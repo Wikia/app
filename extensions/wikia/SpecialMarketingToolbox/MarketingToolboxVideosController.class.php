@@ -11,7 +11,7 @@ class MarketingToolboxVideosController extends WikiaController {
 		$video = $this->getVal('video');
 		$fields = $this->getVal('fields');
 		
-		if( !empty($video) ) { 
+		if( !empty($video) ) {
 			$this->sectionNo = $video['section-no'];
 			$this->videoTitle = $video['title'];
 			$this->timestamp = wfTimeFormatAgo($video['timestamp']);
@@ -48,6 +48,9 @@ class MarketingToolboxVideosController extends WikiaController {
 		//button messages
 		$this->deleteMsg = $this->wf->msg('marketing-toolbox-edithub-delete-button');
 		$this->clearMsg = $this->wf->msg('marketing-toolbox-edithub-clear-button');
+		
+		//blank image
+		$this->blankImgUrl = $this->wg->BlankImgUrl;
 		
 		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
 	}
