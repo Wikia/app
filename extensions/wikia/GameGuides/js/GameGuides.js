@@ -1,77 +1,19 @@
 (function(html, w){
-	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
-		host = w.wgServer,
-		i = links.length,
-		namespaces = w.wgNamespaceIds,
-		regExpNamespace = new RegExp(w.wgArticlePath.replace('$1', "([^:]*)")),
-		//not all namespaces in GG should be clickable
-		disabledNs = [-2,-1,1,2,3,5,6,7,10,11,12,13,15,110,111,500,501,700,701,1200,1201,1202],
-		link,
-		path,
-		parent,
-		notAllowed,
-		namespace,
-		pathMatch;
-
-	while(i--) {
-		link = links[i];
-		path = link.pathname;
-		parent = link.parentElement;
-		notAllowed = (link.origin !== host || path === '/wikia.php') && !~parent.className.indexOf('thumb');
-
-		if(!notAllowed && ~path.indexOf(':')) {
-			pathMatch = path.match(regExpNamespace);
-
-			if(pathMatch && (namespace = namespaces[pathMatch[1].toLowerCase()])) {
-				notAllowed = !!~disabledNs.indexOf(namespace);
-			}
-		}
-
-		if(notAllowed) {
-			if(~link.className.indexOf('image')) {
-				parent.className = 'thumb';
-				link.firstElementChild.className += ' media';
-			}else {
-				link.className += ' disabled';
-			}
-		}
-	}
-
 	//handling clicking on a link
 	html.addEventListener('click', function(ev){
-		var t = ev.target,
-			title,
-			ns = 0;
+		var t = ev.target;
 
-		if(t.tagName === 'A'){
+		if(t.tagName === 'A' && t.hasAttribute('title')) {
 			ev.preventDefault();
-
-			if(t.hasAttribute('title')) {
-				title = t.title.replace(/ /g, '_');
-			}else{
-				title = t.pathname.replace("/wiki/", '')
-			}
-
-			if(~title.indexOf(':')) {
-				var split = title.split(':'),
-					namespace = namespaces[split.shift().toLowerCase()];
-
-				if(namespace) {
-					title = split.join(':');
-					ns = namespace;
-				}
-			}
-
 			Ponto.invoke(
 				'Linker',
 				'goTo',
 				{
-					ns: ns,
-					title: title
+					title: t.title.replace(/ /g, '_')
 				}
 			);
 		}
-	});
+	}, true);
 
 	//handling grabing all links on a page;
 	function Photos(){

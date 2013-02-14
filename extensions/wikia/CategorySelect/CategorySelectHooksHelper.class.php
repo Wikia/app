@@ -164,8 +164,12 @@ class CategorySelectHooksHelper {
 
 			$app->registerHook( 'MakeGlobalVariablesScript', 'CategorySelectHooksHelper', 'onMakeGlobalVariablesScript' );
 
+			// Add hooks for view pages
+			if ( $action == 'view' || $action == 'purge' ) {
+				$app->registerHook( 'OutputPageMakeCategoryLinks', 'CategorySelectHooksHelper', 'onOutputPageMakeCategoryLinks' );
+
 			// Add hooks for edit pages
-			if ( $action == 'edit' || $action == 'submit' || $force ) {
+			} else if ( $action == 'edit' || $action == 'submit' || $force ) {
 				$app->registerHook( 'EditForm::MultiEdit:Form', 'CategorySelectHooksHelper', 'onEditFormMultiEditForm' );
 				$app->registerHook( 'EditPage::CategoryBox', 'CategorySelectHooksHelper', 'onEditPageCategoryBox' );
 				$app->registerHook( 'EditPage::getContent::end', 'CategorySelectHooksHelper', 'onEditPageGetContentEnd' );
@@ -175,6 +179,17 @@ class CategorySelectHooksHelper {
 		}
 
 		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Set category types for view pages (either "normal" or "hidden").
+	 */
+	public static function onOutputPageMakeCategoryLinks( &$out, $categories, &$categoryLinks ) {
+		CategorySelect::setCategoryTypes( $categories );
+
+		// No need to add categories to skin
+		// ... except for WikiAnswers (BugId:97398)
 		return true;
 	}
 }

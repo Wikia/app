@@ -15,21 +15,10 @@ var WikiaPhotoGallerySlider = {
 		currentImage.find('.description-background').show();
 
 		//bind events
-		sliderElem.find('.nav').click(function(e) {
-			var $mainImage = sliderElem.find('.wikiaPhotoGallery-slider');
-			
-			if ( $mainImage.queue().length == 0 ){
+		sliderElem.find('.nav').click(function() {
+			if ( sliderElem.find('.wikiaPhotoGallery-slider').queue().length == 0 ){
 				clearInterval(timer);
-				
-				// Open lightbox for videos
-				var callback = false;
-				if($(e.target).closest('.nav').find('.Wikia-video-play-button').length) {
-					callback = function() {
-						$mainImage.click();
-					}
-				}
-
-				WikiaPhotoGallerySlider.scroll($(this), callback);				
+				WikiaPhotoGallerySlider.scroll($(this));
 			}
 		});
 		
@@ -58,13 +47,12 @@ var WikiaPhotoGallerySlider = {
 		this.sliderEnabled = true;
 	},
 
-	scroll: function(nav, callback) {
+	scroll: function(nav) {
 		//setup variables
 		var thumb_index = nav.parent().index(),
 			scroll_by = parseInt(nav.parent().find('.wikiaPhotoGallery-slider').css('left')),
 			slider_body = nav.closest('.wikiaPhotoGallery-slider-body'),
-			parent_id = slider_body.attr('id'),
-			calledBack = false; // don't execute animation callback more than once per scroll
+			parent_id = slider_body.attr('id');
 
 		if (slider_body.find('.wikiaPhotoGallery-slider').queue().length == 0) {
 
@@ -79,14 +67,7 @@ var WikiaPhotoGallerySlider = {
 			slider_body.find('.wikiaPhotoGallery-slider').animate({
 				left: '-=' + scroll_by
 			}, function() {
-				if(calledBack) {
-					return;
-				}
 				slider_body.find( '.wikiaPhotoGallery-slider-' + thumb_index ).find( '.description' ).fadeIn();
-				if($.isFunction(callback)) {
-					callback();
-				}
-				calledBack = true;
 			});
 		}
 	},

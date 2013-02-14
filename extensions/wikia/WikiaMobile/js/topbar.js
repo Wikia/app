@@ -290,12 +290,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 		if(wkPrf.className.indexOf('loaded') == -1){
 			throbber.show(wkPrf, {center: true});
 
-			loader(
-			{
-				type: loader.LIBRARY,
-				resources: 'facebook'
-			},
-			{
+			loader({
 				type: loader.MULTI,
 				resources: {
 					templates: [{
@@ -309,6 +304,10 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 						useskin: w.skin
 					}
 				}
+			},
+			{
+				type: loader.LIBRARY,
+				resources: 'facebook'
 			}
 			).done(
 				function(res){
@@ -317,15 +316,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 					loader.processStyle(res.styles);
 					wkPrf.insertAdjacentHTML('beforeend', res.templates['UserLoginSpecial_index']);
 					loader.processScript(res.scripts);
-
-					//see fbconnect.js
-					w.FB.init({
-						appId : w.fbAppId,
-						oauth : true,
-						status : true, // Check login status
-						cookie : true, // Enable cookies to allow the server to access the session
-						xfbml  : w.fbUseMarkup // Whether XFBML should be automatically parsed
-					});
 
 					wkPrf.className += ' loaded';
 
@@ -338,9 +328,19 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 							.setHash(hash)
 							.toString()
 					);
+
+					//see fbconnect.js
+					FB.init({
+						appId : window.fbAppId,
+						oauth : true,
+						status : true, // Check login status
+						cookie : true, // Enable cookies to allow the server to access the session
+						xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
+					});
 				}
 			);
 		}
+		//track('login/open');
 	}
 
 	function closeDropDown() {

@@ -70,7 +70,6 @@ define('sections', ['events', 'JSMessages'], function(ev, msg){
 						//do not wrap these elements
 						root = fragment;
 					}else if (isH2){
-						addNoSectClass(node);
 
 						if(addNoSect){
 							addNoSectClass(fragment);

@@ -16,16 +16,10 @@
 			);
 			?>
 			<?=$app->renderView(
-			'MarketingToolbox',
-			'FormField',
-			array('inputData' => $fields['exploreTitle'])
-		);
-			?>
-			<?=$app->renderView(
-			'MarketingToolbox',
-			'FormField',
-			array('inputData' => $fields['imageLink'])
-		);
+				'MarketingToolbox',
+				'FormField',
+				array('inputData' => $fields['exploreTitle'])
+			);
 			?>
 		</div>
 		<div class="grid-1 alpha">

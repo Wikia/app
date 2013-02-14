@@ -107,6 +107,8 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
+		$useThmbnailInfoBar = false;
+
 		/*
 		 * in order to disable RDF metadata in video thumbnails
 		 * pass disableRDF parameter to toHtml method
@@ -206,9 +208,10 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['style'] .= $options['imgExtraStyle'];
 		}
 
-		if ( isset( $options['duration'] ) && $options['duration'] == true ) {
+		if ( $useThmbnailInfoBar || ( isset( $options['duration'] ) && $options['duration'] == true ) ) {
 			$duration = $this->file->getHandler()->getFormattedDuration();
 		}
+
 
 		if ( isset($options['constHeight']) ) {
 
@@ -217,24 +220,62 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		$html = ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::openElement( 'a', $linkAttribs ) : '';
 
-		if ( isset( $duration ) && !empty( $duration ) ) {
-			$timerProp = array( 'class'=>'timer' );
-			if ( $useRDFData ) {
-				$timerProp['itemprop'] = 'duration';
+			if ( isset( $duration ) && !empty( $duration ) ) {
+				$timerProp = array( 'class'=>'timer' );
+				if ( $useRDFData ) {
+					$timerProp['itemprop'] = 'duration';
+				}
+				$html .= Xml::element( 'div', $timerProp,  $duration );
 			}
-			$html .= Xml::element( 'div', $timerProp,  $duration );
-		}
-		$playButtonHeight =  ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) ? $options['constHeight'] : $this->height;
-		if ( !empty( $extraBorder ) ) $playButtonHeight += ( $extraBorder*2 );
-		$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $playButtonHeight );
-		$html .= Xml::element( 'img', $attribs, '', true );
-		
-		
-		if( empty( $options['hideOverlay'] ) ) {
+			$playButtonHeight =  ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) ? $options['constHeight'] : $this->height;
+			if ( !empty( $extraBorder ) ) $playButtonHeight += ( $extraBorder*2 );
+			$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $playButtonHeight );
+			$html .= Xml::element( 'img', $attribs, '', true );
 			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $this->file->getTitle() );
-		}
-		
+
 		$html .= ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::closeElement( 'a' ) : '';
+
+
+
+		if ( $useThmbnailInfoBar ) {
+
+			$titleBar = array(
+				"class"		=> "Wikia-video-title-bar",
+				"style"		=> "width: {$this->width}px; margin-left: -{$this->width}px;"
+			);
+
+			$videoTitle = $attribs['data-video'];
+
+			$infoVars = array();
+			$userName = $this->file->getUser();
+			if (!is_null($userName)) {
+				$link = AvatarService::renderLink($userName);
+				$infoVars["author"] = wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $userName );
+			} else {
+				$infoVars["author"] = "";
+			}
+
+			if (!empty($duration)) {
+				$infoVars["duration"] = '('.$duration.')';
+			} else {
+				$infoVars["duration"] = '';
+			}
+
+			if ( !isset($options['img-class']) ) {
+				$options['img-class'] = "";
+			}
+
+			if ( $options['img-class'] != "thumbimage" ) {
+				$html .= Xml::openElement( 'span', $titleBar );
+					$html .= Xml::element( 'span', array('class'=>'title'), $videoTitle );
+					$html .= Xml::element( 'span', array('class'=>'info'),  '{author} {duration}' );
+				$html .= Xml::closeElement( 'span' );
+			}
+
+			foreach ( $infoVars as $key => $value ) {
+				$html = str_replace('{'.$key.'}', $value, $html);
+			}
+		}
 
 		//give extensions a chance to modify the markup
 		wfRunHooks( 'ThumbnailVideoHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );

@@ -268,7 +268,7 @@ $messages['ms'] = array(
 	'action-taskmanager' => 'paparkan dan uruskan tugas-tugas latar belakang',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -348,7 +348,6 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
- * @author JM Pessanha
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -358,7 +357,6 @@ $messages['pt-br'] = array(
 	'right-taskmanager' => 'Pode mostrar tarefas de segundo plano',
 	'right-taskmanager-action' => 'Pode administrar tarefas de segundo plano',
 	'taskmanager-invert' => 'Inverter seleção',
-	'action-taskmanager' => 'exibir e gerenciar tarefas em segundo plano',
 );
 
 /** Russian (русский)

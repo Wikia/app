@@ -5,38 +5,54 @@
 * @author Garth Webb, Hyun Lim, Liz Lee, Saipetch Kongkatong
 */
 
-ini_set( "include_path", dirname( __FILE__ )."/../../../../maintenance/" );
+// See if we're being run directly or not
+$script = preg_replace('!^.*/!', '', $argv[0]);
+$file   = preg_replace('!^.*/!', '', __FILE__);
 
-require_once( "commandLine.inc" );
+// If we're being run directly do some setup
+if ($script == $file) {
+	ini_set( "include_path", dirname( __FILE__ )."/../../../../maintenance/" );
+	ini_set('display_errors', 'stderr');
 
-if ( isset($options['help']) ) {
-	die( "Usage: php maintenance.php [--help]
-	--help				you are reading it right now\n\n" );
+	require_once( "commandLine.inc" );
+
+	if ( isset($options['help']) ) {
+		die( "Usage: php maintenance.php [--help]\n".
+			"\t--help	This help page\n\n" );
+	}
+
+	$app = F::app();
+	if ( empty($app->wg->CityId) ) {
+		die( "Error: Invalid wiki id." );
+	}
+
+	WikiaTask::work($app->wg->CityId);
 }
 
-$app = F::app();
-if ( empty($app->wg->CityId) ) {
-	die( "Error: Invalid wiki id." );
+class WikiaTask {
+
+	public static function work ( $wiki_id ) {
+		$app = F::app();
+		if ( $app->wf->ReadOnly() ) {
+			die( "Error: In read only mode." );
+		}
+
+		echo "Wiki $wiki_id\n";
+
+		$db = $app->wf->GetDB( DB_MASTER );
+
+		$tableExists = $db->tableExists( 'video_info' );
+		if ( !$tableExists ) {
+			die( "Error: Table does NOT exist.\n" );
+		}
+
+		$memKeyBase = MediaQueryService::getMemKeyTotalVideoViews();
+		$videoListTotal = VideoInfoHelper::getTotalViewsFromDB();
+		foreach( $videoListTotal as $memKeyBucket => $list ) {
+			$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $list, 60*60*2 );
+			//echo "\tCache Key: $memKeyBucket (".count($list).")\n";
+		}
+
+		echo "Cached video views....DONE\n";
+	}
 }
-
-if ( $app->wf->ReadOnly() ) {
-	die( "Error: In read only mode." );
-}
-
-echo "Wiki $wgCityId:\n";
-
-$db = $app->wf->GetDB( DB_MASTER );
-
-$tableExists = $db->tableExists( 'video_info' );
-if ( !$tableExists ) {
-	die( "Error: Table NOT exist.\n" );
-}
-
-$memKeyBase = MediaQueryService::getMemKeyTotalVideoViews();
-$videoListTotal = VideoInfoHelper::getTotalViewsFromDB();
-foreach( $videoListTotal as $memKeyBucket => $list ) {
-	$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $list, 60*60*2 );
-	echo "\tCache Key: $memKeyBucket (".count($list).")\n";
-}
-
-echo "Cached video views....DONE\n";

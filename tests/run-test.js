@@ -41,22 +41,13 @@ var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
 	},
 	optionsCounter = 0,
 	timer,
-	page,
-	runner = 'lib/jasmine/test-runner.html';
+	page;
 
 //load Unit test runner dependancies
 phantom.injectJs('lib/js/JTR.js');
 phantom.injectJs('lib/js/TestResult.js');
 phantom.injectJs('lib/js/Xml.js');
 phantom.injectJs('lib/js/JUnitReport.js');
-
-function log(msg) {
-	if(!options.s) console.log(msg);
-}
-
-function warn(msg) {
-	if(!options.s) console.warn(msg);
-}
 
 function nextTest() {
 	try {
@@ -108,23 +99,20 @@ function onPageLoaded( status ) {
 }
 
 function processTest( test ) {
-	log('Running '+ test.replace(/^\.+/, ''));
+	console.log('Running '+ test.replace(/^\.+/, ''));
 
 	//reset page
 	page = createPage();
 
 	var testSource,
-		requiredFiles = [
-			'lib/jasmine/jasmine.js',
-			'lib/jasmine/jasmine.async.js',
-			'lib/jasmine/phantom_reporter.js'
-		],
+		requiredFiles = [],
 		deps = '',
 		testOptions = {
 			'require-asset': [],
 			'screen-resolution': options['screen-resolution'],
 			'user-agent': options['user-agent']
 		},
+		runner,
 		matches,
 		htmlTemplate;
 	try {
@@ -143,9 +131,9 @@ function processTest( test ) {
 				t = tokens[0];
 
 			if(t == 'exclude'){
-				warn( stylize('[WARN]', 'yellow'), 'Test excluded, skipping... Path: ' + test);
+				console.warn( stylize('[WARN]', 'yellow'), 'Test excluded, skipping... Path: ' + test);
 				//if there is something after exclude take it as a reason of exclusion
-				tokens[1] && log( stylize( '\tReason: ', 'magenta' ), matches[x].replace(/^@test-exclude /i, ''));
+				tokens[1] && console.log( stylize( '\tReason: ', 'magenta' ), matches[x].replace(/^@test-exclude /i, ''));
 				nextTest();
 				return;
 			}else if( t == 'require-asset' && tokens[1] ){
@@ -163,6 +151,28 @@ function processTest( test ) {
 				testOptions[tokens[0]] = tokens[1] || true;
 			}
 		}
+	}
+
+	if(testOptions.framework) {
+		switch(testOptions.framework.toLowerCase().trim()) {
+			case 'qunit':
+				requiredFiles.push('lib/qunit/qunit.js');
+				requiredFiles.push('lib/qunit/phantom_reporter.js');
+				runner = 'lib/qunit/test-runner.html';
+				break;
+			case 'jasmine':
+				requiredFiles.push('lib/jasmine/jasmine.js');
+				requiredFiles.push('lib/jasmine/jasmine.async.js');
+				requiredFiles.push('lib/jasmine/phantom_reporter.js');
+				runner = 'lib/jasmine/test-runner.html';
+				break;
+		}
+	}
+
+	if( !runner ) {
+		console.error( stylize('[ERROR]', 'lightred'), 'Missing or unrecognized framework declaration. Path: ' + test )
+		nextTest();
+		return;
 	}
 
 	if(testOptions['require-asset'] instanceof Array){
@@ -266,7 +276,7 @@ var styles = {
 
 function stylize(str, style) {
 	return '\033[' + styles[style][0] + 'm' + str + '\033[' + styles[style][1] + 'm';
-}
+};
 
 function outputTestsResult() {
 	/*
@@ -301,11 +311,11 @@ function outputTestsResult() {
 
 		var testResult = testResults[i];
 
-		//console.log( '\nRunning ' + stylize( testResult.name, 'bold' ) );
+		console.log( '\nRunning ' + stylize( testResult.name, 'bold' ) );
 
 		for (var suiteName in testResult.suites) {
 
-			log(stylize(suiteName, 'bold'));
+			console.log(stylize(suiteName, 'bold'));
 
 			var suite = testResult.suites[suiteName];
 
@@ -327,10 +337,9 @@ function outputTestsResult() {
 						assertions = stylize('no assertions', 'yellow');
 					}
 
-					log('\t' + testName + '\t' + stylize( '[OK]', 'green' ) + ' (' + assertions + ')' );
+					console.log('\t' + testName + '\t' + stylize( '[OK]', 'green' ) + ' (' + assertions + ')' );
 
 				} else {
-					if(options.s) console.log(stylize(suiteName, 'bold'));
 
 					console.log('\t'+testName+'\t'+stylize('[FAIL]', 'lightred'));
 
@@ -382,7 +391,41 @@ function outputTestsResult() {
 }
 
 function createPage(){
-	var page = require('webpage').create({
+	return require('webpage').create({
+		onConsoleMessage : function(msg) {
+			try {
+				msg = JSON.parse(msg);
+				switch(msg.command) {
+					case 'startTest':
+						testResult.startTest( msg.name, msg.extra );
+						break;
+					case 'stopTest':
+						testResult.stopTest( JTR.status[msg.status], msg.assertions, msg.messages );
+						break;
+					case 'startSuite':
+						testResult.startSuite( msg.name, msg.extra );
+						break;
+					case 'stopSuite':
+						testResult.stopSuite();
+						break;
+					case EXIT_SIGNAL:
+						testResults.push( testResult );
+						testResult = null;
+						nextTest();
+						break;
+				}
+				return;
+			}catch(e){};
+		},
+
+		onError : function(msg, trace) {
+			console.error('Error:', msg);
+
+			trace.forEach(function(item) {
+				console.error('\t-', item.file, ':', item.line);
+			});
+		},
+
 		settings : {
 			loadPlugins : true,
 			localToRemoteUrlAccessEnabled : true,
@@ -392,42 +435,6 @@ function createPage(){
 
 		viewportSize : options['screen-resolution']
 	});
-
-	page.onCallback = function(data){
-		switch(data.command) {
-			case 'startTest':
-				testResult.startTest( data.name, data.extra );
-				break;
-			case 'stopTest':
-				testResult.stopTest( JTR.status[data.status], data.assertions, data.messages );
-				break;
-			case 'startSuite':
-				testResult.startSuite( data.name, data.extra );
-				break;
-			case 'stopSuite':
-				testResult.stopSuite();
-				break;
-			case EXIT_SIGNAL:
-				testResults.push( testResult );
-				testResult = null;
-				nextTest();
-				break;
-		}
-	};
-
-	page.onConsoleMessage = function(msg){
-		console.log( '>>> ' + msg );
-	};
-
-	page.onError = function(msg, trace) {
-		console.error('Error:', msg);
-
-		trace.forEach(function(item) {
-			console.error('\t-', item.file, ':', item.line);
-		});
-	};
-
-	return page;
 }
 
 //begin tests

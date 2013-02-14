@@ -106,7 +106,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		wfProfileIn(__METHOD__);
 		$satisfies = ( $this->parent === null ) && $this->searchConfig->getGroupResults();
 		if ( $satisfies ) {
-			$this->prependWikiMatchIfExists();
 			$this->setResultGroupings();
 			$this->setResultsFound( $this->getHostGrouping()->getMatches() );
 		}
@@ -222,12 +221,12 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		wfProfileOut(__METHOD__);
 		return $this;
 	}
-	
+
 	/**
 	 * Subroutine for optionally prepending article match to result array.
 	 * @return WikiaSearchResultSet provides fluent interface
 	 */
-	protected function prependArticleMatchIfExists() {
+	public function prependArticleMatchIfExists() {
 		wfProfileIn(__METHOD__);
 
 		if (! ( $this->searchConfig->hasArticleMatch() && $this->getResultsStart() == 0 ) ) {
@@ -283,14 +282,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 
 		wfProfileOut(__METHOD__);
 		return $this;
-	}
-	
-	protected function prependWikiMatchIfExists() {
-		if ( $this->searchConfig->hasWikiMatch() ) {
-    		$this->resultsFound++;
-    		return $this->addResult( $this->searchConfig->getWikiMatch()->getResult() );
-		}
-		return false;
 	}
 
 	/**
@@ -518,38 +509,20 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	public function getResults() {
 		return $this->results;
 	}
-	
-	/**
-	 * Allows us to serialize some core values from an expected wiki for json requests
-	 * @param array $expectedFields
-	 * @return array
-	 */
-	public function toArray( $expectedFields = array( 'title', 'url' ) ) {
-		$result = array();
-		foreach ( $expectedFields as $field ) {
-			switch ( $field ) {
-				case 'title':
-					$result['title'] = $this->getHeader( 'cityTitle' );
-					break;
-				case 'url':
-					$result['url'] = $this->getHeader( 'cityUrl' );
-					break;
-			}
-		}
-		return $result;
-	}
 
 	/*
 	 * Done to return results in json format
 	 * Can be removed after upgrade to 5.4 and specify serialized Json data on WikiaSearchResult
 	 * http://php.net/manual/en/jsonserializable.jsonserialize.php
-	 * @todo if we break the different kind of result sets out into different classes, we should make this just be the "toarray" for root node 
+	 *
 	 * @return array
 	 */
 	public function toNestedArray( array $expectedFields = array( 'title', 'url' ) ) {
 		$tempResults = array();
 		foreach( $this->results as $result ){
-	        $tempResults[] = $result->toArray( $expectedFields );
+		    if( $result instanceof WikiaSearchResult ){
+		        $tempResults[] = $result->toArray( $expectedFields );
+		    }
 		}
 		return $tempResults;
 	}

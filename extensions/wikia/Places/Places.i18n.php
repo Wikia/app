@@ -342,7 +342,7 @@ $messages['ms'] = array(
 	'places-category-switch-off' => 'Hidupkan ciri geotag',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -636,23 +636,11 @@ $messages['wa'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
- * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'places' => '本维基上的地点',
-	'places-in-category' => '$1 分类的放置',
-	'places-toolbar-button-tooltip' => '点击以在此页上添加地理标签',
 	'places-editor-search' => '搜索',
-	'places-editor-title-create-new' => '添加地理标签',
-	'places-editor-title-edit' => '编辑地理标签',
-	'places-editor-show-my-location' => '带我到我的位置',
 	'places-editor-geoposition' => '当前地理位置：',
 	'places-geolocation-button-label' => '添加位置',
-	'places-geolocation-modal-add-title' => '添加位置',
 	'places-geolocation-modal-error-title' => '错误',
-	'places-error-no-article' => '您必须指定一个页面',
-	'places-error-place-already-exists' => '此页已有地理标签',
-	'places-updated-geolocation' => '已在此页添加地理标签',
-	'places-category-switch' => '禁用地理标签',
-	'places-category-switch-off' => '启用地理标签',
 );

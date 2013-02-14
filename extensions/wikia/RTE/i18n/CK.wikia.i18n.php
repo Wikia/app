@@ -138,7 +138,6 @@ $messages['qqq'] = array(
 	'rte-ck-hoverPreview-comment-title' => '{{Identical|Comment}}',
 	'rte-ck-hoverPreview-delete' => '{{Identical|Delete}}',
 	'rte-ck-hoverPreview-edit' => '{{Identical|Edit}}',
-	'rte-ck-link-add' => '{{Identical|Add link}}',
 	'rte-ck-link-error-title' => '{{Identical|Error}}',
 	'rte-ck-link-external-tab' => '{{Identical|Liên kết ngoài}}',
 	'rte-ck-link-internal-pageName' => '{{Identical|Page name}}',
@@ -1900,7 +1899,7 @@ $messages['mk'] = array(
 	'rte-ck-poll-confirmDelete' => 'Дали сте сигурни дека сакате да ја анкетата од страницава?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Да ја отстранам анкетава?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Повеќе предлози',
-	'rte-ck-pasteText-title' => 'Вметнете го текстот',
+	'rte-ck-pasteText-title' => 'Ископирајте го текстот',
 	'rte-ck-clipboard-pasteMsg' => 'Од безбедносни причини, уредникот не може директно да дојде до она што го ископиравте. Копирањето направете го во полето подолу користејќи тастатурни кратенки (Ctrl/Cmd+V) и стиснете на „ОК“.<br /><br />Напомена: форматирањето на вашиот текст ќе биде отстрането за да се избегне добивање на сложен викитекст.',
 	'rte-ck-format-tag_p' => 'Нормален текст',
 	'rte-ck-format-tag_pre' => 'Код (претформатиран текст)',
@@ -2085,7 +2084,7 @@ $messages['mzn'] = array(
 	'rte-ck-hoverPreview-edit' => 'دچی‌ین',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2619,7 +2618,6 @@ $messages['ps'] = array(
 	'rte-ck-link-status-external' => 'باندنۍ تړنه',
 	'rte-ck-modeSwitch-toSource' => 'سرچينه',
 	'rte-ck-photoGallery-gallery' => 'انځورتون',
-	'rte-ck-photoGallery-tooltip' => 'دا يو انځورتون دی.',
 	'rte-ck-signature-add' => 'خپل لاسليک ورګډول',
 	'rte-ck-signature-label' => 'لاسليک',
 	'rte-ck-table-toolbarTooltip' => 'لښتيال ورګډول',
@@ -3435,7 +3433,6 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
- * @author Ahonc
  * @author Steve.rusyn
  * @author Тест
  */
@@ -3464,7 +3461,7 @@ $messages['uk'] = array(
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Інший шаблон / магічне слово',
 	'rte-ck-templateDropDown-showUsedList' => 'Показати список використовуваних шаблонів',
 	'rte-ck-templateDropDown-label' => 'Шаблон',
-	'rte-ck-templateDropDown-title' => 'Виберіть шаблон',
+	'rte-ck-templateDropDown-title' => 'Вибір шаблона',
 	'rte-ck-templateEditor-dialog-insert' => 'Вставити',
 	'rte-ck-templateEditor-dialog-magicWords' => 'Магічні слова',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Чарівні слова',
@@ -3678,7 +3675,6 @@ $messages['zh-hans'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => '删除画廊？',
 	'rte-ck-photoGallery-tooltip' => '这是画廊。',
 	'rte-ck-photoGallery-tooltipSlideshow' => '这是幻灯片。',
-	'rte-ck-photoGallery-tooltipSlider' => '这是一个滑块。',
 	'rte-ck-poll-add' => '添加投票箱',
 	'rte-ck-poll-poll' => '投票箱',
 	'rte-ck-signature-add' => '添加您的签名',
@@ -3718,11 +3714,6 @@ $messages['zh-hans'] = array(
 	'rte-ck-mut-mut' => '视频（测试版）',
 	'rte-ck-widescreen-toggle' => '切换宽屏',
 	'rte-ck-poll-confirmDelete' => '您是否确定吧该投票从当页删除？',
-	'rte-ck-poll-confirmDeleteTitle' => '删除此投票吗？',
-	'rte-ck-spellchecker-moreSuggestions' => '更多建议',
-	'rte-ck-pasteText-title' => '粘贴文本',
-	'rte-ck-format-tag_p' => '普通文本',
-	'rte-ck-format-tag_pre' => '代码（预先设好格式文本）',
 	'rte-ck-format-tag_h2' => '标题2',
 	'rte-ck-format-tag_h3' => '标题3',
 	'rte-ck-format-tag_h4' => '标题4',

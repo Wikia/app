@@ -176,7 +176,7 @@ $messages['ms'] = array(
 	'tog-watchlistsubpages' => 'Pantau sublaman',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -287,12 +287,4 @@ $messages['uk'] = array(
 $messages['vi'] = array(
 	'wikia-watchsubpages-desc' => 'Tự động theo dõi các trang con',
 	'tog-watchlistsubpages' => 'Theo dõi các trang con',
-);
-
-/** Simplified Chinese (中文（简体）‎)
- * @author Hydra
- */
-$messages['zh-hans'] = array(
-	'wikia-watchsubpages-desc' => '自动关注子页',
-	'tog-watchlistsubpages' => '关注子页',
 );

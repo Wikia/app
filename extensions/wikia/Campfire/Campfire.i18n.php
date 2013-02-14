@@ -146,7 +146,7 @@ $messages['ms'] = array(
 	'campfire-licensed-under' => 'Dilesenkan di bawah $1',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -245,10 +245,8 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
- * @author Hydra
  */
 $messages['zh-hans'] = array(
-	'campfire-page-header' => '从$2的$1',
 	'campfire-licensed-under' => '在 $1 的许可之下',
 );
 

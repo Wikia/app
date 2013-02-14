@@ -10,7 +10,7 @@ class WikiaPollHooks {
 	 * @param $title Title
 	 * @param $article Article
 	 */
-	public static function onArticleFromTitle(&$title, &$article) {
+	public static function onArticleFromTitle($title, &$article) {
 		wfProfileIn(__METHOD__);
 
 		if ($title->getNamespace() == NS_WIKIA_POLL) {
@@ -46,7 +46,6 @@ class WikiaPollHooks {
 	 *
 	 * @param $editPage EditPage
 	 */
-
 	public static function onAlternateEdit( $editPage ) {
 		global $wgOut;
 
@@ -64,11 +63,10 @@ class WikiaPollHooks {
 	/**
 	 * Return HTML to be used when embedding polls from inside parser
 	 * TODO: replace all this with a hook inside parser
-	 * 
+	 *
 	 * @param WikiaPoll $poll
-	 * @param Title $finalTitle 
+	 * @param Title $finalTitle
 	 */
-
 	public static function generate($poll, $finalTitle) {
 		wfProfileIn(__METHOD__);
 
@@ -120,8 +118,9 @@ class WikiaPollHooks {
 			wfProfileOut(__METHOD__);
 			return $ret;
 		}
-		
+
 		wfProfileOut(__METHOD__);
+		return '';
 	}
 
 	/**
@@ -160,20 +159,15 @@ class WikiaPollHooks {
 			'type' => 'poll'
 		));
 		return RTEData::addIdxToTag($dataIdx, $tag);
-
 	}
-
-
 
 	/**
 	 * Purge poll after an edit
 	 *
 	 * @param $article Article
 	 */
-	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	public static function onArticleSaveComplete($article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		wfProfileIn(__METHOD__);
-
-		wfDebug(__METHOD__ . "\n");
 
 		$title = $article->getTitle();
 
@@ -183,6 +177,34 @@ class WikiaPollHooks {
 		}
 
 		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Add support for [[:Poll:...]] used to embed polls in articles
+	 *
+	 * @param $s string parsed wikitext
+	 * @param $nt Title
+	 * @param $prefix string
+	 * @param $trail string
+	 * @param $RTE_wikitextIdx string
+	 * @return bool
+	 */
+	public static function onParserReplaceInternalLinks2NoForce(&$s, $nt, $prefix, $trail, $RTE_wikitextIdx) {
+		global $wgRTEParserEnabled;
+
+		if ($nt->getNamespace() === NS_WIKIA_POLL) {
+			$poll = WikiaPoll::newFromTitle($nt);
+			if ($poll instanceof WikiaPoll) {
+				if (!empty($wgRTEParserEnabled)) {
+					$s .= $prefix . WikiaPollHooks::generateRTE($poll, $nt, $RTE_wikitextIdx) . $trail;
+				} else {
+					$s .= $prefix . WikiaPollHooks::generate($poll, $nt) . $trail;
+				}
+				return false;
+			}
+		}
+
 		return true;
 	}
 

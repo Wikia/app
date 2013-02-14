@@ -146,7 +146,7 @@ $messages['ms'] = array(
 	'centralhelpsearch-placeholder' => 'Cari Bantuan&hellip;',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -230,9 +230,7 @@ $messages['tt-cyrl'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
- * @author Hydra
  */
 $messages['zh-hans'] = array(
-	'centralhelpsearch-desc' => '允许一个搜寻社区中央帮助网站的表格',
 	'centralhelpsearch-placeholder' => '搜索帮助……',
 );

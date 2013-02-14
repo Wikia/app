@@ -289,7 +289,7 @@ $messages['ms'] = array(
 	'stafflog-filter-type-wikifactory' => 'Status wiki',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -385,7 +385,6 @@ $messages['ps'] = array(
 	'stafflog-filter-label' => 'چاڼګر',
 	'stafflog-filter-user' => 'کارن:',
 	'stafflog-filter-type-block' => 'بنديزونه',
-	'stafflog-filter-type-wikifactory' => 'ويکي دريځ',
 );
 
 /** Portuguese (português)
@@ -403,7 +402,6 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
- * @author JM Pessanha
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -412,8 +410,6 @@ $messages['pt-br'] = array(
 	'stafflog-blockmsg' => '$1 $2 tentou bloquear o usuário da equipe $3 na wiki $4. Motivo: $5',
 	'stafflog-piggybackloginmsg' => 'Personificação $1 - usuário $2 autenticou-se como $3',
 	'stafflog-piggybacklogoutmsg' => 'Personificação $1 - usuário $2 saiu da conta $3',
-	'right-stafflog' => 'Pode ver o registro da staff',
-	'stafflog-wiki-status-change' => '$1 mudou o estado de $2 para $3. Motivo: $4',
 	'stafflog-filter-label' => 'Filtro',
 	'stafflog-filter-user' => 'Usuário:',
 	'stafflog-filter-type' => 'Tipo:',

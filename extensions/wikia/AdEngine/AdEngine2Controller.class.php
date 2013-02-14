@@ -95,7 +95,10 @@ class AdEngine2Controller extends WikiaController {
 			return true;
 		}
 
-		if (!$this->wg->LoadAdsInHead) {
+		if ($this->wg->LoadAdsInHead) {
+			// Removing oasis_shared_core_js asset group
+			array_splice($jsAssets, $coreGroupIndex, 1);
+		} else {
 			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
 			array_splice($jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE);
 		}
@@ -112,19 +115,8 @@ class AdEngine2Controller extends WikiaController {
 	public function onOasisSkinAssetGroupsBlocking(&$jsAssets) {
 		if ($this->wg->LoadAdsInHead) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
+			$jsAssets[] = self::ASSET_GROUP_CORE;
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE;
-		}
-		return true;
-	}
-
-	public function onWikiaSkinTopModules(&$scriptModules, $skin) {
-		if ($this->wg->LoadAdsInHead) {
-			$scriptModules[] = 'wikia.cookies';
-			$scriptModules[] = 'wikia.geo';
-			$scriptModules[] = 'wikia.log';
-			$scriptModules[] = 'wikia.querystring';
-			$scriptModules[] = 'wikia.tracker';
-			$scriptModules[] = 'wikia.window';
 		}
 		return true;
 	}

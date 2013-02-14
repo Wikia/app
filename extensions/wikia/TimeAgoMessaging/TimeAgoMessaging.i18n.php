@@ -333,7 +333,7 @@ $messages['ms'] = array(
 	'timeago-second-from-now' => 'seminit dari sekarang',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -411,8 +411,6 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'timeago-year' => '{{PLURAL:$1|يو کال|$1 کالونه}} دمخه',
-	'timeago-month' => '{{PLURAL:$1|يوه مياشت|$1 مياشتې}} دمخه',
 	'timeago-day' => '{{PLURAL:$1|يوه ورځ|$1 ورځې}} دمخه',
 	'timeago-hour' => '{{PLURAL:$1|يو ساعت|$1 ساعتونه}} دمخه',
 	'timeago-minute' => '{{PLURAL:$1|يوه دقيقه|$1 دقيقې}} دمخه',
@@ -562,15 +560,10 @@ $messages['vi'] = array(
  * @author Hydra
  */
 $messages['zh-hans'] = array(
-	'timeago-year' => '{{PLURAL:$1|1年|$1年}}前',
-	'timeago-month' => '{{PLURAL:$1|1月|$1月}}前',
 	'timeago-day' => '$1天前',
 	'timeago-hour' => '$1小时前',
 	'timeago-minute' => '$1分钟前',
 	'timeago-second' => '一分钟前',
 	'timeago-day-from-now' => '$1天前',
-	'timeago-hour-from-now' => '{{PLURAL:$1|1小时|$1小时}}以后',
-	'timeago-minute-from-now' => '{{PLURAL:$1|1分钟|$1分钟}}以后',
-	'timeago-month-from-now' => '{{PLURAL:$1|1月|$1月}}以后',
 	'timeago-second-from-now' => '一分钟前',
 );

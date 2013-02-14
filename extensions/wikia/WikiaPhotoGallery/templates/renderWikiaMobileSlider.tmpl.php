@@ -1,5 +1,5 @@
-<nav class="wkSlider imgs<?= count($files)?> images<?= (count($files) % 2 == 0) ? 'Even' : 'Odd' ?> "><?
-	foreach ( $files as $i => $image ) {
+<nav class="wkSlider imgs<?= count($images)?> images<?= (count($images) % 2 == 0) ? 'Even' : 'Odd' ?> "><?
+	foreach ( $images as $i => $image ) {
 		$mediaInfo = $image['mediaInfo'];
 		$mediaInfo['attributes']['class'] = 'getThumb';
 

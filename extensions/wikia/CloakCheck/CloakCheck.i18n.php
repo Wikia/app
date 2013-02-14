@@ -436,7 +436,7 @@ $messages['ms'] = array(
 	'cloakcheck-process-edits-no' => 'Jumlah suntingan pengguna tidak memadai.',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -745,7 +745,6 @@ $messages['uk'] = array(
 $messages['zh-hans'] = array(
 	'cloakcheck-form-username' => '用户名：',
 	'cloakcheck-form-check' => '检查用户名',
-	'cloakcheck-form-check-self' => '检查 IRC 斗篷资格',
 	'cloakcheck-process-empty' => '用户名不能为空。',
 	'cloakcheck-process-notexist' => '用户名不存在',
 	'cloakcheck-process-username' => '用户名：$1',
@@ -753,6 +752,5 @@ $messages['zh-hans'] = array(
 	'cloakcheck-process-accountage-no' => '用户太新',
 	'cloakcheck-process-emailconf-yes' => '电子邮件地址已确认。',
 	'cloakcheck-process-emailconf-no' => '电子邮件地址未确认。',
-	'cloakcheck-process-edits-yes' => '用户有足够的编辑。',
 	'cloakcheck-process-edits-no' => '用户编辑数不足。',
 );

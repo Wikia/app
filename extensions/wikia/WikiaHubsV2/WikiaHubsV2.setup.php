@@ -58,20 +58,3 @@ $wgExtensionMessagesFiles['WikiaHubsV2'] = $dir . 'WikiaHubsV2.i18n.php';
 // hooks
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsV2Mobile', 'onWikiaMobileAssetsPackages');
 $app->registerHook('ArticleFromTitle', 'WikiaHubsV2Hooks', 'onArticleFromTitle');
-
-// foreign file repo
-$wgForeignFileRepos[] = array(
-	'class'            => 'WikiaForeignDBViaLBRepo',
-	'name'             => 'wikiahubsfiles',
-	'directory'        => $wgWikiaHubsFileRepoDirectory,
-	'url'              => 'http://images.wikia.com/central/images',
-	'hashLevels'       => 2,
-	'thumbScriptUrl'   => '',
-	'transformVia404'  => true,
-	'hasSharedCache'   => true,
-	'descBaseUrl'      => $wgWikiaHubsFileRepoPath . 'wiki/File:',
-	'fetchDescription' => true,
-	'wiki'             => $wgWikiaHubsFileRepoDBName,
-	'checkRedirects'   => false,
-	'checkDuplicates'  => false,
-);

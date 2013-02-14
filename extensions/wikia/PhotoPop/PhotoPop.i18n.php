@@ -810,7 +810,7 @@ $messages['ms'] = array(
 	'photopop-game-download-error-text' => 'Berlakunya ralat ketika memuat turun data permainan, sila cuba lagi.',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1091,7 +1091,6 @@ $messages['ps'] = array(
 	'photopop-setup-category-label' => 'وېشنيزه',
 	'photopop-setup-submit-label' => 'اوسمهالول',
 	'photopop-image-preview' => 'د انځورونو مخليدنه:',
-	'photopop-game-correct' => 'سم',
 	'photopop-game-total' => 'ټولټال',
 	'photopop-game-wiki' => 'ويکي',
 	'photopop-game-date' => 'نېټه',

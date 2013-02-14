@@ -1,65 +1,66 @@
 /**
+ * @test-framework QUnit
  * @test-require-asset extensions/wikia/AdEngine/js/AdConfig2Late.js
  */
 
-describe('AdConfig2Late', function(){
-	it('getProvider returns Liftium2Dom if it can handle it', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
-			, adProviderLiftium2DomMock = {name: 'Liftium2DomMock', canHandleSlot: function() {return true;}}
-			, logMock = function() {}
-			, windowMock = {}
-			, adConfig;
+module('AdConfig2Late');
 
-		adConfig = AdConfig2Late(
-			logMock, windowMock
+test('getProvider returns Liftium2Dom if it can handle it', function() {
+	var adProviderNullMock = {name: 'NullMock'}
+		, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
+		, adProviderLiftium2DomMock = {name: 'Liftium2DomMock', canHandleSlot: function() {return true;}}
+		, logMock = function() {}
+		, windowMock = {}
+		, adConfig;
 
-			, adProviderGameProMock
-			, adProviderLiftium2DomMock
-			, adProviderNullMock
-		);
+	adConfig = AdConfig2Late(
+		logMock, windowMock
 
-		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftium2DomMock, 'adProviderLiftium2DomMock');
-	});
+		, adProviderGameProMock
+		, adProviderLiftium2DomMock
+		, adProviderNullMock
+	);
 
-	it('getProvider returns Null if Liftium cannot handle it', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
-			, adProviderLiftium2DomMock = {name: 'Liftium2DomMock', canHandleSlot: function() {return false;}}
-			, logMock = function() {}
-			, windowMock = {}
-			, adConfig;
+	equal(adConfig.getProvider(['foo']), adProviderLiftium2DomMock, 'adProviderLiftium2DomMock');
+});
 
-		adConfig = AdConfig2Late(
-			logMock, windowMock
+test('getProvider returns Null if Liftium cannot handle it', function() {
+	var adProviderNullMock = {name: 'NullMock'}
+		, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
+		, adProviderLiftium2DomMock = {name: 'Liftium2DomMock', canHandleSlot: function() {return false;}}
+		, logMock = function() {}
+		, windowMock = {}
+		, adConfig;
 
-			, adProviderGameProMock
-			, adProviderLiftium2DomMock
-			, adProviderNullMock
-		);
+	adConfig = AdConfig2Late(
+		logMock, windowMock
 
-		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock, 'adProviderNullMock');
-	});
+		, adProviderGameProMock
+		, adProviderLiftium2DomMock
+		, adProviderNullMock
+	);
 
-	it('for German sites, getProvider returns GamePro if it can handle it and Null for three slots', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
-			, adProviderLiftium2DomMock = {name: 'Liftium2DomMock', canHandleSlot: function() {return false;}}
-			, logMock = function() {}
-			, windowMock = {wgContentLanguage: 'de'}
-			, adConfig;
+	equal(adConfig.getProvider(['foo']), adProviderNullMock, 'adProviderNullMock');
+});
 
-		adConfig = AdConfig2Late(
-			logMock, windowMock
+test('for German sites, getProvider returns GamePro if it can handle it and Null for three slots', function() {
+	var adProviderNullMock = {name: 'NullMock'}
+		, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
+		, adProviderLiftium2DomMock = {name: 'Liftium2DomMock', canHandleSlot: function() {return false;}}
+		, logMock = function() {}
+		, windowMock = {wgContentLanguage: 'de'}
+		, adConfig;
 
-			, adProviderGameProMock
-			, adProviderLiftium2DomMock
-			, adProviderNullMock
-		);
+	adConfig = AdConfig2Late(
+		logMock, windowMock
 
-		expect(adConfig.getProvider(['foo'])).toBe(adProviderGameProMock, 'adProviderGameProMock');
-		expect(adConfig.getProvider(['PREFOOTER_RIGHT_BOXAD'])).toBe(adProviderNullMock, 'adProviderNullMock');
-		expect(adConfig.getProvider(['LEFT_SKYSCRAPER_3'])).toBe(adProviderNullMock, 'adProviderNullMock');
-		expect(adConfig.getProvider(['TOP_RIGHT_BUTTON'])).toBe(adProviderNullMock, 'adProviderNullMock');
-	});
+		, adProviderGameProMock
+		, adProviderLiftium2DomMock
+		, adProviderNullMock
+	);
+
+	equal(adConfig.getProvider(['foo']), adProviderGameProMock, 'adProviderGameProMock');
+	equal(adConfig.getProvider(['PREFOOTER_RIGHT_BOXAD']), adProviderNullMock, 'adProviderNullMock');
+	equal(adConfig.getProvider(['LEFT_SKYSCRAPER_3']), adProviderNullMock, 'adProviderNullMock');
+	equal(adConfig.getProvider(['TOP_RIGHT_BUTTON']), adProviderNullMock, 'adProviderNullMock');
 });

@@ -6,14 +6,12 @@ abstract class VideoFeedIngester {
 	const PROVIDER_IGN = 'ign';
 	const PROVIDER_ANYCLIP = 'anyclip';
 	const PROVIDER_OOYALA = 'ooyala';
-	const PROVIDER_IVA = 'iva';
 	public static $PROVIDERS = array(
 		self::PROVIDER_SCREENPLAY,
 		self::PROVIDER_IGN,
 		self::PROVIDER_ANYCLIP,
 		self::PROVIDER_REALGRAVITY,
 		self::PROVIDER_OOYALA,
-		self::PROVIDER_IVA,
 	);
 	public static $PROVIDERS_DEFAULT = array(
 		self::PROVIDER_SCREENPLAY,
@@ -28,7 +26,7 @@ abstract class VideoFeedIngester {
 	protected static $CLIP_TYPE_BLACKLIST = array();
 	private static $instances = array();
 	protected $filterByProviderVideoId = array();
-
+	
 	const CACHE_KEY = 'videofeedingester-2';
 	const CACHE_EXPIRY = 3600;
 	const THROTTLE_INTERVAL = 1;	// seconds
@@ -43,7 +41,7 @@ abstract class VideoFeedIngester {
 	 * Generate name for video.
 	 * Note: The name is not sanitized for use as filename or article title.
 	 * @param array $data video data
-	 * @return string video name
+	 * @return string video name 
 	 */
 	abstract protected function generateName(array $data);
 	abstract protected function generateMetadata(array $data, &$errorMsg);
@@ -70,11 +68,11 @@ abstract class VideoFeedIngester {
 				return null;
 			}
 		}
-
+		
 		if (empty(self::$instances[$className])) {
 			self::$instances[$className] = new $className();
 		}
-
+		
 		return self::$instances[$className];
 	}
 
@@ -216,7 +214,7 @@ abstract class VideoFeedIngester {
 		}
 		return $name_final;
 	}
-
+	
 	protected function validateTitle($videoId, $name, &$msg, $isDebug) {
 
 		wfProfileIn( __METHOD__ );
@@ -233,15 +231,15 @@ abstract class VideoFeedIngester {
 
 	protected function titleFromText($name) {
 		return Title::newFromText($name, NS_FILE);
-	}
-
+	}		
+	
 	public function getWikiIngestionData() {
 
 		wfProfileIn( __METHOD__ );
 
 		$data = array();
-
-		// merge data from datasource into a data structure keyed by
+		
+		// merge data from datasource into a data structure keyed by 
 		// partner API search keywords. Value is an array of categories
 		// relevant to wikis
 		$rawData = $this->getWikiIngestionDataFromSource();
@@ -269,7 +267,7 @@ abstract class VideoFeedIngester {
 
 	protected function getWikiIngestionDataFromSource() {
 		global $wgExternalSharedDB, $wgMemc;
-
+		
 		wfProfileIn( __METHOD__ );
 
 		$memcKey = wfMemcKey( self::CACHE_KEY );
@@ -280,13 +278,13 @@ abstract class VideoFeedIngester {
 		}
 
 		$aWikis = array();
-
+		
 		// fetch data from DB
 		// note: as of 2011/11, this function is referred to by only one
-		// calling function, a script that is run once per day. No need
+		// calling function, a script that is run once per day. No need 
 		// to memcache result yet.
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-
+		
 		$aTables = array(
 			'city_variables',
 			'city_variables_pool',
@@ -294,9 +292,9 @@ abstract class VideoFeedIngester {
 		);
 		$varName = mysql_real_escape_string(self::WIKI_INGESTION_DATA_VARNAME);
 		$aWhere = array('city_id = cv_city_id', 'cv_id = cv_variable_id');
-
-		$aWhere[] = "cv_value is not null";
-
+		
+		$aWhere[] = "cv_value is not null";	
+		
 		$aWhere[] = "cv_name = '$varName'";
 
 
@@ -312,7 +310,7 @@ abstract class VideoFeedIngester {
 			$aWikis[$oRow->city_id] = unserialize($oRow->cv_value);
 		}
 		$dbr->freeResult( $oRes );
-
+		
 		$wgMemc->set( $memcKey, $aWikis, self::CACHE_EXPIRY );
 		wfProfileOut( __METHOD__ );
 
@@ -322,14 +320,14 @@ abstract class VideoFeedIngester {
 	protected function getUrlContent($url) {
 		return Http::get($url);
 	}
-
+	
 	/**
-	 * Try to find keyphrase in the subject. A keyphrase could be
+	 * Try to find keyphrase in the subject. A keyphrase could be 
 	 * "harry potter". A keyphrase is present in the subject if "harry" and
 	 * "potter" are present.
 	 * @param string $subject
 	 * @param string $keyphrase
-	 * @return boolean
+	 * @return boolean 
 	 */
 	protected function isKeyphraseInString($subject, $keyphrase) {
 		$keyphraseFound = false;
@@ -344,7 +342,7 @@ abstract class VideoFeedIngester {
 		if (!$keywordMissing) {
 			$keyphraseFound = true;
 		}
-
+		
 		return $keyphraseFound;
 	}
 
@@ -359,7 +357,7 @@ abstract class VideoFeedIngester {
 				return true;
 			}
 		}
-
+		
 		return false;
 	}
 

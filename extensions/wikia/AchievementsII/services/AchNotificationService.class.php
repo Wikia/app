@@ -39,16 +39,20 @@ class AchNotificationService {
 	public function getBadgeToNotify($userId, $markAsNotified = true) {
 		wfProfileIn(__METHOD__);
 
+		global $wgCityId, $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
+
 		$badge = null;
 		$badges = array();
 
 		$lastSeen = null;
 		$lastSeenCurrent = null;
-
-		$dbw = wfGetDB(DB_MASTER);
-		$res = $dbw->select('ach_user_badges_notified', array('lastseen'), array('user_id' => $userId), __METHOD__);
-		if( $row = $res->fetchObject($res) ) {
-			$lastSeen = $row->lastseen;
+		if(!empty($wgEnableAchievementsStoreLocalData)) {
+			$dbw = wfGetDB(DB_MASTER);
+			$res = $dbw->select('ach_user_badges_notified', array('lastseen'), array('user_id' => $userId), __METHOD__);
+			if( $row = $res->fetchObject($res) ) {
+				$lastSeen = $row->lastseen;
+			}
 		}
 
 		if(!empty($lastSeen)) {
@@ -56,7 +60,12 @@ class AchNotificationService {
 			$res = $dbw->select('ach_user_badges', array('badge_type_id', 'badge_lap', 'badge_level', 'date'), $where, __METHOD__);
 		} else {
 			$where = array('user_id' => $userId, 'notified' => 0);
-			$dbw = wfGetDB(DB_MASTER);
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+				$where['wiki_id'] = $wgCityId;
+			} else {
+				$dbw = wfGetDB(DB_MASTER);
+			}
 			$res = $dbw->select('ach_user_badges', array('badge_type_id', 'badge_lap', 'badge_level', 'date'), $where, __METHOD__);
 		}
 		while($row = $dbw->fetchObject($res)) {
