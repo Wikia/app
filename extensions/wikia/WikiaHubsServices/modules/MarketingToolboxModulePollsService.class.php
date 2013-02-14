@@ -70,4 +70,32 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleService {
 
 		return $wtPolls;
 	}
+
+	public function getHubUrl() {
+		$visualizationData = $this->getVisualizationData();
+
+		if (!isset($visualizationData[$this->langCode]['url'])) {
+			throw new Exception('Corporate Wiki not defined for this lang');
+		}
+
+		$hubPages = F::app()->wg->WikiaHubsV2Pages;
+		if (!isset($hubPages[$this->verticalId])) {
+			throw new Exception('Hub page not defined for selected vertical');
+		}
+
+		$url = http_build_url(
+			$visualizationData[$this->langCode]['url'],
+			array(
+				'path' => $hubPages[$this->verticalId]
+			),
+			HTTP_URL_JOIN_PATH
+		);
+
+		return $url;
+	}
+
+	protected function getVisualizationData() {
+		$visualizationModel = new CityVisualization();
+		return $visualizationModel->getVisualizationWikisData();
+	}
 }
