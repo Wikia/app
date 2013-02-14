@@ -6,10 +6,10 @@ class WikiaPollTest extends WikiaBaseTest {
 	 *
 	 * @param string $className name of the class to be mocked
 	 * @param array $methods list of methods and values they should return
-	 * @param string $staticConstructor mock value returned by "static" class constructor (like Title::newFromText)
+	 * @param string $staticConstructor name of the "static" class constructor (e.g. Title::newFromText) that will return mocked object
 	 * @return object mocked object
 	 */
-	private function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = false) {
+	private function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = '') {
 		$mock = $this->getMock($className, array_keys($methods));
 
 		foreach($methods as $methodName => $retVal) {
@@ -18,7 +18,7 @@ class WikiaPollTest extends WikiaBaseTest {
 				->will($this->returnValue($retVal));
 		}
 
-		if ($staticConstructor !== false) {
+		if ($staticConstructor !== '') {
 			$this->proxyClass($className, $mock, $staticConstructor);
 		}
 
