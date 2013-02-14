@@ -165,7 +165,7 @@ $messages['ms'] = array(
 	'signup' => 'Daftar Diri',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  */
 $messages['nb'] = array(
 	'signup-desc' => 'Legger til aliaset [[{{#Special:Signup}}]] for [[{{#Special:UserLogin}}/signup]]',

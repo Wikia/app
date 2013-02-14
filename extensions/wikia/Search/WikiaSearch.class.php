@@ -346,7 +346,16 @@ class WikiaSearch extends WikiaObject {
 		return $response;
 	}
 	
-
+	/**
+	 * Strategy for getting the right kind of match
+	 * @param  WikiaSearchConfig $config
+	 * @return WikiaSearchArticleMatch|WikiSearchWikiMatch|null
+	 */
+	public function getMatch( WikiaSearchConfig $config ) {
+		return $config->isInterWiki() ? $this->getWikiMatch( $config ) : $this->getArticleMatch( $config );
+	}
+	
+	
 	/**
 	 * Finds an article match and sets the value in the search config
 	 * @see    WikiaSearchTest::testGetArticleMatch
@@ -380,6 +389,37 @@ class WikiaSearch extends WikiaObject {
 	    wfProfileOut(__METHOD__);
 	    return null;
 	}
+	
+	public function getWikiMatch( WikiaSearchConfig $config ) {
+		wfProfileIn(__METHOD__);
+		
+		if ( $config->hasWikiMatch() ) {
+			wfProfileOut(__METHOD__);
+			return $config->getWikiMatch();
+		}
+		
+		$domain = preg_replace(
+				'/[^a-zA-Z]/',
+				'',
+				strtolower( $config->getQuery( WikiaSearchConfig::QUERY_RAW ) ) 
+				);
+		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
+		$query = $dbr->select(
+				array( 'city_domains' ),
+				array( 'city_id' ),
+				array( 'city_domain' => "{$domain}.wikia.com" )
+				);
+		if ( $row = $dbr->fetchObject( $query ) ) {
+			$config->setWikiMatch( new WikiaSearchWikiMatch( $row->city_id ) );
+			wfProfileOut(__METHOD__);
+			return $config->getWikiMatch();
+		}
+		
+		
+		wfProfileOut(__METHOD__);
+		return null;
+	}
+	
 	
 	/**
 	 * Public static helper functions for dynamic language support
@@ -469,56 +509,98 @@ class WikiaSearch extends WikiaObject {
 		$query = $this->client->createSelect();
 		$query->setDocumentClass( 'WikiaSearchResult' );
 		
+		$this->registerQueryParams   ( $query, $searchConfig )
+		     ->registerHighlighting  ( $query, $searchConfig )
+		     ->registerFilterQueries ( $query, $searchConfig )
+		     ->registerGrouping      ( $query, $searchConfig )
+		     ->registerSpellcheck    ( $query, $searchConfig )
+		;
+		
+		$formulatedQuery = sprintf('%s AND (%s)', $this->getQueryClausesString( $searchConfig ), $this->getNestedQuery( $searchConfig ));
+		$query->setQuery( $formulatedQuery );
+		
+		wfProfileOut(__METHOD__);
+		return $query;
+	}
+	
+	/**
+	 * Registers meta-parameters for the query
+	 * @param Solarium_Query_Select $query
+	 * @param WikiaSearchConfig $searchConfig
+	 * @return WikiaSearch
+	 */
+	protected function registerQueryParams( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig ) {
 		$sort = $searchConfig->getSort();
-		
-		$query	->addFields		( $searchConfig->getRequestedFields() )
-				->removeField	('*')
-			  	->setStart		( $searchConfig->getStart() )
-				->setRows		( $searchConfig->getLength() )
-				->addSort		( $sort[0], $sort[1] )
-				->addParam		( 'timeAllowed', $searchConfig->isInterWiki() ? 7500 : 5000 )
+		$query->addFields      ( $searchConfig->getRequestedFields() )
+		      ->removeField    ('*')
+		      ->setStart       ( $searchConfig->getStart() )
+		      ->setRows        ( $searchConfig->getLength() )
+		      ->addSort        ( $sort[0], $sort[1] )
+		      ->addParam       ( 'timeAllowed', $searchConfig->isInterWiki() ? 7500 : 5000 )
 		;
-		
-		$highlighting = $query->getHighlighting();
-		$highlighting->addField						( self::field( 'html' ) )
-					 ->setSnippets					( 1 )
-					 ->setRequireFieldMatch			( true )
-					 ->setFragSize					( self::HL_FRAG_SIZE )      
-					 ->setSimplePrefix				( self::HL_MATCH_PREFIX )
-					 ->setSimplePostfix				( self::HL_MATCH_POSTFIX )
-					 ->setAlternateField			( 'nolang_txt' )
-					 ->setMaxAlternateFieldLength	( 100 )
-		;
-		
-		$searchConfig->setFilterQuery( $this->getFilterQueryString( $searchConfig ) );
-		
-		if ( $searchConfig->isInterWiki() ) {
+		return $this;
+	}
+	
+	/**
+	 * Sets grouping params given a configuration
+	 * @param Solarium_Query_Select $query
+	 * @param WikiaSearchConfig $searchConfig
+	 * @return WikiaSearch
+	 */
+	protected function registerGrouping( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig ) {
+	    if ( $searchConfig->isInterWiki() ) {
 			$grouping = $query->getGrouping();
 			$grouping	->setLimit			( self::GROUP_RESULTS_GROUPING_ROW_LIMIT )
 						->setOffset			( $searchConfig->getStart() )
 						->setFields			( array( self::GROUP_RESULTS_GROUPING_FIELD ) )
 			;
 		}
+		return $this;
+	}
+	
+	/**
+	 * Configures filter queries to, for instance, prevent duplicate results from PTT, or enable better caching.
+	 * @param Solarium_Query_Select $query
+	 * @param WikiaSearchConfig $searchConfig
+	 * @return WikiaSearch
+	 */
+	protected function registerFilterQueries( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig ) {
 		
-		// this is how we prevent duplicate results when we already have PTT
-		$noPtt = '';
+		$searchConfig->setFilterQuery( $this->getFilterQueryString( $searchConfig ) );
+		
 		if ( $searchConfig->hasArticleMatch() ) {
-			$am			= $searchConfig->getArticleMatch();
-			$article	= $am->getArticle();  
-			$noPtt		= self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
-			
+			$am       = $searchConfig->getArticleMatch();
+			$article  = $am->getArticle();  
+			$noPtt    = self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
 			$searchConfig->setFilterQuery( $noPtt, 'ptt' );
+		} else if ( $searchConfig->hasWikiMatch() ) {
+			$noPtt    = self::valueForField( 'wid', $searchConfig->getWikiMatch()->getId(), array( 'negate' => true ) );
+			$searchConfig->setFilterQuery( $noPtt, 'wikiptt' );
 		}
 		
 		$query->addFilterQueries( $searchConfig->getFilterQueries() );
 		
-		$formulatedQuery = sprintf('%s AND (%s)', $this->getQueryClausesString( $searchConfig ), $this->getNestedQuery( $searchConfig ));
-		$query->setQuery( $formulatedQuery );
-		
-		$this->handleSpellcheck( $query, $searchConfig );
-		
-		wfProfileOut(__METHOD__);
-		return $query;
+		return $this;
+	}
+	
+	/**
+	 * Configures result snippet highlighting
+	 * @param Solarium_Query_Select $query
+	 * @param WikiaSearchConfig $searchConfig -- not used now, but we will likely want config to control some values
+	 * @return WikiaSearch
+	 */
+	protected function registerHighlighting( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig ) {
+		$highlighting = $query->getHighlighting();
+		$highlighting->addField                     ( self::field( 'html' ) )
+		             ->setSnippets                  ( 1 )
+		             ->setRequireFieldMatch         ( true )
+		             ->setFragSize                  ( self::HL_FRAG_SIZE )
+		             ->setSimplePrefix              ( self::HL_MATCH_PREFIX )
+		             ->setSimplePostfix             ( self::HL_MATCH_POSTFIX )
+		             ->setAlternateField            ( 'nolang_txt' )
+		             ->setMaxAlternateFieldLength   ( 100 )
+		;
+		return $this;
 	}
 	
 	/**
@@ -527,7 +609,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param WikiaSearchConfig $searchConfig
 	 * @return WikiaSearch
 	 */
-	protected function handleSpellcheck( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig ) {
+	protected function registerSpellcheck( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig ) {
 		if ( $this->wg->WikiaSearchSpellcheckActivated ) {
 			$query	->getSpellcheck()
 					->setQuery( $searchConfig->getQueryNoQuotes( true ) )

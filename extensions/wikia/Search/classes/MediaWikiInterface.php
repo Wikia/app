@@ -297,6 +297,21 @@ class MediaWikiInterface
 	}
 	
 	/**
+	 * Returns page ID statistics for a given wiki
+	 * @return array
+	 */
+	public function getApiStatsForWiki() {
+		return \ApiService::call( array(
+					'action'   => 'query',
+					'prop'     => 'info',
+					'inprop'   => 'url|created|views|revcount',
+					'meta'     => 'siteinfo',
+					'siprop'   => 'statistics'
+			));
+	}
+	
+	
+	/**
 	 * Determines whether or not a page "exists"
 	 * @param unknown_type $pageId
 	 * @return boolean

@@ -110,7 +110,8 @@ F::build('JSMessages')->registerPackage( 'WikiaMobileComments', array(
 	'wikiamobile-article-comments-view',
 	'wikiamobile-article-comments-post',
 	'wikiamobile-article-comments-post-reply',
-	'wikiamobile-article-comments-login-post'
+	'wikiamobile-article-comments-login-post',
+	'wikiamobile-article-comments-post-fail'
 ));
 
 // Ajax dispatcher

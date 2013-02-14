@@ -14,7 +14,6 @@ define('events', function () {
 		u;
 
 	return {
-		click: (w.ontap !== u) ? 'tap' : 'click',
 		size: (w.onorientationchange !== u) ? 'orientationchange' : 'resize',
 		touch: (w.ontouchstart !== u) ? 'touchstart' : 'mousedown',
 		move: (w.ontouchmove !== u) ? 'touchmove' : 'mousemove',

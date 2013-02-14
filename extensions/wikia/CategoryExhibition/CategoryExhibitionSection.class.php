@@ -422,7 +422,7 @@ class CategoryExhibitionSection {
 	protected function getTouchedKey($title) {
 		//fb#24914
 		if( $title instanceof Title ) {
-			$key = wfMemcKey( 'category_touched', $title->getDBKey(), self::CACHE_VERSION );
+			$key = wfMemcKey( 'category_touched', md5($title->getDBKey()), self::CACHE_VERSION );
 			return $key;
 		} else {
 			Wikia::log(__METHOD__, '', '$title not an instance of Title');

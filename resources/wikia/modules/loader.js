@@ -42,7 +42,15 @@
 						replace('%4$d', wgStyleVersion);
 				}
 			},
+			addScript = function (content){
+				var script = doc.createElement('script');
 
+				script.type = 'text/javascript';
+				script.text = content;
+
+				// add it to DOM
+				head.appendChild(script);
+			},
 			// TODO: ease mocking
 			get = function(url, success, failure, type){
 				var element,
@@ -138,14 +146,16 @@
 						return typeof w.FB;
 					},
 					addition: function(callbacks) {
-						// always initialize FB API when SDK is loaded on-demand
-						if (typeof w.onFBloaded === 'function') {
-							w.onFBloaded();
-						}
+						callbacks.success = (function(callback){
+							return function(){
+								// always initialize FB API when SDK is loaded on-demand
+								if (typeof w.onFBloaded === 'function') {
+									w.onFBloaded();
+								}
 
-						if (typeof callbacks.success === 'function') {
-							callbacks.success();
-						}
+								callback();
+							}
+						})(callbacks.success);
 
 						return callbacks;
 					}
@@ -355,10 +365,11 @@
 						log(remaining + ' remaining...', log.levels.info, 'loader');
 
 						// All files have been downloaded
-						if ( remaining < 1 ) {
+						if ( remaining == 0 ) {
 
 							if(!failed.length) {
 								// Resolve the deferred object
+
 								dfd.resolve(result);
 							}else{
 								dfd.reject({
@@ -498,13 +509,11 @@
 			 * js - JS code to be evaluated
 			 */
 			loader.processScript = function(js) {
-				var script = doc.createElement('script');
-
-				script.type = 'text/javascript';
-				script.text = js;
-
-				// add it to DOM
-				head.appendChild(script);
+				if(js instanceof Array) {
+					for(var i = 0, l = js.length; i < l; i++) addScript(js[i]);
+				}else{
+					addScript(js);
+				}
 			};
 
 			/**

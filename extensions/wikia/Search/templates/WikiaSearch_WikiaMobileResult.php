@@ -3,7 +3,7 @@
 <?php endif; ?>
 	<p>
 		<?php
-		$title = ( empty( $inGroup ) && $isInterWiki ) ? str_replace('$1', $result->getTitle(), $result->getVar('wikititle')) : $result->getTitle();
+		$title = ( empty( $inGroup ) && $isInterWiki && empty( $result['isWikiMatch'] ) ) ? str_replace('$1', $result->getTitle(), $result->getVar('wikititle')) : $result->getTitle();
 		$trackingData = 'class=result-link data-wid="' . $result->getCityId().
 			'" data-pageid="' . $result->getVar('pageId') .
 			'" data-pagens="' . $result->getVar('ns').

@@ -1,4 +1,6 @@
-<?
+<?php
+include( dirname(__FILE__) . '/../../../SpecialMarketingToolbox/validators/WikiaValidatorToolboxUrl.class.php' );
+include( dirname(__FILE__) . '/../../../SpecialMarketingToolbox/validators/WikiaValidatorUsersUrl.class.php' );
 
 class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 	/**
@@ -6,7 +8,7 @@ class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 	 * @see WikiaBaseTest::setUp()
 	 */
 	public function setUp() {
-		$this->setupFile = dirname(__FILE__) . '/../../SpecialMarketingToolbox.setup.php';
+		$this->setupFile = dirname(__FILE__) . '/../../WikiaHubsServices.setup.php';
 		parent::setUp();
 	}
 

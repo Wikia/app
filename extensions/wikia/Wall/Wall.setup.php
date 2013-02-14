@@ -153,6 +153,9 @@ $app->registerHook( 'AdvancedBoxSearchableNamespaces', 'WallHooksHelper', 'onAdv
 
 $app->registerHook( 'HAWelcomeGetPrefixText', 'WallHooksHelper', 'onHAWelcomeGetPrefixText');
 
+// Monobook toolbar links
+$app->registerHook( 'SkinTemplateToolboxEnd', 'WallHooksHelper', 'onBuildMonobookToolbox');
+
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
 	'wall-notifications-reminder',

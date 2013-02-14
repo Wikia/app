@@ -1,5 +1,4 @@
 /*
- @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/define.mock.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/media.js
  */
@@ -15,13 +14,10 @@ describe("Media module", function () {
 				getVal: function(){}
 			}
 		},
-		eventsMock = {
-			click: true
-		},
 		media;
 
-	// ['JSMessages', 'modal', 'loader', 'querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('cache')]
-	media = define.getModule(undefined, undefined, undefined, qsMock, undefined, undefined, eventsMock);
+	// ['JSMessages', 'modal', 'loader', 'querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('cache')]
+	media = define.getModule(undefined, undefined, undefined, qsMock, undefined, undefined);
 
 	it('should be defined', function(){
 		expect(media).toBeDefined();

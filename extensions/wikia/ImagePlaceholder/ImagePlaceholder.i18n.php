@@ -313,7 +313,7 @@ $messages['ms'] = array(
 	'imgplc-notinhistory-video' => 'Anda tidak boleh meletakkan video dalam mod sejarah.',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -343,7 +343,7 @@ $messages['nl-informal'] = array(
 	'imgplc-notinhistory' => 'Je kunt geen afbeelding toevoegen in geschiedenismodus.',
 );
 
-/** Norwegian Nynorsk (norsk (nynorsk)‎)
+/** Norwegian Nynorsk (norsk nynorsk)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -410,12 +410,15 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
+ * @author JM Pessanha
  */
 $messages['pt-br'] = array(
 	'imgplc-add-image' => 'Adicionar Imagem',
+	'imgplc-add-video' => 'Adicionar Vídeo',
 	'imgplc-placeholder' => 'Espaço reservado',
 	'imgplc-image' => 'Imagem',
 	'imgplc-notinhistory' => 'Você não pode adicionar uma imagem no modo de histórico',
+	'imgplc-notinhistory-video' => 'Você não pode adicionar um vídeo no modo história.',
 );
 
 /** Russian (русский)
@@ -504,5 +507,9 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'imgplc-add-image' => '添加照片',
+	'imgplc-add-video' => '添加视频',
+	'imgplc-placeholder' => '占位符',
 	'imgplc-image' => '照片',
+	'imgplc-notinhistory' => '您不能在历史模式中添加图片。',
+	'imgplc-notinhistory-video' => '您不能在历史模式中添加视频。',
 );
