@@ -434,7 +434,7 @@ function SharedHelpArticleExists($title) {
 }
 
 // basically modify the Wantedpages query to exclude pages that appear on the help wiki, as per #5866
-function SharedHelpWantedPagesSql( $page, $sql ) {
+function SharedHelpWantedPagesSql( &$page, &$sql ) {
 	global $wgWantedPagesThreshold ;
 	global $wgHelpWikiId, $wgMemc;
 	wfProfileIn( __METHOD__ );
@@ -472,7 +472,8 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 		}
 	}
 
-	$notInHelpPages = ""; if ( !empty($helpPages) ) {
+	$notInHelpPages = '';
+	if ( !empty( $helpPages ) ) {
 		$notInHelpPages = " OR pl_title NOT IN (" . $helpPages . ") ";
 	}
 
