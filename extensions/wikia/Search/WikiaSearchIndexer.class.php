@@ -85,8 +85,8 @@ class WikiaSearchIndexer extends WikiaObject {
 	public function getPage( $pageId ) {
 		wfProfileIn(__METHOD__);
 		// these will eventually be broken out into their own atomic updates
-		$result = array();
-		
+		$result = array( 'id' => sprintf( '%s_%s', $this->wg->CityId, $pageId ) );
+				
 		foreach ( $this->serviceNames as $serviceName ) {
 			$serviceResult = $this->getService( $serviceName )
 			                      ->setPageId( $pageId )
@@ -118,30 +118,9 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @return Solarium_Document_ReadWrite 
 	 */
 	public function getSolrDocument( $pageId ) {
+		$this->wg->AppStripsHtml = true;
 		
 		$pageData = $this->getPage( $pageId );
-		
-		$html = $pageData['html'];
-		
-		$regexes = array(
-				'\+s',
-				'<span[^>]*editsection[^>]*>.*?<\/span>',
-				'<img[^>]*>',
-				'<\/img>',
-				'<noscript>.*?<\/noscript>',
-				'<div[^>]*picture-attribution[^>]*>.*?<\/div>',
-				'<ol[^>]*references[^>]*>.*?<\/ol>',
-				'<sup[^>]*reference[^>]*>.*?<\/sup>',
-				'<script .*?<\/script>',
-				'<style .*?<\/style>',
-				'\+s',
-		);
-		
-		foreach ($regexes as $re ) {
-			$html = preg_replace( "/$re/mU", $re == '\+s' ? ' ' : '', $html );
-		}
-		
-		$pageData['html'] = strip_tags( $html );
 		
 		foreach ( WikiaSearch::$languageFields as $field ) {
 			if ( isset( $pageData[$field] ) ) {

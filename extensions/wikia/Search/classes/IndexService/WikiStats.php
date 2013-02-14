@@ -24,13 +24,16 @@ class WikiStats extends AbstractWikiService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
-		$data = $this->interface->getApiStatsForWiki();
-	    $statistics = $data['query']['statistics'];
-		if( is_array($statistics) ) {
-			$this->result['wikipages']      = $statistics['pages'];
-			$this->result['wikiarticles']   = $statistics['articles'];
-			$this->result['activeusers']    = $statistics['activeusers'];
-			$this->result['wiki_images']    = $statistics['images'];
+		$sharedDb = $this->interface->getGlobal( 'ExternalSharedDB' );
+		if (! empty( $sharedDb ) ) { 
+			$data = $this->interface->getApiStatsForWiki();
+			$statistics = $data['query']['statistics'];
+			if( is_array($statistics) ) {
+				$this->result['wikipages']      = $statistics['pages'];
+				$this->result['wikiarticles']   = $statistics['articles'];
+				$this->result['activeusers']    = $statistics['activeusers'];
+				$this->result['wiki_images']    = $statistics['images'];
+			}
 		}
 		wfProfileOut(__METHOD__);
 		return $this->result;

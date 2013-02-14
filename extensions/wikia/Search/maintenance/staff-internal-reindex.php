@@ -22,11 +22,13 @@ $dbr = wfGetDB( DB_MASTER );
 
 $select = $dbr->select(
 		'page',
-		'id'
+		'page_id'
 		);
 
 foreach ( $select as $row ) {
-	$ids[] = $row->id;
+	if ( $row->page_id ) {
+    	$ids[] = $row->page_id;
+	}
 }
 
 $idCount = count($ids);
