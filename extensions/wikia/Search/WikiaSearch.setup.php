@@ -79,6 +79,7 @@ if (isset($_GET['solrhost']) || isset($_GET['solrport'])) {
 
 // some of this stuff can't be trusted evidently.
 $wgSolrHost = !empty( $wgExternalSharedDB ) ? $wgSolrHost : 'staff-search-s1';
+$wgSolrMaster = !empty( $wgExternalSharedDB ) ? $wgSolrMaster : 'staff-search-s1';
 $wgSolrPort = !empty( $wgExternalSharedDB ) ? $wgSolrPort : 8983;
 $wgSolrUseProxy = $wgExternalSharedDB ? !empty($wgSolrUseProxy) : false;
 $wgWikiaSearchUseProxy = $wgExternalSharedDB ? $wgWikiaSearchUseProxy : false;
