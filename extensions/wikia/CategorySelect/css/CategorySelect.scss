@@ -85,7 +85,7 @@
 		width: 245px;
 	}
 
-	.new,
+	.category.new,
 	.placeholder {
 		@include border-radius( 4px );
 		background-color: $color-speech-bubble;
