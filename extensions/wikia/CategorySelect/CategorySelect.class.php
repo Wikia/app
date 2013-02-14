@@ -12,6 +12,7 @@
 
 class CategorySelect {
 	private static $categories;
+	private static $categoriesService;
 	private static $data;
 	private static $frame;
 	private static $isEditable;
@@ -96,7 +97,7 @@ class CategorySelect {
 		// disable changes in Preprocessor and Parser
 		$app->wg->CategorySelectEnabled = false;
 
-		// add ecnoding information
+		// add encoding information
 		$xml = '<?xml version="1.0" encoding="UTF-8"?>' . $xml;
 
 		//init variables
@@ -114,6 +115,7 @@ class CategorySelect {
 		$root = $dom->getElementsByTagName( 'root' )->item( 0 );
 
 		self::$frame = $app->wg->Parser->getPreprocessor()->newFrame();
+		self::$categoriesService = new CategoriesService();
 
 		$categories = self::parseNode( $root );
 
@@ -131,6 +133,20 @@ class CategorySelect {
 		wfProfileOut( __METHOD__ );
 
 		return self::$data;
+	}
+
+	public static function getDefaultNamespaces() {
+		if ( !isset( self::$namespaces ) ) {
+			$namespaces = F::app()->wg->ContLang->getNsText( NS_CATEGORY );
+
+			if ( strpos( $namespaces, 'Category' ) === false ) {
+				$namespaces = 'Category|' . $namespaces;
+			}
+
+			self::$namespaces = $namespaces;
+		}
+
+		return self::$namespaces;
 	}
 
 	/**
@@ -156,20 +172,6 @@ class CategorySelect {
 		}
 
 		return self::$data;
-	}
-
-	public static function getDefaultNamespaces() {
-		if ( !isset( self::$namespaces ) ) {
-			$namespaces = F::app()->wg->ContLang->getNsText( NS_CATEGORY );
-
-			if ( strpos( $namespaces, 'Category' ) === false ) {
-				$namespaces = 'Category|' . $namespaces;
-			}
-
-			self::$namespaces = $namespaces;
-		}
-
-		return self::$namespaces;
 	}
 
 	/**
@@ -427,7 +429,13 @@ class CategorySelect {
 							}
 
 							$childOut['text'] = $newNode;
-							$childOut['categories'][] = array('namespace' => $catNamespace, 'name' => $catName, 'outerTag' => $outerTag, 'sortKey' => $sortKey);
+							$childOut['categories'][] = array(
+								'hidden' => self::$categoriesService->isCategoryHidden( $catName ),
+								'name' => $catName,
+								'namespace' => $catNamespace,
+								'outerTag' => $outerTag,
+								'sortKey' => $sortKey,
+							);
 						}
 						if (count($childOut['categories'])) {
 							$out = array_merge($out, $childOut['categories']);
@@ -484,7 +492,13 @@ class CategorySelect {
 			$catName = $match[2];
 			$sortKey = '';
 		}
-		self::$categories[] = array('namespace' => $match[1], 'name' => $catName, 'outerTag' => self::$outerTag, 'sortKey' => $sortKey);
+		self::$categories[] = array(
+			'hidden' => self::$categoriesService->isCategoryHidden( $catName ),
+			'name' => $catName,
+			'namespace' => $match[1],
+			'outerTag' => self::$outerTag,
+			'sortKey' => $sortKey
+		);
 		return '';
 	}
 }
