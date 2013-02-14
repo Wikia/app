@@ -131,7 +131,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$method = new ReflectionMethod( 'WikiaSearch', 'getFilterQueryString' );
 		$method->setAccessible( true );
 
-		$this->assertEquals( "(wid:{$mockCityId}) AND (is_redirect:false)", $method->invoke( $wikiaSearch, $searchConfig ),
+		$this->assertEquals( "(wid:{$mockCityId})", $method->invoke( $wikiaSearch, $searchConfig ),
 							'The default behavior for on-wiki search should be to filter query for wiki ID and against redirects.' );
 
 		$searchConfig->setIncludeRedirects( true );
@@ -143,12 +143,12 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$searchConfig->setIncludeRedirects( false );
 		$searchConfig->setIsInterWiki( true );
 
-		$this->assertEquals( '(iscontent:true) AND (is_redirect:false)', $method->invoke( $wikiaSearch, $searchConfig),
+		$this->assertEquals( '(iscontent:true)', $method->invoke( $wikiaSearch, $searchConfig),
 							'An interwiki search should filter for content pages only.' );
 
 		$searchConfig->setHub( $mockHub );
 
-		$this->assertEquals( '(iscontent:true) AND (hub:Games) AND (is_redirect:false)', $method->invoke( $wikiaSearch, $searchConfig ),
+		$this->assertEquals( '(iscontent:true) AND (hub:Games)', $method->invoke( $wikiaSearch, $searchConfig ),
 							'An interwiki search with a hub should include the hub in the filter query.' );
 
 	}
@@ -275,14 +275,14 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$searchConfig->setNamespaces( array(1, 2, 3) );
 
 		$this->assertEquals(
-				'((wid:123) AND ((ns:1) OR (ns:2) OR (ns:3)) AND (is_redirect:false))',
+				'((wid:123) AND ((ns:1) OR (ns:2) OR (ns:3)))',
 				$method->invoke( $wikiaSearch, $searchConfig ),
 				'WikiaSearch::getQueryClauses by default should query for namespaces and wiki ID.'
 		);
 
 		$searchConfig->setVideoSearch( true );
 
-		$expectedWithVideo = '(((wid:123) OR (wid:'.WikiaSearch::VIDEO_WIKI_ID.')) AND (is_video:true) AND ((ns:'.NS_FILE.')) AND (is_redirect:false))';
+		$expectedWithVideo = '(((wid:123) OR (wid:'.WikiaSearch::VIDEO_WIKI_ID.')) AND (is_video:true) AND ((ns:'.NS_FILE.')))';
 		$this->assertEquals(
 				$expectedWithVideo,
 				$method->invoke( $wikiaSearch, $searchConfig ),
@@ -293,7 +293,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 						->setIsInterWiki	( true );
 
 		$this->assertEquals(
-				'(-(wid:123) AND -(wid:234) AND (lang:en) AND (iscontent:true) AND (is_redirect:false))',
+				'(-(wid:123) AND -(wid:234) AND (lang:en) AND (iscontent:true))',
 				$method->invoke( $wikiaSearch, $searchConfig ),
         		'WikiaSearch::getQueryClauses should exclude bad wikis, require the language of the wiki, and require content'
 		);
@@ -301,7 +301,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$searchConfig->setHub( 'Entertainment' );
 
 		$this->assertEquals(
-				'(-(wid:123) AND -(wid:234) AND (lang:en) AND (iscontent:true) AND (hub:Entertainment) AND (is_redirect:false))',
+				'(-(wid:123) AND -(wid:234) AND (lang:en) AND (iscontent:true) AND (hub:Entertainment))',
 				$method->invoke( $wikiaSearch, $searchConfig ),
 				'WikiaSearch::getQueryClauses by default should query for namespaces and wiki ID.'
 		);
