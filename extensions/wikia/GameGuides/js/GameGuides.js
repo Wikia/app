@@ -1,5 +1,5 @@
 (function(html, w){
-	var links = document.querySelectorAll('a:not(.extiw)'),
+	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
 		host = w.wgServer,
 		i = links.length,
 		namespaces = w.wgNamespaceIds,
