@@ -14,6 +14,7 @@ class MarketingToolboxVideosController extends WikiaController {
 		if( !empty($video) ) {
 			$this->sectionNo = $video['section-no'];
 			$this->videoTitle = $video['title'];
+			$this->videoFullUrl = $video['fullUrl'];
 			$this->timestamp = wfTimeFormatAgo($video['timestamp']);
 			
 			$this->hiddenFormFields = $this->app->renderView(
