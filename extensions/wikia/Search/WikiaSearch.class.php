@@ -752,10 +752,6 @@ class WikiaSearch extends WikiaObject {
 		else {
 			$filterQueries[] = self::valueForField( 'wid', $searchConfig->getCityId() );
 		}
-		
-		if (! $searchConfig->getIncludeRedirects() ) {
-			$filterQueries[] = self::valueForField( 'is_redirect', 'false');
-		}
 		wfProfileOut(__METHOD__);
 		return implode( ' AND ', $filterQueries );
 	}
@@ -803,10 +799,6 @@ class WikiaSearch extends WikiaObject {
 				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . self::valueForField( 'ns', $namespace );
 			}
 			$queryClauses[] = "({$nsQuery})";
-		}
-		
-		if (! $searchConfig->getIncludeRedirects() ) {
-			$queryClauses[] = self::valueForField( 'is_redirect', 'false' );
 		}
 		
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
