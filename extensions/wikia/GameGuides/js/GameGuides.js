@@ -1,10 +1,11 @@
 (function(html, w){
-	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
+	var links = document.querySelectorAll('a:not(.extiw)'),
 		host = w.wgServer,
 		i = links.length,
 		namespaces = w.wgNamespaceIds,
 		regExpNamespace = new RegExp(w.wgArticlePath.replace('$1', "([^:]*)")),
 		//not all namespaces in GG should be clickable
+		//there are custom namespaces on wikis therefore black list will be better suited here
 		disabledNs = [-2,-1,1,2,3,5,6,7,10,11,12,13,15,110,111,500,501,700,701,1200,1201,1202],
 		link,
 		path,
@@ -17,7 +18,7 @@
 		link = links[i];
 		path = link.pathname;
 		parent = link.parentElement;
-		notAllowed = (link.origin !== host || path === '/wikia.php') && !~parent.className.indexOf('thumb');
+		notAllowed = ((link.origin && link.origin !== host) || path === '/wikia.php') && !~parent.className.indexOf('thumb');
 
 		if(!notAllowed && ~path.indexOf(':')) {
 			pathMatch = path.match(regExpNamespace);
