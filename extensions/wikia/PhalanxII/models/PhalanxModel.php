@@ -17,7 +17,7 @@ abstract class PhalanxModel extends WikiaObject {
 				$this->$method( $value );
 			}
 		}
-		$this->service = F::build("PhalanxService");
+		$this->service = new PhalanxService();
 	}
 
 	abstract public function isOk();
@@ -62,10 +62,13 @@ abstract class PhalanxModel extends WikiaObject {
 			$isUser = isset( $this->user ) && ( $this->user->getName() == $this->wg->User->getName() );
 			
 			# send request to service
+error_log( __METHOD__ . "( $type, {$this->getText()}, {$this->getLang()} )\n", 3, "/tmp/moli.log" );
+error_log( __METHOD__ . ": service: " . print_r( $this->service, true ), 3, "/tmp/moli.log" );
 			$result = $this->service
 				->setLimit(1)
 				->setUser( $isUser ? $this->user : null )
 				->match( $type, $this->getText(), $this->getLang() );
+error_log ( "result: ". print_r( $result, true ) . "\n", 3, "/tmp/moli.log" );
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
 				if ( is_object( $result ) && isset( $result->id ) && $result->id > 0 ) {
@@ -75,7 +78,7 @@ abstract class PhalanxModel extends WikiaObject {
 			} else {
 				$ret = $this->fallback( "match", $type );
 			}
-		}	
+		}
 
 		return $ret;
 	}
