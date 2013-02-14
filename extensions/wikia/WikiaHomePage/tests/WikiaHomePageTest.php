@@ -5,7 +5,7 @@ require_once __DIR__.'/../../WikiaHubsServices/WikiaHubsServicesHelper.class.php
 class WikiaHomePageTest extends WikiaBaseTest {
 	const TEST_CITY_ID = 80433;
 	const TEST_URL = 'http://testing';
-	const TEST_MEMBER_DATE = 'Jan 1970';
+	const TEST_MEMBER_DATE = 'Jun 2005';
 	const MOCK_FILE_URL = 'Mock file URL';
 	const BLANK_IMG_URL = 'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D';
 

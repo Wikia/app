@@ -358,7 +358,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			}
 
 			foreach ($admins as $userId) {
-				$userInfo = $this->getUserInfo($userId, $wikiId);
+				$userInfo = $wikiService->getUserInfo($userId, $wikiId, self::AVATAR_SIZE, array($this,'isValidUserForInterstitial'));
 
 				if (!empty($userInfo)) {
 					$userInfo['edits'] = $wikiService->getUserEdits($userId, $wikiId);
@@ -397,7 +397,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			}
 
 			foreach ($topEditors as $userId => $edits) {
-				$userInfo = $this->getUserInfo($userId, $wikiId);
+				$userInfo = $wikiService->getUserInfo($userId, $wikiId, self::AVATAR_SIZE, array($this,'isValidUserForInterstitial'));
 
 				if (!empty($userInfo)) {
 					$userInfo['edits'] = $edits;
@@ -416,36 +416,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $topEditorAvatars;
 	}
 
-	/**
-	 * get user info ( user name, avatar url, user page url ) if the user has avatar
-	 * @param integer $userId
-	 * @return array userInfo
-	 */
-	public function getUserInfo($userId, $wikiId) {
-		$userInfo = array();
-		$user = F::build('User', array($userId), 'newFromId');
 
-		if ($user instanceof User && $this->isValidUserForInterstitial($user)) {
-			$username = $user->getName();
-
-			$userInfo['avatarUrl'] = F::build('AvatarService', array($user, self::AVATAR_SIZE), 'getAvatarUrl');
-			$userInfo['edits'] = 0;
-			$userInfo['name'] = $username;
-			/** @var $userProfileTitle GlobalTitle */
-			$userProfileTitle = F::build('GlobalTitle', array($username, NS_USER, $wikiId), 'newFromText');
-			$userInfo['userPageUrl'] = ($userProfileTitle instanceof Title) ? $userProfileTitle->getFullURL() : '#';
-			$userContributionsTitle = F::build('GlobalTitle', array('Contributions/' . $username, NS_SPECIAL, $wikiId), 'newFromText');
-			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
-
-			$userStatsService = F::build('UserStatsService', array($userId));
-			$stats = $userStatsService->getGlobalStats($wikiId);
-
-			$date = getdate(strtotime($stats['date']));
-			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
-		}
-
-		return $userInfo;
-	}
 
 	/**
 	 * @desc Returns true if user isn't: an IP address, excluded from interstitial, bot, blocked locally and globally
@@ -453,7 +424,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @param User $user
 	 * @return bool
 	 */
-	protected function isValidUserForInterstitial(User $user) {
+	public function isValidUserForInterstitial(User $user) {
 		$userId = $user->getId();
 		$userName = $user->getName();
 
