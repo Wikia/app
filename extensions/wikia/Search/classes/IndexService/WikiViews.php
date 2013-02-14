@@ -30,7 +30,7 @@ class WikiViews extends AbstractWikiService
 		wfProfileIn(__METHOD__);
 		
 		$sharedDb = $this->interface->getGlobal( 'ExternalSharedDB' );
-		if ( $this->result !== null || !empty( $sharedDb ) ) {
+		if ( $this->result !== null || empty( $sharedDb ) ) {
 			return $this->result;
 		}
 		
