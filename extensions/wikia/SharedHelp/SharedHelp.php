@@ -477,10 +477,13 @@ function SharedHelpWantedPagesSql( &$page, &$sql ) {
 		$notInHelpPages = " OR pl_title NOT IN (" . $helpPages . ") ";
 	}
 
-	$blogNamespaces = "";
+	$excludedNamespaces = array( NS_MEDIAWIKI );
 	if ( defined('NS_BLOG_ARTICLE') ) {
-		$blogNamespaces = implode(",", array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK));
-		$sql['conds'][] = " pl_namespace NOT IN ( {$blogNamespaces} ) ";
+		$excludedNamespaces[] = NS_BLOG_ARTICLE;
+		$excludedNamespaces[] = NS_BLOG_ARTICLE_TALK;
+	}
+	if ( !empty( $excludedNamespaces ) ) {
+		$sql['conds'][] = ' pl_namespace NOT IN ( ' . implode( ',', $excludedNamespaces ) . ' ) ';
 	}
 
 	$sql['conds'][] = " ( pl_namespace != 12 {$notInHelpPages} ) ";
