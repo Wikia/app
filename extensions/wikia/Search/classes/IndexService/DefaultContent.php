@@ -67,10 +67,6 @@ class DefaultContent extends AbstractService
 		$result['page_images']	= count( $response['parse']['images'] );
 		$result[$headingsKey]	= $headings;
 		
-		if (! $this->interface->getGlobal( 'AppStripsHtml' ) ) {
-			$result['id'] = $result['wid'] . '_' . $result['pageid'];
-		}
-	
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent']	= $this->interface->isPageIdContent( $pageId ) ? 'true' : 'false';
 	    $result['is_main_page'] = 'false';
