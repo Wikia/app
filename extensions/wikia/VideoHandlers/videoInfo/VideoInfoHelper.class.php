@@ -16,7 +16,7 @@ class VideoInfoHelper extends WikiaModel {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		if ( is_string($title) ) {
-			$title = F::build( 'Title', array( $title, NS_FILE ), 'newFromText' );
+			$title = Title::newFromText( $title, NS_FILE );
 		}
 
 		$file = $this->wf->FindFile( $title );

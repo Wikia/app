@@ -14,14 +14,14 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileUpload( $file, $reupload, $hasDescription ) {
-		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
 			return true;
 		}
 
 		$videoInfoHelper = new VideoInfoHelper();
 		$videoData = $videoInfoHelper->getVideoDataFromFile( $file );
 		if ( !empty($videoData) ) {
-			$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
+			$videoInfo = new VideoInfo( $videoData );
 			if ( $reupload ) {
 				$videoInfo->reuploadVideo();
 			} else {
@@ -32,7 +32,7 @@ class VideoInfoHooksHelper {
 					$videoInfo->addVideo();
 				}
 
-				$mediaService = F::build( 'MediaQueryService' );
+				$mediaService = new MediaQueryService();
 				$mediaService->clearCacheTotalVideos();
 				if ( !$file->isLocal() ) {
 					$mediaService->clearCacheTotalPremiumVideos();
@@ -49,7 +49,7 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onAddPremiumVideo( $title ) {
-		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
 			return true;
 		}
 
@@ -60,7 +60,7 @@ class VideoInfoHooksHelper {
 				$affected = $videoInfo->addPremiumVideo( F::app()->wg->User->getId() );
 
 				if ( $affected ) {
-					$mediaService = F::build( 'MediaQueryService' );
+					$mediaService = new MediaQueryService();
 					$mediaService->clearCacheTotalVideos();
 					$mediaService->clearCacheTotalPremiumVideos();
 				}
@@ -122,7 +122,7 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
-		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
 			return true;
 		}
 
@@ -151,22 +151,16 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
-		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
 			return true;
 		}
 
 		$videoInfoHelper = new VideoInfoHelper();
-<<<<<<< HEAD
-		$videoData = $videoInfoHelper->getVideoDataFromTitle( $title );
-		if ( !empty($videoData) ) {
-			$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
-=======
 		$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $title );
 		if ( !empty($videoInfo) ) {
->>>>>>> dev
 			$videoInfo->addVideo();
 
-			$mediaService = F::build( 'MediaQueryService' );
+			$mediaService = new MediaQueryService();
 			$mediaService->clearCacheTotalVideos();
 		}
 
@@ -181,7 +175,7 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
-		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
 			return true;
 		}
 
