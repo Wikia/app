@@ -58,9 +58,20 @@ class VideoHandlerController extends WikiaController {
 			$prefix.$sTitle
 		);
 	}
-	
+
+	/**
+	 * remove video
+	 * @requestParam string title
+	 * @responseParam string result [ok/error]
+	 * @responseParam string msg - result message
+	 * @responseParam string redirectUrl
+	 */
 	public function removeVideo() {
-		$this->response = 'success';
+		$title = $this->getVal( 'title', '' );
+
+		$this->redirectUrl = Title::newMainPage()->getFullURL();
+		$this->result = 'ok';
+		$this->msg = wfMsg( 'videohandler-remove-video-modal-success', $title );
 	}
 
 }
