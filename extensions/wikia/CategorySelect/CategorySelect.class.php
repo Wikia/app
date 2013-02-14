@@ -192,14 +192,13 @@ class CategorySelect {
 		if ( !empty( $categories ) ) {
 			foreach( $categories as $category ) {
 				if ( !empty( $category ) ) {
-					$name = $category[ 'name' ];
-					$title = Title::makeTitleSafe( NS_CATEGORY, $name );
+					$title = Title::makeTitleSafe( NS_CATEGORY, $category[ 'name' ] );
 
 					if ( !empty( $title ) ) {
-						$app->wg->ContLang->findVariantLink( $name, $title, true );
+						$text = $title->getText();
 
-						if ( !in_array( $name, $categoryNames ) ) {
-							$categoryNames[] = $name;
+						if ( !in_array( $text, $categoryNames ) ) {
+							$categoryNames[] = $text;
 							$uniqueCategories[] = $category;
 						}
 					}
