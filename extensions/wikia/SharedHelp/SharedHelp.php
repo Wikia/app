@@ -435,12 +435,8 @@ function SharedHelpArticleExists($title) {
 
 // basically modify the Wantedpages query to exclude pages that appear on the help wiki, as per #5866
 function SharedHelpWantedPagesSql( &$page, &$sql ) {
-	global $wgWantedPagesThreshold ;
 	global $wgHelpWikiId, $wgMemc;
 	wfProfileIn( __METHOD__ );
-
-	$count = $wgWantedPagesThreshold - 1;
-	$type = 'Wantedpages';
 
 	$helpPages = "";
 	$helpdb = WikiFactory::IDtoDB( $wgHelpWikiId  );
