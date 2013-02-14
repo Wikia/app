@@ -26,24 +26,39 @@ EditHub.prototype = {
 							'url': url
 						},
 						callback: function(response) {
-							GlobalNotification.hide();
-							if ( response.error ) {
-								GlobalNotification.show( response.error, 'error' );
-							} else {
-								var box = $this.parents('.module-box:first');
-								if (!box.length) {
-									box = $('.MarketingToolboxMain');
+							if (wgMarketingToolboxModuleIdSelected == wgMarketingToolboxModuleIdFeaturedVideo) {
+								GlobalNotification.hide();
+								if ( response.error ) {
+									GlobalNotification.show( response.error, 'error' );
+								} else {
+									var box = $this.parents('.module-box:first');
+									if (!box.length) {
+										box = $('.MarketingToolboxMain');
+									}
+
+									box.find('.filename-placeholder').html(response.videoFileName);
+									box.find('.wmu-file-name-input').val(response.videoFileName).valid();
+
+									box.find('.image-placeholder')
+										.empty()
+										.html(response.videoFileMarkup);
+
+									// Close VET modal
+									VET_loader.modal.closeModal();
 								}
-				
-								box.find('.filename-placeholder').html(response.videoFileName);
-								box.find('.wmu-file-name-input').val(response.videoFileName).valid();
-				
-								box.find('.image-placeholder')
-									.empty()
-									.html(response.videoFileMarkup);
-								
-								// Close VET modal
-								VET_loader.modal.closeModal();
+							}
+							if (wgMarketingToolboxModuleIdSelected == wgMarketingToolboxModuleIdPopularVideos) {
+								$.when(
+									$.loadMustache(),
+									Wikia.getMultiTypePackage({
+										mustache: 'extensions/wikia/SpecialMarketingToolbox/templates/MarketingToolboxVideosController_popularVideoRow.mustache'
+									})
+								).done(function(libData, packagesData) {
+									var template = packagesData[0].mustache[0],
+									html = $.mustache(template, {header: 'foo'});
+									$('#marketing-toolbox-form .module-popular-videos').append(html);
+									VET_loader.modal.closeModal();
+								});
 							}
 						}
 					});

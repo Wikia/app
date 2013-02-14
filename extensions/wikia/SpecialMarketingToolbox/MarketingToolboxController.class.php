@@ -109,6 +109,12 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$this->retriveDataFromUrl();
 
+		$this->wg->Out->addJsConfigVars([
+			'wgMarketingToolboxModuleIdSelected' => $this->selectedModuleId,
+			'wgMarketingToolboxModuleIdPopularVideos' => MarketingToolboxModel::MODULE_POPULAR_VIDEOS,
+			'wgMarketingToolboxModuleIdFeaturedVideo' => MarketingToolboxModel::MODULE_FEATURED_VIDEO
+		]);
+
 		$this->checkDate($this->date);
 
 		$this->flashMessage = $this->getFlashMessage();
