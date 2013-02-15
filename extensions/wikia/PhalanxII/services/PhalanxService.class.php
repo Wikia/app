@@ -2,7 +2,7 @@
 
 class PhalanxService extends Service {
 	/* limit of blocks */
-	private $limit = 0;
+	private $limit = 1;
 	/* @var User */
 	private $user = null;
 
@@ -127,7 +127,7 @@ class PhalanxService extends Service {
 				$parameters[ 'wiki' ] = F::app()->wg->CityId;
 				$parameters[ 'user' ] = $this->user->getName();
 			}
-			if ($action == "match" && $this->limit > 1) {
+			if ($action == "match" && $this->limit != 1) {
 				$parameters['limit'] = $this->limit;
 			}
 			$options["postData"] = wfArrayToCGI( $parameters );
