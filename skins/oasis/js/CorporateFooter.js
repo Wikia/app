@@ -5,7 +5,7 @@
 
 	var corporateFooter = $('footer.CorporateFooter');
 
-	if(Wikia.Cookies.get('mobilefullsite')){
+	if($().isTouchscreen() || Wikia.Cookies.get('mobilefullsite')){
 		var linksWrapper = corporateFooter.find('nav ul').first();
 
 		if(linksWrapper.exists()){
