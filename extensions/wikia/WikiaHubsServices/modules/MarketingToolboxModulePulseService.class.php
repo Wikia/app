@@ -1,5 +1,8 @@
 <?
 class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
+
+	protected static $moduleId = 2;
+
 	protected function getFormFields() {
 		return array(
 			'boardUrl' => array(

@@ -1,5 +1,8 @@
 <?php
 class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleService {
+
+	protected static $moduleId = 4;
+
 	protected function getFormFields() {
 		return array(
 			'sponsoredImage' => array(

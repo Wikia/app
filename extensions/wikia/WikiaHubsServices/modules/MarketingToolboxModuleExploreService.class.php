@@ -4,6 +4,8 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	const LINK_TEXT = 'exploreLinkText';
 	const LINK_URL = 'exploreLinkUrl';
 
+	protected static $moduleId = 5;
+
 	protected $lettersMap = array('a', 'b', 'c', 'd');
 
 	/**
@@ -235,20 +237,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 
 		return $data;
 	}
-	
-	public function loadData($model, $timestamp) {
-		$moduleId = $this->model->getModuleId();
-		$moduleData = $model->getPublishedData($this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp, $moduleId);
-		
-		if( empty($moduleData[$moduleId]['data']) ) {
-			$moduleData = array();
-		} else {
-			$moduleData = $moduleData[$moduleId]['data'];
-		}
-		
-		return $this->getStructuredData($moduleData);
-	}
-	
+
 	public function getStructuredData($data) {
 		$structuredData = array();
 		

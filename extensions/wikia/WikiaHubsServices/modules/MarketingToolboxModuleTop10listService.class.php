@@ -1,5 +1,7 @@
 <?
 class MarketingToolboxModuleTop10listService extends MarketingToolboxModuleService {
+	protected static $moduleId = 8;
+
 	protected function getFormFields() {
 		return array(
 			'boardTitle' => array(

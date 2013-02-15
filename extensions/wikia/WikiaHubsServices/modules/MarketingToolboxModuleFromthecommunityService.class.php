@@ -9,6 +9,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	const FIELD_NAME_URL = 'url';
 
 	static $fieldNames = array('photo', 'title', 'usersUrl', 'quote', 'url');
+	protected static $moduleId = 6;
 
 	protected function getFormFields() {
 
