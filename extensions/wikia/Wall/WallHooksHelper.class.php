@@ -2086,12 +2086,12 @@ class WallHooksHelper {
 		} else {
 			return true;
 		}
-		echo '<li id="t-contributions">' . Linker::link(SpecialPage::getTitleFor('Contributions', $user->getName()), wfMsgHtml('contributions')) . '</li>';
+		echo '<li id="t-contributions">' . Linker::link(SpecialPage::getSafeTitleFor('Contributions', $user->getName()), wfMsgHtml('contributions')) . '</li>';
 		if ($curUser->isAllowed('block')) {
-			echo '<li id="t-blockip">' . Linker::link(SpecialPage::getTitleFor('Block', $user->getName()), wfMsgHtml('block')) . '</li>';
+			echo '<li id="t-blockip">' . Linker::link(SpecialPage::getSafeTitleFor('Block', $user->getName()), wfMsgHtml('block')) . '</li>';
 		}
-		if ($curUser->canSendEmail()) {
-			echo '<li id="t-emailuser">' . Linker::link(SpecialPage::getTitleFor('EmailUser', $user->getName()), wfMsgHtml('emailuser')) . '</li>';
+		if ( $monobook->getSkin()->showEmailUser( $user ) ) {
+			echo '<li id="t-emailuser">' . Linker::link(SpecialPage::getSafeTitleFor('EmailUser', $user->getName()), wfMsgHtml('emailuser')) . '</li>';
 		}
 		echo '<li id="t-log">' . Linker::link(SpecialPage::getTitleFor('Log'), wfMsgHtml('log'), array(), array('user' => $user->getName())) . '</li>';
 		return true;
