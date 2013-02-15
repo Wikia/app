@@ -1,7 +1,9 @@
 /*
  @test-require-asset /resources/wikia/libraries/modil/modil.js
- @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/Wikia.utils.js
+ @test-require-asset /resources/wikia/libraries/deferred/deferred.js
+ @test-require-asset /resources/wikia/libraries/deferred/deferred.api.js
+ @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.js
  @test-require-asset /resources/wikia/modules/window.js
  @test-require-asset /resources/wikia/modules/querystring.js
  @test-require-asset /resources/wikia/modules/ajax.js

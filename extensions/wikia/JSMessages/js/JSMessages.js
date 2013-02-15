@@ -1,6 +1,7 @@
-(function(context, jQuery){
+(function(context, jQuery, Wikia){
 	var shift = Array.prototype.shift,
-		join = Array.prototype.join;
+		join = Array.prototype.join,
+		deferred = (Wikia && Wikia.Deferred /* Mobile */) || jQuery.Deferred /* Oasis */;
 
 	/**
 	 * JS version of wfMsg()
@@ -22,6 +23,8 @@
 	 * $.msg();
 	 * $.getMessages();
 	 * $.getMessagesForContent();
+	 *
+	 * @see https://internal.wikia-inc.com/wiki/JSMessages
 	 *
 	 * @param key string - message name
 	 * @param param string - message parameter #1
@@ -57,8 +60,12 @@
 		 * @param packages string/array - package name or list of packages
 		 * @param callback function - function to call when request is completed
 		 * @param language string - optionally language code (fallbacks to user language)
+		 * @return $.Deferred - promise object
 		 */
 		JSMessages.get = function(packages, callback, language) {
+			// set up deferred object
+			var dfd = new deferred();
+
 			// list of packages was given
 			if (typeof packages != 'string') {
 				packages = join.call(packages, ',');
@@ -67,30 +74,40 @@
 			// by default use user language
 			language = language || window.wgUserLanguage;
 
-			nirvana.sendRequest({
-				type: 'GET',
-				controller: 'JSMessages',
-				method: 'getMessages',
-				data: {
-					packages: packages,
-					uselang: language,
-					cb: window.wgJSMessagesCB
-				},
-				callback: function(result) {
+			nirvana.
+				sendRequest({
+					type: 'GET',
+					controller: 'JSMessages',
+					method: 'getMessages',
+					data: {
+						packages: packages,
+						uselang: language,
+						cb: window.wgJSMessagesCB
+					}
+				}).
+				then(function(result) {
 					window.wgMessages = $.extend(window.wgMessages || {}, result.messages);
 
 					if (typeof callback == 'function') {
 						callback();
 					}
-				}
-			});
+
+					// resolve deferred object
+					dfd.resolve();
+				}).
+				fail(function() {
+					// error handling
+					dfd.reject();
+				});
+
+			return dfd.promise();
 		};
 
 		/**
 		 * Load messages from given package(s) using content language
 		 */
 		JSMessages.getForContent = function(packages, callback) {
-			JSMessages.get(packages, callback, window.wgContentLanguage);
+			return JSMessages.get(packages, callback, window.wgContentLanguage);
 		};
 
 		return JSMessages;
@@ -110,4 +127,4 @@
 		//AMD
 		context.define('JSMessages', ['wikia.nirvana'], JSMessages);
 	}
-})(this, this.jQuery);
+})(this, this.jQuery, this.Wikia);
