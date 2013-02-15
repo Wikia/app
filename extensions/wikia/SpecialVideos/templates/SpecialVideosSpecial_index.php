@@ -27,7 +27,7 @@
 <div class="WikiaGrid VideoGrid">
 	<?php $counter = 0 ?>
 	<?php foreach( $videos as $video ): ?>
-		<?php $alpha = $counter % 3 == 0 ? 'alpha' : ''; ?>
+		<?php $alpha = $counter % 3 == 0 ? ' alpha' : ''; ?>
 
 		<div class="grid-2 video-element<?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 			<a href="<?= $video['fileUrl'] ?>" class="image video" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>">

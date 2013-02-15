@@ -41,8 +41,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		$catInfo = HubService::getComscoreCategory($this->wg->CityId);
 
-
-
 		$descriptionKey = 'specialvideos-meta-description';
 
 		switch ($catInfo->cat_id) {
@@ -130,5 +128,5 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// permission checking for video removal
 		$this->isRemovalAllowed = ( $this->wg->User->isAllowed( 'specialvideosdelete' ) && $this->app->checkSkin( 'oasis' ) );
 	}
-
 }
+
