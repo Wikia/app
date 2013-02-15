@@ -1632,7 +1632,7 @@ class WallHooksHelper {
 	 * @return Array
 	 */
 	public  function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
-	        return WallHelper::getWallTitleData( $rc, $row, $fullUrls);
+		return WallHelper::getWallTitleData( $rc, $row, $fullUrls);
 	}
 
 
@@ -2088,7 +2088,7 @@ class WallHooksHelper {
 		}
 		echo '<li id="t-contributions">' . Linker::link(SpecialPage::getTitleFor('Contributions', $user->getName()), wfMsgHtml('contributions')) . '</li>';
 		if ($curUser->isAllowed('block')) {
-		echo '<li id="t-blockip">' . Linker::link(SpecialPage::getTitleFor('Block', $user->getName()), wfMsgHtml('block')) . '</li>';
+			echo '<li id="t-blockip">' . Linker::link(SpecialPage::getTitleFor('Block', $user->getName()), wfMsgHtml('block')) . '</li>';
 		}
 		if ($curUser->canSendEmail()) {
 			echo '<li id="t-emailuser">' . Linker::link(SpecialPage::getTitleFor('EmailUser', $user->getName()), wfMsgHtml('emailuser')) . '</li>';
