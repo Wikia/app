@@ -104,7 +104,9 @@ h2, h3, .collSec {
 	background-image: linear-gradient(to right, $mainGreen 30%, $sectionGrey 50%);
 
 	-webkit-transition: background-position .3s linear, color .3s;
-	-webkit-transition-delay: .05s;
+	-webkit-transition-delay: .1s;
+
+	-webkit-transform: translateZ(0);
 
 	font-family: inherit;
 
@@ -176,14 +178,8 @@ $width: 1.5;
 	border-color: $textColor transparent transparent transparent;
 
 	-webkit-transition: -webkit-transform .3s;
-	-webkit-transition-delay: .05s;
+	-webkit-transition-delay: .1s;
 	-webkit-transform-origin: 50% 25%;
-	-moz-transition: -moz-transform .3s;
-	-moz-transition-delay: .05s;
-	-moz-transform-origin: 50% 25%;
-	transition: transform .3s;
-	transition-delay: .05s;
-	transform-origin: 50% 25%;
 
 	&:after {
 		content: '';
@@ -202,8 +198,6 @@ $width: 1.5;
 .open .chev {
 	border-top-color: $mainGreen;
 	-webkit-transform: rotateZ(-180deg);
-	-moz-transform: rotateZ(-180deg);
-	transform: rotateZ(-180deg);
 }
 
 table {
@@ -302,4 +296,8 @@ figure {
 	#wkGalTgl {
 		background-image: url('/extensions/wikia/GameGuides/images/gallery_green.png'); /* base64 */
 	}
+}
+
+table.infobox {
+	box-shadow: none;
 }
