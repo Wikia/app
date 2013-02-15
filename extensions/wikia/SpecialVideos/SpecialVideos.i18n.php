@@ -23,6 +23,8 @@ $messages['en'] = array(
 	'specialvideos-meta-description-entertainment' => '$1 has new videos that include the latest TV clips, movie trailers, music videos, actor interviews and episodes. Watch now!',
 	'specialvideos-meta-description-lifestyle' => '$1 has new videos that include how to videos, travel guides, cooking shows, recipe and crafting videos. Watch now!',
 	'specialvideos-meta-description-corporate' => '$1 has new videos that include the latest video clips, video reviews, video interviews and trailers. Watch now!',
+	'specialvideos-remove-modal-title' => 'Delete video',
+	'specialvideos-remove-modal-message' => 'Are you sure you want to delete this video from your wiki?',
 
 );
 
