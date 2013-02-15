@@ -10,8 +10,10 @@ EditHub.prototype = {
 
 	init: function () {
 		var validator;
+		var initThis = this;
 
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
+		$('.module-popular-videos').on('click', '.remove', $.proxy(this.popularVideosRemove, this));
 		$('.MarketingToolboxMain .vet-show').each(function() {
 			var $this = $(this);
 			
@@ -54,18 +56,7 @@ EditHub.prototype = {
 										mustache: 'extensions/wikia/SpecialMarketingToolbox/templates/MarketingToolboxVideosController_popularVideoRow.mustache'
 									})
 								).done(function(libData, packagesData) {
-									var template = packagesData[0].mustache[0],
-									html = $.mustache(template, {
-										sectionNo: null,
-										videoTitle: response.videoFileName,
-										timestamp: null,
-										videoFullUrl: null,
-										videoThumbnail: response.videoFileMarkup,
-										deleteMsg: $.msg('marketing-toolbox-edithub-delete-button'),
-										clearMsg: $.msg('marketing-toolbox-edithub-clear-button'),
-										blankImgUrl: null
-									});
-									$('#marketing-toolbox-form .popular-videos-list').prepend(html);
+									initThis.popularVideosAdd(packagesData[0].mustache[0], response);
 									VET_loader.modal.closeModal();
 								});
 							}
@@ -209,6 +200,27 @@ EditHub.prototype = {
 		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl)
 			.end().filter('.video').empty();
 		this.removeSponsoredImage();
+	},
+
+	popularVideosAdd: function(template, vetData) {
+		var html = $.mustache(template, {
+			sectionNo: null,
+			videoTitle: vetData.videoFileName,
+			timestamp: null,
+			videoFullUrl: null,
+			videoThumbnail: vetData.videoFileMarkup,
+			deleteMsg: $.msg('marketing-toolbox-edithub-delete-button'),
+			blankImgUrl: window.wgBlankImgUrl
+		});
+		$('#marketing-toolbox-form .popular-videos-list').prepend(html);
+	},
+
+	popularVideosRemove: function(event) {
+		var moduleContainer = '.module-box';
+		$(event.target).parents(moduleContainer).remove();
+		$('.popular-videos-list').find(moduleContainer).each(function(index, element) {
+			$(element).find('h3').text(index + 2 + '.');
+		});
 	},
 
 	confirmRemoveSponsoredImage: function() {
