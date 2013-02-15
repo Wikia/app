@@ -66,10 +66,32 @@ class MarketingToolboxModulePollsServiceTest extends WikiaBaseTest
 	/**
 	 * @dataProvider getPollsDataProvider
 	 */
-	public function testRenderPolls($pollsData, $expectedData) {
-		$mtmps = new MarketingToolboxModulePollsService('en',1,1);
-		$renderedData = $mtmps->renderPolls($pollsData);
-		$this->assertEquals($expectedData,$renderedData,'wikitext equal');
+	public function testGetWikitext($pollsData, $expectedData) {
+		$pollsModule = new MarketingToolboxModulePollsService('en',1,1);
+		$renderedData = $pollsModule->getWikitext($pollsData);
+		$this->assertEquals($expectedData,$renderedData,'wikitext');
+	}
+
+	/**
+	 * @dataProvider getDataStructureDataProvider
+	 */
+	public function testGetStructureData($flatArray, $expectedData) {
+		$pollsModuleMock = $this->getMock(
+			'MarketingToolboxModulePollsService',
+			array('getHubUrl'),
+			array('en', 1, 2)
+		);
+
+		$pollsModuleMock
+			->expects($this->any())
+			->method('getHubUrl')
+			->will($this->returnValue('http://www.wikia.com/Video_Games'));
+
+		$this->mockApp();
+
+		$structuredData = $pollsModuleMock->getStructuredData($flatArray);
+
+		$this->assertEquals($expectedData, $structuredData);
 	}
 
 	public function getPollsDataProvider() {
@@ -97,6 +119,64 @@ class MarketingToolboxModulePollsServiceTest extends WikiaBaseTest
 					)
 				),
 				"<poll>\nPoll Question 22\noptional value\nvalue\noption\noption last\n</poll>"
+			)
+		);
+	}
+
+	public function getDataStructureDataProvider() {
+		return array(
+			array(
+				array(
+					'pollsTitle' => 'Post Title',
+					'pollsQuestion' => 'Question',
+					'pollsOption1' => 'option 1',
+					'pollsOption2' => 'option 2',
+					'pollsOption3' => 'option 3',
+					'pollsOption4' => 'option 4'
+				),
+				array(
+					'headline' => 'Post Title',
+					'pollsQuestion' => 'Question',
+					'hubUrl' => 'http://www.wikia.com/Video_Games',
+					'pollsOptions' => array(
+						'option 1',
+						'option 2',
+						'option 3',
+						'option 4'
+					)
+				)
+			),
+			array(
+				array(
+					'pollsTitle' => 'Post Title Example',
+					'pollsQuestion' => 'Question Test',
+					'pollsOption1' => 'optional value',
+					'pollsOption2' => 'value',
+					'pollsOption3' => 'option',
+					'pollsOption4' => 'option last'
+				),
+				array(
+					'headline' => 'Post Title Example',
+					'pollsQuestion' => 'Question Test',
+					'hubUrl' => 'http://www.wikia.com/Video_Games',
+					'pollsOptions' => array(
+						'optional value',
+						'value',
+						'option',
+						'option last'
+					)
+				)
+			),
+			array(
+				array(
+					'pollsTitle' => '',
+					'pollsQuestion' => 'Question Test',
+					'pollsOption1' => 'optional value',
+					'pollsOption2' => 'value',
+					'pollsOption3' => 'option',
+					'pollsOption4' => 'option last'
+				),
+				array()
 			)
 		);
 	}

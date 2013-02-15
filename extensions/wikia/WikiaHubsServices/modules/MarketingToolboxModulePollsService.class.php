@@ -80,6 +80,7 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleService {
 
 			$structuredData['headline'] = $data['pollsTitle'];
 			$structuredData['pollsQuestion'] = $data['pollsQuestion'];
+			$structuredData['hubUrl'] = $this->getHubUrl();
 
 			for ($i = 1; $i <= $optionsLimit; $i++) {
 				if(isset($data['pollsOption' . $i])) {
