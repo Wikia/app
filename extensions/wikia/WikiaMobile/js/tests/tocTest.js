@@ -3,6 +3,8 @@
  @test-require-asset /extensions/wikia/WikiaMobile/js/Wikia.utils.js
  @test-require-asset /resources/wikia/libraries/deferred/deferred.js
  @test-require-asset /resources/wikia/libraries/deferred/deferred.api.js
+ @test-require-asset /resources/wikia/modules/window.js
+ @test-require-asset /resources/wikia/modules/deferred.js
  @test-require-asset /resources/wikia/modules/ajax.js
  @test-require-asset /resources/wikia/modules/nirvana.js
  @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.js
