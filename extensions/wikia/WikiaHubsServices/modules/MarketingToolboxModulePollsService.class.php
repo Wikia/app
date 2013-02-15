@@ -1,8 +1,5 @@
 <?php
 class MarketingToolboxModulePollsService extends MarketingToolboxModuleService {
-
-	protected static $moduleId = 7;
-
 	protected function getFormFields() {
 		$fields = array(
 			'pollsTitle' => array(

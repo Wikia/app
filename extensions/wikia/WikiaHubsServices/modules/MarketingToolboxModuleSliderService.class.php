@@ -1,8 +1,5 @@
 <?
 class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService {
-
-	protected static $moduleId = 1;
-
 	protected function getFormFields() {
 		$fields = array();
 
