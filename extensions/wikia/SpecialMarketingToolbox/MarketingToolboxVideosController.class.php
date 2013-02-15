@@ -28,12 +28,23 @@ class MarketingToolboxVideosController extends WikiaController {
 				)
 			);
 			
+			$this->formFields = $this->app->renderView(
+				'MarketingToolbox',
+				'FormField',
+				array(
+					'inputData' => array_merge(
+						$fields['videoUrl'],
+						array('index' => $idx)
+					)
+				)
+			);
+			
 			$this->videoThumbnail = $this->app->renderView(
 				'MarketingToolboxVideos',
 				'index',
 				array('video' => $video)
 			);
-
+			
 			$this->hiddenFormFields = $this->app->renderView(
 				'MarketingToolbox',
 				'FormField',

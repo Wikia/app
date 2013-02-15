@@ -179,6 +179,9 @@ $chevron-color: #888;
 				input[type="text"] {
 					width: 291px;
 				}
+				input[type="text"].video-url-input {
+					width: 456px;
+				}
 			}
 
 			.navigation {
@@ -272,8 +275,7 @@ $chevron-color: #888;
 			font-weight: bold;
 		}
 		h4,
-		.timeago,
-		.video-url {
+		.timeago {
 			clear: both;
 			display: inline-block;
 			float: none;
