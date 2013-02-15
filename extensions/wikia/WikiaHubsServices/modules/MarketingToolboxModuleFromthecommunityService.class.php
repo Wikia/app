@@ -11,7 +11,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	const MODULE_ID = 6;
 
 	static $fieldNames = array('photo', 'title', 'usersUrl', 'quote', 'url');
-	
+
 	protected function getFormFields() {
 
 		$fields = array();

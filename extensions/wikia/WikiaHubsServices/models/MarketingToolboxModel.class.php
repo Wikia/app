@@ -3,19 +3,6 @@
 class MarketingToolboxModel extends WikiaModel {
 	const SECTION_HUBS = 1;
 
-	/**
-	 * Wikia Hubs modules ids
-	 */
-	const MODULE_SLIDER = 1;
-	const MODULE_PULSE = 2;
-	const MODULE_WIKIAS_PICKS = 3;
-	const MODULE_FEATURED_VIDEO = 4;
-	const MODULE_EXPLORE = 5;
-	const MODULE_FROM_THE_COMMUNITY = 6;
-	const MODULE_POLLS = 7;
-	const MODULE_TOP_10_LIST = 8;
-	const MODULE_POPULAR_VIDEOS = 9;
-
 	const HUBS_TABLE_NAME = '`wikia_hub_modules`';
 
 	const FORM_THUMBNAIL_SIZE = 149;
@@ -45,15 +32,15 @@ class MarketingToolboxModel extends WikiaModel {
 		);
 
 		$this->modules = array(
-			self::MODULE_SLIDER => 'slider',
-			self::MODULE_PULSE => 'pulse',
-			self::MODULE_WIKIAS_PICKS => 'wikias-picks',
-			self::MODULE_FEATURED_VIDEO => 'featured-video',
-			self::MODULE_EXPLORE => 'explore',
-			self::MODULE_FROM_THE_COMMUNITY => 'from-the-community',
-			self::MODULE_POLLS => 'polls',
-			self::MODULE_TOP_10_LIST => 'top10-list',
-			self::MODULE_POPULAR_VIDEOS => 'popular-videos'
+			MarketingToolboxModuleSliderService::MODULE_ID => 'slider',
+			MarketingToolboxModulePulseService::MODULE_ID => 'pulse',
+			MarketingToolboxModuleWikiaspicksService::MODULE_ID => 'wikias-picks',
+			MarketingToolboxModuleFeaturedvideoService::MODULE_ID => 'featured-video',
+			MarketingToolboxModuleExploreService::MODULE_ID => 'explore',
+			MarketingToolboxModuleFromthecommunityService::MODULE_ID => 'from-the-community',
+			MarketingToolboxModulePollsService::MODULE_ID => 'polls',
+			MarketingToolboxModuleTop10listService::MODULE_ID => 'top10-list',
+			MarketingToolboxModulePopularvideosService::MODULE_ID => 'popular-videos'
 		);
 
 		$this->modulesCount = count($this->modules);
@@ -222,7 +209,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 *
 	 * @return array
 	 */
-	public function getModulesData($langCode, $sectionId, $verticalId, $timestamp, $activeModule = self::MODULE_SLIDER) {
+	public function getModulesData($langCode, $sectionId, $verticalId, $timestamp, $activeModule = MarketingToolboxModuleSliderService::MODULE_ID) {
 		$moduleList = $this->getModuleList($langCode, $sectionId, $verticalId, $timestamp);
 
 		$modulesData = array(
