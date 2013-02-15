@@ -58,8 +58,7 @@ class MarketingToolboxVideosController extends WikiaController {
 		}
 		
 		//button messages
-		$this->deleteMsg = $this->wf->msg('marketing-toolbox-edithub-delete-button');
-		$this->clearMsg = $this->wf->msg('marketing-toolbox-edithub-clear-button');
+		$this->removeMsg = $this->wf->msg('marketing-toolbox-edithub-remove');
 		
 		//blank image
 		$this->blankImgUrl = $this->wg->BlankImgUrl;
