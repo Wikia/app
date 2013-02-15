@@ -83,6 +83,8 @@ $messages['en'] = array(
 	'restore-edits-diff-notice' => "Welcome back! We've restored some changes you had not published. However, the page has been updated since then. Would you like to: <a class='notice-action restoreeditlink'>Delete my changes and start with the latest text</a> or <a class='notice-action difflink'>View a comparison of changes with the latest page</a>",
 	'mainpagewarning-notice' => "Learn more about [[w:c:community:Help:Main_page|editing the main page]].",
 	'explainconflict-notice' => "'''Warning!''' Someone else has changed this page since you started editing it! [More info]",
+	'wikia-editor-add-video-notice' => 'Your video has been added. Drag and drop the video anywhere you want on your page or select \"modify\" for embed options.',
+	'wikia-editor-add-image-notice' => 'Your photo has been added. Drag and drop the photo anywhere you want on your page or select \"modify\" for embed options.',
 
 	// "editing" preferences sections
 	'prefs-general' => 'General',
