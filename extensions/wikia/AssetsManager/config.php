@@ -308,8 +308,8 @@ $config['gameguides_js'] = array(
 		'#group_wikiamobile_js_head',
 
 		//libraries/frameworks
-		'//resources/wikia/libraries/Ponto/ponto.js',
 		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/libraries/Ponto/ponto.js',
 		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 
 		// deferred.js - jQuery-free implementation (BugId:34943)
