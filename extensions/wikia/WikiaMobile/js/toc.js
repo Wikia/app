@@ -100,7 +100,7 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 				while(h2 = h2s[i++]){
 					toc.push({
 						id: h2.id,
-						name: h2.innerText
+						name: h2.textContent || h2.innerText
 					})
 				}
 			}
