@@ -55,15 +55,20 @@ var SpecialVideos = {
 							method: 'removeVideo',
 							format: 'json',
 							data: {
-								videoTitle: videoName
+								title: videoName
 							},
 							callback: function(json) {
 								// print error message if error
-								// reload page instead?
-								//(new Wikia.Querystring(window.location)).addCb().goTo();	// reload page with cb
+								if(json.result === 'ok') {
+									(new Wikia.Querystring(window.location)).addCb().goTo();	// reload page with cb
+								} else {
+									GlobalNotification.show(json['msg'], 'error');
+								}
+								
 							}
 						});
 						
+						/*
 						// we assume that above call works majority of the time, so we fade it out here without checking response
 						videoElement.fadeOut('slow', function() {
 							videoElement.remove();
@@ -76,6 +81,7 @@ var SpecialVideos = {
 								}
 							});
 						});
+						*/
 						
 					}
 				});
