@@ -115,7 +115,6 @@ class CategorySelect {
 		$root = $dom->getElementsByTagName( 'root' )->item( 0 );
 
 		self::$frame = $app->wg->Parser->getPreprocessor()->newFrame();
-		self::$categoriesService = new CategoriesService();
 
 		$categories = self::parseNode( $root );
 
@@ -135,6 +134,64 @@ class CategorySelect {
 		return self::$data;
 	}
 
+	/**
+	 * Gets an array of links for the given categories.
+	 */
+	public static function getCategoryLinks( $categories ) {
+		wfProfileIn( __METHOD__ );
+
+		$app = F::app();
+		$categoryLinks = array();
+
+		if ( !empty( $categories ) ) {
+			foreach( $categories as $category ) {
+				// Support array of category names or array of category data objects
+				$name = is_array( $category ) ? $category[ 'name' ] : $category;
+
+				if ( !empty( $name ) ) {
+					$title = Title::makeTitleSafe( NS_CATEGORY, $name );
+
+					if ( !empty( $title ) ) {
+						$text = $app->wg->ContLang->convertHtml( $title->getText() );
+						$categoryLinks[] = Linker::link( $title, $text );
+					}
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $categoryLinks;
+	}
+
+	/**
+	 * Gets the type of a category (either "hidden" or "normal").
+	 */
+	public static function getCategoryType( $category ) {
+		if ( !isset( self::$categoriesService ) ) {
+			self::$categoriesService = new CategoriesService();
+		}
+
+		// Support category name or category data object
+		$name = is_array( $category ) ? $category[ 'name' ] : $category;
+		$type = 'normal';
+
+		$title = Title::makeTitleSafe( NS_CATEGORY, $name );
+
+		if ( !empty( $title ) ) {
+			$text = $title->getDBKey();
+
+			if ( self::$categoriesService->isCategoryHidden( $text ) ) {
+				$type = 'hidden';
+			}
+		}
+
+		return $type;
+	}
+
+	/**
+	 * Gets the default namespaces for a wiki and content language.
+	 */
 	public static function getDefaultNamespaces() {
 		if ( !isset( self::$namespaces ) ) {
 			$namespaces = F::app()->wg->ContLang->getNsText( NS_CATEGORY );
@@ -435,7 +492,7 @@ class CategorySelect {
 								'namespace' => $catNamespace,
 								'outerTag' => $outerTag,
 								'sortKey' => $sortKey,
-								'type' => self::$categoriesService->isCategoryHidden( $catName ) ? 'hidden' : 'normal',
+								'type' => self::getCategoryType( $catName ),
 							);
 						}
 						if (count($childOut['categories'])) {
@@ -498,7 +555,7 @@ class CategorySelect {
 			'namespace' => $match[1],
 			'outerTag' => self::$outerTag,
 			'sortKey' => $sortKey,
-			'type' => self::$categoriesService->isCategoryHidden( $catName ) ? 'hidden' : 'normal',
+			'type' => self::getCategoryType( $catName ),
 		);
 		return '';
 	}
