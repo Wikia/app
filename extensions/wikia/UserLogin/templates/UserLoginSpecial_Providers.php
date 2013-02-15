@@ -6,9 +6,9 @@
 		<?= $app->renderView('FacebookButton', 'index', array(
 			'class' => 'sso-login-facebook',
 			'text' => wfMsg('fbconnect-connect-simple'),
-			'tabindex' => $tabindex,
 			'tooltip' => (!empty($requestType) && $requestType === 'signup' ? 
 				wfMsg('userlogin-provider-tooltip-facebook-signup') : 
-				wfMsg('userlogin-provider-tooltip-facebook'))
+				wfMsg('userlogin-provider-tooltip-facebook')),
+			'tabindex' => $tabindex,
 		)) ?>
 	</div>
