@@ -28,7 +28,7 @@
 					Wikia.Querystring().setVal('useskin', 'wikiamobile').addCb().goTo();
 				});
 
-				linksWrapper.prepend(mobileSwitch.wrap('<li></li>'));
+				linksWrapper.append(mobileSwitch.wrap('<li></li>'));
 			});
 		}
 	}
