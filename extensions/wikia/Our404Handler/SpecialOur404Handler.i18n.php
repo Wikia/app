@@ -483,7 +483,7 @@ Rencana '''$1''' tidak dapat dijumpai.
 * Untuk ke laman utama tapak ini, klik pautan ini: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -530,7 +530,7 @@ Pagina \"'''\$1'''\" is niet aangetroffen.
 * Je kunt naar de hoofdpagina van deze site gaan: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Norwegian Nynorsk (norsk (nynorsk)‎)
+/** Norwegian Nynorsk (norsk nynorsk)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -645,6 +645,14 @@ O artigo '''$1''' não pode ser encontrado.
  */
 $messages['rm'] = array(
 	'our404handler' => 'Errur 404: Pagina betg chattada!',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'our404handler' => 'Errore 404: Pàgene none acchiate!',
+	'our404handler-oops' => 'Non ge stonne le pàggene ca ste cirche. Spuèstete sus, pe piacere.',
 );
 
 /** Russian (русский)

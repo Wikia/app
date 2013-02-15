@@ -15,20 +15,14 @@
 	<article id=wkMainCnt>
 		<?= $bodyContent ;?>
 		<?= $navMenu ;?>
-		<? /*TODO: This check is weird*/if(!empty( $relatedPages ) || !empty( $categoryLinks ) || !empty( $afterContentHookText ) || !empty( $afterBodyContent )) :?>
 		<footer id=wkMainCntFtr>
 			<nav id=wkRltdCnt>
-			<?= $relatedPages ;?>
-			<?= $categoryLinks ;?>
+			<?= !empty( $relatedPages ) ? $relatedPages  : ''; ?>
+			<?= !empty( $categoryLinks ) ? $categoryLinks : ''; ?>
 			</nav>
-			<? if ( !empty( $afterContentHookText ) || !empty( $afterBodyContent ) ) :?>
-			<aside>
-			<?= $afterContentHookText ;?>
-			<?= $afterBodyContent ;?>
-			</aside>
-			<? endif ;?>
+			<?= !empty( $afterContentHookText ) ? $afterContentHookText : ''; ?>
+			<?= !empty( $afterBodyContent ) ? $afterBodyContent : ''; ?>
 		</footer>
-		<? endif; ?>
 	</article>
 </section>
 <div id=wkMdlWrp>

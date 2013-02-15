@@ -369,6 +369,7 @@
 						bind('click', function(ev) {
 							var target = $(ev.target);
 
+							target.attr('target','_blank');
 							// don't block links opening in new tab
 							if (target.attr('target') !== '_blank') {
 								ev.preventDefault();

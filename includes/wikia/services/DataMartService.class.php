@@ -505,6 +505,7 @@ class DataMartService extends Service {
 			$namespaces = null;
 		}
 
+
 		if (!empty($articleIds) && is_array($articleIds)) {
 			$keyToken .= implode(':', $articleIds);
 		} else {
@@ -534,6 +535,7 @@ class DataMartService extends Service {
 					'wiki_id' => $wikiId
 				);
 
+
 				if (!empty($namespaces)) {
 					$namespaces = array_filter($namespaces, function ($val) {
 						return is_integer($val);
@@ -549,6 +551,7 @@ class DataMartService extends Service {
 
 					$where[] = 'article_id IN (' . implode(',', $articleIds) . ')';
 				}
+
 
 				$result = $db->select(
 					array('rollup_wiki_article_pageviews'),
@@ -646,6 +649,7 @@ class DataMartService extends Service {
 			} else {
 				$endDate = date('Y-m-d', strtotime('-1 day'));
 			}
+
 		}
 
 		if (empty($periodId)) {

@@ -365,7 +365,7 @@ $messages['ms'] = array(
 	'category-exhibition-display-new' => 'Paparan Pameran Kategori',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(

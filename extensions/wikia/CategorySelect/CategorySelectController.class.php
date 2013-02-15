@@ -26,31 +26,19 @@ class CategorySelectController extends WikiaController {
 			return false;
 		}
 
-		// Categories are passed in for EditPage preview
-		$categories = $this->request->getVal( 'categories', array() );
+		$categoryLinks = $this->wg->out->getCategoryLinks();
 		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelect::isEditable() );
 
-		// Build categories from categoryTypes array
-		if ( empty( $categories ) ) {
-			$categoryTypes = CategorySelect::getCategoryTypes();
-
-			if ( is_array( $categoryTypes ) ) {
-				foreach( $categoryTypes as $title => $type ) {
-					$title = Title::newFromText( $title, NS_CATEGORY );
-
-					if ( !is_null( $title ) ) {
-						$categories[] = array(
-							'link' => htmlspecialchars( $title->getLinkURL() ),
-							'name' => $this->wg->ContLang->convertHtml( $title->getText() ),
-							'type' => $type,
-						);
-					}
-				}
-			}
+		// Remove hidden categories if user has chosen not to see them.
+		if ( !empty( $categoryLinks[ 'hidden' ] ) && !$this->wg->User->getBoolOption( 'showhiddencats' ) ) {
+			unset( $categoryLinks[ 'hidden' ] );
 		}
 
+		// Make sure category types always show up in the same order (hidden last)
+		krsort( $categoryLinks );
+
 		// There are no categories present and user can't edit, skip rendering
-		if ( !$userCanEdit && empty( $categories ) ) {
+		if ( !$userCanEdit && !count( $categoryLinks ) ) {
 			$this->wf->ProfileOut( __METHOD__ );
 			return false;
 		}
@@ -66,9 +54,8 @@ class CategorySelectController extends WikiaController {
 
 		$categoriesLink = Linker::link( Title::newFromText( $categoriesLinkPage ), $categoriesLinkText, $categoriesLinkAttributes );
 
-		$this->response->setVal( 'categories', $categories );
+		$this->response->setVal( 'categoryLinks', $categoryLinks );
 		$this->response->setVal( 'categoriesLink', $categoriesLink );
-		$this->response->setVal( 'showHidden', $this->wg->User->getBoolOption( 'showhiddencats' ) );
 		$this->response->setVal( 'userCanEdit', $userCanEdit );
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -78,14 +65,11 @@ class CategorySelectController extends WikiaController {
 	 * The template for a category in the category list.
 	 */
 	public function category() {
-		$category = $this->request->getVal( 'category', array() );
-
 		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
-		$this->response->setVal( 'category', $category );
-		$this->response->setVal( 'className', !empty( $category[ 'type' ] ) ? $category[ 'type' ] : 'normal' );
 		$this->response->setVal( 'edit', $this->wf->Msg( 'categoryselect-category-edit' ) );
-		$this->response->setVal( 'index', $this->request->getVal( 'index', 0 ) );
+		$this->response->setVal( 'name', $this->request->getVal( 'name', '' ) );
 		$this->response->setVal( 'remove', $this->wf->Msg( 'categoryselect-category-remove' ) );
+		$this->response->setVal( 'type', $this->request->getVal( 'type', 'normal' ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
@@ -96,7 +80,11 @@ class CategorySelectController extends WikiaController {
 	public function editPage() {
 		$data = CategorySelect::getExtractedCategoryData();
 
-		$this->response->setVal( 'categories', $data[ 'categories' ] );
+		if (!empty ( $data['categories'] ) ) {
+			$this->response->setVal( 'categories', $data[ 'categories' ] );
+		} else {
+			$this->response->setVal( 'categories', array() );
+		}
 
 		$this->response->addAsset( 'categoryselect_edit_js' );
 		$this->response->addAsset( 'extensions/wikia/CategorySelect/css/CategorySelect.edit.scss' );
@@ -107,14 +95,14 @@ class CategorySelectController extends WikiaController {
 	 * for an article.
 	 */
 	public function editPageMetadata() {
-		$categories = '';
 		$data = CategorySelect::getExtractedCategoryData();
 
 		if ( !empty( $data[ 'categories' ] ) ) {
 			$categories = htmlspecialchars( CategorySelect::changeFormat( $data[ 'categories' ], 'array', 'json' ) );
+			$this->response->setVal( 'categories', $categories );
+		} else {
+			$this->response->setVal( 'categories', '' );
 		}
-
-		$this->response->setVal( 'categories', $categories );
 	}
 
 	/**
@@ -203,10 +191,11 @@ class CategorySelectController extends WikiaController {
 
 			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
 
+			// Merge categories stored in the article with any that were passed in and remove duplicates.
 			$categories = array_merge( $data[ 'categories' ], $categories );
 			$categories = CategorySelect::getUniqueCategories( $categories );
 
-			$response[ 'categories' ] = $categories;
+			// Convert categories to wikitext and append them to the article's wikitext
 			$wikitext = $data[ 'wikitext' ] . CategorySelect::changeFormat( $categories, 'array', 'wikitext' );
 
 			$dbw = $this->wf->GetDB( DB_MASTER );
@@ -222,6 +211,18 @@ class CategorySelectController extends WikiaController {
 			$bot = $this->wg->User->isAllowed( 'bot' );
 			$status = $editPage->internalAttemptSave( $result, $bot )->value;
 
+			// Generate links for the new categories and add them to the response.
+			$categoryLinks = array();
+			foreach( $categories as $category ) {
+				$title = Title::makeTitleSafe( NS_CATEGORY, $category[ 'name' ] );
+				$text = $this->wg->ContLang->convertHtml( $title->getText() );
+
+				// We need to pass these through Linker so CategoryBlueLinks can handle them (BugId:97334)
+				$categoryLinks[] = Linker::link( $title, $text );
+			}
+
+			$response[ 'categories' ] = $categories;
+			$response[ 'categoryLinks' ] = $categoryLinks;
 			$response[ 'status' ] = $status;
 
 			switch( $status ) {

@@ -155,7 +155,7 @@ class MenuButtonController extends WikiaController {
 		$this->tooltip = !empty($data['tooltip']) ? (' rel="tooltip" title="' . htmlspecialchars($data['tooltip']) . '"') : '';
 		$this->dropdown = isset($data['dropdown']) ? $data['dropdown'] : false;
 		$this->tabindex = (isset($data['tabindex']) && is_int($data['tabindex']) ? ' tabindex="' . $data['tabindex'] . '" ' : '');
-
+		
 		wfProfileOut(__METHOD__);
 	}
 

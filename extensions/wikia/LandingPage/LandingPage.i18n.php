@@ -295,7 +295,7 @@ $messages['ms'] = array(
 	'landingpage-buttons-learn-more' => 'Ketahui lebih lanjut &gt;',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */

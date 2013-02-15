@@ -1371,7 +1371,7 @@ $messages['my'] = array(
 	'toplists-days' => '$1 {{PLURAL:$1|ရက်|ရက်}}',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */

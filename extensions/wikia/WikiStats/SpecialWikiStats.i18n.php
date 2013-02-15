@@ -2479,7 +2479,7 @@ $messages['fr'] = array(
 	'wikistats_anon_wikians_count' => '$1 {{PLURAL:$1|utilisateur anonyme trouvé|utilisateurs anonymes trouvés}}',
 	'wikistats_latest_pageviews' => 'Dernières pages visitées',
 	'wikistats_active_useredits' => 'Activité par langue',
-	'wikistats_latest_pageviews_subtitle' => 'dans les $1 dernières minutes', # Fuzzy
+	'wikistats_latest_pageviews_subtitle' => 'dans {{PLURAL:$1|la dernière minute|les $1 dernières minutes}}',
 	'wikistats_pageviews' => 'Consultations de pages par espace de noms et par mois',
 	'wikistats_article_one_link' => 'Articles qui contiennent au moins un lien interne',
 	'wikistats_recently_active_wikians' => '$1 {{PLURAL:$1|utilisateur enregistré récemment actif|utilisateurs enregistrés récemment actifs, triés par le nombre de contributions}}',
@@ -2716,7 +2716,7 @@ $messages['gl'] = array(
 	'wikistats_anon_wikians_count' => '{{PLURAL:$1|Atopouse un usuario anónimo|Atopáronse $1 usuarios anónimos}}',
 	'wikistats_latest_pageviews' => 'Últimas páxinas visitadas',
 	'wikistats_active_useredits' => 'Actividade por lingua',
-	'wikistats_latest_pageviews_subtitle' => 'nos últimos $1 minutos', # Fuzzy
+	'wikistats_latest_pageviews_subtitle' => '{{PLURAL:$1|no último minuto|nos últimos $1 minutos}}',
 	'wikistats_pageviews' => 'Visitas ás páxinas por espazo de nomes e por mes',
 	'wikistats_article_one_link' => 'Artigos que conteñen, polo menos, unha ligazón interna',
 	'wikistats_recently_active_wikians' => '$1 {{PLURAL:$1|editor rexistrado recentemente activo|editores rexistrados recentemente activos, ordenados por número de contribucións}}',
@@ -2853,7 +2853,7 @@ $messages['gl'] = array(
 	'wikistats_select_text' => 'Seleccione un Wikia:',
 	'wikistats_select_btn' => 'Seleccionar',
 	'wikistats_xls_uncheck_list' => 'Desmarcar',
-	'wikistats_xls_press_uncheck' => 'Prema sobre este botón para "desmarcar" todos os Wikia seleccionados',
+	'wikistats_xls_press_uncheck' => 'Prema sobre este botón para desmarcar todos os Wikia seleccionados',
 	'wikistats_dbdump_generated' => 'modificado:',
 	'wikistats_records' => 'rexistros',
 	'wikistats_xml_dump' => 'Copia en XML',
@@ -5032,7 +5032,7 @@ $messages['mk'] = array(
 	'wikistats_anon_wikians_count' => '{{PLURAL:$1|Пронајден е $1 анонимен корисник|Пронајдени се $1 анонимни корисници}}',
 	'wikistats_latest_pageviews' => 'Најскоро посетени страници',
 	'wikistats_active_useredits' => 'Јазична активност',
-	'wikistats_latest_pageviews_subtitle' => 'во последните $1 минути', # Fuzzy
+	'wikistats_latest_pageviews_subtitle' => '{{PLURAL:$1|во последнава минута|во последните $1 минути}}',
 	'wikistats_pageviews' => 'Месечно прегледи на страници по именски простор',
 	'wikistats_article_one_link' => 'Статии што содржат барем една надворешна врска',
 	'wikistats_recently_active_wikians' => '$1 неодамна {{PLURAL:$1|активен регистриран уредник|неодамна активни регистрирани уредници, подредени по број на придонеси}}',
@@ -5427,7 +5427,7 @@ $messages['ms'] = array(
 	'wikistats_anon_wikians_count' => '$1 pengguna tanpa nama ditemui',
 	'wikistats_latest_pageviews' => 'Kunjungan laman terkini',
 	'wikistats_active_useredits' => 'Kegiatan bahasa',
-	'wikistats_latest_pageviews_subtitle' => 'dalam $1 minit terkini', # Fuzzy
+	'wikistats_latest_pageviews_subtitle' => 'dalam $1 minit yang terdahulu',
 	'wikistats_pageviews' => 'Kunjungan laman per ruang nama sebulan',
 	'wikistats_article_one_link' => 'Rencana yang mengandungi sekurang-kurangnya satu pautan dalam',
 	'wikistats_recently_active_wikians' => '{{PLURAL:$1|Seorang penyunting berdaftar yang aktif baru-baru ini|$1 orang penyunting berdaftar yang aktif baru-baru ini, disusun mengikut jumlah sumbangan}}',
@@ -5664,7 +5664,7 @@ $messages['mzn'] = array(
 	'wikistats_hide' => 'فه‌رو  بـور',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -7886,7 +7886,7 @@ $messages['sv'] = array(
 	'wikistats_anon_wikians_count' => '$1 anonyma {{PLURAL:$1|användare|användare}} hittades',
 	'wikistats_latest_pageviews' => 'Senaste besökta sidor',
 	'wikistats_active_useredits' => 'Språkaktivitet',
-	'wikistats_latest_pageviews_subtitle' => 'under de senaste $1 minuterna', # Fuzzy
+	'wikistats_latest_pageviews_subtitle' => 'under {{PLURAL:$1|den senaste minuten|de senaste $1 minuterna}}',
 	'wikistats_pageviews' => 'Sidvisningar per namnrymd per månad',
 	'wikistats_article_one_link' => 'Artiklar som innehåller minst en intern länk',
 	'wikistats_recently_active_wikians' => '$1 nyligen aktiva registrerade {{PLURAL:$1|redaktör|redaktörer, sorterade efter antal bidrag}}',
@@ -8692,6 +8692,7 @@ $messages['wuu'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
 	'wikistats' => 'Wikia统计',
@@ -8706,6 +8707,7 @@ $messages['zh-hans'] = array(
 	'wikistats_daterange_to' => '至：',
 	'wikistats_invalid_date' => '日期范围无效',
 	'wikistats_breakdown_editors' => '编辑活动',
+	'wikistats_latest_pageviews_subtitle' => '在最近$1分钟',
 	'wikistats_active_day' => '天',
 	'wikistats_active_month' => '月',
 	'wikistats_active_year' => '年',

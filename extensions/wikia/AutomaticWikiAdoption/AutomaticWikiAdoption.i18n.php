@@ -1170,7 +1170,7 @@ Alatan yang Berguna:
 [[Special:UserRights|Uruskan Hak]]',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */

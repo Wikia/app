@@ -346,7 +346,7 @@ $messages['ms'] = array(
 	'feed-title-recentchanges' => 'Perubahan terkini',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(

@@ -109,7 +109,7 @@ $messages['ms'] = array(
 	'globalnotification-general-ajax-failure' => 'Pelayar tidak dapat bersambung ke Wikia. Cuba lagi nanti.',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -150,6 +150,14 @@ $messages['pt'] = array(
 	'globalnotification-general-ajax-failure' => 'O browser não se conseguiu ligar à Wikia. Tente novamente mais tarde.',
 );
 
+/** Brazilian Portuguese (português do Brasil)
+ * @author JM Pessanha
+ */
+$messages['pt-br'] = array(
+	'globalnotification-desc' => 'Exibe notificações de sistema para eventos como falhas de AJAX',
+	'globalnotification-general-ajax-failure' => 'O navegador não pode se conectar a Wikia. Tente novamente mais tarde.',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
@@ -185,8 +193,10 @@ $messages['tt-cyrl'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Hydra
  */
 $messages['zh-hans'] = array(
+	'globalnotification-desc' => '显示一些如AJAX失败类似事件的系统通知',
 	'globalnotification-general-ajax-failure' => '浏览器无法连接到Wikia。请稍后再试。',
 );
 

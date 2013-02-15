@@ -35,6 +35,7 @@ $app->registerClass('WikiaSearchIndexerController', $dir . 'WikiaSearchIndexerCo
 $app->registerClass('WikiaSearchResult', 			$dir . 'WikiaSearchResult.class.php');
 $app->registerClass('WikiaSearchResultSet', 		$dir . 'WikiaSearchResultSet.class.php');
 $app->registerClass('WikiaSearchArticleMatch',		$dir . 'WikiaSearchArticleMatch.class.php');
+$app->registerClass('WikiaSearchWikiMatch',    		$dir . 'WikiaSearchWikiMatch.class.php');
 $app->registerClass('WikiaSearchAjaxController',	$dir . 'WikiaSearchAjaxController.class.php');
 $app->registerClass('WikiaVideoSearchController',	$dir . 'WikiaVideoSearchController.class.php');
 
@@ -77,8 +78,9 @@ if (isset($_GET['solrhost']) || isset($_GET['solrport'])) {
 }
 
 // some of this stuff can't be trusted evidently.
-$wgSolrHost = $wgExternalSharedDB ? $wgSolrHost : 'staff-search-s1';
-$wgSolrPort = $wgExternalSharedDB ? $wgSolrPort : 8983;
+$wgSolrHost = !empty( $wgExternalSharedDB ) ? $wgSolrHost : 'staff-search-s1';
+$wgSolrMaster = !empty( $wgExternalSharedDB ) ? $wgSolrMaster : 'staff-search-s1';
+$wgSolrPort = !empty( $wgExternalSharedDB ) ? $wgSolrPort : 8983;
 $wgSolrUseProxy = $wgExternalSharedDB ? !empty($wgSolrUseProxy) : false;
 $wgWikiaSearchUseProxy = $wgExternalSharedDB ? $wgWikiaSearchUseProxy : false;
 
@@ -124,7 +126,7 @@ $app->registerHook('GetPreferences', 'WikiaSearch', 'onGetPreferences');
  */
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaSearchController', 'onWikiaMobileAssetsPackages');
 
-if (! $wgExternalSharedDB ) {
+if ( empty( $wgExternalSharedDB ) ) {
 	$app->registerHook('ArticleDeleteComplete', 'WikiaSearchIndexer', 'onArticleDeleteComplete');
 	$app->registerHook('ArticleSaveComplete', 'WikiaSearchIndexer', 'onArticleSaveComplete');
 	$app->registerHook('ArticleUndelete', 'WikiaSearchIndexer', 'onArticleUndelete');
@@ -135,6 +137,6 @@ if (! $wgExternalSharedDB ) {
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'Wikia Search',
 	'version'			=> '3.0',
-	'author'			=> '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://wikia.com/wiki/User:Relwell Robert Elwell]',
+	'author'			=> '[http://wikia.com/wiki/User:Relwell Robert Elwell]',
 	'descriptionmsg'	=> 'wikia-search-desc',
 );

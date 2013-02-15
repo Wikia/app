@@ -281,7 +281,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		'data-align' => $isalign,
 		'data-thumb' => $isthumb,
 		'data-caption' => htmlspecialchars($caption),
-		'data-width' => $isvideo ? '' : $width, // let VET slider determine width for video
+		'data-width' => $width,
 	);
 	
 	if( !$isvideo ) { // image placeholder
@@ -338,15 +338,19 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	return $out;
 }
 
-// Match a placeholder image in the given $text.  The $box parameter determines
-// which placeholder is returned if there are more than one on the page.  If
-// the namespace is not NS_FILE it can be passed via the $ns parameter.  Finally
-// if there is anything additional to match within the placeholder tag, it can
-// be passed via parameter $constrain.
-function ImagePlaceholderMatch ( $text, $box = 0, $ns = NS_FILE, $constrain = null ) {
+/* Used by WMU and VET. Match a placeholder image in the given $text.  The $box parameter determines
+ * which placeholder is returned if there are more than one on the page.
+ * 
+ * @param string $text Article text to check agains placeholder wikitext
+ * @param int $box Index of placeholder to be replaced in case there's more than one on a page
+ * @param bool $isVideo Check placeholder for existence of "|video"  
+ */
+
+function MediaPlaceholderMatch ( $text, $box = 0, $isVideo = false ) {
 	global $wgContLang;
 
 	// Get the namesapace translations in the content language for files and videos
+	$ns = NS_FILE;
 	$ns_vid = $wgContLang->getFormattedNsText( $ns );
 	$ns_img = ImagePlaceholderTranslateNsImage();
 
@@ -368,16 +372,30 @@ function ImagePlaceholderMatch ( $text, $box = 0, $ns = NS_FILE, $constrain = nu
 			$en_ns_vid . ':' . $en_placeholder_msg,
 			$en_ns_img . ':' . $en_placeholder_msg)) . ')';
 
-	$placeholder .= $constrain ? $constrain : '';
-
 	preg_match_all( '/\[\[' . $placeholder . '[^\]]*\]\]/si', $text, $matches, PREG_OFFSET_CAPTURE );
 
 	// Make sure we have matches and that there exists a match at index $box
-	if (is_array($matches) && count($matches[0]) > $box ) {
-		return $matches[0][$box];
-	} else {
-		return null;
+	if ( is_array($matches) ) {
+		$matchArr = $matches[0];
+		
+		for( $x = 0; $x < count( $matchArr ); $x++ ) {
+			$match = $matchArr[$x];
+			if( $isVideo ) {
+				if ( !preg_match( '/\|video/', $match[0] ) ) {
+					array_splice($matchArr, $x, 1);
+				}	
+			} else {
+				if ( preg_match( '/video/', $match[0] ) ) {
+					array_splice($matchArr, $x, 1);
+				}		
+			}
+		}
+		if ( count($matchArr) > $box ) {
+			return $matchArr[$box];
+		}
 	}
+	
+	return null;
 }
 
 // check if this is or not a placeholder

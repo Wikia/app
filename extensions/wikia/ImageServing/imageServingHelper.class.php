@@ -133,6 +133,13 @@ class ImageServingHelper{
 		wfProfileIn(__METHOD__);
 		$db = wfGetDB(DB_MASTER, array());
 
+		// BugId:95164: limit the number of images to be stored serialized in DB
+		// PHP has an internal limit of 65535 bytes than can be unserialized
+		$limit = 230;
+		if (count($images) > $limit) {
+			$images = array_slice($images, 0, $limit);
+		}
+
 		array_walk( $images, create_function( '&$n', '$n = urldecode( $n );' ) );
 
 		if( (count($images) < 1) ) {

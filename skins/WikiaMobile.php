@@ -16,6 +16,29 @@ class SkinWikiaMobile extends WikiaSkin {
 	function __construct() {
 		parent::__construct( 'WikiaMobileTemplate', 'wikiamobile' );
 	}
+
+	/*
+	 * This is due Wikiamobile needs a lot less global variables
+	 * having separate getTopScripts allows for less injecting itself into  WikiaSkin
+	 */
+	function getTopScripts(){
+		$vars = [];
+		$scripts = '';
+
+		//this is run to grab all global variables
+		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
+
+		//global variables
+		//from Output class
+		//and from ResourceLoaderStartUpModule
+		$res = new ResourceVariablesGetter();
+		$vars = array_intersect_key(
+			$this->wg->Out->getJSVars() + $res->get() + $vars,
+			array_flip( $this->wg->WikiaMobileIncludeJSGlobals )
+		);
+
+		return WikiaSkin::makeInlineVariablesScript( $vars ) . $scripts;
+	}
 }
 
 class WikiaMobileTemplate extends WikiaBaseTemplate {

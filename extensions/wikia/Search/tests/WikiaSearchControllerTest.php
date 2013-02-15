@@ -59,7 +59,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 
 		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )
 								->disableOriginalConstructor()
-								->setMethods( array( 'getArticleMatch', 'doSearch' ) )
+								->setMethods( array( 'getMatch', 'doSearch' ) )
 								->getMock();
 
 		$mockWf			=	$this->getMockBuilder( 'WikiaFunctionWrapper' )
@@ -324,7 +324,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		;
 		$mockSearch
 			->expects	( $this->at( 0 ) )
-			->method	( 'getArticleMatch' )
+			->method	( 'getMatch' )
 			->with		( $mockConfig )
 		;
 		$mockConfig
@@ -614,8 +614,8 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 				'WikiaSearchController::index should set wgSuppressRail to false'
 		);
 	}
-
-/**
+	
+	/**
 	 * @covers WikiaSearchController::index
 	 */
 	public function testIndexDefaultAsJson() {
@@ -664,7 +664,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 
 		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )
 								->disableOriginalConstructor()
-								->setMethods( array( 'getArticleMatch', 'doSearch' ) )
+								->setMethods( array( 'getMatch', 'doSearch' ) )
 								->getMock();
 
 		$mockWf			=	$this->getMockBuilder( 'WikiaFunctionWrapper' )
@@ -691,6 +691,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 
 		$mockJsSnippets	=	$this->getMock( 'JSSnippets', array( 'addToStack' ) );
 
+		$resultsPerPage = 10;
 		$mockWg			=	( object ) array(
 								'Out'			=>	$mockOut,
 								'User'			=>	$mockUser,
@@ -699,7 +700,8 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 								'Sitename'		=>	'Sitename',
 								'Lang'			=>	$mockLang,
 								'Title'			=>	$mockTitle,
-								'SolrHost'		=>	'search'
+								'SolrHost'		=>	'search',
+								'SearchResultsPerPage'=>  $resultsPerPage
 								);
 
 
@@ -757,13 +759,13 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'getVal' )
-			->with		( 'limit', WikiaSearchController::RESULTS_PER_PAGE )
-			->will		( $this->returnValue( WikiaSearchController::RESULTS_PER_PAGE ) )
+			->with		( 'limit', $resultsPerPage )
+			->will		( $this->returnValue( $resultsPerPage ) )
 		;
 		$mockConfig
 			->expects	( $this->at( $configIncr++ ) )
 			->method	( 'setLimit' )
-			->with		( WikiaSearchController::RESULTS_PER_PAGE )
+			->with		( $resultsPerPage )
 			->will		( $this->returnValue( $mockConfig ) )
 		;
 		$mockController
@@ -930,7 +932,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		;
 		$mockSearch
 			->expects	( $this->at( 0 ) )
-			->method	( 'getArticleMatch' )
+			->method	( 'getMatch' )
 			->with		( $mockConfig )
 		;
 		$mockConfig
@@ -1115,12 +1117,12 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockConfig
 			->expects	( $this->at( $configIncr++ ) )
 			->method	( 'getLimit' )
-			->will		( $this->returnValue( WikiaSearchController::RESULTS_PER_PAGE ) )
+			->will		( $this->returnValue( $resultsPerPage ) )
 		;
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'setVal' )
-			->with		( 'resultsPerPage', WikiaSearchController::RESULTS_PER_PAGE )
+			->with		( 'resultsPerPage', $resultsPerPage )
 		;
 		$mockTitle
 			->expects	( $this->at( 0 ) )
@@ -1292,7 +1294,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 
 		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )
 								->disableOriginalConstructor()
-								->setMethods( array( 'getArticleMatch', 'doSearch' ) )
+								->setMethods( array( 'getMatch', 'doSearch' ) )
 								->getMock();
 
 		$mockWf			=	$this->getMockBuilder( 'WikiaFunctionWrapper' )
@@ -1876,7 +1878,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 
 		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )
 								->disableOriginalConstructor()
-								->setMethods( array( 'getArticleMatch', 'doSearch' ) )
+								->setMethods( array( 'getMatch', 'doSearch' ) )
 								->getMock();
 
 		$mockWf			=	$this->getMockBuilder( 'WikiaFunctionWrapper' )
@@ -2146,7 +2148,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		;
 		$mockSearch
 			->expects	( $this->at( 0 ) )
-			->method	( 'getArticleMatch' )
+			->method	( 'getMatch' )
 			->with		( $mockConfig )
 		;
 		$mockConfig
@@ -2487,7 +2489,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 
 		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )
 								->disableOriginalConstructor()
-								->setMethods( array( 'getArticleMatch', 'doSearch' ) )
+								->setMethods( array( 'getMatch', 'doSearch' ) )
 								->getMock();
 
 		$mockWf			=	$this->getMockBuilder( 'WikiaFunctionWrapper' )

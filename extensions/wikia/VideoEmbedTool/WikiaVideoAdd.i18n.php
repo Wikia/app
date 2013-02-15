@@ -507,7 +507,7 @@ $messages['my'] = array(
 	'wva-add' => 'ပေါင်းထည့်ရန်',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -649,6 +649,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  * @author Giro720
+ * @author JM Pessanha
  */
 $messages['pt-br'] = array(
 	'wva-success' => 'Página de vídeo $1 foi adicionada com sucesso.',
@@ -661,6 +662,7 @@ $messages['pt-br'] = array(
 	'wva-notlogged' => 'Você precisa se autenticar ou registrar para inserir vídeos.',
 	'wva-notallowed' => 'Você não pode inserir vídeos nesta wiki.',
 	'wva-protected' => 'Este vídeo está protegido.',
+	'wva-thumbnail-upload-failed' => 'Erro ao adicionar o vídeo. Não foi possível obter uma miniatura adequada',
 );
 
 /** Romanian (română)

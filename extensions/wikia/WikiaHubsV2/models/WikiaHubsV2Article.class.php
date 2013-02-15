@@ -20,13 +20,15 @@ class WikiaHubsV2Article extends Article {
 		// let MW handle basic stuff
 		parent::view();
 
+		$params = array();
+		if (!empty($this->verticalId)) {
+			$params['verticalid'] = $this->verticalId;
+		}
+
 		//render hub page
 		$app = F::app();
-		if( !empty($this->verticalId) ) {
-			RequestContext::getMain()->getRequest()->setVal('verticalid', $this->verticalId);
-		}
 		$app->wg->Out->clearHTML();
-		$app->wg->Out->addHTML( $app->sendRequest('SpecialWikiaHubsV2Controller', 'index') );
+		$app->wg->Out->addHTML( $app->sendRequest('SpecialWikiaHubsV2Controller', 'index', $params) );
 
 		wfProfileOut(__METHOD__);
 	}

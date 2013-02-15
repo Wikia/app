@@ -434,13 +434,9 @@ function SharedHelpArticleExists($title) {
 }
 
 // basically modify the Wantedpages query to exclude pages that appear on the help wiki, as per #5866
-function SharedHelpWantedPagesSql( $page, $sql ) {
-	global $wgWantedPagesThreshold ;
+function SharedHelpWantedPagesSql( &$page, &$sql ) {
 	global $wgHelpWikiId, $wgMemc;
 	wfProfileIn( __METHOD__ );
-
-	$count = $wgWantedPagesThreshold - 1;
-	$type = 'Wantedpages';
 
 	$helpPages = "";
 	$helpdb = WikiFactory::IDtoDB( $wgHelpWikiId  );
@@ -472,14 +468,18 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 		}
 	}
 
-	$notInHelpPages = ""; if ( !empty($helpPages) ) {
+	$notInHelpPages = '';
+	if ( !empty( $helpPages ) ) {
 		$notInHelpPages = " OR pl_title NOT IN (" . $helpPages . ") ";
 	}
 
-	$blogNamespaces = "";
+	$excludedNamespaces = array( NS_MEDIAWIKI );
 	if ( defined('NS_BLOG_ARTICLE') ) {
-		$blogNamespaces = implode(",", array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK));
-		$sql['conds'][] = " pl_namespace NOT IN ( {$blogNamespaces} ) ";
+		$excludedNamespaces[] = NS_BLOG_ARTICLE;
+		$excludedNamespaces[] = NS_BLOG_ARTICLE_TALK;
+	}
+	if ( !empty( $excludedNamespaces ) ) {
+		$sql['conds'][] = ' pl_namespace NOT IN ( ' . implode( ',', $excludedNamespaces ) . ' ) ';
 	}
 
 	$sql['conds'][] = " ( pl_namespace != 12 {$notInHelpPages} ) ";

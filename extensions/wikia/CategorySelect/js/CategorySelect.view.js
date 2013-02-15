@@ -38,7 +38,7 @@
 					$.nirvana.sendRequest({
 						controller: 'CategorySelectController',
 						data: {
-							articleId: articleId,
+							articleId: articleId
 						},
 						method: 'getArticleCategories'
 					}),
@@ -109,8 +109,8 @@
 					$categories.find( '.new' ).each(function() {
 						var $category = $( this ),
 							category = $category.data( 'category' ),
-							current = response.categories[ $category.index() ],
-							$link;
+							index = $category.index(),
+							current = response.categories[ index ];
 
 						// Category has been removed
 						if ( !current || current.name !== category.name ) {
@@ -118,15 +118,10 @@
 
 						// Linkify the category
 						} else {
-							$link = $( '<a>' )
-								.addClass( 'name' )
-								.attr( 'href', mw.util.wikiGetlink( categoryLinkPrefix + category.name ) )
-								.text( category.name );
-
 							$category
 								.removeClass( 'new' )
 								.find( '.name' )
-								.replaceWith( $link );
+								.html( response.categoryLinks[ index ] );
 						}
 					});
 				}

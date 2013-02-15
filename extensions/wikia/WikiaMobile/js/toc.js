@@ -59,17 +59,19 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 			a,
 			id,
 			ul,
-			parent;
+			parent,
+			text;
 
 		for(var i = 0, l = list.length; i < l; i++){
 			section = list[i];
 			a = section.children[0];
 			id = a.hash.slice(1);
 			ul = section.children[1];
+			text = a.getElementsByClassName('toctext')[0];
 
 			parent = {
 				id: id,
-				name: a.getElementsByClassName('toctext')[0].innerHTML
+				name: text.textContent || text.innerText
 			};
 
 			ul && (parent.children = getToc(ul.children));
@@ -98,7 +100,7 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 				while(h2 = h2s[i++]){
 					toc.push({
 						id: h2.id,
-						name: h2.innerText
+						name: h2.textContent || h2.innerText
 					})
 				}
 			}

@@ -187,7 +187,7 @@ class ArticleCommentInit {
 		if ( self::ArticleCommentCheck() && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
 			$tocnumber = ++$sublevelCount[1];
 
-			$toc .= Linker::tocLine('article-comments', wfMsg( 'article-comments-toc-item' ), $tocnumber, 1);
+			$toc .= Linker::tocLine('WikiaArticleComments', wfMsg( 'article-comments-toc-item' ), $tocnumber, 1);
 		}
 		return true;
 	}

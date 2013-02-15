@@ -151,7 +151,7 @@ class DataFeedProvider {
 						} elseif (!$hideimages) { // image
 							if (!isset(self::$images[$imageName])) {
 								wfProfileIn(__METHOD__ . "-imagelinks-count");
-								$memcKey = wfMemcKey('ac_image_cnt', $imageName);
+								$memcKey = wfMemcKey('ac_image_cnt', md5($imageName));
 								self::$images[$imageName] = $wgMemc->get($memcKey);
 
 								// Note that memcache returns null if record does not exists in cache

@@ -45,10 +45,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$searchConfig = F::build('WikiaSearchConfig');
 
+		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? self::RESULTS_PER_PAGE : $this->wg->SearchResultsPerPage;
+		
 		$searchConfig
 			->setQuery			( $this->getVal('query', $this->getVal('search') ) )
 			->setCityId			( $this->wg->CityId )
-			->setLimit			( $this->getVal('limit', self::RESULTS_PER_PAGE) )
+			->setLimit			( $this->getVal('limit', $resultsPerPage ) )
 			->setPage			( $this->getVal('page', 1) )
 			->setRank			( $this->getVal('rank', 'default') )
 			->setDebug			( $this->request->getBool('debug', false) )
@@ -69,7 +71,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		if( $searchConfig->getQueryNoQuotes( true ) ) {
-			$this->wikiaSearch->getArticleMatch( $searchConfig );
+			$this->wikiaSearch->getMatch( $searchConfig );
 			if ( $searchConfig->getPage() == 1 ) {
 				$this->handleArticleMatchTracking( $searchConfig, F::build( 'Track' ) );
 			}
