@@ -167,6 +167,8 @@ class WikiaSearchConfig implements \ArrayAccess
 		
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
 		
+		$this->importQueryFieldBoosts();
+		
 		$this->params = array_merge( $this->params, 
 									 array( 'requestedFields' => $this->requestedFields ), 
 									 $params );
@@ -734,6 +736,18 @@ class WikiaSearchConfig implements \ArrayAccess
 			}
 		} else {
 			$this->queryFieldsToBoosts = $fields;
+		}
+		return $this;
+	}
+	
+	/**
+	 * Allows global variables like $wgSearchBoostFor_title to overwrite default boost values defined in this class.
+	 * Run during __construct().
+	 * @return WikiaSearchConfig
+	 */
+	public function importQueryFieldBoosts() {
+		foreach ( $this->queryFieldsToBoosts as $field => $boost ) {
+			$this->addQueryField( $field, $this->interface->getGlobalWithDefault( "SearchBoostFor_{$field}", $boost ) );
 		}
 		return $this;
 	}
