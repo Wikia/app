@@ -695,7 +695,7 @@ class WikiaSearchConfig implements \ArrayAccess
 	 * @param int $boost
 	 * @return WikiaSearchConfig
 	 */
-	public function addQueryField( $field, $boost = 1 ) {
+	public function setQueryField( $field, $boost = 1 ) {
 		$this->queryFieldsToBoosts[$field] = $boost;
 		return $this;
 	}
@@ -708,10 +708,12 @@ class WikiaSearchConfig implements \ArrayAccess
 	public function addQueryFields( array $fields ) {
 		if ( array_values( $fields ) === $fields ) {
 			foreach ( $fields as $field ) {
-				$this->addQueryField( $field );
+				$this->setQueryField( $field );
 			}
 		} else {
-			$this->queryFieldsToBoosts = array_merge( $this->queryFieldsToBoosts, $fields );
+			foreach ( $fields as $field => $boost ) {
+				$this->setQueryField( $field, $boost );
+			}
 		}
 		return $this;
 	}
@@ -731,8 +733,9 @@ class WikiaSearchConfig implements \ArrayAccess
 	 */
 	public function setQueryFields( array $fields ) {
 		if ( array_values( $fields ) === $fields ) {
+			$this->queryFieldsToBoosts = array();
 			foreach ( $fields as $field ) {
-				$this->addQueryField( $field );
+				$this->setQueryField( $field );
 			}
 		} else {
 			$this->queryFieldsToBoosts = $fields;
@@ -741,13 +744,21 @@ class WikiaSearchConfig implements \ArrayAccess
 	}
 	
 	/**
+	 * Lets us grab just the query fields.
+	 * @return array
+	 */
+	public function getQueryFields() {
+		return array_keys( $this->queryFieldsToBoosts );
+	}
+	
+	/**
 	 * Allows global variables like $wgSearchBoostFor_title to overwrite default boost values defined in this class.
 	 * Run during __construct().
 	 * @return WikiaSearchConfig
 	 */
-	public function importQueryFieldBoosts() {
+	protected function importQueryFieldBoosts() {
 		foreach ( $this->queryFieldsToBoosts as $field => $boost ) {
-			$this->addQueryField( $field, $this->interface->getGlobalWithDefault( "SearchBoostFor_{$field}", $boost ) );
+			$this->setQueryField( $field, $this->interface->getGlobalWithDefault( "SearchBoostFor_{$field}", $boost ) );
 		}
 		return $this;
 	}

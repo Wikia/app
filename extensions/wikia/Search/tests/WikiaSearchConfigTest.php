@@ -862,4 +862,136 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		);
 		
 	}
+	
+	/**
+	 * @covers WikiaSearchConfig::setQueryField
+	 */
+	public function testSetQueryField() {
+		$config = new WikiaSearchConfig();
+		$this->assertEquals(
+				$config,
+				$config->setQueryField( 'foo' )
+		);
+		$this->assertEquals(
+				$config,
+				$config->setQueryField( 'bar', 2 )
+		);
+		$queryFieldsToBoostsRefl = new ReflectionProperty( 'WikiaSearchConfig', 'queryFieldsToBoosts' );
+		$queryFieldsToBoostsRefl->setAccessible( true );
+		$fields = $queryFieldsToBoostsRefl->getValue( $config );
+		$this->assertArrayHasKey(
+				'foo',
+				$fields
+		);
+		$this->assertArrayHasKey(
+				'bar',
+				$fields
+		);
+		$this->assertEquals(
+				1,
+				$fields['foo'],
+				'WikiaSearchConfig::setQueryField should set the boost value to 1 for a key by default'
+		);
+		$this->assertEquals(
+				2,
+				$fields['bar'],
+				'WikiaSearchConfig::setQueryField should set the boost value as passed in the second parameter'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchConfig::addQueryFields
+	 */
+	public function testAddQueryFields() {
+		$config = new WikiaSearchConfig();
+		$config->setQueryFields( array( 'foo', 'bar', 'baz' ) );
+		$queryFieldsToBoostsRefl = new ReflectionProperty( 'WikiaSearchConfig', 'queryFieldsToBoosts' );
+		$queryFieldsToBoostsRefl->setAccessible( true );
+		$fields = $queryFieldsToBoostsRefl->getValue( $config );
+		$this->assertEquals(
+				array( 'foo' => 1, 'bar' => 1, 'baz' => 1 ),
+				$fields,
+				'If passed a flat array, WikiaSearchConfig::addQueryFields should set the boost for each as 1'
+		);
+		$sentFields = array( 'foo' => 1, 'bar' => 2, 'baz' => 3 );
+		$this->assertEquals(
+				$config,
+				$config->setQueryFields( $sentFields )
+		);
+		$fields = $queryFieldsToBoostsRefl->getValue( $config );
+		$this->assertEquals(
+				$sentFields,
+				$fields,
+				'If passed a flat array, WikiaSearchConfig::addQueryFields should set the boost for each as 1'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchConfig::getQueryFieldsToBoosts
+	 */
+	public function testGetQueryFieldsToBoosts() {
+		$config = new WikiaSearchConfig();
+		$queryFieldsToBoostsRefl = new ReflectionProperty( 'WikiaSearchConfig', 'queryFieldsToBoosts' );
+		$queryFieldsToBoostsRefl->setAccessible( true );
+		$fields = $queryFieldsToBoostsRefl->getValue( $config );
+		$this->assertEquals(
+				$fields,
+				$config->getQueryFieldsToBoosts(),
+				'WikiaSearchConfig::getQueryFieldsToBoosts should return the qf to boost array'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchConfig::importQueryFieldBoosts
+	 */
+	public function testImportQueryFieldBoosts() {
+		$config = $this->getMockBuilder( 'WikiaSearchConfig' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( array( 'setQueryField' ) )
+		               ->getMock();
+		
+		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getGlobalWithDefault' ) )
+		                  ->getMock();
+		
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobalWithDefault' )
+		    ->with   ( 'SearchBoostFor_title', 5 )
+		    ->will   ( $this->returnValue( 5 ) ) // value doesn't matter -- that's why we test this method separately 
+		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'setQueryField' )
+		    ->with   ( 'title', 5 )
+		;
+		
+		$fieldsrefl = new ReflectionProperty( 'WikiaSearchConfig', 'queryFieldsToBoosts' );
+		$fieldsrefl->setAccessible( true );
+		$fieldsrefl->setValue( $config, array( 'title' => 5 ) );
+		
+		$interfacerefl = new ReflectionProperty( 'WikiaSearchConfig', 'interface' );
+		$interfacerefl->setAccessible(true );
+		$interfacerefl->setValue( $config, $interface );
+		
+		$methodrefl = new ReflectionMethod( 'WikiaSearchConfig', 'importQueryFieldBoosts' );
+		$methodrefl->setAccessible( true );
+		$this->assertEquals(
+				$config,
+				$methodrefl->invoke( $config )
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchConfig::getQueryFields
+	 */
+	public function testGetQueryFields() {
+		$config = new WikiaSearchConfig();
+		$fieldsToBoosts = $config->getQueryFieldsToBoosts();
+		$this->assertEquals(
+				array_keys( $fieldsToBoosts ),
+				$config->getQueryFields()
+		);
+	}
 }

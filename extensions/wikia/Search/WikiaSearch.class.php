@@ -773,7 +773,7 @@ class WikiaSearch extends WikiaObject {
 					));
 		}
 		if ( $searchConfig->isInterWiki() ) {
-			$searchConfig->addQueryField( 'wikititle', 7 );
+			$searchConfig->setQueryField( 'wikititle', 7 );
 		}
 		$queryFieldsString = '';
 		foreach ( $searchConfig->getQueryFieldsToBoosts()  as $field => $boost ) {
