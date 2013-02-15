@@ -485,18 +485,11 @@
 		}
 
 		// macbre: move back button on Oasis
-		setTimeout(function() {
-			$().log(to, 'VET_switchScreen');
-			switch(to) {
-				case 'Details':
-					VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
-					break;
-
-				case 'Conflict':
-					VET_moveBackButton($('#VideoEmbedConflictOverwriteButton'));
-					break;
-			}
-		}, 50);
+		if( to == "Details" ) {
+			setTimeout(function() {
+				VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
+			}, 50);
+		}
 	}
 
 	function VET_back(e) {
@@ -511,7 +504,7 @@
 
 	function VET_close() {
 		VET_switchScreen('Main');
-		
+
 		VET_loader.modal.closeModal();
 
 		// Handle MiniEditor focus
@@ -523,6 +516,8 @@
 				wikiaEditor.plugins.MiniEditor.hasFocus = false;
 			}
 		}
+
+		UserLogin.refreshIfAfterForceLogin();
 	}
 
 	function VET_tracking(action, label, value) {
