@@ -8,8 +8,10 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	const FIELD_NAME_QUOTE = 'quote';
 	const FIELD_NAME_URL = 'url';
 
-	static $fieldNames = array('photo', 'title', 'usersUrl', 'quote', 'url');
+	const MODULE_ID = 6;
 
+	static $fieldNames = array('photo', 'title', 'usersUrl', 'quote', 'url');
+	
 	protected function getFormFields() {
 
 		$fields = array();

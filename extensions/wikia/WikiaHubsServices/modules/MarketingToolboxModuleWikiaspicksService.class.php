@@ -1,5 +1,7 @@
 <?php
 class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleService {
+	const MODULE_ID = 3;
+
 	protected function getFormFields() {
 		$fields = array(
 			'sponsoredImage' => array(

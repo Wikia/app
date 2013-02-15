@@ -52,10 +52,28 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $out;
 	}
 
+	public function loadData($model, $timestamp) {
+		$moduleId = $this->getModuleId();
+
+		$moduleData = $model->getPublishedData($this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp, $moduleId);
+
+		if( empty($moduleData[$moduleId]['data']) ) {
+			$moduleData = array();
+		} else {
+			$moduleData = $moduleData[$moduleId]['data'];
+		}
+
+		return $this->getStructuredData($moduleData);
+	}
+
 	public function filterData($data) {
 		$filteredData = array_intersect_key($data, $this->getFormFields());
 		$filteredData = array_filter($filteredData, function ($value) { return !empty($value); });
 		return $filteredData;
+	}
+
+	protected function getModuleId() {
+		return static::MODULE_ID;
 	}
 
 	protected function getView($viewName, $data) {
