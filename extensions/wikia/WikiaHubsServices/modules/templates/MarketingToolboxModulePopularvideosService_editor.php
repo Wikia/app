@@ -24,9 +24,8 @@
 						'MarketingToolboxVideosController',
 						'popularVideoRow',
 						array(
-							'idx' => $idx,
 							'video' => $video,
-							'fields' => $fields,
+							'errorMsg' => (isset($fields['videoUrl']['errorMessage'][$idx]) ? $fields['videoUrl']['errorMessage'][$idx] : ''),
 						)
 					);
 				?>

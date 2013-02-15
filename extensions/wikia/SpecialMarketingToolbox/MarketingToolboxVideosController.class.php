@@ -8,6 +8,7 @@ class MarketingToolboxVideosController extends WikiaController {
 	
 	public function popularVideoRow() {
 		$video = $this->getVal('video');
+		$this->errorMsg = $this->getVal('errorMsg');
 		
 		if( !empty($video) ) {
 			$this->sectionNo = $video['section-no'];

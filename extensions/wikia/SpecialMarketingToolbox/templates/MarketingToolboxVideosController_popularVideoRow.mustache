@@ -6,6 +6,9 @@
 			<time class="timeago">{{timestamp}}</time>
 			<div class="input-group borderNone">
 				<input type="text" value="{{videoFullUrl}}" name="videoUrl[]" class="video-url-input required">
+				{{#errorMsg}}
+					<p class="error error-msg">{{errorMsg}}</p>
+				{{/errorMsg}}
 			</div>
 			<input type="hidden" value="{{videoName}}" name="video[]" class="wmu-file-name-input required">
 		</div>
