@@ -18,17 +18,19 @@
 	</div>
 	
 	<?php if( !empty($videos) ): ?>
-		<?php foreach($videos as $idx => $video): ?>
-			<?= $app->renderView(
-					'MarketingToolboxVideosController',
-					'popularVideoRow',
-					array(
-						'idx' => $idx,
-						'video' => $video,
-						'fields' => $fields,
-					)
-				);
-			?>
-		<?php endforeach; ?>
+		<div class="popular-videos-list">
+			<?php foreach($videos as $idx => $video): ?>
+				<?= $app->renderView(
+						'MarketingToolboxVideosController',
+						'popularVideoRow',
+						array(
+							'idx' => $idx,
+							'video' => $video,
+							'fields' => $fields,
+						)
+					);
+				?>
+			<?php endforeach; ?>
+		</div>
 	<?php endif; ?>
 </div>

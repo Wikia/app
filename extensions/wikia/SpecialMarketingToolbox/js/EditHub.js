@@ -55,8 +55,17 @@ EditHub.prototype = {
 									})
 								).done(function(libData, packagesData) {
 									var template = packagesData[0].mustache[0],
-									html = $.mustache(template, {header: 'foo'});
-									$('#marketing-toolbox-form .module-popular-videos').append(html);
+									html = $.mustache(template, {
+										sectionNo: null,
+										videoTitle: response.videoFileName,
+										timestamp: null,
+										videoFullUrl: null,
+										videoThumbnail: response.videoFileMarkup,
+										deleteMsg: $.msg('marketing-toolbox-edithub-delete-button'),
+										clearMsg: $.msg('marketing-toolbox-edithub-clear-button'),
+										blankImgUrl: null
+									});
+									$('#marketing-toolbox-form .popular-videos-list').prepend(html);
 									VET_loader.modal.closeModal();
 								});
 							}
