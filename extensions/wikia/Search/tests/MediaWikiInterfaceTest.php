@@ -580,6 +580,21 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 		);
 	}
 	
+	/**
+	 * @covers \Wikia\Search\MediaWikiInterface::getGlobalWithDefault
+	 */
+	public function testGetGlobalWithDefault() {
+		$interface = MediaWikiInterface::getInstance();
+		$app = \F::app();
+		$app->wg->Foo = null;
+		
+		$this->assertEquals(
+				'bar',
+				$interface->getGlobalWithDefault( 'Foo', 'bar' ),
+				'\WikiaSearch\MediaWikiInterface::getGlobalWithDefault should return the default value if the global value is null.'
+		);
+	}
+	
     /**
 	 * @covers \Wikia\Search\MediaWikiInterface::setGlobal
 	 */
@@ -1267,5 +1282,12 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 				'wall message title',
 				$get->invoke( $interface, $title )
 		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getNamespaceIdForString
+	 */
+	public function testGetNamespaceIdForString() {
+		$this->assertEquals( NS_CATEGORY, MediaWikiInterface::getInstance()->getNamespaceIdForString( 'Category' ) );
 	}
 }
