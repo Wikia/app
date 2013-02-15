@@ -68,8 +68,8 @@
 				'Linker',
 				'goTo',
 				{
-					ns: ns,
-					title: title
+					title: title,
+					ns: ns
 				}
 			);
 		}

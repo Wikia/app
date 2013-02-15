@@ -14,11 +14,11 @@
 
 //dependencies
 @import "../../WikiaMobile/css/ui";
-@import "../../WikiaMobile/css/infobox";
 @import "../../WikiaMobile/css/sections";
 @import "../../WikiaMobile/css/images";
 @import "../../WikiaMobile/css/videos";
 @import "../../WikiaMobile/css/image_stack";
+@import "../../WikiaMobile/css/infobox";
 @import '../../WikiaMobile/css/modal';
 @import '../../WikiaMobile/css/media_modal';
 @import "../../WikiaMobile/css/mediagallery";
@@ -204,19 +204,6 @@ $width: 1.5;
 	-webkit-transform: rotateZ(-180deg);
 	-moz-transform: rotateZ(-180deg);
 	transform: rotateZ(-180deg);
-}
-
-.wikitable, .sortable{
-	border:1px solid $border-color;
-
-	th{
-		white-space:nowrap;
-	}
-
-	td{
-		border:1px solid $border-color;
-		white-space:nowrap;
-	}
 }
 
 table {
