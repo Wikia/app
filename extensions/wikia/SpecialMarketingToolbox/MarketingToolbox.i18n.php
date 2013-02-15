@@ -90,6 +90,7 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-polls-option-voluntary' => 'Option $1',
 
 	'marketing-toolbox-hub-module-popular-videos-header' => 'Header',
+	'marketing-toolbox-hub-module-popular-videos-clear-confirm' => 'Are you sure you want to clear the entire Popular Videos module?',
 
 	'marketing-toolbox-hub-module-from-the-community-title' => 'Title',
 	'marketing-toolbox-hub-module-from-the-community-users-url' => 'User\'s URL',

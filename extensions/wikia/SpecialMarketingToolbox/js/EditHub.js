@@ -207,7 +207,6 @@ EditHub.prototype = {
 		var html = $.mustache(template, {
 			sectionNo: 2,
 			videoTitle: vetData.videoFileName,
-			videoName: vetData.videoFileName,
 			timestamp: null,
 			videoFullUrl: vetData.videoUrl,
 			videoThumbnail: vetData.videoFileMarkup,
@@ -227,7 +226,9 @@ EditHub.prototype = {
 	},
 
 	popularVideosRemoveAll: function(event) {
-		$('.popular-videos-list .module-box').remove();
+		if (confirm($.msg('marketing-toolbox-hub-module-popular-videos-clear-confirm')) == true) {
+			$('.popular-videos-list .module-box').remove();
+		}
 	},
 
 	popularVideosResetIndex: function(index, element) {
