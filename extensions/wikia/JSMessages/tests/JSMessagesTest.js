@@ -11,7 +11,7 @@ describe("JSMessages", function () {
 
 	var async = new AsyncSpec(this),
 		nirvanaMock = {},
-		msg = define.getModule(nirvanaMock);
+		msg = define.getModule(nirvanaMock, jQuery.Deferred);
 
 	window.wgMessages = {
 		foo: 'bar',
@@ -64,7 +64,7 @@ describe("JSMessages", function () {
 					return dfd.promise();
 				}
 			},
-			msg = define.getModule(nirvanaMock);
+			msg = define.getModule(nirvanaMock, jQuery.Deferred);
 
 		msg.get(packageName).then(function(resp) {
 			// new message value should be used
