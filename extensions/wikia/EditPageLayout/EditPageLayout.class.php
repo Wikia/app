@@ -543,13 +543,8 @@ class EditPageLayout extends EditPage {
 			if( $file ) {
 				$title = $file->getTitle()->getText();
 				$content = "[[File:" . $title . "|right|thumb|335px]] " . $content;
-				$message = '';
-				if(WikiaFileHelper::isFileTypeVideo( $file )) {
-					$message = $this->app->wf->Msg( 'wikia-editor-add-video-notice' );
-				} else {
-					$message = $this->app->wf->Msg( 'wikia-editor-add-image-notice' );
-				}
-				$this->helper->addJsVariable( 'wgEditPageAddFileMessage', $message );
+				$type = WikiaFileHelper::isFileTypeVideo( $file ) ? 'video' : 'photo';
+				$this->helper->addJsVariable( 'wgEditPageAddFileType', $type );
 			}
 		}
 		return $content;
