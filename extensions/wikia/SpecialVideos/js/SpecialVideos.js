@@ -7,7 +7,7 @@ var SpecialVideos = {
 
 				if(currSort != newSort) {
 					var sort = $target.data('sort');
-					(new Wikia.Querystring(window.wgEditHubUrl)).setVal('sort', sort).goTo();
+					(new Wikia.Querystring()).setVal('sort', sort).goTo();
 				}
 			}
 		});
@@ -28,7 +28,7 @@ var SpecialVideos = {
 							GlobalNotification.show( formRes.error, 'error' );
 						} else {
 							VET_loader.modal.closeModal();
-							window.location.search = "?sort=recent";
+							(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
 						}
 					},
 					// error callback
