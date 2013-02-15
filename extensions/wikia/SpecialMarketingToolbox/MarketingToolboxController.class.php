@@ -358,6 +358,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$this->videoFileName = $fileName;
 		$this->videoFileMarkup = $thumb;
+		$this->videoUrl = $url;
 	}
 
 	// TODO extract this code somewhere

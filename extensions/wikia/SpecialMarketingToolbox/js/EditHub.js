@@ -14,6 +14,7 @@ EditHub.prototype = {
 
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
 		$('.module-popular-videos').on('click', '.remove', $.proxy(this.popularVideosRemove, this));
+		$('.MarketingToolboxMain #marketing-toolbox-removeall').click($.proxy(this.popularVideosRemoveAll, this));
 		$('.MarketingToolboxMain .vet-show').each(function() {
 			var $this = $(this);
 			
@@ -204,23 +205,33 @@ EditHub.prototype = {
 
 	popularVideosAdd: function(template, vetData) {
 		var html = $.mustache(template, {
-			sectionNo: null,
+			sectionNo: 2,
 			videoTitle: vetData.videoFileName,
+			videoName: vetData.videoFileName,
 			timestamp: null,
-			videoFullUrl: null,
+			videoFullUrl: vetData.videoUrl,
 			videoThumbnail: vetData.videoFileMarkup,
-			deleteMsg: $.msg('marketing-toolbox-edithub-delete-button'),
+			removeMsg: $.msg('marketing-toolbox-edithub-remove'),
 			blankImgUrl: window.wgBlankImgUrl
 		});
-		$('#marketing-toolbox-form .popular-videos-list').prepend(html);
+		$('#marketing-toolbox-form .popular-videos-list')
+			.prepend(html)
+			.find('.module-box')
+			.each(this.popularVideosResetIndex);
 	},
 
 	popularVideosRemove: function(event) {
 		var moduleContainer = '.module-box';
 		$(event.target).parents(moduleContainer).remove();
-		$('.popular-videos-list').find(moduleContainer).each(function(index, element) {
-			$(element).find('h3').text(index + 2 + '.');
-		});
+		$('.popular-videos-list').find(moduleContainer).each(this.popularVideosResetIndex);
+	},
+
+	popularVideosRemoveAll: function(event) {
+		$('.popular-videos-list .module-box').remove();
+	},
+
+	popularVideosResetIndex: function(index, element) {
+		$(element).find('h3').text(index + 2 + '.');
 	},
 
 	confirmRemoveSponsoredImage: function() {
