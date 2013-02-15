@@ -39,3 +39,17 @@ This command will run all tests from ``tests`` subdirectories of:
 
 * /extensions/wikia
 * /resources/wikia/modules
+
+## Running extension unit tests
+
+The following commands will run all unit tests from ``/extensions/wikia/Foo/tests`` directory:
+
+```
+cd /usr/wikia/source/wiki/tests
+./js-extension Foo
+```
+
+```
+cd /usr/wikia/source/wiki/tests
+./php-extension Foo
+```
