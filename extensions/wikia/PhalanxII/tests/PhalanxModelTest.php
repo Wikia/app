@@ -35,48 +35,155 @@ class PhalanxModelTest extends WikiaBaseTest {
 			)
 		);
 
-		$this->mockApp();
 		$this->mockGlobalVariable('wgUser', $userMock);	
 		
 		return $userMock;
 	}
+	
+	private function setUpTitle( $title ){
+		// User 
+		$titleMock = $this->mockClassWithMethods( 'Title', 
+			array( 
+				'newFromText'  => null,
+				'getFullText' => $title,
+				'getPrefixedText' => $title
+			), 
+			'newFromText'
+		);
+		
+		$this->mockGlobalVariable('wgTitle', $titleMock);	
+		
+		return $titleMock;
+	}
+	
+	private function setUpTest( $block ) {
+		// PhalanxService
+		$this->mockClassWithMethods( 'PhalanxService', array( 'match' => $block, 'setUser' => null, 'setLimit' => null ) );	
+		$this->mockApp();	
+	}
 
 	/* PhalanxUserModel class */
-
 	/* match_user method */
 	/**
 	 * @dataProvider phalanxUserModelDataProvider
 	 */
 	public function testPhalanxUserModelMatchUser( $isAnon, $userName, $email, $block, $result, $errorMsg ) {		
 		$userMock = $this->setUpUser( $userName, $email, $isAnon );
+		$this->setUpTest( $block );
 
-		// PhalanxService
-		$serviceMock = $this->mockClassWithMethods( 'PhalanxService', array( 'match' => $block, 'setUser' => 'self', 'setLimit' => 'self' ) );
-		$this->proxyClass( 'PhalanxService', $serviceMock );
-		
 		// model
 		$model = new PhalanxUserModel( $userMock );
-		$ret = (int) $model->match_user();
-
+		$ret = ( int ) $model->match_user();
+		
 		$this->assertEquals( $result, $ret );
 	}
 	
+	/* PhalanxUserModel class */
 	/* match_email method */
 	/**
 	 * @dataProvider phalanxUserModelDataProvider
 	 */
-/*	public function testPhalanxUserModelMatchEmail( $isAnon, $userName, $email, $block, $result, $errorMsg ) {		
+	public function testPhalanxUserModelMatchEmail( $isAnon, $userName, $email, $block, $result, $errorMsg ) {		
 		$userMock = $this->setUpUser( $userName, $email, $isAnon );
+		$this->setUpTest( $block );
 
-		// PhalanxService
-		$serviceMock = $this->mockClassWithMethods( 'PhalanxService', array( 'match' => $block ) );
-
+		// model
 		$model = new PhalanxUserModel( $userMock );
-		$ret = (int) $model->match_email();
+		$ret = ( int ) $model->match_email();
 
 		$this->assertEquals( $result, $ret );
-	}*/
+	}
 
+	/* PhalanxTextModel class */
+	 
+	/* wiki_creation method */
+	/**
+	 * @dataProvider phalanxTextModelDataProvider
+	 */
+	public function testPhalanxTextModelWikiCreation( $text, $block, $result ) {
+		$this->setUpTest( $block );
+		
+		$model = new PhalanxTextModel( $text );
+		$ret = ( int ) $model->wiki_creation();
+		
+		$this->assertEquals( $result, $ret );	
+	}
+	
+	/* PhalanxContentModel class */	 
+	/* match_question_title method */
+	/**
+	 * @dataProvider phalanxTitleDataProvider
+	 */
+	public function testPhalanxContentModelQuestionTitle( $title, $block, $language, $result ) {
+		$titleMock = $this->setUpTitle( $title );
+		$this->setUpTest( $block );
+		
+		$model = new PhalanxContentModel( $titleMock, $language );
+		$ret = ( int ) $model->match_question_title();
+		
+		$this->assertEquals( $result, $ret );
+	}
+
+	/* PhalanxContentModel class */
+	/* match_recent_questions method */
+	/**
+	 * @dataProvider phalanxTitleDataProvider
+	 */
+	public function testPhalanxContentModelRecentQuestions( $title, $block, $language, $result ) {
+		$titleMock = $this->setUpTitle( $title );
+		$this->setUpTest( $block );
+		
+		$model = new PhalanxContentModel( $titleMock, $language );
+		$ret = ( int ) $model->match_recent_questions();
+		
+		$this->assertEquals( $result, $ret );
+	}
+	
+	/* PhalanxContentModel class */
+	/* match_summary method */
+	/**
+	 * @dataProvider phalanxContentModelDataProvider
+	 */
+	public function testPhalanxContentModelSummary( $title, $text, $summary, $block_text, $block_summary, $result_text, $result_summary ) {
+		$titleMock = $this->setUpTitle( $title );
+		$this->setUpTest( $block_summary );
+		
+		$model = new PhalanxContentModel( $titleMock );
+		$ret = ( int ) $model->match_summary( $summary );
+		
+		$this->assertEquals( $result_summary, $ret );
+	}
+	
+	/* PhalanxContentModel class */
+	/* match_content method */
+	/**
+	 * @dataProvider phalanxContentModelDataProvider
+	 */
+	public function testPhalanxContentModelContent( $title, $text, $summary, $block_text, $block_summary, $result_text, $result_summary ) {
+		$titleMock = $this->setUpTitle( $title );
+		$this->setUpTest( $block_text );
+		
+		$model = new PhalanxContentModel( $titleMock );
+		$ret = ( int ) $model->match_content( $text );
+		
+		$this->assertEquals( $result_text, $ret );
+	}
+	
+	/* PhalanxContentModel class */
+	/* match_title method */
+	/**
+	 * @dataProvider phalanxTitleDataProvider
+	 */
+	public function testPhalanxContentModelTitle( $title, $block, $language, $result ) {
+		$titleMock = $this->setUpTitle( $title );
+		$this->setUpTest( $block );
+		
+		$model = new PhalanxContentModel( $titleMock );
+		$ret = ( int ) $model->match_title();
+		
+		$this->assertEquals( $result, $ret );
+	}
+	
 	/* data providers */
 	public function phalanxUserModelDataProvider() {
 		/* valid user */
@@ -140,5 +247,127 @@ class PhalanxModelTest extends WikiaBaseTest {
 		);
 	
 		return array( $validUser, $invalidUser, $invalidUserEmail, $okUser );
+	}
+	
+	public function phalanxTextModelDataProvider() {
+		/* valid text */
+		$validWiki = array(
+			'text'		=> self::VALID_WIKIA_NAME,
+			'block'     => 0,
+			'result'    => 1,
+		);
+	
+		/* invalid text */
+		$invalidWiki = array(
+			'title'		=> self::INVALID_WIKIA_NAME,
+			'block'     => (object) array(
+				'regex' => 0,
+				'expires' => '',
+				'text' => self::INVALID_WIKIA_NAME,
+				'reason' => 'Test wiki creation block',
+				'exact' => '',
+				'caseSensitive' => '', 
+				'id' => 4013,
+				'language' => 'en', 
+				'authorId' => 184532,
+			),
+			'result'    => 0,
+		);
+		
+		/* empty text */
+		$invalidWiki = array(
+			'text'		=> '',
+			'block'     => 0,
+			'result'    => 1,
+		);
+		
+		return array( $validWiki, $invalidWiki );
+	}
+	
+	public function phalanxContentModelDataProvider() {
+		/* valid textbox & summary */
+		$validContent = array(
+			'title'			=> self::VALID_TITLE,
+			'textbox'		=> self::VALID_CONTENT,
+			'summary'   	=> self::VALID_SUMMARY,
+			'block_text'	=> 0,
+			'block_summary'	=> 0,
+			'result_text'  	=> 1,
+			'result_summary'=> 1
+		);
+	
+		/* invalid content, valid summary */
+		$invalidContent = array(
+			'title'     	=> self::VALID_TITLE,
+			'textbox'		=> self::INVALID_CONTENT,
+			'summary'   	=> self::VALID_SUMMARY,
+			'block_text'	=> (object) array(
+				'regex' => 0,
+				'expires' => '',
+				'text' => self::INVALID_CONTENT,
+				'reason' => 'Test content block',
+				'exact' => '',
+				'caseSensitive' => '', 
+				'id' => 4014,
+				'language' => 'en', 
+				'authorId' => 184532,
+			),
+			'block_summary' => 0,
+			'result_text'   => 0,
+			'result_summary'=> 1
+		);
+		
+		/* valid content, invalid summary */
+		$invalidSummary = array(
+			'title'     	=> self::VALID_TITLE,
+			'textbox'		=> self::VALID_CONTENT,
+			'summary'   	=> self::INVALID_SUMMARY,
+			'block_text'    => 0,
+			'block_summary' => (object) array(
+				'regex' => 0,
+				'expires' => '',
+				'text' => self::INVALID_SUMMARY,
+				'reason' => 'Test content block',
+				'exact' => '',
+				'caseSensitive' => '', 
+				'id' => 4015,
+				'language' => 'en', 
+				'authorId' => 184532,
+			),
+			'result_text'   => 1,
+			'result_summary'=> 0
+		);
+
+		return array( $validContent, $invalidContent, $invalidSummary );
+	}
+	
+	public function phalanxTitleDataProvider() {
+		/* valid title */
+		$validTitle = array(
+			'title'		=> self::VALID_TITLE,
+			'block'     => 0,
+			'language'  => 'en',
+			'result'    => 1,
+		);
+	
+		/* invalid title */
+		$invalidTitle = array(
+			'title'		=> self::INVALID_TITLE,
+			'block'     => (object) array(
+				'regex' => 0,
+				'expires' => '',
+				'text' => self::INVALID_TITLE,
+				'reason' => 'Test answers block',
+				'exact' => '',
+				'caseSensitive' => '', 
+				'id' => 4011,
+				'language' => 'en', 
+				'authorId' => 184532,
+			),
+			'language'  => 'en',
+			'result'    => 0,
+		);
+		
+		return array( $validTitle, $invalidTitle );
 	}
 }

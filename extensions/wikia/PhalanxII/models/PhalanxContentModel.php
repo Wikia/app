@@ -14,7 +14,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 
 	public function getText() {
-		return preg_replace( '/\s+/', ' ', preg_replace( '/[^\PP]+/', '', $this->title->getFullText() ) );
+		return preg_replace( '/\s+/', ' ', preg_replace( '/[^\PP]+/', '', ( isset( $this->text ) ) ? $this->text : $this->title->getFullText() ) );
 	}
 
 	public function buildWhiteList() {

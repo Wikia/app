@@ -110,7 +110,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		foreach($methods as $methodName => $retVal) {
 			$mock->expects( $this->any() )
 				->method( $methodName )
-				->will( $this->returnValue( ( $retVal == 'self' ) ? $mock : $retVal) );
+				->will( $this->returnValue( ( is_null( $retVal ) ) ? $mock : $retVal) );
 		}
 
 		$this->proxyClass($className, $mock, $staticConstructor);
