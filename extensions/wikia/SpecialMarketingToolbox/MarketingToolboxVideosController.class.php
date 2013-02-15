@@ -7,59 +7,24 @@ class MarketingToolboxVideosController extends WikiaController {
 	}
 	
 	public function popularVideoRow() {
-		$idx = $this->getVal('idx');
 		$video = $this->getVal('video');
-		$fields = $this->getVal('fields');
 		
 		if( !empty($video) ) {
 			$this->sectionNo = $video['section-no'];
+			$this->videoName = $video['id'];
 			$this->videoTitle = $video['title'];
 			$this->videoFullUrl = $video['fullUrl'];
 			$this->timestamp = wfTimeFormatAgo($video['timestamp']);
-			
-			$this->hiddenFormFields = $this->app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array(
-					'inputData' => array_merge(
-						$fields['video'],
-						array('index' => $idx)
-					)
-				)
-			);
-			
-			$this->formFields = $this->app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array(
-					'inputData' => array_merge(
-						$fields['videoUrl'],
-						array('index' => $idx)
-					)
-				)
-			);
 			
 			$this->videoThumbnail = $this->app->renderView(
 				'MarketingToolboxVideos',
 				'index',
 				array('video' => $video)
 			);
-			
-			$this->hiddenFormFields = $this->app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array(
-					'inputData' => array_merge(
-						$fields['video'],
-						array('index' => $idx)
-					)
-				)
-			);
 		}
 		
 		//button messages
-		$this->deleteMsg = $this->wf->msg('marketing-toolbox-edithub-delete-button');
-		$this->clearMsg = $this->wf->msg('marketing-toolbox-edithub-clear-button');
+		$this->removeMsg = $this->wf->msg('marketing-toolbox-edithub-remove');
 		
 		//blank image
 		$this->blankImgUrl = $this->wg->BlankImgUrl;

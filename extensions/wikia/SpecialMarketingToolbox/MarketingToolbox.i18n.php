@@ -45,8 +45,8 @@ $messages['en'] = array(
 	'marketing-toolbox-edithub-file-name' => 'File name',
 	'marketing-toolbox-edithub-video-name' => 'Video name',
 	'marketing-toolbox-edithub-sponsored-image' => 'Add a Sponsored Image',
-	'marketing-toolbox-edithub-sponsored-image-remove' => 'Remove',
-	'marketing-toolbox-edithub-delete-button' => 'Delete',
+	'marketing-toolbox-edithub-remove' => 'Remove',
+	'marketing-toolbox-edithub-removeall-button' => 'Remove all',
 
 	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire $1 module?',
 	'marketing-toolbox-edithub-clear-confirmation' => 'Are you sure you want to clear this section?',

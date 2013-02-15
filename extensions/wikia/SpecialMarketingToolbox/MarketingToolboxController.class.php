@@ -106,7 +106,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 * Main action for editing hub modules
 	 */
 	public function editHubAction() {
-
 		$this->retriveDataFromUrl();
 
 		$this->wg->Out->addJsConfigVars([
