@@ -37,10 +37,10 @@ class RelatedVideosController extends WikiaController {
 		$this->totalVideos = $this->getTotalVideos();
 		$this->canAddVideo = $this->wg->User->isAllowed( 'relatedvideosedit' );
 	}
-	
+
 	public function getTotalVideos(){
 		$mediaService = new MediaQueryService();
-		return $this->wg->Lang->formatNum( $mediaService->getTotalVideos() );	
+		return $this->wg->Lang->formatNum( $mediaService->getTotalVideos() );
 	}
 
 	public function getVideo(){
@@ -246,12 +246,11 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function removeVideo() {
-
-		$articleId = $this->getVal( 'articleId', '' );
 		$title = urldecode( $this->getVal( 'title', '' ) );
 		$external = $this->getVal( 'external', 0 );
-		$rvd = F::build( 'RelatedVideosData' ); /** @var $rvd RelatedVideosData */
-		$retval = $rvd->removeVideo( $articleId, $title, $external );
+
+		$rvd = new RelatedVideosData();
+		$retval = $rvd->removeVideo( $title, $external );
 		if ( is_string( $retval ) ) {
 			$this->setVal( 'error', $retval );
 		}

@@ -18,7 +18,7 @@ class RelatedVideosNamespaceData {
 	const WHITELIST_MARKER = 'WHITELIST';
 	const VIDEO_MARKER = '* ';
 	const GLOBAL_RV_LIST = 'RelatedVideosGlobalList';
-	
+
 	protected function __construct( $id, Title $title = null ) {
 		$this->mId = $id;
 		$this->mTitle = ( $title ? $title : null );
@@ -28,7 +28,7 @@ class RelatedVideosNamespaceData {
 
 		wfDebug(__METHOD__ . ": relatedVideosNS article ID #{$id}\n");
 	}
-	
+
 	/**
 	 * Return instance of this class for given article from RelatedVideos namespace
 	 */
@@ -69,7 +69,7 @@ class RelatedVideosNamespaceData {
 		wfProfileOut( __METHOD__ );
 		return self::newFromGeneralMessage();
 	}
-	
+
 	static public function create(Title $title) {
 		wfProfileIn( __METHOD__ );
 		if (empty($title) || $title->exists()) {
@@ -79,11 +79,11 @@ class RelatedVideosNamespaceData {
 
 		$article = F::build( 'Article', array( $title ) );
 		$status = $article->doEdit( '', 'Article created', EDIT_NEW, false, F::app()->wg->user);
-		
+
 		wfProfileOut( __METHOD__ );
 		return self::newFromTitle( $article->getTitle() );
 	}
-	
+
 	public function getId() {
 		return $this->mId;
 	}
@@ -115,7 +115,7 @@ class RelatedVideosNamespaceData {
 	 */
 	protected function load( $master = false ) {
 		global $wgMemc;
-		
+
 		wfProfileIn(__METHOD__);
 
 		if (!$master) {
@@ -141,14 +141,14 @@ class RelatedVideosNamespaceData {
 			$mode = '';
 			foreach($lines as $line) {
 				$line = trim( $line );
-				
+
 				if ( strtoupper( $line ) == self::BLACKLIST_MARKER ) {
 					$mode = self::BLACKLIST_MARKER;
 				} elseif ( strtoupper( $line ) == self::WHITELIST_MARKER ) {
 					$mode = self::WHITELIST_MARKER;
 				} elseif ( startsWith( $line, self::VIDEO_MARKER ) ) {
 					$line = substr( $line, strlen( self::VIDEO_MARKER ) );
-					
+
 					$isFromVideoWiki = false;
 					$aLine	= explode( "|", $line );
 
@@ -161,7 +161,7 @@ class RelatedVideosNamespaceData {
 						$title = substr( $title, strlen( self::VIDEOWIKI_MARKER ) );
 						$isFromVideoWiki = true;
 					}
-					
+
 					if ( $mode ) {
 						$lists[ $mode ][] = $this->createEntry( $title, $isFromVideoWiki, $user, $date, $isNewDate );
 					}
@@ -173,7 +173,7 @@ class RelatedVideosNamespaceData {
 			);
 
 			wfDebug(__METHOD__ . ": loaded from scratch\n");
-			
+
 			// store it in memcache
 			F::app()->wg->memc->set($this->mMemcacheKey, $this->mData, self::CACHE_TTL);
 		}
@@ -186,7 +186,7 @@ class RelatedVideosNamespaceData {
 		wfProfileOut(__METHOD__);
 		return;
 	}
-	
+
 	/**
 	 * Make contents for RelatedVideosNamespace article out of mData
 	 */
@@ -202,13 +202,13 @@ class RelatedVideosNamespaceData {
 
 			if (!empty($this->mData['lists'][self::BLACKLIST_MARKER])) {
 				$text .= "\n" . self::BLACKLIST_MARKER . "\n\n";
-				$text .= $this->serializeList($this->mData['lists'][self::BLACKLIST_MARKER]);				
+				$text .= $this->serializeList($this->mData['lists'][self::BLACKLIST_MARKER]);
 			}
 		}
 		wfProfileOut( __METHOD__ );
 		return $text;
 	}
-	
+
 	/**
 	 * Make contents for RelatedVideosNamespace article out of a video list
 	 * @param Array $list
@@ -235,7 +235,7 @@ class RelatedVideosNamespaceData {
 		wfProfileOut( __METHOD__ );
 		return $text;
 	}
-	
+
 	/**
 	 * Purges memcache entry
 	 */
@@ -257,7 +257,7 @@ class RelatedVideosNamespaceData {
 			$dbw = wfGetDB(DB_MASTER);
 			$dbw->commit();
 		}
-		
+
 		wfDebug(__METHOD__ . ": purged RelatedVideos NS article #{$this->mId}\n");
 		wfProfileOut(__METHOD__);
 	}
@@ -266,11 +266,9 @@ class RelatedVideosNamespaceData {
 	 * Add entries to specified list, and remove them from the other list
 	 * @param string $list BLACKLIST_MARKER or WHITELIST_MARKER
 	 * @param array $entries
-	 * @param int $mainNsArticleId ID of associated article in NS_MAIN
-	 * @return type 
+	 * @return type
 	 */
-	public function addToList($list, Array $entries, $mainNsArticleId) {
-
+	public function addToList( $list, Array $entries ) {
 		wfProfileIn( __METHOD__ );
 		$content = '';
 		$status = '';
@@ -402,5 +400,26 @@ class RelatedVideosNamespaceData {
 		}
 		wfProfileOut( __METHOD__ );
 		return $entry;
+	}
+
+	/**
+	 * check if videoTitle exists in the list
+	 * @param string $videoTitle
+	 * @param string $list [BLACKLIST_MARKER, WHITELIST_MARKER]
+	 * @return type
+	 */
+	public function entryExists( $videoTitle, $list ) {
+		if ( !empty($videoTitle) && !empty($list) ) {
+			$this->load();
+			if ( !empty($this->mData['lists'][$list]) ) {
+				foreach( $this->mData['lists'][$list] as $entry ) {
+					if ( $entry['title'] == $videoTitle ) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 }
