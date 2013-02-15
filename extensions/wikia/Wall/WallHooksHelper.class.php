@@ -2082,7 +2082,7 @@ class WallHooksHelper {
 		$title = $app->wg->Title;
 		$curUser = $app->wg->User;
 		if ($title->getNamespace() === NS_USER_WALL) {
-			$user = User::newFromName($title->getText());
+			$user = User::newFromName($title->getText(), false);
 		} else {
 			return true;
 		}
