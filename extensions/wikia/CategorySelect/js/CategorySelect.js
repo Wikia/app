@@ -551,7 +551,7 @@
 		 *          invalid.
 		 */
 		normalize: (function() {
-			var properties = [ 'name', 'namespace', 'sortKey' ],
+			var properties = [ 'name', 'namespace', 'outerTag', 'sortKey', 'type' ],
 				rCategory = new RegExp( '\\[\\[' +
 					// Category namespace
 					'(' + wgCategorySelect.defaultNamespaces + '):' +
