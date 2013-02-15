@@ -429,6 +429,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'#group_tracker_js',
 
 		//modules
+		'//resources/wikia/modules/deferred.js',
 		'//resources/wikia/modules/ajax.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',

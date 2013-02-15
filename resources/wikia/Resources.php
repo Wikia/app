@@ -14,6 +14,7 @@ return array(
 	'amd.shared' => array(
 		'dependencies' => array(
 			'wikia.window',
+			'wikia.deferred',
 			'wikia.ajax',
 			'wikia.nirvana',
 			'wikia.mw',
@@ -32,6 +33,13 @@ return array(
 	'wikia.window' => array(
 		'scripts' => 'resources/wikia/modules/window.js',
 		'dependencies' => 'amd',
+	),
+	'wikia.deferred' => array(
+		'scripts' => 'resources/wikia/modules/deferred.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.window'
+		)
 	),
 	'wikia.ajax' => array(
 		'scripts' => 'resources/wikia/modules/ajax.js',
