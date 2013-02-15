@@ -1,13 +1,32 @@
 <?php
 
-require_once dirname( __FILE__ ) . "../GlobalWatchlist.bot.php";
+require_once "includes/GlobalFunctions.php";
+require_once dirname( __FILE__ ) . "/../GlobalWatchlist.php";
+require_once dirname( __FILE__ ) . "/../GlobalWatchlist.bot.php";
+require_once dirname( __FILE__ ) . "/../GlobalWatchlist.i18n.php";
 
-class GlobalWatchlistTest extends WikiaBaseTest {
+
+class GlobalWatchlistBotTest extends WikiaBaseTest {
+	private function mockUser( $userName, $email) {
+		$userMock = $this->mockClassWithMethods( 'User',
+		  array(
+		    'isAnon' => true,
+	 	    'getName' => $userName,
+	 	    'getEmail' => $email,
+	 	    'getOption' => "en"
+	 	  )
+	  );
+	
+  	return $userMock;
+	}
 
 	public function testBlogsSection() {
-		$bot = new GlobalWatchlistBot(true, array(), array());
-		$mail = $bot->composeMail(null, null, null); // TODO: mocks for user and changed data
-		// TODO: asserts
-
+		$user = $this->mockUser("test", "test@example.com", false);
+		$bot = new GlobalWatchlistBot(true, array($user), array());
+		$digests = array();
+		$mail = $bot->composeMail($user, $digests, false);
+		print_r($mail);
+    
 	}
+
 }

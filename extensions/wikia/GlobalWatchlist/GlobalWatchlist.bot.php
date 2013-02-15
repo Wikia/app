@@ -364,7 +364,7 @@ class GlobalWatchlistBot {
 	/**
 	 * compose digest email for user
 	 */
-	private function composeMail ( $oUser, $aDigestsData, $isDigestLimited ) {
+	function composeMail ( $oUser, $aDigestsData, $isDigestLimited ) {
 		global $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
 
 		$sDigests = "";
@@ -379,7 +379,6 @@ class GlobalWatchlistBot {
 			$usehtmlemail = true;
 		}
 		$oUserLanguage = $oUser->getOption( 'language' ); // get this once, since its used 10 times in this func
-
 		foreach ( $aDigestsData as $aDigest ) {
 			$wikiname = $aDigest['wikiName'] . ( $aDigest['wikiLangCode'] != 'en' ?  " (" . $aDigest['wikiLangCode'] . ")": "" ) . ':';
 
@@ -453,11 +452,9 @@ class GlobalWatchlistBot {
 
 			$sDigests .= "\n";
 		}
-
 		if ( $isDigestLimited ) {
 			$sDigests .= $this->getLocalizedMsg( 'globalwatchlist-see-more', $oUserLanguage ) . "\n";
 		}
-
 		$aEmailArgs = array(
 			0 => ucfirst( $oUser->getName() ),
 			1 => ( $iPagesCount > 0 ) ? $sDigests : $this->getLocalizedMsg( 'globalwatchlist-no-page-found', $oUserLanguage ),
