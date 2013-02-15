@@ -36,7 +36,10 @@ return array(
 	),
 	'wikia.deferred' => array(
 		'scripts' => 'resources/wikia/modules/deferred.js',
-		'dependencies' => 'amd',
+		'dependencies' => array(
+			'amd',
+			'wikia.window'
+		)
 	),
 	'wikia.ajax' => array(
 		'scripts' => 'resources/wikia/modules/ajax.js',
