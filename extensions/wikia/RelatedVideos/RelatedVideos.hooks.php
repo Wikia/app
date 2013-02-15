@@ -54,12 +54,10 @@ class RelatedVideosHookHandler {
 					break;
 				case NS_MEDIAWIKI:
 					if ( $title->getText() == RelatedVideosNamespaceData::GLOBAL_RV_LIST ) {
-						$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle($title);
-						$relatedVideosNSData->purge();
-
-						if ( VideoInfoHelper::videoInfoExists() ) {
-							$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
-							if ( !empty($relatedVideos) ) {
+						$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
+						if ( !empty($relatedVideos) ) {
+							$relatedVideos->purge();
+							if ( VideoInfoHelper::videoInfoExists() ) {
 								$data = $relatedVideos->getData();
 								if ( !empty($data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER]) ) {
 									$images = array();
@@ -188,6 +186,59 @@ class RelatedVideosHookHandler {
 	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
 		if ( $oldTitle->getDBKey() != $newTitle->getDBKey() ) {
 			RelatedVideosEmbededData::purgeEmbededArticles( $oldTitle );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: remove premium videos from related videos list
+	 * @param File $file
+	 * @param Status|string $result
+	 * @return true
+	 */
+	public static function onRemoteFileRemoveComplete( $file, &$result ) {
+		if ( !WikiaFileHelper::isFileTypeVideo($file) ) {
+			return true;
+		}
+
+		$isRemote = !$file->isLocal();
+		if ( VideoInfoHelper::videoInfoExists() && $isRemote ) {
+			$videoInfoHelper = new VideoInfoHelper();
+			$title = $file->getTitle();
+			if ( $title instanceof Title && $videoInfoHelper->isVideoRemoved($title) ) {
+				// move title from white list to black list
+				$relatedVideos = new RelatedVideosData();
+				$result = $relatedVideos->removeVideo( $title, $isRemote );
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: add unremoved premium videos to related videos list
+	 * @param File $file
+	 * @param Status|string $result
+	 * @return true
+	 */
+	public static function onRemoteFileUnremoveComplete( $file, &$result ) {
+		if ( !WikiaFileHelper::isFileTypeVideo($file) ) {
+			return true;
+		}
+
+		if ( VideoInfoHelper::videoInfoExists() && !$file->isLocal() ) {
+			$title = $file->getTitle();
+			if ( $title instanceof Title ) {
+				$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
+				if( !empty($relatedVideos) ) {
+					// add video only if the videos already exists in blacklist
+					if ( $relatedVideos->entryExists( $title->getText(), RelatedVideosNamespaceData::BLACKLIST_MARKER ) ) {
+						$entry = $relatedVideos->createEntry( $title->getText(), RelatedVideosData::V_WIKIAVIDEO );
+						$result = $relatedVideos->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array( $entry ) );
+					}
+				}
+			}
 		}
 
 		return true;
