@@ -1,14 +1,14 @@
 <?php 
-
+/**
+ * Class definition for WikiaSearchConfig
+ */
+use Wikia\Search\MediaWikiInterface;
 /**
  * A config class intended to handle variable flags for search
  * Intended to be a dependency-injected receptacle for different search requirements
- * 
  * @author Robert Elwell
- *
  */
-
-class WikiaSearchConfig extends WikiaObject implements ArrayAccess
+class WikiaSearchConfig implements \ArrayAccess
 {
 	/**
 	 * Default number of results per page. Usually overwritten. 
@@ -132,12 +132,18 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	private $filterQueries = array();
 	
 	/**
+	 * Used to shift all MediaWiki logic elsewhere.
+	 * @var MediaWikiInterface
+	 */
+	protected $interface;
+	
+	/**
 	 * Constructor method
 	 * @see   WikiaSearchConfigTest::testConstructor
 	 * @param array $params
 	 */
 	public function __construct( array $params = array() ) {
-		parent::__construct();
+		$this->interface = MediaWikiInterface::getInstance();
 		
 		$dynamicFilterCodes = array(
 				self::FILTER_CAT_VIDEOGAMES		=>	WikiaSearch::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' )  ),
@@ -239,7 +245,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		if ( strpos( $query, ':' ) !== false ) {
 			$queryNsExploded = explode( ':', $query );
 			$queryNamespaceStr = array_shift( $queryNsExploded );
-			$queryNamespace	= $this->wg->ContLang->getNsIndex( $queryNamespaceStr );
+			$queryNamespace	= $this->interface->getNamespaceIdForString( $queryNamespaceStr );
 			if ( $queryNamespace ) {
 				$namespaces = $this->getNamespaces();
 			    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
@@ -507,8 +513,8 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	            )
 	    );
 	    
-	    $this->wf->RunHooks( 'SpecialSearchProfiles', array( &$profiles ) );
-	
+	    $this->interface->invokeHook( 'SpecialSearchProfiles', array( &$profiles ) );
+
 	    foreach( $profiles as $key => &$data ) {
 	        sort( $data['namespaces'] );
 	    }
@@ -559,10 +565,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 */
 	public function getCityId() {
 		if ( empty( $this->params['cityId'] ) && (! $this->isInterWiki() ) ) {
-			
-			$cityId = (! empty( $this->wg->SearchWikiId ) ) ? $this->wg->SearchWikiId : $this->wg->CityId; 
-			
-			return $this->setCityId( $cityId )->getCityId();
+			return $this->setCityId( $this->interface->getWikiId() )->getCityId();
 		}
 		return $this->params['cityId'];
 	}

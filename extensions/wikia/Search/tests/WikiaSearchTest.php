@@ -268,6 +268,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 
 		$wikiaSearch	= F::build( 'WikiaSearch' );
 		$searchConfig	= F::build( 'WikiaSearchConfig' );
+		$searchConfig->setCityId( $mockCityId ); // some wonkiness with mediawikiinterface
 
 		$method = new ReflectionMethod( 'WikiaSearch', 'getQueryClausesString' );
 		$method->setAccessible( true );
