@@ -68,21 +68,6 @@ var SpecialVideos = {
 							}
 						});
 						
-						/*
-						// we assume that above call works majority of the time, so we fade it out here without checking response
-						videoElement.fadeOut('slow', function() {
-							videoElement.remove();
-							$('.video-element').each(function(index, el) {
-								el = $(el);
-								if (index % 3 === 0) {
-									el.addClass('alpha');
-								} else {
-									el.removeClass('alpha');
-								}
-							});
-						});
-						*/
-						
 					}
 				});
 			}
