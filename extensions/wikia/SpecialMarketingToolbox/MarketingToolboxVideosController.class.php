@@ -7,53 +7,19 @@ class MarketingToolboxVideosController extends WikiaController {
 	}
 	
 	public function popularVideoRow() {
-		$idx = $this->getVal('idx');
 		$video = $this->getVal('video');
-		$fields = $this->getVal('fields');
 		
 		if( !empty($video) ) {
 			$this->sectionNo = $video['section-no'];
+			$this->videoName = $video['id'];
 			$this->videoTitle = $video['title'];
 			$this->videoFullUrl = $video['fullUrl'];
 			$this->timestamp = wfTimeFormatAgo($video['timestamp']);
-			
-			$this->hiddenFormFields = $this->app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array(
-					'inputData' => array_merge(
-						$fields['video'],
-						array('index' => $idx)
-					)
-				)
-			);
-			
-			$this->formFields = $this->app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array(
-					'inputData' => array_merge(
-						$fields['videoUrl'],
-						array('index' => $idx)
-					)
-				)
-			);
 			
 			$this->videoThumbnail = $this->app->renderView(
 				'MarketingToolboxVideos',
 				'index',
 				array('video' => $video)
-			);
-			
-			$this->hiddenFormFields = $this->app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array(
-					'inputData' => array_merge(
-						$fields['video'],
-						array('index' => $idx)
-					)
-				)
 			);
 		}
 		

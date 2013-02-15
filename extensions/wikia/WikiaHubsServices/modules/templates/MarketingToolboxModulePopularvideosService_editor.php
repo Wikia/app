@@ -23,9 +23,7 @@
 					'MarketingToolboxVideosController',
 					'popularVideoRow',
 					array(
-						'idx' => $idx,
 						'video' => $video,
-						'fields' => $fields,
 					)
 				);
 			?>

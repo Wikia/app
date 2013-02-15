@@ -4,8 +4,10 @@
 		<div class="module-input-box">
 			<h4 class="video-title">{{videoTitle}}</h4>
 			<time class="timeago">{{timestamp}}</time>
-			{{{formFields}}}
-			{{{hiddenFormFields}}}
+			<div class="input-group borderNone">
+				<input type="text" value="{{videoFullUrl}}" name="videoUrl[]" class="video-url-input required">
+			</div>
+			<input type="hidden" value="{{videoName}}" name="video[]" class="wmu-file-name-input required">
 		</div>
 		
 		<div class="module-image-box">

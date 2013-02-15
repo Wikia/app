@@ -34,9 +34,6 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 				'isArray' => true
 			),
 			'videoUrl' => array(
-				'attributes' => array(
-					'class' => 'video-url-input'
-				),
 				'validator' => new WikiaValidatorListValue(
 					array(
 						'validator' => new WikiaValidatorToolboxUrl(
@@ -47,7 +44,6 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 						),
 					)
 				),
-				'class' => 'borderNone',
 				'isArray' => true
 			),
 		);
