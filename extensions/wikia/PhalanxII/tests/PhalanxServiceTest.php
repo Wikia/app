@@ -11,7 +11,6 @@ class PhalanxServiceTest extends WikiaBaseTest {
 		$this->setupFile =  dirname(__FILE__) . '/../Phalanx_setup.php';
 		wfDebug( __METHOD__ . ': '  .$this->setupFile );
 		parent::setUp();
-		// $this->mockApp(); // not required anymore?
 		$this->checkPhalanxAlive();
 	}
 
@@ -50,8 +49,10 @@ class PhalanxServiceTest extends WikiaBaseTest {
 
 
 	public function testPhalanxServiceReload() {
-		$this->markTestSkipped("Forced reload disabled until we have separate phalanx service for tests.\n");
-		return;
+		if (empty(F::app()->wg->PhalanxServiceUrl)) { // using production phalanx service, skip forced reload
+			$this->markTestSkipped("Forced reload disabled on production phalanx service");
+			return;
+		}
 
 		$ret = $this->service->reload();
 		$this->assertEquals( 1, $ret );
