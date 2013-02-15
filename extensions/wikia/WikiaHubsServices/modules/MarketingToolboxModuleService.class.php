@@ -46,7 +46,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 				if (!$field['validator']->isValid($fieldData)) {
 					$validationError = $field['validator']->getError();
 
-					if ($field['isArray']) {
+					if( !empty($field['isArray']) ) {
 						$out[$fieldName] = array();
 
 						foreach ($validationError as $key => $error) {
