@@ -1156,16 +1156,18 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				'WikiaSearch should query against the dynamic title, html, and redirect titles fields by default.'
 		);
 
+		$oldQueryFields = $searchConfig->getQueryFieldsToBoosts();
+		
 		$searchConfig->setInterWiki( true );
 		$this->assertEquals(
 				$interwikiString,
 				$method->invoke( $wikiaSearch, $searchConfig ),
 				'WikiaSearch should add wikititle as a query field if we are performing an interwiki search.'
 		);
-
 		$searchConfig
 			->setIsInterWiki	( false )
 			->setVideoSearch	( true )
+			->setQueryFields	( $oldQueryFields )
 		;
 		$this->assertEquals(
 		        $defaultString,

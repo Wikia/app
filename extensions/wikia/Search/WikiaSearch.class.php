@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Class definition for WikiaSearch
+ */
+use Wikia\Search\MediaWikiInterface;
 /**
  * This class is responsible for handling interacting with Solr to retrieve results.
  * It uses a custom-modified version of the Solarium library to build out abstracted queries.
@@ -118,6 +121,12 @@ class WikiaSearch extends WikiaObject {
 	protected $client;
 	
 	/**
+	 * Allows us to put all MW logic in a separate class.
+	 * @var MediaWikiInterface
+	 */
+	protected $interface;
+	
+	/**
 	 * Used and reused for string preparation
 	 * @var Solarium_Query_Helper
 	 */
@@ -150,6 +159,7 @@ class WikiaSearch extends WikiaObject {
 	public function __construct( Solarium_Client $client ) {
 		$this->client = $client;
 		$this->client->setAdapter('Solarium_Client_Adapter_Curl');
+		$this->interface = MediaWikiInterface::getInstance();
 		parent::__construct();
 	}
 
@@ -754,19 +764,22 @@ class WikiaSearch extends WikiaObject {
 	 * @return string
 	 */
 	protected function getQueryFieldsString( WikiaSearchConfig $searchConfig ) {
-
-		$queryFieldsString = sprintf( '%s^5 %s^1.5 %s^4 %s^1 %s^7', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ), self::field( 'categories' ), self::field( 'nolang_txt' ) );
-
 		if ( $searchConfig->getVideoSearch() && $this->wg->LanguageCode !== 'en' ) {
-		    // video wiki requires english field search
-		    $queryFieldsString .= sprintf( ' %s^5 %s^1.5 %s^4', self::field( 'title', 'en' ), self::field( 'html', 'en' ), self::field( 'redirect_titles', 'en' ) );
+			// video wiki requires english field search
+			$searchConfig->addQueryFields( array(
+					self::field( 'title', 'en' )           => 5, 
+					self::field( 'html', 'en' )            => 1.5, 
+					self::field( 'redirect_titles', 'en' ) => 4
+					));
 		}
-		
 		if ( $searchConfig->isInterWiki() ) {
-		    $queryFieldsString .= sprintf( ' %s^7', self::field( 'wikititle' ) );
+			$searchConfig->addQueryField( 'wikititle', 7 );
 		}
-		
-		return $queryFieldsString;
+		$queryFieldsString = '';
+		foreach ( $searchConfig->getQueryFieldsToBoosts()  as $field => $boost ) {
+			$queryFieldsString .= sprintf( '%s^%s ', self::field( $field ), $boost );
+		}
+		return trim( $queryFieldsString );
 	}
 	
 	/**

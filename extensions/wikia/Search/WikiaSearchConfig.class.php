@@ -79,6 +79,20 @@ class WikiaSearchConfig implements \ArrayAccess
 	        'views',
 	        'categories',
 	);
+	
+	/**
+	 * Allows us to configure boosts for the provided fields.
+	 * Use the non-translated version.
+	 * @var array
+	 */
+	private $queryFieldsToBoosts = array(
+			'title'             => 5,
+			'html'              => 1.5,
+			'redirect_titles'   => 4,
+			'categories'        => 1,
+			'nolang_txt'        => 7
+			);
+	
 
 	/**
 	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
@@ -669,6 +683,57 @@ class WikiaSearchConfig implements \ArrayAccess
 	public function setFilterQueriesFromCodes( array $codes ) {
 		foreach ( $codes as $code ) {
 			$this->setFilterQueryByCode( $code );
+		}
+		return $this;
+	}
+	
+	/**
+	 * Allows us to add additional query fields, with a given boost.
+	 * @param string $field
+	 * @param int $boost
+	 * @return WikiaSearchConfig
+	 */
+	public function addQueryField( $field, $boost = 1 ) {
+		$this->queryFieldsToBoosts[$field] = $boost;
+		return $this;
+	}
+	
+	/**
+	 * Lets us add multiple fields. Can handle both associative with boosts as value and flat.
+	 * @param array $fields
+	 * @return WikiaSearchConfig
+	 */
+	public function addQueryFields( array $fields ) {
+		if ( array_values( $fields ) === $fields ) {
+			foreach ( $fields as $field ) {
+				$this->addQueryField( $field );
+			}
+		} else {
+			$this->queryFieldsToBoosts = array_merge( $this->queryFieldsToBoosts, $fields );
+		}
+		return $this;
+	}
+	
+	/**
+	 * Returns the associative array of query fields to boosts.
+	 * @return array
+	 */
+	public function getQueryFieldsToBoosts() {
+		return $this->queryFieldsToBoosts;
+	}
+	
+	/**
+	 * Allows us to manually set query fields externally. Supports flat and associative.
+	 * @param array $fields
+	 * @return WikiaSearchConfig
+	 */
+	public function setQueryFields( array $fields ) {
+		if ( array_values( $fields ) === $fields ) {
+			foreach ( $fields as $field ) {
+				$this->addQueryField( $field );
+			}
+		} else {
+			$this->queryFieldsToBoosts = $fields;
 		}
 		return $this;
 	}
