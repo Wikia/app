@@ -13,8 +13,10 @@ class WikiaPollAjax {
 	static public function create() {
 		wfProfileIn(__METHOD__);
 
-		$wgRequest = F::app()->getGlobal('wgRequest');
-		$wgUser = F::app()->getGlobal('wgUser');
+		$app = F::app();
+
+		$wgRequest = $app->wg->Request;
+		$wgUser = $app->wg->User;
 
 		$title = $wgRequest->getVal ('question');
 		$answers = $wgRequest->getArray ('answer');  // array
@@ -24,20 +26,21 @@ class WikiaPollAjax {
 		if (is_object ($title_object) && $title_object->exists() ) {
 			$res = array (
 				'success' => false,
-				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('wikiapoll-error-duplicate')))
-				);
+				'error' => $app->renderView('Error', 'Index', array($app->wf->Msg('wikiapoll-error-duplicate')))
+			);
 		} else if ($title_object == null) {
 			$res = array (
 				'success' => false,
-				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('wikiapoll-error-invalid-title')))
-				);
+				'error' => $app->renderView('Error', 'Index', array($app->wf->Msg('wikiapoll-error-invalid-title')))
+			);
 		} else {
 			$content = "";
 			foreach ($answers as $answer) {
 				$content .= "*$answer\n";
 			}
+			/* @var $article WikiPage */
 			$article = new Article($title_object, NS_WIKIA_POLL);
-			$status = $article->doEdit($content, 'Poll Created', EDIT_NEW, false, $wgUser);
+			$article->doEdit($content, 'Poll Created', EDIT_NEW, false, $wgUser);
 			$title_object = $article->getTitle();
 
 			// fixme: check status object
@@ -46,7 +49,7 @@ class WikiaPollAjax {
 				'pollId' => $article->getID(),
 				'url'  => $title_object->getLocalUrl(),
 				'question' => $title_object->getPrefixedText()
-				);
+			);
 		}
 		wfProfileOut(__METHOD__);
 		return $res;
