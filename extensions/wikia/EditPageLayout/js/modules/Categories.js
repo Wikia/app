@@ -40,7 +40,6 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 					}
 				}
 			},
-			categories: wgCategorySelect.categories,
 			popover: {
 				placement: 'top'
 			}
