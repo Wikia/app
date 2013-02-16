@@ -8,40 +8,26 @@
 	}
 
 	$(function() {
-		var $wrapper = $( '#WikiaArticleCategories' )
-			$add = $wrapper.find( '.add' ),
-			$cancel = $wrapper.find( '.cancel' ),
-			$categories = $wrapper.find( '.categories' ),
-			$container = $wrapper.find( '.container' ),
-			$input = $wrapper.find( '.input' ),
-			$last = $wrapper.find( '.last' ),
-			$save = $wrapper.find( '.save' ),
-			articleId = window.wgArticleId,
-			categoryLinkPrefix = wgCategorySelect.defaultNamespace +
-				wgCategorySelect.defaultSeparator,
+		var articleId = window.wgArticleId,
 			loaded = false,
-			namespace = 'categorySelect';
+			namespace = 'categorySelectView',
+			$wrapper = $( '#WikiaArticleCategories' );
 
 		// User can't edit, no need to bind anything
 		if ( !$wrapper.hasClass( 'userCanEdit' ) ) {
 			return;
 		}
 
-		$add.on( 'click.' + namespace, function() {
-			$wrapper.addClass( 'editMode' );
-			$input.focus();
+		$wrapper.on( 'click.' + namespace, '.add', function() {
+			$wrapper
+				.addClass( 'editMode' )
+				.find( '.input' )
+				.focus();
 
 			if ( !loaded ) {
 				loaded = true;
 
 				$.when(
-					$.nirvana.sendRequest({
-						controller: 'CategorySelectController',
-						data: {
-							articleId: articleId
-						},
-						method: 'getArticleCategories'
-					}),
 					mw.loader.use( 'jquery.ui.autocomplete' ),
 					mw.loader.use( 'jquery.ui.sortable' ),
 					$.getResources([
@@ -51,7 +37,6 @@
 
 				).done(function( response ) {
 					$wrapper.categorySelect({
-						categories: response[ 0 ].categories,
 						placement: 'right',
 						popover: {
 							hint: true
@@ -63,69 +48,59 @@
 							revert: 200
 						}
 
-					}).on( 'add.' + namespace, function( event, cs, data ) {
-						$last.before( data.element );
+					}).on( 'add', function( event, cs, data ) {
+						$wrapper
+							.find( '.last' )
+							.before( data.element );
 
-					}).on( 'update.' + namespace, function() {
-						var modified = $categories.find( '.new' ).length > 0;
+					}).on( 'click.' + namespace, '.cancel', function() {
+						$wrapper
+							.removeClass( 'editMode' )
+							.trigger( 'reset' )
+							.find( '.category.new' )
+							.remove();
 
-						$wrapper.toggleClass( 'modified', modified );
-						$save.prop( 'disabled', !modified );
+					}).on( 'click.' + namespace, '.save', function() {
+						var $container = $wrapper.find( '.container' ).startThrobbing(),
+							$saveButton = $( this ).attr( 'disabled', true );
+
+						$.nirvana.sendRequest({
+							controller: 'CategorySelectController',
+							data: {
+								articleId: articleId,
+								categories: $wrapper.data( 'categorySelect' ).getData( '.new' )
+							},
+							method: 'save'
+
+						}).done(function( response ) {
+							$container.stopThrobbing();
+							$saveButton.removeAttr( 'disabled' );
+
+							// TODO: don't use alert
+							if ( response.error ) {
+								alert( response.error );
+
+							} else {
+								$wrapper
+									.removeClass( 'editMode' )
+									.find( '.category' ).remove();
+
+								$wrapper
+									.find( '.last' )
+									.before( response.html );
+							}
+						});
+
+					}).on( 'update', function() {
+						var modified = $wrapper.find( '.category.new' ).length > 0;
+
+						$wrapper
+							.toggleClass( 'modified', modified )
+							.find( '.save' )
+							.prop( 'disabled', !modified );
 					});
 				});
 			}
-		});
-
-		$cancel.on( 'click.' + namespace, function( event ) {
-			$categories.find( '.new' ).remove();
-			$wrapper.removeClass( 'editMode' ).trigger( 'reset' );
-		});
-
-		$save.on( 'click.' + namespace, function( event ) {
-			var $saveButton = $( this ).attr( 'disabled', true );
-
-			$container.startThrobbing();
-
-			$.nirvana.sendRequest({
-				controller: 'CategorySelectController',
-				data: {
-					articleId: articleId,
-					categories: $wrapper.data( 'categorySelect' ).getData( '.new' )
-				},
-				method: 'save'
-
-			}).done(function( response ) {
-				$container.stopThrobbing();
-				$saveButton.removeAttr( 'disabled' );
-
-				// TODO: don't use alert
-				if ( response.error ) {
-					alert( response.error );
-
-				} else {
-					$wrapper.removeClass( 'editMode' );
-
-					// Update the saved categories
-					$categories.find( '.new' ).each(function() {
-						var $category = $( this ),
-							category = $category.data( 'category' ),
-							index = $category.index(),
-							current = response.categories[ index ];
-
-						// Category has been removed
-						if ( !current || current.name !== category.name ) {
-							$category.remove();
-
-						// Linkify the category
-						} else {
-							$category
-								.removeClass( 'new' )
-								.find( '.name' )
-								.html( response.categoryLinks[ index ] );
-						}
-					});
-				}
-			});
 		});
 	});
 

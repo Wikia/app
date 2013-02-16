@@ -1,5 +1,5 @@
-<li class="category {{type}}">
-	<span class="name">{{{name}}}</span>
+<li class="category {{type}}" data-name="{{name}}" data-namespace="{{namespace}}" data-outerTag="{{outerTag}}" data-sortKey="{{sortKey}}" data-type="{{type}}">
+	<span class="name">{{#link}}{{{link}}}{{/link}}{{^link}}{{name}}{{/link}}</span>
 	<ul class="toolbar">
 		<li class="tool editCategory"><img src="{{blankImageUrl}}" class="sprite-small edit" title="{{messages.edit}}"></li>
 		<li class="tool removeCategory"><img src="{{blankImageUrl}}" class="sprite-small delete" title="{{messages.remove}}"></li>

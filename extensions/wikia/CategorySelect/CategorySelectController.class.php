@@ -14,8 +14,7 @@ class CategorySelectController extends WikiaController {
 	const VERSION = 1;
 
 	/**
-	 * The template used for article pages.
-	 * Also used by EditPage for previewing edits.
+	 * The template used for article pages and edit previews.
 	 */
 	public function articlePage() {
 		$this->wf->ProfileIn( __METHOD__ );
@@ -26,33 +25,14 @@ class CategorySelectController extends WikiaController {
 			return false;
 		}
 
-		$categoryNames = $this->wg->out->getCategories();
+		$categories = $this->wg->out->getCategories();
 		$showHidden = $this->wg->User->getBoolOption( 'showhiddencats' );
 		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelect::isEditable() );
 
 		// There are no categories present and user can't edit, skip rendering
-		if ( !$userCanEdit && !count( $categoryNames ) ) {
+		if ( !$userCanEdit && !count( $categories ) ) {
 			$this->wf->ProfileOut( __METHOD__ );
 			return false;
-		}
-
-		// Because $out->getCategoryLinks doesn't maintain the order of the stored category data,
-		// we have to build this information ourselves manually. This is essentially the same
-		// code from $out->addCategoryLinks().
-		$categories = array();
-		foreach( $categoryNames as $category ) {
-			$origcategory = $category;
-			$title = Title::makeTitleSafe( NS_CATEGORY, $category );
-			$this->wg->ContLang->findVariantLink( $category, $title, true );
-			if ( $category != $origcategory && array_key_exists( $category, $categories ) ) {
-				continue;
-			}
-			$text = $this->wg->ContLang->convertHtml( $title->getText() );
-			$categories[ $category ] = array(
-				'link' => Linker::link( $title, $text ),
-				'name' => $text,
-				'type' => CategorySelect::getCategoryType( $origcategory ),
-			);
 		}
 
 		// Categories link
@@ -75,13 +55,51 @@ class CategorySelectController extends WikiaController {
 	}
 
 	/**
+	 * The category list template. Used by article pages on view and edit save.
+	 */
+	public function categories() {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$categories = $this->request->getVal( 'categories', array() );
+		$data = array();
+
+		// Because $out->getCategoryLinks doesn't maintain the order of the stored category data,
+		// we have to build this information ourselves manually. This is essentially the same
+		// code from $out->addCategoryLinks() but it results in a different data format.
+		foreach( $categories as $category ) {
+			// Support category name or category data object
+			$name = is_array( $category ) ? $category[ 'name' ] : $category;
+			$originalName = $name;
+			$title = Title::makeTitleSafe( NS_CATEGORY, $name );
+			$this->wg->ContLang->findVariantLink( $name, $title, true );
+			if ( $name != $originalName && array_key_exists( $name, $data ) ) {
+				continue;
+			}
+			$text = $this->wg->ContLang->convertHtml( $title->getText() );
+			$data[ $name ] = array(
+				'link' => Linker::link( $title, $text ),
+				'name' => $text,
+				'type' => CategorySelect::getCategoryType( $originalName ),
+			);
+		}
+
+		$this->response->setVal( 'categories', $data );
+
+		$this->wf->ProfileOut( __METHOD__ );
+	}
+
+	/**
 	 * The template for a category in the category list.
 	 */
 	public function category() {
 		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'edit', $this->wf->Msg( 'categoryselect-category-edit' ) );
+		$this->response->setVal( 'link', $this->request->getVal( 'link', '' ) );
 		$this->response->setVal( 'name', $this->request->getVal( 'name', '' ) );
+		$this->response->setVal( 'namespace', $this->request->getVal( 'namespace', '' ) );
+		$this->response->setVal( 'outerTag', $this->request->getVal( 'outerTag', '' ) );
 		$this->response->setVal( 'remove', $this->wf->Msg( 'categoryselect-category-remove' ) );
+		$this->response->setVal( 'sortKey', $this->request->getVal( 'sortKey', '' ) );
 		$this->response->setVal( 'type', $this->request->getVal( 'type', 'normal' ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
@@ -239,9 +257,9 @@ class CategorySelectController extends WikiaController {
 					$dbw->commit();
 					$title->invalidateCache();
 					Article::onArticleEdit( $title );
-
-					$response[ 'categories' ] = $categories;
-					$response[ 'categoryLinks' ] = CategorySelect::getCategoryLinks( $categories );
+					$response[ 'html' ] = $this->app->renderView( 'CategorySelectController', 'categories', array(
+						'categories' => $categories
+					));
 					break;
 
 				case EditPage::AS_SPAM_ERROR:

@@ -4,6 +4,7 @@
 
 	var cached = {},
 		namespace = 'categorySelect',
+		properties = [ 'name', 'namespace', 'outerTag', 'sortKey', 'type' ],
 		slice = Array.prototype.slice,
 		wgCategorySelect = window.wgCategorySelect,
 		Wikia = window.Wikia || {};
@@ -36,6 +37,14 @@
 			}
 		}
 	};
+
+	// Safely decode HTML entities.
+	// TODO: move this somewhere else?
+	function decodeHtmlEntities( str ) {
+		var textarea = document.createElement( 'textarea' );
+		textarea.innerHTML = str;
+		return textarea.value;
+	}
 
 	/**
 	 * CategorySelect Class
@@ -112,14 +121,7 @@
 			});
 
 		elements.list = element.find( options.selectors.categories );
-
-		// Store category data in categories
-		elements.categories = elements.list
-			.find( options.selectors.category )
-			.each(function( i ) {
-				$( this ).data( 'category',
-					CategorySelect.normalize( options.categories[ i ] ) );
-			});
+		elements.categories = elements.list.find( options.selectors.category );
 
 		if ( typeof options.autocomplete === 'object' ) {
 			limit = self.options.autocomplete.limit;
@@ -198,7 +200,7 @@
 		 *          invalid.
 		 */
 		addCategory: function( category ) {
-			var data,
+			var existing,
 				self = this,
 				input = self.elements.input,
 				options = self.options;
@@ -206,17 +208,15 @@
 			category = CategorySelect.normalize( category );
 
 			if ( category ) {
-				data = self.getData( category.name );
+				existing = self.getDatum( category.name );
 
 				// Category already exists
-				if ( data.length ) {
-					category = data[ 0 ];
-
-					input.val( category.name );
+				if ( existing !== undefined ) {
+					input.val( existing.name );
 
 					if ( options.popover ) {
 						$.extend( self.popover.options, {
-							content: $.msg( 'categoryselect-error-duplicate-category-name', category.name ),
+							content: $.msg( 'categoryselect-error-duplicate-category-name', existing.name ),
 							placement: 'right',
 							type: 'error'
 						});
@@ -226,13 +226,12 @@
 
 				} else {
 					$.when( CategorySelect.getTemplate( 'category' ) ).done(function( template ) {
-						var element;
+						var data = $.extend( {}, template.data, category ),
+							element = $( Mustache.render( template.content, data ) );
 
-						template.data.name = category.name;
-
-						element = $( Mustache.render( template.content, template.data ) )
+						element
 							.addClass( 'new' )
-							.data( 'category', category );
+							.data( category );
 
 						self.dirty = true;
 
@@ -260,7 +259,7 @@
 		},
 
 		/**
-		 * Edits a category.
+		 * Edit an existing category.
 		 *
 		 * @param { Element | jQuery | Number | String } category
 		 *        The index of a category relative to the list of categories, the
@@ -269,16 +268,18 @@
 		editCategory: function( category ) {
 			var modal,
 				self = this,
-				element = self.getCategory( category );
+				element = self.getCategory( category ),
+				category = element && self.getDatum( element );
 
-			if ( element.length ) {
-				category = element.data( 'category' );
-
+			if ( category !== undefined ) {
 				$.when( CategorySelect.getTemplate( 'categoryEdit' ) ).done(function( template ) {
-					template.data.category = category;
-					template.data.messages.sortKey = $.msg( 'categoryselect-modal-category-sortkey', category.name );
+					var data = $.extend( true, {}, template.data, category, {
+						messages: {
+							sortKey: $.msg( 'categoryselect-modal-category-sortkey', category.name )
+						}
+					});
 
-					modal = $.showCustomModal( cached.messages.categoryEdit, Mustache.render( template.content, template.data ), {
+					modal = $.showCustomModal( cached.messages.categoryEdit, Mustache.render( template.content, data ), {
 						buttons: [
 							{
 								id: 'CategorySelectEditModalSave',
@@ -292,7 +293,7 @@
 									if ( name === '' ) {
 										error = cached.messages.errorEmptyCategoryName;
 
-									} else if ( name !== category.name && self.getData( name )[ 0 ] ) {
+									} else if ( name !== category.name && self.getDatum( name ) ) {
 										error = $.msg( 'categoryselect-error-duplicate-category-name', name );
 									}
 
@@ -309,7 +310,7 @@
 											});
 
 											element
-												.data( 'category', category )
+												.data( category )
 												.find( '.name' )
 												.text( name );
 
@@ -337,32 +338,47 @@
 		 * Gets the data associated with categories.
 		 *
 		 * @param { Element | jQuery | Number | String } filter
-		 *        The index of a category relative to the list of categories, a
-		 *        selector string or the jQuery object or DOM Element for a category.
+		 *        The index of a category relative to the list of categories, the
+		 *        name of a category, a selector string or the jQuery object or
+		 *        DOM Element for a category.
 		 *
-		 * @returns	{ Object }
-		 *			The data associated with the category, an array of category data
-		 *          for all categories, or undefined if not found.
+		 * @returns	{ Array }
+		 *          An array of data associated with the categories.
 		 */
 		getData: function( filter ) {
 			var data = [];
 
 			this.getCategories( filter ).each(function() {
-				data.push( $( this ).data( 'category' ) );
+				data.push( CategorySelect.normalize( $.data( this ) ) );
 			});
 
 			return data;
 		},
 
 		/**
-		 * Gets categories from the list of categories.
+		 * Gets the data associated with a single category.
 		 *
 		 * @param { Element | jQuery | Number | String } filter
 		 *        The index of a category relative to the list of categories, a
 		 *        selector string or the jQuery object or DOM Element for a category.
 		 *
+		 * @returns	{ Object }
+		 *          The data associated with the category or undefined if not found.
+		 */
+		getDatum: function( filter ) {
+			return this.getData( filter )[ 0 ];
+		},
+
+		/**
+		 * Gets categories from the list of categories.
+		 *
+		 * @param { Element | jQuery | Number | String } filter
+		 *        The index of a category relative to the list of categories, the
+		 *        name of a category, a selector string or the jQuery object or
+		 *        DOM Element for a category.
+		 *
 		 * @returns	{ jQuery }
-		 *			The categories, or an empty jQuery object if not found.
+		 *          The categories, or an empty jQuery object if not found.
 		 */
 		getCategories: function( filter ) {
 			var categories = this.elements.categories;
@@ -380,8 +396,8 @@
 					// By category name, selector string, jQuery object or DOM Element
 					categories.filter(function() {
 						var $category = $( this ),
-							data = $category.data( 'category' ),
-							match = data && data.name === filter;
+							category = CategorySelect.normalize( $category.data() ),
+							match = category.name === decodeHtmlEntities( filter );
 
 						// Try to match a selector string, jQuery object or DOM Element
 						if ( !match ) {
@@ -406,7 +422,7 @@
 		 *        selector string or the jQuery object or DOM Element for a category.
 		 *
 		 * @returns	{ jQuery }
-		 *			The categories, or an empty jQuery object if not found.
+		 *          The categories, or an empty jQuery object if not found.
 		 */
 		getCategory: function( filter ) {
 			return this.getCategories( filter ).eq( 0 );
@@ -459,6 +475,20 @@
 		},
 
 		/**
+		 * Associates category data with DOM elements.
+		 *
+		 * @param { Element | jQuery | Number | String } filter
+		 *        The index of a category relative to the list of categories, the
+		 *        name of a category or the jQuery or DOM Element for a category.
+		 *
+		 * @param { Object } data
+		 *        The data associated with a category.
+		 */
+		setData: function( filter, data ) {
+			return this.getCategories( filter ).data( data );
+		},
+
+		/**
 		 * Triggers an event on the wrapper element. The CategorySelect class is
 		 * always passed as the second argument to handlers, further arguments are
 		 * optional.
@@ -471,7 +501,7 @@
 		 */
 		trigger: function( eventType ) {
 			var args = [ this ].concat( slice.call( arguments, 1 ) );
-			return this.element.triggerHandler( eventType + '.' + namespace, args );
+			return this.element.triggerHandler( eventType, args );
 		}
 	});
 
@@ -551,15 +581,14 @@
 		 *          invalid.
 		 */
 		normalize: (function() {
-			var properties = [ 'name', 'namespace', 'outerTag', 'sortKey', 'type' ],
-				rCategory = new RegExp( '\\[\\[' +
-					// Category namespace
-					'(' + wgCategorySelect.defaultNamespaces + '):' +
-					// Category name
-					'([^\\]|]+)' +
-					// Category sortKey (optional)
-					'\\|?([^\\]]+)?' +
-				']]', 'i' );
+			var rCategory = new RegExp( '\\[\\[' +
+				// Category namespace
+				'(' + wgCategorySelect.defaultNamespaces + '):' +
+				// Category name
+				'([^\\]|]+)' +
+				// Category sortKey (optional)
+				'\\|?([^\\]]+)?' +
+			']]', 'i' );
 
 			return function( category ) {
 				var pieces, prop,
@@ -600,6 +629,9 @@
 						}
 					}
 
+					// Decode HTML entities
+					category.name = decodeHtmlEntities( category.name );
+
 					// Uppercase the first letter in name to match MediaWiki article titles
 					category.name = category.name[ 0 ].toUpperCase() + category.name.slice( 1 );
 				}
@@ -628,7 +660,6 @@
 				// Non-standard
 				limit: 6
 			},
-			categories: [],
 
 			// Based on Title max length
 			maxLength: 255,
