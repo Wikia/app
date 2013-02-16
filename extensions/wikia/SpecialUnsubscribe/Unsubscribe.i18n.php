@@ -490,6 +490,14 @@ $messages['pt-br'] = array(
 	'unsubscribe-preferences-notice' => 'E-mails foram desativados para sua conta. Visite a aba Perfil de Usuário para reativá-los.',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'unsubscribe-confirm-legend' => 'Conferme',
+	'unsubscribe-working-done' => 'Comblete.',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura

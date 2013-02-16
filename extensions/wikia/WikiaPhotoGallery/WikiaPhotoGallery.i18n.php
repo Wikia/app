@@ -238,6 +238,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-preview-bordersize-small' => '{{Identical|Small}}',
 	'wikiaPhotoGallery-preview-bordersize-medium' => '{{Identical|Medium}}',
 	'wikiaPhotoGallery-preview-bordersize-large' => '{{Identical|Large}}',
+	'wikiaPhotoGallery-preview-captions' => '{{Identical|Caption}}',
 	'wikiaPhotoGallery-preview-captions-left' => '{{Identical|Left}}',
 	'wikiaPhotoGallery-preview-captions-center' => '{{Identical|Center}}',
 	'wikiaPhotoGallery-preview-captions-right' => '{{Identical|Right}}',
@@ -4932,8 +4933,13 @@ $messages['ro'] = array(
 $messages['roa-tara'] = array(
 	'wikiaPhotoGallery-back' => 'Rrete',
 	'wikiaPhotoGallery-finish' => 'Spicce',
+	'wikiaPhotoGallery-lightbox-caption' => 'Vie $1',
+	'wikiaPhotoGallery-error-caption' => 'Errore',
 	'wikiaPhotoGallery-upload-findtitle' => 'Cirche',
 	'wikiaPhotoGallery-upload-findbutton' => 'Cirche',
+	'wikiaPhotoGallery-upload-page-next' => 'Le prossime 8',
+	'wikiaPhotoGallery-upload-page-prev' => 'Le 8 precedende',
+	'wikiaPhotoGallery-upload-filesinsert' => 'Mitte sta fote',
 	'wikiaPhotoGallery-upload-select-images' => 'Scacchie',
 	'wikiaPhotoGallery-photooptions-done' => 'Fatte',
 	'wikiaPhotoGallery-preview-title' => 'Costruttore de gallerie',
@@ -4944,6 +4950,19 @@ $messages['roa-tara'] = array(
 	'wikiaPhotoGallery-preview-add-caption' => "Aggiunge 'nu titole",
 	'wikiaPhotoGallery-preview-add-description' => "Aggiunge 'na descrizione",
 	'wikiaPhotoGallery-preview-add-link' => "Agigunge 'nu collegamende",
+	'wikiaPhotoGallery-preview-px' => 'px',
+	'wikiaPhotoGallery-preview-position-left' => 'Sinistre',
+	'wikiaPhotoGallery-preview-position-center' => 'Cendre',
+	'wikiaPhotoGallery-preview-position-right' => 'Destre',
+	'wikiaPhotoGallery-preview-spacing-small' => 'Piccinne',
+	'wikiaPhotoGallery-preview-spacing-medium' => 'Medie',
+	'wikiaPhotoGallery-preview-spacing-large' => 'Granne',
+	'wikiaPhotoGallery-preview-captionalignment-left' => 'Sinistre',
+	'wikiaPhotoGallery-preview-captionalignment-center' => 'Cendre',
+	'wikiaPhotoGallery-preview-captionalignment-right' => 'Destre',
+	'wikiaPhotoGallery-preview-captions-left' => 'Sinistre',
+	'wikiaPhotoGallery-preview-captions-center' => 'Cendre',
+	'wikiaPhotoGallery-preview-captions-right' => 'Destre',
 );
 
 /** Russian (русский)
@@ -6206,6 +6225,13 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-photooptions-captionsub' => '描述该图片。',
 	'wikiaPhotoGallery-search-tooltip' => '在该维基搜索图片',
 	'wikiaPhotoGallery-upload-image-size' => '图片尺寸必须为长670px宽360px或更大',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wikiaPhotoGallery-finish' => '完成',
 );
 
 /** Chinese (Taiwan) (中文（台灣）‎)

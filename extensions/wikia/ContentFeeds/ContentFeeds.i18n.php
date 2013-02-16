@@ -395,6 +395,13 @@ $messages['ro'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Titlu',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Titole',
+);
+
 /** Russian (русский)
  * @author Express2000
  * @author Kuzura

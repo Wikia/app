@@ -101,7 +101,8 @@ $messages['qqq'] = array(
 	'cnw-name-wiki-domain-label' => 'Label for wiki domain field',
 	'cnw-name-wiki-submit-error' => 'Error message to display when the there are errors in the fields',
 	'cnw-login' => 'Text for "Log In" Button',
-	'cnw-signup' => 'Text for "Create account" Button',
+	'cnw-signup' => 'Text for "Create account" Button.
+{{Identical|Create account}}',
 	'cnw-signup-prompt' => 'ask if user needs to create an account',
 	'cnw-call-to-signup' => 'Call to action to create an account (clickable link)',
 	'cnw-login-prompt' => 'ask if user already has a login',
@@ -112,7 +113,8 @@ $messages['qqq'] = array(
 	'cnw-auth-facebook-signup' => '"Sign up with Facebook" Button',
 	'cnw-auth-facebook-login' => '"Login with Facebook" Button',
 	'cnw-userauth-headline' => 'Heading for user login/signup box at the top',
-	'cnw-userauth-creative' => 'Sublabel that says "log in"',
+	'cnw-userauth-creative' => 'Sublabel that says "log in".
+{{Identical|Log in}}',
 	'cnw-userauth-marketing-heading' => 'Heading to create an account in form of a question on the right side of the box',
 	'cnw-userauth-marketing-body' => 'Marketing blurb with link to user signup on the right side.  Please append uselang=es(or other lang) on the link.',
 	'cnw-userauth-signup-button' => 'Label for sign up button on the right side.',
@@ -661,6 +663,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Ilkea
  * @author Lukkipoika
+ * @author Nike
  * @author Tofu II
  * @author VezonThunder
  */
@@ -691,7 +694,7 @@ $messages['fi'] = array(
 	'cnw-userauth-headline' => 'Onko sinulla käyttäjä?',
 	'cnw-userauth-creative' => 'Kirjaudu sisään',
 	'cnw-userauth-marketing-heading' => 'Eikö sinulla ole käyttäjää?',
-	'cnw-userauth-marketing-body' => 'Tarvitset käyttäjätunnuksen, jotta voit luoda wikin Wikia:n. Rekisteröityminen vie vain hetken!', # Fuzzy
+	'cnw-userauth-marketing-body' => 'Tarvitset käyttäjätunnuksen, jotta voit luoda wikin Wikiaan. Rekisteröityminen vie vain hetken!',
 	'cnw-userauth-signup-button' => 'Rekisteröidy',
 	'cnw-desc-headline' => 'Mistä wikisi kertoo?',
 	'cnw-desc-creative' => 'Kuvaile aihettasi',
@@ -1456,13 +1459,13 @@ $messages['ms'] = array(
 	'cnw-name-wiki-wiki' => 'Wiki',
 	'cnw-name-wiki-domain-label' => 'Berikan alamat wiki anda',
 	'cnw-name-wiki-submit-error' => 'Eh eh! Anda perlu mengisi kedua-dua kotak di atas sebelum menyambung.',
-	'cnw-login' => 'Log masuk',
+	'cnw-login' => 'Log Masuk',
 	'cnw-signup' => 'Buka Akaun',
 	'cnw-signup-prompt' => 'Perlukan akaun?',
 	'cnw-call-to-signup' => 'Daftar di sini',
 	'cnw-login-prompt' => 'Sudah ada akaun?',
 	'cnw-call-to-login' => 'Log masuk di sini',
-	'cnw-auth-headline' => 'Log masuk',
+	'cnw-auth-headline' => 'Log Masuk',
 	'cnw-auth-headline2' => 'Daftar Diri',
 	'cnw-auth-creative' => 'Log masuk ke dalam akaun anda untuk terus membina wiki anda.',
 	'cnw-auth-signup-creative' => 'Anda perlukan akaun untuk terus membina wiki anda.<br />Pendaftaran hanya mengambil masa seminit!',

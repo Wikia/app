@@ -476,6 +476,18 @@ $messages['pt-br'] = array(
 	'mostvisitedpagesalllink' => 'Ver as páginas mais visitadas',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'mostvisitedpages' => 'Pàggene cchiù visitate',
+	'mostvisitedpagessearchtext' => "Nome d'a vôsce:",
+	'mostvisitedpagessearchbtn' => 'cirche',
+	'mostvisitedpageslatest' => "jndr'à l'urteme $1 {{PLURAL:$1|minute}}",
+	'mostvisitedpageslatestlink' => "'Ndruche le urteme pàggene visitate",
+	'mostvisitedpagesalllink' => "'Ndruche le pàggene cchiù visitate",
+);
+
 /** Russian (русский)
  * @author Lockal
  * @author Александр Сигачёв

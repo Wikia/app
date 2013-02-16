@@ -827,3 +827,20 @@ $messages['zh-hans'] = array(
 	'wva-url' => '输入URL：',
 	'wva-add' => '添加',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wva-success' => '成功增加影片 [[:$1]]',
+	'wva-success-replaced' => '成功替換影片 [[:$1]]',
+	'wva-failure' => '請提供有效的參數。',
+	'wva-name' => '影片名稱',
+	'wva-url' => '影片連結：',
+	'wva-add' => '新增',
+	'wva-title' => '從網路快速新增影片',
+	'wva-notlogged' => '您需要登錄或註冊來插入影片。',
+	'wva-notallowed' => '您不能在這個wiki搜入影片',
+	'wva-protected' => '這咎影片被保護。',
+	'wva-thumbnail-upload-failed' => '影片嵌入失敗，無法獲取適當的縮圖',
+);

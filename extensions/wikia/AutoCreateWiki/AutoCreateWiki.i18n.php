@@ -4699,7 +4699,7 @@ $messages['zh-hans'] = array(
 *别忘记查看您的维基可以使用的[[Special:WikiFeatures|功能]]并且开通您想要的功能！
 *查询我们的在创立者与管理人员中心的[[w:c:community:Admin_Central:Forum|论坛]]然后看看其他的管理人员所问的问题。
 *最后，为了解除您所有的困难或问题，查看我们的[[w:c:community:Help:Contents|帮助页面]]。
-以上的链接都很适合新的创立者查看。如果您有一个无法找到解决答案的问题 —— 请使用[[Special:Contact]]联系我们。但是最要紧的是，要好玩 :)
+以上的链接都很适合新的创立者查看。如果您有一个无法找到解决答案的问题 —— 请使用[[Special:Contact]]联系我们。但是最要紧的是，要好玩 :D
 祝您编辑快乐！', # Fuzzy
 	'newwikis' => '新的维基',
 	'newwikisstart' => '以此页面打开维基：',

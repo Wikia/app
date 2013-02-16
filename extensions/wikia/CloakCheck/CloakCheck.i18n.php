@@ -591,6 +591,15 @@ $messages['ro'] = array(
 	'cloakcheck-process-edits-yes' => 'Utilizatorul are suficiente modificări.',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'cloakcheck-form-username' => 'Nome utende:',
+	'cloakcheck-form-check' => "Verifiche 'u nome utende",
+	'cloakcheck-process-username' => 'Nome utende: $1',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Eleferen
