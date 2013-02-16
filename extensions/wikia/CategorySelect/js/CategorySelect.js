@@ -4,7 +4,7 @@
 
 	var cached = {},
 		namespace = 'categorySelect',
-		properties = [ 'name', 'namespace', 'outerTag', 'sortKey', 'type' ],
+		properties = [ 'name', 'namespace', 'outertag', 'sortkey', 'type' ],
 		slice = Array.prototype.slice,
 		wgCategorySelect = window.wgCategorySelect,
 		Wikia = window.Wikia || {};
@@ -303,10 +303,10 @@
 											.find( '.error-msg' ).text( error );
 
 									} else {
-										if ( name !== category.name || sortKey !== category.sortKey ) {
+										if ( name !== category.name || sortKey !== category.sortkey ) {
 											$.extend( category, {
 												name: name,
-												sortKey: sortKey
+												sortkey: sortKey
 											});
 
 											element
@@ -609,7 +609,7 @@
 					category = undefined;
 
 				} else {
-					category.name = $.trim( category.name );
+					category.name = $.trim( decodeHtmlEntities( category.name ) );
 
 					// Get rid of unecessary properties
 					for ( prop in category ) {
@@ -625,12 +625,9 @@
 
 						// SortKey is optional
 						if ( pieces[ 3 ] !== undefined ) {
-							category.sortKey = pieces[ 3 ];
+							category.sortkey = pieces[ 3 ];
 						}
 					}
-
-					// Decode HTML entities
-					category.name = decodeHtmlEntities( category.name );
 
 					// Uppercase the first letter in name to match MediaWiki article titles
 					category.name = category.name[ 0 ].toUpperCase() + category.name.slice( 1 );
