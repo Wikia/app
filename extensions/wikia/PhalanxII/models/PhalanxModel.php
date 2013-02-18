@@ -7,6 +7,7 @@ abstract class PhalanxModel extends WikiaObject {
 	public $lang = "";
 	public $user = null;
 	private $service = null;
+	private $ip = null;
 
 	public function __construct( $model, $data = array() ) {
 		parent::__construct();
@@ -18,6 +19,7 @@ abstract class PhalanxModel extends WikiaObject {
 			}
 		}
 		$this->service = new PhalanxService();
+		$this->ip = $this->wg->request->getIp();
 	}
 
 	abstract public function isOk();
@@ -61,11 +63,15 @@ abstract class PhalanxModel extends WikiaObject {
 		if ( !$this->isOk() ) {
 			$isUser = isset( $this->user ) && ( $this->user->getName() == $this->wg->User->getName() );
 			
+			$content = ( isset( $this->user ) ) 
+				? array( $this->getText(), $this->ip )
+				: $this->user;
+			
 			# send request to service
 			$result = $this->service
 				->setLimit(1)
 				->setUser( $isUser ? $this->user : null )
-				->match( $type, $this->getText(), $this->getLang() );
+				->match( $type, $content, $this->getLang() );
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
 				if ( is_object( $result ) && isset( $result->id ) && $result->id > 0 ) {

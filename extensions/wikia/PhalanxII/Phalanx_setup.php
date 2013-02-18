@@ -88,6 +88,25 @@ foreach ( $phalanxhooks as $class => $hooks ) {
 	}
 }
 
+/*
+ * Fallback to previous version of Phalanx
+ */
+$fallback_classes = array(
+	/* classes */
+	'PhalanxFallback'          => $dir . 'fallback/Phalanx.class.php',
+	/* hooks */
+	'UserBlock'                => $dir . 'fallback/hooks/Phalanx.class.php',
+	'ContentBlock'             => $dir . 'fallback/hooks/ContentBlock.class.php',
+	'TitleBlock'               => $dir . 'fallback/hooks/TitleBlock.class.php',
+	'QuestionTitleBlock'       => $dir . 'fallback/hooks/QuestionTitleBlock.class.php',
+	'RecentQuestionsBlock'     => $dir . 'fallback/hooks/RecentQuestionsBlock.class.php',
+	'WikiCreationBlock'        => $dir . 'fallback/hooks/WikiCreationBlock.class.php'
+);
+
+foreach ( $fallback_classes as $class_name => $class_path ) {
+	$app->registerClass( $class_name, $class_path );
+}
+
 /**
  * messages
  */

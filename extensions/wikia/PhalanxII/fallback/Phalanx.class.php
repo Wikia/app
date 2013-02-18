@@ -1,6 +1,6 @@
 <?php
 
-class Phalanx {
+class PhalanxFallback {
 
 	const TYPE_CONTENT = 1;
 	const TYPE_SUMMARY = 2;
@@ -438,7 +438,7 @@ class Phalanx {
 				}
 				wfRestoreWarnings();
 				if ($matched) {
-					$blockData = Phalanx::getFromId($blockId);
+					$blockData = self::getFromId($blockId);
 					if ( $blockData ) {
 						if ($writeStats) {
 							self::addStats($blockData['id'], $blockData['type']);
@@ -454,7 +454,7 @@ class Phalanx {
 				}
 				if ($isExact) {
 					if ($text == $blockText) {
-						$blockData = Phalanx::getFromId($blockId);
+						$blockData = self::getFromId($blockId);
 						if ( $blockData ) {
 							if ($writeStats) {
 								self::addStats($blockData['id'], $blockData['type']);
@@ -465,7 +465,7 @@ class Phalanx {
 					}
 				} else {
 					if ( !empty($blockText) && strpos($text, $blockText) !== false) {
-						$blockData = Phalanx::getFromId($blockId);
+						$blockData = self::getFromId($blockId);
 						if ( $blockData ) {
 							if ($writeStats) {
 								self::addStats($blockData['id'], $blockData['type']);

@@ -17,10 +17,10 @@ class QuestionTitleBlock {
 		$text = preg_replace('/[^\PP]+/', '', $title->getText());
 		$text = preg_replace('/\s+/', ' ', $text);
 
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_ANSWERS_QUESTION_TITLE, $wgLanguageCode );
+		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_ANSWERS_QUESTION_TITLE, $wgLanguageCode );
 
 		$blockData = null;
-		$result = Phalanx::findBlocked( $text, $blocksData, true, $blockData );
+		$result = PhalanxFallback::findBlocked( $text, $blocksData, true, $blockData );
 		if ( $result['blocked'] ) {
 			Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
 			wfProfileOut(__METHOD__);

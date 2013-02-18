@@ -34,11 +34,12 @@ class PhalanxTitleBlock extends WikiaObject {
 		$this->wf->profileIn( __METHOD__ );
 
 		$title = $editPage->getTitle();
-
+error_log ( __METHOD__ . ": title: " . print_r( $title, true ), 3, "/tmp/moli.log" );
 		/* 
 		 * Hook is called for both page creations and edits. We should only check
 		 * if the page is created = page does not exist (RT#61104)
 		 */
+error_log ( __METHOD__ . ": title: " . print_r( $title->exists(), true ), 3, "/tmp/moli.log" );
 		if ( $title->exists() ) {
 			$this->wf->profileOut( __METHOD__ );
 			return true;

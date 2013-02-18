@@ -51,7 +51,7 @@ class PhalanxService extends Service {
 	 * service for match function
 	 *
 	 * @param string $type     one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
-	 * @param string $content  text to be checked
+	 * @param string/Array $content  text to be checked
 	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
 	 */
 	public function match( $type, $content, $lang = "" ) {
@@ -125,12 +125,26 @@ class PhalanxService extends Service {
 		else {			
 			if (($action == "match" || $action == "check") && !is_null( $this->user ) ) {
 				$parameters[ 'wiki' ] = F::app()->wg->CityId;
-				$parameters[ 'user' ] = $this->user->getName();
+				$parameters[ 'user' ][] = $this->user->getName();
 			}
 			if ($action == "match" && $this->limit != 1) {
 				$parameters['limit'] = $this->limit;
 			}
-			$options["postData"] = wfArrayToCGI( $parameters );
+			
+			$postData = array();
+			if ( !empty( $parameters ) ) {
+				foreach ( $parameters as $key => $values ) {
+					if ( is_array( $values ) ) {
+						foreach ( $values as $val ) {
+							$postData[] = urlencode( $key ) . '=' . urlencode( $val );
+						}
+					} else {
+						$postData[] = urlencode( $key ) . '=' . urlencode( $values );
+					}
+				}
+			}
+			
+			$options["postData"] = implode( "&", $postData );
 			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
 			$response = Http::post( $url, $options);
 		}

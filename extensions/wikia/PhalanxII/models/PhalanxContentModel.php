@@ -116,11 +116,8 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function match_question_title_old() {
-		// TO DO
-		/* problem with Phalanx service? */
-		// include_once( dirname(__FILE__) . '/../prev_hooks/QuestionTitleBlock.class.php';
-		// $ret = QuestionTitleBlock::badWordsTest( $title );			
-		return true;
+		/* problem with Phalanx service? - use previous version of Phalanx extension */
+		return QuestionTitleBlock::badWordsTest( $this->title );			
 	}
 	
 	public function match_recent_questions() {
@@ -128,10 +125,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function match_recent_questions_old() {
-		// TO DO
-		/* problem with Phalanx service? */
-		// include_once( dirname(__FILE__) . '/../prev_hooks/RecentQuestionsBlock.class.php';
-		// $ret = RecentQuestionsBlock::filterWordsTest( $question );					
-		return true;
+		/* problem with Phalanx service? - use previous version of Phalanx extension */
+		return RecentQuestionsBlock::filterWordsTest( $this->getText() );					
 	}
 }

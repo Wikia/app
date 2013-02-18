@@ -18,10 +18,10 @@ class RecentQuestionsBlock {
 		$text = preg_replace('/\pP+/', '', $question);
 		$text = preg_replace('/\s+/', ' ', $text);
 
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_ANSWERS_RECENT_QUESTIONS );
+		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_ANSWERS_RECENT_QUESTIONS );
 		if ( !empty($blocksData) && !empty($text) ) {
 			$blockData = null;
-			$result = Phalanx::findBlocked( $text, $blocksData, true, $blockData );
+			$result = PhalanxFallback::findBlocked( $text, $blocksData, true, $blockData );
 			if ( $result['blocked'] ) {
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
 				wfProfileOut( __METHOD__ );

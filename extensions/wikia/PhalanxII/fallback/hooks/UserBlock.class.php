@@ -14,7 +14,7 @@
  */
 
 class UserBlock {
-	const TYPE = Phalanx::TYPE_USER;
+	const TYPE = PhalanxFallback::TYPE_USER;
 	const CACHE_KEY = 'user-status';
 
 	/**
@@ -49,7 +49,7 @@ class UserBlock {
 			if ( $user->isAnon() ) {
 				$ret =  self::blockCheckIP( $user, $text, $isCurrentUser );
 			} else {
-				$blocksData = Phalanx::getFromFilterShort( self::TYPE );
+				$blocksData = PhalanxFallback::getFromFilterShort( self::TYPE );
 				if ( !empty($blocksData) ) {
 					$ret = self::blockCheckInternal( $user, $blocksData, $text, $isCurrentUser );
 				}
@@ -80,7 +80,7 @@ class UserBlock {
 		wfProfileIn( __METHOD__ );
 
 		$blockData = null;
-		$result = Phalanx::findBlocked( $text, $blocksData, $writeStats, $blockData );
+		$result = PhalanxFallback::findBlocked( $text, $blocksData, $writeStats, $blockData );
 
 		if ( $result['blocked'] ) {
 			Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
@@ -111,7 +111,7 @@ class UserBlock {
 		global $wgMemc, $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$moduleId = Phalanx::TYPE_USER;
+		$moduleId = PhalanxFallback::TYPE_USER;
 		$timestampNow = wfTimestampNow();
 		$ipAddr = IP::toHex( $text );
 		$row = $dbr->selectRow(
@@ -141,7 +141,7 @@ class UserBlock {
 			);
 			Wikia::log(__METHOD__, __LINE__, "Block '{$blockData['text']}' blocked '$text'.");
 			if ( $writeStats ) {
-				Phalanx::addStats($blockData['id'], $blockData['type']);
+				PhalanxFallback::addStats($blockData['id'], $blockData['type']);
 			}
 
 			self::setUserData( $user, $blockData, $text, true );
@@ -172,7 +172,7 @@ class UserBlock {
 		$cacheKey = self::getCacheKey( $user );
 		$cachedState = $wgMemc->get( $cacheKey );
 
-		if ( !empty( $cachedState ) && $cachedState['timestamp'] > (int) Phalanx::getLastUpdate() ) {
+		if ( !empty( $cachedState ) && $cachedState['timestamp'] > (int) PhalanxFallback::getLastUpdate() ) {
 			if ( !$cachedState['return'] && $isCurrentUser ) {
 				self::setUserData( $user, $cachedState['block'], '', $user->isAnon() );
 			}
@@ -257,17 +257,17 @@ class UserBlock {
 	 */
 	public static function onAbortNewAccount( $user, &$abortError ) {
 		$text = $user->getName();
-		$blocksData = Phalanx::getFromFilterShort( self::TYPE );
+		$blocksData = PhalanxFallback::getFromFilterShort( self::TYPE );
 		$state = self::blockCheckInternal( $user, $blocksData, $text, true );
 		if ( !$state ) {
 			$abortError = wfMsg( 'phalanx-user-block-new-account' );
 			return false;
 		}
 		// Check if email is blocked
-		$emailBlocksData = Phalanx::getFromFilter( Phalanx::TYPE_EMAIL );
+		$emailBlocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_EMAIL );
 		$userEmail = $user->getEmail();
 		if ( $userEmail !== '' ) {
-			$result = Phalanx::findBlocked( $userEmail, $emailBlocksData, true );
+			$result = PhalanxFallback::findBlocked( $userEmail, $emailBlocksData, true );
 			if ( $result['blocked'] ) {
 				$abortError = wfMsg( 'phalanx-user-block-new-account' );
 				return false;
