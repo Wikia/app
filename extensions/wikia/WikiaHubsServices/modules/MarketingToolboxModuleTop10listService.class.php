@@ -1,5 +1,7 @@
 <?
 class MarketingToolboxModuleTop10listService extends MarketingToolboxModuleService {
+	const MODULE_ID = 8;
+
 	protected function getFormFields() {
 		return array(
 			'boardTitle' => array(

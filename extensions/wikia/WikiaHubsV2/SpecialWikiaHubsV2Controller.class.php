@@ -42,7 +42,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 		foreach ($toolboxModel->getModulesIds() as $moduleId) {
 			// TODO remove this if when other modules would be ready
-			if ($moduleId == MarketingToolboxModel::MODULE_EXPLORE) {
+			if ($moduleId == MarketingToolboxModuleExploreService::MODULE_ID || $moduleId == MarketingToolboxModulePollsService::MODULE_ID) {
 				if (!empty($modulesData[$moduleId]['data'])) {
 					$this->modules[$moduleId] = $this->renderModule(
 						$this->wg->ContLang->getCode(),

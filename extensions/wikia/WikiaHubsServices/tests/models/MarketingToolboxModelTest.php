@@ -27,21 +27,21 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			'testNameFor Top 10 list',
-			$model->getModuleName(MarketingToolboxModel::MODULE_TOP_10_LIST)
+			$model->getModuleName(MarketingToolboxModuleTop10listService::MODULE_ID)
 		);
 	}
 
 	public function testGetNotTranslatedModuleName() {
 		$testDatas = array(
-			MarketingToolboxModel::MODULE_SLIDER => 'Slider',
-			MarketingToolboxModel::MODULE_PULSE => 'Pulse',
-			MarketingToolboxModel::MODULE_WIKIAS_PICKS => 'Wikiaspicks',
-			MarketingToolboxModel::MODULE_FEATURED_VIDEO => 'Featuredvideo',
-			MarketingToolboxModel::MODULE_EXPLORE => 'Explore',
-			MarketingToolboxModel::MODULE_FROM_THE_COMMUNITY => 'Fromthecommunity',
-			MarketingToolboxModel::MODULE_POLLS => 'Polls',
-			MarketingToolboxModel::MODULE_TOP_10_LIST => 'Top10list',
-			MarketingToolboxModel::MODULE_POPULAR_VIDEOS => 'Popularvideos'
+			MarketingToolboxModuleSliderService::MODULE_ID => 'Slider',
+			MarketingToolboxModulePulseService::MODULE_ID => 'Pulse',
+			MarketingToolboxModuleWikiaspicksService::MODULE_ID => 'Wikiaspicks',
+			MarketingToolboxModuleFeaturedvideoService::MODULE_ID => 'Featuredvideo',
+			MarketingToolboxModuleExploreService::MODULE_ID => 'Explore',
+			MarketingToolboxModuleFromthecommunityService::MODULE_ID => 'Fromthecommunity',
+			MarketingToolboxModulePollsService::MODULE_ID => 'Polls',
+			MarketingToolboxModuleTop10listService::MODULE_ID => 'Top10list',
+			MarketingToolboxModulePopularvideosService::MODULE_ID => 'Popularvideos'
 		);
 
 		$model = new MarketingToolboxModel();
@@ -100,7 +100,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 	public function testGetModuleUrl() {
 		$params = array(
-			'moduleId' => MarketingToolboxModel::MODULE_PULSE,
+			'moduleId' => MarketingToolboxModulePulseService::MODULE_ID,
 			'date' => 123456,
 			'region' => 'pl',
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
@@ -143,7 +143,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
 			'timestamp' => 789654,
-			'activeModule' => MarketingToolboxModel::MODULE_WIKIAS_PICKS
+			'activeModule' => MarketingToolboxModuleWikiaspicksService::MODULE_ID
 		);
 
 		// Mock database
@@ -222,7 +222,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
 			'timestamp' => 789654,
-			'activeModule' => MarketingToolboxModel::MODULE_WIKIAS_PICKS
+			'activeModule' => MarketingToolboxModuleWikiaspicksService::MODULE_ID
 		);
 		$lastPublishTimestamp = 66789;
 		$lastEditorName = 'test UserName';
@@ -378,7 +378,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_GAMING,
 			'timestamp' => 1234567,
-			'moduleId' => MarketingToolboxModel::MODULE_POLLS,
+			'moduleId' => MarketingToolboxModulePollsService::MODULE_ID,
 			'data' => array('test1' => 'test2', 'hola hola' => 'espaniola'),
 			'editorId' => 666
 		);
@@ -436,7 +436,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_GAMING,
 			'timestamp' => 1234567,
-			'moduleId' => MarketingToolboxModel::MODULE_POLLS,
+			'moduleId' => MarketingToolboxModulePollsService::MODULE_ID,
 			'data' => array('test1' => 'test2', 'hola hola' => 'espaniola'),
 			'editorId' => 666
 		);
