@@ -110,8 +110,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$this->wg->Out->addJsConfigVars([
 			'wgMarketingToolboxModuleIdSelected' => $this->selectedModuleId,
-			'wgMarketingToolboxModuleIdPopularVideos' => MarketingToolboxModel::MODULE_POPULAR_VIDEOS,
-			'wgMarketingToolboxModuleIdFeaturedVideo' => MarketingToolboxModel::MODULE_FEATURED_VIDEO
+			'wgMarketingToolboxModuleIdPopularVideos' => MarketingToolboxModulePopularvideosService::MODULE_ID,
+			'wgMarketingToolboxModuleIdFeaturedVideo' => MarketingToolboxModuleFeaturedvideoService::MODULE_ID
 		]);
 
 		$this->checkDate($this->date);
