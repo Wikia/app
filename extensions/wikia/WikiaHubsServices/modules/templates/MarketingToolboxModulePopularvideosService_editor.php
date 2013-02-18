@@ -16,20 +16,20 @@
 			<input type="button" class="vet-show" value="<?= $wf->Msg('marketing-toolbox-edithub-add-video-button') ?>" />
 		</div>
 	</div>
-	
-	<?php if( !empty($videos) ): ?>
-		<div class="popular-videos-list">
-			<?php foreach($videos as $idx => $video): ?>
-				<?= $app->renderView(
-						'MarketingToolboxVideosController',
-						'popularVideoRow',
-						array(
-							'video' => $video,
-							'errorMsg' => (isset($fields['videoUrl']['errorMessage'][$idx]) ? $fields['videoUrl']['errorMessage'][$idx] : ''),
-						)
-					);
-				?>
-			<?php endforeach; ?>
-		</div>
-	<?php endif; ?>
+
+	<div class="popular-videos-list">
+		<?php if( !empty($videos) ): ?>
+				<?php foreach($videos as $idx => $video): ?>
+					<?= $app->renderView(
+							'MarketingToolboxVideosController',
+							'popularVideoRow',
+							array(
+								'video' => $video,
+								'errorMsg' => (isset($fields['videoUrl']['errorMessage'][$idx]) ? $fields['videoUrl']['errorMessage'][$idx] : ''),
+							)
+						);
+					?>
+				<?php endforeach; ?>
+		<?php endif; ?>
+	</div>
 </div>
