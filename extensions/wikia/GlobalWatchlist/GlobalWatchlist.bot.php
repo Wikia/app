@@ -458,27 +458,37 @@ class GlobalWatchlistBot {
 		$aEmailArgs = array(
 			0 => ucfirst( $oUser->getName() ),
 			1 => ( $iPagesCount > 0 ) ? $sDigests : $this->getLocalizedMsg( 'globalwatchlist-no-page-found', $oUserLanguage ),
-			2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogs : $this->getLocalizedMsg( 'globalwatchlist-no-blog-page-found', $oUserLanguage ),
+			2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogs : "",
 		);
 
 		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUserLanguage ) . "\n";
+		if (empty($aEmailArgs[2])) $sMessage = $this->cutOutPart($sMessage, '$2', '$3');
 		$sBody = wfMsgReplaceArgs( $sMessage, $aEmailArgs );
-
 		if ( $usehtmlemail ) {
 			// rebuild the $ args using the HTML text we've built
 			$aEmailArgs = array(
 				0 => ucfirst( $oUser->getName() ),
 				1 => ( $iPagesCount > 0 ) ? $sDigestsHTML : $this->getLocalizedMsg( 'globalwatchlist-no-page-found', $oUserLanguage ),
-				2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogsHTML : $this->getLocalizedMsg( 'globalwatchlist-no-blog-page-found', $oUserLanguage ),
+				2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogsHTML : "",
 			);
 
 			$sMessageHTML = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body-html', $oUserLanguage );
 			if ( !wfEmptyMsg( 'globalwatchlist-digest-email-body-html', $sMessageHTML ) ) {
+				if (empty($aEmailArgs[2])) $sMessageHTML = $this->cutOutPart($sMessageHTML, '$2', '$3');
 				$sBodyHTML = wfMsgReplaceArgs( $sMessageHTML, $aEmailArgs );
 			}
 		}
 
 		return array( $sBody, $sBodyHTML );
+	}
+	function cutOutPart($message, $startMarker, $endMarker, $replacement = " ") {
+	 // this is a quick way to skip some parts of email message without remaking all the i18n messages.
+	 $startPos = strpos($message, $startMarker);
+	 $endPos = strpos($message, $endMarker);
+	 if ($startPos !== FALSE && $endPos !== FALSE) {
+	   $message = substr($message, 0, $startPos + strlen($startMarker)) . $replacement . substr($message, $endPos);
+	 }
+	 return $message;
 	}
 
 	private function getLocalizedMsg( $sMsgKey, $sLangCode ) {
