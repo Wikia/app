@@ -21,12 +21,14 @@ class GlobalWatchlistBotTest extends WikiaBaseTest {
 	}
 
 	public function testBlogsSection() {
-		$user = $this->mockUser("test", "test@example.com", false);
+		$user = $this->mockUser("test", "test@example.com");
 		$bot = new GlobalWatchlistBot(true, array($user), array());
 		$digests = array();
 		$mail = $bot->composeMail($user, $digests, false);
-		print_r($mail);
-    
+		$plaintext = $mail[0];
+		$html = $mail[1];
+		$this->assertNotContains("No blog page found", $plaintext);
+		$this->assertNotContains("No blog page found", $html);    
 	}
 
 }
