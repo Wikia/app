@@ -46,7 +46,7 @@
 			array(
 				'type' => 'submit',
 				'value' => wfMsg('login'),
-				'class' => 'big',
+				'class' => 'login-button big',
 				'tabindex' => ++$tabIndex,
 			),
 			array(
