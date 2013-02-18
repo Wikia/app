@@ -113,7 +113,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				->will( $this->returnValue( ( is_null( $retVal ) ) ? $mock : $retVal) );
 		}
 
-		$this->proxyClass($className, $mock, $staticConstructor);
+		$this->proxyClass($className, $mock, ($staticConstructor !== '') ? $staticConstructor : null);
 
 		return $mock;
 	}
@@ -130,6 +130,18 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
 		}
 		$this->appMock->mockGlobalFunction( $functionName, $returnValue, $callsNum, $inputParams );
+	}
+
+	/**
+	 * Mock given message
+	 *
+	 * @param $messageName string
+	 * @param $messageContent string
+	 */
+	protected function mockMessage($messageName, $messageContent) {
+		$this->mockGlobalFunction('msg',  $messageContent, 1, array(
+			$this->equalTo($messageName)
+		));
 	}
 
 	// After calling this, any reference to $this->app in a test now uses the mocked object

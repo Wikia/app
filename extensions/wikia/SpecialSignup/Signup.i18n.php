@@ -8,10 +8,12 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'signup-desc' => 'The Special:Userlogin/signup page is displayed if a user chooses login, but is not signed up for the wiki.',
-	'signup' => 'The Special:Userlogin/signup page is displayed if a user chooses login, but is not signed up for the wiki.',
+	'signup' => 'The Special:Userlogin/signup page is displayed if a user chooses login, but is not signed up for the wiki.
+{{Identical|Signup}}',
 );
 
 /** Arabic (العربية)
@@ -226,6 +228,14 @@ $messages['pt-br'] = array(
 	'signup' => 'Registar-se',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'signup-desc' => "Aggiunge 'n'alias [[{{#Special:Signup}}]] pe [[{{#Special:UserLogin}}/signup]]",
+	'signup' => 'Reggistrate',
+);
+
 /** Russian (русский)
  */
 $messages['ru'] = array(
@@ -311,4 +321,11 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'signup-desc' => '为[[{{#Special:UserLogin}}/signup]]添加别名[[{{#Special:Signup}}]]',
 	'signup' => '注册',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'signup' => '註冊',
 );

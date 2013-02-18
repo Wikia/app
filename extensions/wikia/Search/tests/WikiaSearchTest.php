@@ -268,6 +268,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 
 		$wikiaSearch	= F::build( 'WikiaSearch' );
 		$searchConfig	= F::build( 'WikiaSearchConfig' );
+		$searchConfig->setCityId( $mockCityId ); // some wonkiness with mediawikiinterface
 
 		$method = new ReflectionMethod( 'WikiaSearch', 'getQueryClausesString' );
 		$method->setAccessible( true );
@@ -1155,16 +1156,18 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				'WikiaSearch should query against the dynamic title, html, and redirect titles fields by default.'
 		);
 
+		$oldQueryFields = $searchConfig->getQueryFieldsToBoosts();
+		
 		$searchConfig->setInterWiki( true );
 		$this->assertEquals(
 				$interwikiString,
 				$method->invoke( $wikiaSearch, $searchConfig ),
 				'WikiaSearch should add wikititle as a query field if we are performing an interwiki search.'
 		);
-
 		$searchConfig
 			->setIsInterWiki	( false )
 			->setVideoSearch	( true )
+			->setQueryFields	( $oldQueryFields )
 		;
 		$this->assertEquals(
 		        $defaultString,

@@ -5,21 +5,6 @@
 
 $wide-table-border: 5px solid rgb(215,232,242);
 
-.wikitable, .sortable{
-	border:1px solid $border-color;
-
-	th{
-		background-color:$border-color;
-		text-align:center;
-		white-space:nowrap;
-	}
-
-	td{
-		border:1px solid $border-color;
-		white-space:nowrap;
-	}
-}
-
 //if native scroll is available:
 .overflow .bigTable {
 	overflow: auto;

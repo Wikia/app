@@ -2579,6 +2579,38 @@ $messages['ro'] = array(
 	'swm-error-empty-group' => 'Introdu numele grupului.',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'swm-label-preview' => 'Andeprime',
+	'swm-label-edit' => 'Cange',
+	'swm-label-remove' => 'Live',
+	'swm-label-sent' => 'Mannate',
+	'swm-label-list' => 'Elenghe',
+	'swm-label-recipient-wikis' => 'Uicchi',
+	'swm-label-recipient-users' => 'Utinde',
+	'swm-label-mode-wikis-all' => 'tutte le uicchi',
+	'swm-label-mode-users-all' => "Tutte l'utinde",
+	'swm-label-mode-users-active' => 'Utinde attive',
+	'swm-label-mode-users-user-multi' => "Elenghe de l'utinde",
+	'swm-label-mode-users-anon' => "Tutte l'utinde anonime",
+	'swm-label-content' => 'Condenute',
+	'swm-label-comment' => 'Commende',
+	'swm-label-dismissed' => 'Scettate',
+	'swm-label-language' => 'Lènghe',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-wiki' => 'Uicchi',
+	'swm-list-table-group' => 'Gruppe',
+	'swm-list-table-expire' => 'Scadenze',
+	'swm-list-table-removed' => 'Luate',
+	'swm-list-table-content' => 'Condenute',
+	'swm-list-table-tools' => 'Struminde',
+	'swm-list-table-lang' => 'Lènghe',
+	'swm-yes' => 'Sìne',
+	'swm-no' => 'None',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Eleferen

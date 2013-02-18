@@ -750,6 +750,13 @@ $messages['ro'] = array(
 	'globalwatchlist-no-blog-page-found' => 'Nicio postare pe blog găsită.',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'globalwatchlist-digest-email-subject' => "Riepiloghe d'a sumane",
+);
+
 /** Russian (русский)
  * @author Eleferen
  * @author Lockal

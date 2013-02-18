@@ -1,6 +1,6 @@
 (function(html, w){
 	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
-		host = w.wgServer,
+		host = w.wgServer.replace(/^http\:\/\//, ''),
 		i = links.length,
 		namespaces = w.wgNamespaceIds,
 		regExpNamespace = new RegExp(w.wgArticlePath.replace('$1', "([^:]*)")),
@@ -18,7 +18,7 @@
 		link = links[i];
 		path = link.pathname;
 		parent = link.parentElement;
-		notAllowed = ((link.origin && link.origin !== host) || path === '/wikia.php') && !~parent.className.indexOf('thumb');
+		notAllowed = ((link.host && link.host !== host) || path === '/wikia.php') && !~parent.className.indexOf('thumb');
 
 		if(!notAllowed && ~path.indexOf(':')) {
 			pathMatch = path.match(regExpNamespace);
@@ -68,8 +68,8 @@
 				'Linker',
 				'goTo',
 				{
-					ns: ns,
-					title: title
+					title: title,
+					ns: ns
 				}
 			);
 		}

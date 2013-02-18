@@ -167,6 +167,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author George Animal
  * @author LWChris
+ * @author Metalhead64
  * @author SVG
  */
 $messages['de'] = array(
@@ -178,7 +179,7 @@ $messages['de'] = array(
 Zusätzliche Informationen über das Melden von Problemen auf Wikia findest du [[w:project:Report_a_problem|hier]], oder du kannst in den [[w:Forum:Index|Wikia-Community-Foren]] posten und um Hilfe bitten.
 
 Wenn du gewöhnliche E-Mails bevorzugst oder Anhänge hast, kannst du uns unter [mailto:community@wikia.com community@wikia.com] kontaktieren.',
-	'specialcontact-username' => 'Benutzername', # Fuzzy
+	'specialcontact-username' => 'Dein Benutzername',
 	'specialcontact-wikiname' => 'Welches Wiki',
 	'specialcontact-realname' => 'Dein Name',
 	'specialcontact-yourmail' => 'E-Mail-Adresse',
@@ -319,6 +320,7 @@ Jos haluat käyttää tavallista sähköpostia tai sinulla on lähetettäviä li
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -330,7 +332,7 @@ $messages['fr'] = array(
 Des informations supplémentaires sur comment signaler des problèmes à Wikia se trouvent [[w:project:Report_a_problem|ici]] ou vous pouvez poster un message sur les [[w:Forum:Index|forums de la communauté Wikia]] pour un support utilisateur.
 
 Si vous préférez utiliser la messagerie électronique classique ou souhaitez joindre des fichiers, vous pouvez nous contacter via [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-username' => 'Nom d’utilisateur', # Fuzzy
+	'specialcontact-username' => 'Votre nom d’utilisateur',
 	'specialcontact-wikiname' => 'Quel wiki',
 	'specialcontact-realname' => 'Votre nom',
 	'specialcontact-yourmail' => 'Adresse de courriel',
@@ -364,7 +366,7 @@ $messages['gl'] = array(
 Pode atopar información adicional sobre como informar de problemas a Wikia [[w:project:Report_a_problem|aquí]] ou pode publicar unha mensaxe nos [[w:Forum:Index|foros comunitarios]] se quere axuda dos usuarios.
 
 Se prefire usar o correo electrónico ou necesita enviar ficheiros adxuntos, pode poñerse en contacto connosco en [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-username' => 'Nome de usuario', # Fuzzy
+	'specialcontact-username' => 'O seu nome de usuario',
 	'specialcontact-wikiname' => 'Que wiki',
 	'specialcontact-realname' => 'O seu nome',
 	'specialcontact-yourmail' => 'Enderezo de correo electrónico',
@@ -531,7 +533,7 @@ $messages['mk'] = array(
 Повеќе за тоа како да пријавите проблем на Викија ќе најдете [[w:project:Report_a_problem|тука]]. Ќе добиете корисничка поддршка ако проблемот го објавите на [[w:Forum:Index|Форумите на заедницата]].
 
 Ако претпочитате да користите обична е-пошта или имате прилози, тогаш пишете ни на [mailto:community@wikia.com community@wikia.com]',
-	'specialcontact-username' => 'Корисничко име', # Fuzzy
+	'specialcontact-username' => 'Ваше корисничко име',
 	'specialcontact-wikiname' => 'Кое вики:',
 	'specialcontact-realname' => 'Ваше име',
 	'specialcontact-yourmail' => 'Е-пошта',
@@ -565,7 +567,7 @@ $messages['ms'] = array(
 Maklumat lanjut tentang cara melaporkan masalah kepada Wikia boleh dirujuk di [[w:project:Report_a_problem|sini]], ataupun anda boleh mengirimkan soalan anda kepada [[w:Forum:Index|Wikia Community Forums]] untuk mendapatkan bantuan daripada pengguna lain.
 
 Jika anda lebih gemar menggunakan e-mel biasa atau mempunyai lampiran, anda boleh menghubungi kami di [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-username' => 'Nama pengguna', # Fuzzy
+	'specialcontact-username' => 'Nama Pengguna Anda',
 	'specialcontact-wikiname' => 'Wiki yang mana?',
 	'specialcontact-realname' => 'Nama anda',
 	'specialcontact-yourmail' => 'Alamat e-mel',
@@ -909,7 +911,7 @@ $messages['sv'] = array(
 Tilläggande information om hur man rapporterar problem till Wikia kan hittas [[w:project:Report_a_problem|här]], eller så kan du posta ett inlägg på [[w:Forum:Index|Wikias gemenskapsforum]] för användarsupport.
 
 Om du föredrar att använda e-post eller har bifogade filer kan du kontakta oss på [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-username' => 'Användarnamn', # Fuzzy
+	'specialcontact-username' => 'Ditt användarnamn',
 	'specialcontact-wikiname' => 'Vilken wiki',
 	'specialcontact-realname' => 'Ditt namn',
 	'specialcontact-yourmail' => 'E-postadress',
@@ -1062,7 +1064,7 @@ $messages['zh-hans'] = array(
 	'contact' => '联络 Wikia',
 	'specialcontact-wikia' => '联络 Wikia',
 	'specialcontact-pagetitle' => '联络 Wikia',
-	'specialcontact-username' => '用户名', # Fuzzy
+	'specialcontact-username' => '您的用户名',
 	'specialcontact-wikiname' => '哪个维基',
 	'specialcontact-realname' => '您的名字',
 	'specialcontact-yourmail' => '电子邮件地址',

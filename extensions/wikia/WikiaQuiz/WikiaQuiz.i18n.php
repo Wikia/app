@@ -1512,6 +1512,9 @@ $messages['roa-tara'] = array(
 	'wikiaquiz-createquiz-headline' => "Ccreje 'nu Quiz",
 	'wikiaquiz-editquiz-headline' => "Cange 'nu Quiz",
 	'wikiaquiz-title-label' => 'Titole',
+	'wikiaquiz-moreinfoarticle-label' => 'Vôsce',
+	'wikiaquiz-question-label' => 'Domande',
+	'wikiaquiz-image-label' => 'Immaggine (opzionale)',
 	'wikiaquiz-quiz-label' => 'Quiz',
 	'wikiaquiz-questions-label' => 'Domande',
 	'wikiaquiz-answers-label' => 'Resposte',
@@ -1527,6 +1530,7 @@ $messages['roa-tara'] = array(
 	'wikiaquiz-game-finish-button' => 'Spicce',
 	'wikiaquiz-game-your-score' => "'U PUNDEGGE TUNE JE'",
 	'wikiaquiz-game-continue-button' => 'Condinue',
+	'wikiaquiz-game-mute' => 'Citte',
 );
 
 /** Russian (русский)
@@ -1968,4 +1972,11 @@ $messages['zh-hans'] = array(
 	'wikiaquiz-game-email-error' => '发送此邮件时出错：$1',
 	'wikiaquiz-game-challenge' => '挑战您的朋友来参与！',
 	'wikiaquiz-game-mute' => '静音',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wikiaquiz-title-label' => '標題',
 );

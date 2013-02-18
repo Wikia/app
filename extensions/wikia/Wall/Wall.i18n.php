@@ -397,7 +397,8 @@ $messages['qqq'] = array(
 	'wall-message-wall' => 'Name of the feature',
 	'wall-message-wall-shorten' => "Name of the feature when it's used with a possessive, as in John's wall",
 	'wall-message-unfollow' => 'stop subscribing to notifications for this thread',
-	'wall-message-undoremove' => 'undo the action that you just took',
+	'wall-message-undoremove' => 'undo the action that you just took.
+{{Identical|Undo}}',
 	'wall-message-edited' => 'Parameters:
 * $1 is the user who edited the message
 * $2 is user page URL
@@ -445,7 +446,8 @@ $messages['qqq'] = array(
 	'wall-message-edit' => 'Menu item to edit a message',
 	'wall-message-more' => 'Top of the menu for each message.
 {{Identical|More}}',
-	'wall-message-delete' => 'Menu item to delete a message',
+	'wall-message-delete' => 'Menu item to delete a message.
+{{Identical|Delete}}',
 	'wall-message-close-thread' => 'Menu item to close a thread or message',
 	'wall-message-reopen-thread' => 'Menu item to reopen a thread',
 	'wall-message-removed-thread-because' => 'Summary at the top of a removed thread page. Parameters:
@@ -493,7 +495,8 @@ See also:
 	'wall-action-admin-confirm' => 'Asks for summary in the delete modal box',
 	'wall-action-admin-thread-confirm-info' => 'Explanation in the delete modal box that the thread and summary will still appear in the history',
 	'wall-action-admin-reply-confirm-info' => 'Explanation in the delete modal box that the reply and summary will still appear in the history',
-	'wall-action-admin-confirm-ok' => 'Button in the delete modal box',
+	'wall-action-admin-confirm-ok' => 'Button in the delete modal box.
+{{Identical|Delete}}',
 	'wall-action-restore-thread-title' => 'Button to restore a thread',
 	'wall-action-restore-reply-title' => 'Button to restore a reply',
 	'wall-action-restore-confirm' => 'Asks for summary in the restore modal box',
@@ -697,7 +700,8 @@ checkbox on Special:Block',
 	'wall-history-summary-label' => 'wall history page, heading for summary item',
 	'wall-history-rail-wall' => "wall history page, who's involved box - link to user's wall",
 	'wall-history-rail-contribs' => "wall history page, who's involved box - link to user's contributions list",
-	'wall-history-rail-block' => "wall history page, who's involved box - link for admins to block user",
+	'wall-history-rail-block' => "wall history page, who's involved box - link for admins to block user.
+{{Identical|Block}}",
 	'wall-history-action-view' => 'wall history page, link to view removed thread',
 	'wall-history-action-restore' => 'wall history page, link to restore removed thread',
 	'wall-history-action-thread-history' => 'wall history page, link to view thread history',
@@ -919,9 +923,72 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author BroOk
  * @author Erdemaslancan
  */
 $messages['ca'] = array(
+	'wall-no-title' => 'Sense títol',
+	'wall-message-loadmore' => 'Veure <span class="count">{{PLURAL:$1|$1 resposta|$1 respostes}}</span>',
+	'wall-message-wall' => 'Mur de missatges',
+	'wall-message-wall-shorten' => 'mur',
+	'wall-message-unfollow' => 'Deixar de seguir',
+	'wall-message-undoremove' => 'Desfer',
+	'wall-message-edited' => '<a href="$3" >Editat per</a> <a class="username" href="$1">$2</a>',
+	'wall-message-edited-summary' => '<a href="$4" >$1 per </a><a class="username" href="$2">$3</a>',
+	'wall-message-update-topics-summary' => 'Tema canviat',
+	'wall-message-update-highlight-summary' => 'Destacat',
+	'wall-message-update-removed-highlight-summary' => 'Destacat eliminat',
+	'wall-message-mywall' => 'El meu mur',
+	'wall-toolbar-history' => 'Historial',
+	'wall-message-notify' => 'Notificar a un admin',
+	'wall-message-remove' => 'Treure',
+	'wall-message-rev-delete' => 'Revisió esborrada',
+	'wall-message-fast-admin-delete-message' => 'VSTF borrar',
+	'wall-message-quote-button' => 'Cita',
+	'wall-message-elseswall' => 'mur de $1',
+	'wall-message-no-permission' => 'No tens permisos per a realitzar aquesta acció en el missatge',
+	'wall-thread-removed' => 'Retirat',
+	'wall-thread-isnotifyeveryone' => 'Destacar',
+	'wall-thread-deleted' => 'Esborrat',
+	'wall-thread-closed' => 'Tancat',
+	'wall-default-title' => 'Missatge de $1',
+	'wall-no-title-warning' => '← No has especificat cap títol',
+	'wall-desc' => "Substitució de la pàgina de discussió d'usuari",
+	'wall-disabled-desc' => "Funcionalitat del Mur de Missatges per a wikis sense l'extensió del Mur activada",
+	'wall-placeholder-topic' => 'Què és això?',
+	'wall-placeholder-message' => 'Publicar un missatge nou al mur de $1',
+	'wall-placeholder-message-anon' => 'Publica un missatge nou en aquest mur',
+	'wall-placeholder-reply' => 'Deixar una resposta',
+	'wall-button-to-preview-comment' => 'Previsualitzar',
+	'wall-button-to-cancel-preview' => 'Editar',
+	'wall-button-to-submit-comment' => 'Publicar',
+	'wall-button-to-submit-reply' => 'Respondre',
+	'wall-button-to-submit-comment-no-topic' => 'Publicar sense títol',
+	'wall-button-save-changes' => 'Desar els canvis',
+	'wall-button-cancel-changes' => 'Cancel·lar',
+	'wall-button-done-source' => 'Fet',
+	'wall-message-edit' => 'Editar',
+	'wall-message-more' => 'Més',
+	'wall-message-delete' => 'Eliminar',
+	'wall-message-close-thread' => 'Tancar aquest tema',
+	'wall-message-reopen-thread' => 'Reobrir aquest tema',
+	'wall-message-removed-thread-because' => '$1 ha retirat aquest tema perquè:',
+	'wall-message-deleted-thread-because' => '$1 ha eliminat aquest tema perquè:',
+	'wall-message-restore-thread' => 'Restaurar tema',
+	'wall-message-move-thread' => 'Reanomenar aquest tema',
+	'wall-message-removed-reply-because' => '$1 ha retirat aquesta resposta perquè:',
+	'wall-message-deleted-reply-because' => '$1 ha eliminat aquesta resposta perquè:',
+	'wall-message-closed-by' => '[[$2|$1]] ha tancat aquest tema',
+	'wall-message-restore-reply' => 'Restaurar resposta',
+	'wall-delete-reason' => "Acció d'usuari/admin",
+	'wall-user-talk-page-archive-anchor' => 'Veure la pàgina de discussió arxivada',
+	'wall-user-talk-archive-page-title' => 'Arxiu_de_discussió',
+	'wall-ipb-disableusertalk' => 'Impedeix que aquest usuari pugui publicar en el seu Mur de Missatges mentre duri el bloqueig',
+	'wall-action-all-confirm-cancel' => 'Cancel·lar',
+	'wall-action-all-confirm-notify' => 'Notificar a un admin',
+	'wall-action-remove-reply-title' => 'Retirar aquesta resposta',
+	'wall-action-remove-thread-title' => 'Retirar aquest tema',
+	'wall-delete-error-title' => 'Error',
 	'wall-recentchanges-summary' => '($1)',
 );
 
@@ -3381,6 +3448,7 @@ $messages['ko'] = array(
 	'wall-thread-isnotifyeveryone' => '강조하기',
 	'wall-thread-deleted' => '삭제됨',
 	'wall-thread-closed' => '폐쇄됨',
+	'wall-message-more' => '더 보기',
 	'wall-recentchanges-namespace-selector-message-wall' => '메시지 담벼락',
 	'prefs-email-wall-v2' => '메시지 담벼락과 포럼',
 	'wall-quote-author' => '$1의 말:',
@@ -7133,4 +7201,13 @@ $messages['zh-hans'] = array(
 	'wall-preview-modal-title' => '预览',
 	'wall-preview-modal-button-back' => '返回',
 	'wall-topic-edit-cancel' => '取消',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wall-no-title' => '無標題',
+	'wall-message-wall' => '訊息牆',
+	'wall-message-wall-shorten' => '訊息牆',
 );

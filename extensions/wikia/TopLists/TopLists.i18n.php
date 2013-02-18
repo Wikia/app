@@ -128,9 +128,11 @@ $messages['qqq'] = array(
 	'toplists-desc' => '{{desc}}',
 	'toplists-category' => 'The name for the category that lists all the Top 10 Lists on a wiki',
 	'action-toplists-create-edit-list' => '{{doc-action|toplists-create-edit}}',
+	'toplists-create-button' => '{{Identical|Create list}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
 	'toplists-minutes' => '{{Identical|Minute}}',
+	'toplists-create-button-msg' => '{{Identical|Create list}}',
 	'toplists-oasis-only' => 'Displayed to users who try to edit or create Top 10 lists in a skin other than the Wikia skin.',
 );
 

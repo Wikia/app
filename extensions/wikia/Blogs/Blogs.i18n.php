@@ -156,8 +156,10 @@ Parameters:
 	'create-blog-listing-matches-calculate' => 'Button label. User presses to calculate how many blogs would be included in the blog listing given the user-selected criteria. After button is triggered, message gets switched to [[Wikia:Create-blog-listing-matches-recalculate]].',
 	'create-blog-listing-matches-recalculate' => 'Button label. Appears after [[Wikia:Create-blog-listing-matches-calculate]] has been triggered. Allows user to re-calculate the number of blogs that meet the user-selected criteria if the user changes the criteria since initial calculation.',
 	'create-blog-listing-matches-info' => 'Informs the user of the number of blog posts (number is printed by AJAX) that meet the current criteria',
+	'blog-defaulttitle' => '{{Identical|Blog}}',
 	'blog-added' => 'This is the possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-edited' => 'This is a possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
+	'blog-page' => '{{Identical|Blog}}',
 	'blog-comments' => '{{Identical|Comment}}',
 	'blog-comments-label' => 'This is a checkbox label. If checked by the blog author, users will be able to leave comments on the blog.',
 	'blog-voting-label' => 'This is a checkbox label. If checked by the blog author, users will be able to vote on a blog post. Note: The voting functionality was never fully implemented into the Blogs feature. It may be implemented at a later date.',
@@ -176,7 +178,8 @@ $1 - Username of blog author. GENDER is supported.',
 	'right-blog-articles-edit' => '{{doc-right|blog-articles-edit}}',
 	'right-blog-articles-move' => '{{doc-right|blog-articles-move}}',
 	'blog-desc' => '{{desc}}',
-	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page',
+	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page.
+{{Identical|Blog}}',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
 	'user-blog-url-link' => 'Link - links to users Blog main page',
 );
@@ -3521,7 +3524,7 @@ $messages['pms'] = array(
 	'blog-by' => '$1 da $2',
 	'blogs-searchprofile' => 'Scartari',
 	'blogs-searchprofile-tooltip' => "Sërché ant j'artìcoj e le Liste dë Scartari",
-	'user-blog-url-link' => 'Startari utent:$1',
+	'user-blog-url-link' => 'Scartari utent:$1',
 );
 
 /** Pashto (پښتو)
@@ -4889,6 +4892,7 @@ $messages['wa'] = array(
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(
+	'blog-file-page' => "<a href='$3'>$4's</a>发表了新博客：<a href='$1'>$2</a>",
 	'createblogpage' => '创建博客',
 	'createbloglistingpage' => '创建博客列表',
 	'create-blog-spam' => '看起来像垃圾邮件',
@@ -5002,6 +5006,7 @@ $messages['zh-hans'] = array(
 	'blog-comment-sending' => '正在发送...',
 	'blog-by' => '$1由$2',
 	'blogs-searchprofile' => '博客',
+	'blogs-searchprofile-tooltip' => '在博客文章和博客列表中搜索',
 	'user-blog-url-link' => '用户博客:$1',
 );
 

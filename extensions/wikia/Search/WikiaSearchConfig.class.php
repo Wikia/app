@@ -1,14 +1,14 @@
 <?php 
-
+/**
+ * Class definition for WikiaSearchConfig
+ */
+use Wikia\Search\MediaWikiInterface;
 /**
  * A config class intended to handle variable flags for search
  * Intended to be a dependency-injected receptacle for different search requirements
- * 
  * @author Robert Elwell
- *
  */
-
-class WikiaSearchConfig extends WikiaObject implements ArrayAccess
+class WikiaSearchConfig implements \ArrayAccess
 {
 	/**
 	 * Default number of results per page. Usually overwritten. 
@@ -79,6 +79,20 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	        'views',
 	        'categories',
 	);
+	
+	/**
+	 * Allows us to configure boosts for the provided fields.
+	 * Use the non-translated version.
+	 * @var array
+	 */
+	private $queryFieldsToBoosts = array(
+			'title'             => 5,
+			'html'              => 1.5,
+			'redirect_titles'   => 4,
+			'categories'        => 1,
+			'nolang_txt'        => 7
+			);
+	
 
 	/**
 	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
@@ -132,12 +146,18 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	private $filterQueries = array();
 	
 	/**
+	 * Used to shift all MediaWiki logic elsewhere.
+	 * @var MediaWikiInterface
+	 */
+	protected $interface;
+	
+	/**
 	 * Constructor method
 	 * @see   WikiaSearchConfigTest::testConstructor
 	 * @param array $params
 	 */
 	public function __construct( array $params = array() ) {
-		parent::__construct();
+		$this->interface = MediaWikiInterface::getInstance();
 		
 		$dynamicFilterCodes = array(
 				self::FILTER_CAT_VIDEOGAMES		=>	WikiaSearch::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' )  ),
@@ -146,6 +166,8 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 				);
 		
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
+		
+		$this->importQueryFieldBoosts();
 		
 		$this->params = array_merge( $this->params, 
 									 array( 'requestedFields' => $this->requestedFields ), 
@@ -239,7 +261,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		if ( strpos( $query, ':' ) !== false ) {
 			$queryNsExploded = explode( ':', $query );
 			$queryNamespaceStr = array_shift( $queryNsExploded );
-			$queryNamespace	= $this->wg->ContLang->getNsIndex( $queryNamespaceStr );
+			$queryNamespace	= $this->interface->getNamespaceIdForString( $queryNamespaceStr );
 			if ( $queryNamespace ) {
 				$namespaces = $this->getNamespaces();
 			    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
@@ -507,8 +529,8 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	            )
 	    );
 	    
-	    $this->wf->RunHooks( 'SpecialSearchProfiles', array( &$profiles ) );
-	
+	    $this->interface->invokeHook( 'SpecialSearchProfiles', array( &$profiles ) );
+
 	    foreach( $profiles as $key => &$data ) {
 	        sort( $data['namespaces'] );
 	    }
@@ -559,10 +581,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 */
 	public function getCityId() {
 		if ( empty( $this->params['cityId'] ) && (! $this->isInterWiki() ) ) {
-			
-			$cityId = (! empty( $this->wg->SearchWikiId ) ) ? $this->wg->SearchWikiId : $this->wg->CityId; 
-			
-			return $this->setCityId( $cityId )->getCityId();
+			return $this->setCityId( $this->interface->getWikiId() )->getCityId();
 		}
 		return $this->params['cityId'];
 	}
@@ -666,6 +685,80 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function setFilterQueriesFromCodes( array $codes ) {
 		foreach ( $codes as $code ) {
 			$this->setFilterQueryByCode( $code );
+		}
+		return $this;
+	}
+	
+	/**
+	 * Allows us to add additional query fields, with a given boost.
+	 * @param string $field
+	 * @param int $boost
+	 * @return WikiaSearchConfig
+	 */
+	public function setQueryField( $field, $boost = 1 ) {
+		$this->queryFieldsToBoosts[$field] = $boost;
+		return $this;
+	}
+	
+	/**
+	 * Lets us add multiple fields. Can handle both associative with boosts as value and flat.
+	 * @param array $fields
+	 * @return WikiaSearchConfig
+	 */
+	public function addQueryFields( array $fields ) {
+		if ( array_values( $fields ) === $fields ) {
+			foreach ( $fields as $field ) {
+				$this->setQueryField( $field );
+			}
+		} else {
+			foreach ( $fields as $field => $boost ) {
+				$this->setQueryField( $field, $boost );
+			}
+		}
+		return $this;
+	}
+	
+	/**
+	 * Returns the associative array of query fields to boosts.
+	 * @return array
+	 */
+	public function getQueryFieldsToBoosts() {
+		return $this->queryFieldsToBoosts;
+	}
+	
+	/**
+	 * Allows us to manually set query fields externally. Supports flat and associative.
+	 * @param array $fields
+	 * @return WikiaSearchConfig
+	 */
+	public function setQueryFields( array $fields ) {
+		if ( array_values( $fields ) === $fields ) {
+			$this->queryFieldsToBoosts = array();
+			foreach ( $fields as $field ) {
+				$this->setQueryField( $field );
+			}
+		} else {
+			$this->queryFieldsToBoosts = $fields;
+		}
+		return $this;
+	}
+	
+	/**
+	 * Lets us grab just the query fields.
+	 * @return array
+	 */
+	public function getQueryFields() {
+		return array_keys( $this->queryFieldsToBoosts );
+	}
+	
+	/**
+	 * Allows global variables like $wgSearchBoostFor_title to overwrite default boost values defined in this class.
+	 * Run during __construct().
+	 * @return WikiaSearchConfig
+	 */
+	protected function importQueryFieldBoosts() {
+		foreach ( $this->queryFieldsToBoosts as $field => $boost ) {
+			$this->setQueryField( $field, $this->interface->getGlobalWithDefault( "SearchBoostFor_{$field}", $boost ) );
 		}
 		return $this;
 	}

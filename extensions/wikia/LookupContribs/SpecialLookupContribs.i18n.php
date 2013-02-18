@@ -1689,3 +1689,13 @@ $messages['zh-hans'] = array(
 	'lookupcontribsall' => '全部',
 	'action-lookupcontribs' => '在多个wiki中查询用户的贡献',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'lookupcontribs' => '查詢貢獻',
+	'lookupcontribstitle' => '查詢貢獻',
+	'lookupcontribsrecentcontributions' => '$1最近的貢獻',
+	'lookupcontribsfinalcontributions' => '$1 最近的貢獻',
+);

@@ -80,6 +80,7 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Lloffiwr
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -105,6 +106,7 @@ $messages['qqq'] = array(
 	'wmu-next' => '{{Identical|Next}}',
 	'wmu-back' => 'Select a different photo from the one already chosen.',
 	'wmu-gallery' => '{{Identical|Gallery}}',
+	'wmu-column' => '{{Identical|Column}}',
 );
 
 /** Afrikaans (Afrikaans)

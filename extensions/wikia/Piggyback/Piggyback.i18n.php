@@ -402,6 +402,13 @@ Verifique a ortografia.',
 	'log-description-piggyback' => 'Este log é um registro de conta sobreposta.',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'piggyback-otherusername' => 'Otre nome utende:',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
