@@ -317,6 +317,7 @@ $config['gameguides_js'] = array(
 		'//resources/wikia/libraries/deferred/deferred.api.js',
 
 		//core modules
+		'//resources/wikia/modules/deferred.js',
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
