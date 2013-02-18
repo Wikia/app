@@ -8,6 +8,12 @@ EditHub.prototype = {
 	wmuDeffered: undefined,
 	lastActiveWmuButton: undefined,
 
+	disableArrow: function() {
+		$('#marketing-toolbox-form').find('.module-box').find('button.navigation').removeAttr('disabled');
+		$('#marketing-toolbox-form').find('.module-box').filter(':first').find('.nav-up').attr('disabled', 'disabled');
+		$('#marketing-toolbox-form').find('.module-box').filter(':last').find('.nav-down').attr('disabled', 'disabled');
+	},
+
 	init: function () {
 		var validator;
 		var initThis = this;
@@ -127,6 +133,8 @@ EditHub.prototype = {
 		};
 
 		this.wmuReady = false;
+
+		this.disableArrow();
 	},
 
 	wmuInit: function(event) {
@@ -217,6 +225,7 @@ EditHub.prototype = {
 			.prepend(html)
 			.find('.module-box')
 			.each(this.popularVideosResetIndex);
+		this.disableArrow();
 	},
 
 	popularVideosRemove: function(event) {
@@ -224,6 +233,7 @@ EditHub.prototype = {
 			var moduleContainer = '.module-box';
 			$(event.target).parents(moduleContainer).remove();
 			$('.popular-videos-list').find(moduleContainer).each(this.popularVideosResetIndex);
+			this.disableArrow();
 		}
 	},
 

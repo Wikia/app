@@ -3,19 +3,18 @@ var ModuleNavigation = function() {
 
 ModuleNavigation.prototype = {
 	boxes: undefined,
-	switchSelector: 'input:not(:button), textarea, .filename-placeholder, .image-placeholder img, .video-title, .video-url-input, .timeago',
+	wrapper: undefined,
+	switchSelector: 'input:not(:button), textarea, .filename-placeholder, .image-placeholder img.Wikia-video-thumb, .video-title, .video-url-input, .timeago',
 
 	init: function () {
-		this.boxes = $('#marketing-toolbox-form').find('.module-box');
+		this.wrapper = $('#marketing-toolbox-form');
+		this.boxes = this.wrapper.find('.module-box');
 		this.initButtons();
 	},
 
 	initButtons: function() {
-		this.boxes.filter(':first').find('.nav-up').attr('disabled', 'disabled');
-		this.boxes.filter(':last').find('.nav-down').attr('disabled', 'disabled');
-
-		this.boxes.find('.nav-up').filter(':not(:disabled)').click($.proxy(this.moveUp, this));
-		this.boxes.find('.nav-down').filter(':not(:disabled)').click($.proxy(this.moveDown, this));
+		this.wrapper.on('click', '.module-box .nav-down:not(:disabled)', $.proxy(this.moveDown, this));
+		this.wrapper.on('click', '.module-box .nav-up:not(:disabled)', $.proxy(this.moveUp, this));
 	},
 
 	moveUp: function(event) {
