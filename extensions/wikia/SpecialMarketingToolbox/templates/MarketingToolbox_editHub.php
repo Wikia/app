@@ -24,7 +24,7 @@
 			<?=$moduleContent?>
 			
 			<div class="submits">
-				<?php if( $selectedModuleId == MarketingToolboxModel::MODULE_POPULAR_VIDEOS ): ?>
+				<?php if( $selectedModuleId == MarketingToolboxModulePopularvideosService::MODULE_ID ): ?>
 					<input id="marketing-toolbox-removeall" name="removeall" class="secondary" type="button" value="<?= $wf->msg('marketing-toolbox-edithub-removeall-button'); ?>" />
 				<?php else: ?>
                 	<input id="marketing-toolbox-clearall" name="clearall" class="secondary" type="button" value="<?= $wf->msg('marketing-toolbox-edithub-clearall-button'); ?>" />
