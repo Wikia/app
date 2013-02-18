@@ -160,7 +160,7 @@ $chevron-color: #888;
 		}
 	}
 
-	.module-box {
+	.module-box, .module-popular-videos .one-input-box {
 		@include clearfix;
 
 		.module-right-box {
@@ -178,6 +178,9 @@ $chevron-color: #888;
 
 				input[type="text"] {
 					width: 291px;
+				}
+				input[type="text"].video-url-input {
+					width: 456px;
 				}
 			}
 
@@ -250,6 +253,39 @@ $chevron-color: #888;
 	.module-polls {
 		overflow: hidden;
 		clear: both;
+	}
+
+	.module-popular-videos {
+		.one-input-box {
+			h3 {
+				color: #006CB0;
+			}
+			.module-right-box {
+				height: 57px;
+			}
+		}
+		.module-input-box {
+			width: 460px;
+			&.buttons {
+				clear: both;
+			}
+		}
+		.module-image-box {
+			margin-top: 5px;
+		}
+		h4 {
+			color: #006CB0;
+			font-weight: bold;
+		}
+		h4,
+		.timeago {
+			clear: both;
+			display: inline-block;
+			float: none;
+			margin: 0px 7px;
+			padding: 2px 0;
+			width: 460px;
+		}
 	}
 
 	.module-mediabox {

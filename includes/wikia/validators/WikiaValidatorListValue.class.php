@@ -20,7 +20,6 @@ class WikiaValidatorListValue extends  WikiaValidatorListBase
 
 		if(!$validator->isValid( $value )){
 			$this->addError($key, $validator->getError());
-			//$this->error[] =  ;
 		}
 
 		return ;
