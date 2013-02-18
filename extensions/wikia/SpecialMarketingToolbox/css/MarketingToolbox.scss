@@ -160,7 +160,7 @@ $chevron-color: #888;
 		}
 	}
 
-	.module-box {
+	.module-box, .module-popular-videos .one-input-box {
 		@include clearfix;
 
 		.module-right-box {
