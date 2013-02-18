@@ -353,7 +353,14 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				'duration' => true,
 				'linkAttribs' => array( 'class' => 'video-thumbnail lightbox' )
 			);
-			$thumb = $file->transform( array('width'=>$thumbSize ) )->toHtml( $htmlParams );
+			$thumb = $file->transform( array('width' => $thumbSize) )->toHtml( $htmlParams );
+
+			//TODO: Talk to Video Team about this solution
+			$videoDataHelper = new RelatedVideosData();
+			$videoData = $videoDataHelper->getVideoData($fileName, $thumbSize);
+			if( !empty($videoData['timestamp']) ) {
+				$this->videoDate = wfTimeFormatAgo($videoData['timestamp']);
+			}
 		}
 
 		$this->videoFileName = $fileName;
