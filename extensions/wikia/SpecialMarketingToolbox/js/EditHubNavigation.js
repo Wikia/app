@@ -3,7 +3,7 @@ var ModuleNavigation = function() {
 
 ModuleNavigation.prototype = {
 	boxes: undefined,
-	switchSelector: 'input:not(:button), textarea, .filename-placeholder, .image-placeholder img',
+	switchSelector: 'input:not(:button), textarea, .filename-placeholder, .image-placeholder img, .video-title, .video-url-input, .timeago',
 
 	init: function () {
 		this.boxes = $('#marketing-toolbox-form').find('.module-box');
@@ -42,9 +42,11 @@ ModuleNavigation.prototype = {
 		if (sourceContainersLength != destContainersLength) {
 			throw "Switchable length not equals";
 		}
+		
 		for (var i = 0; i < sourceContainersLength; i++) {
 			this.switchElementValue(sourceContainers[i], destContainers[i]);
 		}
+		
 		dest.get(0).scrollIntoView();
 	},
 
@@ -62,6 +64,8 @@ ModuleNavigation.prototype = {
 		var form = EditHub.form.validate();
 
 		switch(sourceTagName) {
+			case 'h4':
+			case 'time':
 			case 'span':
 				tmp = source.text();
 				source.text(dest.text());
