@@ -25,21 +25,24 @@ class DeleteArticlesByPrefix extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( "prefix", "Prefix used to match articles", true /* $required */ );
+		$this->addOption( "namespace", "Namespace to iterate over" );
 		$this->addOption( "dry-run", "Do not remove any article, just list them" );
 		$this->mDescription = "Remove articles matching given prefix";
 	}
 
 	public function execute() {
 		$prefix = $this->getOption('prefix');
+		$namespace = intval($this->getOption('namespace', 0));
 		$isDryRun = $this->hasOption('dry-run');
 
-		$this->output( "Looking for pages matching '{$prefix}' prefix... " );
+		$this->output( "Looking for pages matching '{$prefix}' prefix in namespace #{$namespace}... " );
 
 		$res = ApiService::call(array(
 			'action' => 'query',
 			'list' => 'allpages',
+			'apnamespace' => $namespace,
 			'apprefix' => $prefix,
-			'aplimit' => 5000
+			'aplimit' => 5000,
 		));
 
 		$pages = !empty($res['query']['allpages']) ? $res['query']['allpages'] : array();
