@@ -52,6 +52,7 @@ class PhalanxUserModel extends PhalanxModel {
 		/* problem with Phalanx service? */
 		// include_once( dirname(__FILE__) . '/../prev_hooks/UserBlock.class.php';
 		// $ret = UserBlock::blockCheck( $user );
+		return true;
 	}
 	
 	public function match_email() {
@@ -63,5 +64,6 @@ class PhalanxUserModel extends PhalanxModel {
 		/* problem with Phalanx service? */
 		// include_once( dirname(__FILE__) . '/../prev_hooks/UserBlock.class.php';
 		// $ret = UserBlock::onAbortNewAccount( $user, $abortError );
+		return true;
 	}
 }

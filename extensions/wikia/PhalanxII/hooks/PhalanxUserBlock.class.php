@@ -20,8 +20,12 @@ class PhalanxUserBlock extends WikiaObject {
 		$this->wf->profileIn( __METHOD__ );
 
 		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
-		$ret = $phalanxModel->match_user( $user );
-		if ( $ret === false ){
+		$ret = $phalanxModel->match_user();
+		if ( $ret !== false ){
+			$ret = $phalanxModel->match_email();
+		}
+		
+		if ( $ret === false ) {
 			$user = $phalanxModel->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
 		}
 		$this->wf->profileOut( __METHOD__ );
@@ -36,9 +40,8 @@ class PhalanxUserBlock extends WikiaObject {
 	public function abortNewAccount( $user, &$abortError ) {
 		$this->wf->profileIn( __METHOD__ );
 		
-		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
-		$ret = $phalanxModel->match_email();
-		
+		$ret = $this->blockCheck();
+
 		if ( $ret === false ) {
 			$abortError = $this->wf->Msg( 'phalanx-user-block-new-account' );
 		}
@@ -56,7 +59,6 @@ class PhalanxUserBlock extends WikiaObject {
 		} else { 
 			$ret = false;
 		}
-		
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;
 	}

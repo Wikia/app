@@ -1,11 +1,11 @@
 <?php
 
 abstract class PhalanxModel extends WikiaObject {
-	protected $model = null;
-	protected $text = "";
-	protected $block = null;
-	protected $lang = "";
-	protected $user = null;
+	public $model = null;
+	public $text = "";
+	public $block = null;
+	public $lang = "";
+	public $user = null;
 	private $service = null;
 
 	public function __construct( $model, $data = array() ) {

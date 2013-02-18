@@ -17,5 +17,6 @@ class PhalanxTextModel extends PhalanxModel {
 		/* problem with Phalanx service? */
 		// include_once( dirname(__FILE__) . '/../prev_hooks/WikiCreationBlock.class.php';
 		// $ret = WikiCreationBlock::isAllowedText( $this->text, '', '' );
+		return true;
 	}
 }

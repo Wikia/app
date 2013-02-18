@@ -122,7 +122,7 @@ class PhalanxService extends Service {
 		/**
 		 * for any other we're sending POST
 		 */
-		else {
+		else {			
 			if (($action == "match" || $action == "check") && !is_null( $this->user ) ) {
 				$parameters[ 'wiki' ] = F::app()->wg->CityId;
 				$parameters[ 'user' ] = $this->user->getName();
