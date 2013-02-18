@@ -169,6 +169,29 @@ class MarketingToolboxModulePollsServiceTest extends WikiaBaseTest
 			),
 			array(
 				array(
+					'pollsTitle' => 'Post Title Example',
+					'pollsQuestion' => 'Question Test',
+					'pollsOption1' => 'option 1',
+					'pollsOption2' => 'option 2',
+					'pollsOption5' => 'option 5',
+					'pollsOption8' => 'option 8',
+					'pollsOption10' => 'option 10'
+				),
+				array(
+					'headline' => 'Post Title Example',
+					'pollsQuestion' => 'Question Test',
+					'hubUrl' => 'http://www.wikia.com/Video_Games',
+					'pollsOptions' => array(
+						'option 1',
+						'option 2',
+						'option 5',
+						'option 8',
+						'option 10'
+					)
+				)
+			),
+			array(
+				array(
 					'pollsTitle' => '',
 					'pollsQuestion' => 'Question Test',
 					'pollsOption1' => 'optional value',
