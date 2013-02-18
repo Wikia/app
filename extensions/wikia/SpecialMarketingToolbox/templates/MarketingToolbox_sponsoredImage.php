@@ -27,5 +27,5 @@
 	<p class="alternative">
 		<?= $wf->MsgExt('marketing-toolbox-hub-module-sponsored-image-tip', array('parseinline')) ?>
 	</p>
-	<input class="secondary remove-sponsored-image" type="button" value="<?= $wf->Msg('marketing-toolbox-edithub-sponsored-image-remove') ?>" />
+	<input class="secondary remove-sponsored-image" type="button" value="<?= $wf->Msg('marketing-toolbox-edithub-remove') ?>" />
 </div>

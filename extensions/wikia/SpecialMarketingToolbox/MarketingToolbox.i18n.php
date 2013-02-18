@@ -45,7 +45,8 @@ $messages['en'] = array(
 	'marketing-toolbox-edithub-file-name' => 'File name',
 	'marketing-toolbox-edithub-video-name' => 'Video name',
 	'marketing-toolbox-edithub-sponsored-image' => 'Add a Sponsored Image',
-	'marketing-toolbox-edithub-sponsored-image-remove' => 'Remove',
+	'marketing-toolbox-edithub-remove' => 'Remove',
+	'marketing-toolbox-edithub-removeall-button' => 'Remove all',
 
 	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire $1 module?',
 	'marketing-toolbox-edithub-clear-confirmation' => 'Are you sure you want to clear this section?',
@@ -87,6 +88,10 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-polls-question' => 'Question title',
 	'marketing-toolbox-hub-module-polls-option-mandatory' => 'Option $1 *',
 	'marketing-toolbox-hub-module-polls-option-voluntary' => 'Option $1',
+
+	'marketing-toolbox-hub-module-popular-videos-header' => 'Header',
+	'marketing-toolbox-hub-module-popular-videos-clear-confirm' => 'Are you sure you want to clear the entire Popular Videos module?',
+	'marketing-toolbox-hub-module-popular-videos-clear-one-confirm' => 'Are you sure you want to remove this section?',
 
 	'marketing-toolbox-hub-module-from-the-community-title' => 'Title',
 	'marketing-toolbox-hub-module-from-the-community-users-url' => 'User\'s URL',
