@@ -40,7 +40,7 @@ class PhalanxUserBlock extends WikiaObject {
 	public function abortNewAccount( $user, &$abortError ) {
 		$this->wf->profileIn( __METHOD__ );
 		
-		$ret = $this->blockCheck();
+		$ret = $this->blockCheck( $user );
 
 		if ( $ret === false ) {
 			$abortError = $this->wf->Msg( 'phalanx-user-block-new-account' );
