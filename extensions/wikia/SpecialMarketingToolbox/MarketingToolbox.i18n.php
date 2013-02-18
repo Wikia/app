@@ -91,6 +91,7 @@ $messages['en'] = array(
 
 	'marketing-toolbox-hub-module-popular-videos-header' => 'Header',
 	'marketing-toolbox-hub-module-popular-videos-clear-confirm' => 'Are you sure you want to clear the entire Popular Videos module?',
+	'marketing-toolbox-hub-module-popular-videos-clear-one-confirm' => 'Are you sure you want to remove this section?',
 
 	'marketing-toolbox-hub-module-from-the-community-title' => 'Title',
 	'marketing-toolbox-hub-module-from-the-community-users-url' => 'User\'s URL',

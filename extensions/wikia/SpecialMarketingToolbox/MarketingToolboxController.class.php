@@ -359,6 +359,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->videoFileName = $fileName;
 		$this->videoFileMarkup = $thumb;
 		$this->videoUrl = $url;
+		$this->videoDate = 'September 25, 2012'; //mocked date, please use php magic here ;)
 	}
 
 	// TODO extract this code somewhere

@@ -207,7 +207,7 @@ EditHub.prototype = {
 		var html = $.mustache(template, {
 			sectionNo: 2,
 			videoTitle: vetData.videoFileName,
-			timestamp: null,
+			timestamp: vetData.videoDate,
 			videoFullUrl: vetData.videoUrl,
 			videoThumbnail: vetData.videoFileMarkup,
 			removeMsg: $.msg('marketing-toolbox-edithub-remove'),
@@ -220,9 +220,11 @@ EditHub.prototype = {
 	},
 
 	popularVideosRemove: function(event) {
-		var moduleContainer = '.module-box';
-		$(event.target).parents(moduleContainer).remove();
-		$('.popular-videos-list').find(moduleContainer).each(this.popularVideosResetIndex);
+		if (confirm($.msg('marketing-toolbox-hub-module-popular-videos-clear-one-confirm')) == true) {
+			var moduleContainer = '.module-box';
+			$(event.target).parents(moduleContainer).remove();
+			$('.popular-videos-list').find(moduleContainer).each(this.popularVideosResetIndex);
+		}
 	},
 
 	popularVideosRemoveAll: function(event) {
