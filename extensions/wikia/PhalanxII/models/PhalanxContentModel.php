@@ -62,14 +62,15 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function contentBlock() {
-		$msg = "Block #{$this->block->id}";
+		$msg = "{$this->block->text} (Block #{$this->block->id})";
 		$this->logBlock();
 		return $msg;
 	}
 	
 	public function reasonBlock() {
 		$msg = $this->wf->msgExt( 'phalanx-title-move-summary', 'parseinline' );
-		$msg .= $this->wf->msgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{Block #{$this->block->id}</nowiki>" );
+		$msg .= Html::element( 'p', array(), $this->wf->Msg( 'phalanx-stats-table-id' ) . " #{$this->block->id}" );
+		$msg .= $this->wf->msgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$this->block->text}</nowiki>" );
 		$this->logBlock();
 		
 		return $msg;
