@@ -33,6 +33,15 @@ require(['jquery', 'mw', 'JSMessages', 'phalanx'], function($, mw, msg, phalanx)
 			bulkModeWrapper.slideDown();
 		}).
 
+		// handle "single mode" button
+		on('click', '#entersingle', function(ev) {
+			var singleModeWrapper = $('#singlemode'),
+				bulkModeWrapper = $('#bulkmode');
+
+			singleModeWrapper.slideDown();
+			bulkModeWrapper.slideUp();
+		}).
+
 		// handle "validate regex" button
 		on('click', '#validate', function(ev) {
 			var regex = $('#wpPhalanxFilter').val(),

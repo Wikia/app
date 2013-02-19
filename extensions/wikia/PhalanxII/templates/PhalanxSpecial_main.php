@@ -20,11 +20,12 @@
 							<input type="text" id="wpPhalanxFilter" name="wpPhalanxFilter" class="blue" size="40" value="<?= $data['text'] ?>" />
 							<input type="button" id="validate" value="<?php echo wfMsg( 'phalanx-validate-regexp' ) ?>" />
 							<?php if (empty($editMode)): ?>
-							<input type="button" id="enterbulk" value="Bulkmode" />
+							<input type="button" id="enterbulk" value="<?= wfMsg('phalanx-bulkmode') ?>">
 						</div>
 						<div id="bulkmode" style="display: none">
 							<label for="wpPhalanxFilterBulk" class="left">Bulk<br/><?php echo wfMsg( 'phalanx-label-filter' ) ?></label>
 							<textarea type="text" id="wpPhalanxFilterBulk" name="wpPhalanxFilterBulk" class="blue" rows="10" cols="40" value="" ></textarea>
+							<input type="button" id="entersingle" value="<?= wfMsg('phalanx-singlemode') ?>">
 						<?php endif; ?>
 						</div>
 						<div>

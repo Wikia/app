@@ -40,6 +40,8 @@ $messages['en'] = array(
 	'phalanx-validate-regexp-valid' => 'Regex is valid',
 	'phalanx-validate-regexp-invalid' => 'Regex is invalid',
 	'phalanx-no-results' => 'No results were found',
+	'phalanx-bulkmode' => 'Bulk mode',
+	'phalanx-singlemode' => 'Single mode',
 
 	'phalanx-block-success' => 'The block was successfully added',
 	'phalanx-block-failure' => 'There was an error during adding the block',
