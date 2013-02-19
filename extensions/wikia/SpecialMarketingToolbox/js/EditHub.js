@@ -35,11 +35,11 @@ EditHub.prototype = {
 							'url': url
 						},
 						callback: function(response) {
-							if (wgMarketingToolboxModuleIdSelected == wgMarketingToolboxModuleIdFeaturedVideo) {
-								GlobalNotification.hide();
-								if ( response.error ) {
-									GlobalNotification.show( response.error, 'error' );
-								} else {
+							GlobalNotification.hide();
+							if ( response.error ) {
+								GlobalNotification.show( response.error, 'error' );
+							} else {
+								if (wgMarketingToolboxModuleIdSelected == wgMarketingToolboxModuleIdFeaturedVideo) {
 									var box = $this.parents('.module-box:first');
 									if (!box.length) {
 										box = $('.MarketingToolboxMain');
@@ -55,17 +55,17 @@ EditHub.prototype = {
 									// Close VET modal
 									VET_loader.modal.closeModal();
 								}
-							}
-							if (wgMarketingToolboxModuleIdSelected == wgMarketingToolboxModuleIdPopularVideos) {
-								$.when(
-									$.loadMustache(),
-									Wikia.getMultiTypePackage({
-										mustache: 'extensions/wikia/SpecialMarketingToolbox/templates/MarketingToolboxVideosController_popularVideoRow.mustache'
-									})
-								).done(function(libData, packagesData) {
-									initThis.popularVideosAdd(packagesData[0].mustache[0], response);
-									VET_loader.modal.closeModal();
-								});
+								else if (wgMarketingToolboxModuleIdSelected == wgMarketingToolboxModuleIdPopularVideos) {
+									$.when(
+										$.loadMustache(),
+										Wikia.getMultiTypePackage({
+											mustache: 'extensions/wikia/SpecialMarketingToolbox/templates/MarketingToolboxVideosController_popularVideoRow.mustache'
+										})
+									).done(function(libData, packagesData) {
+										initThis.popularVideosAdd(packagesData[0].mustache[0], response);
+										VET_loader.modal.closeModal();
+									});
+								}
 							}
 						}
 					});
