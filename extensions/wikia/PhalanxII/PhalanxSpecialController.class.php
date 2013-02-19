@@ -248,6 +248,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$service->setLimit(20);
 
 		$listing = '';
+		$noMatches = true;
 
 		foreach(Phalanx::getAllTypeNames() as $blockType) {
 			$res = $service->match($blockType, $blockText);
@@ -256,10 +257,17 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 				continue;
 			}
 
+			$noMatches = false;
+
 			$pager = new PhalanxBlockTestPager($blockType);
 			$pager->setRows($res);
 			$listing .= $pager->getHeader();
 			$listing .= $pager->getBody();
+		}
+
+		if ($noMatches) {
+			$pager = new PhalanxBlockTestPager(0);
+			$listing .= $pager->getEmptyBody();
 		}
 
 		$this->wf->profileOut( __METHOD__ );
