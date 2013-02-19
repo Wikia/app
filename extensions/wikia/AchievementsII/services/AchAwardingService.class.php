@@ -2,6 +2,9 @@
 
 class AchAwardingService {
 
+	/**
+	 * @var User
+	 */
 	var $mUser;
 	var $mArticle;
 	var $mRevision;
@@ -260,16 +263,18 @@ class AchAwardingService {
 			$dbw->commit();
 
 			//notify the user only if he wants to be notified
-			if(!($this->mUser->getOption('hidepersonalachievements'))) {
+			if ( !($this->mUser->getOption('hidepersonalachievements')) ) {
 				$_SESSION['achievementsNewBadges'] = true;
+
+				$achNotificationService = new AchNotificationService($this->mUser);
+				$achNotificationService->addBadges($this->mNewBadges);
 
 				// Hook to give backend stuff something to latch onto at award-time rather than notifcation-time.
 				// NOTE: This has the limitation that it is only called for a max of one badge per page.
 				// If the user earned multiple badges on the same page, the hook will only be run on the badge which getBadgeToNotify() determines is more important.
 				global $wgWikiaForceAIAFdebug;
 				Wikia::log(__METHOD__, "", "Saving a new badge. About to run hook if badge can be re-loaded.", $wgWikiaForceAIAFdebug);
-				$achNotificationService = new AchNotificationService();
-				$badge = $achNotificationService->getBadgeToNotify($this->mUser->getId(), false);
+				$badge = $achNotificationService->getBadge( /*markAsNotified*/ false);
 				if($badge !== null) {
 					wfRunHooks('AchievementEarned', array($this->mUser, $badge));
 				}

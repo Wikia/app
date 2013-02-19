@@ -1,7 +1,119 @@
 <?php
 class AchNotificationService {
 
-	private static $order = array(BADGE_POUNCE, BADGE_CAFFEINATED, BADGE_LUCKYEDIT ,BADGE_LOVE ,BADGE_EDIT , BADGE_PICTURE ,BADGE_CATEGORY, BADGE_BLOGPOST, BADGE_BLOGCOMMENT);
+	private static $BADGE_TYPES_ORDER = array(BADGE_POUNCE, BADGE_CAFFEINATED, BADGE_LUCKYEDIT ,BADGE_LOVE ,BADGE_EDIT , BADGE_PICTURE ,BADGE_CATEGORY, BADGE_BLOGPOST, BADGE_BLOGCOMMENT);
+
+	const CACHE_TTL = 86400; // 1 day
+
+	protected $app;
+	protected $userObj;
+	protected $userId;
+	protected static $lastBadge = array();
+
+	public function __construct( $user ) {
+		$this->userObj = $user;
+		$this->userId = $this->userObj->getId();
+		$this->app = F::app();
+	}
+
+	protected function getMemcKey() {
+		return $this->app->wf->memcKey('AchNotificationService','user',intval($this->userId));
+	}
+
+	protected function getLastBadge() {
+		wfProfileIn(__METHOD__);
+		if ( empty($this->userId) ) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
+		if ( !array_key_exists($this->userId,self::$lastBadge) ) {
+			$key = $this->getMemcKey();
+			$lastBadge = $this->app->wg->memc->get($key);
+			if ( !empty($lastBadge) ) {
+				$lastBadge = AchBadge::newFromData($lastBadge);
+			} else {
+				$lastBadge = null;
+			}
+			self::$lastBadge[$this->userId] = $lastBadge;
+		}
+		wfProfileOut(__METHOD__);
+		return self::$lastBadge[$this->userId];
+	}
+
+	protected function setLastBadge( $badge ) {
+		wfProfileIn(__METHOD__);
+		if ( empty($this->userId) ) {
+			wfProfileOut(__METHOD__);
+			return;
+		}
+		self::$lastBadge[$this->userId] = $badge;
+		$key = $this->getMemcKey();
+		if ( $badge instanceof AchBadge ) {
+			$this->app->wg->memc->set($key,$badge->getData(),self::CACHE_TTL);
+		} else {
+			$this->app->wg->memc->delete($key);
+		}
+		wfProfileOut(__METHOD__);
+	}
+
+	public function addBadges( $badges ) {
+		wfProfileIn(__METHOD__);
+		$lastBadge = $this->getLastBadge();
+		$changed = false;
+		foreach ($badges as $badge) {
+			if ( is_array($badge) ) {
+				$badge = new AchBadge($badge['badge_type_id'], $badge['badge_lap'], $badge['badge_level']);
+			}
+			if ( !($badge instanceof AchBadge) ) {
+				continue;
+			}
+			// if there's no last badge or the current one is more important
+			if ( empty($lastBadge) || $this->cmp($lastBadge,$badge) >= 0 ) {
+				$lastBadge = $badge;
+				$changed = true;
+			}
+		}
+		if ( $changed ) {
+			$this->setLastBadge($lastBadge);
+		}
+		wfProfileOut(__METHOD__);
+	}
+
+	public function getBadge( $markAsNotified = true ) {
+		wfProfileIn(__METHOD__);
+		$badge = $this->getLastBadge();
+		if ( $markAsNotified ) {
+			$this->setLastBadge(null);
+		}
+		wfProfileOut(__METHOD__);
+		return $badge;
+	}
+
+	public function getNotificationHTML() {
+		wfProfileIn(__METHOD__);
+
+		$badge = $this->getBadge($this->userId);
+
+		if($badge !== null) {
+			$template = new EasyTemplate(dirname(__FILE__).'/../templates');
+
+			$template->set_vars(array(
+				'badge' => $badge,
+				'user' => $this->userObj
+			));
+
+			$out = $template->render('NotificationBox');
+
+			wfRunHooks('AchievementsNotification', array($this->userObj, $badge, &$out));
+
+		} else {
+			$out = '';
+		}
+
+		wfProfileOut(__METHOD__);
+		return $out;
+	}
+
 
 	private static function cmp($a, $b) {
 		if(
@@ -13,12 +125,12 @@ class AchNotificationService {
 			$bO = $b->getTypeId();
 		}
 		else {
-			$aO = array_search($a->getTypeId(), self::$order);
+			$aO = array_search($a->getTypeId(), self::$BADGE_TYPES_ORDER);
 			if($aO === false) {
 				$aO = 9;
 			}
 
-			$bO = array_search($b->getTypeId(), self::$order);
+			$bO = array_search($b->getTypeId(), self::$BADGE_TYPES_ORDER);
 			if($bO === false) {
 				$bO = 9;
 			}
@@ -29,100 +141,6 @@ class AchNotificationService {
 		}
 
 		return ($aO < $bO) ? -1 : 1;
-	}
-
-	/**
-	 * Gets the badge that the user should be notified of.  If 'markAsNotified' is set to false, then this
-	 * badge will be returned, but since it isn't set as being notified, then the badge will still be eligible
-	 * to be returned on the next call of this function.
-	 */
-	public function getBadgeToNotify($userId, $markAsNotified = true) {
-		wfProfileIn(__METHOD__);
-
-		$badge = null;
-		$badges = array();
-
-		$lastSeen = null;
-		$lastSeenCurrent = null;
-
-		$dbw = wfGetDB(DB_MASTER);
-		$res = $dbw->select('ach_user_badges_notified', array('lastseen'), array('user_id' => $userId), __METHOD__);
-		if( $row = $res->fetchObject($res) ) {
-			$lastSeen = $row->lastseen;
-		}
-
-		if(!empty($lastSeen)) {
-			$where = "`user_id` = $userId and `date` > \"$lastSeen\"";
-			$res = $dbw->select('ach_user_badges', array('badge_type_id', 'badge_lap', 'badge_level', 'date'), $where, __METHOD__);
-		} else {
-			$where = array('user_id' => $userId, 'notified' => 0);
-			$dbw = wfGetDB(DB_MASTER);
-			$res = $dbw->select('ach_user_badges', array('badge_type_id', 'badge_lap', 'badge_level', 'date'), $where, __METHOD__);
-		}
-		while($row = $dbw->fetchObject($res)) {
-			if(!isset($badges[$row->badge_level])) {
-				$badges[$row->badge_level] = array();
-			}
-
-			$badges[$row->badge_level][] = new AchBadge($row->badge_type_id, $row->badge_lap, $row->badge_level);
-			if(empty($lastSeenCurrent) || $row->date > $lastSeenCurrent) {
-				$lastSeenCurrent = $row->date;
-			}
-		}
-
-		if(count($badges) > 0) {
-			$maxLevel = max(array_keys($badges));
-
-			if(count($badges[$maxLevel]) > 1) {
-				usort($badges[$maxLevel], 'AchNotificationService::cmp');
-			}
-
-			$badge = $badges[$maxLevel][0];
-			if($markAsNotified && !wfReadOnly() && empty($lastSeen)){
-				$dbw->update('ach_user_badges', array('notified' => 1), $where);
-			}
-		}
-
-		if($markAsNotified && !wfReadOnly() ){
-			if($lastSeen && $lastSeen != $lastSeenCurrent) {
-				$dbw->update('ach_user_badges_notified', array('lastseen' => $lastSeenCurrent), array('user_id'=>$userId));
-			} else if ($lastSeenCurrent) {
-				try {
-					$dbw->insert('ach_user_badges_notified', array('lastseen' => $lastSeenCurrent, 'user_id'=>$userId));
-				} catch(Exception $e) {}
-			}
-		}
-
-
-		wfProfileOut(__METHOD__);
-		return $badge;
-	}
-
-	public function getNotifcationHTML($userObj) {
-		wfProfileIn(__METHOD__);
-
-		global $wgOut;
-
-		$badge = $this->getBadgeToNotify($userObj->getId());
-
-		if($badge !== null) {
-			$template = new EasyTemplate(dirname(__FILE__).'/../templates');
-
-			$template->set_vars(array(
-				'badge' => $badge,
-				'user' => $userObj
-			));
-
-			$out = $template->render('NotificationBox');
-
-			wfRunHooks('AchievementsNotification', array($userObj, $badge, &$out));
-
-		} else {
-			$out = '';
-		}
-
-		wfProfileOut(__METHOD__);
-		return $out;
 	}
 
 }
