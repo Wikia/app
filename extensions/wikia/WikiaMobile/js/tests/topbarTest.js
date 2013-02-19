@@ -5,6 +5,7 @@
  @test-require-asset /resources/wikia/libraries/deferred/deferred.api.js
  @test-require-asset /resources/wikia/modules/deferred.js
  @test-require-asset /resources/wikia/modules/window.js
+ @test-require-asset /resources/wikia/modules/location.js
  @test-require-asset /resources/wikia/modules/querystring.js
  @test-require-asset /resources/wikia/modules/ajax.js
  @test-require-asset /resources/wikia/modules/nirvana.js

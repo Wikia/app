@@ -319,6 +319,8 @@ $config['gameguides_js'] = array(
 		//core modules
 		'//resources/wikia/modules/deferred.js',
 		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/localStorage.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/querystring.js',
@@ -418,6 +420,8 @@ $config['wikiamobile_js_body_minimal'] = array(
 
 		//core modules
 		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/localStorage.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
