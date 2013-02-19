@@ -237,8 +237,6 @@ class CategorySelect {
 	public static function getUniqueCategories( $categories, $format = 'array', $toFormat = 'array' ) {
 		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
-
 		$categoryNames = array();
 		$uniqueCategories = array();
 
