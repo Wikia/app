@@ -58,10 +58,9 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 
 		if( !empty($data['values']['video']) ) {
 			foreach($data['values']['video'] as $i => $video) {
+				$data['videos'][$i] = $model->getVideoData($video);
 				$data['videos'][$i]['title'] = $video;
-				$videoData = $model->getVideoData($video);
-				$data['videos'][$i]['videoThumb'] = $videoData['videoThumb'];
-				$data['videos'][$i]['videoTimestamp'] = $videoData['videoTimestamp'];
+
 				//we enabled curators to edit a video url so if they've changed it we change it here
 				$data['videos'][$i]['fullUrl'] = ( !empty($data['values']['videoUrl'][$i]) ) ? $data['values']['videoUrl'][$i] : $data['videos'][$i]['fullUrl'];
 				//numbers next to section starts with 2

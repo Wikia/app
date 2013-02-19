@@ -48,8 +48,8 @@
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder video">
-				<? if (!empty($videoData)): ?>
-					<?= $videoData ?>
+				<? if (!empty($videoThumb)): ?>
+					<?= $videoThumb ?>
 				<? endif ?>
 			</div>
 		</div>

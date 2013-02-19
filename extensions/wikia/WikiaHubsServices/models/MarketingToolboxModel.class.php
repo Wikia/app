@@ -163,6 +163,7 @@ class MarketingToolboxModel extends WikiaModel {
 			);
 			$videoData['videoThumb'] = $file->transform(array('width' => $thumbSize))->toHtml($htmlParams);
 			$videoData['videoTimestamp'] = $file->getTimestamp();
+			$videoData['videoTime'] = $this->wf->TimeFormatAgo($videoData['videoTimestamp']);
 		}
 		return $videoData;
 	}

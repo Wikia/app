@@ -78,7 +78,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 
 		if( !empty($data['values']['video']) ) {
 			$videoData = $model->getVideoData($data['values']['video']);
-			$data['videoData'] =  $videoData['videoThumb'];
+			$data['videoThumb'] =  $videoData['videoThumb'];
 		}
 		if( !empty($data['values']['sponsoredImage']) ) {
 			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);

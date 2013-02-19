@@ -346,7 +346,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$fileName = $videoInfo[0]->getText();
 
 		$this->videoData = $this->toolboxModel->getVideoData($fileName);
-		$this->videoData['videoTime'] = $this->wf->TimeFormatAgo($this->videoData['videoTimestamp']);
 		$this->videoFileName = $fileName;
 		$this->videoUrl = $url;
 	}

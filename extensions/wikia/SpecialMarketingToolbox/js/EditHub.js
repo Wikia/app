@@ -50,7 +50,7 @@ EditHub.prototype = {
 
 									box.find('.image-placeholder')
 										.empty()
-										.html(response.videoFileMarkup);
+										.html(response.videoData.videoThumb);
 
 									// Close VET modal
 									VET_loader.modal.closeModal();
@@ -215,7 +215,7 @@ EditHub.prototype = {
 		var html = $.mustache(template, {
 			sectionNo: 2,
 			videoTitle: vetData.videoFileName,
-			timestamp: vetData.videoData.videoTime,
+			videoTime: vetData.videoData.videoTime,
 			videoFullUrl: vetData.videoUrl,
 			videoThumbnail: vetData.videoData.videoThumb,
 			removeMsg: $.msg('marketing-toolbox-edithub-remove'),

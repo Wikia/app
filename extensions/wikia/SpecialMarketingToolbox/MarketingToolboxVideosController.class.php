@@ -10,7 +10,7 @@ class MarketingToolboxVideosController extends WikiaController {
 			$this->sectionNo = $video['section-no'];
 			$this->videoTitle = $video['title'];
 			$this->videoFullUrl = $video['fullUrl'];
-			$this->timestamp = $this->wf->TimeFormatAgo($video['videoTimestamp']);
+			$this->videoTime = $video['videoTime'];
 			$this->videoThumbnail = $video['videoThumb'];
 		}
 		
