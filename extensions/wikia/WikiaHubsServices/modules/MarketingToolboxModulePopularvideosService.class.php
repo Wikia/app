@@ -70,8 +70,10 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 
 		return parent::renderEditor($data);
 	}
-	
+
 	public function filterData($data) {
+		$data = parent::filterData($data);
+
 		//for now we're allowing to save empty videos' list
 		if( !isset($data['video']) ) {
 			$data['video'] = array();
@@ -80,7 +82,13 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 		if( !isset($data['videoUrl']) ) {
 			$data['videoUrl'] = array();
 		}
-		
+
+		foreach ($data['videoUrl'] as &$url) {
+			if (!empty($url)) {
+				$url = $this->addProtocolToLink($url);
+			}
+		}
+
 		return $data;
 	}
 }
