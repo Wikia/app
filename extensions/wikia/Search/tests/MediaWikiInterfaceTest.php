@@ -1290,4 +1290,12 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	public function testGetNamespaceIdForString() {
 		$this->assertEquals( NS_CATEGORY, MediaWikiInterface::getInstance()->getNamespaceIdForString( 'Category' ) );
 	}
+	
+	public function testReminder() {
+		$this->assertFalse(
+				true,
+				'Do tests for getFirstRevisionTimestampForPageId, lastforpageid, getformattedtimestamp, 
+				getArticleMatch, getNonCanonicalTitleString, getmediawikiformattedtimestamp, getGlobalForWiki'
+		);
+	} 
 }
