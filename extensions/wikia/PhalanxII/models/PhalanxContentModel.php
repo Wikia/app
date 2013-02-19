@@ -14,7 +14,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 
 	public function getText() {
-		return preg_replace( '/\s+/', ' ', preg_replace( '/[^\PP]+/', '', ( isset( $this->text ) ) ? $this->text : $this->title->getFullText() ) );
+		return preg_replace( '/\s+/', ' ', preg_replace( '/[^\PP]+/', '', ( !empty( $this->text ) ) ? $this->text : $this->title->getFullText() ) );
 	}
 
 	public function buildWhiteList() {
@@ -53,8 +53,8 @@ class PhalanxContentModel extends PhalanxModel {
 		$this->wg->Out->setArticleRelated( false );
 		$this->wg->Out->addHTML( Html::openElement( 'div', array( 'id' => 'spamprotected_summary' ) ) );
 		$this->wg->Out->addWikiMsg( 'spamprotectiontext' );
-		$this->wg->Out->addHTML( Html::element( 'p', array(), wfMsg( '( Call ' . get_class( $this ) . ' )' ) ) );
-		$this->wg->Out->addWikiMsg( 'spamprotectionmatch', "<nowiki>{Block #{$this->block->id}</nowiki>" );
+		$this->wg->Out->addHTML( Html::element( 'p', array(), $this->wf->Msg( 'phalanx-stats-table-id' ) . " #{$this->block->id}" ) );
+		$this->wg->Out->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$this->block->text}</nowiki>" );
 		$this->wg->Out->addWikiMsg( 'phalanx-content-spam-summary' );
 		$this->wg->Out->returnToMain( false, $this->title );
 		$this->wg->Out->addHTML( Html::closeElement( 'div' ) );

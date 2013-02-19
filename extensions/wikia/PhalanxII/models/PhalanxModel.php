@@ -65,13 +65,14 @@ abstract class PhalanxModel extends WikiaObject {
 			
 			$content = ( isset( $this->user ) ) 
 				? array( $this->getText(), $this->ip )
-				: $this->user;
-			
+				: $this->getText();
+				
 			# send request to service
 			$result = $this->service
 				->setLimit(1)
 				->setUser( $isUser ? $this->user : null )
 				->match( $type, $content, $this->getLang() );
+
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
 				if ( is_object( $result ) && isset( $result->id ) && $result->id > 0 ) {
