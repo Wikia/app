@@ -71,6 +71,14 @@
 	padding-bottom: 2px;
 }
 
+#phalanx-check-results .blockContent {
+	display: inline-block;
+	max-width: 600px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 #phalanx-check-results .removed {
 	opacity: 0.2;
 }
