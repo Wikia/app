@@ -95,3 +95,7 @@
 #phalanx-check-results .unblock {
 	float: right;
 }
+
+#entersingle {
+	vertical-align: top;
+}
