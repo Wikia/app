@@ -57,6 +57,10 @@ class PhalanxPager extends ReverseChronologicalPager {
 		return Html::closeElement( 'ul' );
 	}
 
+	function getEmptyBody() {
+		return Html::element('div', array('class' => 'error'), wfMsg('phalanx-no-results'));
+	}
+
 	function formatRow( $row ) {
 		// hide e-mail filters
 		if ( ( $row->p_type & Phalanx::TYPE_EMAIL ) && !$this->app->wg->User->isAllowed( 'phalanxemailblock' ) ) {
