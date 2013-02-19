@@ -27,6 +27,17 @@
 				<?php else: ?>
 					<table class="wallfeed"><?php print FeedRenderer::getDetails($row) ?></table>
 				<?php endif; ?>
+				<?php
+					// copied from feed.tmpl.php, BugId:97673
+					global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
+					if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
+						if(isset($row['Badge'])){
+							$badge = unserialize($row['Badge']);
+							$ownerBadge = array('badge' => $badge);
+							AchBadge::renderForActivityFeed($ownerBadge, true);
+						}
+					}
+				?>
 			</li>
 		<?php endforeach; ?>
 		</ul>
