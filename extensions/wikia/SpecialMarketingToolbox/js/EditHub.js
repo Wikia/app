@@ -215,9 +215,9 @@ EditHub.prototype = {
 		var html = $.mustache(template, {
 			sectionNo: 2,
 			videoTitle: vetData.videoFileName,
-			timestamp: vetData.videoDate,
+			timestamp: vetData.videoData.videoTime,
 			videoFullUrl: vetData.videoUrl,
-			videoThumbnail: vetData.videoFileMarkup,
+			videoThumbnail: vetData.videoData.videoThumb,
 			removeMsg: $.msg('marketing-toolbox-edithub-remove'),
 			blankImgUrl: window.wgBlankImgUrl
 		});
