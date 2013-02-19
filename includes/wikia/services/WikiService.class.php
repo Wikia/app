@@ -243,24 +243,12 @@ class WikiService extends WikiaModel {
 		$memKey = $this->wf->SharedMemcKey( 'wiki_user_edits', $wikiId, $userId );
 		$userEdits = $this->wg->Memc->get( $memKey );
 		if ( $userEdits === false ) {
-			$userEdits = 0;
-			$dbname = WikiFactory::IDtoDB( $wikiId );
-			if ( !empty($dbname) ) {
-				$db = $this->wf->GetDB( DB_SLAVE, array(), $dbname );
 
-				$row = $db->selectRow(
-					'revision',
-					array('count(*) cnt'),
-					array('rev_user' => $userId),
-					__METHOD__
-				);
+			$user = User::newFromId( $userId );
+			$userEdits = $user->getEditCount(false, $wikiId);
 
-				if ( $row ) {
-					$userEdits = intval( $row->cnt );
-				}
+			$this->wg->Memc->set( $memKey, $userEdits, 60*60*3 );
 
-				$this->wg->Memc->set( $memKey, $userEdits, 60*60*3 );
-			}
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
