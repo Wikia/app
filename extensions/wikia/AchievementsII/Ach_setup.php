@@ -215,8 +215,8 @@ function Ach_GetHTMLAfterBody($skin, &$html) {
 				header('X-Pass-Cache-Control: no-store, private, no-cache, must-revalidate');
 			}
 
-			$notificationService = new AchNotificationService();
-			$wgOut->addHTML($notificationService->getNotifcationHTML($wgUser));
+			$notificationService = new AchNotificationService($wgUser);
+			$wgOut->addHTML($notificationService->getNotificationHTML());
 			if( isset($_SESSION['achievementsNewBadges']) )
 				unset($_SESSION['achievementsNewBadges']);
 		}
