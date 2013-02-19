@@ -70,4 +70,17 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 
 		return parent::renderEditor($data);
 	}
+	
+	public function filterData($data) {
+		//for now we're allowing to save empty videos' list
+		if( !isset($data['video']) ) {
+			$data['video'] = array();
+		}
+
+		if( !isset($data['videoUrl']) ) {
+			$data['videoUrl'] = array();
+		}
+		
+		return $data;
+	}
 }
