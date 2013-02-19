@@ -223,6 +223,8 @@ class FounderEmails {
 				$wikiService = F::build( 'WikiService' ); /* @var $wikiService WikiService */
 				$memKey  = $wikiService->getMemKeyAdminIds( $wgCityId );
 				$wgMemc->delete($memKey);
+				$memKey  = $wikiService->getMemKeyAdminIds( $wgCityId, true );
+				$wgMemc->delete($memKey);
 				$wikiService->getWikiAdminIds( $wgCityId, true );
 			}
 		}
