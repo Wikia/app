@@ -3,29 +3,51 @@
 class WikiaSearchArticleMatch {
 	
 	/**
-	 * The original article match
-	 * @var Article
+	 * The page ID corresponding to the term that generated it. 
 	 */
-	private $article;
+	protected $pageId;
 	
 	/**
-	 * The article the original article redirected to
-	 * @var Article
+	 * MediaWiki interface
+	 * @var \Wikia\Search\MediaWikiInterface
 	 */
-	private $redirect;
+	protected $interface;
 	
 	/**
 	 * Accepts an article and performs all necessary logic to also store a redirect
 	 * @param Article $article
 	 */
-	public function __construct( Article $article ) {
-		$this->article = $article;
-		if ( $article->isRedirect() ) {
-			$target = $article->getRedirectTarget();
-			if ( $target instanceOf Title ) {
-				$this->redirect = F::build( 'Article', array( $target ) );
-			}
+	public function __construct( $pageId ) {
+		$this->pageId = $pageId;
+	}
+	
+	/**
+	 * Transforms article match into search result.
+	 * @return WikiaSearchResult
+	 */
+	public function getResult() {
+		$wikiId = $this->interface->getWikiId();
+
+		$fieldsArray = array(
+				'id'            => sprintf( '%s_%s', $wikiId, $this->pageId ), 
+				'wid'           => $wikiId,
+				'title'         => $this->interface->getTitleStringFromPageId( $this->pageId ),
+				'url'           => urldecode( $this->interface->getUrlFromPageId( $this->pageId ) ),
+				'score'         => 'PTT',
+				'isArticleMatch'=> true,
+				'ns'            => $this->interface->getNamespaceFromPageId( $this->pageId ),
+				'pageId'        => $this->interface->getCanonicalPageIdFromPageId( $this->pageId ),
+				'created'       => $this->interface->getFirstRevisionTimestampForPageId( $this->pageId ),
+				'touched'       => $this->interface->getLastRevisionTimestampForPageId( $this->pageId ),
+				);
+
+		$result = new WikiaSearchResult( $fieldsArray );
+		
+		$result->setText( $this->interface->getSnippetForPageId( $this->pageId ) );
+		if ( $this->hasRedirect() ) {
+			$result->setVar( 'redirectTitle', $this->interface->getNonCanonicalTitleString( $this->pageId ) );
 		}
+		return $result;
 	}
 	
 	/**
@@ -33,30 +55,6 @@ class WikiaSearchArticleMatch {
 	 * @return boolean
 	 */
 	public function hasRedirect() {
-		return $this->redirect !== null;
-	}
-	
-	/**
-	 * Returns the canonical article
-	 * @return Article
-	 */
-	public function getArticle() {
-		return $this->article;
-	}
-	
-	/**
-	 * Return the redirected article if there is a redirect; otherwise return article.
-	 * @return Article
-	 */
-	public function getCanonicalArticle() {
-		return $this->hasRedirect() ? $this->redirect : $this->article;
-	}
-	
-	/**
-	 * Always returns the redirect, if there is one
-	 * @return Article|null
-	 */
-	public function getRedirect() {
-		return $this->redirect;
+		return $this->interface->getCanonicalPageIdFromPageId( $this->pageId ) !== $this->pageId;
 	}
 }
