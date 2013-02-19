@@ -104,6 +104,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 		/* types */
 		$html .= $this->app->wf->Msg('phalanx-display-row-blocks', implode( ', ', Phalanx::getTypeNames( $row->p_type ) ) );
 
+		/* created */
 		if (isset($row->p_timestamp)) {
 			$html .= sprintf( " &bull; %s ",
 				$this->app->wf->MsgExt( 'phalanx-display-row-created', array('parseinline'),
@@ -111,6 +112,18 @@ class PhalanxPager extends ReverseChronologicalPager {
 					$this->app->wg->Lang->timeanddate( $row->p_timestamp )
 				)
 			);
+		}
+
+		/* valid till */
+		if (property_exists($row, 'p_expire')) {
+			if (is_null($row->p_expire)) {
+				$html .= sprintf( " &bull; %s ", $this->app->wf->Msg('phalanx-display-row-expire-infinity'));
+			}
+			else {
+				$html .= sprintf( " &bull; %s ",
+					$this->app->wf->Msg( 'phalanx-display-row-expire', $this->app->wg->Lang->timeanddate( $row->p_expire ))
+				);
+			}
 		}
 
 		$html .= Html::closeElement( "li" );
