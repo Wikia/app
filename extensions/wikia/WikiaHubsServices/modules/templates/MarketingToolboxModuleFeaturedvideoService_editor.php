@@ -49,12 +49,7 @@
 		<div class="grid-1 alpha">
 			<div class="image-placeholder video">
 				<? if (!empty($videoData)): ?>
-					<?= $app->renderView(
-						'MarketingToolboxVideos',
-						'index',
-						array('video' => $videoData)
-					);
-					?>
+					<?= $videoData ?>
 				<? endif ?>
 			</div>
 		</div>
