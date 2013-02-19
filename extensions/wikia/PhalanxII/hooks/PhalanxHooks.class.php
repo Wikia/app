@@ -24,9 +24,8 @@ class PhalanxHooks extends WikiaObject {
 				'PhalanxBlock',
 				wfArrayToCGI( 
 					array(
-						'type'   => '8', 
-						'target' => $nt->getText(), 
-						'wpPhalanxCheckBlocker'=> $nt->getText() 
+						'wpPhalanxTypeFilter[]' => '8',
+						'wpPhalanxCheckBlocker' => $nt->getText() 
 					) 
 				)
 			);

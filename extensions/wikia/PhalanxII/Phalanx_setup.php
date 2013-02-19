@@ -37,7 +37,7 @@ $classes = array(
 	'PhalanxTitleBlock'        => $dir . 'hooks/PhalanxTitleBlock.class.php',
 	'PhalanxAnswersBlock'      => $dir . 'hooks/PhalanxAnswersBlock.class.php',
 	'PhalanxWikiCreationBlock' => $dir . 'hooks/PhalanxWikiCreationBlock.class.php',
-	'PhalanxHook'	           => $dir . 'hooks/PhalanxHook.class.php'
+	'PhalanxHooks'	           => $dir . 'hooks/PhalanxHooks.class.php'
 );
 
 foreach ( $classes as $class_name => $class_path ) {
@@ -76,7 +76,7 @@ $phalanxhooks = array(
 		array(
 			'AutoCreateWiki::checkBadWords'        => 'isAllowedText'
 		),
-	'PhalanxHook' =>
+	'PhalanxHooks' =>
 		array(
 			'ContributionsToolLinks'               => 'loadLinks'
 		)
