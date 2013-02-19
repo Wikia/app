@@ -19,11 +19,13 @@ class PhalanxBlockTestPager extends PhalanxPager {
 	}
 
 	public function getBody() {
-		$ret = '';
+		$ret = '<ul>';
 
 		foreach($this->rows as $row) {
 			$ret .= $this->formatRow($row);
 		}
+
+		$ret .= '</ul>';
 
 		return $ret;
 	}

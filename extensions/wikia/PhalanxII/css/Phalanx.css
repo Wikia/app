@@ -83,8 +83,9 @@
 	opacity: 0.2;
 }
 
-#phalanx-test-tab-content {
-	display: none;
+#phalanx-content-area ul {
+	list-style: none;
+	margin: 0;
 }
 
 .phalanx-target {
