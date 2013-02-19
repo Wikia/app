@@ -12,7 +12,8 @@ describe("Phalanx", function () {
 		BLOCKID = 123,
 		async = new AsyncSpec(this),
 		nirvanaMock = {},
-		phalanx = define.getModule(jQuery, nirvanaMock);
+		deferred = jQuery.Deferred,
+		phalanx = define.getModule(deferred, nirvanaMock);
 
 	it('registers AMD module', function() {
 		expect(typeof phalanx).toBe('object');
@@ -35,7 +36,7 @@ describe("Phalanx", function () {
 
 	async.it('RegExp is validated', function(done) {
 		var nirvanaMock = mockNirvanaValidate({valid: 1}),
-			phalanx = define.getModule(jQuery, nirvanaMock);
+			phalanx = define.getModule(deferred, nirvanaMock);
 
 		phalanx.init(TOKEN);
 
@@ -47,7 +48,7 @@ describe("Phalanx", function () {
 
 	async.it('RegExp is not validated', function(done) {
 		var nirvanaMock = mockNirvanaValidate({valid: 0}),
-			phalanx = define.getModule(jQuery, nirvanaMock);
+			phalanx = define.getModule(deferred, nirvanaMock);
 
 		phalanx.init(TOKEN);
 
@@ -59,7 +60,7 @@ describe("Phalanx", function () {
 
 	async.it('empty RegExp is not validated', function(done) {
 		var nirvanaMock = {},
-			phalanx = define.getModule(jQuery, nirvanaMock);
+			phalanx = define.getModule(deferred, nirvanaMock);
 
 		phalanx.init(TOKEN);
 
@@ -84,7 +85,7 @@ describe("Phalanx", function () {
 	async.it('block is deleted', function(done) {
 		var regexp = "foo",
 			nirvanaMock = mockNirvanaUnblock({success: true}),
-			phalanx = define.getModule(jQuery, nirvanaMock);
+			phalanx = define.getModule(deferred, nirvanaMock);
 
 		phalanx.init(TOKEN);
 
@@ -97,7 +98,7 @@ describe("Phalanx", function () {
 	async.it('block deletion failed', function(done) {
 		var regexp = "foo",
 			nirvanaMock = mockNirvanaUnblock({success: false}),
-			phalanx = define.getModule(jQuery, nirvanaMock);
+			phalanx = define.getModule(deferred, nirvanaMock);
 
 		phalanx.init(TOKEN);
 

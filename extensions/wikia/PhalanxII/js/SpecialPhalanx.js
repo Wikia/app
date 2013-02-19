@@ -1,4 +1,4 @@
-require(['jquery', 'mw', 'JSMessages', 'phalanx', 'wikia.log'], function($, mw, msg, phalanx, log) {
+require(['jquery', 'mw', 'JSMessages', 'phalanx'], function($, mw, msg, phalanx) {
 	// edit token is required by Phalanx API
 	phalanx.init(mw.config.get('wgPhalanxToken'));
 
@@ -21,8 +21,6 @@ require(['jquery', 'mw', 'JSMessages', 'phalanx', 'wikia.log'], function($, mw, 
 				}).
 				fail(function() {
 					node.attr('disabled', false);
-
-					log('block #' + blockId + ' not removed', log.levels.error, 'Phalanx');
 				});
 		}).
 
