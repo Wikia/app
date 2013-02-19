@@ -62,6 +62,12 @@ class MediaWikiInterface
 	 * @var array
 	 */
 	protected $pageIdsToFiles = array();
+	
+	/**
+	 * Stores articles that are redirects (helps us grab non-canonical info)
+	 * @var array
+	 */
+	protected $redirectArticles = array();
 
 	/**
 	 * Given a page ID, get the title string
@@ -239,6 +245,16 @@ class MediaWikiInterface
 	}
 	
 	/**
+	 * Gets global values set for other wikis.
+	 * @param string $global
+	 * @param int $wikiId
+	 * @return mixed
+	 */
+	public function getGlobalForWiki( $global, $wikiId ) {
+		return \WikiFactory::getVarValueByName( $global, $wikiId );
+	}
+	
+	/**
 	 * Provides global value as set in the Oasis wg helper.
 	 * If the value is NULL, we return the default value set in param 2
 	 * @param mixed $global
@@ -396,6 +412,84 @@ class MediaWikiInterface
 	public function pageIdIsVideoFile( $pageId ) {
 		return \WikiaFileHelper::isVideoFile( $this->getFileForPageId( $pageId ) );
 	}
+	
+	/**
+	 * Returns the appropriately formatted timestamp for the first revision of a given page.
+	 * @param int $pageId
+	 * @return string
+	 */
+	public function getFirstRevisionTimestampForPageId( $pageId ) {
+		$firstRev = $this->getTitleFromPageId( $pageId )->getFirstRevision();
+		return empty( $firstRev ) ? '' : $this->getFormattedTimestamp( $firstRev->getTimestamp() );
+	}
+	
+	/**
+	 * Returns a text snippet provided a page ID.
+	 * @param int $pageId
+	 * @param int $snippetLength
+	 * @return string
+	 */
+	public function getSnippetForPageId( $pageId, $snippetLength = 250 ) {
+		$articleService = new \ArticleService( $this->getCanonicalPageIdFromPageId( $pageId ) );
+		return $articleService->getTextSnippet( $snippetLength );
+	}
+	
+	/**
+	 * Returns the non-canonical title string for page ID (redirects ignored)
+	 * @param int $pageId
+	 * @return string
+	 */
+	public function getNonCanonicalTitleString( $pageId ) {
+		if ( isset( $this->redirectArticles[$pageId] ) ) {
+			return $this->getTitleString( $this->redirectArticles[$pageId]->getTitle() );
+		}
+		return $this->getTitleStringFromPageId( $pageId ); 
+	}
+	
+	/**
+	 * Provided a string, uses MediaWiki's ability to find article matches to instantiate a Wikia Search Article Match.
+	 * @param string $term
+	 * @param array $namespaces
+	 * @return \WikiaSearchArticleMatch|NULL
+	 */
+	public function getArticleMatchForTermAndNamespaces( $term, array $namespaces ) {
+		$searchEngine = new \SearchEngine();
+		$title = $searchEngine->getNearMatch( $term );
+		if( ( $title !== null ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
+			// initialize our memoized data
+			$this->getPageFromPageId( $title->getArticleId() );
+			$articleMatch = new \WikiaSearchArticleMatch( $title->getArticleId() );
+			return $articleMatch;
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the appropriately formatted timestamp for the most recent revision of a given page.
+	 * @param int $pageId
+	 * @return string
+	 */
+	public function getLastRevisionTimestampForPageId( $pageId ) {
+		$lastRev = \Revision::newFromId( $this->getTitleFromPageId( $pageId )->getLatestRevID() );
+		return empty( $lastRev ) ? '' : $this->getFormattedTimestamp( $lastRev->getTimestamp() ); 
+	}
+	
+	/**
+	 * Returns mediawiki-formatted timestamps.
+	 * @param string $timestamp
+	 * @return string
+	 */
+	public function getMediaWikiFormattedTimestamp( $timestamp ) { 
+		return $this->wg->Lang ? $this->wg->Lang->date( $this->wf->Timestamp( TS_MW, $timestamp ) ) : '';
+	}
+	
+	/**
+	 * Provides a format, provided a revision's default timestamp format.
+	 * @param string $timestamp
+	 */
+	protected function getFormattedTimestamp( $timestamp ) {
+		return $this->wf->Timestamp( TS_ISO_8601, $timestamp );
+	}
 
 	/**
 	 * Gets the DB key of a title provided a page id
@@ -435,6 +529,7 @@ class MediaWikiInterface
 			throw new \WikiaException( 'Invalid Article ID' );
 		}
 		if( $page->isRedirect() ) {
+			$this->redirectArticles[$pageId] = $page;
 			$page = new \Article( $page->getRedirectTarget() );
 			$newId = $page->getID();
 			$this->pageIdsToArticles[$newId] = $page;

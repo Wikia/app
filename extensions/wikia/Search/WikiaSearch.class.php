@@ -376,28 +376,12 @@ class WikiaSearch extends WikiaObject {
 	 * @return WikiaSearchArticleMatch|null
 	 */
 	public function getArticleMatch( WikiaSearchConfig $config ) {
-	    wfProfileIn(__METHOD__);
-	
 	    if ( $config->hasArticleMatch() ) {
 			wfProfileOut(__METHOD__);
 	        return $config->getArticleMatch();
 	    }
-	    
-	    $term 			= $config->getOriginalQuery();
-	    $searchEngine	= F::build( 'SearchEngine' );
-    	$title			= $searchEngine->getNearMatch( $term );
-    	
-	    if( ( $title !== null ) && ( in_array( $title->getNamespace(), $config->getNamespaces() ) ) ) {
-	        $article		= F::build( 'Article',					array( $title, RequestContext::getMain() ), 'newFromTitle' );
-	        $articleMatch	= F::build( 'WikiaSearchArticleMatch',	array( $article ) );
-	
-	        $config->setArticleMatch( $articleMatch );
-	        
-	        wfProfileOut(__METHOD__);
-	        return $articleMatch;
-	    }
-	    wfProfileOut(__METHOD__);
-	    return null;
+	    $match = \Wikia\Search\MediaWikiInterface::getInstance()->getArticleMatchForTermAndNamespaces( $config->getOriginalQuery(), $config->getNamespaces() );
+	    return $config->setArticleMatch( $match )->getArticleMatch();
 	}
 	
 	public function getWikiMatch( WikiaSearchConfig $config ) {
