@@ -6,7 +6,7 @@
 describe("CacheTest", function(){
 
 	it( 'Set then get', function() {
-		var wc = define.getModule();
+		var wc = define.getModule(window.localStorage);
 
 		wc.set('a1', 'some-value');
 		expect(wc.get('a1')).toEqual('some-value');
@@ -35,7 +35,7 @@ describe("CacheTest", function(){
 
 
 	it('Gets from localStorage', function() {
-		var wc = define.getModule();
+		var wc = define.getModule(window.localStorage);
 
 		localStorage.setItem('wkch_val_b1', JSON.stringify('some-value'));
 		expect(wc.get('b1')).toEqual('some-value');
@@ -63,7 +63,7 @@ describe("CacheTest", function(){
 	});
 
 	it('Sets to localStorage', function() {
-		var wc = define.getModule();
+		var wc = define.getModule(window.localStorage);
 
 		wc.set('c1', 'some-value');
 		expect(localStorage.getItem('wkch_val_c1')).toEqual(JSON.stringify('some-value'));
@@ -91,7 +91,7 @@ describe("CacheTest", function(){
 	});
 
 	it('Get from localStorage then set', function() {
-		var wc = define.getModule();
+		var wc = define.getModule(window.localStorage);
 
 		localStorage.setItem('wkch_val_d', JSON.stringify('some-value'));
 		expect(wc.get('d')).toEqual('some-value');
@@ -102,14 +102,14 @@ describe("CacheTest", function(){
 
 
 	it('Get returns the value that was set last', function() {
-		var wc = define.getModule();
+		var wc = define.getModule(window.localStorage);
 		wc.set('e', 'some-value');
 		wc.set('e', 'other-value');
 		expect(wc.get('e')).toEqual('other-value');
 	});
 
 	it('Value expires after given TTL', function() {
-		var wc = define.getModule(),
+		var wc = define.getModule(window.localStorage),
 			fakeNowTimestamp = 8723687632,
 			fakeNow = {getTime: function() {return fakeNowTimestamp;}},
 			anHourLater = {getTime: function() {return fakeNowTimestamp + 3600 * 1000;}},

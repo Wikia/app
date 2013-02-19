@@ -13,7 +13,7 @@
 		storage,
 		undef;
 
-	function cache() {
+	function cache(localStorage) {
 		var moduleStorage = {};
 
 		/**
@@ -31,7 +31,7 @@
 			}
 
 			try {
-				return context.localStorage.getItem(key);
+				return localStorage.getItem(key);
 			} catch (err) {
 				return null;
 			}
@@ -48,7 +48,7 @@
 		function uniSet(key, value) {
 			moduleStorage[key] = value;
 			try {
-				context.localStorage.setItem(key, value);
+				localStorage.setItem(key, value);
 			} catch (err) {}
 		}
 
@@ -62,7 +62,7 @@
 		function uniDel(key) {
 			delete moduleStorage[key];
 			try {
-				context.localStorage.removeItem(key);
+				localStorage.removeItem(key);
 			} catch (err) {}
 		}
 
