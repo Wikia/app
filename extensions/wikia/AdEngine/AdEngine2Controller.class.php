@@ -121,10 +121,10 @@ class AdEngine2Controller extends WikiaController {
 		if ($this->wg->LoadAdsInHead) {
 			$scriptModules[] = 'wikia.cookies';
 			$scriptModules[] = 'wikia.geo';
+			$scriptModules[] = 'wikia.location';
 			$scriptModules[] = 'wikia.log';
 			$scriptModules[] = 'wikia.querystring';
 			$scriptModules[] = 'wikia.tracker';
-			$scriptModules[] = 'wikia.window';
 		}
 		return true;
 	}
