@@ -22,7 +22,6 @@
  * @property WebResponse $response
  * @property MWMemcached Memc
  * @property MWMemcached memc
- * @property Language Lang
  * @property Language ContLang
  * @property String ArticlePath
  * @property Boolean DevelEnvironment
