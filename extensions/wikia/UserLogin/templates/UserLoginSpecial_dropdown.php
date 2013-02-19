@@ -35,7 +35,6 @@
 			),
 			array(
 				'type' => 'custom',
-				'class' => 'forgot-password',
 				'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMsg('userlogin-forgot-password').'</a>',
 			),
 			array(
