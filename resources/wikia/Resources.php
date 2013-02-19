@@ -14,6 +14,8 @@ return array(
 	'amd.shared' => array(
 		'dependencies' => array(
 			'wikia.window',
+			'wikia.location',
+			'wikia.localStorage',
 			'wikia.deferred',
 			'wikia.ajax',
 			'wikia.nirvana',
@@ -32,6 +34,14 @@ return array(
 	// core AMD modules (see amd.shared module)
 	'wikia.window' => array(
 		'scripts' => 'resources/wikia/modules/window.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.location' => array(
+		'scripts' => 'resources/wikia/modules/location.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.localStorage' => array(
+		'scripts' => 'resources/wikia/modules/localStorage.js',
 		'dependencies' => 'amd',
 	),
 	'wikia.deferred' => array(
