@@ -2544,21 +2544,28 @@ class User {
 	 * Get the user's edit count for current wiki.
 	 * @since Feb 2013
 	 * @author Kamil Koterba
+	 *
+	 * @param $skipCache boolean On true ignores cache
+	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
 	 * @return Int
 	 */
-	public function getEditCount( $skipCache = false ) {
-		global $wgMemc;
+	public function getEditCount( $skipCache = false, $wikiId = 0 ) {
+		global $wgMemc, $wgCityId;
 		if( $this->getId() ) {
+			$wikiId = ( empty($wikiId) ) ? $wgCityId : $wikiId ;
+
 			/* Get editcount from memcache */
-			$key = wfMemcKey($this->getId().'-editcount');
+			$key = wfSharedMemcKey( 'editcount', $wikiId, $this->getId() );
 			$editCount = $wgMemc->get($key);
 
 			if ( !empty( $editCount ) && !$skipCache ) {
 				return $editCount;
 			}
 
+			$dbname = ( $wikiId != $wgCityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+
 			/* Get editcount from database */
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, array(), $dbname );
 			$field = $dbr->selectField(
 				'wikia_user_properties',
 				'wup_value',
@@ -2568,7 +2575,7 @@ class User {
 			);
 
 			if( $field === null or $field === false ) { // editcount has not been initialized. do so.
-				$dbw = wfGetDB( DB_MASTER );
+				$dbw = wfGetDB( DB_MASTER, array(), $dbname );
 				$editCount = $dbr->selectField(
 					'revision', 'count(*)',
 					array( 'rev_user' => $this->getId() ),
