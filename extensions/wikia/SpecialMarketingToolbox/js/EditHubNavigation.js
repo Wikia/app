@@ -4,7 +4,7 @@ var ModuleNavigation = function() {
 ModuleNavigation.prototype = {
 	boxes: undefined,
 	wrapper: undefined,
-	switchSelector: 'input:not(:button), textarea, .filename-placeholder, .image-placeholder img.Wikia-video-thumb, .video-title, .video-url-input, .timeago',
+	switchSelector: 'input:not(:button), textarea, .filename-placeholder, .image-placeholder img.Wikia-video-thumb, .video-title, .video-url-input, .timeago, .timer, div.image-placeholder.video > a',
 
 	init: function () {
 		this.wrapper = $('#marketing-toolbox-form');
@@ -56,6 +56,7 @@ ModuleNavigation.prototype = {
 			throw "Switchable type not equals";
 		}
 		var imgAttribsToSwitch = ['src', 'width', 'height'];
+		var linkAttribsToSwitch = ['data-video-name', 'href'];
 
 		source = $(source);
 		dest = $(dest);
@@ -66,15 +67,18 @@ ModuleNavigation.prototype = {
 			case 'h4':
 			case 'time':
 			case 'span':
+			case 'div':
 				tmp = source.text();
 				source.text(dest.text());
 				dest.text(tmp);
 				break;
 			case 'img':
-				for (var i = 0; i < imgAttribsToSwitch.length; i++) {
-					tmp = source.attr(imgAttribsToSwitch[i]);
-					source.attr(imgAttribsToSwitch[i], dest.attr(imgAttribsToSwitch[i]));
-					dest.attr(imgAttribsToSwitch[i], tmp);
+			case 'a':
+				var attribs = (sourceTagName == 'a') ? linkAttribsToSwitch : imgAttribsToSwitch;
+				for (var i = 0; i < attribs.length; i++) {
+					tmp = source.attr(attribs[i]);
+					source.attr(attribs[i], dest.attr(attribs[i]));
+					dest.attr(attribs[i], tmp);
 				}
 				break;
 			case 'textarea':
