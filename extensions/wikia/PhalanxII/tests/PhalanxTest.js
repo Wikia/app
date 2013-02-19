@@ -57,6 +57,18 @@ describe("Phalanx", function () {
 		});
 	});
 
+	async.it('empty RegExp is not validated', function(done) {
+		var nirvanaMock = {},
+			phalanx = define.getModule(jQuery, nirvanaMock);
+
+		phalanx.init(TOKEN);
+
+		phalanx.validate('').then(function(resp) {
+			expect(resp).toBe(false);
+			done();
+		});
+	});
+
 	function mockNirvanaUnblock(resp) {
 		return {
 			postJson: function(controllerName, method, params, callback) {

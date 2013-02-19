@@ -10,6 +10,11 @@ define('phalanx', ['jquery', 'wikia.nirvana'], function($, nirvana) {
 	function validate(regexp) {
 		var dfd = new $.Deferred();
 
+		if (regexp === '') {
+			dfd.resolve(false);
+			return dfd.promise();
+		}
+
 		nirvana.postJson('PhalanxSpecial', 'validate', {
 			regexp: regexp,
 			token: TOKEN
