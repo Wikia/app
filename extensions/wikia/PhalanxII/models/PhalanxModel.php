@@ -66,7 +66,7 @@ abstract class PhalanxModel extends WikiaObject {
 			$content = ( isset( $this->user ) ) 
 				? array( $this->getText(), $this->ip )
 				: $this->getText();
-				
+			
 			# send request to service
 			$result = $this->service
 				->setLimit(1)

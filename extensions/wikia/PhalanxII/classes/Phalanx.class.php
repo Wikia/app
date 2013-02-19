@@ -29,9 +29,9 @@ class Phalanx implements arrayaccess {
 		2   => 'summary',
 		4   => 'title',
 		8   => 'user',
-		16  => 'answers-question-title',
-		32  => 'answers-recent-questions',
-		64  => 'wiki-creation',
+		16  => 'question_title',
+		32  => 'recent_questions',
+		64  => 'wiki_creation',
 		128 => 'cookie',
 		256 => 'email'
 	);
