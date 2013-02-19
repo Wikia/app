@@ -78,13 +78,13 @@ class SendGridPostback extends UnlistedSpecialPage {
 				$this->handleSpam($emailId, $emailAddr);
 				break;
 			default:
-				Wikia::log(__METHOD__, false, "Unrecognized type: <postback>" . print_r($_POST, true) . "</postback>\n", true);
+				Wikia::log(__METHOD__, false, "Unrecognized type: " . print_r(json_encode($_POST), true), true);
 			}
 
 			$wgOut->addHtml("Postback processed.");
 		} else {
 			// Log the token-validation problem.
-			Wikia::log(__METHOD__, false, "INVALID TOKEN DURING THIS POSTBACK: <postback>" . print_r($_POST, true) . "</postback>\n", true);
+			Wikia::log(__METHOD__, false, "INVALID TOKEN DURING THIS POSTBACK: " . print_r(json_encode($_POST), true), true);
 			$wgOut->addHtml("Postback token did not match expected value.  Ignoring.");
 		}
 
