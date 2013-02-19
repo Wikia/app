@@ -296,7 +296,7 @@ var WikiaQuiz = {
 			label: WikiaQuiz.trackerLabelPrefix + label,
 			trackingMethod: 'both',
 			value: value
-		});
+		}, params);
 	}
 };
 
