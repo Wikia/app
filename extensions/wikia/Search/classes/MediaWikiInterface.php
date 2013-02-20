@@ -447,6 +447,18 @@ class MediaWikiInterface
 	}
 	
 	/**
+	 * Returns the non-canonical url string for page ID (redirects ignored)
+	 * @param int $pageId
+	 * @return string
+	 */
+	public function getNonCanonicalUrlFromPageId( $pageId ) {
+		if ( isset( $this->redirectArticles[$pageId] ) ) {
+			return $this->redirectArticles[$pageId]->getTitle()->getFullUrl();
+		}
+		return $this->getUrlFromPageId( $pageId ); 
+	}
+	
+	/**
 	 * Provided a string, uses MediaWiki's ability to find article matches to instantiate a Wikia Search Article Match.
 	 * @param string $term
 	 * @param array $namespaces

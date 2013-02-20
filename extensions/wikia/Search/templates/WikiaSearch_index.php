@@ -69,7 +69,7 @@
 					<?php foreach( $results as $result ): ?>
 						<?php
 							$pos++;
-							if($result instanceof WikiaSearchResultSet) {
+							if($result instanceof \Wikia\Search\ResultSet\Base) {
 								echo $app->getView( 'WikiaSearch', 'resultSet', array(
 								  'resultSet' => $result,
 								  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),

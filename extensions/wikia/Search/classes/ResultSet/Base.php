@@ -9,11 +9,13 @@ use \WikiaSearch;
 use \WikiaException;
 use \Solarium_Result_Select;
 use \WikiaSearchConfig;
+use \ArrayAccess;
+use \Iterator;
 /**
  * This is the default class definition -- represents a flat grouping of results, e.g. on-wiki search.
  * @author relwell
  */
-class Base
+class Base implements Iterator, ArrayAccess
 {
 	/**
 	 * Used to keep track of index in array access

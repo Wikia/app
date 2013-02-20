@@ -51,6 +51,7 @@ class WikiaSearchArticleMatch {
 			$result->setText( $this->interface->getSnippetForPageId( $this->pageId ) );
 			if ( $this->hasRedirect() ) {
 				$result->setVar( 'redirectTitle', $this->interface->getNonCanonicalTitleString( $this->pageId ) );
+				$result->setVar( 'redirectUrl', $this->interface->getNonCanonicalUrlFromPageId( $this->pageId ) );
 			}
 			$this->result = $result;
 		}

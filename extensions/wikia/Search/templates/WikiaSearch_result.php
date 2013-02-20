@@ -19,7 +19,7 @@
 		<?= $debug ? $pos.'. ' : ''; ?><a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?= $title ?></a>
 	</h1>
 	<? if ($redirectTitle = $result->getVar('redirectTitle')): ?>
-		<p class="redirect-title">&mdash; <?= wfMessage( 'wikiasearch2-results-redirected-from' )->text() ?> <a href="<?=$redirectTitle->getFullUrl()?>" <?=$trackingData?>><?= $redirectTitle->getText() ?></a></p>
+		<p class="redirect-title">&mdash; <?= wfMessage( 'wikiasearch2-results-redirected-from' )->text() ?> <a href="<?=$result->getVar('redirectUrl')?>" <?=$trackingData?>><?= $result->getVar('redirectTitle') ?></a></p>
 	<? endif; ?>
 	
 	<? if ($result->getVar('ns') == NS_FILE): ?>
