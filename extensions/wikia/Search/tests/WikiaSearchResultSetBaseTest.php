@@ -7,7 +7,7 @@ class WikiaSearchResultSetBaseTest extends WikiaSearchBaseTest
 	protected $config;
 	protected $resultSet;
 	protected $searchResult;
-	
+
 	/**
 	 * Convenience method to easily handle the necessary dependencies & method mocking for recurrent mocks
 	 * @param array $resultSetMethods
@@ -474,65 +474,7 @@ class WikiaSearchResultSetBaseTest extends WikiaSearchBaseTest
 		);
 	}
 	
-	/**
-	 * @covers \Wikia\Search\ResultSet\Base::next
-	 * @covers \Wikia\Search\ResultSet\Base::rewind
-	 * @covers \Wikia\Search\ResultSet\Base::current
-	 * @covers \Wikia\Search\ResultSet\Base::key
-	 * @covers \Wikia\Search\ResultSet\Base::valid
-	 */
-	public function testIteratorMethods() {
-		$this->prepareMocks( array( 'hasArticleMatch' ) );
-		
-		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'getID' ) )
-							->getMock();
-		
-		$mockResult2 = $this->getMockBuilder( 'WikiaSearchResult' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'getTitle' ) )
-							->getMock();
-		
-		$resultArray = array( '123_234' => $mockResult, '345_456' => $mockResult2 );
-		
-		$results = new ReflectionProperty( '\Wikia\Search\ResultSet\Base', 'results' );
-		$results->setAccessible( true );
-		$results->setValue( $this->resultSet, $resultArray );
-		
-		$this->resultSet->rewind();
-		$this->assertEquals(
-				$mockResult,
-				$this->resultSet->next()
-		);
-		$this->assertEquals(
-				$mockResult2,
-				$this->resultSet->current()
-		);
-		$this->assertEquals(
-				1,
-				$this->resultSet->key()
-		);
-		$this->assertTrue(
-				$this->resultSet->valid()
-		);
-		$this->resultSet->rewind();
-		$this->assertEquals(
-				$mockResult,
-				$this->resultSet->current()
-		);
-		
-		$this->prepareMocks( array( 'valid' ) );
-		
-		$this->resultSet
-			->expects	( $this->once() )
-			->method	( 'valid' )
-			->will		( $this->returnValue( false ) )
-		;
-		$this->assertFalse(
-				$this->resultSet->current()
-		);
-	}
+	
 	
 	/**
 	 * @covers \Wikia\Search\ResultSet\Base::setHeader
@@ -697,47 +639,6 @@ class WikiaSearchResultSetBaseTest extends WikiaSearchBaseTest
 				$this->resultSet->isOnlyArticleMatchFound(),
 				'\Wikia\Search\ResultSet\Base::isOnlyArticleMatchFound should return true when there is only one result, and it is marked as an article match'
 		);
-	}
-	
-	/**
-	 * @covers \Wikia\Search\ResultSet\Base::offsetExists
-	 * @covers \Wikia\Search\ResultSet\Base::offsetGet
-	 * @covers \Wikia\Search\ResultSet\Base::offsetSet
-	 * @covers \Wikia\Search\ResultSet\Base::offsetUnset
-	 */
-	public function testArrayAccess() {
-		$this->prepareMocks( array( 'getResultsNum' ) );
-		
-		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'getVar' ) )
-							->getMock();
-		
-		$results = new ReflectionProperty( '\Wikia\Search\ResultSet\Base', 'results' );
-		$results->setAccessible( true );
-		$results->setValue( $this->resultSet, array( $mockResult ) );
-		
-		$this->assertTrue(
-				$this->resultSet->offsetExists( 0 )
-		);
-		$this->assertFalse(
-				$this->resultSet->offsetExists( 1 )
-		);
-		$this->assertEquals(
-				$mockResult,
-				$this->resultSet[0]
-		);
-		$this->assertFalse(
-				$this->resultSet[1]
-		);
-		$this->resultSet[1] = clone $mockResult;
-		$this->assertNotEmpty(
-				$this->resultSet[1]
-		);
-		unset( $this->resultSet[1] );
-		$this->assertFalse(
-				$this->resultSet[1]
-		); 
 	}
 	
 	/**

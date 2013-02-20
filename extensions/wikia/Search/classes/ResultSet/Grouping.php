@@ -26,18 +26,15 @@ class Grouping extends Base
 	protected $host;
 	
 	/**
-	 * Constructor, sets parent and metaposition and configures instance.
-	 * @param Solarium_Result_Select $result
-	 * @param WikiaSearchConfig $searchConfig
-	 * @param GroupingSet $parent
-	 * @param int $metaposition
+	 * Constructor, uses DependencyContainer to pre-populate attributes.
+	 * @param DependencyContainer $container
 	 */
-	public function __construct( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig, GroupingSet $parent, $metaposition ) {
-		$this->searchResultObject = $result;
-		$this->searchConfig       = $searchConfig;
-		$this->parent             = $parent;
-		$this->metaposition       = $metaposition;
-		$this->interface          = MediaWikiInterface::getInstance();
+	public function __construct( DependencyContainer $container ) {
+		$this->searchResultObject = $container->getResult();
+		$this->searchConfig       = $container->getConfig();
+		$this->interface          = $container->getInterface();
+		$this->parent             = $container->getParent();
+		$this->metaposition       = $container->getMetaposition();
 		
 		$valueGroups = $this->getHostGrouping()->getValueGroups();
 		$valueGroup  = $valueGroups[$this->metaposition];
