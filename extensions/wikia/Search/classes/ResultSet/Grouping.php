@@ -30,7 +30,7 @@ class Grouping extends Base
 	 * @param GroupingSet $parent
 	 * @param int $metaposition
 	 */
-	public function __construct( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig, GroupingSet $parent, $metaposition) {
+	public function __construct( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig, GroupingSet $parent, $metaposition ) {
 		$this->searchResultObject = $result;
 		$this->searchConfig       = $searchConfig;
 		$this->parent             = $parent;
@@ -62,7 +62,6 @@ class Grouping extends Base
 	 * @return Solarium_Result_Select_Grouping_FieldGroup
 	 */
 	protected function getHostGrouping() {
-		wfProfileIn(__METHOD__);
 		$grouping = $this->searchResultObject->getGrouping();
 		if (! $grouping ) {
 		    throw new \Exception("Search config was grouped but result was not.");
@@ -71,21 +70,20 @@ class Grouping extends Base
 		if (! $hostGrouping ) {
 		    throw new \Exception("Search results were not grouped by host field.");
 		}
-		wfProfileOut(__METHOD__);
 		return $hostGrouping;
 	}
 
 	/**
 	 * Returns the parent value set during instantiation
-	 * @return WikiaSearchResultSet|null
+	 * @return GroupingSet|null
 	 */
 	public function getParent() {
 		return $this->parent;
 	}
 
 	/**
-	 * For a search result set with a parent, returns the host value of the grouping.
-	 * @return string|null
+	 * Returns the host value of the grouping.
+	 * @return string
 	 */
 	public function getId() {
 		return $this->host;
