@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 class MarketingToolboxModuleSliderServiceTest extends WikiaBaseTest
 {
