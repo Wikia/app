@@ -93,3 +93,8 @@ $categoryselect-color-placeholder: darken( $color-epl-input, 2% );
 #EditPageMain .CategorySelect {
 	display: none;
 }
+
+// Unhide for widescreen mode
+.editpage-visualwidemode #EditPageMain .CategorySelect {
+	display: block;
+}
