@@ -400,6 +400,29 @@ class MediaWikiInterface
 	}
 	
 	/**
+	 * Returns default namespaces from mediawiki.
+	 * @return array
+	 */
+	public function getDefaultNamespacesFromSearchEngine() {
+		return \SearchEngine::defaultNamespaces();
+	}
+	
+	/**
+	 * Returns searchable namespaces from MediaWiki.
+	 * @return array
+	 */
+	public function getSearchableNamespacesFromSearchEngine() {
+		return \SearchEngine::searchableNamespaces();
+	}
+	
+	/**
+	 * Returns text values for namespaces.
+	 */
+	public function getTextForNamespaces( array $namespaces ) {
+		return \SearchEngine::namespacesAsText( $namespaces );
+	}
+	
+	/**
 	 * Allows us to abstract calling a hook away from other parts of the library.
 	 * @param string $hookName
 	 * @param array $args
