@@ -2540,81 +2540,10 @@ class User {
 	}
 
 	/**
-	 * Wikia change
-	 * Get the user's edit count for current wiki.
-	 * @since Feb 2013
-	 * @author Kamil Koterba
-	 *
-	 * @param $skipCache boolean On true ignores cache
-	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * Get the user's edit count.
 	 * @return Int
 	 */
-	public function getEditCount( $wikiId = 0, $skipCache = false ) {
-		global $wgMemc, $wgCityId;
-		if( $this->getId() ) {
-			$wikiId = ( empty($wikiId) ) ? $wgCityId : $wikiId ;
-
-			/* Get editcount from memcache */
-			$key = wfSharedMemcKey( 'editcount', $wikiId, $this->getId() );
-			$editCount = $wgMemc->get($key);
-
-			if ( !empty( $editCount ) && !$skipCache ) {
-				return $editCount;
-			}
-
-			$dbname = ( $wikiId != $wgCityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
-
-			/* Get editcount from database */
-			$dbr = wfGetDB( DB_SLAVE, array(), $dbname );
-			$field = $dbr->selectField(
-				'wikia_user_properties',
-				'wup_value',
-				array( 'wup_user' => $this->getId(),
-					'wup_property' => 'editcount' ),
-				__METHOD__
-			);
-
-			if( $field === null or $field === false ) { // editcount has not been initialized. do so.
-				$dbw = wfGetDB( DB_MASTER, array(), $dbname );
-				$editCount = $dbr->selectField(
-					'revision', 'count(*)',
-					array( 'rev_user' => $this->getId() ),
-					__METHOD__
-				);
-
-				$editCount += $dbr->selectField(
-					'archive', 'count(*)',
-					array( 'ar_user' => $this->getId() ),
-					__METHOD__
-				);
-
-				$dbw->insert(
-					'wikia_user_properties',
-					array( 'wup_user' => $this->getId(),
-						'wup_property' => 'editcount',
-					'wup_value' => $editCount),
-					__METHOD__
-				);
-
-			} else {
-				$editCount = $field;
-			}
-
-			$wgMemc->set($key,$editCount,86400);
-			return $editCount;
-		} else {
-			/* nil */
-			return null;
-		}
-	}
-
-	/**
-	 * Wikia change
-	 * Get the user's global edit count.
-	 * Code from getEditCount before Feb 2013
-	 * @return Int
-	 */
-	public function getEditCountGlobal() {
+	public function getEditCount() {
 		if( $this->getId() ) {
 			if ( !isset( $this->mEditCount ) ) {
 				/* Populate the count, if it has not been populated yet */
