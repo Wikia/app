@@ -416,3 +416,4 @@ window.WikiaTracker = (function( window ) {
 		track: track
 	};
 })( window );
+
