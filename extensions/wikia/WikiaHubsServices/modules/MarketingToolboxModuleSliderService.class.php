@@ -90,26 +90,6 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 		return parent::renderEditor($data);
 	}
 
-	public function getStructuredData($data) {
-		return $data;
-	}
-	
-	public function render($structureData) {
-		//TODO: removed mocked data once FB#98041 is done
-		$data['wikitextslider'] =
-<<<POLLS
-<gallery type="slider" orientation="mosaic">
-New-super-mario-bros-u.jpg|'''Game Tips for New Super Mario Bros. U'''|link=http://mario.wikia.com/wiki/User_blog:TheBlueRogue/New_Super_Mario_Bros._U_Game_Tips|linktext=Defeat the Koopas and save Princess Peach!|shorttext=Mario Bros. U 
-Medal-of-Honor-Warfighter-Zero-Dark-Thirty-Map-Pack-Trailer_1.jpg|'''Zero Dark Thirty Map Pack'''|link=http://medalofhonor.wikia.com/wiki/Zero_Dark_Thirty_Map_Pack|linktext=What are you waiting for? Join the manhunt now.|shorttext=MOH: Warfighter
-Street-Fighter-X-Mega-Man.jpg|'''Meet the Character: Mega Man'''|link=http://megaman.wikia.com/wiki/Mega_Man_%28character%29|linktext=Streetfighter X Mega Man is out today. For free.|shorttext=Mega Man 
-Crysis3_hero_041612.jpg|'''The 7 Wonders of Crysis 3'''|link=http://crysis.wikia.com/wiki/File:The_7_Wonders_of_Crysis_3|link=http://crysis.wikia.com/wiki/File:The_7_Wonders_of_Crysis_3|linktext=Episode 1 of this new video series packs a punch|shorttext=7 Wonders of Crysis 3
-Far-Cry-3.jpg|'''Far Cry Walkthrough'''|link=http://farcry.wikia.com/wiki/Category:Far_Cry_3_Missions|linktext=Survival tips for a dangerous island.|shorttext=Far Cry 3
-</gallery>
-POLLS;
-
-		return parent::render($data);
-	}
-
 	public function filterData($data) {
 		$data = parent::filterData($data);
 
@@ -146,4 +126,21 @@ POLLS;
 
 		return $structuredData;
 	}
+
+	public function render($structureData) {
+		//TODO: removed mocked data once FB#98041 is done
+		$data['wikitextslider'] =
+			<<<POLLS
+			<gallery type="slider" orientation="mosaic">
+New-super-mario-bros-u.jpg|'''Game Tips for New Super Mario Bros. U'''|link=http://mario.wikia.com/wiki/User_blog:TheBlueRogue/New_Super_Mario_Bros._U_Game_Tips|linktext=Defeat the Koopas and save Princess Peach!|shorttext=Mario Bros. U 
+Medal-of-Honor-Warfighter-Zero-Dark-Thirty-Map-Pack-Trailer_1.jpg|'''Zero Dark Thirty Map Pack'''|link=http://medalofhonor.wikia.com/wiki/Zero_Dark_Thirty_Map_Pack|linktext=What are you waiting for? Join the manhunt now.|shorttext=MOH: Warfighter
+Street-Fighter-X-Mega-Man.jpg|'''Meet the Character: Mega Man'''|link=http://megaman.wikia.com/wiki/Mega_Man_%28character%29|linktext=Streetfighter X Mega Man is out today. For free.|shorttext=Mega Man 
+Crysis3_hero_041612.jpg|'''The 7 Wonders of Crysis 3'''|link=http://crysis.wikia.com/wiki/File:The_7_Wonders_of_Crysis_3|link=http://crysis.wikia.com/wiki/File:The_7_Wonders_of_Crysis_3|linktext=Episode 1 of this new video series packs a punch|shorttext=7 Wonders of Crysis 3
+Far-Cry-3.jpg|'''Far Cry Walkthrough'''|link=http://farcry.wikia.com/wiki/Category:Far_Cry_3_Missions|linktext=Survival tips for a dangerous island.|shorttext=Far Cry 3
+</gallery>
+POLLS;
+
+		return parent::render($data);
+	}
+	
 }
