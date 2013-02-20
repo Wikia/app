@@ -2549,7 +2549,7 @@ class User {
 	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
 	 * @return Int
 	 */
-	public function getEditCount( $skipCache = false, $wikiId = 0 ) {
+	public function getEditCount( $wikiId = 0, $skipCache = false ) {
 		global $wgMemc, $wgCityId;
 		if( $this->getId() ) {
 			$wikiId = ( empty($wikiId) ) ? $wgCityId : $wikiId ;
@@ -4203,7 +4203,7 @@ class User {
 				$wgMemc->incr( $key );
 			} else {
 				//initialize editcount skipping memcache
-				$this->getEditCount( true );
+				$this->getEditCount( 0, true );
 			}
 			/* end of change */
 

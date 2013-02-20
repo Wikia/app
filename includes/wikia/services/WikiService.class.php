@@ -245,7 +245,7 @@ class WikiService extends WikiaModel {
 		if ( $userEdits === false ) {
 
 			$user = User::newFromId( $userId );
-			$userEdits = $user->getEditCount(false, $wikiId);
+			$userEdits = $user->getEditCount($wikiId);
 
 			$this->wg->Memc->set( $memKey, $userEdits, 60*60*3 );
 
