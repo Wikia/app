@@ -685,7 +685,7 @@ class MediaWikiInterface
 					'action'      => 'query',
 					'meta'        => 'allmessages',
 					'ammessages'  => 'mainpage',
-					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
+					'amlang'      => $this->getGlobalForWiki( 'LanguageCode', $wikiId )
 					) 
 			);
 	    return \GlobalTitle::newFromText( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
