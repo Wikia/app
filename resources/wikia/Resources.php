@@ -108,6 +108,7 @@ return array(
 	// not yet AMD :-(
 	'wikia.tracker' => array(
 		'scripts' => 'extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'dependencies' => 'wikia.log',
 	),
 
 	// AMD modules loaded on demand
