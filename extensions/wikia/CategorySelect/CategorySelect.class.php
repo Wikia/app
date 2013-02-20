@@ -12,6 +12,7 @@
 
 class CategorySelect {
 	private static $categories;
+	private static $categoriesService;
 	private static $data;
 	private static $frame;
 	private static $isEditable;
@@ -96,7 +97,7 @@ class CategorySelect {
 		// disable changes in Preprocessor and Parser
 		$app->wg->CategorySelectEnabled = false;
 
-		// add ecnoding information
+		// add encoding information
 		$xml = '<?xml version="1.0" encoding="UTF-8"?>' . $xml;
 
 		//init variables
@@ -134,6 +135,78 @@ class CategorySelect {
 	}
 
 	/**
+	 * Gets an array of links for the given categories.
+	 */
+	public static function getCategoryLinks( $categories ) {
+		wfProfileIn( __METHOD__ );
+
+		$app = F::app();
+		$categoryLinks = array();
+
+		if ( !empty( $categories ) ) {
+			foreach( $categories as $category ) {
+				// Support array of category names or array of category data objects
+				$name = is_array( $category ) ? $category[ 'name' ] : $category;
+
+				if ( !empty( $name ) ) {
+					$title = Title::makeTitleSafe( NS_CATEGORY, $name );
+
+					if ( !empty( $title ) ) {
+						$text = $app->wg->ContLang->convertHtml( $title->getText() );
+						$categoryLinks[] = Linker::link( $title, $text );
+					}
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $categoryLinks;
+	}
+
+	/**
+	 * Gets the type of a category (either "hidden" or "normal").
+	 */
+	public static function getCategoryType( $category ) {
+		if ( !isset( self::$categoriesService ) ) {
+			self::$categoriesService = new CategoriesService();
+		}
+
+		// Support category name or category data object
+		$name = is_array( $category ) ? $category[ 'name' ] : $category;
+		$type = 'normal';
+
+		$title = Title::makeTitleSafe( NS_CATEGORY, $name );
+
+		if ( !empty( $title ) ) {
+			$text = $title->getDBKey();
+
+			if ( self::$categoriesService->isCategoryHidden( $text ) ) {
+				$type = 'hidden';
+			}
+		}
+
+		return $type;
+	}
+
+	/**
+	 * Gets the default namespaces for a wiki and content language.
+	 */
+	public static function getDefaultNamespaces() {
+		if ( !isset( self::$namespaces ) ) {
+			$namespaces = F::app()->wg->ContLang->getNsText( NS_CATEGORY );
+
+			if ( strpos( $namespaces, 'Category' ) === false ) {
+				$namespaces = 'Category|' . $namespaces;
+			}
+
+			self::$namespaces = $namespaces;
+		}
+
+		return self::$namespaces;
+	}
+
+	/**
 	 * Extracts category tags from wikitext and returns a hash of the categories
 	 * and the wikitext with categories removed. If wikitext is not provided, it will
 	 * attempt to pull it from the current article.
@@ -158,20 +231,6 @@ class CategorySelect {
 		return self::$data;
 	}
 
-	public static function getDefaultNamespaces() {
-		if ( !isset( self::$namespaces ) ) {
-			$namespaces = F::app()->wg->ContLang->getNsText( NS_CATEGORY );
-
-			if ( strpos( $namespaces, 'Category' ) === false ) {
-				$namespaces = 'Category|' . $namespaces;
-			}
-
-			self::$namespaces = $namespaces;
-		}
-
-		return self::$namespaces;
-	}
-
 	/**
 	 * Removes duplicate categories, optionally converting to/from different formats.
 	 */
@@ -188,14 +247,13 @@ class CategorySelect {
 		if ( !empty( $categories ) ) {
 			foreach( $categories as $category ) {
 				if ( !empty( $category ) ) {
-					$title = Title::newFromText( $category[ 'name' ], NS_CATEGORY );
+					$title = Title::makeTitleSafe( NS_CATEGORY, $category[ 'name' ] );
 
-					// Can return false or null if invalid
 					if ( !empty( $title ) ) {
-						$category[ 'name' ] = $title->getText();
+						$text = $title->getText();
 
-						if ( !in_array( $category[ 'name' ], $categoryNames ) ) {
-							$categoryNames[] = $category[ 'name' ];
+						if ( !in_array( $text, $categoryNames ) ) {
+							$categoryNames[] = $text;
 							$uniqueCategories[] = $category;
 						}
 					}
@@ -427,7 +485,13 @@ class CategorySelect {
 							}
 
 							$childOut['text'] = $newNode;
-							$childOut['categories'][] = array('namespace' => $catNamespace, 'name' => $catName, 'outerTag' => $outerTag, 'sortKey' => $sortKey);
+							$childOut['categories'][] = array(
+								'name' => $catName,
+								'namespace' => $catNamespace,
+								'outerTag' => $outerTag,
+								'sortKey' => $sortKey,
+								'type' => self::getCategoryType( $catName ),
+							);
 						}
 						if (count($childOut['categories'])) {
 							$out = array_merge($out, $childOut['categories']);
@@ -484,7 +548,13 @@ class CategorySelect {
 			$catName = $match[2];
 			$sortKey = '';
 		}
-		self::$categories[] = array('namespace' => $match[1], 'name' => $catName, 'outerTag' => self::$outerTag, 'sortKey' => $sortKey);
+		self::$categories[] = array(
+			'name' => $catName,
+			'namespace' => $match[1],
+			'outerTag' => self::$outerTag,
+			'sortKey' => $sortKey,
+			'type' => self::getCategoryType( $catName ),
+		);
 		return '';
 	}
 }
