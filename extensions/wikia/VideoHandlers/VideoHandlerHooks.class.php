@@ -263,4 +263,35 @@ class VideoHandlerHooks extends WikiaObject{
 
 		return true;
 	}
+
+	/**
+	 * Hook: get wiki link for SpecialGlobalUsage::formatItem()
+	 * @param array $item
+	 * @param string $page
+	 * @param string|false $link
+	 * @return true
+	 */
+	public function onGlobalUsageFormatItemWikiLink( $item, $page, &$link ) {
+		$link = WikiFactory::DBtoUrl( $item['wiki'] );
+		if ( $link ) {
+			$link .= 'wiki/'.$page;
+			$link = Xml::element( 'a', array( 'href' => $link ), str_replace( '_',' ', $page ) );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: get wiki link for GlobalUsage
+	 * @param string $wikiName
+	 * @return true
+	 */
+	public function onGlobalUsageImagePageWikiLink( &$wikiName ) {
+		$wiki = WikiFactory::getWikiByDB( $wikiName );
+		if ( $wiki ) {
+			$wikiName = '['.$wiki->city_url.' '.$wiki->city_title.']';
+		}
+
+		return true;
+	}
 }
