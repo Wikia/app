@@ -94,7 +94,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 		$imageSize = $model->getThumbnailSize();
 		for ($i = 1; $i <= $data['slidesCount']; $i++) {
 			if (!empty($data['values']['photo' . $i])) {
-				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['photo' . $i], $imageSize);
+				$imageData = $this->getImageInfo($data['values']['photo' . $i], $imageSize);
 				$data['photos'][$i]['url'] = $imageData->url;
 				$data['photos'][$i]['imageWidth'] = $imageData->width;
 				$data['photos'][$i]['imageHeight'] = $imageData->height;
