@@ -52,9 +52,28 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	public function main() {
 		$this->wf->profileIn( __METHOD__ );
 
+		// creating / editing a block
 		if ( $this->wg->Request->wasPosted() ) {
 			$res = $this->handleBlockPost();
-			$message = wfMsg( ($res !== false) ? 'phalanx-block-success' : 'phalanx-block-failure' );
+
+			// add a message that will be shown after the redirect
+			if ($res !== false) {
+				NotificationsController::addConfirmation(
+					wfMsg('phalanx-block-success'),
+					NotificationsController::CONFIRMATION_NOTIFY
+				);
+			}
+			else {
+				NotificationsController::addConfirmation(
+					wfMsg('phalanx-block-failure'),
+					NotificationsController::CONFIRMATION_ERROR
+				);
+			}
+
+			$this->wg->Out->redirect($this->title->getFullURL());
+
+			$this->wf->profileOut( __METHOD__ );
+			return;
 		}
 
 		/* set pager */
@@ -78,7 +97,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'editMode',  $editMode);
 		$this->setVal( 'action', $this->title->getLocalURL() );
 		$this->setVal( 'showEmail', $this->wg->User->isAllowed( 'phalanxemailblock' ) );
-		$this->setVal( 'message', isset($message) ? $message : '' );
 
 		$this->wf->profileOut( __METHOD__ );
 	}
@@ -173,7 +191,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $typemask ) ) {
 			$this->wf->profileOut( __METHOD__ );
-			$this->errorMsg = $this->wf->Msg( 'phalanx-block-failure' );
 			return false;
 		}
 
@@ -191,7 +208,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$expire = strtotime( $phalanx['expire'] );
 			if ( $expire < 0 || $expire === false ) {
 				$this->wf->profileOut( __METHOD__ );
-				$this->errorMsg = $this->wf->Msg( 'phalanx-block-failure' );
 				return false;
 			}
 			$phalanx['expire'] = wfTimestamp( TS_MW, $expire );

@@ -10,7 +10,6 @@
 				<form id="phalanx-block" method="post" action="<?= $action ?>">
 					<!-- Filter -->
 					<div id="phalanx-block-texts">
-						<div id="phalanx-feedback-msg" class="clearfix"><?= $message ?></div>
 						<?php if (!empty($editMode)): ?>
 						<input type="hidden" name="id" value="<?= $data['id'] ?>"/>
 						<strong>ID:</strong> <?= $data['id'] ?>
