@@ -271,7 +271,7 @@
 		 */
 		p.replaceState = function(data) {
 			// Check browser support of HTML5 history api
-			if(!(window.history && history.pushState)) {
+			if(!(window.history && history.replaceState)) {
 				return;
 			}
 			data = data || {};
