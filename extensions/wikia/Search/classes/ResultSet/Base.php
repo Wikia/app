@@ -71,10 +71,10 @@ class Base
 		$this->searchResultObject  = $result;
 		$this->searchConfig        = $searchConfig;
 		$this->interface           = MediaWikiInterface::getInstance();
-		$this
-			->prependArticleMatchIfExists	()
-			->setResults					( $this->searchResultObject->getDocuments() )
-			->setResultsFound				( $this->resultsFound + $this->searchResultObject->getNumFound() )
+		$this->resultsFound        = $this->searchResultObject->getNumFound();
+		$this->prependArticleMatchIfExists()
+		     ->setResults( $this->searchResultObject->getDocuments() )
+		     ->setResultsFound( $this->resultsFound )
 		;
 	}
 	
