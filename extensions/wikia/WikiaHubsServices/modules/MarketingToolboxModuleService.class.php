@@ -136,4 +136,8 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $link;
 	}
 
+	protected function getImageInfo($fileName, $destSize = 0) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($fileName, $destSize);
+	}
+
 }

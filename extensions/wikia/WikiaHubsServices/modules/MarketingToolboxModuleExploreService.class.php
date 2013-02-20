@@ -211,7 +211,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		
 		if( !empty($data['values']['fileName']) ) {
 			$model = new MarketingToolboxModel();
-			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['fileName'], $model->getThumbnailSize());
+			$imageData = $this->getImageInfo($data['values']['fileName'], $model->getThumbnailSize());
 			$data['fileUrl'] = $imageData->url;
 			$data['imageWidth'] = $imageData->width;
 			$data['imageHeight'] = $imageData->height;
@@ -246,7 +246,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 			$structuredData['linkgroups'] = $this->getLinkGroupsFromApiResponse($data);
 			
 			if( !empty($data['fileName']) ) {
-				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['fileName']);
+				$imageData = $this->getImageInfo($data['fileName']);
 				$structuredData['imageUrl'] = $imageData->url;
 				$structuredData['imageAlt'] = $imageData->title;
 			} else {
