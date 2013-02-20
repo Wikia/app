@@ -314,12 +314,14 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	 */
 	public function testGetArticleMatchHasMatch() {
 
-		$wikiaSearch		= F::build( 'WikiaSearch' );
-		$mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'hasArticleMatch', 'getArticleMatch' ) );
-		$mockTitle			= $this->getMock( 'Title', array( 'getNamespace' ) );
-		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
-		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
-		$mockTerm			= 'foo';
+		$search = $this->getMockBuilder( 'WikiaSearch' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( array( null ) )
+		               ->getMock();
+		
+		$mockSearchConfig = $this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'hasArticleMatch', 'getArticleMatch' ) );
+		$mockArticleMatch = $mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( 123 ) );
+		$mockTerm         = 'foo';
 
 		// If there's already an article match set in the search config, return that
 		$mockSearchConfig
@@ -337,7 +339,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->method	( 'getArticleMatch' )
 			->will		( $this->returnValue( $mockArticleMatch ) )
 		;
-		$this->assertInstanceOf( 'WikiaSearchArticleMatch', $wikiaSearch->getArticleMatch( $mockSearchConfig ),
+		$this->assertInstanceOf( 'WikiaSearchArticleMatch', $search->getArticleMatch( $mockSearchConfig ),
 								'A searchconfig with an article match should return its article match during WikiaSearch::getArticleMatch()' );
 	}
 
@@ -345,14 +347,17 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	 * @covers WikiaSearch::getArticleMatch
 	 */
 	public function testGetArticleMatchWithNoMatch() {
-		$wikiaSearch		= F::build( 'WikiaSearch' );
-		$mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'hasArticleMatch', 'getArticleMatch' ) );
-		$mockTitle			= $this->getMock( 'Title', array( 'getNamespace' ) );
-		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
-		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
-		$mockSearchEngine	= $this->getMock( 'stdClass', array( 'getNearMatch' ) );
-		$mockTerm			= 'foo';
-
+		$wikiaSearch      = $this->getMockBuilder( 'WikiaSearch' )
+		                         ->disableOriginalConstructor()
+		                         ->getMock();
+		$mockSearchConfig = $this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'hasArticleMatch', 'setArticleMatch', 'getArticleMatch', 'getNamespaces' ) );
+		$mockTerm         = 'foo';
+		$mockInterface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		                      ->setMethods( array( 'getArticleMatchForTermAndNamespaces' ) )
+		                      ->disableOriginalConstructor()
+		                      ->getMock();
+		$namespaces = array( 0, 14 );
+		
 		$mockSearchConfig
 			->expects	( $this->any() )
 			->method	( 'getOriginalQuery' )
@@ -365,21 +370,28 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		;
 		$mockSearchConfig
 			->expects	( $this->any() )
-			->method	( 'getArticleMatch' )
-			->will		( $this->returnValue( null ) )
+			->method	( 'getNamespaces' )
+			->will		( $this->returnValue( $namespaces ) )
 		;
-		$mockSearchEngine
-			->expects	( $this->any() )
-			->method	( 'getNearMatch' )
-			->with		( $mockTerm )
-			->will		( $this->returnValue( null ) )
+		$mockInterface
+		    ->expects( $this->once() )
+		    ->method ( 'getArticleMatchForTermAndNamespaces' )
+		    ->with   ( $mockTerm, $namespaces )
+		    ->will   ( $this->returnValue( null ) )
 		;
-
-		$this->mockClass( 'Title',				$mockTitle );
-		$this->mockClass( 'Article',			$mockArticle );
-		$this->mockClass( 'ArticleMatch',		$mockArticleMatch );
-		$this->mockClass( 'SearchEngine',		$mockSearchEngine );
-
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setArticleMatch' )
+		    ->with   ( null )
+		    ->will   ( $this->returnValue( $mockSearchConfig ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getArticleMatch' )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		$this->proxyClass( '\Wikia\Search\MediaWikiInterface', $mockInterface, 'getInstance' );
+		$this->mockApp();
 		$this->assertNull( $wikiaSearch->getArticleMatch( $mockSearchConfig ),
 		        			'A query term that does not produce a near title match should return null from WikiaSearch::getArticleMatch' );
 	}
@@ -388,25 +400,18 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	 * @covers WikiaSearch::getArticleMatch
 	 */
 	public function testGetArticleMatchWithMatchFirstCall() {
-		$wikiaSearch		= F::build( 'WikiaSearch' );
-		$mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getArticleMatch', 'setArticleMatch', 'getNamespaces', 'getOriginalQuery' ) );
-		$mockTitle			= $this->getMock( 'Title', array( 'getNamespace' ) );
-		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
-		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
-		$mockSearchEngine	= $this->getMock( 'stdClass', array( 'getNearMatch' ) );
-		$mockTerm			= 'foo';
-
-		$mockSearchEngine
-			->expects	( $this->any() )
-			->method	( 'getNearMatch' )
-			->with		( $mockTerm )
-			->will		( $this->returnValue( $mockTitle ) )
-		;
-		$mockTitle
-			->expects	( $this->any() )
-			->method	( 'getNamespace' )
-			->will		( $this->returnValue( 1 ) )
-		;
+		$wikiaSearch      = $this->getMockBuilder( 'WikiaSearch' )
+		                         ->disableOriginalConstructor()
+		                         ->getMock();
+		$mockSearchConfig = $this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'hasArticleMatch', 'setArticleMatch', 'getArticleMatch', 'getNamespaces' ) );
+		$mockTerm         = 'foo';
+		$mockInterface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		                      ->setMethods( array( 'getArticleMatchForTermAndNamespaces' ) )
+		                      ->disableOriginalConstructor()
+		                      ->getMock();
+		$mockMatch = $this->getMock( 'WikiaSearchArticleMatch', array(), array( 123 ) );
+		$namespaces = array( 0, 14 );
+		
 		$mockSearchConfig
 			->expects	( $this->any() )
 			->method	( 'getOriginalQuery' )
@@ -414,78 +419,35 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		;
 		$mockSearchConfig
 			->expects	( $this->any() )
-			->method	( 'setArticleMatch' )
-			->will		( $this->returnValue( $mockSearchConfig ) )
+			->method	( 'hasArticleMatch' )
+			->will		( $this->returnValue( false ) )
 		;
 		$mockSearchConfig
 			->expects	( $this->any() )
 			->method	( 'getNamespaces' )
-			->will		( $this->returnValue( array( 1 ) ) )
+			->will		( $this->returnValue( $namespaces ) )
 		;
-		$mockArticle
-			->expects	( $this->any() )
-			->method	( 'newFromTitle' )
-			->will		( $this->returnValue( $mockArticle ) )
+		$mockInterface
+		    ->expects( $this->once() )
+		    ->method ( 'getArticleMatchForTermAndNamespaces' )
+		    ->with   ( $mockTerm, $namespaces )
+		    ->will   ( $this->returnValue( $mockMatch ) )
 		;
-
-		$this->mockClass( 'Title',				$mockTitle );
-		$this->mockClass( 'Article',			$mockArticle );
-		$this->mockClass( 'ArticleMatch',		$mockArticleMatch );
-		$this->mockClass( 'SearchEngine',		$mockSearchEngine );
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setArticleMatch' )
+		    ->with   ( $mockMatch )
+		    ->will   ( $this->returnValue( $mockSearchConfig ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getArticleMatch' )
+		    ->will   ( $this->returnValue( $mockMatch ) )
+		;
+		$this->proxyClass( '\Wikia\Search\MediaWikiInterface', $mockInterface, 'getInstance' );
 		$this->mockApp();
-		F::setInstance( 'Article', $mockArticle );
-
-		$this->assertInstanceOf( 'WikiaSearchArticleMatch', $wikiaSearch->getArticleMatch( $mockSearchConfig ),
-		        				'A query term that is a near title match should result in the creation, storage, and return of an instance of WikiaArticleMatch' );
-
-	}
-
-	/**
-	 * @covers WikiaSearch::getArticleMatch
-	 */
-	public function testGetArticleMatchWithMatchFirstCallMismatchedNamespace() {
-	    $wikiaSearch		= F::build( 'WikiaSearch' );
-	    $mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'getNamespaces', 'hasArticleMatch' ) );
-		$mockTitle			= $this->getMock( 'Title', array( 'getNamespace' ) );
-		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
-		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
-	    $mockSearchEngine	= $this->getMock( 'stdClass', array( 'getNearMatch' ) );
-	    $mockTerm			= 'foo';
-
-	    $mockSearchEngine
-		    ->expects	( $this->any() )
-		    ->method	( 'getNearMatch' )
-		    ->with		( $mockTerm )
-		    ->will		( $this->returnValue( $mockTitle ) )
-	    ;
-	    $mockTitle
-		    ->expects	( $this->any() )
-		    ->method	( 'getNamespace' )
-		    ->will		( $this->returnValue( 1 ) )
-	    ;
-	    $mockSearchConfig
-	    	->expects	( $this->any() )
-	    	->method	( 'hasArticleMatch' )
-	    	->will		( $this->returnValue( false ) )
-    	;
-	    $mockSearchConfig
-		    ->expects	( $this->any() )
-		    ->method	( 'getOriginalQuery' )
-		    ->will		( $this->returnValue( $mockTerm ) )
-	    ;
-	    $mockSearchConfig
-		    ->expects	( $this->any() )
-		    ->method	( 'getNamespaces' )
-		    ->will		( $this->returnValue( array( 0 ) ) )
-	    ;
-
-	    $this->mockClass( 'Title',				$mockTitle );
-	    $this->mockClass( 'Article',			$mockArticle );
-	    $this->mockClass( 'ArticleMatch',		$mockArticleMatch );
-	    $this->mockClass( 'SearchEngine',		$mockSearchEngine );
-
-	    $this->assertNull( $wikiaSearch->getArticleMatch( $mockSearchConfig ),
-	            			'A query term that is a near title match should still return null if it is not in the searched-for namespaces' );
+		$this->assertNotEmpty( $wikiaSearch->getArticleMatch( $mockSearchConfig ),
+		        			'A query term that does produce a near title match should return an instance of WikiaSearchArticleMatch' );
 
 	}
 
