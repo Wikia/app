@@ -480,7 +480,7 @@ class MediaWikiInterface
 	 * @return string
 	 */
 	public function getMediaWikiFormattedTimestamp( $timestamp ) { 
-		return $this->wg->Lang ? $this->wg->Lang->date( $this->wf->Timestamp( TS_MW, $timestamp ) ) : '';
+		return $this->app->wg->Lang ? $this->app->wg->Lang->date( $this->app->wf->Timestamp( TS_MW, $timestamp ) ) : '';
 	}
 	
 	/**
@@ -488,7 +488,7 @@ class MediaWikiInterface
 	 * @param string $timestamp
 	 */
 	protected function getFormattedTimestamp( $timestamp ) {
-		return $this->wf->Timestamp( TS_ISO_8601, $timestamp );
+		return $this->app->wf->Timestamp( TS_ISO_8601, $timestamp );
 	}
 
 	/**

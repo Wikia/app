@@ -7,6 +7,8 @@ use \WikiaSearchResult;
 use \Wikia\Search\MediaWikiInterface;
 use \WikiaSearch;
 use \WikiaException;
+use \Solarium_Result_Select;
+use \WikiaSearchConfig;
 /**
  * This is the default class definition -- represents a flat grouping of results, e.g. on-wiki search.
  * @author relwell
@@ -79,10 +81,33 @@ class Base
 	}
 	
 	/**
+	 * set result documents
+	 * @param  array $results list of WikiaResult or WikiaResultSet (for result grouping) objects
+	 * @return Base provides fluent interface
+	 */
+	public function setResults(Array $results) {
+		foreach($results as $result) {
+			$this->addResult($result);
+		}
+		return $this;
+	}
+	
+	/**
+	 * Populates the resultsFound protected var
+	 * @param int $value
+	 * @return Base provides fluent interface
+	 */
+	public function setResultsFound($value) {
+		$this->resultsFound = $value;
+		return $this;
+	}
+	
+	
+	/**
 	 * Does a little prep on a result object, applies highlighting if exists, and adds to result array.
 	 * @param  WikiaSearchResult $result
 	 * @throws WikiaException
-	 * @return WikiaSearchResultSet provides fluent interface
+	 * @return Base provides fluent interface
 	 */
 	protected function addResult( WikiaSearchResult $result ) {
 		if( $this->isValidResult( $result ) ) {
@@ -113,7 +138,7 @@ class Base
 	
 	/**
 	 * Subroutine for optionally prepending article match to result array.
-	 * @return WikiaSearchResultSet provides fluent interface
+	 * @return Base provides fluent interface
 	 */
 	protected function prependArticleMatchIfExists() {
 		if (! ( $this->searchConfig->hasArticleMatch() && $this->getResultsStart() == 0 ) ) {
@@ -210,7 +235,7 @@ class Base
 	 * Used particularly for grouped results.
 	 * @param  string $key
 	 * @param  mixed  $value
-	 * @return WikiaSearchResultSet provides fluent interface
+	 * @return Base provides fluent interface
 	 */
 	public function setHeader( $key, $value ) {
 		$this->header[$key] = $value;

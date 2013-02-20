@@ -563,9 +563,7 @@ class WikiaSearch extends WikiaObject {
 		$searchConfig->setFilterQuery( $this->getFilterQueryString( $searchConfig ) );
 		
 		if ( $searchConfig->hasArticleMatch() ) {
-			$am       = $searchConfig->getArticleMatch();
-			$article  = $am->getArticle();  
-			$noPtt    = self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
+			$noPtt    = self::valueForField( 'id', $searchConfig->getArticleMatch()->getResult()->getVar( 'id' ), array( 'negate' => true ) ) ;
 			$searchConfig->setFilterQuery( $noPtt, 'ptt' );
 		} else if ( $searchConfig->hasWikiMatch() ) {
 			$noPtt    = self::valueForField( 'wid', $searchConfig->getWikiMatch()->getId(), array( 'negate' => true ) );
@@ -680,7 +678,7 @@ class WikiaSearch extends WikiaObject {
 			}
 		}
 		
-		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
+		$results = Wikia\Search\ResultSet\Factory::getInstance()->get($result, $searchConfig);
 
 		$resultCount = $results->getResultsFound();
 		

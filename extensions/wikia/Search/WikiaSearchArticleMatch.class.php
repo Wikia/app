@@ -14,11 +14,18 @@ class WikiaSearchArticleMatch {
 	protected $interface;
 	
 	/**
+	 * WikiaSearchResult instance
+	 * @var WikiaSearchResult
+	 */
+	protected $result;
+	
+	/**
 	 * Accepts an article and performs all necessary logic to also store a redirect
 	 * @param Article $article
 	 */
 	public function __construct( $pageId ) {
 		$this->pageId = $pageId;
+		$this->interface = \Wikia\Search\MediaWikiInterface::getInstance();
 	}
 	
 	/**
@@ -26,28 +33,28 @@ class WikiaSearchArticleMatch {
 	 * @return WikiaSearchResult
 	 */
 	public function getResult() {
-		$wikiId = $this->interface->getWikiId();
-
-		$fieldsArray = array(
-				'id'            => sprintf( '%s_%s', $wikiId, $this->pageId ), 
-				'wid'           => $wikiId,
-				'title'         => $this->interface->getTitleStringFromPageId( $this->pageId ),
-				'url'           => urldecode( $this->interface->getUrlFromPageId( $this->pageId ) ),
-				'score'         => 'PTT',
-				'isArticleMatch'=> true,
-				'ns'            => $this->interface->getNamespaceFromPageId( $this->pageId ),
-				'pageId'        => $this->interface->getCanonicalPageIdFromPageId( $this->pageId ),
-				'created'       => $this->interface->getFirstRevisionTimestampForPageId( $this->pageId ),
-				'touched'       => $this->interface->getLastRevisionTimestampForPageId( $this->pageId ),
+		if ( $this->result === null ) {
+			$wikiId = $this->interface->getWikiId();
+			$fieldsArray = array(
+					'id'            => sprintf( '%s_%s', $wikiId, $this->pageId ),
+					'wid'           => $wikiId,
+					'title'         => $this->interface->getTitleStringFromPageId( $this->pageId ),
+					'url'           => urldecode( $this->interface->getUrlFromPageId( $this->pageId ) ),
+					'score'         => 'PTT',
+					'isArticleMatch'=> true,
+					'ns'            => $this->interface->getNamespaceFromPageId( $this->pageId ),
+					'pageId'        => $this->interface->getCanonicalPageIdFromPageId( $this->pageId ),
+					'created'       => $this->interface->getFirstRevisionTimestampForPageId( $this->pageId ),
+					'touched'       => $this->interface->getLastRevisionTimestampForPageId( $this->pageId ),
 				);
-
-		$result = new WikiaSearchResult( $fieldsArray );
-		
-		$result->setText( $this->interface->getSnippetForPageId( $this->pageId ) );
-		if ( $this->hasRedirect() ) {
-			$result->setVar( 'redirectTitle', $this->interface->getNonCanonicalTitleString( $this->pageId ) );
+			$result = new WikiaSearchResult( $fieldsArray );
+			$result->setText( $this->interface->getSnippetForPageId( $this->pageId ) );
+			if ( $this->hasRedirect() ) {
+				$result->setVar( 'redirectTitle', $this->interface->getNonCanonicalTitleString( $this->pageId ) );
+			}
+			$this->result = $result;
 		}
-		return $result;
+		return $this->result;
 	}
 	
 	/**

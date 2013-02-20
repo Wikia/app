@@ -4,6 +4,8 @@
  */
 namespace Wikia\Search\ResultSet;
 use \Wikia\Search\MediaWikiInterface;
+use \Solarium_Result_Select;
+use \WikiaSearchConfig;
 /**
  * This is a search result set that contains grouped results.
  * @author relwell
