@@ -40,7 +40,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	private function blockStats($blockId) {
 		$this->wg->Out->setPageTitle( sprintf( "%s #%s", $this->wf->Msg('phalanx-stats-title'), $blockId ) );
 
-		$data = F::build( 'Phalanx', array( $blockId ), 'newFromId' );
+		$data = Phalanx::newFromId($blockId);
 
 		if ( !isset( $data["id"] ) ) {
 			$this->wg->Out->addWikiMsg( 'phalanx-stats-block-notfound', $blockId );
@@ -62,7 +62,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$data['regex'] = $data['regex'] ? 'Yes' : 'No';
 		$data['case']  = $data['case']  ? 'Yes' : 'No';
 		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
-		$data['lang'] = empty( $data['lang'] ) ? '*' : $data['lang'];
+		$data['lang'] = empty( $data['lang'] ) ? 'All' : $data['lang'];
 
 		/* pull these out of the array, so they dont get used in the top rows */
 		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->wg->User->isAllowed( 'phalanxemailblock' ) ) {
@@ -77,9 +77,9 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			$this->wf->Msg('phalanx-stats-table-type'),
 			$this->wf->Msg('phalanx-stats-table-create'),
 			$this->wf->Msg('phalanx-stats-table-expire'),
+			$this->wf->Msg('phalanx-stats-table-exact'),
 			$this->wf->Msg('phalanx-stats-table-regex'),
 			$this->wf->Msg('phalanx-stats-table-case'),
-			$this->wf->Msg('phalanx-stats-table-exact'),
 			$this->wf->Msg('phalanx-stats-table-language'),
 		);
 
