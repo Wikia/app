@@ -4,6 +4,8 @@
  */
 namespace Wikia\Search\ResultSet;
 use \Wikia\Search\MediaWikiInterface;
+use \Solarium_Result_Select;
+use \WikiaSearchConfig;
 /**
  * This class handles sub-groupings of results for inter-wiki search.
  * @author relwell

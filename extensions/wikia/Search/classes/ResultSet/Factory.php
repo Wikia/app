@@ -3,6 +3,8 @@
  * Class definition for \Wikia\Search\ResultSet\Factory
  */
 namespace Wikia\Search\ResultSet;
+use \Solarium_Result_Select;
+use \WikiaSearchConfig;
 
 /**
  * A singleton instance for instantiating search result sets.
@@ -37,7 +39,7 @@ class Factory
 	 * @return \Wikia\Search\IndexService\AbstractService
 	 */
 	public function get( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig, $parent = null, $metaposition = null ) {
-		if ( $parent === null && $searchConfig->getGroupResults ) {
+		if ( $parent === null && $searchConfig->getGroupResults() ) {
 			return new GroupingSet( $result, $searchConfig );
 		} else if ( $parent !== null && $metaposition !== null ) {
 			return new Grouping( $result, $searchConfig, $parent, $metaposition );
