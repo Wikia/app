@@ -106,16 +106,12 @@ return array(
 		)
 	),
 	'wikia.tracker' => array(
-<<<<<<< HEAD
-		'scripts' => 'extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'dependencies' => 'wikia.log',
-=======
 		'scripts' => 'resources/wikia/modules/tracker.js',
-	),
-
-	'wikia.trackerqueue' => array(
-		'scripts' => 'resources/wikia/modules/trackerqueue.js',
->>>>>>> e194030... WikiaTracker as AMD module
+		'dependencies' => array(
+			'amd',
+			'wikia.window',
+			'wikia.log',
+		)
 	),
 
 	// AMD modules loaded on demand
