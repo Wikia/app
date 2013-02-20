@@ -1,4 +1,4 @@
-<?php if($resultSet->getResultsFound() > 1): ?>
+<?php echo 'hi'; die; if($resultSet->getResultsFound() > 1): ?>
 	<!-- grouped search result-->
 	<li class="result">
 
