@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 class MarketingToolboxModuleSliderServiceTest extends WikiaBaseTest
 {
@@ -136,4 +137,112 @@ WIKI_TEXT;
 			array($data2, $expectedText2),
 		);
 	}
+
+
+	/**
+	 * @dataProvider getDataStructureDataProvider
+	 */
+	public function testGetStructuredDate($flatArray, $expectedData) {
+
+		$sliderMock = $this->getMock(
+				'MarketingToolboxModuleSliderService',
+				array( 'getImageData' ),
+				array('en', 1, 1)
+		);
+
+		$sliderMock
+			->expects($this->any())
+			->method( 'getImageData' )
+			->will( $this->returnValue(
+					(object) array(
+						'url' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg',
+						'title' => 'TheMuppets hero 100512.jpg'
+					)
+				)
+			);
+
+		//$slider = new MarketingToolboxModuleSliderService('en', 1, 1);
+
+		$structuredData = $sliderMock->getStructuredData($flatArray);
+
+		$this->assertEquals($expectedData, $structuredData);
+	}
+
+	public function getDataStructureDataProvider() {
+		return array(
+			array (
+				array(
+					'photo1' => 'LegoMiniFigures hero 010513.jpg',
+					'shortDesc1' => 'lego',
+					'longDesc1' => 'lego heroes',
+					'url1' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'photo2' => 'Wikia-Visualization-Main,legogalaxygameat.png',
+					'shortDesc2' => 'lego2',
+					'longDesc2' => 'lego galaxy',
+					'url2' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'photo3' => 'Wikia-Visualization-Main,swindontownfootballclub.png',
+					'shortDesc3' => 'swindon',
+					'longDesc3' => 'swindon town FC',
+					'url3' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'photo4' => 'TheMuppets hero 100512.jpg',
+					'shortDesc4' => 'muppets',
+					'longDesc4' => 'muppets hero',
+					'url4' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'photo5' => 'Wikia-Visualization-Main,dragonballupdates.png',
+					'shortDesc5' => 'dragon',
+					'longDesc5' => 'dragon balls',
+					'url5' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics'
+				),
+				array(
+					'slides' => array (
+						array(
+							'photoUrl' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg',
+							'shortDesc' => 'lego',
+							'longDesc' => 'lego heroes',
+							'url' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+							'photoName' => 'LegoMiniFigures hero 010513.jpg',
+							'photoAlt' => 'TheMuppets hero 100512.jpg'
+						),
+						array(
+							'photoUrl' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg',
+							'shortDesc' => 'lego2',
+							'longDesc' => 'lego galaxy',
+							'url' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+							'photoName' => 'Wikia-Visualization-Main,legogalaxygameat.png',
+							'photoAlt' => 'TheMuppets hero 100512.jpg'
+						),
+						array(
+							'photoUrl' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg',
+							'shortDesc' => 'swindon',
+							'longDesc' => 'swindon town FC',
+							'url' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+							'photoName' => 'Wikia-Visualization-Main,swindontownfootballclub.png',
+							'photoAlt' => 'TheMuppets hero 100512.jpg'
+						),
+						array(
+							'photoUrl' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg',
+							'shortDesc' => 'muppets',
+							'longDesc' => 'muppets hero',
+							'url' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+							'photoName' => 'TheMuppets hero 100512.jpg',
+							'photoAlt' => 'TheMuppets hero 100512.jpg'
+						),
+						array(
+							'photoUrl' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg',
+							'shortDesc' => 'dragon',
+							'longDesc' => 'dragon balls',
+							'url' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+							'photoName' => 'Wikia-Visualization-Main,dragonballupdates.png',
+							'photoAlt' => 'TheMuppets hero 100512.jpg'
+						),
+					)
+				)
+			),
+			array(
+				array(),
+				array()
+			)
+		);
+	}
 }
+

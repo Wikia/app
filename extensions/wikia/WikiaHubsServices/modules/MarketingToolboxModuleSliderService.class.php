@@ -106,13 +106,16 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 	}
 
 	public function getStructuredData($data) {
-		$model = new MarketingToolboxSliderModel();
-		$slidesCount =  $model->getSlidesCount();
 		$structuredData = array();
 
 		if( !empty( $data ) ) {
+
+			$model = new MarketingToolboxSliderModel();
+			$slidesCount =  $model->getSlidesCount();
+
 			for( $i = 1; $i <= $slidesCount; $i++ ) {
-				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['photo'.$i]);
+				$imageData = $this->getImageData($data['photo'.$i]);
+
 				$structuredData['slides'][] = array(
 									'photoUrl' => $imageData->url,
 									'shortDesc' => $data['shortDesc'.$i],
@@ -126,6 +129,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 
 		return $structuredData;
 	}
+
 
 	public function render($structureData) {
 		$data['wikitextslider'] = $this->getWikitext($structureData);
@@ -147,5 +151,10 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 		}
 		$galleryText .= "\n</gallery>";
 		return $galleryText;
+	}
+
+	public function getImageData( $image ) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($image);
+
 	}
 }
