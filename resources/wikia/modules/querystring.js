@@ -248,6 +248,35 @@
 		p.goTo = function () {
 			l.href = this.toString();
 		};
+		
+		/**
+		 * Updates the URL without navigating away from the page
+		 *
+		 * @public
+		 */
+		p.pushState = function(data) {
+			// Check browser support of HTML5 history api
+			if(!(window.history && history.pushState)) {
+				return;
+			}
+			data = data || {};
+			history.pushState(data, document.title, this.toString());
+		}
+
+		/**
+		 * Updates the URL without navigating away from the page
+		 * Replaces history state instead of adding to it.
+		 *
+		 * @public
+		 */
+		p.replaceState = function(data) {
+			// Check browser support of HTML5 history api
+			if(!(window.history && history.pushState)) {
+				return;
+			}
+			data = data || {};
+			history.replaceState(data, document.title, this.toString());
+		}
 
 		return Querystring;
 	}
