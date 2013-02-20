@@ -306,6 +306,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 */
 	public function executeFooter($data) {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss');
+		$this->allModulesSaved = $this->toolboxModel->checkModulesSaved($this->langCode, $this->verticalId, $this->date) ? '' : 'disabled="disabled"' ;
 	}
 
 	/**
