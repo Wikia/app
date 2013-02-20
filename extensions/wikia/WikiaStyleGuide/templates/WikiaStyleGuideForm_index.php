@@ -19,6 +19,12 @@
 			</div>
 		<? endif ?>
 
+		<? if ( !empty( $form[ 'success' ] ) ): ?>
+			<div class="input-group general-errors">
+				<div class="error-msg"><?= $form[ 'errorMsg' ] ?></div>
+			</div>
+		<? endif ?>
+
 		<? if ( is_array( $form[ 'inputs' ] ) ): ?>
 			<? foreach( $form[ 'inputs' ] as $input ): ?>
 				<?php
