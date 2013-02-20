@@ -4106,7 +4106,7 @@ class User {
 	 * Will have no effect for anonymous users.
 	 */
 	public function incEditCount() {
-		global $wgMemc;
+		global $wgMemc, $wgCityId;
 		if( !$this->isAnon() ) {
             // wikia change, load always from first cluster when we use
             // shared users database
@@ -4139,7 +4139,7 @@ class User {
 
 			if ($dbw->affectedRows() == 1) {
 				//increment memcache also
-				$key = wfMemcKey($this->getId().'-editcount');
+				$key = wfSharedMemcKey( 'editcount', $wgCityId, $this->getId() );
 				$wgMemc->incr( $key );
 			} else {
 				//initialize editcount skipping memcache
