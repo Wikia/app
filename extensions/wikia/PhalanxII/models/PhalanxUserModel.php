@@ -7,6 +7,10 @@ class PhalanxUserModel extends PhalanxModel {
 		parent::__construct( __CLASS__, array( 'user' => $user, 'lang' => $lang, 'id' => $id ) );
 	}
 	
+	public function getText() {
+		return ( !empty( $this->text ) ) ? $this->text : array( $this->user->getName(), $this->ip );
+	}
+	
 	public function isOk() {
 		return $this->user->isAllowed( 'phalanxexempt' );
 	}
@@ -44,7 +48,7 @@ class PhalanxUserModel extends PhalanxModel {
 	}
 	
 	public function match_user() {
-		return $this->setText( $this->user->getName() )->match( "user" );
+		return $this->match( "user" );
 	}
 	
 	public function match_user_old() {

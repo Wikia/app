@@ -5,7 +5,7 @@ class PhalanxContentModel extends PhalanxModel {
 	const SPAM_WHITELIST_TITLE = 'Spam-whitelist';
 	const SPAM_WHITELIST_NS_TITLE = 'Mediawiki:Spam-whitelist';
 
-	public function __construct( $title, $lang = '', $id = 0 ) {
+	public function __construct( $title, $lang = null, $id = 0 ) {
 		parent::__construct( __CLASS__, array( 'title' => $title, 'lang' => $lang, 'id' => $id ) );
 	}
 	

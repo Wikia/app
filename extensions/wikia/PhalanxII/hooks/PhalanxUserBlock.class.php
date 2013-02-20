@@ -7,6 +7,7 @@
  */
 
 class PhalanxUserBlock extends WikiaObject {
+	private $typeBlock = null;
 	function __construct(){
 		parent::__construct();
 		F::setInstance( __CLASS__, $this );
@@ -23,10 +24,14 @@ class PhalanxUserBlock extends WikiaObject {
 		$ret = $phalanxModel->match_user();
 		if ( $ret !== false ){
 			$ret = $phalanxModel->match_email();
-		}
+			if ( $ret === false ) {
+				$this->typeBlock = 'email';
+			}
+		} 
 		
 		if ( $ret === false ) {
 			$user = $phalanxModel->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
+			$this->typeBlock = (empty( $this->typeBlock ) ) ? 'user' : $this->typeBlock;
 		}
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;
@@ -43,7 +48,7 @@ class PhalanxUserBlock extends WikiaObject {
 		$ret = $this->blockCheck( $user );
 
 		if ( $ret === false ) {
-			$abortError = $this->wf->Msg( 'phalanx-user-block-new-account' );
+			$abortError = $this->wf->Msg( ( $this->typeBlock == 'email' ) ? 'phalanx-email-block-new-account' : 'phalanx-user-block-new-account' );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -59,6 +64,7 @@ class PhalanxUserBlock extends WikiaObject {
 		} else { 
 			$ret = false;
 		}
+
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;
 	}
