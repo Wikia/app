@@ -337,6 +337,32 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
+	 * Check if all modules in current hub (lang, vertical and date) are filled and saved
+	 *
+	 * @param string $langCode
+	 * @param int $verticalId
+	 * @param int $timestamp
+	 */
+	public function checkModulesSaved($langCode, $verticalId, $timestamp) {
+		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$hubDate = date('Y-m-d', $timestamp);
+
+		$fields = array('count(module_id)');
+		$conds = array(
+			'lang_code' => $langCode,
+			'vertical_id' => $verticalId,
+			'hub_date' => $hubDate
+		);
+
+		$result = $sdb->select(self::HUBS_TABLE_NAME, $fields, $conds);
+
+		$row = $sdb->fetchRow($result);
+
+		return $row[0]==$this->modulesCount ? true : false;
+	}
+
+	/**
 	 * Get data for module list from DB
 	 *
 	 * @param string $langCode
