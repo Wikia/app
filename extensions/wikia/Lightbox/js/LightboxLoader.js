@@ -1,5 +1,7 @@
 /*global Lightbox:true, LightboxTracker:true*/
 
+(function(window, $){
+
 var LightboxLoader = {
 	// cached thumbnail arrays and detailed info
 	cache: {
@@ -218,7 +220,6 @@ var LightboxLoader = {
 			deferredList.push($.loadMustache());
 
 			var resources = [
-				$.getAssetManagerGroupUrl('history_polyfill_js'),
 				$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss'),
 				window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js'
 			];
@@ -341,12 +342,13 @@ var LightboxLoader = {
 		}
 	},
 	loadFromURL: function() {
-		var fileTitle = $.getUrlVar('file'),
+		var fileTitle = window.Wikia.Querystring().getVal('file'),
 			openModal = $('#LightboxModal');
 
+		// Check if there's a file param in URL
 		if(fileTitle) {
+			// If Lightbox is already open, update it
 			if(openModal.length) {
-				// Lightbox is already open, update it
 				LightboxLoader.getMediaDetail({fileTitle: fileTitle}, function(data) {
 					Lightbox.current.title = data.title;
 					Lightbox.current.type = data.mediaType;
@@ -355,8 +357,8 @@ var LightboxLoader = {
 					Lightbox.openModal.carousel.find('li').eq(Lightbox.current.index).click();
 				});
 
+			// Open new Lightbox
 			} else {
-				// Open new Lightbox
 				// set a fake parent for carouselType
 				var trackingInfo = {
 					parent: $('#WikiaArticle'),
@@ -364,6 +366,7 @@ var LightboxLoader = {
 				}
 				LightboxLoader.loadLightbox(fileTitle, trackingInfo);
 			}
+		// No file param, if there's an open modal, close it
 		} else {
 			if(openModal.length) {
 				openModal.closeModal();
@@ -409,3 +412,8 @@ $(function() {
 
 	LightboxLoader.loadFromURL();
 });
+
+window.LightboxLoader = LightboxLoader;
+window.LightboxTracker = LightboxTracker;
+
+})(this, jQuery);

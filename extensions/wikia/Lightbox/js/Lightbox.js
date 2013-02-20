@@ -2,6 +2,8 @@
 
 /* TDOO: We need to normalize all readable titles and dbKeys so that we always know which one is which. This includes updating the DOM for every image and video element site-wide */
 
+(function(window, $) {
+
 var Lightbox = {
 	eventTimers: {
 		lastMouseUpdated: 0
@@ -24,6 +26,7 @@ var Lightbox = {
 	backfillCount: 0,
 	backfillCountMessage: false,
 	to: 0, // timestamp for getting wiki images
+	historyEnabled: !!(window.history && history.pushState),
 
 	makeLightbox: function(params) {
 		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length; // if we don't have latest photos in the DOM, request them from back end
@@ -118,8 +121,6 @@ var Lightbox = {
 
 	},
 	bindEvents: function() {
-		Lightbox.bindHistoryEvents();
-
 		Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
 			var time = new Date().getTime();
 			if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 100 ) {
@@ -264,7 +265,9 @@ var Lightbox = {
 						'line-height': (dimensions.imageContainerHeight - 3) + 'px' // -3 hack to remove white line in chrome
 					}).html(renderedResult);
 
-				$(window).trigger('resize'); // firefox image loading hack (BugId:32477)
+				Lightbox.openModal.media.find('img').first().load(function() {
+					$(window).trigger('resize'); // firefox image loading hack (BugId:32477)
+				});
 
 				Lightbox.updateArrows();
 
@@ -694,62 +697,20 @@ var Lightbox = {
 	},
 
 	// Handle history API
-	bindHistoryEvents: function() {
-		var History = window.History;
-
-		// Handle forward and back buttons
-		History.Adapter.bind(window, 'statechange.Lightbox', function(e) { // Note: History.js uses custom 'statechange' event instead of popstate
-			// History.replaceState will trigger the statechange event, if this is the case, ignore this event
-			if(Lightbox.stateChangedManually === true) {
-				Lightbox.stateChangedManually = false;
-				return;
-			}
-			LightboxLoader.loadFromURL();
-		});
-	},
 	updateUrlState: function(clear) {
-		var History = window.History;
-
 		// Only support HTML5 browsers for now
-		if(!History.enabled) {
-			return false;
+		if(!this.historyEnabled) {
+			return;
 		}
+		
+		var qs = window.Wikia.Querystring();
 
-		var query = window.location.search.substring(1),
-			vars = query.split('&'),
-			queryObj = {};
-
-		for(var i = 0; i < vars.length; i++) {
-			if(vars[i] == "") {
-				break;
-			}
-			var pair = vars[i].split('=');
-			// Create object of query params
-			queryObj[pair[0]] = pair[1];
-		}
+		this.stateChangedManually = true;
 
 		if(clear) {
-			delete queryObj.file;
+			qs.removeVal('file').replaceState();
 		} else {
-			queryObj.file = Lightbox.getTitleDbKey();
-		}
-
-		var newQuery = $.param(queryObj);
-
-		if(newQuery != "") {
-			newQuery = "?" + newQuery;
-		}
-
-		if(window.location.search != newQuery) {
-			var stateObj = {
-					fileTitle: queryObj.file || null
-				},
-				stateUrl = decodeURI(window.location.pathname);
-
-			stateUrl += newQuery;
-
-			Lightbox.stateChangedManually = true;
-			History.replaceState(stateObj, History.options.initialTitle + ", " + Lightbox.current.title, stateUrl);
+			qs.setVal('file', this.getTitleDbKey()).replaceState();		
 		}
 	},
 
@@ -1382,7 +1343,8 @@ var Lightbox = {
 			trackingCarouselType: trackingCarouselType
 		};
 	}
-
-
 };
 
+window.Lightbox = Lightbox;
+
+})(this, jQuery);
