@@ -26,7 +26,6 @@ var Lightbox = {
 	backfillCount: 0,
 	backfillCountMessage: false,
 	to: 0, // timestamp for getting wiki images
-	historyEnabled: !!(window.history && history.pushState),
 
 	makeLightbox: function(params) {
 		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length; // if we don't have latest photos in the DOM, request them from back end
@@ -698,14 +697,7 @@ var Lightbox = {
 
 	// Handle history API
 	updateUrlState: function(clear) {
-		// Only support HTML5 browsers for now
-		if(!this.historyEnabled) {
-			return;
-		}
-		
 		var qs = window.Wikia.Querystring();
-
-		this.stateChangedManually = true;
 
 		if(clear) {
 			qs.removeVal('file').replaceState();
