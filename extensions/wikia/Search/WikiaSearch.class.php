@@ -2,7 +2,7 @@
 /**
  * Class definition for WikiaSearch
  */
-use Wikia\Search\MediaWikiInterface;
+use Wikia\Search\MediaWikiInterface, Wikia\Search\ResultSet;
 /**
  * This class is responsible for handling interacting with Solr to retrieve results.
  * It uses a custom-modified version of the Solarium library to build out abstracted queries.
@@ -127,6 +127,12 @@ class WikiaSearch extends WikiaObject {
 	protected $interface;
 	
 	/**
+	 * Allows us to instantiate result sets.
+	 * @var Wikia\Search\ResultSet\Factory
+	 */
+	protected $resultSetFactory;
+	
+	/**
 	 * Used and reused for string preparation
 	 * @var Solarium_Query_Helper
 	 */
@@ -160,6 +166,7 @@ class WikiaSearch extends WikiaObject {
 		$this->client = $client;
 		$this->client->setAdapter('Solarium_Client_Adapter_Curl');
 		$this->interface = MediaWikiInterface::getInstance();
+		$this->resultSetFactory = ResultSet\Factory::getInstance();
 		parent::__construct();
 	}
 
@@ -171,7 +178,7 @@ class WikiaSearch extends WikiaObject {
 	/**
 	 * perform search
 	 * @param  WikiaSearchConfig $searchConfig
-	 * @return WikiaSearchResultSet
+	 * @return Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	public function doSearch( WikiaSearchConfig $searchConfig ) {
 		wfProfileIn(__METHOD__);
@@ -189,7 +196,7 @@ class WikiaSearch extends WikiaObject {
 	 * What you set in the query value of the searchconfig is what we search for.
 	 * Please note the risk of not getting results 
 	 * @param  WikiaSearchConfig $searchConfig
-	 * @return WikiaSearchResultSet
+	 * @return Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	public function searchByLuceneQuery( WikiaSearchConfig $searchConfig ) {
 		$this->wf->ProfileIn( __METHOD__ );
@@ -215,10 +222,10 @@ class WikiaSearch extends WikiaObject {
 		} catch ( Exception $e ) {
 			F::build('Wikia')->log(__METHOD__, 'Querying Solr First Time', $e);
 			$searchConfig->setError( $e );
-			$result = F::build('Solarium_Result_Select_Empty');
+			$result = new Solarium_Result_Select_Empty();
 		}
-		
-		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
+		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $searchConfig ) );
+		$results = $this->resultSetFactory->get( $container );
 		
 		$searchConfig->setResults		( $results )
 					 ->setResultsFound	( $results->getResultsFound() )
@@ -274,7 +281,7 @@ class WikiaSearch extends WikiaObject {
 	/**
 	 * Used in the related videos module to get both premium and on-wiki videos.
 	 * @param  WikiaSearchConfig $searchConfig
-	 * @return WikiaSearchResultSet
+	 * @return Wikia\Search\ResultSet\Base
 	 */
 	public function getRelatedVideos( WikiaSearchConfig $searchConfig ) {
 	    wfProfileIn(__METHOD__);
@@ -383,33 +390,24 @@ class WikiaSearch extends WikiaObject {
 	    return $config->setArticleMatch( $match )->getArticleMatch();
 	}
 	
+	/**
+	 * Tries to get a wiki match based on settings in config.
+	 * @param WikiaSearchConfig $config
+	 * @return NULL
+	 */
 	public function getWikiMatch( WikiaSearchConfig $config ) {
-		wfProfileIn(__METHOD__);
-		
 		if ( $config->hasWikiMatch() ) {
-			wfProfileOut(__METHOD__);
 			return $config->getWikiMatch();
 		}
-		
 		$domain = preg_replace(
 				'/[^a-zA-Z]/',
 				'',
 				strtolower( $config->getQuery( WikiaSearchConfig::QUERY_RAW ) ) 
 				);
-		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
-		$query = $dbr->select(
-				array( 'city_domains' ),
-				array( 'city_id' ),
-				array( 'city_domain' => "{$domain}.wikia.com" )
-				);
-		if ( $row = $dbr->fetchObject( $query ) ) {
-			$config->setWikiMatch( new WikiaSearchWikiMatch( $row->city_id ) );
-			wfProfileOut(__METHOD__);
+		if ( $match = $this->interface->getWikiMatchByHost( $domain ) ) {
+			$config->setWikiMatch( $match );
 			return $config->getWikiMatch();
 		}
-		
-		
-		wfProfileOut(__METHOD__);
 		return null;
 	}
 	
@@ -677,7 +675,9 @@ class WikiaSearch extends WikiaObject {
 			}
 		}
 		
-		$results = Wikia\Search\ResultSet\Factory::getInstance()->get($result, $searchConfig);
+		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $searchConfig ) );
+		
+		$results = $this->resultSetFactory->get( $container );
 
 		$resultCount = $results->getResultsFound();
 		
@@ -869,7 +869,7 @@ class WikiaSearch extends WikiaObject {
 	 * Utilizes Solr's MoreLikeThis component to return similar pages
 	 * @see    WikiaSearchTest::testMoreLikeThis
 	 * @param  WikiaSearchConfig $searchConfig
-	 * @return WikiaSearchResultSet
+	 * @return Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	protected function moreLikeThis( WikiaSearchConfig $searchConfig )
 	{
@@ -917,9 +917,8 @@ class WikiaSearch extends WikiaObject {
 			F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		}
 		
-		$results = F::build('WikiaSearchResultSet', array($mltResult, $searchConfig) );
-		
-		return $results;
+		$container = new ResultSet\DependencyContainer( array( 'result' => $mltResult, 'config' => $searchConfig ) );
+		return $this->resultSetFactory->get( $container );
 	}
 
 	/**

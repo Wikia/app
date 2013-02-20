@@ -14,15 +14,12 @@ class GroupingSet extends Grouping
 {
 	/**
 	 * Constructor.
-	 * @param Solarium_Result_Select $result
-	 * @param WikiaSearchConfig $searchConfig
-	 * @param GroupingSet $parent
-	 * @param int $metaposition
+	 * @param DependencyContainer $container
 	 */
-	public function __construct( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig ) {
-		$this->searchResultObject = $result;
-		$this->searchConfig       = $searchConfig;
-		$this->interface          = MediaWikiInterface::getInstance();
+	public function __construct( DependencyContainer $container ) {
+		$this->searchResultObject = $container->getResult();
+		$this->searchConfig       = $container->getConfig();
+		$this->interface          = $container->getInterface();
 		$this->resultsFound = $this->getHostGrouping()->getMatches();
 		$this->prependWikiMatchIfExists()
 		     ->setResultGroupings()

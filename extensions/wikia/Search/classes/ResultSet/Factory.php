@@ -3,8 +3,7 @@
  * Class definition for \Wikia\Search\ResultSet\Factory
  */
 namespace Wikia\Search\ResultSet;
-use \Solarium_Result_Select;
-use \WikiaSearchConfig;
+use \Solarium_Result_Select, \Solarium_Result_Select_Empty, \WikiaSearchConfig;
 
 /**
  * A singleton instance for instantiating search result sets.
@@ -32,18 +31,28 @@ class Factory
 	}
 	
 	/**
-	 * Allows us to instantiate a service anywhere in the app by name only importing a single class
-	 * @param string $terminalClassName
-	 * @param array $pageIds
+	 * Inspects a dependency container and selects the appropriate result set based on what is set.
+	 * @param DependencyContainer $container
+	 * @todo return type hinting for DependencyContainer to constructor when we have a better solution than WikiaMockProxy for testing. (or a dependencycontainerfactory, yuck)
 	 * @throws \Exception
 	 * @return \Wikia\Search\IndexService\AbstractService
 	 */
-	public function get( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig, $parent = null, $metaposition = null ) {
-		if ( $parent === null && $searchConfig->getGroupResults() ) {
-			return new GroupingSet( $result, $searchConfig );
-		} else if ( $parent !== null && $metaposition !== null ) {
-			return new Grouping( $result, $searchConfig, $parent, $metaposition );
+	public function get( $container ) {
+		$parent = $container->getParent();
+		$searchConfig = $container->getConfig();
+		$metaposition = $container->getMetaposition();
+		$result = $container->getResult();
+		
+		if ( $searchConfig === null ) {
+			throw new \Exception( 'An instance of WikiaSearchConfig must be set in the dependency container at a mininum in order to instantiate a result set.' );
 		}
-		return new Base( $result, $searchConfig );
+		if ( $parent === null && $searchConfig->getGroupResults() ) {
+			return new GroupingSet( $container );
+		} else if ( $parent !== null && $metaposition !== null ) {
+			return new Grouping( $container );
+		} else if ( $result === null || $result instanceof Solarium_Result_Select_Empty ) {
+			return new EmptySet( $container );
+		}
+		return new Base( $container );
 	}
 }
