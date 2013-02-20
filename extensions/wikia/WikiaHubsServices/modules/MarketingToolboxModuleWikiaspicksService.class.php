@@ -65,10 +65,6 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 
 		return $fields;
 	}
-
-	public function getStructuredData($data) {
-		return $data;
-	}
 	
 	public function renderEditor($data) {
 		$model = new MarketingToolboxModel();
@@ -86,18 +82,6 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 		return parent::renderEditor($data);
 	}
 	
-	public function render($data) {
-		//mocked data TODO: remove it once FB#98045 is done
-		$data = array(
-			'headline' => "Wikia's Picks",
-			'imageUrl' => 'http://images.nandy.wikia-dev.com/central/images/1/16/252_85x15.jpg',
-			'imageAlt' => '252 85x15.jpg',
-			'text' => 'Test: <a href="http://www.wikia.com" target="_blank">Wikia!</a>. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-		);
-		
-		return parent::render($data);
-	}
-	
 	public function filterData($data) {
 		if( !empty($data['text']) ) {
 			$model = new MarketingToolboxModel();
@@ -109,22 +93,24 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 
 	public function getStructuredData($data) {
 		$structuredData = array();
-
+		
 		if (!empty($data['sponsoredImage'])) {
 			$sponsoredImageInfo = $this->getImageInfo($data['sponsoredImage']);
 		}
+		
 		$structuredData['sponsoredImageUrl'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->url : null;
 		$structuredData['sponsoredImageAlt'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->title : null;
 
 		if (!empty($data['fileName'])) {
 			$imageInfo = $this->getImageInfo($data['fileName']);
 		}
+		
 		$structuredData['imageUrl'] = (isset($imageInfo)) ? $imageInfo->url : null;
 		$structuredData['imageAlt'] = (isset($imageInfo)) ? $imageInfo->title : null;
-
+		
 		$structuredData['title'] = $data['moduleTitle'];
 		$structuredData['text'] = $data['text'];
-
+		
 		return $structuredData;
 	}
 }
