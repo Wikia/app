@@ -87,9 +87,9 @@ class Base implements Iterator, ArrayAccess
 	 * @param  array $results list of WikiaResult or WikiaResultSet (for result grouping) objects
 	 * @return Base provides fluent interface
 	 */
-	public function setResults(Array $results) {
-		foreach($results as $result) {
-			$this->addResult($result);
+	public function setResults( array $results ) {
+		foreach( $results as $result ) {
+			$this->addResult( $result );
 		}
 		return $this;
 	}
@@ -99,7 +99,7 @@ class Base implements Iterator, ArrayAccess
 	 * @param int $value
 	 * @return Base provides fluent interface
 	 */
-	public function setResultsFound($value) {
+	public function setResultsFound( $value ) {
 		$this->resultsFound = $value;
 		return $this;
 	}
