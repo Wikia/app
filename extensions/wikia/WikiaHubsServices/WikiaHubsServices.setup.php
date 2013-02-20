@@ -30,4 +30,3 @@ $app->registerClass('MarketingToolboxModuleFeaturedvideoService', $dir . 'module
 $app->registerClass('MarketingToolboxModuleFromthecommunityService', $dir . 'modules/MarketingToolboxModuleFromthecommunityService.class.php');
 $app->registerClass('MarketingToolboxModulePollsService', $dir . 'modules/MarketingToolboxModulePollsService.class.php');
 
-include_once($dir . '../RelatedVideos/RelatedVideos.setup.php'); //TODO: remove after discussing it with Video Team
