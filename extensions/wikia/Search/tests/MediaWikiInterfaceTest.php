@@ -1295,7 +1295,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 		$this->assertFalse(
 				true,
 				'Do tests for getFirstRevisionTimestampForPageId, lastforpageid, getformattedtimestamp, 
-				getArticleMatch, getNonCanonicalTitleString, getmediawikiformattedtimestamp, getGlobalForWiki'
+				getArticleMatch, getNonCanonicalTitleString, getmediawikiformattedtimestamp, getGlobalForWiki, getnoncanonicalurlfrompageid'
 		);
 	} 
 }
