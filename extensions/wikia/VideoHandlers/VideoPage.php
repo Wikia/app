@@ -12,6 +12,28 @@ class WikiaVideoPage extends ImagePage {
 	
 	protected static $videoWidth = 660;
 
+	/**
+	 * TOC override so Video Page does not return any TOC
+	 *
+	 * @param $metadata Boolean - doesn't matter
+	 * @return String - will return empty string to add
+	 */
+	protected function showTOC( $metadata ) {
+		return '';
+	}
+	
+	/**
+	 * imageListing override.
+	 * for VideoPage, imageListing will be printed under additionalDetails()
+	 */
+	protected function imageListing() {
+		// do nothing on purpose
+	}
+	
+	protected function additionalDetails() {
+		/* hyun remark 2013-02-19 - add video usage list, global usage, and related pages here */
+	}
+
 	function openShowImage(){
 		global $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath;
 		wfProfileIn( __METHOD__ );
@@ -33,6 +55,9 @@ class WikiaVideoPage extends ImagePage {
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/VideoPage.js\"></script>\n" );
 
 		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>' );
+		
+		/* hyun remark 2013-02-19 - add video caption here */
+		
 		wfProfileOut( __METHOD__ );
 	}
 	
