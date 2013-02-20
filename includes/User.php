@@ -2545,6 +2545,17 @@ class User {
 	 */
 	public function getEditCount() {
 		if( $this->getId() ) {
+
+			/**
+			 * Wikia change
+			 * Get edit count localized per wiki
+			 * @since Feb 2013
+			 * @author Kamil Koterba
+			 */
+			$wikiService = F::build( 'WikiService' ); /* @var $wikiService WikiService */
+			return $wikiService->getUserEdits( $this->mId );
+			/* end of change */
+
 			if ( !isset( $this->mEditCount ) ) {
 				/* Populate the count, if it has not been populated yet */
 				$this->mEditCount = User::edits( $this->mId );
