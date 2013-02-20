@@ -33,14 +33,6 @@ $app->registerSpecialPage( 'PhalanxStats', 'PhalanxStatsSpecialController', 'wik
 $wgAvailableRights[] = 'phalanx';
 $wgAvailableRights[] = 'phalanxemailblock';
 
-/**
- * messages for Special:Phalanx UI
- */
-F::build('JSMessages')->registerPackage('PhalanxSpecial', array(
-	'phalanx-validate-regexp-valid',
-	'phalanx-validate-regexp-invalid'
-));
-
 // Resources Loader module
 $wgResourceModules['ext.wikia.Phalanx'] = array(
 	'scripts' => array(
@@ -54,6 +46,10 @@ $wgResourceModules['ext.wikia.Phalanx'] = array(
 		'wikia.log',
 		'wikia.deferred',
 		'wikia.nirvana'
+	),
+	'messages' => array(
+		'phalanx-validate-regexp-valid',
+		'phalanx-validate-regexp-invalid'
 	),
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/PhalanxII'

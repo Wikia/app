@@ -1,4 +1,4 @@
-require(['jquery', 'mw', 'JSMessages', 'phalanx'], function($, mw, msg, phalanx) {
+require(['jquery', 'mw', 'phalanx'], function($, mw, phalanx) {
 	// edit token is required by Phalanx API
 	phalanx.init(mw.config.get('wgPhalanxToken'));
 
@@ -53,7 +53,7 @@ require(['jquery', 'mw', 'JSMessages', 'phalanx'], function($, mw, msg, phalanx)
 			phalanx.validate(regex).
 				done(function(isValid) {
 					msgNode.
-						text(isValid ? msg('phalanx-validate-regexp-valid') : msg('phalanx-validate-regexp-invalid')).
+						text(isValid ? mw.msg('phalanx-validate-regexp-valid') : mw.msg('phalanx-validate-regexp-invalid')).
 						slideDown();
 
 					buttonNode.attr('disabled', false);
