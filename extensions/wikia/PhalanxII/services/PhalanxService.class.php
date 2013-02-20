@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @method setLimit
+ */
 class PhalanxService extends Service {
 	/* limit of blocks */
 	private $limit = 1;
@@ -122,7 +125,7 @@ class PhalanxService extends Service {
 		/**
 		 * for any other we're sending POST
 		 */
-		else {			
+		else {
 			if (($action == "match" || $action == "check") && !is_null( $this->user ) ) {
 				$parameters[ 'wiki' ] = F::app()->wg->CityId;
 				$parameters[ 'user' ][] = $this->user->getName();
@@ -130,7 +133,7 @@ class PhalanxService extends Service {
 			if ($action == "match" && $this->limit != 1) {
 				$parameters['limit'] = $this->limit;
 			}
-			
+
 			$postData = array();
 			if ( !empty( $parameters ) ) {
 				foreach ( $parameters as $key => $values ) {
@@ -143,7 +146,7 @@ class PhalanxService extends Service {
 					}
 				}
 			}
-			
+
 			$options["postData"] = implode( "&", $postData );
 			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
 			$response = Http::post( $url, $options);
