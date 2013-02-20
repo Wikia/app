@@ -1061,6 +1061,9 @@ $wgEnableQuickToolsExt = true;
  * Use phalanx external service
  */
 $wgPhalanxService = true;
+$wgPhalanxServiceUrl = "http://phalanx";
+$wgPhalanxServiceOptions = [];
+
 
 /**
  * @name $wgWikiaHubsFileRepoDBName

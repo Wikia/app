@@ -182,3 +182,9 @@ $recaptcha_private_key = '6LehHs0SAAAAABYaeCiC0ockp0NsY-H7wEiPZk7i';
 $wgConf->localVHosts = array(
 	'wikia-dev.com'
 );
+
+#
+# phalanx as service section
+#
+$wgPhalanxServiceUrl = "http://phalanx-dev";
+$wgPhalanxServiceOptions = [];

@@ -107,14 +107,10 @@ class PhalanxService extends Service {
 	private function sendToPhalanxDaemon( $action, $parameters ) {
 		wfProfileIn( __METHOD__  );
 
-		if (empty(F::app()->wg->PhalanxServiceUrl)) {
-			$wgPhalanxServiceUrl = "http://phalanx";
-			$options = array();
-		}	else {
-			$wgPhalanxServiceUrl = F::app()->wg->PhalanxServiceUrl;
-			$options = array('noProxy' => true);
-		}
-		$url = sprintf( "%s/%s", $wgPhalanxServiceUrl, $action != "status" ? $action : "" );
+		$baseurl = $this->wg->PhalanxServiceUrl;
+		$options = $this->wg->PhalanxServiceOptions;
+
+		$url = sprintf( "%s/%s", $baseurl, $action != "status" ? $action : "" );
 		/**
 		 * for status we're sending GET
 		 */
