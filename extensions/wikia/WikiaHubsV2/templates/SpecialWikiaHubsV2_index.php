@@ -10,7 +10,7 @@
 				<?= $app->renderView('SpecialWikiaHubsV2', 'slider', $app->wg->request->getValues()); ?>
 			</section>
 			<section class="grid-3 alpha wikiahubs-newstabs wikiahubs-module">
-				<?= $app->renderView('SpecialWikiaHubsV2', 'tabber', $app->wg->request->getValues()); ?>
+				<?= $modules[MarketingToolboxModuleWikiaspicksService::MODULE_ID] ?>
 			</section>
 		</div>
 		<section class="grid-3 wikiahubs-rail wikiahubs-pulse wikiahubs-module" >
