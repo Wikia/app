@@ -1,9 +1,13 @@
 <?php
 
 class PhalanxSpecialController extends WikiaSpecialPageController {
-	private $title = null;
-	private $errorMsg = '';
-	private $service = null;
+
+	const RESULT_BLOCK_ADDED = 1;
+	const RESULT_BLOCK_UPDATED = 2;
+	const RESULT_ERROR = 3;
+
+	private $title;
+	private $service;
 
 	public function __construct() {
 		parent::__construct('Phalanx', 'phalanx' /* restrictions */);
@@ -57,16 +61,16 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$res = $this->handleBlockPost();
 
 			// add a message that will be shown after the redirect
-			if ($res !== false) {
+			if ($res === self::RESULT_ERROR) {
 				NotificationsController::addConfirmation(
-					wfMsg('phalanx-block-success'),
-					NotificationsController::CONFIRMATION_NOTIFY
+					wfMsg('phalanx-block-failure'),
+					NotificationsController::CONFIRMATION_ERROR
 				);
 			}
 			else {
 				NotificationsController::addConfirmation(
-					wfMsg('phalanx-block-failure'),
-					NotificationsController::CONFIRMATION_ERROR
+					wfMsg( $res === self::RESULT_BLOCK_ADDED ?  'phalanx-block-success' :  'phalanx-modify-success'),
+					NotificationsController::CONFIRMATION_NOTIFY
 				);
 			}
 
@@ -169,6 +173,8 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$id = $this->wg->Request->getInt( 'id', 0 );
 		$multitext = $this->wg->Request->getText( 'wpPhalanxFilterBulk' );
 
+		$isBlockUpdate = ($id !== 0);
+
 		/* init Phalanx helper class */
 		$phalanx = Phalanx::newFromId($id);
 
@@ -248,7 +254,12 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		$this->wf->profileOut( __METHOD__ );
 
-		return $result;
+		if ($result === false) {
+			return self::RESULT_ERROR;
+		}
+		else {
+			return $isBlockUpdate ? self::RESULT_BLOCK_UPDATED : self::RESULT_BLOCK_ADDED;
+		}
 	}
 
 	/**
