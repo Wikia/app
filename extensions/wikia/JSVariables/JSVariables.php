@@ -8,9 +8,10 @@ $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
 
 /**
  * @param array $vars JS variables to be added at the top of the page
+ * @param array $scripts JS scripts to add to the top of the page
  * @return bool return true - it's a hook
  */
-function wfJSVariablesTopScripts(Array &$vars) {
+function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	$wg = F::app()->wg;
 
 	$title = $wg->Title;
@@ -50,6 +51,14 @@ function wfJSVariablesTopScripts(Array &$vars) {
 	// missing in 1.19
 	$skin = RequestContext::getMain()->getSkin();
 	$vars['skin'] = $skin->getSkinName();
+
+	// analytics/wikiatracker
+	$vars['_gaq'] = array();
+	$vars['_wtq'] = array();
+
+	$vars['wgIsGASpecialWiki'] = $wg->IsGASpecialWiki;
+
+	$scripts .= Html::inlineScript("var wgNow = new Date();") .	"\n";
 
 	return true;
 }
