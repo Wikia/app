@@ -43,7 +43,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		// load resource loader module
 		$this->wg->Out->addModules('ext.wikia.Phalanx');
 		$this->wg->Out->addJsConfigVars('wgPhalanxToken', $this->getToken());
-		F::build('JSMessages')->enqueuePackage('PhalanxSpecial', JSMessages::INLINE);
 
 		$this->forward('PhalanxSpecial', $currentTab);
 
@@ -101,6 +100,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'editMode',  $editMode);
 		$this->setVal( 'action', $this->title->getLocalURL() );
 		$this->setVal( 'showEmail', $this->wg->User->isAllowed( 'phalanxemailblock' ) );
+		$this->setVal( 'typeFilter', $pager->getSearchFilter() );
 
 		$this->wf->profileOut( __METHOD__ );
 	}

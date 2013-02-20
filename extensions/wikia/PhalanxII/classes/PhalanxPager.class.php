@@ -14,11 +14,24 @@ class PhalanxPager extends ReverseChronologicalPager {
 		$this->mSearchFilter = $this->app->wg->Request->getArray( 'wpPhalanxTypeFilter' );
 		$this->mSearchId = $this->app->wg->Request->getInt( 'id' );
 
+		// handle "type" parameter from URLs comming from hook messages
+		$type = $this->app->wg->Request->getInt('type');
+		if ($type > 0) {
+			$this->mSearchFilter = array($type => true);
+		}
+
 		$this->mTitle = F::build( 'Title', array( 'Phalanx/stats', NS_SPECIAL ), 'newFromText' );
 		$this->mSkin = RequestContext::getMain()->getSkin();
 
 		$this->phalanxPage = SpecialPage::getTitleFor('Phalanx');
 		$this->phalanxStatsPage = SpecialPage::getTitleFor('PhalanxStats');
+	}
+
+	/**
+	 * @return Array
+	 */
+	function getSearchFilter() {
+		return $this->mSearchFilter;
 	}
 
 	function getQueryInfo() {
