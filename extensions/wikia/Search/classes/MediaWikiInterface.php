@@ -477,6 +477,24 @@ class MediaWikiInterface
 	}
 	
 	/**
+	 * Provided a prepped domain string, (e.g. 'runescape'), return a wiki match.
+	 * @param string $domain
+	 * @return \WikiaSearchWikiMatch|NULL
+	 */
+	public function getWikiMatchByHost( $domain ) {
+		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
+		$query = $dbr->select(
+				array( 'city_domains' ),
+				array( 'city_id' ),
+				array( 'city_domain' => "{$domain}.wikia.com" )
+				);
+		if ( $row = $dbr->fetchObject( $query ) ) {
+			return new \WikiaSearchWikiMatch( $row->city_id );
+		}
+		return null;
+	}
+	
+	/**
 	 * Returns the appropriately formatted timestamp for the most recent revision of a given page.
 	 * @param int $pageId
 	 * @return string

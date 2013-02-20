@@ -756,13 +756,13 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		
 		$mockArticleMatch = $this->getMockBuilder( 'WikiaSearchArticleMatch' )
 		                         ->disableOriginalConstructor()
-		                         ->setMethods( array( 'getArticle' ) )
+		                         ->setMethods( array( 'getResult' ) )
 		                         ->getMock();
 		
-		$mockArticle = $this->getMockBuilder( 'Article' )
-		                    ->setMethods( array( 'getID' ) )
-		                    ->disableOriginalConstructor()
-		                    ->getMock();
+		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'getVar' ) )
+		                   ->getMock();
 		
 		$mockSearchConfig = $this->getMock( 'WikiaSearchConfig', array( 'hasArticleMatch', 'getArticleMatch', 'setFilterQuery', 'getCityId', 'getFilterQueries' ) );
 		
@@ -770,9 +770,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$registerFilterQueries->setAccessible( true );
 		
 		$filterQueryString = 'filterquery';
-		$articleId = '321';
-		$cityId = '123';
-		$noPtt = WikiaSearch::valueForField( 'id', sprintf( '%s_%s', $cityId, $articleId ), array( 'negate' => true ) ) ;
+		$id = '123_321';
+		$noPtt = WikiaSearch::valueForField( 'id', $id, array( 'negate' => true ) ) ;
 		$filterQueries = array( 'fq1' => $filterQueryString, 'ptt' => $noPtt );
 		
 		$mockSearch
@@ -798,21 +797,17 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		;
 		$mockArticleMatch
 		    ->expects( $this->once() )
-		    ->method ( 'getArticle' )
-		    ->will   ( $this->returnValue( $mockArticle ) )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( $mockResult ) )
 		;
-		$mockArticle
+		$mockResult
 		    ->expects( $this->once() )
-		    ->method ( 'getID' )
-		    ->will   ( $this->returnValue( $articleId ) )
+		    ->method ( 'getVar' )
+		    ->with   ( 'id' )
+		    ->will   ( $this->returnValue( $id ) )
 		;
 		$mockSearchConfig
-		    ->expects( $this->at( 3 ) )
-		    ->method ( 'getCityId' )
-		    ->will   ( $this->returnValue( $cityId ) )
-		;
-		$mockSearchConfig
-		    ->expects( $this->at( 4 )  )
+		    ->expects( $this->at( 3 )  )
 		    ->method ( 'setFilterQuery' )
 		    ->will   ( $this->returnValue( $noPtt, 'ptt' ) )
 		;
@@ -1183,7 +1178,16 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$mockMltResult		=	$this->getMock( 'Solarium_Result_MoreLikeThis', array(), array( $mockClient, $mockMoreLikeThis, $mockResponse ) );
 		$wikiaSearch		=	F::build( 'WikiaSearch', array( $mockClient ) );
 		$searchConfig		=	F::build( 'WikiaSearchConfig' );
-		$mockResultSet		=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+		$mockResultSetFactory = $this->getMockBuilder( 'Wikia\Search\ResultSet\Factory' )
+		                             ->disableOriginalConstructor()
+		                             ->setMethods( array( 'get' ) )
+		                             ->disableOriginalConstructor()
+		                             ->getMock();
+		$mockContainer        = $this->getMockBuilder( 'Wikia\Search\ResultSet\DependencyContainer' )
+		                             ->disableOriginalConstructor()
+		                             ->setMethods( array() )
+		                             ->getMock();
+		$mockResultSet		=	$this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 									->disableOriginalConstructor()
 									->getMock();
 		$method				=	new ReflectionMethod( 'WikiaSearch', 'moreLikeThis' );
@@ -1191,7 +1195,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$method->setAccessible( true );
 
 		$searchConfig->setMltFields( array( 'title', 'html' ) );
-
+		
 		$e = null;
 		try {
 			$method->invoke( $wikiaSearch, $searchConfig );
@@ -1212,13 +1216,24 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				->will		( $this->returnValue( $mockMoreLikeThis ) )
 			;
 		}
+		
+		$mockResultSetFactory
+		    ->expects( $this->once() )
+		    ->method ( 'get' )
+		    ->with   ( $mockContainer )
+		    ->will   ( $this->returnValue( $mockResultSet ) )
+		;
+		
+		$factory = new ReflectionProperty( 'WikiaSearch', 'resultSetFactory' );
+		$factory->setAccessible( true );
+		$factory->setValue( $wikiaSearch, $mockResultSetFactory );
 
 		$this->mockClass( 'Solarium_Query_MoreLikeThis',		$mockMoreLikeThis);
-		$this->mockClass( 'WikiaSearchResultSet',				$mockResultSet );
 		$this->mockClass( 'Solarium_Client_Response',			$mockResponse );
 		$this->mockClass( 'Solarium_Result_MoreLikeThis',		$mockMltResult );
+		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer',    $mockContainer );
 		$this->mockApp();
-		F::setInstance( 'WikiaSearchResultSet', $mockResultSet );
+		F::setInstance( 'Wikia\Search\ResultSet\Base', $mockResultSet );
 		F::setInstance( 'Solarium_Client', $mockClient );
 		F::addClassConstructor( 'WikiaSearch', array( 'client' => $mockClient ) );
 		$wikiaSearch = F::build( 'WikiaSearch' );
@@ -1231,9 +1246,9 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		;
 
 		$this->assertInstanceOf(
-				'WikiaSearchResultSet',
+				'Wikia\Search\ResultSet\Base',
 				$method->invoke( $wikiaSearch, $searchConfig ),
-				'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet'
+				'WikiaSearch::moreLikeThis should return an instance of Wikia\Search\ResultSet\Base'
 		);
 
 		$searchConfig
@@ -1243,9 +1258,9 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		;
 
 		$this->assertInstanceOf(
-		        'WikiaSearchResultSet',
+		        'Wikia\Search\ResultSet\Base',
 		        $method->invoke( $wikiaSearch, $searchConfig ),
-		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
+		        'WikiaSearch::moreLikeThis should return an instance of Wikia\Search\ResultSet\Base, even if the client throws an exception.'
 		);
 
 		$searchConfig
@@ -1256,9 +1271,9 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$searchConfig['query'] = false;
 
 		$this->assertInstanceOf(
-		        'WikiaSearchResultSet',
+		        'Wikia\Search\ResultSet\Base',
 		        $method->invoke( $wikiaSearch, $searchConfig ),
-		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
+		        'WikiaSearch::moreLikeThis should return an instance of Wikia\Search\ResultSet\Base, even if the client throws an exception.'
 		);
 
 		$searchConfig->setFilterQueries( array() );
@@ -1283,9 +1298,9 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$this->mockApp();
 
 		$this->assertInstanceOf(
-		        'WikiaSearchResultSet',
+		        'Wikia\Search\ResultSet\Base',
 		        $method->invoke( $wikiaSearch, $searchConfig ),
-		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
+		        'WikiaSearch::moreLikeThis should return an instance of Wikia\Search\ResultSet\Base, even if the client throws an exception.'
 		);
 	}
 
@@ -1512,7 +1527,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 								->setMethods( array( 'moreLikeThis' ) )
 								->getMock();
 
-		$mockResults	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+		$mockResults	=	$this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 								->disableOriginalConstructor()
 								->getMock();
 
@@ -1573,7 +1588,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 								->setMethods( array( 'moreLikeThis' ) )
 								->getMock();
 
-		$mockResults	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+		$mockResults	=	$this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 								->disableOriginalConstructor()
 								->getMock();
 
@@ -1747,7 +1762,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 								->setMethods( array( 'moreLikeThis' ) )
 								->getMock();
 
-		$mockResultSet	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+		$mockResultSet	=	$this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getInterestingTerms' ) )
 								->getMock();
@@ -1796,7 +1811,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	 */
 	public function testDoSearch() {
 		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'getResults' ) );
-		$mockResultSet	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+		$mockResultSet	=	$this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 								->disableOriginalConstructor()
 								->getMock();
 		
@@ -1833,7 +1848,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$mockResultSet,
 				$mockSearch->doSearch( $mockConfig ),
-				'WikiaSearch::doSearch should always return an instance of WikiaSearchResultSet'
+				'WikiaSearch::doSearch should always return an instance of Wikia\Search\ResultSet\Base'
 		);
 	}
 	
@@ -1927,7 +1942,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 							->setMethods( array( 'setresults', 'setResultsFound', 'getPage' ) )
 							->getMock();
 		
-		$mockResults = $this->getMockBuilder( 'WikiaSearchResultSet' )
+		$mockResults = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 							->disableOriginalConstructor()
 							->setMethods( array( 'getResultsFound' ) )
 							->getMock();
@@ -1940,8 +1955,24 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 							->disableOriginalConstructor()
 							->getMock();
 		
+		$mockResultSetFactory = $this->getMockBuilder( '\Wikia\Search\ResultSet\Factory' )
+		                             ->disableOriginalConstructor()
+		                             ->setMethods( array( 'get' ) )
+		                             ->getMock();
+		
+		$mockContainer = $this->getMockBuilder( '\Wikia\Search\ResultSet\DependencyContainer' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array() )
+		                      ->getMock();
+		
 		$found = 100;
 		
+		$mockResultSetFactory
+		    ->expects   ( $this->at( 0 ) )
+		    ->method    ( 'get' )
+		    ->with      ( $mockContainer )
+		    ->will      ( $this->returnValue( $mockResults ) )
+		;
 		$mockResults
 			->expects	( $this->at( 0 ) )
 			->method	( 'getResultsFound' )
@@ -1964,13 +1995,17 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->method	( 'getPage' )
 			->will		( $this->returnValue( 2 ) )
 		;
-		
-		$this->mockClass( 'WikiaSearchResultSet', $mockResults );
+		$this->mockClass( 'Wikia\Search\ResultSet\Base', $mockResults );
+		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockContainer );
 		$this->mockApp();
 		
 		$wg = new ReflectionProperty( 'WikiaSearch', 'wg' );
 		$wg->setAccessible( true );
 		$wg->setValue( $mockSearch, (object) array( 'WikiaSearchSpellcheckActivated' => false ) );
+		
+		$factory = new ReflectionProperty( 'WikiaSearch', 'resultSetFactory' );
+		$factory->setAccessible( true );
+		$factory->setValue( $mockSearch, $mockResultSetFactory );
 		
 		$postSearch = new ReflectionMethod( 'WikiaSearch', 'postSearch' );
 		$postSearch->setAccessible( true );
@@ -1985,7 +2020,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 							->setMethods( array( 'setresults', 'setResultsFound', 'hasArticleMatch', 'setQuery', 'getPage' ) )
 							->getMock();
 		
-		$mockResults = $this->getMockBuilder( 'WikiaSearchResultSet' )
+		$mockResults = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 							->disableOriginalConstructor()
 							->setMethods( array( 'getResultsFound' ) )
 							->getMock();
@@ -2010,8 +2045,25 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 							->setMethods( array( 'getNumFound', 'getSpellcheck' ) )
 							->getMock();
 		
+		$mockResultSetFactory = $this->getMockBuilder( '\Wikia\Search\ResultSet\Factory' )
+		                             ->disableOriginalConstructor()
+		                             ->setMethods( array( 'get' ) )
+		                             ->getMock();
+		
+		$mockContainer = $this->getMockBuilder( '\Wikia\Search\ResultSet\DependencyContainer' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array() )
+		                      ->getMock();
+		
 		$found = 0;
 		
+		
+		$mockResultSetFactory
+		    ->expects   ( $this->at( 0 ) )
+		    ->method    ( 'get' )
+		    ->with      ( $mockContainer )
+		    ->will      ( $this->returnValue( $mockResults ) )
+		;
 		$mockResult
 			->expects	( $this->at( 0 ) )
 			->method	( 'getNumFound' )
@@ -2070,12 +2122,17 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( 2 ) )
 		;
 		
-		$this->mockClass( 'WikiaSearchResultSet', $mockResults );
+		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockContainer );
+		$this->mockClass( 'Wikia\Search\ResultSet\Base', $mockResults );
 		$this->mockApp();
 		
 		$wg = new ReflectionProperty( 'WikiaSearch', 'wg' );
 		$wg->setAccessible( true );
 		$wg->setValue( $mockSearch, (object) array( 'WikiaSearchSpellcheckActivated' => true ) );
+		
+		$factory = new ReflectionProperty( 'WikiaSearch', 'resultSetFactory' );
+		$factory->setAccessible( true );
+		$factory->setValue( $mockSearch, $mockResultSetFactory );
 		
 		$postSearch = new ReflectionMethod( 'WikiaSearch', 'postSearch' );
 		$postSearch->setAccessible( true );
@@ -2094,7 +2151,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 							->disableOriginalConstructor()
 							->getMock();
 		
-		$mockResults = $this->getMockBuilder( 'WikiaSearchResultSet' )
+		$mockResults = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 							->disableOriginalConstructor()
 							->setMethods( array( 'getResultsFound' ) )
 							->getMock();
@@ -2108,8 +2165,24 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 						->setMethods( array( 'event' ) )
 						->getMock();
 		
+		$mockResultSetFactory = $this->getMockBuilder( '\Wikia\Search\ResultSet\Factory' )
+		                             ->disableOriginalConstructor()
+		                             ->setMethods( array( 'get' ) )
+		                             ->getMock();
+		
+		$mockContainer = $this->getMockBuilder( '\Wikia\Search\ResultSet\DependencyContainer' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array() )
+		                      ->getMock();
+		
 		$found = 100;
 
+		$mockResultSetFactory
+		    ->expects   ( $this->at( 0 ) )
+		    ->method    ( 'get' )
+		    ->with      ( $mockContainer )
+		    ->will      ( $this->returnValue( $mockResults ) )
+		;
 		$mockResults
 			->expects	( $this->at( 0 ) )
 			->method	( 'getResultsFound' )
@@ -2148,13 +2221,18 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->with			( 'search_start', array( 'sterm' => 'foo', 'rver' => WikiaSearch::RELEVANCY_FUNCTION_ID, 'stype' => 'intra' ) )
 		;
 		
+		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockContainer );
 		$this->mockClass( 'Track', $mockTrack );
-		$this->mockClass( 'WikiaSearchResultSet', $mockResults );
+		$this->mockClass( 'Wikia\Search\ResultSet\Base', $mockResults );
 		$this->mockApp();
 		
 		$wg = new ReflectionProperty( 'WikiaSearch', 'wg' );
 		$wg->setAccessible( true );
 		$wg->setValue( $mockSearch, (object) array( 'WikiaSearchSpellcheckActivated' => false ) );
+		
+		$factory = new ReflectionProperty( 'WikiaSearch', 'resultSetFactory' );
+		$factory->setAccessible( true );
+		$factory->setValue( $mockSearch, $mockResultSetFactory );
 		
 		$postSearch = new ReflectionMethod( 'WikiaSearch', 'postSearch' );
 		$postSearch->setAccessible( true );
@@ -2175,7 +2253,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 								->setMethods( array( 'select', 'setAdapter', 'createSelect' ) )
 								->getMock();
 
-		$mockResultSet	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+		$mockResultSet	=	$this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getResultsFound' ) )
 								->getMock();
@@ -2183,6 +2261,16 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$mockSolResult	=	$this->getMockBuilder( 'Solarium_Result' )
 								->disableOriginalConstructor()
 								->getMock();
+		
+		$mockResultSetFactory = $this->getMockBuilder( '\Wikia\Search\ResultSet\Factory' )
+		                             ->disableOriginalConstructor()
+		                             ->setMethods( array( 'get' ) )
+		                             ->getMock();
+		
+		$mockContainer = $this->getMockBuilder( '\Wikia\Search\ResultSet\DependencyContainer' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array() )
+		                      ->getMock();
 
 		$queryMethods	=	array( 'setDocumentClass', 'addFields', 'removeField', 'setStart', 'setRows', 'addSort', 'addParam', 'setQuery' );
 
@@ -2280,6 +2368,12 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->method	( 'select' )
 			->will		( $this->returnValue( $mockSolResult ) )
 		;
+		$mockResultSetFactory
+		    ->expects   ( $this->at( 0 ) )
+		    ->method    ( 'get' )
+		    ->with      ( $mockContainer )
+		    ->will      ( $this->returnValue( $mockResultSet ) )
+		;
 		$mockConfig
 			->expects	( $this->once() )
 			->method	( 'setResults' )
@@ -2297,7 +2391,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->with		( 200 )
 		;
 
-		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
+		$this->mockClass( 'Wikia\Search\ResultSet\Base', $mockResultSet );
+		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockContainer );
 		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockClass( 'Solarium_Client', $mockClient );
 		$this->mockApp();
@@ -2311,13 +2406,17 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$reflectionProperty = new ReflectionProperty( 'WikiaSearch', 'client' );
 		$reflectionProperty->setAccessible( true );
 		$reflectionProperty->setValue( $search, $mockClient );
+		
+		$factory = new ReflectionProperty( 'WikiaSearch', 'resultSetFactory' );
+		$factory->setAccessible( true );
+		$factory->setValue( $search, $mockResultSetFactory );
 
 		$results = $search->searchByLuceneQuery( $mockConfig );
 
 		$this->assertEquals(
 				$mockResultSet,
 				$results,
-				'WikiaSearchConfig::searchByLuceneQuery should return an instance of WikiaSearchResultSet, no matter what'
+				'WikiaSearchConfig::searchByLuceneQuery should return an instance of Wikia\Search\ResultSet\Base, no matter what'
 		);
 	}
 
@@ -2652,7 +2751,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	/**
 	 * @covers WikiaSearch::searchByLuceneQuery
 	 */
-	public function testSearchByLuceneQueryBreaksGracefully() {
+	public function testSearchByLuceneQueryBreaksGracefully() {$this->assertFalse( true );return;
 		$searchConfigMethods = array(
 				'getGroupResults', 'setLength', 'setIsInterWiki', 'getPage', 'setResults', 'getRequestedFields',
 				'setResultsFound', 'getQuery', 'getIsInterWiki', 'getLength', 'setStart', 'getSort', 'getStart'
@@ -2663,7 +2762,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 								->setMethods( array( 'select', 'setAdapter', 'createSelect' ) )
 								->getMock();
 
-		$mockResultSet	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+		$mockResultSet	=	$this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getResultsFound' ) )
 								->getMock();
@@ -2787,7 +2886,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->with		( 200 )
 		;
 
-		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
+		$this->mockClass( 'Wikia\Search\ResultSet\Base', $mockResultSet );
 		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockClass( 'Solarium_Client', $mockClient );
 		$this->mockApp();
@@ -2807,7 +2906,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$mockResultSet,
 				$results,
-				'WikiaSearchConfig::searchByLuceneQuery should return an instance of WikiaSearchResultSet, no matter what'
+				'WikiaSearchConfig::searchByLuceneQuery should return an instance of Wikia\Search\ResultSet\Base, no matter what'
 		);
 	}
 }
