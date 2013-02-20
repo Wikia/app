@@ -104,4 +104,26 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 
 		return $data;
 	}
+
+	public function getStructuredData($data) {
+		$model = new MarketingToolboxSliderModel();
+		$slidesCount =  $model->getSlidesCount();
+		$structuredData = array();
+
+		if( !empty( $data ) ) {
+			for( $i = 1; $i <= $slidesCount; $i++ ) {
+				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['photo'.$i]);
+				$structuredData['slides'][] = array(
+										'photoUrl' => $imageData->url,
+										'shortDesc' => $data['shortDesc'.$i],
+										'longDesc' => $data['longDesc'.$i],
+										'url' => $data['url'.$i],
+										'photoAlt' => $imageData->title
+
+				);
+			}
+		}
+
+		return $structuredData;
+	}
 }
