@@ -115,9 +115,9 @@ class Base implements Iterator, ArrayAccess
 		if( $this->isValidResult( $result ) ) {
 			$id = $result['id'];
 			$highlighting = $this->searchResultObject->getHighlighting();
-			if (        ( $highlighting == null )
-					&&  ( $hlResult      = $highlighting->getResult( $id ) )
-					&&  ( $field         = $hlResult->getField( WikiaSearch::field( 'html' ) ) ) ) {
+			if (        ( $highlighting !== null )
+					&&  ( $hlResult      =  $highlighting->getResult( $id ) )
+					&&  ( $field         =  $hlResult->getField( WikiaSearch::field( 'html' ) ) ) ) {
 				$result->setText( $field[0] );
 			}
 
