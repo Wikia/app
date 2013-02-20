@@ -68,6 +68,12 @@ class MediaWikiInterface
 	 * @var array
 	 */
 	protected $redirectArticles = array();
+	
+	/**
+	 * An array that corresponds wiki IDs to their wiki data sources.
+	 * @var array
+	 */
+	protected $wikiDataSources = array();
 
 	/**
 	 * Given a page ID, get the title string
@@ -251,7 +257,15 @@ class MediaWikiInterface
 	 * @return mixed
 	 */
 	public function getGlobalForWiki( $global, $wikiId ) {
-		return \WikiFactory::getVarValueByName( $global, $wikiId );
+		return unserialize( \WikiFactory::getVarValueByName( $global, $wikiId )->cv_value );
+	}
+	
+	/**
+	 * Determines whether we are using a mobile skin.
+	 * @return bool
+	 */
+	public function isSkinMobile() {
+		return $this->app->wg->User->getSkin() instanceof \SkinWikiaMobile;
 	}
 	
 	/**
@@ -479,19 +493,45 @@ class MediaWikiInterface
 	/**
 	 * Provided a prepped domain string, (e.g. 'runescape'), return a wiki match.
 	 * @param string $domain
-	 * @return \WikiaSearchWikiMatch|NULL
+	 * @return \Wikia\Search\Match\Wiki|NULL
 	 */
 	public function getWikiMatchByHost( $domain ) {
-		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
+		$dbr = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
 		$query = $dbr->select(
 				array( 'city_domains' ),
 				array( 'city_id' ),
 				array( 'city_domain' => "{$domain}.wikia.com" )
 				);
 		if ( $row = $dbr->fetchObject( $query ) ) {
-			return new \WikiaSearchWikiMatch( $row->city_id );
+			return new \Wikia\Search\Match\Wiki( $row->city_id );
 		}
 		return null;
+	}
+	
+
+	/**
+	 * Returns the URL string for a wiki ID
+	 * @param int $wikiId
+	 * @return string
+	 */
+	public function getMainPageUrlForWikiId( $wikiId ) {
+		return $this->getMainPageTitleForWikiId( $wikiId )->getFullUrl();
+	}
+	
+	/**
+	 * Returns text from the main page of a provided wiki.
+	 * @param int $wikiId
+	 * @return string
+	 */
+	public function getMainPageTextForWikiId( $wikiId ) {
+		$params = array(
+				'controller' => 'ArticlesApiController', 
+				'method' => 'getDetails', 
+				'titles' => $this->getMainPageTitle()->getDbKey()
+				);
+		$response = \ApiService::foreignCall( $this->getDbNameForWikiId( $wikiId ), $params, \ApiService::WIKIA );
+		$item = \array_shift( $response['items'] );
+		return $item['abstract'];
 	}
 	
 	/**
@@ -592,5 +632,39 @@ class MediaWikiInterface
 		}
 		wfProfileOut(__METHOD__);
 		return (string) $title;
+	}
+	
+	/**
+	 * Allows us to access an instance of WikiDataSource
+	 * @param int $wikiId
+	 * @return \WikiDataSource
+	 */
+	protected function getDataSourceForWikiId( $wikiId ) {
+		if ( empty( $this->wikiDataSources[$wikiId] ) ) {
+			$this->wikiDataSources[$wikiId] = new \WikiDataSource( $wikiId );
+		}
+		return $this->wikiDataSources[$wikiId];
+	}
+
+	protected function getDbNameForWikiId( $wikiId ) {
+		return $this->getDataSourceForWikiId( $wikiId )->getDbName();
+	}
+	
+	/**
+	 * Returns an instance of GlobalTitle provided a Wiki ID
+	 * @param int $wikiId
+	 * @return GlobalTitle
+	 */
+	protected function getMainPageTitleForWikiId( $wikiId ) {
+		$response = \ApiService::foreignCall(
+			$this->getDbNameForWikiId( $wikiId ), 
+			array(
+					'action'      => 'query',
+					'meta'        => 'allmessages',
+					'ammessages'  => 'mainpage',
+					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
+					) 
+			);
+	    return \GlobalTitle::newFromText( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
 	}
 }
