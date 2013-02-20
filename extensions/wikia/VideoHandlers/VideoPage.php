@@ -30,8 +30,23 @@ class WikiaVideoPage extends ImagePage {
 		// do nothing on purpose
 	}
 	
+	/**
+	 * render file usage, global usage, and related pages
+	 * output directly into wgOut
+	 */
 	protected function additionalDetails() {
+		global $wgOut;
 		/* hyun remark 2013-02-19 - add video usage list, global usage, and related pages here */
+		
+		$app = F::app();
+		
+		$html = '';
+		
+		$html .= $app->renderView( 'VideoPageController', 'fileUsage', array() );
+		$html .= $app->renderView( 'VideoPageController', 'globalUsage', array() );
+		$html .= $app->renderView( 'VideoPageController', 'relatedPages', array() );
+		
+		$wgOut->addHTML( $html );
 	}
 
 	function openShowImage(){
@@ -52,9 +67,16 @@ class WikiaVideoPage extends ImagePage {
 
 		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
 		
+		
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoHandlers/css/VideoPage.scss'));
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/VideoPage.js\"></script>\n" );
 
-		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>' );
+		$html = '';
+		$html .= '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
+		$html .= F::app()->renderView( 'VideoPageController', 'videoCaption', array() );
+		
+		$wgOut->addHTML( $html );
+		
 		
 		/* hyun remark 2013-02-19 - add video caption here */
 		
