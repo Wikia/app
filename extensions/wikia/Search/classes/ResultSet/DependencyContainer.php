@@ -3,13 +3,15 @@
  * Class definition for \Wikia\Search\ResultSet\DependencyContainer
  */
 namespace Wikia\Search\ResultSet;
-use \WikiaSearchConfig, \Solarium_Result_Select, \Wikia\Search\MediaWikiInterface;
+use \WikiaSearchConfig, \Solarium_Result_Select, \Wikia\Search\MediaWikiInterface, \Wikia\Search\Traits;
 /**
  * This allows us to encapsulate all dependencies and send a single object to Wikia\Search\ResultSet\Factory
  * @author relwell
  */
 class DependencyContainer
 {
+	use Traits\ArrayConfigurable;
+	
 	/**
 	 * Search Config
 	 * @var WikiaSearchConfig
@@ -47,21 +49,6 @@ class DependencyContainer
 	public function __construct( array $dependencies = array() ) {
 		$this->setInterface( MediaWikiInterface::getInstance() )
 		     ->configureByArray( $dependencies );
-	}
-	
-	/**
-	 * Convenience method for setting dependencies by array. Called during construction.
-	 * @param array $dependencies
-	 * @return DependencyContainer
-	 */
-	protected function configureByArray( array $dependencies ) {
-		foreach ( $dependencies as $name => $value ) {
-			$method = 'set'.ucfirst( $name);
-			if ( \method_exists( $this, $method ) ) {
-				$this->{$method}( $value );
-			}
-		}
-		return $this;
 	}
 	
 	/**
