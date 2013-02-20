@@ -377,7 +377,6 @@ class WikiaSearch extends WikiaObject {
 	 */
 	public function getArticleMatch( WikiaSearchConfig $config ) {
 	    if ( $config->hasArticleMatch() ) {
-			wfProfileOut(__METHOD__);
 	        return $config->getArticleMatch();
 	    }
 	    $match = \Wikia\Search\MediaWikiInterface::getInstance()->getArticleMatchForTermAndNamespaces( $config->getOriginalQuery(), $config->getNamespaces() );
