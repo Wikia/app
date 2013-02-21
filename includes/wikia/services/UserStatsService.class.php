@@ -1,5 +1,5 @@
 <?php
-class UserStatsService extends Service {
+class UserStatsService extends WikiaService {
 
 	const CACHE_TTL = 86400;
 	const GET_GLOBAL_STATS_CACHE_VER = 'v1.0';
@@ -10,7 +10,8 @@ class UserStatsService extends Service {
 	 * Pass user ID of user you want to get data about
 	 */
 	function __construct($userId) {
-			$this->userId = intval($userId);
+		$this->userId = intval($userId);
+		parent::__construct();
 	}
 
 	/**
@@ -38,6 +39,141 @@ class UserStatsService extends Service {
 
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+
+
+
+	/**
+	 * Get the user's edit count for specified wiki.
+	 * @since Feb 2013
+	 * @author Kamil Koterba
+	 *
+	 * @param $userId Integer Id of user
+	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param $skipCache boolean On true ignores cache
+	 * @return Int Number of edits
+	 */
+	public function getWikiEditCount( $wikiId = 0, $skipCache = true ) {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+
+		/* Get editcount from memcache */
+		$key = wfSharedMemcKey( 'editcount', $wikiId, $this->userId );
+		$editCount = $this->wg->Memc->get($key);
+
+		if ( !empty( $editCount ) && !$skipCache ) {
+			$this->wf->ProfileOut( __METHOD__ );
+			return $editCount;
+		}
+
+		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+
+		/* Get editcount from database */
+		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
+		$field = $dbr->selectField(
+			'wikia_user_properties',
+			'wup_value',
+			array( 'wup_user' => $this->userId,
+				'wup_property' => 'editcount' ),
+			__METHOD__
+		);
+
+		if( $field === null or $field === false ) { // editcount has not been initialized. do so.
+			$dbw = $this->getWikiDB( DB_MASTER, array(), $dbName );
+			$editCount = $dbr->selectField(
+				'revision', 'count(*)',
+				array( 'rev_user' => $this->userId ),
+				__METHOD__
+			);
+
+			$editCount += $dbr->selectField(
+				'archive', 'count(*)',
+				array( 'ar_user' => $this->userId ),
+				__METHOD__
+			);
+
+			$dbw->insert(
+				'wikia_user_properties',
+				array( 'wup_user' => $this->userId,
+					'wup_property' => 'editcount',
+					'wup_value' => $editCount),
+				__METHOD__
+			);
+
+		} else {
+			$editCount = $field;
+		}
+
+		$this->wg->Memc->set( $key,$editCount, 86400 );
+
+		$this->wf->ProfileOut( __METHOD__ );
+		return $editCount;
+	}
+
+
+	/**
+	 * Get the user's global edit count.
+	 * Functionality from getEditCount before Feb 2013
+	 *
+	 * Returns editcount field from user table, which is summary editcount from all wikis
+	 *
+	 * @since Feb 2013
+	 * @author Kamil Koterba
+	 *
+	 * @return Int
+	 */
+	public function getEditCountGlobal( $userId, $wikiId, $skipCache = false ) {
+		wfProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+
+		$key = wfSharedMemcKey( 'editcount-global', $wikiId, $userId );
+		$editCount = $this->wg->Memc->get($key);
+
+		if ( !empty( $editCount ) && !$skipCache ) {
+			$this->wf->ProfileOut( __METHOD__ );
+			return $editCount;
+		}
+
+		$dbr = wfGetDB( DB_SLAVE, $this->wg->ExternalSharedDB );
+		// check if the user_editcount field has been initialized
+		$field = $dbr->selectField(
+			'user', 'user_editcount',
+			array( 'user_id' => $userId ),
+			__METHOD__
+		);
+
+		$dbname = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+
+		if( $field === null ) { // it has not been initialized. do so.
+			$dbw = wfGetDB( DB_MASTER, array(), $dbname );
+			//count revisions
+			$editCount = $dbr->selectField(
+				'revision', 'count(*)',
+				array( 'rev_user' => $userId ),
+				__METHOD__
+			);
+			$editCount += $dbr->selectField(
+				'archive', 'count(*)',
+				array( 'ar_user' => $userId ),
+				__METHOD__
+			);
+			//write to wikicities (acting 'user' will redirect result to wikicites)
+			$dbw->update(
+				'user',
+				array( 'user_editcount' => $editCount ),
+				array( 'user_id' => $userId ),
+				__METHOD__
+			);
+		} else {
+			$editCount = $field;
+		}
+
+		$this->wg->Memc->set( $key,$editCount, 86400 );
+
+		wfProfileOut( __METHOD__ );
+		return $editCount;
 	}
 
 	/**

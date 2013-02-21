@@ -361,7 +361,8 @@ class WikiaHomePageHelper extends WikiaModel {
 				$userInfo = $this->getUserInfo($userId, $wikiId);
 
 				if (!empty($userInfo)) {
-					$userInfo['edits'] = $wikiService->getUserEdits($userId, $wikiId);
+					$userStatService = F::build('UserStatsService', array($userId)); /* @var $userStatService UserStatsService */
+					$userInfo['edits'] = $userStatService->getWikiEditCount($wikiId);
 					if (!empty($adminAvatars[$userInfo['name']])) {
 						$userInfo['edits'] += $adminAvatars[$userInfo['name']]['edits'];
 					}

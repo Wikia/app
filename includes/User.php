@@ -2552,8 +2552,8 @@ class User {
 			 * @since Feb 2013
 			 * @author Kamil Koterba
 			 */
-			$wikiService = F::build( 'WikiService' ); /* @var $wikiService WikiService */
-			return $wikiService->getUserEdits( $this->mId );
+			$userStatsService = F::build( 'UserStatsService', array( $this->mId ) ); /* @var $userStatsService UserStatsService */
+			return $userStatsService->getWikiEditCount();
 			/* end of change */
 
 			if ( !isset( $this->mEditCount ) ) {
