@@ -11,7 +11,6 @@
  */
 class WikiaRequest {
 
-	private $isDispatched = false;
 	private $isInternal = false;
 	protected $params = array();
 
@@ -57,22 +56,6 @@ class WikiaRequest {
 	public function setVal( $key, $value ) {
 		$this->params[$key] = $value;
 	}
-
-	/**
-	 * checks if request was already dispatched
-	 * @return bool
-	 */
-	// public function isDispatched() {
-	// 	return $this->isDispatched;
-	// }
-
-	/**
-	 * set "dispatched" flag
-	 * @param bool $value
-	 */
-	// public function setDispatched($value) {
-	// 	$this->isDispatched = (bool) $value;
-	// }
 
 	/**
 	 * checks if it's internal request
