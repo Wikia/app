@@ -793,7 +793,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	public function testGetHubUrl($expectedUrl, $langCode, $verticalId, $wikiaHubsV2Pages) {
 		$toolBoxModelMock = $this->getMock(
 			'MarketingToolboxModel',
-			array('getVisualizationData')
+			array('getVisualizationData', 'getHubsV2Pages')
 		);
 
 		$toolBoxModelMock
@@ -801,7 +801,12 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->method('getVisualizationData')
 			->will($this->returnValue($this->visualizationData));
 
-		$this->mockGlobalVariable('wgWikiaHubsV2Pages', $wikiaHubsV2Pages);
+
+		$toolBoxModelMock
+			->expects($this->once())
+			->method('getHubsV2Pages')
+			->will($this->returnValue($wikiaHubsV2Pages));
+
 		$this->mockApp();
 
 		$this->assertEquals($expectedUrl, $toolBoxModelMock->getHubUrl($langCode, $verticalId));

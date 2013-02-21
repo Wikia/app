@@ -560,7 +560,7 @@ class MarketingToolboxModel extends WikiaModel {
 			throw new Exception('Corporate Wiki not defined for this lang');
 		}
 
-		$hubPages = F::app()->wg->WikiaHubsV2Pages;
+		$hubPages = $this->getHubsV2Pages($visualizationData[$langCode]['wikiId']);
 
 		if (!isset($hubPages[$verticalId])) {
 			throw new Exception('Hub page not defined for selected vertical');
@@ -575,6 +575,10 @@ class MarketingToolboxModel extends WikiaModel {
 		);
 
 		return $url;
+	}
+
+	protected function getHubsV2Pages($wikiId) {
+		return WikiFactory::getVarValueByName('wgWikiaHubsV2Pages', $wikiId);
 	}
 
 	protected function getVisualizationData() {
