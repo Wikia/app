@@ -210,6 +210,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	protected function prepareLayoutData($selectedModuleId, $modulesData) {
 		$this->prepareHeaderData($modulesData, $this->date);
 		$this->prepareLeftMenuData($modulesData, $selectedModuleId);
+		$this->prepareFooterData($this->langCode, $this->verticalId, $this->date);
 	}
 
 	/**
@@ -241,6 +242,12 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				'anchor' => $moduleData['name'],
 			);
 		}
+	}
+
+	protected  function prepareFooterData($langCode, $verticalId, $timestamp) {
+		$this->footerData = array(
+			'allModulesSaved' => $this->toolboxModel->checkModulesSaved($langCode, $verticalId, $timestamp)
+		);
 	}
 
 	/**
@@ -306,7 +313,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 */
 	public function executeFooter($data) {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss');
-		$this->allModulesSaved = $this->toolboxModel->checkModulesSaved($this->langCode, $this->verticalId, $this->date) ? '' : 'disabled="disabled"' ;
+		$this->allModulesSaved = $data['allModulesSaved'] ? '' : 'disabled="disabled"' ;
 	}
 
 	/**

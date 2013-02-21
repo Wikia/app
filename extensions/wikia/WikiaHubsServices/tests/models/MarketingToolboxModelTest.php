@@ -694,4 +694,45 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals($statuses['NOT_PUBLISHED'], $data['2013-01-08']);
 	}
 
+	/**
+	 * @dataProvider getDataModulesSavedDataProvider
+	 */
+	public function testCheckModulesSaved($savedModules, $expectedVal) {
+		$dbMock = $this->getMock('DatabaseMysql', array( 'select', 'fetchRow'));
+
+		$dbMock->expects($this->any())
+			->method('fetchRow')
+			->will($this->returnValue($savedModules));
+
+		$dbMock->expects($this->once())
+			->method('select')
+			->will($this->returnValue(array()));
+
+		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockApp();
+
+		$model = new MarketingToolboxModel();
+		$returnedVal = $model->checkModulesSaved('en', '2','1360454400');
+
+		$this->assertEquals($expectedVal, $returnedVal);
+	}
+
+	public function getDataModulesSavedDataProvider() {
+		return array(
+			array(
+				'8', false
+			),
+			array(
+				'9', true
+			),
+			array(
+				'3', false
+			),
+			array(
+				'5', false
+			)
+		);
+	}
+
+
 }
