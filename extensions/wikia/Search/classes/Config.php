@@ -3,13 +3,13 @@
  * Class definition for Wikia\Search\Config
  */
 namespace Wikia\Search;
-use Wikia\Search\MediaWikiInterface, \Sanitizer, \Solarium_Query_Select, \WikiaSearch as SearchService, \Wikia\Search\Match;
+use Wikia\Search\MediaWikiInterface, \Sanitizer, \Solarium_Query_Select, \WikiaSearch as SearchService, \Wikia\Search\Match, \ArrayAccess;
 /**
  * A config class intended to handle variable flags for search
  * Intended to be a dependency-injected receptacle for different search requirements
  * @author Robert Elwell
  */
-class WikiaSearchConfig implements \ArrayAccess
+class Config implements ArrayAccess
 {
 	/**
 	 * Default number of results per page. Usually overwritten. 
