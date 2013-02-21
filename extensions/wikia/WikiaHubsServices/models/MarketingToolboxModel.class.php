@@ -359,7 +359,63 @@ class MarketingToolboxModel extends WikiaModel {
 
 		$row = $sdb->fetchRow($result);
 
-		return $row[0]==$this->modulesCount ? true : false;
+		return ($row[0] == $this->modulesCount) ? true : false;
+	}
+
+	/**
+	 * @desc Main method to publish hub page of specific vertical in specific language and on specific day
+	 * 
+	 * @param $langCode
+	 * @param $verticalId
+	 * @param $timestamp
+	 * 
+	 * @return stdClass (properties: boolean $success, boolean $error, string $errorMsg)
+	 */
+	public function publish($langCode, $verticalId, $timestamp) {
+		$results = new stdClass();
+		$results->success = false;
+		$results->error = false;
+		$results->errorMsg = null;
+		
+		if( $this->wf->ReadOnly() ) {
+			$results->error = true;
+			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-read-only');
+			
+			return $results;
+		}
+		
+		if( !$results->error && !$this->checkModulesSaved($langCode, $verticalId, $timestamp) ) {
+			$results->error = true;
+			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-modules-not-saved');
+			
+			return $results;
+		}
+		
+		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$hubDate = date('Y-m-d', $timestamp);
+		
+		$changes = array(
+			'module_status' => $this->statuses['PUBLISHED']
+		);
+		
+		$conditions = array(
+			'lang_code' => $langCode,
+			'vertical_id' => $verticalId,
+			'hub_date' => $hubDate
+		);
+		
+		$dbSuccess = $mdb->update(self::HUBS_TABLE_NAME, $changes, $conditions, __METHOD__);
+		
+		if( $dbSuccess ) {
+			$mdb->commit(__METHOD__);
+			$results->success = true;
+			$results->error = false;
+		} else {
+			$results->error = true;
+			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-db-error');
+		}
+		
+		return $results;
 	}
 
 	/**
