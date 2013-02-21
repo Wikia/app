@@ -12,9 +12,19 @@ class WikiaHubsV2Hooks {
 
 		$app = F::app();
 		$dbKeyName = $title->getDBKey();
-		if( !empty($app->wg->EnableWikiaHomePageExt) && $this->isHubsPage($dbKeyName) ) {
+		$dbKeyNameSplit = explode('/', $dbKeyName);
+
+		$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
+
+		if( !empty($app->wg->EnableWikiaHomePageExt) && $this->isHubsPage($hubName) ) {
+			$hubTimestamp = $this->getTimestampFromSplitDbKey($dbKeyNameSplit);
+
+			// TODO handle if date is wrong
+
+			// TODO ask Matt if anon user can see future hubs
+
 			$app->wg->SuppressPageHeader = true;
-			$article = F::build( 'WikiaHubsV2Article', array($title, $this->getHubPageId($dbKeyName)) );
+			$article = F::build( 'WikiaHubsV2Article', array($title, $this->getHubPageId($dbKeyName), $hubTimestamp) );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -48,5 +58,20 @@ class WikiaHubsV2Hooks {
 		}
 
 		return false;
+	}
+
+	protected function getTimestampFromSplitDbKey($dbKeyNameSplit) {
+		if (isset($dbKeyNameSplit[1])) {
+			unset($dbKeyNameSplit[0]);
+			$hubDate = implode('/', $dbKeyNameSplit);
+			$hubTimestamp = $this->getTimestampFromUserDate($hubDate);
+		} else {
+			$hubTimestamp = null;
+		}
+		return $hubTimestamp;
+	}
+
+	protected function getTimestampFromUserDate($date) {
+		return strtotime($date);
 	}
 }

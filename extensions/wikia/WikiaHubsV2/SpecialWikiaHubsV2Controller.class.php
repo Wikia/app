@@ -35,7 +35,8 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$modulesData = $toolboxModel->getPublishedData(
 			$this->wg->ContLang->getCode(),
 			MarketingToolboxModel::SECTION_HUBS,
-			$this->verticalId
+			$this->verticalId,
+			$this->hubTimestamp
 		);
 
 		$this->modules = array();
@@ -170,6 +171,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->initModel();
 		$this->initVertical();
 		$this->initVerticalSettings();
+		$this->initHubTimestamp();
 	}
 
 	protected function initCacheValidityTimes() {
@@ -226,5 +228,9 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		}
 		RequestContext::getMain()->getRequest()->setVal('vertical', $this->verticalName);
 		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $this->verticalName));
+	}
+
+	protected function initHubTimestamp() {
+		$this->hubTimestamp = $this->getRequest()->getVal('hubTimestamp', null);
 	}
 }
