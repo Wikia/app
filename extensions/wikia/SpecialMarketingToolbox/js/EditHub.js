@@ -278,7 +278,7 @@ EditHub.prototype = {
 				'sectionId': qs.getVal('sectionId')
 			},
 			callback: function(data){
-				if (!data.success) {
+				if (data.success) {
 					window.open(data.hubUrl);
 				} else {
 					alert(data.errorMsg);

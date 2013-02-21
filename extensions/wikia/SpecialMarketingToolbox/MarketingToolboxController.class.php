@@ -189,8 +189,11 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			);
 
 			$this->success = $result->success;
-			if (true) {
-				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId);
+			if ($this->success) {
+				$date = new DateTime('@' . $this->date);
+
+				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
+					. '/' . $date->format('Y-m-d');
 			} else {
 				$this->errorMsg = $result->errorMsg;
 			}
