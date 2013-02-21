@@ -37,8 +37,13 @@ class PhalanxPager extends ReverseChronologicalPager {
 	 * @return Array
 	 */
 	function getSearchFilter() {
-		$filters = array_map('intval', $this->mSearchFilter);
-		return array_fill_keys($filters, true);
+		if (is_array($this->mSearchFilter)) {
+			$filters = array_map('intval', $this->mSearchFilter);
+			return array_fill_keys($filters, true);
+		}
+		else {
+			return array();
+		}
 	}
 
 	function getQueryInfo() {
