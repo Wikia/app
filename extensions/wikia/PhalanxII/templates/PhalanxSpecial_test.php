@@ -4,15 +4,13 @@
 	</div>
 
 	<div id="phalanx-content-area">
-		<fieldset>
-			<form id="phalanx-block-test" action="<?= $action ?>">
-				<label>
-					<?= wfMsg( 'phalanx-test-description' ) ?>
-					<input type="text" id="phalanx-block-text" name="wpBlockText" value="<?= htmlspecialchars($blockText) ?>" autofocus>
-				</label>
-				<input type="submit" value="<?= wfMsg( 'phalanx-test-submit' ) ?>">
-			</form>
-		</fieldset>
+		<form id="phalanx-block-test" action="<?= $action ?>">
+			<label>
+				<?= wfMsg( 'phalanx-test-description' ) ?>
+				<input type="text" id="phalanx-block-text" name="wpBlockText" value="<?= htmlspecialchars($blockText) ?>" autofocus>
+			</label>
+			<input type="submit" value="<?= wfMsg( 'phalanx-test-submit' ) ?>">
+		</form>
 <?php if (isset($listing)): ?>
 		<fieldset>
 			<legend><?= wfMsg( 'phalanx-test-results-legend' ); ?></legend>

@@ -60,6 +60,10 @@ class Phalanx implements arrayaccess {
 		$this->data = array();
 	}
 
+	/**
+	 * @param $blockId int
+	 * @return Phalanx
+	 */
 	public static function newFromId( $blockId ) {
 		$instance = F::build( 'Phalanx', array( 'blockId' => $blockId ) );
 
@@ -193,7 +197,7 @@ class Phalanx implements arrayaccess {
 
 		return $types;
 	}
-	
+
 	/* get all phalanx types */
 	public static function getAllTypeNames() {
 		return self::$typeNames;

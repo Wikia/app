@@ -6,8 +6,9 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 	function __construct( ) {
 		parent::__construct( 'PhalanxStats', 'phalanx', false );
-		$this->title = F::build( 'Title', array( 'PhalanxStats', NS_SPECIAL ), 'newFromText' );
-		$this->phalanxTitle = F::build( 'Title', array( 'Phalanx', NS_SPECIAL ), 'newFromText' );
+
+		$this->title = SpecialPage::getTitleFor('PhalanxStats');
+		$this->phalanxTitle = SpecialPage::getTitleFor('Phalanx');
 	}
 
 	public function index() {
@@ -47,9 +48,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$phalanxUrl = $this->phalanxTitle->getFullUrl( array( 'id' => $data['id'] ) );
-
-		$data['author_id'] = F::build( 'User', array( $data['author_id'] ), 'newFromId' )->getName();
+		$data['author_id'] = User::newFromId($data['author_id'])->getName();
 		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
 		$data['timestamp'] = $this->wg->Lang->timeanddate( $data['timestamp'] );
 
@@ -99,16 +98,16 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$table .= "<tr><th>" . $this->wf->Msg('phalanx-stats-table-reason')  ."</th><td colspan='8'>{$data['reason']}</td></tr>";
 		$table .= "</table>";
 
-		$link = Html::element( 'a', array( 'class' => 'modify', 'href' => $phalanxUrl ), $this->wf->Msg('phalanx-link-modify') );
-		$html = $table . "\n&bull; " . $link . "<br/>\n";
-		$this->wg->Out->addHTML( $html );
+		$this->setVal('table', $table);
+		$this->setVal('editUrl', $this->phalanxTitle->getLocalUrl( array( 'id' => $data['id'] ) ));
 
-		/* pager */
+		/* match statistics */
 		$pager = new PhalanxStatsPager( $blockId );
-		$html  = $pager->getNavigationBar();
-		$html .= $pager->getBody();
-		$html .= $pager->getNavigationBar();
-		$this->wg->Out->addHTML( $html );
+		$this->setVal('statsPager',
+			$pager->getNavigationBar() .
+			$pager->getBody() .
+			$pager->getNavigationBar()
+		);
 	}
 
 	private function blockWikia($wikiId) {
@@ -156,6 +155,6 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function help() {
-		$this->setVal( 'action', $this->title->getFullURL() );
+		$this->setVal( 'action', $this->title->getLocalURL() );
 	}
 }
