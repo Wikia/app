@@ -222,7 +222,53 @@ var Lightbox = {
 			}
 
 			Lightbox.openModal.find('.carousel li').eq(Lightbox.current.index).trigger('click');
+		}).on('click.Lightbox', '.article-add-button', function() {
+			Lightbox.doAutocomplete($(this));
 		});
+	},
+	doAutocomplete: function (elem) {
+		$.when(
+			$.loadJQueryAutocomplete()
+		).then($.proxy(function() {
+			var input = elem.hide().next('input').show();
+			
+			input.autocomplete({
+				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+				onSelect: function(value, data, event) {
+					var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
+						// slashes can't be urlencoded because they break routing
+						location = wgArticlePath.
+							replace(/\$1/, valueEncoded).
+							replace(encodeURIComponent('/'), '/');
+					
+					location = location + "?action=edit&addFile=" + Lightbox.getTitleDbKey();
+
+					/*this.track({
+						eventName: 'search_start_suggest',
+						sterm: valueEncoded,
+						rver: 0
+					});*/
+
+					// Respect modifier keys to allow opening in a new window (BugId:29401)
+					if (event.button === 1 || event.metaKey || event.ctrlKey) {
+						window.open(location);
+
+						// Prevents hiding the container
+						return false;
+					} else {
+						window.location.href = location;
+					}
+				},
+				appendTo: '#lightbox-add-to-article',
+				deferRequestBy: 400,
+				minLength: 3,
+				maxHeight: 800,
+				selectedClass: 'selected',
+				width: '270px',
+				skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
+			});
+		}, this));
+	
 	},
 	clearTrackingTimeouts: function() {
 		// Clear video tracking timeout
