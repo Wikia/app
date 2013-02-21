@@ -53,7 +53,7 @@ class UserStatsService extends WikiaModel {
 	 * @param $skipCache boolean On true ignores cache
 	 * @return Int Number of edits
 	 */
-	public function getWikiEditCount( $wikiId = 0, $skipCache = true ) {
+	public function getEditCountWiki( $wikiId = 0, $skipCache = true ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;

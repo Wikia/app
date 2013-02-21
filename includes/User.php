@@ -2553,7 +2553,7 @@ class User {
 			 * @author Kamil Koterba
 			 */
 			$userStatsService = F::build( 'UserStatsService', array( $this->mId ) ); /* @var $userStatsService UserStatsService */
-			return $userStatsService->getWikiEditCount();
+			return $userStatsService->getEditCountWiki();
 			/* end of change */
 
 			if ( !isset( $this->mEditCount ) ) {
