@@ -8,8 +8,14 @@ class RelatedPagesController extends WikiaController {
 		$this->skipRendering = false;
 	}
 
-	public function executeIndex() {
+	public function executeIndex( $params = null ) {
 		global $wgTitle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgRelatedPagesAddAfterSection;
+
+		if (array_key_exists('altTitle', $params)) {
+			$altTitle = $params['altTitle'];
+		}
+
+		$title = empty($altTitle) ? $wgTitle : $altTitle;
 
 		$relatedPages = RelatedPages::getInstance();
 
@@ -25,7 +31,7 @@ class RelatedPagesController extends WikiaController {
 		}
 
 		// check for content namespaces
-		if( !empty($wgTitle) && !in_array($wgTitle->getNamespace(), $wgContentNamespaces) ) {
+		if( !empty($title) && !in_array($title->getNamespace(), $wgContentNamespaces) ) {
 			$this->skipRendering = true;
 		}
 
@@ -45,11 +51,11 @@ class RelatedPagesController extends WikiaController {
 		}
 
 		if( !$this->skipRendering ) {
-			$mKey = wfMemcKey('mOasisRelatedPages', $wgTitle->getArticleId());
+			$mKey = wfMemcKey('mOasisRelatedPages', $title->getArticleId());
 			$this->pages = $wgMemc->get($mKey);
 			$this->srcAttrName = $this->app->checkSkin( 'monobook' ) ? 'src' : 'data-src';
 			if( empty($this->pages) ) {
-				$this->pages = $relatedPages->get( $wgTitle->getArticleId() );
+				$this->pages = $relatedPages->get( $title->getArticleId() );
 				if(count($this->pages) > 0) {
 					$wgMemc->set($mKey, $this->pages, 3 * 3600);
 				}
