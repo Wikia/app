@@ -69,8 +69,7 @@ $phalanxhooks = array(
 		),
 	'PhalanxAnswersBlock' =>
 		array(
-			'CreateDefaultQuestionPageFilter'      => 'badWordsTest',
-			'DefaultQuestion::filterWordsTest'     => 'filterWordsTest'
+			'CreateDefaultQuestionPageFilter'      => 'badWordsTest'
 		),
 	'PhalanxWikiCreationBlock' =>
 		array(

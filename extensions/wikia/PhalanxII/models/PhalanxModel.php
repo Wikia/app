@@ -70,7 +70,7 @@ abstract class PhalanxModel extends WikiaObject {
 				->setLimit(1)
 				->setUser( $isUser ? $this->user : null )
 				->match( $type, $content, $this->getLang() );
-								
+	
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
 				if ( is_object( $result ) && isset( $result->id ) && $result->id > 0 ) {

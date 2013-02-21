@@ -123,21 +123,6 @@ class PhalanxModelTest extends WikiaBaseTest {
 		
 		$this->assertEquals( $result, $ret );
 	}
-
-	/* PhalanxContentModel class */
-	/* match_recent_questions method */
-	/**
-	 * @dataProvider phalanxTitleDataProvider
-	 */
-	public function testPhalanxContentModelRecentQuestions( $title, $block, $language, $result ) {
-		$titleMock = $this->setUpTitle( $title );
-		$this->setUpTest( $block );
-		
-		$model = new PhalanxContentModel( $titleMock, $language );
-		$ret = ( int ) $model->match_recent_questions();
-		
-		$this->assertEquals( $result, $ret );
-	}
 	
 	/* PhalanxContentModel class */
 	/* match_summary method */

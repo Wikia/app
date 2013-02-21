@@ -120,13 +120,4 @@ class PhalanxContentModel extends PhalanxModel {
 		/* problem with Phalanx service? - use previous version of Phalanx extension */
 		return QuestionTitleBlock::badWordsTest( $this->title );			
 	}
-	
-	public function match_recent_questions() {
-		return $this->match( "recent_questions" );
-	}
-	
-	public function match_recent_questions_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension */
-		return RecentQuestionsBlock::filterWordsTest( $this->getText() );					
-	}
 }

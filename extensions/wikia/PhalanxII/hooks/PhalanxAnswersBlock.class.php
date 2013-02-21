@@ -24,14 +24,4 @@ class PhalanxAnswersBlock extends WikiaObject {
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;
 	}
-
-	public function filterWordsTest( $title ) {
-		$this->wf->profileIn( __METHOD__ );
-
-		$phalanxModel = F::build('PhalanxContentModel', array( $title, $this->wg->LanguageCode ) );
-		$ret = $phalanxModel->match_recent_questions();
-		
-		$this->wf->profileOut( __METHOD__ );
-		return $ret;
-	}
 }
