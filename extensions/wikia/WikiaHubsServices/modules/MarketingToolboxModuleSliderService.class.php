@@ -104,4 +104,57 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 
 		return $data;
 	}
+
+	public function getStructuredData($data) {
+		$structuredData = array();
+
+		if( !empty( $data ) ) {
+
+			$model = new MarketingToolboxSliderModel();
+			$slidesCount =  $model->getSlidesCount();
+
+			for( $i = 1; $i <= $slidesCount; $i++ ) {
+				$imageData = $this->getImageData($data['photo'.$i]);
+
+				$structuredData['slides'][] = array(
+									'photoUrl' => $imageData->url,
+									'shortDesc' => $data['shortDesc'.$i],
+									'longDesc' => $data['longDesc'.$i],
+									'url' => $data['url'.$i],
+									'photoName' => $data['photo'.$i],
+									'photoAlt' => $imageData->title
+								);
+			}
+		}
+
+		return $structuredData;
+	}
+
+
+	public function render($structureData) {
+		$data['wikitextslider'] = $this->getWikitext($structureData);
+
+		return parent::render($data);
+	}
+
+	public function getWikitext($data) {
+		$galleryText = '<gallery type="slider" orientation="mosaic">';
+		foreach($data['slides'] as $slide) {
+			$galleryText .= "\n" . implode('|',array(
+					$this->app->wg->ContLang->getNsText( NS_FILE ) . ':' . $slide['photoName'],
+					$slide['photoAlt'],
+					'link=' . $slide['url'],
+					'linktext=' . $slide['longDesc'],
+					'shorttext=' . $slide['shortDesc']
+				)
+			);
+		}
+		$galleryText .= "\n</gallery>";
+		return $galleryText;
+	}
+
+	public function getImageData( $image ) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($image);
+
+	}
 }

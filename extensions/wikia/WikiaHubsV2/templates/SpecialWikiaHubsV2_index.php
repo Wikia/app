@@ -7,7 +7,7 @@
 	<div class="WikiaGrid WikiaHubs" id="WikiaHubs">
 		<div class="grid-3 alpha">
 			<section class="grid-3 alpha wikiahubs-slider wikiahubs-module">
-				<?= $app->renderView('SpecialWikiaHubsV2', 'slider', $app->wg->request->getValues()); ?>
+				<?= $modules[MarketingToolboxModuleSliderService::MODULE_ID] ?>
 			</section>
 			<section class="grid-3 alpha wikiahubs-newstabs wikiahubs-module">
 				<?= $app->renderView('SpecialWikiaHubsV2', 'tabber', $app->wg->request->getValues()); ?>
