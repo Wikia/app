@@ -48,8 +48,8 @@ var ShareButtons = {
 
 		return dfd.promise();
 	},
-	track: window.WikiaTracker.buildTrackingFunction({
-		action: window.WikiaTracker.ACTIONS.CLICK,
+	track: Wikia.Tracker.buildTrackingFunction({
+		action: Wikia.Tracker.ACTIONS.CLICK,
 		category: 'share',
 		trackingMethod: 'ga'
 	})

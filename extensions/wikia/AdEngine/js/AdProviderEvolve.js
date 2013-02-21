@@ -51,7 +51,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 		var slotname = slot[0],
 			slotsize = slot[1] || slotMap[slotname].size;
 
-		WikiaTracker.track({
+		tracker.track({
 			eventName: 'liftium.slot2',
 			ga_category: 'slot2/' + slotsize.split(',')[0],
 			ga_action: slotname,
@@ -173,7 +173,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 		hoppedSlots[slotname] = true;
 
 		log('slotTimer2 end for ' + slotname + ' after ' + time + ' ms', 7, 'AdProviderEvolve');
-		WikiaTracker.track({
+		tracker.track({
 			eventName: 'liftium.hop2',
 			ga_category: 'hop2/evolve',
 			ga_action: 'slot ' + slotname,
@@ -208,7 +208,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 	};
 
 	// copy of Liftium.formatTrackTime
-	// TODO refactor out... AdEngine2Helper? WikiaTracker?
+	// TODO refactor out... AdEngine2Helper? Wikia.Tracker?
 	formatTrackTime = function (t, max) {
 		if (isNaN(t)) {
 			log('Error, time tracked is NaN: ' + t, 7, 'AdProviderEvolve');

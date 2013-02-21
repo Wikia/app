@@ -7,13 +7,13 @@ describe('AdProviderGamePro', function(){
 		var logMock = function() {}
 			, scriptWriterMock
 			, wikiaDartMock
-			, wikiaTrackerMock
+			, trackerMock
 			, windowMock = {wgInsideUnitTest: true, wgContentLanguage: 'de'}
 			, documentMock
 			, adProviderGamePro;
 
 		adProviderGamePro = AdProviderGamePro(
-			wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
+			wikiaDartMock, scriptWriterMock, trackerMock, logMock, windowMock, documentMock
 		);
 
 		expect(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD'])).toBeTruthy('de slot HOME_TOP_LEADERBOARD');
@@ -24,14 +24,14 @@ describe('AdProviderGamePro', function(){
 	it('canHandleSlot GamePro outside de', function() {
 		var logMock = function() {}
 			, scriptWriterMock
-			, wikiaTrackerMock
+			, trackerMock
 			, windowMock = {wgInsideUnitTest: true}
 			, documentMock
 			, adProviderGamePro
 			, wikiaDartMock;
 
 		adProviderGamePro = AdProviderGamePro(
-			wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
+			wikiaDartMock, scriptWriterMock, trackerMock, logMock, windowMock, documentMock
 		);
 
 		windowMock.wgContentLanguage = 'pl';

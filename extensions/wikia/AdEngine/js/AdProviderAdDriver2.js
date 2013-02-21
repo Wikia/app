@@ -1,4 +1,4 @@
-// TODO: move WikiaTracker outside
+// TODO: move Wikia.Tracker outside
 
 var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain, abTest, wikiaGpt) {
 	'use strict';

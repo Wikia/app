@@ -11,8 +11,8 @@
  @test-require-asset /resources/wikia/modules/cookies.js
  @test-require-asset /resources/wikia/modules/log.js
  @test-require-asset /resources/wikia/modules/loader.js
+ @test-require-asset /resources/wikia/modules/tracker.js
  @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.js
- @test-require-asset /extensions/wikia/WikiaTracker/js/WikiaTracker.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/track.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/throbber.js

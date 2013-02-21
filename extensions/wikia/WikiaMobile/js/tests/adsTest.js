@@ -11,7 +11,6 @@
  @test-require-asset /extensions/wikia/AdEngine/js/DartUrl.js
  @test-require-asset /extensions/wikia/AdEngine/js/WikiaDartHelper.js
  @test-require-asset /extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js
- @test-require-asset /extensions/wikia/WikiaTracker/js/WikiaTracker.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/track.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/features.js

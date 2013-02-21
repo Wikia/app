@@ -30,7 +30,7 @@ var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, tra
 			, slotsize = slot[1] || slotMap[slotname].size
 		;
 
-		WikiaTracker.track({
+		tracker.track({
 			eventName: 'liftium.slot2',
 			ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''),
 			ga_action: slotname,

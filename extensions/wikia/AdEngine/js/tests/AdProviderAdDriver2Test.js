@@ -10,7 +10,7 @@ describe('AdProviderAdDriver2', function(){
 			scriptWriterMock = {injectScriptByUrl: function() {
 				dartCalled = true;
 			}},
-			wikiaTrackerMock = {track: function() {}},
+			trackerMock = {track: function() {}},
 			logMock = function() {},
 			windowMock = {adslots2: {push: function() {liftiumCalled = true;}}},
 			GeoMock = {getCountryCode: function() {}},
@@ -29,7 +29,7 @@ describe('AdProviderAdDriver2', function(){
 		adProviderAdDriver2 = AdProviderAdDriver2(
 			wikiaDartMock,
 			scriptWriterMock,
-			wikiaTrackerMock,
+			trackerMock,
 			logMock,
 			windowMock,
 			GeoMock,
@@ -66,7 +66,7 @@ describe('AdProviderAdDriver2', function(){
 			scriptWriterMock = {injectScriptByUrl: function() {
 				dartCalled = true;
 			}},
-			wikiaTrackerMock = {track: function() {}},
+			trackerMock = {track: function() {}},
 			logMock = function() {},
 			windowMock = {adslots2: {push: function() {liftiumCalled = true;}}},
 			GeoMock = {getCountryCode: function() {}},
@@ -85,7 +85,7 @@ describe('AdProviderAdDriver2', function(){
 		adProviderAdDriver2 = AdProviderAdDriver2(
 			wikiaDartMock,
 			scriptWriterMock,
-			wikiaTrackerMock,
+			trackerMock,
 			logMock,
 			windowMock,
 			GeoMock,

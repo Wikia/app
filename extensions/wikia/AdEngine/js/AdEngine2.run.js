@@ -4,14 +4,14 @@
  */
 
 /*global document, window */
-/*global Geo, Wikia, WikiaTracker */
+/*global Geo, Wikia */
 /*global ghostwriter, Krux */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter, WikiaDartHelper */
 /*global AdProviderAdDriver2, AdProviderEvolve, AdProviderGamePro, AdProviderLater, AdProviderNull */
 /*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicShortPage */
 /*jslint newcap:true */
 
-(function (log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
+(function (log, tracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -81,7 +81,7 @@
 	);
 
 	log('work on window.adslots2 according to AdConfig2', 1, module);
-	WikiaTracker.track({
+	tracker.track({
 		eventName: 'liftium.init',
 		ga_category: 'init2/init',
 		ga_action: 'init',
@@ -125,7 +125,7 @@
 		if (adConfigForLateAds) {
 			log('launching late ads now', 1, module);
 			log('work on queueForLateAds according to AdConfig2Late', 1, module);
-			WikiaTracker.track({
+			tracker.track({
 				eventName: 'liftium.init',
 				ga_category: 'init2/init',
 				ga_action: 'init',
@@ -135,7 +135,7 @@
 			adEngine.run(adConfigForLateAds, queueForLateAds);
 		} else {
 			log('ERROR, AdEngine_loadLateAds called before AdEngine_setLateConfig!', 1, module);
-			WikiaTracker.track({
+			tracker.track({
 				eventName: 'liftium.errors',
 				ga_category: 'errors2/no_late_config',
 				ga_action: 'no_late_config',
@@ -157,4 +157,4 @@
 		}
 	};
 
-}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));
+}(Wikia.log, Wikia.Tracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));

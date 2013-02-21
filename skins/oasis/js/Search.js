@@ -4,7 +4,7 @@ var WikiaSearchApp = {
 
 	ads: false,
 
-	track: window.WikiaTracker.buildTrackingFunction({
+	track: Wikia.Tracker.buildTrackingFunction({
 		trackingMethod: 'internal'
 	}),
 

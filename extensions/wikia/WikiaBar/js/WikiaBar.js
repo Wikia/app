@@ -383,7 +383,7 @@ var WikiaBar = {
 	//todo: extract class
 	trackClick: function (category, action, label, value, params, event) {
 		if (this.isSampledEvent()) {
-			WikiaTracker.track({
+			Wikia.Tracker.track({
 				action: action,
 				category: category,
 				label: label,
@@ -398,15 +398,15 @@ var WikiaBar = {
 			startTime = new Date();
 
 		if (node.hasClass('arrow')) {
-			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'arrow-hide', null, {}, e);
+			this.trackClick('wikia-bar', Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'arrow-hide', null, {}, e);
 		} else if (node.hasClass('wikia-bar-collapse')) {
-			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'arrow-show', null, {}, e);
+			this.trackClick('wikia-bar', Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'arrow-show', null, {}, e);
 		} else if (parent.hasClass('wikiabar-button')) {
 			var buttonIdx = parent.data('index');
-			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'wikiabar-button-' + buttonIdx, null, {}, e);
+			this.trackClick('wikia-bar', Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'wikiabar-button-' + buttonIdx, null, {}, e);
 		} else if (parent.hasClass('message')) {
 			var messageIdx = node.data('index');
-			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'message-' + messageIdx + '-clicked', null, {}, e);
+			this.trackClick('wikia-bar', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'message-' + messageIdx + '-clicked', null, {}, e);
 		}
 
 		$().log('tracking took ' + (new Date() - startTime) + ' ms');
