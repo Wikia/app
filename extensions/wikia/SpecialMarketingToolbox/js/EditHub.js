@@ -18,6 +18,8 @@ EditHub.prototype = {
 		var validator;
 		var initThis = this;
 
+		$('#MarketingToolboxPublish').click($.proxy(this.publishHub, this));
+
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
 		$('.module-popular-videos').on('click', '.remove', $.proxy(this.popularVideosRemove, this));
 		$('.MarketingToolboxMain #marketing-toolbox-removeall').click($.proxy(this.popularVideosRemoveAll, this));
@@ -260,6 +262,25 @@ EditHub.prototype = {
 			.find('.image-placeholder img').remove()
 			.end()
 			.find('span.filename-placeholder').text('');
+	},
+
+	publishHub: function() {
+		var qs = Wikia.Querystring(window.location);
+
+		$.nirvana.sendRequest({
+			controller: 'MarketingToolbox',
+			method: 'publishHub',
+			type: 'post',
+			data: {
+				'date': qs.getVal('date'),
+				'region': qs.getVal('region'),
+				'verticalId': qs.getVal('verticalId'),
+				'sectionId': qs.getVal('sectionId')
+			},
+			callback: function(data){
+				window.open(data.hubUrl);
+			}
+		});
 	}
 };
 

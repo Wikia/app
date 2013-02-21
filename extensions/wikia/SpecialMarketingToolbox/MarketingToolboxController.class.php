@@ -177,6 +177,25 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->overrideTemplate('editHub');
 	}
 
+	public function publishHub() {
+		if ($this->request->wasPosted()) {
+			$this->retriveDataFromUrl();
+
+			$result = $this->toolboxModel->publishHub(
+				$this->langCode,
+				$this->sectionId,
+				$this->verticalId,
+				$this->date
+			);
+
+			if ($result->success) {
+				$this->hubUrl = 'http://www.wikia.com';
+			} else {
+				$this->error = $result->errorMsg;
+			}
+		}
+	}
+
 	private function getNextModuleUrl() {
 		$nextModuleId = $this->selectedModuleId;
 
