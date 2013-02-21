@@ -553,6 +553,35 @@ class MarketingToolboxModel extends WikiaModel {
 		return $result;
 	}
 
+	public function getHubUrl($langCode, $verticalId) {
+		$visualizationData = $this->getVisualizationData();
+
+		if (!isset($visualizationData[$langCode]['url'])) {
+			throw new Exception('Corporate Wiki not defined for this lang');
+		}
+
+		$hubPages = F::app()->wg->WikiaHubsV2Pages;
+
+		if (!isset($hubPages[$verticalId])) {
+			throw new Exception('Hub page not defined for selected vertical');
+		}
+
+		$url = http_build_url(
+			$visualizationData[$langCode]['url'],
+			array(
+				'path' => $hubPages[$verticalId]
+			),
+			HTTP_URL_JOIN_PATH
+		);
+
+		return $url;
+	}
+
+	protected function getVisualizationData() {
+		$visualizationModel = new CityVisualization();
+		return $visualizationModel->getVisualizationWikisData();
+	}
+
 	/**
 	 * Method to extract textual filename from VET-generated
 	 * wikitext (i.e. [[File:Batman - Following|thumb|right|335 px]]

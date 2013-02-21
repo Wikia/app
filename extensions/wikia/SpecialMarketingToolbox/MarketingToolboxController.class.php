@@ -181,17 +181,18 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		if ($this->request->wasPosted()) {
 			$this->retriveDataFromUrl();
 
-			$result = $this->toolboxModel->publishHub(
+			$result = $this->toolboxModel->publish(
 				$this->langCode,
 				$this->sectionId,
 				$this->verticalId,
 				$this->date
 			);
 
-			if ($result->success) {
-				$this->hubUrl = 'http://www.wikia.com';
+			$this->success = $result->success;
+			if (true) {
+				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId);
 			} else {
-				$this->error = $result->errorMsg;
+				$this->errorMsg = $result->errorMsg;
 			}
 		}
 	}

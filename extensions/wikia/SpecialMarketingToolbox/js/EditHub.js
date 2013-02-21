@@ -278,7 +278,11 @@ EditHub.prototype = {
 				'sectionId': qs.getVal('sectionId')
 			},
 			callback: function(data){
-				window.open(data.hubUrl);
+				if (!data.success) {
+					window.open(data.hubUrl);
+				} else {
+					alert(data.errorMsg);
+				}
 			}
 		});
 	}
