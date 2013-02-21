@@ -83,14 +83,15 @@
 			// @see /extensions/wikia/AnalyticsEngine/js/analytics_prod.js
 			gaTrackAdEvent = window.gaTrackAdEvent,
 			gaTrackEvent = window.gaTrackEvent,
-			logGroup = 'WikiaTracker',
+			logGroup = 'Wikia.Tracker',
 			purgeFromData = [
 				'browserEvent',
 				'eventName',
 				'trackingMethod'
 			],
 			rDoubleSlash = /\/\//g,
-			slice = [].slice;
+			slice = [].slice,
+			Wikia = window.Wikia || {};
 
 		// Adds the info from the second hash into the first.
 		// If the same key is in both, the key in the second object overrides what's in the first object.
@@ -250,7 +251,7 @@
 		 *
 		 *        keys: (Please ping tracking team leads before adding new ones)
 		 *            action (required for GA tracking)
-		 *                One of the values in WikiaTracker.ACTIONS.
+		 *                One of the values in Wikia.Tracker.ACTIONS.
 		 *            browserEvent (optional)
 		 *                The browser event object that triggered this tracking call.
 		 *            category (required for GA tracking)
@@ -278,7 +279,7 @@
 		 *         category: 'myCategory'
 		 *     };
 		 *
-		 *     WikiaTracker.track( defaults, {
+		 *     Wikia.Tracker.track( defaults, {
 		 *         label: 'myLabel',
 		 *     });
 		 */
@@ -371,7 +372,7 @@
 		/**
 		 * Function factory for building custom tracking methods with default parameters.
 		 *
-		 *     var track = WikiaTracker.buildTrackingFunction({
+		 *     var track = Wikia.Tracker.buildTrackingFunction({
 		 *         category: 'myCategory',
 		 *         trackingMethod: 'ga'
 		 *     });
@@ -403,10 +404,11 @@
 		};
 	}
 
+	// Exports
+	Wikia.Tracker = tracker(context);
+
 	if (context.define && context.define.amd) {
 		context.define('wikia.tracker', ['wikia.window', 'wikia.log'], tracker);
 	}
-
-	WikiaTracker = tracker(context);
 
 }(this));

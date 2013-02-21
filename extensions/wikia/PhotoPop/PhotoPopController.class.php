@@ -46,9 +46,6 @@ class PhotoPopController extends WikiaController {
 			'wgMessages' => $jsMsg->getPackages( array ( self::JS_MESSAGES_PACKAGE ) )
 		);
 
-		//getting WikiaTracker global JS vars
-		F::build( 'WikiaTrackerController' )->onMakeGlobalVariablesScript( $jsVars );
-
 		$this->response->setVal( 'globalVariablesScript', Skin::makeVariablesScript($jsVars) );
 		$this->response->setVal( 'scripts', AssetsManager::getInstance()->getGroupCommonURL( 'photopop' ) );
 		$this->response->setVal( 'dataMain', $this->wg->ExtensionsPath . '/wikia/PhotoPop/shared/lib/main');

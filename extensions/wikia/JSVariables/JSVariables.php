@@ -52,7 +52,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	$skin = RequestContext::getMain()->getSkin();
 	$vars['skin'] = $skin->getSkinName();
 
-	// analytics/wikiatracker
+	// analytics/Wikia.Tracker
 	$vars['_gaq'] = array();
 	$vars['_wtq'] = array();
 

@@ -21,9 +21,9 @@ var InWikiGame = {
 				}
 			);
 			iframe.load(function() {
-				WikiaTracker.track({
+				Wikia.Tracker.track({
 					category: 'in-wiki-game',
-					action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
+					action: Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
 					label: 'iframe-entry-point-' + InWikiGame.storageEntryPoint,
 					trackingMethod: 'internal'
 				});
@@ -34,9 +34,9 @@ var InWikiGame = {
 	},
 	getEntryPoint: function() {
 		if( this.storageEntryPoint !== null ) {
-			WikiaTracker.track({
+			Wikia.Tracker.track({
 				category: 'in-wiki-game',
-				action: WikiaTracker.ACTIONS.IMPRESSION,
+				action: Wikia.Tracker.ACTIONS.IMPRESSION,
 				label: 'placeholder-entry-point-' + this.storageEntryPoint,
 				trackingMethod: 'internal'
 			});

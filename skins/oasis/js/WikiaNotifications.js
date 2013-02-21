@@ -1,10 +1,9 @@
 var WikiaNotificationsApp = {
-
 	purgeCurrentPage: function() {
 			$.post(wgScript, {action: 'purge', title: wgPageName});
 	},
 
-	track: window.WikiaTracker.buildTrackingFunction({
+	track: Wikia.Tracker.buildTrackingFunction({
 		category: 'sitewidemessages',
 		trackingMethod: 'internal'
 	}),
@@ -47,7 +46,7 @@ var WikiaNotificationsApp = {
 
 					// SWM click tracking (BugID: 45402)
 					self.track({
-						action: window.WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
+						action: Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
 						browserEvent: ev,
 						label: 'swm-dismiss',
 						value: messageId
@@ -61,7 +60,7 @@ var WikiaNotificationsApp = {
 						var	nextMessageId = parseInt( nextNotification.attr( 'id' ).substr( 4 ) );
 
 						self.track({
-							action: WikiaTracker.ACTIONS.IMPRESSION,
+							action: Wikia.Tracker.ACTIONS.IMPRESSION,
 							label: 'swm-impression',
 							value: nextMessageId
 						});

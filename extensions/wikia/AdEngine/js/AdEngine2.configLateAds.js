@@ -4,7 +4,7 @@
  *
  * Liftium must call AdEngine_loadLateAds to trigger showing ads
  */
-(function(log, WikiaTracker, window, ghostwriter, document, Geo, Krux) {
+(function(log, tracker, window, ghostwriter, document, Geo, Krux) {
 	var adConfig
 		, scriptWriter
 		, wikiaDart
@@ -27,8 +27,8 @@
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
-	adProviderGamePro = AdProviderGamePro(wikiaDart, scriptWriter, WikiaTracker, log, window, document);
-	adProviderLiftium2Dom = AdProviderLiftium2Dom(WikiaTracker, log, document, slotTweaker, fakeLiftium, scriptWriter);
+	adProviderGamePro = AdProviderGamePro(wikiaDart, scriptWriter, tracker, log, window, document);
+	adProviderLiftium2Dom = AdProviderLiftium2Dom(tracker, log, document, slotTweaker, fakeLiftium, scriptWriter);
 
 	adConfig = AdConfig2Late(
 		log, window
@@ -52,4 +52,4 @@
 	 */
 	window.AdEngine_setLateAdsConfig(adConfig);
 
-}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, Krux));
+}(Wikia.log, Wikia.Tracker, window, ghostwriter, document, Geo, Krux));

@@ -8,7 +8,7 @@ describe('AdProviderEvolve', function(){
 // yields window.AdEngine2.hop('=TOP_LEADERBOARD;ord=7121786175');
 // instead of window.AdEngine2.hop('TOP_LEADERBOARD');
 	it('sanitizeSlotname', function() {
-		var wikiaTrackerMock
+		var trackerMock
 			, logMock = function() {}
 			, wikiaDartMock
 			, scriptWriterMock
@@ -19,7 +19,7 @@ describe('AdProviderEvolve', function(){
 			, adProviderEvolve;
 
 		adProviderEvolve = AdProviderEvolve(
-			wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+			wikiaDartMock, scriptWriterMock, trackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 		);
 
 		expect(adProviderEvolve.sanitizeSlotname('foo')).toBe('', 'foo');
@@ -28,7 +28,7 @@ describe('AdProviderEvolve', function(){
 	});
 
 	it('getUrl', function() {
-		var wikiaTrackerMock
+		var trackerMock
 			, logMock = function() {}
 			, wikiaDartMock = {
 				getDomainKV: function() {return 'dmn=mock;';},
@@ -47,7 +47,7 @@ describe('AdProviderEvolve', function(){
 			;
 
 		adProviderEvolve = AdProviderEvolve(
-			wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+			wikiaDartMock, scriptWriterMock, trackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 		);
 
 		windowMock.wgDBname = 'somedb';
@@ -72,7 +72,7 @@ describe('AdProviderEvolve', function(){
 	});
 
 	it('Evolve canHandleSlot AU', function() {
-		var wikiaTrackerMock
+		var trackerMock
 			, logMock = function() {}
 			, wikiaDartMock
 			, scriptWriterMock
@@ -83,7 +83,7 @@ describe('AdProviderEvolve', function(){
 			, adProviderEvolve;
 
 		adProviderEvolve = AdProviderEvolve(
-			wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+			wikiaDartMock, scriptWriterMock, trackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 		);
 
 		expect(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD'])).toBeTruthy('TOP_LEADERBOARD');
