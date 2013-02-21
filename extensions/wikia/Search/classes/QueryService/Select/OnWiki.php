@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\QueryService\Select\OnWiki
  */
 namespace Wikia\Search\QueryService\Select;
-use \Wikia\Search\Utilities;
+use \Wikia\Search\Utilities, \Solarium_Query_Select;
 
 class OnWiki extends AbstractSelect
 {
@@ -21,6 +21,18 @@ class OnWiki extends AbstractSelect
 		'log(views)^0.66', 
 		'log(backlinks)'
 	);
+	
+	/**
+	 * @return Wikia\Search\Match\Article|null
+	 */
+	public function extractMatch() {
+		$match = $this->interface->getArticleMatchForTermAndNamespaces( $this->config->getOriginalQuery(), $this->config->getNamespaces() );
+		if (! empty( $match ) ) {
+			$this->config->setArticleMatch( $match );
+		}
+		
+		return $this->config->getMatch();
+	}
 	
 	/**
 	 * Registers different components in Solarium
@@ -76,7 +88,7 @@ class OnWiki extends AbstractSelect
 	protected function getQueryFieldsString() {
 		$queryFieldsString = '';
 		foreach ( $this->config->getQueryFieldsToBoosts()  as $field => $boost ) {
-			$queryFieldsString .= sprintf( '%s^%s ', self::field( $field ), $boost );
+			$queryFieldsString .= sprintf( '%s^%s ', Utilities::field( $field ), $boost );
 		}
 		return trim( $queryFieldsString );
 	}
