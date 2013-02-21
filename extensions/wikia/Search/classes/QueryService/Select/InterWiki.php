@@ -55,6 +55,22 @@ class InterWiki extends AbstractSelect
 	 */
 	protected $timeAllowed = 7500;
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::extractMatch()
+	 */
+	public function extractMatch() {
+		$domain = preg_replace(
+				'/[^a-zA-Z]/',
+				'',
+				strtolower( $this->config->getQuery( \Wikia\Search\Config::QUERY_RAW ) ) 
+				);
+		if ( $match = $this->interface->getWikiMatchByHost( $domain ) ) {
+			return $this->config->setWikiMatch( $match )->getWikiMatch();
+		}
+		return null;
+	}
+	
 	protected function registerComponents( Solarium_Query_Select $query ) {
 		return $this->registerQueryParams   ( $query )
 		            ->registerHighlighting  ( $query )

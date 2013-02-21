@@ -31,6 +31,7 @@ class DependencyContainer
 	
 	public function __construct( array $dependencies ) {
 		$this->resultSetFactory = Factory::getInstance();
+		$this->interface = MediaWikiInterface::getInstance();
 		$this->configureByArray( $dependencies );
 	}
 	
@@ -45,7 +46,7 @@ class DependencyContainer
 	 * @param \Wikia\Search\MediaWikiInterface $interface
 	 * @return \Wikia\Search\QueryService\DependencyContainer
 	 */
-	public function setInterface($interface) {
+	public function setInterface( MediaWikiInterface $interface) {
 		$this->interface = $interface;
 		return $this;
 	}
@@ -61,7 +62,7 @@ class DependencyContainer
 	 * @param \Wikia\Search\Config $config
 	 * @return \Wikia\Search\QueryService\DependencyContainer
 	 */
-	public function setConfig($config) {
+	public function setConfig( Config $config) {
 		$this->config = $config;
 		return $this;
 	}
@@ -77,7 +78,7 @@ class DependencyContainer
 	 * @param Solarium_Client $client
 	 * @return \Wikia\Search\QueryService\DependencyContainer
 	 */
-	public function setClient($client) {
+	public function setClient( \Solarium_Client $client) {
 		$this->client = $client;
 		return $this;
 	}
@@ -92,7 +93,7 @@ class DependencyContainer
 	/**
 	 * @param \Wikia\Search\ResultSet\Factory $resultSetFactory
 	 */
-	public function setResultSetFactory( $resultSetFactory ) {
+	public function setResultSetFactory( Factory $resultSetFactory ) {
 		$this->resultSetFactory = $resultSetFactory;
 	}
 

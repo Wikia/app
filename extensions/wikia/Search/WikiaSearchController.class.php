@@ -43,7 +43,25 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->handleSkinSettings( $this->wg->User->getSkin() );
 
-		$searchConfig = F::build('WikiaSearchConfig');
+		$solariumConfig = array(
+				'adapteroptions' => array(
+						'host' => ( $this->wg->SolrHost ?: 'localhost'),
+						'port' => ( $this->wg->SolrPort ?: 8180 ),
+						'path' => '/solr/',
+						)
+				);
+		if ( $this->wg->WikiaSearchUseProxy && isset( $this->wg->SolrProxy ) ) {
+			$solariumConfig['adapteroptions']['proxy'] = $this->wg->SolrProxy;
+			$solariumConfig['adapteroptions']['port'] = null;
+		}
+		
+		$searchConfig = new Wikia\Search\Config();
+		$dcParams = array(
+					'config' => $searchConfig,
+					'client' => new \Solarium_Client( $solariumConfig ) //@todo put this in its own factory?
+					);
+		$container = new Wikia\Search\QueryService\DependencyContainer( $dcParams );
+		$this->wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->get( $container ); 
 
 		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? self::RESULTS_PER_PAGE : $this->wg->SearchResultsPerPage;
 		
@@ -75,8 +93,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			if ( $searchConfig->getPage() == 1 ) {
 				$this->handleArticleMatchTracking( $searchConfig, F::build( 'Track' ) );
 			}
-
-			$this->wikiaSearch->doSearch( $searchConfig );
+			
+			$this->wikiaSearch->search();
 
 			$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query',
 												array( ucwords( $searchConfig->getQuery( WikiaSearchConfig::QUERY_RAW ) ), $this->wg->Sitename) )  );
@@ -281,7 +299,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return boolean true (if not routed to search match page)
 	 */
-	protected function handleArticleMatchTracking( WikiaSearchConfig $searchConfig, Track $track ) {
+	protected function handleArticleMatchTracking( Wikia\Search\Config $searchConfig, Track $track ) {
 		$articleMatch	=	$searchConfig->getArticleMatch();
 
 		if ( (! empty($articleMatch) ) && $this->getVal('fulltext', '0') === '0') {
@@ -312,7 +330,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return boolean true
 	 */
-	protected function setNamespacesFromRequest( WikiaSearchConfig $searchConfig, User $user ) {
+	protected function setNamespacesFromRequest( Wikia\Search\Config $searchConfig, User $user ) {
 		$searchEngine = F::build( 'SearchEngine' );
 		$searchableNamespaces = $searchEngine->searchableNamespaces();
 		$namespaces = array();
@@ -377,7 +395,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function advancedBox() {
 		$config = $this->getVal('config', false);
-		if (! $config instanceof WikiaSearchConfig ) {
+		if (! $config instanceof Wikia\Search\Config ) {
 			throw new Exception("This should not be called outside of self-request context.");
 		}
 
@@ -401,7 +419,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function tabs() {
 		$config = $this->getVal('config', false);
 
-		if (! $config || (! $config instanceOf WikiaSearchConfig ) ) {
+		if (! $config || (! $config instanceOf Wikia\Search\Config ) ) {
 		    throw new Exception("This should not be called outside of self-request context.");
 		}
 
@@ -445,7 +463,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function pagination() {
 		$config = $this->getVal('config', false);
-		if (! $config || (! $config instanceOf WikiaSearchConfig ) ) {
+		if (! $config || (! $config instanceOf Wikia\Search\Config ) ) {
 			throw new Exception("This should not be called outside of self-request context.");
 		}
 
