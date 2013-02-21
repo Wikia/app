@@ -22,26 +22,21 @@
 	}
 }
 
-// Legacy styles that need to be kept around for articles with stale cache
-// TODO: should be removed once all the cache with the old HTML expires - kflorence
-span.Wikia-video-play-button,
+/* Monobook doesn't have oasis sprite so we're using the old way of 
+ * giving the div a one-size-fits-all background image.  (bugid:95941);
+ */
 .skin-monobook .Wikia-video-play-button {
 	display: block;
 	background-color: transparent;
 	background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_50x50.png); /* wgCdnStylePath */
 	background-position: center center;
 	background-repeat: no-repeat;
-
-	&.min {
-		background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_35x35.png); /* wgCdnStylePath */
+	img {
+		display: none;
 	}
-
-	&.mid {
-		background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_50x50.png); /* wgCdnStylePath */
-	}
-
-	&.max {
-		background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_85x85.png); /* wgCdnStylePath */
+	&:after {
+		content: "";
+		display: inline-block;
 	}
 }
 
