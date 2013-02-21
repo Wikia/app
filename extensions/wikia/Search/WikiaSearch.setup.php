@@ -107,7 +107,6 @@ if ($wgWikiaSearchUseProxy && isset($wgSolrProxy)) {
 
 F::addClassConstructor( 'Solarium_Client', array( 'solariumConfig' => $solariumConfig ) );
 
-
 F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('Solarium_Client') ) );
 F::addClassConstructor( 'WikiaSearchIndexer', array( 'client' => F::build('Solarium_Client', array( 'solariumConfig' => $indexerSolariumConfig ) ) ) );
 

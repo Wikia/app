@@ -65,7 +65,7 @@ class FieldExpression
 	}
 	
 	protected function getValueString() {
-		$value = $this->value ?: '*';
+		$value = $this->value !== null ? $this->value : '*';
 		return sprintf( '%s%s%s', $this->valueQuote, $value, $this->valueQuote );
 	}
 	

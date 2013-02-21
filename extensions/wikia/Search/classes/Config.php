@@ -311,7 +311,7 @@ class Config implements ArrayAccess
 	public function getNamespaces() {
 		$namespaces = ( isset($this->params['namespaces']) && !empty( $this->params['namespaces'] ) ) 
 					? $this->params['namespaces'] 
-					: $this->interface->getDefaultNamespaces();
+					: $this->interface->getDefaultNamespacesFromSearchEngine();
 		if (! is_array( $namespaces ) ) { 
 			$namespaces = array();
 		}
@@ -484,7 +484,7 @@ class Config implements ArrayAccess
 	 */
 	public function getSearchProfiles() {
 		$nsAllSet = array_keys( $this->interface->getSearchableNamespacesFromSearchEngine() );
-		$defaultNamespaces = $this->searchEngine->getDefaultNamespacesFromSearchEngine();
+		$defaultNamespaces = $this->interface->getDefaultNamespacesFromSearchEngine();
 
 	    $profiles = array(
 	            SEARCH_PROFILE_DEFAULT => array(

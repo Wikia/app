@@ -55,13 +55,16 @@ class Field
 	 */
 	public function __construct( $fieldName, $languageCode = null ) {
 		$this->fieldName = $fieldName;
-		$this->languageCode = $languageCode ?: $this->interface->getLanguageCode();
 		$this->interface = \Wikia\Search\MediaWikiInterface::getInstance();
+		$this->languageCode = $languageCode ?: $this->interface->getLanguageCode();
 	}
 	
 	public function __toString() {
-		$lang = $this->interface->searchSupportsLanguageCode( $this->languageCode ) ? preg_replace( '/([^-]+)(-.*)?/', '_$1', $this->languageCode ) : '';
-		$mv = in_array( $this->fieldName, self::$multiValuedFields ) ? '_mv' : '';
-		return sprintf( '%s%s%s', $this->fieldName, $mv, $lang );
+		if ( in_array( $this->languageCode, self::$languageFields ) ) {
+			$lang = $this->interface->searchSupportsLanguageCode( $this->languageCode ) ? preg_replace( '/([^-]+)(-.*)?/', '_$1', $this->languageCode ) : '';
+			$mv = in_array( $this->fieldName, self::$multiValuedFields ) ? '_mv' : '';
+			return sprintf( '%s%s%s', $this->fieldName, $mv, $lang );
+		}
+		return $this->fieldName;
 	}
 }

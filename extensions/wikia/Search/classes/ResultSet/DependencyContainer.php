@@ -3,7 +3,7 @@
  * Class definition for \Wikia\Search\ResultSet\DependencyContainer
  */
 namespace Wikia\Search\ResultSet;
-use \WikiaSearchConfig, \Solarium_Result_Select, \Wikia\Search\MediaWikiInterface, \Wikia\Search\Traits;
+use \Wikia\Search\Config, \Solarium_Result_Select, \Wikia\Search\MediaWikiInterface, \Wikia\Search\Traits;
 /**
  * This allows us to encapsulate all dependencies and send a single object to Wikia\Search\ResultSet\Factory
  * @author relwell
@@ -14,7 +14,7 @@ class DependencyContainer
 	
 	/**
 	 * Search Config
-	 * @var WikiaSearchConfig
+	 * @var Wikia\Search\Config
 	 */
 	protected $config;
 	
@@ -52,7 +52,7 @@ class DependencyContainer
 	}
 	
 	/**
-	 * @return WikiaSearchConfig
+	 * @return Wikia\Search\Config
 	 */
 	public function getConfig() {
 		return $this->config;
@@ -90,7 +90,7 @@ class DependencyContainer
 	 * @param WikiaSearchConfig $config
 	 * @return DependencyContainer
 	 */
-	public function setConfig( WikiaSearchConfig $config ) {
+	public function setConfig( Config $config ) {
 		$this->config = $config;
 		return $this;
 	}

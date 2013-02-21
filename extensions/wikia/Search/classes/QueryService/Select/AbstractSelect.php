@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\QueryService\Select\AbstractSelect
  */
 namespace Wikia\Search\QueryService\Select;
-use Wikia\Search\QueryService\DependencyContainer, Wikia\Search\Config, \Solarium_Client, Wikia\Search\ResultSet, Wikia\Search\Utilities;
+use Wikia\Search\QueryService\DependencyContainer, Wikia\Search\Config, \Solarium_Client, Wikia\Search\ResultSet, Wikia\Search\Utilities, \Solarium_Query_Select, \Solarium_Result_Select;
 
 abstract class AbstractSelect
 {
@@ -67,6 +67,11 @@ abstract class AbstractSelect
 	protected $config;
 	
 	/**
+	 * @var Wikia\Search\MediaWikiInterface
+	 */
+	protected $interface;
+	
+	/**
 	 * @var \Solarium_Client
 	 */
 	protected $client;
@@ -75,6 +80,7 @@ abstract class AbstractSelect
 		$this->client = $container->getClient();
 		$this->config = $container->getConfig();
 		$this->resultSetFactory = $container->getResultSetFactory();
+		$this->interface = $container->getInterface();
 	}
 	
 	/**
@@ -86,6 +92,24 @@ abstract class AbstractSelect
 		     ->prepareResponse( $this->sendSearchRequestToClient() )
 		;
 		return $this->config->getResults();
+	}
+	
+	/**
+	 * @return Ambigous <\Wikia\Search\Match\Article, \Wikia\Search\Match\Wiki, \Wikia\Search\false, boolean>
+	 */
+	public function getMatch() {
+		if ( $this->config->hasMatch() ) {
+			return $this->config->getMatch();
+		}
+		return $this->extractMatch();
+	}
+	
+	/**
+	 * Should be overidden by children
+	 * @return NULL
+	 */
+	protected function extractMatch() {
+		return null;
 	}
 	
 	/**
@@ -109,7 +133,7 @@ abstract class AbstractSelect
 	 * Prepare boost queries based on the provided instance.
 	 * @return string
 	 */
-	public function getBoostQueryString() {
+	protected function getBoostQueryString() {
 		return '';
 	}
 	
@@ -118,7 +142,7 @@ abstract class AbstractSelect
 	 * @param \Solarium_Query_Select $query
 	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
-	protected function registerComponents( \Solarium_Query_Select $query ) {
+	protected function registerComponents( Solarium_Query_Select $query ) {
 		return $this;
 	}
 	
@@ -129,7 +153,7 @@ abstract class AbstractSelect
 	 */
 	protected function registerQueryParams( Solarium_Query_Select $query ) {
 		$sort = $this->config->getSort();
-		$query->addFields      ( $this->searchConfig->getRequestedFields() )
+		$query->addFields      ( $this->config->getRequestedFields() )
 		      ->removeField    ('*')
 		      ->setStart       ( $this->config->getStart() )
 		      ->setRows        ( $this->config->getLength() )
@@ -163,7 +187,7 @@ abstract class AbstractSelect
 	 */
 	protected function registerHighlighting( Solarium_Query_Select $query ) {
 		$highlighting = $query->getHighlighting();
-		$highlighting->addField                     ( self::field( 'html' ) )
+		$highlighting->addField                     ( Utilities::field( 'html' ) )
 		             ->setSnippets                  ( 1 )
 		             ->setRequireFieldMatch         ( true )
 		             ->setFragSize                  ( self::HL_FRAG_SIZE )
@@ -224,7 +248,6 @@ abstract class AbstractSelect
 		}
 		
 		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $this->config ) );
-		
 		$results = $this->resultSetFactory->get( $container );
 		$resultCount = $results->getResultsFound();
 		
