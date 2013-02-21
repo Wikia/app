@@ -150,6 +150,7 @@ class Phalanx implements arrayaccess {
 		} else {
 			$action = '';
 		}
+		$dbw->commit();
 
 		$this->wf->profileOut( __METHOD__ );
 		return ( $action ) ? $this->data['id'] : false;
@@ -169,6 +170,7 @@ class Phalanx implements arrayaccess {
 		if ( $removed = $dbw->affectedRows() ) {
 			$this->log( 'delete' );
 		}
+		$dbw->commit();
 
 		$this->wf->profileOut( __METHOD__ );
 		return ( $removed ) ? $this->data['id'] : false;
