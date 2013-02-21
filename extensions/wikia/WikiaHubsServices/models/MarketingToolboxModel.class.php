@@ -366,56 +366,80 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @desc Main method to publish hub page of specific vertical in specific language and on specific day
 	 * 
 	 * @param $langCode
+	 * @param $sectionId
 	 * @param $verticalId
 	 * @param $timestamp
 	 * 
-	 * @return stdClass (properties: boolean $success, boolean $error, string $errorMsg)
+	 * @return stdClass (properties: boolean $success, string $errorMsg)
 	 */
-	public function publish($langCode, $verticalId, $timestamp) {
+	public function publish($langCode, $sectionId, $verticalId, $timestamp) {
+		$this->wf->ProfileIn(__METHOD__);
+		
 		$results = new stdClass();
-		$results->success = false;
-		$results->error = false;
+		$results->success = null;
 		$results->errorMsg = null;
 		
 		if( $this->wf->ReadOnly() ) {
-			$results->error = true;
+			$results->success = false;
 			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-read-only');
-			
+
+			$this->wf->ProfileOut(__METHOD__);
 			return $results;
 		}
 		
-		if( !$results->error && !$this->checkModulesSaved($langCode, $verticalId, $timestamp) ) {
-			$results->error = true;
+		switch($sectionId) {
+			case self::SECTION_HUBS:
+				$this->publishHub($langCode, $verticalId, $timestamp, $results);
+				break;
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return $results;
+	}
+
+	/**
+	 * @param $langCode
+	 * @param $verticalId
+	 * @param $timestamp
+	 * @param stdClass $results
+	 * 
+	 * @return stdClass (properties: boolean $success, string $errorMsg)
+	 */
+	protected function publishHub($langCode, $verticalId, $timestamp, &$results) {
+		if( !$this->checkModulesSaved($langCode, $verticalId, $timestamp) ) {
+			$results->success = false;
 			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-modules-not-saved');
-			
-			return $results;
+
+			$this->wf->ProfileOut(__METHOD__);
+			return;
 		}
-		
+
 		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 		$hubDate = date('Y-m-d', $timestamp);
-		
+
 		$changes = array(
 			'module_status' => $this->statuses['PUBLISHED']
 		);
-		
+
 		$conditions = array(
 			'lang_code' => $langCode,
 			'vertical_id' => $verticalId,
 			'hub_date' => $hubDate
 		);
-		
+
+		$mdb->begin(__METHOD__);
 		$dbSuccess = $mdb->update(self::HUBS_TABLE_NAME, $changes, $conditions, __METHOD__);
-		
-		if( $dbSuccess ) {
+
+		if( $dbSuccess && $this->checkModulesSaved($langCode, $verticalId, $timestamp) ) {
 			$mdb->commit(__METHOD__);
 			$results->success = true;
-			$results->error = false;
 		} else {
-			$results->error = true;
+			$mdb->rollback(__METHOD__);
+			$results->success = false;
 			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-db-error');
 		}
-		
-		return $results;
+
+		$this->wf->ProfileOut(__METHOD__);
 	}
 
 	/**
