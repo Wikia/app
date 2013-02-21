@@ -181,26 +181,26 @@ WikiaHomePageRemix.prototype = {
 			$.storage.set('remixCounter', remixCounter);
 		}
 		else if (node.hasParent('.goPreview') || node.is('.goPreview')) {
-			this.track(WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'preview', ev);
+			this.track(WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'preview', {}, ev);
 		}
 		else if (node.hasParent('.goVisit') || node.is('.goVisit')) {
-			this.track(WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'visit', ev);
+			this.track(WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'visit', {}, ev);
 		}
 		else if (node.hasParent('.wikia-slot')) {
-			this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'slot-image', ev);
+			this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'slot-image', {}, ev);
 		}
 		else if (node.is('.create-wiki')) {
-			this.track(WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'create-wiki', ev);
+			this.track(WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'create-wiki', {}, ev);
 		}
 		else if (node.hasParent('.wikiahomepage-hubs-section')) {
 			if (node.hasParent('.videogames') && node.is('img')) {
-				this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hubs-image-videogames', ev);
+				this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hubs-image-videogames', {}, ev);
 			}
 			else if (node.hasParent('.entertainment') && node.is('img')) {
-				this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hubs-image-entertainment', ev);
+				this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hubs-image-entertainment', {}, ev);
 			}
 			else if (node.hasParent('.lifestyle') && node.is('img')) {
-				this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hubs-image-lifestyle', ev);
+				this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hubs-image-lifestyle', {}, ev);
 			}
 			else if (node.is('a')) {
 				this.track(
@@ -213,22 +213,22 @@ WikiaHomePageRemix.prototype = {
 		}
 		else if (node.hasParent('.WikiPreviewInterstitial')) {
 			if (node.hasParent('.carousel')) {
-				this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'interstitial-carousel', ev);
+				this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'interstitial-carousel', {}, ev);
 			}
 			else if (node.is('.hero-image')) {
-				this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'interstitial-hero-image', ev);
+				this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'interstitial-hero-image', {}, ev);
 			}
 			else if (node.is('.close-button')) {
-				this.track(WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'interstitial-close', ev);
+				this.track(WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'interstitial-close', {}, ev);
 			}
 			else if (node.hasParent('.user-page')) {
-				this.track(WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'interstitial-user-page', ev);
+				this.track(WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'interstitial-user-page', {}, ev);
 			}
 			else if (node.hasParent('.user-contributions')) {
-				this.track(WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'interstitial-user-contributions', ev);
+				this.track(WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'interstitial-user-contributions', {}, ev);
 			}
 			else if (node.is('.visit') || node.hasParent('.visit')) {
-				this.track(WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'interstitial-visit', ev);
+				this.track(WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'interstitial-visit', {}, ev);
 			}
 		}
 	},
