@@ -155,6 +155,27 @@ class ImagePage extends Article {
 			$this->mPage->doViewUpdates( $this->getContext()->getUser() );
 		}
 
+		/* Wikia Change - abstracted this out to protected function */
+		$this->imageDetails($showmeta, $formattedMetadata);
+		/* End Wikia Change */
+
+		// Add remote Filepage.css
+		if( !$this->repo->isLocal() ) {
+			$css = $this->repo->getDescriptionStylesheetUrl();
+			if ( $css ) {
+				$wgOut->addStyle( $css );
+			}
+		}
+		// always show the local local Filepage.css, bug 29277
+		$wgOut->addModuleStyles( 'filepage' );
+	}
+	
+	/**
+	 * Wikia - abstracted out part of view() function, so it can be wrapped by WikiaVideoPage
+	 */
+	protected function imageDetails($showmeta, $formattedMetadata) {
+		global $wgOut;
+		
 		# Show shared description, if needed
 		if ( $this->mExtraDescription ) {
 			$fol = wfMessage( 'shareddescriptionfollows' );
@@ -171,36 +192,19 @@ class ImagePage extends Article {
 		/* Wikia Change - abstracted this out to protected function */
 		$this->imageListing();	// generates image dupes and image links
 		/* End Wikia Change */
-
+		
 		# Allow extensions to add something after the image links
 		$html = '';
 		wfRunHooks( 'ImagePageAfterImageLinks', array( $this, &$html ) );
 		if ( $html ) {
 			$wgOut->addHTML( $html );
 		}
-
+		
 		if ( $showmeta ) {
 			$wgOut->addHTML( Xml::element( 'h2', array( 'id' => 'metadata' ), wfMsg( 'metadata' ) ) . "\n" );
 			$wgOut->addWikiText( $this->makeMetadataTable( $formattedMetadata ) );
 			$wgOut->addModules( array( 'mediawiki.action.view.metadata' ) );
 		}
-		
-		/* Wikia Change - adding more content to this page */
-		$addtionalDetails = $this->additionalDetails();
-		if ( $addtionalDetails ) {
-			$wgOut->addHtml($additionalDetails);
-		}
-		/* End Wikia Change */
-
-		// Add remote Filepage.css
-		if( !$this->repo->isLocal() ) {
-			$css = $this->repo->getDescriptionStylesheetUrl();
-			if ( $css ) {
-				$wgOut->addStyle( $css );
-			}
-		}
-		// always show the local local Filepage.css, bug 29277
-		$wgOut->addModuleStyles( 'filepage' );
 	}
 	
 	/**
@@ -218,14 +222,6 @@ class ImagePage extends Article {
 		# @todo FIXME: For some freaky reason, we can't redirect to foreign images.
 		# Yet we return metadata about the target. Definitely an issue in the FileRepo
 		$this->imageLinks();
-	}
-	
-	/**
-	 * Wikia - empty protected method so that it can be overwritten by WikiaVideoPage
-	 * @return string HTML
-	 */
-	protected function additionalDetails() {
-		return '';	// return nothing on purpose
 	}
 
 	/**

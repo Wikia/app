@@ -3,6 +3,18 @@ $(function() {
 var VideoPage = {
 	init: function() {
 		var self = this;
+		var moreInfoWrapper = $('.more-info-wrapper');
+		
+		$('#SeeMore').on('click', function(e) {
+			e.preventDefault();
+			$(this).toggleClass('toggled');
+			moreInfoWrapper.toggleClass('show');
+			if(moreInfoWrapper.hasClass('show')) {
+				moreInfoWrapper.slideDown('fast');
+			} else {
+				moreInfoWrapper.slideUp('fast');
+			}
+		});
 		
 		$('.WikiaMenuElement').on('click', '.remove', function(e) {
 			e.preventDefault();

@@ -23,6 +23,19 @@ class WikiaVideoPage extends ImagePage {
 	}
 	
 	/**
+	 * imageDetails override
+	 * Image page doesn't need the wrapper, but VideoPage does
+	 */
+	protected function imageDetails($showmeta, $formattedMetadata) {
+		global $wgOut;
+		$wgOut->addHtml('<div class="more-info-wrapper">');
+		parent::imageDetails($showmeta, $formattedMetadata);
+		$wgOut->addHtml('</div>');
+		$wgOut->addHtml(F::app()->renderPartial( 'VideoPageController', 'seeMore', array() ));
+		$this->additionalDetails();
+	}
+	
+	/**
 	 * imageListing override.
 	 * for VideoPage, imageListing will be printed under additionalDetails()
 	 */

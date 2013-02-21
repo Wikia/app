@@ -1,4 +1,6 @@
+@import "skins/oasis/css/mixins/arrow";
 @import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/core/color";
 
 .page-listings {
 	@include clearfix;
@@ -21,4 +23,30 @@
 	.page-listing-title {
 		margin: 0;
 	}
+}
+
+.SeeMore {
+	&.toggled {
+		.see-less {
+			display: inline;
+		}
+		.see-more {
+			display: none;
+		}
+	}
+	.arrow {
+		&.down {
+			@include arrow(4px, $color-text, 'down');
+		}
+		&.up {
+			@include arrow(4px, $color-text, 'up');
+		}
+	}
+	.see-less {
+		display: none;
+	}
+}
+
+.more-info-wrapper {
+	display: none;
 }
