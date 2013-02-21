@@ -107,8 +107,8 @@ class PhalanxService extends Service {
 	private function sendToPhalanxDaemon( $action, $parameters ) {
 		wfProfileIn( __METHOD__  );
 
-		$baseurl = $this->wg->PhalanxServiceUrl;
-		$options = $this->wg->PhalanxServiceOptions;
+		$baseurl = F::app()->wg->PhalanxServiceUrl;
+		$options = F::app()->wg->PhalanxServiceOptions;
 
 		$url = sprintf( "%s/%s", $baseurl, $action != "status" ? $action : "" );
 		/**

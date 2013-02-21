@@ -53,7 +53,7 @@ class PhalanxUserModel extends PhalanxModel {
 	
 	public function match_user_old() {
 		/* problem with Phalanx service? - use previous version of Phalanx extension */
-		return UserBlock::blockCheck( $user );
+		return UserBlock::blockCheck( $this->user );
 	}
 	
 	public function match_email() {
@@ -63,6 +63,6 @@ class PhalanxUserModel extends PhalanxModel {
 	public function match_email_old() {
 		/* problem with Phalanx service? - use previous version of Phalanx extension */
 		$abortError = '';
-		return UserBlock::onAbortNewAccount( $user, $abortError );
+		return UserBlock::onAbortNewAccount( $this->user, $abortError );
 	}
 }
