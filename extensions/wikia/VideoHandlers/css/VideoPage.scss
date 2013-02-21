@@ -1,0 +1,24 @@
+@import "skins/oasis/css/mixins/clearfix";
+
+.page-listings {
+	@include clearfix;
+	ul {
+		list-style: none;
+		margin: 0;
+	}
+	.page-listing {
+		@include clearfix;
+		margin: 10px 0 0;
+	}
+	.page-listing-image {
+		background-color: grey;
+		height: 90px;
+		width: 160px;
+	}
+	.page-listing-snippet {
+		margin: 0;
+	}
+	.page-listing-title {
+		margin: 0;
+	}
+}
