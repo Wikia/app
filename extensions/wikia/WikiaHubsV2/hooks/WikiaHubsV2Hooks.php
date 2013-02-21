@@ -9,22 +9,52 @@ class WikiaHubsV2Hooks {
 	 */
 	public function onArticleFromTitle(&$title, &$article) {
 		wfProfileIn(__METHOD__);
-
 		$app = F::app();
-		$dbKeyName = $title->getDBKey();
-		$dbKeyNameSplit = explode('/', $dbKeyName);
 
-		$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
+		if( !empty($app->wg->EnableWikiaHomePageExt)) {
+			$dbKeyName = $title->getDBKey();
+			$dbKeyNameSplit = explode('/', $dbKeyName);
 
-		if( !empty($app->wg->EnableWikiaHomePageExt) && $this->isHubsPage($hubName) ) {
-			$hubTimestamp = $this->getTimestampFromSplitDbKey($dbKeyNameSplit);
+			$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-			// TODO handle if date is wrong
+			if ( $this->isHubsPage($hubName) ) {
+				$hubTimestamp = $this->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
-			// TODO ask Matt if anon user can see future hubs
+				// TODO handle if date is wrong
 
-			$app->wg->SuppressPageHeader = true;
-			$article = F::build( 'WikiaHubsV2Article', array($title, $this->getHubPageId($dbKeyName), $hubTimestamp) );
+				// TODO ask Matt if anon user can see future hubs
+
+				$app->wg->SuppressPageHeader = true;
+				$article = F::build( 'WikiaHubsV2Article', array($title, $this->getHubPageId($dbKeyName), $hubTimestamp) );
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+
+	}
+
+	/**
+	 * Change canonical url if we are displaying hub for selected date
+	 *
+	 * @param string $url
+	 * @param Title  $title
+	 *
+	 * @return bool
+	 */
+	public function onWikiaCanonicalHref(&$url, $title) {
+		wfProfileIn(__METHOD__);
+		$app = F::app();
+
+		if( !empty($app->wg->EnableWikiaHomePageExt)) {
+
+			$dbKeyName = $title->getDBKey();
+			$dbKeyNameSplit = explode('/', $dbKeyName);
+			$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
+
+			if ( $this->isHubsPage($hubName) && isset($dbKeyNameSplit[1])) {
+				$url = $this->getCanonicalHrefForHub($hubName, $url);
+			}
 		}
 
 		wfProfileOut(__METHOD__);
@@ -73,5 +103,9 @@ class WikiaHubsV2Hooks {
 
 	protected function getTimestampFromUserDate($date) {
 		return strtotime($date);
+	}
+
+	protected function getCanonicalHrefForHub($hubName, $url) {
+		return mb_substr($url, 0, mb_strpos($url, $hubName) + mb_strlen($hubName));
 	}
 }
