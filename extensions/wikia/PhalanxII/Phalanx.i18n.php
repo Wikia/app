@@ -1826,6 +1826,7 @@ Prosimy [[Special:Contact|skontaktuj się z nami]] w sprawie problemu.<br />Blok
 	'phalanx-stats-row' => "w $4, typ filtru '''$1''' zablokowano '''$2''' na $3",
 	'phalanx-stats-row-per-wiki' => "użytkownik '''$2''' zablokował na '''$4''' wedle ID filtru '''$3''' ($5) (typ: '''$1''')",
 	'phalanx-stats-not-implemented' => 'Ta funkcjonalnośc nie została jeszcze zaimplementowana',
+	'phalanx-stats-results' => 'Log dla blokady',
 	'phalanx-rule-log-name' => 'Rejestr Phalanx',
 	'phalanx-rule-log-header' => 'Jest to rejestr zmian reguł Phalanx.',
 	'phalanx-email-rule-log-name' => 'rejestr filtrów e-mailowych Phalanx',

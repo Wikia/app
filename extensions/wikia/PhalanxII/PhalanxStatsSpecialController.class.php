@@ -155,6 +155,6 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function help() {
-		$this->setVal( 'action', $this->title->getLocalURL() );
+		$this->setVal( 'action', $this->title->getFullURL() );
 	}
 }
