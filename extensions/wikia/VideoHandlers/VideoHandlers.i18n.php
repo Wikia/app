@@ -41,6 +41,11 @@ $messages['en'] = array(
 	'videos-error-old-type-video' => 'Old type of videos no longer supported (VideoPage)',
 	'videos-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
 	'videos-initial-upload-edit-summary' => 'created video',
+	
+	/* video page */
+	'video-page-file-list-header' => 'Appears in these articles',
+	'video-page-global-file-list-header' => 'Appears in these articles on other Wikis',
+	
 );
 
 /** Message documentation (Message documentation) */
@@ -72,7 +77,9 @@ $messages['qqq'] = array(
 	'videos-error-old-type-video' => 'Error message when user tries to add a video of a type that is no longer supported.',
 	'videos-error-while-loading' => 'Error message when failing to add a video.',
 
-
+	/* video page */
+	'video-page-file-list-header' => 'Heading for file list on Video File Page',
+	'video-page-global-file-list-header' => 'Heading for global usage list on Video File Page',
 );
 
 /** Afrikaans (Afrikaans)

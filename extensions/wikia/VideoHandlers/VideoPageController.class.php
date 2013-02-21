@@ -10,17 +10,50 @@ class VideoPageController extends WikiaController {
 		
 	}
 	
+	/**
+	 *
+	 */
 	public function fileUsage() {
-
-	}
-	
-	public function globalUsage() {
-
+		$type = $this->getVal('type', 'local');
+		if($type === 'global') {
+			$heading = wfMsg('video-page-global-file-list-header');
+		} else {
+			$heading = wfMsg('video-page-file-list-header');
+		}
+		$mockFileList = array(
+			array(
+				'imageUrl' => '',
+				'url' => '',
+				'title' => 'Article Title Should be here',
+				'wiki' => 'Glee Wiki',
+				'wikiUrl' => '',
+				'snippet' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.',
+			),
+			array(
+				'imageUrl' => '',
+				'url' => '',
+				'title' => 'Article Title Should be here',
+				'wiki' => 'Glee Wiki',
+				'wikiUrl' => '',
+				'snippet' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.',
+			),
+			array(
+				'imageUrl' => '',
+				'url' => '',
+				'title' => 'Article Title Should be here',
+				'wiki' => 'Glee Wiki',
+				'wikiUrl' => '',
+				'snippet' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.',
+			),
+		);
+		
+		$this->heading = $heading;
+		$this->fileList = $mockFileList;
 	}
 	
 	public function relatedPages() {
 
-		$titleID = ; # Find title from one of the pages that include the current video
+		$titleID = 15; # Find title from one of the pages that include the current video
 		$title = Title::newFromID($titleID);
 
 		# Get the categories for this title
@@ -43,7 +76,7 @@ class VideoPageController extends WikiaController {
 		$relatedPages->setCategories($titleCats);
 
 		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
-		$text = F::app()->renderView( 'RelatedPages', 'Index', array( "altTitle" => $title ) );
+		$this->text = F::app()->renderView( 'RelatedPages', 'Index', array( "altTitle" => $title ) );
 	}
 
 }

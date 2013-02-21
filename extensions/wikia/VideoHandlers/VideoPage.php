@@ -42,8 +42,8 @@ class WikiaVideoPage extends ImagePage {
 		
 		$html = '';
 		
-		$html .= $app->renderView( 'VideoPageController', 'fileUsage', array() );
-		$html .= $app->renderView( 'VideoPageController', 'globalUsage', array() );
+		$html .= $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'local') );
+		$html .= $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'global') );
 		$html .= $app->renderView( 'VideoPageController', 'relatedPages', array() );
 		
 		$wgOut->addHTML( $html );
