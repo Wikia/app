@@ -165,7 +165,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Handle POST request to edit / create a block
 	 *
-	 * @return array|bool
+	 * @return int
 	 */
 	private function handleBlockPost() {
 		$this->wf->profileIn( __METHOD__ );
@@ -197,7 +197,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $typemask ) ) {
 			$this->wf->profileOut( __METHOD__ );
-			return false;
+			return self::RESULT_ERROR;
 		}
 
 		$phalanx['type'] = $typemask;
@@ -214,7 +214,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$expire = strtotime( $phalanx['expire'] );
 			if ( $expire < 0 || $expire === false ) {
 				$this->wf->profileOut( __METHOD__ );
-				return false;
+				return self::RESULT_ERROR;
 			}
 			$phalanx['expire'] = wfTimestamp( TS_MW, $expire );
 		} else {
