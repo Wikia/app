@@ -4106,6 +4106,7 @@ class User {
 	 * Will have no effect for anonymous users.
 	 */
 	public function incEditCount() {
+		global $wgMemc, $wgCityId;
 		if( !$this->isAnon() ) {
             // wikia change, load always from first cluster when we use
             // shared users database
@@ -4124,14 +4125,11 @@ class User {
 				__METHOD__ );
 			$dbw->commit();
 
-
-			/*
-			 * Wikia Change By Tomek
-			 * at this point we do not want to run
-			 * other logic because is not truth in our system
-			 * (local table of revision on every wiki)
-			 *
-			 *  false && to skip runing this part of code
+			/**
+			 * Wikia change
+			 * Update editcount for wiki
+			 * @since Feb 2013
+			 * @author Kamil Koterba
 			 */
 			if ( !empty($wgEnableEditCountLocal) ) {
 				$dbw = wfGetDB( DB_MASTER );
@@ -4150,7 +4148,7 @@ class User {
 					$this->getEditCountLocal( 0, true );
 				}
 			}
-
+			/* end of change */
 
 		}
 		// edit count in user cache too
