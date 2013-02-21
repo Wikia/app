@@ -80,7 +80,7 @@ class UserStatsService extends WikiaModel {
 		);
 
 		if( $field === null or $field === false ) { // editcount has not been initialized. do so.
-			$dbw = $this->getWikiDB( DB_MASTER, array(), $dbName );
+			$dbw = $this->getWikiDB( DB_MASTER, $dbName );
 			$editCount = $dbr->selectField(
 				'revision', 'count(*)',
 				array( 'rev_user' => $this->userId ),
