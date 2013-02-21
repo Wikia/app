@@ -17,7 +17,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 		// handle "type" parameter from URLs comming from hook messages
 		$type = $this->app->wg->Request->getInt('type');
 		if ($type > 0) {
-			$this->mSearchFilter = array($type => true);
+			$this->mSearchFilter = array($type);
 		}
 
 		$this->mTitle = F::build( 'Title', array( 'Phalanx/stats', NS_SPECIAL ), 'newFromText' );
@@ -28,10 +28,17 @@ class PhalanxPager extends ReverseChronologicalPager {
 	}
 
 	/**
+	 * Get types filter as key/value collection:
+	 *
+	 * array(
+	 *  typeId => true
+	 * )
+	 *
 	 * @return Array
 	 */
 	function getSearchFilter() {
-		return $this->mSearchFilter;
+		$filters = array_map('intval', $this->mSearchFilter);
+		return array_fill_keys($filters, true);
 	}
 
 	function getQueryInfo() {
