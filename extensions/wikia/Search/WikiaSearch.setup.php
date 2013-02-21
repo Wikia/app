@@ -119,7 +119,7 @@ $app->registerExtensionMessageFile('WikiaSearch', $dir . 'WikiaSearch.i18n.php' 
 /**
  * preference settings
  */
-$app->registerHook('GetPreferences', 'WikiaSearch', 'onGetPreferences');
+$app->registerHook('GetPreferences', 'WikiaSearchController', 'onGetPreferences');
 
 /*
  * hooks

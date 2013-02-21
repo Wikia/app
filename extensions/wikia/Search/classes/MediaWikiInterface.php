@@ -296,8 +296,16 @@ class MediaWikiInterface
 	 * @return int
 	 */
 	public function getWikiId() {
+		return (int) $this->isOnDbCluster() ?  $this->getGlobal( 'CityId' ) : $this->getGlobal( 'SearchWikiId' );
+	}
+	
+	/**
+	 * Tells us whether we're using the DB cluster. This is how we figure out if we're on internal or not.
+	 * @return boolean
+	 */
+	public function isOnDbCluster() {
 		$shared = $this->getGlobal( 'ExternalSharedDB' );
-		return (int) ( empty( $shared ) ? $this->getGlobal( 'SearchWikiId' ) : $this->getGlobal( 'CityId' ) );
+		return !empty( $shared );
 	}
 	
 	/**
@@ -574,6 +582,25 @@ class MediaWikiInterface
 	 */
 	public function getMediaWikiFormattedTimestamp( $timestamp ) { 
 		return $this->app->wg->Lang ? $this->app->wg->Lang->date( $this->app->wf->Timestamp( TS_MW, $timestamp ) ) : '';
+	}
+	
+	
+	
+	/**
+	 * Determines if the current globally registered language code is supported by search for dynamic support.
+	 * @return boolean
+	 */
+	public function searchSupportsCurrentLanguage() {
+		return $this->searchSupportsLanguageCode( $this->getLanguageCode() );
+	}
+	
+	/**
+	 * Determines if a given language code is supported for dynamic search
+	 * @param string $languageCode
+	 * @return boolean
+	 */
+	public function searchSupportsLanguageCode( $languageCode ) {
+		return in_array( $languageCode, $this->getGlobal( 'WikiaSearchSupportedLanguages' ) );
 	}
 	
 	/**
