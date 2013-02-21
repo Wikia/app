@@ -110,6 +110,10 @@ $messages['en'] = array(
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
 	'marketing-toolbox-module-save-ok' => '$1 module saved successfully!',
 
+	'marketing-toolbox-module-publish-error-read-only' => "We're in read-only mode at this moment. The hub page cannot be published. Please, try again later.",
+	'marketing-toolbox-module-publish-error-modules-not-saved' => 'There are unsaved modules. Please check their content, save them and try publish hub page again.',
+	'marketing-toolbox-module-publish-error-db-error' => 'A database error occured. The hub pages has not been published.',
+
 	'marketing-toolbox-validator-string-short' => 'Your text is too short, please write more',
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',
 	'marketing-toolbox-validator-wrong-url' => 'The URL you entered is not valid, please try again',
