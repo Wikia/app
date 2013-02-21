@@ -1,4 +1,4 @@
 <?php
-abstract class Service {
+abstract class Service extends WikiaObject {
 
 }
