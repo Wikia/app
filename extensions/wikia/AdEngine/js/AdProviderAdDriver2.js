@@ -97,7 +97,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			inMedRecTest = abTest && abTest.getGroup('MEDREC_TESTS'),
 			inSkinTest = abTest && abTest.getGroup('SKIN_TESTS');
 
-		// Always have an ad when user is in the LEADERBOARD_TESTS experiment
+		// Always have an ad when user is in a relevant AB experiment
 		if (!(inLeaderboardTest && slotname === 'TOP_LEADERBOARD')
 				&& !(inMedRecTest && slotname === 'TOP_RIGHT_BOXAD')
 				&& !(inSkinTest && slotname === 'TOP_LEADERBOARD')
