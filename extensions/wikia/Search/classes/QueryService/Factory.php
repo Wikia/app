@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\QueryService;
-use \Wikia\Search\Config;
+use \Wikia\Search\Config, \Wikia\Search\MediaWikiInterface, \Solarium_Client;
 
 class Factory
 {
@@ -27,6 +27,7 @@ class Factory
 	
 	public function get( DependencyContainer $container ) {
 		$config = $container->getConfig();
+		$this->validateClient( $container );
 		
 		if ( $config->isInterWiki() ) {
 			return new Select\InterWiki( $container );
@@ -35,5 +36,24 @@ class Factory
 			return new Select\Video( $container );
 		}
 		return new Select\OnWiki( $container );
+	}
+	
+	protected function validateClient( DependencyContainer $container ) {
+		$interface = MediaWikiInterface::getInstance();
+		$client = $container->getClient();
+		if ( empty( $client ) ) {
+			$solariumConfig = array(
+					'adapter' => 'Solarium_Client_Adapter_Curl',
+					'adapteroptions' => array(
+							'host'    => ( $this->wg->SolrHost ?: 'localhost'),
+							'port'    => ( $this->wg->SolrPort ?: 8180 ),'path'    => '/solr/',
+							)
+					);
+			if ( $interface->getGlobal( 'WikiaSearchUseProxy' ) && $interface->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
+				$solariumConfig['adapteroptions']['proxy'] = $this->interface->getGlobal( 'SolrProxy' );
+				$solariumConfig['adapteroptions']['port'] = null;
+			}
+			$container->setClient( new Solarium_Client( $solariumConfig ) );
+		}
 	}
 }
