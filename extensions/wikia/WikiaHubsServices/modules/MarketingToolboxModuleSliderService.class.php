@@ -142,7 +142,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 		foreach($data['slides'] as $slide) {
 			$galleryText .= "\n" . implode('|',array(
 					$this->app->wg->ContLang->getNsText( NS_FILE ) . ':' . $slide['photoName'],
-					$slide['photoAlt'],
+					"'''" . $slide['photoAlt'] . "'''",
 					'link=' . $slide['url'],
 					'linktext=' . $slide['longDesc'],
 					'shorttext=' . $slide['shortDesc']
