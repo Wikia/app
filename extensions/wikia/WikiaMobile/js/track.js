@@ -7,16 +7,16 @@
 
 /* global define Wikia */
 
-define('track', function () {
+define('track', ['wikia.tracker'], function( tracker ) {
 	'use strict';
-	var ACTIONS = Wikia.Tracker.ACTIONS;
+	var ACTIONS = tracker.ACTIONS;
 
 	return {
 		event: function (category, action, options, ev) {
 			options = options || {};
 
 			if (!window.wgGameGuides) {
-				Wikia.Tracker.track({
+				tracker.track({
 					action: action,
 					browserEvent: ev,
 					category: 'wikiamobile-' + category,

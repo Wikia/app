@@ -117,7 +117,7 @@
 	}
 
 	// Exports
-	context.Wikia = Wikia || {};
+	context.Wikia = context.Wikia || {};
 	context.Wikia.Tracker = tracker( context );
 
 	if (context.define && context.define.amd) {
