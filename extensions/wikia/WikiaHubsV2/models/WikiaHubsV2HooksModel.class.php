@@ -15,7 +15,7 @@ class WikiaHubsV2HooksModel extends WikiaModel {
 	 * @return bool
 	 */
 	public function isHubsPage($dbKeyName) {
-		foreach(F::app()->wg->WikiaHubsV2Pages as $hubPageTitleDbKey) {
+		foreach($this->app->wg->WikiaHubsV2Pages as $hubPageTitleDbKey) {
 			if( $dbKeyName === $hubPageTitleDbKey ) return true;
 		}
 
@@ -29,7 +29,7 @@ class WikiaHubsV2HooksModel extends WikiaModel {
 	 * @return bool
 	 */
 	public function getHubPageId($dbKeyName) {
-		$verticals = array_flip(F::app()->wg->WikiaHubsV2Pages);
+		$verticals = array_flip($this->app->wg->WikiaHubsV2Pages);
 		if( isset($verticals[$dbKeyName]) ) {
 			return $verticals[$dbKeyName];
 		}
