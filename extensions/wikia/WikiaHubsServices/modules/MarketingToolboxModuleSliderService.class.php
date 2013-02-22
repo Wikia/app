@@ -23,6 +23,20 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 				'class' => 'hidden'
 			);
 
+			$fields['strapline' . $i] = array(
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-slider-strapline'),
+				'validator' => new WikiaValidatorString(
+					array(
+						'required' => true,
+						'min' => 1
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
+				),
+				'attributes' => array(
+					'class' => 'required'
+				)
+			);
+
 			$fields['shortDesc' . $i] = array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-slider-short-description'),
 				'validator' => new WikiaValidatorString(
@@ -106,24 +120,55 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 	}
 
 	public function getStructuredData($data) {
-		$model = new MarketingToolboxSliderModel();
-		$slidesCount =  $model->getSlidesCount();
 		$structuredData = array();
 
 		if( !empty( $data ) ) {
-			for( $i = 1; $i <= $slidesCount; $i++ ) {
-				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['photo'.$i]);
-				$structuredData['slides'][] = array(
-										'photoUrl' => $imageData->url,
-										'shortDesc' => $data['shortDesc'.$i],
-										'longDesc' => $data['longDesc'.$i],
-										'url' => $data['url'.$i],
-										'photoAlt' => $imageData->title
 
-				);
+			$model = new MarketingToolboxSliderModel();
+			$slidesCount =  $model->getSlidesCount();
+
+			for( $i = 1; $i <= $slidesCount; $i++ ) {
+				$imageData = $this->getImageData($data['photo'.$i]);
+
+				$structuredData['slides'][] = array(
+									'photoUrl' => $imageData->url,
+									'strapline' => $data['strapline'.$i],
+									'shortDesc' => $data['shortDesc'.$i],
+									'longDesc' => $data['longDesc'.$i],
+									'url' => $data['url'.$i],
+									'photoName' => $data['photo'.$i],
+								);
 			}
 		}
 
 		return $structuredData;
+	}
+
+
+	public function render($structureData) {
+		$data['wikitextslider'] = $this->getWikitext($structureData);
+
+		return parent::render($data);
+	}
+
+	public function getWikitext($data) {
+		$galleryText = '<gallery type="slider" orientation="mosaic">';
+		foreach($data['slides'] as $slide) {
+			$galleryText .= "\n" . implode('|',array(
+					$this->app->wg->ContLang->getNsText( NS_FILE ) . ':' . $slide['photoName'],
+					"'''" . $slide['strapline'] . "'''",
+					'link=' . $slide['url'],
+					'linktext=' . $slide['longDesc'],
+					'shorttext=' . $slide['shortDesc']
+				)
+			);
+		}
+		$galleryText .= "\n</gallery>";
+		return $galleryText;
+	}
+
+	public function getImageData( $image ) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($image);
+
 	}
 }

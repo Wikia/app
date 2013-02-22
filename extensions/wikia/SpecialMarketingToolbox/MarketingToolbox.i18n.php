@@ -74,6 +74,7 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-top10list-title' => 'Title',
 	'marketing-toolbox-hub-module-top10list-desc' => 'Description',
 
+	'marketing-toolbox-hub-module-slider-strapline' => 'Strapline',
 	'marketing-toolbox-hub-module-slider-short-description' => 'Short description',
 	'marketing-toolbox-hub-module-slider-long-description' => 'Long description',
 	'marketing-toolbox-hub-module-slider-url' => 'Wiki URL',
