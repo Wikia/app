@@ -26,6 +26,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		if (!$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('marketingtoolbox')) {
 			$this->wf->ProfileOut(__METHOD__);
+			$this->app->wg->Out->setStatusCode ( 403 );
 			$this->specialPage->displayRestrictionError();
 			return false;
 		}
@@ -177,6 +178,29 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->overrideTemplate('editHub');
 	}
 
+	public function publishHub() {
+		if ($this->request->wasPosted()) {
+			$this->retriveDataFromUrl();
+
+			$result = $this->toolboxModel->publish(
+				$this->langCode,
+				$this->sectionId,
+				$this->verticalId,
+				$this->date
+			);
+
+			$this->success = $result->success;
+			if ($this->success) {
+				$date = new DateTime('@' . $this->date);
+
+				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
+					. '/' . $date->format('Y-m-d');
+			} else {
+				$this->errorMsg = $result->errorMsg;
+			}
+		}
+	}
+
 	private function getNextModuleUrl() {
 		$nextModuleId = $this->selectedModuleId;
 
@@ -210,6 +234,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	protected function prepareLayoutData($selectedModuleId, $modulesData) {
 		$this->prepareHeaderData($modulesData, $this->date);
 		$this->prepareLeftMenuData($modulesData, $selectedModuleId);
+		$this->prepareFooterData($this->langCode, $this->verticalId, $this->date);
 	}
 
 	/**
@@ -241,6 +266,12 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				'anchor' => $moduleData['name'],
 			);
 		}
+	}
+
+	protected  function prepareFooterData($langCode, $verticalId, $timestamp) {
+		$this->footerData = array(
+			'allModulesSaved' => $this->toolboxModel->checkModulesSaved($langCode, $verticalId, $timestamp)
+		);
 	}
 
 	/**
@@ -306,6 +337,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 */
 	public function executeFooter($data) {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss');
+		$this->allModulesSaved = $data['allModulesSaved'] ? '' : 'disabled="disabled"' ;
 	}
 
 	/**

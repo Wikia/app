@@ -30,6 +30,7 @@ $app->registerClass('WikiaHubsV2Hooks', $dir . 'hooks/WikiaHubsV2Hooks.php');
 // model classes
 $app->registerClass('WikiaHubsV2Article', $dir . 'models/WikiaHubsV2Article.class.php');
 $app->registerClass('WikiaHubsV2Model', $dir . 'models/WikiaHubsV2Model.class.php');
+$app->registerClass('WikiaHubsV2HooksModel', $dir . 'models/WikiaHubsV2HooksModel.class.php');
 
 $app->registerClass('WikiaHubsV2Module', $dir . 'models/modules/WikiaHubsV2Module.class.php');
 $app->registerClass('WikiaHubsV2PulseModule', $dir . 'models/modules/WikiaHubsV2PulseModule.class.php');
@@ -58,6 +59,7 @@ $wgExtensionMessagesFiles['WikiaHubsV2'] = $dir . 'WikiaHubsV2.i18n.php';
 // hooks
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsV2Mobile', 'onWikiaMobileAssetsPackages');
 $app->registerHook('ArticleFromTitle', 'WikiaHubsV2Hooks', 'onArticleFromTitle');
+$app->registerHook('WikiaCanonicalHref', 'WikiaHubsV2Hooks', 'onWikiaCanonicalHref');
 
 // foreign file repo
 $wgForeignFileRepos[] = array(
