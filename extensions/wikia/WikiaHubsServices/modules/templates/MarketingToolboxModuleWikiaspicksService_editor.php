@@ -8,7 +8,7 @@
 				'imageWidth' => (isset($sponsoredImage->width) ? $sponsoredImage->width : ''),
 				'imageHeight' => (isset($sponsoredImage->height) ? $sponsoredImage->height : ''),
 			)
-		); 
+		);
 	?>
 	<div class="module-box grid-4 alpha">
 		<div class="grid-3 alpha">
@@ -30,6 +30,12 @@
 					'MarketingToolbox',
 					'FormField',
 					array('inputData' => $fields['moduleTitle'])
+				);
+			?>
+			<?= $app->renderView(
+					'MarketingToolbox',
+					'FormField',
+					array('inputData' => $fields['imageLink'])
 				);
 			?>
 			<?= $app->renderView(
