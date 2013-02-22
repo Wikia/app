@@ -3,7 +3,7 @@
 /**
  * simple class for using titles across WikiFactory installation
  *
- * NOTE: it is not full replacement for Title class, You can expect that all
+ * NOTE: it is not full replacement for Title class, You can't expect that all
  * method from Title will work there. For example You can't build proper Article
  * from this class
  *
