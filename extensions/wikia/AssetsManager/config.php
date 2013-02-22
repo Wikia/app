@@ -21,6 +21,7 @@ $config['oasis_extensions_js'] = array(
 $config['tracker_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//resources/wikia/modules/tracker.stub.js',
 		'//resources/wikia/modules/tracker.js',
 	)
 );
