@@ -88,6 +88,8 @@ class User {
 		'mRegistration',
 		'mBirthDate', // Wikia. Added to reflect our user table layout.
 		'mEditCount',
+		// Wikia. edit count localized for wiki
+		'mEditCountLocal',
 		// user_groups table
 		'mGroups',
 		// user_properties table
@@ -168,6 +170,7 @@ class User {
 		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
 		$mCookiePassword, $mEditCount, $mAllowUsertalk;
+	var $mEditCountLocal; // Wikia. edit count localized for wiki.
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
 
@@ -1104,6 +1107,7 @@ class User {
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
 			$this->getEditCount(); // revalidation for nulls
+			$this->getEditCountLocal(); // revalidation for nulls
 			$this->mMonacoData = null;
 			$this->mMonacoSidebar = null;
 			return true;
@@ -2545,22 +2549,35 @@ class User {
 	 */
 	public function getEditCount() {
 		if( $this->getId() ) {
-
-			/**
-			 * Wikia change
-			 * Get edit count localized per wiki
-			 * @since Feb 2013
-			 * @author Kamil Koterba
-			 */
-			$userStatsService = F::build( 'UserStatsService', array( $this->mId ) ); /* @var $userStatsService UserStatsService */
-			return $userStatsService->getEditCountWiki();
-			/* end of change */
-
 			if ( !isset( $this->mEditCount ) ) {
 				/* Populate the count, if it has not been populated yet */
 				$this->mEditCount = User::edits( $this->mId );
 			}
 			return $this->mEditCount;
+		} else {
+			/* nil */
+			return null;
+		}
+	}
+
+	/**
+	 * Wikia. Get number of edits localized for wiki,
+	 * initialize if not set
+	 *
+	 * @autor Kamil Koterba
+	 * @since Feb 2013
+	 * @return Int mEditCountLocal
+	 */
+	public function getEditCountLocal() {
+		if( $this->getId() ) {
+
+			if ( !isset( $this->mEditCountLocal ) ) {
+				/* Populate the count, if it has not been populated yet */
+				$userStatsService = new UserStatsService( $this->mId );
+				$this->mEditCountLocal = $userStatsService->getEditCountWiki();
+			}
+			return $this->mEditCountLocal;
+
 		} else {
 			/* nil */
 			return null;
