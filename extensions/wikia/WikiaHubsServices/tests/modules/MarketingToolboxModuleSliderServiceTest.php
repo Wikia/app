@@ -202,7 +202,7 @@ WIKI_TEXT;
 				array(
 					'slides' => array (
 						array(
-							'photoUrl' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg',
+							'photoUrl' => 'http://test.image.path/image.png',
 							'shortDesc' => 'lego',
 							'longDesc' => 'lego heroes',
 							'url' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
@@ -210,7 +210,7 @@ WIKI_TEXT;
 							'strapline' => 'strapline lego 1'
 						),
 						array(
-							'photoUrl' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg',
+							'photoUrl' => 'http://test.image.path/image2.png',
 							'shortDesc' => 'lego2',
 							'longDesc' => 'lego galaxy',
 							'url' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
@@ -218,7 +218,7 @@ WIKI_TEXT;
 							'strapline' => 'strapline lego 2'
 						),
 						array(
-							'photoUrl' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg',
+							'photoUrl' => 'http://test.image.path/image3.png',
 							'shortDesc' => 'swindon',
 							'longDesc' => 'swindon town FC',
 							'url' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
@@ -226,7 +226,7 @@ WIKI_TEXT;
 							'strapline' => 'strapline swindon 3'
 						),
 						array(
-							'photoUrl' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg',
+							'photoUrl' => 'http://test.image.path/image4.png',
 							'shortDesc' => 'muppets',
 							'longDesc' => 'muppets hero',
 							'url' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
@@ -234,7 +234,7 @@ WIKI_TEXT;
 							'strapline' => 'strapline muppets 4'
 						),
 						array(
-							'photoUrl' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg',
+							'photoUrl' => 'http://test.image.path/image5.png',
 							'shortDesc' => 'dragon',
 							'longDesc' => 'dragon balls',
 							'url' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
