@@ -139,14 +139,15 @@ class UserStatsService extends WikiaModel {
 	 * @since Feb 2013
 	 * @author Kamil Koterba
 	 *
+	 * @param $wikiId Integer Id of wiki - specifies wiki from which to init editcount, 0 for current wiki
+	 * @param $skipCache boolean On true ignores cache
+	 *
 	 * @return Int
 	 */
-	public function getEditCountGlobal( $userId, $wikiId, $skipCache = false ) {
+	public function getEditCountGlobal( $wikiId, $skipCache = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
-
-		$key = wfSharedMemcKey( 'editcount-global', $wikiId, $userId );
+		$key = wfSharedMemcKey( 'editcount-global', $this->userId );
 		$editCount = $this->wg->Memc->get($key);
 
 		if ( !empty( $editCount ) && !$skipCache ) {
@@ -158,32 +159,36 @@ class UserStatsService extends WikiaModel {
 		// check if the user_editcount field has been initialized
 		$field = $dbr->selectField(
 			'user', 'user_editcount',
-			array( 'user_id' => $userId ),
+			array( 'user_id' => $this->userId ),
 			__METHOD__
 		);
 
-		$dbname = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
-
 		if( $field === null ) { // it has not been initialized. do so.
+
+			$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+			$dbname = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
 			$dbw = wfGetDB( DB_MASTER, array(), $dbname );
+
 			//count revisions
 			$editCount = $dbr->selectField(
 				'revision', 'count(*)',
-				array( 'rev_user' => $userId ),
+				array( 'rev_user' => $this->userId ),
 				__METHOD__
 			);
 			$editCount += $dbr->selectField(
 				'archive', 'count(*)',
-				array( 'ar_user' => $userId ),
+				array( 'ar_user' => $this->userId ),
 				__METHOD__
 			);
+
 			//write to wikicities (acting 'user' will redirect result to wikicites)
 			$dbw->update(
 				'user',
 				array( 'user_editcount' => $editCount ),
-				array( 'user_id' => $userId ),
+				array( 'user_id' => $this->userId ),
 				__METHOD__
 			);
+
 		} else {
 			$editCount = $field;
 		}
