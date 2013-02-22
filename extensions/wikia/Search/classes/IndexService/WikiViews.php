@@ -29,7 +29,8 @@ class WikiViews extends AbstractWikiService
 	public function execute() {
 		wfProfileIn(__METHOD__);
 		
-		if ( $this->result !== null ) {
+		$sharedDb = $this->interface->getGlobal( 'ExternalSharedDB' );
+		if ( $this->result !== null || empty( $sharedDb ) ) {
 			return $this->result;
 		}
 		

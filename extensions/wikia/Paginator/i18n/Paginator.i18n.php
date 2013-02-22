@@ -247,6 +247,14 @@ $messages['pt-br'] = array(
 	'paginator-back' => 'Voltar',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'paginator-next' => 'Prossime',
+	'paginator-back' => 'Rrete',
+);
+
 /** Russian (русский)
  */
 $messages['ru'] = array(

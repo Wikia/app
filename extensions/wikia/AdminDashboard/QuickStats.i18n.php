@@ -26,6 +26,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'quickstats-header-photos' => '{{Identical|Photo}}',
 	'quickstats-date-format' => 'Follow this guide: http://php.net/manual/en/function.date.php.',
 	'quickstats-totals-label' => '{{Identical|Total}}',
 	'quickstats-number-shortening' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 10.000 are rendered using this message (as thousands rounded up to the first decimal fraction). K stands for thousands (1.000)',
@@ -620,6 +621,15 @@ $messages['nb'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1 M',
 	'quickstats-number-shortening-billions' => '$1 B',
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'quickstats-header-date' => 'मिति',
+	'quickstats-header-views' => 'अवलोकनहरू',
+	'quickstats-header-edits' => 'सम्पादनहरु',
 );
 
 /** Dutch (Nederlands)

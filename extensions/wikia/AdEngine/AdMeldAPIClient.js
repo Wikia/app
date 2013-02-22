@@ -30,16 +30,16 @@ AdMeldAPIClient.log = function(msg, level) {
 AdMeldAPIClient.track = function(data, profile) {
 	profile = profile || 'admeldapiclient';
 	this.log('track ' + data.join('/') + ' in ' + profile, 'trace_l3');
-	
+
 	data[0] = 'admeldapiclient/' + data[0];
 
 	var event = data;
 	if (event.length > 3) {
-		event = [event[0], event[1], event.slice(2).join('/')];		
+		event = [event[0], event[1], event.slice(2).join('/')];
 	}
 	this.log('event: [' + event.join(', ') + ']', 'trace_l3');
 
-	//WikiaTracker.track(data.join('/'), 'liftium.' + profile, event);	
+	//Wikia.Tracker.track(data.join('/'), 'liftium.' + profile, event);
 };
 
 AdMeldAPIClient.getAd = function(slotname) {
@@ -50,7 +50,7 @@ AdMeldAPIClient.getAd = function(slotname) {
 		this.log('slotname HOME_' + slotname + ' replaced with ' + slotname, 'trace_l3');
 	} catch(e1) {
 	}
-	
+
 	try {
 		return this.slots[slotname].ad.creative + this.slots[slotname].pixels.join("\n");
 	} catch(e2) {
@@ -62,7 +62,7 @@ AdMeldAPIClient.getAd = function(slotname) {
 
 AdMeldAPIClient.getBid = function(slotname) {
 	this.log('getBid ' + slotname, 'trace_l2');
-	
+
 	try {
 		slotname = slotname.replace('HOME_', '');
 		this.log('slotname HOME_' + slotname + ' replaced with ' + slotname, 'trace');
@@ -80,7 +80,7 @@ AdMeldAPIClient.getBid = function(slotname) {
 
 AdMeldAPIClient.init = function() {
 	this.log('init', 'info');
-	
+
 	var page = window.top.wgServer + window.top.wgArticlePath.replace('$1', window.top.wgPageName);
 
 	for (var slot in this.slots) {
@@ -92,7 +92,7 @@ AdMeldAPIClient.init = function() {
 					'&placement=' + s.placement.replace('%%HUB%%', this.siteHub) +
 					'&size=' + s.size +
 					'&url=' + page +
-					'&callback=' + 'AdMeldAPIClient.callback' + 
+					'&callback=' + 'AdMeldAPIClient.callback' +
 					'&container=' + slot;
 		this.log('calling ' + url, 'trace');
 		this.track(['call', slot]);
@@ -142,14 +142,14 @@ AdMeldAPIClient.callback = function(data) {
 		this.track(['error', 'callback', 'bid'], 'error');
 		return false;
 	}
-	
+
 	return true;
 };
 
 // based on Liftium.setAdjustedValues
 AdMeldAPIClient.adjustLiftiumChain = function(tags) {
 	this.log(tags, 'trace_l3');
-	
+
 	try {
 		if (this.sizes.indexOf(tags[0].size) == -1) {
 			this.log('adjustLiftiumChain ' + tags[0].size + ' skipped, no tags for this size', 'trace_l2');
@@ -160,13 +160,13 @@ AdMeldAPIClient.adjustLiftiumChain = function(tags) {
 		this.log('Error in adjustLiftiumChain', 'error')
 		this.track(['error', 'adjust_liftium_chain'], 'error');
 	}
-	
+
 	for (var i = 0; i < tags.length; i++) {
 		var t = tags[i];
 		this.log(t, 'trace_l3');
 		if (t.network_id == 172) {
 			this.log(t, 'trace_l3');
-			
+
 			var slotname = t.criteria.placement[0];
 			try {
 				slotname = slotname.replace('HOME_', '');
@@ -182,7 +182,7 @@ AdMeldAPIClient.adjustLiftiumChain = function(tags) {
 			this.track(['liftium', t.tag_id, tier, bid]);
 		}
 	}
-	
+
 	return tags; // Not really necessary, because it modified values in place
 };
 
@@ -196,7 +196,7 @@ AdMeldAPIClient.getLiftiumTier = function(bid) {
 	if (bid >= 0.50) return 7;
 	if (bid >= 0.35) return 8;
 	if (bid >= 0.20) return 9;
-	
+
 	return 10;
 };
 
@@ -211,12 +211,12 @@ AdMeldAPIClient.getParamForDART = function(slotname) {
 
 AdMeldAPIClient.roundBidForDART = function(bid) {
 	this.log('roundBidForDART ' + bid, 'trace_l2');
-	
+
 	if (bid > 5) bid = 5;
-	
+
 	bid = Math.round(bid*10)/10; // round to x.x
 	bid = bid.toFixed(2); // store as x.x0
-	
+
 	return bid;
 };
 

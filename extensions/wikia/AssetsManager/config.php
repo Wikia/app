@@ -21,7 +21,8 @@ $config['oasis_extensions_js'] = array(
 $config['tracker_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'//resources/wikia/modules/tracker.stub.js',
+		'//resources/wikia/modules/tracker.js',
 	)
 );
 
@@ -308,8 +309,8 @@ $config['gameguides_js'] = array(
 		'#group_wikiamobile_js_head',
 
 		//libraries/frameworks
-		'//resources/wikia/libraries/Ponto/ponto.js',
 		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/libraries/Ponto/ponto.js',
 		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 
 		// deferred.js - jQuery-free implementation (BugId:34943)
@@ -317,7 +318,10 @@ $config['gameguides_js'] = array(
 		'//resources/wikia/libraries/deferred/deferred.api.js',
 
 		//core modules
+		'//resources/wikia/modules/deferred.js',
 		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/localStorage.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/querystring.js',
@@ -417,6 +421,8 @@ $config['wikiamobile_js_body_minimal'] = array(
 
 		//core modules
 		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/localStorage.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
@@ -429,6 +435,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'#group_tracker_js',
 
 		//modules
+		'//resources/wikia/modules/deferred.js',
 		'//resources/wikia/modules/ajax.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
@@ -617,7 +624,6 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.src.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
-		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
@@ -1199,14 +1205,5 @@ $config['categoryselect_edit_js'] = array(
 		'//resources/jquery.ui/jquery.ui.mouse.js',
 		'//resources/jquery.ui/jquery.ui.sortable.js',
 		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
-	)
-);
-
-$config['history_polyfill_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//resources/wikia/polyfills/history/history.adapter.jquery.js',
-		//'//resources/wikia/polyfills/history/history.html4.js', // add this back in when we're ready to support IE
-		'//resources/wikia/polyfills/history/history.js',
 	)
 );

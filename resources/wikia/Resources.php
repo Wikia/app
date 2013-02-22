@@ -14,6 +14,9 @@ return array(
 	'amd.shared' => array(
 		'dependencies' => array(
 			'wikia.window',
+			'wikia.location',
+			'wikia.localStorage',
+			'wikia.deferred',
 			'wikia.ajax',
 			'wikia.nirvana',
 			'wikia.mw',
@@ -32,6 +35,21 @@ return array(
 	'wikia.window' => array(
 		'scripts' => 'resources/wikia/modules/window.js',
 		'dependencies' => 'amd',
+	),
+	'wikia.location' => array(
+		'scripts' => 'resources/wikia/modules/location.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.localStorage' => array(
+		'scripts' => 'resources/wikia/modules/localStorage.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.deferred' => array(
+		'scripts' => 'resources/wikia/modules/deferred.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.window'
+		)
 	),
 	'wikia.ajax' => array(
 		'scripts' => 'resources/wikia/modules/ajax.js',
@@ -87,9 +105,21 @@ return array(
 			'wikia.cookies'
 		)
 	),
-	// not yet AMD :-(
 	'wikia.tracker' => array(
-		'scripts' => 'extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'scripts' => 'resources/wikia/modules/tracker.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.window',
+			'wikia.log',
+			'wikia.tracker.stub',
+		)
+	),
+	'wikia.tracker.stub' => array(
+		'scripts' => 'resources/wikia/modules/tracker.stub.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.window'
+		)
 	),
 
 	// AMD modules loaded on demand

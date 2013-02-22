@@ -212,7 +212,7 @@ class CheckUserHooks {
 
 	/**
 	 * Handler for non-standard (edit/log) entries that need IP data
-	 * 
+	 *
 	 * @param $context IContextSource
 	 * @param $data Array
 	 * @return bool
@@ -299,8 +299,7 @@ class CheckUserHooks {
 					if ( IP::isPublic( $ip ) ) {
 						$client = $ip;
 					}
-				} elseif ( !in_array( $ip, $wgSquidServers )
-					&& !in_array( $ip, $wgSquidServersNoPurge ) )
+				} elseif ( !wfIsTrustedProxy( $ip ) )
 				{
 					$isSquidOnly = false;
 					break;

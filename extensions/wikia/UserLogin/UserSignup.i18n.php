@@ -261,7 +261,8 @@ $messages['qqq'] = array(
 * $1 is an e-mail address;
 * $2 is a link to user's preference page.",
 	'usersignup-facebook-heading' => 'Heading on Facebook signup modal when signing up via Facebook Connect',
-	'usersignup-facebook-create-account' => 'Sub heading on Facebook signup modal.',
+	'usersignup-facebook-create-account' => 'Sub heading on Facebook signup modal.
+{{Identical|Create account}}',
 	'usersignup-facebook-email-tooltip' => 'A hint to the user saying you can changed the email later in preferences.',
 	'usersignup-facebook-have-an-account-heading' => 'Heading to suggest logging in instead.',
 	'usersignup-facebook-have-an-account' => 'Suggestion to connect existing account with FB.',
@@ -327,7 +328,8 @@ Tooltip letting user know they can change their email.  Tooltip is on the same l
 	'usersignup-marketing-benefits' => 'Heading for right side of Special:UserSignup',
 	'usersignup-marketing-community-heading' => 'Subsection heading on right side of Special:UserSignup',
 	'usersignup-marketing-community' => 'Marketing blurb on right side of Special:UserSignup',
-	'usersignup-marketing-global-heading' => 'Second subsection heading on right side of Special:UserSignup',
+	'usersignup-marketing-global-heading' => 'Second subsection heading on right side of Special:UserSignup.
+{{Identical|Create}}',
 	'usersignup-marketing-global' => 'Second marketing blurb on right side of Special:UserSignup.',
 	'usersignup-marketing-creativity-heading' => 'Third subsection heading on right side of Special:UserSignup',
 	'usersignup-marketing-creativity' => 'Third marketing blurb on right side of Special:UserSignup.',
@@ -4088,4 +4090,18 @@ ___________________________________________
 查看Wikia的最新信息请访问http://community.wikia.com
 想控制接收那些电子邮件？请查看：{{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => '与脸谱链接出错，请稍后再试。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'usersignup-page-title' => '加入 Wikia',
+	'usersignup-confirm-email-new-email-label' => '新電子郵件',
+	'usersignup-confirm-email-update' => '更新',
+	'usersignup-resend-email-heading-failure' => '電子郵件未重新發送',
+	'usersignup-confirm-page-heading-confirmed-user' => '恭喜 ！',
+	'usersignup-confirmation-heading' => '快完成了。',
+	'usersignup-confirmation-heading-email-resent' => '新電子郵件已發送',
+	'usersignup-confirmation-subheading' => '請檢查您的電子郵件',
 );

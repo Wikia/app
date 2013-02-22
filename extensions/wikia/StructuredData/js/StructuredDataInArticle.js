@@ -1,6 +1,7 @@
 $('button.add-wikiText-SDObj-from-article').click(function() {
-	var objectId = $(this).data('object-id'),
-		objectPropName = $(this).data('prop-name'),
+	var $target = $(this),
+		objectId = $target.data('object-id'),
+		objectPropName = $target.data('prop-name'),
 		modalTitle = $.msg('structureddata-add-trivia-header'),
 		modalHtml = '<form class="WikiaForm"><div class="input-group"><label>' + $.msg('structureddata-add-trivia-label-name') + ':</label><input type="text" value="" name="schema:name"></div><div class="input-group"><label>' + $.msg('structureddata-add-trivia-label-wiki-text') + ':</label><textarea name="schema:text"></textarea></div></form>',
 		modalId = 'AddWikiTextSDObject',

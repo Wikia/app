@@ -1,5 +1,8 @@
 <?php
 class MarketingToolboxModulePollsService extends MarketingToolboxModuleService {
+
+	const MODULE_ID = 7;
+
 	protected function getFormFields() {
 		$fields = array(
 			'pollsTitle' => array(
@@ -58,5 +61,50 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleService {
 		$data['optionsLimit'] = $model->getTotalOptionsLimit();
 
 		return parent::renderEditor($data);
+	}
+
+	public function getWikitext($data) {
+		$wtPolls  = "<poll>\n";
+		$wtPolls .= $data['pollsQuestion'] . "\n";
+		foreach($data['pollsOptions'] as $option) {
+			$wtPolls .= $option . "\n";
+		}
+		$wtPolls .= "</poll>";
+
+		return $wtPolls;
+	}
+
+	public function getStructuredData($data) {
+		$structuredData = array();
+
+		if(!empty($data['pollsTitle'])) {
+			$model = new MarketingToolboxPollsModel();
+			$optionsLimit = $model->getTotalOptionsLimit();
+
+			$toolBoxModel = $this->getToolboxModel();
+
+			$structuredData['headline'] = $data['pollsTitle'];
+			$structuredData['pollsQuestion'] = $data['pollsQuestion'];
+			$structuredData['hubUrl'] = $toolBoxModel->getHubUrl($this->langCode, $this->verticalId);
+
+			for ($i = 1; $i <= $optionsLimit; $i++) {
+				if(isset($data['pollsOption' . $i])) {
+					$structuredData['pollsOptions'][] = $data['pollsOption' . $i];
+				}
+			}
+		}
+
+		return $structuredData;
+	}
+
+	public function render($structureData) {
+		$data['headline'] = $structureData['headline'];
+		$data['wikitextpolls'] = $this->getWikitext($structureData);
+
+		return parent::render($data);
+	}
+
+	protected function getToolboxModel() {
+		return new MarketingToolboxModel();
 	}
 }

@@ -233,10 +233,7 @@ class VideoHandlerHooks extends WikiaObject{
 	 * Add "remove" action to MenuButtons on premium video file pages
 	 * This button will remove a video from a wiki but keep it on the Video Wiki.
 	 */
-
 	public function onSkinTemplateNavigation($skin, &$tabs) {
-		global $wgTitle, $wgCityId;
-
 		$app = F::app();
 
 		// Ignore Video Wiki videos
@@ -248,17 +245,40 @@ class VideoHandlerHooks extends WikiaObject{
 		if ( WikiaFileHelper::isTitleVideo( $title ) ) {
 			$file = $app->wf->FindFile( $title );
 			if( !$file->isLocal() ) {
-				$videoinfoHelper = new VideoInfoHelper();
-				$action = ( $videoinfoHelper->isVideoRemoved( $title ) ) ? 'unremove' : 'remove';
-				$tabs['actions'][$action] = array(
-					'class' => $action,
-					'text' => $app->wf->Message( 'videohandler-'.$action ),
-					'href' => '#',
-				);
-
 				// Prevent move tab being shown.
 				unset( $tabs['actions']['move'] );
 			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: get wiki link for SpecialGlobalUsage::formatItem()
+	 * @param array $item
+	 * @param string $page
+	 * @param string|false $link
+	 * @return true
+	 */
+	public function onGlobalUsageFormatItemWikiLink( $item, $page, &$link ) {
+		$link = WikiFactory::DBtoUrl( $item['wiki'] );
+		if ( $link ) {
+			$link .= 'wiki/'.$page;
+			$link = Xml::element( 'a', array( 'href' => $link ), str_replace( '_',' ', $page ) );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: get wiki link for GlobalUsage
+	 * @param string $wikiName
+	 * @return true
+	 */
+	public function onGlobalUsageImagePageWikiLink( &$wikiName ) {
+		$wiki = WikiFactory::getWikiByDB( $wikiName );
+		if ( $wiki ) {
+			$wikiName = '['.$wiki->city_url.' '.$wiki->city_title.']';
 		}
 
 		return true;

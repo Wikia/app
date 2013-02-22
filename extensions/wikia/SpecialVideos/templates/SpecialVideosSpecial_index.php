@@ -27,9 +27,9 @@
 <div class="WikiaGrid VideoGrid">
 	<?php $counter = 0 ?>
 	<?php foreach( $videos as $video ): ?>
-		<?php $alpha = $counter % 3 == 0 ? 'alpha' : ''; ?>
+		<?php $alpha = $counter % 3 == 0 ? ' alpha' : ''; ?>
 
-		<div class="grid-2 <?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+		<div class="grid-2 video-element<?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 			<a href="<?= $video['fileUrl'] ?>" class="image video" data-video-name="<?= $video['fileTitle'] ?>">
 				<?= $video['videoPlayButton'] ?>
 				<img itemprop="thumbnail" alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video="<?= $video['fileTitle'] ?>" class="Wikia-video-thumb thumbimage">
@@ -38,7 +38,13 @@
 			<p><?= $video['byUserMsg'] ?></p>
 			<p itemprop="uploadDate"><?= wfTimeFormatAgo($video['timestamp']) ?></p>
 			<p><?= $video['postedInMsg']; ?></p>
-			<meta itemprop="embedUrl" content="<?= $video['embedUrl'] ?>" />			
+			<meta itemprop="embedUrl" content="<?= $video['embedUrl'] ?>" />
+			<? if($isRemovalAllowed): ?>
+				<a class="remove">
+					<img class="sprite trash" src="<?= wfBlankImgUrl() ?>">
+				</a>
+				<?= wfMsg('specialvideos-remove-modal-title') ?>
+			<? endif; ?>
 		</div>
 
 		<?php $counter++; ?>

@@ -27,21 +27,21 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			'testNameFor Top 10 list',
-			$model->getModuleName(MarketingToolboxModel::MODULE_TOP_10_LIST)
+			$model->getModuleName(MarketingToolboxModuleTop10listService::MODULE_ID)
 		);
 	}
 
 	public function testGetNotTranslatedModuleName() {
 		$testDatas = array(
-			MarketingToolboxModel::MODULE_SLIDER => 'Slider',
-			MarketingToolboxModel::MODULE_PULSE => 'Pulse',
-			MarketingToolboxModel::MODULE_WIKIAS_PICKS => 'Wikiaspicks',
-			MarketingToolboxModel::MODULE_FEATURED_VIDEO => 'Featuredvideo',
-			MarketingToolboxModel::MODULE_EXPLORE => 'Explore',
-			MarketingToolboxModel::MODULE_FROM_THE_COMMUNITY => 'Fromthecommunity',
-			MarketingToolboxModel::MODULE_POLLS => 'Polls',
-			MarketingToolboxModel::MODULE_TOP_10_LIST => 'Top10list',
-			MarketingToolboxModel::MODULE_POPULAR_VIDEOS => 'Popularvideos'
+			MarketingToolboxModuleSliderService::MODULE_ID => 'Slider',
+			MarketingToolboxModulePulseService::MODULE_ID => 'Pulse',
+			MarketingToolboxModuleWikiaspicksService::MODULE_ID => 'Wikiaspicks',
+			MarketingToolboxModuleFeaturedvideoService::MODULE_ID => 'Featuredvideo',
+			MarketingToolboxModuleExploreService::MODULE_ID => 'Explore',
+			MarketingToolboxModuleFromthecommunityService::MODULE_ID => 'Fromthecommunity',
+			MarketingToolboxModulePollsService::MODULE_ID => 'Polls',
+			MarketingToolboxModuleTop10listService::MODULE_ID => 'Top10list',
+			MarketingToolboxModulePopularvideosService::MODULE_ID => 'Popularvideos'
 		);
 
 		$model = new MarketingToolboxModel();
@@ -100,7 +100,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 	public function testGetModuleUrl() {
 		$params = array(
-			'moduleId' => MarketingToolboxModel::MODULE_PULSE,
+			'moduleId' => MarketingToolboxModulePulseService::MODULE_ID,
 			'date' => 123456,
 			'region' => 'pl',
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
@@ -143,7 +143,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
 			'timestamp' => 789654,
-			'activeModule' => MarketingToolboxModel::MODULE_WIKIAS_PICKS
+			'activeModule' => MarketingToolboxModuleWikiaspicksService::MODULE_ID
 		);
 
 		// Mock database
@@ -222,7 +222,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
 			'timestamp' => 789654,
-			'activeModule' => MarketingToolboxModel::MODULE_WIKIAS_PICKS
+			'activeModule' => MarketingToolboxModuleWikiaspicksService::MODULE_ID
 		);
 		$lastPublishTimestamp = 66789;
 		$lastEditorName = 'test UserName';
@@ -378,7 +378,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_GAMING,
 			'timestamp' => 1234567,
-			'moduleId' => MarketingToolboxModel::MODULE_POLLS,
+			'moduleId' => MarketingToolboxModulePollsService::MODULE_ID,
 			'data' => array('test1' => 'test2', 'hola hola' => 'espaniola'),
 			'editorId' => 666
 		);
@@ -436,7 +436,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_GAMING,
 			'timestamp' => 1234567,
-			'moduleId' => MarketingToolboxModel::MODULE_POLLS,
+			'moduleId' => MarketingToolboxModulePollsService::MODULE_ID,
 			'data' => array('test1' => 'test2', 'hola hola' => 'espaniola'),
 			'editorId' => 666
 		);
@@ -694,4 +694,173 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals($statuses['NOT_PUBLISHED'], $data['2013-01-08']);
 	}
 
+	/**
+	 * @dataProvider getDataModulesSavedDataProvider
+	 */
+	public function testCheckModulesSaved($savedModules, $expectedVal) {
+		$dbMock = $this->getMock('DatabaseMysql', array( 'select', 'fetchRow'));
+
+		$dbMock->expects($this->any())
+			->method('fetchRow')
+			->will($this->returnValue($savedModules));
+
+		$dbMock->expects($this->once())
+			->method('select')
+			->will($this->returnValue(array()));
+
+		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockApp();
+
+		$model = new MarketingToolboxModel();
+		$returnedVal = $model->checkModulesSaved('en', '2','1360454400');
+
+		$this->assertEquals($expectedVal, $returnedVal);
+	}
+
+	public function getDataModulesSavedDataProvider() {
+		return array(
+			array(
+				'8', false
+			),
+			array(
+				'9', true
+			),
+			array(
+				'3', false
+			),
+			array(
+				'5', false
+			)
+		);
+	}
+
+	private $visualizationData = array (
+		'de' => array(
+			'wikiId' => 111264,
+			'wikiTitle' => 'Wikia Deutschland',
+			'url' => 'http://de.wikia.com/',
+			'db' => 'dehauptseite',
+			'lang' => 'de'
+		),
+		'fr' => array(
+			'wikiId' => 208826,
+			'wikiTitle' => 'Wikia',
+			'url' => 'http://fr.wikia.com/',
+			'db' => 'fraccueil',
+			'lang' => 'fr'
+		),
+		'es' => array(
+			'wikiId' => 583437,
+			'wikiTitle' => 'Wiki Esglobal',
+			'url' => 'http://es.wikia.com/',
+			'db' => 'esesglobal',
+			'lang' => 'es'
+		),
+		'en' => array(
+			'wikiId' => 80433,
+			'wikiTitle' => 'Wikia',
+			'url' => 'http://www.wikia.com/',
+			'db' => 'wikiaglobal',
+			'lang' => 'en'
+		),
+	);
+
+	private $hubsV2Pages = array(
+		'en' => array (
+			2 => 'Video_Games',
+			3 => 'Entertainment',
+			9 => 'Lifestyle',
+		),
+		'de' => array (
+			2 => 'Videospiele',
+			3 => 'Entertainment',
+		),
+		'fr' => array (
+			2 => 'Mode_de_vie',
+			3 => 'Jeux_vidéo',
+			9 => 'Divertissement',
+		),
+		'es' => array (
+			2 => 'Videojuegos',
+			3 => 'Entretenimiento',
+			9 => 'Lista_de_Wikis',
+		),
+	);
+
+	/**
+	 * @dataProvider getHubUrlDataProvider
+	 */
+	public function testGetHubUrl($expectedUrl, $langCode, $verticalId, $wikiaHubsV2Pages) {
+		$toolBoxModelMock = $this->getMock(
+			'MarketingToolboxModel',
+			array('getVisualizationData', 'getHubsV2Pages')
+		);
+
+		$toolBoxModelMock
+			->expects($this->once())
+			->method('getVisualizationData')
+			->will($this->returnValue($this->visualizationData));
+
+
+		$toolBoxModelMock
+			->expects($this->once())
+			->method('getHubsV2Pages')
+			->will($this->returnValue($wikiaHubsV2Pages));
+
+		$this->mockApp();
+
+		$this->assertEquals($expectedUrl, $toolBoxModelMock->getHubUrl($langCode, $verticalId));
+	}
+
+	public function getHubUrlDataProvider() {
+		return array(
+			array('http://www.wikia.com/Video_Games', 'en', 2, $this->hubsV2Pages['en']),
+			array('http://www.wikia.com/Entertainment', 'en', 3, $this->hubsV2Pages['en']),
+			array('http://www.wikia.com/Lifestyle', 'en', 9, $this->hubsV2Pages['en']),
+
+			array('http://de.wikia.com/Videospiele', 'de', 2, $this->hubsV2Pages['de']),
+			array('http://de.wikia.com/Entertainment', 'de', 3, $this->hubsV2Pages['de']),
+
+			array('http://fr.wikia.com/Mode_de_vie', 'fr', 2, $this->hubsV2Pages['fr']),
+			array('http://fr.wikia.com/Jeux_vidéo', 'fr', 3, $this->hubsV2Pages['fr']),
+			array('http://fr.wikia.com/Divertissement', 'fr', 9, $this->hubsV2Pages['fr']),
+
+			array('http://es.wikia.com/Videojuegos', 'es', 2, $this->hubsV2Pages['es']),
+			array('http://es.wikia.com/Entretenimiento', 'es', 3, $this->hubsV2Pages['es']),
+			array('http://es.wikia.com/Lista_de_Wikis', 'es', 9, $this->hubsV2Pages['es']),
+		);
+	}
+
+	public function testGetHubUrlForWrongLang() {
+		$pollsModuleMock = $this->getMock(
+			'MarketingToolboxModel',
+			array('getVisualizationData')
+		);
+
+		$pollsModuleMock
+			->expects($this->once())
+			->method('getVisualizationData')
+			->will($this->returnValue($this->visualizationData));
+
+		$this->setExpectedException('Exception');
+		$pollsModuleMock->getHubUrl('xxx', 9);
+	}
+
+	public function testGetHubUrlForWrongVertical() {
+		$pollsModuleMock = $this->getMock(
+			'MarketingToolboxModel',
+			array('getVisualizationData')
+		);
+
+		$pollsModuleMock
+			->expects($this->once())
+			->method('getVisualizationData')
+			->will($this->returnValue($this->visualizationData));
+
+		$this->mockGlobalVariable('wgWikiaHubsV2Pages', $this->hubsV2Pages['en']);
+		$this->mockApp();
+
+		$this->setExpectedException('Exception');
+		$pollsModuleMock->getHubUrl('en', 666);
+	}
 }

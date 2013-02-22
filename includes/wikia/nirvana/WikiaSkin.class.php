@@ -189,7 +189,7 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
-		$scriptModules = array('amd');
+		$scriptModules = array( 'amd', 'wikia.tracker.stub' );
 		$this->wf->runHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
 		if ( !empty($scriptModules) ) {
 			// Mocking mw.loader.state so the script can be loaded up high
@@ -222,10 +222,10 @@ abstract class WikiaSkin extends SkinTemplate {
 	public function buildNavUrls() {
 		return parent::buildNavUrls();
 	}
-	
+
 	public function subPageSubtitle() {
 		// bugid: 51048 -- don't show subpage link for blog content
-		if ( $this->wg->Title->getNamespace() > 599 || $this->wg->Title->getNamespace() < 500 ) { 
+		if ( $this->wg->Title->getNamespace() > 599 || $this->wg->Title->getNamespace() < 500 ) {
 			return parent::subPageSubtitle();
 		}
 		return '';

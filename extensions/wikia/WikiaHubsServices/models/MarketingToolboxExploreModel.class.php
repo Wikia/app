@@ -10,8 +10,4 @@ class MarketingToolboxExploreModel extends WikiaModel {
 	public function getLinksLimit() {
 		return self::FORM_SECTION_LINKS_LIMIT;
 	}
-	
-	public function getModuleId() {
-		return MarketingToolboxModel::MODULE_EXPLORE;
-	}
 }

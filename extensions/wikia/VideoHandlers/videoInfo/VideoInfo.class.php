@@ -322,14 +322,6 @@ SQL;
 		$this->updateDatabase( $data );
 	}
 
-	public function unremoveVideo() {
-		$data = array(
-			'removed' => 0,
-		);
-
-		$this->updateDatabase( $data );
-	}
-
 	public function deleteVideo() {
 		$this->removeFromDatabase();
 	}

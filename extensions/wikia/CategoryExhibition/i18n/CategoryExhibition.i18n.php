@@ -15,6 +15,13 @@ $messages['en'] = array(
 	'category-exhibition-display-new'		=> 'Category Exhibition view'
 );
 
+/** Message documentation (Message documentation)
+ * @author Shirayuki
+ */
+$messages['qqq'] = array(
+	'category-exhibition-subcategories-header' => '{{Identical|Subcategory}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -582,4 +589,11 @@ $messages['zh-hans'] = array(
 	'category-exhibition-blogs-header' => '博客帖子',
 	'category-exhibition-display-old' => '分类（列表视图）',
 	'category-exhibition-display-new' => '分类展示视图',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'category-exhibition-display-new' => '分類展示',
 );

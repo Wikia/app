@@ -746,3 +746,10 @@ $messages['zh-hans'] = array(
 	'searchbar-hint' => '搜索 %s ⋯',
 	'alert-download-updated-wikis-button-ok' => '确认',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'window-article-button-close' => '關閉',
+);

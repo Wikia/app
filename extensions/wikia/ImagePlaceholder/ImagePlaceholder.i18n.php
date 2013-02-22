@@ -382,11 +382,11 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'imgplc-add-image' => 'Gionta Figura',
-	'imgplc-add-video' => 'Gionta Video',
+	'imgplc-add-video' => 'Gionté un filmà',
 	'imgplc-placeholder' => 'Marcapòst',
 	'imgplc-image' => 'Figura',
 	'imgplc-notinhistory' => 'A peul pa gionté na figura an modalità stòria.',
-	'imgplc-notinhistory-video' => 'A peul pa gionté un video an modalità stòria.',
+	'imgplc-notinhistory-video' => 'A peul pa gionté un filmà an modalità stòria.',
 );
 
 /** Pashto (پښتو)

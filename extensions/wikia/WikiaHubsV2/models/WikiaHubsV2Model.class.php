@@ -113,7 +113,7 @@ class WikiaHubsV2Model extends WikiaModel {
 	public function getDataForModuleExplore() {
 		try {
 			$response = F::app()->sendRequest('WikiaHubsApi', 'getModuleData', array(
-				'module' => MarketingToolboxModel::MODULE_EXPLORE,
+				'module' => MarketingToolboxModuleExploreService::MODULE_ID,
 				'vertical' => $this->getVertical(),
 				'ts' => $this->getTimestamp(),
 				//'lang' => $this->getLang(), //TODO: returns 80433 -- why?

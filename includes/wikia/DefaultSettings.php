@@ -148,6 +148,7 @@ $app->registerHook( 'TitleMoveComplete', 'ApiHooks', 'onTitleMoveComplete' );
 $app->registerHook( 'ArticleCommentListPurgeComplete', 'ApiHooks', 'ArticleCommentListPurgeComplete' );
 
 
+
 //Wikia API base controller, all the others extend this class
 $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
 
@@ -234,6 +235,7 @@ $wgHooks['ResourceLoaderUserModule::getPages'][]         = 'ResourceLoaderHooks:
 $wgHooks['ResourceLoaderCacheControlHeaders'][]          = "ResourceLoaderHooks::onResourceLoaderCacheControlHeaders";
 $wgHooks['AlternateResourceLoaderURL'][]                 = "ResourceLoaderHooks::onAlternateResourceLoaderURL";
 $wgHooks['ResourceLoaderMakeQuery'][]                    = "ResourceLoaderHooks::onResourceLoaderMakeQuery";
+$wgHooks['ResourceLoaderModifyMaxAge'][]                 = "ResourceLoaderHooks::onResourceLoaderModifyMaxAge";
 
 // core
 $wgAutoloadClasses['Module']  =  $IP.'/includes/wikia/Module.php';
@@ -465,7 +467,6 @@ include_once( "$IP/extensions/wikia/TagCloud/TagCloudClass.php" );
 include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCategories.php" );
 include_once( "$IP/extensions/wikia/AssetsManager/AssetsManager_setup.php" );
 include_once( "$IP/extensions/wikia/JSSnippets/JSSnippets_setup.php" );
-include_once( "$IP/extensions/wikia/WikiaTracker/WikiaTracker.setup.php" );
 include_once( "$IP/extensions/wikia/EmailsStorage/EmailsStorage.setup.php" );
 include_once( "$IP/extensions/wikia/ShareButtons/ShareButtons.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnlockdb/SpecialUnlockdb.setup.php" );
@@ -1078,3 +1079,9 @@ $wgWikiaHubsFileRepoPath = 'http://community.wikia.com/';
  * filesystem path for hubs' images
  */
 $wgWikiaHubsFileRepoDirectory = '/images/c/central/';
+
+/**
+ * trusted proxy service registry
+ */
+$app->registerClass( 'TrustedProxyService', "$IP/includes/wikia/services/TrustedProxyService.class.php" );
+$app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'onIsTrustedProxy' );

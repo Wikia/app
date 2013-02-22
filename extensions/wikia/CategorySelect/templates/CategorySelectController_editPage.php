@@ -2,9 +2,7 @@
 	<?= $app->getView( 'CategorySelect', 'input' ) ?>
 	<ul class="categories">
 		<? foreach( $categories as $category ): ?>
-			<?= $app->renderView( 'CategorySelectController', 'category', array(
-				'name' => $category[ 'name' ]
-			)) ?>
+			<?= $app->renderView( 'CategorySelectController', 'category', $category ) ?>
 		<? endforeach ?>
 	</ul>
 </div>

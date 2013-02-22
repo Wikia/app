@@ -1,12 +1,14 @@
 <?php
 class WikiaHubsV2Article extends Article {
 	protected $verticalId = null;
+	protected $hubTimestamp;
 
-	public function __construct($title, $verticalId) {
+	public function __construct($title, $verticalId, $hubTimestamp = null) {
 		wfProfileIn(__METHOD__);
 
 		parent::__construct($title);
 		$this->verticalId = $verticalId;
+		$this->hubTimestamp = $hubTimestamp;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -20,13 +22,18 @@ class WikiaHubsV2Article extends Article {
 		// let MW handle basic stuff
 		parent::view();
 
+		$params = array();
+		if (!empty($this->verticalId)) {
+			$params['verticalid'] = $this->verticalId;
+		}
+		if (isset($this->hubTimestamp)) {
+			$params['hubTimestamp'] = $this->hubTimestamp;
+		}
+
 		//render hub page
 		$app = F::app();
-		if( !empty($this->verticalId) ) {
-			RequestContext::getMain()->getRequest()->setVal('verticalid', $this->verticalId);
-		}
 		$app->wg->Out->clearHTML();
-		$app->wg->Out->addHTML( $app->sendRequest('SpecialWikiaHubsV2Controller', 'index') );
+		$app->wg->Out->addHTML( $app->sendRequest('SpecialWikiaHubsV2Controller', 'index', $params) );
 
 		wfProfileOut(__METHOD__);
 	}

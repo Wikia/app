@@ -76,6 +76,7 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author PtM
  * @author SPQRobin
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'photopop-setup-category-label' => '{{Identical|Category}}',
@@ -85,6 +86,7 @@ $messages['qqq'] = array(
 	'photopop-game-points' => 'Unit of measurement for score. The default EN version is "points", which is a noun.',
 	'photopop-game-total' => '{{Identical|Total}}',
 	'photopop-game-date' => '{{Identical|Date}}',
+	'photopop-game-please-wait' => '{{Identical|Please wait}}',
 );
 
 /** Breton (brezhoneg)

@@ -5,18 +5,18 @@
  *
  */
 
-/* global WikiaTracker define */
+/* global define Wikia */
 
-define('track', function () {
+define('track', ['wikia.tracker'], function( tracker ) {
 	'use strict';
-	var ACTIONS = WikiaTracker.ACTIONS;
+	var ACTIONS = tracker.ACTIONS;
 
 	return {
 		event: function (category, action, options, ev) {
 			options = options || {};
 
 			if (!window.wgGameGuides) {
-				WikiaTracker.track({
+				tracker.track({
 					action: action,
 					browserEvent: ev,
 					category: 'wikiamobile-' + category,
@@ -27,7 +27,7 @@ define('track', function () {
 				});
 			}
 		},
-		//if anything happens to WikiaTracker it'll be much easier to fix it in one place
+		//if anything happens to Wikia.Tracker it'll be much easier to fix it in one place
 		CLICK: ACTIONS.CLICK,
 		SWIPE: ACTIONS.SWIPE,
 		SUBMIT: ACTIONS.SUBMIT,

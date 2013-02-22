@@ -7,17 +7,17 @@
 	<div class="WikiaGrid WikiaHubs" id="WikiaHubs">
 		<div class="grid-3 alpha">
 			<section class="grid-3 alpha wikiahubs-slider wikiahubs-module">
-				<?= $app->renderView('SpecialWikiaHubsV2', 'slider', $app->wg->request->getValues()); ?>
+				<?= $modules[MarketingToolboxModuleSliderService::MODULE_ID] ?>
 			</section>
 			<section class="grid-3 alpha wikiahubs-newstabs wikiahubs-module">
-				<?= $app->renderView('SpecialWikiaHubsV2', 'tabber', $app->wg->request->getValues()); ?>
+				<?= $modules[MarketingToolboxModuleWikiaspicksService::MODULE_ID] ?>
 			</section>
 		</div>
 		<section class="grid-3 wikiahubs-rail wikiahubs-pulse wikiahubs-module" >
 			<?= $app->renderView('SpecialWikiaHubsV2', 'pulse', $app->wg->request->getValues()); ?>
 		</section>
 		<section class="grid-1 plainlinks wikiahubs-explore wikiahubs-module">
-			<?= $modules[MarketingToolboxModel::MODULE_EXPLORE] ?>
+			<?= $modules[MarketingToolboxModuleExploreService::MODULE_ID] ?>
 		</section>
 		<div class="grid-2 alpha wikiahubs-rail">
 			<section class="grid-2 alpha wikiahubs-featured-video wikiahubs-module">
@@ -25,7 +25,7 @@
 			</section>
 
 			<section class="grid-2 alpha wikiahubs-wikitext-module wikiahubs-module">
-				<?= $app->renderView('SpecialWikiaHubsV2', 'wikitextmodule', $app->wg->request->getValues()); ?>
+				<?= $modules[MarketingToolboxModulePollsService::MODULE_ID] ?>
 			</section">
 
 			<section class="grid-2 alpha wikiahubs-top-wikis wikiahubs-module">

@@ -98,6 +98,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'founderprogressbar-list-description1' => '{{doc-singularthey}}',
+	'founderprogressbar-list-task-label' => '{{Identical|Task}}',
 	'founderprogressbar-photo-add10-label' => 'Goal.',
 	'founderprogressbar-category-add3-label' => '',
 );
@@ -1693,6 +1694,7 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-list-bonus-task-label' => '奖励任务',
 	'founderprogressbar-list-bonus-task-desc' => '完成任务列表以解锁其他特别任务',
 	'founderprogressbar-task-call-to-action' => '进入任务',
+	'founderprogressbar-bonus-task-notice' => '注意：每个奖励任务都可以多次完成。完成必要的重复来冲击100%吧',
 	'founderprogressbar-page-add10-label' => '达到$1{{PLURAL:$1|页|页}}',
 	'founderprogressbar-themedesigner-visit-label' => '自定义您的主题',
 	'founderprogressbar-mainpage-edit-label' => '完成您的首页',
@@ -1710,6 +1712,7 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-category-add5-label' => '达到$1{{PLURAL:$1|类别|类别}}',
 	'founderprogressbar-gallery-add-label' => '添加图片库',
 	'founderprogressbar-topnav-edit-label' => '自订您的导航',
+	'founderprogressbar-mainpage-addslider-label' => '添加主页幻灯',
 	'founderprogressbar-commcorner-edit-label' => '编辑社区角落',
 	'founderprogressbar-video-add-label' => '添加一段视频',
 	'founderprogressbar-user-add5-label' => '查看5个用户的档案',

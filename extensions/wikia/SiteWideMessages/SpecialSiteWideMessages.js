@@ -1,5 +1,5 @@
 (function( window ) {
-	var track = window.WikiaTracker.buildTrackingFunction({
+	var track = Wikia.Tracker.buildTrackingFunction({
 		category: 'sitewidemessages',
 		trackingMethod: 'internal'
 	});
@@ -14,14 +14,14 @@
 		});
 		$( '.SWM_message' ).each( function() {
 			track({
-				action: WikiaTracker.ACTIONS.IMPRESSION,
+				action: Wikia.Tracker.ACTIONS.IMPRESSION,
 				label: 'swm-impression',
 				value: parseInt( $( this ).attr( 'id' ).substr( 4 ) )
 			});
 
 			$( this ).find( 'p a' ).click( function (e) {
 				track({
-					action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
+					action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
 					browserEvent: e,
 					href: $( this ).attr( 'href' ),
 					label: 'swm-link',
@@ -40,7 +40,7 @@
 			});
 
 		track({
-			action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
+			action: Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
 			label: 'swm-dismiss',
 			value: id
 		});

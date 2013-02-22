@@ -20,18 +20,6 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
 		// TODO: use asynchronous approach (BugId:20216)
 		// @see http://code.google.com/intl/pl/apis/analytics/docs/tracking/asyncTracking.html
-/*
-		$script .= <<<SCRIPT2
-<script type="text/javascript" src="{$wgProto}://www.google-analytics.com/ga.js"></script>
-<script type="text/javascript">
-$setDomainName
-_gaq.push(['_setSampleRate', '10']);
-urchinTracker = function() {
-	_wtq.push(['/error/fakeurchin', 'main']);
-};
-</script>
-SCRIPT2;
-*/
 		$script = <<<SCRIPT2
 <script type="text/javascript">
   function getCustomVarPage() {
@@ -94,7 +82,6 @@ SCRIPT2;
 
 			case AnalyticsEngine::EVENT_PAGEVIEW:
 				return '';
-// 				return '<script type="text/javascript">_wtq.push([\'AnalyticsEngine::EVENT_PAGEVIEW\', \'Wikia.main\']);</script>';
 				#return '<script type="text/javascript">_gaq.push([\'_setAccount\',\'UA-288915-1\']);_gaq.push([\'_setSampleRate\',10]);_gaq.push([\'_setDomainName\',\'.wikia.com\']);_gaq.push([\'_trackPageview\']);</script>'; // BugId:21127
 
 			// oasis is not calling this?!?
@@ -104,7 +91,6 @@ SCRIPT2;
 				}
 				$hub = "/" . str_replace(' ', '_', $eventDetails['name']);
 				return '';
-// 				return '<script type="text/javascript">_wtq.push([\'' . addslashes($hub) . '\', \'Wikia.hub\']);</script>';
 
 			case 'onewiki':
 				return $this->onewiki($eventDetails[0]);
@@ -127,37 +113,17 @@ SCRIPT2;
 			return '<!-- No tracking for this wiki -->';
 		} else {
 			return '';
-// 			return '<script type="text/javascript">_wtq.push([\'AnalyticsEngine::EVENT_PAGEVIEW\', \'' . addslashes($wgGoogleAnalyticsAccount) . '\']);</script>';
 		}
 	}
 
 	/* Record how long the page took to load  */
 	private function pagetime($skin){
 		return '';
-/*
-		return '<script type="text/javascript">
-if (typeof window.wgNow == "object"){
-	var now = new Date();
-	var ms = (now.getTime() - window.wgNow.getTime()) / 1000;
-	var pageTime = Math.floor(ms * 10) / 10; // Round to 1 decimal
-	var slashtime = "/' . $skin . '/" + pageTime.toString().replace(/\./, "/");
-	_wtq.push([slashtime, \'Wikia.pagetime\']);
-}
-</script>';
-*/
 	}
 
 	private function varnishstat() {
 		return '';
-/*
-		return '<script type="text/javascript">
-var varnish_server;
-if (varnish_server = document.cookie.match(/varnish-stat=([^;]+)/)) {
-	_wtq.push([varnish_server[1], \'Wikia.varnish\']);
-}
-</script>';
-*/
-		}
+	}
 
 	private function lyrics() {
 		global $wgRequest;
@@ -176,11 +142,6 @@ if (varnish_server = document.cookie.match(/varnish-stat=([^;]+)/)) {
 		$ns = $wgTitle->getNamespace();
 
 		$out = '';
-// 		$out .= "<script type=\"text/javascript\">_wtq.push(['/GN2/".$ns."', 'lyrics']);</script>\n";
-
-		if (in_array($ns, array(0, 220))) {
-// 			$out .= "<script type=\"text/javascript\">_wtq.push(['/GN4/".$ns."/".$wgTitle->getArticleID()."', 'lyrics']);</script>\n";
-		}
 
 		return $out;
 	}

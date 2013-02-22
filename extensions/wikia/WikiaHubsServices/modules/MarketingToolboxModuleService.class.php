@@ -43,8 +43,23 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 					$field['validator']->setFormData($data);
 				}
 
-				if (!$field['validator']->isValid($fieldData) && (($validationError = $field['validator']->getError()) instanceof WikiaValidationError)) {
-					$out[$fieldName] = $validationError->getMsg();
+				if (!$field['validator']->isValid($fieldData)) {
+					$validationError = $field['validator']->getError();
+
+					if( !empty($field['isArray']) ) {
+						$out[$fieldName] = array();
+
+						foreach ($validationError as $key => $error) {
+							if (is_array($error)) {
+								// maybe in future we should handle many errors from one validator,
+								// but actually we don't need  this feature
+								$error = array_shift(array_values($error));
+							}
+							$out[$fieldName][$key] = $error->getMsg();
+						}
+					} else {
+						$out[$fieldName] = $validationError->getMsg();
+					}
 				}
 			}
 		}
@@ -52,10 +67,28 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $out;
 	}
 
+	public function loadData($model, $timestamp) {
+		$moduleId = $this->getModuleId();
+
+		$moduleData = $model->getPublishedData($this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp, $moduleId);
+
+		if( empty($moduleData[$moduleId]['data']) ) {
+			$moduleData = array();
+		} else {
+			$moduleData = $moduleData[$moduleId]['data'];
+		}
+
+		return $this->getStructuredData($moduleData);
+	}
+
 	public function filterData($data) {
 		$filteredData = array_intersect_key($data, $this->getFormFields());
 		$filteredData = array_filter($filteredData, function ($value) { return !empty($value); });
 		return $filteredData;
+	}
+
+	protected function getModuleId() {
+		return static::MODULE_ID;
 	}
 
 	protected function getView($viewName, $data) {
@@ -77,6 +110,8 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 				'type' => isset($field['type']) ? $field['type'] : 'text',
 				'class' => isset($field['class']) ? $field['class'] : '',
 				'icon' => isset($field['icon']) ? $field['icon'] : '',
+				'isArray' => isset($field['isArray']) ? $field['isArray'] : false,
+				'id' => MarketingToolboxModel::FORM_FIELD_PREFIX . $fieldName
 			);
 		}
 
@@ -99,6 +134,10 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		}
 
 		return $link;
+	}
+
+	protected function getImageInfo($fileName, $destSize = 0) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($fileName, $destSize);
 	}
 
 }

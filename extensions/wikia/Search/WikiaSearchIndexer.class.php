@@ -3,6 +3,7 @@
  * Class definition for WikiaSearchIndexer
  */
 use \Wikia\Search\IndexService\Factory;
+use \Wikia\Search\MediaWikiInterface;
 /**
  * This class is responsible for handling all the methods needed to serve up document data for indexing.
  * @author Robert Elwell
@@ -14,6 +15,12 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @var Solarium_Client
 	 */
 	protected $client;
+	
+	/**
+	 * Interface to MediaWiki logic -- need to use this more
+	 * @var \Wikia\Search\MediaWikiInterface
+	 */
+	protected $interface;
 	
 	/**
 	 * Used to store pages when we make multiple invocations for the same page ID
@@ -41,6 +48,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 */
 	public function __construct( Solarium_Client $client ) {
 	    $this->client = $client;
+	    $this->interface = MediaWikiInterface::getInstance();
 	    parent::__construct();
 	}
 		
@@ -85,8 +93,9 @@ class WikiaSearchIndexer extends WikiaObject {
 	public function getPage( $pageId ) {
 		wfProfileIn(__METHOD__);
 		// these will eventually be broken out into their own atomic updates
-		$result = array();
-		
+		$cityId = !empty( $this->wg->CityId ) ? $this->wg->CityId : $this->wg->SearchWikiId;
+		$result = array( 'id' => sprintf( '%s_%s', $this->interface->getWikiId(), $this->interface->getCanonicalPageIdFromPageId( $pageId ) ) );
+
 		foreach ( $this->serviceNames as $serviceName ) {
 			$serviceResult = $this->getService( $serviceName )
 			                      ->setPageId( $pageId )
@@ -118,30 +127,9 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @return Solarium_Document_ReadWrite 
 	 */
 	public function getSolrDocument( $pageId ) {
+		$this->wg->AppStripsHtml = true;
 		
 		$pageData = $this->getPage( $pageId );
-		
-		$html = $pageData['html'];
-		
-		$regexes = array(
-				'\+s',
-				'<span[^>]*editsection[^>]*>.*?<\/span>',
-				'<img[^>]*>',
-				'<\/img>',
-				'<noscript>.*?<\/noscript>',
-				'<div[^>]*picture-attribution[^>]*>.*?<\/div>',
-				'<ol[^>]*references[^>]*>.*?<\/ol>',
-				'<sup[^>]*reference[^>]*>.*?<\/sup>',
-				'<script .*?<\/script>',
-				'<style .*?<\/style>',
-				'\+s',
-		);
-		
-		foreach ($regexes as $re ) {
-			$html = preg_replace( "/$re/mU", $re == '\+s' ? ' ' : '', $html );
-		}
-		
-		$pageData['html'] = strip_tags( $html );
 		
 		foreach ( WikiaSearch::$languageFields as $field ) {
 			if ( isset( $pageData[$field] ) ) {

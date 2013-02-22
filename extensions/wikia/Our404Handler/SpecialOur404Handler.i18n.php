@@ -653,6 +653,13 @@ $messages['rm'] = array(
 $messages['roa-tara'] = array(
 	'our404handler' => 'Errore 404: Pàgene none acchiate!',
 	'our404handler-oops' => 'Non ge stonne le pàggene ca ste cirche. Spuèstete sus, pe piacere.',
+	'message404' => "'''Nuje sime avveramende dispiaciute, ma pe quacche mutive 'a pàgene ca tu è cercate non g'esiste.'''
+
+Vôsce '''$1''' non ge se pò acchià.
+
+* Tu puè pruvà 'a vôsce [[$2]]
+* Tu puè ausà 'a sckatele de ricerche sus a 'u late sinistre d'a pàgene
+* Vèje sus a Pàgene Prengepàle de stu site, cazze 'u collegamende: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Russian (русский)

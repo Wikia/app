@@ -31,18 +31,29 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	 * Main method for displaying hub pages
 	 */
 	public function index() {
+
+		if (!$this->checkAccess()) {
+			$titleText = $this->getContext()->getTitle()->getText();
+			$titleTextSplit = explode('/', $titleText);
+			$this->hubUrl = $titleTextSplit[0];
+			$this->app->wg->Out->setStatusCode ( 404 );
+			$this->overrideTemplate('404');
+			return;
+		}
+
 		$toolboxModel = new MarketingToolboxModel();
 		$modulesData = $toolboxModel->getPublishedData(
 			$this->wg->ContLang->getCode(),
 			MarketingToolboxModel::SECTION_HUBS,
-			$this->verticalId
+			$this->verticalId,
+			$this->hubTimestamp
 		);
 
 		$this->modules = array();
 
 		foreach ($toolboxModel->getModulesIds() as $moduleId) {
 			// TODO remove this if when other modules would be ready
-			if ($moduleId == MarketingToolboxModel::MODULE_EXPLORE) {
+			if( in_array($moduleId, array(MarketingToolboxModuleExploreService::MODULE_ID, MarketingToolboxModulePollsService::MODULE_ID, MarketingToolboxModuleWikiaspicksService::MODULE_ID, MarketingToolboxModuleSliderService::MODULE_ID)) ) {
 				if (!empty($modulesData[$moduleId]['data'])) {
 					$this->modules[$moduleId] = $this->renderModule(
 						$this->wg->ContLang->getCode(),
@@ -64,6 +75,18 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		if (F::app()->checkSkin('wikiamobile')) {
 			$this->overrideTemplate('wikiamobileindex');
 		}
+	}
+
+	/**
+	 * Check if user has access to see hub page in future date
+	 *
+	 * @return bool
+	 */
+	protected function checkAccess() {
+		return $this->hubTimestamp !== false
+			&& ($this->hubTimestamp <= time()
+				|| $this->wg->User->isLoggedIn() && $this->wg->User->isAllowed('marketingtoolbox')
+			);
 	}
 
 	/**
@@ -170,6 +193,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->initModel();
 		$this->initVertical();
 		$this->initVerticalSettings();
+		$this->initHubTimestamp();
 	}
 
 	protected function initCacheValidityTimes() {
@@ -226,5 +250,9 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		}
 		RequestContext::getMain()->getRequest()->setVal('vertical', $this->verticalName);
 		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $this->verticalName));
+	}
+
+	protected function initHubTimestamp() {
+		$this->hubTimestamp = $this->getRequest()->getVal('hubTimestamp');
 	}
 }

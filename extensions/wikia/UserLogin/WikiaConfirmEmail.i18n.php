@@ -216,6 +216,15 @@ $messages['ps'] = array(
 	'wikiaconfirmemail-username' => 'کارن-نوم',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'Codece de conferme vacande',
+	'wikiaconfirmemail-error-invalid-code' => 'Codece de conferme invalide',
+	'wikiaconfirmemail-username' => 'Nome utende',
+);
+
 /** Russian (русский)
  * @author Kuzura
  */

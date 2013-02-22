@@ -1,5 +1,7 @@
 <?
 class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
+	const MODULE_ID = 2;
+
 	protected function getFormFields() {
 		return array(
 			'boardUrl' => array(

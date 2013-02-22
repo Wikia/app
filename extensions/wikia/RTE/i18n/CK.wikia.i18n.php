@@ -138,9 +138,10 @@ $messages['qqq'] = array(
 	'rte-ck-hoverPreview-comment-title' => '{{Identical|Comment}}',
 	'rte-ck-hoverPreview-delete' => '{{Identical|Delete}}',
 	'rte-ck-hoverPreview-edit' => '{{Identical|Edit}}',
+	'rte-ck-image-photo' => '{{Identical|Photo}}',
 	'rte-ck-link-add' => '{{Identical|Add link}}',
 	'rte-ck-link-error-title' => '{{Identical|Error}}',
-	'rte-ck-link-external-tab' => '{{Identical|Liên kết ngoài}}',
+	'rte-ck-link-external-tab' => '{{Identical|External link}}',
 	'rte-ck-link-internal-pageName' => '{{Identical|Page name}}',
 	'rte-ck-link-internal-tab' => '{{Identical|Internal link}}',
 	'rte-ck-link-status-external' => '{{Identical|External link}}',
@@ -157,6 +158,7 @@ $messages['qqq'] = array(
 	'rte-ck-templateEditor-editor-parameters' => '{{Identical|Parameter}}',
 	'rte-ck-templateEditor-editor-previewButton' => '{{Identical|Preview}}',
 	'rte-ck-templateEditor-editor-previewTitle' => '{{Identical|Preview}}',
+	'rte-ck-video-video' => '{{Identical|Video}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -3727,6 +3729,17 @@ $messages['zh-hans'] = array(
 	'rte-ck-format-tag_h3' => '标题3',
 	'rte-ck-format-tag_h4' => '标题4',
 	'rte-ck-format-tag_h5' => '标题5',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'rte-ck-hoverPreview-delete' => '刪除',
+	'rte-ck-templateEditor-editor-previewButton' => '預覽',
+	'rte-ck-templateEditor-editor-previewTitle' => '預覽',
+	'rte-ck-mut-add' => '添加影片 （測試版）',
+	'rte-ck-mut-mut' => '影片 （測試版）',
 );
 
 /** Chinese (Taiwan) (中文（台灣）‎)

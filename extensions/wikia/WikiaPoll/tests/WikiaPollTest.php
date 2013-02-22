@@ -9,12 +9,9 @@ class WikiaPollTest extends WikiaBaseTest {
 	public function testWikiaPollAjaxCreate() {
 		$poll = new WikiaPollAjax;
 
-		$mockTitle = $this->getMock('Title', array('exists'));
-		$mockTitle->expects($this->any())
-				->method('exists')
-				->will($this->returnValue(false));
-
-		$this->proxyClass('Title', $mockTitle, 'newFromText');
+		$mockTitle = $this->mockClassWithMethods('Title', array(
+			'exists' => false
+		), 'newFromText');
 		$this->mockGlobalVariable('wgTitle', $mockTitle);
 
 		$mockArticle = $this->getMock('Article', array('doEdit', 'getTitle'), array($mockTitle));
@@ -35,6 +32,8 @@ class WikiaPollTest extends WikiaBaseTest {
 				->will($this->returnValue(array("One", "Two", "Three")));
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
+		// message needs to be mocked before mockApp() is called
+		$this->mockMessage('wikiapoll-error-invalid-title', 'Question text is invalid');
 		$this->mockApp();
 
 		$result = $poll->create();
@@ -47,9 +46,7 @@ class WikiaPollTest extends WikiaBaseTest {
 		$result = $poll->create();
 
 		$this->assertEquals(false, $result["success"], 'Create Poll with null title failed. Error' . (isset($result['error']) ? $result['error'] : 'unknown - error message not set'));
-
-		// TODO: fix messages mocking
-		#$this->assertContains("Question text is invalid", $result["error"], 'Create Poll with null title failed to return the expected error string');
+		$this->assertContains("Question text is invalid", $result["error"], 'Create Poll with null title failed to return the expected error string');
 	}
 
 	public function testWikiaPollAjaxGet() {
@@ -84,7 +81,6 @@ class WikiaPollTest extends WikiaBaseTest {
 
 		$this->assertInternalType("array", $result, "Get result is an array");
 		$this->assertEquals(true, $result["exists"], "Get a poll that exists");
-
 	}
 
 	public function testWikiaPollAjaxUpdate() {
@@ -128,8 +124,7 @@ class WikiaPollTest extends WikiaBaseTest {
 
 		$this->assertInternalType("array", $result, "Update result is array");
 		$this->assertEquals(true, $result["success"], "Update result is success");
-
-}
+	}
 
 	public function testWikiaPollAjaxVote() {
 		// Fourth part of test is to register a vote for an item
@@ -159,11 +154,9 @@ class WikiaPollTest extends WikiaBaseTest {
 				->will($this->returnValue(true));
 		$this->proxyClass("WikiaPoll", $mockPoll, 'newFromId');
 
-		$mockTitle = $this->getMock('Title', array('getNamespace'));
-		$mockTitle->expects($this->any())
-				->method('getNamespace')
-				->will($this->returnValue(false));
-
+		$mockTitle = $this->mockClassWithMethods('Title', array(
+			'getNamespace' => false
+		));
 		$this->mockGlobalVariable('wgTitle', $mockTitle);
 
 		$mockArticle = $this->getMock('Article', array(), array($mockTitle));
@@ -183,18 +176,14 @@ class WikiaPollTest extends WikiaBaseTest {
 		$result = $poll->hasVoted();
 		$this->assertInternalType("array", $result, "HasVoted result is array");
 		$this->assertEquals(true, $result['hasVoted'], "HasVoted result is true");
-
 	}
 
 	function testDuplicateCreate() {
 		$poll = new WikiaPollAjax();
 
-		$mockTitle = $this->getMock('Title', array('exists'));
-		$mockTitle->expects($this->any())
-				->method('exists')
-				->will($this->returnValue(true));
-
-		$this->proxyClass('Title', $mockTitle, 'newFromText');
+		$this->mockClassWithMethods('Title', array(
+			'exists' => true
+		), 'newFromText');
 
 		$this->mockApp();
 
@@ -204,6 +193,5 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertInternalType("array", $result, "Create duplicate result is array");
 		$this->assertEquals(false, $result["success"], "Create duplicate Poll success flag is false");
 		$this->assertInternalType("string", $result["error"], "Create duplicate Poll results in an error");
-
 	}
 }

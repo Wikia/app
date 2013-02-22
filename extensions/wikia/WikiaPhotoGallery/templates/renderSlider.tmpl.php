@@ -11,7 +11,7 @@
 						<?= $val['videoHtml'] ?>
 					<? else: ?>
 						<? if ( !empty( $val['imageLink'] ) ): ?>
-							<a href='<?= $val['imageLink'] ?>'>";
+							<a href='<?= $val['imageLink'] ?>'>
 						<? endif; ?>
 						<img width='<?= $val['adjWidth']; ?>' height='<?= $val['adjHeight'] ?>'  src='<?=$val['imageUrl']?>' class='wikiaPhotoGallery-slider' style="top: <?= $val['centerTop'] ?>px; margin-left: <?= $val['centerLeft'] ?>px;">
 						<? if (!empty( $val['imageLink'] ) ): ?>

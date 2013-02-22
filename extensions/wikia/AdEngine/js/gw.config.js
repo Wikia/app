@@ -13,19 +13,19 @@
  * This file needs to be included right after ghostwriter's library.
  */
 
-(function(window, document, location, ghostwriter) {
+(function (window, document, location, ghostwriter) {
 	'use strict';
 
-	var documentWriteScript
-		, checkHandler
-		, shouldUseNativeWrite;
+	var documentWriteTag,
+		checkHandler,
+		shouldUseNativeWrite;
 
 	// Save the original document.write method
 	document.nativeWrite = document.write;
 
 	// Decide whether the script should be written natively (return true)
 	// or can be safely handled by ghostwriter (return false)
-	shouldUseNativeWrite = function(src) {
+	shouldUseNativeWrite = function (src) {
 		var i, srcDomain;
 
 		// Check if script source is a full URL. If not it may be
@@ -63,9 +63,9 @@
 	};
 
 	// Natively document.write script tag with given attrs
-	documentWriteScript = function(attrs) {
-		var name
-			, html = '<script';
+	documentWriteTag = function (tagName, attrs) {
+		var name,
+			html = '<' + tagName;
 
 		for (name in attrs) {
 			if (attrs.hasOwnProperty(name)) {
@@ -76,9 +76,9 @@
 		document.nativeWrite(html);
 	};
 
-	// If script is ours, load it natively using documentWriteScript
+	// If script is ours, load it natively using documentWriteTag
 	// and return false, otherwise return true
-	checkHandler = function(tagName, attrs) {
+	checkHandler = function (tagName, attrs) {
 		// Optional logging
 		var logging = (location.search.indexOf('gwconfiglog=1') !== -1);
 
@@ -86,8 +86,15 @@
 
 		if (tagName === 'script' && attrs.src && shouldUseNativeWrite(attrs.src)) {
 			if (logging) { window.console.log('gw.config.js: checkHandler: natively writing script ' + attrs.src); }
-			documentWriteScript(attrs);
+			documentWriteTag('script', attrs);
 			if (logging) { window.console.log('gw.config.js: checkHandler: end of ' + attrs.src); }
+			return false;
+		}
+
+		if (tagName === 'div' && attrs['class'] === 'twtr-widget') {
+			if (logging) { window.console.log('gw.config.js: checkHandler: natively writing twitter div'); }
+			documentWriteTag('div', attrs);
+			if (logging) { window.console.log('gw.config.js: checkHandler: end of twitter div'); }
 			return false;
 		}
 
@@ -102,7 +109,7 @@
 
 		// We need to reverse what happens in ghostwriter function setDocumentOverrides
 		ghostwriter(document.documentElement, {
-			done: function() {
+			done: function () {
 				ghostwriter.flushloadhandlers();
 			}
 		}); // this initializes ghostwriter without doing much harm

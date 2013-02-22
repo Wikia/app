@@ -266,7 +266,7 @@
 		for ( expName in experiments ) {
 			exp = experiments[expName];
 			if ( exp.flags && exp.flags.dw_tracking && exp.group ) {
-				window.WikiaTracker.track({
+				Wikia.Tracker.track({
 					eventName: 'ab_treatment',
 					experiment: exp.name,
 					experimentId: exp.id,

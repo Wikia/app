@@ -334,7 +334,11 @@ jQuery(function($) {
 	// modify preview dialog
 	if (window.wgIsWikiNavMessage) {
 		// preload messages
-		$.getMessages('Oasis-navigation-v2');
+		$.getMessages('Oasis-navigation-v2').done(function() {
+			$('#EditPageRail .module_page_controls .module_content').append(
+				'<div class="preview-validator-desc">' + $.msg('oasis-navigation-v2-validation-caption') + '</div>'
+			);
+		});
 
 		// modify size of preview modal
 		$(window).bind('EditPageRenderPreview', function(ev, options) {
@@ -371,7 +375,7 @@ jQuery(function($) {
                 var notifications =
                     '<div class="global-notification error">'
                     + '<div class="msg">' + errorMessages.join("</br>") + '</div>'
-                    + '</div>'
+                    + '</div>';
 
                 $('.modalContent .ArticlePreview').prepend(notifications);
 			}
@@ -383,14 +387,11 @@ jQuery(function($) {
 
             previewNode.find('.msg > a').click(function() {
                 window.location = this.href;
-            })
+            });
 
 		});
 
 		$('#wpPreview').parent().removeClass('secondary');
-		$('#EditPageRail .module_page_controls .module_content').append(
-			'<div class="preview-validator-desc">' + $.msg('oasis-navigation-v2-validation-caption') + '</div>'
-		);
 		$('#EditPageMain').addClass('editpage-wikianavmode');	// to set the toolbar height in wide mode (so the preview-validator-desc div fits)
 	}
 });

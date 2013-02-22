@@ -162,6 +162,14 @@ $messages['pt-br'] = array(
 	'confirmemailprompt-error' => 'É este o seu endereço de e-mail: <strong>$1</strong>? [[$2|Confirme-o]] ou [[$3|mude-o]].',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'confirmemailprompt-desc' => "Face assè 'nu messàgge de avvertimende ce 'n'utende ave 'n'indirizze e-mail non confermate",
+	'confirmemailprompt-error' => "Jè quiste l'indirizze e-mail tune: <strong>$1</strong>? [[$2|Confermale]] o [[$3|cangiale]].",
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura

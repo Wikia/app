@@ -5920,6 +5920,22 @@ $messages['ro'] = array(
 	'founderemails-email-3-day-explore-button' => 'Exploră',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'founderemails-email-user-registered-greeting' => 'Cià $USERNAME,',
+	'founderemails-email-user-registered-signature' => "'A squadre Uicchia",
+	'founderemails-email-user-registered-button' => 'Bovègne a lore',
+	'founderemails-email-0-days-passed-subject' => "Bovègne jndr'à Uicchia!",
+	'founderemails-email-first-edit-greeting' => 'Cià $USERNAME,',
+	'founderemails-email-first-edit-signature' => "'A squadre Uicchia",
+	'founderemails-email-general-edit-greeting' => 'Cià $USERNAME,',
+	'founderemails-email-general-edit-signature' => "'A squadre Uicchia",
+	'founderemails-email-anon-edit-greeting' => 'Cià $USERNAME,',
+	'founderemails-email-anon-edit-signature' => "'A squadre Uicchia",
+);
+
 /** Russian (русский)
  * @author Kuzura
  * @author Александр Сигачёв

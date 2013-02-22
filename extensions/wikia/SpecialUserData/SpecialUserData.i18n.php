@@ -364,3 +364,12 @@ $messages['zh-hans'] = array(
 	'userdata-submit' => '获取数据',
 	'userdata-not-updated' => '更新wgUserData失败',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'userdata' => '獲取使用者資料',
+	'userdata-userid-label' => '提供使用者 ID：',
+	'userdata-submit' => '獲取資料',
+);

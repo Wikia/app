@@ -1,28 +1,46 @@
 $(function() {
 	if( window.wgEnableUserLoginExt ) {
-		/* Hyun (2013-01-24) - super ultra shitty hack to fix the problem at hand */
-		/* it is almost copied and pasted code from small part of UserLoginAjaxForm */
 		var form = $('.UserLogin'),
-			wikiaForm = new WikiaForm(form.find('form'));
-		
-		$('.forgot-password').on('click.haxxor', function(e) {
-			e.preventDefault();
-			form.find('.input-group').removeClass('error');
-			form.find('.error-msg').remove();
-			$.post(wgScriptPath + '/wikia.php', {
+			formGroup = form.find('.input-group'),
+			wikiaForm = new WikiaForm(form.find('form')),
+			formError = form.find('.error-msg'),
+			formGeneralError = form.find('.general-errors'),
+			formGeneralErrorMsg = null,
+			formUserName = form.find('input[name=username]');
+
+		$('.forgot-password').on('click', function(e) {
+			formGroup.removeClass('error');
+			formError.remove();
+			$.nirvana.sendRequest({
 				controller: 'UserLoginSpecial',
 				method: 'mailPassword',
+				data: {
+					username: formUserName.val()
+				},
+				type: 'post',
 				format: 'json',
-				username: form.find('input[name=username]').val()
-			}, function(json) {
-				if(json['result'] === 'ok' || json['result'] === 'error') {
-					if(json['errParam']) {
-						wikiaForm.showInputError(json['errParam'], json['msg']);
-					} else {
+				callback: function(json) {
+					formGeneralErrorMsg = formGeneralError.find('.error-msg');
+					if(json['result'] === 'error') {
+						formUserName
+							.parent()
+							.addClass('error')
+							.find('.error-msg')
+							.remove()
+							.end()
+							.append('<div class="error-msg">'+json['msg']+'</div>');
+						formGeneralErrorMsg.html('');
+					} else if (json['result'] === 'ok') {
+						formGeneralError.removeClass('error');
+						formUserName
+							.parent()
+							.find('.error-msg')
+							.remove();
 						wikiaForm.showGenericError(json['msg']);
 					}
 				}
 			});
+			e.preventDefault();
 		});
 	}
 });

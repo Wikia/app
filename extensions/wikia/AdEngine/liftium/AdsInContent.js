@@ -17,14 +17,14 @@ AIC2.init = function() {
 
 	if ($('body').hasClass('rtl')) {
 		Liftium.d("AIC2: rtl wiki", 7);
-		//WikiaTracker.track({eventName:'liftium.varia', 'ga_category':'varia/AIC2', 'ga_action':'rtl', trackingMethod: 'ad'});
+		//Wikia.Tracker.track({eventName:'liftium.varia', 'ga_category':'varia/AIC2', 'ga_action':'rtl', trackingMethod: 'ad'});
 		AIC2.isRightToLeft = true;
 	}
 
 	// FIXME
 	if ($window.width() < 1010) {
 		Liftium.d("AIC2: window too narrow, bailing out", 3);
-		//WikiaTracker.track({eventName:'liftium.varia', 'ga_category':'varia/AIC2', 'ga_action':'too narrow', trackingMethod: 'ad'});
+		//Wikia.Tracker.track({eventName:'liftium.varia', 'ga_category':'varia/AIC2', 'ga_action':'too narrow', trackingMethod: 'ad'});
 		return;
 	}
 
@@ -38,7 +38,7 @@ AIC2.init = function() {
 		$window.bind("resize.AIC2", AIC2.onScroll ); // FIXME: throttle
 	} else {
 		Liftium.d("AIC2: page too short", 3);
-		//WikiaTracker.track({eventName:'liftium.varia', 'ga_category':'varia/AIC2', 'ga_action':'too short', trackingMethod: 'ad'});
+		//Wikia.Tracker.track({eventName:'liftium.varia', 'ga_category':'varia/AIC2', 'ga_action':'too short', trackingMethod: 'ad'});
 	}
 };
 
@@ -52,7 +52,7 @@ AIC2.checkStartStopPosition = function() {
 
 	if (!AIC2.$placeHolder.length) {
 		Liftium.d("AIC2: no rail", 3);
-		//WikiaTracker.track({eventName:'liftium.varia', 'ga_category':'varia/AIC2', 'ga_action':'no rail', trackingMethod: 'ad'});
+		//Wikia.Tracker.track({eventName:'liftium.varia', 'ga_category':'varia/AIC2', 'ga_action':'no rail', trackingMethod: 'ad'});
 		// No rail, no ads
 		return false;
 	}
@@ -68,7 +68,7 @@ AIC2.checkStartStopPosition = function() {
 		}
 	} catch (e) {
 		Liftium.d("AIC2: catched in start/stop:", 1, e);
-		WikiaTracker.track({
+		Wikia.Tracker.track({
 			eventName: 'liftium.errors',
 			ga_category: 'errors/AIC2',
 			ga_action: 'try-catch',

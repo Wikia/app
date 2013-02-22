@@ -3,19 +3,18 @@ var ModuleNavigation = function() {
 
 ModuleNavigation.prototype = {
 	boxes: undefined,
-	switchSelector: 'input:not(:button), textarea, .filename-placeholder, .image-placeholder img',
+	wrapper: undefined,
+	switchSelector: 'input:not(:button), textarea, .filename-placeholder, .image-placeholder img, .video-title, .video-url-input, .timeago, .timer, div.image-placeholder.video > a',
 
 	init: function () {
-		this.boxes = $('#marketing-toolbox-form').find('.module-box');
+		this.wrapper = $('#marketing-toolbox-form');
+		this.boxes = this.wrapper.find('.module-box');
 		this.initButtons();
 	},
 
 	initButtons: function() {
-		this.boxes.filter(':first').find('.nav-up').attr('disabled', 'disabled');
-		this.boxes.filter(':last').find('.nav-down').attr('disabled', 'disabled');
-
-		this.boxes.find('.nav-up').filter(':not(:disabled)').click($.proxy(this.moveUp, this));
-		this.boxes.find('.nav-down').filter(':not(:disabled)').click($.proxy(this.moveDown, this));
+		this.wrapper.on('click', '.module-box .nav-down:not(:disabled)', $.proxy(this.moveDown, this));
+		this.wrapper.on('click', '.module-box .nav-up:not(:disabled)', $.proxy(this.moveUp, this));
 	},
 
 	moveUp: function(event) {
@@ -42,9 +41,11 @@ ModuleNavigation.prototype = {
 		if (sourceContainersLength != destContainersLength) {
 			throw "Switchable length not equals";
 		}
+		
 		for (var i = 0; i < sourceContainersLength; i++) {
 			this.switchElementValue(sourceContainers[i], destContainers[i]);
 		}
+		
 		dest.get(0).scrollIntoView();
 	},
 
@@ -54,7 +55,8 @@ ModuleNavigation.prototype = {
 		if (sourceTagName != dest.nodeName.toLowerCase()) {
 			throw "Switchable type not equals";
 		}
-		var imgAttribsToSwitch = ['src', 'width', 'height'];
+		var imgAttribsToSwitch = ['src', 'width', 'height', 'data-video'];
+		var linkAttribsToSwitch = ['href'];
 
 		source = $(source);
 		dest = $(dest);
@@ -62,16 +64,21 @@ ModuleNavigation.prototype = {
 		var form = EditHub.form.validate();
 
 		switch(sourceTagName) {
+			case 'h4':
+			case 'time':
 			case 'span':
+			case 'div':
 				tmp = source.text();
 				source.text(dest.text());
 				dest.text(tmp);
 				break;
 			case 'img':
-				for (var i = 0; i < imgAttribsToSwitch.length; i++) {
-					tmp = source.attr(imgAttribsToSwitch[i]);
-					source.attr(imgAttribsToSwitch[i], dest.attr(imgAttribsToSwitch[i]));
-					dest.attr(imgAttribsToSwitch[i], tmp);
+			case 'a':
+				var attribs = (sourceTagName == 'a') ? linkAttribsToSwitch : imgAttribsToSwitch;
+				for (var i = 0; i < attribs.length; i++) {
+					tmp = source.attr(attribs[i]);
+					source.attr(attribs[i], dest.attr(attribs[i]));
+					dest.attr(attribs[i], tmp);
 				}
 				break;
 			case 'textarea':

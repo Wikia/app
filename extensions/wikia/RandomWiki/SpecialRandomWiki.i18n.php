@@ -273,6 +273,14 @@ $messages['pt-br'] = array(
 	'randomwiki' => 'Wiki Aleatória',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'randomwiki-desc' => "Lasse le utinde a esplorà 'na uicchi a uecchije",
+	'randomwiki' => 'Uicchi a uecchije',
+);
+
 /** Russian (русский)
  * @author Eleferen
  * @author Kuzura

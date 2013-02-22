@@ -16,7 +16,7 @@ var EvolveHelper = function (log, window) {
 			if (window.wgPageName === 'Video_Games') {
 				sect = 'gaming';
 			}
-			if (window.wgPagename === 'Entertainment') {
+			if (window.wgPageName === 'Entertainment') {
 				sect = 'entertainment';
 			}
 		} else if (kv.indexOf('movie') !== -1) {

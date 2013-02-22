@@ -83,6 +83,8 @@ $messages['en'] = array(
 	'restore-edits-diff-notice' => "Welcome back! We've restored some changes you had not published. However, the page has been updated since then. Would you like to: <a class='notice-action restoreeditlink'>Delete my changes and start with the latest text</a> or <a class='notice-action difflink'>View a comparison of changes with the latest page</a>",
 	'mainpagewarning-notice' => "Learn more about [[w:c:community:Help:Main_page|editing the main page]].",
 	'explainconflict-notice' => "'''Warning!''' Someone else has changed this page since you started editing it! [More info]",
+	'wikia-editor-add-file-notice' => 'Your $1 has been added. Drag and drop the $1 anywhere on the page or hover over the thumbnail and click "modify" for embed options.',
+	'wikia-editor-add-file-notice-no-wysiwyg' => 'Your $1 has been added.',
 
 	// "editing" preferences sections
 	'prefs-general' => 'General',
@@ -120,12 +122,15 @@ $messages['qqq'] = array(
 {{Identical|Gallery}}',
 	'wikia-editor-media-slideshow' => 'Label for edit page button that brings up the Slideshow Builder',
 	'wikia-editor-media-slider' => 'This refers to a special kind of slideshow which is intended for the main page. See http://help.wikia.com/wiki/Help:Galleries_and_slideshows#Creating_a_main_page_slider.',
-	'wikia-editor-media-video' => 'Label for edit page button that brings up the video upload wizard',
+	'wikia-editor-media-video' => 'Label for edit page button that brings up the video upload wizard.
+{{Identical|Video}}',
+	'wikia-editor-media-mut' => '{{Identical|Video}}',
 	'wikia-editor-source-bold-tooltip' => 'Tooltip for the button used to bold text in source mode.',
 	'wikia-editor-source-italic-tooltip' => 'Tooltip for the button used to italicize text in source mode.
 {{Identical|Italic}}',
 	'wikia-editor-source-link-tooltip' => 'Tooltip for the button used to add a link in source mode.
 {{Identical|Add link}}',
+	'wikia-editor-modules-templates-title' => '{{Identical|Template}}',
 	'wikia-editor-modules-license-text' => 'Parameters:
 * $1 is a placeholder for the license logo/image.
 * $2 is a URL.
@@ -1311,7 +1316,7 @@ $messages['ko'] = array(
 	'editpagelayout-pageControls-summaryLabel' => '편집 요약',
 	'editpagelayout-pageControls-newSectionLabel' => '문단 제목 넣기',
 	'editpagelayout-pageControls-back' => '에디터로 돌아가기',
-	'editpagelayout-pageControls-changes' => '차이 보기',
+	'editpagelayout-pageControls-changes' => '차이',
 	'editpagelayout-blocked-user' => '자신의 사용자 이름이나 IP 주소가 차단되어 있습니다.',
 	'editpagelayout-edit-summary-label' => '편집 요약',
 	'editpagelayout-subject-headline-label' => '주제/제목:',
@@ -2127,6 +2132,22 @@ $messages['pt-br'] = array(
 	'tog-editwidth' => 'Ampliar o modo de edição "Fonte" para encher toda a tela',
 	'tog-minordefault' => 'Marcar todas as edições como "menor" por padrão',
 	'tog-forceeditsummary' => 'Avisar-me se eu deixar um sumário em branco',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'editpagelayout-more' => 'de cchiù',
+	'editpagelayout-less' => 'de mene',
+	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Notifiche}}',
+	'editpagelayout-pageControls-changes' => 'Cangiaminde',
+	'wikia-editor-media-image' => 'Foto',
+	'wikia-editor-media-gallery' => 'Gallerie',
+	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-mut' => 'Video',
+	'wikia-editor-source-bold-tooltip' => 'Grascette',
+	'wikia-editor-source-italic-tooltip' => 'Corsive',
 );
 
 /** Russian (русский)

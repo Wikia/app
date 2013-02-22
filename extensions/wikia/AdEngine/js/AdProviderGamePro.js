@@ -1,4 +1,4 @@
-var AdProviderGamePro = function(wikiaDart, ScriptWriter, WikiaTracker, log, window, document) {
+var AdProviderGamePro = function(wikiaDart, ScriptWriter, tracker, log, window, document) {
 	var ord = Math.round(Math.random() * 23456787654);
 	var slotMap = {
 		'HOME_TOP_LEADERBOARD': {'size':'728x90', 'tile': 1, 'pos': 'leadfull', 'dcopt': 'ist'},
@@ -30,7 +30,7 @@ var AdProviderGamePro = function(wikiaDart, ScriptWriter, WikiaTracker, log, win
 			, slotsize = slot[1] || slotMap[slotname].size
 		;
 
-		WikiaTracker.track({
+		tracker.track({
 			eventName: 'liftium.slot2',
 			ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''),
 			ga_action: slotname,

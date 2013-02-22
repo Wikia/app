@@ -111,6 +111,7 @@ For example, you could:
 $messages['qqq'] = array(
 	'myhome-activity-feed' => 'This the title of the list/summary of recent activity in "My home page" in Wikia. "Feed" here does not refer to an RSS/Atom-type feed.',
 	'myhome-watchlist-feed' => '{{Identical|My watchlist}}',
+	'myhome-user-contributions-feed' => '{{Identical|Contribution}}',
 	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
 	'myhome-feed-newpage' => '{{Identical|New page}}',
 	'myhome-feed-edit' => '{{Identical|Edit}}',
@@ -120,6 +121,8 @@ $messages['qqq'] = array(
 	'myhome-feed-new-blog-comment-details' => '{{Identical|Comment}}',
 	'myhome-feed-new-article-comment-details' => '{{Identical|Comment}}',
 	'myhome-feed-redirect-details' => '{{Identical|Redirect}}',
+	'myhome-hot-spots-number-of-editors' => '{{Identical|Editor}}',
+	'myhome-namespace-blog' => '{{Identical|Blog}}',
 	'myhome-community-corner-edit' => '{{Identical|Edit message}}',
 	'myhome-default-view-checkbox' => "In the list of recent wiki activity (Special:WikiActivity), this is a checkbox button to toggle between viewing a summary of all activity and a summary of activity in pages on the user's watchlist.
 

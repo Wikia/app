@@ -232,9 +232,22 @@ class MediaWikiInterface
 	/**
 	 * Provides global value as set in the Oasis wg helper
 	 * @param mixed $global
+	 * @return mixed
 	 */
 	public function getGlobal( $global ) {
 		return $this->app->wg->{$global};
+	}
+	
+	/**
+	 * Provides global value as set in the Oasis wg helper.
+	 * If the value is NULL, we return the default value set in param 2
+	 * @param mixed $global
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public function getGlobalWithDefault( $global, $default = null ) {
+		$result = $this->getGlobal( $global );
+		return $result === null ? $default : $result;
 	}
 	
 	/**
@@ -345,6 +358,25 @@ class MediaWikiInterface
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * For a given NS (e.g. 'Category'), returns the integer value (e.g. 14).
+	 * @param string $namespaceString
+	 * @return int
+	 */
+	public function getNamespaceIdForString( $namespaceString ) {
+		return $this->app->wg->ContLang->getNsIndex( $namespaceString );
+	}
+	
+	/**
+	 * Allows us to abstract calling a hook away from other parts of the library.
+	 * @param string $hookName
+	 * @param array $args
+	 * @return mixed
+	 */
+	public function invokeHook( $hookName, array $args = array() ) {
+		return wfRunHooks( $hookName, $args );
 	}
 	
 	/**

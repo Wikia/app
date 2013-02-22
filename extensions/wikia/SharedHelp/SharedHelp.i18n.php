@@ -246,8 +246,8 @@ $messages['pl'] = array(
 $messages['pms'] = array(
 	'sharedhelp-desc' => "A pija dle pàgine da [[w:c:Help|Help Wikia]] e a j'anseriss ant lë spassi nominal {{ns:help}} dë sta wiki-sì",
 	'sharedhelp-autotalkcreate-summary' => 'Pàgina ëd discussion creà automaticament',
-	'sharedhelp-searchprofile' => "Pagine d'agiut",
-	'sharedhelp-searchprofile-tooltip' => "Sërché pàgine d'agiut",
+	'sharedhelp-searchprofile' => "Pàgine d'agiut",
+	'sharedhelp-searchprofile-tooltip' => "Sërché ant le pàgine d'agiut",
 );
 
 /** Pashto (پښتو)
@@ -280,6 +280,8 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'sharedhelp-desc' => "Pigghie le pàggene da l'[[w:c:Help|Aijute de Uicchia]] e sckaffele jndr'à 'u namespace {{ns:help}} sus a sta uicchi",
+	'sharedhelp-autotalkcreate-summary' => "Pàgene de le 'ngazzaminde ccrejate automaticamende",
 	'sharedhelp-searchprofile' => "Pàgene d'ajute",
 	'sharedhelp-searchprofile-tooltip' => 'Cirche le pàggene de ajute',
 );

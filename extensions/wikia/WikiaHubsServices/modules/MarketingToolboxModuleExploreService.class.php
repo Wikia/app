@@ -4,6 +4,8 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	const LINK_TEXT = 'exploreLinkText';
 	const LINK_URL = 'exploreLinkUrl';
 
+	const MODULE_ID = 5;
+
 	protected $lettersMap = array('a', 'b', 'c', 'd');
 
 	/**
@@ -209,7 +211,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		
 		if( !empty($data['values']['fileName']) ) {
 			$model = new MarketingToolboxModel();
-			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['fileName'], $model->getThumbnailSize());
+			$imageData = $this->getImageInfo($data['values']['fileName'], $model->getThumbnailSize());
 			$data['fileUrl'] = $imageData->url;
 			$data['imageWidth'] = $imageData->width;
 			$data['imageHeight'] = $imageData->height;
@@ -235,20 +237,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 
 		return $data;
 	}
-	
-	public function loadData($model, $timestamp) {
-		$moduleId = $this->model->getModuleId();
-		$moduleData = $model->getPublishedData($this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp, $moduleId);
-		
-		if( empty($moduleData[$moduleId]['data']) ) {
-			$moduleData = array();
-		} else {
-			$moduleData = $moduleData[$moduleId]['data'];
-		}
-		
-		return $this->getStructuredData($moduleData);
-	}
-	
+
 	public function getStructuredData($data) {
 		$structuredData = array();
 		
@@ -257,7 +246,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 			$structuredData['linkgroups'] = $this->getLinkGroupsFromApiResponse($data);
 			
 			if( !empty($data['fileName']) ) {
-				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['fileName']);
+				$imageData = $this->getImageInfo($data['fileName']);
 				$structuredData['imageUrl'] = $imageData->url;
 				$structuredData['imageAlt'] = $imageData->title;
 			} else {

@@ -8,6 +8,8 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	const FIELD_NAME_QUOTE = 'quote';
 	const FIELD_NAME_URL = 'url';
 
+	const MODULE_ID = 6;
+
 	static $fieldNames = array('photo', 'title', 'usersUrl', 'quote', 'url');
 
 	protected function getFormFields() {
@@ -172,7 +174,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		$imageSize = $model->getThumbnailSize();
 		for ($i = 1; $i <= $data['boxesCount']; $i++) {
 			if (!empty($data['values']['photo' . $i])) {
-				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['photo' . $i], $imageSize);
+				$imageData = $this->getImageInfo($data['values']['photo' . $i], $imageSize);
 				$data['photos'][$i]['url'] = $imageData->url;
 				$data['photos'][$i]['imageWidth'] = $imageData->width;
 				$data['photos'][$i]['imageHeight'] = $imageData->height;

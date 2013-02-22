@@ -1723,6 +1723,16 @@ $messages['ro'] = array(
 	'editaccount-status' => 'Mesaj de stare',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'editaccount-frame-usage' => 'Note',
+	'editaccount-submit-account' => "Gestisce 'u cunde",
+	'editaccount-label-reason' => 'Mutive:',
+	'editaccount-submit-button' => 'Reggìstre',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Eleferen
@@ -2240,6 +2250,9 @@ $messages['zh-hans'] = array(
 	'editaccount-success-pass' => '帐户 $1 的密码更改成功。',
 	'editaccount-success-realname' => '帐户 $1 的真实姓名更改成功。',
 	'editaccount-success-close' => '成功禁用了帐户 $1 。',
+	'editaccount-error-email' => '电子邮件地址未改变。请重试或联系技术团队。',
+	'editaccount-error-pass' => '密码未改变。请重试或联系技术团队。',
+	'editaccount-error-realname' => '真实姓名未改变。请重试或联系技术团队。',
 	'editaccount-invalid-email' => '"$1"不是有效的电子邮件地址！',
 	'editaccount-nouser' => '帐户“$1”不存在！',
 	'editaccount-not-loaded' => '错误：用户数据无法正确加载，请尝试重新加载页面。',
@@ -2255,6 +2268,7 @@ $messages['zh-hans'] = array(
 	'editaccount-log-entry-pass' => '用户$2密码已变更',
 	'editaccount-log-entry-realname' => '用户$2真实姓名已变更',
 	'right-editaccount' => '编辑其他用户的信息',
+	'action-editaccount' => '编辑其他用户的信息',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

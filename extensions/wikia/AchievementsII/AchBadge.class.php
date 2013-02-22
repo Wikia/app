@@ -5,9 +5,8 @@ class AchBadge {
 	private $mBadgeTypeId;
 	private $mBadgeLap;
 	private $mLevel;
-	private $mCategory;
 
-	public function __construct($badgeTypeId, $badgeLap = null, $badgeLevel = null, $category = null) {
+	public function __construct($badgeTypeId, $badgeLap = null, $badgeLevel = null) {
 		$this->mBadgeTypeId = $badgeTypeId;
 		$this->mBadgeLap = $badgeLap;
 		$this->mLevel = $badgeLevel;
@@ -234,4 +233,21 @@ class AchBadge {
 
 		wfProfileOut( __METHOD__ );
 	}
+
+	public function getData() {
+		return array(
+			'badge_type_id' => $this->mBadgeTypeId,
+			'badge_lap' => $this->mBadgeLap,
+			'badge_level' => $this->mLevel,
+		);
+	}
+
+	public static function newFromData( $data ) {
+		return new AchBadge(
+			$data['badge_type_id'],
+			$data['badge_lap'],
+			$data['badge_level']
+		);
+	}
+
 }

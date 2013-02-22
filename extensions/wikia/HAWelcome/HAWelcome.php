@@ -508,6 +508,14 @@ class HAWelcomeJob extends Job {
 			}
 
 			/**
+			 * Skip welcome if edit was made by a different user to the current user (i.e. User:Wikia) (BugID: 97835)
+			 */
+			if ( $wgUser->getId() !== $revision->getUser() ) {
+				$canWelcome = false;
+				Wikia::log( __METHOD__, $wgUser->getId(), "Skip welcome, current user ({$wgUser->getId()}) is different to revision author: " . $revision->getUser() );
+			}
+
+			/**
 			 * put possible welcomer into memcached, RT#14067
 			 */
 			if( $wgUser->getId() && self::isWelcomer( $wgUser ) ) {
