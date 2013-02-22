@@ -23,9 +23,6 @@ class WikiaHubsV2Hooks {
 				$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
 				// TODO handle if date is wrong
-
-				// TODO ask Matt if anon user can see future hubs
-
 				$app->wg->SuppressPageHeader = true;
 				$article = F::build( 'WikiaHubsV2Article', array($title, $model->getHubPageId($dbKeyName), $hubTimestamp) );
 			}

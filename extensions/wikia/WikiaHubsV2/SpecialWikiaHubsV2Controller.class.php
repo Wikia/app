@@ -31,6 +31,14 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	 * Main method for displaying hub pages
 	 */
 	public function index() {
+
+		if (!$this->checkAccess()) {
+			// TODO change template
+			die;
+			$this->overrideTemplate('404');
+			return;
+		}
+
 		$toolboxModel = new MarketingToolboxModel();
 		$modulesData = $toolboxModel->getPublishedData(
 			$this->wg->ContLang->getCode(),
@@ -65,6 +73,16 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		if (F::app()->checkSkin('wikiamobile')) {
 			$this->overrideTemplate('wikiamobileindex');
 		}
+	}
+
+	/**
+	 * Check if user has access to see hub page in future date
+	 *
+	 * @return bool
+	 */
+	protected function checkAccess() {
+		return !(isset($this->hubTimestamp) && $this->hubTimestamp > time())
+			|| $this->wg->User->isLoggedIn() && $this->wg->User->isAllowed('marketingtoolbox');
 	}
 
 	/**

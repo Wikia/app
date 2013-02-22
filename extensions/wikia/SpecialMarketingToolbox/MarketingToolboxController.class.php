@@ -26,6 +26,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		if (!$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('marketingtoolbox')) {
 			$this->wf->ProfileOut(__METHOD__);
+			$this->app->wg->Out->setStatusCode ( 403 );
 			$this->specialPage->displayRestrictionError();
 			return false;
 		}
