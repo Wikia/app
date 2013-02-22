@@ -1,4 +1,4 @@
-/*global LightboxLoader:true, RelatedVideosIds, LightboxTracker*/
+/*global LightboxLoader:true, RelatedVideosIds, LightboxTracker, wgStyleVersion*/
 
 /* TDOO: We need to normalize all readable titles and dbKeys so that we always know which one is which. This includes updating the DOM for every image and video element site-wide */
 
@@ -1034,7 +1034,7 @@ var Lightbox = {
 			type:		'GET',
 			format: 'html',
 			data: {
-				lightboxVersion: 2, // update this when we change the template
+				lightboxVersion: wgStyleVersion,
 				userLang: window.wgUserLanguage // just in case user changes language prefs
 			},
 			callback: function(html) {
