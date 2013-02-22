@@ -33,8 +33,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	public function index() {
 
 		if (!$this->checkAccess()) {
-			// TODO change template
-			die;
+			$titleText = $this->getContext()->getTitle()->getText();
+			$titleTextSplit = explode('/', $titleText);
+			$this->hubUrl = $titleTextSplit[0];
+			$this->app->wg->Out->setStatusCode ( 404 );
 			$this->overrideTemplate('404');
 			return;
 		}
