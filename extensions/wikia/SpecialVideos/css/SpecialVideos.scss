@@ -97,7 +97,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 	.video-element {
 		position: relative;
 		&:hover .remove {
-			display: block;
+			/*display: block;*/
 		}
 		.remove {
 			background-color: #ddd;	/* hardcoded because this is admin only feature */
