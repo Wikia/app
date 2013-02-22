@@ -221,8 +221,6 @@ class LatestPhotosController extends WikiaController {
 
 		$links = array();
 		if ( !empty( $data ) ) {
-			$sk = RequestContext::getMain()->getSkin();
-
 			foreach ( $data as $row ) {
 				$Title = Title::makeTitle( $row['ns'], $row['title'] );
 
@@ -231,7 +229,7 @@ class LatestPhotosController extends WikiaController {
 							'#filelinks" class="wikia-gallery-item-more">' .
 							wfMsg( 'oasis-latest-photos-more-dotdotdot' ) . '</a>';
 				} else {
-					$links[] = $sk->link( $Title, null, array( 'class' => 'wikia-gallery-item-posted' ) );
+					$links[] = Linker::link( $Title, null, array( 'class' => 'wikia-gallery-item-posted' ) );
 				}
 			}
 		}
