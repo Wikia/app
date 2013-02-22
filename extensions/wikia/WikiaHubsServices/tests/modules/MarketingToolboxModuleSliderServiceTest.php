@@ -149,15 +149,20 @@ WIKI_TEXT;
 				array('en', 1, 1)
 		);
 
+		$map = [];
+		if (!empty($flatArray)) {
+			for ($i = 1; $i <= 5; $i++) {
+				$map[] = array(
+					$flatArray['photo' . $i],
+					(object) array('url' => $expectedData['slides'][$i - 1]['photoUrl'])
+				);
+			}
+		}
+
 		$sliderMock
 			->expects($this->any())
 			->method( 'getImageData' )
-			->will( $this->returnValue(
-					(object) array(
-						'url' => 'http://images.lukaszk.wikia-dev.com/__cb20121004195613/wikiaglobal/images/7/71/TheMuppets_hero_100512.jpg'
-					)
-				)
-			);
+			->will($this->returnValueMap($map));
 
 		$structuredData = $sliderMock->getStructuredData($flatArray);
 
