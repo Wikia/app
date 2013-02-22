@@ -9,8 +9,8 @@ class WikiaHubsV2HooksTest extends WikiaBaseTest
 		include_once __DIR__ . DIRECTORY_SEPARATOR
 			. '..' . DIRECTORY_SEPARATOR
 			. '..' . DIRECTORY_SEPARATOR
-			. 'hooks' . DIRECTORY_SEPARATOR
-			. 'WikiaHubsV2Hooks.php';
+			. 'models' . DIRECTORY_SEPARATOR
+			. 'WikiaHubsV2HooksModel.class.php';
 		//$this->setupFile = dirname(__FILE__) . '/../../WikiaHubsV2.setup.php';
 		parent::setUp();
 	}
@@ -19,13 +19,8 @@ class WikiaHubsV2HooksTest extends WikiaBaseTest
 	 * @dataProvider getTimestampFromSplitDbKeyDataProvider
 	 */
 	public function testGetTimestampFromSplitDbKey($urlDbKey, $expectedTimestamp) {
-
-		$class = new ReflectionClass('WikiaHubsV2Hooks');
-		$method = $class->getMethod('getTimestampFromSplitDbKey');
-		$method->setAccessible(true);
-
-		$hook = new WikiaHubsV2Hooks();
-		$timestamp = $method->invoke($hook, explode('/', $urlDbKey));
+		$hook = new WikiaHubsV2HooksModel();
+		$timestamp = $hook->getTimestampFromSplitDbKey(explode('/', $urlDbKey));
 
 		$this->assertEquals($expectedTimestamp, $timestamp);
 	}
@@ -46,16 +41,11 @@ class WikiaHubsV2HooksTest extends WikiaBaseTest
 
 
 	/**
-	 * @dataProvider getTimestampFromSplitDbKeyDataProvider
+	 * @dataProvider getCanonicalHrefForHubDataProvider
 	 */
 	public function testGetCanonicalHrefForHub($expectedUrl, $url, $hubName) {
-
-		$class = new ReflectionClass('WikiaHubsV2Hooks');
-		$method = $class->getMethod('getCanonicalHrefForHub');
-		$method->setAccessible(true);
-
-		$hook = new WikiaHubsV2Hooks();
-		$url = $method->invoke($hook, $hubName);
+		$hook = new WikiaHubsV2HooksModel();
+		$url = $hook->getCanonicalHrefForHub($hubName, $url);
 
 		$this->assertEquals($expectedUrl, $url);
 	}
