@@ -101,6 +101,10 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 			$data['text'] = strip_tags($data['text'], $model->getAllowedTags());
 		}
 		
+		if( !empty($data['imageLink']) ) {
+			$data['imageLink'] = $this->addProtocolToLink($data['imageLink']);
+		}
+		
 		return parent::filterData($data);
 	}
 
