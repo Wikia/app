@@ -148,19 +148,6 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 			zone2 = window.wikiaPageType || 'article';
 		}
 
-		/*
-		 http://ad.doubleclick.net/adj/wka.ent/_glee/article;s0=ent;s1=_glee;s2=article;media=tv;sex=f;age=13-17;age=18-34;eth=asian;hhi=0-30;aff=fashion;aff=teens;age=teen;aff=video;aff=communities;artid=2102;dmn=wikia-devcom;hostpre=glee;pos=TOP_RIGHT_BOXAD;wpage=the_rhodes_not_taken;lang=en;dis=large;hasp=yes;u=H5feJdXS;ksgmnt=l4ml7tc6y;ksgmnt=l7drxohb5;ksgmnt=mhu7kdyz5;ksgmnt=mkwaoxp2x;ksgmnt=mkcdphvyq;ksgmnt=l4ipfweef;ksgmnt=mhu6miy43;ksgmnt=l5g2q8ndp;ksgmnt=l6dwvwk4q;ksgmnt=mlhkv0y2u;ksgmnt=l60oj8o6a;ksgmnt=l65e7q72q;ksgmnt=mdfzhvp3x;ksgmnt=mczlqdo8q;ksgmnt=l9cwgqxmx;ksgmnt=miqlt2xrx;ksgmnt=mhu6jt32u;ksgmnt=l5hqg89ks;ksgmnt=md0socy4l;ksgmnt=mnbz18cpv;ksgmnt=l8cvx4q0q;
-		 impct=4;cat=episodes;cat=season_one;cat=april_rhodes;cat=glee_episodes;cat=cabaret;cat=episode_5;cat=carrie_underwood;cat=queen;cat=terri_schuester;cat=will_schuester;cat=finn-centric;cat=kristin_chenoweth;
-		 loc=top;admeld=-1.00;ab=e1g1;src=driver;sz=300x250,300x600;mtfInline=true;tile=2;endtag=$;ord=17177439419?
-
-
-		 http://ad.doubleclick.net/adj/wka.ent/_glee/article;s0=ent;s1=_glee;s2=article;media=tv;sex=f;age=13-17;age=18-34;eth=asian;hhi=0-30;aff=fashion;aff=teens;age=teen;aff=video;aff=communities;artid=2102;dmn=wikia-devcom;hostpre=glee;pos=TOP_LEADERBOARD;wpage=the_rhodes_not_taken;lang=en;dis=large;hasp=unknown;
-		 cat=episodes;cat=season_one;cat=april_rhodes;cat=glee_episodes;cat=cabaret;cat=episode_5;cat=carrie_underwood;cat=queen;cat=terri_schuester;cat=will_schuester;cat=finn-centric;cat=kristin_chenoweth;
-		 loc=top;dcopt=ist;admeld=-1.00;mtfIFPath=/extensions/wikia/AdEngine/;src=driver;sz=728x90,468x60,980x130,980x65;mtfInline=true;tile=1;endtag=$;ord=2097541707?
-
-		 http://ad.doubleclick.net/adj/wka.ent/_glee/article;s0=ent;s1=_glee;s2=article;media=tv;sex=f;age=13-17;age=18-34;eth=asian;hhi=0-30;aff=fashion;aff=teens;age=teen;aff=video;aff=communities;           dmn=wikia-devcom;hostpre=glee;pos=TOP_LEADERBOARD;                           lang=en;dis=large;hasp=unknown;
-		 loc=top;                          dcopt=ist;mtfIFPath=/extensions/wikia/AdEngine/;src=driver;sz=728x90,468x60,980x130,980x65;mtfInline=true;tile=1;endtag=$;ord=21889937933?
-		 */
 		url = dartUrl.urlBuilder(
 			subdomain + '.doubleclick.net',
 			pathPrefix + 'wka.' + site + '/' + zone1 + '/' + zone2
@@ -168,7 +155,6 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 		url.addParam('s0', site);
 		url.addParam('s1', zone1);
 		url.addParam('s2', zone2);
-		url.addString(getCustomKeyValues(), true);
 		url.addParam('artid', window.wgArticleId);
 		url.addParam('dmn', getDomain(window.location.hostname)); // TODO inconsistent, most func just read window.*
 		url.addParam('hostpre', getHostname(window.location.hostname)); // TODO inconsistent, most func just read window.*
@@ -187,17 +173,20 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 		}
 		url.addParam('positionfixed', params.positionfixed);
 		if (Krux) {
-			url.addString(Krux && Krux.dartKeyValues, true);
+			url.addParam('u', Krux.user);
+			url.addParam('ksgmnt', Krux.segments, true);
 		}
 		url.addParam('cat', getCategories(), categoryStrMaxLength);
 		url.addParam('loc', params.loc);
 		url.addParam('dcopt', params.dcopt);
-		url.addString(window.AdMeldAPIClient ? window.AdMeldAPIClient.getParamForDART(slotname) : ''); // TODO FIXME missing in adsinhead
 		url.addParam('src', src);
 		url.addParam('sz', size);
 		url.addParam('ab', getAb());
+
 		url.addString('mtfIFPath=/extensions/wikia/AdEngine/;');
 		url.addParam('mtfInline', 'true');	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
+		url.addString(getCustomKeyValues(), true);
+
 		url.addParam('tile', localTile);
 		if (!params.omitEndTag) {
 			url.addString('endtag=$;');
