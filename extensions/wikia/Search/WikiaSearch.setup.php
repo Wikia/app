@@ -118,12 +118,12 @@ $app->registerExtensionMessageFile('WikiaSearch', $dir . 'WikiaSearch.i18n.php' 
 /**
  * preference settings
  */
-$app->registerHook('GetPreferences', 'WikiaSearchController', 'onGetPreferences');
+$app->registerHook('GetPreferences', 'Wikia\Search\Hooks', 'onGetPreferences');
 
 /*
  * hooks
  */
-$app->registerHook('WikiaMobileAssetsPackages', 'WikiaSearchController', 'onWikiaMobileAssetsPackages');
+$app->registerHook('WikiaMobileAssetsPackages', 'Wikia\Search\Hooks', 'onWikiaMobileAssetsPackages');
 
 if ( empty( $wgExternalSharedDB ) ) {
 	$app->registerHook('ArticleDeleteComplete', 'WikiaSearchIndexer', 'onArticleDeleteComplete');

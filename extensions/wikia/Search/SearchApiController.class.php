@@ -4,6 +4,7 @@
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
+use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
 
 class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
@@ -34,7 +35,7 @@ class SearchApiController extends WikiaApiController {
 	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
-		$searchConfig = F::build('WikiaSearchConfig');
+		$searchConfig = new Config();
 		$type = $this->request->getVal( 'type', 'articles' );
 		$query = $this->getVal( 'query', null );
 		$rank = $this->request->getVal( 'rank', 'default' );
@@ -74,13 +75,14 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		if ( $searchConfig->getQueryNoQuotes( true ) ) {
-			$wikiaSearch = F::build( 'WikiaSearch' );
+			$container = new DependencyContainer( array( 'config' => $searchConfig ) );
+			$wikiaSearch = Factory::getInstance()->get( $container );
 
 			//if some articles match the query lets display it
 			//this has to run before doSearch runs
 			$wikiaSearch->getArticleMatch( $searchConfig );
 
-			$resultSet = $wikiaSearch->doSearch( $searchConfig );
+			$resultSet = $wikiaSearch->search( $searchConfig );
 			$total = $searchConfig->getResultsFound();
 
 			if ( $total ) {
