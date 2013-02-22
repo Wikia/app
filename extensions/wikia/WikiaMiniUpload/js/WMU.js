@@ -1005,6 +1005,7 @@ function WMU_insertImage(type) {
 		switch($.trim(screenType)) {
 			case 'error':
 				o.responseText = o.responseText.replace(/<script.*script>/, "" );
+				alert(o.responseText);
 				break;
 			case 'conflict':
 				WMU_switchScreen('Conflict');
