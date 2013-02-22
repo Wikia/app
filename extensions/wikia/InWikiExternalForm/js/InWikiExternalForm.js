@@ -1,8 +1,8 @@
 var InWikiExternalForm = {
 	init: function() {
-		WikiaTracker.track({
+		Wikia.Tracker.track({
 			category: 'in-wiki-external-form',
-			action: WikiaTracker.ACTIONS.IMPRESSION,
+			action: Wikia.Tracker.ACTIONS.IMPRESSION,
 			label: 'form-impression',
 			trackingMethod: 'internal'
 		});

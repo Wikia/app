@@ -105,10 +105,21 @@ return array(
 			'wikia.cookies'
 		)
 	),
-	// not yet AMD :-(
 	'wikia.tracker' => array(
-		'scripts' => 'extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'dependencies' => 'wikia.log',
+		'scripts' => 'resources/wikia/modules/tracker.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.window',
+			'wikia.log',
+			'wikia.tracker.stub',
+		)
+	),
+	'wikia.tracker.stub' => array(
+		'scripts' => 'resources/wikia/modules/tracker.stub.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.window'
+		)
 	),
 
 	// AMD modules loaded on demand

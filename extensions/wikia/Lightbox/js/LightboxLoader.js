@@ -278,7 +278,7 @@ var LightboxLoader = {
 			// save references for inline video removal later
 			LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
 			LightboxTracker.inlineVideoTrackingTimeout = setTimeout(function() {
-				LightboxTracker.track(WikiaTracker.ACTIONS.VIEW, 'video-inline', null, {title:json.title, provider: json.providerName, clickSource: clickSource});
+				LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'video-inline', null, {title:json.title, provider: json.providerName, clickSource: clickSource});
 			}, 1000);
 
 			LightboxLoader.inlineVideoLoading.splice($.inArray(mediaTitle, LightboxLoader.inlineVideoLoading), 1);
@@ -381,7 +381,7 @@ LightboxTracker = {
 	// @param data - any extra params we want to pass to internal tracking
 	// Don't add willy nilly though... check with Jonathan.
 	track: function(action, label, value, data) {
-		WikiaTracker.track({
+		Wikia.Tracker.track({
 			action: action,
 			category: 'lightbox',
 			label: label || '',
