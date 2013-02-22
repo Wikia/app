@@ -111,6 +111,7 @@ return array(
 			'amd',
 			'wikia.window',
 			'wikia.log',
+			'wikia.tracker.stub',
 		)
 	),
 	'wikia.tracker.stub' => array(
