@@ -347,6 +347,33 @@ describe('WikiaDartHelper', function(){
 		expect(paramsPassed.hasp).toBe('no', 'no');
 	});
 
+	it('getUrl per-wiki key values', function() {
+		var logMock = function() {},
+			windowMock = {
+				location: {hostname: 'example.org'}
+			},
+			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			adLogicShortPageMock = {hasPreFooters: function() {return true;}},
+			stringsPassed = {},
+			urlBuilderMock = {
+				addParam: function () {},
+				addString: function (stringToAdd) {
+					stringsPassed[stringToAdd] = true;
+				}
+			},
+			dartUrlMock = {
+				urlBuilder: function(domain, prefix) {
+					return urlBuilderMock;
+				}
+			},
+			dartHelper;
+
+		windowMock.wgDartCustomKeyValues = 'key1=value1;key2=value2';
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMock, dartUrlMock);
+		dartHelper.getUrl({});
+		expect(stringsPassed['key1=value1;key2=value2;']).toBe(true, 'values passed');
+	});
+
 	it('getUrl Auto tile, same ord', function() {
 		var logMock = function() {},
 			windowMock = {
