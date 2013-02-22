@@ -5,6 +5,9 @@
  @test-require-asset /resources/wikia/modules/querystring.js
  @test-require-asset /resources/wikia/modules/cookies.js
  @test-require-asset /resources/wikia/modules/log.js
+ @test-require-asset /resources/wikia/modules/tracker.stub.js
+ @test-require-asset /resources/wikia/modules/tracker.js
+ @test-require-asset /extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js
  @test-require-asset /extensions/wikia/AdEngine/js/DartUrl.js
  @test-require-asset /extensions/wikia/AdEngine/js/WikiaDartHelper.js
  @test-require-asset /extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js

@@ -59,9 +59,10 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
-		'//extensions/wikia/AdEngine/js/AdLogicShortPage.js',
-		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
+		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
+		'//extensions/wikia/AdEngine/js/AdLogicShortPage.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 
@@ -496,6 +497,7 @@ $config['wikiamobile_js_ads'] = array(
 		'//resources/wikia/libraries/DOMwriter/domwriter.js',
 
 		//advertisement "core"
+		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
