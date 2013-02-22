@@ -375,7 +375,7 @@ jQuery(function($) {
                 var notifications =
                     '<div class="global-notification error">'
                     + '<div class="msg">' + errorMessages.join("</br>") + '</div>'
-                    + '</div>'
+                    + '</div>';
 
                 $('.modalContent .ArticlePreview').prepend(notifications);
 			}
@@ -387,7 +387,7 @@ jQuery(function($) {
 
             previewNode.find('.msg > a').click(function() {
                 window.location = this.href;
-            })
+            });
 
 		});
 
