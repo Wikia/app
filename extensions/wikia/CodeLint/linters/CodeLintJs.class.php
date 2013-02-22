@@ -23,7 +23,6 @@ class CodeLintJs extends CodeLint {
 	 */
 	function __construct() {
 		$this->knownGlobals = array(
-			'_wtq',
 			'$',
 			'$G',
 			'AjaxLogin',

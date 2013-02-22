@@ -52,10 +52,8 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	$skin = RequestContext::getMain()->getSkin();
 	$vars['skin'] = $skin->getSkinName();
 
-	// analytics/Wikia.Tracker
+	// for Google Analytics
 	$vars['_gaq'] = array();
-	$vars['_wtq'] = array();
-
 	$vars['wgIsGASpecialWiki'] = $wg->IsGASpecialWiki;
 
 	$scripts .= Html::inlineScript("var wgNow = new Date();") .	"\n";
