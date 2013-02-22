@@ -60,7 +60,20 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 					'class' => 'required',
 					'rows' => 3
 				)
-			)
+			),
+			'imageLink' => array(
+				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-link-url'),
+				'validator' => new WikiaValidatorToolboxUrl(
+					array(),
+					array(
+						'wrong' => 'marketing-toolbox-validator-wrong-url'
+					)
+				),
+				'icon' => true,
+				'attributes' => array(
+					'class' => 'wikiaUrl'
+				)
+			),
 		);
 
 		return $fields;
@@ -100,11 +113,13 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 		
 		$structuredData['sponsoredImageUrl'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->url : null;
 		$structuredData['sponsoredImageAlt'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->title : null;
+		
+		$structuredData['imageLink'] = (!empty($data['imageLink'])) ? $data['imageLink'] : null;
 
 		if (!empty($data['fileName'])) {
 			$imageInfo = $this->getImageInfo($data['fileName']);
 		}
-		
+
 		$structuredData['imageUrl'] = (isset($imageInfo)) ? $imageInfo->url : null;
 		$structuredData['imageAlt'] = (isset($imageInfo)) ? $imageInfo->title : null;
 		
