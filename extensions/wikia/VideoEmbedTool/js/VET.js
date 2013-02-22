@@ -512,7 +512,7 @@
 	
 	function VET_close() {
 		VET_switchScreen('Main');
-		
+
 		VET_loader.modal.closeModal();
 
 		// Handle MiniEditor focus
@@ -524,6 +524,8 @@
 				wikiaEditor.plugins.MiniEditor.hasFocus = false;
 			}
 		}
+
+		UserLogin.refreshIfAfterForceLogin();
 	}
 	
 	function VET_tracking(action, label, value) {
