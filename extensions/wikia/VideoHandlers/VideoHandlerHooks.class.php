@@ -2,7 +2,7 @@
 class VideoHandlerHooks extends WikiaObject{
 
 	const VIDEO_WIKI = 298117;
-	
+
 	function __construct(){
 		parent::__construct();
 		F::setInstance( __CLASS__, $this );
@@ -231,33 +231,25 @@ class VideoHandlerHooks extends WikiaObject{
 
 	/*
 	 * Add "remove" action to MenuButtons on premium video file pages
-	 * This button will remove a video from a wiki but keep it on the Video Wiki. 
+	 * This button will remove a video from a wiki but keep it on the Video Wiki.
 	 */
-	
 	public function onSkinTemplateNavigation($skin, &$tabs) {
-		global $wgTitle, $wgCityId;
-		
+		$app = F::app();
+
 		// Ignore Video Wiki videos
-		if($wgCityId == self::VIDEO_WIKI) {
+		if( $app->wg->CityId == self::VIDEO_WIKI ) {
 			return true;
 		}
 
-		if(WikiaFileHelper::isTitleVideo($wgTitle)) {
-			$file = wfFindFile( $wgTitle );
-
-			if(!$file->isLocal()) {
-			// (BugId:44086) hiding front end for now while back end is being worked on
-			//	$tabs['actions']['remove'] = array(
-			//		'class' => 'remove',
-			//		'text' => wfMsg('videohandler-remove'),
-			//		'href' => '#',
-			//	);
-
+		$title = $app->wg->Title;
+		if ( WikiaFileHelper::isTitleVideo( $title ) ) {
+			$file = $app->wf->FindFile( $title );
+			if( !$file->isLocal() ) {
 				// Prevent move tab being shown.
 				unset( $tabs['actions']['move'] );
 			}
 		}
-	
+
 		return true;
 	}
 
