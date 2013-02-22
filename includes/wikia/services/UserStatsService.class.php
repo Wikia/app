@@ -200,44 +200,6 @@ class UserStatsService extends WikiaModel {
 	}
 
 	/**
-	 * Retrieves date of first contribution to wiki by user
-	 * @param $wikiId ID of wiki
-	 * @return first edit date i.e. 20061210153740
-	 *
-	 * @author Kamil Koterba
-	 */
-	private function getFirstEditDate( $wikiId = 0, $skipCache = true ) {
-		$this->wf->ProfileIn( __METHOD__ );
-		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
-
-		/* Get first-edit-date from memcache */
-		$key = wfSharedMemcKey( 'first-edit-date', $wikiId, $this->userId );
-		$firstEditDate = $this->wg->Memc->get($key);
-
-		if ( !empty( $firstEditDate ) && !$skipCache ) {
-			$this->wf->ProfileOut( __METHOD__ );
-			return $firstEditDate;
-		}
-
-		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
-
-		/* Get first-edit-date from database */
-		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
-
-		$firstEditDate = $dbr->selectField(
-			'revision',
-			'min(rev_timestamp) AS date',
-			array('rev_user' => $this->userId),
-			__METHOD__
-		);
-
-		$this->wg->Memc->set( $key,$firstEditDate, 86400 );
-
-		$this->wf->ProfileOut( __METHOD__ );
-		return $firstEditDate;
-	}
-
-	/**
 	 * Update service cache for current user
 	 */
 	function increaseEditsCount() {
@@ -269,6 +231,7 @@ class UserStatsService extends WikiaModel {
 	 */
 	function getStats() {
 		$this->wf->ProfileIn(__METHOD__);
+
 		// try to get cached data
 		$key = $this->getKey('stats4');
 
@@ -277,14 +240,9 @@ class UserStatsService extends WikiaModel {
 			$this->wf->ProfileIn(__METHOD__ . '::miss');
 			$this->wf->Debug(__METHOD__ . ": cache miss\n");
 
-			// get edit points
-			$stats['edits'] = $this->getEditCountWiki();
-
-			// get first edit date
-			$date = $this->getFirstEditDate();
-			if ( !empty($date) ) {
-				$stats['date'] = $date;
-			}
+			// get edit points / first edit date
+			$dbr = $this->wf->GetDB(DB_SLAVE);
+			$stats = $this->doStatsQuery($dbr);
 
 			// TODO: get likes
 			$stats['likes'] = 20 + ($this->userId % 50);
@@ -323,21 +281,19 @@ class UserStatsService extends WikiaModel {
 			$this->wf->ProfileIn(__METHOD__ . '::miss');
 			$this->wf->Debug(__METHOD__ . ": cache miss\n");
 
+			$wikiDbName = WikiFactory::IDtoDB($wikiId);
 
-			// get edit points
-			$stats['edits'] = $this->getEditCountWiki( $wikiId );
+			if( !empty($wikiDbName) ) {
+				// get edit points / first edit date
+				$dbr = $this->wf->GetDB( DB_SLAVE, array(), $wikiDbName );
+				$stats = $this->doStatsQuery($dbr);
 
-			// get first edit date
-			$date = $this->getFirstEditDate( $wikiId );
-			if ( !empty($date) ) {
-				$stats['date'] = $date;
-			}
+				// TODO: get likes
+				$stats['likes'] = 20 + ($this->userId % 50);
 
-			// TODO: get likes
-			$stats['likes'] = 20 + ($this->userId % 50);
-
-			if( !empty($stats) ) {
-				$this->wg->memc->set($key, $stats, self::CACHE_TTL);
+				if( !empty($stats) ) {
+					$this->wg->memc->set($key, $stats, self::CACHE_TTL);
+				}
 			}
 
 			$this->wf->ProfileOut(__METHOD__ . '::miss');
@@ -351,4 +307,30 @@ class UserStatsService extends WikiaModel {
 		return $stats;
 	}
 
+	/**
+	 * @desc Sends a query to database and returns an array based on database results; used by UserStatsService::getStats() and UserStatsService::getGlobalStats()
+	 * @param $dbr
+	 * @return array
+	 *
+	 * @author Andrzej 'nAndy' Lukaszewski
+	 */
+	private function doStatsQuery($dbr) {
+		$stats = array();
+
+		$res = $dbr->selectRow(
+			'revision',
+			array('min(rev_timestamp) AS date, count(*) AS edits'),
+			array('rev_user' => $this->userId),
+			__METHOD__
+		);
+
+		if( !empty($res) ) {
+			$stats = array(
+				'edits' => intval($res->edits),
+				'date' => $res->date,
+			);
+		}
+
+		return $stats;
+	}
 }
