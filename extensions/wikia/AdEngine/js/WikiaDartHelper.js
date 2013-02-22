@@ -1,93 +1,12 @@
 
-var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, dartUrl, abTest) {
+var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl) {
 	'use strict';
 
 	var logGroup = 'WikiaDartHelper',
 		getUrl,
 		ord = Math.round(Math.random() * 23456787654),
 		tile = 1,
-
-		categoryStrMaxLength = 300,
-
-		getCustomKeyValues,
-		getDomain,
-		getDomainKV,
-		getDartHubName,
-		getHostname,
-		getHostnamePrefix,
-		getKruxKeyValues,
-		getCategories,
-		getAb;
-
-	getDartHubName = function () {
-		if (window.cscoreCat === 'Entertainment') {
-			return 'ent';
-		}
-		if (window.cscoreCat === 'Gaming') {
-			return 'gaming';
-		}
-		return 'life';
-	};
-
-	getCustomKeyValues = function () {
-		if (window.wgDartCustomKeyValues) {
-			return window.wgDartCustomKeyValues + ';';
-		}
-		return '';
-	};
-
-	getDomain = function (hostname) {
-		var lhost, pieces, sld = '', np;
-		lhost = hostname.toLowerCase();
-
-		pieces = lhost.split('.');
-		np = pieces.length;
-
-		if (pieces[np - 2] === 'co') {
-			// .co.uk or .co.jp
-			sld = pieces[np - 3] + '.' + pieces[np - 2] + '.' + pieces[np - 1];
-		} else {
-			sld = pieces[np - 2] + '.' + pieces[np - 1];
-		}
-
-		return sld.replace(/\./g, '');
-	};
-
-	getDomainKV = function (hostname) {
-		return dartUrl.decorateParam('dmn', getDomain(hostname));
-	};
-
-	getHostname = function (hostname) {
-		var lhost = hostname.toLowerCase(),
-			pieces = lhost.split('.');
-
-		if (pieces.length) {
-			return pieces[0];
-		}
-	};
-
-	getHostnamePrefix = function (hostname) {
-		return dartUrl.decorateParam('hostpre', getHostname(hostname));
-	};
-
-	getCategories = function () {
-		if (window.wgCategories instanceof Array) {
-			return window.wgCategories.join('|').toLowerCase().replace(/ /g, '_').split('|');
-		}
-	};
-
-	getAb = function () {
-		var experiments, i, ab = [];
-
-		if (abTest) {
-			experiments = abTest.getExperiments();
-			for (i = 0; i < experiments.length; i += 1) {
-				ab.push(experiments[i].id + '_' + experiments[i].group.id);
-			}
-		}
-
-		return ab;
-	};
+		categoryStrMaxLength = 300;
 
 	/**
 	 * Get URL for DART call
@@ -114,20 +33,19 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 			localOrd = params.ord || ord,
 			url,
 			subdomain = params.subdomain,
-			site,
-			zone1,
-			zone2,
-			clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
+			pageParams = adLogicPageLevelParams.getPageLevelParams(),
+			name,
+			value;
 
 		if (adType === 'jwplayer') {
 			adType = 'pfadx';
 		}
 
 		if (adType === 'mobile') {
-			pathPrefix = 'DARTProxy/mobile.handler?k=' + ( window.wgDFPid ? window.wgDFPid + '/' : '' );
+			pathPrefix = 'DARTProxy/mobile.handler?k=';
 		}
 
-		pathPrefix = pathPrefix || ( window.wgDFPid ? window.wgDFPid + '/' : '' ) + adType + '/';
+		pathPrefix = pathPrefix || adType + '/';
 
 		if (params.tile) {
 			localTile = params.tile;
@@ -138,55 +56,41 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 
 		log(['getUrl', slotname, size], 5, logGroup);
 
-		if (window.wikiaPageIsHub) {
-			site = 'hub';
-			zone1 = '_' + getDartHubName() + '_hub';
-			zone2 = 'hub';
-		} else {
-			site = window.cityShort;
-			zone1 = '_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
-			zone2 = window.wikiaPageType || 'article';
-		}
-
 		url = dartUrl.urlBuilder(
 			subdomain + '.doubleclick.net',
-			pathPrefix + 'wka.' + site + '/' + zone1 + '/' + zone2
+			pathPrefix + 'wka.' + pageParams.s0 + '/' + pageParams.s1 + '/' + pageParams.s2
 		);
-		url.addParam('s0', site);
-		url.addParam('s1', zone1);
-		url.addParam('s2', zone2);
-		url.addParam('artid', window.wgArticleId);
-		url.addParam('dmn', getDomain(window.location.hostname)); // TODO inconsistent, most func just read window.*
-		url.addParam('hostpre', getHostname(window.location.hostname)); // TODO inconsistent, most func just read window.*
-		url.addParam('pos', params.slotname);
-		if (window.wgPageName) {
-			url.addParam('wpage', window.wgPageName.toLowerCase());
-		}
-		url.addParam('lang', window.wgContentLanguage || 'unknown');
-		if (clientWidth > 1024) {
-			url.addParam('dis', 'large');
-		}
-		if (adLogicShortPage && adLogicShortPage.hasPreFooters()) {
-			url.addParam('hasp', 'yes');
-		} else {
-			url.addParam('hasp', 'no');
-		}
-		url.addParam('positionfixed', params.positionfixed);
-		if (Krux) {
-			url.addParam('u', Krux.user);
-			url.addParam('ksgmnt', Krux.segments, true);
-		}
-		url.addParam('cat', getCategories(), categoryStrMaxLength);
-		url.addParam('loc', params.loc);
-		url.addParam('dcopt', params.dcopt);
-		url.addParam('src', src);
-		url.addParam('sz', size);
-		url.addParam('ab', getAb());
 
+		// per page params
+		for (name in pageParams) {
+			if (pageParams.hasOwnProperty(name)) {
+				value = pageParams[name];
+				if (value) {
+					if (name === 'cat') {
+						url.addParam(name, value, categoryStrMaxLength);
+					} else if (name === 'ksgmnt') {
+						url.addParam(name, value, true);
+					} else {
+						url.addParam(name, value);
+					}
+				}
+			}
+		}
+		url.addString(adLogicPageLevelParams.getCustomKeyValues(), true);
+		url.addParam('positionfixed', params.positionfixed);
+
+		// global params
+		url.addParam('src', src);
 		url.addString('mtfIFPath=/extensions/wikia/AdEngine/;');
 		url.addParam('mtfInline', 'true');	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
-		url.addString(getCustomKeyValues(), true);
 
+		// per slot params
+		url.addParam('pos', params.slotname);
+		url.addParam('loc', params.loc);
+		url.addParam('dcopt', params.dcopt);
+		url.addParam('sz', size);
+
+		// sync params
 		url.addParam('tile', localTile);
 		if (!params.omitEndTag) {
 			url.addString('endtag=$;');
@@ -197,18 +101,7 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 		return url.toString();
 	};
 
-	getKruxKeyValues = function () {
-		if (Krux && Krux.dartKeyValues) {
-			return dartUrl.trimParam(Krux.dartKeyValues);
-		}
-		return '';
-	};
-
 	return {
-		getUrl: getUrl,
-		getCustomKeyValues: getCustomKeyValues,
-		getDomainKV: getDomainKV,
-		getHostnamePrefix: getHostnamePrefix,
-		getKruxKeyValues: getKruxKeyValues
+		getUrl: getUrl
 	};
 };

@@ -1,12 +1,14 @@
-// Relies on WikiaDartHelper and DartUrl
+// Relies on AdLogicPageLevelParams, WikiaDartHelper and DartUrl
 
 var WikiaDartMobileHelper = function (log, window, document) {
 	'use strict';
 
 	var nullKrux,
 		nullAdLogicShortPage,
+		nullAb,
 		dartUrl = DartUrl(),
-		wikiaDartHelper = WikiaDartHelper(log, window, document, nullKrux, nullAdLogicShortPage, dartUrl);
+		adLogicPageLevelParams = AdLogicPageLevelParams(log, window, document, nullKrux, nullAdLogicShortPage, nullAb, dartUrl),
+		wikiaDartHelper = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl);
 
 	return {
 		/**

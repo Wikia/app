@@ -17,9 +17,10 @@
 	var module = 'AdEngine2.run',
 		adConfig,
 		adEngine,
-		adLogicShortPage,
-		adLogicHighValueCountry,
 		adLogicDartSubdomain,
+		adLogicHighValueCountry,
+		adLogicPageLevelParams,
+		adLogicShortPage,
 		scriptWriter,
 		dartUrl,
 		wikiaDart,
@@ -38,13 +39,14 @@
 	adEngine = AdEngine2(log, LazyQueue);
 
 	// Construct various helpers
-	adLogicShortPage = AdLogicShortPage(document);
-	adLogicHighValueCountry = AdLogicHighValueCountry(window);
+	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
+	adLogicHighValueCountry = AdLogicHighValueCountry(window);
+	adLogicShortPage = AdLogicShortPage(document);
+	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, document, Krux, adLogicShortPage, abTest, dartUrl);
 	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
-	dartUrl = DartUrl();
-	wikiaDart = WikiaDartHelper(log, window, document, Krux, adLogicShortPage, dartUrl, abTest);
+	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
