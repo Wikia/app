@@ -111,6 +111,9 @@ class ImageServing {
 			);
 
 			while ($row =  $db->fetchRow( $res ) ) {
+$handle = fopen("/tmp/debug.out", 'a');
+fwrite($handle, 'ID = '.$row->id.' TITLE = '.$row->title."\n";
+fclose($handle);
 				$this->addArticleToList($row);
 			}
 
@@ -125,18 +128,14 @@ class ImageServing {
 				}
 
 				$driver = new ImageServingDriverMainNS($db, $this, $this->proportionString);
-				//rest of article in MAIN name spaces
-				foreach( $this->articlesByNS as $value ) {
-					$driver->setArticlesList( $value );
-					$out = $out + $driver->execute($n);
-				}
 			} else {
 				$driver = new $driver($db, $this, $this->proportionString);
-				//rest of article in MAIN name spaces
-				foreach( $this->articlesByNS as $value ) {
-					$driver->setArticlesList( $value );
-					$out = $out + $driver->execute($n);
-				}
+			}
+
+			//rest of article in MAIN name spaces
+			foreach( $this->articlesByNS as $value ) {
+				$driver->setArticlesList( $value );
+				$out = $out + $driver->execute($n);
 			}
 
 			if(empty($out)){

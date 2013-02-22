@@ -52,8 +52,8 @@ class VideoPageController extends WikiaController {
 	}
 	
 	public function relatedPages() {
-
 		$titleID = 15; # Find title from one of the pages that include the current video
+return;
 		$title = Title::newFromID($titleID);
 
 		# Get the categories for this title
