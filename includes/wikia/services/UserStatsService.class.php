@@ -41,7 +41,40 @@ class UserStatsService extends WikiaModel {
 		return true;
 	}
 
+	/**
+	 * Counts contributions from revision and archive
+	 * and resets value in wikia_user_properties table
+	 * for specified wiki.
+	 *
+	 * @since Feb 2013
+	 * @author Kamil Koterba
+	 *
+	 * @param $dbName String Name of wiki database, false to connect current wiki
+	 * @return Int Number of edits
+	 */
+	public function resetEditCountWiki( $dbName = false ) {
+		$dbw = $this->getWikiDB( DB_MASTER, $dbName );
+		$editCount = $dbw->selectField(
+			'revision', 'count(*)',
+			array( 'rev_user' => $this->userId ),
+			__METHOD__
+		);
 
+		$editCount += $dbw->selectField(
+			'archive', 'count(*)',
+			array( 'ar_user' => $this->userId ),
+			__METHOD__
+		);
+
+		$dbw->insert(
+			'wikia_user_properties',
+			array( 'wup_user' => $this->userId,
+			'wup_property' => 'editcount',
+			'wup_value' => $editCount),
+			__METHOD__
+		);
+		return $editCount;
+	}
 
 	/**
 	 * Get the user's edit count for specified wiki.
@@ -80,26 +113,8 @@ class UserStatsService extends WikiaModel {
 		);
 
 		if( $field === null or $field === false ) { // editcount has not been initialized. do so.
-			$dbw = $this->getWikiDB( DB_MASTER, $dbName );
-			$editCount = $dbr->selectField(
-				'revision', 'count(*)',
-				array( 'rev_user' => $this->userId ),
-				__METHOD__
-			);
 
-			$editCount += $dbr->selectField(
-				'archive', 'count(*)',
-				array( 'ar_user' => $this->userId ),
-				__METHOD__
-			);
-
-			$dbw->insert(
-				'wikia_user_properties',
-				array( 'wup_user' => $this->userId,
-					'wup_property' => 'editcount',
-					'wup_value' => $editCount),
-				__METHOD__
-			);
+			$editCount = $this->resetEditCountWiki( $dbName );
 
 		} else {
 			$editCount = $field;
@@ -114,7 +129,8 @@ class UserStatsService extends WikiaModel {
 
 	/**
 	 * Get the user's global edit count.
-	 * Functionality from getEditCount before Feb 2013
+	 * (editcount field from user table)
+	 * Functionality from User::getEditCount before Feb 2013
 	 *
 	 * Returns editcount field from user table, which is summary editcount from all wikis
 	 *
