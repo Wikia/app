@@ -233,10 +233,7 @@ class VideoHandlerHooks extends WikiaObject{
 	 * Add "remove" action to MenuButtons on premium video file pages
 	 * This button will remove a video from a wiki but keep it on the Video Wiki.
 	 */
-
 	public function onSkinTemplateNavigation($skin, &$tabs) {
-		global $wgTitle, $wgCityId;
-
 		$app = F::app();
 
 		// Ignore Video Wiki videos
@@ -248,14 +245,6 @@ class VideoHandlerHooks extends WikiaObject{
 		if ( WikiaFileHelper::isTitleVideo( $title ) ) {
 			$file = $app->wf->FindFile( $title );
 			if( !$file->isLocal() ) {
-				$videoinfoHelper = new VideoInfoHelper();
-				$action = ( $videoinfoHelper->isVideoRemoved( $title ) ) ? 'unremove' : 'remove';
-				$tabs['actions'][$action] = array(
-					'class' => $action,
-					'text' => $app->wf->Message( 'videohandler-'.$action ),
-					'href' => '#',
-				);
-
 				// Prevent move tab being shown.
 				unset( $tabs['actions']['move'] );
 			}
