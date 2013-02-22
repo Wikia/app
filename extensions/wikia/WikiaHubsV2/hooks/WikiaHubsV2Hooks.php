@@ -23,6 +23,7 @@ class WikiaHubsV2Hooks {
 				$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
 				$app->wg->SuppressPageHeader = true;
+				$app->wg->SuppressRail = true;
 				$article = F::build( 'WikiaHubsV2Article', array($title, $model->getHubPageId($dbKeyName), $hubTimestamp) );
 			}
 		}
