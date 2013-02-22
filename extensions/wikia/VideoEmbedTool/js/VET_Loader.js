@@ -31,13 +31,18 @@
 		VET_loader = {};
 
 	VET_loader.load = function(options) {
-
 		if (wgUserName == null && wgAction == 'edit') {
 			// handle login on edit page
 			UserLogin.rteForceLogin();
 			$.stopThrobbing();
 			return;
-		} else if (UserLogin.isForceLogIn()) {
+		} else if (wgUserName == null) {
+			UserLoginModal.show({
+				callback: function() {
+					UserLogin.forceLoggedIn = true;
+					window.VET_loader.load(options);
+				}
+			});
 			$.stopThrobbing();
 			// handle login on article page
 			return;
@@ -78,7 +83,7 @@
 			]);
 			deferredList.push(resourcePromise);
 		}
-		
+
 		$.when.apply(this, deferredList).done(function() {
 			$.stopThrobbing();
 

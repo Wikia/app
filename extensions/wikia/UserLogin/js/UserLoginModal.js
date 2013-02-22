@@ -26,6 +26,7 @@ var UserLoginModal = {
 				UserLoginModal.loginAjaxForm = new UserLoginAjaxForm(UserLoginModal.dialog, {
 					ajaxLogin: true,
 					callback: function(res) {
+						wgUserName = res['username'];
 						var callback = options['callback'];
 						if(callback && typeof callback === 'function') {
 							if(!options['persistModal']) {
