@@ -3,7 +3,7 @@
  * Class definition for \Wikia\Search\ResultSet\Base
  */
 namespace Wikia\Search\ResultSet;
-use \WikiaSearchResult, \ArrayIterator, \Wikia\Search\MediaWikiInterface, \WikiaSearch;
+use \Wikia\Search\Result, \ArrayIterator, \Wikia\Search\MediaWikiInterface, \WikiaSearch;
 use \WikiaException, \Solarium_Result_Select, \WikiaSearchConfig;
 /**
  * This is the default class definition -- represents a flat grouping of results, e.g. on-wiki search.
@@ -64,11 +64,11 @@ class Base extends EmptySet
 	
 	/**
 	 * Does a little prep on a result object, applies highlighting if exists, and adds to result array.
-	 * @param  WikiaSearchResult $result
+	 * @param  Result $result
 	 * @throws WikiaException
 	 * @return Base provides fluent interface
 	 */
-	protected function addResult( WikiaSearchResult $result ) {
+	protected function addResult( Result $result ) {
 		if( $this->isValidResult( $result ) ) {
 			$id = $result['id'];
 			$highlighting = $this->searchResultObject->getHighlighting();
@@ -122,7 +122,7 @@ class Base extends EmptySet
 	 * @return boolean
 	 */
 	protected function isValidResult( $result ) {
-		return ( ( $result instanceof WikiaSearchResult ) || ( $result instanceof Base ) );
+		return ( ( $result instanceof Result ) || ( $result instanceof Base ) );
 	}
 
 	/**
