@@ -473,8 +473,8 @@
 	function VET_switchScreen(to) {
 		VET_prevScreen = VET_curScreen;
 		VET_curScreen = to;
-		$('#VideoEmbed' + VET_prevScreen).css('display', 'none');
-		$('#VideoEmbed' + VET_curScreen).css('display', '');
+		$('#VideoEmbedBody').find('.VET_screen').hide();
+		$('#VideoEmbed' + VET_curScreen).show();
 		
 		VET_updateHeader();
 		
@@ -486,18 +486,11 @@
 		}
 	
 		// macbre: move back button on Oasis
-		setTimeout(function() {
-			$().log(to, 'VET_switchScreen');
-			switch(to) {
-				case 'Details':
-					VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
-					break;
-
-				case 'Conflict':
-					VET_moveBackButton($('#VideoEmbedConflictOverwriteButton'));
-					break;
-			}
-		}, 50);
+		if( to == "Details" ) {
+			setTimeout(function() {
+				VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
+			}, 50);
+		}
 	}
 	
 	function VET_back(e) {

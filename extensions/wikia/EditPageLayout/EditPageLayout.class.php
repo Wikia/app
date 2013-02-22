@@ -528,6 +528,27 @@ class EditPageLayout extends EditPage {
 
 		parent::showTextbox1($customAttribs, $textoverride );
 	}
+	
+	/**
+	 * Add items to loaded content
+	 */
+	function getContent() {
+		$content = parent::getContent();
+		
+		$addFile = $this->app->getGlobal('wgRequest')->getVal('addFile');
+		
+		if( $addFile ) {
+			$file = wfFindFile( $addFile );
+			
+			if( $file ) {
+				$title = $file->getTitle()->getText();
+				$content = "[[File:" . $title . "|right|thumb|335px]] " . $content;
+				$type = WikiaFileHelper::isFileTypeVideo( $file ) ? 'video' : 'photo';
+				$this->helper->addJsVariable( 'wgEditPageAddFileType', $type );
+			}
+		}
+		return $content;
+	}
 
 	/**
 	 * Render read-only textarea

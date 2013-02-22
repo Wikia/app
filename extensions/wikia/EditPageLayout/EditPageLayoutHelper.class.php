@@ -357,6 +357,7 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/Tracker.js',
 			'extensions/wikia/EditPageLayout/js/plugins/PageControls.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Autoresizer.js',
+			'extensions/wikia/EditPageLayout/js/plugins/AddFile.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Collapsiblemodules.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Cssloadcheck.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Edittools.js',

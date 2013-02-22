@@ -7,7 +7,7 @@ var SpecialVideos = {
 
 				if(currSort != newSort) {
 					var sort = $target.data('sort');
-					(new Wikia.Querystring(window.wgEditHubUrl)).setVal('sort', sort).goTo();
+					(new Wikia.Querystring()).setVal('sort', sort).goTo();
 				}
 			}
 		});
@@ -28,7 +28,7 @@ var SpecialVideos = {
 							GlobalNotification.show( formRes.error, 'error' );
 						} else {
 							VET_loader.modal.closeModal();
-							window.location.search = "?sort=recent";
+							(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
 						}
 					},
 					// error callback
@@ -38,6 +38,38 @@ var SpecialVideos = {
 				);
 				// Don't move on to second VET screen.  We're done.
 				return false; 
+			}
+		});
+		
+		$('.VideoGrid').on('click', '.remove', function(e) {
+			var videoElement = $(e.target).parents('.video-element'),
+				videoName = videoElement.find('.video').data('video-name');
+			if(videoName) {
+				$.confirm({
+					title: $.msg('specialvideos-remove-modal-title'),
+					content: $.msg('specialvideos-remove-modal-message'),
+					width: 600,
+					onOk: function() {
+						$.nirvana.sendRequest({
+							controller: 'VideoHandler',
+							method: 'removeVideo',
+							format: 'json',
+							data: {
+								title: videoName
+							},
+							callback: function(json) {
+								// print error message if error
+								if(json.result === 'ok') {
+									(new Wikia.Querystring(window.location)).addCb().goTo();	// reload page with cb
+								} else {
+									GlobalNotification.show(json['msg'], 'error');
+								}
+								
+							}
+						});
+						
+					}
+				});
 			}
 		});
 	}

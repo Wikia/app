@@ -40,6 +40,25 @@ describe("Querystring", function () {
 		expect(typeof qs.addCb).toBe('function', 'addCb');
 		expect(typeof qs.toString).toBe('function', 'toString');
 		expect(typeof qs.goTo).toBe('function', 'goTo');
+		expect(typeof qs.pushState).toBe('function', 'pushState');
+		expect(typeof qs.replaceState).toBe('function', 'replaceState');
+	});
+
+	it('works with history api', function() {
+		var qs = new querystring(),
+			histLen = history.length;
+
+		qs.pushState({test:1});
+		expect(history.length).toBe(histLen+1);
+		// PhantomJS doesn't currently support history.state
+		//expect(history.state.test).toBe(1);
+
+		histLen = history.length;
+		qs.replaceState({test:2});
+		expect(history.length).toBe(histLen);
+		// PhantomJS doesn't currently support history.state
+		//expect(history.state.test).toBe(2);
+
 	});
 
 	it('works with new and without new operand', function(){
