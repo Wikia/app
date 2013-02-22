@@ -66,13 +66,15 @@ class UserStatsService extends WikiaModel {
 			__METHOD__
 		);
 
-		$dbw->insert(
+		$dbw->replace(
 			'wikia_user_properties',
+			array(),
 			array( 'wup_user' => $this->userId,
 			'wup_property' => 'editcount',
 			'wup_value' => $editCount),
 			__METHOD__
 		);
+
 		return $editCount;
 	}
 
