@@ -26,7 +26,7 @@ class WikiaHubsV2Article extends Article {
 		if (!empty($this->verticalId)) {
 			$params['verticalid'] = $this->verticalId;
 		}
-		if (!empty($this->hubTimestamp)) {
+		if (isset($this->hubTimestamp)) {
 			$params['hubTimestamp'] = $this->hubTimestamp;
 		}
 

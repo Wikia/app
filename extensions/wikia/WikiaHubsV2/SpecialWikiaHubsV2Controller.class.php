@@ -83,8 +83,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	protected function checkAccess() {
-		return !(isset($this->hubTimestamp) && $this->hubTimestamp > time())
-			|| $this->wg->User->isLoggedIn() && $this->wg->User->isAllowed('marketingtoolbox');
+		return $this->hubTimestamp !== false
+			&& ($this->hubTimestamp <= time()
+				|| $this->wg->User->isLoggedIn() && $this->wg->User->isAllowed('marketingtoolbox')
+			);
 	}
 
 	/**
@@ -251,6 +253,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	protected function initHubTimestamp() {
-		$this->hubTimestamp = $this->getRequest()->getVal('hubTimestamp', null);
+		$this->hubTimestamp = $this->getRequest()->getVal('hubTimestamp');
 	}
 }

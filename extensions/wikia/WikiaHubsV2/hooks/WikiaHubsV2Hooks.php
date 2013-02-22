@@ -22,7 +22,6 @@ class WikiaHubsV2Hooks {
 			if ( $model->isHubsPage($hubName) ) {
 				$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
-				// TODO handle if date is wrong
 				$app->wg->SuppressPageHeader = true;
 				$article = F::build( 'WikiaHubsV2Article', array($title, $model->getHubPageId($dbKeyName), $hubTimestamp) );
 			}
