@@ -44,10 +44,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->handleSkinSettings( $this->wg->User->getSkin() );
 
 		$solariumConfig = array(
+				'adapter' => 'Solarium_Client_Adapter_Curl',
 				'adapteroptions' => array(
-						'host' => ( $this->wg->SolrHost ?: 'localhost'),
-						'port' => ( $this->wg->SolrPort ?: 8180 ),
-						'path' => '/solr/',
+						'host'    => ( $this->wg->SolrHost ?: 'localhost'),
+						'port'    => ( $this->wg->SolrPort ?: 8180 ),
+						'path'    => '/solr/',
 						)
 				);
 		if ( $this->wg->WikiaSearchUseProxy && isset( $this->wg->SolrProxy ) ) {
