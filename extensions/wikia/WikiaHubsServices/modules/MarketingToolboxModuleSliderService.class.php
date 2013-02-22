@@ -23,6 +23,20 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 				'class' => 'hidden'
 			);
 
+			$fields['strapline' . $i] = array(
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-slider-strapline'),
+				'validator' => new WikiaValidatorString(
+					array(
+						'required' => true,
+						'min' => 1
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
+				),
+				'attributes' => array(
+					'class' => 'required'
+				)
+			);
+
 			$fields['shortDesc' . $i] = array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-slider-short-description'),
 				'validator' => new WikiaValidatorString(
@@ -118,11 +132,11 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 
 				$structuredData['slides'][] = array(
 									'photoUrl' => $imageData->url,
+									'strapline' => $data['strapline'.$i],
 									'shortDesc' => $data['shortDesc'.$i],
 									'longDesc' => $data['longDesc'.$i],
 									'url' => $data['url'.$i],
 									'photoName' => $data['photo'.$i],
-									'photoAlt' => $imageData->title
 								);
 			}
 		}
@@ -142,7 +156,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 		foreach($data['slides'] as $slide) {
 			$galleryText .= "\n" . implode('|',array(
 					$this->app->wg->ContLang->getNsText( NS_FILE ) . ':' . $slide['photoName'],
-					"'''" . $slide['photoAlt'] . "'''",
+					"'''" . $slide['strapline'] . "'''",
 					'link=' . $slide['url'],
 					'linktext=' . $slide['longDesc'],
 					'shorttext=' . $slide['shortDesc']
