@@ -427,14 +427,12 @@ class MarketingToolboxModel extends WikiaModel {
 			'hub_date' => $hubDate
 		);
 
-		$mdb->begin(__METHOD__);
 		$dbSuccess = $mdb->update(self::HUBS_TABLE_NAME, $changes, $conditions, __METHOD__);
 
-		if( $dbSuccess && $this->checkModulesSaved($langCode, $verticalId, $timestamp) ) {
+		if( $dbSuccess ) {
 			$mdb->commit(__METHOD__);
 			$results->success = true;
 		} else {
-			$mdb->rollback(__METHOD__);
 			$results->success = false;
 			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-db-error');
 		}
