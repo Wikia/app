@@ -53,13 +53,19 @@ fclose($handle);
 				$snippet = $service->getTextSnippet();
 
 				$dbName = WikiFactory::IDtoDB($wikiID);
+				$wikiUrl = 'http://'.WikiFactory::DBtoDomain($dbName);
 				$imageURL = self::articleImage($dbName, $title->getArticleID());
 
-				$summary[$wikiID][$title->getPrefixedDBkey()] = array(
-					'title'    => $title,
-					'imageURL' => $imageURL,
-					'titleURL' => $title->getFullURL(),
-					'snippet'  => $snippet,
+				$summary[$wikiID][] = array(
+					'titleDBkey' => $title->getPrefixedDBkey(),
+					'title'      => $title,
+					'titleText'  => $title->getFullText(),
+					'articleId'  => $title->getArticleID(),
+					'imageUrl'   => $imageURL,
+					'url'        => $title->getFullURL(),
+					'wiki'       => $dbName,
+					'wikiUrl'    => $wikiUrl,
+					'snippet'    => $snippet,
 				);
 			}
 		}

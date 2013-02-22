@@ -15,42 +15,36 @@ class VideoPageController extends WikiaController {
 	 */
 	public function fileUsage() {
 		$type = $this->getVal('type', 'local');
+
+		$summary = VideoUsageService::summaryInfoByWiki($this->wg->Title->getDBkey());
+
 		if($type === 'global') {
 			$heading = wfMsg('video-page-global-file-list-header');
+			if (array_key_exists($this->wg->CityId, $summary)) {
+				unset($summary[$this->wg->CityId]);
+			}
+
+			$count = 0;
+			foreach ($summary as $wikiID => $info) {
+				$fileList[] = $info[0];
+				$count++;
+				if ($count >=3) {
+					break;
+				}
+			}
 		} else {
 			$heading = wfMsg('video-page-file-list-header');
+			if (array_key_exists($this->wg->CityId, $summary)) {
+				$fileList = $summary[$this->wg->CityId];
+			}
 		}
-		$mockFileList = array(
-			array(
-				'imageUrl' => '',
-				'url' => '',
-				'title' => 'Article Title Should be here',
-				'wiki' => 'Glee Wiki',
-				'wikiUrl' => '',
-				'snippet' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.',
-			),
-			array(
-				'imageUrl' => '',
-				'url' => '',
-				'title' => 'Article Title Should be here',
-				'wiki' => 'Glee Wiki',
-				'wikiUrl' => '',
-				'snippet' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.',
-			),
-			array(
-				'imageUrl' => '',
-				'url' => '',
-				'title' => 'Article Title Should be here',
-				'wiki' => 'Glee Wiki',
-				'wikiUrl' => '',
-				'snippet' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.',
-			),
-		);
+
+
 		
 		$this->heading = $heading;
-		$this->fileList = $mockFileList;
+		$this->fileList = $fileList;
 	}
-	
+
 	public function relatedPages() {
 		$titleID = 15; # Find title from one of the pages that include the current video
 return;

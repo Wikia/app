@@ -10,7 +10,7 @@
 						</a>
 					</div>
 					<div class="grid-3">
-						<h3 class="page-listing-title"><a href="<?= $fileUsage['url'] ?>"><?= $fileUsage['title'] ?></a></h3>
+						<h3 class="page-listing-title"><a href="<?= $fileUsage['url'] ?>"><?= $fileUsage['titleText'] ?></a></h3>
 						<a href="<?= $fileUsage['wikiUrl'] ?>" class="page-listing-wiki"><?= $fileUsage['wiki'] ?></a>
 						<p class="page-listing-snippet">
 							<?= $fileUsage['snippet'] ?>
