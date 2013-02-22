@@ -1,5 +1,6 @@
 /*
  @test-require-asset /resources/wikia/libraries/modil/modil.js
+ @test-require-asset /resources/wikia/modules/tracker.stub.js
  @test-require-asset /resources/wikia/modules/tracker.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/track.js
  */

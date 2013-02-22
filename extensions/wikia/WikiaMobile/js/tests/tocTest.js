@@ -7,6 +7,7 @@
  @test-require-asset /resources/wikia/modules/deferred.js
  @test-require-asset /resources/wikia/modules/ajax.js
  @test-require-asset /resources/wikia/modules/nirvana.js
+ @test-require-asset /resources/wikia/modules/tracker.stub.js
  @test-require-asset /resources/wikia/modules/tracker.js
  @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
