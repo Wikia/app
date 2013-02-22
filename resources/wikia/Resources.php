@@ -110,6 +110,13 @@ return array(
 		'scripts' => 'extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 		'dependencies' => 'wikia.log',
 	),
+	'wikia.tracker.stub' => array(
+		'scripts' => 'resources/wikia/modules/tracker.stub.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.window'
+		)
+	),
 
 	// AMD modules loaded on demand
 	'wikia.aim' => array(

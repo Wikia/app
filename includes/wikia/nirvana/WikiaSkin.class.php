@@ -189,7 +189,7 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
-		$scriptModules = array('amd', 'wikia.tracker');
+		$scriptModules = array( 'amd', 'wikia.tracker.stub' );
 		$this->wf->runHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
 		if ( !empty($scriptModules) ) {
 			// Mocking mw.loader.state so the script can be loaded up high
