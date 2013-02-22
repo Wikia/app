@@ -7,22 +7,26 @@
  * @author Hyun Lim <hyun@wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
-(function(context) {
+(function( context ) {
 	'use strict';
+
+	// Depends on tracker.stub.js
+	var trackerStub = context.Wikia.Tracker;
 
 	// Adds the info from the second hash into the first.
 	// If the same key is in both, the key in the second object overrides what's in the first object.
-	function extendObject(obj, ext){
-		for(var p in ext){
-			obj[p] = ext[p];
+	function extend( target, obj ) {
+		var key;
+
+		for( key in obj ) {
+			target[ key ] = obj[ key ];
 		}
 
-		return obj;
+		return target;
 	}
 
-	function tracker(window) {
+	function tracker( window ) {
 		/** @private **/
-
 		var	args,
 			// Convenience mappings for keys that can be passed into
 			// the Wikia.Tracker.Track method.
@@ -52,23 +56,23 @@
 			],
 			rDoubleSlash = /\/\//g,
 			slice = [].slice,
-			spool = Wikia.Tracker.spool;
+			spool = trackerStub.spool;
 
 		/**
-		 * Detects if an action made on event target was left mouse button click with ctrl key pressed
+		 * Detects if an action made on event target was left mouse button click with ctrl key pressed (bugId:45483)
 		 *
 		 * @param browserEvent
 		 * @return Boolean
 		 */
-		function isCtrlLeftClick(browserEvent) {
-			//bugId:45483
+		function isCtrlLeftClick( browserEvent ) {
 			var result = false;
 
-			if( browserEvent && browserEvent.ctrlKey ) {
-				if( browserEvent.button === 1 ) {
-				//Microsoft left mouse button === 1
+			if ( browserEvent && browserEvent.ctrlKey ) {
+				// Microsoft left mouse button === 1
+				if ( browserEvent.button === 1 ) {
 					result = true;
-				} else if( browserEvent.button == 0 ) {
+
+				} else if ( browserEvent.button == 0 ) {
 					result = true;
 				}
 			}
@@ -77,21 +81,21 @@
 		}
 
 		/**
-		 * Detects if an action made on event target was middle mouse button click in a webkit browser
+		 * Detects if an action made on event target was middle mouse button click in a webkit browser (bugId:31900)
 		 *
 		 * @param browserEvent
 		 * @return Boolean
 		 */
-		function isMiddleClick(browserEvent) {
-			//bugId:31900
+		function isMiddleClick( browserEvent ) {
 			var result = false;
 
-			if( browserEvent && browserEvent.button === 4 ) {
-			//Microsoft middle mouse button === 4
+			// Microsoft middle mouse button === 4
+			if ( browserEvent && browserEvent.button === 4 ) {
 				result = true;
-			} else if( browserEvent && browserEvent.button == 1 && !browserEvent.ctrlKey ) {
-			//just-in-case we check if the ctrlKey button isn't pressed to avoid the function
-			//returning true in IE when it's not middle click but ctrl + left mouse button click
+
+			// just-in-case we check if the ctrlKey button isn't pressed to avoid the function
+			// returning true in IE when it's not middle click but ctrl + left mouse button click
+			} else if ( browserEvent && browserEvent.button == 1 && !browserEvent.ctrlKey ) {
 				result = true;
 			}
 
@@ -107,16 +111,16 @@
 		 * @param object errorCallback callback function on failure (optional)
 		 * @param integer timeout How long to wait before declaring the tracking request as failed (optional)
 		 */
-		function internalTrack(event, data, successCallback /* unused */, errorCallback /* unused */, timeout) {
-			if (!event) {
-				Wikia.log('missing required argument: event', 'error', logGroup);
+		function internalTrack( event, data, successCallback /* unused */, errorCallback /* unused */, timeout ) {
+			if ( !event ) {
+				Wikia.log( 'missing required argument: event', 'error', logGroup );
 				return;
 			}
 
-			Wikia.log(event + ' [event name]', 'trace', logGroup);
+			Wikia.log( event + ' [event name]', 'trace', logGroup );
 
-			if(data) {
-				Wikia.log(data, 'trace', logGroup);
+			if ( data ) {
+				Wikia.log( data, 'trace', logGroup );
 			}
 
 			// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
@@ -129,67 +133,66 @@
 				'u': window.trackID || window.wgTrackID || 0,
 				's': skin,
 				'beacon': window.beacon_id || '',
-				'cb': Math.floor(Math.random()*99999)
+				'cb': Math.floor( Math.random() * 99999 )
 			};
 
 			// Add data object to params object
-			extendObject(params, data);
-			var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement,
-				script = document.createElement( "script" ),
+			extend( params, data );
+			var head = document.head || document.getElementsByTagName( 'head' )[ 0 ] || document.documentElement,
+				script = document.createElement( 'script' ),
 				callbackDelay = 200,
 				timeout = timeout || 3000,
-				requestUrl = 'http://a.wikia-beacon.com/__track/special/' + encodeURIComponent(event),
+				requestUrl = 'http://a.wikia-beacon.com/__track/special/' + encodeURIComponent( event ),
 				requestParameters = [],
 				p;
 
-			for(p in params) {
-				requestParameters.push(encodeURIComponent(p) + '=' + encodeURIComponent(params[p]));
+			for( p in params ) {
+				requestParameters.push( encodeURIComponent( p ) + '=' + encodeURIComponent( params[ p ] ) );
 			}
 
-			requestUrl += '?' + requestParameters.join('&');
+			requestUrl += '?' + requestParameters.join( '&' );
 
-			if("async" in script) {
-				script.async = "async";
+			if( 'async' in script ) {
+				script.async = 'async';
 			}
 
 			script.src = requestUrl;
 
-			script.onload = script.onreadystatechange = function(abort){
-				if(abort || !script.readyState || /loaded|complete/.test(script.readyState)){
+			script.onload = script.onreadystatechange = function( abort ) {
+				if ( abort || !script.readyState || /loaded|complete/.test( script.readyState ) ) {
 
-					//Handle memory leak in IE
+					// Handle memory leak in IE
 					script.onload = script.onreadystatechange = null;
 
-					//Remove the script
-					if(head && script.parentNode) {
-						head.removeChild(script);
+					// Remove the script
+					if ( head && script.parentNode ) {
+						head.removeChild( script );
 					}
 
-					//Dereference the script
+					// Dereference the script
 					script = undefined;
 
 					var callback;
 
-					if(!abort && typeof successCallback == 'function') {
-						setTimeout(successCallback, callbackDelay);
-					} else if(abort && typeof errorCallback == 'function') {
-						setTimeout(errorCallback, callbackDelay);
+					if ( !abort && typeof successCallback == 'function' ) {
+						setTimeout( successCallback, callbackDelay );
+
+					} else if ( abort && typeof errorCallback == 'function' ) {
+						setTimeout( errorCallback, callbackDelay );
 					}
 				}
 			};
 
-			//Use insertBefore instead of appendChild  to circumvent an IE6 bug.
-			//This arises when a base node is used (#2709 and #4378).
-			head.insertBefore(script, head.firstChild);
+			// Use insertBefore instead of appendChild  to circumvent an IE6 bug.
+			// This arises when a base node is used (#2709 and #4378).
+			head.insertBefore( script, head.firstChild );
 
-			if(timeout > 0){
-				setTimeout(function(){
-						if(script) {
-							script.onload(true);
-						}
-					},
-					timeout
-				);
+			if ( timeout > 0 ) {
+				setTimeout(function() {
+					if ( script ) {
+						script.onload( true );
+					}
+				}, timeout );
 			}
 		};
 
@@ -249,7 +252,7 @@
 
 			// Merge options
 			for ( i = 0, l = args.length; i < l; i++ ) {
-				extendObject( data, args[ i ] );
+				extend( data, args[ i ] );
 			}
 
 			// Remap keys for data consistency
@@ -271,7 +274,7 @@
 
 			if ( tracking.none || ( tracking.ga &&
 				// Category and action are compulsory for GA tracking
-				( !data.ga_category || !data.ga_action || !actionsReverse[ data.ga_action ] )
+				( !data.ga_category || !data.ga_action || !trackerStub.ACTIONS_REVERSE[ data.ga_action ] )
 			) ) {
 				Wikia.log( 'Missing or invalid parameters', 'error', logGroup );
 				Wikia.log( data, 'trace', logGroup );
@@ -334,10 +337,12 @@
 		};
 	}
 
-	// Exports
-	context.Wikia.Tracker = extendObject( context.Wikia.Tracker, tracker( context ) );
+	// UMD
+	extend( trackerStub, tracker( context ) );
+
+	// AMD
 	require( [ 'wikia.tracker' ], function( trackerStub ) {
-		extendObject( trackerStub, tracker( context ) );
+		extend( trackerStub, tracker( context ) );
 	});
 
 }(this));

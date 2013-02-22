@@ -102,7 +102,7 @@
 			var args = slice.call( arguments );
 
 			return function() {
-				return track.apply( null, args.concat( slice.call( arguments ) ) );
+				return Wikia.Tracker.track.apply( null, args.concat( slice.call( arguments ) ) );
 			};
 		}
 
