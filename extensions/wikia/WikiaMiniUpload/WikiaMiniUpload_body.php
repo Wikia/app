@@ -489,7 +489,7 @@ class WikiaMiniUpload {
 
 					if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
 						header('X-screen-type: error');
-						wfMsg( 'wmu-file-protected' );
+						return wfMsg( 'wmu-file-protected' );
 					}
 
 					$temp_file = new LocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
