@@ -111,9 +111,12 @@ class ImageServing {
 			);
 
 			while ($row =  $db->fetchRow( $res ) ) {
+
+/*
 $handle = fopen("/tmp/debug.out", 'a');
 fwrite($handle, 'ID = '.$row->id.' TITLE = '.$row->title."\n";
 fclose($handle);
+*/
 				$this->addArticleToList($row);
 			}
 
