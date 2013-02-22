@@ -74,7 +74,7 @@ describe('DartUrl', function(){
 			undef;
 
 		url.addParam('key', ['val1', 'val2', 'val3']);
-		expect(url.toString(), 'http://example.com/some/path;key=val1;key=val2;key=val3;');
+		expect(url.toString()).toBe('http://example.com/some/path;key=val1;key=val2;key=val3;');
 	});
 
 	it('addParam more values packed in array (more params)', function() {
@@ -86,7 +86,7 @@ describe('DartUrl', function(){
 
 		url.addParam('key1', ['val1', 'val2', 'val3']);
 		url.addParam('key2', ['a', 'b', 'c']);
-		expect(url.toString(), 'http://example.com/some/path;key1=val1;key1=val2;key1=val3;key2=a;key2=b;key2=c;');
+		expect(url.toString()).toBe('http://example.com/some/path;key1=val1;key1=val2;key1=val3;key2=a;key2=b;key2=c;');
 	});
 
 	it('addParam limit length', function() {
@@ -97,14 +97,14 @@ describe('DartUrl', function(){
 			undef;
 
 		url.addParam('0', '23456789plussomeextrachars', 10);
-		expect(url.toString(), 'http://example.com/some/path;', 'single value, limit 10 (value removed)');
+		expect(url.toString()).toBe('http://example.com/some/path;', 'single value, limit 10 (value removed)');
 
 		url.addParam('0', '2345678', 10);
-		expect(url.toString(), 'http://example.com/some/path;0=2345678;', 'single value, limit 10 (value kept)');
+		expect(url.toString()).toBe('http://example.com/some/path;0=2345678;', 'single value, limit 10 (value kept)');
 
 		url = dartUrl.urlBuilder(domain, path);
 		url.addParam('0', ['234567890', 'anothervalue'], 10);
-		expect(url.toString(), 'http://example.com/some/path;', 'two values, limit 10 (value removed)');
+		expect(url.toString()).toBe('http://example.com/some/path;', 'two values, limit 10 (value removed)');
 
 		url = dartUrl.urlBuilder(domain, path);
 		url.addParam('0', ['234567', 'anothervalue'], 10);
