@@ -18,9 +18,9 @@
 
 					Wikia.Cookies.set('mobilefullsite', null);//invalidate cookie
 
-					WikiaTracker.track({
+					Wikia.Tracker.track({
 						category: 'corporate-footer',
-						action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
+						action: Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
 						label: 'mobile-switch',
 						trackingMethod: 'both'
 					});

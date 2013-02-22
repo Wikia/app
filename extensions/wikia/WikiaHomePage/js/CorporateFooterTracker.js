@@ -5,7 +5,7 @@ var CorporateFooter = {
 		);
 	},
 	track: function(action, label, params, event) {
-		WikiaTracker.track({
+		Wikia.Tracker.track({
 			action: action,
 			browserEvent: event,
 			category: 'corporateFooter',
@@ -16,14 +16,14 @@ var CorporateFooter = {
 	trackClick: function(ev) {
 		var node = $(ev.target);
 		if (node.is('.button')) {
-			this.track(WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'create-wiki', {}, ev);
+			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'create-wiki', {}, ev);
 		}
 		else if (node.is('.interlang')) {
-			this.track(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hubs-link', {}, ev);
+			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'hubs-link', {}, ev);
 		}
 		else if (node.is('a')) {
 			this.track(
-				WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
+				Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
 				'hubs-link',
 				{href: node.attr('href'), anchor: node.text()},
 				ev

@@ -12,7 +12,7 @@ var RelatedVideos = {
 	isHubExtPage: false,
 	rvItemCount: null,
 
-	track: WikiaTracker.buildTrackingFunction({
+	track: Wikia.Tracker.buildTrackingFunction({
 		category: 'related-videos'
 	}),
 
@@ -28,7 +28,7 @@ var RelatedVideos = {
 		if(!this.rvModule.length) {
 			return;
 		}
-		
+
 		this.rvContainer = $('.container', this.rvModule);
 		this.rvScrollRight = $('.scrollright', this.rvModule);
 		this.rvScrollLeft = $('.scrollleft', this.rvModule);
@@ -86,11 +86,11 @@ var RelatedVideos = {
 				callbackAfterSelect: function(url) {
 
 					RelatedVideos.track({
-						action: WikiaTracker.ACTIONS.ADD,
+						action: Wikia.Tracker.ACTIONS.ADD,
 						label: 'add-video-success',
 						trackingMethod: 'both'
 					});
-					
+
 					$.nirvana.postJson(
 						// controller
 						'RelatedVideosController',
@@ -137,7 +137,7 @@ var RelatedVideos = {
 		}
 
 		RelatedVideos.track({
-			action: WikiaTracker.ACTIONS.VIEW,
+			action: Wikia.Tracker.ACTIONS.VIEW,
 			trackingMethod: 'both'
 		});
 	},
@@ -148,7 +148,7 @@ var RelatedVideos = {
 		RelatedVideos.lazyLoad();
 
 		RelatedVideos.track({
-			action: WikiaTracker.ACTIONS.PAGINATE,
+			action: Wikia.Tracker.ACTIONS.PAGINATE,
 			label: 'paginate-next',
 			trackingMethod: 'both',
 			value: RelatedVideos.currentRoom + 1
@@ -159,7 +159,7 @@ var RelatedVideos = {
 
 	scrollleft: function(){
 		RelatedVideos.track({
-			action: WikiaTracker.ACTIONS.PAGINATE,
+			action: Wikia.Tracker.ACTIONS.PAGINATE,
 			label: 'paginate-prev',
 			trackingMethod: 'both',
 			value: RelatedVideos.currentRoom - 1
@@ -218,7 +218,7 @@ var RelatedVideos = {
 
 		if (titles.length) {
 			RelatedVideos.track({
-				action: WikiaTracker.ACTIONS.IMPRESSION,
+				action: Wikia.Tracker.ACTIONS.IMPRESSION,
 				label: 'video',
 				orders: orders.join(','),
 				trackingMethod: 'internal',

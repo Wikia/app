@@ -302,7 +302,7 @@ var WikiaQuiz = {
 		if ( href ) {
 			params.href = href;
 		}
-		WikiaTracker.track(params);
+		Wikia.Tracker.track(params);
 	}
 };
 

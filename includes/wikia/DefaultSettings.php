@@ -467,7 +467,6 @@ include_once( "$IP/extensions/wikia/TagCloud/TagCloudClass.php" );
 include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCategories.php" );
 include_once( "$IP/extensions/wikia/AssetsManager/AssetsManager_setup.php" );
 include_once( "$IP/extensions/wikia/JSSnippets/JSSnippets_setup.php" );
-include_once( "$IP/extensions/wikia/WikiaTracker/WikiaTracker.setup.php" );
 include_once( "$IP/extensions/wikia/EmailsStorage/EmailsStorage.setup.php" );
 include_once( "$IP/extensions/wikia/ShareButtons/ShareButtons.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnlockdb/SpecialUnlockdb.setup.php" );

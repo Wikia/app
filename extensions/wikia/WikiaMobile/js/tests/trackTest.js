@@ -1,6 +1,7 @@
 /*
  @test-require-asset /resources/wikia/libraries/modil/modil.js
- @test-require-asset /extensions/wikia/WikiaTracker/js/WikiaTracker.js
+ @test-require-asset /resources/wikia/modules/tracker.stub.js
+ @test-require-asset /resources/wikia/modules/tracker.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/track.js
  */
 
@@ -21,12 +22,12 @@ describe("Track module", function () {
 
 	async.it('should have proper action names', function(done){
 		require(['track'], function(track){
-			expect(track.CLICK).toEqual(WikiaTracker.ACTIONS.CLICK);
-			expect(track.SWIPE).toEqual(WikiaTracker.ACTIONS.SWIPE);
-			expect(track.SUBMIT).toEqual(WikiaTracker.ACTIONS.SUBMIT);
-			expect(track.PAGINATE).toEqual(WikiaTracker.ACTIONS.PAGINATE);
-			expect(track.IMAGE_LINK).toEqual(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE);
-			expect(track.TEXT_LINK).toEqual(WikiaTracker.ACTIONS.CLICK_LINK_TEXT);
+			expect(track.CLICK).toEqual(Wikia.Tracker.ACTIONS.CLICK);
+			expect(track.SWIPE).toEqual(Wikia.Tracker.ACTIONS.SWIPE);
+			expect(track.SUBMIT).toEqual(Wikia.Tracker.ACTIONS.SUBMIT);
+			expect(track.PAGINATE).toEqual(Wikia.Tracker.ACTIONS.PAGINATE);
+			expect(track.IMAGE_LINK).toEqual(Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE);
+			expect(track.TEXT_LINK).toEqual(Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT);
 
 			done();
 		});
