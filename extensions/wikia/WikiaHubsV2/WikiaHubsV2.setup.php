@@ -29,6 +29,7 @@ $app->registerClass('WikiaHubsV2Hooks', $dir . 'hooks/WikiaHubsV2Hooks.php');
 // model classes
 $app->registerClass('WikiaHubsV2Article', $dir . 'models/WikiaHubsV2Article.class.php');
 $app->registerClass('WikiaHubsV2Model', $dir . 'models/WikiaHubsV2Model.class.php');
+$app->registerClass('WikiaHubsV2HooksModel', $dir . 'models/WikiaHubsV2HooksModel.class.php');
 
 $app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
 
