@@ -21,7 +21,8 @@ $config['oasis_extensions_js'] = array(
 $config['tracker_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'//resources/wikia/modules/tracker.stub.js',
+		'//resources/wikia/modules/tracker.js',
 	)
 );
 
@@ -322,6 +323,8 @@ $config['gameguides_js'] = array(
 		//core modules
 		'//resources/wikia/modules/deferred.js',
 		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/localStorage.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/querystring.js',
@@ -421,6 +424,8 @@ $config['wikiamobile_js_body_minimal'] = array(
 
 		//core modules
 		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/localStorage.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
@@ -1204,14 +1209,5 @@ $config['categoryselect_edit_js'] = array(
 		'//resources/jquery.ui/jquery.ui.mouse.js',
 		'//resources/jquery.ui/jquery.ui.sortable.js',
 		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
-	)
-);
-
-$config['history_polyfill_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//resources/wikia/polyfills/history/history.adapter.jquery.js',
-		//'//resources/wikia/polyfills/history/history.html4.js', // add this back in when we're ready to support IE
-		'//resources/wikia/polyfills/history/history.js',
 	)
 );
