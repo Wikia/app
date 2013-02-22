@@ -33,7 +33,7 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
 				)
 			),
-			'module-title' => array(
+			'moduleTitle' => array(
 				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-title'),
 				'validator' => new WikiaValidatorString(
 					array(
@@ -65,7 +65,7 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 
 		return $fields;
 	}
-
+	
 	public function renderEditor($data) {
 		$model = new MarketingToolboxModel();
 
@@ -90,5 +90,27 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 		
 		return parent::filterData($data);
 	}
-	
+
+	public function getStructuredData($data) {
+		$structuredData = array();
+		
+		if (!empty($data['sponsoredImage'])) {
+			$sponsoredImageInfo = $this->getImageInfo($data['sponsoredImage']);
+		}
+		
+		$structuredData['sponsoredImageUrl'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->url : null;
+		$structuredData['sponsoredImageAlt'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->title : null;
+
+		if (!empty($data['fileName'])) {
+			$imageInfo = $this->getImageInfo($data['fileName']);
+		}
+		
+		$structuredData['imageUrl'] = (isset($imageInfo)) ? $imageInfo->url : null;
+		$structuredData['imageAlt'] = (isset($imageInfo)) ? $imageInfo->title : null;
+		
+		$structuredData['title'] = $data['moduleTitle'];
+		$structuredData['text'] = $data['text'];
+		
+		return $structuredData;
+	}
 }

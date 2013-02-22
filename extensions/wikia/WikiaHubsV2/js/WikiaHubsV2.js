@@ -118,6 +118,16 @@ var WikiaHubs = {
 				WikiaHubs.trackClick('TopWikis', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'wikiname', nameIndex, {href: url, lang: lang}, e);
 			}
 		}
+		else if (node.closest('.wikiahubs-newstabs').length > 0) {    // Wikia's Picks
+			if (node.is('a')) {
+				url = node.closest('a').attr('href');
+				WikiaHubs.trackClick('WikiasPicks', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'link', null, {href: url, lang: lang}, e);
+			} else if (node.is('.sponsored-image')) {
+				WikiaHubs.trackClick('WikiasPicks', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'sponsoredimage', null, {lang: lang}, e);
+			} else if (node.is('img')) {
+				WikiaHubs.trackClick('WikiasPicks', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'image', null, {lang: lang}, e);
+			}
+		}
 
 		$().log('tracking took ' + (new Date() - startTime) + ' ms');
 	},
