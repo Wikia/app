@@ -1,6 +1,8 @@
-/*global LightboxLoader:true, RelatedVideosIds, LightboxTracker*/
+/*global LightboxLoader:true, RelatedVideosIds, LightboxTracker, wgStyleVersion*/
 
 /* TDOO: We need to normalize all readable titles and dbKeys so that we always know which one is which. This includes updating the DOM for every image and video element site-wide */
+
+(function(window, $) {
 
 var Lightbox = {
 	eventTimers: {
@@ -118,8 +120,6 @@ var Lightbox = {
 
 	},
 	bindEvents: function() {
-		Lightbox.bindHistoryEvents();
-
 		Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
 			var time = new Date().getTime();
 			if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 100 ) {
@@ -222,7 +222,53 @@ var Lightbox = {
 			}
 
 			Lightbox.openModal.find('.carousel li').eq(Lightbox.current.index).trigger('click');
+		}).on('click.Lightbox', '.article-add-button', function() {
+			Lightbox.doAutocomplete($(this));
 		});
+	},
+	doAutocomplete: function (elem) {
+		$.when(
+			$.loadJQueryAutocomplete()
+		).then($.proxy(function() {
+			var input = elem.hide().next('input').show();
+			
+			input.autocomplete({
+				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+				onSelect: function(value, data, event) {
+					var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
+						// slashes can't be urlencoded because they break routing
+						location = wgArticlePath.
+							replace(/\$1/, valueEncoded).
+							replace(encodeURIComponent('/'), '/');
+					
+					location = location + "?action=edit&addFile=" + Lightbox.getTitleDbKey();
+
+					/*this.track({
+						eventName: 'search_start_suggest',
+						sterm: valueEncoded,
+						rver: 0
+					});*/
+
+					// Respect modifier keys to allow opening in a new window (BugId:29401)
+					if (event.button === 1 || event.metaKey || event.ctrlKey) {
+						window.open(location);
+
+						// Prevents hiding the container
+						return false;
+					} else {
+						window.location.href = location;
+					}
+				},
+				appendTo: '#lightbox-add-to-article',
+				deferRequestBy: 400,
+				minLength: 3,
+				maxHeight: 800,
+				selectedClass: 'selected',
+				width: '270px',
+				skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
+			});
+		}, this));
+	
 	},
 	clearTrackingTimeouts: function() {
 		// Clear video tracking timeout
@@ -264,7 +310,9 @@ var Lightbox = {
 						'line-height': (dimensions.imageContainerHeight - 3) + 'px' // -3 hack to remove white line in chrome
 					}).html(renderedResult);
 
-				$(window).trigger('resize'); // firefox image loading hack (BugId:32477)
+				Lightbox.openModal.media.find('img').first().load(function() {
+					$(window).trigger('resize'); // firefox image loading hack (BugId:32477)
+				});
 
 				Lightbox.updateArrows();
 
@@ -694,62 +742,13 @@ var Lightbox = {
 	},
 
 	// Handle history API
-	bindHistoryEvents: function() {
-		var History = window.History;
-
-		// Handle forward and back buttons
-		History.Adapter.bind(window, 'statechange.Lightbox', function(e) { // Note: History.js uses custom 'statechange' event instead of popstate
-			// History.replaceState will trigger the statechange event, if this is the case, ignore this event
-			if(Lightbox.stateChangedManually === true) {
-				Lightbox.stateChangedManually = false;
-				return;
-			}
-			LightboxLoader.loadFromURL();
-		});
-	},
 	updateUrlState: function(clear) {
-		var History = window.History;
-
-		// Only support HTML5 browsers for now
-		if(!History.enabled) {
-			return false;
-		}
-
-		var query = window.location.search.substring(1),
-			vars = query.split('&'),
-			queryObj = {};
-
-		for(var i = 0; i < vars.length; i++) {
-			if(vars[i] == "") {
-				break;
-			}
-			var pair = vars[i].split('=');
-			// Create object of query params
-			queryObj[pair[0]] = pair[1];
-		}
+		var qs = window.Wikia.Querystring();
 
 		if(clear) {
-			delete queryObj.file;
+			qs.removeVal('file').replaceState();
 		} else {
-			queryObj.file = Lightbox.getTitleDbKey();
-		}
-
-		var newQuery = $.param(queryObj);
-
-		if(newQuery != "") {
-			newQuery = "?" + newQuery;
-		}
-
-		if(window.location.search != newQuery) {
-			var stateObj = {
-					fileTitle: queryObj.file || null
-				},
-				stateUrl = decodeURI(window.location.pathname);
-
-			stateUrl += newQuery;
-
-			Lightbox.stateChangedManually = true;
-			History.replaceState(stateObj, History.options.initialTitle + ", " + Lightbox.current.title, stateUrl);
+			qs.setVal('file', this.getTitleDbKey()).replaceState();		
 		}
 	},
 
@@ -1035,7 +1034,7 @@ var Lightbox = {
 			type:		'GET',
 			format: 'html',
 			data: {
-				lightboxVersion: 2, // update this when we change the template
+				lightboxVersion: wgStyleVersion,
 				userLang: window.wgUserLanguage // just in case user changes language prefs
 			},
 			callback: function(html) {
@@ -1382,7 +1381,8 @@ var Lightbox = {
 			trackingCarouselType: trackingCarouselType
 		};
 	}
-
-
 };
 
+window.Lightbox = Lightbox;
+
+})(this, jQuery);

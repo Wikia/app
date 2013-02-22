@@ -18,7 +18,7 @@ class VideoInfoHelper extends WikiaModel {
 		$app->wf->ProfileIn( __METHOD__ );
 
 		if ( is_string($title) ) {
-			$title = F::build( 'Title', array( $title, NS_FILE ), 'newFromText' );
+			$title = Title::newFromText( $title, NS_FILE );
 		}
 
 		$file = $app->wf->FindFile( $title );
@@ -42,8 +42,7 @@ class VideoInfoHelper extends WikiaModel {
 
 		$video = null;
 
-		if ( $file instanceof File && $file->exists()
-			&& F::build( 'WikiaFileHelper', array($file), 'isFileTypeVideo' ) ) {
+		if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo($file) ) {
 			if ( !($premiumOnly && $file->isLocal()) ) {
 				$fileMetadata = $file->getMetadata();
 				$userId = $file->getUser( 'id' );
@@ -105,6 +104,26 @@ class VideoInfoHelper extends WikiaModel {
 		}
 
 		return $videoList;
+	}
+
+	/**
+	 * check if video is removed (premium video)
+	 * @param Title|string $title
+	 * @return boolean
+	 */
+	public function isVideoRemoved( $title ) {
+		if ( is_string($title) ) {
+			$title = Title::newFromText( $title, NS_FILE );
+		}
+
+		if ( $title instanceof Title ) {
+			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
+			if ( !empty($videoInfo) ) {
+				return $videoInfo->isRemoved();
+			}
+		}
+
+		return false;
 	}
 
 	/**

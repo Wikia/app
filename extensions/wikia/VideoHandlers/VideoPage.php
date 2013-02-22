@@ -26,7 +26,19 @@ class WikiaVideoPage extends ImagePage {
 			$img = $this->getDisplayedFile();
 		}
 
-		$autoplay = F::app()->wg->VideoPageAutoPlay;
+		$app = F::app();
+		$autoplay = $app->wg->VideoPageAutoPlay;
+
+		// If autoplay is false, see if its turned on for any specific hubs
+		if (empty($autoplay) && count($app->wg->VideoPageAutoPlayHub)) {
+			$hub = WikiFactoryHub::getInstance();
+			$cat_id = $hub->getCategoryId( $app->wg->CityId );
+
+			// If autoplay is enabled for this hub, flip $autoplay
+			if (in_array($cat_id, $app->wg->VideoPageAutoPlayHub)) {
+				$autoplay = true;
+			}
+		}
 
 		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
 		

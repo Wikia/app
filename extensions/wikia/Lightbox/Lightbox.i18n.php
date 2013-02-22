@@ -6,6 +6,7 @@ $messages['en'] = array(
 	/* new stuff for new lightbox */
 	'lightbox-header-more-info-button' => 'More Info',
 	'lightbox-header-share-button' => 'Share',
+	'lightbox-header-add-video-button' => 'Add to article',
 	'lightbox-header-see-full-size-image' => 'See full size image',
 	'lightbox-header-added-by' => 'Added by $1',
 	'lightbox-header-posted-in' => 'Posted in $1',
