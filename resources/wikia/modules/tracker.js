@@ -1,79 +1,38 @@
 /**
  * Event tracking for GA and our internal datawarehouse.
+ * This file depends on "resources/modules/tracker.stub.js" and serves
+ * as the actual implementation for the methods and properties defined there.
  *
  * @author Kyle Florence <kflorence@wikia-inc.com>
  * @author Hyun Lim <hyun@wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
-(function (context) {
+(function(context) {
 	'use strict';
+
+	// Adds the info from the second hash into the first.
+	// If the same key is in both, the key in the second object overrides what's in the first object.
+	function extendObject(obj, ext){
+		for(var p in ext){
+			obj[p] = ext[p];
+		}
+
+		return obj;
+	}
 
 	function tracker(window) {
 		/** @private **/
 
-		/**
-		 * DO NOT ADD TO THIS LIST WITHOUT CONSULTATION FROM TRACKING TEAM LEADS
-		 * Keep it in alphabetical order
-		 */
-		var actions = {
-				// Generic add
-				ADD: 'add',
-
-				// Generic click, mostly javascript clicks
-				CLICK: 'click',
-
-				// Click on navigational button
-				CLICK_LINK_BUTTON: 'click-link-button',
-
-				// Click on image link
-				CLICK_LINK_IMAGE: 'click-link-image',
-
-				// Click on text link
-				CLICK_LINK_TEXT: 'click-link-text',
-
-				// impression of item on page/module
-				IMPRESSION: 'impression',
-
-				// Video play
-				PLAY_VIDEO: 'play-video',
-
-				// Removal
-				REMOVE: 'remove',
-
-				// Generic paginate
-				PAGINATE: 'paginate',
-
-				// Sharing view email, social network, etc
-				SHARE: 'share',
-
-				// Form submit, usually a post method
-				SUBMIT: 'submit',
-
-				// General swipe event
-				SWIPE: 'swipe',
-
-				// Action to take a survey
-				TAKE_SURVEY: 'take-survey',
-
-				// View
-				VIEW: 'view'
-			},
-			actionsReverse = (function() {
-				var obj = {},
-					key;
-
-				for ( key in actions ) {
-					obj[ actions[ key ] ] = key;
-				}
-
-				return obj;
-			})(),
+		var	args,
+			// Convenience mappings for keys that can be passed into
+			// the Wikia.Tracker.Track method.
 			dataKeyMap = {
 				action: 'ga_action',
 				category: 'ga_category',
 				label: 'ga_label',
 				value: 'ga_value'
 			},
+			// The argument order for GA calls
 			gaPushOrder = [
 				'ga_category',
 				'ga_action',
@@ -84,6 +43,8 @@
 			gaTrackAdEvent = window.gaTrackAdEvent,
 			gaTrackEvent = window.gaTrackEvent,
 			logGroup = 'Wikia.Tracker',
+			// These keys will be removed from tracking data before it gets sent to
+			// GA or the internal datawarehouse.
 			purgeFromData = [
 				'browserEvent',
 				'eventName',
@@ -91,17 +52,7 @@
 			],
 			rDoubleSlash = /\/\//g,
 			slice = [].slice,
-			Wikia = window.Wikia || {};
-
-		// Adds the info from the second hash into the first.
-		// If the same key is in both, the key in the second object overrides what's in the first object.
-		function extendObject(obj, ext){
-			for(var p in ext){
-				obj[p] = ext[p];
-			}
-
-			return obj;
-		}
+			spool = Wikia.Tracker.spool;
 
 		/**
 		 * Detects if an action made on event target was left mouse button click with ctrl key pressed
@@ -369,46 +320,24 @@
 			}
 		}
 
-		/**
-		 * Function factory for building custom tracking methods with default parameters.
-		 *
-		 *     var track = Wikia.Tracker.buildTrackingFunction({
-		 *         category: 'myCategory',
-		 *         trackingMethod: 'ga'
-		 *     });
-		 *
-		 *     track({
-		 *         label: 'myLabel'
-		 *     });
-		 *
-		 * @params {Object} defaults
-		 *         A key-value hash of parameters.
-		 *
-		 * @see The track method above for hash key information.
-		 */
-		function buildTrackingFunction() {
-			var args = slice.call( arguments );
+		// If there are any tracking events in the spool, replay them.
+		while( ( args = spool.shift() ) ) {
+			Wikia.log( 'Sending previously-spooled tracking event', 'trace', logGroup );
+			Wikia.log( data, 'trace', logGroup );
 
-			return function() {
-				return track.apply( null, args.concat( slice.call( arguments ) ) );
-			};
+			track.apply( null, args );
 		}
 
 		/** @public **/
-
 		return {
-			ACTIONS: actions,
-			ACTIONS_REVERSE: actionsReverse,
-			buildTrackingFunction: buildTrackingFunction,
 			track: track
 		};
 	}
 
 	// Exports
-	Wikia.Tracker = tracker(context);
-
-	if (context.define && context.define.amd) {
-		context.define('wikia.tracker', ['wikia.window', 'wikia.log'], tracker);
-	}
+	context.Wikia.Tracker = extendObject( context.Wikia.Tracker, tracker( context ) );
+	require( [ 'wikia.tracker' ], function( trackerStub ) {
+		extendObject( trackerStub, tracker( context ) );
+	});
 
 }(this));
