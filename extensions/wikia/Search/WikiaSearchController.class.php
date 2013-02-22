@@ -42,24 +42,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->wg->SuppressRail = true;
 
 		$this->handleSkinSettings( $this->wg->User->getSkin() );
-
-		$solariumConfig = array(
-				'adapter' => 'Solarium_Client_Adapter_Curl',
-				'adapteroptions' => array(
-						'host'    => ( $this->wg->SolrHost ?: 'localhost'),
-						'port'    => ( $this->wg->SolrPort ?: 8180 ),
-						'path'    => '/solr/',
-						)
-				);
-		if ( $this->wg->WikiaSearchUseProxy && isset( $this->wg->SolrProxy ) ) {
-			$solariumConfig['adapteroptions']['proxy'] = $this->wg->SolrProxy;
-			$solariumConfig['adapteroptions']['port'] = null;
-		}
 		
 		$searchConfig = new Wikia\Search\Config();
 		$dcParams = array(
 					'config' => $searchConfig,
-					'client' => new \Solarium_Client( $solariumConfig ) //@todo put this in its own factory?
 					);
 		$container = new Wikia\Search\QueryService\DependencyContainer( $dcParams );
 		$this->wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->get( $container ); 
