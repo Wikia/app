@@ -3,11 +3,8 @@
 var WikiaDartMobileHelper = function (log, window, document) {
 	'use strict';
 
-	var nullKrux,
-		nullAdLogicShortPage,
-		nullAb,
-		dartUrl = DartUrl(),
-		adLogicPageLevelParams = AdLogicPageLevelParams(log, window, document, nullKrux, nullAdLogicShortPage, nullAb, dartUrl),
+	var dartUrl = DartUrl(),
+		adLogicPageLevelParams = AdLogicPageLevelParams(log, window),
 		wikiaDartHelper = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl);
 
 	return {
