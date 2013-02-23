@@ -1,4 +1,4 @@
-var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, Krux, evolveHelper, slotTweaker) {
+var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, evolveHelper, slotTweaker) {
 	'use strict';
 
 	var slotMap,
