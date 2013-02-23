@@ -20,6 +20,7 @@
 		adLogicDartSubdomain,
 		adLogicHighValueCountry,
 		adLogicPageLevelParams,
+		adLogicPageLevelParamsLegacy,
 		adLogicShortPage,
 		scriptWriter,
 		dartUrl,
@@ -44,7 +45,8 @@
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
 	adLogicShortPage = AdLogicShortPage(document);
-	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, document, Krux, adLogicShortPage, abTest, dartUrl);
+	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicShortPage, abTest);
+	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl);
@@ -53,8 +55,8 @@
 
 	// Construct Ad Providers
 	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, adLogicDartSubdomain, abTest, wikiaGpt);
-	adProviderEvolve = AdProviderEvolve(wikiaDart, scriptWriter, tracker, log, window, document, Krux, evolveHelper, slotTweaker);
-	adProviderGamePro = AdProviderGamePro(wikiaDart, scriptWriter, tracker, log, window, document);
+	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, Krux, evolveHelper, slotTweaker);
+	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document);
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	// Special Ad Provider, to deal with the late ads

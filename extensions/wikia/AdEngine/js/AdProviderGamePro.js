@@ -1,4 +1,4 @@
-var AdProviderGamePro = function(wikiaDart, ScriptWriter, WikiaTracker, log, window, document) {
+var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, tracker, log, window, document) {
 	var ord = Math.round(Math.random() * 23456787654);
 	var slotMap = {
 		'HOME_TOP_LEADERBOARD': {'size':'728x90', 'tile': 1, 'pos': 'leadfull', 'dcopt': 'ist'},
@@ -52,7 +52,7 @@ var AdProviderGamePro = function(wikiaDart, ScriptWriter, WikiaTracker, log, win
 			'ow-wikia.com' + '/' + 'wka.' + window.cityShort + ';' +
 			's1=' + '_' + window.wgDBname + ';' +
 			'pos=' + slotMap[slotname].pos + ';' +
-			 wikiaDart.getCustomKeyValues() +
+			adLogicPageLevelParamsLegacy.getCustomKeyValues() +
 			'tile=' + slotMap[slotname].tile + ';' +
 			(slotMap[slotname].dcopt ? 'dcopt=' + slotMap[slotname].dcopt + ';' : '') +
 			'sz=' + slotMap[slotname].size + ';' +

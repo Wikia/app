@@ -7,7 +7,9 @@
 (function(log, WikiaTracker, window, ghostwriter, document, Geo, Krux) {
 	var adConfig
 		, scriptWriter
-		, wikiaDart
+		, adLogicPageLevelParams
+		, adLogicPageLevelParamsLegacy
+		, dartUrl
 		, slotTweaker
 		, fakeLiftium = {}
 		, adProviderGamePro
@@ -20,15 +22,17 @@
 		return window.Liftium.callInjectedIframeAd(sizeOrSlot, iframeElement, placement);
 	};
 
+	dartUrl = DartUrl();
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
-	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux);
+	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux /* omiting a few optional deps */);
+	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	slotTweaker = SlotTweaker(log, document, window);
 
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
-	adProviderGamePro = AdProviderGamePro(wikiaDart, scriptWriter, WikiaTracker, log, window, document);
-	adProviderLiftium2Dom = AdProviderLiftium2Dom(WikiaTracker, log, document, slotTweaker, fakeLiftium, scriptWriter);
+	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document);
+	adProviderLiftium2Dom = AdProviderLiftium2Dom(tracker, log, document, slotTweaker, fakeLiftium, scriptWriter);
 
 	adConfig = AdConfig2Late(
 		log, window

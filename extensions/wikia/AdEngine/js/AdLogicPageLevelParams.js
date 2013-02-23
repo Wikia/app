@@ -1,21 +1,22 @@
-// TODO: less dependencies, move optional stuff to separate modules
-// TODO: don't depend of dartUrl, remove methods relying on it and uses of it
-// TODO: remove the unused document depenedency (update uses and tests)
-
-var AdLogicPageLevelParams = function (log, window, document, /* optional */ Krux, /* optional */ adLogicShortPage, /* optional */ abTest, dartUrl) {
+var AdLogicPageLevelParams = function (
+	log,
+	window,
+	Krux,             // optional
+	adLogicShortPage, // optional
+	abTest            // optional
+) {
 	'use strict';
 
 	var logGroup = 'AdLogicPageLevelParams',
 		getCustomKeyValues,
 		getDomain,
-		getDomainKV,
 		getDartHubName,
 		getHostname,
-		getHostnamePrefix,
 		getKruxKeyValues,
 		getCategories,
 		getAb,
-		getPageLevelParams;
+		getPageLevelParams,
+		hostname = window.location.hostname.toString();
 
 	getDartHubName = function () {
 		if (window.cscoreCat === 'Entertainment') {
@@ -27,14 +28,7 @@ var AdLogicPageLevelParams = function (log, window, document, /* optional */ Kru
 		return 'life';
 	};
 
-	getCustomKeyValues = function () {
-		if (window.wgDartCustomKeyValues) {
-			return dartUrl.trimParam(window.wgDartCustomKeyValues + ';');
-		}
-		return '';
-	};
-
-	getDomain = function (hostname) {
+	getDomain = function () {
 		var lhost, pieces, sld = '', np;
 		lhost = hostname.toLowerCase();
 
@@ -51,21 +45,13 @@ var AdLogicPageLevelParams = function (log, window, document, /* optional */ Kru
 		return sld.replace(/\./g, '');
 	};
 
-	getDomainKV = function (hostname) {
-		return dartUrl.decorateParam('dmn', getDomain(hostname));
-	};
-
-	getHostname = function (hostname) {
+	getHostname = function () {
 		var lhost = hostname.toLowerCase(),
 			pieces = lhost.split('.');
 
 		if (pieces.length) {
 			return pieces[0];
 		}
-	};
-
-	getHostnamePrefix = function (hostname) {
-		return dartUrl.decorateParam('hostpre', getHostname(hostname));
 	};
 
 	getCategories = function () {
@@ -75,11 +61,12 @@ var AdLogicPageLevelParams = function (log, window, document, /* optional */ Kru
 	};
 
 	getAb = function () {
-		var experiments, i, ab = [];
+		var experiments, experimentsNumber, i, ab = [];
 
 		if (abTest) {
 			experiments = abTest.getExperiments();
-			for (i = 0; i < experiments.length; i += 1) {
+			experimentsNumber = experiments.length;
+			for (i = 0; i < experimentsNumber; i += 1) {
 				ab.push(experiments[i].id + '_' + experiments[i].group.id);
 			}
 		}
@@ -116,8 +103,8 @@ var AdLogicPageLevelParams = function (log, window, document, /* optional */ Kru
 			s1: zone1,
 			s2: zone2,
 			artid: window.wgArticleId,
-			dmn: getDomain(window.location.hostname),
-			hostpre: getHostname(window.location.hostname),
+			dmn: getDomain(),
+			hostpre: getHostname(),
 			wpage: window.wgPageName && window.wgPageName.toLowerCase(),
 			lang: window.wgContentLanguage || 'unknown',
 			cat: getCategories(),
@@ -151,18 +138,7 @@ var AdLogicPageLevelParams = function (log, window, document, /* optional */ Kru
 		return params;
 	};
 
-	getKruxKeyValues = function () {
-		if (Krux && Krux.dartKeyValues) {
-			return dartUrl.trimParam(Krux.dartKeyValues);
-		}
-		return '';
-	};
-
 	return {
-		getCustomKeyValues: getCustomKeyValues,
-		getDomainKV: getDomainKV,
-		getHostnamePrefix: getHostnamePrefix,
-		getKruxKeyValues: getKruxKeyValues,
 		getPageLevelParams: getPageLevelParams
 	};
 };
