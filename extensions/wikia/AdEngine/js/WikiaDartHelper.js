@@ -76,7 +76,6 @@ var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl) {
 				}
 			}
 		}
-		url.addString(adLogicPageLevelParams.getCustomKeyValues(), true);
 		url.addParam('positionfixed', params.positionfixed);
 
 		// global params

@@ -11,7 +11,7 @@ describe('AdLogicPageLevelParams', function(){
 				wgDBname: 'dbname',
 				wgContentLanguage: 'xx'
 			},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			adLogicShortPageMock,
 			kruxMock,
 			abTestMock,
@@ -28,7 +28,7 @@ describe('AdLogicPageLevelParams', function(){
 	it('getPageLevelParams hostprefix and domain params', function() {
 		var logMock = function() {},
 			windowMock = {location: {}},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			adLogicShortPageMock,
 			kruxMock,
 			abTestMock,
@@ -83,7 +83,7 @@ describe('AdLogicPageLevelParams', function(){
 		var undef,
 			logMock = function() {},
 			windowMock = {location: {hostname: 'an.example.org'}},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			adLogicShortPageMock,
 			kruxMock,
 			abTestMock,
@@ -114,7 +114,7 @@ describe('AdLogicPageLevelParams', function(){
 	it('getPageLevelParams default DB name', function() {
 		var logMock = function() {},
 			windowMock = {location: {hostname: 'an.example.org'}},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			adLogicShortPageMock,
 			kruxMock,
 			abTestMock,
@@ -128,7 +128,7 @@ describe('AdLogicPageLevelParams', function(){
 	it('getPageLevelParams language', function() {
 		var logMock = function() {},
 			windowMock = {location: {hostname: 'an.example.org'}},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			adLogicShortPageMock,
 			kruxMock,
 			abTestMock,
@@ -152,7 +152,7 @@ describe('AdLogicPageLevelParams', function(){
 				location: {hostname: 'an.example.org'},
 				wikiaPageType: 'pagetype'
 			},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			adLogicShortPageMock,
 			kruxMock,
 			abTestMock,
@@ -169,7 +169,7 @@ describe('AdLogicPageLevelParams', function(){
 				location: {hostname: 'an.example.org'},
 				wgArticleId: 678
 			},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			adLogicShortPageMock,
 			kruxMock,
 			abTestMock,
@@ -183,7 +183,7 @@ describe('AdLogicPageLevelParams', function(){
 	it('getPageLevelParams has pre footers', function() {
 		var logMock = function() {},
 			windowMock = {location: {hostname: 'an.example.org'}},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			adLogicShortPageMockTrue = {hasPreFooters: function() {return true;}},
 			adLogicShortPageMockFalse = {hasPreFooters: function() {return false;}},
 			kruxMock,
@@ -201,10 +201,29 @@ describe('AdLogicPageLevelParams', function(){
 		expect(params.hasp).toBe('no', 'no');
 	});
 
+	it('getPageLevelParams per-wiki custom DART params', function() {
+		var logMock = function() {},
+			windowMock = {
+				location: {hostname: 'an.example.org'},
+				wgDartCustomKeyValues: 'key1=value1;key2=value2;key3=value3;key3=value4'
+			},
+			documentMock,
+			adLogicShortPageMock = {hasPreFooters: function() {return true;}},
+			kruxMock,
+			abTestMock,
+			dartUrlMock,
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, documentMock, kruxMock, adLogicShortPageMock, abTestMock, dartUrlMock),
+			params = adLogicPageLevelParams.getPageLevelParams();
+
+		expect(params.key1).toEqual(['value1'], 'key1=value1');
+		expect(params.key2).toEqual(['value2'], 'key2=value2');
+		expect(params.key3).toEqual(['value3', 'value4'], 'key3=value3;key3=value4');
+	});
+
 	it('getCustomKeyValues', function() {
 		var logMock = function() {},
 			windowMock = {location: {hostname: 'an.example.org'}},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			adLogicShortPageMock = {},
 			kruxMock,
 			abTestMock,
@@ -227,7 +246,7 @@ describe('AdLogicPageLevelParams', function(){
 				location: {hostname: 'an.example.org'},
 				wgCategories: ['Category', 'Another Category', 'YetAnother Category']
 			},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			adLogicShortPageMock,
 			kruxMock,
 			abTestMock,
@@ -243,7 +262,7 @@ describe('AdLogicPageLevelParams', function(){
 	it('getPageLevelParams abTest info', function() {
 		var logMock = function() {},
 			windowMock = {location: {hostname: 'an.example.org'}},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			adLogicShortPageMock,
 			kruxMock,
 			abTestMock = {
@@ -291,7 +310,7 @@ describe('AdLogicPageLevelParams', function(){
 				wgWikiaHubType: 'gaming',
 				wikiaPageIsHub: true
 			},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			kruxMock,
 			adLogicShortPageMock = {hasPreFooters: function() {return true;}},
 			abTestMock,
@@ -319,7 +338,7 @@ describe('AdLogicPageLevelParams', function(){
 				wgWikiaHubType: 'ent',
 				wikiaPageIsHub: true
 			},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			kruxMock,
 			adLogicShortPageMock = {hasPreFooters: function() {return true;}},
 			abTestMock,
@@ -347,7 +366,7 @@ describe('AdLogicPageLevelParams', function(){
 				wgWikiaHubType: 'life',
 				wikiaPageIsHub: true
 			},
-			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+			documentMock,
 			kruxMock,
 			adLogicShortPageMock = {hasPreFooters: function() {return true;}},
 			abTestMock,
