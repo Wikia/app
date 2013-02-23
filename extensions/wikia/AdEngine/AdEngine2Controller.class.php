@@ -62,6 +62,10 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
 		$vars['wgShowAds'] = $this->wg->ShowAds;
 
+		$useGpt = (bool) $req->getCookie('usegpt', '', $this->wg->UseGpt);
+		$useGpt = $req->getBool('usegpt', $useGpt);
+		$vars['wgUseGpt'] = $useGpt;
+
 		// Used to hop by DART ads
 		$vars['adDriverLastDARTCallNoAds'] = array();
 

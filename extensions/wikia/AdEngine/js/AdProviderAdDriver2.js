@@ -1,6 +1,6 @@
 // TODO: move Wikia.Tracker outside
 
-var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain, abTest) {
+var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain, abTest, wikiaGpt) {
 	'use strict';
 
 	var logGroup = 'AdProviderAdDriver2',
@@ -131,12 +131,6 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		incrementItemInStorage(numCallForSlotStorageKey);
 		cacheStorage.del(noAdStorageKey);
 
-		// Random ord for MODAL_INTERSTITIAL
-		// This disables synchronisation of Lightbox ads, but allows ads to repeat
-		if (slotname.match(/^MODAL_INTERSTITIAL/)) {
-			ord = Math.floor(Math.random() * 100000000000);
-		}
-
 		tracker.track({
 			eventName: 'liftium.slot2',
 			ga_category: 'slot2/' + slotsize.split(',')[0],
@@ -145,44 +139,67 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			trackingMethod: 'ad'
 		});
 
-		url = wikiaDart.getUrl({
-			slotname: slotname,
-			slotsize: slotsize,
-			subdomain: adLogicDartSubdomain.getSubdomain(),
-			dcopt: dcopt,
-			loc: loc,
-			ord: ord
-		});
+		if (window.wgUseGpt) {
+			// Use the new GPT library:
 
-		scriptWriter.injectScriptByUrl(slotname, url, function () {
-			/**
-			 * Our DART server when having no ads returns
-			 *
-			 * window.adDriverLastDARTCallNoAds[slotname] = true
-			 *
-			 * We're handling this here.
-			 */
-			if (window.adDriverLastDARTCallNoAds && window.adDriverLastDARTCallNoAds[slotname]) {
-				log(slotname + ' was not filled by DART', 2, logGroup);
-				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
+			wikiaGpt.pushAd({
+				slotname: slotname,
+				slotsize: slotsize,
+				dcopt: dcopt,
+				loc: loc
+			}, function() {
+				// TODO: detect success and hop situations and handle them
 
-				// Track hop time
-				hopTime = new Date().getTime() - hopTimer;
-				log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms', 7, logGroup);
-				tracker.track({
-					eventName: 'liftium.hop2',
-					ga_category: 'hop2/addriver2',
-					ga_action: 'slot ' + slotname,
-					ga_label: formatTrackTime(hopTime, 5),
-					trackingMethod: 'ad'
-				});
-
-				error();
-			} else {
-				log(slotname + ' was filled by DART', 5, logGroup);
 				success();
+			});
+		} else {
+			// Legacy DART call:
+
+			// Random ord for MODAL_INTERSTITIAL
+			// This disables synchronisation of Lightbox ads, but allows ads to repeat
+			if (slotname.match(/^MODAL_INTERSTITIAL/)) {
+				ord = Math.floor(Math.random() * 100000000000);
 			}
-		});
+
+			url = wikiaDart.getUrl({
+				slotname: slotname,
+				slotsize: slotsize,
+				subdomain: adLogicDartSubdomain.getSubdomain(),
+				dcopt: dcopt,
+				loc: loc,
+				ord: ord
+			});
+
+			scriptWriter.injectScriptByUrl(slotname, url, function () {
+				/**
+				 * Our DART server when having no ads returns
+				 *
+				 * window.adDriverLastDARTCallNoAds[slotname] = true
+				 *
+				 * We're handling this here.
+				 */
+				if (window.adDriverLastDARTCallNoAds && window.adDriverLastDARTCallNoAds[slotname]) {
+					log(slotname + ' was not filled by DART', 2, logGroup);
+					cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
+
+					// Track hop time
+					hopTime = new Date().getTime() - hopTimer;
+					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms', 7, logGroup);
+					tracker.track({
+						eventName: 'liftium.hop2',
+						ga_category: 'hop2/addriver2',
+						ga_action: 'slot ' + slotname,
+						ga_label: formatTrackTime(hopTime, 5),
+						trackingMethod: 'ad'
+					});
+
+					error();
+				} else {
+					log(slotname + ' was filled by DART', 5, logGroup);
+					success();
+				}
+			});
+		}
 	};
 
 	formatTrackTime = function (t, max) {
