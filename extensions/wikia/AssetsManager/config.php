@@ -53,6 +53,7 @@ $config['adengine2_js'] = array(
 		// high prio
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
