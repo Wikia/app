@@ -403,18 +403,18 @@ class RelatedVideosNamespaceData {
 	}
 
 	/**
-	 * check if videoTitle exists in the list
+	 * get entry if videoTitle exists in the list
 	 * @param string $videoTitle
 	 * @param string $list [BLACKLIST_MARKER, WHITELIST_MARKER]
-	 * @return type
+	 * @return array|null $entry
 	 */
-	public function entryExists( $videoTitle, $list ) {
+	public function getEntry( $videoTitle, $list ) {
 		if ( !empty($videoTitle) && !empty($list) ) {
 			$this->load();
 			if ( !empty($this->mData['lists'][$list]) ) {
 				foreach( $this->mData['lists'][$list] as $entry ) {
-					if ( $entry['title'] == $videoTitle ) {
-						return true;
+					if ( $videoTitle == str_replace('_', ' ', $entry['title']) ) {
+						return $entry;
 					}
 				}
 			}
@@ -422,4 +422,5 @@ class RelatedVideosNamespaceData {
 
 		return false;
 	}
+
 }

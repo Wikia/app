@@ -45,8 +45,8 @@ $app->registerHook('ArticleSaveComplete', 'RelatedVideosHookHandler', 'onArticle
 $app->registerHook( 'FileDeleteComplete', 'RelatedVideosHookHandler', 'onFileDeleteComplete' );
 $app->registerHook( 'FileUndeleteComplete', 'RelatedVideosHookHandler', 'onFileUndeleteComplete' );
 $app->registerHook( 'SpecialMovepageAfterMove', 'RelatedVideosHookHandler', 'onFileRenameComplete' );
-$app->registerHook( 'RemoteFileRemoveComplete', 'RelatedVideosHookHandler', 'onRemoteFileRemoveComplete' );
-$app->registerHook( 'RemoteFileUnremoveComplete', 'RelatedVideosHookHandler', 'onRemoteFileUnremoveComplete' );
+$app->registerHook( 'ArticleDeleteComplete', 'RelatedVideosHookHandler', 'onArticleDeleteComplete' );
+$app->registerHook( 'UndeleteComplete', 'RelatedVideosHookHandler', 'onUndeleteComplete' );
 
 /**
  * messages

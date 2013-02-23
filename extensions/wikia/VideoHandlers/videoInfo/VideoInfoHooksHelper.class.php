@@ -95,7 +95,7 @@ class VideoInfoHooksHelper {
 			$videoData = $videoInfoHelper->getVideoDataByTitle( $img['il_to'], true );
 			if ( !empty($videoData) ) {
 				$videoInfo = new VideoInfo( $videoData );
-				$affected = $videoInfo->addPremiumVideo( $userId ) ) {
+				$affected = $videoInfo->addPremiumVideo( $userId );
 			}
 		}
 
@@ -254,4 +254,20 @@ class VideoInfoHooksHelper {
 		return true;
 	}
 
+	/**
+	 * Hook: check if the file is deleted
+	 * @param string $title
+	 * @param boolean $isDeleted
+	 * @return type
+	 */
+	public static function onForeignFileDeleted( $title, &$isDeleted ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
+			return true;
+		}
+
+		$videoInfoHelper = new VideoInfoHelper();
+		$isDeleted = $videoInfoHelper->isVideoRemoved($title);
+
+		return true;
+	}
 }

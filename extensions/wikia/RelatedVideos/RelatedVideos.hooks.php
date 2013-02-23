@@ -192,51 +192,23 @@ class RelatedVideosHookHandler {
 	}
 
 	/**
-	 * Hook: remove premium videos from related videos list
-	 * @param File $file
-	 * @param Status|string $result
+	 * Hook: delete premium video from related videos module when the file page is deleted
+	 * @param WikiPage $wikiPage
+	 * @param User $user
+	 * @param string $reason
+	 * @param integer $pageId
 	 * @return true
 	 */
-	public static function onRemoteFileRemoveComplete( $file, &$result ) {
-		if ( !WikiaFileHelper::isFileTypeVideo($file) ) {
-			return true;
-		}
-
-		$isRemote = !$file->isLocal();
-		if ( VideoInfoHelper::videoInfoExists() && $isRemote ) {
-			$videoInfoHelper = new VideoInfoHelper();
-			$title = $file->getTitle();
-			if ( $title instanceof Title && $videoInfoHelper->isVideoRemoved($title) ) {
-				// move title from white list to black list
-				$relatedVideos = new RelatedVideosData();
-				$result = $relatedVideos->removeVideo( $title, $isRemote );
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Hook: add unremoved premium videos to related videos list
-	 * @param File $file
-	 * @param Status|string $result
-	 * @return true
-	 */
-	public static function onRemoteFileUnremoveComplete( $file, &$result ) {
-		if ( !WikiaFileHelper::isFileTypeVideo($file) ) {
-			return true;
-		}
-
-		if ( VideoInfoHelper::videoInfoExists() && !$file->isLocal() ) {
-			$title = $file->getTitle();
-			if ( $title instanceof Title ) {
-				$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
-				if( !empty($relatedVideos) ) {
-					// add video only if the videos already exists in blacklist
-					if ( $relatedVideos->entryExists( $title->getText(), RelatedVideosNamespaceData::BLACKLIST_MARKER ) ) {
-						$entry = $relatedVideos->createEntry( $title->getText(), RelatedVideosData::V_WIKIAVIDEO );
-						$result = $relatedVideos->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array( $entry ) );
-					}
+	public static function onArticleDeleteComplete( &$wikiPage, &$user, $reason, $pageId  ) {
+		$title = $wikiPage->getTitle();
+		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
+			$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
+			if( !empty($relatedVideos) ) {
+				// add video only if the videos already exists in blacklist
+				$entry = $relatedVideos->getEntry( $title->getText(), RelatedVideosNamespaceData::WHITELIST_MARKER );
+				if ( !empty($entry) ) {
+					// move title from white list to black list
+					$result = $relatedVideos->addToList( RelatedVideosNamespaceData::BLACKLIST_MARKER, array( $entry ) );
 				}
 			}
 		}
@@ -244,4 +216,25 @@ class RelatedVideosHookHandler {
 		return true;
 	}
 
+	/**
+	 * Hook: restore premium video to related videos module when the file page is undeleted
+	 * @param Title $title
+	 * @param User $wgUser
+	 * @param string $reason
+	 * @return true
+	 */
+	public static function onUndeleteComplete( &$title, &$user, $reason ) {
+		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
+			$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
+			if( !empty($relatedVideos) ) {
+				// add video only if the videos already exists in blacklist
+				$entry = $relatedVideos->getEntry( $title->getText(), RelatedVideosNamespaceData::BLACKLIST_MARKER );
+				if ( !empty($entry) ) {
+					$result = $relatedVideos->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array( $entry ) );
+				}
+			}
+		}
+
+		return true;
+	}
 }
