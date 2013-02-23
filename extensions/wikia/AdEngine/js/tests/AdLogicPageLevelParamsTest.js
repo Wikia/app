@@ -23,7 +23,6 @@ describe('AdLogicPageLevelParams', function(){
 		expect(params.s1).toBe('_dbname');
 		expect(params.s2).toBe('article');
 		expect(params.lang).toBe('xx');
-		expect(params.dis).toBe('large');
 	});
 
 	it('getPageLevelParams hostprefix and domain params', function() {
@@ -306,7 +305,6 @@ describe('AdLogicPageLevelParams', function(){
 		expect(params.dmn).toBe('wikiacom');
 		expect(params.hostpre).toBe('www');
 		expect(params.lang).toBe('en');
-		expect(params.dis).toBe('large');
 		expect(params.hasp).toBe('yes');
 	});
 
@@ -335,7 +333,6 @@ describe('AdLogicPageLevelParams', function(){
 		expect(	params.dmn).toBe('wikiacom');
 		expect(	params.hostpre).toBe('www');
 		expect(	params.lang).toBe('en');
-		expect(	params.dis).toBe('large');
 		expect(	params.hasp).toBe('yes');
 	});
 
@@ -364,7 +361,6 @@ describe('AdLogicPageLevelParams', function(){
 		expect(params.dmn).toBe('wikiacom');
 		expect(params.hostpre).toBe('www');
 		expect(params.lang).toBe('en');
-		expect(params.dis).toBe('large');
 		expect(params.hasp).toBe('yes');
 	});
 });

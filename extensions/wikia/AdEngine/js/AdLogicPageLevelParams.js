@@ -1,5 +1,6 @@
 // TODO: less dependencies, move optional stuff to separate modules
 // TODO: don't depend of dartUrl, remove methods relying on it and uses of it
+// TODO: remove the unused document depenedency (update uses and tests)
 
 var AdLogicPageLevelParams = function (log, window, document, /* optional */ Krux, /* optional */ adLogicShortPage, /* optional */ abTest, dartUrl) {
 	'use strict';
@@ -92,7 +93,6 @@ var AdLogicPageLevelParams = function (log, window, document, /* optional */ Kru
 		var site,
 			zone1,
 			zone2,
-			clientWidth = document.documentElement.clientWidth || document.body.clientWidth,
 			params;
 
 		if (window.wikiaPageIsHub) {
@@ -127,10 +127,6 @@ var AdLogicPageLevelParams = function (log, window, document, /* optional */ Kru
 		if (Krux) {
 			params.u = Krux.user;
 			params.ksgmnt = Krux.segments;
-		}
-
-		if (clientWidth > 1024) {
-			params.dis = 'large';
 		}
 
 		log(params, 9, logGroup);
