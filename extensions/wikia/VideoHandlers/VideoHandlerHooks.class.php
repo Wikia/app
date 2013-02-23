@@ -244,7 +244,12 @@ class VideoHandlerHooks extends WikiaObject{
 		$title = $app->wg->Title;
 		if ( WikiaFileHelper::isTitleVideo( $title ) ) {
 			$file = $app->wf->FindFile( $title );
-			if( !$file->isLocal() ) {
+			if ( !$file->isLocal() ) {
+				if ( !$app->wg->User->isAllowed('videodelete') ) {
+					unset( $tabs['actions']['protect'] );
+					unset( $tabs['actions']['delete'] );
+				}
+
 				// Prevent move tab being shown.
 				unset( $tabs['actions']['move'] );
 			}
