@@ -23,7 +23,7 @@ class WAMApiController extends WikiaApiController {
 	 *                             major verticals (2,3,9 - Gaming, Entertainment, Lifestyle)
 	 * @requestParam integer $wiki_lang [OPTIONAL] Language code if narrowing the results to specific language. Defaults to null
 	 * @requestParam integer $wiki_id [OPTIONAL] Id of specific wiki to pull. Defaults to null
-	 * @requestParam string $wiki_word [OPTIONAL] Fragment of url or name to search for amongst wikis. Defaults to null
+	 * @requestParam string $wiki_word [OPTIONAL] Fragment of url to search for amongst wikis. Defaults to null
 	 * @requestParam boolean $fetch_admins [OPTIONAL] Determines if admins of each wiki are to be returned. Defaults to false
 	 * @requestParam integer $avatar_size [OPTIONAL] Size of admin avatars in pixels if fetch_admins is enabled
 	 * @requestParam boolean $fetch_wiki_images [OPTIONAL] Determines if image of each wiki isto be returned. Defaults to false
@@ -72,7 +72,9 @@ class WAMApiController extends WikiaApiController {
 					if (empty($wikiService)) {
 						$wikiService = new WikiService();
 					}
-					$images = $wikiService->getWikiImages(array_keys($wamIndex), $wikiImageSize);
+
+					$images = $wikiService->getWikiImages(array_keys($wamIndex['wam_index']), $wikiImageSize);
+
 					foreach ($wamIndex['wam_index'] as $wiki_id => &$wiki) {
 						$wiki['wiki_image'] = (!empty($images[$wiki_id])) ? $images[$wiki_id] : $this->wg->blankImgUrl;
 					}
