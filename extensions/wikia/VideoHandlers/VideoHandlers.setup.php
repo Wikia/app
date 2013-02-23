@@ -115,7 +115,8 @@ $app->registerHook( 'FileDeleteComplete', 'VideoInfoHooksHelper', 'onFileDeleteC
 $app->registerHook( 'FileUndeleteComplete', 'VideoInfoHooksHelper', 'onFileUndeleteComplete' );
 $app->registerHook( 'SpecialMovepageAfterMove', 'VideoInfoHooksHelper', 'onFileRenameComplete' );
 $app->registerHook( 'AddPremiumVideo', 'VideoInfoHooksHelper', 'onAddPremiumVideo' );
-$app->registerHook( 'RemovePremiumVideo', 'VideoInfoHooksHelper', 'onRemovePremiumVideo' );
+$app->registerHook( 'ArticleDeleteComplete', 'VideoInfoHooksHelper', 'onArticleDeleteComplete' );
+$app->registerHook( 'UndeleteComplete', 'VideoInfoHooksHelper', 'onUndeleteComplete' );
 
 if(!empty($wgVideoHandlersVideosMigrated)) {
 	$app->registerHook( 'ParserFirstCallInit', 'VideoHandlerHooks', 'initParserHook' );

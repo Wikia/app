@@ -79,6 +79,7 @@ class VideoInfo extends WikiaModel {
 	protected function updateDatabase( $updateValue ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
+		$affected = false;
 		if ( !$this->wf->ReadOnly() && !empty($this->videoTitle) ) {
 			$db = $this->wf->GetDB( DB_MASTER );
 
@@ -89,10 +90,16 @@ class VideoInfo extends WikiaModel {
 				__METHOD__
 			);
 
+			if ( $db->affectedRows() > 0 ) {
+				$affected = true;
+			}
+
 			$db->commit();
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
+
+		return $affected;
 	}
 
 	/**
@@ -101,7 +108,7 @@ class VideoInfo extends WikiaModel {
 	protected function addToDatabase() {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$affected = true;
+		$affected = false;
 		if ( !$this->wf->ReadOnly() ) {
 			$db = $this->wf->GetDB( DB_MASTER );
 
@@ -125,7 +132,9 @@ class VideoInfo extends WikiaModel {
 				'IGNORE'
 			);
 
-			$affected = (bool) $db->affectedRows();
+			if ( $db->affectedRows() > 0 ) {
+				$affected = true;
+			}
 
 			$db->commit();
 		}
@@ -295,7 +304,7 @@ SQL;
 			'featured' => $this->featured,
 		);
 
-		$this->updateDatabase( $data );
+		return $this->updateDatabase( $data );
 	}
 
 	public function renameVideo( $newVideoTitle ) {
@@ -303,7 +312,7 @@ SQL;
 			'video_title' => $newVideoTitle,
 		);
 
-		$this->updateDatabase( $data );
+		return $this->updateDatabase( $data );
 	}
 
 	public function restoreVideo() {
@@ -311,7 +320,7 @@ SQL;
 			'removed' => 0,
 		);
 
-		$this->updateDatabase( $data );
+		return $this->updateDatabase( $data );
 	}
 
 	public function removeVideo() {
@@ -319,7 +328,7 @@ SQL;
 			'removed' => 1,
 		);
 
-		$this->updateDatabase( $data );
+		return $this->updateDatabase( $data );
 	}
 
 	public function deleteVideo() {

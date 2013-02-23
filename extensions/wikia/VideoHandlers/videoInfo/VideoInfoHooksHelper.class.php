@@ -95,9 +95,7 @@ class VideoInfoHooksHelper {
 			$videoData = $videoInfoHelper->getVideoDataByTitle( $img['il_to'], true );
 			if ( !empty($videoData) ) {
 				$videoInfo = new VideoInfo( $videoData );
-				if ( $videoInfo->addPremiumVideo( $userId ) ) {
-					$affected = true;
-				}
+				$affected = $videoInfo->addPremiumVideo( $userId ) ) {
 			}
 		}
 
@@ -200,16 +198,20 @@ class VideoInfoHooksHelper {
 	}
 
 	/**
-	 * Hook: remove premium video and clear cache
-	 * @param Title $title
+	 * Hook: delete premium video and clear cache when the file page is deleted
+	 * @param WikiPage $wikiPage
+	 * @param User $user
+	 * @param string $reason
+	 * @param integer $pageId
 	 * @return true
 	 */
-	public static function onRemovePremiumVideo( $title ) {
+	public static function onArticleDeleteComplete( &$wikiPage, &$user, $reason, $pageId  ) {
 		if ( !VideoInfoHelper::videoInfoExists() ) {
 			return true;
 		}
 
-		if ( $title instanceof Title ) {
+		$title = $wikiPage->getTitle();
+		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
 			$videoInfoHelper = new VideoInfoHelper();
 			$videoData = $videoInfoHelper->getVideoDataByTitle( $title, true );
 			if ( !empty($videoData) ) {
@@ -226,4 +228,30 @@ class VideoInfoHooksHelper {
 
 		return true;
 	}
+
+	/**
+	 * Hook: restore premium video and clear cache when the file page is undeleted
+	 * @param Title $title
+	 * @param User $user
+	 * @param string $reason
+	 * @return true
+	 */
+	public static function onUndeleteComplete( &$title, &$user, $reason ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
+			return true;
+		}
+
+		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
+			$videoInfoHelper = new VideoInfoHelper();
+			$affected = $videoInfoHelper->restoreVideo( $title );
+			if ( $affected ) {
+				$mediaService = new MediaQueryService();
+				$mediaService->clearCacheTotalVideos();
+				$mediaService->clearCacheTotalPremiumVideos();
+			}
+		}
+
+		return true;
+	}
+
 }
