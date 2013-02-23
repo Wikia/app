@@ -93,7 +93,13 @@ var AdLogicPageLevelParams = function (log, window, document, /* optional */ Kru
 		var site,
 			zone1,
 			zone2,
-			params;
+			params,
+			customParams,
+			customParamsNumber,
+			customParam,
+			i,
+			key,
+			value;
 
 		if (window.wikiaPageIsHub) {
 			site = 'hub';
@@ -127,6 +133,18 @@ var AdLogicPageLevelParams = function (log, window, document, /* optional */ Kru
 		if (Krux) {
 			params.u = Krux.user;
 			params.ksgmnt = Krux.segments;
+		}
+
+		if (window.wgDartCustomKeyValues) {
+			customParams = window.wgDartCustomKeyValues.split(';');
+			customParamsNumber = customParams.length;
+			for (i = 0; i < customParamsNumber; i += 1) {
+				customParam = customParams[i].split('=');
+				key = customParam[0];
+				value = customParam[1];
+				params[key] = params[key] || [];
+				params[key].push(value);
+			}
 		}
 
 		log(params, 9, logGroup);
