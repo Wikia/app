@@ -10,7 +10,7 @@ describe('AdProviderEvolve', function(){
 	it('sanitizeSlotname', function() {
 		var trackerMock
 			, logMock = function() {}
-			, wikiaDartMock
+			, adLogicPageLevelParamsLegacyMock
 			, scriptWriterMock
 			, windowMock = {wgInsideUnitTest: true}
 			, documentMock
@@ -19,7 +19,7 @@ describe('AdProviderEvolve', function(){
 			, adProviderEvolve;
 
 		adProviderEvolve = AdProviderEvolve(
-			wikiaDartMock, scriptWriterMock, trackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+			adLogicPageLevelParamsLegacyMock, scriptWriterMock, trackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 		);
 
 		expect(adProviderEvolve.sanitizeSlotname('foo')).toBe('', 'foo');
@@ -30,7 +30,7 @@ describe('AdProviderEvolve', function(){
 	it('getUrl', function() {
 		var trackerMock
 			, logMock = function() {}
-			, wikiaDartMock = {
+			, adLogicPageLevelParamsLegacyMock = {
 				getDomainKV: function() {return 'dmn=mock;';},
 				getHostnamePrefix: function() {return 'hostpre=mock;';},
 				getCustomKeyValues: function() {return '';},
@@ -47,7 +47,7 @@ describe('AdProviderEvolve', function(){
 			;
 
 		adProviderEvolve = AdProviderEvolve(
-			wikiaDartMock, scriptWriterMock, trackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+			adLogicPageLevelParamsLegacyMock, scriptWriterMock, trackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 		);
 
 		windowMock.wgDBname = 'somedb';
@@ -74,7 +74,7 @@ describe('AdProviderEvolve', function(){
 	it('Evolve canHandleSlot AU', function() {
 		var trackerMock
 			, logMock = function() {}
-			, wikiaDartMock
+			, adLogicPageLevelParamsLegacyMock
 			, scriptWriterMock
 			, documentMock
 			, windowMock = {wgInsideUnitTest: true}
@@ -83,7 +83,7 @@ describe('AdProviderEvolve', function(){
 			, adProviderEvolve;
 
 		adProviderEvolve = AdProviderEvolve(
-			wikiaDartMock, scriptWriterMock, trackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+			adLogicPageLevelParamsLegacyMock, scriptWriterMock, trackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 		);
 
 		expect(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD'])).toBeTruthy('TOP_LEADERBOARD');
