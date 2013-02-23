@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Proposed Phing build file for MediaWiki app at Wikia --> 
+<!-- Primary purpose of this is to make a package -->
+
 <project name="Wikia App" default="assemble-timestamp" basedir=".">
-<tstamp>
-  <format property="WIKIA_TS" pattern="%Y%m%d%H%M%S"/>
-</tstamp>
+  <!-- Adds TS for standard Trunk Build -->
+  <tstamp>
+    <format property="WIKIA_TS" pattern="%Y%m%d%H%M%S"/>
+  </tstamp>
 
   <target name="assemble-timestamp">
     <phingcall target="assemble">
@@ -59,11 +63,11 @@
     </tar>
 
     <if>
-       <not>
-       <equals arg1="${release_option}" arg2="ts"/> 
-       </not>
+      <not>
+      <equals arg1="${release_option}" arg2="ts"/> 
+      </not>
       <then>
-      <gittag repository="." name="geoffp-${version.number}"/> 
+        <gittag repository="." name="geoffp-${version.number}"/> 
       </then>
     </if>
   </target>
