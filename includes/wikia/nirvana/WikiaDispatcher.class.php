@@ -73,7 +73,7 @@ class WikiaDispatcher {
 			throw new WikiaException( "wgAutoloadClasses is empty, cannot dispatch Request" );
 		}
 		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
-		$response = F::build( 'WikiaResponse', array( 'format' => $format, 'request' => $request ) );
+		$response = new WikiaResponse( $format, $request );
 		$controller = null;
 
 		// Main dispatch is a loop because Controllers can forward to each other
@@ -117,6 +117,7 @@ class WikiaDispatcher {
 				$profilename = __METHOD__ . " ({$controllerClassName}_{$method})";
 				$app->wf->profileIn($profilename);
 
+				// TODO: remove F::build here after removing client calls to addClassConstructor
 				$controller = F::build( $controllerClassName ); /* @var $controller WikiaController */
 
 				if ( $callNext ) {
@@ -224,7 +225,7 @@ class WikiaDispatcher {
 
 				// if we catch an exception, forward to the WikiaError controller unless we are already dispatching Error
 				if ( empty($controllerClassName) || $controllerClassName != 'WikiaErrorController' ) {
-					$controller = F::build("WikiaErrorController");
+					$controller = new WikiaErrorController();
 					$controller->forward('WikiaError', 'error', false);  // keep params for error controller
 					$response->getView()->setTemplatePath( null );  	// response is re-used so skip the original template
 				}
