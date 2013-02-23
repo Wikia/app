@@ -53,7 +53,7 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 
 		WikiaTracker.track({
 			eventName: 'liftium.slot2',
-			ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''),
+			ga_category: 'slot2/' + slotsize.split(',')[0],
 			ga_action: slotname,
 			ga_label: 'evolve',
 			trackingMethod: 'ad'
@@ -165,7 +165,7 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 
 		slotname = sanitizeSlotname(slotname);
 
-		var size = (slotMap[slotname].size || '0x0').replace(/,.*/, ''),
+		var size = (slotMap[slotname].size || '0x0').split(',')[0],
 			time = new Date().getTime() - slotTimer2[slotname];
 
 		log([slotname, size], 7, 'AdProviderEvolve');
