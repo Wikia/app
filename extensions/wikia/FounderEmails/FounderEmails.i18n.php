@@ -846,6 +846,17 @@ $messages['cs'] = array(
 	'founderemails-pref-edits-v2' => '... někdo editoval',
 );
 
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'founderemails-email-user-registered-signature' => 'Y Tîm Wikia',
+	'founderemails-email-first-edit-signature' => 'Y Tîm Wikia',
+	'founderemails-email-general-edit-signature' => 'Y Tîm Wikia',
+	'founderemails-email-anon-edit-signature' => 'Y Tîm Wikia',
+	'founderemails-email-lot-happening-greeting' => 'Helo $USERNAME,',
+);
+
 /** German (Deutsch)
  * @author Avatar
  * @author Claudia Hattitten
@@ -7325,8 +7336,10 @@ Bạn luôn luôn có thể ghé qua hoạt động của wiki để xem tất c
  * @author Hydra
  * @author Hzy980512
  * @author Sam Wang
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'founderemails-desc' => '帮助通知创始人有关在他们的wiki上的变更',
 	'founderemails-email-user-registered-subject' => '有新用户加入$WIKINAME',
 	'founderemails-email-user-registered-body' => '嗨！$USERNAME，
 祝贺！$EDITORNAME刚刚加入了$WIKINAME。

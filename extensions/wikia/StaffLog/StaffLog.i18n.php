@@ -502,7 +502,13 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'stafflog-filter-label' => '过滤器',
 	'stafflog-filter-user' => '用户：',
+	'stafflog-filter-type' => '类型：',
+	'stafflog-filter-apply' => '应用过滤器',
+	'stafflog-filter-type-renameuser' => '重命名用户',
+	'stafflog-filter-type-wikifactory' => 'Wiki状态',
 );

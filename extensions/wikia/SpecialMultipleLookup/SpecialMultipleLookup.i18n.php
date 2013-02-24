@@ -46,6 +46,7 @@ $messages['qqq'] = array(
 	'multilookupgo' => '{{Identical|Go}}',
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
+	'multilookupwiki' => '{{Identical|Wiki}}',
 	'right-multilookup' => '{{doc-right|multilookup|ns=Wikia}}',
 	'action-multilookup' => '{{doc-action|multilookup}}',
 );
@@ -200,6 +201,15 @@ $messages['cs'] = array(
 	'multilookupwikioptions' => 'Možnosti',
 	'multilookuplastedithdr' => 'Poslední editace',
 	'multilookuprecordspager' => 'Zobrazeny záznamy $1 až $2 ze $3 záznamů.',
+);
+
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'multilookupnext' => 'nesaf',
+	'multilookupprevious' => 'blaenorol',
+	'multilookupwiki' => 'Wici',
 );
 
 /** German (Deutsch)
@@ -1002,8 +1012,10 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'specialmultiplelookup-desc' => '在多个wiki上提供用户信息查阅',
 	'multilookupgo' => '去',
 	'multilookupnext' => '下一步',
 	'multilookupprevious' => '前一步',

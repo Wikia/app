@@ -44,11 +44,13 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Kflorence
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'categoryselect-desc' => '{{desc}}',
 	'categoryselect-button-add' => 'The text displayed for the add category button on article pages.',
-	'categoryselect-button-cancel' => 'The text displayed for the cancel button on article pages.',
+	'categoryselect-button-cancel' => 'The text displayed for the cancel button on article pages.
+{{Identical|Cancel}}',
 	'categoryselect-button-save' => 'The text displayed for the save button on article pages.',
 	'categoryselect-category-add' => 'The placeholder text displayed in the category input field when it is empty.',
 	'categoryselect-category-edit' => 'Title text for the edit icon and the heading for category edit modals.',
@@ -395,7 +397,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'categoryselect-desc' => "Fournit une interface permettant de gérer les catégories d'un article sans avoir à éditer tout l'article.",
+	'categoryselect-desc' => "Fournit une interface permettant de gérer les catégories d'un article sans avoir à modifier tout l'article.",
 	'categoryselect-button-add' => 'Ajouter des catégories',
 	'categoryselect-button-cancel' => 'Annuler',
 	'categoryselect-button-save' => 'Enregistrer',
@@ -407,11 +409,11 @@ $messages['fr'] = array(
 	'categoryselect-error-category-name-length' => 'La taille maximale pour un nom de catégorie a été atteinte.',
 	'categoryselect-error-db-locked' => 'La base de données est verrouillée.',
 	'categoryselect-error-duplicate-category-name' => 'La catégorie « $1 » existe déjà.',
-	'categoryselect-error-edit-abort' => 'Les modifications que vous avez essayées de faire ont été annulées par une extension rattachée.',
-	'categoryselect-error-empty-category-name' => 'Veuillez fournir un nom de catégorie.',
+	'categoryselect-error-edit-abort' => 'Les modifications que vous avez essayé d’effectuer on été annulées par un point d’extension.',
+	'categoryselect-error-empty-category-name' => 'Veuillez indiquer un nom de catégorie.',
 	'categoryselect-error-user-rights' => 'Vous n’avez pas les droits pour ajouter des catégories à cette page.',
-	'categoryselect-modal-category-name' => 'Fournissez le nom de la catégorie:',
-	'categoryselect-modal-category-sortkey' => 'De façon facultative, vous pouvez ranger alphabétiquement cet article dan s la page de catégorie "$1" sous le nom:',
+	'categoryselect-modal-category-name' => 'Indiquez le nom de la catégorie :',
+	'categoryselect-modal-category-sortkey' => 'Vous pouvez trier cet article par ordre alphabétique sur la page de la catégorie « $1 » sous le nom (facultatif) :',
 	'categoryselect-tooltip-add' => 'Appuyez sur la touche Entrée ou Retour une fois terminé.',
 	'tog-disablecategoryselect' => "Désactiver le module des catégories (valable uniquement si l'édition en mode visuel a été désactivée)",
 	'tog-disablecategoryselect-v2' => "Désactiver le module Catégorie (s'applique uniquement si le mode d'édition visuelle est désactivé)",
@@ -891,17 +893,24 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
+ * @author JM Pessanha
  * @author Jesielt
  * @author TheGabrielZaum
  * @author 555
  */
 $messages['pt-br'] = array(
 	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias de uma página sem que seja necessário editá-lo por inteiro',
+	'categoryselect-button-add' => 'Adicionar categoria',
 	'categoryselect-button-cancel' => 'Cancelar',
 	'categoryselect-button-save' => 'Salvar',
-	'categoryselect-category-edit' => 'Opções de categoria', # Fuzzy
+	'categoryselect-category-add' => 'Adicionar categoria...',
+	'categoryselect-category-edit' => 'Editar categoria',
+	'categoryselect-category-remove' => 'Remover categoria',
 	'categoryselect-edit-summary' => 'Adicionando categorias',
+	'categoryselect-error-article-doesnt-exist' => 'O artigo [id=$1] não existe.',
+	'categoryselect-error-category-name-length' => 'Atingiu-se o comprimento máximo para um nome de categoria.',
 	'categoryselect-error-db-locked' => 'O banco de dados está bloqueado.',
+	'categoryselect-error-duplicate-category-name' => 'A categoria "$1" já existe.',
 	'categoryselect-error-user-rights' => 'Erro nos direitos de usuário.', # Fuzzy
 	'tog-disablecategoryselect' => 'Desabilitar o módulo de categorias (apenas aplicado caso a edição em modo visual foi desabilitada)',
 	'tog-disablecategoryselect-v2' => 'Desativar o módulo de Categorias (aplicado apenas se o Modo Visual está desativado)',
@@ -940,12 +949,23 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'categoryselect-desc' => 'Предоставляет интерфейс для управления категориями в статье без редактирования всей статьи.',
+	'categoryselect-button-add' => 'Добавить категорию',
 	'categoryselect-button-cancel' => 'Отмена',
 	'categoryselect-button-save' => 'Сохранить',
-	'categoryselect-category-edit' => 'Настройки категории', # Fuzzy
+	'categoryselect-category-add' => 'Добавьте категорию...',
+	'categoryselect-category-edit' => 'Редактировании категории',
+	'categoryselect-category-remove' => 'Удалить категорию',
 	'categoryselect-edit-summary' => 'Добавление категорий',
+	'categoryselect-error-article-doesnt-exist' => 'Статья [id=$1] не существует.',
+	'categoryselect-error-category-name-length' => 'Была достигнута максимальная длина названия категории.',
 	'categoryselect-error-db-locked' => 'База данных заблокирована.',
-	'categoryselect-error-user-rights' => 'Ошибка прав участника.', # Fuzzy
+	'categoryselect-error-duplicate-category-name' => 'Категория "$1" уже добавлена.',
+	'categoryselect-error-edit-abort' => 'Правка, которую вы пытались сделать, была отменена расширением.',
+	'categoryselect-error-empty-category-name' => 'Пожалуйста, укажите название категории.',
+	'categoryselect-error-user-rights' => 'Вы не имеете прав на выполнение этого действия.',
+	'categoryselect-modal-category-name' => 'Укажите название категории:',
+	'categoryselect-modal-category-sortkey' => 'Не обязательно. Вы можете поместить эту статью в категории "$1" под названием:',
+	'categoryselect-tooltip-add' => 'Нажмите Enter или Отменить, когда закончите.',
 	'tog-disablecategoryselect' => 'Отключить модуль категорий (применяется только при отключенном редактировании в визуальном режиме)',
 	'tog-disablecategoryselect-v2' => 'Отключить модуль Категорий (активно только при редактировании в режиме Исходного кода)',
 );
@@ -1059,15 +1079,30 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Base
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
 	'categoryselect-desc' => 'Забезпечує інтерфейс для управління категоріями у статті без редагування всієї статті.',
+	'categoryselect-button-add' => 'Додати категорію',
 	'categoryselect-button-cancel' => 'Скасувати',
 	'categoryselect-button-save' => 'Зберегти',
-	'categoryselect-category-edit' => 'Параметри категорії', # Fuzzy
+	'categoryselect-category-add' => 'Додати категорію…',
+	'categoryselect-category-edit' => 'Редагувати категорію',
+	'categoryselect-category-remove' => 'Вилучити категорію',
 	'categoryselect-edit-summary' => 'Додавання категорій',
-	'categoryselect-error-user-rights' => 'Помилка прав користувача.', # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => 'Стаття [id=$1] не існує.',
+	'categoryselect-error-category-name-length' => 'Досягнуто максимальної довжини назви категорії.',
+	'categoryselect-error-db-locked' => 'Базу даних заблоковано.',
+	'categoryselect-error-duplicate-category-name' => 'Категорія «$1» вже існує.',
+	'categoryselect-error-edit-abort' => 'Зміна, яку Ви намагались учинити була відхилена хуком розширення.',
+	'categoryselect-error-empty-category-name' => 'Будь ласка, вкажіть назву категорії.',
+	'categoryselect-error-user-rights' => 'У вас немає прав для того, щоб здійснити цю дію.',
+	'categoryselect-modal-category-name' => 'Вкажіть назву категорії:',
+	'categoryselect-modal-category-sortkey' => 'За бажання, Ви можете відсортувати цю статтю за алфавітом у категорії «$1» під назвою:',
+	'categoryselect-tooltip-add' => 'Натисніть клавішу Enter або Return коли скінчите.',
+	'tog-disablecategoryselect' => 'Вимкнути модуль категорій (застосовується лише при вимкненому редагуванні у візуальному режимі)',
+	'tog-disablecategoryselect-v2' => 'Вимкнути модуль категорій (застосовується лише при вимкненому візуальному режимі)',
 );
 
 /** Urdu (اردو)
@@ -1116,8 +1151,10 @@ $messages['zh'] = array(
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'categoryselect-desc' => '提供一个接口，用以在不编辑整个条目的情况下管理条目中的分类',
 	'categoryselect-button-add' => '添加类别',
 	'categoryselect-button-cancel' => '取消',
 	'categoryselect-button-save' => '保存',
@@ -1125,10 +1162,17 @@ $messages['zh-hans'] = array(
 	'categoryselect-category-edit' => '编辑类别',
 	'categoryselect-category-remove' => '删除类别',
 	'categoryselect-edit-summary' => '添加分类',
+	'categoryselect-error-article-doesnt-exist' => '条目[id=$1]不存在。',
+	'categoryselect-error-category-name-length' => '一个分类名称已超过最大长度。',
 	'categoryselect-error-db-locked' => '数据库已锁定。',
+	'categoryselect-error-duplicate-category-name' => '分类：“$1”已存在。',
+	'categoryselect-error-edit-abort' => '您所尝试的修改被一个扩展钩子所取消。',
 	'categoryselect-error-empty-category-name' => '请输入分类名称。',
 	'categoryselect-error-user-rights' => '用户没有进行此操作的权限。',
 	'categoryselect-modal-category-name' => '提供类别的名称：',
+	'categoryselect-tooltip-add' => '完成后按Enter或Return键。',
+	'tog-disablecategoryselect' => '禁用分类模块（仅适用于如果编辑在可视模式下已被禁用）',
+	'tog-disablecategoryselect-v2' => '禁用分类模块（仅适用于如果可视模式已被禁用）',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

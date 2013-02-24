@@ -291,3 +291,11 @@ $messages['uk'] = array(
 	'interwikidispatcher' => 'Диспетчер інтервікі',
 	'interwikidispatcher-desc' => 'Виправлення інтервікі з метою зменшення посилань на перенаправлення',
 );
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Yfdyh000
+ */
+$messages['zh-hans'] = array(
+	'interwikidispatcher' => '跨wiki调度程序',
+	'interwikidispatcher-desc' => '解决跨wiki链接，以减少Apache重定向',
+);

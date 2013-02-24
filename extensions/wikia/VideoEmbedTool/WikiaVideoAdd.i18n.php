@@ -147,6 +147,13 @@ $messages['cs'] = array(
 	'wva-thumbnail-upload-failed' => 'Vložení videa selhalo, nelze získat odpovídající miniaturu',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'wva-name' => "Enw'r fideo:",
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author PtM
@@ -821,11 +828,20 @@ $messages['uk'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'wva-success' => '已成功添加视频页面[[:$1]]。',
+	'wva-success-replaced' => '已成功替换视频页面[[:$1]]。',
+	'wva-failure' => '请提供有效的参数。',
 	'wva-name' => '输入名字：',
 	'wva-url' => '输入URL：',
 	'wva-add' => '添加',
+	'wva-title' => '从URL快速添加视频',
+	'wva-notlogged' => '您需要登录或注册来插入视频。',
+	'wva-notallowed' => '您不能在此wiki插入视频。',
+	'wva-protected' => '此视频已被保护。',
+	'wva-thumbnail-upload-failed' => '视频嵌入失败，无法得到适合的缩略图',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

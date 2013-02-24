@@ -38,6 +38,7 @@ $1
  */
 $messages['qqq'] = array(
 	'lightbox-forum' => '{{Identical|Forum}}',
+	'lightbox-send' => '{{Identical|Send}}',
 	'lightbox-share-description' => 'Parameters:
 * $1 is the current page,
 * $2 is the site name.',
@@ -236,7 +237,7 @@ Alguien quería mostrarte una imagen en Wikia. Mírala:
 $1
 
 -El Equipo de Wikia',
-	'lightbox-share-button-email' => 'Email',
+	'lightbox-share-button-email' => 'Correo',
 	'lightbox-share-button-www' => 'Compartir',
 	'lightbox-share-button-embed' => 'Insertar',
 	'lightbox-share-email-label' => 'Enviar por correo electrónico esta imagen a un amigo',

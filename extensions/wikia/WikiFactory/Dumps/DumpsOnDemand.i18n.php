@@ -795,14 +795,20 @@ $messages['uk'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'dump-database' => '数据库转储',
+	'dump-database-info' => '数据库转储可以作为一个个人的备份（Wikia会对所有wiki自动生成单独的备份）或用于维护类机器人',
 	'dump-database-curr-pages' => '当前页面',
 	'dump-database-curr-pages-info' => '（此版本通常是最适合机器人使用）',
 	'dump-database-full-pages' => '当前和历史页面',
 	'dump-database-full-pages-info' => '（警告：此文件可能会很大）',
 	'dump-database-request' => '请求更新',
+	'dump-database-request-info' => '（转储通常每周生成）',
 	'dump-database-request-submit' => '发送请求',
+	'dump-database-request-already-submitted' => '转储最近已被要求（7天内）',
+	'dump-database-request-requested' => '发送数据库转储请求',
 	'dump-database-info-more' => '请<a href="http://community.wikia.com/wiki/Help:Database_download">查看</a>更多的信息',
 );
 

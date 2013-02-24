@@ -85,6 +85,7 @@ $messages['qqq'] = array(
 	'photopop-game-correct' => 'Message shown if user guesses image correct.',
 	'photopop-game-points' => 'Unit of measurement for score. The default EN version is "points", which is a noun.',
 	'photopop-game-total' => '{{Identical|Total}}',
+	'photopop-game-wiki' => '{{Identical|Wiki}}',
 	'photopop-game-date' => '{{Identical|Date}}',
 	'photopop-game-please-wait' => '{{Identical|Please wait}}',
 );

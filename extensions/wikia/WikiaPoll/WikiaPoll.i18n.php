@@ -28,6 +28,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'wikiapoll-desc' => '{{desc}}',
@@ -41,7 +42,8 @@ $messages['qqq'] = array(
 * $1 is the number of votes cast.',
 	'wikiapoll-createpoll-headline' => 'Headline for Create Poll Special Page',
 	'wikiapoll-editpoll-headline' => 'Headline for Edit Poll Special Page',
-	'wikiapoll-question-label' => 'Form Label for Special Page',
+	'wikiapoll-question-label' => 'Form Label for Special Page.
+{{Identical|Question}}',
 	'wikiapoll-addnewitem-label' => 'Special Page text next to button for a new item to a poll',
 	'wikiapoll-cancel-label' => 'Cancel button label',
 	'wikiapoll-publish-label' => 'Create/Edit Poll button label for confirming changes',
@@ -203,6 +205,14 @@ $messages['cs'] = array(
 	'wikiamobile-wikiapoll-thanks-voting' => 'Díky za hlasování!',
 	'wikiamobile-wikiapoll-poll' => 'Průzkum',
 	'wikiamobile-wikiapoll-user-voted' => 'Hlasoval jste pro $1',
+);
+
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Diolch!',
 );
 
 /** German (Deutsch)
@@ -431,6 +441,21 @@ $messages['it'] = array(
 	'wikiapoll-publish-label' => 'Pubblica',
 	'wikiapoll-error-duplicate' => 'Un sondaggio con quel nome esiste già.',
 	'wikiapoll-error-invalid-title' => 'Il testo della domanda non è valido.',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Spas!',
+	'wikiapoll-vote' => 'Dengê xwe bide!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote|$1 deng}}',
+	'wikiapoll-question-label' => 'Pirs',
+	'wikiapoll-cancel-label' => 'Betal bike',
+	'wikiamobile-wikiapoll-open-poll' => 'Tu çi difikirî?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Spas bo dengdanê!',
+	'wikiamobile-wikiapoll-user-voted' => 'Te dengê xwe bo "$1" da',
 );
 
 /** Latin (Latina)

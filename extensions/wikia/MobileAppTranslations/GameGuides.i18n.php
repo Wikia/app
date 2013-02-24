@@ -126,6 +126,14 @@ $messages['cs'] = array(
 	'error-no-connection' => 'Připojení k Internetu není k dispozici. \\nProsím, opakujte akci.',
 );
 
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'window-category-load-batch' => 'Mwy',
+	'alert-download-updated-wikis-button-ok' => 'Iawn',
+);
+
 /** German (Deutsch)
  * @author Inkowik
  * @author Kghbln
