@@ -221,6 +221,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-preview-hover-modify' => '{{Identical|Modify}}',
 	'wikiaPhotoGallery-preview-hover-delete' => '{{Identical|Delete}}',
 	'wikiaPhotoGallery-preview-add-link' => '{{Identical|Add link}}',
+	'wikiaPhotoGallery-preview-tab-layout' => '{{Identical|Layout}}',
 	'wikiaPhotoGallery-preview-position-left' => '{{Identical|Left}}',
 	'wikiaPhotoGallery-preview-position-center' => '{{Identical|Center}}',
 	'wikiaPhotoGallery-preview-position-right' => '{{Identical|Right}}',
@@ -242,6 +243,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-preview-captions-left' => '{{Identical|Left}}',
 	'wikiaPhotoGallery-preview-captions-center' => '{{Identical|Center}}',
 	'wikiaPhotoGallery-preview-captions-right' => '{{Identical|Right}}',
+	'wikiaPhotoGallery-slideshow-view-title' => '{{Identical|Slideshow}}',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => '{{Identical|Left}}',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => '{{Identical|Center}}',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => '{{Identical|Right}}',
@@ -1249,6 +1251,22 @@ Místo toho můžete kliknout na "$2" a zobrazit aktualizovanou stránku.',
 	'wikiaPhotoGallery-upload-image-size' => 'Velikost obrázku musí být 670 px na 360 px nebo více.',
 	'wikiaPhotoGallery-not-displayed' => 'Není zobrazeno',
 	'galery-slider-read-more' => 'Číst více >',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'wikiaPhotoGallery-upload-findtitle' => 'Canfod',
+	'wikiaPhotoGallery-upload-findbutton' => 'Canfod',
+	'wikiaPhotoGallery-upload-page-next' => 'Yr 8 nesaf',
+	'wikiaPhotoGallery-upload-page-prev' => 'Yr 8 blaenorol',
+	'wikiaPhotoGallery-preview-spacing-small' => 'Bach',
+	'wikiaPhotoGallery-preview-spacing-large' => 'Mawr',
+	'wikiaPhotoGallery-preview-captionsize-small' => 'Bach',
+	'wikiaPhotoGallery-preview-captionsize-large' => 'Mawr',
+	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'y dudalen hon',
 );
 
 /** German (Deutsch)
@@ -5145,7 +5163,7 @@ $messages['ru'] = array(
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Перейти на (вставьте название страницы или URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Детали изображения.',
 	'wikiaPhotoGallery-search-tooltip' => 'Поиск фотографий на этой вики',
-	'wikiaPhotoGallery-upload-image-size' => 'Изображения должны быть 670 пикселей на 360 пикселей или больше.', # Fuzzy
+	'wikiaPhotoGallery-upload-image-size' => 'Изображения должны быть 670 пикселей на 360 пикселей или больше.',
 	'wikiaPhotoGallery-not-displayed' => 'Не отображается',
 	'galery-slider-read-more' => 'Читать подробнее >',
 );
@@ -6136,9 +6154,11 @@ $messages['yi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author Yfdyh000
  * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
+	'wikiaphotogallery-desc' => '提供一个界面以供在页面中管理画廊和幻灯片',
 	'wikiaPhotoGallery-back' => '返回',
 	'wikiaPhotoGallery-finish' => '完成',
 	'wikiaPhotoGallery-edit-summary' => '编辑图库',

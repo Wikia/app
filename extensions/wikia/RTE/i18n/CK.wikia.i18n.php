@@ -147,8 +147,10 @@ $messages['qqq'] = array(
 	'rte-ck-link-status-external' => '{{Identical|External link}}',
 	'rte-ck-media-delete' => '{{Identical|Remove}}',
 	'rte-ck-media-edit' => '{{Identical|Modify}}',
+	'rte-ck-modeSwitch-toSource' => '{{Identical|Source}}',
 	'rte-ck-modeSwitch-toWysiwyg' => 'A type of editor that makes code easier to read/edit and easy for new editors.',
 	'rte-ck-photoGallery-gallery' => '{{Identical|Gallery}}',
+	'rte-ck-photoGallery-slideshow' => '{{Identical|Slideshow}}',
 	'rte-ck-photoGallery-tooltipSlider' => 'Tooltip for the slider placeholder in the editor.',
 	'rte-ck-signature-label' => '{{Identical|Signature}}',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'See [[mw:Help:Magic words]] for the term.',
@@ -678,6 +680,16 @@ $messages['cs'] = array(
 	'rte-ck-format-tag_h3' => 'Nadpis 3',
 	'rte-ck-format-tag_h4' => 'Nadpis 4',
 	'rte-ck-format-tag_h5' => 'Nadpis 5',
+);
+
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'rte-ck-hoverPreview-delete' => 'dileu',
+	'rte-ck-hoverPreview-edit' => 'golygu',
+	'rte-ck-image-photo' => 'Ffoto',
+	'rte-ck-video-video' => 'Fideo',
 );
 
 /** German (Deutsch)
@@ -1754,12 +1766,14 @@ $messages['ku-latn'] = array(
 	'rte-ck-link-external-linkText' => 'Nivîsa lînkê',
 	'rte-ck-link-external-tab' => 'Lînka derve',
 	'rte-ck-link-external-url' => 'URL',
+	'rte-ck-link-internal-pageName' => 'Navê rûpelê',
 	'rte-ck-link-internal-tab' => 'Lînka hundir',
 	'rte-ck-link-status-exists' => 'Rûpel heye',
 	'rte-ck-link-status-notexists' => 'Rûpel tune ye',
 	'rte-ck-link-status-external' => 'Lînka derve',
 	'rte-ck-signature-label' => 'Îmze',
 	'rte-ck-templateDropDown-label' => 'Şablon',
+	'rte-ck-templateEditor-editor-parameters' => 'Parametre',
 	'rte-ck-templateEditor-editor-previewButton' => 'Pêşdîtin',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Pêşdîtin',
 );

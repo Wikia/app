@@ -838,6 +838,9 @@ $messages['cy'] = array(
 Ewch yn ôl a cheisio eto, os gwelwch yn dda.',
 	'userrenametool-error-same-user' => "Ni ellir ail-enwi defnyddiwr gyda'r un enw ag o'r blaen.",
 	'userrenametool-success' => 'Mae\'r defnyddiwr "<nowiki>$1</nowiki>" wedi cael ei ail-enwi i "<nowiki>$2</nowiki>"',
+	'userrenametool-confirm-intro' => 'Ydy chi wir am wneud hyn?',
+	'userrenametool-confirm-yes' => 'Ydw',
+	'userrenametool-confirm-no' => 'Nacydw',
 	'userrenametool-page-exists' => "Mae'r dudalen $1 ar gael yn barod ac ni ellir ei throsysgrifo.",
 	'userrenametool-page-moved' => 'Symudwyd $1 i $2.',
 	'userrenametool-page-unmoved' => 'Ni lwyddwyd i symud y dudalen $1 i $2.',
@@ -4433,6 +4436,7 @@ $messages['yue'] = array(
  * @author Dimension
  * @author Gzdavidwong
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'userrenametool' => '更改一个用户的名称',
@@ -4443,8 +4447,11 @@ $messages['zh-hans'] = array(
 	'userrenametool-reason' => '重命名的原因:',
 	'userrenametool-move' => '移动用户页及其对话页（包括各子页）到新的名字',
 	'userrenametool-reserve' => '封禁旧用户名，使之不能在日后使用',
+	'userrenametool-notify-renamed' => '完成时发邮件给被重命名的用户',
 	'userrenametool-warnings' => '警告:',
 	'userrenametool-requested-rename' => '用户$1要求重命名',
+	'userrenametool-did-not-request-rename' => '用户 $1 没有要求重命名',
+	'userrenametool-previously-renamed' => '用户 $1 已经要求了重命名',
 	'userrenametool-confirm' => '是，为用户重命名',
 	'userrenametool-submit' => '提交',
 	'userrenametool-errordoesnotexist' => '用户"<nowiki>$1</nowiki>"不存在',
@@ -4453,9 +4460,13 @@ $messages['zh-hans'] = array(
 	'userrenametool-errorinvalidnew' => '"<nowiki>$1</nowiki>"不是一个有效的新用户名。',
 	'userrenametool-errortoomany' => '用户"<nowiki>$1</nowiki>"贡献了$2次，重命名一个超过$3次的用户会影响站点性能',
 	'userrenametool-errorprocessing' => '用户<nowiki>$1</nowiki>重命名至<nowiki>$2</nowiki>过程已在进行中。',
+	'userrenametool-errorlocked' => '用户 <nowiki>$1</nowiki> 已被封禁。',
+	'userrenametool-errorbot' => '用户 <nowiki>$1</nowiki> 是一个机器人。',
 	'userrenametool-error-request' => '在收到请求时出现问题。
 请回去重试。',
 	'userrenametool-error-same-user' => '您不可以更改一位用户是跟之前的东西一样。',
+	'userrenametool-error-extension-abort' => '一个扩展阻碍了重命名进程。',
+	'userrenametool-error-cannot-rename-account' => '在共享的全局数据库重命名用户失败。',
 	'userrenametool-success' => '用户"<nowiki>$1</nowiki>"已经更名为"<nowiki>$2</nowiki>"',
 	'userrenametool-confirm-intro' => '你真的想这样做呢？',
 	'userrenametool-confirm-yes' => '是',
@@ -4463,6 +4474,9 @@ $messages['zh-hans'] = array(
 	'userrenametool-page-exists' => '$1这一页己经存在，不能自动覆写。',
 	'userrenametool-page-moved' => '$1这一页已经移动到$2。',
 	'userrenametool-page-unmoved' => '$1这一页不能移动到$2。',
+	'userrenametool-finished-email-subject' => '重命名用户 [$1] 的进程已完成',
+	'userrenametool-finished-email-body-text' => '移动“<nowiki>$1</nowiki>”至“<nowiki>$2</nowiki>”已完成。',
+	'userrenametool-finished-email-body-html' => '移动“<nowiki>$1</nowiki>”至“<nowiki>$2</nowiki>”的进程已完成。',
 	'userrenametool-logpage' => '用户名变更日志',
 	'userrenametool-logpagetext' => '这是用户名更改的日志',
 	'userrenametool-logentry' => '已经把 $1 重命名为 "$2"',

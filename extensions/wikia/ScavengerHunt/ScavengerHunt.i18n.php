@@ -309,6 +309,14 @@ $messages['cs'] = array(
 	'scavengerhunt-label-clue-size' => 'Velikost písma',
 );
 
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'scavengerhunt-list-edit' => 'golygu',
+	'scavengerhunt-label-name' => 'Enw:',
+);
+
 /** German (Deutsch)
  * @author George Animal
  * @author LWChris

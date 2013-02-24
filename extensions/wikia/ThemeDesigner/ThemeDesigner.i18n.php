@@ -67,7 +67,8 @@ $messages['en'] = array(
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'themedesigner-or' => '"or", as in, either Text Wordmark *or* Graphic Wordmark',
+	'themedesigner-or' => '"or", as in, either Text Wordmark *or* Graphic Wordmark.
+{{Identical|Or}}',
 	'themedesigner-desc' => '{{desc}}',
 	'themedesigner-page' => '{{Identical|Page}}',
 	'themedesigner-color' => '{{Identical|Color}}',
@@ -396,6 +397,15 @@ $messages['cs'] = array(
 	'themedesigner-unknown-error' => 'Nastala neidentifikovaná chyba, prosím opakujte akci.',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Náhled',
+);
+
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'themedesigner-small' => 'Bach',
+	'themedesigner-large' => 'Mawr',
+	'themedesigner-button-ok' => 'Iawn',
 );
 
 /** German (Deutsch)
@@ -1997,26 +2007,40 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Sam Wang
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'themedesigner-or' => '或',
+	'themedesigner-desc' => '允许wiki管理员为wiki设计一个主题',
+	'themedesigner-title' => 'Wikia主题设计器',
 	'themedesigner-background' => '背景',
 	'themedesigner-page' => '页面',
 	'themedesigner-color' => '颜色',
 	'themedesigner-graphic' => '图案',
 	'themedesigner-buttons' => '按钮',
 	'themedesigner-links' => '链接',
+	'themedesigner-header' => '页眉',
+	'themedesigner-text-wordmark' => '文字标志',
+	'themedesigner-graphic-wordmark' => '图形标志',
 	'themedesigner-small' => '小',
 	'themedesigner-medium' => '中',
 	'themedesigner-large' => '大',
+	'themedesigner-tile-background' => '瓦片',
+	'themedesigner-transparency' => '透明度',
+	'themedesigner-tab-theme' => '主题',
 	'themedesigner-tab-customize' => '自定义',
+	'themedesigner-tab-wordmark' => '标志',
 	'themedesigner-preview-mode' => '预览模式',
+	'themedesigner-previous-versions' => '以前的版本',
 	'themedesigner-button-save-im-done' => '保存，我做好了',
 	'themedesigner-button-cancel' => '取消',
 	'themedesigner-pick-a-color' => '选一个颜色',
+	'themedesigner-enter-your-own' => '输入您自己的',
+	'themedesigner-color-name-or-hex-code' => '颜色名称或十六进制代码',
 	'themedesigner-button-ok' => '好',
 	'themedesigner-pick-an-image' => '选择图片',
 	'themedesigner-dont-use-a-background' => '不用背景',
+	'themedesigner-upload-your-own' => '上载您自己的',
 	'themedesigner-button-upload' => '上载',
 	'themedesigner-button-upload-wordmark' => '上传',
 	'themedesigner-rules-background' => 'jpg，gif或png。{{PLURAL:$1|$1 kilobyte|$1 kilobytes}}限制',
@@ -2025,6 +2049,18 @@ $messages['zh-hans'] = array(
 	'themedesigner-size' => '大小',
 	'themedesigner-button-save' => '保存',
 	'themedesigner-upload-a-graphic' => '上传图案',
+	'themedesigner-rules-wordmark' => '上传一个250x65像素或更小的.png文件。',
+	'themedesigner-rules-favicon' => '上传一个16x16像素的.ico文件。Favicon就是出现在浏览器窗口/标签页左上角的小图标。',
+	'themedesigner-rules-favicon-learn-more-link' => '了解更多。',
+	'themedesigner-dont-use-a-graphic' => '移除',
+	'themedesigner-button-change-text' => '更改文本',
+	'themedesigner-reason' => '主题设计器 - 保存完成由 $1',
+	'themedesigner-size-error' => '不正确的文件尺寸',
+	'themedesigner-dimensions-error' => '图像超过了尺寸限制',
+	'themedesigner-type-error' => '不正确的文件类型',
+	'themedesigner-unknown-error' => '发生了错误，不幸的是我们无法识别它，请再试一次',
+	'themedesigner-manual-upload-error' => '使用主题设计器来上传标志或wiki背景图',
+	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => '预览',
 );
 

@@ -421,6 +421,18 @@ $messages['pt-br'] = array(
 	'imgplc-notinhistory-video' => 'Você não pode adicionar um vídeo no modo história.',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'imgplc-add-image' => "Aggiunge 'n'immaggine",
+	'imgplc-add-video' => "Aggiunge 'nu video",
+	'imgplc-placeholder' => 'Sione',
+	'imgplc-image' => 'Immaggine',
+	'imgplc-notinhistory' => "Non ge puè aggiungere 'n'immaggine jndr'à 'u mode de cunde.",
+	'imgplc-notinhistory-video' => "Non ge puè aggiungere 'nu video jndr'à 'u mode de cunde.",
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Александр Сигачёв

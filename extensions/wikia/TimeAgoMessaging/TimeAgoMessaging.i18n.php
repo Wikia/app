@@ -560,8 +560,10 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'timeagomessaging-desc' => '为jquery.timeago.js插件提供国际化(i18n)',
 	'timeago-year' => '{{PLURAL:$1|1年|$1年}}前',
 	'timeago-month' => '{{PLURAL:$1|1月|$1月}}前',
 	'timeago-day' => '$1天前',

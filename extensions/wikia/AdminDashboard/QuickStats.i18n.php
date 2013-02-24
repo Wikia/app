@@ -205,6 +205,24 @@ $messages['cs'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'quickstats-header-label' => 'Ystadegau Chwim',
+	'quickstats-header-date' => 'Dyddiad',
+	'quickstats-header-views' => 'Golygon',
+	'quickstats-header-edits' => 'Newidiadau',
+	'quickstats-header-photos' => 'Lluniau',
+	'quickstats-header-likes' => 'Hoffau',
+	'quickstats-totals-label' => 'Cyfanswm',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Amlygu mwy ystadegau]]',
+	'quickstats-number-shortening' => '$1,000',
+	'quickstats-number-shortening-millions' => '$1 miliwn',
+	'quickstats-number-shortening-billions' => '$1 biliwn',
+);
+
 /** Danish (dansk)
  * @author Christian List
  * @author Sarrus
@@ -415,6 +433,25 @@ $messages['he'] = array(
 	'quickstats-number-shortening' => '$1 אלפים',
 	'quickstats-number-shortening-millions' => '$1 מיליונים',
 	'quickstats-number-shortening-billions' => '$1 מיליארדים',
+);
+
+/** Hindi (हिन्दी)
+ * @author Kush rohra
+ */
+$messages['hi'] = array(
+	'quickstats-header-label' => 'त्वरित आँकड़े',
+	'quickstats-header-date' => 'तिथि',
+	'quickstats-header-views' => '	
+	
+दृष्टिकोण',
+	'quickstats-header-edits' => 'संपादन',
+	'quickstats-header-photos' => 'तस्वीरें',
+	'quickstats-header-likes' => 'हित',
+	'quickstats-totals-label' => 'योग',
+	'quickstats-see-more-stats-link' => '[[विशिष्ट:विकीआँकड़े|देखना अधिक आँकड़े]]', # Fuzzy
+	'quickstats-number-shortening' => '$1के',
+	'quickstats-number-shortening-millions' => '$1मिलियन',
+	'quickstats-number-shortening-billions' => '$1बिलियन',
 );
 
 /** Hungarian (magyar)

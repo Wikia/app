@@ -750,8 +750,11 @@ $messages['uk'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'cloakcheck' => 'IRC斗篷资格检查',
+	'cloakcheck-desc' => '提供一个全功能于一身的接口用以验证IRC斗篷的资格',
 	'cloakcheck-form-username' => '用户名：',
 	'cloakcheck-form-check' => '检查用户名',
 	'cloakcheck-form-check-self' => '检查 IRC 斗篷资格',

@@ -330,8 +330,10 @@ $messages['uk'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'sharedhelp-desc' => '将[[w:c:Help|Wikia帮助]]带来并嵌入到此wiki的{{ns:help}}命名空间',
 	'sharedhelp-autotalkcreate-summary' => '讨论页已自动创建',
 	'sharedhelp-searchprofile' => '帮助页面',
 	'sharedhelp-searchprofile-tooltip' => '搜索帮助页面',
