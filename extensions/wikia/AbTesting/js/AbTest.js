@@ -21,11 +21,10 @@
 		serverTime = new Date( serverTimeString ).getTime() / 1000;
 
 	// Function to log different things (could not use Wikia.Log because it may not be available yet)
-	var log = function( methodName, message ) {
-		var log = window.console && window.console.log;
+	var log = (function( console ) {
 
 		// Internal logging, becomes a no-op if window.console isn't present
-		if ( log ) {
+		return console ? function( methodName, message ) {
 			if ( !message ) {
 				message = methodName;
 				methodName = undefined;
@@ -34,10 +33,10 @@
 			// Don't display duplicate messages (BugId:96400)
 			if ( !logCache[ message ] ) {
 				logCache[ message ] = true;
-				window.console.log( 'Wikia.AbTest' + ( methodName ? '.' + methodName + '()' : '' ) + ':', message );
+				console.log.call( console, 'Wikia.AbTest' + ( methodName ? '.' + methodName + '()' : '' ) + ':', message );
 			}
-		}
-	};
+		} : function() {};
+	})( window.console );
 
 	/* --------------------------- */
 	/* AbTest class implementation */
