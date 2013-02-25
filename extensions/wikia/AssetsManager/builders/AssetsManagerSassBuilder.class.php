@@ -24,7 +24,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$this->mOid = preg_replace( '/^[\/]+/', '', $this->mOid );
 
 		if ( !file_exists( "{$IP}/{$this->mOid}" ) ) {
-			throw new Exception("File {$IP}/{$this->mOid} does not exist!");
+			throw new Exception("File {$this->mOid} does not exist!");
 		}
 		$this->mContentType = AssetsManager::TYPE_CSS;
 	}
