@@ -65,8 +65,8 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 
 			setTimeout(function(){
 				lazyload(modalWrapper.querySelectorAll('.prev .img'), true);
-			}, 100);
-		}, 100);
+			}, 200);
+		}, 200);
 	}
 
 	function goBackToImgModal(img){
