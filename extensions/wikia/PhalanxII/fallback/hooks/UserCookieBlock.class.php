@@ -10,7 +10,7 @@
  */
 
 class UserCookieBlock extends UserBlock {
-	const TYPE = Phalanx::TYPE_COOKIE;
+	const TYPE = PhalanxFallback::TYPE_COOKIE;
 	const CACHE_KEY = 'user-cookie-status';
 
 	/**
@@ -50,7 +50,7 @@ class UserCookieBlock extends UserBlock {
 		$tracker = F::build( 'AccountCreationTracker' ); /** @var $tracker AccountCreationTracker */
 		$hashes = $tracker->getHashesByUser( $user );
 
-		$blocksData = Phalanx::getFromFilter( self::TYPE );
+		$blocksData = PhalanxFallback::getFromFilter( self::TYPE );
 
 		if ( !empty( $blocksData ) && !empty( $hashes ) ) {
 			foreach ( $hashes as $hash ) {

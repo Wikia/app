@@ -65,7 +65,8 @@ $phalanxhooks = array(
 			'SpecialMovepageBeforeMove'            => 'beforeMove',
 			'EditFilter'                           => 'editFilter',
 			'CreateDefaultQuestionPageFilter'      => 'checkTitle',
-			'CreatePageTitleCheck'                 => 'checkTitle'
+			'CreatePageTitleCheck'                 => 'checkTitle',
+			'TopListCheckTitle'                    => 'checkTitle',
 		),
 	'PhalanxAnswersBlock' =>
 		array(

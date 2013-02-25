@@ -12,11 +12,11 @@ class WikiCreationBlock {
 		wfProfileIn( __METHOD__ );
 
 		$text = trim($text);
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_WIKI_CREATION );
+		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_WIKI_CREATION );
 
 		if ( !empty($blocksData) && !empty($text) ) {
 			$blockData = null;
-			$result = Phalanx::findBlocked( $text, $blocksData, true, $blockData );
+			$result = PhalanxFallback::findBlocked( $text, $blocksData, true, $blockData );
 			if ( $result['blocked'] ) {
 				wfProfileOut( __METHOD__ );
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");

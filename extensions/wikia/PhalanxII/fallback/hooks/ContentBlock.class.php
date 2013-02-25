@@ -22,13 +22,13 @@ class ContentBlock {
 		}
 
 		// here we get only the phrases for blocking in summaries...
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_SUMMARY );
+		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_SUMMARY );
 		$summary = $editpage->summary;
 		if ( !empty($blocksData) && $summary != '' ) {
 			$summary = self::applyWhitelist($summary);
 
 			$blockData = null;
-			$result = Phalanx::findBlocked($summary, $blocksData, true, $blockData);
+			$result = PhalanxFallback::findBlocked($summary, $blocksData, true, $blockData);
 			if ( $result['blocked'] ) {
 
 				$wgOut->setPageTitle( wfMsg( 'spamprotectiontitle' ) );
@@ -48,13 +48,13 @@ class ContentBlock {
 			}
 		}
 
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_CONTENT );
+		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_CONTENT );
 		$textbox = $editpage->textbox1;
 		if ( !empty($blocksData) && $textbox != '' ) {
 			$textbox = self::applyWhitelist($textbox);
 
 			$blockData = null;
-			$result = Phalanx::findBlocked($textbox, $blocksData, true, $blockData);
+			$result = PhalanxFallback::findBlocked($textbox, $blocksData, true, $blockData);
 			if ( $result['blocked'] ) {
 				$editpage->spamPageWithContent( $result['msg'] );
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$textbox'.");
@@ -79,12 +79,12 @@ class ContentBlock {
 		wfProfileIn( __METHOD__ );
 
 		$reason = $wgRequest->getText( 'wpReason' );
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_SUMMARY );
+		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_SUMMARY );
 		if ( !empty($blocksData) && $reason != '' ) {
 			$reason = self::applyWhitelist($reason);
 
 			$blockData = null;
-			$result = Phalanx::findBlocked($reason, $blocksData, true, $blockData);
+			$result = PhalanxFallback::findBlocked($reason, $blocksData, true, $blockData);
 			if ( $result['blocked'] ) {
 				$error .= wfMsgExt( 'phalanx-title-move-summary', 'parseinline' );
 				$error .= wfMsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$result['msg']}</nowiki>" );
@@ -108,12 +108,12 @@ class ContentBlock {
 	static public function genericContentCheck( $content ) {
 		wfProfileIn( __METHOD__ );
 
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_CONTENT );
+		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_CONTENT );
 		if ( !empty($blocksData) && $content != '' ) {
 			$content = self::applyWhitelist($content);
 
 			$blockData = null;
-			$result = Phalanx::findBlocked($content, $blocksData, true, $blockData);
+			$result = PhalanxFallback::findBlocked($content, $blocksData, true, $blockData);
 			if ( $result['blocked'] ) {
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$content'.");
 				wfProfileOut( __METHOD__ );

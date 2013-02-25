@@ -86,14 +86,14 @@ class TitleBlock {
 		wfProfileIn( __METHOD__ );
 
 		if (is_null(self::$blocksData)) {
-			self::$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_TITLE );
+			self::$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_TITLE );
 		}
 		$fullText = $title->getFullText();
 		$result = array('blocked' => false);
 
 		if ( !empty(self::$blocksData) ) {
 			$blockData = null;
-			$result = Phalanx::findBlocked( $fullText, self::$blocksData, true, $blockData );
+			$result = PhalanxFallback::findBlocked( $fullText, self::$blocksData, true, $blockData );
 			if ( $result['blocked'] ) {
 				self::spamPage( $result['msg'], $title );
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$fullText'.");
