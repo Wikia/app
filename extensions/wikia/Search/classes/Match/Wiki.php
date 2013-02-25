@@ -3,14 +3,14 @@
  * Class definition for \Wikia\Search\Match\Wiki
  */
 namespace Wikia\Search\Match;
-use \WikiaSearchResult as Result;
+use \Wikia\Search\Result as Result;
 use \WikiaHomePageHelper as HomePageHelper;
 
 class Wiki extends AbstractMatch
 {
 	/**
 	 * @see \Wikia\Search\Match\AbstractMatch::createResult()
-	 * @return \WikiaSearchResult;
+	 * @return \Wikia\Search\Result;
 	 */
 	public function createResult()
 	{
@@ -18,9 +18,9 @@ class Wiki extends AbstractMatch
 	}
 	
 	/**
-	 * Extracts promo data and turns it into a WikiaSearchResult
+	 * Extracts promo data and turns it into a Wikia\Search\Result
 	 * Returns null if no promo data
-	 * @return \WikiaSearchResult|NULL
+	 * @return \Wikia\Search\Result|NULL
 	 */
 	public function getResultFromPromoData() {
 		$fields = array();
@@ -47,7 +47,7 @@ class Wiki extends AbstractMatch
 	
 	/**
 	 * Uses MediaWikiInterface to access necessary data from main page as a result.
-	 * @return \WikiaSearchResult
+	 * @return \Wikia\Search\Result
 	 */
 	public function getResultFromMainPage() {
 		

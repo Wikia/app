@@ -34,7 +34,14 @@ class GroupingSet extends Grouping
 		$fieldGroup = $this->getHostGrouping();
 		$metaposition = 0;
 		foreach ($fieldGroup->getValueGroups() as $valueGroup) {
-			$resultSet = Factory::getInstance()->get( $this->searchResultObject, $this->searchConfig, $this, $metaposition++ );
+			$dependencies = array(
+					'result' => $this->searchResultObject, 
+					'config' => $this->searchConfig, 
+					'parent' => $this, 
+					'metaposition' => $metaposition++
+					);
+			;
+			$resultSet = Factory::getInstance()->get( new DependencyContainer( $dependencies ) );
 			$this->results[$resultSet->getHeader('cityUrl')] = $resultSet;
 		}
 		return $this;
