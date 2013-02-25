@@ -11,22 +11,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected $wikiaSearch;
 
 	/**
-	 * Responsible for building data used in indexing
-	 * @var WikiaSearchIndexer
-	 */
-	protected $wikiaSearchIndexer;
-
-	/**
 	 * Handles dependency-building and special page routing before calling controller actions
 	 */
 	public function __construct() {
         // note: this is required since we haven't constructed $this->wg yet
 		global $wgWikiaSearchIsDefault;
-		// Solarium_Client dependency handled in class constructor call in WikiaSearch.setup.php
-		$this->wikiaSearch			= F::build('WikiaSearch');
-		$this->wikiaSearchIndexer	= F::build('WikiaSearchIndexer');
-		$specialPageName 			= $wgWikiaSearchIsDefault ? 'Search' : 'WikiaSearch';
-
+		$specialPageName = $wgWikiaSearchIsDefault ? 'Search' : 'WikiaSearch';
 		parent::__construct( $specialPageName, $specialPageName, false );
 	}
 
@@ -69,7 +59,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if($this->isCorporateWiki()) {
 			OasisController::addBodyClass('inter-wiki-search');
 		}
-
+		
 		if( $searchConfig->getQueryNoQuotes( true ) ) {
 			$dcParams = array(
 					'config' => $searchConfig,
@@ -158,39 +148,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $this->setVal( 'label',		$label );
 	    $this->setVal( 'tooltip',	$tooltip );
 	}
-
-	/**
-	 * Service-level actions -- no view templates, just JSON responses.
-	 *---------------------------------------------------------------------------------*/
-
-	/**
-	 * Used during indexing to retrieve data for a single page in JSON format.
-	 */
-	public function getPage() {
-	    $pageId = $this->getVal( 'id' );
-
-	    if( !empty( $pageId ) ) {
-	        $page = $this->wikiaSearchIndexer->getPage( $pageId );
-
-	        $this->response->setData( $page );
-	    }
-
-	    // force output format as there's no template file (BugId:18831)
-	    $this->getResponse()->setFormat( 'json' );
-	}
-
-	/**
-	 * Used during indexing to retrieve multiple pages in JSON format.
-	 */
-	public function getPages() {
-	    $this->wg->AllowMemcacheWrites = false;
-	    $ids = $this->getVal('ids');
-	    if ( !empty( $ids ) ) {
-	        $this->response->setData( $this->wikiaSearchIndexer->getPages( explode( '|', $ids ) ) );
-	    }
-	    $this->getResponse()->setFormat('json');
-	}
-
+	
 	/**
 	 * Delivers a JSON response for video searches
 	 */
@@ -428,25 +386,5 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'rank', 				$config->getRank() );
 		$this->setVal( 'by_category', 		$this->getVal('by_category', false) );
 
-	}
-
-	/**
-	 * Controller-level Hooks
-	 */
-
-	/**
-	 * WikiaMobile hook to add assets so they are minified and concatenated
-	 * @see    WikiaSearchControllerTest::testOnWikiaMobileAssetsPackages
-	 * @param  array $jsHeadPackages
-	 * @param  array $jsBodyPackages
-	 * @param  array $scssPackages
-	 * @return boolean
-	 */
-	public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
-		if( F::app()->wg->Title->isSpecial('Search') ) {
-			$jsBodyPackages[] = 'wikiasearch_js_wikiamobile';
-			$scssPackages[] = 'wikiasearch_scss_wikiamobile';
-		}
-		return true;
 	}
 }

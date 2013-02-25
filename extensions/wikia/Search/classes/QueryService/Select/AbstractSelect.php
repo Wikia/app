@@ -88,6 +88,7 @@ abstract class AbstractSelect
 	 * @return Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	public function search() {
+		$this->getMatch();
 		$this->prepareRequest()
 		     ->prepareResponse( $this->sendSearchRequestToClient() )
 		;

@@ -78,10 +78,6 @@ class SearchApiController extends WikiaApiController {
 			$container = new DependencyContainer( array( 'config' => $searchConfig ) );
 			$wikiaSearch = Factory::getInstance()->get( $container );
 
-			//if some articles match the query lets display it
-			//this has to run before doSearch runs
-			$wikiaSearch->getArticleMatch( $searchConfig );
-
 			$resultSet = $wikiaSearch->search( $searchConfig );
 			$total = $searchConfig->getResultsFound();
 
