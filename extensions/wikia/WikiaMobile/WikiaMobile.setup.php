@@ -126,9 +126,11 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'_gaq',
 			'wgEnableKruxTargeting',
 			'wgKruxCategoryId',
+			'cscoreCat',
 
 			//ads
 			'wgDartCustomKeyValues',
+			'cityShort',
 
 			//server/wiki
 			'wgServer',
