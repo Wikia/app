@@ -1,14 +1,10 @@
 <?php
 
+use Wikia\Search\QueryService;
+
 class WikiaSearchAjaxController extends WikiaController {
 
     const RESULTS_PER_PAGE = 25;
-
-    protected $wikiaSearch = null;
-
-    public function __construct() {
-        $this->wikiaSearch = F::build('WikiaSearch');
-    }
 
     public function getNextResults(){
         $this->wf->ProfileIn(__METHOD__);
@@ -39,9 +35,8 @@ class WikiaSearchAjaxController extends WikiaController {
 			'query'			=>	$query,
 		);
 
-        $searchConfig = F::build( 'WikiaSearchConfig', array( $params ) );
-
-        $results = $this->wikiaSearch->doSearch( $searchConfig );
+        $container = new QueryService\DependencyContainer( array( 'config' => new Wikia\Search\Config( $params ) ) );
+        $results = QueryService\Factory::getInstance()->get( $container )->search();
 
         $text = $this->app->getView('WikiaSearch', 'WikiaMobileResultList', array(
                 'currentPage'=> $page,
