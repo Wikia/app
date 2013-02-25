@@ -28,7 +28,7 @@ class FieldExpression
 	 * Allows us to express a negated field.
 	 * @var bool
 	 */
-	protected $negated;
+	protected $negate;
 	
 	/**
 	 * Allows us to express a value for a field.
@@ -53,7 +53,7 @@ class FieldExpression
 	}
 	
 	protected function getNegationString() {
-		return $this->negated ? '-' : '';
+		return $this->negate ? '-' : '';
 	}
 	
 	protected function getBoostString() {
@@ -74,8 +74,8 @@ class FieldExpression
 		return $this;
 	}
 	
-	public function setNegated( $negated ) {
-		$this->negated = $negated;
+	public function setNegate( $negate ) {
+		$this->negate = $negate;
 		return $this;
 	}
 	
