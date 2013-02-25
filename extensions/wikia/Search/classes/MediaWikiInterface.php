@@ -507,7 +507,7 @@ class MediaWikiInterface
 	 * Provided a string, uses MediaWiki's ability to find article matches to instantiate a Wikia Search Article Match.
 	 * @param string $term
 	 * @param array $namespaces
-	 * @return \WikiaSearchArticleMatch|NULL
+	 * @return \Wikia\Search\Match\Article|NULL
 	 */
 	public function getArticleMatchForTermAndNamespaces( $term, array $namespaces ) {
 		$searchEngine = new \SearchEngine();
@@ -515,7 +515,7 @@ class MediaWikiInterface
 		if( ( $title !== null ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
 			// initialize our memoized data
 			$this->getPageFromPageId( $title->getArticleId() );
-			$articleMatch = new \WikiaSearchArticleMatch( $title->getArticleId() );
+			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this );
 			return $articleMatch;
 		}
 		return null;
@@ -534,7 +534,7 @@ class MediaWikiInterface
 				array( 'city_domain' => "{$domain}.wikia.com" )
 				);
 		if ( $row = $dbr->fetchObject( $query ) ) {
-			return new \Wikia\Search\Match\Wiki( $row->city_id );
+			return new \Wikia\Search\Match\Wiki( $row->city_id, $this );
 		}
 		return null;
 	}

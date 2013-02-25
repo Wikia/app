@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\Match\Article
  */
 namespace Wikia\Search\Match;
-use \WikiaSearchResult as Result;
+use \Wikia\Search\Result as Result;
 
 class Article extends AbstractMatch
 {
@@ -35,4 +35,11 @@ class Article extends AbstractMatch
 		return $result;
 	}
 	
+	/**
+	 * Says whether we found a redirect during construct
+	 * @return boolean
+	 */
+	public function hasRedirect() {
+		return $this->interface->getCanonicalPageIdFromPageId( $this->id ) !== $this->id;
+	}
 }

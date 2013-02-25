@@ -25,6 +25,11 @@ class Factory
 		return self::$instance;
 	}
 	
+	/**
+	 * Inspects dependency container and returns appropriate QueryService\Select instance.
+	 * @param DependencyContainer $container
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
+	 */
 	public function get( DependencyContainer $container ) {
 		$config = $container->getConfig();
 		$this->validateClient( $container );
@@ -38,6 +43,10 @@ class Factory
 		return new Select\OnWiki( $container );
 	}
 	
+	/**
+	 * If an instance of Solarium_Client has not been created yet, create it.
+	 * @param DependencyContainer $container
+	 */
 	protected function validateClient( DependencyContainer $container ) {
 		$interface = MediaWikiInterface::getInstance();
 		$client = $container->getClient();
@@ -45,12 +54,13 @@ class Factory
 			$solariumConfig = array(
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
-							'host'    => ( $this->wg->SolrHost ?: 'localhost'),
-							'port'    => ( $this->wg->SolrPort ?: 8180 ),'path'    => '/solr/',
+							'host'    => ( $interface->getGlobalWithDefault( 'SolrHost', 'localhost' ) ),
+							'port'    => $interface->getGlobalWithDefault( 'SolrPort', 8180 ),
+							'path'    => '/solr/',
 							)
 					);
 			if ( $interface->getGlobal( 'WikiaSearchUseProxy' ) && $interface->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
-				$solariumConfig['adapteroptions']['proxy'] = $this->interface->getGlobal( 'SolrProxy' );
+				$solariumConfig['adapteroptions']['proxy'] = $interface->getGlobal( 'SolrProxy' );
 				$solariumConfig['adapteroptions']['port'] = null;
 			}
 			$container->setClient( new Solarium_Client( $solariumConfig ) );
