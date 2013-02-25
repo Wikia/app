@@ -21,6 +21,10 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 		//remove slashes at the beginning of the string, we need a pure relative path to open the file
 		$this->mOid = preg_replace( '/^[\/]+/', '', $this->mOid );
+
+		if ( !file_exists( $this->mOid ) ) {
+			throw new Exception("File {$this->mOid} does not exist!");
+		}
 		$this->mContentType = AssetsManager::TYPE_CSS;
 	}
 
@@ -32,7 +36,6 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		if ( $this->mForceProfile ) {
 			$processingTimeStart = microtime( true );
 		}
-
 		$hash = wfAssetManagerGetSASShash( $this->mOid );
 		$paramsHash = md5( urldecode( http_build_query( $this->mParams, '', ' ' ) ) );
 		$cacheId = "/Sass-{$paramsHash}-{$hash}-" . self::CACHE_VERSION;
