@@ -125,6 +125,11 @@ return array(
 		'dependencies' => 'amd'
 	),
 
+	'wikia.stringhelper' => array(
+		'scripts' => 'resources/wikia/modules/stringhelper.js',
+		'dependencies' => 'amd',
+	),
+
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
 	// this used to be static file located in /skins/common/jquery/jquery-ui-1.8.14.custom.js
 	'wikia.jquery.ui' => array(
