@@ -146,9 +146,17 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 	function updateDots(){
 		var curr;
 
-		if(curr = pagination.getElementsByClassName('curr')[0]) {curr.className = 'dot';}
-		d.getElementById('dot'+ current).className += ' curr';
-		paginationStyle.webkitTransform = 'translate3d(' + Math.min(Math.max((~~(dotsPerWidth/2) - current) * 18, (-paginationWidth+width)), 0) + 'px,0,0)';
+		//find current and remove curr class
+		if(curr = pagination.getElementsByClassName('curr')[0]) {
+			curr.className = 'dot'
+		}
+
+		//find dot that should be current now mark it as current and scroll to it
+		if(curr = d.getElementById('dot'+ current)) {
+			curr.className += ' curr';
+			paginationStyle.webkitTransform = 'translate3d(' + Math.min(Math.max((~~(dotsPerWidth/2) - current) * 18, (-paginationWidth+width)), 0) + 'px,0,0)';
+		}
+
 	}
 
 	function open(){
