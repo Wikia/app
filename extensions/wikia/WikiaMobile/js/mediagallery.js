@@ -206,6 +206,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 		});
 
 		loadImages();
+		updateDots();
 
 		track.event('gallery', track.CLICK, {label: 'open'});
 	}
