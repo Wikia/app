@@ -16,18 +16,26 @@
 	var AbTest,
 		Wikia = window.Wikia = (window.Wikia || {}),
 		config = Wikia.AbTestConfig || {},
+		logCache = {},
 		serverTimeString = window.varnishTime,
 		serverTime = new Date( serverTimeString ).getTime() / 1000;
 
 	// Function to log different things (could not use Wikia.Log because it may not be available yet)
 	var log = function( methodName, message ) {
+		var log = window.console && window.console.log;
+
 		// Internal logging, becomes a no-op if window.console isn't present
-		if ( window.console && window.console.log ) {
+		if ( log ) {
 			if ( !message ) {
+				message = methodName;
 				methodName = undefined;
-				message = arguments[0];
 			}
-			window.console.log( 'Wikia.AbTest' + ( methodName ? '.' + methodName + '()' : '' ) + ':', message );
+
+			// Don't display duplicate messages (BugId:96400)
+			if ( !logCache[ message ] ) {
+				logCache[ message ] = true;
+				window.console.log( 'Wikia.AbTest' + ( methodName ? '.' + methodName + '()' : '' ) + ':', message );
+			}
 		}
 	};
 
