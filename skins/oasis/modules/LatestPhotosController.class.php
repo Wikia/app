@@ -193,7 +193,7 @@ class LatestPhotosController extends WikiaController {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
-		$cacheKey = wfMemcKey( __METHOD__, $name );
+		$cacheKey = wfMemcKey( __METHOD__, md5($name) );
 		$data = $wgMemc->get( $cacheKey );
 		if( !is_array($data) ) {
 			// The ORDER BY ensures we get NS_MAIN pages first
