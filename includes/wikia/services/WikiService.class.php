@@ -1,7 +1,7 @@
 <?php
 
 class WikiService extends WikiaModel {
-
+	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	static $botGroups = array('bot', 'bot-global');
 
 	/**
@@ -14,7 +14,7 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return array of $userIds
 	 */
-	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false ) {
+	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$userIds = array();
@@ -27,12 +27,12 @@ class WikiService extends WikiaModel {
 
 				// get admin and bureaucrat
 				if ( empty($this->wg->EnableAnswers) ) {
-					$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots );
+					$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots, $limit );
 
 					$adminIds = WikiaDataAccess::cache(
 						$memKey,
 						60 * 60 * 3,
-						function() use ($wiki, $useMaster, $excludeBots) {
+						function() use ($wiki, $useMaster, $excludeBots, $limit) {
 							$dbname = $wiki->city_dbname;
 							$dbType = ( $useMaster ) ? DB_MASTER : DB_SLAVE;
 							$db = $this->wf->GetDB( $dbType, array(), $dbname );
@@ -49,7 +49,8 @@ class WikiService extends WikiaModel {
 								'user_groups',
 								'distinct ug_user',
 								array ("ug_group in ('sysop','bureaucrat')"),
-								__METHOD__
+								__METHOD__,
+								(!empty($limit))?(array('LIMIT' => $limit)):array()
 							);
 
 							$adminIds = array();
@@ -77,11 +78,12 @@ class WikiService extends WikiaModel {
 	 *
 	 * @param integer $wikiId
 	 * @param bool    $excludeBots
+	 * @param integer $limit
 	 *
 	 * @return string memcache key
 	 */
-	public function getMemKeyAdminIds( $wikiId, $excludeBots = false ) {
-		return $this->wf->SharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots );
+	public function getMemKeyAdminIds( $wikiId, $excludeBots, $limit ) {
+		return $this->wf->SharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots, $limit );
 	}
 
 	/**
@@ -101,7 +103,7 @@ class WikiService extends WikiaModel {
 				$db = $this->wf->GetDB( DB_SLAVE, array(), $dbname );
 
 				$row = $db->selectRow(
-					array( 'image' ), 
+					array( 'image' ),
 					array( 'count(*) cnt' ),
 					array( 'img_media_type' => 'VIDEO' ),
 					__METHOD__
@@ -145,8 +147,8 @@ class WikiService extends WikiaModel {
 			if ( !empty($dbname) ) {
 				$db = $this->wf->GetDB( DB_SLAVE, 'vslow', $dbname );
 
-				$row = $db->selectRow( 
-					array( 'site_stats' ), 
+				$row = $db->selectRow(
+					array( 'site_stats' ),
 					array( '*' ),
 					array(),
 					__METHOD__
@@ -266,6 +268,96 @@ class WikiService extends WikiaModel {
 		$this->wf->ProfileOut( __METHOD__ );
 
 		return $totalImages;
+	}
+
+	/**
+	 * Get user info ( user name, avatar url, user page url ) on given wiki
+	 * if the user has avatar
+	 * @param integer $userId
+	 * @param integer $wikiId
+	 * @param integer $avatarSize
+	 * @param callable $checkUserCallback
+	 * @return array userInfo
+	 *
+	 */
+	public function getUserInfo($userId, $wikiId, $avatarSize, $checkUserCallback) {
+		$userInfo = array();
+		$user = F::build('User', array($userId), 'newFromId');
+
+		if ($user instanceof User && $checkUserCallback($user)) {
+			$username = $user->getName();
+
+			$userInfo['avatarUrl'] = F::build('AvatarService', array($user, $avatarSize), 'getAvatarUrl');
+			$userInfo['edits'] = 0;
+			$userInfo['name'] = $username;
+			/** @var $userProfileTitle GlobalTitle */
+			$userProfileTitle = F::build('GlobalTitle', array($username, NS_USER, $wikiId), 'newFromTextCached');
+			$userInfo['userPageUrl'] = ($userProfileTitle instanceof Title) ? $userProfileTitle->getFullURL() : '#';
+			$userContributionsTitle = F::build('GlobalTitle', array('Contributions/' . $username, NS_SPECIAL, $wikiId), 'newFromTextCached');
+			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
+
+			$userStatsService = F::build('UserStatsService', array($userId));
+			$stats = $userStatsService->getGlobalStats($wikiId);
+
+			if(!empty($stats['date'])) {
+				$date = getdate(strtotime($stats['date']));
+			} else {
+				$date = getdate(strtotime('2005-06-01'));
+			}
+
+			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
+		}
+
+		return $userInfo;
+	}
+
+	/**
+	 * @param array $wikiIds
+	 * @param int $imageWidth
+	 * @return mixed|null|string
+	 */
+	public function getWikiImages($wikiIds, $imageWidth) {
+		$images = array();
+		try {
+			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+			$tables = array('city_visualization');
+			$fields = array('city_id', 'city_main_image');
+			$conds = array('city_id' => $wikiIds);
+			$results = $db->select($tables, $fields, $conds, __METHOD__, array(), array());
+
+			while($row = $results->fetchObject()) {
+				$images[$row->city_id] = $this->wg->blankImgUrl;
+				$title = Title::newFromText($row->city_main_image, NS_FILE);
+				$file = $this->wf->findFile($title);
+				if (!empty($file)) {
+					$images[$row->city_id] = $file->createThumb($imageWidth);
+				}
+			}
+		} catch(Exception $e) {
+			// for devbox machines
+		}
+		return $images;
+	}
+
+	public function getWikiAdmins ($wikiId, $avatarSize, $limit = null) {
+		return WikiaDataAccess::cacheWithLock(
+			$this->wf->sharedMemcKey('get_wiki_admins', $wikiId, $avatarSize, $limit),
+			3 * 60 * 60,
+			function () use ($wikiId, $avatarSize, $limit) {
+				$admins = array();
+				try {
+					$admins = $this->getWikiAdminIds($wikiId, false, true, $limit);
+					$checkUserCallback = function ($user) { return true; };
+					foreach ($admins as &$admin) {
+						$userInfo = $this->getUserInfo($admin, $wikiId, $avatarSize, $checkUserCallback);
+						$admin = $userInfo;
+					}
+				} catch (Exception $e) {
+					// for devboxes
+				}
+				return $admins;
+			}
+		);
 	}
 
 	protected function getMemcKeyTotalImages( $wikiId ) {

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * DataMart Services
+ * DataMart Service
  */
 class DataMartService extends Service {
 
@@ -590,43 +590,6 @@ class DataMartService extends Service {
 	}
 
 	/**
-	 * Returns the latest WAM score provided a wiki ID
-	 * @param int $wikiId
-	 * @return number
-	 */
-	public static function getCurrentWamScoreForWiki ($wikiId) {
-		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
-
-		$memKey = $app->wf->SharedMemcKey('datamart', 'wam', $wikiId);
-
-		$getData = function () use ($app, $wikiId) {
-			$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-
-			$result = $db->select(
-				array('fact_wam_scores'),
-				array(
-					'wam'
-				),
-				array(
-					'wiki_id' => $wikiId
-				),
-				__METHOD__,
-				array(
-					'ORDER BY' => 'time_id DESC',
-					'LIMIT' => 1
-				)
-			);
-
-			return ($row = $db->fetchObject($result)) ? $row->wam : 0;
-		};
-
-		$wamScore = WikiaDataAccess::cacheWithLock($memKey, 86400 /* 24 hours */, $getData);
-		$app->wf->ProfileOut(__METHOD__);
-		return $wamScore;
-	}
-
-	/**
 	 * Gets the list of top wikis for tag_id and language on a monthly pageviews basis
 	 *
 	 * @param integer $tagId A valid tag_id from city_tag_map table
@@ -738,7 +701,7 @@ class DataMartService extends Service {
 		}
 
 		$categoryViews = WikiaDataAccess::cache(
-			$app->wf->SharedMemcKey('datamar2t', 'categories_top_wikis', $categoryId, $periodId, $startDate, $endDate, $langCode, $limit),
+			$app->wf->SharedMemcKey('datamart', 'categories_top_wikis', $categoryId, $periodId, $startDate, $endDate, $langCode, $limit),
 			12 * 60 * 60,
 			function () use ($app, $categoryId, $startDate, $endDate, $langCode, $periodId, $limit) {
 				$categoryViews = array();
