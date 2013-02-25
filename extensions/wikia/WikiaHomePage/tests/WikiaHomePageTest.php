@@ -363,22 +363,28 @@ TXT;
 	/**
 	 * @dataProvider getWikiAdminAvatarsDataProvider
 	 */
-	public function testGetWikiAdminAvatars($mockWikiId, $mockWikiServiceParam, $mockUserParam, $mockAvatarServiceParam, $expAdminAvatars) {
+	public function testGetWikiAdminAvatars($mockWikiId, $mockWikiServiceParam, $mockUserStatsServiceParam, $mockUserParam, $mockAvatarServiceParam, $expAdminAvatars) {
 		// setup
 		$globalVarParams = array('wgServer' => self::TEST_URL);
 		$this->setUpGlobalVariables($globalVarParams);
 
 		$this->setUpMockObject('WikiService', $mockWikiServiceParam, true);
+		$this->setUpMockObject('UserStatsService', $mockUserStatsServiceParam, true);
 		$this->setUpMockObject('User', $mockUserParam, true);
 		$this->setUpMockObject('AvatarService', $mockAvatarServiceParam, true);
 
-		$mockUserStatsService = $this->getMock('UserStatsService', array('getStats'), array(1));
+		$mockUserStatsService = $this->getMock('UserStatsService', array('getStats','getEditCountWiki'), array(1));
 		$mockUserStatsService->expects($this->any())->method('getStats')
 			->will($this->returnValue(
-			array(
-				'edits' => !empty($mockWikiServiceParam['getUserEdits']) ? $mockWikiServiceParam['getUserEdits'] : 0,
-				'date' => 0,
-				'likes' => 20 + rand(0, 50))
+				array(
+					'edits' => !empty($mockUserStatsServiceParam['getEditCountWiki']) ? $mockUserStatsServiceParam['getEditCountWiki'] : 0,
+					'date' => 0,
+					'likes' => 20 + rand(0, 50))
+			)
+		);
+		$mockUserStatsService->expects($this->any())->method('getEditCountWiki')
+			->will($this->returnValue(
+				(!empty($mockUserStatsServiceParam['getEditCountWiki']) ? $mockUserStatsServiceParam['getEditCountWiki'] : 0)
 			)
 		);
 		$this->mockClass('UserStatsService',$mockUserStatsService);
@@ -409,6 +415,7 @@ TXT;
 		// 1 - wikiId = 0
 		$mockWikiId1 = 0;
 		$mockWikiServiceParam1 = null;
+		$mockUserStatsServiceParam1 = null;
 		$mockUserParam1 = null;
 		$mockAvatarServiceParam1 = null;
 		$expAdminAvatars1 = array();
@@ -418,22 +425,38 @@ TXT;
 		$mockWikiServiceParam2 = array(
 			'getWikiAdminIds' => array(),
 		);
+		$mockUserStatsServiceParam2 = array(
+			'getWikiAdminIds' => array(),
+			'getEditCountWiki' => rand(0,100),
+			'params' => rand(0,100000),//user_id
+		);
 
 		// 3 - user not found
 		$mockWikiServiceParam3 = array(
 			'getWikiAdminIds' => array('123'),
 		);
+		$mockUserStatsServiceParam3 = array(
+			'getEditCountWiki' => rand(0,100),
+			'params' => rand(0,100000),//user_id
+		);
 		$mockUserParam3 = false;
 
 		// 4 - don't have avatar
+		$mockUserStatsServiceParam4 = array(
+			'getEditCountWiki' => rand(0,100),
+			'params' => rand(0,100000),//user_id
+		);
 		$mockUserParam4 = array(
 			'newFromId' => null,
 		);
 
 		// 5 - admins have avatar < LIMIT_ADMIN_AVATARS + user edits = 0
 		$mockWikiServiceParam5 = array(
-			'getWikiAdminIds' => array('123'),
-			'getUserEdits' => 0,
+			'getWikiAdminIds' => array('123')
+		);
+		$mockUserStatsServiceParam5 = array(
+			'getEditCountWiki' => 0,
+			'params' => rand(0,100000),//user_id
 		);
 		$mockUserParam5 = array(
 			'newFromId' => null,
@@ -456,7 +479,10 @@ TXT;
 		// 6 - admins have avatar == LIMIT_ADMIN_AVATARS + user edits != 0
 		$mockWikiServiceParam6 = array(
 			'getWikiAdminIds' => array('1', '2', '3'),
-			'getUserEdits' => 5,
+		);
+		$mockUserStatsServiceParam6 = array(
+			'getEditCountWiki' => 5,
+			'params' => '5338185',
 		);
 		$expAdminAvatars6 = array(
 			array(
@@ -472,7 +498,10 @@ TXT;
 		// 7 - admins have avatar > LIMIT_ADMIN_AVATARS + user edits != 0
 		$mockWikiServiceParam7 = array(
 			'getWikiAdminIds' => array('1', '2', '3', '4', '5', '6'),
-			'getUserEdits' => 5,
+		);
+		$mockUserStatsServiceParam7 = array(
+			'getEditCountWiki' => 5,
+			'params' => '5338185',
 		);
 		$expAdminAvatars7 = array(
 			array(
@@ -487,19 +516,19 @@ TXT;
 
 		return array(
 			// 1 - wikiId = 0
-			array($mockWikiId1, $mockWikiServiceParam1, $mockUserParam1, $mockAvatarServiceParam1, $expAdminAvatars1),
+			array($mockWikiId1, $mockWikiServiceParam1, $mockUserStatsServiceParam1, $mockUserParam1, $mockAvatarServiceParam1, $expAdminAvatars1),
 			// 2 - no admins
-			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam1, $mockAvatarServiceParam1, $expAdminAvatars1),
+			array($mockWikiId2, $mockWikiServiceParam2, $mockUserStatsServiceParam2, $mockUserParam1, $mockAvatarServiceParam1, $expAdminAvatars1),
 			// 3 - user not found
-			array($mockWikiId2, $mockWikiServiceParam3, $mockUserParam3, $mockAvatarServiceParam1, $expAdminAvatars1),
+			array($mockWikiId2, $mockWikiServiceParam3, $mockUserStatsServiceParam3, $mockUserParam3, $mockAvatarServiceParam1, $expAdminAvatars1),
 			// 4 - don't have avatar
-			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam4, $mockAvatarServiceParam1, $expAdminAvatars1),
+			array($mockWikiId2, $mockWikiServiceParam2, $mockUserStatsServiceParam2, $mockUserParam4, $mockAvatarServiceParam1, $expAdminAvatars1),
 			// 5 - admins have avatar < LIMIT_ADMIN_AVATARS + user edits = 0
-			array($mockWikiId2, $mockWikiServiceParam5, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars5),
+			array($mockWikiId2, $mockWikiServiceParam5, $mockUserStatsServiceParam5, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars5),
 			// 6 - admins have avatar = LIMIT_ADMIN_AVATARS + user edits != 0
-			array($mockWikiId2, $mockWikiServiceParam6, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars6),
+			array($mockWikiId2, $mockWikiServiceParam6, $mockUserStatsServiceParam6, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars6),
 			// 7 - admins have avatar > LIMIT_ADMIN_AVATARS + user edits != 0
-			array($mockWikiId2, $mockWikiServiceParam7, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars7),
+			array($mockWikiId2, $mockWikiServiceParam7, $mockUserStatsServiceParam7, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars7),
 		);
 	}
 
