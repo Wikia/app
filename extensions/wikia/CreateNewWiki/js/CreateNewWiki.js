@@ -11,7 +11,7 @@ var WikiBuilder = {
 	retryGoto: 0,
 	nameAjax: false,
 	domainAjax: false,
-	init: function() {
+	init: function(stringHelper) {
 		// pre-cache
 		this.wb = $('#CreateNewWiki');
 		this.steps = $('#CreateNewWiki .steps .step');
@@ -95,7 +95,7 @@ var WikiBuilder = {
 			that.nameAjax = true;
 			that.checkNextButtonStep1();
 			var name = $(this).val();
-			name = $.trim(name.latinize().replace(/[^a-zA-Z0-9 ]+/g, '')).replace(/ +/g, '-');
+			name = $.trim(stringHelper.latinise(name).replace(/[^a-zA-Z0-9 ]+/g, '')).replace(/ +/g, '-');
 			that.wikiDomain.val(name.toLowerCase()).trigger('keyup');
 			if(that.wntimer) {
 				clearTimeout(that.wntimer);
@@ -478,7 +478,11 @@ function sendToConnectOnLogin() {
 
 $(function() {
 	wgAjaxPath = wgScriptPath + wgScript;
-	WikiBuilder.init();
+
+	mw.loader.use('wikia.stringhelper')
+		.done(function(){
+			require(['wikia.stringhelper'], function(stringHelper) { WikiBuilder.init(stringHelper);});
+		});
 	$('#AjaxLoginButtons').hide();
 	$('#AjaxLoginLoginForm').show();
 
