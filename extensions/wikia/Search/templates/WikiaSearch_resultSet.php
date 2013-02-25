@@ -21,14 +21,14 @@
 				<li>Max Score: <?=sprintf('%.3f',  $resultSet->totalScore)?></li>
 			<?php endif;?>
 		</ul>
-		<?php for($i = 1; $i < 5; $i++): ?>
-			<?php $result = $resultSet->next(); ?>
-			<?php if($result instanceof WikiaSearchResult): ?>
+		<?php $i = 0; ?>
+		<?php foreach ( $resultSet as $result ): ?>
+			<?php if ( $result instanceof Wikia\Search\Result || $i++ < 5 ): ?>
 				<div class="grouped-result <?php if($i%2): ?>new-row<?php endif; ?>">
 					<?= $app->getView( 'WikiaSearch', 'result', array( 'result' => $result, 'gpos' => $pos, 'pos' => $i, 'debug' => $debug, 'query' => $query, 'inGroup' => true, 'isInterWiki' => $isInterWiki, 'relevancyFunctionId' => $relevancyFunctionId )); ?>
 				</div>
 			<?php else: break; endif; ?>
-		<?php endfor; ?>
+		<?php endforeach; ?>
 	</li>
 <?php elseif ($nextResult = $resultSet->next()): ?>
 	<?= $app->getView( 'WikiaSearch', 'result', array( 'result' => $nextResult, 'gpos' => 0, 'pos' => $pos, 'debug' => $debug, 'query' => $query, 'rank' =>  $resultSet->getHeader('cityRank'), 'isInterWiki'=> true, 'relevancyFunctionId' => $relevancyFunctionId )); ?>
