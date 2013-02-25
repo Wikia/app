@@ -3,9 +3,7 @@
  * Class definition for Wikia\Search\ResultSet\Grouping
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\MediaWikiInterface;
-use \Solarium_Result_Select;
-use \WikiaSearchConfig;
+use \Wikia\Search\MediaWikiInterface, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config;
 /**
  * This class handles sub-groupings of results for inter-wiki search.
  * @author relwell
@@ -35,6 +33,7 @@ class Grouping extends Base
 		$this->interface          = $container->getInterface();
 		$this->parent             = $container->getParent();
 		$this->metaposition       = $container->getMetaposition();
+		$this->results            = new ArrayIterator( array() );
 		
 		$valueGroups = $this->getHostGrouping()->getValueGroups();
 		$valueGroup  = $valueGroups[$this->metaposition];

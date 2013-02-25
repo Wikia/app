@@ -113,7 +113,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * @return array
 	 */
 	public function getResults() {
-		$this->results = $this->results instanceof ArrayIterator ? $this->results : new ArrayIterator( array() ); 
+		$this->results = $this->results instanceof ArrayIterator ? $this->results : new ArrayIterator( $this->results ); 
 		return $this->results; 
 	}
 	
@@ -176,7 +176,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * @return void true if the offset exists, otherwise false
 	 */
 	public function offsetExists( $index ) {
-	    return $this->getResults()->offsetExists( $index );
+	    return $this->results->offsetExists( $index );
 	}
 
 	/**
@@ -188,7 +188,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * @return mixed The value at offset index.
 	 */
 	public function offsetGet( $index ) {
-	    return $this->getResults()->offsetGet( $index );
+	    return $this->results->offsetGet( $index );
 	}
 
 	/**
@@ -203,7 +203,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * @return void 
 	 */
 	public function offsetSet( $index, $newval ) {
-	    return $this->getResults()->offsetSet( $index, $newval );
+	    return $this->results->offsetSet( $index, $newval );
 	}
 
 	/**
@@ -215,7 +215,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * @return void 
 	 */
 	public function offsetUnset( $index ) {
-	    return $this->getResults()->offsetUnset( $index );
+	    return $this->results->offsetUnset( $index );
 	}
 
 	/**
@@ -227,7 +227,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * @return void 
 	 */
 	public function append( $value ) {
-	    return $this->getResults()->append( $value );
+	    return $this->results->append( $value );
 	}
 
 	/**
@@ -235,8 +235,8 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * @link http://www.php.net/manual/en/arrayiterator.rewind.php
 	 * @return void 
 	 */
-	public function rewind (){
-	    return $this->getResults()->rewind();
+	public function rewind(){
+	    return $this->results->rewind();
 	}
 
 	/**
@@ -283,7 +283,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * </p>
 	 * @return void 
 	 */
-	public function seek ($position){
+	public function seek( $position ) {
 	    return $this->getResults()->seek( $position );
 	}
 }

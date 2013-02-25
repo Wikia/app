@@ -41,7 +41,6 @@
 		<?php if(!$isCorporateWiki): ?>
 			<div class="results-wrapper grid-3 alpha">
 		<?php endif; ?>
-			
 			<?php if(!empty($results)): ?>
 				<?php if( $resultsFound > 0 ): ?>
 					<p class="result-count subtle">
@@ -69,7 +68,7 @@
 					<?php foreach( $results as $result ): ?>
 						<?php
 							$pos++;
-							if($result instanceof \Wikia\Search\ResultSet\Base) {
+							if($result instanceof \Wikia\Search\ResultSet\Grouping) {
 								echo $app->getView( 'WikiaSearch', 'resultSet', array(
 								  'resultSet' => $result,
 								  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),

@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\ResultSet\GroupingSet
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\MediaWikiInterface;
+use \Wikia\Search\MediaWikiInterface, \ArrayIterator;
 use \Solarium_Result_Select;
 use \WikiaSearchConfig;
 /**
@@ -20,6 +20,7 @@ class GroupingSet extends Grouping
 		$this->searchResultObject = $container->getResult();
 		$this->searchConfig       = $container->getConfig();
 		$this->interface          = $container->getInterface();
+		$this->results            = new ArrayIterator( array() );
 		$this->resultsFound = $this->getHostGrouping()->getMatches();
 		$this->prependWikiMatchIfExists()
 		     ->setResultGroupings()
@@ -52,7 +53,7 @@ class GroupingSet extends Grouping
 	 * @return GroupingSet
 	 */
 	protected function prependWikiMatchIfExists() {
-		if ( $this->searchConfig->hasWikiMatch() ) {
+		if ( $this->searchConfig->hasWikiMatch() && $this->searchConfig->getStart() == 0 ) {
     		$this->resultsFound++;
     		return $this->addResult( $this->searchConfig->getWikiMatch()->getResult() );
 		}

@@ -41,7 +41,7 @@ class Base extends EmptySet
 	
 	/**
 	 * set result documents
-	 * @param  array $results list of WikiaResult or WikiaResultSet (for result grouping) objects
+	 * @param  array $results list of Wikia\Search\Result or Wikia\Search\ResultSet objects
 	 * @return Base provides fluent interface
 	 */
 	public function setResults( array $results ) {
