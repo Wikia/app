@@ -40,7 +40,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * Keys are IDs, values are WikiaSearchResult instances.
 	 * @var ArrayIterator
 	 */
-	protected $results;
+	protected $results = array();
 	
 	/**
 	 * The configuration used in handling searhes

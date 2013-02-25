@@ -3,7 +3,7 @@
  * Class definition for \Wikia\Search\ResultSet\Base
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\Result, \ArrayIterator, \Wikia\Search\MediaWikiInterface, \WikiaSearch;
+use \Wikia\Search\Result, \ArrayIterator, \Wikia\Search\MediaWikiInterface, \Wikia\Search\Utilities;
 use \WikiaException, \Solarium_Result_Select, \WikiaSearchConfig;
 /**
  * This is the default class definition -- represents a flat grouping of results, e.g. on-wiki search.
@@ -31,6 +31,7 @@ class Base extends EmptySet
 		$this->searchResultObject  = $container->getResult();
 		$this->searchConfig        = $container->getConfig();
 		$this->interface           = $container->getInterface();
+		$this->results             = new ArrayIterator( array() );
 		$this->resultsFound        = $this->searchResultObject->getNumFound();
 		$this->prependArticleMatchIfExists()
 		     ->setResults( $this->searchResultObject->getDocuments() )
@@ -44,7 +45,6 @@ class Base extends EmptySet
 	 * @return Base provides fluent interface
 	 */
 	public function setResults( array $results ) {
-		$this->results = new ArrayIterator( array() );
 		foreach( $results as $result ) {
 			$this->addResult( $result );
 		}
@@ -74,7 +74,7 @@ class Base extends EmptySet
 			$highlighting = $this->searchResultObject->getHighlighting();
 			if (        ( $highlighting !== null )
 					&&  ( $hlResult      =  $highlighting->getResult( $id ) )
-					&&  ( $field         =  $hlResult->getField( WikiaSearch::field( 'html' ) ) ) ) {
+					&&  ( $field         =  $hlResult->getField( Utilities::field( 'html' ) ) ) ) {
 				$result->setText( $field[0] );
 			}
 
@@ -85,7 +85,7 @@ class Base extends EmptySet
 			}
 
 			$result->setVar('cityArticlesNum', $result['wikiarticles'] )
-			       ->setVar('wikititle',       $result[WikiaSearch::field( 'wikititle' )] );
+			       ->setVar('wikititle',       $result[Utilities::field( 'wikititle' )] );
 
 			$this->results[$id] = $result;
 		}

@@ -84,7 +84,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->wikiaSearch->search();
 
 			$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query',
-												array( ucwords( $searchConfig->getQuery( WikiaSearchConfig::QUERY_RAW ) ), $this->wg->Sitename) )  );
+												array( ucwords( $searchConfig->getQuery( Wikia\Search\Config::QUERY_RAW ) ), $this->wg->Sitename) )  );
 		} else {
 			if( $searchConfig->getIsInterWiki() ) {
 				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
@@ -116,7 +116,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'currentPage', 			$searchConfig->getPage() );
 		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination', $tabsArgs ) );
 		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', $tabsArgs ) );
-		$this->setVal( 'query',					$searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
+		$this->setVal( 'query',					$searchConfig->getQuery( Wikia\Search\Config::QUERY_ENCODED ) );
 		$this->setVal( 'resultsPerPage',		$searchConfig->getLimit() );
 		$this->setVal( 'pageUrl',				$this->wg->Title->getFullUrl() );
 		$this->setVal( 'debug',					$searchConfig->getDebug() );
@@ -191,88 +191,29 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Delivers related videos in JSON format.
-	 */
-	public function getRelatedVideos() {
-	    $searchConfig = F::build('WikiaSearchConfig');
-
-	    if ( $this->getVal('id', false) ) {
-	        $searchConfig->setPageId( $this->getVal('id') );
-	    }
-
-	    $searchConfig
-	    	->setStart	(  0 )
-	    	->setSize	( 20 );
-
-	    $mltResult = $this->wikiaSearch->getRelatedVideos( $searchConfig );
-
-	    $responseData = array();
-	    foreach ( $mltResult as $document ) {
-	    	$responseData[$document['url']] = $document->getFields();
-	    }
-
-	    $this->response->setData($responseData);
-	    $this->response->setFormat('json');
-	}
-
-	/**
 	 * Delivers a JSON response for video searches
 	 */
 	public function videoSearch() {
-	    $searchConfig = F::build('WikiaSearchConfig');
+	    $searchConfig = new Wikia\Search\Config();
 	    $searchConfig
 	    	->setCityId			( $this->wg->cityId )
 	    	->setQuery			( $this->getVal('q') )
 	    	->setNamespaces		( array(NS_FILE) )
 	    	->setVideoSearch	( true )
 	    ;
+	    
+	    $dcParams = array(
+					'config' => $searchConfig,
+					);
+		$container = new Wikia\Search\QueryService\DependencyContainer( $dcParams );
+		$this->wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->get( $container ); 
 
-	    $this->wikiaSearch->doSearch( $searchConfig );
-	    // up to whoever's using this service as to what they want from here. I'm just going to return JSON.
-	    // if you just want to search for only videos in the traditional video interface, then you should
-	    // be setting 'videoSearch' in the query string of the search index page
+	    $this->wikiaSearch->search( $searchConfig );
 	    $this->getResponse()->setFormat( 'json' );
 	    $this->getResponse()->setData( ( $searchConfig->getResults() ) ? $searchConfig->getResults()->toNestedArray() : array() );
 
 	}
 
-	/**
-	 * Delivers a JSON response with similar pages to a stream or URL.
-	 * @throws Exception
-	 */
-	public function getSimilarPagesExternal() {
-	    $searchConfig 	= F::build('WikiaSearchConfig');
-	    $query 			= $this->getVal( 'q', null );
-	    $url 			= $this->getVal( 'url', null );
-	    $contents 		= $this->getVal( 'contents', null );
-	    if ( $query !== null ) {
-	    	$searchConfig->setQuery( $query );
-	    } else if ( $url !== null ) {
-	        $searchConfig->setStreamUrl( $url );
-	    } else if ( $contents !== null ) {
-	        $searchConfig->setStreamBody( $contents );
-	    } else {
-	        throw new Exception('Please provide a query, url or stream contents');
-	    }
-
-	    $this->response->setData( $this->wikiaSearch->getSimilarPages( $searchConfig ) );
-	    $this->response->setFormat('json');
-	}
-
-	/**
-	 * Delivers a JSON response with keywords from the page ID
-	 */
-	public function getKeywords() {
-	    $id = $this->getVal('id');
-	    if (empty($id)) {
-	        throw new Exception('Please provide an ID');
-	    }
-	    $searchConfig 	= F::build		('WikiaSearchConfig');
-	    $searchConfig	->setPageId		( $id );
-	    $responseData 	= $this->wikiaSearch->getKeywords( $searchConfig );
-	    $this->response	->setData		( $responseData );
-	    $this->response	->setFormat		( 'json' );
-	}
 
 
 	/**
@@ -283,7 +224,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action.
 	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
 	 * @see    WikiaSearchControllerTest::testArticleMatchTracking
-	 * @param  WikiaSearchConfig $searchConfig
+	 * @param  Wikia\Search\Config $searchConfig
 	 * @return boolean true (if not routed to search match page)
 	 */
 	protected function handleArticleMatchTracking( Wikia\Search\Config $searchConfig, Track $track ) {
@@ -314,7 +255,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * Called in index action. Sets the SearchConfigs namespaces based on MW-core NS request style.
 	 * @see    WikiSearchControllerTest::testSetNamespacesFromRequest
-	 * @param  WikiaSearchConfig $searchConfig
+	 * @param  Wikia\Search\Config $searchConfig
 	 * @return boolean true
 	 */
 	protected function setNamespacesFromRequest( Wikia\Search\Config $searchConfig, User $user ) {
@@ -434,7 +375,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$form['no_filter'] = 0;
 		}
 
-		$this->setVal( 'bareterm', 			$config->getQuery( WikiaSearchConfig::QUERY_RAW ) );
+		$this->setVal( 'bareterm', 			$config->getQuery( Wikia\Search\Config::QUERY_RAW ) );
 		$this->setVal( 'searchProfiles', 	$config->getSearchProfiles() );
 		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
 		$this->setVal( 'activeTab', 		$config->getActiveTab() );
@@ -468,7 +409,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						? ( $page + self::PAGES_PER_WINDOW )
 						: $config->getNumPages() ) ;
 
-		$this->setVal( 'query', 			$config->getQuery( WikiaSearchConfig::QUERY_RAW ) );
+		$this->setVal( 'query', 			$config->getQuery( Wikia\Search\Config::QUERY_RAW ) );
 		$this->setVal( 'pagesNum', 			$config->getNumPages() );
 		$this->setVal( 'currentPage', 		$page );
 		$this->setVal( 'windowFirstPage', 	$windowFirstPage );
