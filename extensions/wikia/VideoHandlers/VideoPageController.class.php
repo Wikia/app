@@ -17,29 +17,33 @@ class VideoPageController extends WikiaController {
 		$type = $this->getVal('type', 'local');
 
 		$summary = VideoUsageService::summaryInfoByWiki($this->wg->Title->getDBkey());
+		
+		$heading = '';
+		$fileList = array();
 
-		if($type === 'global') {
-			$heading = wfMsg('video-page-global-file-list-header');
-			if (array_key_exists($this->wg->CityId, $summary)) {
-				unset($summary[$this->wg->CityId]);
-			}
-
-			$count = 0;
-			foreach ($summary as $wikiID => $info) {
-				$fileList[] = $info[0];
-				$count++;
-				if ($count >=3) {
-					break;
+		if(!empty($summary) ) {
+			if($type === 'global') {
+				$heading = wfMsg('video-page-global-file-list-header');
+				if (array_key_exists($this->wg->CityId, $summary)) {
+					unset($summary[$this->wg->CityId]);
+				}
+	
+				$count = 0;
+				foreach ($summary as $wikiID => $info) {
+					$fileList[] = $info[0];
+					$count++;
+					if ($count >=3) {
+						break;
+					}
+				}
+			} else {
+				$heading = wfMsg('video-page-file-list-header');
+				if (array_key_exists($this->wg->CityId, $summary)) {
+					$fileList = $summary[$this->wg->CityId];
 				}
 			}
-		} else {
-			$heading = wfMsg('video-page-file-list-header');
-			if (array_key_exists($this->wg->CityId, $summary)) {
-				$fileList = $summary[$this->wg->CityId];
-			}
+
 		}
-
-
 		
 		$this->heading = $heading;
 		$this->fileList = $fileList;

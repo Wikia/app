@@ -28,11 +28,11 @@ class WikiaVideoPage extends ImagePage {
 	 */
 	protected function imageDetails($showmeta, $formattedMetadata) {
 		global $wgOut;
+		$this->additionalDetails();
 		$wgOut->addHtml('<div class="more-info-wrapper">');
 		parent::imageDetails($showmeta, $formattedMetadata);
 		$wgOut->addHtml('</div>');
 		$wgOut->addHtml(F::app()->renderPartial( 'VideoPageController', 'seeMore', array() ));
-		$this->additionalDetails();
 	}
 	
 	/**
