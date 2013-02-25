@@ -33,13 +33,20 @@ abstract class AbstractMatch
 	}
 	
 	/**
-	 * @return WikiaSearchResult
+	 * @return Wikia\Search\Result
 	 */
 	public function getResult() {
 		if ( $this->result === null ) {
 			$this->result = $this->createResult();
 		}
 		return $this->result;
+	}
+	
+	/**
+	 * @return number
+	 */
+	public function getId() {
+		return $this->id;
 	}
 	
 	/**

@@ -44,11 +44,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->handleSkinSettings( $this->wg->User->getSkin() );
 		
 		$searchConfig = new Wikia\Search\Config();
-		$dcParams = array(
-					'config' => $searchConfig,
-					);
-		$container = new Wikia\Search\QueryService\DependencyContainer( $dcParams );
-		$this->wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->get( $container ); 
 
 		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? self::RESULTS_PER_PAGE : $this->wg->SearchResultsPerPage;
 		
@@ -67,8 +62,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setVideoSearch	( $this->getVal('videoSearch', false) )
 			->setGroupResults	( $searchConfig->isInterWiki() || $this->getVal('grouped', false) )
 			->setFilterQueriesFromCodes( $this->getVal( 'filters', array() ) )
-		 ;
-
+		;
+		
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 
 		if($this->isCorporateWiki()) {
@@ -76,6 +71,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		if( $searchConfig->getQueryNoQuotes( true ) ) {
+			$dcParams = array(
+					'config' => $searchConfig,
+					);
+			$container = new Wikia\Search\QueryService\DependencyContainer( $dcParams );
+			$this->wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->get( $container );
+			
 			$this->wikiaSearch->getMatch( $searchConfig );
 			if ( $searchConfig->getPage() == 1 ) {
 				$this->handleArticleMatchTracking( $searchConfig, F::build( 'Track' ) );

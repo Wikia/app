@@ -257,7 +257,11 @@ class MediaWikiInterface
 	 * @return mixed
 	 */
 	public function getGlobalForWiki( $global, $wikiId ) {
-		return unserialize( \WikiFactory::getVarValueByName( $global, $wikiId )->cv_value );
+		$row = \WikiFactory::getVarValueByName( $global, $wikiId );
+		if ( is_object( $row ) ) {
+			return unserialize( $row->cv_value );
+		}
+		return $row;
 	}
 	
 	/**
