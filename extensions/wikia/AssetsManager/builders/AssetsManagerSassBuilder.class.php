@@ -9,6 +9,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	const CACHE_VERSION = 2;
 
 	public function __construct(WebRequest $request) {
+		global $IP;
 		parent::__construct($request);
 
 		if (strpos($this->mOid, '..') !== false) {
@@ -22,8 +23,8 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		//remove slashes at the beginning of the string, we need a pure relative path to open the file
 		$this->mOid = preg_replace( '/^[\/]+/', '', $this->mOid );
 
-		if ( !file_exists( $this->mOid ) ) {
-			throw new Exception("File {$this->mOid} does not exist!");
+		if ( !file_exists( "{$IP}/{$this->mOid}" ) ) {
+			throw new Exception("File {$IP}/{$this->mOid} does not exist!");
 		}
 		$this->mContentType = AssetsManager::TYPE_CSS;
 	}
