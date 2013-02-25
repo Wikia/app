@@ -34,42 +34,43 @@ class AssetsManagerServer {
 					throw new Exception('Unknown type.');
 			}
 
-			// do not log illegal request type (one/group/groups/sass supported only) - not to pollute
-			// logs
-			if( function_exists( 'newrelic_name_transaction' ) ) {
-				if ( function_exists( 'newrelic_disable_autorum') ) {
-					newrelic_disable_autorum();
-				}
-				newrelic_name_transaction( "am/AssetManager/" . $type );
-			}
-
-			$headers = array();
-
-			if($builder->getContentType()) {
-				$headers['Content-Type'] = $builder->getContentType();
-			}
-
-			// BugId:31327
-			$headers['Vary'] = $builder->getVary();
-
-			$cacheDuration = $builder->getCacheDuration();
-			if($cacheDuration > 0) {
-				$headers['Expires'] = gmdate('D, d M Y H:i:s \G\M\T', strtotime($cacheDuration . ' seconds'));
-				$headers['X-Pass-Cache-Control'] = $builder->getCacheMode() . ', max-age=' . $cacheDuration;
-				$headers['Cache-Control'] = $builder->getCacheMode() . ', max-age=' . $cacheDuration;
-			}
-
-			$headers['Last-Modified'] = gmdate('D, d M Y H:i:s \G\M\T');
-
-			foreach($headers as $k => $v) {
-				header($k . ': ' . $v);
-			}
-
-			echo $builder->getContent();
 		} catch (Exception $e) {
 			header('HTTP/1.1 404 Not Found');
 			echo $e->getMessage();
 			return;
 		}
+
+		// do not log illegal request type (one/group/groups/sass supported only) - not to pollute
+		// logs
+		if( function_exists( 'newrelic_name_transaction' ) ) {
+			if ( function_exists( 'newrelic_disable_autorum') ) {
+				newrelic_disable_autorum();
+			}
+			newrelic_name_transaction( "am/AssetManager/" . $type );
+		}
+
+		$headers = array();
+
+		if($builder->getContentType()) {
+			$headers['Content-Type'] = $builder->getContentType();
+		}
+
+		// BugId:31327
+		$headers['Vary'] = $builder->getVary();
+
+		$cacheDuration = $builder->getCacheDuration();
+		if($cacheDuration > 0) {
+			$headers['Expires'] = gmdate('D, d M Y H:i:s \G\M\T', strtotime($cacheDuration . ' seconds'));
+			$headers['X-Pass-Cache-Control'] = $builder->getCacheMode() . ', max-age=' . $cacheDuration;
+			$headers['Cache-Control'] = $builder->getCacheMode() . ', max-age=' . $cacheDuration;
+		}
+
+		$headers['Last-Modified'] = gmdate('D, d M Y H:i:s \G\M\T');
+
+		foreach($headers as $k => $v) {
+			header($k . ': ' . $v);
+		}
+
+		echo $builder->getContent();
 	}
 }
