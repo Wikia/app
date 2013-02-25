@@ -48,6 +48,7 @@ class WikiaHubsV2HooksModel extends WikiaModel {
 		if (isset($dbKeyNameSplit[1])) {
 			unset($dbKeyNameSplit[0]);
 			$hubDate = implode('/', $dbKeyNameSplit);
+			$hubDate = str_replace('_', '-', $hubDate);
 			$hubTimestamp = $this->getTimestampFromUserDate($hubDate);
 		} else {
 			$hubTimestamp = null;
