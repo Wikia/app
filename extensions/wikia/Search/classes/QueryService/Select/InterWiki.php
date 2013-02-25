@@ -160,18 +160,18 @@ class InterWiki extends AbstractSelect
 	{
 		$widQueries = array();
 		foreach ( $this->interface->getGlobal( 'CrossWikiaSearchExcludedWikis' ) as $excludedWikiId ) {
-			$widQueries[] = self::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
+			$widQueries[] = Utilities::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 		}
 		
 		$queryClauses= array(
 				implode( ' AND ', $widQueries ),
-				Utilities::valueForField( 'lang', $this->wg->ContLang->mCode ),
+				Utilities::valueForField( 'lang', $this->interface->getLanguageCode() ),
 				Utilities::valueForField( 'iscontent', 'true' )
 		);
 		
 		$hub = $this->config->getHub();
 		if (! empty( $hub ) ) {
-		    $queryClauses[] = self::valueForField( 'hub', $hub );
+		    $queryClauses[] = Utilities::valueForField( 'hub', $hub );
 		}
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
 	}
@@ -198,6 +198,19 @@ class InterWiki extends AbstractSelect
 				Utilities::valueForField( 'host', 'respuestas', array( 'boost' => 10, 'negate' => true ) )
 		);
 		return implode( ' ', $boostQueries );
+	}
+	
+	/**
+	 * Return a string of query fields based on configuration
+	 * @return string
+	 */
+	protected function getQueryFieldsString() {
+		$queryFieldsString = '';
+		$this->config->setQueryField( 'wikititle', 7 );
+		foreach ( $this->config->getQueryFieldsToBoosts()  as $field => $boost ) {
+			$queryFieldsString .= sprintf( '%s^%s ', Utilities::field( $field ), $boost );
+		}
+		return trim( $queryFieldsString );
 	}
 	
 }

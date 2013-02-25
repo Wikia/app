@@ -37,7 +37,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 
 	/**
 	 * This is the associative array handling results.
-	 * Keys are IDs, values are WikiaSearchResult instances.
+	 * Keys are IDs, values are Wikia\Search\Result instances.
 	 * @var ArrayIterator
 	 */
 	protected $results = array();
@@ -113,8 +113,8 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * @return array
 	 */
 	public function getResults() {
-		$this->results = $this->results ?: new ArrayIterator(); 
-		return $this->results;
+		$this->results = $this->results instanceof ArrayIterator ? $this->results : new ArrayIterator( array() ); 
+		return $this->results; 
 	}
 	
 	/**
@@ -147,7 +147,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 
 	/**
 	 * Done to return results in json format
-	 * Can be removed after upgrade to 5.4 and specify serialized Json data on WikiaSearchResult
+	 * Can be removed after upgrade to 5.4 and specify serialized Json data on Wikia\Search\Result
 	 * http://php.net/manual/en/jsonserializable.jsonserialize.php
 	 * @return array
 	 */
