@@ -26,7 +26,7 @@
 
 			<section class="grid-2 alpha wikiahubs-wikitext-module wikiahubs-module">
 				<?= $modules[MarketingToolboxModulePollsService::MODULE_ID] ?>
-			</section">
+			</section>
 
 			<section class="grid-2 alpha wikiahubs-top-wikis wikiahubs-module">
 				<?= $app->renderView('SpecialWikiaHubsV2', 'topwikis', $app->wg->request->getValues()); ?>
