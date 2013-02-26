@@ -70,7 +70,13 @@ class WikiaVideoPage extends ImagePage {
 
 		$html = '';
 		$html .= '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
-		$html .= F::app()->renderView( 'VideoPageController', 'videoCaption', array() );
+
+		$captionDetails = array(
+			'provider' => $img->getProviderName(),
+			'providerUrl' => $img->getProviderHomeUrl(),
+			'detailUrl' => $img->getProviderDetailUrl(),
+		);
+		$html .= $app->renderView( 'VideoPageController', 'videoCaption', $captionDetails );
 		
 		$wgOut->addHTML( $html );
 		

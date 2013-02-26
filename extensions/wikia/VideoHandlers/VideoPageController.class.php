@@ -87,6 +87,7 @@ return;
 		
 		$this->provider = ucwords($provider);
 		$this->detailUrl = $this->getVal('detailUrl');
+		$this->providerUrl = $this->getVal('providerUrl');
 		$this->expireDate = $expireDate;
 		$this->viewCount = $viewCount;
 	}
