@@ -5,7 +5,7 @@
 <article>
 
 	<?php if($result->getThumbnail() != null): ?>
-		<div class="grid-1 alpha"><?= $result->getThumbnail()->toHtml(array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)); ?></div>
+		<div class="grid-1 alpha"><?= $result->getThumbnailHtml(); ?></div>
 		<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
 	<?php endif; ?>
 	
