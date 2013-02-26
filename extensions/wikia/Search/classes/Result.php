@@ -10,10 +10,22 @@ use \Solarium_Document_ReadWrite as ReadWrite; #forward compatibility with v3
  * @author Robert Elwell
  */
 class Result extends ReadWrite {
-	protected $titleObject;
-	protected $thumbnailObject;
 	
+	/**
+	 * @var MediaWikiInterface
+	 */
+	protected $interface;
 
+	/**
+	 * Constructs the result and stores MW interface
+	 * @param array $fields
+	 * @param array $boosts
+	 */
+	public function __construct( $fields = array(), $boosts = array() ) {
+		parent::__construct( $fields, $boosts );
+		$this->interface = MediaWikiInterface::getInstance();
+	}
+	
 	/**
 	 * Backwards compatibility, since Solarium_Document_ReadWrite instances have array access.
 	 * @see    WikiaSearchResult::testGetCityId
@@ -185,21 +197,14 @@ class Result extends ReadWrite {
 	}
 
 	/**
-	 * Returns the thumbnail object that is used to render thumbnails in a search result
-	 * @see    WikiaSearchTest::testGetThumbnail
-	 * @return MediaTransformOutput|null (i think?)
+	 * Returns the thumbnail html
+	 * @return string
 	 */
-	public function getThumbnail() {
-		if ( (! isset( $this->thumbnailObject ) ) && ( $this['ns'] == NS_FILE ) ) {
-			$img = \F::app()->wf->FindFile( $this->getTitleObject() );
-			if (! empty( $img ) ) {
-				$thumb = $img->transform( array( 'width' => 160 ) ); // WikiaGrid 1 column width
-				if (! empty( $thumb ) ) {
-					$this->thumbnailObject = $thumb;
-				}
-			}
+	public function getThumbnailHtml() {
+		if (! isset( $this['thumbnail'] ) ) {
+			$this['thumbnail'] = $this->interface->getThumbnailHtmlForPageId( $this['pageid'] );
 		}
-		return $this->thumbnailObject;
+		return $this['thumbnail'];
 	}
 
 	/**
@@ -207,15 +212,7 @@ class Result extends ReadWrite {
 	 * @return string $videoViews
 	 */
 	public function getVideoViews() {
-		$videoViews = '';
-		$title = $this->getTitleObject();
-		
-		if ( \F::build( 'WikiaFileHelper' )->isFileTypeVideo( $title ) ) {
-			$videoViews = \F::build( 'MediaQueryService' )->getTotalVideoViewsByTitle( $title->getDBKey() );
-			$videoViews = \F::app()->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), \F::app()->wg->Lang->formatNum($videoViews) );
-		}
-
-		return $videoViews;
+		return $this->interface->getVideoViewsForPageId( $this['pageid'] );
 	}
 
 	/**
