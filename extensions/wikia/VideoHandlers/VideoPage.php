@@ -28,11 +28,14 @@ class WikiaVideoPage extends ImagePage {
 	 */
 	protected function imageDetails($showmeta, $formattedMetadata) {
 		global $wgOut;
-		$this->additionalDetails();
+		$app = F::app();
+		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'local') ) );
+		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'global') ) );
+		$wgOut->addHtml( $app->renderPartial( 'VideoPageController', 'seeMore', array() ));
 		$wgOut->addHtml('<div class="more-info-wrapper">');
 		parent::imageDetails($showmeta, $formattedMetadata);
 		$wgOut->addHtml('</div>');
-		$wgOut->addHtml(F::app()->renderPartial( 'VideoPageController', 'seeMore', array() ));
+		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'relatedPages', array() ) );
 	}
 	
 	/**
@@ -42,39 +45,19 @@ class WikiaVideoPage extends ImagePage {
 	protected function imageListing() {
 		// do nothing on purpose
 	}
-	
-	/**
-	 * render file usage, global usage, and related pages
-	 * output directly into wgOut
-	 */
-	protected function additionalDetails() {
-		global $wgOut;
-		/* hyun remark 2013-02-19 - add video usage list, global usage, and related pages here */
-		
-		$app = F::app();
-		
-		$html = '';
-		
-		$html .= $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'local') );
-		$html .= $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'global') );
-		$html .= $app->renderView( 'VideoPageController', 'relatedPages', array() );
-		
-		$wgOut->addHTML( $html );
-	}
 
 	function openShowImage(){
 		global $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath;
 		wfProfileIn( __METHOD__ );
-		$app = F::app();
 		$timestamp = $wgRequest->getInt('t', 0);
 
 		if ( $timestamp > 0 ) {
-			$file = wfFindFile( $this->mTitle, $timestamp );
-			if ( !($file instanceof LocalFile && $file->exists()) ) {
-				$file = $this->getDisplayedFile();				
+			$img = wfFindFile( $this->mTitle, $timestamp );
+			if ( !($img instanceof LocalFile && $img->exists()) ) {
+				$img = $this->getDisplayedFile();				
 			}
 		} else {
-			$file = $this->getDisplayedFile();
+			$img = $this->getDisplayedFile();
 		}
 
 		$autoplay = F::app()->wg->VideoPageAutoPlay;
@@ -86,19 +69,35 @@ class WikiaVideoPage extends ImagePage {
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/VideoPage.js\"></script>\n" );
 
 		$html = '';
-		$html .= '<div class="fullImageLink" id="file">'.$file->getEmbedCode( self::$videoWidth, $autoplay ).'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
-		
-		$captionDetails = array(
-			'provider' => $file->getProviderName(),
-			'providerUrl' => $file->getProviderHomeUrl(),
-		);
-		$html .= $app->renderView( 'VideoPageController', 'videoCaption', $captionDetails );
+		$html .= '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
+		$html .= F::app()->renderView( 'VideoPageController', 'videoCaption', array() );
 		
 		$wgOut->addHTML( $html );
-
+		
+		
+		/* hyun remark 2013-02-19 - add video caption here */
+		
 		wfProfileOut( __METHOD__ );
 	}
 	
+	protected function getVideoInfoLine() {
+		global $wgWikiaVideoProviders;
+		
+		$img = $this->getDisplayedFile();
+		$detailUrl = $img->getProviderDetailUrl();
+		$provider = $img->getProviderName();
+		if ( !empty($provider) ) {
+			$providerName = explode( '/', $provider );
+			$provider = array_pop( $providerName );
+		}
+		$providerUrl = $img->getProviderHomeUrl();
+		
+		$link = '<a href="' . $detailUrl . '" class="external" target="_blank">' . $this->mTitle->getText() . '</a>';
+		$providerLink = '<a href="' . $providerUrl . '" class="external" target="_blank">' . $provider . '</a>';
+		$s = '<div id="VideoPageInfo">' . wfMsgExt( 'videohandler-video-details', array('replaceafter'), $link, $providerLink )  . '</div>';
+		return $s;
+	}
+
 	public function getDuplicates() {
 
 		wfProfileIn( __METHOD__ );

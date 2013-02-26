@@ -26,6 +26,10 @@
 }
 
 .SeeMore {
+	border: 1px solid $color-page-border;
+	display: block;
+	padding: 5px;
+	text-align: center;
 	&.toggled {
 		.see-less {
 			display: inline;

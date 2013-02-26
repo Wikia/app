@@ -48,6 +48,8 @@ $messages['en'] = array(
 	'video-page-from-provider' => 'From $1',
 	'video-page-expires' => 'Content expires on $1',
 	'video-page-views' => '$1 Views',
+	'video-page-see-more-info' => 'Show more info',
+	'video-page-see-less-info' => 'Show less info',
 );
 
 /** Message documentation (Message documentation) */
@@ -82,6 +84,8 @@ $messages['qqq'] = array(
 	/* video page */
 	'video-page-file-list-header' => 'Heading for file list on Video File Page',
 	'video-page-global-file-list-header' => 'Heading for global usage list on Video File Page',
+	'video-page-see-more-info' => 'Label to uncollapse UI that shows more info',
+	'video-page-see-less-info' => 'Label to collapse UI that shows more info',
 );
 
 /** Afrikaans (Afrikaans)
