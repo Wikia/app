@@ -62,6 +62,7 @@ class Wiki extends AbstractMatch
 		$result = new Result( $fields );
 		
 		
+		
 		$result->setText( $this->preprocessText( $this->getMainPageTextForWikiId( $this->id ) ) );
 		
 		return $result;
