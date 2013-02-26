@@ -79,10 +79,7 @@ class WikiaVideoPage extends ImagePage {
 		$html .= F::app()->renderView( 'VideoPageController', 'videoCaption', $captionDetails );
 		
 		$wgOut->addHTML( $html );
-		
-		
-		/* hyun remark 2013-02-19 - add video caption here */
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
