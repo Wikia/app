@@ -405,8 +405,8 @@ $messages['qqq'] = array(
 * $3 is a diff URL.',
 	'wall-message-edited-summary' => 'Parameters:
 * $1 summary of the edit
-* $2 is the user who edited the message
-* $3 is user page URL
+* $2 is user page URL
+* $3 is the user who edited the message
 * $4 is a diff URL.',
 	'wall-message-update-topics-summary' => 'Added as auto summery when editing topics',
 	'wall-message-update-highlight-summary' => 'Added as auto summery when highlighted message',
