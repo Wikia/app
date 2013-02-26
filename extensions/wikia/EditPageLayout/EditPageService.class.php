@@ -172,7 +172,7 @@ class EditPageService extends Service {
 			}
 		}
 
-		$langbox = null;
+		$langbox = '';
 		if(!empty($language_urls) && ($skin instanceof SkinOasis)) {
 			$langbox = F::app()->sendRequest('ArticleInterlang','Index',array('request_language_urls' => $language_urls))->toString();
 		}
