@@ -78,8 +78,12 @@ class WikiaVideoPage extends ImagePage {
 		);
 		$html .= F::app()->renderView( 'VideoPageController', 'videoCaption', $captionDetails );
 		
+		$content = $this->getContent();
+		$isContentEmpty = empty($content);
+		$html .= F::app()->renderPartial( 'VideoPageController', 'description', array('isContentEmpty' => $isContentEmpty) );
+		
 		$wgOut->addHTML( $html );
-
+		
 		wfProfileOut( __METHOD__ );
 	}
 

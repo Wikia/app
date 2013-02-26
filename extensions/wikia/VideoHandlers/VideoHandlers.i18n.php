@@ -50,6 +50,8 @@ $messages['en'] = array(
 	'video-page-views' => '$1 Views',
 	'video-page-see-more-info' => 'Show more info',
 	'video-page-see-less-info' => 'Show less info',
+	'video-page-description-heading' => 'Description',
+	'video-page-description-zero-state' => 'There is no description for this video yet.',
 );
 
 /** Message documentation (Message documentation) */
@@ -86,6 +88,8 @@ $messages['qqq'] = array(
 	'video-page-global-file-list-header' => 'Heading for global usage list on Video File Page',
 	'video-page-see-more-info' => 'Label to uncollapse UI that shows more info',
 	'video-page-see-less-info' => 'Label to collapse UI that shows more info',
+	'video-page-description-heading' => 'Description heading',
+	'video-page-description-zero-state' => 'Page content that states there is no description for this',
 );
 
 /** Afrikaans (Afrikaans)
