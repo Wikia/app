@@ -195,6 +195,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
 					. '/' . $date->format('Y-m-d');
+				$this->successText = $this->wf->msg('marketing-toolbox-module-publish-success', $this->wg->lang->date($this->date));
 			} else {
 				$this->errorMsg = $result->errorMsg;
 			}

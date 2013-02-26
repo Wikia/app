@@ -280,6 +280,12 @@ EditHub.prototype = {
 			callback: function(data){
 				if (data.success) {
 					window.open(data.hubUrl);
+					var info = $('<p />')
+						.addClass('success')
+						.text(data.successText);
+
+					$('.grid-4.alpha').prepend(info);
+					info.get(0).scrollIntoView();
 				} else {
 					alert(data.errorMsg);
 				}
