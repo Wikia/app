@@ -69,7 +69,6 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 						'wrong' => 'marketing-toolbox-validator-wrong-url'
 					)
 				),
-				'icon' => true,
 				'attributes' => array(
 					'class' => 'wikiaUrl'
 				)
