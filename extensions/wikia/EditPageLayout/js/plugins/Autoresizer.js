@@ -19,7 +19,7 @@
 		// height of the editbox element.
 		editboxOffsetHeight: 0,
 		mode: false,
-		minPageHeight: 500,
+		minPageHeight: 300,
 		rightrail: false,
 		widemode: false,
 
