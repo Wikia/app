@@ -81,7 +81,9 @@ var ArticleComments = {
 	edit: function(e) {
 		e.preventDefault();
 
-		if (ArticleComments.processing) { return; }
+		if (ArticleComments.processing) {
+			return;
+		}
 
 		// If MiniEditor is enabled, we need to determine the correct content format before making the request
 		if (ArticleComments.miniEditorEnabled && !MiniEditor.assetsLoaded) {
@@ -555,11 +557,12 @@ var ArticleComments = {
 
 if (ArticleComments.loadOnDemand) {
 	$(function() {
-		
-		//NO article comment on this page lets just skip 
-		if( $('#WikiaArticleComments').length == 0 ) {
-			return true;
+
+		// NO article comment on this page lets just skip
+		if ( !$('#WikiaArticleComments').length ) {
+			return;
 		}
+
 		var content,
 			hash = window.location.hash,
 			permalink = /^#comm-/.test(hash),

@@ -254,7 +254,7 @@ var MiniEditor = {
 	},
 
 	// Return the 'convertToFormat' parameter for loading content.
-	// Either 'richtext' or empty string (because it comes to use as wikitext already)
+	// Either 'richtext' or empty string (because it comes to us as wikitext already)
 	getLoadConversionFormat: function(element) {
 		return WikiaEditor.modeToFormat(this.getStartupMode(element)) == 'richtext' ? 'richtext' : '';
 	},
