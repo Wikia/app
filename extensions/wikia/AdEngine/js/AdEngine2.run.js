@@ -17,12 +17,15 @@
 	var module = 'AdEngine2.run',
 		adConfig,
 		adEngine,
-		adLogicShortPage,
-		adLogicHighValueCountry,
 		adLogicDartSubdomain,
+		adLogicHighValueCountry,
+		adLogicPageLevelParams,
+		adLogicPageLevelParamsLegacy,
+		adLogicShortPage,
 		scriptWriter,
 		dartUrl,
 		wikiaDart,
+		wikiaGpt,
 		evolveHelper,
 		adProviderAdDriver2,
 		adProviderEvolve,
@@ -38,19 +41,22 @@
 	adEngine = AdEngine2(log, LazyQueue);
 
 	// Construct various helpers
-	adLogicShortPage = AdLogicShortPage(document);
-	adLogicHighValueCountry = AdLogicHighValueCountry(window);
+	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
+	adLogicHighValueCountry = AdLogicHighValueCountry(window);
+	adLogicShortPage = AdLogicShortPage(document);
+	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicShortPage, abTest);
+	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
-	dartUrl = DartUrl();
-	wikiaDart = WikiaDartHelper(log, window, document, Krux, adLogicShortPage, dartUrl, abTest);
+	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl);
+	wikiaGpt = WikiaGptHelper(log, window, document, adLogicPageLevelParams);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, adLogicDartSubdomain, abTest);
-	adProviderEvolve = AdProviderEvolve(wikiaDart, scriptWriter, tracker, log, window, document, Krux, evolveHelper, slotTweaker);
-	adProviderGamePro = AdProviderGamePro(wikiaDart, scriptWriter, tracker, log, window, document);
+	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, adLogicDartSubdomain, abTest, wikiaGpt);
+	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, evolveHelper, slotTweaker, dartUrl);
+	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document);
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	// Special Ad Provider, to deal with the late ads
