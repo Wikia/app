@@ -81,11 +81,8 @@ class PhalanxContentModel extends PhalanxModel {
 	} 
 	
 	public function match_summary_old() {
-		// TO DO
-		/* problem with Phalanx service? */
-		// include_once( dirname(__FILE__) . '/../prev_hooks/ContentBlock.class.php';
-		// $ret = ContentBlock::onEditFilter( $editPage, $text, $section, &$hookError, $summary );
-		return true;
+		/* problem with Phalanx service? - use previous version of Phalanx extension */
+		return ContentBlock::onEditFilter( '', $this->getText() );
 	}
 	
 	public function match_content( $textbox ) {
@@ -93,11 +90,8 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function match_content_old() {
-		// TO DO
-		/* problem with Phalanx service? */
-		// include_once( dirname(__FILE__) . '/../prev_hooks/ContentBlock.class.php';
-		// $ret = ContentBlock::onEditFilter( $editPage );
-		return true;
+		/* problem with Phalanx service? - use previous version of Phalanx extension */
+		return ContentBlock::onEditFilter( $this->getText(), '' );
 	}
 	
 	public function match_title() {
@@ -105,11 +99,8 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function match_title_old() {
-		// TO DO
-		/* problem with Phalanx service? */
-		// include_once( dirname(__FILE__) . '/../prev_hooks/TitleBlock.class.php';
-		// $ret = TitleBlock::genericTitleCheck( $title );
-		return true;
+		/* problem with Phalanx service? - use previous version of Phalanx extension */
+		return TitleBlock::genericTitleCheck( $this->title );
 	}
 
 	public function match_question_title() {

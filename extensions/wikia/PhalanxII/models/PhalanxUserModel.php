@@ -18,7 +18,7 @@ class PhalanxUserModel extends PhalanxModel {
 	public function userBlock( $type = 'exact' ) {
 		$this->wf->profileIn( __METHOD__ );
 	
-		$this->user->mBlockedby = self::PHALANX_USER;
+		$this->user->mBlockedby = $this->block->authorId;
 		$this->user->mBlockedGlobally = true;
 
 		if ( $type == 'exact' ) {

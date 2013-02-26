@@ -7,8 +7,6 @@
  * Note: only works on Answers-type wikis
  */
 
-require_once( dirname(__FILE__) . "/../Phalanx.class.php" );
-
 class QuestionTitleBlock {
 	static public function badWordsTest( $title ) {
 		global $wgLanguageCode;

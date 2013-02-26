@@ -95,7 +95,7 @@ class TitleBlock {
 			$blockData = null;
 			$result = PhalanxFallback::findBlocked( $fullText, self::$blocksData, true, $blockData );
 			if ( $result['blocked'] ) {
-				self::spamPage( $result['msg'], $title );
+				#self::spamPage( $result['msg'], $title );
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$fullText'.");
 			}
 		}

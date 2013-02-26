@@ -11,7 +11,7 @@
 class ContentBlock {
 	private static $whitelist = null;
 
-	public static function onEditFilter( $editpage ) {
+	public static function onEditFilter( $textbox, $summary ) {
 		global $wgOut, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
@@ -23,25 +23,13 @@ class ContentBlock {
 
 		// here we get only the phrases for blocking in summaries...
 		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_SUMMARY );
-		$summary = $editpage->summary;
+
 		if ( !empty($blocksData) && $summary != '' ) {
 			$summary = self::applyWhitelist($summary);
 
 			$blockData = null;
 			$result = PhalanxFallback::findBlocked($summary, $blocksData, true, $blockData);
 			if ( $result['blocked'] ) {
-
-				$wgOut->setPageTitle( wfMsg( 'spamprotectiontitle' ) );
-				$wgOut->setRobotPolicy( 'noindex,nofollow' );
-				$wgOut->setArticleRelated( false );
-				$wgOut->addHTML( '<div id="spamprotected_summary">' );
-				$wgOut->addWikiMsg( 'spamprotectiontext' );
-				$wgOut->addHTML( '<p>( Call #3 )</p>' );
-				$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$result['msg']}</nowiki>" );
-				$wgOut->addWikiMsg( 'phalanx-content-spam-summary' );
-
-				$wgOut->returnToMain( false, $wgTitle );
-				$wgOut->addHTML( '</div>' );
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$summary'.");
 				wfProfileOut( __METHOD__ );
 				return false;
@@ -49,14 +37,12 @@ class ContentBlock {
 		}
 
 		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_CONTENT );
-		$textbox = $editpage->textbox1;
 		if ( !empty($blocksData) && $textbox != '' ) {
 			$textbox = self::applyWhitelist($textbox);
 
 			$blockData = null;
 			$result = PhalanxFallback::findBlocked($textbox, $blocksData, true, $blockData);
 			if ( $result['blocked'] ) {
-				$editpage->spamPageWithContent( $result['msg'] );
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$textbox'.");
 				wfProfileOut( __METHOD__ );
 				return false;

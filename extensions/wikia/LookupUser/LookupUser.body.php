@@ -276,9 +276,7 @@ EOT
 
 			//checking and setting User::mBlockedGlobally if needed
 			//only for this instance of class User
-			if( class_exists('UserBlock') ) {
-				UserBlock::blockCheck($user);
-			}
+			wfRunHooks( 'GetBlockedStatus', array( &$user ) );
 
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars(array(
