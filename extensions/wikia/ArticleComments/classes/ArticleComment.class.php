@@ -629,7 +629,7 @@ class ArticleComment {
 		if ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) {
 			$vars = array(
 				'canEdit'				=> $this->canEdit(),
-				'comment'				=> ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText()),
+				'comment'				=> htmlentities(ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText())),
 				'isReadOnly'			=> wfReadOnly(),
 				'isMiniEditorEnabled'	=> ArticleComment::isMiniEditorEnabled(),
 				'stylePath'				=> $wgStylePath,
