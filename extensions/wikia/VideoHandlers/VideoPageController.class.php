@@ -6,10 +6,6 @@ class VideoPageController extends WikiaController {
 		
 	}
 	
-	public function videoCaption() {
-		
-	}
-	
 	/**
 	 *
 	 */
@@ -76,5 +72,25 @@ return;
 		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
 		$this->text = F::app()->renderView( 'RelatedPages', 'Index', array( "altTitle" => $title ) );
 	}
+	
+	public function videoCaption() {
+		global $wgWikiaVideoProviders;
+		
+		$provider = $this->getVal('provider');		
+		if ( !empty($provider) ) {
+			$providerName = explode( '/', $provider );
+			$provider = array_pop( $providerName );
+		}
+		
+		$expireDate = 'expire date';
+		$viewCount = 'view count';
+		
+		$this->provider = ucwords($provider);
+		$this->detailUrl = $this->getVal('detailUrl');
+		$this->expireDate = $expireDate;
+		$this->viewCount = $viewCount;
+	}
+
+
 
 }

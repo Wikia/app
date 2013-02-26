@@ -45,7 +45,9 @@ $messages['en'] = array(
 	/* video page */
 	'video-page-file-list-header' => 'Appears in these articles',
 	'video-page-global-file-list-header' => 'Appears in these articles on other Wikis',
-	
+	'video-page-from-provider' => 'From $1',
+	'video-page-expires' => 'Content expires on $1',
+	'video-page-views' => '$1 Views',
 );
 
 /** Message documentation (Message documentation) */
