@@ -314,7 +314,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 					throbber.remove(wkPrf);
 
 					loader.processStyle(res.styles);
-					wkPrf.insertAdjacentHTML('beforeend', res.templates['UserLoginSpecial_index']);
+					wkPrf.insertAdjacentHTML('beforeend', res.templates.UserLoginSpecial_index);
 					loader.processScript(res.scripts);
 
 					//see fbconnect.js
@@ -337,6 +337,14 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 							.setHash(hash)
 							.toString()
 					);
+
+					form.addEventListener('submit', function(ev){
+						var t = ev.target;
+
+						if(t[2].value.trim() == '' || t[3].value.trim() == '') {
+							ev.preventDefault();
+						}
+					})
 				}
 			);
 		}
