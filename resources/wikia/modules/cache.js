@@ -10,6 +10,7 @@
 
 	var CACHE_VALUE_PREFIX = 'wkch_val_',
 		CACHE_TTL_PREFIX = 'wkch_ttl_',
+		storage,
 		undef;
 
 	function cache(localStorage) {
@@ -138,8 +139,14 @@
 		context.Wikia = {};
 	}
 
+	// Trying to access storage with cookies disabled can throw
+	// security exceptions in some browsers like Firefox (BugId:94924)
+	try {
+		storage = context.localStorage;
+	} catch( e ) {}
+
 	//namespace
-	context.Wikia.Cache = cache(context.localStorage);
+	context.Wikia.Cache = cache(storage);
 
 	if (context.define && context.define.amd) {
 		context.define('wikia.cache', ['wikia.localStorage'], cache);

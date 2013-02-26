@@ -298,18 +298,7 @@ $.store.drivers = {
 		},
 		load: function()
 		{
-			try
-			{
-				this.cache = $.store.serializers.json.decode( window.name + "" );
-				if( typeof this.cache != "object" ) {
-					this.cache = {};
-				}
-			}
-			catch(e)
-			{
-				this.cache = {};
-				window.name = "{}";
-			}
+			this.cache = $.store.serializers.json.decode( window.name + "" );
 		},
 		get: function( key )
 		{
@@ -352,7 +341,6 @@ $.store.serializers = {
 			encoders.push( "json" );
 			decoders.push( "json" );
 		},
-		// macbre: use interface provided by jQuery JSON plugin
 		// wladek: try/catch block is here to prevent weird errors
 		encode: function(data) {
 			try {
@@ -365,7 +353,7 @@ $.store.serializers = {
 			try {
 				return JSON.parse(data);
 			} catch (e) {
-				return null;
+				return {};
 			}
 		}
 	}
