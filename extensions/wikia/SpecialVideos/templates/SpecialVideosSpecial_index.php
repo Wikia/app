@@ -42,8 +42,8 @@
 			<? if($isRemovalAllowed): ?>
 				<a class="remove">
 					<img class="sprite trash" src="<?= wfBlankImgUrl() ?>">
+					<?= wfMsg('specialvideos-remove-modal-title') ?>
 				</a>
-				<?= wfMsg('specialvideos-remove-modal-title') ?>
 			<? endif; ?>
 		</div>
 
