@@ -82,14 +82,13 @@ return;
 			$provider = array_pop( $providerName );
 		}
 		
-		$expireDate = 'expire date';
-		$viewCount = 'view count';
+		$expireDate = false;
 		
 		$this->provider = ucwords($provider);
 		$this->detailUrl = $this->getVal('detailUrl');
 		$this->providerUrl = $this->getVal('providerUrl');
 		$this->expireDate = $expireDate;
-		$this->viewCount = $viewCount;
+		$this->viewCount = $this->getVal('views');
 	}
 
 

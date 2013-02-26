@@ -75,6 +75,7 @@ class WikiaVideoPage extends ImagePage {
 			'provider' => $img->getProviderName(),
 			'providerUrl' => $img->getProviderHomeUrl(),
 			'detailUrl' => $img->getProviderDetailUrl(),
+			'views' => MediaQueryService::getTotalVideoViewsByTitle( $img->getTitle()->getDBKey() ),
 		);
 		$html .= F::app()->renderView( 'VideoPageController', 'videoCaption', $captionDetails );
 		

@@ -54,3 +54,23 @@
 .more-info-wrapper {
 	display: none;
 }
+
+.WikiaArticle .video-page-caption {
+	@include clearfix;
+	border-bottom: solid 1px $color-headline-border;
+	margin: 15px 0 34px;
+	padding-bottom: 15px;
+	
+	.video-views {
+		float: right;
+		font-size: 18px;
+		margin: 0;
+	}
+	p {
+		line-height: 20px;
+		margin: 6px 0;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
