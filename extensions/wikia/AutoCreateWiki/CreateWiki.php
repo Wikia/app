@@ -132,7 +132,8 @@ class CreateWiki {
 				'pagelinks',
 				'revision',
 				'templatelinks',
-				'text'
+				'text',
+				'wikia_user_properties'
 			),
 			"answers" => array(
 				'user_profile'
