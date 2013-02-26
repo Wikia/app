@@ -34,6 +34,7 @@ class Wiki extends AbstractMatch
 			$fields[\WikiaSearch::field( 'title' )] = $data['name'];
 			$fields['url'] = sprintf('%s://%s%s', $parsed['scheme'], $parsed['host'], $parsed['path']);
 			$fields['isWikiMatch'] = true;
+			$fields['thumbnail'] = array_shift( empty( $data['wiki_images'] ) ? array() : $data['wiki_images'] );
 
 			$result = new Result( $fields );
 			

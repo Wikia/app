@@ -608,6 +608,39 @@ class MediaWikiInterface
 	}
 	
 	/**
+	 * Returns the HTML needed to get a thumbnail provided a page ID
+	 * @param int $pageId
+	 * @param array $transformParams
+	 * @param array $htmlParams
+	 */
+	public function getThumbnailHtmlForPageId(
+			$pageId, 
+			$transformParams = array( 'width' => 160 ), 
+			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) 
+			) {
+		$img = $this->getFileForPageId( $pageId );
+		if (! empty( $img ) ) {
+			$thumb = $img->transform( array( 'width' => 160 ) ); // WikiaGrid 1 column width
+			return $thumb->toHtml( $htmlParams );
+		}
+	}
+	
+	/**
+	 * Returns the number of video views for a page ID.
+	 * @param int $pageId
+	 * @return string
+	 */
+	public function getVideoViewsForPageId( $pageId ) {
+		$videoViews = '';
+		$title = $this->getTitleFromPageId( $pageId );
+		if ( \F::build( 'WikiaFileHelper' )->isFileTypeVideo( $title ) ) {
+			$videoViews = \F::build( 'MediaQueryService' )->getTotalVideoViewsByTitle( $title->getDBKey() );
+			$videoViews = \F::app()->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), \F::app()->wg->Lang->formatNum($videoViews) );
+		}
+		return $videoViews;
+	}
+	
+	/**
 	 * Provides a format, provided a revision's default timestamp format.
 	 * @param string $timestamp
 	 */
