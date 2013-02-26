@@ -171,32 +171,6 @@ class Result extends ReadWrite {
 	}
 
 	/**
-	 * Retrieves the title object for this
-	 * @see    WikiaSearchResultTest::testGetTitleObject
-	 * @return Title|null
-	 */
-	public function getTitleObject() {
-		$title = $this->getTitle();
-		
-		if ( $title === null || $title === '' ) {
-			// this will likely be null
-			return $this->titleObject;
-		}
-		
-		$ns = $this['ns'] ?: 0;
-		
-		if (! isset( $this->titleObject ) ) {
-			$this->titleObject = \F::build( 'Title', 
-											array(	$ns, 
-													preg_replace( '/^' . MWNamespace::getCanonicalName( $ns ) . ':/', '', $title )
-												 ),
-											'MakeTitle'
-									 	 );
-		}
-		return $this->titleObject;
-	}
-
-	/**
 	 * Returns the thumbnail html
 	 * @return string
 	 */
