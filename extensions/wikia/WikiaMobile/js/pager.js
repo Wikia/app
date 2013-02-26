@@ -209,6 +209,7 @@ define('pager', ['wikia.window'], function (window) {
 					if ( isFunction ? !checkCancel() : true ) {
 						pos = ev.touches[0].pageX;
 
+						wrapper.removeEventListener('touchstart', onTouchStart);
 						wrapper.addEventListener('touchmove', onTouchMove);
 						wrapper.addEventListener('touchend', onTouchEnd);
 						wrapper.addEventListener('touchcancel', onTouchEnd);
@@ -238,6 +239,7 @@ define('pager', ['wikia.window'], function (window) {
 						onStartFired && goTo(ev.changedTouches[0].pageX - pos);
 					}
 
+					wrapper.addEventListener('touchstart', onTouchStart);
 					wrapper.removeEventListener('touchmove', onTouchMove);
 					wrapper.removeEventListener('touchend', onTouchEnd);
 					wrapper.removeEventListener('touchcancel', onTouchEnd);
