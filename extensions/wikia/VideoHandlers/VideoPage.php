@@ -69,7 +69,7 @@ class WikiaVideoPage extends ImagePage {
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/VideoPage.js\"></script>\n" );
 
 		$html = '';
-		$html .= '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
+		$html .= '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
 
 		$captionDetails = array(
 			'provider' => $img->getProviderName(),
@@ -84,24 +84,6 @@ class WikiaVideoPage extends ImagePage {
 		/* hyun remark 2013-02-19 - add video caption here */
 		
 		wfProfileOut( __METHOD__ );
-	}
-	
-	protected function getVideoInfoLine() {
-		global $wgWikiaVideoProviders;
-		
-		$img = $this->getDisplayedFile();
-		$detailUrl = $img->getProviderDetailUrl();
-		$provider = $img->getProviderName();
-		if ( !empty($provider) ) {
-			$providerName = explode( '/', $provider );
-			$provider = array_pop( $providerName );
-		}
-		$providerUrl = $img->getProviderHomeUrl();
-		
-		$link = '<a href="' . $detailUrl . '" class="external" target="_blank">' . $this->mTitle->getText() . '</a>';
-		$providerLink = '<a href="' . $providerUrl . '" class="external" target="_blank">' . $provider . '</a>';
-		$s = '<div id="VideoPageInfo">' . wfMsgExt( 'videohandler-video-details', array('replaceafter'), $link, $providerLink )  . '</div>';
-		return $s;
 	}
 
 	public function getDuplicates() {
