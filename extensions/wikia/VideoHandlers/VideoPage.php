@@ -76,7 +76,7 @@ class WikiaVideoPage extends ImagePage {
 			'providerUrl' => $img->getProviderHomeUrl(),
 			'detailUrl' => $img->getProviderDetailUrl(),
 		);
-		$html .= $app->renderView( 'VideoPageController', 'videoCaption', $captionDetails );
+		$html .= F::app()->renderView( 'VideoPageController', 'videoCaption', $captionDetails );
 		
 		$wgOut->addHTML( $html );
 		
