@@ -51,7 +51,6 @@ describe("Nirvana", function () {
 			nirvana.sendRequest({
 				controller: controllerName,
 				method: methodName,
-				format: 'foo'
 			});
 		}).toThrow('Only Json,Jsonp and Html format are allowed');
 	});
