@@ -139,7 +139,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			trackingMethod: 'ad'
 		});
 
-		if (window.wgUseGpt) {
+		if (window.wgAdDriverUseGpt) {
 			// Use the new GPT library:
 
 			wikiaGpt.pushAd({
