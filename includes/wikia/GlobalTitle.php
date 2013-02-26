@@ -25,6 +25,7 @@ class GlobalTitle extends Title {
 	public $mCityId = false;
 	public $mTextform = false;
 	public $mUrlform = false;
+	public $mArticleID = false;
 
 	/**
 	 * others, private
@@ -462,6 +463,34 @@ class GlobalTitle extends Title {
 		}
 
 		return $this->mIsRedirect;
+	}
+
+	/**
+	 * Get the article ID for this Title from the link cache,
+	 * adding it if necessary
+	 *
+	 * @param $flags Int a bit field; may be Title::GAID_FOR_UPDATE to select
+	 *  for update
+	 * @return Int the ID
+	 */
+	public function getArticleID( $flags = 0 ) {
+		if ( $this->getNamespace() < 0 ) {
+			return $this->mArticleID = 0;
+		}
+
+		if (empty($this->mArticleID)) {
+			$dbName = WikiFactory::IDtoDB($this->mCityId);
+			$db = wfGetDB( DB_SLAVE, array(), $dbName );
+
+			$row = $db->selectRow( 'page',
+				array( 'page_id' ),
+				array( 'page_namespace' => $this->mNamespace, 'page_title' => $this->mDbkeyform ),
+				__METHOD__);
+
+			$this->mArticleID = $row->page_id;
+		}
+
+		return $this->mArticleID;
 	}
 
 	/*
