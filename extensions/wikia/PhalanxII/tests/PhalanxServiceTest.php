@@ -48,20 +48,6 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	}
 
 
-	public function testPhalanxServiceReload() {
-		if (empty(F::app()->wg->PhalanxServiceUrl)) { // using production phalanx service, skip forced reload
-			$this->markTestSkipped("Forced reload disabled on production phalanx service");
-			return;
-		}
-
-		$ret = $this->service->reload();
-		$this->assertEquals( 1, $ret );
-
-		$ret = $this->service->reload( array( 1, 2, 3 ) );
-		$this->assertEquals( 1, $ret );
-
-	}
-
 	public function testPhalanxServiceMatch() {
 		$ret = $this->service->match( "content", "hello" );
 		$this->assertEquals( 0, $ret );
