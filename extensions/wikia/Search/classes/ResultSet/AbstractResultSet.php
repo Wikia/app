@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\ResultSet;
-use \Iterator, \ArrayAccess, \ArrayIterator;
+use \Iterator, \ArrayAccess, \ArrayIterator, \Wikia\Search\Config;
 /**
  * This allows us to do a lot of the utility stuff separated out from the core logic of each class.
  * @author relwell
@@ -44,7 +44,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	
 	/**
 	 * The configuration used in handling searhes
-	 * @var WikiaSearchConfig
+	 * @var Config
 	 */
 	protected $searchConfig;
 	
@@ -122,7 +122,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * @return string
 	 */
 	public function getQuery() {
-		return $this->searchConfig->getQuery( \WikiaSearchConfig::QUERY_ENCODED );
+		return $this->searchConfig->getQuery( Config::QUERY_ENCODED );
 	}
 	
 	/**
