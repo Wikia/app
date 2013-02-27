@@ -247,7 +247,6 @@ abstract class AbstractSelect
 				$result = $this->sendSearchRequestToClient();
 			}
 		}
-		
 		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $this->config ) );
 		$results = $this->resultSetFactory->get( $container );
 		$resultCount = $results->getResultsFound();

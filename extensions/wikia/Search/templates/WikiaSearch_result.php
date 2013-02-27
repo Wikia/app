@@ -3,9 +3,9 @@
 <?php endif; ?>
 
 <article>
-
-	<?php if($result->getThumbnail() != null): ?>
-		<div class="grid-1 alpha"><?= $result->getThumbnailHtml(); ?></div>
+	<?php $thumbnailHtml = $result->getThumbnailHtml(); ?>
+	<?php if(! empty( $thumbnailHtml ) ): ?>
+		<div class="grid-1 alpha"><?= $thumbnailHtml ?></div>
 		<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
 	<?php endif; ?>
 	
@@ -52,7 +52,7 @@
 		<i>Categories: <?=implode(" | ", $result->getVar('categories', array("NONE")))?></i><br/>
 	<?php endif; //debug ?>
 
-	<?php if($result->getThumbnail() != null): ?>
+	<?php if(! empty( $thumbnailHtml ) ): ?>
 		</div> <? // Close media-text div when there's a thumbnail ?>
 	<?php endif; ?>
 

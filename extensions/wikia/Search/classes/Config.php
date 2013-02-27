@@ -65,6 +65,7 @@ class Config implements ArrayAccess
 	 */
 	private $requestedFields = array(
 			'id',
+			'pageid',
 			'wikiarticles',
 			'wikititle',
 			'url',
@@ -79,6 +80,7 @@ class Config implements ArrayAccess
 			'created',
 			'views',
 			'categories',
+			'hub',
 	);
 	
 	/**
