@@ -1,5 +1,8 @@
 <?php
 class WikiaHubsV2SuggestModel extends WikiaModel {
+	const ARTICLEURL_MAXLENGTH = 255;
+	const REASON_MAXLENGTH = 140;
+
 
 	public function getSuggestVideoForm() {
 		$form = array(
@@ -52,7 +55,7 @@ class WikiaHubsV2SuggestModel extends WikiaModel {
 					'label' => wfMsg('wikiahubs-suggest-article-what-article'),
 					'value' => '',
 					'attributes' => array(
-						'maxlength' => 255
+						'maxlength' => self::ARTICLEURL_MAXLENGTH
 					)
 				),
 				array(
@@ -63,7 +66,7 @@ class WikiaHubsV2SuggestModel extends WikiaModel {
 					'label' => wfMsg('wikiahubs-suggest-article-reason'),
 					'value' => '',
 					'attributes' => array(
-						'maxlength' => 140
+						'maxlength' => self::REASON_MAXLENGTH
 					)
 				),
 				array(
