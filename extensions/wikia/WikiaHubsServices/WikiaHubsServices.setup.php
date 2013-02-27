@@ -14,6 +14,7 @@ $app = F::app();
 $app->registerClass('MarketingToolboxModel', $dir . 'models/MarketingToolboxModel.class.php');
 $app->registerClass('MarketingToolboxTop10listModel', $dir . 'models/MarketingToolboxTop10listModel.class.php');
 $app->registerClass('MarketingToolboxExploreModel', $dir . 'models/MarketingToolboxExploreModel.class.php');
+$app->registerClass('MarketingToolboxFeaturedvideoModel', $dir . 'models/MarketingToolboxFeaturedvideoModel.class.php');
 $app->registerClass('MarketingToolboxPollsModel', $dir . 'models/MarketingToolboxPollsModel.class.php');
 $app->registerClass('MarketingToolboxPopularvideosModel', $dir . 'models/MarketingToolboxPopularvideosModel.class.php');
 $app->registerClass('MarketingToolboxSliderModel', $dir . 'models/MarketingToolboxSliderModel.class.php');
@@ -30,5 +31,3 @@ $app->registerClass('MarketingToolboxModuleExploreService', $dir . 'modules/Mark
 $app->registerClass('MarketingToolboxModuleFeaturedvideoService', $dir . 'modules/MarketingToolboxModuleFeaturedvideoService.class.php');
 $app->registerClass('MarketingToolboxModuleFromthecommunityService', $dir . 'modules/MarketingToolboxModuleFromthecommunityService.class.php');
 $app->registerClass('MarketingToolboxModulePollsService', $dir . 'modules/MarketingToolboxModulePollsService.class.php');
-
-include_once($dir . '../RelatedVideos/RelatedVideos.setup.php'); //TODO: remove after discussing it with Video Team
