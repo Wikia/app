@@ -11,7 +11,7 @@ class MarketingToolboxModulePopularvideosServiceTest extends WikiaBaseTest
 	/**
 	 * @dataProvider getDataStructureDataProvider
 	 */
-	public function testGetDataStructureDataProvider($inputData, $videoData, $expectedData) {
+	public function testGetDataStructureDataProvider($inputData, $videoData, $thumbSize, $expectedData) {
 		$popularVideosMock = $this->getMock( 'MarketingToolboxModulePopularvideosService', array( 'getToolboxModel', 'getModuleModel'), array('en',1,1) );
 		$toolboxModelMock = $this->getMock( 'MarketingToolboxModel', array( 'getVideoData' ) );
 		$popularVideoModelMock = $this->getMock( 'MarketingToolboxPopularvideosModel', array( 'getVideoThumbSize' ) );
@@ -19,14 +19,14 @@ class MarketingToolboxModulePopularvideosServiceTest extends WikiaBaseTest
 		$map = [];
 		if(!empty($inputData['video'])) {
 			foreach($inputData['video'] as $k => $video) {
-				$map[] = array( $video, 160, $videoData[$k] );
+				$map[] = array( $video, $thumbSize, $videoData[$k] );
 			}
 		}
 
 		$popularVideoModelMock
 			->expects( $this->any() )
 			->method( 'getVideoThumbSize')
-			->will( $this->returnValue(160) );
+			->will( $this->returnValue($thumbSize) );
 
 		$toolboxModelMock
 			->expects( $this->any() )
@@ -83,6 +83,7 @@ class MarketingToolboxModulePopularvideosServiceTest extends WikiaBaseTest
 						'videoTime' => 'October 25, 2012'
 					)
 				),
+				160,
 				array(
 					'header' => 'bond',
 					'videos' => array(
