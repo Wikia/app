@@ -162,16 +162,19 @@ class MarketingToolboxModel extends WikiaModel {
 				'duration' => true,
 				'linkAttribs' => array('class' => 'video-thumbnail lightbox')
 			);
-			$videoData['videoThumb'] = $file->transform(array('width' => $thumbSize))->toHtml($htmlParams);
+			$thumb = $file->transform(array('width' => $thumbSize));
+
+			$videoData['videoThumb'] = $thumb->toHtml($htmlParams);
 			$videoData['videoTimestamp'] = $file->getTimestamp();
 			$videoData['videoTime'] = $this->wf->TimeFormatAgo($videoData['videoTimestamp']);
 
 			$meta = unserialize($file->getMetadata());
 			$videoData['duration'] = isset($meta['duration']) ? $meta['duration'] : null;
-			$videoData['thumbUrl'] = isset($meta['thumbnail']) ? $meta['thumbnail'] : null;
 			$videoData['title'] = $title->getText();
 			$videoData['fileUrl'] = $title->getFullURL();
+			$videoData['thumbUrl'] = $thumb->getUrl();
 		}
+
 		return $videoData;
 	}
 
