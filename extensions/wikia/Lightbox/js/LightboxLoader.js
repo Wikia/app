@@ -404,7 +404,7 @@ LightboxTracker = {
 };
 
 $(function() {
-	if (!window.wgEnableLightboxExt || window.wikiaPageIsHub) {
+	if (!window.wgEnableLightboxExt) {
 		return;
 	}
 
