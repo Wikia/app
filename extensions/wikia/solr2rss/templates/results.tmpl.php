@@ -9,9 +9,9 @@
   <generator><?php echo htmlspecialchars($url); ?></generator>
   <?php foreach ($docs as $doc): ?>
    <item>
-    <title><?php echo htmlspecialchars($doc[WikiaSearch::field( 'title', $lang )]); ?></title>
+    <title><?php echo htmlspecialchars($doc[Wikia\Search\Utilities::field( 'title', $lang )]); ?></title>
     <link><?php echo htmlspecialchars($doc['url']); ?></link>
-    <description><?php echo htmlspecialchars($doc[WikiaSearch::field( 'html', $lang )]); ?></description>
+    <description><?php echo htmlspecialchars($doc[Wikia\Search\Utilities::field( 'html', $lang )]); ?></description>
     <pubDate><?php echo date($dateFormat, strtotime($doc['created'])); ?></pubDate>
     <guid isPermaLink="true"><?php echo htmlspecialchars($doc['url']); ?></guid>
    </item>

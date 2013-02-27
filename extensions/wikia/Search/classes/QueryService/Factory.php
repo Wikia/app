@@ -40,6 +40,9 @@ class Factory
 		if ( $config->getVideoSearch() ) {
 			return new Select\Video( $container );
 		}
+		if ( $config->getDirectLuceneQuery() ) {
+			return new Select\Lucene( $container );
+		}
 		return new Select\OnWiki( $container );
 	}
 	
