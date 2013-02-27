@@ -4,6 +4,7 @@
  */
 namespace Wikia\Search\Match;
 use \Wikia\Search\Result as Result;
+use \Wikia\Search\Utilities;
 use \WikiaHomePageHelper as HomePageHelper;
 
 class Wiki extends AbstractMatch
@@ -31,7 +32,7 @@ class Wiki extends AbstractMatch
 			$parsed = parse_url($data['url']);
 			$fields['wid'] = $this->id;
 			$fields['title'] = !empty( $data['name'] ) ? $data['name'] : $this->interface->getGlobalForWiki( 'wgSitename', $this->id );
-			$fields[\WikiaSearch::field( 'title' )] = $data['name'];
+			$fields[Utilities::field( 'title' )] = $data['name'];
 			$fields['url'] = sprintf('%s://%s%s', $parsed['scheme'], $parsed['host'], $parsed['path']);
 			$fields['isWikiMatch'] = true;
 			$fields['thumbnail'] = array_shift( empty( $data['wiki_images'] ) ? array() : $data['wiki_images'] );

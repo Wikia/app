@@ -46,11 +46,20 @@ class Indexer
 	 * Handles dependency injection for solarium client
 	 * @param Solarium_Client $client
 	 */
-	public function __construct( Solarium_Client $client ) {
-	    $this->client = $client;
-	    $this->interface = MediaWikiInterface::getInstance();
-	    $this->logger = new Wikia();
-	    parent::__construct();
+	public function __construct() {
+		$this->interface = MediaWikiInterface::getInstance();
+		$master = $this->interface->isOnDbCluster() ? $this->interface->getGlobal( 'SolrHost' ) : 'staff-search-s1';
+		$params = array(
+				'adapter' => 'Curl',
+				'adapteroptions' => array(
+						'host' => $master,
+						'port' => 8983,
+						'path' => '/solr/'
+						 )
+				);
+		$this->client = new Solarium_Client( $params );
+		$this->logger = new Wikia();
+		parent::__construct();
 	}
 		
 	/**
