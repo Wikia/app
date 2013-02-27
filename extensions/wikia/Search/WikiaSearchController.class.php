@@ -113,7 +113,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'debug',					$searchConfig->getDebug() );
 		$this->setVal( 'solrHost',				$this->wg->SolrHost);
 		$this->setVal( 'isInterWiki',			$searchConfig->getIsInterWiki() );
-		$this->setVal( 'relevancyFunctionId',	WikiaSearch::RELEVANCY_FUNCTION_ID ); //@todo do we need this?
+		$this->setVal( 'relevancyFunctionId',	6 ); //@todo do we need this?
 		$this->setVal( 'namespaces',			$searchConfig->getNamespaces() );
 		$this->setVal( 'hub',					$searchConfig->getHub() );
 		$this->setVal( 'hasArticleMatch',		$searchConfig->hasArticleMatch() );
@@ -312,7 +312,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$filters = $config->getFilterQueries();
 		$rank = $config->getRank();
-		$is_video_wiki = $this->wg->CityId == WikiaSearch::VIDEO_WIKI_ID;
+		$is_video_wiki = $this->wg->CityId == Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID;
 
 		$form = array(
 				'by_category' =>        $this->getVal('by_category', false),
