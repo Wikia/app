@@ -130,7 +130,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	protected function addProtocolToLink($link) {
-		if (strpos($link, 'http://') === false) {
+		if (strpos($link, 'http://') === false && strpos($link, 'https://') === false) {
 			$link = 'http://' . $link;
 		}
 
