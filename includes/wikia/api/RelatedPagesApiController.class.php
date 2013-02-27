@@ -10,16 +10,17 @@ class RelatedPagesApiController extends WikiaApiController {
 	const PARAMETER_LIMIT = 'limit';
 
 	/**
-	 * Get RelatedPages for a givin article ID
+	 * Get RelatedPages for a given article ID
 	 *
-	 * @requestParam string $id Id of an article to fetch related pages for
-	 * @requestParam string $limit [OPTIONAL] Limit the number of related pages to return default: 3
+	 * @requestParam array $id Id of an article to fetch related pages for
+	 * @requestParam integer $limit [OPTIONAL] Limit the number of related pages to return default: 3
 	 *
-	 * @responseParam array $items The list of top wikis by pageviews matching the optional filtering
-	 * @responseParam integer $total The total number of results
+	 * @responseParam object $items List of articles with related pages
+	 * @responseParam array $basepath domain of a wiki to create a url for an article
 	 *
-	 * @example &id=2087
-	 * @example &id=2087&limit=5
+	 * @example &ids=2087
+	 * @example &ids=2087,3090
+	 * @example &ids=2087&limit=5
 	 */
 
 	function getList(){
@@ -47,12 +48,12 @@ class RelatedPagesApiController extends WikiaApiController {
 			throw new MissingParameterApiException( 'ids' );
 		}
 
-		$this->response->setVal( 'related_pages', $related );
+		$this->response->setVal( 'items', $related );
 		$this->response->setVal( 'basepath', $this->wg->Server );
 
 		$this->response->setCacheValidity(
-			604800 /* 1 week */,
-			604800 /* 1 week */,
+			10800 /* 3 hours */,
+			10800 /* 3 hours */,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
