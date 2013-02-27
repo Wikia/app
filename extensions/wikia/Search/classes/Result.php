@@ -176,7 +176,11 @@ class Result extends ReadWrite {
 	 */
 	public function getThumbnailHtml() {
 		if (! isset( $this['thumbnail'] ) ) {
-			$this['thumbnail'] = $this->interface->getThumbnailHtmlForPageId( $this['pageid'] );
+			try {
+				$this['thumbnail'] = $this->interface->getThumbnailHtmlForPageId( $this['pageid'] );
+			} catch ( \Exception $e ) {
+				$this['thumbnail'] = '';
+			}
 		}
 		return $this['thumbnail'];
 	}
@@ -186,7 +190,11 @@ class Result extends ReadWrite {
 	 * @return string $videoViews
 	 */
 	public function getVideoViews() {
-		return $this->interface->getVideoViewsForPageId( $this['pageid'] );
+		try {
+			return $this->interface->getVideoViewsForPageId( $this['pageid'] );
+		} catch ( \Exception $e ) {
+			return 0;
+		}
 	}
 
 	/**
