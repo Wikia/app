@@ -13,7 +13,6 @@ class RelatedPages {
 	static protected $instance = null;
 
 	protected function __construct( ) {
-		$this->categories = array();
 	}
 
 	protected function __clone() {
@@ -34,12 +33,27 @@ class RelatedPages {
 		$this->categories = $categories;
 	}
 
-	public function getCategories( $articleId) {
-		return Title::newFromID( $articleId )->getParentCategories();
+	public function getCategories( $articleId ) {
+		if ( is_null( $this->categories ) ) {
+			$title = Title::newFromID( $articleId );
+
+			if( !empty( $title ) ) {
+				$categories = [];
+
+				foreach( $title->getParentCategories() as $category => $title ) {
+					$categories[] = Title::newFromText( $category, NS_CATEGORY )->getBaseText();
+				}
+
+				$this->categories = $categories;
+			}
+		}
+
+		return $this->categories;
 	}
 
 	public function reset() {
 		$this->pages = null;
+		$this->categories = null;
 	}
 
 	public function setData( $data ){
@@ -234,6 +248,7 @@ class RelatedPages {
 				$pages[$pageId] = array(
 					'url' => $title->getLocalUrl(),
 					'title' => $prefixedTitle,
+					'id' => (int) $pageId
 				);
 			}
 		}
