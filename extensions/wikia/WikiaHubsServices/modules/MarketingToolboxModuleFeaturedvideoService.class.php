@@ -100,6 +100,21 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 		return parent::filterData($data);
 	}
 
+	public function render($data) {
+		if( !empty($data['sponsoredImageAlt']) ) {
+			//sponsoredImageAlt === image file title -> can be used in Title::newFromTitle() to create Title instance
+			$sponsoredImageInfo = $this->getImageInfo($data['sponsoredImageAlt']);
+			$data['sponsoredImageMarkup'] = Xml::element('img', array(
+				'src' => $sponsoredImageInfo->url,
+				'alt' => $sponsoredImageInfo->title,
+				'width' => $sponsoredImageInfo->width,
+				'height' => $sponsoredImageInfo->height,
+			), '', true);
+		}
+		
+		return parent::render($data);
+	}
+	
 	public function getStructuredData($data) {
 		$structuredData = array();
 
