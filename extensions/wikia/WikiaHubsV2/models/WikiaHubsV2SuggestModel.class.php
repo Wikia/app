@@ -51,12 +51,20 @@ class WikiaHubsV2SuggestModel extends WikiaModel {
 					'isRequired' => true,
 					'label' => wfMsg('wikiahubs-suggest-article-what-article'),
 					'value' => '',
+					'attributes' => array(
+						'maxlength' => 255
+					)
 				),
 				array(
-					'type' => 'custom',
+					'class' => 'reason',
+					'type' => 'textarea',
+					'name' => 'reason',
 					'isRequired' => true,
 					'label' => wfMsg('wikiahubs-suggest-article-reason'),
-					'output' => '<label>'.wfMsg('wikiahubs-suggest-article-reason').'</label><textarea name="reason" class="reason"></textarea>',
+					'value' => '',
+					'attributes' => array(
+						'maxlength' => 140
+					)
 				),
 				array(
 					'class' => 'submit-button',
