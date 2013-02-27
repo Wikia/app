@@ -237,6 +237,15 @@ abstract class VideoHandler extends BitmapHandler {
 	}
 
 	/**
+	 * get expiration date
+	 * @return integer|null
+	 */
+	public function getExpirationDate() {
+		$metadata = $this->getMetadata(true);
+		return (!empty($metadata['expirationDate']) ? $metadata['expirationDate'] : null);
+	}
+
+	/**
 	 *
 	 * @return int duration in seconds, or null
 	 */
@@ -266,7 +275,7 @@ abstract class VideoHandler extends BitmapHandler {
 
 		return '';
 	}
-	
+
 	/**
 	 * Get the video id that is used for embed code
 	 * @return string

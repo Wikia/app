@@ -3,9 +3,9 @@
 class VideoPageController extends WikiaController {
 
 	public function setupResources() {
-		
+
 	}
-	
+
 	/**
 	 *
 	 */
@@ -13,7 +13,7 @@ class VideoPageController extends WikiaController {
 		$type = $this->getVal('type', 'local');
 
 		$summary = VideoUsageService::summaryInfoByWiki($this->wg->Title->getDBkey());
-		
+
 		$heading = '';
 		$fileList = array();
 
@@ -23,7 +23,7 @@ class VideoPageController extends WikiaController {
 				if (array_key_exists($this->wg->CityId, $summary)) {
 					unset($summary[$this->wg->CityId]);
 				}
-	
+
 				$count = 0;
 				foreach ($summary as $wikiID => $info) {
 					$fileList[] = $info[0];
@@ -40,7 +40,7 @@ class VideoPageController extends WikiaController {
 			}
 
 		}
-		
+
 		$this->heading = $heading;
 		$this->fileList = $fileList;
 	}
@@ -72,18 +72,22 @@ return;
 		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
 		$this->text = F::app()->renderView( 'RelatedPages', 'Index', array( "altTitle" => $title ) );
 	}
-	
+
 	public function videoCaption() {
 		global $wgWikiaVideoProviders;
-		
-		$provider = $this->getVal('provider');		
+
+		$provider = $this->getVal('provider');
 		if ( !empty($provider) ) {
 			$providerName = explode( '/', $provider );
 			$provider = array_pop( $providerName );
 		}
-		
-		$expireDate = false;
-		
+
+		$expireDate = $this->getVal( 'expireDate', '' );
+		if ( !empty($expireDate) ) {
+			$date = $this->wg->Lang->date( $expireDate );
+			$expireDate = $this->wf->Message( 'video-page-expires', $date )->text();
+		}
+
 		$this->provider = ucwords($provider);
 		$this->detailUrl = $this->getVal('detailUrl');
 		$this->providerUrl = $this->getVal('providerUrl');

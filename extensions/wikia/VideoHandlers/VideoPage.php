@@ -9,7 +9,7 @@ if( !defined( 'MEDIAWIKI' ) )
  * @ingroup Media
  */
 class WikiaVideoPage extends ImagePage {
-	
+
 	protected static $videoWidth = 660;
 
 	/**
@@ -21,7 +21,7 @@ class WikiaVideoPage extends ImagePage {
 	protected function showTOC( $metadata ) {
 		return '';
 	}
-	
+
 	/**
 	 * imageDetails override
 	 * Image page doesn't need the wrapper, but VideoPage does
@@ -37,7 +37,7 @@ class WikiaVideoPage extends ImagePage {
 		$wgOut->addHtml('</div>');
 		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'relatedPages', array() ) );
 	}
-	
+
 	/**
 	 * imageListing override.
 	 * for VideoPage, imageListing will be printed under additionalDetails()
@@ -54,7 +54,7 @@ class WikiaVideoPage extends ImagePage {
 		if ( $timestamp > 0 ) {
 			$img = wfFindFile( $this->mTitle, $timestamp );
 			if ( !($img instanceof LocalFile && $img->exists()) ) {
-				$img = $this->getDisplayedFile();				
+				$img = $this->getDisplayedFile();
 			}
 		} else {
 			$img = $this->getDisplayedFile();
@@ -63,8 +63,8 @@ class WikiaVideoPage extends ImagePage {
 		$autoplay = F::app()->wg->VideoPageAutoPlay;
 
 		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
-		
-		
+
+
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoHandlers/css/VideoPage.scss'));
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/VideoPage.js\"></script>\n" );
 
@@ -72,19 +72,20 @@ class WikiaVideoPage extends ImagePage {
 		$html .= '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
 
 		$captionDetails = array(
+			'expireDate' => $img->getExpirationDate(),
 			'provider' => $img->getProviderName(),
 			'providerUrl' => $img->getProviderHomeUrl(),
 			'detailUrl' => $img->getProviderDetailUrl(),
 			'views' => MediaQueryService::getTotalVideoViewsByTitle( $img->getTitle()->getDBKey() ),
 		);
 		$html .= F::app()->renderView( 'VideoPageController', 'videoCaption', $captionDetails );
-		
+
 		$content = $this->getContent();
 		$isContentEmpty = empty($content);
 		$html .= F::app()->renderPartial( 'VideoPageController', 'description', array('isContentEmpty' => $isContentEmpty) );
-		
+
 		$wgOut->addHTML( $html );
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
