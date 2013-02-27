@@ -93,12 +93,12 @@ class CategorySelectController extends WikiaController {
 	 */
 	public function category() {
 		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
-		$this->response->setVal( 'edit', $this->wf->Msg( 'categoryselect-category-edit' ) );
+		$this->response->setVal( 'edit', $this->wf->Message( 'categoryselect-category-edit' )->text() );
 		$this->response->setVal( 'link', $this->request->getVal( 'link', '' ) );
 		$this->response->setVal( 'name', $this->request->getVal( 'name', '' ) );
 		$this->response->setVal( 'namespace', $this->request->getVal( 'namespace', '' ) );
 		$this->response->setVal( 'outerTag', $this->request->getVal( 'outerTag', '' ) );
-		$this->response->setVal( 'remove', $this->wf->Msg( 'categoryselect-category-remove' ) );
+		$this->response->setVal( 'remove', $this->wf->Message( 'categoryselect-category-remove' )->text() );
 		$this->response->setVal( 'sortKey', $this->request->getVal( 'sortKey', '' ) );
 		$this->response->setVal( 'type', $this->request->getVal( 'type', 'normal' ) );
 
@@ -213,13 +213,13 @@ class CategorySelectController extends WikiaController {
 		$title = Title::newFromID( $articleId );
 
 		if ( $this->wf->ReadOnly() ) {
-			$response[ 'error' ] = $this->wf->Message( 'categoryselect-error-db-locked' );
+			$response[ 'error' ] = $this->wf->Message( 'categoryselect-error-db-locked' )->text();
 
 		} else if ( is_null( $title ) ) {
-			$response[ 'error' ] = $this->wf->Message( 'categoryselect-error-article-doesnt-exist', $articleId );
+			$response[ 'error' ] = $this->wf->Message( 'categoryselect-error-article-doesnt-exist', $articleId )->text();
 
 		} else if ( !$title->userCan( 'edit' ) || $this->wg->User->isBlocked() ) {
-			$response[ 'error' ] = $this->wf->Message( 'categoryselect-error-user-rights' );
+			$response[ 'error' ] = $this->wf->Message( 'categoryselect-error-user-rights' )->text();
 
 		} else if ( !empty( $categories ) && is_array( $categories ) ) {
 			Wikia::setVar( 'EditFromViewMode', 'CategorySelect' );
@@ -243,7 +243,7 @@ class CategorySelectController extends WikiaController {
 			$editPage->edittime = $article->getTimestamp();
 			$editPage->recreate = true;
 			$editPage->textbox1 = $wikitext;
-			$editPage->summary = $this->wf->MsgForContent( 'categoryselect-edit-summary' );
+			$editPage->summary = $this->wf->Message( 'categoryselect-edit-summary' )->inContentLanguage()->text();
 			$editPage->watchthis = $editPage->mTitle->userIsWatching();
 
 			$bot = $this->wg->User->isAllowed( 'bot' );
@@ -264,12 +264,12 @@ class CategorySelectController extends WikiaController {
 
 				case EditPage::AS_SPAM_ERROR:
 					$dbw->rollback();
-					$response[ 'error' ] = $this->wf->Message( 'spamprotectiontext' ) . '<p>( Case #8 )</p>';
+					$response[ 'error' ] = $this->wf->Message( 'spamprotectiontext' )->text() . '<p>( Case #8 )</p>';
 					break;
 
 				default:
 					$dbw->rollback();
-					$response[ 'error' ] = $this->wf->Message( 'categoryselect-edit-abort' );
+					$response[ 'error' ] = $this->wf->Message( 'categoryselect-edit-abort' )->text();
 			}
 		}
 

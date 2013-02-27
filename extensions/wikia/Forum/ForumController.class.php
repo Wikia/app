@@ -33,7 +33,7 @@ class ForumController extends WallBaseController {
 
 		parent::index(self::BOARD_PER_PAGE);
 		$this->setIsForum();
-		
+
 		F::build( 'JSMessages' )->enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 		$this->response->addAsset( 'forum_js' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoard.scss' );
@@ -41,14 +41,14 @@ class ForumController extends WallBaseController {
 
 		$this->addMiniEditorAssets();
 
-		$this->description = ''; 
+		$this->description = '';
 
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$board = F::build( 'ForumBoard', array( ), 'getEmpty' );
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
-			
+
 			$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-topic-title', $this->wg->title->getBaseText() ) );
 		} else {
 			$boardId = $this->wall->getId();
@@ -61,9 +61,9 @@ class ForumController extends WallBaseController {
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads() );
 			$this->response->setVal( 'isTopicPage', false );
-			
+
 			$this->description = $board->getDescription();
-			
+
 			$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-title', $this->wg->title->getBaseText() ) );
 		}
 
@@ -109,11 +109,11 @@ class ForumController extends WallBaseController {
 		$this->isTopicPage = $this->getVal('isTopicPage', false);
 		if($this->isTopicPage) {
 			$forum = new Forum();
-		
+
 			$list = $forum->getBoardList();
 
 			$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
-	
+
 			foreach ( $list as $value ) {
 				$this->destinationBoards[] = array( 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) );
 			}
@@ -247,7 +247,7 @@ class ForumController extends WallBaseController {
 	protected function addMiniEditorAssets() {
 		if ( $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) ) {
 			$this->sendRequest( 'MiniEditor', 'loadAssets',
-				array( 'additionalAssets' => array( 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ) ) 
+				array( 'additionalAssets' => array( 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ) )
 			);
 		}
 	}
@@ -263,9 +263,13 @@ class ForumController extends WallBaseController {
 				break;
 			case 'index' :
 			default :
-				$options = array( 'nr' => $this->app->wf->Msg( 'forum-sorting-option-newest-replies' ),
-				//		'pt' => $this->app->wf->Msg('forum-sorting-option-popular-threads'),
-				'mr' => $this->app->wf->Msg( 'forum-sorting-option-most-replies' ), );
+				$options = array(
+					'nr' => $this->app->wf->Message( 'forum-sorting-option-newest-replies' )->text(),
+					// 'pt' => $this->app->wf->Message('forum-sorting-option-popular-threads')->text(),
+					'mr' => $this->app->wf->Message( 'forum-sorting-option-most-replies' )->text(),
+					'nt' => $this->app->wf->Message( 'forum-sorting-option-newest-threads' )->text(),
+					'ot' => $this->app->wf->Message( 'forum-sorting-option-oldest-threads' )->text(),
+				);
 				break;
 		}
 
