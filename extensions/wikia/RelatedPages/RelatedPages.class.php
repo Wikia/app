@@ -203,7 +203,7 @@ class RelatedPages {
 		global $wgMemc;
 
 		wfProfileIn(__METHOD__);
-		if ( empty( $this->memcKeyPrefix ) ){
+		if ( empty( $this->memcKeyPrefix ) ) {
 			$cacheKey = wfMemcKey( __METHOD__, $articleId);
 		} else {
 			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $articleId);
