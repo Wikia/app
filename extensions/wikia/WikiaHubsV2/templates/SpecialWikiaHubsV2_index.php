@@ -21,7 +21,7 @@
 		</section>
 		<div class="grid-2 alpha wikiahubs-rail">
 			<section class="grid-2 alpha wikiahubs-featured-video wikiahubs-module">
-				<?= $app->renderView('SpecialWikiaHubsV2', 'featuredvideo', $app->wg->request->getValues()); ?>
+				<?= $modules[MarketingToolboxModuleFeaturedvideoService::MODULE_ID] ?>
 			</section>
 
 			<section class="grid-2 alpha wikiahubs-wikitext-module wikiahubs-module">
