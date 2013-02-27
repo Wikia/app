@@ -5,5 +5,7 @@
 <div class="video-page-caption">
 	<p class="video-views"><?= wfMessage( 'video-page-views' )->params( $viewCount ) ?></p>
 	<p><?= wfMessage( 'video-page-from-provider' )->params( $providerLink )->text() ?></p>
-	<p><?= $expireDate ?></p>
+	<? if( $expireDate ): ?>
+		<p><?= $expireDate ?></p>
+	<? endif; ?>
 </div>
