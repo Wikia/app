@@ -6,8 +6,8 @@
  */
 
 class RelatedPagesApiController extends WikiaApiController {
-	const ITEMS_PER_BATCH = 25;
-	const PARAMETER_WIKI_IDS = 'ids';
+	const PARAMETER_ARTICLE_IDS = 'ids';
+	const PARAMETER_LIMIT = 'limit';
 
 	/**
 	 * Get RelatedPages for a givin article ID
@@ -23,26 +23,41 @@ class RelatedPagesApiController extends WikiaApiController {
 	 */
 
 	function getList(){
-		$articleid = $this->request->getInt( 'id', 0 );
-		$limit = $this->request->getInt( 'limit', 3 );
+		$this->wf->ProfileIn( __METHOD__ );
 
-		if ( $articleid != 0 ) {
+		$ids = $this->request->getArray( self::PARAMETER_ARTICLE_IDS, null );
+		$limit = $this->request->getInt( self::PARAMETER_LIMIT, 3 );
+
+		$related = [];
+
+		if ( is_array( $ids ) ) {
 			$relatedPages = RelatedPages::getInstance();
 
+			foreach( $ids as $id ) {
+				if ( is_numeric( $id ) ) {
+					$related[$id] = $relatedPages->get( $id, $limit );
+				} else {
+					throw new InvalidParameterApiException( self::PARAMETER_ARTICLE_IDS );
+				}
 
-
-			$this->response->setVal( 'relatedPages', $relatedPages->get( $articleid, $limit ) );
+				$relatedPages->reset();
+			}
 		} else {
-			throw new MissingParameterApiException( 'id' );
+			$this->wf->ProfileOut( __METHOD__ );
+			throw new MissingParameterApiException( 'ids' );
 		}
 
-//		$this->response->setCacheValidity(
-//			1209600 /* 2 weeks */,
-//			1209600 /* 1 week */,
-//			array(
-//				WikiaResponse::CACHE_TARGET_BROWSER,
-//				WikiaResponse::CACHE_TARGET_VARNISH
-//			)
-//		);
+		$this->response->setVal( 'related_pages', $related );
+		$this->response->setVal( 'basepath', $this->wg->Server );
+
+		$this->response->setCacheValidity(
+			604800 /* 1 week */,
+			604800 /* 1 week */,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+		$this->wf->ProfileOut( __METHOD__ );
 	}
 }
