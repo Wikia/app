@@ -127,11 +127,6 @@ if(!empty($wgVideoHandlersVideosMigrated)) {
 $wgAvailableRights[] = 'specialvideohandler';
 $wgGroupPermissions['staff']['specialvideohandler'] = true;
 
-$wgAvailableRights[] = 'videodelete';
-$wgGroupPermissions['*']['videodelete'] = false;
-$wgGroupPermissions['staff']['videodelete'] = true;
-//$wgGroupPermissions['sysop']['videodelete'] = true;
-
 /*
  * handlers
  */
