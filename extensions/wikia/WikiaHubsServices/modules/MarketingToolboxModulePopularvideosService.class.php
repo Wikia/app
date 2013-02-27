@@ -91,4 +91,8 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 
 		return $data;
 	}
+
+	public function getStructuredData($data) {
+		return array();
+	}
 }
