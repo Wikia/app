@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\Config
  */
 namespace Wikia\Search;
-use Wikia\Search\MediaWikiInterface, \Sanitizer, \Solarium_Query_Select, \WikiaSearch as SearchService, \Wikia\Search\Match, \ArrayAccess;
+use Wikia\Search\MediaWikiInterface, \Sanitizer, \Solarium_Query_Select, \Wikia\Search\Match, \ArrayAccess;
 /**
  * A config class intended to handle variable flags for search
  * Intended to be a dependency-injected receptacle for different search requirements
@@ -162,9 +162,9 @@ class Config implements ArrayAccess
 		$this->interface = MediaWikiInterface::getInstance();
 		
 		$dynamicFilterCodes = array(
-				self::FILTER_CAT_VIDEOGAMES    => SearchService::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' ) ),
-				self::FILTER_CAT_ENTERTAINMENT => SearchService::valueForField( 'categories', 'Entertainment' ),
-				self::FILTER_CAT_LIFESTYLE     => SearchService::valueForField( 'categories', 'Lifestyle'),
+				self::FILTER_CAT_VIDEOGAMES    => Utilities::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' ) ),
+				self::FILTER_CAT_ENTERTAINMENT => Utilities::valueForField( 'categories', 'Entertainment' ),
+				self::FILTER_CAT_LIFESTYLE     => Utilities::valueForField( 'categories', 'Lifestyle'),
 				);
 		
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
@@ -182,7 +182,7 @@ class Config implements ArrayAccess
 	 * @param  string $method
 	 * @param  array  $params
 	 * @throws \BadMethodCallException
-	 * @return Ambigous <NULL, multitype:>|WikiaSearchConfig
+	 * @return Ambigous <NULL, multitype:>|Wikia\Search\Config
 	 */
 	public function __call($method, $params) {
 		if ( substr($method, 0, 3) == 'get' ) {
@@ -286,7 +286,7 @@ class Config implements ArrayAccess
 		if (! isset( $this->params['query'] ) ) {
 			return false;
 		}
-		$query = $strategy !== self::QUERY_DEFAULT ? $this->params['query'] : SearchService::sanitizeQuery( $this->params['query'] );
+		$query = $strategy !== self::QUERY_DEFAULT ? $this->params['query'] : Utilities::sanitizeQuery( $this->params['query'] );
 		$query = $strategy === self::QUERY_ENCODED ? htmlentities( $query, ENT_COMPAT, 'UTF-8' ) : $query;
 		
 		if ( $this->isInterWiki() ) {
@@ -302,7 +302,7 @@ class Config implements ArrayAccess
 	 */
 	public function getQueryNoQuotes( $raw = false ) {
 		$query = preg_replace( "/['\"]/", '', preg_replace( "/(\\w)['\"](\\w)/", '$1 $2',  $this->getQuery( self::QUERY_RAW ) ) );
-		return $raw ? $query : SearchService::sanitizeQuery( $query );
+		return $raw ? $query : Utilities::sanitizeQuery( $query );
 	}
 	
 	/**
@@ -425,7 +425,7 @@ class Config implements ArrayAccess
 	{
 		$fieldsPrepped = array();
 		foreach ( $this['requestedFields'] as $field ) {
-			$fieldsPrepped[] = SearchService::field( $field );
+			$fieldsPrepped[] = Utilities::field( $field );
 		}
 		
 		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {

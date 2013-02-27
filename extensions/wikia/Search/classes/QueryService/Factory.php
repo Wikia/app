@@ -51,15 +51,16 @@ class Factory
 		$interface = MediaWikiInterface::getInstance();
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
+			$host = $interface->isOnDbCluster() ? $interface->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';  
 			$solariumConfig = array(
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
-							'host'    => ( $interface->getGlobalWithDefault( 'SolrHost', 'localhost' ) ),
+							'host'    => $host,
 							'port'    => $interface->getGlobalWithDefault( 'SolrPort', 8180 ),
 							'path'    => '/solr/',
 							)
 					);
-			if ( $interface->getGlobal( 'WikiaSearchUseProxy' ) && $interface->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
+			if ( $interface->isOnDbCluster() && $interface->getGlobal( 'WikiaSearchUseProxy' ) && $interface->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
 				$solariumConfig['adapteroptions']['proxy'] = $interface->getGlobal( 'SolrProxy' );
 				$solariumConfig['adapteroptions']['port'] = null;
 			}
