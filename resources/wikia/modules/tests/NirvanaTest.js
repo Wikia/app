@@ -77,7 +77,7 @@ describe("Nirvana", function () {
 			},
 			callback: function(resp) {
 				expect(typeof resp).toBe('object');
-				expect(resp.res).toBe(true);
+				expect(resp.res).toBe(false);
 
 				done();
 			}
