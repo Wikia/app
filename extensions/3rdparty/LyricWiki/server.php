@@ -2078,14 +2078,14 @@ function lw_getSearchResults($searchString, $maxResults=25){
 	$titles = array();
 
 	try {
-		$wikiaSearch = F::build('WikiaSearch');
-		$wikiaSearchConfig = F::build('WikiaSearchConfig');
+		$wikiaSearchConfig = new Wikia\Search\Config();
 		$wikiaSearchConfig->setNamespaces( array( NS_MAIN ) )
 			->setQuery( $searchString )
-			->setLength( $maxResults )
-			->setCityId( $wgCityId );
+			->setLength( $maxResults );
 
-		$resultSet = $wikiaSearch->doSearch( $wikiaSearchConfig );
+		$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
+		$wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->get( $container );
+		$resultSet = $wikiaSearch->search();
 		$found = $resultSet->getResultsFound();
 
 		if ( !empty( $found ) ) {
