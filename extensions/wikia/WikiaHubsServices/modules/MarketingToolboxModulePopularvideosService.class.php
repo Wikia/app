@@ -72,7 +72,66 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 
 		return parent::renderEditor($data);
 	}
+	
+	public function render($data) {
+		//mocked data TODO: remove once #fb98656 is done
+		$model = new MarketingToolboxModel();
+		$video = $model->getVideoData('LEGO The Lord of the Rings - Demo - E3 2012');
+		$data = array(
+			'headline' => 'Popular Videos (mocked data)',
+			'videos' => array(
+				array(
+					'title' => 'LEGO The Lord of the Rings - Demo - E3 2012',
+					'fileUrl' => '',
+					'thumbMarkup' => $video['videoThumb'],
+					'thumbUrl' => '',
+					'duration' => '',
+					'wikiUrl' => ''
+				),
+				array(
+					'title' => 'LEGO The Lord of the Rings - Demo - E3 2012',
+					'fileUrl' => '',
+					'thumbMarkup' => $video['videoThumb'],
+					'thumbUrl' => '',
+					'duration' => '',
+					'wikiUrl' => ''
+				),
+				array(
+					'title' => 'LEGO The Lord of the Rings - Demo - E3 2012',
+					'fileUrl' => '',
+					'thumbMarkup' => $video['videoThumb'],
+					'thumbUrl' => '',
+					'duration' => '',
+					'wikiUrl' => ''
+				),
+				array(
+					'title' => 'LEGO The Lord of the Rings - Demo - E3 2012',
+					'fileUrl' => '',
+					'thumbMarkup' => $video['videoThumb'],
+					'thumbUrl' => '',
+					'duration' => '',
+					'wikiUrl' => ''
+				),
+				array(
+					'title' => 'LEGO The Lord of the Rings - Demo - E3 2012',
+					'fileUrl' => '',
+					'thumbMarkup' => $video['videoThumb'],
+					'thumbUrl' => '',
+					'duration' => '',
+					'wikiUrl' => ''
+				),
+			)
+		);
+		//end of mocked data
+		
+		return parent::render($data);
+	}
 
+	//TODO: remove once #fb98656 is done
+	public function getStructuredData($data) {
+		return $data;
+	}
+	
 	public function filterData($data) {
 		$data = parent::filterData($data);
 
@@ -92,16 +151,5 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 		}
 
 		return $data;
-	}
-
-	public function getStructuredData($data) {
-
-		// TODO
-		$video = 'Skyfall Video Interviews';
-		$toolboxModel = new MarketingToolboxModel();
-		$moduleModel = new MarketingToolboxPopularvideosModel();
-		$videoData = $toolboxModel->getVideoData($video, $moduleModel->getVideoThumbSize());
-
-		return array();
 	}
 }
