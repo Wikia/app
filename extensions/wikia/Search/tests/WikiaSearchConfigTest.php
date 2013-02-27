@@ -4,14 +4,28 @@ require_once( 'WikiaSearchBaseTest.php' );
 
 class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 
+	public function setUp() {
+		$this->interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		                        ->disableOriginalConstructor();
+		
+		$this->config = $this->getMockBuilder( '\Wikia\Search\Config' )
+		                     ->disableOriginalConstructor();
+		
+		parent::setUp();
+	}
+	
+	protected function setInterface( $config, $interface ) {
+		$refl = new ReflectionProperty( '\\Wikia\\Search\\Config', 'interface' );
+		$refl->setAccesible( true );
+		$refl->setValue( $config, $interface );
+	}
+	
 	/**
-	 * @covers WikiaSearchConfig::__construct
+	 * @covers Wikia\Search\Config::__construct
 	 */
 	public function testConstructor() {
-
-		$newParams	= array( 'rank'	=>	'newest');
-		$config		= F::build( 'WikiaSearchConfig', array( $newParams ) );
-
+		$newParams = array( 'rank' => 'newest');
+		$config    = new Wikia\Search\Config( $newParams );
 		$this->assertEquals(
 				'newest',
 				$config->getRank(),
@@ -20,18 +34,16 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::__call
+	 * @covers Wikia\Search\Config::__call
 	 */
 	public function testMagicMethods() {
-
-		$config = F::build( 'WikiaSearchConfig' );
-
+		$config = new Wikia\Search\Config();
 		$this->assertNull(
 				$config->getValueThatDoesntExist(),
 				'An accessor method value that has not been set should return null.'
 		);
 		$this->assertInstanceOf(
-				'WikiaSearchConfig',
+				'Wikia\Search\Config',
 				$config->setValueThatDoesntExist( true ),
 				'A dynamic mutator method should provide a fluent interface.'
 		);
@@ -42,9 +54,8 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$config->getValueThatDoesntExist(),
 				$config['valueThatDoesntExist'],
-				'Any value set in WikiaSearchConfig should be exposed via array access.'
+				'Any value set in Wikia\Search\Config should be exposed via array access.'
 		);
-
 		$exception = false;
 		try {
 			$config->thisIsAMethodIJustMadeUp();
@@ -57,31 +68,25 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::offsetExists
-	 * @covers WikiaSearchConfig::offsetGet
-	 * @covers WikiaSearchConfig::offsetSet
-	 * @covers WikiaSearchConfig::offsetUnset
+	 * @covers Wikia\Search\Config::offsetExists
+	 * @covers Wikia\Search\Config::offsetGet
+	 * @covers Wikia\Search\Config::offsetSet
+	 * @covers Wikia\Search\Config::offsetUnset
 	 */
 	public function testArrayAccessMethods() {
-
-		$config = F::build( 'WikiaSearchConfig' );
-
+		$config = new Wikia\Search\Config();
 		$this->assertNull(
 		        $config['valueThatDoesntExist'],
 		        'Array access for an unknown key should return null.'
 		);
-
 		$config['valueThatDoesntExist'] = true;
-
 		$this->assertTrue(
 				$config['valueThatDoesntExist'],
 				'Array access value setting should result in future array access returning the assigned value.'
 		);
-
 		if ( isset( $config['valueThatDoesntExist'] ) ) {
 			unset($config['valueThatDoesntExist']);
 		}
-
 		$this->assertNull(
 		        $config['valueThatDoesntExist'],
 		        'Unsetting an array key for a value should result in it returning null in future access.'
@@ -89,34 +94,31 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::getSize
-	 * @covers WikiaSearchConfig::getLength
-	 * @covers WikiaSearchConfig::getLimit
-	 * @covers WikiaSearchConfig::setLimit
+	 * @covers Wikia\Search\Config::getSize
+	 * @covers Wikia\Search\Config::getLength
+	 * @covers Wikia\Search\Config::getLimit
+	 * @covers Wikia\Search\Config::setLimit
 	 */
 	public function testGetSize() {
-
-		$config = F::build( 'WikiaSearchConfig' );
-
+		$config = new Wikia\Search\Config();
 		$this->assertEquals(
-		        WikiaSearchConfig::RESULTS_PER_PAGE,
+		        Wikia\Search\Config::RESULTS_PER_PAGE,
 		        $config->getLength(),
-		        'WikiaSearchConfig getLength should default to constant WikiaSearchConfig::RESULTS_PER_PAGE.'
+		        'Wikia\Search\Config getLength should default to constant Wikia\Search\Config::RESULTS_PER_PAGE.'
 		);
 		$this->assertEquals(
 				$config->getSize(),
 				$config->getLength(),
-				'WikiaSearchConfig getSize and getLength methods should be synonymous.'
+				'Wikia\Search\Config getSize and getLength methods should be synonymous.'
 		);
 		$this->assertEquals(
 				$config->getSize(),
 				$config->getLimit(),
-				'WikiaSearchConfig getSize and getLimit methods should be synonymous without an article match.'
+				'Wikia\Search\Config getSize and getLimit methods should be synonymous without an article match.'
 		);
-
-		$mockTitle			= $this->getMock( 'Title' );
-		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
-		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
+		$mockArticleMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
+		                         ->disableOriginalConstructor()
+		                         ->getMock();
 
 		$limit = $config->getLimit();
 
@@ -124,53 +126,53 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				->setStart			( 0 );
 
 		$this->assertEquals(
-				WikiaSearchConfig::RESULTS_PER_PAGE - 1,
+				Wikia\Search\Config::RESULTS_PER_PAGE - 1,
 				$config->getLength(),
-				'A stored article match in WikiaSearchConfig should result in reducing the length value by 1 if start=0.'
+				'A stored article match in Wikia\Search\Config should result in reducing the length value by 1 if start=0.'
 		);
 		$this->assertEquals(
 				$limit,
 				$config->getLimit(),
-				'The return value of WikiaSearchConfig::getLimit should not mutate regardless of article match if start=0.'
+				'The return value of Wikia\Search\Config::getLimit should not mutate regardless of article match if start=0.'
 		);
 		$this->assertEquals(
 		        $config->getSize(),
 		        $config->getLength(),
-		        'WikiaSearchConfig getSize and getLength methods should be synonymous, even with article match at start=0.'
+		        'Wikia\Search\Config getSize and getLength methods should be synonymous, even with article match at start=0.'
 		);
 		$this->assertNotEquals(
 				$config->getLimit(),
 				$config->getLength(),
-				'WikiaSearchConfig::getLimit and WikiaSearchConfig::getLength should not be equal if we have an article match at start=0.'
+				'Wikia\Search\Config::getLimit and Wikia\Search\Config::getLength should not be equal if we have an article match at start=0.'
 		);
 
 		$config->setStart( 10 );
 
 		$this->assertEquals(
-		        WikiaSearchConfig::RESULTS_PER_PAGE,
+		        Wikia\Search\Config::RESULTS_PER_PAGE,
 		        $config->getLength(),
-		        'A stored article match in WikiaSearchConfig should not result in reducing the length value by 1 if start != 0.'
+		        'A stored article match in Wikia\Search\Config should not result in reducing the length value by 1 if start != 0.'
 		);
 		$this->assertEquals(
 		        $limit,
 		        $config->getLimit(),
-		        'The return value of WikiaSearchConfig::getLimit should not mutate regardless of article match or start.'
+		        'The return value of Wikia\Search\Config::getLimit should not mutate regardless of article match or start.'
 		);
 		$this->assertEquals(
 		        $config->getSize(),
 		        $config->getLength(),
-		        'WikiaSearchConfig getSize and getLength methods should be synonymous, even with article match, regardless of start.'
+		        'Wikia\Search\Config getSize and getLength methods should be synonymous, even with article match, regardless of start.'
 		);
 		$this->assertEquals(
 		        $config->getLimit(),
 		        $config->getLength(),
-		        'WikiaSearchConfig::getLimit and WikiaSearchConfig::getLength should be equal if we have an article match at start > 0.'
+		        'Wikia\Search\Config::getLimit and Wikia\Search\Config::getLength should be equal if we have an article match at start > 0.'
 		);
 		$newLimit = 20;
 		$this->assertEquals(
 				$config,
 				$config->setLimit( $newLimit ),
-				'WikiaSearchConfig::setLimit should provide fluent interface.'
+				'Wikia\Search\Config::setLimit should provide fluent interface.'
 		);
 		$this->assertEquals(
 				$newLimit,
@@ -185,17 +187,17 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::setQuery
-	 * @covers WikiaSearchConfig::getQuery
-	 * @covers WikiaSearchConfig::getNamespaces
-	 * @covers WikiaSearchConfig::getQueryNoQuotes
-	 */
+	 * @covers Wikia\Search\Config::setQuery
+	 * @covers Wikia\Search\Config::getQuery
+	 * @covers Wikia\Search\Config::getNamespaces
+	 * @covers Wikia\Search\Config::getQueryNoQuotes
+	 * @todo
 	public function testQueryAndNamespaceMethods() {
 
-		$config = F::build( 'WikiaSearchConfig' );
-		$noNsQuery			= 'foo';
-		$nsQuery			= 'File:foo';
-		$phantomNsQuery		= 'file';
+		$config = new Wikia\Search\Config();
+		$noNsQuery = 'foo';
+		$nsQuery = 'File:foo';
+		$phantomNsQuery = 'file';
 
 		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'DefaultNamespaces' ), array() );
 
@@ -224,13 +226,13 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$expectedDefaultNamespaces,
 				$originalNamespaces,
-				'WikiaSearchConfig::getNamespaces should return SearchEngine::DefaultNamespaces if namespaces are not initialized.'
+				'Wikia\Search\Config::getNamespaces should return SearchEngine::DefaultNamespaces if namespaces are not initialized.'
 		);
-		$this->assertFalse( $config->getQuery(), 'WikiaSearchConfig::getQuery should return false if the query has not been set.');
+		$this->assertFalse( $config->getQuery(), 'Wikia\Search\Config::getQuery should return false if the query has not been set.');
 		$this->assertEquals(
 				$config,
 				$config->setQuery( $noNsQuery ),
-				'WikiaSearchConfig::setQuery should provide a fluent interface'
+				'Wikia\Search\Config::setQuery should provide a fluent interface'
 		);
 		$this->assertEquals(
 				$noNsQuery,
@@ -250,7 +252,7 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$config,
 				$config->setQuery( $nsQuery ),
-				'WikiaSearchConfig::setQuery should provide a fluent interface'
+				'Wikia\Search\Config::setQuery should provide a fluent interface'
 		);
 		$this->assertEquals(
 		        $nsQuery,
@@ -324,37 +326,37 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				"HTML entities in queries should be decoded when being set."
 		);
 		$this->assertEquals(
-		        $config->setQuery( $htmlEntityQuery )->getQuery( WikiaSearchConfig::QUERY_DEFAULT ),
+		        $config->setQuery( $htmlEntityQuery )->getQuery( Wikia\Search\Config::QUERY_DEFAULT ),
 		        $config->setQuery( $htmlEntityQuery )->getQuery(),
-		        "The default behavior of the getQuery method should be identical to passing the WikiaSearchConfig::QUERY_DEFAULT constant."
+		        "The default behavior of the getQuery method should be identical to passing the Wikia\\Search\\Config::QUERY_DEFAULT constant."
 		);
 
 		$this->assertEquals(
 		        "'foo & bar & baz' \"",
-		        $config->setQuery( $htmlEntityQuery )->getQuery( WikiaSearchConfig::QUERY_RAW ),
+		        $config->setQuery( $htmlEntityQuery )->getQuery( Wikia\Search\Config::QUERY_RAW ),
 		        "HTML entities in queries should be decoded when being set. Raw-strategy queries shouldn't escape anything."
 		);
 		$this->assertEquals(
 		        "'foo &amp; bar &amp; baz' &quot;",
-		        $config->setQuery( $htmlEntityQuery )->getQuery( WikiaSearchConfig::QUERY_ENCODED ),
+		        $config->setQuery( $htmlEntityQuery )->getQuery( Wikia\Search\Config::QUERY_ENCODED ),
 		        "HTML entities in queries should be decoded when being set. HTML-decoded queries should properly HTML-encode all entities on access if using encoded strategy."
 		);
 
 		$utf8Query = '"аВатаР"';
 		$this->assertEquals(
 				'\"аВатаР\"',
-				$config->setQuery( $utf8Query )->getQuery( WikiaSearchConfig::QUERY_DEFAULT ),
-				'WikiaSearch::setQuery should not unnecessarily mutate UTF-8 characters. Retrieving them should return those characters, properly encoded.'
+				$config->setQuery( $utf8Query )->getQuery( Wikia\Search\Config::QUERY_DEFAULT ),
+				'Wikia\Search\Config::setQuery should not unnecessarily mutate UTF-8 characters. Retrieving them should return those characters, properly encoded.'
 		);
 		$this->assertEquals(
 				'"аВатаР"',
-				$config->setQuery( $utf8Query )->getQuery( WikiaSearchConfig::QUERY_RAW ),
-				'WikiaSearch::getQuery() should not unnecessarily mutate UTF-8 characters, and should not escape quotes when asking for raw query.'
+				$config->setQuery( $utf8Query )->getQuery( Wikia\Search\Config::QUERY_RAW ),
+				'Wikia\Search\Config::getQuery() should not unnecessarily mutate UTF-8 characters, and should not escape quotes when asking for raw query.'
 		);
 		$this->assertEquals(
 		        htmlentities( '"аВатаР"', ENT_COMPAT, 'UTF-8' ),
-		        $config->setQuery( $utf8Query )->getQuery( WikiaSearchConfig::QUERY_ENCODED ),
-		        'WikiaSearch::getQuery() should properly HTML-encode UTF-8 characters when using the encoded query strategy.'
+		        $config->setQuery( $utf8Query )->getQuery( Wikia\Search\Config::QUERY_ENCODED ),
+		        'Wikia\Search\Config::getQuery() should properly HTML-encode UTF-8 characters when using the encoded query strategy.'
 		);
 
 		$config->setQuery( 'foo bar wiki' );
@@ -363,7 +365,7 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				'foo bar',
 				$config->getQuery(),
-				'WikiaSearch::getQuery() should strip the term "wiki" from the set query if the search is interwiki'
+				'Wikia\Search\Config::getQuery() should strip the term "wiki" from the set query if the search is interwiki'
 		);
 
 		$config->setQuery( $phantomNsQuery );
@@ -373,13 +375,13 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				'A query that initially matches a namespaces but does not end with a colon should not strip namespaces'
 		);
 
-	}
+	}*/
 
 	/**
-	 * @covers WikiaSearchConfig::getSort
+	 * @covers Wikia\Search\Config::getSort
 	 */
 	public function testGetSort() {
-		$config = F::build( 'WikiaSearchConfig' );
+		$config = F::build( 'Wikia\Search\Config' );
 
 		$defaultRank = array( 'score',		Solarium_Query_Select::SORT_DESC );
 
@@ -410,48 +412,48 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				array( 'created', 'asc' ),
 				$config->getSort(),
-				'WikiaSearchConfig::getSort should return a value set by setSort if it has been invoked'
+				'Wikia\Search\Config::getSort should return a value set by setSort if it has been invoked'
 		);
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::hasArticleMatch
-	 * @covers WikiaSearchConfig::setArticleMatch
-	 * @covers WikiaSearchConfig::getArticleMatch
+	 * @covers Wikia\Search\Config::hasArticleMatch
+	 * @covers Wikia\Search\Config::setArticleMatch
+	 * @covers Wikia\Search\Config::getArticleMatch
 	 */
 	public function testArticleMatching() {
-		$mockTitle			= $this->getMock( 'Title' );
-		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
-		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
-		$config				= F::build( 'WikiaSearchConfig' );
+		$mockArticleMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
+		                         ->disableOriginalConstructor()
+		                         ->getMock();
+		$config = new Wikia\Search\Config();
 
 		$this->assertFalse(
 				$config->hasArticleMatch(),
-				'WikiaSearchConfig should not have an article match by default.'
+				'Wikia\Search\Config should not have an article match by default.'
 		);
 		$this->assertNull(
 				$config->getArticleMatch(),
-				'WikiaSearchConfig should return null when getting an uninitialized article match'
+				'Wikia\Search\Config should return null when getting an uninitialized article match'
 		);
 		$this->assertEquals(
 				$config,
 				$config->setArticleMatch( $mockArticleMatch ),
-				'WikiaSearchConfig::setArticleMatch should provide a fluent interface.'
+				'Wikia\Search\Config::setArticleMatch should provide a fluent interface.'
 		);
 		$this->assertEquals(
 				$mockArticleMatch,
 				$config->getArticleMatch(),
-				'WikiaSearchConfig::getArticleMatch should return the appropriate article match once set.'
+				'Wikia\Search\Config::getArticleMatch should return the appropriate article match once set.'
 		);
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::isInterWiki
-	 * @covers WikiaSearchConfig::setIsInterWiki
-	 * @covers WikiaSearchConfig::getIsInterWiki
+	 * @covers Wikia\Search\Config::isInterWiki
+	 * @covers Wikia\Search\Config::setIsInterWiki
+	 * @covers Wikia\Search\Config::getIsInterWiki
 	 */
 	public function testInterWiki() {
-		$config	= F::build( 'WikiaSearchConfig' );
+		$config	= F::build( 'Wikia\Search\Config' );
 
 		$this->assertFalse(
 				$config->getIsInterWiki() || $config->getInterWiki() || $config->getIsInterWiki(),
@@ -469,10 +471,10 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchconfig::getTruncatedResultsNum
+	 * @covers Wikia\Search\Config::getTruncatedResultsNum
 	 */
 	public function testTruncatedResultsNum() {
-		$config	= F::build( 'WikiaSearchConfig' );
+		$config	= F::build( 'Wikia\Search\Config' );
 
 		$singleDigit = 9;
 
@@ -516,10 +518,10 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::getNumPages
+	 * @covers Wikia\Search\Config::getNumPages
 	 */
 	public function testGetNumPages() {
-		$config = F::build( 'WikiaSearchConfig' );
+		$config = F::build( 'Wikia\Search\Config' );
 
 		$this->assertEquals(
 				0,
@@ -531,7 +533,7 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$config->setResultsFound( $numFound );
 
 		$this->assertEquals(
-				ceil( $numFound / WikiaSearchConfig::RESULTS_PER_PAGE ),
+				ceil( $numFound / Wikia\Search\Config::RESULTS_PER_PAGE ),
 				$config->getNumPages(),
 				'Number of pages should be divided by default number of results per page by if no limit is set.'
 		);
@@ -547,11 +549,11 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::getCityId
-	 * @covers WikiaSearchConfig::setCityID
+	 * @covers Wikia\Search\Config::getCityId
+	 * @covers Wikia\Search\Config::setCityID
 	 */
 	public function testGetCityId() {
-		$config = F::build( 'WikiaSearchConfig' );
+		$config = F::build( 'Wikia\Search\Config' );
 
 		$mockCityId = 123;
 		global $wgCityId;
@@ -576,10 +578,10 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::getSearchProfiles
+	 * @covers Wikia\Search\Config::getSearchProfiles
 	 */
 	public function testGetSearchProfiles() {
-		$config 			= F::build( 'WikiaSearchConfig' );
+		$config 			= F::build( 'Wikia\Search\Config' );
 		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
 
 		$searchEngineMock
@@ -612,11 +614,11 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::getActiveTab
+	 * @covers Wikia\Search\Config::getActiveTab
 	 */
 	public function testGetActiveTab() {
 
-		$config 			= F::build( 'WikiaSearchConfig' );
+		$config 			= F::build( 'Wikia\Search\Config' );
 		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
 
 		$config->setAdvanced( true );
@@ -687,63 +689,63 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::setFilterQuery
-	 * @covers WikiaSearchConfig::setFilterQueries
-	 * @covers WikiaSearchConfig::getFilterQueries
-	 * @covers WikiaSearchConfig::setFilterQueryByCode
-	 * @covers WikiaSearchConfig::setFilterQueriesFromCodes
+	 * @covers Wikia\Search\Config::setFilterQuery
+	 * @covers Wikia\Search\Config::setFilterQueries
+	 * @covers Wikia\Search\Config::getFilterQueries
+	 * @covers Wikia\Search\Config::setFilterQueryByCode
+	 * @covers Wikia\Search\Config::setFilterQueriesFromCodes
 	 */
 	public function testFilterQueryMethods() {
-		$config	= F::build( 'WikiaSearchConfig' ); /* @var WikiaSearchConfig */
-		$fqAttr	= new ReflectionProperty( 'WikiaSearchConfig', 'filterQueries' );
+		$config	= F::build( 'Wikia\Search\Config' ); /* @var Wikia\Search\Config */
+		$fqAttr	= new ReflectionProperty( 'Wikia\Search\Config', 'filterQueries' );
 		$fqAttr->setAccessible( true );
 
 		$this->assertFalse(
 				$config->hasFilterQueries(),
-				'WikiaSearchConfig::hasFilterQueries should return false if no filter queries have been explicitly set.'
+				'Wikia\Search\Config::hasFilterQueries should return false if no filter queries have been explicitly set.'
 		);
 		$this->assertEquals(
 				$config,
 				$config->setFilterQuery( 'foo:bar' ),
-				'WikiaSearchConfig::setFilterQuery should provide a fluent interface.'
+				'Wikia\Search\Config::setFilterQuery should provide a fluent interface.'
 		);
 		$this->assertArrayHasKey(
 				'fq1',
 				$fqAttr->getValue( $config ),
-				'WikiaSearchConfig::setFilterQuery should assign an auto-incremented key when a key is not provided'
+				'Wikia\Search\Config::setFilterQuery should assign an auto-incremented key when a key is not provided'
 		);
 		$this->assertArrayHasKey(
 				'foo',
 				$fqAttr->getValue( $config->setFilterQuery( 'bar:foo', 'foo' ) ),
-				'WikiaSearchConfig::setFilterQuery should store the filter query by the provided key'
+				'Wikia\Search\Config::setFilterQuery should store the filter query by the provided key'
 		);
 		$this->assertContains(
 				array( 'key' => 'foo', 'query' => 'bar:foo' ),
 				$fqAttr->getValue( $config ),
-				'WikiaSearchConfig::setFilterQuery should store the key and query as associative values in the value array per Solarium expected format'
+				'Wikia\Search\Config::setFilterQuery should store the key and query as associative values in the value array per Solarium expected format'
 		);
 		$this->assertTrue(
 				$config->hasFilterQueries(),
-				'WikiaSearchConfig::hasFilterQueries should return true if filter queries have been set'
+				'Wikia\Search\Config::hasFilterQueries should return true if filter queries have been set'
 		);
 		$this->assertEquals(
 				$fqAttr->getValue( $config ),
 				$config->getFilterQueries(),
-				'WikiaSearchConfig::getFilterQueries should return the filterQueries attribute'
+				'Wikia\Search\Config::getFilterQueries should return the filterQueries attribute'
 		);
 		$this->assertEquals(
 				$config,
 				$config->setFilterQueries( array() ),
-				'WikiaSearchConfig::setFilterQueries should provide a fluent interface'
+				'Wikia\Search\Config::setFilterQueries should provide a fluent interface'
 		);
 		$this->assertEmpty(
 				$fqAttr->getValue( $config ),
-				'Passing an empty array to WikiaSearchConfig::setFilterQueries should remove all filter queries.'
+				'Passing an empty array to Wikia\Search\Config::setFilterQueries should remove all filter queries.'
 		);
 		$this->assertEquals(
 				0,
-				WikiaSearchConfig::$filterQueryIncrement,
-				'WikiaSearchConfig::setFilterQueries should reset the filter query increment'
+				Wikia\Search\Config::$filterQueryIncrement,
+				'Wikia\Search\Config::setFilterQueries should reset the filter query increment'
 		);
 
 		$config->setFilterQueries( array(
@@ -758,18 +760,18 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				'baz',
 				$fqAttr->getValue( $config ),
 				'A properly formatted filter query array passed as a value to the array argument of '
-				.' WikiaSearchConfig::setFilterQueries should respect the previously set key'
+				.' Wikia\Search\Config::setFilterQueries should respect the previously set key'
 		);
 		$this->assertArrayHasKey(
 				'fq1',
 				$fqAttr->getValue( $config ),
 				'Values in the argument array that are string-typed should receive '
-				.' an auto-incremented key per WikiaSearchConfig::setFilterQuery'
+				.' an auto-incremented key per Wikia\Search\Config::setFilterQuery'
 		);
 		$this->assertEquals(
 				2,
 				count( $fqAttr->getValue( $config ) ),
-				'Values in the array passed to WikiaSearchConfig::setFilterQueries that are not properly formatted should be ignored'
+				'Values in the array passed to Wikia\Search\Config::setFilterQueries that are not properly formatted should be ignored'
 		);
 
 		// resetting
@@ -778,24 +780,24 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$config,
 				$config->setFilterQueryByCode( 'is_video' ),
-				'WikiaSearchConfig::setFilterQueryByCode should provide a fluent interface'
+				'Wikia\Search\Config::setFilterQueryByCode should provide a fluent interface'
 		);
 		$fqArray = $fqAttr->getValue( $config );
 		$this->assertArrayHasKey(
 				'is_video',
 				$fqArray,
-				'WikiaSearchConfig::setFilterQueryByCode should set the code as the key for the new filter query'
+				'Wikia\Search\Config::setFilterQueryByCode should set the code as the key for the new filter query'
 		);
 
-		$fcAttr = new ReflectionProperty( 'WikiaSearchConfig', 'filterCodes' );
+		$fcAttr = new ReflectionProperty( 'Wikia\Search\Config', 'filterCodes' );
 		$fcAttr->setAccessible( true );
 		$filterCodes = $fcAttr->getValue( $config );
 
 		$this->assertEquals(
 				array( 'key' => 'is_video', 'query' => $filterCodes['is_video'] ),
 				$fqArray['is_video'],
-				'WikiaSearchConfig::setFilterQueryByCode should set exactly the query string that is '
-				.'the value in WikiaSearchConfig::filterCodes, keyed by the code provided'
+				'Wikia\Search\Config::setFilterQueryByCode should set exactly the query string that is '
+				.'the value in Wikia\Search\Config::filterCodes, keyed by the code provided'
 		);
 
 		$mockWikia = $this->getMock( 'Wikia', array( 'log' ) );
@@ -811,63 +813,63 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$config,
 				$config->setFilterQueriesFromCodes( array( 'is_video', 'is_image' ) ),
-				'WikiaSearchConfig::setFilterQueriesFromCodes should provide a fluent interface'
+				'Wikia\Search\Config::setFilterQueriesFromCodes should provide a fluent interface'
 		);
 		$this->assertEquals(
 				2,
 				count( $fqAttr->getValue( $config ) ),
-				'WikiaSearchConfig::setFilterQueriesFromCode should function over each array '
-				.' value provided as a code key to WikiaSearchConfig::setFilterQueryByCode. '
+				'Wikia\Search\Config::setFilterQueriesFromCode should function over each array '
+				.' value provided as a code key to Wikia\Search\Config::setFilterQueryByCode. '
 				.' This test also proves a vital part of filter query data architecture: overwriting a key is allowed, '
 				.' and warnings are not issues if you do so.'
 		);
 		// needs resetting to get the testing environment back in shape
-		WikiaSearchConfig::$filterQueryIncrement = 0;
+		Wikia\Search\Config::$filterQueryIncrement = 0;
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::getRequestedFields
+	 * @covers Wikia\Search\Config::getRequestedFields
 	 */
 	public function testGetRequestedFields() {
-		$config = F::build( 'WikiaSearchConfig' );
+		$config = F::build( 'Wikia\Search\Config' );
 
 		$config->setRequestedFields( array( 'html' ) );
 
 		$fields = $config->getRequestedFields();
 
 		$this->assertContains(
-				WikiaSearch::field( 'html' ),
+				Wikia\Search\Utilities::field( 'html' ),
 				$fields,
-				'WikiaSearchConfig::getRequestedFields() should perform language field transformation'
+				'Wikia\Search\Config::getRequestedFields() should perform language field transformation'
 		);
 		$this->assertContains(
 				'id',
 				$fields,
-				'WikiaSearchConfig::getRequestedFields() should always include an id'
+				'Wikia\Search\Config::getRequestedFields() should always include an id'
 		);
 	}
 
 	/**
-	 * @covers WikiaSearchConfig::getPublicFilterKeys
+	 * @covers Wikia\Search\Config::getPublicFilterKeys
 	 */
 	public function testGetPublicFilterKeys() {
-		$config = F::build( 'WikiaSearchConfig' );
+		$config = F::build( 'Wikia\Search\Config' );
 		
 		$config->setFilterQueryByCode( 'is_image' );
 		
 		$this->assertContains(
 				'is_image',
 				$config->getPublicFilterKeys(),
-				'A public filter key registered in WikiaSearchConfig::publicFilterKeys should be returned by WikiaSearchConfig::getPublicFilterKeys'
+				'A public filter key registered in Wikia\Search\Config::publicFilterKeys should be returned by Wikia\Search\Config::getPublicFilterKeys'
 		);
 		
 	}
 	
 	/**
-	 * @covers WikiaSearchConfig::setQueryField
+	 * @covers Wikia\Search\Config::setQueryField
 	 */
 	public function testSetQueryField() {
-		$config = new WikiaSearchConfig();
+		$config = new Wikia\Search\Config();
 		$this->assertEquals(
 				$config,
 				$config->setQueryField( 'foo' )
@@ -876,7 +878,7 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				$config,
 				$config->setQueryField( 'bar', 2 )
 		);
-		$queryFieldsToBoostsRefl = new ReflectionProperty( 'WikiaSearchConfig', 'queryFieldsToBoosts' );
+		$queryFieldsToBoostsRefl = new ReflectionProperty( 'Wikia\Search\Config', 'queryFieldsToBoosts' );
 		$queryFieldsToBoostsRefl->setAccessible( true );
 		$fields = $queryFieldsToBoostsRefl->getValue( $config );
 		$this->assertArrayHasKey(
@@ -890,28 +892,28 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				1,
 				$fields['foo'],
-				'WikiaSearchConfig::setQueryField should set the boost value to 1 for a key by default'
+				'Wikia\Search\Config::setQueryField should set the boost value to 1 for a key by default'
 		);
 		$this->assertEquals(
 				2,
 				$fields['bar'],
-				'WikiaSearchConfig::setQueryField should set the boost value as passed in the second parameter'
+				'Wikia\Search\Config::setQueryField should set the boost value as passed in the second parameter'
 		);
 	}
 	
 	/**
-	 * @covers WikiaSearchConfig::addQueryFields
+	 * @covers Wikia\Search\Config::addQueryFields
 	 */
 	public function testAddQueryFields() {
-		$config = new WikiaSearchConfig();
+		$config = new Wikia\Search\Config();
 		$config->setQueryFields( array( 'foo', 'bar', 'baz' ) );
-		$queryFieldsToBoostsRefl = new ReflectionProperty( 'WikiaSearchConfig', 'queryFieldsToBoosts' );
+		$queryFieldsToBoostsRefl = new ReflectionProperty( 'Wikia\Search\Config', 'queryFieldsToBoosts' );
 		$queryFieldsToBoostsRefl->setAccessible( true );
 		$fields = $queryFieldsToBoostsRefl->getValue( $config );
 		$this->assertEquals(
 				array( 'foo' => 1, 'bar' => 1, 'baz' => 1 ),
 				$fields,
-				'If passed a flat array, WikiaSearchConfig::addQueryFields should set the boost for each as 1'
+				'If passed a flat array, Wikia\Search\Config::addQueryFields should set the boost for each as 1'
 		);
 		$sentFields = array( 'foo' => 1, 'bar' => 2, 'baz' => 3 );
 		$this->assertEquals(
@@ -922,30 +924,30 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$sentFields,
 				$fields,
-				'If passed a flat array, WikiaSearchConfig::addQueryFields should set the boost for each as 1'
+				'If passed a flat array, Wikia\Search\Config::addQueryFields should set the boost for each as 1'
 		);
 	}
 	
 	/**
-	 * @covers WikiaSearchConfig::getQueryFieldsToBoosts
+	 * @covers Wikia\Search\Config::getQueryFieldsToBoosts
 	 */
 	public function testGetQueryFieldsToBoosts() {
-		$config = new WikiaSearchConfig();
-		$queryFieldsToBoostsRefl = new ReflectionProperty( 'WikiaSearchConfig', 'queryFieldsToBoosts' );
+		$config = new Wikia\Search\Config();
+		$queryFieldsToBoostsRefl = new ReflectionProperty( 'Wikia\Search\Config', 'queryFieldsToBoosts' );
 		$queryFieldsToBoostsRefl->setAccessible( true );
 		$fields = $queryFieldsToBoostsRefl->getValue( $config );
 		$this->assertEquals(
 				$fields,
 				$config->getQueryFieldsToBoosts(),
-				'WikiaSearchConfig::getQueryFieldsToBoosts should return the qf to boost array'
+				'Wikia\Search\Config::getQueryFieldsToBoosts should return the qf to boost array'
 		);
 	}
 	
 	/**
-	 * @covers WikiaSearchConfig::importQueryFieldBoosts
+	 * @covers Wikia\Search\Config::importQueryFieldBoosts
 	 */
 	public function testImportQueryFieldBoosts() {
-		$config = $this->getMockBuilder( 'WikiaSearchConfig' )
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
 		               ->disableOriginalConstructor()
 		               ->setMethods( array( 'setQueryField' ) )
 		               ->getMock();
@@ -967,15 +969,15 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		    ->with   ( 'title', 5 )
 		;
 		
-		$fieldsrefl = new ReflectionProperty( 'WikiaSearchConfig', 'queryFieldsToBoosts' );
+		$fieldsrefl = new ReflectionProperty( 'Wikia\Search\Config', 'queryFieldsToBoosts' );
 		$fieldsrefl->setAccessible( true );
 		$fieldsrefl->setValue( $config, array( 'title' => 5 ) );
 		
-		$interfacerefl = new ReflectionProperty( 'WikiaSearchConfig', 'interface' );
+		$interfacerefl = new ReflectionProperty( 'Wikia\Search\Config', 'interface' );
 		$interfacerefl->setAccessible(true );
 		$interfacerefl->setValue( $config, $interface );
 		
-		$methodrefl = new ReflectionMethod( 'WikiaSearchConfig', 'importQueryFieldBoosts' );
+		$methodrefl = new ReflectionMethod( 'Wikia\Search\Config', 'importQueryFieldBoosts' );
 		$methodrefl->setAccessible( true );
 		$this->assertEquals(
 				$config,
@@ -984,10 +986,10 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * @covers WikiaSearchConfig::getQueryFields
+	 * @covers Wikia\Search\Config::getQueryFields
 	 */
 	public function testGetQueryFields() {
-		$config = new WikiaSearchConfig();
+		$config = new Wikia\Search\Config();
 		$fieldsToBoosts = $config->getQueryFieldsToBoosts();
 		$this->assertEquals(
 				array_keys( $fieldsToBoosts ),

@@ -6,7 +6,6 @@
  * @author Robert Elwell <robert@wikia-inc.com>
  *
  */
-
 class WikiaSearchBaseTest extends WikiaBaseTest {
 	
 	/**
