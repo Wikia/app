@@ -378,7 +378,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$videoInfo = $response->getVal('videoInfo');
 		$fileName = $videoInfo[0]->getText();
 
-		$this->videoData = $this->toolboxModel->getVideoData($fileName);
+		$this->videoData = $this->toolboxModel->getVideoData(
+			$fileName,
+			$this->toolboxModel->getThumbnailSize()
+		);
 		$this->videoFileName = $fileName;
 		$this->videoUrl = $url;
 	}

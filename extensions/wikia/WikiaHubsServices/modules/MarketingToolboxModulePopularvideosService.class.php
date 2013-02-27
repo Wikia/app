@@ -58,7 +58,7 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 
 		if( !empty($data['values']['video']) ) {
 			foreach($data['values']['video'] as $i => $video) {
-				$data['videos'][$i] = $model->getVideoData($video);
+				$data['videos'][$i] = $model->getVideoData($video, $model->getThumbnailSize());
 				$data['videos'][$i]['title'] = $video;
 
 				//we enabled curators to edit a video url so if they've changed it we change it here
@@ -93,6 +93,13 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 	}
 
 	public function getStructuredData($data) {
+
+		// TODO
+		$video = 'Skyfall Video Interviews';
+		$toolboxModel = new MarketingToolboxModel();
+		$moduleModel = new MarketingToolboxPopularvideosModel();
+		$videoData = $toolboxModel->getVideoData($video, $moduleModel->getVideoThumbSize());
+
 		return array();
 	}
 }
