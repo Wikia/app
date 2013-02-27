@@ -46,6 +46,50 @@ class WikiStatsXLS {
 		return;
 	}
 
+	private function getStatsDateFormat($showYear = 1) {
+		global $wgUser;
+		$return = $dateFormat = $wgUser->getDatePreference();
+		switch ($dateFormat) {
+			case "mdy" : $return = (!empty($showYear)) ? "M j, Y" : "M j"; break;
+			case "dmy" : $return = (!empty($showYear)) ? "j M Y" : "j M"; break;
+			case "ymd" : $return = (!empty($showYear)) ? "Y M j" : "M j"; break;
+			case "ISO 8601" : $return = (!empty($showYear)) ? "xnY-xnM-xnd" : "xnM-xnd"; break;
+			default : $return = (!empty($showYear)) ? "M j, Y" : "M j"; break;
+		}
+		return $return;
+	}
+	
+	private function checkColumnStatDate($date, $prev_date)
+	{
+		$addEmptyLine = false;
+		wfProfileOut( __METHOD__ );
+		#---
+		if ( (strpos($prev_date,STATS_COLUMN_PREFIX) !== false) && (strpos($date,STATS_COLUMN_PREFIX) === false) ) {
+			$addEmptyLine = 4;
+		}
+		elseif (strpos($prev_date,STATS_COLUMN_PREFIX) === false) {
+			$datePrevArr = explode("-", $prev_date);
+			$dateArr = explode("-", $date);
+			if ($datePrevArr[0] != $dateArr[0]) { // years
+				$addEmptyLine = 1;
+			}
+		}
+		#---
+		wfProfileOut( __METHOD__ );
+		return $addEmptyLine;
+	}
+	
+	private function makeCorrectDate($date, $today = 0) {
+		global $wgLang;
+		wfProfileIn( __METHOD__ );
+		$dateArr = explode("-", $date);
+		$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+		$corDate = ($today) ? $wgLang->sprintfDate( $this->getStatsDateFormat(0), wfTimestamp(TS_MW, $stamp))
+						: $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
+		wfProfileOut( __METHOD__ );
+		return $corDate;
+	}
+
 	private function writeXLSLabel($row, $col, $value ) {
 		$value = str_replace("<br/>", " ", $value);
 		$value = str_replace("&lt;", "<", $value);
@@ -249,11 +293,11 @@ class WikiStatsXLS {
 					$rank_change = "...";
 				}
 				#---
-				$outFirstEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['first_edit']));
+				$outFirstEdit = $wgLang->sprintfDate( $this->getStatsDateFormat(), wfTimestamp(TS_MW, $data['first_edit']));
 				#$outFirstEdit = wfMsg(strtolower(date("M",$data['first_edit']))) . " " . date("d",$data['first_edit']) .", ".date("Y",$data['first_edit']);
 				#---
 				#$outLastEdit = wfMsg(strtolower(date("M",$data['last_edit']))) . " " . date("d",$data['last_edit']) .", ".date("Y",$data['last_edit']);
-				$outLastEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['last_edit']));
+				$outLastEdit = $wgLang->sprintfDate( $this->getStatsDateFormat(), wfTimestamp(TS_MW, $data['last_edit']));
 
 				// write data
 				$col = 0;
@@ -305,10 +349,10 @@ class WikiStatsXLS {
 			$row++;
 			foreach ($absent as $rank => $data) {
 				#---
-				$outFirstEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['first_edit']));
+				$outFirstEdit = $wgLang->sprintfDate( $this->getStatsDateFormat(), wfTimestamp(TS_MW, $data['first_edit']));
 				#$outFirstEdit = wfMsg(strtolower(date("M",$data['first_edit']))) . " " . date("d",$data['first_edit']) .", ".date("Y",$data['first_edit']);
 				#---
-				$outLastEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['last_edit']));
+				$outLastEdit = $wgLang->sprintfDate( $this->getStatsDateFormat(), wfTimestamp(TS_MW, $data['last_edit']));
 				#$outLastEdit = wfMsg(strtolower(date("M",$data['last_edit']))) . " " . date("d",$data['last_edit']) .", ".date("Y",$data['last_edit']);
 				#---
 				$col = 0;
@@ -368,11 +412,11 @@ class WikiStatsXLS {
 			foreach ($anonData as $id => $data) {
 				$rank++;
 				#---
-				$outFirstEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['min']));
+				$outFirstEdit = $wgLang->sprintfDate( $this->getStatsDateFormat(), wfTimestamp(TS_MW, $data['min']));
 				#$outFirstEdit = wfMsg(strtolower(date("M",$data['min']))) . " " . date("d",$data['min']) .", ".date("Y",$data['min']);
 				#---
 				#$outLastEdit = wfMsg(strtolower(date("M",$data['max'])))  . " " . date("d",$data['max']) .", ".date("Y",$data['max']);
-				$outLastEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['max']));
+				$outLastEdit = $wgLang->sprintfDate( $this->getStatsDateFormat(), wfTimestamp(TS_MW, $data['max']));
 				#---
 				$col = 0;
 				$this->writeXLSLabel($row,$col,$data['user_name']); $col++;
@@ -438,7 +482,7 @@ class WikiStatsXLS {
 			$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 			#---
 			if ($date == date("Y-m")) {
-				$out = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $stamp));
+				$out = $wgLang->sprintfDate( $this->getStatsDateFormat(), wfTimestamp(TS_MW, $stamp));
 				#$out = wfMsg(strtolower(date("M",$stamp))) . " " . date("d") . ", " . $dateArr[0];
 			}
 			#---
@@ -504,7 +548,7 @@ class WikiStatsXLS {
 			#$out = wfMsg(strtolower(date("M",$stamp))) . " " . $dateArr[0];
 			$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 			if ($date == date("Y-m")) {
-				$out = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $stamp));
+				$out = $wgLang->sprintfDate( $this->getStatsDateFormat(), wfTimestamp(TS_MW, $stamp));
 				#$out = wfMsg(strtolower(date("M",$stamp))) . " " . date("d") . ", " . $dateArr[0];
 			}
 			#---
@@ -677,7 +721,7 @@ class WikiStatsXLS {
 					$is_month = 1;
 				}
 				/*$stamp = mktime(23,59,59,$dateArr[1],($is_month)?1:$dateArr[2],$dateArr[0]);
-				$out = $wgLang->sprintfDate(($is_month)?"M Y":WikiaGenericStats::getStatsDateFormat(1), wfTimestamp(TS_MW, $stamp));
+				$out = $wgLang->sprintfDate(($is_month)?"M Y":$this->getStatsDateFormat(1), wfTimestamp(TS_MW, $stamp));
 				*/
 				$aRow[] = $date; #$out;
 				foreach ($aNamespaces as $id => $value) {
@@ -980,7 +1024,7 @@ class WikiStatsXLS {
 					#---
 					$stamp = mktime(23,59,59,$dateArr[1],$dateArr[2],$dateArr[0]);
 					#$outDate = wfMsg(strtolower(date("M",$stamp))) . " " . $dateArr[2] .", ". $dateArr[0];
-					$outDate = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $stamp));
+					$outDate = $wgLang->sprintfDate( $this->getStatsDateFormat(), wfTimestamp(TS_MW, $stamp));
 				} else {
 					if (!in_array($date, array('trend', 'mean', 'growth'))) {
 						$dateArr = explode("-", $date);
@@ -1170,7 +1214,7 @@ class WikiStatsXLS {
 			$show_percent = false;
 			$cur_date = $date;
 			#---
-			$addEmptyLine = (!empty($prev_date)) ? WikiaGenericStats::checkColumnStatDate($date, $prev_date) : false;
+			$addEmptyLine = (!empty($prev_date)) ? $this->checkColumnStatDate($date, $prev_date) : false;
 			#---
 			if ($addEmptyLine !== false) {
 				$this->mergeXLSColsRows($row, $col, $row, $col + count($splitCityList));
@@ -1182,7 +1226,7 @@ class WikiStatsXLS {
 				$show_percent = true;
 			}
 			#---
-			$outDate = WikiaGenericStats::makeCorrectDate($date, ($date==date('Y-m')));
+			$outDate = $this->makeCorrectDate($date, ($date==date('Y-m')));
 			#---
 			$this->writeXLSLabel($row, $col, $outDate);
 			#---
