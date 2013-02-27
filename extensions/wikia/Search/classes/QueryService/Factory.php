@@ -47,6 +47,16 @@ class Factory
 	}
 	
 	/**
+	 * Skips instantiating dependency container, just using config and allowing default client instance.
+	 * @param Config $config
+	 * @return Ambigous <\Wikia\Search\QueryService\Select\AbstractSelect, \Wikia\Search\QueryService\Select\InterWiki, \Wikia\Search\QueryService\Select\Video, \Wikia\Search\QueryService\Select\Lucene, \Wikia\Search\QueryService\Select\OnWiki>
+	 */
+	public function getFromConfig( Config $config ) {
+		$container = new DependencyContainer( array( 'config' => $config ) );
+		return $this->get( $container );
+	}
+	
+	/**
 	 * If an instance of Solarium_Client has not been created yet, create it.
 	 * @param DependencyContainer $container
 	 */

@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\QueryService\DependencyContainer
  */
 namespace Wikia\Search\QueryService;
-use \Wikia\Search\Traits, \Solarium_Client, \Wikia\Search\Config, \Wikia\Search\MediaWikiInterface, \Wikia\Search\ResultSet\Factory;
+use \Wikia\Search\Traits, \Solarium_Client, \Wikia\Search\Config, \Wikia\Search\MediaWikiInterface, \Wikia\Search\ResultSet;
 
 class DependencyContainer
 {
@@ -30,7 +30,7 @@ class DependencyContainer
 	protected $client; 
 	
 	public function __construct( array $dependencies ) {
-		$this->resultSetFactory = Factory::getInstance();
+		$this->resultSetFactory = ResultSet\Factory::getInstance();
 		$this->interface = MediaWikiInterface::getInstance();
 		$this->configureByArray( $dependencies );
 	}
