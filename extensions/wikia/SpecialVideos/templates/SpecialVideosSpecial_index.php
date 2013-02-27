@@ -30,7 +30,7 @@
 		<?php $alpha = $counter % 3 == 0 ? ' alpha' : ''; ?>
 
 		<div class="grid-2 video-element<?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-			<a href="<?= $video['fileUrl'] ?>" class="image video" data-video-name="<?= $video['fileTitle'] ?>">
+			<a href="<?= $video['fileUrl'] ?>" class="image video" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>">
 				<?= $video['videoPlayButton'] ?>
 				<img itemprop="thumbnail" alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video="<?= $video['fileTitle'] ?>" class="Wikia-video-thumb thumbimage">
 				<?= $video['videoOverlay'] ?>
