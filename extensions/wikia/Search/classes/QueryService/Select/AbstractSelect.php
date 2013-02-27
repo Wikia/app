@@ -11,37 +11,37 @@ abstract class AbstractSelect
 	 * Snippets should be 150 characters long, by default.
 	 * @var int
 	 */
-	const HL_FRAG_SIZE 						= 150;
+	const HL_FRAG_SIZE = 150;
 	
 	/**
 	 * This should be prepended to matches in Solr snippets.
 	 * @var string
 	 */
-	const HL_MATCH_PREFIX					= '<span class="searchmatch">';
+	const HL_MATCH_PREFIX = '<span class="searchmatch">';
 	
 	/**
 	 * This should be appended to matches in Solr snippets.
 	 * @var string
 	 */
-	const HL_MATCH_POSTFIX					= '</span>';
+	const HL_MATCH_POSTFIX = '</span>';
 	
 	/**
 	 * Sets max collation tries when spellchecking
 	 * @var int
 	 */
-	const SPELLING_MAX_COLLATION_TRIES		= 20;
+	const SPELLING_MAX_COLLATION_TRIES = 20;
 	
 	/**
 	 * Sets max collations when spellchecking
 	 * @var int
 	 */
-	const SPELLING_MAX_COLLATIONS			= 5;
+	const SPELLING_MAX_COLLATIONS = 5;
 	
 	/**
 	 * Sets the max number of results to return when spellchecking
 	 * @var int
 	 */
-	const SPELLING_RESULT_COUNT				= 20;
+	const SPELLING_RESULT_COUNT = 20;
 	
 	/**
 	 * Used for tracking
