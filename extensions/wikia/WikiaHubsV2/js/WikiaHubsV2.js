@@ -49,14 +49,12 @@ var WikiaHubs = {
 
 		lang = wgContentLanguage;
 
-		if (node.closest('.wikiahubs-sponsored-video').length > 0) {    // featured video
-			if (node.hasClass('thumbinner') || node.hasParent('.thumbinner')) {
-				url = node.closest('.thumbinner').find('a').attr('href');
-				var videoTitle = url.substr(url.indexOf(':') + 1);
-				WikiaHubs.trackClick('FeaturedVideo', Wikia.Tracker.ACTIONS.PLAY_VIDEO, 'play', null, {video_title: videoTitle, lang: lang}, e);
-			} else if (node.is('a')) {
+		if (node.closest('.wikiahubs-featured-video').length > 0) {    // featured video
+			if (node.is('a')) {
 				url = node.closest('a').attr('href');
 				WikiaHubs.trackClick('FeaturedVideo', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'link', null, {href: url, lang: lang}, e);
+			} else if (node.is('.sponsored-image')) {
+				WikiaHubs.trackClick('FeaturedVideo', Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'sponsoredimage', null, {lang: lang}, e);
 			}
 		} else if (node.closest('.wikiahubs-popular-videos').length > 0) {    // popular videos
 			if (node.hasClass('previous')) {
@@ -120,6 +118,19 @@ var WikiaHubs = {
 				WikiaHubs.trackClick('TopWikis', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'wikiname', nameIndex, {href: url, lang: lang}, e);
 			}
 		}
+<<<<<<< HEAD
+=======
+		else if (node.closest('.wikiahubs-newstabs').length > 0) {    // Wikia's Picks
+			if (node.is('a')) {
+				url = node.closest('a').attr('href');
+				WikiaHubs.trackClick('WikiasPicks', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'link', null, {href: url, lang: lang}, e);
+			} else if (node.is('.sponsored-image')) {
+				WikiaHubs.trackClick('WikiasPicks', Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'sponsoredimage', null, {lang: lang}, e);
+			} else if (node.is('img')) {
+				WikiaHubs.trackClick('WikiasPicks', Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'image', null, {lang: lang}, e);
+			}
+		}
+>>>>>>> bugid-98663: Hubs: Featured Video - Revise tracking code
 
 		$().log('tracking took ' + (new Date() - startTime) + ' ms');
 	},
