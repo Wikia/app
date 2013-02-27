@@ -34,8 +34,8 @@ class RelatedPages {
 		$this->categories = $categories;
 	}
 
-	public function getCategories() {
-		return array_keys( $this->categories );
+	public function getCategories( $articleId) {
+		return Title::newFromID( $articleId )->getParentCategories();
 	}
 
 	public function reset() {
@@ -72,9 +72,7 @@ class RelatedPages {
 	 * @param int $limit limit
 	 */
 	public function get( $articleId, $limit = 3 ) {
-		global $wgContentNamespaces, $wgEnableRelatedPagesUnionSelectQueries, $wgUser;
 		wfProfileIn( __METHOD__ );
-		$cs = new CategoriesService();
 
 		// prevent from calling this function more than one, use reset() to omit
 		if( is_array( $this->getData() ) ) {
@@ -83,7 +81,8 @@ class RelatedPages {
 		}
 
 		$this->setData( array() );
-		$categories = $this->getCategories();
+		$categories = $this->getCategories( $articleId );
+
 		if ( count($categories) > 0 ) {
 			//RT#80681/RT#139837: apply category blacklist
 			$categories = CategoriesService::filterOutBlacklistedCategories($categories);
@@ -105,8 +104,6 @@ class RelatedPages {
 	}
 
 	protected function afterGet( $pages, $limit ){
-
-		global $wgContentNamespaces, $wgEnableRelatedPagesUnionSelectQueries, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		// ImageServing extension enabled, get images
@@ -149,7 +146,6 @@ class RelatedPages {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $category );
 		if ( empty( $this->memcKeyPrefix ) ){
 			$cacheKey = wfMemcKey( __METHOD__, $category);
 		} else {
@@ -190,7 +186,7 @@ class RelatedPages {
 	* @author Owen
 	*/
 	protected function getPagesForCategories($articleId, $limit, Array $categories) {
-		global $wgMemc, $wgContentNamespaces;
+		global $wgMemc;
 
 		wfProfileIn(__METHOD__);
 		if ( empty( $this->memcKeyPrefix ) ){
@@ -198,9 +194,9 @@ class RelatedPages {
 		} else {
 			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $articleId);
 		}
-		$cache =  $wgMemc->get($cacheKey);
+		$cache = $wgMemc->get($cacheKey);
 
-		if (is_array($cache)) {
+		if ( is_array( $cache ) ) {
 			wfProfileOut(__METHOD__);
 			return $cache;
 		}
@@ -350,11 +346,6 @@ class RelatedPages {
 	public function getArticleSnippet( $articleId, $length = 100 ) {
 		$service = new ArticleService( $articleId );
 		return $service->getTextSnippet();
-	}
-
-	public static function onOutputPageMakeCategoryLinks( $outputPage, $categories, $categoryLinks ) {
-		self::getInstance()->setCategories( $categories );
-		return true;
 	}
 
 	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
