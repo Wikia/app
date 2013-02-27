@@ -26,7 +26,7 @@ class UpdateBacklinksJobTest extends WikiaBaseTest
 							->setMethods( array( 'addField', 'offsetExists', 'offsetGet' ) )
 							->getMock();
 		
-		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+		$mockIndexer = $this->getMockBuilder( 'Wikia\Search\Indexer' )
 							->disableOriginalConstructor()
 							->setMethods( array( 'updateDocuments' ) )
 							->getMock();
@@ -85,7 +85,7 @@ class UpdateBacklinksJobTest extends WikiaBaseTest
 		$paramRefl->setAccessible( true );
 		$paramRefl->setValue( $mockJob, array( $mockDocument ) );
 		
-		$this->mockClass( 'WikiaSearchIndexer', $mockIndexer );
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		
 		$mockJob->run();
 	}
