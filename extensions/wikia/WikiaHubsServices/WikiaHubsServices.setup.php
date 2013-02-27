@@ -15,6 +15,7 @@ $app->registerClass('MarketingToolboxModel', $dir . 'models/MarketingToolboxMode
 $app->registerClass('MarketingToolboxTop10listModel', $dir . 'models/MarketingToolboxTop10listModel.class.php');
 $app->registerClass('MarketingToolboxExploreModel', $dir . 'models/MarketingToolboxExploreModel.class.php');
 $app->registerClass('MarketingToolboxPollsModel', $dir . 'models/MarketingToolboxPollsModel.class.php');
+$app->registerClass('MarketingToolboxPopularvideosModel', $dir . 'models/MarketingToolboxPopularvideosModel.class.php');
 $app->registerClass('MarketingToolboxSliderModel', $dir . 'models/MarketingToolboxSliderModel.class.php');
 $app->registerClass('MarketingToolboxFromthecommunityModel', $dir . 'models/MarketingToolboxFromthecommunityModel.class.php');
 $app->registerClass('MarketingToolboxImageModel', $dir . 'models/MarketingToolboxImageModel.class.php');

@@ -60,7 +60,9 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 			$videoDataHelper = new RelatedVideosData();
 			
 			foreach($data['values']['video'] as $i => $video) {
-				$data['videos'][$i] = $videoDataHelper->getVideoData($video, $model->getThumbnailSize());
+				$data['videos'][$i] = $model->getVideoData($video, $model->getThumbnailSize());
+				$data['videos'][$i]['title'] = $video;
+
 				//we enabled curators to edit a video url so if they've changed it we change it here
 				$data['videos'][$i]['fullUrl'] = ( !empty($data['values']['videoUrl'][$i]) ) ? $data['values']['videoUrl'][$i] : $data['videos'][$i]['fullUrl'];
 				//numbers next to section starts with 2
@@ -93,6 +95,13 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 	}
 
 	public function getStructuredData($data) {
+
+		// TODO
+		$video = 'Skyfall Video Interviews';
+		$toolboxModel = new MarketingToolboxModel();
+		$moduleModel = new MarketingToolboxPopularvideosModel();
+		$videoData = $toolboxModel->getVideoData($video, $moduleModel->getVideoThumbSize());
+
 		return array();
 	}
 }

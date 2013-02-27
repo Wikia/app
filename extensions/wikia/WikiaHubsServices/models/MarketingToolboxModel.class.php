@@ -142,6 +142,41 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
+	 * Return array consisting of videoThumb and videoTimestamp
+	 * for given video name
+	 *
+	 * @param string $fileName
+	 * @param int    $thumbSize
+	 *
+	 * @return array
+	 */
+	public function getVideoData ($fileName, $thumbSize) {
+		$videoData = array();
+		$title = Title::newFromText($fileName, NS_FILE);
+		if (!empty($title)) {
+			$file = $this->wf->findFile($title);
+		}
+		if (!empty($file)) {
+			$htmlParams = array(
+				'file-link' => true,
+				'duration' => true,
+				'linkAttribs' => array('class' => 'video-thumbnail lightbox')
+			);
+			$videoData['videoThumb'] = $file->transform(array('width' => $thumbSize))->toHtml($htmlParams);
+			$videoData['videoTimestamp'] = $file->getTimestamp();
+			$videoData['videoTime'] = $this->wf->TimeFormatAgo($videoData['videoTimestamp']);
+
+			$meta = unserialize($file->getMetadata());
+			$videoData['duration'] = isset($meta['duration']) ? $meta['duration'] : null;
+			$videoData['thumbUrl'] = isset($meta['thumbnail']) ? $meta['thumbnail'] : null;
+			$videoData['title'] = $title->getText();
+			$videoData['fileUrl'] = $title->getFullURL();
+		}
+		return $videoData;
+	}
+
+
+	/**
 	 * Get avalable sections
 	 *
 	 * @return array
