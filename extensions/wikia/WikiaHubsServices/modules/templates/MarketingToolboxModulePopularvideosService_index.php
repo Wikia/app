@@ -9,13 +9,13 @@
 		<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="chevron" />
 	</a>
 	<? if( is_array($videos) ): ?>
-	<div id="carouselContainer" class="carouselContainer">
+	<div id="carouselContainer" class="carousel-container">
 		<div>
-			<ul class="carousel" style="">
+			<ul class="carousel">
 				<? foreach($videos as $video): ?>
 				<li class="thumbs active">
 					<?= $video['thumbMarkup']; ?>
-					<div class="description"><?= $video['title']; ?></div>
+					<div class="video-title"><?= $video['title']; ?></div>
 				</li>
 				<? endforeach; ?>
 			</ul>
