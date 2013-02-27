@@ -150,8 +150,8 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 		$structuredData = array();
 
 		if(!empty($data)) {
-			$toolboxModel = new MarketingToolboxModel();
-			$moduleModel = new MarketingToolboxPopularvideosModel();
+			$toolboxModel = $this->getToolboxModel();
+			$moduleModel = $this->getModuleModel();
 
 			$structuredData['header'] = $data['header'];
 
@@ -165,12 +165,18 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 					'thumbUrl' => $videoData['thumbUrl'],
 					'thumbMarkup' => $videoData['videoThumb'],
 					'wikiUrl' => $data['videoUrl'][$key]
-
 				);
 			}
-
 		}
 
 		return $structuredData;
+	}
+
+	public function getToolboxModel() {
+		return new MarketingToolboxModel();
+	}
+
+	public function getModuleModel() {
+		return new MarketingToolboxPopularvideosModel();
 	}
 }
