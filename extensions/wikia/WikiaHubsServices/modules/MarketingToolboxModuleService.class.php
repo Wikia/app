@@ -140,9 +140,4 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	protected function getImageInfo($fileName, $destSize = 0) {
 		return ImagesService::getLocalFileThumbUrlAndSizes($fileName, $destSize);
 	}
-
-	protected function getVideoInfo() {
-
-	}
-
 }
