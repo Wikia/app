@@ -78,11 +78,11 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	'forum-thread-deleted-return-to' => 'Return to $1 board',
 
 	/* Sorting */
-	'forum-sorting-option-newest-replies' => 'Most Recent',
+	'forum-sorting-option-newest-replies' => 'Most Recent Replies',
 	'forum-sorting-option-popular-threads' => 'Most Popular',
 	'forum-sorting-option-most-replies' => 'Most Active in 7 Days',
-	'forum-sorting-option-newest-threads' => 'Newest threads',
-	'forum-sorting-option-oldest-threads' => 'Oldest threads',
+	'forum-sorting-option-newest-threads' => 'Newest Threads',
+	'forum-sorting-option-oldest-threads' => 'Oldest Threads',
 
 	/* New Discussion */
 	'forum-discussion-post' => 'Post',
