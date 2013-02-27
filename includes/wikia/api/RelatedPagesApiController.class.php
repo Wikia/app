@@ -26,39 +26,44 @@ class RelatedPagesApiController extends WikiaApiController {
 	function getList(){
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$ids = $this->request->getArray( self::PARAMETER_ARTICLE_IDS, null );
-		$limit = $this->request->getInt( self::PARAMETER_LIMIT, 3 );
+		if( !empty( $this->wg->EnableRelatedPagesExt ) && empty( $this->wg->EnableAnswers ) ) {
+			$ids = $this->request->getArray( self::PARAMETER_ARTICLE_IDS, null );
+			$limit = $this->request->getInt( self::PARAMETER_LIMIT, 3 );
 
-		$related = [];
+			$related = [];
 
-		if ( is_array( $ids ) ) {
-			$relatedPages = RelatedPages::getInstance();
+			if ( is_array( $ids ) ) {
+				$relatedPages = RelatedPages::getInstance();
 
-			foreach( $ids as $id ) {
-				if ( is_numeric( $id ) ) {
-					$related[$id] = $relatedPages->get( $id, $limit );
-				} else {
-					throw new InvalidParameterApiException( self::PARAMETER_ARTICLE_IDS );
+				foreach( $ids as $id ) {
+					if ( is_numeric( $id ) ) {
+						$related[$id] = $relatedPages->get( $id, $limit );
+					} else {
+						throw new InvalidParameterApiException( self::PARAMETER_ARTICLE_IDS );
+					}
+
+					$relatedPages->reset();
 				}
-
-				$relatedPages->reset();
+			} else {
+				$this->wf->ProfileOut( __METHOD__ );
+				throw new MissingParameterApiException( 'ids' );
 			}
-		} else {
+
+			$this->response->setVal( 'items', $related );
+			$this->response->setVal( 'basepath', $this->wg->Server );
+
+			$this->response->setCacheValidity(
+				10800 /* 3 hours */,
+				10800 /* 3 hours */,
+				array(
+					WikiaResponse::CACHE_TARGET_BROWSER,
+					WikiaResponse::CACHE_TARGET_VARNISH
+				)
+			);
+
 			$this->wf->ProfileOut( __METHOD__ );
-			throw new MissingParameterApiException( 'ids' );
+		} else {
+			throw new NotFoundApiException( 'Related Pages extension not available' );
 		}
-
-		$this->response->setVal( 'items', $related );
-		$this->response->setVal( 'basepath', $this->wg->Server );
-
-		$this->response->setCacheValidity(
-			10800 /* 3 hours */,
-			10800 /* 3 hours */,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
-		$this->wf->ProfileOut( __METHOD__ );
 	}
 }
