@@ -33,18 +33,18 @@ class PhalanxContentBlock extends WikiaObject {
 			$summary = preg_replace( self::$whitelist, '', $summary );
 		}
 
+		$error_msg = '';
 		$ret = $phalanxModel->match_summary( $summary );
 		if ( $ret !== false ) {
 			/* check content */
-			if ( !empty( self::$whitelist ) ) {
-				$textbox = preg_replace( self::$whitelist, '', $textbox );
-			}
-			$ret = $phalanxModel->match_content( $textbox );	
+			$ret = $this->editContent( $textbox, $error_msg, $phalanxModel );
+		} else {
+			$error_msg = $phalanxModel->contentBlock();
 		}
 		
 		if ( $ret === false ) {
 			// we found block
-			$editPage->spamPageWithContent( $phalanxModel->contentBlock() );
+			$editPage->spamPageWithContent( $error_msg );
 		}
 		
 		$this->wf->profileOut( __METHOD__ );
@@ -82,5 +82,34 @@ class PhalanxContentBlock extends WikiaObject {
 		
 		$this->wf->profileOut( __METHOD__ );
 		return true;
+	}
+	
+
+	public function editContent( $textbox, &$error_msg, $phalanxModel = null ) {
+		$this->wf->profileIn( __METHOD__ );
+
+		if ( is_null( $phalanxModel ) ) {
+			$phalanxModel = F::build('PhalanxContentModel', array( $this->wg->Title ) );
+		}
+		
+		/* compare summary with spam-whitelist */
+		if ( !empty( $textbox ) && is_null(self::$whitelist) ) {
+			self::$whitelist = $phalanxModel->buildWhiteList();
+		}
+
+		/* check content */
+		if ( !empty( self::$whitelist ) ) {
+			$textbox = preg_replace( self::$whitelist, '', $textbox );
+		}
+
+		/* check in Phalanx service */
+		$ret = $phalanxModel->match_content( $textbox );	
+		
+		if ( $ret === false ) {
+			$error_msg = $phalanxModel->contentBlock();
+		}
+		
+		$this->wf->profileOut( __METHOD__ );
+		return $ret;
 	}
 }

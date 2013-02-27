@@ -59,6 +59,7 @@ $phalanxhooks = array(
 		array(
 			'EditFilter'         => 'editFilter',
 			'AbortMove'          => 'abortMove',
+			'EditContent'        => 'editContent',
 		),
 	'PhalanxTitleBlock' =>
 		array(
@@ -66,7 +67,7 @@ $phalanxhooks = array(
 			'EditFilter'                           => 'editFilter',
 			'CreateDefaultQuestionPageFilter'      => 'checkTitle',
 			'CreatePageTitleCheck'                 => 'checkTitle',
-			'TopListCheckTitle'                    => 'checkTitle',
+			'TopListCheckTitle'                    => 'checkTopListTitle',
 		),
 	'PhalanxAnswersBlock' =>
 		array(

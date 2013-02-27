@@ -49,7 +49,8 @@ class TopList extends TopListBase {
 		//FB#16388: we don't need to check Phalanx blocks while deleting
 		if( !$skipPhalanxCheck ) {
 			//FB#8083: blocked titles are not being filtered, this should be handled automatically by Phalanx though...
-			if ( ! wfRunHooks( "TopListCheckTitle", array( $title ) ) ) {
+			$error_msg = '';
+			if ( ! wfRunHooks( "TopListCheckTitle", array( $title, &$error_msg ) ) ) {
 				$notPhalanxBlocked = false;
 			}
 		} 

@@ -50,14 +50,28 @@ class PhalanxTitleBlock extends WikiaObject {
 		return $ret;
 	}
 
-	public function checkTitle( $title ) {
+	public function checkTitle( $title, $displayBlock = true ) {
+		$this->wf->profileIn( __METHOD__ );
+
+		$phalanxModel = F::build('PhalanxContentModel', array( $title ) );
+		$ret = $phalanxModel->match_title();
+		
+		if ( $ret === false && $displayBlock ) {
+			$phalanxModel->displayBlock();
+		}
+		
+		$this->wf->profileOut( __METHOD__ );
+		return $ret;
+	}
+	
+	public function checkTopListTitle( $title, &$error_msg ) {
 		$this->wf->profileIn( __METHOD__ );
 
 		$phalanxModel = F::build('PhalanxContentModel', array( $title ) );
 		$ret = $phalanxModel->match_title();
 		
 		if ( $ret === false ) {
-			$phalanxModel->displayBlock();
+			$error_msg = $phalanxModel->contentBlock();
 		}
 		
 		$this->wf->profileOut( __METHOD__ );
