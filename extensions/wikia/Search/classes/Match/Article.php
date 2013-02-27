@@ -16,6 +16,7 @@ class Article extends AbstractMatch
 		$wikiId = $this->interface->getWikiId();
 		$fieldsArray = array(
 				'id'            => sprintf( '%s_%s', $wikiId, $this->id ),
+				'pageid'        => $this->id,
 				'wid'           => $wikiId,
 				'title'         => $this->interface->getTitleStringFromPageId( $this->id ),
 				'url'           => urldecode( $this->interface->getUrlFromPageId( $this->id ) ),
