@@ -285,7 +285,7 @@ class CloseWikiMaintenance {
 					/**
 					 * update search index
 					 */
-					$indexer = F::build( 'WikiaSearchIndexer' );
+					$indexer = new Wikia\Search\Indexer();
 					$indexer->deleteWikiDocs( $row->city_id );
 					$this->log( "Wiki documents removed from index" );
 
