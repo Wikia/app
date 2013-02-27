@@ -25,33 +25,10 @@ var SuggestModalWikiaHubsV2 = {
 				}
 			}
 		});
-		// show modal for suggest related videos
-		$('#suggest-popularvideos').click(function () {
-			if (window.wgUserName) {
-				SuggestModalWikiaHubsV2.suggestVideo();
-			} else {
-				if (window.wgComboAjaxLogin) {
-					showComboAjaxForPlaceHolder(false, false, function () {
-						AjaxLogin.doSuccess = function () {
-							$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
-							SuggestModalWikiaHubsV2.suggestVideo();
-						};
-						AjaxLogin.close = function () {
-							$('#AjaxLoginBoxWrapper').closeModal();
-						};
-					}, false, true);
-				} else {
-					UserLoginModal.show({
-						callback: function () {
-							SuggestModalWikiaHubsV2.suggestVideo();
-						}
-					});
-				}
-			}
-		});
 	},
 	
 	suggestArticle: function () {
+		// TODO change this method to send data to internal analytics
 		$.nirvana.sendRequest({
 			controller: 'WikiaHubsV2SuggestController',
 			method: 'suggestArticle',
@@ -77,37 +54,6 @@ var SuggestModalWikiaHubsV2 = {
 					SuggestModalWikiaHubsV2.closeModal(modal);
 				});
 			}
-		});
-	},
-
-	suggestVideo: function () {
-		$.nirvana.sendRequest({
-			controller: 'WikiaHubsV2SuggestController',
-			method: 'suggestVideo',
-			format: 'html',
-			type: 'get',
-			callback: function (html) {
-				var modal = $(html).makeModal({width: 490, onClose: SuggestModalWikiaHubsV2.closeModal});
-				var wikiaForm = new WikiaForm(modal.find('form'));
-				
-				modal.find('input[name=videourl], input[name=wikiname]').placeholder();
-						
-				// show submit button
-				SuggestModalWikiaHubsV2.showSubmit(modal);
-	
-				modal.find('button.submit').click(function (e) {
-					e.preventDefault();
-					var videourl = modal.find('input[name=videourl]').val();
-					var wikiname = modal.find('input[name=wikiname]').val();
-					$().log('suggestVideo modal submit');
-					SuggestModalWikiaHubsV2.closeModal(modal);
-				});
-	
-				modal.find('button.cancel').click(function (e) {
-					e.preventDefault();
-					SuggestModalWikiaHubsV2.closeModal(modal);
-				});
-			}		
 		});
 	},
 
@@ -144,7 +90,6 @@ var SuggestModalWikiaHubsV2 = {
 			modal.closeModal();
 		}
 	}
-
 };
 
 $(function () {
