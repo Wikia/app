@@ -245,9 +245,13 @@ class ContactForm extends SpecialPage {
 		}
 
 		//smush it all together
-		$info = $this->mBrowser . "\n";
-		$info .= "A/B Tests: " . $this->mAbTestInfo . "\n"; // giving it its own line so that it stands out more
-		$info .= implode("; ", $items) . "\n";
+		$info = $this->mBrowser . "\n\n";
+		if ( !empty($uid) ) {
+		$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. $wgUser->getName() . "\n";
+		}
+		$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. $this->mEmail . "\n\n";
+		$info .= "A/B Tests: " . $this->mAbTestInfo . "\n\n"; // giving it its own line so that it stands out more
+		$info .= implode("; ", $items) . "\n\n";
 		//end wikia debug data
 
 		$body = "\n{$this->mProblemDesc}\n\n----\n" . $m_shared . $info;
