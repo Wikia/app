@@ -17,10 +17,13 @@
  *
  */
 
+// TODO: find a way to create unittests for this?
+
 require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 require_once( dirname( __FILE__ ) . '../extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php'); // for BLOB fetcher
 
 class SynchronizeBlobs extends Maintenance {
+	var $context = null; // will this be needed?
 
 	public function __construct() {
 		parent::__construct();
@@ -29,15 +32,18 @@ class SynchronizeBlobs extends Maintenance {
 
 	function latestRevisions() {
 		$db = $this->getDB();
+		// todo: get rows from join of page, revision, and perhaps text tables
 		return array();
 	}
 
 	function renderArticle(&$article) {
-
+		$artictle->fetchContent(); // todo: go deeper
 	}
 
-	function loadArticle($article) {
-
+	function &loadArticle(&$revision_row) {
+		$title = Title::newFromRow($revision_row);
+		$article = Article::newFromTitle($title, $this->context);
+		return $article;
 	}
 
 	public function execute() {
@@ -45,18 +51,14 @@ class SynchronizeBlobs extends Maintenance {
 		$this->setDB($db);
 		$latest = latestRevisions();
 		$total = count($latest);
+		$done = 0;
 		foreach ($latest as $revision_row) {
 			$article = loadArticle($revision_row);
 			$this->renderArticle($article);
+			$done++;
+			// TODO: hopefully, show progress and ETA
 		}
-
-
-
-		// TODO: show progress
-
-
 	}
-
 }
 
 $maintClass = "SynchronizeBlobs";
