@@ -125,11 +125,6 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 		return parent::render($data);
 	}
 
-	//TODO: remove once #fb98656 is done
-	public function getStructuredData($data) {
-		return $data;
-	}
-	
 	public function filterData($data) {
 		$data = parent::filterData($data);
 
@@ -149,5 +144,33 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 		}
 
 		return $data;
+	}
+
+	public function getStructuredData($data) {
+		$structuredData = array();
+
+		if(!empty($data)) {
+			$toolboxModel = new MarketingToolboxModel();
+			$moduleModel = new MarketingToolboxPopularvideosModel();
+
+			$structuredData['header'] = $data['header'];
+
+			foreach($data['video'] as $key => $video) {
+				$videoData = $toolboxModel->getVideoData($video, $moduleModel->getVideoThumbSize());
+
+				$structuredData['videos'][] = array(
+					'title' => $videoData['title'],
+					'fileUrl' => $videoData['fileUrl'],
+					'duration' => $videoData['duration'],
+					'thumbUrl' => $videoData['thumbUrl'],
+					'thumbMarkup' => $videoData['videoThumb'],
+					'wikiUrl' => $data['videoUrl'][$key]
+
+				);
+			}
+
+		}
+
+		return $structuredData;
 	}
 }
