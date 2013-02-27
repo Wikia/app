@@ -55,7 +55,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 : Topics allow you to link a forum discussion with a wiki article. It's another way to keep Forums organized and to help people find interesting discussions. For example, a Forum thread tagged with \"Lord Voldemort\" will appear at the bottom of the \"Lord Voldemort\" article.",
 
 	/* Forum Board */
-	
+
 	'forum-board-title' => '$1 board',
 	'forum-board-topic-title' => 'Discussions about $1',
 	'forum-board-topics' => 'Topics',
@@ -66,9 +66,9 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	'forum-board-thread-unfollow' => 'Unfollow',
 	'forum-board-new-message-heading' => 'Start a Discussion',
 	'forum-board-select-board' => 'Select a Board',
-	
+
 	'forum-board-no-board-worning' => "The board you're looking for was not found",
-	
+
 	'forum-no-board-selection-error' => '← Please select a board to post to',
 
 	/* Forum Thread */
@@ -81,6 +81,8 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	'forum-sorting-option-newest-replies' => 'Most Recent',
 	'forum-sorting-option-popular-threads' => 'Most Popular',
 	'forum-sorting-option-most-replies' => 'Most Active in 7 Days',
+	'forum-sorting-option-newest-threads' => 'Newest threads',
+	'forum-sorting-option-oldest-threads' => 'Oldest threads',
 
 	/* New Discussion */
 	'forum-discussion-post' => 'Post',
@@ -96,7 +98,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	'forum-notification-user1-reply-to-someone' => '$1 replied on the $3 board',
 	'forum-notification-user2-reply-to-someone' => '$1 and $2 replied on the $3 board',
 	'forum-notification-user3-reply-to-someone' => '$1 and others replied on the $3 board',
-	
+
 	'forum-notification-newmsg-on-followed-wall' => '$1 left a new message on the $2 board',
 
 	/* Mail message */
@@ -142,7 +144,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	/* WikiActivity */
 	'forum-wiki-activity-msg' => 'on the $1',
 	'forum-wiki-activity-msg-name' => '$1 board',
-	
+
 	/* Forum Activity and Related Module */
 	'forum-activity-module-heading' => 'Forum Activity',
 	'forum-related-module-heading' => 'Related Threads',
@@ -180,7 +182,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 
 	/* Old version of forum */
 	'forum-specialpage-oldforum-link' => 'Old forum Archives',
-	
+
 	/* board admin page messages */
 	'forum-admin-page-heading' => '{{SITENAME}} Board Admin',
 	'forum-admin-page-breadcrumb' => 'Admin Board Management',
@@ -188,11 +190,11 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-admin-create-new-board-modal-heading' => 'Create a new board',
 	'forum-admin-create-new-board-title' => 'Board Title',
 	'forum-admin-create-new-board-description' => 'Board Description',
-	
+
 	'forum-admin-edit-board-modal-heading' => 'Edit Board: $1',
 	'forum-admin-edit-board-title' => 'Board Title',
 	'forum-admin-edit-board-description' => 'Board Description',
-	
+
 	'forum-admin-delete-and-merge-board-modal-heading' => 'Delete Board: $1',
 	'forum-admin-delete-board-title' => 'Please confirm by typing the name of the board that you want to delete:',
 	'forum-admin-merge-board-warning' => 'The threads on this board will be merged into an existing board.',
@@ -215,28 +217,28 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 
 	'forum-autoboard-title-5' => 'Fun and Games',
 	'forum-autoboard-body-5' => 'This board is for off-topic conversation -- a place to hang out with your $WIKINAME friends.',
-	
+
 	/* board creation validation messages */
 
 	'forum-board-destination-empty' => '(Please select board)',
-	
+
 	'forum-board-title-validation-invalid' => 'Board name contains invalid characters',
 	'forum-board-title-validation-length' => 'Board name should be at least 4 characters long',
 	'forum-board-title-validation-exists' => 'A Board of the same name already exists',
 	'forum-board-validation-count' => 'The maximum number of boards is $1',
-	
+
 	'forum-board-description-validation-length' => 'Please write a description for this board',
 	'forum-board-id-validation-missing' => 'Board id is missing',
 
 	'forum-board-destination-validation-missing' => 'You need to choose a board to merge',
 	'forum-board-title-validation-compare-error' => 'You need typing in the name of the board you are deleting',
-	
+
 	'forum-board-no-board-warning' => 'We couldn\'t find a board with that title.  Here\'s the list of forum boards.',
-	
+
 	/* old forum notification */
 	'forum-old-notification-message' => 'This Forum has been archived',
 	'forum-old-notification-navigation-button' => 'Visit the new Forums',
-	
+
 	/* messages for Related Discussions Module on Article page */
 	'forum-related-discussion-heading' => 'Discussions about $1',
 	'forum-related-discussion-new-post-button' => 'Start a Discussion',
@@ -257,7 +259,7 @@ $messages['qqq'] = array(
 	'forum-specialpage-board-threads' => 'The count of threads on a board. Parameters: * $1 - the number of threads.  Use formatnum for local formatting.',
 	'forum-specialpage-board-posts' => 'The count of posts on a board. Parameters: * $1 - the number of posts.  Use formatnum for local formatting.',
 	'forum-specialpage-board-lastpostby' => '',
-	
+
 	'forum-specialpage-policies-edit' => 'Edit button on modal with forum Policies',
 	'forum-specialpage-policies' => 'button label for forum policies',
 	'forum-policies-and-faq' => 'default policies and faq',
@@ -275,7 +277,7 @@ $messages['qqq'] = array(
 	'forum-participation-module-kudos' => 'Gives state of kudos user activity by event and time.  $1 is a url link to the kudos event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 	'forum-participation-module-posted' => 'Gives state of posted user activity by event and time.  $1 is a url link to the posted event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 	'forum-participation-module-started' => 'Gives state of started user activity by event and time.  $1 is a url link to the started event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
-	
+
 	'forum-recentchanges-closed-thread' => 'Recent changes item. Parameters:
 * $2 is thread title
 * $4 is thread owner
@@ -308,30 +310,33 @@ $messages['qqq'] = array(
 	'forum-admin-create-new-board-modal-heading' => 'Modal heading for create a new board dialog',
 	'forum-admin-create-new-board-title' => 'Form input label for board title',
 	'forum-admin-create-new-board-description' => 'Form input label board description',
-	
+
 	'forum-admin-delete-and-merge-board-modal-heading' => 'Heading for delete and merge dialog. $1 is board name',
 	'forum-admin-delete-board-title' => 'Label for board name verification for deletion',
 	'forum-admin-merge-board-warning' => 'Help text letting users know that threads under a deleted board needs to be merged to existing board',
 	'forum-admin-merge-board-destination' => 'Label for board selection dropdown to merge to',
 	'forum-admin-delete-and-merge-button-label' => 'Delete and Merge button label',
-	
+
 	'forum-board-title-validation-invalid' => 'Display on board create in case of validation error ',
 	'forum-board-title-validation-length' => 'Display on board create in case of validation error ',
 	'forum-board-title-validation-exists' => 'Display on board create in case of validation error ',
 	'forum-board-title-validation-compare-error' => 'Display on board create in case of validation error ',
 	'forum-board-validation-count' => 'Display on board create in case of validation error ',
-	 
+
 	'forum-board-description-validation-length' => 'Display on board create in case of validation error ',
 	'forum-board-destination-validation-missing' => 'Display on board create in case of validation error ',
 	'forum-board-id-validation-missing' => 'User should not see this message unless they hack the wiki.  Nevertheless, it is a validation error when it is not provided.',
-	
+
 	'forum-related-discussion-heading' => 'Section heading for related discussion section.  $1 is article that this section will be on.',
 	'forum-related-discussion-total-replies' => 'Label showing total number of replies in a discussion.  $1 is number of replies',
 	'forum-related-discussion-see-more' => 'See More link to topic page',
-	
+
 	'forum-board-select-board' => 'A form label instructing someone to select a board from a drop down.',
-	
-	
+
+
 	'forum-discussion-placeholder-message-short' => 'Display on topic page inside new discussion body testarea',
 	'forum-confirmation-board-deleted' => 'Board delete confirmation message. $1 is board name',
+
+	'forum-sorting-option-newest-threads' => 'Sorting option, newest threads first',
+	'forum-sorting-option-oldest-threads' => 'Sorting option, oldest threads first',
 );
