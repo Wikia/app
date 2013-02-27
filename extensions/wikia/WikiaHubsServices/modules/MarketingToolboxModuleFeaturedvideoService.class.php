@@ -101,4 +101,8 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 
 		return parent::filterData($data);
 	}
+
+	public function getStructuredData($data) {
+		return array();
+	}
 }

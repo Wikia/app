@@ -8,6 +8,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	protected $verticalId;
 
 	abstract protected function getFormFields();
+	abstract public function getStructuredData($data);
 
 	public function __construct($langCode, $sectionId, $verticalId) {
 		parent::__construct();
@@ -134,6 +135,14 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		}
 
 		return $link;
+	}
+
+	protected function getImageInfo($fileName, $destSize = 0) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($fileName, $destSize);
+	}
+
+	protected function getVideoInfo() {
+
 	}
 
 }

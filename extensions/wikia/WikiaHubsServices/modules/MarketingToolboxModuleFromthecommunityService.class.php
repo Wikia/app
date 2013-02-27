@@ -211,4 +211,8 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		}
 		return $data;
 	}
+
+	public function getStructuredData($data) {
+		return array();
+	}
 }
