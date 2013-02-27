@@ -1,4 +1,4 @@
-var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, evolveHelper, slotTweaker, dartUrl) {
+var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, Krux, evolveHelper, slotTweaker) {
 	'use strict';
 
 	var slotMap,
@@ -9,7 +9,6 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 		hoppedSlots = {},
 		getReskinAndSilverScript,
 		getUrl,
-		getUrl2,
 		getKv,
 		iface,
 		sanitizeSlotname,
@@ -123,36 +122,13 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 	getKv = function (slotname) {
 		var sect = evolveHelper.getSect();
 
-		return 'sect=' + sect + ';' +
+		return sect + ';' +
+			'sect=' + sect + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
 			's1=_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_') + ';' +
 			adLogicPageLevelParamsLegacy.getCustomKeyValues() +
 			adLogicPageLevelParamsLegacy.getKruxKeyValues();
-	};
-
-	getUrl2 = function(slotname) {
-		var sect = evolveHelper.getSect(),
-			dcopt = slotMap[slotname].dcopt,
-			size = slotMap[slotname].size,
-			tile = slotMap[slotname].tile,
-			url = dartUrl.urlBuilder('n4403ad.doubleclick.net', 'adj/gn.wikia4.com/' + sect);
-
-		url.addParam('sect', sect);
-		url.addParam('mtfInline', 'true');
-		url.addParam('pos', slotname);
-		url.addParam('s1', (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_'));
-		url.addString(adLogicPageLevelParamsLegacy.getCustomKeyValues());
-		url.addString(adLogicPageLevelParamsLegacy.getKruxKeyValues());
-		url.addString(adLogicPageLevelParamsLegacy.getDomainKV());
-		url.addString(adLogicPageLevelParamsLegacy.getHostnamePrefix());
-		url.addParam('sz', size);
-		url.addParam('dcopt', dcopt);
-		url.addParam('type', ['pop', 'int']); // TODO remove?
-		url.addParam('tile', tile);
-		url.addString('ord=' + ord + '?');
-
-		return url.toString();
 	};
 
 	// adapted for Evolve + simplified copy of AdConfig.DART.getUrl
@@ -170,7 +146,6 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 			'.doubleclick.net/' +
 			'adj' + '/' +
 			'gn.wikia4.com' + '/' +
-			sect + ';' +
 			getKv(slotname) +
 			adLogicPageLevelParamsLegacy.getDomainKV() +
 			adLogicPageLevelParamsLegacy.getHostnamePrefix() +
@@ -180,8 +155,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 			'tile=' + tile + ';' +
 			'ord=' + ord + '?';
 
-		log('getUrl1: ' + url, 7, 'AdProviderEvolve');
-		log('getUrl2: ' + getUrl2(slotname), 5, 'AdProviderEvolve');
+		log(url, 7, 'AdProviderEvolve');
 		return url;
 	};
 

@@ -170,7 +170,7 @@ $messages['qqq'] = array(
 	'wikifactory-label-eznamespace' => '{{Optional}}',
 	'right-wikifactory' => '{{doc-right|wikifactory|ns=Wikia}}',
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
-	'closewiki-nbr-wiki' => '',
+	'closewiki-nbr-wiki' => 'Number of wikis. $1 represents a numeric value',
 	'closewiki-unknown' => '{{Identical|Unknown}}',
 	'wikifactory-public-status-change-default-reason' => 'WikiFactory is a staff tool that allows Wikia to manage per-wiki settings across their network. The "public status" setting determines whether a wiki is available for users or closed and assigned for removal. Staff members usually justify a change of the status of a wiki by filling in the "Reason" field in the form. If no reason is provided, the wikifactory-public-status-change-default-reason is used automatically so it can be deduced where the change had been requested from.',
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',

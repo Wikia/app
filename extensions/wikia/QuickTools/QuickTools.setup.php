@@ -73,7 +73,11 @@ $wgResourceModules['ext.quickAdopt'] = $qtResourceTemplate + array(
 	'messages' => array(
 		'quicktools-adopt-reason',
 		'quicktools-adopt-success',
-		'quicktools-adopt-error'
+		'quicktools-adopt-error',
+		'quicktools-adopt-confirm',
+		'quicktools-adopt-confirm-ok',
+		'quicktools-adopt-confirm-cancel',
+		'quicktools-adopt-confirm-title'
 	)
 );
 
