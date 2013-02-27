@@ -109,6 +109,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 				'alt' => $sponsoredImageInfo->title,
 				'width' => $sponsoredImageInfo->width,
 				'height' => $sponsoredImageInfo->height,
+				'class' => 'sponsored-image',
 			), '', true);
 		}
 		
