@@ -28,7 +28,7 @@ class UserStatsService extends WikiaModel {
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 
 		wfProfileIn(__METHOD__);
-
+		
 		if ($revision !== NULL) {	// // do not count null edits
 			// tell service to update cached data for user who edited the page
 			if (!$user->isAnon()) {
@@ -66,7 +66,6 @@ class UserStatsService extends WikiaModel {
 			__METHOD__
 		);
 
-		/* Commenting out temporarily until deployment BugId:98376
 		$dbw->replace(
 			'wikia_user_properties',
 			array(),
@@ -75,7 +74,6 @@ class UserStatsService extends WikiaModel {
 			'wup_value' => $editCount),
 			__METHOD__
 		);
-		*/
 
 		return $editCount;
 	}
