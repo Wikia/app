@@ -1107,7 +1107,7 @@ class User {
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
 			$this->getEditCount(); // revalidation for nulls
-			$this->getEditCountLocal(); // revalidation for nulls
+			//$this->getEditCountLocal(); // revalidation for nulls
 			$this->mMonacoData = null;
 			$this->mMonacoSidebar = null;
 			return true;
