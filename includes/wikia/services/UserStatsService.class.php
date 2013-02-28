@@ -53,19 +53,20 @@ class UserStatsService extends WikiaModel {
 	 * @return Int Number of edits
 	 */
 	public function resetEditCountWiki( $dbName = false ) {
-		$dbw = $this->getWikiDB( DB_MASTER, $dbName );
-		$editCount = $dbw->selectField(
+		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
+		$editCount = $dbr->selectField(
 			'revision', 'count(*)',
 			array( 'rev_user' => $this->userId ),
 			__METHOD__
 		);
 
-		$editCount += $dbw->selectField(
+		$editCount += $dbr->selectField(
 			'archive', 'count(*)',
 			array( 'ar_user' => $this->userId ),
 			__METHOD__
 		);
 
+		$dbw = $this->getWikiDB( DB_MASTER, $dbName );
 		$dbw->replace(
 			'wikia_user_properties',
 			array(),
