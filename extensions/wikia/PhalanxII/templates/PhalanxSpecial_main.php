@@ -69,7 +69,7 @@
 						foreach($blockTypes as $typeId => $typeName) {
 							$typeName = str_replace('_', '-', $typeName);
 ?>
-							<label>
+							<label title="<?= wfMsg("phalanx-help-type-{$typeName}"); ?>">
 								<?= Xml::check('wpPhalanxType[]', !empty($data['type'][$typeId]), array('value' => $typeId)); ?>
 
 								<?= wfMsg("phalanx-type-{$typeName}"); ?>
@@ -78,18 +78,6 @@
 <?php
 						}
 ?>
-						<!--
-						<div id="phalanx-help">
-							<div id="phalanx-help-1" class="accent"><?php echo wfMsg( 'phalanx-help-type-content' ) ?></div>
-							<div id="phalanx-help-2" class="accent"><?php echo wfMsg( 'phalanx-help-type-summary' ) ?></div>
-							<div id="phalanx-help-4" class="accent"><?php echo wfMsg( 'phalanx-help-type-title' ) ?></div>
-							<div id="phalanx-help-8" class="accent"><?php echo wfMsg( 'phalanx-help-type-user' ) ?></div>
-							<div id="phalanx-help-64" class="accent"><?php echo wfMsg( 'phalanx-help-type-wiki-creation' )  ?></div>
-							<div id="phalanx-help-16" class="accent"><?php echo wfMsg( 'phalanx-help-type-answers-question-title' ) ?></div>
-							<div id="phalanx-help-32" class="accent"><?php echo wfMsg( 'phalanx-help-type-answers-recent-questions' ) ?></div>
-							<div id="phalanx-help-256" class="accent"><?php echo wfMsg( 'phalanx-help-type-user-email' ) ?></div>
-						</div>
-						-->
 					</div>
 					<!-- Reason -->
 					<div id="phalanx-block-optionals" class="clearfix">
@@ -131,7 +119,7 @@
 						foreach($blockTypes as $typeId => $typeName) {
 							$typeName = str_replace('_', '-', $typeName);
 ?>
-							<label>
+							<label title="<?= wfMsg("phalanx-help-type-{$typeName}"); ?>">
 								<?= Xml::check('wpPhalanxTypeFilter[]', !empty($typeFilter[$typeId]), array('value' => $typeId)); ?>
 
 								<?= wfMsg("phalanx-type-{$typeName}"); ?>

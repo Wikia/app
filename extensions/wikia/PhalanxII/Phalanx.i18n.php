@@ -73,14 +73,14 @@ Clicking "{{int:phalanx-edit-block}}" will save your changes!',
 	 It does not prevent a pre-existing page from being edited.',
 	'phalanx-help-type-user' => 'This filter blocks a user (exactly the same as a local MediaWiki block), if the name or IP address matches one of the blacklisted names or IP addresses.',
 	'phalanx-help-type-wiki-creation' => 'This filter prevents a wiki from being created, if its name or URL matches any blacklisted phrase.',
-	'phalanx-help-type-answers-question-title' => 'This filter blocks a question (page) from being created, if its title matches any of the blacklisted phrases.
+	'phalanx-help-type-question-title' => 'This filter blocks a question (page) from being created, if its title matches any of the blacklisted phrases.
 
 Note: only works on Answers-type wikis.',
-	'phalanx-help-type-answers-recent-questions' => 'This filter prevents questions (pages) from being displayed in a number of outputs (widgets, lists, tag-generated listings).
+	'phalanx-help-type-recent-questions' => 'This filter prevents questions (pages) from being displayed in a number of outputs (widgets, lists, tag-generated listings).
 It does not prevent those pages from being created.
 
 Note: works only on Answers-type wiks.',
-	'phalanx-help-type-user-email' => 'This filter prevents account creation using a blocked email address.',
+	'phalanx-help-type-email' => 'This filter prevents account creation using a blocked email address.',
 
 	#block reason overrides, when no block reason was inputed (original usage)
 	'phalanx-user-block-reason-ip' => 'This IP address is prevented from editing across the entire Wikia network due to vandalism or other disruption by you or by someone who shares your IP address.
@@ -324,13 +324,13 @@ Ein Klick auf „{{int:phalanx-edit-block}}“ speichert deine Änderungen!',
 Er verhindert nicht die Bearbeitung einer bereits vorhandenen Seite.',
 	'phalanx-help-type-user' => 'Dieser Filter blockiert einen Benutzer (genauso wie eine lokale MediaWiki-Sperre), wenn der Name oder die IP-Adresse mit einem Eintrag in der schwarzen Liste übereinstimmt.',
 	'phalanx-help-type-wiki-creation' => 'Dieser Filter verhindert die Erstellung eines Wikis, falls sein Name oder seine URL auf einen Eintrag in der schwarzen Liste passt.',
-	'phalanx-help-type-answers-question-title' => 'Dieser Filter verhindert die Erstellung einer Frage (Seite), falls ihr Titel auf einen Eintrag in der schwarzen Liste passt.
+	'phalanx-help-type-question-title' => 'Dieser Filter verhindert die Erstellung einer Frage (Seite), falls ihr Titel auf einen Eintrag in der schwarzen Liste passt.
 
 Anmerkung: funktioniert nur für Wikis vom Typ Answers.',
-	'phalanx-help-type-answers-recent-questions' => 'Dieser Filter verhindert die Anzeige einer Frage (Seite) in einer Anzahl von Ausgängen (Widgets, Listen, Tag-generierte Auflistungen).
+	'phalanx-help-type-recent-questions' => 'Dieser Filter verhindert die Anzeige einer Frage (Seite) in einer Anzahl von Ausgängen (Widgets, Listen, Tag-generierte Auflistungen).
 
 Anmerkung: funktioniert nur für Wikis vom Typ Answers.',
-	'phalanx-help-type-user-email' => 'Dieser Filter verhindert die Kontoerstellung über eine blockierte E-Mail-Adresse.',
+	'phalanx-help-type-email' => 'Dieser Filter verhindert die Kontoerstellung über eine blockierte E-Mail-Adresse.',
 	'phalanx-user-block-reason-ip' => 'Aufgrund von Vandalismus oder anderem Fehlverhalten durch dich oder jemanden, der deine IP-Adresse mitnutzt, wurde dieser IP-Adresse das Schreibrecht entzogen. Dies gilt für das gesamte Wikia-Netzwerk.
 Wenn du denkst, dass es sich hierbei um einen Fehler handelt, [[Special:Contact|kontaktiere Wikia]]!',
 	'phalanx-user-block-reason-exact' => 'Diesem Benutzernamen oder dieser IP-Adresse ist das Schreiben – aufgrund von Vandalismus oder anderem Fehlverhalten – im gesamten Wikia-Netzwerk verboten worden.
@@ -470,13 +470,13 @@ $messages['es'] = array(
 No evitará que las páginas previamente existentes sean editadas.',
 	'phalanx-help-type-user' => 'Este filtro bloquea a un usuario (exactamente igual que Especial:Bloquear de las wikis), si el nombre de usuario o la IP concuerdan con una cuenta o IP bloqueada.',
 	'phalanx-help-type-wiki-creation' => 'Este filtro evita que una wiki sea creada, si su nombre contiene alguna frase bloqueada.',
-	'phalanx-help-type-answers-question-title' => 'Este filtro bloquea una pregunta (página) de ser creada, si su título concuerda con cualquiera de las frases.
+	'phalanx-help-type-question-title' => 'Este filtro bloquea una pregunta (página) de ser creada, si su título concuerda con cualquiera de las frases.
 
 Nota: solo trabaja en wikis tipo answers.',
-	'phalanx-help-type-answers-recent-questions' => 'Este filtro previene que las preguntas sean mostradas en los widgets, listas, etiquetas, etc. No previene que esas páginas sean creadas.
+	'phalanx-help-type-recent-questions' => 'Este filtro previene que las preguntas sean mostradas en los widgets, listas, etiquetas, etc. No previene que esas páginas sean creadas.
 
 Nota: solo trabaja en wikis tipo answers.',
-	'phalanx-help-type-user-email' => 'Este filtro evita el registro de cuentas usando un correo electrónico bloqueado.',
+	'phalanx-help-type-email' => 'Este filtro evita el registro de cuentas usando un correo electrónico bloqueado.',
 	'phalanx-user-block-reason-ip' => 'Esta dirección IP ha sido bloqueada para editar en toda Wikia debido a vandalismo, spam u otro problema por ti u otra persona quien comparte la misma dirección IP.
 Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Este nombre de usuario o dirección IP ha sido bloqueado para editar en toda Wikia debido a vandalismo, spam u otro problema por ti u otra persona quien comparte la misma dirección IP.
@@ -650,14 +650,14 @@ En cliquant sur "{{int:phalanx-add-block}}" vos modifications seront enregistré
 Il n'empêche pas l'édition d'une page existante.",
 	'phalanx-help-type-user' => "Ce filtre bloque un utilisateur (exactement le même qu'un bloc local MediaWiki), si le nom ou l'adresse IP correspond à l'un des noms ou l'une des adresses IP sur la liste noire.",
 	'phalanx-help-type-wiki-creation' => "Ce filtre empêche la création d'un wiki si son nom ou son URL correspond à une des expressions contenues dans la liste noire.",
-	'phalanx-help-type-answers-question-title' => "Ce filtre bloque la création d'une question (page) si son titre correspond à une des expressions de la liste noire.
+	'phalanx-help-type-question-title' => "Ce filtre bloque la création d'une question (page) si son titre correspond à une des expressions de la liste noire.
 
 Note: Ne fonctionne que sur les wikis de type Answers.",
-	'phalanx-help-type-answers-recent-questions' => 'Ce filtre empêche des questions (pages) d’être affichées dans un certains nombre de sorties (widgets, listes, énumérations générées par balise).
+	'phalanx-help-type-recent-questions' => 'Ce filtre empêche des questions (pages) d’être affichées dans un certains nombre de sorties (widgets, listes, énumérations générées par balise).
 Il n’empêche pas ces pages d’être créées.
 
 Note : cela ne fonctionne que sur les wikis de type Réponses.',
-	'phalanx-help-type-user-email' => 'Ce filtre empêche la création de compte en utilisant une adresse de courriel bloquée.',
+	'phalanx-help-type-email' => 'Ce filtre empêche la création de compte en utilisant une adresse de courriel bloquée.',
 	'phalanx-user-block-reason-ip' => 'Cette adresse IP n’a pas les droits de modification dans le réseau entier Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou par quelqu’un d’autre qui partage cette adresse IP.
 Si vous pensez qu’il s’agit d’une erreur, [[Special:Contact|Contacter Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Ce nom d’utilisateur ou cette adresse IP est interdit de toute modification sur l’intégralité du réseau Wikia en raison de vandalisme ou d’autres perturbations.
@@ -765,14 +765,14 @@ Ao premer en "{{int:phalanx-edit-block}}" gardará os cambios!',
 Non impide a edición daquelas páxinas que xa existían con anterioridade.',
 	'phalanx-help-type-user' => 'Este filtro bloquea un usuario (exactamente o mesmo que un bloqueo local en MediaWiki) se o nome ou o enderezo IP coincide con calquera dos nomes ou enderezos IP presentes na lista negra.',
 	'phalanx-help-type-wiki-creation' => 'Este filtro impide a creación dun wiki se o seu nome ou enderezo URL coincide con calquera das frases presentes na lista negra.',
-	'phalanx-help-type-answers-question-title' => 'Este filtro impide a creación dunha pregunta (páxina) se o seu título coincide con calquera das frases presentes na lista negra.
+	'phalanx-help-type-question-title' => 'Este filtro impide a creación dunha pregunta (páxina) se o seu título coincide con calquera das frases presentes na lista negra.
 
 Nota: Funciona só nos wikis do tipo de preguntas e respostas.',
-	'phalanx-help-type-answers-recent-questions' => 'Este filtro impide mostrar aquelas preguntas (páxinas) nun número de saídas (widgets, listas, enumeracións xeradas por etiqueta).
+	'phalanx-help-type-recent-questions' => 'Este filtro impide mostrar aquelas preguntas (páxinas) nun número de saídas (widgets, listas, enumeracións xeradas por etiqueta).
 Non impide a creación das devanditas páxinas.
 
 Nota: Funciona só nos wikis do tipo de preguntas e respostas.',
-	'phalanx-help-type-user-email' => 'Este filtro evita a creación de contas segundo os enderezos de correo electrónico bloqueados.',
+	'phalanx-help-type-email' => 'Este filtro evita a creación de contas segundo os enderezos de correo electrónico bloqueados.',
 	'phalanx-user-block-reason-ip' => 'A este enderezo IP estalle prohibido editar ao longo de toda a rede de Wikia debido a vandalismo ou outras actividades negativas realizadas por vostede ou por alguén que comparte o seu enderezo IP.
 Se pensa que se trata dun erro, [[Special:Contact|póñase en contacto con Wikia]].',
 	'phalanx-user-block-reason-exact' => 'A este nome de usuario ou enderezo IP estalle prohibido editar ao longo de toda a rede de Wikia debido a vandalismo ou outras actividades negativas.
@@ -881,13 +881,13 @@ Az "{{int:phalanx-edit-block}}"-ra kattintva elmentheted a változtatásaidat!',
 	 Nem akadályozza meg azonban az esetlegesen már meglévő oldal szerkesztését.',
 	'phalanx-help-type-user' => 'Ez a szűrő blokkol egy felhasználót (a helyi MediaWiki blokkal megegyezően), ammennyiben a név vagy IP-cím megegyezik valamelyik feketelistás mnévvel vagy IP-címmel.',
 	'phalanx-help-type-wiki-creation' => 'Ez a szűrő megakadályozza egy wiki létrehozását, amennyiben a neve vagy az URL-címe megegyezik a feketelistás kifejezések bármelyikével.',
-	'phalanx-help-type-answers-question-title' => 'Ez a szűrő blokkolja a kérdés (oldal) létrehozását, ammennyiben annak címe megegyezik a feketelistás kifejezések bármelyikével.
+	'phalanx-help-type-question-title' => 'Ez a szűrő blokkolja a kérdés (oldal) létrehozását, ammennyiben annak címe megegyezik a feketelistás kifejezések bármelyikével.
 Megjegyzés: csak az Answers-típusú wikiken működik.',
-	'phalanx-help-type-answers-recent-questions' => 'Ez a szűrő megakadályozza a kérdések (oldalak) megjelenítését egy sor kimenetben (widgetek, listák, címkék által létrehozott listák).
+	'phalanx-help-type-recent-questions' => 'Ez a szűrő megakadályozza a kérdések (oldalak) megjelenítését egy sor kimenetben (widgetek, listák, címkék által létrehozott listák).
 Nem gátolja meg ezen oldalak létrehozását.
 
 Megjegyzés:csak az Answers-típusú wikiken működik.',
-	'phalanx-help-type-user-email' => 'Ez a szűrő megakadályozza a letiltott e-mail cím használatával végzett fióklétrehozást.',
+	'phalanx-help-type-email' => 'Ez a szűrő megakadályozza a letiltott e-mail cím használatával végzett fióklétrehozást.',
 	'phalanx-user-block-reason-ip' => 'Ez az IP-cím a Wikia egész hálózatán el van tiltva a szerkesztéstől általad&mdash;vagy az IP-címed más használója&mdash;végzett vandalizmus vagy más rendzavarás miatt.
 Amennyiben ezt hibásnak tartod, kérlek, [[Special:Contact|lépj kapcsolatba a Wikiával]].',
 	'phalanx-user-block-reason-exact' => 'Ez a felhasználónév vagy IP-cím a Wikia egész hálózatán el van tiltva a szerkesztéstől vandalizmus vagy más rendzavarás miatt.
@@ -998,14 +998,14 @@ Un clic sur "{{int:phalanx-add-block}}" salveguardara le cambios!',
 Illo non impedi le modification de un pagina pre-existente.',
 	'phalanx-help-type-user' => 'Iste filtro bloca un usator (exactemente como un blocada local in MediaWiki), si le nomine o adresse IP es presente in le lista nigre de nomines o de adresses IP.',
 	'phalanx-help-type-wiki-creation' => 'Iste filtro impedi le creation de un wiki si su nomine o URL es presente in le lista nigre.',
-	'phalanx-help-type-answers-question-title' => 'Iste filtro bloca le creation de un question (pagina), si su titulo es presente in le lista nigre.
+	'phalanx-help-type-question-title' => 'Iste filtro bloca le creation de un question (pagina), si su titulo es presente in le lista nigre.
 
 Nota: functiona solmente in wikis del typo Responsas.',
-	'phalanx-help-type-answers-recent-questions' => 'Iste filtro impedi le visualisation de questiones (paginas) in un numero de formatos (widgets, listas, listages a base de etiquettas).
+	'phalanx-help-type-recent-questions' => 'Iste filtro impedi le visualisation de questiones (paginas) in un numero de formatos (widgets, listas, listages a base de etiquettas).
 Illo non impedi le creation de tal paginas.
 
 Nota: functiona solmente in wikis del typo Answers.',
-	'phalanx-help-type-user-email' => 'Iste filtro impedi le creation de contos con un adresse de e-mail blocate.',
+	'phalanx-help-type-email' => 'Iste filtro impedi le creation de contos con un adresse de e-mail blocate.',
 	'phalanx-user-block-reason-ip' => 'Iste adresse IP es impedite de facer modificationes in tote le rete de Wikia pro causa de vandalismo o de altere disruption per te o per alcuno altere qui usa un adresse IP in commun con te.
 Si tu crede que isto es un error, per favor [[Special:Contact|contacta Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Iste nomine de usator o adresse IP es impedite de facer modificationes in tote le rete de Wikia pro causa de vandalismo o de altere disruption.
@@ -1253,14 +1253,14 @@ $messages['mk'] = array(
 Филтерот не спречува уредување на веќе постоечка страница.',
 	'phalanx-help-type-user' => 'Овој филтер блокира корисник (сосем исто како локален блок на МедијаВики) ако неговото име или IP-адреса одговара на некое име или IP-адреса наведена на црниот список.',
 	'phalanx-help-type-wiki-creation' => 'Овој филтер спречува создавање на вики ако неговото име или URL-адреса одговара на нешто од наведеното на црниот список.',
-	'phalanx-help-type-answers-question-title' => 'Овој филтер блокира создавање на прашање (страница) ако насловот одговара на некој од изразите наведени на црниот список.
+	'phalanx-help-type-question-title' => 'Овој филтер блокира создавање на прашање (страница) ако насловот одговара на некој од изразите наведени на црниот список.
 
 Напомена: работи само на викија за одговорање на прашања',
-	'phalanx-help-type-answers-recent-questions' => 'Овој филтер спречува приказ на прашања (страници) во низа изводи (посреднички елементи, списоци, пописи направени со ознаки).
+	'phalanx-help-type-recent-questions' => 'Овој филтер спречува приказ на прашања (страници) во низа изводи (посреднички елементи, списоци, пописи направени со ознаки).
 Филтерот не спречува создавање на таквите страници.
 
 Напомена: работи само на викија за одговорање на прашања',
-	'phalanx-help-type-user-email' => 'Филтерот спречува создавање на сметки со блокирани е-пошти.',
+	'phalanx-help-type-email' => 'Филтерот спречува создавање на сметки со блокирани е-пошти.',
 	'phalanx-user-block-reason-ip' => 'Оваа IP-адреса е спречена да уредува низ сета мрежа на Викија поради вандализам или друго нарушување од страна на вас или некој што ја користи вашата IP-адреса.
 Доколку сметате дека ова е по грешка, [[Special:Contact|контактирајте ја Викија]].',
 	'phalanx-user-block-reason-exact' => 'Ова корисничко име или IP-адреса е спречена да уредува низ сета мрежа на Викија поради вандализам или друго нарушување.
@@ -1394,13 +1394,13 @@ Klik "{{int:phalanx-add-block}}" untuk menyimpan pengubahan anda!',
 Ia tidak menghalang laman yang prawujud daripada disunting.',
 	'phalanx-help-type-user' => 'Penapis ini menyekat seseorang pengguna (yang sama sekali dengan sekatan MediaWiki setempat), jika nama atau alamat IP berpadan dengan mana-mana nama atau alamat IP yang dilarang.',
 	'phalanx-help-type-wiki-creation' => 'Penapis ini menghalang pembukaan wiki jika nama atau URL-nya berpadan dengan mana-mana ungkapan yang dilarang.',
-	'phalanx-help-type-answers-question-title' => 'Penapis ini menyekat penciptaan (laman) soalan jika judulnya berpadan dengan mana-mana ungkapan yang dilarang.
+	'phalanx-help-type-question-title' => 'Penapis ini menyekat penciptaan (laman) soalan jika judulnya berpadan dengan mana-mana ungkapan yang dilarang.
 
 Perhatian: berkesan di wiki jenis Soal Jawab (Answers) sahaja.',
-	'phalanx-help-type-answers-recent-questions' => 'Penapis ini menghalang (laman) soalan daripada dipaparkan di sebilangan output (widget, senarai, senarai janaan tag). Ia tidak menghalang pembukaan laman-laman itu.
+	'phalanx-help-type-recent-questions' => 'Penapis ini menghalang (laman) soalan daripada dipaparkan di sebilangan output (widget, senarai, senarai janaan tag). Ia tidak menghalang pembukaan laman-laman itu.
 
 Perhatian: Berkesan di wiki jenis Soal Jawab (Answers) sahaja.',
-	'phalanx-help-type-user-email' => 'Penapis ini melarang pembukaan akaun dengan alamat e-mel yang disekat.',
+	'phalanx-help-type-email' => 'Penapis ini melarang pembukaan akaun dengan alamat e-mel yang disekat.',
 	'phalanx-user-block-reason-ip' => 'Alamat IP ini dihalang daripada menyunting atas kesalahan laku musnah atau gangguan yang dilakukan oleh anda atau sesiapa yang berkongsi alamat IP anda.
 Jika anda percaya bahawa ini ialah kesilapan, sila [[Special:Contact|hubungi Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Nama pengguna atau alamat IP ini dihalang daripada menyunting atas kesalahan laku musnah atau gangguan.
@@ -1509,14 +1509,14 @@ $messages['nb'] = array(
 Det hindrer ikke en allerede eksisterende side i å redigeres.',
 	'phalanx-help-type-user' => 'Dette filteret blokkerer en bruker (nøyaktig det samme som en lokal MediaWiki-blokkering) dersom navnet eller IP-adressen samsvarer et av de svartelistede navnene eller IP-adressene.',
 	'phalanx-help-type-wiki-creation' => 'Dette filteret hindrer en wiki i å opprettes om navnet eller URL-en samsvarer med noen av de svartelistede setningene.',
-	'phalanx-help-type-answers-question-title' => 'Dette filteret blokkerer et spørsmål (en side) fra å opprettes dersom tittelen samsvarer med noen av de svartelistede setningene.
+	'phalanx-help-type-question-title' => 'Dette filteret blokkerer et spørsmål (en side) fra å opprettes dersom tittelen samsvarer med noen av de svartelistede setningene.
 
 Note: fungerer kun på Svar-wikier.',
-	'phalanx-help-type-answers-recent-questions' => 'Dette filteret hindrer spørsmål (sider) fra å vises i en rekke kanaler (skjermelementer, lister, tag-genererte lister).
+	'phalanx-help-type-recent-questions' => 'Dette filteret hindrer spørsmål (sider) fra å vises i en rekke kanaler (skjermelementer, lister, tag-genererte lister).
 Det hindrer ikke disse sidene i å opprettes.
 
 Note: fungerer kun på Svar-wikier.',
-	'phalanx-help-type-user-email' => 'Dette filteret hindrer kontoopprettelse med en blokkert e-postadresse.',
+	'phalanx-help-type-email' => 'Dette filteret hindrer kontoopprettelse med en blokkert e-postadresse.',
 	'phalanx-user-block-reason-ip' => 'Denne IP-adressen er forhindret i å redigere over hele Wikia-nettverket  grunnet vandalisme eller annt hærverk fra deg eller noen som deler din IP-adresse.
 Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Dette brukernavnet eller IP-adressen er forhindret i år redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk.
@@ -1624,14 +1624,14 @@ Als u op "{{int:phalanx-add-block}}" klikt, worden uw wijzigingen opgeslagen.',
 Dit filter voorkomt niet dat een bestaande pagina bewerkt kan worden.',
 	'phalanx-help-type-user' => 'Dit filter blokkeert een gebruiker (net zoals lokale blokkades in MediaWiki) als de gebruikersnaam of het IP-adres voorkomt in de zwarte lijst met namen en IP-adressen.',
 	'phalanx-help-type-wiki-creation' => 'Dit filter voorkomt dat een wiki wordt aangemaakt als tekst uit de naam of de URL op de zwarte lijst staat.',
-	'phalanx-help-type-answers-question-title' => "Dit filter voorkomt dat een pagina wordt aangemaakt als tekst uit de paginanaam op de zwarte lijst staat.
+	'phalanx-help-type-question-title' => "Dit filter voorkomt dat een pagina wordt aangemaakt als tekst uit de paginanaam op de zwarte lijst staat.
 
 Dit werkt alleen voor Antwoordwiki's.",
-	'phalanx-help-type-answers-recent-questions' => "Dit filter voorkomt dat vragen (pagina's) worden weergegeven in een aantal lijsten (widgets, lijsten, labelgebaseerde lijsten).
+	'phalanx-help-type-recent-questions' => "Dit filter voorkomt dat vragen (pagina's) worden weergegeven in een aantal lijsten (widgets, lijsten, labelgebaseerde lijsten).
 Het voorkomt niet dat pagina's worden aangemaakt.
 
 Dit werkt alleen voor Antwoordwiki's.",
-	'phalanx-help-type-user-email' => 'Dit filter voorkomt het aanmaken van gebruikers met een geblokkeerd e-mailadres.',
+	'phalanx-help-type-email' => 'Dit filter voorkomt het aanmaken van gebruikers met een geblokkeerd e-mailadres.',
 	'phalanx-user-block-reason-ip' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door u of door iemand met hetzelfde IP-adres.
 Als u denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Deze (anonieme) gebruiker mag niet bewerken in het hele Wikia-netwerk wegens vandalisme of verstoring.
@@ -1786,14 +1786,14 @@ Kliknięcie "{{int:phalanx-edit-block}}" spowoduje zapisanie zmian!',
 Nie uniemożliwia edycji strony utworzonej wcześniej.',
 	'phalanx-help-type-user' => 'Ten filtr blokuje użytkownika (dokładnie tak samo jak blokada lokalna MediaWiki), jeśli nazwa lub adres IP odpowiada jednej z zabronionych nazw lub adresów IP.',
 	'phalanx-help-type-wiki-creation' => 'Ten filtr zapobiega utworzeniu wiki, jeśli jego nazwa lub adres URL odpowiada dowolnej z zabronionych fraz.',
-	'phalanx-help-type-answers-question-title' => 'Ten filtr blokuje pytanie (stronę) przed utworzeniem, jeśli jego nazwa pasuje do dowolnego z zabronionych wyrażeń.
+	'phalanx-help-type-question-title' => 'Ten filtr blokuje pytanie (stronę) przed utworzeniem, jeśli jego nazwa pasuje do dowolnego z zabronionych wyrażeń.
 
 Uwaga: działa tylko na wiki typu Odpowiedzi.',
-	'phalanx-help-type-answers-recent-questions' => 'Ten filtr uniemożliwia wyświetlenie  pytań (stron)  w pewnych wyjściach (widżety, listy, wykazy generowane według znacznika).
+	'phalanx-help-type-recent-questions' => 'Ten filtr uniemożliwia wyświetlenie  pytań (stron)  w pewnych wyjściach (widżety, listy, wykazy generowane według znacznika).
 Nie blokuje on utworzenia tych stron.
 
 Uwaga: działa tylko z wiki typu Odpowiedzi.',
-	'phalanx-help-type-user-email' => 'Ten filtr zapobiega tworzeniu kont przy użyciu zablokowanego adresu e-mail.',
+	'phalanx-help-type-email' => 'Ten filtr zapobiega tworzeniu kont przy użyciu zablokowanego adresu e-mail.',
 	'phalanx-user-block-reason-ip' => 'Ten adres IP jest został zablokowany i nie posiada praw edycji w całej Wikii z powodu wandalizmu lub innego typu naruszeń zasad czynionych przez Ciebie lub przez inną osobę, która dzieli twój adres IP.
 Jeśli uważasz, że jest to błąd, proszę [[Special:Contact|skontaktuj się z nami]].',
 	'phalanx-user-block-reason-exact' => 'Ta nazwa użytkownika lub adres IP jest zablokowany i nie ma prawa do edycji na całej Wikii ze względu na wandalizm lub inne nadużycia.
@@ -1904,14 +1904,14 @@ Sgnacand "{{int:phalanx-edit-block}}" it salveras ij tò cambi!',
 A vieta pa che na pagina pre-esistenta a sia modificà.',
 	'phalanx-help-type-user' => "Sto filtr a bloca n'utent (propi l'istess com un blòch local MediaWiki), se ël nòm o l'adrëssa IP a corispond a un dij nòm o adrëssa IP dla lista nèira.",
 	'phalanx-help-type-wiki-creation' => 'Ël filtr a vieta che na wiki a sia creà, se sò nòm o anliura a corispond a quaich fras dla lista nèira.',
-	'phalanx-help-type-answers-question-title' => 'Sto filtr a blòca la creassion ëd na custion (pagina), se sò tìtol a corispond a quaich fras dla lista nèira.
+	'phalanx-help-type-question-title' => 'Sto filtr a blòca la creassion ëd na custion (pagina), se sò tìtol a corispond a quaich fras dla lista nèira.
 
 Nòta: a travaja mach dzor wiki ëd sòrt-Arspòste.',
-	'phalanx-help-type-answers-recent-questions' => 'Sto filtr a vieta ëd visualisé na custion (pagina) ant un nùmer ëd surtìe (widget, liste, liste generà da tichëtte).
+	'phalanx-help-type-recent-questions' => 'Sto filtr a vieta ëd visualisé na custion (pagina) ant un nùmer ëd surtìe (widget, liste, liste generà da tichëtte).
 A vieta pa che coste pagine a sio creà.
 
 Nòta: a travaja mach dzor le wiki ëd sòrt Arspòste',
-	'phalanx-help-type-user-email' => "Sto filtr a vieta la creassion ëd cont dovrand n'adrëssa ëd corel blocà.",
+	'phalanx-help-type-email' => "Sto filtr a vieta la creassion ëd cont dovrand n'adrëssa ëd corel blocà.",
 	'phalanx-user-block-reason-ip' => "St'adrëssa IP-sì a peul pa modifiché travers l'antera rèh Wikia për vandalism o àutr dann fàit da ti o da cheicun che a condivid  toa adrëssa IP.
 S'it chërde che son a sia n'eror, për piasì [[Special:Contact|contata Wikia]]",
 	'phalanx-user-block-reason-exact' => "Sto nòm utent o adrëssa IP a peul pa modifiché travers l'antera rèj Wikia për vandalism o àutr dann.
@@ -2043,10 +2043,10 @@ Clicar "{{int:phalanx-add-block}}" grava as suas alterações!',
 Não impede a edição de uma página que já exista.',
 	'phalanx-help-type-user' => 'Este filtro bloqueia um utilizador (exactamente como um bloqueio local no MediaWiki), se o nome ou o endereço IP do utilizador corresponder a um dos nomes ou endereços IP da lista negra.',
 	'phalanx-help-type-wiki-creation' => 'Este filtro impede a criação de uma wiki, se o nome ou a URL da wiki corresponderem a qualquer frase da lista negra.',
-	'phalanx-help-type-answers-question-title' => 'Este filtro impede a criação de uma (página de) pergunta, se o título da página corresponder a qualquer uma das frases da lista negra.
+	'phalanx-help-type-question-title' => 'Este filtro impede a criação de uma (página de) pergunta, se o título da página corresponder a qualquer uma das frases da lista negra.
 
 Nota: só funciona nas wikis de Perguntas e Respostas.',
-	'phalanx-help-type-answers-recent-questions' => 'Este filtro impede a apresentação de (páginas de) perguntas numa série de dispositivos de saída (widgets, listas, listagens geradas com base em tags).
+	'phalanx-help-type-recent-questions' => 'Este filtro impede a apresentação de (páginas de) perguntas numa série de dispositivos de saída (widgets, listas, listagens geradas com base em tags).
 Não impede a criação dessas páginas.
 
 Nota: só funciona nas wikis de Perguntas e Respostas.',
@@ -2204,14 +2204,14 @@ $messages['ru'] = array(
 Это не мешает редактированию страницы.',
 	'phalanx-help-type-user' => 'Этот фильтр блокирует участника (также, как блокирование на самой вики), если его имя или IP-адрес соответствует имени или IP-адресу из чёрного списка.',
 	'phalanx-help-type-wiki-creation' => 'Если название или URL-адрес вики соответствует тому, что находится в чёрном списке, то этот фильтр запрещает создание такой вики.',
-	'phalanx-help-type-answers-question-title' => 'Этот фильтр блокирует создание вопроса (страницы), если его название соответствует слову из чёрного списка фильтра.
+	'phalanx-help-type-question-title' => 'Этот фильтр блокирует создание вопроса (страницы), если его название соответствует слову из чёрного списка фильтра.
 
 Примечание: работает только на Вики-ответов.',
-	'phalanx-help-type-answers-recent-questions' => 'Этот фильтр предотвращает отображение вопросов (страниц) на экране в ряде случаев (виджеты, списки, генерируемые тегами списки).
+	'phalanx-help-type-recent-questions' => 'Этот фильтр предотвращает отображение вопросов (страниц) на экране в ряде случаев (виджеты, списки, генерируемые тегами списки).
 Это не мешает созданию данных страниц.
 
 Примечание: работает только на Вики-ответах.',
-	'phalanx-help-type-user-email' => 'Этот фильтр предотвращает создание учетной записи, с использованием заблокированного электронного адреса.',
+	'phalanx-help-type-email' => 'Этот фильтр предотвращает создание учетной записи, с использованием заблокированного электронного адреса.',
 	'phalanx-user-block-reason-ip' => 'Участник с данным IP-адресом не может редактировать на всей Викия из-за вандализма или других нарушений, которые совершил он или некто с таким же IP-адресом.
 Если Вы считаете, что произошла ошибка, то, пожалуйста, [[Special:Contact|свяжитесь с сотрудниками Викия]].',
 	'phalanx-user-block-reason-exact' => 'Этот участник или участник с данным IP-адресом не может редактировать на всей Викия из-за вандализма или других нарушений.
@@ -2355,13 +2355,13 @@ Klicka på "{{int:phalanx-edit-block}}" för att spara dina ändringar!',
 Filtret förhindrar inte möjligheten att redigera en tidigare skapad sida.',
 	'phalanx-help-type-user' => 'Detta filter blockerar en användare (precis samma som en lokal MediaWiki-blockering) om namnet eller IP-adressen matchar en av de svartlistade namnen eller IP-adresserna.',
 	'phalanx-help-type-wiki-creation' => 'Detta filter förhindrar en wiki från att skapas om dess namn eller URL-adress matchar någon svartlistad fras.',
-	'phalanx-help-type-answers-question-title' => 'Detta filter förhindrar att en fråga (sida) skapas, om dess titel matchar någon av de svartlistade fraserna.
+	'phalanx-help-type-question-title' => 'Detta filter förhindrar att en fråga (sida) skapas, om dess titel matchar någon av de svartlistade fraserna.
 Anmärkning: fungerar endast på Svar-typ wikier.',
-	'phalanx-help-type-answers-recent-questions' => 'Detta filter förhindrar att frågor (sidor) visas i ett antal listor (widgets, listor, tag-baserade listor).
+	'phalanx-help-type-recent-questions' => 'Detta filter förhindrar att frågor (sidor) visas i ett antal listor (widgets, listor, tag-baserade listor).
 Filtret förhindrar inte att dessa sidor skapas.
 
 Anmärkning: fungerar endast på Svar-typ wikier.',
-	'phalanx-help-type-user-email' => 'Detta filter förhindrar att konton skapas med en blockerad e-postadress.',
+	'phalanx-help-type-email' => 'Detta filter förhindrar att konton skapas med en blockerad e-postadress.',
 	'phalanx-user-block-reason-ip' => 'Denna IP-adress förhindras från att redigera på hela Wikia-nätverket på grund av vandalisering eller andra störningar av dig eller någon annan som delar din IP-adress.
 Om du tror att detta är ett fel, var god [[Special:Contact|kontakta Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Detta användarnamn eller IP-adress förhindras från att redigera på hela Wikia-nätverket på grund av vandalisering eller någon annan störning.
@@ -2490,9 +2490,9 @@ Makapagsasagip ng mga binago mo ang pagpindot sa "{{int:phalanx-add-block}}"',
 Hindi nito iniiwasan ang mabago ang isang dati nang umiiral na pahina.',
 	'phalanx-help-type-user' => 'Ang pansalang ito ay hinahadlangan ang isang tagagamit (katulad na katulad ng isang katutubong paghahadlang ng MediaWiki), kapag tumugma ang pangalan o tirahang IP sa isa sa ipinagbabawal na mga pangalan o tirahang IP.',
 	'phalanx-help-type-wiki-creation' => 'Iniiwasan ng pansalang ito na malikha ang isang wiki, kapag tumugma ang pangalan o URL nito sa anumang pariralang ipinagbabawal.',
-	'phalanx-help-type-answers-question-title' => 'Paunawa: gumagana lamang sa mga wiking may uri ng mga Sagot.',
-	'phalanx-help-type-answers-recent-questions' => 'Paunawa: gumagana lamang sa mga uri ng wiking Sumasagot.',
-	'phalanx-help-type-user-email' => 'Iniiwasan ng pansalang ito ang paglikha ng akawnt na ginagamit ang isang hinarang na tirahan ng e-liham.',
+	'phalanx-help-type-question-title' => 'Paunawa: gumagana lamang sa mga wiking may uri ng mga Sagot.',
+	'phalanx-help-type-recent-questions' => 'Paunawa: gumagana lamang sa mga uri ng wiking Sumasagot.',
+	'phalanx-help-type-email' => 'Iniiwasan ng pansalang ito ang paglikha ng akawnt na ginagamit ang isang hinarang na tirahan ng e-liham.',
 	'phalanx-user-block-reason-ip' => 'Pinipigilan ang tirahan ng IP na ito na makapamatnugot sa kahabaan ng buong lambat na panggawain ng Wikia dahil sa pambababoy o ibang panggugulo mo o ng isang taong kabahagi ng tirahan ng IP mo.
 Kung naniniwala ka na isa itong pagkakamali, paki [[Special:Contact|makipag-ugnayan sa Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Pinipigilan ang pangalan ng tagagamit o tirahang IP na ito na makapamatnugot sa kahabaan ng buong lambat na gawaan ng Wikia dahil sa pambababoy o ibang panggugulo.
