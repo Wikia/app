@@ -1446,7 +1446,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( 'getFromConfig' ) )
 		                    ->getMock();
-		$mockResults	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+		$mockResults	=	$this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'toNestedArray' ) )
 								->getMock();
@@ -1457,15 +1457,10 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 
 		$mockWgRefl = new ReflectionProperty( 'WikiaSearchController', 'wg' );
 		$mockWgRefl->setAccessible( true );
-		$mockWgRefl->setValue( $mockController, (object) array( 'cityId' => 123 ) );
+		$mockWgRefl->setValue( $mockController, (object) array( 'CityId' => 123 ) );
 
 		$responseArr = array( 'foo' => 'bar' );
 
-		$this->mockFactory
-		    ->expects( $this->once() )
-		    ->method ( 'get' )
-		    ->will   ( $this->returnValue( $mockSearch ) )
-		;
 		$mockConfig
 			->expects	( $this->at( 0 ) )
 			->method	( 'setCityId' )
@@ -1504,17 +1499,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockSearch
 			->expects	( $this->at( 0 ) )
 			->method	( 'search' )
-			->with		( $mockConfig )
-			->will		( $this->returnValue( $mockResults ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 4 ) )
-			->method	( 'getResults' )
-			->will		( $this->returnValue( $mockResults ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 5 ) )
-			->method	( 'getResults' )
 			->will		( $this->returnValue( $mockResults ) )
 		;
 		$mockResults
@@ -1546,7 +1530,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$searchRefl->setAccessible( true );
 		$searchRefl->setValue( $mockController, $mockFactory );
 
-		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
+		$this->proxyClass( 'Wikia\Search\Config', $mockConfig );
 		$this->mockApp();
 
 		$mockController->videoSearch();
@@ -1600,6 +1584,8 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockWgRefl->setAccessible( true );
 		$mockWgRefl->setValue( $mockController, (object) array( 'AllowMemcacheWrites' => true ) );
 
+		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockApp();
 		$mockController->getPages();
 
 		$this->assertFalse(
