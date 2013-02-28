@@ -1,12 +1,11 @@
-<div class="title-wrapper">
-	<h2><?= $header; ?></h2>
-	
+<h2>
 	<?php if( !empty($sponsoredImageMarkup) ): ?>
 		<span class="sponsorbox"><ins><?= wfMessage('wikiahubs-sponsored-by')->rawParams($sponsoredImageMarkup)->escaped(); ?></ins></span>
 	<?php endif; ?>
-</div>
+	<?= $header; ?>
+</h2>
 	
-<div class="sponsored-video-content">
+<div class="featured-video-content">
 	<?= $video['thumbMarkup']; ?>
 	<p><?= $description; ?></p>
 </div>

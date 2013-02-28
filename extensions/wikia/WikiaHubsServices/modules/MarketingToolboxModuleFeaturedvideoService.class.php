@@ -102,15 +102,8 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 
 	public function render($data) {
 		if( !empty($data['sponsoredImageAlt']) ) {
-			//sponsoredImageAlt === image file title -> can be used in Title::newFromTitle() to create Title instance
-			$sponsoredImageInfo = $this->getImageInfo($data['sponsoredImageAlt']);
-			$data['sponsoredImageMarkup'] = Xml::element('img', array(
-				'src' => $sponsoredImageInfo->url,
-				'alt' => $sponsoredImageInfo->title,
-				'width' => $sponsoredImageInfo->width,
-				'height' => $sponsoredImageInfo->height,
-				'class' => 'sponsored-image',
-			), '', true);
+		//sponsoredImageAlt === image file title -> can be used in Title::newFromTitle() to create Title instance
+			$data['sponsoredImageMarkup'] = $this->getSponsoredImageMarkup($data['sponsoredImageAlt']);
 		}
 		
 		return parent::render($data);
