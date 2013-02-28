@@ -67,6 +67,8 @@ class UserStatsService extends WikiaModel {
 	 */
 	public function resetEditCountWiki( $dbName = false ) {
 		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
+		$userName = $this->getUser()->getName();
+
 		$editCount = $dbr->selectField(
 			'revision', 'count(*)',
 			array( 'rev_user' => $this->userId ),
@@ -75,7 +77,7 @@ class UserStatsService extends WikiaModel {
 
 		$editCount += $dbr->selectField(
 			'archive', 'count(*)',
-			array( 'ar_user' => $this->userId ),
+			array( 'ar_user_text' => $userName ),
 			__METHOD__
 		);
 
