@@ -1,4 +1,5 @@
-<?
+<?php
+
 class MarketingToolboxModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 	/**
 	 * (non-PHPdoc)
@@ -26,14 +27,16 @@ class MarketingToolboxModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 			->with($this->equalTo($inputData['video']))
 			->will($this->returnValue($mockedVideoData));
 
-		$mockReturnVal = new stdClass();
-		$mockReturnVal->url = $expectedData['sponsoredImageUrl'];
-		$mockReturnVal->title = $expectedData['sponsoredImageAlt'];
+		if( isset($inputData['sponsoredImage']) ) {
+			$mockReturnVal = new stdClass();
+			$mockReturnVal->url = $expectedData['sponsoredImageUrl'];
+			$mockReturnVal->title = $expectedData['sponsoredImageAlt'];
 
-		$moduleMock->expects($this->any())
-			->method('getImageInfo')
-			->with($this->equalTo($inputData['sponsoredImage']))
-			->will($this->returnValue($mockReturnVal));
+			$moduleMock->expects($this->any())
+				->method('getImageInfo')
+				->with($this->equalTo($inputData['sponsoredImage']))
+				->will($this->returnValue($mockReturnVal));
+		}
 
 		$moduleMock->expects($this->once())
 			->method('getToolboxModel')
@@ -45,7 +48,6 @@ class MarketingToolboxModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 	}
 
 	public function getStructuredDataDataProvider() {
-
 		$out = array();
 
 		$inputData = array(
