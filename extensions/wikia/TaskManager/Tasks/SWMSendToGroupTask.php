@@ -761,7 +761,7 @@ class SWMSendToGroupTask extends BatchTask {
 
 		$this->log( "Step 1 of 2: make list of user ids from users who registered {$params['regOption']} start date {$params['regStartDate']} and {$params['regEndDate']}." );
 		$res = $dbr->select(
-			array( 'user' ),
+			array( '`user`' ),
 			array( 'user_id' ),
 			$where,
 			__METHOD__

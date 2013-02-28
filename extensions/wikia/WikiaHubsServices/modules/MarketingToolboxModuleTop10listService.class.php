@@ -34,4 +34,8 @@ class MarketingToolboxModuleTop10listService extends MarketingToolboxModuleServi
 
 		return parent::renderEditor($data);
 	}
+
+	public function getStructuredData($data) {
+		return array();
+	}
 }

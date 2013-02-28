@@ -109,6 +109,9 @@ $app->registerHook( 'File::checkExtensionCompatibilityResult', 'VideoHandlerHook
 
 $app->registerHook( 'SkinTemplateNavigation', 'VideoHandlerHooks', 'onSkinTemplateNavigation' );
 
+$app->registerHook( 'GlobalUsageFormatItemWikiLink', 'VideoHandlerHooks', 'onGlobalUsageFormatItemWikiLink' );
+$app->registerHook( 'GlobalUsageImagePageWikiLink', 'VideoHandlerHooks', 'onGlobalUsageImagePageWikiLink' );
+
 $app->registerHook( 'FileUpload', 'VideoInfoHooksHelper', 'onFileUpload' );
 $app->registerHook( 'ArticleSaveComplete', 'VideoInfoHooksHelper', 'onArticleSaveComplete' );
 $app->registerHook( 'FileDeleteComplete', 'VideoInfoHooksHelper', 'onFileDeleteComplete' );

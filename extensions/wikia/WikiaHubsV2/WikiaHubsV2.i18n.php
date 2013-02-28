@@ -50,6 +50,10 @@ $messages['en'] = array(
 
 	//featured video
 	'wikiahubs-sponsored-by' => 'Sponsored by $1',
+
+	// 404 page
+	'wikiahubs-404-title' => 'The page you are looking for cannot be found',
+	'wikiahubs-404-message' => "We couldn't find the page you are looking for. [[$1|Click here]] to go to today's hub."
 );
 
 $messages['de'] = array(
@@ -84,4 +88,6 @@ $messages['qqq'] = array(
 	'wikiahubs-popular-videos-suggested-by' => 'A link under video thumbnail on hubs page. The only parameter is username.',
 	'wikiahubs-popular-videos-suggested-by-profile' => "A link under video thumbnail on hubs page. The first parameter is username and second one is a full page address to user's profile page.",
 	'wikiahubs-sponsored-by' => 'Just a text next to the sponsor image (logo). First parameter is <img /> tag with the image path',
+	'wikiahubs-404-title' => '404 page title',
+	'wikiahubs-404-message' => '404 page message, first parameter is link to actual hub page'
 );

@@ -94,6 +94,22 @@ $placeholder-bg-color: darken($color-page, 10%);
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
+	.video-element {
+		position: relative;
+		&:hover .remove {
+			/*display: block;*/
+		}
+		.remove {
+			background-color: #ddd;	/* hardcoded because this is admin only feature */
+			cursor: pointer;
+			display: none;
+			padding: 0px 2px 4px 5px;
+			position: absolute;
+			right: 0;
+			top: 20px;
+			z-index: 101;
+		}
+	}
 }
 
 .messageHolder {

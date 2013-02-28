@@ -639,11 +639,17 @@ Administrátoři do ní mohou psát:
 
 /** Welsh (Cymraeg)
  * @author (vinny)
+ * @author Lloffiwr
+ * @author Thefartydoctor
  */
 $messages['cy'] = array(
 	'myhome' => 'Fy Hafan',
+	'wikiactivity' => 'Gweithgarwch Wici',
 	'myhome-feed-edit' => 'golygu',
 	'myhome-feed-new-page-details' => 'Tudalen newydd',
+	'myhome-feed-new-blog-comment-details' => 'Sylw',
+	'myhome-feed-new-article-comment-details' => 'Sylw',
+	'myhome-namespace-blog' => 'Blog',
 	'myhome-default-view-checkbox' => 'Gwnewch yn $1 fy marn ball',
 );
 

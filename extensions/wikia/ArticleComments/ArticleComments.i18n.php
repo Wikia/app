@@ -104,6 +104,7 @@ Parameters:
 {{Identical|Delete}}',
 	'article-comments-edit' => 'Click this button to edit the message.  A box will appear to with the message text for editing.',
 	'article-comments-history' => '{{Identical|History}}',
+	'article-comments-reply' => '{{Identical|Reply}}',
 	'article-comments-next-page' => '{{Identical|Next}}',
 	'wikiamobile-article-comments-header' => "The header of the Comments section shown in Wikia's mobile skin. Parameters:
 * $1 is the number of the comments.",
@@ -524,6 +525,76 @@ Wikia
 <li>Chcete nastavit, které e-maily budete dostávat? <a href="{{fullurl:Special:Preferences}}">Aktualizujte své předvolby<a>.</li>
 </ul>
 </p>', # Fuzzy
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'article-comments-file-page' => "<a href='$1'>Sylw gan $2</a> ar <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Sylw gan $2</a> ar <a href='$3'>$4</a> bost ar y blog <a href='$5'>$6</a>",
+	'article-comments-anonymous' => 'Defnyddiwr anhysbys',
+	'article-comments-comments' => 'Sylwadau ($1)',
+	'article-comments-post' => 'Postio sylw',
+	'article-comments-cancel' => 'Canslo',
+	'article-comments-delete' => 'dileu',
+	'article-comments-edit' => 'golygu',
+	'article-comments-history' => 'hanes',
+	'article-comments-error' => 'Dydyn ni ddim yn gallu achub y sylw.',
+	'article-comments-undeleted-comment' => 'Sylw ddim yn dileu am tudalen blog $1',
+	'article-comments-rc-comment' => 'Sylw erthygl (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => 'Sylw erthygl ([[$1]])',
+	'article-comments-fblogin' => '<a href="$1" rel="nofollow">Mewngofnodi a chysylltu gyda Facebook</a> os ydych chi eisiau gwneud sylw ar y wici hwn!',
+	'article-comments-fbconnect' => '<a href="$1>Cysylltu y cyfrif hwn gyda Facebook</a> os ydych chi eisiau gwneud sylw!',
+	'article-comments-rc-blog-comment' => 'Sylw blog (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'Sylwadau blog ([[$1]])',
+	'article-comments-login' => '<a href="$1">Mewngofnodi</a> os ydych chi eisiau postio sylw ar y wici hwn.',
+	'article-comments-toc-item' => 'Sylwadau',
+	'article-comments-comment-cannot-add' => 'Dydych chi ddim yn gallu creu sylw ar yr erthygl hon.',
+	'article-comments-vote' => "Dw i'n hoffi hwn.",
+	'article-comments-reply' => 'Ateb',
+	'article-comments-show-all' => 'Amlygu pob sylw',
+	'article-comments-prev-page' => 'Cynt',
+	'article-comments-next-page' => 'Nesaf',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => "Mae'r erthygl / sylw wreiddiol wedi bod yn dileu.",
+	'article-comments-empty-comment' => "Dydych chi ddim yn gallu postio sylw gwag. <a href='$1'>Dileu efallai?</a>",
+	'wikiamobile-article-comments-header' => 'Sylwadau <span class=cnt id=wkArtCnt>$1</span>',
+	'wikiamobile-article-comments-more' => 'Darllenwch mwy',
+	'wikiamobile-article-comments-prev' => 'Darllenwch cynt',
+	'wikiamobile-article-comments-none' => 'Nid oes sylwadau',
+	'wikiamobile-article-comments-view' => 'Darllenwch atebion',
+	'wikiamobile-article-comments-replies' => 'Atebion',
+	'wikiamobile-article-comments-post-reply' => 'Postio ateb',
+	'wikiamobile-article-comments-post' => 'Postio',
+	'wikiamobile-article-comments-placeholder' => 'Postio sylw',
+	'wikiamobile-article-comments-show' => 'Amlygu',
+	'wikiamobile-article-comments-login-post' => 'Mewngofnodi i bostio sylw.',
+	'wikiamobile-article-comments-post-fail' => "Ni lwyddwyd rhoi'r sylw ar gadw, ceisiwch eto'n ddiweddarach os gwelwch yn dda.",
+	'enotif_subject_article_comment' => 'Mae $PAGEEDITOR wedi sylw ar "$PAGETITLE" ar {{SITENAME}}',
+	'enotif_body_article_comment' => 'Helo $WATCHINGUSERNAME,
+
+Mae sylw newydd ar $PAGETITLE ar {{SITENAME}}. Defnyddwch y linc hwn i weld pob sylw:
+$PAGETITLE_URL#WikiaArticleComments
+
+- Y Tîm Wikia
+
+___________________________________________
+* Ffeindiwch help a chwnsel ar Community Central: http://community.wikia.com
+* Ydych chi eisiau cael llai neges ohonon ni? Dych chi\'n gallu stopio\'ch tanysgrifiad neu newid eich dewisiadau ebost yma: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Helo $WATCHINGUSERNAME,
+<br /><br />
+Mae sylw newydd ar $PAGETITLE ar {{SITENAME}}. Defnyddwch y linc hwn i weld pob sylw: $PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Y Tîm Wikia
+<br /><br />
+___________________________________________
+<ul>
+<li>Ffeindiwch help a chwnsel ar Community Central: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Ydych chi eisiau cael llai neges ohonon ni? Dych chi\'n gallu stopio\'ch tanysgrifiad neu newid eich dewisiadau ebost yma:  <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
 );
 
 /** Danish (dansk)
@@ -1145,6 +1216,41 @@ $messages['he'] = array(
 	'article-comments-fblogin' => 'אנא <a href="$1" rel="nofollow">התחבר בעזרת פייסבוק</a> על מנת לפרסם תגובה בוויקי זו!',
 	'article-comments-comment-cannot-add' => 'אינך יכול להוסיף תגובה לערך',
 	'article-comments-show-all' => 'הצגת כל התגובות',
+);
+
+/** Hindi (हिन्दी)
+ * @author Kush rohra
+ */
+$messages['hi'] = array(
+	'article-comments-anonymous' => 'बेनामी उपयोगकर्ता',
+	'article-comments-comments' => 'टिप्पणियाँ ( $1 )',
+	'article-comments-post' => 'टिप्पणी पोस्ट',
+	'article-comments-cancel' => 'रद्द करें',
+	'article-comments-delete' => 'हटाएँ',
+	'article-comments-edit' => 'संपादित करें',
+	'article-comments-history' => 'इतिहास',
+	'article-comments-error' => 'टिप्पणी को सहेजा नहीं जा सका',
+	'article-comments-toc-item' => 'टिप्पणियाँ',
+	'article-comments-comment-cannot-add' => 'आप लेख के लिए एक टिप्पणी जोड़ें नहीं कर सकता।',
+	'article-comments-vote' => 'ऊपर वोट',
+	'article-comments-reply' => 'उत्तर दें',
+	'article-comments-show-all' => 'सभी टिप्पणियाँ दिखाएँ',
+	'article-comments-prev-page' => 'पिछली',
+	'article-comments-next-page' => 'अगला',
+	'article-comments-delete-reason' => 'जनक टिप्पणी नष्ट कर दिया गया है।',
+	'wikiamobile-article-comments-more' => 'भार अधिक',
+	'wikiamobile-article-comments-prev' => 'पिछले लोड',
+	'wikiamobile-article-comments-none' => 'नहीं 
+टिप्पणी',
+	'wikiamobile-article-comments-view' => '
+उत्तरों देखने के',
+	'wikiamobile-article-comments-replies' => 'जवाब',
+	'wikiamobile-article-comments-post-reply' => 'एक उत्तर पोस्ट',
+	'wikiamobile-article-comments-post' => 'पोस्ट',
+	'wikiamobile-article-comments-placeholder' => 'टिप्पणी पोस्ट करें',
+	'wikiamobile-article-comments-show' => 'दिखाएँ',
+	'wikiamobile-article-comments-login-post' => 'कृपया एक टिप्पणी पोस्ट करने में लॉग इन करें।',
+	'wikiamobile-article-comments-post-fail' => 'टिप्पणी को बचाने के लिए, कृपया बाद में पुन: प्रयास करें विफल रहा',
 );
 
 /** Hungarian (magyar)
@@ -2264,6 +2370,7 @@ $messages['pt-br'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Postar um comentário',
 	'wikiamobile-article-comments-show' => 'Mostrar',
 	'wikiamobile-article-comments-login-post' => 'Autentifique-se para postar um comentário.',
+	'wikiamobile-article-comments-post-fail' => 'Falha ao salvar o comentário, por favor, tente novamente mais tarde',
 	'enotif_subject_article_comment' => 'Comentou sobre "$ PAGETITLE" em {{SITENAME}} $PAGEEDITOR',
 	'enotif_body_article_comment' => 'Olá $ WATCHINGUSERNAME,
 
@@ -2388,6 +2495,7 @@ $messages['ru'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Оставить комментарий',
 	'wikiamobile-article-comments-show' => 'Показать',
 	'wikiamobile-article-comments-login-post' => 'Пожалуйста войдите, чтобы оставить комментарий.',
+	'wikiamobile-article-comments-post-fail' => 'Не удалось сохранить комментарий, повторите попытку позже',
 	'enotif_subject_article_comment' => '$PAGEEDITOR прокомментировал "$ PAGETITLE" на {{SITENAME}}',
 	'enotif_body_article_comment' => 'Привет $WATCHINGUSERNAME,
 
@@ -2886,8 +2994,10 @@ Wikia
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'article-comments-file-page' => "<a href='$1'>评论来自 $2</a> 于 <a href='$3'>$4</a>",
 	'article-comments-anonymous' => '匿名用户',
 	'article-comments-comments' => '评论（$1）',
 	'article-comments-post' => '发表评论',

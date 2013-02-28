@@ -521,8 +521,12 @@ $messages['vi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'contentfeeds-desc' => '通过各种标签和Feed提供最新且丰富的信息',
+	'contentfeeds-newimages-rss-title' => '{{#Special:NewFiles}} 的 RSS Feed',
+	'contentfeeds-newimages-rss-desc' => 'Feed 来自 $1',
 	'contentfeeds-firstfewarticles-tag-header' => '创建您的首批页面！',
 	'contentfeeds-firstfewarticles-tag-title' => '标题',
 	'contentfeeds-firstfewarticles-tag-next' => '下一页',

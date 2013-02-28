@@ -74,6 +74,7 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-top10list-title' => 'Title',
 	'marketing-toolbox-hub-module-top10list-desc' => 'Description',
 
+	'marketing-toolbox-hub-module-slider-strapline' => 'Strapline',
 	'marketing-toolbox-hub-module-slider-short-description' => 'Short description',
 	'marketing-toolbox-hub-module-slider-long-description' => 'Long description',
 	'marketing-toolbox-hub-module-slider-url' => 'Wiki URL',
@@ -100,6 +101,7 @@ $messages['en'] = array(
 
 	'marketing-toolbox-hub-module-wikiaspicks-title' => 'Title',
 	'marketing-toolbox-hub-module-wikiaspicks-text' => 'Text',
+	'marketing-toolbox-hub-module-wikiaspicks-link-url' => 'URL',
 	'marketing-toolbox-hub-module-html-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
 	'marketing-toolbox-hub-module-sponsored-image-tip' => "'''Tip:''' The maximum file size is 85x15 pixels",
 	
@@ -109,6 +111,11 @@ $messages['en'] = array(
 
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
 	'marketing-toolbox-module-save-ok' => '$1 module saved successfully!',
+
+	'marketing-toolbox-module-publish-error-read-only' => "We're in read-only mode at this moment. The hub page cannot be published. Please, try again later.",
+	'marketing-toolbox-module-publish-error-modules-not-saved' => 'There are unsaved modules. Please check their content, save them and try publish hub page again.',
+	'marketing-toolbox-module-publish-error-db-error' => 'A database error occured. The hub pages has not been published.',
+	'marketing-toolbox-module-publish-success' => 'Hub page published for $1',
 
 	'marketing-toolbox-validator-string-short' => 'Your text is too short, please write more',
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',

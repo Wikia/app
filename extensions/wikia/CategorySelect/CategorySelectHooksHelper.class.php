@@ -109,11 +109,11 @@ class CategorySelectHooksHelper {
 
 		if ( $app->wg->EnableUserPreferencesV2Ext ) {
 			$section = 'editing/starting-an-edit';
-			$message = $app->wf->Message( 'tog-disablecategoryselect-v2' );
+			$message = $app->wf->Message( 'tog-disablecategoryselect-v2' )->text();
 
 		} else {
 			$section = 'editing/editing-experience';
-			$message = $app->wf->Message( 'tog-disablecategoryselect' );
+			$message = $app->wf->Message( 'tog-disablecategoryselect' )->text();
 		}
 
 		$preferences[ 'disablecategoryselect' ] = array(
@@ -130,17 +130,8 @@ class CategorySelectHooksHelper {
 	 */
 	public static function onMakeGlobalVariablesScript( Array &$vars ) {
 		$app = F::app();
-		$action = $app->wg->Request->getVal( 'action', 'view' );
-		$categories = array();
-
-		// Load categories data for edit page
-		if ( $action == 'edit' || $action == 'submit' ) {
-			$data = CategorySelect::getExtractedCategoryData();
-			$categories = $data[ 'categories' ];
-		}
 
 		$vars[ 'wgCategorySelect' ] = array(
-			'categories' => $categories,
 			'defaultNamespace' => $app->wg->ContLang->getNsText( NS_CATEGORY ),
 			'defaultNamespaces' => CategorySelect::getDefaultNamespaces(),
 			'defaultSeparator' => trim( $app->wf->Message( 'colon-separator' )->escaped() ),

@@ -469,6 +469,27 @@ $messages['cs'] = array(
 	'usersignup-confirmation-reminder-email-greeting' => 'Ahoj $USERNAME',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'usersignup-page-captcha-label' => 'Gair Aneglur',
+	'usersignup-facebook-create-account' => 'Creu cyfrif',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Llongyfarchion!',
+	'usersignup-confirmation-email-greeting' => 'Helo $USERNAME,',
+	'usersignup-confirmation-email-signature' => 'Y Tîm Wikia',
+	'usersignup-reconfirmation-email-greeting' => 'Helo $USERNAME',
+	'usersignup-reconfirmation-email-signature' => 'Y Tîm Wikia',
+	'usersignup-welcome-email-subject' => 'Croeso i Wikia, $USERNAME!',
+	'usersignup-welcome-email-greeting' => 'Helo $USERNAME',
+	'usersignup-welcome-email-signature' => 'Y Tîm Wikia',
+	'usersignup-account-creation-email-greeting' => 'Helo,',
+	'usersignup-account-creation-email-signature' => 'Y Tîm Wikia',
+	'usersignup-confirmation-reminder-email-greeting' => 'Helo $USERNAME',
+	'usersignup-confirmation-reminder-email-signature' => 'Y Tîm Wikia',
+);
+
 /** German (Deutsch)
  * @author PtM
  */

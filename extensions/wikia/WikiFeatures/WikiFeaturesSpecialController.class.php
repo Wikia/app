@@ -23,13 +23,6 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			return false;  // skip rendering
 		}
 
-		$this->isOasis = F::app()->checkSkin( 'oasis' );
-
-		if ( !( $this->isOasis ) ) {
-			$this->forward('WikiFeaturesSpecial', 'notOasis');
-			return;
-		}
-
 		$this->response->addAsset('extensions/wikia/WikiFeatures/css/WikiFeatures.scss');
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/modernizr.transform.js');
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/WikiFeatures.js');

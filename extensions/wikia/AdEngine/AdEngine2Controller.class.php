@@ -62,6 +62,9 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
 		$vars['wgShowAds'] = $this->wg->ShowAds;
 
+		$useGpt = $req->getBool('usegpt', (bool) $this->wg->AdDriverUseGpt);
+		$vars['wgAdDriverUseGpt'] = $useGpt;
+
 		// Used to hop by DART ads
 		$vars['adDriverLastDARTCallNoAds'] = array();
 
@@ -121,10 +124,10 @@ class AdEngine2Controller extends WikiaController {
 		if ($this->wg->LoadAdsInHead) {
 			$scriptModules[] = 'wikia.cookies';
 			$scriptModules[] = 'wikia.geo';
+			$scriptModules[] = 'wikia.location';
 			$scriptModules[] = 'wikia.log';
 			$scriptModules[] = 'wikia.querystring';
 			$scriptModules[] = 'wikia.tracker';
-			$scriptModules[] = 'wikia.window';
 		}
 		return true;
 	}

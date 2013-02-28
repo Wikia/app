@@ -50,6 +50,10 @@ $messages['en'] = array(
 	'quicktools-adopt-reason' => 'Adopting Wiki',
 	'quicktools-adopt-success' => 'User rights change succeeded!',
 	'quicktools-adopt-error' => 'User rights change failed!',
+	'quicktools-adopt-confirm' => 'Are you sure you want to grant this user administrator and bureaucrat rights?',
+	'quicktools-adopt-confirm-ok' => 'Yes',
+	'quicktools-adopt-confirm-cancel' => 'No',
+	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
 );
 
 /**
@@ -89,4 +93,8 @@ $messages['qqq'] = array(
 	'quicktools-adopt-reason' => 'Summary used in the rights change when approving adoption request for user',
 	'quicktools-adopt-success' => 'Success message displayed when user rights change was successful',
 	'quicktools-adopt-error' => 'Error message displayed when user rights change failed',
+	'quicktools-adopt-confirm' => 'Message shown in a prompt to check that user wants to give the user rights',
+	'quicktools-adopt-confirm-ok' => 'Message for the OK button in the confirm dialog',
+	'quicktools-adopt-confirm-cancel' => 'Message for the cancel button in the confirm dialog',
+	'quicktools-adopt-confirm-title' => 'Title of confirm dialog',
 );

@@ -18,10 +18,16 @@
 				);
 				?>
 				<?=$app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['shortDesc' . $i])
-				);
+				'MarketingToolbox',
+				'FormField',
+				array('inputData' => $fields['strapline' . $i])
+			);
+				?>
+				<?=$app->renderView(
+				'MarketingToolbox',
+				'FormField',
+				array('inputData' => $fields['shortDesc' . $i])
+			);
 				?>
 				<?=$app->renderView(
 					'MarketingToolbox',

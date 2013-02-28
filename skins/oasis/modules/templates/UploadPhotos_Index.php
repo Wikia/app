@@ -4,14 +4,14 @@
 
 		<div class="step-1">
 			<h1><?= wfMsg('oasis-upload-photos-title') ?></h1>
-			<input type="file" name="wpUploadFile" size="60">
+			<input type="file" name="wpUploadFile">
 			<input type="submit" value="<?= wfMsg('Upload') ?>">
 			<img class="ajaxwait" src="<?= $wg->StylePath ?>/common/images/ajax.gif"><br>
 			<label class="override"><input type="checkbox" name="wpDestFileWarningAck">Overwrite File</label>
 			<div class="status"></div>
 
 			<div class="options">
-				<label for="wpDestFile"><?= wfMsg('filename') ?>:</label><input type="text" name="wpDestFile" size="60" autocomplete="off"><br>
+				<label for="wpDestFile"><?= wfMsg('filename') ?>:</label><input type="text" name="wpDestFile" autocomplete="off"><br>
 				<label for="wpUploadDescription"><?= wfMsg('oasis-upload-photos-caption') ?>:</label><textarea name="wpUploadDescription"></textarea><br>
 				<label for="wpLicense"><?= wfMsg('license') ?></label><?= $licensesHtml ?><br>
 				<div id="mw-license-preview"></div>

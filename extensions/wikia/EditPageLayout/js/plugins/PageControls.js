@@ -472,7 +472,7 @@
 					self.ajax('preview',
 						extraData,
 						function(data) {
-							contentNode.html(data.html + data.catbox);
+							contentNode.html(data.html + data.catbox + data.interlanglinks);
 
 							// move "edit" link to the right side of heading names
 							contentNode.find('.editsection').each(function() {

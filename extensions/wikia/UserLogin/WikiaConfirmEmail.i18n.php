@@ -17,6 +17,19 @@ $messages['en'] = array(
 	'wikiaconfirmemail-username' => 'Username',
 );
 
+/** Breton (brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'kod kadarnaat goullo',
+	'wikiaconfirmemail-error-invalid-code' => 'Kod kadarnaat direizh',
+	'wikiaconfirmemail-error-user-not-match' => "C'hem, evit doare ne glot ket al liamm kadarnaat gant an anv implijer lakaet ganeoc'h. Bezit sur e lakait an anv implijer mat. Mar fell deoc'h kevreañ gant ur gont all, klikit <a href=\"{{fullurl:{{ns:special}}:UserLogin}}\">amañ</a>",
+	'wikiaconfirmemail-login-button' => 'Kadarnaat ha kevreañ',
+	'wikiaconfirmemail-heading' => 'Tost echu !',
+	'wikiaconfirmemail-subheading' => "Kevreañ gant hoc'h anv implijer hag ar ger-tremen, deomp da c'houzout eo bet resevet ar postel ganeoc'h.",
+	'wikiaconfirmemail-username' => 'Anv implijer',
+);
+
 /** Czech (česky)
  * @author Jezevec
  */
@@ -115,6 +128,13 @@ $messages['ia'] = array(
 	'wikiaconfirmemail-heading' => 'Quasi finite!',
 	'wikiaconfirmemail-subheading' => 'Aperi session con tu nomine de usator e contrasigno a fin que nos sape que tu ha recipite le message de e-mail.',
 	'wikiaconfirmemail-username' => 'Nomine de usator',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'wikiaconfirmemail-username' => 'Navê bikarhêner',
 );
 
 /** Macedonian (македонски)
@@ -290,11 +310,14 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'wikiaconfirmemail-error-empty-code' => '验证码为空',
 	'wikiaconfirmemail-error-invalid-code' => '验证码无效。',
+	'wikiaconfirmemail-error-user-not-match' => '噢，此确认链接与您输入的用户名不匹配。请确认您输入了正确的用户名。如果您想在其他帐户登录，点击<a href="{{fullurl:{{ns:special}}:UserLogin}}">这里</a>',
 	'wikiaconfirmemail-login-button' => '确认并登录',
 	'wikiaconfirmemail-heading' => '马上好了。',
+	'wikiaconfirmemail-subheading' => '用您的用户名和密码登录，让我们知道您收到了那封电子邮件。',
 	'wikiaconfirmemail-username' => '用户名',
 );

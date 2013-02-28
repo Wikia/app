@@ -1,4 +1,4 @@
-/*global VET_loader, WMU_skipDetails:true, WMU_show, WMU_openedInEditor:true, confirm */
+/*global VET_loader, WMU_skipDetails:true, WMU_show, WMU_openedInEditor:true, confirm, alert */
 
 var EditHub = function() {};
 
@@ -9,14 +9,16 @@ EditHub.prototype = {
 	lastActiveWmuButton: undefined,
 
 	disableArrow: function() {
-		$('#marketing-toolbox-form').find('.module-box').find('button.navigation').removeAttr('disabled');
-		$('#marketing-toolbox-form').find('.module-box').filter(':first').find('.nav-up').attr('disabled', 'disabled');
-		$('#marketing-toolbox-form').find('.module-box').filter(':last').find('.nav-down').attr('disabled', 'disabled');
+		$('#marketing-toolbox-form').find('.module-box').find('button.navigation').removeAttr('disabled')
+			.end().filter(':first').find('.nav-up').attr('disabled', 'disabled')
+			.end().end().filter(':last').find('.nav-down').attr('disabled', 'disabled');
 	},
 
 	init: function () {
 		var validator;
 		var initThis = this;
+
+		$('#MarketingToolboxPublish').click($.proxy(this.publishHub, this));
 
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
 		$('.module-popular-videos').on('click', '.remove', $.proxy(this.popularVideosRemove, this));
@@ -50,7 +52,7 @@ EditHub.prototype = {
 
 									box.find('.image-placeholder')
 										.empty()
-										.html(response.videoFileMarkup);
+										.html(response.videoData.videoThumb);
 
 									// Close VET modal
 									VET_loader.modal.closeModal();
@@ -147,7 +149,7 @@ EditHub.prototype = {
 				$.loadJQueryAIM(),
 				$.getResources([
 					wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
-					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
+					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss')
 				]),
 				$.loadJQueryAIM()
 			).then($.proxy(function() {
@@ -180,7 +182,7 @@ EditHub.prototype = {
 				tempImg.src = response.fileUrl;
 				var box = this.lastActiveWmuButton.parents('.module-box:first');
 				if (!box.hasClass('sponsored-image')) { //define dimensions if it's not sponsored image
-					tempImg.height = response.imageHeight
+					tempImg.height = response.imageHeight;
 					tempImg.width = response.imageWidth;
 				}
 				if (!box.length) {
@@ -215,9 +217,9 @@ EditHub.prototype = {
 		var html = $.mustache(template, {
 			sectionNo: 2,
 			videoTitle: vetData.videoFileName,
-			timestamp: vetData.videoDate,
+			videoTime: vetData.videoData.videoTime,
 			videoFullUrl: vetData.videoUrl,
-			videoThumbnail: vetData.videoFileMarkup,
+			videoThumbnail: vetData.videoData.videoThumb,
 			removeMsg: $.msg('marketing-toolbox-edithub-remove'),
 			blankImgUrl: window.wgBlankImgUrl
 		});
@@ -260,6 +262,38 @@ EditHub.prototype = {
 			.find('.image-placeholder img').remove()
 			.end()
 			.find('span.filename-placeholder').text('');
+	},
+
+	publishHub: function() {
+		var qs = Wikia.Querystring(window.location);
+
+		$.nirvana.sendRequest({
+			controller: 'MarketingToolbox',
+			method: 'publishHub',
+			type: 'post',
+			data: {
+				'date': qs.getVal('date'),
+				'region': qs.getVal('region'),
+				'verticalId': qs.getVal('verticalId'),
+				'sectionId': qs.getVal('sectionId')
+			},
+			callback: function(data){
+				if (data.success) {
+					window.open(data.hubUrl);
+					var container = $('.grid-4.alpha:first');
+					container.find('p.success').remove();
+
+					var info = $('<p />')
+						.addClass('success')
+						.text(data.successText);
+
+					container.prepend(info);
+					info.get(0).scrollIntoView();
+				} else {
+					alert(data.errorMsg);
+				}
+			}
+		});
 	}
 };
 

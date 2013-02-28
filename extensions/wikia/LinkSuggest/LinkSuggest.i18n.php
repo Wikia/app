@@ -128,9 +128,11 @@ $messages['hsb'] = array(
 
 /** Hungarian (magyar)
  * @author Glanthor Reviol
+ * @author Misibacsi
  * @author TK-999
  */
 $messages['hu'] = array(
+	'linksuggest-desc' => 'Hivatkozásokat javasol a szerkesztőknek a szerkesztési nézetben',
 	'tog-disablelinksuggest' => 'Ne jelenítse meg a hivatkozás-javaslatot forráskódndash;nézetben',
 	'tog-redirected-from' => '&ndash; Az $1 szócikkből átirányítva',
 );

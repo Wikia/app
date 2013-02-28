@@ -375,13 +375,12 @@ class BlogTemplateClass {
 		if (!empty($username)) {
 			$oUser = User::newFromName($username);
 			if ( $oUser instanceof User ) {
-				$sk = RequestContext::getMain()->getSkin();
 				$oUserPage = $oUser->getUserPage();
 				$oUserTalkPage = $oUser->getTalkPage();
 				$aResult = array(
-					"userpage" => ($oUserPage instanceof Title) ? $sk->link($oUserPage, $oUser->getName(), $attribs) : "",
-					"talkpage" => ($oUserTalkPage instanceof Title) ? $sk->link($oUserTalkPage, wfMsg( 'sp-contributions-talk' ), $attribs) : "",
-					"contribs" => $sk->link(
+					"userpage" => ($oUserPage instanceof Title) ? Linker::link($oUserPage, $oUser->getName(), $attribs) : "",
+					"talkpage" => ($oUserTalkPage instanceof Title) ? Linker::link($oUserTalkPage, wfMsg( 'sp-contributions-talk' ), $attribs) : "",
+					"contribs" => Linker::link(
 						SpecialPage::getTitleFor( 'Contributions' ),
 						wfMsg( 'contribslink' ),
 						$attribs,

@@ -142,6 +142,44 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
+	 * Return array consisting of videoThumb and videoTimestamp
+	 * for given video name
+	 *
+	 * @param string $fileName
+	 * @param int    $thumbSize
+	 *
+	 * @return array
+	 */
+	public function getVideoData ($fileName, $thumbSize) {
+		$videoData = array();
+		$title = Title::newFromText($fileName, NS_FILE);
+		if (!empty($title)) {
+			$file = $this->wf->findFile($title);
+		}
+		if (!empty($file)) {
+			$htmlParams = array(
+				'file-link' => true,
+				'duration' => true,
+				'linkAttribs' => array('class' => 'video-thumbnail lightbox')
+			);
+			$thumb = $file->transform(array('width' => $thumbSize));
+
+			$videoData['videoThumb'] = $thumb->toHtml($htmlParams);
+			$videoData['videoTimestamp'] = $file->getTimestamp();
+			$videoData['videoTime'] = $this->wf->TimeFormatAgo($videoData['videoTimestamp']);
+
+			$meta = unserialize($file->getMetadata());
+			$videoData['duration'] = isset($meta['duration']) ? $meta['duration'] : null;
+			$videoData['title'] = $title->getText();
+			$videoData['fileUrl'] = $title->getFullURL();
+			$videoData['thumbUrl'] = $thumb->getUrl();
+		}
+
+		return $videoData;
+	}
+
+
+	/**
 	 * Get avalable sections
 	 *
 	 * @return array
@@ -309,6 +347,110 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
+	 * Check if all modules in current hub (lang, vertical and date) are filled and saved
+	 *
+	 * @param string $langCode
+	 * @param int $verticalId
+	 * @param int $timestamp
+	 */
+	public function checkModulesSaved($langCode, $verticalId, $timestamp) {
+		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$hubDate = date('Y-m-d', $timestamp);
+
+		$fields = array('count(module_id)');
+		$conds = array(
+			'lang_code' => $langCode,
+			'vertical_id' => $verticalId,
+			'hub_date' => $hubDate
+		);
+
+		$result = $sdb->select(self::HUBS_TABLE_NAME, $fields, $conds);
+
+		$row = $sdb->fetchRow($result);
+
+		return ($row[0] == $this->modulesCount) ? true : false;
+	}
+
+	/**
+	 * @desc Main method to publish hub page of specific vertical in specific language and on specific day
+	 * 
+	 * @param $langCode
+	 * @param $sectionId
+	 * @param $verticalId
+	 * @param $timestamp
+	 * 
+	 * @return stdClass (properties: boolean $success, string $errorMsg)
+	 */
+	public function publish($langCode, $sectionId, $verticalId, $timestamp) {
+		$this->wf->ProfileIn(__METHOD__);
+		
+		$results = new stdClass();
+		$results->success = null;
+		$results->errorMsg = null;
+		
+		if( $this->wf->ReadOnly() ) {
+			$results->success = false;
+			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-read-only');
+
+			$this->wf->ProfileOut(__METHOD__);
+			return $results;
+		}
+		
+		switch($sectionId) {
+			case self::SECTION_HUBS:
+				$this->publishHub($langCode, $verticalId, $timestamp, $results);
+				break;
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return $results;
+	}
+
+	/**
+	 * @param $langCode
+	 * @param $verticalId
+	 * @param $timestamp
+	 * @param stdClass $results
+	 * 
+	 * @return stdClass (properties: boolean $success, string $errorMsg)
+	 */
+	protected function publishHub($langCode, $verticalId, $timestamp, &$results) {
+		if( !$this->checkModulesSaved($langCode, $verticalId, $timestamp) ) {
+			$results->success = false;
+			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-modules-not-saved');
+
+			$this->wf->ProfileOut(__METHOD__);
+			return;
+		}
+
+		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$hubDate = date('Y-m-d', $timestamp);
+
+		$changes = array(
+			'module_status' => $this->statuses['PUBLISHED']
+		);
+
+		$conditions = array(
+			'lang_code' => $langCode,
+			'vertical_id' => $verticalId,
+			'hub_date' => $hubDate
+		);
+
+		$dbSuccess = $mdb->update(self::HUBS_TABLE_NAME, $changes, $conditions, __METHOD__);
+
+		if( $dbSuccess ) {
+			$mdb->commit(__METHOD__);
+			$results->success = true;
+		} else {
+			$results->success = false;
+			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-db-error');
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+	}
+
+	/**
 	 * Get data for module list from DB
 	 *
 	 * @param string $langCode
@@ -441,6 +583,39 @@ class MarketingToolboxModel extends WikiaModel {
 		$result = $sdb->selectField($table, 'unix_timestamp(max(hub_date))', $conds, __METHOD__);
 
 		return $result;
+	}
+
+	public function getHubUrl($langCode, $verticalId) {
+		$visualizationData = $this->getVisualizationData();
+
+		if (!isset($visualizationData[$langCode]['url'])) {
+			throw new Exception('Corporate Wiki not defined for this lang');
+		}
+
+		$hubPages = $this->getHubsV2Pages($visualizationData[$langCode]['wikiId']);
+
+		if (!isset($hubPages[$verticalId])) {
+			throw new Exception('Hub page not defined for selected vertical');
+		}
+
+		$url = http_build_url(
+			$visualizationData[$langCode]['url'],
+			array(
+				'path' => $hubPages[$verticalId]
+			),
+			HTTP_URL_JOIN_PATH
+		);
+
+		return $url;
+	}
+
+	protected function getHubsV2Pages($wikiId) {
+		return WikiFactory::getVarValueByName('wgWikiaHubsV2Pages', $wikiId);
+	}
+
+	protected function getVisualizationData() {
+		$visualizationModel = new CityVisualization();
+		return $visualizationModel->getVisualizationWikisData();
 	}
 
 	/**

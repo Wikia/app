@@ -124,12 +124,13 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 		[
 			//analytics
 			'_gaq',
-			'_wtq',
 			'wgEnableKruxTargeting',
 			'wgKruxCategoryId',
+			'cscoreCat',
 
 			//ads
 			'wgDartCustomKeyValues',
+			'cityShort',
 
 			//server/wiki
 			'wgServer',

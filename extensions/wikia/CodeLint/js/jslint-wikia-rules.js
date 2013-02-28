@@ -111,7 +111,7 @@ exports.rules  = [
 		name: 'Tracking',
 		regexp: /((WET.byId|WET.byStr|\$\(.*\).trackClick|\$.tracker).*)\(/,
 		reason: function(matches) {
-			return matches[1] + ' - old tracking code found (use WikiaTracker.track instead)';
+			return matches[1] + ' - old tracking code found (use Wikia.Tracker.track instead)';
 		}
 	},
 	**/

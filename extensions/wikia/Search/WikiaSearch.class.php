@@ -742,7 +742,7 @@ class WikiaSearch extends WikiaObject {
 				->setPhraseSlop			( 3 )
 				->setTie				( 0.01 )
 			;
-			if (! $searchConfig->getSkipBoostFunctions()  ) {
+			if (! $searchConfig->getSkipBoostFunctions() || $this->interface->getGlobal( 'wgSearchSkipBoostFunctions' ) ) {
 			    $dismax->setBoostFunctions(
 			            implode(' ',
 			                    $searchConfig->isInterWiki()

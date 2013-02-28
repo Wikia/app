@@ -900,8 +900,13 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'globalwatchlist-desc' => '发送在所有wiki上监视页面的每周摘要邮件',
+	'tog-watchlistdigest' => '将每周监视列表摘要发邮件给我',
+	'tog-watchlistdigestclear' => '将来自我的每周监视列表摘要的页面标记为已访问',
+	'globalwatchlist-see-more' => '请检查您的本地监视列表了解更多变更',
 	'globalwatchlist-digest-email-subject' => '每周文摘',
 	'globalwatchlist-digest-email-body' => '亲爱的$1，
 以下是您的监视列表中上次访问后被改动的页面。
@@ -917,4 +922,5 @@ Wikia
 * 标记全部本周摘要为已读，参见首选项中的“监视列表”选项',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2条评论)',
 	'globalwatchlist-no-page-found' => '未找到页面。',
+	'globalwatchlist-no-blog-page-found' => '找不到博客页面。',
 );

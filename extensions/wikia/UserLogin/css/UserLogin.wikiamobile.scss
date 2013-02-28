@@ -15,10 +15,14 @@ $spacing: 5px;
 #wkLgn{
 	padding: 10px;
 
+	.wkErr {
+		margin: -20px 0 20px 0;
+	}
+
 	a {
 		text-align: left;
 		padding-left: 10px;
-		margin-bottom: 20px;
+		margin: 20px 0;
 	}
 
 	//needs to select parent to override "#wkLgn input" rule

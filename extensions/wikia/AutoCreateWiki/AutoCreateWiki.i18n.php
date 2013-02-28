@@ -113,31 +113,27 @@ Wikia Community Support
 ___________________________________________
 * Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences",
 	"autocreatewiki-welcometalk-wall-title" => "Welcome!",
-        "autocreatewiki-welcometalk-wall" => "Hey there!
-We're excited to have {{subst:SITENAME}} as part of the Wikia community! There's still a lot to do, so here are some helpful tips and links to get your wiki going:
-*Not sure where to begin? Stop by [[w:c:community:Admin_Central:Main_Page|Founder &amp; Admin Central]] and check out the [[w:c:community:Blog:Wikia_Founders_&_Admins|Blog]] for tips on how to jump start your wiki and make it grow!
-*Visit [[w:c:community:main page|Community Central]] to make friends via [[w:c:community:Special:Chat|chat]], learn about new features and get updated on Wikia news and upcoming features on the [[w:c:community:Blog:Wikia_Staff_Blog|Staff Blog]].
-*Take a look at our [[w:c:community:Webinars|webinar series]] -- where you can sign up to interact with Wikia staff, as well as watch past sessions
-*Be sure to check out [[Special:WikiFeatures|Wiki Features]] to see what features you can enable on your wiki!
-*Explore our [[w:c:community:Admin_Central:Forum|forums]] on Founder and Admin Central to see what other wiki admins are asking. 
-*Lastly, visit our [[w:c:community:Help:Contents|Help Pages]] to answer any specific question you may have.
-All of the above links are a great place to start exploring Wikia. If you get stuck or have a question you can't find the answer to -- please contact us [[Special:Contact|here]]. But most importantly, have fun! :)
-Happy editing!",
+        "autocreatewiki-welcometalk-wall" => "Hello, We're excited to have {{subst:SITENAME}} as part of the Wikia community!
+
+There's still a lot to do; here are some helpful tips and links to get your wiki going:
+*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including Chat, Achievements and much more.
+*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or chat live with fellow Wikians.
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia.
+
+All of the above links are a great place to start exploring, and have fun!",
 
 	"autocreatewiki-welcometalk" => "==Welcome!==
-<div style=\"font-size:120%; line-height:1.2em;\">Hi $1 -- we're excited to have '''$4''' as part of the Wikia community!
+Hey there!
 
-Now you've got a whole website to fill up with information, pictures and videos about your favorite topic. But right now, it's just blank pages staring at you... Scary, right? Here are some ways to get started.
+We're excited to have $4 as part of the Wikia community! There's still a lot to do; here are some helpful tips and links to get your wiki going:
 
-* '''Introduce your topic''' on the front page. This is your opportunity to explain to your readers what your topic is all about. Write as much as you want! Your description can link off to all the important pages on your site.
+*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including chat, achievements and much more.
+*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or chat live with fellow Wikians
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia
 
-* '''Start some new pages''' -- just a sentence or two is fine to get started. Don't let the blank page stare you down! A wiki is all about adding and changing things as you go along. You can also add pictures and videos, to fill out the page and make it more interesting.
+All of the above links are a great place to start exploring, and have fun!
 
-And then just keep going! People like visiting wikis when there's lots of stuff to read and look at, so keep adding stuff, and you'll attract readers and editors. There's a lot to do, but don't worry -- today's your first day, and you've got plenty of time. Every wiki starts the same way -- a little bit at a time, starting with the first few pages, until it grows into a huge, busy site.
-
-If you've got questions, you can e-mail us through our [[Special:Contact|contact form]]. Have fun!
-
--- [[User:$2|$3]] <staff /></div>",
+-- [[User:$2|$3]] <staff />",
 // new wikis - special page
 	"newwikis" => "New wikis",
 	"newwikisstart" => "Display wikis starting at:",
@@ -148,6 +144,7 @@ If you've got questions, you can e-mail us through our [[Special:Contact|contact
 /** Message documentation (Message documentation)
  * @author Prima klasy4na
  * @author Purodha
+ * @author Shirayuki
  * @author Siebrand
  * @author The Evil IP address
  * @author Umherirrender
@@ -161,6 +158,7 @@ $messages['qqq'] = array(
 	'autocreatewiki-info-realname' => '{{Identical|Real name attribution}}',
 	'autocreatewiki-info-blurry-word' => 'Message {{msg-Wikia|Autocreatewiki-blurry-word}} refers here.',
 	'autocreatewiki-title-template' => 'This will be the sitename of the wiki, i.e. the text that shows up in the TITLE element as well as in other places on the site.',
+	'autocreatewiki-category-other' => '{{Identical|Other}}',
 	'autocreatewiki-set-username' => 'If user does not provide a username when attempting to log in, an error message appears prompting a username to be provided',
 	'autocreatewiki-welcometalk' => 'Text of the welcome message left for wiki founder upon wiki creation. 
 Parameters:
@@ -576,10 +574,44 @@ Prosím, vyberte hodnotu ze seznamu.',
 );
 
 /** Welsh (Cymraeg)
+ * @author Lloffiwr
  * @author Pwyll
+ * @author Thefartydoctor
  */
 $messages['cy'] = array(
-	'autocreatewiki' => 'Creu wiki newydd',
+	'autocreatewiki' => 'Dechrau wici newydd',
+	'autocreatewiki-desc' => 'Creu wici yn y WikiFactory gyda ymofyniadau defnyddiwyr',
+	'autocreatewiki-page-title-default' => 'Creu wici newydd',
+	'autocreatewiki-page-title-answers' => 'Creu gwefan Atebion newydd',
+	'createwiki' => 'Creu wici newydd',
+	'autocreatewiki-chooseone' => 'Dewiswch un',
+	'autocreatewiki-required' => '$1 = gofynnol',
+	'autocreatewiki-web-address' => 'Cyfeiriad gwe:',
+	'autocreatewiki-category-select' => 'Dewiswch un',
+	'autocreatewiki-language-top' => 'Y $1 iaith fwyaf',
+	'autocreatewiki-language-all' => 'Holl ieithoedd',
+	'autocreatewiki-remember' => 'Cofio fi',
+	'autocreatewiki-create-account' => 'Creu cyfrif',
+	'autocreatewiki-haveaccount-question' => 'Oes cyfrif Wikia gyda chi?',
+	'autocreatewiki-info-topic' => 'Ychwanegu disgrifiad bach fel "Star Wars" neu "Sioeau deledu".',
+	'autocreatewiki-info-category-default' => 'Bydd hwn yn helpu ymwelwyr i ffeindio eich wici chi.',
+	'autocreatewiki-info-category-answers' => 'Bydd hwn yn helpu ymwelwyr i ffeindio eich gwefan Atebion chi.',
+	'autocreatewiki-info-language' => 'Hon fydd yr iaith rhagosodedig i ymwelwyr eich wici chi.',
+	'autocreatewiki-info-email-address' => 'Mae eich cyfeiriad e-bost chi erioed yn dangos i unrhywun ar Wikia.',
+	'autocreatewiki-info-realname' => "Os ydych chi'n dewis ei roi, byddwn ni'n ei ddefnyddio i roi priodoliad i chi am eich gwaith.",
+	'autocreatewiki-info-birthdate' => "Mae Wikia yn gofyn i bob defnyddiwr roi ei ddyddiad geni fel mesur diogelwch, ac er mwyn cadw uniondeb y wefan tra'n cydymffurfio â rheolau ffederal.",
+	'autocreatewiki-info-blurry-word' => "I helpu nhw i ddiogelu rhag y greadigaeth gyfrif awtomatig, teipwich y gair blyri fod chi'n gallu gweud yn y bocs hwn.",
+	'autocreatewiki-info-terms-agree' => 'Gan creu wici a chyfrif defnyddiwr, dych chi\'n cyd-fynd y <a href="http://www.wikia.com/wiki/Terms_of_use">Termiau Defnydd o Wikia</a>',
+	'autocreatewiki-info-staff-username' => '<b>Staff yn unig:</b> Bydd y defnyddiwr penodol yn cofrestru fel syflaenwr.',
+	'autocreatewiki-title-template' => 'Wici $1',
+	'autocreatewiki-limit-day' => 'Mae Wikia wedi rhagori y rhif uchafrif o greadigaeth wici heddiw ($1).',
+	'autocreatewiki-limit-creation' => 'Dych chi wedi rhagori y rhif uchafrif o greadigaeth wici yn 24 awr ($1).',
+	'autocreatewiki-empty-field' => "Cwblhau'r bocs hwn, os gwelwch chi'n dda.",
+	'autocreatewiki-bad-name' => 'Mae enwau gyda llythryn arbennig (fel $ neu @) ddim yn oddefol ac mae\'n reidiol yn bod yn bachlythrennau heb bylchau.',
+	'autocreatewiki-invalid-wikiname' => 'Mae enwau gyda llythryn arbennig (fel $ neu @) ac enwau gwag ddim yn oddefol.',
+	'autocreatewiki-violate-policy' => "Mae'r enw wici hwn yn cynnwys gair fod yn treisio ein polisi enwi ni.",
+	'autocreatewiki-name-taken' => 'Mae\'n wici gyda y cyfeiriad hwn. Dych chi\'n gallu creu newidiadau wrth <a href="http://$1.wikia.com">http://$1.wikia.com</a> neu dewis cyfeiriad arall.',
+	'autocreatewiki-name-too-short' => "Mae'r cyfeiriad yn rhy fach, dewis cyfeiriad gyda 3 llythryn neu nifer o leiaf.",
 );
 
 /** German (Deutsch)
@@ -1638,6 +1670,33 @@ $messages['he'] = array(
 	'autocreatewiki-category-label' => 'קטגוריה:',
 	'newwikis' => 'אתרי וויקי חדשים',
 	'newwikisstart' => 'הצג אתרי וויקי המתחילים ב:',
+);
+
+/** Hindi (हिन्दी)
+ * @author Kush rohra
+ */
+$messages['hi'] = array(
+	'autocreatewiki' => 'बनाएँ एक नई wiki',
+	'autocreatewiki-desc' => 'Wiki में WikiFactory उपयोगकर्ता का अनुरोध बनाएँ',
+	'autocreatewiki-page-title-default' => 'बनाएँ एक नई wiki',
+	'autocreatewiki-page-title-answers' => 'एक नए जवाब साइट बनाएँ',
+	'createwiki' => 'बनाएँ एक नई wiki',
+	'autocreatewiki-chooseone' => 'एक को चुनें',
+	'autocreatewiki-required' => '$1 = 	
+चाहा हुआ',
+	'autocreatewiki-web-address' => 'आईपी पता:',
+	'autocreatewiki-category-select' => 'एक का चयन करें',
+	'autocreatewiki-language-top' => 'शीर्ष  $1  भाषाएँ',
+	'autocreatewiki-language-all' => 'सर्रि भाषा',
+	'autocreatewiki-remember' => 'मुझ याअद रख्न',
+	'autocreatewiki-create-account' => 'अप्न खत बनयिय',
+	'autocreatewiki-haveaccount-question' => 'क्य अप्क्के पस्स Wikia का खता हे',
+	'autocreatewiki-info-domain' => 'यह अपने विषय के लिए एक खोज खोजशब्द होने की संभावना एक शब्द का उपयोग करने के लिए सबसे अच्छा है।',
+	'autocreatewiki-info-category-default' => 'यह मिल अपने wiki आगंतुकों में मदद मिलेगी।',
+	'autocreatewiki-info-category-answers' => 'एक छोटी "स्टार वार्स" या "टीवी शो" जैसे विवरण जोड़ें.',
+	'autocreatewiki-info-email-address' => 'अपना ईमेल पता कभी नहीं Wikia पर किसी को भी दिखाया गया है।',
+	'autocreatewiki-info-blurry-word' => 'स्वचालित खाता निर्माण के खिलाफ की रक्षा में मदद करने के लिए, कृपया इस फ़ील्ड में blurry शब्द है कि आप देखें लिखें।',
+	'autocreatewiki-title-template' => '$1 विकि',
 );
 
 /** Hungarian (magyar)

@@ -91,7 +91,7 @@
 			return false;
 		}
 
-		if (tagName === 'div' && attrs.class === 'twtr-widget') {
+		if (tagName === 'div' && attrs['class'] === 'twtr-widget') {
 			if (logging) { window.console.log('gw.config.js: checkHandler: natively writing twitter div'); }
 			documentWriteTag('div', attrs);
 			if (logging) { window.console.log('gw.config.js: checkHandler: end of twitter div'); }

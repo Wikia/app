@@ -26,6 +26,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		if (!$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('marketingtoolbox')) {
 			$this->wf->ProfileOut(__METHOD__);
+			$this->app->wg->Out->setStatusCode ( 403 );
 			$this->specialPage->displayRestrictionError();
 			return false;
 		}
@@ -177,6 +178,30 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->overrideTemplate('editHub');
 	}
 
+	public function publishHub() {
+		if ($this->request->wasPosted()) {
+			$this->retriveDataFromUrl();
+
+			$result = $this->toolboxModel->publish(
+				$this->langCode,
+				$this->sectionId,
+				$this->verticalId,
+				$this->date
+			);
+
+			$this->success = $result->success;
+			if ($this->success) {
+				$date = new DateTime('@' . $this->date);
+
+				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
+					. '/' . $date->format('Y-m-d');
+				$this->successText = $this->wf->msg('marketing-toolbox-module-publish-success', $this->wg->lang->date($this->date));
+			} else {
+				$this->errorMsg = $result->errorMsg;
+			}
+		}
+	}
+
 	private function getNextModuleUrl() {
 		$nextModuleId = $this->selectedModuleId;
 
@@ -210,6 +235,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	protected function prepareLayoutData($selectedModuleId, $modulesData) {
 		$this->prepareHeaderData($modulesData, $this->date);
 		$this->prepareLeftMenuData($modulesData, $selectedModuleId);
+		$this->prepareFooterData($this->langCode, $this->verticalId, $this->date);
 	}
 
 	/**
@@ -241,6 +267,12 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				'anchor' => $moduleData['name'],
 			);
 		}
+	}
+
+	protected  function prepareFooterData($langCode, $verticalId, $timestamp) {
+		$this->footerData = array(
+			'allModulesSaved' => $this->toolboxModel->checkModulesSaved($langCode, $verticalId, $timestamp)
+		);
 	}
 
 	/**
@@ -306,6 +338,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 */
 	public function executeFooter($data) {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss');
+		$this->allModulesSaved = $data['allModulesSaved'] ? '' : 'disabled="disabled"' ;
 	}
 
 	/**
@@ -345,26 +378,11 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$videoInfo = $response->getVal('videoInfo');
 		$fileName = $videoInfo[0]->getText();
 
-		$file = wfFindFile( $fileName );
-		if( !empty($file) ) {
-			$thumbSize = $this->toolboxModel->getThumbnailSize();
-			$htmlParams = array(
-				'file-link' => true,
-				'duration' => true,
-				'linkAttribs' => array( 'class' => 'video-thumbnail lightbox' )
-			);
-			$thumb = $file->transform( array('width' => $thumbSize) )->toHtml( $htmlParams );
-
-			//TODO: Talk to Video Team about this solution
-			$videoDataHelper = new RelatedVideosData();
-			$videoData = $videoDataHelper->getVideoData($fileName, $thumbSize);
-			if( !empty($videoData['timestamp']) ) {
-				$this->videoDate = wfTimeFormatAgo($videoData['timestamp']);
-			}
-		}
-
+		$this->videoData = $this->toolboxModel->getVideoData(
+			$fileName,
+			$this->toolboxModel->getThumbnailSize()
+		);
 		$this->videoFileName = $fileName;
-		$this->videoFileMarkup = $thumb;
 		$this->videoUrl = $url;
 	}
 

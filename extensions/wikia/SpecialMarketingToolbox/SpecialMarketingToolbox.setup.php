@@ -47,10 +47,3 @@ $app->registerSpecialPage('MarketingToolbox', 'MarketingToolboxController', 'wik
 //message files
 $app->registerExtensionMessageFile('MarketingToolbox', $dir . 'MarketingToolbox.i18n.php');
 F::build('JSMessages')->registerPackage('MarketingToolbox', array('marketing-toolbox-*'));
-
-//add wikia staff tool rights to staff users
-$wgGroupPermissions['*']['marketingtoolbox'] = false;
-$wgGroupPermissions['staff']['marketingtoolbox'] = true;
-$wgGroupPermissions['vstf']['marketingtoolbox'] = false;
-$wgGroupPermissions['helper']['marketingtoolbox'] = false;
-$wgGroupPermissions['sysop']['marketingtoolbox'] = false;

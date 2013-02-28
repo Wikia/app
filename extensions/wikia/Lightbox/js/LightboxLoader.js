@@ -1,5 +1,7 @@
 /*global Lightbox:true, LightboxTracker:true*/
 
+(function(window, $){
+
 var LightboxLoader = {
 	// cached thumbnail arrays and detailed info
 	cache: {
@@ -218,7 +220,6 @@ var LightboxLoader = {
 			deferredList.push($.loadMustache());
 
 			var resources = [
-				$.getAssetManagerGroupUrl('history_polyfill_js'),
 				$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss'),
 				window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js'
 			];
@@ -232,7 +233,7 @@ var LightboxLoader = {
 				type:		'GET',
 				format: 'html',
 				data: {
-					lightboxVersion: 6, // update this when we change the template Lightbox_lightboxModalContent.php
+					lightboxVersion: window.wgStyleVersion,
 					userLang: window.wgUserLanguage // just in case user changes language prefs
  				},
 				callback: function(html) {
@@ -277,7 +278,7 @@ var LightboxLoader = {
 			// save references for inline video removal later
 			LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
 			LightboxTracker.inlineVideoTrackingTimeout = setTimeout(function() {
-				LightboxTracker.track(WikiaTracker.ACTIONS.VIEW, 'video-inline', null, {title:json.title, provider: json.providerName, clickSource: clickSource});
+				LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'video-inline', null, {title:json.title, provider: json.providerName, clickSource: clickSource});
 			}, 1000);
 
 			LightboxLoader.inlineVideoLoading.splice($.inArray(mediaTitle, LightboxLoader.inlineVideoLoading), 1);
@@ -341,12 +342,13 @@ var LightboxLoader = {
 		}
 	},
 	loadFromURL: function() {
-		var fileTitle = $.getUrlVar('file'),
+		var fileTitle = window.Wikia.Querystring().getVal('file'),
 			openModal = $('#LightboxModal');
 
+		// Check if there's a file param in URL
 		if(fileTitle) {
+			// If Lightbox is already open, update it
 			if(openModal.length) {
-				// Lightbox is already open, update it
 				LightboxLoader.getMediaDetail({fileTitle: fileTitle}, function(data) {
 					Lightbox.current.title = data.title;
 					Lightbox.current.type = data.mediaType;
@@ -355,8 +357,8 @@ var LightboxLoader = {
 					Lightbox.openModal.carousel.find('li').eq(Lightbox.current.index).click();
 				});
 
+			// Open new Lightbox
 			} else {
-				// Open new Lightbox
 				// set a fake parent for carouselType
 				var trackingInfo = {
 					parent: $('#WikiaArticle'),
@@ -364,6 +366,7 @@ var LightboxLoader = {
 				}
 				LightboxLoader.loadLightbox(fileTitle, trackingInfo);
 			}
+		// No file param, if there's an open modal, close it
 		} else {
 			if(openModal.length) {
 				openModal.closeModal();
@@ -378,7 +381,7 @@ LightboxTracker = {
 	// @param data - any extra params we want to pass to internal tracking
 	// Don't add willy nilly though... check with Jonathan.
 	track: function(action, label, value, data) {
-		WikiaTracker.track({
+		Wikia.Tracker.track({
 			action: action,
 			category: 'lightbox',
 			label: label || '',
@@ -401,11 +404,16 @@ LightboxTracker = {
 };
 
 $(function() {
-	if (!window.wgEnableLightboxExt) {
+	//TODO: remove || statement (leave only !window.wgEnableLightboxExt) once WikiaHubsV2 is released and WikiaHubs extension is removed
+	if (!window.wgEnableLightboxExt || (window.wikiaPageIsHub && !window.isWikiaHubsV2Page) ) {
 		return;
 	}
 
 	LightboxLoader.init();
-
 	LightboxLoader.loadFromURL();
 });
+
+window.LightboxLoader = LightboxLoader;
+window.LightboxTracker = LightboxTracker;
+
+})(this, jQuery);

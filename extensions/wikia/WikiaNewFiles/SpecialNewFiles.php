@@ -8,6 +8,10 @@
  */
 
 // TODO: extend SpecialNewFiles class instead of using a function
+/**
+ * @param $par string
+ * @param $specialPage SpecialPage
+ */
 function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	global $wgOut, $wgLang, $wgRequest, $wgMiserMode;
 	global $wmu, $wgOasisHD;
@@ -147,7 +151,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 		$ut = $s->img_user_text;
 
 		$nt = Title::newFromText( $name, NS_FILE );
-		$ul = $sk->link( Title::makeTitle( NS_USER, $ut ), $ut, array( 'class' => 'wikia-gallery-item-user' ) );
+		$ul = Linker::link( Title::makeTitle( NS_USER, $ut ), $ut, array( 'class' => 'wikia-gallery-item-user' ) );
 		$timeago = wfTimeFormatAgo( $s->img_timestamp );
 
 		$links = getLinkedFiles( $s );
@@ -209,13 +213,15 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 		$botpar = '';
 	}
 	$now = wfTimestampNow();
+
+	/* @var $wgLang Language */
 	$d = $wgLang->date( $now, true );
 	$t = $wgLang->time( $now, true );
-	$dateLink = $sk->link( $titleObj, wfMsgHtml( 'sp-newimages-showfrom', $d, $t ),
+	$dateLink = Linker::link( $titleObj, wfMsgHtml( 'sp-newimages-showfrom', $d, $t ),
 							array( 'class' => 'navigation-filesfrom' ),
 		'from=' . $now . $botpar . $searchpar );
 
-	$botLink = $sk->link( $titleObj,
+	$botLink = Linker::link( $titleObj,
 						 wfMsgHtml( 'showhidebots', ( $hidebots ? wfMsgHtml( 'show' ) : wfMsgHtml( 'hide' ) ) ),
 						 array( 'class' => 'navigation-' . ( $hidebots ? 'showbots' : 'hidebots' ) ),
 						 'hidebots=' . ( $hidebots ? '0' : '1' ) . $searchpar );
@@ -225,7 +231,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	$prevLink = wfMsgExt( 'pager-newer-n', $opts, $wgLang->formatNum( $limit ) );
 	if ( $firstTimestamp && $firstTimestamp != $latestTimestamp ) {
 		$wmu['prev'] = $firstTimestamp;
-		$prevLink = $sk->link( $titleObj, $prevLink,
+		$prevLink = Linker::link( $titleObj, $prevLink,
 							   array( 'class' => 'navigation-newer' ),
 							   'from=' . $firstTimestamp . $botpar . $searchpar );
 	}
@@ -233,7 +239,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	$nextLink = wfMsgExt( 'pager-older-n', $opts, $wgLang->formatNum( $limit ) );
 	if ( $shownImages > $limit && $lastTimestamp ) {
 		$wmu['next'] = $lastTimestamp;
-		$nextLink = $sk->link( $titleObj, $nextLink,
+		$nextLink = Linker::link( $titleObj, $nextLink,
 							   array( 'class' => 'navigation-older' ),
 							   'until=' . $lastTimestamp . $botpar . $searchpar );
 	}
@@ -255,7 +261,7 @@ function getLinkedFiles ( $image ) {
 	$anchorLength = 60;
 
 	wfProfileIn( __METHOD__ );
-	$cacheKey = wfMemcKey( __METHOD__, $image->img_name );
+	$cacheKey = wfMemcKey( __METHOD__, md5($image->img_name) );
 	$data = $wgMemc->get( $cacheKey );
 	if( !is_array($data) ) {
 		// The ORDER BY ensures we get NS_MAIN pages first
@@ -279,10 +285,9 @@ function getLinkedFiles ( $image ) {
 	$links = array();
 
 	if ( !empty($data) ) {
-		$sk = RequestContext::getMain()->getSkin();
 		foreach ( $data as $row ) {
 			$name = Title::makeTitle( $row['ns'], $row['title'] );
-			$links[] = $sk->link( $name, wfShortenText($name, $anchorLength), array( 'class' => 'wikia-gallery-item-posted' ) );
+			$links[] = Linker::link( $name, wfShortenText($name, $anchorLength), array( 'class' => 'wikia-gallery-item-posted' ) );
 		}
 	}
 

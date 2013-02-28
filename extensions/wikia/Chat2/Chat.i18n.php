@@ -2784,8 +2784,21 @@ $messages['uk'] = array(
 	'chat-user-was-unbanned' => 'Закінчився бан у Чаті $2 від $1.',
 	'chat-ban-cannt-undo' => 'Бан вже був скасований',
 	'chat-user-permanently-disconnected' => 'Ви були відімкнуті, перевірте своє підключення до Інтернету та поновіть сторінку в браузері.',
+	'chat-ban-modal-label-expires' => 'Закінчується',
 	'chat-ban-modal-label-reason' => 'Причина',
+	'chat-log-reason-undo' => 'скасувати',
+	'chat-ban-undolink' => 'скасувати',
+	'chat-ban-modal-button-ok' => 'Забанити цього користувача',
+	'chat-ban-modal-button-change-ban' => 'Змінити бан',
 	'chat-ban-modal-button-cancel' => 'Скасувати',
+	'chat-ban-modal-end-ban' => 'Закінчення бана',
+	'chat-log-reason-banchange' => 'Причина не вказана',
+	'chat-log-reason-banremove' => 'Причина не вказана',
+	'chat-user-menu-message-wall' => 'Стіна обговорення',
+	'chat-user-menu-talk-page' => 'Обговорення користувача',
+	'group-chatmoderator-member' => 'Модератор чату',
+	'chat-checkuser-join-action' => 'Приєднатися',
+	'chat-status-away' => 'Відсутній',
 );
 
 /** Veps (vepsän kel’)

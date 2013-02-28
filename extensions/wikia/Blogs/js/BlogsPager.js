@@ -4,8 +4,7 @@ if(!window.blogInitialized) {
 	var BlogPaginator = {
 		isFree: true,
 		init: function() {
-			BlogPaginator.n = $('.wk_blogs_pager .wikia-paginator');
-			BlogPaginator.n.live('click', function(evt) {
+			$('.WikiaBlogListing').on('click', '.wk_blogs_pager .wikia-paginator', function(evt) {
 				evt.preventDefault();
 				if(BlogPaginator.isFree) {
 					BlogPaginator.isFree = false;

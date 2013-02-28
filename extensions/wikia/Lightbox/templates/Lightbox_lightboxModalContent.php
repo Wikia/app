@@ -1,5 +1,3 @@
-<? //  Important: If you change this template, update lightboxVersion in LightboxLoader.js to bust browser cache  ?>
-
 <div class="WikiaLightbox">
 	<!-- Keep media at the top so everything stacks on top of this, without the need to mess with z-index -->
 	<div class="media">
@@ -60,6 +58,12 @@
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
 		<button class="share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></button>
 		<button class="more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></button>
+		
+		<div id="lightbox-add-to-article" class="lightbox-add-to-article">
+			<button class="article-add-button secondary"><?= wfMsg('lightbox-header-add-video-button') ?></button>
+			<input class="lightbox-article-input" />
+		</div>
+
 		<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
 		<a href="{{rawImageUrl}}" class="see-full-size-link" target="_blank"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
 		<span class="video-views">{{{views}}}</span>

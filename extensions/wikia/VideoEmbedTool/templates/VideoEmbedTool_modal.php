@@ -4,8 +4,8 @@
 </div>
 <div id="VideoEmbedBody">
 	<h1 id="VideoEmbedHeader"></h1>
-	<div id="VideoEmbedMain"></div>
-	<div id="VideoEmbedDetails" style="display: none;"></div>
-	<div id="VideoEmbedConflict" style="display: none;"></div>
-	<div id="VideoEmbedSummary" style="display: none;"></div>
+	<div id="VideoEmbedMain" class="VET_screen"></div>
+	<div id="VideoEmbedDetails" class="VET_screen" style="display: none;"></div>
+	<div id="VideoEmbedConflict" class="VET_screen" style="display: none;"></div>
+	<div id="VideoEmbedSummary" class="VET_screen" style="display: none;"></div>
 </div>

@@ -111,12 +111,6 @@ var AjaxLogin = {
 			return ;
 		}
 
-		// macbre: store selector of node to be clicked when page is reloaded (BugId:15911)
-		if (typeof AjaxLogin.clickAfterLogin == 'string') {
-			$.storage.set('AjaxLoginClickAfterLogin', AjaxLogin.clickAfterLogin);
-			$().log(AjaxLogin.clickAfterLogin + ' will be clicked', 'AjaxLogin');
-		}
-
 		// macbre: call custom function (if provided by any extension)
 		if (typeof window.wgAjaxLoginOnSuccess == 'function') {
 			// let's update wgUserName

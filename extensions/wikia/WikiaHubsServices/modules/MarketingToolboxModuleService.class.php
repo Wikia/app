@@ -8,6 +8,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	protected $verticalId;
 
 	abstract protected function getFormFields();
+	abstract public function getStructuredData($data);
 
 	public function __construct($langCode, $sectionId, $verticalId) {
 		parent::__construct();
@@ -129,11 +130,31 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	protected function addProtocolToLink($link) {
-		if (strpos($link, 'http://') === false) {
+		if (strpos($link, 'http://') === false && strpos($link, 'https://') === false) {
 			$link = 'http://' . $link;
 		}
 
 		return $link;
 	}
 
+	protected function getImageInfo($fileName, $destSize = 0) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($fileName, $destSize);
+	}
+
+	/**
+	 * @desc Creates sponsored image markup which is then passed to wfMessage()
+	 * 
+	 * @param $imageTitleText
+	 * @return string
+	 */
+	protected function getSponsoredImageMarkup($imageTitleText) {
+		$sponsoredImageInfo = $this->getImageInfo($imageTitleText);
+		return Xml::element('img', array(
+			'alt' => $sponsoredImageInfo->title,
+			'class' => 'sponsored-image',
+			'height' => $sponsoredImageInfo->height,
+			'src' => $sponsoredImageInfo->url,
+			'width' => $sponsoredImageInfo->width,
+		), '', true);
+	}
 }

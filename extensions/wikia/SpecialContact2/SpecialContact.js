@@ -38,8 +38,8 @@ var SpecialContact = {
 	},
 
 	trackClick: function ( trackLabel, trackUrl, event ) {
-		WikiaTracker.track({
-			action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
+		Wikia.Tracker.track({
+			action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
 			category: 'specialcontact',
 			label: trackLabel,
 			href: trackUrl,
