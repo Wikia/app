@@ -32,6 +32,12 @@ spl_autoload_register( function( $class ) {
 	}  
 });
 
+/**
+ * Keeping the traditional controller registry for now
+ */
+$app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class.php');
+$app->registerClass('WikiaSearchIndexerController', $dir . 'WikiaSearchIndexerController.class.php');
+$app->registerClass('WikiaSearchAjaxController', $dir . 'WikiaSearchAjaxController.class.php');
 
 /**
  * special pages
@@ -39,12 +45,7 @@ spl_autoload_register( function( $class ) {
 $app->registerSpecialPage('WikiaSearch',	'WikiaSearchController');
 $app->registerSpecialPage('Search',			'WikiaSearchController');
 
-/**
- * Keeping the traditional controller registry for now
- */
-$app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class.php');
-$app->registerClass('WikiaSearchIndexerController', $dir . 'WikiaSearchIndexerController.class.php');
-$app->registerClass('WikiaSearchAjaxController', $dir . 'WikiaSearchAjaxController.class.php');
+
 
 /**
  * Wikia API controllers

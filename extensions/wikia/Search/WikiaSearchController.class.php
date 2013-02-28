@@ -1,14 +1,25 @@
 <?php
+/**
+ * Class definition for WikiaSearchController. Responsible for handling search requests.
+ * @author relwell
+ */
 class WikiaSearchController extends WikiaSpecialPageController {
 
-	const RESULTS_PER_PAGE = 25;
-	const PAGES_PER_WINDOW = 5;
-
 	/**
-	 * Responsible for search queries
-	 * @var Wikia\Search\QueryService\Select\AbstractSelect
+	 * Default results per page
+	 * @var int
 	 */
-	protected $wikiaSearch;
+	const RESULTS_PER_PAGE = 25;
+	/**
+	 * Default pages per window
+	 * @var int
+	 */
+	const PAGES_PER_WINDOW = 5;
+	
+	/**
+	 * @var Wikia\Search\QueryService\Factory
+	 */
+	protected $queryServiceFactory;
 
 	/**
 	 * Handles dependency-building and special page routing before calling controller actions
@@ -17,6 +28,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
         // note: this is required since we haven't constructed $this->wg yet
 		global $wgWikiaSearchIsDefault;
 		$specialPageName = $wgWikiaSearchIsDefault ? 'Search' : 'WikiaSearch';
+		$this->queryServiceFactory = Wikia\Search\QueryService\Factory::getInstance();
 		parent::__construct( $specialPageName, $specialPageName, false );
 	}
 
@@ -28,17 +40,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * This is the main search action. Special:Search points here.
 	 */
 	public function index() {
-		$this->handleSkinSettings( $this->wg->User->getSkin() );
+		$this->handleSkinSettings();
 		$searchConfig = $this->getSearchConfigFromRequest();
 		
 		if( $searchConfig->getQueryNoQuotes( true ) ) {
-			$this->wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->getFromConfig( $searchConfig);
+			$search = $this->queryServiceFactory->getFromConfig( $searchConfig);
 			// explicity called to accommodate go-search
-			$this->wikiaSearch->getMatch();
-			if ( $searchConfig->getPage() == 1 ) {
-				$this->handleArticleMatchTracking( $searchConfig, new Track() );
-			}
-			$this->wikiaSearch->search();
+			$search->getMatch();
+			$this->handleArticleMatchTracking( $searchConfig );
+			$search->search();
 		}
 		
 		$this->setPageTitle( $searchConfig );
@@ -138,8 +148,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function getPages() {
 		$this->wg->AllowMemcacheWrites = false;
 		$indexer = new Wikia\Search\Indexer();
-		$this->setData( $indexer->getPages( explode( '|', $this->getVal ) ) );
-		$this->setFormat( 'json' );
+		$this->getResponse()->setData( $indexer->getPages( explode( '|', $this->getVal( 'ids' ) ) ) );
+		$this->getResponse()->setFormat( 'json' );
 	}
 
 	/**
@@ -201,19 +211,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * Called in index action.
 	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
-	 * @see    WikiaSearchControllerTest::testArticleMatchTracking
 	 * @param  Wikia\Search\Config $searchConfig
-	 * @return boolean true (if not routed to search match page)
+	 * @return boolean true if on page 1 and not routed, false if not on page 1 
 	 */
-	protected function handleArticleMatchTracking( Wikia\Search\Config $searchConfig, Track $track ) {
+	protected function handleArticleMatchTracking( Wikia\Search\Config $searchConfig ) {
+		if ( $searchConfig->getPage() != 1 ) {
+			return false;
+		}
 		$title = Title::newFromText( $searchConfig->getOriginalQuery() );
-
+		$track = new Track();
 		if ( $searchConfig->hasArticleMatch() && $this->getVal('fulltext', '0') === '0') {
 
 		    $this->wf->RunHooks( 'SpecialSearchIsgomatch', array( $title, $searchConfig->getOriginalQuery() ) );
 
 		    $track->event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
-		    $this->response->redirect(  );
+		    $this->response->redirect( $title->getFullUrl() );
 		}
 		else if ( $searchConfig->hasArticlematch() ) {
 		    $track->event( 'search_start_match', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
@@ -259,18 +271,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * Called in index action to manipulate the view based on the user's skin
-	 * @see    WikiaSearchControllerTest::testSkinSettings
-	 * @param  SkinTemplate $skin
 	 * @return boolean true
 	 */
-	protected function handleSkinSettings( $skin ) {
-
+	protected function handleSkinSettings() {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
 		$this->wg->SuppressRail = true;
 		if ($this->isCorporateWiki() ) {
 			OasisController::addBodyClass('inter-wiki-search');
 		}
-		
+		$skin = $this->wg->User->getSkin();
 		if ( $skin instanceof SkinMonoBook ) {
 		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
 		}
