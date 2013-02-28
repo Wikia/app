@@ -966,26 +966,30 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	 * @covers \Wikia\Search\MediaWikiInterface::getFileForPageId
 	 */
 	public function testGetFileForPageId() {
-		$interface = $this->interface->setMethods( array( 'getTitleStringFromPageId' ) )->getMock();
+		$interface = $this->interface->setMethods( array( 'getTitleFromPageId' ) )->getMock();
 		$mockFile = $this->getMockBuilder( '\File' )
 		                 ->disableOriginalConstructor()
 		                 ->getMock();
 		
 		$mockWrapper = $this->getMockBuilder( '\WikiaFunctionWrapper' )
 		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'findFile' ) )
+		                    ->setMethods( array( 'FindFile' ) )
 		                    ->getMock();
-		$titleString = 'Foo.jpg';
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
 		$interface
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getTitleStringFromPageId' )
+		    ->method ( 'getTitleFromPageId' )
 		    ->with   ( $this->pageId )
-		    ->will   ( $this->returnValue( $titleString ) )
+		    ->will   ( $this->returnValue( $mockTitle ) )
 		;
 		$mockWrapper
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'findFile' )
-		    ->with   ( $titleString )
+		    ->method ( 'FindFile' )
+		    ->with   ( $mockTitle )
 		    ->will   ( $this->returnValue( $mockFile ) )
 		;
 		$app = new ReflectionProperty( '\Wikia\Search\MediaWikiInterface', 'app' );
@@ -1290,12 +1294,4 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	public function testGetNamespaceIdForString() {
 		$this->assertEquals( NS_CATEGORY, MediaWikiInterface::getInstance()->getNamespaceIdForString( 'Category' ) );
 	}
-	
-	public function testReminder() {
-		$this->assertFalse(
-				true,
-				'Do tests for getFirstRevisionTimestampForPageId, lastforpageid, getformattedtimestamp, 
-				getArticleMatch, getNonCanonicalTitleString, getmediawikiformattedtimestamp, getGlobalForWiki, getnoncanonicalurlfrompageid'
-		);
-	} 
 }
