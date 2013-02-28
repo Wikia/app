@@ -24,7 +24,8 @@ describe("Querystring", function () {
 					this.state.push(data);
 				},
 				replaceState: function(data) {
-					this.state = [data];
+					this.state.pop();
+					this.state.push(data);
 				}
 			}
 		}, 
