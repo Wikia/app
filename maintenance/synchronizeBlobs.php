@@ -73,8 +73,7 @@ class SynchronizeBlobs extends Maintenance {
 		unset($rows);
 	}
 
-	function filterBlobs($cluster, &$ids)
-	{
+	function filterBlobs($cluster, &$ids)	{
 		$dbw = $this->store->getMaster( $cluster );
 		if (!$dbw) throw new Exception("Could not get database for cluster $cluster");
 		$table = $this->store->getTable( $dbw );
