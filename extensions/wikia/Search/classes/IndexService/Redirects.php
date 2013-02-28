@@ -5,6 +5,7 @@
  *
  */
 namespace Wikia\Search\IndexService;
+use Wikia\Search\Utilities;
 /**
  * Reports on redirect titles for a given page
  * @author relwell
@@ -18,7 +19,7 @@ class Redirects extends AbstractService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
-		$key = $this->interface->getGlobal( 'AppStripsHtml' ) ? \WikiaSearch::field( 'redirect_titles' ) : 'redirect_titles';
+		$key = $this->interface->getGlobal( 'AppStripsHtml' ) ? Utilities::field( 'redirect_titles' ) : 'redirect_titles';
 		$result = array( $key => $this->interface->getRedirectTitlesForPageId( $this->currentPageId ) );
 		wfProfileOut(__METHOD__);
 		return $result;

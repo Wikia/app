@@ -4,6 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\IndexService;
+use Wikia\Search\Utilities;
 /**
  * This is intended to provide core article content
  * @author relwell
@@ -41,10 +42,10 @@ class DefaultContent extends AbstractService
 
 		if ( $this->interface->getGlobal( 'AppStripsHtml' ) ) {
 			$result = $this->prepValuesFromHtml( $html );
-			$titleKey = \WikiaSearch::field( 'title' );
-    		$wikiTitleKey = \WikiaSearch::field( 'wikititle' );
-    		$categoriesKey = \WikiaSearch::field( 'categories' );
-    		$headingsKey = \WikiaSearch::field( 'headings' );
+			$titleKey = Utilities::field( 'title' );
+    		$wikiTitleKey = Utilities::field( 'wikititle' );
+    		$categoriesKey = Utilities::field( 'categories' );
+    		$headingsKey = Utilities::field( 'headings' );
 		} else {
 			// backwards compatibility
 			$result = array( 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
@@ -154,7 +155,7 @@ class DefaultContent extends AbstractService
 			$result['words'] = substr_count( $plaintext, ' ' );
 		}
 
-		$result[\WikiaSearch::field( 'html' )] = $plaintext;
+		$result[Utilities::field( 'html' )] = $plaintext;
 
 		wfProfileOut(__METHOD__);
 		return $result;

@@ -9,26 +9,26 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	);
 
 	/**
-	 * @covers WikiaSearchResult::getCityId
+	 * @covers Wikia\Search\Result::getCityId
 	 */
 	public function testGetCityId() {
 
-		$result = F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
+		$result = F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
 
 		$this->assertEquals(
 				$this->defaultFields['wid'],
 				$result->getCityId(),
-				'WikiaSearchResult::getCityId should return the value for the "wid" field as passed during construction.'
+				'Wikia\Search\Result::getCityId should return the value for the "wid" field as passed during construction.'
 		);
 	}
 
 	/**
-	 * @covers WikiaSearchResult::getText
-	 * @covers WikiaSearchResult::setText
+	 * @covers Wikia\Search\Result::getText
+	 * @covers Wikia\Search\Result::setText
 	 */
 	public function testTextFieldMethods() {
 
-		$result = F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
+		$result = F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
 
 		$this->assertEquals(
 				'',
@@ -41,21 +41,21 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$result,
 				$result->setText( $textFieldValue ),
-				'WikiaSearchResult::setText should provide a fluent interface.'
+				'Wikia\Search\Result::setText should provide a fluent interface.'
 		);
 
-		$method = new ReflectionMethod( 'WikiaSearchResult', 'fixSnippeting' );
+		$method = new ReflectionMethod( 'Wikia\Search\Result', 'fixSnippeting' );
 		$method->setAccessible( true );
 		$this->assertEquals(
 				$method->invoke( $result, $textFieldValue, true ),
 				$result->getText(),
-				'The text field should be stored after being filtered through WikiaSearchResult::fixSnippeting.'
+				'The text field should be stored after being filtered through Wikia\Search\Result::fixSnippeting.'
 		);
 	}
 
 	/**
-	 * @covers WikiaSearchResult::getTitle
-	 * @covers WikiaSearchResult::setTitle
+	 * @covers Wikia\Search\Result::getTitle
+	 * @covers Wikia\Search\Result::setTitle
 	 */
 	public function testTitleFieldMethods() {
 
@@ -64,9 +64,9 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 
 		$fieldsCopy = $this->defaultFields;
 		unset($fieldsCopy['title']);
-		unset($fieldsCopy[WikiaSearch::field('title')]);
+		unset($fieldsCopy[Wikia\Search\Utilities::field('title')]);
 
-		$result = F::build( 'WikiaSearchResult', array( $fieldsCopy ) );
+		$result = F::build( 'Wikia\Search\Result', array( $fieldsCopy ) );
 
 		$this->assertEquals(
 				'',
@@ -84,7 +84,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		);
 
 		$languageTitle							= 'LangFoo';
-		$result[WikiaSearch::field('title')]	= $languageTitle;
+		$result[Wikia\Search\Utilities::field('title')]	= $languageTitle;
 
 		$this->assertEquals(
 		        $languageTitle,
@@ -96,20 +96,20 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$result,
 				$result->setTitle( $languageTitleWithJunk ),
-				'WikiaSearchResult::setTitle should provide a fluent interface'
+				'Wikia\Search\Result::setTitle should provide a fluent interface'
 		);
 
-		$method = new ReflectionMethod( 'WikiaSearchResult', 'fixSnippeting' );
+		$method = new ReflectionMethod( 'Wikia\Search\Result', 'fixSnippeting' );
 		$method->setAccessible( true );
 		$this->assertEquals(
 				$method->invoke( $result, $languageTitleWithJunk ),
 				$result->getTitle(),
-				'A title set with WikiaSearch::setTitle() should be filtered with WikiaSearch::fixSnippeting before storage.'
+				'A title set with Wikia\Search\Result::setTitle() should be filtered with Wikia\Search\Utilities::fixSnippeting before storage.'
 		);
 
-		unset( $result[WikiaSearch::field( 'title' )] );
+		unset( $result[Wikia\Search\Utilities::field( 'title' )] );
 		unset( $result['title'] );
-		$result[WikiaSearch::field( 'title', 'en' )] = $languageTitle;
+		$result[Wikia\Search\Utilities::field( 'title', 'en' )] = $languageTitle;
 
 		$this->assertEquals(
 		        $languageTitle,
@@ -120,232 +120,161 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchResult::getUrl
-	 * @covers WikiaSearchResult::setUrl
-	 * @covers WikiaSearchResult::getTextUrl
+	 * @covers Wikia\Search\Result::getUrl
+	 * @covers Wikia\Search\Result::setUrl
+	 * @covers Wikia\Search\Result::getTextUrl
 	 */
 	public function testUrlMethods() {
 
-		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
+		$result		= F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
 		$urlNormal	= 'http://www.willcaltrainsucktoday.com/Fake:Will_Caltrain_Suck_Today?';
 		$urlEncoded	= 'http://www.willcaltrainsucktoday.com/Fake:Will_Caltrain_Suck_Today' . urlencode('?');
 
 		$this->assertEquals(
 				'',
 				$result->getUrl(),
-				'WikiaSearchResult::getUrl should return an empty string if the url field has not been set.'
+				'Wikia\Search\Result::getUrl should return an empty string if the url field has not been set.'
 		);
 		$this->assertEquals(
 				$result,
 				$result->setUrl( $urlEncoded ),
-				'WikiaSearchResult::setUrl should provide a fluent interface.'
+				'Wikia\Search\Result::setUrl should provide a fluent interface.'
 		);
 		$this->assertEquals(
 				$urlNormal,
 				$result->getTextUrl(),
-				'WikiaSearchResult::getTextUrl() should provide a user-readable version of the URL.'
+				'Wikia\Search\Result::getTextUrl() should provide a user-readable version of the URL.'
 		);
 		$this->assertEquals(
 				$urlEncoded,
 				$result->getUrl(),
-				'WikiaSearchResult::getUrl should return exactly what was stored in WikiaSearchResult::setUrl'
+				'Wikia\Search\Result::getUrl should return exactly what was stored in Wikia\Search\Result::setUrl'
 		);
 	}
 
 	/**
-	 * @covers WikiaSearchResult::setVar
-	 * @covers WikiaSearchResult::getVar
-	 * @covers WikiaSearchResult::getVars
+	 * @covers Wikia\Search\Result::setVar
+	 * @covers Wikia\Search\Result::getVar
+	 * @covers Wikia\Search\Result::getVars
 	 */
 	public function testVarMethods() {
 
-		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
+		$result		= F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
 
 		$this->assertEquals(
 				$this->defaultFields,
 				$result->getVars(),
-				'WikiaSearchResult::getVars should return the protected $_fields array.'
+				'Wikia\Search\Result::getVars should return the protected $_fields array.'
 		);
 		$this->assertEquals(
 				$this->defaultFields['wid'],
 				$result->getVar( 'wid' ),
-				'WikiaSearchResult::getVar should return any values already set in the result fields.'
+				'Wikia\Search\Result::getVar should return any values already set in the result fields.'
 		);
 		$this->assertNull(
 				$result->getVar( 'NonExistentField' ),
-				'Querying for nonexistent fields without a second parameter passed should return null in WikiaSearchResult::getVar.'
+				'Querying for nonexistent fields without a second parameter passed should return null in Wikia\Search\Result::getVar.'
 		);
 		$this->assertEquals(
 				'TestDefault',
 				$result->getVar( 'NonExistentField', 'TestDefault' ),
-				'WikiaSearchResult::getVar should accommodate a flexible default value as the second parameter.'
+				'Wikia\Search\Result::getVar should accommodate a flexible default value as the second parameter.'
 		);
 		$this->assertEquals(
 				$result,
 				$result->setVar( 'foo', 'bar' ),
-				'WikiaSearchResult::setVar should provide a fluent interface.'
+				'Wikia\Search\Result::setVar should provide a fluent interface.'
 		);
 		$this->assertEquals(
 				$result['foo'],
 				$result->getVar( 'foo' ),
-				'WikiaSearchResult::setVar should store a value as a field, accessible by array methods or getVar().'
+				'Wikia\Search\Result::setVar should store a value as a field, accessible by array methods or getVar().'
 		);
 	}
 
 	/**
-	 * @covers WikiaSearchResult::fixSnippeting
+	 * @covers Wikia\Search\Result::fixSnippeting
 	 */
 	public function testFixSnippeting() {
 
-		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
-		$method		= new ReflectionMethod( 'WikiaSearchResult', 'fixSnippeting' );
+		$result		= F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
+		$method		= new ReflectionMethod( 'Wikia\Search\Result', 'fixSnippeting' );
 		$method->setAccessible( true );
 
 		$text = '�foo';
 		$this->assertEquals(
 				'foo',
 				$method->invoke( $result, $text ),
-				'WikiaSearchResult::fixSnippeting should remove bytecode junk.'
+				'Wikia\Search\Result::fixSnippeting should remove bytecode junk.'
 		);
 
 		$text = 'foo &hellip;';
 		$this->assertEquals(
 		        'foo',
 		        $method->invoke( $result, $text ),
-		        'WikiaSearchResult::fixSnippeting should remove string-final ellipses.'
+		        'Wikia\Search\Result::fixSnippeting should remove string-final ellipses.'
 		);
 		$text = 'foo&hellip;';
 		$this->assertEquals(
 		        'foo',
 		        $method->invoke( $result, $text ),
-		        'WikiaSearchResult::fixSnippeting should remove string-final ellipses.'
+		        'Wikia\Search\Result::fixSnippeting should remove string-final ellipses.'
 		);
 		$text = 'foo...';
 		$this->assertEquals(
 		        'foo',
 		        $method->invoke( $result, $text ),
-		        'WikiaSearchResult::fixSnippeting should remove string-final ellipses.'
+		        'Wikia\Search\Result::fixSnippeting should remove string-final ellipses.'
 		);
 		$text = 'foo ...';
 		$this->assertEquals(
 		        'foo',
 		        $method->invoke( $result, $text ),
-		        'WikiaSearchResult::fixSnippeting should remove string-final ellipses.'
+		        'Wikia\Search\Result::fixSnippeting should remove string-final ellipses.'
 		);
 		$text = 'foo..';
 		$this->assertEquals(
 		        'foo',
 		        $method->invoke( $result, $text ),
-		        'WikiaSearchResult::fixSnippeting should remove multiple string-final periods.'
+		        'Wikia\Search\Result::fixSnippeting should remove multiple string-final periods.'
 		);
 		$text = 'foo                     ';
 		$this->assertEquals(
 		        'foo',
 		        $method->invoke( $result, $text ),
-		        'WikiaSearchResult::fixSnippeting should remove string-final whitespace.'
+		        'Wikia\Search\Result::fixSnippeting should remove string-final whitespace.'
 		);
 		$text = "foo</span>'s";
 		$this->assertEquals(
 		        "foo's</span>",
 		        $method->invoke( $result, $text ),
-		        'WikiaSearchResult::fixSnippeting should fix searchmatch spans that orphan apostrophes.'
+		        'Wikia\Search\Result::fixSnippeting should fix searchmatch spans that orphan apostrophes.'
 		);
 		$text = '!,?. foo';
 		$this->assertEquals(
 		        'foo',
 		        $method->invoke( $result, $text ),
-		        'WikiaSearchResult::fixSnippeting should remove string-initial punctuation.'
+		        'Wikia\Search\Result::fixSnippeting should remove string-initial punctuation.'
 		);
 		$text = 'span class="searchmatch"> foo';
 		$this->assertEquals(
 		        '<span class="searchmatch"> foo',
 		        $method->invoke( $result, $text ),
-		        'WikiaSearchResult::fixSnippeting should repair broken string-initial span tags.'
+		        'Wikia\Search\Result::fixSnippeting should repair broken string-initial span tags.'
 		);
 		$text = 'foo</span>!!!!';
 		$this->assertEquals(
 		        'foo</span>&hellip;',
 		        $method->invoke( $result, $text, true ),
-		        'WikiaSearchResult::fixSnippeting should append an ellipses to the end of a string if second parameter passed as true. Broken span tags should be repaired, as well.'
+		        'Wikia\Search\Result::fixSnippeting should append an ellipses to the end of a string if second parameter passed as true. Broken span tags should be repaired, as well.'
 		);
 	}
 
 	/**
-	 * @covers WikiaSearchResult::getTitleObject
-	 */
-	public function testGetTitleObject() {
-		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
-		$titleMock	= $this->getMock( 'Title', array( 'MakeTitle' ) );
-
-		$this->assertNull(
-				$result->getTitleObject(),
-				'A result object without a title value should return null when calling getTitleObject.'
-		);
-
-		$result['title']	= 'Foo';
-		$result['ns']		= 0;
-
-		$titleMock
-			->expects	( $this->any() )
-			->method	( 'MakeTitle' )
-			->will		( $this->returnValue( $titleMock ) )
-		;
-
-		$this->mockClass( 'Title', $titleMock );
-		$this->mockApp();
-
-		$this->assertEquals(
-				$titleMock,
-				$result->getTitleObject(),
-				'WikiaSearchResult::getTitleObject() should return a title object based on namespace and title field values.'
-		);
-	}
-
-	/**
-	 * @covers WikiaSearchResult::getThumbnail
-	 * Looks like this is a victim of MediaWiki's habit of declaring multiple classes in a single file?
-	 */
-	public function testGetThumbnail() {
-		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
-		$titleMock	= $this->getMock( 'Title' );
-		$mockImage	= $this->getMockBuilder( 'File' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'transform' ) )
-							->getMock();
-		$mockThumb	= $this->getMockBuilder( 'ThumbnailImage' )
-							->disableOriginalConstructor()
-							->getMock();
-		$mockMTO	= $this->getMockBuilder( 'MediaTransformOutput' )
-							->disableOriginalConstructor();
-
-		$result['title']	= 'File:Foo.jpg';
-		$result['ns']		= NS_FILE;
-
-		$mockImage
-			->expects	( $this->any() )
-			->method	( 'transform' )
-			->will		( $this->returnValue( $mockThumb ) )
-		;
-
-		$this->mockGlobalFunction( 'findFile', $mockImage, 1, array( $this->equalTo($titleMock) ) );
-		$this->mockClass( 'Title', $titleMock );
-		$this->mockClass( 'MediaTransformOutput', $mockMTO );
-		$this->mockClass( 'File', $mockImage );
-		$this->mockClass( 'ThumbnailImage', $mockThumb);
-		$this->mockApp();
-
-		$this->assertInstanceOf(
-				'ThumbnailImage',
-				$result->getThumbnail(),
-				'The result of WikiaSearch::getThumbnail should be an instance of MediaTransformOutput if the thumbnail exists.'
-		);
-	}
-
-	/**
-	 * @covers WikiaSearchResult::toArray
+	 * @covers Wikia\Search\Result::toArray
 	 */
 	public function testToArray() {
-		$result = F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
+		$result = F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
 		$array  = $result->toArray( array( 'wid' ) );
 		$this->assertArrayHasKey(
 				'wid',
@@ -358,29 +287,29 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	}
 
 	/**
-	 * @covers WikiaSearchResult::replaceUnusualEscapes
-	 * @covers WikiaSearchResult::replaceUnusualEscapesCallback
+	 * @covers Wikia\Search\Result::replaceUnusualEscapes
+	 * @covers Wikia\Search\Result::replaceUnusualEscapesCallback
 	 */
 	public function testReplaceUnusualEscapes() {
 		$this->assertEquals(
 				'%5Bfoo+bar%25_%3F!',
-				WikiaSearchResult::replaceUnusualEscapes( urlencode( '[foo bar%_?!' ) )
+				Wikia\Search\Result::replaceUnusualEscapes( urlencode( '[foo bar%_?!' ) )
 		);
 
 		$this->assertEquals(
 				'100%25+Completion',
-				WikiaSearchResult::replaceUnusualEscapes( urlencode( '100% Completion' ) )
+				Wikia\Search\Result::replaceUnusualEscapes( urlencode( '100% Completion' ) )
 		);
 
 	}
 	
 	/**
 	 * bugid: 69027
-	 * @covers WikiaSearchResult::getTitleObject
+	 * @covers Wikia\Search\Result::getTitleObject
 	 */
 	public function testGetTitleObjectForEmptyButNonNullTitles() {
 		
-		$result = $this->getMockBuilder( 'WikiaSearchResult' )
+		$result = $this->getMockBuilder( 'Wikia\Search\Result' )
 						->setMethods( array( 'getTitle' ) )
 						->getMock();
 		
@@ -392,14 +321,14 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		
 		$titleObjectPlaceholder = (object) array( 'foo' => 'bar' );
 		
-		$titleObject = new ReflectionProperty( 'WikiaSearchResult', 'titleObject' );
+		$titleObject = new ReflectionProperty( 'Wikia\Search\Result', 'titleObject' );
 		$titleObject->setAccessible( true );
 		$titleObject->setValue( $result, $titleObjectPlaceholder );
 		
 		$this->assertEquals(
 				$titleObjectPlaceholder,
 				$result->getTitleObject(),
-				'WikiaSearchResult::getTitleObject should return whatever value is presently set in the titleObject property if there is no title string available from WikiaSearchResult::getTitle'
+				'Wikia\Search\Result::getTitleObject should return whatever value is presently set in the titleObject property if there is no title string available from Wikia\Search\Result::getTitle'
 		);
 		
 		$titleObject->setValue( $result, null );
@@ -420,16 +349,16 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$mockTitle,
 				$result->getTitleObject(),
-				'WikiaSearchResult::getTitleObject should set the titleObject property if a title string can be found and a title object instantiated'
+				'Wikia\Search\Result::getTitleObject should set the titleObject property if a title string can be found and a title object instantiated'
 		);
 		
 	}
 
 	/**
-	 * @covers WikiaSearchResult::getVideoViews
+	 * @covers Wikia\Search\Result::getVideoViews
 	 */
 	public function testGetVideoViewsNotVideo() {
-		$result = $this->getMockBuilder( 'WikiaSearchResult' )
+		$result = $this->getMockBuilder( 'Wikia\Search\Result' )
 						->setMethods( array( 'getTitleObject', 'offsetGet' ) )
 						->getMock();
 		
@@ -459,15 +388,15 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		
 		$this->assertEmpty(
 				$result->getVideoViews(),
-				'WikiaSearchResult::getVideoViews() should return an empty string if the file result is an not a video file'
+				'Wikia\Search\Result::getVideoViews() should return an empty string if the file result is an not a video file'
 		);
 	}
 	
     /**
-	 * @covers WikiaSearchResult::getVideoViews
+	 * @covers Wikia\Search\Result::getVideoViews
 	 */
 	public function testGetVideoViewsVideo() {
-		$result = $this->getMockBuilder( 'WikiaSearchResult' )
+		$result = $this->getMockBuilder( 'Wikia\Search\Result' )
 						->setMethods( array( 'getTitleObject', 'offsetGet' ) )
 						->getMock();
 		
@@ -516,7 +445,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				'25 views',
 				$result->getVideoViews(),
-				'WikiaSearchResult::getVideoViews() should return a translated string containing the value of the video views'
+				'Wikia\Search\Result::getVideoViews() should return a translated string containing the value of the video views'
 		);
 	}
 }

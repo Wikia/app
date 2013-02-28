@@ -57,7 +57,7 @@ abstract class AbstractService
 	/**
 	 * Used when we're only executing a single iteration
 	 * @param int $pageId
-	 * @return WikiaSearchIndexerAbstract
+	 * @return Wikia\Search\IndexService\AbstractService
 	 */
 	public function setPageId( $pageId ) {
 		$this->currentPageId = $pageId;
@@ -67,7 +67,7 @@ abstract class AbstractService
 	/**
 	 * Declares the page scope of the indexing service
 	 * @param array $pageIds
-	 * @return WikiaSearchIndexServiceAbstract
+	 * @return Wikia\Search\IndexService\AbstractService
 	 */
 	public function setPageIds( array $pageIds = array() ) {
 		$this->pageIds = $pageIds;
