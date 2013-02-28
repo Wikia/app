@@ -63,7 +63,6 @@
 								  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 								  'query' => $query,
 								  'isInterWiki' => $isInterWiki,
-								  'relevancyFunctionId' => $relevancyFunctionId
 								));
 							}
 							else {
@@ -73,7 +72,6 @@
 								  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 								  'query' => $query,
 								  'isInterWiki' => $isInterWiki,
-								  'relevancyFunctionId' => $relevancyFunctionId
 								));
 							}
 						?>
