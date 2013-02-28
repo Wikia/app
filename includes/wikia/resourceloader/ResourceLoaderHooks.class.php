@@ -305,26 +305,4 @@ class ResourceLoaderHooks {
 		return true;
 	}
 
-	/**
-	 * @param ResourceLoaderContext $context
-	 * @param $mtime string timestamp from module(s) calculated from filesystem
-	 * @param $maxage int UNIX timestamp for maxage
-	 * @param $smaxage int UNIX timestamp for smaxage
-	 * @return bool it's a hook
-	 */
-	public static function onResourceLoaderModifyMaxAge(ResourceLoaderContext $context, $mtime, &$maxage, &$smaxage) {
-		global $wgResourceLoaderMaxage;
-		$timestampFromRequest = strtotime($context->getVersion()); // version parameter from URL
-
-		// request wants to get module(s) newer than on those on server - set shorter caching period
-		if ($timestampFromRequest > $mtime) {
-			$maxage  = $wgResourceLoaderMaxage['unversioned']['client'];
-			$smaxage = $wgResourceLoaderMaxage['unversioned']['server'];
-
-			$modules = implode(',', $context->getModules());
-			Wikia::log(__METHOD__, false, "shorter TTL set for {$modules}", true);
-		}
-
-		return true;
-	}
 }
