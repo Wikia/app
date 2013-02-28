@@ -17,49 +17,170 @@
  *
  */
 
-// TODO: find a way to create unittests for this?
-
 require_once( dirname( __FILE__ ) . '/Maintenance.php' );
-require_once( dirname( __FILE__ ) . '../extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php'); // for BLOB fetcher
 
 class SynchronizeBlobs extends Maintenance {
-	var $context = null; // will this be needed?
+	var $wgFetchBlobApiURL = "http://community.wikia.com/api.php";
+	var $store = null;
+	var	$done = 0;
+	var	$downloaded = 0;
+	var $toDownload = 0;
+	var $total = 0;
+	var $startTime = 0;
+	var $lastProgressTime = 0;
+	var $clusters = array();
+	var $progressPeriod;
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Synchronize blobs for latest revisions of pages from SJC to POZ (for devboxes)";
-	}
-
-	function latestRevisions() {
-		$db = $this->getDB();
-		// todo: get rows from join of page, revision, and perhaps text tables
-		return array();
-	}
-
-	function renderArticle(&$article) {
-		$artictle->fetchContent(); // todo: go deeper
-	}
-
-	function &loadArticle(&$revision_row) {
-		$title = Title::newFromRow($revision_row);
-		$article = Article::newFromTitle($title, $this->context);
-		return $article;
+		$this->addArg("progress", "How many seconds between each progress report (0 to disable). 30 is default", false);
 	}
 
 	public function execute() {
-		$db = wfGetDB( DB_SLAVE );
-		$this->setDB($db);
-		$latest = latestRevisions();
-		$total = count($latest);
-		$done = 0;
-		foreach ($latest as $revision_row) {
-			$article = loadArticle($revision_row);
-			$this->renderArticle($article);
-			$done++;
-			// TODO: hopefully, show progress and ETA
+		$isPoznanDevbox = ( F::app()->wg->DevelEnvironment === true && F::app()->wg->WikiaDatacenter == "poz" );
+		if (!$isPoznanDevbox) throw new Exception("This should be run within Poznan devel environment");
+		$this->progressPeriod = $this->getArg(0, 30);
+		$this->output("Getting ids of latest revisions.\n");
+		$this->fetchLatestRevisions();
+		$this->store = new ExternalStoreDB();
+		$this->output("Creating list of blobs to download.\n");
+		foreach ($this->clusters as $cluster => $ids) $this->filterBlobs($cluster, $ids);
+		$this->output("Downloading ".$this->toDownload." out of total of ".$this->total." blobs.\n");
+		$this->startTime = time();
+		foreach ($this->clusters as $cluster => $ids) $this->fetchAndStoreBlobs($cluster, $ids);
+		$this->showProgress();
+	}
+
+
+	function fetchLatestRevisions() {
+		$db = $this->getDB(DB_SLAVE);
+		$rows = $db->query("SELECT old_id, old_flags, old_text FROM page
+											  INNER JOIN revision ON page_id=rev_page AND page_latest=rev_id
+												INNER JOIN text ON rev_text_id=old_id",
+											"SynchronizeBlobs::latestRevision");
+		foreach ($rows as $row) {
+			if ($row->old_flags=="utf-8,gzip,external") { // i know what to do with it
+				if (preg_match("/DB:\/\/([^\/]+)\/([0-9]+)/", $row->old_text, $url)) {
+					$this->clusters[$url[1]][] = $url[2];
+				}
+			} else {
+				$this->output("Unexpected row: $row");
+			}
+		}
+		unset($rows);
+	}
+
+	function filterBlobs($cluster, &$ids)
+	{
+		$dbw = $this->store->getMaster( $cluster );
+		if (!$dbw) throw new Exception("Could not get database for cluster $cluster");
+		$table = $this->store->getTable( $dbw );
+		sort($ids);
+		$count = count($ids);
+		$this->output("Filtering $count blobs for cluster $cluster ");
+		$this->total += $count;
+		$skip = array();
+		$batch_size = 64;
+		$offset = 0;
+		while ($offset < $count) {
+			$subset = array_slice($ids, $offset, $batch_size);
+			$offset += $batch_size;
+			$rows = $dbw->select($table, "blob_id", array("blob_id" => $subset));
+			foreach ($rows as $row) $skip[intval($row->blob_id)] = true;
+		}
+		$needs_work = array();
+		foreach ($ids as $id) if (!array_key_exists($id, $skip)) $needs_work[] = $id; // array_diff did not work correctly
+		$count = count($needs_work);
+		$this->toDownload += $count;
+		$this->output("down to $count\n");
+		if ($count==0) {
+			unset($this->clusters[$cluster]);
+		} else {
+			$this->clusters[$cluster] = $needs_work;
 		}
 	}
+
+	function fetchAndStoreBlobs($cluster, &$ids) {
+		global $wgTheSchwartzSecretToken;
+		$dbw = $this->store->getMaster( $cluster );
+		if (!$dbw) throw new Exception("Could not get database for cluster $cluster");
+		$table = $this->store->getTable( $dbw );
+		$this->output("Downloading ".count($ids). " blobs for cluster $cluster.\n");
+
+		foreach ($ids as $id) {
+			$url = sprintf( "%s?action=fetchblob&store=%s&id=%d&token=%s&format=json", $this->wgFetchBlobApiURL,	$cluster,	$id,$wgTheSchwartzSecretToken	);
+			$response = json_decode( Http::get( $url, "default", array( 'noProxy' => true ) ) );
+
+			if( isset( $response->fetchblob ) ) {
+				$blob = isset( $response->fetchblob->blob ) ? $response->fetchblob->blob : false;
+				$hash = isset( $response->fetchblob->hash ) ? $response->fetchblob->hash : null;
+				if( $blob ) {
+					// pack to binary
+					$blob = pack( "H*", $blob );
+					$hash = md5( $blob );
+					// check md5 sum for binary
+					if(  $hash == $response->fetchblob->hash ) {
+						$ret = $blob;
+						$insert_ok = $dbw->insert($table,	array( "blob_id" => $id, "blob_text" => $ret ),	__METHOD__ );
+																			//array('IGNORE'));
+						if (!$insert_ok) print $dbw->lastError();
+						$dbw->commit();
+						$this->downloaded++;
+					}	else {
+						$this->output("md5 sum not match, $hash != $response->fetchblob->hash\n");
+					}
+				}
+			}	else {
+				$this->output("malformed response from API call\n" );
+			}
+			$this->done++;
+			$this->showProgress();
+		}
+	}
+
+	function getNiceDuration($durationInSeconds) {
+		$duration = '';
+		$days = floor($durationInSeconds / 86400);
+		$durationInSeconds -= $days * 86400;
+		$hours = floor($durationInSeconds / 3600);
+		$durationInSeconds -= $hours * 3600;
+		$minutes = floor($durationInSeconds / 60);
+		$seconds = floor($durationInSeconds - $minutes * 60);
+
+		if($days > 0) {
+			$duration .= $days . ' day' . ($days>1?"s":"");
+		}
+		if($hours > 0) {
+			$duration .= ' ' . $hours . ' hour' . ($hours>1?"s":"");
+		}
+		if($minutes > 0) {
+			$duration .= ' ' . $minutes . ' minute' . ($minutes>1?"s":"");
+		}
+		$duration .= ' ' . $seconds . ' second' . ($seconds!=1?"s":"");
+		return $duration;
+	}
+
+	public function getETA() {
+		$elapsed = time() - $this->startTime;
+		if ($elapsed < 1) return " unknown";
+		$speed = (float)($this->done) / (float)($elapsed);
+		$left = ($this->toDownload - $this->done) / $speed;
+		return $this->getNiceDuration($left);
+	}
+
+	public function showProgress() {
+		if ($this->progressPeriod == 0) return;
+		if ($this->lastProgressTime) {
+			if ($this->lastProgressTime + $this->progressPeriod > time()) return;
+			$this->output("Processeed ".$this->done." (".($this->downloaded==$this->done?"all":$this->downloaded)." successfully) out of ".$this->toDownload. " to download in".
+										$this->getNiceDuration(time() - $this->startTime). ", ".
+										($this->done < $this->toDownload ? "remaining time:".$this->getETA() : "finished")."\n");
+		}
+		$this->lastProgressTime = time();
+	}
 }
+
 
 $maintClass = "SynchronizeBlobs";
 require_once( RUN_MAINTENANCE_IF_MAIN );
