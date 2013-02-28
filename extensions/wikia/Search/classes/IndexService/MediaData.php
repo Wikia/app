@@ -12,7 +12,7 @@ class MediaData extends AbstractService
 {
 	/**
 	 * Extracts data from images and videos
-	 * @see WikiaSearchIndexServiceAbstract::execute()
+	 * @see Wikia\Search\IndexService\AbstractService::execute()
 	 * @return array
 	 */
 	public function execute() {
