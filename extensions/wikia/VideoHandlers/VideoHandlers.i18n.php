@@ -52,6 +52,7 @@ $messages['en'] = array(
 	'video-page-see-less-info' => 'Show less info',
 	'video-page-description-heading' => 'Description',
 	'video-page-description-zero-state' => 'There is no description for this video yet.',
+	'video-page-file-list-pagination' => '$1 of $2',
 );
 
 /** Message documentation (Message documentation) */
@@ -90,6 +91,7 @@ $messages['qqq'] = array(
 	'video-page-see-less-info' => 'Label to collapse UI that shows more info',
 	'video-page-description-heading' => 'Description heading',
 	'video-page-description-zero-state' => 'Page content that states there is no description for this',
+	'video-page-file-list-pagination' => 'Pagination for file listing.  e.g. 1 of 2.  $1 is current page, $2 is total pages',
 );
 
 /** Afrikaans (Afrikaans)
