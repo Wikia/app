@@ -9,7 +9,7 @@ class WikiaHubsV2SuggestModel extends WikiaModel {
 			'inputs' => array(
 				array(
 					'class' => 'articleurl',
-					'type' => 'text',
+					'type' => 'url',
 					'name' => 'articleurl',
 					'isRequired' => true,
 					'label' => wfMsg('wikiahubs-suggest-article-what-article'),
@@ -33,7 +33,7 @@ class WikiaHubsV2SuggestModel extends WikiaModel {
 					'class' => 'submit-button',
 					'type' => 'custom',
 					'output' => '<button class="wikia-button secondary cancel" >'.wfMsg('wikiahubs-button-cancel').'</button>'.
-						'<button class="wikia-button submit" disabled="disabled" >'.wfMsg('wikiahubs-suggest-article-submit-button').'</button>',
+						'<button type="submit" class="wikia-button submit" disabled="disabled" >'.wfMsg('wikiahubs-suggest-article-submit-button').'</button>',
 				),
 			),
 		);

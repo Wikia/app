@@ -28,7 +28,6 @@ var SuggestModalWikiaHubsV2 = {
 	},
 	
 	suggestArticle: function () {
-		// TODO change this method to send data to internal analytics
 		$.nirvana.sendRequest({
 			controller: 'WikiaHubsV2SuggestController',
 			method: 'suggestArticle',
@@ -36,15 +35,32 @@ var SuggestModalWikiaHubsV2 = {
 			type: 'get',
 			callback: function (html) {
 				var modal = $(html).makeModal({width: 490, onClose: SuggestModalWikiaHubsV2.closeModal});
-				var wikiaForm = new WikiaForm(modal.find('form'));
+				var form = modal.find('form');
+				var wikiaForm = new WikiaForm(form);
 				
 				// show submit button
 				SuggestModalWikiaHubsV2.showSubmit(modal);
-				
-				modal.find('button.submit').click(function (e) {
+
+				form.submit(function (e) {
 					e.preventDefault();
-					var articleurl = modal.find('input[name=articleurl]').val();
+					var articleUrl = modal.find('input[name=articleurl]').val();
 					var reason = modal.find('textarea[name=reason]').val();
+
+					Wikia.Tracker.track({
+						action: Wikia.Tracker.ACTIONS.SUBMIT,
+						browserEvent: e,
+						category: 'SuggestArticle',
+						label: 'suggestSubmit',
+						trackingMethod: 'internal',
+						value: null
+					}, {
+						lang: wgContentLanguage,
+						userName: window.wgUserName,
+						articleUrl: articleUrl,
+						reason: reason,
+						pageName: window.wgPageName
+					});
+
 					$().log('suggestArticle modal submit');
 					SuggestModalWikiaHubsV2.closeModal(modal);
 				});
