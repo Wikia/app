@@ -1,4 +1,5 @@
-<?
+<?php
+
 class MarketingToolboxModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 	/**
 	 * (non-PHPdoc)
@@ -20,7 +21,6 @@ class MarketingToolboxModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 		);
 
 		$toolboxModelMock = $this->getMock('MarketingToolboxModel', array('getVideoData'));
-
 		$toolboxModelMock->expects($this->once())
 			->method('getVideoData')
 			->with($this->equalTo($inputData['video']))
@@ -45,7 +45,6 @@ class MarketingToolboxModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 	}
 
 	public function getStructuredDataDataProvider() {
-
 		$out = array();
 
 		$inputData = array(
@@ -84,6 +83,7 @@ class MarketingToolboxModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 		$out[] = array($inputData, $expectedData, $mockedVideoData);
 
 		$inputData = array(
+			'sponsoredImage' => null,
 			'video' => 'video video',
 			'header' => 'Header',
 			'articleUrl' => 'http://example.wikia.com/TestUrl',

@@ -33,6 +33,8 @@ $app->registerClass('WikiaHubsV2Model', $dir . 'models/WikiaHubsV2Model.class.ph
 
 $app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
 
+$app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
+
 $app->registerClass('WikiaHubsV2Module', $dir . 'models/modules/WikiaHubsV2Module.class.php');
 $app->registerClass('WikiaHubsV2PulseModule', $dir . 'models/modules/WikiaHubsV2PulseModule.class.php');
 $app->registerClass('WikiaHubsV2SliderModule', $dir . 'models/modules/WikiaHubsV2SliderModule.class.php');

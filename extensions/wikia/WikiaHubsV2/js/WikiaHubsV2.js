@@ -60,6 +60,10 @@ var WikiaHubs = {
 			if (node.hasClass('previous')) {
 				WikiaHubs.trackClick('PopularVideos', Wikia.Tracker.ACTIONS.PAGINATE, 'previous', null, {lang: lang}, e);
 			}
+		} else if (node.closest('.wikiahubs-popular-videos').length > 0) {    // popular videos
+			if (node.hasClass('previous')) {
+				WikiaHubs.trackClick('PopularVideos', Wikia.Tracker.ACTIONS.PAGINATE, 'previous', null, {lang: lang}, e);
+			}
 			else if (node.hasClass('next')) {
 				WikiaHubs.trackClick('PopularVideos', Wikia.Tracker.ACTIONS.PAGINATE, 'next', null, {lang: lang}, e);
 			}
