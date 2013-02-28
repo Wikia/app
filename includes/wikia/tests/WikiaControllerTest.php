@@ -31,18 +31,18 @@ class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 			array( false )
 		);
 	}
-	
+
 	/*
 	 * Test that the Controller response object is working properly for get/set/unset of a controller property
 	 */
 	public function testResponse() {
-		$controller = F::build('TestController');		
+		$controller = F::build('TestController');
 		$response = F::build('WikiaResponse', array('html'));
-		
+
 		// setResponse and getResponse
 		$controller->setResponse($response);
 		$this->assertEquals ($response, $controller->getResponse());
-		
+
 		// setVal and getVal
 		$controller->foo = 'foo';
 		$this->assertFalse (empty($controller->foo));
@@ -57,7 +57,7 @@ class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider redirectingDataProvider
 	 */
 	public function testRedirecting( $resetResponse ) {
-		$response = F::app()->sendRequest( 'Test', 'redirectTest', array( 'resetResponse' => $resetResponse ), false );
+		$response = F::app()->sendRequest( 'Test', 'forwardTest', array( 'resetResponse' => $resetResponse ), false );
 		$data = $response->getData();
 
 		$this->assertEquals( 'AnotherTestController', $data['controller'] );

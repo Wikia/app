@@ -446,18 +446,34 @@ class WikiaApp {
 
 	/**
 	 * register controller class
+	 * @param string $className Name of controller class
+	 * @param string $filePath Path to file containing class
+	 * @param array $options Array of routing options
+	 *
+	 * The dispatcher will check options for you before dispatching the request
+	 * Options contains an array of methods => conditions
+	 * This is used to invoke a different controller method depending on skin or global variable true/false
+	 * The dispatcher can also invoke a before/after method passing the same request/response object
+	 *
+	 * F::app()->registerController("FooController", "/path", array(
+	 * "performActionA" => array(
+	 *		"global" => "wgEnableNewFoo",
+	 *		"skin"=>"mobile"
+	 *	),
+	 *	"performActionB" => array(
+	 *		"skin" => "oasis",
+	 *		"before" => "calledBeforeActionB",
+	 *		"after" => "calledAfterActionB"
+	 *	),
+	 *	// default is "any skin"
+	 *
 	 */
 
 	public function registerController($className, $filePath, $options = null) {
 		// register the class with the autoloader
 		$this->registerClass($className, $filePath);
-
-		if ( is_array ($className)) {
-			foreach ( $className as $cls ) {
-				$this->wg->set('wgWikiaControllers', $className, $options);
-			}
-		} else {
-			$this->wg->set('wgWikiaControllers', $options);
+		if ( is_array( $options ) ) {
+			$this->getDispatcher()->addRouting($className, $options);
 		}
 	}
 
