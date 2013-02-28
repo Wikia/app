@@ -55,8 +55,100 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setResponseValuesFromConfig( $searchConfig );
 	}
 	
+	
+	
 	/**
-	 * Passes the appropriate values to the config object from the request.
+	 * Deprecated functionality for indexing.
+	 */
+	public function getPages() {
+		$this->wg->AllowMemcacheWrites = false;
+		$indexer = new Wikia\Search\Indexer();
+		$this->getResponse()->setData( $indexer->getPages( explode( '|', $this->getVal( 'ids' ) ) ) );
+		$this->getResponse()->setFormat( 'json' );
+	}
+
+	/**
+	 * Called by a view script to generate the advanced tab link in search.
+	 */
+	public function advancedTabLink() {
+	    $term = $this->getVal('term');
+	    $namespaces = $this->getVal('namespaces');
+	    $label = $this->getVal('label');
+	    $tooltip = $this->getVal('tooltip');
+	    $params = $this->getVal('params');
+	    $redirs = $this->getVal('redirs');
+
+	    $opt = $params;
+	    foreach( $namespaces as $n ) {
+	        $opt['ns' . $n] = 1;
+	    }
+
+	    $opt['redirs'] = !empty($redirs) ? 1 : 0;
+	    $stParams = array_merge( array( 'search' => $term ), $opt );
+
+	    $title = F::build('SpecialPage', array( 'WikiaSearch' ), 'getTitleFor');
+
+	    $this->setVal( 'class',     str_replace( ' ', '-', strtolower( $label ) ) );
+	    $this->setVal( 'href',		$title->getLocalURL( $stParams ) );
+	    $this->setVal( 'title',		$tooltip );
+	    $this->setVal( 'label',		$label );
+	    $this->setVal( 'tooltip',	$tooltip );
+	}
+	
+	/**
+	 * Delivers a JSON response for video searches
+	 */
+	public function videoSearch() {
+	    $searchConfig = new Wikia\Search\Config();
+	    $searchConfig
+	    	->setCityId			( $this->wg->CityId )
+	    	->setQuery			( $this->getVal('q') )
+	    	->setNamespaces		( array(NS_FILE) )
+	    	->setVideoSearch	( true )
+	    ;
+		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig ); 
+	    $results = $wikiaSearch->search();
+	    $this->getResponse()->setFormat( 'json' );
+	    $this->getResponse()->setData( $results->toNestedArray() );
+
+	}
+
+	/**
+	 * Controller Helper Methods
+	 *----------------------------------------------------------------------------------*/
+
+	/**
+	 * Called in index action.
+	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
+	 * @param  Wikia\Search\Config $searchConfig
+	 * @return boolean true if on page 1 and not routed, false if not on page 1 
+	 */
+	protected function handleArticleMatchTracking( Wikia\Search\Config $searchConfig ) {
+		if ( $searchConfig->getPage() != 1 ) {
+			return false;
+		}
+		$title = Title::newFromText( $searchConfig->getOriginalQuery() );
+		$track = new Track();
+		if ( $searchConfig->hasArticleMatch() && $this->getVal('fulltext', '0') === '0') {
+
+		    $this->wf->RunHooks( 'SpecialSearchIsgomatch', array( $title, $searchConfig->getOriginalQuery() ) );
+
+		    $track->event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+		    $this->response->redirect( $title->getFullUrl() );
+		}
+		else if ( $searchConfig->hasArticlematch() ) {
+		    $track->event( 'search_start_match', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+		} else {
+		    if ( $title !== null ) {
+		        $this->wf->RunHooks( 'SpecialSearchNogomatch', array( &$title ) );
+		    }
+		}
+
+		return true;
+	}
+	
+	/**
+	 * Passes the appropriate values to the config object from the request during index method.
 	 * @return \Wikia\Search\Config
 	 */
 	protected function getSearchConfigFromRequest() {
@@ -83,7 +175,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 	
 	/**
-	 * Sets values for the view to work with.
+	 * Sets values for the view to work with during index method.
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
@@ -137,99 +229,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 													array($this->wg->Sitename) )  );
 			}
 		}
-	}
-	
-	public function getPages() {
-		$this->wg->AllowMemcacheWrites = false;
-		$indexer = new Wikia\Search\Indexer();
-		$this->getResponse()->setData( $indexer->getPages( explode( '|', $this->getVal( 'ids' ) ) ) );
-		$this->getResponse()->setFormat( 'json' );
-	}
-
-	/**
-	 * Called by a view script to generate the advanced tab link in search.
-	 */
-	public function advancedTabLink() {
-	    $term = $this->getVal('term');
-	    $namespaces = $this->getVal('namespaces');
-	    $label = $this->getVal('label');
-	    $tooltip = $this->getVal('tooltip');
-	    $params = $this->getVal('params');
-	    $redirs = $this->getVal('redirs');
-
-	    $opt = $params;
-	    foreach( $namespaces as $n ) {
-	        $opt['ns' . $n] = 1;
-	    }
-
-	    $opt['redirs'] = !empty($redirs) ? 1 : 0;
-	    $stParams = array_merge( array( 'search' => $term ), $opt );
-
-	    $title = F::build('SpecialPage', array( 'WikiaSearch' ), 'getTitleFor');
-
-	    $this->setVal( 'class',     str_replace( ' ', '-', strtolower( $label ) ) );
-	    $this->setVal( 'href',		$title->getLocalURL( $stParams ) );
-	    $this->setVal( 'title',		$tooltip );
-	    $this->setVal( 'label',		$label );
-	    $this->setVal( 'tooltip',	$tooltip );
-	}
-	
-	/**
-	 * Delivers a JSON response for video searches
-	 */
-	public function videoSearch() {
-	    $searchConfig = new Wikia\Search\Config();
-	    $searchConfig
-	    	->setCityId			( $this->wg->cityId )
-	    	->setQuery			( $this->getVal('q') )
-	    	->setNamespaces		( array(NS_FILE) )
-	    	->setVideoSearch	( true )
-	    ;
-	    
-	    $dcParams = array(
-					'config' => $searchConfig,
-					);
-		$container = new Wikia\Search\QueryService\DependencyContainer( $dcParams );
-		$this->wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->get( $container ); 
-
-	    $this->wikiaSearch->search( $searchConfig );
-	    $this->getResponse()->setFormat( 'json' );
-	    $this->getResponse()->setData( ( $searchConfig->getResults() ) ? $searchConfig->getResults()->toNestedArray() : array() );
-
-	}
-
-	/**
-	 * Controller Helper Methods
-	 *----------------------------------------------------------------------------------*/
-
-	/**
-	 * Called in index action.
-	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
-	 * @param  Wikia\Search\Config $searchConfig
-	 * @return boolean true if on page 1 and not routed, false if not on page 1 
-	 */
-	protected function handleArticleMatchTracking( Wikia\Search\Config $searchConfig ) {
-		if ( $searchConfig->getPage() != 1 ) {
-			return false;
-		}
-		$title = Title::newFromText( $searchConfig->getOriginalQuery() );
-		$track = new Track();
-		if ( $searchConfig->hasArticleMatch() && $this->getVal('fulltext', '0') === '0') {
-
-		    $this->wf->RunHooks( 'SpecialSearchIsgomatch', array( $title, $searchConfig->getOriginalQuery() ) );
-
-		    $track->event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
-		    $this->response->redirect( $title->getFullUrl() );
-		}
-		else if ( $searchConfig->hasArticlematch() ) {
-		    $track->event( 'search_start_match', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
-		} else {
-		    if ( $title !== null ) {
-		        $this->wf->RunHooks( 'SpecialSearchNogomatch', array( &$title ) );
-		    }
-		}
-
-		return true;
 	}
 
 	/**
