@@ -162,7 +162,7 @@ class IndexServiceTest extends \WikiaSearchBasetest
     	$this->injectInterface( $service, $interface );
     	$service->setPageId( $this->pageId );
     	$this->assertEquals(
-    			array( \WikiaSearch::field( 'redirect_titles' ) => array( 'foo', 'bar' ) ),
+    			array( \Wikia\Search\Utilities::field( 'redirect_titles' ) => array( 'foo', 'bar' ) ),
     			$service->execute()
 		);
     }
