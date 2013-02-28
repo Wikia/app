@@ -59,7 +59,6 @@ class Indexer
 				);
 		$this->client = new Solarium_Client( $params );
 		$this->logger = new Wikia();
-		parent::__construct();
 	}
 		
 	/**
@@ -259,8 +258,7 @@ class Indexer
 	 */
 	public function deleteArticle( $pageId) {
 		
-		$cityId	= $this->wg->CityId ?: $this->wg->SearchWikiId;
-		$id		= sprintf( '%s_%s', $cityId, $pageId );
+		$id		= sprintf( '%s_%s', $this->interface->getWikiId(), $pageId );
 		
 		$this->deleteBatch( array( $id ) );
 		
