@@ -1857,4 +1857,122 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		
 		$reflGet->invoke( $mockController );
 	}
+	
+	/**
+	 * @covers WikiaSearchController::setPageTitle
+	 */
+	public function testSetPageTitle()
+	{
+		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
+		                       ->disableOriginalConstructor()
+		                       ->setMethods( array() )
+		                       ->getMock();
+		
+		$mockWf = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( array( 'msg' ) )
+		               ->getMock();
+		
+		$mockOut = $this->getMockBuilder( 'OutputPage' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'setPageTitle' ) )
+		                ->getMock();
+		
+		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'getQueryNoQuotes', 'getQuery', 'getIsInterWiki' ) )
+		                   ->getMock();
+		
+		$sitename = "Foo Wiki";
+		$query = "Foo";
+		$message = "The contents of this message does not matter here";
+		$mockWg = (object) array( 'Out' => $mockOut, 'Sitename' => $sitename );
+		
+		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$reflWg->setAccessible( true );
+		$reflWg->setValue( $mockController, $mockWg );
+		
+		$reflWf = new ReflectionProperty( 'WikiaSearchController', 'wf' );
+		$reflWf->setAccessible( true );
+		$reflWf->setValue( $mockController, $mockWf );
+		
+		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setPageTitle' );
+		$reflSet->setAccessible( true );
+		
+		$mockConfig
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getQueryNoQuotes' )
+		    ->with   ( true )
+		    ->will   ( $this->returnValue( $query ) )
+		;
+		$mockConfig
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getQuery' )
+		    ->with   ( Wikia\Search\Config::QUERY_RAW )
+		    ->will   ( $this->returnValue( $query ) )
+		;
+		$mockWf
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'msg' )
+		    ->with   ( 'wikiasearch2-page-title-with-query', array( $query, $sitename ) )
+		    ->will   ( $this->returnValue( $message ) )
+		;
+		$mockOut
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'setPageTitle' )
+		    ->with   ( $message )
+		;
+
+		$reflSet->invoke( $mockController, $mockConfig );
+		
+		$mockConfig
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getQueryNoQuotes' )
+		    ->with   ( true )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		$mockConfig
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getIsInterWiki' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockWf
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'msg' )
+		    ->with   ( 'wikiasearch2-page-title-no-query-interwiki' )
+		    ->will   ( $this->returnValue( $message ) )
+		;
+		$mockOut
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'setPageTitle' )
+		    ->with   ( $message )
+		;
+		
+		$reflSet->invoke( $mockController, $mockConfig );
+		
+		$mockConfig
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getQueryNoQuotes' )
+		    ->with   ( true )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		$mockConfig
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getIsInterWiki' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockWf
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'msg' )
+		    ->with   ( 'wikiasearch2-page-title-no-query-intrawiki', array( $sitename ) )
+		    ->will   ( $this->returnValue( $message ) )
+		;
+		$mockOut
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'setPageTitle' )
+		    ->with   ( $message )
+		;
+		
+		$reflSet->invoke( $mockController, $mockConfig );
+	}
 }
