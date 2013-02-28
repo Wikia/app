@@ -48,15 +48,16 @@
 	margin: 6px 0 0 6px;
 }
 
-#phalanx-block-types {
-	float: left;
+.phalanx-block-types {
+	margin-left: 75px;
+	width: 500px;
 }
 
 .phalanx-block-types label {
 	display: inline-block;
 	margin: 6px 0px 0px 10px;
 	text-align: left;
-	width: 130px;
+	width: 220px;
 }
 
 #phalanx-check-label {

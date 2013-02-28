@@ -8,7 +8,6 @@ class Phalanx implements arrayaccess {
 	const TYPE_ANSWERS_QUESTION_TITLE = 16;
 	const TYPE_ANSWERS_RECENT_QUESTIONS = 32;
 	const TYPE_WIKI_CREATION = 64;
-	const TYPE_COOKIE = 128;
 	const TYPE_EMAIL = 256;
 
 	const SCRIBE_KEY = 'log_phalanx';
@@ -32,7 +31,6 @@ class Phalanx implements arrayaccess {
 		16  => 'question_title',
 		32  => 'recent_questions',
 		64  => 'wiki_creation',
-		128 => 'cookie',
 		256 => 'email'
 	);
 	private static $expiry_values = 'phalanx-expire-durations';

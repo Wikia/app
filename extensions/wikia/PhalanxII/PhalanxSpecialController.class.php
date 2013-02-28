@@ -101,6 +101,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'action', $this->title->getLocalURL() );
 		$this->setVal( 'showEmail', $this->wg->User->isAllowed( 'phalanxemailblock' ) );
 		$this->setVal( 'typeFilter', $pager->getSearchFilter() );
+		$this->setVal( 'blockTypes', Phalanx::getAllTypeNames() );
 
 		$this->wf->profileOut( __METHOD__ );
 	}
