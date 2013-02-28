@@ -10,56 +10,45 @@ class VideoPageController extends WikiaController {
 	 *
 	 */
 	public function fileUsage() {
-		$type = $this->getVal('type', 'local');
 
-		$query = new GlobalUsageQuery( $this->wg->Title->getDBkey() );
-		if ( $this->getVal('offset') ) {
-			$query->setOffset( $this->getVal('offset') );
-		}
-		$query->setLimit( $this->wg->Request->getInt('limit', 50) );
-		$query->execute();
-
-		$summary = $query->getSingleImageResult();
+		$summary = $this->getGlobalUsage();
 
 		$heading = '';
 		$fileList = array();
 
-		if(!empty($summary) ) {
-			if($type === 'global') {
+		if (!empty($summary) ) {
+			$type = $this->getVal('type', 'local');
+
+			if ($type === 'global') {
+				$summary = $this->addGlobalSummary($summary);
+
 				$heading = wfMsg('video-page-global-file-list-header');
-				if (array_key_exists($this->wg->CityId, $summary)) {
-					unset($summary[$this->wg->CityId]);
+				if (array_key_exists($this->wg->DBname, $summary)) {
+					unset($summary[$this->wg->DBname]);
 				}
 
 				$count = 0;
-				foreach ($summary as $wikiID => $info) {
-					$item = $info[0];
-					$dbName = $item['wiki'];
+				foreach ($summary as $dbName => $articles) {
 
-					// Change the 'wiki' key from a db name to a display name
-					$item['wiki'] = $this->nameToTitle($dbName);
-
-					$summaryInfo = $this->queryGlobalSummary($dbName, array($item['id']));
-
-					$itemInfo = $summaryInfo['summary'][$dbName][$item['id']];
-
-					$item = array_merge($item, $itemInfo);
-
-					$fileList[] = $item;
+					// Pick the first first article from each wiki to show
+					$fileList[] = $articles[0];
 					$count++;
 					if ($count >=3) {
 						break;
 					}
 				}
 			} else {
-				$heading = wfMsg('video-page-file-list-header');
-				if (array_key_exists($this->wg->CityId, $summary)) {
-					$fileList = $summary[$this->wg->CityId];
+				$dbName = $this->wg->DBname;
 
-					// Change the 'wiki' key from a db name to a display name
-					foreach ($fileList as $data) {
-						$data['wiki'] = $this->nameToTitle($data['wiki']);
-					}
+				$heading = wfMsg('video-page-file-list-header');
+				if (array_key_exists($dbName, $summary)) {
+					// Eliminate all but this wiki from the summary
+					$summary = array($dbName => $summary[$dbName]);
+
+					// Fill in all the summary information
+					$summary = $this->addLocalSummary($summary);
+
+					$fileList = $summary[$dbName];
 				}
 			}
 		}
@@ -141,14 +130,81 @@ class VideoPageController extends WikiaController {
 		);
 	}
 
-	private function queryGlobalSummary( $dbName, $ids ) {
-		$url = WikiFactory::DBtoURL($dbName);
-		$url = WikiFactory::getLocalEnvURL($url);
-		$url .= '/wikia.php?controller=ArticleSummaryController&method=blurb&format=json&ids=';
-		$url .= implode(',', $ids);
+	public function getGlobalUsage () {
 
-		$out = Http::get($url);
+		// Query the global usage table to see where the current File title is used
+		$query = new GlobalUsageQuery( $this->wg->Title->getDBkey() );
+		if ( $this->getVal('offset') ) {
+			$query->setOffset( $this->getVal('offset') );
+		}
+		$query->setLimit( $this->wg->Request->getInt('limit', 50) );
+		$query->execute();
 
-		return json_decode($out, true);
+		$summary = $query->getSingleImageResult();
+
+		// Translate key names and add some additional data
+		foreach ($summary as $dbName => $articles) {
+			foreach ($articles as $info) {
+				// Change the 'wiki' key from a db name to a display name
+				$dbName = $info['wiki'];
+				$info['wiki'] = $this->nameToTitle($dbName);
+				$info['dbName'] = $dbName;
+			}
+		}
+
+		return $summary;
+	}
+
+	public function addLocalSummary ( $data ) {
+		$handle = fopen("/tmp/debug.out", 'a');
+		fwrite($handle, 'LOCAL: '. print_r($data, true));
+		fclose($handle);
+		return $this->addSummary($data, function ($dbName, $articleIds) {
+			$response = $this->app->sendRequest('ArticleSummaryController', 'blurb', array('ids' => implode(',', $articleIds)));
+			return $response->getData();
+		});
+	}
+
+	public function addGlobalSummary( $data ) {
+		return $this->addSummary($data, function ($dbName, $articleIds) {
+			$url = WikiFactory::DBtoURL($dbName);
+			$url = WikiFactory::getLocalEnvURL($url);
+			$url .= '/wikia.php?controller=ArticleSummaryController&method=blurb&format=json&ids=';
+			$url .= implode(',', $articleIds);
+
+			$out = Http::get($url);
+			return json_decode($out, true);
+		});
+	}
+
+	private function addSummary ( $data, $summaryFunc ) {
+
+		// Iterate through each wiki DB name in the data
+		foreach ($data as $dbName => $articles) {
+
+			// Get all the article IDs for this wiki so we can make one call to
+			// grab the extra data we need from the ArticleSummaryController
+			$articleIds = array_map(function ($item) { return $item['id']; }, $articles);
+
+			// This function will fetch the data for us
+			$extraData = $summaryFunc($dbName, $articleIds);
+
+			if (!empty($extraData['summary'])) {
+				// Eliminate the superfluous 'summary' key
+				$extraData = $extraData['summary'];
+
+				// Loop with indexes so we can change $data in place
+				for ($i = 0; $i < count($articles); $i++) {
+					$info = $articles[$i];
+					$extraInfo = $extraData[$info['id']];
+
+					$articles[$i] = array_merge($info, $extraInfo);
+				}
+
+				$data[$dbName] = $articles;
+			}
+		}
+
+		return $data;
 	}
 }

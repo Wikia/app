@@ -4,11 +4,10 @@ class ArticleSummaryController extends WikiaController {
 
 
 	public function blurb () {
-		global $wgRequest;
 
-		$method = $wgRequest->getVal('method');
-		$id_str = $wgRequest->getVal('ids');
-		$ids = explode(',', $id_str);
+		$method = $this->request->getVal('method');
+		$idStr = $this->request->getVal('ids');
+		$ids = explode(',', $idStr);
 
 		$this->summary = ArticleSummary::blurb($ids);
 	}

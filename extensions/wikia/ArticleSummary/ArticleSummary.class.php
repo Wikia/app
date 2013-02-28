@@ -9,7 +9,7 @@ class ArticleSummary {
 		foreach ($idList as $id) {
 			$title = Title::newFromID($id);
 			if (empty($title)) {
-				$summary[$app->wg->CityId][$id] = array('error' => "Unable to find title for ID $id");
+				$summary[$app->wg->CityId]['error'][] = "Unable to find title for ID $id";
 				break;
 			}
 
@@ -27,7 +27,7 @@ class ArticleSummary {
 				$imageURL = $images[$id][0]['url'];
 			}
 
-			$summary[$dbName][$id] = array(
+			$summary[$id] = array(
 				'wiki'       => $app->wg->Sitename,
 				'wikiUrl'    => $wikiUrl,
 				'titleDBkey' => $title->getPrefixedDBkey(),
