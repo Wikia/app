@@ -26,11 +26,11 @@ class VideoHandlerHelper extends WikiaModel {
 				$oldContent = $article->getContent();
 				if ( !strstr($oldContent, $content) ) {
 					$content = $oldContent.$content;
-					$status = $article->doEdit( $content, 'Added video category', EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $user );
+					$status = $article->doEdit( $content, 'added video category', EDIT_UPDATE, false, $user );
 				}
 			} else {
 				$article = new Article( $title );
-				$status = $article->doEdit( $content, 'Article created', EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $user );
+				$status = $article->doEdit( $content, 'created video', EDIT_NEW, false, $user );
 			}
 		}
 

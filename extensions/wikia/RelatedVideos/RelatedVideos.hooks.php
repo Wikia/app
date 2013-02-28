@@ -192,7 +192,7 @@ class RelatedVideosHookHandler {
 	}
 
 	/**
-	 * Hook: delete premium video from related videos module when the file page is deleted
+	 * Hook: delete video from related videos module when the file page is deleted
 	 * @param WikiPage $wikiPage
 	 * @param User $user
 	 * @param string $reason
@@ -217,7 +217,7 @@ class RelatedVideosHookHandler {
 	}
 
 	/**
-	 * Hook: restore premium video to related videos module when the file page is undeleted
+	 * Hook: restore video to related videos module when the file page is undeleted
 	 * @param Title $title
 	 * @param User $wgUser
 	 * @param string $reason

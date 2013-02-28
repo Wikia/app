@@ -284,12 +284,24 @@ SQL;
 	}
 
 	public function addPremiumVideo( $userId ) {
+		$this->wf->ProfileIn( __METHOD__ );
+
 		$this->addedAt = $this->wf->Timestamp( TS_MW );
 		if ( !empty($userId) ) {
 			$this->addedBy = $userId;
 		}
 
-		return $this->addToDatabase();
+		$affected = $this->addToDatabase();
+
+		if ( $affected ) {
+			// create file page when adding premium video to wiki
+			$user = User::newFromId( $this->addedBy );
+			$status = VideoHandlerHelper::addCategoryVideos( $this->videoTitle, $user );
+		}
+
+		$this->wf->ProfileOut( __METHOD__ );
+
+		return $affected;
 	}
 
 	public function reuploadVideo() {

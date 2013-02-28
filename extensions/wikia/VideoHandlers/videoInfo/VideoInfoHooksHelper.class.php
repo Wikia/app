@@ -95,7 +95,7 @@ class VideoInfoHooksHelper {
 			$videoData = $videoInfoHelper->getVideoDataByTitle( $img['il_to'], true );
 			if ( !empty($videoData) ) {
 				$videoInfo = new VideoInfo( $videoData );
-				$affected = $videoInfo->addPremiumVideo( $userId );
+				$affected = ( $affected || $videoInfo->addPremiumVideo( $userId ) );
 			}
 		}
 
