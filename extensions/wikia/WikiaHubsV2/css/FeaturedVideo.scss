@@ -4,46 +4,28 @@
 		overflow:hidden;
 		padding: 10px;
 		width: 300px;
-		.title-wrapper {
-			border: 0;
-			overflow:hidden;
-			h2 {				
-				border:none;
-				float:left;
-				margin-bottom: 10px;
-			}
-			.sponsorbox {
-				float:right;
-				text-align:right;
-				ins {
-					text-transform:uppercase;
-					float:left;
-					font-size:8px;
-					height:18px;
-					line-height:25px;
-					margin-right:5px;
-					display:block;		
+		h2 {
+			margin-bottom: 10px;
+		}
+		.sponsorbox {
+			display: block;
+			float: right;
+			ins {
+				text-transform: uppercase;
+				display: block;
+				float: left;
+				font-weight: normal;
+				font-size: 8px;
+				height: 18px;
+				line-height: 25px;
+				margin: 0 5px 5px 0;
+				img {
+					vertical-align: top;
+					margin-top: 4px;
 				}
-				a {
-					float:left;
-					display:block;
-					height:18px;
-					line-height:18px;
-				}
-			}
-			.floatright {
-				clear:none;
-				float:none;
-				display:inline;
-				margin:0;
-				border:0;
-			}
-			.wikiheader {
-				clear:both;
-				float:left;			
 			}
 		}
-		.sponsored-video-content {
+		.featured-video-content {
 			clear: both;
 			.thumbinner {
 				background: black;
@@ -75,7 +57,7 @@
 				line-height: 1.5em;
 			}
 			.thumbcaption {
-				display: none;			
+				display: none;
 			}
 		}
 	}
