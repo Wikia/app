@@ -30,6 +30,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	}
 
 	public function getContent() {
+		global $wgDevelEnvironment, $wgDevelEnvironmentName;
 		wfProfileIn(__METHOD__);
 
 		$processingTimeStart = null;
@@ -39,7 +40,12 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		}
 		$hash = wfAssetManagerGetSASShash( $this->mOid );
 		$paramsHash = md5( urldecode( http_build_query( $this->mParams, '', ' ' ) ) );
-		$cacheId = "/Sass-{$paramsHash}-{$hash}-" . self::CACHE_VERSION;
+		$cacheId = "sass-{$paramsHash}-{$hash}-" . self::CACHE_VERSION;
+
+		// vary SASS caching between devboxes
+		if (!empty($wgDevelEnvironment)) {
+			$cacheId .= "-dev-{$wgDevelEnvironmentName}";
+		}
 
 		$memc = F::App()->wg->Memc;
 		$cachedContent = $memc->get( $cacheId );
