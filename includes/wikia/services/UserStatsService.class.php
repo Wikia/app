@@ -5,13 +5,26 @@ class UserStatsService extends WikiaModel {
 	const GET_GLOBAL_STATS_CACHE_VER = 'v1.0';
 
 	private $userId;
+	private $user;
 
 	/**
 	 * Pass user ID of user you want to get data about
 	 */
 	function __construct($userId) {
 		$this->userId = intval($userId);
+		$this->user = null;
 		parent::__construct();
+	}
+
+	/**
+	 * Get user object based on $this->userId
+	 * @return User
+	 */
+	function getUser() {
+		if ( empty($this->user) ) {
+			$this->user = User::newFromId( $this->userId );
+		}
+		return $this->user;
 	}
 
 	/**
@@ -28,7 +41,7 @@ class UserStatsService extends WikiaModel {
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 
 		wfProfileIn(__METHOD__);
-
+		
 		if ($revision !== NULL) {	// // do not count null edits
 			// tell service to update cached data for user who edited the page
 			if (!$user->isAnon()) {
@@ -53,20 +66,22 @@ class UserStatsService extends WikiaModel {
 	 * @return Int Number of edits
 	 */
 	public function resetEditCountWiki( $dbName = false ) {
-		$dbw = $this->getWikiDB( DB_MASTER, $dbName );
-		$editCount = $dbw->selectField(
+		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
+		$userName = $this->getUser()->getName();
+
+		$editCount = $dbr->selectField(
 			'revision', 'count(*)',
 			array( 'rev_user' => $this->userId ),
 			__METHOD__
 		);
 
-		$editCount += $dbw->selectField(
+		$editCount += $dbr->selectField(
 			'archive', 'count(*)',
-			array( 'ar_user' => $this->userId ),
+			array( 'ar_user_text' => $userName ),
 			__METHOD__
 		);
 
-		/* Commenting out temporarily until deployment BugId:98376
+		$dbw = $this->getWikiDB( DB_MASTER, $dbName );
 		$dbw->replace(
 			'wikia_user_properties',
 			array(),
@@ -75,7 +90,6 @@ class UserStatsService extends WikiaModel {
 			'wup_value' => $editCount),
 			__METHOD__
 		);
-		*/
 
 		return $editCount;
 	}
@@ -90,7 +104,7 @@ class UserStatsService extends WikiaModel {
 	 * @param $skipCache boolean On true ignores cache
 	 * @return Int Number of edits
 	 */
-	public function getEditCountWiki( $wikiId = 0, $skipCache = true ) {
+	public function getEditCountWiki( $wikiId = 0, $skipCache = false ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;

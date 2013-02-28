@@ -4147,9 +4147,6 @@ class User {
 			 * @since Feb 2013
 			 * @author Kamil Koterba
 			 */
-
-			/**
-			 * Commented out temporarily awaiting deployment BugId: 98376
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->update( 'wikia_user_properties',
 				array( 'wup_value=wup_value+1' ),
@@ -4165,7 +4162,6 @@ class User {
 				//initialize editcount skipping memcache
 				$this->getEditCount( 0, true );
 			}
-			*/
 			/* end of change */
 
 		}
