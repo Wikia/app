@@ -4,7 +4,7 @@
 			<?= $heading ?>
 			<div class="page-list-pagination">
 				<img src="<?= wfBlankImgUrl() ?>" class="arrow left disabled">
-				<?= wfMsg('video-page-file-list-pagination', '<span class="page-list-current">1</span>', '<span class="page-list-pages">2</span>') ?>
+				<?= wfMessage('video-page-file-list-pagination', '<span class="page-list-current">1</span>', '<span class="page-list-pages">2</span>')->text() ?>
 				<img src="<?= wfBlankImgUrl() ?>" class="arrow right">
 			</div>
 		</h2>
