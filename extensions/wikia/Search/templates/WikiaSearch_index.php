@@ -18,17 +18,6 @@
 			<input type="hidden" name="fulltext" value="Search" />
 			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 	
-			<?php if($debug): ?>
-			<fieldset>
-				<label><input type="checkbox" name="crossWikia" value="1" <?= ( $isInterWiki ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-search-all-wikia' ); ?></label>
-				<label><input type="checkbox" name="debug" value="1" <?= ( $debug ? 'checked' : '' ); ?>/> Debug mode</label>
-			</fieldset>
-			<?php endif; ?>
-			<?php if ($debug): ?>
-				<br/>
-				<i>Query Time: <?=$results->getQueryTime();?></i>
-			<?php endif; ?>
-	
 			<?php if(!empty($advancedSearchBox)) : ?>
 			<?php echo $advancedSearchBox; ?>
 			<?php endif; ?>
@@ -72,7 +61,6 @@
 								echo $app->getView( 'WikiaSearch', 'resultSet', array(
 								  'resultSet' => $result,
 								  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-								  'debug' => $debug,
 								  'query' => $query,
 								  'isInterWiki' => $isInterWiki,
 								  'relevancyFunctionId' => $relevancyFunctionId
@@ -83,7 +71,6 @@
 								  'result' => $result,
 								  'gpos' => 0,
 								  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-								  'debug' => $debug,
 								  'query' => $query,
 								  'isInterWiki' => $isInterWiki,
 								  'relevancyFunctionId' => $relevancyFunctionId
