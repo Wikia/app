@@ -113,7 +113,7 @@ class SpecialCreateTopList extends SpecialPage {
 					if ( empty( $title ) ) {
 						$errors[ 'related_article_name' ] = array( wfMsg( 'toplists-error-invalid-title' )  );
 					} 
-					elseif ( !wfRunHooks( "TopListCheckTitle", array( $title, &$error_msg ) ) ) {
+					elseif ( !wfRunHooks( "PageTitleFilter", array( $title, &$error_msg ) ) ) {
 						$errors[ 'related_article_name' ] = array( ( !empty($error_msg) ) ? $error_msg : wfMsg( 'spamprotectiontext' ) );
 					} 
 					else {

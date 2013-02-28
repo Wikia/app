@@ -50,7 +50,7 @@ class TopList extends TopListBase {
 		if( !$skipPhalanxCheck ) {
 			//FB#8083: blocked titles are not being filtered, this should be handled automatically by Phalanx though...
 			$error_msg = '';
-			if ( ! wfRunHooks( "TopListCheckTitle", array( $title, &$error_msg ) ) ) {
+			if ( ! wfRunHooks( "PageTitleFilter", array( $title, &$error_msg ) ) ) {
 				$notPhalanxBlocked = false;
 			}
 		} 

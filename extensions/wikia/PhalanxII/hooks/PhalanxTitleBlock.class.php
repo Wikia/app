@@ -64,7 +64,7 @@ class PhalanxTitleBlock extends WikiaObject {
 		return $ret;
 	}
 	
-	public function checkTopListTitle( $title, &$error_msg ) {
+	public function pageTitleFilter( $title, &$error_msg ) {
 		$this->wf->profileIn( __METHOD__ );
 
 		$phalanxModel = F::build('PhalanxContentModel', array( $title ) );
