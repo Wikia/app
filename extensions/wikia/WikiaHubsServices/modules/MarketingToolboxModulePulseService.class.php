@@ -124,4 +124,8 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 
 		return $data;
 	}
+
+	public function getStructuredData($data) {
+		return array();
+	}
 }

@@ -51,9 +51,17 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 		$this->modules = array();
 
+		$enabledModules = array(
+			MarketingToolboxModuleExploreService::MODULE_ID,
+			MarketingToolboxModulePollsService::MODULE_ID,
+			MarketingToolboxModuleWikiaspicksService::MODULE_ID,
+			MarketingToolboxModuleSliderService::MODULE_ID,
+			MarketingToolboxModulePopularvideosService::MODULE_ID,
+		);
+
 		foreach ($toolboxModel->getModulesIds() as $moduleId) {
 			// TODO remove this if when other modules would be ready
-			if( in_array($moduleId, array(MarketingToolboxModuleExploreService::MODULE_ID, MarketingToolboxModulePollsService::MODULE_ID, MarketingToolboxModuleWikiaspicksService::MODULE_ID, MarketingToolboxModuleSliderService::MODULE_ID)) ) {
+			if( in_array($moduleId, $enabledModules) ) {
 				if (!empty($modulesData[$moduleId]['data'])) {
 					$this->modules[$moduleId] = $this->renderModule(
 						$this->wg->ContLang->getCode(),
@@ -72,6 +80,12 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->response->addAsset('wikiahubs_v2_modal');
 		$this->response->addAsset('wikiahubs_v2_scss');
 		$this->response->addAsset('wikiahubs_v2_scss_mobile');
+
+		//TODO: remove after releasing WikiaHubsV2 and removing WikiaHubs extension
+		$this->wg->Out->addJsConfigVars([
+			'isWikiaHubsV2Page' => true,
+		]);
+		
 		if (F::app()->checkSkin('wikiamobile')) {
 			$this->overrideTemplate('wikiamobileindex');
 		}
