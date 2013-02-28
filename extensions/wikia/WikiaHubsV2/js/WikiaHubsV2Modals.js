@@ -74,21 +74,13 @@ var SuggestModalWikiaHubsV2 = {
 	},
 
 	closeModal: function (modal) {
-	//todo: use QueryString made by Jakub Olek :)
-		if (!window.wgUserName) {
-			var searchstring = window.location.search || '';
-			if (typeof searchstring === "undefined") {
-				searchstring = '';
+		require(['wikia.querystring'], function (qs){
+			if (!window.wgUserName) {
+				qs.addCb().goTo();
+			} else if (typeof(modal.closeModal) === 'function') {
+				modal.closeModal();
 			}
-
-			if (searchstring === '') {
-				window.location = window.location + '?cb=' + Math.floor(Math.random() * 10000);
-			} else if (searchstring.substr(0, 1) == '?') {
-				window.location = window.location + '&cb=' + Math.floor(Math.random() * 10000);
-			}
-		} else if (typeof(modal.closeModal) === 'function') {
-			modal.closeModal();
-		}
+		});
 	}
 };
 
