@@ -63,7 +63,7 @@ fclose($handle);
 					'articleId'  => $title->getArticleID(),
 					'imageUrl'   => $imageURL,
 					'url'        => $title->getFullURL(),
-					'wiki'       => $dbName,
+					'wiki'       => $this->wg->Sitename,
 					'wikiUrl'    => $wikiUrl,
 					'snippet'    => $snippet,
 				);

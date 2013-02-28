@@ -12,7 +12,14 @@ class VideoPageController extends WikiaController {
 	public function fileUsage() {
 		$type = $this->getVal('type', 'local');
 
-		$summary = VideoUsageService::summaryInfoByWiki($this->wg->Title->getDBkey());
+		$query = new GlobalUsageQuery( $this->wg->Title->getDBkey() );
+		if ( $this->getVal('offset') ) {
+			$query->setOffset( $this->getVal('offset') );
+		}
+		$query->setLimit( $this->wg->Request->getInt('limit', 50) );
+		$query->execute();
+
+		$summary = $query->getSingleImageResult();
 
 		$heading = '';
 		$fileList = array();
@@ -26,7 +33,19 @@ class VideoPageController extends WikiaController {
 
 				$count = 0;
 				foreach ($summary as $wikiID => $info) {
-					$fileList[] = $info[0];
+					$item = $info[0];
+					$dbName = $item['wiki'];
+
+					// Change the 'wiki' key from a db name to a display name
+					$item['wiki'] = $this->nameToTitle($dbName);
+
+					$summaryInfo = $this->queryGlobalSummary($dbName, array($item['id']));
+
+					$itemInfo = $summaryInfo['summary'][$dbName][$item['id']];
+
+					$item = array_merge($item, $itemInfo);
+
+					$fileList[] = $item;
 					$count++;
 					if ($count >=3) {
 						break;
@@ -36,41 +55,55 @@ class VideoPageController extends WikiaController {
 				$heading = wfMsg('video-page-file-list-header');
 				if (array_key_exists($this->wg->CityId, $summary)) {
 					$fileList = $summary[$this->wg->CityId];
+
+					// Change the 'wiki' key from a db name to a display name
+					foreach ($fileList as $data) {
+						$data['wiki'] = $this->nameToTitle($data['wiki']);
+					}
 				}
 			}
-
 		}
 
 		$this->heading = $heading;
 		$this->fileList = $fileList;
 	}
 
+	private function nameToTitle ( $dbName ) {
+		$wikiData = WikiFactory::getWikiByDB($dbName);
+		return $wikiData->city_title;
+	}
+
 	public function relatedPages() {
-		$titleID = 15; # Find title from one of the pages that include the current video
-return;
-		$title = Title::newFromID($titleID);
+		$res = $this->queryImageLinks(1);
+		$first = $res->fetchObject();
 
-		# Get the categories for this title
-		$cats = $title->getParentCategories();
-		$titleCats = array();
+		if (!empty($first)) {
+			$titleID = $first->page_id;
 
-		# Construct an array of category name to sorting key.  We use the 'normal'
-		# default as the sorting key since we don't really care about the sorting
-		# here.  We just need to give the RelatedPages module something to work with
-		foreach ($cats as $cat_text => $title_text) {
-			$categoryTitle = Title::newFromText($cat_text);
-			$categoryName = $categoryTitle->getText();
-			$titleCats[$categoryName] = 'normal';
+			$title = Title::newFromID($titleID);
+
+			# Get the categories for this title
+			$cats = $title->getParentCategories();
+			$titleCats = array();
+
+			# Construct an array of category name to sorting key.  We use the 'normal'
+			# default as the sorting key since we don't really care about the sorting
+			# here.  We just need to give the RelatedPages module something to work with
+			foreach ($cats as $cat_text => $title_text) {
+				$categoryTitle = Title::newFromText($cat_text);
+				$categoryName = $categoryTitle->getText();
+				$titleCats[$categoryName] = 'normal';
+			}
+
+			# Seed the RelatedPages instance with the categories we found.  Normally
+			# categories are set via a hook in the page render process, so we have to
+			# supply our own here.
+			$relatedPages = RelatedPages::getInstance();
+			$relatedPages->setCategories($titleCats);
+
+			# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
+			$this->text = F::app()->renderView( 'RelatedPages', 'Index', array( "altTitle" => $title ) );
 		}
-
-		# Seed the RelatedPages instance with the categories we found.  Normally
-		# categories are set via a hook in the page render process, so we have to
-		# supply our own here.
-		$relatedPages = RelatedPages::getInstance();
-		$relatedPages->setCategories($titleCats);
-
-		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
-		$this->text = F::app()->renderView( 'RelatedPages', 'Index', array( "altTitle" => $title ) );
 	}
 
 	public function videoCaption() {
@@ -95,6 +128,27 @@ return;
 		$this->viewCount = $this->getVal('views');
 	}
 
+	private function queryImageLinks( $limit ) {
+		$target = $this->wg->Title->getDBkey();
+		$dbr = wfGetDB( DB_SLAVE );
 
+		return $dbr->select(
+			array( 'imagelinks', 'page' ),
+			array( 'page_namespace', 'page_title', 'page_id', 'il_to' ),
+			array( 'il_to' => $target, 'il_from = page_id', 'page_is_redirect = 0' ),
+			__METHOD__,
+			array( 'LIMIT' => $limit + 1, 'ORDER BY' => 'il_from', )
+		);
+	}
 
+	private function queryGlobalSummary( $dbName, $ids ) {
+		$url = WikiFactory::DBtoURL($dbName);
+		$url = WikiFactory::getLocalEnvURL($url);
+		$url .= '/wikia.php?controller=ArticleSummaryController&method=blurb&format=json&ids=';
+		$url .= implode(',', $ids);
+
+		$out = Http::get($url);
+
+		return json_decode($out, true);
+	}
 }
