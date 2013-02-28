@@ -1,0 +1,19 @@
+/* Use on hubs page for sponsored image in Wikia's Picks and Feature Video modules */
+.sponsorbox {
+	display: block;
+	float: right;
+	ins {
+		text-transform: uppercase;
+		display: block;
+		float: left;
+		font-weight: normal;
+		font-size: 8px;
+		height: 18px;
+		line-height: 25px;
+		margin: 0 5px 5px 0;
+		img {
+			vertical-align: top;
+			margin-top: 4px;
+		}
+	}
+}
