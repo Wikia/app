@@ -34,6 +34,7 @@ class clearEditCountLocalAllWikis extends Maintenance {
 			__METHOD__
 		);
 
+		echo "Number of wikis: ".$resWiki->numRows()."\n";
 		$stepsCounter = 0;
 		//process each wiki
 		foreach ($resWiki as $rowWiki) {
@@ -55,7 +56,7 @@ class clearEditCountLocalAllWikis extends Maintenance {
 				$stepsCounter++;
 
 		        } catch (Exception $e) {
-		                //echo $e->getMessage(), "\n";
+		                echo $e->getMessage(), "\n";
                 		continue;
 		        }
 
