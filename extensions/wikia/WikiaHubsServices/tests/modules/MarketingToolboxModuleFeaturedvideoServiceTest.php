@@ -21,22 +21,19 @@ class MarketingToolboxModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 		);
 
 		$toolboxModelMock = $this->getMock('MarketingToolboxModel', array('getVideoData'));
-
 		$toolboxModelMock->expects($this->once())
 			->method('getVideoData')
 			->with($this->equalTo($inputData['video']))
 			->will($this->returnValue($mockedVideoData));
 
-		if( isset($inputData['sponsoredImage']) ) {
-			$mockReturnVal = new stdClass();
-			$mockReturnVal->url = $expectedData['sponsoredImageUrl'];
-			$mockReturnVal->title = $expectedData['sponsoredImageAlt'];
+		$mockReturnVal = new stdClass();
+		$mockReturnVal->url = $expectedData['sponsoredImageUrl'];
+		$mockReturnVal->title = $expectedData['sponsoredImageAlt'];
 
-			$moduleMock->expects($this->any())
-				->method('getImageInfo')
-				->with($this->equalTo($inputData['sponsoredImage']))
-				->will($this->returnValue($mockReturnVal));
-		}
+		$moduleMock->expects($this->any())
+			->method('getImageInfo')
+			->with($this->equalTo($inputData['sponsoredImage']))
+			->will($this->returnValue($mockReturnVal));
 
 		$moduleMock->expects($this->once())
 			->method('getToolboxModel')
@@ -86,6 +83,7 @@ class MarketingToolboxModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 		$out[] = array($inputData, $expectedData, $mockedVideoData);
 
 		$inputData = array(
+			'sponsoredImage' => null,
 			'video' => 'video video',
 			'header' => 'Header',
 			'articleUrl' => 'http://example.wikia.com/TestUrl',
