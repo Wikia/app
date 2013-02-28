@@ -150,10 +150,11 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	protected function getSponsoredImageMarkup($imageTitleText) {
 		$sponsoredImageInfo = $this->getImageInfo($imageTitleText);
 		return Xml::element('img', array(
-			'src' => $sponsoredImageInfo->url,
 			'alt' => $sponsoredImageInfo->title,
-			'width' => $sponsoredImageInfo->width,
+			'class' => 'sponsored-image',
 			'height' => $sponsoredImageInfo->height,
+			'src' => $sponsoredImageInfo->url,
+			'width' => $sponsoredImageInfo->width,
 		), '', true);
 	}
 }
