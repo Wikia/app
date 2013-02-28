@@ -19,6 +19,7 @@ var SuggestModalWikiaHubsV2 = {
 				} else {
 					UserLoginModal.show({
 						callback: function () {
+							UserLogin.forceLoggedIn = true;
 							SuggestModalWikiaHubsV2.suggestArticle();
 						}
 					});
