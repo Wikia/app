@@ -113,31 +113,27 @@ Wikia Community Support
 ___________________________________________
 * Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences",
 	"autocreatewiki-welcometalk-wall-title" => "Welcome!",
-        "autocreatewiki-welcometalk-wall" => "Hey there!
-We're excited to have {{subst:SITENAME}} as part of the Wikia community! There's still a lot to do, so here are some helpful tips and links to get your wiki going:
-*Not sure where to begin? Stop by [[w:c:community:Admin_Central:Main_Page|Founder &amp; Admin Central]] and check out the [[w:c:community:Blog:Wikia_Founders_&_Admins|Blog]] for tips on how to jump start your wiki and make it grow!
-*Visit [[w:c:community:main page|Community Central]] to make friends via [[w:c:community:Special:Chat|chat]], learn about new features and get updated on Wikia news and upcoming features on the [[w:c:community:Blog:Wikia_Staff_Blog|Staff Blog]].
-*Take a look at our [[w:c:community:Webinars|webinar series]] -- where you can sign up to interact with Wikia staff, as well as watch past sessions
-*Be sure to check out [[Special:WikiFeatures|Wiki Features]] to see what features you can enable on your wiki!
-*Explore our [[w:c:community:Admin_Central:Forum|forums]] on Founder and Admin Central to see what other wiki admins are asking. 
-*Lastly, visit our [[w:c:community:Help:Contents|Help Pages]] to answer any specific question you may have.
-All of the above links are a great place to start exploring Wikia. If you get stuck or have a question you can't find the answer to -- please contact us [[Special:Contact|here]]. But most importantly, have fun! :)
-Happy editing!",
+        "autocreatewiki-welcometalk-wall" => "Hello, We're excited to have {{subst:SITENAME}} as part of the Wikia community!
+
+There's still a lot to do; here are some helpful tips and links to get your wiki going:
+*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including Chat, Achievements and much more.
+*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or chat live with fellow Wikians.
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia.
+
+All of the above links are a great place to start exploring, and have fun!",
 
 	"autocreatewiki-welcometalk" => "==Welcome!==
-<div style=\"font-size:120%; line-height:1.2em;\">Hi $1 -- we're excited to have '''$4''' as part of the Wikia community!
+Hey there!
 
-Now you've got a whole website to fill up with information, pictures and videos about your favorite topic. But right now, it's just blank pages staring at you... Scary, right? Here are some ways to get started.
+We're excited to have $4 as part of the Wikia community! There's still a lot to do; here are some helpful tips and links to get your wiki going:
 
-* '''Introduce your topic''' on the front page. This is your opportunity to explain to your readers what your topic is all about. Write as much as you want! Your description can link off to all the important pages on your site.
+*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including chat, achievements and much more.
+*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or chat live with fellow Wikians
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia
 
-* '''Start some new pages''' -- just a sentence or two is fine to get started. Don't let the blank page stare you down! A wiki is all about adding and changing things as you go along. You can also add pictures and videos, to fill out the page and make it more interesting.
+All of the above links are a great place to start exploring, and have fun!
 
-And then just keep going! People like visiting wikis when there's lots of stuff to read and look at, so keep adding stuff, and you'll attract readers and editors. There's a lot to do, but don't worry -- today's your first day, and you've got plenty of time. Every wiki starts the same way -- a little bit at a time, starting with the first few pages, until it grows into a huge, busy site.
-
-If you've got questions, you can e-mail us through our [[Special:Contact|contact form]]. Have fun!
-
--- [[User:$2|$3]] <staff /></div>",
+-- [[User:$2|$3]] <staff />",
 // new wikis - special page
 	"newwikis" => "New wikis",
 	"newwikisstart" => "Display wikis starting at:",
