@@ -44,6 +44,7 @@ $app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.c
 $app->registerClass( 'VideoHandlerHooks',	$dir . '/VideoHandlerHooks.class.php' );
 $app->registerClass( 'VideoFileUploader',	$dir . '/VideoFileUploader.class.php' );
 $app->registerClass( 'WikiaVideoPage',		$dir . '/VideoPage.php' );
+$app->registerClass( 'VideoHandlerHelper', $dir . '/VideoHandlerHelper.class.php' );
 
 // api wrappers
 $app->registerClass( 'ApiWrapperFactory',		$dir . '/apiwrappers/ApiWrapperFactory.class.php' );
