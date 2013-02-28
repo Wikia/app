@@ -25,6 +25,7 @@ $success-color: #3d8d42;
 		margin-bottom: 5px;
 		padding: 5px 7px;
 		input[type=text],
+		input[type=url],
 		input[type=password],
 		textarea {
 			@include wikia-form-input-field;
