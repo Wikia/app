@@ -2069,7 +2069,21 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		                    ->setMethods( array( 'toNestedArray' ) )
 		                    ->getMock();
 		
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getFullUrl' ) )
+		                  ->getMock();
+		
+		$mockUser = $this->getMockBuilder( 'User' )
+		                 ->disableOriginalConstructor()
+		                 ->setMethods( array( 'getSkin' ) )
+		                 ->getMock();
+		
+		$mockWg = (object) array( 'Title' => $mockTitle, 'User' => $mockUser );
+		
 		$controllerIncr = 0;
+		$tabsArgs = array( 'config' => $mockConfig, 'by_category' => false );
 		
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
@@ -2103,7 +2117,175 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		    ->with   ( 'by_category', false )
 		    ->will   ( $this->returnValue( false ) )
 		;
+		$mockConfig
+		    ->expects( $this->any() )
+		    ->method ( 'getResults' )
+		    ->will   ( $this->returnValue( $mockResults ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'results', $mockResults )
+		;
+		$mockConfig
+		    ->expects( $this->any() )
+		    ->method ( 'getResultsFound' )
+		    ->will   ( $this->returnValue( 1000 ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'resultsFound', 1000 )
+		;
+		$mockConfig
+		    ->expects( $this->any() )
+		    ->method ( 'getTruncatedResultsNum' )
+		    ->with   ( true )
+		    ->will   ( $this->returnValue( '1,000' ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'resultsFoundTruncated', '1,000' )
+		;
+		$mockConfig
+		    ->expects( $this->any() )
+		    ->method ( 'getNumPages' )
+		    ->will   ( $this->returnValue( 100 ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'isOneResultsPageOnly', false )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'pagesCount', 100 )
+		;
+		$mockConfig
+		    ->expects( $this->any() )
+		    ->method ( 'getPage' )
+		    ->will   ( $this->returnValue( 1 ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'currentPage', 1 )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'sendSelfRequest' )
+		    ->with   ( 'pagination', $tabsArgs )
+		    ->will   ( $this->returnValue( 'paginationresponse' ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'paginationLinks', 'paginationresponse' )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'sendSelfRequest' )
+		    ->with   ( 'tabs', $tabsArgs )
+		    ->will   ( $this->returnValue( 'tabresponse' ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'tabs', 'tabresponse' )
+		;
+		$mockConfig
+		    ->expects( $this->any() )
+		    ->method ( 'getQuery' )
+		    ->with   ( Wikia\Search\Config::QUERY_ENCODED )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'query', 'foo' )
+		;
+		$mockConfig
+		    ->expects( $this->any() )
+		    ->method ( 'getLimit' )
+		    ->will   ( $this->returnValue( 10 ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'resultsPerPage', 10 )
+		;
+		$mockTitle
+		    ->expects( $this->any() )
+		    ->method ( 'getFullUrl' )
+		    ->will   ( $this->returnValue( 'foo.wikia.com/wiki/search' ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'pageUrl', 'foo.wikia.com/wiki/search' )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'isInterWiki', false )
+		;
+		$mockConfig
+		    ->expects( $this->any() )
+		    ->method ( 'getNamespaces' )
+		    ->will   ( $this->returnValue( array( 0, 14 ) ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'namespaces', array( 0, 14 ) )
+		;
+		$mockConfig
+		    ->expects( $this->any() )
+		    ->method ( 'getHub' )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'hub', null )
+		;
+		$mockConfig
+		    ->expects( $this->any() )
+		    ->method ( 'hasArticleMatch' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'hasArticleMatch', false )
+		;
+		$mockUser
+		    ->expects( $this->once() )
+		    ->method ( 'getSkin' )
+		    ->will   ( $this->returnValue( null ) ) // screw it
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'isMonobook', false )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'isCorporateWiki' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setVal' )
+		    ->with   ( 'isCorporateWiki', false )
+		;
 		
+		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$reflWg->setAccessible( true );
+		$reflWg->setValue( $mockController, $mockWg );
+
 		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setResponseValuesFromConfig' );
 		$reflSet->setAccessible( true );
 		$reflSet->invoke( $mockController, $mockConfig );

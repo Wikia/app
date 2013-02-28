@@ -465,7 +465,7 @@ class Config implements ArrayAccess
 	 * Returns results number based on a truncated heuristic
 	 * @return integer
 	 */
-	public function getTruncatedResultsNum() 
+	public function getTruncatedResultsNum( $formatted = false ) 
 	{
 		$resultsNum = $this->getResultsFound();
 		
@@ -475,8 +475,12 @@ class Config implements ArrayAccess
 		if( $digits > 1 ) {
 			$zeros = ( $digits > 3 ) ? ( $digits - 1 ) : $digits;
 			$result = round( $resultsNum, ( 0 - ( $zeros - 1 ) ) );
-	    }
-	    return $result;
+		}
+		
+		if ( $formatted ) {
+			$result = $this->interface->formatNumber( $result ); 
+		}
+		return $result;
 	}
 	
 	/**
