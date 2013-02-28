@@ -3,7 +3,6 @@
 	display: block;
 	float: right;
 	ins {
-		text-transform: uppercase;
 		display: block;
 		float: left;
 		font-weight: normal;
@@ -11,9 +10,10 @@
 		height: 18px;
 		line-height: 25px;
 		margin: 0 5px 5px 0;
+		text-transform: uppercase;
 		img {
-			vertical-align: top;
 			margin-top: 4px;
+			vertical-align: top;
 		}
 	}
 }
