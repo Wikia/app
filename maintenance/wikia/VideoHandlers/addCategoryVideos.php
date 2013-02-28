@@ -1,13 +1,17 @@
 <?php
 
-	/**
-	* Maintenance script to add Category:Videos to file page for premium videos
-	* This is one time use script
-	* @author Saipetch Kongkatong
-	*/
+/**
+* Maintenance script to add video category to file page for premium videos
+* This is one time use script
+* @author Saipetch Kongkatong
+*/
 
+$script = preg_replace( '!^.*/!', '', $argv[0] );
+$file   = preg_replace( '!^.*/!', '', __FILE__ );
+
+if ( $script == $file ) {
 	ini_set( "include_path", dirname( __FILE__ )."/../../" );
-	ini_set('display_errors', 1);
+	ini_set( 'display_errors', 'stderr' );
 
 	require_once( "commandLine.inc" );
 
@@ -19,55 +23,99 @@
 
 	$dryRun = ( isset($options['dry-run']) );
 
-	if ( empty($wgCityId) ) {
+	$app = F::app();
+
+	if ( empty($app->wg->CityId) ) {
 		die( "Error: Invalid wiki id." );
 	}
 
-	echo "Wiki: $wgCityId\n";
+	WikiaTask::work( $app->wg->CityId, $dryRun );
+}
 
-	try {
-		$db = wfGetDB( DB_SLAVE );
-	} catch (Exception $e) {
-		die( "Error: Could not connect to database: ".$e->getMessage()."\n" );
-	}
+class WikiaTask {
 
-	if ( !$db->tableExists( 'video_info' ) ) {
-		die( "Error: video_info table NOT found." );
-	}
+	public static function work ( $wiki_id, $dryRun ) {
+		$app = F::app();
 
-	$result = $db->select(
-		array( 'video_info' ),
-		array( 'video_title' ),
-		array( 'premium' => 1 ),
-		__METHOD__
-	);
+		echo "Wiki $wiki_id\n";
 
-	$counter = 1;
-	$success = 0;
-	$total = $result->numRows();
-	$botUser = User::newFromName( 'WikiaBot' );
-	while ( $result && $row = $db->fetchRow( $result ) ) {
-		echo "\t[$counter of $total] Title:".$row['video_title'];
-
-		if ( $dryRun ) {
-			$status = Status::newGood();
-		} else {
-			$videoHandlerHelper = new VideoHandlerHelper();
-			$status = $videoHandlerHelper->addCategoryVideos( $row['video_title'], $botUser );
+		if ( $app->wf->ReadOnly() ) {
+			die( "Error: In read only mode.\n" );
 		}
 
-		if ( !$status instanceof Status) {
-			echo "...FAILED (Title not found or Category:Videos exists).\n";
-		} else if ( $status->isOK() ) {
-			$success++;
-			echo "...DONE.\n";
-		} else {
-			echo "...FAILED (".$status->getMessage().").\n";
+		try {
+			$db = $app->wf->GetDB( DB_SLAVE );
+		} catch ( Exception $e ) {
+			die( "Error: Could not connect to database: ".$e->getMessage()."\n" );
 		}
 
-		$counter++;
+		if ( !$db->tableExists( 'video_info' ) ) {
+			die( "Error: video_info table NOT found." );
+		}
+
+		$result = $db->select(
+			array( 'video_info' ),
+			array( 'video_title' ),
+			array( 'premium' => 1 ),
+			__METHOD__
+		);
+
+		$counter = 1;
+		$success = 0;
+		$categoryExists = 0;
+		$failed = 0;
+		$total = $result->numRows();
+		$botUser = User::newFromName( 'WikiaBot' );
+		while ( $result && $row = $db->fetchRow( $result ) ) {
+			echo "\tWiki $wiki_id: [$counter of $total] Title:".$row['video_title'];
+
+			$title = Title::newFromText( $row['video_title'], NS_FILE );
+			if ( $title instanceof Title ) {
+				$cat = $app->wg->ContLang->getFormattedNsText( NS_CATEGORY );
+				$content = '[[' . $cat . ':' . $app->wf->Message( 'videohandler-category' )->inContentLanguage()->text() . ']]';
+
+				$status = Status::newGood();
+				if ( $title->exists() ) {
+					$article = Article::newFromID( $title->getArticleID() );
+					$oldContent = $article->getContent();
+					if ( !strstr($oldContent, $content) ) {
+						$content = $oldContent.$content;
+						if ( !$dryRun ) {
+							$status = $article->doEdit( $content, 'added video category', EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+						}
+					} else {
+						$failed++;
+						$categoryExists++;
+						$status = null;
+						echo "...FAILED (video category exists).\n";
+					}
+				} else {
+					$article = new Article( $title );
+					if ( !$dryRun ) {
+						$status = $article->doEdit( $content, 'created video', EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+					}
+				}
+
+				if ( $status instanceof Status ) {
+					if ( $status->isOK() ) {
+						$success++;
+						echo "...DONE.\n";
+					} else {
+						$failed++;
+						echo "...FAILED (".$status->getMessage().").\n";
+					}
+				}
+			} else {
+				$failed++;
+				echo "...FAILED (Title not found).\n";
+			}
+
+			$counter++;
+		}
+
+		$db->freeResult($result);
+
+		echo "Wiki $wiki_id: Total videos: $total, Success: $success, Failed: $failed (Video category exists: $categoryExists)\n\n";
 	}
 
-	$db->freeResult($result);
-
-	echo "Total videos: $total, Success: $success\n\n";
+}
