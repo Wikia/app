@@ -89,10 +89,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $title = F::build('SpecialPage', array( 'WikiaSearch' ), 'getTitleFor');
 
 	    $this->setVal( 'class',     str_replace( ' ', '-', strtolower( $label ) ) );
-	    $this->setVal( 'href',		$title->getLocalURL( $stParams ) );
-	    $this->setVal( 'title',		$tooltip );
-	    $this->setVal( 'label',		$label );
-	    $this->setVal( 'tooltip',	$tooltip );
+	    $this->setVal( 'href',      $title->getLocalURL( $stParams ) );
+	    $this->setVal( 'title',     $tooltip );
+	    $this->setVal( 'label',     $label );
+	    $this->setVal( 'tooltip',   $tooltip );
 	}
 	
 	/**
@@ -101,10 +101,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function videoSearch() {
 	    $searchConfig = new Wikia\Search\Config();
 	    $searchConfig
-	    	->setCityId			( $this->wg->CityId )
-	    	->setQuery			( $this->getVal('q') )
-	    	->setNamespaces		( array(NS_FILE) )
-	    	->setVideoSearch	( true )
+	    	->setCityId         ( $this->wg->CityId )
+	    	->setQuery          ( $this->getVal('q') )
+	    	->setNamespaces     ( array(NS_FILE) )
+	    	->setVideoSearch    ( true )
 	    ;
 		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig ); 
 	    $results = $wikiaSearch->search();
@@ -176,9 +176,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
-		$format = $this->response->getFormat();
-		if ( ( $format == 'json' || $format == 'jsonp' ) && ( $searchConfig->getResultsFound() > 0 ) ){
-			$searchConfig->setResults( $searchConfig->getResults()->toNestedArray() );
+		$response = $this->getResponse();
+		$format = $response->getFormat();
+		if ( $format == 'json' || $format == 'jsonp' ){
+			$response->setData( $searchConfig->getResults()->toNestedArray() );
+			return;
 		}
 		if(! $searchConfig->getIsInterWiki() ) {
 			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox', array( 'config' => $searchConfig ) ) );
@@ -187,26 +189,23 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				'config'		=> $searchConfig,
 				'by_category'	=> $this->getVal( 'by_category', false )
 				);
-		$this->setVal( 'results',				$searchConfig->getResults() );
-		$this->setVal( 'resultsFound',			$searchConfig->getResultsFound() );
+		$this->setVal( 'results',               $searchConfig->getResults() );
+		$this->setVal( 'resultsFound',          $searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $searchConfig->getTruncatedResultsNum() ) );
-		$this->setVal( 'isOneResultsPageOnly',	$searchConfig->getNumPages() < 2 );
-		$this->setVal( 'pagesCount', 			$searchConfig->getNumPages() );
-		$this->setVal( 'currentPage', 			$searchConfig->getPage() );
-		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination', $tabsArgs ) );
-		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', $tabsArgs ) );
-		$this->setVal( 'query',					$searchConfig->getQuery( Wikia\Search\Config::QUERY_ENCODED ) );
-		$this->setVal( 'resultsPerPage',		$searchConfig->getLimit() );
-		$this->setVal( 'pageUrl',				$this->wg->Title->getFullUrl() );
-		$this->setVal( 'debug',					$searchConfig->getDebug() );
-		$this->setVal( 'solrHost',				$this->wg->SolrHost);
-		$this->setVal( 'isInterWiki',			$searchConfig->getIsInterWiki() );
-		$this->setVal( 'relevancyFunctionId',	6 ); //@todo do we need this?
-		$this->setVal( 'namespaces',			$searchConfig->getNamespaces() );
-		$this->setVal( 'hub',					$searchConfig->getHub() );
-		$this->setVal( 'hasArticleMatch',		$searchConfig->hasArticleMatch() );
-		$this->setVal( 'isMonobook',			($this->wg->User->getSkin() instanceof SkinMonobook) );
-		$this->setVal( 'isCorporateWiki',		$this->isCorporateWiki() );
+		$this->setVal( 'isOneResultsPageOnly',  $searchConfig->getNumPages() < 2 );
+		$this->setVal( 'pagesCount',            $searchConfig->getNumPages() );
+		$this->setVal( 'currentPage',           $searchConfig->getPage() );
+		$this->setVal( 'paginationLinks',       $this->sendSelfRequest( 'pagination', $tabsArgs ) );
+		$this->setVal( 'tabs',                  $this->sendSelfRequest( 'tabs', $tabsArgs ) );
+		$this->setVal( 'query',                 $searchConfig->getQuery( Wikia\Search\Config::QUERY_ENCODED ) );
+		$this->setVal( 'resultsPerPage',        $searchConfig->getLimit() );
+		$this->setVal( 'pageUrl',               $this->wg->Title->getFullUrl() );
+		$this->setVal( 'isInterWiki',           $searchConfig->getIsInterWiki() );
+		$this->setVal( 'namespaces',            $searchConfig->getNamespaces() );
+		$this->setVal( 'hub',                   $searchConfig->getHub() );
+		$this->setVal( 'hasArticleMatch',       $searchConfig->hasArticleMatch() );
+		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
+		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 	}
 	
 	/**
