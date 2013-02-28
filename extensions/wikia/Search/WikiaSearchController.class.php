@@ -191,7 +191,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				);
 		$this->setVal( 'results',               $searchConfig->getResults() );
 		$this->setVal( 'resultsFound',          $searchConfig->getResultsFound() );
-		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $searchConfig->getTruncatedResultsNum() ) );
+		$this->setVal( 'resultsFoundTruncated', $searchConfig->getTruncatedResultsNum( true ) );
 		$this->setVal( 'isOneResultsPageOnly',  $searchConfig->getNumPages() < 2 );
 		$this->setVal( 'pagesCount',            $searchConfig->getNumPages() );
 		$this->setVal( 'currentPage',           $searchConfig->getPage() );
