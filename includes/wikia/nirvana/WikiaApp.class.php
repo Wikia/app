@@ -474,7 +474,7 @@ class WikiaApp {
 		// register the class with the autoloader
 		$this->registerClass($className, $filePath);
 		if ( is_array( $routing ) ) {
-			$this->getDispatcher()->addRouting($className, $options);
+			$this->getDispatcher()->addRouting($className, $routing);
 		}
 	}
 
