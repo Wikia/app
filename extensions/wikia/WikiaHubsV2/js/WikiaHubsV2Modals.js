@@ -19,31 +19,8 @@ var SuggestModalWikiaHubsV2 = {
 				} else {
 					UserLoginModal.show({
 						callback: function () {
+							UserLogin.forceLoggedIn = true;
 							SuggestModalWikiaHubsV2.suggestArticle();
-						}
-					});
-				}
-			}
-		});
-		// show modal for suggest related videos
-		$('#suggest-popularvideos').click(function () {
-			if (window.wgUserName) {
-				SuggestModalWikiaHubsV2.suggestVideo();
-			} else {
-				if (window.wgComboAjaxLogin) {
-					showComboAjaxForPlaceHolder(false, false, function () {
-						AjaxLogin.doSuccess = function () {
-							$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
-							SuggestModalWikiaHubsV2.suggestVideo();
-						};
-						AjaxLogin.close = function () {
-							$('#AjaxLoginBoxWrapper').closeModal();
-						};
-					}, false, true);
-				} else {
-					UserLoginModal.show({
-						callback: function () {
-							SuggestModalWikiaHubsV2.suggestVideo();
 						}
 					});
 				}
@@ -59,15 +36,32 @@ var SuggestModalWikiaHubsV2 = {
 			type: 'get',
 			callback: function (html) {
 				var modal = $(html).makeModal({width: 490, onClose: SuggestModalWikiaHubsV2.closeModal});
-				var wikiaForm = new WikiaForm(modal.find('form'));
+				var form = modal.find('form');
+				var wikiaForm = new WikiaForm(form);
 				
 				// show submit button
 				SuggestModalWikiaHubsV2.showSubmit(modal);
-				
-				modal.find('button.submit').click(function (e) {
+
+				form.submit(function (e) {
 					e.preventDefault();
-					var articleurl = modal.find('input[name=articleurl]').val();
+					var articleUrl = modal.find('input[name=articleurl]').val();
 					var reason = modal.find('textarea[name=reason]').val();
+
+					Wikia.Tracker.track({
+						action: Wikia.Tracker.ACTIONS.SUBMIT,
+						browserEvent: e,
+						category: 'SuggestArticle',
+						label: 'suggestSubmit',
+						trackingMethod: 'internal',
+						value: null
+					}, {
+						lang: wgContentLanguage,
+						user_name: window.wgUserName,
+						article_url: articleUrl,
+						reason: reason,
+						page_name: window.wgPageName
+					});
+
 					$().log('suggestArticle modal submit');
 					SuggestModalWikiaHubsV2.closeModal(modal);
 				});
@@ -77,37 +71,6 @@ var SuggestModalWikiaHubsV2 = {
 					SuggestModalWikiaHubsV2.closeModal(modal);
 				});
 			}
-		});
-	},
-
-	suggestVideo: function () {
-		$.nirvana.sendRequest({
-			controller: 'WikiaHubsV2SuggestController',
-			method: 'suggestVideo',
-			format: 'html',
-			type: 'get',
-			callback: function (html) {
-				var modal = $(html).makeModal({width: 490, onClose: SuggestModalWikiaHubsV2.closeModal});
-				var wikiaForm = new WikiaForm(modal.find('form'));
-				
-				modal.find('input[name=videourl], input[name=wikiname]').placeholder();
-						
-				// show submit button
-				SuggestModalWikiaHubsV2.showSubmit(modal);
-	
-				modal.find('button.submit').click(function (e) {
-					e.preventDefault();
-					var videourl = modal.find('input[name=videourl]').val();
-					var wikiname = modal.find('input[name=wikiname]').val();
-					$().log('suggestVideo modal submit');
-					SuggestModalWikiaHubsV2.closeModal(modal);
-				});
-	
-				modal.find('button.cancel').click(function (e) {
-					e.preventDefault();
-					SuggestModalWikiaHubsV2.closeModal(modal);
-				});
-			}		
 		});
 	},
 
@@ -128,23 +91,14 @@ var SuggestModalWikiaHubsV2 = {
 	},
 
 	closeModal: function (modal) {
-	//todo: use QueryString made by Jakub Olek :)
-		if (!window.wgUserName) {
-			var searchstring = window.location.search || '';
-			if (typeof searchstring === "undefined") {
-				searchstring = '';
+		require(['wikia.querystring'], function (qs){
+			if (!window.wgUserName) {
+				qs.addCb().goTo();
+			} else if (typeof(modal.closeModal) === 'function') {
+				modal.closeModal();
 			}
-
-			if (searchstring === '') {
-				window.location = window.location + '?cb=' + Math.floor(Math.random() * 10000);
-			} else if (searchstring.substr(0, 1) == '?') {
-				window.location = window.location + '&cb=' + Math.floor(Math.random() * 10000);
-			}
-		} else if (typeof(modal.closeModal) === 'function') {
-			modal.closeModal();
-		}
+		});
 	}
-
 };
 
 $(function () {
