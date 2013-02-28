@@ -5,13 +5,26 @@ class UserStatsService extends WikiaModel {
 	const GET_GLOBAL_STATS_CACHE_VER = 'v1.0';
 
 	private $userId;
+	private $user;
 
 	/**
 	 * Pass user ID of user you want to get data about
 	 */
 	function __construct($userId) {
 		$this->userId = intval($userId);
+		$this->user = null;
 		parent::__construct();
+	}
+
+	/**
+	 * Get user object based on $this->userId
+	 * @return User
+	 */
+	function getUser() {
+		if ( empty($this->user) ) {
+			$this->user = User::newFromId( $this->userId );
+		}
+		return $this->user;
 	}
 
 	/**
