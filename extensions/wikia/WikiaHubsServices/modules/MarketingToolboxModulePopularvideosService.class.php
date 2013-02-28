@@ -102,7 +102,7 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 			$moduleModel = $this->getModuleModel();
 
 			$structuredData['header'] = $data['header'];
-
+			$structuredData['videos'] = null;
 			foreach($data['video'] as $key => $video) {
 				$videoData = $toolboxModel->getVideoData($video, $moduleModel->getVideoThumbSize());
 
