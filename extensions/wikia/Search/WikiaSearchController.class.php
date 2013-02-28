@@ -55,32 +55,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setResponseValuesFromConfig( $searchConfig );
 	}
 	
-	/**
-	 * Passes the appropriate values to the config object from the request.
-	 * @return \Wikia\Search\Config
-	 */
-	protected function getSearchConfigFromRequest() {
-		$searchConfig = new Wikia\Search\Config();
-		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? self::RESULTS_PER_PAGE : $this->wg->SearchResultsPerPage;
-		$searchConfig
-			->setQuery			( $this->getVal('query', $this->getVal('search') ) )
-			->setCityId			( $this->wg->CityId )
-			->setLimit			( $this->getVal('limit', $resultsPerPage ) )
-			->setPage			( $this->getVal('page', 1) )
-			->setRank			( $this->getVal('rank', 'default') )
-			->setDebug			( $this->request->getBool('debug', false) )
-			->setSkipCache		( $this->request->getBool('skipCache', false) )
-			->setAdvanced		( $this->request->getBool( 'advanced', false ) )
-			->setHub			( ($this->getVal('nohub') != '1') ? $this->getVal('hub', false) : false )
-			->setRedirs			( $searchConfig->getAdvanced() ? $this->request->getBool('redirs', false) : false )
-			->setIsInterWiki	( $this->request->getBool('crossWikia', false) || $this->isCorporateWiki() )
-			->setVideoSearch	( $this->getVal('videoSearch', false) )
-			->setGroupResults	( $searchConfig->isInterWiki() || $this->getVal('grouped', false) )
-			->setFilterQueriesFromCodes( $this->getVal( 'filters', array() ) )
-		;
-		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
-		return $searchConfig;
-	}
 	
 	/**
 	 * Sets values for the view to work with.
@@ -127,24 +101,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 	
 	/**
-	 * Sets the page title during index method.
-	 * @param Wikia\Search\Config $searchConfig
+	 * Deprecated functionality for indexing.
 	 */
-	protected function setPageTitle( Wikia\Search\Config $searchConfig ) {
-		if ( $searchConfig->getQueryNoQuotes( true ) ) {
-			$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query',
-												array( ucwords( $searchConfig->getQuery( Wikia\Search\Config::QUERY_RAW ) ), $this->wg->Sitename) )  );
-		}
-		else {
-			if( $searchConfig->getIsInterWiki() ) {
-				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
-			} else {
-				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki',
-													array($this->wg->Sitename) )  );
-			}
-		}
-	}
-	
 	public function getPages() {
 		$this->wg->AllowMemcacheWrites = false;
 		$indexer = new Wikia\Search\Indexer();
@@ -186,21 +144,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function videoSearch() {
 	    $searchConfig = new Wikia\Search\Config();
 	    $searchConfig
-	    	->setCityId			( $this->wg->cityId )
+	    	->setCityId			( $this->wg->CityId )
 	    	->setQuery			( $this->getVal('q') )
 	    	->setNamespaces		( array(NS_FILE) )
 	    	->setVideoSearch	( true )
 	    ;
-	    
-	    $dcParams = array(
-					'config' => $searchConfig,
-					);
-		$container = new Wikia\Search\QueryService\DependencyContainer( $dcParams );
-		$this->wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->get( $container ); 
-
-	    $this->wikiaSearch->search( $searchConfig );
+		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig ); 
+	    $results = $wikiaSearch->search();
 	    $this->getResponse()->setFormat( 'json' );
-	    $this->getResponse()->setData( ( $searchConfig->getResults() ) ? $searchConfig->getResults()->toNestedArray() : array() );
+	    $this->getResponse()->setData( $results->toNestedArray() );
 
 	}
 
@@ -236,6 +188,90 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Passes the appropriate values to the config object from the request during index method.
+	 * @return \Wikia\Search\Config
+	 */
+	protected function getSearchConfigFromRequest() {
+		$searchConfig = new Wikia\Search\Config();
+		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? self::RESULTS_PER_PAGE : $this->wg->SearchResultsPerPage;
+		$searchConfig
+			->setQuery			( $this->getVal('query', $this->getVal('search') ) )
+			->setCityId			( $this->wg->CityId )
+			->setLimit			( $this->getVal('limit', $resultsPerPage ) )
+			->setPage			( $this->getVal('page', 1) )
+			->setRank			( $this->getVal('rank', 'default') )
+			->setDebug			( $this->request->getBool('debug', false) )
+			->setSkipCache		( $this->request->getBool('skipCache', false) )
+			->setAdvanced		( $this->request->getBool( 'advanced', false ) )
+			->setHub			( ($this->getVal('nohub') != '1') ? $this->getVal('hub', false) : false )
+			->setRedirs			( $searchConfig->getAdvanced() ? $this->request->getBool('redirs', false) : false )
+			->setIsInterWiki	( $this->request->getBool('crossWikia', false) || $this->isCorporateWiki() )
+			->setVideoSearch	( $this->getVal('videoSearch', false) )
+			->setGroupResults	( $searchConfig->isInterWiki() || $this->getVal('grouped', false) )
+			->setFilterQueriesFromCodes( $this->getVal( 'filters', array() ) )
+		;
+		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
+		return $searchConfig;
+	}
+	
+	/**
+	 * Sets values for the view to work with during index method.
+	 * @param Wikia\Search\Config $searchConfig
+	 */
+	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
+		$format = $this->response->getFormat();
+		if ( ( $format == 'json' || $format == 'jsonp' ) && ( $searchConfig->getResultsFound() > 0 ) ){
+			$searchConfig->setResults( $searchConfig->getResults()->toNestedArray() );
+		}
+		if(! $searchConfig->getIsInterWiki() ) {
+			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox', array( 'config' => $searchConfig ) ) );
+		}
+		$tabsArgs = array(
+				'config'		=> $searchConfig,
+				'by_category'	=> $this->getVal( 'by_category', false )
+				);
+		$this->setVal( 'results',				$searchConfig->getResults() );
+		$this->setVal( 'resultsFound',			$searchConfig->getResultsFound() );
+		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $searchConfig->getTruncatedResultsNum() ) );
+		$this->setVal( 'isOneResultsPageOnly',	$searchConfig->getNumPages() < 2 );
+		$this->setVal( 'pagesCount', 			$searchConfig->getNumPages() );
+		$this->setVal( 'currentPage', 			$searchConfig->getPage() );
+		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination', $tabsArgs ) );
+		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', $tabsArgs ) );
+		$this->setVal( 'query',					$searchConfig->getQuery( Wikia\Search\Config::QUERY_ENCODED ) );
+		$this->setVal( 'resultsPerPage',		$searchConfig->getLimit() );
+		$this->setVal( 'pageUrl',				$this->wg->Title->getFullUrl() );
+		$this->setVal( 'debug',					$searchConfig->getDebug() );
+		$this->setVal( 'solrHost',				$this->wg->SolrHost);
+		$this->setVal( 'isInterWiki',			$searchConfig->getIsInterWiki() );
+		$this->setVal( 'relevancyFunctionId',	6 ); //@todo do we need this?
+		$this->setVal( 'namespaces',			$searchConfig->getNamespaces() );
+		$this->setVal( 'hub',					$searchConfig->getHub() );
+		$this->setVal( 'hasArticleMatch',		$searchConfig->hasArticleMatch() );
+		$this->setVal( 'isMonobook',			($this->wg->User->getSkin() instanceof SkinMonobook) );
+		$this->setVal( 'isCorporateWiki',		$this->isCorporateWiki() );
+	}
+	
+	/**
+	 * Sets the page title during index method.
+	 * @param Wikia\Search\Config $searchConfig
+	 */
+	protected function setPageTitle( Wikia\Search\Config $searchConfig ) {
+		if ( $searchConfig->getQueryNoQuotes( true ) ) {
+			$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query',
+												array( ucwords( $searchConfig->getQuery( Wikia\Search\Config::QUERY_RAW ) ), $this->wg->Sitename) )  );
+		}
+		else {
+			if( $searchConfig->getIsInterWiki() ) {
+				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
+			} else {
+				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki',
+													array($this->wg->Sitename) )  );
+			}
+		}
 	}
 
 	/**
