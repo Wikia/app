@@ -664,7 +664,7 @@ class MediaWikiInterface
 	 */
 	protected function getFileForPageId( $pageId ) {
 		if (! isset( $this->pageIdsToFiles[$pageId] ) ) {
-			$this->pageIdsToFiles[$pageId] = $this->app->wf->findFile( $this->getTitleFromPageId( $pageId ) );
+			$this->pageIdsToFiles[$pageId] = $this->app->wf->FindFile( $this->getTitleFromPageId( $pageId ) );
 		}
 		return $this->pageIdsToFiles[$pageId];
 	}

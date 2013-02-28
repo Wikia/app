@@ -303,60 +303,10 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 
 	}
 	
-	/**
-	 * bugid: 69027
-	 * @covers Wikia\Search\Result::getTitleObject
-	 */
-	public function testGetTitleObjectForEmptyButNonNullTitles() {
-		
-		$result = $this->getMockBuilder( 'Wikia\Search\Result' )
-						->setMethods( array( 'getTitle' ) )
-						->getMock();
-		
-		$result
-			->expects	( $this->at( 0 ) )
-			->method	( 'getTitle' )
-			->will		( $this->returnValue( '' ) ) // this is not a valid title
-		;
-		
-		$titleObjectPlaceholder = (object) array( 'foo' => 'bar' );
-		
-		$titleObject = new ReflectionProperty( 'Wikia\Search\Result', 'titleObject' );
-		$titleObject->setAccessible( true );
-		$titleObject->setValue( $result, $titleObjectPlaceholder );
-		
-		$this->assertEquals(
-				$titleObjectPlaceholder,
-				$result->getTitleObject(),
-				'Wikia\Search\Result::getTitleObject should return whatever value is presently set in the titleObject property if there is no title string available from Wikia\Search\Result::getTitle'
-		);
-		
-		$titleObject->setValue( $result, null );
-		
-		$mockTitle = $this->getMockBuilder( 'Title' )
-							->disableOriginalConstructor()
-							->getMock();
-		
-		$result
-			->expects	( $this->at( 0 ) )
-			->method	( 'getTitle' )
-			->will		( $this->returnValue( '0' ) ) // this is a valid title, but empty() returns true
-		;
-		
-		$this->proxyClass( 'Title', $mockTitle, 'MakeTitle' );
-		$this->mockApp();
-		
-		$this->assertEquals(
-				$mockTitle,
-				$result->getTitleObject(),
-				'Wikia\Search\Result::getTitleObject should set the titleObject property if a title string can be found and a title object instantiated'
-		);
-		
-	}
 
 	/**
 	 * @covers Wikia\Search\Result::getVideoViews
-	 */
+	 * @todo
 	public function testGetVideoViewsNotVideo() {
 		$result = $this->getMockBuilder( 'Wikia\Search\Result' )
 						->setMethods( array( 'getTitleObject', 'offsetGet' ) )
@@ -390,11 +340,11 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 				$result->getVideoViews(),
 				'Wikia\Search\Result::getVideoViews() should return an empty string if the file result is an not a video file'
 		);
-	}
+	}*/
 	
     /**
 	 * @covers Wikia\Search\Result::getVideoViews
-	 */
+	 *@todo
 	public function testGetVideoViewsVideo() {
 		$result = $this->getMockBuilder( 'Wikia\Search\Result' )
 						->setMethods( array( 'getTitleObject', 'offsetGet' ) )
@@ -447,5 +397,5 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 				$result->getVideoViews(),
 				'Wikia\Search\Result::getVideoViews() should return a translated string containing the value of the video views'
 		);
-	}
+	}*/
 }
