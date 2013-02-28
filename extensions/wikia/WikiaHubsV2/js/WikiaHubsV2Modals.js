@@ -55,10 +55,10 @@ var SuggestModalWikiaHubsV2 = {
 						value: null
 					}, {
 						lang: wgContentLanguage,
-						userName: window.wgUserName,
-						articleUrl: articleUrl,
+						user_name: window.wgUserName,
+						article_url: articleUrl,
 						reason: reason,
-						pageName: window.wgPageName
+						page_name: window.wgPageName
 					});
 
 					$().log('suggestArticle modal submit');
