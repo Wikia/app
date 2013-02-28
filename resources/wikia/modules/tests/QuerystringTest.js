@@ -14,7 +14,21 @@ describe("Querystring", function () {
 			search: '',
 			hash: ''
 		},
-		querystring = define.getModule(locationMock);
+		windowMock = {
+			document: window.document,
+			history: {
+				length: 0,
+				state: [],
+				pushState: function(data, title, url) {
+					this.length++;
+					this.state.push(data);
+				},
+				replaceState: function(data) {
+					this.state = [data];
+				}
+			}
+		}, 
+		querystring = define.getModule(locationMock, windowMock);
 
 	it('registers AMD module', function() {
 		expect(querystring).toBeDefined();
@@ -46,18 +60,16 @@ describe("Querystring", function () {
 
 	it('works with history api', function() {
 		var qs = new querystring(),
-			histLen = history.length;
+			histLen = windowMock.history.length;
 
 		qs.pushState({test:1});
-		expect(history.length).toBe(histLen+1);
-		// PhantomJS doesn't currently support history.state
-		//expect(history.state.test).toBe(1);
+		expect(windowMock.history.length).toBe(histLen+1);
+		expect(windowMock.history.state[histLen].test).toBe(1);
 
-		histLen = history.length;
+		histLen = windowMock.history.length;
 		qs.replaceState({test:2});
-		expect(history.length).toBe(histLen);
-		// PhantomJS doesn't currently support history.state
-		//expect(history.state.test).toBe(2);
+		expect(windowMock.history.length).toBe(histLen);
+		expect(windowMock.history.state[histLen-1].test).toBe(2);
 
 	});
 
