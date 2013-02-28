@@ -1,5 +1,5 @@
 <div class="title-wrapper">
-	<h2><?= $headline ?></h2>
+	<h2><?= $header ?></h2>
 </div>
 <section class="WikiaMediaCarousel">
 	<a href="#" class="button secondary right next">
