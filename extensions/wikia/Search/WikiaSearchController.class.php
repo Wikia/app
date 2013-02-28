@@ -198,20 +198,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$searchConfig = new Wikia\Search\Config();
 		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? self::RESULTS_PER_PAGE : $this->wg->SearchResultsPerPage;
 		$searchConfig
-			->setQuery			( $this->getVal('query', $this->getVal('search') ) )
-			->setCityId			( $this->wg->CityId )
-			->setLimit			( $this->getVal('limit', $resultsPerPage ) )
-			->setPage			( $this->getVal('page', 1) )
-			->setRank			( $this->getVal('rank', 'default') )
-			->setDebug			( $this->request->getBool('debug', false) )
-			->setSkipCache		( $this->request->getBool('skipCache', false) )
-			->setAdvanced		( $this->request->getBool( 'advanced', false ) )
-			->setHub			( ($this->getVal('nohub') != '1') ? $this->getVal('hub', false) : false )
-			->setRedirs			( $searchConfig->getAdvanced() ? $this->request->getBool('redirs', false) : false )
-			->setIsInterWiki	( $this->request->getBool('crossWikia', false) || $this->isCorporateWiki() )
-			->setVideoSearch	( $this->getVal('videoSearch', false) )
-			->setGroupResults	( $searchConfig->isInterWiki() || $this->getVal('grouped', false) )
-			->setFilterQueriesFromCodes( $this->getVal( 'filters', array() ) )
+			->setQuery                   ( $this->getVal( 'query', $this->getVal( 'search' ) ) )
+			->setCityId                  ( $this->wg->CityId )
+			->setLimit                   ( $this->getVal( 'limit', $resultsPerPage ) )
+			->setPage                    ( $this->getVal( 'page', 1) )
+			->setRank                    ( $this->getVal( 'rank', 'default' ) )
+			->setAdvanced                ( $this->getRequest()->getBool( 'advanced', false ) )
+			->setHub                     ( $this->getVal( 'hub', false ) )
+			->setIsInterWiki             ( $this->isCorporateWiki() )
+			->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
+			->setGroupResults            ( $searchConfig->isInterWiki() )
+			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
 		;
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 		return $searchConfig;
@@ -278,9 +275,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action. Sets the SearchConfigs namespaces based on MW-core NS request style.
 	 * @see    WikiSearchControllerTest::testSetNamespacesFromRequest
 	 * @param  Wikia\Search\Config $searchConfig
+	 * @todo return type hinting when we live in a saner world of unit testing
 	 * @return boolean true
 	 */
-	protected function setNamespacesFromRequest( Wikia\Search\Config $searchConfig, User $user ) {
+	protected function setNamespacesFromRequest( $searchConfig, User $user ) {
 		$searchEngine = F::build( 'SearchEngine' );
 		$searchableNamespaces = $searchEngine->searchableNamespaces();
 		$namespaces = array();
