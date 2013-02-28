@@ -60,12 +60,14 @@ class SynchronizeBlobs extends Maintenance {
 												INNER JOIN text ON rev_text_id=old_id",
 											"SynchronizeBlobs::latestRevision");
 		foreach ($rows as $row) {
-			if ($row->old_flags=="utf-8,gzip,external") { // i know what to do with it
+			if (strpos($row->old_flags, "external") !== false) { // i know what to do with it
 				if (preg_match("/DB:\/\/([^\/]+)\/([0-9]+)/", $row->old_text, $url)) {
 					$this->clusters[$url[1]][] = $url[2];
 				}
 			} else {
-				$this->output("Unexpected row: $row");
+				$flags = $row->old_flags;
+				$id = $row->old_id;
+				$this->output("Unexpected row $id with flags: $flags\n");
 			}
 		}
 		unset($rows);
