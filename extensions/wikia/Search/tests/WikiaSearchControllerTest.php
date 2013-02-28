@@ -323,63 +323,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	}
 
 
-	/**
-	 * @covers WikiaSearchController
-	 *@todo move to hookstest
-	public function testOnWikiaMobileAssetsPackages() {
-
-		$mockSearch		= $this->getMockBuilder( 'WikiaSearch' )->disableOriginalConstructor()->getMock();
-		$mockIndexer	= $this->getMockBuilder( 'WikiaSearchIndexer' )->disableOriginalConstructor()->getMock();
-		$controller		= F::build( 'WikiaSearchController', array( $mockSearch, $mockIndexer ) );
-
-		$mockTitle	= $this->getMock( 'Title', array( 'isSpecial' ) );
-		$jsHead		= array();
-		$jsBody		= array();
-		$cssPkg		= array();
-
-		$mockTitle
-			->expects	( $this->at( 0 ) )
-			->method	( 'isSpecial' )
-			->with		( 'Search' )
-			->will		( $this->returnValue( false ) )
-		;
-		$mockTitle
-			->expects	( $this->at( 1 ) )
-			->method	( 'isSpecial' )
-			->with		( 'Search' )
-			->will		( $this->returnValue( true ) )
-		;
-
-		$this->mockGlobalVariable( 'wgTitle', $mockTitle );
-		$this->mockApp();
-		$this->assertTrue(
-				$controller->onWikiaMobileAssetsPackages( $jsHead, $jsBody, $cssPkg ),
-				'As a hook, WikiaSearchController::onWikiaMobileAssetsPackages must return true.'
-		);
-		$this->assertEmpty(
-		        $jsBody,
-		        'WikiaSearchController::onWikiaMobileAssetsPackages shoudl not append the value "wikiasearch_js_wikiamobile" to the jsBodyPackages array if the title is not special search.'
-		);
-		$this->assertEmpty(
-		        $cssPkg,
-		        'WikiaSearchController::onWikiaMobileAssetsPackages should not append the value "wikiasearch_scss_wikiamobile" to the jsBodyPackages array  if the title is not special search.'
-		);
-		$this->assertTrue(
-		        $controller->onWikiaMobileAssetsPackages( $jsHead, $jsBody, $cssPkg ),
-		        'As a hook, WikiaSearchController::onWikiaMobileAssetsPackages must return true.'
-		);
-		$this->assertContains(
-				'wikiasearch_js_wikiamobile',
-				$jsBody,
-				'WikiaSearchController::onWikiaMobileAssetsPackages shoudl append the value "wikiasearch_js_wikiamobile" to the jsBodyPackages array.'
-		);
-		$this->assertContains(
-		        'wikiasearch_scss_wikiamobile',
-		        $cssPkg,
-		        'WikiaSearchController::onWikiaMobileAssetsPackages shoudl append the value "wikiasearch_scss_wikiamobile" to the jsBodyPackages array.'
-		);
-	}*/
-
+	
 	/**
 	 * @covers WikiaSearchController::pagination
 	 */
