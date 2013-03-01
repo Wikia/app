@@ -3083,17 +3083,14 @@ ___________________________________________
 * Wilt u minder berichten van ons ontvangen? U kunt hier uitschrijven of uw e-mailvoorjeuren wijzigen: http://community.wikia.com/Special:Preferences",
 	'autocreatewiki-welcometalk-wall-title' => 'Welkom!',
 	'autocreatewiki-welcometalk-wall' => "Hallo!
-We zijn blij dat {{subst:SITENAME}} nu onderdeel is van de Wikiagemeenschap. Er is nog veel te doen, dus hier zijn wat handige tips om uw wiki verder te helpen:
-* Weet u niet zeker waar u moet beginnen? Ga naar [[w:c:community:Admin_Central:Main_Page|De hub voor Oprichters en beheerders]] en neem vooral ook een kijkje op de [[w:c:community:Blog:Wikia_Founders_&_Admins|Blog]] voor tips over hoe u uw wiki een vlotte start kunt geven en kunt laten groeien.
-* Maak in de [[w:c:community:Special:Chat|chat]] van [[w:c:community:main page|Community Central]] nieuwe vrienden en leer over nieuwe functies en nieuws van Wikia op de  [[w:c:community:Blog:Wikia_Staff_Blog|Stafblog]].
-* Neem deel aan een van onze [[w:c:community:Webinars|webinars]] -- waar u kunt inschrijven voor interactieve sessies met onze medewerkers en reeds gehouden sessies (nog een keer) kunt bekijken.
-* Neem zeker ook een kijkje op [[Special:WikiFeatures|Wikifuncties]] om te kijken welke functies u voor uw wiki in kunt schakelen.
-* Ga op ontdekkingstocht op de [[w:c:community:Admin_Central:Forum|forums]] op de Hub voor Oprichters en Beheerders om de ontdekken wat andere wikibeheerders vragen.
-* Tenslotte kunt u onze [[w:c:community:Help:Contents|Hulppagina's]] bekijken om snel vragen beantwoord te krijgen waar u mee zit.
+We zijn blij dat {{subst:SITENAME}} nu onderdeel is van de Wikiagemeenschap.
 
-Alle bovenstaande koppelingen zijn een prima plaats om te beginnen met het verkennen van Wikia. Als u vast komt te zitten, of een antwoord niet kunt vinden, [[Special:Contact|neem dan alstublieft contact met ons op]]. En het meest belangrijke: maak plezier!
+Er is nog veel te doen, dus hier zijn wat handige tips om uw wiki verder te helpen:
+* Neem een kijkje op [[Special:WikiFeatures|Wikifuncties]] om te zien welke functies u voor uw wiki in kunt schakelen, waaronder chat, speldjes en nog veel meer.
+* Ga langs bij [[w:c:community|Community Central]] om op de hoogte te blijven via onze [[w:c:community:Blog:Wikia_Staff_Blog|medewerkersblog]], stel vragen op ons [[w:c:community:Special:Forum|gemeenschapsforum]], neem deel aan onze [[w:c:community:Help:Webinars|webinars]] of chat live met mede-Wikianen.
+* Tenslotte kunt u onze [[Help:Contents|Hulppagina's]] bekijken om alle ins en outs van Wikia te leren kennen.
 
-Veel plezier met bewerken!",
+Alle bovenstaande koppelingen zijn een prima plaats om te beginnen met het verkennen van Wikia. Veel plezier!",
 	'autocreatewiki-welcometalk' => "== Welkom! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hallo \$1. We zijn erg blij dat '''\$4''' onderdeel is geworden van de Wikiagemeenschap!
 
@@ -3107,7 +3104,7 @@ En daarna vooral volhouden! De wiki's waar veel te lezen en te zien is zijn het 
 
 Als u vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]]. Veel plezier!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => "Nieuwe wiki's",
 	'newwikisstart' => "Wiki's weergeven vanaf:",
 );
