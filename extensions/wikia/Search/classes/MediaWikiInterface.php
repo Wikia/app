@@ -488,7 +488,7 @@ class MediaWikiInterface
 	 * @param int $pageId
 	 * @return string
 	 */
-	public function getNonCanonicalTitleString( $pageId ) {
+	public function getNonCanonicalTitleStringFromPageId( $pageId ) {
 		if ( isset( $this->redirectArticles[$pageId] ) ) {
 			return $this->getTitleString( $this->redirectArticles[$pageId]->getTitle() );
 		}
@@ -646,6 +646,16 @@ class MediaWikiInterface
 	 */
 	public function formatNumber( $number ) {
 		return $this->app->wg->Lang->formatNum( $number ); 
+	}
+	
+	/**
+	 * Uses Wikia Homepage Helper to acces visualization info
+	 * @param int $wikiId
+	 * @return array
+	 */
+	public function getVisualizationInfoForWikiId( $wikiId ) {
+		$helper = new \WikiaHomePageHelper();
+		return $helper->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
 	}
 	
 	/**

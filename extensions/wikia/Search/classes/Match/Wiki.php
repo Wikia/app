@@ -5,66 +5,25 @@
 namespace Wikia\Search\Match;
 use \Wikia\Search\Result as Result;
 use \Wikia\Search\Utilities;
-use \WikiaHomePageHelper as HomePageHelper;
 
 class Wiki extends AbstractMatch
 {
 	/**
+	 * Creates result from  main page. We used to use promo data, but we're putting that kind of information one level up.
 	 * @see \Wikia\Search\Match\AbstractMatch::createResult()
 	 * @return \Wikia\Search\Result;
 	 */
 	public function createResult()
 	{
-		return $this->getResultFromPromoData() ?: $this->getResultFromMainPage();
-	}
-	
-	/**
-	 * Extracts promo data and turns it into a Wikia\Search\Result
-	 * Returns null if no promo data
-	 * @return \Wikia\Search\Result|NULL
-	 */
-	public function getResultFromPromoData() {
-		$fields = array();
-		$helper = new HomePageHelper;
-		$data = $helper->getWikiInfoForVisualization( $this->id, $this->interface->getLanguageCode() );
-		
-		if ( !empty( $data ) ) {
-			$parsed = parse_url($data['url']);
-			$fields['wid'] = $this->id;
-			$fields['title'] = !empty( $data['name'] ) ? $data['name'] : $this->interface->getGlobalForWiki( 'wgSitename', $this->id );
-			$fields[Utilities::field( 'title' )] = $data['name'];
-			$fields['url'] = sprintf('%s://%s%s', $parsed['scheme'], $parsed['host'], $parsed['path']);
-			$fields['isWikiMatch'] = true;
-			$fields['thumbnail'] = array_shift( empty( $data['wiki_images'] ) ? array() : $data['wiki_images'] );
-
-			$result = new Result( $fields );
-			
-			$text = $this->preprocessText( $data['description'] ?: $this->interface->getMainPageTextForWikiId( $this->id ) );
-			$result->setText( $text, true );
-			
-			return $result;
-		}
-		return null;
-	}
-	
-	/**
-	 * Uses MediaWikiInterface to access necessary data from main page as a result.
-	 * @return \Wikia\Search\Result
-	 */
-	public function getResultFromMainPage() {
-		
 		$fields = array(
 				'wid' => $this->id,
-				'title' => $this->interface->getGlobalForWiki( 'wgSitename', $this->id ),
+				'title' => $this->interface->getGlobalForWiki( 'Sitename', $this->id ),
 				'isWikiMatch' => true,
-				\WikiaSearch::field( 'title' ) => $this->interface->getGlobalForWiki( 'wgSitename', $this->id ),
-				$fields['url'] = $this->interface->getMainPageUrlForWikiId( $this->id )
+				'url' => $this->interface->getMainPageUrlForWikiId( $this->id )
 				);
 		$result = new Result( $fields );
 		
-		
-		
-		$result->setText( $this->preprocessText( $this->getMainPageTextForWikiId( $this->id ) ) );
+		$result->setText( $this->preprocessText( $this->interface->getMainPageTextForWikiId( $this->id ) ) );
 		
 		return $result;
 	}
