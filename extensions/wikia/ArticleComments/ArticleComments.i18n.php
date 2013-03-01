@@ -2256,10 +2256,13 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author Pttraduc
  * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(
+	'article-comments-file-page' => "<a href='$1'>Comentário de  $2  </a> em<a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Comentar do  $2  </a> na <a href='$3'> $4 </a> post sobre <a href='$5'>  $6 do</a> blog",
 	'article-comments-anonymous' => 'Utilizador anónimo',
 	'article-comments-comments' => 'Comentários ($1)',
 	'article-comments-post' => 'Publicar comentário',
@@ -2297,6 +2300,7 @@ $messages['pt'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Publicar um comentário',
 	'wikiamobile-article-comments-show' => 'Mostrar',
 	'wikiamobile-article-comments-login-post' => 'Inicie sessão antes de publicar um comentário.',
+	'wikiamobile-article-comments-post-fail' => 'Falha ao salvar o comentário, por favor, tente novamente mais tarde',
 	'enotif_subject_article_comment' => '$PAGEEDITOR comentou "$PAGETITLE" na {{SITENAME}}',
 	'enotif_body_article_comment' => 'Olá $WATCHINGUSERNAME,
 
@@ -2307,19 +2311,17 @@ Existe um novo comentário em $PAGETITLE na {{SITENAME}}. Usa este link para ver
 ___________________________________________
 * Encontra ajuda e conselhos na Central da Comunidade: http://community.wikia.com
 * Desejas receber menos mensagens nossas? Podes des-subscrever ou alterar as tuas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences',
-	'enotif_body_article_comment-HTML' => '<p>Caro $WATCHINGUSERNAME,
-<br /><br />
-$PAGEEDITOR fez um comentário em "$PAGETITLE".
-<br /><br />
-Para ver a lista de discussão do comentário, siga este link: <a href="$PAGETITLE_URL">$PAGETITLE</a>
-<br /><br />
-Por favor, visite e edite muitas vezes...
-<br /><br />
-Wikia
-<br /><hr />
+	'enotif_body_article_comment-HTML' => '<p>Oi WATCHINGUSERNAME $,
+<br><br>
+Há um novo comentário no $PAGETITLE em {{SITENAME}}. Use este link para ver todos os comentários: $PAGETITLE_URL #WikiaArticleComments
+<br><br>
+-apoio da Comunidade Wikia
+<br><br>
+___________________________________________
 <ul>
-<li>Quer controlar os e-mails que recebe? <a href="{{fullurl:Special:Preferences}}">Actualize as suas preferências<a>.</li>
-</ul>
+<li>Encontrar ajuda e conselhos na Comunidade Central: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Quero receber menos mensagens de nós? Você pode cancelar ou alterar suas preferências de e-mail aqui: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+</li></li></ul>
 </p>', # Fuzzy
 );
 

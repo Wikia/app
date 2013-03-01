@@ -417,6 +417,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		//libraries/frameworks
 		'//resources/wikia/libraries/modil/modil.js',
 		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
+		'//resources/wikia/modules/sloth.js',
 
 		// deferred.js - jQuery-free implementation (BugId:34943)
 		'//resources/wikia/libraries/deferred/deferred.js',
@@ -482,6 +483,8 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
 		'//extensions/wikia/WikiaMobile/js/share.js',
 		'//resources/wikia/modules/thumbnailer.js',
+
+		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js',
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',

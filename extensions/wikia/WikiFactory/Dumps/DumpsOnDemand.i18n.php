@@ -669,6 +669,14 @@ $messages['ro'] = array(
 	'dump-database-request' => 'Solicită o actualizare',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'dump-database-curr-pages' => 'Pàggene de mò',
+	'dump-database-full-pages' => 'Pàggene de mò e cunde lore',
+);
+
 /** Russian (русский)
  * @author Lockal
  * @author MaxSem

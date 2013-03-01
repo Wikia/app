@@ -264,6 +264,14 @@ $messages['pt-br'] = array(
 	'wikiarelatedpages-heading' => 'Leia mais',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikiarelatedpages-desc' => "Aggiunge 'n'elenghe cu le pàggene collegate a le pàggene",
+	'wikiarelatedpages-heading' => 'Ligge de cchiù',
+);
+
 /** Russian (русский)
  * @author Eleferen
  * @author Exlex
