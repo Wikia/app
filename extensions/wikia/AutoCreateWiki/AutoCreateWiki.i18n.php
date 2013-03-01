@@ -3505,11 +3505,13 @@ $messages['ps'] = array(
 	'autocreatewiki-congratulation' => 'مبارک مو شه!',
 	'autocreatewiki-welcometalk-log' => 'د ښه راغلاست پيغام',
 	'autocreatewiki-welcomesubject' => '$1 جوړ شو!',
+	'autocreatewiki-welcometalk-wall-title' => 'ښه راغلۍ!',
 	'newwikis' => 'نوې ويکي ګانې',
 );
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Pttraduc
  * @author SandroHc
  * @author Waldir
  */
@@ -3610,6 +3612,7 @@ A Equipa da Comunidade Wikia
 
 ___________________________________________
 * Você quer receber menos mensagens nossas? Você pode remover a subscrição ou alterar as suas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences',
+	'autocreatewiki-welcometalk-wall-title' => 'Bem-vindo!',
 	'autocreatewiki-welcometalk' => "== Bem-vindo(a)! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Olá \$1 -- é óptimo poder contar com a '''\$4''' na comunidade Wikia!
 
@@ -3623,7 +3626,7 @@ Depois é só continuar! As pessoas gostam de visitar wikis com muito conteúdo 
 
 Se tiver alguma questão, pode contactar-nos por correio electrónico usando o [[Special:Contact|formulário de contacto]]. Divirta-se!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Wikis novas',
 	'newwikisstart' => 'Mostrar wikis, começando por:',
 );

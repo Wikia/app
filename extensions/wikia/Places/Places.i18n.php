@@ -467,6 +467,7 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'places-editor-search' => 'پلټل',
+	'places-geolocation-modal-error-title' => 'تېروتنه',
 );
 
 /** Portuguese (português)

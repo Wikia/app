@@ -438,7 +438,7 @@ $messages['gl'] = array(
 	'categoryselect-error-duplicate-category-name' => 'A categoría "$1" xa existe.',
 	'categoryselect-error-edit-abort' => 'O asociador da extensión abortou a modificación que intentou realizar.',
 	'categoryselect-error-empty-category-name' => 'Dea o nome da categoría.',
-	'categoryselect-error-user-rights' => 'O usuario non ten os permisos necesarios para levar a cabo esta accións.',
+	'categoryselect-error-user-rights' => 'O usuario non ten os permisos necesarios para levar a cabo esta acción.',
 	'categoryselect-modal-category-name' => 'Escriba o nome da categoría:',
 	'categoryselect-modal-category-sortkey' => 'Opcionalmente, pode clasificar alfabeticamente este artigo na categoría "$1" co nome:',
 	'categoryselect-tooltip-add' => 'Prema a tecla Intro ou Retroceso cando remate.',
@@ -567,6 +567,7 @@ $messages['it'] = array(
 /** Japanese (日本語)
  * @author Shirayuki
  * @author Tommy6
+ * @author 아라
  */
 $messages['ja'] = array(
 	'categoryselect-desc' => '記事を編集することなくカテゴリを操作するためのインターフェースを提供する',
@@ -576,7 +577,7 @@ $messages['ja'] = array(
 	'categoryselect-category-add' => 'カテゴリを追加', # Fuzzy
 	'categoryselect-category-edit' => 'カテゴリのオプション', # Fuzzy
 	'categoryselect-edit-summary' => 'カテゴリを追加',
-	'categoryselect-error-article-doesnt-exist' => '記事 [id=$1] は存在しません。', # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => '記事 [id=$1] は存在しません。',
 	'categoryselect-error-db-locked' => 'データベースがロックされています',
 	'categoryselect-error-edit-abort' => '拡張機能のフックによって、修正が中断されました', # Fuzzy
 	'categoryselect-error-empty-category-name' => 'カテゴリ名を入力（"|"より前の部分）', # Fuzzy
@@ -601,16 +602,23 @@ $messages['kn'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
+	'categoryselect-desc' => '전체 문서를 편집하지 않고 문서에 분류를 관리하기 위한 인터페이스를 제공합니다',
 	'categoryselect-button-add' => '분류 추가',
 	'categoryselect-button-cancel' => '취소',
 	'categoryselect-button-save' => '저장',
-	'categoryselect-category-add' => '분류 추가', # Fuzzy
-	'categoryselect-category-edit' => '분류 옵션', # Fuzzy
+	'categoryselect-category-add' => '분류 추가...',
+	'categoryselect-category-edit' => '분류 편집',
+	'categoryselect-category-remove' => '분류 제거',
 	'categoryselect-edit-summary' => '분류 추가',
-	'categoryselect-error-article-doesnt-exist' => '문서 [id=$1]가 존재하지 않습니다.', # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => '[id=$1] 문서가 존재하지 않습니다.',
+	'categoryselect-error-category-name-length' => '분류 이름에 대한 최대 길이에 도달했습니다.',
 	'categoryselect-error-db-locked' => '데이터베이스가 잠겨 있습니다.',
-	'categoryselect-error-empty-category-name' => '분류 이름 제공 (| 전에 부분)', # Fuzzy
-	'categoryselect-error-user-rights' => '사용자 권한 오류입니다.', # Fuzzy
+	'categoryselect-error-duplicate-category-name' => '"$1" 분류는 이미 존재합니다.',
+	'categoryselect-error-edit-abort' => '수정하려고 한 것이 확장 기능 훅에 의해 중지되었습니다.',
+	'categoryselect-error-empty-category-name' => '분류 이름을 제공하세요.',
+	'categoryselect-error-user-rights' => '사용자는 이 작업을 수행할 권한이 없습니다.',
+	'categoryselect-modal-category-name' => '분류의 이름 제공:',
+	'categoryselect-modal-category-sortkey' => '선택적으로 이름에 따라 "$1" 분류 문서에 이 문서를 알파벳순으로 할 수 있습니다:',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -861,13 +869,17 @@ $messages['ps'] = array(
 	'categoryselect-button-add' => 'وېشنيزه ورګډول',
 	'categoryselect-button-cancel' => 'ناګارل',
 	'categoryselect-button-save' => 'خوندي کول',
-	'categoryselect-category-add' => 'يوه وېشنيزه ورګډول', # Fuzzy
+	'categoryselect-category-add' => 'وېشنيزه ورګډول...',
+	'categoryselect-category-edit' => 'وېشنيزه سمول',
+	'categoryselect-category-remove' => 'وېشنيزه غورځول',
 	'categoryselect-edit-summary' => 'وېشنيزې ورګډول',
+	'categoryselect-error-article-doesnt-exist' => 'د [id=$1] ليکنه نشته.',
 );
 
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author Pttraduc
  * @author SandroHc
  */
 $messages['pt'] = array(
@@ -877,9 +889,11 @@ $messages['pt'] = array(
 	'categoryselect-button-save' => 'Gravar',
 	'categoryselect-category-add' => 'Adicionar uma categoria', # Fuzzy
 	'categoryselect-category-edit' => 'Opções de categoria', # Fuzzy
+	'categoryselect-category-remove' => 'Remover categoria',
 	'categoryselect-edit-summary' => 'A adicionar categorias',
 	'categoryselect-error-article-doesnt-exist' => 'A página [id=$1] não existe.', # Fuzzy
 	'categoryselect-error-db-locked' => 'A base de dados está trancada.',
+	'categoryselect-error-duplicate-category-name' => 'A categoria "$1" já existe.',
 	'categoryselect-error-edit-abort' => 'A alteração que tentou fazer foi abortada pelo hook de uma extensão', # Fuzzy
 	'categoryselect-error-empty-category-name' => 'Introduza o nome da categoria (a parte antes de |)', # Fuzzy
 	'categoryselect-error-user-rights' => 'Erro de permissões.', # Fuzzy
@@ -1177,6 +1191,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Simon Shek
  */
 $messages['zh-hant'] = array(
 	'categoryselect-button-add' => '增加分類',
@@ -1190,6 +1205,6 @@ $messages['zh-hant'] = array(
 	'categoryselect-error-db-locked' => '資料庫已鎖定。',
 	'categoryselect-error-duplicate-category-name' => '分類「$1」已存在。',
 	'categoryselect-error-empty-category-name' => '請提供一個分類名稱。',
-	'categoryselect-error-user-rights' => '用戶權限錯誤。', # Fuzzy
+	'categoryselect-error-user-rights' => '用戶沒有進行此操作的權限。',
 	'categoryselect-modal-category-name' => '提供的分類的名稱：',
 );

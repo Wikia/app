@@ -1962,6 +1962,7 @@ $messages['ps'] = array(
 	'phalanx-test-submit' => 'آزمېښت',
 	'phalanx-test-results-legend' => 'آزمېښت پايلې',
 	'phalanx-stats-table-create' => 'جوړ شو',
+	'phalanx-stats-table-exact' => 'کټ مټ',
 	'phalanx-stats-table-language' => 'ژبه',
 	'phalanx-stats-table-text' => 'متن',
 	'phalanx-stats-table-reason' => 'سبب',
