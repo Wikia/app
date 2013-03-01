@@ -144,7 +144,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
 		}
 
-		$extraClasses = 'video lightbox';
+		$extraClasses = 'image video lightbox';
 		$linkAttribs['class'] = empty($linkAttribs['class']) ? $extraClasses : $linkAttribs['class'] . ' ' . $extraClasses;
 
 		$attribs = array(
