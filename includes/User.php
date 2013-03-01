@@ -2035,7 +2035,7 @@ class User {
 				array( 'user_touched' => $dbw->timestamp( $this->mTouched ) ),
 				array( 'user_id' => $this->mId ),
 				__METHOD__ );
-
+			$dbw->commit(); /// Wikia change -- db problems (ask owen)
 			$this->clearSharedCache();
 		}
 	}
