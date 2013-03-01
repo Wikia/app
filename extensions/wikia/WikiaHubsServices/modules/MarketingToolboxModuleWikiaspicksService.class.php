@@ -78,47 +78,38 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
 			$data['sponsoredImage'] = $imageModel->getImageThumbData();
 		}
-		
+
 		return parent::renderEditor($data);
 	}
-	
+
 	public function filterData($data) {
 		if( !empty($data['text']) ) {
 			$model = new MarketingToolboxModel();
 			$data['text'] = strip_tags($data['text'], $model->getAllowedTags());
 		}
-		
+
 		return parent::filterData($data);
 	}
-	
+
 	public function render($data) {
 		if( !empty($data['sponsoredImageAlt']) ) {
 		//sponsoredImageAlt === image file title -> can be used in Title::newFromTitle() to create Title instance
 			$data['sponsoredImageMarkup'] = $this->getSponsoredImageMarkup($data['sponsoredImageAlt']);
 		}
-		
-		return parent::render($data);
-	}
-	
-	public function render($data) {
-		if( !empty($data['sponsoredImageAlt']) ) {
-		//sponsoredImageAlt === image file title -> can be used in Title::newFromTitle() to create Title instance
-			$data['sponsoredImageMarkup'] = $this->getSponsoredImageMarkup($data['sponsoredImageAlt']);
-		}
-		
+
 		return parent::render($data);
 	}
 
 	public function getStructuredData($data) {
 		$structuredData = array();
-		
+
 		if (!empty($data['sponsoredImage'])) {
 			$sponsoredImageInfo = $this->getImageInfo($data['sponsoredImage']);
 		}
-		
+
 		$structuredData['sponsoredImageUrl'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->url : null;
 		$structuredData['sponsoredImageAlt'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->title : null;
-		
+
 		$structuredData['imageLink'] = (!empty($data['imageLink'])) ? $data['imageLink'] : null;
 
 		if (!empty($data['fileName'])) {
@@ -127,10 +118,10 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 
 		$structuredData['imageUrl'] = (isset($imageInfo)) ? $imageInfo->url : null;
 		$structuredData['imageAlt'] = (isset($imageInfo)) ? $imageInfo->title : null;
-		
+
 		$structuredData['title'] = $data['moduleTitle'];
 		$structuredData['text'] = $data['text'];
-		
+
 		return $structuredData;
 	}
 }
