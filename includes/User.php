@@ -88,8 +88,6 @@ class User {
 		'mRegistration',
 		'mBirthDate', // Wikia. Added to reflect our user table layout.
 		'mEditCount',
-		// Wikia. edit count localized for wiki
-		'mEditCountLocal',
 		// user_groups table
 		'mGroups',
 		// user_properties table
@@ -170,7 +168,6 @@ class User {
 		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
 		$mCookiePassword, $mEditCount, $mAllowUsertalk;
-	var $mEditCountLocal; // Wikia. edit count localized for wiki.
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
 
@@ -1107,7 +1104,6 @@ class User {
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
 			$this->getEditCount(); // revalidation for nulls
-			//$this->getEditCountLocal(); // revalidation for nulls
 			$this->mMonacoData = null;
 			$this->mMonacoSidebar = null;
 			return true;
@@ -2554,30 +2550,6 @@ class User {
 				$this->mEditCount = User::edits( $this->mId );
 			}
 			return $this->mEditCount;
-		} else {
-			/* nil */
-			return null;
-		}
-	}
-
-	/**
-	 * Wikia. Get number of edits localized for wiki,
-	 * initialize if not set
-	 *
-	 * @autor Kamil Koterba
-	 * @since Feb 2013
-	 * @return Int mEditCountLocal
-	 */
-	public function getEditCountLocal() {
-		if( $this->getId() ) {
-
-			if ( !isset( $this->mEditCountLocal ) ) {
-				/* Populate the count, if it has not been populated yet */
-				$userStatsService = new UserStatsService( $this->mId );
-				$this->mEditCountLocal = $userStatsService->getEditCountWiki();
-			}
-			return $this->mEditCountLocal;
-
 		} else {
 			/* nil */
 			return null;
@@ -4123,7 +4095,6 @@ class User {
 	 * Will have no effect for anonymous users.
 	 */
 	public function incEditCount() {
-		global $wgMemc, $wgCityId;
 		if( !$this->isAnon() ) {
             // wikia change, load always from first cluster when we use
             // shared users database
@@ -4140,29 +4111,47 @@ class User {
 				array( 'user_editcount=user_editcount+1' ),
 				array( 'user_id' => $this->getId() ),
 				__METHOD__ );
+			$dbw->commit();
 
-			/**
-			 * Wikia change
-			 * Update editcount for wiki
-			 * @since Feb 2013
-			 * @author Kamil Koterba
+
+			/*
+			 * Wikia Change By Tomek
+			 * at this point we do not want to run
+			 * other logic because is not truth in our system
+			 * (local table of revision on every wiki)
+			 *
+			 *  false && to skip runing this part of code
 			 */
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->update( 'wikia_user_properties',
-				array( 'wup_value=wup_value+1' ),
-				array( 'wup_user' => $this->getId(),
-					'wup_property' => 'editcount' ),
-				__METHOD__ );
 
-			if ($dbw->affectedRows() == 1) {
-				//increment memcache also
-				$key = wfSharedMemcKey( 'editcount', $wgCityId, $this->getId() );
-				$wgMemc->incr( $key );
-			} else {
-				//initialize editcount skipping memcache
-				$this->getEditCount( 0, true );
+			// Lazy initialization check...
+			if( false && $dbw->affectedRows() == 0 ) {
+				// Pull from a slave to be less cruel to servers
+				// Accuracy isn't the point anyway here
+				$dbr = wfGetDB( DB_SLAVE );
+
+				$count = $dbr->selectField( 'revision',
+					'COUNT(rev_user)',
+					array( 'rev_user' => $this->getId() ),
+					__METHOD__ );
+
+				// Now here's a goddamn hack...
+				if( $dbr !== $dbw ) {
+					// If we actually have a slave server, the count is
+					// at least one behind because the current transaction
+					// has not been committed and replicated.
+					$count++;
+				} else {
+					// But if DB_SLAVE is selecting the master, then the
+					// count we just read includes the revision that was
+					// just added in the working transaction.
+				}
+
+				$dbw->update( '`user`',
+					array( 'user_editcount' => $count ),
+					array( 'user_id' => $this->getId() ),
+					__METHOD__ );
 			}
-			/* end of change */
+
 
 		}
 		// edit count in user cache too

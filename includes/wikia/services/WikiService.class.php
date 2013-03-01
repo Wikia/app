@@ -231,6 +231,44 @@ class WikiService extends WikiaModel {
 	}
 
 	/**
+	 * get user edits
+	 * @param type $userId
+	 * @param type $wikiId
+	 * @return integer $userEdits
+	 */
+	public function getUserEdits( $userId, $wikiId = 0 ) {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+		$memKey = $this->wf->SharedMemcKey( 'wiki_user_edits', $wikiId, $userId );
+		$userEdits = $this->wg->Memc->get( $memKey );
+		if ( $userEdits === false ) {
+			$userEdits = 0;
+			$dbname = WikiFactory::IDtoDB( $wikiId );
+			if ( !empty($dbname) ) {
+				$db = $this->wf->GetDB( DB_SLAVE, array(), $dbname );
+
+				$row = $db->selectRow(
+					'revision',
+					array('count(*) cnt'),
+					array('rev_user' => $userId),
+					__METHOD__
+				);
+
+				if ( $row ) {
+					$userEdits = intval( $row->cnt );
+				}
+
+				$this->wg->Memc->set( $memKey, $userEdits, 60*60*3 );
+			}
+		}
+
+		$this->wf->ProfileOut( __METHOD__ );
+
+		return $userEdits;
+	}
+
+	/**
 	 * get number of images on the wiki
 	 * @return integer totalImages
 	 */
