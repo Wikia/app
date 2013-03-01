@@ -155,7 +155,7 @@ class Autopromote {
 				}
 				return false;
 			case APCOND_EDITCOUNT:
-				return $user->getEditCount() >= $cond[1];
+				return $user->getEditCountLocal() >= $cond[1];
 			case APCOND_AGE:
 				$age = time() - wfTimestampOrNull( TS_UNIX, $user->getRegistration() );
 				return $age >= $cond[1];
