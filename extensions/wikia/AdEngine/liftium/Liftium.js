@@ -2764,13 +2764,8 @@ if (LiftiumOptions.error_beacon !== false ){
 
 
 // Gentlemen, Start your optimization!
-
-if (window.wgAdDriverStartLiftiumOnLoad) {
-	Liftium.addEventListener(window, 'load', Liftium.init);
-} else {
-	if (Liftium.empty(LiftiumOptions.offline)){
-		Liftium.init();
-	}
+if (Liftium.empty(LiftiumOptions.offline)){
+	Liftium.init();
 }
 
 Liftium.addEventListener(window, 'load', Liftium.onLoadHandler);

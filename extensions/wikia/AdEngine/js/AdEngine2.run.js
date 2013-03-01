@@ -80,18 +80,16 @@
 		adProviderNull
 	);
 
-	window.wgAfterContentAndJS.push(function() {
-		log('work on window.adslots2 according to AdConfig2', 1, module);
-		tracker.track({
-			eventName: 'liftium.init',
-			ga_category: 'init2/init',
-			ga_action: 'init',
-			ga_label: 'adengine2',
-			trackingMethod: 'ad'
-		});
-		window.adslots2 = window.adslots2 || [];
-		adEngine.run(adConfig, window.adslots2);
+	log('work on window.adslots2 according to AdConfig2', 1, module);
+	tracker.track({
+		eventName: 'liftium.init',
+		ga_category: 'init2/init',
+		ga_action: 'init',
+		ga_label: 'adengine2',
+		trackingMethod: 'ad'
 	});
+	window.adslots2 = window.adslots2 || [];
+	adEngine.run(adConfig, window.adslots2);
 
 	// DART API for Liftium
 	window.LiftiumDART = {

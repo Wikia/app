@@ -43,29 +43,6 @@ class AdEngine2Controller extends WikiaController {
 		return $runAds;
 	}
 
-	public static function getAdsInHeadGroup() {
-		static $group = null;
-
-		if ($group === null) {
-			// Get into a random 3% group:
-			$group = mt_rand(0, 33);
-
-			// Override from URL
-			$group = F::app()->wg->Request->getInt('adsinhead', $group);
-
-			// Put all but #1 and #2 group into #0
-			if ($group > 2) {
-				$group = 0;
-			}
-		}
-
-		return $group;
-	}
-
-	public static function areAdsInHead() {
-		return self::getAdsInHeadGroup() === 1;
-	}
-
 	/**
 	 * Register ad-related vars on top
 	 *
@@ -81,13 +58,12 @@ class AdEngine2Controller extends WikiaController {
 
 		// AdEngine2.js
 		$vars['adslots2'] = array();
-		$vars['wgLoadAdsInHead'] = self::areAdsInHead();
-		$vars['wgAdsInHeadGroup'] = self::getAdsInHeadGroup();
+		$vars['wgLoadAdsInHead'] = !empty($this->wg->LoadAdsInHead);
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
 		$vars['wgShowAds'] = $this->wg->ShowAds;
 
-		$vars['wgAdDriverUseGpt'] = $req->getBool('usegpt', (bool) $this->wg->AdDriverUseGpt);
-		$vars['wgAdDriverStartLiftiumOnLoad'] = $req->getBool('liftiumonload', (bool) $this->wg->LiftiumOnLoad);
+		$useGpt = $req->getBool('usegpt', (bool) $this->wg->AdDriverUseGpt);
+		$vars['wgAdDriverUseGpt'] = $useGpt;
 
 		// Used to hop by DART ads
 		$vars['adDriverLastDARTCallNoAds'] = array();
@@ -98,6 +74,10 @@ class AdEngine2Controller extends WikiaController {
 		}
 		$cat = AdEngine::getCachedCategory();
 		$vars['cityShort'] = $cat['short'];
+
+		if (!empty($this->wg->DFPid)) {
+			$vars['wgDFPid'] = $this->wg->DFPid;
+		}
 
 		wfProfileOut(__METHOD__);
 
@@ -118,7 +98,7 @@ class AdEngine2Controller extends WikiaController {
 			return true;
 		}
 
-		if (!self::areAdsInHead()) {
+		if (!$this->wg->LoadAdsInHead) {
 			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
 			array_splice($jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE);
 		}
@@ -133,7 +113,7 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	public function onOasisSkinAssetGroupsBlocking(&$jsAssets) {
-		if (self::areAdsInHead()) {
+		if ($this->wg->LoadAdsInHead) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE;
 		}
@@ -141,14 +121,13 @@ class AdEngine2Controller extends WikiaController {
 	}
 
 	public function onWikiaSkinTopModules(&$scriptModules, $skin) {
-		if (self::areAdsInHead()) {
+		if ($this->wg->LoadAdsInHead) {
 			$scriptModules[] = 'wikia.cookies';
 			$scriptModules[] = 'wikia.geo';
 			$scriptModules[] = 'wikia.location';
 			$scriptModules[] = 'wikia.log';
 			$scriptModules[] = 'wikia.querystring';
 			$scriptModules[] = 'wikia.tracker';
-			$scriptModules[] = 'wikia.window';
 		}
 		return true;
 	}
