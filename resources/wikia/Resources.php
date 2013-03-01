@@ -7,11 +7,7 @@
 return array(
 	// AMD library
 	'amd' => array(
-		'scripts' => array(
-			'resources/wikia/libraries/modil/modil.js',
-			// quick fix for fb#98739
-			'resources/wikia/modules/tracker.stub.js'
-		)
+		'scripts' => 'resources/wikia/libraries/modil/modil.js',
 	),
 
 	// shared AMD modules loaded on each page
