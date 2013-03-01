@@ -65,6 +65,328 @@ class WikiaHubsV2Model extends WikiaModel {
 		return $this->vertical;
 	}
 
+<<<<<<< HEAD
+=======
+	public function getDataForModuleSlider() {
+		$data = array(
+			'images' => array(
+				array(
+					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
+					'href' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'title' => 'Gaming Olympics',
+					'headline' => 'Exclusively on Wikia!',
+					'description' => 'Participate in the biggest gaming event of 2012'
+				),
+				array(
+					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
+					'href' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'title' => 'Gaming Olympics',
+					'headline' => 'Exclusively on Wikia!',
+					'description' => 'Participate in the biggest gaming event of 2012'
+				),
+				array(
+					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
+					'href' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'title' => 'Gaming Olympics',
+					'headline' => 'Exclusively on Wikia!',
+					'description' => 'Participate in the biggest gaming event of 2012'
+				),
+				array(
+					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
+					'href' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'title' => 'Gaming Olympics',
+					'headline' => 'Exclusively on Wikia!',
+					'description' => 'Participate in the biggest gaming event of 2012'
+				),
+				array(
+					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
+					'href' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'title' => 'Gaming Olympics',
+					'headline' => 'Exclusively on Wikia!',
+					'description' => 'Participate in the biggest gaming event of 2012'
+				),
+			)
+		);
+
+		foreach ($data['images'] as &$image) {
+			$image['imagethumb'] = $this->getStandardThumbnailUrl($image['image']);
+		}
+		return $data;
+	}
+
+	public function getDataForModuleExplore() {
+		try {
+			$response = F::app()->sendRequest('WikiaHubsApi', 'getModuleData', array(
+				'module' => MarketingToolboxModuleExploreService::MODULE_ID,
+				'vertical' => $this->getVertical(),
+				'ts' => $this->getTimestamp(),
+				//'lang' => $this->getLang(), //TODO: returns 80433 -- why?
+			));
+			
+			$data = $response->getVal('data');
+		} catch (Exception $e) {
+			$data = array(
+				'headline' => $e->getMessage(),
+				'linkgroups' => array(),
+				'imagelink' => '',
+			);
+		}
+
+		return $data;
+	}
+
+	public function getDataForModulePulse() {
+		//mock data
+		return array(
+			'title' => array(
+				'anchor' => 'WoWwiki',
+				'href' => 'http://www.wowwiki.com'
+			),
+			'socialmedia' => array(
+				'facebook' => 'link to facebook',
+				'googleplus' => 'link to G+',
+				'twitter' => 'link to twitter',
+			),
+			'boxes' => array(
+				array(
+					'headline' => array(
+						'anchor' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
+					),
+					'number' => 10000,
+					'unit' => 'editors',
+					'link' => array(
+						'anchor' => 'see more',
+						'href' => 'http://www.wowwiki.com'
+					),
+				),
+				array(
+					'headline' => array(
+						'anchor' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
+					),
+					'number' => 10000,
+					'unit' => 'pages',
+					'link' => array(
+						'anchor' => 'see more',
+						'href' => 'http://www.wowwiki.com'
+					),
+				),
+				array(
+					'headline' => array(
+						'anchor' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
+					),
+					'number' => 10000,
+					'unit' => 'videos',
+					'link' => array(
+						'anchor' => 'see more',
+						'href' => 'http://www.wowwiki.com'
+					),
+				)
+			)
+		);
+	}
+
+	public function getDataForModuleFeaturedVideo() {
+		//mock data
+		$results = array(
+			'headline' => 'Featured video',
+			'sponsor' => 'Sponsored_by_xbox.png',
+			'sponsorthumb' => array(),
+			'videoTitle' => 'Dishonored (VG) () - Debut trailer',
+			'videoKey' => 'Dishonored_(VG)_()_-_Debut_trailer',
+			'description' => array(
+				'maintitle' => 'Resident Evil 6',
+				'subtitle' => 'More evil awaits you on the',
+				'link' => array(
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
+				)
+			)
+		);
+
+		$results['sponsorthumb']['src'] = $this->getThumbnailUrl($results['sponsor'], self::SPONSORED_IMAGE_WIDTH, self::SPONSORED_IMAGE_HEIGHT);
+		$sponsorThumbSizes = $this->getImageThumbSize();
+		if (!empty($sponsorThumbSizes)) {
+			$results['sponsorthumb']['width'] = $sponsorThumbSizes['width'];
+			$results['sponsorthumb']['height'] = $sponsorThumbSizes['height'];
+		}
+
+		return $results;
+	}
+
+	public function getDataForModulePopularVideos() {
+		//mock data
+		return array(
+			'headline' => 'Popular videos',
+			'sponsor' => 'Sponsored_by_xbox.png',
+			'sponsorthumb' => $this->getStandardThumbnailUrl('Sponsored_by_xbox.png'),
+			'videos' => array(
+				array(
+					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
+					'thumbnailData' => array(
+						'width' => 160,
+						'height' => 90,
+					),
+					'headline' => 'The Twilight Saga',
+					'submitter' => 'Bschwood',
+					'profile' => 'http://community.wikia.com/wiki/User:Bchwood',
+					'wikiId' => 5687,
+				),
+				array(
+					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
+					'thumbnailData' => array(
+						'width' => 160,
+						'height' => 90,
+					),
+					'headline' => 'The Twilight Saga',
+					'submitter' => 'Andrzej Łukaszewski',
+					'profile' => 'http://poznan.wikia.com/wiki/U%C5%BCytkownik:Andrzej_%C5%81ukaszewski',
+					'wikiId' => 5687,
+				),
+				array(
+					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
+					'thumbnailData' => array(
+						'width' => 160,
+						'height' => 90,
+					),
+					'headline' => 'The Twilight Saga',
+					'submitter' => 'Bschwood',
+					'profile' => '',
+					'wikiId' => 5687,
+				),
+				array(
+					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
+					'thumbnailData' => array(
+						'width' => 160,
+						'height' => 90,
+					),
+					'headline' => 'The Twilight Saga',
+					'submitter' => 'Bschwood',
+					'profile' => 'http://community.wikia.com/wiki/User:Bchwood',
+					'wikiId' => 5687,
+				),
+				array(
+					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
+					'thumbnailData' => array(
+						'width' => 160,
+						'height' => 90,
+					),
+					'headline' => 'The Twilight Saga',
+					'submitter' => 'Bschwood',
+					'profile' => 'http://community.wikia.com/wiki/User:Bchwood',
+					'wikiId' => 5687,
+				),
+				array(
+					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
+					'thumbnailData' => array(
+						'width' => 160,
+						'height' => 90,
+					),
+					'headline' => 'The Twilight Saga',
+					'submitter' => 'Bschwood',
+					'profile' => 'http://community.wikia.com/wiki/User:Bchwood',
+					'wikiId' => 5687,
+				),
+			)
+		);
+	}
+
+	public function getDataForModuleTopWikis() {
+		//mock data
+		return array(
+			'headline' => 'Top Gaming Wikis',
+			'description' => 'Here are the top 10 Video Game wikis based on wiki activity, breadth of content and awesomeness.',
+			'wikis' => array(
+				array(
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
+				),
+				array(
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
+				),
+				array(
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
+				),
+				array(
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
+				),
+				array(
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
+				),
+				array(
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
+				),
+				array(
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
+				),
+				array(
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
+				),
+				array(
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
+				),
+				array(
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
+				),
+			)
+		);
+	}
+
+	public function getDataForModuleTabber() {
+		//mock data
+		return array(
+			'headline' => 'Wikia\'s Picks',
+			'sponsor' => 'Sponsored_by_xbox.png',
+			'sponsorthumb' => $this->getStandardThumbnailUrl('Sponsored_by_xbox.png'),
+			'tabs' => array(
+				array(
+					'title' => 'Tab 1 title',
+					'image' => 'Wikia-Visualization-Add-5,glee.png',
+					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'imagelink' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
+					'content' => 'Tab 1 content'
+				),
+				array(
+					'title' => 'Tab 2 title',
+					'image' => 'Wikia-Visualization-Add-5,glee.png',
+					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'imagelink' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
+					'content' => 'Tab 2 content'
+				),
+				array(
+					'title' => 'Tab 3 title',
+					'image' => 'Wikia-Visualization-Add-5,glee.png',
+					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'imagelink' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
+					'content' => 'Tab 3 content'
+				)
+			)
+		);
+	}
+
+	public function getDataForModuleWikitext() {
+		//mock data
+		return array(
+			'headline' => 'The Big Question',
+			'wikitext' => '<poll>
+Should the older, original Call of Duty games be <html> <a href=http://callofduty.wikia.com/wiki/User_blog:Flamesword300/OLD_COD_GAMES-_SHOULD_THEY_BE_REMADE%3F_:YES_OR_NO>remade</a></html> with modern 3D engine tech?
+Yes
+No
+</poll>'
+		);
+	}
+
 	public function getDataForModuleFromTheCommunity() {
 		//mock data
 		return array(
@@ -217,8 +539,6 @@ class WikiaHubsV2Model extends WikiaModel {
 
 		return $result;
 	}
-
-
 
 	public function getVerticalName($verticalId) {
 		/** @var WikiFactoryHub $wikiFactoryHub */

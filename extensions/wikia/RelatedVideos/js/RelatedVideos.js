@@ -210,7 +210,7 @@ var RelatedVideos = {
 		var titles = [];
 		var orders = [];
 		var group = this.rvContainer.find('.group').eq(room-1);
-		var itemLinks = group.find('a.video-thumbnail');
+		var itemLinks = group.find('a.video');
 		itemLinks.each( function(i) {
 			titles.push( $(this).data('ref') );
 			orders.push( (room-1)*RelatedVideos.videosPerPage + i+1 );
@@ -274,7 +274,7 @@ var RelatedVideos = {
 	// Only for hubs
 	showImages: function(){
 		var rl = this;
-		$('div.item a.video-thumbnail img', this.rvModule).each( function (i) {
+		$('div.item a.video img', this.rvModule).each( function (i) {
 			if ( i < ( ( RelatedVideos.currentRoom + (rl.videosPerPage-1) ) * rl.videosPerPage ) ){
 				var $thisJquery = $(this);
 				if ( $thisJquery.attr( 'data-src' ) != "" ){
@@ -481,7 +481,7 @@ var RelatedVideos = {
 
 	removeVideoItem: function(parentItem) {
 		$( parentItem ).fadeTo( 'slow', 0 );
-		var item = $(parentItem).find('a.video-thumbnail');
+		var item = $(parentItem).find('a.video');
 		$.nirvana.sendRequest({
 			controller: 'RelatedVideos',
 			method: 'removeVideo',

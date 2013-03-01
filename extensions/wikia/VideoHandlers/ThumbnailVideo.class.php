@@ -120,40 +120,26 @@ class ThumbnailVideo extends ThumbnailImage {
 		 * wikia change, Inez
 		 */
 		$title = !isset( $options['title'] ) ? $alt : $options['title'];
+		
+		$videoTitle = $this->file->getTitle();
 
 		$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
 
-		if ( !empty( $options['custom-url-link'] ) ) {
-			$linkAttribs = array( 'href' => $options['custom-url-link'] );
-			if ( !empty( $options['title'] ) ) {
-				$linkAttribs['title'] = $options['title'];
-			}
-		} elseif ( !empty( $options['custom-title-link'] ) ) {
-			$title = $options['custom-title-link'];
-			$linkAttribs = array(
-				'href' => $title->getLinkUrl(),
-				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
-			);
-		} elseif ( !empty( $options['desc-link'] ) ) {
+		if ( !empty( $options['desc-link'] ) ) {
 			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
-			if ( F::app()->checkSkin( array( 'oasis', 'wikiamobile' ) ) ) {
-				$linkAttribs['data-video-name'] = $this->file->getTitle()->getText();
-				$linkAttribs['href'] = $this->file->getTitle()->getLocalURL();
-				if ( !empty( $options['id'] ) ){
-					$linkAttribs['id'] = $options['id'];
-				}
-			}
-		} elseif ( !empty( $options['file-link'] ) ) {
-			$linkAttribs = array( 'href' => $this->file->getTitle()->getLocalURL() );
 		} else {
 			$linkAttribs = array();
 		}
 
-		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
-			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
+		$linkAttribs['href'] = $videoTitle->getLocalURL();
+
+		if ( !empty( $options['id'] ) ){
+			$linkAttribs['id'] = $options['id'];
 		}
 
-		$linkAttribs['class'] = empty($linkAttribs['class']) ? 'video' : $linkAttribs['class'].' video';
+		// Info for Lightbox
+		$linkAttribs['data-video-name'] = $videoTitle->getText();
+		$linkAttribs['data-video-key'] = $videoTitle->getDBKey();
 
 		if ( $useRDFData ) { // bugId: #46621
 			$linkAttribs['itemprop'] = 'video';
@@ -161,21 +147,28 @@ class ThumbnailVideo extends ThumbnailImage {
 			$linkAttribs['itemtype'] = 'http://schema.org/VideoObject';
 		}
 
+		// let extension override any link attributes 
+		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
+			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
+		}
+
+		$extraClasses = 'video lightbox';
+		$linkAttribs['class'] = empty($linkAttribs['class']) ? $extraClasses : $linkAttribs['class'] . ' ' . $extraClasses;
+
 		$attribs = array(
 			'alt' => $alt,
 			'src' => !empty($options['src']) ? $options['src'] : $this->url,
 			'width' => $this->width,
 			'height' => $this->height,
-			'data-video' => $this->file->getTitle()->getText(),
 		);
 
 		if ( $useRDFData ) {
 			$attribs['itemprop'] = 'thumbnail';
 		}
 
-	        if ( !empty($options['usePreloading']) ) {
-	            $attribs['data-src'] = $this->url;
-	        }
+        if ( !empty($options['usePreloading']) ) {
+            $attribs['data-src'] = $this->url;
+        }
 
 		if ( $this->file instanceof OldLocalFile ) {
 			$archive_name = $this->file->getArchiveName();
@@ -231,7 +224,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		
 		
 		if( empty( $options['hideOverlay'] ) ) {
-			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $this->file->getTitle() );
+			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $videoTitle );
 		}
 		
 		$html .= ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::closeElement( 'a' ) : '';

@@ -1408,7 +1408,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					// Get HTML for main video image
 					$htmlParams = array(
 						'file-link' => true,
-						'linkAttribs' => array( 'class' => 'video-thumbnail lightbox wikiaPhotoGallery-slider' ),
+						'linkAttribs' => array( 'class' => 'wikiaPhotoGallery-slider' ),
 						'hideOverlay' => true,
 					);
 					$videoHtml = $file->transform( array( 'width' => $imagesDimensions['w'] ) )->toHtml( $htmlParams );
