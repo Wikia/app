@@ -2586,8 +2586,8 @@ $wgResourceLoaderMaxage = array(
 		'client' => 30 * 24 * 60 * 60, // 30 days
 	),
 	'unversioned' => array(
-		'server' => 5 * 60, // 5 minutes
-		'client' => 5 * 60, // 5 minutes
+		'server' => 24 * 60 * 60, // 1 day
+		'client' => 24 * 60 * 60, // 1 day
 	),
 );
 
