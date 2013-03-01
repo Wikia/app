@@ -28,6 +28,7 @@ $app->registerClass( 'RelatedForumDiscussionController', $dir . 'RelatedForumDis
 
 // i18n mapping
 $app->registerExtensionMessageFile( 'Forum', $dir . 'Forum.i18n.php' );
+$app->registerExtensionMessageFile( 'ForumAliases', $dir . 'Forum.alias.php');
 
 // special pages
 $app->registerSpecialPage( 'Forum', 'ForumSpecialController' );
