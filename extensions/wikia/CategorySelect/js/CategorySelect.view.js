@@ -87,6 +87,10 @@
 								$wrapper
 									.find( '.last' )
 									.before( response.html );
+
+								$wrapper
+									.find( '.input' )
+									.val( '' );
 							}
 						});
 
