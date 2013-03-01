@@ -12,12 +12,15 @@
  * See LazyQueueTest.js or CacheTest.js as examples of how to use this define mock.
  */
 
+var modules = {};
+
 function define(id, deps, def) {
 	var undef;
 	if (def === undef) {
 		def = deps;
 	}
-	define.getModule = def;
+
+	window.modules[id] = def;
 }
 
 define.amd = true;
