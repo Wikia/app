@@ -268,6 +268,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->wg->SuppressRail = true;
 		if ($this->isCorporateWiki() ) {
 			OasisController::addBodyClass('inter-wiki-search');
+			$this->overrideTemplate('CrossWiki_index');
 		}
 		$skin = $this->wg->User->getSkin();
 		if ( $skin instanceof SkinMonoBook ) {

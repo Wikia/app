@@ -4,6 +4,7 @@
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/box-sizing";
 
 $color-search-form-background: darken($color-page, 5%);
 @if $is-dark-wiki {
@@ -26,6 +27,10 @@ $form-negative-side-padding: $form-side-padding*-1;
 		padding: $form-side-padding;
 		padding-bottom: 0;
 
+		.inter-wiki-search & {
+			margin-top: 10px;
+			padding: 10px 10px 30px;
+		}
 		input[type="search"], input[type="text"] {
 			height: 24px;
 			margin-right: 12px;
@@ -65,7 +70,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 			//padding-bottom: 18px;
 
 			width: 100%;
-			
+
 			label {
 				display: inline-block;
 				width: 25%;
@@ -95,6 +100,11 @@ $form-negative-side-padding: $form-side-padding*-1;
 		margin-bottom: 0;
 		text-align: right;
 
+		.inter-wiki-search & {
+			text-align: left;
+			padding-left: 10px;
+		}
+
 		span {
 			text-transform: capitalize;
 		}
@@ -107,12 +117,11 @@ $form-negative-side-padding: $form-side-padding*-1;
 		list-style: none;
 		margin: 0;
 		padding: 0;
+
+		.inter-wiki-search & {
+			padding-top: 20px;
+		}
 	}
-	
-	.Results.inter-wiki .result {
-		max-width: 760px;
-	}
-	
 	.result {
 		@include clearfix;
 		list-style: none;
@@ -147,23 +156,25 @@ $form-negative-side-padding: $form-side-padding*-1;
 			@include clearfix;
 			line-height: 19px;
 		}
-		.grouped-result {
-			width: 280px;
-			float: left;
-			margin: 9px 0 9px 40px;
-
-			h1 {
-				font-size: inherit;
-			}
-
-			&.new-row {
-				clear: left;
-			}
-		}
 		.redirect-title {
 			margin: 0;
 			padding: 0;
 			color: $color-alternate-text;
+		}
+		.wikiPromoteThumbnail {
+			padding-left: 10px;
+			@include box-sizing;
+		}
+		.wiki-statistics, .hub {
+			font-size: 12px;
+			text-transform: uppercase;
+		}
+		.wiki-statistics {
+			padding-top: 10px;
+		}
+		.result-description {
+			padding-left: 30px;
+			@include box-sizing;
 		}
 		a.image {
 			position: relative;
@@ -414,9 +425,9 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			}
 		}
 		.link {
-			 font-size: 14px;
-			 font-weight: bold;
-			 line-height: 18px;
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 18px;
 		}
 	}
 	.SearchAdsTopWrapper {
