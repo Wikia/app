@@ -159,7 +159,6 @@ class RelatedVideosController extends WikiaController {
 			$videoThumb = $videoThumbObj->toHtml(
 				array(
 					'linkAttribs' => array(
-						'data-video-name' => $video['title'],
 						'data-external' => $video['external'],
 						'data-ref' => $video['prefixedUrl']
 					),

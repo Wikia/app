@@ -46,6 +46,7 @@ class RelatedVideosData {
 			$data['provider']		= $file->minor_mime;
 			$data['thumbnailData']	= $thumb;
 			$data['title']			= $file->getTitle()->getText();
+			$data['key']			= $file->getTitle()->getDBKey();
 			$data['timestamp']		= $file->getTimestamp();
 			$data['uniqueId']		= $file->getVideoUniqueId();
 

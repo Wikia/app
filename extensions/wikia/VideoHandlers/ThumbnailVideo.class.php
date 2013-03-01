@@ -123,23 +123,15 @@ class ThumbnailVideo extends ThumbnailImage {
 		
 		$videoTitle = $this->file->getTitle();
 
-		$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
-
-		if ( !empty( $options['desc-link'] ) ) {
-			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
-		} else {
-			$linkAttribs = array();
-		}
-
-		$linkAttribs['href'] = $videoTitle->getLocalURL();
+		$linkAttribs = array(
+			'href' => $videoTitle->getLocalURL(),
+			'data-video-name' => $videoTitle->getText(),
+			'data-video-key' => $videoTitle->getDBKey(),
+		);
 
 		if ( !empty( $options['id'] ) ){
 			$linkAttribs['id'] = $options['id'];
 		}
-
-		// Info for Lightbox
-		$linkAttribs['data-video-name'] = $videoTitle->getText();
-		$linkAttribs['data-video-key'] = $videoTitle->getDBKey();
 
 		if ( $useRDFData ) { // bugId: #46621
 			$linkAttribs['itemprop'] = 'video';
@@ -204,11 +196,10 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		if ( isset($options['constHeight']) ) {
-
 			$this->appendHtmlCrop($linkAttribs, $options);
 		}
 
-		$html = ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::openElement( 'a', $linkAttribs ) : '';
+		$html = Xml::openElement( 'a', $linkAttribs );
 
 		if ( isset( $duration ) && !empty( $duration ) ) {
 			$timerProp = array( 'class'=>'timer' );
