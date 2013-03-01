@@ -74,7 +74,6 @@
 
 						}).done(function( response ) {
 							$container.stopThrobbing();
-							$saveButton.removeAttr( 'disabled' );
 
 							// TODO: don't use alert
 							if ( response.error ) {
