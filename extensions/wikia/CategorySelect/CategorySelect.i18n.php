@@ -20,7 +20,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
+	'categoryselect-desc' => 'Provides an interface for managing categories in page without editing whole page',
 	'categoryselect-button-add' => 'Add category',
 	'categoryselect-button-cancel' => 'Cancel',
 	'categoryselect-button-save' => 'Save',
@@ -28,7 +28,7 @@ $messages['en'] = array(
 	'categoryselect-category-edit' => 'Edit category',
 	'categoryselect-category-remove' => 'Remove category',
 	'categoryselect-edit-summary' => 'Adding categories',
-	'categoryselect-error-article-doesnt-exist' => 'Article [id=$1] does not exist.',
+	'categoryselect-error-article-doesnt-exist' => 'Page [id=$1] does not exist.',
 	'categoryselect-error-category-name-length' => 'The maximum length for a category name has been reached.',
 	'categoryselect-error-db-locked' => 'Database is locked.',
 	'categoryselect-error-duplicate-category-name' => 'Category "$1" already exists.',
@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'categoryselect-error-empty-category-name' => 'Please provide a category name.',
 	'categoryselect-error-user-rights' => 'User does not have permission to perform this action.',
 	'categoryselect-modal-category-name' => 'Provide the name of the category:',
-	'categoryselect-modal-category-sortkey' => 'Optionally, you may alphabetize this article on the "$1" category page under the name:',
+	'categoryselect-modal-category-sortkey' => 'Optionally, you may alphabetize this page on the "$1" category page under the name:',
 	'categoryselect-tooltip-add' => 'Press the Enter or Return key when done.',
 	'tog-disablecategoryselect' => 'Disable Category module (only applies if editing in visual mode has been disabled)',
 	'tog-disablecategoryselect-v2' => 'Disable Category module (only applies if visual mode editing is disabled)',
