@@ -111,11 +111,16 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		unset( $result['title'] );
 		$result[Wikia\Search\Utilities::field( 'title', 'en' )] = $languageTitle;
 
+		global $wgLanguageCode;
+		$oldCode = $wgLanguageCode;
+		$wgLanguageCode = 'fr';
+		$this->mockApp();
 		$this->assertEquals(
 		        $languageTitle,
 		        $result->getTitle(),
 		        'A result should return the english language title field during getTitle() if it exists, but the non-english field doesn\'t (video support).'
 		);
+		$wgLanguageCode = $oldCode;
 
 	}
 
@@ -303,99 +308,126 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 
 	}
 	
+	/**
+	 * @covers Wikia\Search\Result::getThumbnailHtml
+	 */
+	public function testGetThumbnailHtmlNoHtml() {
+		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
+		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
+		                   ->setMethods( null )
+		                   ->getMock();
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
+		                      ->getMock();
+		$mockException = $this->getMockBuilder( '\Exception' )
+		                      ->disableOriginalConstructor()
+		                      ->getMock();
+		
+		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
+		$reflInterface->setAccessible( true );
+		$reflInterface->setValue( $mockResult, $mockInterface );
+		
+		$mockInterface
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getThumbnailHtmlForPageId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->throwException( $mockException ) )
+		;
+		$this->assertEquals(
+				'',
+				$mockResult->getThumbnailHtml()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Result::getThumbnailHtml
+	 */
+	public function testGetThumbnailHtmlWithHtml() {
+		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
+		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
+		                   ->setMethods( null )
+		                   ->getMock();
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
+		                      ->getMock();
+		
+		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
+		$reflInterface->setAccessible( true );
+		$reflInterface->setValue( $mockResult, $mockInterface );
+		
+		$img = "<img src='foo.jpg' />";
+		$mockInterface
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getThumbnailHtmlForPageId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $img ) )
+		;
+		$this->assertEquals(
+				$img,
+				$mockResult->getThumbnailHtml()
+		);
+	}
 
 	/**
 	 * @covers Wikia\Search\Result::getVideoViews
-	 * @todo
-	public function testGetVideoViewsNotVideo() {
-		$result = $this->getMockBuilder( 'Wikia\Search\Result' )
-						->setMethods( array( 'getTitleObject', 'offsetGet' ) )
-						->getMock();
+	 */
+	public function testGetVideoViews() {
+		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
+		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
+		                   ->setMethods( null )
+		                   ->getMock();
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'getVideoViewsForPageId' ) )
+		                      ->getMock();
 		
-		$mockTitle = $this->getMockBuilder( 'Title' )
-		                  ->disableOriginalConstructor()
-		                  ->getMock();
+		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
+		$reflInterface->setAccessible( true );
+		$reflInterface->setValue( $mockResult, $mockInterface );
 		
-		$mockFileHelper = $this->getMockBuilder( 'WikiaFileHelper' )
-		                        ->disableOriginalConstructor()
-		                       ->setMethods( array( 'isFileTypeVideo' ) )
-		                       ->getMock();
-		
-		$result
+		$mockInterface
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getTitleObject' )
-		    ->will   ( $this->returnValue( $mockTitle ) )
+		    ->method ( 'getVideoViewsForPageId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( 50 ) )
 		;
-		$mockFileHelper
-		    ->staticExpects( $this->at( 0 ) )
-		    ->method       ( 'isFileTypeVideo' )
-		    ->with         ( $mockTitle )
-		    ->will         ( $this->returnValue( false ) )
-		;
-		
-		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
-		$this->mockApp();
-		
-		$this->assertEmpty(
-				$result->getVideoViews(),
-				'Wikia\Search\Result::getVideoViews() should return an empty string if the file result is an not a video file'
-		);
-	}*/
-	
-    /**
-	 * @covers Wikia\Search\Result::getVideoViews
-	 *@todo
-	public function testGetVideoViewsVideo() {
-		$result = $this->getMockBuilder( 'Wikia\Search\Result' )
-						->setMethods( array( 'getTitleObject', 'offsetGet' ) )
-						->getMock();
-		
-		$mockTitle = $this->getMockBuilder( 'Title' )
-		                  ->setMethods( array( 'getDBKey' ) )
-		                  ->disableOriginalConstructor()
-		                  ->getMock();
-		
-		$mockFileHelper = $this->getMockBuilder( 'WikiaFileHelper' )
-		                        ->disableOriginalConstructor()
-		                       ->setMethods( array( 'isFileTypeVideo' ) )
-		                       ->getMock();
-		
-		$mockMqs = $this->getMockBuilder( 'MediaQueryService' )
-		                ->disableOriginalConstructor()
-		                ->setMethods( array( 'getTotalVideoViewsByTitle' ) )
-		                ->getMock();
-		
-		$result
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getTitleObject' )
-		    ->will   ( $this->returnValue( $mockTitle ) )
-		;
-		$mockFileHelper
-		    ->staticExpects( $this->at( 0 ) )
-		    ->method       ( 'isFileTypeVideo' )
-		    ->with         ( $mockTitle )
-		    ->will         ( $this->returnValue( true ) )
-		;
-		$mockTitle
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getDBKey' )
-		    ->will   ( $this->returnValue( 'dbKey' ) )
-		;
-		$mockMqs
-		    ->staticExpects( $this->at( 0 ) )
-		    ->method       ( 'getTotalVideoViewsByTitle' )
-		    ->with         ( 'dbKey' )
-		    ->will         ( $this->returnValue( 25 ) )
-		;
-		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
-		$this->mockClass( 'MediaQueryService', $mockMqs );
-		$this->mockApp();
-		
-		// @todo mock up the translation part
 		$this->assertEquals(
-				'25 views',
-				$result->getVideoViews(),
-				'Wikia\Search\Result::getVideoViews() should return a translated string containing the value of the video views'
+				50,
+				$mockResult->getVideoViews()
 		);
-	}*/
+	}
+	
+	/**
+	 * @covers Wikia\Search\Result::getVideoViews
+	 */
+	public function testGetVideoViewsException() {
+		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
+		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
+		                   ->setMethods( null )
+		                   ->getMock();
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'getVideoViewsForPageId' ) )
+		                      ->getMock();
+		$mockException = $this->getMockBuilder( '\Exception' )
+		                      ->disableOriginalConstructor()
+		                      ->getMock();
+		
+		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
+		$reflInterface->setAccessible( true );
+		$reflInterface->setValue( $mockResult, $mockInterface );
+		
+		$mockInterface
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getVideoViewsForPageId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->throwException( $mockException ) )
+		;
+		$this->assertEquals(
+				0,
+				$mockResult->getVideoViews()
+		);
+	}
 }
