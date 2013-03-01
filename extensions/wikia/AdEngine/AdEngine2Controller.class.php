@@ -43,15 +43,27 @@ class AdEngine2Controller extends WikiaController {
 		return $runAds;
 	}
 
-	public static function areAdsInHead() {
-		static $cached = null;
+	public static function getAdsInHeadGroup() {
+		static $group = null;
 
-		if ($cached === null) {
-			$wg = F::app()->wg;
-			$cached = $wg->Request->getBool('adsinhead', (bool) $wg->LoadAdsInHead);
+		if ($group === null) {
+			// Get into a random 3% group:
+			$group = mt_rand(0, 33);
+
+			// Override from URL
+			$group = F::app()->wg->Request->getInt('adsinhead', $group);
+
+			// Put all but #1 and #2 group into #0
+			if ($group > 2) {
+				$group = 0;
+			}
 		}
 
-		return $cached;
+		return $group;
+	}
+
+	public static function areAdsInHead() {
+		return self::getAdsInHeadGroup() === 1;
 	}
 
 	/**
@@ -70,6 +82,7 @@ class AdEngine2Controller extends WikiaController {
 		// AdEngine2.js
 		$vars['adslots2'] = array();
 		$vars['wgLoadAdsInHead'] = self::areAdsInHead();
+		$vars['wgAdsInHeadGroup'] = self::getAdsInHeadGroup();
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
 		$vars['wgShowAds'] = $this->wg->ShowAds;
 
