@@ -96,6 +96,18 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 		$this->header[$key] = $value;
 		return $this;
 	}
+	
+	/**
+	 * Allows us to set multiple headers at once.
+	 * @param array $headers
+	 * @return \Wikia\Search\ResultSet\AbstractResultSet
+	 */
+	public function addHeaders( array $headers ) {
+		foreach ( $headers as $key => $value ) {
+			$this->setHeader( $key, $value );
+		}
+		return $this;
+	}
 
 	/**
 	 * If you don't provide a key, this returns the entire header array.

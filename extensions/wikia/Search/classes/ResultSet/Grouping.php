@@ -41,16 +41,28 @@ class Grouping extends Base
 		$documents   = $valueGroup->getDocuments();
 
 		$this->setResults       ( $documents )
-		     ->setResultsFound  ( $valueGroup->getNumFound() );
+		     ->setResultsFound  ( $valueGroup->getNumFound() )
+		     ->configureGlobals();
 
-		if ( count( $documents ) > 0 ) {
-			$exampleDoc = $documents[0];
-			$cityId     = $exampleDoc->getCityId();
-
+		
+	}
+	
+	/**
+	 * Sets a bunch of headers associated with wiki info
+	 */
+	protected function configureGlobals() {
+		if (! empty( $this->results[0] ) ) {
+			$doc = $this->results[0];
+			$cityId     = $doc->getCityId();
+			
 			$this->setHeader( 'cityId', $cityId )
 			     ->setHeader( 'cityTitle', $this->interface->getGlobalForWiki( 'wgSitename', $cityId ) )
-			     ->setHeader( 'cityUrl', $this->interface->getGlobalForWiki( 'wgServer', $cityId ) )
-			     ->setHeader( 'cityArticlesNum', $exampleDoc['wikiarticles'] );
+			     ->setHeader( 'cityUrl', $this->interface->getGlobalForWiki( 'wgServer', $cityId ) );
+			
+			foreach ( $this->interface->getVisualizationInfoForWikiId( $cityId ) as $key => $val ) {
+				$this->setHeader( $key.'_count', $val );
+			}
+			$this->addHeaders( $this->interface->getStatsInfoForWikiId( $cityId ) );
 		}
 	}
 	
