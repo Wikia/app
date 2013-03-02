@@ -657,6 +657,16 @@ class MediaWikiInterface
 		$helper = new \WikiaHomePageHelper();
 		return $helper->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
 	}
+
+	/**
+	 * Uses Wikia Homepage Helper to acces stats info
+	 * @param int $wikiId
+	 * @return array
+	 */
+	public function getStatsInfoForWikiId( $wikiId ) {
+		$helper = new \WikiaHomePageHelper();
+		return $helper->getWikiStats( $wikiId );
+	}
 	
 	/**
 	 * Provides a format, provided a revision's default timestamp format.
