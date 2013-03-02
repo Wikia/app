@@ -64,17 +64,91 @@ class VideoHandlerController extends WikiaController {
 	 * @requestParam string title
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
-	 * @responseParam string redirectUrl
 	 */
 	public function removeVideo() {
-		$title = $this->getVal( 'title', '' );
+		$this->wf->ProfileIn( __METHOD__ );
 
-		$this->wf->RunHooks( 'RemovePremiumVideo', array( $file ) );
+		$videoTitle = $this->getVal( 'title', '' );
+		if ( empty($videoTitle) ) {
+			$this->result = 'error';
+			$this->msg = $this->wf->Message( 'videos-error-empty-title' )->text();
+			$this->wf->ProfileOut( __METHOD__ );
+			return;
+		}
 
-		// redirect to home page
-		$this->redirectUrl = Title::newMainPage()->getFullURL();
-		$this->result = 'ok';
-		$this->msg = $this->wf->Message( 'videohandler-remove-video-modal-success', $title );
+		// check if user is logged in
+		if ( !$this->wg->User->isLoggedIn() ) {
+			$this->result = 'error';
+			$this->msg = $this->wf->Message( 'videos-error-not-logged-in' )->text();
+			$this->wf->ProfileOut( __METHOD__ );
+			return;
+		}
+
+		// check if user is blocked
+		if ( $this->wg->User->isBlocked() ) {
+			$this->result = 'error';
+			$this->msg = $this->wf->Message( 'videos-error-blocked-user' )->text();
+			$this->wf->ProfileOut( __METHOD__ );
+			return;
+		}
+
+		// check if read-only
+		if ( $this->wf->ReadOnly() ) {
+			$this->result = 'error';
+			$this->msg = $this->wf->Message( 'videos-error-readonly' )->text();
+			$this->wf->ProfileOut( __METHOD__ );
+			return;
+		}
+
+		$error = '';
+
+		$title = Title::newFromText( $videoTitle, NS_FILE );
+		$file = ( $title instanceof Title ) ? $this->wf->Findfile( $title ) : false;
+		if ( $file instanceof File && WikiaFileHelper::isFileTypeVideo($file) ) {
+			// check permissions
+			$permissionErrors = $title->getUserPermissionsErrors( 'delete', $this->wg->User );
+			if ( count( $permissionErrors ) ) {
+				$this->result = 'error';
+				$this->msg = $this->wf->Message( 'videos-error-permissions' )->text();
+				$this->wf->ProfileOut( __METHOD__ );
+				return;
+			}
+
+			$reason = '';
+			if ( $file->isLocal() ) {
+				$oldimage = null;
+				$status = FileDeleteForm::doDelete( $title, $file, $oldimage, $reason, false );
+				if ( !$status->isOK() ) {
+					$error = $status->getMessage();
+				}
+			} else {
+				if ( $title->exists() ) {
+					$article = Article::newFromID( $title->getArticleID() );
+				} else {
+					$botUser = User::newFromName( 'WikiaBot' );
+					$article = new Article( $title );
+					$status = $article->doEdit( $content, 'created video', EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+				}
+
+				if ( !$article->doDeleteArticle( $reason, false, 0, true, $error ) ) {
+					if ( empty($error) ) {
+						$error = $this->wf->Message( 'videohandler-remove-error-unknow' )->text();
+					}
+				}
+			}
+		} else {
+			$error = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
+		}
+
+		if ( empty($error) ) {
+			$this->result = 'ok';
+			$this->msg = $this->wf->Message( 'videohandler-remove-video-modal-success', $title )->text();
+		} else {
+			$this->result = 'error';
+			$this->msg = $error;
+		}
+
+		$this->wf->ProfileOut( __METHOD__ );
 	}
 
 }
