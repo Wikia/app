@@ -12,9 +12,9 @@ var RelatedVideos = {
 	isHubExtPage: false,
 	rvItemCount: null,
 
-	track: WikiaTracker.buildTrackingFunction({
-		category: 'related-videos'
-	}),
+//	track: WikiaTracker.buildTrackingFunction({
+//		category: 'related-videos'
+//	}),
 
 	// Lazy Loading
 	loadedCount: 0,
