@@ -66,14 +66,12 @@ class WikiaTask {
 		$failed = 0;
 		$total = $result->numRows();
 		$botUser = User::newFromName( 'WikiaBot' );
+		$content = '[['.WikiaVideoPage::getVideosCategory().']]';
 		while ( $result && $row = $db->fetchRow( $result ) ) {
 			echo "\tWiki $wiki_id: [$counter of $total] Title:".$row['video_title'];
 
 			$title = Title::newFromText( $row['video_title'], NS_FILE );
 			if ( $title instanceof Title ) {
-				$cat = $app->wg->ContLang->getFormattedNsText( NS_CATEGORY );
-				$content = '[[' . $cat . ':' . $app->wf->Message( 'videohandler-category' )->inContentLanguage()->text() . ']]';
-
 				$status = Status::newGood();
 				if ( $title->exists() ) {
 					$article = Article::newFromID( $title->getArticleID() );

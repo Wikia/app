@@ -126,6 +126,7 @@ class VideoHandlerController extends WikiaController {
 					$article = Article::newFromID( $title->getArticleID() );
 				} else {
 					$botUser = User::newFromName( 'WikiaBot' );
+					$content = '[['.WikiaVideoPage::getVideosCategory().']]';
 					$article = new Article( $title );
 					$status = $article->doEdit( $content, 'created video', EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
 				}

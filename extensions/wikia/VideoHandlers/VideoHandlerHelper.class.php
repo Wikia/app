@@ -18,8 +18,7 @@ class VideoHandlerHelper extends WikiaModel {
 		$status = null;
 		$title = Title::newFromText( $titleText, NS_FILE );
 		if ( $title instanceof Title ) {
-			$cat = $this->wg->ContLang->getFormattedNsText( NS_CATEGORY );
-			$content = '[[' . $cat . ':' . wfMsgForContent( 'videohandler-category' ) . ']]';
+			$content = '[['.WikiaVideoPage::getVideosCategory().']]';
 
 			if ( $title->exists() ) {
 				$article = Article::newFromID( $title->getArticleID() );
