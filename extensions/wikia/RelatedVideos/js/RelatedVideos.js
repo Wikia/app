@@ -85,11 +85,11 @@ var RelatedVideos = {
 			relatedVideosModule.find('.addVideo').addVideoButton({
 				callbackAfterSelect: function(url) {
 
-					RelatedVideos.track({
-						action: WikiaTracker.ACTIONS.ADD,
-						label: 'add-video-success',
-						trackingMethod: 'both'
-					});
+//					RelatedVideos.track({
+//						action: WikiaTracker.ACTIONS.ADD,
+//						label: 'add-video-success',
+//						trackingMethod: 'both'
+//					});
 					
 					$.nirvana.postJson(
 						// controller
@@ -136,10 +136,10 @@ var RelatedVideos = {
 			RelatedVideos.checkButtonState();
 		}
 
-		RelatedVideos.track({
-			action: WikiaTracker.ACTIONS.VIEW,
-			trackingMethod: 'both'
-		});
+//		RelatedVideos.track({
+//			action: WikiaTracker.ACTIONS.VIEW,
+//			trackingMethod: 'both'
+//		});
 	},
 
 	// Scrolling items
@@ -147,23 +147,23 @@ var RelatedVideos = {
 	scrollright: function(){
 		RelatedVideos.lazyLoad();
 
-		RelatedVideos.track({
-			action: WikiaTracker.ACTIONS.PAGINATE,
-			label: 'paginate-next',
-			trackingMethod: 'both',
-			value: RelatedVideos.currentRoom + 1
-		});
+//		RelatedVideos.track({
+//			action: WikiaTracker.ACTIONS.PAGINATE,
+//			label: 'paginate-next',
+//			trackingMethod: 'both',
+//			value: RelatedVideos.currentRoom + 1
+//		});
 
 		RelatedVideos.scroll( 1, false );
 	},
 
 	scrollleft: function(){
-		RelatedVideos.track({
-			action: WikiaTracker.ACTIONS.PAGINATE,
-			label: 'paginate-prev',
-			trackingMethod: 'both',
-			value: RelatedVideos.currentRoom - 1
-		});
+//		RelatedVideos.track({
+//			action: WikiaTracker.ACTIONS.PAGINATE,
+//			label: 'paginate-prev',
+//			trackingMethod: 'both',
+//			value: RelatedVideos.currentRoom - 1
+//		});
 
 		RelatedVideos.scroll( -1, false );
 	},
@@ -217,13 +217,13 @@ var RelatedVideos = {
 		});
 
 		if (titles.length) {
-			RelatedVideos.track({
-				action: WikiaTracker.ACTIONS.IMPRESSION,
-				label: 'video',
-				orders: orders.join(','),
-				trackingMethod: 'internal',
-				video_titles: "'" + titles.join("','") + "'"
-			});
+//			RelatedVideos.track({
+//				action: WikiaTracker.ACTIONS.IMPRESSION,
+//				label: 'video',
+//				orders: orders.join(','),
+//				trackingMethod: 'internal',
+//				video_titles: "'" + titles.join("','") + "'"
+//			});
 		}
 	},
 
