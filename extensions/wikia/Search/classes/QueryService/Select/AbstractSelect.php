@@ -210,10 +210,8 @@ abstract class AbstractSelect
 		} catch ( \Exception $e ) {
 			if ( $this->config->getError() !== null ) {
 				$this->config->setError( $e );
-				\Wikia::log( __METHOD__, 'Querying Solr With No Boost Functions', $e );
 				return new \Solarium_Result_Select_Empty();
 			} else {
-				\Wikia::log( __METHOD__, 'Querying Solr First Time', $e );
 				
 				$this->config->setSkipBoostFunctions( true )
 				             ->setError( $e );
@@ -235,9 +233,11 @@ abstract class AbstractSelect
 	}
 	
 	/**
-	 * This is a hook forchild classes to optionally extend
+	 * Allows us to re-search for a collated spellcheck
+	 * @param Solarium_Result_Select $result
+	 * @return Ambigous <Solarium_Result_Select, \Solarium_Result_Select_Empty>
 	 */
-	protected function prepareResponse( Solarium_Result_Select $result ) {
+	protected function spellcheckResult( Solarium_Result_Select $result ) {
 		// re-search for spellchecked phrase in the absence of results
 		if ( $this->interface->getGlobal( 'WikiaSearchSpellcheckActivated' ) 
 				&& $result->getNumFound() == 0
@@ -247,6 +247,14 @@ abstract class AbstractSelect
 				$result = $this->sendSearchRequestToClient();
 			}
 		}
+		return $result;
+	}
+	
+	/**
+	 * This is a hook for child classes to optionally extend
+	 */
+	protected function prepareResponse( Solarium_Result_Select $result ) {
+		$this->spellcheckResult( $result );
 		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $this->config ) );
 		$results = $this->resultSetFactory->get( $container );
 		$resultCount = $results->getResultsFound();
@@ -264,6 +272,12 @@ abstract class AbstractSelect
 					);
 		}
 	}
+	
+	/**
+	 * Returns the fields that should be queried
+	 * @return string 
+	 */
+	abstract protected function getQueryFieldsString();
 	
 	/**
 	 * Creates a nested query using extended dismax.

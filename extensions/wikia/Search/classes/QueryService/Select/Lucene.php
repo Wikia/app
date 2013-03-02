@@ -13,4 +13,12 @@ class Lucene extends AbstractSelect
 	protected function getFormulatedQuery() {
 		return $this->config->getQuery( \Wikia\Search\Config::QUERY_RAW );
 	}
+	
+	/**
+	 * This obviously violates the LSP -- @todo create a parent to abstractselect
+	 * @return string
+	 */
+	protected function getQueryFieldsString() {
+		return '';
+	}
 }
