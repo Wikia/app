@@ -23,11 +23,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
 			function() use( $category ) {
 				$viewer = new WikiaMobileCategoryViewer( $category );
 				$viewer->doCategoryQuery();
-
-				return [
-					'items' => $viewer->items,
-					'count' => $viewer->count
-				];
+				return $viewer->getData();
 			}
 		);
 
@@ -105,8 +101,8 @@ class WikiaMobileCategoryModel extends WikiaModel{
  *
  */
 class WikiaMobileCategoryViewer extends CategoryViewer{
-	public $items;
-	public $count;
+	private $items;
+	private $count;
 
 	function __construct( Category $category ){
 		parent::__construct( $category->getTitle(), RequestContext::getMain() );
@@ -146,5 +142,12 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 			];
 			$this->count++;
 		}
+	}
+
+	public function getData(){
+		return [
+			'items' => $this->items,
+			'count' => $this->count
+		];
 	}
 }
