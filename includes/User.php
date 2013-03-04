@@ -4140,6 +4140,7 @@ class User {
 				array( 'user_editcount=user_editcount+1' ),
 				array( 'user_id' => $this->getId() ),
 				__METHOD__ );
+			$dbw->commit();
 
 			/**
 			 * Wikia change
