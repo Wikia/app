@@ -4,6 +4,9 @@ require_once( 'WikiaSearchBaseTest.php' );
 
 class WikiaSearchQueryServiceSelectVideoTest extends WikiaSearchBaseTest {
 	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\Video::configureQueryFields
+	 */
 	public function testConfigureQueryFields() {
 		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
 		                      ->disableOriginalConstructor()

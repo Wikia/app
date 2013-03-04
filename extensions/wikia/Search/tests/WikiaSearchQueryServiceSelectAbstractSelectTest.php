@@ -368,7 +368,8 @@ class WikiaSearchQueryServiceSelectAbstractSelectTest extends WikiaSearchBaseTes
 		                   ->getMockForAbstractClass();
 		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'registerFilterQueryForMatch' );
 		$get->setAccessible( true );
-		$this->assertNull(
+		$this->assertEquals(
+				$mockSelect,
 				$get->invoke( $mockSelect )
 		);
 	}
