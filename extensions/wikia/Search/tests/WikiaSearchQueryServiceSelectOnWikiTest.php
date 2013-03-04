@@ -68,11 +68,20 @@ class WikiaSearchQueryServiceSelectOnWikiTest extends WikiaSearchBaseTest {
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
 		
+		$selectMethods = array( 
+				'registerQueryParams', 'registerHighlighting', 'registerFilterQueries', 
+				'registerSpellcheck', 'configureQueryFields' 
+				);
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( array( 'registerQueryParams', 'registerHighlighting', 'registerFilterQueries', 'registerSpellcheck' ) )
+		                   ->setMethods( $selectMethods )
 		                   ->getMock();
 		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'configureQueryFields' )
+		    ->will   ( $this->returnValue( $mockSelect ) )
+		;
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'registerQueryParams' )
