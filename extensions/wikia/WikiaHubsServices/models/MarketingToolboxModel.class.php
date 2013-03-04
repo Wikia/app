@@ -145,26 +145,36 @@ class MarketingToolboxModel extends WikiaModel {
 	 * Return array consisting of videoThumb and videoTimestamp
 	 * for given video name
 	 *
-	 * @param $fileName
+	 * @param string $fileName
+	 * @param int    $thumbSize
+	 *
 	 * @return array
 	 */
-	public function getVideoData ($fileName) {
+	public function getVideoData ($fileName, $thumbSize) {
 		$videoData = array();
 		$title = Title::newFromText($fileName, NS_FILE);
 		if (!empty($title)) {
 			$file = $this->wf->findFile($title);
 		}
 		if (!empty($file)) {
-			$thumbSize = $this->getThumbnailSize();
 			$htmlParams = array(
 				'file-link' => true,
 				'duration' => true,
 				'linkAttribs' => array('class' => 'video-thumbnail lightbox')
 			);
-			$videoData['videoThumb'] = $file->transform(array('width' => $thumbSize))->toHtml($htmlParams);
+			$thumb = $file->transform(array('width' => $thumbSize));
+
+			$videoData['videoThumb'] = $thumb->toHtml($htmlParams);
 			$videoData['videoTimestamp'] = $file->getTimestamp();
 			$videoData['videoTime'] = $this->wf->TimeFormatAgo($videoData['videoTimestamp']);
+
+			$meta = unserialize($file->getMetadata());
+			$videoData['duration'] = isset($meta['duration']) ? $meta['duration'] : null;
+			$videoData['title'] = $title->getText();
+			$videoData['fileUrl'] = $title->getFullURL();
+			$videoData['thumbUrl'] = $thumb->getUrl();
 		}
+
 		return $videoData;
 	}
 

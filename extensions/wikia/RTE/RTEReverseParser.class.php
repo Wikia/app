@@ -22,7 +22,6 @@ class RTEReverseParser {
 	const DATA_RTE_SPACES_AFTER = 'data-rte-spaces-after';
 	const DATA_RTE_SPACES_BEFORE = 'data-rte-spaces-before';
 
-
 	// DOMdocument used to process HTML
 	private $dom;
 
@@ -41,6 +40,12 @@ class RTEReverseParser {
 	 * @var array
 	 */
 	private $nodeOutputs = array();
+
+	/**
+	 * Stores nodes that have had the fix for table cells applied to them.
+	 * @var array
+	 */
+	private $fixedTableCellNodes = array();
 
 	// node ID counter
 	private $nodeId = 0;
@@ -448,9 +453,9 @@ class RTEReverseParser {
 			}
 			else {
 				// only add line break if there's no empty line before and previous sibling was not a tag
-				if ( self::getEmptyLinesBefore($node) == 0 
-					&& !self::isFirstChild($node) 
-					&& !$this->wasTag( $node->previousSibling ) 
+				if ( self::getEmptyLinesBefore($node) == 0
+					&& !self::isFirstChild($node)
+					&& !$this->wasTag( $node->previousSibling )
 					&& $node->nodeName != 'blockquote' ) {
 					$prefix = "\n";
 				}
@@ -664,11 +669,11 @@ class RTEReverseParser {
 				$textContent = "\n";
 			}
 		}
-		
+
 		/**
 		 * bugid: 51621 -- an empty p tag preceding a blockquote should be nixed when reverse-parsing
 		 */
-		if ( self::nextSiblingIs( $node, 'blockquote' ) 
+		if ( self::nextSiblingIs( $node, 'blockquote' )
 			&& $node->hasAttribute( self::DATA_RTE_FROMPARSER )
 			&& $textContent == "\n" ) {
 			return '';
@@ -676,7 +681,7 @@ class RTEReverseParser {
 		if ( self::previousSiblingIs( $node, 'blockquote' )
 			&& $textContent == "\n" ) {
 		    return '';
-		} 
+		}
 
 		// RT#40786: handle "filler" paragraphs added between headings
 		if ($node->hasAttribute(self::DATA_RTE_FILTER) && $textContent == "\n") {
@@ -1529,6 +1534,7 @@ class RTEReverseParser {
 							!self::nextSiblingIs($node, 'sup')
 						) {
 							$out = "{$out}\n";
+							$fixedTableCellNodes[] = $node;
 						}
 						break;
 
@@ -1548,11 +1554,11 @@ class RTEReverseParser {
 		} else if (
 			// Break before lists if previous node is text node (RT #34043)
 			( self::isListNode( $node ) && self::previousSiblingIsTextNode( $node ) ) ||
-			// (BugId:11235) Break before paragraphs created by newlines. Exclude first-child
-			// anchor tags as they are handled as a special case in the first-child only code above.
-			( $node->nodeName == 'p' && !self::wasHtml( $node ) &&
-				!( self::previousSiblingIs( $node, 'a' ) && self::isFirstChild( $node->previousSibling ) )
-			)
+			// (BugId:11235, BugId:95911) Break before paragraphs created by newlines,
+			// as opposed to explicit <p> tags, but only in certain scenarios.
+			( $node->nodeName == 'p' && !self::wasHtml( $node ) && ( self::previousSiblingIsTextNode( $node ) ||
+				!self::isFirstChild( $node->previousSibling ) || in_array( $node->previousSibling, $this->fixedTableCellNodes )
+			) )
 		) {
 			$out = "\n{$out}";
 		}

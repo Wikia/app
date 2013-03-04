@@ -93,8 +93,9 @@ class DependencyContainer
 	/**
 	 * @param \Wikia\Search\ResultSet\Factory $resultSetFactory
 	 */
-	public function setResultSetFactory( Factory $resultSetFactory ) {
+	public function setResultSetFactory( \Wikia\Search\ResultSet\Factory $resultSetFactory ) {
 		$this->resultSetFactory = $resultSetFactory;
+		return $this;
 	}
 
 }

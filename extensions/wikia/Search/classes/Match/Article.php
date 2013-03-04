@@ -14,23 +14,23 @@ class Article extends AbstractMatch
 	 */
 	public function createResult() {
 		$wikiId = $this->interface->getWikiId();
+		$pageId = $this->interface->getCanonicalPageIdFromPageId( $this->id );
 		$fieldsArray = array(
-				'id'            => sprintf( '%s_%s', $wikiId, $this->id ),
-				'pageid'        => $this->id,
+				'id'            => sprintf( '%s_%s', $wikiId, $pageId ),
+				'pageId'        => $pageId,
 				'wid'           => $wikiId,
 				'title'         => $this->interface->getTitleStringFromPageId( $this->id ),
 				'url'           => urldecode( $this->interface->getUrlFromPageId( $this->id ) ),
 				'score'         => 'PTT',
 				'isArticleMatch'=> true,
 				'ns'            => $this->interface->getNamespaceFromPageId( $this->id ),
-				'pageId'        => $this->interface->getCanonicalPageIdFromPageId( $this->id ),
 				'created'       => $this->interface->getFirstRevisionTimestampForPageId( $this->id ),
 				'touched'       => $this->interface->getLastRevisionTimestampForPageId( $this->id ),
 			);
 		$result = new Result( $fieldsArray );
 		$result->setText( $this->interface->getSnippetForPageId( $this->id ) );
 		if ( $this->hasRedirect() ) {
-			$result->setVar( 'redirectTitle', $this->interface->getNonCanonicalTitleString( $this->id ) );
+			$result->setVar( 'redirectTitle', $this->interface->getNonCanonicalTitleStringFromPageId( $this->id ) );
 			$result->setVar( 'redirectUrl', $this->interface->getNonCanonicalUrlFromPageId( $this->id ) );
 		}
 		return $result;

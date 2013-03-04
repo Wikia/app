@@ -21,7 +21,7 @@
 		</section>
 		<div class="grid-2 alpha wikiahubs-rail">
 			<section class="grid-2 alpha wikiahubs-featured-video wikiahubs-module">
-				<?= $app->renderView('SpecialWikiaHubsV2', 'featuredvideo', $app->wg->request->getValues()); ?>
+				<?= $modules[MarketingToolboxModuleFeaturedvideoService::MODULE_ID] ?>
 			</section>
 
 			<section class="grid-2 alpha wikiahubs-wikitext-module wikiahubs-module">
@@ -33,7 +33,7 @@
 			</section>
 		</div>
 		<div class="grid-4 alpha wikiahubs-popular-videos wikiahubs-module">
-			<?= $app->renderView('SpecialWikiaHubsV2', 'popularvideos', $app->wg->request->getValues()); ?>
+			<?= $modules[MarketingToolboxModulePopularvideosService::MODULE_ID] ?>
 		</div>
 		<div class="grid-4 alpha wikiahubs-from-the-community wikiahubs-module ">
 			<?= $app->renderView('SpecialWikiaHubsV2', 'fromthecommunity', $app->wg->request->getValues()); ?>

@@ -120,6 +120,11 @@ class AbstractServiceTest extends \WikiaSearchBasetest
 		;
 		$service
 		    ->expects( $this->any() )
+		    ->method ( 'getCurrentDocumentId' )
+		    ->will   ( $this->returnValue( 234 ) )
+		;
+		$service
+		    ->expects( $this->any() )
 		    ->method ( 'execute' )
 		    ->will   ( $this->returnValue( $executeResponse ) )
 		;
@@ -135,6 +140,54 @@ class AbstractServiceTest extends \WikiaSearchBasetest
 		
 		$actualResponse = $service->getResponseForPageIds();
 		$expectedResponse = array( 'contents' => array( $jsonResponse ), 'errors' => array() );
+		$this->assertEquals(
+				$expectedResponse,
+				$actualResponse
+		);
+	}
+	
+	/**
+	 * @covers \Wikia\Search\IndexService\AbstractService::getResponseForPageIds
+	 */
+	public function testGetResponseForPageIdsSkipRepeats() {
+		$service = $this->service
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
+		                ->getMock();
+		
+		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'pageIdExists' ) )
+		                  ->getMock();
+		
+		$service->setPageIds( array( 456 ) );
+		
+		$reflProcessedDocs = new ReflectionProperty( 'Wikia\Search\IndexService\AbstractService', 'processedDocIds' );
+		$reflProcessedDocs->setAccessible( true );
+		$reflProcessedDocs->setValue( $service, array( 456 ) );
+		
+		$interface
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'pageIdExists' )
+		    ->with   ( 456 )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getCurrentDocumentId' )
+		    ->will   ( $this->returnValue( 456 ) )
+		;
+		$service
+		    ->expects( $this->never() )
+		    ->method ( 'execute' )
+		;
+
+		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'interface' );
+		$reflIf->setAccessible( true );
+		$reflIf->setValue( $service, $interface );
+		
+		$actualResponse = $service->getResponseForPageIds();
+		$expectedResponse = array( 'contents' => array(), 'errors' => array() );
 		$this->assertEquals(
 				$expectedResponse,
 				$actualResponse

@@ -2,7 +2,6 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/opacity";
-@import 'NewsTabs';
 @import 'Explore';
 @import 'Pulse';
 @import 'VideoModule';
@@ -12,6 +11,7 @@
 @import 'WikitextModule';
 @import 'CorporateFooter';
 @import 'ColorsPerVertical';
+@import 'SponsoredBox';
 
 $wikiahubs-line-height: 16px;
 
@@ -111,7 +111,7 @@ $wikiahubs-line-height: 16px;
 
 .WikiaHubsModal {
 	.WikiaForm {
-		input[type="text"],
+		input[type="url"],
 		textarea {
 			width: 450px;
 			padding: 7px;

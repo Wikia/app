@@ -1,10 +1,5 @@
 <div class="title-wrapper">
-	<h2><?= $headline ?></h2>
-	<? if (!F::app()->checkSkin('wikiamobile')): ?>
-		<button id="suggest-popularvideos" class="wikia-button secondary">
-			<?= wfMsg('wikiahubs-suggest-video-submit-button'); ?>
-		</button>
-	<? endif; ?>
+	<h2><?= $header ?></h2>
 </div>
 <section class="WikiaMediaCarousel">
 	<a href="#" class="button secondary right next">
@@ -13,13 +8,14 @@
 	<a href="#" class="button secondary left previous">
 		<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="chevron" />
 	</a>
-	<? if (is_array($videos)): ?>
-	<div id="carouselContainer" class="carouselContainer">
+	<? if( is_array($videos) ): ?>
+	<div id="carouselContainer" class="carousel-container">
 		<div>
-			<ul class="carousel" style="">
+			<ul class="carousel">
 				<? foreach($videos as $video): ?>
 				<li class="thumbs active">
-					<?= $app->renderView( 'SpecialWikiaHubsV2', 'renderCaruselElement', array_merge(F::app()->wg->request->getValues(),array('video' => $video)) ); ?>
+					<?= $video['thumbMarkup']; ?>
+					<div class="video-title"><?= $video['title']; ?></div>
 				</li>
 				<? endforeach; ?>
 			</ul>

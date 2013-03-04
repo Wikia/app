@@ -58,7 +58,7 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 
 		if( !empty($data['values']['video']) ) {
 			foreach($data['values']['video'] as $i => $video) {
-				$data['videos'][$i] = $model->getVideoData($video);
+				$data['videos'][$i] = $model->getVideoData($video, $model->getThumbnailSize());
 				$data['videos'][$i]['title'] = $video;
 
 				//we enabled curators to edit a video url so if they've changed it we change it here
@@ -90,5 +90,39 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 		}
 
 		return $data;
+	}
+
+	public function getStructuredData($data) {
+		$structuredData = array();
+
+		if(!empty($data)) {
+			$toolboxModel = $this->getToolboxModel();
+			$moduleModel = $this->getModuleModel();
+
+			$structuredData['header'] = $data['header'];
+			$structuredData['videos'] = null;
+			foreach($data['video'] as $key => $video) {
+				$videoData = $toolboxModel->getVideoData($video, $moduleModel->getVideoThumbSize());
+
+				$structuredData['videos'][] = array(
+					'title' => $videoData['title'],
+					'fileUrl' => $videoData['fileUrl'],
+					'duration' => $videoData['duration'],
+					'thumbUrl' => $videoData['thumbUrl'],
+					'thumbMarkup' => $videoData['videoThumb'],
+					'wikiUrl' => $data['videoUrl'][$key]
+				);
+			}
+		}
+
+		return $structuredData;
+	}
+
+	public function getToolboxModel() {
+		return new MarketingToolboxModel();
+	}
+
+	public function getModuleModel() {
+		return new MarketingToolboxPopularvideosModel();
 	}
 }
