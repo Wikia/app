@@ -183,4 +183,6 @@ class WikiaSearchResultSetDependenciesTest extends WikiaSearchBaseTest {
 		);
 	}
 	
+	//@todo if i wanted full code coverage i would do the dependency container but meh
+	
 }

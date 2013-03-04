@@ -16,7 +16,7 @@ class GroupingSet extends Grouping
 	 * Configures result set.
 	 * @param DependencyContainer $container
 	 */
-	public function configure( DependencyContainer $container ) {
+	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject = $container->getResult();
 		$this->searchConfig       = $container->getConfig();
 		$this->interface          = $container->getInterface();

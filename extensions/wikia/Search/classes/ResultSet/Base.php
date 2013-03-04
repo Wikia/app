@@ -27,7 +27,7 @@ class Base extends EmptySet
 	 * Dependencies are injected here by factory for result, config, and interface, via container.
 	 * @param DependencyContainer $container
 	 */
-	public function configure( DependencyContainer $container ) {
+	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject  = $container->getResult();
 		$this->searchConfig        = $container->getConfig();
 		$this->interface           = $container->getInterface();
