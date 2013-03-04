@@ -365,7 +365,7 @@ Ma soñj deoc'h ez eo dre fazi pe mar fell deoc'h e vefe distroet war an diviz e
 	'chat-room-is-not-on-this-wiki' => "Evit doare n'eus ket eus ar gaoz a glaskit kevreañ outi war ar wiki-mañ.",
 	'chat-kick-log-reason' => "Skarzhet eus ar flap er wiki-mañ gant $1.
 Kit e darempred ganto da c'houzout hiroc'h.",
-	'chat-live2' => 'Fla war-eeun !',
+	'chat-live2' => 'Flap war-eeun !',
 	'chat-start-a-chat' => 'Kregiñ gant ar Flap',
 	'chat-join-the-chat' => 'Mont er Flap',
 	'chat-edit-count' => '$1 Kemm', # Fuzzy
