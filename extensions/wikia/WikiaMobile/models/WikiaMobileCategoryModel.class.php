@@ -10,19 +10,21 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	const EXHIBITION_ITEMS_LIMIT = 4;//maximum number of items in Category Exhibition to display
 
 	/**
-	 * @param Category $category
-	 * @return WikiaMobileCategoryViewer
+	 * @return Array
 	 */
-
-	public function getItemsCollection( Category $category ){
+	public function getItemsCollection( Category $category, $index = NULL, $batch = NULL ){
 		$this->wf->profileIn( __METHOD__ );
 
-		$cacheKey = $this->getItemsCollectionCacheKey( $category->getName() );
+		$cacheKey = $this->getItemsCollectionCacheKey( $category->getID() );
 		$contents = $this->wg->memc->get( $cacheKey );
 
 		if ( empty( $contents ) ) {
 			$contents = (new WikiaMobileCategoryViewer( $category ))->getContents();
 			$this->wg->memc->set( $cacheKey, $contents, self::CACHE_TTL_ITEMSCOLLECTION );
+		}
+
+		if( !empty( $index ) && is_numeric( $batch ) ) {
+			$contents = $this->wf->PaginateArray( $contents[$index], 25, $batch );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -55,11 +57,11 @@ class WikiaMobileCategoryModel extends WikiaModel{
 					}
 
 					$oTitle = Title::newFromID( $pageId );
-					$items[] = array(
+					$items[] = [
 						'img'		=> $img,
 						'title'		=> $oTitle->getText(),
 						'url'		=> $oTitle->getFullURL()
-					);
+					];
 				}
 
 				$this->wg->memc->set( $cacheKey, $items, self::CACHE_TTL_EXHIBITION );
@@ -73,8 +75,8 @@ class WikiaMobileCategoryModel extends WikiaModel{
 		return false;
 	}
 
-	private function getItemsCollectionCacheKey( $categoryName ){
-		return $this->wf->memcKey( __CLASS__, 'ItemsCollection', md5( $categoryName ) );
+	private function getItemsCollectionCacheKey( $categoryId ){
+		return $this->wf->memcKey( __CLASS__, 'ItemsCollection', $categoryId );
 	}
 
 	private function getExhibitionItemsCacheKey( $titleText ){
@@ -104,7 +106,7 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 		//get all the members in the category
 		$this->limit = null;
 
-		$this->items = array();
+		$this->items = [];
 		$this->count = 0;
 	}
 
@@ -126,10 +128,14 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 			 $index = (string) mb_strtoupper( mb_substr( $sortkey, 0, 1 ) );
 
 			if ( empty( $this->items[$index] ) ) {
-				$this->items[$index] = new WikiaMobileCategoryItemsCollection;
+				$this->items[$index] = [];
 			}
 
-			$this->items[$index]->addItem( new WikiaMobileCategoryItem( $title ) );
+			$this->items[$index][] = [
+				'name' => $title->getText(),
+			 	'url' => $title->getLocalUrl(),
+				'is_category' => $title->getNamespace() == NS_CATEGORY
+			];
 			$this->count++;
 		}
 	}
@@ -142,126 +148,10 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 	public function getContents(){
 		parent::doCategoryQuery();
 
-		/*
-		if ( $this->count > 0 ) {
-			ksort( $this->items );
-		}
-		*/
-
-		$ret = new WikiaMobileCategoryContents( $this->items, $this->count );
+		$ret = $this->items;
 
 		$this->count = $this->items = null;
 
 		return $ret;
-	}
-}
-
-/**
- * Simple DTO to handle the indexed contents of a category
- */
-class WikiaMobileCategoryContents implements arrayaccess{
-	private $items;
-	private $count;
-
-	function __construct( Array $items, $count ){
-		$this->items = $items;
-		$this->count = (int) $count;
-	}
-
-	public function setItems( Array $items ){
-		$this->items = $items;
-	}
-
-	public function getItems(){
-		return $this->items;
-	}
-
-	public function setCount( $count ){
-		$this->count = (int) $count;
-	}
-
-	public function getCount(){
-		return $this->count;
-	}
-
-	public function offsetSet( $offset, $value ){
-        if ( is_null( $offset ) ) {
-            $this->items[] = $value;
-        } else {
-            $this->items[$offset] = $value;
-        }
-    }
-
-    public function offsetExists( $offset ){
-        return isset( $this->items[$offset] );
-    }
-
-    public function offsetUnset( $offset ){
-        unset( $this->items[$offset] );
-    }
-
-    public function offsetGet( $offset ){
-        return isset( $this->items[$offset] ) ? $this->items[$offset] : null;
-    }
-}
-
-/**
- * Paginated container for all the members of a category starting with a specific letter
- */
-class WikiaMobileCategoryItemsCollection extends WikiaObject{
-	private $items;
-	private $count;
-
-	function __construct(){
-		parent::__construct();
-		$this->items = array();
-		$this->count = 0;
-	}
-
-	public function getItems( $batch = null, $batchSize = 25 ){
-		if ( is_int( $batch ) && is_int( $batchSize ) ) {
-			return $this->wf->PaginateArray( $this->items, $batchSize, $batch );
-		}
-
-		return $this->items;
-	}
-
-	public function addItem( WikiaMobileCategoryItem $item ){
-		$this->items[] = $item;
-		$this->count++;
-	}
-
-	public function getCount(){
-		return $this->count;
-	}
-}
-
-/**
- * Simple DTO representing one item in a Category
- */
-class WikiaMobileCategoryItem{
-	const TYPE_ARTICLE = 1;
-	const TYPE_SUBCATEGORY = 2;
-
-	private $name;
-	private $url;
-	private $type;
-
-	function __construct( Title $title ){
-		$this->name = $title->getText();
-		$this->url = $title->getLocalUrl();
-		$this->type = ( $title->getNamespace() == NS_CATEGORY ) ? self::TYPE_SUBCATEGORY : self::TYPE_ARTICLE;;
-	}
-
-	public function getName(){
-		return $this->name;
-	}
-
-	public function getUrl(){
-		return $this->url;
-	}
-
-	public function getType(){
-		return $this->type;
 	}
 }

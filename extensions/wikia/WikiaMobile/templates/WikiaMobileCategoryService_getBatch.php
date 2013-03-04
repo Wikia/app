@@ -1,13 +1,9 @@
-<?
-/**
+<?/**
  * @var $itemsBatch array
- * @var $item WikiaMobileCategoryItem
- */
-?>
-<? if( isset( $itemsBatch ) && is_array( $itemsBatch ) ) : ?>
+ * @var $item Array
+ */?>
 <ul class=wkLst>
-<? foreach ( $itemsBatch['items'] as $item ) :?>
-	<li<?= ( $item->getType() == WikiaMobileCategoryItem::TYPE_SUBCATEGORY ) ? ' class=cld' : '';?>><a href="<?= $item->getUrl() ;?>"><?= $item->getName(); ?></a></li>
+<? foreach ( $itemsBatch as $item ) :?>
+	<li<?= $item['is_category'] ? ' class=cld' : '';?>><a href="<?= $item['url'] ;?>"><?= $item['name']; ?></a></li>
 <? endforeach ;?>
 </ul>
-<? endif; ?>
