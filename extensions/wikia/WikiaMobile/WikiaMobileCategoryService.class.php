@@ -23,8 +23,7 @@ class WikiaMobileCategoryService extends WikiaService {
 	public function index(){
 		$categoryLinks = $this->request->getVal( 'categoryLinks', '' );
 
-		//MW1.16 always returns non empty $catlinks
-		//TODO: remove since we're on 1.17+?
+		//$catlinks are always returned even empty
 		if (strpos($categoryLinks, ' catlinks-allhidden\'></div>') !== false) {
 			$categoryLinks = '';
 		}
