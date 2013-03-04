@@ -8,7 +8,7 @@
  */
 
 class QuestionTitleBlock {
-	static public function badWordsTest( $title ) {
+	static public function badWordsTest( $title, &$block ) {
 		global $wgLanguageCode;
 		wfProfileIn(__METHOD__);
 
@@ -20,6 +20,7 @@ class QuestionTitleBlock {
 		$blockData = null;
 		$result = PhalanxFallback::findBlocked( $text, $blocksData, true, $blockData );
 		if ( $result['blocked'] ) {
+			$block = ( object ) $result;
 			Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
 			wfProfileOut(__METHOD__);
 			return false;

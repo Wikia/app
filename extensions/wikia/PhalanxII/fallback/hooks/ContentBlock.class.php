@@ -11,7 +11,7 @@
 class ContentBlock {
 	private static $whitelist = null;
 
-	public static function onEditFilter( $textbox, $summary ) {
+	public static function onEditFilter( $textbox, $summary, &$block ) {
 		global $wgOut, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
@@ -23,13 +23,13 @@ class ContentBlock {
 
 		// here we get only the phrases for blocking in summaries...
 		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_SUMMARY );
-
 		if ( !empty($blocksData) && $summary != '' ) {
 			$summary = self::applyWhitelist($summary);
 
 			$blockData = null;
 			$result = PhalanxFallback::findBlocked($summary, $blocksData, true, $blockData);
 			if ( $result['blocked'] ) {
+				$block = (object) $blockData;
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$summary'.");
 				wfProfileOut( __METHOD__ );
 				return false;
@@ -43,6 +43,7 @@ class ContentBlock {
 			$blockData = null;
 			$result = PhalanxFallback::findBlocked($textbox, $blocksData, true, $blockData);
 			if ( $result['blocked'] ) {
+				$block = (object) $blockData;
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$textbox'.");
 				wfProfileOut( __METHOD__ );
 				return false;

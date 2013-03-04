@@ -62,7 +62,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function contentBlock() {
-		$msg = $this->wf->msgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$this->block->text} (Block #{$this->block->id})</nowiki>" );
+		$msg = $this->wf->msgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$this->block->text} (Block #{$this->block->id})</nowiki>" ); 
 		$this->logBlock();
 		return $msg;
 	}
@@ -81,8 +81,8 @@ class PhalanxContentModel extends PhalanxModel {
 	} 
 	
 	public function match_summary_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension */
-		return ContentBlock::onEditFilter( '', $this->getText() );
+		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
+		return ContentBlock::onEditFilter( '', $this->getText(), $this->block );
 	}
 	
 	public function match_content( $textbox ) {
@@ -90,8 +90,8 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function match_content_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension */
-		return ContentBlock::onEditFilter( $this->getText(), '' );
+		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
+		return ContentBlock::onEditFilter( $this->getText(), '', $this->block );
 	}
 	
 	public function match_title() {
@@ -99,8 +99,8 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function match_title_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension */
-		return TitleBlock::genericTitleCheck( $this->title );
+		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
+		return TitleBlock::genericTitleCheck( $this->title, $this->block );
 	}
 
 	public function match_question_title() {
@@ -108,7 +108,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function match_question_title_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension */
-		return QuestionTitleBlock::badWordsTest( $this->title );			
+		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
+		return QuestionTitleBlock::badWordsTest( $this->title, $this->block );
 	}
 }

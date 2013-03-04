@@ -8,7 +8,7 @@
  */
 
 class WikiCreationBlock {
-	public static function isAllowedText($text, $where, $split) {
+	public static function isAllowedText($text, &$block) {
 		wfProfileIn( __METHOD__ );
 
 		$text = trim($text);
@@ -18,8 +18,8 @@ class WikiCreationBlock {
 			$blockData = null;
 			$result = PhalanxFallback::findBlocked( $text, $blocksData, true, $blockData );
 			if ( $result['blocked'] ) {
+				$block = (object) $blockData;
 				wfProfileOut( __METHOD__ );
-				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
 				return false;
 			}
 		}

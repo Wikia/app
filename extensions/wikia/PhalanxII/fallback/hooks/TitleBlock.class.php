@@ -14,7 +14,7 @@
 class TitleBlock {
 	static private $blocksData = null;
 
-	static public function beforeMove( &$move ) {
+	static public function beforeMove( &$move, &$block ) {
 		wfProfileIn( __METHOD__ );
 
 		$retVal = true;
@@ -24,17 +24,16 @@ class TitleBlock {
 			wfProfileOut( __METHOD__ );
 			return $retVal;
 		}
-		$retVal = self::checkTitle($title);
+		$retVal = self::checkTitle($title, $block);
 
 		wfProfileOut( __METHOD__ );
 		return $retVal;
 	}
 
-	static public function listCallback( $editPage, $text, $section, &$hookError ) {
+	static public function listCallback( $title, &$block ) {
 		wfProfileIn( __METHOD__ );
 
 		$retVal = true;
-		$title = $editPage->mTitle;
 
 		if (!($title instanceof Title)) {
 			wfProfileOut( __METHOD__ );
@@ -48,33 +47,33 @@ class TitleBlock {
 			return $retVal;
 		}
 
-		$retVal = self::checkTitle($title);
+		$retVal = self::checkTitle($title, $block);
 
 		wfProfileOut( __METHOD__ );
 		return $retVal;
 	}
 
-	static public function newWikiBuilder( &$api, $titleObj, $category, $text ) {
+	static public function newWikiBuilder( $titleObj, &$block ) {
 		wfProfileIn( __METHOD__ );
 
 		$retVal = true;
 
 		// titleObj is already verified as object earlier in NWB
-		$retVal = self::checkTitle($titleObj);
+		$retVal = self::checkTitle( $titleObj, $block );
 
 		wfProfileOut( __METHOD__ );
 		return $retVal;
 	}
 
 	//used in Answer's CreateDefaultQuestionPage
-	static public function genericTitleCheck( $titleObj ) {
+	static public function genericTitleCheck( $titleObj, &$block ) {
 		wfProfileIn( __METHOD__ );
 
 		$retVal = true;
 
 		// titleObj is already verified as object earlier in CDQP
 		if ($titleObj instanceof Title) {
-			$retVal = self::checkTitle($titleObj);
+			$retVal = self::checkTitle($titleObj, $block );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -82,7 +81,7 @@ class TitleBlock {
 	}
 
 
-	static public function checkTitle($title) {
+	static public function checkTitle($title, &$block) {
 		wfProfileIn( __METHOD__ );
 
 		if (is_null(self::$blocksData)) {
@@ -95,6 +94,7 @@ class TitleBlock {
 			$blockData = null;
 			$result = PhalanxFallback::findBlocked( $fullText, self::$blocksData, true, $blockData );
 			if ( $result['blocked'] ) {
+				$block = ( object ) $blockData;
 				#self::spamPage( $result['msg'], $title );
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$fullText'.");
 			}

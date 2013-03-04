@@ -13,7 +13,7 @@ class PhalanxTextModel extends PhalanxModel {
 	}
 	
 	public function wiki_creation_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension */
-		return WikiCreationBlock::isAllowedText( $this->getText(), '', '' );
+		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
+		return WikiCreationBlock::isAllowedText( $this->getText(), $this->block );
 	}
 }

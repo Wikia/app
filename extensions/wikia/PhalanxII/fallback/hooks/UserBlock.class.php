@@ -21,7 +21,7 @@ class UserBlock {
 	 * @desc blockCheck() will return false if user is blocked. The reason why it was
 	 * written in such way is below when you look at method UserBlock::onUserCanSendEmail().
 	 */
-	public static function blockCheck(User $user) {
+	public static function blockCheck(User $user, &$block) {
 		global $wgUser, $wgMemc, $wgRequest;
 		wfProfileIn( __METHOD__ );
 
@@ -42,21 +42,22 @@ class UserBlock {
 		$cachedState = self::getBlockFromCache( $user, $isCurrentUser );
 		if ( !is_null( $cachedState ) ) {
 			wfProfileOut( __METHOD__ );
-			return $cachedState;
+			$block = (object) $cachedState['block'];
+			return $cachedState['return'];
 		}
 
 		if ( !empty($text) ) {
 			if ( $user->isAnon() ) {
-				$ret =  self::blockCheckIP( $user, $text, $isCurrentUser );
+				$ret =  self::blockCheckIP( $user, $text, $block, $isCurrentUser );
 			} else {
 				$blocksData = PhalanxFallback::getFromFilterShort( self::TYPE );
 				if ( !empty($blocksData) ) {
-					$ret = self::blockCheckInternal( $user, $blocksData, $text, $isCurrentUser );
+					$ret = self::blockCheckInternal( $user, $blocksData, $text, $block, $isCurrentUser );
 				}
 				//do not check IP for current user when checking block status of different user
 				if ( $ret && $isCurrentUser ) {
 					// if the user name was not blocked, check for an IP block
-					$ret = self::blockCheckIP( $user, $wgRequest->getIP(), $isCurrentUser );
+					$ret = self::blockCheckIP( $user, $wgRequest->getIP(), $block, $isCurrentUser );
 				}
 			}
 		}
@@ -75,7 +76,7 @@ class UserBlock {
 		return $ret;
 	}
 
-	protected static function blockCheckInternal( User $user, $blocksData, $text, $writeStats = true ) {
+	protected static function blockCheckInternal( User $user, $blocksData, $text, &$block, $writeStats = true ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
@@ -84,7 +85,10 @@ class UserBlock {
 
 		if ( $result['blocked'] ) {
 			Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
-			self::setUserData( $user, $blockData, $text, false );
+			#self::setUserData( $user, $blockData, $text, false );
+
+			# set block 
+			$block = ( object ) $blockData;
 
 			$cachedState = array(
 				'timestamp' => wfTimestampNow(),
@@ -107,7 +111,7 @@ class UserBlock {
 	 *
 	 * @author grunny
 	 */
-	protected static function blockCheckIP( User $user, $text, $writeStats = true ) {
+	protected static function blockCheckIP( User $user, $text, &$block, $writeStats = true ) {
 		global $wgMemc, $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
@@ -144,7 +148,10 @@ class UserBlock {
 				PhalanxFallback::addStats($blockData['id'], $blockData['type']);
 			}
 
-			self::setUserData( $user, $blockData, $text, true );
+			#self::setUserData( $user, $blockData, $text, true );
+
+			# set block
+			$block = (object) $blockData;
 
 			$cachedState = array(
 				'timestamp' => wfTimestampNow(),
@@ -177,11 +184,8 @@ class UserBlock {
 				self::setUserData( $user, $cachedState['block'], '', $user->isAnon() );
 			}
 
-			//added to make User::isBlockedGlobally() work for this instance of User class
-			$user->mBlockedGlobally = !$cachedState['return'];
-
 			wfProfileOut( __METHOD__ );
-			return $cachedState['return'];
+			return $cachedState;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -241,8 +245,8 @@ class UserBlock {
 	 * Hook handler
 	 * @author Marooned
 	 */
-	public static function onUserCanSendEmail(&$user, &$canSend) {
-		$canSend = self::blockCheck($user);
+	public static function onUserCanSendEmail(&$user, &$canSend, &$block ) {
+		$canSend = self::blockCheck( $user, $block );
 		return true;
 	}
 
@@ -255,10 +259,10 @@ class UserBlock {
 	 * @param $name string
 	 * @param $validate string
 	 */
-	public static function onAbortNewAccount( $user, &$abortError ) {
+	public static function onAbortNewAccount( $user, &$abortError, &$block ) {
 		$text = $user->getName();
 		$blocksData = PhalanxFallback::getFromFilterShort( self::TYPE );
-		$state = self::blockCheckInternal( $user, $blocksData, $text, true );
+		$state = self::blockCheckInternal( $user, $blocksData, $text, $block, true );
 		if ( !$state ) {
 			$abortError = wfMsg( 'phalanx-user-block-new-account' );
 			return false;
@@ -267,8 +271,10 @@ class UserBlock {
 		$emailBlocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_EMAIL );
 		$userEmail = $user->getEmail();
 		if ( $userEmail !== '' ) {
-			$result = PhalanxFallback::findBlocked( $userEmail, $emailBlocksData, true );
+			$blockData = null;
+			$result = PhalanxFallback::findBlocked( $userEmail, $emailBlocksData, true, $blockData );
 			if ( $result['blocked'] ) {
+				$block = ( object ) $blockData;
 				$abortError = wfMsg( 'phalanx-user-block-new-account' );
 				return false;
 			}
@@ -284,10 +290,10 @@ class UserBlock {
 	 * @param $userName string
 	 * @param $abortError string [OUTPUT]
 	 */
-	public static function onValidateUserName( $userName, &$abortError ) {
+	public static function onValidateUserName( $userName, &$abortError, &$block ) {
 		$user = User::newFromName($userName);
 		$message = '';
-		if ( !$user || !self::onAbortNewAccount($user, $message) ) {
+		if ( !$user || !self::onAbortNewAccount($user, $message, $block) ) {
 			$abortError = wfMsg( 'phalanx-user-block-new-account' );
 			return false;
 		}
