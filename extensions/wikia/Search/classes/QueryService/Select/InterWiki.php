@@ -56,8 +56,9 @@ class InterWiki extends AbstractSelect
 	protected $timeAllowed = 7500;
 	
 	/**
-	 * (non-PHPdoc)
+	 * Identifies a match by domain via interface. Registers with config and returns if found.
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::extractMatch()
+	 * @return Wikia\Search\Match\Wiki
 	 */
 	public function extractMatch() {
 		$domain = preg_replace(
@@ -65,18 +66,22 @@ class InterWiki extends AbstractSelect
 				'',
 				strtolower( $this->config->getQuery( \Wikia\Search\Config::QUERY_RAW ) ) 
 				);
-		if ( $match = $this->interface->getWikiMatchByHost( $domain ) ) {
-			return $this->config->setWikiMatch( $match )->getWikiMatch();
+		$match =  $this->interface->getWikiMatchByHost( $domain );
+		if (! empty( $match ) ) {
+			$this->config->setWikiMatch( $match );
 		}
-		return null;
+		return $match;
 	}
 	
+	/**
+	 * Registers grouping, query parameters, and filters.
+	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerComponents()
+	 */
 	protected function registerComponents( Solarium_Query_Select $query ) {
-		return $this->registerQueryParams   ( $query )
-		            ->registerHighlighting  ( $query )
+		return $this->configureQueryFields()
+		            ->registerQueryParams   ( $query )
 		            ->registerFilterQueries ( $query )
 		            ->registerGrouping      ( $query )
-		            ->registerSpellcheck    ( $query )
 		;
 	}
 	
@@ -87,56 +92,47 @@ class InterWiki extends AbstractSelect
 	 */
 	protected function registerGrouping( Solarium_Query_Select $query ) {
 		$grouping = $query->getGrouping();
-		$grouping	->setLimit			( self::GROUP_RESULTS_GROUPING_ROW_LIMIT )
-					->setOffset			( $this->config->getStart() )
-					->setFields			( array( self::GROUP_RESULTS_GROUPING_FIELD ) )
+		$grouping->setLimit( self::GROUP_RESULTS_GROUPING_ROW_LIMIT )
+		         ->setOffset( $this->config->getStart() )
+		         ->setFields( array( self::GROUP_RESULTS_GROUPING_FIELD ) )
 		;
 		return $this;
 	}
 
+	/**
+	 * Registers a filter query for documents matching the wiki ID of a match, if available.
+	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerFilterQueryForMatch()
+	 * @return Wikia\Search\QueryService\Select\InterWiki
+	 */
 	protected function registerFilterQueryForMatch() {
 		if ( $this->config->hasWikiMatch() ) {
 			$noPtt = Utilities::valueForField( 'wid', $this->config->getWikiMatch()->getId(), array( 'negate' => true ) );
 			$this->config->setFilterQuery( $noPtt, 'wikiptt' );
 		}
-		
-	}
-	
-	/**
-	 * Configures spellcheck per our desired settings
-	 * @param Solarium_Query_Select $query
-	 * @return InterWiki
-	 */
-	protected function registerSpellcheck( Solarium_Query_Select $query ) {
-		if ( $this->interface->getGlobal( 'WikiaSearchSpellcheckActivated' ) ) {
-			$query->getSpellcheck()
-			      ->setQuery( $this->config->getQueryNoQuotes( true ) )
-			      ->setCollate( true )
-			      ->setCount( self::SPELLING_RESULT_COUNT )
-			      ->setMaxCollationTries( self::SPELLING_MAX_COLLATION_TRIES )
-			      ->setMaxCollations( self::SPELLING_MAX_COLLATIONS )
-			      ->setExtendedResults( true )
-			      ->setCollateParam( 'fq', 'is_content:true' )
-			      ->setOnlyMorePopular( true )
-			      ->setDictionary( $this->interface->searchSupportsCurrentLanguage() ? $this->interface->getLanguageCode() : 'default'   )
-			      ->setCollateExtendedResults( true )
-			;
-		}
 		return $this;
 	}
 	
+	
 	/**
-	 * Handles initial configuration when invoking doSearch
+	 * Handles initial configuration when invoking search.
+	 * @return Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function prepareRequest() {
 		$this->config->setLength( self::GROUP_RESULTS_GROUPINGS_LIMIT )
-		             ->setIsInterWiki( true )
-		;
-		return parent::prepareRequest();
+		             ->setIsInterWiki( true );
+		if ( $this->config->getPage() > 1 ) {
+			$this->config->setStart( ( $this->config->getPage() - 1 ) * $this->config->getLength() );
+		}
+		return $this;
 	}
-	
+
+	/**
+	 * Adds wikititle to query fields before querying.
+	 * @return \Wikia\Search\QueryService\Select\InterWiki
+	 */
 	protected function configureQueryFields() {
 		$this->config->setQueryField( 'wikititle', 7 );
+		return $this;
 	}
 	
 	/**
@@ -202,11 +198,11 @@ class InterWiki extends AbstractSelect
 	
 	/**
 	 * Return a string of query fields based on configuration
+	 * @todo since this gets repeated across OnWiki as well, this is an another indicator that we need additional class layers
 	 * @return string
 	 */
 	protected function getQueryFieldsString() {
 		$queryFieldsString = '';
-		$this->config->setQueryField( 'wikititle', 7 );
 		foreach ( $this->config->getQueryFieldsToBoosts()  as $field => $boost ) {
 			$queryFieldsString .= sprintf( '%s^%s ', Utilities::field( $field ), $boost );
 		}

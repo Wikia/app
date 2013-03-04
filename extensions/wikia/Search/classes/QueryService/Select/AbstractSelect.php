@@ -177,9 +177,13 @@ abstract class AbstractSelect
 	}
 	
 	/**
+	 * Used to register a filter query based on settings in the config.
 	 * Children can override this method optionally.
+	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
-	protected function registerFilterQueryForMatch() {}
+	protected function registerFilterQueryForMatch() {
+		return $this;
+	}
 	
 	/**
 	 * Configures result snippet highlighting
