@@ -235,7 +235,7 @@ class WikiaSearchMatchTest extends WikiaSearchBaseTest {
 		$mockInterface
 		    ->expects( $this->once() )
 		    ->method ( 'getGlobalForWiki' )
-		    ->with   ( 'Sitename', 123 )
+		    ->with   ( 'wgSitename', 123 )
 		    ->will   ( $this->returnValue( $title ) ) 
 		;
 		$mockInterface
