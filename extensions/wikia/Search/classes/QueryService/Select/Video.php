@@ -25,6 +25,7 @@ class Video extends OnWiki
 					Utilities::field( 'redirect_titles', 'en' ) => 4
 					));
 		}
+		return $this;
 	}
 	
 	/**
@@ -34,7 +35,7 @@ class Video extends OnWiki
 	protected function getQueryClausesString() {
 		$queryClauses = array(
 				Utilities::valueForField( 'wid', $this->config->getCityId() ),
-				Utilities::valueForField( 'ns', NS_FILE )
+				Utilities::valueForField( 'ns', \NS_FILE )
 				);
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
 	}

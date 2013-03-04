@@ -35,11 +35,12 @@ class OnWiki extends AbstractSelect
 	}
 	
 	/**
-	 * Registers different components in Solarium
+	 * Registers different components in Solarium. We also use this spot to update query fields for the video search child class.
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerComponents()
 	 */
 	protected function registerComponents( \Solarium_Query_Select $query ) {
-		return $this->registerQueryParams   ( $query )
+		return $this->configureQueryFields()
+		            ->registerQueryParams   ( $query )
 		            ->registerHighlighting  ( $query )
 		            ->registerFilterQueries ( $query )
 		            ->registerSpellcheck    ( $query )
