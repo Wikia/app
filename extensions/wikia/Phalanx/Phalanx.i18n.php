@@ -140,6 +140,7 @@ $messages['qqq'] = array(
 	'phalanx-add-block' => 'This message is used as a button label (like "Save", "Show preview" and "Show changes" in <code>action=edit</code>). Clicking on the button adds a new block to the Phalanx database. ([[Thread:Support/About_Wikia:Phalanx-add-block/fi/reply|documentation]] by [[User:Jack Phoenix|Jack Phoenix]])',
 	'phalanx-label-filter' => '{{Identical|Filter}}',
 	'phalanx-label-type' => '{{Identical|Type}}',
+	'phalanx-test-submit' => '{{Identical|Test}}',
 	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
 	'phalanx-stats-table-language' => '{{Identical|Language}}',
 	'phalanx-stats-table-text' => '{{Identical|Text}}',

@@ -109,14 +109,14 @@ Arabat kaout aon kas din ur gemenadenn war [[$2|ma fajenn kaozeadenn]] ma c'hell
 
 Demat, Degemer mat war {{SITENAME}} Ho trugarekaat a reomp da vezañ kemmet ar bajenn [[:$1]].
 
-M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ [[wikia:Forum:Community Central Forum|foromoù Wiki Kreiz ar Gumuniezh]] $3",
+M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ [[wikia:Forum:Community Central Forum|foromoù Wiki Kreiz ar Gumuniezh]] $3", # Fuzzy
 	'welcome-message-anon-staff' => "==Degemer mat ! ==
 
 Demat, Degemer mat war {{SITENAME}}; Trugarez da vezañ kemmet ar bajenn [[:$1]].
 
 '''[[Special:Userlogin|Please sign in and create a user name]]'''. Un doare aes eo evit mirout roudoù eus ho labourioù hag evel-se e c'hallot mont e darempred gant ar peurrest eus ar gumuniezh.
 
-M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ ar [[wikia:Forum:Community Central Forum|foromoù Kreiz ar Gumuniezh]] $3",
+M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ ar [[wikia:Forum:Community Central Forum|foromoù Kreiz ar Gumuniezh]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forom skoazellañ]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 );
@@ -178,7 +178,7 @@ Si us plau, deixa un missatge al meu mur si et puc ajudar en alguna cosa!",
 
 Per què no et '''[[Special:Userlogin|crees un compte i t'identifiques?]]''' D'aquesta manera serà molt més fàcil saber quines pàgines has editat i se t'atribuirà la teva feina; a més, et serà molt més fàcil comunicar-te amb la resta de comunitat.
 
-Si us plau, deixa un missatge al meu mur si et puc ajudar en qualsevol cosa!",
+Si us plau, deixa un missatge al meu mur si et puc ajudar en qualsevol cosa!", # Fuzzy
 );
 
 /** Czech (česky)
@@ -213,7 +213,7 @@ Prosím nechejte vzkaz na [[$2|mé diskuzní stránce]], pokud potřebujete s č
 Vítejte na {{SITENAME}}! Děkujeme za Vaší úpravu stránky [[:$1]].
 
 Pokud potřebujete pomoci a nejsou zde žádní administrátoři, můžete navštívit [[wikia:Forum:Community Central Forum|fórum na Community
-Central Wiki]] $3',
+Central Wiki]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Vítejte==
 
 Vítejte na {{SITENAME}}! Děkujeme za Vaší úpravu stránky [[:$1]].
@@ -222,7 +222,7 @@ Vítejte na {{SITENAME}}! Děkujeme za Vaší úpravu stránky [[:$1]].
 Je to snadný způsob, jak sledovat své příspěvky a komunikovat s komunitou.
 
 Pokud potřebujete pomoci a nejsou zde žádní administrátoři, můžete navštívit [[wikia:Forum:Community Central Forum|fórum na Community
-Central Wiki]] $3",
+Central Wiki]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|fórum podpory]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 );
@@ -261,14 +261,14 @@ Falls du irgendwelche Hilfe brauchst, kannst du mir gerne eine Nachricht auf [[$
 Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
 
 Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du vielleicht
-die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3',
+die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Willkommen==
 
 Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung der Seite „[[:$1]]“.
 
 '''[[Special:UserLogin|Bitte lege dir ein Benutzerkonto an]]'''. So kannst du ganz einfach deine Beiträge im Überblick behalten und dich besser mit dem Rest der Gemeinschaft verständigen.
 
-Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3",
+Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|Hilfe]] | [[w:sblog|Blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Hallo und Willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]]. 
@@ -278,7 +278,7 @@ Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach 
 
 Falls du Hilfe brauchst und keine [[Special:ListAdmins|aktiven Admins]] im Wiki findest, kannst du auch unser [[w:c:de.community:Forum:Index|Forum im Community-Wiki]] besuchen. Wenn du an aktuellen Informationen rund um Wikia interessiert bist, dann solltest du das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia Deutschland News-Blog]] lesen.
 
-Viel Spaß im Wiki!',
+Viel Spaß im Wiki!', # Fuzzy
 	'welcome-message-wall-anon' => "Hallo und Willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
 
 '''[[Special:Userlogin|Bitte melde dich an und erstelle ein Benutzerkonto]]'''. So kannst du ganz einfach einen Überblick über deine Beiträge behalten und es hilft sehr dabei, mit dem Rest der Community zu kommunizieren.
@@ -288,7 +288,7 @@ Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach 
 
 '''[[Special:Userlogin|Bitte melde dich an und erstelle ein Benutzerkonto]]'''. So kannst du ganz einfach einen Überblick über deine Beiträge behalten und es hilft sehr dabei, mit dem Rest der Community zu kommunizieren.
 
-Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach eine Nachricht.",
+Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach eine Nachricht.", # Fuzzy
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -323,14 +323,14 @@ Falls Sie irgendwelche Hilfe brauchen, können Sie mir gerne eine Nachricht auf 
 Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung auf der Seite [[:$1]].
 
 Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie vielleicht
-die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3',
+die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Willkommen==
 
 Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung der Seite „[[:$1]]“.
 
 '''[[Special:UserLogin|Bitte legen Sie sich ein Benutzerkonto an]]'''. So können Sie ganz einfach Ihre Beiträge im Überblick behalten und sich besser mit dem Rest der Gemeinschaft verständigen.
 
-Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3",
+Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3", # Fuzzy
 );
 
 /** Zazaki (Zazaki)
@@ -382,14 +382,14 @@ Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en [[$2|mi di
 
 Hola, ¡bienvenido a {{SITENAME}}! Gracias por editar la página [[:$1]].
 
-Si necesitas ayuda y no hay administradores locales aquí, quizás quieras visitar los [[wikia:Forum:Community Central Forum|foros de la Central de Wikia en español]]. $3',
+Si necesitas ayuda y no hay administradores locales aquí, quizás quieras visitar los [[wikia:Forum:Community Central Forum|foros de la Central de Wikia en español]]. $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Bienvenido==
 
 Hola, bienvenido a {{SITENAME}}. Gracias por editar la página [[:$1]].
 
 '''[[Special:Userlogin|Por favor regístrese y cree un nombre de usuario]]'''. Es una forma sencilla de mantener un registro de sus contribuciones y para ayudar a comunicarnos con el resto de la comunidad.
 
-Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar los $3 [[wikia:Forum:Community Central Forum|foros de la Comunidad Central Wiki]] $3",
+Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar los $3 [[wikia:Forum:Community Central Forum|foros de la Comunidad Central Wiki]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|foro de ayuda]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HaWelcomeEdit',
 	'welcome-message-wall-user' => '¡Hola, bienvenido a {{SITENAME}}! Gracias por tu edición en [[:$1]].
@@ -399,7 +399,7 @@ Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro pa
 
 Si necesitas ayuda y no hay ningún administrador local por aquí, podrías querer visitar los [[w:c:es:Foro:Índice|foros en el wiki de la central de Wikia en español]]. También podrías estar interesado en revisar nuestro [[w:c:es:Blog:Noticias_de_Wikia|blog del staff]] para estar al tanto de las últimas novedades y noticias sobre Wikia.
 
-Diviértete editando!',
+Diviértete editando!', # Fuzzy
 	'welcome-message-wall-anon' => "¡Hola, bienvenido a {{SITENAME}}! Gracias por tu edición en [[:$1]].
 
 ¿Por qué no '''[[Special:Userlogin|te creas una cuenta y te identificas?]]'''. De esta forma será mucho más fácil saber qué páginas has editado y se te atribuirá tu trabajo en el wiki, además te será de ayuda a la hora de comunicarte con el resto de la comunidad.
@@ -409,7 +409,7 @@ Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro pa
 
 ¿Por qué no '''[[Special:Userlogin|te creas una cuenta y te identificas?]]'''. De esta forma será mucho más fácil saber qué páginas has editado y se te atribuirá tu trabajo en el wiki, además te será de ayuda a la hora de comunicarte con el resto de la comunidad.
 
-Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro para ver si puedo ayudarte con cualquier cosa.",
+Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro para ver si puedo ayudarte con cualquier cosa.", # Fuzzy
 );
 
 /** Estonian (eesti)
@@ -488,7 +488,7 @@ Jos vain jotenkin voin auttaa, niin laita viesti [[$2|keskustelusivulleni]]! $3"
 
 Hei ja tervetuloa sivustolle {{SITENAME}}! Kiitos, että muokkasit sivua [[:$1]].
 
-Jos tarvitset apua ja täällä ei ole paikallisia ylläpitäjiä, tahdot ehkä käydä [[wikia:Forum:Community Central Forum|Keskuswikian foorumeilla]] $3',
+Jos tarvitset apua ja täällä ei ole paikallisia ylläpitäjiä, tahdot ehkä käydä [[wikia:Forum:Community Central Forum|Keskuswikian foorumeilla]] $3', # Fuzzy
 );
 
 /** French (français)
@@ -523,7 +523,7 @@ N’hésitez pas à laisser un message sur [[$2|ma page de discussion]] si je pe
 	'welcome-message-user-staff' => "== Bienvenue ==
 Bonjour et bienvenue sur {{SITENAME}} ! Merci d'avoir modifié la page [[:$1]].
 
-Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:fr:Forum:Vue d'ensemble|forums du Wiki Central de la Communauté]] $3",
+Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:fr:Forum:Vue d'ensemble|forums du Wiki Central de la Communauté]] $3", # Fuzzy
 	'welcome-message-anon-staff' => "==Bienvenue==
 
 Bonjour et bienvenue sur {{SITENAME}}.
@@ -532,7 +532,7 @@ Merci d'avoir modifié la page [[:$1]].
 '''[[Special:UserLogin|Merci de bien vouloir vous enregistrer et créer un nom d'utilisateur]]'''.
 C'est un moyen simple pour garder la trace de vos contributions et qui vous aidera à communiquer avec le reste de la communauté.
 
-Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:Forum:Community Central Forum|forums du Wiki Central de la Communauté]] $3",
+Si vous avez besoin d'aide et qu'il n'y a pas d'administrateur ici, vous pouvez visiter les [[wikia:Forum:Community Central Forum|forums du Wiki Central de la Communauté]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum d’aide]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Bonjour et bienvenue sur {{SITENAME}} ! Merci d’avoir modifié la page [[:$1]].
@@ -542,7 +542,7 @@ Veuillez me laisser un message si je peux vous aider pour quoi que ce soit !',
 
 Si vous avez besoin d’aide et qu’il n’y a pas d'administrateurs locaux ici, vous pouvez essayer d’aller sur les [[wikia:Forum:Community Central Forum|forums du wiki des communautés]]. Vous pouvez aussi consulter le [[w:c:community:Blog:Wikia_Staff_Blog|blog d’information]] pour connaître les dernières nouvelles et évènements sur Wikia.
 
-Bonnes modifications !",
+Bonnes modifications !", # Fuzzy
 	'welcome-message-wall-anon' => "Bonjour et bienvenue sur {{SITENAME}} ! Merci d’avoir modifié la page [[:$1]].
 
 '''Veuillez [[Special:Userlogin|vous enregistrer et créer un compte utilisateur]]'''. C’est un moyen simple de garder une trace de vos contributions et faciliter la communication avec le reste de la communauté.
@@ -552,7 +552,7 @@ Veuillez me laisser un message si je peux vous aider pour quoi que ce soit !",
 
 '''Veuillez [[Special:Userlogin|vous enregistrer et créer un compte utilisateur]]'''. C’est un moyen simple de garder une trace de vos contributions et faciliter la communication avec le reste de la communauté.
 
-Veuillez me laisser un message si je peux vous aider pour quoi que ce soit !",
+Veuillez me laisser un message si je peux vous aider pour quoi que ce soit !", # Fuzzy
 );
 
 /** Galician (galego)
@@ -587,7 +587,7 @@ Ola, dámoslle a benvida a {{SITENAME}}! Grazas pola súa edición na páxina "[
 
 Se necesita axuda e non hai administradores locais aquí, quizais queira
 visitar os [[wikia:Forum:Community Central Forum|foros no wiki central
-da comunidade]] $3',
+da comunidade]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Benvida==
 
 Ola, dámoslle a benvida a {{SITENAME}}.
@@ -596,7 +596,7 @@ Grazas pola súa edición na páxina \"[[:\$1]]\".
 '''Por favor, [[Special:UserLogin|rexístrese e cree unha conta de usuario]]'''.
 É un xeito doado de manter baixo control as súas achegas e axuda á comunicación co resto da comunidade.
 
-Se necesita axuda e non hai administradores locais aquí, quizais queira visitar os [[wikia:Forum:Community Central Forum|foros no wiki central da comunidade]] \$3",
+Se necesita axuda e non hai administradores locais aquí, quizais queira visitar os [[wikia:Forum:Community Central Forum|foros no wiki central da comunidade]] \$3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|foro de axuda]] | [[w:sblog|blogue]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Ola, dámoslle a benvida a {{SITENAME}}! Grazas pola súa edición na páxina "[[:$1]]".
@@ -606,7 +606,7 @@ Por favor, déixeme unha mensaxe se quere que lle axude con algunha cousa!',
 
 Se necesita axuda e non hai administradores locais aquí, quizais queira visitar os [[wikia:Forum:Community Central Forum|foros no wiki central da comunidade]]. Temén pode consultar o [[w:c:community:Blog:Wikia_Staff_Blog|blogue do noso persoal]] para estar ao día das últimas novidades e acontecementos sobre Wikia.
 
-Pase un bo anaco editando!',
+Pase un bo anaco editando!', # Fuzzy
 	'welcome-message-wall-anon' => "Ola, benvido(a) a {{SITENAME}}! Grazas pola súa edición na páxina \"[[:\$1]]\".
 
 '''Por favor, [[Special:Userlogin|rexístrese e cree unha conta de usuario]]'''. É un xeito doado de manter baixo control as súas achegas e axuda á comunicación co resto da comunidade.
@@ -616,7 +616,7 @@ Por favor, déixeme unha mensaxe se quere que lle axude con algunha cousa!",
 
 '''Por favor, [[Special:Userlogin|rexístrese e cree unha conta de usuario]]'''. É un xeito doado de manter baixo control as súas achegas e axuda á comunicación co resto da comunidade.
 
-Por favor, déixeme unha mensaxe se quere que lle axude con algunha cousa!",
+Por favor, déixeme unha mensaxe se quere que lle axude con algunha cousa!", # Fuzzy
 );
 
 /** Hebrew (עברית)
@@ -676,14 +676,14 @@ Kérlek hagyj üzenetet a [[$2|vitalapomon]], ha segíthetek valamiben. $3",
 
 Szia, üdvözlünk a(z) {{SITENAME}} wikin! Köszönjük a(z) [[:$1]] lapon tett szerkesztésedet.
 
-Ha segítségre van szükséged, és nincsenek helyi adminisztrátorok, látogasd meg a [[wikia:Forum:Community Central Forum|Community Central Wiki fórumait]] $3',
+Ha segítségre van szükséged, és nincsenek helyi adminisztrátorok, látogasd meg a [[wikia:Forum:Community Central Forum|Community Central Wiki fórumait]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "== Üdvözlet ==
 
 Szia, üdvözlünk a(z) {{SITENAME}} wikin! Köszönjük a(z) [[:$1]] lapon tett szerkesztésedet.
 
 '''[[Special:Userlogin|Kérlek regisztrálj egy felhasználónevet, és jelentkezz be.]]'''. Így könnyen tudod majd követni a  szerkesztéseidet, és segít a közösséggel való kommunikációban.
 
-Ha segítségre van szükséged, és nincsenek helyi adminisztrátorok, látogasd meg a [[wikia:Forum:Community Central Forum|Community Central Wiki fórumait]] $3",
+Ha segítségre van szükséged, és nincsenek helyi adminisztrátorok, látogasd meg a [[wikia:Forum:Community Central Forum|Community Central Wiki fórumait]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|segítségkérési fórum]] | [[w:sblog|blog]])</small>',
 	'welcome-message-wall-user' => 'Szia, üdvözlünk a(z) {{SITENAME}} wikin! Köszönjük a(z) [[:$1]] lapon végzett szerkesztésedet.
 
@@ -692,7 +692,7 @@ Kérlek, hagyj nekem üzenetet, ha segíthetek valamiben.',
 
 Ha segítségre van szükséged, és nincsenek itt helyi adminisztrátorok, meglátogathatod [[wikia:Forum:Community Central Forum|a Community Central fórumait]]. Megtekintheted a [[w:c:community:Blog:Wikia_Staff_Blog|személyzeti]] blogot is, hogy naprakész maradj a Wikia friss híreivel és eseményeivel kapcsolatban.
 
-Jó szerkesztést!',
+Jó szerkesztést!', # Fuzzy
 );
 
 /** Interlingua (interlingua)
@@ -728,14 +728,14 @@ Salute, benvenite a {{SITENAME}}! Gratias pro tu modification del pagina [[:$1]]
 
 Si tu ha besonio de adjuta, e il ha nulle administratores local hic, nos suggere
 visitar le [[wikia:Forum:Community Central Forum|foros in le wiki Community
-Central]] $3',
+Central]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Benvenite==
 
 Salute, benvenite a {{SITENAME}}. Gratias pro tu modification del pagina [[:$1]].
 
 '''[[Special:Userlogin|Per favor crea un conto e aperi un session]]'''. Es un modo facile de tener tracia de tu contributiones e te adjuta a communicar con le resto del communitate.
 
-Si tu ha besonio de adjuta, e il ha nulle administratores local hic, nos suggere visitar le [[wikia:Forum:Community Central Forum|foros in le wiki Community Central]] $3",
+Si tu ha besonio de adjuta, e il ha nulle administratores local hic, nos suggere visitar le [[wikia:Forum:Community Central Forum|foros in le wiki Community Central]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|foro de adjuta]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Salute, benvenite a {{SITENAME}}! Gratias pro tu contribution al pagina [[:$1]].
@@ -745,7 +745,7 @@ Non hesita de lassar me un message si io pote adjutar te con alcun cosa!',
 
 Si tu ha besonio de adjuta, e il non ha administratores local hic, tu pote visitar le [[wikia:Forum:Community Central Forum|foros in le wiki Community Central]]. Tu pote equalmente leger [[w:c:community:Blog:Wikia_Staff_Blog|le blog de nostre personal]] pro tener te al currente con le ultime novas e eventos in tote Wikia.
 
-Bon redaction!',
+Bon redaction!', # Fuzzy
 	'welcome-message-wall-anon' => "Salute, benvenite a {{SITENAME}}! Gratias pro tu contribution al pagina [[:$1]].
 
 '''[[Special:Userlogin|Per favor aperi un session o crea un conto]]'''. Isto permitte sequer tu contributiones e facilita le communication con le resto del communitate.
@@ -755,7 +755,7 @@ Non hesita de lassar un message si io pote adjutar te con alcun cosa!",
 
 '''[[Special:Userlogin|Per favor aperi un session o crea un conto]]'''. Isto permitte sequer tu contributiones e facilita le communication con le resto del communitate.
 
-Non hesita de lassar un message si io pote adjutar te con alcun cosa!",
+Non hesita de lassar un message si io pote adjutar te con alcun cosa!", # Fuzzy
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -814,7 +814,7 @@ Lascia un messaggio sulla [[$2|pagina delle mie discussioni]], se posso esserti 
 Ciao, benvenuto/a su {{SITENAME}}! Grazie per la tua modifica alla pagina [[:$1]].
 
 Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita 
-[[wikia:Forum:Community Central Forum|i forum sul wiki centrale della Community]] $3',
+[[wikia:Forum:Community Central Forum|i forum sul wiki centrale della Community]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Benvenuto==
 
 Ciao, benvenuto/a su {{SITENAME}}.
@@ -823,7 +823,7 @@ Grazie per la tua modifica alla pagina [[:$1]].
 '''[[Special:UserLogin|Se vuoi, puoi registrarti ed usare un nome utente]]'''.
 E' un modo semplice per tenere traccia dei tuoi contributi e per aiutrti a comunicare con il resto della Community.
 
-Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita i [[wikia:Forum:Community Central Forum|forum sul wiki centrale della Community]] $3",
+Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita i [[wikia:Forum:Community Central Forum|forum sul wiki centrale della Community]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum di supporto]] | [[w:sblog|blog]])</small>',
 	'welcome-message-wall-user' => 'Ciao, benvenuto su {{SITENAME}}! Grazie per la tua modifica alla pagina [[:$1]].
 
@@ -832,7 +832,7 @@ Lascia pure un messaggio se posso esserti utile per qualsiasi cosa!',
 
 Se hai bisogno di aiuto, e gli amministratori locali non sono presenti, puoi visitare il [[wikia:Forum:Community Central Forum|Forum sulla Comunità Centrale di Wiki]]. È anche possibile controllare il nostro [[w:c:community:Blog:Wikia_Staff_Blog|blog dello Staff]] per seguire le ultime notizie e gli eventi di Wikia.
 
-Buone modifiche!',
+Buone modifiche!', # Fuzzy
 );
 
 /** Japanese (日本語)
@@ -864,12 +864,12 @@ $messages['ja'] = array(
 	'welcome-message-log' => 'ウィキアへようこそ！',
 	'welcome-message-user-staff' => 'こんにちは、{{SITENAME}}へようこそ！ [[:$1]]への編集ありがとうございます。
 
-もし、何か困ったことがあり、このウィキローカルの管理者が見当たらない場合には、[[w:ja:Forum:Index|セントラルウィキアのフォーラム]]までメッセージをお寄せください。$3',
+もし、何か困ったことがあり、このウィキローカルの管理者が見当たらない場合には、[[w:ja:Forum:Index|セントラルウィキアのフォーラム]]までメッセージをお寄せください。$3', # Fuzzy
 	'welcome-message-anon-staff' => 'こんにちは、{{SITENAME}}へようこそ！ [[:$1]]への編集ありがとうございます。
 
 もし、まだアカウントをお持ちでなければ、[[Special:Userlogin|ぜひアカウントを取得してみてください]]。他の方とコミュニケーションがとりやすくなりますし、アカウントユーザーだけが利用できる機能も多くあります。
 
-もし、何か困ったことがあり、このウィキローカルの管理者が見当たらない場合には、[[w:ja:Forum:Index|セントラルウィキアのフォーラム]]までメッセージをお寄せください。$3',
+もし、何か困ったことがあり、このウィキローカルの管理者が見当たらない場合には、[[w:ja:Forum:Index|セントラルウィキアのフォーラム]]までメッセージをお寄せください。$3', # Fuzzy
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -910,14 +910,14 @@ $messages['mk'] = array(
 
 Здраво и добредојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
 
-Ако ви треба помош, а нема локални администратори, ви препорачуваме да ги посетите [[wikia:Forum:Community Central Forum|форумите на Центарот на Заедницата]] $3',
+Ако ви треба помош, а нема локални администратори, ви препорачуваме да ги посетите [[wikia:Forum:Community Central Forum|форумите на Центарот на Заедницата]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Добредојдовте==
 
 Здраво и добредојдовте на {{SITENAME}}. Ви благодариме за вашето уредување на страницата [[:$1]].
 
 '''[[Special:Userlogin|Најавете се и создајте корисничко име]]'''. Вака лесно ќе можеме да ги следиме вашите придонеси, а воедно ја олеснува и вашата комуникација со останатите членови на заедницата.
 
-Ако ви треба помош, а нема локални администратори, ви препорачуваме да ги посетите [[wikia:Forum:Community Central Forum|форумите на Центарот на Заедницата]] $3",
+Ако ви треба помош, а нема локални администратори, ви препорачуваме да ги посетите [[wikia:Forum:Community Central Forum|форумите на Центарот на Заедницата]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|форум за помош]] | [[w:sblog|блог]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Здраво и добредојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
@@ -927,7 +927,7 @@ $messages['mk'] = array(
 
 Доколку ви треба помош, а нема локални администратори, посетете ги [[wikia:Forum:Community Central Forum|форумите на Центарот на заедницата]]. Најнови вести и настани ќе најдете на [[w:c:community:Blog:Wikia_Staff_Blog|Блогот на персоналот]] на Викија.
 
-Ви посакуваме среќно уредување!',
+Ви посакуваме среќно уредување!', # Fuzzy
 	'welcome-message-wall-anon' => "Здраво и добредојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
 
 '''[[Special:Userlogin|Најавете се и создајте корисничко име]]'''. Ова е лесен начин на следење на вашите придонеси и ви овозможува да комуницирате со другите учесници во заедницата.
@@ -937,7 +937,7 @@ $messages['mk'] = array(
 
 '''[[Special:Userlogin|Најавете се и создајте корисничко име]]'''. Ова е лесен начин на следење на вашите придонеси и ви овозможува да комуницирате со другите учесници во заедницата.
 
-Оставете ми порака на ако ви треба било каква помош!",
+Оставете ми порака на ако ви треба било каква помош!", # Fuzzy
 );
 
 /** Malay (Bahasa Melayu)
@@ -971,7 +971,7 @@ Sila tinggalkan pesanan di [[$2|laman perbincangan saya]] jika anda memerlukan b
 
 Selamat datang ke {{SITENAME}}! Terima kasih kerana menyunting laman [[:$1]].
 
-Jika anda memerlukan bantuan, tetapi tiada admin setempat di sini, anda disaran supaya mengunjungi [[wikia:Forum:Community Central Forum|forum di Community Central Wiki]] $3',
+Jika anda memerlukan bantuan, tetapi tiada admin setempat di sini, anda disaran supaya mengunjungi [[wikia:Forum:Community Central Forum|forum di Community Central Wiki]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Selamat datang==
 
 Selamat datang ke {{SITENAME}}! Terima kasih kerana menyunting laman [[:$1]].
@@ -979,7 +979,7 @@ Selamat datang ke {{SITENAME}}! Terima kasih kerana menyunting laman [[:$1]].
 '''[[Special:UserLogin|Sila log masuk dan cipta nama pengguna anda]]'''.
 Dengan ini, anda mudah menjejaki sumbangan anda serta berkomunikasi dengan seluruh komuniti.
 
-Jika anda memerlukan bantuan, tetapi tiada admin setempat di sini, anda disaran supaya mengunjungi [[wikia:Forum:Community Central Forum|forum di Community Central Wiki]] $3",
+Jika anda memerlukan bantuan, tetapi tiada admin setempat di sini, anda disaran supaya mengunjungi [[wikia:Forum:Community Central Forum|forum di Community Central Wiki]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum bantuan]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Selamat datang ke {{SITENAME}}! Terima kasih kerana menyunting laman [[:$1]].
@@ -989,7 +989,7 @@ Sila tinggalkan pesanan sekiranya anda memerlukan bantuan saya!',
 
 Jika anda memerlukan bantuan, tetapi tiadanya penyelia setempat di sini, apa kata anda mengunjungi [[wikia:Forum:Community Central Forum|forum di Community Central Wiki]]. Anda juga boleh membaca [[w:c:community:Blog:Wikia_Staff_Blog|blog Kakitangan]] kami untuk mengikuti perkembangan dan acara terbaru di Wikia.
 
-Selamat menyunting!',
+Selamat menyunting!', # Fuzzy
 	'welcome-message-wall-anon' => "Selamat datang ke {{SITENAME}}! Terima kasih kerana menyunting laman [[:$1]].
 
 '''[[Special:Userlogin|Sila log masuk dan cipta nama pengguna anda]]'''. Dengan ini, anda mudah menjejaki sumbangan anda serta berkomunikasi dengan seluruh komuniti.
@@ -999,7 +999,7 @@ Sila tinggalkan pesanan sekiranya anda memerlukan bantuan saya!",
 
 '''[[Special:Userlogin|Sila log masuk dan cipta nama pengguna anda]]'''. Dengan ini, anda mudah menjejaki sumbangan anda serta berkomunikasi dengan seluruh komuniti.
 
-Sila tinggalkan pesanan jika anda memerlukan bantuan saya!",
+Sila tinggalkan pesanan jika anda memerlukan bantuan saya!", # Fuzzy
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -1036,14 +1036,14 @@ Hei, velkommen til {{SITENAME}}. Takk for at du har redigert [[:$1]]-siden.
 
 Hvis du trenger hjelp, og det ikke er noen lokale administratorer her, vil
 du kanskjebesøke [[wikia:Forum:Community Central Forum|forumene på Community
-Central Wiki]] $3',
+Central Wiki]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "== Velkommen ==
 
 Hei, velkommen til {{SITENAME}}. Takk for at du har redigert [[:$1]]-siden.
 
 '''[[Special:Userlogin|Registrer deg og opprett et brukernavn]]'''. Det er en enkel måte å holde styring på bidragene dine og hjelper deg med å kommunisere med resten av fellesskapet.
 
-Hvis du trenger hjelp og det ikke er noen lokale administratorer her vil du kanskje besøke [[wikia:Forum:Community Central Forum|forumene på Community Central Wiki]] $3",
+Hvis du trenger hjelp og det ikke er noen lokale administratorer her vil du kanskje besøke [[wikia:Forum:Community Central Forum|forumene på Community Central Wiki]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|hjelpeforum]] | [[w:sblog|blogg]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Hei, velkommen til {{SITENAME}}! Takk for at du redigerte siden [[:$1]].
@@ -1053,7 +1053,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!',
 
 Hvis du trenger hjelp, og det ikke er noen lokale administratorer her, vil du kanskje besøke [[wikia:Forum:Community Central Forum|forumene på Fellesskapssentral-wikien]]. Du kan også sjekke [[w:c:community:Blog:Wikia_Staff_Blog|ledelsesbloggen vår]] for å holde deg oppdatert med de siste nyhetene og hendelsene innenfor Wikia.
 
-Gledelig redigering!',
+Gledelig redigering!', # Fuzzy
 	'welcome-message-wall-anon' => "Hei, velkommen til {{SITENAME}}! Takk for at du redigerte siden [[:$1]].
 
 '''[[Special:Userlogin|Vennligst logg inn og opprett et brukernavn]]'''. Det er en enkel måte å holde oversikt over bidragene dine og hjelper deg med å kommunisere med resten av fellesskapet.
@@ -1063,7 +1063,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!",
 
 '''[[Special:Userlogin|Vennligst logg inn og opprett et brukernavn]]'''. Det er en enkel måte å holde oversikt over bidragene dine og hjelper deg med å kommunisere med resten av fellesskapet.
 
-Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!",
+Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!", # Fuzzy
 );
 
 /** Dutch (Nederlands)
@@ -1098,14 +1098,14 @@ Laat alstublieft een bericht achter op [[$2|mijn overleg pagina]] als ik u ergen
 
 Hallo! Welkom bij {{SITENAME}}. Dank u wel voor uw bewerking aan de pagina [[:$1]].
 
-Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3',
+Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Welkom==
 
 Hallo! Welkom bij {{SITENAME}}. Dank u wel voor uw bewerking aan de pagina [[:$1]].
 
 '''[[Special:UserLogin|Meld u zich alstublieft aan of maak een gebruiker aan]]'''. Zo kunt u eenvoudig uw bewerkingen bijhouden en contact houden met de andere leden van de gemeenschap.
 
-Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3",
+Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum voor hulp]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HA Welkom bewerken',
 	'welcome-message-wall-user' => 'Hallo en welkom bij {{SITENAME}}! Dank u wel voor uw bewerking aan de pagina [[:$1]].
@@ -1113,7 +1113,7 @@ Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum
 Laat een bericht voor me achter als ik ergens mee kan helpen.',
 	'welcome-message-wall-user-staff' => 'Hallo en welkom bij {{SITENAME}}! Dank u wel voor uw bewerking aan de pagina [[:$1]].
 
-Als u hulp nodig hebt en als er hier geen lokale beheerders zijn, kom dan langs op de [[wikia:Forum:Community Central Forum|forums op Community Central Wiki]]. U kunt ook kijken op onze [[w:c:community:Blog:Wikia_Staff_Blog|Stafblog]] om op de hoogte te blijven van het laatste nieuws en evenementen rondom Wikia.',
+Als u hulp nodig hebt en als er hier geen lokale beheerders zijn, kom dan langs op de [[wikia:Forum:Community Central Forum|forums op Community Central Wiki]]. U kunt ook kijken op onze [[w:c:community:Blog:Wikia_Staff_Blog|Stafblog]] om op de hoogte te blijven van het laatste nieuws en evenementen rondom Wikia.', # Fuzzy
 	'welcome-message-wall-anon' => "Hallo, welkom bij {{SITENAME}}. Dank u wel voor uw werk aan de pagina [[:$1]].
 
 '''[[Special:Userlogin|Maak alstublieft een gebruiker aan of meld u aan]]'''.
@@ -1125,7 +1125,7 @@ Laat alstublieft een bericht achter als ik u ergens mee kan helpen!",
 '''[[Special:Userlogin|Maak alstublieft een gebruiker aan of meld u aan]]'''.
 Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderhouden van contacten met de rest van de gemeenschap.
 
-Laat alstublieft een bericht achter als ik u ergens mee kan helpen!",
+Laat alstublieft een bericht achter als ik u ergens mee kan helpen!", # Fuzzy
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -1156,14 +1156,14 @@ Laat alsjeblieft een bericht achter op [[$2|mijn overleg pagina]] als ik je erge
 
 Hoi! Welkom bij {{SITENAME}}. Dank je wel voor je bewerking aan de pagina [[:$1]].
 
-Als je hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3',
+Als je hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Welkom==
 
 Hoi! Welkom bij {{SITENAME}}. Dank je wel voor je bewerking aan de pagina [[:$1]].
 
 '''[[Special:UserLogin|Meld je alsjeblieft aan of maak een gebruiker aan]]'''. Zo kan je eenvoudig je bewerkingen bijhouden en contact houden met de andere leden van de gemeenschap.
 
-Als je hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3",
+Als je hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3", # Fuzzy
 );
 
 /** Occitan (occitan)
@@ -1193,13 +1193,13 @@ Trantalhetz pas a daissar un messatge sus [[$2|ma pagina de discussion]] se vos 
 	'welcome-message-user-staff' => "== Benvenguda ==
 Bonjorn e benvenguda sus {{SITENAME}} ! Mercés d'aver modificada la pagina [[:$1]].
 
-S'avètz besonh d'ajuda e qu'i a pas d'administrator aicí, podètz visitar los [[wikia:Forum:Community Central Forum|forums del Wiki Central de la Comunautat]] $3",
+S'avètz besonh d'ajuda e qu'i a pas d'administrator aicí, podètz visitar los [[wikia:Forum:Community Central Forum|forums del Wiki Central de la Comunautat]] $3", # Fuzzy
 	'welcome-message-anon-staff' => "== Benvenguda ==
 Bonjorn e benvenguda sus {{SITENAME}}. Mercés d'aver modificada la pagina [[:$1]].
 
 '''[[Special:Userlogin|Mercés de vos enregistrar e de crear un nom d'utilizaire]]'''. Es un mejan simple per gardar la traça de vòstras contribucions e que vos ajudarà a comunicar amb la rèsta de la comunautat.
 
-S'avètz besonh d'ajuda e qu'i a pas d'administrator aicí, podètz visitar los [[wikia:Forum:Community Central Forum|forums del Wiki Central de la Comunautat]] $3",
+S'avètz besonh d'ajuda e qu'i a pas d'administrator aicí, podètz visitar los [[wikia:Forum:Community Central Forum|forums del Wiki Central de la Comunautat]] $3", # Fuzzy
 );
 
 /** Polish (polski)
@@ -1232,13 +1232,13 @@ Zostaw wiadomość na [[$2|mojej stronie dyskusji]], gdyby potrzebna była Ci ja
 	'welcome-message-user-staff' => "==Witaj==
 Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''[[:$1]]'''.
 
-Jeśli potrzebujesz pomocy, a brak jest tutaj lokalnych administratorów możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne lokalnej społeczności Wikia]]. $3",
+Jeśli potrzebujesz pomocy, a brak jest tutaj lokalnych administratorów możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne lokalnej społeczności Wikia]]. $3", # Fuzzy
 	'welcome-message-anon-staff' => "==Witaj==
 Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''[[:$1]]'''.
 
 Proszę, [[Special:UserLogin|załóż konto]]. Ułatwi Ci to kontakt ze społecznością projektu i sprawi, że wszystkie Twoje edycje będą trzymane w jednym miejscu.
 
-Jeśli potrzebujesz pomocy, a brak jest tutaj lokalnych administratorów możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne lokalnej społeczności Wikia]]. $3",
+Jeśli potrzebujesz pomocy, a brak jest tutaj lokalnych administratorów możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne lokalnej społeczności Wikia]]. $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum pomocy]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''[[:$1]]'''.
@@ -1249,7 +1249,7 @@ Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.",
 Jeśli potrzebujesz pomocy, a brak jest tutaj lokalnych administratorów możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne lokalnej społeczności Wikia]].
 Odwiedź [[w:c:community:Blog:Wikia_Staff_Blog|nasz blog]] aby być na bieżąco z nowościami.
 
-Przyjemnego edytowania!",
+Przyjemnego edytowania!", # Fuzzy
 	'welcome-message-wall-anon' => "Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''[[:$1]]'''.
 
 Proszę, [[Special:Userlogin|załóż konto]]. Ułatwi Ci to kontakt ze społecznością projektu i sprawi, że wszystkie Twoje edycje będą trzymane w jednym miejscu.
@@ -1259,7 +1259,7 @@ Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.",
 
 Proszę, [[Special:Userlogin|załóż konto]]. Ułatwi Ci to kontakt ze społecznością projektu i sprawi, że wszystkie Twoje edycje będą trzymane w jednym miejscu.
 
-Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.",
+Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.", # Fuzzy
 );
 
 /** Piedmontese (Piemontèis)
@@ -1294,14 +1294,14 @@ Për piasì ch'a lassa un mëssagi su [[$2|mia pàgina ëd discussion]] s'i peus
 Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]].
 
 S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul 
-visité le [[wikia:Forum:Community Central Forum|piasse dla Wiki Sentral ëd la Comunità]] $3",
+visité le [[wikia:Forum:Community Central Forum|piasse dla Wiki Sentral ëd la Comunità]] $3", # Fuzzy
 	'welcome-message-anon-staff' => "==Bin ëvnù==
 
 Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]].
 
 '''[[Special:Userlogin|Për piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera bel fé ëd ten-e trassa ëd soe contribussion e a-j giuta a comuniché con ël rest ëd la comunità.
 
-S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia:Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3",
+S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia:Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3", # Fuzzy
 	'staffsig-text' => "$1<staff /> <small>([[w:forums|piassa d'agiut]] | [[w:sblog|blog]])</small>",
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Cerea, bin ëvnù a {{SITENAME}}! Mersì për soe modìfiche a la pàgina [[:$1]].
@@ -1311,7 +1311,7 @@ Për piasì ch'am lassa un mëssagi se i peuss giuté con cheicòs!",
 
 S'a l'ha dabzògn d'agiut, e a-i é gnun admin locaj sì, a peul visité ij [[wikia:Forum:Community Central Forum|forum dzor la Community Central Wiki]]. A peul ëdcò controlé nòst [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] për mantense agiornà con j'ùltime neuve e event d'antorn a Wikia.
 
-Bon-e modìfiche!",
+Bon-e modìfiche!", # Fuzzy
 	'welcome-message-wall-anon' => "Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]].
 
 '''[[Special:Userlogin|Per piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera belfé ëd manten-e na marca ëd soe contribussion e a lo giuta a comuniché con ël rest ëd la comunità.
@@ -1321,7 +1321,7 @@ Për piasì ch'am lassa un mëssagi s'i peuss giuté con cheicòs!",
 
 '''[[Special:Userlogin|Per piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera belfé ëd manten-e na marca ëd soe contribussion e a lo giuta a comuniché con ël rest ëd la comunità.
 
-Për piasì ch'am lassa un mëssagi s'i peuss giuté con cheicòs!",
+Për piasì ch'am lassa un mëssagi s'i peuss giuté con cheicòs!", # Fuzzy
 );
 
 /** Pashto (پښتو)
@@ -1377,14 +1377,14 @@ Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]
 
 Se necessita de ajuda e não encontra administradores locais, talvez
 queira visitar os [[wikia:Forum:Community Central Forum|fóruns na
-Wiki Community Central]] $3',
+Wiki Community Central]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Bem-vindo(a)==
 
 Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
 
 '''[[Special:UserLogin|Por favor, registe-se e crie uma conta de utilizador]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os outros utilizadores.
 
-Se necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3",
+Se necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 );
@@ -1425,14 +1425,14 @@ Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]
 
 Se você necessita de ajuda e não encontra administradores locais, talvez
 queira visitar os [[wikia:Forum:Community Central Forum|fóruns na
-Wiki Community Central]] $3',
+Wiki Community Central]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Bem-vindo(a)==
 
 Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
 
 '''[[Special:UserLogin|Por favor, registe-se e crie uma conta de usuário]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os demais usuários.
 
-Se você necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3",
+Se você necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Olá, bem-vindo a {{SITENAME}}! Obrigado pela sua edição na página [[:$1]].
@@ -1442,7 +1442,7 @@ Por favor, se tiver dúvidas, deixe uma mensagem no meu mural para que eu possa 
 
 Se precisar de ajuda e não encontrar nenhum administrador local por aqui, você poderá visitar os [[wikia:Forum:Community Central Forum|os fóruns na Comunidade Central da Wikia]]. Você pode também verificar o nosso [[w:c:community:Blog:Wikia_Staff_Blog|Blog da Staff]] para manter-se atualizado com as últimas notícias e eventos sobre a Wikia.
 
-Divirta-se com as edições!',
+Divirta-se com as edições!', # Fuzzy
 	'welcome-message-wall-anon' => "Olá, bem-vindo a {{SITENAME}}! Obrigado pela sua edição na página [[:$1]].
 
 '''[[Special:Userlogin|Por favor, crie uma conta e identifique-se]]'''. É uma maneira fácil para acompanhar suas contribuições e ajuda você a se comunicar com o resto da Comunidade.
@@ -1452,7 +1452,7 @@ Por favor, deixe-me uma mensagem se eu puder te ajudar com qualquer coisa!",
 
 '''[[Special:Userlogin|Por favor, crie uma conta e identifique-se]]'''. É uma maneira fácil para acompanhar suas contribuições e ajuda você a se comunicar com o resto da Comunidade.
 
-Por favor, deixe-me uma mensagem se eu puder te ajudar com qualquer coisa!",
+Por favor, deixe-me uma mensagem se eu puder te ajudar com qualquer coisa!", # Fuzzy
 );
 
 /** Russian (русский)
@@ -1488,14 +1488,14 @@ $messages['ru'] = array(
 Привет, добро пожаловать на сайт {{SITENAME}}! Спасибо за ваше исправление на странице [[:$1]].
 
 Если вам нужна помощь, а локальные администраторы отсутствуют, вы можете
-посетить [[wikia:Forum:Community Central Forum|форумы Центральной вики сообщества]] $3',
+посетить [[wikia:Forum:Community Central Forum|форумы Центральной вики сообщества]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "== Добро пожаловать ==
 
 Привет, добро пожаловать на сайт {{SITENAME}}! Спасибо за ваше исправление на странице [[:$1]].
 
 '''[[Special:Userlogin|Пожалуйста создайте учётную запись и представьтесь системе]]'''. Это поможет вам следить за своими исправлениями и общаться с остальными членами сообщества.
 
-Если вам нужна помощь, а локальные администраторы отсутствуют, вы можете посетить [[wikia:Forum:Community Central Forum|форумы Центральной вики сообщества]] $3",
+Если вам нужна помощь, а локальные администраторы отсутствуют, вы можете посетить [[wikia:Forum:Community Central Forum|форумы Центральной вики сообщества]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|справочный форум]] | [[w:sblog|блог]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Здравствуйте, добро пожаловать {{SITENAME}}! Спасибо за ваши правки на странице [[:$1]].
@@ -1505,7 +1505,7 @@ $messages['ru'] = array(
 
 Если вам нужна помощь, а местные администраторы отсутствуют, вы можете посетить [[wikia:Forum:Community Central Forum|Форумы на Центральной вики]]. Вы также можете проверить наш [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]]б чтобы следить за последними новостями и событиями Викия.
 
-Счастливого редактирования!',
+Счастливого редактирования!', # Fuzzy
 	'welcome-message-wall-anon' => "Привет, добро пожаловать на {{SITENAME}}! Спасибо за вашу правку на странице [[:$1]].
 
 '''[[Special:Userlogin|Пожалуйста, войдите в систему и создайте учётную запись]]'''. Это позволит вам легко следить за вашими правками и общаться с другими членами сообщества.
@@ -1515,7 +1515,7 @@ $messages['ru'] = array(
 
 '''[[Special:Userlogin|Пожалуйста, войдите в систему и создайте учётную запись]]'''. Это позволит вам легко следить за вашими правками и общаться с другими членами сообщества.
 
-Пожалуйста, оставьте мне сообщение, если я могу чем-то помочь!",
+Пожалуйста, оставьте мне сообщение, если я могу чем-то помочь!", # Fuzzy
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -1552,7 +1552,7 @@ $messages['sr-ec'] = array(
 
 Здраво и добро дошли на {{SITENAME}}! Хвала вам на измени на [[:$1]] страници.
 
-Ако вам буде затребала помоћ а не нађете администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3',
+Ако вам буде затребала помоћ а не нађете администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "== Добродошлица ==
 
 Здраво и добро дошли на {{SITENAME}}.
@@ -1561,7 +1561,7 @@ $messages['sr-ec'] = array(
 '''[[Special:UserLogin|Пријавите се и направите корисничко име]]'''.
 То је најлакши начин да приступите својим доприносима и комуницирате с остатком заједнице.
 
-Ако вам буде затребала помоћ а не нађете администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3",
+Ако вам буде затребала помоћ а не нађете администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3", # Fuzzy
 );
 
 /** Swedish (svenska)
@@ -1598,7 +1598,7 @@ Hej och välkommen till {{SITENAME}}! Tack för att du redigerade sidan [[:$1]].
 
 Om du behöver hjälp, och det inte finns några lokala administratörer här, kan du
 besöka [[wikia:Forum:Community Central Forum|forumen på Community
-Central Wiki]] $3',
+Central Wiki]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Välkommen==
 
 Hej, välkommen till {{SITENAME}}.
@@ -1608,7 +1608,7 @@ Tack för att du redigerade sidan [[:$1]].
 '''[[Special:UserLogin|Var god logga in och skapa ett användarnamn]]'''.
 Det är ett enkelt sätt att hålla reda på alla dina bidrag och hjälper dig att kommunicera med resten av gemenskapen.
 
-Om du behöver hjälp, och det inte finns några lokala administratörer här, kan du besöka [[wikia:Forum:Community Central Forum|forumen på Community Central Wiki]] $3",
+Om du behöver hjälp, och det inte finns några lokala administratörer här, kan du besöka [[wikia:Forum:Community Central Forum|forumen på Community Central Wiki]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|hjälpforum]] | [[w:sblog|blogg]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Hej, välkommen till {{SITENAME}}! Tack för din redigering på sidan [[:$1]].
@@ -1618,7 +1618,7 @@ Lämna ett meddelande på min diskussionssida om jag kan hjälpa till med något
 
 Om du behöver hjälp och det inte finns några lokala administratörer här, kan du besöka [[wikia:Forum:Community Central Forum|forumen på Gemenskapscentralswikin]]. Du kna också spana in vår [[w:c:community:Blog:Wikia_Staff_Blog|personalblogg]] för att vara uppdaterad med de senast nyheterna och händelserna runtomkring Wikia.
 
-Glad redigering!',
+Glad redigering!', # Fuzzy
 	'welcome-message-wall-anon' => "Hej, välkommen till {{SITENAME}}! Tack för din redigering på sidan [[:$1]].
 
 '''[[Special:Userlogin|Var god logga in och skapa ett användarnamn]]'''. Det är ett enkelt sätt att hålla koll på dina bidrag and hjälper dig att kommunicera med resten av gemenskapen.
@@ -1628,7 +1628,7 @@ Lämna mig ett meddelande om jag kan hjälpa till med något!",
 
 '''[[Special:Userlogin|Var god logga in och skapa ett användarnamn]]'''. Det är ett enkelt sätt att hålla koll på dina bidrag and hjälper dig att kommunicera med resten av gemenskapen.
 
-Lämna mig ett meddelande om jag kan hjälpa till med något!",
+Lämna mig ett meddelande om jag kan hjälpa till med något!", # Fuzzy
 );
 
 /** Thai (ไทย)
@@ -1661,7 +1661,7 @@ $messages['th'] = array(
 
 สวัสดี, ยินดีต้อนรับสู่ {{SITENAME}}! ขอบคุณสำหรับการแก้ไขหน้า [[:$1]]
 
-ถ้าคุณต้องการให้ช่วย, และไม่มีผู้ดูแลที่นี่ คุณอาจจำเป็นต้องไปที่เยี่ยมชม [[wikia:Forum:Community Central Forum|ฟอรั่มบนศูนย์กลางชุมชนวิกิ]] $3',
+ถ้าคุณต้องการให้ช่วย, และไม่มีผู้ดูแลที่นี่ คุณอาจจำเป็นต้องไปที่เยี่ยมชม [[wikia:Forum:Community Central Forum|ฟอรั่มบนศูนย์กลางชุมชนวิกิ]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==ยินดีต้อนรับ==
 
 สวัสดี, ยินดีต้อนรับสู่ {{SITENAME}}
@@ -1670,7 +1670,7 @@ $messages['th'] = array(
 '''[[Special:UserLogin|กรุณาเข้าสู่ระบบและสร้างชื่อผู้ใช้]]'''
 มันเป็นทางที่ง่ายในการติดตามผลงานของคุณและให้ความช่วยเหลือการติดต่อกับบุคคลที่เหลือนบนชุมชน
 
-ถ้าคุณต้องการให้ช่วย และไม่มีผู้ดูแลที่นี่ คุณอาจจำเป็นต้องไปที่เยี่ยมชม [[wikia:Forum:Community Central Forum|ฟอรั่มบนศูนย์กลางชุมชนวิกิ]] $3",
+ถ้าคุณต้องการให้ช่วย และไม่มีผู้ดูแลที่นี่ คุณอาจจำเป็นต้องไปที่เยี่ยมชม [[wikia:Forum:Community Central Forum|ฟอรั่มบนศูนย์กลางชุมชนวิกิ]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|กระดานช่วยเหลือ]] | [[w:sblog|บล๊อก]])</small>',
 	'hawelcomeedit' => 'ยินดีต้อนรับสู่ HA',
 );
@@ -1706,7 +1706,7 @@ Mangyaring mag-iwan ng isang mensahe sa [[$2|pahina ko ng talakayan]] kung makak
 Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahinang [[:$1]].
 
 Kung kailangan mo ng tulong, at walang katutubong mga tagapangasiwa dito, maaaring naisin mong
-dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahing Pamayanan]] $3',
+dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahing Pamayanan]] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Maligayang pagdating==
 
 Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahinang [[:$1]].
@@ -1714,7 +1714,7 @@ Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pah
 '''[[Special:Userlogin|Mangyaring lumagda o lumikha ng isang pangalan ng tagagamit]]'''. Isa itong maginhawang paraan upang masubaybayan ang mga ambag mo at makakatulong sa pakikipag-ugnayan mo sa iba pang mga nasa pamayanan.
 
 Kung kailangan mo ng tulong, at walang katutubong mga tagapangasiwa dito, maaaring naisin mong
-dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahing Pamayanan]] $3",
+dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahing Pamayanan]] $3", # Fuzzy
 	'staffsig-text' => ' $1<staff /> <small>([[w:forums|poro ng tulong]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahina ng [[:$1]].
@@ -1724,7 +1724,7 @@ Mangyaring iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!',
 
 Kung kailangan mo ng tulong, at walang katutubong mga tagapangasiwa rito, maaaring naisin mong dalawin ang [[wikia:Forum:Community Central Forum|mga porum na nasa Lunduyang Wiki ng Pamayanan]]. Maaari mo ring tingnan at suriin ang aming [[w:c:community:Blog:Wikia_Staff_Blog|blog ng Tauhan]] upang manatiling nakakaalam sa pinakahuling mga balita at mga kaganapan sa paligid ng Wikia.
 
-Maligayang pamamatnugot!',
+Maligayang pamamatnugot!', # Fuzzy
 	'welcome-message-wall-anon' => "Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahina ng [[:$1]].
 
 '''[[Special:Userlogin|Paki lumagda at lumikha ng isang pangalan ng tagagamit]]'''. Isa itong madaling paraan upang masubaybayan ang mga ambag mo at makatutulong sa iyong makipag-ugnayan sa iba pang nasa pamayanan.
@@ -1734,7 +1734,7 @@ Mangyaring iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!",
 
 '''[[Special:Userlogin|Paki lumagda at lumikha ng isang pangalan ng tagagamit]]'''. Isa itong madaling paraan upang masubaybayan ang mga ambag mo at makatutulong sa iyong makipag-ugnayan sa iba pang nasa pamayanan.
 
-Paki iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!",
+Paki iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!", # Fuzzy
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -1790,7 +1790,7 @@ $messages['uk'] = array(
 
 Привіт, ласкаво просимо на {{SITENAME}}! Дякуємо за ваші зміни на сторінці [[:$1]].
 
-Якщо вам потрібна допомога, а локальні адміністратори відсутні, ви можете відвідати [[wikia:Forum:Community Central Forum|форуми спільноти Central Wiki]] $3',
+Якщо вам потрібна допомога, а локальні адміністратори відсутні, ви можете відвідати [[wikia:Forum:Community Central Forum|форуми спільноти Central Wiki]] $3', # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|форум допомоги]] | [[w:sblog|блог]])</small>',
 );
 
@@ -1824,7 +1824,7 @@ Xin vui lòng để lại tin nhắn vào [[$2|trang thảo luận]] của tôi 
 
 Chào bạn, hoan nghênh bạn đến {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
 
-Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần giúp đỡ, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|diễn đàn cộng đồng trung tâm Wikia]] hoặc [http://vi.wikia.com Wikia Tiếng Việt] $3',
+Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần giúp đỡ, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|diễn đàn cộng đồng trung tâm Wikia]] hoặc [http://vi.wikia.com Wikia Tiếng Việt] $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Xin chào==
 Chào bạn, hoan nghênh bạn đến với {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
 
@@ -1832,7 +1832,7 @@ Chào bạn, hoan nghênh bạn đến với {{SITENAME}}! Cảm ơn bạn đã 
 
 Đó là cách dễ dàng để giữ lại những đóng góp của bạn và giúp bạn giao tiếp với cộng đồng.
 
-Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần giúp đỡ, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|diễn đàn cộng đồng trung tâm Wikia]] hoặc [http://vi.wikia.com Wikia Tiếng Việt] $3",
+Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần giúp đỡ, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|diễn đàn cộng đồng trung tâm Wikia]] hoặc [http://vi.wikia.com Wikia Tiếng Việt] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|diễn đàn trợ giúp]] | [[w:sblog|blog]] | [http://vi.wikia.com Wikia Tiếng Việt])</small>',
 	'hawelcomeedit' => 'Sửa đổi thông điệp chào đón',
 	'welcome-message-wall-user' => 'Chào bạn, hoan nghênh bạn đến {{SITENAME}}! Cảm ơn sửa đổi của bạn tại trang [[:$1]].
@@ -1842,7 +1842,7 @@ Xin vui lòng để lại cho tôi một tin nhắn nếu tôi có thể giúp v
 
 Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần trợ giúp, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|diễn đàn cộng đồng trung tâm Wikia]] hoặc [[wikia:vi:Trang Chính|Wikia Tiếng Việt]]. Bạn cũng có thể xem qua [[w:c:community:Blog:Wikia_Staff_Blog|blog nhân viên]] của chúng tôi để cập nhật với những tin tức và sự kiện mới nhất xung quanh Wikia.
 
-Sửa đổi vui vẻ!',
+Sửa đổi vui vẻ!', # Fuzzy
 	'welcome-message-wall-anon' => "Chào bạn, hoan nghênh bạn đến với {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
 
 '''[[Special:Userlogin|Xin hãy đăng ký và tạo tài khoản mới]]'''. Đó là cách dễ dàng để giữ lại những đóng góp của bạn và giúp bạn giao tiếp với cộng đồng.
@@ -1852,7 +1852,7 @@ Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp
 
 '''[[Special:Userlogin|Xin hãy đăng ký và tạo tài khoản mới]]'''. Đó là cách dễ dàng để giữ lại những đóng góp của bạn và giúp bạn giao tiếp với cộng đồng.
 
-Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp về bất cứ điều gì!",
+Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp về bất cứ điều gì!", # Fuzzy
 );
 
 /** Simplified Chinese (中文（简体）‎)
