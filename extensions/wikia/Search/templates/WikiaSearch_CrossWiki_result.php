@@ -16,14 +16,14 @@
 			<? endif; ?>
 			<!-- end -->
 
-			<p class="hub subtle">GAMES</p>
+			<p class="hub subtle"><?= $hub ?></p>
 			<p><?= $result->getText(); ?></p>
 			<ul>
 				<li><a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getTextUrl(), 90);?></a></li>
 				<li><a href="http://<?= $result['host'] .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search'; ?>"><?= wfMsg( 'wikiasearch2-search-on-wiki') ?></a></li>
 			</ul>
 			<ul class="wiki-statistics subtle">
-				<li>19k Pages</li>
+				<li>11111</li>
 				<li>12k Photos</li>
 				<li>20 Videos</li>
 			</ul>

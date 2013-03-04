@@ -52,6 +52,7 @@
 						'gpos' => 0,
 						'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 						'query' => $query,
+						'hub' => $hub
 					));
 					?>
 					<?php endforeach; ?>
