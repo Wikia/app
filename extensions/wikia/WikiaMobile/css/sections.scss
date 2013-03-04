@@ -27,7 +27,7 @@ h1, h2, h3{
 		display: block;
 	}
 
-	ul {
+	ul:not(.wkLst) {
 		//setting to 20px makes it narrower but still nicely indented
 		padding-left: 20px;
 	}
