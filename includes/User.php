@@ -88,8 +88,6 @@ class User {
 		'mRegistration',
 		'mBirthDate', // Wikia. Added to reflect our user table layout.
 		'mEditCount',
-		// Wikia. edit count localized for wiki
-		'mEditCountLocal',
 		// user_groups table
 		'mGroups',
 		// user_properties table
@@ -170,7 +168,6 @@ class User {
 		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
 		$mCookiePassword, $mEditCount, $mAllowUsertalk;
-	var $mEditCountLocal; // Wikia. edit count localized for wiki.
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
 
@@ -2562,21 +2559,20 @@ class User {
 
 	/**
 	 * Wikia. Get number of edits localized for wiki,
-	 * initialize if not set
+	 *
+	 * NOTE: UserStatsService:getEditCountWiki function retrieves User object inside
+	 * due to this fact localized editcount shouldn't be a field of User class
+	 * to avoid infinite loop
 	 *
 	 * @autor Kamil Koterba
 	 * @since Feb 2013
-	 * @return Int mEditCountLocal
+	 * @return Int
 	 */
 	public function getEditCountLocal() {
 		if( $this->getId() ) {
 
-			if ( !isset( $this->mEditCountLocal ) ) {
-				/* Populate the count, if it has not been populated yet */
-				$userStatsService = new UserStatsService( $this->mId );
-				$this->mEditCountLocal = $userStatsService->getEditCountWiki();
-			}
-			return $this->mEditCountLocal;
+			$userStatsService = new UserStatsService( $this->mId );
+			return $userStatsService->getEditCountWiki();
 
 		} else {
 			/* nil */
