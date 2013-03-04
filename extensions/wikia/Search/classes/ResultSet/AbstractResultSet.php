@@ -138,32 +138,12 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	}
 	
 	/**
-	 * Allows us to serialize some core values from an expected wiki for json requests
-	 * @param array $expectedFields
-	 * @return array
-	 */
-	public function toArray( $expectedFields = array( 'title', 'url' ) ) {
-		$result = array();
-		foreach ( $expectedFields as $field ) {
-			switch ( $field ) {
-				case 'title':
-					$result['title'] = $this->getHeader( 'cityTitle' );
-					break;
-				case 'url':
-					$result['url'] = $this->getHeader( 'cityUrl' );
-					break;
-			}
-		}
-		return $result;
-	}
-
-	/**
 	 * Done to return results in json format
 	 * Can be removed after upgrade to 5.4 and specify serialized Json data on Wikia\Search\Result
 	 * http://php.net/manual/en/jsonserializable.jsonserialize.php
 	 * @return array
 	 */
-	public function toNestedArray( array $expectedFields = array( 'title', 'url' ) ) {
+	public function toArray( array $expectedFields = array( 'title', 'url' ) ) {
 		$tempResults = array();
 		foreach( $this->results as $result ){
 			$tempResults[] = $result->toArray( $expectedFields );

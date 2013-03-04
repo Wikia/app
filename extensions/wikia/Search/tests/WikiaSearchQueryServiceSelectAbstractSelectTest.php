@@ -916,4 +916,15 @@ class WikiaSearchQueryServiceSelectAbstractSelectTest extends WikiaSearchBaseTes
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\QueryService\AbstractSelect::searchAsApi
+	 */
+	public function testSearchAsApi() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'search' ) )
+		                   ->getMockForAbstractClass();
+		
+	}
+	
 }
