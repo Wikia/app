@@ -50,7 +50,8 @@ class OnWiki extends AbstractSelect
 		if ( $this->config->hasArticleMatch() ) {
 			$noPtt = Utilities::valueForField( 'id', $this->config->getArticleMatch()->getResult()->getVar( 'id' ), array( 'negate' => true ) ) ;
 			$this->config->setFilterQuery( $noPtt, 'ptt' );
-		} 
+		}
+		return $this;
 	}
 	
 	/**
@@ -69,7 +70,6 @@ class OnWiki extends AbstractSelect
 			      ->setExtendedResults( true )
 			      ->setCollateParam( 'fq', 'is_content:true AND wid:'.$this->config->getCityId() )
 			      ->setOnlyMorePopular( true )
-			      ->setDictionary( $this->interface->searchSupportsCurrentLanguage() ? $this->interface->getLanguageCode() : 'default'   )
 			      ->setCollateExtendedResults( true )
 			;
 		}
@@ -78,8 +78,11 @@ class OnWiki extends AbstractSelect
 	
 	/**
 	 * This is a hook called if we need to modify the basic query fields as a part the class's basic functionality.
+	 * @return OnWiki
 	 */
-	protected function configureQueryFields(){}
+	protected function configureQueryFields() {
+	    return $this;
+	}
 	
 	/**
 	 * Return a string of query fields based on configuration
