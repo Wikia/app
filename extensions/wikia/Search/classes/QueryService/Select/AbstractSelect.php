@@ -96,6 +96,13 @@ abstract class AbstractSelect
 	}
 	
 	/**
+	 * @return array
+	 */
+	public function searchAsApi() {
+		return $this->search()->toArray();
+	}
+	
+	/**
 	 * @return Ambigous <\Wikia\Search\Match\Article, \Wikia\Search\Match\Wiki, \Wikia\Search\false, boolean>
 	 */
 	public function getMatch() {

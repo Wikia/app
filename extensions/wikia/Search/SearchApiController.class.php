@@ -83,13 +83,11 @@ class SearchApiController extends WikiaApiController {
 
 			if ( $total ) {
 				foreach ( $resultSet as $result ) {
-					$title = $result->getTitleObject();
-
 					$results[] = [
-						'id' => $title->getArticleID(),
-						'title' => $title->getText(),
-						'url' => $title->getLocalUrl(),
-						'ns' => $title->getNamespace()
+						'id' => $result['pageid'],
+						'title' => $result->getTitle(),
+						'url' => $result->getUrl(),
+						'ns' => $result['ns']
 					];
 				}
 

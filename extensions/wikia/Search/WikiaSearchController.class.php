@@ -150,9 +150,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    	->setVideoSearch    ( true )
 	    ;
 		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig ); 
-	    $results = $wikiaSearch->search();
 	    $this->getResponse()->setFormat( 'json' );
-	    $this->getResponse()->setData( $results->toNestedArray() );
+	    $this->getResponse()->setData( $wikiaSearch->searchAsApi() );
 
 	}
 
@@ -222,7 +221,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response = $this->getResponse();
 		$format = $response->getFormat();
 		if ( $format == 'json' || $format == 'jsonp' ){
-			$response->setData( $searchConfig->getResults()->toNestedArray() );
+			$response->setData( $searchConfig->getResults()->toArray() );
 			return;
 		}
 		if(! $searchConfig->getIsInterWiki() ) {
