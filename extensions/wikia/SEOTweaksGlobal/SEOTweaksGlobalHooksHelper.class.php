@@ -14,6 +14,10 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 	public function onOpenGraphMetaHeaders( &$meta, $title ) {
 
 		if ( !empty( $title ) && $title instanceof Title && !$title->isMainPage() ) {
+			$namespace = $title->getNamespace();
+			if ( $namespace == NS_USER ) {
+				return true;
+			}
 
 			$cacheKey = $this->wf->memcKey( __METHOD__, $title->getDBKey() );
 			$imageUrl = $this->wg->memc->get( $cacheKey );
@@ -25,9 +29,7 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 
 			if ( !empty( $title ) ) {
 
-				$namespace = $title->getNamespace();
 				$maxWidth = 500;
-
 				if ( $namespace == NS_FILE ) {
 
 					$file = wfFindFile( $title );
@@ -52,17 +54,21 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 						$name = $first[0]['name'];
 						$fileTitle = Title::newFromText($name, NS_FILE);
 						$file = wfFindFile( $fileTitle );
-						$width = $file->getWidth();
-						$width = $width > $maxWidth ? $maxWidth : $width;
-						$thumbObj = $file->transform( array('width'=>$width ), 0 );
-						$thumb = $thumbObj->getUrl();
+						if ( !empty( $file ) ) {
+							$width = $file->getWidth();
+							$width = $width > $maxWidth ? $maxWidth : $width;
+							$thumbObj = $file->transform( array('width'=>$width ), 0 );
+							$thumb = $thumbObj->getUrl();
 
-						$meta["og:image"] = $thumb;
-						$this->wg->memc->set( $cacheKey, $thumb );
+							$meta["og:image"] = $thumb;
+							$this->wg->memc->set( $cacheKey, $thumb );
+						}
 
 					} else {
 
-						$this->wg->memc->set( $cacheKey, $meta["og:image"] );
+						if (isset($meta["og:image"])) {
+							$this->wg->memc->set( $cacheKey, $meta["og:image"] );
+						}
 					}
 				}
 			}
