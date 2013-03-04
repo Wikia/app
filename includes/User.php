@@ -4143,20 +4143,22 @@ class User {
 			 * @since Feb 2013
 			 * @author Kamil Koterba
 			 */
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->update( 'wikia_user_properties',
-				array( 'wup_value=wup_value+1' ),
-				array( 'wup_user' => $this->getId(),
-					'wup_property' => 'editcount' ),
-				__METHOD__ );
+			if ( !empty($wgEnableEditCountLocal) ) {
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->update( 'wikia_user_properties',
+					array( 'wup_value=wup_value+1' ),
+					array( 'wup_user' => $this->getId(),
+						'wup_property' => 'editcount' ),
+					__METHOD__ );
 
-			if ($dbw->affectedRows() == 1) {
-				//increment memcache also
-				$key = wfSharedMemcKey( 'editcount', $wgCityId, $this->getId() );
-				$wgMemc->incr( $key );
-			} else {
-				//initialize editcount skipping memcache
-				$this->getEditCount( 0, true );
+				if ($dbw->affectedRows() == 1) {
+					//increment memcache also
+					$key = wfSharedMemcKey( 'editcount', $wgCityId, $this->getId() );
+					$wgMemc->incr( $key );
+				} else {
+					//initialize editcount skipping memcache
+					$this->getEditCountLocal( 0, true );
+				}
 			}
 			/* end of change */
 
