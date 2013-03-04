@@ -56,7 +56,8 @@ $app->registerClass('MysqlWikiaHubsV2SliderModuleDataProvider', $dir . 'models/d
 $app->registerSpecialPage('WikiaHubsV2', 'SpecialWikiaHubsV2Controller');
 
 // i18n mapping
-$wgExtensionMessagesFiles['WikiaHubsV2'] = $dir . 'WikiaHubsV2.i18n.php';
+$app->registerExtensionMessageFile('WikiaHubsV2', $dir.'WikiaHubsV2.i18n.php');
+F::build('JSMessages')->registerPackage('WikiaHubsV2', array('wikiahubs-suggest-article-success'));
 
 // hooks
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsV2Mobile', 'onWikiaMobileAssetsPackages');
