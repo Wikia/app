@@ -113,31 +113,27 @@ Wikia Community Support
 ___________________________________________
 * Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences",
 	"autocreatewiki-welcometalk-wall-title" => "Welcome!",
-        "autocreatewiki-welcometalk-wall" => "Hey there!
-We're excited to have {{subst:SITENAME}} as part of the Wikia community! There's still a lot to do, so here are some helpful tips and links to get your wiki going:
-*Not sure where to begin? Stop by [[w:c:community:Admin_Central:Main_Page|Founder &amp; Admin Central]] and check out the [[w:c:community:Blog:Wikia_Founders_&_Admins|Blog]] for tips on how to jump start your wiki and make it grow!
-*Visit [[w:c:community:main page|Community Central]] to make friends via [[w:c:community:Special:Chat|chat]], learn about new features and get updated on Wikia news and upcoming features on the [[w:c:community:Blog:Wikia_Staff_Blog|Staff Blog]].
-*Take a look at our [[w:c:community:Webinars|webinar series]] -- where you can sign up to interact with Wikia staff, as well as watch past sessions
-*Be sure to check out [[Special:WikiFeatures|Wiki Features]] to see what features you can enable on your wiki!
-*Explore our [[w:c:community:Admin_Central:Forum|forums]] on Founder and Admin Central to see what other wiki admins are asking. 
-*Lastly, visit our [[w:c:community:Help:Contents|Help Pages]] to answer any specific question you may have.
-All of the above links are a great place to start exploring Wikia. If you get stuck or have a question you can't find the answer to -- please contact us [[Special:Contact|here]]. But most importantly, have fun! :)
-Happy editing!",
+        "autocreatewiki-welcometalk-wall" => "Hello, We're excited to have {{subst:SITENAME}} as part of the Wikia community!
+
+There's still a lot to do; here are some helpful tips and links to get your wiki going:
+*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including Chat, Achievements and much more.
+*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or chat live with fellow Wikians.
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia.
+
+All of the above links are a great place to start exploring, and have fun!",
 
 	"autocreatewiki-welcometalk" => "==Welcome!==
-<div style=\"font-size:120%; line-height:1.2em;\">Hi $1 -- we're excited to have '''$4''' as part of the Wikia community!
+Hey there!
 
-Now you've got a whole website to fill up with information, pictures and videos about your favorite topic. But right now, it's just blank pages staring at you... Scary, right? Here are some ways to get started.
+We're excited to have $4 as part of the Wikia community! There's still a lot to do; here are some helpful tips and links to get your wiki going:
 
-* '''Introduce your topic''' on the front page. This is your opportunity to explain to your readers what your topic is all about. Write as much as you want! Your description can link off to all the important pages on your site.
+*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including chat, achievements and much more.
+*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or chat live with fellow Wikians
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia
 
-* '''Start some new pages''' -- just a sentence or two is fine to get started. Don't let the blank page stare you down! A wiki is all about adding and changing things as you go along. You can also add pictures and videos, to fill out the page and make it more interesting.
+All of the above links are a great place to start exploring, and have fun!
 
-And then just keep going! People like visiting wikis when there's lots of stuff to read and look at, so keep adding stuff, and you'll attract readers and editors. There's a lot to do, but don't worry -- today's your first day, and you've got plenty of time. Every wiki starts the same way -- a little bit at a time, starting with the first few pages, until it grows into a huge, busy site.
-
-If you've got questions, you can e-mail us through our [[Special:Contact|contact form]]. Have fun!
-
--- [[User:$2|$3]] <staff /></div>",
+-- [[User:$2|$3]] <staff />",
 // new wikis - special page
 	"newwikis" => "New wikis",
 	"newwikisstart" => "Display wikis starting at:",
@@ -148,6 +144,7 @@ If you've got questions, you can e-mail us through our [[Special:Contact|contact
 /** Message documentation (Message documentation)
  * @author Prima klasy4na
  * @author Purodha
+ * @author Shirayuki
  * @author Siebrand
  * @author The Evil IP address
  * @author Umherirrender
@@ -161,6 +158,7 @@ $messages['qqq'] = array(
 	'autocreatewiki-info-realname' => '{{Identical|Real name attribution}}',
 	'autocreatewiki-info-blurry-word' => 'Message {{msg-Wikia|Autocreatewiki-blurry-word}} refers here.',
 	'autocreatewiki-title-template' => 'This will be the sitename of the wiki, i.e. the text that shows up in the TITLE element as well as in other places on the site.',
+	'autocreatewiki-category-other' => '{{Identical|Other}}',
 	'autocreatewiki-set-username' => 'If user does not provide a username when attempting to log in, an error message appears prompting a username to be provided',
 	'autocreatewiki-welcometalk' => 'Text of the welcome message left for wiki founder upon wiki creation. 
 Parameters:
@@ -478,7 +476,7 @@ Ha kendalc'hit goude ! Plijout a ra d'an dud mont war ar wikioù ma vez traoù d
 
 M'ho peus goulennoù da sevel e c'hallit skrivañ ur gerig dimp war ar bajenn  [[Special:Contact|contact form]]-mañ. Hetiñ a reomp kalz a blijadur deoc'h !
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Wikioù nevez',
 	'newwikisstart' => 'Diskouez ar Wikioù adal :',
 );
@@ -576,10 +574,44 @@ Prosím, vyberte hodnotu ze seznamu.',
 );
 
 /** Welsh (Cymraeg)
+ * @author Lloffiwr
  * @author Pwyll
+ * @author Thefartydoctor
  */
 $messages['cy'] = array(
-	'autocreatewiki' => 'Creu wiki newydd',
+	'autocreatewiki' => 'Dechrau wici newydd',
+	'autocreatewiki-desc' => 'Creu wici yn y WikiFactory gyda ymofyniadau defnyddiwyr',
+	'autocreatewiki-page-title-default' => 'Creu wici newydd',
+	'autocreatewiki-page-title-answers' => 'Creu gwefan Atebion newydd',
+	'createwiki' => 'Creu wici newydd',
+	'autocreatewiki-chooseone' => 'Dewiswch un',
+	'autocreatewiki-required' => '$1 = gofynnol',
+	'autocreatewiki-web-address' => 'Cyfeiriad gwe:',
+	'autocreatewiki-category-select' => 'Dewiswch un',
+	'autocreatewiki-language-top' => 'Y $1 iaith fwyaf',
+	'autocreatewiki-language-all' => 'Holl ieithoedd',
+	'autocreatewiki-remember' => 'Cofio fi',
+	'autocreatewiki-create-account' => 'Creu cyfrif',
+	'autocreatewiki-haveaccount-question' => 'Oes cyfrif Wikia gyda chi?',
+	'autocreatewiki-info-topic' => 'Ychwanegu disgrifiad bach fel "Star Wars" neu "Sioeau deledu".',
+	'autocreatewiki-info-category-default' => 'Bydd hwn yn helpu ymwelwyr i ffeindio eich wici chi.',
+	'autocreatewiki-info-category-answers' => 'Bydd hwn yn helpu ymwelwyr i ffeindio eich gwefan Atebion chi.',
+	'autocreatewiki-info-language' => 'Hon fydd yr iaith rhagosodedig i ymwelwyr eich wici chi.',
+	'autocreatewiki-info-email-address' => 'Mae eich cyfeiriad e-bost chi erioed yn dangos i unrhywun ar Wikia.',
+	'autocreatewiki-info-realname' => "Os ydych chi'n dewis ei roi, byddwn ni'n ei ddefnyddio i roi priodoliad i chi am eich gwaith.",
+	'autocreatewiki-info-birthdate' => "Mae Wikia yn gofyn i bob defnyddiwr roi ei ddyddiad geni fel mesur diogelwch, ac er mwyn cadw uniondeb y wefan tra'n cydymffurfio â rheolau ffederal.",
+	'autocreatewiki-info-blurry-word' => "I helpu nhw i ddiogelu rhag y greadigaeth gyfrif awtomatig, teipwich y gair blyri fod chi'n gallu gweud yn y bocs hwn.",
+	'autocreatewiki-info-terms-agree' => 'Gan creu wici a chyfrif defnyddiwr, dych chi\'n cyd-fynd y <a href="http://www.wikia.com/wiki/Terms_of_use">Termiau Defnydd o Wikia</a>',
+	'autocreatewiki-info-staff-username' => '<b>Staff yn unig:</b> Bydd y defnyddiwr penodol yn cofrestru fel syflaenwr.',
+	'autocreatewiki-title-template' => 'Wici $1',
+	'autocreatewiki-limit-day' => 'Mae Wikia wedi rhagori y rhif uchafrif o greadigaeth wici heddiw ($1).',
+	'autocreatewiki-limit-creation' => 'Dych chi wedi rhagori y rhif uchafrif o greadigaeth wici yn 24 awr ($1).',
+	'autocreatewiki-empty-field' => "Cwblhau'r bocs hwn, os gwelwch chi'n dda.",
+	'autocreatewiki-bad-name' => 'Mae enwau gyda llythryn arbennig (fel $ neu @) ddim yn oddefol ac mae\'n reidiol yn bod yn bachlythrennau heb bylchau.',
+	'autocreatewiki-invalid-wikiname' => 'Mae enwau gyda llythryn arbennig (fel $ neu @) ac enwau gwag ddim yn oddefol.',
+	'autocreatewiki-violate-policy' => "Mae'r enw wici hwn yn cynnwys gair fod yn treisio ein polisi enwi ni.",
+	'autocreatewiki-name-taken' => 'Mae\'n wici gyda y cyfeiriad hwn. Dych chi\'n gallu creu newidiadau wrth <a href="http://$1.wikia.com">http://$1.wikia.com</a> neu dewis cyfeiriad arall.',
+	'autocreatewiki-name-too-short' => "Mae'r cyfeiriad yn rhy fach, dewis cyfeiriad gyda 3 llythryn neu nifer o leiaf.",
 );
 
 /** German (Deutsch)
@@ -696,7 +728,7 @@ Wir freuen uns, dass {{subst:SITENAME}} jetzt Teil der Wikia-Gemeinschaft ist! E
 *Besuche unser [[w:c:community:Admin_Central:Forum|Forum]] im Gründer- und Adminbereich und lies Fragen, die andere Wiki-Administratoren haben.
 *Zu guter Letzt: Durchsuche unsere [[w:c:community:Help:Contents|Hilfeseiten]], die dir so manche deiner Fragen beantworten können.
 Alle diese Links sind gute Stellen, um Wikia kennenzulernen. Falls du irgendwann nicht weiter weißt oder keine Antwort auf deine Frage findest, dann setz dich mit uns [[Special:Contact|über diese Seite]] in Verbindung. Aber vor allem viel Spaß!
-Frohes Schaffen!',
+Frohes Schaffen!', # Fuzzy
 	'autocreatewiki-welcometalk' => "== Willkommen! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hi \$1 -- wir freuen uns, dass '''\$4''' jetzt Teil der Wikia-Gemeinschaft ist!
 
@@ -710,7 +742,7 @@ Und im Anschluss mach einfach weiter! Leute mögen große Wikis, in denen man vi
 
 Wenn du Fragen hast, kannst du uns eine Mail über unser [[Special:Contact|Kontaktformular]] schreiben. Viel Spaß!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Neue Wikis',
 	'newwikisstart' => 'Zeige Wikis ab:',
 );
@@ -783,7 +815,7 @@ Machen Sie im Anschluss einfach weiter! Leute mögen große Wikis, in denen man 
 
 Wenn Sie Fragen haben, können Sie uns eine Mail über unser [[Special:Contact|Kontaktformular]] schreiben. Viel Spaß!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 );
 
 /** Zazaki (Zazaki)
@@ -1046,7 +1078,7 @@ ___________________________________________
  *Explora nuestros [[w:c:community:Admin_Central:Forum|foros]] en la Central de administración para ver lo que preguntan los administradores de otros wikis. 
 *Por último, visita nuestras [[w:c:community:Help:Contents|páginas de ayuda]] para encontrar las respuestas a cualquier pregunta específica que puedas tener.
 Todos los enlaces anteriores son magníficos lugares para comenzar a explorar Wikia. Si no sabes como continuar o tienes una pregunta sin respuesta, pónte en contacto con nosotros [[Special:Contact|aquí]]. Pero por encima de todo, ¡diviértete!
-¡Pásalo bien!',
+¡Pásalo bien!', # Fuzzy
 	'autocreatewiki-welcometalk' => "== ¡Bienvenidos! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hola \$1 -- nos encanta que '''\$4''' sea parte de la comunidad Wikia!
 
@@ -1060,7 +1092,7 @@ Ahora tienes un sitio web entero que completar con información, fotos y videos 
 
 Si tienes algunas dudas, envíanos un correo electrónico a través de nuestro [[Special:Contact|formulario de contacto]]. ¡Que te diviertas!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Nuevos wikis',
 	'newwikisstart' => 'Mostrar wikis comenzando por:',
 );
@@ -1214,7 +1246,7 @@ $3
 منتظر درخشش پروژه شما هستیم!
 
 با آرزوی بهترین‌ها، [[User:$2|$3]] <staff />
-</div>',
+</div>', # Fuzzy
 	'newwikis' => 'ویکی‌های جدید',
 	'newwikisstart' => 'نمایش ویکی‌هایی که شروع می‌شوند در:',
 );
@@ -1338,7 +1370,7 @@ Ja sitten jatka vain samaan malliin! Ihmiset pitävät vierailusta wikeissä kun
 
 Jos sinulla on kysyttävää, [[Special:Contact|lähetä sähköpostia]] Wikian tukihenkilökunnalle. Pidä hauskaa!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Uudet wikit',
 	'newwikisstart' => 'Näytä wikit alkaen:',
 );
@@ -1470,7 +1502,7 @@ Nous sommes heureux d’accueillir {{SITENAME}} dans la communauté Wikia ! l y 
 Tous les liens ci-dessus sont un bon moyen de commencer à naviguer sur Wikia. Si tu es bloqué(e) ou as des questions auxquelles tu ne trouves pas la réponse, tu peux nous contacter [[Special:Contact|ici]]. Mais le plus important est que tu prennes du plaisir ! :)
 
 Bonnes modifications !
-<!-- [[w:c:community:main page|Community Central]], [[w:c:community:Webinars|webinar series]] -->',
+<!-- [[w:c:community:main page|Community Central]], [[w:c:community:Webinars|webinar series]] -->', # Fuzzy
 	'autocreatewiki-welcometalk' => "== Bienvenue ! ==
 
 <div style=\"font-size:120%; line-height:1.2em;\">Bonjour \$1, nous sommes fiers d’héberger votre site '''\$4''' chez Wikia!
@@ -1485,7 +1517,7 @@ Et ensuite continuez ! Les gens aiment aller sur des wikis où il y a beaucoup d
 
 Si vous avez des questions, vous pouvez nous écrire par cette page [[Special:Contact]]. Nous vous souhaitons bien du plaisir ! 
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Nouveaux wikis',
 	'newwikisstart' => 'Afficher les wikis depuis :',
 );
@@ -1593,7 +1625,7 @@ ___________________________________________
 Estamos encantados de que {{subst:SITENAME}} sexa parte da comunidade de Wikia! Aínda hai moito por facer, así que aquí hai algúns consellos e ligazóns para comezar a darlle un pulo ao seu wiki:
 *Non está seguro de onde empezar? Pase pola [[w:c:community:Admin_Central:Main_Page|Central de administración]] e consulte o [[w:c:community:Blog:Wikia_Founders_&_Admins|blogue]] para atopar consellos sobre como comezar o wiki e facelo medrar! *Visite o [[w:c:community:main page|wiki central da comunidade]] para facer amizades a través do [[w:c:community:Special:Chat|chat]] e obteña máis información sobre as novas características e estea ao día das novidades sobre Wikia e das características futuras no [[w:c:community:Blog:Wikia_Staff_Blog|blogue do persoal]]. *Bótelle unha ollada á nosa [[w:c:community:Webinars|serie web]], á que se pode subscribir para estar en contacto co persoal de Wikia, así como revisar as sesións anteriores *Asegúrese de consultar as [[Special:WikiFeatures|características do wiki]] para ollar as características que pode activar no seu wiki! *Explore os nosos [[w:c:community:Admin_Central:Forum|foros]] na Central de administración para ver o que preguntan os administradores doutros wikis. *Por último, visite as nosas [[w:c:community:Help:Contents|páxinas de axuda]] para atopar as respostas a calquera pregunta específica que poida ter.
 Todas as ligazóns anteriores son magníficos lugares para comezar a explorar Wikia. Se non sabe como continuar ou ten unha pregunta sen resposta, póñase en contacto con nós [[Special:Contact|aquí]]. Pero o máis importante é divertirse! :)
-Páseo ben!',
+Páseo ben!', # Fuzzy
 	'autocreatewiki-welcometalk' => "== Benvido! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Ola \$1; estamos encantados de que '''\$4''' sexa parte da comunidade de Wikia!
 
@@ -1607,7 +1639,7 @@ Continúe a traballar! Á xente gústalle visitar os wikis cando hai moitas cous
 
 Se ten algunha dúbida ou pregunta, pódenos enviar un correo electrónico a través do noso [[Special:Contact|formulario de contacto]]. Páseo ben!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Novos wikis',
 	'newwikisstart' => 'Mostrar os wikis que comecen por:',
 );
@@ -1638,6 +1670,33 @@ $messages['he'] = array(
 	'autocreatewiki-category-label' => 'קטגוריה:',
 	'newwikis' => 'אתרי וויקי חדשים',
 	'newwikisstart' => 'הצג אתרי וויקי המתחילים ב:',
+);
+
+/** Hindi (हिन्दी)
+ * @author Kush rohra
+ */
+$messages['hi'] = array(
+	'autocreatewiki' => 'बनाएँ एक नई wiki',
+	'autocreatewiki-desc' => 'Wiki में WikiFactory उपयोगकर्ता का अनुरोध बनाएँ',
+	'autocreatewiki-page-title-default' => 'बनाएँ एक नई wiki',
+	'autocreatewiki-page-title-answers' => 'एक नए जवाब साइट बनाएँ',
+	'createwiki' => 'बनाएँ एक नई wiki',
+	'autocreatewiki-chooseone' => 'एक को चुनें',
+	'autocreatewiki-required' => '$1 = 	
+चाहा हुआ',
+	'autocreatewiki-web-address' => 'आईपी पता:',
+	'autocreatewiki-category-select' => 'एक का चयन करें',
+	'autocreatewiki-language-top' => 'शीर्ष  $1  भाषाएँ',
+	'autocreatewiki-language-all' => 'सर्रि भाषा',
+	'autocreatewiki-remember' => 'मुझ याअद रख्न',
+	'autocreatewiki-create-account' => 'अप्न खत बनयिय',
+	'autocreatewiki-haveaccount-question' => 'क्य अप्क्के पस्स Wikia का खता हे',
+	'autocreatewiki-info-domain' => 'यह अपने विषय के लिए एक खोज खोजशब्द होने की संभावना एक शब्द का उपयोग करने के लिए सबसे अच्छा है।',
+	'autocreatewiki-info-category-default' => 'यह मिल अपने wiki आगंतुकों में मदद मिलेगी।',
+	'autocreatewiki-info-category-answers' => 'एक छोटी "स्टार वार्स" या "टीवी शो" जैसे विवरण जोड़ें.',
+	'autocreatewiki-info-email-address' => 'अपना ईमेल पता कभी नहीं Wikia पर किसी को भी दिखाया गया है।',
+	'autocreatewiki-info-blurry-word' => 'स्वचालित खाता निर्माण के खिलाफ की रक्षा में मदद करने के लिए, कृपया इस फ़ील्ड में blurry शब्द है कि आप देखें लिखें।',
+	'autocreatewiki-title-template' => '$1 विकि',
 );
 
 /** Hungarian (magyar)
@@ -1752,7 +1811,7 @@ Aztán csak menj tovább! Az emberek akkor látogatják a wikiket, ha sok olvasn
 
 Ha kérdéseid vannak, küldhetsz nekünk e-mailt a [[Special:Contact|kapcsolatfelvételi űrlap]] segítségével. Jó szórakozást!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Új wikik',
 	'newwikisstart' => 'Wikik megjelenítése a következőtől:',
 );
@@ -1868,7 +1927,7 @@ E postea simplemente continua! Un wiki attractive ha multe cosas a leger e regua
 
 Si tu ha questiones, invia nos e-mail per nostre [[Special:Contact|formulario de contacto]]. Bon divertimento!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Nove wikis',
 	'newwikisstart' => 'Monstrar wikis a partir de:',
 );
@@ -1989,7 +2048,7 @@ Dan kemudian teruskan! Orang-orang senang mengunjungi wiki ketika ada banyak hal
 
 Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Contact|formulir]]. Selamat bersenang-senang! 
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Wiki baru',
 	'newwikisstart' => 'Tampilkan wiki diawali dengan:',
 );
@@ -2254,7 +2313,7 @@ $3
 
 もし質問がありましたら、[[Special:Contact|連絡フォーム]]からメールをお使いください。では、楽しんでください！
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => '新しいウィキ',
 	'newwikisstart' => '次の文字列から始まるウィキを表示:',
 );
@@ -2605,7 +2664,7 @@ $3
 Со возбуда му посакуваме добредојде на викито „{{subst:SITENAME}}“, кое сега е дел од заедницата на Викија! Сепак, има многу што да се прави, па затоа еве некои корисни совети и врски што ќе ве наведат на добар почеток:
 *Не знаете каде да почнете? Навратете на [[w:c:community:Admin_Central:Main_Page|Центарот на основачи и администратори]] и погледајте го [[w:c:community:Blog:Wikia_Founders_&_Admins|Блогот]] за да добиете совети како да го започнете викито и како да почнете да го развивате! *Посетете го [[w:c:community:main page|Центарот на заедницата]] за да се запознаете со другите преку [[w:c:community:Special:Chat|разговорот во живо]], дознајте за новите функции, најновите збиднувања и престојните можности на [[w:c:community:Blog:Wikia_Staff_Blog|Блогот за персоналот]]. *Проследете ја [[w:c:community:Webinars|серијата „Вебинар“]] -- каде можете да се пријавите за да општите и соработувате со персоналот на Викија, но и да ги прегледате изминатите седници *Исто така не заборавајте да ги погледате [[Special:WikiFeatures|Викифункциите]] за да дознаете кои функции ќе можете да ги ставите на вашето вики! *Истражете ги [[w:c:community:Admin_Central:Forum|форумите]] на Центарот за основачи и администратори за да видите што прашуваат другите администратори. *На крај, посетете ги  [[w:c:community:Help:Contents|страниците за помош]] на кои ќе најдете одговори на сите поедини прашања.
 Сите горенаведени врски се одлични места што ве воведуваат во Викија. Ако некаде заглавите или не можете да најдете одговор на некое прашање -- тогаш обратете ни се [[Special:Contact|тука]]. Но, најважно од сè - забавувајте се! :)
-Пријатно уредување!',
+Пријатно уредување!', # Fuzzy
 	'autocreatewiki-welcometalk' => "== Добредојдовте! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Здраво \$1 -- баш ни е драго што го имаме викито '''\$4''' како дел од заедницата на Викија!
 
@@ -2619,7 +2678,7 @@ $3
 
 Ако имате било какви прашања, обратете ни се по е-пошта преку вашиот [[Special:Contact|контактен образец]]. Забавувајте се!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Нови викија',
 	'newwikisstart' => 'Прикажи викија со почеток во:',
 );
@@ -2760,7 +2819,7 @@ Dengan sukacitanya kami mengalu-alukan {{subst:SITENAME}} untuk menyertai komun
 *Jelajahi [[w:c:community:Admin_Central:Forum|forum-forum]] kami di Founder and Admin Central untuk meninjau pertanyaan pentadbir-pentadbir wiki yang lain. 
 *Akhir sekali, lawati halaman-halaman [[w:c:community:Help:Contents|Bantuan]] kami untuk menjawab sebarang soalan yang ingin anda ajukan.
 Kesemua pautan di atas merupakan permulaan yang terbaik untuk menjelajahi Wikia. Jika anda menemui kebuntuan atau hendak mengajukan soalan yang anda tidak tercari jawapannya -- sila hubungi kami di [[Special:Contact|sini]]. Penting sekali, berseronoklah! ^_^
-Selamat menyunting!',
+Selamat menyunting!', # Fuzzy
 	'autocreatewiki-welcometalk' => "== Selamat datang! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Apa khabar \$1! Kami berbangga kerana '''\$4''' menyertai komuniti Wikia!
 
@@ -2774,7 +2833,7 @@ Selepas ini, teruskan sahaja! Orang ramai gemar mengunjungi wiki yang padat deng
 
 Jika anda ada apa-apa masalah, anda boleh memberitahu kami dengan mengisi [[Special:Contact|borang pertanyaan]] kami. Semoga anda berseronok!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Wiki baru',
 	'newwikisstart' => 'Paparkan wiki bermula dengan:',
 );
@@ -2897,7 +2956,7 @@ Vi er stolte over å ha {{subst:SITENAME}} som en del av Wikia-fellesskapet! Det
 *Sørg for å sjekke ut [[Special:WikiFeatures|Wiki-funksjoner]] for å se hva slags funksjoner du kan aktivere på wikien din! *Utforsk [[w:c:community:Admin_Central:Forum|forumet vårt]] på Grunnlegger- og Admin-sentralen for å se hva andre wiki-administratorer lurer på.
 *Til slutt, besøk [[w:c:community:Help:Contents|hjelpesidene våre]] for å få svar på de spesifikke spørsmålene du måtte ha.
 Alle lenkene ovenfor er gode steder å begynne å utforske Wikia på. Hvis du setter deg fast eller har spørsmål du ikke finner svar på -- vennligst kontakt oss [[Special:Contact|her]]. Men viktigst av alt, ha det gøy! :)
-Gledelig redigering!',
+Gledelig redigering!', # Fuzzy
 	'autocreatewiki-welcometalk' => "== Velkommen! == 
 <div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet! 
 
@@ -2911,7 +2970,7 @@ Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese 
 
 Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Contact|kontaktskjema]]. Ha det gøy!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Nye wikier',
 	'newwikisstart' => 'Vis wikier fra og med:',
 );
@@ -3024,17 +3083,14 @@ ___________________________________________
 * Wilt u minder berichten van ons ontvangen? U kunt hier uitschrijven of uw e-mailvoorjeuren wijzigen: http://community.wikia.com/Special:Preferences",
 	'autocreatewiki-welcometalk-wall-title' => 'Welkom!',
 	'autocreatewiki-welcometalk-wall' => "Hallo!
-We zijn blij dat {{subst:SITENAME}} nu onderdeel is van de Wikiagemeenschap. Er is nog veel te doen, dus hier zijn wat handige tips om uw wiki verder te helpen:
-* Weet u niet zeker waar u moet beginnen? Ga naar [[w:c:community:Admin_Central:Main_Page|De hub voor Oprichters en beheerders]] en neem vooral ook een kijkje op de [[w:c:community:Blog:Wikia_Founders_&_Admins|Blog]] voor tips over hoe u uw wiki een vlotte start kunt geven en kunt laten groeien.
-* Maak in de [[w:c:community:Special:Chat|chat]] van [[w:c:community:main page|Community Central]] nieuwe vrienden en leer over nieuwe functies en nieuws van Wikia op de  [[w:c:community:Blog:Wikia_Staff_Blog|Stafblog]].
-* Neem deel aan een van onze [[w:c:community:Webinars|webinars]] -- waar u kunt inschrijven voor interactieve sessies met onze medewerkers en reeds gehouden sessies (nog een keer) kunt bekijken.
-* Neem zeker ook een kijkje op [[Special:WikiFeatures|Wikifuncties]] om te kijken welke functies u voor uw wiki in kunt schakelen.
-* Ga op ontdekkingstocht op de [[w:c:community:Admin_Central:Forum|forums]] op de Hub voor Oprichters en Beheerders om de ontdekken wat andere wikibeheerders vragen.
-* Tenslotte kunt u onze [[w:c:community:Help:Contents|Hulppagina's]] bekijken om snel vragen beantwoord te krijgen waar u mee zit.
+We zijn blij dat {{subst:SITENAME}} nu onderdeel is van de Wikiagemeenschap.
 
-Alle bovenstaande koppelingen zijn een prima plaats om te beginnen met het verkennen van Wikia. Als u vast komt te zitten, of een antwoord niet kunt vinden, [[Special:Contact|neem dan alstublieft contact met ons op]]. En het meest belangrijke: maak plezier!
+Er is nog veel te doen, dus hier zijn wat handige tips om uw wiki verder te helpen:
+* Neem een kijkje op [[Special:WikiFeatures|Wikifuncties]] om te zien welke functies u voor uw wiki in kunt schakelen, waaronder chat, speldjes en nog veel meer.
+* Ga langs bij [[w:c:community|Community Central]] om op de hoogte te blijven via onze [[w:c:community:Blog:Wikia_Staff_Blog|medewerkersblog]], stel vragen op ons [[w:c:community:Special:Forum|gemeenschapsforum]], neem deel aan onze [[w:c:community:Help:Webinars|webinars]] of chat live met mede-Wikianen.
+* Tenslotte kunt u onze [[Help:Contents|Hulppagina's]] bekijken om alle ins en outs van Wikia te leren kennen.
 
-Veel plezier met bewerken!",
+Alle bovenstaande koppelingen zijn een prima plaats om te beginnen met het verkennen van Wikia. Veel plezier!",
 	'autocreatewiki-welcometalk' => "== Welkom! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hallo \$1. We zijn erg blij dat '''\$4''' onderdeel is geworden van de Wikiagemeenschap!
 
@@ -3048,7 +3104,7 @@ En daarna vooral volhouden! De wiki's waar veel te lezen en te zien is zijn het 
 
 Als u vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]]. Veel plezier!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => "Nieuwe wiki's",
 	'newwikisstart' => "Wiki's weergeven vanaf:",
 );
@@ -3096,7 +3152,7 @@ En daarna vooral volhouden! De wiki's waar veel te lezen en te zien is zijn het 
 
 Als je vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]]. Veel plezier!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 );
 
 /** Pälzisch (Pälzisch)
@@ -3257,7 +3313,7 @@ ___________________________________________
 
 Jeśli masz problem, [[Special:Contact|skontaktuj się z nami]] lub zajrzyj na [http://spolecznosc.wikia.com/wiki/Centrum_Społeczności Centrum Społeczności] -- chętnie pomożemy!
 
-Powodzenia!<div style=\"display:none\">[[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]], [[w:c:community:Blog:Wikia_Founders_&_Admins|Blog]], [[w:c:community:main page|Community Central]], [[w:c:community:Special:Chat|chat]], [[w:c:community:Blog:Wikia_Staff_Blog|Staff Blog]], [[w:c:community:Webinars|webinar series]], [[Special:WikiFeatures|Wiki Features]], [[w:c:community:Admin_Central:Forum|forums]], [[w:c:community:Help:Contents|Help Pages]]</div>",
+Powodzenia!<div style=\"display:none\">[[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]], [[w:c:community:Blog:Wikia_Founders_&_Admins|Blog]], [[w:c:community:main page|Community Central]], [[w:c:community:Special:Chat|chat]], [[w:c:community:Blog:Wikia_Staff_Blog|Staff Blog]], [[w:c:community:Webinars|webinar series]], [[Special:WikiFeatures|Wiki Features]], [[w:c:community:Admin_Central:Forum|forums]], [[w:c:community:Help:Contents|Help Pages]]</div>", # Fuzzy
 	'autocreatewiki-welcometalk' => "== Witaj! ==
 <div style=\"font-size:120%; line-height:1.4em;\">Witaj \$1 -- Gratulujemy rozpoczęcia edycji '''\$4'''! Jest to zupełnie nowy projekt, więc potrzebuje sporego zaangażowania. Oto kilka wskazówek na dobry początek.
 
@@ -3281,7 +3337,7 @@ Jeśli masz problem, [[Special:Contact|skontaktuj się z nami]] lub zajrzyj na [
 
 Powodzenia!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Nowe wiki',
 	'newwikisstart' => 'Wyświetl wiki rozpoczynając od:',
 );
@@ -3396,7 +3452,7 @@ I soma content d'avèj {{subst:SITENAME}} com part ëd la Comunità Wikia! A-i �
 *Ch'a esplora nòstre [[w:c:community:Admin_Central:Forum|piasse ëd discussion]] dzora a la Sentral dj'Aministrator e dij Fondator për vëdde lòn che d'àutri aministrator ëd wiki a ciamo.
 *E a la fin, ch'a vìsita nòstre [[w:c:community:Help:Contents|pàgine d'agiut]] për dle rispòste a qualsëssìaa chestion specìfica ch'a peula avèj.
 Tute le liure sì-dzora a son dij gran bej pòst për ancaminé a esploré Wikia. Se a l'é blocà o a l'ha na chestion dont a treuva nen la rispòsta -- për piasì, ch'an contata [[Special:Contact|ambelessì]]. Ma dzortut, ch'as amusa! :)
-Bon-e modìfiche!",
+Bon-e modìfiche!", # Fuzzy
 	'autocreatewiki-welcometalk' => "== Bin ëvnù! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Cerea \$1 -- noi i soma content d'avèj '''\$4''' com part ëd la comunità Wikia!
 
@@ -3410,7 +3466,7 @@ E peui ch'a la cudissa! A le përson-e a-i pias visité le wiki quand ch'a-i é 
 
 S'a l'ha ëd chestion, a peul mandeje për pòsta eletrònica a nòstr [[Special:Contact|formolari ëd contat]]. Tant boneur!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'neuve wiki',
 	'newwikisstart' => 'Visualisa Wiki partend da:',
 );
@@ -3446,11 +3502,13 @@ $messages['ps'] = array(
 	'autocreatewiki-congratulation' => 'مبارک مو شه!',
 	'autocreatewiki-welcometalk-log' => 'د ښه راغلاست پيغام',
 	'autocreatewiki-welcomesubject' => '$1 جوړ شو!',
+	'autocreatewiki-welcometalk-wall-title' => 'ښه راغلۍ!',
 	'newwikis' => 'نوې ويکي ګانې',
 );
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Pttraduc
  * @author SandroHc
  * @author Waldir
  */
@@ -3551,6 +3609,7 @@ A Equipa da Comunidade Wikia
 
 ___________________________________________
 * Você quer receber menos mensagens nossas? Você pode remover a subscrição ou alterar as suas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences',
+	'autocreatewiki-welcometalk-wall-title' => 'Bem-vindo!',
 	'autocreatewiki-welcometalk' => "== Bem-vindo(a)! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Olá \$1 -- é óptimo poder contar com a '''\$4''' na comunidade Wikia!
 
@@ -3564,7 +3623,7 @@ Depois é só continuar! As pessoas gostam de visitar wikis com muito conteúdo 
 
 Se tiver alguma questão, pode contactar-nos por correio electrónico usando o [[Special:Contact|formulário de contacto]]. Divirta-se!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Wikis novas',
 	'newwikisstart' => 'Mostrar wikis, começando por:',
 );
@@ -3683,7 +3742,7 @@ Estamos felizes em ter {{subst:SITENAME}} como parte da comunidade Wikia! Ainda 
 *Explore nossos [[w:c:community:Admin_Central:Forum|fórums]] na Central do Fundador e Administrador para ver o que os outros admins de wikis perguntam.
 *E por último, visite nossas [[w:c:community:Help:Contents|Páginas de Ajuda]] para responder qualquer dúvida específica que você deva ter.
 Todos os links acima são bons lugares para começar explorando a Wikia. Se você se perder ou ter alguma dúvida que você não consiga achar a resposta -- por favor, contate-nos [[Special:Contact|aqui]]. Mas o mais importante, divirta-se! :)
-Boa edição!',
+Boa edição!', # Fuzzy
 	'autocreatewiki-welcometalk' => "== Boas-vindas! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Olá \$1 -- nós estamos felizes por ter '''\$4''' como parte da comunidade do Wikia!
 
@@ -3697,7 +3756,7 @@ Então, apenas continue editando! As pessoas gostam de visitar wikis quando há 
 
 Se você tiver alguma dúvida, você pode nos contatar através do nosso [[Special:Contact|formulário de contato]]. Divirta-se!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Novas wikis',
 	'newwikisstart' => 'Mostrar Wikis começando com:',
 );
@@ -3898,7 +3957,7 @@ ___________________________________________
 
 Если у вас есть вопросы, вы можете написать нам через [[Special:Contact|контактную форму]]. Удачи!
 
-— [[User:\$2|\$3]] <staff /></div>",
+— [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Новые вики',
 	'newwikisstart' => 'Показать вики, начиная с:',
 );
@@ -4070,7 +4129,7 @@ Vi är glada att ha {{subst:SITENAME}} som en del av Wikias gemenskap! Det finns
 *Utforska våra [[w:c:community:Admin_Central:Forum|forum]] på Grundar- och administratörscentralen för att se vad andra wiki-administratörer frågar. 
 *Slutligen, besök våra [[w:c:community:Help:Contents|Hjälpsidor]] för att besvara några specifika frågor du kanske har.
 Alla ovanstående länkar är perfekta platser att starta utforska Wikia. Om du fastnar eller har en fråga som du inte kan hitta svaret till -- var god kontakta oss [[Special:Contact|här]]. Men framförallt, ha kul! :)
-Ha det så kul med redigeringen!',
+Ha det så kul med redigeringen!', # Fuzzy
 	'autocreatewiki-welcometalk' => "== Välkommen! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hej \$1 -- vi är glada över att ha '''\$4''' som en del av Wikia-gemenskapen!
 
@@ -4084,7 +4143,7 @@ Och sedan är det bara att fortsätta! Människor gillar att besöka wikis där 
 
 Om du har några frågor kan du alltid skicka ett e-post till oss via vårt [[Special:Contact|kontaktformulär]]. Ha så kul!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Nya wikis',
 	'newwikisstart' => 'Visa wikis som börjar med:',
 );
@@ -4245,7 +4304,7 @@ At pagkaraan ay magpatuloy lamang nang magpatuloy! Ang mga tao ay mahihilig duma
 
 Kung mayroong kang mga katanungan, mapapadalhan mo kami ng e-liham sa pamamagitan ng aming [[Special:Contact|pormularyo ng pakikipag-ugnayan]]. Magsaya ka!
 
--- [[User:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Bagong mga wiki',
 	'newwikisstart' => 'Ipakita ang mga wiki na nagsisimula sa:',
 );
@@ -4419,7 +4478,7 @@ ___________________________________________
 
 Әгәр сорауларыгыз була икән, сез [[Special:Contact|элемтәгә]] чыга аласыз. Уңышлар!
 
-— [[User:\$2|\$3]] <staff /></div>",
+— [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Яңа викилар',
 );
 
@@ -4551,7 +4610,7 @@ $messages['uk'] = array(
 
 А далі просто рухайтесь вперед! Звернутися до розробників можна  [[Special:Contact|тут]]. Успіхів!
 
-— [[User:\$2|\$3]] <staff /></div>",
+— [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Нові вікі',
 	'newwikisstart' => 'Показати вікі, починаючи з:',
 );

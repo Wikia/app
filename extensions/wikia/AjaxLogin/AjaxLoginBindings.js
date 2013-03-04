@@ -117,9 +117,15 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 	});
 	return true;
 }
-//Open image place holder if pass in get
-$(function(){
-	if ((typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
+
+//Attach DOM-Ready handlers (only if the extensions is loaded)
+if (window.wgComboAjaxLogin) {
+	$(function() {
+
+		$('.ajaxLogin').click(openLogin);
+		$('.ajaxRegister').click(openRegister);
+
+		//Open image place holder if pass in get
 		if (wgUserName !== null) {
 			if (window.location.href.indexOf("placeholder=") > 0) {
 				element = window.location.href.split("placeholder=")[1].split("&")[0];
@@ -128,101 +134,85 @@ $(function(){
 				}
 			}
 		}
-	}
-});
 
-//Attach DOM-Ready handlers
-$(function() {
+		if ( wgUserName === null) {
+			$(".wikiaPlaceholder .wikia-button").
+				removeAttr("onclick").
+				click(function(e){
+					if( e.target.nodeName == "SPAN" ){
+						showComboAjaxForPlaceHolder($(e.target.parentNode).attr('id'),true);
+					}
+					else
+					{
+						showComboAjaxForPlaceHolder($(e.target).attr('id'),true);
+					}
+					return false;
+				});
 
-	$('.ajaxLogin').click(openLogin);
-	$('.ajaxRegister').click(openRegister);
+			var editpromptable = $("#ca-viewsource").add("#te-editanon").add('.loginToEditProtectedPage').add(".upphotoslogin");
 
-	if ( wgUserName === null && window.wgComboAjaxLogin ) {
-		$(".wikiaPlaceholder .wikia-button").removeAttr("onclick");
-		$(".wikiaPlaceholder .wikia-button").click(function(e){
-			if( e.target.nodeName == "SPAN" ){
-				showComboAjaxForPlaceHolder($(e.target.parentNode).attr('id'),true);
-			}
-			else
-			{
-				showComboAjaxForPlaceHolder($(e.target).attr('id'),true);
-			}
-			return false;
-		});
-
-		var editpromptable = $("#ca-viewsource").add("#te-editanon").add('.loginToEditProtectedPage').add(".upphotoslogin");
-
-		// add .editsection on wikis with anon editing disabled
-		if ( (typeof wgDisableAnonymousEditig !== 'undefined') && (wgDisableAnonymousEditig) ) {
-			editpromptable = editpromptable.add(".editsection");
-		}
-
-		editpromptable.click(function(e){
-			// message handling
-			var message = true; // base 'login required for this action'
-			if ($(e.target).is(".loginToEditProtectedPage")) {
-				message = 'protected';
-			} else if ($(e.target).is(".upphotoslogin")) {
-				message = 'reload';
+			// add .editsection on wikis with anon editing disabled
+			if (window.wgDisableAnonymousEditig) {
+				editpromptable = editpromptable.add(".editsection");
 			}
 
-			showComboAjaxForPlaceHolder(false, "", function(){
-				AjaxLogin.doSuccess = function() {
-					if(message == 'protected'){
-						AjaxLogin.doReload('action=edit');
-					} else if(message == 'reload') {
-						AjaxLogin.doReload('');
-					} else {
-						var target = $(e.target);
-						if( target.is('a') ){
-							window.location.href = target.attr('href');
+			editpromptable.click(function(e){
+				// message handling
+				var message = true; // base 'login required for this action'
+				if ($(e.target).is(".loginToEditProtectedPage")) {
+					message = 'protected';
+				} else if ($(e.target).is(".upphotoslogin")) {
+					message = 'reload';
+				}
+
+				showComboAjaxForPlaceHolder(false, "", function(){
+					AjaxLogin.doSuccess = function() {
+						if(message == 'protected'){
+							AjaxLogin.doReload('action=edit');
+						} else if(message == 'reload') {
+							AjaxLogin.doReload('');
 						} else {
-							/* fogbugz BugId: 20320 */
-							if(target.parent().is('a')) {
-								window.location.href = target.parent().attr('href');
+							var target = $(e.target);
+							if( target.is('a') ){
+								window.location.href = target.attr('href');
 							} else {
-								window.location.href = target.closest('nav').find('a').attr('href');
+								/* fogbugz BugId: 20320 */
+								if(target.parent().is('a')) {
+									window.location.href = target.parent().attr('href');
+								} else {
+									window.location.href = target.closest('nav').find('a').attr('href');
+								}
 							}
 						}
 					}
-				}
-			}, false, message); // show the 'login required for this action' message.
-			return false;
-		});
+				}, false, message); // show the 'login required for this action' message.
+				return false;
+			});
 
-		 $(".wikiaComboAjaxLogin").click(function(e){
-			showComboAjaxForPlaceHolder(false, "", function(){
-				AjaxLogin.doSuccess = function() {
-					CreatePage.openDialog(e, null);
+			 $(".wikiaComboAjaxLogin").click(function(e){
+				showComboAjaxForPlaceHolder(false, "", function(){
+					AjaxLogin.doSuccess = function() {
+						CreatePage.openDialog(e, null);
+					}
+				});
+				return false;
+			});
+
+			//FB#8523
+			$('.require-login').click(function(e) {
+				$().log('login required for this action');
+				// element, isPlaceholder, callback, showRegisterTabFirst, showLoginRequiredMessage
+				if (showComboAjaxForPlaceHolder('', false, function() {
+					AjaxLogin.doSuccess = function() {
+						var href = $(e.target).attr('href');
+						if (href) {
+							window.location.href = href;
+						}
+					};
+				}, false, true)) {
+					e.preventDefault();
 				}
 			});
-			return false;
-		});
-
-		//FB#8523
-		$('.require-login').click(function(e) {
-			$().log('login required for this action');
-			// element, isPlaceholder, callback, showRegisterTabFirst, showLoginRequiredMessage
-			if (showComboAjaxForPlaceHolder('', false, function() {
-				AjaxLogin.doSuccess = function() {
-					var href = $(e.target).attr('href');
-					if (href) {
-						window.location.href = href;
-					}
-				};
-			}, false, true)) {
-				e.preventDefault();
-			}
-		});
-	}
-
-	// macbre: store selector of node to be clicked when page is reloaded (BugId:15911)
-	var clickAfterLogin = $.storage.get('AjaxLoginClickAfterLogin');
-
-	if (typeof clickAfterLogin == 'string') {
-		$().log('clicking ' + clickAfterLogin, 'AjaxLogin');
-		$(clickAfterLogin).click();
-
-		$.storage.del('AjaxLoginClickAfterLogin');
-	}
-});
+		}
+	});
+}

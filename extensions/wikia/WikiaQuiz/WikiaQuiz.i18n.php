@@ -69,6 +69,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author LWChris
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'wikiaquiz-desc' => '{{desc}}',
@@ -84,13 +85,17 @@ $messages['qqq'] = array(
 	'wikiaquiz-moreinfolinks-label' => 'Form Label for More Info Links.',
 	'wikiaquiz-moreinfoarticle-label' => 'Form Label for More info Article.',
 	'wikiaquiz-moreinfolinktext-label' => 'Form Label for More info Link Text.',
-	'wikiaquiz-question-label' => 'Form Label for Question.',
+	'wikiaquiz-question-label' => 'Form Label for Question.
+{{Identical|Question}}',
 	'wikiaquiz-image-label' => 'Form Label for Image.',
 	'wikiaquiz-explanation-label' => 'Form Label for Answer Explanation.',
 	'wikiaquiz-quiz-label' => 'Form Label for Quiz.',
-	'wikiaquiz-questions-label' => 'Form Label for Questions.',
-	'wikiaquiz-answers-label' => 'Form Label for Answers.',
-	'wikiaquiz-answer-label' => 'Form Label for Answer.',
+	'wikiaquiz-questions-label' => 'Form Label for Questions.
+{{Identical|Question}}',
+	'wikiaquiz-answers-label' => 'Form Label for Answers.
+{{Identical|Answer}}',
+	'wikiaquiz-answer-label' => 'Form Label for Answer.
+{{Identical|Answer}}',
 	'wikiaquiz-correct-label' => 'Form Label for Correct.',
 	'wikiaquiz-addnewitem-label' => 'Special Page text next to button for a new item to a quiz.',
 	'wikiaquiz-cancel-label' => 'Cancel button label.',
@@ -102,9 +107,11 @@ $messages['qqq'] = array(
 	'wikiaquiz-error-missing-answers' => 'Error message when no answer given.',
 	'wikiaquiz-error-invalid-correct-answer' => 'Error message when no correct answer given.',
 	'wikiaquiz-error-invalid-article-with-details' => 'Error message when article is invalid, with details.',
+	'wikiaquiz-game-start-button' => '{{Identical|Start game}}',
 	'wikiaquiz-game-cadence-3' => 'First part of "Ready - Set - Go!" (sports countdown)',
 	'wikiaquiz-game-cadence-2' => 'Second part of "Ready - Set - Go!" (sports countdown)',
 	'wikiaquiz-game-cadence-1' => 'Third part of "Ready - Set - Go!" (sports countdown)',
+	'wikiaquiz-game-continue-button' => '{{Identical|Continue}}',
 	'wikiaquiz-game-thanks' => '$1 is the name of wiki main page',
 	'wikiaquiz-game-email-token-mismatch' => "Shown when hidden token (to prevent hijacking) sent to the backend doesn't match the one stored in user's session",
 	'wikiaquiz-game-email-subject' => 'Subject of an email sent to the user when quiz is completed',
@@ -276,6 +283,26 @@ $messages['cs'] = array(
 	'wikiaquiz-game-thanks' => 'Díky za hru!',
 	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
 	'wikiaquiz-game-email-subject' => 'Děkujeme za vložení.',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'wikiaquiz-createquiz-headline' => 'Llunio Cwis',
+	'wikiaquiz-editquiz-headline' => 'Golygu Cwis',
+	'wikiaquiz-createquizarticle-headline' => 'Llunio Cwestiynau ac Atebion Cwis',
+	'wikiaquiz-editquizarticle-headline' => 'Golygu Cwestiynau ac Atebion Cwis',
+	'wikiaquiz-title-label' => 'Teitl',
+	'wikiaquiz-moreinfoarticle-label' => 'Erthygl',
+	'wikiaquiz-quiz-label' => 'Cwis',
+	'wikiaquiz-questions-label' => 'Cwestiynau',
+	'wikiaquiz-answers-label' => 'Atebion',
+	'wikiaquiz-answer-label' => 'Ateb',
+	'wikiaquiz-cancel-label' => 'Diddymu',
+	'wikiaquiz-game-next-button' => 'Cwestiwn Nesaf',
+	'wikiaquiz-game-email-placeholder' => 'eichenw@eichebost.com',
 );
 
 /** German (Deutsch)

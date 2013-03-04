@@ -309,6 +309,14 @@ $messages['cs'] = array(
 	'scavengerhunt-label-clue-size' => 'Velikost písma',
 );
 
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'scavengerhunt-list-edit' => 'golygu',
+	'scavengerhunt-label-name' => 'Enw:',
+);
+
 /** German (Deutsch)
  * @author George Animal
  * @author LWChris
@@ -1988,10 +1996,13 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'scavengerhunt-list-header-name' => 'د لوبې نوم',
+	'scavengerhunt-list-header-actions' => 'چارې',
 	'scavengerhunt-list-enabled' => 'چارنول',
 	'scavengerhunt-list-disabled' => 'ناچارنول',
 	'scavengerhunt-list-edit' => 'سمول',
 	'scavengerhunt-label-name' => 'نوم:',
+	'scavengerhunt-button-add' => 'يو نوم ورګډول',
 	'scavengerhunt-button-save' => 'خوندي کول',
 	'scavengerhunt-button-disable' => 'ناچارنول',
 	'scavengerhunt-button-enable' => 'چارنول',

@@ -125,6 +125,7 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Lloffiwr
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -133,10 +134,12 @@ $messages['qqq'] = array(
 	'swm-label-preview' => '{{Identical|Preview}}',
 	'swm-label-edit' => '{{Identical|Edit}}',
 	'swm-label-remove' => '{{Identical|Remove}}',
-	'swm-label-sent' => 'Page title after message is sent out.',
+	'swm-label-sent' => 'Page title after message is sent out.
+{{Identical|Sent}}',
 	'swm-label-list' => 'List is a noun here.
 
 {{Identical|List}}',
+	'swm-label-recipient-wikis' => '{{Identical|Wiki}}',
 	'swm-label-recipient-users' => '{{Identical|User}}',
 	'swm-label-mode-wikis-wiki-multi' => 'Option to select if user wants to send message to users on a list of wikis.',
 	'swm-label-mode-wikis-wiki-multi-hint' => 'Message explaining the format of the list of wikis.',
@@ -150,6 +153,7 @@ $messages['qqq'] = array(
 	'swm-button-new' => '{{Identical|New}}',
 	'swm-msg-sent-task' => 'Message to display when a task is created in order to send a message. $1 is a link to the created task.',
 	'swm-expire-info' => '',
+	'swm-list-table-wiki' => '{{Identical|Wiki}}',
 	'swm-list-table-group' => '{{Identical|Group}}',
 	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.',
 	'swm-list-table-content' => '{{Identical|Content}}',
@@ -2377,6 +2381,7 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'swm-label-preview' => 'مخليدنه',
 	'swm-label-edit' => 'سمول',
+	'swm-label-remove' => 'غورځول',
 	'swm-label-sent' => 'ولېږل شو',
 	'swm-label-list' => 'لړليک',
 	'swm-label-recipient-wikis' => 'ويکي ګانې',
@@ -2409,6 +2414,7 @@ $messages['ps'] = array(
 	'swm-mode-users-registration-after' => 'وروسته',
 	'swm-mode-users-registration-before' => 'دمخه',
 	'swm-mode-users-registration-between' => 'تر منځ',
+	'swm-mode-users-editcount-more' => 'نور',
 	'swm-mode-users-editcount-between' => 'تر منځ',
 	'swm-mode-wikis-created-after' => 'وروسته',
 	'swm-mode-wikis-created-before' => 'دمخه',

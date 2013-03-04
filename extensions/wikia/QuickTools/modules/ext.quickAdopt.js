@@ -5,8 +5,8 @@
  *
  * @author Grunny
  */
-/*global jQuery, mediaWiki, window*/
-( function( $, mw ) {
+/*global jQuery, mediaWiki*/
+( function( $, mw, window ) {
 	'use strict';
 
 	var QuickAdopt = {
@@ -14,12 +14,21 @@
 		init: function() {
 			var $adoptLink = $( '#contentSub' ).find( '#quicktools-adopt-link' );
 			if ( $adoptLink.length ) {
-				$adoptLink.click( QuickAdopt.adoptWiki );
+				$adoptLink.click( function () {
+					$.confirm( {
+						title: mw.msg( 'quicktools-adopt-confirm-title' ),
+						content: mw.msg( 'quicktools-adopt-confirm' ),
+						cancelMsg: mw.msg( 'quicktools-adopt-confirm-cancel' ),
+						okMsg: mw.msg( 'quicktools-adopt-confirm-ok' ),
+						width: 400,
+						onOk: $.proxy( QuickAdopt.adoptWiki, this )
+					} );
+				} );
 			}
 		},
 
-		adoptWiki: function( e ) {
-			var	userName = $( e.target ).attr( 'data-username' );
+		adoptWiki: function() {
+			var userName = $( this ).attr( 'data-username' );
 			$.getJSON( mw.util.wikiScript( 'api' ), {
 				action: 'query',
 				list: 'users',
@@ -27,7 +36,7 @@
 				ustoken: 'userrights',
 				format: 'json'
 			} ).done( function ( data ) {
-				var	urToken = data.query.users[0].userrightstoken;
+				var urToken = data.query.users[0].userrightstoken;
 				QuickAdopt.grantRights( userName, urToken );
 			} );
 		},
@@ -74,4 +83,4 @@
 
 	$( QuickAdopt.init );
 
-}( jQuery, mediaWiki ) );
+}( jQuery, mediaWiki, this ) );

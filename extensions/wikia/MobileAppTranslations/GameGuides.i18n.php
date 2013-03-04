@@ -126,6 +126,14 @@ $messages['cs'] = array(
 	'error-no-connection' => 'Připojení k Internetu není k dispozici. \\nProsím, opakujte akci.',
 );
 
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'window-category-load-batch' => 'Mwy',
+	'alert-download-updated-wikis-button-ok' => 'Iawn',
+);
+
 /** German (Deutsch)
  * @author Inkowik
  * @author Kghbln
@@ -712,10 +720,11 @@ $messages['tly'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Base
  * @author Steve.rusyn
  */
 $messages['uk'] = array(
-	'activityindicator-message' => 'Завантаження...',
+	'activityindicator-message' => 'Завантаження…',
 	'window-category-load-batch' => 'Більше',
 	'window-article-button-close' => 'Закрити',
 	'window-article-button-back' => 'Назад',

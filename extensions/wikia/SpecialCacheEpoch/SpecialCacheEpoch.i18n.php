@@ -333,3 +333,18 @@ $messages['vi'] = array(
 	'cacheepoch-wf-reason' => 'Cập nhật giá trị thông qua Special:CacheEpoch',
 	'cacheepoch-no-wf' => 'WikiFactory không được kích hoạt trên wiki này. Không thể thay đổi lưu trữ bộ đệm.',
 );
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Yfdyh000
+ */
+$messages['zh-hans'] = array(
+	'cacheepoch-desc' => '为更改每个wiki的wgCacheEpoch提供一个接口',
+	'cacheepoch' => 'Cache Epoch接口',
+	'cacheepoch-header' => '增加wgCacheEpoch',
+	'cacheepoch-value' => 'wgCacheEpoch的当前值是“$1”。按下按钮将其设置为当前的时间戳。',
+	'cacheepoch-submit' => '更新该值',
+	'cacheepoch-updated' => 'wgCacheEpoch已更新为“$1”',
+	'cacheepoch-not-updated' => '更新wgCacheEpoch失败。',
+	'cacheepoch-wf-reason' => '通过 Special:CacheEpoch 更新数值',
+	'cacheepoch-no-wf' => 'WikiFactory在此wiki上未启用。无法更改wgCacheEpoch。',
+);

@@ -61,9 +61,11 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author SPQRobin
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'app-tab-sotd' => 'SotD = Song of the Day',
+	'app-async-error-title' => '{{Identical|Oops}}',
 );
 
 /** Arabic (العربية)
@@ -198,6 +200,14 @@ $messages['cs'] = array(
 	'ringtone-matcher-by-song' => 'Nechte si zaslat vyzvánění %s na váš mobil',
 );
 
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'app-async-error-title' => 'Ŵps!',
+	'app-nonetwork-dialog-close-button' => 'Iawn',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
@@ -289,7 +299,7 @@ $messages['es'] = array(
 	'about-heading-licensing' => 'Copyrights',
 	'about-licensing-0' => 'Esta aplicación es 100% legal. A través de Gracenote se pagan las correspondientes regalías a los titulares de los derechos de las canciones - al igual que en la web de LyricWiki.',
 	'about-heading-feedback' => 'Sugerencias',
-	'about-feedback-0' => '¿Quiere darnos su opinión acerca de la aplicación? Envíenos un email: %s',
+	'about-feedback-0' => '¿Quieres darnos tu opinión sobre la aplicación? Envíanos un correo electrónico a: %s',
 	'about-heading-rate' => '¡Por favor, valore esta aplicación!',
 	'about-rate-0-android' => 'Si le gusta esta aplicación, por favor ¡dale 5 estrellas en el Android Market!',
 	'about-rate-0-ios' => '¡Si te gusta esta aplicación, por favor valórala con 5 estrellas en la Tienda de Aplicaciones!',
@@ -953,6 +963,23 @@ $messages['pt-br'] = array(
 	'about-heading-tips' => 'Procurando',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'app-loading' => 'Stoche a careche…',
+	'app-tab-search' => 'Cirche',
+	'app-tab-about' => 'Sus a',
+	'app-tab-browse' => 'A..Z',
+	'app-async-error-title' => 'Ohhhhh!',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Veje!',
+	'login-username-hint' => 'Nome utende',
+	'login-password-hint' => 'Passuord',
+	'login-submit-button' => 'Tràse',
+	'about-credits' => 'da %s',
+);
+
 /** Russian (русский)
  * @author Byulent
  * @author DCamer
@@ -1136,7 +1163,7 @@ $messages['tr'] = array(
  * @author Steve.rusyn
  */
 $messages['uk'] = array(
-	'app-loading' => 'Завантаження...',
+	'app-loading' => 'Завантаження…',
 	'app-tab-search' => 'Пошук',
 	'app-tab-about' => 'Про програму',
 	'app-tab-browse' => 'A..Z',

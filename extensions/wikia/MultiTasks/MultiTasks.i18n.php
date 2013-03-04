@@ -132,6 +132,7 @@ $messages['qqq'] = array(
 * $1 is a number of pages.',
 	'action-multiwikiedit' => '{{doc-action|multiwikiedit}}',
 	'multidelete_button' => '{{Identical|Delete}}',
+	'multidelete_select_all' => '{{Identical|Select all}}',
 	'multidelete_reason' => '{{Identical|Reason for deletion}}',
 	'multidelete_success_subtitle' => '{{Identical|For $1}}',
 	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks. 
@@ -522,6 +523,17 @@ $messages['cs'] = array(
 	'multiwikienterpagename' => 'Zadejte název stránky:',
 	'multiwikirecords' => 'nalezeno $1 wiki', # Fuzzy
 	'action-multiwikifinder' => 'hledat konkrétní název na Wikii',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'multiwikiedit_caption' => 'Rhestr tudalennau',
+	'multiwikiedit_list_caption' => 'Rhestr wicïau',
+	'multiwikiedit_select_yourself' => 'chi',
+	'multidelete_button' => 'DILEU',
 );
 
 /** German (Deutsch)
@@ -2417,7 +2429,10 @@ $messages['ps'] = array(
 	'multidelete_this_wiki' => 'همدا ويکي',
 	'multidelete_all_wikis' => 'ټولې ويکي ګانې',
 	'multidelete_selected_wikis' => 'ټاکلې ويکي ګانې',
+	'multidelete_success_subtitle' => 'د $1 لپاره',
 	'multidelete_brazilian_portuguese_wikis' => 'ټولې برازيلۍ پارتوګالي ويکي ګانې',
+	'multidelete_hebrew_wikis' => 'ټولې عبري ويکي ګانې',
+	'multidelete_chinese_wikis' => 'ټولې چينايي ويکي ګانې',
 	'multidelete_german_wikis' => 'ټولې جرمنۍ ويکي ګانې',
 	'multiwikifindpagenames' => 'د مخ نوم موندل',
 );

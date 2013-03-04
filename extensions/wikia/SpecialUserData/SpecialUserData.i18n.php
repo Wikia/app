@@ -357,12 +357,19 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'userdata' => '获取用户档案',
 	'userdata-userid-label' => '提供用户ID：',
 	'userdata-submit' => '获取数据',
+	'specialuserdata-desc' => '为更改每个wiki的wgUserData提供一个接口',
+	'userdata-header' => '增加wgUserData',
+	'userdata-value' => 'wgUserData的当前值是“$1”。按下按钮将其设置为当前的时间戳。',
+	'userdata-updated' => 'wgUserData已更新为“$1”。',
 	'userdata-not-updated' => '更新wgUserData失败',
+	'userdata-wf-reason' => '通过 [[Special:UserData|UserData]] 更新值',
+	'userdata-no-wf' => 'WikiFactory在此wiki上未启用。无法更改wgUserData。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

@@ -138,6 +138,18 @@ $messages['it'] = array(
 	'minieditor-placeholder-reply' => 'Rispondi qui al messaggio',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'minieditor-specialpage-title' => 'MiniEditor Demo Page',
+	'minieditor-new-heading' => 'Peyama nû binivîse',
+	'minieditor-placeholder-new' => 'Peyama me li vir binivîse',
+	'minieditor-message-edit' => 'Ev peyameke heye',
+	'minieditor-reply' => 'Bersiv bide',
+	'minieditor-placeholder-reply' => 'Peyamê li vir bibersivîne',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -303,11 +315,13 @@ $messages['uk'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
-	'minieditor-new-heading' => '创造新信息',
-	'minieditor-placeholder-new' => '在此输入您的信息',
-	'minieditor-message-edit' => '该信息已存在',
+	'minieditor-specialpage-title' => '迷你编辑器演示页面',
+	'minieditor-new-heading' => '创建新消息',
+	'minieditor-placeholder-new' => '在此输入您的消息',
+	'minieditor-message-edit' => '该消息已存在',
 	'minieditor-reply' => '回复',
-	'minieditor-placeholder-reply' => '在这里答复信息',
+	'minieditor-placeholder-reply' => '在这里回复消息',
 );

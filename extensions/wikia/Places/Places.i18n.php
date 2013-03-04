@@ -467,6 +467,7 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'places-editor-search' => 'پلټل',
+	'places-geolocation-modal-error-title' => 'تېروتنه',
 );
 
 /** Portuguese (português)
@@ -637,11 +638,16 @@ $messages['wa'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'places' => '本维基上的地点',
+	'places-desc' => '提供<nowiki><place>和<places></nowiki>解析器钩，以供有地理标记的页面和[[Special:Places|所有有标记的页面的地图]]',
 	'places-in-category' => '$1 分类的放置',
+	'places-on-map' => '在此地图有{{PLURAL:$1|$1个地方|$1个地方}}',
+	'places-modal-go-to-special' => '显示了{{PLURAL:$1|$1个地方|$1个地方}}（[[Special:Places|观看所有]]）',
 	'places-toolbar-button-tooltip' => '点击以在此页上添加地理标签',
+	'places-toolbar-button-address' => '请为此页提供一个作为地理标志的地址',
 	'places-editor-search' => '搜索',
 	'places-editor-title-create-new' => '添加地理标签',
 	'places-editor-title-edit' => '编辑地理标签',
@@ -650,6 +656,8 @@ $messages['zh-hans'] = array(
 	'places-geolocation-button-label' => '添加位置',
 	'places-geolocation-modal-add-title' => '添加位置',
 	'places-geolocation-modal-error-title' => '错误',
+	'places-geolocation-modal-error' => '尝试测定您的位置时出错：<br />$1',
+	'places-geolocation-modal-not-available' => '此功能目前仅可用于移动设备。<br /><br />想试试它？只需换用您的移动设备访问此页面。',
 	'places-error-no-article' => '您必须指定一个页面',
 	'places-error-place-already-exists' => '此页已有地理标签',
 	'places-updated-geolocation' => '已在此页添加地理标签',

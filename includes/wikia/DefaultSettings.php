@@ -158,6 +158,7 @@ $app->registerApiController( 'NavigationApiController', "{$IP}/includes/wikia/ap
 $app->registerApiController( 'ArticlesApiController', "{$IP}/includes/wikia/api/ArticlesApiController.class.php" );
 $app->registerApiController( 'StatsApiController', "{$IP}/includes/wikia/api/StatsApiController.class.php" );
 $app->registerApiController( 'WikiaHubsApiController', "{$IP}/includes/wikia/api/WikiaHubsApiController.class.php" );
+$app->registerApiController( 'RelatedPagesApiController', "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php" );
 
 //Wikia Api exceptions classes
 $app->registerClass( 'BadRequestApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
@@ -271,6 +272,7 @@ $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.cl
 $wgAutoloadClasses['ImagesService'] = $IP . '/includes/wikia/services/ImagesService.class.php';
 $wgAutoloadClasses['WikiService'] = $IP . '/includes/wikia/services/WikiService.class.php';
 $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMartService.class.php';
+$wgAutoloadClasses['WAMService'] = $IP . '/includes/wikia/services/WAMService.class.php';
 $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 $wgAutoloadClasses['SassService']  =  $IP.'/includes/wikia/services/SassService.php';
 $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';

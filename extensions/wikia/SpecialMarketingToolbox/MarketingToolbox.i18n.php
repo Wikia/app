@@ -115,6 +115,7 @@ $messages['en'] = array(
 	'marketing-toolbox-module-publish-error-read-only' => "We're in read-only mode at this moment. The hub page cannot be published. Please, try again later.",
 	'marketing-toolbox-module-publish-error-modules-not-saved' => 'There are unsaved modules. Please check their content, save them and try publish hub page again.',
 	'marketing-toolbox-module-publish-error-db-error' => 'A database error occured. The hub pages has not been published.',
+	'marketing-toolbox-module-publish-success' => 'Hub page published for $1',
 
 	'marketing-toolbox-validator-string-short' => 'Your text is too short, please write more',
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',

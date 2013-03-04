@@ -195,6 +195,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
 					. '/' . $date->format('Y-m-d');
+				$this->successText = $this->wf->msg('marketing-toolbox-module-publish-success', $this->wg->lang->date($this->date));
 			} else {
 				$this->errorMsg = $result->errorMsg;
 			}
@@ -377,7 +378,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$videoInfo = $response->getVal('videoInfo');
 		$fileName = $videoInfo[0]->getText();
 
-		$this->videoData = $this->toolboxModel->getVideoData($fileName);
+		$this->videoData = $this->toolboxModel->getVideoData(
+			$fileName,
+			$this->toolboxModel->getThumbnailSize()
+		);
 		$this->videoFileName = $fileName;
 		$this->videoUrl = $url;
 	}

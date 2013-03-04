@@ -32,6 +32,8 @@ $app->registerClass('WikiaHubsV2Article', $dir . 'models/WikiaHubsV2Article.clas
 $app->registerClass('WikiaHubsV2Model', $dir . 'models/WikiaHubsV2Model.class.php');
 $app->registerClass('WikiaHubsV2HooksModel', $dir . 'models/WikiaHubsV2HooksModel.class.php');
 
+$app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
+
 $app->registerClass('WikiaHubsV2Module', $dir . 'models/modules/WikiaHubsV2Module.class.php');
 $app->registerClass('WikiaHubsV2PulseModule', $dir . 'models/modules/WikiaHubsV2PulseModule.class.php');
 $app->registerClass('WikiaHubsV2SliderModule', $dir . 'models/modules/WikiaHubsV2SliderModule.class.php');
@@ -54,7 +56,8 @@ $app->registerClass('MysqlWikiaHubsV2SliderModuleDataProvider', $dir . 'models/d
 $app->registerSpecialPage('WikiaHubsV2', 'SpecialWikiaHubsV2Controller');
 
 // i18n mapping
-$wgExtensionMessagesFiles['WikiaHubsV2'] = $dir . 'WikiaHubsV2.i18n.php';
+$app->registerExtensionMessageFile('WikiaHubsV2', $dir.'WikiaHubsV2.i18n.php');
+F::build('JSMessages')->registerPackage('WikiaHubsV2', array('wikiahubs-suggest-article-success'));
 
 // hooks
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsV2Mobile', 'onWikiaMobileAssetsPackages');

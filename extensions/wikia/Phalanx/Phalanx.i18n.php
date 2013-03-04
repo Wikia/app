@@ -140,8 +140,10 @@ $messages['qqq'] = array(
 	'phalanx-add-block' => 'This message is used as a button label (like "Save", "Show preview" and "Show changes" in <code>action=edit</code>). Clicking on the button adds a new block to the Phalanx database. ([[Thread:Support/About_Wikia:Phalanx-add-block/fi/reply|documentation]] by [[User:Jack Phoenix|Jack Phoenix]])',
 	'phalanx-label-filter' => '{{Identical|Filter}}',
 	'phalanx-label-type' => '{{Identical|Type}}',
+	'phalanx-test-submit' => '{{Identical|Test}}',
 	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
 	'phalanx-stats-table-language' => '{{Identical|Language}}',
+	'phalanx-stats-table-text' => '{{Identical|Text}}',
 	'phalanx-stats-row' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is the URL of a wiki, $4 is a time and date',
 	'phalanx-stats-row-per-wiki' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is a filter ID, $4 is the URL of a wiki, $4 is a time and date, $5 is a link to stats for that filter ID',
 	'action-phalanx' => '{{doc-action|phalanx}}',
@@ -244,6 +246,15 @@ $messages['cs'] = array(
 	'phalanx-stats-table-wiki-id' => 'ID wiki',
 	'phalanx-stats-table-wiki-name' => 'Název wiki',
 	'phalanx-stats-table-wiki-url' => 'Adresa URL wiki',
+);
+
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'phalanx-type-user' => 'defnyddiwr',
+	'phalanx-type-user-email' => 'e-bost',
+	'phalanx-label-lang' => 'Iaith:',
 );
 
 /** German (Deutsch)
@@ -1952,6 +1963,7 @@ $messages['ps'] = array(
 	'phalanx-test-submit' => 'آزمېښت',
 	'phalanx-test-results-legend' => 'آزمېښت پايلې',
 	'phalanx-stats-table-create' => 'جوړ شو',
+	'phalanx-stats-table-exact' => 'کټ مټ',
 	'phalanx-stats-table-language' => 'ژبه',
 	'phalanx-stats-table-text' => 'متن',
 	'phalanx-stats-table-reason' => 'سبب',
@@ -2604,10 +2616,17 @@ $messages['uk'] = array(
  * @author Hydra
  * @author Reasno
  * @author Xiaomingyan
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'phalanx-desc' => 'Phalanx是一个集成化的垃圾信息防御机制',
+	'phalanx' => 'Phalanx',
+	'phalanx-title' => 'Phalanx - 集成化垃圾信息防御机制',
+	'phalanx-type-content' => '页面内容',
+	'phalanx-type-summary' => '页面摘要',
 	'phalanx-type-title' => '页面标题',
 	'phalanx-type-user' => '用户',
+	'phalanx-type-user-email' => '电子邮件',
 	'phalanx-type-answers-question-title' => '问题标题',
 	'phalanx-type-answers-recent-questions' => '最新问题',
 	'phalanx-label-reason' => '原因：',

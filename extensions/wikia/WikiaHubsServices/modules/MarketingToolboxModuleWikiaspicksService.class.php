@@ -69,7 +69,6 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 						'wrong' => 'marketing-toolbox-validator-wrong-url'
 					)
 				),
-				'icon' => true,
 				'attributes' => array(
 					'class' => 'wikiaUrl'
 				)
@@ -106,6 +105,15 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 		}
 		
 		return parent::filterData($data);
+	}
+	
+	public function render($data) {
+		if( !empty($data['sponsoredImageAlt']) ) {
+		//sponsoredImageAlt === image file title -> can be used in Title::newFromTitle() to create Title instance
+			$data['sponsoredImageMarkup'] = $this->getSponsoredImageMarkup($data['sponsoredImageAlt']);
+		}
+		
+		return parent::render($data);
 	}
 
 	public function getStructuredData($data) {

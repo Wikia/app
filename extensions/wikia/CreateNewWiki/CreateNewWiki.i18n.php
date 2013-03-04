@@ -92,12 +92,13 @@ $messages['qqq'] = array(
 {{Identical|Next}}',
 	'cnw-back' => 'Text for "Back" Button
 {{Identical|Back}}',
-	'cnw-or' => 'Division for login or Facebook login',
+	'cnw-or' => 'Division for login or Facebook login.
+{{Identical|Or}}',
 	'cnw-title' => 'General Title for this feature',
 	'cnw-name-wiki-headline' => 'H1 for this step',
 	'cnw-name-wiki-creative' => 'Creative or instruction for this step following H1',
 	'cnw-name-wiki-label' => 'Label for wiki name field',
-	'cnw-name-wiki-wiki' => '"Wiki"',
+	'cnw-name-wiki-wiki' => '{{Identical|Wiki}}',
 	'cnw-name-wiki-domain-label' => 'Label for wiki domain field',
 	'cnw-name-wiki-submit-error' => 'Error message to display when the there are errors in the fields',
 	'cnw-login' => 'Text for "Log In" Button',
@@ -446,6 +447,18 @@ $messages['cs'] = array(
 	'cnw-theme-headline' => 'Zvolte téma',
 	'cnw-error-wiki-limit-header' => 'Dosažen limit Wiki',
 	'cnw-error-blocked-header' => 'Účet zablokován',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'cnw-title' => 'Dechrau wici newydd',
+	'cnw-name-wiki-headline' => 'Dechrau wici',
+	'cnw-auth-facebook-login' => 'Mewngofnodi gyda Facebook',
+	'cnw-userauth-creative' => 'Mewngofnodi',
+	'cnw-desc-lang' => 'Iaith',
 );
 
 /** German (Deutsch)
@@ -2060,7 +2073,7 @@ $messages['ru'] = array(
 	'cnw-userauth-headline' => 'Есть аккаунт?',
 	'cnw-userauth-creative' => 'Войти',
 	'cnw-userauth-marketing-heading' => 'Нет аккаунта?',
-	'cnw-userauth-marketing-body' => 'Вам необходим аккаунт для создания вики на Викия.   Всего минута  на регистрацию!', # Fuzzy
+	'cnw-userauth-marketing-body' => 'Вам необходим аккаунт для создания вики на Викия. Всего минута на регистрацию!',
 	'cnw-userauth-signup-button' => 'Регистрация',
 	'cnw-desc-headline' => 'О чём будет ваша вики?',
 	'cnw-desc-creative' => 'Опишите вашу тему',

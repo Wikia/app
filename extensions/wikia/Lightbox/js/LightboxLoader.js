@@ -233,7 +233,7 @@ var LightboxLoader = {
 				type:		'GET',
 				format: 'html',
 				data: {
-					lightboxVersion: 6, // update this when we change the template Lightbox_lightboxModalContent.php
+					lightboxVersion: window.wgStyleVersion,
 					userLang: window.wgUserLanguage // just in case user changes language prefs
  				},
 				callback: function(html) {
@@ -404,12 +404,12 @@ LightboxTracker = {
 };
 
 $(function() {
-	if (!window.wgEnableLightboxExt || window.wikiaPageIsHub) {
+	//TODO: remove || statement (leave only !window.wgEnableLightboxExt) once WikiaHubsV2 is released and WikiaHubs extension is removed
+	if (!window.wgEnableLightboxExt || (window.wikiaPageIsHub && !window.isWikiaHubsV2Page) ) {
 		return;
 	}
 
 	LightboxLoader.init();
-
 	LightboxLoader.loadFromURL();
 });
 

@@ -8,7 +8,12 @@
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 //classes
-$app->registerClass('WikiFeaturesSpecialController', $dir . 'WikiFeaturesSpecialController.class.php');
+$app->registerController(
+	'WikiFeaturesSpecialController',
+	$dir . 'WikiFeaturesSpecialController.class.php',
+	array( 'index' => array( "skin" => array( "monobook", "wikiamobile" ), "method" => "notOasis") )
+);
+
 $app->registerClass('WikiFeaturesHelper', $dir . 'WikiFeaturesHelper.class.php');
 $app->registerClass('WikiaLabsSpecialController', $dir . 'WikiaLabsSpecialController.class.php');
 

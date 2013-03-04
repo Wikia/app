@@ -13,13 +13,51 @@
 class WikiaDispatcher {
 
 	const DEFAULT_METHOD_NAME = 'index';
+	private $routes = array();
 
 	/**
-	 * @param WikiaRequest $request
-	 * @return mixed
+	 * @param WikiaApp $app
+	 * @param WikiaResponse $response
+	 * @param string $className Full class name (with Controller/Service suffix)
+	 * @param string $methodName Base method name from requeset
+	 * @return mixed $callStack if post-controller routing is involved, otherwise false
 	 */
-	protected function getMethodName( WikiaRequest $request ) {
-		return $request->getVal( 'method', self::DEFAULT_METHOD_NAME );
+	protected function applyRouting( WikiaApp $app, WikiaResponse $response, $className, $methodName ) {
+
+		// Starting with requested or default method name which is passed in by dispatch
+		$response->setControllerName( $className );
+		$response->setMethodName( $methodName );
+		$callNext = array();
+
+		// Check to see if we have a defined route for this controller to another controller
+		if ( isset( $this->routes[$className]["*"])) {
+			$route = $this->routes[$className]["*"];
+		}
+		// Check for method overrides
+		else if ( isset( $this->routes[$className][$methodName] ) ) {
+			$route = $this->routes[$className][$methodName];
+		} else {
+			return false;
+		}
+
+		// skin routing, also allows possibility to override template
+		if ( isset( $route['skin'] ) && $app->checkSkin( $route['skin']) ) {
+			if ( isset( $route['controller'] ) ) $response->setControllerName( $route['controller'] );
+			if ( isset( $route['method'] ) ) $response->setMethodName( $route['method'] );
+			if ( isset( $route['template'] ) ) $response->getView()->setTemplate( $className, $route['template'] );
+			if ( isset( $route['after'] ) ) $callNext = $route['after'];
+		}
+		// global var routing should probably only be for controllers and methods
+		if (isset( $route['global'] ) && isset( $app->wg->$route['global'] ) ) {
+			if ( isset( $route['controller'] ) ) $response->setControllerName( $route['controller'] );
+			if ( isset( $route['method'] ) ) $response->setMethodName( $route['method'] );
+			if ( isset( $route['after'] ) ) $callNext = $route['after'];
+		}
+		return $callNext;
+	}
+
+	public function addRouting( $className, array $routes ) {
+		$this->routes[$className] = $routes;
 	}
 
 	/**
@@ -35,21 +73,29 @@ class WikiaDispatcher {
 			throw new WikiaException( "wgAutoloadClasses is empty, cannot dispatch Request" );
 		}
 		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
-		$response = F::build( 'WikiaResponse', array( 'format' => $format, 'request' => $request ) );
-		if ( $app->wg->EnableSkinTemplateOverride && $app->isSkinInitialized() ) {
-			$response->setSkinName( $app->wg->User->getSkin()->getSkinName() );
-		}
+		$response = new WikiaResponse( $format, $request );
+		$controller = null;
 
 		// Main dispatch is a loop because Controllers can forward to each other
-		// Error condition is also handled via dispatching to the error controller
+		// Error condition is also handled via forwarding to the error controller
 		do {
-			$request->setDispatched(true);
+			// First time through the loop we skip this section
+			// If we got through the dispatch loop and have a nextCall, then call it.
+			// Request and Response are re-used, Response data can be optionally reset
+			if ( $controller && $controller->hasNext() ) {
+				$nextCall = $controller->getNext();
+				$request->setVal( 'controller', $nextCall['controller'] );
+				$request->setVal( 'method', $nextCall['method'] );
+				if ( $nextCall['reset'] ) $response->resetData();
+			}
 
 			try {
-				$method = $this->getMethodName( $request );
 
 				// Determine the "base" name for the controller, stripping off Controller/Service/Module
 				$controllerName = $app->getBaseName( $request->getVal( 'controller' ) );
+				if( empty( $controllerName ) ) {
+					throw new WikiaException( "Controller parameter missing or invalid: {$controllerName}" );
+				}
 
 				// Service classes must be dispatched by full name otherwise we look for a controller.
 				if ($app->isService($request->getVal('controller'))) {
@@ -58,32 +104,39 @@ class WikiaDispatcher {
 					$controllerClassName = $app->getControllerClassName( $controllerName );
 				}
 
-				$profilename = __METHOD__ . " ({$controllerName}_{$method})";
-
-				if( empty( $controllerName ) ) {
-					throw new WikiaException( "Invalid controller name: {$controllerName}" );
-				}
-
 				if ( empty( $autoloadClasses[$controllerClassName] ) ) {
-					throw new WikiaException( "Controller class does not exist: {$controllerClassName} method: {$method}" );
+					throw new WikiaException( "Controller class does not exist: {$controllerClassName}" );
 				}
 
-				$app->wf->profileIn($profilename);
-				$response->setControllerName( $controllerClassName );
-				$response->setMethodName( $method );
+				// Determine the final name for the controller and method based on any routing rules
+				$callNext = $this->applyRouting( $app, $response, $controllerClassName, $request->getVal( 'method', self::DEFAULT_METHOD_NAME ) );
+				$controllerClassName = $response->getControllerName();		// might have been changed
+				$controllerName = $app->getBaseName($controllerClassName);  // chop off Service/Controller
+				$method = $response->getMethodName();						// might have been changed
 
+				$profilename = __METHOD__ . " ({$controllerClassName}_{$method})";
+				$app->wf->profileIn($profilename);
+
+				// TODO: remove F::build here after removing client calls to addClassConstructor
 				$controller = F::build( $controllerClassName ); /* @var $controller WikiaController */
 
+				if ( $callNext ) {
+					list ($nextController, $nextMethod, $resetData) = explode("::", $callNext);
+					$controller->forward($nextController, $nextMethod, $resetData);
+				}
 				// map X to executeX method names for things that used to be modules
 				if (!method_exists($controller, $method)) {
 					$method = ucfirst( $method );
 					// This will throw an exception if the template is missing
 					// Refactor the offending class to not use executeXYZ methods or set format in request params
+					// Warning: this means you can't use the new Dispatcher routing to switch templates in modules
 					if ($format == WikiaResponse::FORMAT_HTML) {
 						$response->getView()->setTemplate( $controllerName, $method );
 					}
 					$method = "execute{$method}";
 					$params = $request->getParams();  // old modules expect params in a different place
+				} else {
+					$params = array();
 				}
 
 				if (
@@ -120,19 +173,13 @@ class WikiaDispatcher {
 				$controller->setApp( $app );
 				$controller->init();
 
-				// BugId:5125 - keep old hooks naming convention
-				$hookMethod = ucfirst( $this->getMethodName( $request ) );
-
-				$hookResult = $app->runHook( ( "{$controllerName}{$hookMethod}BeforeExecute" ), array( &$controller, &$params ) );
-
-				if ( $hookResult ) {
-					$result = $controller->$method( $params );
-
-					if($result === false) {
-						// skip template rendering when false returned
-						$controller->skipRendering();
-					}
+				// Actually call the controller::method!
+				$result = $controller->$method( $params );
+				if($result === false) {
+				   // skip template rendering when false returned
+				   $controller->skipRendering();
 				}
+
 				// Preserve original request (this is for SpecialPageControllers)
 				if ($originalRequest != null) {
 					$controller->setRequest($originalRequest);
@@ -141,7 +188,8 @@ class WikiaDispatcher {
 					$controller->setResponse($originalResponse);
 				}
 
-				// we ignore the result of the AfterExecute hook
+				// keep the AfterExecute hooks for now, refactor later using "after" dispatching
+				$hookMethod = ucfirst( $method );
 				$app->runHook( ( "{$controllerName}{$hookMethod}AfterExecute" ), array( &$controller, &$params ) );
 
 				$app->wf->profileOut($profilename);
@@ -175,16 +223,15 @@ class WikiaDispatcher {
 				$response->setException($e);
 				Wikia::log(__METHOD__, $e->getMessage() );
 
-				// if we catch an exception, redirect to the WikiaError controller
-				if ( $controllerClassName != 'WikiaErrorController' && $method != 'error' ) {
-					$response->getView()->setTemplatePath( null );
-					$request->setVal( 'controller', 'WikiaError' );
-					$request->setVal( 'method', 'error' );
-					$request->setDispatched( false );
+				// if we catch an exception, forward to the WikiaError controller unless we are already dispatching Error
+				if ( empty($controllerClassName) || $controllerClassName != 'WikiaErrorController' ) {
+					$controller = new WikiaErrorController();
+					$controller->forward('WikiaError', 'error', false);  // keep params for error controller
+					$response->getView()->setTemplatePath( null );  	// response is re-used so skip the original template
 				}
 			}
 
-		} while ( !$request->isDispatched() );
+		} while ( $controller && $controller->hasNext() );
 
 		if ( $request->isInternal() && $response->hasException() ) {
 			Wikia::logBacktrace(__METHOD__ . '::exception');

@@ -99,6 +99,14 @@ $messages['cs'] = array(
 	'browser-loading-message' => 'Načítá se…',
 );
 
+/** Welsh (Cymraeg)
+ * @author Thefartydoctor
+ */
+$messages['cy'] = array(
+	'main-tab-personal' => 'Fy Wikia i',
+	'tab-discover-no-network-dialog-close-button' => 'Iawn',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
  */
@@ -253,6 +261,15 @@ $messages['it'] = array(
  */
 $messages['khw'] = array(
 	'main-tab-offline' => 'آف لاین',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'main-tab-search' => 'Lêgerîn',
+	'tab-discover-no-network-dialog-close-button' => 'Temam',
+	'tab-search-loading-message' => 'Lê digere...',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -505,11 +522,11 @@ $messages['ug-arab'] = array(
 $messages['uk'] = array(
 	'main-tab-search' => 'Пошук',
 	'main-tab-offline' => 'Офлайн',
-	'tab-discover-loading-message' => 'Завантаження...',
+	'tab-discover-loading-message' => 'Завантаження…',
 	'tab-discover-no-network-dialog-title' => 'Мережа недоступна',
 	'tab-discover-no-network-dialog-close-button' => 'Гаразд',
 	'tab-search-loading-message' => 'Пошук...',
-	'browser-loading-message' => 'Завантаження...',
+	'browser-loading-message' => 'Завантаження…',
 );
 
 /** Simplified Chinese (中文（简体）‎)

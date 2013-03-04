@@ -132,7 +132,8 @@ class CreateWiki {
 				'pagelinks',
 				'revision',
 				'templatelinks',
-				'text'
+				'text',
+				'wikia_user_properties'
 			),
 			"answers" => array(
 				'user_profile'
@@ -155,6 +156,7 @@ class CreateWiki {
 			//wall history table
 			"{$this->mIP}/extensions/wikia/Wall/sql/wall_history_local.sql",
 			"{$this->mIP}/extensions/wikia/VideoHandlers/sql/video_info.sql",
+			"{$this->mIP}/maintenance/wikia/wikia_user_properties.sql",
 		);
 
 		/**

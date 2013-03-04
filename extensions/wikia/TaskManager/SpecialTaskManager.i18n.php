@@ -447,3 +447,16 @@ $messages['uk'] = array(
 	'taskmanager_tasklist' => 'Повернутися до списку завдань',
 	'taskmanager-invert' => 'Інвертувати виділення',
 );
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Yfdyh000
+ */
+$messages['zh-hans'] = array(
+	'taskmanager' => '显示和管理后台任务',
+	'taskmanager_title' => '显示和管理后台任务',
+	'taskmanager_tasklist' => '返回任务列表',
+	'right-taskmanager' => '可以显示后台任务',
+	'right-taskmanager-action' => '可以管理后台任务',
+	'taskmanager-invert' => '反向选择',
+	'action-taskmanager' => '显示和管理后台任务',
+);

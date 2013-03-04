@@ -170,7 +170,7 @@ $messages['qqq'] = array(
 	'wikifactory-label-eznamespace' => '{{Optional}}',
 	'right-wikifactory' => '{{doc-right|wikifactory|ns=Wikia}}',
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
-	'closewiki-nbr-wiki' => '',
+	'closewiki-nbr-wiki' => 'Number of wikis. $1 represents a numeric value',
 	'closewiki-unknown' => '{{Identical|Unknown}}',
 	'wikifactory-public-status-change-default-reason' => 'WikiFactory is a staff tool that allows Wikia to manage per-wiki settings across their network. The "public status" setting determines whether a wiki is available for users or closed and assigned for removal. Staff members usually justify a change of the status of a wiki by filling in the "Reason" field in the form. If no reason is provided, the wikifactory-public-status-change-default-reason is used automatically so it can be deduced where the change had been requested from.',
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',
@@ -1228,6 +1228,7 @@ $messages['csb'] = array(
 
 /** Welsh (Cymraeg)
  * @author Lloffiwr
+ * @author Thefartydoctor
  */
 $messages['cy'] = array(
 	'wf_city_url' => 'Cyfeiriad',
@@ -1236,12 +1237,14 @@ $messages['cy'] = array(
 	'wf_city_public' => 'Cyflwr',
 	'wf_city_lang' => 'Iaith',
 	'wf_cc_name' => 'Categori',
+	'wikifactory-label-info' => 'Gwybodaeth',
 	'wikifactory-label-variables' => 'Newidynnau',
 	'wikifactory-label-variables2' => 'Cyffredinol',
 	'wikifactory-label-return' => "Yn ôl i'r rhestr",
 	'wikifactory-label-actions' => 'Gweithrediadau',
 	'wikifactory-label-close' => 'Cau',
 	'wikifactory-label-tags' => 'Tagiau',
+	'closewiki-nbr-wiki' => '$1 wici',
 	'closewiki-unknown' => 'Anhysbys',
 	'closewiki-return' => 'Yn ôl i $1',
 	'awc-metrics-wikis' => 'Arddangos wicïau',
@@ -1251,7 +1254,9 @@ $messages['cy'] = array(
 	'awc-metrics-nbr-result' => 'Canlyniadau:',
 	'awc-metrics-articles' => 'Erthyglau',
 	'awc-metrics-edits' => 'Golygiadau',
+	'awc-metrics-images' => 'Lluniau',
 	'closed-wiki' => 'Wici a gaewyd',
+	'closed-wiki-info' => "Mae'r wici hwn ar gau",
 	'closed-wiki-create-wiki' => 'Dechrau wici newydd',
 	'closed-delete-images' => "Dileu'r delweddau",
 	'closed-confirm-btn' => "Cadarnhau'r cau",
@@ -3957,6 +3962,7 @@ pàgine',
 $messages['ps'] = array(
 	'closewiki' => 'ويکي تړل',
 	'wf_city_url' => 'پته',
+	'wf_city_id' => 'پېژند',
 	'wf_city_title' => 'سرليک',
 	'wf_city_created' => 'جوړ شو',
 	'wf_city_founding_user' => 'بنسټګر',
@@ -3967,6 +3973,7 @@ $messages['ps'] = array(
 	'wikifactory-label-info' => 'مالومات',
 	'wikifactory-label-variables2' => 'ټولګړی',
 	'wikifactory-label-domains' => 'شپولونه',
+	'wikifactory-label-actions' => 'کړنې',
 	'wikifactory-label-google' => 'د ګووګل اوزار',
 	'wikifactory-label-close' => 'تړل',
 	'wikifactory-label-compare' => 'پرتلل',
@@ -3992,6 +3999,7 @@ $messages['ps'] = array(
 	'awc-metrics-by-email' => ' يا (د کارن برېښليک):',
 	'awc-metrics-nbr-result' => 'پايلې:',
 	'awc-metrics-articles' => 'ليکنې',
+	'awc-metrics-articles-per-day' => 'ليکنې<br />(د ورځې منځوۍ کچه)',
 	'awc-metrics-edits' => 'سمونونه',
 	'awc-metrics-images' => 'انځورونه',
 	'awc-metrics-pageviews' => 'د مخ<br />ليدنې',
@@ -4350,6 +4358,21 @@ $messages['ro'] = array(
 	'closed-redirect-url' => 'Redirecţionează adresa',
 	'closed-redirect-alert' => 'Vă rugăm puneţi noua adresă de redirecţionare!',
 	'closed-reason' => 'Motivul:',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'closewiki' => "Achiude 'a uicchi",
+	'wf_city_url' => 'Indirizze',
+	'wf_city_id' => 'id',
+	'wf_city_title' => 'Titole',
+	'wf_city_created' => 'Ccrejate',
+	'wf_city_lang' => 'Lènghe',
+	'wf_cc_name' => 'Categorije',
+	'wikifactory-label-variables2' => 'Generale',
+	'wikifactory-label-close' => 'Achiude',
 );
 
 /** Russian (русский)
@@ -5144,16 +5167,45 @@ $messages['yi'] = array(
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'wikifactorypagetitle' => 'Wiki出厂配置',
+	'wikifactory' => 'Wiki出厂配置',
 	'closewiki' => '关闭维基',
+	'wf_city_url' => '地址',
 	'wf_city_id' => 'id',
 	'wf_city_title' => '标题',
+	'wf_city_founding_user' => '创始人',
+	'wf_city_founding_email' => '创始人电子邮箱',
+	'wf_city_public' => '状态',
 	'wf_city_lang' => '语言',
 	'wf_cc_name' => '分类',
+	'wikifactory_removevariable' => '从缓存中移除wiki数据',
+	'wikifactory_removeconfirm' => '已从缓存中移除wiki数据！',
+	'wikifactory-label-info' => '信息',
+	'wikifactory-label-variables' => '变量',
+	'wikifactory-label-variables2' => '常规',
+	'wikifactory-label-hubs' => '中枢',
+	'wikifactory-label-domains' => '域名',
+	'wikifactory-label-return' => '返回名单',
+	'wikifactory-label-clog' => '修改记录',
+	'wikifactory-label-actions' => '操作',
+	'wikifactory-label-google' => 'Google工具',
 	'wikifactory-label-close' => '关闭',
+	'wikifactory-label-tags' => '标签',
+	'wikifactory-label-tags2' => '标签',
+	'wikifactory-label-masstags' => '标签集',
+	'wikifactory-label-findtags' => '查找标签',
 	'wikifactory-label-compare' => '比较',
+	'right-wikifactory' => '对wiki更改内部设置',
+	'action-wikifactory' => '对wiki更改内部设置',
+	'wikifactory-domain-edit' => '编辑此URL',
+	'wikifactory-domain-remove' => '从wiki中移除此URL',
+	'wikifactory-domain-setmain' => '提交此URL到wgServer',
+	'closewiki-check-and-confirm' => '检查wiki并确认操作',
 	'closewiki-redirect-to' => '重定向至',
+	'closewiki-message' => '域名 $1',
 	'closewiki-nbr-wiki' => '$1 维基',
 	'awc-metrics-all' => '所有维基',
 	'awc-metrics-all-languages' => '所有语言',

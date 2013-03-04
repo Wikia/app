@@ -74,7 +74,6 @@
 
 						}).done(function( response ) {
 							$container.stopThrobbing();
-							$saveButton.removeAttr( 'disabled' );
 
 							// TODO: don't use alert
 							if ( response.error ) {
@@ -88,6 +87,10 @@
 								$wrapper
 									.find( '.last' )
 									.before( response.html );
+
+								$wrapper
+									.find( '.input' )
+									.val( '' );
 							}
 						});
 
