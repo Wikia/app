@@ -20,6 +20,8 @@ class WikiaHubsV2Model extends WikiaModel {
 	const SPONSORED_IMAGE_WIDTH = 91;
 	const SPONSORED_IMAGE_HEIGHT = 27;
 
+	const HUB_CANONICAL_LANG = 'en';
+
 	protected $lang;
 	protected $date;
 	protected $vertical;
@@ -659,9 +661,16 @@ No
 	}
 
 	public function getVerticalName($verticalId) {
-		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		/** @var WikiFactoryHub $wikiFactoryHub */
+		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
-		return wfMsgForContent('hub-' . $wikiaHub['name']);
+		return $this->wf->wfMessage('hub-' . $wikiaHub['name'])->inContentLanguage()->text();
+	}
+
+	public function getCanonicalVerticalName($verticalId) {
+		/** @var WikiFactoryHub $wikiFactoryHub */
+		$wikiFactoryHub = WikiFactoryHub::getInstance();
+		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
+		return $this->wf->Message('hub-' . $wikiaHub['name'])->inLanguage(self::HUB_CANONICAL_LANG)->text();
 	}
 }
