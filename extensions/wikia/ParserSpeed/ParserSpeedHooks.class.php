@@ -18,7 +18,7 @@ class ParserSpeedHooks extends WikiaObject {
 					'htmlSize' => $parserOutput->getPerformanceStats('htmlSize'),
 				);
 				$data = json_encode( $fields );
-//				WScribeClient::singleton( self::SCRIBE_KEY )->send( $data );
+				WScribeClient::singleton( self::SCRIBE_KEY )->send( $data );
 				wfDebug( 'parser speed article' . $data . "\n" );
 			}
 			catch( TException $e ) {
