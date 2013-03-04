@@ -664,7 +664,7 @@ No
 		/** @var WikiFactoryHub $wikiFactoryHub */
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
-		return $this->wf->wfMessage('hub-' . $wikiaHub['name'])->inContentLanguage()->text();
+		return $this->wf->Message('hub-' . $wikiaHub['name'])->inContentLanguage()->text();
 	}
 
 	public function getCanonicalVerticalName($verticalId) {
