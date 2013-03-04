@@ -8,6 +8,8 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	const CACHE_TTL_ITEMSCOLLECTION = 1800;//30 mins, same TTL used by CategoryExhibition
 	const CACHE_TTL_EXHIBITION = 21600;//6h
 	const EXHIBITION_ITEMS_LIMIT = 4;//maximum number of items in Category Exhibition to display
+	const CACHE_VERSION = 0;
+	const BATCH_SIZE = 25;
 
 	/**
 	 * @return Array
@@ -15,16 +17,22 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	public function getItemsCollection( Category $category, $index = NULL, $batch = NULL ){
 		$this->wf->profileIn( __METHOD__ );
 
-		$cacheKey = $this->getItemsCollectionCacheKey( $category->getID() );
-		$contents = $this->wg->memc->get( $cacheKey );
+		$contents = WikiaDataAccess::cache(
+			$this->getItemsCollectionCacheKey( $category->getID() ),
+			self::CACHE_TTL_ITEMSCOLLECTION,
+			function() use( $category ) {
+				$viewer = new WikiaMobileCategoryViewer( $category );
+				$viewer->doCategoryQuery();
 
-		if ( empty( $contents ) ) {
-			$contents = (new WikiaMobileCategoryViewer( $category ))->getContents();
-			$this->wg->memc->set( $cacheKey, $contents, self::CACHE_TTL_ITEMSCOLLECTION );
-		}
+				return [
+					'items' => $viewer->items,
+					'count' => $viewer->count
+				];
+			}
+		);
 
-		if( !empty( $index ) && is_numeric( $batch ) ) {
-			$contents = $this->wf->PaginateArray( $contents[$index], 25, $batch );
+		if( !empty( $index ) && array_key_exists( $index, $contents['items'] ) && is_numeric( $batch ) ) {
+			$contents = $this->wf->PaginateArray( $contents['items'][$index], self::BATCH_SIZE, $batch );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -76,11 +84,11 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	}
 
 	private function getItemsCollectionCacheKey( $categoryId ){
-		return $this->wf->memcKey( __CLASS__, 'ItemsCollection', $categoryId );
+		return $this->wf->memcKey( __CLASS__, 'ItemsCollection', $categoryId, self::CACHE_VERSION );
 	}
 
 	private function getExhibitionItemsCacheKey( $titleText ){
-		return $this->wf->memcKey( __CLASS__, 'Exhibition', md5( $titleText ) );
+		return $this->wf->memcKey( __CLASS__, 'Exhibition', md5( $titleText ), self::CACHE_VERSION );
 	}
 
 	public function purgeItemsCollectionCache( $categoryName ){
@@ -97,8 +105,8 @@ class WikiaMobileCategoryModel extends WikiaModel{
  *
  */
 class WikiaMobileCategoryViewer extends CategoryViewer{
-	private $items;
-	private $count;
+	public $items;
+	public $count;
 
 	function __construct( Category $category ){
 		parent::__construct( $category->getTitle(), RequestContext::getMain() );
@@ -138,20 +146,5 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 			];
 			$this->count++;
 		}
-	}
-
-	/**
-	 * Executes CategoryViewer::doCategoryQuery() and returns the contents wrapped in a DTO
-	 *
-	 * @return $ret WikiaMobileCategoryContents The contents of the category
-	 */
-	public function getContents(){
-		parent::doCategoryQuery();
-
-		$ret = $this->items;
-
-		$this->count = $this->items = null;
-
-		return $ret;
 	}
 }

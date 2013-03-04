@@ -17,7 +17,7 @@
 	</header>
 <? foreach ( $collections as $index => $collection) {
 	$batch = ( $index == $requestedIndex ) ? $requestedBatch : 1;
-	$itemsBatch = $wf->PaginateArray( $collection, 25, $batch );
+	$itemsBatch = $wf->PaginateArray( $collection, WikiaMobileCategoryModel::BATCH_SIZE, $batch );
 	$currentBatch = $itemsBatch['currentBatch'];
 	$nextBatch = $currentBatch + 1;
 	$prevBatch = $currentBatch - 1;

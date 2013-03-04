@@ -80,8 +80,8 @@ class WikiaMobileCategoryService extends WikiaService {
 			 */
 			$collections = $this->model->getItemsCollection( $category );
 
-			$this->response->setVal( 'total', count( $collections ) );
-			$this->response->setVal( 'collections', $collections );
+			$this->response->setVal( 'total', $collections['count'] );
+			$this->response->setVal( 'collections', $collections['items'] );
 			$this->response->setVal( 'requestedIndex', $this->wg->Request->getText( 'index', null ) );
 			$this->response->setVal( 'requestedBatch', $this->wg->Request->getInt( 'page', 1 ) );
 		} else {
