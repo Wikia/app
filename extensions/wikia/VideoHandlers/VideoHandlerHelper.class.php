@@ -7,30 +7,28 @@
 class VideoHandlerHelper extends WikiaModel {
 
 	/**
-	 * add video category to file page
-	 * @param string $titleText
-	 * @param User $user
-	 * @return Status|null $status
+	 * create file page by adding video category
+	 * @param Title|string $title
+	 * @param User|integer $user
+	 * @return Status|false $status
 	 */
-	public function addCategoryVideos( $titleText, $user ) {
+	public function addCategoryVideos( $title, $user, $flags = EDIT_NEW ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$status = null;
-		$title = Title::newFromText( $titleText, NS_FILE );
-		if ( $title instanceof Title ) {
+		if ( is_string($title) ) {
+			$title = Title::newFromText( $title, NS_FILE );
+		}
+
+		$status = false;
+		if ( $title instanceof Title && !$title->exists() ) {
+			if ( is_integer($user) ) {
+				$user = User::newFromId( $user );
+			}
+
 			$content = '[['.WikiaVideoPage::getVideosCategory().']]';
 
-			if ( $title->exists() ) {
-				$article = Article::newFromID( $title->getArticleID() );
-				$oldContent = $article->getContent();
-				if ( !strstr($oldContent, $content) ) {
-					$content = $oldContent.$content;
-					$status = $article->doEdit( $content, 'added video category', EDIT_UPDATE, false, $user );
-				}
-			} else {
-				$article = new Article( $title );
-				$status = $article->doEdit( $content, 'created video', EDIT_NEW, false, $user );
-			}
+			$article = new Article( $title );
+			$status = $article->doEdit( $content, 'created video', $flags, false, $user );
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );

@@ -293,11 +293,9 @@ SQL;
 
 		$affected = $this->addToDatabase();
 
-		if ( $affected ) {
-			// create file page when adding premium video to wiki
-			$user = User::newFromId( $this->addedBy );
-			$status = VideoHandlerHelper::addCategoryVideos( $this->videoTitle, $user );
-		}
+		// create file page when adding premium video to wiki
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$status = $videoHandlerHelper->addCategoryVideos( $this->videoTitle, $this->addedBy );
 
 		$this->wf->ProfileOut( __METHOD__ );
 
