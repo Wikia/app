@@ -9,12 +9,12 @@ class OoyalaVideoHandler extends VideoHandler {
 
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
 		$height = $this->getHeight($width);
-		$autoPlayStr = ( $autoplay ) ? 1 : 0;
+		$autoPlayStr = ( $autoplay && !$this->isAgeGate() ) ? 1 : 0;
 		$containerId = 'ooyalaplayer-'.$this->videoId.'-'.time();
 
 		$embed = <<<EOT
 <div id="{$containerId}" style="width:{$width}px;"></div>
-<script type="text/javascript" src="http://player.ooyala.com/player.js?embedCode={$this->videoId}&width={$width}&height={$height}&playerContainerId={$containerId}&autoplay={$autoPlayStr}"></script>
+<script type="text/javascript" src="http://player.ooyala.com/player.js?embedCode={$this->videoId}&width={$width}&height={$height}&playerContainerId={$containerId}&autoplay={$autoPlayStr}&wmode=opaque"></script>
 EOT;
 
 		return $embed;
