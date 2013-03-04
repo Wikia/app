@@ -91,13 +91,10 @@ var SuggestModalWikiaHubsV2 = {
 	},
 
 	closeModal: function (modal) {
-		require(['wikia.querystring'], function (qs){
-			if (!window.wgUserName) {
-				qs.addCb().goTo();
-			} else if (typeof(modal.closeModal) === 'function') {
-				modal.closeModal();
-			}
-		});
+		UserLogin.refreshIfAfterForceLogin();
+		if (typeof(modal.closeModal) === 'function') {
+			modal.closeModal();
+		}
 	}
 };
 
