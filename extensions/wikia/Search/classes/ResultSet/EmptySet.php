@@ -15,7 +15,7 @@ class EmptySet extends AbstractResultSet
 	 * Constructor class. Search Config is the bare minimum we need.
 	 * @param DependencyContainer $container
 	 */
-	public function configure( DependencyContainer $container )
+	protected function configure( DependencyContainer $container )
 	{
 		$this->searchConfig = $container->getConfig();
 	}

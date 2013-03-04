@@ -27,7 +27,7 @@ class Grouping extends Base
 	 * Uses DependencyContainer to pre-populate attributes, and then configures stuff.
 	 * @param DependencyContainer $container
 	 */
-	public function configure( DependencyContainer $container ) {
+	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject = $container->getResult();
 		$this->searchConfig       = $container->getConfig();
 		$this->interface          = $container->getInterface();
