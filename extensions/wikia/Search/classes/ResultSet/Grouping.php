@@ -51,10 +51,9 @@ class Grouping extends Base
 	 * Sets a bunch of headers associated with wiki info
 	 */
 	protected function configureGlobals() {
-		if (! empty( $this->results[0] ) ) {
-			$doc = $this->results[0];
-			$cityId     = $doc->getCityId();
-			
+		$doc = end( $this->results ); // there's only one
+		if (! empty( $doc ) ) {
+			$cityId     = $doc['wid'];
 			$this->setHeader( 'cityId', $cityId )
 			     ->setHeader( 'cityTitle', $this->interface->getGlobalForWiki( 'wgSitename', $cityId ) )
 			     ->setHeader( 'cityUrl', $this->interface->getGlobalForWiki( 'wgServer', $cityId ) );

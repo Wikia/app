@@ -17,7 +17,7 @@ class Wiki extends AbstractMatch
 	{
 		$fields = array(
 				'wid' => $this->id,
-				'title' => $this->interface->getGlobalForWiki( 'Sitename', $this->id ),
+				'title' => $this->interface->getGlobalForWiki( 'wgSitename', $this->id ),
 				'isWikiMatch' => true,
 				'url' => $this->interface->getMainPageUrlForWikiId( $this->id )
 				);
