@@ -62,7 +62,9 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 
 					} else {
 
-						$this->wg->memc->set( $cacheKey, $meta["og:image"] );
+						if (isset($meta["og:image"])) {
+							$this->wg->memc->set( $cacheKey, $meta["og:image"] );
+						}
 					}
 				}
 			}
