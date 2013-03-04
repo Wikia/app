@@ -917,7 +917,7 @@ class WikiaSearchQueryServiceSelectAbstractSelectTest extends WikiaSearchBaseTes
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\AbstractSelect::searchAsApi
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::searchAsApi
 	 */
 	public function testSearchAsApi() {
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
@@ -925,6 +925,27 @@ class WikiaSearchQueryServiceSelectAbstractSelectTest extends WikiaSearchBaseTes
 		                   ->setMethods( array( 'search' ) )
 		                   ->getMockForAbstractClass();
 		
+		$mockResultSet = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'toArray' ) )
+		                      ->getMock();
+		
+		$results = array( array( 'id' => '123_234', 'title' => 'foo' ) );
+		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'search' )
+		    ->will   ( $this->returnValue( $mockResultSet ) )
+		;
+		$mockResultSet
+		    ->expects( $this->once() )
+		    ->method ( 'toArray' )
+		    ->will   ( $this->returnValue( $results ) )
+		;
+		$this->assertEquals(
+				$results,
+				$mockSelect->searchAsApi()
+		);
 	}
 	
 }

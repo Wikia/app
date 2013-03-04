@@ -404,7 +404,7 @@ class WikiaSearchQueryServiceSelectInterWikiTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\OnWiki::getQueryFieldsString 
+	 * @covers Wikia\Search\QueryService\Select\InterWiki::getQueryFieldsString 
 	 */
 	public function testGetQueryFieldsString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryFieldsToBoosts' ) );

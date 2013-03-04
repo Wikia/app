@@ -96,6 +96,7 @@ abstract class AbstractSelect
 	}
 	
 	/**
+	 * Allows us to get an array from search results rather than search result objects.
 	 * @return array
 	 */
 	public function searchAsApi() {
