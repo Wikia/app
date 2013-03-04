@@ -66,8 +66,9 @@ var SuggestModalWikiaHubsV2 = {
 
 					$().log('suggestArticle modal submit');
 					form.hide();
-					successMessage.text( $.msg('wikiahubs-suggest-article-success') );
-					successMessage.show();
+					successMessage
+						.text( $.msg('wikiahubs-suggest-article-success') )
+						.show();
 				});
 	
 				modal.find('button.cancel').click(function (e) {
