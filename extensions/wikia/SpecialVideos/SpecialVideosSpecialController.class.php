@@ -29,7 +29,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		$this->wg->SupressPageSubtitle = true;
-		
+
 		// enqueue i18n message for javascript
 		F::build('JSMessages')->enqueuePackage('SpecialVideos', JSMessages::INLINE);
 
@@ -124,9 +124,9 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->sortMsg = $sortingOptions[$sort]; // selected sorting option to display in drop down
 		$this->sortingOptions = $sortingOptions; // populate the drop down
 		$this->videos = $videos;
-		
+
 		// permission checking for video removal
-		$this->isRemovalAllowed = $this->wg->User->isAllowed( 'specialvideosdelete' );
+		$this->isRemovalAllowed = ( $this->wg->User->isAllowed( 'specialvideosdelete' ) && $this->app->checkSkin( 'oasis' ) );
 	}
 }
 
