@@ -11,28 +11,20 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	const CACHE_VERSION = 0;
 	const BATCH_SIZE = 25;
 
-	/**
-	 * @return Array
-	 */
-	public function getItemsCollection( Category $category, $index = NULL, $batch = NULL ){
-		$this->wf->profileIn( __METHOD__ );
-
-		$contents = WikiaDataAccess::cache(
+	public function getCollection( Category $category ){
+		return WikiaDataAccess::cache(
 			$this->getItemsCollectionCacheKey( $category->getID() ),
 			self::CACHE_TTL_ITEMSCOLLECTION,
 			function() use( $category ) {
+				$this->wf->profileIn( __METHOD__ );
+
 				$viewer = new WikiaMobileCategoryViewer( $category );
 				$viewer->doCategoryQuery();
+
+				$this->wf->profileOut( __METHOD__ );
 				return $viewer->getData();
 			}
 		);
-
-		if( !empty( $index ) && array_key_exists( $index, $contents['items'] ) && is_numeric( $batch ) ) {
-			$contents = $this->wf->PaginateArray( $contents['items'][$index], self::BATCH_SIZE, $batch );
-		}
-
-		$this->wf->profileOut( __METHOD__ );
-		return $contents;
 	}
 
 	public function getExhibitionItems( Title $title ){

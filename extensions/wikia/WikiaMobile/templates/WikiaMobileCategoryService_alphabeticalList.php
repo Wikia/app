@@ -15,7 +15,7 @@
 			<span class=collapse><?= $wf->Message( 'wikiamobile-categories-collapse' )->inContentLanguage()->text() ;?></span>
 		</button>
 	</header>
-<? foreach ( $collections as $index => $collection) {
+<? foreach ( $collections as $index => $collection ) {
 	$batch = ( $index == $requestedIndex ) ? $requestedBatch : 1;
 	$itemsBatch = $wf->PaginateArray( $collection, WikiaMobileCategoryModel::BATCH_SIZE, $batch );
 	$currentBatch = $itemsBatch['currentBatch'];

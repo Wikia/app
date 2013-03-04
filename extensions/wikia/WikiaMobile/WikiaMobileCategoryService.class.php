@@ -74,10 +74,7 @@ class WikiaMobileCategoryService extends WikiaService {
 
 			$title = $categoryPage->getTitle();
 			$category = Category::newFromTitle( $title );
-			/**
-			 * @var $collections Array
-			 */
-			$collections = $this->model->getItemsCollection( $category );
+			$collections = $this->model->getCollection( $category );
 
 			$this->response->setVal( 'total', $collections['count'] );
 			$this->response->setVal( 'collections', $collections['items'] );
@@ -105,7 +102,11 @@ class WikiaMobileCategoryService extends WikiaService {
 			if ( $category instanceof Category ) {
 				$this->initModel();
 
-				$data = $this->model->getItemsCollection( $category, $index, $batch );
+				$data = $this->wf->PaginateArray(
+					$this->model->getCollection( $category )['items'][$index],
+					WikiaMobileCategoryModel::BATCH_SIZE,
+					$batch
+				);
 
 				if ( !empty( $data['items'] ) ) {
 					//cache response for 3 hours in varnish and browser
@@ -115,7 +116,8 @@ class WikiaMobileCategoryService extends WikiaService {
 						[
 							WikiaResponse::CACHE_TARGET_BROWSER,
 							WikiaResponse::CACHE_TARGET_VARNISH
-						]);
+						]
+					);
 					$this->response->setVal( 'itemsBatch', $data['items'] );
 				} else {
 					$err = "No Data for given index or batch";
