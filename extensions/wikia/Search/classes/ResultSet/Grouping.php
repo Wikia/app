@@ -24,10 +24,10 @@ class Grouping extends Base
 	protected $host;
 	
 	/**
-	 * Constructor, uses DependencyContainer to pre-populate attributes.
+	 * Uses DependencyContainer to pre-populate attributes, and then configures stuff.
 	 * @param DependencyContainer $container
 	 */
-	public function __construct( DependencyContainer $container ) {
+	public function configure( DependencyContainer $container ) {
 		$this->searchResultObject = $container->getResult();
 		$this->searchConfig       = $container->getConfig();
 		$this->interface          = $container->getInterface();

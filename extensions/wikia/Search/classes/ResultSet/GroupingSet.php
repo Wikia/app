@@ -13,10 +13,10 @@ use \WikiaSearchConfig;
 class GroupingSet extends Grouping
 {
 	/**
-	 * Constructor.
+	 * Configures result set.
 	 * @param DependencyContainer $container
 	 */
-	public function __construct( DependencyContainer $container ) {
+	public function configure( DependencyContainer $container ) {
 		$this->searchResultObject = $container->getResult();
 		$this->searchConfig       = $container->getConfig();
 		$this->interface          = $container->getInterface();
