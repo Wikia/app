@@ -233,6 +233,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	protected function initVertical() {
 		$this->verticalId = $this->getRequest()->getVal('verticalid', WikiFactoryHub::CATEGORY_ID_GAMING);
 		$this->verticalName = $this->model->getVerticalName($this->verticalId);
+		$this->canonicalVerticalName = $this->model->getCanonicalVerticalName($this->verticalId);
 	}
 
 	protected function initModel() {
@@ -261,7 +262,8 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			$this->wgWikiaHubType = $this->verticalName;
 		}
 		RequestContext::getMain()->getRequest()->setVal('vertical', $this->verticalName);
-		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $this->verticalName));
+		RequestContext::getMain()->getRequest()->setVal('verticalid', $this->verticalId);
+		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $this->canonicalVerticalName));
 	}
 
 	protected function initHubTimestamp() {
