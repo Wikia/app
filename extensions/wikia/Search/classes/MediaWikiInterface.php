@@ -242,21 +242,23 @@ class MediaWikiInterface
 
 	
 	/**
-	 * Provides global value as set in the Oasis wg helper
+	 * Provides global value as set in the Oasis wg helper. Can use wgGlobalValue or GlobalValue.
 	 * @param mixed $global
 	 * @return mixed
 	 */
 	public function getGlobal( $global ) {
+		$global = substr_count( $global, 'wg', 0, 2 ) ? substr( $global, 2 ) : $global;
 		return $this->app->wg->{$global};
 	}
 	
 	/**
-	 * Gets global values set for other wikis.
+	 * Gets global values set for other wikis. Can use wgGlobalValue or GlobalValue
 	 * @param string $global
 	 * @param int $wikiId
 	 * @return mixed
 	 */
 	public function getGlobalForWiki( $global, $wikiId ) {
+		$global = substr_count( $global, 'wg', 0, 2 ) ? $global : ( 'wg' . $global );
 		$row = \WikiFactory::getVarValueByName( $global, $wikiId );
 		if ( is_object( $row ) ) {
 			return unserialize( $row->cv_value );
@@ -562,7 +564,7 @@ class MediaWikiInterface
 		$params = array(
 				'controller' => 'ArticlesApiController', 
 				'method' => 'getDetails', 
-				'titles' => $this->getMainPageTitle()->getDbKey()
+				'titles' => $this->getMainPageTitleForWikiId( $wikiId )->getDbKey()
 				);
 		$response = \ApiService::foreignCall( $this->getDbNameForWikiId( $wikiId ), $params, \ApiService::WIKIA );
 		$item = \array_shift( $response['items'] );
@@ -777,9 +779,13 @@ class MediaWikiInterface
 					'action'      => 'query',
 					'meta'        => 'allmessages',
 					'ammessages'  => 'mainpage',
-					'amlang'      => $this->getGlobalForWiki( 'LanguageCode', $wikiId )
+					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
 					) 
 			);
-	    return \GlobalTitle::newFromText( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
+	    $title = \GlobalTitle::newFromText( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
+	    if ( $title->isRedirect() ) {
+	    	$title = $title->getRedirectTarget();
+	    }
+	    return $title;
 	}
 }
