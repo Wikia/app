@@ -17,7 +17,8 @@
  *
  */
 
-require_once( dirname( __FILE__ ) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
+define("MW_CONFIG_FILE", "/usr/wikia/conf/current/wiki.factory/LocalSettings.php"); // lazy but useful
 
 class SynchronizeBlobs extends Maintenance {
 	var $wgFetchBlobApiURL = "http://community.wikia.com/api.php";
@@ -33,15 +34,18 @@ class SynchronizeBlobs extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Synchronize blobs for latest revisions of pages from SJC to POZ (for devboxes)";
+		$this->mDescription = "Synchronize blobs for latest revisions of pages from SJC to POZ (for devboxes). Run on a POZ devbox.";
 		$this->addArg("progress", "How many seconds between each progress report (0 to disable). 30 is default", false);
 	}
 
 	public function execute() {
+		global $oWiki;
 		$isPoznanDevbox = ( F::app()->wg->DevelEnvironment === true && F::app()->wg->WikiaDatacenter == "poz" );
 		if (!$isPoznanDevbox) throw new Exception("This should be run within Poznan devel environment");
 		$this->progressPeriod = $this->getArg(0, 30);
-		$this->output("Getting ids of latest revisions.\n");
+		$city_id = $oWiki->mCityID;
+		$city_dbname = $oWiki->mCityDB;
+		$this->output("Getting ids of latest revisions for city_id=$city_id and city_dbname=$city_dbname\n");
 		$this->fetchLatestRevisions();
 		$this->store = new ExternalStoreDB();
 		$this->output("Creating list of blobs to download.\n");
