@@ -76,7 +76,7 @@
 
 	window.wgAfterContentAndJS.push(function() {
 		log('work on window.adslots2 according to AdConfig2', 1, module);
-		tracker.track({
+		WikiaTracker.track({
 			eventName: 'liftium.init',
 			ga_category: 'init2/init',
 			ga_action: 'init',
