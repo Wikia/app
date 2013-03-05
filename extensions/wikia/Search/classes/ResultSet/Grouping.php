@@ -64,7 +64,7 @@ class Grouping extends Base
 			     ->addHeaders( $this->interface->getVisualizationInfoForWikiId( $cityId ) )
 			     ->addHeaders( $statsInfo )
 			     ->setHeader ( 'wikititle', $this->interface->getGlobalForWiki( 'wgSitename', $cityId ) );
-		}var_dump($this->getHeader()); die;
+		}
 		return $this;
 	}
 	
