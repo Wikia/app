@@ -86,7 +86,7 @@ function SiteWideMessagesIncludeJSCSS( $skin, &$bottomScripts) {
  *
  */
 function SiteWideMessagesGetUserMessagesContent( $dismissLink = true, $parse = true, $addJSandCSS = true ) {
-	global $wgExtensionsPath, $wgOut, $wgUser, $wgRequest;
+	global $wgExtensionsPath, $wgOut, $wgUser;
 
 	$content = SiteWideMessages::getAllUserMessages( $wgUser, $dismissLink );
 	if ( !empty( $content ) ) {
