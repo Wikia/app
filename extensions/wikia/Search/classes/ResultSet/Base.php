@@ -35,7 +35,6 @@ class Base extends EmptySet
 		$this->resultsFound        = $this->searchResultObject->getNumFound();
 		$this->prependArticleMatchIfExists()
 		     ->setResults( $this->searchResultObject->getDocuments() )
-		     ->setResultsFound( $this->resultsFound )
 		;
 	}
 	
@@ -52,17 +51,6 @@ class Base extends EmptySet
 	}
 	
 	/**
-	 * Populates the resultsFound protected var
-	 * @param int $value
-	 * @return Base provides fluent interface
-	 */
-	public function setResultsFound( $value ) {
-		$this->resultsFound = $value;
-		return $this;
-	}
-	
-	
-	/**
 	 * Does a little prep on a result object, applies highlighting if exists, and adds to result array.
 	 * @param  Result $result
 	 * @throws WikiaException
@@ -77,11 +65,9 @@ class Base extends EmptySet
 					&&  ( $field         =  $hlResult->getField( Utilities::field( 'html' ) ) ) ) {
 				$result->setText( $field[0] );
 			}
-
-			
 			if ( $result['created'] ) {
 				$result->setVar( 'fmt_timestamp', $this->interface->getMediaWikiFormattedTimestamp( $result['created'] ) );
-				$result->setVar( 'created_30daysago', time() - strtotime( $result['created'] ) > 2592000 );
+				$result->setVar( 'created_30daysago', ( time() - strtotime( $result['created'] ) ) > 2592000 );
 			}
 
 			$result->setVar('cityArticlesNum', $result['wikiarticles'] )
