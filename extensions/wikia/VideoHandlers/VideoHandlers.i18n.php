@@ -43,8 +43,8 @@ $messages['en'] = array(
 	'videos-initial-upload-edit-summary' => 'created video',
 	
 	/* video page */
-	'video-page-file-list-header' => 'Appears in these articles',
-	'video-page-global-file-list-header' => 'Appears in these articles on other Wikis',
+	'video-page-file-list-header' => 'Appears in these pages',
+	'video-page-global-file-list-header' => 'Appears in these wikis',
 	'video-page-from-provider' => 'From $1',
 	'video-page-expires' => 'Content expires on $1',
 	'video-page-views' => '$1 Views',
