@@ -83,7 +83,6 @@ class PhalanxContentBlock extends WikiaObject {
 		$this->wf->profileOut( __METHOD__ );
 		return true;
 	}
-	
 
 	public function editContent( $textbox, &$error_msg, $phalanxModel = null ) {
 		$this->wf->profileIn( __METHOD__ );

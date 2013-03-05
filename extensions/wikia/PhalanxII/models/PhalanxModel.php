@@ -2,7 +2,7 @@
 
 abstract class PhalanxModel extends WikiaObject {
 	public $model = null;
-	public $text = "";
+	public $text = null;
 	public $block = null;
 	public $lang = null;
 	public $user = null;
