@@ -57,27 +57,22 @@ class Base extends EmptySet
 	 * @return Base provides fluent interface
 	 */
 	protected function addResult( Result $result ) {
-		if( $this->isValidResult( $result ) ) {
-			$id = $result['id'];
-			$highlighting = $this->searchResultObject->getHighlighting();
-			if (        ( $highlighting !== null )
-					&&  ( $hlResult      =  $highlighting->getResult( $id ) )
-					&&  ( $field         =  $hlResult->getField( Utilities::field( 'html' ) ) ) ) {
-				$result->setText( $field[0] );
-			}
-			if ( $result['created'] ) {
-				$result->setVar( 'fmt_timestamp', $this->interface->getMediaWikiFormattedTimestamp( $result['created'] ) );
-				$result->setVar( 'created_30daysago', ( time() - strtotime( $result['created'] ) ) > 2592000 );
-			}
-
-			$result->setVar('cityArticlesNum', $result['wikiarticles'] )
-			       ->setVar('wikititle',       $result[Utilities::field( 'wikititle' )] );
-
-			$this->results[$id] = $result;
+		$id = $result['id'];
+		$highlighting = $this->searchResultObject->getHighlighting();
+		if (        ( $highlighting !== null )
+				&&  ( $hlResult      =  $highlighting->getResult( $id ) )
+				&&  ( $field         =  $hlResult->getField( Utilities::field( 'html' ) ) ) ) {
+			$result->setText( $field[0] );
 		}
-		else {
-			throw new WikiaException( 'Invalid result in set' );
+		if ( $result['created'] ) {
+			$result->setVar( 'fmt_timestamp', $this->interface->getMediaWikiFormattedTimestamp( $result['created'] ) );
+			$result->setVar( 'created_30daysago', ( time() - strtotime( $result['created'] ) ) > 2592000 );
 		}
+
+		$result->setVar('cityArticlesNum', $result['wikiarticles'] )
+		       ->setVar('wikititle',       $result[Utilities::field( 'wikititle' )] );
+
+		$this->results[$id] = $result;
 		return $this;
 	}
 	
@@ -100,15 +95,6 @@ class Base extends EmptySet
 	 */
 	public function getResultsStart() {
 		return $this->searchResultObject->getStart();
-	}
-
-	/**
-	 * Determines if a result is valid to be added to the $results array.
-	 * @param  mixed $result
-	 * @return boolean
-	 */
-	protected function isValidResult( $result ) {
-		return ( ( $result instanceof Result ) || ( $result instanceof Base ) );
 	}
 
 	/**
