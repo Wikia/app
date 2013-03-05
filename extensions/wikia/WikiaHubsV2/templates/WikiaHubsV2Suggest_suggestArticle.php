@@ -2,4 +2,5 @@
 	<h1><?= wfMsg('wikiahubs-suggest-article-header') ?></h1>
 
 	<?= F::app()->renderView( 'WikiaStyleGuideForm', 'index', array('form' => $formData) ); ?>
+	<p class="successMessage"></p>
 </div>

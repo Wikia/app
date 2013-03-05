@@ -276,6 +276,12 @@ class AjaxPollClass {
 
 		self::$mCount++;
 
+		/**
+		 * because this parser tag contains elements of interface we need to
+		 * inform parser to vary parser cache key by user lang option
+		 */
+		$this->mParser->mOutput->recordOption('userlang');
+
 		wfProfileOut( __METHOD__ );
 
 		return $out;
