@@ -46,6 +46,7 @@ class Factory
 		$parent = $container->getParent();
 		$metaposition = $container->getMetaposition();
 		$result = $container->getResult();
+		$wikiMatch = $container->getWikiMatch();
 		
 		if ( $result === null || $result instanceof Solarium_Result_Select_Empty ) {
 			return new EmptySet( $container );
@@ -53,6 +54,8 @@ class Factory
 			return new GroupingSet( $container );
 		} else if ( $parent !== null && $metaposition !== null ) {
 			return new Grouping( $container );
+		} else if ( $parent !== null && $wikiMatch !== null ) {
+			return new MatchGrouping( $container );
 		}
 		return new Base( $container );
 	}

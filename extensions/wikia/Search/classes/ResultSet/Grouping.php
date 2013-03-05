@@ -37,8 +37,6 @@ class Grouping extends Base
 		
 		$this->setResultsFromHostGrouping()
 		     ->configureHeaders();
-
-		
 	}
 	
 	/**
