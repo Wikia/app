@@ -2,7 +2,7 @@
 
 require_once( 'WikiaSearchBaseTest.php' );
 
-class WikiaSearchResultSetGroupingGroupingTest extends WikiaSearchBaseTest
+class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest
 {
 	
 	/**
@@ -303,7 +303,7 @@ class WikiaSearchResultSetGroupingGroupingTest extends WikiaSearchBaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\ResultSet::configureHeaders
+	 * @covers Wikia\Search\ResultSet\Grouping::configureHeaders
 	 */
 	public function testConfigureHeaders() {
 		$mockResult = $this->getMock( 'Wikia\Search\Result', array( 'offsetGet', 'getFields' ) );

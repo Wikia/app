@@ -2,10 +2,10 @@
 
 require_once( 'WikiaSearchBaseTest.php' );
 
-class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest {
+class WikiaSearchResultSetGroupingSetTest extends WikiaSearchBaseTest {
 	
 	/**
-	 * @covers Wikia\Search\ResultSet\Grouping::configure
+	 * @covers Wikia\Search\ResultSet\GroupingSet::configure
 	 */
 	public function testConfigure() {
 		$dcMethods = array( 'getResult', 'getConfig', 'getInterface' );
@@ -103,15 +103,15 @@ class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest {
 		$mockFieldGroup
 		    ->expects( $this->once() )
 		    ->method ( 'getValueGroups' )
-		    ->will   ( $this->returnValue( array( $mockValueGroup ) ) )
+		    ->will   ( $this->returnValue( array( $mockValueGroup, $mockValueGroup ) ) )
 	    ;
 		$mockFactory
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'get' )
 		    ->will   ( $this->returnValue( $mockGrouping ) )
 		;
 		$mockGrouping
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'getHeader' )
 		    ->with   ( 'url' )
 		    ->will   ( $this->returnValue( 'foo.wikia.com' ) )
