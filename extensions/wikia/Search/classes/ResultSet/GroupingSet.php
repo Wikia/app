@@ -33,7 +33,7 @@ class GroupingSet extends Grouping
 	protected function setResultGroupings() {
 		$fieldGroup = $this->getHostGrouping();
 		$metaposition = 0;
-		foreach ($fieldGroup->getValueGroups() as $valueGroup) {
+		foreach ( $fieldGroup->getValueGroups() as $valueGroup ) {
 			$dependencies = array(
 					'result' => $this->searchResultObject, 
 					'config' => $this->searchConfig, 
@@ -42,7 +42,7 @@ class GroupingSet extends Grouping
 					);
 			;
 			$resultSet = Factory::getInstance()->get( new DependencyContainer( $dependencies ) );
-			$this->results[$resultSet->getHeader('cityUrl')] = $resultSet;
+			$this->results[$resultSet->getHeader( 'url' )] = $resultSet;
 		}
 		return $this;
 	}
@@ -53,8 +53,15 @@ class GroupingSet extends Grouping
 	 */
 	protected function prependWikiMatchIfExists() {
 		if ( $this->searchConfig->hasWikiMatch() && $this->searchConfig->getStart() == 0 ) {
-    		$this->resultsFound++;
-    		return $this->addResult( $this->searchConfig->getWikiMatch()->getResult() );
+			$dependencies = array(
+					'result' => $this->searchResultObject, 
+					'config' => $this->searchConfig, 
+					'parent' => $this, 
+					'wikiMatch' => $this->searchConfig->getWikiMatch(),
+					);
+			;
+			$resultSet = Factory::getInstance()->get( new DependencyContainer( $dependencies ) );
+			$this->results[$resultSet->getHeader( 'url' )] = $resultSet;
 		}
 		return $this;
 	}
