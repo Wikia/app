@@ -23,8 +23,7 @@ class GroupingSet extends Grouping
 		$this->results            = new ArrayIterator( array() );
 		$this->resultsFound = $this->getHostGrouping()->getMatches();
 		$this->prependWikiMatchIfExists()
-		     ->setResultGroupings()
-		     ->setResultsFound( $this->resultsFound );
+		     ->setResultGroupings();
 	}
 	
 	/**
