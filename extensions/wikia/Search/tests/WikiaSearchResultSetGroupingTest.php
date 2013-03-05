@@ -180,6 +180,52 @@ class WikiaSearchResultSetGroupingGroupingTest extends WikiaSearchBaseTest
 		$configure->invoke( $mockGrouping, $dc );
 	}
 	
+	/**
+	 * @covers Wikia\Search\ResultSet\MatchGrouping::configure
+	 */
+	public function testMatchGroupingConfigure() {
+		$dcMethods = array( 'getResult', 'getConfig', 'getInterface', 'getParent', 'getMetaposition' );
+		$dc = $this->getMockBuilder( 'Wikia\Search\ResultSet\DependencyContainer' )
+		           ->disableOriginalConstructor()
+		           ->setMethods( array_merge( $dcMethods, ['getWikiMatch'] ) )
+		           ->getMock();
+		
+		$mockWikiMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'getResult' ) )
+		                      ->getMock();
+		
+		$mockResult = $this->getMock( 'Wikia\Search\Result' );
+		
+		$mockGrouping = $this->getMockBuilder( 'Wikia\Search\ResultSet\MatchGrouping' )
+		                     ->disableOriginalConstructor()
+		                     ->setMethods( array( 'configureHeaders' ) )
+		                     ->getMock();
+		foreach ( $dcMethods as $method ) {
+			$dc
+			    ->expects( $this->once() )
+			    ->method ( $method )
+			;
+		}
+		$dc
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiMatch' )
+		    ->will   ( $this->returnValue( $mockWikiMatch ) )
+		;
+		$mockWikiMatch
+		    ->expects( $this->once() )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( $mockResult ) )
+		;
+		$mockGrouping
+		    ->expects( $this->once() )
+		    ->method ( 'configureHeaders' )
+		    ->will   ( $this->returnValue( $mockGrouping ) )
+		;
+		$configure = new ReflectionMethod( 'Wikia\Search\ResultSet\MatchGrouping', 'configure' );
+		$configure->setAccessible( true );
+		$configure->invoke( $mockGrouping, $dc );
+	}
 	
 	
 	/**

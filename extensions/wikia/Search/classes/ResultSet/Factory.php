@@ -40,7 +40,7 @@ class Factory
 	public function get( $container ) {
 		$searchConfig = $container->getConfig();
 		if ( $searchConfig === null ) {
-			throw new \Exception( 'An instance of WikiaSearchConfig must be set in the dependency container at a mininum in order to instantiate a result set.' );
+			throw new \Exception( 'An instance of Wikia\Search\Config must be set in the dependency container at a mininum in order to instantiate a result set.' );
 		}
 		
 		$parent = $container->getParent();
