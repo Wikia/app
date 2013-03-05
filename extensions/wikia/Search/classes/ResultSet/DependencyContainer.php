@@ -34,7 +34,7 @@ class DependencyContainer
 	 * Metaposition is for Groupings
 	 * @var int
 	 */
-	protected $metaposition = 0;
+	protected $metaposition;
 	
 	/**
 	 * Parent is also for Groupings
