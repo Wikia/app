@@ -39,9 +39,9 @@ class Grouping extends Base
 		$valueGroup  = $valueGroups[$this->metaposition];
 		$this->host  = $valueGroup->getValue();
 		$documents   = $valueGroup->getDocuments();
+		$this->resultsFound = $valueGroup->getNumFound();
 
 		$this->setResults       ( $documents )
-		     ->setResultsFound  ( $valueGroup->getNumFound() )
 		     ->configureGlobals();
 
 		
@@ -49,20 +49,23 @@ class Grouping extends Base
 	
 	/**
 	 * Sets a bunch of headers associated with wiki info
+	 * @return Wikia\Search\ResultSet\Grouping
 	 */
 	protected function configureGlobals() {
 		$doc = end( $this->results ); // there's only one
 		if (! empty( $doc ) ) {
-			$cityId     = $doc['wid'];
-			$this->setHeader( 'cityId', $cityId )
-			     ->setHeader( 'cityTitle', $this->interface->getGlobalForWiki( 'wgSitename', $cityId ) )
-			     ->setHeader( 'cityUrl', $this->interface->getGlobalForWiki( 'wgServer', $cityId ) );
-			
-			foreach ( $this->interface->getVisualizationInfoForWikiId( $cityId ) as $key => $val ) {
-				$this->setHeader( $key.'_count', $val );
+			$cityId = $doc['wid'];
+			$statsInfo = $this->interface->getStatsInfoForWikiId( $cityId );
+			foreach ( $statsInfo as $key => $val ) {
+				$statsInfo[$key.'_count'] = $val;
+				unset( $statsInfo[$key] );
 			}
-			$this->addHeaders( $this->interface->getStatsInfoForWikiId( $cityId ) );
-		}
+			$this->addHeaders( $doc->getFields() )
+			     ->addHeaders( $this->interface->getVisualizationInfoForWikiId( $cityId ) )
+			     ->addHeaders( $statsInfo )
+			     ->setHeader ( 'wikititle', $this->interface->getGlobalForWiki( 'wgSitename', $cityId ) );
+		}var_dump($this->getHeader()); die;
+		return $this;
 	}
 	
 	/**
