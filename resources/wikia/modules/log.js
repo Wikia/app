@@ -144,7 +144,7 @@
 				y,
 				g;
 
-			outputLevel = qs.getVal('log_level') || cookies.get('log_level') || outputLevel;
+			outputLevel = qs.getVal('log_level') || (cookies && cookies.get('log_level')) || outputLevel;
 
 			if (levels.hasOwnProperty(outputLevel)) {
 				outputLevel = levels[outputLevel];
@@ -152,7 +152,7 @@
 				outputLevel = parseInt(outputLevel, 10);
 			}
 
-			selectedGroups = (qs.getVal('log_group') || cookies.get('log_group') || '').replace(' ', '').replace('|', ',').split(',');
+			selectedGroups = (qs.getVal('log_group') || (cookies && cookies.get('log_group')) || '').replace(' ', '').replace('|', ',').split(',');
 			groupsString = selectedGroups.join(', ');
 
 			for (x = 0, y = selectedGroups.length; x < y; x++) {
@@ -172,7 +172,7 @@
 
 		//init
 		if (context.define && context.define.amd) {
-			context.require(['wikia.querystring', 'wikia.cookies'], init);
+			context.require(['wikia.querystring', require.optional('wikia.cookies')], init);
 		} else {
 			init(context.Wikia.Querystring, context.Wikia.Cookies);
 		}
