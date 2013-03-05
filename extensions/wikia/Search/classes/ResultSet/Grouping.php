@@ -35,23 +35,30 @@ class Grouping extends Base
 		$this->metaposition       = $container->getMetaposition();
 		$this->results            = new ArrayIterator( array() );
 		
+		$this->setResultsFromHostGrouping()
+		     ->configureHeaders();
+
+		
+	}
+	
+	/**
+	 * Finds current grouping from result and sets documents accordingly.
+	 * @return \Wikia\Search\ResultSet\Grouping
+	 */
+	protected function setResultsFromHostGrouping() {
 		$valueGroups = $this->getHostGrouping()->getValueGroups();
 		$valueGroup  = $valueGroups[$this->metaposition];
 		$this->host  = $valueGroup->getValue();
-		$documents   = $valueGroup->getDocuments();
 		$this->resultsFound = $valueGroup->getNumFound();
-
-		$this->setResults       ( $documents )
-		     ->configureGlobals();
-
-		
+		$this->setResults( $valueGroup->getDocuments() );
+		return $this;
 	}
 	
 	/**
 	 * Sets a bunch of headers associated with wiki info
 	 * @return Wikia\Search\ResultSet\Grouping
 	 */
-	protected function configureGlobals() {
+	protected function configureHeaders() {
 		$doc = end( $this->results ); // there's only one
 		if (! empty( $doc ) ) {
 			$cityId = $doc['wid'];
