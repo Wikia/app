@@ -2,7 +2,7 @@
 
 require_once( 'WikiaSearchBaseTest.php' );
 
-class WikiaSearchResultSetGroupingGroupingTest extends WikiaSearchBaseTest
+class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest
 {
 	
 	/**
@@ -180,6 +180,52 @@ class WikiaSearchResultSetGroupingGroupingTest extends WikiaSearchBaseTest
 		$configure->invoke( $mockGrouping, $dc );
 	}
 	
+	/**
+	 * @covers Wikia\Search\ResultSet\MatchGrouping::configure
+	 */
+	public function testMatchGroupingConfigure() {
+		$dcMethods = array( 'getResult', 'getConfig', 'getInterface', 'getParent', 'getMetaposition' );
+		$dc = $this->getMockBuilder( 'Wikia\Search\ResultSet\DependencyContainer' )
+		           ->disableOriginalConstructor()
+		           ->setMethods( array_merge( $dcMethods, ['getWikiMatch'] ) )
+		           ->getMock();
+		
+		$mockWikiMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'getResult' ) )
+		                      ->getMock();
+		
+		$mockResult = $this->getMock( 'Wikia\Search\Result' );
+		
+		$mockGrouping = $this->getMockBuilder( 'Wikia\Search\ResultSet\MatchGrouping' )
+		                     ->disableOriginalConstructor()
+		                     ->setMethods( array( 'configureHeaders' ) )
+		                     ->getMock();
+		foreach ( $dcMethods as $method ) {
+			$dc
+			    ->expects( $this->once() )
+			    ->method ( $method )
+			;
+		}
+		$dc
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiMatch' )
+		    ->will   ( $this->returnValue( $mockWikiMatch ) )
+		;
+		$mockWikiMatch
+		    ->expects( $this->once() )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( $mockResult ) )
+		;
+		$mockGrouping
+		    ->expects( $this->once() )
+		    ->method ( 'configureHeaders' )
+		    ->will   ( $this->returnValue( $mockGrouping ) )
+		;
+		$configure = new ReflectionMethod( 'Wikia\Search\ResultSet\MatchGrouping', 'configure' );
+		$configure->setAccessible( true );
+		$configure->invoke( $mockGrouping, $dc );
+	}
 	
 	
 	/**
@@ -257,7 +303,7 @@ class WikiaSearchResultSetGroupingGroupingTest extends WikiaSearchBaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\ResultSet::configureHeaders
+	 * @covers Wikia\Search\ResultSet\Grouping::configureHeaders
 	 */
 	public function testConfigureHeaders() {
 		$mockResult = $this->getMock( 'Wikia\Search\Result', array( 'offsetGet', 'getFields' ) );
@@ -326,6 +372,65 @@ class WikiaSearchResultSetGroupingGroupingTest extends WikiaSearchBaseTest
 		$this->assertEquals(
 				$this->resultSet,
 				$conf->invoke( $this->resultSet )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::getParent
+	 */
+	public function testGetParent() {
+		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\Grouping' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( null )
+		                  ->getMock();
+		
+		$mockGroupingSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\GroupingSet' )
+		                        ->disableOriginalConstructor()
+		                        ->getMock();
+		
+		$resultsFound = new ReflectionProperty( 'Wikia\Search\ResultSet\Grouping', 'parent' );
+		$resultsFound->setAccessible( true );
+		$resultsFound->setValue( $resultSet, $mockGroupingSet );
+		$this->assertEquals(
+				$mockGroupingSet,
+				$resultSet->getParent()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::getId
+	 */
+	public function testGetId() {
+		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\Grouping' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( null )
+		                  ->getMock();
+		$resultsFound = new ReflectionProperty( 'Wikia\Search\ResultSet\Grouping', 'host' );
+		$resultsFound->setAccessible( true );
+		$resultsFound->setValue( $resultSet, 'foo.wikia.com' );
+		$this->assertEquals(
+				'foo.wikia.com',
+				$resultSet->getId()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::toArray
+	 */
+	public function testToArray() {
+		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\Grouping' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getHeader' ) )
+		                  ->getMock();
+		$array = array( 'foo' => 'bar' );
+		$resultSet
+		    ->expects( $this->once( 'getHeader' ) )
+		    ->method ( 'getHeader' )
+		    ->will   ( $this->returnValue( $array ) )
+		;
+		$this->assertEquals(
+				$array,
+				$resultSet->toArray()
 		);
 	}
 }

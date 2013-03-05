@@ -40,12 +40,13 @@ class Factory
 	public function get( $container ) {
 		$searchConfig = $container->getConfig();
 		if ( $searchConfig === null ) {
-			throw new \Exception( 'An instance of WikiaSearchConfig must be set in the dependency container at a mininum in order to instantiate a result set.' );
+			throw new \Exception( 'An instance of Wikia\Search\Config must be set in the dependency container at a mininum in order to instantiate a result set.' );
 		}
 		
 		$parent = $container->getParent();
 		$metaposition = $container->getMetaposition();
 		$result = $container->getResult();
+		$wikiMatch = $container->getWikiMatch();
 		
 		if ( $result === null || $result instanceof Solarium_Result_Select_Empty ) {
 			return new EmptySet( $container );
@@ -53,6 +54,8 @@ class Factory
 			return new GroupingSet( $container );
 		} else if ( $parent !== null && $metaposition !== null ) {
 			return new Grouping( $container );
+		} else if ( $parent !== null && $wikiMatch !== null ) {
+			return new MatchGrouping( $container );
 		}
 		return new Base( $container );
 	}

@@ -3,7 +3,7 @@
  * Class definition for \Wikia\Search\ResultSet\DependencyContainer
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\Config, \Solarium_Result_Select, \Wikia\Search\MediaWikiInterface, \Wikia\Search\Traits;
+use \Wikia\Search\Config, \Solarium_Result_Select, \Wikia\Search\MediaWikiInterface, \Wikia\Search\Traits, \Wikia\Search\Match\Wiki;
 /**
  * This allows us to encapsulate all dependencies and send a single object to Wikia\Search\ResultSet\Factory
  * @author relwell
@@ -34,7 +34,7 @@ class DependencyContainer
 	 * Metaposition is for Groupings
 	 * @var int
 	 */
-	protected $metaposition = 0;
+	protected $metaposition;
 	
 	/**
 	 * Parent is also for Groupings
@@ -42,6 +42,12 @@ class DependencyContainer
 	 */
 	protected $parent;
 	
+	/**
+	 * Wiki match, lets us know if we need to use the "match" grouping wrapper.
+	 *@var Match
+	 */
+	protected $wikiMatch;
+
 	/**
 	 * Constructor class. Basically allows us to pre-populate the $interface property and configure by array rather than separate invocations.
 	 * @param array $dependencies optional method of prepopulating the dependencies. Can also call mutators.
@@ -130,4 +136,21 @@ class DependencyContainer
 		$this->parent = $parent;
 		return $this;
 	}
+	
+	
+	/**
+	 * @return the $wikiMatch
+	 */
+	public function getWikiMatch() {
+		return $this->wikiMatch;
+	}
+
+	/**
+	 * @param \Wikia\Search\ResultSet\Match $wikiMatch
+	 */
+	public function setWikiMatch( Wiki $wikiMatch ) {
+		$this->wikiMatch = $wikiMatch;
+		return $this;
+	}
+	
 }

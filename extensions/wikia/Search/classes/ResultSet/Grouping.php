@@ -37,8 +37,6 @@ class Grouping extends Base
 		
 		$this->setResultsFromHostGrouping()
 		     ->configureHeaders();
-
-		
 	}
 	
 	/**
@@ -113,19 +111,8 @@ class Grouping extends Base
 	 * @param array $expectedFields
 	 * @return array
 	 */
-	public function toArray( $expectedFields = array( 'title', 'url' ) ) {
-		$result = array();
-		foreach ( $expectedFields as $field ) {
-			switch ( $field ) {
-				case 'title':
-					$result['title'] = $this->getHeader( 'cityTitle' );
-					break;
-				case 'url':
-					$result['url'] = $this->getHeader( 'cityUrl' );
-					break;
-			}
-		}
-		return $result;
+	public function toArray() {
+		return $this->getHeader();
 	}
 
 }
