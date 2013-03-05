@@ -328,4 +328,63 @@ class WikiaSearchResultSetGroupingGroupingTest extends WikiaSearchBaseTest
 				$conf->invoke( $this->resultSet )
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::getParent
+	 */
+	public function testGetParent() {
+		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\Grouping' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( null )
+		                  ->getMock();
+		
+		$mockGroupingSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\GroupingSet' )
+		                        ->disableOriginalConstructor()
+		                        ->getMock();
+		
+		$resultsFound = new ReflectionProperty( 'Wikia\Search\ResultSet\Grouping', 'parent' );
+		$resultsFound->setAccessible( true );
+		$resultsFound->setValue( $resultSet, $mockGroupingSet );
+		$this->assertEquals(
+				$mockGroupingSet,
+				$resultSet->getParent()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::getId
+	 */
+	public function testGetId() {
+		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\Grouping' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( null )
+		                  ->getMock();
+		$resultsFound = new ReflectionProperty( 'Wikia\Search\ResultSet\Grouping', 'host' );
+		$resultsFound->setAccessible( true );
+		$resultsFound->setValue( $resultSet, 'foo.wikia.com' );
+		$this->assertEquals(
+				'foo.wikia.com',
+				$resultSet->getId()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::toArray
+	 */
+	public function testToArray() {
+		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\Grouping' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getHeader' ) )
+		                  ->getMock();
+		$array = array( 'foo' => 'bar' );
+		$resultSet
+		    ->expects( $this->once( 'getHeader' ) )
+		    ->method ( 'getHeader' )
+		    ->will   ( $this->returnValue( $array ) )
+		;
+		$this->assertEquals(
+				$array,
+				$resultSet->toArray()
+		);
+	}
 }
