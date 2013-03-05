@@ -1,8 +1,108 @@
 $(function() {
 
+var Paginator = function(el, summary) {
+	this.$el = $(el);
+	this.$backward = this.$el.find('.left');
+	this.$forward = this.$el.find('.right');
+	this.$current = this.$el.find('.page-list-current');
+	this.$root = $el.parents('.page-listings');
+	this.type = this.$root.data('listing-type');
+	this.currentPage = 0;
+	this.totalCount = 0;
+	this.summary = VideoPageSummary[this.type];
+	this.$content = this.$root.find('.page-list-content');
+	this.init();
+};
+
+Paginator.prototype = {
+	ARTICLES_PER_PAGE: 3,
+	init: function() {
+		var self = this;
+		this.$el.on('click', '.arrow', function(e) {
+			$target = $(e.target);
+			if(!$target.hasClass('disabled')) {
+				if($target.hasClass('right')) {
+					self.currentPage++;
+				} else if ($target.hasClass('left')) {
+					self.currentPage--
+				}
+				self.updatePager();
+				self.updateContent();
+			}
+
+		});
+		
+		this.flatSummary = [];
+		
+		// flatten summary structure
+		for(wiki in this.summary) {
+			this.flatSummary = this.flatSummary.concat(this.summary[wiki]);
+		}
+		
+		this.totalCount = this.flatSummary.length;
+		this.maxPage = Math.ceil(this.totalCount / Paginator.prototype.ARTICLES_PER_PAGE) - 1;
+		if(this.maxPage > 1) {
+			this.$el.find('.page-list-total').text(this.maxPage + 1);
+			this.updatePager();
+			this.$el.show();
+		}
+	},
+	updatePager: function() {
+		this.$forward.removeClass('disabled');
+		this.$backward.removeClass('disabled');
+		if(this.currentPage === 0) {
+			this.$backward.addClass('disabled');
+		} 
+		if(this.currentPage === this.maxPage) {
+			this.$forward.addClass('disabled');
+		}
+		
+		this.$current.text(this.currentPage + 1);
+	},
+	updateContent: function() {
+		this.$content.startThrobbing();
+	
+		var index = this.currentPage * Paginator.prototype.ARTICLES_PER_PAGE,
+			flatSubSummary = this.flatSummary.slice(index, index + 3),
+			summary = {},
+			i = 0,
+			self = this;
+			
+		for(i = 0; i < flatSubSummary.length; i++) {
+			var wiki = flatSubSummary[i].wiki;
+			if(!summary[wiki]) {
+				summary[wiki] = [];
+			}
+			summary[wiki].push(flatSubSummary[i]);
+		}
+		
+		$.nirvana.sendRequest({
+			controller: 'VideoPageController',
+			method: 'fileList',
+			type: 'get',
+			format: 'html',
+			data: {
+				summary: summary,
+				type: this.type
+			},
+			callback: function(html) {
+				self.$content.html(html).stopThrobbing();
+				
+			}
+		});
+	}
+};
+
+
+
 var VideoPage = {
 	init: function() {
 		var self = this;
+		
+		$('.page-list-pagination').each(function() {
+			$el = $(this);
+			window.pagi = new Paginator($el);
+		});
 
 		var moreInfoWrapper = $('.more-info-wrapper');
 		

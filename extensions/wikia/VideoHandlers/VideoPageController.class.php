@@ -2,16 +2,13 @@
 
 class VideoPageController extends WikiaController {
 
-	public function setupResources() {
-
-	}
-
 	/**
 	 *
 	 */
 	public function fileUsage() {
-
-		$summary = $this->getGlobalUsage();
+		
+		$this->setVal('limit', 50);
+		$summary = F::app()->sendRequest('VideoPageController', 'getGlobalUsage')->getData()['summary'];
 
 		$heading = '';
 		$fileList = array();
@@ -20,41 +17,88 @@ class VideoPageController extends WikiaController {
 			$type = $this->getVal('type', 'local');
 
 			if ($type === 'global') {
-				$summary = $this->addGlobalSummary($summary);
-
 				$heading = wfMsg('video-page-global-file-list-header');
+				
 				if (array_key_exists($this->wg->DBname, $summary)) {
 					unset($summary[$this->wg->DBname]);
 				}
-
+				
 				$count = 0;
-				foreach ($summary as $dbName => $articles) {
-
-					// Pick the first first article from each wiki to show
-					$fileList[] = $articles[0];
-					$count++;
-					if ($count >=3) {
-						break;
+				$shortenedSummary = array();
+				
+				// shorten it to 3
+				foreach($summary as $wiki => $articles) {
+					if($count < 3) {
+						foreach($articles as $article) {
+							$dbName = $article['wiki'];
+							if(empty($shortenedSummary[$dbName])) {
+								$shortenedSummary[$dbName] = array();
+							}
+							$shortenedSummary[$dbName][] = $article;
+							if(++$count > 2) {
+								break;
+							}
+						}
 					}
 				}
+				
+				$fileList = F::app()->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'global'))->getData()['fileList'];
+
 			} else {
-				$dbName = $this->wg->DBname;
-
 				$heading = wfMsg('video-page-file-list-header');
-				if (array_key_exists($dbName, $summary)) {
-					// Eliminate all but this wiki from the summary
+				$dbName = $this->wg->DBname;
+				
+				$shortenedSummary = array();
+				if(array_key_exists($dbName, $summary)) {
 					$summary = array($dbName => $summary[$dbName]);
-
-					// Fill in all the summary information
-					$summary = $this->addLocalSummary($summary);
-
-					$fileList = $summary[$dbName];
+					// shorten it to 3, different algo than global list
+					$count = 0;
+					$articles = array();
+					foreach($summary[$dbName] as $article) {
+						$articles[] = $article;
+						if(++$count > 2) {
+							break;
+						}
+					}
+					$shortenedSummary = array($dbName => $articles);
 				}
+				
+				$fileList = F::app()->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'local') )->getData()['fileList'];
 			}
 		}
 
 		$this->heading = $heading;
 		$this->fileList = $fileList;
+		$this->summary = $summary;
+		$this->type = $type;
+	}
+	
+	public function fileList() {
+		//$summary = F::app()->sendRequest('VideoPageController', 'getGlobalUsage', array('fileTitle' => 'File:Shoot_Many_Robots_Design_Many_Robots_Trailer'))->getData()['summary'];
+		$summary = $this->getVal('summary', '');
+		$type = $this->getVal('type', '');
+		$result = array();
+		if(empty($summary) || empty($type)) {
+			$this->result = $result;
+			return;
+		}
+		
+		if($type === 'global') {
+			$expandedSummary = $this->addGlobalSummary($summary);
+		} else {
+			$expandedSummary = $this->addLocalSummary($summary);
+		}
+		
+		$result = array();
+		
+		foreach($expandedSummary as $wiki => $articles) {
+			foreach($articles as $article) {
+				$result[] = $article;
+			}
+		}
+		
+		$this->fileList = $result;
+		
 	}
 
 	private function nameToTitle ( $dbName ) {
@@ -63,6 +107,9 @@ class VideoPageController extends WikiaController {
 	}
 
 	public function relatedPages() {
+		if(empty($this->wg->EnableRelatedPagesExt)) {
+			return;
+		}
 		$res = $this->queryImageLinks(1);
 		$first = $res->fetchObject();
 
@@ -131,9 +178,14 @@ class VideoPageController extends WikiaController {
 	}
 
 	public function getGlobalUsage () {
+		$fileTitle = $this->getVal('fileTitle', '');
+		$titleObj = empty($fileTitle) ? $this->wg->Title : Title::newFromText($fileTitle);
 
 		// Query the global usage table to see where the current File title is used
-		$query = new GlobalUsageQuery( $this->wg->Title->getDBkey() );
+		$query = new GlobalUsageQuery( $titleObj->getDBkey() );
+		
+		$titleObj = null;
+		
 		if ( $this->getVal('offset') ) {
 			$query->setOffset( $this->getVal('offset') );
 		}
@@ -141,18 +193,18 @@ class VideoPageController extends WikiaController {
 		$query->execute();
 
 		$summary = $query->getSingleImageResult();
-
+		
 		// Translate key names and add some additional data
 		foreach ($summary as $dbName => $articles) {
 			foreach ($articles as $info) {
 				// Change the 'wiki' key from a db name to a display name
-				$dbName = $info['wiki'];
+				//$dbName = $info['wiki'];
 				$info['wiki'] = $this->nameToTitle($dbName);
 				$info['dbName'] = $dbName;
 			}
 		}
 
-		return $summary;
+		$this->summary = $summary;
 	}
 
 	public function addLocalSummary ( $data ) {

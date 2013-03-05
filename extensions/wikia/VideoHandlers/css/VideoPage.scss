@@ -10,6 +10,7 @@
 		margin: 0;
 	}
 	.page-list-pagination {
+		display: none;
 		float: right;
 		font-size: 12px;
 		.arrow {
@@ -33,6 +34,9 @@
 		@include clearfix;
 		margin: 10px 0 0;
 	}
+	.page-list-content {
+		position: relative;
+	}
 	.page-listing-image {
 		background-color: grey;
 		height: 90px;
@@ -49,6 +53,7 @@
 .SeeMore {
 	border: 1px solid $color-page-border;
 	display: block;
+	margin: 10px 0;
 	padding: 5px;
 	text-align: center;
 	&.toggled {
