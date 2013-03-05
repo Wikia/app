@@ -10,7 +10,7 @@ if( !defined( 'MEDIAWIKI' ) )
  */
 class WikiaVideoPage extends ImagePage {
 
-	protected static $videoWidth = 660;
+	protected static $videoWidth = 670;
 
 	/**
 	 * TOC override so Video Page does not return any TOC

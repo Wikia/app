@@ -12,9 +12,9 @@ class VideoPageController extends WikiaController {
 
 		$heading = '';
 		$fileList = array();
+		$type = $this->getVal('type', 'local');
 
 		if (!empty($summary) ) {
-			$type = $this->getVal('type', 'local');
 
 			if ($type === 'global') {
 				$heading = wfMsg('video-page-global-file-list-header');
@@ -42,8 +42,9 @@ class VideoPageController extends WikiaController {
 					}
 				}
 				
-				$fileList = F::app()->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'global'))->getData()['fileList'];
+				$data = F::app()->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'global'))->getData();
 
+				$fileList = empty($data['fileList']) ? array() : $data['fileList'];
 			} else {
 				$heading = wfMsg('video-page-file-list-header');
 				$dbName = $this->wg->DBname;
@@ -63,7 +64,8 @@ class VideoPageController extends WikiaController {
 					$shortenedSummary = array($dbName => $articles);
 				}
 				
-				$fileList = F::app()->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'local') )->getData()['fileList'];
+				$data = F::app()->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'local') )->getData();
+				$fileList = empty($data['fileList']) ? array() : $data['fileList'];
 			}
 		}
 
@@ -98,7 +100,7 @@ class VideoPageController extends WikiaController {
 		}
 		
 		$this->fileList = $result;
-		
+		$this->type = $type;
 	}
 
 	private function nameToTitle ( $dbName ) {
@@ -107,9 +109,12 @@ class VideoPageController extends WikiaController {
 	}
 
 	public function relatedPages() {
+		$this->text = '';
+	
 		if(empty($this->wg->EnableRelatedPagesExt)) {
 			return;
 		}
+		
 		$res = $this->queryImageLinks(1);
 		$first = $res->fetchObject();
 

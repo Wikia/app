@@ -7,7 +7,9 @@
 		</div>
 		<div class="grid-3">
 			<h3 class="page-listing-title"><a href="<?= $fileUsage['url'] ?>"><?= $fileUsage['titleText'] ?></a></h3>
-			<a href="<?= $fileUsage['wikiUrl'] ?>" class="page-listing-wiki"><?= $fileUsage['wiki'] ?></a>
+			<? if($type === 'global'): ?>
+				<a href="<?= $fileUsage['wikiUrl'] ?>" class="page-listing-wiki"><?= $fileUsage['wiki'] ?></a>
+			<? endif; ?>
 			<p class="page-listing-snippet">
 				<?= $fileUsage['snippet'] ?>
 			</p>
