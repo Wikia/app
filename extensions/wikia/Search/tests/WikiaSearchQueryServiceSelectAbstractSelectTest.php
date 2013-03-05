@@ -368,7 +368,8 @@ class WikiaSearchQueryServiceSelectAbstractSelectTest extends WikiaSearchBaseTes
 		                   ->getMockForAbstractClass();
 		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'registerFilterQueryForMatch' );
 		$get->setAccessible( true );
-		$this->assertNull(
+		$this->assertEquals(
+				$mockSelect,
 				$get->invoke( $mockSelect )
 		);
 	}
@@ -912,6 +913,38 @@ class WikiaSearchQueryServiceSelectAbstractSelectTest extends WikiaSearchBaseTes
 		$this->assertEquals(
 				$mockQuery,
 				$funcRefl->invoke( $mockSelect )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::searchAsApi
+	 */
+	public function testSearchAsApi() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'search' ) )
+		                   ->getMockForAbstractClass();
+		
+		$mockResultSet = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'toArray' ) )
+		                      ->getMock();
+		
+		$results = array( array( 'id' => '123_234', 'title' => 'foo' ) );
+		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'search' )
+		    ->will   ( $this->returnValue( $mockResultSet ) )
+		;
+		$mockResultSet
+		    ->expects( $this->once() )
+		    ->method ( 'toArray' )
+		    ->will   ( $this->returnValue( $results ) )
+		;
+		$this->assertEquals(
+				$results,
+				$mockSelect->searchAsApi()
 		);
 	}
 	

@@ -1425,7 +1425,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		                    ->getMock();
 		$mockResults	=	$this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 								->disableOriginalConstructor()
-								->setMethods( array( 'toNestedArray' ) )
+								->setMethods( array( 'toArray' ) )
 								->getMock();
 		$mockResponse	=	$this->getMockBuilder( 'WikiaResponse' )
 								->setMethods( array( 'setData', 'setFormat' ) )
@@ -1480,7 +1480,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		;
 		$mockResults
 			->expects	( $this->at( 0 ) )
-			->method	( 'toNestedArray' )
+			->method	( 'toArray' )
 			->will		( $this->returnValue( $responseArr ) )
 		;
 		$mockController
@@ -2002,7 +2002,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		
 		$mockResults = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'toNestedArray' ) )
+		                    ->setMethods( array( 'toArray' ) )
 		                    ->getMock();
 		
 		$mockController
@@ -2022,7 +2022,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		;
 		$mockResults
 		    ->expects( $this->once() )
-		    ->method ( 'toNestedArray' )
+		    ->method ( 'toArray' )
 		    ->will   ( $this->returnValue( array( 'foo' ) ) )
 		;
 		$mockResponse
@@ -2066,7 +2066,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		
 		$mockResults = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'toNestedArray' ) )
+		                    ->setMethods( array( 'toArray' ) )
 		                    ->getMock();
 		
 		

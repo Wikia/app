@@ -4,6 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\ResultSet;
+use Wikia\Search\Traits\AttributeIterable;
 use \Iterator, \ArrayAccess, \ArrayIterator, \Wikia\Search\Config;
 /**
  * This allows us to do a lot of the utility stuff separated out from the core logic of each class.
@@ -11,6 +12,8 @@ use \Iterator, \ArrayAccess, \ArrayIterator, \Wikia\Search\Config;
  */
 abstract class AbstractResultSet implements Iterator, ArrayAccess
 {
+	use AttributeIterable;
+	
 	/**
 	 * Used to keep track of index in array access
 	 * @var int
@@ -52,7 +55,15 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * A resultset requires a dependency container, because that's how it knows how to configure itself.
 	 * @param DependencyContainer $container
 	 */
-	abstract public function __construct( DependencyContainer $container );
+	final public function __construct( DependencyContainer $container ) {
+		$this->configure( $container );
+	}
+	
+	/**
+	 * We need this one because you can't unit test an abstract class with an abstract constructor
+	 * @param DependencyContainer $container
+	 */
+	abstract protected function configure( DependencyContainer $container );
 	
 	/**
 	 * Provides the offset for the result set.
@@ -138,164 +149,24 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	}
 	
 	/**
-	 * Allows us to serialize some core values from an expected wiki for json requests
-	 * @param array $expectedFields
-	 * @return array
-	 */
-	public function toArray( $expectedFields = array( 'title', 'url' ) ) {
-		$result = array();
-		foreach ( $expectedFields as $field ) {
-			switch ( $field ) {
-				case 'title':
-					$result['title'] = $this->getHeader( 'cityTitle' );
-					break;
-				case 'url':
-					$result['url'] = $this->getHeader( 'cityUrl' );
-					break;
-			}
-		}
-		return $result;
-	}
-
-	/**
 	 * Done to return results in json format
 	 * Can be removed after upgrade to 5.4 and specify serialized Json data on Wikia\Search\Result
 	 * http://php.net/manual/en/jsonserializable.jsonserialize.php
 	 * @return array
 	 */
-	public function toNestedArray( array $expectedFields = array( 'title', 'url' ) ) {
+	public function toArray( array $expectedFields = array( 'title', 'url' ) ) {
 		$tempResults = array();
-		foreach( $this->results as $result ){
+		foreach( $this->getResults() as $result ){
 			$tempResults[] = $result->toArray( $expectedFields );
 		}
 		return $tempResults;
 	}
 	
 	/**
-	 * Here come a bunch of wrapper methods for ArrayIterator.
-	 * These allow us to use array iterator methods on an existing property.
-	 * @todo Turn everything below into a trait that includes a method that identifies which property is an ArrayIterator.
-	 * This is a really nifty pattern for classes that encapsulate something iterable, but may require additional logic further down the road.
-	 * This way, you can test once, and focus on the logic in the specific class implementations.
+	 * Allows us to implement the AttributeIterable trait.
+	 * @return \ArrayIterator
 	 */
-	
-	/**
-	 * Check if offset exists
-	 * @link http://www.php.net/manual/en/arrayiterator.offsetexists.php
-	 * @param index string <p>
-	 * The offset being checked.
-	 * </p>
-	 * @return void true if the offset exists, otherwise false
-	 */
-	public function offsetExists( $index ) {
-	    return $this->results->offsetExists( $index );
-	}
-
-	/**
-	 * Get value for an offset
-	 * @link http://www.php.net/manual/en/arrayiterator.offsetget.php
-	 * @param index string <p>
-	 * The offset to get the value from.
-	 * </p>
-	 * @return mixed The value at offset index.
-	 */
-	public function offsetGet( $index ) {
-	    return $this->results->offsetGet( $index );
-	}
-
-	/**
-	 * Set value for an offset
-	 * @link http://www.php.net/manual/en/arrayiterator.offsetset.php
-	 * @param index string <p>
-	 * The index to set for.
-	 * </p>
-	 * @param newval string <p>
-	 * The new value to store at the index.
-	 * </p>
-	 * @return void 
-	 */
-	public function offsetSet( $index, $newval ) {
-	    return $this->results->offsetSet( $index, $newval );
-	}
-
-	/**
-	 * Unset value for an offset
-	 * @link http://www.php.net/manual/en/arrayiterator.offsetunset.php
-	 * @param index string <p>
-	 * The offset to unset.
-	 * </p>
-	 * @return void 
-	 */
-	public function offsetUnset( $index ) {
-	    return $this->results->offsetUnset( $index );
-	}
-
-	/**
-	 * Append an element
-	 * @link http://www.php.net/manual/en/arrayiterator.append.php
-	 * @param value mixed <p>
-	 * The value to append.
-	 * </p>
-	 * @return void 
-	 */
-	public function append( $value ) {
-	    return $this->results->append( $value );
-	}
-
-	/**
-	 * Rewind array back to the start
-	 * @link http://www.php.net/manual/en/arrayiterator.rewind.php
-	 * @return void 
-	 */
-	public function rewind(){
-	    return $this->results->rewind();
-	}
-
-	/**
-	 * Return current array entry
-	 * @link http://www.php.net/manual/en/arrayiterator.current.php
-	 * @return mixed The current array entry.
-	 */
-	public function current() {
-	    return $this->getResults()->current();
-	}
-
-	/**
-	 * Return current array key
-	 * @link http://www.php.net/manual/en/arrayiterator.key.php
-	 * @return mixed The current array key.
-	 */
-	public function key() {
-	    return $this->getResults()->key();
-	}
-
-	/**
-	 * Move to next entry
-	 * @link http://www.php.net/manual/en/arrayiterator.next.php
-	 * @return void 
-	 */
-	public function next() {
-	    return $this->getResults()->next();
-	}
-
-	/**
-	 * Check whether array contains more entries
-	 * @link http://www.php.net/manual/en/arrayiterator.valid.php
-	 * @return bool 
-	 */
-	public function valid() {
-	    return $this->getResults()->valid();
-	}
-
-	/**
-	 * Seek to position
-	 * @link http://www.php.net/manual/en/arrayiterator.seek.php
-	 * @param position int <p>
-	 * The position to seek to.
-	 * </p>
-	 * @return void 
-	 */
-	public function seek( $position ) {
-	    return $this->getResults()->seek( $position );
+	public function getIterable() {
+		return $this->getResults();
 	}
 }

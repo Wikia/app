@@ -24,10 +24,10 @@ class Grouping extends Base
 	protected $host;
 	
 	/**
-	 * Constructor, uses DependencyContainer to pre-populate attributes.
+	 * Uses DependencyContainer to pre-populate attributes, and then configures stuff.
 	 * @param DependencyContainer $container
 	 */
-	public function __construct( DependencyContainer $container ) {
+	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject = $container->getResult();
 		$this->searchConfig       = $container->getConfig();
 		$this->interface          = $container->getInterface();
@@ -51,10 +51,9 @@ class Grouping extends Base
 	 * Sets a bunch of headers associated with wiki info
 	 */
 	protected function configureGlobals() {
-		if (! empty( $this->results[0] ) ) {
-			$doc = $this->results[0];
-			$cityId     = $doc->getCityId();
-			
+		$doc = end( $this->results ); // there's only one
+		if (! empty( $doc ) ) {
+			$cityId     = $doc['wid'];
 			$this->setHeader( 'cityId', $cityId )
 			     ->setHeader( 'cityTitle', $this->interface->getGlobalForWiki( 'wgSitename', $cityId ) )
 			     ->setHeader( 'cityUrl', $this->interface->getGlobalForWiki( 'wgServer', $cityId ) );
@@ -97,6 +96,26 @@ class Grouping extends Base
 	 */
 	public function getId() {
 		return $this->host;
+	}
+	
+	/**
+	 * Allows us to serialize some core values from an expected wiki for json requests
+	 * @param array $expectedFields
+	 * @return array
+	 */
+	public function toArray( $expectedFields = array( 'title', 'url' ) ) {
+		$result = array();
+		foreach ( $expectedFields as $field ) {
+			switch ( $field ) {
+				case 'title':
+					$result['title'] = $this->getHeader( 'cityTitle' );
+					break;
+				case 'url':
+					$result['url'] = $this->getHeader( 'cityUrl' );
+					break;
+			}
+		}
+		return $result;
 	}
 
 }

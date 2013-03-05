@@ -96,6 +96,14 @@ abstract class AbstractSelect
 	}
 	
 	/**
+	 * Allows us to get an array from search results rather than search result objects.
+	 * @return array
+	 */
+	public function searchAsApi() {
+		return $this->search()->toArray();
+	}
+	
+	/**
 	 * @return Ambigous <\Wikia\Search\Match\Article, \Wikia\Search\Match\Wiki, \Wikia\Search\false, boolean>
 	 */
 	public function getMatch() {
@@ -177,9 +185,13 @@ abstract class AbstractSelect
 	}
 	
 	/**
+	 * Used to register a filter query based on settings in the config.
 	 * Children can override this method optionally.
+	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
-	protected function registerFilterQueryForMatch() {}
+	protected function registerFilterQueryForMatch() {
+		return $this;
+	}
 	
 	/**
 	 * Configures result snippet highlighting
