@@ -48,7 +48,7 @@ class ArticlesApiController extends WikiaApiController {
 		$ids = null;
 
 		if ( !empty( $category )) {
-			$cat = Title::newFromText( $category, NS_CATEGORY );
+			$cat = Title::makeTitleSafe( NS_CATEGORY, $category, false, false );
 
 			if ( !$cat->exists() ) {
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
@@ -260,8 +260,7 @@ class ArticlesApiController extends WikiaApiController {
 		$offset = $this->request->getVal( 'offset', '' );
 
 		if ( !empty( $category ) ) {
-			//if $category does not have Category: in it, add it as API needs it
-			$category = Title::newFromText( $category, NS_CATEGORY );
+			$category = Title::makeTitleSafe( NS_CATEGORY, $category, false, false );
 
 			if ( !is_null( $category ) ) {
 				if ( !empty( $namespaces ) ) {
@@ -403,7 +402,6 @@ class ArticlesApiController extends WikiaApiController {
 			$articles = explode( ',', $articles );
 			$ids = array();
 
-
 			foreach ( $articles as $i ) {
 				//data is cached on a per-article basis
 				//to avoid one article requiring purging
@@ -416,11 +414,12 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$i] = $cache;
 				}
 			}
+
 			if ( count( $ids ) > 0 ) {
 				$titles = Title::newFromIDs( $ids );
 			}
 		}
-		
+
 		if ( !empty( $titleKeys ) ) {
 			$paramtitles = explode( ',', $titleKeys );
 			if ( count( $paramtitles ) > 0 ) {
@@ -438,20 +437,23 @@ class ArticlesApiController extends WikiaApiController {
 				$revId = $t->getLatestRevID();
 				$rev = Revision::newFromId( $revId );
 
-				$collection[$id] = [
-					'title' => $t->getText(),
-					'ns' => $t->getNamespace(),
-					'url' => $t->getLocalURL(),
-					'revision' => [
-						'id' => $revId,
-						'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
-						'timestamp' => $this->wf->Timestamp( TS_UNIX, $rev->getTimestamp() )
-					]
-				];
+				if ( !empty( $rev ) ) {
+					$collection[$id] = [
+						'title' => $t->getText(),
+						'ns' => $t->getNamespace(),
+						'url' => $t->getLocalURL(),
+						'revision' => [
+							'id' => $revId,
+							'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
+							'timestamp' => $this->wf->Timestamp( TS_UNIX, $rev->getTimestamp() )
+						]
+					];
 
-				$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
+					$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 
-				$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
+					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
+				}
+
 			}
 
 			$titles = null;

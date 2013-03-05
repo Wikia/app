@@ -755,7 +755,7 @@ function WMU_displayDetails(responseText) {
 		$('#ImageUploadLayoutLeft').attr('checked', true);
 		$('#ImageUploadFullOption').attr('checked', true);
 
-		WMU_insertImage($.getEvent(),'skip');
+		WMU_insertImage('skip');
 	}else if($('#ImageUploadThumb').length) {
 		WMU_orgThumbSize = null;
 		var image = $('#ImageUploadThumb').children(':first');
@@ -851,7 +851,7 @@ function WMU_insertPlaceholder( box ) {
 	$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 }
 
-function WMU_insertImage(e, type) {
+function WMU_insertImage(type) {
 	var params = Array();
 	params.push('type='+type);
 	params.push('mwname='+$('#ImageUploadMWname').val());
