@@ -116,7 +116,7 @@ class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest {
 		    ->with   ( 'url' )
 		    ->will   ( $this->returnValue( 'foo.wikia.com' ) )
 		;
-		$this->proxyClass( 'Wikia\Search\ResultSet\Factory', $mockFactory );
+		$this->proxyClass( 'Wikia\Search\ResultSet\Factory', $mockFactory, 'getInstance' );
 		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockDc );
 		$this->mockApp();
 		$set = new ReflectionMethod( 'Wikia\Search\ResultSet\GroupingSet', 'setResultGroupings' );;
@@ -191,7 +191,7 @@ class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest {
 		    ->with   ( 'url' )
 		    ->will   ( $this->returnValue( 'foo.wikia.co' ) )
 		;
-		$this->proxyClass( 'Wikia\Search\ResultSet\Factory', $mockFactory );
+		$this->proxyClass( 'Wikia\Search\ResultSet\Factory', $mockFactory, 'getInstance' );
 		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockDc );
 		$this->mockApp();
 		$set = new ReflectionMethod( 'Wikia\Search\ResultSet\GroupingSet', 'prependWikiMatchIfExists' );;
