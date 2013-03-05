@@ -132,6 +132,7 @@ class UserBlock {
 		if ( $row !== false ) {
 			$blockData = array(
 				'id' => $row->p_id,
+				'authorId' => $row->p_author_id, /* uses in PhalanxII */
 				'author_id' => $row->p_author_id,
 				'text' => $row->p_text,
 				'type' => $row->p_type,

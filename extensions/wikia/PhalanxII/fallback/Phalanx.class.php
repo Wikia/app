@@ -232,6 +232,7 @@ class PhalanxFallback {
 			$block = array(
 				'id' => $row->p_id,
 				'author_id' => $row->p_author_id,
+				'authorId' => $row->p_author_id, /* uses in PhalanxII */
 				'text' => $row->p_text,
 				'type' => $row->p_type,
 				'timestamp' => $row->p_timestamp,

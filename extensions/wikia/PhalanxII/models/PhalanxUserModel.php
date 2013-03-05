@@ -11,10 +11,6 @@ class PhalanxUserModel extends PhalanxModel {
 		return ( !empty( $this->text ) ) ? $this->text : array( $this->user->getName(), $this->ip );
 	}
 	
-	public function isOk() {
-		return $this->user->isAllowed( 'phalanxexempt' );
-	}
-
 	public function userBlock( $type = 'exact' ) {
 		$this->wf->profileIn( __METHOD__ );
 	

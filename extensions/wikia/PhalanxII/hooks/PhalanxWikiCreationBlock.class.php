@@ -18,7 +18,7 @@ class PhalanxWikiCreationBlock extends WikiaObject {
 
 		$text = trim( $text );
 		$phalanxModel = F::build( 'PhalanxTextModel', array( $text ) );
-		$ret = $phalanxModel->wiki_creation();
+		$ret = $phalanxModel->match_wiki_creation();
 		
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;

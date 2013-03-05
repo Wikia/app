@@ -22,7 +22,12 @@ abstract class PhalanxModel extends WikiaObject {
 		$this->ip = $this->wg->request->getIp();
 	}
 
-	abstract public function isOk();
+	public function isOk() {
+		return ( 
+			$this->wg->User->isAllowed( 'phalanxexempt' ) || 
+			( !empty( $this->user ) && $this->user->isAllowed( 'phalanxexempt' ) ) 
+		);
+	}
 
 	public function __call($name, $args) {
 		$method = substr($name, 0, 3);
@@ -71,7 +76,7 @@ abstract class PhalanxModel extends WikiaObject {
 				->setLimit(1)
 				->setUser( $isUser ? $this->user : null )
 				->match( $type, $content, $this->getLang() );
-
+				
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
 				if ( is_object( $result ) && isset( $result->id ) && $result->id > 0 ) {

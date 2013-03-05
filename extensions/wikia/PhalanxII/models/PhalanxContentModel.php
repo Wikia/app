@@ -10,7 +10,11 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function isOk() { 
-		return ( !( $this->title instanceof Title ) || ( $this->title->getPrefixedText() == self::SPAM_WHITELIST_NS_TITLE ) );
+		return ( 
+			$this->wg->User->isAllowed( 'phalanxexempt' ) || 
+			!( $this->title instanceof Title ) || 
+			( $this->title->getPrefixedText() == self::SPAM_WHITELIST_NS_TITLE )  
+		);
 	}
 
 	public function getText() {
@@ -76,6 +80,11 @@ class PhalanxContentModel extends PhalanxModel {
 		return $msg;
 	}
 	
+	public function textBlock() {
+		$this->logBlock();
+		return $this->block->text;
+	}
+	
 	public function match_summary( $summary ) {
 		return $this->setText( $summary )->match( "summary" );
 	} 
@@ -86,7 +95,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function match_content( $textbox ) {
-		return $this->setText( $textbox )->match( "content" );
+		return $this->setText( $textbox )->match( "content" ); 
 	}
 	
 	public function match_content_old() {

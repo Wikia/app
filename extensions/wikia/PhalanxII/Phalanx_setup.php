@@ -60,6 +60,7 @@ $phalanxhooks = array(
 			'EditFilter'         => 'editFilter',
 			'AbortMove'          => 'abortMove',
 			'EditContent'        => 'editContent',
+			'CheckContent'       => 'checkContent',
 		),
 	'PhalanxTitleBlock' =>
 		array(
@@ -83,6 +84,7 @@ $phalanxhooks = array(
 		)
 );
 
+// don't bother initializing hooks if user is immune to Phalanx
 foreach ( $phalanxhooks as $class => $hooks ) {
 	foreach ( $hooks as $name => $method ) {
 		$app->registerHook( $name, $class, $method );

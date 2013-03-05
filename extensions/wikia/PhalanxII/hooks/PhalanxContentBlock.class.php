@@ -111,4 +111,19 @@ class PhalanxContentBlock extends WikiaObject {
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;
 	}
+	
+	public function checkContent( $textbox, &$msg ) {
+		$this->wf->profileIn( __METHOD__ );
+
+		$phalanxModel = F::build('PhalanxContentModel', array( $this->wg->Title ) );
+		
+		$ret = $this->editContent( $textbox, $msg, $phalanxModel );
+		
+		if ( $ret === false ) {
+			$msg = $phalanxModel->textBlock();
+		}
+		
+		$this->wf->profileOut( __METHOD__ );
+		return $ret;
+	}
 }
