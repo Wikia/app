@@ -4,6 +4,22 @@ require_once( 'WikiaSearchBaseTest.php' );
 
 class WikiaSearchResultSetDependenciesTest extends WikiaSearchBaseTest {
 	
+	public function testFactoryConstruct() {
+		$instance = new ReflectionProperty( 'Wikia\Search\ResultSet\Factory', 'instance' );
+		$instance->setAccessible( true );
+		$instance->setValue( null );
+		$factory = Wikia\Search\ResultSet\Factory::getInstance();
+		$this->assertInstanceOf(
+				'Wikia\Search\ResultSet\Factory',
+				$factory
+		);
+		$this->assertAttributeInstanceOf(
+				'Wikia\Search\ResultSet\Factory',
+				'instance',
+				'Wikia\Search\ResultSet\Factory'
+		);
+	}
+	
 	/**
 	 * @covers Wikia\Search\ResultSet\Factory::get
 	 */
