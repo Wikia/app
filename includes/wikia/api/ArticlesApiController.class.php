@@ -48,7 +48,7 @@ class ArticlesApiController extends WikiaApiController {
 		$ids = null;
 
 		if ( !empty( $category )) {
-			$cat = Title::newFromText( $category, NS_CATEGORY );
+			$cat = Title::makeTitleSafe( NS_CATEGORY, $category, false, false );
 
 			if ( !$cat->exists() ) {
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
@@ -260,8 +260,7 @@ class ArticlesApiController extends WikiaApiController {
 		$offset = $this->request->getVal( 'offset', '' );
 
 		if ( !empty( $category ) ) {
-			//if $category does not have Category: in it, add it as API needs it
-			$category = Title::newFromText( $category, NS_CATEGORY );
+			$category = Title::makeTitleSafe( NS_CATEGORY, $category, false, false );
 
 			if ( !is_null( $category ) ) {
 				if ( !empty( $namespaces ) ) {
