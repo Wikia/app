@@ -97,8 +97,40 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 		$this->assertEquals(array('foo'=>'bar', 'og:image' => $thumbUrl), $meta);
 	}
 
+	/*
+	 * Test if we don't try to generate thumbnail for user pages (bugid 98881)
+	 */
+	public function testUserNS() {
+		$mock_cache = $this->getMock('stdClass', array('get', 'set'));
+		$mock_cache->expects($this->never())
+			->method('get');
+		$mock_cache->expects($this->never())
+			->method('set');
+
+		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
+
+		$this->mockApp();
+
+		$mockedTitle = $this->getMock('Title', array('getNamespace') );
+		$mockedTitle->expects($this->any())
+			->method('getNamespace')
+			->will($this->returnValue(NS_USER));
+
+		$mocked = $this->getMock('SEOTweaksGlobalHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeKey') );
+		$mock_cache->expects($this->any())
+			->method('makeKey')
+			->will($this->returnValue('bar'));
+		$mocked->expects($this->never())
+			->method('getFirstArticleImage');
+		$mocked->expects($this->never())
+			->method('getThumbFromFile');
+		$meta = array('foo'=>'bar');
+
+		$mocked->onOpenGraphMetaHeaders($meta, $mockedTitle);
+		$this->assertEquals(array('foo'=>'bar'), $meta);
+	}
 	/**
-	 * As two test above cover all the generation cases, we right now use the cached value to check the
+	 * As tests above cover all the generation cases, we right now use the cached value to check the
 	 * behaviour in remaining scenarios
 	 * @dataProvider getCacheDataProvider
 	 */
