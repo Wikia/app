@@ -78,4 +78,126 @@ class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 			array(5, 'quote', "{required: '#MarketingToolboxphoto5:filled,#MarketingToolboxtitle5:filled,#MarketingToolboxusersUrl5:filled,#MarketingToolboxurl5:filled'}"),
 		);
 	}
+
+	/**
+	 * @dataProvider getStructuredDataDataProvider
+	 */
+	public function testGetStructuredData($inputData, $expectedData) {
+		$boxesCount = $inputData['boxesCount'];
+		
+		$modelMock = $this->getMock(
+			'MarketingToolboxFromthecommunityModel',
+			array('getBoxesCount')
+		);
+		$modelMock->expects($this->once())
+			->method('getBoxesCount')
+			->will($this->returnValue($boxesCount));
+		
+		$moduleMock = $this->getMock(
+			'MarketingToolboxModuleFromthecommunityService',
+			array('getImageInfo', 'getModel'),
+			array('en', 1, 1)
+		);
+		$moduleMock->expects($this->any())
+			->method('getModel')
+			->will($this->returnValue($modelMock));
+		
+		$moduleMockedDataMap = array();
+		for( $i = 1; $i <= $boxesCount; $i++ ) {
+			$moduleMockedDataMap[] =  array(
+				$inputData['photo' . $i],
+				0,
+				(object) array(
+					'url' => $expectedData['entries'][$i - 1]['imageUrl'],
+					'title' => $expectedData['entries'][$i - 1]['imageAlt']
+				)
+			);
+		}
+		
+		$moduleMock->expects($this->any())
+			->method('getImageInfo')
+			->will($this->returnValueMap($moduleMockedDataMap));
+		
+		$structuredData = $moduleMock->getStructuredData($inputData);
+		$this->assertEquals($expectedData, $structuredData);
+	}
+
+	public function getStructuredDataDataProvider() {
+		$out = array();
+
+		$inputData = array(
+			'boxesCount' => 1,
+			'photo1' => 'First SLS Roadster.jpg',
+			'title1' => 'Rabbids land',
+			'usersUrl1' => 'http://www.assassinscreed.wikia.com/wiki/User:Master_Sima_Yi',
+			'quote1' => 'Just a simple description. Visit <a href="nandytest.wikia.com/">nAndy wiki</a> to order some food!',
+			'url1' => 'http://www.wikia.com',
+			'wikiUrl1' => 'assassinscreed.wikia.com',
+			'UserName1' => 'Master Sima Yi',
+		);
+
+		$expectedData = array(
+			'entries' => array(
+				array(
+					'articleTitle' => 'Rabbids land',
+					'articleUrl' => 'http://www.wikia.com',
+					'imageAlt' => 'First SLS Roadster.jpg',
+					'imageUrl' => 'http://example.com/First_SLS_Roadster.jpg',
+					'userName' => 'Master Sima Yi',
+					'userUrl' => 'http://www.assassinscreed.wikia.com/wiki/User:Master_Sima_Yi',
+					'wikiUrl' => 'assassinscreed.wikia.com',
+					'quote' => 'Just a simple description. Visit <a href="nandytest.wikia.com/">nAndy wiki</a> to order some food!',
+				),
+			)
+		);
+
+		$out[] = array($inputData, $expectedData);
+
+		$inputData = array(
+			'boxesCount' => 2,
+			'photo1' => 'First SLS Roadster.jpg',
+			'title1' => 'Rabbids land',
+			'usersUrl1' => 'http://www.assassinscreed.wikia.com/wiki/User:Master_Sima_Yi',
+			'quote1' => 'Just a simple description. Visit <a href="nandytest.wikia.com/">nAndy wiki</a> to order some food!',
+			'url1' => 'http://www.wikia.com',
+			'wikiUrl1' => 'assassinscreed.wikia.com',
+			'UserName1' => 'Master Sima Yi',
+			'photo2' => 'FakeImage.png',
+			'title2' => 'Kotleciarnia',
+			'usersUrl2' => 'http://www.nandytest.wikia.com/wiki/User:Andrzej_Łukaszewski',
+			'quote2' => 'Pure awesomeness...',
+			'url2' => 'http://www.nandytest.wikia.com',
+			'wikiUrl2' => 'nandytest.wikia.com',
+			'UserName2' => 'Andrzej Łukaszewski',
+		);
+
+		$expectedData = array(
+			'entries' => array(
+				array(
+					'articleTitle' => 'Rabbids land',
+					'articleUrl' => 'http://www.wikia.com',
+					'imageAlt' => 'First SLS Roadster.jpg',
+					'imageUrl' => 'http://example.com/First_SLS_Roadster.jpg',
+					'userName' => 'Master Sima Yi',
+					'userUrl' => 'http://www.assassinscreed.wikia.com/wiki/User:Master_Sima_Yi',
+					'wikiUrl' => 'assassinscreed.wikia.com',
+					'quote' => 'Just a simple description. Visit <a href="nandytest.wikia.com/">nAndy wiki</a> to order some food!',
+				),
+				array(
+					'articleTitle' => 'Kotleciarnia',
+					'articleUrl' => 'http://www.nandytest.wikia.com',
+					'imageAlt' => 'FakeImage.png',
+					'imageUrl' => 'http://example.com/FakeImage.png',
+					'userName' => 'Andrzej Łukaszewski',
+					'userUrl' => 'http://www.nandytest.wikia.com/wiki/User:Andrzej_Łukaszewski',
+					'wikiUrl' => 'nandytest.wikia.com',
+					'quote' => 'Pure awesomeness...',
+				),
+			)
+		);
+
+		$out[] = array($inputData, $expectedData);
+
+		return $out;
+	}
 }
