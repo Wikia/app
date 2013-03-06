@@ -101,7 +101,7 @@ var VideoPage = {
 		
 		$('.page-list-pagination').each(function() {
 			$el = $(this);
-			window.pagi = new Paginator($el);
+			new Paginator($el);
 		});
 
 		var moreInfoWrapper = $('.more-info-wrapper'),
