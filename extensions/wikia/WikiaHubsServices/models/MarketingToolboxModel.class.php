@@ -33,13 +33,11 @@ class MarketingToolboxModel extends WikiaModel {
 
 		$this->modules = array(
 			MarketingToolboxModuleSliderService::MODULE_ID => 'slider',
-			MarketingToolboxModulePulseService::MODULE_ID => 'pulse',
 			MarketingToolboxModuleWikiaspicksService::MODULE_ID => 'wikias-picks',
 			MarketingToolboxModuleFeaturedvideoService::MODULE_ID => 'featured-video',
 			MarketingToolboxModuleExploreService::MODULE_ID => 'explore',
 			MarketingToolboxModuleFromthecommunityService::MODULE_ID => 'from-the-community',
 			MarketingToolboxModulePollsService::MODULE_ID => 'polls',
-			MarketingToolboxModuleTop10listService::MODULE_ID => 'top10-list',
 			MarketingToolboxModulePopularvideosService::MODULE_ID => 'popular-videos'
 		);
 
