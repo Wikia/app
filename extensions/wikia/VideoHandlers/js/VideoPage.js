@@ -24,7 +24,7 @@ Paginator.prototype = {
 				if($target.hasClass('right')) {
 					self.currentPage++;
 				} else if ($target.hasClass('left')) {
-					self.currentPage--
+					self.currentPage--;
 				}
 				self.updatePager();
 				self.updateContent();
@@ -106,14 +106,17 @@ var VideoPage = {
 
 		var moreInfoWrapper = $('.more-info-wrapper'),
 			$table = $('#mw_metadata');
+			
+		// temporary hiding from UI.  remove this after the GlobalUsage hook is removed as well
+		$('#globalusage, #mw-imagepage-section-globalusage').hide();
 		
 		$('#SeeMore').on('click', function(e) {
 			e.preventDefault();
 			$(this).toggleClass('toggled');
 			moreInfoWrapper.toggleClass('show');
 			if(moreInfoWrapper.hasClass('show')) {
-				moreInfoWrapper.slideDown('fast');
 				$table.addClass('expanded').removeClass('collapsed');
+				moreInfoWrapper.slideDown('fast');
 			} else {
 				moreInfoWrapper.slideUp('fast');
 			}
