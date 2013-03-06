@@ -11,6 +11,11 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	const MODULE_ID = 6;
 
 	static $fieldNames = array('photo', 'title', 'usersUrl', 'quote', 'url');
+	
+	/**
+	 * @var $model MarketingToolboxFromthecommunityModel
+	 */
+	protected $model = null;
 
 	protected function getFormFields() {
 		$fields = array();
@@ -232,7 +237,11 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	}
 	
 	public function getModel() {
-		return new MarketingToolboxFromthecommunityModel();
+		if( is_null($this->model) ) {
+			$this->model = new MarketingToolboxFromthecommunityModel();
+		}
+		
+		return $this->model;
 	}
 	
 }
