@@ -305,10 +305,12 @@ $config['gameguides_scss'] = array(
 
 
 //this combines couple of WikiaMobile groups to make it possible to load all js via one request
+//also unfortunately loads bit more than needed not to change WikiaMobile assets too much
 $config['gameguides_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
+		'//extensions/wikia/GameGuides/js/initGameGuides.js',
 		'#group_wikiamobile_js_head',
 
 		//libraries/frameworks
@@ -324,12 +326,10 @@ $config['gameguides_js'] = array(
 		'//resources/wikia/modules/deferred.js',
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/location.js',
-		'//resources/wikia/modules/localStorage.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
+		'//resources/wikia/modules/log.js',
 
 		//tracker
 		'#group_tracker_js',

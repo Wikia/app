@@ -171,11 +171,11 @@
 		function Sections(){
 			this.open = function(id){
 				s.open(id, true);
-			}
+			};
 			this.close = s.close;
 			this.toggle = function(id) {
 				s.toggle(id, true);
-			}
+			};
 		}
 
 		Ponto.PontoBaseHandler.derive(Sections);
@@ -185,6 +185,14 @@
 		};
 
 		w.Sections = Sections;
+
+		s.addEventListener('open', function(){
+			document.documentElement.style.minHeight = document.documentElement.offsetHeight + 'px';
+		});
+
+		s.addEventListener('close', function(){
+			document.documentElement.style.minHeight = 0;
+		});
 	});
 
 	window.addEventListener('DOMContentLoaded', function(){
@@ -203,4 +211,5 @@
 			);
 		});
 	});
+
 })(document.documentElement, this);

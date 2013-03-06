@@ -21,9 +21,9 @@ h1, h2, h3{
 .artSec {
 	position: relative;
 	padding-bottom: 30px;
+	overflow: hidden;
 
 	&.open {
-		overflow: hidden;
 		display: block;
 	}
 
@@ -34,8 +34,8 @@ h1, h2, h3{
 
 	&::after{
 		content: '';
-		display: block; 
-		height: 0; 
+		display: block;
+		height: 0;
 		font-size:0;
 		clear: both;
 		visibility:hidden;
