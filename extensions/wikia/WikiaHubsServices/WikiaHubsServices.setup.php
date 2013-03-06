@@ -12,7 +12,6 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 $app->registerClass('MarketingToolboxModel', $dir . 'models/MarketingToolboxModel.class.php');
-$app->registerClass('MarketingToolboxTop10listModel', $dir . 'models/MarketingToolboxTop10listModel.class.php');
 $app->registerClass('MarketingToolboxExploreModel', $dir . 'models/MarketingToolboxExploreModel.class.php');
 $app->registerClass('MarketingToolboxFeaturedvideoModel', $dir . 'models/MarketingToolboxFeaturedvideoModel.class.php');
 $app->registerClass('MarketingToolboxPollsModel', $dir . 'models/MarketingToolboxPollsModel.class.php');
@@ -23,9 +22,7 @@ $app->registerClass('MarketingToolboxImageModel', $dir . 'models/MarketingToolbo
 
 $app->registerClass('MarketingToolboxModuleService', $dir . 'modules/MarketingToolboxModuleService.class.php');
 $app->registerClass('MarketingToolboxModuleSliderService', $dir . 'modules/MarketingToolboxModuleSliderService.class.php');
-$app->registerClass('MarketingToolboxModulePulseService', $dir . 'modules/MarketingToolboxModulePulseService.class.php');
 $app->registerClass('MarketingToolboxModuleWikiaspicksService', $dir . 'modules/MarketingToolboxModuleWikiaspicksService.class.php');
-$app->registerClass('MarketingToolboxModuleTop10listService', $dir . 'modules/MarketingToolboxModuleTop10listService.class.php');
 $app->registerClass('MarketingToolboxModulePopularvideosService', $dir . 'modules/MarketingToolboxModulePopularvideosService.class.php');
 $app->registerClass('MarketingToolboxModuleExploreService', $dir . 'modules/MarketingToolboxModuleExploreService.class.php');
 $app->registerClass('MarketingToolboxModuleFeaturedvideoService', $dir . 'modules/MarketingToolboxModuleFeaturedvideoService.class.php');

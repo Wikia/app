@@ -111,74 +111,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		return $module->render($moduleData);
 	}
 
-	public function slider() {
-		/** @var $sliderModule WikiaHubsV2SliderModule */
-		$sliderModule = F::build('WikiaHubsV2SliderModule');
-		$this->initModule($sliderModule);
-		$sliderData = $sliderModule->loadData();
-
-		if ($this->format == 'json') {
-			$this->images = $sliderData['images'];
-		} else {
-			$this->slider = $this->model->generateSliderWikiText($sliderData['images']);
-		}
-	}
-
-	public function pulse() {
-		/** @var $pulseModule WikiaHubsV2PulseModule */
-		$pulseModule = F::build('WikiaHubsV2PulseModule');
-		$this->initModule($pulseModule);
-		$pulseData = $pulseModule->loadData();
-
-		$this->title = !empty($pulseData['title']) ? $pulseData['title'] : null;
-		$this->socialmedia = !empty($pulseData['socialmedia']) ? $pulseData['socialmedia'] : null;
-		$this->boxes = !empty($pulseData['boxes']) ? $pulseData['boxes'] : null;
-	}
-
-	public function featuredvideo() {
-		$videoData = $this->model->getDataForModuleFeaturedVideo();
-		$this->headline = $videoData['headline'];
-		$this->sponsor = $videoData['sponsor'];
-		$this->sponsorThumb = !empty($videoData['sponsorthumb']) ? $this->model->generateImageXml($videoData['sponsorthumb']) : null;
-		$this->description = $videoData['description'];
-		$this->video = $this->model->parseVideoData($videoData);
-	}
-
-	public function popularvideos() {
-		$videosData = $this->model->getDataForModulePopularVideos();
-		$this->headline = $videosData['headline'];
-		$this->videos = $videosData['videos'];
-	}
-
-	/**
-	 * @requestParam Array $video
-	 */
-	public function renderCaruselElement() {
-		$video = $this->request->getVal('video', false);
-		$this->video = $this->model->getVideoElementData($video);
-	}
-
-	public function topwikis() {
-		$wikiData = $this->model->getDataForModuleTopWikis();
-		$this->headline = $wikiData['headline'];
-		$this->description = $wikiData['description'];
-		$this->wikis = $wikiData['wikis'];
-	}
-
-	public function tabber() {
-		$tabData = $this->model->getDataForModuleTabber();
-		$this->headline = $tabData['headline'];
-		if ($this->format == 'json') {
-			$this->tabdata = $tabData;
-		} else {
-			$this->tabs = $this->model->generateTabberWikiText($tabData);
-		}
-	}
-
-	public function wikitextmodule() {
-		$this->wikitextmoduledata = $this->model->getDataForModuleWikitext();
-	}
-
 	public function fromthecommunity() {
 		$fromTheCommunityData = $this->model->getDataForModuleFromTheCommunity();
 		$this->headline = $fromTheCommunityData['headline'];
@@ -229,14 +161,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->model->setDate($date);
 		$this->model->setLang($lang);
 		$this->model->setVertical($this->verticalId);
-	}
-
-	protected function initModule(WikiaHubsV2Module $module) {
-		$date = $this->getRequest()->getVal('date', date('Y-m-d'));
-		$lang = $this->getRequest()->getVal('cityId', $this->wg->cityId);
-		$module->setDate($date);
-		$module->setLang($lang);
-		$module->setVertical($this->verticalId);
 	}
 
 	/**
