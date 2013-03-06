@@ -210,13 +210,15 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		
 		$entries = array();
 		for($i = 1; $i <= $boxesCount; $i++) {
-			$imageData = $this->getImageInfo($data['photo' . $i]);
+			if( !empty($data['photo' . $i]) ) {
+				$imageData = $this->getImageInfo($data['photo' . $i]);
+			}
 			
 			$entries[] = array(
 				'articleTitle' => $data['title' . $i],
 				'articleUrl' => $data['url' . $i],
-				'imageAlt' => $imageData->title,
-				'imageUrl' => $imageData->url,
+				'imageAlt' => empty($imageData->title) ? null : $imageData->title,
+				'imageUrl' => empty($imageData->url) ? null : $imageData->url,
 				'userName' => $data['UserName' . $i],
 				'userUrl' => $data['usersUrl' . $i],
 				'wikiUrl' => $data['wikiUrl' . $i],
