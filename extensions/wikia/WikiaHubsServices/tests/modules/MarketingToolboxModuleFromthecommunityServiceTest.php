@@ -104,14 +104,16 @@ class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 		
 		$moduleMockedDataMap = array();
 		for( $i = 1; $i <= $boxesCount; $i++ ) {
-			$moduleMockedDataMap[] =  array(
-				$inputData['photo' . $i],
-				0,
-				(object) array(
-					'url' => $expectedData['entries'][$i - 1]['imageUrl'],
-					'title' => $expectedData['entries'][$i - 1]['imageAlt']
-				)
-			);
+			if( isset($inputData['photo' . $i]) ) {
+				$moduleMockedDataMap[] =  array(
+					$inputData['photo' . $i],
+					0,
+					(object) array(
+						'url' => $expectedData['entries'][$i - 1]['imageUrl'],
+						'title' => $expectedData['entries'][$i - 1]['imageAlt']
+					)
+				);
+			}
 		}
 		
 		$moduleMock->expects($this->any())
