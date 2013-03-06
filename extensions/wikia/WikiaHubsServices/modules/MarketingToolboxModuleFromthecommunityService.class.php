@@ -11,6 +11,11 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	const MODULE_ID = 6;
 
 	static $fieldNames = array('photo', 'title', 'usersUrl', 'quote', 'url');
+	
+	/**
+	 * @var $model MarketingToolboxFromthecommunityModel
+	 */
+	protected $model = null;
 
 	protected function getFormFields() {
 		$fields = array();
@@ -210,13 +215,15 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		
 		$entries = array();
 		for($i = 1; $i <= $boxesCount; $i++) {
-			$imageData = $this->getImageInfo($data['photo' . $i]);
+			if( !empty($data['photo' . $i]) ) {
+				$imageData = $this->getImageInfo($data['photo' . $i]);
+			}
 			
 			$entries[] = array(
 				'articleTitle' => $data['title' . $i],
 				'articleUrl' => $data['url' . $i],
-				'imageAlt' => $imageData->title,
-				'imageUrl' => $imageData->url,
+				'imageAlt' => empty($imageData->title) ? null : $imageData->title,
+				'imageUrl' => empty($imageData->url) ? null : $imageData->url,
 				'userName' => $data['UserName' . $i],
 				'userUrl' => $data['usersUrl' . $i],
 				'wikiUrl' => $data['wikiUrl' . $i],
@@ -230,7 +237,11 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	}
 	
 	public function getModel() {
-		return new MarketingToolboxFromthecommunityModel();
+		if( is_null($this->model) ) {
+			$this->model = new MarketingToolboxFromthecommunityModel();
+		}
+		
+		return $this->model;
 	}
 	
 }
