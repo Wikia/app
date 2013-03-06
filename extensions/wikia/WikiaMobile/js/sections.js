@@ -139,22 +139,22 @@ define('sections', ['JSMessages'], function(msg){
 	}
 
 	function find(heading){
+		var h2;
+
 		if(typeof heading == 'string') {
 			heading = d.getElementById(heading.replace(/ /g, '_'));
 		}
 
 		if(heading) {
-			var h2 = heading;
+			h2 = heading;
 
 			//find in what section is the header
-			while(!h2.nodeName.match(/H[12]/)){
+			while(h2 && !h2.nodeName.match(/H[12]/)){
 				h2 = (heading.parentNode.className.indexOf('artSec') > -1) ? h2.parentNode.previousElementSibling : h2.parentNode;
 			}
-
-			return [heading, h2];
 		}
 
-		return [];
+		return [heading, h2];
 	}
 
 	function findPos(obj) {
