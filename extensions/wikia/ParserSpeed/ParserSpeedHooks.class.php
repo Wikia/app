@@ -10,6 +10,7 @@ class ParserSpeedHooks extends WikiaObject {
 				$title = $article->getTitle();
 				$fields = array(
 					'wikiId' => intval($this->wg->CityId),
+					'databaseName' => $this->wg->DBname,
 					'articleId' => $title->getArticleID(),
 					'namespaceId' => $title->getNamespace(),
 					'articleTitle' => $title->getText(),
