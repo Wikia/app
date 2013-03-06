@@ -140,7 +140,7 @@ define('sections', ['JSMessages'], function(msg){
 
 	function find(heading){
 		if(typeof heading == 'string') {
-			heading = d.getElementById(heading.replace(/ /, '_'));
+			heading = d.getElementById(heading.replace(/ /g, '_'));
 		}
 
 		if(heading) {
