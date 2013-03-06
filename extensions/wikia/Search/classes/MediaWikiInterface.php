@@ -571,6 +571,11 @@ class MediaWikiInterface
 		return $item['abstract'];
 	}
 	
+	public function getHubForWikiId( $wikiId ) {
+		$cat = \WikiFactory::getCategory( $wikiId );
+		return is_object( $cat ) ? $cat->cat_name : $cat;
+	}
+	
 	/**
 	 * Returns the appropriately formatted timestamp for the most recent revision of a given page.
 	 * @param int $pageId
