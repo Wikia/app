@@ -4,7 +4,7 @@
 		<?= F::app()->renderView( 'WikiaStyleGuideForm', 'index', array('form' => $formData) ); ?>
 	</div>
 	<div class="success-view">
-		<p class="successMessage"></p>
+		<p class="success-message"><?= $successMessage; ?></p>
 		<div class="close-button">
 			<button class="wikia-button close"><?= wfMessage('ok')->text(); ?></button>
 		</div>
