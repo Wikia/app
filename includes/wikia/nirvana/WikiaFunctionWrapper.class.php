@@ -11,6 +11,7 @@
  *
  * //helpers for PHP Lint
  * @method MsgForContent
+ * @method Message Message
  * @method LoadExtensionMessages
  * @method RenderModule
  * @method RunHooks
@@ -19,7 +20,6 @@
  * @method BlankImgUrl
  * @method memcKey
  * @method sharedMemcKey
- * @method SharedMemcKey
  * @method PaginateArray
  * @method debug
  * @method ReadOnly
