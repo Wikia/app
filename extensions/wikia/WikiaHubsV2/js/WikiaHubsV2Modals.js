@@ -37,9 +37,8 @@ var SuggestModalWikiaHubsV2 = {
 			callback: function (html) {
 				var modal = $(html).makeModal({width: 490, onClose: SuggestModalWikiaHubsV2.closeModal});
 				var form = modal.find('form');
-				var wikiaForm = new WikiaForm(form);
-				var successMessage = modal.find('.successMessage');
-				successMessage.hide();
+				var formView = modal.find('.form-view');
+				var successView = modal.find('.success-view');
 
 				// show submit button
 				SuggestModalWikiaHubsV2.showSubmit(modal);
@@ -65,10 +64,8 @@ var SuggestModalWikiaHubsV2 = {
 					});
 
 					$().log('suggestArticle modal submit');
-					form.hide();
-					successMessage
-						.text( $.msg('wikiahubs-suggest-article-success') )
-						.show();
+					formView.hide();
+					successView.show();
 				});
 	
 				modal.find('button.cancel').click(function (e) {
