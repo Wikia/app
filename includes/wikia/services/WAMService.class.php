@@ -152,9 +152,12 @@ class WAMService extends Service {
 	}
 
 	protected function getWamIndexConditions ($currentTimestamp, $previousTimestamp, $wikiId, $verticalId, $wikiLang, $wikiWord) {
+		$currentTimestamp = $currentTimestamp ? $currentTimestamp : strtotime('00:00 -2 day');
+		$previousTimestamp = $previousTimestamp ? $previousTimestamp : $currentTimestamp - 60 * 60 * 24;
+
 		$conds = array(
-			'fw1.time_id = FROM_UNIXTIME(' . ($currentTimestamp ? $currentTimestamp : strtotime('00:00 -2 day')) . ')',
-			'fw2.time_id = FROM_UNIXTIME(' . ($previousTimestamp ? $previousTimestamp : strtotime('00:00 -3 day')) . ')'
+			'fw1.time_id = FROM_UNIXTIME(' . $currentTimestamp . ')',
+			'fw2.time_id = FROM_UNIXTIME(' . $previousTimestamp . ')'
 		);
 
 		if (!is_null($wikiId)) {
@@ -169,7 +172,11 @@ class WAMService extends Service {
 		if (!is_null($verticalId)) {
 			$conds ['dw.hub_id'] = $verticalId;
 		} else {
-			$conds ['dw.hub_id'] = array(2, 3, 9);
+			$conds ['dw.hub_id'] = array(
+				WikiFactoryHub::CATEGORY_ID_GAMING,
+				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+				WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+			);
 		}
 
 		if (!is_null($wikiLang)) {
