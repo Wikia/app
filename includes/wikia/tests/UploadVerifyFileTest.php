@@ -5,16 +5,23 @@ class TestUploadClass extends UploadBase {
 }
 
 class UploadVerifyFile extends WikiaBaseTest {
+	private $tmpPath = false;
+
+	public function tearDown() {
+		parent::tearDown();
+
+		if ($this->tmpPath !== false) {
+			unlink($this->tmpPath);
+		}
+	}
+
 	/**
 	 * @dataProvider uploadVerifyFileDataProvider
 	 */
 	public function testUploadVerifyFile($mime, $expectedReturnVal, $uploadContent = '') {
 		if ($uploadContent !== '') {
-			$tmpPath = tempnam("/tmp", "UploadTest");
-			file_put_contents($tmpPath, $uploadContent);
-		}
-		else {
-			$tmpPath = false;
+			$this->tmpPath = tempnam("/tmp", "UploadTest");
+			file_put_contents($this->tmpPath, $uploadContent);
 		}
 
 		$titleMock = $this->mockClassWithMethods('Title', array(
@@ -22,7 +29,7 @@ class UploadVerifyFile extends WikiaBaseTest {
 		));
 		$uploadMock = $this->mockClassWithMethods('TestUploadClass', array(
 			'getTitle' => $titleMock,
-			'getTempPath' => $tmpPath
+			'getTempPath' => $this->tmpPath
 		));
 
 		$status = array();
