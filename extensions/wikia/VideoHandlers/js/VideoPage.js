@@ -104,7 +104,8 @@ var VideoPage = {
 			window.pagi = new Paginator($el);
 		});
 
-		var moreInfoWrapper = $('.more-info-wrapper');
+		var moreInfoWrapper = $('.more-info-wrapper'),
+			$table = $('#mw_metadata');
 		
 		$('#SeeMore').on('click', function(e) {
 			e.preventDefault();
@@ -112,6 +113,7 @@ var VideoPage = {
 			moreInfoWrapper.toggleClass('show');
 			if(moreInfoWrapper.hasClass('show')) {
 				moreInfoWrapper.slideDown('fast');
+				$table.addClass('expanded').removeClass('collapsed');
 			} else {
 				moreInfoWrapper.slideUp('fast');
 			}
