@@ -23,9 +23,9 @@ abstract class PhalanxModel extends WikiaObject {
 	}
 
 	public function isOk() {
-		return ( 
-			$this->wg->User->isAllowed( 'phalanxexempt' ) || 
-			( !empty( $this->user ) && $this->user->isAllowed( 'phalanxexempt' ) ) 
+		return (
+			$this->wg->User->isAllowed( 'phalanxexempt' ) ||
+			( !empty( $this->user ) && $this->user->isAllowed( 'phalanxexempt' ) )
 		);
 	}
 
@@ -47,20 +47,20 @@ abstract class PhalanxModel extends WikiaObject {
 		}
 		return $result;
 	}
-	
+
 	protected function fallback( $method, $type ) {
 		$fallback = "{$method}_{$type}_old";
-		$ret = false; 
+		$ret = false;
 		if ( method_exists( $this, $fallback ) ) {
 			Wikia::log( __METHOD__, __LINE__, "Call method from previous version of Phalanx - check Phalanx service!\n" );
 			$ret = call_user_func( array( $this, $fallback ) );
 		}
 		return $ret;
 	}
-	
+
 	public function logBlock() {
 		$txt = $this->getText();
-		Wikia::log( __METHOD__, __LINE__, "Block '#{$this->block->id}' blocked '{" . ( ( is_array( $txt ) ) ? implode(",", $txt) : $txt ) . "}'.\n" );
+		wfDebug( __METHOD__ . ":". __LINE__. ": Block '#{$this->block->id}' blocked '{" . ( ( is_array( $txt ) ) ? implode(",", $txt) : $txt ) . "}'.\n", true );
 	}
 
 	public function match( $type, $method = 'logBlock' ) {
@@ -68,15 +68,15 @@ abstract class PhalanxModel extends WikiaObject {
 
 		if ( !$this->isOk() ) {
 			$isUser = isset( $this->user ) && ( $this->user->getName() == $this->wg->User->getName() );
-			
+
 			$content = $this->getText();
-				
+
 			# send request to service
 			$result = $this->service
 				->setLimit(1)
 				->setUser( $isUser ? $this->user : null )
 				->match( $type, $content, $this->getLang() );
-				
+
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
 				if ( is_object( $result ) && isset( $result->id ) && $result->id > 0 ) {
@@ -92,15 +92,15 @@ abstract class PhalanxModel extends WikiaObject {
 	}
 
 	public function check( $type ) {
-		# send request to service 
+		# send request to service
 		$result = $this->service->check( $type, $this->getText, $this->getLang() );
-		
+
 		if ( $result !== false ) {
 			# we have response from Phalanx service - 0/1
 			$ret = $result;
 		} else {
 			$ret = $this->fallback( "check", $type );
-		}				
+		}
 
 		return $ret;
 	}
