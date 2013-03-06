@@ -18,7 +18,6 @@
 			echo $app->getView( 'WikiaSearch', 'WikiaMobileResultList', array(
 				'currentPage'=> $currentPage,
 				'isInterWiki' => $isInterWiki,
-				'relevancyFunctionId' => $relevancyFunctionId,
 				'results' => $results,
 				'resultsPerPage' => $resultsPerPage,
 				'query' => $query));

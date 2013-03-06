@@ -15,6 +15,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var int
 	 */
 	const PAGES_PER_WINDOW = 5;
+
+
+	const RVERSION = 6;
 	
 	/**
 	 * @var Wikia\Search\QueryService\Factory
@@ -267,7 +270,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->wg->SuppressRail = true;
 		if ($this->isCorporateWiki() ) {
 			OasisController::addBodyClass('inter-wiki-search');
-			//$this->overrideTemplate('CrossWiki_index');
+			$this->overrideTemplate('CrossWiki_index');
 		}
 		$skin = $this->wg->User->getSkin();
 		if ( $skin instanceof SkinMonoBook ) {

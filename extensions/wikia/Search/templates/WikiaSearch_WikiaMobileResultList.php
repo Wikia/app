@@ -8,10 +8,9 @@ if ( count( $results ) ) {
 			'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 			'query' => $query,
 			'isInterWiki' => $isInterWiki,
-			'relevancyFunctionId' => $relevancyFunctionId
 		);
 
-        if($result instanceof WikiaSearchResultSet) {
+        if($result instanceof \Wikia\Search\ResultSet\Grouping) {
 			$props['resultSet'] = $result;
             echo $app->getView( 'WikiaSearch', 'WikiaMobileResultSet', $props);
         }

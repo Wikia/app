@@ -11,7 +11,9 @@
 			'" data-gpos="'. ( !empty($gpos) ? $gpos : 0 ).
 			'" data-pos="' . $pos.'" data-sterm="'.addslashes($query).
 			'" data-stype="' . ( $isInterWiki ? 'inter' : 'intra' ).
-			'" data-rver="' . $relevancyFunctionId . '"' . ( $result->getVar('isArticleMatch') ? ' data-event=search_click_match' : '' );
+			'" data-rver="' . WikiaSearchController::RVERSION . '"' . ( $result->getVar('isArticleMatch')) ? '
+			data-event=search_click_match' :
+			'';
 		?>
 		<a class=title href="<?= $result->getUrl(); ?>" <?= $trackingData; ?> ><?= $title; ?></a>
 	</p>

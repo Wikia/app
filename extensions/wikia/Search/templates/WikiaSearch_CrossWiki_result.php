@@ -1,9 +1,9 @@
 <li class="result">
 	<article>
 		<?php $title = (empty( $result['isWikiMatch'] ) ) ? str_replace('$1', $result->getTitle(), $result->getVar('wikititle')) : $result->getTitle(); ?>
-		<?php $trackingData = 'class="result-link" data-wid="'.$result->getCityId().'" data-pageid="'.$result->getVar
+		<?php $trackingData = 'class="result-link" data-wid="'.$result->getHeader('cityId').'" data-pageid="'.$result->getVar
 	('pageId').'" data-pagens="'.$result->getVar('ns').'" data-title="'.$result->getTitle().'" data-gpos="'.( !empty
-	($gpos) ? $gpos : 0 ).'" data-pos="'.$pos.'" data-sterm="'.addslashes($query).'" data-stype="inter" data-rver="6"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' ); ?>
+	($gpos) ? $gpos : 0 ).'" data-pos="'.$pos.'" data-sterm="'.addslashes($query).'" data-stype="inter" data-rver="' . WikiaSearchController::RVERSION . '"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' ); ?>
 		<img src="#" alt="<?= $title ?>" class="wikiPromoteThumbnail grid-1 alpha" />
 		<div class="grid-5 result-description">
 			<h1>

@@ -5,7 +5,7 @@
 		'" data-gpos="' . $pos .
 		'" data-pos=0 data-sterm="' . addslashes($query).
 		'" data-stype="' . ( $isInterWiki ? 'inter' : 'intra' ).
-		'" data-rver="' . $relevancyFunctionId.
+		'" data-rver="' . WikiaSearchController::RVERSION .
 		'" data-event=search_click_wiki';
 ?>
 	<p>
