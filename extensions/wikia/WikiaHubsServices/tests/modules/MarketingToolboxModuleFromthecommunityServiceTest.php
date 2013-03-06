@@ -198,6 +198,50 @@ class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 
 		$out[] = array($inputData, $expectedData);
 
+		$inputData = array(
+			'boxesCount' => 2,
+			'title1' => 'Rabbids land',
+			'usersUrl1' => 'http://www.assassinscreed.wikia.com/wiki/User:Master_Sima_Yi',
+			'quote1' => 'Just a simple description. Visit <a href="nandytest.wikia.com/">nAndy wiki</a> to order some food!',
+			'url1' => 'http://www.wikia.com',
+			'wikiUrl1' => 'assassinscreed.wikia.com',
+			'UserName1' => 'Master Sima Yi',
+			'photo2' => 'FakeImage.png',
+			'title2' => 'Kotleciarnia',
+			'usersUrl2' => 'http://www.nandytest.wikia.com/wiki/User:Andrzej_Łukaszewski',
+			'quote2' => 'Pure awesomeness...',
+			'url2' => 'http://www.nandytest.wikia.com',
+			'wikiUrl2' => 'nandytest.wikia.com',
+			'UserName2' => 'Andrzej Łukaszewski',
+		);
+
+		$expectedData = array(
+			'entries' => array(
+				array(
+					'articleTitle' => 'Rabbids land',
+					'articleUrl' => 'http://www.wikia.com',
+					'imageAlt' => null,
+					'imageUrl' => null,
+					'userName' => 'Master Sima Yi',
+					'userUrl' => 'http://www.assassinscreed.wikia.com/wiki/User:Master_Sima_Yi',
+					'wikiUrl' => 'assassinscreed.wikia.com',
+					'quote' => 'Just a simple description. Visit <a href="nandytest.wikia.com/">nAndy wiki</a> to order some food!',
+				),
+				array(
+					'articleTitle' => 'Kotleciarnia',
+					'articleUrl' => 'http://www.nandytest.wikia.com',
+					'imageAlt' => 'FakeImage.png',
+					'imageUrl' => 'http://example.com/FakeImage.png',
+					'userName' => 'Andrzej Łukaszewski',
+					'userUrl' => 'http://www.nandytest.wikia.com/wiki/User:Andrzej_Łukaszewski',
+					'wikiUrl' => 'nandytest.wikia.com',
+					'quote' => 'Pure awesomeness...',
+				),
+			)
+		);
+
+		$out[] = array($inputData, $expectedData);
+
 		return $out;
 	}
 }
