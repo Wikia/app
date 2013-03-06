@@ -198,7 +198,7 @@ class RelatedPages {
 		} else {
 			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $articleId);
 		}
-		$cache =  $wgMemc->get($cacheKey);
+		$cache = $wgMemc->get($cacheKey);
 
 		if (is_array($cache)) {
 			wfProfileOut(__METHOD__);

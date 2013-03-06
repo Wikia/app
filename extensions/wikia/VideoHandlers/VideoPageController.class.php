@@ -110,21 +110,27 @@ class VideoPageController extends WikiaController {
 
 	public function relatedPages() {
 		$this->text = '';
-	
+
 		if(empty($this->wg->EnableRelatedPagesExt)) {
 			return;
 		}
-		
-		$res = $this->queryImageLinks(1);
-		$first = $res->fetchObject();
 
-		if (!empty($first)) {
-			$titleID = $first->page_id;
+		$cats = array();
+
+		$res = $this->queryImageLinks(1);
+		while ($info = $res->fetchObject()) {
+			$titleID = $info->page_id;
 
 			$title = Title::newFromID($titleID);
 
 			# Get the categories for this title
 			$cats = $title->getParentCategories();
+			if (count($cats)) {
+				break;
+			}
+		}
+
+		if (count($cats)) {
 			$titleCats = array();
 
 			# Construct an array of category name to sorting key.  We use the 'normal'
@@ -132,7 +138,7 @@ class VideoPageController extends WikiaController {
 			# here.  We just need to give the RelatedPages module something to work with
 			foreach ($cats as $cat_text => $title_text) {
 				$categoryTitle = Title::newFromText($cat_text);
-				$categoryName = $categoryTitle->getText();
+				$categoryName = $categoryTitle->getDBkey();
 				$titleCats[$categoryName] = 'normal';
 			}
 
@@ -213,9 +219,6 @@ class VideoPageController extends WikiaController {
 	}
 
 	public function addLocalSummary ( $data ) {
-		$handle = fopen("/tmp/debug.out", 'a');
-		fwrite($handle, 'LOCAL: '. print_r($data, true));
-		fclose($handle);
 		return $this->addSummary($data, function ($dbName, $articleIds) {
 			$response = $this->app->sendRequest('ArticleSummaryController', 'blurb', array('ids' => implode(',', $articleIds)));
 			return $response->getData();

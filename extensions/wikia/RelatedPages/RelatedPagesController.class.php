@@ -11,9 +11,7 @@ class RelatedPagesController extends WikiaController {
 	public function executeIndex( $params = null ) {
 		global $wgTitle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgRelatedPagesAddAfterSection;
 
-		if (array_key_exists('altTitle', $params)) {
-			$altTitle = $params['altTitle'];
-		}
+		$altTitle = $this->request->getVal('altTitle', null);
 
 		$title = empty($altTitle) ? $wgTitle : $altTitle;
 
