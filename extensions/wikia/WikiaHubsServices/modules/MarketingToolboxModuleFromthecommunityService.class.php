@@ -215,24 +215,38 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		
 		$entries = array();
 		for($i = 1; $i <= $boxesCount; $i++) {
-			if( !empty($data['photo' . $i]) ) {
-				$imageData = $this->getImageInfo($data['photo' . $i]);
+			if( $this->isEntryFilledIn($i, $data) ) {
+				if( !empty($data['photo' . $i]) ) {
+					$imageData = $this->getImageInfo($data['photo' . $i]);
+				}
+
+				$entries[] = array(
+					'articleTitle' => $data['title' . $i],
+					'articleUrl' => $data['url' . $i],
+					'imageAlt' => empty($imageData->title) ? null : $imageData->title,
+					'imageUrl' => empty($imageData->url) ? null : $imageData->url,
+					'userName' => $data['UserName' . $i],
+					'userUrl' => $data['usersUrl' . $i],
+					'wikiUrl' => $data['wikiUrl' . $i],
+					'quote' => $data['quote' . $i],
+				);
 			}
-			
-			$entries[] = array(
-				'articleTitle' => $data['title' . $i],
-				'articleUrl' => $data['url' . $i],
-				'imageAlt' => empty($imageData->title) ? null : $imageData->title,
-				'imageUrl' => empty($imageData->url) ? null : $imageData->url,
-				'userName' => $data['UserName' . $i],
-				'userUrl' => $data['usersUrl' . $i],
-				'wikiUrl' => $data['wikiUrl' . $i],
-				'quote' => $data['quote' . $i],
-			);
 		}
 		
 		return array(
 			'entries' => $entries
+		);
+	}
+	
+	protected function isEntryFilledIn($entryId, $data) {
+		//photo is optional but the rest shouldn't be empty
+		return (
+			!empty($data['title' . $entryId]) &&
+			!empty($data['url' . $entryId]) &&
+			!empty($data['UserName' . $entryId]) &&
+			!empty($data['usersUrl' . $entryId]) &&
+			!empty($data['wikiUrl' . $entryId]) &&
+			!empty($data['quote' . $entryId])
 		);
 	}
 	
