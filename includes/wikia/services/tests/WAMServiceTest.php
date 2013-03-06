@@ -10,7 +10,7 @@ class WAMServiceTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetWamIndexConditionsDataProvider
+	 * @dataProvider getWamIndexConditionsDataProvider
 	 */
 	public function testGetWamIndexConditions ($currentTimestamp, $previousTimestamp, $wikiId, $verticalId, $langCode, $wikiWord, $expConds) {
 		$getWamIndexConditions = $this->getReflectionMethod('getWamIndexConditions');
@@ -19,7 +19,7 @@ class WAMServiceTest extends WikiaBaseTest {
 		$this->assertEquals($expConds, $actConds);
 	}
 
-	public function testGetWamIndexConditionsDataProvider () {
+	public function getWamIndexConditionsDataProvider () {
 		return array(
 			array(
 				100000, 80000, null, null, null, null,

@@ -76,7 +76,7 @@ class WAMApiController extends WikiaApiController {
 					$images = $wikiService->getWikiImages(array_keys($wamIndex['wam_index']), $wikiImageSize);
 
 					foreach ($wamIndex['wam_index'] as $wiki_id => &$wiki) {
-						$wiki['wiki_image'] = (!empty($images[$wiki_id])) ? $images[$wiki_id] : $this->wg->blankImgUrl;
+						$wiki['wiki_image'] = (!empty($images[$wiki_id])) ? $images[$wiki_id] : null;
 					}
 				}
 
