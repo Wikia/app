@@ -39,7 +39,6 @@ var SuggestModalWikiaHubsV2 = {
 				var form = modal.find('form');
 				var formView = modal.find('.form-view');
 				var successView = modal.find('.success-view');
-				var successMessage = modal.find('.successMessage');
 
 				// show submit button
 				SuggestModalWikiaHubsV2.showSubmit(modal);
@@ -66,7 +65,6 @@ var SuggestModalWikiaHubsV2 = {
 
 					$().log('suggestArticle modal submit');
 					formView.hide();
-					successMessage.text( $.msg('wikiahubs-suggest-article-success') );
 					successView.show();
 				});
 	
