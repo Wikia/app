@@ -59,16 +59,21 @@ class Grouping extends Base
 	protected function configureHeaders() {
 		$doc = end( $this->results ); // there's only one
 		if (! empty( $doc ) ) {
-			$cityId = $doc['wid'];
-			$statsInfo = $this->interface->getStatsInfoForWikiId( $cityId );
+			$wikiId = $doc['wid'];
+			$statsInfo = $this->interface->getStatsInfoForWikiId( $wikiId );
 			foreach ( $statsInfo as $key => $val ) {
 				$statsInfo[$key.'_count'] = $val;
 				unset( $statsInfo[$key] );
 			}
 			$this->addHeaders( $doc->getFields() )
-			     ->addHeaders( $this->interface->getVisualizationInfoForWikiId( $cityId ) )
+			     ->addHeaders( $this->interface->getVisualizationInfoForWikiId( $wikiId ) )
 			     ->addHeaders( $statsInfo )
-			     ->setHeader ( 'wikititle', $this->interface->getGlobalForWiki( 'wgSitename', $cityId ) );
+			     ->setHeader ( 'wikititle', $this->interface->getGlobalForWiki( 'wgSitename', $wikiId ) )
+			     ->setHeader ( 'hub', $this->interface->getHubForWikiId( $wikiId ) );
+			
+			if (! $this->getHeader( 'description' ) ) {
+				$this->setHeader( 'description', $this->interface->getMainPageTextForWikiId( $wikiId ) );
+			}
 		}
 		return $this;
 	}

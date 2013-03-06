@@ -308,7 +308,7 @@ class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest
 	public function testConfigureHeaders() {
 		$mockResult = $this->getMock( 'Wikia\Search\Result', array( 'offsetGet', 'getFields' ) );
 		$results = new \ArrayIterator( array( $mockResult ) );
-		$this->prepareMocks( array( 'addHeaders', 'setHeader' ), array(), array(), array( 'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getGlobalForWiki' ) );
+		$this->prepareMocks( array( 'addHeaders', 'setHeader', 'getHeader' ), array(), array(), array( 'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getGlobalForWiki', 'getHubForWikiId', 'getMainPageTextForWikiId' ) );
 		$fields = array( 'id' => 123 );
 		$vizInfo = array( 'description' => 'yup' );
 		$mockResult
@@ -362,10 +362,39 @@ class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest
 		    ->will   ( $this->returnValue( "my title" ) )
 		;
 		$this->resultSet
-		    ->expects( $this->once() )
+		    ->expects( $this->at( 3 ) )
 		    ->method ( 'setHeader' )
 		    ->with   ( "wikititle", "my title" )
 		    ->will   ( $this->returnValue( $this->resultSet ) )
+		;
+		$this->interface
+		    ->expects( $this->any() )
+		    ->method ( 'getHubForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( "Edutainment" ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 4 ) )
+		    ->method ( 'setHeader' )
+		    ->with   ( "hub", "Edutainment" )
+		    ->will   ( $this->returnValue( $this->resultSet ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 5 ) )
+		    ->method ( 'getHeader' )
+		    ->with   ( "description" )
+		    ->will   ( $this->returnValue( "" ) )
+		;
+		$this->interface
+		    ->expects( $this->any() )
+		    ->method ( 'getMainPageTextForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( "This be the text" ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 6 ) )
+		    ->method ( 'setHeader' )
+		    ->with   ( "description", "This be the text" )
 		;
 		$conf = new ReflectionMethod( 'Wikia\Search\ResultSet\Grouping', 'configureHeaders' );
 		$conf->setAccessible( true );
