@@ -57,7 +57,6 @@ $app->registerSpecialPage('WikiaHubsV2', 'SpecialWikiaHubsV2Controller');
 
 // i18n mapping
 $app->registerExtensionMessageFile('WikiaHubsV2', $dir.'WikiaHubsV2.i18n.php');
-F::build('JSMessages')->registerPackage('WikiaHubsV2', array('wikiahubs-suggest-article-success'));
 
 // hooks
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsV2Mobile', 'onWikiaMobileAssetsPackages');
