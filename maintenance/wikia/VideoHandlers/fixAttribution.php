@@ -19,7 +19,7 @@ class EditCLI extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgUser, $wgExternalDatawareDB;
+		global $wgExternalDatawareDB;
 
 		$conf = $this->getOption('conf');
 		$test = $this->hasOption('test');
