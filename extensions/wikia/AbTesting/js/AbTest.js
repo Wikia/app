@@ -259,6 +259,11 @@
 			if ( exp.group || !exp.current || slot < 0 ) {
 				continue;
 			}
+			// Skip this experiment if it's Special Wiki experiment only and this is not a special wiki
+			if (exp.flags && exp.flags.limit_to_special_wikis && !window.wgIsGASpecialWiki) {
+				log('init', 'Skipping experiment ' + expName + ' - not a special Wiki');
+				continue;
+			}
 			for ( groupName in exp.current.groups ) {
 				if ( isInRanges( slot, exp.current.groups[groupName].ranges ) ) {
 					setActiveGroup( expName, groupName );
