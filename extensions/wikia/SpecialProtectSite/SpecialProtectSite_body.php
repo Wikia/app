@@ -125,13 +125,13 @@ class ProtectsiteForm extends SpecialPage
 				$doLog = false;
 			}
 
-			if( $doLog ) {
-				/* Create a log entry */
+			/* Create a log entry
+			As of March 2013, always show log
+			Suppress option now only suppresses time value */
 				$log = new LogPage('protect');
 				$log->addEntry('protect', Title::makeTitle(NS_SPECIAL, 'Allpages'),
-					$prot['timeout'] .
+					$doLog ? $prot['timeout'] : wfMsg('protectsite-log-suppressed') .
 					(strlen($prot['comment']) > 0 ? '; ' . $prot['comment'] : ''));
-			}
 
 			/* Call the Unprotect Form function to display the current state. */
 			$this->unProtectsiteForm($prot);
@@ -153,12 +153,10 @@ class ProtectsiteForm extends SpecialPage
 			$doLog = false;
 		}
 
-		if( $doLog ) {
-			/* Create a log entry */
+		/* As of March 2013, remove ability to unsuppress unprotect log */
 			$log = new LogPage('protect');
 			$log->addEntry('unprotect', Title::makeTitle(NS_SPECIAL, 'Allpages'),
 				$request['ucomment']);
-		}
 
 		/* Call the Protect Form function to display the current state. */
 		$this->setProtectsiteForm();
@@ -167,13 +165,6 @@ class ProtectsiteForm extends SpecialPage
 	function unProtectsiteForm($prot)
 	{
 		global $wgOut, $wgLang;
-		$noLogCheck = '';
-
-		if( $this->isMagicUser ) {
-			$noLogCheck = "<label>" . wfMsg('protectsite-nologs') .
-						 "<input type='checkbox' name=\"nolog\" />" .
-						 "</label><br/>\n";
-		}
 
 		/* Construct page data and add to output. */
 		$wgOut->addWikiMsg( 'protectsite-text-unprotect' );
@@ -236,7 +227,7 @@ class ProtectsiteForm extends SpecialPage
 
 		$noLogCheck = '';
 		if( $this->isMagicUser ) {
-			$noLogCheck = "<div><label>" . wfMsg('protectsite-nologs') .
+			$noLogCheck = "<div><label>" . wfMsg('protectsite-hide-time-length') .
 						 "<input type='checkbox' name=\"nolog\" />" .
 						 "</label></div>\n";
 		}
