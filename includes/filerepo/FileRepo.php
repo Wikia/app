@@ -47,7 +47,7 @@ class FileRepo {
 	// a) they shouldn't affect repository when it's a local repository
 	// b) there are many classes that are derrived from LocalRepo and RepoGroup catches all uses
 	//    in one place
-	var $checkRedirects, $checkDuplicates;
+	var $checkRedirects, $checkDuplicates, $allowBlocking;
 	// Wikia Change End
 
 	/**
@@ -96,6 +96,9 @@ class FileRepo {
 		$this->checkDuplicates = isset( $info['checkDuplicates'] )
 			? $info['checkDuplicates']
 			: true;
+		$this->allowBlocking = isset( $info['allowBlocking'] )
+			? $info['allowBlocking']
+			: false;
 		// Wikia Change End
 
 		// Optional settings that have a default
@@ -143,7 +146,7 @@ class FileRepo {
 	/**
 	 * Prepare a single zone or list of zones for usage.
 	 * See initDeletedDir() for additional setup needed for the 'deleted' zone.
-	 * 
+	 *
 	 * @param $doZones Array Only do a particular zones
 	 * @return Status
 	 */
@@ -244,7 +247,7 @@ class FileRepo {
 
 	/**
 	 * The the storage container and base path of a zone
-	 * 
+	 *
 	 * @param $zone string
 	 * @return Array (container, base path) or (null, null)
 	 */
@@ -823,8 +826,8 @@ class FileRepo {
 	}
 
 	/**
-	 * Concatenate a list of files into a target file location. 
-	 * 
+	 * Concatenate a list of files into a target file location.
+	 *
 	 * @param $srcPaths Array Ordered list of source virtual URLs/storage paths
 	 * @param $dstPath String Target file system path
 	 * @param $flags Integer: bitwise combination of the following flags:
@@ -1176,7 +1179,7 @@ class FileRepo {
 	/**
 	 * Get a local FS copy of a file with a given virtual URL/storage path.
 	 * Temporary files may be purged when the file object falls out of scope.
-	 * 
+	 *
 	 * @param $virtualUrl string
 	 * @return TempFSFile|null Returns null on failure
 	 */
@@ -1189,7 +1192,7 @@ class FileRepo {
 	 * Get a local FS file with a given virtual URL/storage path.
 	 * The file is either an original or a copy. It should not be changed.
 	 * Temporary files may be purged when the file object falls out of scope.
-	 * 
+	 *
 	 * @param $virtualUrl string
 	 * @return FSFile|null Returns null on failure.
 	 */
