@@ -5,6 +5,10 @@ class ParserSpeedHooks extends WikiaObject {
 	const SCRIBE_KEY = 'parser_speed_article';
 
 	public function onArticleViewAfterParser( Article $article, ParserOutput $parserOutput ) {
+		if ( !$this->app->checkSkin( 'oasis', $this->wg->Skin ) ) {
+			return true;
+		}
+
 		if ( class_exists('WScribeClient') ) {
 			try {
 				$title = $article->getTitle();
