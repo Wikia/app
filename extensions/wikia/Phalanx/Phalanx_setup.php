@@ -35,7 +35,7 @@ $wgExtensionFunctions[] = 'efPhalanxInit';
 
 // Phalanx traffic shoadowing
 $wgAutoloadClasses['PhalanxShadowing'] = $dir.'PhalanxShadowing.class.php';
-$wgAutoloadClasses['PhalanxService'] = $dir.'../PhalanxII/services/PhalanxService.class.php';
+$wgAutoloadClasses['PhalanxService'] = $dir.'services/PhalanxService.class.php';
 
 // log type
 global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;

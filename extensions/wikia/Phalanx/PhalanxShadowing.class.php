@@ -33,7 +33,7 @@ class PhalanxShadowing {
 		if (isset(self::$typesMap[$blockType])) {
 			self::$typeName = self::$typesMap[$blockType];
 
-			Wikia::log(__METHOD__, false, "type #{$blockType}", true);
+			wfDebug(__METHOD__ . ": type #{$blockType}\n");
 		}
 		else {
 			self::$typeName = null;
@@ -57,7 +57,7 @@ class PhalanxShadowing {
 
 		if (mt_rand(1, 100) <= $wgPhalanxShadowingPercentage) {
 			if (self::$typeName !== null) {
-				Wikia::log(__METHOD__, false, self::$typeName, true);
+				wfDebug(__METHOD__ . '::' . self::$typeName ."\n");
 
 				$service = new PhalanxService();
 				$service->check(self::$typeName, $content);
