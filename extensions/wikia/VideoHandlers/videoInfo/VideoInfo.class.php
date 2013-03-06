@@ -15,6 +15,17 @@ class VideoInfo extends WikiaModel {
 	protected $removed = 0;
 	protected $featured = 0;
 
+	protected static $fields = array(
+		'videoTitle',
+		'addedAt',
+		'addedBy',
+		'premium',
+		'duration',
+		'hdfile',
+		'removed',
+		'featured',
+	);
+
 	public function __construct( $data = array() ) {
 		foreach ( $data as $key => $value ) {
 			$this->$key = $value;
@@ -29,6 +40,13 @@ class VideoInfo extends WikiaModel {
 	 */
 	public function setVideoTitle( $videoTitle ) {
 		$this->videoTitle = $videoTitle;
+	}
+
+	/**
+	 * set video removed
+	 */
+	public function setRemoved() {
+		$this->removed = 1;
 	}
 
 	/**
@@ -95,6 +113,8 @@ class VideoInfo extends WikiaModel {
 			}
 
 			$db->commit();
+
+			$this->saveToCache();
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -137,6 +157,8 @@ class VideoInfo extends WikiaModel {
 			}
 
 			$db->commit();
+
+			$this->saveToCache();
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -160,6 +182,8 @@ class VideoInfo extends WikiaModel {
 			);
 
 			$db->commit();
+
+			$this->invalidateCache();
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -237,18 +261,25 @@ SQL;
 
 		$app->wf->ProfileIn( __METHOD__ );
 
-		$db = $app->wf->GetDB( DB_SLAVE );
+		$memKey = self::getMemcKey( $videoTitle );
+		$videoData = $app->wg->Memc->get( $memKey );
+		if ( is_array($videoData) ) {
+			$video = new VideoInfo( $videoData );
+		} else {
+			$db = $app->wf->GetDB( DB_SLAVE );
 
-		$row = $db->selectRow(
-			'video_info',
-			'*',
-			array( 'video_title' => $videoTitle ),
-			__METHOD__
-		);
+			$row = $db->selectRow(
+				'video_info',
+				'*',
+				array( 'video_title' => $videoTitle ),
+				__METHOD__
+			);
 
-		$video = null;
-		if ( $row ) {
-			$video = self::newFromRow( $row );
+			$video = null;
+			if ( $row ) {
+				$video = self::newFromRow( $row );
+				$video->saveToCache();
+			}
 		}
 
 		$app->wf->ProfileOut( __METHOD__ );
@@ -261,7 +292,7 @@ SQL;
 	 * @param object $row
 	 * @return array video
 	 */
-	public static function newFromRow( $row ) {
+	protected static function newFromRow( $row ) {
 		$data = array(
 			'videoTitle' => $row->video_title,
 			'addedAt' => $row->added_at,
@@ -279,10 +310,19 @@ SQL;
 	}
 
 
+	/**
+	 * add video
+	 * @return boolean
+	 */
 	public function addVideo() {
 		return $this->addToDatabase();
 	}
 
+	/**
+	 * add premium video
+	 * @param integer $userId
+	 * @return boolean
+	 */
 	public function addPremiumVideo( $userId ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
@@ -302,6 +342,10 @@ SQL;
 		return $affected;
 	}
 
+	/**
+	 * reupload video
+	 * @return boolean
+	 */
 	public function reuploadVideo() {
 		$addedAt = $this->wf->Timestamp( TS_MW );
 		$data = array(
@@ -317,6 +361,11 @@ SQL;
 		return $this->updateDatabase( $data );
 	}
 
+	/**
+	 * rename video
+	 * @param string $newVideoTitle
+	 * @return boolean
+	 */
 	public function renameVideo( $newVideoTitle ) {
 		$data = array(
 			'video_title' => $newVideoTitle,
@@ -325,6 +374,10 @@ SQL;
 		return $this->updateDatabase( $data );
 	}
 
+	/**
+	 * restore video
+	 * @return boolean
+	 */
 	public function restoreVideo() {
 		$data = array(
 			'removed' => 0,
@@ -333,6 +386,10 @@ SQL;
 		return $this->updateDatabase( $data );
 	}
 
+	/**
+	 * remove video
+	 * @return boolean
+	 */
 	public function removeVideo() {
 		$data = array(
 			'removed' => 1,
@@ -341,8 +398,38 @@ SQL;
 		return $this->updateDatabase( $data );
 	}
 
+	/**
+	 * delete video
+	 */
 	public function deleteVideo() {
 		$this->removeFromDatabase();
+	}
+
+	/**
+	 * get memcache key
+	 * @param string $videoTitle
+	 * @return string
+	 */
+	protected static function getMemcKey( $videoTitle ) {
+		return F::app()->wf->MemcKey( 'video_info', 'v1', md5($videoTitle) );
+	}
+
+	/**
+	 * save to cache
+	 */
+	protected function saveToCache() {
+		foreach( self::$fields as $field ) {
+			$cache[$field] = $this->$field;
+		}
+
+		$this->wg->Memc->set( self::getMemcKey( $this->getVideoTitle() ), $cache, 60*60*24*7 );
+	}
+
+	/**
+	 * clear cache
+	 */
+	protected function invalidateCache() {
+		$this->wg->Memc->delete( self::getMemcKey( $this->getVideoTitle() ) );
 	}
 
 }
