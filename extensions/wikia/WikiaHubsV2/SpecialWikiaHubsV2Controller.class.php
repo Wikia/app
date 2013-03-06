@@ -55,6 +55,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			MarketingToolboxModuleSliderService::MODULE_ID,
 			MarketingToolboxModulePopularvideosService::MODULE_ID,
 			MarketingToolboxModuleFeaturedvideoService::MODULE_ID,
+			MarketingToolboxModuleFromthecommunityService::MODULE_ID,
 		);
 
 		foreach ($toolboxModel->getModulesIds() as $moduleId) {

@@ -36,7 +36,7 @@
 			<?= $modules[MarketingToolboxModulePopularvideosService::MODULE_ID] ?>
 		</div>
 		<div class="grid-4 alpha wikiahubs-from-the-community wikiahubs-module ">
-			<?= $app->renderView('SpecialWikiaHubsV2', 'fromthecommunity', $app->wg->request->getValues()); ?>
+			<?= $modules[MarketingToolboxModuleFromthecommunityService::MODULE_ID] ?>
 		</div>
 	</div>
 </div>
