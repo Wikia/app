@@ -221,6 +221,7 @@ $(function(){
 				}
 
 				$save.removeClass();
+				$form.startThrobbing();
 
 				nirvana.sendRequest({
 					controller: 'GameGuidesSpecialContent',
@@ -261,7 +262,9 @@ $(function(){
 					function(){
 						$save.addClass('err');
 					}
-				);
+				).then(function(){
+						$form.stopThrobbing();
+				});
 			}
 		});
 
@@ -272,12 +275,12 @@ $(function(){
 			function onFail(){
 				$currentImage
 					.css( 'backgroundImage', '' )
-					.attr('data-id', 0);
+					.removeAttr('data-id');
 
 				$currentImage.stopThrobbing();
 			}
 
-			function loadImage(imgTitle){
+			function loadImage(imgTitle, catImage){
 				$currentImage.startThrobbing();
 
 				nirvana.getJson(
@@ -289,11 +292,12 @@ $(function(){
 				).done(
 					function(data){
 						if(data.url && data.id) {
-							$currentImage
-								.css( 'backgroundImage', 'url(' + data.url + ')' )
-								.attr('data-id', data.id);
+							$currentImage.css( 'backgroundImage', 'url(' + data.url + ')' )
 
-							$currentImage.siblings().last().addClass('photo-remove');
+							if(!catImage) {
+								$currentImage.attr('data-id', data.id);
+								$currentImage.siblings().last().addClass('photo-remove');
+							};
 
 							$currentImage.stopThrobbing();
 						} else {
@@ -313,14 +317,11 @@ $(function(){
 						$line = $this.parent();
 
 					$currentImage = $line.find('.image');
-
-					$currentImage
-						.css('background-image', '')
-						.attr('data-id', 0);
+					$currentImage.removeAttr('data-id');
 
 					$this.removeClass('photo-remove');
 
-					//loadImage();
+					loadImage(wgFormattedNamespaces[wgNamespaceIds.category] + ':' + $line.find('.cat-input').val(), true);
 				})
 				.on('click', '.photo:not(.photo-remove), .image', function(){
 					$currentImage = $(this).parent().find('.image');
