@@ -15,10 +15,10 @@ var CreateWikiaPoll = {
 				opacity: 0.8,
 				stop: CreateWikiaPoll.renumber
 			}).end()
-			.find(".drag").live("mousedown", function(event) {
+			.on("mousedown", ".drag", function(event) {
 				event.preventDefault();
-			}).end()
-			.find(".trash").live("click", CreateWikiaPoll.remove).end()
+			})
+            .on("click", ".trash", CreateWikiaPoll.remove)
 			.find(".add-new a").click(CreateWikiaPoll.addNew).end()
 			.find(".create").click(CreateWikiaPoll.onSave);
 		if ($("#CreateWikiaPoll").closest(".modalWrapper")) {
