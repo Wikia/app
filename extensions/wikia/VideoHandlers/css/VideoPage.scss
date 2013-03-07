@@ -38,9 +38,14 @@
 		position: relative;
 	}
 	.page-listing-image {
-		background-color: grey;
+		background-color: #f0f0f0;
 		height: 90px;
 		width: 160px;
+		&.no-image {
+			background-image: url(/extensions/wikia/VideoHandlers/images/Brackets.png); /* base64 */
+			background-position: 42px 20px;
+			background-repeat: no-repeat;
+		}
 	}
 	.page-listing-snippet {
 		margin: 0;
