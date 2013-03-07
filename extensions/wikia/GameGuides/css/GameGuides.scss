@@ -303,3 +303,12 @@ figure {
 table.infobox {
 	box-shadow: none;
 }
+
+//don't expand sliders wider then screen
+.wkSlider {
+	max-width: 100%;
+
+	figure {
+		max-width: 48%;
+	}
+}
