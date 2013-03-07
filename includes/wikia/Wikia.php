@@ -39,6 +39,10 @@ $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPag
 $wgHooks['OutputPageCheckLastModified'][] = 'Wikia::onOutputPageCheckLastModified';
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 
+# User hooks
+$wgHooks['UserNameLoadFromId']       [] = "Wikia::UserNameLoadFromId";
+$wgHooks['UserLoadFromDatabase']     [] = "Wikia::UserLoadFromDatabase";
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -1956,6 +1960,41 @@ class Wikia {
 			imagedestroy($img);
 		}
 
-		return $isValid;
+		return $isValid;	
+	}
+	
+	/*
+	 * @param $user_name String
+	 * @param $s ResultWrapper
+	 */
+	public static function UserNameLoadFromId( $user_name, &$s ) {
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType ) {
+			$mExtUser = ExternalUser::newFromName( $user_name );
+			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
+				$mExtUser->linkToLocal( $mExtUser->getId() );
+				$s = $mExtUser->getLocalUser( false );
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * @param $user User
+	 * @param $s ResultWrapper
+	 */
+	public static function UserLoadFromDatabase( $user, &$s ) {
+		/* wikia change */
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType ) {
+			$mExtUser = ExternalUser::newFromId( $user->mId );
+			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
+				$mExtUser->linkToLocal( $mExtUser->getId() );
+				$s = $mExtUser->getLocalUser( false );
+			}
+		}
+		
+		return true;
 	}
 }
