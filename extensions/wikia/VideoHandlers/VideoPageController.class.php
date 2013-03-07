@@ -115,42 +115,42 @@ class VideoPageController extends WikiaController {
 			return;
 		}
 
-		$cats = array();
-
-		$res = $this->queryImageLinks(1);
-		while ($info = $res->fetchObject()) {
-			$titleID = $info->page_id;
-
-			$title = Title::newFromID($titleID);
-
-			# Get the categories for this title
-			$cats = $title->getParentCategories();
-			if (count($cats)) {
-				break;
-			}
+		# Find the first page that links to this current file page that has a category
+		$pageId = $this->firstPageWithCategory();
+		if (empty($pageId)) {
+			return;
 		}
 
-		if (count($cats)) {
-			$titleCats = array();
-
-			# Construct an array of category name to sorting key.  We use the 'normal'
-			# default as the sorting key since we don't really care about the sorting
-			# here.  We just need to give the RelatedPages module something to work with
-			foreach ($cats as $cat_text => $title_text) {
-				$categoryTitle = Title::newFromText($cat_text);
-				$categoryName = $categoryTitle->getDBkey();
-				$titleCats[$categoryName] = 'normal';
-			}
-
-			# Seed the RelatedPages instance with the categories we found.  Normally
-			# categories are set via a hook in the page render process, so we have to
-			# supply our own here.
-			$relatedPages = RelatedPages::getInstance();
-			$relatedPages->setCategories($titleCats);
-
-			# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
-			$this->text = F::app()->renderView( 'RelatedPages', 'Index', array( "altTitle" => $title ) );
+		# Get the title object
+		$title = Title::newFromID($pageId);
+		if (empty($title)) {
+			return;
 		}
+
+		# Get the categories for this title
+		$cats = $title->getParentCategories();
+		if (!count($cats)) {
+			return;
+		}
+		$titleCats = array();
+
+		# Construct an array of category name to sorting key.  We use the 'normal'
+		# default as the sorting key since we don't really care about the sorting
+		# here.  We just need to give the RelatedPages module something to work with
+		foreach ($cats as $cat_text => $title_text) {
+			$categoryTitle = Title::newFromText($cat_text);
+			$categoryName = $categoryTitle->getDBkey();
+			$titleCats[$categoryName] = 'normal';
+		}
+
+		# Seed the RelatedPages instance with the categories we found.  Normally
+		# categories are set via a hook in the page render process, so we have to
+		# supply our own here.
+		$relatedPages = RelatedPages::getInstance();
+		$relatedPages->setCategories($titleCats);
+
+		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
+		$this->text = F::app()->renderView( 'RelatedPages', 'Index', array( "altTitle" => $title ) );
 	}
 
 	public function videoCaption() {
@@ -175,17 +175,25 @@ class VideoPageController extends WikiaController {
 		$this->viewCount = $this->getVal('views');
 	}
 
-	private function queryImageLinks( $limit ) {
+	private function firstPageWithCategory () {
 		$target = $this->wg->Title->getDBkey();
 		$dbr = wfGetDB( DB_SLAVE );
 
-		return $dbr->select(
-			array( 'imagelinks', 'page' ),
-			array( 'page_namespace', 'page_title', 'page_id', 'il_to' ),
-			array( 'il_to' => $target, 'il_from = page_id', 'page_is_redirect = 0' ),
+		# We want to find the first page that has a link to the current file page AND
+		# has at least one category associated with it.  The categor(ies) are how
+		# the RelatedPages extention determines what's related
+		$res = $dbr->select(
+			array( 'imagelinks', 'page', 'categorylinks' ),
+			array( 'distinct(page_id) as page_id' ),
+			array( 'il_to' => $target, 'il_from = page_id', 'page_is_redirect = 0', 'cl_from = page_id' ),
 			__METHOD__,
-			array( 'LIMIT' => $limit + 1, 'ORDER BY' => 'il_from', )
+			array( 'LIMIT' => 1, 'ORDER BY' => 'il_from', )
 		);
+
+		$info = $res->fetchObject();
+		$dbr->freeResult($res);
+
+		return empty($info) ? null : $info->page_id;
 	}
 
 	public function getGlobalUsage () {
