@@ -80,7 +80,8 @@ $phalanxhooks = array(
 		),
 	'PhalanxHooks' =>
 		array(
-			'ContributionsToolLinks'               => 'loadLinks'
+			'ContributionsToolLinks'               => 'loadLinks',
+			'SpamFilterCheck'                      => 'onSpamFilterCheck'
 		)
 );
 
