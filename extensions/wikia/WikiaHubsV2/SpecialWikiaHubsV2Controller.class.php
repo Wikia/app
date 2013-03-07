@@ -48,19 +48,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 		$this->modules = array();
 
-		$enabledModules = array(
-			MarketingToolboxModuleExploreService::MODULE_ID,
-			MarketingToolboxModulePollsService::MODULE_ID,
-			MarketingToolboxModuleWikiaspicksService::MODULE_ID,
-			MarketingToolboxModuleSliderService::MODULE_ID,
-			MarketingToolboxModulePopularvideosService::MODULE_ID,
-			MarketingToolboxModuleFeaturedvideoService::MODULE_ID,
-			MarketingToolboxModuleFromthecommunityService::MODULE_ID,
-		);
-
 		foreach ($toolboxModel->getModulesIds() as $moduleId) {
-			// TODO remove this if when other modules would be ready
-			if (in_array($moduleId, $enabledModules)) {
 				if (!empty($modulesData[$moduleId]['data'])) {
 					$this->modules[$moduleId] = $this->renderModule(
 						$this->wg->ContLang->getCode(),
@@ -69,10 +57,13 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 						$modulesData[$moduleId]['data']
 					);
 				} else {
-					// TODO think about it what should we render if we don't have data
-					$this->modules[$moduleId] = $toolboxModel->getNotTranslatedModuleName($moduleId) . ' <-- no data';
+					$this->modules[$moduleId] = null;
+					Wikia::log(
+						__METHOD__,
+						'',
+						'no module data for day: '.$modulesData[$moduleId]['data'].', lang: '.$this->wg->ContLang->getCode().', vertical: '.$this->verticalId
+					);
 				}
-			}
 		}
 
 		$this->response->addAsset('wikiahubs_v2');
