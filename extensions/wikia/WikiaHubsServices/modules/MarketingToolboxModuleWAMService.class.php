@@ -4,7 +4,17 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 {
 	const MODULE_ID = 10;
 
-	public function getWamData($wamDay, $wamPrevDay, $verticalId, $lang, $limit) {
+	public function render($structuredData) {
+
+		$data['headline'] = $structuredData['headline'];
+		$data['textTest'] = $structuredData['text'];
+
+		return parent::render($data);
+	}
+
+	public function getStructuredData($data) {
+		$structuredData = [];
+
 		/*
 		$wamIndex = $this->app->sendRequest('WAMApiController', 'getWAMIndex', array(
 			'wam_day' => $wamDay,
@@ -19,24 +29,9 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		))->getData();*/
 
 		//test data
-		$data['headline'] = 'New headline';
-		$data['text'] = 'test text';
+		$structuredData['headline'] = 'New headline';
+		$structuredData['text'] = 'test text';
 
-		return $data;
-	}
-
-	public function render($structuredData) {
-
-		$data['headline'] = $structuredData['headline'];
-		$data['textTest'] = $structuredData['text'];
-
-		return parent::render($data);
-	}
-
-	public function getStructuredData($data) {
-		$structuredData = [];
-
-		//return $structuredData;
-		return $data;
+		return $structuredData;
 	}
 }

@@ -378,7 +378,7 @@ class MarketingToolboxModel extends WikiaModel {
 		$result = $sdb->select(self::HUBS_TABLE_NAME, $fields, $conds);
 
 		$row = $sdb->fetchRow($result);
-		echo $row[0].' ; '.$this->modulesCount;
+
 		return ($row[0] == $this->modulesCount) ? true : false;
 	}
 
