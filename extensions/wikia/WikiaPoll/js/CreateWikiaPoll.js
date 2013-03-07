@@ -18,7 +18,7 @@ var CreateWikiaPoll = {
 			.on("mousedown", ".drag", function(event) {
 				event.preventDefault();
 			})
-            .on("click", ".trash", CreateWikiaPoll.remove)
+			.on("click", ".trash", CreateWikiaPoll.remove)
 			.find(".add-new a").click(CreateWikiaPoll.addNew).end()
 			.find(".create").click(CreateWikiaPoll.onSave);
 		if ($("#CreateWikiaPoll").closest(".modalWrapper")) {
