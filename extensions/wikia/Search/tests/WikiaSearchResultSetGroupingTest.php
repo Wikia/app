@@ -195,12 +195,15 @@ class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest
 		                      ->setMethods( array( 'getResult' ) )
 		                      ->getMock();
 		
-		$mockResult = $this->getMock( 'Wikia\Search\Result' );
+		$mockResult = $this->getMock( 'Wikia\Search\Result', array( 'getFields' ) );
 		
 		$mockGrouping = $this->getMockBuilder( 'Wikia\Search\ResultSet\MatchGrouping' )
 		                     ->disableOriginalConstructor()
-		                     ->setMethods( array( 'configureHeaders' ) )
+		                     ->setMethods( array( 'addHeaders' ) )
 		                     ->getMock();
+		
+		$fields = array( 'id' => 'who cares' );
+		
 		foreach ( $dcMethods as $method ) {
 			$dc
 			    ->expects( $this->once() )
@@ -217,9 +220,15 @@ class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest
 		    ->method ( 'getResult' )
 		    ->will   ( $this->returnValue( $mockResult ) )
 		;
+		$mockResult
+		    ->expects( $this->once() )
+		    ->method ( 'getFields' )
+		    ->will   ( $this->returnValue( $fields ) )
+		;
 		$mockGrouping
 		    ->expects( $this->once() )
-		    ->method ( 'configureHeaders' )
+		    ->method ( 'addHeaders' )
+		    ->with   ( $fields )
 		    ->will   ( $this->returnValue( $mockGrouping ) )
 		;
 		$configure = new ReflectionMethod( 'Wikia\Search\ResultSet\MatchGrouping', 'configure' );
@@ -322,15 +331,15 @@ class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest
 		$resultsRefl->setValue( $this->resultSet, $results );
 		$this->interface
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getStatsInfoForWikiId' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( array( 'users' => 100 ) ) )
-		;
-		$this->interface
-		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getVisualizationInfoForWikiId' )
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( $vizInfo ) )
+		;
+		$this->interface
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getStatsInfoForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( array( 'users_count' => 100 ) ) )
 		;
 		$mockResult
 		    ->expects( $this->once() )

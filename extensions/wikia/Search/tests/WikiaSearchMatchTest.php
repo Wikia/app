@@ -218,20 +218,27 @@ class WikiaSearchMatchTest extends WikiaSearchBaseTest {
 	 * @covers Wikia\Search\Match\Wiki::createResult
 	 */
 	public function testWikiMatchCreateResult() {
-		
+		$interfaceMethods = array(
+				'getGlobalForWiki', 'getMainPageUrlForWikiId', 'getDescriptionTextForWikiId',
+				'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getHubForWikiId' 
+				);
 		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
 		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'getGlobalForWiki', 'getMainPageUrlForWikiId', 'getMainPageTextForWikiId' ) )
+		                      ->setMethods( $interfaceMethods )
 		                      ->getMock();
 		
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                  ->setConstructorArgs( array( 123, $mockInterface ) )
-		                  ->setMethods( array( 'preprocessText' ) )
+		                  ->setMethods( null )
 		                  ->getMock();
 		
 		$title = 'My title';
 		$url = 'http://foo.wikia.com/wiki/';
 		$text = 'this is a wiki about foo';
+		$desc = 'this is a better description';
+		$visualization = array( 'description' => $desc );
+		$stats = array( 'users_count' => 100 );
+		$hub = 'Entertainment';
 		$mockInterface
 		    ->expects( $this->once() )
 		    ->method ( 'getGlobalForWiki' )
@@ -246,14 +253,27 @@ class WikiaSearchMatchTest extends WikiaSearchBaseTest {
 		;
 		$mockInterface
 		   ->expects( $this->once() )
-		   ->method ( 'getMainPageTextForWikiId' )
+		   ->method ( 'getDescriptionTextForWikiId' )
 		   ->with   ( 123 )
-		   ->will   ( $this->returnValue( $url ) )
+		   ->will   ( $this->returnValue( $text ) )
 		;
-		$mockMatch
-		    ->expects( $this->once() )
-		    ->method ( 'preprocessText' )
-		    ->will   ( $this->returnValue( $text ) )
+		$mockInterface
+		   ->expects( $this->once() )
+		   ->method ( 'getHubForWikiId' )
+		   ->with   ( 123 )
+		   ->will   ( $this->returnValue( $hub ) )
+		;
+		$mockInterface
+		   ->expects( $this->once() )
+		   ->method ( 'getVisualizationInfoForWikiId' )
+		   ->with   ( 123 )
+		   ->will   ( $this->returnValue( $visualization ) )
+		;
+		$mockInterface
+		   ->expects( $this->once() )
+		   ->method ( 'getStatsInfoForWikiId' )
+		   ->with   ( 123 )
+		   ->will   ( $this->returnValue( $stats ) )
 		;
 		$result = $mockMatch->createResult();
 		$this->assertInstanceOf(
@@ -265,7 +285,7 @@ class WikiaSearchMatchTest extends WikiaSearchBaseTest {
 				$result->getTitle()
 		);
 		$this->assertEquals(
-				$text."&hellip;",
+				$desc."&hellip;",
 				$result->getText()
 		);
 		$this->assertEquals(
@@ -278,39 +298,6 @@ class WikiaSearchMatchTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				$url,
 				$result['url']
-		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\Match\Wiki::preprocessText
-	 */
-	public function testWikiMatchPreprocessText() {
-		
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
-		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'isSkinMobile' ) )
-		                      ->getMock();
-		
-		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
-		                  ->setConstructorArgs( array( 123, $mockInterface ) )
-		                  ->setMethods( null )
-		                  ->getMock();
-		
-		$text = implode( " ", array_pad( array(), 500, "foo" ) );
-		
-		$mockInterface
-		    ->expects( $this->once() )
-		    ->method ( 'isSkinMobile' )
-		    ->will   ( $this->returnValue( true ) ) 
-		;
-		$reflMethod = new ReflectionMethod( 'Wikia\Search\Match\Wiki', 'preprocessText' );
-		$reflMethod->setAccessible( true );
-		$result = $reflMethod->invoke( $mockMatch, $text );
-		$this->assertTrue(
-				strlen( $result ) <= 100
-		);
-		$this->assertTrue(
-				substr_count( $text, $result ) > 0
 		);
 	}
 }
