@@ -246,6 +246,65 @@ class WikiaSearchResultSetBaseTest extends WikiaSearchBaseTest {
 	/**
 	 * @covers \Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
 	 */
+	public function testPrependArticleMatchIfExistsWithMatch() {
+		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
+		
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getResult' ) )
+		                  ->getMock();
+
+		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
+		                   ->disableOriginalConstructor()
+		                   ->getMock();
+		
+		$this->config
+			->expects( $this->at( 0 ) )
+			->method ( 'hasArticleMatch' )
+			->will   ( $this->returnValue( true ) )
+		;
+		$this->resultSet
+			->expects( $this->at( 0 ) )
+			->method ( 'getResultsStart' )
+			->will   ( $this->returnValue( 0 ) )
+		;
+		$this->config
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getArticleMatch' )
+		    ->will   ( $this->returnValue( $mockMatch ) )
+		;
+		$mockMatch
+		    ->expects( $this->once() )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( $mockResult ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'addResult' )
+		    ->with   ( $mockResult )
+	    ;
+		
+		$found = new ReflectionProperty( '\Wikia\Search\ResultSet\Base', 'resultsFound' );
+		$found->setAccessible( true );
+		$oldFound = $found->getValue( $this->resultSet );
+		
+		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependArticleMatchIfExists' );
+		$prepend->setAccessible( true );
+		
+		$this->assertEquals(
+				$this->resultSet,
+				$prepend->invoke( $this->resultSet ),
+				'\Wikia\Search\ResultSet\Base::prependArticleMatchIfExists should provide a fluent interface'
+		);
+		$this->assertEquals(
+				$oldFound + 1,
+				$found->getValue( $this->resultSet )
+		);
+	}
+	
+	/**
+	 * @covers \Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
+	 */
 	public function testPrependArticleMatchIfExistsNoMatch() {
 		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
 		
