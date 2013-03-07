@@ -195,7 +195,7 @@ class ThumbnailImage extends MediaTransformOutput {
 		$this->file = $file;
 		$this->url = $url;
 		# start wikia change
-		$timestamp = !empty( $file ) ? $file->getTimestamp : false;
+		$timestamp = !empty( $file ) ? $file->getTimestamp() : false;
 		$this->url = wfReplaceImageServer( $this->url, $timestamp );
 		# end wikia change
 
