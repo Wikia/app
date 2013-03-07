@@ -37,63 +37,51 @@ class WAMApiController extends WikiaApiController {
 	 * @responseParam array $wam_results_total The total count of wikis available for provided params
 	 */
 	public function getWAMIndex () {
-		$currentTimestamp = $this->request->getInt('wam_day', strtotime('00:00 -2 day'));
-		$previousTimestamp = $this->request->getInt('wam_previous_day', strtotime('00:00 -3 day'));
-		$verticalId = $this->request->getInt('vertical_id', null);
-		$wikiLang = $this->request->getVal('wiki_lang', null);
-		$wikiId = $this->request->getInt('wiki_id', null);
-		$wikiWord = $this->request->getVal('wiki_word', null);
-		$fetchAdmins = $this->request->getBool('fetch_admins', false);
-		$avatarSize = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
-		$fetchWikiImages = $this->request->getBool('fetch_wiki_images', false);
-		$wikiImageSize = $this->request->getInt('wiki_image_size', self::DEFAULT_WIKI_IMAGE_SIZE);
-		$sortColumn = $this->request->getVal('sort_column', 'wam_rank');
-		$sortDirection = $this->request->getVal('sort_direction', 'ASC');
-		$offset = $this->request->getInt('offset', 0);
-		$limit = $this->request->getInt('limit', self::DEFAULT_PAGE_SIZE);
+		$options = array();
+		$options['currentTimestamp'] = $this->request->getInt('wam_day', strtotime('00:00 -2 day'));
+		$options['previousTimestamp'] = $this->request->getInt('wam_previous_day', $options['currentTimestamp'] - 60 * 60 * 24);
+		$options['verticalId'] = $this->request->getInt('vertical_id', null);
+		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
+		$options['wikiId'] = $this->request->getInt('wiki_id', null);
+		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
+		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
+		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
+		$options['fetchWikiImages'] = $this->request->getBool('fetch_wiki_images', false);
+		$options['wikiImageSize'] = $this->request->getInt('wiki_image_size', self::DEFAULT_WIKI_IMAGE_SIZE);
+		$options['sortColumn'] = $this->request->getVal('sort_column', 'wam_rank');
+		$options['sortDirection'] = $this->request->getVal('sort_direction', 'ASC');
+		$options['offset'] = $this->request->getInt('offset', 0);
+		$options['limit'] = $this->request->getInt('limit', self::DEFAULT_PAGE_SIZE);
 
-		if ($limit > self::MAX_PAGE_SIZE) {
+		if ($options['limit'] > self::MAX_PAGE_SIZE) {
 			throw new InvalidParameterApiException('limit');
 		}
 
 		$wamIndex = WikiaDataAccess::cacheWithLock(
 			F::app()->wf->SharedMemcKey(
 				'wam_index_table',
-				$currentTimestamp,
-				$previousTimestamp,
-				$verticalId,
-				$wikiLang,
-				$wikiId,
-				$wikiWord,
-				$fetchAdmins,
-				$avatarSize,
-				$fetchWikiImages,
-				$wikiImageSize,
-				$sortColumn,
-				$sortDirection,
-				$offset,
-				$limit
+				implode(':', $options)
 			),
 			6 * 60 * 60,
-			function () use ($currentTimestamp, $previousTimestamp, $verticalId, $wikiLang, $wikiId, $wikiWord, $fetchAdmins, $avatarSize, $fetchWikiImages, $wikiImageSize, $sortColumn, $sortDirection, $offset, $limit) {
+			function () use ($options) {
 				$wamService = new WAMService();
 
-				$wamIndex = $wamService->getWamIndex($currentTimestamp, $previousTimestamp, $verticalId, $wikiLang, $wikiId, $wikiWord, $sortColumn, $sortDirection, $offset, $limit);
+				$wamIndex = $wamService->getWamIndex($options);
 
-				if ($fetchAdmins) {
+				if ($options['fetchAdmins']) {
 					if (empty($wikiService)) {
 						$wikiService = new WikiService();
 					}
 					foreach ($wamIndex['wam_index'] as &$row) {
-						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $avatarSize, self::DEFAULT_WIKI_ADMINS_LIMIT);
+						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize'], self::DEFAULT_WIKI_ADMINS_LIMIT);
 					}
 				}
-				if ($fetchWikiImages) {
+				if ($options['fetchWikiImages']) {
 					if (empty($wikiService)) {
 						$wikiService = new WikiService();
 					}
 
-					$images = $wikiService->getWikiImages(array_keys($wamIndex['wam_index']), $wikiImageSize);
+					$images = $wikiService->getWikiImages(array_keys($wamIndex['wam_index']), $options['wikiImageSize']);
 
 					foreach ($wamIndex['wam_index'] as $wiki_id => &$wiki) {
 						$wiki['wiki_image'] = (!empty($images[$wiki_id])) ? $images[$wiki_id] : null;

@@ -8,6 +8,19 @@ class WAMService extends Service {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 
+	protected $defaultIndexOptions = array(
+		'currentTimestamp' => null,
+		'previousTimestamp' => null,
+		'verticalId' => null,
+		'wikiLang' => null,
+		'wikiId' => null,
+		'wikiWord' => null,
+		'sortColumn' => 'wam_rank',
+		'sortDirection' => 'ASC',
+		'offset' => 0,
+		'limit' => self::WAM_DEFAULT_ITEM_LIMIT_PER_PAGE
+	);
+
 	/**
 	 * Returns the latest WAM score provided a wiki ID
 	 * @param int $wikiId
@@ -46,21 +59,22 @@ class WAMService extends Service {
 	}
 
 	/**
-	 * @param int $currentTimestamp
-	 * @param int $previousTimestamp
-	 * @param int $verticalId
-	 * @param int $wikiId
-	 * @param string $wikiWord
-	 * @param string $sortColumn
-	 * @param string $sortDirection
-	 * @param int $offset
-	 * @param int $limit
+	 * @param array $inputOptions - available options:
+	 * 	int $currentTimestamp
+	 * 	int $previousTimestamp
+	 * 	int $verticalId
+	 * 	int $wikiId
+	 * 	string $wikiWord
+	 * 	string $sortColumn
+	 * 	string $sortDirection
+	 * 	int $offset
+	 * 	int $limit
 	 *
 	 * @return array
 	 */
+	public function getWamIndex ($inputOptions) {
+		$inputOptions += $this->defaultIndexOptions;
 
-	// TODO options instead of all params
-	public function getWamIndex ($currentTimestamp = null, $previousTimestamp = null, $verticalId = null, $wikiLang = null, $wikiId = null, $wikiWord = null, $sortColumn = 'wam_rank', $sortDirection = 'ASC', $offset = 0, $limit = self::WAM_DEFAULT_ITEM_LIMIT_PER_PAGE) {
 		$app = F::app();
 		$app->wf->profileIn(__METHOD__);
 
@@ -74,8 +88,8 @@ class WAMService extends Service {
 			$tables = $this->getWamIndexTables();
 			$fields = $this->getWamIndexFields();
 			$countFields = $this->getWamIndexCountFields();
-			$conds = $this->getWamIndexConditions($currentTimestamp, $previousTimestamp, $wikiId, $verticalId, $wikiLang, $wikiWord);
-			$options = $this->getWamIndexOptions($sortDirection, $sortColumn, $offset, $limit);
+			$conds = $this->getWamIndexConditions($inputOptions);
+			$options = $this->getWamIndexOptions($inputOptions);
 			$join_conds = $this->getWamIndexJoinConditions();
 
 			$result = $db->select(
@@ -128,12 +142,12 @@ class WAMService extends Service {
 		return $join_conds;
 	}
 
-	protected function getWamIndexOptions ($sortDirection, $sortColumn, $offset, $limit) {
+	protected function getWamIndexOptions ($inputOptions) {
 		$options = array();
 
-		$sortDirection = (($sortDirection == 'DESC') ? 'DESC' : 'ASC');
+		$sortDirection = (($inputOptions['sortDirection'] == 'DESC') ? 'DESC' : 'ASC');
 
-		switch ($sortColumn) {
+		switch ($inputOptions['sortColumn']) {
 			case 'wam_rank':
 			default:
 				$options['ORDER BY'] = 'wam ' . $sortDirection;
@@ -143,36 +157,38 @@ class WAMService extends Service {
 				break;
 		}
 
-		if (!is_null($offset)) {
-			$options['OFFSET'] = $offset;
+		if (!is_null($inputOptions['offset'])) {
+			$options['OFFSET'] = $inputOptions['offset'];
 		}
 
-		if (!is_null($offset)) {
-			$options['LIMIT'] = $limit;
+		if (!is_null($options['limit'])) {
+			$options['LIMIT'] = $inputOptions['limit'];
 		}
 		return $options;
 	}
 
-	protected function getWamIndexConditions ($currentTimestamp, $previousTimestamp, $wikiId, $verticalId, $wikiLang, $wikiWord) {
-		$currentTimestamp = $currentTimestamp ? $currentTimestamp : strtotime('00:00 -2 day');
-		$previousTimestamp = $previousTimestamp ? $previousTimestamp : $currentTimestamp - 60 * 60 * 24;
+	protected function getWamIndexConditions ($options) {
+		$currentTimestamp = $options['currentTimestamp'] ? $options['currentTimestamp'] : strtotime('00:00 -2 day');
+		$previousTimestamp = $options['previousTimestamp']
+			? $options['previousTimestamp']
+			: $currentTimestamp - 60 * 60 * 24;
 
 		$conds = array(
 			'fw1.time_id = FROM_UNIXTIME(' . $currentTimestamp . ')',
 			'fw2.time_id = FROM_UNIXTIME(' . $previousTimestamp . ')'
 		);
 
-		if ($wikiId) {
-			$conds ['fw1.wiki_id'] = $wikiId;
+		if ($options['wikiId']) {
+			$conds ['fw1.wiki_id'] = $options['wikiId'];
 		}
 
-		if (!is_null($wikiWord)) {
-			$conds [] = "dw.url like '%" . mysql_real_escape_string($wikiWord) . "%' ";
-						"OR dw.title like '%" . mysql_real_escape_string($wikiWord) . "%'";
+		if (!is_null($options['wikiWord'])) {
+			$conds [] = "dw.url like '%" . mysql_real_escape_string($options['wikiWord']) . "%' ";
+						"OR dw.title like '%" . mysql_real_escape_string($options['wikiWord']) . "%'";
 		}
 
-		if ($verticalId) {
-			$conds ['dw.hub_id'] = $verticalId;
+		if ($options['verticalId']) {
+			$conds ['dw.hub_id'] = $options['verticalId'];
 		} else {
 			$conds ['dw.hub_id'] = array(
 				WikiFactoryHub::CATEGORY_ID_GAMING,
@@ -181,8 +197,8 @@ class WAMService extends Service {
 			);
 		}
 
-		if (!is_null($wikiLang)) {
-			$conds ['dw.lang'] = mysql_real_escape_string($wikiLang);
+		if (!is_null($options['wikiLang'])) {
+			$conds ['dw.lang'] = mysql_real_escape_string($options['wikiLang']);
 		}
 
 		return $conds;
