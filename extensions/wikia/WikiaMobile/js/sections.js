@@ -159,18 +159,21 @@ define('sections', ['JSMessages'], function(msg){
 
 	function findPos(obj) {
 		var curtop = 0;
+
 		if (obj.offsetParent) {
 			do {
 				curtop += obj.offsetTop;
 			} while (obj = obj.offsetParent);
-			return [curtop];
 		}
+
+		return curtop;
 	}
 
 	function scrollTo(header){
 		//scroll header into view
 		//if the page is long that is the way I found it reliable
-		//without calling it like that android sometimes did not scroll at all
+		//without calling it like that
+		//android sometimes did not scroll at all
 		//and iOS sometimes scrolled to a wrong place
 		window.scrollTo(0, findPos(header));
 		setTimeout(function(){
