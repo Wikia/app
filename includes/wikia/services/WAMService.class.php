@@ -46,17 +46,20 @@ class WAMService extends Service {
 	}
 
 	/**
-	 * @param null $currentTimestamp
-	 * @param null $previousTimestamp
-	 * @param null $verticalId
-	 * @param null $wikiId
+	 * @param int $currentTimestamp
+	 * @param int $previousTimestamp
+	 * @param int $verticalId
+	 * @param int $wikiId
 	 * @param string $wikiWord
 	 * @param string $sortColumn
 	 * @param string $sortDirection
 	 * @param int $offset
 	 * @param int $limit
+	 *
 	 * @return array
 	 */
+
+	// TODO options instead of all params
 	public function getWamIndex ($currentTimestamp = null, $previousTimestamp = null, $verticalId = null, $wikiLang = null, $wikiId = null, $wikiWord = null, $sortColumn = 'wam_rank', $sortDirection = 'ASC', $offset = 0, $limit = self::WAM_DEFAULT_ITEM_LIMIT_PER_PAGE) {
 		$app = F::app();
 		$app->wf->profileIn(__METHOD__);
@@ -159,7 +162,7 @@ class WAMService extends Service {
 			'fw2.time_id = FROM_UNIXTIME(' . $previousTimestamp . ')'
 		);
 
-		if (!is_null($wikiId)) {
+		if ($wikiId) {
 			$conds ['fw1.wiki_id'] = $wikiId;
 		}
 
@@ -168,7 +171,7 @@ class WAMService extends Service {
 						"OR dw.title like '%" . mysql_real_escape_string($wikiWord) . "%'";
 		}
 
-		if (!is_null($verticalId)) {
+		if ($verticalId) {
 			$conds ['dw.hub_id'] = $verticalId;
 		} else {
 			$conds ['dw.hub_id'] = array(
