@@ -3,7 +3,7 @@
 ?>
 <div id="mw-content-text" lang="<?= $app->wg->contLang->getCode(); ?>">
 	<script>var wgWikiaHubType = '<?= htmlspecialchars($wgWikiaHubType); ?>' || '';</script>
-	<div><?= $modules[MarketingToolboxModuleWAMService::MODULE_ID] ?></div>
+
 	<div class="WikiaGrid WikiaHubs" id="WikiaHubs">
 		<div class="grid-3 alpha">
 			<section class="grid-3 alpha wikiahubs-slider wikiahubs-module">
@@ -13,6 +13,9 @@
 				<?= $modules[MarketingToolboxModuleWikiaspicksService::MODULE_ID] ?>
 			</section>
 		</div>
+		<section class="grid-3 wikiahubs-wam wikiahubs-module">
+			<?= $modules[MarketingToolboxModuleWAMService::MODULE_ID] ?>
+		</section>
 		<section class="grid-1 plainlinks wikiahubs-explore wikiahubs-module">
 			<?= $modules[MarketingToolboxModuleExploreService::MODULE_ID] ?>
 		</section>
@@ -20,7 +23,6 @@
 			<section class="grid-2 alpha wikiahubs-featured-video wikiahubs-module">
 				<?= $modules[MarketingToolboxModuleFeaturedvideoService::MODULE_ID] ?>
 			</section>
-
 			<section class="grid-2 alpha wikiahubs-wikitext-module wikiahubs-module">
 				<?= $modules[MarketingToolboxModulePollsService::MODULE_ID] ?>
 			</section>

@@ -4,14 +4,6 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 {
 	const MODULE_ID = 10;
 
-	public function render($structuredData) {
-
-		$data['headline'] = $structuredData['headline'];
-		$data['textTest'] = $structuredData['text'];
-
-		return parent::render($data);
-	}
-
 	public function getStructuredData($data) {
 		$structuredData = [];
 
@@ -28,10 +20,30 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 			'sort_direction' => 'DESC'
 		))->getData();*/
 
-		//test data
-		$structuredData['headline'] = 'New headline';
-		$structuredData['text'] = 'test text';
+		return $data;
+	}
 
-		return $structuredData;
+	public function render($structuredData) {
+		//MOCKED DATA remove after FB#98999 is done
+		$data = array(
+			'wamPageUrl' => 'http://www.wikia.com/WAM',
+			'verticalName' => 'Video Games',
+			'ranking' => array(
+				/*
+				array(
+					'rank' => '',
+					'wamScore' => '',
+					'imageUrl' => '',
+					'imageWidth' => '',
+					'imageHeight' => '',
+					'wikiName' => '',
+					'wikiUrl' => '',
+				),
+				*/
+			),
+		);
+		//END OF MOCKED DATA
+		
+		return parent::render($data);
 	}
 }
