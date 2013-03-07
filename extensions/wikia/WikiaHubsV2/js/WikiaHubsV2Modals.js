@@ -48,20 +48,13 @@ var SuggestModalWikiaHubsV2 = {
 					var articleUrl = modal.find('input[name=articleurl]').val();
 					var reason = modal.find('textarea[name=reason]').val();
 
-					Wikia.Tracker.track({
-						action: Wikia.Tracker.ACTIONS.SUBMIT,
-						browserEvent: e,
-						category: 'SuggestArticle',
-						label: 'suggestSubmit',
-						trackingMethod: 'internal',
-						value: null
-					}, {
+					WikiaHubs.trackClick('GetPromoted', Wikia.Tracker.ACTIONS.SUBMIT, 'suggestSubmit', null, {
 						lang: wgContentLanguage,
 						user_name: window.wgUserName,
 						article_url: articleUrl,
 						reason: reason,
 						page_name: window.wgPageName
-					});
+					}, e);
 
 					$().log('suggestArticle modal submit');
 					formView.hide();
