@@ -540,8 +540,6 @@ class Config implements ArrayAccess
 		if( $this->getAdvanced() ) {
 		    return SEARCH_PROFILE_ADVANCED;
 		}
-		$searchableNamespaces = array_keys( $this->interface->getSearchableNamespacesFromSearchEngine() );
-		
 		// $nsVals should always have a value at this point
 		$nsVals = $this->getNamespaces();
 		

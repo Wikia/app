@@ -16,7 +16,7 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	
 	protected function setInterface( $config, $interface ) {
 		$refl = new ReflectionProperty( '\\Wikia\\Search\\Config', 'interface' );
-		$refl->setAccesible( true );
+		$refl->setAccessible( true );
 		$refl->setValue( $config, $interface );
 	}
 	
@@ -473,7 +473,7 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	/**
 	 * @covers Wikia\Search\Config::getTruncatedResultsNum
 	 */
-	public function testTruncatedResultsNum() {
+	public function testGetTruncatedResultsNum() {
 		$config	= F::build( 'Wikia\Search\Config' );
 
 		$singleDigit = 9;
@@ -515,6 +515,20 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				$config->getTruncatedResultsNum(),
 				"Larger digits should round to the nearest n-1 radix."
 		);
+		
+		$interface = $this->interface->setMethods( array( 'formatNumber' ) )->getMock();
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'formatNumber' )
+		    ->with   (56000)
+		    ->will   ( $this->returnValue( '56,000' ) )
+	    ;
+		$this->setInterface( $config, $interface );
+		$this->assertEquals(
+				'56,000',
+				$config->getTruncatedResultsNum( true )
+		);
+		
 	}
 
 	/**
@@ -615,77 +629,57 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 
 	/**
 	 * @covers Wikia\Search\Config::getActiveTab
-	 * @todo
+	 */
 	public function testGetActiveTab() {
-
-		$config 			= F::build( 'Wikia\Search\Config' );
-		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
-
-		$config->setAdvanced( true );
-
-		$this->assertEquals(
-				SEARCH_PROFILE_ADVANCED,
-				$config->getActiveTab()
-		);
-
-		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
-
-		$searchEngineMock
-			->staticExpects	( $this->any() )
-			->method		( 'searchableNamespaces' )
-			->will			( $this->returnValue( array( NS_MAIN, NS_TALK, NS_CATEGORY, NS_FILE, NS_USER ) ) )
+		$config = $this->config->setMethods( array( 'getAdvanced', 'getNamespaces', 'getSearchProfiles' ) )->getMock();
+		$config
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getAdvanced' )
+		    ->will   ( $this->returnValue( true ) )
 		;
-		$searchEngineMock
-			->staticExpects	( $this->any() )
-			->method		( 'defaultNamespaces' )
-			->will			( $this->returnValue( array( NS_FILE, NS_CATEGORY ) ) )
+		$this->assertEquals(
+				'advanced',
+				$config->getActiveTab()
+		);
+		$config
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getAdvanced' )
+		    ->will   ( $this->returnValue( false ) )
 		;
-		$searchEngineMock
-			->staticExpects	( $this->any() )
-			->method		( 'namespacesAsText' )
-			->will			( $this->returnValue( 'Article', 'Category' ) )
+		$config
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getNamespaces' )
+		    ->will   ( $this->returnValue( array( 0, 14 ) ) )
 		;
-
-		$this->mockClass( 'SearchEngine', $searchEngineMock );
-		$this->mockGlobalVariable( 'wgDefaultNamespaces', array() );
-		$this->mockApp();
-
-		$config->setAdvanced( false );
+		$config
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getSearchProfiles' )
+		    ->will   ( $this->returnValue( array( 'default' => array( 'namespaces' => array( 0, 14 ) ), 'images' => array( 'namespaces' => array( 6 ) ) ) ) )
+		;
 		$this->assertEquals(
-				SEARCH_PROFILE_DEFAULT,
+				'default',
 				$config->getActiveTab()
 		);
-
-		$config->setNamespaces( array( NS_FILE ) );
+		$config
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getAdvanced' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$config
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getNamespaces' )
+		    ->will   ( $this->returnValue( array( 0, 14, 123 ) ) )
+		;
+		$config
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getSearchProfiles' )
+		    ->will   ( $this->returnValue( array( 'default' => array( 'namespaces' => array( 0, 14 ) ), 'images' => array( 'namespaces' => array( 6 ) ) ) ) )
+		;
 		$this->assertEquals(
-				SEARCH_PROFILE_IMAGES,
+				'advanced',
 				$config->getActiveTab()
 		);
-
-		$config->setNamespaces( array( NS_USER ) );
-		$this->assertEquals(
-				SEARCH_PROFILE_USERS,
-				$config->getActiveTab()
-		);
-
-		$config->setNamespaces( array( NS_FILE, NS_USER ) );
-		$this->assertEquals(
-				SEARCH_PROFILE_ADVANCED,
-				$config->getActiveTab()
-		);
-
-		$config->setNamespaces( array_keys( $searchEngineMock->searchableNamespaces() ) );
-		$this->assertEquals(
-				SEARCH_PROFILE_ALL,
-				$config->getActiveTab()
-		);
-
-		$config->setNamespaces( array( NS_FILE, NS_MAIN ) );
-		$this->assertEquals(
-				SEARCH_PROFILE_ADVANCED,
-				$config->getActiveTab()
-		);
-	}*/
+	}
 
 	/**
 	 * @covers Wikia\Search\Config::setFilterQuery
@@ -943,6 +937,39 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
+	 * @covers Wikia\Search\Config::setQueryFields
+	 */
+	public function testSetQueryFields() {
+		$config = new Wikia\Search\Config;
+		$this->assertEquals(
+				$config,
+				$config->setQueryFields( array( 'foo' ) )
+		);
+		$this->assertAttributeEquals(
+				array( 'foo' => 1 ),
+				'queryFieldsToBoosts',
+				$config
+		);
+		$config->setQueryFields( array( 'bar' => 5 ) );
+		$this->assertAttributeEquals(
+				array( 'bar' => 5 ),
+				'queryFieldsToBoosts',
+				$config
+		);
+	}
+	
+	public function testHasFilterQueries() {
+		$config = new Wikia\Search\Config;
+		$this->assertFalse(
+				$config->hasFilterQueries()
+		);
+		$config->setFilterQuery( 'foo', 'bar' );
+		$this->assertTrue(
+				$config->hasFilterQueries()
+		);
+	}
+	
+	/**
 	 * @covers Wikia\Search\Config::importQueryFieldBoosts
 	 */
 	public function testImportQueryFieldBoosts() {
@@ -995,4 +1022,44 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				$config->getQueryFields()
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setQuery
+	 */
+	public function testSetQuery() {
+		$interface = $this->interface->setMethods( array( 'getNamespaceIdForString' ) )->getMock();
+		$config = $this->config->setMethods( array( 'getNamespaces' ) )->getMock();
+		$this->setInterface( $config, $interface );
+		
+		$query = 'Category:Foo';
+		
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getNamespaceIdForString' )
+		    ->with   ( 'Category' )
+		    ->will   ( $this->returnValue( 14 ) )
+		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getNamespaces' )
+		    ->will   ( $this->returnValue( array( 0 ) ) )
+		;
+		$this->assertEquals(
+				$config,
+				$config->setQuery( $query )
+		);
+		$paramsRefl = new ReflectionProperty( 'Wikia\Search\Config', 'params' );
+		$paramsRefl->setAccessible( true );
+		$params = $paramsRefl->getValue( $config );
+		$this->assertEquals(
+				$query,
+				$params['originalQuery']
+		);
+		$this->assertEquals(
+				'Foo',
+				$params['query']
+		);
+	}
+	
+	
 }
