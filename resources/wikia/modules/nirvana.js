@@ -24,7 +24,7 @@
 				throw "Only Json,Jsonp and Html format are allowed";
 			}
 
-			url = attr.scriptPath || context.wgScriptPath;
+			url = attr.scriptPath || context.wgServer + context.wgScriptPath;
 
 			getUrl = {
 				//Iowa strips out POST parameters, Nirvana requires these to be set
@@ -54,7 +54,7 @@
 			}
 
 			return ajax({
-				url: wgServer + url + '/wikia.php?' + $.param(getUrl), /* JSlint ignore */
+				url: url + '/wikia.php?' + $.param(getUrl), /* JSlint ignore */
 				dataType: format,
 				type: type,
 				data: sortedDict,
