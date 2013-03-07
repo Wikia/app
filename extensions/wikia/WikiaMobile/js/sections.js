@@ -22,10 +22,8 @@ define('sections', ['JSMessages'], function(msg){
 
 		if(len > 0){
 			setTimeout(function(){
-				var x = 0;
-
-				while(x < len){
-					stack[x++].call(target);
+				while(len--){
+					stack[len].call(target);
 				}
 			}, 0);
 		}

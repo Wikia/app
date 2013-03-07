@@ -12,8 +12,7 @@
 		parent,
 		notAllowed,
 		namespace,
-		pathMatch,
-		page = document.getElementById('wkPage');
+		pathMatch;
 
 	while(i--) {
 		link = links[i];
@@ -188,11 +187,11 @@
 		w.Sections = Sections;
 
 		s.addEventListener('open', function(){
-			page.style.minHeight = document.documentElement.offsetHeight + 'px';
+			document.documentElement.style.minHeight = document.documentElement.offsetHeight + 'px';
 		});
 
 		s.addEventListener('close', function(){
-			page.style.minHeight = 0;
+			document.documentElement.style.minHeight = 0;
 		});
 	});
 
