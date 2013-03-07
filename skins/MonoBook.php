@@ -55,7 +55,7 @@ class SkinMonoBook extends WikiaSkinMonoBook {
  * @ingroup Skins
  */
 // Wikia change - begin - @author: wladek
-class MonoBookTemplate extends WikiaMonoBookTemplate {
+class MonoBookTemplate extends WikiaBaseTemplate {
 	/*
 	 * added here because of BugzId:45526
 	 * but frankly, I have no idea why or when this stopped working
