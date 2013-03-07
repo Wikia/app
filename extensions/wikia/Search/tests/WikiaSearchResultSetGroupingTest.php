@@ -308,7 +308,7 @@ class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest
 	public function testConfigureHeaders() {
 		$mockResult = $this->getMock( 'Wikia\Search\Result', array( 'offsetGet', 'getFields' ) );
 		$results = new \ArrayIterator( array( $mockResult ) );
-		$this->prepareMocks( array( 'addHeaders', 'setHeader', 'getHeader' ), array(), array(), array( 'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getGlobalForWiki', 'getHubForWikiId', 'getMainPageTextForWikiId' ) );
+		$this->prepareMocks( array( 'addHeaders', 'setHeader', 'getHeader' ), array(), array(), array( 'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getGlobalForWiki', 'getHubForWikiId', 'getDescriptionTextForWikiId' ) );
 		$fields = array( 'id' => 123 );
 		$vizInfo = array( 'description' => 'yup' );
 		$mockResult
@@ -387,7 +387,7 @@ class WikiaSearchResultSetGroupingTest extends WikiaSearchBaseTest
 		;
 		$this->interface
 		    ->expects( $this->any() )
-		    ->method ( 'getMainPageTextForWikiId' )
+		    ->method ( 'getDescriptionTextForWikiId' )
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( "This be the text" ) )
 		;
