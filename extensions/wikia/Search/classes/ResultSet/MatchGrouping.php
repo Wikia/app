@@ -14,6 +14,7 @@ class MatchGrouping extends Grouping {
 	
 	/**
 	 * Uses DependencyContainer to pre-populate attributes, and then configures stuff.
+	 * Note that we're skipping adding headers or ingesting results from result groupings.
 	 * @param DependencyContainer $container
 	 */
 	protected function configure( DependencyContainer $container ) {
@@ -22,9 +23,10 @@ class MatchGrouping extends Grouping {
 		$this->interface          = $container->getInterface();
 		$this->parent             = $container->getParent();
 		$this->metaposition       = $container->getMetaposition();
-		$this->results            = new \ArrayIterator( array( $container->getWikiMatch()->getResult() ) );
+		$result                   = $container->getWikiMatch()->getResult();
+		$this->results            = new \ArrayIterator( array( $result ) );
 		
-		$this->configureHeaders();
+		$this->addHeaders( $result->getFields() );
 	}
 	
 }
