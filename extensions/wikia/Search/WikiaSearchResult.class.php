@@ -222,10 +222,12 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 	 */
 	public function toArray( $keys ) {
 		$array = array();
-		foreach ( $this->_fields as $key => $value )
-		{
-			if( in_array( $key, $keys ) ) {
-				$array[$key] = $value;
+		foreach ( $keys as $key ) {
+			$langKey = WikiaSearch::field($key);
+			if ( isset( $this->_fields[$langKey] ) ) {
+				$array[$key] = $this->_fields[$langKey];
+			} else if ( isset( $this->_fields[$key] ) ) {
+				$array[$key] = $this->_fields[$key];
 			}
 		}
 		return $array;
