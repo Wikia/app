@@ -161,7 +161,7 @@ class WAMService extends Service {
 			$options['OFFSET'] = $inputOptions['offset'];
 		}
 
-		if (!is_null($options['limit'])) {
+		if (!is_null($inputOptions['limit'])) {
 			$options['LIMIT'] = $inputOptions['limit'];
 		}
 		return $options;
