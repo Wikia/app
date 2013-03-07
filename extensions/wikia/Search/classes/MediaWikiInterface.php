@@ -571,6 +571,22 @@ class MediaWikiInterface
 		return $item['abstract'];
 	}
 	
+	/**
+	 * Returns text from the main page of a provided wiki.
+	 * @param int $wikiId
+	 * @return string
+	 */
+	public function getDescriptionTextForWikiId( $wikiId ) {
+		$params = array(
+				'controller' => 'ArticlesApiController', 
+				'method' => 'getDetails', 
+				'titles' => $this->getDescriptionTitleForWikiId( $wikiId )->getDbKey()
+				);
+		$response = \ApiService::foreignCall( $this->getDbNameForWikiId( $wikiId ), $params, \ApiService::WIKIA );
+		$item = \array_shift( $response['items'] );
+		return $item['abstract'];
+	}
+	
 	public function getHubForWikiId( $wikiId ) {
 		$cat = \WikiFactory::getCategory( $wikiId );
 		return is_object( $cat ) ? $cat->cat_name : $cat;
@@ -768,6 +784,11 @@ class MediaWikiInterface
 		return $this->wikiDataSources[$wikiId];
 	}
 
+	/**
+	 * Returns the database name for a given wiki
+	 * @param int $wikiId
+	 * @return string
+	 */
 	protected function getDbNameForWikiId( $wikiId ) {
 		return $this->getDataSourceForWikiId( $wikiId )->getDbName();
 	}
@@ -784,6 +805,28 @@ class MediaWikiInterface
 					'action'      => 'query',
 					'meta'        => 'allmessages',
 					'ammessages'  => 'mainpage',
+					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
+					) 
+			);
+	    $title = \GlobalTitle::newFromText( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
+	    if ( $title->isRedirect() ) {
+	    	$title = $title->getRedirectTarget();
+	    }
+	    return $title;
+	}
+
+	/**
+	 * Returns an instance of GlobalTitle provided a Wiki ID for MediaWiki:Description
+	 * @param int $wikiId
+	 * @return GlobalTitle
+	 */
+	protected function getDescriptionTitleForWikiId( $wikiId ) {
+		$response = \ApiService::foreignCall(
+			$this->getDbNameForWikiId( $wikiId ), 
+			array(
+					'action'      => 'query',
+					'meta'        => 'allmessages',
+					'ammessages'  => 'description',
 					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
 					) 
 			);

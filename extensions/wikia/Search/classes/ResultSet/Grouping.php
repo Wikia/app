@@ -72,7 +72,7 @@ class Grouping extends Base
 			     ->setHeader ( 'hub', $this->interface->getHubForWikiId( $wikiId ) );
 			
 			if (! $this->getHeader( 'description' ) ) {
-				$this->setHeader( 'description', $this->interface->getMainPageTextForWikiId( $wikiId ) );
+				$this->setHeader( 'description', $this->interface->getDescriptionTextForWikiId( $wikiId ) );
 			}
 		}
 		return $this;
