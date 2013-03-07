@@ -47,14 +47,14 @@
 					sortedKeys[sortedKeys.length] = key;
 				}
 				sortedKeys.sort();
-				var sortedDict = {};
+				sortedDict = {};
 				for(var i = 0; i < sortedKeys.length; i++) {
 					sortedDict[sortedKeys[i]] = data[sortedKeys[i]];
 				}
 			}
 
 			return ajax({
-				url: url + '/wikia.php?' + $.param(getUrl), /* JSlint ignore */
+				url: wgServer + url + '/wikia.php?' + $.param(getUrl), /* JSlint ignore */
 				dataType: format,
 				type: type,
 				data: sortedDict,
