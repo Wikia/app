@@ -21,7 +21,7 @@ class WAMApiController extends WikiaApiController {
 	 *                             Defaults to day before yesterday
 	 * @requestParam integer $vertical_id [OPTIONAL] vertical for which wiki list is to be pulled. By default pulls
 	 *                             major verticals (2,3,9 - Gaming, Entertainment, Lifestyle)
-	 * @requestParam integer $wiki_lang [OPTIONAL] Language code if narrowing the results to specific language. Defaults to null
+	 * @requestParam string $wiki_lang [OPTIONAL] Language code if narrowing the results to specific language. Defaults to null
 	 * @requestParam integer $wiki_id [OPTIONAL] Id of specific wiki to pull. Defaults to null
 	 * @requestParam string $wiki_word [OPTIONAL] Fragment of url to search for amongst wikis. Defaults to null
 	 * @requestParam boolean $fetch_admins [OPTIONAL] Determines if admins of each wiki are to be returned. Defaults to false
@@ -37,23 +37,43 @@ class WAMApiController extends WikiaApiController {
 	 * @responseParam array $wam_results_total The total count of wikis available for provided params
 	 */
 	public function getWAMIndex () {
-		$currentTimestamp = $this->request->getVal('wam_day', strtotime('00:00 -2 day'));
-		$previousTimestamp = $this->request->getVal('wam_previous_day', strtotime('00:00 -3 day'));
-		$verticalId = $this->request->getVal('vertical_id', null);
+		$currentTimestamp = $this->request->getInt('wam_day', strtotime('00:00 -2 day'));
+		$previousTimestamp = $this->request->getInt('wam_previous_day', strtotime('00:00 -3 day'));
+		$verticalId = $this->request->getInt('vertical_id', null);
 		$wikiLang = $this->request->getVal('wiki_lang', null);
-		$wikiId = $this->request->getVal('wiki_id', null);
+		$wikiId = $this->request->getInt('wiki_id', null);
 		$wikiWord = $this->request->getVal('wiki_word', null);
-		$fetchAdmins = $this->request->getVal('fetch_admins', false);
-		$avatarSize = $this->request->getVal('avatar_size', self::DEFAULT_AVATAR_SIZE);
-		$fetchWikiImages = $this->request->getVal('fetch_wiki_images', false);
-		$wikiImageSize = $this->request->getVal('wiki_image_size', self::DEFAULT_WIKI_IMAGE_SIZE);
+		$fetchAdmins = $this->request->getBool('fetch_admins', false);
+		$avatarSize = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
+		$fetchWikiImages = $this->request->getBool('fetch_wiki_images', false);
+		$wikiImageSize = $this->request->getInt('wiki_image_size', self::DEFAULT_WIKI_IMAGE_SIZE);
 		$sortColumn = $this->request->getVal('sort_column', 'wam_rank');
 		$sortDirection = $this->request->getVal('sort_direction', 'ASC');
-		$offset = $this->request->getVal('offset', 0);
-		$limit = min(self::MAX_PAGE_SIZE, $this->request->getVal('limit', self::DEFAULT_PAGE_SIZE));
+		$offset = $this->request->getInt('offset', 0);
+		$limit = $this->request->getInt('limit', self::DEFAULT_PAGE_SIZE);
+
+		if ($limit > self::MAX_PAGE_SIZE) {
+			throw new InvalidParameterApiException('limit');
+		}
 
 		$wamIndex = WikiaDataAccess::cacheWithLock(
-			F::app()->wf->SharedMemcKey('wam_index_table', $currentTimestamp, $previousTimestamp, $verticalId, $wikiLang, $wikiId, $wikiWord, $fetchAdmins, $avatarSize, $fetchWikiImages, $wikiImageSize, $sortColumn, $sortDirection, $offset, $limit),
+			F::app()->wf->SharedMemcKey(
+				'wam_index_table',
+				$currentTimestamp,
+				$previousTimestamp,
+				$verticalId,
+				$wikiLang,
+				$wikiId,
+				$wikiWord,
+				$fetchAdmins,
+				$avatarSize,
+				$fetchWikiImages,
+				$wikiImageSize,
+				$sortColumn,
+				$sortDirection,
+				$offset,
+				$limit
+			),
 			6 * 60 * 60,
 			function () use ($currentTimestamp, $previousTimestamp, $verticalId, $wikiLang, $wikiId, $wikiWord, $fetchAdmins, $avatarSize, $fetchWikiImages, $wikiImageSize, $sortColumn, $sortDirection, $offset, $limit) {
 				$wamService = new WAMService();
