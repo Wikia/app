@@ -11,6 +11,7 @@
 class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	const CACHE_VALIDITY_BROWSER = 86400;
 	const CACHE_VALIDITY_VARNISH = 86400;
+	const WAM_LIMIT = 5;
 
 	/**
 	 * @var WikiaHubsV2Model
@@ -128,6 +129,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			MarketingToolboxModel::SECTION_HUBS,
 			$verticalId
 		);
+
+		if( $module instanceof MarketingToolboxModuleNonEditableService ) {
+			$params = $module->getDataParameters($langCode, $verticalId, self::WAM_LIMIT, $this->hubTimestamp);
+		}
 
 		$moduleData = $module->getStructuredData($moduleData);
 
