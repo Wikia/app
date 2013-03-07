@@ -156,7 +156,6 @@ class SynchronizeBlobs extends Maintenance {
 		}
 		unset($rows);
 	}
-
 	function filterBlobs($cluster, &$ids)	{
 		$dbw = $this->store->getMaster( $cluster );
 		if (!$dbw) throw new Exception("Could not get database for cluster $cluster");
@@ -185,7 +184,6 @@ class SynchronizeBlobs extends Maintenance {
 			$this->clusters[$cluster] = $needs_work;
 		}
 	}
-
 	function fetchAndStoreBlobs($cluster, &$ids) {
 		global $wgTheSchwartzSecretToken;
 		$dbw = $this->store->getMaster( $cluster );
@@ -210,7 +208,6 @@ class SynchronizeBlobs extends Maintenance {
 					if(  $hash == $response->fetchblob->hash ) {
 						$ret = $blob;
 						$insert_ok = $dbw->insert($table,	array( "blob_id" => $id, "blob_text" => $ret ),	__METHOD__ );
-																			//array('IGNORE'));
 						if (!$insert_ok) print $dbw->lastError();
 						$dbw->commit();
 						$this->downloaded++;
@@ -230,7 +227,6 @@ class SynchronizeBlobs extends Maintenance {
 			$this->showProgress();
 		}
 	}
-
 	function getNiceDuration($durationInSeconds) {
 		$duration = '';
 		$days = floor($durationInSeconds / 86400);
@@ -252,10 +248,6 @@ class SynchronizeBlobs extends Maintenance {
 		$duration .= ' ' . $seconds . ' second' . ($seconds!=1?"s":"");
 		return $duration;
 	}
-
-	public function getETA() {
-	}
-
 	public function showProgress() {
 		if ($this->isChild || $this->progressPeriod == 0) return;
 		if ($this->lastProgressTime) {
