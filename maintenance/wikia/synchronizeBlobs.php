@@ -31,37 +31,117 @@ class SynchronizeBlobs extends Maintenance {
 	var $lastProgressTime = 0;
 	var $clusters = array();
 	var $progressPeriod;
+	var $pageNamespace;
+	var $forkCount;
+	var $isChild = false;
+	var $children;
+	var $sockets = array();
+	var $channel;
+	var $childNumber = 0;
+	var $outBuffer = "";
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Synchronize blobs for latest revisions of pages from SJC to POZ (for devboxes). Run on a POZ devbox.";
-		$this->addArg("progress", "How many seconds between each progress report (0 to disable). 30 is default", false);
+		$this->addOption("progress", "How many seconds between each progress report (0 to disable). 30 is default", false, true);
+		$this->addOption("namespace", "Limit to only pages from a specific namespace id (0 for main)", false, true);
+		$this->addOption("fork", "Use n background processes (default - everything in foreground)", false, true);
 	}
 
 	public function execute() {
 		global $oWiki;
 		$isPoznanDevbox = ( F::app()->wg->DevelEnvironment === true && F::app()->wg->WikiaDatacenter == "poz" );
 		if (!$isPoznanDevbox) throw new Exception("This should be run within Poznan devel environment");
-		$this->progressPeriod = $this->getArg(0, 30);
-		$city_id = $oWiki->mCityID;
-		$city_dbname = $oWiki->mCityDB;
-		$this->output("Getting ids of latest revisions for city_id=$city_id and city_dbname=$city_dbname\n");
+		$this->progressPeriod = $this->getOption("progress", 30);
+		$this->pageNamespace = $this->getOption("namespace", "");
+		$this->forkCount = $this->getOption("fork", 0);
+		if (!is_numeric($this->progressPeriod)) throw new Exception("Invalid 'progress' parameter: $this->progressPeriod");
+		if ($this->pageNamespace!=="" && !is_numeric($this->pageNamespace)) throw new Exception("Invalid 'namespace' parameter: $this->pageNamespace");
+		if (!is_numeric($this->forkCount)) throw new Exception("Invalid 'fork' parameter: $this->forkCount");
+		$this->output("Getting ids of latest revisions for city_id=$oWiki->mCityID, city_dbname=$oWiki->mCityDB, namespace="
+									.	(($this->pageNamespace==="") ? "any" : $this->pageNamespace) . "\n");
 		$this->fetchLatestRevisions();
 		$this->store = new ExternalStoreDB();
 		$this->output("Creating list of blobs to download.\n");
 		foreach ($this->clusters as $cluster => $ids) $this->filterBlobs($cluster, $ids);
-		$this->output("Downloading ".$this->toDownload." out of total of ".$this->total." blobs.\n");
-		$this->startTime = time();
-		foreach ($this->clusters as $cluster => $ids) $this->fetchAndStoreBlobs($cluster, $ids);
-		$this->showProgress();
+		if ($this->toDownload) {
+			$this->startTime = time();
+			$this->output("Downloading ".$this->toDownload." out of total of ".$this->total." blobs.\n");
+			if ($this->forkCount) {
+				$this->executeFork();
+			} else {
+				$this->executeWorker();
+			}
+			$this->showProgress();
+		} else {
+			$this->output("Nothing to do, finished\n");
+		}
 	}
-
-
+	function executeFork() {
+		$this->output("Spawning $this->forkCount child processes.\n");
+		$this->children = array();
+		for($fork = 0; ($fork < $this->forkCount); $fork++) {
+			$ok = socket_create_pair(AF_UNIX, SOCK_STREAM, 0, $fd);
+			if (!$ok) throw new Exception("Could not create UNIX socket");
+			$pid=pcntl_fork();
+			if ($pid==0) {
+				$this->isChild = true;
+				foreach ($this->sockets as $old) socket_close($old);
+				socket_close($fd[0]);
+				break;
+			} else {
+				if ($pid==-1) throw new Exception("Could not fork");
+				socket_close($fd[1]);
+				$this->children[] = $pid;
+				$this->sockets[] = $fd[0];
+			}
+		}
+		if ($this->isChild) {
+			$this->childNumber = $fork;
+			$this->channel = $fd[1];
+			$this->executeWorker();
+			socket_close($this->channel);
+		} else {
+			$this->executeParent();
+		}
+	}
+	function executeParent() {
+		$timeout = $this->progressPeriod ? $this->progressPeriod : null;
+		while(true) {
+			$this->showProgress();
+			$read_fds = $this->sockets;
+			$write_fds = array();
+			$exc_fds = array();
+			socket_select($read_fds, $write_fds, $exc_fds, $timeout);
+			foreach ($read_fds as $fd) {
+				$buf = socket_read($fd, 255);
+				if (is_string($buf) &&  strlen($buf)) {
+					$this->addChildProgress($buf);
+					if ($this->done==$this->toDownload) break;
+				} else {
+					$this->output("WARNING: Child finished unexpectedly!\n");
+					$key = array_search($fd, $this->sockets);
+					unset($this->sockets[$key]);
+					$this->sockets = array_values($this->sockets);
+					if (count($this->sockets)==0) return;
+				}
+			}
+		}
+		foreach ($this->children as $pid) pcntl_waitpid($pid, $status);
+	}
+	function addChildProgress($buf) {
+		$this->done += strlen($buf);
+		$this->downloaded += substr_count($buf, "+");
+	}
+	function executeWorker() {
+		foreach ($this->clusters as $cluster => $ids) $this->fetchAndStoreBlobs($cluster, $ids);
+	}
 	function fetchLatestRevisions() {
 		$db = $this->getDB(DB_SLAVE);
+  	$where = ($this->pageNamespace==="") ? "" : " WHERE page_namespace=".$this->pageNamespace;
 		$rows = $db->query("SELECT old_id, old_flags, old_text FROM page
 											  INNER JOIN revision ON page_id=rev_page AND page_latest=rev_id
-												INNER JOIN text ON rev_text_id=old_id",
+												INNER JOIN text ON rev_text_id=old_id" . $where,
 											"SynchronizeBlobs::latestRevision");
 		foreach ($rows as $row) {
 			if (strpos($row->old_flags, "external") !== false) { // i know what to do with it
@@ -98,7 +178,7 @@ class SynchronizeBlobs extends Maintenance {
 		foreach ($ids as $id) if (!array_key_exists($id, $skip)) $needs_work[] = $id; // array_diff did not work correctly
 		$count = count($needs_work);
 		$this->toDownload += $count;
-		$this->output("down to $count\n");
+		$this->output("down to $count.\n");
 		if ($count==0) {
 			unset($this->clusters[$cluster]);
 		} else {
@@ -111,9 +191,11 @@ class SynchronizeBlobs extends Maintenance {
 		$dbw = $this->store->getMaster( $cluster );
 		if (!$dbw) throw new Exception("Could not get database for cluster $cluster");
 		$table = $this->store->getTable( $dbw );
-		$this->output("Downloading ".count($ids). " blobs for cluster $cluster.\n");
+		if ($this->childNumber==0) $this->output("Staring work on cluster $cluster (".count($ids). " blobs).\n");
 
-		foreach ($ids as $id) {
+		foreach ($ids as $index => $id) {
+			if ($this->isChild && ($index % $this->forkCount)!=$this->childNumber) continue; // split work deterministically, if a little bit unfairly ;)
+			$sent = false;
 			$url = sprintf( "%s?action=fetchblob&store=%s&id=%d&token=%s&format=json", $this->wgFetchBlobApiURL,	$cluster,	$id,$wgTheSchwartzSecretToken	);
 			$response = json_decode( Http::get( $url, "default", array( 'noProxy' => true ) ) );
 
@@ -132,6 +214,10 @@ class SynchronizeBlobs extends Maintenance {
 						if (!$insert_ok) print $dbw->lastError();
 						$dbw->commit();
 						$this->downloaded++;
+						if ($this->isChild) {
+							socket_write($this->channel,"+");
+							$sent = true;
+						}
 					}	else {
 						$this->output("md5 sum not match, $hash != $response->fetchblob->hash\n");
 					}
@@ -140,6 +226,7 @@ class SynchronizeBlobs extends Maintenance {
 				$this->output("malformed response from API call\n" );
 			}
 			$this->done++;
+			if ($this->isChild && !$sent) socket_write($this->channel, "-");
 			$this->showProgress();
 		}
 	}
@@ -167,20 +254,24 @@ class SynchronizeBlobs extends Maintenance {
 	}
 
 	public function getETA() {
-		$elapsed = time() - $this->startTime;
-		if ($elapsed < 1) return " unknown";
-		$speed = (float)($this->done) / (float)($elapsed);
-		$left = ($this->toDownload - $this->done) / $speed;
-		return $this->getNiceDuration($left);
 	}
 
 	public function showProgress() {
-		if ($this->progressPeriod == 0) return;
+		if ($this->isChild || $this->progressPeriod == 0) return;
 		if ($this->lastProgressTime) {
 			if ($this->lastProgressTime + $this->progressPeriod > time()) return;
+			$elapsed = time() - $this->startTime;
+			if ($elapsed < 1) $eta = " unknown";
+			$speed = (float)($this->done) / (float)($elapsed);
+			if ($speed>0) {
+				$left = ($this->toDownload - $this->done) / $speed;
+				$eta = $this->getNiceDuration($left);
+			} else {
+				$eta = " unknown";
+			}
 			$this->output("Processeed ".$this->done." (".($this->downloaded==$this->done?"all":$this->downloaded)." successfully) out of ".$this->toDownload. " to download in".
 										$this->getNiceDuration(time() - $this->startTime). ", ".
-										($this->done < $this->toDownload ? "remaining time:".$this->getETA() : "finished")."\n");
+									($this->done < $this->toDownload ? "remaining time:".$eta." (average speed ".round($speed,2)." / s)" : "finished")."\n");
 		}
 		$this->lastProgressTime = time();
 	}
