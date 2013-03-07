@@ -15,12 +15,11 @@ class ParserSpeedSpecialPageController extends WikiaSpecialPageController {
 	 * this is default method, which in this example just redirects to helloWorld method
 	 */
 	public function index() {
-
 		// access control
-//		if ( !$this->wg->User->isAllowed( 'parserspeed' ) ) {
-//			$this->displayRestrictionError();
-//			return false;
-//		}
+		if ( !$this->wg->User->isAllowed( 'parserspeed' ) ) {
+			$this->displayRestrictionError();
+			return false;
+		}
 
 
 		$pager = new ParserSpeedTablePager();

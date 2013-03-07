@@ -12,7 +12,7 @@ class ParserSpeedTablePager extends TablePager {
 	}
 
 	function isFieldSortable( $field ) {
-		return in_array( $field, array( 'average_time', 'wikitext_size', 'html_size' ) );
+		return in_array( $field, array( 'average_time', 'minimum_time', 'maximum_time', 'wikitext_size', 'html_size' ) );
 	}
 
 	function formatValue( $name, $value ) {
@@ -21,6 +21,11 @@ class ParserSpeedTablePager extends TablePager {
 				$articleId = $this->mCurrentRow->article_id;
 				$title = Title::newFromID($articleId);
 				return $title ? Linker::link($title) : '(unknown, id: '.$articleId.')';
+				break;
+			case 'average_time':
+			case 'minimum_time':
+			case 'maximum_time':
+				return $value . " s";
 				break;
 			case 'wikitext_size':
 			case 'html_size':
@@ -41,9 +46,12 @@ class ParserSpeedTablePager extends TablePager {
 	}
 
 	function getFieldNames() {
+		// todo: transfer to i18n files
 		return array(
 			'article_title' => 'Article',
 			'average_time' => 'Avg. parsing time',
+			'minimum_time' => 'Min. parsing time',
+			'maximum_time' => 'Max. parsing time',
 			'wikitext_size' => 'Wikitext size',
 			'html_size' => 'HTML size',
 		);
@@ -52,7 +60,7 @@ class ParserSpeedTablePager extends TablePager {
 	function getQueryInfo() {
 		$queryInfo = array(
 			'tables' => 'parser_speed_article',
-			'fields' => 'article_id, average_time, wikitext_size, html_size',
+			'fields' => 'article_id, average_time, minimum_time, maximum_time, wikitext_size, html_size',
 			'conds' => array(
 				'wiki_id' => F::app()->wg->CityId,
 			)
