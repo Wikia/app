@@ -586,7 +586,7 @@ class MediaWikiInterface
 					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
 					) 
 			);
-		return $this->app->wf->message( $response['query']['allmessages'][0]['*'] )->text();
+		return str_replace( '{{SITENAME}}', $this->getGlobalForWiki( 'wgSitename', $wikiId ), $response['query']['allmessages'][0]['*'] );
 	}
 	
 	public function getHubForWikiId( $wikiId ) {
