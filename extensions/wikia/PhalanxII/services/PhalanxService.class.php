@@ -103,6 +103,7 @@ class PhalanxService extends Service {
 	 *
 	 * @param $action String type of action
 	 * @param $parameters Array additional parameters as hash table
+	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
 		wfProfileIn( __METHOD__  );
@@ -152,6 +153,8 @@ class PhalanxService extends Service {
 			/* service doesn't work */
 			$res = false;
 		} else {
+			wfDebug( __METHOD__ . "::response - {$response}\n" );
+
 			switch ( $action ) {
 				case "stats":
 					$res = ( is_null( $response ) ) ? false : $response;
