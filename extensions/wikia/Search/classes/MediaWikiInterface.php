@@ -571,6 +571,24 @@ class MediaWikiInterface
 		return $item['abstract'];
 	}
 	
+	/**
+	 * Returns text from the main page of a provided wiki.
+	 * @param int $wikiId
+	 * @return string
+	 */
+	public function getDescriptionTextForWikiId( $wikiId ) {
+		$response = \ApiService::foreignCall(
+			$this->getDbNameForWikiId( $wikiId ), 
+			array(
+					'action'      => 'query',
+					'meta'        => 'allmessages',
+					'ammessages'  => 'description',
+					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
+					) 
+			);
+		return str_replace( '{{SITENAME}}', $this->getGlobalForWiki( 'wgSitename', $wikiId ), $response['query']['allmessages'][0]['*'] );
+	}
+	
 	public function getHubForWikiId( $wikiId ) {
 		$cat = \WikiFactory::getCategory( $wikiId );
 		return is_object( $cat ) ? $cat->cat_name : $cat;
@@ -768,6 +786,11 @@ class MediaWikiInterface
 		return $this->wikiDataSources[$wikiId];
 	}
 
+	/**
+	 * Returns the database name for a given wiki
+	 * @param int $wikiId
+	 * @return string
+	 */
 	protected function getDbNameForWikiId( $wikiId ) {
 		return $this->getDataSourceForWikiId( $wikiId )->getDbName();
 	}
