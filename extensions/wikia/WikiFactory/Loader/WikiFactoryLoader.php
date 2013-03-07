@@ -99,11 +99,17 @@ class WikiFactoryLoader {
 			$this->mServerName = false;
 			$this->mCommandLine = true;
 		}
+		elseif( getenv( "SERVER_DBNAME") ) {
+			$this->mCityDB = getenv( "SERVER_DBNAME" );
+			$this->mServerName = false;
+			$this->mCommandLine = true;
+			$this->mCityID = false;
+		}
 		else {
 			/**
 			 * hardcoded exit, nothing can be done at this point
 			 */
-			echo "Cannot tell which wiki it is (neither SERVER_NAME nor SERVER_ID is defined)\n";
+			echo "Cannot tell which wiki it is (neither SERVER_NAME, SERVER_ID nor SERVER_DBNAME is defined)\n";
 			exit(1);
 		}
 
@@ -281,24 +287,26 @@ class WikiFactoryLoader {
 			 * interactive/cmdline case. We know city_id so we don't have to
 			 * ask city_domains table
 			 */
-			if( $this->mCityID ) {
+			if( $this->mCityID || $this->mCityDB) {
 				$oRow = $dbr->selectRow(
-					array( "city_list" ),
-					array(
-						"city_id",
-						"city_public",
-						"city_factory_timestamp",
-						"city_url",
-						"city_dbname",
-						"ad_cat"
-					),
-					array( "city_list.city_id" => $this->mCityID ),
-					__METHOD__
-				);
-				if( isset( $oRow->city_id ) && $this->mCityID == $oRow->city_id ) {
+						array( "city_list" ),
+						array(
+							"city_id",
+							"city_public",
+							"city_factory_timestamp",
+							"city_url",
+							"city_dbname",
+							"ad_cat"
+						),
+						($this->mCityID) ? array( "city_list.city_id" => $this->mCityID ) : array( "city_list.city_dbname" => $this->mCityDB ),
+						__METHOD__
+					);
+
+				if( isset( $oRow->city_id ) )  {
 					preg_match( "/http[s]*\:\/\/(.+)$/", $oRow->city_url, $matches );
 					$host = rtrim( $matches[1],  "/" );
 
+					$this->mCityID = $oRow->city_id;
 					$this->mWikiID =  $oRow->city_id;
 					$this->mIsWikiaActive = $oRow->city_public;
 					$this->mCityHost = $host;
