@@ -104,7 +104,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 		$this->setUpTest( $block );
 		
 		$model = new PhalanxTextModel( $text );
-		$ret = ( int ) $model->wiki_creation();
+		$ret = ( int ) $model->match_wiki_creation();
 		
 		$this->assertEquals( $result, $ret );	
 	}
