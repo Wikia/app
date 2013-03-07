@@ -59,8 +59,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		);
 
 		foreach ($toolboxModel->getModulesIds() as $moduleId) {
-			// TODO remove this if when other modules would be ready
-			if (in_array($moduleId, $enabledModules)) {
 				if (!empty($modulesData[$moduleId]['data'])) {
 					$this->modules[$moduleId] = $this->renderModule(
 						$this->wg->ContLang->getCode(),
@@ -72,7 +70,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 					// TODO think about it what should we render if we don't have data
 					$this->modules[$moduleId] = $toolboxModel->getNotTranslatedModuleName($moduleId) . ' <-- no data';
 				}
-			}
 		}
 
 		$this->response->addAsset('wikiahubs_v2');
