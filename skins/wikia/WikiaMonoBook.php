@@ -288,35 +288,3 @@ HTML;
 	}
 
 } // end of class
-
-abstract class WikiaMonoBookTemplate extends WikiaBaseTemplate{
-	public function set( $name, $value ) {
-		if ( $name == 'headelement' ) {
-			$this->wf->profileIn( __METHOD__ );
-
-			//filter out assets specifically registered for other skins
-			$skin = $this->wg->user->getSkin();
-			$styleTags = $skin->getStyles();
-			$scriptTags = $skin->getScripts();
-			$out = $this->wg->out;
-			$allowedScripts = '';
-			$allowedStyles = '';
-			$allowedHeadItems = $skin->getHeadItems();
-
-			foreach ( $styleTags as $s ) {
-				$allowedStyles .= "{$s['tag']}\n";
-			}
-
-			foreach ( $scriptTags as $s ) {
-				$allowedScripts .= "{$s['tag']}\n";
-			}
-
-			//headitems need to be replaced BEFORE csslinks and scripts as it might be a subset of those!!!
-			$value = str_replace( array( $out->getHeadItems(), $out->buildCssLinks(), $out->getScriptsOnly()  ), array( $allowedHeadItems, $allowedStyles, $allowedScripts ), $value );
-
-			$this->wf->profileOut( __METHOD__ );
-		}
-
-		parent::set( $name, $value );
-	}
-}
