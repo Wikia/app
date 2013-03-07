@@ -1,5 +1,5 @@
 <?php
-class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModuleService {
+class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModuleEditableService {
 	const FIRST_SECTION_INDEX = 1;
 
 	const FIELD_NAME_PHOTO = 'photo';

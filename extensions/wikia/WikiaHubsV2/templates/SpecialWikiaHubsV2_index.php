@@ -3,7 +3,7 @@
 ?>
 <div id="mw-content-text" lang="<?= $app->wg->contLang->getCode(); ?>">
 	<script>var wgWikiaHubType = '<?= htmlspecialchars($wgWikiaHubType); ?>' || '';</script>
-
+	<div><?= $modules[MarketingToolboxModuleWAMService::MODULE_ID] ?></div>
 	<div class="WikiaGrid WikiaHubs" id="WikiaHubs">
 		<div class="grid-3 alpha">
 			<section class="grid-3 alpha wikiahubs-slider wikiahubs-module">

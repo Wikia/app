@@ -10,6 +10,8 @@ class MarketingToolboxModel extends WikiaModel {
 
 	protected $statuses = array();
 	protected $modules = array();
+	protected $editableModules = array();
+	protected $nonEditableModules = array();
 	protected $sections = array();
 	protected $verticals = array();
 	protected $modulesCount;
@@ -31,7 +33,7 @@ class MarketingToolboxModel extends WikiaModel {
 			'PUBLISHED' => 2
 		);
 
-		$this->modules = array(
+		$this->editableModules = array(
 			MarketingToolboxModuleSliderService::MODULE_ID => 'slider',
 			MarketingToolboxModuleWikiaspicksService::MODULE_ID => 'wikias-picks',
 			MarketingToolboxModuleFeaturedvideoService::MODULE_ID => 'featured-video',
@@ -41,7 +43,13 @@ class MarketingToolboxModel extends WikiaModel {
 			MarketingToolboxModulePopularvideosService::MODULE_ID => 'popular-videos'
 		);
 
-		$this->modulesCount = count($this->modules);
+		$this->nonEditableModules = array(
+			MarketingToolboxModuleWAMService::MODULE_ID => 'wam'
+		);
+
+		$this->modules = $this->editableModules + $this->nonEditableModules;
+
+		$this->modulesCount = count($this->editableModules);
 
 		$this->sections = array(
 			self::SECTION_HUBS => $this->wf->msg('marketing-toolbox-section-hubs-button')
@@ -74,8 +82,12 @@ class MarketingToolboxModel extends WikiaModel {
 		return self::FORM_THUMBNAIL_SIZE;
 	}
 	
-	public function getModulesIds() {
-		return array_keys($this->modules);
+	public function getEditableModulesIds() {
+		return array_keys($this->editableModules);
+	}
+
+	public function getNonEditableModulesIds() {
+		return array_keys($this->nonEditableModules);
 	}
 	
 	public function getModuleName($moduleId) {
@@ -366,7 +378,7 @@ class MarketingToolboxModel extends WikiaModel {
 		$result = $sdb->select(self::HUBS_TABLE_NAME, $fields, $conds);
 
 		$row = $sdb->fetchRow($result);
-
+		echo $row[0].' ; '.$this->modulesCount;
 		return ($row[0] == $this->modulesCount) ? true : false;
 	}
 

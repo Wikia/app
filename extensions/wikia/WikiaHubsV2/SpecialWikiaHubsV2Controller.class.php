@@ -55,9 +55,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			MarketingToolboxModuleSliderService::MODULE_ID,
 			MarketingToolboxModulePopularvideosService::MODULE_ID,
 			MarketingToolboxModuleFeaturedvideoService::MODULE_ID,
+			MarketingToolboxModuleWAMService::MODULE_ID
 		);
 
-		foreach ($toolboxModel->getModulesIds() as $moduleId) {
+		foreach ($toolboxModel->getEditableModulesIds() as $moduleId) {
 			// TODO remove this if when other modules would be ready
 			if (in_array($moduleId, $enabledModules)) {
 				if (!empty($modulesData[$moduleId]['data'])) {
@@ -72,6 +73,15 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 					$this->modules[$moduleId] = $toolboxModel->getNotTranslatedModuleName($moduleId) . ' <-- no data';
 				}
 			}
+		}
+
+		foreach ($toolboxModel->getNonEditableModulesIds() as $moduleId) {
+			$this->modules[$moduleId] = $this->renderModule(
+				$this->wg->ContLang->getCode(),
+				$this->verticalId,
+				$toolboxModel->getNotTranslatedModuleName($moduleId),
+				null
+			);
 		}
 
 		$this->response->addAsset('wikiahubs_v2');
