@@ -21,6 +21,8 @@ $app->registerClass('MarketingToolboxFromthecommunityModel', $dir . 'models/Mark
 $app->registerClass('MarketingToolboxImageModel', $dir . 'models/MarketingToolboxImageModel.class.php');
 
 $app->registerClass('MarketingToolboxModuleService', $dir . 'modules/MarketingToolboxModuleService.class.php');
+$app->registerClass('MarketingToolboxModuleEditableService', $dir . 'modules/MarketingToolboxModuleEditableService.class.php');
+$app->registerClass('MarketingToolboxModuleNonEditableService', $dir . 'modules/MarketingToolboxModuleNonEditableService.class.php');
 $app->registerClass('MarketingToolboxModuleSliderService', $dir . 'modules/MarketingToolboxModuleSliderService.class.php');
 $app->registerClass('MarketingToolboxModuleWikiaspicksService', $dir . 'modules/MarketingToolboxModuleWikiaspicksService.class.php');
 $app->registerClass('MarketingToolboxModulePopularvideosService', $dir . 'modules/MarketingToolboxModulePopularvideosService.class.php');
@@ -28,3 +30,4 @@ $app->registerClass('MarketingToolboxModuleExploreService', $dir . 'modules/Mark
 $app->registerClass('MarketingToolboxModuleFeaturedvideoService', $dir . 'modules/MarketingToolboxModuleFeaturedvideoService.class.php');
 $app->registerClass('MarketingToolboxModuleFromthecommunityService', $dir . 'modules/MarketingToolboxModuleFromthecommunityService.class.php');
 $app->registerClass('MarketingToolboxModulePollsService', $dir . 'modules/MarketingToolboxModulePollsService.class.php');
+$app->registerClass('MarketingToolboxModuleWAMService', $dir . 'modules/MarketingToolboxModuleWAMService.class.php');

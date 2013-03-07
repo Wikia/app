@@ -1,5 +1,5 @@
 <?php
-class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleService {
+class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 9;
 
 	protected function getFormFields() {

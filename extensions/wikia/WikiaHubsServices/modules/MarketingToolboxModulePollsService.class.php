@@ -1,5 +1,5 @@
 <?php
-class MarketingToolboxModulePollsService extends MarketingToolboxModuleService {
+class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableService {
 
 	const MODULE_ID = 7;
 
