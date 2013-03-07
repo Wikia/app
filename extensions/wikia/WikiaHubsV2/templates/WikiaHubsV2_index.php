@@ -11,7 +11,7 @@
 				<?= $modules[MarketingToolboxModuleSliderService::MODULE_ID] ?>
 			</section>
 			<section class="grid-3 alpha wikiahubs-newstabs wikiahubs-module">
-				<?= $app->renderView('SpecialWikiaHubsV2', 'tabber', $app->wg->request->getValues()); ?>
+				<?= $modules[MarketingToolboxModuleWikiaspicksService::MODULE_ID] ?>
 			</section>
 		</div>
 		<section class="grid-3 wikiahubs-wam wikiahubs-module">
