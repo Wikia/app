@@ -684,13 +684,19 @@ class MediaWikiInterface
 	}
 
 	/**
-	 * Uses Wikia Homepage Helper to acces stats info
+	 * Uses Wikia Homepage Helper to access stats info. 
+	 * We add '_count' to each key to avoid collisions with visualization info (e.g. images) 
 	 * @param int $wikiId
 	 * @return array
 	 */
 	public function getStatsInfoForWikiId( $wikiId ) {
 		$helper = new \WikiaHomePageHelper();
-		return $helper->getWikiStats( $wikiId );
+		$statsInfo = $helper->getWikiStats( $wikiId );
+		foreach ( $statsInfo as $key => $val ) {
+			$statsInfo[$key.'_count'] = $val;
+			unset( $statsInfo[$key] );
+		}
+		return $statsInfo;
 	}
 	
 	/**

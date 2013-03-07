@@ -9,7 +9,7 @@ use \Wikia\Search\Utilities;
 class Wiki extends AbstractMatch
 {
 	/**
-	 * Creates result from  main page. We used to use promo data, but we're putting that kind of information one level up.
+	 * Creates result from  main page. Prepopulates some values using stats and visualization info. Wiki description is used as a backoff.
 	 * @see \Wikia\Search\Match\AbstractMatch::createResult()
 	 * @return \Wikia\Search\Result;
 	 */
@@ -19,28 +19,15 @@ class Wiki extends AbstractMatch
 				'wid' => $this->id,
 				'title' => $this->interface->getGlobalForWiki( 'wgSitename', $this->id ),
 				'isWikiMatch' => true,
-				'url' => $this->interface->getMainPageUrlForWikiId( $this->id )
+				'text' => $this->interface->getDescriptionTextForWikiId( $this->id ),
+				'url' => $this->interface->getMainPageUrlForWikiId( $this->id ),
+				'hub' => $this->interface->getHubForWikiId( $this->id ),
 				);
+		$fields = array_merge( $fields, $this->interface->getVisualizationInfoForWikiId( $this->id ), $this->interface->getStatsInfoForWikiId( $this->id ) );
 		$result = new Result( $fields );
-		
-		$result->setText( $this->preprocessText( $this->interface->getMainPageTextForWikiId( $this->id ) ) );
-		
+		if ( isset( $result['description'] ) ) {
+			$result->setText( $result['description'] );
+		}
 		return $result;
 	}
-	
-	/**
-	 * Allows us to mutate the description based on skin
-	 * @param string $text
-	 * @return string
-	 */
-	protected function preprocessText( $text ) {
-		$text = \strip_tags( \html_entity_decode( $text, ENT_COMPAT, 'UTF-8' ) );
-		$snippetLength = $this->interface->isSkinMobile() ? 100 : 250; 
-		$match = array();
-		if ( preg_match( "/^.{1,{$snippetLength}}\b/s", $text, $match ) ) {
-			$text = $match[0];
-		}
-		return $text;
-	}
-	
 }

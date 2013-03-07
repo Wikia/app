@@ -60,14 +60,9 @@ class Grouping extends Base
 		$doc = end( $this->results ); // there's only one
 		if (! empty( $doc ) ) {
 			$wikiId = $doc['wid'];
-			$statsInfo = $this->interface->getStatsInfoForWikiId( $wikiId );
-			foreach ( $statsInfo as $key => $val ) {
-				$statsInfo[$key.'_count'] = $val;
-				unset( $statsInfo[$key] );
-			}
 			$this->addHeaders( $doc->getFields() )
 			     ->addHeaders( $this->interface->getVisualizationInfoForWikiId( $wikiId ) )
-			     ->addHeaders( $statsInfo )
+			     ->addHeaders( $this->interface->getStatsInfoForWikiId( $wikiId ) )
 			     ->setHeader ( 'wikititle', $this->interface->getGlobalForWiki( 'wgSitename', $wikiId ) )
 			     ->setHeader ( 'hub', $this->interface->getHubForWikiId( $wikiId ) );
 			
