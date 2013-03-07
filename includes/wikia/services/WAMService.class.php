@@ -88,7 +88,7 @@ class WAMService extends Service {
 			$tables = $this->getWamIndexTables();
 			$fields = $this->getWamIndexFields();
 			$countFields = $this->getWamIndexCountFields();
-			$conds = $this->getWamIndexConditions($inputOptions);
+			$conds = $this->getWamIndexConditions($inputOptions, $db);
 			$options = $this->getWamIndexOptions($inputOptions);
 			$join_conds = $this->getWamIndexJoinConditions();
 
@@ -167,7 +167,7 @@ class WAMService extends Service {
 		return $options;
 	}
 
-	protected function getWamIndexConditions ($options) {
+	protected function getWamIndexConditions ($options, $db) {
 		$currentTimestamp = $options['currentTimestamp'] ? $options['currentTimestamp'] : strtotime('00:00 -2 day');
 		$previousTimestamp = $options['previousTimestamp']
 			? $options['previousTimestamp']
@@ -183,8 +183,8 @@ class WAMService extends Service {
 		}
 
 		if (!is_null($options['wikiWord'])) {
-			$conds [] = "dw.url like '%" . mysql_real_escape_string($options['wikiWord']) . "%' ";
-						"OR dw.title like '%" . mysql_real_escape_string($options['wikiWord']) . "%'";
+			$conds [] = "dw.url like '%" . $db->strencode($options['wikiWord']) . "%' " .
+						"OR dw.title like '%" . $db->strencode($options['wikiWord']) . "%'";
 		}
 
 		if ($options['verticalId']) {
@@ -198,7 +198,7 @@ class WAMService extends Service {
 		}
 
 		if (!is_null($options['wikiLang'])) {
-			$conds ['dw.lang'] = mysql_real_escape_string($options['wikiLang']);
+			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
 		}
 
 		return $conds;
