@@ -38,7 +38,6 @@ class WAMServiceTest extends WikiaBaseTest {
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
-					'fw2.time_id = FROM_UNIXTIME(80000)',
 					'dw.hub_id' => array(2, 3, 9)
 				)
 			),
@@ -53,7 +52,6 @@ class WAMServiceTest extends WikiaBaseTest {
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
-					'fw2.time_id = FROM_UNIXTIME(80000)',
 					'dw.hub_id' => array(2, 3, 9)
 				)
 			),
@@ -68,7 +66,6 @@ class WAMServiceTest extends WikiaBaseTest {
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
-					'fw2.time_id = FROM_UNIXTIME(80000)',
 					'fw1.wiki_id' => 2233,
 					'dw.hub_id' => array(2, 3, 9)
 				)
@@ -84,7 +81,6 @@ class WAMServiceTest extends WikiaBaseTest {
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
-					'fw2.time_id = FROM_UNIXTIME(80000)',
 					'fw1.wiki_id' => 2233,
 					'dw.hub_id' => 1
 				)
@@ -100,7 +96,6 @@ class WAMServiceTest extends WikiaBaseTest {
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
-					'fw2.time_id = FROM_UNIXTIME(80000)',
 					"dw.url like '%testWord%' OR dw.title like '%testWord%'",
 					'dw.hub_id' => array(2, 3, 9),
 				)
@@ -116,7 +111,6 @@ class WAMServiceTest extends WikiaBaseTest {
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
-					'fw2.time_id = FROM_UNIXTIME(80000)',
 					'dw.hub_id' => array(2, 3, 9),
 					'dw.lang' => 'testLang'
 				)
@@ -132,7 +126,6 @@ class WAMServiceTest extends WikiaBaseTest {
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
-					'fw2.time_id = FROM_UNIXTIME(80000)',
 					'fw1.wiki_id' => 666,
 					"dw.url like '%testWord2%' OR dw.title like '%testWord2%'",
 					'dw.hub_id' => 5,
@@ -244,6 +237,75 @@ class WAMServiceTest extends WikiaBaseTest {
 					'OFFSET' => 1,
 					'LIMIT' => 5
 				),
+			),
+		);
+	}
+
+	/**
+	 * @dataProvider getWamIndexJoinConditionsDataProvider
+	 */
+	public function testGetWamIndexJoinConditions($options, $expConds) {
+		$getWamIndexOptions = $this->getReflectionMethod('getWamIndexJoinConditions');
+		$dataMartService = new WAMService();
+		$actConds = $getWamIndexOptions->invoke($dataMartService, $options);
+		$this->assertEquals($expConds, $actConds);
+	}
+
+	public function getWamIndexJoinConditionsDataProvider () {
+		return array(
+			array(
+				array('previousTimestamp' => 80000),
+				array(
+					'fw2' => array(
+						'left join',
+						array(
+							'fw1.wiki_id = fw2.wiki_id',
+							'fw2.time_id = FROM_UNIXTIME(80000)'
+						)
+					),
+					'dw' => array(
+						'left join',
+						array(
+							'fw1.wiki_id = dw.wiki_id'
+						)
+					)
+				)
+			),
+			array(
+				array('previousTimestamp' => 1),
+				array(
+					'fw2' => array(
+						'left join',
+						array(
+							'fw1.wiki_id = fw2.wiki_id',
+							'fw2.time_id = FROM_UNIXTIME(1)'
+						)
+					),
+					'dw' => array(
+						'left join',
+						array(
+							'fw1.wiki_id = dw.wiki_id'
+						)
+					)
+				)
+			),
+			array(
+				array('previousTimestamp' => 10000),
+				array(
+					'fw2' => array(
+						'left join',
+						array(
+							'fw1.wiki_id = fw2.wiki_id',
+							'fw2.time_id = FROM_UNIXTIME(10000)'
+						)
+					),
+					'dw' => array(
+						'left join',
+						array(
+							'fw1.wiki_id = dw.wiki_id'
+						)
+					)
+				)
 			),
 		);
 	}

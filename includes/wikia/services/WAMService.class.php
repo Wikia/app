@@ -75,6 +75,11 @@ class WAMService extends Service {
 	public function getWamIndex ($inputOptions) {
 		$inputOptions += $this->defaultIndexOptions;
 
+		$inputOptions['currentTimestamp'] = $inputOptions['currentTimestamp'] ? $inputOptions['currentTimestamp'] : strtotime('00:00 -2 day');
+		$inputOptions['previousTimestamp'] = $inputOptions['previousTimestamp']
+			? $inputOptions['previousTimestamp']
+			: $inputOptions['currentTimestamp'] - 60 * 60 * 24;
+
 		$app = F::app();
 		$app->wf->profileIn(__METHOD__);
 
@@ -90,7 +95,7 @@ class WAMService extends Service {
 			$countFields = $this->getWamIndexCountFields();
 			$conds = $this->getWamIndexConditions($inputOptions, $db);
 			$options = $this->getWamIndexOptions($inputOptions);
-			$join_conds = $this->getWamIndexJoinConditions();
+			$join_conds = $this->getWamIndexJoinConditions($inputOptions);
 
 			$result = $db->select(
 				$tables,
@@ -124,12 +129,13 @@ class WAMService extends Service {
 		return $wamIndex;
 	}
 
-	protected function getWamIndexJoinConditions () {
+	protected function getWamIndexJoinConditions ($options) {
 		$join_conds = array(
 			'fw2' => array(
 				'left join',
 				array(
 					'fw1.wiki_id = fw2.wiki_id',
+					'fw2.time_id = FROM_UNIXTIME(' . $options['previousTimestamp'] . ')'
 				)
 			),
 			'dw' => array(
@@ -168,14 +174,8 @@ class WAMService extends Service {
 	}
 
 	protected function getWamIndexConditions ($options, $db) {
-		$currentTimestamp = $options['currentTimestamp'] ? $options['currentTimestamp'] : strtotime('00:00 -2 day');
-		$previousTimestamp = $options['previousTimestamp']
-			? $options['previousTimestamp']
-			: $currentTimestamp - 60 * 60 * 24;
-
 		$conds = array(
-			'fw1.time_id = FROM_UNIXTIME(' . $currentTimestamp . ')',
-			'fw2.time_id = FROM_UNIXTIME(' . $previousTimestamp . ')'
+			'fw1.time_id = FROM_UNIXTIME(' . $options['currentTimestamp'] . ')'
 		);
 
 		if ($options['wikiId']) {
