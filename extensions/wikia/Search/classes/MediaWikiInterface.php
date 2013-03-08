@@ -516,15 +516,15 @@ class MediaWikiInterface
 	 * @return \Wikia\Search\Match\Article|NULL
 	 */
 	public function getArticleMatchForTermAndNamespaces( $term, array $namespaces ) {
+		$articleMatch = null;
 		$searchEngine = new \SearchEngine();
 		$title = $searchEngine->getNearMatch( $term );
 		if( ( $title !== null ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
 			// initialize our memoized data
 			$this->getPageFromPageId( $title->getArticleId() );
 			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this );
-			return $articleMatch;
 		}
-		return null;
+		return $articleMatch;
 	}
 	
 	/**
@@ -533,6 +533,7 @@ class MediaWikiInterface
 	 * @return \Wikia\Search\Match\Wiki|NULL
 	 */
 	public function getWikiMatchByHost( $domain ) {
+		$match = null;
 		$dbr = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
 		$query = $dbr->select(
 				array( 'city_domains' ),
@@ -540,9 +541,9 @@ class MediaWikiInterface
 				array( 'city_domain' => "{$domain}.wikia.com" )
 				);
 		if ( $row = $dbr->fetchObject( $query ) ) {
-			return new \Wikia\Search\Match\Wiki( $row->city_id, $this );
+			$match = new \Wikia\Search\Match\Wiki( $row->city_id, $this );
 		}
-		return null;
+		return $match;
 	}
 	
 
