@@ -296,7 +296,7 @@ class Config implements ArrayAccess
 	}
 	
 	/**
-	 * Strips out quotes, and optionally
+	 * Strips out quotes, and sanitizes the query for Lucene query syntax (can be deactivated by passing true)
 	 * @param  boolean $raw
 	 * @return string
 	 */
@@ -311,12 +311,13 @@ class Config implements ArrayAccess
 	 * @return array
 	 */
 	public function getNamespaces() {
+		if ( empty( $this->params['namespaces'] ) || (! is_array( $this->params['namespaces'] ) ) ) { 
+			$this->params['namespaces'] = array();
+		}
 		$namespaces = ( isset($this->params['namespaces']) && !empty( $this->params['namespaces'] ) ) 
 					? $this->params['namespaces'] 
 					: $this->interface->getDefaultNamespacesFromSearchEngine();
-		if (! is_array( $namespaces ) ) { 
-			$namespaces = array();
-		}
+		
 		$queryNamespaceArray = ( isset( $this->params['queryNamespace'] ) ) ? array( $this->params['queryNamespace'] ) : array(); 
 		$this->params['namespaces'] = array_unique( array_merge( $namespaces, $queryNamespaceArray ) );
 
@@ -382,11 +383,20 @@ class Config implements ArrayAccess
 	}
 	
 	/**
+	 * For IDE type-hinting
+	 * @return Wikia\Search\Match\Wiki
+	 */
+	public function getWikiMatch() {
+		return isset( $this['wikiMatch'] ) ? $this['wikiMatch'] : null;
+	}
+	
+	
+	/**
 	 * Agnostic match verifier
 	 * @return boolean
 	 */
 	public function hasMatch() {
-		return $this->hasArticleMatch() | $this->hasWikiMatch();
+		return $this->hasArticleMatch() || $this->hasWikiMatch();
 	}
 	
 	/**
@@ -394,7 +404,7 @@ class Config implements ArrayAccess
 	 * @return Wikia\Search\Match\Article|Wikia\Search\Match\Wiki|false
 	 */
 	public function getMatch() {
-		return $this->getArticleMatch() || $this->getWikiMatch();
+		return $this->getArticleMatch() ?: $this->getWikiMatch();
 	}
 	
 	/**
