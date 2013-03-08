@@ -6,6 +6,6 @@
 	<p class="video-views"><?= wfMessage( 'video-page-views' )->params( $viewCount ) ?></p>
 	<p><?= wfMessage( 'video-page-from-provider' )->params( $providerLink )->text() ?></p>
 	<? if( $expireDate ): ?>
-		<p><?= $expireDate ?></p>
+		<p class="video-provider"><?= $expireDate ?></p>
 	<? endif; ?>
 </div>
