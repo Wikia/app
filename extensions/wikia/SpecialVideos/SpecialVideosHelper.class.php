@@ -57,7 +57,7 @@ class SpecialVideosHelper extends WikiaModel {
 			$filter = 'all';
 		}
 
-		$mediaService = F::build( 'MediaQueryService' );
+		$mediaService = new MediaQueryService();
 		$videoList = $mediaService->getVideoList( $sort, $filter, self::VIDEOS_PER_PAGE, $page );
 
 		$videos = array();
@@ -82,24 +82,23 @@ class SpecialVideosHelper extends WikiaModel {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$videoDetail = array();
-		$title = F::build( 'Title', array( $videoInfo['title'], NS_FILE ), 'newFromText' );
+		$title = Title::newFromText( $videoInfo['title'], NS_FILE );
 		if ( $title instanceof Title ) {
 			$file = $this->wf->FindFile( $title );
-			if ( $file instanceof File && $file->exists()
-				&& F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
+			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
 				// get thumbnail
 				$thumb = $file->transform( array('width'=>self::THUMBNAIL_WIDTH, 'height'=>self::THUMBNAIL_HEIGHT) );
 				$thumbUrl = $thumb->getUrl();
 
 				// get user
-				$user = F::build( 'User', array( $videoInfo['addedBy'] ), 'newFromId' );
+				$user = User::newFromId( $videoInfo['addedBy'] );
 				$userName = ( User::isIP($user->getName()) ) ? $this->wf->Msg( 'oasis-anon-user' ) : $user->getName();
 				$userUrl = $user->getUserPage()->getFullURL();
 
 				// get article list
-				$mediaQuery = F::build( 'ArticlesUsingMediaQuery' , array( $title ) );
+				$mediaQuery = new ArticlesUsingMediaQuery( $title );
 				$articleList = $mediaQuery->getArticleList();
-				list( $truncatedList, $isTruncated ) = F::build( 'WikiaFileHelper', array( $articleList, self::POSTED_IN_ARTICLES ), 'truncateArticleList' );
+				list( $truncatedList, $isTruncated ) = WikiaFileHelper::truncateArticleList( $articleList, self::POSTED_IN_ARTICLES );
 
 				// video details
 				$videoDetail = array(
@@ -183,7 +182,7 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @return integer $videoExist [0/1]
 	 */
 	public function premiumVideosExist() {
-		$mediaService = F::build( 'MediaQueryService' );
+		$mediaService = new MediaQueryService();
 		$videoExist = (bool) $mediaService->getTotalPremiumVideos();
 
 		return $videoExist;
