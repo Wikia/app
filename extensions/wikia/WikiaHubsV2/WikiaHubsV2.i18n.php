@@ -10,6 +10,7 @@ $messages = array();
 $messages['en'] = array(
 	// general
 	'wikiahubs-button-cancel' => 'Cancel',
+	'wikiahubs-search-placeholder' => 'Search Wikia',
 
 	// suggest article
 	'wikiahubs-suggest-article-header' => 'Suggest an Article',
