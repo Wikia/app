@@ -45,10 +45,10 @@ class PhalanxHooks extends WikiaObject {
 	 * @author macbre
 	 */
 	public function onSpamFilterCheck($text, $typeId, &$blockData) {
-		wfProfileIn(__METHOD__);
+		$this->wf->profileIn( __METHOD__ );
 
 		if ($text === '') {
-			wfProfileOut(__METHOD__);
+			$this->wf->profileOut( __METHOD__ );
 			return true;
 		}
 
@@ -72,11 +72,135 @@ class PhalanxHooks extends WikiaObject {
 			$ret = ($res === 1);
 		}
 
-		if ($ret === false) {
-			wfDebug(__METHOD__ . ": spam check blocked '{$text}'\n");
+		if ( $ret === false ) {
+			$this->wf->Debug( __METHOD__ . ": spam check blocked '{$text}'\n" );
 		}
 
-		wfProfileOut(__METHOD__);
+		$this->wf->profileOut( __METHOD__ );
+		return $ret;
+	}
+	
+	/**
+	 * Add/edit Phalanx block
+	 *
+	 * @param $data Array contains block information, possible keys: id, author_id, text, type, timestamp, expire, exact, regex, case, reason, lang, ip_hex
+	 * @param $id Int - block ID
+	 * @return id block or false if error
+	 *
+	 * @author moli
+	 */
+	public function onEditPhalanxBlock( $data, &$id ) {
+		$this->wf->profileIn( __METHOD__ );
+		
+		if ( !isset( $data['id'] ) ) {
+			return false;
+		}
+		
+		$phalanx = Phalanx::newFromId( $data['id'] );
+		
+		foreach ( $data as $key => $val ) {
+			if ( $key == 'id' ) continue;
+			
+			$phalanx[ $key ] = $val;
+		}
+
+		$typemask = 0;
+		if ( is_array( $phalanx['type'] ) ) {
+			foreach ( $phalanx['type'] as $type ) {
+				$typemask |= $type;
+			}
+		}
+		
+		$multitext = '';
+		if ( isset( $phalanx['multitext'] ) && !empty( $phalanx['multitext'] ) ) {
+			$multitext = $phalanx['multitext'];
+		}
+
+		unset( $phalanx['multitext'] );
+			
+		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $typemask ) ) {
+			$this->wf->profileOut( __METHOD__ );
+			return false;
+		}
+
+		$phalanx['type'] = $typemask;
+
+		if ( $phalanx['lang'] == 'all' ) {
+			$phalanx['lang'] = null;
+		}
+
+		if ( $phalanx['expire'] != 'infinite' ) {
+			$expire = strtotime( $phalanx['expire'] );
+			if ( $expire < 0 || $expire === false ) {
+				$this->wf->profileOut( __METHOD__ );
+				return false;
+			}
+			$phalanx['expire'] = wfTimestamp( TS_MW, $expire );
+		} else {
+			$phalanx['expire'] = null ;
+		}
+
+		if ( empty( $multitext ) ) {
+			/* single mode - insert/update record */
+			$id = $phalanx->save();
+			$result = $id ? array( "success" => array( $id ), "failed" => 0 ) : false;
+		}
+		else {
+			/* non-empty bulk field */
+			$bulkdata = explode( "\n", $multitext );
+			if ( count($bulkdata) > 0 ) {
+				$result = array( 'success' => array(), 'failed' => 0 );
+				foreach ( $bulkdata as $bulkrow ) {
+					$bulkrow = trim($bulkrow);
+					$phalanx['id'] = null;
+					$phalanx['text'] = $bulkrow;
+
+					$id = $phalanx->save();
+					if ( $id ) {
+						$result[ 'success' ][] = $id;
+					} else {
+						$result[ 'failed' ]++;
+					}
+				}
+			} else {
+				$result = false;
+			}
+		}
+		
+		if ( $result !== false ) {
+			$service = new PhalanxService();
+			$ret = $service->reload( $result["success"] );
+		} else {
+			$ret = $result;
+		}
+		
+		$this->wf->profileOut( __METHOD__ );
+		return $ret;
+	}
+	
+	/**
+	 * Delete Phalanx block
+	 *
+	 * @param $id Int - block ID
+	 * @return true or false if error
+	 *
+	 * @author moli
+	 */
+	public function onDeletePhalanxBlock( $id ) {
+		$this->wf->profileIn( __METHOD__ );
+
+		$phalanx = Phalanx::newFromId($id);
+
+		$id = $phalanx->delete();
+		if ( $id ) {
+			$service = new PhalanxService();
+			$ids = array( $id );
+			$ret = $service->reload( $ids );
+		} else {
+			$ret = false;
+		}
+
+		$this->wf->profileOut( __METHOD__ );
 		return $ret;
 	}
 }

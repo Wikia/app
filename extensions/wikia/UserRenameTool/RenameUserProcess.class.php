@@ -612,20 +612,22 @@ class RenameUserProcess {
 		$this->addLog("Creating a Phalanx block for the user.");
 
 		if(empty($this->mPhalanxBlockId)){
-			$this->mPhalanxBlockId = PhalanxHelper::save(array(
-				'text' => $this->mNewUsername,
-				'exact' => 1,
-				'case' => 1,
-				'regex' => 0,
-				'timestamp' => wfTimestampNow(),
-				'expire' => null,
-				'author_id' => $this->mRequestorId,
-				'reason' => 'User rename process requested',
-				'lang' => null,
-				'type' => Phalanx::TYPE_USER
-			),
-			false /* do not rebuild the cache */ );
-
+			$data = array(
+				'id'          => $this->mPhalanxBlockId,
+				'text'        => $this->mNewUsername,
+				'exact'       => 1,
+				'case'        => 1,
+				'regex'       => 0,
+				'timestamp'   => wfTimestampNow(),
+				'expire'      => 'infinite',
+				'author_id'   => $this->mRequestorId,
+				'reason'      => 'User rename process requested',
+				'lang'        => null,
+				'type'        => Phalanx::TYPE_USER
+			);
+			
+			wfRunHooks( "EditPhalanxBlock", array( $data, &$this->mPhalanxBlockId ) );
+			
 			if(!$this->mPhalanxBlockId) {
 				$this->addLog("Creation of the block failed.");
 				$this->addError(wfMsgForContent('userrenametool-error-cannot-create-block'));
@@ -907,13 +909,16 @@ class RenameUserProcess {
 		//remove phalanx user block
 
 		if($this->mPhalanxBlockId){
-			$ret = PhalanxHelper::removeFilter($this->mPhalanxBlockId, false /* do not touch Phalanx's cache */ );
 
-			if($ret['error'] == true) {
-				$this->addLog("Error removing Phalanx user block with ID {$this->mPhalanxBlockId}");
+			if ( !wfRunHooks( "DeletePhalanxBlock", array( $this->mPhalanxBlockId ) ) ) {
+				$result = false;
+			} else {
+				$result = true;
 			}
-			else
-			{
+
+			if ( !$result ) {
+				$this->addLog("Error removing Phalanx user block with ID {$this->mPhalanxBlockId}");
+			} else {
 				$this->addLog("Phalanx user block with ID {$this->mPhalanxBlockId} has been removed");
 			}
 		}

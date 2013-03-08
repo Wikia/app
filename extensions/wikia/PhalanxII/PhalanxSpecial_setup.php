@@ -18,12 +18,21 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
-$app->registerClass( 'PhalanxSpecialController', $dir . 'PhalanxSpecialController.class.php' );
-$app->registerClass( 'PhalanxStatsSpecialController', $dir . 'PhalanxStatsSpecialController.class.php' );
-$app->registerClass( 'PhalanxPager', $dir . 'classes/PhalanxPager.class.php' );
-$app->registerClass( 'PhalanxStatsPager', $dir . 'classes/PhalanxStatsPager.class.php' );
-$app->registerClass( 'PhalanxStatsWikiaPager', $dir . 'classes/PhalanxStatsWikiaPager.class.php' );
-$app->registerClass( 'PhalanxBlockTestPager', $dir . 'classes/PhalanxBlockTestPager.class.php' );
+$classes = array(
+	/* controllers */
+	'PhalanxSpecialController'        => $dir . 'PhalanxSpecialController.class.php',
+	'PhalanxStatsSpecialController'   => $dir . 'PhalanxStatsSpecialController.class.php',
+	/* pagers */
+	'PhalanxPager'                    => $dir . 'classes/PhalanxPager.class.php',
+	'PhalanxStatsPager'               => $dir . 'classes/PhalanxStatsPager.class.php',
+	'PhalanxStatsWikiaPager'          => $dir . 'classes/PhalanxStatsWikiaPager.class.php',
+	'PhalanxBlockTestPager'           => $dir . 'classes/PhalanxBlockTestPager.class.php'
+);
+
+foreach ( $classes as $class_name => $class_path ) {
+	$app->registerClass( $class_name, $class_path );
+}
+
 $app->registerSpecialPage( 'Phalanx', 'PhalanxSpecialController', 'wikia' );
 $app->registerSpecialPage( 'PhalanxStats', 'PhalanxStatsSpecialController', 'wikia' );
 
