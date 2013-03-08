@@ -34,6 +34,22 @@ class WAMApiController extends WikiaApiController {
 	 * @requestParam integer $limit [OPTIONAL] limit on fetched number of wikis. Defaults to 20, max 20
 	 *
 	 * @responseParam array $wam_index The result list of wikis
+	 * 	one item from index is an array that contain:
+	 * 		wiki_id - wiki id
+	 * 		wam - wam score
+	 * 		wam_rank - wiki wam rank in whole wam index
+	 * 		hub_wam_rank - wiki wam rank within its hub
+	 *		peak_wam_rank - the peak WAM Rank achieved by this Wiki
+	 * 		peak_hub_wam_rank - peak WAM Rank within its Hub
+	 * 		top_1k_days - the number of days that the Wiki has been in the top 1000 Wikis
+	 * 		top_1k_weeks - the number of weeks that the Wiki has been in the top 1000 Wikis
+	 * 		first_peak - the first date that the Wiki achieved its peak_wam_rank
+	 * 		last_peak - the last time that the Wiki was at its peak_wam_rank
+	 * 		title - wiki title
+	 * 		url - wiki url
+	 * 		hub_id - wiki hub id
+	 * 		wam_change - wam score change from $wam_previous_day
+	 * 		wam_is_new - 1 if wiki wasn't classified on $wam_previous_day, 0 if this wiki was in index
 	 * @responseParam array $wam_results_total The total count of wikis available for provided params
 	 */
 	public function getWAMIndex () {
