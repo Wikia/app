@@ -6,7 +6,6 @@ require(['sloth', 'wikia.nirvana', 'wikia.window'], function(sloth, nirvana, w){
 			on: document.getElementById('wkMainCntFtr'),
 			threshold: 100,
 			callback: function(){
-				console.log(relatedPages);
 				nirvana.getJson(
 					'RelatedPagesApi',
 					'getList',
