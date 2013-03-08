@@ -21,31 +21,31 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 define("MW_CONFIG_FILE", "/usr/wikia/conf/current/wiki.factory/LocalSettings.php"); // lazy but useful
 
 class SynchronizeBlobs extends Maintenance {
-	var $wgFetchBlobApiURL = "http://community.wikia.com/api.php";
-	var $store = null;
-	var	$done = 0;
-	var	$downloaded = 0;
-	var $toDownload = 0;
-	var $total = 0;
-	var $startTime = 0;
-	var $lastProgressTime = 0;
-	var $clusters = array();
-	var $progressPeriod;
-	var $pageNamespace;
-	var $forkCount;
-	var $isChild = false;
-	var $children;
-	var $sockets = array();
-	var $channel;
-	var $childNumber = 0;
-	var $outBuffer = "";
+	public $wgFetchBlobApiURL = "http://community.wikia.com/api.php";
+	public $store = null;
+	public $done = 0;
+	public $downloaded = 0;
+	public $toDownload = 0;
+	public $total = 0;
+	public $startTime = 0;
+	public $lastProgressTime = 0;
+	public $clusters = array();
+	public $progressPeriod;
+	public $pageNamespace;
+	public $procCount;
+	public $isChild = false;
+	public $children;
+	public $sockets = array();
+	public $channel;
+	public $childNumber = 0;
+	public $outBuffer = "";
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Synchronize blobs for latest revisions of pages from SJC to POZ (for devboxes). Run on a POZ devbox.";
 		$this->addOption("progress", "How many seconds between each progress report (0 to disable). 30 is default", false, true);
 		$this->addOption("namespace", "Limit to only pages from a specific namespace id (0 for main)", false, true);
-		$this->addOption("fork", "Use n background processes (default - everything in foreground)", false, true);
+		$this->addOption("proc", "Use n background processes (default - everything in foreground)", false, true);
 	}
 
 	public function execute() {
@@ -54,20 +54,29 @@ class SynchronizeBlobs extends Maintenance {
 		if (!$isPoznanDevbox) throw new Exception("This should be run within Poznan devel environment");
 		$this->progressPeriod = $this->getOption("progress", 30);
 		$this->pageNamespace = $this->getOption("namespace", "");
-		$this->forkCount = $this->getOption("fork", 0);
-		if (!is_numeric($this->progressPeriod)) throw new Exception("Invalid 'progress' parameter: $this->progressPeriod");
-		if ($this->pageNamespace!=="" && !is_numeric($this->pageNamespace)) throw new Exception("Invalid 'namespace' parameter: $this->pageNamespace");
-		if (!is_numeric($this->forkCount)) throw new Exception("Invalid 'fork' parameter: $this->forkCount");
-		$this->output("Getting ids of latest revisions for city_id=$oWiki->mCityID, city_dbname=$oWiki->mCityDB, namespace="
-									.	(($this->pageNamespace==="") ? "any" : $this->pageNamespace) . "\n");
+		$this->procCount = $this->getOption("proc", 0);
+		if (!is_numeric($this->progressPeriod)) {
+			throw new Exception("Invalid 'progress' parameter: $this->progressPeriod");
+		}
+		if ($this->pageNamespace!=="" && !is_numeric($this->pageNamespace)) {
+			throw new Exception("Invalid 'namespace' parameter: $this->pageNamespace");
+		}
+		if (!is_numeric($this->procCount)) {
+			throw new Exception("Invalid 'proc' parameter: $this->procCount");
+		}
+		$this->output("Getting ids of latest revisions for city_id=$oWiki->mCityID, ".
+									"city_dbname=$oWiki->mCityDB, ".
+									"namespace=".	(($this->pageNamespace==="") ? "any" : $this->pageNamespace) . "\n");
 		$this->fetchLatestRevisions();
 		$this->store = new ExternalStoreDB();
 		$this->output("Creating list of blobs to download.\n");
-		foreach ($this->clusters as $cluster => $ids) $this->filterBlobs($cluster, $ids);
+		foreach ($this->clusters as $cluster => $ids) {
+			$this->filterBlobs($cluster, $ids);
+		}
 		if ($this->toDownload) {
 			$this->startTime = time();
 			$this->output("Downloading ".$this->toDownload." out of total of ".$this->total." blobs.\n");
-			if ($this->forkCount) {
+			if ($this->procCount) {
 				$this->executeFork();
 			} else {
 				$this->executeWorker();
@@ -78,9 +87,9 @@ class SynchronizeBlobs extends Maintenance {
 		}
 	}
 	function executeFork() {
-		$this->output("Spawning $this->forkCount child processes.\n");
+		$this->output("Spawning $this->procCount child processes.\n");
 		$this->children = array();
-		for($fork = 0; ($fork < $this->forkCount); $fork++) {
+		for($fork = 0; ($fork < $this->procCount); $fork++) {
 			$ok = socket_create_pair(AF_UNIX, SOCK_STREAM, 0, $fd);
 			if (!$ok) throw new Exception("Could not create UNIX socket");
 			$pid=pcntl_fork();
@@ -134,15 +143,23 @@ class SynchronizeBlobs extends Maintenance {
 		$this->downloaded += substr_count($buf, "+");
 	}
 	function executeWorker() {
-		foreach ($this->clusters as $cluster => $ids) $this->fetchAndStoreBlobs($cluster, $ids);
+		foreach ($this->clusters as $cluster => $ids) {
+			$this->fetchAndStoreBlobs($cluster, $ids);
+		}
 	}
 	function fetchLatestRevisions() {
 		$db = $this->getDB(DB_SLAVE);
-  	$where = ($this->pageNamespace==="") ? "" : " WHERE page_namespace=".$this->pageNamespace;
-		$rows = $db->query("SELECT old_id, old_flags, old_text FROM page
+		/*$rows = $db->query("SELECT old_id, old_flags, old_text FROM page
 											  INNER JOIN revision ON page_id=rev_page AND page_latest=rev_id
 												INNER JOIN text ON rev_text_id=old_id" . $where,
-											"SynchronizeBlobs::latestRevision");
+											"SynchronizeBlobs::latestRevision");*/
+		$rows = $db->select(array("page", "revision", "text"),
+												array("old_id", "old_flags", "old_text"),
+												($this->pageNamespace==="") ? array() : array("page_namespace" => $this->pageNamespace),
+												"synchronizeBlobs::fetchLatestRevisions",
+												array(),
+												array('revision' => array('INNER JOIN','page_id=rev_page AND page_latest=rev_id'),
+															'text' => array('INNER JOIN','rev_text_id=old_id')));
 		foreach ($rows as $row) {
 			if (strpos($row->old_flags, "external") !== false) { // i know what to do with it
 				if (preg_match("/DB:\/\/([^\/]+)\/([0-9]+)/", $row->old_text, $url)) {
@@ -192,7 +209,7 @@ class SynchronizeBlobs extends Maintenance {
 		if ($this->childNumber==0) $this->output("Staring work on cluster $cluster (".count($ids). " blobs).\n");
 
 		foreach ($ids as $index => $id) {
-			if ($this->isChild && ($index % $this->forkCount)!=$this->childNumber) continue; // split work deterministically, if a little bit unfairly ;)
+			if ($this->isChild && ($index % $this->procCount)!=$this->childNumber) continue; // split work deterministically, if a little bit unfairly ;)
 			$sent = false;
 			$url = sprintf( "%s?action=fetchblob&store=%s&id=%d&token=%s&format=json", $this->wgFetchBlobApiURL,	$cluster,	$id,$wgTheSchwartzSecretToken	);
 			$response = json_decode( Http::get( $url, "default", array( 'noProxy' => true ) ) );
@@ -207,6 +224,7 @@ class SynchronizeBlobs extends Maintenance {
 					// check md5 sum for binary
 					if(  $hash == $response->fetchblob->hash ) {
 						$ret = $blob;
+						$dbw->begin();
 						$insert_ok = $dbw->insert($table,	array( "blob_id" => $id, "blob_text" => $ret ),	__METHOD__ );
 						if (!$insert_ok) print $dbw->lastError();
 						$dbw->commit();
@@ -261,9 +279,11 @@ class SynchronizeBlobs extends Maintenance {
 			} else {
 				$eta = " unknown";
 			}
-			$this->output("Processeed ".$this->done." (".($this->downloaded==$this->done?"all":$this->downloaded)." successfully) out of ".$this->toDownload. " to download in".
-										$this->getNiceDuration(time() - $this->startTime). ", ".
-									($this->done < $this->toDownload ? "remaining time:".$eta." (average speed ".round($speed,2)." / s)" : "finished")."\n");
+			$this->output("Processeed ".$this->done." (".($this->downloaded==$this->done?"all":$this->downloaded)
+				." successfully) out of ".$this->toDownload. " to download in".
+				$this->getNiceDuration(time() - $this->startTime). ", ".
+				($this->done < $this->toDownload ? "remaining time:".$eta.
+				 " (average speed ".round($speed,2)." / s)" : "finished")."\n");
 		}
 		$this->lastProgressTime = time();
 	}
