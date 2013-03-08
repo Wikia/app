@@ -103,6 +103,11 @@ var LightboxLoader = {
 				}
 				
 				if(!fileKey) {
+					// might be old/cached DOM.  TODO: delete this when cache is flushed
+					fileKey = $this.attr('data-video-name');
+				}
+				
+				if(!fileKey) {
 					return;
 				}
 
