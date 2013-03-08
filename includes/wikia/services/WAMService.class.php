@@ -219,7 +219,7 @@ class WAMService extends Service {
 			'dw.title',
 			'dw.url',
 			'dw.hub_id',
-			'fw1.wam - fw2.wam as wam_change'
+			'fw1.wam - IFNULL(fw2.wam, 0) as wam_change'
 		);
 		return $fields;
 	}
