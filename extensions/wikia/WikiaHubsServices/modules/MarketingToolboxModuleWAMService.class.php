@@ -53,7 +53,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		
 		$rank = 1;
 		$wamIndex = $data['api_response']['wam_index'];
-		foreach($wamIndex as $i => $wiki) {
+		foreach($wamIndex as $wiki) {
 			$structuredData['ranking'][] = [
 				'rank' => $rank,
 				'wamScore' => $wiki['wam'],
@@ -85,26 +85,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		return new WikiaHubsV2Model();
 	}
 
-	public function render($structuredData) {
-		//MOCKED DATA remove after FB#98999 is done
-		$data = array(
-			'wamPageUrl' => 'http://www.wikia.com/WAM',
-			'verticalName' => 'Video Games',
-			'ranking' => array(
-				array(
-					'rank' => '111',
-					'wamScore' => '222',
-					'imageUrl' => '333',
-					'imageWidth' => '25',
-					'imageHeight' => '25',
-					'wikiName' => '444',
-					'wikiUrl' => '555',
-					'change' => '1'
-				),
-			),
-		);
-		//END OF MOCKED DATA
-		
+	public function render($data) {
 		return parent::render($data);
 	}
 }

@@ -75,7 +75,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	}
 	
 	protected function isValidModule(MarketingToolboxModel $model, $moduleId) {
-		if( $moduleId > 0 ) { 
+		if( $moduleId > 0 ) {
 			return in_array($moduleId, $model->getModulesIds());
 		}
 		

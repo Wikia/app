@@ -35,7 +35,7 @@
 				<?php foreach($ranking as $wiki): ?>
 					<td><?= $wiki['rank']; ?></td>
 					<td><?= $wiki['wamScore']; ?></td>
-					<td><img src="<?= $wiki['imageUrl']; ?>" width="<?= $wiki['imageWidth']; ?>" height="<?= $wiki['imageHeight']; ?>" /></td>
+					<td><img src="<?= $wiki['imageUrl']; ?>" /></td>
 					<td><a href="<?= $wiki['wikiUrl']; ?>" target="_blank"><?= $wiki['wikiName']; ?></a></td>
 				<?php endforeach; ?>
 			</tbody>
