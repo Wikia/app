@@ -59,6 +59,13 @@ class RelatedPagesController extends WikiaController {
 		}
 	}
 
+	static function onWikiaMobileAssetsPackages(&$jsHead, &$jsBody, &$scss) {
+		$jsBody[] = 'wikiamobile_relatedpages_js';
+		$scss[] = 'wikiamobile_relatedpages_scss';
+
+		return true;
+	}
+
 	/**
 	 * @param $article Article
 	 * @param $user User

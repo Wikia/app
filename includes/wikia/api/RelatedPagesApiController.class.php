@@ -26,7 +26,7 @@ class RelatedPagesApiController extends WikiaApiController {
 	function getList(){
 		$this->wf->ProfileIn( __METHOD__ );
 
-		if( !empty( $this->wg->EnableRelatedPagesExt ) && empty( $this->wg->EnableAnswers ) ) {
+		if ( !empty( $this->wg->EnableRelatedPagesExt ) && empty( $this->wg->EnableAnswers ) ) {
 			$ids = $this->request->getArray( self::PARAMETER_ARTICLE_IDS, null );
 			$limit = $this->request->getInt( self::PARAMETER_LIMIT, 3 );
 
