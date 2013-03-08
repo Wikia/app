@@ -73,7 +73,7 @@ class RelatedVideosHookHandler {
 										$userId = $user->getId();
 										$videoInfoHelper = new VideoInfoHelper();
 										foreach( $images as $img ) {
-											$videoData = $videoInfoHelper->getVideoDataByTitle( $img, true );
+											$videoData = $videoInfoHelper->getVideoDataFromTitle( $img, true );
 											if ( !empty($videoData) ) {
 												$videoInfo = new VideoInfo( $videoData );
 												if ( $videoInfo->addPremiumVideo( $userId ) ) {

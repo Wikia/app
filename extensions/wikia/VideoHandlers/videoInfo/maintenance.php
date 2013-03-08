@@ -11,7 +11,7 @@ function addVideo( &$videoList, $titleName ) {
 	global $dryrun, $added, $invalid, $duplicate, $dupInDb;
 
 	$videoInfoHelper = new VideoInfoHelper();
-	$videoData = $videoInfoHelper->getVideoDataByTitle( $titleName );
+	$videoData = $videoInfoHelper->getVideoDataFromTitle( $titleName );
 	if ( !empty($videoData) ) {
 		printText( $videoData['videoTitle'] );
 		$titleHash = md5( $videoData['videoTitle'] );

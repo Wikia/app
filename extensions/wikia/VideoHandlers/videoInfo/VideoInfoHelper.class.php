@@ -12,7 +12,7 @@ class VideoInfoHelper extends WikiaModel {
 	 * @param boolean $premiumOnly
 	 * @return array|null  $video
 	 */
-	public function getVideoDataByTitle( $title, $premiumOnly = false ) {
+	public function getVideoDataFromTitle( $title, $premiumOnly = false ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		if ( is_string($title) ) {
@@ -20,7 +20,7 @@ class VideoInfoHelper extends WikiaModel {
 		}
 
 		$file = $this->wf->FindFile( $title );
-		$video = $this->getVideoDataByFile( $file, $premiumOnly );
+		$video = $this->getVideoDataFromFile( $file, $premiumOnly );
 
 		$this->wf->ProfileOut( __METHOD__ );
 
@@ -33,7 +33,7 @@ class VideoInfoHelper extends WikiaModel {
 	 * @param boolean $premiumOnly
 	 * @return array|null  $video
 	 */
-	public function getVideoDataByFile( $file, $premiumOnly = false ) {
+	public function getVideoDataFromFile( $file, $premiumOnly = false ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$video = null;
@@ -185,7 +185,7 @@ class VideoInfoHelper extends WikiaModel {
 		}
 
 		// add new video
-		$videoData = $this->getVideoDataByTitle( $newTitle );
+		$videoData = $this->getVideoDataFromTitle( $newTitle );
 		if ( !empty($videoData) ) {
 			$videoInfo = new VideoInfo( $videoData );
 			$affected = $videoInfo->addVideo();
@@ -209,10 +209,11 @@ class VideoInfoHelper extends WikiaModel {
 		if ( $title instanceof Title ) {
 			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
 			if ( empty($videoInfo) ) {
-				$videoData = $this->getVideoDataByTitle( $title, true );
+				$videoData = $this->getVideoDataFromTitle( $title, true );
 				if ( !empty($videoData) ) {
-					$videoInfo = new VideoInfo( $videoData );
-					$affected = $videoInfo->addPremiumVideo( $userId );
+					// add premium video if not exist
+					$newVideoInfo = new VideoInfo( $videoData );
+					$affected = $newVideoInfo->addPremiumVideo( $userId );
 				}
 			} else {
 				$affected = $videoInfo->restoreVideo();

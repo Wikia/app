@@ -19,7 +19,7 @@ class VideoInfoHooksHelper {
 		}
 
 		$videoInfoHelper = new VideoInfoHelper();
-		$videoData = $videoInfoHelper->getVideoDataByFile( $file );
+		$videoData = $videoInfoHelper->getVideoDataFromFile( $file );
 		if ( !empty($videoData) ) {
 			$videoInfo = new VideoInfo( $videoData );
 			if ( $reupload ) {
@@ -55,7 +55,7 @@ class VideoInfoHooksHelper {
 
 		if ( $title instanceof Title ) {
 			$videoInfoHelper = new VideoInfoHelper();
-			$videoData = $videoInfoHelper->getVideoDataByTitle( $title, true );
+			$videoData = $videoInfoHelper->getVideoDataFromTitle( $title, true );
 			if ( !empty($videoData) ) {
 				$videoInfo = new VideoInfo( $videoData );
 				$affected = $videoInfo->addPremiumVideo( F::app()->wg->User->getId() );
@@ -97,7 +97,7 @@ class VideoInfoHooksHelper {
 		$userId = $user->getId();
 		$videoInfoHelper = new VideoInfoHelper();
 		foreach( $insertedImages as $img ) {
-			$videoData = $videoInfoHelper->getVideoDataByTitle( $img['il_to'], true );
+			$videoData = $videoInfoHelper->getVideoDataFromTitle( $img['il_to'], true );
 			if ( !empty($videoData) ) {
 				$videoInfo = new VideoInfo( $videoData );
 				$affected = ( $affected || $videoInfo->addPremiumVideo( $userId ) );
@@ -158,7 +158,7 @@ class VideoInfoHooksHelper {
 		}
 
 		$videoInfoHelper = new VideoInfoHelper();
-		$videoData = $videoInfoHelper->getVideoDataByTitle( $title );
+		$videoData = $videoInfoHelper->getVideoDataFromTitle( $title );
 		if ( !empty($videoData) ) {
 			$videoInfo = new VideoInfo( $videoData );
 			$videoInfo->addVideo();
@@ -211,7 +211,7 @@ class VideoInfoHooksHelper {
 			if ( empty($videoInfo) ) {
 				// add removed video
 				$videoInfoHelper = new VideoInfoHelper();
-				$videoData = $videoInfoHelper->getVideoDataByTitle( $title, true );
+				$videoData = $videoInfoHelper->getVideoDataFromTitle( $title, true );
 				if ( !empty($videoData) ) {
 					$videoInfo = new VideoInfo( $videoData );
 					$videoInfo->setRemoved();

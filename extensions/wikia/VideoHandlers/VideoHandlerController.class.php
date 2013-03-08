@@ -115,10 +115,32 @@ class VideoHandlerController extends WikiaController {
 			}
 
 			$reason = '';
+			$suppress = false;
 			if ( $file->isLocal() ) {
-				$oldimage = null;
-				$status = FileDeleteForm::doDelete( $title, $file, $oldimage, $reason, false );
-				if ( !$status->isOK() ) {
+				$status = Status::newFatal( 'cannotdelete', $this->wf->EscapeWikiText( $title->getPrefixedText() ) );
+				$page = WikiPage::factory( $title );
+				$dbw = $this->wf->GetDB( DB_MASTER );
+				try {
+					// delete the associated article first
+					if ( $page->doDeleteArticleReal( $reason, $suppress, 0, false ) >= WikiPage::DELETE_SUCCESS ) {
+						$status = $file->delete( $reason, $suppress );
+						if( $status->isOK() ) {
+							$dbw->commit();
+						} else {
+							$dbw->rollback();
+						}
+					}
+				} catch ( MWException $e ) {
+					// rollback before returning to prevent UI from displaying incorrect "View or restore N deleted edits?"
+					$dbw->rollback();
+					$error = $e->getMessage();
+				}
+
+				if ( $status->isOK() ) {
+					$oldimage = null;
+					$user = $this->wg->User();
+					$this->wf->RunHooks( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
+				} else if ( !empty($error) ) {
 					$error = $status->getMessage();
 				}
 			} else {
@@ -132,7 +154,7 @@ class VideoHandlerController extends WikiaController {
 					$status = $videoHandlerHelper->addCategoryVideos( $title, $botUser, $flags );
 				}
 
-				if ( !$article->doDeleteArticle( $reason, false, 0, true, $error ) ) {
+				if ( !$article->doDeleteArticle( $reason, $suppress, 0, true, $error ) ) {
 					if ( empty($error) ) {
 						$error = $this->wf->Message( 'videohandler-remove-error-unknow' )->text();
 					}
