@@ -626,7 +626,8 @@ class RenameUserProcess {
 				'type'        => Phalanx::TYPE_USER
 			);
 			
-			wfRunHooks( "EditPhalanxBlock", array( $data, &$this->mPhalanxBlockId ) );
+			wfRunHooks( "EditPhalanxBlock", array( &$data ) );
+			$this->mPhalanxBlockId = $data['id'];
 			
 			if(!$this->mPhalanxBlockId) {
 				$this->addLog("Creation of the block failed.");

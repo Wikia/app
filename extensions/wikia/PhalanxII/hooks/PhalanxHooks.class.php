@@ -84,12 +84,11 @@ class PhalanxHooks extends WikiaObject {
 	 * Add/edit Phalanx block
 	 *
 	 * @param $data Array contains block information, possible keys: id, author_id, text, type, timestamp, expire, exact, regex, case, reason, lang, ip_hex
-	 * @param $id Int - block ID
 	 * @return id block or false if error
 	 *
 	 * @author moli
 	 */
-	public function onEditPhalanxBlock( $data, &$id ) {
+	public function onEditPhalanxBlock( &$data ) {
 		$this->wf->profileIn( __METHOD__ );
 		
 		if ( !isset( $data['id'] ) ) {
@@ -142,8 +141,8 @@ class PhalanxHooks extends WikiaObject {
 
 		if ( empty( $multitext ) ) {
 			/* single mode - insert/update record */
-			$id = $phalanx->save();
-			$result = $id ? array( "success" => array( $id ), "failed" => 0 ) : false;
+			$data['id'] = $phalanx->save();
+			$result = $data['id'] ? array( "success" => array( $data['id'] ), "failed" => 0 ) : false;
 		}
 		else {
 			/* non-empty bulk field */
@@ -155,9 +154,9 @@ class PhalanxHooks extends WikiaObject {
 					$phalanx['id'] = null;
 					$phalanx['text'] = $bulkrow;
 
-					$id = $phalanx->save();
-					if ( $id ) {
-						$result[ 'success' ][] = $id;
+					$data['id'] = $phalanx->save();
+					if ( $data['id'] ) {
+						$result[ 'success' ][] = $data['id'];
 					} else {
 						$result[ 'failed' ]++;
 					}
