@@ -8,7 +8,8 @@ class VideoPageController extends WikiaController {
 	public function fileUsage() {
 		
 		$this->setVal('limit', 50);
-		$summary = F::app()->sendRequest('VideoPageController', 'getGlobalUsage')->getData()['summary'];
+		$app = F::app();
+		$summary = $app->sendRequest('VideoPageController', 'getGlobalUsage')->getData()['summary'];
 
 		$heading = '';
 		$fileList = array();
@@ -39,10 +40,12 @@ class VideoPageController extends WikiaController {
 								break;
 							}
 						}
+					} else {
+						break;
 					}
 				}
 				
-				$data = F::app()->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'global'))->getData();
+				$data = $app->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'global'))->getData();
 
 				$fileList = empty($data['fileList']) ? array() : $data['fileList'];
 			} else {
@@ -64,7 +67,7 @@ class VideoPageController extends WikiaController {
 					$shortenedSummary = array($dbName => $articles);
 				}
 				
-				$data = F::app()->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'local') )->getData();
+				$data = $app->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'local') )->getData();
 				$fileList = empty($data['fileList']) ? array() : $data['fileList'];
 			}
 		}
@@ -76,7 +79,6 @@ class VideoPageController extends WikiaController {
 	}
 	
 	public function fileList() {
-		//$summary = F::app()->sendRequest('VideoPageController', 'getGlobalUsage', array('fileTitle' => 'File:Shoot_Many_Robots_Design_Many_Robots_Trailer'))->getData()['summary'];
 		$summary = $this->getVal('summary', '');
 		$type = $this->getVal('type', '');
 		$result = array();

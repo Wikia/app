@@ -9,7 +9,7 @@ var Paginator = function(el, summary) {
 	this.type = this.$root.data('listing-type');
 	this.currentPage = 0;
 	this.totalCount = 0;
-	this.summary = VideoPageSummary[this.type];
+	this.summary = window.VideoPageSummary[this.type];
 	this.$content = this.$root.find('.page-list-content');
 	this.init();
 };
@@ -63,12 +63,13 @@ Paginator.prototype = {
 		this.$content.startThrobbing();
 	
 		var index = this.currentPage * Paginator.prototype.ARTICLES_PER_PAGE,
-			flatSubSummary = this.flatSummary.slice(index, index + 3),
+			flatSubSummary = this.flatSummary.slice(index, index + Paginator.prototype.ARTICLES_PER_PAGE),
 			summary = {},
 			i = 0,
-			self = this;
+			self = this,
+			flatSubSummaryLength = flatSubSummary.length;
 			
-		for(i = 0; i < flatSubSummary.length; i++) {
+		for(i = 0; i < flatSubSummaryLength; i++) {
 			var wiki = flatSubSummary[i].wiki;
 			if(!summary[wiki]) {
 				summary[wiki] = [];
@@ -100,8 +101,7 @@ var VideoPage = {
 		var self = this;
 		
 		$('.page-list-pagination').each(function() {
-			$el = $(this);
-			new Paginator($el);
+			new Paginator($(this));
 		});
 
 		var moreInfoWrapper = $('.more-info-wrapper'),
