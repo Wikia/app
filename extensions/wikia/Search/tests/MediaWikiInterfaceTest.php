@@ -1351,6 +1351,19 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 				$wgSitename,
 				MediaWikiInterface::getInstance()->getGlobalForWiki( 'Sitename', $wgCityId )
 		);
+		$wf = $this->getMock( 'WikiFactory', [ 'getVarValueByName' ] );
+		$wf
+		    ->staticExpects( $this->once() )
+		    ->method ( 'getVarValueByName' )
+		    ->with   ( 'wgFoo', 123 )
+		    ->will   ( $this->returnValue( (object) [ 'cv_value' => serialize( [ 'bar' ] ) ] ) )
+		;
+		$this->proxyClass( 'WikiFactory', $wf );
+		$this->mockApp();
+		$this->assertEquals(
+				[ 'bar' ],
+				MediaWikiInterface::getInstance()->getGlobalForWiki( 'foo', 123 )
+		);
 	}
 	
 	/**
@@ -1499,6 +1512,805 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 		$this->assertEquals(
 				'snippet',
 				$interface->getSnippetForPageId( $this->pageId )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getNonCanonicalTitleStringFromPageId
+	 */
+	public function testGetNonCanonicalTitleStringFromPageId() { 
+		$interface = $this->interface->setMethods( array( 'getTitleStringFromPageId', 'getTitleString' ) )->getMock();
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'getTitle' ) )
+		                    ->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		$string = 'title';
+		$interface
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitleStringFromPageId' )
+		    ->with   ( $this->pageId )
+		    ->will   ( $this->returnValue( $string ) )
+		;
+		$this->assertEquals(
+				$string,
+				$interface->getNonCanonicalTitleStringFromPageId( $this->pageId )
+		);
+		$reflRedirs = new ReflectionProperty( 'Wikia\Search\MediaWikiInterface', 'redirectArticles' );
+		$reflRedirs->setAccessible( true );
+		$reflRedirs->setValue( $interface, array( $this->pageId => $mockArticle ) );
+		$mockArticle
+		    ->expects( $this->once() )
+		    ->method ( 'getTitle' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getTitleString' )
+		    ->with   ( $mockTitle )
+		    ->will   ( $this->returnValue( $string ) )
+	    ;
+		$this->assertEquals(
+				$string,
+				$interface->getNonCanonicalTitleStringFromPageId( $this->pageId )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getNonCanonicalUrlFromPageId
+	 */
+	public function testGetNonCanonicalUrlFromPageId() { 
+		$interface = $this->interface->setMethods( array( 'getUrlFromPageId' ) )->getMock();
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'getTitle' ) )
+		                    ->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getFullUrl' ) )
+		                  ->getMock();
+		$string = 'http://foo.wikia.com/wiki/Foo';
+		$interface
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getUrlFromPageId' )
+		    ->with   ( $this->pageId )
+		    ->will   ( $this->returnValue( $string ) )
+		;
+		$this->assertEquals(
+				$string,
+				$interface->getNonCanonicalUrlFromPageId( $this->pageId )
+		);
+		$reflRedirs = new ReflectionProperty( 'Wikia\Search\MediaWikiInterface', 'redirectArticles' );
+		$reflRedirs->setAccessible( true );
+		$reflRedirs->setValue( $interface, array( $this->pageId => $mockArticle ) );
+		$mockArticle
+		    ->expects( $this->once() )
+		    ->method ( 'getTitle' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getFullUrl' )
+		    ->will   ( $this->returnValue( $string ) )
+		;
+		$this->assertEquals(
+				$string,
+				$interface->getNonCanonicalUrlFromPageId( $this->pageId )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getArticleMatchForTermAndNamespaces
+	 */
+	public function testGetArticleMatchForTermAndNamespaces() {
+		$interface = $this->interface->setMethods( array( 'getPageFromPageId' ) )->getMock();
+		$mockEngine = $this->getMockBuilder( 'SearchEngine' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'getNearMatch' ) )
+		                   ->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getNamespace', 'getArticleId' ) )
+		                  ->getMock();
+		
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$term = 'Foo';
+		$namespaces = array( 0, 14 );
+		
+		$mockEngine
+		    ->staticExpects( $this->at( 0 ) )
+		    ->method       ( 'getNearMatch' )
+		    ->with         ( $term )
+		    ->will         ( $this->returnValue( null ) ) 
+		;
+		$this->proxyClass( 'SearchEngine', $mockEngine );
+		$this->proxyClass( 'Wikia\Search\Match\Article', $mockMatch );
+		$this->mockApp();
+		$this->assertNull(
+				$interface->getArticleMatchForTermAndNamespaces( $term, $namespaces )
+		);
+		$mockEngine
+		    ->staticExpects( $this->at( 0 ) )
+		    ->method       ( 'getNearMatch' )
+		    ->with         ( $term )
+		    ->will         ( $this->returnValue( $mockTitle ) ) 
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getNamespace' )
+		    ->will   ( $this->returnValue( 0 ) )
+		;
+		$mockTitle
+		    ->expects( $this->any() )
+		    ->method ( 'getArticleId' )
+		    ->will   ( $this->returnValue( $this->pageId ) )
+		;
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getPageFromPageId' )
+		    ->with   ( $this->pageId )
+		;
+		$this->proxyClass( 'SearchEngine', $mockEngine );
+		$this->proxyClass( 'Wikia\Search\Match\Article', $mockMatch );
+		$this->mockApp();
+		$this->assertInstanceOf(
+				$interface->getArticleMatchForTermAndNamespaces( $term, $namespaces )->_mockClassName,
+				$mockMatch
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getWikiMatchByHost
+	 */
+	public function testGetWikiMatchByHost() {
+		$interface = $this->interface->setMethods( null )->getMock();
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'GetDB' ) )
+		                    ->getMock();
+		
+		$mockDb = $this->getMockBuilder( 'DatabaseMysql' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( array( 'select', 'fetchObject' ) )
+		               ->getMock();
+		
+		$mockResult = $this->getMockBuilder( 'ResultWrapper' )
+		                   ->disableOriginalConstructor()
+		                   ->getMock();
+		
+		$mockRow = (object) array( 'city_id' => 321 );
+		$domain = 'foo';
+		$db = 'foo';
+		$wg = (object) array( 'ExternalSharedDB' => $db );
+		$app = (object) array( 'wf' => $mockWrapper, 'wg' => $wg );
+		
+		$reflApp = new ReflectionProperty( 'Wikia\Search\MediaWikiInterface', 'app' );
+		$reflApp->setAccessible( true );
+		$reflApp->setValue( $interface, $app );
+		
+		$mockWrapper
+		    ->expects( $this->once() )
+		    ->method ( 'GetDB' )
+		    ->with   ( DB_SLAVE, array(), $db )
+		    ->will   ( $this->returnValue( $mockDb ) )
+		;
+		$mockDb
+		    ->expects( $this->once() )
+		    ->method ( 'select' )
+		    ->with   ( array( 'city_domains' ), array( 'city_id' ), array( 'city_domain' => "{$domain}.wikia.com" ) )
+		    ->will   ( $this->returnValue( $mockResult ) ) 
+		;
+		$mockDb
+		    ->expects( $this->once() )
+		    ->method ( 'fetchObject' )
+		    ->with   ( $mockResult ) 
+		    ->will   ( $this->returnValue( $mockRow ) )
+		;
+		
+		$this->proxyClass( 'Wikia\Search\Match\Wiki', $mockMatch );
+		$this->mockApp();
+		$this->assertInstanceOf(
+				$interface->getWikiMatchByHost( $domain )->_mockClassName,
+				$mockMatch
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getMainPageUrlForWikiId
+	 */
+	public function testGetMainPageUrlForWikiId() {
+		$interface = $this->interface->setMethods( array( 'getMainPageTitleForWikiId' ) )->getMock();
+		$mockTitle = $this->getMockBuilder( 'GlobalTitle' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getFullUrl' ) )
+		                  ->getMock();
+		$url = 'http://foo.wikia.com/wiki/foo';
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getMainPageTitleForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getFullUrl' )
+		    ->will   ( $this->returnValue( $url ) )
+		;
+		$this->assertEquals(
+				$url,
+				$interface->getMainPageUrlForWikiId( 123 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getDbNameForWikiId
+	 */
+	public function testGetDbNameForWikiId() {
+		$interface = $this->interface->setMethods( array( 'getDataSourceForWikiId' ) )->getMock();
+		$mockSource = $this->getMockBuilder( 'WikiaDataSource' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'getDbName' ) )
+		                   ->getMock();
+		$dbName = 'foo';
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getDataSourceForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $mockSource ) )
+		;
+		$mockSource
+		    ->expects( $this->once() )
+		    ->method ( 'getDbName' )
+		    ->will   ( $this->returnValue( $dbName ) )
+		;
+		$reflGet = new ReflectionMethod( 'Wikia\Search\MediaWikiInterface', 'getDbNameForWikiId' );
+		$reflGet->setAccessible( true );
+		$this->assertEquals(
+				$dbName,
+				$reflGet->invoke( $interface, 123 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getLastRevisionTimestampForPageId()
+	 */
+	public function testGetLastRevisionTimestampForPageId() {
+		$interface = $this->interface->setMethods( array( 'getFormattedTimestamp', 'getTitleFromPageId' ) )->getMock();
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getLatestRevId' ) )
+		                  ->getMock();
+		$mockRev = $this->getMockBuilder( 'Revision' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'getTimestamp' ) )
+		                ->getMock();
+		$timestamp = 'whatever o clock';
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getTitleFromPageId' )
+		    ->with   ( $this->pageId )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getLatestRevId' )
+		    ->will   ( $this->returnValue( 456 ) )
+		;
+		$mockRev
+		    ->expects( $this->once() )
+		    ->method ( 'getTimestamp' )
+		    ->will   ( $this->returnValue( $timestamp ) )
+		;
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getFormattedTimestamp' )
+		    ->with   ( $timestamp )
+		    ->will   ( $this->returnValue( '11/11/11' ) )
+		;
+		$this->proxyClass( 'Revision', $mockRev, 'newFromId' );
+		$this->mockApp();
+		$this->assertEquals(
+				'11/11/11',
+				$interface->getLastRevisionTimestampForPageId( $this->pageId )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getMediaWikiFormattedTimestamp
+	 */
+	public function testGetMediaWikiFormattedTimestamp() {
+		$interface = $this->interface->setMethods( null )->getMock();
+		$lang = $this->getMockBuilder( 'Language' )
+		             ->disableOriginalConstructor()
+		             ->setMethods( array( 'date' ) )
+		             ->getMock();
+		$wrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'Timestamp' ) )
+		                ->getMock();
+		
+		$app = (object) array( 'wg' => (object) array( 'Lang' => $lang ), 'wf' => $wrapper );
+		$reflApp = new ReflectionProperty( 'Wikia\Search\MediaWikiInterface', 'app' );
+		$reflApp->setAccessible( true );
+		$reflApp->setValue( $interface, $app );
+		
+		$wrapper
+		    ->expects( $this->once() )
+		    ->method ( 'Timestamp' )
+		    ->with   ( TS_MW, '11/11/11' )
+		    ->will   ( $this->returnValue( 'timestamp' ) )
+		;
+		$lang
+		    ->expects( $this->once() )
+		    ->method ( 'date' )
+		    ->with   ( 'timestamp' ) 
+		    ->will   ( $this->returnValue( 'mw formatted timestamp' ) )
+		;
+		$this->assertEquals(
+				'mw formatted timestamp',
+				$interface->getMediaWikiFormattedTimestamp( '11/11/11' )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::searchSupportsCurrentLanguage
+	 */
+	public function testSearchSupportsCurrentLanguage() {
+		$interface = $this->interface->setMethods( array( 'searchSupportsLanguageCode', 'getLanguageCode' ) )->getMock();
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getLanguageCode' )
+		    ->will   ( $this->returnValue( 'en' ) )
+		;
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'searchSupportsLanguageCode' )
+		    ->with   ( 'en' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->assertTrue(
+				$interface->searchSupportsCurrentLanguage()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getThumbnailHtmlForPageId
+	 */
+	public function testGetThumbnailHtmlForPageId() {
+		$interface = $this->interface->setMethods( array( 'getFileForPageId' ) )->getMock();
+		$mockFile = $this->getMockBuilder( 'File' )
+		                 ->disableOriginalConstructor()
+		                 ->setMethods( array( 'transform' ) )
+		                 ->getMock();
+		$mockTransform = $this->getMockBuilder( 'MediaTransformOutput' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'toHtml' ) )
+		                      ->getMock();
+		$html = 'this value does not matter';
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getFileForPageId' )
+		    ->with   ( $this->pageId )
+		    ->will   ( $this->returnValue( $mockFile ) )
+		;
+		$mockFile
+		    ->expects( $this->once() )
+		    ->method ( 'transform' )
+		    ->with   ( array( 'width' => 160 ) )
+		    ->will   ( $this->returnValue( $mockTransform ) )
+		;
+		$mockTransform
+		    ->expects( $this->once() )
+		    ->method ( 'toHtml' )
+		    ->with   ( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
+		    ->will   ( $this->returnValue( $html ) )
+		;
+		$this->assertEquals(
+				$html,
+				$interface->getThumbnailHtmlForPageId( $this->pageId )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getVideoViewsForPageId
+	 */
+	public function testGetVideoViewsForPageId() {
+		$interface = $this->interface->setMethods( array( 'getTitleFromPageId', 'formatNumber' ) )->getMock();
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getDBKey' ) )
+		                  ->getMock();
+		// i'm sure marissa mayer will love this
+		$wfh = $this->getMockBuilder( 'WikiaFileHelper' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( array( 'isFileTypeVideo' ) )
+		            ->getMock();
+		
+		$mqs = $this->getMockBuilder( 'MediaQueryService' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( array( 'getTotalVideoViewsByTitle' ) )
+		            ->getMock();
+		
+		$wrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'MsgExt' ) )
+		                ->getMock();
+		
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getTitleFromPageId' )
+		    ->with   ( $this->pageId )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$wfh
+		    ->staticExpects( $this->once() )
+		    ->method ( 'isFileTypeVideo' )
+		    ->with   ( $mockTitle )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getDBKey' )
+		    ->will   ( $this->returnValue( 'Foo_bar' ) )
+		;
+		$mqs
+		    ->staticExpects( $this->once() )
+		    ->method ( 'getTotalVideoViewsByTitle' )
+		    ->with   ( 'Foo_bar' )
+		    ->will   ( $this->returnValue( 1234 ) )
+		;
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'formatNumber' )
+		    ->with   ( 1234 )
+		    ->will   ( $this->returnValue( '1,234' ) )
+		;
+		$wrapper
+		    ->expects( $this->once() )
+		    ->method ( 'MsgExt' )
+		    ->with   ( 'videohandler-video-views', array( 'parsemag' ), '1,234' )
+		    ->will   ( $this->returnValue( '1,234 views' ) )
+		;
+		$reflApp = new ReflectionProperty( '\Wikia\Search\MediaWikiInterface', 'app' );
+		$reflApp->setAccessible( true );
+		$reflApp->setValue( $interface, (object) array( 'wf' => $wrapper ) );
+		$this->proxyClass( 'WikiaFileHelper', $wfh );
+		$this->proxyClass( 'MediaQueryService', $mqs );
+		$this->mockApp();
+		$this->assertEquals(
+				'1,234 views',
+				$interface->getVideoViewsForPageId( $this->pageId )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::formatNumber
+	 */
+	public function testFormatNumber() {
+		$interface = $this->interface->setMethods( null )->getMock();
+		
+		$lang = $this->getMockBuilder( "Language" )
+		             ->disableOriginalConstructor()
+		             ->setMethods( array( 'formatNum' ) )
+		             ->getMock();
+		
+		$lang
+		    ->expects( $this->once() )
+		    ->method ( 'formatNum' )
+		    ->with   ( 10000 )
+		    ->will   ( $this->returnValue( '10,000' ) )
+		;
+		$wg = (object) array( 'Lang' => $lang );
+		$app = new ReflectionProperty( 'Wikia\Search\MediaWikiInterface', 'app' );
+		$app->setAccessible( true );
+		$app->setValue( $interface, (object) array( 'wg' => $wg ) );
+		$this->assertEquals(
+				'10,000',
+				$interface->formatNumber( 10000 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getVisualizationInfoForWikiId
+	 */
+	public function testGetVisualizationInfoForWikiId() {
+		$interface = $this->interface->setMethods( array( 'getLanguageCode' ) )->getMock();
+		$hph = $this->getMock( 'WikiaHomePageHelper', array( 'getWikiInfoForVisualization' ) );
+		
+		$info = array( 'yup' );
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getLanguageCode' )
+		    ->will   ( $this->returnValue( 'en' ) )
+		;
+		$hph
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiInfoForVisualization' )
+		    ->with   ( 123, 'en' )
+		    ->will   ( $this->returnValue( $info ) )
+		;
+		$this->proxyClass( 'WikiaHomePageHelper', $hph );
+		$this->mockApp();
+		$this->assertEquals(
+				$info,
+				$interface->getVisualizationInfoForWikiId( 123 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getStatsInfoForWikiId
+	 */
+	public function testGetStatsInfoForWikiId() {
+		$interface = $this->interface->setMethods( null )->getMock();
+		$hph = $this->getMock( 'WikiaHomePageHelper', array( 'getWikiStats' ) );
+		
+		$info = array( 'this' => 'yup' );
+		$hph
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiStats' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $info ) )
+		;
+		$this->proxyClass( 'WikiaHomePageHelper', $hph );
+		$this->mockApp();
+		$this->assertEquals(
+				array( 'this_count' => 'yup' ),
+				$interface->getStatsInfoForWikiId( 123 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getFormattedTimestamp
+	 */
+	public function testGetFormattedTimestamp() {
+		$mockWf = $this->getMock( 'WikiaFunctionWrapper', array( 'Timestamp' ) );
+		$interface = $this->interface->setMethods( null )->getMock();
+		$app = new ReflectionProperty( '\Wikia\Search\MediaWikiInterface' , 'app' );
+		$app->setAccessible( true );
+		$app->setValue( $interface, (object) array( 'wf' => $mockWf ) );
+		$timestamp = 'whatever';
+		$mockWf
+		    ->expects( $this->once() )
+		    ->method ( 'Timestamp' )
+		    ->with   ( TS_ISO_8601, $timestamp )
+		    ->will   ( $this->returnValue( 'result' ) )
+		;
+		$meth = $app = new ReflectionMethod( '\Wikia\Search\MediaWikiInterface' , 'getFormattedTimestamp' );
+		$meth->setAccessible( true );
+		$this->assertEquals(
+				'result',
+				$meth->invoke( $interface, $timestamp )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getDataSourceForWikiId
+	 */
+	public function testGetDataSourceForWikiId() {
+		$interface = $this->interface->setMethods( null )->getMock();
+		$ds = $this->getMockBuilder( 'WikiDataSource' )
+		           ->disableOriginalConstructor()
+		           ->getMock();
+		
+		$this->proxyClass( 'WikiDataSource', $ds );
+		$this->mockApp();
+		$meth = $app = new ReflectionMethod( '\Wikia\Search\MediaWikiInterface' , 'getDataSourceForWikiId' );
+		$meth->setAccessible( true );
+		$result = $meth->invoke( $interface, 123 );
+		$this->assertInstanceOf(
+				$result->_mockClassName,
+				$ds
+		);
+		$this->assertAttributeContains(
+				$result,
+				'wikiDataSources',
+				$interface
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getMainPageTitleForWikiId
+	 */
+	public function testGetMainPageTitleForWikiId() {
+		$interface = $this->interface->setMethods( [ 'getDbNameForWikiId', 'getGlobalForWiki' ] )->getMock();
+		$service = $this->getMock( 'ApiService', [ 'foreignCall' ] );
+		$title = $this->getMockBuilder( 'GlobalTitle' )
+		              ->disableOriginalConstructor()
+		              ->setMethods( [ 'isRedirect', 'getRedirectTarget' ] )
+		              ->getMock();
+		
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getDbNameForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobalForWiki' )
+		    ->with   ( 'wgLanguageCode', 123 )
+		    ->will   ( $this->returnValue( 'en' ) )
+		;
+		$fcArray = [ 'action' => 'query', 'meta' => 'allmessages', 'ammessages' => 'mainpage', 'amlang' => 'en' ];
+		$responseArray = [ 'query' => ['allmessages' => [ ['*' => 'main' ] ] ] ];
+		$service
+		    ->staticExpects( $this->once() )
+		    ->method ( 'foreignCall' )
+		    ->with   ( 'foo', $fcArray )
+		    ->will   ( $this->returnValue( $responseArray ) )
+		;
+		$title
+		    ->expects( $this->once() )
+		    ->method ( 'isRedirect' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$title
+		    ->expects( $this->once() )
+		    ->method ( 'getRedirectTarget' )
+		    ->will   ( $this->returnValue( $title ) )
+		;
+		$this->proxyClass( 'ApiService', $service );
+		$this->proxyClass( 'GlobalTitle', $title, 'newFromText' );
+		$this->mockApp();
+		$reflGet = new ReflectionMethod( 'Wikia\Search\MediaWikiInterface', 'getMainPageTitleForWikiId' );
+		$reflGet->setAccessible( true );
+		$result = $reflGet->invoke( $interface, 123 );
+		$this->assertEquals(
+				$result,
+				$title
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getDescriptionTextForWikiId
+	 */
+	public function testGetDescriptionTextForWikiId() {
+		$interface = $this->interface->setMethods( [ 'getDbNameForWikiId', 'getGlobalForWiki' ] )->getMock();
+		$service = $this->getMock( 'ApiService', [ 'foreignCall' ] );
+		
+		
+		$interface
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getDbNameForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$interface
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getGlobalForWiki' )
+		    ->with   ( 'wgLanguageCode', 123 )
+		    ->will   ( $this->returnValue( 'en' ) )
+		;
+		$interface
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getGlobalForWiki' )
+		    ->with   ( 'wgSitename', 123 )
+		    ->will   ( $this->returnValue( 'foo wiki' ) )
+		;
+		$fcArray = [ 'action' => 'query', 'meta' => 'allmessages', 'ammessages' => 'description', 'amlang' => 'en' ];
+		$responseArray = [ 'query' => ['allmessages' => [ ['*' => '{{SITENAME}} is a wiki' ] ] ] ];
+		$service
+		    ->staticExpects( $this->once() )
+		    ->method ( 'foreignCall' )
+		    ->with   ( 'foo', $fcArray )
+		    ->will   ( $this->returnValue( $responseArray ) )
+		;
+		$this->proxyClass( 'ApiService', $service );
+		$this->mockApp();
+		$this->assertEquals(
+				'foo wiki is a wiki',
+				$interface->getDescriptionTextForWikiId( 123 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getHubForWikiId
+	 */
+	public function testGetHubForWikiId() {
+		$interface = $this->interface->setMethods( null )->getMock();
+		$wf = $this->getMock( 'WikiFactory', [ 'getCategory' ] );
+		$wf
+		    ->staticExpects( $this->once() )
+		    ->method       ( 'getCategory' )
+		    ->with         ( 123 )
+		    ->will         ( $this->returnValue( (object) [ 'cat_name' => 'Entertainment' ] ) )
+		;
+		$this->proxyClass( 'WikiFactory', $wf );
+		$this->mockApp();
+		$this->assertEquals(
+				'Entertainment',
+				$interface->getHubForWikiId( 123 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getMainPageTextForWikiId
+	 */
+	public function testGetMainPageTextForWikiId() {
+		$interface = $this->interface->setMethods( [ 'getMainPageTitleForWikiId', 'getDbNameForWikiId' ] )->getMock();
+		$service = $this->getMock( 'ApiService', [ 'foreignCall' ] );
+		$title = $this->getMockBuilder( 'GlobalTitle' )
+		              ->disableOriginalConstructor()
+		              ->setMethods( [ 'getDbKey' ] )
+		              ->getMock();
+		
+		$params = [ 'controller' => 'ArticlesApiController', 'method' => 'getDetails', 'titles' => 'Foo_bar' ];
+		$title
+		    ->expects( $this->once() )
+		    ->method ( 'getDbKey' )
+		    ->will   ( $this->returnValue( 'Foo_bar' ) )
+		;
+		$interface
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getMainPageTitleForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $title ) )
+		;
+		$interface
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getDbNameForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$responseArray = [ 'items' => [ [ 'abstract' => 'and if you dont know now you know' ] ] ];
+		$service
+		    ->staticExpects( $this->once() )
+		    ->method ( 'foreignCall' )
+		    ->with   ( 'foo', $params, \ApiService::WIKIA )
+		    ->will   ( $this->returnValue( $responseArray ) )
+		;
+		$this->proxyClass( 'ApiService', $service );
+		$this->mockApp();
+		$this->assertEquals(
+				'and if you dont know now you know',
+				$interface->getMainPageTextForWikiId( 123 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::invokeHook
+	 */
+	public function testInvokeHook() {
+		$interface = $this->interface->setMethods( null )->getMock();
+		$wf = $this->getMock( 'WikiaFunctionWrapper', [ 'RunHooks' ] );
+		$app = new ReflectionProperty( '\Wikia\Search\MediaWikiInterface' , 'app' );
+		$app->setAccessible( true );
+		$app->setValue( $interface, (object) array( 'wf' => $wf ) );
+		$wf
+		    ->expects( $this->once() )
+		    ->method ( 'RunHooks' )
+		    ->with   ( 'onwhatever', [ 'foo', 123 ] )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->assertTrue(
+				$interface->invokeHook( 'onwhatever', [ 'foo', 123 ] )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::__construct
+	 */
+	public function test__construct() {
+		$instance = new ReflectionProperty( 'Wikia\Search\MediaWikiInterface', 'instance' );
+		$instance->setAccessible( true );
+		$instance->setValue( null );
+		$interface = MediaWikiInterface::getInstance();
+		$this->assertAttributeEquals(
+				\F::app(),
+				'app',
+				$interface
 		);
 	}
 }

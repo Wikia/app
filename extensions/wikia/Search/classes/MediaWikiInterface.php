@@ -258,8 +258,8 @@ class MediaWikiInterface
 	 * @return mixed
 	 */
 	public function getGlobalForWiki( $global, $wikiId ) {
-		$global = substr_count( $global, 'wg', 0, 2 ) ? $global : ( 'wg' . $global );
-		$row = \WikiFactory::getVarValueByName( $global, $wikiId );
+		$global = substr_count( $global, 'wg', 0, 2 ) ? $global : ( 'wg' . ucfirst( $global ) );
+		$row = (new \WikiFactory)->getVarValueByName( $global, $wikiId );
 		if ( is_object( $row ) ) {
 			return unserialize( $row->cv_value );
 		}
@@ -443,7 +443,7 @@ class MediaWikiInterface
 	 * @return mixed
 	 */
 	public function invokeHook( $hookName, array $args = array() ) {
-		return wfRunHooks( $hookName, $args );
+		return $this->app->wf->RunHooks( $hookName, $args );
 	}
 	
 	/**
@@ -516,15 +516,15 @@ class MediaWikiInterface
 	 * @return \Wikia\Search\Match\Article|NULL
 	 */
 	public function getArticleMatchForTermAndNamespaces( $term, array $namespaces ) {
+		$articleMatch = null;
 		$searchEngine = new \SearchEngine();
 		$title = $searchEngine->getNearMatch( $term );
 		if( ( $title !== null ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
 			// initialize our memoized data
 			$this->getPageFromPageId( $title->getArticleId() );
 			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this );
-			return $articleMatch;
 		}
-		return null;
+		return $articleMatch;
 	}
 	
 	/**
@@ -533,6 +533,7 @@ class MediaWikiInterface
 	 * @return \Wikia\Search\Match\Wiki|NULL
 	 */
 	public function getWikiMatchByHost( $domain ) {
+		$match = null;
 		$dbr = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
 		$query = $dbr->select(
 				array( 'city_domains' ),
@@ -540,9 +541,9 @@ class MediaWikiInterface
 				array( 'city_domain' => "{$domain}.wikia.com" )
 				);
 		if ( $row = $dbr->fetchObject( $query ) ) {
-			return new \Wikia\Search\Match\Wiki( $row->city_id, $this );
+			$match = new \Wikia\Search\Match\Wiki( $row->city_id, $this );
 		}
-		return null;
+		return $match;
 	}
 	
 
@@ -566,7 +567,7 @@ class MediaWikiInterface
 				'method' => 'getDetails', 
 				'titles' => $this->getMainPageTitleForWikiId( $wikiId )->getDbKey()
 				);
-		$response = \ApiService::foreignCall( $this->getDbNameForWikiId( $wikiId ), $params, \ApiService::WIKIA );
+		$response = (new \ApiService)->foreignCall( $this->getDbNameForWikiId( $wikiId ), $params, \ApiService::WIKIA );
 		$item = \array_shift( $response['items'] );
 		return $item['abstract'];
 	}
@@ -577,7 +578,7 @@ class MediaWikiInterface
 	 * @return string
 	 */
 	public function getDescriptionTextForWikiId( $wikiId ) {
-		$response = \ApiService::foreignCall(
+		$response = (new \ApiService)->foreignCall(
 			$this->getDbNameForWikiId( $wikiId ), 
 			array(
 					'action'      => 'query',
@@ -590,7 +591,7 @@ class MediaWikiInterface
 	}
 	
 	public function getHubForWikiId( $wikiId ) {
-		$cat = \WikiFactory::getCategory( $wikiId );
+		$cat = (new \WikiFactory)->getCategory( $wikiId );
 		return is_object( $cat ) ? $cat->cat_name : $cat;
 	}
 	
@@ -637,17 +638,20 @@ class MediaWikiInterface
 	 * @param int $pageId
 	 * @param array $transformParams
 	 * @param array $htmlParams
+	 * @return string
 	 */
 	public function getThumbnailHtmlForPageId(
 			$pageId, 
-			$transformParams = array( 'width' => 160 ), 
+			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
 			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) 
 			) {
+		$html = '';
 		$img = $this->getFileForPageId( $pageId );
 		if (! empty( $img ) ) {
-			$thumb = $img->transform( array( 'width' => 160 ) ); // WikiaGrid 1 column width
-			return $thumb->toHtml( $htmlParams );
+			$thumb = $img->transform( $transformParams );
+			$html = $thumb->toHtml( $htmlParams );
 		}
+		return $html;
 	}
 	
 	/**
@@ -658,9 +662,9 @@ class MediaWikiInterface
 	public function getVideoViewsForPageId( $pageId ) {
 		$videoViews = '';
 		$title = $this->getTitleFromPageId( $pageId );
-		if ( \F::build( 'WikiaFileHelper' )->isFileTypeVideo( $title ) ) {
-			$videoViews = \F::build( 'MediaQueryService' )->getTotalVideoViewsByTitle( $title->getDBKey() );
-			$videoViews = \F::app()->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), \F::app()->wg->Lang->formatNum($videoViews) );
+		if ( ( new \WikiaFileHelper )->isFileTypeVideo( $title ) ) {
+			$videoViews = ( new \MediaQueryService )->getTotalVideoViewsByTitle( $title->getDBKey() );
+			$videoViews = $this->app->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), $this->formatNumber( $videoViews) );
 		}
 		return $videoViews;
 	}
@@ -679,8 +683,7 @@ class MediaWikiInterface
 	 * @return array
 	 */
 	public function getVisualizationInfoForWikiId( $wikiId ) {
-		$helper = new \WikiaHomePageHelper();
-		return $helper->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
+		return (new \WikiaHomePageHelper)->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
 	}
 
 	/**
@@ -690,8 +693,7 @@ class MediaWikiInterface
 	 * @return array
 	 */
 	public function getStatsInfoForWikiId( $wikiId ) {
-		$helper = new \WikiaHomePageHelper();
-		$statsInfo = $helper->getWikiStats( $wikiId );
+		$statsInfo = (new \WikiaHomePageHelper)->getWikiStats( $wikiId );
 		foreach ( $statsInfo as $key => $val ) {
 			$statsInfo[$key.'_count'] = $val;
 			unset( $statsInfo[$key] );
@@ -807,7 +809,7 @@ class MediaWikiInterface
 	 * @return GlobalTitle
 	 */
 	protected function getMainPageTitleForWikiId( $wikiId ) {
-		$response = \ApiService::foreignCall(
+		$response = (new \ApiService)->foreignCall(
 			$this->getDbNameForWikiId( $wikiId ), 
 			array(
 					'action'      => 'query',
