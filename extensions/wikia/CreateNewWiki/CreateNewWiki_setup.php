@@ -31,4 +31,4 @@ $wgGroupPermissions['staff']['createnewwiki'] = true;
 $wgExtensionFunctions[] = 'CreateNewWikiController::setupCreateNewWiki';
 
 $app = F::app();
-$app->registerHook('BeforePageDisplay', 'CreateNewWikiHooks', 'beforePageDisplay');
+$app->registerHook('BeforePageDisplay', 'CreateNewWikiHooks', 'onBeforePageDisplay');
