@@ -1,8 +1,9 @@
 <?php
 
-class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditableService
-{
+class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditableService {
 	const MODULE_ID = 10;
+	//TODO: remove const below after WAM page finished
+	const WIKIA_HOME_PAGE_WAM_URL = 'http://www.wikia.com/WAM';
 
 	public function getDataParameters($langCode, $verticalId, $limit, $hubTimestamp) {
 		//TODO: add wam_previous_day
@@ -29,9 +30,12 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 
 		$url  = 'http://sandbox-s4.www.wikia.com/wikia.php?controller=WAMApi&method=getWAMIndex&';
 		$url .= http_build_query($params);
-
+		
 		if( $apiData = file_get_contents($url) ) {
-			$data = json_decode($apiData, true);
+			$data = [
+				'vertical_id' => $params['vertical_id'],
+				'api_response' => json_decode($apiData, true),
+			];
 		}
 		
 		return $data;
@@ -39,10 +43,47 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	public function getStructuredData($data) {
-		$structuredData = [];
-		return $data;
+		$hubModel = $this->getWikiaHubsModel();
+		
+		$structuredData = [
+			'wamPageUrl' => self::WIKIA_HOME_PAGE_WAM_URL,
+			'verticalName' => $hubModel->getVerticalName($data['vertical_id']),
+			'ranking' => []
+		];
+		
+		$rank = 1;
+		$wamIndex = $data['api_response']['wam_index'];
+		foreach($wamIndex as $i => $wiki) {
+			$structuredData['ranking'][] = [
+				'rank' => $rank,
+				'wamScore' => $wiki['wam'],
+				'imageUrl' => $wiki['wiki_image'],
+				'wikiName' => $wiki['title'],
+				'wikiUrl' => $wiki['url'],
+				'change' => $this->getWamWikiChange($wiki['wam_change']),
+			];
+			$rank++;
+		}
+		
+		return $structuredData;
+	}
+	
+	protected function getWamWikiChange($wamChange) {
+		$result = 0;
+		$floatWamChange = (float) $wamChange;
+		
+		if( $floatWamChange > 0 ) {
+			$result = 1;
+		} else if( $floatWamChange < 0 ) {
+			$result = -1;
+		}
+		
+		return $result;
 	}
 
+	public function getWikiaHubsModel() {
+		return new WikiaHubsV2Model();
+	}
 
 	public function render($structuredData) {
 		//MOCKED DATA remove after FB#98999 is done
