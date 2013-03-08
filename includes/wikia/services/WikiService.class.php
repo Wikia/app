@@ -326,7 +326,6 @@ class WikiService extends WikiaModel {
 			$results = $db->select($tables, $fields, $conds, __METHOD__, array(), array());
 
 			while($row = $results->fetchObject()) {
-				$images[$row->city_id] = $this->wg->blankImgUrl;
 				$title = Title::newFromText($row->city_main_image, NS_FILE);
 				$file = $this->wf->findFile($title);
 				if (!empty($file)) {
