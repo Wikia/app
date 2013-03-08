@@ -16,27 +16,39 @@
 	</div>
 </div>
 <div class="wam-content">
-	<h2>
-		<?= wfMessage('wikiahubs-wam-header')->text(); ?>
-	</h2>
-	<a href="<?= $wamPageUrl; ?>"><?= wfMessage('wikiahubs-wam-see-full-wam-ranking')->text(); ?></a>
+	<div class="title">
+		<h2>
+			<?= wfMessage('wikiahubs-wam-header')->text(); ?>
+		</h2>
+		<a href="<?= $wamPageUrl; ?>">
+			<?= wfMessage('wikiahubs-wam-see-full-wam-ranking')->text(); ?>
+		</a>
+	</div>
 	<h3>
 		<?= wfMessage('wikiahubs-wam-top-wikis-headline', $verticalName)->text(); ?>
 	</h3>
 	<?php if( !empty($ranking) ): ?>
 		<table>
 			<thead>
-				<th><?= wfMessage('wikiahubs-wam-rank')->text() ?></th>
-				<th><?= wfMessage('wikiahubs-wam-score')->text() ?></th>
-				<th></th>
-				<th><?= wfMessage('wikiahubs-wam-wiki-url')->text() ?></th>
+				<tr>
+					<th><?= wfMessage('wikiahubs-wam-rank')->text() ?></th>
+					<th><?= wfMessage('wikiahubs-wam-score')->text() ?></th>
+					<th></th>
+					<th><?= wfMessage('wikiahubs-wam-wiki-url')->text() ?></th>
+				</tr>
 			</thead>
 			<tbody>
 				<?php foreach($ranking as $wiki): ?>
-					<td><?= $wiki['rank']; ?></td>
-					<td><?= $wiki['wamScore']; ?></td>
-					<td><img src="<?= $wiki['imageUrl']; ?>" /></td>
-					<td><a href="<?= $wiki['wikiUrl']; ?>" target="_blank"><?= $wiki['wikiName']; ?></a></td>
+					<tr>
+						<td><?= $wiki['rank']; ?></td>
+						<td><?= $wiki['wamScore']; ?></td>
+						<td>
+							<img src="<?= $wiki['imageUrl']; ?>" width="<?= $wiki['imageWidth']; ?>" height="<?= $wiki['imageHeight']; ?>" />
+						</td>
+						<td>
+							<a href="<?= $wiki['wikiUrl']; ?>" target="_blank"><?= $wiki['wikiName']; ?></a>
+						</td>
+					</tr>
 				<?php endforeach; ?>
 			</tbody>
 		</table>

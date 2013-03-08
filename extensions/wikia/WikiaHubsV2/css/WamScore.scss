@@ -29,5 +29,28 @@
 	}
 	.wam-content {
 		clear: both;
+		.title {
+			height: 25px;
+			a {
+				float: right;
+			}
+		}
+		h2 {
+			border: none;
+			float: left;
+		}
+		h3 {
+			clear: both;
+			font-weight: bold;
+		}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		tr {
+			border-bottom: 1px solid #eaeaea;
+		}
+		td {
+		}
 	}
 }
