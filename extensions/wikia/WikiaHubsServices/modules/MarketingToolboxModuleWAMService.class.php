@@ -51,17 +51,16 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 			'wamPageUrl' => 'http://www.wikia.com/WAM',
 			'verticalName' => 'Video Games',
 			'ranking' => array(
-				/*
 				array(
-					'rank' => '',
-					'wamScore' => '',
-					'imageUrl' => '',
-					'imageWidth' => '',
-					'imageHeight' => '',
-					'wikiName' => '',
-					'wikiUrl' => '',
+					'rank' => '111',
+					'wamScore' => '222',
+					'imageUrl' => '333',
+					'imageWidth' => '25',
+					'imageHeight' => '25',
+					'wikiName' => '444',
+					'wikiUrl' => '555',
+					'change' => '1'
 				),
-				*/
 			),
 		);
 		//END OF MOCKED DATA

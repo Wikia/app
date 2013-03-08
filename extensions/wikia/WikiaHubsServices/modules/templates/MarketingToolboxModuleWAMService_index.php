@@ -1,7 +1,9 @@
 <div>
-	<span class="social-links">
-		
-	</span>
+	<div class="social-links">
+		<a href="#"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
+		<a href="#"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>
+		<a href="#"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
+	</div>
 	<div class="search">
 		<form method="get" action="index.php?title=Special:Search" class="WikiaSearch" id="WikiaSearch">
 			<input type="text" value="" accesskey="f" autocomplete="off" placeholder="<?= wfMessage('wikiahubs-search-placeholder')->text(); ?>" name="search" id="HubSearch" />
@@ -21,14 +23,14 @@
 	<h3>
 		<?= wfMessage('wikiahubs-wam-top-wikis-headline', $verticalName)->text(); ?>
 	</h3>
-	<table>
-		<thead>
-			<th><?= wfMessage('wikiahubs-wam-rank')->text() ?></th>
-			<th><?= wfMessage('wikiahubs-wam-score')->text() ?></th>
-			<th></th>
-			<th><?= wfMessage('wikiahubs-wam-wiki-url')->text() ?></th>
-		</thead>
-		<?php if( !empty($ranking) ): ?>
+	<?php if( !empty($ranking) ): ?>
+		<table>
+			<thead>
+				<th><?= wfMessage('wikiahubs-wam-rank')->text() ?></th>
+				<th><?= wfMessage('wikiahubs-wam-score')->text() ?></th>
+				<th></th>
+				<th><?= wfMessage('wikiahubs-wam-wiki-url')->text() ?></th>
+			</thead>
 			<tbody>
 				<?php foreach($ranking as $wiki): ?>
 					<td><?= $wiki['rank']; ?></td>
@@ -37,6 +39,6 @@
 					<td><a href="<?= $wiki['wikiUrl']; ?>" target="_blank"><?= $wiki['wikiName']; ?></a></td>
 				<?php endforeach; ?>
 			</tbody>
-		<?php endif; ?>
-	</table>
+		</table>
+	<?php endif; ?>
 </div>
