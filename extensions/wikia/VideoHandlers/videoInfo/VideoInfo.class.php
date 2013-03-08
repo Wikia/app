@@ -43,10 +43,19 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * set video removed
+	 * set video removed value
+	 * @param boolean $value
 	 */
-	public function setRemoved() {
-		$this->removed = 1;
+	public function setRemoved( $value = true ) {
+		$this->removed = (int) $value;
+	}
+
+	/**
+	 * set added at
+	 * @param integer $value
+	 */
+	public function setAddedAt( $value ) {
+		$this->addedAt = $value;
 	}
 
 	/**
@@ -91,10 +100,9 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * update data in the database
-	 * @param array $updateValue [ array( field => value ) ]
-	 * [ field = added_at, added_by, duration, premium , hdfile, removed, featured ]
+	 * @return boolean $affected
 	 */
-	protected function updateDatabase( $updateValue ) {
+	protected function updateDatabase() {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$affected = false;
@@ -103,7 +111,15 @@ class VideoInfo extends WikiaModel {
 
 			$db->update(
 				'video_info',
-				$updateValue,
+				array(
+					'added_at' => $this->addedAt,
+					'added_by' => $this->addedBy,
+					'duration' => $this->duration,
+					'premium' => $this->premium,
+					'hdfile' => $this->hdfile,
+					'removed' => $this->removed,
+					'featured' => $this->featured,
+				),
 				array( 'video_title' => $this->videoTitle ),
 				__METHOD__
 			);
@@ -124,6 +140,7 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * add video to database
+	 * @return boolean $affected
 	 */
 	protected function addToDatabase() {
 		$this->wf->ProfileIn( __METHOD__ );
@@ -264,7 +281,7 @@ SQL;
 		$memKey = self::getMemcKey( $videoTitle );
 		$videoData = $app->wg->Memc->get( $memKey );
 		if ( is_array($videoData) ) {
-			$video = new VideoInfo( $videoData );
+			$video = new self( $videoData );
 		} else {
 			$db = $app->wf->GetDB( DB_SLAVE );
 
@@ -348,30 +365,9 @@ SQL;
 	 */
 	public function reuploadVideo() {
 		$addedAt = $this->wf->Timestamp( TS_MW );
-		$data = array(
-			'added_at' => $addedAt,
-			'added_by' => $this->addedBy,
-			'duration' => $this->duration,
-			'premium' => $this->premium,
-			'hdfile' => $this->hdfile,
-			'removed' => $this->removed,
-			'featured' => $this->featured,
-		);
+		$this->setAddedAt( $addedAt );
 
-		return $this->updateDatabase( $data );
-	}
-
-	/**
-	 * rename video
-	 * @param string $newVideoTitle
-	 * @return boolean
-	 */
-	public function renameVideo( $newVideoTitle ) {
-		$data = array(
-			'video_title' => $newVideoTitle,
-		);
-
-		return $this->updateDatabase( $data );
+		return $this->updateDatabase();
 	}
 
 	/**
@@ -379,11 +375,9 @@ SQL;
 	 * @return boolean
 	 */
 	public function restoreVideo() {
-		$data = array(
-			'removed' => 0,
-		);
+		$this->setRemoved( false );
 
-		return $this->updateDatabase( $data );
+		return $this->updateDatabase();
 	}
 
 	/**
@@ -391,11 +385,9 @@ SQL;
 	 * @return boolean
 	 */
 	public function removeVideo() {
-		$data = array(
-			'removed' => 1,
-		);
+		$this->setRemoved();
 
-		return $this->updateDatabase( $data );
+		return $this->updateDatabase();
 	}
 
 	/**

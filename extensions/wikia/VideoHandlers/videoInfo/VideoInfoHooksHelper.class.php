@@ -25,6 +25,7 @@ class VideoInfoHooksHelper {
 			if ( $reupload ) {
 				$videoInfo->reuploadVideo();
 			} else {
+				// check if the foreign video with the same title exists
 				if ( $videoInfoHelper->videoExists($file->getTitle(), true) ) {
 					$videoInfo->reuploadVideo();
 				} else {
@@ -127,17 +128,16 @@ class VideoInfoHooksHelper {
 			return true;
 		}
 
-		$title = $file->getTitle();
-		if ( $title instanceof Title && WikiaFileHelper::isFileTypeVideo($file) ) {
+		if ( WikiaFileHelper::isFileTypeVideo($file) ) {
 			if ( $file->isLocal() ) {
-				$videoData = array(
-					'videoTitle' => $title->getDBKey(),
-				);
-				$videoInfo = new VideoInfo( $videoData );
-				$videoInfo->deleteVideo();
+				// remove local video from video_info table
+				$videoInfo = VideoInfo::newFromTitle( $file->getName() );
+				if ( !empty($videoInfo) ) {
+					$videoInfo->deleteVideo();
 
-				$mediaService = new MediaQueryService();
-				$mediaService->clearCacheTotalVideos();
+					$mediaService = new MediaQueryService();
+					$mediaService->clearCacheTotalVideos();
+				}
 			}
 		}
 
@@ -182,20 +182,11 @@ class VideoInfoHooksHelper {
 			return true;
 		}
 
-		$videoInfo = VideoInfo::newFromTitle( $oldTitle->getDBKey() );
-		if ( empty($videoInfo) ) {
-			// add new video
-			$videoInfoHelper = new VideoInfoHelper();
-			$videoData = $videoInfoHelper->getVideoDataByTitle( $newTitle );
-			if ( !empty($videoData) ) {
-				$videoInfo = new VideoInfo( $videoData );
-				$videoInfo->addVideo();
-
-				$mediaService = new MediaQueryService();
-				$mediaService->clearCacheTotalVideos();
-			}
-		} else {
-			$videoInfo->renameVideo( $newTitle->getDBKey() );
+		$videoInfoHelper = new VideoInfoHelper();
+		$affected = $videoInfoHelper->renameVideo( $oldTitle, $newTitle );
+		if ( $affected ) {
+			$mediaService = new MediaQueryService();
+			$mediaService->clearCacheTotalVideos();
 		}
 
 		return true;
@@ -277,10 +268,9 @@ class VideoInfoHooksHelper {
 			return true;
 		}
 
-		$title = $file->getTitle();
-		if ( $title instanceof Title && WikiaFileHelper::isFileTypeVideo($file) && !$file->isLocal() ) {
+		if ( WikiaFileHelper::isFileTypeVideo($file) && !$file->isLocal() ) {
 			$videoInfoHelper = new VideoInfoHelper();
-			$isDeleted = $videoInfoHelper->isVideoRemoved( $title->getDBKey() );
+			$isDeleted = $videoInfoHelper->isVideoRemoved( $file->getName() );
 		}
 
 		return true;

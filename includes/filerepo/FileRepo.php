@@ -41,7 +41,8 @@ class FileRepo {
 
 	// Wikia Change
 	// when repository is accessed as remote repo
-	// do we support redirects and duplicates check?
+	// do we support redirects, duplicates check and local repo file blocking?
+	// local file blocking happens when an admin deletes a foreign video file
 	// EXPLANATION:
 	// the reason those values are checked in RepoGroup and not directly in FileRepo are twofold:
 	// a) they shouldn't affect repository when it's a local repository
