@@ -31,7 +31,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		$url .= http_build_query($params);
 
 		if( $apiData = file_get_contents($url) ) {
-			$data = json_decode($apiData);
+			$data = json_decode($apiData, true);
 		}
 		
 		return $data;
@@ -40,7 +40,6 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 
 	public function getStructuredData($data) {
 		$structuredData = [];
-
 		return $data;
 	}
 
