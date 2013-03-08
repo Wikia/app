@@ -258,8 +258,8 @@ class MediaWikiInterface
 	 * @return mixed
 	 */
 	public function getGlobalForWiki( $global, $wikiId ) {
-		$global = substr_count( $global, 'wg', 0, 2 ) ? $global : ( 'wg' . $global );
-		$row = \WikiFactory::getVarValueByName( $global, $wikiId );
+		$global = substr_count( $global, 'wg', 0, 2 ) ? $global : ( 'wg' . ucfirst( $global ) );
+		$row = (new \WikiFactory)->getVarValueByName( $global, $wikiId );
 		if ( is_object( $row ) ) {
 			return unserialize( $row->cv_value );
 		}
@@ -443,7 +443,7 @@ class MediaWikiInterface
 	 * @return mixed
 	 */
 	public function invokeHook( $hookName, array $args = array() ) {
-		return wfRunHooks( $hookName, $args );
+		return $this->app->wf->RunHooks( $hookName, $args );
 	}
 	
 	/**
@@ -567,7 +567,7 @@ class MediaWikiInterface
 				'method' => 'getDetails', 
 				'titles' => $this->getMainPageTitleForWikiId( $wikiId )->getDbKey()
 				);
-		$response = \ApiService::foreignCall( $this->getDbNameForWikiId( $wikiId ), $params, \ApiService::WIKIA );
+		$response = (new \ApiService)->foreignCall( $this->getDbNameForWikiId( $wikiId ), $params, \ApiService::WIKIA );
 		$item = \array_shift( $response['items'] );
 		return $item['abstract'];
 	}
@@ -578,7 +578,7 @@ class MediaWikiInterface
 	 * @return string
 	 */
 	public function getDescriptionTextForWikiId( $wikiId ) {
-		$response = \ApiService::foreignCall(
+		$response = (new \ApiService)->foreignCall(
 			$this->getDbNameForWikiId( $wikiId ), 
 			array(
 					'action'      => 'query',
@@ -591,7 +591,7 @@ class MediaWikiInterface
 	}
 	
 	public function getHubForWikiId( $wikiId ) {
-		$cat = \WikiFactory::getCategory( $wikiId );
+		$cat = (new \WikiFactory)->getCategory( $wikiId );
 		return is_object( $cat ) ? $cat->cat_name : $cat;
 	}
 	
@@ -683,8 +683,7 @@ class MediaWikiInterface
 	 * @return array
 	 */
 	public function getVisualizationInfoForWikiId( $wikiId ) {
-		$helper = new \WikiaHomePageHelper();
-		return $helper->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
+		return (new \WikiaHomePageHelper)->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
 	}
 
 	/**
@@ -694,8 +693,7 @@ class MediaWikiInterface
 	 * @return array
 	 */
 	public function getStatsInfoForWikiId( $wikiId ) {
-		$helper = new \WikiaHomePageHelper();
-		$statsInfo = $helper->getWikiStats( $wikiId );
+		$statsInfo = (new \WikiaHomePageHelper)->getWikiStats( $wikiId );
 		foreach ( $statsInfo as $key => $val ) {
 			$statsInfo[$key.'_count'] = $val;
 			unset( $statsInfo[$key] );
@@ -811,7 +809,7 @@ class MediaWikiInterface
 	 * @return GlobalTitle
 	 */
 	protected function getMainPageTitleForWikiId( $wikiId ) {
-		$response = \ApiService::foreignCall(
+		$response = (new \ApiService)->foreignCall(
 			$this->getDbNameForWikiId( $wikiId ), 
 			array(
 					'action'      => 'query',
