@@ -136,13 +136,10 @@ class VideoPageController extends WikiaController {
 		}
 		$titleCats = array();
 
-		# Construct an array of category name to sorting key.  We use the 'normal'
-		# default as the sorting key since we don't really care about the sorting
-		# here.  We just need to give the RelatedPages module something to work with
+		# Construct an array of category names to feed to the RelatedPages extension
 		foreach ($cats as $cat_text => $title_text) {
 			$categoryTitle = Title::newFromText($cat_text);
-			$categoryName = $categoryTitle->getDBkey();
-			$titleCats[$categoryName] = 'normal';
+			$titleCats[] = $categoryTitle->getDBkey();
 		}
 
 		# Seed the RelatedPages instance with the categories we found.  Normally
