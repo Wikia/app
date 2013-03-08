@@ -1173,7 +1173,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 
 	/**
 	 * @see WikiaSearch
-	 */
+	 *
 	public function testSkinSettings() {
 
 		$mockSearchController	=	$this->getMockBuilder( 'WikiaSearchController' )
@@ -1262,7 +1262,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 				$mockSearchController->wg->SuppressRail,
 				'WikiaSearchController::handleSkinSettings should set wgSuppressRail to true.'
 		);
-	}
+	}*/
 
 	/**
 	 * @covers WikiaSearchController::setNamespacesFromRequest
