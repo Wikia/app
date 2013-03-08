@@ -40,8 +40,8 @@ $wgHooks['OutputPageCheckLastModified'][] = 'Wikia::onOutputPageCheckLastModifie
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 
 # User hooks
-$wgHooks['UserNameLoadFromId']       [] = "Wikia::UserNameLoadFromId";
-$wgHooks['UserLoadFromDatabase']     [] = "Wikia::UserLoadFromDatabase";
+$wgHooks['UserNameLoadFromId']       [] = "Wikia::onUserNameLoadFromId";
+$wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -1967,7 +1967,7 @@ class Wikia {
 	 * @param $user_name String
 	 * @param $s ResultWrapper
 	 */
-	public static function UserNameLoadFromId( $user_name, &$s ) {
+	public static function onUserNameLoadFromId( $user_name, &$s ) {
 		global $wgExternalAuthType;
 		if ( $wgExternalAuthType ) {
 			$mExtUser = ExternalUser::newFromName( $user_name );
@@ -1984,7 +1984,7 @@ class Wikia {
 	 * @param $user User
 	 * @param $s ResultWrapper
 	 */
-	public static function UserLoadFromDatabase( $user, &$s ) {
+	public static function onUserLoadFromDatabase( $user, &$s ) {
 		/* wikia change */
 		global $wgExternalAuthType;
 		if ( $wgExternalAuthType ) {

@@ -417,7 +417,6 @@ $config['wikiamobile_js_body_minimal'] = array(
 		//libraries/frameworks
 		'//resources/wikia/libraries/modil/modil.js',
 		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
-		'//resources/wikia/modules/sloth.js',
 
 		// deferred.js - jQuery-free implementation (BugId:34943)
 		'//resources/wikia/libraries/deferred/deferred.js',
@@ -484,10 +483,28 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/share.js',
 		'//resources/wikia/modules/thumbnailer.js',
 
-		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js',
-
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
+	)
+);
+
+$config['wikiamobile_relatedpages_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/RelatedPages/css/RelatedPages.wikiamobile.scss'
+	)
+);
+
+//sloth is a generic library but currently used only by RelatedPages on wikiamobile
+//move to body package if needed
+$config['wikiamobile_relatedpages_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+
+		'//resources/wikia/modules/sloth.js',
+		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js',
 	)
 );
 
