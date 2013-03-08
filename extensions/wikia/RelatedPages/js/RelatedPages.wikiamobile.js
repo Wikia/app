@@ -1,11 +1,12 @@
 require(['sloth', 'wikia.nirvana', 'wikia.window'], function(sloth, nirvana, w){
-	var relatedContent = document.getElementById('wkRltdCnt');
+	var relatedPages = document.getElementById('wkRelPag');
 
-	if(relatedContent) {
+	if(relatedPages) {
 		sloth({
-			on: relatedContent,
-			threshold: 50,
+			on: document.getElementById('wkMainCntFtr'),
+			threshold: 100,
 			callback: function(){
+				console.log(relatedPages);
 				nirvana.getJson(
 					'RelatedPagesApi',
 					'getList',
@@ -18,8 +19,7 @@ require(['sloth', 'wikia.nirvana', 'wikia.window'], function(sloth, nirvana, w){
 
 						if(pages && pages.length){
 							var page,
-								parent = document.getElementById('wkRelPag'),
-								ul = parent.getElementsByTagName('ul')[0],
+								ul = relatedPages.getElementsByTagName('ul')[0],
 								lis = '',
 								i = 0;
 
@@ -34,7 +34,7 @@ require(['sloth', 'wikia.nirvana', 'wikia.window'], function(sloth, nirvana, w){
 							}
 
 							ul.innerHTML = lis;
-							parent.className += ' show';
+							relatedPages.className += ' show';
 						}
 					}
 				)
