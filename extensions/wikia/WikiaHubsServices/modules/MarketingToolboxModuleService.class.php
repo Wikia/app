@@ -24,7 +24,8 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $this->getView('index', $data);
 	}
 
-	public function loadData($model, $timestamp) {
+	public function loadData($model, $params) {
+		$timestamp = $params['ts'];
 		$moduleId = $this->getModuleId();
 
 		$moduleData = $model->getPublishedData($this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp, $moduleId);
@@ -65,5 +66,13 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 			'src' => $sponsoredImageInfo->url,
 			'width' => $sponsoredImageInfo->width,
 		), '', true);
+	}
+
+	/**
+	 * @param Array $params
+	 * @return array
+	 */
+	public function prepareParameters($params) {
+		return $params;
 	}
 }

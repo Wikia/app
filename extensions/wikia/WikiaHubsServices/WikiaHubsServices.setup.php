@@ -19,6 +19,7 @@ $app->registerClass('MarketingToolboxPopularvideosModel', $dir . 'models/Marketi
 $app->registerClass('MarketingToolboxSliderModel', $dir . 'models/MarketingToolboxSliderModel.class.php');
 $app->registerClass('MarketingToolboxFromthecommunityModel', $dir . 'models/MarketingToolboxFromthecommunityModel.class.php');
 $app->registerClass('MarketingToolboxImageModel', $dir . 'models/MarketingToolboxImageModel.class.php');
+$app->registerClass('MarketingToolboxWAMModel', $dir . 'models/MarketingToolboxWAMModel.class.php');
 
 $app->registerClass('MarketingToolboxModuleService', $dir . 'modules/MarketingToolboxModuleService.class.php');
 $app->registerClass('MarketingToolboxModuleEditableService', $dir . 'modules/MarketingToolboxModuleEditableService.class.php');
