@@ -445,10 +445,15 @@ div.main-page-tag-lcs-exploded {
 	position: relative;
 }
 
-/* Word wrapping for text in tables */
-#mw-subcategories .table,
-#mw-pages .table {
+/* Word wrapping for text in pages and subcategories lists and tables  */
+#mw-subcategories table,
+#mw-pages table {
     table-layout: fixed;
+    word-wrap: break-word;
+}
+#mw-subcategories li,
+#mw-pages li {
+    width: 100%;
     word-wrap: break-word;
 }
 
