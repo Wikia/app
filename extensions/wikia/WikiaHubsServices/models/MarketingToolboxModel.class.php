@@ -334,7 +334,7 @@ class MarketingToolboxModel extends WikiaModel {
 		} else {
 			$out = $this->getDefaultModuleList();
 		}
-		
+
 		$actualData = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp);
 		$out = $actualData + $out;
 		ksort($out);
@@ -509,7 +509,7 @@ class MarketingToolboxModel extends WikiaModel {
 	protected function getDefaultModuleList() {
 		$out = array();
 
-		foreach ($this->modules as $moduleId => $moduleName) {
+		foreach ($this->editableModules as $moduleId => $moduleName) {
 			$out[$moduleId] = array(
 				'status' => $this->statuses['NOT_PUBLISHED'],
 				'lastEditTime' => null,
