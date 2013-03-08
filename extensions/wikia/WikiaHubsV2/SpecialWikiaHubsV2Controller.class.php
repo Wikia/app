@@ -11,12 +11,16 @@
 class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	const CACHE_VALIDITY_BROWSER = 86400;
 	const CACHE_VALIDITY_VARNISH = 86400;
-	const WAM_LIMIT = 5;
 
 	/**
 	 * @var WikiaHubsV2Model
 	 */
 	protected $model;
+	
+	/**
+	 * @var MarketingToolboxModel
+	 */
+	protected $marketingToolboxModel;
 
 	protected $format;
 	protected $verticalId;
@@ -131,11 +135,14 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		);
 
 		if( $module instanceof MarketingToolboxModuleNonEditableService ) {
-			$params = $module->getDataParameters($langCode, $verticalId, self::WAM_LIMIT, $this->hubTimestamp);
-			$moduleData = $module->getModuleData($params);
+			$moduleData = $module->loadData($this->getMarketingToolboxModel(), $module->prepareParameters([
+				'lang' => $langCode,
+				'vertical_id' => $verticalId,
+				'ts' => $this->hubTimestamp,
+			]));
+		} else {
+			$moduleData = $module->getStructuredData($moduleData);
 		}
-
-		$moduleData = $module->getStructuredData($moduleData);
 
 		return $module->render($moduleData);
 	}
@@ -172,6 +179,17 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			$this->initModel();
 		}
 		return $this->model;
+	}
+
+	/**
+	 * @return MarketingToolboxModel
+	 */
+	protected function getMarketingToolboxModel() {
+		if( !$this->marketingToolboxModel ) {
+			$this->marketingToolboxModel = new MarketingToolboxModel($this->app);
+		}
+		
+		return $this->marketingToolboxModel;
 	}
 
 	protected function initFormat() {

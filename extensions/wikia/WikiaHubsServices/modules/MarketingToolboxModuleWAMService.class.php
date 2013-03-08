@@ -1,33 +1,41 @@
 <?php
 
 class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditableService {
+	/**
+	 * @var MarketingToolboxWAMModel
+	 */
+	protected $model;
+	
 	const MODULE_ID = 10;
 	//TODO: remove const below after WAM page finished
 	const WIKIA_HOME_PAGE_WAM_URL = 'http://www.wikia.com/WAM';
 
-	public function getDataParameters($langCode, $verticalId, $limit, $hubTimestamp) {
+	/**
+	 * @param Array $params
+	 * @return array
+	 */
+	public function prepareParameters($params) {
+		$params['limit'] = $this->getModel()->getWamLimitForHubPage();
+		
 		//TODO: add wam_previous_day
-		if(empty($hubTimestamp)) {
-			$hubTimestamp = strtotime('00:00 -2 day');
+		if( empty($params['ts']) ) {
+			$params['ts'] = strtotime('00:00 -2 day');
 		}
-
-		return array(
-			'wam_day' => $hubTimestamp,
-			'wam_previous_day' => strtotime('-1 day', $hubTimestamp),
-			'vertical_id' => $verticalId,
-			'wiki_lang' => $langCode,
+		
+		return parent::prepareParameters([
+			'wam_day' => $params['ts'],
+			'wam_previous_day' => strtotime('-1 day', $params['ts']),
+			'vertical_id' => $params['vertical_id'],
+			'wiki_lang' => $params['lang'],
 			'fetch_admins' => true,
 			'fetch_wiki_images' => true,
-			'limit' => $limit,
+			'limit' => $params['limit'],
 			'sort_column' => 'wam_index',
 			'sort_direction' => 'DESC'
-		);
+		]);
 	}
 
-	public function getModuleData($params) {
-		// Temporary data
-		$data = new stdClass();
-
+	public function loadData($model, $params) {
 		$url  = 'http://sandbox-s4.www.wikia.com/wikia.php?controller=WAMApi&method=getWAMIndex&';
 		$url .= http_build_query($params);
 		
@@ -38,7 +46,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 			];
 		}
 		
-		return $data;
+		return $this->getStructuredData($data);
 		//return $this->app->sendRequest('WAMApiController', 'getWAMIndex', $params)->getData();
 	}
 
@@ -87,5 +95,13 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 
 	public function render($data) {
 		return parent::render($data);
+	}
+	
+	public function getModel() {
+		if( !$this->model ) {
+			$this->model = new MarketingToolboxWAMModel();
+		}
+		
+		return $this->model;
 	}
 }
