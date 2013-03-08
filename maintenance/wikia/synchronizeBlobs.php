@@ -45,7 +45,7 @@ class SynchronizeBlobs extends Maintenance {
 		$this->mDescription = "Synchronize blobs for latest revisions of pages from SJC to POZ (for devboxes). Run on a POZ devbox.";
 		$this->addOption("progress", "How many seconds between each progress report (0 to disable). 30 is default", false, true);
 		$this->addOption("namespace", "Limit to only pages from a specific namespace id (0 for main)", false, true);
-		$this->addOption("proc", "Use n background processes (default - everything in foreground)", false, true);
+		$this->addOption("procs", "Use n background processes (default - everything in foreground)", false, true);
 	}
 
 	public function execute() {
@@ -54,7 +54,7 @@ class SynchronizeBlobs extends Maintenance {
 		if (!$isPoznanDevbox) throw new Exception("This should be run within Poznan devel environment");
 		$this->progressPeriod = $this->getOption("progress", 30);
 		$this->pageNamespace = $this->getOption("namespace", "");
-		$this->procCount = $this->getOption("proc", 0);
+		$this->procCount = $this->getOption("procs", 0);
 		if (!is_numeric($this->progressPeriod)) {
 			throw new Exception("Invalid 'progress' parameter: $this->progressPeriod");
 		}
@@ -62,7 +62,7 @@ class SynchronizeBlobs extends Maintenance {
 			throw new Exception("Invalid 'namespace' parameter: $this->pageNamespace");
 		}
 		if (!is_numeric($this->procCount)) {
-			throw new Exception("Invalid 'proc' parameter: $this->procCount");
+			throw new Exception("Invalid 'procs' parameter: $this->procCount");
 		}
 		$this->output("Getting ids of latest revisions for city_id=$oWiki->mCityID, ".
 									"city_dbname=$oWiki->mCityDB, ".
