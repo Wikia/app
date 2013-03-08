@@ -28,7 +28,7 @@
 		<?= wfMessage('wikiahubs-wam-top-wikis-headline', $verticalName)->text(); ?>
 	</h3>
 	<?php if( !empty($ranking) ): ?>
-		<table>
+		<table class="score-table">
 			<thead>
 				<tr>
 					<th><?= wfMessage('wikiahubs-wam-rank')->text() ?></th>
@@ -40,12 +40,12 @@
 			<tbody>
 				<?php foreach($ranking as $wiki): ?>
 					<tr>
-						<td><?= $wiki['rank']; ?></td>
-						<td><?= $wiki['wamScore']; ?></td>
+						<td class="rank"><?= $wiki['rank']; ?>.</td>
+						<td class="score"><?= $wiki['wamScore']; ?></td>
 						<td>
-							<img src="<?= $wiki['imageUrl']; ?>" width="<?= $wiki['imageWidth']; ?>" height="<?= $wiki['imageHeight']; ?>" />
+							<img src="<?= $wiki['imageUrl']; ?>" />
 						</td>
-						<td>
+						<td class="url">
 							<a href="<?= $wiki['wikiUrl']; ?>" target="_blank"><?= $wiki['wikiName']; ?></a>
 						</td>
 					</tr>

@@ -157,9 +157,14 @@
 				}
 			}
 		}
-		.wikiahubs-wam .wam-content .title {
-			border-bottom: 4px solid $color-wikiahome-hubcolor;
-			a {
+		.wikiahubs-wam .wam-content {
+			.title {
+				border-bottom: 4px solid $color-wikiahome-hubcolor;
+				a {
+					color: $color-wikiahome-hubcolor;
+				}
+			}
+			.score-table .url a {
 				color: $color-wikiahome-hubcolor;
 			}
 		}

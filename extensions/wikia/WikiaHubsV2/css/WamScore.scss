@@ -1,4 +1,5 @@
 .wikiahubs-wam {
+	height: 380px;
 	.social-links {
 		float: left;
 		a {
@@ -42,6 +43,7 @@
 		h3 {
 			clear: both;
 			font-weight: bold;
+			margin: 12px 0;
 		}
 		table {
 			border-collapse: collapse;
@@ -49,8 +51,24 @@
 		}
 		tr {
 			border-bottom: 1px solid #eaeaea;
-		}
-		td {
+			th {
+				color: #666;
+				font-weight: normal;
+				text-align: left;
+			}
+			td {
+				padding: 7px 0;
+				img {
+					width: 48px;
+					height: 30px;
+				}
+			}
+			.rank, .score {
+				font-weight: bold;
+			}
+			.url {
+				text-decoration: none;
+			}
 		}
 	}
 }
