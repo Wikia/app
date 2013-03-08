@@ -89,6 +89,10 @@ class MarketingToolboxModel extends WikiaModel {
 	public function getNonEditableModulesIds() {
 		return array_keys($this->nonEditableModules);
 	}
+
+	public function getModulesIds() {
+		return array_merge($this->getEditableModulesIds(), $this->getNonEditableModulesIds());
+	}
 	
 	public function getModuleName($moduleId) {
 		return $this->wf->msg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
