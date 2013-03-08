@@ -512,18 +512,6 @@ class User {
 			wfRunHooks( 'UserNameLoadFromId', array( $user_name, &$s ) );
 		}
 
-		/* wikia change */
-		if ( $s === false ) {
-			global $wgExternalAuthType;
-			if ( $wgExternalAuthType ) {
-				$mExtUser = ExternalUser::newFromName( $nt->getText() );
-				if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-					$mExtUser->linkToLocal( $mExtUser->getId() );
-					$s = $mExtUser->getLocalUser( false );
-				}
-			}
-		}
-
 		if ( $s === false ) {
 			$result = null;
 		} else {
@@ -3036,14 +3024,14 @@ class User {
 			}
 		}
 
-                /**
-                 * @author Michał Roszka (Mix)
-                 * trap for BugId:17012
-                 */
-                if ( 'Lancer1289' == $this->mName ) {
-                    $oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
-                    UserMailer::send( $oTo, $oFrom, 'BugId:17012 Occurrence Report', serialize( wfDebugBacktrace() ) );
-                }
+		/**
+		 * @author Michał Roszka (Mix)
+		 * trap for BugId:17012
+		 */
+		if ( 'Lancer1289' == $this->mName ) {
+			$oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
+			UserMailer::send( $oTo, $oFrom, 'BugId:17012 Occurrence Report', serialize( wfDebugBacktrace() ) );
+		}
 		// wikia change end
 
 		$dbw = wfGetDB( DB_MASTER );

@@ -28,6 +28,7 @@ $messages['en'] = array(
 	// from the community
 	'wikiahubs-from-community-promoted' => 'Get Promoted',
 	'wikiahubs-from-community-caption' => 'From [$1 $2] on [$3 $4]',
+	'wikiahubs-from-community-headline' => 'From the Community',
 
 	//featured video
 	'wikiahubs-sponsored-by' => 'Sponsored by $1',

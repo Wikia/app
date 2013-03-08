@@ -45,7 +45,7 @@ define('lazyload', ['wikia.thumbnailer'], function (thumbnailer) {
 			}
 
 			if(pageWidth < imageWidth){
-				elm.setAttribute('height', ~~(pageWidth/(imageWidth/~~elm.getAttribute('height'))));
+				elm.setAttribute('height', Math.round(elm.width * (~~elm.getAttribute('height') / imageWidth)));
 			}
 
 			img.src = src;

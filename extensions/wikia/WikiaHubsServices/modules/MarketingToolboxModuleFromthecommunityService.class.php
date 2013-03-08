@@ -11,13 +11,15 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	const MODULE_ID = 6;
 
 	static $fieldNames = array('photo', 'title', 'usersUrl', 'quote', 'url');
+	
+	/**
+	 * @var $model MarketingToolboxFromthecommunityModel
+	 */
+	protected $model = null;
 
 	protected function getFormFields() {
-
 		$fields = array();
-
-		$model = new MarketingToolboxFromthecommunityModel();
-		$boxesCount = $model->getBoxesCount();
+		$boxesCount = $this->getModel()->getBoxesCount();
 
 		for ($i = self::FIRST_SECTION_INDEX; $i <= $boxesCount; $i++) {
 			$fields[self::FIELD_NAME_PHOTO . $i] = array(
@@ -166,8 +168,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	}
 
 	public function renderEditor($data) {
-		$FTCModel = new MarketingToolboxFromthecommunityModel();
-		$data['boxesCount'] = $FTCModel->getBoxesCount();
+		$data['boxesCount'] = $this->getModel()->getBoxesCount();
 		$data['photos'] = array();
 
 		$model = new MarketingToolboxModel();
@@ -186,15 +187,12 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 
 	public function filterData($data) {
 		$data = parent::filterData($data);
-
-		$model = new MarketingToolboxFromthecommunityModel();
-		$boxesCount = $model->getBoxesCount();
+		$boxesCount = $this->getModel()->getBoxesCount();
 
 		for ($i = 1; $i <= $boxesCount; $i++) {
 			if (!empty($data['url' . $i])) {
 				$data['url' . $i] = $this->addProtocolToLink($data['url' . $i]);
 			}
-
 
 			if (!empty($data['usersUrl' . $i])) {
 				$data['usersUrl' . $i] = $this->addProtocolToLink($data['usersUrl' . $i]);
@@ -213,6 +211,51 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	}
 
 	public function getStructuredData($data) {
-		return array();
+		$boxesCount = $this->getModel()->getBoxesCount();
+		
+		$entries = array();
+		for($i = 1; $i <= $boxesCount; $i++) {
+			if( $this->isEntryFilledIn($i, $data) ) {
+				if( !empty($data['photo' . $i]) ) {
+					$imageData = $this->getImageInfo($data['photo' . $i]);
+				}
+
+				$entries[] = array(
+					'articleTitle' => $data['title' . $i],
+					'articleUrl' => $data['url' . $i],
+					'imageAlt' => empty($imageData->title) ? null : $imageData->title,
+					'imageUrl' => empty($imageData->url) ? null : $imageData->url,
+					'userName' => $data['UserName' . $i],
+					'userUrl' => $data['usersUrl' . $i],
+					'wikiUrl' => $data['wikiUrl' . $i],
+					'quote' => $data['quote' . $i],
+				);
+			}
+		}
+		
+		return array(
+			'entries' => $entries
+		);
 	}
+	
+	protected function isEntryFilledIn($entryId, $data) {
+		//photo is optional but the rest shouldn't be empty
+		return (
+			!empty($data['title' . $entryId]) &&
+			!empty($data['url' . $entryId]) &&
+			!empty($data['UserName' . $entryId]) &&
+			!empty($data['usersUrl' . $entryId]) &&
+			!empty($data['wikiUrl' . $entryId]) &&
+			!empty($data['quote' . $entryId])
+		);
+	}
+	
+	public function getModel() {
+		if( is_null($this->model) ) {
+			$this->model = new MarketingToolboxFromthecommunityModel();
+		}
+		
+		return $this->model;
+	}
+	
 }

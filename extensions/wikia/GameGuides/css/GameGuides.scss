@@ -205,6 +205,7 @@ $width: 1.5;
 table {
 	font-size: 1em;
 	line-height: inherit;
+	text-align: inherit;
 }
 
 //handling wide Tables
@@ -302,4 +303,13 @@ figure {
 
 table.infobox {
 	box-shadow: none;
+}
+
+//don't expand sliders wider then screen
+.wkSlider {
+	max-width: 100%;
+
+	figure {
+		max-width: 48%;
+	}
 }

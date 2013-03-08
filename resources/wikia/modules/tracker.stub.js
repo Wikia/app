@@ -9,6 +9,11 @@
 (function( context ) {
 	'use strict';
 
+	// quick fix for fb#98739
+	if ( context.Wikia && context.Wikia.Tracker ) {
+		return;
+	}
+
 	function tracker( window ) {
 		/** @private **/
 
@@ -119,6 +124,9 @@
 	// Exports
 	context.Wikia = context.Wikia || {};
 	context.Wikia.Tracker = tracker( context );
+
+	// quick fix for fb#98739
+	context.WikiaTracker = context.Wikia.Tracker;
 
 	if (context.define && context.define.amd) {
 		context.define('wikia.tracker', ['wikia.window'], tracker);

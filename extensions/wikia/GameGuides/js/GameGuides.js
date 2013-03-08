@@ -68,7 +68,7 @@
 				'Linker',
 				'goTo',
 				{
-					title: title,
+					title: decodeURIComponent(title),
 					ns: ns
 				}
 			);

@@ -67,23 +67,23 @@ var WikiaHubs = {
 			else if (node.hasClass('next')) {
 				WikiaHubs.trackClick('PopularVideos', Wikia.Tracker.ACTIONS.PAGINATE, 'next', null, {lang: lang}, e);
 			}
-		} else if (node.closest('.wikiahubs-from-the-community').length > 0) {    // suggest article
+		} else if (node.closest('.wikiahubs-from-the-community').length > 0) {    // From the Community
 			if (node.is('img') && node.hasParent('a')) {
 				url = node.closest('a').attr('href');
-				WikiaHubs.trackClick('SuggestArticle', Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'hero', null, {href: url, lang: lang}, e);
+				WikiaHubs.trackClick('FromtheCommunity', Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'hero', null, {href: url, lang: lang}, e);
 			} else if (node.is('a')) {
 				url = node.closest('a').attr('href');
 				if (node.closest('.wikiahubs-ftc-title').length > 0) {
-					WikiaHubs.trackClick('SuggestArticle', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'title', null, {href: url, lang: lang}, e);
+					WikiaHubs.trackClick('FromtheCommunity', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'title', null, {href: url, lang: lang}, e);
 				} else if (node.closest('.wikiahubs-ftc-subtitle').length > 0) {
 					if (node.is('a:first-child')) {
-						WikiaHubs.trackClick('SuggestArticle', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'username', null, {href: url, lang: lang}, e);
+						WikiaHubs.trackClick('FromtheCommunity', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'username', null, {href: url, lang: lang}, e);
 					} else {
-						WikiaHubs.trackClick('SuggestArticle', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'wikiname', null, {href: url, lang: lang}, e);
+						WikiaHubs.trackClick('FromtheCommunity', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'wikiname', null, {href: url, lang: lang}, e);
 					}
 				}
-			} else if (node.is('#suggestArticle')) {
-				WikiaHubs.trackClick('SuggestArticle', Wikia.Tracker.ACTIONS.CLICK, 'suggest', null, {lang: lang}, e);
+			} else if (node.is('#suggestArticle')) { //get promoted button
+				WikiaHubs.trackClick('FromtheCommunity', Wikia.Tracker.ACTIONS.CLICK, 'getpromotedbutton', null, {lang: lang}, e);
 			}
 		} else if (node.closest('.wikiahubs-pulse').length > 0) {    // pulse
 			if (node.is('#facebook')) {
