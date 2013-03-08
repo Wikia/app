@@ -65,7 +65,7 @@ class WAMApiController extends WikiaApiController {
 		$options['fetchWikiImages'] = $this->request->getBool('fetch_wiki_images', false);
 		$options['wikiImageSize'] = $this->request->getInt('wiki_image_size', self::DEFAULT_WIKI_IMAGE_SIZE);
 		$options['sortColumn'] = $this->request->getVal('sort_column', 'wam_rank');
-		$options['sortDirection'] = $this->request->getVal('sort_direction', 'ASC');
+		$options['sortDirection'] = $this->request->getVal('sort_direction', 'DESC');
 		$options['offset'] = $this->request->getInt('offset', 0);
 		$options['limit'] = $this->request->getInt('limit', self::DEFAULT_PAGE_SIZE);
 
