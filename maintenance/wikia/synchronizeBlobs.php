@@ -156,7 +156,7 @@ class SynchronizeBlobs extends Maintenance {
 		$rows = $db->select(array("page", "revision", "text"),
 												array("old_id", "old_flags", "old_text"),
 												($this->pageNamespace==="") ? array() : array("page_namespace" => $this->pageNamespace),
-												"synchronizeBlobs::fetchLatestRevisions",
+												__METHOD__,
 												array(),
 												array('revision' => array('INNER JOIN','page_id=rev_page AND page_latest=rev_id'),
 															'text' => array('INNER JOIN','rev_text_id=old_id')));
@@ -225,13 +225,25 @@ class SynchronizeBlobs extends Maintenance {
 					if(  $hash == $response->fetchblob->hash ) {
 						$ret = $blob;
 						$dbw->begin();
-						$insert_ok = $dbw->insert($table,	array( "blob_id" => $id, "blob_text" => $ret ),	__METHOD__ );
-						if (!$insert_ok) print $dbw->lastError();
-						$dbw->commit();
-						$this->downloaded++;
-						if ($this->isChild) {
-							socket_write($this->channel,"+");
-							$sent = true;
+						$error = false;
+						try {
+							$insert_ok = $dbw->insert($table,	array( "blob_id" => $id, "blob_text" => $ret ),	__METHOD__);
+							if ($insert_ok) {						
+								$dbw->commit();
+								$this->downloaded++;
+								if ($this->isChild) {
+									socket_write($this->channel,"+");
+								}
+								$sent = true;
+							} else {
+								$error = $dbw->lastError();
+							}
+						} catch (Exception $e) {
+							$error = $e;
+						}
+						if ($error) {
+							print "Warning: Could not save blob $id on cluster $cluster: $error\n";
+							$dbw->rollback();							
 						}
 					}	else {
 						$this->output("md5 sum not match, $hash != $response->fetchblob->hash\n");
