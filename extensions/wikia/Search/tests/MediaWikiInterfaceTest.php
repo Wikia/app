@@ -1769,4 +1769,216 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 				$reflGet->invoke( $interface, 123 )
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getLastRevisionTimestampForPageId()
+	 */
+	public function testGetLastRevisionTimestampForPageId() {
+		$interface = $this->interface->setMethods( array( 'getFormattedTimestamp', 'getTitleFromPageId' ) )->getMock();
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getLatestRevId' ) )
+		                  ->getMock();
+		$mockRev = $this->getMockBuilder( 'Revision' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'getTimestamp' ) )
+		                ->getMock();
+		$timestamp = 'whatever o clock';
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getTitleFromPageId' )
+		    ->with   ( $this->pageId )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getLatestRevId' )
+		    ->will   ( $this->returnValue( 456 ) )
+		;
+		$mockRev
+		    ->expects( $this->once() )
+		    ->method ( 'getTimestamp' )
+		    ->will   ( $this->returnValue( $timestamp ) )
+		;
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getFormattedTimestamp' )
+		    ->with   ( $timestamp )
+		    ->will   ( $this->returnValue( '11/11/11' ) )
+		;
+		$this->proxyClass( 'Revision', $mockRev, 'newFromId' );
+		$this->mockApp();
+		$this->assertEquals(
+				'11/11/11',
+				$interface->getLastRevisionTimestampForPageId( $this->pageId )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getMediaWikiFormattedTimestamp
+	 */
+	public function testGetMediaWikiFormattedTimestamp() {
+		$interface = $this->interface->setMethods( null )->getMock();
+		$lang = $this->getMockBuilder( 'Language' )
+		             ->disableOriginalConstructor()
+		             ->setMethods( array( 'date' ) )
+		             ->getMock();
+		$wrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'Timestamp' ) )
+		                ->getMock();
+		
+		$app = (object) array( 'wg' => (object) array( 'Lang' => $lang ), 'wf' => $wrapper );
+		$reflApp = new ReflectionProperty( 'Wikia\Search\MediaWikiInterface', 'app' );
+		$reflApp->setAccessible( true );
+		$reflApp->setValue( $interface, $app );
+		
+		$wrapper
+		    ->expects( $this->once() )
+		    ->method ( 'Timestamp' )
+		    ->with   ( TS_MW, '11/11/11' )
+		    ->will   ( $this->returnValue( 'timestamp' ) )
+		;
+		$lang
+		    ->expects( $this->once() )
+		    ->method ( 'date' )
+		    ->with   ( 'timestamp' ) 
+		    ->will   ( $this->returnValue( 'mw formatted timestamp' ) )
+		;
+		$this->assertEquals(
+				'mw formatted timestamp',
+				$interface->getMediaWikiFormattedTimestamp( '11/11/11' )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::searchSupportsCurrentLanguage
+	 */
+	public function testSearchSupportsCurrentLanguage() {
+		$interface = $this->interface->setMethods( array( 'searchSupportsLanguageCode', 'getLanguageCode' ) )->getMock();
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getLanguageCode' )
+		    ->will   ( $this->returnValue( 'en' ) )
+		;
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'searchSupportsLanguageCode' )
+		    ->with   ( 'en' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->assertTrue(
+				$interface->searchSupportsCurrentLanguage()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getThumbnailForPageId
+	 */
+	public function testGetThumbnailHtmlForPageId() {
+		$interface = $this->interface->setMethods( array( 'getFileForPageId' ) )->getMock();
+		$mockFile = $this->getMockBuilder( 'File' )
+		                 ->disableOriginalConstructor()
+		                 ->setMethods( array( 'transform' ) )
+		                 ->getMock();
+		$mockTransform = $this->getMockBuilder( 'MediaTransformOutput' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'toHtml' ) )
+		                      ->getMock();
+		$html = 'this value does not matter';
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getFileForPageId' )
+		    ->with   ( $this->pageId )
+		    ->will   ( $this->returnValue( $mockFile ) )
+		;
+		$mockFile
+		    ->expects( $this->once() )
+		    ->method ( 'transform' )
+		    ->with   ( array( 'width' => 160 ) )
+		    ->will   ( $this->returnValue( $mockTransform ) )
+		;
+		$mockTransform
+		    ->expects( $this->once() )
+		    ->method ( 'toHtml' )
+		    ->with   ( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
+		    ->will   ( $this->returnValue( $html ) )
+		;
+		$this->assertEquals(
+				$html,
+				$interface->getThumbnailHtmlForPageId( $this->pageId )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiInterface::getVideoViewsForPageId
+	 */
+	public function testGetVideoViewsForPageId() {
+		$interface = $this->interface->setMethods( array( 'getTitleFromPageId', 'formatNumber' ) )->getMock();
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getDBKey' ) )
+		                  ->getMock();
+		// i'm sure marissa mayer will love this
+		$wfh = $this->getMockBuilder( 'WikiaFileHelper' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( array( 'isFileTypeVideo' ) )
+		            ->getMock();
+		
+		$mqs = $this->getMockBuilder( 'MediaQueryService' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( array( 'getTotalVideoViewsByTitle' ) )
+		            ->getMock();
+		
+		$wrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'MsgExt' ) )
+		                ->getMock();
+		
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'getTitleFromPageId' )
+		    ->with   ( $this->pageId )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$wfh
+		    ->staticExpects( $this->once() )
+		    ->method ( 'isFileTypeVideo' )
+		    ->with   ( $mockTitle )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getDBKey' )
+		    ->will   ( $this->returnValue( 'Foo_bar' ) )
+		;
+		$mqs
+		    ->staticExpects( $this->once() )
+		    ->method ( 'getTotalVideoViewsByTitle' )
+		    ->with   ( 'Foo_bar' )
+		    ->will   ( $this->returnValue( 1234 ) )
+		;
+		$interface
+		    ->expects( $this->once() )
+		    ->method ( 'formatNumber' )
+		    ->with   ( 1234 )
+		    ->will   ( $this->returnValue( '1,234' ) )
+		;
+		$wrapper
+		    ->expects( $this->once() )
+		    ->method ( 'MsgExt' )
+		    ->with   ( 'videohandler-video-views', array( 'parsemag' ), '1,234' )
+		    ->will   ( $this->returnValue( '1,234 views' ) )
+		;
+		$reflApp = new ReflectionProperty( '\Wikia\Search\MediaWikiInterface', 'app' );
+		$reflApp->setAccessible( true );
+		$reflApp->setValue( $interface, (object) array( 'wf' => $wrapper ) );
+		$this->proxyClass( 'WikiaFileHelper', $wfh );
+		$this->proxyClass( 'MediaQueryService', $mqs );
+		$this->mockApp();
+		$this->assertEquals(
+				'1,234 views',
+				$interface->getVideoViewsForPageId( $this->pageId )
+		);
+	}
 }

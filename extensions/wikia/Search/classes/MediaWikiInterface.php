@@ -638,17 +638,20 @@ class MediaWikiInterface
 	 * @param int $pageId
 	 * @param array $transformParams
 	 * @param array $htmlParams
+	 * @return string
 	 */
 	public function getThumbnailHtmlForPageId(
 			$pageId, 
-			$transformParams = array( 'width' => 160 ), 
+			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
 			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) 
 			) {
+		$html = '';
 		$img = $this->getFileForPageId( $pageId );
 		if (! empty( $img ) ) {
-			$thumb = $img->transform( array( 'width' => 160 ) ); // WikiaGrid 1 column width
-			return $thumb->toHtml( $htmlParams );
+			$thumb = $img->transform( $transformParams );
+			$html = $thumb->toHtml( $htmlParams );
 		}
+		return $html;
 	}
 	
 	/**
@@ -659,9 +662,9 @@ class MediaWikiInterface
 	public function getVideoViewsForPageId( $pageId ) {
 		$videoViews = '';
 		$title = $this->getTitleFromPageId( $pageId );
-		if ( \F::build( 'WikiaFileHelper' )->isFileTypeVideo( $title ) ) {
-			$videoViews = \F::build( 'MediaQueryService' )->getTotalVideoViewsByTitle( $title->getDBKey() );
-			$videoViews = \F::app()->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), \F::app()->wg->Lang->formatNum($videoViews) );
+		if ( ( new \WikiaFileHelper )->isFileTypeVideo( $title ) ) {
+			$videoViews = ( new \MediaQueryService )->getTotalVideoViewsByTitle( $title->getDBKey() );
+			$videoViews = $this->app->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), $this->formatNumber( $videoViews) );
 		}
 		return $videoViews;
 	}
