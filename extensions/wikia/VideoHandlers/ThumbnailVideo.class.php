@@ -125,8 +125,6 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		$linkAttribs = array(
 			'href' => $videoTitle->getLocalURL(),
-			'data-video-name' => $videoTitle->getText(),
-			'data-video-key' => $videoTitle->getDBKey(),
 		);
 
 		if ( !empty( $options['id'] ) ){
@@ -152,6 +150,8 @@ class ThumbnailVideo extends ThumbnailImage {
 			'src' => !empty($options['src']) ? $options['src'] : $this->url,
 			'width' => $this->width,
 			'height' => $this->height,
+			'data-video-name' => htmlspecialchars($videoTitle->getText()),
+			'data-video-key' => htmlspecialchars(urlencode($videoTitle->getDBKey())),
 		);
 
 		if ( $useRDFData ) {

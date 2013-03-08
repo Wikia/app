@@ -134,7 +134,6 @@ class ImageTweaksHooks extends WikiaObject {
 
 		$this->wf->profileIn( __METHOD__ );
 
-
 		if (
 			/**
 			* Images SEO project
@@ -157,13 +156,6 @@ class ImageTweaksHooks extends WikiaObject {
 
 			if ( is_array( $linkAttribs ) ) {
 				if ( !empty( $file ) ) {
-					$title = $file->getTitle();
-
-					if ( $title instanceof Title ) {
-						$linkAttribs['data-image-name'] = $title->getText();
-						$linkAttribs['data-image-key'] = $title->getDBKey();
-					}
-
 					$linkAttribs['href'] = $this->wf->ReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
 					$fullImageUrl = $linkAttribs['href'];
 				}
@@ -205,9 +197,9 @@ class ImageTweaksHooks extends WikiaObject {
 				if ( empty( $linkAttribs['class'] ) ) {
 					$linkAttribs['class'] = 'image';
 				}
-
-				if ( !empty( $linkAttribs['data-image-name'] ) ) {
-					$imageParams['name'] = $linkAttribs['data-image-name'];
+				
+				if ( !empty( $attribs['data-image-name'] ) ) {
+					$imageParams['name'] = $attribs['data-image-name'];
 				}
 
 				if ( !empty( $fullImageUrl ) ) {

@@ -45,8 +45,8 @@ class RelatedVideosData {
 			$data['embedJSON']		= null;
 			$data['provider']		= $file->minor_mime;
 			$data['thumbnailData']	= $thumb;
-			$data['title']			= $file->getTitle()->getText();
-			$data['key']			= $file->getTitle()->getDBKey();
+			$data['title']			= htmlspecialchars($file->getTitle()->getText());
+			$data['key']			= urlencode(htmlspecialchars($file->getTitle()->getDBKey()));
 			$data['timestamp']		= $file->getTimestamp();
 			$data['uniqueId']		= $file->getVideoUniqueId();
 

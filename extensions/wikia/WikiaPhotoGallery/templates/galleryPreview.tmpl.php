@@ -26,15 +26,13 @@ $extraClass = empty($fromFeed) ? ' WikiaPhotoGalleryPreviewDraggable' : ' WikiaP
 							style="<?= ($image['thumbnail']) ? " background-image: url({$image['thumbnail']});" : null ;?>; line-height:<?= $image['height'] ;?>px; height:<?= $image['height'] ;?>px; width:<?= $image['width'] ;?>px;"
 							title="<?= ($image['placeholder']) ? wfMsg('wikiaPhotoGallery-preview-add-photo') : null ;?>">
 							<?= (!empty($image['titleText'])) ? $image['titleText'] : null ;?>
-							<?php if (!empty($image['link'])) { ?>
-								<?php
-								$msg = htmlspecialchars(wfMsg('wikiaPhotoGallery-preview-link-tooltip', $image['link']));
-								?>
+							<? if (!empty($image['link'])) { ?>
+								<? $msg = htmlspecialchars(wfMsg('wikiaPhotoGallery-preview-link-tooltip', $image['link'])); ?>
 								<span class="WikiaPhotoGalleryPreviewItemLink" title="<?= $msg ?>"></span>
-							<?php }
+							<? }
 								if (!empty($image['image'])) { ?>
 								<img data-src="<?= htmlspecialchars($image['image']) ?>" alt="" width="<?= $image['width'] ?>" height="<?= $width['height'] ?>" />
-							<?php
+							<?
 								}
 							?>
 						</a>

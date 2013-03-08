@@ -1054,31 +1054,35 @@ var Lightbox = {
 			if(cached.length) {
 				thumbArr = cached;
 			} else {
-
 				var article = $('#WikiaArticle, #WikiaArticleComments'),
 					playButton = Lightbox.thumbPlayButton,
 					titles = [], // array to check for title dupes
 					thumbArr = [],
 					infobox = article.find('.infobox');
-
 				// Collect images from DOM
-				var thumbs = article.find('.image, .lightbox').find('img');
-				thumbs = thumbs.add(article.find('.thumbimage'));
+				var thumbs = article.find('img[data-image-name], img[data-video-name]');
 
 				thumbs.each(function() {
 					var $thisThumb = $(this),
 						$thisParent = $thisThumb.parent(),
-						type = ($thisThumb.hasClass('Wikia-video-thumb') || $thisParent.hasClass('video')) ? 'video' : 'image',
-						title = (type == 'image') ? $thisParent.data('image-name') : $thisParent.data('video-name'),
-						playButtonSpan = (type == 'video') ? playButton : '';
-
-
+						type,
+						title,
+						playButton;
+						
 					if($thisThumb.closest('.ogg_player').length) {
 						return;
 					}
 
-					// (BugId:38144)
-					title = title || $thisThumb.attr('alt');
+					var videoName = $thisThumb.attr('data-video-name');
+					if(videoName) {
+						type = 'video';
+						title = videoName;
+						playButtonSpan = Lightbox.thumbPlayButton;
+					} else {
+						type = 'image';
+						title = $thisThumb.attr('data-image-name');
+						playButtonSpan = '';
+					}
 
 					if(title) {
 						// Check for dupes
@@ -1092,7 +1096,6 @@ var Lightbox = {
 							title: title,
 							type: type,
 							playButtonSpan: playButtonSpan
-							//caption: caption
 						});
 					}
 				});
@@ -1168,7 +1171,7 @@ var Lightbox = {
 				thumbs.each(function() {
 					var $thisThumb = $(this),
 						thumbUrl = $thisThumb.data('src') || $thisThumb.attr('src'),
-						title = $thisThumb.parent().data('ref').replace('File:', '');
+						title = $thisThumb.attr('data-image-name');
 
 					if(title) {
 						// Check for dupes
