@@ -23,20 +23,23 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		);
 	}
 
+	public function getModuleData($params) {
+		// Temporary data
+		$data = new stdClass();
+
+		$url  = 'http://sandbox-s4.www.wikia.com/wikia.php?controller=WAMApi&method=getWAMIndex&';
+		$url .= http_build_query($params);
+
+		if( $apiData = file_get_contents($url) ) {
+			$data = json_decode($apiData);
+		}
+		
+		return $data;
+		//return $this->app->sendRequest('WAMApiController', 'getWAMIndex', $params)->getData();
+	}
+
 	public function getStructuredData($data) {
 		$structuredData = [];
-/*
-		$wamIndex = $this->app->sendRequest('WAMApiController', 'getWAMIndex', array(
-			'wam_day' => $wamDay,
-			'wam_previous_day' => $wamPrevDay,
-			'vertical_id' => $this->verticalId,
-			'wiki_lang' => $this->langCode,
-			'fetch_admins' => true,
-			'fetch_wiki_images' => true,
-			'limit' => $limit,
-			'sort_column' => 'wam_index',
-			'sort_direction' => 'DESC'
-		))->getData();*/
 
 		return $data;
 	}

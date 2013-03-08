@@ -132,6 +132,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 		if( $module instanceof MarketingToolboxModuleNonEditableService ) {
 			$params = $module->getDataParameters($langCode, $verticalId, self::WAM_LIMIT, $this->hubTimestamp);
+			$moduleData = $module->getModuleData($params);
 		}
 
 		$moduleData = $module->getStructuredData($moduleData);
