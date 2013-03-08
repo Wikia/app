@@ -2,6 +2,8 @@
 
 class WikiService extends WikiaModel {
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
+	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
+
 	static $botGroups = array('bot', 'bot-global');
 
 	/**
@@ -314,9 +316,11 @@ class WikiService extends WikiaModel {
 	/**
 	 * @param array $wikiIds
 	 * @param int $imageWidth
+	 * @param int $imageHeight
+	 *
 	 * @return mixed|null|string
 	 */
-	public function getWikiImages($wikiIds, $imageWidth) {
+	public function getWikiImages($wikiIds, $imageWidth, $imageHeight = self::IMAGE_HEIGHT_KEEP_ASPECT_RATIO) {
 		$images = array();
 		try {
 			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
@@ -329,7 +333,7 @@ class WikiService extends WikiaModel {
 				$title = Title::newFromText($row->city_main_image, NS_FILE);
 				$file = $this->wf->findFile($title);
 				if (!empty($file)) {
-					$images[$row->city_id] = $file->createThumb($imageWidth);
+					$images[$row->city_id] = $file->createThumb($imageWidth, $imageHeight);
 				}
 			}
 		} catch(Exception $e) {

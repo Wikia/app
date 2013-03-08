@@ -10,7 +10,7 @@ class WAMApiController extends WikiaApiController {
 	const DEFAULT_PAGE_SIZE = 20;
 	const MAX_PAGE_SIZE = 20;
 	const DEFAULT_AVATAR_SIZE = 28;
-	const DEFAULT_WIKI_IMAGE_SIZE = 150;
+	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
 
 	/**
@@ -27,7 +27,8 @@ class WAMApiController extends WikiaApiController {
 	 * @requestParam boolean $fetch_admins [OPTIONAL] Determines if admins of each wiki are to be returned. Defaults to false
 	 * @requestParam integer $avatar_size [OPTIONAL] Size of admin avatars in pixels if fetch_admins is enabled
 	 * @requestParam boolean $fetch_wiki_images [OPTIONAL] Determines if image of each wiki isto be returned. Defaults to false
-	 * @requestParam integer $wiki_image_size [OPTIONAL] Width of wiki image in pixels if fetch_wiki_images is enabled
+	 * @requestParam integer $wiki_image_width [OPTIONAL] Width of wiki image in pixels if fetch_wiki_images is enabled
+	 * @requestParam integer $wiki_image_height [OPTIONAL] Height of wiki image in pixels if fetch_wiki_images is enabled. You can pass here -1 to keep aspect ratio
 	 * @requestParam string $sort_column [OPTIONAL] Column by which to sort. Allowed values: wam_rank, wam_change. Defaults to WAM score (wam)
 	 * @requestParam string $sort_direction [OPTIONAL] Either ASC or DESC. Defaults to ASC
 	 * @requestParam integer $offset [OPTIONAL] offset from the beginning of data. Defaults to 0
@@ -63,7 +64,8 @@ class WAMApiController extends WikiaApiController {
 		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
 		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
 		$options['fetchWikiImages'] = $this->request->getBool('fetch_wiki_images', false);
-		$options['wikiImageSize'] = $this->request->getInt('wiki_image_size', self::DEFAULT_WIKI_IMAGE_SIZE);
+		$options['wikiImageWidth'] = $this->request->getInt('wiki_image_width', self::DEFAULT_WIKI_IMAGE_WIDTH);
+		$options['wikiImageHeight'] = $this->request->getInt('wiki_image_height', WikiService::IMAGE_HEIGHT_KEEP_ASPECT_RATIO);
 		$options['sortColumn'] = $this->request->getVal('sort_column', 'wam_rank');
 		$options['sortDirection'] = $this->request->getVal('sort_direction', 'DESC');
 		$options['offset'] = $this->request->getInt('offset', 0);
@@ -97,7 +99,7 @@ class WAMApiController extends WikiaApiController {
 						$wikiService = new WikiService();
 					}
 
-					$images = $wikiService->getWikiImages(array_keys($wamIndex['wam_index']), $options['wikiImageSize']);
+					$images = $wikiService->getWikiImages(array_keys($wamIndex['wam_index']), $options['wikiImageWidth'], $options['wikiImageHeight']);
 
 					foreach ($wamIndex['wam_index'] as $wiki_id => &$wiki) {
 						$wiki['wiki_image'] = (!empty($images[$wiki_id])) ? $images[$wiki_id] : null;
