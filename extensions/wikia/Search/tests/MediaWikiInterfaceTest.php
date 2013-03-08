@@ -1873,7 +1873,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 	
 	/**
-	 * @covers Wikia\Search\MediaWikiInterface::getThumbnailForPageId
+	 * @covers Wikia\Search\MediaWikiInterface::getThumbnailHtmlForPageId
 	 */
 	public function testGetThumbnailHtmlForPageId() {
 		$interface = $this->interface->setMethods( array( 'getFileForPageId' ) )->getMock();
