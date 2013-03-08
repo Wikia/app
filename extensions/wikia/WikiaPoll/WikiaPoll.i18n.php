@@ -475,6 +475,9 @@ $messages['lb'] = array(
 	'wikiapoll-vote' => 'Ofstëmmen!',
 	'wikiapoll-votes' => '({{PLURAL:$1|1 Stëmm|$1 Stëmmen}})',
 	'wikiapoll-question-label' => 'Fro',
+	'wikiapoll-cancel-label' => 'Ofbriechen',
+	'wikiapoll-publish-label' => 'Verëffentlechen',
+	'wikiamobile-wikiapoll-poll' => 'Ëmfro',
 );
 
 /** Macedonian (македонски)

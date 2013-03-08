@@ -12,13 +12,13 @@ echo wfMsg('wmu-conflict-inf', $file_name->getName());
 				<input type="text" id="ImageUploadRenameName" value="<?= $partname ?>" />
 				<label for="ImageUploadRenameName">.<?= $extension ?></label>
 	                        <input id="ImageUploadRenameExtension" type="hidden" value="<?= $extension ?>" />
-				<input type="button" value="<?= wfMsg('wmu-insert') ?>" onclick="WMU_insertImage(event, 'rename');" />
+				<input type="button" value="<?= wfMsg('wmu-insert') ?>" onclick="WMU_insertImage('rename');" />
 			</div>
 		</td>
 		<td>
 			<h2><?= wfMsg('wmu-existing') ?></h2>
 			<div style="margin: 5px 0;">
-				<input type="button" value="<?= wfMsg('wmu-insert') ?>" onclick="WMU_insertImage(event, 'existing');" />
+				<input type="button" value="<?= wfMsg('wmu-insert') ?>" onclick="WMU_insertImage('existing');" />
 			</div>
 		</td>
 	</tr>
@@ -32,4 +32,4 @@ echo wfMsg('wmu-conflict-inf', $file_name->getName());
 		</td>
 	</tr>
 </table>
-<div style="text-align: center;"><a onclick="WMU_insertImage(event, 'overwrite');" href="#"><?= wfMsg('wmu-overwrite') ?></a></div>
+<div style="text-align: center;"><a onclick="WMU_insertImage('overwrite');" href="#"><?= wfMsg('wmu-overwrite') ?></a></div>

@@ -365,7 +365,7 @@ Ma soñj deoc'h ez eo dre fazi pe mar fell deoc'h e vefe distroet war an diviz e
 	'chat-room-is-not-on-this-wiki' => "Evit doare n'eus ket eus ar gaoz a glaskit kevreañ outi war ar wiki-mañ.",
 	'chat-kick-log-reason' => "Skarzhet eus ar flap er wiki-mañ gant $1.
 Kit e darempred ganto da c'houzout hiroc'h.",
-	'chat-live2' => 'Fla war-eeun !',
+	'chat-live2' => 'Flap war-eeun !',
 	'chat-start-a-chat' => 'Kregiñ gant ar Flap',
 	'chat-join-the-chat' => 'Mont er Flap',
 	'chat-edit-count' => '$1 Kemm', # Fuzzy
@@ -1486,7 +1486,7 @@ $messages['khw'] = array(
  */
 $messages['ko'] = array(
 	'chat-desc' => '[[Special:Chat|실시간 채팅]]',
-	'chat-no-login' => '채팅을 하기 위해서는 로그인이 필요합니다.',
+	'chat-no-login' => '채팅을 하려면 로그인해야 합니다.',
 	'chat-no-login-text' => '채팅을 하기 위해서는 로그인이 필요합니다.',
 	'chat-default-topic' => '$1 채팅에 오신 것을 환영합니다',
 	'chat-ban-cant-ban-moderator' => '다른 채팅 운영자를 추방할 수 없습니다.',
@@ -2187,6 +2187,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author Pttraduc
  * @author SandroHc
  */
 $messages['pt'] = array(
@@ -2265,8 +2266,12 @@ $messages['pt'] = array(
 	'group-bannedfromchat-member' => 'Banido do chat',
 	'chat-ban-option-list' => '2 horas:2 hours,1 dia:1 day,3 dias:3 days,1 semana:1 week,2 semanas:2 weeks,1 mês:1 month,3 meses:3 months,6 meses:6 months,1 ano:1 year,infinito:infinite',
 	'chat-ban-log-change-ban-link' => 'alterar banimento',
+	'chat-chatconnect-log' => 'Registro de conexão com o Chat',
 	'chat-chatconnect-log-entry' => 'conectado a $1 a partir do endereço $2',
 	'chat-chatban-log' => 'Registo de banimento do chat',
+	'chat-chatbanadd-log-entry' => 'banido $1 do chat por $2, terminando em $3',
+	'chat-chatbanremove-log-entry' => 'desbanido $1 do chat',
+	'chat-chatbanchange-log-entry' => 'mudou o ban de $1 por $2, terminando em $3',
 	'chat-contributions-ban-notice' => 'Este utilizador está atualmente banido do chat. A última entrada no registo do banimento do chat é providenciada abaixo para referência:', # Fuzzy
 	'chat-browser-is-notsupported' => 'O seu navegador não é suportado. Para uma melhor experiência, use um <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navegador mais recente</a>.',
 	'chat-checkuser-join-action' => 'Entrou no chat',

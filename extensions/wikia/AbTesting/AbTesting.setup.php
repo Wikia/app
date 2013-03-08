@@ -50,7 +50,7 @@ $app->registerClass('SpecialAbTestingController',"{$dir}/SpecialAbTestingControl
 $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/AbTesting.i18n.php", 'AbTesting' );
 
 // Embed the experiment/treatment config in the head scripts.
-$app->registerHook( 'WikiaSkinTopModules', 'AbTesting', 'onWikiaSkinTopModules' );
+$app->registerHook( 'WikiaSkinTopScripts', 'AbTesting', 'onWikiaSkinTopScripts' );
 // Add js code in Oasis
 $app->registerHook( 'OasisSkinAssetGroupsBlocking', 'AbTesting', 'onOasisSkinAssetGroupsBlocking' );
 

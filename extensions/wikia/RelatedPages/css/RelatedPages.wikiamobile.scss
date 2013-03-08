@@ -1,23 +1,18 @@
 //dependencies
-@import "variables.scss";
-
-//mixins
-@import "mixins/linear-gradient.scss";
-@import "mixins/box-sizing.scss";
+@import "../../WikiaMobile/css/variables";
 
 $itemHeight: 50px;
 $itemPadding: 6px;
 
 #wkRelPag {
-	ul {
-		display: none;
-		padding: 0;
-		margin: 0;
-		color: $page-text-color;
+	display: none;
 
-		&.open {
-			display: block;
-		}
+	&.show {
+		display: block;
+	}
+
+	ul {
+		margin: 10px 0;
 	}
 
 	li {
@@ -35,20 +30,8 @@ $itemPadding: 6px;
 				left: $itemPadding;
 
 				margin-top: -25px;
-				height: 50px;
 
 				pointer-events: none;
-			}
-		}
-	}
-}
-
-.js {
-	#wkRelPag {
-		img {
-			&.lazy{
-				display: inline;
-				background-size: 40px;
 			}
 		}
 	}

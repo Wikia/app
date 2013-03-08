@@ -1665,6 +1665,7 @@ Utiss Utij:
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Pttraduc
  * @author Rhaijin
  */
 $messages['pt'] = array(
@@ -1711,7 +1712,7 @@ Pode <a href="$3">cancelar a subscrição</a> de alterações a esta lista.',
 	'wikiadoption-mail-second-subject' => 'A #WIKINAME será disponibilizada para adopção em breve',
 	'wikiadoption-mail-second-content' => 'Olá $1,
 
-Infelizmente, há quase um mês que nenhum administrador visita a #WIKINAME. É importante que existam administradores activos a colaborar na wiki para que ela continue a funcionar bem.
+Infelizmente, há quase um mês que nenhum administrador visita a #WIKINAME. É importante que hajam administradores activos a colaborar na wiki para que ela continue a funcionar bem.
 
 Como já passaram tantos dias desde que um dos administradores apareceu, a #WIKINAME vai ser disponibilizada para adopção por outros utilizadores.
 

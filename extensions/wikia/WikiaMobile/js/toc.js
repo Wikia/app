@@ -71,7 +71,7 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 
 			parent = {
 				id: id,
-				name: text.textContent || text.innerText
+				name: (text.textContent || text.innerText).trim()
 			};
 
 			ul && (parent.children = getToc(ul.children));
@@ -100,7 +100,7 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 				while(h2 = h2s[i++]){
 					toc.push({
 						id: h2.id,
-						name: h2.textContent || h2.innerText
+						name: (h2.textContent || h2.innerText).trim()
 					})
 				}
 			}

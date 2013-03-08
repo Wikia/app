@@ -225,6 +225,14 @@ $messages['pt-br'] = array(
 	'tog-watchlistsubpages' => 'Seguir subpáginas',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikia-watchsubpages-desc' => 'Auto seguimende pe le sottopàggene',
+	'tog-watchlistsubpages' => 'Segue le sottopàggene',
+);
+
 /** Russian (русский)
  * @author Александр Сигачёв
  */

@@ -164,7 +164,7 @@ describe('AdLogicPageLevelParams', function(){
 			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock),
 			params = adLogicPageLevelParams.getPageLevelParams();
 
-		expect(params.artid).toBe(678, 'artid=678');
+		expect(params.artid).toBe('678', 'artid=678');
 	});
 
 	it('getPageLevelParams has pre footers', function() {

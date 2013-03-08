@@ -279,6 +279,7 @@ $messages['qqq'] = array(
 	'wikistats_namespaces' => '{{Identical|Namespace}}',
 	'wikistats_main_namespace' => 'Name of the main namespace (ns:0)',
 	'wikistats_more_200_ch' => 'What does this mean? "characters"?',
+	'wikistats_rank' => '{{Identical|Rank}}',
 	'wikistats_total' => '{{Identical|Total}}',
 	'wikistats_new' => '{{Identical|New}}',
 	'wikistats_register' => 'Abbreviation for "Registered users"',

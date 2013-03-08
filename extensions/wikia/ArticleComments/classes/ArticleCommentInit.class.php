@@ -372,14 +372,28 @@ class ArticleCommentInit {
 		if ( $ns == NS_TALK ) {
 			$title = Title::newFromText( $element->page_title, $ns );
 
-			if( !empty( $title ) ) {
+			if ( !empty( $title ) ) {
 				$parentTitle = reset( explode( '/', $element->page_title) ); // getBaseText returns me parent comment for subcomment
+
+				$rev = Revision::newFromId( $title->getLatestRevID() );
+
+				if ( !empty( $rev ) ) {
+					$user = User::newFromId( $rev->getUser() );
+
+					if ( !empty( $user ) ) {
+						$user = $user->getName();
+					}
+				}
+
+				if ( !isset( $user ) ) {
+					$user = $app->wf->Message( 'article-comments-anonymous' )->text();
+				}
 
 				$link = $app->wf->MsgExt(
 					'article-comments-file-page',
 					array ('parsemag'),
 					$title->getLocalURL(),
-					User::newFromId( Revision::newFromId( $title->getLatestRevID() )->getUser() )->getName(),
+					$user,
 					Title::newFromText( $parentTitle )->getLocalURL(),
 					$parentTitle
 				);

@@ -113,7 +113,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 		$structuredData = array();
 
 		$structuredData['header'] = $data['header'];
-		$structuredData['description'] = $data['description'];
+		$structuredData['description'] = isset($data['description']) ? $data['description'] : '';
 		$structuredData['articleUrl'] = $data['articleUrl'];
 
 		if (!empty($data['sponsoredImage'])) {

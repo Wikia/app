@@ -37,8 +37,9 @@ var SuggestModalWikiaHubsV2 = {
 			callback: function (html) {
 				var modal = $(html).makeModal({width: 490, onClose: SuggestModalWikiaHubsV2.closeModal});
 				var form = modal.find('form');
-				var wikiaForm = new WikiaForm(form);
-				
+				var formView = modal.find('.form-view');
+				var successView = modal.find('.success-view');
+
 				// show submit button
 				SuggestModalWikiaHubsV2.showSubmit(modal);
 
@@ -47,23 +48,17 @@ var SuggestModalWikiaHubsV2 = {
 					var articleUrl = modal.find('input[name=articleurl]').val();
 					var reason = modal.find('textarea[name=reason]').val();
 
-					Wikia.Tracker.track({
-						action: Wikia.Tracker.ACTIONS.SUBMIT,
-						browserEvent: e,
-						category: 'SuggestArticle',
-						label: 'suggestSubmit',
-						trackingMethod: 'internal',
-						value: null
-					}, {
+					WikiaHubs.trackClick('GetPromoted', Wikia.Tracker.ACTIONS.SUBMIT, 'suggestSubmit', null, {
 						lang: wgContentLanguage,
 						user_name: window.wgUserName,
 						article_url: articleUrl,
 						reason: reason,
 						page_name: window.wgPageName
-					});
+					}, e);
 
 					$().log('suggestArticle modal submit');
-					SuggestModalWikiaHubsV2.closeModal(modal);
+					formView.hide();
+					successView.show();
 				});
 	
 				modal.find('button.cancel').click(function (e) {
@@ -91,13 +86,10 @@ var SuggestModalWikiaHubsV2 = {
 	},
 
 	closeModal: function (modal) {
-		require(['wikia.querystring'], function (qs){
-			if (!window.wgUserName) {
-				qs.addCb().goTo();
-			} else if (typeof(modal.closeModal) === 'function') {
-				modal.closeModal();
-			}
-		});
+		UserLogin.refreshIfAfterForceLogin();
+		if (typeof(modal.closeModal) === 'function') {
+			modal.closeModal();
+		}
 	}
 };
 

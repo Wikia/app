@@ -243,8 +243,6 @@
 						self.trigger( 'update' );
 					});
 
-					input.val( '' );
-
 					if ( options.autocomplete ) {
 						input.autocomplete( 'close' );
 					}
@@ -252,6 +250,8 @@
 					if ( options.popover ) {
 						input.popover( 'hide' );
 					}
+
+					input.val( '' );
 				}
 			}
 

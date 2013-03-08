@@ -2429,7 +2429,10 @@ $messages['ps'] = array(
 	'multidelete_this_wiki' => 'همدا ويکي',
 	'multidelete_all_wikis' => 'ټولې ويکي ګانې',
 	'multidelete_selected_wikis' => 'ټاکلې ويکي ګانې',
+	'multidelete_success_subtitle' => 'د $1 لپاره',
 	'multidelete_brazilian_portuguese_wikis' => 'ټولې برازيلۍ پارتوګالي ويکي ګانې',
+	'multidelete_hebrew_wikis' => 'ټولې عبري ويکي ګانې',
+	'multidelete_chinese_wikis' => 'ټولې چينايي ويکي ګانې',
 	'multidelete_german_wikis' => 'ټولې جرمنۍ ويکي ګانې',
 	'multiwikifindpagenames' => 'د مخ نوم موندل',
 );

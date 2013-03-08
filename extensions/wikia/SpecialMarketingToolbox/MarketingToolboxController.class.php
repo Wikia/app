@@ -203,10 +203,14 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	private function getNextModuleUrl() {
-		$nextModuleId = $this->selectedModuleId;
+		$moduleIds = $this->toolboxModel->getModulesIds();
 
-		if ($nextModuleId + 1 <= max($this->toolboxModel->getModulesIds())) {
-			$nextModuleId++;
+		$actualModuleIndex = array_search($this->selectedModuleId, $moduleIds);
+
+		if (isset($moduleIds[$actualModuleIndex + 1])) {
+			$nextModuleId = $moduleIds[$actualModuleIndex + 1];
+		} else {
+			$nextModuleId = $moduleIds[$actualModuleIndex];
 		}
 
 		$nextUrl = $this->toolboxModel->getModuleUrl(

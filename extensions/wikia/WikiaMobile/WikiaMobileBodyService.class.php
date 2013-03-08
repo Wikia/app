@@ -23,7 +23,7 @@ class WikiaMobileBodyService extends WikiaService {
 		}
 
 		/* Dont show header if user profile page */
-		if( $this->wg->Title->getNamespace() !== NS_USER ){
+		if( !$this->wg->Title->inNamespace( NS_USER ) ){
 			$this->response->setVal( 'pageHeaderContent', $this->app->renderView( 'WikiaMobilePageHeaderService', 'index' ));
 		}else{
 			$this->response->setVal( 'pageHeaderContent', '');
@@ -32,7 +32,6 @@ class WikiaMobileBodyService extends WikiaService {
 		$this->response->setVal(
 			'relatedPages',
 			(	!empty( $this->wg->EnableRelatedPagesExt ) &&
-				empty( $this->wg->MakeWikiWebsite ) &&
 				empty( $this->wg->EnableAnswers ) ) ? $this->app->renderView( 'RelatedPagesController', 'index' ) : null);
 
 		$this->response->setVal(
