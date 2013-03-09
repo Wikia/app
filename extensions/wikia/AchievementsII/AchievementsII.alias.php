@@ -10,6 +10,7 @@ $specialPageAliases = array();
 
 /** English */
 $specialPageAliases['en'] = array(
+	'Platinum' => array( 'Platinum' ),
 	'Leaderboard' => array( 'Leaderboard' ),
 	'AchievementsCustomize' => array( 'AchievementsCustomize' ),
 );
@@ -22,6 +23,7 @@ $specialPageAliases['de'] = array(
 
 /** Polish (Polski) */
 $specialPageAliases['pl'] = array(
+	'Platinum' => array( 'Platyna' ),
 	'Leaderboard' => array( 'Ranking' ),
 	'AchievementsCustomize' => array( 'Dostosuj_odznczenia' ),
 );

@@ -21,6 +21,7 @@ $wgSpecialPages['CreateWiki'] = 'SpecialCreateNewWiki';
 
 // i18n mapping
 $wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
+$wgExtensionMessagesFiles['CreateNewWikiAliases'] = $dir . 'CreateNewWiki.alias.php';
 
 // permissions
 $wgAvailableRights[] = 'createnewwiki';
