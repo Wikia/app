@@ -144,7 +144,7 @@ class RelatedVideosController extends WikiaController {
 
 		if( empty( $video ) ) {
 			$title = $this->getVal('videoTitle');
-			$rvs = F::build('RelatedVideosService');
+			$rvs = new RelatedVideosService();
 			$video = $rvs->getRelatedVideoDataFromTitle( array( 'title' => $title ) );
 		}
 
@@ -186,13 +186,14 @@ class RelatedVideosController extends WikiaController {
 			$userGroups = $this->wg->User->getEffectiveGroups();
 			$isAdmin = in_array('admin', $userGroups) || in_array('staff', $userGroups);
 
-			$this->removeTooltip = wfMsg('related-videos-tooltip-remove');
+			$this->removeTooltip = $this->wf->Message( 'related-videos-tooltip-remove' );
 			$this->videoThumb = $videoThumb;
 			$this->video = $video;
 			$this->preloaded = $preloaded;
 			$this->isAdmin = $isAdmin;
 			$this->totalVideos = $this->getTotalVideos();
-
+			$this->isNew = empty($video['isNew']) ? false : true ;
+			$this->isNewMsg = $this->wf->Message( 'related-videos-video-is-new' );
 		} else {
 			Wikia::log(__METHOD__, false, 'A video file not found. ID: '.$video['id']);
 		}
