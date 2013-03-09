@@ -25,7 +25,7 @@ $specialPageAliases['de'] = array(
 $specialPageAliases['pl'] = array(
 	'Platinum' => array( 'Platyna' ),
 	'Leaderboard' => array( 'Ranking' ),
-	'AchievementsCustomize' => array( 'Dostosuj_odznczenia' ),
+	'AchievementsCustomize' => array( 'Dostosuj_odznaczenia' ),
 );
 
 /** French (Français) */
