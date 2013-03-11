@@ -8,7 +8,7 @@ class FollowModel {
         static public $specialPageListLimit = 15;
 
     /**
-	 * getWatchList -- get data for followe pages include see all
+	 * getWatchList -- get data for followed pages include see all
 	 *
 	 * @static
 	 * @access public
@@ -16,7 +16,7 @@ class FollowModel {
 	 * @return array
 	 */
 	static function getWatchList($user_id, $from = 0, $limit = 15, $namespace_head = null, $show_deleted_pages = true) {
-		global $wgServer, $wgScript, $wgContentNamespaces, $wgEnableBlogArticles;
+		global $wgServer, $wgScript, $wgContentNamespaces, $wgEnableBlogArticles, $wgEnableForumExt;
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_SLAVE );
 
@@ -38,6 +38,10 @@ class FollowModel {
 			$namespaces[NS_BLOG_LISTING] = 'wikiafollowedpages-special-heading-blogs';
 		}
 
+		if ( !empty( $wgEnableForumExt ) ) {
+			$namespaces[NS_WIKIA_FORUM_BOARD_THREAD] = 'wikiafollowedpages-special-heading-board';
+		}
+
 		$order = array(
 			'wikiafollowedpages-special-heading-category',
 			'wikiafollowedpages-special-heading-article',
@@ -48,7 +52,8 @@ class FollowModel {
 			'wikiafollowedpages-special-heading-templates',
 			'wikiafollowedpages-special-heading-mediawiki',
 			'wikiafollowedpages-special-heading-media',
-			'wikiafollowedpages-special-heading-wall'
+			'wikiafollowedpages-special-heading-wall',
+			'wikiafollowedpages-special-heading-board'
 		);
 
 		foreach ($wgContentNamespaces as $value) {
@@ -86,6 +91,20 @@ class FollowModel {
 					$row['wl_title'] = $explode[1];
 					$row['by_user'] =  $explode[0];
 				}
+			}
+			if ( defined( 'NS_WIKIA_FORUM_BOARD_THREAD' ) && $row['wl_namespace'] == NS_WIKIA_FORUM_BOARD_THREAD ) {
+				$wallMessage = WallMessage::newFromTitle( $title );
+				$wallMessage->load();
+				$row['wl_title'] = $wallMessage->getMetaTitle();
+				$row['wl_title_obj'] = Title::newFromText( $wallMessage->getID(), NS_USER_WALL_MESSAGE );
+				$row['on_board'] = Xml::tags(
+					'a',
+					array(
+						'href' => $wallMessage->getWallUrl(),
+						'title' => $wallMessage->getArticleTitle()->getText()
+					),
+					$wallMessage->getArticleTitle()->getText()
+				);
 			}
 
 			if ( in_array($row['wl_namespace'], $wgContentNamespaces) && (NS_MAIN != $row['wl_namespace']) ) {
