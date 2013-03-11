@@ -80,7 +80,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 				'wamScore' => round($wiki['wam'], self::DECIMALS),
 				'imageUrl' => $wiki['wiki_image'],
 				'wikiName' => $wiki['title'],
-				'wikiUrl' => $wiki['url'],
+				'wikiUrl' => $this->addProtocolToLink($wiki['url']),
 				'change' => $this->getWamWikiChange($wiki['wam_change']),
 			];
 			$rank++;
