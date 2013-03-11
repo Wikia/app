@@ -22,15 +22,8 @@ class MediaWikiInterface
 	/**
 	 * Constructor method
 	 */
-	protected function __construct() {
+	public function __construct() {
 		$this->app = \F::app();
-	}
-	
-	public static function getInstance() {
-		if (! isset( self::$instance ) ) {
-			self::$instance = new MediaWikiInterface();
-		}
-		return self::$instance;
 	}
 	
 	/**

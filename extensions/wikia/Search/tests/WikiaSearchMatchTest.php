@@ -9,7 +9,7 @@ class WikiaSearchMatchTest extends WikiaSearchBaseTest {
 	 * @covers Wikia\Search\Match\AbstractMatch::getId
 	 */
 	public function testAbstractConstruct() {
-		$interface = Wikia\Search\MediaWikiInterface::getInstance();
+		$interface = new Wikia\Search\MediaWikiInterface;
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\AbstractMatch' )
 		                  ->setConstructorArgs( array( 123, $interface ) )
 		                  ->getMockForAbstractClass();

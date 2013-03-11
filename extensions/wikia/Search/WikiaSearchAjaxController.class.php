@@ -36,7 +36,7 @@ class WikiaSearchAjaxController extends WikiaController {
 		);
 
         $container = new QueryService\DependencyContainer( array( 'config' => new Wikia\Search\Config( $params ) ) );
-        $results = QueryService\Factory::getInstance()->get( $container )->search();
+        $results = (new QueryService\Factory)->get( $container )->search();
 
         $text = $this->app->getView('WikiaSearch', 'WikiaMobileResultList', array(
                 'currentPage'=> $page,

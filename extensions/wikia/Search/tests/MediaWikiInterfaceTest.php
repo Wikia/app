@@ -29,35 +29,17 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 		$this->pageId = 123;
 		$this->interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
                                 ->disableOriginalConstructor();
-	}
-	
-	/**
-	 * @covers \Wikia\Search\MediaWikiInterface::getInstance
-	 */
-	public function testGetInstance() {
-		$mockMediaWikiInterface = $this->interface->setMethods( array( 'foo' ) )
-		                                          ->getMock();
 		
-		$instanceRefl = new ReflectionProperty( '\Wikia\Search\MediaWikiInterface', 'instance' );
-		$instanceRefl->setAccessible( true );
-		$instanceRefl->setValue( null );
-		
-		$instance = $mockMediaWikiInterface->getInstance();
-		
-		$this->assertInstanceOf(
-				'\Wikia\Search\MediaWikiInterface',
-				$instance,
-				'\Wikia\Search\MediaWikiInterface::getInstance should create an instance of \Wikia\Search\MediaWikiInterface if one has not been constructed'
+		// re-initialize static vars
+		$staticVars = array( 
+				'pageIdsToArticles', 'pageIdsToTitles', 'redirectsToCanonicalIds',
+				'pageIdsToFiles', 'redirectArticles', 'wikiDataSources' 
 		);
-		$this->assertNotEmpty(
-				$instanceRefl->getValue(),
-				'\Wikia\Search\MediaWikiInterface should store its singleton instance in \Wikia\Search\MediaWikiInterface::$instance'
-		);
-		$this->assertEquals(
-				$instance,
-				$mockMediaWikiInterface->getInstance(),
-				'\Wikia\Search\MediaWikiInterface should return its stored instance on subsequent calls to getInstance()'
-		);
+		foreach ( $staticVars as $var ) {
+			$refl = new ReflectionProperty( 'Wikia\Search\MediaWikiInterface', $var );
+			$refl->setAccessible( true );
+			$refl->setValue( array() );
+		}
 	}
 	
 	/**
@@ -302,7 +284,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 		global $wgContLang;
 		$this->assertEquals(
 				$wgContLang->getCode(),
-				MediaWikiInterface::getInstance()->getLanguageCode(),
+				(new MediaWikiInterface)->getLanguageCode(),
 				'\Wikia\Search\MediaWikiInterface::getLanguageCode should provide an interface to $wgContLang->getCode()'
 		);
 	}
@@ -373,7 +355,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	public function testGetMainPageArticleId() {
 		$this->assertEquals(
 				\Title::newMainPage()->getArticleId(),
-				MediaWikiInterface::getInstance()->getMainPageArticleId()
+				(new MediaWikiInterface)->getMainPageArticleId()
 		);
 	}
 	
@@ -413,7 +395,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 		
 		$this->assertEquals(
 				$mockResultArray,
-				MediaWikiInterface::getInstance()->getParseResponseFromPageId( $this->pageId )
+				(new MediaWikiInterface)->getParseResponseFromPageId( $this->pageId )
 		);
 	}
 	
@@ -594,7 +576,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	 * @covers \Wikia\Search\MediaWikiInterface::getGlobal
 	 */
 	public function testGetGlobal() {
-		$interface = MediaWikiInterface::getInstance();
+		$interface = new MediaWikiInterface;
 		$app = \F::app();
 		$app->wg->Foo = 'bar';
 		
@@ -609,7 +591,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	 * @covers \Wikia\Search\MediaWikiInterface::getGlobalWithDefault
 	 */
 	public function testGetGlobalWithDefault() {
-		$interface = MediaWikiInterface::getInstance();
+		$interface = new MediaWikiInterface;
 		$app = \F::app();
 		$app->wg->Foo = null;
 		
@@ -624,7 +606,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	 * @covers \Wikia\Search\MediaWikiInterface::setGlobal
 	 */
 	public function testSetGlobal() {
-		$interface = MediaWikiInterface::getInstance();
+		$interface = new MediaWikiInterface;
 		$app = \F::app();
 		
 		$this->assertEquals(
@@ -770,7 +752,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
         				'meta'     => 'siteinfo',
         				'siprop'   => 'statistics|wikidesc|variables|namespaces|category'
         		) ),
-			    MediaWikiInterface::getInstance()->getApiStatsForPageId( $this->pageId )
+			    (new MediaWikiInterface)->getApiStatsForPageId( $this->pageId )
 		);
 	}
 	
@@ -787,7 +769,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 						'meta'     => 'siteinfo',
 						'siprop'   => 'statistics'
 						) ),
-			    MediaWikiInterface::getInstance()->getApiStatsForWiki( $wgCityId )
+			    (new MediaWikiInterface)->getApiStatsForWiki( $wgCityId )
 		);
 	}
 	
@@ -1070,7 +1052,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiInterface', 'getPageFromPageId' );
 		$get->setAccessible( true );
 		try {
-			$get->invoke( MediaWikiInterface::getInstance(), $this->pageId );
+			$get->invoke( (new MediaWikiInterface), $this->pageId );
 		} catch ( \Exception $e ) {}
 		
 		$this->assertInstanceOf(
@@ -1334,7 +1316,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	 * @covers Wikia\Search\MediaWikiInterface::getNamespaceIdForString
 	 */
 	public function testGetNamespaceIdForString() {
-		$this->assertEquals( NS_CATEGORY, MediaWikiInterface::getInstance()->getNamespaceIdForString( 'Category' ) );
+		$this->assertEquals( NS_CATEGORY, (new MediaWikiInterface)->getNamespaceIdForString( 'Category' ) );
 	}
 	
 	/**
@@ -1345,11 +1327,11 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 		$sitename = $wgSitename;
 		$this->assertEquals(
 				$wgSitename,
-				MediaWikiInterface::getInstance()->getGlobalForWiki( 'wgSitename', $wgCityId )
+				(new MediaWikiInterface)->getGlobalForWiki( 'wgSitename', $wgCityId )
 		);
 		$this->assertEquals(
 				$wgSitename,
-				MediaWikiInterface::getInstance()->getGlobalForWiki( 'Sitename', $wgCityId )
+				(new MediaWikiInterface)->getGlobalForWiki( 'Sitename', $wgCityId )
 		);
 		$wf = $this->getMock( 'WikiFactory', [ 'getVarValueByName' ] );
 		$wf
@@ -1362,7 +1344,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 		$this->mockApp();
 		$this->assertEquals(
 				[ 'bar' ],
-				MediaWikiInterface::getInstance()->getGlobalForWiki( 'foo', 123 )
+				(new MediaWikiInterface)->getGlobalForWiki( 'foo', 123 )
 		);
 	}
 	
@@ -1423,7 +1405,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	public function testGetDefaultNamespacesFromSearchEngine() {
 		$this->assertEquals(
 				\SearchEngine::defaultNamespaces(),
-				MediaWikiInterface::getInstance()->getDefaultNamespacesFromSearchEngine()
+				(new MediaWikiInterface)->getDefaultNamespacesFromSearchEngine()
 		);
 	}
 	
@@ -1433,7 +1415,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	public function testGetSearchableNamespacesFromSearchEngine() {
 		$this->assertEquals(
 				\SearchEngine::searchableNamespaces(),
-				MediaWikiInterface::getInstance()->getSearchableNamespacesFromSearchEngine()
+				(new MediaWikiInterface)->getSearchableNamespacesFromSearchEngine()
 		);
 	}
 	
@@ -1443,7 +1425,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	public function testGetTextForNamespaces() {
 		$this->assertEquals(
 				\SearchEngine::namespacesAsText( array( 0, 14 ) ),
-				MediaWikiInterface::getInstance()->getTextForNamespaces( array( 0, 14 ) )
+				(new MediaWikiInterface)->getTextForNamespaces( array( 0, 14 ) )
 		);
 	}
 	
@@ -2303,10 +2285,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	 * @covers Wikia\Search\MediaWikiInterface::__construct
 	 */
 	public function test__construct() {
-		$instance = new ReflectionProperty( 'Wikia\Search\MediaWikiInterface', 'instance' );
-		$instance->setAccessible( true );
-		$instance->setValue( null );
-		$interface = MediaWikiInterface::getInstance();
+		$interface = (new MediaWikiInterface);
 		$this->assertAttributeEquals(
 				\F::app(),
 				'app',

@@ -23,7 +23,7 @@ class Result extends ReadWrite {
 	 */
 	public function __construct( $fields = array(), $boosts = array() ) {
 		parent::__construct( $fields, $boosts );
-		$this->interface = MediaWikiInterface::getInstance();
+		$this->interface = new MediaWikiInterface;
 	}
 	
 	/**
