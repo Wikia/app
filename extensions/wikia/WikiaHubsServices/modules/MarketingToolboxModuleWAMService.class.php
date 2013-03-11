@@ -55,18 +55,13 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 
 	public function loadData($model, $params) {
 		$params = $this->prepareParameters($params);
-		$url  = 'http://sandbox-s4.www.wikia.com/wikia.php?controller=WAMApi&method=getWAMIndex&';
-		$url .= http_build_query($params);
-		
-		if( $apiData = file_get_contents($url) ) {
-			$data = [
-				'vertical_id' => $params['vertical_id'],
-				'api_response' => json_decode($apiData, true),
-			];
-		}
+
+		$data = [
+			'vertical_id' => $params['vertical_id'],
+			'api_response' => $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData()
+		];
 		
 		return $this->getStructuredData($data);
-		//return $this->app->sendRequest('WAMApiController', 'getWAMIndex', $params)->getData();
 	}
 
 	public function getStructuredData($data) {
