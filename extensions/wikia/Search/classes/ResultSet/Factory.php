@@ -14,23 +14,6 @@ use \Solarium_Result_Select, \Solarium_Result_Select_Empty, \WikiaSearchConfig;
 class Factory
 {
 	/**
-	 * Singleton instance
-	 * @var Factory 
-	 */
-	private static $instance;
-	
-	/**
-	 * Return a singleton instance
-	 * @return \Wikia\Search\ResultSet\Factory
-	 */
-	public static function getInstance() {
-		if (! isset( self::$instance ) ) {
-			self::$instance = new Factory();
-		}
-		return self::$instance;
-	}
-	
-	/**
 	 * Inspects a dependency container and selects the appropriate result set based on what is set.
 	 * @param DependencyContainer $container
 	 * @todo return type hinting for DependencyContainer to constructor when we have a better solution than WikiaMockProxy for testing. (or a dependencycontainerfactory, yuck)
