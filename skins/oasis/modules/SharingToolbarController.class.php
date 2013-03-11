@@ -32,6 +32,10 @@ class SharingToolbarController extends WikiaController {
 			$allowedNamespaces[] = intval(NS_BLOG_LISTING);
 		}
 
+		if( defined('NS_FORUM') ) {
+			$allowedNamespaces[] = intval(NS_FORUM);
+		}
+
 		if( !empty($this->app->wg->EnableWallExt) ) {
 			$allowedNamespaces[] = intval(NS_USER_WALL_MESSAGE);
 		}
@@ -42,6 +46,14 @@ class SharingToolbarController extends WikiaController {
 
 		if( !empty($this->app->wg->EnableWikiaQuiz) ) {
 			$allowedNamespaces[] = intval(NS_WIKIA_PLAYQUIZ);
+		}
+
+		if ( !empty($this->app->wg->EnableForumExt) ) {
+			$allowedNamespaces = array_merge($allowedNamespaces, array(
+				NS_WIKIA_FORUM_BOARD,
+				NS_WIKIA_FORUM_BOARD_THREAD,
+				NS_WIKIA_FORUM_TOPIC_BOARD,
+			));
 		}
 
 		$title = $this->app->wg->Title;
