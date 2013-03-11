@@ -212,7 +212,9 @@ blockquote {
 
 #wkTst{
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	//for those browsers that don't support fixed
 	position: absolute;
+	position: fixed;
 	margin: 10px auto;
 	padding: 10px 20px;
 	border-radius: 5px;
