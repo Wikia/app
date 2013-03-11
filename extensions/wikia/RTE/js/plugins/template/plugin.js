@@ -438,7 +438,21 @@ RTE.templateEditor = {
 					html += '<dd><textarea rel="' + key + '" id="templateEditorParameter' + i +'">' + value + '</textarea></dd>';
 				});
 
-				$('#templateParameters').html(html);
+				$('#templateParameters')
+					.html(html)
+					// dirty fix for tinymce tab handling issue (bugid-32623).
+					.find('dd > textarea').keydown(function(ev) {
+						if( ev.which == 9 /* tab */ ) {
+							// select next text area to focus
+							var next = $(this).parent('dd').next('dt').next('dd').children('textarea').first();
+							if( next.size() == 1 ) {
+								next.focus();
+								// prevent tinymce from handling tab event
+								ev.stopPropagation();
+								ev.preventDefault();
+							}
+						}
+					});
 
 				// generate preview
 				this.doPreview();
