@@ -76,4 +76,12 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	protected function prepareParameters($params) {
 		return $params;
 	}
+
+	protected function addProtocolToLink($link) {
+		if (strpos($link, 'http://') === false && strpos($link, 'https://') === false) {
+			$link = 'http://' . $link;
+		}
+
+		return $link;
+	}
 }

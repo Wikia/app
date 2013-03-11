@@ -80,7 +80,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 				'wamScore' => round($wiki['wam'], self::DECIMALS),
 				'imageUrl' => $wiki['wiki_image'],
 				'wikiName' => $wiki['title'],
-				'wikiUrl' => $wiki['url'],
+				'wikiUrl' => $this->addProtocolToLink($wiki['url']),
 				'change' => $this->getWamWikiChange($wiki['wam_change']),
 			];
 			$rank++;
@@ -107,6 +107,10 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	public function render($data) {
+		$data['imagesHeight'] = $this->getModel()->getImageHeight();
+		$data['imagesWidth'] = $this->getModel()->getImageWidth();
+		$data['searchHubName'] = $this->getSearchHubName($data['verticalName']);
+		
 		return parent::render($data);
 	}
 	
@@ -116,5 +120,20 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		}
 		
 		return $this->model;
+	}
+
+	/**
+	 * @desc Since search works better only for EN hub pages we implemented this simple method; we'll remove it once we contact with Robert and set a plan
+	 * 
+	 * @param $verticalName
+	 * @return string
+	 */
+	protected function getSearchHubName($verticalName) {
+		if( in_array($verticalName, array('Video Games', 'Entertainment', 'Lifestyle')) ) {
+			if( $verticalName  === 'Video Games' ) return 'Gaming';
+			return $verticalName;
+		}
+		
+		return null;
 	}
 }
