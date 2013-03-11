@@ -11,6 +11,11 @@
  */
 define("DB_DPL", 3);
 
+/**
+ * @name DB_SLAVE_BEFORE_MASTER
+ * added by Wikia - wladek
+ * this option is experimental (only a couple of functions support this value)
+ */
 define('DB_SLAVE_BEFORE_MASTER',-100);
 
 /**
