@@ -55,51 +55,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setResponseValuesFromConfig( $searchConfig );
 	}
 	
-	
-	/**
-	 * Sets values for the view to work with.
-	 * @param Wikia\Search\Config $searchConfig
-	 */
-	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
-		$format = $this->response->getFormat();
-		if ( ( $format == 'json' || $format == 'jsonp' ) && ( $searchConfig->getResultsFound() > 0 ) ){
-			$searchConfig->setResults( $searchConfig->getResults()->toNestedArray() );
-		}
-		if(! $searchConfig->getIsInterWiki() ) {
-			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox', array( 'config' => $searchConfig ) ) );
-		}
-
-		$format = $this->response->getFormat();
-		if( ($format == 'json' || $format == 'jsonp') && ($searchConfig->getResultsFound() > 0) ){
-			$searchConfig->setResults( $searchConfig->getResults()->toNestedArray( array( 'title', 'url', 'pageid' ) ) );
-		}
-
-		$tabsArgs = array(
-				'config'		=> $searchConfig,
-				'by_category'	=> $this->getVal( 'by_category', false )
-				);
-		$this->setVal( 'results',				$searchConfig->getResults() );
-		$this->setVal( 'resultsFound',			$searchConfig->getResultsFound() );
-		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $searchConfig->getTruncatedResultsNum() ) );
-		$this->setVal( 'isOneResultsPageOnly',	$searchConfig->getNumPages() < 2 );
-		$this->setVal( 'pagesCount', 			$searchConfig->getNumPages() );
-		$this->setVal( 'currentPage', 			$searchConfig->getPage() );
-		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination', $tabsArgs ) );
-		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', $tabsArgs ) );
-		$this->setVal( 'query',					$searchConfig->getQuery( Wikia\Search\Config::QUERY_ENCODED ) );
-		$this->setVal( 'resultsPerPage',		$searchConfig->getLimit() );
-		$this->setVal( 'pageUrl',				$this->wg->Title->getFullUrl() );
-		$this->setVal( 'debug',					$searchConfig->getDebug() );
-		$this->setVal( 'solrHost',				$this->wg->SolrHost);
-		$this->setVal( 'isInterWiki',			$searchConfig->getIsInterWiki() );
-		$this->setVal( 'relevancyFunctionId',	6 ); //@todo do we need this?
-		$this->setVal( 'namespaces',			$searchConfig->getNamespaces() );
-		$this->setVal( 'hub',					$searchConfig->getHub() );
-		$this->setVal( 'hasArticleMatch',		$searchConfig->hasArticleMatch() );
-		$this->setVal( 'isMonobook',			($this->wg->User->getSkin() instanceof SkinMonobook) );
-		$this->setVal( 'isCorporateWiki',		$this->isCorporateWiki() );
-	}
-	
 	/**
 	 * Deprecated functionality for indexing.
 	 */
