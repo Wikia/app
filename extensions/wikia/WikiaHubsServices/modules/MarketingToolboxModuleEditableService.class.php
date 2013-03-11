@@ -88,12 +88,4 @@ abstract class MarketingToolboxModuleEditableService extends MarketingToolboxMod
 
 		return $out;
 	}
-
-	protected function addProtocolToLink($link) {
-		if (strpos($link, 'http://') === false && strpos($link, 'https://') === false) {
-			$link = 'http://' . $link;
-		}
-
-		return $link;
-	}
 }
