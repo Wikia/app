@@ -55,10 +55,16 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 
 	public function loadData($model, $params) {
 		$params = $this->prepareParameters($params);
+		
+		if( !empty($this->app->wg->DevelEnvironment) ) {
+			$apiResponse = ['vertical_id' => 2, 'wam_index' => []];
+		} else {
+			$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+		}
 
 		$data = [
 			'vertical_id' => $params['vertical_id'],
-			'api_response' => $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData()
+			'api_response' => $apiResponse,
 		];
 		
 		return $this->getStructuredData($data);
