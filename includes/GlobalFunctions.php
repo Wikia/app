@@ -872,7 +872,9 @@ function wfDebug( $text, $logonly = false ) {
 			$cache = array();
 		}
 	}
-	if ( wfRunHooks( 'Debug', array( $text, null /* no log group */ ) ) ) {
+	/**
+	# BAC-91
+	if ( wfRunHooks( 'Debug', array( $text, null ) ) ) {
 		if ( $wgDebugLogFile != '' && !$wgProfileOnly ) {
 			# Strip unprintables; they can switch terminal modes when binary data
 			# gets dumped, which is pretty annoying.
@@ -881,6 +883,7 @@ function wfDebug( $text, $logonly = false ) {
 			wfErrorLog( $text, $wgDebugLogFile );
 		}
 	}
+	**/
 
 	MWDebug::debugMsg( $text );
 }
