@@ -2084,7 +2084,7 @@ function lw_getSearchResults($searchString, $maxResults=25){
 			->setLength( $maxResults );
 
 		$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
-		$wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->get( $container );
+		$wikiaSearch = (new Wikia\Search\QueryService\Factory)->get( $container );
 		$resultSet = $wikiaSearch->search();
 		$found = $resultSet->getResultsFound();
 
