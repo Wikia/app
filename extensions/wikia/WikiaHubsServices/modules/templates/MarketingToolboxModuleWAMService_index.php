@@ -1,8 +1,8 @@
 <div>
 	<div class="social-links">
-		<a href="#"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
-		<a href="#"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>
-		<a href="#"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
+		<a href="<?= wfMsg('wikiahome-community-social-facebook-link') ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
+		<a href="<?= wfMsg('wikiahome-community-social-twitter-link') ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>
+		<a href="<?= wfMsg('wikiahome-community-social-googleplus-link') ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
 	</div>
 	<div class="search">
 		<form method="get" action="index.php?title=Special:Search" class="WikiaSearch" id="WikiaSearch">

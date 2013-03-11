@@ -95,6 +95,9 @@
 				height: 30px;
 				width: 48px;
 			}
+			.wiki-thumb img {
+				@include radial-gradient(#003a6e, #002e54);
+			}
 		}
 	}
 }
