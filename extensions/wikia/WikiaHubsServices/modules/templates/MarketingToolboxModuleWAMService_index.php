@@ -10,13 +10,14 @@
 			<input type="hidden" value="0" name="fulltext" />
 			<input type="submit" />
 			<button class="wikia-button">
-				<img width="21" height="17" class="sprite search" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" />
+				<img width="21" height="17" class="sprite search" src="<?= $wg->BlankImgUrl; ?>" />
 			</button>
 		</form>
 	</div>
 </div>
 <div class="wam-content">
 	<div class="title">
+		<img src="<?= $wg->BlankImgUrl; ?>" class="logo" />
 		<h2>
 			<?= wfMessage('wikiahubs-wam-header')->text(); ?>
 		</h2>
@@ -41,7 +42,24 @@
 				<?php foreach($ranking as $wiki): ?>
 					<tr>
 						<td class="rank"><?= $wiki['rank']; ?>.</td>
-						<td class="score"><?= $wiki['wamScore']; ?></td>
+						<td class="score">
+							<img src="<?= $wg->BlankImgUrl; ?>" class="
+								<?
+									switch ($wiki['change']) {
+										case '-1':
+											echo 'down';
+											break;
+										case '0':
+											echo 'nochange';
+											break;
+										case '1':
+											echo 'up';
+											break;
+									}
+								?>
+							" />
+							<?= $wiki['wamScore']; ?>
+						</td>
 						<td>
 							<img src="<?= $wiki['imageUrl']; ?>" />
 						</td>
