@@ -135,11 +135,11 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		);
 
 		if( $module instanceof MarketingToolboxModuleNonEditableService ) {
-			$moduleData = $module->loadData($this->getMarketingToolboxModel(), $module->prepareParameters([
+			$moduleData = $module->loadData($this->getMarketingToolboxModel(), [
 				'lang' => $langCode,
 				'vertical_id' => $verticalId,
 				'ts' => $this->hubTimestamp,
-			]));
+			]);
 		} else {
 			$moduleData = $module->getStructuredData($moduleData);
 		}

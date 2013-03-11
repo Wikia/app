@@ -25,6 +25,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	public function loadData($model, $params) {
+		$params = $this->prepareParameters($params);
 		$timestamp = $params['ts'];
 		$moduleId = $this->getModuleId();
 
@@ -72,7 +73,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	 * @param Array $params
 	 * @return array
 	 */
-	public function prepareParameters($params) {
+	protected function prepareParameters($params) {
 		return $params;
 	}
 }

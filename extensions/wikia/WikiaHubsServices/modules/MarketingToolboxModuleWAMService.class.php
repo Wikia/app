@@ -14,7 +14,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	 * @param Array $params
 	 * @return array
 	 */
-	public function prepareParameters($params) {
+	protected function prepareParameters($params) {
 		$params['limit'] = $this->getModel()->getWamLimitForHubPage();
 		
 		//TODO: add wam_previous_day
@@ -36,6 +36,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	public function loadData($model, $params) {
+		$params = $this->prepareParameters($params);
 		$url  = 'http://sandbox-s4.www.wikia.com/wikia.php?controller=WAMApi&method=getWAMIndex&';
 		$url .= http_build_query($params);
 		
