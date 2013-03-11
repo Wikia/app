@@ -47,7 +47,10 @@ class PhalanxService extends Service {
 	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
 	 */
 	public function check( $type, $content, $lang = "" ) {
-		return $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
+		wfProfileIn( __METHOD__  );
+		$result =  $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
+		wfProfileOut( __METHOD__  );
+		return $result;
 	}
 
 	/**
@@ -58,7 +61,10 @@ class PhalanxService extends Service {
 	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
 	 */
 	public function match( $type, $content, $lang = "" ) {
-		return $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
+		wfProfileIn( __METHOD__  );
+		$result =  $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
+		wfProfileOut( __METHOD__  );
+		return $result;
 	}
 
 	/**
@@ -70,7 +76,10 @@ class PhalanxService extends Service {
 	 *
 	 */
 	public function reload( $changed = array() ) {
-		return $this->sendToPhalanxDaemon( "reload", is_array( $changed ) && sizeof( $changed ) ? array( "changed" => implode( ",", $changed ) ) : array() );
+		wfProfileIn( __METHOD__  );
+		$result = $this->sendToPhalanxDaemon( "reload", is_array( $changed ) && sizeof( $changed ) ? array( "changed" => implode( ",", $changed ) ) : array() );
+		wfProfileOut( __METHOD__  );
+		return $result;
 	}
 
 	/**
@@ -82,7 +91,10 @@ class PhalanxService extends Service {
 	 *
 	 */
 	public function validate( $regex ) {
-		return $this->sendToPhalanxDaemon( "validate", array( "regex" => $regex ) );
+		wfProfileIn( __METHOD__  );
+		$result =  $this->sendToPhalanxDaemon( "validate", array( "regex" => $regex ) );
+		wfProfileOut( __METHOD__  );
+		return $result;
 	}
 
 	/**
@@ -92,7 +104,10 @@ class PhalanxService extends Service {
 	 *
 	 */
 	public function stats() {
-		return $this->sendToPhalanxDaemon( "stats", array() );
+		wfProfileIn( __METHOD__  );
+		$result = $this->sendToPhalanxDaemon( "stats", array() );
+		wfProfileOut( __METHOD__  );
+		return $result;
 	}
 
 	/**
@@ -106,8 +121,6 @@ class PhalanxService extends Service {
 	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-		wfProfileIn( __METHOD__  );
-
 		$baseurl = F::app()->wg->PhalanxServiceUrl;
 		$options = F::app()->wg->PhalanxServiceOptions;
 
@@ -191,9 +204,6 @@ class PhalanxService extends Service {
 					break;
 			}
 		}
-
-		wfProfileOut( __METHOD__  );
-
 		return $res;
 	}
 };
