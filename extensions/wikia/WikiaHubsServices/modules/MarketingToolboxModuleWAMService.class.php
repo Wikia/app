@@ -127,15 +127,15 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	/**
-	 * @desc Since search works better only for EN hub pages we implemented this simple method; we'll remove it once we contact with Robert and set a plan
+	 * @desc Since search works better only for EN hub pages we implemented this simple method
 	 * 
-	 * @param $verticalName
+	 * @param int|string $vertical vertical name or id
 	 * @return string
 	 */
-	protected function getSearchHubName($verticalName) {
-		if( in_array($verticalName, array('Video Games', 'Entertainment', 'Lifestyle')) ) {
-			if( $verticalName  === 'Video Games' ) return 'Gaming';
-			return $verticalName;
+	protected function getSearchHubName($vertical) {
+		$searchNames = F::app()->wg->WikiaHubsSearchMapping;
+		if( !empty($searchNames[$vertical]) ) {
+			return $searchNames[$vertical];
 		}
 		
 		return null;
