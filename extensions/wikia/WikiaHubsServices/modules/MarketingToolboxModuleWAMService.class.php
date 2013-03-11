@@ -22,9 +22,12 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	protected function prepareParameters($params) {
 		$params['limit'] = $this->getModel()->getWamLimitForHubPage();
 		
-		//TODO: add wam_previous_day
 		if( empty($params['ts']) ) {
 			$params['ts'] = strtotime('00:00 -2 day');
+		}
+
+		if( empty($params['ts_previous_day']) ) {
+			$params['ts_previous_day'] = strtotime('-1 day', $params['ts']);
 		}
 
 		if( empty($params['image_height']) ) {
@@ -37,7 +40,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 
 		return parent::prepareParameters([
 			'wam_day' => $params['ts'],
-			'wam_previous_day' => strtotime('-1 day', $params['ts']),
+			'wam_previous_day' => $params['ts_previous_day'],
 			'vertical_id' => $params['vertical_id'],
 			'wiki_lang' => $params['lang'],
 			'fetch_admins' => true,
