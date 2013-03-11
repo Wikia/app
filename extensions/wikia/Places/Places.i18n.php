@@ -52,6 +52,7 @@ $messages['br'] = array(
 	'places-geolocation-button-label' => "Ouzhpennañ ul lec'hiadur",
 	'places-geolocation-modal-add-title' => "Ouzhpennañ ul lec'hiadur",
 	'places-geolocation-modal-error-title' => 'Fazi',
+	'places-error-no-article' => "Ret eo deoc'h diferiñ ur bajenn",
 );
 
 /** Czech (česky)

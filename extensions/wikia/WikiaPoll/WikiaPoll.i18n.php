@@ -144,6 +144,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
@@ -159,6 +160,10 @@ $messages['br'] = array(
 	'wikiapoll-addnewitem-label' => 'Ouzhpennañ un elfenn nevez',
 	'wikiapoll-cancel-label' => 'Nullañ',
 	'wikiapoll-publish-label' => 'Embann',
+	'wikiamobile-wikiapoll-open-poll' => 'Petra a soñjit ?',
+	'wikiamobile-wikiapoll-thanks-voting' => "Trugarez deoc'h da vezañ votet !",
+	'wikiamobile-wikiapoll-poll' => 'Sontadeg',
+	'wikiamobile-wikiapoll-user-voted' => 'Votet ho peus war "$1"',
 );
 
 /** Catalan (català)

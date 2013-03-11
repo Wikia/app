@@ -391,6 +391,7 @@ Kit e darempred ganto da c'houzout hiroc'h.",
 	'chat-chatconnect-log' => 'Renabl kevreañ ar flap',
 	'chat-chatconnect-log-entry' => "Kevreañ ouzh $1 gant ar chomlec'h $2",
 	'chat-chatban-log' => 'Renabl obererezhioù forbannañ eus ar flap',
+	'chat-checkuser-join-action' => 'A zo deuet er flap',
 	'chat-status-away' => 'Ezvezant',
 );
 
@@ -1268,6 +1269,7 @@ Per favor contacta le pro plus informationes.',
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author Kenrick95
  */
 $messages['id'] = array(
 	'chat-no-login' => 'Anda harus login untuk chatting.',
@@ -1281,6 +1283,8 @@ $messages['id'] = array(
 	'chat-inlinealert-a-made-b-chatmod' => '$1telah <strong> $2 </strong> moderator chatting.',
 	'chat-err-connected-from-another-browser' => 'Anda telah terhubung dari browser lain. Hubungan ini akan ditutup.',
 	'chat-err-communicating-with-mediawiki' => 'Kesalahan terjadi saat terhubung dengan MediaWiki server.',
+	'chat-log-reason-undo' => 'balikkan',
+	'chat-ban-undolink' => 'balikkan',
 	'chat-ban-cant-ban-moderator' => 'Anda tidak bisa menendang/ban Moderator chatting yang lain.',
 	'chat-ban-already-banned' => '$1sudah dilarang dari chatting di wiki ini.',
 	'chat-ban-you-need-permission' => 'Anda tidak memiliki  $1  izin yang diperlukan untuk menendang/ban pengguna.',
@@ -2791,6 +2795,7 @@ $messages['uk'] = array(
 	'chat-user-permanently-disconnected' => 'Ви були відімкнуті, перевірте своє підключення до Інтернету та поновіть сторінку в браузері.',
 	'chat-ban-modal-label-expires' => 'Закінчується',
 	'chat-ban-modal-label-reason' => 'Причина',
+	'chat-log-reason-banadd' => 'Неправильно поводився у чаті',
 	'chat-log-reason-undo' => 'скасувати',
 	'chat-ban-undolink' => 'скасувати',
 	'chat-ban-modal-button-ok' => 'Забанити цього користувача',
@@ -2799,6 +2804,7 @@ $messages['uk'] = array(
 	'chat-ban-modal-end-ban' => 'Закінчення бана',
 	'chat-log-reason-banchange' => 'Причина не вказана',
 	'chat-log-reason-banremove' => 'Причина не вказана',
+	'chat-live2' => 'Live! Чат',
 	'chat-user-menu-message-wall' => 'Стіна обговорення',
 	'chat-user-menu-talk-page' => 'Обговорення користувача',
 	'group-chatmoderator-member' => 'Модератор чату',

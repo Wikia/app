@@ -98,7 +98,7 @@ $messages['br'] = array(
 * Pajennoù plijetañ #3", # Fuzzy
 	'welcome-message-user' => "Demat, Degemer mat war {{SITENAME}} ! Trugarez da vezañ kemmet [[:$1]].
 
-Gallout a rit lezel ur gemennadenn war ma fajenn V [[$2|discussion]] ma c'hallan sikour ac'hanoc'h d'ober tra pe dra $3",
+Gallout a rit lezel ur gemennadenn war ma fajenn V [[$2|kaozeal]] ma c'hallan sikour ac'hanoc'h d'ober tra pe dra ! $3",
 	'welcome-message-anon' => "Demat, degemer mat war {{SITENAME}}. Trugarez evit ho tegasadennoù er pajenn [[:$1]].
 
 '''[[Special:Userlogin|Mar plij kevreit pe krouit ur gont]]'''. Un doare aes eo evit derc'hel ur roud eus ho tegasadennoù hag aesaat a ra ar c'hehentiñ gant peurest ar gumuniezh.
@@ -119,6 +119,9 @@ Demat, Degemer mat war {{SITENAME}}; Trugarez da vezañ kemmet ar bajenn [[:$1]]
 M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ ar [[wikia:Forum:Community Central Forum|foromoù Kreiz ar Gumuniezh]] $3", # Fuzzy
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forom skoazellañ]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
+	'welcome-message-wall-user' => "Demat, Degemer mat war {{SITENAME}} ! Trugarez da vezañ kemmet [[:$1]].
+
+Gallout a rit lezel ur gemennadenn din ma c'hallan sikour ac'hanoc'h d'ober tra pe dra !",
 );
 
 /** Catalan (català)
@@ -230,6 +233,7 @@ Central Wiki]] $3", # Fuzzy
 /** German (Deutsch)
  * @author Geitost
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  * @author The Evil IP address
  */
@@ -256,39 +260,36 @@ Falls du irgendwelche Hilfe brauchen solltest, kannst du mir gerne eine Nachrich
 
 Falls du irgendwelche Hilfe brauchst, kannst du mir gerne eine Nachricht auf [[$2|meiner Diskussionsseite]] hinterlassen! $3",
 	'welcome-message-log' => 'Begrüßung eines neuen Autors',
-	'welcome-message-user-staff' => '==Willkommen==
+	'welcome-message-user-staff' => '== Willkommen ==
 
-Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
+Hallo und willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
 
-Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du vielleicht
-die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3', # Fuzzy
-	'welcome-message-anon-staff' => "==Willkommen==
+Falls du Hilfe brauchst, schau dir zuerst die [[Help:Contents|Hilfe-Seiten]] an. Besuche [[w:c:community|die deutsche Wikia-Community]], um über das [[w:c:community:Blog:Wikia_Staff_Blog|Staff-Blog]] auf dem aktuellen Stand zu sein, Fragen im [[w:c:community:Special:Forum|Community-Forum]] zu stellen, an unseren [[w:c:community:Help:Webinars|Webinars]] teilzunehmen oder mit anderen Wikianern zu chatten. Viel Spaß noch! $3',
+	'welcome-message-anon-staff' => '== Willkommen ==
 
-Hi, Willkommen bei {{SITENAME}}! Danke für deine Bearbeitung der Seite „[[:$1]]“.
+Hallo und willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
 
-'''[[Special:UserLogin|Bitte lege dir ein Benutzerkonto an]]'''. So kannst du ganz einfach deine Beiträge im Überblick behalten und dich besser mit dem Rest der Gemeinschaft verständigen.
+Wir fänden es gut, wenn du [[Special:UserLogin|dir ein Benutzerkonto anlegst]]. So kannst du ganz einfach deine Beiträge im Überblick behalten, hast mehr Funktionen zur Verfügung und bist für den Rest der Wiki-Gemeinschaft erkennbar.
 
-Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3", # Fuzzy
+Falls du Hilfe brauchst, schau dir zuerst die [[Help:Contents|Hilfe-Seiten]] an und besuche [[w:c:community|die deutsche Wikia-Community]], um mehr zu erfahren. Viel Spaß noch! $3',
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|Hilfe]] | [[w:sblog|Blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Hallo und Willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]]. 
 
 Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach eine Nachricht.',
-	'welcome-message-wall-user-staff' => 'Hallo und Willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
+	'welcome-message-wall-user-staff' => 'Hallo und willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
 
-Falls du Hilfe brauchst und keine [[Special:ListAdmins|aktiven Admins]] im Wiki findest, kannst du auch unser [[w:c:de.community:Forum:Index|Forum im Community-Wiki]] besuchen. Wenn du an aktuellen Informationen rund um Wikia interessiert bist, dann solltest du das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia Deutschland News-Blog]] lesen.
-
-Viel Spaß im Wiki!', # Fuzzy
+Falls du Hilfe brauchst, schau dir zuerst die [[Help:Übersicht|Hilfe-Seiten]] an. Besuche [[w:c:de.community|die deutsche Wikia-Community]], um über das [[w:c:de.community:Blog:Wikia Deutschland News|Staff-Blog]] auf dem aktuellen Stand zu sein, Fragen im [[w:c:de.community:Special:Forum|Community-Forum]] zu stellen oder mit anderen Wikianern zu chatten. Viel Spaß noch!',
 	'welcome-message-wall-anon' => "Hallo und Willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
 
 '''[[Special:Userlogin|Bitte melde dich an und erstelle ein Benutzerkonto]]'''. So kannst du ganz einfach einen Überblick über deine Beiträge behalten und es hilft sehr dabei, mit dem Rest der Community zu kommunizieren.
 
 Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach eine Nachricht.",
-	'welcome-message-wall-anon-staff' => "Hallo und Willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
+	'welcome-message-wall-anon-staff' => 'Hallo und willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
 
-'''[[Special:Userlogin|Bitte melde dich an und erstelle ein Benutzerkonto]]'''. So kannst du ganz einfach einen Überblick über deine Beiträge behalten und es hilft sehr dabei, mit dem Rest der Community zu kommunizieren.
+Wir fänden es gut, wenn du [[Special:UserLogin|dir ein Benutzerkonto anlegst]]. So kannst du ganz einfach deine Beiträge im Überblick behalten, hast mehr Funktionen zur Verfügung und bist für den Rest der Wiki-Gemeinschaft erkennbar.
 
-Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach eine Nachricht.", # Fuzzy
+Falls du Hilfe brauchst, schau dir zuerst die [[Help:Contents|Hilfe-Seiten]] an und besuche [[w:c:community|die deutsche Wikia-Community]], um mehr zu erfahren. Viel Spaß noch!',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
