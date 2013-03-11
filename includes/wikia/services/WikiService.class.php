@@ -332,8 +332,10 @@ class WikiService extends WikiaModel {
 			while($row = $results->fetchObject()) {
 				$title = Title::newFromText($row->city_main_image, NS_FILE);
 				$file = $this->wf->findFile($title);
-				if (!empty($file)) {
-					$images[$row->city_id] = $file->createThumb($imageWidth, $imageHeight);
+				
+				if ($file instanceof File && $file->exists()) {
+					$imageServing = new ImageServing(null, $imageWidth, $imageHeight);
+					$images[$row->city_id] = $imageServing->getUrl($row->city_main_image, $file->getWidth(), $file->getHeight());
 				}
 			}
 		} catch(Exception $e) {
