@@ -116,10 +116,12 @@ class WikiaSearchResultSetGroupingSetTest extends WikiaSearchBaseTest {
 		    ->with   ( 'url' )
 		    ->will   ( $this->returnValue( 'foo.wikia.com' ) )
 		;
-		$this->proxyClass( 'Wikia\Search\ResultSet\Factory', $mockFactory, 'getInstance' );
 		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockDc );
 		$this->mockApp();
-		$set = new ReflectionMethod( 'Wikia\Search\ResultSet\GroupingSet', 'setResultGroupings' );;
+		$fac = new ReflectionProperty( 'Wikia\Search\ResultSet\GroupingSet', 'factory' );
+		$fac->setAccessible( true );
+		$fac->setValue( $mockGroupingSet, $mockFactory );
+		$set = new ReflectionMethod( 'Wikia\Search\ResultSet\GroupingSet', 'setResultGroupings' );
 		$set->setAccessible( true );
 		$this->assertEquals(
 				$mockGroupingSet,
@@ -191,7 +193,9 @@ class WikiaSearchResultSetGroupingSetTest extends WikiaSearchBaseTest {
 		    ->with   ( 'url' )
 		    ->will   ( $this->returnValue( 'foo.wikia.co' ) )
 		;
-		$this->proxyClass( 'Wikia\Search\ResultSet\Factory', $mockFactory, 'getInstance' );
+		$fac = new ReflectionProperty( 'Wikia\Search\ResultSet\GroupingSet', 'factory' );
+		$fac->setAccessible( true );
+		$fac->setValue( $mockGroupingSet, $mockFactory );
 		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockDc );
 		$this->mockApp();
 		$set = new ReflectionMethod( 'Wikia\Search\ResultSet\GroupingSet', 'prependWikiMatchIfExists' );;

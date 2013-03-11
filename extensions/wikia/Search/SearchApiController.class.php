@@ -76,7 +76,7 @@ class SearchApiController extends WikiaApiController {
 
 		if ( $searchConfig->getQueryNoQuotes( true ) ) {
 			$container = new DependencyContainer( array( 'config' => $searchConfig ) );
-			$wikiaSearch = Factory::getInstance()->get( $container );
+			$wikiaSearch = (new Factory)->get( $container );
 
 			$resultSet = $wikiaSearch->search( $searchConfig );
 			$total = $searchConfig->getResultsFound();

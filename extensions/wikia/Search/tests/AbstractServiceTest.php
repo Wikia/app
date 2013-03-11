@@ -74,9 +74,10 @@ class AbstractServiceTest extends \WikiaSearchBasetest
 	 */
 	public function testGetCurrentDocumentId() {
 		$service = $this->service->getMockForAbstractClass();
+		$interface = new MediaWikiInterface;
 		$service->setPageId( 123 );
 		$this->assertEquals(
-				sprintf( '%s_%s', MediaWikiInterface::getInstance()->getWikiId(), MediaWikiInterface::getInstance()->getCanonicalPageIdFromPageId( 123 ) ),
+				sprintf( '%s_%s', $interface->getWikiId(), $interface->getCanonicalPageIdFromPageId( 123 ) ),
 				$service->getCurrentDocumentId()
 		);
 	}

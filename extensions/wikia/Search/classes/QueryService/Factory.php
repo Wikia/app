@@ -45,7 +45,7 @@ class Factory
 	 * @param DependencyContainer $container
 	 */
 	protected function validateClient( DependencyContainer $container ) {
-		$interface = MediaWikiInterface::getInstance();
+		$interface = new MediaWikiInterface;
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
 			$host = $interface->isOnDbCluster() ? $interface->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';  
