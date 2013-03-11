@@ -23,7 +23,15 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		if( empty($params['ts']) ) {
 			$params['ts'] = strtotime('00:00 -2 day');
 		}
-		
+
+		if( empty($params['image_height']) ) {
+			$params['image_height'] = $this->getModel()->getImageHeight();
+		}
+
+		if( empty($params['image_width']) ) {
+			$params['image_width'] = $this->getModel()->getImageWidth();
+		}
+
 		return parent::prepareParameters([
 			'wam_day' => $params['ts'],
 			'wam_previous_day' => strtotime('-1 day', $params['ts']),
@@ -33,7 +41,9 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 			'fetch_wiki_images' => true,
 			'limit' => $params['limit'],
 			'sort_column' => 'wam_index',
-			'sort_direction' => 'DESC'
+			'sort_direction' => 'DESC',
+			'wiki_image_height' => $params['image_height'],
+			'wiki_image_width' => $params['image_width'],
 		]);
 	}
 
