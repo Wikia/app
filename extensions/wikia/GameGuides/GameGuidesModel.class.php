@@ -214,7 +214,7 @@ class GameGuidesModel{
 									->setLength		( $totalLimit );
 
 				$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
-				$wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->get( $container );
+				$wikiaSearch = (new Wikia\Search\QueryService\Factory)->get( $container );
 				$resultSet = $wikiaSearch->search( $wikiaSearchConfig );
 
 				$ret['textResults'] = array();
