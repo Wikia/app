@@ -159,7 +159,7 @@ class Config implements ArrayAccess
 	 * @param array $params
 	 */
 	public function __construct( array $params = array() ) {
-		$this->interface = MediaWikiInterface::getInstance();
+		$this->interface = new MediaWikiInterface;
 		
 		$dynamicFilterCodes = array(
 				self::FILTER_CAT_VIDEOGAMES    => Utilities::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' ) ),

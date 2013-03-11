@@ -14,12 +14,6 @@ namespace Wikia\Search;
 class MediaWikiInterface
 {
 	/**
-	 * Enforce singleton
-	 * @var MediaWikiInterface
-	 */
-	protected static $instance;
-	
-	/**
 	 * Application interface
 	 * @var \WikiaApp
 	 */
@@ -28,52 +22,45 @@ class MediaWikiInterface
 	/**
 	 * Constructor method
 	 */
-	protected function __construct() {
+	public function __construct() {
 		$this->app = \F::app();
-	}
-	
-	public static function getInstance() {
-		if (! isset( self::$instance ) ) {
-			self::$instance = new MediaWikiInterface();
-		}
-		return self::$instance;
 	}
 	
 	/**
 	 * Allows us to memoize article instantiation based on pageid
 	 * @var array
 	 */
-	protected $pageIdsToArticles = array();
+	static protected $pageIdsToArticles = array();
 	
 	/**
 	 * Allows us to cache titles based on page id
 	 * @var array
 	 */
-	protected $pageIdsToTitles = array();
+	static protected $pageIdsToTitles = array();
 	
 	/**
 	 * Allows us to recover the canonical page ID
 	 * @var array
 	 */
-	protected $redirectsToCanonicalIds = array();
+	static protected $redirectsToCanonicalIds = array();
 	
 	/**
 	 * Gives direct access to File instance from page id
 	 * @var array
 	 */
-	protected $pageIdsToFiles = array();
+	static protected $pageIdsToFiles = array();
 	
 	/**
 	 * Stores articles that are redirects (helps us grab non-canonical info)
 	 * @var array
 	 */
-	protected $redirectArticles = array();
+	static protected $redirectArticles = array();
 	
 	/**
 	 * An array that corresponds wiki IDs to their wiki data sources.
 	 * @var array
 	 */
-	protected $wikiDataSources = array();
+	static protected $wikiDataSources = array();
 
 	/**
 	 * Given a page ID, get the title string
@@ -91,12 +78,12 @@ class MediaWikiInterface
 	 */
 	protected function getTitleFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );
-		if (! isset( $this->pageIdsToTitles[$pageId] ) ) {
+		if (! isset( static::$pageIdsToTitles[$pageId] ) ) {
 			$page = $this->getPageFromPageId( $pageId );
-			$this->pageIdsToTitles[$pageId] = $page->getTitle();
+			static::$pageIdsToTitles[$pageId] = $page->getTitle();
 		}
 		wfProfileOut( __METHOD__ );
-		return $this->pageIdsToTitles[$pageId];
+		return static::$pageIdsToTitles[$pageId];
 	}
 	
 	/**
@@ -114,8 +101,8 @@ class MediaWikiInterface
 			return $pageId;
 		}
 		
-		if ( isset( $this->redirectsToCanonicalIds[$pageId] ) ) {
-			$pageId = $this->redirectsToCanonicalIds[$pageId];
+		if ( isset( self::$redirectsToCanonicalIds[$pageId] ) ) {
+			$pageId = self::$redirectsToCanonicalIds[$pageId];
 		}
 		wfProfileOut(__METHOD__);
 		return $pageId;
@@ -491,8 +478,8 @@ class MediaWikiInterface
 	 * @return string
 	 */
 	public function getNonCanonicalTitleStringFromPageId( $pageId ) {
-		if ( isset( $this->redirectArticles[$pageId] ) ) {
-			return $this->getTitleString( $this->redirectArticles[$pageId]->getTitle() );
+		if ( isset( self::$redirectArticles[$pageId] ) ) {
+			return $this->getTitleString( self::$redirectArticles[$pageId]->getTitle() );
 		}
 		return $this->getTitleStringFromPageId( $pageId ); 
 	}
@@ -503,8 +490,8 @@ class MediaWikiInterface
 	 * @return string
 	 */
 	public function getNonCanonicalUrlFromPageId( $pageId ) {
-		if ( isset( $this->redirectArticles[$pageId] ) ) {
-			return $this->redirectArticles[$pageId]->getTitle()->getFullUrl();
+		if ( isset( self::$redirectArticles[$pageId] ) ) {
+			return self::$redirectArticles[$pageId]->getTitle()->getFullUrl();
 		}
 		return $this->getUrlFromPageId( $pageId ); 
 	}
@@ -724,10 +711,10 @@ class MediaWikiInterface
 	 * @return File
 	 */
 	protected function getFileForPageId( $pageId ) {
-		if (! isset( $this->pageIdsToFiles[$pageId] ) ) {
-			$this->pageIdsToFiles[$pageId] = $this->app->wf->FindFile( $this->getTitleFromPageId( $pageId ) );
+		if (! isset( self::$pageIdsToFiles[$pageId] ) ) {
+			self::$pageIdsToFiles[$pageId] = $this->app->wf->FindFile( $this->getTitleFromPageId( $pageId ) );
 		}
-		return $this->pageIdsToFiles[$pageId];
+		return self::$pageIdsToFiles[$pageId];
 	}
 	
     /**
@@ -738,8 +725,8 @@ class MediaWikiInterface
 	 */
 	protected function getPageFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );
-		if ( isset( $this->pageIdsToArticles[$pageId] ) ) {
-			return $this->pageIdsToArticles[$pageId];
+		if ( isset( self::$pageIdsToArticles[$pageId] ) ) {
+			return self::$pageIdsToArticles[$pageId];
 		}
 	    $page = \Article::newFromID( $pageId );
 	
@@ -747,13 +734,13 @@ class MediaWikiInterface
 			throw new \WikiaException( 'Invalid Article ID' );
 		}
 		if( $page->isRedirect() ) {
-			$this->redirectArticles[$pageId] = $page;
+			self::$redirectArticles[$pageId] = $page;
 			$page = new \Article( $page->getRedirectTarget() );
 			$newId = $page->getID();
-			$this->pageIdsToArticles[$newId] = $page;
-			$this->redirectsToCanonicalIds[$pageId] = $newId;
+			self::$pageIdsToArticles[$newId] = $page;
+			self::$redirectsToCanonicalIds[$pageId] = $newId;
 		}
-		$this->pageIdsToArticles[$pageId] = $page;
+		self::$pageIdsToArticles[$pageId] = $page;
 		
 		wfProfileOut(__METHOD__);
 		return $page;
@@ -788,10 +775,10 @@ class MediaWikiInterface
 	 * @return \WikiDataSource
 	 */
 	protected function getDataSourceForWikiId( $wikiId ) {
-		if ( empty( $this->wikiDataSources[$wikiId] ) ) {
-			$this->wikiDataSources[$wikiId] = new \WikiDataSource( $wikiId );
+		if ( empty( self::$wikiDataSources[$wikiId] ) ) {
+			self::$wikiDataSources[$wikiId] = new \WikiDataSource( $wikiId );
 		}
-		return $this->wikiDataSources[$wikiId];
+		return self::$wikiDataSources[$wikiId];
 	}
 
 	/**

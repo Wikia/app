@@ -30,8 +30,8 @@ class DependencyContainer
 	protected $client; 
 	
 	public function __construct( array $dependencies ) {
-		$this->resultSetFactory = ResultSet\Factory::getInstance();
-		$this->interface = MediaWikiInterface::getInstance();
+		$this->resultSetFactory = new ResultSet\Factory;
+		$this->interface = new MediaWikiInterface;
 		$this->configureByArray( $dependencies );
 	}
 	

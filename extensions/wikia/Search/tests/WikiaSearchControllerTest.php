@@ -11,7 +11,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		                          ->setMethods( array( 'get', 'getFromConfig' ) )
 		                          ->getMock();
 		
-		$this->proxyClass( 'Wikia\Search\QueryService\Factory', $this->mockFactory, 'getInstance' ); 
+		$this->proxyClass( 'Wikia\Search\QueryService\Factory', $this->mockFactory ); 
 		parent::setUp();
 	}
 

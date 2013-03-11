@@ -47,7 +47,7 @@ class Indexer
 	 * @param Solarium_Client $client
 	 */
 	public function __construct() {
-		$this->interface = MediaWikiInterface::getInstance();
+		$this->interface = new MediaWikiInterface;
 		$master = $this->interface->isOnDbCluster() ? $this->interface->getGlobal( 'SolrHost' ) : 'staff-search-s1';
 		$params = array(
 				'adapter' => 'Curl',
@@ -121,7 +121,7 @@ class Indexer
 	 */
 	public function getService( $serviceName ) {
 		if (! isset( $this->services[$serviceName] ) ) {
-			$this->services[$serviceName] = IndexService\Factory::getInstance()->get( $serviceName ); 
+			$this->services[$serviceName] = (new IndexService\Factory)->get( $serviceName ); 
 		}
 		return $this->services[$serviceName]; 
 	}

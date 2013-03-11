@@ -21,10 +21,11 @@ class WikiaSearchQueryServiceTest extends WikiaSearchBaseTest {
 		                   ->getMock();
 		
 		$config = new Wikia\Search\Config();
-		
+		$interface = new Wikia\Search\MediaWikiInterface;
+		$factory = new Wikia\Search\ResultSet\Factory;
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array() );
-		$dc->setInterface( Wikia\Search\MediaWikiInterface::getInstance() )
-		   ->setResultSetFactory( Wikia\Search\ResultSet\Factory::getInstance() )
+		$dc->setInterface( $interface )
+		   ->setResultSetFactory( $factory )
 		   ->setConfig( $config )
 		   ->setClient( $mockClient );
 		$this->assertEquals(
@@ -36,26 +37,12 @@ class WikiaSearchQueryServiceTest extends WikiaSearchBaseTest {
 				$dc->getConfig()
 		);
 		$this->assertEquals(
-				Wikia\Search\MediaWikiInterface::getInstance(),
+				$interface,
 				$dc->getInterface()
 		);
 		$this->assertEquals(
-				Wikia\Search\ResultSet\Factory::getInstance(),
+				$factory,
 				$dc->getResultSetFactory()
-		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\QueryService\Factory::getInstance
-	 */
-	public function testFactoryGetInstance() {
-		$instance = Wikia\Search\QueryService\Factory::getInstance();
-		$r = new ReflectionProperty( 'Wikia\Search\QueryService\Factory', 'instance' );
-		$r->setAccessible( true );
-		$r->setValue( $instance, null );
-		$this->assertInstanceOf(
-				'Wikia\Search\QueryService\Factory',
-				Wikia\Search\QueryService\Factory::getInstance()
 		);
 	}
 	
@@ -149,7 +136,7 @@ class WikiaSearchQueryServiceTest extends WikiaSearchBaseTest {
 		$config = new Wikia\Search\Config();
 		$this->assertInstanceOf(
 				'Wikia\Search\QueryService\Select\AbstractSelect',
-				Wikia\Search\QueryService\Factory::getInstance()->getFromConfig( $config )
+				(new Wikia\Search\QueryService\Factory)->getFromConfig( $config )
 		);
 	}
 	
@@ -158,7 +145,7 @@ class WikiaSearchQueryServiceTest extends WikiaSearchBaseTest {
 	 */
 	public function testFactoryValidateClient() {
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array() );
-		$factory = Wikia\Search\QueryService\Factory::getInstance();
+		$factory = new Wikia\Search\QueryService\Factory;
 		$reflValidate = new ReflectionMethod( 'Wikia\Search\QueryService\Factory' ,'validateClient' );
 		$reflValidate->setAccessible( true );
 		$reflValidate->invoke( $factory, $dc );

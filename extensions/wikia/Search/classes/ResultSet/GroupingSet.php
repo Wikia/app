@@ -13,6 +13,12 @@ use \WikiaSearchConfig;
 class GroupingSet extends Grouping
 {
 	/**
+	 * Helps us instantiate child groupings
+	 * @var Factory
+	 */
+	protected $factory;
+	
+	/**
 	 * Configures result set.
 	 * @param DependencyContainer $container
 	 */
@@ -21,7 +27,8 @@ class GroupingSet extends Grouping
 		$this->searchConfig       = $container->getConfig();
 		$this->interface          = $container->getInterface();
 		$this->results            = new ArrayIterator( array() );
-		$this->resultsFound = $this->getHostGrouping()->getMatches();
+		$this->resultsFound       = $this->getHostGrouping()->getMatches();
+		$this->factory            = new Factory;
 		$this->prependWikiMatchIfExists()
 		     ->setResultGroupings();
 	}
@@ -32,16 +39,16 @@ class GroupingSet extends Grouping
 	 */
 	protected function setResultGroupings() {
 		$fieldGroup = $this->getHostGrouping();
-		$metaposition = 0;
-		foreach ( $fieldGroup->getValueGroups() as $valueGroup ) {
+		$groups = $fieldGroup->getValueGroups();
+		for ( $i = 0; $i < count( $groups ); $i++ ) {
 			$dependencies = array(
 					'result' => $this->searchResultObject, 
 					'config' => $this->searchConfig, 
 					'parent' => $this, 
-					'metaposition' => $metaposition++
+					'metaposition' => $i
 					);
 			;
-			$resultSet = Factory::getInstance()->get( new DependencyContainer( $dependencies ) );
+			$resultSet = $this->factory->get( new DependencyContainer( $dependencies ) );
 			$this->results[$resultSet->getHeader( 'url' )] = $resultSet;
 		}
 		return $this;
@@ -60,7 +67,7 @@ class GroupingSet extends Grouping
 					'wikiMatch' => $this->searchConfig->getWikiMatch(),
 					);
 			;
-			$resultSet = Factory::getInstance()->get( new DependencyContainer( $dependencies ) );
+			$resultSet = $this->factory->get( new DependencyContainer( $dependencies ) );
 			$this->results[$resultSet->getHeader( 'url' )] = $resultSet;
 		}
 		return $this;

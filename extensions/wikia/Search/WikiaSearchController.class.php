@@ -31,7 +31,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
         // note: this is required since we haven't constructed $this->wg yet
 		global $wgWikiaSearchIsDefault;
 		$specialPageName = $wgWikiaSearchIsDefault ? 'Search' : 'WikiaSearch';
-		$this->queryServiceFactory = Wikia\Search\QueryService\Factory::getInstance();
+		$this->queryServiceFactory = new Wikia\Search\QueryService\Factory;
 		parent::__construct( $specialPageName, $specialPageName, false );
 	}
 

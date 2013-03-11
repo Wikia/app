@@ -26,7 +26,8 @@ class WikiaSearchIndexerController extends WikiaController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->interface = MediaWikiInterface::getInstance();
+		$this->factory = new Factory;
+		$this->interface = new MediaWikiInterface;
 		$this->interface->setGlobal( 'AllowMemcacheWrites', false )
 		                ->setGlobal( 'AppStripsHtml', true );
 	}
@@ -40,7 +41,7 @@ class WikiaSearchIndexerController extends WikiaController
 
 		$serviceName = $this->getVal( 'service', 'DefaultContent' );
 		$ids = explode( '|', $this->getVal( 'ids', '' ) );
-		$service = Factory::getInstance()->get( $serviceName, $ids );
+		$service = $this->factory->get( $serviceName, $ids );
 		$service->setVerbose( $this->getVal( 'verbose', false ) );
 		
 		$ids = $this->getVal( 'ids' );
@@ -61,7 +62,7 @@ class WikiaSearchIndexerController extends WikiaController
 		$this->getResponse()->setFormat('json');
 		
 		// this will throw an exception if you don't set the service. that's a behavior we want.
-		$service = Factory::getInstance()->get( $this->getVal( 'service' ) );
+		$service = $this->factory->get( $this->getVal( 'service' ) );
 		
 		$this->response->setData( $service->getStubbedWikiResponse() );
 	}

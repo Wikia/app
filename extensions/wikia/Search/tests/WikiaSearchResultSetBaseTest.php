@@ -49,7 +49,7 @@ class WikiaSearchResultSetBaseTest extends WikiaSearchBaseTest {
 		                   ->setMethods( array( 'getNumFound', 'getDocuments' ) )
 		                   ->getMock();
 		$config = new Wikia\Search\Config;
-		$interface = Wikia\Search\MediaWikiInterface::getInstance();
+		$interface = new Wikia\Search\MediaWikiInterface;
 		$dc = new Wikia\Search\ResultSet\DependencyContainer( array( 'config' => $config, 'interface' => $interface, 'result' => $mockResult ) );
 		$docArray = array( 'this value does not actually matter' );
 		$mockResult

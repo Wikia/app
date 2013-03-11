@@ -8,23 +8,6 @@ use \Wikia\Search\Config, \Wikia\Search\MediaWikiInterface, \Solarium_Client;
 
 class Factory
 {
-/**
-	 * Singleton instance
-	 * @var Factory 
-	 */
-	private static $instance;
-	
-	/**
-	 * Return a singleton instance
-	 * @return \Wikia\Search\QueryService\Factory
-	 */
-	public static function getInstance() {
-		if (! isset( self::$instance ) ) {
-			self::$instance = new Factory();
-		}
-		return self::$instance;
-	}
-	
 	/**
 	 * Inspects dependency container and returns appropriate QueryService\Select instance.
 	 * @param DependencyContainer $container
@@ -62,7 +45,7 @@ class Factory
 	 * @param DependencyContainer $container
 	 */
 	protected function validateClient( DependencyContainer $container ) {
-		$interface = MediaWikiInterface::getInstance();
+		$interface = new MediaWikiInterface;
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
 			$host = $interface->isOnDbCluster() ? $interface->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';  

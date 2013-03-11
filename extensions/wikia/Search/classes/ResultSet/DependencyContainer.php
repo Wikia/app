@@ -53,7 +53,7 @@ class DependencyContainer
 	 * @param array $dependencies optional method of prepopulating the dependencies. Can also call mutators.
 	 */
 	public function __construct( array $dependencies = array() ) {
-		$this->setInterface( MediaWikiInterface::getInstance() )
+		$this->setInterface( new MediaWikiInterface )
 		     ->configureByArray( $dependencies );
 	}
 	

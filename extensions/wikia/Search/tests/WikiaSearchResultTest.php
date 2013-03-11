@@ -10,15 +10,21 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 
 	/**
 	 * @covers Wikia\Search\Result::getCityId
+	 * @covers Wikia\Search\Result::__construct
 	 */
 	public function testGetCityId() {
 
-		$result = F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
+		$result = new Wikia\Search\Result( $this->defaultFields );
 
 		$this->assertEquals(
 				$this->defaultFields['wid'],
 				$result->getCityId(),
 				'Wikia\Search\Result::getCityId should return the value for the "wid" field as passed during construction.'
+		);
+		$this->assertAttributeInstanceOf(
+				'Wikia\Search\MediaWikiInterface', 
+				'interface',
+				$result
 		);
 	}
 
@@ -66,7 +72,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		unset($fieldsCopy['title']);
 		unset($fieldsCopy[Wikia\Search\Utilities::field('title')]);
 
-		$result = F::build( 'Wikia\Search\Result', array( $fieldsCopy ) );
+		$result = new Wikia\Search\Result( $fieldsCopy );
 
 		$this->assertEquals(
 				'',
@@ -114,6 +120,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		global $wgLanguageCode;
 		$oldCode = $wgLanguageCode;
 		$wgLanguageCode = 'fr';
+		$result = new Wikia\Search\Result( array( 'title_en' => $languageTitle ) );
 		$this->mockApp();
 		$this->assertEquals(
 		        $languageTitle,

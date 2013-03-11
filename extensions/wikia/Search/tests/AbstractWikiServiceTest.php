@@ -58,7 +58,7 @@ class AbstractWikiServiceTest extends \WikiaSearchBasetest
             ->will   ( $this->returnValue( $jsonResponse ) )
         ;
         $this->assertEquals(
-        		array( 'contents' => array( 'foo' => array( 'set' => 'bar' ) ), 'wid' => MediaWikiInterface::getInstance()->getWikiId() ),
+        		array( 'contents' => array( 'foo' => array( 'set' => 'bar' ) ), 'wid' => (new MediaWikiInterface)->getWikiId() ),
         		$service->getStubbedWikiResponse()
 		);
 	}
@@ -67,12 +67,13 @@ class AbstractWikiServiceTest extends \WikiaSearchBasetest
 	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getCurrentDocumentId 
 	 */
 	public function testGetCurrentDocumentId() {
+		$interface = new MediaWikiInterface;
 		$this->assertEquals(
-				sprintf( '%s_%s', MediaWikiInterface::getInstance()->getWikiId(), \Wikia\Search\IndexService\AbstractWikiService::PAGEID_PLACEHOLDER ),
+				sprintf( '%s_%s', $interface->getWikiId(), \Wikia\Search\IndexService\AbstractWikiService::PAGEID_PLACEHOLDER ),
 				$this->service->getMockForAbstractClass()->getCurrentDocumentId()
 		);
 		$this->assertEquals(
-				sprintf( '%s_%s', MediaWikiInterface::getInstance()->getWikiId(), 123 ),
+				sprintf( '%s_%s', $interface->getWikiId(), 123 ),
 				$this->service->getMockForAbstractClass()->setPageId( 123 )->getCurrentDocumentId()
 		);
 	}

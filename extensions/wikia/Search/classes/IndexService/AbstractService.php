@@ -45,7 +45,7 @@ abstract class AbstractService
 	 */
 	public function __construct( array $pageIds = array() ) {
 	    $this->pageIds = $pageIds;
-	    $this->interface = MediaWikiInterface::getInstance();
+	    $this->interface = new MediaWikiInterface;
 	}
 	
 	/**
