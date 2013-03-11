@@ -65,7 +65,7 @@ body {
 
 #wkMainCntHdr {
 	border-bottom: 1px solid $border-color;
-	padding: $page-padding 50px $page-padding $page-padding;
+	padding: $page-padding 50px $page-padding 0;
 	position: relative;
 
 	h1{
