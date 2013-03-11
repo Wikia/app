@@ -12,19 +12,17 @@ class VideoInfoHelper extends WikiaModel {
 	 * @param boolean $premiumOnly
 	 * @return array|null  $video
 	 */
-	public function getVideoDataByTitle( $title, $premiumOnly = false ) {
-		$app = F::app();
-
-		$app->wf->ProfileIn( __METHOD__ );
+	public function getVideoDataFromTitle( $title, $premiumOnly = false ) {
+		$this->wf->ProfileIn( __METHOD__ );
 
 		if ( is_string($title) ) {
 			$title = F::build( 'Title', array( $title, NS_FILE ), 'newFromText' );
 		}
 
-		$file = $app->wf->FindFile( $title );
-		$video = $this->getVideoDataByFile( $file, $premiumOnly );
+		$file = $this->wf->FindFile( $title );
+		$video = $this->getVideoDataFromFile( $file, $premiumOnly );
 
-		$app->wf->ProfileOut( __METHOD__ );
+		$this->wf->ProfileOut( __METHOD__ );
 
 		return $video;
 	}
@@ -35,15 +33,17 @@ class VideoInfoHelper extends WikiaModel {
 	 * @param boolean $premiumOnly
 	 * @return array|null  $video
 	 */
-	public function getVideoDataByFile( $file, $premiumOnly = false ) {
-		$app = F::app();
-
-		$app->wf->ProfileIn( __METHOD__ );
+	public function getVideoDataFromFile( $file, $premiumOnly = false ) {
+		$this->wf->ProfileIn( __METHOD__ );
 
 		$video = null;
 
-		if ( $file instanceof File && $file->exists()
-			&& F::build( 'WikiaFileHelper', array($file), 'isFileTypeVideo' ) ) {
+		if ( !self::videoInfoExists() ) {
+			$this->wf->ProfileOut( __METHOD__ );
+			return $video;
+		}
+
+		if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo($file) ) {
 			if ( !($premiumOnly && $file->isLocal()) ) {
 				$fileMetadata = $file->getMetadata();
 				$userId = $file->getUser( 'id' );
@@ -63,7 +63,7 @@ class VideoInfoHelper extends WikiaModel {
 
 				$premium = ( $file->isLocal() ) ? 0 : 1 ;
 				$video = array(
-					'videoTitle' => $file->getTitle()->getDBKey(),
+					'videoTitle' => $file->getName(),
 					'addedAt' => $addedAt,
 					'addedBy' => $userId,
 					'duration' => $duration,
@@ -73,7 +73,7 @@ class VideoInfoHelper extends WikiaModel {
 			}
 		}
 
-		$app->wf->ProfileOut( __METHOD__ );
+		$this->wf->ProfileOut( __METHOD__ );
 
 		return $video;
 	}
@@ -83,13 +83,18 @@ class VideoInfoHelper extends WikiaModel {
 	 * @return array $videoList
 	 */
 	public static function getTotalViewsFromDB() {
+		$app = F::app();
+
+		$app->wf->ProfileIn( __METHOD__ );
+
 		$videoList = array();
 
 		if ( !self::videoInfoExists() ) {
+			$app->wf->ProfileOut( __METHOD__ );
 			return $videoList;
 		}
 
-		$db = F::app()->wf->GetDB( DB_SLAVE );
+		$db = $app->wf->GetDB( DB_SLAVE );
 
 		$result = $db->select(
 			array( 'video_info' ),
@@ -104,7 +109,120 @@ class VideoInfoHelper extends WikiaModel {
 			$videoList[$key][$hashTitle] = $row->views_total;
 		}
 
+		$app->wf->ProfileOut( __METHOD__ );
+
 		return $videoList;
+	}
+
+	/**
+	 * check if video is removed
+	 * @param Title|string $title
+	 * @return boolean
+	 */
+	public function isVideoRemoved( $title ) {
+		if ( !self::videoInfoExists() ) {
+			return false;
+		}
+
+		if ( is_string($title) ) {
+			$title = Title::newFromText( $title, NS_FILE );
+		}
+
+		if ( $title instanceof Title ) {
+			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
+			if ( !empty($videoInfo) ) {
+				return $videoInfo->isRemoved();
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * check if video exists
+	 * @param Title|string $title
+	 * @param Boolean $premiumOnly
+	 * @return Boolean
+	 */
+	public function videoExists( $title, $premiumOnly = false ) {
+		if ( !self::videoInfoExists() ) {
+			return false;
+		}
+
+		if ( is_string($title) ) {
+			$title = Title::newFromText( $title, NS_FILE );
+		}
+
+		if ( $title instanceof Title ) {
+			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
+			if ( !empty($videoInfo) ) {
+				if ( $premiumOnly ) {
+					return $videoInfo->isPremium();
+				}
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * rename video
+	 * @param Title $oldTitle
+	 * @param Title $newTitle
+	 * @return boolean
+	 */
+	public function renameVideo( $oldTitle, $newTitle ) {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$affected = false;
+		$videoInfo = VideoInfo::newFromTitle( $oldTitle->getDBKey() );
+
+		// delete old video
+		if ( !empty($videoInfo) ) {
+			$videoInfo->deleteVideo();
+		}
+
+		// add new video
+		$videoData = $this->getVideoDataFromTitle( $newTitle );
+		if ( !empty($videoData) ) {
+			$videoInfo = new VideoInfo( $videoData );
+			$affected = $videoInfo->addVideo();
+		}
+
+		$this->wf->ProfileOut( __METHOD__ );
+
+		return $affected;
+	}
+
+	/**
+	 * restore premium video
+	 * @param Title $title
+	 * @param integer $userId
+	 * @return boolean $affected
+	 */
+	public function restorePremiumVideo( $title, $userId ) {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$affected = false;
+		if ( $title instanceof Title ) {
+			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
+			if ( empty($videoInfo) ) {
+				$videoData = $this->getVideoDataFromTitle( $title, true );
+				if ( !empty($videoData) ) {
+					// add premium video if not exist
+					$newVideoInfo = new VideoInfo( $videoData );
+					$affected = $newVideoInfo->addPremiumVideo( $userId );
+				}
+			} else {
+				$affected = $videoInfo->restoreVideo();
+			}
+		}
+
+		$this->wf->ProfileOut( __METHOD__ );
+
+		return $affected;
 	}
 
 	/**

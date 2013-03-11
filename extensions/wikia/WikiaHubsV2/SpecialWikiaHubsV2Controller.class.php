@@ -60,7 +60,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 					Wikia::log(
 						__METHOD__,
 						'',
-						'no module data for day: '.$modulesData[$moduleId]['data'].', lang: '.$this->wg->ContLang->getCode().', vertical: '.$this->verticalId
+						'no module data for day: ' . $this->wg->lang->date($this->hubTimestamp)
+							. ', lang: ' . $this->wg->ContLang->getCode()
+							. ', vertical: ' . $this->verticalId
+							. ', moduleId: ' . $moduleId
 					);
 				}
 		}

@@ -17,6 +17,7 @@ describe("Nirvana", function () {
 
 	// set up the environment
 	window.wgScriptPath = '';
+	window.wgServer = '';
 
 	it('registers AMD module', function() {
 		expect(typeof nirvana).toBe('object');

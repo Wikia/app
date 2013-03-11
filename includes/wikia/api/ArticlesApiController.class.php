@@ -48,19 +48,21 @@ class ArticlesApiController extends WikiaApiController {
 		$ids = null;
 
 		if ( !empty( $category )) {
-			$cat = Title::makeTitleSafe( NS_CATEGORY, $category, false, false );
+			$category = Title::makeTitleSafe( NS_CATEGORY, $category, false, false );
 
-			if ( !$cat->exists() ) {
+			if ( !is_null( $category ) && $category->exists() ) {
+				$category = self::followRedirect( $category );
+
+				$ids = self::getCategoryMembers( $category->getFullText(), 5000, '', '', 'timestamp' , 'desc' );
+
+				if ( !empty( $ids ) ) {
+					$ids = array_reduce($ids[0], function( $ret, $item ) {
+						$ret[] = $item['pageid'];
+						return $ret;
+					});
+				}
+			} else {
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
-			}
-
-			$ids = self::getCategoryMembers( $cat->getFullText(), 5000, '', '', 'timestamp' , 'desc' );
-
-			if ( !empty( $ids ) ) {
-				$ids = array_reduce($ids[0], function( $ret, $item ) {
-					$ret[] = $item['pageid'];
-					return $ret;
-				});
 			}
 		}
 
@@ -262,7 +264,9 @@ class ArticlesApiController extends WikiaApiController {
 		if ( !empty( $category ) ) {
 			$category = Title::makeTitleSafe( NS_CATEGORY, $category, false, false );
 
-			if ( !is_null( $category ) ) {
+			if ( !is_null( $category ) && $category->exists() ) {
+				$category = self::followRedirect( $category );
+
 				if ( !empty( $namespaces ) ) {
 					foreach ( $namespaces as &$n ) {
 						if ( !is_numeric( $n ) ) {
@@ -276,7 +280,7 @@ class ArticlesApiController extends WikiaApiController {
 				$articles = self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
 			} else {
 				$this->wf->profileOut( __METHOD__ );
-				throw new NotFoundApiException( 'Title::newFromText returned null' );
+				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
 			}
 		} else {
 
@@ -556,6 +560,16 @@ class ArticlesApiController extends WikiaApiController {
 				}
 			}
 		);
+	}
+
+	static private function followRedirect( $category ) {
+		$redirect = (new WikiPage( $category ))->getRedirectTarget();
+
+		if ( !empty( $redirect ) ) {
+			return $redirect;
+		}
+
+		return $category;
 	}
 
 	/**

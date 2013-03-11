@@ -232,6 +232,7 @@ $messages['br'] = array(
 	'editaccount-label-pass' => 'Termeniñ ur ger-tremen nevez',
 	'editaccount-label-realname' => 'Termeniñ un anv klok nevez',
 	'editaccount-label-clearunsub' => 'Digoumanantet',
+	'editaccount-label-reason' => 'Abeg',
 	'editaccount-submit-email' => 'Enrollañ ar postel',
 	'editaccount-submit-pass' => 'Enrollañ ar ger-tremen',
 	'editaccount-submit-realname' => 'Enrollañ an anv klok',

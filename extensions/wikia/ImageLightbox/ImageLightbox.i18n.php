@@ -62,11 +62,30 @@ $messages['az'] = array(
 
 /** Breton (brezhoneg)
  * @author Fohanno
+ * @author Y-M D
  */
 $messages['br'] = array(
+	'lightbox_details_tooltip' => 'Gwelet munudoù ar skeudenn',
+	'lightbox-forum' => 'Forom',
 	'lightbox-send' => 'Kas',
+	'lightbox-share-description' => 'Skeudenn $1 war $2',
+	'lightbox-share-email-subject' => "$1 en deus kaset deoc'h ur skeudenn war Wikia",
+	'lightbox-share-email-body' => "Salud,
+
+Fellout a ra d'unan bennak diskouez ur skeudenn deoc'h war Wikia. Sellit outi :
+
+$1
+
+- Skipailh Wikia",
+	'lightbox-share-button-email' => 'Postel',
 	'lightbox-share-button-www' => 'Rannañ',
+	'lightbox-share-button-embed' => 'Enframmañ',
+	'lightbox-share-email-label' => "Kas ar skeudenn-mañ d'ur mignon dre bostel",
+	'lightbox-share-email-page-label' => "Kas ar bajenn-mañ d'ur mignon dre bostel",
 	'lightbox-share-email-page-label-address' => "Chomlec'h postel",
+	'lightbox-share-email-ok-caption' => 'Kadarnadur',
+	'lightbox-share-email-ok-content' => 'Kaset eo bet ar postel{{PLURAL:$1||où}}.',
+	'lightbox-share-email-error-caption' => 'Fazi',
 	'lightbox-visit-the-wiki' => 'Gweladenniñ ar wiki :',
 );
 

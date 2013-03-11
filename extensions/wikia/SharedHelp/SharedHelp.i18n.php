@@ -42,12 +42,14 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Gwendal
  * @author Y-M D
  */
 $messages['br'] = array(
 	'sharedhelp-desc' => "Kemer a ra pajennoù [[w:c:Help|skoazell Wikia]] hag ensoc'hañ a ra anezho en esaouenn anv {{ns:help}} eus ar wiki-mañ",
 	'sharedhelp-autotalkcreate-summary' => 'Pajenn gaozeal krouet ent emgefreek',
+	'sharedhelp-searchprofile' => 'Pajennoù skoazell',
 );
 
 /** Czech (česky)
@@ -178,6 +180,13 @@ $messages['ja'] = array(
 $messages['ksh'] = array(
 	'sharedhelp-desc' => 'Nimmb Sigge us däm <i lang="en">[[w:c:Help|Help Wikia]]</i> un deiht se en et {{ns:help}}-Appachtemang en heh däm Wikis erin.',
 	'sharedhelp-autotalkcreate-summary' => 'Klaafsigg automattesch aanjelaat',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'sharedhelp-searchprofile' => 'Rûpelên alîkariyê',
 );
 
 /** Macedonian (македонски)

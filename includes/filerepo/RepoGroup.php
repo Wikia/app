@@ -148,6 +148,16 @@ class RepoGroup {
 		foreach ( $this->foreignRepos as $repo ) {
 			$image = $repo->findFile( $title, $options );
 			if ( $image ) {
+				/* Wikia changes begin */
+				// check if the foreign repo allows local repo file blocking
+				if ( $repo->allowBlocking ) {
+					$isDeleted = false;
+					wfRunHooks( 'ForeignFileDeleted', array( $image, &$isDeleted ) );
+					if ( $isDeleted ) {
+						return false;
+					}
+				}
+				/* Wikia changes end */
 				if ( $useCache ) {
 					$cacheEntry = $image;
 				}

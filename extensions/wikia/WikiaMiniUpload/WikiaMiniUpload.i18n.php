@@ -396,6 +396,7 @@ $messages['bjn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -471,6 +472,7 @@ $messages['br'] = array(
 	'wmu-replace-default-caption' => "Erlec'hiañ an notenn dre ziouer",
 	'wmu-appearance-in-article' => 'Tres er pennad',
 	'wmu-alignment' => 'Linennadur',
+	'wmu-file-protected' => 'Gwarezet eo ar skeudenn-mañ',
 );
 
 /** Catalan (català)

@@ -225,6 +225,7 @@ Treiwch eto neu [[Special:Contact|dywedwch rhywbeth]].",
 
 /** Danish (dansk)
  * @author Claus chr
+ * @author Kaare
  * @author Sarrus
  */
 $messages['da'] = array(
@@ -235,7 +236,7 @@ $messages['da'] = array(
 <li>Beholde dit nuværende brugernavn, historik, redigeringer... intet ændres bortset fra hvordan du logger ind</li>
 <li>Dele din aktivitet på Wikia med dine venner på Facebook, med fuld kontrol over hvad der bliver offentliggjort</li>
 </ul>',
-	'comboajaxlogin-connectmarketing-back' => '«Tilbage',
+	'comboajaxlogin-connectmarketing-back' => '« Tilbage',
 	'comboajaxlogin-connectmarketing-forward' => 'Kom i gang »',
 	'comboajaxlogin-connectdirections' => 'Indtast dit Wikia-brugernavn og kodeord her - vi vil på magisk vis forbinde dine Wikia og Facebook konti i baggrunden.
 
@@ -671,9 +672,11 @@ $messages['lb'] = array(
 
 /** Lithuanian (lietuvių)
  * @author Eitvys200
+ * @author Vilius
  */
 $messages['lt'] = array(
 	'comboajaxlogin-createlog' => 'Prisijungti arba sukurti sąskaitą',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Prisijungti su FaceBook Prisijungimu</h1>',
 );
 
 /** Macedonian (македонски)

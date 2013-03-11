@@ -18,14 +18,19 @@ class VideoInfoHooksHelper {
 			return true;
 		}
 
-		$videoInfoHelper = F::build( 'VideoInfoHelper' );
-		$videoData = $videoInfoHelper->getVideoDataByFile( $file );
+		$videoInfoHelper = new VideoInfoHelper();
+		$videoData = $videoInfoHelper->getVideoDataFromFile( $file );
 		if ( !empty($videoData) ) {
 			$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
 			if ( $reupload ) {
 				$videoInfo->reuploadVideo();
 			} else {
-				$videoInfo->addVideo();
+				// check if the foreign video with the same title exists
+				if ( $videoInfoHelper->videoExists($file->getTitle(), true) ) {
+					$videoInfo->reuploadVideo();
+				} else {
+					$videoInfo->addVideo();
+				}
 
 				$mediaService = F::build( 'MediaQueryService' );
 				$mediaService->clearCacheTotalVideos();
@@ -49,8 +54,8 @@ class VideoInfoHooksHelper {
 		}
 
 		if ( $title instanceof Title ) {
-			$videoInfoHelper = F::build( 'VideoInfoHelper' );
-			$videoData = $videoInfoHelper->getVideoDataByTitle( $title, true );
+			$videoInfoHelper = new VideoInfoHelper();
+			$videoData = $videoInfoHelper->getVideoDataFromTitle( $title, true );
 			if ( !empty($videoData) ) {
 				$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
 				$affected = $videoInfo->addPremiumVideo( F::app()->wg->User->getId() );
@@ -92,12 +97,10 @@ class VideoInfoHooksHelper {
 		$userId = $user->getId();
 		$videoInfoHelper = new VideoInfoHelper();
 		foreach( $insertedImages as $img ) {
-			$videoData = $videoInfoHelper->getVideoDataByTitle( $img['il_to'], true );
+			$videoData = $videoInfoHelper->getVideoDataFromTitle( $img['il_to'], true );
 			if ( !empty($videoData) ) {
 				$videoInfo = new VideoInfo( $videoData );
-				if ( $videoInfo->addPremiumVideo( $userId ) ) {
-					$affected = true;
-				}
+				$affected = ( $affected || $videoInfo->addPremiumVideo( $userId ) );
 			}
 		}
 
@@ -125,17 +128,16 @@ class VideoInfoHooksHelper {
 			return true;
 		}
 
-		$title = $file->getTitle();
-		if ( $title instanceof Title && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
+		if ( WikiaFileHelper::isFileTypeVideo($file) ) {
 			if ( $file->isLocal() ) {
-				$videoData = array(
-					'videoTitle' => $title->getDBKey(),
-				);
-				$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
-				$videoInfo->deleteVideo();
+				// remove local video from video_info table
+				$videoInfo = VideoInfo::newFromTitle( $file->getName() );
+				if ( !empty($videoInfo) ) {
+					$videoInfo->deleteVideo();
 
-				$mediaService = F::build( 'MediaQueryService' );
-				$mediaService->clearCacheTotalVideos();
+					$mediaService = new MediaQueryService();
+					$mediaService->clearCacheTotalVideos();
+				}
 			}
 		}
 
@@ -155,8 +157,8 @@ class VideoInfoHooksHelper {
 			return true;
 		}
 
-		$videoInfoHelper = F::build( 'VideoInfoHelper' );
-		$videoData = $videoInfoHelper->getVideoDataByTitle( $title );
+		$videoInfoHelper = new VideoInfoHelper();
+		$videoData = $videoInfoHelper->getVideoDataFromTitle( $title );
 		if ( !empty($videoData) ) {
 			$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
 			$videoInfo->addVideo();
@@ -180,23 +182,97 @@ class VideoInfoHooksHelper {
 			return true;
 		}
 
-		$videoInfo = F::build( 'VideoInfo', array($oldTitle->getDBKey()), 'newFromTitle' );
-		if ( empty($videoInfo) ) {
-			// add new video
-			$videoInfoHelper = F::build( 'VideoInfoHelper' );
-			$videoData = $videoInfoHelper->getVideoDataByTitle( $newTitle );
-			if ( !empty($videoData) ) {
-				$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
-				$videoInfo->addVideo();
-
-				$mediaService = F::build( 'MediaQueryService' );
-				$mediaService->clearCacheTotalVideos();
-			}
-		} else {
-			$videoInfo->renameVideo( $newTitle->getDBKey() );
+		$videoInfoHelper = new VideoInfoHelper();
+		$affected = $videoInfoHelper->renameVideo( $oldTitle, $newTitle );
+		if ( $affected ) {
+			$mediaService = new MediaQueryService();
+			$mediaService->clearCacheTotalVideos();
 		}
 
 		return true;
 	}
 
+	/**
+	 * Hook: delete premium video and clear cache when the file page is deleted
+	 * @param WikiPage $wikiPage
+	 * @param User $user
+	 * @param string $reason
+	 * @param integer $pageId
+	 * @return true
+	 */
+	public static function onArticleDeleteComplete( &$wikiPage, &$user, $reason, $pageId  ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
+			return true;
+		}
+
+		$title = $wikiPage->getTitle();
+		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
+			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
+			if ( empty($videoInfo) ) {
+				// add removed video
+				$videoInfoHelper = new VideoInfoHelper();
+				$videoData = $videoInfoHelper->getVideoDataFromTitle( $title, true );
+				if ( !empty($videoData) ) {
+					$videoInfo = new VideoInfo( $videoData );
+					$videoInfo->setRemoved();
+					$affected = $videoInfo->addPremiumVideo( $user->getId() );
+				}
+			} else {
+				// set removed video
+				$affected = $videoInfo->removeVideo();
+			}
+
+			if ( $affected ) {
+				$mediaService = new MediaQueryService();
+				$mediaService->clearCacheTotalVideos();
+				$mediaService->clearCacheTotalPremiumVideos();
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: restore premium video and clear cache when the file page is undeleted
+	 * @param Title $title
+	 * @param User $user
+	 * @param string $reason
+	 * @return true
+	 */
+	public static function onUndeleteComplete( &$title, &$user, $reason ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
+			return true;
+		}
+
+		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
+			$videoInfoHelper = new VideoInfoHelper();
+			$affected = $videoInfoHelper->restorePremiumVideo( $title, $user->getId() );
+			if ( $affected ) {
+				$mediaService = new MediaQueryService();
+				$mediaService->clearCacheTotalVideos();
+				$mediaService->clearCacheTotalPremiumVideos();
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: check if the file is deleted
+	 * @param File $file
+	 * @param boolean $isDeleted
+	 * @return true
+	 */
+	public static function onForeignFileDeleted( $file, &$isDeleted ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
+			return true;
+		}
+
+		if ( WikiaFileHelper::isFileTypeVideo($file) && !$file->isLocal() ) {
+			$videoInfoHelper = new VideoInfoHelper();
+			$isDeleted = $videoInfoHelper->isVideoRemoved( $file->getName() );
+		}
+
+		return true;
+	}
 }
