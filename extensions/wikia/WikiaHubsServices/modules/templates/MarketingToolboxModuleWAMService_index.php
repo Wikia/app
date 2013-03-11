@@ -8,6 +8,9 @@
 		<form method="get" action="index.php?title=Special:Search" class="WikiaSearch" id="WikiaSearch">
 			<input type="text" value="" accesskey="f" autocomplete="off" placeholder="<?= wfMessage('wikiahubs-search-placeholder')->text(); ?>" name="search" id="HubSearch" />
 			<input type="hidden" value="0" name="fulltext" />
+			<? if (!empty($searchHubName)): ?>
+				<input type="hidden" name="hub" value="<?= $searchHubName; ?>" />
+			<? endif; ?>
 			<input type="submit" />
 			<button class="wikia-button">
 				<img width="21" height="17" class="sprite search" src="<?= $wg->BlankImgUrl; ?>" />
@@ -43,21 +46,7 @@
 					<tr>
 						<td class="rank"><?= $wiki['rank']; ?>.</td>
 						<td class="score">
-							<img src="<?= $wg->BlankImgUrl; ?>" class="
-								<?
-									switch ($wiki['change']) {
-										case '-1':
-											echo 'down';
-											break;
-										case '0':
-											echo 'nochange';
-											break;
-										case '1':
-											echo 'up';
-											break;
-									}
-								?>
-							" />
+							<img src="<?= $wg->BlankImgUrl; ?>" class="<?= $scoreChangeMap[$wiki['change']]; ?>" />
 							<?= $wiki['wamScore']; ?>
 						</td>
 						<td>

@@ -110,7 +110,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		$data['imagesHeight'] = $this->getModel()->getImageHeight();
 		$data['imagesWidth'] = $this->getModel()->getImageWidth();
 		$data['searchHubName'] = $this->getSearchHubName($data['verticalName']);
-		
+
 		return parent::render($data);
 	}
 	
