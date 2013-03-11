@@ -284,6 +284,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -302,7 +303,7 @@ $messages['br'] = array(
 	'multiwikiedit_task_added' => 'Ouzhpennet eo bet an trevell lieskemmañ #$1.',
 	'multiwikiedit_task_error' => 'Ur fazi zo bet en ur ouzhpennañ ar poellad lieskemmañ.',
 	'multiwikiedit_task_none_selected' => "N'hoc'h eus ouzhpennet pennad ebet. N'eo ket bet ouzhpennet an trevell.",
-	'multiwikiedit_on' => 'war', # Fuzzy
+	'multiwikiedit_on' => 'Seveniñ ar skript war',
 	'multiwikiedit_page' => 'Pajennoù da gemmañ',
 	'multiwikiedit_page_text' => 'Testenn da enrollañ',
 	'multiwikiedit_reason' => "Abeg ar c'hemm",
@@ -387,6 +388,7 @@ $messages['br'] = array(
 	'multidelete_french_wikis' => 'an holl wikioù gallek',
 	'multidelete_swedish_wikis' => 'an holl wikioù svedek',
 	'multidelete_german_wikis' => 'an holl wikioù alamanek',
+	'action-multidelete' => 'Dilemel ur strobad pajennoù',
 	'multiwikifinder' => 'Klasker titloù lieswiki',
 	'multiwikifindpagenames' => 'Kavout anvioù pajennoù',
 	'multiwikienterpagename' => 'Lakait un anv pajenn :',

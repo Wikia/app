@@ -6,21 +6,28 @@
  */
 class ParserSpeedTablePager extends TablePager {
 
+	protected $mainNamespaceText;
+
 	public function __construct( IContextSource $context = null ) {
 		parent::__construct($context);
 		$this->mDb = wfGetDB(DB_SLAVE,array(),F::app()->wg->ExternalDatawareDB);
+		$this->mainNamespaceText = wfMessage('blanknamespace')->inContentLanguage()->plain();
 	}
 
 	function isFieldSortable( $field ) {
-		return in_array( $field, array( 'average_time', 'minimum_time', 'maximum_time', 'wikitext_size', 'html_size' ) );
+		return in_array( $field, array( 'page_ns', 'average_time', 'minimum_time', 'maximum_time', 'wikitext_size', 'html_size' ) );
 	}
 
 	function formatValue( $name, $value ) {
+		global $wgContLang;
 		switch ($name) {
 			case 'article_title':
 				$articleId = $this->mCurrentRow->article_id;
 				$title = Title::newFromID($articleId);
 				return $title ? Linker::link($title) : '(unknown, id: '.$articleId.')';
+				break;
+			case 'page_ns':
+				return ($value != 0 ? $wgContLang->getNsText( $value ) : $this->mainNamespaceText) . " [$value]";
 				break;
 			case 'average_time':
 			case 'minimum_time':
@@ -48,6 +55,7 @@ class ParserSpeedTablePager extends TablePager {
 	function getFieldNames() {
 		// todo: transfer to i18n files
 		return array(
+			'page_ns' => 'Namespace',
 			'article_title' => 'Article',
 			'average_time' => 'Avg. parsing time',
 			'minimum_time' => 'Min. parsing time',
@@ -60,7 +68,7 @@ class ParserSpeedTablePager extends TablePager {
 	function getQueryInfo() {
 		$queryInfo = array(
 			'tables' => 'parser_speed_article',
-			'fields' => 'article_id, average_time, minimum_time, maximum_time, wikitext_size, html_size',
+			'fields' => 'article_id, page_ns, average_time, minimum_time, maximum_time, wikitext_size, html_size',
 			'conds' => array(
 				'wiki_id' => F::app()->wg->CityId,
 			)

@@ -592,6 +592,7 @@ $messages['lb'] = array(
 
 /** Lithuanian (lietuvių)
  * @author Eitvys200
+ * @author Vilius
  */
 $messages['lt'] = array(
 	'quickstats-header-label' => 'Greita statistika',
@@ -601,6 +602,7 @@ $messages['lt'] = array(
 	'quickstats-header-photos' => 'Nuotraukos',
 	'quickstats-header-likes' => 'Patinka',
 	'quickstats-totals-label' => 'Viso',
+	'quickstats-see-more-stats-link' => '[[Specialus:WikiStatistika|Pamatyti daugiau statistikų]]', # Fuzzy
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',

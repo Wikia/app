@@ -8,7 +8,7 @@
 (function (context) {
 	'use strict';
 
-	function querystring(location) {
+	function querystring(location, win) {
 		var l = location,
 			p,
 			u,
@@ -256,11 +256,11 @@
 		 */
 		p.pushState = function(data) {
 			// Check browser support of HTML5 history api
-			if(!(window.history && history.pushState)) {
+			if(!(win.history && win.history.pushState)) {
 				return;
 			}
 			data = data || {};
-			history.pushState(data, document.title, this.toString());
+			win.history.pushState(data, win.document.title, this.toString());
 		}
 
 		/**
@@ -271,19 +271,19 @@
 		 */
 		p.replaceState = function(data) {
 			// Check browser support of HTML5 history api
-			if(!(window.history && history.replaceState)) {
+			if(!(win.history && win.history.replaceState)) {
 				return;
 			}
 			data = data || {};
-			history.replaceState(data, document.title, this.toString());
+			win.history.replaceState(data, win.document.title, this.toString());
 		}
 
 		return Querystring;
 	}
 
 	if (context.define && context.define.amd) {
-		context.define('wikia.querystring', ['wikia.location'], querystring);
+		context.define('wikia.querystring', ['wikia.location', 'wikia.window'], querystring);
 	}
 	context.Wikia = context.Wikia || {};
-	context.Wikia.Querystring = querystring(context.location);
+	context.Wikia.Querystring = querystring(context.location, context);
 }(this));

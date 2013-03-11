@@ -720,6 +720,7 @@ $messages['bjn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
@@ -884,6 +885,7 @@ Deskrivit ar skeudenn-mañ.",
 	'wikiaPhotoGallery-photooptions-linkurl' => "Liamm davet (ensoc'hit anv pe URL ar bajenn).",
 	'wikiaPhotoGallery-photooptions-description' => 'Munudoù ar skeudenn.',
 	'wikiaPhotoGallery-search-tooltip' => 'Klask skeudennoù er wiki-mañ',
+	'wikiaPhotoGallery-not-displayed' => "N'eo ket diskwelet",
 	'galery-slider-read-more' => "Lenn muioc'h >",
 );
 
@@ -2613,6 +2615,13 @@ Másik lehetőségként a(z) "$2"-re kattintva megtekintheted az oldalt frissít
 	'wikiaPhotoGallery-upload-image-size' => 'A képek minimális mérete 670 × 360 pixel', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Nem jelenik meg',
 	'galery-slider-read-more' => 'Tovább >',
+);
+
+/** Armenian (Հայերեն)
+ * @author Vadgt
+ */
+$messages['hy'] = array(
+	'wikiaPhotoGallery-preview-add-link' => 'Ավելացնել հղում',
 );
 
 /** Interlingua (interlingua)
