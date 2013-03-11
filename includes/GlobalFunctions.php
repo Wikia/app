@@ -853,8 +853,8 @@ function wfMatchesDomainList( $url, $domains ) {
  * @param $logonly Bool: set true to avoid appearing in HTML when $wgDebugComments is set
  */
 function wfDebug( $text, $logonly = false ) {
-	global $wgOut, $wgDebugComments, $wgDebugRawPage;
-	global $wgShowDebug;
+	global $wgOut, $wgDebugLogFile, $wgDebugComments, $wgProfileOnly, $wgDebugRawPage;
+	global $wgDebugLogPrefix, $wgShowDebug;
 
 	static $cache = array(); // Cache of unoutputted messages
 	$text = wfDebugTimer() . $text;
@@ -873,7 +873,7 @@ function wfDebug( $text, $logonly = false ) {
 		}
 	}
 	/**
-	global $wgDebugLogFile, $wgProfileOnly, $wgDebugLogPrefix;
+	# BAC-91
 	if ( wfRunHooks( 'Debug', array( $text, null ) ) ) {
 		if ( $wgDebugLogFile != '' && !$wgProfileOnly ) {
 			# Strip unprintables; they can switch terminal modes when binary data
