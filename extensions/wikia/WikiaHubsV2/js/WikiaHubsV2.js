@@ -45,6 +45,7 @@ var WikiaHubs = {
 		var node = $(e.target),
 			startTime = new Date(),
 			url,
+			rank,
 			lang;
 
 		lang = wgContentLanguage;
@@ -130,6 +131,17 @@ var WikiaHubs = {
 				WikiaHubs.trackClick('WikiasPicks', Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'sponsoredimage', null, {lang: lang}, e);
 			} else if (node.is('img')) {
 				WikiaHubs.trackClick('WikiasPicks', Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'image', null, {lang: lang}, e);
+			}
+		}
+		else if (node.closest('.wikiahubs-wam').length > 0) {    // WAM
+			url = node.closest('a').attr('href');
+			rank = node.closest('tr').attr('data-rank');
+			if (node.hasParent('.wiki-thumb')) {
+				WikiaHubs.trackClick('HubWam', Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'wikithumbnail', null, {lang: lang, href: url, rank: rank}, e);
+			} else if (node.is('.wiki-name')) {
+				WikiaHubs.trackClick('HubWam', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'wikiname', null, {lang: lang, href: url, rank: rank}, e);
+			} else if (node.is('.read-more')) {
+				WikiaHubs.trackClick('HubWam', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'readmore', null, {lang: lang, href: url}, e);
 			}
 		}
 

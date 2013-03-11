@@ -24,7 +24,7 @@
 		<h2>
 			<?= wfMessage('wikiahubs-wam-header')->text(); ?>
 		</h2>
-		<a href="<?= $wamPageUrl; ?>">
+		<a href="<?= $wamPageUrl; ?>" class="read-more">
 			<?= wfMessage('wikiahubs-wam-see-full-wam-ranking')->text(); ?>
 		</a>
 	</div>
@@ -43,17 +43,19 @@
 			</thead>
 			<tbody>
 				<?php foreach($ranking as $wiki): ?>
-					<tr>
+					<tr data-rank="<?= $wiki['rank']; ?>">
 						<td class="rank"><?= $wiki['rank']; ?>.</td>
 						<td class="score">
 							<img src="<?= $wg->BlankImgUrl; ?>" class="<?= $scoreChangeMap[$wiki['change']]; ?>" />
 							<?= $wiki['wamScore']; ?>
 						</td>
 						<td>
-							<img src="<?= $wiki['imageUrl']; ?>" />
+							<a href="<?= $wiki['wikiUrl']; ?>" class="wiki-thumb">
+								<img src="<?= $wiki['imageUrl']; ?>" />
+							</a>
 						</td>
 						<td class="url">
-							<a href="<?= $wiki['wikiUrl']; ?>" target="_blank"><?= $wiki['wikiName']; ?></a>
+							<a href="<?= $wiki['wikiUrl']; ?>" class="wiki-name"><?= $wiki['wikiName']; ?></a>
 						</td>
 					</tr>
 				<?php endforeach; ?>

@@ -67,10 +67,6 @@
 			}
 			td {
 				padding: 7px 0;
-				img {
-					width: 48px;
-					height: 30px;
-				}
 			}
 			.rank, .score {
 				font-weight: bold;
@@ -93,6 +89,11 @@
 			}
 			.url {
 				text-decoration: none;
+			}
+			.wiki-thumb, .wiki-thumb img {
+				display: block;
+				height: 30px;
+				width: 48px;
 			}
 		}
 	}
