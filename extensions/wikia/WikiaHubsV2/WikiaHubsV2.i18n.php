@@ -10,6 +10,7 @@ $messages = array();
 $messages['en'] = array(
 	// general
 	'wikiahubs-button-cancel' => 'Cancel',
+	'wikiahubs-search-placeholder' => 'Search Wikia',
 
 	// suggest article
 	'wikiahubs-suggest-article-header' => 'Suggest an Article',
@@ -24,6 +25,14 @@ $messages['en'] = array(
 	'wikiahubs-vertical-VideoGames' => 'Video Games',
 	'wikiahubs-vertical-Entertainment' => 'Entertainment',
 	'wikiahubs-vertical-Lifestyle' => 'Lifestyle',
+	
+	//WAM
+	'wikiahubs-wam-header' => 'WAM Score',
+	'wikiahubs-wam-see-full-wam-ranking' => 'Read more about WAM',
+	'wikiahubs-wam-top-wikis-headline' => 'Top $1 Wikis',
+	'wikiahubs-wam-rank' => 'Rank',
+	'wikiahubs-wam-score' => 'WAM Score',
+	'wikiahubs-wam-wiki-url' => "Wiki's Name",
 	
 	// from the community
 	'wikiahubs-from-community-promoted' => 'Get Promoted',
@@ -73,6 +82,9 @@ $messages['qqq'] = array(
 	'wikiahubs-vertical-Entertainment' => 'Entertainment hub name',
 	'wikiahubs-vertical-Lifestyle' => 'Lifestyle hub name',
 
+	//WAM
+	'wikiahubs-wam-top-wikis-headline' => 'the parameter is a vertical name i.e. Video Games or Entertainment',
+	
 	// from the community
 	'wikiahubs-from-community-promoted' => 'Text on button next to FTC title - suggest new article',
 	'wikiahubs-from-community-caption' => 'From [$1 $2] on [$3 $4] - 1st parameter: Users URL, 2nd - User Name, 3rd - Article Url, 4th - wiki name',

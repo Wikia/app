@@ -238,13 +238,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'data' => array('second test variable' => 'variable')
 		);
 
-		$mockedModulesData = array();
-		for ($i = 1; $i < 9; $i++) {
-			$mockedModulesData[$i] = $mockDataForModule;
-		}
-		$mockedModulesData[9] = $mockDataForLastModule;
-
-
 		// Mock database
 		$dbMock = $this->getMock('DatabaseMysql', array('selectField', 'makeList'));
 		$dbMock->expects($this->once())
@@ -281,6 +274,14 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			array('getModulesDataFromDb', 'getModuleUrl', 'getDefaultModuleList'),
 			array($app)
 		);
+
+		$moduleIds = $modelMock->getEditableModulesIds();
+
+		$mockedModulesData = array();
+		for ($i = 1; $i < 9; $i++) {
+			if(in_array($i, $moduleIds)) $mockedModulesData[$i] = $mockDataForModule;
+		}
+		$mockedModulesData[9] = $mockDataForLastModule;
 
 		$modelMock->expects($this->at(0))
 			->method('getModulesDataFromDb')
@@ -329,24 +330,26 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals(123654, $modulesData['lastEditTime']);
 		$this->assertEquals($lastEditorName, $modulesData['lastEditor']);
 		$this->assertNotNull($modulesData['activeModuleName']);
-		$this->assertEquals(9, count($modulesData['moduleList']));
+		$this->assertEquals(7, count($modulesData['moduleList']));
 
 		for ($i = 1; $i < 9; $i++) {
-			$module = $modulesData['moduleList'][$i];
+			if(in_array($i, $moduleIds)) {
+				$module = $modulesData['moduleList'][$i];
 
-			$this->assertArrayHasKey('status', $module);
-			$this->assertArrayHasKey('data', $module);
-			$this->assertArrayHasKey('lastEditTime', $module);
-			$this->assertArrayHasKey('lastEditorId', $module);
-			$this->assertArrayHasKey('name', $module);
-			$this->assertArrayHasKey('href', $module);
+				$this->assertArrayHasKey('status', $module);
+				$this->assertArrayHasKey('data', $module);
+				$this->assertArrayHasKey('lastEditTime', $module);
+				$this->assertArrayHasKey('lastEditorId', $module);
+				$this->assertArrayHasKey('name', $module);
+				$this->assertArrayHasKey('href', $module);
 
-			$this->assertEquals(1, $module['status']);
-			$this->assertEquals($mockDataForModule['lastEditTime'], $module['lastEditTime']);
-			$this->assertEquals($mockDataForModule['lastEditorId'], $module['lastEditorId']);
-			$this->assertEquals($mockDataForModule['data'], $module['data']);
-			$this->assertNotNull($module['name']);
-			$this->assertEquals('test href', $module['href']);
+				$this->assertEquals(1, $module['status']);
+				$this->assertEquals($mockDataForModule['lastEditTime'], $module['lastEditTime']);
+				$this->assertEquals($mockDataForModule['lastEditorId'], $module['lastEditorId']);
+				$this->assertEquals($mockDataForModule['data'], $module['data']);
+				$this->assertNotNull($module['name']);
+				$this->assertEquals('test href', $module['href']);
+			}
 		}
 
 		$module = $modulesData['moduleList'][9];

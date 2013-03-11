@@ -52,7 +52,11 @@ class WikiaHubsApiController extends WikiaApiController {
 		$moduleService = MarketingToolboxModuleService::getModuleByName($moduleName, $lang, MarketingToolboxModel::SECTION_HUBS, $verticalId);
 		
 		if( $this->isValidModuleService($moduleService) ) {
-			$data = $moduleService->loadData($model, $timestamp);
+			$data = $moduleService->loadData($model, [
+				'lang' => $lang,
+				'vertical_id' => $verticalId,
+				'ts' => $timestamp,
+			]);
 			$this->response->setVal('data', $data);
 		} else {
 			throw new BadRequestApiException();
@@ -75,7 +79,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	}
 	
 	protected function isValidModule(MarketingToolboxModel $model, $moduleId) {
-		if( $moduleId > 0 ) { 
+		if( $moduleId > 0 ) {
 			return in_array($moduleId, $model->getModulesIds());
 		}
 		
