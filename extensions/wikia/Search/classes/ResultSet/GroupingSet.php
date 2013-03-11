@@ -32,13 +32,13 @@ class GroupingSet extends Grouping
 	 */
 	protected function setResultGroupings() {
 		$fieldGroup = $this->getHostGrouping();
-		$metaposition = 0;
-		foreach ( $fieldGroup->getValueGroups() as $valueGroup ) {
+		$groups = $fieldGroup->getValueGroups();
+		for ( $i = 0; $i < count( $groups ); $i++ ) {
 			$dependencies = array(
 					'result' => $this->searchResultObject, 
 					'config' => $this->searchConfig, 
 					'parent' => $this, 
-					'metaposition' => $metaposition++
+					'metaposition' => $i
 					);
 			;
 			$resultSet = Factory::getInstance()->get( new DependencyContainer( $dependencies ) );
