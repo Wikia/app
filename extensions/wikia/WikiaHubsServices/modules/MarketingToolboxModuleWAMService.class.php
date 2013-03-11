@@ -1,6 +1,8 @@
 <?php
 
 class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditableService {
+	const DECIMALS = 2;
+	
 	/**
 	 * @var MarketingToolboxWAMModel
 	 */
@@ -65,7 +67,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		foreach($wamIndex as $wiki) {
 			$structuredData['ranking'][] = [
 				'rank' => $rank,
-				'wamScore' => $wiki['wam'],
+				'wamScore' => round($wiki['wam'], self::DECIMALS),
 				'imageUrl' => $wiki['wiki_image'],
 				'wikiName' => $wiki['title'],
 				'wikiUrl' => $wiki['url'],
