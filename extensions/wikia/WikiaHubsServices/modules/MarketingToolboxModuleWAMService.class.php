@@ -1,7 +1,10 @@
 <?php
 
 class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditableService {
-	const DECIMALS = 2;
+	const WAM_SCORE_CHANGE_UP = 1;
+	const WAM_SCORE_NO_CHANGE = 0;
+	const WAM_SCORE_CHANGE_DOWN = -1;
+	const WAM_SCORE_DECIMALS = 2;
 	
 	/**
 	 * @var MarketingToolboxWAMModel
@@ -77,7 +80,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		foreach($wamIndex as $wiki) {
 			$structuredData['ranking'][] = [
 				'rank' => $rank,
-				'wamScore' => round($wiki['wam'], self::DECIMALS),
+				'wamScore' => round($wiki['wam'], self::WAM_SCORE_DECIMALS),
 				'imageUrl' => $wiki['wiki_image'],
 				'wikiName' => $wiki['title'],
 				'wikiUrl' => $this->addProtocolToLink($wiki['url']),
@@ -90,13 +93,13 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 	
 	protected function getWamWikiChange($wamChange) {
-		$result = 0;
+		$result = self::WAM_SCORE_NO_CHANGE;
 		$floatWamChange = (float) $wamChange;
 		
 		if( $floatWamChange > 0 ) {
-			$result = 1;
+			$result = self::WAM_SCORE_CHANGE_UP;
 		} else if( $floatWamChange < 0 ) {
-			$result = -1;
+			$result = self::WAM_SCORE_CHANGE_DOWN;
 		}
 		
 		return $result;
@@ -110,6 +113,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		$data['imagesHeight'] = $this->getModel()->getImageHeight();
 		$data['imagesWidth'] = $this->getModel()->getImageWidth();
 		$data['searchHubName'] = $this->getSearchHubName($data['verticalName']);
+		$data['scoreChangeMap'] = [self::WAM_SCORE_CHANGE_DOWN => 'down', self::WAM_SCORE_NO_CHANGE => 'nochange', self::WAM_SCORE_CHANGE_UP => 'up'];
 
 		return parent::render($data);
 	}
@@ -123,15 +127,15 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	/**
-	 * @desc Since search works better only for EN hub pages we implemented this simple method; we'll remove it once we contact with Robert and set a plan
+	 * @desc Since search works better only for EN hub pages we implemented this simple method
 	 * 
-	 * @param $verticalName
+	 * @param int|string $vertical vertical name or id
 	 * @return string
 	 */
-	protected function getSearchHubName($verticalName) {
-		if( in_array($verticalName, array('Video Games', 'Entertainment', 'Lifestyle')) ) {
-			if( $verticalName  === 'Video Games' ) return 'Gaming';
-			return $verticalName;
+	protected function getSearchHubName($vertical) {
+		$searchNames = F::app()->wg->WikiaHubsSearchMapping;
+		if( !empty($searchNames[$vertical]) ) {
+			return $searchNames[$vertical];
 		}
 		
 		return null;
