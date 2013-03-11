@@ -15,6 +15,10 @@ class SharingToolbarController extends WikiaController {
 	 * @return boolean show toolbar?
 	 */
 	private function canBeShown() {
+		if (empty($this->app->wg->EnableSharingToolbar)) {
+			return false;
+		}
+
 		// generate list of namespaces toolbar can be shown on
 		$allowedNamespaces = $this->app->wg->ContentNamespaces;
 		$allowedNamespaces = array_merge($allowedNamespaces, array(
@@ -23,10 +27,6 @@ class SharingToolbarController extends WikiaController {
 			NS_FILE,
 			NS_CATEGORY,
 		));
-
-		if( defined('NS_VIDEO') ) {
-			$allowedNamespaces[] = intval(NS_VIDEO);
-		}
 
 		if( defined('NS_BLOG_LISTING') ) {
 			$allowedNamespaces[] = intval(NS_BLOG_LISTING);
@@ -59,9 +59,7 @@ class SharingToolbarController extends WikiaController {
 		$title = $this->app->wg->Title;
 		$namespace = ($title instanceof Title) ? $title->getNamespace() : -1;
 
-		$ret = in_array($namespace, $allowedNamespaces) && !empty($this->app->wg->EnableSharingToolbar);
-
-		return $ret;
+		return in_array($namespace, $allowedNamespaces, true);
 	}
 
 	public function getShareButtons( Title $title ) {
