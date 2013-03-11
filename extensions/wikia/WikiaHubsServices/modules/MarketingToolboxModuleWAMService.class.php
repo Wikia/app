@@ -1,6 +1,8 @@
 <?php
 
 class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditableService {
+	const DECIMALS = 2;
+	
 	/**
 	 * @var MarketingToolboxWAMModel
 	 */
@@ -14,14 +16,22 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	 * @param Array $params
 	 * @return array
 	 */
-	public function prepareParameters($params) {
+	protected function prepareParameters($params) {
 		$params['limit'] = $this->getModel()->getWamLimitForHubPage();
 		
 		//TODO: add wam_previous_day
 		if( empty($params['ts']) ) {
 			$params['ts'] = strtotime('00:00 -2 day');
 		}
-		
+
+		if( empty($params['image_height']) ) {
+			$params['image_height'] = $this->getModel()->getImageHeight();
+		}
+
+		if( empty($params['image_width']) ) {
+			$params['image_width'] = $this->getModel()->getImageWidth();
+		}
+
 		return parent::prepareParameters([
 			'wam_day' => $params['ts'],
 			'wam_previous_day' => strtotime('-1 day', $params['ts']),
@@ -31,11 +41,14 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 			'fetch_wiki_images' => true,
 			'limit' => $params['limit'],
 			'sort_column' => 'wam_index',
-			'sort_direction' => 'DESC'
+			'sort_direction' => 'DESC',
+			'wiki_image_height' => $params['image_height'],
+			'wiki_image_width' => $params['image_width'],
 		]);
 	}
 
 	public function loadData($model, $params) {
+		$params = $this->prepareParameters($params);
 		$url  = 'http://sandbox-s4.www.wikia.com/wikia.php?controller=WAMApi&method=getWAMIndex&';
 		$url .= http_build_query($params);
 		
@@ -64,7 +77,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		foreach($wamIndex as $wiki) {
 			$structuredData['ranking'][] = [
 				'rank' => $rank,
-				'wamScore' => $wiki['wam'],
+				'wamScore' => round($wiki['wam'], self::DECIMALS),
 				'imageUrl' => $wiki['wiki_image'],
 				'wikiName' => $wiki['title'],
 				'wikiUrl' => $wiki['url'],
