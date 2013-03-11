@@ -107,6 +107,7 @@ $messages['qqq'] = array(
 	'wikiaquiz-error-missing-answers' => 'Error message when no answer given.',
 	'wikiaquiz-error-invalid-correct-answer' => 'Error message when no correct answer given.',
 	'wikiaquiz-error-invalid-article-with-details' => 'Error message when article is invalid, with details.',
+	'wikiaquiz-game-start-button' => '{{Identical|Start game}}',
 	'wikiaquiz-game-cadence-3' => 'First part of "Ready - Set - Go!" (sports countdown)',
 	'wikiaquiz-game-cadence-2' => 'Second part of "Ready - Set - Go!" (sports countdown)',
 	'wikiaquiz-game-cadence-1' => 'Third part of "Ready - Set - Go!" (sports countdown)',

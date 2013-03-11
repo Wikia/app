@@ -3,9 +3,7 @@
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import 'Explore';
-@import 'Pulse';
 @import 'VideoModule';
-@import 'HubsTopWikis';
 @import 'HubsPopularVideos';
 @import 'FeaturedVideo';
 @import 'WikitextModule';
@@ -111,7 +109,7 @@ $wikiahubs-line-height: 16px;
 
 .WikiaHubsModal {
 	.WikiaForm {
-		input[type="url"],
+		input[type="text"],
 		textarea {
 			width: 450px;
 			padding: 7px;
@@ -129,7 +127,7 @@ $wikiahubs-line-height: 16px;
 			}
 		}
 	}
-	.close-button {
+	.success-view {
 		display: none;
 	}
 }

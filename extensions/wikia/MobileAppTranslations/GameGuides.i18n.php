@@ -720,10 +720,11 @@ $messages['tly'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Base
  * @author Steve.rusyn
  */
 $messages['uk'] = array(
-	'activityindicator-message' => 'Завантаження...',
+	'activityindicator-message' => 'Завантаження…',
 	'window-category-load-batch' => 'Більше',
 	'window-article-button-close' => 'Закрити',
 	'window-article-button-back' => 'Назад',

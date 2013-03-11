@@ -37,6 +37,11 @@ $wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionMemcachePurge";
 //$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction"; disable to gather different newrelic statistics
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
 $wgHooks['OutputPageCheckLastModified'][] = 'Wikia::onOutputPageCheckLastModified';
+$wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
+
+# User hooks
+$wgHooks['UserNameLoadFromId']       [] = "Wikia::onUserNameLoadFromId";
+$wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -1910,6 +1915,86 @@ class Wikia {
 	public static function onAjaxAddScript(OutputPage $out) {
 		// because of dependency resolving this module needs to be loaded via JavaScript
 		$out->addModules( 'amd.shared' );
+		return true;
+	}
+
+	/**
+	 * Verifies image being uploaded whether it's not corrupted
+	 *
+	 * @author macbre
+	 *
+	 * @param UploadBase $upload
+	 * @param $mime
+	 * @param $error
+	 * @return bool
+	 */
+	public static function onUploadVerifyFile(UploadBase $upload, $mime, &$error) {
+		// only check supported images
+		$mimeTypes = array(
+			'image/gif',
+			'image/jpeg',
+			'image/png',
+		);
+
+		if (!in_array($mime, $mimeTypes)) {
+			return true;
+		}
+
+		// validate an image
+		$imageFile = $upload->getTempPath();
+		$img = @imagecreatefromstring( file_get_contents($imageFile) );
+		$isValid = is_resource($img);
+
+		if (!$isValid) {
+			$msg = sprintf(
+				'File "%s" claimed to be "%s"',
+				$upload->getTitle()->getText(),
+				$mime
+			);
+			Wikia::log(__METHOD__, 'failed', $msg, true);
+
+			// pass an error to UploadBase class
+			$error = array('verification-error');
+		}
+		else {
+			imagedestroy($img);
+		}
+
+		return $isValid;	
+	}
+	
+	/*
+	 * @param $user_name String
+	 * @param $s ResultWrapper
+	 */
+	public static function onUserNameLoadFromId( $user_name, &$s ) {
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType ) {
+			$mExtUser = ExternalUser::newFromName( $user_name );
+			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
+				$mExtUser->linkToLocal( $mExtUser->getId() );
+				$s = $mExtUser->getLocalUser( false );
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * @param $user User
+	 * @param $s ResultWrapper
+	 */
+	public static function onUserLoadFromDatabase( $user, &$s ) {
+		/* wikia change */
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType ) {
+			$mExtUser = ExternalUser::newFromId( $user->mId );
+			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
+				$mExtUser->linkToLocal( $mExtUser->getId() );
+				$s = $mExtUser->getLocalUser( false );
+			}
+		}
+		
 		return true;
 	}
 }

@@ -127,6 +127,8 @@ class WikiaDispatcher {
 				// map X to executeX method names for things that used to be modules
 				if (!method_exists($controller, $method)) {
 					$method = ucfirst( $method );
+					$hookMethod = $method; // the original module hook naming scheme does not use the "Execute" part
+
 					// This will throw an exception if the template is missing
 					// Refactor the offending class to not use executeXYZ methods or set format in request params
 					// Warning: this means you can't use the new Dispatcher routing to switch templates in modules
@@ -136,6 +138,7 @@ class WikiaDispatcher {
 					$method = "execute{$method}";
 					$params = $request->getParams();  // old modules expect params in a different place
 				} else {
+					$hookMethod = $method;
 					$params = array();
 				}
 
@@ -189,7 +192,6 @@ class WikiaDispatcher {
 				}
 
 				// keep the AfterExecute hooks for now, refactor later using "after" dispatching
-				$hookMethod = ucfirst( $method );
 				$app->runHook( ( "{$controllerName}{$hookMethod}AfterExecute" ), array( &$controller, &$params ) );
 
 				$app->wf->profileOut($profilename);

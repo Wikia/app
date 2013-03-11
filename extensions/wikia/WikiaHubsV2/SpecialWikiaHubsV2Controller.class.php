@@ -48,18 +48,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 		$this->modules = array();
 
-		$enabledModules = array(
-			MarketingToolboxModuleExploreService::MODULE_ID,
-			MarketingToolboxModulePollsService::MODULE_ID,
-			MarketingToolboxModuleWikiaspicksService::MODULE_ID,
-			MarketingToolboxModuleSliderService::MODULE_ID,
-			MarketingToolboxModulePopularvideosService::MODULE_ID,
-			MarketingToolboxModuleFeaturedvideoService::MODULE_ID,
-		);
-
 		foreach ($toolboxModel->getModulesIds() as $moduleId) {
-			// TODO remove this if when other modules would be ready
-			if (in_array($moduleId, $enabledModules)) {
 				if (!empty($modulesData[$moduleId]['data'])) {
 					$this->modules[$moduleId] = $this->renderModule(
 						$this->wg->ContLang->getCode(),
@@ -68,17 +57,23 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 						$modulesData[$moduleId]['data']
 					);
 				} else {
-					// TODO think about it what should we render if we don't have data
-					$this->modules[$moduleId] = $toolboxModel->getNotTranslatedModuleName($moduleId) . ' <-- no data';
+					$this->modules[$moduleId] = null;
+					Wikia::log(
+						__METHOD__,
+						'',
+						'no module data for day: ' . $this->wg->lang->date($this->hubTimestamp)
+							. ', lang: ' . $this->wg->ContLang->getCode()
+							. ', vertical: ' . $this->verticalId
+							. ', moduleId: ' . $moduleId
+					);
 				}
-			}
 		}
 
 		$this->response->addAsset('wikiahubs_v2');
 		$this->response->addAsset('wikiahubs_v2_modal');
 		$this->response->addAsset('wikiahubs_v2_scss');
 		$this->response->addAsset('wikiahubs_v2_scss_mobile');
-
+		
 		//TODO: remove after releasing WikiaHubsV2 and removing WikiaHubs extension
 		$this->wg->Out->addJsConfigVars([
 			'isWikiaHubsV2Page' => true,
@@ -124,74 +119,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		return $module->render($moduleData);
 	}
 
-	public function slider() {
-		/** @var $sliderModule WikiaHubsV2SliderModule */
-		$sliderModule = F::build('WikiaHubsV2SliderModule');
-		$this->initModule($sliderModule);
-		$sliderData = $sliderModule->loadData();
-
-		if ($this->format == 'json') {
-			$this->images = $sliderData['images'];
-		} else {
-			$this->slider = $this->model->generateSliderWikiText($sliderData['images']);
-		}
-	}
-
-	public function pulse() {
-		/** @var $pulseModule WikiaHubsV2PulseModule */
-		$pulseModule = F::build('WikiaHubsV2PulseModule');
-		$this->initModule($pulseModule);
-		$pulseData = $pulseModule->loadData();
-
-		$this->title = !empty($pulseData['title']) ? $pulseData['title'] : null;
-		$this->socialmedia = !empty($pulseData['socialmedia']) ? $pulseData['socialmedia'] : null;
-		$this->boxes = !empty($pulseData['boxes']) ? $pulseData['boxes'] : null;
-	}
-
-	public function featuredvideo() {
-		$videoData = $this->model->getDataForModuleFeaturedVideo();
-		$this->headline = $videoData['headline'];
-		$this->sponsor = $videoData['sponsor'];
-		$this->sponsorThumb = !empty($videoData['sponsorthumb']) ? $this->model->generateImageXml($videoData['sponsorthumb']) : null;
-		$this->description = $videoData['description'];
-		$this->video = $this->model->parseVideoData($videoData);
-	}
-
-	public function popularvideos() {
-		$videosData = $this->model->getDataForModulePopularVideos();
-		$this->headline = $videosData['headline'];
-		$this->videos = $videosData['videos'];
-	}
-
-	/**
-	 * @requestParam Array $video
-	 */
-	public function renderCaruselElement() {
-		$video = $this->request->getVal('video', false);
-		$this->video = $this->model->getVideoElementData($video);
-	}
-
-	public function topwikis() {
-		$wikiData = $this->model->getDataForModuleTopWikis();
-		$this->headline = $wikiData['headline'];
-		$this->description = $wikiData['description'];
-		$this->wikis = $wikiData['wikis'];
-	}
-
-	public function tabber() {
-		$tabData = $this->model->getDataForModuleTabber();
-		$this->headline = $tabData['headline'];
-		if ($this->format == 'json') {
-			$this->tabdata = $tabData;
-		} else {
-			$this->tabs = $this->model->generateTabberWikiText($tabData);
-		}
-	}
-
-	public function wikitextmodule() {
-		$this->wikitextmoduledata = $this->model->getDataForModuleWikitext();
-	}
-
 	public function fromthecommunity() {
 		$fromTheCommunityData = $this->model->getDataForModuleFromTheCommunity();
 		$this->headline = $fromTheCommunityData['headline'];
@@ -233,6 +160,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	protected function initVertical() {
 		$this->verticalId = $this->getRequest()->getVal('verticalid', WikiFactoryHub::CATEGORY_ID_GAMING);
 		$this->verticalName = $this->model->getVerticalName($this->verticalId);
+		$this->canonicalVerticalName = $this->model->getCanonicalVerticalName($this->verticalId);
 	}
 
 	protected function initModel() {
@@ -244,14 +172,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->model->setVertical($this->verticalId);
 	}
 
-	protected function initModule(WikiaHubsV2Module $module) {
-		$date = $this->getRequest()->getVal('date', date('Y-m-d'));
-		$lang = $this->getRequest()->getVal('cityId', $this->wg->cityId);
-		$module->setDate($date);
-		$module->setLang($lang);
-		$module->setVertical($this->verticalId);
-	}
-
 	/**
 	 * @desc Sets hubs specific settings: page title, hub type, vertical body class
 	 */
@@ -261,7 +181,8 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			$this->wgWikiaHubType = $this->verticalName;
 		}
 		RequestContext::getMain()->getRequest()->setVal('vertical', $this->verticalName);
-		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $this->verticalName));
+		RequestContext::getMain()->getRequest()->setVal('verticalid', $this->verticalId);
+		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $this->canonicalVerticalName));
 	}
 
 	protected function initHubTimestamp() {

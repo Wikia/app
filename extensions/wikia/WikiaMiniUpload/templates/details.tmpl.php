@@ -18,7 +18,7 @@ global $wgExtensionsPath, $wgBlankImgUrl;
 				'' ?></textarea>
 
 			<a class="backbutton" href="#" style="display:none" ><?= wfMsg('wmu-back') ?></a>
-			<input type="submit" value="<?= wfMsg('wmu-insert2') ?>" onclick="WMU_insertImage(event, 'details');" />
+			<input type="submit" value="<?= wfMsg('wmu-insert2') ?>" onclick="WMU_insertImage('details');" />
 		</div>
 	</div>
 </div>

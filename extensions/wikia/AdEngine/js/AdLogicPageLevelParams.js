@@ -102,7 +102,7 @@ var AdLogicPageLevelParams = function (
 			s0: site,
 			s1: zone1,
 			s2: zone2,
-			artid: window.wgArticleId,
+			artid: window.wgArticleId && window.wgArticleId.toString(),
 			dmn: getDomain(),
 			hostpre: getHostname(),
 			wpage: window.wgPageName && window.wgPageName.toLowerCase(),

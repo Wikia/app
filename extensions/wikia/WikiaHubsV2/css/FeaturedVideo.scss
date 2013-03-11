@@ -1,6 +1,8 @@
+@import "../../../../skins/oasis/css/core/color";
+
 .WikiaArticle {
 	.wikiahubs-featured-video {
-		background: #f0f0f0;
+		background: mix($color-page, $color-page-opposite, 95%);;
 		padding: 10px;
 		overflow:hidden;
 		width: 300px;

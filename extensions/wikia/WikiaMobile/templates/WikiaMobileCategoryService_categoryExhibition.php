@@ -1,8 +1,6 @@
-<?
-/**
+<?/**
  * @var $items array
- */
-?>
+ */?>
 <section id=wkCatExh class=noWrap>
 <? foreach($items as $item)  :?>
 	<div class=wkExhItm><a href=<?= $item['url'] ;?>>

@@ -18,7 +18,7 @@ require(['throbber', 'track', 'wikia.nirvana'], function (throbber, track, nirva
 		l;
 
 	if (expAll) {
-		elements = d.querySelectorAll('.alphaSec .artSec, .alphaSec .collSec');
+		elements = d.querySelectorAll('.alphaSec .artSec, .collSec, .catlinks');
 		l = elements.length;
 
 		expAll.addEventListener(clickEvent, function() {

@@ -232,7 +232,8 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 				// Wikia change - end
 				// Wikia change - begin - @author: gabrys
 				// allows early loading of resource loader modules and then prevents reloading them
-				"\n\t" . 'window.preMwLdrSt&&mw.loader.state(window.preMwLdrSt);' . "\n" .
+				"\n\t" . 'window.preMwLdrSt&&mw.loader.state(window.preMwLdrSt);' . "\n" . // wladek - to be removed after next release
+				"\n\t" . 'if(window.preMwLdrStA){for(var i=0;i<window.preMwLdrStA.length;i++)mw.loader.state(window.preMwLdrStA[i]);};' . "\n" .
 				// Wikia change - end
 				"};\n";
 

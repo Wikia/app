@@ -5,7 +5,7 @@
 		<?php
 			$trackingData = 'class="ResultLink" data-wid="' . $resultSet->getHeader('cityId') . '" data-gpos="' . $pos
 				. '" data-pos="0" data-sterm="' . addslashes($query) . '" data-stype="' .( $isInterWiki ? 'inter' :
-				'intra' ) . '" data-rver="' . WikiaSearchController::RVERSION. '" data-event="search_click_wiki"';
+				'intra' ) . '" data-rver="6" data-event="search_click_wiki"';
 		?>
 
 		<img src="#" alt="<?= $resultSet->getHeader('cityTitle'); ?>" class="wikiPromoteThumbnail grid-1 alpha" />

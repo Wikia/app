@@ -769,7 +769,7 @@ var mw = ( function ( $, undefined ) {
 					// This needs to NOT use mw.log because these errors are common in production mode
 					// and not in debug mode, such as when a symbol that should be global isn't exported
 					if ( window.console && typeof window.console.log === 'function' ) {
-						console.log( 'mw.loader::execute> Exception thrown by ' + module + ': ' + e.message );
+						console.log( 'mw.loader::execute> Exception thrown by ' + module + ': ' + e.message, e );
 					}
 					registry[module].state = 'error';
 				}

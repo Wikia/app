@@ -6,6 +6,7 @@
 
 .modal {
 	height: 100%;
+	min-height: 0 !important; //if anything set min-height this might brake modal
 
 	body {
 		min-height: 100%;

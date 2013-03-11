@@ -9,7 +9,7 @@ class WikiaHubsV2SuggestModel extends WikiaModel {
 			'inputs' => array(
 				array(
 					'class' => 'articleurl',
-					'type' => 'url',
+					'type' => 'text',
 					'name' => 'articleurl',
 					'isRequired' => true,
 					'label' => wfMsg('wikiahubs-suggest-article-what-article'),

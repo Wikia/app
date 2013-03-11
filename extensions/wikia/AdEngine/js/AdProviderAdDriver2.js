@@ -147,7 +147,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				slotsize: slotsize,
 				dcopt: dcopt,
 				loc: loc
-			}, function() {
+			}, function () {
 				// TODO: detect success and hop situations and handle them
 
 				success();

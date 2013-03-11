@@ -15,9 +15,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var int
 	 */
 	const PAGES_PER_WINDOW = 5;
-
-
-	const RVERSION = 6;
 	
 	/**
 	 * @var Wikia\Search\QueryService\Factory
@@ -57,8 +54,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
 	}
-	
-	
 	
 	/**
 	 * Deprecated functionality for indexing.
