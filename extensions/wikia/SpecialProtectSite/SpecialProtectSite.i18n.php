@@ -16,6 +16,8 @@ $messages['en'] = array(
 	'protectsite-edit' => 'Allow editing of pages by',
 	'protectsite-move' => 'Allow moving of pages by',
 	'protectsite-upload' => 'Allow file uploads by',
+	'protectsite-log-suppressed' => 'Length hidden',
+	'protectsite-hide-time-length' => 'Suppress protection length from logs',
 	'protectsite-timeout' => 'Timeout:',
 	'protectsite-timeout-error' => "'''Invalid Timeout.'''",
 	'protectsite-maxtimeout' => 'Maximum:',
@@ -49,6 +51,8 @@ $messages['qqq'] = array(
 	'specialprotectsite-desc' => '{{desc}}',
 	'protectsite-comment' => '{{Identical|Comment}}',
 	'protectsite-protect' => '{{Identical|Protect}}',
+	'protectsite-hide-time-length' => 'Checkbox label. If selected, the protection length will be hidden in the log',
+	'protectsite-log-suppressed' => 'If the protecting user chooses to hide the amount of time in the log entry, then the log entry will say indicate the protection length was hidden',
 	'protectsite-unprotect' => '{{Identical|Unprotect}}',
 	'action-protectsite' => '{{doc-action|protectsite}}',
 );

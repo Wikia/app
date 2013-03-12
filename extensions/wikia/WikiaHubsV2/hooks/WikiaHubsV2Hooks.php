@@ -11,21 +11,19 @@ class WikiaHubsV2Hooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		if( !empty($app->wg->EnableWikiaHomePageExt)) {
-			$model = new WikiaHubsV2HooksModel();
+		$model = new WikiaHubsV2HooksModel();
 
-			$dbKeyName = $title->getDBKey();
-			$dbKeyNameSplit = explode('/', $dbKeyName);
+		$dbKeyName = $title->getDBKey();
+		$dbKeyNameSplit = explode('/', $dbKeyName);
 
-			$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
+		$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-			if ( $model->isHubsPage($hubName) ) {
-				$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
+		if ( $model->isHubsPage($hubName) ) {
+			$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
-				$app->wg->SuppressPageHeader = true;
-				$app->wg->SuppressRail = true;
-				$article = F::build( 'WikiaHubsV2Article', array($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp) );
-			}
+			$app->wg->SuppressPageHeader = true;
+			$app->wg->SuppressRail = true;
+			$article = F::build( 'WikiaHubsV2Article', array($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp) );
 		}
 
 		wfProfileOut(__METHOD__);

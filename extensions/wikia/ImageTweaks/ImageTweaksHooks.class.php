@@ -26,17 +26,24 @@ class ImageTweaksHooks extends WikiaObject {
 			$linked = !empty( $frameParams['link-url'] ) || !empty( $frameParams['link-title'] );
 			$caption = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
 
+			if( is_object( $thumb ) ) {
+				$width = $thumb->getWidth();
+				$showRibbon = WikiaMobileMediaService::showRibbon( $width, $thumb->getHeight() );
+			} else {
+				$width = false;
+				$showRibbon = false;
+			}
+
 			$html = $this->app->sendRequest(
 				'WikiaMobileMediaService',
 				'renderFigureTag',
 				array(
-					'class' => ( $linked ) ? 'link' : 'thumb',
+					'class' => [( $linked ) ? 'link' : 'thumb'],
+					'width' => $width,
 					'content' => $origHTML,
 					//force the caption wrapper to exist if it's a linked image without caption
 					'caption' => ( $linked && empty( $caption ) ) ? '' :  $caption,
-					'showRibbon' => ( is_object( $thumb ) ) ?
-						WikiaMobileMediaService::showRibbon( $thumb->getWidth(), $thumb->getHeight() ) :
-						false
+					'showRibbon' => $showRibbon
 				),
 				true
 			)->toString();
@@ -92,17 +99,24 @@ class ImageTweaksHooks extends WikiaObject {
 			$linked = !empty( $frameParams['link-url'] ) || !empty( $frameParams['link-title'] );
 			$caption = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
 
+			if( is_object( $thumb ) ) {
+				$width = $thumb->getWidth();
+				$showRibbon = WikiaMobileMediaService::showRibbon( $width, $thumb->getHeight() );
+			} else {
+				$width = false;
+				$showRibbon = false;
+			}
+
 			$html = $this->app->sendRequest(
 				'WikiaMobileMediaService',
 				'renderFigureTag',
 				array(
-					'class' => ( $linked ) ? 'link' : 'thumb',
+					'class' => [( $linked ) ? 'link' : 'thumb'],
+					'width' => $width,
 					'content' => $origHTML,
 					//force the caption wrapper to exist if it's a linked image without caption
 					'caption' => ( $linked && empty( $caption ) ) ? '' : $caption,
-					'showRibbonwfdebug' => ( is_object( $thumb ) ) ?
-						WikiaMobileMediaService::showRibbon( $thumb->getWidth(), $thumb->getHeight() ) :
-						false
+					'showRibbon' => $showRibbon
 				),
 				true
 			)->toString();

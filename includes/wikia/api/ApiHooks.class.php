@@ -39,8 +39,15 @@ class ApiHooks {
 	}
 
 	public static function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
-		ArticlesApiController::purgeCache( $article->getTitle()->getArticleID() );
+		$id = $article->getTitle()->getArticleID();
+
+		ArticlesApiController::purgeCache( $id );
 		ArticlesApiController::purgeMethods( ['getList', 'getTop'] );
+		RelatedPagesApiController::purgeMethodVariants( 'getList', [
+			[ 'ids' => $id ],
+			[ 'ids' => $id, 'limit' => 5 ],
+			[ 'ids' => $id, 'limit' => 10 ]
+		] );
 		return true;
 	}
 

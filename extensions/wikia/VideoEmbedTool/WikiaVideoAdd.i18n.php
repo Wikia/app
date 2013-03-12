@@ -464,6 +464,7 @@ $messages['lb'] = array(
 	'wva-name' => 'Gitt w.e.g. den Numm un:',
 	'wva-url' => "Gitt w.e.g. d'URL an:",
 	'wva-add' => 'Derbäisetzen',
+	'wva-protected' => 'Dëse Video ass gespaart.',
 );
 
 /** Macedonian (македонски)

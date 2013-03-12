@@ -241,6 +241,14 @@ $messages['pt-br'] = array(
 	'interwikidispatcher-desc' => 'Resolve os links interwikis para reduzir os reencaminhamentos do servidor Apache',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'interwikidispatcher' => 'Smistatore de interuicchi',
+	'interwikidispatcher-desc' => 'Resolve le collegaminde de interuicchi pe diminuì le redirezionaminde de Apache',
+);
+
 /** Russian (русский)
  * @author Александр Сигачёв
  */

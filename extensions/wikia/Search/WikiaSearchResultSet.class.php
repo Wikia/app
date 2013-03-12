@@ -262,7 +262,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 				'score'			=>	'PTT',
 				'isArticleMatch'=>	true,
 				'ns'			=>	$titleNs,
-				'pageId'		=>	$articleId,
+				'pageid'		=>	$articleId,
 				'created'		=>	$created,
 				'touched'		=>	$touched,
 				);

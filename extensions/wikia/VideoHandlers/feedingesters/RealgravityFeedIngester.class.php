@@ -33,6 +33,22 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			'name' => 'Billboard',
 			'categories' => array()
 		),
+		628 => array(
+			'name' => 'Sugar Inc. - FitSugar',
+			'categories' => array( 'Health & fitness' )
+		),
+		629 => array(
+			'name' => 'Sugar Inc. - FabSugar',
+			'categories' => array( 'Fashion' )
+		),
+		630 => array(
+			'name' => 'Sugar Inc. - BellaSugar',
+			'categories' => array( 'Beauty' )
+		),
+		631 => array(
+			'name' => 'Sugar Inc. - YumSugar',
+			'categories' => array( 'Food' )
+		),
 	);
 
 	const API_PAGE_SIZE = 100;

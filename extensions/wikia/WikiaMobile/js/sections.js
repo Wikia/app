@@ -22,10 +22,8 @@ define('sections', ['JSMessages'], function(msg){
 
 		if(len > 0){
 			setTimeout(function(){
-				var x = 0;
-
-				while(x < len){
-					stack[x++].call(target);
+				while(len--){
+					stack[len].call(target);
 				}
 			}, 0);
 		}
@@ -139,38 +137,41 @@ define('sections', ['JSMessages'], function(msg){
 	}
 
 	function find(heading){
+		var h2;
+
 		if(typeof heading == 'string') {
-			heading = d.getElementById(heading.replace(/ /, '_'));
+			heading = d.getElementById(heading.replace(/ /g, '_'));
 		}
 
 		if(heading) {
-			var h2 = heading;
+			h2 = heading;
 
 			//find in what section is the header
-			while(!h2.nodeName.match(/H[12]/)){
+			while(h2 && !h2.nodeName.match(/H[12]/)){
 				h2 = (heading.parentNode.className.indexOf('artSec') > -1) ? h2.parentNode.previousElementSibling : h2.parentNode;
 			}
-
-			return [heading, h2];
 		}
 
-		return [];
+		return [heading, h2];
 	}
 
 	function findPos(obj) {
 		var curtop = 0;
+
 		if (obj.offsetParent) {
 			do {
 				curtop += obj.offsetTop;
 			} while (obj = obj.offsetParent);
-			return [curtop];
 		}
+
+		return curtop;
 	}
 
 	function scrollTo(header){
 		//scroll header into view
 		//if the page is long that is the way I found it reliable
-		//without calling it like that android sometimes did not scroll at all
+		//without calling it like that
+		//android sometimes did not scroll at all
 		//and iOS sometimes scrolled to a wrong place
 		window.scrollTo(0, findPos(header));
 		setTimeout(function(){

@@ -1,5 +1,5 @@
 <?php
-class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleService {
+class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 3;
 
 	protected function getFormFields() {
@@ -105,6 +105,15 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 		}
 		
 		return parent::filterData($data);
+	}
+	
+	public function render($data) {
+		if( !empty($data['sponsoredImageAlt']) ) {
+		//sponsoredImageAlt === image file title -> can be used in Title::newFromTitle() to create Title instance
+			$data['sponsoredImageMarkup'] = $this->getSponsoredImageMarkup($data['sponsoredImageAlt']);
+		}
+		
+		return parent::render($data);
 	}
 
 	public function getStructuredData($data) {

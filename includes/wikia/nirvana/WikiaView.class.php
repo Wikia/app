@@ -37,13 +37,6 @@ class WikiaView {
 		$response->setControllerName( $controllerName );
 		$response->setMethodName( $methodName );
 		$response->setData( $data );
-		$app = F::app();
-
-		if ( $app->wg->EnableSkinTemplateOverride ) {
-			if ( $app->isSkinInitialized() ) {
-				$response->setSkinName( $app->wg->User->getSkin()->getSkinName() );
-			}
-		}
 
 		return $response->getView();
 	}
@@ -123,30 +116,9 @@ class WikiaView {
 			// First we look for BaseName_MethodName
 			$dirName = dirname( $autoloadClasses[$controllerClass] );
 			$basePath = "{$dirName}/templates/{$controllerBaseName}_{$methodName}";
-			$templatePath = null;
-
-			/**
-			 * per-skin template override (experimental)
-			 * @see $wgEnableSkinTemplateOverride
-			 */
-			if ( !empty( $this->response ) ) {
-				$requestedSkinName = $this->response->getSkinName();
-
-				if ( !empty( $requestedSkinName ) ) {
-					$skinSpecificPath = "{$basePath}_{$requestedSkinName}.$extension";
-
-					if ( file_exists( $skinSpecificPath ) ) {
-						$templatePath = $skinSpecificPath;
-					}
-				}
-			}
-
-			if ( empty( $templatePath ) ) {
-				$templatePath = "{$basePath}.$extension";
-			}
-
-			// First we look for BaseName_MethodName
+			$templatePath = "{$basePath}.$extension";
 			$templateExists = file_exists( $templatePath );
+
 			// Fall back to ControllerClass_MethodName
 			if( !$templateExists ) {
 				$templatePath = "{$dirName}/templates/{$controllerClass}_{$methodName}.$extension";

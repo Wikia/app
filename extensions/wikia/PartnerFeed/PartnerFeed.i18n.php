@@ -57,6 +57,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -66,6 +67,7 @@ $messages['br'] = array(
 	'all-blog-posts' => 'an holl rummadoù',
 	'blog-posts-from-listing' => 'eus ar roll : $1',
 	'feed-title-blogcomments' => 'Evezhiadenn da $1',
+	'feed-title-recentchanges' => 'Kemmoù graet nevez zo',
 );
 
 /** Czech (česky)

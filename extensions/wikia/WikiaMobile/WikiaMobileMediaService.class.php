@@ -11,6 +11,7 @@ class WikiaMobileMediaService extends WikiaService {
 	const SINGLE = 1;
 	const GROUP = 2;
 	const RIBBON_SIZE = 50;
+	const SMALL_IMAGE_SIZE = 64;
 
 	static public function calculateMediaSize( $width, $height ) {
 		if ( $width > self::THUMB_WIDTH ) {
@@ -43,6 +44,7 @@ class WikiaMobileMediaService extends WikiaService {
 		$noscript = $this->request->getVal( 'noscript' );
 		$class = $this->request->getVal( 'class', null );
 		$caption = $this->request->getVal( 'caption', null );
+
 		$this->response->setBody( $this->render( self::SINGLE, $attribs, $params, $linkAttribs, $linked, $noscript, $class, $caption ) );
 
 		$this->wf->profileOut( __METHOD__ );
@@ -137,7 +139,7 @@ class WikiaMobileMediaService extends WikiaService {
 					array(),
 					false,
 					Xml::element( 'img', $attribs, '', true ),
-					null,
+					[],
 					$this->wf->MsgForContent( 'wikiamobile-media-group-footer', count( $params ) )
 				);
 			}
@@ -184,6 +186,7 @@ class WikiaMobileMediaService extends WikiaService {
 		$this->response->setVal( 'anchorAttributes', $linkAttribs );
 		$this->response->setVal( 'noscript', $noscript );
 		$this->response->setVal( 'content', $content );
+		$this->response->setVal( 'width', $attribs['width'] );
 
 		$this->wf->profileOut( __METHOD__ );
 	}
@@ -192,12 +195,17 @@ class WikiaMobileMediaService extends WikiaService {
 	public function renderFigureTag() {
 		$this->wf->profileIn( __METHOD__ );
 
-		$class = $this->request->getVal( 'class', null );
+		$width = $this->request->getVal( 'width', null );
+		$class = $this->request->getVal( 'class', [] );
 		$content = $this->request->getVal( 'content', null );
 		$caption = $this->request->getVal( 'caption', null );
 		$showRibbon = $this->request->getVal( 'showRibbon', false );
 
-		if ( is_array( $class ) ) {
+		if ( is_numeric( $width ) && (int) $width < self::SMALL_IMAGE_SIZE ) {
+			$class[] = 'small';
+		}
+
+		if ( !empty( $class ) ) {
 			$class = implode( ' ', $class );
 		}
 
@@ -209,15 +217,11 @@ class WikiaMobileMediaService extends WikiaService {
 		$this->wf->profileOut( __METHOD__ );
 	}
 
-	private function render( $type, Array $attribs = array(), Array $params = array(), Array $linkAttribs = array(), $link = false, $noscript = null, $class = null, $caption = null ) {
+	private function render( $type, Array $attribs = [], Array $params = [], Array $linkAttribs = [], $link = false, $noscript = null, $class = null, $caption = null ) {
 		$this->wf->profileIn( __METHOD__ );
 
-		if ( is_array( $class ) ) {
-			$class = implode( ' ', $class );
-		}
-
-		if ( !empty( $class ) ) {
-			$class = " {$class}";
+		if ( !is_array( $class ) ) {
+			$class = [];
 		}
 
 		if ( !empty( $params ) ) {
@@ -242,7 +246,7 @@ class WikiaMobileMediaService extends WikiaService {
 			$caption = '';
 		}
 
-		$content = $this->sendSelfRequest(
+		$image = $this->sendSelfRequest(
 			'renderImageTag',
 			array(
 				'attributes' => $attribs,
@@ -251,15 +255,16 @@ class WikiaMobileMediaService extends WikiaService {
 				'linked' => !empty( $link ),
 				'noscript' => $noscript
 			)
-		)->toString();
+		);
 
 		$result = $this->sendSelfRequest(
 			'renderFigureTag',
 			array(
-				'class' => ( ( !empty( $link ) ) ? 'link' : 'thumb' ) . $class,
-				'content' => $content,
+				'class' => [( ( !empty( $link ) ) ? 'link' : 'thumb' )] + $class,
+				'content' => $image->toString(),
 				'caption' => $caption,
-				'showRibbon' => self::showRibbon( $attribs['width'], $attribs['height'] )
+				'showRibbon' => self::showRibbon( $attribs['width'], $attribs['height'] ),
+				'width' => $image->getVal( 'width', null )
 			)
 		)->toString();
 

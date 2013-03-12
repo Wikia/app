@@ -1,8 +1,8 @@
 <h2>
+	<?php if( !empty($sponsoredImageMarkup) ): ?>
+		<span class="sponsorbox"><ins><?= wfMessage('wikiahubs-sponsored-by')->rawParams($sponsoredImageMarkup)->escaped(); ?></ins></span>
+	<?php endif; ?>
 	<?= $title ?>
-	<? if (!is_null($sponsoredImageUrl)): ?>
-		<img class="floatright sponsored-image" src="<?= $sponsoredImageUrl ?>" alt="<?= $sponsoredImageAlt ?>" />
-	<? endif; ?>
 </h2>
 <p>
 	<?php if( !is_null($imageLink) ): ?>

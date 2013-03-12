@@ -22,10 +22,11 @@ $messages['ar'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
-	'new-look' => 'Neuz nevez Wikia', # Fuzzy
+	'new-look' => 'Wikia',
 );
 
 /** Czech (česky)

@@ -1,5 +1,5 @@
 <?php
-class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleService {
+class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 9;
 
 	protected function getFormFields() {
@@ -100,7 +100,7 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 			$moduleModel = $this->getModuleModel();
 
 			$structuredData['header'] = $data['header'];
-
+			$structuredData['videos'] = null;
 			foreach($data['video'] as $key => $video) {
 				$videoData = $toolboxModel->getVideoData($video, $moduleModel->getVideoThumbSize());
 

@@ -50,7 +50,7 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		}
 	}
 
-	function __get( $name ){
+	function __get( $name ) {
 		if ( !isset( $this->$name ) ) {
 			return $this->getLocalFileLogic()->$name;
 		} else {

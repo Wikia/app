@@ -140,6 +140,7 @@ $messages['qqq'] = array(
 	'phalanx-add-block' => 'This message is used as a button label (like "Save", "Show preview" and "Show changes" in <code>action=edit</code>). Clicking on the button adds a new block to the Phalanx database. ([[Thread:Support/About_Wikia:Phalanx-add-block/fi/reply|documentation]] by [[User:Jack Phoenix|Jack Phoenix]])',
 	'phalanx-label-filter' => '{{Identical|Filter}}',
 	'phalanx-label-type' => '{{Identical|Type}}',
+	'phalanx-test-submit' => '{{Identical|Test}}',
 	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
 	'phalanx-stats-table-language' => '{{Identical|Language}}',
 	'phalanx-stats-table-text' => '{{Identical|Text}}',
@@ -185,30 +186,41 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
 	'phalanx-type-title' => 'anv ar bajenn',
 	'phalanx-type-user' => 'implijer',
+	'phalanx-type-user-email' => 'postel',
+	'phalanx-type-answers-question-title' => 'titl ar goulenn',
+	'phalanx-type-answers-recent-questions' => 'goulennoù graet nevez zo',
+	'phalanx-type-wiki-creation' => 'Krouiñ ur wiki',
 	'phalanx-label-filter' => 'Sil :',
 	'phalanx-label-reason' => 'Abeg :',
 	'phalanx-label-expiry' => 'Termen :',
 	'phalanx-label-type' => 'Seurt :',
 	'phalanx-label-lang' => 'Yezh :',
+	'phalanx-view-blocks' => 'Siloù enklask',
+	'phalanx-view-id-submit' => 'Tapout ur sil',
 	'phalanx-format-exact' => 'rik',
+	'phalanx-tab-secondary' => 'Amprouiñ ar siloù',
 	'phalanx-test-submit' => 'Amprouiñ',
 	'phalanx-display-row-blocks' => 'stankadennoù : $1',
 	'phalanx-link-unblock' => 'distankañ',
 	'phalanx-link-modify' => 'kemmañ',
 	'phalanx-link-stats' => 'stadegoù',
+	'phalanx-legend-input' => 'Krouiñ pe gemmañ ur sil',
 	'phalanx-stats-table-id' => 'Stankañ an ID',
+	'phalanx-stats-table-user' => 'Ouzhpennet gant',
 	'phalanx-stats-table-type' => 'Seurt',
 	'phalanx-stats-table-create' => 'Krouet',
 	'phalanx-stats-table-language' => 'Yezh',
 	'phalanx-stats-table-text' => 'Testenn',
 	'phalanx-stats-table-reason' => 'Abeg',
 	'phalanx-stats-table-wiki-name' => 'Anv ar wiki',
+	'phalanx-stats-table-wiki-url' => 'URL ar wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Kemmet da ziwezhañ',
 );
 
@@ -1962,6 +1974,7 @@ $messages['ps'] = array(
 	'phalanx-test-submit' => 'آزمېښت',
 	'phalanx-test-results-legend' => 'آزمېښت پايلې',
 	'phalanx-stats-table-create' => 'جوړ شو',
+	'phalanx-stats-table-exact' => 'کټ مټ',
 	'phalanx-stats-table-language' => 'ژبه',
 	'phalanx-stats-table-text' => 'متن',
 	'phalanx-stats-table-reason' => 'سبب',

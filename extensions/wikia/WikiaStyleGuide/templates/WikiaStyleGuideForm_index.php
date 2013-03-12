@@ -118,7 +118,8 @@
 								</select>
 							<? break; ?>
 							<? case 'text': ?>
-								<input type="text" <?= $inputAttributes ?>>
+							<? case 'url': ?>
+								<input type="<?= $type ?>" <?= $inputAttributes ?>>
 							<? break; ?>
 							<? case 'textarea': ?>
 								<textarea <?= $inputAttributes ?>><?= $value ?></textarea>

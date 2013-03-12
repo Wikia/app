@@ -267,21 +267,33 @@ class RequestContext implements IContextSource {
 	}
 
 	/**
-	 * Get the Language object
+	 * Get the Language object.
+	 * Initialization of user or request objects can depend on this.
 	 *
 	 * @return Language
 	 * @since 1.19
 	 */
 	public function getLanguage() {
-		if ( $this->lang === null ) {
+		if ( isset( $this->recursion ) ) {
+			trigger_error( "Recursion detected in " . __METHOD__, E_USER_WARNING );
+			$e = new Exception;
+			wfDebugLog( 'recursion-guard', "Recursion detected:\n" . $e->getTraceAsString() );
+
+			global $wgLanguageCode;
+			$code = ( $wgLanguageCode ) ? $wgLanguageCode : 'en';
+			$this->lang = Language::factory( $code );
+		} elseif ( $this->lang === null ) {
+			$this->recursion = true;
+
 			global $wgLanguageCode, $wgContLang;
-			$code = $this->getRequest()->getVal(
-				'uselang',
-				$this->getUser()->getOption( 'language' )
-			);
+
+			$request = $this->getRequest();
+			$user = $this->getUser();
+
+			$code = $request->getVal( 'uselang', $user->getOption( 'language' ) );
 			$code = self::sanitizeLangCode( $code );
 
-			wfRunHooks( 'UserGetLanguageObject', array( $this->getUser(), &$code ) );
+			wfRunHooks( 'UserGetLanguageObject', array( $user, &$code, $this ) );
 
 			if( $code === $wgLanguageCode ) {
 				$this->lang = $wgContLang;
@@ -289,7 +301,10 @@ class RequestContext implements IContextSource {
 				$obj = Language::factory( $code );
 				$this->lang = $obj;
 			}
+
+			unset( $this->recursion );
 		}
+
 		return $this->lang;
 	}
 
@@ -384,8 +399,8 @@ class RequestContext implements IContextSource {
 	 *   language or a uselang param in the fauxrequest data may change the lang
 	 * - Skin will be based on the anonymous user, should be the wiki's default skin
 	 *
-	 * @param $title Title Title to use for the extraneous request
-	 * @param $request Mixed A WebRequest or data to use for a FauxRequest
+	 * @param Title $title Title to use for the extraneous request
+	 * @param WebRequest|array $request A WebRequest or data to use for a FauxRequest
 	 * @return RequestContext
 	 */
 	public static function newExtraneousContext( Title $title, $request=array() ) {

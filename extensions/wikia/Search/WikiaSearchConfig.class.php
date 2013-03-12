@@ -64,6 +64,7 @@ class WikiaSearchConfig implements \ArrayAccess
 	 */
 	private $requestedFields = array(
 	        'id',
+			'pageid',
 	        'wikiarticles',
 	        'wikititle',
 	        'url',

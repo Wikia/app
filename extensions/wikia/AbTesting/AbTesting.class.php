@@ -3,6 +3,7 @@
  * @author Sean Colombo
  * @author Kyle Florence
  * @author Władysław Bodzek
+ * @author Piotr Bablok
  */
 
 class AbTesting extends WikiaObject {
@@ -14,12 +15,14 @@ class AbTesting extends WikiaObject {
 	const FLAG_GA_TRACKING = 1;
 	const FLAG_DW_TRACKING = 2;
 	const FLAG_FORCED_GA_TRACKING_ON_LOAD = 4;
-	const DEFAULT_FLAGS = 7;
+	const FLAG_LIMIT_TO_SPECIAL_WIKIS = 8;
+	const DEFAULT_FLAGS = 3;
 
 	static public $flags = array(
 		self::FLAG_GA_TRACKING => 'ga_tracking',
 		self::FLAG_DW_TRACKING => 'dw_tracking',
 		self::FLAG_FORCED_GA_TRACKING_ON_LOAD => 'forced_ga_tracking_on_load',
+		self::FLAG_LIMIT_TO_SPECIAL_WIKIS => 'limit_to_special_wikis',
 	);
 
 	static protected $initialized = false;
@@ -45,9 +48,9 @@ class AbTesting extends WikiaObject {
 		return true;
 	}
 
-	public function onWikiaSkinTopModules( &$scriptModules, $skin ) {
+	public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
 		if ( $this->app->checkSkin( 'oasis', $skin ) ) {
-			array_unshift( $scriptModules, 'wikia.ext.abtesting' );
+			$scripts .= ResourceLoader::makeCustomLink($this->wg->out, array( 'wikia.ext.abtesting' ), 'scripts') . "\n";
 		}
 		return true;
 	}

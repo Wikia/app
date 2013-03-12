@@ -7,11 +7,8 @@ class WikiaHubsV2SuggestController extends WikiaController {
 		$this->model = F::build('WikiaHubsV2SuggestModel');
 	}
 
-	public function suggestVideo() {
-		$this->formData = $this->model->getSuggestVideoForm();
-	}
-
 	public function suggestArticle() {
+		$this->successMessage = wfMessage('wikiahubs-suggest-article-success')->text();
 		$this->formData = $this->model->getSuggestArticleForm();
 	}
 

@@ -1,32 +1,17 @@
 <?php
 
 /**
- * Base exception class for the Nirvana framework
+ * WikiaBaseException
+ *
+ * it is used by WikiaException and WikiaHttpException
+ * WikiaHttpExceptions should not be logged by default
+ * as they are more about communication than errors
  *
  * @ingroup nirvana
  *
- * @author Wojciech Szela <wojtek@wikia-inc.com>
- * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
- * @link http://pl2.php.net/manual/en/class.exception.php
+ * @author Jakub Olek <jakubolek@wikia-inc.com>
  */
-class WikiaException extends MWException {
-	/**
-	 * Constructor
-	 *
-	 * @param string $message The exception message
-	 * @param int $code The error code
-	 * @param Exception $previous The previous exception in the chain if any
-	 *
-	 * @link  http://www.php.net/manual/en/class.exception.php
-	 * @see MWException
-	 */
-	public function __construct($message = '', $code = 0, Exception $previous = null) {
-		parent::__construct( $message, $code, $previous );
-
-		// log more details (macbre)
-		Wikia::logBacktrace( __METHOD__ );
-	}
-
+abstract class WikiaBaseException extends MWException {
 	/**
 	 * Overrides MWException::report to also write exceptions to error_log
 	 *
@@ -53,6 +38,24 @@ class WikiaException extends MWException {
 		flush();
 		*/
 		parent::report();
+	}
+}
+
+/**
+ * Base exception class for the Nirvana framework
+ *
+ * @ingroup nirvana
+ *
+ * @author Wojciech Szela <wojtek@wikia-inc.com>
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ * @link http://pl2.php.net/manual/en/class.exception.php
+ */
+class WikiaException extends WikiaBaseException {
+	public function __construct($message = '', $code = 0, Exception $previous = null) {
+		parent::__construct( $message, $code, $previous );
+
+		// log more details (macbre)
+		Wikia::logBacktrace( __METHOD__ );
 	}
 }
 
@@ -153,7 +156,7 @@ class WikiaDispatchedException extends WikiaException {
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
-abstract class WikiaHttpException extends WikiaException {
+abstract class WikiaHttpException extends WikiaBaseException {
 	protected $code = null;
 	protected $message = null;
 	protected $details = null;

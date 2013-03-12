@@ -326,7 +326,7 @@
 		// If there are any tracking events in the spool, replay them.
 		while( ( args = spool.shift() ) ) {
 			Wikia.log( 'Sending previously-spooled tracking event', 'trace', logGroup );
-			Wikia.log( data, 'trace', logGroup );
+			Wikia.log( args, 'trace', logGroup );
 
 			track.apply( null, args );
 		}
