@@ -124,7 +124,7 @@ describe("Popover module", function () {
 
 		fireEvent('click', container);
 
-		expect(container.innerText).toBe('TESTTHIS');
+		expect(container.textContent).toBe('TESTTHIS');
 	});
 
 	it('should set a text of popover with a function', function(){
@@ -134,13 +134,13 @@ describe("Popover module", function () {
 		pop({
 			on: container,
 			create: function(cnt){
-				cnt.innerText = 'TESTTHIS';
+				cnt.textContent = 'TESTTHIS';
 			}
 		});
 
 		fireEvent('click', container);
 
-		expect(container.innerText).toBe('TESTTHIS');
+		expect(container.textContent).toBe('TESTTHIS');
 	});
 
 	it('should change content', function(){
@@ -154,13 +154,13 @@ describe("Popover module", function () {
 
 		fireEvent('click', container);
 
-		expect(container.innerText).toBe('TESTTHIS');
+		expect(container.textContent).toBe('TESTTHIS');
 
 		p.changeContent(function(cnt){
-				cnt.innerText = 'TEXTTHISNUMBET2';
+				cnt.textContent = 'TEXTTHISNUMBET2';
 		});
 
-		expect(container.innerText).toBe('TEXTTHISNUMBET2');
+		expect(container.textContent).toBe('TEXTTHISNUMBET2');
 	});
 
 	it('should run onopen callback', function(){
