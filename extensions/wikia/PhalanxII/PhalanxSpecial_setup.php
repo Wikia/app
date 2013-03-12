@@ -57,8 +57,10 @@ $wgResourceModules['ext.wikia.Phalanx'] = array(
 		'wikia.nirvana'
 	),
 	'messages' => array(
+		'phalanx',
 		'phalanx-validate-regexp-valid',
-		'phalanx-validate-regexp-invalid'
+		'phalanx-validate-regexp-invalid',
+		'phalanx-unblock-failure',
 	),
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/PhalanxII'

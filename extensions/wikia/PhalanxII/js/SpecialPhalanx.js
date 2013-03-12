@@ -20,6 +20,7 @@ require(['jquery', 'mw', 'phalanx'], function($, mw, phalanx) {
 					node.closest('li').addClass('removed');
 				}).
 				fail(function() {
+					$.showModal(mw.msg('phalanx'), mw.msg('phalanx-unblock-failure'));
 					node.attr('disabled', false);
 				});
 		}).
