@@ -131,7 +131,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 					],
 					3125 => [
 						'wiki_id' => '3125',
-						'wam'=> '99.5516',
+						'wam'=> '99.5000',
 						'wam_rank' => '17',
 						'hub_wam_rank' => '5',
 						'peak_wam_rank' => '2',
@@ -143,7 +143,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'title' => 'Call of Duty Wiki',
 						'url' => 'callofduty.wikia.com',
 						'hub_id' => '2',
-						'wam_change' => '-0.0093',
+						'wam_change' => '-0.1000',
 						'admins' => [],
 						'wiki_image' => null,
 					],
@@ -162,40 +162,46 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 
 	public function getStructuredData($data) {
 		$hubModel = $this->getWikiaHubsModel();
-		
+
 		$structuredData = [
 			'wamPageUrl' => self::WIKIA_HOME_PAGE_WAM_URL,
 			'verticalName' => $hubModel->getVerticalName($data['vertical_id']),
 			'ranking' => []
 		];
-		
+
 		$rank = 1;
 		$wamIndex = $data['api_response']['wam_index'];
 		foreach($wamIndex as $wiki) {
+			$wamScore = $wiki['wam'];
+			$wamChange = $wiki['wam_change'];
+			$wamPrevScore = $wamScore - $wamChange;
+
 			$structuredData['ranking'][] = [
 				'rank' => $rank,
-				'wamScore' => round($wiki['wam'], self::WAM_SCORE_DECIMALS),
+				'wamScore' => round($wamScore, self::WAM_SCORE_DECIMALS),
 				'imageUrl' => $wiki['wiki_image'],
 				'wikiName' => $wiki['title'],
 				'wikiUrl' => $this->addProtocolToLink($wiki['url']),
-				'change' => $this->getWamWikiChange($wiki['wam_change']),
+				'change' => $this->getWamWikiChange($wamScore, $wamPrevScore),
 			];
 			$rank++;
 		}
-		
+
 		return $structuredData;
 	}
-	
-	protected function getWamWikiChange($wamChange) {
+
+	protected function getWamWikiChange($wamScore, $wamPrevScore) {
 		$result = self::WAM_SCORE_NO_CHANGE;
-		$floatWamChange = (float) $wamChange;
-		
-		if( $floatWamChange > 0 ) {
+		$wamScore = round($wamScore, self::WAM_SCORE_DECIMALS);
+		$wamPrevScore = round($wamPrevScore, self::WAM_SCORE_DECIMALS);
+		$wamChange = $wamPrevScore - $wamScore;
+
+		if( $wamChange > 0 ) {
 			$result = self::WAM_SCORE_CHANGE_UP;
-		} else if( $floatWamChange < 0 ) {
+		} else if( $wamChange < 0 ) {
 			$result = self::WAM_SCORE_CHANGE_DOWN;
 		}
-		
+
 		return $result;
 	}
 

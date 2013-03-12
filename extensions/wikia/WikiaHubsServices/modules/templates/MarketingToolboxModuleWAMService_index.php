@@ -47,7 +47,7 @@
 						<td class="rank"><?= $wiki['rank']; ?>.</td>
 						<td class="score">
 							<img src="<?= $wg->BlankImgUrl; ?>" class="<?= $scoreChangeMap[$wiki['change']]; ?>" />
-							<?= $wiki['wamScore']; ?>
+							<?= number_format( $wiki['wamScore'], MarketingToolboxModuleWAMService::WAM_SCORE_DECIMALS ); ?>
 						</td>
 						<td>
 							<a href="<?= $wiki['wikiUrl']; ?>" class="wiki-thumb">
