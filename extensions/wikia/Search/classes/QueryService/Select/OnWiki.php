@@ -72,7 +72,7 @@ class OnWiki extends AbstractSelect
 	 * @param Solarium_Query_Select $query
 	 * @return OnWiki
 	 */
-	protected function registerSpellcheck( Solarium_Query_Select $query ) {
+	protected function registerSpellcheck( Select $query ) {
 		if ( $this->interface->getGlobal( 'WikiaSearchSpellcheckActivated' ) ) {
 			$query->getSpellcheck()
 			      ->setQuery( $this->config->getQueryNoQuotes( true ) )
