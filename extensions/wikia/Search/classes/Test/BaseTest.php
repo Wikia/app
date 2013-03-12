@@ -6,7 +6,7 @@ use \WikiaBaseTest as WikiaBaseTest;
  * All shared methods should go here.
  * @author Robert Elwell <robert@wikia-inc.com>
  */
-class BaseTest extends WikiaBaseTest {
+abstract class BaseTest extends WikiaBaseTest {
 	/**
 	 * (non-PHPdoc)
 	 * @see WikiaBaseTest::setUp()
