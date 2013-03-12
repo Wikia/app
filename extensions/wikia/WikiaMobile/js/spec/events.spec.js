@@ -1,7 +1,3 @@
-/*
- @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
- */
-
 describe("Event module", function() {
 
 	var events = modules.events();

@@ -21,7 +21,6 @@ files = [
 	'extensions/wikia/WikiaMobile/js/autocomplete.js',
 	'extensions/wikia/WikiaMobile/js/events.js',
 	'extensions/wikia/WikiaMobile/js/features.js',
-	'extensions/wikia/WikiaMobile/js/layout.js',
 	'extensions/wikia/WikiaMobile/js/lazyload.js',
 	'extensions/wikia/WikiaMobile/js/mediagallery.js',
 	'extensions/wikia/WikiaMobile/js/media.js',
@@ -92,7 +91,7 @@ captureTimeout = 6000;
 
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit
-singleRun = false;
+singleRun = true;
 
 coverageReporter = {
 	type : 'html',

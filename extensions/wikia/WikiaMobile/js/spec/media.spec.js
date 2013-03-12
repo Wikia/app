@@ -1,5 +1,5 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Media module", function () {
+ddescribe("Media module", function () {
 	'use strict';
 
 	window.wgStyleVersion = 123;
@@ -9,10 +9,22 @@ describe("Media module", function () {
 				getVal: function(){}
 			}
 		},
+		modal = {
+			open: function(){},
+			getWrapper: function(){}
+		},
+		loader = function(){
+			return {
+				done: function(func) {
+					//func({});
+				}
+			}
+		},
 		media;
 
-	// ['JSMessages', 'modal', 'loader', 'querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('cache')]
-	media = modules.media(undefined, undefined, undefined, qsMock, undefined, undefined);
+	loader.MULTI = '';
+
+	media = modules.media(null, modal, null, qsMock, null,null, null, null, loader, null);
 
 	it('should be defined', function(){
 		expect(media).toBeDefined();
@@ -46,16 +58,4 @@ describe("Media module", function () {
 
 		expect(imgs[5].isVideo).toBeTruthy();
 	});
-
-	it('should open modal', function(done){
-		var body = getBody();
-
-		body.innerHTML += "<div id=wkMdlWrp><div id=wkMdlTB><div id=wkMdlTlBar></div><div id=wkMdlClo class=clsIco></div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div></div>";
-
-		media.openModal(0);
-
-		expect(document.getElementById('wkMdlWrp').className).toBe(' imgMdl');
-		expect(document.getElementById('wkMdlTlBar').childElementCount).toBe(2);
-	});
-
 });
