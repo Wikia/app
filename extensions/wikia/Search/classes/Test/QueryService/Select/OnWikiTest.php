@@ -1,8 +1,13 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchQueryServiceSelectOnWikiTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\QueryService\Select\OnWiki
+ */
+namespace Wikia\Search\QueryService\Select;
+use Wikia, ReflectionProperty, ReflectionMethod;
+/**
+ * Tests on-wiki search functionality
+ */
+class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\OnWiki::extractMatch
