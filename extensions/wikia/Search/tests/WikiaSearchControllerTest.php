@@ -2,7 +2,7 @@
 
 require_once( 'WikiaSearchBaseTest.php' );
 
-class WikiaSearchControllerTest extends WikiaSearchBaseTest {
+class WikiaSearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 	public function setUp() {
 		$this->searchController = $this->getMockBuilder( 'WikiaSearchController' )
