@@ -1,5 +1,5 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
-ddescribe("Toast module", function () {
+describe("Toast module", function () {
 	'use strict';
 
 	var body = getBody(),

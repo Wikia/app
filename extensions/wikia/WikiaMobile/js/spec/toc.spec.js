@@ -11,7 +11,7 @@ describe("Toc module", function() {
 			document: {
 				body: body,
 				getElementById: function(id){
-					body.querySelector('#' + id);
+					return body.querySelector('#' + id);
 				}
 			}
 		},
@@ -29,9 +29,9 @@ describe("Toc module", function() {
 
 			toc.init();
 
-			expect(document.body.className).toMatch('hasToc');
+			expect(window.document.body.className).toMatch('hasToc');
 
-			var chev = document.getElementById('toctitle').querySelectorAll('.chev');
+			var chev = window.document.getElementById('toctitle').querySelectorAll('.chev');
 			expect(chev.length).toEqual(1);
 	});
 

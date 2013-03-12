@@ -38,5 +38,5 @@
 		};
 	}
 
-	context.define('wikia.stringhelper', [], stringhelper);
+	context.define('wikia.stringhelper', stringhelper);
 }(this));
