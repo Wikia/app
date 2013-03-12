@@ -1,8 +1,13 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchControllerTest extends Wikia\Search\Test\BaseTest {
+/**
+ * Class definition for Wikia\Search\Test\Controller\ControllerTest
+ */
+namespace Wikia\Search\Test\Controller;
+use Wikia, WikiaSearchController, ReflectionMethod, ReflectionProperty, SearchEngine, Exception, F;
+/**
+ * Tests WikiaSearchController, currently in global namespace
+ */
+class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 	public function setUp() {
 		$this->searchController = $this->getMockBuilder( 'WikiaSearchController' )
