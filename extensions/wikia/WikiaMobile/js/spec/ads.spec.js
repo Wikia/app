@@ -1,5 +1,5 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
-ddescribe("Ads module", function () {
+describe("Ads module", function () {
 	'use strict';
 
 	//required markup for correct initialization of the ads module
