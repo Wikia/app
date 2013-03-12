@@ -26,6 +26,11 @@ describe("Cookies", function () {
 		expect(cookies.set('new_cookie', 'new_value')).toBe('new_cookie=new_value');
 		expect(cookies.get('test_cookie')).toBe('test_value');
 		expect(cookies.get('new_cookie')).toBe('new_value');
-		expect(document.cookie).toBe('foo=bar; wikia_beacon_id=mCizgIam7U; test_cookie=test_value; new_cookie=new_value')
-	})
+
+		expect(document.cookie).toContain('foo=bar');
+		expect(document.cookie).toContain('wikia_beacon_id=mCizgIam7U');
+		expect(document.cookie).toContain('test_cookie=test_value');
+		expect(document.cookie).toContain('new_cookie=new_value');
+		expect(document.cookie).toContain(';');
+	});
 });

@@ -178,9 +178,9 @@ describe("Nirvana", function () {
 
 	async.it('data can be a string', function(done) {
 		// mock the request
-		var urlParams = 'value=1&abc=xyz'
+		var urlParams = 'value=1&abc=xyz',
 			ajaxMock = function(params) {
-				expect(params.data).toBe(urlParams);
+				expect(params.data).toBe(urlParams + '&format=json');
 
 				// fire callback
 				params.success();
