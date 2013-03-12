@@ -13,6 +13,9 @@
 				<?= $app->renderView('SpecialWikiaHubsV2', 'tabber', $app->wg->request->getValues()); ?>
 			</section>
 		</div>
+		<section class="grid-3 wikiahubs-wam wikiahubs-module">
+			<?= $modules[MarketingToolboxModuleWAMService::MODULE_ID] ?>
+		</section>
 		<section class="grid-1 plainlinks wikiahubs-explore wikiahubs-module">
 			<?= $modules[MarketingToolboxModuleExploreService::MODULE_ID] ?>
 		</section>
@@ -20,7 +23,6 @@
 			<section class="grid-2 alpha wikiahubs-featured-video wikiahubs-module">
 				<?= $modules[MarketingToolboxModuleFeaturedvideoService::MODULE_ID] ?>
 			</section>
-
 			<section class="grid-2 alpha wikiahubs-wikitext-module wikiahubs-module">
 				<?= $modules[MarketingToolboxModulePollsService::MODULE_ID] ?>
 			</section>

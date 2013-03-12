@@ -4,7 +4,7 @@
 		$mediaInfo['attributes']['class'] = 'getThumb';
 
 		?><?= F::app()->renderView( 'WikiaMobileMediaService', 'renderMedia', array(
-		'class' => "img{$i}",
+		'class' => ["img{$i}"],
 		'linked' => !empty( $image['imageLink'] ),
 		'anchorAttributes' => ( !empty( $image['imageLink'] ) ) ? array( 'href' => $image['imageLink'] ) : null,
 		'caption' => ( !empty( $image['imageTitle'] ) ) ? $image['imageTitle'] : null,

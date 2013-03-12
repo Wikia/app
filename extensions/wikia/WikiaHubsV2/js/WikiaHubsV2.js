@@ -45,6 +45,7 @@ var WikiaHubs = {
 		var node = $(e.target),
 			startTime = new Date(),
 			url,
+			rank,
 			lang;
 
 		lang = wgContentLanguage;
@@ -122,8 +123,6 @@ var WikiaHubs = {
 				WikiaHubs.trackClick('TopWikis', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'wikiname', nameIndex, {href: url, lang: lang}, e);
 			}
 		}
-<<<<<<< HEAD
-=======
 		else if (node.closest('.wikiahubs-newstabs').length > 0) {    // Wikia's Picks
 			if (node.is('a')) {
 				url = node.closest('a').attr('href');
@@ -134,7 +133,18 @@ var WikiaHubs = {
 				WikiaHubs.trackClick('WikiasPicks', Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'image', null, {lang: lang}, e);
 			}
 		}
->>>>>>> bugid-98663: Hubs: Featured Video - Revise tracking code
+		else if (node.closest('.wikiahubs-wam').length > 0) {    // WAM
+			url = node.closest('a').attr('href');
+			rank = node.closest('tr').attr('data-rank');
+			if (node.hasParent('.wiki-thumb')) {
+				WikiaHubs.trackClick('HubWam', Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'wikithumbnail', null, {lang: lang, href: url, rank: rank}, e);
+			} else if (node.is('.wiki-name')) {
+				WikiaHubs.trackClick('HubWam', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'wikiname', null, {lang: lang, href: url, rank: rank}, e);
+			} else if (node.is('.read-more')) {
+				WikiaHubs.trackClick('HubWam', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'readmore', null, {lang: lang, href: url}, e);
+			}
+		}
+>>>>>>> dev
 
 		$().log('tracking took ' + (new Date() - startTime) + ' ms');
 	},
