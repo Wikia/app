@@ -15,29 +15,23 @@ class OoyalaVideoHandler extends VideoHandler {
 		//$url = $this->getEmbedUrl();
 		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.time().'-'.intval($isAjax);
 		$jsFile = 'http://player.ooyala.com/v3/'.self::OOYALA_PLAYER_ID;
+		$extensionsPath = F::app()->wg->ExtensionsPath;
 
 		$autoPlayStr = ( $autoplay ) ? 'true' : 'false';
 
 		$embed = <<<EOT
 <div id='{$playerId}' style='width:{$width}px;height:{$height}px;'></div>
-EOT;
-
-		$embed .= <<<EOT
 <script type="text/javascript">
-
-(function(window) {
-
-	var loadOoyala = function(){
-		$.getScript('{$jsFile}').done(function() {
-			window.OO.Player.create('{$playerId}', '{$this->videoId}', { width:'{$width}px', height: '{$height}px', autoplay:{$autoPlayStr} });
-		});
-	};
-
-	wgAfterContentAndJS.push(loadOoyala);
-
-})(this);
-
+	window.ooyalaParams = { 
+		jsFile: "{$jsFile}", 
+		playerId: "{$playerId}", 
+		videoId: "{$this->videoId}", 
+		width: "{$width}",
+		height: "{$height}",
+		autoPlay: "{$autoPlayStr}"
+	}
 </script>
+<script type="text/javascript" src="{$extensionsPath}/wikia/VideoHandlers/js/handlers/Ooyala.js"></script>
 EOT;
 
 		return $embed;
