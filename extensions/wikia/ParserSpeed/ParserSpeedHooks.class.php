@@ -5,7 +5,9 @@ class ParserSpeedHooks extends WikiaObject {
 	const SCRIBE_KEY = 'parser_speed_article';
 
 	public function onArticleViewAfterParser( Article $article, ParserOutput $parserOutput ) {
-		if ( !$this->app->checkSkin( 'oasis', $this->wg->Skin ) ) {
+		// we collect production data from Oasis only
+		if ( !$this->app->checkSkin( 'oasis', $this->wg->Skin )
+				|| $this->wg->DevelEnvironment || $this->wg->StagingEnvironment ) {
 			return true;
 		}
 

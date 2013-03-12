@@ -1,8 +1,8 @@
 <div>
 	<div class="social-links">
-		<a href="#"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
-		<a href="#"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>
-		<a href="#"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
+		<a href="<?= wfMessage('oasis-community-social-facebook-link')->text() ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
+		<a href="<?= wfMessage('oasis-community-social-twitter-link')->text() ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>
+		<a href="<?= wfMessage('oasis-community-social-googleplus-link')->text() ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
 	</div>
 	<div class="search">
 		<form method="get" action="index.php?title=Special:Search" class="WikiaSearch" id="WikiaSearch">
@@ -47,11 +47,14 @@
 						<td class="rank"><?= $wiki['rank']; ?>.</td>
 						<td class="score">
 							<img src="<?= $wg->BlankImgUrl; ?>" class="<?= $scoreChangeMap[$wiki['change']]; ?>" />
-							<?= $wiki['wamScore']; ?>
+							<?= number_format( $wiki['wamScore'], MarketingToolboxModuleWAMService::WAM_SCORE_DECIMALS ); ?>
 						</td>
 						<td>
 							<a href="<?= $wiki['wikiUrl']; ?>" class="wiki-thumb">
-								<img src="<?= $wiki['imageUrl']; ?>" />
+								<img
+									src="<?= ($wiki['imageUrl']) ? $wiki['imageUrl'] : $wg->BlankImgUrl; ?>"
+									width="<?= $imagesWidth; ?>px" height="<?= $imagesHeight; ?>px"
+								/>
 							</a>
 						</td>
 						<td class="url">
