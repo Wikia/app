@@ -82,7 +82,7 @@ describe("Popover module", function () {
 		getBody().innerHTML = '<div id="popover"></div>';
 		container = document.getElementById('popover');
 
-		var p = pop({
+		p = pop({
 			on: container,
 			create: 'TESTTHIS'
 		});
@@ -102,7 +102,7 @@ describe("Popover module", function () {
 
 		fireEvent('click', container);
 
-		expect(container.innerHTML).toBe('<div class="ppOvr" style="top: 13px; "></div>');
+		expect(container.getElementsByClassName('ppOvr')[0].style.top).toBe('13px');
 
 		p.open();
 
