@@ -1,8 +1,8 @@
 <div>
 	<div class="social-links">
-		<a href="<?= wfMsg('wikiahome-community-social-facebook-link') ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
-		<a href="<?= wfMsg('wikiahome-community-social-twitter-link') ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>
-		<a href="<?= wfMsg('wikiahome-community-social-googleplus-link') ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
+		<a href="<?= wfMessage('oasis-community-social-facebook-link')->text() ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
+		<a href="<?= wfMessage('oasis-community-social-twitter-link')->text() ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>
+		<a href="<?= wfMessage('oasis-community-social-googleplus-link')->text() ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
 	</div>
 	<div class="search">
 		<form method="get" action="index.php?title=Special:Search" class="WikiaSearch" id="WikiaSearch">
@@ -51,7 +51,10 @@
 						</td>
 						<td>
 							<a href="<?= $wiki['wikiUrl']; ?>" class="wiki-thumb">
-								<img src="<?= $wiki['imageUrl']; ?>" />
+								<img
+									src="<?= ($wiki['imageUrl']) ? $wiki['imageUrl'] : $wg->BlankImgUrl; ?>"
+									width="<?= $imagesWidth; ?>px" height="<?= $imagesHeight; ?>px"
+								/>
 							</a>
 						</td>
 						<td class="url">

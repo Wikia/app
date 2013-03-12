@@ -72,11 +72,8 @@ $messages['en'] = array(
 	'wikiahome-community-social-wikia-blog' => 'Wikia Blog',
 	'wikiahome-community-social-wikia-blog-link' => 'http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
 	'wikiahome-community-social-twitter' => 'Twitter',
-	'wikiahome-community-social-twitter-link' => 'http://twitter.com/#!/wikia',
 	'wikiahome-community-social-facebook' => 'Facebook',
-	'wikiahome-community-social-facebook-link' => 'http://www.facebook.com/wikia',
 	'wikiahome-community-social-googleplus' => 'Google+',
-	'wikiahome-community-social-googleplus-link' => 'http://gplus.to/wikia',
 
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
 *[http://www.wikia.com/About_Us About Us]
@@ -198,11 +195,8 @@ $messages['de'] = array(
 	'wikiahome-community-social-wikia-blog' => 'Wikia Blog',
 	'wikiahome-community-social-wikia-blog-link' => 'http://de.community.wikia.com/wiki/Blog%3AWikia_Deutschland_News',
 	'wikiahome-community-social-twitter' => 'Twitter',
-	'wikiahome-community-social-twitter-link' => 'http://twitter.com/wikia_de',
 	'wikiahome-community-social-facebook' => 'Facebook',
-	'wikiahome-community-social-facebook-link' => 'http://www.facebook.com/wikia.de',
 	'wikiahome-community-social-googleplus' => '',
-	'wikiahome-community-social-googleplus-link' => '',
 
 	'wikiahome-footer-wikiainc' => '===Wikia===
 *[http://de.wikia.com/%C3%9Cber_Wikia Über Wikia]
@@ -311,11 +305,8 @@ $messages['es'] = array(
 	'wikiahome-community-social-wikia-blog' => 'Blog de Wikia',
 	'wikiahome-community-social-wikia-blog-link' => 'http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia',
 	'wikiahome-community-social-twitter' => 'Twitter',
-	'wikiahome-community-social-twitter-link' => 'https://twitter.com/#!/wikia_es',
 	'wikiahome-community-social-facebook' => 'Facebook',
-	'wikiahome-community-social-facebook-link' => 'http://www.facebook.com/wikia.es',
 	'wikiahome-community-social-googleplus' => '',
-	'wikiahome-community-social-googleplus-link' => '',
 
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
 *[http://es.wikia.com/Sobre_nosotros Sobre nosotros]
@@ -423,11 +414,8 @@ $messages['fr'] = array(
 	'wikiahome-community-social-wikia-blog' => 'Blog Wikia',
 	'wikiahome-community-social-wikia-blog-link' => 'http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia',
 	'wikiahome-community-social-twitter' => 'Twitter',
-	'wikiahome-community-social-twitter-link' => 'https://twitter.com/#!/wikia_fr',
 	'wikiahome-community-social-facebook' => 'Facebook',
-	'wikiahome-community-social-facebook-link' => 'http://www.facebook.com/wikia.fr',
 	'wikiahome-community-social-googleplus' => '',
-	'wikiahome-community-social-googleplus-link' => '',
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
 *[http://www.wikia.com/About_Us À propos de nous]
 *[http://www.wikia.com/Special:Contact Contacter Wikia]

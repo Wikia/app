@@ -65,21 +65,21 @@
 						</a>
 					</li>
 					<li>
-						<a href="<?= wfMsg('wikiahome-community-social-twitter-link') ?>">
+						<a href="<?= wfMsg('oasis-community-social-twitter-link') ?>">
 							<img class="wikiahomepage-community-social-twitter" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-twitter') ?>
 						</a>
 					</li>
 					<li>
-						<a href="<?= wfMsg('wikiahome-community-social-facebook-link') ?>">
+						<a href="<?= wfMsg('oasis-community-social-facebook-link') ?>">
 							<img class="wikiahomepage-community-social-facebook" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-facebook') ?>
 						</a>
 					</li>
 					<?php
-						$message = wfMsg('wikiahome-community-social-googleplus-link');
+						$message = wfMsg('oasis-community-social-googleplus-link');
 						if(!empty($message)):
 					?>
 					<li>
-						<a href="<?= wfMsg('wikiahome-community-social-googleplus-link') ?>">
+						<a href="<?= $message ?>">
 							<img class="wikiahomepage-community-social-googleplus" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-googleplus') ?>
 						</a>
 					</li>
