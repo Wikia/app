@@ -1,13 +1,6 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
 describe("Popover module", function () {
 	'use strict';
-	var async = new AsyncSpec(this);
-
-	function fire(event, element){
-		var evt = document.createEvent("HTMLEvents");
-		evt.initEvent(event, true, true); // event type,bubbling,cancelable
-		return !element.dispatchEvent(evt);
-	}
 
 	var pop = modules.popover({
 		show: function(){},
@@ -35,18 +28,17 @@ describe("Popover module", function () {
 
 	it('should set position correctly', function(){
 		getBody().innerHTML = '<div id="popover"></div>';
-		var container = document.getElementById('popover');
 
-		var p = pop({
-			on: container,
-			create: 'TESTTHIS',
-			position: 'top'
-		});
+		var container = document.getElementById('popover'),
+			p = pop({
+				on: container,
+				create: 'TESTTHIS',
+				position: 'top'
+			});
 
-		fire('click', container);
+		fireEvent('click', container);
 
 		expect(container.className).toMatch('top');
-
 
 		getBody().innerHTML = '<div id="popover"></div>';
 		container = document.getElementById('popover');
@@ -57,7 +49,7 @@ describe("Popover module", function () {
 			position: 'left'
 		});
 
-		fire('click', container);
+		fireEvent('click', container);
 
 		expect(container.className).toMatch('left');
 
@@ -70,7 +62,7 @@ describe("Popover module", function () {
 			position: 'right'
 		});
 
-		fire('click', container);
+		fireEvent('click', container);
 
 		expect(container.className).toMatch('right');
 
@@ -83,7 +75,7 @@ describe("Popover module", function () {
 			position: 'bottom'
 		});
 
-		fire('click', container);
+		fireEvent('click', container);
 
 		expect(container.className).toMatch('bottom');
 
@@ -95,7 +87,7 @@ describe("Popover module", function () {
 			create: 'TESTTHIS'
 		});
 
-		fire('click', container);
+		fireEvent('click', container);
 
 		expect(container.className).toMatch('bottom');
 	});
@@ -108,7 +100,7 @@ describe("Popover module", function () {
 			on: container
 		});
 
-		fire('click', container);
+		fireEvent('click', container);
 
 		expect(container.innerHTML).toBe('<div class="ppOvr" style="top: 13px; "></div>');
 
@@ -130,7 +122,7 @@ describe("Popover module", function () {
 			create: 'TESTTHIS'
 		});
 
-		fire('click', container);
+		fireEvent('click', container);
 
 		expect(container.innerText).toBe('TESTTHIS');
 	});
@@ -146,7 +138,7 @@ describe("Popover module", function () {
 			}
 		});
 
-		fire('click', container);
+		fireEvent('click', container);
 
 		expect(container.innerText).toBe('TESTTHIS');
 	});
@@ -160,7 +152,7 @@ describe("Popover module", function () {
 			create: 'TESTTHIS'
 		});
 
-		fire('click', container);
+		fireEvent('click', container);
 
 		expect(container.innerText).toBe('TESTTHIS');
 
@@ -185,7 +177,7 @@ describe("Popover module", function () {
 
 		pop(options);
 
-		fire('click', container);
+		fireEvent('click', container);
 
 		expect(options.open).toHaveBeenCalled();
 	});
@@ -204,8 +196,8 @@ describe("Popover module", function () {
 
 		pop(options);
 
-		fire('click', container);
-		fire('click', container);
+		fireEvent('click', container);
+		fireEvent('click', container);
 
 		expect(options.close).toHaveBeenCalled();
 	});

@@ -1,7 +1,3 @@
-/**
- * @test-require-asset extensions/wikia/AdEngine/js/AdConfig2Late.js
- */
-
 describe('AdConfig2Late', function(){
 	it('getProvider returns Liftium2Dom if it can handle it', function() {
 		var adProviderNullMock = {name: 'NullMock'}
