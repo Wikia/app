@@ -1,18 +1,17 @@
 <?php
-
+/**
+ * Class definition for WikiaSearchIndexerController
+ */
 use Wikia\Search\IndexService\Factory;
 use Wikia\Search\MediaWikiInterface;
 /**
  * This class is responsible for providing responses for atomic updates of documents. 
  * @author relwell
+ * @package Search
+ * @subpackage Controller
  */
 class WikiaSearchIndexerController extends WikiaController
 {
-	/**
-	 * @var WikiaSearchIndexer
-	 */
-	protected $searchIndexer;
-	
 	/**
 	 * Allows us to avoid direct calls to MediaWiki components
 	 * @var Wikia\Search\MediaWikiInterface

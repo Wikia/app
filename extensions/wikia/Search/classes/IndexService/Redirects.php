@@ -2,13 +2,14 @@
 /**
  * Class definition for \Wikia\Search\IndexService\Redirects
  * @author relwell
- *
  */
 namespace Wikia\Search\IndexService;
 use Wikia\Search\Utilities;
 /**
  * Reports on redirect titles for a given page
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class Redirects extends AbstractService
 {

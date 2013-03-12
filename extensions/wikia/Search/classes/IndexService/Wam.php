@@ -8,6 +8,8 @@ use \WAMService;
 /**
  * Reponsible for retrieving WAM score for a given wiki
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class Wam extends AbstractWikiService
 {

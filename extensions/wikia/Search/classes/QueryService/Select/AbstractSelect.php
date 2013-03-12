@@ -4,7 +4,13 @@
  */
 namespace Wikia\Search\QueryService\Select;
 use Wikia\Search\QueryService\DependencyContainer, Wikia\Search\Config, \Solarium_Client, Wikia\Search\ResultSet, Wikia\Search\Utilities, \Solarium_Query_Select, \Solarium_Result_Select;
-
+/**
+ * Abstract class responsible for controlling the flow of logic of a search select query.
+ * The workflow for a search includes preparation of the query, sending of the query, and preparation of results.
+ * @author relwell
+ * @package Search
+ * @subpackage QueryService
+ */
 abstract class AbstractSelect
 {
 	/**
@@ -62,20 +68,27 @@ abstract class AbstractSelect
 	protected $timeAllowed = 5000;
 	
 	/**
+	 * Responsible for storing configuration values for a search.
 	 * @var Wikia\Search\Config
 	 */
 	protected $config;
 	
 	/**
+	 * Responsible for encapsulating logic that interacts with MediaWiki classes.
 	 * @var Wikia\Search\MediaWikiInterface
 	 */
 	protected $interface;
 	
 	/**
+	 * Responsible for sending search requests to Solr.
 	 * @var \Solarium_Client
 	 */
 	protected $client;
 	
+	/**
+	 * Handles dependency injection for all child classes.
+	 * @param DependencyContainer $container
+	 */
 	public function __construct( DependencyContainer $container ) {
 		$this->client = $container->getClient();
 		$this->config = $container->getConfig();
@@ -84,7 +97,11 @@ abstract class AbstractSelect
 	}
 	
 	/**
-	 * @param  WikiaSearchConfig $searchConfig
+	 * Performs a select query on Solr.
+	 * A match is instantiated if available, and then the search request 
+	 * is prepared and sent. The response, upon receipt, is used to create a ResultSet.
+	 * This is fault-tolerant, and will return an instance of Wikia\Search\ResultSet\EmptySet
+	 * in the event of no results or an internal exception.
 	 * @return Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	public function search() {
@@ -104,6 +121,7 @@ abstract class AbstractSelect
 	}
 	
 	/**
+	 * Retrieves an existing match, or forces the child class to retrieve a match. 
 	 * @return Ambigous <\Wikia\Search\Match\Article, \Wikia\Search\Match\Wiki, \Wikia\Search\false, boolean>
 	 */
 	public function getMatch() {
@@ -114,7 +132,7 @@ abstract class AbstractSelect
 	}
 	
 	/**
-	 * Should be overidden by children
+	 * This hook should be overidden by children to access the appropriate kind of match.
 	 * @return NULL
 	 */
 	protected function extractMatch() {
@@ -263,7 +281,10 @@ abstract class AbstractSelect
 	}
 	
 	/**
-	 * This is a hook for child classes to optionally extend
+	 * This is a hook for child classes to optionally extend.
+	 * It creates result sets based on the response from Solr, encapsulated in 
+	 * an instance of Solarium_Result_Select.
+	 * @param Solarium_Result_Select $result
 	 */
 	protected function prepareResponse( Solarium_Result_Select $result ) {
 		$this->spellcheckResult( $result );

@@ -4,12 +4,12 @@
  */
 namespace Wikia\Search\ResultSet;
 use \Solarium_Result_Select, \Solarium_Result_Select_Empty, \WikiaSearchConfig;
-
 /**
- * A singleton instance for instantiating search result sets.
- * Yes it's a singleton -- this is easier to test than a static factory method.
+ * A factory for instantiating search result sets.
  * This lets us make something else reponsible for determining which instance to select.
  * @author relwell
+ * @package Search
+ * @subpackage ResultSet
  */
 class Factory
 {

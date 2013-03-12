@@ -9,6 +9,8 @@ namespace Wikia\Search\Traits;
  * This is a really nifty pattern for classes that encapsulate something iterable, but may require additional logic further down the road.
  * This way, you can test once, and focus on the logic in the specific class implementations.
  * A class that uses this can implement ArrayAccess and Iterator.
+ * @package Search
+ * @subpackage Traits
  */
 trait AttributeIterable {
 	

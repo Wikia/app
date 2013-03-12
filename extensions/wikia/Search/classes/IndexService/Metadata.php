@@ -7,6 +7,8 @@ namespace Wikia\Search\IndexService;
 /**
  * Allows us to access mediawiki-dependent metadata
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class Metadata extends AbstractService
 {

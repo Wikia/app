@@ -3,6 +3,12 @@
  * Class definition for Wikia\Search\Traits\ArrayConfigurable
  */
 namespace Wikia\Search\Traits;
+/**
+ * This trait allows us to generalize setting properties based on the values of associated array keys.
+ * @author relwell
+ * @package Search
+ * @subpackage Traits
+ */
 trait ArrayConfigurable
 {
 	/**

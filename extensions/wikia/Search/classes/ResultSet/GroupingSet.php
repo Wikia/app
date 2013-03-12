@@ -9,6 +9,8 @@ use \WikiaSearchConfig;
 /**
  * This is a search result set that contains grouped results.
  * @author relwell
+ * @package Search
+ * @subpackage ResultSet
  */
 class GroupingSet extends Grouping
 {

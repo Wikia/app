@@ -7,6 +7,8 @@ use \Wikia\Search\Config, \Solarium_Result_Select, \Wikia\Search\MediaWikiInterf
 /**
  * This allows us to encapsulate all dependencies and send a single object to Wikia\Search\ResultSet\Factory
  * @author relwell
+ * @package Search
+ * @subpackage ResultSet
  */
 class DependencyContainer
 {
@@ -58,6 +60,7 @@ class DependencyContainer
 	}
 	
 	/**
+	 * Accessor method for config.
 	 * @return Wikia\Search\Config
 	 */
 	public function getConfig() {
@@ -65,6 +68,7 @@ class DependencyContainer
 	}
 
 	/**
+	 * Accessor method for result.
 	 * @return Solarium_Result_Select
 	 */
 	public function getResult() {
@@ -72,6 +76,7 @@ class DependencyContainer
 	}
 
 	/**
+	 * Accessor method for interface.
 	 * @return \Wikia\Search\MediaWikiInterface
 	 */
 	public function getInterface() {
@@ -79,6 +84,7 @@ class DependencyContainer
 	}
 
 	/**
+	 * Accessor method for metaposition.
 	 * @return number
 	 */
 	public function getMetaposition() {
@@ -86,6 +92,7 @@ class DependencyContainer
 	}
 
 	/**
+	 * Accessor method for parent.
 	 * @return \Wikia\Search\ResultSet\GroupingSet
 	 */
 	public function getParent() {
@@ -93,7 +100,8 @@ class DependencyContainer
 	}
 
 	/**
-	 * @param WikiaSearchConfig $config
+	 * Mutator for config.
+	 * @param Config $config
 	 * @return DependencyContainer
 	 */
 	public function setConfig( Config $config ) {
@@ -102,6 +110,7 @@ class DependencyContainer
 	}
 
 	/**
+	 * Mutator for result.
 	 * @param Solarium_Result_Select $result
 	 * @return DependencyContainer
 	 */
@@ -111,6 +120,7 @@ class DependencyContainer
 	}
 
 	/**
+	 * Mutator for interface.
 	 * @param MediaWikiInterface $interface
 	 * @return DependencyContainer
 	 */
@@ -120,6 +130,7 @@ class DependencyContainer
 	}
 
 	/**
+	 * Mutator for metaposition.
 	 * @param int $metaposition
 	 * @return DependencyContainer
 	 */
@@ -129,6 +140,7 @@ class DependencyContainer
 	}
 
 	/**
+	 * Mutator for parent.
 	 * @param GroupingSet $parent
 	 * @return DependencyContainer
 	 */
@@ -139,6 +151,7 @@ class DependencyContainer
 	
 	
 	/**
+	 * Accessor for WikiMatch
 	 * @return the $wikiMatch
 	 */
 	public function getWikiMatch() {
@@ -146,7 +159,8 @@ class DependencyContainer
 	}
 
 	/**
-	 * @param \Wikia\Search\ResultSet\Match $wikiMatch
+	 * Mutator for WikiMatch
+	 * @param Wiki $wikiMatch
 	 */
 	public function setWikiMatch( Wiki $wikiMatch ) {
 		$this->wikiMatch = $wikiMatch;

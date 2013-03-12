@@ -7,11 +7,13 @@ use \Solarium_Query_Helper;
 /**
  * A placeholder for utilities used across the search lib. 
  * @author relwell
+ * @package Search
  */
 class Utilities
 {
 	/**
-	 * @var \Solarium_Query_Helper
+	 * We use this helper to escape terms in sanitizeQuery.
+	 * @staticvar \Solarium_Query_Helper
 	 */
 	private static $queryHelper;
 	
@@ -32,6 +34,7 @@ class Utilities
 	 * Accepts a string and, checks it against a known set of dynamic language fields, and composes
 	 * a field namebased on the language context and field set membership.
 	 * @param  string $field
+	 * @param  string $lang the non-global language code, if needed
 	 * @return string the dynamic field, or the field name if not dynamic
 	 **/
 	public static function field( $field, $lang = null )

@@ -8,6 +8,8 @@ use Wikia\Search\Utilities;
 /**
  * This is intended to provide core article content
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class DefaultContent extends AbstractService
 {

@@ -7,6 +7,8 @@ namespace Wikia\Search\IndexService;
 /**
  * Returns additioanl data about images and videos 
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class MediaData extends AbstractService
 {
