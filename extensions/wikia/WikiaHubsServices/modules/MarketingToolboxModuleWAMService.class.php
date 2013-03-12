@@ -131,7 +131,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 					],
 					3125 => [
 						'wiki_id' => '3125',
-						'wam'=> '99.5516',
+						'wam'=> '99.5000',
 						'wam_rank' => '17',
 						'hub_wam_rank' => '5',
 						'peak_wam_rank' => '2',
@@ -143,7 +143,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'title' => 'Call of Duty Wiki',
 						'url' => 'callofduty.wikia.com',
 						'hub_id' => '2',
-						'wam_change' => '-0.0093',
+						'wam_change' => '-0.1000',
 						'admins' => [],
 						'wiki_image' => null,
 					],
