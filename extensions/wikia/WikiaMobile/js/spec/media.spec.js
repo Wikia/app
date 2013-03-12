@@ -1,5 +1,5 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
-ddescribe("Media module", function () {
+describe("Media module", function () {
 	'use strict';
 
 	window.wgStyleVersion = 123;

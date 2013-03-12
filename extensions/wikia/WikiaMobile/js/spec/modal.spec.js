@@ -1,6 +1,4 @@
-
 /*global describe, it, runs, waitsFor, expect, require, document*/
-
 describe("Modal module", function () {
 	'use strict';
 	var timerCallback,
