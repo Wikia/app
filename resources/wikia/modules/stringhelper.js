@@ -36,5 +36,3 @@ define('wikia.stringhelper', function stringhelper() {
 		isLatin: isLatin
 	};
 });
-
-
