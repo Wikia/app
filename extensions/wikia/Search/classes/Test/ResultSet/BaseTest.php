@@ -1,8 +1,13 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchResultSetBaseTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\ResultSet\BaseTest
+ */
+namespace Wikia\Search\Test\ResultSet;
+use Wikia, ReflectionMethod, ReflectionProperty;
+/**
+ * Tests base result set class
+ */
+class BaseTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
 	 * Convenience method to easily handle the necessary dependencies & method mocking for recurrent mocks

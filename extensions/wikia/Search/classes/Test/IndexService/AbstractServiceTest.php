@@ -1,19 +1,15 @@
 <?php
 /**
- * Class definition for \Wikia\Search\Test\AbstractServiceTest
+ * Class definition for \Wikia\Search\Test\IndexService\AbstractServiceTest
  * @author relwell
  */
-namespace Wikia\Search\Test;
-use Wikia\Search\IndexService\AbstractService;
-use Wikia\Search\MediaWikiInterface;
-use \ReflectionProperty;
-use \ReflectionMethod;
-require_once( 'WikiaSearchBaseTest.php' );
+namespace Wikia\Search\Test\IndexService;
+use Wikia\Search\IndexService\AbstractService, Wikia\Search\MediaWikiInterface, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Test\BaseTest;
 /**
  * Tests the methods found in \Wikia\Search\IndexService\AbstractService
  * @author relwell
  */
-class AbstractServiceTest extends \WikiaSearchBasetest
+class AbstractServiceTest extends BaseTest
 {
 	public function setUp() {
 		$this->service = $this->getMockBuilder( '\Wikia\Search\IndexService\AbstractService' );

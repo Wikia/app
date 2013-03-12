@@ -1,8 +1,13 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchResultTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\ResultTest
+ */
+namespace Wikia\Search\Test;
+use Wikia\Search\Result, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Utilities;
+/**
+ * Tests functionality related to Wikia\Search\Result
+ */
+class ResultTest extends BaseTest {
 
 	protected $defaultFields = array(
 			'wid'	=>	123
@@ -14,7 +19,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	 */
 	public function testGetCityId() {
 
-		$result = new Wikia\Search\Result( $this->defaultFields );
+		$result = new Result( $this->defaultFields );
 
 		$this->assertEquals(
 				$this->defaultFields['wid'],
@@ -34,7 +39,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	 */
 	public function testTextFieldMethods() {
 
-		$result = F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
+		$result = new Result( $this->defaultFields );
 
 		$this->assertEquals(
 				'',
@@ -70,9 +75,9 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 
 		$fieldsCopy = $this->defaultFields;
 		unset($fieldsCopy['title']);
-		unset($fieldsCopy[Wikia\Search\Utilities::field('title')]);
+		unset($fieldsCopy[Utilities::field('title')]);
 
-		$result = new Wikia\Search\Result( $fieldsCopy );
+		$result = new Result( $fieldsCopy );
 
 		$this->assertEquals(
 				'',
@@ -90,7 +95,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		);
 
 		$languageTitle							= 'LangFoo';
-		$result[Wikia\Search\Utilities::field('title')]	= $languageTitle;
+		$result[Utilities::field('title')]	= $languageTitle;
 
 		$this->assertEquals(
 		        $languageTitle,
@@ -113,14 +118,14 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 				'A title set with Wikia\Search\Result::setTitle() should be filtered with Wikia\Search\Utilities::fixSnippeting before storage.'
 		);
 
-		unset( $result[Wikia\Search\Utilities::field( 'title' )] );
+		unset( $result[Utilities::field( 'title' )] );
 		unset( $result['title'] );
-		$result[Wikia\Search\Utilities::field( 'title', 'en' )] = $languageTitle;
+		$result[Utilities::field( 'title', 'en' )] = $languageTitle;
 
 		global $wgLanguageCode;
 		$oldCode = $wgLanguageCode;
 		$wgLanguageCode = 'fr';
-		$result = new Wikia\Search\Result( array( 'title_en' => $languageTitle ) );
+		$result = new Result( array( 'title_en' => $languageTitle ) );
 		$this->mockApp();
 		$this->assertEquals(
 		        $languageTitle,
@@ -138,7 +143,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	 */
 	public function testUrlMethods() {
 
-		$result		= F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
+		$result		= new Result( $this->defaultFields );
 		$urlNormal	= 'http://www.willcaltrainsucktoday.com/Fake:Will_Caltrain_Suck_Today?';
 		$urlEncoded	= 'http://www.willcaltrainsucktoday.com/Fake:Will_Caltrain_Suck_Today' . urlencode('?');
 
@@ -171,7 +176,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	 */
 	public function testVarMethods() {
 
-		$result		= F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
+		$result		= new Result( $this->defaultFields );
 
 		$this->assertEquals(
 				$this->defaultFields,
@@ -209,7 +214,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	 */
 	public function testFixSnippeting() {
 
-		$result		= F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
+		$result		= new Result( $this->defaultFields );
 		$method		= new ReflectionMethod( 'Wikia\Search\Result', 'fixSnippeting' );
 		$method->setAccessible( true );
 
@@ -286,7 +291,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	 * @covers Wikia\Search\Result::toArray
 	 */
 	public function testToArray() {
-		$result = F::build( 'Wikia\Search\Result', array( $this->defaultFields ) );
+		$result = new Result( $this->defaultFields );
 		$array  = $result->toArray( array( 'wid' ) );
 		$this->assertArrayHasKey(
 				'wid',
@@ -305,12 +310,12 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	public function testReplaceUnusualEscapes() {
 		$this->assertEquals(
 				'%5Bfoo+bar%25_%3F!',
-				Wikia\Search\Result::replaceUnusualEscapes( urlencode( '[foo bar%_?!' ) )
+				Result::replaceUnusualEscapes( urlencode( '[foo bar%_?!' ) )
 		);
 
 		$this->assertEquals(
 				'100%25+Completion',
-				Wikia\Search\Result::replaceUnusualEscapes( urlencode( '100% Completion' ) )
+				Result::replaceUnusualEscapes( urlencode( '100% Completion' ) )
 		);
 
 	}

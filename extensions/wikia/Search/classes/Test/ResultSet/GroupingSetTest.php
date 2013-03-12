@@ -1,8 +1,13 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchResultSetGroupingSetTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\ResultSet
+ */
+namespace Wikia\Search\Test\ResultSet;
+use Wikia, ReflectionProperty, ReflectionMethod;
+/**
+ * Tests grouping set functionality
+ */
+class GroupingSetTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\ResultSet\GroupingSet::configure
