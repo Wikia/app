@@ -1,14 +1,19 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchFieldTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\FieldTest
+ */
+namespace Wikia\Search\Test\Field;
+use Wikia\Search\Field, Wikia\Search\Test\BaseTest, \ReflectionProperty, \ReflectionMethod;
+/**
+ * Tests Field\Field and Field\Expression
+ */
+class WikiaSearchFieldTest extends BaseTest {
 
 	/**
-	 * @covers Wikia\Search\Field\Field::__construct
+	 * @covers Field\Field::__construct
 	 */
 	public function test__construct() {
-		$field = new Wikia\Search\Field\Field( 'html', 'en' );
+		$field = new Field\Field( 'html', 'en' );
 		
 		$reflFieldName = new ReflectionProperty( 'Wikia\Search\Field\Field', 'fieldName' );
 		$reflFieldName->setAccessible( true );
@@ -25,20 +30,20 @@ class WikiaSearchFieldTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\Field\Field::__toString()
+	 * @covers Field\Field::__toString()
 	 */
 	public function test__toString() {
-		$field = new Wikia\Search\Field\Field( 'html', 'en' );
+		$field = new Field\Field( 'html', 'en' );
 		$this->assertEquals(
 				'html_en',
 				$field->__toString()
 		);
-		$field = new Wikia\Search\Field\Field( 'html', 'zzzz' );
+		$field = new Field\Field( 'html', 'zzzz' );
 		$this->assertEquals(
 				'html',
 				$field->__toString()
 		);
-		$field = new Wikia\Search\Field\Field( 'redirect_titles', 'en' );
+		$field = new Field\Field( 'redirect_titles', 'en' );
 		$this->assertEquals(
 				'redirect_titles_mv_en',
 				$field->__toString()
@@ -46,8 +51,8 @@ class WikiaSearchFieldTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
-	 * @covers Wikia\Search\Field\FieldExpression::__toString()
+	 * @covers Field\FieldExpression::getFieldValueString
+	 * @covers Field\FieldExpression::__toString()
 	 */
 	public function testFieldExpression__toString() {
 		$mockFe = $this->getMockBuilder( 'Wikia\Search\Field\FieldExpression' )
@@ -77,14 +82,14 @@ class WikiaSearchFieldTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
-	 * @covers Wikia\Search\Field\FieldExpression::getNegationString
-	 * @covers Wikia\Search\Field\FieldExpression::setNegate
+	 * @covers Field\FieldExpression::getFieldValueString
+	 * @covers Field\FieldExpression::getNegationString
+	 * @covers Field\FieldExpression::setNegate
 	 */
 	public function testNegation()
 	{
-		$field = new Wikia\Search\Field\Field( 'foo', 'en' );
-		$expr = new Wikia\Search\Field\FieldExpression( $field, array( 'value' => 'bar' ) );
+		$field = new Field\Field( 'foo', 'en' );
+		$expr = new Field\FieldExpression( $field, array( 'value' => 'bar' ) );
 		
 		$this->assertEquals(
 				"(foo:bar)",
@@ -99,14 +104,14 @@ class WikiaSearchFieldTest extends WikiaSearchBaseTest {
 	
 	
 	/**
-	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
-	 * @covers Wikia\Search\Field\FieldExpression::getBoostString
-	 * @covers Wikia\Search\Field\FieldExpression::setBoost
+	 * @covers Field\FieldExpression::getFieldValueString
+	 * @covers Field\FieldExpression::getBoostString
+	 * @covers Field\FieldExpression::setBoost
 	 */
 	public function testBoosting()
 	{
-		$field = new Wikia\Search\Field\Field( 'foo', 'en' );
-		$expr = new Wikia\Search\Field\FieldExpression( $field, array( 'value' => 'bar' ) );
+		$field = new Field\Field( 'foo', 'en' );
+		$expr = new Field\FieldExpression( $field, array( 'value' => 'bar' ) );
 		
 		$this->assertEquals(
 				"(foo:bar)",
@@ -120,13 +125,13 @@ class WikiaSearchFieldTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
-	 * @covers Wikia\Search\Field\FieldExpression::setValueQuote
+	 * @covers Field\FieldExpression::getFieldValueString
+	 * @covers Field\FieldExpression::setValueQuote
 	 */
 	public function testQuoting()
 	{
-		$field = new Wikia\Search\Field\Field( 'foo', 'en' );
-		$expr = new Wikia\Search\Field\FieldExpression( $field, array( 'value' => 'bar' ) );
+		$field = new Field\Field( 'foo', 'en' );
+		$expr = new Field\FieldExpression( $field, array( 'value' => 'bar' ) );
 		
 		$this->assertEquals(
 				"(foo:bar)",
