@@ -28,18 +28,6 @@
 	clear: both;
 }
 
-#phalanx-help {
-	font-size: 0.9em;
-	margin-left: 400px;
-	position: relative;
-}
-
-#phalanx-help div {
-	position: absolute;
-	display: none;
-	padding: 5px;
-}
-
 #phalanx-check-area {
 	clear: both;
 }
