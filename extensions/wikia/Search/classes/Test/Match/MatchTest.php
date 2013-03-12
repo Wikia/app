@@ -1,15 +1,20 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchMatchTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\Match\MatchTest
+ */
+namespace Wikia\Search\Test\Match;
+use Wikia\Search\Test\BaseTest, ReflectionProperty, ReflectionMethod, Wikia\Search\MediaWikiInterface;
+/**
+ * Tests Wikia\Search\Match classes
+ */
+class MatchTest extends BaseTest {
 
 	/**
 	 * @covers Wikia\Search\Match\AbstractMatch::__construct
 	 * @covers Wikia\Search\Match\AbstractMatch::getId
 	 */
 	public function testAbstractConstruct() {
-		$interface = new Wikia\Search\MediaWikiInterface;
+		$interface = new MediaWikiInterface;
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\AbstractMatch' )
 		                  ->setConstructorArgs( array( 123, $interface ) )
 		                  ->getMockForAbstractClass();
