@@ -23,7 +23,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		$params['limit'] = $this->getModel()->getWamLimitForHubPage();
 		
 		if( empty($params['ts']) ) {
-			$params['ts'] = strtotime('00:00 -2 day');
+			$params['ts'] = strtotime('00:00 -1 day');
 		}
 
 		if( empty($params['ts_previous_day']) ) {
