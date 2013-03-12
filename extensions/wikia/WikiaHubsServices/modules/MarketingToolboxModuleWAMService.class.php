@@ -194,7 +194,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		$result = self::WAM_SCORE_NO_CHANGE;
 		$wamScore = round($wamScore, self::WAM_SCORE_DECIMALS);
 		$wamPrevScore = round($wamPrevScore, self::WAM_SCORE_DECIMALS);
-		$wamChange = $wamPrevScore - $wamScore;
+		$wamChange = $wamScore - $wamPrevScore;
 
 		if( $wamChange > 0 ) {
 			$result = self::WAM_SCORE_CHANGE_UP;
