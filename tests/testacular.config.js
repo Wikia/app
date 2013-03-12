@@ -93,7 +93,9 @@ files = [
 	'extensions/wikia/AdEngine/js/EvolveHelper.js',
 	'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 	'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
-		'extensions/wikia/AdEngine/js/spec/*.spec.js'
+		'extensions/wikia/AdEngine/js/spec/*.spec.js',
+
+	{pattern: 'resources/wikia/**/*.js', watched: false, included: false, served: false}
 ];
 
 // list of files to exclude
@@ -101,7 +103,7 @@ exclude = [];
 
 // test results reporter to use
 // possible values: 'dots', 'progress', 'junit'
-reporters = ['progress'];
+reporters = ['progress', 'coverage'];
 
 // web server port
 port = 9876;
@@ -127,7 +129,7 @@ autoWatch = true;
 // - Safari (only Mac)
 // - PhantomJS
 // - IE (only Windows)
-browsers = ['Chrome', 'PhantomJS', 'Firefox', 'Opera', 'Safari'];
+browsers = ['Chrome'];
 
 // If browser does not capture in given timeout [ms], kill it
 captureTimeout = 10000;
@@ -139,11 +141,12 @@ singleRun = false;
 
 coverageReporter = {
 	type : 'html',
-	dir : 'tests/coverage/'
+	dir : '/Users/jolek/coverage'
 };
 
 //reportSlowerThan = 100;
 
 preprocessors = {
+	'**/resources/wikia/modules/*.js': 'coverage',
 	'**/js/*.js': 'coverage'
 };
