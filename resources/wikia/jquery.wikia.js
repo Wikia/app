@@ -96,8 +96,13 @@ $.showModal = function(title, content, options) {
 		dialog = $('<div>'),
 		wrapper;
 
-	// Do not use jquery .html() method here, because it breaks code like '<a onlick="<references/>">test</a>' into <a onlick="<references></a>">test</a>
-	dialog.get(0).innerHTML = content;
+	if (typeof options.rawHTML != 'undefined' && options.rawHTML === true) {
+		// Do not use jquery .html() method here, because it breaks code like '<a onlick="<references/>">test</a>' into <a onlick="<references></a>">test</a>
+		dialog.get(0).innerHTML = content;
+	} else {
+		dialog.html(content);
+	}
+
 	dialog.prepend(header).appendTo('body');
 
 	// fire callbackBefore if provided
