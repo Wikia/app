@@ -324,10 +324,16 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					$isThumb = true;
 
 					if ( empty( $img['src'] ) ) {
+						// if we don't have a thumb by this opint, we still need to display something, fall back to placeholder
 						$globalTitle = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
 						if ( is_object( $globalTitle ) ) {
 							$img['page'] = $globalTitle->getFullUrl();
+							// @TODO this should be taken from the code instead of being hardcoded
 							$img['src'] = 'http://images.wikia.com/central/images/8/8c/Wikia_image_placeholder.png';
+						} else {
+							// this should never happen
+							$invalidImages[] = $record;
+							continue;
 						}
 					}
 
