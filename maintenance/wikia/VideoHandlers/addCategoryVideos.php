@@ -65,50 +65,52 @@ class WikiaTask {
 		$categoryExists = 0;
 		$failed = 0;
 		$total = $result->numRows();
-		$botUser = User::newFromName( 'WikiaBot' );
-		$content = '[['.WikiaVideoPage::getVideosCategory().']]';
-		while ( $result && $row = $db->fetchRow( $result ) ) {
-			echo "\tWiki $wiki_id: [$counter of $total] Title:".$row['video_title'];
+		if ( $total ) {
+			$botUser = User::newFromName( 'WikiaBot' );
+			$content = '[['.WikiaVideoPage::getVideosCategory().']]';
+			while ( $result && $row = $db->fetchRow( $result ) ) {
+				echo "\tWiki $wiki_id: [$counter of $total] Title:".$row['video_title'];
 
-			$title = Title::newFromText( $row['video_title'], NS_FILE );
-			if ( $title instanceof Title ) {
-				$status = Status::newGood();
-				if ( $title->exists() ) {
-					$article = Article::newFromID( $title->getArticleID() );
-					$oldContent = $article->getContent();
-					if ( !strstr($oldContent, $content) ) {
-						$content = $oldContent.$content;
-						if ( !$dryRun ) {
-							$status = $article->doEdit( $content, 'added video category', EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+				$title = Title::newFromText( $row['video_title'], NS_FILE );
+				if ( $title instanceof Title ) {
+					$status = Status::newGood();
+					if ( $title->exists() ) {
+						$article = Article::newFromID( $title->getArticleID() );
+						$oldContent = $article->getContent();
+						if ( !strstr($oldContent, $content) ) {
+							$content = $oldContent.$content;
+							if ( !$dryRun ) {
+								$status = $article->doEdit( $content, 'added video category', EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+							}
+						} else {
+							$failed++;
+							$categoryExists++;
+							$status = null;
+							echo "...FAILED (video category exists).\n";
 						}
 					} else {
-						$failed++;
-						$categoryExists++;
-						$status = null;
-						echo "...FAILED (video category exists).\n";
+						$article = new Article( $title );
+						if ( !$dryRun ) {
+							$status = $article->doEdit( $content, 'created video', EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+						}
+					}
+
+					if ( $status instanceof Status ) {
+						if ( $status->isOK() ) {
+							$success++;
+							echo "...DONE.\n";
+						} else {
+							$failed++;
+							echo "...FAILED (".$status->getMessage().").\n";
+						}
 					}
 				} else {
-					$article = new Article( $title );
-					if ( !$dryRun ) {
-						$status = $article->doEdit( $content, 'created video', EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
-					}
+					$failed++;
+					echo "...FAILED (Title not found).\n";
 				}
 
-				if ( $status instanceof Status ) {
-					if ( $status->isOK() ) {
-						$success++;
-						echo "...DONE.\n";
-					} else {
-						$failed++;
-						echo "...FAILED (".$status->getMessage().").\n";
-					}
-				}
-			} else {
-				$failed++;
-				echo "...FAILED (Title not found).\n";
+				$counter++;
 			}
-
-			$counter++;
 		}
 
 		$db->freeResult($result);
