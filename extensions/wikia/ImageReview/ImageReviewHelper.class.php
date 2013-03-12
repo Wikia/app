@@ -316,12 +316,20 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 				$extension = pathinfo( strtolower( $img['page'] ), PATHINFO_EXTENSION ); // this needs to use the page index since src for SVG ends in .svg.png :/
 
-				if ( empty( $img['src'] ) ) {
+				if ( empty( $img['src'] ) && $state != ImageReviewStatuses::STATE_QUESTIONABLE && $state != ImageReviewStatuses::STATE_REJECTED ) {
 					$invalidImages[] = $record;
 				} elseif ( 'ico' == $extension ) {
 					$iconsWhere[] = $record;
 				} else {
 					$isThumb = true;
+
+					if ( empty( $img['src'] ) ) {
+						$globalTitle = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
+						if ( is_object( $globalTitle ) ) {
+							$img['page'] = $globalTitle->getFullUrl();
+							$img['src'] = 'http://images.wikia.com/central/images/8/8c/Wikia_image_placeholder.png';
+						}
+					}
 
 					if  ( in_array( $extension, array( 'gif', 'svg' ) ) ) {
 						$img = ImagesService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
