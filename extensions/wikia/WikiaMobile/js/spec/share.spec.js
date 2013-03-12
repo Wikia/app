@@ -1,34 +1,27 @@
-/*
- * @test-require-asset resources/wikia/libraries/define.mock.js
- @test-require-asset /extensions/wikia/WikiaMobile/js/share.js
- */
-
 /*global describe, it, runs, waitsFor, expect, require, document*/
 describe("Share module", function () {
 	'use strict';
-
-	window.wgStyleVersion = 1234567890;
-	window.wgServer = 'http://test.com';
-	window.wgArticlePath = '/$1';
-	window.wgPageName = 'Test';
-	window.wgTitle = 'Test';
-	window.wgSitename = 'Test Wiki';
-
 
 	var cache = {
 		getVersioned: function(){
 			return false;
 		},
 		setVersioned: function(){}
-	};
-
-	var JSMessages = function(){
+	},
+	window = {
+		wgStyleVersion: 1234567890,
+		wgServer: 'http://test.com',
+		wgArticlePath: '/$1',
+		wgPageName: 'Test',
+		wgTitle: 'Test',
+		wgSitename: 'Test Wiki'
+	},
+	JSMessages = function(){
 		return function(){
 			return 'TEST';
 		}
-	};
-
-	var loader = function(){
+	},
+	loader = function(){
 		return {
 			done: function(callback){
 				callback({
@@ -43,7 +36,7 @@ describe("Share module", function () {
 
 	loader.processStyle = function(){};
 
-	var share = define.getModule(cache, JSMessages, loader);
+	var share = modules.share(cache, JSMessages, loader, window);
 
 	it('should be defined', function(){
 		expect(share).toBeDefined();
@@ -59,7 +52,7 @@ describe("Share module", function () {
 	});
 
 	it('should create sharing list', function(){
-		document.body.innerHTML = '<div id="sharePlace"></div>';
+		getBody().innerHTML = '<div id="sharePlace"></div>';
 
 		var sharePlace = document.getElementById('sharePlace');
 
