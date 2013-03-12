@@ -1,8 +1,13 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchResultSetDependenciesTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\ResultSet\DependenciesTest
+ */
+namespace Wikia\Search\Test\ResultSet;
+use Wikia, ReflectionProperty, ReflectionMethod;
+/**
+ * Tests Factory and DependencyContainer in Wikia\Search\ResultSet
+ */
+class DependenciesTest extends Wikia\Search\Test\BaseTest {
 	/**
 	 * @covers Wikia\Search\ResultSet\Factory::get
 	 */
@@ -49,7 +54,7 @@ class WikiaSearchResultSetDependenciesTest extends WikiaSearchBaseTest {
 		;
 		try {
 			$factory->get( $mockDc );
-		} catch ( Exception $e ) {}
+		} catch ( \Exception $e ) {}
 		$this->assertInstanceOf(
 				'Exception',
 				$e
