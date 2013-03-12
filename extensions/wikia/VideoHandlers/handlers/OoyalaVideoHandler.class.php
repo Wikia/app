@@ -19,10 +19,24 @@ class OoyalaVideoHandler extends VideoHandler {
 		$autoPlayStr = ( $autoplay ) ? 'true' : 'false';
 
 		$embed = <<<EOT
-<script src='{$jsFile}'></script>
 <div id='{$playerId}' style='width:{$width}px;height:{$height}px;'></div>
-<script>
-    OO.ready(function() { OO.Player.create('{$playerId}','{$this->videoId}', { autoplay:{$autoPlayStr} }); });
+EOT;
+
+		$embed .= <<<EOT
+<script type="text/javascript">
+
+(function(window) {
+
+	var loadOoyala = function(){
+		$.getScript('{$jsFile}').done(function() {
+			window.OO.Player.create('{$playerId}', '{$this->videoId}', { width:'{$width}px', height: '{$height}px', autoplay:{$autoPlayStr} });
+		});
+	};
+
+	wgAfterContentAndJS.push(loadOoyala);
+
+})(this);
+
 </script>
 EOT;
 
