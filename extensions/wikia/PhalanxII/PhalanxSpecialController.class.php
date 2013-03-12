@@ -323,10 +323,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal('blocks', $result);
 	}
 
-	private function refresh( /*Array*/ $ids )  {
-		$this->setVal('valid', $this->service->reload( $ids ));
-	}
-
 	private function getToken() {
 		return $this->wg->User->getEditToken();
 	}
