@@ -1,14 +1,14 @@
 define('tables', ['events', 'track', 'wikia.window'], function(ev, track, w){
 	'use strict';
 
-	var d = document,
+	var d = w.document,
 		pageContent = d.getElementById('mw-content-text') || d.getElementById('wkMainCnt'),
 		realWidth = pageContent.offsetWidth,
 		inited = false,
 		handledTables = [];
 
 	function wrap(elm){
-		var wrapper = document.createElement('div'),
+		var wrapper = d.createElement('div'),
 			parent = elm.parentElement;
 
 		wrapper.className = 'bigTable';
@@ -80,6 +80,7 @@ define('tables', ['events', 'track', 'wikia.window'], function(ev, track, w){
 				table.computedWidth = firstRowWidth;
 				if(firstRowWidth > realWidth){
 					//remove scripts to avoid re-parsing
+					dump(true);
 					removeScripts(table);
 					wrap(table);
 					table.wasWrapped = true;
@@ -120,7 +121,7 @@ define('tables', ['events', 'track', 'wikia.window'], function(ev, track, w){
 			});
 
 			if(!Features.overflow){
-				document.body.addEventListener(ev.touch, function(ev){
+				d.body.addEventListener(ev.touch, function(ev){
 					var t = ev.target;
 
 					if(~t.className.indexOf('bigTable')){

@@ -1,5 +1,5 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Toast module", function () {
+ddescribe("Toast module", function () {
 	'use strict';
 
 	var body = getBody(),
@@ -7,7 +7,7 @@ describe("Toast module", function () {
 			document: {
 				body: body,
 				getElementById: function(id){
-					body.querySelector('#' + id);
+					return body.querySelector('#' + id);
 				}
 			}
 		};
@@ -30,24 +30,25 @@ describe("Toast module", function () {
 		}).toThrow();
 	});
 
-	it('should show/hide toast', function(){
+	it('should show/hide itself', function(){
 
-		var msg = 'This is a test message';
+		var msg = 'This is a test message',
+			doc = window.document;
 
 		toast.show(msg);
 
-		expect(window.document.body.className).toMatch(' hasToast');
-		expect(window.document.getElementById('wkTst').innerHTML).toBe(msg);
+		expect(doc.body.className).toMatch(' hasToast');
+		expect(doc.getElementById('wkTst').innerHTML).toBe(msg);
 
 		toast.show(msg, {
 			error: true
 		});
 
-		expect(window.document.getElementById('wkTst').className).toMatch('err');
+		expect(doc.getElementById('wkTst').className).toMatch('err');
 
 		toast.hide();
 
-		expect(window.document.getElementById('wkTst').className).toBe('hide clsIco');
+		expect(doc.getElementById('wkTst').className).toBe('hide clsIco');
 	});
 
 });
