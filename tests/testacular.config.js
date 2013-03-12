@@ -9,31 +9,37 @@
 basePath = '../';
 
 // list of files / patterns to load in the browser
-files = {
-	'base': [
-		JASMINE,
-		JASMINE_ADAPTER,
-		'resources/wikia/libraries/define.mock.js',
-		'tests/lib/jasmine/jasmine.async.js',
-		'tests/lib/jasmine/helpers.js',
+files = [
+	JASMINE,
+	JASMINE_ADAPTER,
+	'resources/wikia/libraries/define.mock.js',
+	'tests/lib/jasmine/jasmine.async.js',
+	'tests/lib/jasmine/helpers.js',
 
-		'resources/jquery/jquery-1.8.2.js',
-		'extensions/wikia/JSMessages/js/JSMessages.js',
-		'extensions/wikia/WikiaMobile/js/autocomplete.js',
-		'extensions/wikia/WikiaMobile/js/events.js',
-		'extensions/wikia/WikiaMobile/js/features.js',
-		'extensions/wikia/WikiaMobile/js/layout.js',
-		'extensions/wikia/WikiaMobile/js/lazyload.js',
-		'extensions/wikia/WikiaMobile/js/mediagallery.js',
-		'extensions/wikia/WikiaMobile/js/media.js',
-		'extensions/wikia/WikiaMobile/js/modal.js',
-		'extensions/wikia/WikiaMobile/js/pager.js',
-		'extensions/wikia/WikiaMobile/js/popover.js',
-		'extensions/wikia/WikiaMobile/js/sections.js',
+	'resources/jquery/jquery-1.8.2.js',
+	'extensions/wikia/JSMessages/js/JSMessages.js',
+	'extensions/wikia/WikiaMobile/js/autocomplete.js',
+	'extensions/wikia/WikiaMobile/js/events.js',
+	'extensions/wikia/WikiaMobile/js/features.js',
+	'extensions/wikia/WikiaMobile/js/layout.js',
+	'extensions/wikia/WikiaMobile/js/lazyload.js',
+	'extensions/wikia/WikiaMobile/js/mediagallery.js',
+	'extensions/wikia/WikiaMobile/js/media.js',
+	'extensions/wikia/WikiaMobile/js/modal.js',
+	'extensions/wikia/WikiaMobile/js/pager.js',
+	'extensions/wikia/WikiaMobile/js/popover.js',
+	'extensions/wikia/WikiaMobile/js/sections.js',
+	'extensions/wikia/WikiaMobile/js/ads.js',
+	'extensions/wikia/WikiaMobile/js/share.js',
+	'extensions/wikia/WikiaMobile/js/tables.js',
+	'extensions/wikia/WikiaMobile/js/throbber.js',
+	'extensions/wikia/WikiaMobile/js/toast.js',
+	'extensions/wikia/WikiaMobile/js/toc.js',
+	'extensions/wikia/WikiaMobile/js/topbar.js',
+	'extensions/wikia/WikiaMobile/js/features.js',
 
-		'**/js/spec/*Spec.js'
-	]
-}
+	'extensions/**/js/spec/*.spec.js'
+];
 
 
 
@@ -45,7 +51,7 @@ exclude = [
 
 // test results reporter to use
 // possible values: 'dots', 'progress', 'junit'
-reporters = ['progress', 'coverage'];
+reporters = ['progress'];
 
 
 // web server port

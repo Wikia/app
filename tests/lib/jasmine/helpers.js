@@ -11,3 +11,9 @@ function getBody(){
 
 	return document.getElementById(rand);
 }
+
+function fireEvent(event, element){
+	var evt = document.createEvent("HTMLEvents");
+	evt.initEvent(event, true, true); // event type,bubbling,cancelable
+	return !element.dispatchEvent(evt);
+}
