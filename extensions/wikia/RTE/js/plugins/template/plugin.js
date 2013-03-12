@@ -438,7 +438,9 @@ RTE.templateEditor = {
 					html += '<dd><textarea rel="' + key + '" id="templateEditorParameter' + i +'">' + value + '</textarea></dd>';
 				});
 
-				$('#templateParameters').html(html);
+				$('#templateParameters')
+					.html(html)
+					.find('dd > textarea').keydown(this.onTextareaKeyDown);
 
 				// generate preview
 				this.doPreview();
@@ -454,6 +456,21 @@ RTE.templateEditor = {
 					$('#templateAdvPreview').html(html);
 				});
 				break;
+		}
+	},
+
+	// handle keydown event on textarea elements
+	onTextareaKeyDown: function(ev) {
+		// tinymce will not handle tab key correctly.
+		if( ev.which == 9 /* tab */ ) {
+			// select next textarea to focus
+			var next = $(this).parent('dd').next('dt').next('dd').children('textarea').first();
+			if( next.size() == 1 ) {
+				next.focus();
+				// prevent tinymce and browser from handling this event
+				ev.stopPropagation();
+				ev.preventDefault();
+			}
 		}
 	},
 
