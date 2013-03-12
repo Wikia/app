@@ -55,7 +55,7 @@ class WAMApiController extends WikiaApiController {
 	 */
 	public function getWAMIndex () {
 		$options = array();
-		$options['currentTimestamp'] = $this->request->getInt('wam_day', strtotime('00:00 -2 day'));
+		$options['currentTimestamp'] = $this->request->getInt('wam_day', strtotime('00:00 -1 day'));
 		$options['previousTimestamp'] = $this->request->getInt('wam_previous_day', $options['currentTimestamp'] - 60 * 60 * 24);
 		$options['verticalId'] = $this->request->getInt('vertical_id', null);
 		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);

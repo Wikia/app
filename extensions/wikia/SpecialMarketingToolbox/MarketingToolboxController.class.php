@@ -178,7 +178,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	private function getNextModuleUrl() {
-		$moduleIds = $this->toolboxModel->getModulesIds();
+		$moduleIds = $this->toolboxModel->getEditableModulesIds();
 
 		$actualModuleIndex = array_search($this->selectedModuleId, $moduleIds);
 
