@@ -8,6 +8,8 @@ namespace Wikia\Search\IndexService;
  * A responsible for instantiating services.
  * This lets us make something else reponsible for dependency injection.
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class Factory
 {

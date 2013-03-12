@@ -1,11 +1,11 @@
 <?php
-
 /**
+ * Responsible for reindexing on staff and internal, using Indexer class.
  * @package MediaWiki
  * @addtopackage maintenance
  */
 
-ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
+ini_set( "include_path", "{$IP}/maintenance/" );
 require_once( "commandLine.inc" );
 
 include("$IP/extensions/wikia/Search/WikiaSearch.setup.php");

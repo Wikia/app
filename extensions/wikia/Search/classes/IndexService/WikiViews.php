@@ -7,6 +7,8 @@ namespace Wikia\Search\IndexService;
 /**
  * Retrieves wikiviews from the data mart
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class WikiViews extends AbstractWikiService
 {

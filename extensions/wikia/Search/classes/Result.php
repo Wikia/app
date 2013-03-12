@@ -8,10 +8,12 @@ use \Solarium_Document_ReadWrite as ReadWrite; #forward compatibility with v3
  * This is a wrapper for the Solarium_Document_ReadWrite class based on code we 
  * originally wrote for an entirely hand-rolled search result class.
  * @author Robert Elwell
+ * @package Search
  */
 class Result extends ReadWrite {
 	
 	/**
+	 * Encapsulates MediaWiki logic.
 	 * @var MediaWikiInterface
 	 */
 	protected $interface;

@@ -9,6 +9,9 @@ use \Iterator, \ArrayAccess, \ArrayIterator, \Wikia\Search\Config;
 /**
  * This allows us to do a lot of the utility stuff separated out from the core logic of each class.
  * @author relwell
+ * @abstract
+ * @package Search
+ * @subpackage ResultSet
  */
 abstract class AbstractResultSet implements Iterator, ArrayAccess
 {
@@ -53,6 +56,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	
 	/**
 	 * A resultset requires a dependency container, because that's how it knows how to configure itself.
+	 * @final
 	 * @param DependencyContainer $container
 	 */
 	final public function __construct( DependencyContainer $container ) {
@@ -152,6 +156,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * Done to return results in json format
 	 * Can be removed after upgrade to 5.4 and specify serialized Json data on Wikia\Search\Result
 	 * http://php.net/manual/en/jsonserializable.jsonserialize.php
+	 * @param array $expectedFields the fields we should surface
 	 * @return array
 	 */
 	public function toArray( array $expectedFields = array( 'title', 'url' ) ) {

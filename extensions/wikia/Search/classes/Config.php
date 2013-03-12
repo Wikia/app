@@ -8,6 +8,7 @@ use Wikia\Search\MediaWikiInterface, \Sanitizer, \Solarium_Query_Select, \Wikia\
  * A config class intended to handle variable flags for search
  * Intended to be a dependency-injected receptacle for different search requirements
  * @author Robert Elwell
+ * @package Search
  */
 class Config implements ArrayAccess
 {
@@ -113,7 +114,11 @@ class Config implements ArrayAccess
 			'shortest'          =>	array( 'video_duration_i', Solarium_Query_Select::SORT_ASC ),
 			'longest'           =>	array( 'video_duration_i', Solarium_Query_Select::SORT_DESC ),
 	);
-	
+
+	/**
+	 * These are the filter keys that can be invoked directly from the controller.
+	 * @var array
+	 */
 	private $publicFilterKeys = array(
 			self::FILTER_VIDEO,
 			self::FILTER_IMAGE,
@@ -356,8 +361,8 @@ class Config implements ArrayAccess
 	
 	/**
 	 * Overloading __set to type hint
-	 * @param  Wikia\Search\Match\Article $articleMatch
-	 * @return Wikia\Search\Config provides fluent interface
+	 * @param  \Wikia\Search\Match\Article $articleMatch
+	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setArticleMatch( Match\Article $articleMatch ) {
 		$this->params['articleMatch'] = $articleMatch;
@@ -366,8 +371,8 @@ class Config implements ArrayAccess
 	
 	/**
 	 * Overloading __set to type hint
-	 * @param  Wikia\Search\Match\Wiki $wikiMatch
-	 * @return Wikia\Search\Config provides fluent interface
+	 * @param  \Wikia\Search\Match\Wiki $wikiMatch
+	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setWikiMatch( Match\Wiki $wikiMatch ) {
 		$this->params['wikiMatch'] = $wikiMatch;
@@ -473,6 +478,7 @@ class Config implements ArrayAccess
 	
 	/**
 	 * Returns results number based on a truncated heuristic
+	 * @param boolean $formatted whether we should also format the number
 	 * @return integer
 	 */
 	public function getTruncatedResultsNum( $formatted = false ) 

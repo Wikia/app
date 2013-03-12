@@ -3,7 +3,12 @@
  * Class definition for Wikia\Search\Hooks
  */
 namespace Wikia\Search;
-
+/**
+ * This class is responsible for storing MediaWiki hook logic related to search.
+ * Each method must be registered as a hook in the setup file, given the appropriate global settings.
+ * @author relwell
+ * @package Search
+ */
 class Hooks
 {
 	/**

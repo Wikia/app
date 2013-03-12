@@ -9,6 +9,8 @@ namespace Wikia\Search\IndexService;
  * Responsible for statistics for a given wiki
  * Separated out so we can run this service wiki-wide
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class WikiStats extends AbstractWikiService
 {

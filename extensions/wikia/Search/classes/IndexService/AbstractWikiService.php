@@ -9,6 +9,9 @@ namespace Wikia\Search\IndexService;
  * AbstractWikiService can also operate on single pages as well, but provide the ability 
  * to send a stubbed-out response that can be applied to all pages on the backend.
  * @author relwell
+ * @abstract
+ * @package Search
+ * @subpackage IndexService
  */
 abstract class AbstractWikiService extends AbstractService
 {

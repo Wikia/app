@@ -8,6 +8,8 @@ use \WikiaSearchConfig, \ArrayIterator;
  * Used to denote an empty result set.
  * We implement the ArrayIterator stuff here for inheritance's sake and to reduce clutter in other 
  * @author relwell
+ * @package Search
+ * @subpackage ResultSet
  */
 class EmptySet extends AbstractResultSet
 {

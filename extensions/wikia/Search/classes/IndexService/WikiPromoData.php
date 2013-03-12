@@ -8,6 +8,8 @@ namespace Wikia\Search\IndexService;
 /**
  * Responsible for wiki promo info for a wiki
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class WikiPromoData extends AbstractWikiService
 {

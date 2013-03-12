@@ -1,7 +1,13 @@
 <?php
 /**
- * Class definition for WikiaSearchController. Responsible for handling search requests.
+ * Class definition for WikiaSearchController.
+ */
+// Someday there will be a namespace declaration here.
+/**
+ * Responsible for handling search requests.
  * @author relwell
+ * @package Search
+ * @subpackage Controller
  */
 class WikiaSearchController extends WikiaSpecialPageController {
 
@@ -17,6 +23,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const PAGES_PER_WINDOW = 5;
 	
 	/**
+	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
 	 */
 	protected $queryServiceFactory;
@@ -228,7 +235,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action. Sets the SearchConfigs namespaces based on MW-core NS request style.
 	 * @see    WikiSearchControllerTest::testSetNamespacesFromRequest
 	 * @param  Wikia\Search\Config $searchConfig
-	 * @todo return type hinting when we live in a saner world of unit testing
+	 * @param  User $user 
 	 * @return boolean true
 	 */
 	protected function setNamespacesFromRequest( $searchConfig, User $user ) {

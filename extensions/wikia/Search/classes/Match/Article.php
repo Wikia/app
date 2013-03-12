@@ -4,7 +4,12 @@
  */
 namespace Wikia\Search\Match;
 use \Wikia\Search\Result as Result;
-
+/**
+ * This class correlates a page ID to a MediaWiki article (via interface), and creates a result based on it.
+ * @author relwell
+ * @package Search
+ * @subpackage Match
+ */
 class Article extends AbstractMatch
 {
 	/**

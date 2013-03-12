@@ -5,8 +5,9 @@
 namespace Wikia\Search;
 use \Solarium_Client, \WikiaException, Wikia\Search\IndexService, \WikiDataSource, \Wikia, \ScribeProducer;
 /**
- * This lets us 
+ * This class is responsible for (soon to be) deprecated getPages functionality, and application-based indexing logic.
  * @author relwell
+ * @package Search
  */
 class Indexer
 {
@@ -44,7 +45,6 @@ class Indexer
 	
 	/**
 	 * Handles dependency injection for solarium client
-	 * @param Solarium_Client $client
 	 */
 	public function __construct() {
 		$this->interface = new MediaWikiInterface;
