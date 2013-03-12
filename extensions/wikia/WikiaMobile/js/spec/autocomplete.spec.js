@@ -2,12 +2,6 @@
 describe("Autocomplete module", function () {
 	'use strict';
 
-	function fire(event, element){
-		var evt = document.createEvent("HTMLEvents");
-		evt.initEvent(event, true, true); // event type,bubbling,cancelable
-		return !element.dispatchEvent(evt);
-	}
-
 	var auto = modules.autocomplete();
 
 	it('should be defined', function(){
@@ -93,7 +87,7 @@ describe("Autocomplete module", function () {
 
 		expect(input.value).toEqual('value');
 
-		fire('click', clear);
+		fireEvent('click', clear);
 
 		expect(input.value).toEqual('');
 		expect(list.innerHTML).toEqual('');

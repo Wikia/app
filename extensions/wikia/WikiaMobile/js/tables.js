@@ -1,8 +1,7 @@
-define('tables', ['events', 'track'], function(ev, track){
+define('tables', ['events', 'track', 'wikia.window'], function(ev, track, w){
 	'use strict';
 
-	var w = window,
-		d = document,
+	var d = document,
 		pageContent = d.getElementById('mw-content-text') || d.getElementById('wkMainCnt'),
 		realWidth = pageContent.offsetWidth,
 		inited = false,

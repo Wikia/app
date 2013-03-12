@@ -9,11 +9,11 @@
  *
  * @author Jakub Olek
  */
-define('share', ['wikia.cache', 'JSMessages', 'wikia.loader'], function (cache, msg, loader) {
+define('share', ['wikia.cache', 'JSMessages', 'wikia.loader', 'wikia.window'], function (cache, msg, loader, w) {
 	'use strict';
 
 	var shrData,
-		pageUrl = wgServer + wgArticlePath.replace('$1', wgPageName),
+		pageUrl = w.wgServer + w.wgArticlePath.replace('$1', w.wgPageName),
 		shrImgTxt,
 		shrPageTxt,
 		shrMailPageTxt,
@@ -25,7 +25,7 @@ define('share', ['wikia.cache', 'JSMessages', 'wikia.loader'], function (cache, 
 
 	return function(link){
 		return function(cnt){
-			var cacheKey = 'shareButtons' + wgStyleVersion;
+			var cacheKey = 'shareButtons' + w.wgStyleVersion;
 
 			function handle(html){
 				if(link){
@@ -39,9 +39,9 @@ define('share', ['wikia.cache', 'JSMessages', 'wikia.loader'], function (cache, 
 			if(!shrData){
 				shrData = cache.get(cacheKey);
 				loader.processStyle(cache.get(cacheKey + 'style'));
-				shrPageTxt = msg('wikiamobile-sharing-page-text', wgTitle, wgSitename);
+				shrPageTxt = msg('wikiamobile-sharing-page-text', w.wgTitle, w.wgSitename);
 				shrMailPageTxt = encodeURIComponent(msg('wikiamobile-sharing-email-text', shrPageTxt));
-				shrImgTxt = msg('wikiamobile-sharing-modal-text', msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);
+				shrImgTxt = msg('wikiamobile-sharing-modal-text', msg('wikiamobile-sharing-media-image'), w.wgTitle, w.wgSitename);
 				shrMailImgTxt = encodeURIComponent(msg('wikiamobile-sharing-email-text', shrImgTxt));
 			}
 
