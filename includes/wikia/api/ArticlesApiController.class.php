@@ -56,9 +56,10 @@ class ArticlesApiController extends WikiaApiController {
 				$ids = self::getCategoryMembers( $category->getFullText(), 5000, '', '', 'timestamp' , 'desc' );
 
 				if ( !empty( $ids ) ) {
-					$ids = array_reduce($ids[0], function( $ret, $item ) {
-						$ret[] = $item['pageid'];
-						return $ret;
+					$ids = $ids[0];
+
+					array_walk( $ids, function( $val, $key ) use ( &$ids ) {
+						$ids[$key] = $val['pageid'];
 					});
 				}
 			} else {
