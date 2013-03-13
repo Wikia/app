@@ -336,9 +336,9 @@ class ResultTest extends BaseTest {
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
 		
-		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
-		$reflInterface->setAccessible( true );
-		$reflInterface->setValue( $mockResult, $mockService );
+		$reflService = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
+		$reflService->setAccessible( true );
+		$reflService->setValue( $mockResult, $mockService );
 		
 		$mockService
 		    ->expects( $this->at( 0 ) )
@@ -365,9 +365,9 @@ class ResultTest extends BaseTest {
 		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
 		                      ->getMock();
 		
-		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
-		$reflInterface->setAccessible( true );
-		$reflInterface->setValue( $mockResult, $mockService );
+		$reflService = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
+		$reflService->setAccessible( true );
+		$reflService->setValue( $mockResult, $mockService );
 		
 		$img = "<img src='foo.jpg' />";
 		$mockService
@@ -395,9 +395,9 @@ class ResultTest extends BaseTest {
 		                      ->setMethods( array( 'getVideoViewsForPageId' ) )
 		                      ->getMock();
 		
-		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
-		$reflInterface->setAccessible( true );
-		$reflInterface->setValue( $mockResult, $mockService );
+		$reflService = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
+		$reflService->setAccessible( true );
+		$reflService->setValue( $mockResult, $mockService );
 		
 		$mockService
 		    ->expects( $this->at( 0 ) )
@@ -427,9 +427,9 @@ class ResultTest extends BaseTest {
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
 		
-		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
-		$reflInterface->setAccessible( true );
-		$reflInterface->setValue( $mockResult, $mockService );
+		$reflService = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
+		$reflService->setAccessible( true );
+		$reflService->setValue( $mockResult, $mockService );
 		
 		$mockService
 		    ->expects( $this->at( 0 ) )
