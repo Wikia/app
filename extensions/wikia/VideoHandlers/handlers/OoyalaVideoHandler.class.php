@@ -14,8 +14,14 @@ class OoyalaVideoHandler extends VideoHandler {
 		$height = $this->getHeight($width);
 		//$url = $this->getEmbedUrl();
 		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.time().'-'.intval($isAjax);
-		$jsFile = 'http://player.ooyala.com/v3/'.self::OOYALA_PLAYER_ID;
 		$extensionsPath = F::app()->wg->ExtensionsPath;
+
+		if ( $this->isAgeGate() ) {
+			$ooyalaPlayerId = self::OOYALA_PLAYER_ID_AGEGATE;
+		} else {
+			$ooyalaPlayerId = self::OOYALA_PLAYER_ID;
+		}
+		$jsFile = 'http://player.ooyala.com/v3/'.$ooyalaPlayerId;
 
 		$autoPlayStr = ( $autoplay && !$this->isAgeGate() ) ? 'true' : 'false';
 
