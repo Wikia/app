@@ -11,10 +11,10 @@ class WAMPageSpecialController extends WikiaSpecialPageController
 	}
 
 	public function index() {
-
+		//only template for now
 	}
 
 	public function faq() {
-
+		//only template for now
 	}
 }
