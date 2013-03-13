@@ -13,17 +13,24 @@ files = [
 	JASMINE,
 	JASMINE_ADAPTER,
 	'tests/lib/jasmine/jasmine.async.js',
+
 	'tests/lib/jasmine/helpers.js',
 
 	'resources/wikia/libraries/define.mock.js',
 
 	'extensions/wikia/WikiaMobile/js/Wikia.utils.js',
+	'resources/jquery/jquery-1.8.2.js',
 	'resources/wikia/libraries/deferred/deferred.js',
 	'resources/wikia/libraries/deferred/deferred.api.js',
 
-	'resources/jquery/jquery-1.8.2.js',
+	//JSMessages
 	'extensions/wikia/JSMessages/js/JSMessages.js',
-		'extensions/wikia/JSMessages/js/spec/*.spec.js',
+		'extensions/wikia/JSMessages/js/spec/JSMessages.spec.js',
+
+	//Chat Tests
+	'extensions/wikia/Chat2/js/spec/views.mocks.js',
+	'extensions/wikia/Chat2/js/views/views.js',
+		'extensions/wikia/Chat2/js/spec/ChatController.spec.js',
 
 	//WikiaMobile
 	'extensions/wikia/WikiaMobile/js/autocomplete.js',
@@ -48,7 +55,9 @@ files = [
 		'extensions/wikia/WikiaMobile/js/spec/*.spec.js',
 
 	//SpecialPromote
-	//'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
+	'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.mocks.js',
+	'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
+		'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.spec.js',
 
 	//core modules
 	'resources/wikia/modules/aim.js',
@@ -65,14 +74,6 @@ files = [
 	'resources/wikia/modules/thumbnailer.js',
 	'resources/wikia/modules/uniqueId.js',
 		'resources/wikia/modules/spec/*.spec.js',
-
-	//Chat Tests
-	//'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
-	//'resources/wikia/jquery.wikia.js',
-	//'extensions/wikia/Chat2/js/emoticons.js',
-	//'extensions/wikia/Chat2/js/lib/underscore.js',
-	//'extensions/wikia/Chat2/js/lib/backbone.js',
-	//'extensions/wikia/Chat2/js/views/views.js',
 
 	//Advertisment
 	'extensions/wikia/AdEngine/js/AdConfig2.js',
@@ -94,8 +95,6 @@ files = [
 	'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 	'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
 		'extensions/wikia/AdEngine/js/spec/*.spec.js',
-
-	{pattern: 'resources/wikia/**/*.js', watched: false, included: false, served: false}
 ];
 
 // list of files to exclude
@@ -103,7 +102,7 @@ exclude = [];
 
 // test results reporter to use
 // possible values: 'dots', 'progress', 'junit'
-reporters = ['progress', 'coverage'];
+reporters = ['progress'];
 
 // web server port
 port = 9876;
@@ -129,7 +128,7 @@ autoWatch = true;
 // - Safari (only Mac)
 // - PhantomJS
 // - IE (only Windows)
-browsers = ['Chrome'];
+browsers = ['PhantomJS'];
 
 // If browser does not capture in given timeout [ms], kill it
 captureTimeout = 10000;
@@ -144,7 +143,7 @@ coverageReporter = {
 	dir : '/Users/jolek/coverage'
 };
 
-//reportSlowerThan = 100;
+reportSlowerThan = 500;
 
 preprocessors = {
 	'**/resources/wikia/modules/*.js': 'coverage',
