@@ -1,23 +1,8 @@
-/*
- // Include jQuery and jQuery.wikia and specialPromote
- @test-require-asset /resources/wikia/libraries/modil/modil.js
- @test-require-asset resources/jquery/jquery-1.7.2.js
- @test-require-asset resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js
- @test-require-asset resources/wikia/jquery.wikia.js
- @test-require-asset extensions/wikia/SpecialPromote/js/SpecialPromote.js
- @test-require-asset /resources/wikia/modules/nirvana.js
- */
-xdescribe("Module A", function(){
+describe("Module A", function(){
 
-	var orig$ = $;
+	var orig$;
 
 //SpecialPromote needs log on onload
-	$.fn.log = function(){return true;}
-
-	$.loadJQueryAIM = function() {
-		var dfd = new $.Deferred();
-		return dfd.promise();
-	};
 
 	function specialPromoteSetup() {
 		// create a SpecialPromote instance and mock methods
@@ -28,6 +13,14 @@ xdescribe("Module A", function(){
 		$.msg = function() {return true;}
 		return new SpecialPromote();
 	}
+
+	beforeEach(function(){
+		orig$ = jQuery;
+	});
+
+	afterEach(function(){
+		window.jQuery = orig$;
+	});
 
 	it("removeImage test", function() {
 		var s = specialPromoteSetup();
@@ -53,7 +46,5 @@ xdescribe("Module A", function(){
 		var wrapperEventNoType = $.Event('click', {target: wrapperHtmlNoType.find('.modify-remove .modify')});
 		expect( s.onChangePhotoClick(wrapperEventNoType), 'no type - should not return true').toBeFalsy();
 	});
-
-	$ = orig$;
 });
 

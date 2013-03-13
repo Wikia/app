@@ -18,8 +18,8 @@ files = [
 
 	'resources/wikia/libraries/define.mock.js',
 
-	'extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 	'resources/jquery/jquery-1.8.2.js',
+	'extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 	'resources/wikia/libraries/deferred/deferred.js',
 	'resources/wikia/libraries/deferred/deferred.api.js',
 
@@ -53,11 +53,6 @@ files = [
 	'extensions/wikia/WikiaMobile/js/features.js',
 	'extensions/wikia/WikiaMobile/js/track.js',
 		'extensions/wikia/WikiaMobile/js/spec/*.spec.js',
-
-	//SpecialPromote
-	'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.mocks.js',
-	'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
-		'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.spec.js',
 
 	//core modules
 	'resources/wikia/modules/aim.js',
@@ -95,6 +90,11 @@ files = [
 	'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 	'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
 		'extensions/wikia/AdEngine/js/spec/*.spec.js',
+
+	//SpecialPromote
+	'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.mocks.js',
+	'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
+		'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.spec.js',
 ];
 
 // list of files to exclude
@@ -128,7 +128,7 @@ autoWatch = true;
 // - Safari (only Mac)
 // - PhantomJS
 // - IE (only Windows)
-browsers = ['PhantomJS'];
+browsers = ['Chrome'];
 
 // If browser does not capture in given timeout [ms], kill it
 captureTimeout = 10000;

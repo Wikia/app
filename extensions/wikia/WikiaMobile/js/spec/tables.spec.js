@@ -2,7 +2,7 @@
 describe("Tables module", function () {
 	var body = getBody();
 
-	body.innerHTML = '<div id="mw-content-text" style="width:100px;overflow: hidden;"><table style="min-width: 9999px"><tbody><tr><td>some content</td><td>and some more</td></tr><tr><td></td></tr></tbody></table><table><tr><td></td></tr></table></div>';
+	body.innerHTML = '<div id="mw-content-text"><table id="TESTTABLE"><tbody><tr style="min-width: 99999px;"><td>some content to TEST wide table</td><td>and some more</td></tr><tr><td></td></tr></tbody></table></div>';
 
 	var tables = modules.tables(
 		{
@@ -21,29 +21,38 @@ describe("Tables module", function () {
 		}
 	);
 
+	beforeEach(function(){
+		body = getBody();
+
+		body.innerHTML = '<div id="mw-content-text"><table ><tbody><tr><td>TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST</td><td>and some more</td></tr><tr><td></td></tr></tbody></table></div>';
+
+		//TODO: ummock
+		window.Features = {
+			overflow: false
+		};
+	});
+
 	it('is defined', function(){
 		expect(tables).toBeDefined();
 		expect(typeof tables.process).toBe('function');
 	});
 
-	xit('should wrap/unwrap table', function(){
-		var tab = body.getElementsByTagName('table');
+	it('should wrap/unwrap table', function(){
+		var tab = body.querySelectorAll('table');
+
 		tables.process(tab);
 
 		var table = body.getElementsByTagName('table')[0];
 
 		expect(table.parentElement.id).not.toBe("mw-content-text");
 		expect(table.parentElement.className).toBe('bigTable');
-
-//			fire('viewportsize', window);
-//
-//			table = document.getElementsByTagName('table')[0];
-//
-//			expect(table.parentElement.id).toBe("mw-content-text");
-//			expect(table.parentElement.className).not.toBe('bigTable');
 	});
 
-	xit('should add wkScroll to bitTable', function(){
+	it('should add wkScroll to bitTable', function(){
+		var foundTables = body.getElementsByTagName('table');
+
+		tables.process(foundTables);
+
 		var table = body.getElementsByTagName('table')[0];
 
 		fireEvent('click', table.parentElement);
