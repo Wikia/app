@@ -376,8 +376,9 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	public function getHubImages() {
 		$lang = $this->wg->contLang->getCode();
-		if (!empty($this->app->wg->EnableWikiaHubsV2Ext)) {
-			$hubImages = WikiaDataAccess::cacheWithLock(
+
+		if ($this->app->wg->EnableWikiaHubsV2Ext) {
+			$hubImages = WikiaDataAccess::cache(
 				F::app()->wf->SharedMemcKey(
 					'wikiahomepage',
 					'hubv2 images',
@@ -389,16 +390,7 @@ class WikiaHomePageController extends WikiaController {
 					$hubImages = [];
 
 					foreach ($this->app->wg->WikiaHubsV2Pages as $hubId => $hubName) {
-						$response = $this->app->sendRequest(
-							'WikiaHubsApi',
-							'getModuleData',
-							array(
-								'module' => MarketingToolboxModuleSliderService::MODULE_ID,
-								'vertical' => $hubId,
-								'lang' => $lang
-							)
-						);
-						$sliderData = $response->getData();
+						$sliderData = $this->getHubSliderData($lang, $hubId);
 
 						$hubImages[$hubId] = isset($sliderData['data']['slides'][0]['photoUrl'])
 								? $sliderData['data']['slides'][0]['photoUrl']
@@ -420,6 +412,18 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 		$this->hubImages = $hubImages;
+	}
+
+	protected function getHubSliderData($lang, $hubId) {
+		return $this->app->sendRequest(
+			'WikiaHubsApi',
+			'getModuleData',
+			array(
+				'module' => MarketingToolboxModuleSliderService::MODULE_ID,
+				'vertical' => $hubId,
+				'lang' => $lang
+			)
+		)->getData();
 	}
 
 	protected function getHubImageUrls() {
