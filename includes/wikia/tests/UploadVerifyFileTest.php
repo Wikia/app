@@ -24,11 +24,7 @@ class UploadVerifyFile extends WikiaBaseTest {
 			file_put_contents($this->tmpPath, $uploadContent);
 		}
 
-		$titleMock = $this->mockClassWithMethods('Title', array(
-			'getText' => 'Foo'
-		));
 		$uploadMock = $this->mockClassWithMethods('TestUploadClass', array(
-			'getTitle' => $titleMock,
 			'getTempPath' => $this->tmpPath
 		));
 
