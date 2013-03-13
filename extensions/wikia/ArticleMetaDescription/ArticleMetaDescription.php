@@ -24,61 +24,11 @@ $wgExtensionCredits['other'][] = array(
     'description' => 'adding meta-description tag containing snippet of the Article, provided by the ArticleService'
 );
 
-$wgHooks['OutputPageBeforeHTML'][] = 'ArticleMetaDescription::onOutputPageBeforeHTML';
-class ArticleMetaDescription {
-	function descriptionFromMessage( $wgTitle ) {
-		$sMessage = null;
-		if( !wfEmptyMsg( "Description" ) ) {
-			$sMainPage = wfMsgForContent('Mainpage');
-			if(strpos($sMainPage, ':') !== false) {
-				$sTitle = $wgTitle->getFullText();
-			}
-			else {
-				$sTitle = $wgTitle->getText();
-			}
+$dir = dirname(__FILE__) . '/';
+$app = F::app();
 
-			if(strcmp($sTitle, $sMainPage) == 0) {
-				// we're on Main Page, check MediaWiki:Description message
-				$sMessage = wfMsg("Description");
-			}
-		}
-		return $sMessage;
-	}
+$app->registerClass('ArticleMetaDescriptionHelpers', $dir.'ArticleMetaDescriptionHelpers.class.php');
+$app->registerClass('ArticleMetaDescriptionHooks', $dir.'ArticleMetaDescriptionHooks.class.php');
 
-	function descriptionFromSnippet( $wgTitle ) {
-		$DESC_LENGTH = 100;
-		$articleId = $wgTitle->getArticleID();
-		$articleService = new ArticleService( $articleId );
-		return $articleService->getTextSnippet( $DESC_LENGTH );
-	}
-
-	/**
-	 * @param OutputPage $out
-	 * @param string $text
-	 * @return bool
-	 */
-	function onOutputPageBeforeHTML(&$out, &$text) {
-		global $wgTitle, $wgPPSEOCustomKeywords, $wgPPSEOCustomDescriptions;
-		wfProfileIn( __METHOD__ );
-
-		$pagename = $out->getTitle()->getPrefixedText();
-
-		if ( !empty( $wgPPSEOCustomKeywords[$pagename] ) ) {
-			foreach( explode( ',', $wgPPSEOCustomKeywords[$pagename]) as $i => $keyword ) {
-				$out->addKeyword( $keyword );
-			}
-		}
-
-		$description = null;
-		if ( !empty( $wgPPSEOCustomDescriptions[$pagename] ) ) $description = $wgPPSEOCustomDescriptions[$pagename];
-		if( $description == null ) $description = ArticleMetaDescription::descriptionFromMessage( $wgTitle );
-		if( $description == null ) $description = ArticleMetaDescription::descriptionFromSnippet( $wgTitle );
-
-		if( !empty($description) ) {
-			$out->addMeta('description', htmlspecialchars($description));
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-}
+//$wgHooks['OutputPageBeforeHTML'][] = 'ArticleMetaDescription::onOutputPageBeforeHTML';
+$app->registerHook('OutputPageBeforeHTML', 'ArticleMetaDescriptionHooks', 'onOutputPageBeforeHTML');
