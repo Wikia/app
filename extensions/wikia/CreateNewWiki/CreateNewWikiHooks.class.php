@@ -1,6 +1,6 @@
 <?php
 class CreateNewWikiHooks {
-	public static function onBeforePageDisplay(OutputPage $out, Skin $skin) {
+	public static function onBeforePageDisplay($out) {
 		$wg = F::app()->wg;
 
 		$wikiWelcome = $wg->request->getVal('wiki-welcome');
