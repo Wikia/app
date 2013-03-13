@@ -14,7 +14,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testExtractMatch() {
 		
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getArticleMatchForTermAndNamespaces' ) )
 		                      ->getMock();
@@ -23,7 +23,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->setMethods( array( 'getOriginalQuery', 'getNamespaces', 'setArticleMatch', 'getMatch' ) )
 		                   ->getMock();
 		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'interface' => $mockInterface, 'config' => $mockConfig ) );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
@@ -43,7 +43,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getNamespaces' )
 		    ->will   ( $this->returnValue( array( 0, 14 ) ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getArticleMatchForTermAndNamespaces' )
 		    ->with   ( 'term', array( 0, 14 ) )
@@ -188,19 +188,19 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( $spellcheckMethods )
 		                       ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getGlobal' ) )
 		                      ->getMock();
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryNoQuotes', 'getCityId'  ) );
 		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'interface' => $mockInterface, 'config' => $mockConfig ) );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
 		
-		$mockInterface
+		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'WikiaSearchSpellcheckActivated' )

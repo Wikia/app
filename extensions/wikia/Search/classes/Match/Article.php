@@ -18,25 +18,25 @@ class Article extends AbstractMatch
 	 * @return Result
 	 */
 	public function createResult() {
-		$wikiId = $this->interface->getWikiId();
-		$pageId = $this->interface->getCanonicalPageIdFromPageId( $this->id );
+		$wikiId = $this->service->getWikiId();
+		$pageId = $this->service->getCanonicalPageIdFromPageId( $this->id );
 		$fieldsArray = array(
 				'id'            => sprintf( '%s_%s', $wikiId, $pageId ),
 				'pageId'        => $pageId,
 				'wid'           => $wikiId,
-				'title'         => $this->interface->getTitleStringFromPageId( $this->id ),
-				'url'           => urldecode( $this->interface->getUrlFromPageId( $this->id ) ),
+				'title'         => $this->service->getTitleStringFromPageId( $this->id ),
+				'url'           => urldecode( $this->service->getUrlFromPageId( $this->id ) ),
 				'score'         => 'PTT',
 				'isArticleMatch'=> true,
-				'ns'            => $this->interface->getNamespaceFromPageId( $this->id ),
-				'created'       => $this->interface->getFirstRevisionTimestampForPageId( $this->id ),
-				'touched'       => $this->interface->getLastRevisionTimestampForPageId( $this->id ),
+				'ns'            => $this->service->getNamespaceFromPageId( $this->id ),
+				'created'       => $this->service->getFirstRevisionTimestampForPageId( $this->id ),
+				'touched'       => $this->service->getLastRevisionTimestampForPageId( $this->id ),
 			);
 		$result = new Result( $fieldsArray );
-		$result->setText( $this->interface->getSnippetForPageId( $this->id ) );
+		$result->setText( $this->service->getSnippetForPageId( $this->id ) );
 		if ( $this->hasRedirect() ) {
-			$result->setVar( 'redirectTitle', $this->interface->getNonCanonicalTitleStringFromPageId( $this->id ) );
-			$result->setVar( 'redirectUrl', $this->interface->getNonCanonicalUrlFromPageId( $this->id ) );
+			$result->setVar( 'redirectTitle', $this->service->getNonCanonicalTitleStringFromPageId( $this->id ) );
+			$result->setVar( 'redirectUrl', $this->service->getNonCanonicalUrlFromPageId( $this->id ) );
 		}
 		return $result;
 	}
@@ -46,6 +46,6 @@ class Article extends AbstractMatch
 	 * @return boolean
 	 */
 	public function hasRedirect() {
-		return $this->interface->getCanonicalPageIdFromPageId( $this->id ) !== $this->id;
+		return $this->service->getCanonicalPageIdFromPageId( $this->id ) !== $this->id;
 	}
 }

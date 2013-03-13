@@ -7,7 +7,7 @@ use \Wikia\Search\Config, \Solarium_Query_Select, \ReflectionProperty, \Reflecti
 class ConfigTest extends BaseTest {
 
 	public function setUp() {
-		$this->interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$this->service = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                        ->disableOriginalConstructor();
 		
 		$this->config = $this->getMockBuilder( '\\Wikia\Search\Config' )
@@ -16,10 +16,10 @@ class ConfigTest extends BaseTest {
 		parent::setUp();
 	}
 	
-	protected function setInterface( $config, $interface ) {
-		$refl = new ReflectionProperty( '\\Wikia\\Search\\Config', 'interface' );
+	protected function setService( $config, $service ) {
+		$refl = new ReflectionProperty( '\\Wikia\\Search\\Config', 'service' );
 		$refl->setAccessible( true );
-		$refl->setValue( $config, $interface );
+		$refl->setValue( $config, $service );
 	}
 	
 	/**
@@ -569,14 +569,14 @@ class ConfigTest extends BaseTest {
 				"Larger digits should round to the nearest n-1 radix."
 		);
 		
-		$interface = $this->interface->setMethods( array( 'formatNumber' ) )->getMock();
-		$interface
+		$service = $this->service->setMethods( array( 'formatNumber' ) )->getMock();
+		$service
 		    ->expects( $this->once() )
 		    ->method ( 'formatNumber' )
 		    ->with   (56000)
 		    ->will   ( $this->returnValue( '56,000' ) )
 	    ;
-		$this->setInterface( $config, $interface );
+		$this->setService( $config, $service );
 		$this->assertEquals(
 				'56,000',
 				$config->getTruncatedResultsNum( true )
@@ -1037,12 +1037,12 @@ class ConfigTest extends BaseTest {
 		               ->setMethods( array( 'setQueryField' ) )
 		               ->getMock();
 		
-		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$service = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getGlobalWithDefault' ) )
 		                  ->getMock();
 		
-		$interface
+		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getGlobalWithDefault' )
 		    ->with   ( 'SearchBoostFor_title', 5 )
@@ -1058,9 +1058,9 @@ class ConfigTest extends BaseTest {
 		$fieldsrefl->setAccessible( true );
 		$fieldsrefl->setValue( $config, array( 'title' => 5 ) );
 		
-		$interfacerefl = new ReflectionProperty( '\Wikia\Search\Config', 'interface' );
-		$interfacerefl->setAccessible(true );
-		$interfacerefl->setValue( $config, $interface );
+		$servicerefl = new ReflectionProperty( '\Wikia\Search\Config', 'service' );
+		$servicerefl->setAccessible(true );
+		$servicerefl->setValue( $config, $service );
 		
 		$methodrefl = new ReflectionMethod( '\Wikia\Search\Config', 'importQueryFieldBoosts' );
 		$methodrefl->setAccessible( true );
@@ -1086,13 +1086,13 @@ class ConfigTest extends BaseTest {
 	 * @covers \Wikia\Search\Config::setQuery
 	 */
 	public function testSetQuery() {
-		$interface = $this->interface->setMethods( array( 'getNamespaceIdForString' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getNamespaceIdForString' ) )->getMock();
 		$config = $this->config->setMethods( array( 'getNamespaces' ) )->getMock();
-		$this->setInterface( $config, $interface );
+		$this->setService( $config, $service );
 		
 		$query = 'Category:Foo';
 		
-		$interface
+		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getNamespaceIdForString' )
 		    ->with   ( 'Category' )
@@ -1125,10 +1125,10 @@ class ConfigTest extends BaseTest {
 	 */
 	public function testGetNamespaces() {
 		$config = $this->config->setMethods( null )->getMock();
-		$interface = $this->config->setMethods( array( 'getDefaultNamespacesFromSearchEngine' ) )->getMock();
-		$this->setInterface( $config, $interface );
+		$service = $this->config->setMethods( array( 'getDefaultNamespacesFromSearchEngine' ) )->getMock();
+		$this->setService( $config, $service );
 		$config->setQueryNamespace( 123 );
-		$interface
+		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getDefaultNamespacesFromSearchEngine' )
 		    ->will   ( $this->returnValue( array( 0, 14 ) ) )

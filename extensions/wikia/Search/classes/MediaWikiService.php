@@ -1,6 +1,6 @@
 <?php
 /**
- * Class definition for \Wikia\Search\MediaWikiInterface
+ * Class definition for \Wikia\Search\MediaWikiService
  * @author relwell
  */
 namespace Wikia\Search; 
@@ -11,7 +11,7 @@ namespace Wikia\Search;
  * @author relwell
  * @package Search 
  */
-class MediaWikiInterface
+class MediaWikiService
 {
 	/**
 	 * Application interface
@@ -202,7 +202,7 @@ class MediaWikiInterface
 	 * @param string $key
 	 * @param mixed $value
 	 * @param int $ttl
-	 * @return \Wikia\Search\MediaWikiInterface
+	 * @return \Wikia\Search\MediaWikiService
 	 */
 	public function setCacheFromStringKey( $key, $value, $ttl ) {
 		$this->getGlobal( 'Memc' )->set( $this->getCacheKey( $key ), $value, $ttl );
@@ -277,7 +277,7 @@ class MediaWikiInterface
 	 * Sets a global param, abstracted away from MediaWiki
 	 * @param string $global
 	 * @param mixed $value
-	 * @return \Wikia\Search\MediaWikiInterface
+	 * @return \Wikia\Search\MediaWikiService
 	 */
 	public function setGlobal( $global, $value ) {
 		$this->app->wg->{$global} = $value;

@@ -26,9 +26,9 @@ class WikiStats extends AbstractWikiService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
-		$sharedDb = $this->interface->getGlobal( 'ExternalSharedDB' );
+		$sharedDb = $this->service->getGlobal( 'ExternalSharedDB' );
 		if (! empty( $sharedDb ) ) { 
-			$data = $this->interface->getApiStatsForWiki();
+			$data = $this->service->getApiStatsForWiki();
 			$statistics = $data['query']['statistics'];
 			if( is_array($statistics) ) {
 				$this->result['wikipages']      = $statistics['pages'];

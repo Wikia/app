@@ -13,14 +13,14 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\Video::configureQueryFields
 	 */
 	public function testConfigureQueryFields() {
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getLanguageCode' ) )
 		                      ->getMock();
 		
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'addQueryFields' ) );
 		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'interface' => $mockInterface ) );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Video' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
@@ -31,7 +31,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 				Wikia\Search\Utilities::field( 'html', 'en' )            => 1.5, 
 				Wikia\Search\Utilities::field( 'redirect_titles', 'en' ) => 4
 		);
-		$mockInterface
+		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getLanguageCode' )
 		    ->will   ( $this->returnValue( 'fr' ) )

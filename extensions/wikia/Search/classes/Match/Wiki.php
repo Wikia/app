@@ -23,13 +23,13 @@ class Wiki extends AbstractMatch
 	{
 		$fields = array(
 				'wid' => $this->id,
-				'title' => $this->interface->getGlobalForWiki( 'wgSitename', $this->id ),
+				'title' => $this->service->getGlobalForWiki( 'wgSitename', $this->id ),
 				'isWikiMatch' => true,
-				'text' => $this->interface->getDescriptionTextForWikiId( $this->id ),
-				'url' => $this->interface->getMainPageUrlForWikiId( $this->id ),
-				'hub' => $this->interface->getHubForWikiId( $this->id ),
+				'text' => $this->service->getDescriptionTextForWikiId( $this->id ),
+				'url' => $this->service->getMainPageUrlForWikiId( $this->id ),
+				'hub' => $this->service->getHubForWikiId( $this->id ),
 				);
-		$fields = array_merge( $fields, $this->interface->getVisualizationInfoForWikiId( $this->id ), $this->interface->getStatsInfoForWikiId( $this->id ) );
+		$fields = array_merge( $fields, $this->service->getVisualizationInfoForWikiId( $this->id ), $this->service->getStatsInfoForWikiId( $this->id ) );
 		$result = new Result( $fields );
 		if ( isset( $result['description'] ) ) {
 			$result->setText( $result['description'] );

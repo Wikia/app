@@ -3,7 +3,7 @@
  * Class definition for \Wikia\Search\IndexService\All
  */
 namespace Wikia\Search\IndexService;
-use Wikia\Search\MediaWikiInterface;
+use Wikia\Search\MediaWikiService;
 /**
  * Aggregates all other services into a single request -- good for populating a full index
  * @author relwell

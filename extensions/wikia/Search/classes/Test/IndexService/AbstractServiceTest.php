@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\Test\IndexService;
-use Wikia\Search\IndexService\AbstractService, Wikia\Search\MediaWikiInterface, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Test\BaseTest;
+use Wikia\Search\IndexService\AbstractService, Wikia\Search\MediaWikiService, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Test\BaseTest;
 /**
  * Tests the methods found in \Wikia\Search\IndexService\AbstractService
  * @author relwell
@@ -70,10 +70,10 @@ class AbstractServiceTest extends BaseTest
 	 */
 	public function testGetCurrentDocumentId() {
 		$service = $this->service->getMockForAbstractClass();
-		$interface = new MediaWikiInterface;
+		$mwservice = new MediaWikiService;
 		$service->setPageId( 123 );
 		$this->assertEquals(
-				sprintf( '%s_%s', $interface->getWikiId(), $interface->getCanonicalPageIdFromPageId( 123 ) ),
+				sprintf( '%s_%s', $mwservice->getWikiId(), $mwservice->getCanonicalPageIdFromPageId( 123 ) ),
 				$service->getCurrentDocumentId()
 		);
 	}
@@ -101,7 +101,7 @@ class AbstractServiceTest extends BaseTest
 		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
 		                ->getMock();
 		
-		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'pageIdExists' ) )
 		                  ->getMock();
@@ -109,7 +109,7 @@ class AbstractServiceTest extends BaseTest
 		$executeResponse = array( 'foo' => 'bar' );
 		$jsonResponse = array( 'id' => '321_234', 'foo' => array( 'set' => 'bar' ) );
 		$service->setPageIds( array( 234 ) );
-		$interface
+		$mwservice
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'pageIdExists' )
 		    ->with   ( 234 )
@@ -131,9 +131,9 @@ class AbstractServiceTest extends BaseTest
 		    ->with   ( $executeResponse )
 		    ->will   ( $this->returnValue( $jsonResponse ) )
 		;
-		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'interface' );
+		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$reflIf->setAccessible( true );
-		$reflIf->setValue( $service, $interface );
+		$reflIf->setValue( $service, $mwservice );
 		
 		$actualResponse = $service->getResponseForPageIds();
 		$expectedResponse = array( 'contents' => array( $jsonResponse ), 'errors' => array() );
@@ -152,7 +152,7 @@ class AbstractServiceTest extends BaseTest
 		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
 		                ->getMock();
 		
-		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'pageIdExists' ) )
 		                  ->getMock();
@@ -163,7 +163,7 @@ class AbstractServiceTest extends BaseTest
 		$reflProcessedDocs->setAccessible( true );
 		$reflProcessedDocs->setValue( $service, array( 456 ) );
 		
-		$interface
+		$mwservice
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'pageIdExists' )
 		    ->with   ( 456 )
@@ -179,9 +179,9 @@ class AbstractServiceTest extends BaseTest
 		    ->method ( 'execute' )
 		;
 
-		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'interface' );
+		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$reflIf->setAccessible( true );
-		$reflIf->setValue( $service, $interface );
+		$reflIf->setValue( $service, $mwservice );
 		
 		$actualResponse = $service->getResponseForPageIds();
 		$expectedResponse = array( 'contents' => array(), 'errors' => array() );
@@ -200,7 +200,7 @@ class AbstractServiceTest extends BaseTest
 		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
 		                ->getMock();
 		
-		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'pageIdExists' ) )
 		                  ->getMock();
@@ -211,7 +211,7 @@ class AbstractServiceTest extends BaseTest
 		$executeResponse = array( 'foo' => 'bar' );
 		$jsonResponse = array( 'id' => '321_123', 'foo' => array( 'set' => 'bar' ) );
 		$service->setPageIds( array( 123 ) );
-		$interface
+		$mwservice
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'pageIdExists' )
 		    ->with   ( 123 )
@@ -222,9 +222,9 @@ class AbstractServiceTest extends BaseTest
 		    ->method ( 'execute' )
 		    ->will   ( $this->throwException( $exception ) )
 		;
-		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'interface' );
+		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$reflIf->setAccessible( true );
-		$reflIf->setValue( $service, $interface );
+		$reflIf->setValue( $service, $mwservice );
 		
 		$expectedResponse = array( 'contents' => array(), 'errors' => array( 123 ) );
 		$this->assertEquals(
@@ -233,7 +233,7 @@ class AbstractServiceTest extends BaseTest
 		);
 	}
 	
-/**
+	/**
 	 * @covers \Wikia\Search\IndexService\AbstractService::getResponseForPageIds
 	 */
 	public function testGetResponseForPageIdsNotExists() {
@@ -242,7 +242,7 @@ class AbstractServiceTest extends BaseTest
 		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
 		                ->getMock();
 		
-		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'pageIdExists' ) )
 		                  ->getMock();
@@ -250,7 +250,7 @@ class AbstractServiceTest extends BaseTest
 		$executeResponse = array( 'foo' => 'bar' );
 		$jsonResponse = array( 'id' => '321_123', 'foo' => array( 'set' => 'bar' ) );
 		$service->setPageIds( array( 123 ) );
-		$interface
+		$mwservice
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'pageIdExists' )
 		    ->with   ( 123 )
@@ -261,9 +261,9 @@ class AbstractServiceTest extends BaseTest
 		    ->method ( 'getCurrentDocumentId' )
 		    ->will   ( $this->returnValue( '321_123' ) )
 		;
-		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'interface' );
+		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$reflIf->setAccessible( true );
-		$reflIf->setValue( $service, $interface );
+		$reflIf->setValue( $service, $mwservice );
 		
 		$expectedResponse = array( 'contents' => array( array( 'delete' => array( 'id' => '321_123' ) ) ), 'errors' => array() );
 		$this->assertEquals(

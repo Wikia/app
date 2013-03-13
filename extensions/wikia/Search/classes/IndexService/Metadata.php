@@ -21,7 +21,7 @@ class Metadata extends AbstractService
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
-		$sharedDb = $this->interface->getGlobal( 'ExternalSharedDB' );
+		$sharedDb = $this->service->getGlobal( 'ExternalSharedDB' );
 		if ( empty( $sharedDb ) ) {
 			return array();
 		}
@@ -31,7 +31,7 @@ class Metadata extends AbstractService
 			throw new \WikiaException( 'A pageId-dependent indexer service was executed without a page ID queued' );
 		}
 
-		$data = $this->interface->getApiStatsForPageId( $pageId );
+		$data = $this->service->getApiStatsForPageId( $pageId );
 		if( isset( $data['query']['pages'][$pageId] ) ) {
 			$pageData = $data['query']['pages'][$pageId];
 			$result['views'] = $pageData['views'];
