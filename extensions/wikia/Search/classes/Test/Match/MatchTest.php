@@ -62,17 +62,17 @@ class MatchTest extends BaseTest {
 	 * @covers Wikia\Search\Match\Article::hasRedirect
 	 */
 	public function testArticleMatchHasRedirect() {
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getCanonicalPageIdFromPageId' ) )
 		                      ->getMock();
 		
 		$mockResult = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
-		                   ->setConstructorArgs( array( 123, $mockInterface ) )
+		                   ->setConstructorArgs( array( 123, $mockService ) )
 		                   ->setMethods( null )
 		                   ->getMock();
 		
-		$mockInterface
+		$mockService
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getCanonicalPageIdFromPageId' )
 		    ->with   ( 123 )
@@ -81,7 +81,7 @@ class MatchTest extends BaseTest {
 		$this->assertTrue(
 				$mockResult->hasRedirect()
 		);
-		$mockInterface
+		$mockService
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getCanonicalPageIdFromPageId' )
 		    ->with   ( 123 )
@@ -102,14 +102,14 @@ class MatchTest extends BaseTest {
 				'getSnippetForPageId', 'getNonCanonicalTitleStringFromPageId', 'getNonCanonicalUrlFromPageId'
 				);
 		
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( $serviceMethods )
 		                      ->getMock();
 		
 		$pageId = 123;
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
-		                   ->setConstructorArgs( array( $pageId, $mockInterface ) )
+		                   ->setConstructorArgs( array( $pageId, $mockService ) )
 		                   ->setMethods( array( 'hasRedirect' ) )
 		                   ->getMock();
 		
@@ -136,48 +136,48 @@ class MatchTest extends BaseTest {
 				'touched' => $touched
 				);
 		
-		$mockInterface
+		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( $wid ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getCanonicalPageIdFromPageId' )
 		    ->with   ( $pageId )
 		    ->will   ( $this->returnValue( $canonicalPageId ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getTitleStringFromPageId' )
 		    ->with   ( $pageId )
 		    ->will   ( $this->returnValue( $titleString ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getUrlFromPageId' )
 		    ->with   ( $pageId )
 		    ->will   ( $this->returnValue( $url ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getNamespaceFromPageId' )
 		    ->with   ( $pageId )
 		    ->will   ( $this->returnValue( 0 ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getFirstRevisionTimestampForPageId' )
 		    ->with   ( $pageId )
 		    ->will   ( $this->returnValue( $created ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getLastRevisionTimestampForPageId' )
 		    ->with   ( $pageId )
 		    ->will   ( $this->returnValue( $touched ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getSnippetForPageId' )
 		    ->with   ( $pageId )
@@ -188,13 +188,13 @@ class MatchTest extends BaseTest {
 		    ->method ( 'hasRedirect' )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getNonCanonicalTitleStringFromPageId' )
 		    ->with   ( $pageId )
 		    ->will   ( $this->returnValue( $nonCanonicalTitle ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getNonCanonicalUrlFromPageId' )
 		    ->with   ( $pageId )
@@ -227,13 +227,13 @@ class MatchTest extends BaseTest {
 				'getGlobalForWiki', 'getMainPageUrlForWikiId', 'getDescriptionTextForWikiId',
 				'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getHubForWikiId' 
 				);
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( $serviceMethods )
 		                      ->getMock();
 		
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
-		                  ->setConstructorArgs( array( 123, $mockInterface ) )
+		                  ->setConstructorArgs( array( 123, $mockService ) )
 		                  ->setMethods( null )
 		                  ->getMock();
 		
@@ -244,37 +244,37 @@ class MatchTest extends BaseTest {
 		$visualization = array( 'description' => $desc );
 		$stats = array( 'users_count' => 100 );
 		$hub = 'Entertainment';
-		$mockInterface
+		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getGlobalForWiki' )
 		    ->with   ( 'wgSitename', 123 )
 		    ->will   ( $this->returnValue( $title ) ) 
 		;
-		$mockInterface
+		$mockService
 		   ->expects( $this->once() )
 		   ->method ( 'getMainPageUrlForWikiId' )
 		   ->with   ( 123 )
 		   ->will   ( $this->returnValue( $url ) )
 		;
-		$mockInterface
+		$mockService
 		   ->expects( $this->once() )
 		   ->method ( 'getDescriptionTextForWikiId' )
 		   ->with   ( 123 )
 		   ->will   ( $this->returnValue( $text ) )
 		;
-		$mockInterface
+		$mockService
 		   ->expects( $this->once() )
 		   ->method ( 'getHubForWikiId' )
 		   ->with   ( 123 )
 		   ->will   ( $this->returnValue( $hub ) )
 		;
-		$mockInterface
+		$mockService
 		   ->expects( $this->once() )
 		   ->method ( 'getVisualizationInfoForWikiId' )
 		   ->with   ( 123 )
 		   ->will   ( $this->returnValue( $visualization ) )
 		;
-		$mockInterface
+		$mockService
 		   ->expects( $this->once() )
 		   ->method ( 'getStatsInfoForWikiId' )
 		   ->with   ( 123 )

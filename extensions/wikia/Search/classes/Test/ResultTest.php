@@ -328,7 +328,7 @@ class ResultTest extends BaseTest {
 		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
 		                      ->getMock();
@@ -338,9 +338,9 @@ class ResultTest extends BaseTest {
 		
 		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
 		$reflInterface->setAccessible( true );
-		$reflInterface->setValue( $mockResult, $mockInterface );
+		$reflInterface->setValue( $mockResult, $mockService );
 		
-		$mockInterface
+		$mockService
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getThumbnailHtmlForPageId' )
 		    ->with   ( 123 )
@@ -360,17 +360,17 @@ class ResultTest extends BaseTest {
 		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
 		                      ->getMock();
 		
 		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
 		$reflInterface->setAccessible( true );
-		$reflInterface->setValue( $mockResult, $mockInterface );
+		$reflInterface->setValue( $mockResult, $mockService );
 		
 		$img = "<img src='foo.jpg' />";
-		$mockInterface
+		$mockService
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getThumbnailHtmlForPageId' )
 		    ->with   ( 123 )
@@ -390,16 +390,16 @@ class ResultTest extends BaseTest {
 		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getVideoViewsForPageId' ) )
 		                      ->getMock();
 		
 		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
 		$reflInterface->setAccessible( true );
-		$reflInterface->setValue( $mockResult, $mockInterface );
+		$reflInterface->setValue( $mockResult, $mockService );
 		
-		$mockInterface
+		$mockService
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getVideoViewsForPageId' )
 		    ->with   ( 123 )
@@ -419,7 +419,7 @@ class ResultTest extends BaseTest {
 		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getVideoViewsForPageId' ) )
 		                      ->getMock();
@@ -429,9 +429,9 @@ class ResultTest extends BaseTest {
 		
 		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
 		$reflInterface->setAccessible( true );
-		$reflInterface->setValue( $mockResult, $mockInterface );
+		$reflInterface->setValue( $mockResult, $mockService );
 		
-		$mockInterface
+		$mockService
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getVideoViewsForPageId' )
 		    ->with   ( 123 )

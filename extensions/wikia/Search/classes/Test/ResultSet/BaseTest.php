@@ -124,7 +124,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 									->setMethods( array( 'getField' ) )
 									->getMock();
 		
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getMediaWikiFormattedTimestamp' ) )
 		                      ->getMock();
@@ -176,7 +176,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 			->with		( 'created' )
 			->will		( $this->returnValue( $mockTimestamp ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getMediaWikiFormattedTimestamp' )
 		    ->with   ( $mockTimestamp )
@@ -232,7 +232,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		
 		$intRefl = new ReflectionProperty( 'Wikia\Search\ResultSet\Base', 'interface' );
 		$intRefl->setAccessible( true );
-		$intRefl->setValue( $this->resultSet, $mockInterface );
+		$intRefl->setValue( $this->resultSet, $mockService );
 		
 		$global = new ReflectionProperty( '\Wikia\Search\ResultSet\Base', 'results' );
 		$global->setAccessible( true );
