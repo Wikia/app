@@ -6,11 +6,23 @@ describe("Nirvana", function () {
 		ajaxMock = function() {},
 		nirvana = modules['wikia.nirvana'](ajaxMock),
 		controllerName = 'foo',
-		methodName = 'bar';
+		methodName = 'bar',
+		origwgScriptPath,
+		origwgServer;
 
-	// set up the environment
-	window.wgScriptPath = '';
-	window.wgServer = '';
+	beforeEach(function(){
+		origwgScriptPath = window.wgScriptPath;
+		origwgServer = window.wgServer;
+
+		// set up the environment
+		window.wgScriptPath = '';
+		window.wgServer = '';
+	});
+
+	afterEach(function(){
+		window.wgScriptPath = origwgScriptPath;
+		window.wgServer = origwgServer;
+	});
 
 	it('registers AMD module', function() {
 		expect(typeof nirvana).toBe('object');
@@ -21,9 +33,9 @@ describe("Nirvana", function () {
 
 	it('has jQuery API', function() {
 		expect(typeof $.nirvana).toBe('object');
-		expect(typeof $.nirvana.sendRequest).toBe('function');
-		expect(typeof $.nirvana.getJson).toBe('function');
-		expect(typeof $.nirvana.postJson).toBe('function');
+		expect(typeof $.nirvana.sendRequest).toBe('function' ,'sendRequest');
+		expect(typeof $.nirvana.getJson).toBe('function', 'getJson');
+		expect(typeof $.nirvana.postJson).toBe('function', 'postJson');
 	});
 
 	it('controller name is required', function() {

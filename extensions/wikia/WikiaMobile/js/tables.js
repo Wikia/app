@@ -14,7 +14,7 @@ define('tables', ['events', 'track', 'wikia.window'], function(ev, track, w){
 		wrapper.className = 'bigTable';
 		wrapper.appendChild(elm.cloneNode(true));
 
-		elm.parentElement.replaceChild(wrapper, elm);
+		parent.replaceChild(wrapper, elm);
 		//keep references to parent and wrapper as cloning nodes does not copy parentElement properties
 		elm.parent = parent;
 		elm.wrapper = wrapper;
@@ -80,7 +80,6 @@ define('tables', ['events', 'track', 'wikia.window'], function(ev, track, w){
 				table.computedWidth = firstRowWidth;
 				if(firstRowWidth > realWidth){
 					//remove scripts to avoid re-parsing
-					dump(true);
 					removeScripts(table);
 					wrap(table);
 					table.wasWrapped = true;
@@ -126,7 +125,7 @@ define('tables', ['events', 'track', 'wikia.window'], function(ev, track, w){
 
 					if(~t.className.indexOf('bigTable')){
 						if(!t.wkScroll) {
-							new iScroll(t, function(){
+							new w.iScroll(t, function(){
 								track.event('tables', track.SWIPE);
 							});
 							t.wkScroll = true;
