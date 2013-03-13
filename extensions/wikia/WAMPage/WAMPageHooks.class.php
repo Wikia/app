@@ -17,7 +17,6 @@ class WAMPageHooks {
 			&& $title instanceof Title 
 			&& ($this->isWAMFAQPage($title) || $this->isWAMIndexPage($title)) 
 		) {
-			die('hook works!');
 			$article = new WAMPageArticle($title);
 		}
 

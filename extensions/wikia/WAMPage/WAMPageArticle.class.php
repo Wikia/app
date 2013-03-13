@@ -19,7 +19,7 @@ class WAMPageArticle extends Article {
 
 		$app = F::app();
 		$app->wg->Out->clearHTML();
-		$this->wg->Out->addHTML( $app->sendRequest('WAMPageSpecialController', 'index') );
+		$app->wg->Out->addHTML( $app->sendRequest('WAMPageSpecialController', 'index') );
 		
 		wfProfileOut(__METHOD__);
 	}
