@@ -16,7 +16,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	 *
 	 * @requestParam integer $module [REQUIRED] module id see MarketingToolboxModel.class.php from line 9 to 17
 	 * @requestParam integer $vertical [REQUIRED] vertical id see WikiFactoryHub::CATEGORY_ID_GAMING, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, WikiFactoryHub::CATEGORY_ID_LIFESTYLE
-	 * @requestParam integer $timestamp [REQUIRED] unix timestamp
+	 * @requestParam integer $timestamp [OPTIONAL] unix timestamp, default current date
 	 * @requestParam string $lang [OPTIONAL] default set to EN
 	 *
 	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
