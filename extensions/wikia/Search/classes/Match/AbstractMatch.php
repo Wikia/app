@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\Match;
-use Wikia\Search\MediaWikiInterface;
+use Wikia\Search\MediaWikiService;
 /**
  * Provides a common API for matches, regardless of implementation.
  * Matches encapsulate classes that model data that directly correlates to a search term, given a domain.
@@ -24,9 +24,9 @@ abstract class AbstractMatch
 
 	/**
 	 * Encapsulates appropriate logic.
-	 * @var MediaWikiInterface
+	 * @var MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 	
 	/**
 	 * Memoization cache for getResult method
@@ -35,13 +35,13 @@ abstract class AbstractMatch
 	protected $result;
 	
 	/**
-	 * Dependency-injects an ID and interface.
+	 * Dependency-injects an ID and MW service.
 	 * @param int $id
-	 * @param MediaWikiInterface $interface
+	 * @param MediaWikiService $service
 	 */
-	public function __construct( $id, MediaWikiInterface $interface ) {
+	public function __construct( $id, MediaWikiService $service ) {
 		$this->id = $id;
-		$this->interface = $interface;
+		$this->service = $service;
 	}
 	
 	/**

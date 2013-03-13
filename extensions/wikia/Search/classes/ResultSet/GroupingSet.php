@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\ResultSet\GroupingSet
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\MediaWikiInterface, \ArrayIterator;
+use \Wikia\Search\MediaWikiService, \ArrayIterator;
 use \Solarium_Result_Select;
 use \WikiaSearchConfig;
 /**
@@ -27,7 +27,7 @@ class GroupingSet extends Grouping
 	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject = $container->getResult();
 		$this->searchConfig       = $container->getConfig();
-		$this->interface          = $container->getInterface();
+		$this->service          = $container->getService();
 		$this->results            = new ArrayIterator( array() );
 		$this->resultsFound       = $this->getHostGrouping()->getMatches();
 		$this->factory            = new Factory;

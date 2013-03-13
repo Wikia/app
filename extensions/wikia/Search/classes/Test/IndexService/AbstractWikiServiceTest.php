@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\Test\IndexService;
-use Wikia\Search\IndexService\AbstractWikiService, Wikia\Search\MediaWikiInterface, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Test\BaseTest;
+use Wikia\Search\IndexService\AbstractWikiService, Wikia\Search\MediaWikiService, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Test\BaseTest;
 /**
  * Tests the methods found in \Wikia\Search\IndexService\AbstractWikiService
  * @author relwell
@@ -54,7 +54,7 @@ class AbstractWikiServiceTest extends BaseTest
             ->will   ( $this->returnValue( $jsonResponse ) )
         ;
         $this->assertEquals(
-        		array( 'contents' => array( 'foo' => array( 'set' => 'bar' ) ), 'wid' => (new MediaWikiInterface)->getWikiId() ),
+        		array( 'contents' => array( 'foo' => array( 'set' => 'bar' ) ), 'wid' => (new MediaWikiService)->getWikiId() ),
         		$service->getStubbedWikiResponse()
 		);
 	}
@@ -63,13 +63,13 @@ class AbstractWikiServiceTest extends BaseTest
 	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getCurrentDocumentId 
 	 */
 	public function testGetCurrentDocumentId() {
-		$interface = new MediaWikiInterface;
+		$service = new MediaWikiService;
 		$this->assertEquals(
-				sprintf( '%s_%s', $interface->getWikiId(), \Wikia\Search\IndexService\AbstractWikiService::PAGEID_PLACEHOLDER ),
+				sprintf( '%s_%s', $service->getWikiId(), \Wikia\Search\IndexService\AbstractWikiService::PAGEID_PLACEHOLDER ),
 				$this->service->getMockForAbstractClass()->getCurrentDocumentId()
 		);
 		$this->assertEquals(
-				sprintf( '%s_%s', $interface->getWikiId(), 123 ),
+				sprintf( '%s_%s', $service->getWikiId(), 123 ),
 				$this->service->getMockForAbstractClass()->setPageId( 123 )->getCurrentDocumentId()
 		);
 	}

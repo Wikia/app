@@ -19,9 +19,9 @@ class Indexer
 	
 	/**
 	 * Interface to MediaWiki logic -- need to use this more
-	 * @var \Wikia\Search\MediaWikiInterface
+	 * @var \Wikia\Search\MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 	
 	/**
 	 * Used to store pages when we make multiple invocations for the same page ID
@@ -47,8 +47,8 @@ class Indexer
 	 * Handles dependency injection for solarium client
 	 */
 	public function __construct() {
-		$this->interface = new MediaWikiInterface;
-		$master = $this->interface->isOnDbCluster() ? $this->interface->getGlobal( 'SolrHost' ) : 'staff-search-s1';
+		$this->service = new MediaWikiService;
+		$master = $this->service->isOnDbCluster() ? $this->service->getGlobal( 'SolrHost' ) : 'staff-search-s1';
 		$params = array(
 				'adapter' => 'Curl',
 				'adapteroptions' => array(
@@ -99,7 +99,7 @@ class Indexer
 	 */
 	public function getPage( $pageId ) {
 		wfProfileIn(__METHOD__);
-		$result = array( 'id' => sprintf( '%s_%s', $this->interface->getWikiId(), $this->interface->getCanonicalPageIdFromPageId( $pageId ) ) );
+		$result = array( 'id' => sprintf( '%s_%s', $this->service->getWikiId(), $this->service->getCanonicalPageIdFromPageId( $pageId ) ) );
 
 		foreach ( $this->serviceNames as $serviceName ) {
 			$serviceResult = $this->getService( $serviceName )
@@ -132,7 +132,7 @@ class Indexer
 	 * @return Wikia\Search\Result 
 	 */
 	public function getSolrDocument( $pageId ) {
-		$this->interface->setGlobal( 'AppStripsHtml', true );
+		$this->service->setGlobal( 'AppStripsHtml', true );
 		$pageData = $this->getPage( $pageId );
 		return new Result( $pageData );
 	}
@@ -258,7 +258,7 @@ class Indexer
 	 */
 	public function deleteArticle( $pageId) {
 		
-		$id		= sprintf( '%s_%s', $this->interface->getWikiId(), $pageId );
+		$id		= sprintf( '%s_%s', $this->service->getWikiId(), $pageId );
 		
 		$this->deleteBatch( array( $id ) );
 		

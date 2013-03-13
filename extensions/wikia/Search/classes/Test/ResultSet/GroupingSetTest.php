@@ -13,7 +13,7 @@ class GroupingSetTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\ResultSet\GroupingSet::configure
 	 */
 	public function testConfigure() {
-		$dcMethods = array( 'getResult', 'getConfig', 'getInterface' );
+		$dcMethods = array( 'getResult', 'getConfig', 'getService' );
 		$dc = $this->getMockBuilder( 'Wikia\Search\ResultSet\DependencyContainer' )
 		           ->disableOriginalConstructor()
 		           ->setMethods( $dcMethods )

@@ -38,8 +38,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 				$mockSelect
 		);
 		$this->assertAttributeInstanceOf(
-				'Wikia\Search\MediaWikiInterface',
-				'interface',
+				'Wikia\Search\MediaWikiService',
+				'service',
 				$mockSelect
 		);
 	}
@@ -617,13 +617,13 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::spellcheckResult
 	 */
 	public function testSpellcheckResult() {
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getGlobal' ) )
 		                      ->getMock();
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'hasMatch', 'setQuery' ) );
 		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'interface' => $mockInterface ) ); 
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) ); 
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( array( 'sendSearchRequestToClient' ) )
@@ -642,7 +642,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                      ->setMethods( array( 'getQuery' ) )
 		                      ->getMock();
 		
-		$mockInterface
+		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'WikiaSearchSpellcheckActivated' )
@@ -802,7 +802,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( $dismaxMethods )
 		                   ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'isOnDbCluster' ) )
 		                      ->getMock();
@@ -811,7 +811,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                   ->setMethods( array( 'getMinimumMatch', 'getSkipBoostFunctions', 'getQuery' ) )
 		                   ->getMock();
 		
-		$deps = array( 'config' => $mockConfig, 'client' => $mockClient, 'interface' => $mockInterface  );
+		$deps = array( 'config' => $mockConfig, 'client' => $mockClient, 'service' => $mockService  );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( $deps );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
 		                   ->setConstructorArgs( array( $dc ) )
@@ -855,7 +855,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( 'edismax' )
 		    ->will   ( $this->returnValue( $mockDismax ) )
 		;
-		$mockInterface
+		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'isOnDbCluster' )
 		    ->will   ( $this->returnValue( true  ) )

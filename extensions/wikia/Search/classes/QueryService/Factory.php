@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\QueryService;
-use \Wikia\Search\Config, \Wikia\Search\MediaWikiInterface, \Solarium_Client;
+use \Wikia\Search\Config, \Wikia\Search\MediaWikiService, \Solarium_Client;
 /**
  * This class is responsible for instantiating the appropriate QueryService based on values in the config.
  * It is also responsible for generating the appropriate instance of Solarium_Client, based on global settings.
@@ -51,20 +51,20 @@ class Factory
 	 * @param DependencyContainer $container
 	 */
 	protected function validateClient( DependencyContainer $container ) {
-		$interface = new MediaWikiInterface;
+		$service = new MediaWikiService;
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
-			$host = $interface->isOnDbCluster() ? $interface->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';  
+			$host = $service->isOnDbCluster() ? $service->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';  
 			$solariumConfig = array(
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
 							'host'    => $host,
-							'port'    => $interface->getGlobalWithDefault( 'SolrPort', 8180 ),
+							'port'    => $service->getGlobalWithDefault( 'SolrPort', 8180 ),
 							'path'    => '/solr/',
 							)
 					);
-			if ( $interface->isOnDbCluster() && $interface->getGlobal( 'WikiaSearchUseProxy' ) && $interface->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
-				$solariumConfig['adapteroptions']['proxy'] = $interface->getGlobal( 'SolrProxy' );
+			if ( $service->isOnDbCluster() && $service->getGlobal( 'WikiaSearchUseProxy' ) && $service->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
+				$solariumConfig['adapteroptions']['proxy'] = $service->getGlobal( 'SolrProxy' );
 				$solariumConfig['adapteroptions']['port'] = null;
 			}
 			$container->setClient( new Solarium_Client( $solariumConfig ) );

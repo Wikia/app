@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\IndexService;
-use Wikia\Search\MediaWikiInterface;
+use Wikia\Search\MediaWikiService;
 /**
  * This class allows us to define a standard API for indexing services
  * @author relwell
@@ -18,9 +18,9 @@ abstract class AbstractService
 	 * This allows us to abstract out logic core to MediaWiki. 
 	 * Eventually, we could have other 'drivers' for our logic interface here.
 	 * Sorry I didn't have a better name for this one -- maybe "driver"?
-	 * @var Wikia\Search\MediaWikiInterface
+	 * @var Wikia\Search\MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 	
 	/**
 	 * Stores page ids so that we don't need to pass it to execute method
@@ -48,7 +48,7 @@ abstract class AbstractService
 	 */
 	public function __construct( array $pageIds = array() ) {
 	    $this->pageIds = $pageIds;
-	    $this->interface = new MediaWikiInterface;
+	    $this->service = new MediaWikiService;
 	}
 	
 	/**
@@ -90,7 +90,7 @@ abstract class AbstractService
 		
 		foreach ( $this->pageIds as $pageId ) {
 			$this->currentPageId = $pageId;
-		    if (! $this->interface->pageIdExists( $pageId ) ) {
+		    if (! $this->service->pageIdExists( $pageId ) ) {
 				$documents[] = array( "delete" => array( "id" => $this->getCurrentDocumentId() ) );
 				continue;
 			}
@@ -117,7 +117,7 @@ abstract class AbstractService
 	 * @return string
 	 */
 	public function getCurrentDocumentId() {
-		return sprintf( '%s_%s', $this->interface->getWikiId(), $this->interface->getCanonicalPageIdFromPageId( $this->currentPageId ) );
+		return sprintf( '%s_%s', $this->service->getWikiId(), $this->service->getCanonicalPageIdFromPageId( $this->currentPageId ) );
 	}
 	
 	/**

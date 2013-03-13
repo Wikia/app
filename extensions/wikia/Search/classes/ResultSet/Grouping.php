@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\ResultSet\Grouping
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\MediaWikiInterface, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config;
+use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config;
 /**
  * This class handles sub-groupings of results for inter-wiki search.
  * @author relwell
@@ -32,7 +32,7 @@ class Grouping extends Base
 	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject = $container->getResult();
 		$this->searchConfig       = $container->getConfig();
-		$this->interface          = $container->getInterface();
+		$this->service          = $container->getService();
 		$this->parent             = $container->getParent();
 		$this->metaposition       = $container->getMetaposition();
 		$this->results            = new ArrayIterator( array() );
@@ -63,13 +63,13 @@ class Grouping extends Base
 		if (! empty( $doc ) ) {
 			$wikiId = $doc['wid'];
 			$this->addHeaders( $doc->getFields() )
-			     ->addHeaders( $this->interface->getVisualizationInfoForWikiId( $wikiId ) )
-			     ->addHeaders( $this->interface->getStatsInfoForWikiId( $wikiId ) )
-			     ->setHeader ( 'wikititle', $this->interface->getGlobalForWiki( 'wgSitename', $wikiId ) )
-			     ->setHeader ( 'hub', $this->interface->getHubForWikiId( $wikiId ) );
+			     ->addHeaders( $this->service->getVisualizationInfoForWikiId( $wikiId ) )
+			     ->addHeaders( $this->service->getStatsInfoForWikiId( $wikiId ) )
+			     ->setHeader ( 'wikititle', $this->service->getGlobalForWiki( 'wgSitename', $wikiId ) )
+			     ->setHeader ( 'hub', $this->service->getHubForWikiId( $wikiId ) );
 			
 			if (! $this->getHeader( 'description' ) ) {
-				$this->setHeader( 'description', $this->interface->getDescriptionTextForWikiId( $wikiId ) );
+				$this->setHeader( 'description', $this->service->getDescriptionTextForWikiId( $wikiId ) );
 			}
 		}
 		return $this;

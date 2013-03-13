@@ -29,11 +29,11 @@ class OnWiki extends AbstractSelect
 	);
 	
 	/**
-	 * Passes data from the config to the MW interface to instantiate a match and store it in the config.
+	 * Passes data from the config to the MW service to instantiate a match and store it in the config.
 	 * @return Wikia\Search\Match\Article|null
 	 */
 	public function extractMatch() {
-		$match = $this->interface->getArticleMatchForTermAndNamespaces( $this->config->getOriginalQuery(), $this->config->getNamespaces() );
+		$match = $this->service->getArticleMatchForTermAndNamespaces( $this->config->getOriginalQuery(), $this->config->getNamespaces() );
 		if (! empty( $match ) ) {
 			$this->config->setArticleMatch( $match );
 		}
@@ -73,7 +73,7 @@ class OnWiki extends AbstractSelect
 	 * @return OnWiki
 	 */
 	protected function registerSpellcheck( Select $query ) {
-		if ( $this->interface->getGlobal( 'WikiaSearchSpellcheckActivated' ) ) {
+		if ( $this->service->getGlobal( 'WikiaSearchSpellcheckActivated' ) ) {
 			$query->getSpellcheck()
 			      ->setQuery( $this->config->getQueryNoQuotes( true ) )
 			      ->setCollate( true )

@@ -3,7 +3,7 @@
  * Class definition for \Wikia\Search\ResultSet\Base
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\Result, \ArrayIterator, \Wikia\Search\MediaWikiInterface, \Wikia\Search\Utilities;
+use \Wikia\Search\Result, \ArrayIterator, \Wikia\Search\MediaWikiService, \Wikia\Search\Utilities;
 use \WikiaException, \Solarium_Result_Select, \WikiaSearchConfig;
 /**
  * This is the default class definition -- represents a flat grouping of results, e.g. on-wiki search.
@@ -20,10 +20,10 @@ class Base extends EmptySet
 	protected $searchResultObject;
 	
 	/**
-	 * MW interface.
-	 * @var MediaWikiInterface
+	 * MW service.
+	 * @var MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 
 	/**
 	 * Dependencies are injected here by factory for result, config, and interface, via container.
@@ -32,7 +32,7 @@ class Base extends EmptySet
 	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject  = $container->getResult();
 		$this->searchConfig        = $container->getConfig();
-		$this->interface           = $container->getInterface();
+		$this->service           = $container->getService();
 		$this->results             = new ArrayIterator( array() );
 		$this->resultsFound        = $this->searchResultObject->getNumFound();
 		$this->prependArticleMatchIfExists()
@@ -67,7 +67,7 @@ class Base extends EmptySet
 			$result->setText( $field[0] );
 		}
 		if ( $result['created'] ) {
-			$result->setVar( 'fmt_timestamp', $this->interface->getMediaWikiFormattedTimestamp( $result['created'] ) );
+			$result->setVar( 'fmt_timestamp', $this->service->getMediaWikiFormattedTimestamp( $result['created'] ) );
 			$result->setVar( 'created_30daysago', ( time() - strtotime( $result['created'] ) ) > 2592000 );
 		}
 

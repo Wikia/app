@@ -23,7 +23,7 @@ class Video extends OnWiki
 	 * @see \Wikia\Search\QueryService\Select\OnWiki::configureQueryFields()
 	 */
 	protected function configureQueryFields() {
-		if ( $this->interface->getLanguageCode() !== 'en' ) {
+		if ( $this->service->getLanguageCode() !== 'en' ) {
 			$this->config->addQueryFields( array(
 					Utilities::field( 'title', 'en' )           => 5, 
 					Utilities::field( 'html', 'en' )            => 1.5, 
