@@ -2106,7 +2106,7 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetMainPageTitleForWikiId() {
 		$service = $this->service->setMethods( [ 'getDbNameForWikiId', 'getGlobalForWiki' ] )->getMock();
-		$service = $this->getMock( 'ApiService', [ 'foreignCall' ] );
+		$apiservice = $this->getMock( 'ApiService', [ 'foreignCall' ] );
 		$title = $this->getMockBuilder( 'GlobalTitle' )
 		              ->disableOriginalConstructor()
 		              ->setMethods( [ 'isRedirect', 'getRedirectTarget' ] )
@@ -2126,7 +2126,7 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$fcArray = [ 'action' => 'query', 'meta' => 'allmessages', 'ammessages' => 'mainpage', 'amlang' => 'en' ];
 		$responseArray = [ 'query' => ['allmessages' => [ ['*' => 'main' ] ] ] ];
-		$service
+		$apiservice
 		    ->staticExpects( $this->once() )
 		    ->method ( 'foreignCall' )
 		    ->with   ( 'foo', $fcArray )
@@ -2142,7 +2142,7 @@ class MediaWikiServiceTest extends BaseTest
 		    ->method ( 'getRedirectTarget' )
 		    ->will   ( $this->returnValue( $title ) )
 		;
-		$this->proxyClass( 'ApiService', $service );
+		$this->proxyClass( 'ApiService', $apiservice );
 		$this->proxyClass( 'GlobalTitle', $title, 'newFromText' );
 		$this->mockApp();
 		$reflGet = new ReflectionMethod( 'Wikia\Search\MediaWikiService', 'getMainPageTitleForWikiId' );
@@ -2159,7 +2159,7 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetDescriptionTextForWikiId() {
 		$service = $this->service->setMethods( [ 'getDbNameForWikiId', 'getGlobalForWiki' ] )->getMock();
-		$service = $this->getMock( 'ApiService', [ 'foreignCall' ] );
+		$apiservice = $this->getMock( 'ApiService', [ 'foreignCall' ] );
 		
 		
 		$service
@@ -2182,13 +2182,13 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$fcArray = [ 'action' => 'query', 'meta' => 'allmessages', 'ammessages' => 'description', 'amlang' => 'en' ];
 		$responseArray = [ 'query' => ['allmessages' => [ ['*' => '{{SITENAME}} is a wiki' ] ] ] ];
-		$service
+		$apiservice
 		    ->staticExpects( $this->once() )
 		    ->method ( 'foreignCall' )
 		    ->with   ( 'foo', $fcArray )
 		    ->will   ( $this->returnValue( $responseArray ) )
 		;
-		$this->proxyClass( 'ApiService', $service );
+		$this->proxyClass( 'ApiService', $apiservice );
 		$this->mockApp();
 		$this->assertEquals(
 				'foo wiki is a wiki',
@@ -2221,7 +2221,7 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetMainPageTextForWikiId() {
 		$service = $this->service->setMethods( [ 'getMainPageTitleForWikiId', 'getDbNameForWikiId' ] )->getMock();
-		$service = $this->getMock( 'ApiService', [ 'foreignCall' ] );
+		$apiservice = $this->getMock( 'ApiService', [ 'foreignCall' ] );
 		$title = $this->getMockBuilder( 'GlobalTitle' )
 		              ->disableOriginalConstructor()
 		              ->setMethods( [ 'getDbKey' ] )
@@ -2246,13 +2246,13 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 		$responseArray = [ 'items' => [ [ 'abstract' => 'and if you dont know now you know' ] ] ];
-		$service
+		$apiservice
 		    ->staticExpects( $this->once() )
 		    ->method ( 'foreignCall' )
 		    ->with   ( 'foo', $params, \ApiService::WIKIA )
 		    ->will   ( $this->returnValue( $responseArray ) )
 		;
-		$this->proxyClass( 'ApiService', $service );
+		$this->proxyClass( 'ApiService', $apiservice );
 		$this->mockApp();
 		$this->assertEquals(
 				'and if you dont know now you know',

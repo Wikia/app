@@ -18,18 +18,18 @@ class IndexServicesTest extends BaseTest
 		$this->pageId = 123;
 	}
 	
-	protected function injectService( $service, $service ) {
+	protected function injectService( $service, $mwservice ) {
 		$refl = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$refl->setAccessible( true );
-		$refl->setValue( $service, $service );
+		$refl->setValue( $service, $mwservice );
 	}
 	
 	/**
 	 * @covers Wikia\Search\IndexService\BacklinkCount::execute
 	 */
 	public function testBacklinkCountExecute() {
-		$service = $this->service->setMethods( array( 'getBacklinksCountFromPageId' ) )->getMock();
-		$service
+		$mwservice = $this->service->setMethods( array( 'getBacklinksCountFromPageId' ) )->getMock();
+		$mwservice
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getBacklinksCountFromPageId' )
 		    ->with   ( $this->pageId )
@@ -42,7 +42,7 @@ class IndexServicesTest extends BaseTest
 		
 		$service->setPageId( $this->pageId );
 		
-		$this->injectService( $service, $service );
+		$this->injectService( $service, $mwservice );
 		
 		$this->assertEquals(
 				array( 'backlinks' => 20 ),
@@ -58,14 +58,14 @@ class IndexServicesTest extends BaseTest
 		                ->disableOriginalConstructor()
 		                ->setMethods( null )
 		                ->getMock();
-		$service = $this->service->setMethods( array( 'getGlobal' ) )->getMock();
-		$service
+		$mwservice = $this->service->setMethods( array( 'getGlobal' ) )->getMock();
+		$mwservice
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'ExternalSharedDB' )
 		    ->will   ( $this->returnValue( false ) )
 		;
-		$this->injectService( $service, $service );
+		$this->injectService( $service, $mwservice );
 		$this->assertEmpty(
 				$service->execute()
 		);
@@ -79,14 +79,14 @@ class IndexServicesTest extends BaseTest
 		                ->disableOriginalConstructor()
 		                ->setMethods( null )
 		                ->getMock();
-		$service = $this->service->setMethods( array( 'getGlobal' ) )->getMock();
-		$service
+		$mwservice = $this->service->setMethods( array( 'getGlobal' ) )->getMock();
+		$mwservice
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'ExternalSharedDB' )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$this->injectService( $service, $service );
+		$this->injectService( $service, $mwservice );
 		try {
 			$service->execute();
 		} catch ( \Exception $e ) { }
@@ -105,7 +105,7 @@ class IndexServicesTest extends BaseTest
 		                ->disableOriginalConstructor()
 		                ->setMethods( null )
 		                ->getMock();
-		$service = $this->service->setMethods( array( 'getGlobal', 'getApiStatsForPageId' ) )->getMock();
+		$mwservice = $this->service->setMethods( array( 'getGlobal', 'getApiStatsForPageId' ) )->getMock();
 		
 		$pageData = array( 'views' => 123, 'revcount' => 234, 'created' => 'yesterday', 'touched' => 'today' );
 		$apiResult = array(
@@ -113,20 +113,20 @@ class IndexServicesTest extends BaseTest
 						          'category' => array( 'catname' => 'stuff' ) ) 
 				);
 		
-		$service
+		$mwservice
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'ExternalSharedDB' )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$service
+		$mwservice
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getApiStatsForPageId' )
 		    ->with   ( $this->pageId )
 		    ->will   ( $this->returnValue( $apiResult ) )
 		;
 		$service->setPageId( $this->pageId );
-		$this->injectService( $service, $service );
+		$this->injectService( $service, $mwservice );
 		$expected = array_merge( $pageData, array( 'hub' => 'stuff' ) );
 		$this->assertEquals(
 				$expected,
@@ -138,14 +138,14 @@ class IndexServicesTest extends BaseTest
      * @covers \Wikia\Search\IndexService\Redirects::execute
      */
     public function testRedirectsService() {
-    	$service = $this->service->setMethods( array( 'getGlobal', 'getRedirectTitlesForPageId' ) )->getMock();
-    	$service
+    	$mwservice = $this->service->setMethods( array( 'getGlobal', 'getRedirectTitlesForPageId' ) )->getMock();
+    	$mwservice
     	    ->expects( $this->at( 0 ) )
     	    ->method ( 'getGlobal' )
     	    ->with   ( 'AppStripsHtml' )
     	    ->will   ( $this->returnValue( true ) )
     	;
-    	$service
+    	$mwservice
     	    ->expects( $this->at( 1 ) )
     	    ->method ( 'getRedirectTitlesForPageId' )
     	    ->with   ( $this->pageId )
@@ -155,7 +155,7 @@ class IndexServicesTest extends BaseTest
     	                ->disableOriginalConstructor()
     	                ->setMethods( null )
     	                ->getMock();
-    	$this->injectService( $service, $service );
+    	$this->injectService( $service, $mwservice );
     	$service->setPageId( $this->pageId );
     	$this->assertEquals(
     			array( \Wikia\Search\Utilities::field( 'redirect_titles' ) => array( 'foo', 'bar' ) ),
