@@ -20,7 +20,7 @@ abstract class AbstractService
 	 * Sorry I didn't have a better name for this one -- maybe "driver"?
 	 * @var Wikia\Search\MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 	
 	/**
 	 * Stores page ids so that we don't need to pass it to execute method

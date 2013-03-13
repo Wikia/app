@@ -30,7 +30,7 @@ class DependencyContainer
 	 * MediaWikiService
 	 * @var MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 	
 	/**
 	 * Metaposition is for Groupings
@@ -51,7 +51,7 @@ class DependencyContainer
 	protected $wikiMatch;
 
 	/**
-	 * Constructor class. Basically allows us to pre-populate the $interface property and configure by array rather than separate invocations.
+	 * Constructor class. Basically allows us to pre-populate the $service property and configure by array rather than separate invocations.
 	 * @param array $dependencies optional method of prepopulating the dependencies. Can also call mutators.
 	 */
 	public function __construct( array $dependencies = array() ) {
@@ -121,11 +121,11 @@ class DependencyContainer
 
 	/**
 	 * Mutator for interface.
-	 * @param MediaWikiService $interface
+	 * @param MediaWikiService $service
 	 * @return DependencyContainer
 	 */
-	public function setInterface( MediaWikiService $interface ) {
-		$this->interface = $interface;
+	public function setInterface( MediaWikiService $service ) {
+		$this->interface = $service;
 		return $this;
 	}
 

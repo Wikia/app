@@ -16,7 +16,7 @@ class WikiaSearchIndexerController extends WikiaController
 	 * Allows us to avoid direct calls to MediaWiki components
 	 * @var Wikia\Search\MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 	
 	/**
 	 * Constructor method.

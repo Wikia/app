@@ -16,7 +16,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 	 * @param array $configMethods
 	 * @param array $resultMethods
 	 */
-	protected function prepareMocks( $resultSetMethods = array(), $configMethods = array(), $resultMethods = array(), $interfaceMethods = array() ) { 
+	protected function prepareMocks( $resultSetMethods = array(), $configMethods = array(), $resultMethods = array(), $serviceMethods = array() ) { 
 	
 		$this->searchResult		=	$this->getMockBuilder( 'Solarium_Result_Select' )
 									->disableOriginalConstructor()
@@ -35,7 +35,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		
 		$this->interface = $this->getMockbuilder( 'Wikia\Search\MediaWikiService' )
 		                        ->disableOriginalConstructor()
-		                        ->setMethods( $interfaceMethods )
+		                        ->setMethods( $serviceMethods )
 		                        ->getMock();
 		
 		$reflResult = new ReflectionProperty( '\Wikia\Search\ResultSet\Base', 'searchResultObject' );

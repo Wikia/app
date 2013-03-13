@@ -54,8 +54,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		                   ->setMethods( array( 'getNumFound', 'getDocuments' ) )
 		                   ->getMock();
 		$config = new Wikia\Search\Config;
-		$interface = new Wikia\Search\MediaWikiService;
-		$dc = new Wikia\Search\ResultSet\DependencyContainer( array( 'config' => $config, 'interface' => $interface, 'result' => $mockResult ) );
+		$service = new Wikia\Search\MediaWikiService;
+		$dc = new Wikia\Search\ResultSet\DependencyContainer( array( 'config' => $config, 'interface' => $service, 'result' => $mockResult ) );
 		$docArray = array( 'this value does not actually matter' );
 		$mockResult
 		    ->expects( $this->once() )

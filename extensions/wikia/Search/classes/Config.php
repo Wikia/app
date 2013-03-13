@@ -157,7 +157,7 @@ class Config implements ArrayAccess
 	 * Used to shift all MediaWiki logic elsewhere.
 	 * @var MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 	
 	/**
 	 * Constructor method

@@ -20,7 +20,7 @@ class DependencyContainer
 	 * Used to handle all non-primitive MediaWiki logic.
 	 * @var \Wikia\Search\MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 	
 	/**
 	 * Used to handle query abstraction as well as instantiation flags in the factory.
@@ -52,7 +52,7 @@ class DependencyContainer
 	
 	/**
 	 * Accessor for interface.
-	 * @return the $interface
+	 * @return the $service
 	 */
 	public function getInterface() {
 		return $this->interface;
@@ -60,11 +60,11 @@ class DependencyContainer
 
 	/**
 	 * Mutator for interface.
-	 * @param \Wikia\Search\MediaWikiService $interface
+	 * @param \Wikia\Search\MediaWikiService $service
 	 * @return \Wikia\Search\QueryService\DependencyContainer
 	 */
-	public function setInterface( MediaWikiService $interface) {
-		$this->interface = $interface;
+	public function setInterface( MediaWikiService $service) {
+		$this->interface = $service;
 		return $this;
 	}
 

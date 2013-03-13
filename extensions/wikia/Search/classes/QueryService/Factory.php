@@ -51,20 +51,20 @@ class Factory
 	 * @param DependencyContainer $container
 	 */
 	protected function validateClient( DependencyContainer $container ) {
-		$interface = new MediaWikiService;
+		$service = new MediaWikiService;
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
-			$host = $interface->isOnDbCluster() ? $interface->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';  
+			$host = $service->isOnDbCluster() ? $service->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';  
 			$solariumConfig = array(
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
 							'host'    => $host,
-							'port'    => $interface->getGlobalWithDefault( 'SolrPort', 8180 ),
+							'port'    => $service->getGlobalWithDefault( 'SolrPort', 8180 ),
 							'path'    => '/solr/',
 							)
 					);
-			if ( $interface->isOnDbCluster() && $interface->getGlobal( 'WikiaSearchUseProxy' ) && $interface->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
-				$solariumConfig['adapteroptions']['proxy'] = $interface->getGlobal( 'SolrProxy' );
+			if ( $service->isOnDbCluster() && $service->getGlobal( 'WikiaSearchUseProxy' ) && $service->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
+				$solariumConfig['adapteroptions']['proxy'] = $service->getGlobal( 'SolrProxy' );
 				$solariumConfig['adapteroptions']['port'] = null;
 			}
 			$container->setClient( new Solarium_Client( $solariumConfig ) );

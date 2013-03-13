@@ -14,9 +14,9 @@ class MatchTest extends BaseTest {
 	 * @covers Wikia\Search\Match\AbstractMatch::getId
 	 */
 	public function testAbstractConstruct() {
-		$interface = new MediaWikiService;
+		$service = new MediaWikiService;
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\AbstractMatch' )
-		                  ->setConstructorArgs( array( 123, $interface ) )
+		                  ->setConstructorArgs( array( 123, $service ) )
 		                  ->getMockForAbstractClass();
 		
 		$this->assertAttributeEquals(
@@ -25,7 +25,7 @@ class MatchTest extends BaseTest {
 				$mockMatch
 		);
 		$this->assertAttributeEquals(
-				$interface, 
+				$service, 
 				'interface', 
 				$mockMatch
 		);
@@ -96,7 +96,7 @@ class MatchTest extends BaseTest {
 	 * @covers Wikia\Search\Match\Article::createResult
 	 */
 	public function testCreateResultArticle() {
-		$interfaceMethods = array( 
+		$serviceMethods = array( 
 				'getWikiId', 'getTitleStringFromPageId', 'getUrlFromPageid', 'getNamespaceFromPageId',
 				'getCanonicalPageIdFromPageId', 'getFirstRevisionTimestampForPageId','getLastRevisionTimestampForPageId',
 				'getSnippetForPageId', 'getNonCanonicalTitleStringFromPageId', 'getNonCanonicalUrlFromPageId'
@@ -104,7 +104,7 @@ class MatchTest extends BaseTest {
 		
 		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
-		                      ->setMethods( $interfaceMethods )
+		                      ->setMethods( $serviceMethods )
 		                      ->getMock();
 		
 		$pageId = 123;
@@ -223,13 +223,13 @@ class MatchTest extends BaseTest {
 	 * @covers Wikia\Search\Match\Wiki::createResult
 	 */
 	public function testWikiMatchCreateResult() {
-		$interfaceMethods = array(
+		$serviceMethods = array(
 				'getGlobalForWiki', 'getMainPageUrlForWikiId', 'getDescriptionTextForWikiId',
 				'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getHubForWikiId' 
 				);
 		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
-		                      ->setMethods( $interfaceMethods )
+		                      ->setMethods( $serviceMethods )
 		                      ->getMock();
 		
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )

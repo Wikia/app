@@ -21,7 +21,7 @@ class Indexer
 	 * Interface to MediaWiki logic -- need to use this more
 	 * @var \Wikia\Search\MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 	
 	/**
 	 * Used to store pages when we make multiple invocations for the same page ID

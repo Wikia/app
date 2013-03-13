@@ -23,7 +23,7 @@ class Base extends EmptySet
 	 * MW interface.
 	 * @var MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 
 	/**
 	 * Dependencies are injected here by factory for result, config, and interface, via container.

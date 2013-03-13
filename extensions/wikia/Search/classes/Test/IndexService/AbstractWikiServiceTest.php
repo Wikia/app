@@ -63,13 +63,13 @@ class AbstractWikiServiceTest extends BaseTest
 	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getCurrentDocumentId 
 	 */
 	public function testGetCurrentDocumentId() {
-		$interface = new MediaWikiService;
+		$service = new MediaWikiService;
 		$this->assertEquals(
-				sprintf( '%s_%s', $interface->getWikiId(), \Wikia\Search\IndexService\AbstractWikiService::PAGEID_PLACEHOLDER ),
+				sprintf( '%s_%s', $service->getWikiId(), \Wikia\Search\IndexService\AbstractWikiService::PAGEID_PLACEHOLDER ),
 				$this->service->getMockForAbstractClass()->getCurrentDocumentId()
 		);
 		$this->assertEquals(
-				sprintf( '%s_%s', $interface->getWikiId(), 123 ),
+				sprintf( '%s_%s', $service->getWikiId(), 123 ),
 				$this->service->getMockForAbstractClass()->setPageId( 123 )->getCurrentDocumentId()
 		);
 	}

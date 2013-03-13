@@ -16,7 +16,7 @@ class Result extends ReadWrite {
 	 * Encapsulates MediaWiki logic.
 	 * @var MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 
 	/**
 	 * Constructs the result and stores MW interface

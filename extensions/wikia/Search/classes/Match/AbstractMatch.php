@@ -26,7 +26,7 @@ abstract class AbstractMatch
 	 * Encapsulates appropriate logic.
 	 * @var MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 	
 	/**
 	 * Memoization cache for getResult method
@@ -37,11 +37,11 @@ abstract class AbstractMatch
 	/**
 	 * Dependency-injects an ID and interface.
 	 * @param int $id
-	 * @param MediaWikiService $interface
+	 * @param MediaWikiService $service
 	 */
-	public function __construct( $id, MediaWikiService $interface ) {
+	public function __construct( $id, MediaWikiService $service ) {
 		$this->id = $id;
-		$this->interface = $interface;
+		$this->interface = $service;
 	}
 	
 	/**

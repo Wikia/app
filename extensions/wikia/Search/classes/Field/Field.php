@@ -31,7 +31,7 @@ class Field
 	 * Responsible for encapsulating MediaWiki logic.
 	 * @var Wikia\Search\MediaWikiService
 	 */
-	protected $interface;
+	protected $service;
 	
 	/**
 	 * Stores the actual name of the field as constructed
