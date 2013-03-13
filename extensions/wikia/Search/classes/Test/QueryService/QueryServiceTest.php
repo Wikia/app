@@ -11,8 +11,8 @@ class QueryServiceTest extends Search\Test\BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\QueryService\DependencyContainer::__construct
-	 * @covers Wikia\Search\QueryService\DependencyContainer::getInterface
-	 * @covers Wikia\Search\QueryService\DependencyContainer::setInterface
+	 * @covers Wikia\Search\QueryService\DependencyContainer::getService
+	 * @covers Wikia\Search\QueryService\DependencyContainer::setService
 	 * @covers Wikia\Search\QueryService\DependencyContainer::getConfig
 	 * @covers Wikia\Search\QueryService\DependencyContainer::setConfig
 	 * @covers Wikia\Search\QueryService\DependencyContainer::getClient
@@ -29,7 +29,7 @@ class QueryServiceTest extends Search\Test\BaseTest {
 		$service = new Search\MediaWikiService;
 		$factory = new Search\ResultSet\Factory;
 		$dc = new Search\QueryService\DependencyContainer( array() );
-		$dc->setInterface( $service )
+		$dc->setService( $service )
 		   ->setResultSetFactory( $factory )
 		   ->setConfig( $config )
 		   ->setClient( $mockClient );
@@ -43,7 +43,7 @@ class QueryServiceTest extends Search\Test\BaseTest {
 		);
 		$this->assertEquals(
 				$service,
-				$dc->getInterface()
+				$dc->getService()
 		);
 		$this->assertEquals(
 				$factory,

@@ -54,7 +54,7 @@ class DependencyContainer
 	 * Accessor for interface.
 	 * @return the $service
 	 */
-	public function getInterface() {
+	public function getService() {
 		return $this->service;
 	}
 
@@ -63,7 +63,7 @@ class DependencyContainer
 	 * @param \Wikia\Search\MediaWikiService $service
 	 * @return \Wikia\Search\QueryService\DependencyContainer
 	 */
-	public function setInterface( MediaWikiService $service) {
+	public function setService( MediaWikiService $service) {
 		$this->service = $service;
 		return $this;
 	}

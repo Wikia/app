@@ -27,7 +27,7 @@ class GroupingSet extends Grouping
 	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject = $container->getResult();
 		$this->searchConfig       = $container->getConfig();
-		$this->service          = $container->getInterface();
+		$this->service          = $container->getService();
 		$this->results            = new ArrayIterator( array() );
 		$this->resultsFound       = $this->getHostGrouping()->getMatches();
 		$this->factory            = new Factory;

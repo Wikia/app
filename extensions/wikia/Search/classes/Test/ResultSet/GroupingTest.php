@@ -154,7 +154,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 	}
 	
 	public function testConfigure() {
-		$dcMethods = array( 'getResult', 'getConfig', 'getInterface', 'getParent', 'getMetaposition' );
+		$dcMethods = array( 'getResult', 'getConfig', 'getService', 'getParent', 'getMetaposition' );
 		$dc = $this->getMockBuilder( 'Wikia\Search\ResultSet\DependencyContainer' )
 		           ->disableOriginalConstructor()
 		           ->setMethods( $dcMethods )
@@ -189,7 +189,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 	 * @covers Wikia\Search\ResultSet\MatchGrouping::configure
 	 */
 	public function testMatchGroupingConfigure() {
-		$dcMethods = array( 'getResult', 'getConfig', 'getInterface', 'getParent', 'getMetaposition' );
+		$dcMethods = array( 'getResult', 'getConfig', 'getService', 'getParent', 'getMetaposition' );
 		$dc = $this->getMockBuilder( 'Wikia\Search\ResultSet\DependencyContainer' )
 		           ->disableOriginalConstructor()
 		           ->setMethods( array_merge( $dcMethods, ['getWikiMatch'] ) )

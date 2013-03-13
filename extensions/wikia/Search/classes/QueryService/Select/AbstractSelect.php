@@ -93,7 +93,7 @@ abstract class AbstractSelect
 		$this->client = $container->getClient();
 		$this->config = $container->getConfig();
 		$this->resultSetFactory = $container->getResultSetFactory();
-		$this->service = $container->getInterface();
+		$this->service = $container->getService();
 	}
 	
 	/**

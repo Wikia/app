@@ -21,7 +21,7 @@ class MatchGrouping extends Grouping {
 	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject = $container->getResult();
 		$this->searchConfig       = $container->getConfig();
-		$this->service          = $container->getInterface();
+		$this->service          = $container->getService();
 		$this->parent             = $container->getParent();
 		$this->metaposition       = $container->getMetaposition();
 		$result                   = $container->getWikiMatch()->getResult();

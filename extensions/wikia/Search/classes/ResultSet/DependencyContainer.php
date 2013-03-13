@@ -55,7 +55,7 @@ class DependencyContainer
 	 * @param array $dependencies optional method of prepopulating the dependencies. Can also call mutators.
 	 */
 	public function __construct( array $dependencies = array() ) {
-		$this->setInterface( new MediaWikiService )
+		$this->setService( new MediaWikiService )
 		     ->configureByArray( $dependencies );
 	}
 	
@@ -79,7 +79,7 @@ class DependencyContainer
 	 * Accessor method for interface.
 	 * @return \Wikia\Search\MediaWikiService
 	 */
-	public function getInterface() {
+	public function getService() {
 		return $this->service;
 	}
 
@@ -124,7 +124,7 @@ class DependencyContainer
 	 * @param MediaWikiService $service
 	 * @return DependencyContainer
 	 */
-	public function setInterface( MediaWikiService $service ) {
+	public function setService( MediaWikiService $service ) {
 		$this->service = $service;
 		return $this;
 	}

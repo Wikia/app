@@ -16,7 +16,7 @@ class ConfigTest extends BaseTest {
 		parent::setUp();
 	}
 	
-	protected function setInterface( $config, $service ) {
+	protected function setService( $config, $service ) {
 		$refl = new ReflectionProperty( '\\Wikia\\Search\\Config', 'interface' );
 		$refl->setAccessible( true );
 		$refl->setValue( $config, $service );
@@ -576,7 +576,7 @@ class ConfigTest extends BaseTest {
 		    ->with   (56000)
 		    ->will   ( $this->returnValue( '56,000' ) )
 	    ;
-		$this->setInterface( $config, $service );
+		$this->setService( $config, $service );
 		$this->assertEquals(
 				'56,000',
 				$config->getTruncatedResultsNum( true )
@@ -1088,7 +1088,7 @@ class ConfigTest extends BaseTest {
 	public function testSetQuery() {
 		$service = $this->service->setMethods( array( 'getNamespaceIdForString' ) )->getMock();
 		$config = $this->config->setMethods( array( 'getNamespaces' ) )->getMock();
-		$this->setInterface( $config, $service );
+		$this->setService( $config, $service );
 		
 		$query = 'Category:Foo';
 		
@@ -1126,7 +1126,7 @@ class ConfigTest extends BaseTest {
 	public function testGetNamespaces() {
 		$config = $this->config->setMethods( null )->getMock();
 		$service = $this->config->setMethods( array( 'getDefaultNamespacesFromSearchEngine' ) )->getMock();
-		$this->setInterface( $config, $service );
+		$this->setService( $config, $service );
 		$config->setQueryNamespace( 123 );
 		$service
 		    ->expects( $this->once() )

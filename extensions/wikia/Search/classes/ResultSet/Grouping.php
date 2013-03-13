@@ -32,7 +32,7 @@ class Grouping extends Base
 	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject = $container->getResult();
 		$this->searchConfig       = $container->getConfig();
-		$this->service          = $container->getInterface();
+		$this->service          = $container->getService();
 		$this->parent             = $container->getParent();
 		$this->metaposition       = $container->getMetaposition();
 		$this->results            = new ArrayIterator( array() );
