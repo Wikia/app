@@ -10,7 +10,7 @@ class AbTesting extends WikiaObject {
 
 	const VARNISH_CACHE_TIME = 900; // 15 minutes - depends on Resource Loader settings for non-versioned requests
 	const CACHE_TTL = 300; // 5 minutes (quite short to minimize impact of caching issues)
-	const VERSION = 3;
+	const VERSION = 4;
 
 	const FLAG_GA_TRACKING = 1;
 	const FLAG_DW_TRACKING = 2;
@@ -112,35 +112,44 @@ class AbTesting extends WikiaObject {
 		return sprintf("Wikia.AbTestConfig = %s;\n",json_encode($expConfig));
 	}
 
+	/* gets config from Cache if available
+	   otherwise generates it using helper function
+	*/
 	protected function getConfig() {
-		$dataClass = new AbTestingData();
 		$memcKey = $this->getMemcKey();
 		$data = $this->wg->memc->get($memcKey);
 		if ( empty( $data ) ) {
-			// find last modification time
-			$lastModified = $dataClass->getLastEffectiveChangeTime(self::VARNISH_CACHE_TIME);
-			$lastModified = $lastModified
-				? $this->getTimestampForUTCDate($lastModified) : null;
-
-			// find time of next config change
-			$nextModification = $dataClass->getNextEffectiveChangeTime(self::VARNISH_CACHE_TIME);
-			$nextModification = $nextModification
-				? $this->getTimestampForUTCDate($nextModification) : null;
-
-			// calculate proper TTL
-			$ttl = self::CACHE_TTL;
-			if ( $nextModification ) {
-				$ttl = max( 1, min( $ttl, $nextModification - time() + 1 ) );
-			}
-
-			$data = array(
-				'modifiedTime' => $lastModified,
-				'script' => $this->generateConfigScript($dataClass->getCurrent()),
-			);
-			$this->wg->memc->set($memcKey,$data,$ttl);
+			$data = $this->generateConfigObj();
 		}
 		return $data;
 	}
+
+	protected function generateConfigObj() {
+		$dataClass = new AbTestingData();
+		$memcKey = $this->getMemcKey();
+		// find last modification time
+		$lastModified = $dataClass->getLastEffectiveChangeTime(self::VARNISH_CACHE_TIME);
+		$lastModified = $lastModified
+			? $this->getTimestampForUTCDate($lastModified) : null;
+
+		// find time of next config change
+		$nextModification = $dataClass->getNextEffectiveChangeTime(self::VARNISH_CACHE_TIME);
+		$nextModification = $nextModification
+			? $this->getTimestampForUTCDate($nextModification) : null;
+
+		// calculate proper TTL
+		$ttl = self::CACHE_TTL;
+		if ( $nextModification ) {
+			$ttl = max( 1, min( $ttl, $nextModification - time() + 1 ) );
+		}
+
+		$data = array(
+			'modifiedTime' => $lastModified,
+			'script' => $this->generateConfigScript($dataClass->getCurrent()),
+		);
+		$this->wg->memc->set($memcKey,$data,$ttl);
+		return $data;
+}
 
 	public function getConfigScript() {
 		$data = $this->getConfig();
@@ -153,7 +162,8 @@ class AbTesting extends WikiaObject {
 	}
 
 	public function invalidateCache() {
-		$this->wg->memc->delete($this->getMemcKey());
+		//$this->wg->memc->delete($this->getMemcKey());
+		$this->generateConfigObj();
 	}
 
 	/**

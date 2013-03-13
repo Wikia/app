@@ -38,7 +38,8 @@
 					});
 				},
 				id: 'EditPageEditTools',
-				width: 680
+				width: 680,
+				rawHTML: true
 			});
 		}
 	});

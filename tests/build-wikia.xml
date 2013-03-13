@@ -57,7 +57,7 @@
             <env key="SERVER_ID" value="165" />
             <arg line="run-test.js
             		../extensions/wikia
-            		../resources/wikia/modules
+            		../resources/wikia
 					--output=${basedir}/build
             	" />
         </exec>

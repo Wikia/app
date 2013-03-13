@@ -49,7 +49,7 @@ class FollowHelper {
 	 * @return bool
 	 */
 
-	function emailNotification($childTitle, $list, $namespace, $user, $action, $message) {
+	public static function emailNotification($childTitle, $list, $namespace, $user, $action, $message) {
 		global $wgTitle;
 
 		wfProfileIn( __METHOD__ );
