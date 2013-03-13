@@ -25,7 +25,7 @@
 				('wikititle'); ?></a>
             </h1>
 
-            <p class="hub subtle"><?= $resultSet->getHeader('hub'); ?></p>
+            <p class="hub subtle"><?= strtoupper( $resultSet->getHeader( 'hub' ) ); ?></p>
             <p><?= $resultSet->getHeader('description'); ?></p>
 
             <ul>
@@ -39,6 +39,6 @@
             </ul>
         </div>
     </li>
-<?php elseif ($nextResult = $resultSet->next()): ?>
-	<?= $app->getView( 'WikiaSearch', 'result', array( 'result' => $nextResult, 'gpos' => 0, 'pos' => $pos, 'query' => $query, 'rank' =>  $resultSet->getHeader('cityRank'), 'isInterWiki'=> true )); ?>
+<?php else: ?>
+	<?= $app->getView( 'WikiaSearch', 'CrossWiki_exactResult', array( 'resultSet' => $resultSet, 'gpos' => 0, 'pos' => $pos, 'query' => $query, 'rank' =>  $resultSet->getHeader('cityRank'), 'isInterWiki'=> true )); ?>
 <?php endif; ?>
