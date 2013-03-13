@@ -21,8 +21,6 @@ $dir = __DIR__ . '/';
 $app = F::app();
 
 $classes = array(
-	/* controllers */
-	'PhalanxController'        => $dir . 'PhalanxController.class.php',
 	/* models */
 	'Phalanx'                  => $dir . 'classes/Phalanx.class.php',
 	'PhalanxModel'             => $dir . 'models/PhalanxModel.php',
