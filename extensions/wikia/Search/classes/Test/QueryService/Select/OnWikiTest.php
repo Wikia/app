@@ -23,7 +23,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->setMethods( array( 'getOriginalQuery', 'getNamespaces', 'setArticleMatch', 'getMatch' ) )
 		                   ->getMock();
 		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'interface' => $mockService, 'config' => $mockConfig ) );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
@@ -194,7 +194,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                      ->getMock();
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryNoQuotes', 'getCityId'  ) );
 		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'interface' => $mockService, 'config' => $mockConfig ) );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )

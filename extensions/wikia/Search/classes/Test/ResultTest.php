@@ -28,7 +28,7 @@ class ResultTest extends BaseTest {
 		);
 		$this->assertAttributeInstanceOf(
 				'Wikia\Search\MediaWikiService', 
-				'interface',
+				'service',
 				$result
 		);
 	}
@@ -336,7 +336,7 @@ class ResultTest extends BaseTest {
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
 		
-		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
+		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
 		$reflInterface->setAccessible( true );
 		$reflInterface->setValue( $mockResult, $mockService );
 		
@@ -365,7 +365,7 @@ class ResultTest extends BaseTest {
 		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
 		                      ->getMock();
 		
-		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
+		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
 		$reflInterface->setAccessible( true );
 		$reflInterface->setValue( $mockResult, $mockService );
 		
@@ -395,7 +395,7 @@ class ResultTest extends BaseTest {
 		                      ->setMethods( array( 'getVideoViewsForPageId' ) )
 		                      ->getMock();
 		
-		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
+		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
 		$reflInterface->setAccessible( true );
 		$reflInterface->setValue( $mockResult, $mockService );
 		
@@ -427,7 +427,7 @@ class ResultTest extends BaseTest {
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
 		
-		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'interface' );
+		$reflInterface = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
 		$reflInterface->setAccessible( true );
 		$reflInterface->setValue( $mockResult, $mockService );
 		

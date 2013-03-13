@@ -46,7 +46,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		$reflConfig->setAccessible( true );
 		$reflConfig->setValue( $this->resultSet, $this->config );
 		
-		$reflConfig = new ReflectionProperty(  '\Wikia\Search\ResultSet\Base', 'interface' );
+		$reflConfig = new ReflectionProperty(  '\Wikia\Search\ResultSet\Base', 'service' );
 		$reflConfig->setAccessible( true );
 		$reflConfig->setValue( $this->resultSet, $this->service );
 	}

@@ -55,7 +55,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		                   ->getMock();
 		$config = new Wikia\Search\Config;
 		$service = new Wikia\Search\MediaWikiService;
-		$dc = new Wikia\Search\ResultSet\DependencyContainer( array( 'config' => $config, 'interface' => $service, 'result' => $mockResult ) );
+		$dc = new Wikia\Search\ResultSet\DependencyContainer( array( 'config' => $config, 'service' => $service, 'result' => $mockResult ) );
 		$docArray = array( 'this value does not actually matter' );
 		$mockResult
 		    ->expects( $this->once() )
@@ -230,7 +230,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( $mockId, $mockSearchResult )
 		;
 		
-		$intRefl = new ReflectionProperty( 'Wikia\Search\ResultSet\Base', 'interface' );
+		$intRefl = new ReflectionProperty( 'Wikia\Search\ResultSet\Base', 'service' );
 		$intRefl->setAccessible( true );
 		$intRefl->setValue( $this->resultSet, $mockService );
 		

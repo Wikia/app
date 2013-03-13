@@ -17,7 +17,7 @@ class ConfigTest extends BaseTest {
 	}
 	
 	protected function setService( $config, $service ) {
-		$refl = new ReflectionProperty( '\\Wikia\\Search\\Config', 'interface' );
+		$refl = new ReflectionProperty( '\\Wikia\\Search\\Config', 'service' );
 		$refl->setAccessible( true );
 		$refl->setValue( $config, $service );
 	}
@@ -1058,7 +1058,7 @@ class ConfigTest extends BaseTest {
 		$fieldsrefl->setAccessible( true );
 		$fieldsrefl->setValue( $config, array( 'title' => 5 ) );
 		
-		$servicerefl = new ReflectionProperty( '\Wikia\Search\Config', 'interface' );
+		$servicerefl = new ReflectionProperty( '\Wikia\Search\Config', 'service' );
 		$servicerefl->setAccessible(true );
 		$servicerefl->setValue( $config, $service );
 		

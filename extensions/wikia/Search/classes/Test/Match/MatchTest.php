@@ -26,7 +26,7 @@ class MatchTest extends BaseTest {
 		);
 		$this->assertAttributeEquals(
 				$service, 
-				'interface', 
+				'service', 
 				$mockMatch
 		);
 		$this->assertEquals(

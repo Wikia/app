@@ -20,7 +20,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'addQueryFields' ) );
 		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'interface' => $mockService ) );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Video' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )

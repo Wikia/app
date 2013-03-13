@@ -19,7 +19,7 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	protected function injectInterface( $service, $service ) {
-		$refl = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'interface' );
+		$refl = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$refl->setAccessible( true );
 		$refl->setValue( $service, $service );
 	}

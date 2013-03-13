@@ -19,7 +19,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		                      ->setMethods( array( 'getWikiMatchByHost' ) )
 		                      ->getMock();
 
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'interface' => $mockService ) );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
@@ -319,7 +319,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getGlobal', 'getLanguageCode' ) )
 		                      ->getMock();
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'interface' => $mockService ) );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )

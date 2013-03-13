@@ -39,7 +39,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		);
 		$this->assertAttributeInstanceOf(
 				'Wikia\Search\MediaWikiService',
-				'interface',
+				'service',
 				$mockSelect
 		);
 	}
@@ -623,7 +623,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                      ->getMock();
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'hasMatch', 'setQuery' ) );
 		
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'interface' => $mockService ) ); 
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) ); 
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( array( 'sendSearchRequestToClient' ) )
@@ -811,7 +811,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                   ->setMethods( array( 'getMinimumMatch', 'getSkipBoostFunctions', 'getQuery' ) )
 		                   ->getMock();
 		
-		$deps = array( 'config' => $mockConfig, 'client' => $mockClient, 'interface' => $mockService  );
+		$deps = array( 'config' => $mockConfig, 'client' => $mockClient, 'service' => $mockService  );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( $deps );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
 		                   ->setConstructorArgs( array( $dc ) )

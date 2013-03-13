@@ -131,7 +131,7 @@ class AbstractServiceTest extends BaseTest
 		    ->with   ( $executeResponse )
 		    ->will   ( $this->returnValue( $jsonResponse ) )
 		;
-		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'interface' );
+		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$reflIf->setAccessible( true );
 		$reflIf->setValue( $service, $service );
 		
@@ -179,7 +179,7 @@ class AbstractServiceTest extends BaseTest
 		    ->method ( 'execute' )
 		;
 
-		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'interface' );
+		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$reflIf->setAccessible( true );
 		$reflIf->setValue( $service, $service );
 		
@@ -222,7 +222,7 @@ class AbstractServiceTest extends BaseTest
 		    ->method ( 'execute' )
 		    ->will   ( $this->throwException( $exception ) )
 		;
-		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'interface' );
+		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$reflIf->setAccessible( true );
 		$reflIf->setValue( $service, $service );
 		
@@ -261,7 +261,7 @@ class AbstractServiceTest extends BaseTest
 		    ->method ( 'getCurrentDocumentId' )
 		    ->will   ( $this->returnValue( '321_123' ) )
 		;
-		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'interface' );
+		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$reflIf->setAccessible( true );
 		$reflIf->setValue( $service, $service );
 		
