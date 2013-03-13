@@ -80,7 +80,7 @@ class DependencyContainer
 	 * @return \Wikia\Search\MediaWikiService
 	 */
 	public function getInterface() {
-		return $this->interface;
+		return $this->service;
 	}
 
 	/**
@@ -125,7 +125,7 @@ class DependencyContainer
 	 * @return DependencyContainer
 	 */
 	public function setInterface( MediaWikiService $service ) {
-		$this->interface = $service;
+		$this->service = $service;
 		return $this;
 	}
 

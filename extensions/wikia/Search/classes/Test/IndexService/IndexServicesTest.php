@@ -13,7 +13,7 @@ class IndexServicesTest extends BaseTest
 {
 	public function setUp() {
 		parent::setUp();
-		$this->interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
+		$this->service = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                        ->disableOriginalConstructor();
 		$this->pageId = 123;
 	}
@@ -28,7 +28,7 @@ class IndexServicesTest extends BaseTest
 	 * @covers Wikia\Search\IndexService\BacklinkCount::execute
 	 */
 	public function testBacklinkCountExecute() {
-		$service = $this->interface->setMethods( array( 'getBacklinksCountFromPageId' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getBacklinksCountFromPageId' ) )->getMock();
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getBacklinksCountFromPageId' )
@@ -58,7 +58,7 @@ class IndexServicesTest extends BaseTest
 		                ->disableOriginalConstructor()
 		                ->setMethods( null )
 		                ->getMock();
-		$service = $this->interface->setMethods( array( 'getGlobal' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getGlobal' ) )->getMock();
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getGlobal' )
@@ -79,7 +79,7 @@ class IndexServicesTest extends BaseTest
 		                ->disableOriginalConstructor()
 		                ->setMethods( null )
 		                ->getMock();
-		$service = $this->interface->setMethods( array( 'getGlobal' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getGlobal' ) )->getMock();
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getGlobal' )
@@ -105,7 +105,7 @@ class IndexServicesTest extends BaseTest
 		                ->disableOriginalConstructor()
 		                ->setMethods( null )
 		                ->getMock();
-		$service = $this->interface->setMethods( array( 'getGlobal', 'getApiStatsForPageId' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getGlobal', 'getApiStatsForPageId' ) )->getMock();
 		
 		$pageData = array( 'views' => 123, 'revcount' => 234, 'created' => 'yesterday', 'touched' => 'today' );
 		$apiResult = array(
@@ -138,7 +138,7 @@ class IndexServicesTest extends BaseTest
      * @covers \Wikia\Search\IndexService\Redirects::execute
      */
     public function testRedirectsService() {
-    	$service = $this->interface->setMethods( array( 'getGlobal', 'getRedirectTitlesForPageId' ) )->getMock();
+    	$service = $this->service->setMethods( array( 'getGlobal', 'getRedirectTitlesForPageId' ) )->getMock();
     	$service
     	    ->expects( $this->at( 0 ) )
     	    ->method ( 'getGlobal' )

@@ -7,7 +7,7 @@ use \Wikia\Search\Config, \Solarium_Query_Select, \ReflectionProperty, \Reflecti
 class ConfigTest extends BaseTest {
 
 	public function setUp() {
-		$this->interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
+		$this->service = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                        ->disableOriginalConstructor();
 		
 		$this->config = $this->getMockBuilder( '\\Wikia\Search\Config' )
@@ -569,7 +569,7 @@ class ConfigTest extends BaseTest {
 				"Larger digits should round to the nearest n-1 radix."
 		);
 		
-		$service = $this->interface->setMethods( array( 'formatNumber' ) )->getMock();
+		$service = $this->service->setMethods( array( 'formatNumber' ) )->getMock();
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'formatNumber' )
@@ -1086,7 +1086,7 @@ class ConfigTest extends BaseTest {
 	 * @covers \Wikia\Search\Config::setQuery
 	 */
 	public function testSetQuery() {
-		$service = $this->interface->setMethods( array( 'getNamespaceIdForString' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getNamespaceIdForString' ) )->getMock();
 		$config = $this->config->setMethods( array( 'getNamespaces' ) )->getMock();
 		$this->setInterface( $config, $service );
 		

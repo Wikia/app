@@ -48,7 +48,7 @@ abstract class AbstractService
 	 */
 	public function __construct( array $pageIds = array() ) {
 	    $this->pageIds = $pageIds;
-	    $this->interface = new MediaWikiService;
+	    $this->service = new MediaWikiService;
 	}
 	
 	/**
@@ -90,7 +90,7 @@ abstract class AbstractService
 		
 		foreach ( $this->pageIds as $pageId ) {
 			$this->currentPageId = $pageId;
-		    if (! $this->interface->pageIdExists( $pageId ) ) {
+		    if (! $this->service->pageIdExists( $pageId ) ) {
 				$documents[] = array( "delete" => array( "id" => $this->getCurrentDocumentId() ) );
 				continue;
 			}
@@ -117,7 +117,7 @@ abstract class AbstractService
 	 * @return string
 	 */
 	public function getCurrentDocumentId() {
-		return sprintf( '%s_%s', $this->interface->getWikiId(), $this->interface->getCanonicalPageIdFromPageId( $this->currentPageId ) );
+		return sprintf( '%s_%s', $this->service->getWikiId(), $this->service->getCanonicalPageIdFromPageId( $this->currentPageId ) );
 	}
 	
 	/**

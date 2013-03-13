@@ -59,8 +59,8 @@ class Field
 	 */
 	public function __construct( $fieldName, $languageCode = null ) {
 		$this->fieldName = $fieldName;
-		$this->interface = new MediaWikiService;
-		$this->languageCode = $languageCode ?: $this->interface->getLanguageCode();
+		$this->service = new MediaWikiService;
+		$this->languageCode = $languageCode ?: $this->service->getLanguageCode();
 	}
 	
 	/**
@@ -68,7 +68,7 @@ class Field
 	 * @return string
 	 */
 	public function __toString() {
-		if ( in_array( $this->fieldName, self::$languageFields ) && $this->interface->searchSupportsLanguageCode( $this->languageCode ) ) {
+		if ( in_array( $this->fieldName, self::$languageFields ) && $this->service->searchSupportsLanguageCode( $this->languageCode ) ) {
 			$lang = preg_replace( '/([^-]+)(-.*)?/', '_$1', $this->languageCode );
 			$mv = in_array( $this->fieldName, self::$multiValuedFields ) ? '_mv' : '';
 			return sprintf( '%s%s%s', $this->fieldName, $mv, $lang );

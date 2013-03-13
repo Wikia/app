@@ -32,7 +32,7 @@ class Base extends EmptySet
 	protected function configure( DependencyContainer $container ) {
 		$this->searchResultObject  = $container->getResult();
 		$this->searchConfig        = $container->getConfig();
-		$this->interface           = $container->getInterface();
+		$this->service           = $container->getInterface();
 		$this->results             = new ArrayIterator( array() );
 		$this->resultsFound        = $this->searchResultObject->getNumFound();
 		$this->prependArticleMatchIfExists()
@@ -67,7 +67,7 @@ class Base extends EmptySet
 			$result->setText( $field[0] );
 		}
 		if ( $result['created'] ) {
-			$result->setVar( 'fmt_timestamp', $this->interface->getMediaWikiFormattedTimestamp( $result['created'] ) );
+			$result->setVar( 'fmt_timestamp', $this->service->getMediaWikiFormattedTimestamp( $result['created'] ) );
 			$result->setVar( 'created_30daysago', ( time() - strtotime( $result['created'] ) ) > 2592000 );
 		}
 

@@ -93,7 +93,7 @@ abstract class AbstractSelect
 		$this->client = $container->getClient();
 		$this->config = $container->getConfig();
 		$this->resultSetFactory = $container->getResultSetFactory();
-		$this->interface = $container->getInterface();
+		$this->service = $container->getInterface();
 	}
 	
 	/**
@@ -269,7 +269,7 @@ abstract class AbstractSelect
 	 */
 	protected function spellcheckResult( Solarium_Result_Select $result ) {
 		// re-search for spellchecked phrase in the absence of results
-		if ( $this->interface->getGlobal( 'WikiaSearchSpellcheckActivated' ) 
+		if ( $this->service->getGlobal( 'WikiaSearchSpellcheckActivated' ) 
 				&& $result->getNumFound() == 0
 				&& !$this->config->hasMatch() ) {
 			if ( $collation = $result->getSpellcheck()->getCollation() ) {
@@ -326,7 +326,7 @@ abstract class AbstractSelect
 		                      ->setQueryParser( 'edismax' )
 		;
 		
-		if ( $this->interface->isOnDbCluster() ) {
+		if ( $this->service->isOnDbCluster() ) {
 			$dismax
 				->setPhraseFields		( $queryFieldsString )
 				->setBoostQuery			( $this->getBoostQueryString() )

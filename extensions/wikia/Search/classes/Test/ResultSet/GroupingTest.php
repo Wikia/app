@@ -33,7 +33,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 									->setMethods( $resultSetMethods )
 									->getMock();
 		
-		$this->interface = $this->getMockbuilder( 'Wikia\Search\MediaWikiService' )
+		$this->service = $this->getMockbuilder( 'Wikia\Search\MediaWikiService' )
 		                        ->disableOriginalConstructor()
 		                        ->setMethods( $serviceMethods )
 		                        ->getMock();
@@ -48,7 +48,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		
 		$reflConfig = new ReflectionProperty(  '\Wikia\Search\ResultSet\Base', 'interface' );
 		$reflConfig->setAccessible( true );
-		$reflConfig->setValue( $this->resultSet, $this->interface );
+		$reflConfig->setValue( $this->resultSet, $this->service );
 	}
 
 	/**
@@ -334,13 +334,13 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		$resultsRefl = new ReflectionProperty( 'Wikia\Search\ResultSet\Grouping', 'results' );
 		$resultsRefl->setAccessible( true );
 		$resultsRefl->setValue( $this->resultSet, $results );
-		$this->interface
+		$this->service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getVisualizationInfoForWikiId' )
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( $vizInfo ) )
 		;
-		$this->interface
+		$this->service
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getStatsInfoForWikiId' )
 		    ->with   ( 123 )
@@ -369,7 +369,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		    ->with   ( array( 'users_count' => 100 ) )
 		    ->will   ( $this->returnValue( $this->resultSet ) )
 		;
-		$this->interface
+		$this->service
 		    ->expects( $this->any() )
 		    ->method ( 'getGlobalForWiki' )
 		    ->with   ( 'wgSitename', 123 )
@@ -381,7 +381,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		    ->with   ( "wikititle", "my title" )
 		    ->will   ( $this->returnValue( $this->resultSet ) )
 		;
-		$this->interface
+		$this->service
 		    ->expects( $this->any() )
 		    ->method ( 'getHubForWikiId' )
 		    ->with   ( 123 )
@@ -399,7 +399,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		    ->with   ( "description" )
 		    ->will   ( $this->returnValue( "" ) )
 		;
-		$this->interface
+		$this->service
 		    ->expects( $this->any() )
 		    ->method ( 'getDescriptionTextForWikiId' )
 		    ->with   ( 123 )

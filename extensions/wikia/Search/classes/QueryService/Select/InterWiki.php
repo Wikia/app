@@ -73,7 +73,7 @@ class InterWiki extends AbstractSelect
 				'',
 				strtolower( $this->config->getQuery( \Wikia\Search\Config::QUERY_RAW ) ) 
 				);
-		$match =  $this->interface->getWikiMatchByHost( $domain );
+		$match =  $this->service->getWikiMatchByHost( $domain );
 		if (! empty( $match ) ) {
 			$this->config->setWikiMatch( $match );
 		}
@@ -164,13 +164,13 @@ class InterWiki extends AbstractSelect
 	protected function getQueryClausesString()
 	{
 		$widQueries = array();
-		foreach ( $this->interface->getGlobal( 'CrossWikiaSearchExcludedWikis' ) as $excludedWikiId ) {
+		foreach ( $this->service->getGlobal( 'CrossWikiaSearchExcludedWikis' ) as $excludedWikiId ) {
 			$widQueries[] = Utilities::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 		}
 		
 		$queryClauses= array(
 				implode( ' AND ', $widQueries ),
-				Utilities::valueForField( 'lang', $this->interface->getLanguageCode() ),
+				Utilities::valueForField( 'lang', $this->service->getLanguageCode() ),
 				Utilities::valueForField( 'iscontent', 'true' )
 		);
 		

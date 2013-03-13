@@ -164,7 +164,7 @@ class Config implements ArrayAccess
 	 * @param array $params
 	 */
 	public function __construct( array $params = array() ) {
-		$this->interface = new MediaWikiService;
+		$this->service = new MediaWikiService;
 		
 		$dynamicFilterCodes = array(
 				self::FILTER_CAT_VIDEOGAMES    => Utilities::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' ) ),
@@ -267,7 +267,7 @@ class Config implements ArrayAccess
 		if ( strpos( $query, ':' ) !== false ) {
 			$queryNsExploded = explode( ':', $query );
 			$queryNamespaceStr = array_shift( $queryNsExploded );
-			$queryNamespace	= $this->interface->getNamespaceIdForString( $queryNamespaceStr );
+			$queryNamespace	= $this->service->getNamespaceIdForString( $queryNamespaceStr );
 			if ( $queryNamespace ) {
 				$namespaces = $this->getNamespaces();
 			    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
@@ -321,7 +321,7 @@ class Config implements ArrayAccess
 		}
 		$namespaces = ( isset($this->params['namespaces']) && !empty( $this->params['namespaces'] ) ) 
 					? $this->params['namespaces'] 
-					: $this->interface->getDefaultNamespacesFromSearchEngine();
+					: $this->service->getDefaultNamespacesFromSearchEngine();
 		
 		$queryNamespaceArray = ( isset( $this->params['queryNamespace'] ) ) ? array( $this->params['queryNamespace'] ) : array(); 
 		$this->params['namespaces'] = array_unique( array_merge( $namespaces, $queryNamespaceArray ) );
@@ -494,7 +494,7 @@ class Config implements ArrayAccess
 		}
 		
 		if ( $formatted ) {
-			$result = $this->interface->formatNumber( $result ); 
+			$result = $this->service->formatNumber( $result ); 
 		}
 		return $result;
 	}
@@ -505,15 +505,15 @@ class Config implements ArrayAccess
 	 * @return array
 	 */
 	public function getSearchProfiles() {
-		$nsAllSet = array_keys( $this->interface->getSearchableNamespacesFromSearchEngine() );
-		$defaultNamespaces = $this->interface->getDefaultNamespacesFromSearchEngine();
+		$nsAllSet = array_keys( $this->service->getSearchableNamespacesFromSearchEngine() );
+		$defaultNamespaces = $this->service->getDefaultNamespacesFromSearchEngine();
 
 	    $profiles = array(
 	            SEARCH_PROFILE_DEFAULT => array(
 	                    'message' => 'wikiasearch2-tabs-articles',
 	                    'tooltip' => 'searchprofile-articles-tooltip',
 	                    'namespaces' => $defaultNamespaces,
-	                    'namespace-messages' => $this->interface->getTextForNamespaces( $defaultNamespaces ),
+	                    'namespace-messages' => $this->service->getTextForNamespaces( $defaultNamespaces ),
 	            ),
 	            SEARCH_PROFILE_IMAGES => array(
 	                    'message' => 'wikiasearch2-tabs-photos-and-videos',
@@ -538,7 +538,7 @@ class Config implements ArrayAccess
 	            )
 	    );
 	    
-	    $this->interface->invokeHook( 'SpecialSearchProfiles', array( &$profiles ) );
+	    $this->service->invokeHook( 'SpecialSearchProfiles', array( &$profiles ) );
 
 	    foreach( $profiles as $key => &$data ) {
 	        sort( $data['namespaces'] );
@@ -585,7 +585,7 @@ class Config implements ArrayAccess
 	 */
 	public function getCityId() {
 		if ( empty( $this->params['cityId'] ) && (! $this->isInterWiki() ) ) {
-			return $this->setCityId( $this->interface->getWikiId() )->getCityId();
+			return $this->setCityId( $this->service->getWikiId() )->getCityId();
 		}
 		return $this->params['cityId'];
 	}
@@ -754,7 +754,7 @@ class Config implements ArrayAccess
 	 */
 	protected function importQueryFieldBoosts() {
 		foreach ( $this->queryFieldsToBoosts as $field => $boost ) {
-			$this->setQueryField( $field, $this->interface->getGlobalWithDefault( "SearchBoostFor_{$field}", $boost ) );
+			$this->setQueryField( $field, $this->service->getGlobalWithDefault( "SearchBoostFor_{$field}", $boost ) );
 		}
 		return $this;
 	}

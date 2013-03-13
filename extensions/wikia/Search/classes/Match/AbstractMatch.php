@@ -41,7 +41,7 @@ abstract class AbstractMatch
 	 */
 	public function __construct( $id, MediaWikiService $service ) {
 		$this->id = $id;
-		$this->interface = $service;
+		$this->service = $service;
 	}
 	
 	/**

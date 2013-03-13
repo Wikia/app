@@ -46,7 +46,7 @@ class DependencyContainer
 	 */
 	public function __construct( array $dependencies = array() ) {
 		$this->resultSetFactory = new ResultSet\Factory;
-		$this->interface = new MediaWikiService;
+		$this->service = new MediaWikiService;
 		$this->configureByArray( $dependencies );
 	}
 	
@@ -55,7 +55,7 @@ class DependencyContainer
 	 * @return the $service
 	 */
 	public function getInterface() {
-		return $this->interface;
+		return $this->service;
 	}
 
 	/**
@@ -64,7 +64,7 @@ class DependencyContainer
 	 * @return \Wikia\Search\QueryService\DependencyContainer
 	 */
 	public function setInterface( MediaWikiService $service) {
-		$this->interface = $service;
+		$this->service = $service;
 		return $this;
 	}
 

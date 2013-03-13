@@ -26,8 +26,8 @@ class WikiaSearchIndexerController extends WikiaController
 	{
 		parent::__construct();
 		$this->factory = new Factory;
-		$this->interface = new MediaWikiService;
-		$this->interface->setGlobal( 'AllowMemcacheWrites', false )
+		$this->service = new MediaWikiService;
+		$this->service->setGlobal( 'AllowMemcacheWrites', false )
 		                ->setGlobal( 'AppStripsHtml', true );
 	}
 	

@@ -25,7 +25,7 @@ class Result extends ReadWrite {
 	 */
 	public function __construct( $fields = array(), $boosts = array() ) {
 		parent::__construct( $fields, $boosts );
-		$this->interface = new MediaWikiService;
+		$this->service = new MediaWikiService;
 	}
 	
 	/**
@@ -179,7 +179,7 @@ class Result extends ReadWrite {
 	public function getThumbnailHtml() {
 		if (! isset( $this['thumbnail'] ) ) {
 			try {
-				$this['thumbnail'] = $this->interface->getThumbnailHtmlForPageId( $this['pageid'] );
+				$this['thumbnail'] = $this->service->getThumbnailHtmlForPageId( $this['pageid'] );
 			} catch ( \Exception $e ) {
 				$this['thumbnail'] = '';
 			}
@@ -193,7 +193,7 @@ class Result extends ReadWrite {
 	 */
 	public function getVideoViews() {
 		try {
-			return $this->interface->getVideoViewsForPageId( $this['pageid'] );
+			return $this->service->getVideoViewsForPageId( $this['pageid'] );
 		} catch ( \Exception $e ) {
 			return 0;
 		}
