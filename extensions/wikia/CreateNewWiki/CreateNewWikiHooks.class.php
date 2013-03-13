@@ -1,6 +1,6 @@
 <?php
 class CreateNewWikiHooks {
-	public static function onBeforePageDisplay() {
+	public static function beforePageDisplay() {
 		global $wgOut, $wgRequest;
 
 		$wg = F::app()->wg;
