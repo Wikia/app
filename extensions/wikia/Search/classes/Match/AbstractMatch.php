@@ -35,7 +35,7 @@ abstract class AbstractMatch
 	protected $result;
 	
 	/**
-	 * Dependency-injects an ID and interface.
+	 * Dependency-injects an ID and MW service.
 	 * @param int $id
 	 * @param MediaWikiService $service
 	 */

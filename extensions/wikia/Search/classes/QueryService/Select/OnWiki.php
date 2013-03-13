@@ -29,7 +29,7 @@ class OnWiki extends AbstractSelect
 	);
 	
 	/**
-	 * Passes data from the config to the MW interface to instantiate a match and store it in the config.
+	 * Passes data from the config to the MW service to instantiate a match and store it in the config.
 	 * @return Wikia\Search\Match\Article|null
 	 */
 	public function extractMatch() {

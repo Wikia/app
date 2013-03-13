@@ -18,7 +18,7 @@ class IndexServicesTest extends BaseTest
 		$this->pageId = 123;
 	}
 	
-	protected function injectInterface( $service, $service ) {
+	protected function injectService( $service, $service ) {
 		$refl = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$refl->setAccessible( true );
 		$refl->setValue( $service, $service );
@@ -42,7 +42,7 @@ class IndexServicesTest extends BaseTest
 		
 		$service->setPageId( $this->pageId );
 		
-		$this->injectInterface( $service, $service );
+		$this->injectService( $service, $service );
 		
 		$this->assertEquals(
 				array( 'backlinks' => 20 ),
@@ -65,7 +65,7 @@ class IndexServicesTest extends BaseTest
 		    ->with   ( 'ExternalSharedDB' )
 		    ->will   ( $this->returnValue( false ) )
 		;
-		$this->injectInterface( $service, $service );
+		$this->injectService( $service, $service );
 		$this->assertEmpty(
 				$service->execute()
 		);
@@ -86,7 +86,7 @@ class IndexServicesTest extends BaseTest
 		    ->with   ( 'ExternalSharedDB' )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$this->injectInterface( $service, $service );
+		$this->injectService( $service, $service );
 		try {
 			$service->execute();
 		} catch ( \Exception $e ) { }
@@ -126,7 +126,7 @@ class IndexServicesTest extends BaseTest
 		    ->will   ( $this->returnValue( $apiResult ) )
 		;
 		$service->setPageId( $this->pageId );
-		$this->injectInterface( $service, $service );
+		$this->injectService( $service, $service );
 		$expected = array_merge( $pageData, array( 'hub' => 'stuff' ) );
 		$this->assertEquals(
 				$expected,
@@ -155,7 +155,7 @@ class IndexServicesTest extends BaseTest
     	                ->disableOriginalConstructor()
     	                ->setMethods( null )
     	                ->getMock();
-    	$this->injectInterface( $service, $service );
+    	$this->injectService( $service, $service );
     	$service->setPageId( $this->pageId );
     	$this->assertEquals(
     			array( \Wikia\Search\Utilities::field( 'redirect_titles' ) => array( 'foo', 'bar' ) ),

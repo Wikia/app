@@ -19,7 +19,7 @@ class Result extends ReadWrite {
 	protected $service;
 
 	/**
-	 * Constructs the result and stores MW interface
+	 * Constructs the result and stores MW service
 	 * @param array $fields
 	 * @param array $boosts
 	 */

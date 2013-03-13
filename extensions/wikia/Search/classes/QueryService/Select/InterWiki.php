@@ -63,7 +63,7 @@ class InterWiki extends AbstractSelect
 	protected $timeAllowed = 7500;
 	
 	/**
-	 * Identifies a match by domain via interface. Registers with config and returns if found.
+	 * Identifies a match by domain via mw service. Registers with config and returns if found.
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::extractMatch()
 	 * @return Wikia\Search\Match\Wiki
 	 */

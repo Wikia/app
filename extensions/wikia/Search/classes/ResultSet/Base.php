@@ -20,7 +20,7 @@ class Base extends EmptySet
 	protected $searchResultObject;
 	
 	/**
-	 * MW interface.
+	 * MW service.
 	 * @var MediaWikiService
 	 */
 	protected $service;

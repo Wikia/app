@@ -51,7 +51,7 @@ class DependencyContainer
 	}
 	
 	/**
-	 * Accessor for interface.
+	 * Accessor for mw service.
 	 * @return the $service
 	 */
 	public function getService() {
@@ -59,7 +59,7 @@ class DependencyContainer
 	}
 
 	/**
-	 * Mutator for interface.
+	 * Mutator for mw service.
 	 * @param \Wikia\Search\MediaWikiService $service
 	 * @return \Wikia\Search\QueryService\DependencyContainer
 	 */
