@@ -15,7 +15,6 @@ class FollowHelper {
 	 *
 	 * @return bool
 	 */
-
 	static public function watchCategories($categoryInserts, $categoryDeletes, $title) {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
@@ -48,7 +47,6 @@ class FollowHelper {
 	 *
 	 * @return bool
 	 */
-
 	public static function emailNotification($childTitle, $list, $namespace, $user, $action, $message) {
 		global $wgTitle;
 
@@ -129,7 +127,6 @@ class FollowHelper {
 	 *
 	 * @return bool
 	 */
-
 	static public function blogListingBuildRelation($title, $cat, $users){
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
@@ -185,7 +182,6 @@ class FollowHelper {
 	 *
 	 * @return bool
 	 */
-
 	static public function watchBlogListing(&$article, &$user, $text, $summary, $minor, $undef1, $undef2, &$flags, $revision, &$status, $baseRevId ) {
 		if (!$status->value['new']){
 			return true;
@@ -215,7 +211,7 @@ class FollowHelper {
 					__METHOD__ );
 			$related = array();
 			while ($row = $dbw->fetchObject( $res ) ) {
-                //Bug fix  //
+				//Bug fix  //
 				$exploded = explode(":", $row->blr_title);
 				if(count($exploded) > 1) {
 					$title =  $exploded[1];
@@ -295,16 +291,15 @@ class FollowHelper {
 	 *
 	 * @return bool
 	 */
-
 	static public function showAll(){
 		global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt;
 		wfProfileIn(__METHOD__);
 
 		$user_id = $wgRequest->getVal( 'user_id' );
 		$head = $wgRequest->getVal( 'head' );
-                $from = $wgRequest->getVal( 'from' );
+		$from = $wgRequest->getVal( 'from' );
 
-                $response = new AjaxResponse();
+		$response = new AjaxResponse();
 
 		$user = User::newFromId($user_id);
 		if ( empty($user) || $user->getOption('hidefollowedpages') ) {
@@ -341,8 +336,6 @@ class FollowHelper {
 	 *
 	 * @return bool
 	 */
-
-
 	static public function renderFollowPrefs(User $user, &$defaultPreferences) {
 		global $wgUseRCPatrol, $wgEnableAPI, $wgJsMimeType, $wgExtensionsPath, $wgOut, $wgUser;
 		wfProfileIn(__METHOD__);
@@ -526,7 +519,6 @@ class FollowHelper {
 	 *
 	 * @return bool
 	 */
-
 	static public function jsVars(Array &$vars) {
 		$vars[ 'wgEnableWikiaFollowedPages' ] = true;
 		$vars[ 'wgFollowedPagesPagerLimit' ] = FollowModel::$specialPageListLimit;
@@ -555,7 +547,6 @@ class FollowHelper {
 	 *
 	 * @return  array
 	 */
-
 	static public function getMasthead($userspace) {
 		global $wgUser;
 		if(($wgUser->getId() > 0) && ($wgUser->getName() == $userspace)) {
@@ -574,8 +565,6 @@ class FollowHelper {
 	 *
 	 * @return  array
 	 */
-
-
 	static public function renderUserProfile(&$out) {
 		global $wgTitle, $wgRequest, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgUser;
 		wfProfileIn(__METHOD__);
@@ -625,7 +614,7 @@ class FollowHelper {
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
 		if ( count($data) == 0 ) $data = null;
-	/*
+		/*
 		if ( count($data) > 5 ) {
 			$data2 = array_slice($data, 5 );
 			$data = array_slice($data, 0, 5);
@@ -663,7 +652,6 @@ class FollowHelper {
 	 *
 	 * @return  array
 	 */
-
 	static public function mailNotifyBuildKeys(&$keys, $action, $other_param) {
 		global $wgEnableForumExt;
 		$actionsList = array('categoryadd', 'blogpost');
@@ -722,20 +710,19 @@ class FollowHelper {
 	 *
 	 * @return  bool
 	 */
+	static public function categoryIndexer(&$self, $article) {
+		global $wgRequest;
+		if( $wgRequest->getVal("makeindex", 0) != 1 ) {
+			return true;
+		}
 
-        static public function categoryIndexer(&$self, $article) {
-            global $wgRequest;
-            if( $wgRequest->getVal("makeindex", 0) != 1 ) {
-                return true;
-            }
-
-            if($article != null) {
-                $self->parseTag(urldecode( $article ));
-                $cats = BlogTemplateClass::getCategoryNames();
-                if(count($cats) > 0) {
-                    self::blogListingBuildRelation($article, $cats, array());
-                }
-            }
-            return true;
-        }
+		if($article != null) {
+			$self->parseTag(urldecode( $article ));
+			$cats = BlogTemplateClass::getCategoryNames();
+			if(count($cats) > 0) {
+				self::blogListingBuildRelation($article, $cats, array());
+			}
+		}
+		return true;
+	}
 }
