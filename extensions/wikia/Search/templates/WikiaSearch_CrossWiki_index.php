@@ -45,7 +45,7 @@
 					<?php
 					if($result instanceof \Wikia\Search\ResultSet\Grouping) {
 						$pos++;
-						echo $app->getView( 'WikiaSearch', 'resultSet', array(
+						echo $app->getView( 'WikiaSearch', 'CrossWiki_result', array(
 							'resultSet' => $result,
 							'gpos' => 0,
 							'isInterWiki' => $isInterWiki,

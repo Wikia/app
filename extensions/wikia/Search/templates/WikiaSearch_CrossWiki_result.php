@@ -1,32 +1,44 @@
-<li class="result">
-	<article>
-		<?php $title = (empty( $result['isWikiMatch'] ) ) ? str_replace('$1', $result->getTitle(), $result->getVar('wikititle')) : $result->getTitle(); ?>
-		<?php $trackingData = 'class="result-link" data-wid="'.$result->getHeader('cityId').'" data-pageid="'.$result->getVar
-	('pageId').'" data-pagens="'.$result->getVar('ns').'" data-title="'.$result->getTitle().'" data-gpos="'.( !empty
-	($gpos) ? $gpos : 0 ).'" data-pos="'.$pos.'" data-sterm="'.addslashes($query).'" data-stype="inter" data-rver="' . WikiaSearchController::RVERSION . '"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' ); ?>
-		<img src="#" alt="<?= $title ?>" class="wikiPromoteThumbnail grid-1 alpha" />
-		<div class="grid-5 result-description">
-			<h1>
-				<a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?= $title ?></a>
-			</h1>
+<?php if($resultSet->getResultsFound() > 1): ?>
+    <!-- grouped search result-->
+    <li class="result">
 
-			<!-- TODO: Do we need this in cross wiki search -->
-			<? if ($redirectTitle = $result->getVar('redirectTitle')): ?>
-			<p class="redirect-title">&mdash; <?= wfMessage( 'wikiasearch2-results-redirected-from' )->text() ?> <a href="<?=$redirectTitle->getFullUrl()?>" <?=$trackingData?>><?= $redirectTitle->getText() ?></a></p>
-			<? endif; ?>
-			<!-- end -->
+		<?php
+		$trackingData = 'class="ResultLink" data-wid="' . $resultSet->getHeader('wid') . '" data-gpos="' . $pos
+			. '" data-pos="0" data-sterm="' . addslashes($query) . '" data-stype="' .( $isInterWiki ? 'inter' :
+			'intra' ) . '" data-rver="6" data-event="search_click_wiki"';
+		?>
 
-			<p class="hub subtle"><?= $hub ?></p>
-			<p><?= $result->getText(); ?></p>
-			<ul>
-				<li><a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getTextUrl(), 90);?></a></li>
-				<li><a href="http://<?= $result['host'] .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search'; ?>"><?= wfMsg( 'wikiasearch2-search-on-wiki') ?></a></li>
-			</ul>
-			<ul class="wiki-statistics subtle">
-				<li>11111</li>
-				<li>12k Photos</li>
-				<li>20 Videos</li>
-			</ul>
-		</div>
-	</article>
-</li>
+		<?php
+			$images = $resultSet->getHeader( 'images' );
+			if ( !empty( $images ) ) {
+				$imageInfo = ImagesService::getLocalFileThumbUrlAndSizes( reset( $images ) );
+			} else {
+				//TODO: get default image
+				$imageInfo = new stdClass();
+			}
+		?>
+        <img src="<?= $imageInfo->url; ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail grid-1 alpha" />
+        <div class="grid-5 result-description">
+
+            <h1>
+                <a href="<?= $resultSet->getHeader('host'); ?>" <?=$trackingData;?> ><?= $resultSet->getHeader
+				('wikititle'); ?></a>
+            </h1>
+
+            <p class="hub subtle"><?= $resultSet->getHeader('hub'); ?></p>
+            <p><?= $resultSet->getHeader('description'); ?></p>
+
+            <ul>
+                <li><a href="<?=$resultSet->getHeader('url');?>" <?=$trackingData;?> ><?=$resultSet->getHeader('host');?></a></li>
+				<li><a href="<?= $resultSet->getHeader('host') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search';?>"><?= wfMsg( 'wikiasearch2-search-on-wiki')?></a></li>
+            </ul>
+            <ul class="wiki-statistics subtle">
+                <li><?= wfMsg( 'wikiasearch2-pages', $wg->Lang->formatNum($resultSet->getHeader('articles_count')) ); ?></li>
+                <li><?= wfMsg( 'wikiasearch2-images', $wg->Lang->formatNum($resultSet->getHeader('images_count')) ); ?></li>
+                <li><?= wfMsg( 'wikiasearch2-videos', $wg->Lang->formatNum($resultSet->getHeader('videos_count')) ); ?></li>
+            </ul>
+        </div>
+    </li>
+<?php elseif ($nextResult = $resultSet->next()): ?>
+	<?= $app->getView( 'WikiaSearch', 'result', array( 'result' => $nextResult, 'gpos' => 0, 'pos' => $pos, 'query' => $query, 'rank' =>  $resultSet->getHeader('cityRank'), 'isInterWiki'=> true )); ?>
+<?php endif; ?>
