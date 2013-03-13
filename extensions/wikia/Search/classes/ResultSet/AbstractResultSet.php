@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\ResultSet;
-use Wikia\Search\Traits\AttributeIterable;
+use Wikia\Search\Traits\AttributeIterableTrait;
 use \Iterator, \ArrayAccess, \ArrayIterator, \Wikia\Search\Config;
 /**
  * This allows us to do a lot of the utility stuff separated out from the core logic of each class.
@@ -15,7 +15,7 @@ use \Iterator, \ArrayAccess, \ArrayIterator, \Wikia\Search\Config;
  */
 abstract class AbstractResultSet implements Iterator, ArrayAccess
 {
-	use AttributeIterable;
+	use AttributeIterableTrait;
 	
 	/**
 	 * Used to keep track of index in array access

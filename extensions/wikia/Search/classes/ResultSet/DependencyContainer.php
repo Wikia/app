@@ -12,7 +12,7 @@ use \Wikia\Search\Config, \Solarium_Result_Select, \Wikia\Search\MediaWikiServic
  */
 class DependencyContainer
 {
-	use Traits\ArrayConfigurable;
+	use Traits\ArrayConfigurableTrait;
 	
 	/**
 	 * Search Config
