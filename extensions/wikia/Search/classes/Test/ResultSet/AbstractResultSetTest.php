@@ -10,6 +10,19 @@ use Wikia, ReflectionProperty, ReflectionMethod, ArrayIterator;
 class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::__construct
+	 */
+	public function testConstruct() {
+		$dc = new Wikia\Search\ResultSet\DependencyContainer();
+		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )
+		                  ->setConstructorArgs( array( $dc ) )
+		                  ->getMockForAbstractClass();
+		
+		// constructor should call configure(), but we have no way of asserting this
+		// (other than everything else breaking in other tests)
+	}
+	
+	/**
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getResultsFound
 	 */
 	public function testGetResultsFound() {
