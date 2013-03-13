@@ -137,9 +137,9 @@ class WikiaHomePageTest extends WikiaBaseTest {
 		// 1 - empty html
 		$mockRawText1 = '';
 		$expHubImages1 = array(
-			'Entertainment' => '',
-			'Video_Games' => '',
-			'Lifestyle' => '',
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => '',
+			WikiFactoryHub::CATEGORY_ID_GAMING => '',
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => '',
 		);
 		$mockFileParams1 = false;
 		$mockImageServingParams1 = 0;
@@ -184,23 +184,23 @@ TXT;
 		);
 
 		$expHubImages3 = array(
-			'Entertainment' => '',
-			'Video_Games' => '',
-			'Lifestyle' => '',
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => '',
+			WikiFactoryHub::CATEGORY_ID_GAMING => '',
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => '',
 		);
 
 		// 4 - not empty html + gallery tag exists with orientation="mosaic" + file does not exist
 		$expHubImages4 = array(
-			'Entertainment' => self::BLANK_IMG_URL,
-			'Video_Games' => self::BLANK_IMG_URL,
-			'Lifestyle' => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_GAMING => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => self::BLANK_IMG_URL,
 		);
 
 		// 5 - not empty html + gallery tag exists with orientation="mosaic" + file exists
 		$expHubImages5 = array(
-			'Entertainment' => self::BLANK_IMG_URL,
-			'Video_Games' => self::BLANK_IMG_URL,
-			'Lifestyle' => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_GAMING => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => self::BLANK_IMG_URL,
 		);
 		$mockFileParams5 = array(
 			'exists' => true,

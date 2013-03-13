@@ -31,7 +31,7 @@ class WikiaHubsApiController extends WikiaApiController {
 		
 		$moduleId = $this->request->getInt(self::PARAMETER_MODULE);
 		$verticalId = $this->request->getInt(self::PARAMETER_VERTICAL);
-		$timestamp = $this->request->getInt(self::PARAMETER_TIMESTAMP);
+		$timestamp = $this->request->getInt(self::PARAMETER_TIMESTAMP, strtotime('00:00'));
 		$lang = $this->request->getVal(self::PARAMETER_LANG, self::DEFAULT_LANG);
 		
 		$model = $this->getModel();
