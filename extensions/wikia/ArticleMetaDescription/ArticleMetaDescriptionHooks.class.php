@@ -13,9 +13,7 @@ class ArticleMetaDescriptionHooks {
 		$pagename = $out->getTitle()->getPrefixedText();
 
 		if ( !empty( $wgPPSEOCustomKeywords[$pagename] ) ) {
-			foreach( explode( ',', $wgPPSEOCustomKeywords[$pagename]) as $i => $keyword ) {
-				$out->addKeyword( $keyword );
-			}
+			$out->addKeyword( $wgPPSEOCustomKeywords[$pagename] );
 		}
 
 		$description = null;
