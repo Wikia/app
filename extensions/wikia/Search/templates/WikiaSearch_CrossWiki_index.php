@@ -43,17 +43,20 @@
 					<?php $pos = 0; ?>
 					<?php foreach( $results as $result ): ?>
 					<?php
-					if($result instanceof \Wikia\Search\ResultSet\Grouping) {
-						$pos++;
-						echo $app->getView( 'WikiaSearch', 'CrossWiki_result', array(
-							'resultSet' => $result,
-							'gpos' => 0,
-							'isInterWiki' => $isInterWiki,
-							'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-							'query' => $query,
-							'hub' => $hub
-						));
-//						continue;
+					if($result instanceof \Wikia\Search\ResultSet\Grouping ) {
+						$header = $result->getHeader();
+						if ( !empty( $header ) ) {
+							$pos++;
+							echo $app->getView( 'WikiaSearch', 'CrossWiki_result', array(
+								'resultSet' => $result,
+								'gpos' => 0,
+								'isInterWiki' => $isInterWiki,
+								'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+								'query' => $query,
+								'hub' => $hub
+							));
+	//						continue;
+						}
 					}
 //					$pos++;
 //					echo $app->getView( 'WikiaSearch', 'CrossWiki_result', array(

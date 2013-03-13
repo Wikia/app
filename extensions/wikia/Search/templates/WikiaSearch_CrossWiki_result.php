@@ -15,6 +15,7 @@
 			} else {
 				//TODO: get default image
 				$imageInfo = new stdClass();
+				$imageInfo->url = '';
 			}
 		?>
         <img src="<?= $imageInfo->url; ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail grid-1 alpha" />

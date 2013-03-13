@@ -13,6 +13,7 @@
 	} else {
 		//TODO: get default image
 		$imageInfo = new stdClass();
+		$imageInfo->url = '';
 	}
 
 	$urlInfo = parse_url( $resultSet->getHeader( 'url' ) );
