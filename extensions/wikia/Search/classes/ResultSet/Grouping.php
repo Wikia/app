@@ -7,6 +7,8 @@ use \Wikia\Search\MediaWikiInterface, \ArrayIterator, \Solarium_Result_Select, \
 /**
  * This class handles sub-groupings of results for inter-wiki search.
  * @author relwell
+ * @package Search
+ * @subpackage ResultSet
  */
 class Grouping extends Base
 {
@@ -108,7 +110,6 @@ class Grouping extends Base
 	
 	/**
 	 * Allows us to serialize some core values from an expected wiki for json requests
-	 * @param array $expectedFields
 	 * @return array
 	 */
 	public function toArray() {

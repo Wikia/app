@@ -27,6 +27,9 @@
 	<testsuite name="Wikia Maintenance Test Suite">
 		<directory>../maintenance/wikia/tests/</directory>
 	</testsuite>
+	<testsuite name="Wikia Search Test Suite">
+		<directory>../extensions/wikia/Search/classes/Test</directory>
+	</testsuite>
 	<!-- DO NOT run MW tests. These tests are dropping db tables, including users -->
 	<!--
 	 <testsuite name="MediaWiki Test Suite">

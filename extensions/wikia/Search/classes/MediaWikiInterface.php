@@ -5,11 +5,11 @@
  */
 namespace Wikia\Search; 
 /**
- * Encapsulates MediaWiki functionalities 
- * This will allow us to abstract our behavior away from MediaWiki if we want
+ * Encapsulates MediaWiki functionalities.
+ * This will allow us to abstract our behavior away from MediaWiki if we want.
  * Public functions should not return instances of classes defined in MediaWiki core.
  * @author relwell
- * @todo a bunch of these methods should probably be defined in an actual interface, but until we have another "backend" the point is moot
+ * @package Search 
  */
 class MediaWikiInterface
 {
@@ -418,6 +418,8 @@ class MediaWikiInterface
 	
 	/**
 	 * Returns text values for namespaces.
+	 * @param array $namespaces
+	 * @return array of namespace strings
 	 */
 	public function getTextForNamespaces( array $namespaces ) {
 		return \SearchEngine::namespacesAsText( $namespaces );
@@ -577,6 +579,11 @@ class MediaWikiInterface
 		return str_replace( '{{SITENAME}}', $this->getGlobalForWiki( 'wgSitename', $wikiId ), $response['query']['allmessages'][0]['*'] );
 	}
 	
+	/**
+	 * Returns the string name of a hub for the provided wiki ID.
+	 * @param int $wikiId
+	 * @return string
+	 */
 	public function getHubForWikiId( $wikiId ) {
 		$cat = (new \WikiFactory)->getCategory( $wikiId );
 		return is_object( $cat ) ? $cat->cat_name : $cat;
@@ -749,7 +756,7 @@ class MediaWikiInterface
     /**
 	 * Provided a page, returns the string value of that page's title
 	 * This allows us to accommodate unconventional locations for titles
-	 * @param Title $title
+	 * @param \Title $title
 	 * @return string
 	 */
 	protected function getTitleString( \Title $title ) {

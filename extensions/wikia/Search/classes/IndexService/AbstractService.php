@@ -8,6 +8,9 @@ use Wikia\Search\MediaWikiInterface;
 /**
  * This class allows us to define a standard API for indexing services
  * @author relwell
+ * @abstract
+ * @package Search
+ * @subpackage IndexService
  */
 abstract class AbstractService
 {
@@ -77,8 +80,6 @@ abstract class AbstractService
 	
     /**
 	 * Allows us to reuse the same basic JSON structure for any number of service calls
-	 * @param string $fname
-	 * @param array $pageIds
 	 * @return string
 	 */
 	public function getResponseForPageIds() {

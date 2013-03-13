@@ -8,7 +8,8 @@ namespace Wikia\Search\ResultSet;
 /**
  * This class is used to create a "grouping" based on a wiki match.
  * @author relwell
- *
+ * @package Search
+ * @subpackage ResultSet
  */
 class MatchGrouping extends Grouping {
 	

@@ -7,12 +7,11 @@ namespace Wikia\Search\Test;
 use Wikia\Search\MediaWikiInterface;
 use \ReflectionProperty;
 use \ReflectionMethod;
-require_once( 'WikiaSearchBaseTest.php' );
 /**
  * Tests the methods found in \Wikia\Search\MediaWikiInterface
  * @author relwell
  */
-class MediaWikiInterfaceTest extends \WikiaSearchBasetest
+class MediaWikiInterfaceTest extends BaseTest
 {
 	/**
 	 * @var \Wikia\Search\MediaWikiInterface

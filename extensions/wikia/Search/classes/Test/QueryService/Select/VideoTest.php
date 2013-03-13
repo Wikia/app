@@ -1,8 +1,13 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchQueryServiceSelectVideoTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\QueryService\Select\VideoTest
+ */
+namespace Wikia\Search\Test\QueryService\Select;
+use Wikia, ReflectionProperty, ReflectionMethod;
+/**
+ * Tests video search
+ */
+class VideoTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\Video::configureQueryFields

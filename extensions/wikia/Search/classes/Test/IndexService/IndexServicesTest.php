@@ -1,19 +1,15 @@
 <?php
 /**
- * Class definition for \Wikia\Search\Test\IndexServicesTest
+ * Class definition for \Wikia\Search\Test\IndexService\IndexServicesTest
  * @author relwell
  */
-namespace Wikia\Search\Test;
-use Wikia\Search\IndexService;
-use Wikia\Search\MediaWikiInterface;
-use \ReflectionProperty;
-use \ReflectionMethod;
-require_once( 'WikiaSearchBaseTest.php' );
+namespace Wikia\Search\Test\IndexService;
+use Wikia\Search\IndexService, Wikia\Search\MediaWikiInterface, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Test\BaseTest;
 /**
  * Tests the methods found in concrete classes within the \Wikia\Search\IndexService namespace
  * @author relwell
  */
-class IndexServiceTest extends \WikiaSearchBasetest
+class IndexServicesTest extends BaseTest
 {
 	public function setUp() {
 		parent::setUp();

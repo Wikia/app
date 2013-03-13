@@ -1,11 +1,14 @@
 <?php
 /**
- * Controller to execute searches in the content of a wiki.
- *
- * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ * Class definition for SearchApiController
  */
 use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
-
+/**
+ * Controller to execute searches in the content of a wiki.
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ * @package Search
+ * @subpackage Controller
+ */
 class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 

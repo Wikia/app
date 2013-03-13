@@ -4,7 +4,12 @@
  */
 namespace Wikia\Search\QueryService\Select;
 use Wikia\Search\Utilities;
-
+/**
+ * Class responsible for video search. Not totally sure we're using this for video search presently.
+ * @author relwell
+ * @package Search
+ * @subpackage QueryService
+ */
 class Video extends OnWiki
 {
 	/**

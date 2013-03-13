@@ -1,8 +1,13 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchResultSetEmptySetTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\ResultSet\EmptySetTest
+ */
+namespace Wikia\Search\Test\ResultSet;
+use Wikia, ReflectionProperty, ReflectionMethod;
+/** 
+ * Tests empty result functionality 
+ */
+class WikiaSearchResultSetEmptySetTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\ResultSet\EmptySet::configure

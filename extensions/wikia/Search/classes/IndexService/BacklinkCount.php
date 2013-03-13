@@ -7,6 +7,8 @@ namespace Wikia\Search\IndexService;
 /**
  * This class provides backlink info for a page  
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class BacklinkCount extends AbstractService
 {

@@ -8,6 +8,8 @@ use \WikiaException, \Solarium_Result_Select, \WikiaSearchConfig;
 /**
  * This is the default class definition -- represents a flat grouping of results, e.g. on-wiki search.
  * @author relwell
+ * @package Search
+ * @subpackage ResultSet
  */
 class Base extends EmptySet
 {

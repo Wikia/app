@@ -3,8 +3,14 @@
  * Class definition for Wikia\Search\QueryService\Select\OnWiki
  */
 namespace Wikia\Search\QueryService\Select;
-use \Wikia\Search\Utilities, \Solarium_Query_Select;
-
+use \Wikia\Search\Utilities, \Solarium_Query_Select as Select;
+/**
+ * This class is responsible for the default behavior of search.
+ * That is, searching for documents on a given wiki matching the provided term.
+ * @author relwell
+ * @package Search
+ * @subpackage QueryService
+ */
 class OnWiki extends AbstractSelect
 {
 	/**
@@ -23,6 +29,7 @@ class OnWiki extends AbstractSelect
 	);
 	
 	/**
+	 * Passes data from the config to the MW interface to instantiate a match and store it in the config.
 	 * @return Wikia\Search\Match\Article|null
 	 */
 	public function extractMatch() {
@@ -30,15 +37,15 @@ class OnWiki extends AbstractSelect
 		if (! empty( $match ) ) {
 			$this->config->setArticleMatch( $match );
 		}
-		
 		return $this->config->getMatch();
 	}
 	
 	/**
 	 * Registers different components in Solarium. We also use this spot to update query fields for the video search child class.
+	 * @param \Solarium_Query_Select $query
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerComponents()
 	 */
-	protected function registerComponents( \Solarium_Query_Select $query ) {
+	protected function registerComponents( Select $query ) {
 		return $this->configureQueryFields()
 		            ->registerQueryParams   ( $query )
 		            ->registerHighlighting  ( $query )
@@ -47,6 +54,11 @@ class OnWiki extends AbstractSelect
 		;
 	}
 	
+	/**
+	 * Responsible for assigning a filter query to our push-to-top result to prevent duplicate results.
+	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerFilterQueryForMatch()
+	 * @return OnWiki
+	 */
 	protected function registerFilterQueryForMatch() {
 		if ( $this->config->hasArticleMatch() ) {
 			$noPtt = Utilities::valueForField( 'id', $this->config->getArticleMatch()->getResult()->getVar( 'id' ), array( 'negate' => true ) ) ;
@@ -60,7 +72,7 @@ class OnWiki extends AbstractSelect
 	 * @param Solarium_Query_Select $query
 	 * @return OnWiki
 	 */
-	protected function registerSpellcheck( Solarium_Query_Select $query ) {
+	protected function registerSpellcheck( Select $query ) {
 		if ( $this->interface->getGlobal( 'WikiaSearchSpellcheckActivated' ) ) {
 			$query->getSpellcheck()
 			      ->setQuery( $this->config->getQueryNoQuotes( true ) )
@@ -98,7 +110,9 @@ class OnWiki extends AbstractSelect
 	}
 	
 	/**
+	 * Returns a nested query, with query clauses used to pre-filter things like namespace and wiki ID.
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery()
+	 * @return string
 	 */
 	protected function getFormulatedQuery() {
 		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->getNestedQuery() );

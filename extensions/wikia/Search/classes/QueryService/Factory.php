@@ -5,7 +5,13 @@
  */
 namespace Wikia\Search\QueryService;
 use \Wikia\Search\Config, \Wikia\Search\MediaWikiInterface, \Solarium_Client;
-
+/**
+ * This class is responsible for instantiating the appropriate QueryService based on values in the config.
+ * It is also responsible for generating the appropriate instance of Solarium_Client, based on global settings.
+ * @author relwell
+ * @package Search
+ * @subpackage QueryService
+ */
 class Factory
 {
 	/**

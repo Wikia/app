@@ -7,9 +7,15 @@ use Wikia\Search\MediaWikiInterface;
 /**
  * Aggregates all other services into a single request -- good for populating a full index
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class All extends AbstractService
 {
+	/**
+	 * These are the services whose outputs will be aggregated during execute. 
+	 * @var array
+	 */
 	protected $services = array(
 			'DefaultContent'  => null,
 			'BacklinkCount'   => null,

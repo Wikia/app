@@ -1,8 +1,13 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchQueryServiceSelectAbstractSelectTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\QueryService\Select\AbstractSelect
+ */
+namespace Wikia\Search\Test\QueryService\Select;
+use Wikia, ReflectionProperty, ReflectionMethod;
+/**
+ * Tests core functionality shared by other Select instances
+ */
+class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::__construct

@@ -7,6 +7,8 @@ use \Wikia\Search\MediaWikiInterface;
 /**
  * Allows us to abstract fields and dynamically handle languages.
  * @author relwell
+ * @package Search
+ * @subpackage Field
  */
 class Field
 {
@@ -26,6 +28,7 @@ class Field
 	);
 
 	/**
+	 * Responsible for encapsulating MediaWiki logic.
 	 * @var Wikia\Search\MediaWikiInterface
 	 */
 	protected $interface;
@@ -52,7 +55,7 @@ class Field
 	/**
 	 * Constructs a field.
 	 * @param string $fieldName
-	 * @param string $language
+	 * @param string $languageCode
 	 */
 	public function __construct( $fieldName, $languageCode = null ) {
 		$this->fieldName = $fieldName;
@@ -60,6 +63,10 @@ class Field
 		$this->languageCode = $languageCode ?: $this->interface->getLanguageCode();
 	}
 	
+	/**
+	 * Provides the logic for the appropriate field name, dynamic or not.
+	 * @return string
+	 */
 	public function __toString() {
 		if ( in_array( $this->fieldName, self::$languageFields ) && $this->interface->searchSupportsLanguageCode( $this->languageCode ) ) {
 			$lang = preg_replace( '/([^-]+)(-.*)?/', '_$1', $this->languageCode );

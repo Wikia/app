@@ -1,15 +1,20 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchHooksTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\HooksTest
+ */
+namespace Wikia\Search\Test;
+use Wikia\Search\Hooks;
+/**
+ * Tests hooks related to Wikia\Search
+ */
+class HooksTest extends BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\Hooks
 	 */
 	public function testOnWikiaMobileAssetsPackages() {
 
-		$hooks		= F::build( 'Wikia\Search\Hooks' );
+		$hooks		= new Hooks;
 
 		$mockTitle	= $this->getMock( 'Title', array( 'isSpecial' ) );
 		$jsHead		= array();

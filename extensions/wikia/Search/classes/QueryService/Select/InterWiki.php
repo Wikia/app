@@ -4,7 +4,14 @@
  */
 namespace Wikia\Search\QueryService\Select;
 use \Solarium_Query_Select, \Wikia\Search\Utilities;
-
+/**
+ * This class is responsible for performing interwiki search queries.
+ * Presently, that not only means not restricting search by a single wiki,
+ * but also grouping by hostname.
+ * @author relwell
+ * @package Search
+ * @subpackage QueryService
+ */
 class InterWiki extends AbstractSelect
 {
 	/**
@@ -76,6 +83,8 @@ class InterWiki extends AbstractSelect
 	/**
 	 * Registers grouping, query parameters, and filters.
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerComponents()
+	 * @param Solarium_Query_Select $query
+	 * @return InterWiki
 	 */
 	protected function registerComponents( Solarium_Query_Select $query ) {
 		return $this->configureQueryFields()
@@ -173,6 +182,7 @@ class InterWiki extends AbstractSelect
 	}
 	
 	/**
+	 * Returns a nested query, preceded by lucene queries used to filter out bad wikis, and non-content documents.
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery()
 	 */
 	protected function getFormulatedQuery() {

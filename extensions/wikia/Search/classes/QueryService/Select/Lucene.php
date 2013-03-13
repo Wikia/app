@@ -3,7 +3,13 @@
  * Class definition for Wikia\Search\QueryService\Select\Lucene
  */
 namespace Wikia\Search\QueryService\Select;
-
+/**
+ * This class is responsible for queries that use strict Lucene syntax (without DisMax)
+ * @todo this class should be the only instance in the Select namespace; the other classes should be in the Select\Dismax subnamespace.
+ * @author relwell
+ * @package Search
+ * @subpackage QueryService
+ */
 class Lucene extends AbstractSelect
 {
 	/**

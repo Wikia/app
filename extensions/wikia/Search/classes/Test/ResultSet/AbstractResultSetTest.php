@@ -1,8 +1,13 @@
 <?php
-
-require_once( 'WikiaSearchBaseTest.php' );
-
-class WikiaSearchResultSetAbstractResultSetTest extends WikiaSearchBaseTest {
+/**
+ * Class definition for Wikia\Search\Test\ResultSet\AbstractResultSetTest
+ */
+namespace Wikia\Search\Test\ResultSet;
+use Wikia, ReflectionProperty, ReflectionMethod, ArrayIterator;
+/**
+ * Tests abstract result set class
+ */
+class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getResultsFound
