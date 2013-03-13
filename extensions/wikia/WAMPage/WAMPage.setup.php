@@ -22,11 +22,11 @@ $wgExtensionCredits['specialpage'][] = array(
 
 // classes
 $app->registerClass( 'WAMPageArticle', $dir . 'WAMPageArticle.class.php' );
-$app->registerClass( 'WAMPageSpecialController', $dir . 'WAMPageSpecialController.class.php' );
+$app->registerClass( 'SpecialWAMPageController', $dir . 'SpecialWAMPageController.class.php' );
 $app->registerClass( 'WAMPageHooks', $dir . 'WAMPageHooks.class.php' );
 
 // special pages
-$app->registerSpecialPage( 'WAMPage', 'WAMPageSpecialController' );
+$app->registerSpecialPage( 'WAMPage', 'SpecialWAMPageController' );
 
 // hooks
 $app->registerHook('ArticleFromTitle', 'WAMPageHooks', 'onArticleFromTitle');
