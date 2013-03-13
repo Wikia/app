@@ -405,8 +405,8 @@ $messages['qqq'] = array(
 * $3 is a diff URL.',
 	'wall-message-edited-summary' => 'Parameters:
 * $1 summary of the edit
-* $2 is the user who edited the message
-* $3 is user page URL
+* $2 is user page URL
+* $3 is the user who edited the message
 * $4 is a diff URL.',
 	'wall-message-update-topics-summary' => 'Added as auto summery when editing topics',
 	'wall-message-update-highlight-summary' => 'Added as auto summery when highlighted message',
@@ -892,11 +892,15 @@ $messages['br'] = array(
 	'wall-message-removed-thread-because' => '$1 en deus tennet an neudennad evit an abeg-mañ :',
 	'wall-message-deleted-thread-because' => '$1 en deus diverket an neudennad evit an abeg-mañ :',
 	'wall-message-restore-thread' => 'Adsevel an neudennad',
+	'wall-message-move-thread' => "Dilec'hiañ an neudennad-mañ",
 	'wall-message-removed-reply-because' => '$1 en deus tennet ar repsont evit an abeg-mañ :',
 	'wall-message-deleted-reply-because' => '$1 en deus diverket ar respont evit an abeg-mañ :',
 	'wall-message-closed-by' => '[[$2|$1]] en deus serret an neudennad-mañ',
 	'wall-message-restore-reply' => 'Adsevel ar respont',
 	'wall-action-all-confirm-cancel' => 'Nullañ',
+	'wall-action-all-confirm-notify' => 'Kemenn ur merour',
+	'wall-action-remove-reply-title' => 'Lemel ar respont-mañ',
+	'wall-action-remove-thread-title' => 'Lemel an neudennad-mañ',
 	'wall-delete-error-title' => 'Fazi',
 	'wall-action-remove-confirm-ok' => 'Dilemel',
 	'wall-action-admin-thread-title' => 'Diverkañ an neudennad-mañ',
@@ -907,6 +911,9 @@ $messages['br'] = array(
 	'wall-action-restore-confirm' => "Mar plij displegit perak e fell deoc'h ec'h adsevel :",
 	'wall-action-restore-confirm-ok' => 'Assevel',
 	'wall-action-rev-confirm-ok' => 'Ya, diverkañ',
+	'wall-action-move-thread-heading' => "Dilec'hiañ an neudennad-mañ",
+	'wall-action-move-topics-summary' => "Neudennad dilec'hiet",
+	'wall-action-move-thread-ok' => "Dilec'hiañ an neudennad",
 	'wall-notifications' => 'Kemennoù',
 	'wall-notifications-all' => 'An holl gemennoù',
 	'wall-notifications-markasread' => 'Merkañ an holl evel lennet',
@@ -915,15 +922,56 @@ $messages['br'] = array(
 	'wall-notifications-empty' => "N'eus kemenn ebet",
 	'wall-notifications-loading' => "O kargañ ar c'hemennoù",
 	'wall-notifications-reminder' => '<span>$1</span> kemenn nann-lennet ho peus', # Fuzzy
+	'wn-user1-reply-you-a-wall' => "$1 en deus respontet d'ho kemennadenn",
+	'wn-user2-reply-you-a-wall' => "$1 ha $2 o deus respontet d'ho kemennadenn",
+	'wn-user3-reply-you-a-wall' => "$1 ha re all o deus respontet d'ho kemennadenn",
+	'wn-user1-reply-self-a-wall' => "$1 en deus respontet d'ur gemennadenn",
+	'wn-user2-reply-self-a-wall' => "$1 ha $2 o deus respontet d'ur gemennadenn",
+	'wn-user3-reply-self-a-wall' => "$1 ha re all o deus respontet d'ur gemennadenn",
+	'wn-user1-reply-other-a-wall' => '$1 en deus respontet da gemennadenn $2',
+	'wn-user2-reply-other-a-wall' => '$1 ha $2 o deus respontet da gemennadenn $3',
+	'wn-user3-reply-other-a-wall' => '$1 ha re all o deus respontet da gemennadenn $3',
+	'wn-newmsg-onmywall' => '$1 en deus lezet ur gemennadenn war ho moger',
+	'wn-newmsg' => 'Lezet ho peus ur gemennadenn nevez war moger $1',
+	'wn-newmsg-on-followed-wall' => '$1 en deus lezet ur gemennadenn nevez war moger $2',
+	'wn-admin-thread-deleted' => 'Neudennad lamet diouzh moger $1',
 	'wall-sorting-newest-threads' => 'Neudennadoù nevesañ',
 	'wall-sorting-oldest-threads' => 'Neudennadoù koshañ',
 	'wall-sorting-newest-replies' => 'Respontoù nevesañ',
 	'wall-sorting-most-active' => 'Oberiantañ',
 	'wall-sorting-archived' => 'Diellaouet',
 	'wall-deleted-msg-pagetitle' => 'Kemennadenn dilamet',
+	'wall-deleted-msg-return-to' => 'Distreiñ da voger $1.',
 	'wall-deleted-msg-view' => '(Gwelet/Adsevel)',
+	'wall-recentchanges-edit' => '(kemennadenn aozet)',
+	'wall-recentchanges-namespace-selector-message-wall' => "Moger ar c'homzoù",
 	'wall-recentchanges-history-link' => 'istor ar voger',
 	'wall-recentchanges-thread-history-link' => 'istor ar gaoz',
+	'wall-removed-thread-undo' => 'Lamet eo bet an neudennad-mañ. $1',
+	'wall-removed-reply' => 'Lamet eo bet ar respont-mañ.',
+	'wall-deleted-thread-undo' => 'Dilamet eo nbet an neudennad-mañ. $1',
+	'wall-history-thread-created' => '$1 krouet gant $2',
+	'wall-history-thread-removed' => '$1 lamet gant $2',
+	'wall-history-thread-restored' => '$1 assavet gant $2',
+	'wall-history-thread-admin-deleted' => '$1 dilamet gant $2',
+	'wall-history-sorting-newest-first' => 'Ar re nevesañ da gentañ',
+	'wall-history-sorting-oldest-first' => 'Ar re goshañ da gentañ',
+	'wall-history-rail-wall' => 'moger',
+	'wall-history-action-view' => 'gwelet',
+	'wall-history-action-restore' => 'assevel',
+	'wall-history-action-thread-history' => 'istor an neudennad',
+	'wall-thread-history-title' => 'istor an neudennad',
+	'wall-thread-history-thread-created' => '$1 $2 en deus krouet an neudennad-mañ',
+	'wall-history-action-restore-reply' => 'Adsevel ar respont',
+	'wall-history-action-restore-thread' => 'Adsevel an neudennad',
+	'mail-notification-html-greeting' => "Demat deoc'h $1,",
+	'mail-notification-html-button' => 'Gwelet ar gaoz',
+	'wall-quote-author' => '$1 en deus skrivet :',
+	'wall-quote-reply-to' => 'respont da #$1',
+	'wall-preview-modal-title' => 'Rakwelet',
+	'wall-preview-modal-button-publish' => 'Embann',
+	'wall-topic-edit-save' => 'Enrollañ',
+	'wall-topic-edit-cancel' => 'Nullañ',
 );
 
 /** Catalan (català)
@@ -959,7 +1007,7 @@ $messages['ca'] = array(
 	'wall-no-title-warning' => '← No has especificat cap títol',
 	'wall-desc' => "Substitució de la pàgina de discussió d'usuari",
 	'wall-disabled-desc' => "Funcionalitat del Mur de Missatges per a wikis sense l'extensió del Mur activada",
-	'wall-placeholder-topic' => 'Què és això?',
+	'wall-placeholder-topic' => 'De què vols parlar?',
 	'wall-placeholder-message' => 'Publicar un missatge nou al mur de $1',
 	'wall-placeholder-message-anon' => 'Publica un missatge nou en aquest mur',
 	'wall-placeholder-reply' => 'Deixar una resposta',
@@ -3299,6 +3347,13 @@ tue preferentias de e-mail: http://community.wikia.com/Special:Preferences',
 	'wall-preview-modal-button-publish' => 'Publicar',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Kenrick95
+ */
+$messages['id'] = array(
+	'wall-message-undoremove' => 'Balikkan',
+);
+
 /** Italian (italiano)
  * @author Minerva Titani
  */
@@ -5306,6 +5361,8 @@ $messages['ps'] = array(
 	'mail-notification-html-greeting' => 'سلامونه $1،',
 	'prefs-email-wall-v2' => 'پيغام دېوال او فورم',
 	'tog-enotifwallthread-v2' => 'برېښليک راولېږه…',
+	'wall-quote-author' => '$1 ليکلی:',
+	'wall-quote-reply-to' => '#$1 ته ځواب وييل',
 	'wall-preview-modal-title' => 'مخليدنه',
 	'wall-preview-modal-button-back' => 'پر شا',
 	'wall-preview-modal-button-publish' => 'خپرول',

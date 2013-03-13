@@ -396,6 +396,7 @@ $messages['bjn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -425,7 +426,7 @@ $messages['br'] = array(
 	'wmu-thumbnail' => 'Munud',
 	'wmu-fullsize' => 'Ment wirion ($1x$2px)',
 	'wmu-width' => 'Ledander',
-	'wmu-layout' => 'Fichañ',
+	'wmu-layout' => 'Pajennaozañ',
 	'wmu-caption' => "Alc'hwez",
 	'wmu-link' => 'Liamm',
 	'wmu-optional' => '(diret)',
@@ -471,6 +472,7 @@ $messages['br'] = array(
 	'wmu-replace-default-caption' => "Erlec'hiañ an notenn dre ziouer",
 	'wmu-appearance-in-article' => 'Tres er pennad',
 	'wmu-alignment' => 'Linennadur',
+	'wmu-file-protected' => 'Gwarezet eo ar skeudenn-mañ',
 );
 
 /** Catalan (català)
@@ -2295,6 +2297,8 @@ $messages['ps'] = array(
 	'wmu-layout' => 'ليدنمخ',
 	'wmu-link' => 'تړنه',
 	'wmu-insert2' => 'دوتنه ورټومبل',
+	'wmu-insert3' => 'دا انځور ورټومبل',
+	'wmu-back' => 'يو بل انځور ټاکل',
 	'wmu-imagebutton' => 'انځورونه ورګډول',
 	'wmu-gallery' => 'انځورتون',
 	'wmu-gallery-btn1' => 'يو بل انځور ورګډول',

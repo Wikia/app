@@ -8,6 +8,10 @@
  */
 
 // TODO: extend SpecialNewFiles class instead of using a function
+/**
+ * @param $par string
+ * @param $specialPage SpecialPage
+ */
 function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	global $wgOut, $wgLang, $wgRequest, $wgMiserMode;
 	global $wmu, $wgOasisHD;
@@ -209,6 +213,8 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 		$botpar = '';
 	}
 	$now = wfTimestampNow();
+
+	/* @var $wgLang Language */
 	$d = $wgLang->date( $now, true );
 	$t = $wgLang->time( $now, true );
 	$dateLink = Linker::link( $titleObj, wfMsgHtml( 'sp-newimages-showfrom', $d, $t ),
@@ -255,7 +261,7 @@ function getLinkedFiles ( $image ) {
 	$anchorLength = 60;
 
 	wfProfileIn( __METHOD__ );
-	$cacheKey = wfMemcKey( __METHOD__, $image->img_name );
+	$cacheKey = wfMemcKey( __METHOD__, md5($image->img_name) );
 	$data = $wgMemc->get( $cacheKey );
 	if( !is_array($data) ) {
 		// The ORDER BY ensures we get NS_MAIN pages first
@@ -279,7 +285,6 @@ function getLinkedFiles ( $image ) {
 	$links = array();
 
 	if ( !empty($data) ) {
-		$sk = RequestContext::getMain()->getSkin();
 		foreach ( $data as $row ) {
 			$name = Title::makeTitle( $row['ns'], $row['title'] );
 			$links[] = Linker::link( $name, wfShortenText($name, $anchorLength), array( 'class' => 'wikia-gallery-item-posted' ) );

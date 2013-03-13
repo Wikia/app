@@ -1,5 +1,5 @@
 <?
-class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService {
+class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 1;
 
 	protected function getFormFields() {

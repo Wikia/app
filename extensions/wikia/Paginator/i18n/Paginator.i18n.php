@@ -233,6 +233,14 @@ $messages['pms'] = array(
 	'paginator-back' => 'André',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'paginator-next' => 'راتلونکی',
+	'paginator-back' => 'پر شا کېدل',
+);
+
 /** Portuguese (português)
  */
 $messages['pt'] = array(

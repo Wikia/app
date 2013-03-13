@@ -8,6 +8,19 @@ class WAMService extends Service {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 
+	protected $defaultIndexOptions = array(
+		'currentTimestamp' => null,
+		'previousTimestamp' => null,
+		'verticalId' => null,
+		'wikiLang' => null,
+		'wikiId' => null,
+		'wikiWord' => null,
+		'sortColumn' => 'wam_rank',
+		'sortDirection' => 'ASC',
+		'offset' => 0,
+		'limit' => self::WAM_DEFAULT_ITEM_LIMIT_PER_PAGE
+	);
+
 	/**
 	 * Returns the latest WAM score provided a wiki ID
 	 * @param int $wikiId
@@ -46,18 +59,27 @@ class WAMService extends Service {
 	}
 
 	/**
-	 * @param null $currentTimestamp
-	 * @param null $previousTimestamp
-	 * @param null $verticalId
-	 * @param null $wikiId
-	 * @param string $wikiWord
-	 * @param string $sortColumn
-	 * @param string $sortDirection
-	 * @param int $offset
-	 * @param int $limit
+	 * @param array $inputOptions - available options:
+	 * 	int $currentTimestamp
+	 * 	int $previousTimestamp
+	 * 	int $verticalId
+	 * 	int $wikiId
+	 * 	string $wikiWord
+	 * 	string $sortColumn
+	 * 	string $sortDirection
+	 * 	int $offset
+	 * 	int $limit
+	 *
 	 * @return array
 	 */
-	public function getWamIndex ($currentTimestamp = null, $previousTimestamp = null, $verticalId = null, $wikiLang = null, $wikiId = null, $wikiWord = null, $sortColumn = 'wam_rank', $sortDirection = 'ASC', $offset = 0, $limit = self::WAM_DEFAULT_ITEM_LIMIT_PER_PAGE) {
+	public function getWamIndex ($inputOptions) {
+		$inputOptions += $this->defaultIndexOptions;
+
+		$inputOptions['currentTimestamp'] = $inputOptions['currentTimestamp'] ? $inputOptions['currentTimestamp'] : strtotime('00:00 -1 day');
+		$inputOptions['previousTimestamp'] = $inputOptions['previousTimestamp']
+			? $inputOptions['previousTimestamp']
+			: $inputOptions['currentTimestamp'] - 60 * 60 * 24;
+
 		$app = F::app();
 		$app->wf->profileIn(__METHOD__);
 
@@ -71,9 +93,9 @@ class WAMService extends Service {
 			$tables = $this->getWamIndexTables();
 			$fields = $this->getWamIndexFields();
 			$countFields = $this->getWamIndexCountFields();
-			$conds = $this->getWamIndexConditions($currentTimestamp, $previousTimestamp, $wikiId, $verticalId, $wikiLang, $wikiWord);
-			$options = $this->getWamIndexOptions($sortDirection, $sortColumn, $offset, $limit);
-			$join_conds = $this->getWamIndexJoinConditions();
+			$conds = $this->getWamIndexConditions($inputOptions, $db);
+			$options = $this->getWamIndexOptions($inputOptions);
+			$join_conds = $this->getWamIndexJoinConditions($inputOptions);
 
 			$result = $db->select(
 				$tables,
@@ -107,12 +129,13 @@ class WAMService extends Service {
 		return $wamIndex;
 	}
 
-	protected function getWamIndexJoinConditions () {
+	protected function getWamIndexJoinConditions ($options) {
 		$join_conds = array(
 			'fw2' => array(
 				'left join',
 				array(
 					'fw1.wiki_id = fw2.wiki_id',
+					'fw2.time_id = FROM_UNIXTIME(' . $options['previousTimestamp'] . ')'
 				)
 			),
 			'dw' => array(
@@ -125,12 +148,12 @@ class WAMService extends Service {
 		return $join_conds;
 	}
 
-	protected function getWamIndexOptions ($sortDirection, $sortColumn, $offset, $limit) {
+	protected function getWamIndexOptions ($inputOptions) {
 		$options = array();
 
-		$sortDirection = (($sortDirection == 'DESC') ? 'DESC' : 'ASC');
+		$sortDirection = (($inputOptions['sortDirection'] == 'DESC') ? 'DESC' : 'ASC');
 
-		switch ($sortColumn) {
+		switch ($inputOptions['sortColumn']) {
 			case 'wam_rank':
 			default:
 				$options['ORDER BY'] = 'wam ' . $sortDirection;
@@ -140,40 +163,42 @@ class WAMService extends Service {
 				break;
 		}
 
-		if (!is_null($offset)) {
-			$options['OFFSET'] = $offset;
+		if (!is_null($inputOptions['offset'])) {
+			$options['OFFSET'] = $inputOptions['offset'];
 		}
 
-		if (!is_null($offset)) {
-			$options['LIMIT'] = $limit;
-			return $options;
+		if (!is_null($inputOptions['limit'])) {
+			$options['LIMIT'] = $inputOptions['limit'];
 		}
 		return $options;
 	}
 
-	protected function getWamIndexConditions ($currentTimestamp, $previousTimestamp, $wikiId, $verticalId, $wikiLang, $wikiWord) {
+	protected function getWamIndexConditions ($options, $db) {
 		$conds = array(
-			'fw1.time_id = FROM_UNIXTIME(' . ($currentTimestamp ? $currentTimestamp : strtotime('00:00 -2 day')) . ')',
-			'fw2.time_id = FROM_UNIXTIME(' . ($previousTimestamp ? $previousTimestamp : strtotime('00:00 -3 day')) . ')'
+			'fw1.time_id = FROM_UNIXTIME(' . $options['currentTimestamp'] . ')'
 		);
 
-		if (!is_null($wikiId)) {
-			$conds ['fw1.wiki_id'] = $wikiId;
+		if ($options['wikiId']) {
+			$conds ['fw1.wiki_id'] = $options['wikiId'];
 		}
 
-		if (!is_null($wikiWord)) {
-			$conds [] = "dw.url like '%" . mysql_real_escape_string($wikiWord) . "%' ";
-						"OR dw.title like '%" . mysql_real_escape_string($wikiWord) . "%'";
+		if (!is_null($options['wikiWord'])) {
+			$conds [] = "dw.url like '%" . $db->strencode($options['wikiWord']) . "%' " .
+						"OR dw.title like '%" . $db->strencode($options['wikiWord']) . "%'";
 		}
 
-		if (!is_null($verticalId)) {
-			$conds ['dw.hub_id'] = $verticalId;
+		if ($options['verticalId']) {
+			$conds ['dw.hub_id'] = $options['verticalId'];
 		} else {
-			$conds ['dw.hub_id'] = array(2, 3, 9);
+			$conds ['dw.hub_id'] = array(
+				WikiFactoryHub::CATEGORY_ID_GAMING,
+				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+				WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+			);
 		}
 
-		if (!is_null($wikiLang)) {
-			$conds ['dw.lang'] = mysql_real_escape_string($wikiLang);
+		if (!is_null($options['wikiLang'])) {
+			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
 		}
 
 		return $conds;
@@ -194,7 +219,8 @@ class WAMService extends Service {
 			'dw.title',
 			'dw.url',
 			'dw.hub_id',
-			'fw1.wam - fw2.wam as wam_change'
+			'fw1.wam - IFNULL(fw2.wam, 0) as wam_change',
+			'ISNULL(fw2.wam) as wam_is_new'
 		);
 		return $fields;
 	}

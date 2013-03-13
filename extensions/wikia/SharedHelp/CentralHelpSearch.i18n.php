@@ -195,6 +195,14 @@ $messages['pt-br'] = array(
 	'centralhelpsearch-placeholder' => 'Procurar em Ajuda...',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'centralhelpsearch-desc' => "Permette 'nglusiune de 'nu module pe cercà 'a Comunitate Cendrale d'Aijute",
+	'centralhelpsearch-placeholder' => 'Cirche aijute...',
+);
+
 /** Russian (русский)
  * @author AZISS
  * @author Kuzura

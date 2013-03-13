@@ -251,6 +251,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
@@ -263,7 +264,7 @@ $messages['br'] = array(
 	'scavengerhunt-list-edit' => 'kemmañ',
 	'scavengerhunt-label-general' => 'Hollek',
 	'scavengerhunt-label-name' => 'Anv :',
-	'scavengerhunt-label-article-title' => 'Titl ar bajenn :', # Fuzzy
+	'scavengerhunt-label-article-title' => 'Titl ar bajenn (URL ar pennad e forzh peseurt wiki) :',
 	'scavengerhunt-label-article-hidden-image' => 'Skeudenn kuzhet :',
 	'scavengerhunt-button-add' => "Ouzhpennañ ur c'hoari",
 	'scavengerhunt-button-save' => 'Enrollañ',
@@ -272,12 +273,14 @@ $messages['br'] = array(
 	'scavengerhunt-button-delete' => 'Dilemel',
 	'scavengerhunt-entry-form-name' => "Hoc'h anv :",
 	'scavengerhunt-entry-form-email' => "Ho chomlec'h postel :",
+	'scavengerhunt-label-progress-bar' => 'Barrenn mont war-raok',
 	'scavengerhunt-quit-game-button-quit' => 'Kuitaat',
 	'scavengerhunt-quit-game-button-cancel' => 'Nullañ',
 	'scavengerhunt-label-entry-form-email' => 'Postel an implijer',
 	'scavengerhunt-label-entry-form-username' => 'Anv implijer',
 	'scavengerhunt-label-clue-color' => 'Liv ar font',
 	'scavengerhunt-label-clue-size' => 'Ment ar font',
+	'scavengerhunt-label-article-congrats' => "Kemennadenn gourc'hemennoù",
 );
 
 /** Czech (česky)
@@ -1996,10 +1999,13 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'scavengerhunt-list-header-name' => 'د لوبې نوم',
+	'scavengerhunt-list-header-actions' => 'چارې',
 	'scavengerhunt-list-enabled' => 'چارنول',
 	'scavengerhunt-list-disabled' => 'ناچارنول',
 	'scavengerhunt-list-edit' => 'سمول',
 	'scavengerhunt-label-name' => 'نوم:',
+	'scavengerhunt-button-add' => 'يو نوم ورګډول',
 	'scavengerhunt-button-save' => 'خوندي کول',
 	'scavengerhunt-button-disable' => 'ناچارنول',
 	'scavengerhunt-button-enable' => 'چارنول',

@@ -623,6 +623,14 @@ class Article extends Page {
 						$wgOut->addHTML( "<!-- parser cache is expired, sending anyway due to pool overload-->\n" );
 					}
 
+					# <Wikia>
+					if ( !$poolArticleView->getIsDirty() ) {
+						$this->mParserOutput->setPerformanceStats('wikitextSize',strlen($this->getContent()));
+						$this->mParserOutput->setPerformanceStats('htmlSize',strlen($this->mParserOutput->getText()));
+						wfRunHooks('ArticleViewAfterParser',array( $this, $this->mParserOutput ) );
+					}
+					# </Wikia>
+
 					$outputDone = true;
 					break;
 				# Should be unreachable, but just in case...

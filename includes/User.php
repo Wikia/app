@@ -88,8 +88,6 @@ class User {
 		'mRegistration',
 		'mBirthDate', // Wikia. Added to reflect our user table layout.
 		'mEditCount',
-		// Wikia. edit count localized for wiki
-		'mEditCountLocal',
 		// user_groups table
 		'mGroups',
 		// user_properties table
@@ -170,7 +168,6 @@ class User {
 		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
 		$mCookiePassword, $mEditCount, $mAllowUsertalk;
-	var $mEditCountLocal; // Wikia. edit count localized for wiki.
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
 
@@ -513,18 +510,6 @@ class User {
 		if ( $s === false ) {
 			$user_name = $nt->getText();
 			wfRunHooks( 'UserNameLoadFromId', array( $user_name, &$s ) );
-		}
-
-		/* wikia change */
-		if ( $s === false ) {
-			global $wgExternalAuthType;
-			if ( $wgExternalAuthType ) {
-				$mExtUser = ExternalUser::newFromName( $nt->getText() );
-				if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-					$mExtUser->linkToLocal( $mExtUser->getId() );
-					$s = $mExtUser->getLocalUser( false );
-				}
-			}
 		}
 
 		if ( $s === false ) {
@@ -1107,7 +1092,6 @@ class User {
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
 			$this->getEditCount(); // revalidation for nulls
-			$this->getEditCountLocal(); // revalidation for nulls
 			$this->mMonacoData = null;
 			$this->mMonacoSidebar = null;
 			return true;
@@ -2562,21 +2546,20 @@ class User {
 
 	/**
 	 * Wikia. Get number of edits localized for wiki,
-	 * initialize if not set
+	 *
+	 * NOTE: UserStatsService:getEditCountWiki function retrieves User object inside
+	 * due to this fact localized editcount shouldn't be a field of User class
+	 * to avoid infinite loop
 	 *
 	 * @autor Kamil Koterba
 	 * @since Feb 2013
-	 * @return Int mEditCountLocal
+	 * @return Int
 	 */
 	public function getEditCountLocal() {
 		if( $this->getId() ) {
 
-			if ( !isset( $this->mEditCountLocal ) ) {
-				/* Populate the count, if it has not been populated yet */
-				$userStatsService = new UserStatsService( $this->mId );
-				$this->mEditCountLocal = $userStatsService->getEditCountWiki();
-			}
-			return $this->mEditCountLocal;
+			$userStatsService = new UserStatsService( $this->mId );
+			return $userStatsService->getEditCountWiki();
 
 		} else {
 			/* nil */
@@ -3041,14 +3024,14 @@ class User {
 			}
 		}
 
-                /**
-                 * @author Michał Roszka (Mix)
-                 * trap for BugId:17012
-                 */
-                if ( 'Lancer1289' == $this->mName ) {
-                    $oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
-                    UserMailer::send( $oTo, $oFrom, 'BugId:17012 Occurrence Report', serialize( wfDebugBacktrace() ) );
-                }
+		/**
+		 * @author Michał Roszka (Mix)
+		 * trap for BugId:17012
+		 */
+		if ( 'Lancer1289' == $this->mName ) {
+			$oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
+			UserMailer::send( $oTo, $oFrom, 'BugId:17012 Occurrence Report', serialize( wfDebugBacktrace() ) );
+		}
 		// wikia change end
 
 		$dbw = wfGetDB( DB_MASTER );
@@ -4140,6 +4123,7 @@ class User {
 				array( 'user_editcount=user_editcount+1' ),
 				array( 'user_id' => $this->getId() ),
 				__METHOD__ );
+			$dbw->commit();
 
 			/**
 			 * Wikia change
@@ -4147,20 +4131,22 @@ class User {
 			 * @since Feb 2013
 			 * @author Kamil Koterba
 			 */
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->update( 'wikia_user_properties',
-				array( 'wup_value=wup_value+1' ),
-				array( 'wup_user' => $this->getId(),
-					'wup_property' => 'editcount' ),
-				__METHOD__ );
+			if ( !empty($wgEnableEditCountLocal) ) {
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->update( 'wikia_user_properties',
+					array( 'wup_value=wup_value+1' ),
+					array( 'wup_user' => $this->getId(),
+						'wup_property' => 'editcount' ),
+					__METHOD__ );
 
-			if ($dbw->affectedRows() == 1) {
-				//increment memcache also
-				$key = wfSharedMemcKey( 'editcount', $wgCityId, $this->getId() );
-				$wgMemc->incr( $key );
-			} else {
-				//initialize editcount skipping memcache
-				$this->getEditCount( 0, true );
+				if ($dbw->affectedRows() == 1) {
+					//increment memcache also
+					$key = wfSharedMemcKey( 'editcount', $wgCityId, $this->getId() );
+					$wgMemc->incr( $key );
+				} else {
+					//initialize editcount skipping memcache
+					$this->getEditCountLocal( 0, true );
+				}
 			}
 			/* end of change */
 

@@ -1,5 +1,5 @@
 <?php
-class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleService {
+class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 4;
 
 	protected function getFormFields() {
@@ -77,7 +77,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 		$model = new MarketingToolboxModel();
 
 		if( !empty($data['values']['video']) ) {
-			$videoData = $model->getVideoData($data['values']['video']);
+			$videoData = $model->getVideoData($data['values']['video'], $model->getThumbnailSize());
 			$data['videoThumb'] =  $videoData['videoThumb'];
 		}
 		if( !empty($data['values']['sponsoredImage']) ) {
@@ -98,5 +98,48 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 		}
 
 		return parent::filterData($data);
+	}
+
+	public function render($data) {
+		if( !empty($data['sponsoredImageAlt']) ) {
+		//sponsoredImageAlt === image file title -> can be used in Title::newFromTitle() to create Title instance
+			$data['sponsoredImageMarkup'] = $this->getSponsoredImageMarkup($data['sponsoredImageAlt']);
+		}
+		
+		return parent::render($data);
+	}
+	
+	public function getStructuredData($data) {
+		$structuredData = array();
+
+		$structuredData['header'] = $data['header'];
+		$structuredData['description'] = isset($data['description']) ? $data['description'] : '';
+		$structuredData['articleUrl'] = $data['articleUrl'];
+
+		if (!empty($data['sponsoredImage'])) {
+			$sponsoredImageInfo = $this->getImageInfo($data['sponsoredImage']);
+		}
+
+		$structuredData['sponsoredImageUrl'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->url : null;
+		$structuredData['sponsoredImageAlt'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->title : null;
+
+
+		$toolboxModel = $this->getToolboxModel();
+		$moduleModel = new MarketingToolboxFeaturedvideoModel();
+		$videoData = $toolboxModel->getVideoData($data['video'], $moduleModel->getVideoThumbSize());
+
+		$structuredData['video'] = array(
+			'title' => isset($videoData['title']) ? $videoData['title'] : null,
+			'fileUrl' => isset($videoData['fileUrl']) ? $videoData['fileUrl'] : null,
+			'thumbUrl' => isset($videoData['thumbUrl']) ? $videoData['thumbUrl'] : null,
+			'duration' => isset($videoData['duration']) ? $videoData['duration'] : null,
+			'thumbMarkup' => isset($videoData['videoThumb']) ? $videoData['videoThumb'] : null,
+		);
+
+		return $structuredData;
+	}
+
+	protected function getToolboxModel() {
+		return new MarketingToolboxModel();
 	}
 }

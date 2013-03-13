@@ -1280,9 +1280,8 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 				'score'			=>	'PTT',
 				'isArticleMatch'=>	true,
 				'ns'			=>	NS_MAIN,
-				'pageId'		=>	$mockId,
+				'pageid'		=>	$mockId,
 				);
-		
 		foreach ( $expectedFieldValues as $key => $val ) {
 			$this->assertEquals(
 					$val,

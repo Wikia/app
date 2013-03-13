@@ -15,7 +15,7 @@
 		<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', array(
 			'classname' => 'videogames',
 			'heading' => wfMsg('wikiahome-hubs-videogames-heading'),
-			'heroimageurl' => $hubImages['Video_Games'],
+			'heroimageurl' => $hubImages[WikiFactoryHub::CATEGORY_ID_GAMING],
 			'herourl' => wfMsg('wikiahome-hubs-videogames-url'),
 			'creative' => wfMsg('wikiahome-hubs-videogames-creative'),
 			'moreheading' => wfMsg('wikiahome-hubs-videogames-more-heading'),
@@ -24,7 +24,7 @@
 		<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', array(
 			'classname' => 'entertainment',
 			'heading' => wfMsg('wikiahome-hubs-entertainment-heading'),
-			'heroimageurl' => $hubImages['Entertainment'],
+			'heroimageurl' => $hubImages[WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT],
 			'herourl' => wfMsg('wikiahome-hubs-entertainment-url'),
 			'creative' => wfMsg('wikiahome-hubs-entertainment-creative'),
 			'moreheading' => wfMsg('wikiahome-hubs-entertainment-more-heading'),
@@ -33,7 +33,7 @@
 		<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', array(
 			'classname' => 'lifestyle',
 			'heading' => wfMsg('wikiahome-hubs-lifestyle-heading'),
-			'heroimageurl' => $hubImages['Lifestyle'],
+			'heroimageurl' => $hubImages[WikiFactoryHub::CATEGORY_ID_LIFESTYLE],
 			'herourl' => wfMsg('wikiahome-hubs-lifestyle-url'),
 			'creative' => wfMsg('wikiahome-hubs-lifestyle-creative'),
 			'moreheading' => wfMsg('wikiahome-hubs-lifestyle-more-heading'),
@@ -65,21 +65,21 @@
 						</a>
 					</li>
 					<li>
-						<a href="<?= wfMsg('wikiahome-community-social-twitter-link') ?>">
+						<a href="<?= wfMsg('oasis-community-social-twitter-link') ?>">
 							<img class="wikiahomepage-community-social-twitter" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-twitter') ?>
 						</a>
 					</li>
 					<li>
-						<a href="<?= wfMsg('wikiahome-community-social-facebook-link') ?>">
+						<a href="<?= wfMsg('oasis-community-social-facebook-link') ?>">
 							<img class="wikiahomepage-community-social-facebook" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-facebook') ?>
 						</a>
 					</li>
 					<?php
-						$message = wfMsg('wikiahome-community-social-googleplus-link');
+						$message = wfMsg('oasis-community-social-googleplus-link');
 						if(!empty($message)):
 					?>
 					<li>
-						<a href="<?= wfMsg('wikiahome-community-social-googleplus-link') ?>">
+						<a href="<?= $message ?>">
 							<img class="wikiahomepage-community-social-googleplus" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-googleplus') ?>
 						</a>
 					</li>

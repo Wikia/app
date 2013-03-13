@@ -337,6 +337,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
@@ -388,7 +389,7 @@ $messages['br'] = array(
 	'rte-ck-media-delete' => 'lemel',
 	'rte-ck-media-edit' => 'kemmañ',
 	'rte-ck-modeSwitch-toSource' => 'Mammenn',
-	'rte-ck-modeSwitch-toWysiwyg' => "Mont d'ar mod WYSIWYG", # Fuzzy
+	'rte-ck-modeSwitch-toWysiwyg' => 'Da welet',
 	'rte-ck-photoGallery-gallery' => 'Skeudennaoueg',
 	'rte-ck-photoGallery-slideshow' => "Kinnig luc'hvannoù",
 	'rte-ck-photoGallery-slider' => 'Dibuner',
@@ -561,6 +562,13 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'rte-ck-templateDropDown-label' => 'Куцкеп',
+);
+
+/** Sorani Kurdish (کوردی)
+ * @author Calak
+ */
+$messages['ckb'] = array(
+	'rte-ck-link-add' => 'بەستەر زیاد بکە',
 );
 
 /** Czech (česky)
@@ -1425,6 +1433,13 @@ $messages['hu'] = array(
 	'rte-ck-format-tag_h3' => 'Címsor 3',
 	'rte-ck-format-tag_h4' => 'Címsor 4',
 	'rte-ck-format-tag_h5' => 'Címsor 5',
+);
+
+/** Armenian (Հայերեն)
+ * @author Vadgt
+ */
+$messages['hy'] = array(
+	'rte-ck-link-add' => 'Ստեղծել հղումը',
 );
 
 /** Interlingua (interlingua)
@@ -2633,6 +2648,8 @@ $messages['ps'] = array(
 	'rte-ck-link-internal-pageName' => 'د مخ نوم',
 	'rte-ck-link-internal-tab' => 'کورنۍ تړنه',
 	'rte-ck-link-status-external' => 'باندنۍ تړنه',
+	'rte-ck-media-delete' => 'غورځول',
+	'rte-ck-media-edit' => 'بدلول',
 	'rte-ck-modeSwitch-toSource' => 'سرچينه',
 	'rte-ck-photoGallery-gallery' => 'انځورتون',
 	'rte-ck-photoGallery-tooltip' => 'دا يو انځورتون دی.',

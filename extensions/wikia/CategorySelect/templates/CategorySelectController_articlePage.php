@@ -7,7 +7,7 @@
 			)) ?>
 			<? if ( $userCanEdit ): ?>
 				<li class="last">
-					<button class="wikia-button secondary add" id="CategorySelectAdd" type="button"><?= $wf->Message( 'categoryselect-button-add' ) ?></button>
+					<button class="wikia-button secondary add" id="CategorySelectAdd" type="button"><?= $wf->Message( 'categoryselect-button-add' )->text() ?></button>
 					<?= $app->getView( 'CategorySelect', 'input' ) ?>
 				</li>
 			<? endif ?>
@@ -15,8 +15,8 @@
 	</div>
 	<? if ( $userCanEdit ): ?>
 		<div class="toolbar">
-			<button class="wikia-button secondary cancel" id="CategorySelectCancel" type="button"><?= $wf->Message( 'categoryselect-button-cancel' ) ?></button>
-			<button class="wikia-button save" id="CategorySelectSave" type="button" disabled="disabled"><?= $wf->Message( 'categoryselect-button-save' ) ?></button>
+			<button class="wikia-button secondary cancel" id="CategorySelectCancel" type="button"><?= $wf->Message( 'categoryselect-button-cancel' )->text() ?></button>
+			<button class="wikia-button save" id="CategorySelectSave" type="button" disabled="disabled"><?= $wf->Message( 'categoryselect-button-save' )->text() ?></button>
 		</div>
 	<? endif ?>
 </nav>

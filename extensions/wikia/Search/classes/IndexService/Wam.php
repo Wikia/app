@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\IndexService;
-use \DataMartService;
+use \WAMService;
 /**
  * Reponsible for retrieving WAM score for a given wiki
  * @author relwell

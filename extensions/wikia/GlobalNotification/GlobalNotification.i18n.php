@@ -158,6 +158,14 @@ $messages['pt-br'] = array(
 	'globalnotification-general-ajax-failure' => 'O navegador não pode se conectar a Wikia. Tente novamente mais tarde.',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'globalnotification-desc' => "Face vedè le notifiche d'u sisteme pe le avveneminde cumme a le falleminde AJAX",
+	'globalnotification-general-ajax-failure' => "'U browser non ge pò collegarse a 'a Uicchia. Pruève arrete.",
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura

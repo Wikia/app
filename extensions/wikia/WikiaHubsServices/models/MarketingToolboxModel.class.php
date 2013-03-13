@@ -10,6 +10,8 @@ class MarketingToolboxModel extends WikiaModel {
 
 	protected $statuses = array();
 	protected $modules = array();
+	protected $editableModules = array();
+	protected $nonEditableModules = array();
 	protected $sections = array();
 	protected $verticals = array();
 	protected $modulesCount;
@@ -31,19 +33,23 @@ class MarketingToolboxModel extends WikiaModel {
 			'PUBLISHED' => 2
 		);
 
-		$this->modules = array(
+		$this->editableModules = array(
 			MarketingToolboxModuleSliderService::MODULE_ID => 'slider',
-			MarketingToolboxModulePulseService::MODULE_ID => 'pulse',
 			MarketingToolboxModuleWikiaspicksService::MODULE_ID => 'wikias-picks',
 			MarketingToolboxModuleFeaturedvideoService::MODULE_ID => 'featured-video',
 			MarketingToolboxModuleExploreService::MODULE_ID => 'explore',
 			MarketingToolboxModuleFromthecommunityService::MODULE_ID => 'from-the-community',
 			MarketingToolboxModulePollsService::MODULE_ID => 'polls',
-			MarketingToolboxModuleTop10listService::MODULE_ID => 'top10-list',
 			MarketingToolboxModulePopularvideosService::MODULE_ID => 'popular-videos'
 		);
 
-		$this->modulesCount = count($this->modules);
+		$this->nonEditableModules = array(
+			MarketingToolboxModuleWAMService::MODULE_ID => 'wam'
+		);
+
+		$this->modules = $this->editableModules + $this->nonEditableModules;
+
+		$this->modulesCount = count($this->editableModules);
 
 		$this->sections = array(
 			self::SECTION_HUBS => $this->wf->msg('marketing-toolbox-section-hubs-button')
@@ -76,8 +82,16 @@ class MarketingToolboxModel extends WikiaModel {
 		return self::FORM_THUMBNAIL_SIZE;
 	}
 	
+	public function getEditableModulesIds() {
+		return array_keys($this->editableModules);
+	}
+
+	public function getNonEditableModulesIds() {
+		return array_keys($this->nonEditableModules);
+	}
+
 	public function getModulesIds() {
-		return array_keys($this->modules);
+		return array_merge($this->getEditableModulesIds(), $this->getNonEditableModulesIds());
 	}
 	
 	public function getModuleName($moduleId) {
@@ -145,26 +159,36 @@ class MarketingToolboxModel extends WikiaModel {
 	 * Return array consisting of videoThumb and videoTimestamp
 	 * for given video name
 	 *
-	 * @param $fileName
+	 * @param string $fileName
+	 * @param int    $thumbSize
+	 *
 	 * @return array
 	 */
-	public function getVideoData ($fileName) {
+	public function getVideoData ($fileName, $thumbSize) {
 		$videoData = array();
 		$title = Title::newFromText($fileName, NS_FILE);
 		if (!empty($title)) {
 			$file = $this->wf->findFile($title);
 		}
 		if (!empty($file)) {
-			$thumbSize = $this->getThumbnailSize();
 			$htmlParams = array(
 				'file-link' => true,
 				'duration' => true,
 				'linkAttribs' => array('class' => 'video-thumbnail lightbox')
 			);
-			$videoData['videoThumb'] = $file->transform(array('width' => $thumbSize))->toHtml($htmlParams);
+			$thumb = $file->transform(array('width' => $thumbSize));
+
+			$videoData['videoThumb'] = $thumb->toHtml($htmlParams);
 			$videoData['videoTimestamp'] = $file->getTimestamp();
 			$videoData['videoTime'] = $this->wf->TimeFormatAgo($videoData['videoTimestamp']);
+
+			$meta = unserialize($file->getMetadata());
+			$videoData['duration'] = isset($meta['duration']) ? $meta['duration'] : null;
+			$videoData['title'] = $title->getText();
+			$videoData['fileUrl'] = $title->getFullURL();
+			$videoData['thumbUrl'] = $thumb->getUrl();
 		}
+
 		return $videoData;
 	}
 
@@ -314,7 +338,7 @@ class MarketingToolboxModel extends WikiaModel {
 		} else {
 			$out = $this->getDefaultModuleList();
 		}
-		
+
 		$actualData = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp);
 		$out = $actualData + $out;
 		ksort($out);
@@ -489,7 +513,7 @@ class MarketingToolboxModel extends WikiaModel {
 	protected function getDefaultModuleList() {
 		$out = array();
 
-		foreach ($this->modules as $moduleId => $moduleName) {
+		foreach ($this->editableModules as $moduleId => $moduleName) {
 			$out[$moduleId] = array(
 				'status' => $this->statuses['NOT_PUBLISHED'],
 				'lastEditTime' => null,

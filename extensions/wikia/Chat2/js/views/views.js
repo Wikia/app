@@ -46,7 +46,12 @@ var ChatView = Backbone.View.extend({
 				if (match !== null) {
 					linkName = match[1];
 				}
-				linkName = decodeURIComponent(linkName);
+
+				// (BugId:97945) Invalid URIs can throw "URIError: URI malformed"
+				try {
+					linkName = decodeURIComponent(linkName);
+				} catch( e ) {}
+
 				linkName = linkName.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
 				linkName = linkName.replace(/>/g, "&gt;");
 				return '<a href="'+link+'">'+linkName+'</a>';

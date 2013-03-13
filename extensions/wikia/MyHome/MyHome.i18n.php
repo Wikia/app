@@ -482,6 +482,7 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
 );
 
 /** Catalan (català)
+ * @author Anskar
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -497,6 +498,7 @@ $messages['ca'] = array(
 	'myhome-hot-spots-feed' => 'Més Populars!',
 	'myhome-hot-spots-feed-empty' => "Aquest wiki està esperant a que t'uneixis. Fes clic a '''[[Special:CreatePage|nova pàgina]]''' per començar a escriure!",
 	'myhome-hot-spots-newest' => 'Pàgines noves al wiki',
+	'tog-userlandingpage' => "Pàgina d'inici",
 	'prefs-myhome' => 'Inici',
 	'myhome-feed-newpage' => 'nova pàgina',
 	'myhome-feed-edit' => 'modifica',
@@ -529,7 +531,13 @@ $messages['ca'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Imatge afegida|Imatges afegides}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Vídeo afegit|Vídeos afegits}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categoria afegida|Categories afegides}}',
+	'myhome-user-contributions-empty' => 'Podeu participar en aquest wiki fent clic a "{{int:editthispage}}" en qualsevol pàgina i afegint el que sabeu.
+Tothom pot fer canvis, afegir informació o corregir un error.
+El wiki és construït per la comunitat, i una vegada que feu clic al botó d\'editar, ja formeu part de la comunitat.
+Proveu-ho!',
 	'myhome-hot-spots-number-of-editors' => 'editors',
+	'myhome-log-in' => "<center>La Pàgina d'Inici només està disponible si esteu registrats.<br /><br /><big>'' [{{fullurl:Special:Signup| $1 }} Si us plau iniciau la sessió per poder veure aquesta pàgina!]''</big></center>",
+	'myhome-switch-to-monaco' => "La funció ViquiActivitat només està disponible si esteu usant l'aparença Wikia. Si voleu veure la pàgina d'inici, activeu-ho a '''[[Special:Preferences|la vostra pàgina de preferències]]'''",
 	'myhome-namespace-blog' => 'Bloc',
 	'myhome-community-corner-header' => 'Missatges de la Comunitat',
 	'oasis-myhome-community-corner-edit' => 'editar el missatge &gt;',
@@ -1548,6 +1556,13 @@ Ha te vagy a wiki alapítója vagy egyik adminisztrátora, megváltoztathatod ez
 	'tooltip-pt-myhome' => 'Kezdőlapom megtekintése',
 	'activityfeed' => 'Tevékenység hírcsatornája',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|egy|$1}} üzenet',
+);
+
+/** Armenian (Հայերեն)
+ * @author Vadgt
+ */
+$messages['hy'] = array(
+	'myhome-feed-newpage' => 'նոր էջ',
 );
 
 /** Interlingua (interlingua)

@@ -170,7 +170,7 @@ $messages['qqq'] = array(
 	'wikifactory-label-eznamespace' => '{{Optional}}',
 	'right-wikifactory' => '{{doc-right|wikifactory|ns=Wikia}}',
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
-	'closewiki-nbr-wiki' => '',
+	'closewiki-nbr-wiki' => 'Number of wikis. $1 represents a numeric value',
 	'closewiki-unknown' => '{{Identical|Unknown}}',
 	'wikifactory-public-status-change-default-reason' => 'WikiFactory is a staff tool that allows Wikia to manage per-wiki settings across their network. The "public status" setting determines whether a wiki is available for users or closed and assigned for removal. Staff members usually justify a change of the status of a wiki by filling in the "Reason" field in the form. If no reason is provided, the wikifactory-public-status-change-default-reason is used automatically so it can be deduced where the change had been requested from.',
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',
@@ -895,6 +895,9 @@ $messages['br'] = array(
 	'closed-confirm-btn' => 'Gwiriañ ar serriñ',
 	'closed-redirect-alert' => 'Roit un URL adkas, mar plij !',
 	'closed-reason' => 'Abeg :',
+	'newwikisgraph-wikis-created' => 'wikioù krouet',
+	'newwikisgraph-param-all' => 'An holl',
+	'newwikisgraph-param-other' => 'All',
 );
 
 /** Bosnian (bosanski)
@@ -3962,6 +3965,7 @@ pàgine',
 $messages['ps'] = array(
 	'closewiki' => 'ويکي تړل',
 	'wf_city_url' => 'پته',
+	'wf_city_id' => 'پېژند',
 	'wf_city_title' => 'سرليک',
 	'wf_city_created' => 'جوړ شو',
 	'wf_city_founding_user' => 'بنسټګر',
@@ -3972,6 +3976,7 @@ $messages['ps'] = array(
 	'wikifactory-label-info' => 'مالومات',
 	'wikifactory-label-variables2' => 'ټولګړی',
 	'wikifactory-label-domains' => 'شپولونه',
+	'wikifactory-label-actions' => 'کړنې',
 	'wikifactory-label-google' => 'د ګووګل اوزار',
 	'wikifactory-label-close' => 'تړل',
 	'wikifactory-label-compare' => 'پرتلل',
@@ -3997,6 +4002,7 @@ $messages['ps'] = array(
 	'awc-metrics-by-email' => ' يا (د کارن برېښليک):',
 	'awc-metrics-nbr-result' => 'پايلې:',
 	'awc-metrics-articles' => 'ليکنې',
+	'awc-metrics-articles-per-day' => 'ليکنې<br />(د ورځې منځوۍ کچه)',
 	'awc-metrics-edits' => 'سمونونه',
 	'awc-metrics-images' => 'انځورونه',
 	'awc-metrics-pageviews' => 'د مخ<br />ليدنې',

@@ -128,10 +128,29 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 		}
 
 		if($wgCommandLineMode) {
-			$cityId = getenv( "SERVER_ID" );
 
-			$wikiFactoryLoader->mCityID = $cityId;
-			$wikiFactoryLoader->mWikiID = $cityId;
+			$cityId = getenv( "SERVER_ID" );
+			if( is_numeric( $cityId ) ) {
+				$wikiFactoryLoader->mCityID = $cityId;
+				$wikiFactoryLoader->mWikiID = $cityId;
+			}
+			else {
+				$dbName = getenv( "SERVER_DBNAME" );
+				/**
+				 * find city_id by database name
+				 */
+				$dbr = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
+				$cityId = $dbr->selectField(
+					"city_list",
+					array( "city_id" ),
+					array( "city_dbname" => $dbName ),
+					__METHOD__
+				);
+				if( is_numeric( $cityId ) ) {
+					$wikiFactoryLoader->mCityID = $cityId;
+					$wikiFactoryLoader->mWikiID = $cityId;
+				}
+			}
 		}
 
 

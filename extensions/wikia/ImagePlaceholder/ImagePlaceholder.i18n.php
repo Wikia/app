@@ -60,9 +60,11 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'imgplc-add-image' => 'Ouzhpennañ ur skeudenn',
+	'imgplc-add-video' => 'Ouzhpennañ ur video',
 	'imgplc-placeholder' => "Lec'hier",
 	'imgplc-image' => 'Skeudenn',
 	'imgplc-notinhistory' => "Ne c'helloc'h ket ouzhpennañ poltriji er mod istor.",
+	'imgplc-notinhistory-video' => "Ne c'helloc'h ket ouzhpennañ videoioù er mod istor.",
 );
 
 /** Czech (česky)

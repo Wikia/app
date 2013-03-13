@@ -22,6 +22,10 @@ figure{
 	margin: 5px auto;
 }
 
+figure.small {
+	display: inline-block;
+}
+
 .thumbcaption {
 	pointer-events: none;
 

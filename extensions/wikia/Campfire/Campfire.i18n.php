@@ -195,6 +195,14 @@ $messages['pt-br'] = array(
 	'campfire-licensed-under' => 'Licenciado com a $1',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'campfire-page-header' => '$1 da $2',
+	'campfire-licensed-under' => 'Licenziate sotte a $1',
+);
+
 /** Russian (русский)
  * @author Kuzura
  */

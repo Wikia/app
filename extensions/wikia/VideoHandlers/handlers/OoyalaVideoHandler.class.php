@@ -17,15 +17,15 @@ class OoyalaVideoHandler extends VideoHandler {
 		$jsFile = 'http://player.ooyala.com/v3/'.self::OOYALA_PLAYER_ID;
 		$extensionsPath = F::app()->wg->ExtensionsPath;
 
-		$autoPlayStr = ( $autoplay ) ? 'true' : 'false';
+		$autoPlayStr = ( $autoplay && !$this->isAgeGate() ) ? 'true' : 'false';
 
 		$embed = <<<EOT
 <div id='{$playerId}' style='width:{$width}px;height:{$height}px;'></div>
 <script type="text/javascript">
-	window.ooyalaParams = { 
-		jsFile: "{$jsFile}", 
-		playerId: "{$playerId}", 
-		videoId: "{$this->videoId}", 
+	window.ooyalaParams = {
+		jsFile: "{$jsFile}",
+		playerId: "{$playerId}",
+		videoId: "{$this->videoId}",
 		width: "{$width}",
 		height: "{$height}",
 		autoPlay: "{$autoPlayStr}"

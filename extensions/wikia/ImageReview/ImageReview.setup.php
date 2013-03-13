@@ -34,6 +34,9 @@ $app->registerClass('ImageReviewHelperBase', $dir . 'ImageReviewHelperBase.class
 $app->registerClass('ImageReviewHelper', $dir . 'ImageReviewHelper.class.php');
 $app->registerSpecialPage('ImageReview', 'ImageReviewSpecialController');
 
+// hooks
+$wgHooks['WikiFactoryPublicStatusChange'][] = 'ImageReviewHelper::onWikiFactoryPublicStatusChange' ;
+
 // rights
 $wgAvailableRights[] = 'imagereview';
 $wgGroupPermissions['util']['imagereview'] = true;

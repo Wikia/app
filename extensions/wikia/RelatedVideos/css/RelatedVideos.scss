@@ -144,46 +144,46 @@ $color-related-videos-background: darken($color-page, 20%);
 						overflow: hidden;
 						margin-left: 2px;
 					}
+					.new {
+						position: absolute;
+						left: 0px;
+						top: 0px;
+						color: $color-button-text;
+						font-size: 11px;
+						line-height: 14px;
+						padding: 1px 4px 1px 6px;
+						background-color: $color-buttons;
+						&:before {
+							content: '';
+							position: absolute;
+							height: 0px;
+							width: 0px;
+							border-width: 8px;
+							border-style: solid;
+							border-color: transparent transparent $color-buttons transparent;
+							right: -8px;
+							top: 0px;
+							visibility: visible;
+						}
+						&:after {
+							content: '';
+							position: absolute;
+							height: 0px;
+							width: 0px;
+							border-width: 8px;
+							border-style: solid;
+							border-color: $color-buttons transparent transparent transparent;
+							right: -8px;
+							top: 0px;
+							visibility: visible;
+						}
+					}
 					a.video-thumbnail{
 						display: block;
 						width: 160px;
 						height: 90px;
 						overflow: hidden;
 						position: relative;
-						.new {
-							position: absolute;
-							left: 0px;
-							top: 0px;
-							color: $color-button-text;
-							font-size: 11px;
-							line-height: 14px;
-							padding: 1px 4px 1px 6px;
-							background-color: $color-buttons;
-							&:before {
-								content: '';
-								position: absolute;
-								height: 0px;
-								width: 0px;
-								border-width: 8px;
-								border-style: solid;
-								border-color: transparent transparent $color-buttons transparent;
-								right: -8px;
-								top: 0px;
-								visibility: visible;
-							}
-							&:after {
-								content: '';
-								position: absolute;
-								height: 0px;
-								width: 0px;
-								border-width: 8px;
-								border-style: solid;
-								border-color: $color-buttons transparent transparent transparent;
-								right: -8px;
-								top: 0px;
-								visibility: visible;
-							}
-						}
 						.playButton {
 							@include opacity(30);
 							width: 160px;
@@ -341,7 +341,7 @@ $color-related-videos-background: darken($color-page, 20%);
 			.fixedwidth {
 				width: 80px;
 			}
-		}		
+		}
 
 		.RVBody {
 			height: auto;
@@ -379,7 +379,7 @@ $color-related-videos-background: darken($color-page, 20%);
 						padding-top: 2px;
 						font-size: 11px;
 						margin: 0;
-						
+
 						// Video title next to thumbnail
 						a {
 							font-size: 12px;
@@ -528,6 +528,6 @@ $color-related-videos-background: darken($color-page, 20%);
 		.seeMorePlaceholder {
 			display: none;
 		}
-	}	
+	}
 }
 

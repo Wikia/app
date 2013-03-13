@@ -19,10 +19,11 @@ $wgExtensionCredits['parserhook'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 // hooks
+global $wgHooks;
 
-$wgHooks['OutputPageMakeCategoryLinks'][] = 'RelatedPages::onOutputPageMakeCategoryLinks';
 array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedPages::onOutputPageBeforeHTML' );
 $wgHooks['ArticleSaveComplete'][] = 'RelatedPagesController::onArticleSaveComplete';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'RelatedPagesController::onWikiaMobileAssetsPackages';
 
 // classes
 $wgAutoloadClasses['RelatedPages'] = $dir . 'RelatedPages.class.php';

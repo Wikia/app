@@ -1,8 +1,8 @@
 
 <div class="ContentHeader sort-form">
 	<label><?= wfMsg('specialvideos-sort-by') ?></label>
-	
-	
+
+
 	<div class="WikiaDropdown MultiSelect" id="sorting-dropdown">
 		<div class="selected-items">
 			<span class="selected-items-list"><?= $sortMsg ?></span>
@@ -19,7 +19,7 @@
 				<? endforeach; ?>
 			</ul>
 		</div>
-	</div>	
+	</div>
 
 </div>
 
@@ -30,7 +30,7 @@
 		<?php $alpha = $counter % 3 == 0 ? ' alpha' : ''; ?>
 
 		<div class="grid-2 video-element<?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-			<a href="<?= $video['fileUrl'] ?>" class="image video" data-video-name="<?= $video['fileTitle'] ?>">
+			<a href="<?= $video['fileUrl'] ?>" class="image video" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>">
 				<?= $video['videoPlayButton'] ?>
 				<img itemprop="thumbnail" alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video="<?= $video['fileTitle'] ?>" class="Wikia-video-thumb thumbimage">
 				<?= $video['videoOverlay'] ?>
@@ -41,8 +41,7 @@
 			<meta itemprop="embedUrl" content="<?= $video['embedUrl'] ?>" />
 			<? if($isRemovalAllowed): ?>
 				<a class="remove">
-					<img class="sprite trash" src="<?= wfBlankImgUrl() ?>">
-					<?= wfMsg('specialvideos-remove-modal-title') ?>
+					<img class="sprite trash" src="<?= wfBlankImgUrl() ?>" title="<?= wfMsg('specialvideos-remove-modal-title') ?>">
 				</a>
 			<? endif; ?>
 		</div>

@@ -87,7 +87,7 @@ jQuery(function($){
 		}, trackWithEventData).on('click', '.editsection a', {
 			category: category,
 			label: 'section-edit'
-		});
+		}, trackWithEventData);
 
 		$('#WikiaArticleCategories').on('click', 'a', {
 			category: category,

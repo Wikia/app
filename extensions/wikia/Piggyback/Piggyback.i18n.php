@@ -365,6 +365,13 @@ Ch\'a contròla l\'ortografìa.',
 	'log-description-piggyback' => "Ës registr a l'é na lista dj'intrade ant ël sistema con vàire cont.",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'piggyback-otherusername' => 'بل کارن نوم:',
+);
+
 /** Portuguese (português)
  */
 $messages['pt'] = array(
