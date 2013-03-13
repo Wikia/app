@@ -10,7 +10,7 @@ use Wikia\Search\Field, Wikia\Search\Test\BaseTest, \ReflectionProperty, \Reflec
 class WikiaSearchFieldTest extends BaseTest {
 
 	/**
-	 * @covers Field\Field::__construct
+	 * @covers Wikia\Search\Field\Field::__construct
 	 */
 	public function test__construct() {
 		$field = new Field\Field( 'html', 'en' );
@@ -30,7 +30,7 @@ class WikiaSearchFieldTest extends BaseTest {
 	}
 	
 	/**
-	 * @covers Field\Field::__toString()
+	 * @covers Wikia\Search\Field\Field::__toString()
 	 */
 	public function test__toString() {
 		$field = new Field\Field( 'html', 'en' );
@@ -51,8 +51,8 @@ class WikiaSearchFieldTest extends BaseTest {
 	}
 	
 	/**
-	 * @covers Field\FieldExpression::getFieldValueString
-	 * @covers Field\FieldExpression::__toString()
+	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
+	 * @covers Wikia\Search\Field\FieldExpression::__toString()
 	 */
 	public function testFieldExpression__toString() {
 		$mockFe = $this->getMockBuilder( 'Wikia\Search\Field\FieldExpression' )
@@ -82,9 +82,9 @@ class WikiaSearchFieldTest extends BaseTest {
 	}
 	
 	/**
-	 * @covers Field\FieldExpression::getFieldValueString
-	 * @covers Field\FieldExpression::getNegationString
-	 * @covers Field\FieldExpression::setNegate
+	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
+	 * @covers Wikia\Search\Field\FieldExpression::getNegationString
+	 * @covers Wikia\Search\Field\FieldExpression::setNegate
 	 */
 	public function testNegation()
 	{
@@ -104,9 +104,9 @@ class WikiaSearchFieldTest extends BaseTest {
 	
 	
 	/**
-	 * @covers Field\FieldExpression::getFieldValueString
-	 * @covers Field\FieldExpression::getBoostString
-	 * @covers Field\FieldExpression::setBoost
+	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
+	 * @covers Wikia\Search\Field\FieldExpression::getBoostString
+	 * @covers Wikia\Search\Field\FieldExpression::setBoost
 	 */
 	public function testBoosting()
 	{
@@ -125,8 +125,8 @@ class WikiaSearchFieldTest extends BaseTest {
 	}
 	
 	/**
-	 * @covers Field\FieldExpression::getFieldValueString
-	 * @covers Field\FieldExpression::setValueQuote
+	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
+	 * @covers Wikia\Search\Field\FieldExpression::setValueQuote
 	 */
 	public function testQuoting()
 	{
