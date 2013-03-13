@@ -665,6 +665,7 @@ class FollowHelper {
 	 */
 
 	static public function mailNotifyBuildKeys(&$keys, $action, $other_param) {
+		global $wgEnableForumExt;
 		$actionsList = array('categoryadd', 'blogpost');
 		if (!in_array($action, $actionsList)) {
 			return true;
@@ -678,6 +679,27 @@ class FollowHelper {
 		if($action == 'categoryadd') {
 			$keys['$CATEGORY_URL'] = $page->getFullUrl();
 			$keys['$CATEGORY'] = $page->getText();
+
+			// Format Forum thread URLs when added to category
+			if ( !empty( $wgEnableForumExt )
+				&& $other_param['childTitle']->getNamespace() === NS_WIKIA_FORUM_BOARD_THREAD
+			) {
+				$title = $other_param['childTitle'];
+				$titleParts = explode( '/', $title->getPrefixedText() );
+
+				// Handle replies, can't use WallMessage::getTopParentObj as the comments
+				// index isn't updated yet
+				if ( strpos( $titleParts[count( $titleParts ) - 2], ARTICLECOMMENT_PREFIX ) === 0 ) {
+					$titleText = implode( '/', array_slice( $titleParts, 0, count( $titleParts ) - 1 ) );
+					$title = Title::newFromText( $titleText );
+				}
+				$wallMessage = WallMessage::newFromTitle( $title );
+				$wallMessage->load();
+				$threadTitle = Title::newFromText( $wallMessage->getID(), NS_USER_WALL_MESSAGE );
+
+				$keys['$PAGETITLE'] = $wallMessage->getMetaTitle();
+				$keys['$PAGETITLE_URL'] = $threadTitle->getFullURL();
+			}
 			return true;
 		}
 
