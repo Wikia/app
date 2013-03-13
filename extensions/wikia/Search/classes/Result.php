@@ -14,7 +14,7 @@ class Result extends ReadWrite {
 	
 	/**
 	 * Encapsulates MediaWiki logic.
-	 * @var MediaWikiInterface
+	 * @var MediaWikiService
 	 */
 	protected $interface;
 
@@ -25,7 +25,7 @@ class Result extends ReadWrite {
 	 */
 	public function __construct( $fields = array(), $boosts = array() ) {
 		parent::__construct( $fields, $boosts );
-		$this->interface = new MediaWikiInterface;
+		$this->interface = new MediaWikiService;
 	}
 	
 	/**

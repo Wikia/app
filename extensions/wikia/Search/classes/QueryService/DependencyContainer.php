@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\QueryService\DependencyContainer
  */
 namespace Wikia\Search\QueryService;
-use \Wikia\Search\Traits, \Solarium_Client, \Wikia\Search\Config, \Wikia\Search\MediaWikiInterface, \Wikia\Search\ResultSet;
+use \Wikia\Search\Traits, \Solarium_Client, \Wikia\Search\Config, \Wikia\Search\MediaWikiService, \Wikia\Search\ResultSet;
 /**
  * Used to encapsulate the dependencies that must be injected into the different query services.
  * Provides a fixed schema for injected dependencies in the QueryService namespace.
@@ -18,7 +18,7 @@ class DependencyContainer
 	
 	/**
 	 * Used to handle all non-primitive MediaWiki logic.
-	 * @var \Wikia\Search\MediaWikiInterface
+	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $interface;
 	
@@ -46,7 +46,7 @@ class DependencyContainer
 	 */
 	public function __construct( array $dependencies = array() ) {
 		$this->resultSetFactory = new ResultSet\Factory;
-		$this->interface = new MediaWikiInterface;
+		$this->interface = new MediaWikiService;
 		$this->configureByArray( $dependencies );
 	}
 	
@@ -60,10 +60,10 @@ class DependencyContainer
 
 	/**
 	 * Mutator for interface.
-	 * @param \Wikia\Search\MediaWikiInterface $interface
+	 * @param \Wikia\Search\MediaWikiService $interface
 	 * @return \Wikia\Search\QueryService\DependencyContainer
 	 */
-	public function setInterface( MediaWikiInterface $interface) {
+	public function setInterface( MediaWikiService $interface) {
 		$this->interface = $interface;
 		return $this;
 	}

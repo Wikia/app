@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\ResultSet\GroupingSet
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\MediaWikiInterface, \ArrayIterator;
+use \Wikia\Search\MediaWikiService, \ArrayIterator;
 use \Solarium_Result_Select;
 use \WikiaSearchConfig;
 /**

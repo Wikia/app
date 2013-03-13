@@ -3,7 +3,7 @@
  * Class definition for \Wikia\Search\ResultSet\Base
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\Result, \ArrayIterator, \Wikia\Search\MediaWikiInterface, \Wikia\Search\Utilities;
+use \Wikia\Search\Result, \ArrayIterator, \Wikia\Search\MediaWikiService, \Wikia\Search\Utilities;
 use \WikiaException, \Solarium_Result_Select, \WikiaSearchConfig;
 /**
  * This is the default class definition -- represents a flat grouping of results, e.g. on-wiki search.
@@ -21,7 +21,7 @@ class Base extends EmptySet
 	
 	/**
 	 * MW interface.
-	 * @var MediaWikiInterface
+	 * @var MediaWikiService
 	 */
 	protected $interface;
 

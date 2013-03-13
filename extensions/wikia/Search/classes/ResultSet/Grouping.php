@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\ResultSet\Grouping
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\MediaWikiInterface, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config;
+use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config;
 /**
  * This class handles sub-groupings of results for inter-wiki search.
  * @author relwell

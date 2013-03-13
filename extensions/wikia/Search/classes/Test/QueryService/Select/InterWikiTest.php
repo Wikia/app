@@ -14,7 +14,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testExtractMatch() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery', 'setWikiMatch', 'getWikiMatch' ) );
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getWikiMatchByHost' ) )
 		                      ->getMock();
@@ -315,7 +315,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testGetQueryClausesString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getHub' ) );
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getGlobal', 'getLanguageCode' ) )
 		                      ->getMock();

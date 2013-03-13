@@ -38,7 +38,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 				$mockSelect
 		);
 		$this->assertAttributeInstanceOf(
-				'Wikia\Search\MediaWikiInterface',
+				'Wikia\Search\MediaWikiService',
 				'interface',
 				$mockSelect
 		);
@@ -617,7 +617,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::spellcheckResult
 	 */
 	public function testSpellcheckResult() {
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getGlobal' ) )
 		                      ->getMock();
@@ -802,7 +802,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( $dismaxMethods )
 		                   ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'isOnDbCluster' ) )
 		                      ->getMock();

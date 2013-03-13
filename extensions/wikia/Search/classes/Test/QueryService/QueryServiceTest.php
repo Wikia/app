@@ -26,7 +26,7 @@ class QueryServiceTest extends Search\Test\BaseTest {
 		                   ->getMock();
 		
 		$config = new Search\Config();
-		$interface = new Search\MediaWikiInterface;
+		$interface = new Search\MediaWikiService;
 		$factory = new Search\ResultSet\Factory;
 		$dc = new Search\QueryService\DependencyContainer( array() );
 		$dc->setInterface( $interface )

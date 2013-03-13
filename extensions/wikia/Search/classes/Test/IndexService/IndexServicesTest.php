@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\Test\IndexService;
-use Wikia\Search\IndexService, Wikia\Search\MediaWikiInterface, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Test\BaseTest;
+use Wikia\Search\IndexService, Wikia\Search\MediaWikiService, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Test\BaseTest;
 /**
  * Tests the methods found in concrete classes within the \Wikia\Search\IndexService namespace
  * @author relwell
@@ -13,7 +13,7 @@ class IndexServicesTest extends BaseTest
 {
 	public function setUp() {
 		parent::setUp();
-		$this->interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$this->interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                        ->disableOriginalConstructor();
 		$this->pageId = 123;
 	}

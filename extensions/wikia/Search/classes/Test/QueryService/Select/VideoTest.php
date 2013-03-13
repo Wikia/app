@@ -13,7 +13,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\Video::configureQueryFields
 	 */
 	public function testConfigureQueryFields() {
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getLanguageCode' ) )
 		                      ->getMock();

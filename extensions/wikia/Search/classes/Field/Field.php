@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\Field\Field
  */
 namespace Wikia\Search\Field;
-use \Wikia\Search\MediaWikiInterface;
+use \Wikia\Search\MediaWikiService;
 /**
  * Allows us to abstract fields and dynamically handle languages.
  * @author relwell
@@ -29,7 +29,7 @@ class Field
 
 	/**
 	 * Responsible for encapsulating MediaWiki logic.
-	 * @var Wikia\Search\MediaWikiInterface
+	 * @var Wikia\Search\MediaWikiService
 	 */
 	protected $interface;
 	
@@ -59,7 +59,7 @@ class Field
 	 */
 	public function __construct( $fieldName, $languageCode = null ) {
 		$this->fieldName = $fieldName;
-		$this->interface = new MediaWikiInterface;
+		$this->interface = new MediaWikiService;
 		$this->languageCode = $languageCode ?: $this->interface->getLanguageCode();
 	}
 	

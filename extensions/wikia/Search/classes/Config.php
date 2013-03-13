@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\Config
  */
 namespace Wikia\Search;
-use Wikia\Search\MediaWikiInterface, \Sanitizer, \Solarium_Query_Select, \Wikia\Search\Match, \ArrayAccess;
+use Wikia\Search\MediaWikiService, \Sanitizer, \Solarium_Query_Select, \Wikia\Search\Match, \ArrayAccess;
 /**
  * A config class intended to handle variable flags for search
  * Intended to be a dependency-injected receptacle for different search requirements
@@ -155,7 +155,7 @@ class Config implements ArrayAccess
 	
 	/**
 	 * Used to shift all MediaWiki logic elsewhere.
-	 * @var MediaWikiInterface
+	 * @var MediaWikiService
 	 */
 	protected $interface;
 	
@@ -164,7 +164,7 @@ class Config implements ArrayAccess
 	 * @param array $params
 	 */
 	public function __construct( array $params = array() ) {
-		$this->interface = new MediaWikiInterface;
+		$this->interface = new MediaWikiService;
 		
 		$dynamicFilterCodes = array(
 				self::FILTER_CAT_VIDEOGAMES    => Utilities::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' ) ),

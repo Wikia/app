@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\Test\IndexService;
-use Wikia\Search\IndexService\AbstractService, Wikia\Search\MediaWikiInterface, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Test\BaseTest;
+use Wikia\Search\IndexService\AbstractService, Wikia\Search\MediaWikiService, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Test\BaseTest;
 /**
  * Tests the methods found in \Wikia\Search\IndexService\AbstractService
  * @author relwell
@@ -70,7 +70,7 @@ class AbstractServiceTest extends BaseTest
 	 */
 	public function testGetCurrentDocumentId() {
 		$service = $this->service->getMockForAbstractClass();
-		$interface = new MediaWikiInterface;
+		$interface = new MediaWikiService;
 		$service->setPageId( 123 );
 		$this->assertEquals(
 				sprintf( '%s_%s', $interface->getWikiId(), $interface->getCanonicalPageIdFromPageId( 123 ) ),
@@ -101,7 +101,7 @@ class AbstractServiceTest extends BaseTest
 		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
 		                ->getMock();
 		
-		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'pageIdExists' ) )
 		                  ->getMock();
@@ -152,7 +152,7 @@ class AbstractServiceTest extends BaseTest
 		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
 		                ->getMock();
 		
-		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'pageIdExists' ) )
 		                  ->getMock();
@@ -200,7 +200,7 @@ class AbstractServiceTest extends BaseTest
 		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
 		                ->getMock();
 		
-		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'pageIdExists' ) )
 		                  ->getMock();
@@ -242,7 +242,7 @@ class AbstractServiceTest extends BaseTest
 		                ->setMethods( array( 'getJsonDocumentFromResponse', 'execute', 'getCurrentDocumentId' ) )
 		                ->getMock();
 		
-		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'pageIdExists' ) )
 		                  ->getMock();

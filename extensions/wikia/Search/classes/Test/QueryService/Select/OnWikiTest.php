@@ -14,7 +14,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testExtractMatch() {
 		
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getArticleMatchForTermAndNamespaces' ) )
 		                      ->getMock();
@@ -188,7 +188,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( $spellcheckMethods )
 		                       ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getGlobal' ) )
 		                      ->getMock();

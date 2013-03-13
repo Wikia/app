@@ -75,7 +75,7 @@ abstract class AbstractSelect
 	
 	/**
 	 * Responsible for encapsulating logic that interacts with MediaWiki classes.
-	 * @var Wikia\Search\MediaWikiInterface
+	 * @var Wikia\Search\MediaWikiService
 	 */
 	protected $interface;
 	

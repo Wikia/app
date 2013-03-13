@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\QueryService;
-use \Wikia\Search\Config, \Wikia\Search\MediaWikiInterface, \Solarium_Client;
+use \Wikia\Search\Config, \Wikia\Search\MediaWikiService, \Solarium_Client;
 /**
  * This class is responsible for instantiating the appropriate QueryService based on values in the config.
  * It is also responsible for generating the appropriate instance of Solarium_Client, based on global settings.
@@ -51,7 +51,7 @@ class Factory
 	 * @param DependencyContainer $container
 	 */
 	protected function validateClient( DependencyContainer $container ) {
-		$interface = new MediaWikiInterface;
+		$interface = new MediaWikiService;
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
 			$host = $interface->isOnDbCluster() ? $interface->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';  

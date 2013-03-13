@@ -54,7 +54,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		                   ->setMethods( array( 'getNumFound', 'getDocuments' ) )
 		                   ->getMock();
 		$config = new Wikia\Search\Config;
-		$interface = new Wikia\Search\MediaWikiInterface;
+		$interface = new Wikia\Search\MediaWikiService;
 		$dc = new Wikia\Search\ResultSet\DependencyContainer( array( 'config' => $config, 'interface' => $interface, 'result' => $mockResult ) );
 		$docArray = array( 'this value does not actually matter' );
 		$mockResult
@@ -124,7 +124,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 									->setMethods( array( 'getField' ) )
 									->getMock();
 		
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getMediaWikiFormattedTimestamp' ) )
 		                      ->getMock();

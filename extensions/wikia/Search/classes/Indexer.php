@@ -19,7 +19,7 @@ class Indexer
 	
 	/**
 	 * Interface to MediaWiki logic -- need to use this more
-	 * @var \Wikia\Search\MediaWikiInterface
+	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $interface;
 	
@@ -47,7 +47,7 @@ class Indexer
 	 * Handles dependency injection for solarium client
 	 */
 	public function __construct() {
-		$this->interface = new MediaWikiInterface;
+		$this->interface = new MediaWikiService;
 		$master = $this->interface->isOnDbCluster() ? $this->interface->getGlobal( 'SolrHost' ) : 'staff-search-s1';
 		$params = array(
 				'adapter' => 'Curl',

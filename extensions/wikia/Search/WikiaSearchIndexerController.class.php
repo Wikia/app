@@ -3,7 +3,7 @@
  * Class definition for WikiaSearchIndexerController
  */
 use Wikia\Search\IndexService\Factory;
-use Wikia\Search\MediaWikiInterface;
+use Wikia\Search\MediaWikiService;
 /**
  * This class is responsible for providing responses for atomic updates of documents. 
  * @author relwell
@@ -14,7 +14,7 @@ class WikiaSearchIndexerController extends WikiaController
 {
 	/**
 	 * Allows us to avoid direct calls to MediaWiki components
-	 * @var Wikia\Search\MediaWikiInterface
+	 * @var Wikia\Search\MediaWikiService
 	 */
 	protected $interface;
 	
@@ -26,7 +26,7 @@ class WikiaSearchIndexerController extends WikiaController
 	{
 		parent::__construct();
 		$this->factory = new Factory;
-		$this->interface = new MediaWikiInterface;
+		$this->interface = new MediaWikiService;
 		$this->interface->setGlobal( 'AllowMemcacheWrites', false )
 		                ->setGlobal( 'AppStripsHtml', true );
 	}

@@ -27,7 +27,7 @@ class ResultTest extends BaseTest {
 				'Wikia\Search\Result::getCityId should return the value for the "wid" field as passed during construction.'
 		);
 		$this->assertAttributeInstanceOf(
-				'Wikia\Search\MediaWikiInterface', 
+				'Wikia\Search\MediaWikiService', 
 				'interface',
 				$result
 		);
@@ -328,7 +328,7 @@ class ResultTest extends BaseTest {
 		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
 		                      ->getMock();
@@ -360,7 +360,7 @@ class ResultTest extends BaseTest {
 		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getThumbnailHtmlForPageId' ) )
 		                      ->getMock();
@@ -390,7 +390,7 @@ class ResultTest extends BaseTest {
 		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getVideoViewsForPageId' ) )
 		                      ->getMock();
@@ -419,7 +419,7 @@ class ResultTest extends BaseTest {
 		                   ->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiInterface' )
+		$mockInterface = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getVideoViewsForPageId' ) )
 		                      ->getMock();

@@ -33,7 +33,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 									->setMethods( $resultSetMethods )
 									->getMock();
 		
-		$this->interface = $this->getMockbuilder( 'Wikia\Search\MediaWikiInterface' )
+		$this->interface = $this->getMockbuilder( 'Wikia\Search\MediaWikiService' )
 		                        ->disableOriginalConstructor()
 		                        ->setMethods( $interfaceMethods )
 		                        ->getMock();

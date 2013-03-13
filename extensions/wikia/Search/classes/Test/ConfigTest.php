@@ -7,7 +7,7 @@ use \Wikia\Search\Config, \Solarium_Query_Select, \ReflectionProperty, \Reflecti
 class ConfigTest extends BaseTest {
 
 	public function setUp() {
-		$this->interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$this->interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                        ->disableOriginalConstructor();
 		
 		$this->config = $this->getMockBuilder( '\\Wikia\Search\Config' )
@@ -1037,7 +1037,7 @@ class ConfigTest extends BaseTest {
 		               ->setMethods( array( 'setQueryField' ) )
 		               ->getMock();
 		
-		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiInterface' )
+		$interface = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getGlobalWithDefault' ) )
 		                  ->getMock();
