@@ -12,7 +12,7 @@ use Wikia\Search\Traits;
  */
 class FieldExpression
 {
-	use Traits\ArrayConfigurable;
+	use Traits\ArrayConfigurableTrait;
 	
 	/**
 	 * Allows us to express a field.

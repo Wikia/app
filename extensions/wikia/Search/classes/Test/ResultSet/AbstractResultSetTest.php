@@ -10,6 +10,19 @@ use Wikia, ReflectionProperty, ReflectionMethod, ArrayIterator;
 class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::__construct
+	 */
+	public function testConstruct() {
+		$dc = new Wikia\Search\ResultSet\DependencyContainer();
+		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )
+		                  ->setConstructorArgs( array( $dc ) )
+		                  ->getMockForAbstractClass();
+		
+		// constructor should call configure(), but we have no way of asserting this
+		// (other than everything else breaking in other tests)
+	}
+	
+	/**
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getResultsFound
 	 */
 	public function testGetResultsFound() {
@@ -228,6 +241,68 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				$whoCares,
 				$resultSet->getIterable()
 		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Traits\AttributeIterableTrait::offsetExists
+	 * @covers Wikia\Search\Traits\AttributeIterableTrait::offsetGet
+	 * @covers Wikia\Search\Traits\AttributeIterableTrait::offsetSet
+	 * @covers Wikia\Search\Traits\AttributeIterableTrait::offsetUnset
+	 * @covers Wikia\Search\Traits\AttributeIterableTrait::append
+	 * @covers Wikia\Search\Traits\AttributeIterableTrait::rewind
+	 * @covers Wikia\Search\Traits\AttributeIterableTrait::current
+	 * @covers Wikia\Search\Traits\AttributeIterableTrait::key
+	 * @covers Wikia\Search\Traits\AttributeIterableTrait::next
+	 * @covers Wikia\Search\Traits\AttributeIterableTrait::valid
+	 * @covers Wikia\Search\Traits\AttributeIterableTrait::seek
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::offsetExists
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::offsetGet
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::offsetSet
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::offsetUnset
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::append
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::rewind
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::current
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::key
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::next
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::valid
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::seek
+	 */
+	public function testAttributeIterable() {
+		$methodArgs = array(
+				'offsetExists' => array( 'foo' ),
+				'offsetSet'    => array( 'foo', 'bar' ),
+				'offsetGet'    => array( 'foo' ),
+				'offsetUnset'  => array( 'foo' ),
+				'append'       => array( 'foo' ),
+				'seek'         => array( 'foo' ),
+				);
+		$methods = array( 
+				'offsetExists', 'offsetGet', 'offsetSet', 'offsetUnset', 
+				'append', 'rewind', 'current', 'key', 'next', 'valid', 'seek' 
+				);
+		$mockIterator = $this->getMock( '\ArrayIterator', $methods, array( array() ) );
+		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getIterable' ) )
+		                  ->getMockForAbstractClass();
+		$resultSet
+		    ->expects( $this->any() )
+		    ->method ( 'getIterable' )
+		    ->will   ( $this->returnValue( $mockIterator ) )
+		;
+		foreach ( $methods as $method ) {
+			$with = $mockIterator
+			            ->expects( $this->once() )
+			            ->method ( $method )
+			;
+			if ( isset( $methodArgs[$method] ) ) {
+				$with = call_user_func_array( array( $with, 'with' ), $methodArgs[$method] );
+				call_user_func_array( array( $resultSet, $method ), $methodArgs[$method] );
+			} else {
+				$resultSet->{$method}();
+			}
+			
+		}
 	}
 	
 }

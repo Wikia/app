@@ -3,6 +3,7 @@
  * Class definition for Wikia\Search\Hooks
  */
 namespace Wikia\Search;
+use Wikia\Search\Indexer;
 /**
  * This class is responsible for storing MediaWiki hook logic related to search.
  * Each method must be registered as a hook in the setup file, given the appropriate global settings.
@@ -18,8 +19,8 @@ class Hooks
 	 * @param integer $reason
 	 * @param integer $id
 	 */
-	public function onArticleDeleteComplete( &$article, User &$user, $reason, $id ) {
-		return $this->indexer->deleteArticle( $id );
+	public function onArticleDeleteComplete( &$article, \User &$user, $reason, $id ) {
+		return (new Indexer)->deleteArticle( $id );
 	}
 	
 	/**
@@ -38,7 +39,7 @@ class Hooks
 	 */
 	public function onArticleSaveComplete( &$article, &$user, $text, $summary,
 	        $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
-		return $this->indexer->reindexBatch( array( $article->getTitle()->getArticleID() ) );
+		return (new Indexer)->reindexBatch( array( $article->getTitle()->getArticleID() ) );
 	}
 	
 	/**
@@ -47,7 +48,7 @@ class Hooks
 	 * @param int $create
 	 */
 	public function onArticleUndelete( $title, $create ) {
-		return $this->indexer->reindexBatch( array( $title->getArticleID() ) );
+		return (new Indexer)->reindexBatch( array( $title->getArticleID() ) );
 	}
 	
 	/**
@@ -61,8 +62,8 @@ class Hooks
 	 */
 	public function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason ) {
 		return ( $city_public < 1 ) 
-		    ? $this->indexer->deleteWikiDocs( $city_id )
-		    : $this->indexer->reindexWiki( $city_id );
+		    ? (new Indexer)->deleteWikiDocs( $city_id )
+		    : (new Indexer)->reindexWiki( $city_id );
 	}
 	
 	/**
@@ -72,9 +73,7 @@ class Hooks
 	 * @param User $user
 	 * @param array $defaultPreferences
 	 */ 
-	public static function onGetPreferences($user, &$defaultPreferences) {
-		wfProfileIn( __METHOD__ );
-
+	public static function onGetPreferences( $user, &$defaultPreferences ) {
 		// removes core mw search prefs
 		$defunctPreferences = array(
 			'searchlimit',
@@ -100,8 +99,6 @@ class Hooks
 			'label-message'	=> array('wikiasearch2-search-all-namespaces'),
 			'section'		=> 'under-the-hood/advanced-displayv2',
 		);
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 	

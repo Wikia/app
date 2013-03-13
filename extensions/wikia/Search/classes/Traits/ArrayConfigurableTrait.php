@@ -1,6 +1,6 @@
 <?php
 /**
- * Class definition for Wikia\Search\Traits\ArrayConfigurable
+ * Class definition for Wikia\Search\Traits\ArrayConfigurableTrait
  */
 namespace Wikia\Search\Traits;
 /**
@@ -9,12 +9,12 @@ namespace Wikia\Search\Traits;
  * @package Search
  * @subpackage Traits
  */
-trait ArrayConfigurable
+trait ArrayConfigurableTrait
 {
 	/**
 	 * Convenience method for setting dependencies by array.
 	 * @param array $dependencies
-	 * @return Wikia\Search\Traits\ArrayConfigurable
+	 * @return Wikia\Search\Traits\ArrayConfigurableTrait
 	 */
 	protected function configureByArray( array $dependencies ) {
 		foreach ( $dependencies as $name => $value ) {

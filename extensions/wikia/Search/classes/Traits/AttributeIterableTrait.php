@@ -1,6 +1,6 @@
 <?php
 /**
- * Class definition for \Wikia\Search\Traits\AttributeIterable
+ * Class definition for \Wikia\Search\Traits\AttributeIterableTrait
  */
 namespace Wikia\Search\Traits;
 /**
@@ -12,7 +12,7 @@ namespace Wikia\Search\Traits;
  * @package Search
  * @subpackage Traits
  */
-trait AttributeIterable {
+trait AttributeIterableTrait {
 	
 	/**
 	 * Return the attribute that is iterable.

@@ -14,7 +14,7 @@ use \Wikia\Search\Traits, \Solarium_Client, \Wikia\Search\Config, \Wikia\Search\
  */
 class DependencyContainer
 {
-	use Traits\ArrayConfigurable;
+	use Traits\ArrayConfigurableTrait;
 	
 	/**
 	 * Used to handle all non-primitive MediaWiki logic.
@@ -41,7 +41,7 @@ class DependencyContainer
 	protected $client; 
 	
 	/**
-	 * Implements the ArrayConfigurable::configureByArray trait method to store attribute values.
+	 * Implements the ArrayConfigurableTrait::configureByArray method to store attribute values.
 	 * @param array $dependencies an associative array of attribute to value.
 	 */
 	public function __construct( array $dependencies = array() ) {

@@ -64,4 +64,156 @@ class HooksTest extends BaseTest {
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\Hooks::onArticleDeleteComplete
+	 */
+	public function testOnArticleDeleteComplete() {
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->getMock();
+		$mockUser = $this->getMockBuilder( 'User' )
+		                 ->disableOriginalConstructor()
+		                 ->getMock();
+		$mockHooks = $this->getMock( 'Wikia\Search\Hooks', null );
+		$mockIndexer = $this->getMock( 'Wikia\Search\Indexer', array( 'deleteArticle' ) );
+		$mockIndexer
+		    ->expects( $this->once() )
+		    ->method ( 'deleteArticle' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockApp();
+		$this->assertTrue(
+				$mockHooks->onArticleDeleteComplete( $mockArticle, $mockUser, 'why not', 123 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Hooks::onArticleSaveComplete
+	 */
+	public function testOnArticleSaveComplete() {
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->getMock();
+		$mockUser = $this->getMockBuilder( 'User' )
+		                 ->disableOriginalConstructor()
+		                 ->getMock();
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getArticleID' ) )
+		                  ->getMock();
+		$mockRev = $this->getMockBuilder( 'Revision' )
+		                ->disableOriginalConstructor()
+		                ->getMock();
+		$mockHooks = $this->getMock( 'Wikia\Search\Hooks', null );
+		$mockIndexer = $this->getMock( 'Wikia\Search\Indexer', array( 'reindexBatch' ) );
+		$mockArticle
+		    ->expects( $this->once() )
+		    ->method ( 'getTitle' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getArticleID' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mockIndexer
+		    ->expects( $this->once() )
+		    ->method ( 'reindexBatch' )
+		    ->with   ( array( 123 ) )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockApp();
+		$whatevs = array();
+		$whatevs2 = 0;
+		$this->assertTrue(
+				$mockHooks->onArticleSaveComplete( $mockArticle, $mockUser, 'why not', 'yup', 0, 0, 'foo', $whatevs, $mockRev, $whatevs2, $whatevs2 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Hooks::onArticleUndelete
+	 */
+	public function testOnArticleUndelete() {
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getArticleID' ) )
+		                  ->getMock();
+		$mockHooks = $this->getMock( 'Wikia\Search\Hooks', null );
+		$mockIndexer = $this->getMock( 'Wikia\Search\Indexer', array( 'reindexBatch' ) );
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getArticleID' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mockIndexer
+		    ->expects( $this->once() )
+		    ->method ( 'reindexBatch' )
+		    ->with   ( array( 123 ) )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockApp();
+		$whatevs = array();
+		$whatevs2 = 0;
+		$this->assertTrue(
+				$mockHooks->onArticleUndelete( $mockTitle, 0 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Hooks::onWikiFactoryPublicStatusChange
+	 */
+	public function testOnWikiFactoryPublicStatusChange() {
+		$mockIndexer = $this->getMock( 'Wikia\Search\Indexer', array( 'reindexWiki', 'deleteWikiDocs' ) );
+		$hooks = new \Wikia\Search\Hooks;
+		$mockIndexer
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'deleteWikiDocs' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$status = 0;
+		$wid = 123;
+		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockApp();
+		$this->assertTrue(
+				$hooks->onWikiFactoryPublicStatusChange( $status, $wid, 'why not' )
+		);
+		$mockIndexer
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'reindexWiki' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$status = 1;
+		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockApp();
+		$this->assertTrue(
+				$hooks->onWikiFactoryPublicStatusChange( $status, $wid, 'why not' )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Hooks::onGetPreferences
+	 */
+	public function testonGetPreferences() {
+		$badKeys = array(
+			'searchlimit',
+			'contextlines',
+			'contextchars',
+			'disablesuggest',
+			'searcheverything',
+			'searchnamespaces',
+		);
+		$prefs = array_flip( $badKeys );
+		$mockUser = $this->getMock( 'User' );
+		$hooks = new \Wikia\Search\Hooks;
+		$hooks->onGetPreferences( $mockUser, $prefs );
+		foreach ( $badKeys as $key ) {
+			$this->assertArrayNotHasKey( $key , $prefs );
+		}
+		$this->assertArrayHasKey( 'enableGoSearch', $prefs );
+		$this->assertArrayHasKey( 'searchAllNamespaces', $prefs );
+	}
 }

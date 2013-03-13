@@ -245,6 +245,59 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		);
 	}
 	
-	//@todo Dependency container tests, but they're pretty cut-and-dry
+	/**
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::__construct
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::getConfig
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::setConfig
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::getResult
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::setResult
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::getService
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::setService
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::getMetaposition
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::setMetaposition
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::getParent
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::setParent
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::getWikiMatch
+	 * @covers Wikia\Search\ResultSet\DependencyContainer::setWikiMatch
+	 */
+	public function testDependencyContainer() {
+		$namesToClasses = array(
+				'config' => 'Wikia\Search\Config',
+				'result' => '\Solarium_Result_Select',
+				'service' => 'Wikia\Search\MediaWikiService',
+				'parent' => 'Wikia\Search\ResultSet\GroupingSet',
+				'wikiMatch' => 'Wikia\Search\Match\Wiki'
+				);
+		$namesToMocks = array( 'metaposition' => 1 );
+		foreach ( $namesToClasses as $name => $class ) {
+			$namesToMocks[$name] = $this->getMockBuilder( $class )->disableOriginalConstructor()->getMock();
+		}
+		$dc = new \Wikia\Search\ResultSet\DependencyContainer( $namesToMocks );
+		foreach ( $namesToMocks as $name => $mock ) {
+			$get = 'get'.ucfirst($name);
+			$this->assertEquals(
+					$mock,
+					$dc->{$get}()
+			);
+		}
+		$dc = new \Wikia\Search\ResultSet\DependencyContainer();
+		foreach ( $namesToMocks as $name => $mock ) {
+			$get = 'get'.ucfirst($name);
+			$set = 'set'.ucfirst($name);
+			if ( $name !== 'service' ) {
+				$this->assertNull(
+						$dc->{$get}()
+				);
+			}
+			$this->assertEquals(
+					$dc,
+					$dc->{$set}( $mock )
+			);
+			$this->assertEquals(
+					$mock,
+					$dc->{$get}()
+			);
+		}
+	}
 	
 }
