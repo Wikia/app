@@ -58,8 +58,8 @@ class ArticlesApiController extends WikiaApiController {
 				if ( !empty( $ids ) ) {
 					$ids = $ids[0];
 
-					array_walk( $ids, function( $val, $key ) use ( &$ids ) {
-						$ids[$key] = $val['pageid'];
+					array_walk( $ids, function( &$val ) {
+						$val = $val['pageid'];
 					});
 				}
 			} else {
