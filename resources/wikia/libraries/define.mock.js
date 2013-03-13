@@ -24,6 +24,10 @@ function define(id, deps, def) {
 }
 
 define.amd = true;
-require = {
-	optional: function() {}
+
+require = function(){
+};
+
+require.optional = function(name){
+	return name;
 };
