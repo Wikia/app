@@ -140,7 +140,7 @@ var LightboxLoader = {
 		openModal.find(".modalContent").startThrobbing();
 
 		var lightboxParams = {
-			title: mediaTitle,
+			key: mediaTitle,
 			modal: openModal
 		};
 
@@ -281,7 +281,7 @@ var LightboxLoader = {
 			// If Lightbox is already open, update it
 			if(openModal.length) {
 				LightboxLoader.getMediaDetail({fileTitle: fileTitle}, function(data) {
-					Lightbox.current.title = data.title;
+					Lightbox.current.key = data.title;
 					Lightbox.current.type = data.mediaType;
 
 					Lightbox.setCarouselIndex();
