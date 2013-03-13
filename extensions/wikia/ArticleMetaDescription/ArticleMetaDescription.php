@@ -34,33 +34,34 @@ $wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
 function wfArticleMetaDescription(&$out, &$text) {
 	global $wgTitle;
 	wfProfileIn( __METHOD__ );
+	if( wfRunHooks( 'ArticleMetaDescription', array() ) ) {
+		$sMessage = null;
+		$sMainPage = wfMsgForContent('Mainpage');
+		if(strpos($sMainPage, ':') !== false) {
+		    $sTitle = $wgTitle->getFullText();
+		}
+		else {
+		    $sTitle = $wgTitle->getText();
+		}
 
-	$sMessage = null;
-	$sMainPage = wfMsgForContent('Mainpage');
-	if(strpos($sMainPage, ':') !== false) {
-	    $sTitle = $wgTitle->getFullText();
-	}
-	else {
-	    $sTitle = $wgTitle->getText();
-	}
+		if(strcmp($sTitle, $sMainPage) == 0) {
+			// we're on Main Page, check MediaWiki:Description message
+			$sMessage = wfMsg("Description");
+		}
 
-	if(strcmp($sTitle, $sMainPage) == 0) {
-		// we're on Main Page, check MediaWiki:Description message
-		$sMessage = wfMsg("Description");
-	}
+		if(($sMessage == null) || wfEmptyMsg("Description", $sMessage)) {
+			$DESC_LENGTH = 100;
+			$articleId = $wgTitle->getArticleID();
+			$articleService = new ArticleService( $articleId );
+			$description = $articleService->getTextSnippet( $DESC_LENGTH );
+		} else {
+			// MediaWiki:Description message found, use it
+			$description = $sMessage;
+		}
 
-	if(($sMessage == null) || wfEmptyMsg("Description", $sMessage)) {
-		$DESC_LENGTH = 100;
-		$articleId = $wgTitle->getArticleID();
-		$articleService = new ArticleService( $articleId );
-		$description = $articleService->getTextSnippet( $DESC_LENGTH );
-	} else {
-		// MediaWiki:Description message found, use it
-		$description = $sMessage;
-	}
-
-	if(!empty($description)) {
-		$out->addMeta('description', htmlspecialchars($description));
+		if(!empty($description)) {
+			$out->addMeta('description', htmlspecialchars($description));
+		}
 	}
 
 	wfProfileOut( __METHOD__ );

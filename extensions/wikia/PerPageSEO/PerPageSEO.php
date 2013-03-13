@@ -33,6 +33,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgHooks['BeforePageDisplay'][] = 'efPerPageSEO';
+$wgHooks['ArticleMetaDescription'][] = 'efPerPageSEOPreventArticleMetaDescription';
 
 // defaults, WikiFactory overrides
 if ( empty( $wgPPSEOCustomKeywords ) ) $wgPPSEOCustomKeywords = array();
@@ -52,4 +53,12 @@ function efPerPageSEO( $out ) {
 	}
 
 	return true;
+}
+
+function efPerPageSEOPreventArticleMetaDescription() {
+	global $wgOut;
+
+	$pagename = $wgOut->getTitle()->getPrefixedText();
+
+	return isset( $wgPPSEOCustomDescriptions[$pagename] );
 }
