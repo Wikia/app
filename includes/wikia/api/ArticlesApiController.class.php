@@ -48,7 +48,7 @@ class ArticlesApiController extends WikiaApiController {
 		$ids = null;
 
 		if ( !empty( $category )) {
-			$category = Title::makeTitleSafe( NS_CATEGORY, $category, false, false );
+			$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
 
 			if ( !is_null( $category ) && $category->exists() ) {
 				self::followRedirect( $category );
@@ -274,7 +274,7 @@ class ArticlesApiController extends WikiaApiController {
 		$offset = $this->request->getVal( 'offset', '' );
 
 		if ( !empty( $category ) ) {
-			$category = Title::makeTitleSafe( NS_CATEGORY, $category, false, false );
+			$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
 
 			if ( !is_null( $category ) && $category->exists() ) {
 				self::followRedirect( $category );
