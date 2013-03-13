@@ -1,0 +1,38 @@
+<?php
+class WAMPageArticle extends Article {
+	const WAM_PAGE_NAME = 'WAM';
+	const WAM_FAQ_PAGE_NAME = 'WAM/FAQ';
+
+	public function __construct($title) {
+		wfProfileIn(__METHOD__);
+
+		parent::__construct($title);
+		
+		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * @desc Render hubs page
+	 */
+	public function view() {
+		wfProfileIn(__METHOD__);
+
+		// let MW handle basic stuff
+		parent::view();
+
+		$app = F::app();
+		$app->wg->Out->clearHTML();
+		if( $this->isWAMFAQPage($this->getTitle()) ) {
+			$app->wg->Out->addHTML( $app->sendRequest('WAMPageSpecialController', 'faq') );
+		} else {
+			$app->wg->Out->addHTML( $app->sendRequest('WAMPageSpecialController', 'index') );
+		}
+		
+		wfProfileOut(__METHOD__);
+	}
+
+	protected function isWAMFAQPage(Title $title) {
+		return $title->isSubpage() && $title->getDBKey() == self::WAM_FAQ_PAGE_NAME;
+	}
+	
+}

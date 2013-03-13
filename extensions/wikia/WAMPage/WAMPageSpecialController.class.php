@@ -13,4 +13,8 @@ class WAMPageSpecialController extends WikiaSpecialPageController
 	public function index() {
 
 	}
+
+	public function faq() {
+
+	}
 }
