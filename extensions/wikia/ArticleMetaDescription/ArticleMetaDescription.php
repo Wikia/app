@@ -24,60 +24,61 @@ $wgExtensionCredits['other'][] = array(
     'description' => 'adding meta-description tag containing snippet of the Article, provided by the ArticleService'
 );
 
-$wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
+$wgHooks['OutputPageBeforeHTML'][] = 'ArticleMetaDescription::onOutputPageBeforeHTML';
+class ArticleMetaDescription {
+	function descriptionFromMessage( $wgTitle ) {
+		$sMessage = null;
+		if( !wfEmptyMsg( "Description" ) ) {
+			$sMainPage = wfMsgForContent('Mainpage');
+			if(strpos($sMainPage, ':') !== false) {
+				$sTitle = $wgTitle->getFullText();
+			}
+			else {
+				$sTitle = $wgTitle->getText();
+			}
 
-function wfArticleMetaDescriptionFromMessage( $wgTitle ) {
-	$sMessage = null;
-	if( !wfEmptyMsg( "Description" ) ) {
-		$sMainPage = wfMsgForContent('Mainpage');
-		if(strpos($sMainPage, ':') !== false) {
-			$sTitle = $wgTitle->getFullText();
+			if(strcmp($sTitle, $sMainPage) == 0) {
+				// we're on Main Page, check MediaWiki:Description message
+				$sMessage = wfMsg("Description");
+			}
 		}
-		else {
-			$sTitle = $wgTitle->getText();
-		}
-
-		if(strcmp($sTitle, $sMainPage) == 0) {
-			// we're on Main Page, check MediaWiki:Description message
-			$sMessage = wfMsg("Description");
-		}
-	}
-	return $sMessage;
-}
-
-function wfArticleMetaDescriptionFromSnippet( $wgTitle ) {
-	$DESC_LENGTH = 100;
-	$articleId = $wgTitle->getArticleID();
-	$articleService = new ArticleService( $articleId );
-	return $articleService->getTextSnippet( $DESC_LENGTH );
-}
-
-/**
- * @param OutputPage $out
- * @param string $text
- * @return bool
- */
-function wfArticleMetaDescription(&$out, &$text) {
-	global $wgTitle, $wgPPSEOCustomKeywords, $wgPPSEOCustomDescriptions;
-	wfProfileIn( __METHOD__ );
-
-	$pagename = $out->getTitle()->getPrefixedText();
-
-	if ( !empty( $wgPPSEOCustomKeywords[$pagename] ) ) {
-		foreach( explode( ',', $wgPPSEOCustomKeywords[$pagename]) as $i => $keyword ) {
-			$out->addKeyword( $keyword );
-		}
+		return $sMessage;
 	}
 
-	$description = null;
-	if ( !empty( $wgPPSEOCustomDescriptions[$pagename] ) ) $description = $wgPPSEOCustomDescriptions[$pagename];
-	if( $description == null ) $description = wfArticleMetaDescriptionFromMessage( $wgTitle );
-	if( $description == null ) $description = wfArticleMetaDescriptionFromSnippet( $wgTitle );
-
-	if( !empty($description) ) {
-		$out->addMeta('description', htmlspecialchars($description));
+	function descriptionFromSnippet( $wgTitle ) {
+		$DESC_LENGTH = 100;
+		$articleId = $wgTitle->getArticleID();
+		$articleService = new ArticleService( $articleId );
+		return $articleService->getTextSnippet( $DESC_LENGTH );
 	}
 
-	wfProfileOut( __METHOD__ );
-	return true;
+	/**
+	 * @param OutputPage $out
+	 * @param string $text
+	 * @return bool
+	 */
+	function onOutputPageBeforeHTML(&$out, &$text) {
+		global $wgTitle, $wgPPSEOCustomKeywords, $wgPPSEOCustomDescriptions;
+		wfProfileIn( __METHOD__ );
+
+		$pagename = $out->getTitle()->getPrefixedText();
+
+		if ( !empty( $wgPPSEOCustomKeywords[$pagename] ) ) {
+			foreach( explode( ',', $wgPPSEOCustomKeywords[$pagename]) as $i => $keyword ) {
+				$out->addKeyword( $keyword );
+			}
+		}
+
+		$description = null;
+		if ( !empty( $wgPPSEOCustomDescriptions[$pagename] ) ) $description = $wgPPSEOCustomDescriptions[$pagename];
+		if( $description == null ) $description = ArticleMetaDescription::descriptionFromMessage( $wgTitle );
+		if( $description == null ) $description = ArticleMetaDescription::descriptionFromSnippet( $wgTitle );
+
+		if( !empty($description) ) {
+			$out->addMeta('description', htmlspecialchars($description));
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 }
