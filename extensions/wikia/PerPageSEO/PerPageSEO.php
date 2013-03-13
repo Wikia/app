@@ -59,6 +59,6 @@ function efPerPageSEOPreventArticleMetaDescription() {
 	global $wgOut, $wgPPSEOCustomDescriptions;
 
 	$pagename = $wgOut->getTitle()->getPrefixedText();
-	
+
 	return !isset( $wgPPSEOCustomDescriptions[$pagename] );
 }
