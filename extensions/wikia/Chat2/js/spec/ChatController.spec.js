@@ -1,4 +1,8 @@
-xdescribe("ChatView Test", function(){
+describe("ChatView Test", function(){
+	origwgServer = window.wgServer;
+	origwgArticlePath = window.wgArticlePath;
+	origEMOTICONS = window.EMOTICONS;
+
 	it("processText links", function() {
 		/*
 		 * some mockup so we can create NodeRoomController
@@ -6,8 +10,6 @@ xdescribe("ChatView Test", function(){
 		window.wgServer = "http://poznan.mech.wikia-dev.com";
 		window.wgArticlePath = "/wiki/$1";
 		window.EMOTICONS = '';
-
-		$.fn.log = function(){return true};
 
 		// create a view instance and test the processtest method
 		var c = new ChatView({});
@@ -113,4 +115,8 @@ xdescribe("ChatView Test", function(){
 		expect(c.processText('[[Namespace:Test_pipe_trick:Foo:bar|]]'))
 			.toEqual('<a href="http://poznan.mech.wikia-dev.com/wiki/Namespace:Test_pipe_trick:Foo:bar">Test pipe trick:Foo:bar</a>', 'pipe-trick link with namespace and multiple colons');
 	});
+
+	window.wgServer = origwgServer;
+	window.wgArticlePath = origwgArticlePath;
+	window.EMOTICONS = origEMOTICONS;
 });
