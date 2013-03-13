@@ -133,11 +133,16 @@ class ArticlesApiController extends WikiaApiController {
 		$this->response->setCacheValidity(
 			self::CLIENT_CACHE_VALIDITY,
 			self::CLIENT_CACHE_VALIDITY,
-			array(
+			[
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
-			)
+			]
 		);
+
+		//if no mainpages were found and deleted we want to always return collection of self::MAX_ITEMS items
+		if ( count( $collection ) > self::MAX_ITEMS ) {
+			$collection = array_slice( $collection, 0, self::MAX_ITEMS );
+		}
 
 		$this->response->setVal( 'items', $collection );
 		$this->response->setVal( 'basepath', $this->wg->Server );
