@@ -50,8 +50,10 @@ class GroupingSet extends Grouping
 					'metaposition' => $i
 					);
 			;
-			$resultSet = $this->factory->get( new DependencyContainer( $dependencies ) );
-			$this->results[$resultSet->getHeader( 'url' )] = $resultSet;
+			try {
+				$resultSet = $this->factory->get( new DependencyContainer( $dependencies ) );
+				$this->results[$resultSet->getHeader( 'url' )] = $resultSet;
+			} catch ( \Exception $e ) {}
 		}
 		return $this;
 	}
