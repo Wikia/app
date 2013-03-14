@@ -8,6 +8,9 @@ class MarketingToolboxModel extends WikiaModel {
 	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'MarketingToolbox';
 
+	const CACHE_KEY = 'HubsV2v1.00';
+	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'lastPublishedTimestamp';
+
 	protected $statuses = array();
 	protected $modules = array();
 	protected $editableModules = array();
@@ -582,6 +585,29 @@ class MarketingToolboxModel extends WikiaModel {
 		if ($timestamp === null) {
 			$timestamp = time();
 		}
+		$timestamp = strtotime('00:00', $timestamp);
+
+		if ($timestamp == strtotime('00:00')) {
+			$lastPublishedTimestamp = WikiaDataAccess::cache(
+				F::app()->wf->SharedMemcKey(
+					self::CACHE_KEY,
+					$langCode,
+					$verticalId,
+					self::CACHE_KEY_LAST_PUBLISHED_TIMESTAMP
+				),
+				6 * 60 * 60,
+				function () use ($langCode, $sectionId, $verticalId, $timestamp) {
+					return $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp);
+				}
+			);
+		} else {
+			$lastPublishedTimestamp = $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp);
+		}
+
+		return $lastPublishedTimestamp;
+	}
+
+	protected function getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp) {
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$table = $this->getTablesBySectionId($sectionId);
 
