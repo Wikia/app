@@ -4,7 +4,8 @@ describe("Tables module", function () {
 
 	body.innerHTML = '<div id="mw-content-text"><table id="TESTTABLE"><tbody><tr style="min-width: 99999px;"><td>some content to TEST wide table</td><td>and some more</td></tr><tr><td></td></tr></tbody></table></div>';
 
-	var tables = modules.tables(
+	var origFeatures,
+		tables = modules.tables(
 		{
 			touch: 'click'
 		},
@@ -22,6 +23,8 @@ describe("Tables module", function () {
 	);
 
 	beforeEach(function(){
+		origFeatures = window.Features;
+
 		body = getBody();
 
 		body.innerHTML = '<div id="mw-content-text"><table ><tbody><tr><td>TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST</td><td>and some more</td></tr><tr><td></td></tr></tbody></table></div>';
@@ -30,6 +33,10 @@ describe("Tables module", function () {
 		window.Features = {
 			overflow: false
 		};
+	});
+
+	afterEach(function(){
+		window.Features = origFeatures;
 	});
 
 	it('is defined', function(){
