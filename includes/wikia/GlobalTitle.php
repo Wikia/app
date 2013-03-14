@@ -264,7 +264,7 @@ class GlobalTitle extends Title {
 	 * getInternalUrl from Title is not working corretly with GlobalTitle so it is fixed by getting FullURL
 	 *
 	 * @param string $query an optional query string
-	 * @param string $query2 (depricated) language variant of url (for sr, zh..)
+	 * @param string $query2 (deprecated) language variant of url (for sr, zh..)
 	 *
 	 * @return string
 	 */
