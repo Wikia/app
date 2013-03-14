@@ -2,7 +2,7 @@
 
 	<?php
 	$trackingData = 'class="ResultLink" data-wid="' . $resultSet->getHeader('wid') . '" data-gpos="' . $pos
-		. '" data-pos="0" data-sterm="' . addslashes($query) . '" data-stype="inter" data-rver="6" data-event="search_click_wiki"';
+		. '" data-pos="0" data-sterm="' . addslashes($query) . '" data-stype="inter" data-rver="' . WikiaSearchController::RVERSION . '" data-event="search_click_wiki"';
 	?>
 
 	<?php

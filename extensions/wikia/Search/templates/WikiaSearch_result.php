@@ -14,7 +14,12 @@
 		<?php $title = $result->getTitle(); ?>
 
 		<?php
-			$trackingData = 'class="result-link" data-wid="'.$result->getCityId().'" data-pageid="'.$result->getVar('pageId').'" data-pagens="'.$result->getVar('ns').'" data-title="'.$result->getTitle().'" data-gpos="'.( !empty($gpos) ? $gpos : 0 ).'" data-pos="'.$pos.'" data-sterm="'.addslashes($query).'" data-stype="intra" data-rver="6"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );
+			$trackingData = 'class="result-link" data-wid="'.$result->getCityId().'" data-pageid="'.$result->getVar
+				('pageId').'" data-pagens="'.$result->getVar('ns').'" data-title="'.$result->getTitle().'"
+				data-gpos="'.( !empty($gpos) ? $gpos : 0 ).'" data-pos="'.$pos.'" data-sterm="'.addslashes($query).'"
+				 data-stype="intra" data-rver="' . WikiaSearchController::RVERSION . '"' . ( $result->getVar
+				('isArticleMatch') ? '
+				 data-event="search_click_match"' : '' );
 		?>
 
 		<a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?= $title ?></a>

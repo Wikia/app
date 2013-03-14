@@ -22,7 +22,7 @@
 		<?php
 		$trackingData = 'class="ResultLink" data-wid="' . $resultSet->getHeader('wid') . '" data-gpos="' . $pos
 			. '" data-pos="0" data-sterm="' . addslashes($query) . '" data-stype="' .( $isInterWiki ? 'inter' :
-			'intra' ) . '" data-rver="6" data-event="search_click_wiki"';
+			'intra' ) . '" data-rver="' . WikiaSearchController::RVERSION . '" data-event="search_click_wiki"';
 		?>
 
         <img src="<?= $imageURL; ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail grid-1 alpha" />

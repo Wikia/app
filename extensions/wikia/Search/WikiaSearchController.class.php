@@ -21,6 +21,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var int
 	 */
 	const PAGES_PER_WINDOW = 5;
+
+	/**
+	 * r version for tracking
+	 * @var int
+	 */
+	const RVERSION = 6;
 	
 	/**
 	 * Responsible for instantiating query services based on config.
