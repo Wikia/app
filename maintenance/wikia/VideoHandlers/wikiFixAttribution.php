@@ -36,14 +36,16 @@ class EditCLI extends Maintenance {
 					"where img_user = " . self::wikiaBotID .
 					" and wiki_id = " . $wgCityId;
 
-			$this->output('-- Resetting attribution ');
+			global $wgDBname;
+			$this->output("-- Resetting attribution on $wgDBname ");
 
 			$res = $dbDataware->query($query);
 			while ($row = $dbDataware->fetchObject($res)) {
 				if ($test) {
-					$this->output("\n[TEST] Assigning attribution to " . $row->img_user_text);
+					$this->output("\n[TEST] Assigning attribution on '".$row->img_name."' to " . $row->img_user_text);
 				} else {
-					$this->output('.');
+					$this->output("\nAssigning attribution on '".$row->img_name."' to " . $row->img_user_text);
+					//$this->output('.');
 				}
 				$ret = $this->fixAttribution($dbw, $row, $test);
 			}

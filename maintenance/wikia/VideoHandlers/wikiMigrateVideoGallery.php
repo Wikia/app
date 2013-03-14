@@ -33,6 +33,9 @@ class EditCLI extends Maintenance {
 			$wgUser->addToDatabase();
 		}
 
+		global $wgDBname;
+		$this->output("Wiki: ".$wgDBname."\n");
+
 		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		if (!is_null($dbs)) {
 			global $wgCityId;
@@ -62,11 +65,11 @@ class EditCLI extends Maintenance {
 		# Read the text
 		$text = $page->getText();
 
-		$text = preg_replace('/<(\/?)videogallery>/', '<$1gallery>', $text);
+		$text = preg_replace('/<(\/?)videogallery([^>]*)>/', '<$1gallery$2>', $text);
 		$summary = 'Updating <videogallery> to <gallery>';
 
 		# Do the edit
-		$this->output( "Replacing page ID ($pageId) ... " );
+		$this->output( "Replacing page (".$wgTitle->getDBkey().") ... " );
 		if ($test) {
 			$this->output("(test: no changes) done\n");
 		} else {

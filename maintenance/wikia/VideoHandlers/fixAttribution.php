@@ -49,8 +49,8 @@ class EditCLI extends Maintenance {
 
 	public function fixForWiki ( $conf, $wikiId, $test = null ) {
 		$dir = dirname( __FILE__ );
-		$cmd = "SERVER_ID=$wikiId php $dir/wikiMigrateVideoGallery.php --conf $conf";
-		if (isset($test)) {
+		$cmd = "SERVER_ID=$wikiId php $dir/wikiFixAttribution.php --conf $conf";
+		if ($test) {
 			$cmd .= ' --test';
 		}
 		system($cmd, $retval);
