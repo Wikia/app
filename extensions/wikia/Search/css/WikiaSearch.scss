@@ -109,7 +109,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 
 	// Tabs on Special: Search in wiki
-	.search-tabs {
+	.WikiaSearch .search-tabs {
 		border-top: 1px solid $color-search-grid-border;
 		margin-top: 35px;
 		overflow: hidden;
@@ -203,14 +203,12 @@ $form-negative-side-padding: $form-side-padding*-1;
 		margin-bottom: 10px;
 		overflow: hidden;
 		padding: 11px 0;
-		text-align: right;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		text-align: right;
+		text-align: left;
 
 		.inter-wiki-search & {
 			border-bottom: none;
-			text-align: left;
 			padding-left: 10px;
 			padding-top: 20px;
 		}
