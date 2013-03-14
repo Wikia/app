@@ -37,11 +37,10 @@ class All extends AbstractService
 		if ( $this->currentPageId === null ) {
 			throw new \Exception( "This service requires a page ID to be set." );
 		}
-		$factory = new Factory;
 		$result = array();
 		foreach ( $this->services as $serviceName => $service ) {
 			if ( $service === null ) {
-				$service = $factory->get( $serviceName );
+				$service = new $service();
 				$this->services[$serviceName] = $service;
 			}
 			$subResult = $service->setPageId( $this->currentPageId )->execute();

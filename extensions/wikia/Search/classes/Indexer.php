@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\Indexer
  */
 namespace Wikia\Search;
-use \Solarium_Client, \WikiaException, Wikia\Search\IndexService, \WikiDataSource, \Wikia, \ScribeProducer;
+use \Solarium_Client, \Exception, \WikiDataSource, \Wikia, \ScribeProducer;
 /**
  * This class is responsible for (soon to be) deprecated getPages functionality, and application-based indexing logic.
  * @author relwell
@@ -12,23 +12,29 @@ use \Solarium_Client, \WikiaException, Wikia\Search\IndexService, \WikiDataSourc
 class Indexer
 {
 	/**
-	 * Used for querying Solr
+	 * Interface to MediaWiki logic -- need to use this more
+	 * @var \Wikia\Search\MediaWikiService
+	 */
+	protected $mwService;
+	
+	/**
+	 * Connects to Solr 
 	 * @var Solarium_Client
 	 */
 	protected $client;
 	
 	/**
-	 * Interface to MediaWiki logic -- need to use this more
-	 * @var \Wikia\Search\MediaWikiService
+	 * Encapsulates Wikia::log functionality
+	 * @var Wikia
 	 */
-	protected $service;
+	protected $logger;
 	
 	/**
-	 * Used to store pages when we make multiple invocations for the same page ID
+	 * Stores any IndexServices we have instantiated
 	 * @var array
 	 */
-	protected $articles = array();
-	
+	protected $indexServices;
+
 	/**
 	 * Used to determine which services to invoke during WikiaSearchIndexer::getPage()
 	 * @var array
@@ -42,25 +48,7 @@ class Indexer
 			'WikiPromoData',
 			'WikiViews'
 	);
-	
-	/**
-	 * Handles dependency injection for solarium client
-	 */
-	public function __construct() {
-		$this->service = new MediaWikiService;
-		$master = $this->service->isOnDbCluster() ? $this->service->getGlobal( 'SolrHost' ) : 'staff-search-s1';
-		$params = array(
-				'adapter' => 'Curl',
-				'adapteroptions' => array(
-						'host' => $master,
-						'port' => 8983,
-						'path' => '/solr/'
-						 )
-				);
-		$this->client = new Solarium_Client( $params );
-		$this->logger = new Wikia();
-	}
-		
+
 	/**
 	 * Used to generate indexing data for a number of page IDs on a given  wiki
 	 * @see WikiaSearchController::getPages()
@@ -68,16 +56,15 @@ class Indexer
 	 * @return array result, for JSON encoding 
 	 */
 	public function getPages( array $pageIds ) {
-		wfProfileIn(__METHOD__);
 		$result = array(
-				'pages'			=> array(), 
-				'missingPages'	=> array(), 
+				'pages'         => array(),
+				'missingPages'  => array(),
 		);
 
 		foreach ( $pageIds as $pageId ) {
 			try {
 				$result['pages'][$pageId] = $this->getPage( $pageId );
-			} catch (WikiaException $e) {
+			} catch ( Exception $e ) {
 				/**
 				 * here's how we will pretend that a page is empty for now. the risk is that if any of the
 				 * API code is broken in the getPage() method, it will tell the indexer to queue the page up
@@ -86,7 +73,6 @@ class Indexer
 				$result['missingPages'][] = $pageId;
 			}
 		}
-		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
@@ -98,11 +84,10 @@ class Indexer
 	 * @return array result
 	 */
 	public function getPage( $pageId ) {
-		wfProfileIn(__METHOD__);
-		$result = array( 'id' => sprintf( '%s_%s', $this->service->getWikiId(), $this->service->getCanonicalPageIdFromPageId( $pageId ) ) );
+		$result = array( 'id' => sprintf( '%s_%s', $this->getMwService()->getWikiId(), $this->getMwService()->getCanonicalPageIdFromPageId( $pageId ) ) );
 
 		foreach ( $this->serviceNames as $serviceName ) {
-			$serviceResult = $this->getService( $serviceName )
+			$serviceResult = $this->getIndexService( $serviceName )
 			                      ->setPageId( $pageId )
 			                      ->execute();
 			
@@ -110,20 +95,7 @@ class Indexer
     			$result = array_merge( $result, $serviceResult );
 			}
 		}
-		wfProfileOut(__METHOD__);
 		return $result;
-	}
-	
-	/**
-	 * Helper for instantiating or retrieving stored services
-	 * @param string $serviceName
-	 * @return WikiaSearchIndexServiceAbstract
-	 */
-	public function getService( $serviceName ) {
-		if (! isset( $this->services[$serviceName] ) ) {
-			$this->services[$serviceName] = (new IndexService\Factory)->get( $serviceName ); 
-		}
-		return $this->services[$serviceName]; 
 	}
 	
 	/**
@@ -132,9 +104,8 @@ class Indexer
 	 * @return Wikia\Search\Result 
 	 */
 	public function getSolrDocument( $pageId ) {
-		$this->service->setGlobal( 'AppStripsHtml', true );
-		$pageData = $this->getPage( $pageId );
-		return new Result( $pageData );
+		$this->getMwService()->setGlobal( 'AppStripsHtml', true );
+		return new Result( $this->getPage( $pageId ) );
 	}
 	
 	/**
@@ -156,13 +127,13 @@ class Indexer
 	 * @return boolean
 	 */
 	public function updateDocuments( array $documents = array() ) {
-		$updateHandler = $this->client->createUpdate();
+		$updateHandler = $this->getClient()->createUpdate();
 		$updateHandler->addDocuments( $documents );
 		$updateHandler->addCommit();
 		try {
-			$this->client->update( $updateHandler );
+			$this->getClient()->update( $updateHandler );
 		} catch ( \Exception $e ) {
-			$this->logger->log( __METHOD__, '', $e );
+			$this->getLogger()->log( __METHOD__, '', $e );
 		}
 		return true;
 	}
@@ -181,7 +152,7 @@ class Indexer
 				$sp->reindexPage();
 			}
 		} catch ( \Exception $e ) {
-			$this->logger->log( __METHOD__, '', $e );
+			$this->getLogger()->log( __METHOD__, '', $e );
 		}
 	}
 	
@@ -192,14 +163,14 @@ class Indexer
 	 * @return Solarium_Result|null
 	 */
 	public function deleteWikiDocs( $wid ) {
-		$updateHandler = $this->client->createUpdate();
+		$updateHandler = $this->getClient()->createUpdate();
 		$query = Utilities::valueForField( 'wid', $wid );
 		$updateHandler->addDeleteQuery( $query );
 		$updateHandler->addCommit();
 		try {
-			return $this->client->update( $updateHandler );
+			return $this->getClient()->update( $updateHandler );
 		} catch ( \Exception $e ) {
-			F::build( 'Wikia' )->Log( __METHOD__, 'Delete: '.$query, $e);
+			$this->getLogger()->log( __METHOD__, 'Delete: '.$query, $e);
 		}
 	}
 
@@ -211,16 +182,16 @@ class Indexer
 	 * @return Solarium_Result|null
 	 */
 	public function deleteManyWikiDocs( $wids ) {
-		$updateHandler = $this->client->createUpdate();
+		$updateHandler = $this->getClient()->createUpdate();
 		foreach ( $wids as $wid ) {
 			$query = Utilities::valueForField( 'wid', $wid );
 			$updateHandler->addDeleteQuery( $query );
 		}
 		$updateHandler->addCommit();
 		try {
-			return $this->client->update( $updateHandler );
+			return $this->getClient()->update( $updateHandler );
 		} catch ( \Exception $e ) {
-			$this->logger->log( __METHOD__, 'Delete: '.$query, $e);
+			$this->getLogger()->log( __METHOD__, 'Delete: '.$query, $e);
 		}
 	}
 	
@@ -230,15 +201,15 @@ class Indexer
 	 * @return bool true
 	 */
 	public function deleteBatch( array $documentIds = array() ) {
-	    $updateHandler = $this->client->createUpdate();
+	    $updateHandler = $this->getClient()->createUpdate();
 	    foreach ( $documentIds as $id ) {
 		    $updateHandler->addDeleteQuery( Utilities::valueForField( 'id', $id ) );
 	    }
 		$updateHandler->addCommit();
 	    try {
-	        $this->client->update( $updateHandler );
+	        $this->getClient()->update( $updateHandler );
 	    } catch ( \Exception $e ) {
-	        $this->logger->log( __METHOD__, implode( ',', $documentIds ), $e);
+	        $this->getLogger()->log( __METHOD__, implode( ',', $documentIds ), $e);
 		}
 
 		return true;
@@ -257,11 +228,59 @@ class Indexer
 	 * @param int $pageId
 	 */
 	public function deleteArticle( $pageId) {
-		
-		$id		= sprintf( '%s_%s', $this->service->getWikiId(), $pageId );
-		
+		$id = sprintf( '%s_%s', $this->getMwService()->getWikiId(), $pageId );
 		$this->deleteBatch( array( $id ) );
-		
 		return true;
+	}
+	
+	/**
+	 * Lazy-loading for the client dependency.
+	 * @return \Solarium_Client
+	 */
+	protected function getClient() {
+		if ( $this->client === null ) {
+			$master = $this->getMwService()->isOnDbCluster() ? $this->getMwService()->getGlobal( 'SolrHost' ) : 'staff-search-s1';
+			$params = array(
+					'adapter' => 'Curl',
+					'adapteroptions' => array(
+							'host' => $master,
+							'port' => 8983,
+							'path' => '/solr/'
+							)
+					);
+			$this->client = new Solarium_Client( $params );
+		}
+		return $this->client;
+	}
+	
+	/**
+	 * Lazy loads MW service
+	 * @return \Wikia\Search\MediaWikiService
+	 */
+	protected function getMwService() {
+		$this->mwService = $this->mwService ?: new MediaWikiService;
+		return $this->mwService;
+	}
+	
+	/**
+	 * Lazy loads logger
+	 * @return \Wikia
+	 */
+	protected function getLogger() {
+		$this->logger = $this->logger ?: new Wikia;
+		return $this->logger;
+	}
+	
+	/**
+	 * Helper for instantiating or retrieving stored services
+	 * @param string $serviceName
+	 * @return WikiaSearchIndexServiceAbstract
+	 */
+	protected function getIndexService( $serviceName ) {
+		if (! isset( $this->indexServices[$serviceName] ) ) {
+			$fullServiceName = 'Wikia\Search\IndexService\\' . $serviceName;
+			$this->indexServices[$serviceName] = new $fullServiceName; 
+		}
+		return $this->indexServices[$serviceName]; 
 	}
 }

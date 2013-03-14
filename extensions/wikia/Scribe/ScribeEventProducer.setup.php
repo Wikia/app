@@ -3,6 +3,7 @@
 $app = F::app();
 $dir = dirname( __FILE__ );
 
+$app->registerClass('ScribeProducer', $dir . '/ScribeProducer.php');  //was this removed?
 $app->registerClass('ScribeEventProducer', $dir . '/ScribeEventProducer.class.php');
 $app->registerClass('ScribeEventProducerController', $dir . '/ScribeEventProducerController.class.php');
 
