@@ -2,8 +2,16 @@
 	'use strict';
 
 	function ooyala() {
+		if(!(this instanceof ooyala)) {
+			return new ooyala();
+		}
+		
+		if(typeof context.Wikia.Ooyala == 'object') {
+			return;
+		}
 
-		var p = window.ooyalaParams;
+		var p = window.ooyalaParams,
+			that = this;
 
 		var loadOoyala = function(){
 			$.getScript(p.jsFile).done(function() {
@@ -11,26 +19,28 @@
 			});
 		};
 		
+		var resetTracking = function() {
+			this.duration = null;
+			this.timeAtHalf = null;
+			this.halfAchieved = false;
+			this.timeAtFull = null;
+			this.fullAchieved = false;			
+		};
+
+		resetTracking.call(this);
+		
 		var onCreate = function(player) {
-			var messageBus = player.mb,
-				duration,
-				half,
-				halfCalled = false,
-				full,
-				fullCalled = false;
-			
-// TODO: test with age gate
-// TODO: reset when embed code changes (i.e. the next video is played)
-// TODO: add loading image to original div
-			
+			var messageBus = player.mb;
+
 			messageBus.subscribe(OO.EVENTS.PLAYING, 'tracking', function() {
 				console.log('playing');
-				
+
 				// Duration is not available until the video starts playing
-				if(!duration) {
-					duration = player.getDuration();
-					half = Math.floor(duration / 2);
-					full = Math.floor(duration) - 2;
+				if(!that.duration) {
+					that.duration = player.getDuration();
+					that.timeAtHalf = Math.floor(that.duration / 2);
+					// Subtract 1 from duration so we're sure to catch the event
+					that.timeAtFull = Math.floor(that.duration) - 1;
 				}
 			});
 
@@ -39,30 +49,29 @@
 			});
 
 			messageBus.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'tracking', function(eventName, payload) {
-				if(!duration) {
+				if(!that.duration) {
 					return;
 				}
+				var pl = Math.floor(payload);				
 
-				var pl = Math.floor(payload);
-				
-				if(!halfCalled && pl > half) {
+				if(!that.halfAchieved && pl > that.timeAtHalf) {
 					console.log('half!');
-					halfCalled = true;
+					that.halfAchieved = true;
 					return;
 				}
 				
-				if(!fullCalled && pl > full) {
-					console.log('full!');				
-					fullCalled = true;
+				if(!that.fullAchieved && pl > that.timeAtFull) {
+					console.log('full!');
+					that.fullAchieved = true;
 					return;
 				}
 			});
 			
 			// Log all events and values
-			messageBus.subscribe('*', 'tracking', function(eventName, payload) {
+			/*messageBus.subscribe('*', 'tracking', function(eventName, payload) {
 				console.log(eventName);
 				console.log(payload);
-			});
+			});*/
 			
 		}
 
