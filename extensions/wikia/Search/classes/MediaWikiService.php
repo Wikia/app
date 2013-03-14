@@ -580,11 +580,20 @@ class MediaWikiService
 	}
 	
 	/**
-	 * Returns the string name of a hub for the provided wiki ID.
-	 * @param int $wikiId
+	 * Returns the string name of the top-level hub for the provided wiki ID
+	 * @param $wikiId
 	 * @return string
 	 */
 	public function getHubForWikiId( $wikiId ) {
+		return (new \HubService())->getCategoryInfoForCity( $wikiId )->cat_name;
+	}
+	
+	/**
+	 * Returns the string name of a sub-hub for the provided wiki ID.
+	 * @param int $wikiId
+	 * @return string
+	 */
+	public function getSubHubForWikiId( $wikiId ) {
 		$cat = (new \WikiFactory)->getCategory( $wikiId );
 		return is_object( $cat ) ? $cat->cat_name : $cat;
 	}

@@ -2201,6 +2201,27 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetHubForWikiId() {
 		$service = $this->service->setMethods( null )->getMock();
+		$hs = $this->getMock( 'HubService', [ 'getCategoryInfoForCity' ] );
+		$hs
+		    ->staticExpects( $this->once() )
+		    ->method       ( 'getCategoryInfoForCity' )
+		    ->with         ( 123 )
+		    ->will         ( $this->returnValue( (object) [ 'cat_name' => 'Entertainment' ] ) )
+		;
+		$this->proxyClass( 'HubService', $hs );
+		$this->mockApp();
+		$this->assertEquals(
+				'Entertainment',
+				$service->getHubForWikiId( 123 )
+		);
+	}
+	
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getSubHubForWikiId
+	 */
+	public function testGetSubHubForWikiId() {
+		$service = $this->service->setMethods( null )->getMock();
 		$wf = $this->getMock( 'WikiFactory', [ 'getCategory' ] );
 		$wf
 		    ->staticExpects( $this->once() )
@@ -2212,7 +2233,7 @@ class MediaWikiServiceTest extends BaseTest
 		$this->mockApp();
 		$this->assertEquals(
 				'Entertainment',
-				$service->getHubForWikiId( 123 )
+				$service->getSubHubForWikiId( 123 )
 		);
 	}
 	
