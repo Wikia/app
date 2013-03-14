@@ -285,6 +285,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 		}
 		.wikiPromoteThumbnail {
 			padding-left: 10px;
+			padding-top: 3px;
 			@include box-sizing;
 		}
 		.wiki-statistics, .hub {

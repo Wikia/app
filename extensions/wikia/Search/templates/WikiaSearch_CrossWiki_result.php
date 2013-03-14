@@ -9,16 +9,20 @@
 		?>
 
 		<?php
-			$images = $resultSet->getHeader( 'images' );
-			if ( !empty( $images ) ) {
-				$imageInfo = ImagesService::getLocalFileThumbUrlAndSizes( reset( $images ) );
+	        $images = $resultSet->getHeader( 'images' );
+			$helper = new \WikiaHomePageHelper();
+
+	        if ( !empty( $images ) ) {
+				foreach($images as $k=>$v) {
+					$images[$k] = $helper->getImageUrl($v, 150, 100);
+
+				}
+		        $imageURL = $images[0];
 			} else {
-				//TODO: get default image
-				$imageInfo = new stdClass();
-				$imageInfo->url = '';
+				$imageURL = $wgExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
 			}
 		?>
-        <img src="<?= $imageInfo->url; ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail grid-1 alpha" />
+        <img src="<?= $imageURL; ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail grid-1 alpha" />
         <div class="grid-5 result-description">
 
             <h1>
