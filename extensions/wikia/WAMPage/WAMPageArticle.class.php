@@ -23,11 +23,12 @@ class WAMPageArticle extends Article {
 		$app = F::app();
 		$app->wg->Out->clearHTML();
 		if( $this->isWAMFAQPage($this->getTitle()) ) {
-			$app->wg->Out->addHTML( $app->sendRequest('WAMPageSpecialController', 'faq') );
+			$action = 'faq';
 		} else {
-			$app->wg->Out->addHTML( $app->sendRequest('WAMPageSpecialController', 'index') );
+			$action = 'index';
 		}
 		
+		$app->wg->Out->addHTML( $app->sendRequest('SpecialWAMPageController', $action) );
 		wfProfileOut(__METHOD__);
 	}
 

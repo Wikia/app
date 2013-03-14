@@ -13,4 +13,8 @@ class SpecialWAMPageController extends WikiaSpecialPageController
 	public function index() {
 		$this->response->addAsset('wampage_scss');
 	}
+	
+	public function faq() {
+		//just for the template now...
+	}
 }
