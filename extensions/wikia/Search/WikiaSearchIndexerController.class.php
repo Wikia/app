@@ -2,7 +2,6 @@
 /**
  * Class definition for WikiaSearchIndexerController
  */
-use Wikia\Search\IndexService\Factory;
 use Wikia\Search\MediaWikiService;
 /**
  * This class is responsible for providing responses for atomic updates of documents. 
@@ -25,7 +24,6 @@ class WikiaSearchIndexerController extends WikiaController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->factory = new Factory;
 		$this->service = new MediaWikiService;
 		$this->service->setGlobal( 'AllowMemcacheWrites', false )
 		                ->setGlobal( 'AppStripsHtml', true );
@@ -38,10 +36,9 @@ class WikiaSearchIndexerController extends WikiaController
 	{
 		$this->getResponse()->setFormat('json');
 
-		$serviceName = $this->getVal( 'service', 'DefaultContent' );
+		$serviceName = 'Wikia\Search\IndexService\\' . $this->getVal( 'service', 'DefaultContent' );
 		$ids = explode( '|', $this->getVal( 'ids', '' ) );
-		$service = $this->factory->get( $serviceName, $ids );
-		$service->setVerbose( $this->getVal( 'verbose', false ) );
+		$service = new $serviceName( $ids );
 		
 		$ids = $this->getVal( 'ids' );
 	    if ( !empty( $ids ) ) {
@@ -54,14 +51,13 @@ class WikiaSearchIndexerController extends WikiaController
 	 * The response includes the wiki ID, the URL of the wiki, and the stubbed-out XML
 	 * It is the responsibility of the back-end script to access all page IDs using the appropriate API 
 	 * and replace placeholder values with
-	 * @todo needs better error handling
 	 */
 	public function getForWiki()
 	{
 		$this->getResponse()->setFormat('json');
 		
-		// this will throw an exception if you don't set the service. that's a behavior we want.
-		$service = $this->factory->get( $this->getVal( 'service' ) );
+		$serviceName = 'Wikia\Search\IndexService\\' . $this->getVal( 'service' );
+		$service = new $serviceName();
 		
 		$this->response->setData( $service->getStubbedWikiResponse() );
 	}

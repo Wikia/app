@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\Indexer
  */
 namespace Wikia\Search;
-use \Solarium_Client, \WikiaException, Wikia\Search\IndexService, \WikiDataSource, \Wikia, \ScribeProducer;
+use \Solarium_Client, \WikiaException, \WikiDataSource, \Wikia, \ScribeProducer;
 /**
  * This class is responsible for (soon to be) deprecated getPages functionality, and application-based indexing logic.
  * @author relwell
@@ -121,7 +121,8 @@ class Indexer
 	 */
 	public function getService( $serviceName ) {
 		if (! isset( $this->services[$serviceName] ) ) {
-			$this->services[$serviceName] = (new IndexService\Factory)->get( $serviceName ); 
+			$fullServiceName = 'Wikia\Search\IndexService\\' . $serviceName;
+			$this->services[$serviceName] = new $fullServiceName; 
 		}
 		return $this->services[$serviceName]; 
 	}
