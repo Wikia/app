@@ -182,6 +182,10 @@ class EditAccount extends SpecialPage {
 				'isDisabled' => null,
 				'isAdopter' => null,
 				'returnURL' => $this->getTitle()->getFullURL(),
+				'logLink' => Linker::linkKnown(
+					SpecialPage::getTitleFor( 'Log', 'editaccnt' ),
+					$this->msg( 'editaccount-log' )->escaped()
+				),
 				'userStatus' => null,
 				'emailStatus' => null,
 				'disabled' => null,
