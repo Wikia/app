@@ -49,23 +49,12 @@
 					<?php foreach( $results as $result ): ?>
 						<?php
 							$pos++;
-							if($result instanceof \Wikia\Search\ResultSet\Grouping) {
-								echo $app->getView( 'WikiaSearch', 'resultSet', array(
-								  'resultSet' => $result,
-								  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-								  'query' => $query,
-								  'isInterWiki' => $isInterWiki,
-								));
-							}
-							else {
-								echo $app->getView( 'WikiaSearch', 'result', array(
-								  'result' => $result,
-								  'gpos' => 0,
-								  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-								  'query' => $query,
-								  'isInterWiki' => $isInterWiki,
-								));
-							}
+							echo $app->getView( 'WikiaSearch', 'result', array(
+							  'result' => $result,
+							  'gpos' => 0,
+							  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+							  'query' => $query
+							));
 						?>
 					<?php endforeach; ?>
 					</ul>
