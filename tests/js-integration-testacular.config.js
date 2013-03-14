@@ -2,7 +2,7 @@
 // Generated on Thu Feb 28 2013 11:29:38 GMT+0100 (CET)
 
 /*
-	created by Jakub Olek <jakub.olek@wikia-inc.com>
+ created by Jakub Olek <jakub.olek@wikia-inc.com>
  */
 
 // base path, that will be used to resolve files and exclude
@@ -25,12 +25,12 @@ files = [
 
 	//JSMessages
 	'extensions/wikia/JSMessages/js/JSMessages.js',
-		'extensions/wikia/JSMessages/js/spec/JSMessages.spec.js',
+	'extensions/wikia/JSMessages/js/spec/JSMessages.spec.js',
 
 	//Chat Tests
 	'extensions/wikia/Chat2/js/spec/views.mocks.js',
 	'extensions/wikia/Chat2/js/views/views.js',
-		'extensions/wikia/Chat2/js/spec/ChatController.spec.js',
+	'extensions/wikia/Chat2/js/spec/ChatController.spec.js',
 
 	//WikiaMobile
 	'extensions/wikia/WikiaMobile/js/autocomplete.js',
@@ -52,7 +52,7 @@ files = [
 	'extensions/wikia/WikiaMobile/js/topbar.js',
 	'extensions/wikia/WikiaMobile/js/features.js',
 	'extensions/wikia/WikiaMobile/js/track.js',
-		'extensions/wikia/WikiaMobile/js/spec/*.spec.js',
+	'extensions/wikia/WikiaMobile/js/spec/*.spec.js',
 
 	//core modules
 	'resources/wikia/modules/aim.js',
@@ -68,7 +68,7 @@ files = [
 	'resources/wikia/modules/stringhelper.js',
 	'resources/wikia/modules/thumbnailer.js',
 	'resources/wikia/modules/uniqueId.js',
-		'resources/wikia/modules/spec/*.spec.js',
+	'resources/wikia/modules/spec/*.spec.js',
 
 	//Advertisment
 	'extensions/wikia/AdEngine/js/AdConfig2.js',
@@ -89,12 +89,12 @@ files = [
 	'extensions/wikia/AdEngine/js/EvolveHelper.js',
 	'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 	'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
-		'extensions/wikia/AdEngine/js/spec/*.spec.js',
+	'extensions/wikia/AdEngine/js/spec/*.spec.js',
 
 	//SpecialPromote
 	'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.mocks.js',
 	'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
-		'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.spec.js',
+	'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.spec.js',
 ];
 
 // list of files to exclude
@@ -120,19 +120,19 @@ logLevel = LOG_INFO;
 // enable / disable watching file and executing tests whenever any file changes
 autoWatch = true;
 
-// Start these browsers, currently available:
-// - Chrome
-// - ChromeCanary
-// - Firefox
-// - Opera
-// - Safari (only Mac)
-// - PhantomJS
-// - IE (only Windows)
-browsers = ['Chrome'];
+// Start these browsers, to run tests:
+browsers = [
+	'PhantomJS',
+	'Chrome',
+	//'ChromeCanary',
+	'Firefox',
+	'Opera',
+	'Safari', // only Mac
+	//'IE' // only Windows
+];
 
 // If browser does not capture in given timeout [ms], kill it
 captureTimeout = 10000;
-
 
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit
