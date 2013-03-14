@@ -14,7 +14,6 @@ $wgAutoloadClasses['CreateWikiLocalJob'] = $dir."../AutoCreateWiki/CreateWikiLoc
 $wgAutoloadClasses['CreateWiki'] = $dir."../AutoCreateWiki/CreateWiki.php";
 $wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
 $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
-$wgAutoloadClasses['CreateNewWikiHooks'] = $dir . 'CreateNewWikiHooks.class.php';
 
 // special page mapping
 $wgSpecialPages['CreateNewWiki'] = 'SpecialCreateNewWiki';
@@ -29,6 +28,3 @@ $wgGroupPermissions['*']['createnewwiki'] = true;
 $wgGroupPermissions['staff']['createnewwiki'] = true;
 
 $wgExtensionFunctions[] = 'CreateNewWikiController::setupCreateNewWiki';
-
-$app = F::app();
-$app->registerHook('BeforePageDisplay', 'CreateNewWikiHooks', 'onBeforePageDisplay');
