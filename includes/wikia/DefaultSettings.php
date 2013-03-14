@@ -1083,6 +1083,12 @@ $wgWikiaHubsFileRepoPath = 'http://community.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/central/';
 
 /**
+ * @name $wgEnableAmazonDirectTargetedBuy
+ * Enables AmazonDirectTargetedBuy integration
+ */
+$wgEnableAmazonDirectTargetedBuy = false;
+
+/**
  * trusted proxy service registry
  */
 $app->registerClass( 'TrustedProxyService', "$IP/includes/wikia/services/TrustedProxyService.class.php" );

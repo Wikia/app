@@ -253,6 +253,7 @@ class OasisController extends WikiaController {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw = AnalyticsEngine::track('IVW', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->amazonDirectTargetedBuy = AnalyticsEngine::track('AmazonDirectTargetedBuy', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		$this->mainSassFile = 'skins/oasis/css/oasis.scss';
