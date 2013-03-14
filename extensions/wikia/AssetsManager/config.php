@@ -1055,6 +1055,15 @@ $config['wikiahubs_v2_scss_mobile'] = array(
 	)
 );
 
+/** WAMPage **/
+$config['wampage_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array('oasis'),
+	'assets' => array(
+		'//extensions/wikia/WAMPage/css/WAMPage.scss'
+	)
+);
+
 /** WikiaSearch **/
 $config['wikiasearch_js_wikiamobile'] = array(
     'type' => AssetsManager::TYPE_JS,
