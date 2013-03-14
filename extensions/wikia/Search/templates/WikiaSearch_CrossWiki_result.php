@@ -1,3 +1,20 @@
+<?php
+	// get wiki thumbnail
+	$images = $resultSet->getHeader( 'images' );
+	$helper = new \WikiaHomePageHelper();
+
+	if ( !empty( $images ) ) {
+		foreach($images as $k=>$v) {
+			$images[$k] = $helper->getImageUrl($v, 150, 100);
+
+		}
+		$imageURL = $images[0];
+	} else {
+		// display placeholder image if no thumbnail
+		$imageURL = $wgExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
+	}
+?>
+
 <?php if($resultSet->getResultsFound() > 1): ?>
     <!-- grouped search result-->
     <li class="result">
@@ -8,20 +25,6 @@
 			'intra' ) . '" data-rver="6" data-event="search_click_wiki"';
 		?>
 
-		<?php
-	        $images = $resultSet->getHeader( 'images' );
-			$helper = new \WikiaHomePageHelper();
-
-	        if ( !empty( $images ) ) {
-				foreach($images as $k=>$v) {
-					$images[$k] = $helper->getImageUrl($v, 150, 100);
-
-				}
-		        $imageURL = $images[0];
-			} else {
-				$imageURL = $wgExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
-			}
-		?>
         <img src="<?= $imageURL; ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail grid-1 alpha" />
         <div class="grid-5 result-description">
 
@@ -45,5 +48,12 @@
         </div>
     </li>
 <?php else: ?>
-	<?= $app->getView( 'WikiaSearch', 'CrossWiki_exactResult', array( 'resultSet' => $resultSet, 'gpos' => 0, 'pos' => $pos, 'query' => $query, 'rank' =>  $resultSet->getHeader('cityRank'), 'isInterWiki'=> true )); ?>
+	<?= $app->getView( 'WikiaSearch', 'CrossWiki_exactResult', array(
+		'resultSet' => $resultSet,
+		'gpos' => 0,
+		'pos' => $pos,
+		'query' => $query,
+		'rank' =>  $resultSet->getHeader('cityRank'),
+		'imageURL' => $imageURL
+		)); ?>
 <?php endif; ?>

@@ -232,6 +232,10 @@ $form-negative-side-padding: $form-side-padding*-1;
 		margin-bottom: 13px;
 		word-wrap: break-word;
 		padding: 0;
+
+		.inter-wiki-search & {
+			margin-bottom: 20px;
+		}
 		.media-text {
 			float: left;
 		}

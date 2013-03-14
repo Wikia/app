@@ -2,24 +2,15 @@
 
 	<?php
 	$trackingData = 'class="ResultLink" data-wid="' . $resultSet->getHeader('wid') . '" data-gpos="' . $pos
-		. '" data-pos="0" data-sterm="' . addslashes($query) . '" data-stype="' .( $isInterWiki ? 'inter' :
-		'intra' ) . '" data-rver="6" data-event="search_click_wiki"';
+		. '" data-pos="0" data-sterm="' . addslashes($query) . '" data-stype="inter" data-rver="6" data-event="search_click_wiki"';
 	?>
 
 	<?php
-	$images = $resultSet->getHeader( 'images' );
-	if ( !empty( $images ) ) {
-		$imageInfo = ImagesService::getLocalFileThumbUrlAndSizes( reset( $images ) );
-	} else {
-		//TODO: get default image
-		$imageInfo = new stdClass();
-		$imageInfo->url = '';
-	}
-
-	$urlInfo = parse_url( $resultSet->getHeader( 'url' ) );
-	$host = $urlInfo[ 'host' ] ;
+		$urlInfo = parse_url( $resultSet->getHeader( 'url' ) );
+		$host = $urlInfo[ 'host' ] ;
 	?>
-    <img src="<?= $imageInfo->url; ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail grid-1 alpha" />
+    <img src="<?= $imageURL ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail grid-1 alpha"
+	    />
     <div class="grid-5 result-description">
 
         <h1>
