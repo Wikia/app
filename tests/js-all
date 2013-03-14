@@ -1,2 +1,2 @@
 #!/bin/sh
-ant -f build-wikia.xml js
+testacular start js-unit-testacular.config.js
