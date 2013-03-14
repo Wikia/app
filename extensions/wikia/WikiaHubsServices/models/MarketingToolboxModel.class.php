@@ -464,6 +464,11 @@ class MarketingToolboxModel extends WikiaModel {
 			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-db-error');
 		}
 
+		$actualPublishedTimestamp = $this->getLastPublishedTimestamp($langCode, self::SECTION_HUBS, $verticalId);
+		if ($actualPublishedTimestamp < $timestamp && $timestamp < time()) {
+			$this->purgeLastPublishedTimestampCache($langCode, self::SECTION_HUBS, $verticalId);
+		}
+
 		$this->wf->ProfileOut(__METHOD__);
 	}
 
@@ -589,12 +594,7 @@ class MarketingToolboxModel extends WikiaModel {
 
 		if ($timestamp == strtotime('00:00')) {
 			$lastPublishedTimestamp = WikiaDataAccess::cache(
-				F::app()->wf->SharedMemcKey(
-					self::CACHE_KEY,
-					$langCode,
-					$verticalId,
-					self::CACHE_KEY_LAST_PUBLISHED_TIMESTAMP
-				),
+				$this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId),
 				6 * 60 * 60,
 				function () use ($langCode, $sectionId, $verticalId, $timestamp) {
 					return $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp);
@@ -605,6 +605,10 @@ class MarketingToolboxModel extends WikiaModel {
 		}
 
 		return $lastPublishedTimestamp;
+	}
+
+	protected function purgeLastPublishedTimestampCache($langCode, $sectionId, $verticalId) {
+		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId));
 	}
 
 	protected function getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp) {
@@ -702,6 +706,16 @@ class MarketingToolboxModel extends WikiaModel {
 		}
 
 		return $table;
+	}
+
+	protected function getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId) {
+		return F::app()->wf->SharedMemcKey(
+			self::CACHE_KEY,
+			$langCode,
+			$sectionId,
+			$verticalId,
+			self::CACHE_KEY_LAST_PUBLISHED_TIMESTAMP
+		);
 	}
 
 	protected function getSpecialPageClass() {
