@@ -93,6 +93,9 @@
 		});
 		window.adslots2 = window.adslots2 || [];
 		adEngine.run(adConfig, window.adslots2);
+
+		// Flush GPT tags
+		adProviderAdDriver2.flushGpt();
 	});
 
 	// DART API for Liftium
