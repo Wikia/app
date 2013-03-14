@@ -37,11 +37,14 @@ class EditCLI extends Maintenance {
 			$query = "select distinct(wiki_id) as wiki_id " .
 					"from video_imagetable_backup";
 			$res = $dbs->query($query);
-			$this->output("done\n");
+			$numRows = $dbs->numRows($res);
+			$this->output("done ($numRows rows)\n");
 
+			$curRow = 1;
 			while ($row = $dbs->fetchObject($res)) {
-				$this->output("== Fixing wiki ID: " . $row->wiki_id . "\n");
+				$this->output("== [$curRow/$numRows] Fixing wiki ID: " . $row->wiki_id . "\n");
 				$this->fixForWiki($conf, $row->wiki_id, $test);
+				$curRow++;
 			}
 			$dbs->freeResult($res);
 		}
