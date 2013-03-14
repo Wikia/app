@@ -29,7 +29,6 @@ describe("Tables module", function () {
 
 		body.innerHTML = '<div id="mw-content-text"><table ><tbody><tr><td>TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST</td><td>and some more</td></tr><tr><td></td></tr></tbody></table></div>';
 
-		//TODO: ummock
 		window.Features = {
 			overflow: false
 		};
