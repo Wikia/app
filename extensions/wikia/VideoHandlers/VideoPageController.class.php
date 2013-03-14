@@ -6,71 +6,57 @@ class VideoPageController extends WikiaController {
 	 *
 	 */
 	public function fileUsage() {
-		
-		$this->setVal('limit', 50);
 		$app = F::app();
-		$summary = $app->sendRequest('VideoPageController', 'getGlobalUsage')->getData()['summary'];
+
+		$this->setVal('limit', 50);
 
 		$heading = '';
 		$fileList = array();
+		$shortenedSummary = array();
 		$type = $this->getVal('type', 'local');
 
-		if (!empty($summary) ) {
+		if ($type === 'global') {
+			$heading = wfMsg('video-page-global-file-list-header');
 
-			if ($type === 'global') {
-				$heading = wfMsg('video-page-global-file-list-header');
-				
-				if (array_key_exists($this->wg->DBname, $summary)) {
-					unset($summary[$this->wg->DBname]);
-				}
-				
-				$count = 0;
-				$shortenedSummary = array();
-				
-				// shorten it to 3
-				foreach($summary as $wiki => $articles) {
-					if($count < 3) {
-						foreach($articles as $article) {
-							$dbName = $article['wiki'];
-							if(empty($shortenedSummary[$dbName])) {
-								$shortenedSummary[$dbName] = array();
-							}
-							$shortenedSummary[$dbName][] = $article;
-							if(++$count > 2) {
-								break;
-							}
+			$summary = $app->sendRequest('VideoPageController', 'getGlobalUsage')->getData()['summary'];
+			
+			if (array_key_exists($this->wg->DBname, $summary)) {
+				unset($summary[$this->wg->DBname]);
+			}
+			
+			$count = 0;
+			
+			// shorten it to 3
+			foreach ($summary as $wiki => $articles) {
+				if ($count < 3) {
+					foreach ($articles as $article) {
+						$dbName = $article['wiki'];
+						if(empty($shortenedSummary[$dbName])) {
+							$shortenedSummary[$dbName] = array();
 						}
-					} else {
-						break;
-					}
-				}
-				
-				$data = $app->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'global'))->getData();
-
-				$fileList = empty($data['fileList']) ? array() : $data['fileList'];
-			} else {
-				$heading = wfMsg('video-page-file-list-header');
-				$dbName = $this->wg->DBname;
-				
-				$shortenedSummary = array();
-				if(array_key_exists($dbName, $summary)) {
-					$summary = array($dbName => $summary[$dbName]);
-					// shorten it to 3, different algo than global list
-					$count = 0;
-					$articles = array();
-					foreach($summary[$dbName] as $article) {
-						$articles[] = $article;
-						if(++$count > 2) {
+						$shortenedSummary[$dbName][] = $article;
+						if (++$count > 2) {
 							break;
 						}
 					}
-					$shortenedSummary = array($dbName => $articles);
+				} else {
+					break;
 				}
-				
-				$data = $app->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => 'local') )->getData();
-				$fileList = empty($data['fileList']) ? array() : $data['fileList'];
+			}
+		} else {
+			$heading = wfMsg('video-page-file-list-header');
+
+			$summary = $this->getLocalUsage( 3 );
+//			$summary = $app->sendRquest('VideoPageController', 'getLocalUsage')->getData();
+
+			if (count($summary)) {
+				$dbName = $this->wg->DBname;
+				$shortenedSummary = array($dbName => $summary);
 			}
 		}
+
+		$data = $app->sendRequest( 'VideoPageController', 'fileList', array('summary' => $shortenedSummary, 'type' => $type) )->getData();
+		$fileList = empty($data['fileList']) ? array() : $data['fileList'];
 
 		$this->heading = $heading;
 		$this->fileList = $fileList;
@@ -86,13 +72,13 @@ class VideoPageController extends WikiaController {
 			$this->result = $result;
 			return;
 		}
-		
-		if($type === 'global') {
+
+		if ($type === 'global') {
 			$expandedSummary = $this->addGlobalSummary($summary);
 		} else {
 			$expandedSummary = $this->addLocalSummary($summary);
 		}
-		
+
 		$result = array();
 		
 		foreach($expandedSummary as $wiki => $articles) {
@@ -193,6 +179,30 @@ class VideoPageController extends WikiaController {
 		$dbr->freeResult($res);
 
 		return empty($info) ? null : $info->page_id;
+	}
+
+	private function getLocalUsage ( $limit ) {
+		$target = $this->wg->Title->getDbKey();
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$res = $dbr->select(
+			array( 'imagelinks', 'page' ),
+			array( 'page_id', 'page_namespace', 'page_title', 'page_is_redirect', 'il_to' ),
+			array( 'il_to' => $target, 'il_from = page_id' ),
+			__METHOD__,
+			array( 'LIMIT' => $limit, 'ORDER BY' => 'il_from', )
+		);
+
+		$summary = array();
+		foreach ( $res as $row ) {
+			if ( ! $row->page_is_redirect ) {
+				$summary[] = array("title" => $row->page_title,
+								   "id"    => $row->page_id,
+								   "namespace_id" => $row->page_namespace,
+								 );
+			}
+		}
+		return $summary;
 	}
 
 	public function getGlobalUsage () {
