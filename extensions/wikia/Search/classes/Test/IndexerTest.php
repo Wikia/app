@@ -169,7 +169,7 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Searc\Indexer::updateDocuments
+	 * @covers Wikia\Search\Indexer::updateDocuments
 	 */
 	public function testUpdateDocuments() {
 		$indexer = $this->getMock( 'Wikia\Search\Indexer', [ 'getClient', 'getLogger' ] );
