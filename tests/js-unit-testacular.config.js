@@ -1,8 +1,9 @@
-// Testacular configuration
-// Generated on Thu Feb 28 2013 11:29:38 GMT+0100 (CET)
-
-/*
- created by Jakub Olek <jakub.olek@wikia-inc.com>
+/**
+ * Testacular configuration
+ *
+ * Used to run Wikia's JS Unit tests
+ *
+ * created by Jakub Olek <jakub.olek@wikia-inc.com>
  */
 
 // base path, that will be used to resolve files and exclude
@@ -123,11 +124,11 @@ autoWatch = true;
 // Start these browsers, to run tests:
 browsers = [
 	'PhantomJS',
-	//'Chrome',
+	'Chrome',
 	//'ChromeCanary',
-	//'Firefox',
-	//'Opera',
-	//'Safari', // only Mac
+	'Firefox',
+	'Opera',
+	'Safari', // only Mac
 	//'IE' // only Windows
 ];
 

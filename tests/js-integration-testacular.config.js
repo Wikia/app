@@ -1,8 +1,9 @@
-// Testacular configuration
-// Generated on Thu Feb 28 2013 11:29:38 GMT+0100 (CET)
-
-/*
- created by Jakub Olek <jakub.olek@wikia-inc.com>
+/**
+ * Testacular configuration
+ *
+ * Used to run Wikia's JS Integration tests
+ *
+ * created by Jakub Olek <jakub.olek@wikia-inc.com>
  */
 
 // base path, that will be used to resolve files and exclude
@@ -142,8 +143,6 @@ coverageReporter = {
 	type : 'html',
 	dir : '/Users/jolek/coverage'
 };
-
-reportSlowerThan = 500;
 
 preprocessors = {
 	'**/resources/wikia/modules/*.js': 'coverage',
