@@ -9,9 +9,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		country = Geo.getCountryCode(),
 		now = window.wgNow || new Date(),
 		maxCallsToDART,
-		isHighValueCountry,
-		gptConfig,
-		gptFlushed = false;
+		isHighValueCountry;
 
 	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
 	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
@@ -38,15 +36,6 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		'TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x100,1x1', 'tile': 1, 'loc': 'top'},
 		'WIKIA_BAR_BOXAD_1': {'size': '320x50,1x1', 'tile': 4, 'loc': 'bottom'}
 	};
-	// TODO: integrate this array to slotMap if it makes sense
-	gptConfig = { // slots to use SRA with
-		TOP_LEADERBOARD: 'wait',
-		HOME_TOP_LEADERBOARD: 'wait',
-		TOP_RIGHT_BOXAD: 'flush',
-		HOME_TOP_RIGHT_BOXAD: 'flush'
-	};
-
-	wikiaGpt.init(slotMap);
 
 	// Private methods
 
@@ -90,17 +79,6 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	}
 
 	// Public methods
-
-	/**
-	 * Flush GPT ads (if not flushed already).
-	 *
-	 * This function will cause all ads pushed to GPT to be fetched and rendered.
-	 * All other ads will go through the legacy DART API.
-	 */
-	function flushGpt() {
-		gptFlushed = true;
-		wikiaGpt.flushAds();
-	}
 
 	function fillInSlot(slot) {
 		log(['fillInSlot', slot], 5, logGroup);
@@ -181,19 +159,16 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		if (window.wgAdDriverUseGpt) {
 			// Use the new GPT library:
 
-			wikiaGpt.pushAd(
-				slotname,
-				function () {
-					// TODO: detect success and hop situations and handle them
+			wikiaGpt.pushAd({
+				slotname: slotname,
+				slotsize: slotsize,
+				dcopt: dcopt,
+				loc: loc
+			}, function () {
+				// TODO: detect success and hop situations and handle them
 
-					success();
-				}
-			);
-
-			// Once we flush, we want to flush all the remaining ads one by one
-			if (gptConfig[slotname] === 'flush' || gptFlushed) {
-				flushGpt();
-			}
+				success();
+			});
 		} else {
 			// Legacy DART call:
 
@@ -247,7 +222,6 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	return {
 		name: 'AdDriver2',
 		fillInSlot: fillInSlot,
-		canHandleSlot: canHandleSlot,
-		flushGpt: flushGpt
+		canHandleSlot: canHandleSlot
 	};
 };
