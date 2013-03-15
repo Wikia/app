@@ -8,6 +8,7 @@ class SpecialWAMPageController extends WikiaSpecialPageController
 
 	public function init() {
 		$this->response->addAsset('wampage_scss');
+		$this->response->addAsset('wampage_js');
 	}
 
 	public function index() {
