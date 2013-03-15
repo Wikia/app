@@ -12,7 +12,7 @@ if ( count( $results ) ) {
 
         if($result instanceof \Wikia\Search\ResultSet\Grouping) {
 			$props['resultSet'] = $result;
-            echo $app->getView( 'WikiaSearch', 'WikiaMobileResultSet', $props);
+            echo $app->getView( 'WikiaSearch', 'CrossWiki_WikiaMobileResult', $props);
         }
         else {
 			$props['result'] = $result;
