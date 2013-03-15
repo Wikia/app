@@ -37,18 +37,17 @@ describe("Media module", function () {
 		expect(typeof media.cleanup).toBe('function');
 	});
 
-	it('should init', function(){
+	it('should init and parse elements', function(){
 		function Elem(data){
 			this.data = data;
+			this.props = {}
 		}
 
 		Elem.prototype.getAttribute = function(){
 			return this.data;
 		};
 
-		Elem.prototype.setAttribute = function(key, val){
-			this.data[key] = val;
-		};
+		Elem.prototype.setAttribute = function(){};
 
 		media.init([
 			new Elem('[{"name":"Bo 2 wii.jpg","full":"http:\/\/images.jolek.wikia-dev.com\/__cb20120915045654\/callofduty\/images\/5\/50\/Bo_2_wii.jpg","capt":"0"}]'),
