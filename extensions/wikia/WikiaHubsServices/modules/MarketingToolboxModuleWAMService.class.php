@@ -51,8 +51,19 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		]);
 	}
 
-	public function loadData($model, $params) {
+	public function loadData($model, $module, $params) {
+		$moduleId = $params['moduleId'];
+
+		$lastTimestamp = $model->getLastPublishedTimestamp(
+									$params['lang'],
+									$model::SECTION_HUBS,
+									$params['vertical_id'],
+									$params['ts']
+						);
+
 		$params = $this->prepareParameters($params);
+
+		$structuredData = [];
 		
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$apiResponse = ['vertical_id' => 2, 'wam_index' => [
@@ -146,15 +157,41 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'wiki_image' => null,
 					],
 			]];
+
+			$data = [
+				'vertical_id' => $params['vertical_id'],
+				'api_response' => $apiResponse,
+			];
+
+			$structuredData = $this->getStructuredData($data);
+
 		} else {
-			$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+			$structuredData = WikiaDataAccess::cache(
+				$this->wf->SharedMemcKey(
+					$model::CACHE_KEY,
+					$lastTimestamp,
+					$this->verticalId,
+					$params['wiki_lang'],
+					$moduleId
+				),
+				6 * 60 * 60,
+				function () use( $params ) {
+					return $this->loadStructuredData($params);
+				}
+			);
 		}
+
+		return $structuredData;
+	}
+
+	protected function loadStructuredData($params) {
+		$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 
 		$data = [
 			'vertical_id' => $params['vertical_id'],
 			'api_response' => $apiResponse,
 		];
-		
+
 		return $this->getStructuredData($data);
 	}
 

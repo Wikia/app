@@ -24,20 +24,47 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $this->getView('index', $data);
 	}
 
-	public function loadData($model, $params) {
-		$params = $this->prepareParameters($params);
-		$timestamp = $params['ts'];
-		$moduleId = $this->getModuleId();
+	public function loadData($model, $module, $params) {
+		$lastTimestamp = $model->getLastPublishedTimestamp(
+			$params['lang'],
+			$model::SECTION_HUBS,
+			$params['vertical_id'],
+			$params['ts']
+		);
 
-		$moduleData = $model->getPublishedData($this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp, $moduleId);
+		$structuredData = WikiaDataAccess::cache(
+				$this->wf->SharedMemcKey(
+					$model::CACHE_KEY,
+					$lastTimestamp,
+					$this->verticalId,
+					$params['lang'],
+					$params['moduleId']
+				),
+				6 * 60 * 60,
+				function () use( $model, $module, $params ) {
+					return $this->loadStructuredData( $model, $module, $params );
+				}
+		);
 
-		if( empty($moduleData[$moduleId]['data']) ) {
+		return $structuredData;
+	}
+
+	protected function loadStructuredData( $model, $module, $params ) {
+		$moduleData = $model->getPublishedData(
+			$params['lang'],
+			MarketingToolboxModel::SECTION_HUBS,
+			$this->verticalId,
+			$params['ts'],
+			$params['moduleId']
+		);
+
+		if( empty($moduleData[$params['moduleId']]['data']) ) {
 			$moduleData = array();
 		} else {
-			$moduleData = $moduleData[$moduleId]['data'];
+			$moduleData = $moduleData[$params['moduleId']]['data'];
 		}
 
-		return $this->getStructuredData($moduleData);
+		return $module->getStructuredData($moduleData);
 	}
 
 	protected function getModuleId() {

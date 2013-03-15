@@ -586,7 +586,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 *
 	 * @return int timestamp
 	 */
-	protected function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null) {
+	public function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null) {
 		if ($timestamp === null) {
 			$timestamp = time();
 		}

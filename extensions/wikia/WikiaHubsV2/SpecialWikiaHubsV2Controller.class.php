@@ -43,42 +43,14 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		}
 
 		$toolboxModel = new MarketingToolboxModel();
-		$modulesData = $toolboxModel->getPublishedData(
-			$this->wg->ContLang->getCode(),
-			MarketingToolboxModel::SECTION_HUBS,
-			$this->verticalId,
-			$this->hubTimestamp
-		);
 
 		$this->modules = array();
 
-		foreach ($toolboxModel->getEditableModulesIds() as $moduleId) {
-				if (!empty($modulesData[$moduleId]['data'])) {
-					$this->modules[$moduleId] = $this->renderModule(
-						$this->wg->ContLang->getCode(),
-						$this->verticalId,
-						$toolboxModel->getNotTranslatedModuleName($moduleId),
-						$modulesData[$moduleId]['data']
-					);
-				} else {
-					$this->modules[$moduleId] = null;
-					Wikia::log(
-						__METHOD__,
-						'',
-						'no module data for day: ' . $this->wg->lang->date($this->hubTimestamp)
-							. ', lang: ' . $this->wg->ContLang->getCode()
-							. ', vertical: ' . $this->verticalId
-							. ', moduleId: ' . $moduleId
-					);
-				}
-		}
-
-		foreach ($toolboxModel->getNonEditableModulesIds() as $moduleId) {
+		foreach($toolboxModel->getModulesIds() as $moduleId) {
 			$this->modules[$moduleId] = $this->renderModule(
-				$this->wg->ContLang->getCode(),
-				$this->verticalId,
-				$toolboxModel->getNotTranslatedModuleName($moduleId),
-				null
+				$toolboxModel,
+				$moduleId,
+				$toolboxModel->getNotTranslatedModuleName($moduleId)
 			);
 		}
 
@@ -119,25 +91,40 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	 *
 	 * @return string
 	 */
-	protected function renderModule($langCode, $verticalId, $moduleName, $moduleData) {
+	protected function renderModule( $toolboxModel, $moduleId, $moduleName ) {
+		$params = $this->getParams($moduleId);
+
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$moduleName,
-			$langCode,
+			$this->wg->ContLang->getCode(),
 			MarketingToolboxModel::SECTION_HUBS,
-			$verticalId
+			$this->verticalId
 		);
 
-		if( $module instanceof MarketingToolboxModuleNonEditableService ) {
-			$moduleData = $module->loadData($this->getMarketingToolboxModel(), [
-				'lang' => $langCode,
-				'vertical_id' => $verticalId,
-				'ts' => $this->hubTimestamp,
-			]);
-		} else {
-			$moduleData = $module->getStructuredData($moduleData);
-		}
+		$modulesData[$moduleId]['data'] = $module->loadData( $toolboxModel, $module, $params );
 
-		return $module->render($moduleData);
+		if (!empty($modulesData[$moduleId]['data'])) {
+			return $module->render( $modulesData[$moduleId]['data'] );
+		} else {
+			Wikia::log(
+				__METHOD__,
+				'',
+				'no module data for day: ' . $this->wg->lang->date($this->hubTimestamp)
+					. ', lang: ' . $this->wg->ContLang->getCode()
+					. ', vertical: ' . $this->verticalId
+					. ', moduleId: ' . $moduleId
+			);
+			return null;
+		}
+	}
+
+	protected function getParams( $moduleId ) {
+		return [
+			'ts' => $this->hubTimestamp,
+			'lang' => $this->wg->ContLang->getCode(),
+			'vertical_id' => $this->verticalId,
+			'moduleId' => $moduleId
+		];
 	}
 
 	public function init() {
