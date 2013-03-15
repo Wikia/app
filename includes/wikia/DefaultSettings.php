@@ -1053,6 +1053,12 @@ $wgWikiaSeasonsWikiaBar = false;
 $wgWikiaSeasonsPencilUnit = false;
 
 /**
+ * @name $wgEnableWAMPageExt
+ * Enables WAMPage extension (corporate pages extension)
+ */
+$wgEnableWAMPageExt = false;
+
+/**
  * @name $wgEnableQuickToolsExt
  * Enables QuickTools extension
  */
