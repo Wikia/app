@@ -183,7 +183,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		$this->metadata = array_merge( $this->metadata, $metadata );
 	}
 
-	protected static function getRedirectUrl( $url ) {
+	public static function getRedirectUrl( $url ) {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
@@ -208,7 +208,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		return $redirectUrl;
 	}
 
-	protected static function getInfoFromHtml( $url ) {
+	public static function getInfoFromHtml( $url ) {
 		wfProfileIn( __METHOD__ );
 
 		$info = array();
