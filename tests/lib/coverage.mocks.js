@@ -1,0 +1,2 @@
+wgAction = '';
+wgAfterContentAndJS = [];

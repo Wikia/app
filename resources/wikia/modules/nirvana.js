@@ -7,6 +7,7 @@
 	'use strict';
 
 	function nirvana(ajax) {
+
 		function sendRequest(attr) {
 			var type = (attr.type || 'POST').toUpperCase(),
 				format = (attr.format || 'json').toLowerCase(),

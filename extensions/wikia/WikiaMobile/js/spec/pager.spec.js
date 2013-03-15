@@ -34,11 +34,14 @@ describe("Pager module", function () {
 	});
 
 	it('should return helper functions', function(){
-
-		getBody().innerHTML = '<div></div>';
-
 		var pager = p({
-			container: document.getElementsByTagName('div')[0],
+			container: {
+				childNodes: [
+					{},
+					{}
+				],
+				addEventListener: function(){}
+			},
 			pages: ['1','2']
 		});
 
@@ -50,16 +53,34 @@ describe("Pager module", function () {
 	});
 
 	it('should return current page', function(){
+		var secondPage = {
+				className: '',
+				innerHTML: 2,
+				style: {}
+			},
+			container = {
+				childNodes: [
+					{
+						className: '',
+						innerHTML: 1,
+						style: {},
+						addEventListener: function(name, func){
+							func();
+						},
+						removeEventListener: function(){},
+						nextElementSibling: secondPage
+					},
+					secondPage
+				],
+				addEventListener: function(){}
+			},
+			pager = p({
+				container: container,
+				pages: ['', '']
+			});
 
-		getBody().innerHTML = '<div></div>';
-
-		var pager = p({
-			container: document.getElementsByTagName('div')[0],
-			pages: ['<div>one</div>','<div>two</div>', '<div>three</div>']
-		});
-
-		expect(pager.getCurrent().innerHTML).toBe('one');
+		expect(pager.getCurrent().innerHTML).toBe(1);
+		pager.next();
+		expect(pager.getCurrent().innerHTML).toBe(2);
 	});
-
-
 });

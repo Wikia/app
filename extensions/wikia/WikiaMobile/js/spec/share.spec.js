@@ -26,7 +26,7 @@ describe("Share module", function () {
 			done: function(callback){
 				callback({
 					templates: {
-						WikiaMobileSharingService_index: '<ul class=wkLst><li class=facebookShr><a href="http://www.facebook.com/sharer.php?u=__1__&t=__2__" target=_blank>&nbsp;</a></li><li class=twitterShr><a href="http://twitter.com/home?status=__1__%20__2__\" target=_blank>&nbsp;</a></li><li class=plusoneShr><a href="https://plusone.google.com/_/+1/confirm?hl=pl&url=__1__" target=_blank>&nbsp;</a></li><li class=emailShr><a href="mailto:?body=__3__%20__1__&subject=__4__" target=_blank>&nbsp;</a></li></ul>'
+						WikiaMobileSharingService_index: 'SHARING_HTML __1__'
 					},
 					styles: ''
 				})
@@ -52,22 +52,18 @@ describe("Share module", function () {
 	});
 
 	it('should create sharing list', function(){
-		getBody().innerHTML = '<div id="sharePlace"></div>';
+		var sharePlace = {};
 
-		var sharePlace = document.getElementById('sharePlace');
+		share()(sharePlace);
 
-		share('TESTTEST')(sharePlace);
+		expect(sharePlace.innerHTML).toBe('SHARING_HTML http://test.com/Test');
 
-		expect(sharePlace.children.length).toBe(1);
-		expect(sharePlace.children[0].className).toBe('wkLst');
-		expect(sharePlace.querySelector('.wkLst').children.length).toBe(4);
+		share('TEST')(sharePlace);
 
-		var as = sharePlace.querySelectorAll('.wkLst a');
+		expect(sharePlace.innerHTML).toBe('SHARING_HTML http://test.com/Test?file=TEST');
 
-		for(var i = 0, l = as.length; i < l; i++){
-			expect(as[i].href).toContain('http://test.com/Test?file=TESTTEST');
-			expect(as[i].target).toMatch('_blank');
-			expect(as[i].parentElement.className).toMatch('Shr');
-		}
+		share('TEST2')(sharePlace);
+
+		expect(sharePlace.innerHTML).toBe('SHARING_HTML http://test.com/Test?file=TEST2');
 	});
 });
