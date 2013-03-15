@@ -1064,6 +1064,15 @@ $config['wampage_scss'] = array(
 	)
 );
 
+$config['wampage_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array('oasis'),
+	'assets' => array(
+		'//extensions/wikia/WAMPage/js/WAMPage.js',
+		'//extensions/wikia/WAMPage/js/WAMPageTracker.js',
+	)
+);
+
 /** WikiaSearch **/
 $config['wikiasearch_js_wikiamobile'] = array(
     'type' => AssetsManager::TYPE_JS,
