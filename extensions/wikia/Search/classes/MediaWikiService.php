@@ -705,6 +705,24 @@ class MediaWikiService
 	}
 	
 	/**
+	 * Compares a pageid to the main page's article ID for this wiki.
+	 * False if the main page ID is 0.
+	 * @param int $pageId
+	 * @return boolean
+	 */
+	public function isPageIdMainPage( $pageId ) {
+		return $pageId !== 0 && $pageId == $this->getMainPageArticleId();
+	}
+	
+	/**
+	 * Returns the hostname for a wiki. e.g. returns 'rap.wikia.com' for $wgServer = http://rap.wikia.com.
+	 * @return string
+	 */
+	public function getHostName() {
+		return substr( $this->getGlobal( 'Server' ), 7);
+	}
+	
+	/**
 	 * Provides a format, provided a revision's default timestamp format.
 	 * @param string $timestamp
 	 */
