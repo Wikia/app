@@ -4,9 +4,9 @@
  * @author Artur Klajnerok<arturk(at)wikia-inc.com>
  **/
 
-require(['throbber', 'topbar', 'track'], function(throbber, topbar, track){
+require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], function(throbber, topbar, track, nirvana, window){
 
-    var d = document,
+    var d = window.document,
         wkSrhInp = d.getElementById('wkSrhInp'),
         wkMainCnt = d.getElementById('wkMainCnt'),
         wkResCntAct = d.getElementById('wkResCntAct'),
@@ -45,6 +45,8 @@ require(['throbber', 'topbar', 'track'], function(throbber, topbar, track){
         });
     }
 
+
+
     function clickHandler(event){
         event.preventDefault();
 
@@ -67,17 +69,16 @@ require(['throbber', 'topbar', 'track'], function(throbber, topbar, track){
 				label: forward ? 'next' : 'previous'
 			});
 
-            $.nirvana.sendRequest({
-				controller: 'WikiaSearchAjaxController',
-				method: 'getNextResults',
-				format: 'json',
-				type: 'GET',
-				data: {
+            nirvana.getJson(
+				'WikiaSearchAjax',
+				'getNextResults',
+				{
 					useskin: skin,
 					query: encodeURIComponent(query),
 					page: pageIndex
-				},
-				callback: function(result){
+				}
+			).done(
+				function(result){
 					var finished;
 
 					currentPage = pageIndex;
@@ -100,7 +101,7 @@ require(['throbber', 'topbar', 'track'], function(throbber, topbar, track){
 
 					window.scrollTo(0, wkMainCnt.offsetTop);
 				}
-            });
+			);
         }
     }
 
