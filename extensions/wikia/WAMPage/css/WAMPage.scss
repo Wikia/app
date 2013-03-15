@@ -1,3 +1,32 @@
+.oasis-one-column .WikiaMainContent.grid-6 {
+	margin: 0;
+	width: 1030px;
+}
+
 .wam-header {
-	background-color: blue;
+	background-image: url("/extensions/wikia/WAMPage/images/wamheader.png");
+	height: 100px;
+	width: 1030px;
+	h2 {
+		border: 0;
+		color: #f1f2f2;
+		font-size: 30px;
+		margin: 0;
+		padding: 50px 25px;
+		text-transform: uppercase;
+	}
+}
+
+.wam-content {
+	padding: 50px 25px;
+}
+
+.wam-content-faq {
+	padding: 0 25px;
+	h3 {
+		font-size: 25px;
+		font-weight: bold;
+		margin: 45px 0 15px 0;
+		padding: 0;
+	}
 }

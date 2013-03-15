@@ -1,6 +1,6 @@
 <div class="wam-header">
-	<?= wfMessage('wampage-header')->text(); ?>
+	<h2><?= wfMessage('wampage-header')->text(); ?></h2>
 </div>
-<div>
+<div class="wam-content">
 	<?= wfMessage('wampage-content')->parse(); ?>
 </div>
