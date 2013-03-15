@@ -219,6 +219,10 @@ $app->registerClass( 'IvaVideoHandler', $dir . '/handlers/IvaVideoHandler.class.
 $app->registerClass( 'IvaApiWrapper', $dir . '/apiwrappers/IvaApiWrapper.class.php' );
 $wgMediaHandlers['video/iva'] = 'IvaVideoHandler';
 
+$app->registerClass( 'SnappytvVideoHandler', $dir . '/handlers/SnappytvVideoHandler.class.php' );
+$app->registerClass( 'SnappytvApiWrapper', $dir . '/apiwrappers/SnappytvApiWrapper.class.php' );
+$wgMediaHandlers['video/snappytv'] = 'SnappytvVideoHandler';
+
 /**
  * Feed ingesters
  */
@@ -253,6 +257,7 @@ $wgVideoMigrationProviderMap = array(
 	27 => 'Twitchtv',
 	28 => 'Ooyala',
 	29 => 'Iva',
+	30 => 'Snappytv',
 );
 
 
