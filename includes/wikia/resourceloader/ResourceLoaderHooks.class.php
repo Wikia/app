@@ -323,6 +323,17 @@ class ResourceLoaderHooks {
 	public static function onResourceLoaderModifyMaxAge(ResourceLoaderContext $context, $mtime, &$maxage, &$smaxage) {
 		global $wgStyleVersion, $wgResourceLoaderMaxage;
 
+		// need to cache RL manifest for longer
+		$modules = $context->getModules();
+		if ( count($modules) == 1 && $modules[0] == 'startup' ) {
+			$maxage  = $wgResourceLoaderMaxage['versioned']['client'];
+			$smaxage = $wgResourceLoaderMaxage['versioned']['server'];
+
+			$modules = implode(',', $context->getModules());
+			Wikia::log(__METHOD__, false, "longer TTL set for {$modules}", true);
+			return true;
+		}
+
 		$forceShortTTL = false;
 
 		$version = explode('-',(string)($context->getVersion()),2);
