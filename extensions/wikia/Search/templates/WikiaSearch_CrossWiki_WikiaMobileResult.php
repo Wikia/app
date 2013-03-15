@@ -18,13 +18,13 @@
 				'host' );?></a>
 		<span class=desc><?= $resultSet->getHeader('description'); ?></span>
 	</li>
-<?php elseif ($nextResult = $resultSet->next()): ?>
-	<?= $app->getView( 'WikiaSearch', 'WikiaMobileResult', array(
-		'result' => $nextResult,
+<?php else : ?>
+	<?= $app->getView( 'WikiaSearch', 'CrossWiki_WikiaMobileExactResult', array(
+		'resultSet' => $resultSet,
 		'gpos' => 0,
 		'pos' => $pos,
 		'query' => $query,
 		'rank' =>  $resultSet->getHeader('cityRank'),
-		'isInterWiki'=> true,
-		'relevancyFunctionId' => $relevancyFunctionId ) ); ?>
+	)); ?>
 <?php endif; ?>
+
