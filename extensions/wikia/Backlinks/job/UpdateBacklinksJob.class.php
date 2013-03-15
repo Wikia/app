@@ -27,7 +27,7 @@ class UpdateBacklinksJob extends Job
 				}
 			}
 		}
-		$indexer = F::build( 'WikiaSearchIndexer' ); /** @var WikiaSearchIndexer **/
+		$indexer = new Wikia\Search\Indexer();
 		$indexer->updateDocuments( $this->documents );
 		wfProfileOut(__METHOD__);
 	}
@@ -39,7 +39,7 @@ class UpdateBacklinksJob extends Job
 	 */
 	protected function getDocumentForTarget( $targetId ) {
 		if (! isset( $this->documents[$targetId] ) ) {
-			$document = F::build( 'Solarium_Document_AtomicUpdate' );
+			$document = new Solarium_Document_AtomicUpdate();
 			$document->setKey( 'id', $targetId );
 			$this->documents[$targetId] = $document;
 		}

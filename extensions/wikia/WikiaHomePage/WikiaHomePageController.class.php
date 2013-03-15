@@ -51,7 +51,7 @@ class WikiaHomePageController extends WikiaController {
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 
-	const HUBS_IMAGES_MEMC_KEY_VER = '1.02';
+	const HUBS_IMAGES_MEMC_KEY_VER = '1.03';
 
 	/**
 	 * @var WikiaHomePageHelper
@@ -76,6 +76,7 @@ class WikiaHomePageController extends WikiaController {
 
 		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->hubImages = $response->getVal('hubImages', '');
+
 		$this->lang = $this->wg->contLang->getCode();
 		F::build('JSMessages')->enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
 	}
@@ -374,15 +375,55 @@ class WikiaHomePageController extends WikiaController {
 	 * @responseParam array hubImages
 	 */
 	public function getHubImages() {
-		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'hubimages', $this->wg->contLang->getCode(), self::HUBS_IMAGES_MEMC_KEY_VER);
-		$hubImages = $this->wg->Memc->get($memKey);
+		$lang = $this->wg->contLang->getCode();
 
-		if (empty($hubImages)) {
-			$hubImages = $this->getHubImageUrls();
-			$this->wg->Memc->set($memKey, $hubImages, 60 * 60 * 24);
+		if ($this->app->wg->EnableWikiaHubsV2Ext) {
+			$hubImages = WikiaDataAccess::cache(
+				F::app()->wf->SharedMemcKey(
+					'wikiahomepage',
+					'hubv2images',
+					$lang,
+					self::HUBS_IMAGES_MEMC_KEY_VER
+				),
+				24 * 60 * 60,
+				function () use ($lang) {
+					$hubImages = [];
+
+					foreach ($this->app->wg->WikiaHubsV2Pages as $hubId => $hubName) {
+						$sliderData = $this->getHubSliderData($lang, $hubId);
+
+						$hubImages[$hubId] = isset($sliderData['data']['slides'][0]['photoUrl'])
+								? $sliderData['data']['slides'][0]['photoUrl']
+								: null;
+					}
+
+					return $hubImages;
+				}
+			);
+		} else {
+			// TODO remove after launch new hubs
+			$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'hubimages', $lang, self::HUBS_IMAGES_MEMC_KEY_VER);
+			$hubImages = $this->wg->Memc->get($memKey);
+
+			if (empty($hubImages)) {
+				$hubImages = $this->getHubImageUrls();
+				$this->wg->Memc->set($memKey, $hubImages, 60 * 60 * 24);
+			}
 		}
 
 		$this->hubImages = $hubImages;
+	}
+
+	protected function getHubSliderData($lang, $hubId) {
+		return $this->app->sendRequest(
+			'WikiaHubsApi',
+			'getModuleData',
+			array(
+				'module' => MarketingToolboxModuleSliderService::MODULE_ID,
+				'vertical' => $hubId,
+				'lang' => $lang
+			)
+		)->getData();
 	}
 
 	protected function getHubImageUrls() {
@@ -391,24 +432,24 @@ class WikiaHomePageController extends WikiaController {
 		foreach ($this->wg->wikiaHubsPages as $groupId => $hubGroup) {
 			if (!empty($hubGroup[0])) {
 				$hubName = $hubGroup[0];
-				$hubEngName = $this->getEnglishHubName($groupId);
-				$hubImages[$hubEngName] = $this->getImageUrlForHub($hubName);
+				$newHubId = $this->getNewHubId($groupId);
+				$hubImages[$newHubId] = $this->getImageUrlForHub($hubName);
 			}
 		}
 		return $hubImages;
 	}
 
-	protected function getEnglishHubName($hubId) {
+	protected function getNewHubId($hubId) {
 		switch ($hubId) {
 			case 1:
-				return 'Lifestyle';
+				return WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 				break;
 			case 2:
-				return 'Video_Games';
+				return WikiFactoryHub::CATEGORY_ID_GAMING;
 				break;
 			case 3:
 			default:
-				return 'Entertainment';
+				return WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT;
 				break;
 		}
 	}

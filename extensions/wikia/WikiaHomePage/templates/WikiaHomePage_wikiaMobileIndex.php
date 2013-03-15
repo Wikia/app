@@ -3,21 +3,21 @@
 	<h2><?= wfMsg('wikiahome-page-header-subheading') ?></h2>
 	<section class="wkhome-section wkhome-games">
 		<a href="<?= wfMsg('wikiahome-hubs-videogames-url') ?>" class=wkhome-hero>
-			<img class=wkhome-img src=<?= $hubImages['Video_Games'] ?>>
+			<img class=wkhome-img src=<?= $hubImages[WikiFactoryHub::CATEGORY_ID_GAMING] ?>>
 			<h2><?= wfMsg('wikiahome-hubs-videogames-heading') ?></h2>
 		</a>
 		<p><?= wfMsg('wikiahome-hubs-videogames-creative') ?></p>
 	</section>
 	<section class="wkhome-section wkhome-entertainment">
 		<a href="<?= wfMsg('wikiahome-hubs-entertainment-url') ?>" class=wkhome-hero>
-			<img class=wkhome-img src=<?= $hubImages['Entertainment'] ?>>
+			<img class=wkhome-img src=<?= $hubImages[WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT] ?>>
 			<h2><?= wfMsg('wikiahome-hubs-entertainment-heading') ?></h2>
 		</a>
 		<p><?= wfMsg('wikiahome-hubs-entertainment-creative') ?></p>
 	</section>
 	<section class="wkhome-section wkhome-lifestyle">
 		<a href="<?= wfMsg('wikiahome-hubs-lifestyle-url') ?>" class=wkhome-hero>
-			<img class=wkhome-img src=<?= $hubImages['Lifestyle'] ?>>
+			<img class=wkhome-img src=<?= $hubImages[WikiFactoryHub::CATEGORY_ID_LIFESTYLE] ?>>
 			<h2><?= wfMsg('wikiahome-hubs-lifestyle-heading') ?></h2>
 		</a>
 		<p><?= wfMsg('wikiahome-hubs-lifestyle-creative') ?></p>

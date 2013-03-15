@@ -4,14 +4,11 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 
 	var logGroup = 'WikiaGptHelper',
 		gptLoaded = false,
-		loadGpt,
-		pushAd,
-		convertSizesToGpt,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '/' + pageLevelParams.s2,
 		googletag;
 
-	loadGpt = function () {
+	function loadGpt() {
 		if (!gptLoaded) {
 			log('loadGpt', 7, logGroup);
 
@@ -51,9 +48,9 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 				}
 			});
 		}
-	};
+	}
 
-	convertSizesToGpt = function (slotsize) {
+	function convertSizesToGpt(slotsize) {
 		log(['convertSizeToGpt', slotsize], 9, logGroup);
 		var tmp1 = slotsize.split(','),
 			sizes = [],
@@ -66,9 +63,9 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		}
 
 		return sizes;
-	};
+	}
 
-	pushAd = function (slotParams, done) {
+	function pushAd(slotParams, done) {
 		var slotname = slotParams.slotname,
 			sizes = convertSizesToGpt(slotParams.slotsize),
 			params = {};
@@ -100,12 +97,8 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 
 			googletag.enableServices();
 			googletag.display(slotname);
-
-			if (typeof done === 'function') {
-				done();
-			}
 		});
-	};
+	}
 
 	return {
 		pushAd: pushAd

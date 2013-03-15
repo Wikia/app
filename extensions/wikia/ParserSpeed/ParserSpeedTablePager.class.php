@@ -15,7 +15,7 @@ class ParserSpeedTablePager extends TablePager {
 	}
 
 	function isFieldSortable( $field ) {
-		return in_array( $field, array( 'page_ns', 'average_time', 'minimum_time', 'maximum_time', 'wikitext_size', 'html_size' ) );
+		return in_array( $field, array( 'page_ns', 'average_time', 'minimum_time', 'maximum_time', 'wikitext_size', 'html_size', 'exp_func_count', 'node_count', 'post_expand_size', 'temp_arg_size' ) );
 	}
 
 	function formatValue( $name, $value ) {
@@ -62,13 +62,17 @@ class ParserSpeedTablePager extends TablePager {
 			'maximum_time' => 'Max. parsing time',
 			'wikitext_size' => 'Wikitext size',
 			'html_size' => 'HTML size',
+			'exp_func_count' => 'Exp. functions',
+			'node_count' => 'Node count',
+			'post_expand_size' => 'Post expand size',
+			'temp_arg_size' => 'Temp arg. size'
 		);
 	}
 
 	function getQueryInfo() {
 		$queryInfo = array(
 			'tables' => 'parser_speed_article',
-			'fields' => 'article_id, page_ns, average_time, minimum_time, maximum_time, wikitext_size, html_size',
+			'fields' => 'article_id, page_ns, average_time, minimum_time, maximum_time, wikitext_size, html_size, exp_func_count, node_count, post_expand_size, temp_arg_size',
 			'conds' => array(
 				'wiki_id' => F::app()->wg->CityId,
 			)
