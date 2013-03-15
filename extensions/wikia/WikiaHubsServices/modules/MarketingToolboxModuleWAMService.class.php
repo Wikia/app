@@ -60,8 +60,6 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						);
 
 		$params = $this->prepareParameters($params);
-
-		$structuredData = [];
 		
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$apiResponse = ['vertical_id' => 2, 'wam_index' => [
@@ -165,8 +163,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 
 		} else {
 			$structuredData = WikiaDataAccess::cache(
-				$this->wf->SharedMemcKey(
-					$model::CACHE_KEY,
+				$this->getMemcacheKey(
 					$lastTimestamp,
 					$this->verticalId,
 					$params['wiki_lang'],

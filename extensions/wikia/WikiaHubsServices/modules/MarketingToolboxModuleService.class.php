@@ -33,8 +33,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		);
 
 		$structuredData = WikiaDataAccess::cache(
-				$this->wf->SharedMemcKey(
-					$model::CACHE_KEY,
+				$this->getMemcacheKey(
 					$lastTimestamp,
 					$this->verticalId,
 					$params['lang'],
@@ -110,5 +109,24 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		}
 
 		return $link;
+	}
+
+	protected function purgeMemcache($lastTimestamp, $verticalId, $lang, $moduleId) {
+		$this->app->wg->Memc->delete($this->getMemcacheKey(
+			$lastTimestamp,
+			$verticalId,
+			$lang,
+			$moduleId
+		));
+	}
+
+	protected function getMemcacheKey($lastTimestamp, $verticalId, $lang, $moduleId) {
+		return $this->wf->SharedMemcKey(
+			MarketingToolboxModel::CACHE_KEY,
+			$lastTimestamp,
+			$verticalId,
+			$lang,
+			$moduleId
+		);
 	}
 }
