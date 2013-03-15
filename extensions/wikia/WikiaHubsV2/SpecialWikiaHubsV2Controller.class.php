@@ -101,10 +101,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			$this->verticalId
 		);
 
-		$modulesData[$moduleId]['data'] = $module->loadData( $toolboxModel, $module, $params );
+		$moduleData = $module->loadData( $toolboxModel, $params );
 
-		if (!empty($modulesData[$moduleId]['data'])) {
-			return $module->render( $modulesData[$moduleId]['data'] );
+		if (!empty($moduleData)) {
+			return $module->render( $moduleData );
 		} else {
 			Wikia::log(
 				__METHOD__,
