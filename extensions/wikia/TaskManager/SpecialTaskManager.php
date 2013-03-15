@@ -22,22 +22,24 @@ $wgExtensionCredits['specialpage'][] = array(
 	"author" => "Krzysztof Krzyżaniak (eloy)"
 );
 
+$dir = __DIR__;
+
 /**
  * add all task which should be visible here
  */
-require_once( dirname(__FILE__) . "/BatchTask.php" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/CloseWikiTask.php", "closewiki", "CloseWikiTask" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/MultiRestoreTask.php", "multirestore", "MultiRestoreTask" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/ImageGrabberTask.php", "imagegrabber", "ImageGrabberTask" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/ImageImporterTask.php", "imageimporter", "ImageImporterTask" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/PageGrabberTask.php", "pagegrabber", "PageGrabberTask" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/PageGrabberDumpTask.php", "pagegrabberdump", "PageGrabberDumpTask" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
-extAddBatchTask( dirname(__FILE__) ."/Tasks/RebuildLocalisationCacheTask.php", "rebuild_localisation_cache", "RebuildLocalisationCacheTask" );
-extAddBatchTask( dirname(__FILE__) ."/Tasks/UpdateSpecialPagesTask.php", "update_special_pages", "UpdateSpecialPagesTask" );
-extAddBatchTask( dirname(__FILE__)."/../AchievementsII/EnableAchievementsTask.php", "enableachievements", "EnableAchievementsTask" );
+require_once( $dir . "/BatchTask.php" );
+extAddBatchTask( $dir."/Tasks/CloseWikiTask.php", "closewiki", "CloseWikiTask" );
+extAddBatchTask( $dir."/Tasks/MultiRestoreTask.php", "multirestore", "MultiRestoreTask" );
+extAddBatchTask( $dir."/Tasks/ImageGrabberTask.php", "imagegrabber", "ImageGrabberTask" );
+extAddBatchTask( $dir."/Tasks/ImageImporterTask.php", "imageimporter", "ImageImporterTask" );
+extAddBatchTask( $dir."/Tasks/PageGrabberTask.php", "pagegrabber", "PageGrabberTask" );
+extAddBatchTask( $dir."/Tasks/PageGrabberDumpTask.php", "pagegrabberdump", "PageGrabberDumpTask" );
+extAddBatchTask( $dir."/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
+extAddBatchTask( $dir."/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
+extAddBatchTask( $dir."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
+extAddBatchTask( $dir ."/Tasks/RebuildLocalisationCacheTask.php", "rebuild_localisation_cache", "RebuildLocalisationCacheTask" );
+extAddBatchTask( $dir ."/Tasks/UpdateSpecialPagesTask.php", "update_special_pages", "UpdateSpecialPagesTask" );
+extAddBatchTask( $dir."/../AchievementsII/EnableAchievementsTask.php", "enableachievements", "EnableAchievementsTask" );
 
 /**
  * permissions
@@ -54,12 +56,18 @@ $wgGroupPermissions['util']['taskmanager-action'] = true;
 /**
  * message file
  */
-$wgExtensionMessagesFiles[ $sSpecialPage ] = dirname(__FILE__) . "/Special{$sSpecialPage}.i18n.php";
+$wgExtensionMessagesFiles[ $sSpecialPage ] = $dir . "/Special{$sSpecialPage}.i18n.php";
 
 /**
  * aliases file
  */
-$wgExtensionMessagesFiles[ $sSpecialPage . 'Aliases' ] = __DIR__ . "/Special{$sSpecialPage}.aliases.php";
+$wgExtensionMessagesFiles[ $sSpecialPage . 'Aliases' ] = $dir . "/Special{$sSpecialPage}.aliases.php";
 
-extAddSpecialPage( dirname(__FILE__) . "/Special{$sSpecialPage}_body.php", $sSpecialPage, "{$sSpecialPage}Page" );
+extAddSpecialPage( $dir . "/Special{$sSpecialPage}_body.php", $sSpecialPage, "{$sSpecialPage}Page" );
 $wgSpecialPageGroups[$sSpecialPage] = 'wikia';
+
+/**
+ * hooks
+ */
+$wgAutoloadClasses['TaskManagerHooks'] = $dir . '/hooks/TaskManagerHooks.class.php';
+$wgHooks['APIQuerySiteInfoStatistics'][] = 'TaskManagerHooks::onAPIQuerySiteInfoStatistics';

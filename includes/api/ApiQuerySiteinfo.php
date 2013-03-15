@@ -95,7 +95,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					break;
 				default:
 					wfRunHooks( 'UseExternalQuerySiteInfo', array(&$this) );
-					if ( !isset($this->noErrors) ) { 
+					if ( !isset($this->noErrors) ) {
 						ApiBase :: dieDebug( __METHOD__, "Unknown prop=$p" );
 					}
 			}
@@ -355,6 +355,12 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		$data['activeusers'] = intval( SiteStats::activeUsers() );
 		$data['admins'] = intval( SiteStats::numberingroup( 'sysop' ) );
 		$data['jobs'] = intval( SiteStats::jobs() );
+
+		// Wikia change begin
+		// @author macbre
+		wfRunHooks( 'APIQuerySiteInfoStatistics', array( $this, &$data ) );
+		// Wikia change end
+
 		return $this->getResult()->addValue( 'query', $property, $data );
 	}
 
