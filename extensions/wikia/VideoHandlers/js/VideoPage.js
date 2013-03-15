@@ -41,7 +41,7 @@ Paginator.prototype = {
 		
 		this.totalCount = this.flatSummary.length;
 		this.maxPage = Math.ceil(this.totalCount / Paginator.prototype.ARTICLES_PER_PAGE) - 1;
-		if(this.maxPage > 1) {
+		if(this.maxPage > 0) {
 			this.$el.find('.page-list-total').text(this.maxPage + 1);
 			this.updatePager();
 			this.$el.show();
