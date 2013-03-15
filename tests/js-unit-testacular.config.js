@@ -17,9 +17,8 @@ files = [
 
 	'tests/lib/jasmine/helpers.js',
 
-	'resources/wikia/libraries/define.mock.js',
-
 	'resources/jquery/jquery-1.8.2.js',
+	'resources/wikia/libraries/define.mock.js',
 	'extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 	'resources/wikia/libraries/deferred/deferred.js',
 	'resources/wikia/libraries/deferred/deferred.api.js',
@@ -28,30 +27,16 @@ files = [
 	'extensions/wikia/JSMessages/js/JSMessages.js',
 	'extensions/wikia/JSMessages/js/spec/JSMessages.spec.js',
 
-	//Chat Tests
-	'extensions/wikia/Chat2/js/spec/views.mocks.js',
-	'extensions/wikia/Chat2/js/views/views.js',
-	'extensions/wikia/Chat2/js/spec/ChatController.spec.js',
-
 	//WikiaMobile
-	'extensions/wikia/WikiaMobile/js/autocomplete.js',
 	'extensions/wikia/WikiaMobile/js/events.js',
-	'extensions/wikia/WikiaMobile/js/features.js',
-	'extensions/wikia/WikiaMobile/js/lazyload.js',
 	'extensions/wikia/WikiaMobile/js/mediagallery.js',
 	'extensions/wikia/WikiaMobile/js/media.js',
-	'extensions/wikia/WikiaMobile/js/modal.js',
 	'extensions/wikia/WikiaMobile/js/pager.js',
-	'extensions/wikia/WikiaMobile/js/popover.js',
-	'extensions/wikia/WikiaMobile/js/sections.js',
 	'extensions/wikia/WikiaMobile/js/ads.js',
 	'extensions/wikia/WikiaMobile/js/share.js',
 	'extensions/wikia/WikiaMobile/js/tables.js',
 	'extensions/wikia/WikiaMobile/js/throbber.js',
-	'extensions/wikia/WikiaMobile/js/toast.js',
-	'extensions/wikia/WikiaMobile/js/toc.js',
 	'extensions/wikia/WikiaMobile/js/topbar.js',
-	'extensions/wikia/WikiaMobile/js/features.js',
 	'extensions/wikia/WikiaMobile/js/track.js',
 	'extensions/wikia/WikiaMobile/js/spec/*.spec.js',
 
@@ -62,8 +47,6 @@ files = [
 	'resources/wikia/modules/geo.js',
 	'resources/wikia/modules/lazyqueue.js',
 	'resources/wikia/modules/loader.js',
-	'resources/wikia/libraries/mustache/mustache.js',
-	'resources/wikia/libraries/mustache/jquery.mustache.js',
 	'resources/wikia/modules/nirvana.js',
 	'resources/wikia/modules/querystring.js',
 	'resources/wikia/modules/stringhelper.js',
@@ -91,19 +74,78 @@ files = [
 	'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 	'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
 	'extensions/wikia/AdEngine/js/spec/*.spec.js',
+];
 
-	//SpecialPromote
-	'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.mocks.js',
-	'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
-	'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.spec.js',
+notCovered = [
+	//Those are for coverage purposes
+	'tests/lib/coverage.mocks.js',
+	//'extensions/wikia/AbTesting/js/*.js',
+	'extensions/wikia/Lightbox/js/*.js',
+	'extensions/wikia/WikiStats/js/wikistats.js',
+	'extensions/wikia/WikiMap/js/WikiMapIndexContent.js',
+	//'extensions/wikia/WikiFactory/js/*.js',
+	//'extensions/wikia/WikiaQuiz/js/*.js',
+	//'extensions/wikia/WikiaPoll/js/*.js',
+	'extensions/wikia/WikiaPhotoGallery/js/*.js',
+	'extensions/wikia/WikiaMiniUpload/js/WMU.js',
+	//'extensions/wikia/WikiaHubsV2/js/*.js',
+	//'extensions/wikia/WikiaHomePage/js/*.js',
+	'extensions/wikia/WikiaBar/js/WikiaBar.js',
+	//'extensions/wikia/Wall/js/*.js',
+	'extensions/wikia/VisualStats/js/Visual*.js',
+	'extensions/wikia/VideoHandlers/js/*.js',
+	'extensions/wikia/VideoEmbedTool/js/*.js',
+	//'extensions/wikia/UserProfilePageV3/js/UserProfilePage.js',
+	//'extensions/wikia/UserLogin/js/*.js',
+	//'extensions/wikia/TopLists/js/*.js',
+	//'extensions/wikia/ThemeDesigner/js/*.js',
+	//'extensions/wikia/TabView/js/*.js',
+	//'extensions/wikia/StructuredData/js/*.js',
+	'extensions/wikia/SponsorshipDashboard/js/*.js',
+	//'extensions/wikia/SpecialVideos/js/*.js',
+	//'extensions/wikia/SpecialMarketingToolbox/js/*.js',
+	//'extensions/wikia/SpecialManageWikiaHome/js/*.js',
+	//'extensions/wikia/ShareButtons/js/*.js',
+	//'extensions/wikia/Search/js/*.js',
+	//'extensions/wikia/RelatedVideos/js/*.js',
+	//'extensions/wikia/RelatedPages/js/*.js',
+	//'extensions/wikia/RecentChanges/js/*.js',
+	'extensions/wikia/Places/js/*.js',
+	'extensions/wikia/Phalanx/js/*.js',
+	//'extensions/wikia/MiniEditor/js/*.js',
+	//'extensions/wikia/MiniEditor/js/Forum/*.js',
+	//'extensions/wikia/MiniEditor/js/Wall/*.js',
+	'extensions/wikia/LoaderQueue/js/*.js',
+	//'extensions/wikia/LinkSuggest/js/*.js',
+	'extensions/wikia/JSSnippets/js/*.js',
+	//'extensions/wikia/ImageReview/js/*.js',
+	'extensions/wikia/ImagePlaceholder/js/*.js',
+	//'extensions/wikia/ImageLazyLoad/js/*.js',
+	//'extensions/wikia/Forum/js/*.js',
+	//'extensions/wikia/EditPageLayout/js/**/*.js',
+	'extensions/wikia/CreatePage/js/**/*.js',
+	//'extensions/wikia/CreateNewWiki/js/*.js',
+	'extensions/wikia/CorporatePage/js/*.js',
+	'extensions/wikia/ContentWarning/js/*.js',
+	//'extensions/wikia/CategorySelect/js/*.js',
+	'extensions/wikia/CategoryExhibition/js/*.js',
+	'extensions/wikia/Blogs/js/*.js',
+	'extensions/wikia/ArticleComments/js/*.js',
+	'extensions/wikia/AjaxPoll/js/*.js',
+	//'extensions/wikia/AchievementsII/js/*.js',
+	//'extensions/wikia/WikiFeatures/js/WikiFeatures.js',
 ];
 
 // list of files to exclude
 exclude = [];
 
 // test results reporter to use
-// possible values: 'dots', 'progress', 'junit'
-reporters = ['progress'];
+reporters = [
+	//'dots',
+	'progress',
+	//'junit',
+	'coverage'
+];
 
 // web server port
 port = 9876;
@@ -124,10 +166,10 @@ autoWatch = true;
 // Start these browsers, to run tests:
 browsers = [
 	'PhantomJS',
-	'Chrome',
+	//'Chrome',
 	//'ChromeCanary',
-	'Firefox',
-	'Opera',
+	//'Firefox',
+	//'Opera',
 	//'Safari', // only Mac
 	//'IE' // only Windows
 ];

@@ -3,15 +3,15 @@ describe("JSMessages", function () {
 
 	var async = new AsyncSpec(this),
 		nirvanaMock = {},
-		msg = modules.JSMessages(nirvanaMock, jQuery.Deferred);
-
-	window.wgMessages = {
-		foo: 'bar',
-		complex: '$1 is $2'
-	};
-
-	window.wgUserLanguage = 'foo';
-	window.wgJSMessagesCB = 123;
+		window = {
+			wgMessages: {
+				foo: 'bar',
+				complex: '$1 is $2'
+			},
+			wgUserLanguage: 'foo',
+			wgJSMessagesCB: 123
+		},
+		msg = modules.JSMessages(nirvanaMock, jQuery.Deferred, window);
 
 	it('registers AMD module', function() {
 		expect(typeof msg).toBe('function');
@@ -56,7 +56,7 @@ describe("JSMessages", function () {
 					return dfd.promise();
 				}
 			},
-			msg = modules.JSMessages(nirvanaMock, jQuery.Deferred);
+			msg = modules.JSMessages(nirvanaMock, jQuery.Deferred, window);
 
 		msg.get(packageName).then(function(resp) {
 			// new message value should be used

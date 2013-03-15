@@ -35,7 +35,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 		fixed = false,
 		ftr,
 		inited,
-		positionfixed = Features.positionfixed,
+		positionfixed = w.Features.positionfixed,
 		type,
 		dartHelper = w.WikiaDartMobileHelper(log, w, d);
 

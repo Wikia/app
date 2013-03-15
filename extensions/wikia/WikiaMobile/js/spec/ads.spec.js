@@ -2,27 +2,31 @@
 describe("Ads module", function () {
 	'use strict';
 
-	//required markup for correct initialization of the ads module
-	getBody().innerHTML = '<aside id=wkAdPlc><div id=wkAdCls></div><div id=wkAdWrp></div></aside><div id=wkFtr></div>';
-
 	var domwriter = {
 			addEventListener: function(){},
 			removeEventListener: function(){}
 		},
-		cookies = {
-
+		cookies = {},
+		track = {},
+		log = {},
+		parentNode = {
+			removeChild: function(){}
 		},
-		track = {
-
-		},
-		log = {
-
+		elements = {},
+		Element = function(){
+			this.parentNode = parentNode;
+			this.className = '';
 		},
 		window = {
 			WikiaDartMobileHelper: function(){
 				return function(){};
 			},
-			document: document
+			document: {
+				getElementById: function(name){
+					return elements[name] || (elements[name] = new Element());
+				}
+			},
+			Features: {}
 		},
 		utils = function(func){
 			func();
@@ -44,17 +48,30 @@ describe("Ads module", function () {
 
 	it("can initialize a footer Ad", function () {
 		ads.init('footer');
+
+		expect(elements['wkAdPlc'].className).toEqual('footer');
 		expect(ads.getAdType()).toEqual('footer');
 	});
 
-	it("ad slot is removed after dismiss", function (done) {
-		var doc = window.document;
+	it("can initialize a interstital Ad", function(){
+		ads.init('interstitial');
 
-		expect(doc.getElementById('wkAdPlc')).toBeDefined();
+		expect(elements['wkAdPlc'].className).toEqual('interstitial');
+		expect(ads.getAdType()).toEqual('interstitial');
+	});
+
+	it("will not do anything with wrong Ad type passed", function(){
+		ads.init('TEST');
+
+		expect(elements['wkAdPlc'].className).not.toEqual('TEST');
+		expect(ads.getAdType()).not.toEqual('TEST');
+	});
+
+	it("ad slot is removed after dismiss", function () {
+		spyOn(parentNode, 'removeChild');
+
 		ads.dismiss();
 
-		expect(doc.getElementById('wkAdPlc')).toBe(null);
-		expect(doc.getElementById('wkAdCls')).toBe(null);
-		expect(doc.getElementById('wkFtr')).toBeDefined();
+		expect(parentNode.removeChild).toHaveBeenCalled();
 	});
 });

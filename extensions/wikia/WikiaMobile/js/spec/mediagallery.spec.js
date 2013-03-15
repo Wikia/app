@@ -3,17 +3,20 @@ describe("Media Gallery module", function () {
 	'use strict';
 
 	var mediaMock = {
-		getImages: function() {},
-	},
-	modalMock = {
-		getWrapper: function() {}
-	},
-	// ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 'track']
-	mg = modules.mediagallery(mediaMock, modalMock);
+			getImages: function() {},
+		},
+		modalMock = {
+			getWrapper: function() {}
+		},
+		pagerMock = {
 
-	it('should be defined', function(done){
-		getBody().innerHTML = '<div id="wkPage"><section id="mw-content-text"></section></div>';
+		},
+		thumbnailerMock = {},
+		lazyloadMock = {},
+		trackMock = {},
+		mg = modules.mediagallery(mediaMock, modalMock, pagerMock, thumbnailerMock, lazyloadMock, trackMock);
 
+	it('should be defined', function(){
 		expect(typeof mg.init).toBe('function');
 		expect(typeof mg.open).toBe('function');
 	});

@@ -38,24 +38,30 @@ describe("Media module", function () {
 	});
 
 	it('should init', function(){
-		var body = getBody();
+		function Elem(data){
+			this.data = data;
+		}
 
-		body.innerHTML = '<img alt="Bo 2 wii.jpg" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="256" height="360" data-src="http://images.jolek.wikia-dev.com/__cb20120915045654/callofduty/images/5/50/Bo_2_wii.jpg" class="lazy noSect" data-params="[{&quot;name&quot;:&quot;Bo 2 wii.jpg&quot;,&quot;full&quot;:&quot;http:\/\/images.jolek.wikia-dev.com\/__cb20120915045654\/callofduty\/images\/5\/50\/Bo_2_wii.jpg&quot;,&quot;capt&quot;:&quot;0&quot;}]"><img alt="Bo 2 wii.jpg" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="256" height="360" data-src="http://images.jolek.wikia-dev.com/__cb20120915045654/callofduty/images/5/50/Bo_2_wii.jpg" class="lazy noSect" data-params="[{&quot;name&quot;:&quot;Bo 2 wii.jpg&quot;,&quot;full&quot;:&quot;http:\/\/images.jolek.wikia-dev.com\/__cb20120915045654\/callofduty\/images\/5\/50\/Bo_2_wii.jpg&quot;,&quot;capt&quot;:&quot;1&quot;}]"><img alt="Bo 2 wii.jpg" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="256" height="360" data-src="http://images.jolek.wikia-dev.com/__cb20120915045654/callofduty/images/5/50/Bo_2_wii.jpg" class="lazy noSect" data-params="[{&quot;name&quot;:&quot;Bo 2 wii.jpg&quot;,&quot;full&quot;:&quot;http:\/\/images.jolek.wikia-dev.com\/__cb20120915045654\/callofduty\/images\/5\/50\/Bo_2_wii.jpg&quot;,&quot;capt&quot;:&quot;2&quot;}]"><img alt="Bo 2 wii.jpg" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="256" height="360" data-src="http://images.jolek.wikia-dev.com/__cb20120915045654/callofduty/images/5/50/Bo_2_wii.jpg" class="lazy noSect" data-params="[{&quot;name&quot;:&quot;Bo 2 wii.jpg&quot;,&quot;full&quot;:&quot;http:\/\/images.jolek.wikia-dev.com\/__cb20120915045654\/callofduty\/images\/5\/50\/Bo_2_wii.jpg&quot;,&quot;capt&quot;:&quot;3&quot;}]"><img alt="Bo 2 wii.jpg" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="256" height="360" data-src="http://images.jolek.wikia-dev.com/__cb20120915045654/callofduty/images/5/50/Bo_2_wii.jpg" class="lazy noSect" data-params="[{&quot;name&quot;:&quot;Bo 2 wii.jpg&quot;,&quot;full&quot;:&quot;http:\/\/images.jolek.wikia-dev.com\/__cb20120915045654\/callofduty\/images\/5\/50\/Bo_2_wii.jpg&quot;,&quot;capt&quot;:&quot;4&quot;}]">' +
-		'<img alt="Bo 2 wii.jpg" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="256" height="360" data-src="vid.mp4" class="lazy noSect" data-params="[{&quot;name&quot;:&quot;video&quot;,&quot;full&quot;:&quot;link_to_vid.mp4&quot;,&quot;capt&quot;:&quot;5&quot;,&quot;type&quot;:&quot;video&quot;}]">' +
-			'<img alt="Bo 2 wii.jpg" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="256" height="360" data-src="http://images.jolek.wikia-dev.com/__cb20120915045654/callofduty/images/5/50/Bo_2_wii.jpg" class="lazy noSect" data-params="[{&quot;name&quot;:&quot;Bo 2 wii.jpg&quot;,&quot;full&quot;:&quot;http:\/\/images.jolek.wikia-dev.com\/__cb20120915045654\/callofduty\/images\/5\/50\/Bo_2_wii.jpg&quot;,&quot;capt&quot;:&quot;0&quot;}]">';
+		Elem.prototype.getAttribute = function(){
+			return this.data;
+		};
 
-		media.init(body.getElementsByTagName('img'));
+		Elem.prototype.setAttribute = function(key, val){
+			this.data[key] = val;
+		};
+
+		media.init([
+			new Elem('[{"name":"Bo 2 wii.jpg","full":"http:\/\/images.jolek.wikia-dev.com\/__cb20120915045654\/callofduty\/images\/5\/50\/Bo_2_wii.jpg","capt":"0"}]'),
+			new Elem('[{"name":"video","full":"link_to_vid.mp4","capt":"5","type":"video"}]')
+		]);
 
 		var imgs = media.getImages();
 
-		for(var i = 0, l = imgs.length-2; i < l; i++){
-			expect(imgs[i].element).toBeDefined();
-			expect(imgs[i].url).toBe('http://images.jolek.wikia-dev.com/__cb20120915045654/callofduty/images/5/50/Bo_2_wii.jpg');
-			expect(imgs[i].name).toBe('Bo 2 wii.jpg');
-			expect(imgs[i].caption).toBe(i + '');
-			expect(imgs[i].type).not.toBeDefined();
-		}
-
-		expect(imgs[5].isVideo).toBeTruthy();
+		expect(imgs[0].element).toBeDefined();
+		expect(imgs[0].url).toBe('http://images.jolek.wikia-dev.com/__cb20120915045654/callofduty/images/5/50/Bo_2_wii.jpg');
+		expect(imgs[0].name).toBe('Bo 2 wii.jpg');
+		expect(imgs[0].caption).toBe(0 + '');
+		expect(imgs[0].type).not.toBeDefined();
+		expect(imgs[1].isVideo).toBeTruthy();
 	});
 });

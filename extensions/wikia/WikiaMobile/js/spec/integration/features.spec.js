@@ -11,7 +11,7 @@ describe("Features module", function () {
 	it('should normalize name', function(){
 		Features.addTest('WeIrDNAme', function(){
 			return true;
-		})
+		});
 
 		expect(Features.WeIrDNAme).not.toBeDefined();
 

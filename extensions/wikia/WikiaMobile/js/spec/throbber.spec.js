@@ -13,24 +13,40 @@ describe("throbber module", function () {
 	});
 
 	it('should show/hide/remove throbber', function(){
-		var body = getBody();
+		var parentElement = {
+				removeChild: function(){}
+			},
+			throb = undefined,
+			element = {
+				getElementsByClassName: function(){
+					if(throb) {
+						return [throb];
+					}else{
+						throb = {
+							style: {},
+							parentElement: parentElement
+						};
+						return [];
+					}
+				},
+				insertAdjacentHTML: function(where, html){
+					this.html = html;
+				}
+			};
 
-		expect(body.children.length).toBe(0);
+		throbber.show(element);
 
-		throbber.show(body);
+		expect(element.html).toBe('<div class="wkMblThrobber"><span ></span></div>');
 
-		expect(body.children.length).toBe(1);
+		spyOn(parentElement, 'removeChild');
 
-		throbber.remove(body);
+		throbber.remove(element);
 
-		expect(body.children.length).toBe(0);
+		expect(parentElement.removeChild).toHaveBeenCalled();
 
-		throbber.show(body);
+		throbber.show(element);
 
-		expect(body.children.length).toBe(1);
-		expect(body.children[0].className).toBe('wkMblThrobber');
-
-		throbber.remove(body);
+		expect(throb.style.display).toBe('block');
 	});
 
 	it('should throw', function(){
@@ -46,44 +62,65 @@ describe("throbber module", function () {
 	});
 
 	it('should accept options', function(){
+		var parentElement = {
+				removeChild: function(){
+					element.html = '';
+					throb = undefined;
+				}
+			},
+			throb = undefined,
+			element = {
+				getElementsByClassName: function(){
+					if(throb) {
+						return [throb];
+					}else{
+						throb = {
+							style: {},
+							parentElement: parentElement
+						};
+						return [];
+					}
+				},
+				insertAdjacentHTML: function(where, html){
+					this.html = html;
+				}
+			};
 
-		var body = getBody();
-
-		throbber.show(body, {
+		throbber.show(element, {
 			center: true
 		});
 
-		expect(body.children[0].className).toMatch('cntr');
+		expect(element.html).toMatch('cntr');
 
-		throbber.remove(body);
+		throbber.remove(element);
 
-		throbber.show(body, {
+		throbber.show(element, {
 			size: '50px'
 		});
 
-		expect(body.children[0].children[0].style.width).toMatch('50px');
-		expect(body.children[0].children[0].style.height).toMatch('50px');
+		expect(element.html).toMatch('height:50px');
+		expect(element.html).toMatch('width:50px');
 
-		throbber.remove(body);
+		throbber.remove(element);
 
-		throbber.show(body, {
+		throbber.show(element, {
 			size: '10px'
 		});
 
-		expect(body.children[0].children[0].style.width).toMatch('10px');
-		expect(body.children[0].children[0].style.height).toMatch('10px');
+		expect(element.html).toMatch('height:10px');
+		expect(element.html).toMatch('width:10px');
 
-		throbber.remove(body);
+		throbber.remove(element);
 
-		throbber.show(body, {
+		throbber.show(element, {
 			center: true,
 			size: '20px'
 		});
 
-		expect(body.children[0].className).toMatch('cntr');
-		expect(body.children[0].children[0].style.width).toMatch('20px');
-		expect(body.children[0].children[0].style.height).toMatch('20px');
+		expect(element.html).toMatch('cntr');
+		expect(element.html).toMatch('height:20px');
+		expect(element.html).toMatch('width:20px');
 
-		throbber.remove(body);
+		throbber.remove(element);
 	});
 });

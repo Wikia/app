@@ -102,8 +102,12 @@ files = [
 exclude = [];
 
 // test results reporter to use
-// possible values: 'dots', 'progress', 'junit'
-reporters = ['progress'];
+reporters = [
+	//'dots',
+	'progress',
+	//'junit',
+	//'coverage'
+];
 
 // web server port
 port = 9876;
