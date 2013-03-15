@@ -45,13 +45,11 @@ class VideoPageController extends WikiaController {
 			}
 		} else {
 			$heading = wfMsg('video-page-file-list-header');
+			$summary = $app->sendRequest('VideoPageController', 'getLocalUsage')->getData()['summary'];
 
-			$summary = $this->getLocalUsage( 3 );
-//			$summary = $app->sendRquest('VideoPageController', 'getLocalUsage')->getData();
-
-			if (count($summary)) {
+			if ($summary and count($summary)) {
 				$dbName = $this->wg->DBname;
-				$shortenedSummary = array($dbName => $summary);
+				$shortenedSummary = array($dbName => array_slice($summary, 0, 3));
 			}
 		}
 
@@ -181,8 +179,10 @@ class VideoPageController extends WikiaController {
 		return empty($info) ? null : $info->page_id;
 	}
 
-	private function getLocalUsage ( $limit ) {
-		$target = $this->wg->Title->getDbKey();
+	public function getLocalUsage () {
+		$target = $this->getVal('fileTitle', $this->wg->Title->getDBkey());
+		$limit = $this->wg->Request->getInt('limit', 50);
+
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$res = $dbr->select(
@@ -202,7 +202,8 @@ class VideoPageController extends WikiaController {
 								 );
 			}
 		}
-		return $summary;
+
+		$this->summary = $summary;
 	}
 
 	public function getGlobalUsage () {
