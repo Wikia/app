@@ -77,12 +77,12 @@ class AssetsManagerBaseBuilder {
 	}
 
 	public function getCacheDuration() {
-		global $wgStyleVersion;
+		global $wgResourceLoaderMaxage, $wgStyleVersion;
 		if($this->mCb > $wgStyleVersion) {
 			Wikia::log(__METHOD__, false, "shorter TTL set for {$this->mOid}", true);
-			return 10 * 60; // 10 minutes
+			return $wgResourceLoaderMaxage['unversioned'];
 		} else {
-			return 7 * 24 * 60 * 60; // 7 days
+			return $wgResourceLoaderMaxage['versioned'];
 		}
 	}
 
