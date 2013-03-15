@@ -258,13 +258,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 			.inter-wiki-search & {
 				float: left;
 			}
-			&:before {
-				content: "\00a0|\00a0";
-			}
-
-			&:first-child:before {
-				content: "";
-			}
 		}
 		.redirect-title .result-link {
 			color: $color-alternate-text;
@@ -295,7 +288,14 @@ $form-negative-side-padding: $form-side-padding*-1;
 			text-transform: uppercase;
 		}
 		.wiki-statistics {
-			padding-top: 10px;
+			margin-top: 0.4em;
+
+			li {
+				padding-right: 40px;
+			}
+		}
+		.description {
+			margin: 0;
 		}
 		.result-description {
 			padding-left: 30px;

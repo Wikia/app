@@ -34,12 +34,8 @@
             </h1>
 
             <p class="hub subtle"><?= strtoupper( $resultSet->getHeader( 'hub' ) ); ?></p>
-            <p><?= $resultSet->getHeader('description'); ?></p>
+            <p class="description"><?= $resultSet->getHeader('description'); ?></p>
 
-            <ul>
-                <li><a href="<?=$resultSet->getHeader('url');?>" <?=$trackingData;?> ><?=$resultSet->getHeader('host');?></a></li>
-				<li><a href="<?= $resultSet->getHeader('host') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search';?>"><?= wfMsg( 'wikiasearch2-search-on-wiki')?></a></li>
-            </ul>
             <ul class="wiki-statistics subtle">
                 <li><?= wfMsg( 'wikiasearch2-pages', $wg->Lang->formatNum($resultSet->getHeader('articles_count')) ); ?></li>
                 <li><?= wfMsg( 'wikiasearch2-images', $wg->Lang->formatNum($resultSet->getHeader('images_count')) ); ?></li>
