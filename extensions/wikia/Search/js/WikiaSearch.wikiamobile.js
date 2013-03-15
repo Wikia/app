@@ -4,7 +4,7 @@
  * @author Artur Klajnerok<arturk(at)wikia-inc.com>
  **/
 
-require(['throbber', 'topbar', 'track'], function(throbber, topbar, track){
+require(['throbber', 'topbar', 'track', 'wikia.nirvana'], function(throbber, topbar, track, nirvana){
 
     var d = document,
         wkSrhInp = d.getElementById('wkSrhInp'),
@@ -67,7 +67,7 @@ require(['throbber', 'topbar', 'track'], function(throbber, topbar, track){
 				label: forward ? 'next' : 'previous'
 			});
 
-            $.nirvana.sendRequest({
+            nirvana.sendRequest({
 				controller: 'WikiaSearchAjaxController',
 				method: 'getNextResults',
 				format: 'json',

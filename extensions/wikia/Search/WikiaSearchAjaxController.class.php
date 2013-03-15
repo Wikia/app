@@ -39,7 +39,6 @@ class WikiaSearchAjaxController extends WikiaController {
 			'page'			=>	$page,
 			'length'		=>	self::RESULTS_PER_PAGE,
 			'cityId'		=>	$cityId,
-			'groupResults'	=>	$isInterWiki,
 			'rank'			=>	$rank,
 			'hub'			=>	$hub,
 			'query'			=>	$query,
