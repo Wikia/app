@@ -2312,4 +2312,46 @@ class MediaWikiServiceTest extends BaseTest
 				$service
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getHostName
+	 */
+	public function testGetHostName() {
+		$service = (new MediaWikiService);
+		$this->assertEquals(
+				substr( $service->getGlobal( 'Server' ), 7 ),
+				$service->getHostName()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::isPageIdMainPage
+	 */
+	public function testPageIdIsMainPage() {
+		$mockService = $this->getMock( 'MediaWikiService', [ 'getMainPageArticleId' ] );
+		$mockService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getMainPageArticleId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$this->assertTrue(
+				$mockService->isPageIdMainPage( 123 )
+		);
+		$mockService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getMainPageArticleId' )
+		    ->will   ( $this->returnValue( 234 ) )
+		;
+		$this->assertFalse(
+				$mockService->isPageIdMainPage( 123 )
+		);
+		$mockService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getMainPageArticleId' )
+		    ->will   ( $this->returnValue( 0 ) )
+		;
+		$this->assertFalse(
+				$mockService->isPageIdMainPage( 0 )
+		);
+	}
 }
