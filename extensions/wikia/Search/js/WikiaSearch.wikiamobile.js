@@ -45,8 +45,6 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
         });
     }
 
-
-
     function clickHandler(event){
         event.preventDefault();
 
