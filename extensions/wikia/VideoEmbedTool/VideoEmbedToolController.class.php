@@ -34,30 +34,27 @@ class VideoEmbedToolController extends WikiaController {
 			$svSize = $this->request->getInt( 'svSize', 20 );
 			$trimTitle = $this->request->getInt( 'trimTitle', 0 );
 			
-			$wikiaSearchConfig = F::build( 'WikiaSearchConfig' );  /* @var $wikiaSearchConfig WikiaSearchConfig */
-			$requestedFields   = $wikiaSearchConfig->getRequestedFields();
-			$requestedFields[] = 'pageid';
 			$articleId         = $this->request->getInt('articleId', 0 );
 			$article           = ( $articleId > 0 ) ? F::build( 'Article', array( $articleId ), 'newFromId' ) : null;
 			$articleTitle      = ( $article !== null ) ? $article->getTitle() : '';
 			$wikiTitleSansWiki = preg_replace( '/\bwiki\b/i', '', $this->wg->Sitename );
 			
+			$wikiaSearchConfig = new Wikia\Search\Config();
 			$wikiaSearchConfig  ->setStart( $svStart )
 								->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
-								->setCityID( WikiaSearch::VIDEO_WIKI_ID )
-								->setRequestedFields( $requestedFields )
+								->setCityID( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
 								->setIsVideo( true )
-								->setNamespaces( array( NS_FILE ) );
+								->setNamespaces( array( NS_FILE ) )
+								->setQuery( $articleTitle . ' ' . $wikiTitleSansWiki );
 
-			$wikiaSearchConfig->setQuery( $articleTitle . ' ' . $wikiTitleSansWiki );
-
-			$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-			 
-			$response = $search->doSearch( $wikiaSearchConfig );
+			
+			$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
+			$search = Wikia\Search\QueryService\Factory::getInstance()->get( $container );
+			$response = $search->search();
 			
 			if ( $response->getResultsFound() == 0 ) {
 				$wikiaSearchConfig->setQuery( $articleTitle == '' ? $wikiTitleSansWiki : $articleTitle ); 
-				$response = $search->doSearch( $wikiaSearchConfig );
+				$response = $search->search();
 			}
 			
 			//TODO: fill $currentVideosByTitle array with unwated videos
@@ -87,7 +84,7 @@ class VideoEmbedToolController extends WikiaController {
 
 		$svSize = $svSize < 1 ? 1 : $svSize;
 
-		$wikiaSearchConfig = F::build( 'WikiaSearchConfig' );  /* @var $wikiaSearchConfig WikiaSearchConfig */
+		$wikiaSearchConfig = new Wikia\Search\Config();
 		$wikiaSearchConfig  ->setStart( $svStart )
 							->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
 							->setVideoSearch( true )
@@ -95,7 +92,7 @@ class VideoEmbedToolController extends WikiaController {
 							->setRank($searchOrder);
 
 		if($searchType == 'premium') {
-			$wikiaSearchConfig->setCityID( WikiaSearch::VIDEO_WIKI_ID );
+			$wikiaSearchConfig->setCityID( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
 		}
 		else {
 			$wikiaSearchConfig->setCityID( $this->wg->CityId );
@@ -109,9 +106,11 @@ class VideoEmbedToolController extends WikiaController {
 							  
 			$wikiaSearchConfig->setQuery( $phrase )
 							  ->setRequestedFields( array_merge( $wikiaSearchConfig->getRequestedFields(), $requestedFields ) );
-			$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
+			
+			$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $container ) );
+			$search = Wikia\Search\QueryService\Factory::getInstance()->get( $container );
 
-			$searchResults = $search->doSearch( $wikiaSearchConfig );
+			$searchResults = $search->search();
 			$response = $this->processSearchResponse( $searchResults, $svStart, $svSize, $trimTitle );
 		}
 
@@ -147,10 +146,10 @@ class VideoEmbedToolController extends WikiaController {
 		$this->response->setData( $response->getData() );
 	}
 
-	private function processSearchResponse( WikiaSearchResultSet $response, $svStart, $svSize, $trimTitle = false, $excludedVideos = array() ) {
+	private function processSearchResponse( Wikia\Search\ResultSet\AbstractResultSet $response, $svStart, $svSize, $trimTitle = false, $excludedVideos = array() ) {
 		$data = array();
 		$nextStartFrom = $svStart;
-		foreach( $response  as $result ) {   /* @var $result WikiaSearchResult */
+		foreach( $response  as $result ) {   /* @var $result Wikia\Search\ResultSet\AbstractResultset */
 			$singleVideoData = array();
 			$singleVideoData['pageid'] = $result['pageid'];
 			$singleVideoData['wid'] =  $result->getCityId();

@@ -26,7 +26,7 @@ class UpdateBacklinksJobTest extends WikiaBaseTest
 							->setMethods( array( 'addField', 'offsetExists', 'offsetGet' ) )
 							->getMock();
 		
-		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+		$mockIndexer = $this->getMockBuilder( 'Wikia\Search\Indexer' )
 							->disableOriginalConstructor()
 							->setMethods( array( 'updateDocuments' ) )
 							->getMock();
@@ -85,7 +85,8 @@ class UpdateBacklinksJobTest extends WikiaBaseTest
 		$paramRefl->setAccessible( true );
 		$paramRefl->setValue( $mockJob, array( $mockDocument ) );
 		
-		$this->mockClass( 'WikiaSearchIndexer', $mockIndexer );
+		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockApp();
 		
 		$mockJob->run();
 	}
@@ -103,7 +104,6 @@ class UpdateBacklinksJobTest extends WikiaBaseTest
 							->disableOriginalConstructor()
 							->setMethods( array( 'setKey' ) )
 							->getMock();
-		
 		$mockId = '123_234';
 		
 		$mockDocument
@@ -112,15 +112,15 @@ class UpdateBacklinksJobTest extends WikiaBaseTest
 			->with   ( 'id', $mockId )
 		;
 		
-		$this->mockClass( 'Solarium_Document_AtomicUpdate', $mockDocument );
+		$this->proxyClass( 'Solarium_Document_AtomicUpdate', $mockDocument );
 		$this->mockApp();
 		
 		$getter = new ReflectionMethod( 'UpdateBacklinksJob', 'getDocumentForTarget' );
 		$getter->setAccessible( true );
 		
 		$this->assertEquals(
-				$mockDocument,
-				$getter->invoke( $mockJob, $mockId ),
+				get_class( $mockDocument ),
+				$getter->invoke( $mockJob, $mockId )->_mockClassName,
 				'UpdateBacklinksJob::getDocumentForTarget should always return an instance of Solarium_Document_AtomicUpdate'
 		);
 	}
@@ -145,8 +145,7 @@ class UpdateBacklinksJobTest extends WikiaBaseTest
 			->expects( $this->never() )
 			->method ( 'setKey' )
 		;
-		
-		$this->mockClass( 'Solarium_Document_AtomicUpdate', $mockDocument );
+		$this->proxyClass( 'Solarium_Document_AtomicUpdate', $mockDocument );
 		$this->mockApp();
 		
 		$getter = new ReflectionMethod( 'UpdateBacklinksJob', 'getDocumentForTarget' );

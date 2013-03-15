@@ -14,15 +14,15 @@ class solr2rss extends UnlistedSpecialPage {
 			return;
 		}
 		
-		$searchConfig = F::build( 'WikiaSearchConfig' );
+		$searchConfig = new Wikia\Search\Config();
 
 		$lang = $wgRequest->getVal( 'uselang', $wgContLang->mCode );
 		
 		$fields = array(
-				WikiaSearch::field( 'title',	$lang ),
-				WikiaSearch::field( 'url',		$lang ),
-				WikiaSearch::field( 'html',		$lang ),
-				WikiaSearch::field( 'created',	$lang ),
+				Wikia\Search\Utilities::field( 'title',	$lang ),
+				Wikia\Search\Utilities::field( 'url',		$lang ),
+				Wikia\Search\Utilities::field( 'html',		$lang ),
+				Wikia\Search\Utilities::field( 'created',	$lang ),
 				);
 		
 		$query = $wgRequest->getVal('q');
@@ -60,12 +60,14 @@ class solr2rss extends UnlistedSpecialPage {
 					 ->setRequestedFields	( $fields )
 					 ->setQuery				( $query )
 					 ->setLength			( $rows )
+					 ->setDirectLuceneQuery ( true )
 		;
 
 		if( !empty( $query ) ) {
-			$wikiaSearch = F::build( 'WikiaSearch' );
+			$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $searchConfig ) );
+			$wikiaSearch = Wikia\Search\QueryService\Factory::getInstance()->get( $container );
 			try {
-				$resultSet = $wikiaSearch->searchByLuceneQuery( $searchConfig );
+				$resultSet = $wikiaSearch->search();
 			}
 			catch (Exception $exception) {
 				$wgOut->addHTML( 'ERROR: ' . $exception->getMessage() );
