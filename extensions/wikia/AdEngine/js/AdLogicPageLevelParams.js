@@ -8,17 +8,9 @@ var AdLogicPageLevelParams = function (
 	'use strict';
 
 	var logGroup = 'AdLogicPageLevelParams',
-		getCustomKeyValues,
-		getDomain,
-		getDartHubName,
-		getHostname,
-		getKruxKeyValues,
-		getCategories,
-		getAb,
-		getPageLevelParams,
 		hostname = window.location.hostname.toString();
 
-	getDartHubName = function () {
+	function getDartHubName() {
 		if (window.cscoreCat === 'Entertainment') {
 			return 'ent';
 		}
@@ -26,9 +18,9 @@ var AdLogicPageLevelParams = function (
 			return 'gaming';
 		}
 		return 'life';
-	};
+	}
 
-	getDomain = function () {
+	function getDomain() {
 		var lhost, pieces, sld = '', np;
 		lhost = hostname.toLowerCase();
 
@@ -43,24 +35,24 @@ var AdLogicPageLevelParams = function (
 		}
 
 		return sld.replace(/\./g, '');
-	};
+	}
 
-	getHostname = function () {
+	function getHostname() {
 		var lhost = hostname.toLowerCase(),
 			pieces = lhost.split('.');
 
 		if (pieces.length) {
 			return pieces[0];
 		}
-	};
+	}
 
-	getCategories = function () {
+	function getCategories() {
 		if (window.wgCategories instanceof Array) {
 			return window.wgCategories.join('|').toLowerCase().replace(/ /g, '_').split('|');
 		}
-	};
+	}
 
-	getAb = function () {
+	function getAb() {
 		var experiments, experimentsNumber, i, ab = [];
 
 		if (abTest) {
@@ -72,9 +64,9 @@ var AdLogicPageLevelParams = function (
 		}
 
 		return ab;
-	};
+	}
 
-	getPageLevelParams = function () {
+	function getPageLevelParams() {
 		log('getPageLevelParams', 9, logGroup);
 
 		var site,
@@ -136,7 +128,7 @@ var AdLogicPageLevelParams = function (
 
 		log(params, 9, logGroup);
 		return params;
-	};
+	}
 
 	return {
 		getPageLevelParams: getPageLevelParams
