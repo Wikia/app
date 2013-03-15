@@ -29,6 +29,40 @@ SCRIPT;
 			if (F::app()->wg->EnableAmazonDirectTargetedBuy) {
 				$code = self::$code;
 			}
+
+/** FAKE CODE BELOW, REMOVE WHEN NOT NEEDED */
+if (F::app()->wg->EnableAmazonDirectTargetedBuyFake) {
+$code = <<< FAKE
+<script>
+function amzn_Ads(data) {
+	document.amzn_Ads = data.Ads;
+		try {
+		   window.amzn_targs = "";
+		   for(var slot in data.Ads) {
+			   window.amzn_targs += slot + "=1;";
+		   }
+		} catch(e) {}
+}
+
+function amzn_render(slot) {
+	try {
+		var ad = document.amzn_Ads[slot];
+		if(ad!=null) document.writeln(ad);
+	} catch(e) {}
+}
+
+amzn_Ads({
+   "Ads":{
+		  "amzn_728x90": "<div style='width: 728px; height:  90px; background: #000; color: #fff; font-size: 20px'>Fake amazon test ad 728x90 </iframe>",
+		  "amzn_300x250":"<div style='width: 300px; height: 250px; background: #000; color: #fff; font-size: 20px'>Fake amazon test ad 300x250</iframe>",
+   },
+	"status":"ok"
+});
+</script>
+FAKE;
+}
+/** FAKE CODE ABOVE, REMOVE WHEN NOT NEEDED */
+
 		}
 
 		return $code;
