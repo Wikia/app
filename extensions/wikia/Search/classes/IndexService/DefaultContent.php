@@ -54,7 +54,7 @@ class DefaultContent extends AbstractService
 	 * @return string
 	 */
 	protected function field( $field ) {
-		return $this->service->getGlobal( 'AppStripsHtml' ) ? Utilities::field( $field ) : $field; 
+		return $this->service->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field; 
 	}
 	
 	/**
