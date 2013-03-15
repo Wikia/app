@@ -1069,7 +1069,6 @@ $config['wampage_js'] = array(
 	'skin' => array('oasis'),
 	'assets' => array(
 		'//extensions/wikia/WAMPage/js/WAMPage.js',
-		'//extensions/wikia/WAMPage/js/WAMPageTracker.js',
 	)
 );
 

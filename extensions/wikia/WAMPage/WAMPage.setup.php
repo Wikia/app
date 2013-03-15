@@ -30,6 +30,7 @@ $app->registerSpecialPage( 'WAMPage', 'SpecialWAMPageController' );
 
 // hooks
 $app->registerHook('ArticleFromTitle', 'WAMPageHooks', 'onArticleFromTitle');
+$app->registerHook('MakeGlobalVariablesScript', 'WAMPageHooks', 'onMakeGlobalVariablesScript');
 
 // i18n
 $app->registerExtensionMessageFile( 'WAMPage', $dir . 'WAMPage.i18n.php' );
