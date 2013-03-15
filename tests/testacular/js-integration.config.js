@@ -134,7 +134,7 @@ browsers = [
 	//'ChromeCanary',
 	'Firefox',
 	'Opera',
-	'Safari', // only Mac
+	//'Safari', // only Mac
 	//'IE' // only Windows
 ];
 
