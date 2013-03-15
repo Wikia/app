@@ -182,10 +182,11 @@ $messages['br'] = array(
 	'categoryselect-button-add' => 'Ouzhpennañ rummadoù',
 	'categoryselect-button-cancel' => 'Nullañ',
 	'categoryselect-button-save' => 'Enrollañ',
-	'categoryselect-category-add' => 'Ouzhpennañ ur rummad', # Fuzzy
-	'categoryselect-category-edit' => 'Dibarzhioù ar rummad', # Fuzzy
+	'categoryselect-category-add' => 'Ouzhpennañ ur rummad...',
+	'categoryselect-category-edit' => 'Kemmañ ar rummad',
+	'categoryselect-category-remove' => 'Tennañ ar rummad kuit',
 	'categoryselect-edit-summary' => 'Ouzhpennañ ur rummad',
-	'categoryselect-error-article-doesnt-exist' => "N'eus ket eus ar pennad [id=$1].", # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => "N'eus ket eus ar bajenn [id=$1].",
 	'categoryselect-error-db-locked' => 'Stanket eo ar bank roadennoù',
 	'categoryselect-error-edit-abort' => "Ar c'hemm hoc'h eus klasket degas zo bet harzet gant ur c'hrog astenn.", # Fuzzy
 	'categoryselect-error-empty-category-name' => 'Reiñ a ra anv ar rummad (al lodenn skrivet a-raok |)', # Fuzzy

@@ -29,7 +29,7 @@ class RelatedPagesController extends WikiaController {
 			// check for mainpage
 			Wikia::isMainPage() ||
 			// check for content namespaces
-			(!empty( $title ) && !in_array( $title->getNamespace(), $wgContentNamespaces )) ||
+			(!empty( $wgTitle ) && !in_array( $wgTitle->getNamespace(), $wgContentNamespaces )) ||
 			// check if we have any categories
 			count( $relatedPages->getCategories( $articleid ) ) == 0 ||
 			// check action

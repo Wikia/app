@@ -618,6 +618,7 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 	'blog-movepage-badtitle' => 'Titl blogadenn direizh',
 	'blog-comment-sending' => 'O kas...',
 	'blog-by' => '$1 gant $2',
+	'user-blog-url-link' => 'Blog implijer : $1',
 );
 
 /** Catalan (català)
@@ -2586,10 +2587,13 @@ $messages['lb'] = array(
 
 /** Lithuanian (lietuvių)
  * @author Eitvys200
+ * @author Vilius
  */
 $messages['lt'] = array(
 	'createblogpage' => 'Sukurti dienoraštį',
+	'createbloglistingpage' => '↓Kurti dienoraščio sarašą',
 	'create-blog-spam' => 'Atrodo kaip šlamštas',
+	'create-blog-cant-edit' => '↓Nepavyko atlikti redagavimo',
 	'create-blog-post-recent-listing' => 'Naujausios žinutės',
 	'create-blog-post-recent-listing-title' => 'Naujausios žinutės',
 	'create-blog-post-title' => 'Sukurti naują dienoraščio įrašą',

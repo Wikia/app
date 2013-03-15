@@ -41,7 +41,7 @@ class RelatedPages {
 				$categories = [];
 
 				foreach( $title->getParentCategories() as $category => $title ) {
-					$categories[] = Title::newFromText( $category, NS_CATEGORY )->getBaseText();
+					$categories[] = Title::newFromText( $category, NS_CATEGORY )->getDBkey();
 				}
 
 				$this->categories = $categories;

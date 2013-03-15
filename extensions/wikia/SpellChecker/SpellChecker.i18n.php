@@ -223,6 +223,13 @@ $messages['inh'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'spellchecker-info-spellcheck-languages' => 'Ziman',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

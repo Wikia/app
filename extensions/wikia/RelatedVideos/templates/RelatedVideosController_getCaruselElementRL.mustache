@@ -3,6 +3,9 @@
 		<a class="remove" title="{{removeTooltip}}" href="#"><span class="sprite trash"></span></a>
 	{{/isAdmin}}
 	{{{videoThumb}}}
+	{{#isNew}}
+		<div class="new">{{isNewMsg}}<div class="newRibbon" ></div></div>
+	{{/isNew}}
 	<div class="description">
 		{{#video}}
 			<a class="lightbox" href="{{fullUrl}}" data-ref="{{prefixedUrl}}" data-external="{{external}}" data-video-name="{{title}}" >

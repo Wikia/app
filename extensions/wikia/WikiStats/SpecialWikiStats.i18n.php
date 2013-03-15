@@ -974,6 +974,7 @@ $messages['bn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author McDutchie
@@ -995,11 +996,13 @@ $messages['br'] = array(
 	'wikistats_daterange_from' => 'Eus :',
 	'wikistats_daterange_to' => 'Da :',
 	'wikistats_nostats_found' => "N'eus ket bet kavet stadegoù evit ar Wikia dibabet",
+	'wikistats_pviews_notfound' => "N'eo bet kavet pajenn gwelet ebet",
 	'wikistats_invalid_date' => 'Lijorenn deiziadoù direizh',
 	'wikistats_distrib_article' => 'Dasparzh oberezhioù an embannerien',
 	'wikistats_active_absent_wikians' => 'Bevenn oberezhioù evit an embannerien oberiant',
 	'wikistats_anon_wikians' => 'Bevenn obererezh evit an embannerien zianav',
 	'wikistats_anon_wikians_count' => 'Kavet ez eus bet $1 implijer{{PLURAL:$1||}} dizanv',
+	'wikistats_latest_pageviews' => 'Ar pajennoù bet gweladennet da ziwezhañ',
 	'wikistats_latest_pageviews_subtitle' => 'e kerzh ar $1 minutenn ziwezhañ', # Fuzzy
 	'wikistats_pageviews' => 'Sellet pajennoù dre egorenn anvioù ha dre viz',
 	'wikistats_article_one_link' => 'Pennadoù zo enno ul liamm diabarzh da nebeutañ',
@@ -1023,6 +1026,7 @@ $messages['br'] = array(
 	'wikistats_active_year' => 'bloaz',
 	'wikistats_active_months' => 'miz',
 	'wikistats_number_editors' => 'niver a aozerien',
+	'wikistats_number_anons' => 'niver a dud dianv',
 	'wikistats_wikians' => 'Embannerien enrollet',
 	'wikistats_articles' => 'Pennadoù (hep an adkasoù)',
 	'wikistats_articles_text' => 'Pennadoù',
@@ -1034,6 +1038,7 @@ $messages['br'] = array(
 	'wikistats_images' => 'Skeudennoù',
 	'wikistats_video' => 'Video',
 	'wikistats_media' => 'Skeudennoù & video',
+	'wikistats_video_embeded' => 'enklozet',
 	'wikistats_uploaded_images' => 'Enporzhiet',
 	'wikistats_with_links' => 'gant liammoù',
 	'wikistats_connection_error' => 'Fazi kevreañ',
@@ -1179,6 +1184,7 @@ $messages['br'] = array(
 	'wikistats_recordspager' => "Diskwel enrolladennoù '''$1''' da '''$2''' war '''$3'''.",
 	'wikistats_title' => 'Titl',
 	'wikistats_namespaces_top10list' => 'Roll Top 10',
+	'wikistats_namespaces_maintenance' => "Trezalc'h (MediaWiki, Patrom, Raktres)",
 	'wikistats_namespace_top' => 'Esaouennoù anv raktermenet',
 	'wikistats_error_malformed_date' => 'Fazi : Direizh eo an deiziad merket',
 );

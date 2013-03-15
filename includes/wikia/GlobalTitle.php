@@ -260,6 +260,20 @@ class GlobalTitle extends Title {
 	}
 
 	/**
+	 * Get url for squid-related code
+	 * For wikia system InternalURL is the same as FullURL
+	 * getInternalUrl from Title is not working corretly with GlobalTitle so it is fixed by getting FullURL
+	 *
+	 * @param string $query an optional query string
+	 * @param string $query2 (deprecated) language variant of url (for sr, zh..)
+	 *
+	 * @return string
+	 */
+	public function getInternalURL( $query = '', $query2 = false ) {
+		return $this->getFullURL($query, $query2);
+	}
+
+	/**
 	 * local url doesn't make sense in this context. we always return full URL
 	 *
 	 * @param string $query an optional query string
