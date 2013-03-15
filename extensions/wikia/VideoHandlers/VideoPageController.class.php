@@ -170,7 +170,7 @@ class VideoPageController extends WikiaController {
 			array( 'distinct(page_id) as page_id' ),
 			array( 'il_to' => $target, 'il_from = page_id', 'page_is_redirect = 0', 'cl_from = page_id' ),
 			__METHOD__,
-			array( 'LIMIT' => 1, 'ORDER BY' => 'il_from', )
+			array( 'LIMIT' => 1 )
 		);
 
 		$info = $res->fetchObject();
@@ -190,7 +190,7 @@ class VideoPageController extends WikiaController {
 			array( 'page_id', 'page_namespace', 'page_title', 'page_is_redirect', 'il_to' ),
 			array( 'il_to' => $target, 'il_from = page_id' ),
 			__METHOD__,
-			array( 'LIMIT' => $limit, 'ORDER BY' => 'il_from', )
+			array( 'LIMIT' => $limit )
 		);
 
 		$summary = array();
