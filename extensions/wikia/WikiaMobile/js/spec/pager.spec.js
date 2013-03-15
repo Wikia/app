@@ -1,7 +1,14 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
 describe("Pager module", function () {
 	'use strict';
-	var p = modules.pager();
+
+	var windowMock = {
+			setTimeout: function(func){
+				func();
+			},
+			addEventListener: function(){}
+		},
+		p = modules.pager(windowMock);
 
 	it('should be defined', function(){
 		expect(p).toBeDefined();
@@ -64,10 +71,6 @@ describe("Pager module", function () {
 						className: '',
 						innerHTML: 1,
 						style: {},
-						addEventListener: function(name, func){
-							func();
-						},
-						removeEventListener: function(){},
 						nextElementSibling: secondPage
 					},
 					secondPage

@@ -25,7 +25,7 @@ describe("AIM", function () {
 			onStart: function() {
 				var iFrameName = form.getAttribute('target');
 
-				expect(typeof iFrameName).toBe('string');
+				expect(iFrameName).toContain('aim');
 				expect($('iframe#' + iFrameName).length).toBe(1);
 
 				done();
@@ -39,10 +39,11 @@ describe("AIM", function () {
 
 		aim.submit(form, {
 			onStart: function() {
-				form.setAttribute('action', 'about:');
+				form.setAttribute('action', '');
 				form.submit();
 			},
 			onComplete: function(resp) {
+				expect(resp).toBeDefined();
 				expect(typeof resp).toBe('string');
 				done();
 			}
