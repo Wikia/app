@@ -111,7 +111,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $link;
 	}
 
-	protected function purgeMemcache($lastTimestamp) {
+	public function purgeMemcache($lastTimestamp) {
 		$this->app->wg->Memc->delete($this->getMemcacheKey(
 			$lastTimestamp,
 			$this->verticalId,

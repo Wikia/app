@@ -163,6 +163,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 					$this->wg->user->getId()
 				);
 
+				$module->purgeMemcache($this->date);
+
 				$this->putFlashMessage($this->wf->msg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
 
 				$nextUrl = $this->getNextModuleUrl();
