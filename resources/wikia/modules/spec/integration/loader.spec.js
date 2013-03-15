@@ -4,7 +4,10 @@ describe("Loader Module", function () {
 
 	var async = new AsyncSpec(this),
 		windowMock = {
-			document: window.document
+			document: window.document,
+			wgCdnRootUrl: '',
+			wgAssetsManagerQuery: "/__am/%4$d/%1$s/%3$s/%2$s",
+			wgStyleVersion: ~~(Math.random()*99999)
 		},
 		mwMock = undefined,
 		nirvanaMock = {},
@@ -12,10 +15,6 @@ describe("Loader Module", function () {
 		loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, logMock);
 
 	logMock.levels = {};
-
-	window.wgCdnRootUrl = '';
-	window.wgAssetsManagerQuery = "/__am/%4$d/%1$s/%3$s/%2$s";
-	window.wgStyleVersion = ~~(Math.random()*99999);
 
 	it('registers itself', function() {
 		expect(typeof loader).toBe('function');

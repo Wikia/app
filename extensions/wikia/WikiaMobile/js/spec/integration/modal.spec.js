@@ -134,18 +134,18 @@ describe("Modal module", function () {
 		expect(document.getElementById('wkMdlFtr').style.display).toBe('block');
 	});
 
-	it('should handle content correctly', function(done){
-			modal.open({
-				content: 'TEST'
-			});
+	it('should handle content correctly', function(){
+		modal.open({
+			content: 'TEST'
+		});
 
-			expect(document.getElementById('wkMdlCnt').innerHTML).toBe('TEST');
+		expect(document.getElementById('wkMdlCnt').innerHTML).toBe('TEST');
 
-			modal.setContent();
-			expect(document.getElementById('wkMdlCnt').innerHTML).toBe('TEST');
+		modal.setContent();
+		expect(document.getElementById('wkMdlCnt').innerHTML).toBe('TEST');
 
-			modal.setContent('EXAMPLE');
-			expect(document.getElementById('wkMdlCnt').innerHTML).toBe('EXAMPLE');
+		modal.setContent('EXAMPLE');
+		expect(document.getElementById('wkMdlCnt').innerHTML).toBe('EXAMPLE');
 
 	});
 

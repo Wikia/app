@@ -26,7 +26,7 @@
 				} else {
 					//we might convert links to go through AssetManager
 					//so we can minify them all!! YAY!
-					path = path.replace(wgCdnRootUrl, '').replace(/__cb\d*/, '');
+					path = path.replace(w.wgCdnRootUrl, '').replace(/__cb\d*/, '');
 
 					if (type == 'groups' && path instanceof Array) {
 						path = path.join(',');
@@ -36,11 +36,11 @@
 						params = params || w.wgSassParams;
 					}
 
-					return wgCdnRootUrl + wgAssetsManagerQuery.
+					return w.wgCdnRootUrl + w.wgAssetsManagerQuery.
 						replace('%1$s', type).
 						replace('%2$s', path.replace(slashRegex, '')). // remove first slash
 						replace('%3$s', params ? encodeURIComponent($.param(params)) : '-').
-						replace('%4$d', wgStyleVersion);
+						replace('%4$d', w.wgStyleVersion);
 				}
 			},
 			addScript = function (content){
@@ -311,7 +311,7 @@
 					}
 
 					// add a cache buster
-					options.cb = wgStyleVersion;
+					options.cb = w.wgStyleVersion;
 
 					nirvana.getJson(
 						'AssetsManager',
@@ -321,7 +321,7 @@
 						function(resources, event) {
 							// "register" JS messages
 							if (resources.messages) {
-								w.wgMessages = $.extend(wgMessages, resources.messages);
+								w.wgMessages = $.extend(w.wgMessages, resources.messages);
 							}
 
 							complete(event, resources);
