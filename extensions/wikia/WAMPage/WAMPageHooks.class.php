@@ -1,6 +1,6 @@
 <?php
 class WAMPageHooks {
-	protected $WamPageConfig = null;
+	protected $WAMPageConfig = null;
 	protected $EnableWAMPageExt = null;
 	protected $app = null;
 
@@ -11,7 +11,7 @@ class WAMPageHooks {
 			$this->app = F::app();
 		}
 		
-		foreach(['WamPageConfig', 'EnableWAMPageExt'] as $var) {
+		foreach(['WAMPageConfig', 'EnableWAMPageExt'] as $var) {
 			if( is_null($this->$var) ) {
 				$this->$var = $this->app->wg->$var;
 			}
@@ -31,8 +31,8 @@ class WAMPageHooks {
 		$this->init();
 		
 		$dbKey = null;
-		$wamPageName = mb_strtolower( $this->WamPageConfig['pageName'] );
-		$wamPageFaqPageName = mb_strtolower( $this->WamPageConfig['faqPageName'] );
+		$wamPageName = mb_strtolower( $this->WAMPageConfig['pageName'] );
+		$wamPageFaqPageName = mb_strtolower( $this->WAMPageConfig['faqPageName'] );
 		
 		if( $title instanceof Title ) {
 			$dbKey = mb_strtolower( $title->getDBKey() );
@@ -52,8 +52,8 @@ class WAMPageHooks {
 		$this->init();
 		
 		if( !empty($this->EnableWAMPageExt) ) {
-			$vars['wgWAMPageName'] = $this->WamPageConfig['pageName'];
-			$vars['wgWAMFAQPageName'] = $this->WamPageConfig['faqPageName'];
+			$vars['wgWAMPageName'] = $this->WAMPageConfig['pageName'];
+			$vars['wgWAMFAQPageName'] = $this->WAMPageConfig['faqPageName'];
 		}
 
 		return true;
