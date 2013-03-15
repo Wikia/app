@@ -7,11 +7,11 @@ class SpecialWAMPageController extends WikiaSpecialPageController
 	}
 
 	public function init() {
-
+		$this->response->addAsset('wampage_scss');
 	}
 
 	public function index() {
-		$this->response->addAsset('wampage_scss');
+		//just for the template now...
 	}
 	
 	public function faq() {
