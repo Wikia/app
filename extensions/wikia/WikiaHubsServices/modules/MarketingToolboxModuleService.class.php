@@ -26,9 +26,9 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 	public function loadData($model, $params) {
 		$lastTimestamp = $model->getLastPublishedTimestamp(
-			$params['lang'],
-			$model::SECTION_HUBS,
-			$params['vertical_id'],
+			$this->langCode,
+			$this->sectionId,
+			$this->verticalId,
 			$params['ts']
 		);
 
@@ -36,7 +36,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 				$this->getMemcacheKey(
 					$lastTimestamp,
 					$this->verticalId,
-					$params['lang'],
+					$this->langCode,
 					$this->getModuleId()
 				),
 				6 * 60 * 60,
@@ -50,8 +50,8 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 	protected function loadStructuredData( $model, $params ) {
 		$moduleData = $model->getPublishedData(
-			$params['lang'],
-			MarketingToolboxModel::SECTION_HUBS,
+			$this->langCode,
+			$this->sectionId,
 			$this->verticalId,
 			$params['ts'],
 			$this->getModuleId()
@@ -111,22 +111,22 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $link;
 	}
 
-	protected function purgeMemcache($lastTimestamp, $verticalId, $lang, $moduleId) {
+	protected function purgeMemcache($lastTimestamp) {
 		$this->app->wg->Memc->delete($this->getMemcacheKey(
 			$lastTimestamp,
-			$verticalId,
-			$lang,
-			$moduleId
+			$this->verticalId,
+			$this->langCode,
+			$this->getModuleId()
 		));
 	}
 
-	protected function getMemcacheKey($lastTimestamp, $verticalId, $lang, $moduleId) {
+	protected function getMemcacheKey($lastTimestamp) {
 		return $this->wf->SharedMemcKey(
 			MarketingToolboxModel::CACHE_KEY,
 			$lastTimestamp,
-			$verticalId,
-			$lang,
-			$moduleId
+			$this->verticalId,
+			$this->langCode,
+			$this->getModuleId()
 		);
 	}
 }

@@ -92,7 +92,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	 * @return string
 	 */
 	protected function renderModule( $toolboxModel, $moduleId, $moduleName ) {
-		$params = $this->getParams($moduleId);
+		$params = $this->getParams();
 
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$moduleName,
@@ -118,12 +118,9 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		}
 	}
 
-	protected function getParams( $moduleId ) {
+	protected function getParams() {
 		return [
-			'ts' => $this->hubTimestamp,
-			'lang' => $this->wg->ContLang->getCode(),
-			'vertical_id' => $this->verticalId,
-			'moduleId' => $moduleId
+			'ts' => $this->hubTimestamp
 		];
 	}
 
