@@ -502,8 +502,7 @@ $config['wikiamobile_relatedpages_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-
-		'//resources/wikia/modules/sloth.js',
+		'//resources/wikia/libraries/sloth/sloth.js',
 		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js',
 	)
 );
