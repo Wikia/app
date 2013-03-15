@@ -294,7 +294,7 @@ function authConnection(handshakeData, authcallback){
 					client.isChatMod = data.isChatMod;
 					client.editCount = data.editCount;
 					client.wikiaSince = data.since;
-					client.isCanGiveChatMode = data.isCanGiveChatMode;
+					client.isCanGiveChatMod = data.isCanGiveChatMod;
 					client.isStaff = data.isStaff;
 					client.roomId = roomId;
 					client.cityId = data.wgCityId;
@@ -383,7 +383,7 @@ function finishConnectingUser(client, socket ){
                 	name: client.username,
                         avatarSrc: client.avatarSrc,
                         isModerator: client.isChatMod,
-                        isCanGiveChatMode: client.isCanGiveChatMode,
+                        isCanGiveChatMod: client.isCanGiveChatMod,
                         isStaff: client.isStaff,
                         editCount: client.editCount,
                         since: client.wikiaSince
@@ -609,7 +609,7 @@ function kick(client, socket, msg){
 		if (typeof kickedUser !== "undefined") {
 			if ( client.myUser.get('isModerator') !== true) {
 				sendInlineAlertToClient(client, '', 'chat-kick-you-need-permission', []);
-			} else if ( kickedUser.get('isCanGiveChatMode') || ( kickedUser.get('isModerator') === true && client.myUser.get('isCanGiveChatMode') !== true ) ) {
+			} else if ( kickedUser.get('isCanGiveChatMod') || ( kickedUser.get('isModerator') === true && client.myUser.get('isCanGiveChatMod') !== true ) ) {
 				sendInlineAlertToClient(client, '', 'chat-kick-cant-kick-moderator', []);
 			} else {
 				var kickEvent = new models.KickEvent({

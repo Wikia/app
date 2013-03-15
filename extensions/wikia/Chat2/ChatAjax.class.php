@@ -37,10 +37,10 @@ class ChatAjax {
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
 
-		$isCanGiveChatMode = false;
+		$isCanGiveChatMod = false;
 		$userChangeableGroups = $user->changeableGroups();
 		if (in_array('chatmoderator', $userChangeableGroups['add'])) {
-			$isCanGiveChatMode = true;
+			$isCanGiveChatMod = true;
 		}
 
 		// First, check if they can chat on this wiki.
@@ -48,7 +48,7 @@ class ChatAjax {
 			'canChat' => Chat::canChat($user),
 			'isLoggedIn' => $user->isLoggedIn(),
 			'isChatMod' => $user->isAllowed( 'chatmoderator' ),
-			'isCanGiveChatMode' => $isCanGiveChatMode,
+			'isCanGiveChatMod' => $isCanGiveChatMod,
 			'isStaff' => $user->isAllowed( 'chatstaff' ),
 			'username' => $user->getName(),
 			'avatarSrc' => AvatarService::getAvatarUrl($user->getName(), self::CHAT_AVATAR_DIMENSION),
