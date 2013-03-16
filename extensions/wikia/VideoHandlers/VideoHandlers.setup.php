@@ -82,6 +82,9 @@ $app->registerClass( 'VideoInfo', $dir . '/videoInfo/VideoInfo.class.php' );
 $app->registerClass( 'VideoInfoHelper', $dir . '/videoInfo/VideoInfoHelper.class.php' );
 $app->registerClass( 'VideoInfoHooksHelper', $dir . '/videoInfo/VideoInfoHooksHelper.class.php' );
 
+// video page controller
+$app->registerClass( 'VideoPageController', $dir . '/VideoPageController.class.php' );
+
 /**
  * messages
  */
