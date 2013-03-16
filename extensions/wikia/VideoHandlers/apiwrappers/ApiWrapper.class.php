@@ -401,6 +401,10 @@ abstract class ApiWrapper {
 	protected function getActors() {
 		return '';
 	}
+
+	protected function getVideoExpirationDate() {
+		return '';
+	}
 }
 
 class EmptyResponseException extends Exception {
