@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\ResultSet\Grouping
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config, Wikia\Search\Utilities;
+use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config;
 /**
  * This class handles sub-groupings of results for inter-wiki search.
  * @author relwell
@@ -50,20 +50,7 @@ class Grouping extends Base
 		$valueGroup  = $valueGroups[$this->metaposition];
 		$this->host  = $valueGroup->getValue();
 		$this->resultsFound = $valueGroup->getNumFound();
-		$docs = $valueGroup->getDocuments();
-		$highlighting = $this->searchResultObject->getHighlighting();
-		if ( $highlighting !== null ) {
-			foreach ( $docs as $doc ) {
-				$hlResult = $highlighting->getResult( $doc['id'] );
-				if (! empty( $hlResult ) ) {
-					$field = $hlResult->getField( Utilities::field( 'html' ) );
-					if ( count( $field ) > 0 ) {
-						$doc->setText( $field[0] );
-					}
-				}
-			}
-		}
-		$this->setResults( $docs );
+		$this->setResults( $valueGroup->getDocuments() );
 		return $this;
 	}
 	

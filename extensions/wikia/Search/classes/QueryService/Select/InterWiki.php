@@ -24,7 +24,7 @@ class InterWiki extends AbstractSelect
 	 * Number of results per grouping we want in a grouped search
 	 * @var int
 	 */
-	const GROUP_RESULTS_GROUPING_ROW_LIMIT = 4;
+	const GROUP_RESULTS_GROUPING_ROW_LIMIT = 1;
 	
 	/**
 	 * The field to group over.
@@ -89,7 +89,6 @@ class InterWiki extends AbstractSelect
 	protected function registerComponents( Solarium_Query_Select $query ) {
 		return $this->configureQueryFields()
 		            ->registerQueryParams   ( $query )
-		            ->registerHighlighting  ( $query )
 		            ->registerFilterQueries ( $query )
 		            ->registerGrouping      ( $query )
 		;
