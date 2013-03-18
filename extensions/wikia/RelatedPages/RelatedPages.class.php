@@ -41,7 +41,12 @@ class RelatedPages {
 				$categories = [];
 
 				foreach( $title->getParentCategories() as $category => $title ) {
-					$categories[] = Title::newFromText( $category, NS_CATEGORY )->getDBkey();
+					$titleObj = Title::newFromText( $category, NS_CATEGORY );
+
+					//User might add category like [[Category: ]] and from that I could not create proper Title object
+					if ( $titleObj instanceof Title ) {
+						$categories[] = $titleObj->getDBkey();
+					}
 				}
 
 				$this->categories = $categories;
