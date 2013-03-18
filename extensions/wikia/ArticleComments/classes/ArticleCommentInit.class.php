@@ -4,6 +4,7 @@ class ArticleCommentInit {
 	const ERROR_USER_CANNOT_EDIT = 2;
 
 	public static $enable = null;
+	public static $commentByAnonMsg = null;
 
 	static public function ArticleCommentCheck( $title=null ) {
 		global $wgRequest, $wgUser;
@@ -410,16 +411,25 @@ class ArticleCommentInit {
 
 	public static function getUserNameFromRevision(Title $title) {
 		$rev = Revision::newFromId( $title->getLatestRevID() );
-		$userName = F::app()->wf->Message( 'article-comments-anonymous' )->text();
-
+		
 		if ( !empty( $rev ) ) {
 			$user = User::newFromId( $rev->getUser() );
 
 			if ( !empty( $user ) ) {
 				$userName = $user->getName();
+			} else {
+				$userName = self::getCommentByAnonMsg();
 			}
 		}
 		
 		return $userName;
+	}
+	
+	public static function getCommentByAnonMsg() {
+		if( is_null(self::$commentByAnonMsg) ) {
+			self::$commentByAnonMsg = F::app()->wf->Message( 'article-comments-anonymous' )->text();
+		}
+		
+		return self::$commentByAnonMsg;
 	}
 }
