@@ -1,5 +1,4 @@
 <?php
-
 class ArticleCommentInit {
 	const ERROR_READONLY = 1;
 	const ERROR_USER_CANNOT_EDIT = 2;
@@ -365,7 +364,6 @@ class ArticleCommentInit {
 
 	public static function onFilePageImageUsageSingleLink( &$link, &$element ) {
 		$app = F::app();
-
 		$ns = $element->page_namespace;
 
 		//comments and talk pages
@@ -375,25 +373,11 @@ class ArticleCommentInit {
 			if ( !empty( $title ) ) {
 				$parentTitle = reset( explode( '/', $element->page_title) ); // getBaseText returns me parent comment for subcomment
 
-				$rev = Revision::newFromId( $title->getLatestRevID() );
-
-				if ( !empty( $rev ) ) {
-					$user = User::newFromId( $rev->getUser() );
-
-					if ( !empty( $user ) ) {
-						$user = $user->getName();
-					}
-				}
-
-				if ( !isset( $user ) ) {
-					$user = $app->wf->Message( 'article-comments-anonymous' )->text();
-				}
-
 				$link = $app->wf->MsgExt(
 					'article-comments-file-page',
 					array ('parsemag'),
 					$title->getLocalURL(),
-					$user,
+					self::getUserNameFromRevision($title),
 					Title::newFromText( $parentTitle )->getLocalURL(),
 					$parentTitle
 				);
@@ -412,7 +396,7 @@ class ArticleCommentInit {
 					'article-blog-comments-file-page',
 					array ('parsemag'),
 					$blogPostComment->getLocalURL(),
-					User::newFromId( Revision::newFromId( $blogPostComment->getLatestRevID() )->getUser() )->getName(),
+					self::getUserNameFromRevision($blogPostComment),
 					Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getLocalURL(),
 					$titleNames[1],
 					$userBlog->getLocalURL(),
@@ -422,5 +406,20 @@ class ArticleCommentInit {
 		}
 
 		return true;
+	}
+
+	public static function getUserNameFromRevision(Title $title) {
+		$rev = Revision::newFromId( $title->getLatestRevID() );
+		$userName = F::app()->wf->Message( 'article-comments-anonymous' )->text();
+
+		if ( !empty( $rev ) ) {
+			$user = User::newFromId( $rev->getUser() );
+
+			if ( !empty( $user ) ) {
+				$userName = $user->getName();
+			}
+		}
+		
+		return $userName;
 	}
 }
