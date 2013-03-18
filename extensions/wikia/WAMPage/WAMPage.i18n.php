@@ -26,7 +26,7 @@ The WAM is calculated daily for the top 5,000 Wikis and includes an overall and 
 	WAM data goes back to January 1, 2012
 
 ===Where is the WAM currently displayed?===
-	You can currently find the WAM on this product page, [[Video Games|the Video Game]], [[Entertainment]] and [[Lifestyle]] hub pages, and the preview interstitial page for each Wiki.
+	You can currently find the WAM on this product page, the [[Video Games|Video Game]], [[Entertainment]] and [[Lifestyle]] hub pages, and the preview interstitial page for each Wiki.
 
 ===Am I allowed to display my WAM score on my Wiki?===
 We encourage you to display your WAM score or rank on your Wiki, but we ask you that you link back to the product page. In the coming months we will be rolling out tools that will make it easier to display the WAM on your Wiki.

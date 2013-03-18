@@ -158,14 +158,16 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		return $this->getStructuredData($data);
 	}
 
+	public function getWamPageUrl () {
+		$devboxUrl = ($this->app->wg->DevelEnvironment == true) ? '/wiki' : '';
+		return !empty($this->app->wg->WAMPageConfig['pageName']) ? $devboxUrl.'/'.$this->app->wg->WAMPageConfig['pageName'] : '#';
+	}
 	public function getStructuredData($data) {
 		$hubModel = $this->getWikiaHubsModel();
 
-		$devboxUrl = ($this->app->wg->DevelEnvironment == true) ? '/wiki' : '';
-		$wamPageUrl = !empty($this->app->wg->WAMPageConfig['pageName']) ? $devboxUrl.'/'.$this->app->wg->WAMPageConfig['pageName'] : '#';
 
 		$structuredData = [
-			'wamPageUrl' => $wamPageUrl,
+			'wamPageUrl' => $this->getWamPageUrl(),
 			'verticalName' => $hubModel->getVerticalName($data['vertical_id']),
 			'ranking' => []
 		];
