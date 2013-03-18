@@ -35,7 +35,7 @@ class ResourceLoaderTest extends WikiaBaseTest {
 	 * @param $ttl int expected caching period
 	 */
 	public function testResourceLoaderModifyMaxAge($timestamp, $ttl) {
-		global $wgHooks;
+		global $wgHooks, $wgStyleVersion;
 
 		$resourceLoader = new ResourceLoader();
 		$resourceLoader->register('WikiaTestModule', array(
@@ -44,7 +44,7 @@ class ResourceLoaderTest extends WikiaBaseTest {
 
 		$request = new WebRequest();
 		$request->setVal('modules', 'WikiaTestModule');
-		$request->setVal('version', wfTimestamp(TS_ISO_8601_BASIC, $timestamp));
+		$request->setVal('version', $wgStyleVersion . '-' . wfTimestamp(TS_ISO_8601_BASIC, $timestamp));
 
 		// set up hooks
 		$wgHooks['ResourceLoaderCacheControlHeaders'][] = 'ResourceLoaderTest::onResourceLoaderCacheControlHeaders';

@@ -10,6 +10,8 @@ class MarketingToolboxModel extends WikiaModel {
 
 	protected $statuses = array();
 	protected $modules = array();
+	protected $editableModules = array();
+	protected $nonEditableModules = array();
 	protected $sections = array();
 	protected $verticals = array();
 	protected $modulesCount;
@@ -31,7 +33,7 @@ class MarketingToolboxModel extends WikiaModel {
 			'PUBLISHED' => 2
 		);
 
-		$this->modules = array(
+		$this->editableModules = array(
 			MarketingToolboxModuleSliderService::MODULE_ID => 'slider',
 			MarketingToolboxModuleWikiaspicksService::MODULE_ID => 'wikias-picks',
 			MarketingToolboxModuleFeaturedvideoService::MODULE_ID => 'featured-video',
@@ -41,7 +43,13 @@ class MarketingToolboxModel extends WikiaModel {
 			MarketingToolboxModulePopularvideosService::MODULE_ID => 'popular-videos'
 		);
 
-		$this->modulesCount = count($this->modules);
+		$this->nonEditableModules = array(
+			MarketingToolboxModuleWAMService::MODULE_ID => 'wam'
+		);
+
+		$this->modules = $this->editableModules + $this->nonEditableModules;
+
+		$this->modulesCount = count($this->editableModules);
 
 		$this->sections = array(
 			self::SECTION_HUBS => $this->wf->msg('marketing-toolbox-section-hubs-button')
@@ -74,8 +82,16 @@ class MarketingToolboxModel extends WikiaModel {
 		return self::FORM_THUMBNAIL_SIZE;
 	}
 	
+	public function getEditableModulesIds() {
+		return array_keys($this->editableModules);
+	}
+
+	public function getNonEditableModulesIds() {
+		return array_keys($this->nonEditableModules);
+	}
+
 	public function getModulesIds() {
-		return array_keys($this->modules);
+		return array_merge($this->getEditableModulesIds(), $this->getNonEditableModulesIds());
 	}
 	
 	public function getModuleName($moduleId) {
@@ -322,7 +338,7 @@ class MarketingToolboxModel extends WikiaModel {
 		} else {
 			$out = $this->getDefaultModuleList();
 		}
-		
+
 		$actualData = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp);
 		$out = $actualData + $out;
 		ksort($out);
@@ -497,7 +513,7 @@ class MarketingToolboxModel extends WikiaModel {
 	protected function getDefaultModuleList() {
 		$out = array();
 
-		foreach ($this->modules as $moduleId => $moduleName) {
+		foreach ($this->editableModules as $moduleId => $moduleName) {
 			$out[$moduleId] = array(
 				'status' => $this->statuses['NOT_PUBLISHED'],
 				'lastEditTime' => null,

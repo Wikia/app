@@ -16,6 +16,11 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	 * @var WikiaHubsV2Model
 	 */
 	protected $model;
+	
+	/**
+	 * @var MarketingToolboxModel
+	 */
+	protected $marketingToolboxModel;
 
 	protected $format;
 	protected $verticalId;
@@ -48,7 +53,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 		$this->modules = array();
 
-		foreach ($toolboxModel->getModulesIds() as $moduleId) {
+		foreach ($toolboxModel->getEditableModulesIds() as $moduleId) {
 				if (!empty($modulesData[$moduleId]['data'])) {
 					$this->modules[$moduleId] = $this->renderModule(
 						$this->wg->ContLang->getCode(),
@@ -67,6 +72,15 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 							. ', moduleId: ' . $moduleId
 					);
 				}
+		}
+
+		foreach ($toolboxModel->getNonEditableModulesIds() as $moduleId) {
+			$this->modules[$moduleId] = $this->renderModule(
+				$this->wg->ContLang->getCode(),
+				$this->verticalId,
+				$toolboxModel->getNotTranslatedModuleName($moduleId),
+				null
+			);
 		}
 
 		$this->response->addAsset('wikiahubs_v2');
@@ -114,15 +128,17 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			$verticalId
 		);
 
-		$moduleData = $module->getStructuredData($moduleData);
+		if( $module instanceof MarketingToolboxModuleNonEditableService ) {
+			$moduleData = $module->loadData($this->getMarketingToolboxModel(), [
+				'lang' => $langCode,
+				'vertical_id' => $verticalId,
+				'ts' => $this->hubTimestamp,
+			]);
+		} else {
+			$moduleData = $module->getStructuredData($moduleData);
+		}
 
 		return $module->render($moduleData);
-	}
-
-	public function fromthecommunity() {
-		$fromTheCommunityData = $this->model->getDataForModuleFromTheCommunity();
-		$this->headline = $fromTheCommunityData['headline'];
-		$this->entries = $fromTheCommunityData['entries'];
 	}
 
 	public function init() {
@@ -153,6 +169,17 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		return $this->model;
 	}
 
+	/**
+	 * @return MarketingToolboxModel
+	 */
+	protected function getMarketingToolboxModel() {
+		if( !$this->marketingToolboxModel ) {
+			$this->marketingToolboxModel = new MarketingToolboxModel($this->app);
+		}
+		
+		return $this->marketingToolboxModel;
+	}
+
 	protected function initFormat() {
 		$this->format = $this->request->getVal('format', 'html');
 	}
@@ -165,10 +192,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 	protected function initModel() {
 		$this->model = F::build('WikiaHubsV2Model');
-		$date = $this->getRequest()->getVal('date', date('Y-m-d'));
-		$lang = $this->getRequest()->getVal('cityId', $this->wg->cityId);
-		$this->model->setDate($date);
-		$this->model->setLang($lang);
 		$this->model->setVertical($this->verticalId);
 	}
 

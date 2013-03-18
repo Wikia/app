@@ -71,6 +71,27 @@ $messages['bs'] = array(
 	'stafflog-piggybacklogoutmsg' => '$1 nosilac - korisnik $2 odjava sa $3 računa',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'stafflog-desc' => 'Registre centralitzat pel personal',
+	'stafflog' => 'Registre del personal',
+	'stafflog-blockmsg' => "$1 $2 ha provat bloquejar a l'empleat $3 en el projecte $4. Motiu: $5",
+	'stafflog-piggybackloginmsg' => '$1 Personificació - usuari $2 inicia como $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Personificació - usuari $2 tanca la sessió del compte $3',
+	'right-stafflog' => "Pots veure el registre de l'staff",
+	'stafflog-wiki-status-change' => "$1 ha canviat l'estat de $2 a $3. Motiu: $4",
+	'stafflog-filter-label' => 'Filtre',
+	'stafflog-filter-user' => 'Usuari:',
+	'stafflog-filter-type' => 'Tipus:',
+	'stafflog-filter-apply' => 'Aplicar el filtre',
+	'stafflog-filter-type-block' => 'Bloquejar',
+	'stafflog-filter-type-piggyback' => 'Personificar',
+	'stafflog-filter-type-renameuser' => "Canviar el nom d'usuari",
+	'stafflog-filter-type-wikifactory' => 'Estat del wiki',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Dontlietome7

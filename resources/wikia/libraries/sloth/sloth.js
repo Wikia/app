@@ -1,3 +1,9 @@
+/**
+ * Library to lazy initialize components of a web page
+ *
+ * @author Hakubo bukaj.kelo<@gmail.com>
+ * @see https://github.com/hakubo/Sloth
+ */
 define('sloth', function(){
 	//some private vars
 	var slice = Array.prototype.slice,

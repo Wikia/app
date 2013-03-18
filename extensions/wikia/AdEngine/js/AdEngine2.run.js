@@ -6,9 +6,11 @@
 /*global document, window */
 /*global Geo, Wikia */
 /*global ghostwriter, Krux */
-/*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter, WikiaDartHelper */
+/*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
+/*global WikiaDartHelper, WikiaGptHelper */
 /*global AdProviderAdDriver2, AdProviderEvolve, AdProviderGamePro, AdProviderLater, AdProviderNull */
-/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicShortPage */
+/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicShortPage, AdLogicPageLevelParams */
+/*global AdLogicPageLevelParamsLegacy */
 /*jslint newcap:true */
 
 (function (log, tracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
@@ -80,7 +82,7 @@
 		adProviderNull
 	);
 
-	window.wgAfterContentAndJS.push(function() {
+	window.wgAfterContentAndJS.push(function () {
 		log('work on window.adslots2 according to AdConfig2', 1, module);
 		tracker.track({
 			eventName: 'liftium.init',

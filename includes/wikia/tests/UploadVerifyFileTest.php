@@ -4,6 +4,10 @@ class TestUploadClass extends UploadBase {
 	public function initializeFromRequest( &$request ) {}
 }
 
+/**
+ * @category Wikia
+ * @group Integration
+ */
 class UploadVerifyFile extends WikiaBaseTest {
 	private $tmpPath = false;
 
@@ -24,11 +28,7 @@ class UploadVerifyFile extends WikiaBaseTest {
 			file_put_contents($this->tmpPath, $uploadContent);
 		}
 
-		$titleMock = $this->mockClassWithMethods('Title', array(
-			'getText' => 'Foo'
-		));
 		$uploadMock = $this->mockClassWithMethods('TestUploadClass', array(
-			'getTitle' => $titleMock,
 			'getTempPath' => $this->tmpPath
 		));
 

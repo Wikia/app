@@ -368,6 +368,7 @@ $messages['bo'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'article-comments-file-page' => "<a href='$1'>Evezhiadenn eus $2</a> war <a href='$3'>$4</a>",
 	'article-comments-anonymous' => 'Implijer dizanv',
 	'article-comments-comments' => 'Evezhiadennoù - $1',
 	'article-comments-post' => 'Lakaat un evezhiadenn',
@@ -433,10 +434,19 @@ Wikia
 );
 
 /** Catalan (català)
+ * @author Anskar
  * @author Solde
  */
 $messages['ca'] = array(
+	'article-comments-cancel' => 'Cancel·la',
+	'article-comments-delete' => 'elimina',
+	'article-comments-edit' => 'modifica',
 	'article-comments-history' => 'historial',
+	'article-comments-error' => "El comentari no s'ha pogut desar",
+	'article-comments-undeleted-comment' => 'Comentari no eliminat de la pàgina del bloc $1',
+	'article-comments-rc-comment' => 'Comentari de l\'article (<span class="plainlinks">[$1  $2]</span>)',
+	'article-comments-rc-comments' => "Comentaris d'article ([[$1]])",
+	'article-comments-fblogin' => 'Si us plau <a href="$1" rel="nofollow"> identifiqueu-vos i connecteu-vos amb Facebook</a> per enviar un comentari en aquest wiki!',
 	'article-comments-toc-item' => 'Comentaris',
 	'article-comments-reply' => 'Respon',
 	'article-comments-show-all' => 'Mostra tots els comentaris',
@@ -1696,6 +1706,7 @@ $PAGEEDITOR къейд ттуна "$PAGETITLE".
 
 /** Lithuanian (lietuvių)
  * @author Eitvys200
+ * @author Vilius
  */
 $messages['lt'] = array(
 	'article-comments-anonymous' => 'Anoniminis vartotojas',
@@ -1706,11 +1717,13 @@ $messages['lt'] = array(
 	'article-comments-edit' => 'redaguoti',
 	'article-comments-history' => 'istorija',
 	'article-comments-error' => 'Komentaras negali būti išsaugotas',
+	'article-comments-rc-comments' => '↓Straipsnio komentarai ([[$1]])',
 	'article-comments-rc-blog-comment' => 'Blog\'o komentaras (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => "Blog'o komentarai ([[$1]])",
 	'article-comments-login' => 'Prašome <a href="$1">prisijungti</a> kad galėtumėte rašyti šioje wiki.',
 	'article-comments-toc-item' => 'Komentarai',
 	'article-comments-comment-cannot-add' => 'Jūs negalite pridėti komentarą į ši straipsnį.',
+	'article-comments-vote' => '↓Balsuoti teigiamai',
 	'article-comments-reply' => 'Atsakyti',
 	'article-comments-show-all' => 'Rodyti visus komentarus',
 	'article-comments-prev-page' => 'Ankstesnis',
@@ -1720,6 +1733,8 @@ $messages['lt'] = array(
 	'wikiamobile-article-comments-more' => 'Įkelti daugiau',
 	'wikiamobile-article-comments-prev' => 'Įkelti ankstesni',
 	'wikiamobile-article-comments-none' => 'Nėra komentarų',
+	'wikiamobile-article-comments-view' => '↓Žiūrėti atsakymus',
+	'wikiamobile-article-comments-replies' => '↓atsakymai',
 	'wikiamobile-article-comments-post' => 'Rašyti',
 	'wikiamobile-article-comments-placeholder' => 'Rašyti komentarą',
 	'wikiamobile-article-comments-show' => 'Rodyti',
@@ -1981,18 +1996,18 @@ $messages['nl'] = array(
 	'article-blog-comments-file-page' => "<a href='$1'>Reactie van $2</a> op bericht <a href='$3'>$4</a> op het blog van <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Anonieme gebruiker',
 	'article-comments-comments' => 'Opmerkingen ($1)',
-	'article-comments-post' => 'Opmerking plaatsen',
+	'article-comments-post' => 'Reactie plaatsen',
 	'article-comments-cancel' => 'Annuleren',
 	'article-comments-delete' => 'verwijderen',
 	'article-comments-edit' => 'bewerken',
 	'article-comments-history' => 'geschiedenis',
-	'article-comments-error' => 'De opmerking kon niet opgeslagen worden',
-	'article-comments-undeleted-comment' => 'Heeft een opmerking op blogpagina $1 teruggeplaatst',
-	'article-comments-rc-comment' => 'Opmerking bij pagina (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-error' => 'De reactie kon niet worden opgeslagen',
+	'article-comments-undeleted-comment' => 'Reactie teruggeplaatst op blogpagina $1',
+	'article-comments-rc-comment' => 'Reactie bij pagina (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Opmerkingen bij pagina ([[$1]])',
 	'article-comments-fblogin' => '<a href="$1">Meld u aan en verbind met Facebook</a> om een opmerking in deze wiki te plaatsen.',
 	'article-comments-fbconnect' => '<a href="$1">Verbind deze gebruiker met Facebook</a> om opmerkingen te plaatsen.',
-	'article-comments-rc-blog-comment' => 'Opmerking bij blog (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comment' => 'Reactie bij blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Opmerkingen bij blog ([[$1]])',
 	'article-comments-login' => '<a href="$1">Meld u aan</a> om een opmerking in deze wiki te kunnen plaatsen.',
 	'article-comments-toc-item' => 'Opmerkingen',
@@ -2013,7 +2028,7 @@ $messages['nl'] = array(
 	'wikiamobile-article-comments-replies' => 'antwoorden',
 	'wikiamobile-article-comments-post-reply' => 'Reactie plaatsen',
 	'wikiamobile-article-comments-post' => 'Opslaan',
-	'wikiamobile-article-comments-placeholder' => 'Opmerking plaatsen',
+	'wikiamobile-article-comments-placeholder' => 'Reactie plaatsen',
 	'wikiamobile-article-comments-show' => 'Weergeven',
 	'wikiamobile-article-comments-login-post' => 'Meld u aan om te reageren.',
 	'wikiamobile-article-comments-post-fail' => 'Het opslaan van de reactie is mislukt. Probeer het later opnieuw.',

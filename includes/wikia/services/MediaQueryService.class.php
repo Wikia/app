@@ -339,7 +339,7 @@ class MediaQueryService extends WikiaService {
 
 		$db = $this->wf->GetDB( DB_SLAVE );
 
-		$sqlWhere = array();
+		$sqlWhere = array( 'removed' => 0 );
 		$sqlOptions = array();
 
 		// check for filter
@@ -418,10 +418,9 @@ SQL;
 
 				$totalVideos = 0;
 				while ( $row = $db->fetchObject($result) ) {
-					$title = F::build( 'Title', array( $row->name, NS_FILE ), 'newFromText' );
+					$title = Title::newFromText( $row->name, NS_FILE );
 					$file = $this->wf->FindFile( $title );
-					if ( $file instanceof File && $file->exists()
-						&& F::build( 'WikiaFileHelper', array($title), 'isTitleVideo' ) ) {
+					if ( $file instanceof File && $file->exists() && WikiaFileHelper::isTitleVideo($title) ) {
 						$totalVideos++;
 					}
 				}
@@ -429,7 +428,7 @@ SQL;
 				$row = $db->selectRow(
 					array( 'video_info' ),
 					array( 'count(video_title) cnt' ),
-					array(),
+					array( 'removed' => 0 ),
 					__METHOD__
 				);
 
@@ -468,7 +467,10 @@ SQL;
 			$row = $db->selectRow(
 				array( 'video_info' ),
 				array( 'count(video_title) cnt' ),
-				array( 'premium' => 1 ),
+				array(
+					'premium' => 1,
+					'removed' => 0,
+				),
 				__METHOD__
 			);
 

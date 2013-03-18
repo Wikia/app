@@ -15,6 +15,17 @@ class VideoInfo extends WikiaModel {
 	protected $removed = 0;
 	protected $featured = 0;
 
+	protected static $fields = array(
+		'videoTitle',
+		'addedAt',
+		'addedBy',
+		'premium',
+		'duration',
+		'hdfile',
+		'removed',
+		'featured',
+	);
+
 	public function __construct( $data = array() ) {
 		foreach ( $data as $key => $value ) {
 			$this->$key = $value;
@@ -29,6 +40,22 @@ class VideoInfo extends WikiaModel {
 	 */
 	public function setVideoTitle( $videoTitle ) {
 		$this->videoTitle = $videoTitle;
+	}
+
+	/**
+	 * set video removed value
+	 * @param boolean $value
+	 */
+	public function setRemoved( $value = true ) {
+		$this->removed = (int) $value;
+	}
+
+	/**
+	 * set added at
+	 * @param integer $value
+	 */
+	public function setAddedAt( $value ) {
+		$this->addedAt = $value;
 	}
 
 	/**
@@ -73,35 +100,52 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * update data in the database
-	 * @param array $updateValue [ array( field => value ) ]
-	 * [ field = added_at, added_by, duration, premium , hdfile, removed, featured ]
+	 * @return boolean $affected
 	 */
-	protected function updateDatabase( $updateValue ) {
+	protected function updateDatabase() {
 		$this->wf->ProfileIn( __METHOD__ );
 
+		$affected = false;
 		if ( !$this->wf->ReadOnly() && !empty($this->videoTitle) ) {
 			$db = $this->wf->GetDB( DB_MASTER );
 
 			$db->update(
 				'video_info',
-				$updateValue,
+				array(
+					'added_at' => $this->addedAt,
+					'added_by' => $this->addedBy,
+					'duration' => $this->duration,
+					'premium' => $this->premium,
+					'hdfile' => $this->hdfile,
+					'removed' => $this->removed,
+					'featured' => $this->featured,
+				),
 				array( 'video_title' => $this->videoTitle ),
 				__METHOD__
 			);
 
+			if ( $db->affectedRows() > 0 ) {
+				$affected = true;
+			}
+
 			$db->commit();
+
+			$this->saveToCache();
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
+
+		return $affected;
 	}
 
 	/**
 	 * add video to database
+	 * @return boolean $affected
 	 */
 	protected function addToDatabase() {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$affected = true;
+		$affected = false;
 		if ( !$this->wf->ReadOnly() ) {
 			$db = $this->wf->GetDB( DB_MASTER );
 
@@ -125,9 +169,13 @@ class VideoInfo extends WikiaModel {
 				'IGNORE'
 			);
 
-			$affected = (bool) $db->affectedRows();
+			if ( $db->affectedRows() > 0 ) {
+				$affected = true;
+			}
 
 			$db->commit();
+
+			$this->saveToCache();
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -151,6 +199,8 @@ class VideoInfo extends WikiaModel {
 			);
 
 			$db->commit();
+
+			$this->invalidateCache();
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -228,18 +278,25 @@ SQL;
 
 		$app->wf->ProfileIn( __METHOD__ );
 
-		$db = $app->wf->GetDB( DB_SLAVE );
+		$memKey = self::getMemcKey( $videoTitle );
+		$videoData = $app->wg->Memc->get( $memKey );
+		if ( is_array($videoData) ) {
+			$video = new self( $videoData );
+		} else {
+			$db = $app->wf->GetDB( DB_SLAVE );
 
-		$row = $db->selectRow(
-			'video_info',
-			'*',
-			array( 'video_title' => $videoTitle ),
-			__METHOD__
-		);
+			$row = $db->selectRow(
+				'video_info',
+				'*',
+				array( 'video_title' => $videoTitle ),
+				__METHOD__
+			);
 
-		$video = null;
-		if ( $row ) {
-			$video = self::newFromRow( $row );
+			$video = null;
+			if ( $row ) {
+				$video = self::newFromRow( $row );
+				$video->saveToCache();
+			}
 		}
 
 		$app->wf->ProfileOut( __METHOD__ );
@@ -252,7 +309,7 @@ SQL;
 	 * @param object $row
 	 * @return array video
 	 */
-	public static function newFromRow( $row ) {
+	protected static function newFromRow( $row ) {
 		$data = array(
 			'videoTitle' => $row->video_title,
 			'addedAt' => $row->added_at,
@@ -270,60 +327,101 @@ SQL;
 	}
 
 
+	/**
+	 * add video
+	 * @return boolean
+	 */
 	public function addVideo() {
 		return $this->addToDatabase();
 	}
 
+	/**
+	 * add premium video
+	 * @param integer $userId
+	 * @return boolean
+	 */
 	public function addPremiumVideo( $userId ) {
+		$this->wf->ProfileIn( __METHOD__ );
+
 		$this->addedAt = $this->wf->Timestamp( TS_MW );
 		if ( !empty($userId) ) {
 			$this->addedBy = $userId;
 		}
 
-		return $this->addToDatabase();
+		$affected = $this->addToDatabase();
+
+		// create file page when adding premium video to wiki
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$status = $videoHandlerHelper->addCategoryVideos( $this->videoTitle, $this->addedBy );
+
+		$this->wf->ProfileOut( __METHOD__ );
+
+		return $affected;
 	}
 
+	/**
+	 * reupload video
+	 * @return boolean
+	 */
 	public function reuploadVideo() {
 		$addedAt = $this->wf->Timestamp( TS_MW );
-		$data = array(
-			'added_at' => $addedAt,
-			'added_by' => $this->addedBy,
-			'duration' => $this->duration,
-			'premium' => $this->premium,
-			'hdfile' => $this->hdfile,
-			'removed' => $this->removed,
-			'featured' => $this->featured,
-		);
+		$this->setAddedAt( $addedAt );
 
-		$this->updateDatabase( $data );
+		return $this->updateDatabase();
 	}
 
-	public function renameVideo( $newVideoTitle ) {
-		$data = array(
-			'video_title' => $newVideoTitle,
-		);
-
-		$this->updateDatabase( $data );
-	}
-
+	/**
+	 * restore video
+	 * @return boolean
+	 */
 	public function restoreVideo() {
-		$data = array(
-			'removed' => 0,
-		);
+		$this->setRemoved( false );
 
-		$this->updateDatabase( $data );
+		return $this->updateDatabase();
 	}
 
+	/**
+	 * remove video
+	 * @return boolean
+	 */
 	public function removeVideo() {
-		$data = array(
-			'removed' => 1,
-		);
+		$this->setRemoved();
 
-		$this->updateDatabase( $data );
+		return $this->updateDatabase();
 	}
 
+	/**
+	 * delete video
+	 */
 	public function deleteVideo() {
 		$this->removeFromDatabase();
+	}
+
+	/**
+	 * get memcache key
+	 * @param string $videoTitle
+	 * @return string
+	 */
+	protected static function getMemcKey( $videoTitle ) {
+		return F::app()->wf->MemcKey( 'video_info', 'v1', md5($videoTitle) );
+	}
+
+	/**
+	 * save to cache
+	 */
+	protected function saveToCache() {
+		foreach( self::$fields as $field ) {
+			$cache[$field] = $this->$field;
+		}
+
+		$this->wg->Memc->set( self::getMemcKey( $this->getVideoTitle() ), $cache, 60*60*24*7 );
+	}
+
+	/**
+	 * clear cache
+	 */
+	protected function invalidateCache() {
+		$this->wg->Memc->delete( self::getMemcKey( $this->getVideoTitle() ) );
 	}
 
 }

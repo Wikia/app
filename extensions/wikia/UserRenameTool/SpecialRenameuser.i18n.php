@@ -214,10 +214,27 @@ $messages['ar'] = array(
 );
 
 /** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
  */
 $messages['arc'] = array(
-	'renameuser' => 'ܫܚܠܦ ܫܡܐ ܕܡܦܠܚܢܐ',
-	'userrenametool-submit' => 'ܡܨܝܘܬܐ',
+	'userrenametool' => 'ܫܚܠܦ ܫܡܐ ܕܡܦܠܚܢܐ',
+	'renameuser' => 'ܬܢܝ ܫܘܡܗܐ ܕܡܦܠܚܢܐ',
+	'userrenametool-old' => 'ܫܡܐ ܕܡܦܠܚܢܐ ܗܫܝܐ:',
+	'userrenametool-new' => 'ܫܡܐ ܕܡܦܠܚܢܐ ܚܕܬܐ:',
+	'userrenametool-reason' => 'ܥܠܬܐ ܕܬܢܝ ܫܘܡܗܐ:',
+	'userrenametool-warnings' => 'ܙܘܗܪ̈ܐ:',
+	'userrenametool-confirm' => 'ܐܝܢ، ܫܚܠܦ ܫܡܐ ܕܡܦܠܚܢܐ',
+	'userrenametool-submit' => 'ܫܚܠܦ ܫܡܐ ܕܡܦܠܚܢܐ',
+	'userrenametool-confirm-intro' => 'ܐܪܐ ܫܪܝܪܐܝܬ ܨܒܬ ܕܬܥܒܕ ܗܢܐ؟',
+	'userrenametool-confirm-yes' => 'ܐܝܢ',
+	'userrenametool-confirm-no' => 'ܠܐ',
+	'userrenametool-logpage' => 'ܣܓܠܐ ܕܬܘܢܝ ܫܘܡܗܐ ܕܡܦܠܚܢܐ',
+	'userrenametool-logpagetext' => 'ܗܢܘ ܣܓܠܐ ܕܫܘܚܠܦ̈ܐ ܕܫܡܗ̈ܐ ܕܡܦܠܚܢܐ.',
+	'userrenametool-logentry' => 'ܬܢܝ ܫܘܡܗܐ $1 ܠ "$2"',
+	'userrenametool-log' => '{{PLURAL:$1|1 ܫܘܚܠܦܐ|$1 ܫܘܚܠܦ̈ܐ}}.
+ܥܠܬܐ: $2',
+	'userrenametool-move-log' => 'ܝܬܐܝܬ ܫܢܐ ܦܐܬܐ ܟܕ ܬܢܝ ܫܘܡܗܐ ܕܡܦܠܚܢܐ "[[User:$1|$1]]" ܠ "[[User:$2|$2]]"',
+	'right-renameuser' => 'ܬܢܝ ܫܘܡܗܐ ܕܡܦܠܚܢܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -3608,6 +3625,7 @@ $messages['si'] = array(
 
 /** Slovak (slovenčina)
  * @author Helix84
+ * @author KuboF
  */
 $messages['sk'] = array(
 	'renameuser' => 'Premenovať používateľa',
@@ -3617,6 +3635,7 @@ $messages['sk'] = array(
 	'userrenametool-reason' => 'Dôvod premenovania:',
 	'userrenametool-move' => 'Presunúť používateľské a diskusné stránky (a ich podstránky) na nový názov',
 	'userrenametool-reserve' => 'Vyhradiť staré používateľské meno (zabrániť ďalšiemu použitiu)',
+	'userrenametool-notify-renamed' => 'Poslať premenovanému používateľovi email po dokončení',
 	'userrenametool-warnings' => 'Upozornenia:',
 	'userrenametool-confirm' => 'Áno, premenovať používateľa',
 	'userrenametool-submit' => 'Odoslať',
@@ -3624,6 +3643,7 @@ $messages['sk'] = array(
 	'userrenametool-errorexists' => 'Používateľ „<nowiki>$1</nowiki>“ už existuje',
 	'userrenametool-errorinvalid' => 'Používateľské meno „<nowiki>$1</nowiki>“ je neplatné',
 	'userrenametool-errortoomany' => 'Používateľ „<nowiki>$1</nowiki>“ má $2 {{PLURAL:$2|príspevok|príspevky|príspevkov}}, premenovanie používateľa s viac ako $3 {{PLURAL:$3|príspevkom|príspevkami}} by sa mohlo nepriaznivo odraziť na výkone stránky.',
+	'userrenametool-errorbot' => 'Používateľ <nowiki>$1</nowiki> je robot.',
 	'userrenametool-error-request' => 'Pri prijímaní vašej požiadavky nastal problém. Prosím, vráťte sa a skúste to znova.',
 	'userrenametool-error-same-user' => 'Nemôžete premenovať používateľa na rovnaké meno ako mal predtým.',
 	'userrenametool-success' => 'Používateľ „<nowiki>$1</nowiki>“ bol premenovaný na „<nowiki>$2</nowiki>“',

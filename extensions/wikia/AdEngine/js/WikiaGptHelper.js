@@ -4,14 +4,13 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 
 	var logGroup = 'WikiaGptHelper',
 		gptLoaded = false,
-		loadGpt,
-		pushAd,
-		convertSizesToGpt,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '/' + pageLevelParams.s2,
+		slotsToDisplay = [],
+		doneCallbacks = [],
 		googletag;
 
-	loadGpt = function () {
+	function loadGpt() {
 		if (!gptLoaded) {
 			log('loadGpt', 7, logGroup);
 
@@ -51,9 +50,9 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 				}
 			});
 		}
-	};
+	}
 
-	convertSizesToGpt = function (slotsize) {
+	function convertSizesToGpt(slotsize) {
 		log(['convertSizeToGpt', slotsize], 9, logGroup);
 		var tmp1 = slotsize.split(','),
 			sizes = [],
@@ -66,9 +65,9 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		}
 
 		return sizes;
-	};
+	}
 
-	pushAd = function (slotParams, done) {
+	function pushAd(slotParams, done) {
 		var slotname = slotParams.slotname,
 			sizes = convertSizesToGpt(slotParams.slotsize),
 			params = {};
@@ -98,16 +97,43 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 				}
 			}
 
-			googletag.enableServices();
-			googletag.display(slotname);
-
+			slotsToDisplay.push(slotname);
 			if (typeof done === 'function') {
-				done();
+				doneCallbacks.push(done);
 			}
 		});
-	};
+	}
+
+	function flushAds() {
+		log(['googletag.cmd.push', 'enableServices'], 4, logGroup);
+		log(['googletag.cmd.push', 'display', slotsToDisplay], 4, logGroup);
+
+		googletag.cmd.push(function () {
+			var callback, slotname;
+
+			log(['flushAds', 'start'], 4, logGroup);
+
+			googletag.pubads().enableSingleRequest();
+			googletag.enableServices();
+
+			while (slotsToDisplay.length > 0) {
+				slotname = slotsToDisplay.shift();
+
+				log(['flushAds', 'display', slotname], 8, logGroup);
+
+				googletag.display(slotname);
+			}
+
+			while (doneCallbacks.length > 0) {
+				callback = doneCallbacks.shift();
+				callback();
+			}
+			log(['flushAds', 'done'], 4, logGroup);
+		});
+	}
 
 	return {
-		pushAd: pushAd
+		pushAd: pushAd,
+		flushAds: flushAds
 	};
 };

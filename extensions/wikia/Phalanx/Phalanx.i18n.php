@@ -186,30 +186,41 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
 	'phalanx-type-title' => 'anv ar bajenn',
 	'phalanx-type-user' => 'implijer',
+	'phalanx-type-user-email' => 'postel',
+	'phalanx-type-answers-question-title' => 'titl ar goulenn',
+	'phalanx-type-answers-recent-questions' => 'goulennoù graet nevez zo',
+	'phalanx-type-wiki-creation' => 'Krouiñ ur wiki',
 	'phalanx-label-filter' => 'Sil :',
 	'phalanx-label-reason' => 'Abeg :',
 	'phalanx-label-expiry' => 'Termen :',
 	'phalanx-label-type' => 'Seurt :',
 	'phalanx-label-lang' => 'Yezh :',
+	'phalanx-view-blocks' => 'Siloù enklask',
+	'phalanx-view-id-submit' => 'Tapout ur sil',
 	'phalanx-format-exact' => 'rik',
+	'phalanx-tab-secondary' => 'Amprouiñ ar siloù',
 	'phalanx-test-submit' => 'Amprouiñ',
 	'phalanx-display-row-blocks' => 'stankadennoù : $1',
 	'phalanx-link-unblock' => 'distankañ',
 	'phalanx-link-modify' => 'kemmañ',
 	'phalanx-link-stats' => 'stadegoù',
+	'phalanx-legend-input' => 'Krouiñ pe gemmañ ur sil',
 	'phalanx-stats-table-id' => 'Stankañ an ID',
+	'phalanx-stats-table-user' => 'Ouzhpennet gant',
 	'phalanx-stats-table-type' => 'Seurt',
 	'phalanx-stats-table-create' => 'Krouet',
 	'phalanx-stats-table-language' => 'Yezh',
 	'phalanx-stats-table-text' => 'Testenn',
 	'phalanx-stats-table-reason' => 'Abeg',
 	'phalanx-stats-table-wiki-name' => 'Anv ar wiki',
+	'phalanx-stats-table-wiki-url' => 'URL ar wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Kemmet da ziwezhañ',
 );
 

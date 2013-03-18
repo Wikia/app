@@ -3,8 +3,7 @@ jQuery(function( $ ) {
 		$header = $( '#WikiHeader' ),
 		$button = $header.find( '.share-button' );
 
-	// Load all required assets for the SharingToolbar, then initialize it
-	$button.one( 'click', function( event ) {
+	function initialize( event ) {
 		$button.addClass('share-enabled');
 
 		require(['wikia.loader', 'mw'], function(loader, mw) {
@@ -49,5 +48,14 @@ jQuery(function( $ ) {
 			);
 		})
 
-	});
+	}
+
+	// Load immediately if user is in "ON" group of "SHARE_BUTTON" experiment.
+	if ( Wikia.AbTest.getGroup( 'SHARE_BUTTON' ) == 'ON' ) {
+		initialize( $.Event() );
+
+	// Load all required assets for the SharingToolbar, then initialize it
+	} else {
+		$button.one( 'click', initialize );
+	}
 });

@@ -140,7 +140,7 @@ class DefaultContent extends AbstractService
     		foreach ( $dom->find( 'p' ) as $pNode ) {
     			$paragraphs[] = $pNode->plaintext;
     		}
-    		$plaintext = $dom->plaintext . ' ' . $plaintext;
+    		$plaintext = strip_tags( $dom->plaintext . ' ' . $plaintext ); // simple_html_dom can leave remnants
 		} else {
 			$plaintext = html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' );
 		}

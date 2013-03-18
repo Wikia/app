@@ -178,6 +178,7 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Meno25
  * @author OsamaK
  */
@@ -191,6 +192,7 @@ $messages['ar'] = array(
 	'rte-ck-media-delete' => 'أزل',
 	'rte-ck-media-edit' => 'عدل',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'هذا عرض الشرائح.',
+	'rte-ck-poll-poll' => 'تصويت',
 	'rte-ck-templateDropDown-label' => 'قالب',
 	'rte-ck-templateEditor-dialog-insert' => 'أدرج',
 	'rte-ck-templateEditor-dialog-magicWords' => 'كلمات سحرية',
@@ -337,6 +339,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
@@ -388,7 +391,7 @@ $messages['br'] = array(
 	'rte-ck-media-delete' => 'lemel',
 	'rte-ck-media-edit' => 'kemmañ',
 	'rte-ck-modeSwitch-toSource' => 'Mammenn',
-	'rte-ck-modeSwitch-toWysiwyg' => "Mont d'ar mod WYSIWYG", # Fuzzy
+	'rte-ck-modeSwitch-toWysiwyg' => 'Da welet',
 	'rte-ck-photoGallery-gallery' => 'Skeudennaoueg',
 	'rte-ck-photoGallery-slideshow' => "Kinnig luc'hvannoù",
 	'rte-ck-photoGallery-slider' => 'Dibuner',
@@ -436,7 +439,14 @@ $messages['br'] = array(
 	'rte-ck-mut-add' => 'Ouzhpennañ ur video (beta)',
 	'rte-ck-mut-mut' => 'Video (beta)',
 	'rte-ck-widescreen-toggle' => 'Gweredekaat/diweredekaat ar skramm leun',
+	'rte-ck-poll-confirmDeleteTitle' => 'Lemel kuit ar sontadeg-mañ ?',
+	'rte-ck-spellchecker-moreSuggestions' => "Muioc'h a ginnigoù",
+	'rte-ck-pasteText-title' => 'Pegañ ho testenn',
 	'rte-ck-format-tag_p' => 'Testenn normal',
+	'rte-ck-format-tag_h2' => 'Titl 2',
+	'rte-ck-format-tag_h3' => 'Titl 3',
+	'rte-ck-format-tag_h4' => 'Titl 4',
+	'rte-ck-format-tag_h5' => 'Titl 5',
 );
 
 /** Catalan (català)
@@ -561,6 +571,13 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'rte-ck-templateDropDown-label' => 'Куцкеп',
+);
+
+/** Sorani Kurdish (کوردی)
+ * @author Calak
+ */
+$messages['ckb'] = array(
+	'rte-ck-link-add' => 'بەستەر زیاد بکە',
 );
 
 /** Czech (česky)
@@ -1427,6 +1444,13 @@ $messages['hu'] = array(
 	'rte-ck-format-tag_h5' => 'Címsor 5',
 );
 
+/** Armenian (Հայերեն)
+ * @author Vadgt
+ */
+$messages['hy'] = array(
+	'rte-ck-link-add' => 'Ստեղծել հղումը',
+);
+
 /** Interlingua (interlingua)
  * @author McDutchie
  */
@@ -1763,7 +1787,7 @@ $messages['ku-latn'] = array(
 	'rte-ck-hoverPreview-video-notExisting' => 'Ev video tune ye.',
 	'rte-ck-image-add' => 'Wênekî zêde bike',
 	'rte-ck-link-error-title' => 'Çewtî!',
-	'rte-ck-link-external-linkText' => 'Nivîsa lînkê',
+	'rte-ck-link-external-linkText' => 'Nivîsa girêdanê',
 	'rte-ck-link-external-tab' => 'Lînka derve',
 	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-link-internal-pageName' => 'Navê rûpelê',
@@ -2625,6 +2649,7 @@ $messages['ps'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'تبصره',
 	'rte-ck-hoverPreview-delete' => 'ړنګول',
 	'rte-ck-hoverPreview-edit' => 'سمول',
+	'rte-ck-hoverPreview-video-notExisting' => 'دا ويډيو نشته!',
 	'rte-ck-image-add' => 'يو انځور ورګډول',
 	'rte-ck-image-photo' => 'انځور',
 	'rte-ck-link-add' => 'تړنه ورګډول',
@@ -2649,6 +2674,7 @@ $messages['ps'] = array(
 	'rte-ck-templateEditor-editor-previewTitle' => 'مخليدنه',
 	'rte-ck-video-add' => 'يوه ويډيو ورګډول',
 	'rte-ck-video-video' => 'ويډيو',
+	'rte-ck-mut-mut' => 'ويډيو (بيټا)',
 	'rte-ck-format-tag_h2' => 'سرليک 2',
 	'rte-ck-format-tag_h3' => 'سرليک 3',
 	'rte-ck-format-tag_h4' => 'سرليک 4',

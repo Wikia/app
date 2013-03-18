@@ -3,7 +3,7 @@
 /**
  * simple class for using titles across WikiFactory installation
  *
- * NOTE: it is not full replacement for Title class, You can expect that all
+ * NOTE: it is not full replacement for Title class, You can't expect that all
  * method from Title will work there. For example You can't build proper Article
  * from this class
  *
@@ -25,6 +25,7 @@ class GlobalTitle extends Title {
 	public $mCityId = false;
 	public $mTextform = false;
 	public $mUrlform = false;
+	public $mArticleID = false;
 
 	/**
 	 * others, private
@@ -259,6 +260,20 @@ class GlobalTitle extends Title {
 	}
 
 	/**
+	 * Get url for squid-related code
+	 * For wikia system InternalURL is the same as FullURL
+	 * getInternalUrl from Title is not working corretly with GlobalTitle so it is fixed by getting FullURL
+	 *
+	 * @param string $query an optional query string
+	 * @param string $query2 (deprecated) language variant of url (for sr, zh..)
+	 *
+	 * @return string
+	 */
+	public function getInternalURL( $query = '', $query2 = false ) {
+		return $this->getFullURL($query, $query2);
+	}
+
+	/**
 	 * local url doesn't make sense in this context. we always return full URL
 	 *
 	 * @param string $query an optional query string
@@ -462,6 +477,34 @@ class GlobalTitle extends Title {
 		}
 
 		return $this->mIsRedirect;
+	}
+
+	/**
+	 * Get the article ID for this Title from the link cache,
+	 * adding it if necessary
+	 *
+	 * @param $flags Int a bit field; may be Title::GAID_FOR_UPDATE to select
+	 *  for update
+	 * @return Int the ID
+	 */
+	public function getArticleID( $flags = 0 ) {
+		if ( $this->getNamespace() < 0 ) {
+			return $this->mArticleID = 0;
+		}
+
+		if (empty($this->mArticleID)) {
+			$dbName = WikiFactory::IDtoDB($this->mCityId);
+			$db = wfGetDB( DB_SLAVE, array(), $dbName );
+
+			$row = $db->selectRow( 'page',
+				array( 'page_id' ),
+				array( 'page_namespace' => $this->mNamespace, 'page_title' => $this->mDbkeyform ),
+				__METHOD__);
+
+			$this->mArticleID = $row->page_id;
+		}
+
+		return $this->mArticleID;
 	}
 
 	/*

@@ -3,10 +3,9 @@
  *
  * @author Artur Klajnerok<arturk(at)wikia-inc.com>
  **/
+require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], function(throbber, topbar, track, nirvana, window){
 
-require(['throbber', 'topbar', 'track', 'wikia.nirvana'], function(throbber, topbar, track, nirvana){
-
-    var d = document,
+    var d = window.document,
         wkSrhInp = d.getElementById('wkSrhInp'),
         wkMainCnt = d.getElementById('wkMainCnt'),
         wkResCntAct = d.getElementById('wkResCntAct'),
@@ -76,8 +75,9 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana'], function(throbber, top
 					useskin: skin,
 					query: encodeURIComponent(query),
 					page: pageIndex
-				},
-				callback: function(result){
+				}
+			).done(
+				function(result){
 					var finished;
 
 					currentPage = pageIndex;
@@ -100,7 +100,7 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana'], function(throbber, top
 
 					window.scrollTo(0, wkMainCnt.offsetTop);
 				}
-            });
+			);
         }
     }
 

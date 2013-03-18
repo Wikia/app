@@ -339,7 +339,12 @@ class ForumHooksHelper {
 	 */
 	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		$app = F::App();
-		if ( $out->isArticle() && $app->wg->Title->exists() && $app->wg->Title->getNamespace() == NS_MAIN && !Wikia::isMainPage() && $app->wg->Request->getVal( 'diff' ) === null && !( $app->checkSkin( 'wikiamobile' ) ) ) {
+		if ( $out->isArticle() && $app->wg->Title->exists()
+			&& $app->wg->Title->getNamespace() == NS_MAIN && !Wikia::isMainPage()
+			&& $app->wg->Request->getVal( 'diff' ) === null
+			&& $app->wg->Request->getVal( 'action' ) !== 'render'
+			&& !( $app->checkSkin( 'wikiamobile' ) )
+		) {
 			$text .= $app->renderView( 'RelatedForumDiscussionController', 'index');
 		}
 		return true;
@@ -419,5 +424,35 @@ class ForumHooksHelper {
 
 		wfProfileOut( __METHOD__ );
 		return $html;
+	}
+
+	/**
+	 * Set Topic page links as known if they are connected to related article
+	 * (because Topic is not save in 'Page' table like other articles)
+	 *
+	 * @param $skin
+	 * @param $target
+	 * @param $text
+	 * @param $customAttribs
+	 * @param $query
+	 * @param $options
+	 * @param $ret
+	 * @return bool
+	 */
+	public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
+		if( !($target instanceof Title) ) {
+			return true;
+		}
+
+		if ($target->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD) {
+			$topicTitle =  Title::newFromURL($target->getText());
+			if ($topicTitle->exists()) {
+				$index = array_search('broken', $options);
+				unset($options[$index]);
+				$options[] = 'known';
+			}
+		}
+
+		return true;
 	}
 }

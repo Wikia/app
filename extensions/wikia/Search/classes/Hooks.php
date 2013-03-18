@@ -53,8 +53,6 @@ class Hooks
 	
 	/**
 	 * Issues a reindex event or deletes all docs, depending on whether a wiki is being closed or reopened
-	 * @see    WikiaSearchIndexerTest::testOnWikiFactoryPublicStatusChangeClosed
-	 * @see    WikiaSearchIndexerTest::testOnWikiFactoryPublicStatusChangeOpened
 	 * @param  int    $city_public
 	 * @param  int    $city_id
 	 * @param  string $reason

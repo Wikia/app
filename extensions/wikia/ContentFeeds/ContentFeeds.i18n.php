@@ -34,6 +34,15 @@ $messages['af'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fout: Bladsyinhoud benodig',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'قم بإنشاء أول صفحاتك!',
+	'contentfeeds-firstfewarticles-tag-title' => 'الإسم',
+	'contentfeeds-firstfewarticles-tag-next' => 'التالي',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */

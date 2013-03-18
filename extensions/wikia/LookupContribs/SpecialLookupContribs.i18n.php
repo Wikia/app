@@ -111,9 +111,12 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author ترجمان05
  */
 $messages['ar'] = array(
+	'lookupcontribs' => 'البحث عن المساهمات',
+	'lookupcontribstitle' => 'البحث عن المساهمات',
 	'lookupcontribsselectuser' => 'اختر مستخدما:',
 	'lookupcontribsall' => 'الكل',
 );

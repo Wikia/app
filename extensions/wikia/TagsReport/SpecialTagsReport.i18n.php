@@ -73,6 +73,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -87,16 +88,24 @@ $messages['br'] = array(
 	'tagsreportmainnspace' => 'Pennañ',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pajenn|pajennoù}})',
 	'tagsreportpagesfound' => 'Kavet <strong>$1</strong> pajennoù, zo enno ur valizenn arbennik (dpl, youtube, ...)', # Fuzzy
-	'tagsreportgenerated' => "Krouet d'an $1 $2", # Fuzzy
+	'tagsreportgenerated' => "Krouet d'an $1 da $2",
 );
 
 /** Catalan (català)
+ * @author Marcmpujol
  * @author Paucabot
  */
 $messages['ca'] = array(
+	'tagsreport' => "Informe d'etiquetes",
+	'tagsreporttitle' => "Informe d'etiquetes",
+	'tagsreportselecttag' => 'Seleccionar etiqueta:',
 	'tagsreportgo' => 'Mostra',
+	'tagsreportnotspecify' => 'Encara no has seleccionat cap etiqueta especial',
+	'tagsreportnoresults' => 'No hi ha coincidències',
 	'tagsreportmainnspace' => 'Principal',
-	'tagsreportgenerated' => 'Generat el $1 $2', # Fuzzy
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pàgina|pàgines}})',
+	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|pàgina trobada|pàgines trobades}}, que continguin alguna etiqueta especial (dpl, youtube, etc.)',
+	'tagsreportgenerated' => 'Generat el $1 a les $2',
 );
 
 /** Czech (česky)

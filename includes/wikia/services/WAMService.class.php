@@ -75,7 +75,7 @@ class WAMService extends Service {
 	public function getWamIndex ($inputOptions) {
 		$inputOptions += $this->defaultIndexOptions;
 
-		$inputOptions['currentTimestamp'] = $inputOptions['currentTimestamp'] ? $inputOptions['currentTimestamp'] : strtotime('00:00 -2 day');
+		$inputOptions['currentTimestamp'] = $inputOptions['currentTimestamp'] ? $inputOptions['currentTimestamp'] : strtotime('00:00 -1 day');
 		$inputOptions['previousTimestamp'] = $inputOptions['previousTimestamp']
 			? $inputOptions['previousTimestamp']
 			: $inputOptions['currentTimestamp'] - 60 * 60 * 24;

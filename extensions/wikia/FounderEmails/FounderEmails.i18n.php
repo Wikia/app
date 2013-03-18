@@ -403,16 +403,26 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Mutarjem horr
  */
 $messages['ar'] = array(
+	'founderemails-email-user-registered-subject' => 'لقد انضم شخص جديد إلى $WIKINAME',
+	'founderemails-email-user-registered-signature' => 'فريق ويكيا',
+	'founderemails-email-3-days-passed-subject' => 'كيف تسير الأمور في الويكي الخاصة بك',
 	'founderemails-email-first-edit-greeting' => 'مرحباً $USERNAME,',
 	'founderemails-email-first-edit-signature' => 'طاقم ويكيا',
 	'founderemails-email-general-edit-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-general-edit-signature' => 'فريق ويكيا',
+	'founderemails-email-general-edit-button' => 'التحقق من ذلك!',
 	'founderemails-email-anon-edit-greeting' => 'مرحباً $USERNAME,',
 	'founderemails-email-anon-edit-signature' => 'طاقم ويكيا',
+	'founderemails-email-anon-edit-button' => 'التحقق من ذلك!',
 	'founderemails-email-lot-happening-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-lot-happening-signature' => 'فريق ويكيا',
+	'founderemails-email-0-day-addpages-heading' => 'إضافة صفحات.',
 	'founderemails-email-0-day-addpages-button' => 'أضف صفحة',
+	'founderemails-email-0-day-addphotos-heading' => 'إضافة صور.',
 	'founderemails-email-0-day-addphotos-button' => 'أضف صورة',
 	'founderemails-email-3-day-addphotos-button' => 'أضف صور',
 	'founderemails-email-views-digest-button' => 'أضف المزيد من الصفحات',
@@ -473,7 +483,7 @@ Evit doare eo bet an implijer $EDITORNAME oc\'h en em enrollañ war ho wiki ! Pe
 -- Skipailh Wikia", # Fuzzy
 	'founderemails-email-0-days-passed-body-HTML' => 'Gourc\'hemennoù evit bezañ krouet <strong>$WIKINAME</strong> - er gumuniezh Wkia emaoc\'h bremañ !<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Skipailh Wikia</div>',
-	'founderemails-email-3-days-passed-subject' => 'Enrolladenn', # Fuzzy
+	'founderemails-email-3-days-passed-subject' => "Penaos 'mañ kont gant ho wiki ?",
 	'founderemails-email-3-days-passed-body' => "Ac'hanta \$USERNAME,
 
 Bremañ hoc'h eus tremenet un nebeut devezhioù en ho wiki, e soñjomp ho pefe c'hoant teurel ur sell war traoù all a c'hellfec'h ober.
@@ -482,7 +492,7 @@ Bremañ hoc'h eus tremenet un nebeut devezhioù en ho wiki, e soñjomp ho pefe c
 	'founderemails-email-3-days-passed-body-HTML' => "Ac'hanta \$USERNAME,<br /><br />
 Bremañ hoc'h eus tremenet un nebeut devezhioù en ho wiki, e soñjomp ho pefe c'hoant teurel ur sell war traoù all a c'hellfec'h ober.<br /><br />
 <div style=\"font-style: italic; font-size: 120%;\">-- Skipailh Wikia</div>",
-	'founderemails-email-10-days-passed-subject' => "Penaos 'mañ kont gant ho wiki ?", # Fuzzy
+	'founderemails-email-10-days-passed-subject' => 'Dekvet deiz laouen !',
 	'founderemails-email-10-days-passed-body' => "Ac'hanta \$USERNAME,
 
 Kroget hoc'h eus gant ur wiki war Wikia ur prantadig 'zo bremañ - spi hon eus e tremen mat pep tra ! C'hoant hon defe rannañ ganeoc'h un nebeut finesaoù a-benn sikour ac'hanoc'h da vezañ en ho aes en ho wiki, evel er gêr.
@@ -615,8 +625,20 @@ Ur bern traoù a c\'hoarvez war ho wiki hiziv ! Kit war $MYHOMEURL da welet pena
 	'founderemails-email-3-day-explore-button' => 'Ergerzhout',
 	'founderemails-email-3-day-wikiahelps-signature' => "Kendalc'hit gant ho labour dispar !<br />Skipailh Wikia",
 	'founderemails-email-10-day-heading' => 'Penaos \'mañ kont $USERNAME ?',
+	'founderemails-email-10-day-wikiahelps-signature' => "Kendalc'hit gant ho labour dispar !<br />Skipailh Wikia",
+	'founderemails-email-views-digest-subject' => 'Gweladennoù hiziv war $WIKINAME',
+	'founderemails-email-views-digest-body' => 'Ac\'hanta $USERNAME,
+
+Hziv eo bet gwelet $WIKINAME gant $1 {{PLURAL:$1|den}}.
+
+Kendalc\'hit da ouzhpennañ danvez ha da brudañ ho wiki evit broudañ muioc\'h a dud da lenn, da gemmañ ha da lakaat ar ger da dremen.
+
+$WIKIURL
+
+Skipailh Wikia',
 	'founderemails-email-views-digest-greeting' => 'Ac\'hanta $USERNAME,',
 	'founderemails-email-views-digest-headline' => 'Hiziv eo bet gweladennet $WIKINAME gant $UNIQUEVIEWS den.',
+	'founderemails-email-views-digest-content' => "Kendalc'hit da ouzhpennañ danvez ha da brudañ ho wiki evit broudañ muioc'h a dud da lenn, da gemmañ ha da lakaat ar ger da dremen.",
 	'founderemails-email-views-digest-signature' => 'Skipailh Wikia',
 	'founderemails-email-views-digest-button' => "Ouzhpennañ muioc'h a bajennoù",
 	'founderemails-email-complete-digest-subject' => 'An obererezh nevesañ war $WIKINAME',
@@ -624,8 +646,13 @@ Ur bern traoù a c\'hoarvez war ho wiki hiziv ! Kit war $MYHOMEURL da welet pena
 	'founderemails-email-complete-digest-content-heading1' => '$UNIQUEVIEWS den o deus gweladennet ho wiki.',
 	'founderemails-email-complete-digest-content-heading2' => '$USEREDITS kemm a zo bet graet.',
 	'founderemails-email-complete-digest-signature' => 'Skipailh Wikia',
+	'founderemails-email-complete-digest-button' => 'Mont da oberiantiz ar wiki',
+	'founderemails-pref-joins' => 'Kas ur postel din pa stag unan bennak gant $1.',
 	'founderemails-pref-edits' => 'Kas ur postel din pa vez kemmet $1 gant unan bennak',
 	'founderemails-pref-views-digest' => 'Kas din ur postel bemdez evit lavaret din pet gwech eo bet gweladennet $1',
+	'founderemails-pref-complete-digest' => 'Kas din bemdez un diverrañ eus an oberiantiz war $1',
+	'founderemails-pref-edits-v2' => "...ur c'hemm 'vez graet gant unan bennak",
+	'founderemails-pref-views-digest-v2' => '...prest eo un diverrañ pemdeziek eus an holl weladennoù',
 );
 
 /** Catalan (català)
