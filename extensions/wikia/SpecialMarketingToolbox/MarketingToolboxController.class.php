@@ -439,11 +439,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	private function purgeWikiaHomepageHubs() {
-		WikiaDataAccess::cachePurge( $this->wf->SharedMemcKey(
-			'wikiahomepage',
-			'hubv2 images',
-			$this->langCode,
-			WikiaHomePageController::HUBS_IMAGES_MEMC_KEY_VER
-		));
+		WikiaDataAccess::cachePurge( WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($this->langCode) );
 	}
 }
