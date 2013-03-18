@@ -172,6 +172,7 @@ class Indexer
 		} catch ( \Exception $e ) {
 			$this->getLogger()->log( __METHOD__, 'Delete: '.$query, $e);
 		}
+		return true;
 	}
 
 	/**
@@ -241,7 +242,7 @@ class Indexer
 		if ( $this->client === null ) {
 			$master = $this->getMwService()->isOnDbCluster() ? $this->getMwService()->getGlobal( 'SolrHost' ) : 'staff-search-s1';
 			$params = array(
-					'adapter' => 'Curl',
+					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
 							'host' => $master,
 							'port' => 8983,

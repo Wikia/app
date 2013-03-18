@@ -73,7 +73,7 @@ if ( empty( $wgExternalSharedDB ) ) {
 	$app->registerHook('ArticleSaveComplete', 'Wikia\Search\Hooks', 'onArticleSaveComplete');
 	$app->registerHook('ArticleUndelete', 'Wikia\Search\Hooks', 'onArticleUndelete');
 } else {
-	$app->registerHook('WikiFactoryPublicStatusChange', 'Wikia\Search\Hook', 'onWikiFactoryPublicStatusChange');
+	$app->registerHook('WikiFactoryPublicStatusChange', 'Wikia\Search\Hooks', 'onWikiFactoryPublicStatusChange');
 }
 
 $wgExtensionCredits['other'][] = array(
