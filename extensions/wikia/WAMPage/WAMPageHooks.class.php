@@ -40,7 +40,9 @@ class WAMPageHooks {
 
 		if( !empty($this->EnableWAMPageExt) && ($dbKey === $wamPageName || $dbKey === $wamPageFaqPageName) ) {
 			$this->app->wg->SuppressPageHeader = true;
+			$this->app->wg->SuppressWikiHeader = true;
 			$this->app->wg->SuppressRail = true;
+			$this->app->wg->SuppressFooter = true;
 			$article = new WAMPageArticle($title);
 		}
 
