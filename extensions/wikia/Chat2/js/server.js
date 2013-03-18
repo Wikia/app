@@ -521,9 +521,12 @@ function broadcastDisconnectionInfo(client, socket){
 
 	broadcastUserListToMediaWiki(client, true);
 
+	var PartEvent = new models.PartEvent({
+		name: client.myUser.get('name')
+	});
 	broadcastToRoom(client, socket, {
         	event: 'part',
-        	data: client.myUser.xport()
+        	data: partEvent.xport()
 	});
 } // end broadcastDisconnectionInfo()
 
@@ -578,7 +581,7 @@ function chatMessage(client, socket, msg){
 
 function logout(client, socket, msg) {
 	var logoutEvent = new models.LogoutEvent({
-		leavingUserName: client.myUser.get('name')
+		name: client.myUser.get('name')
 	});
 	monitoring.incrEventCounter('logouts');
 	tracker.trackEvent(client, 'logout');
