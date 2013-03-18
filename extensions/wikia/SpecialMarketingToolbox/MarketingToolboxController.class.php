@@ -163,7 +163,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 					$this->wg->user->getId()
 				);
 
-				$this->purgeMemcache();
+				$this->purgeMemcache( $module );
 
 				$this->putFlashMessage($this->wf->msg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
 
@@ -429,23 +429,13 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->imageHeight = $this->request->getVal('imageHeight', '');
 	}
 
-	private function purgeMemcache() {
-		$this->purgeHubs();
+	private function purgeMemcache($module) {
+		$module->purgeModuleMemcache($this->date);
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
 			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null )) {
 				$this->purgeWikiaHomepageHubs();
 		}
-	}
-
-	private function purgeHubs() {
-		$this->app->wg->Memc->delete( $this->wf->SharedMemcKey(
-			MarketingToolboxModel::CACHE_KEY,
-			$this->date,
-			$this->verticalId,
-			$this->langCode,
-			$this->selectedModuleId
-		));
 	}
 
 	private function purgeWikiaHomepageHubs() {

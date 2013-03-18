@@ -111,4 +111,14 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 		return $link;
 	}
+
+	public function purgeModuleMemcache($timestamp) {
+		$this->app->wg->Memc->delete( $this->wf->SharedMemcKey(
+			MarketingToolboxModel::CACHE_KEY,
+			$timestamp,
+			$this->verticalId,
+			$this->langCode,
+			$this->getModuleId()
+		));
+	}
 }
