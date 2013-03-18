@@ -55,7 +55,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\InterWiki::registerComponents
-	 */
+	 *
 	public function testRegisterComponents() {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
@@ -95,7 +95,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 				$mockSelect,
 				$register->invoke( $mockSelect, $mockQuery )
 		);
-	}
+	} */
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\InterWiki::registerGrouping
