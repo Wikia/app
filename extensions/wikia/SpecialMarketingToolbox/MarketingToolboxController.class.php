@@ -126,7 +126,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->date,
 			$this->selectedModuleId
 		);
-		
+
 		$this->prepareLayoutData($this->selectedModuleId, $modulesData);
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
@@ -163,7 +163,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 					$this->wg->user->getId()
 				);
 
-				$module->purgeMemcache($this->date);
+				$this->purgeMemcache();
 
 				$this->putFlashMessage($this->wf->msg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
 
@@ -198,6 +198,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
 					. '/' . $date->format('Y-m-d');
 				$this->successText = $this->wf->msg('marketing-toolbox-module-publish-success', $this->wg->lang->date($this->date));
+				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null )) {
+					$this->purgeWikiaHomepageHubs();
+				}
 			} else {
 				$this->errorMsg = $result->errorMsg;
 			}
@@ -424,5 +427,33 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->fileUrl = $this->request->getVal('fileUrl', '');
 		$this->imageWidth = $this->request->getVal('imageWidth', '');
 		$this->imageHeight = $this->request->getVal('imageHeight', '');
+	}
+
+	private function purgeMemcache() {
+		$this->purgeHubs();
+
+		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
+			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null )) {
+				$this->purgeWikiaHomepageHubs();
+		}
+	}
+
+	private function purgeHubs() {
+		$this->app->wg->Memc->delete( $this->wf->SharedMemcKey(
+			MarketingToolboxModel::CACHE_KEY,
+			$this->date,
+			$this->verticalId,
+			$this->langCode,
+			$this->selectedModuleId
+		));
+	}
+
+	private function purgeWikiaHomepageHubs() {
+		WikiaDataAccess::cachePurge( $this->wf->SharedMemcKey(
+			'wikiahomepage',
+			'hubv2 images',
+			$this->langCode,
+			WikiaHomePageController::HUBS_IMAGES_MEMC_KEY_VER
+		));
 	}
 }
