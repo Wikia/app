@@ -141,12 +141,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		return $module->render($moduleData);
 	}
 
-	public function fromthecommunity() {
-		$fromTheCommunityData = $this->model->getDataForModuleFromTheCommunity();
-		$this->headline = $fromTheCommunityData['headline'];
-		$this->entries = $fromTheCommunityData['entries'];
-	}
-
 	public function init() {
 		parent::init();
 		$this->initCacheValidityTimes();
@@ -200,8 +194,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->model = F::build('WikiaHubsV2Model');
 		$date = $this->getRequest()->getVal('date', date('Y-m-d'));
 		$lang = $this->getRequest()->getVal('cityId', $this->wg->cityId);
-		$this->model->setDate($date);
-		$this->model->setLang($lang);
 		$this->model->setVertical($this->verticalId);
 	}
 
