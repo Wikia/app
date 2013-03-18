@@ -6,6 +6,8 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		gptLoaded = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '/' + pageLevelParams.s2,
+		slotsToDisplay = [],
+		doneCallbacks = [],
 		googletag;
 
 	function loadGpt() {
@@ -95,12 +97,43 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 				}
 			}
 
+			slotsToDisplay.push(slotname);
+			if (typeof done === 'function') {
+				doneCallbacks.push(done);
+			}
+		});
+	}
+
+	function flushAds() {
+		log(['googletag.cmd.push', 'enableServices'], 4, logGroup);
+		log(['googletag.cmd.push', 'display', slotsToDisplay], 4, logGroup);
+
+		googletag.cmd.push(function () {
+			var callback, slotname;
+
+			log(['flushAds', 'start'], 4, logGroup);
+
+			googletag.pubads().enableSingleRequest();
 			googletag.enableServices();
-			googletag.display(slotname);
+
+			while (slotsToDisplay.length > 0) {
+				slotname = slotsToDisplay.shift();
+
+				log(['flushAds', 'display', slotname], 8, logGroup);
+
+				googletag.display(slotname);
+			}
+
+			while (doneCallbacks.length > 0) {
+				callback = doneCallbacks.shift();
+				callback();
+			}
+			log(['flushAds', 'done'], 4, logGroup);
 		});
 	}
 
 	return {
-		pushAd: pushAd
+		pushAd: pushAd,
+		flushAds: flushAds
 	};
 };
