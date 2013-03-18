@@ -430,7 +430,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	private function purgeMemcache($module) {
-		$module->purgeModuleMemcache($this->date);
+		$module->purgeMemcache($this->date);
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
 			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null )) {
