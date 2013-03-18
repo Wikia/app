@@ -244,6 +244,9 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload'], funct
 		});
 	}
 
+	//load all images that might be on a comments page
+	lazyload(wkArtCom.querySelectorAll('.lazy'));
+
 	if(totalPages > 1 && wgArticleId){
 		loadMore.addEventListener(clickEvent, clickHandler, true);
 		loadPrev.addEventListener(clickEvent, clickHandler, true);
