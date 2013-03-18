@@ -279,6 +279,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 			color: $color-alternate-text;
 		}
 		.wikiPromoteThumbnail {
+			float: left;
 			padding-left: 10px;
 			padding-top: 3px;
 			@include box-sizing;
@@ -298,7 +299,9 @@ $form-negative-side-padding: $form-side-padding*-1;
 			margin: 0;
 		}
 		.result-description {
+			float: left;
 			padding-left: 30px;
+			width: 820px;
 			@include box-sizing;
 		}
 		a.image {
