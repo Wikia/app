@@ -340,7 +340,7 @@ var NodeRoomController = $.createClass(Observable,{
 
 	onJoin: function(message) {
 		var joinedUser = new models.User();
-		joinedUser.mport(message.joinData);
+		joinedUser.mport(message.data);
 
 		if(joinedUser.get('name') == wgUserName) {
 			this.userMain = joinedUser;
