@@ -66,6 +66,7 @@
 <?= $quantServe ?>
 <?= $googleAnalytics ?>
 <?= $ivw ?>
+<?= $amazonDirectTargetedBuy ?>
 <?= $body ?>
 
 <?php
