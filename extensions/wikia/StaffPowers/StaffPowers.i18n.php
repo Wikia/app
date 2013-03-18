@@ -22,6 +22,13 @@ $messages['qqq'] = array(
 	'staffpowers-ipblock-abort' => "Do not translate (but do add additional text if you like) <nowiki>[[Special:Contact</nowiki>'''|optional additional text'''<nowiki>]]</nowiki>.",
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'staffpowers-ipblock-abort' => "No es possible bloquejar l'Staff de Wikia, als Helpers ni als membres del VSTF. Si us plau, utilitza el [[Special:Contact|formulari de contacte]] per informar de qualsevol problema amb el nostre staff.",
+);
+
 /** Czech (česky)
  * @author Jezevec
  */

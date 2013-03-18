@@ -130,6 +130,15 @@ $messages['af'] = array(
 	'wikiadoption-know-more-header' => 'Wil u meer weet?',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'wikiadoption-adoption-successed' => 'تهانينا! أنت الآن إداري مسؤول عن هذه الويكي!',
+	'wikiadoption-not-allowed' => 'نحن نأسف. لا يمكن لك تبني هذه الويكي حاليا',
+	'wikiadoption-not-enough-edits' => 'عفوا! تحتاج إلى أكثر من 10 تعديلات لكي تتمكن من تبني هذه الويكي',
+);
+
 /** Bulgarian (български)
  */
 $messages['bg'] = array(

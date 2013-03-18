@@ -31,6 +31,18 @@ $messages['br'] = array(
 	'minieditor-reply' => 'Respont',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'minieditor-specialpage-title' => 'Pàgina de demostració del MiniEditor',
+	'minieditor-new-heading' => 'Crear un missatge nou',
+	'minieditor-placeholder-new' => 'Escriu el missatge aquí',
+	'minieditor-message-edit' => 'Aquest és un missatge existent',
+	'minieditor-reply' => 'Respondre',
+	'minieditor-placeholder-reply' => 'Respondre al missatge aquí',
+);
+
 /** Czech (česky)
  * @author Jezevec
  */
@@ -213,15 +225,16 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'minieditor-specialpage-title' => 'Pagina ëd Demo dël MiniEditor',
+	'minieditor-specialpage-title' => 'Pàgina ëd dimostrassion dël MiniEditor',
 	'minieditor-new-heading' => 'Creé un neuv mëssagi',
 	'minieditor-placeholder-new' => 'Anseriss tò mëssagi sì',
 	'minieditor-message-edit' => "Cost a l'é un mëssagi esistent",
-	'minieditor-reply' => 'Arspond',
-	'minieditor-placeholder-reply' => 'Arspond al mëssagi sì',
+	'minieditor-reply' => 'Rësponde',
+	'minieditor-placeholder-reply' => "Ch'a rësponda al mëssagi ambelessì",
 );
 
 /** Pashto (پښتو)

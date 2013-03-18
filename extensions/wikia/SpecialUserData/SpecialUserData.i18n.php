@@ -239,15 +239,16 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'userdata' => 'Oten dat utent',
-	'userdata-userid-label' => 'Dà ID utent:',
+	'userdata' => "Oten-e dij dat d'utent",
+	'userdata-userid-label' => "Fornì l'ID utent:",
 	'userdata-submit' => 'Oten dij dat',
-	'specialuserdata-desc' => "A dà n'antërfacia për cangé wgUserData për na wiki",
-	'userdata-header' => 'Ancrementa wgUserData',
-	'userdata-value' => 'Valor corent ëd wgUserData a l\'é "$1". Sgnaca ël boton për ampostelo al timestamp corent.',
+	'specialuserdata-desc' => "A forniss n'antërfacia për cangé wgUserData për wiki",
+	'userdata-header' => 'Aument wgUserData',
+	'userdata-value' => 'Ël valor corent ëd wgUserData a l\'é "$1". Ch\'a sgnaca an sël boton për ampostelo al timestamp corent.',
 	'userdata-updated' => 'wgUserData agiornà a "$1".',
 	'userdata-not-updated' => 'Falì a agiorné wgUserData.',
 	'userdata-wf-reason' => 'Valor agiornà via [[Special:UserData|UserData]]',
