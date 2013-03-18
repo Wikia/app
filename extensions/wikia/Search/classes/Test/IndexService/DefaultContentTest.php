@@ -51,4 +51,12 @@ class DefaultContentTest extends BaseTest
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::execute
+	 */
+	public function testExecute() {
+		$methods = array( 'getService' );
+		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', $methods, array( array( 123 ) ) );
+	}
+	
 }
