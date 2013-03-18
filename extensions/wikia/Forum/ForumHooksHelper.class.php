@@ -425,4 +425,34 @@ class ForumHooksHelper {
 		wfProfileOut( __METHOD__ );
 		return $html;
 	}
+
+	/**
+	 * Set Topic page links as known if they are connected to related article
+	 * (because Topic is not save in 'Page' table like other articles)
+	 *
+	 * @param $skin
+	 * @param $target
+	 * @param $text
+	 * @param $customAttribs
+	 * @param $query
+	 * @param $options
+	 * @param $ret
+	 * @return bool
+	 */
+	public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
+		if( !($target instanceof Title) ) {
+			return true;
+		}
+
+		if ($target->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD) {
+			$topicTitle =  Title::newFromURL($target->getText());
+			if ($topicTitle->getArticleId() > 0) {
+				$index = array_search('broken', $options);
+				unset($options[$index]);
+				$options[] = 'known';
+			}
+		}
+
+		return true;
+	}
 }
