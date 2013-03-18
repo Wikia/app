@@ -56,6 +56,9 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	$vars['_gaq'] = array();
 	$vars['wgIsGASpecialWiki'] = $wg->IsGASpecialWiki;
 
+	// PER-58: moved wgStyleVersion to <head>
+	$vars['wgStyleVersion'] = (string)($wg->StyleVersion);
+
 	$scripts .= Html::inlineScript("var wgNow = new Date();") .	"\n";
 
 	return true;
@@ -69,7 +72,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
 	global $wgMemc, $wgEnableAjaxLogin, $wgPrivateTracker, $wgExtensionsPath,
-		$wgArticle, $wgStyleVersion, $wgSitename, $wgDisableAnonymousEditing,
+		$wgArticle, $wgSitename, $wgDisableAnonymousEditing,
 		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgResourceBasePath;
 
 	$skin = $out->getSkin();
@@ -111,8 +114,6 @@ function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	if (Wikia::isContentNamespace()) {
 		$vars['wgIsContentNamespace'] = true;
 	}
-
-	$vars['wgStyleVersion'] = isset($wgStyleVersion) ? $wgStyleVersion : '' ;
 
 	// TODO: is this one really needed?
 	if(isset($skin->themename)) {

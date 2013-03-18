@@ -221,7 +221,7 @@ class ResourceLoaderHooks {
 	}
 
 	public static function onResourceLoaderCacheControlHeaders( $context, $maxage, $smaxage, $exp ) {
-		header( "X-Pass-Cache-Control: public, max-age=$maxage, s-maxage=$smaxage" );
+		header( "X-Pass-Cache-Control: public, max-age=$maxage, s-maxage=$maxage" );
 		header( 'X-Pass-Expires: ' . wfTimestamp( TS_RFC2822, $exp + time() ) );
 
 		return true;
@@ -281,6 +281,14 @@ class ResourceLoaderHooks {
 	}
 
 	public static function onResourceLoaderMakeQuery( $modules, &$query ) {
+		// PER-58: append CB value to RL query
+		global $wgStyleVersion;
+		if ( !empty( $query['version'] ) ) {
+			$query['version'] = $wgStyleVersion . "-" . $query['version'];
+		} else {
+			$query['cb'] = $wgStyleVersion;
+		}
+
 		$only = isset($query['only']) ? $query['only'] : null;
 
 		if ( empty( $only ) || $only == 'styles' ) {
@@ -313,11 +321,35 @@ class ResourceLoaderHooks {
 	 * @return bool it's a hook
 	 */
 	public static function onResourceLoaderModifyMaxAge(ResourceLoaderContext $context, $mtime, &$maxage, &$smaxage) {
-		global $wgResourceLoaderMaxage;
-		$timestampFromRequest = strtotime($context->getVersion()); // version parameter from URL
+		global $wgStyleVersion, $wgResourceLoaderMaxage;
+
+		// need to cache RL manifest for longer
+		$modules = $context->getModules();
+		if ( count($modules) == 1 && $modules[0] == 'startup' ) {
+			$maxage  = $wgResourceLoaderMaxage['versioned']['client'];
+			$smaxage = $wgResourceLoaderMaxage['versioned']['server'];
+
+			$modules = implode(',', $context->getModules());
+			Wikia::log(__METHOD__, false, "longer TTL set for {$modules}", true);
+			return true;
+		}
+
+		$forceShortTTL = false;
+
+		$version = explode('-',(string)($context->getVersion()),2);
+		if ( !is_array($version) || count($version) != 2 ) { // if version format different than "CB-TS"
+			$forceShortTTL = true;
+		}
+
+		if ( !$forceShortTTL ) {
+			list( $styleVersionFromRequest, $timestampFromRequest ) = $version;
+			$timestampFromRequest = strtotime($timestampFromRequest); // parse timestamp from request
+			$forceShortTTL = $styleVersionFromRequest > $wgStyleVersion
+				|| $timestampFromRequest > $mtime;
+		}
 
 		// request wants to get module(s) newer than on those on server - set shorter caching period
-		if ($timestampFromRequest > $mtime) {
+		if ( $forceShortTTL ) {
 			$maxage  = $wgResourceLoaderMaxage['unversioned']['client'];
 			$smaxage = $wgResourceLoaderMaxage['unversioned']['server'];
 
