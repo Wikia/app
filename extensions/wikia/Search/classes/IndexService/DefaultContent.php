@@ -19,29 +19,29 @@ class DefaultContent extends AbstractService
 	 * @return array
 	 */
 	public function execute() {
-		$pageId = $this->getService()->getCanonicalPageIdFromPageId( $this->currentPageId );
+		$service = $this->getService();
+		$pageId = $service->getCanonicalPageIdFromPageId( $this->currentPageId );
 
 		// we still assume the response is the same format as MediaWiki's
-		$response   = $this->getService()->getParseResponseFromPageId( $pageId ); 
-		$titleStr   = $this->getService()->getTitleStringFromPageId( $pageId );
-		$html       = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
+		$response   = $service->getParseResponseFromPageId( $pageId ); 
+		$titleStr   = $service->getTitleStringFromPageId( $pageId );
 		
 		$pageFields = [
-				'wid'                        => $this->getService()->getWikiId(),
+				'wid'                        => $service->getWikiId(),
 				'pageid'                     => $pageId,
 				$this->field( 'title' )      => $titleStr,
 				'titleStrict'                => $titleStr,
-				'url'                        => $this->getService()->getUrlFromPageId( $pageId ),
-				'ns'                         => $this->getService()->getNamespaceFromPageId( $pageId ),
-				'host'                       => $this->getService()->getHostName(),
-				'lang'                       => $this->getService()->getSimpleLanguageCode(),
-				$this->field( 'wikititle' )  => $this->getService()->getGlobal( 'Sitename' ),
+				'url'                        => $service->getUrlFromPageId( $pageId ),
+				'ns'                         => $service->getNamespaceFromPageId( $pageId ),
+				'host'                       => $service->getHostName(),
+				'lang'                       => $service->getSimpleLanguageCode(),
+				$this->field( 'wikititle' )  => $service->getGlobal( 'Sitename' ),
 				'page_images'                => count( $response['parse']['images'] ),
-				'iscontent'                  => $this->getService()->isPageIdContent( $pageId ) ? 'true' : 'false',
-				'is_main_page'               => $this->getService()->isPageIdMainPage( $pageId ) ? 'true' : 'false',
+				'iscontent'                  => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
+				'is_main_page'               => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
 				];
 		return array_merge( 
-				$this->getResultFromHtml( $html ), 
+				$this->getPageContentFromParseResponse( $response ), 
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$pageFields 
@@ -60,10 +60,11 @@ class DefaultContent extends AbstractService
 	/**
 	 * Wraps logic for creating the initial result array, based on which implementation we're using.
 	 * The old version strips HTML from the backend; the new version strips HTML within the IndexService.
-	 * @param string $html
+	 * @param array $response
 	 * @return array
 	 */
-	protected function getResultFromHtml( $html ) {
+	protected function getPageContentFromParseResponse( $response ) {
+		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
 		if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
 			return $this->prepValuesFromHtml( $html );
 		}
