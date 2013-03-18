@@ -5,6 +5,7 @@
  *
  */
 namespace Wikia\Search\ResultSet;
+use Wikia\Search\Utilities;
 /**
  * This class is used to create a "grouping" based on a wiki match.
  * @author relwell
@@ -25,9 +26,12 @@ class MatchGrouping extends Grouping {
 		$this->parent             = $container->getParent();
 		$this->metaposition       = $container->getMetaposition();
 		$result                   = $container->getWikiMatch()->getResult();
+		$result->setText( implode( ' ', array_slice( explode( ' ', $result->getText() ), 0, 25 ) ) . '&hellip;' );
+		$result['wikititle'] = $result['title'];
+		$result['cityArticlesNum'] = $result['articles_count'];
 		$this->results            = new \ArrayIterator( array( $result ) );
-		
 		$this->addHeaders( $result->getFields() );
+		
 	}
 	
 }
