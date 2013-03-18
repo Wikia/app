@@ -130,10 +130,10 @@ autoWatch = true;
 // Start these browsers, to run tests:
 browsers = [
 	'PhantomJS',
-	'Chrome',
+	//'Chrome',
 	//'ChromeCanary',
-	'Firefox',
-	'Opera',
+	//'Firefox',
+	//'Opera',
 	//'Safari', // only Mac
 	//'IE' // only Windows
 ];
@@ -147,7 +147,7 @@ singleRun = false;
 
 coverageReporter = {
 	type : 'html',
-	dir : '/Users/jolek/coverage'
+	dir : '~/js-coverage'
 };
 
 preprocessors = {
