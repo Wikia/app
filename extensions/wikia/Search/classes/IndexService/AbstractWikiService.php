@@ -33,7 +33,7 @@ abstract class AbstractWikiService extends AbstractService
 		$response = $this->getJsonDocumentFromResponse( $this->execute() );
 		// let the backend insert the id
 		unset( $response['id'] );
-		return array( 'contents' => $response, 'wid' => $this->service->getWikiId() );
+		return array( 'contents' => $response, 'wid' => $this->getService()->getWikiId() );
 	}
 	
 	/**
@@ -42,6 +42,6 @@ abstract class AbstractWikiService extends AbstractService
 	 * @return string
 	 */
     public function getCurrentDocumentId() {
-    	return sprintf( '%s_%s', $this->service->getWikiId(), $this->currentPageId  ?: self::PAGEID_PLACEHOLDER );
+    	return sprintf( '%s_%s', $this->getService()->getWikiId(), $this->currentPageId  ?: self::PAGEID_PLACEHOLDER );
     }
 }

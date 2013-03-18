@@ -2328,7 +2328,7 @@ class MediaWikiServiceTest extends BaseTest
 	 * @covers Wikia\Search\MediaWikiService::isPageIdMainPage
 	 */
 	public function testPageIdIsMainPage() {
-		$mockService = $this->getMock( 'MediaWikiService', [ 'getMainPageArticleId' ] );
+		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getMainPageArticleId' ] );
 		$mockService
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getMainPageArticleId' )
@@ -2345,11 +2345,6 @@ class MediaWikiServiceTest extends BaseTest
 		$this->assertFalse(
 				$mockService->isPageIdMainPage( 123 )
 		);
-		$mockService
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getMainPageArticleId' )
-		    ->will   ( $this->returnValue( 0 ) )
-		;
 		$this->assertFalse(
 				$mockService->isPageIdMainPage( 0 )
 		);

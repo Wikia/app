@@ -19,26 +19,26 @@ class DefaultContent extends AbstractService
 	 * @return array
 	 */
 	public function execute() {
-		$pageId = $this->service->getCanonicalPageIdFromPageId( $this->currentPageId );
+		$pageId = $this->getService()->getCanonicalPageIdFromPageId( $this->currentPageId );
 
 		// we still assume the response is the same format as MediaWiki's
-		$response   = $this->service->getParseResponseFromPageId( $pageId ); 
-		$titleStr   = $this->service->getTitleStringFromPageId( $pageId );
+		$response   = $this->getService()->getParseResponseFromPageId( $pageId ); 
+		$titleStr   = $this->getService()->getTitleStringFromPageId( $pageId );
 		$html       = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
 		
 		$pageFields = [
-				'wid'                        => $this->service->getWikiId(),
+				'wid'                        => $this->getService()->getWikiId(),
 				'pageid'                     => $pageId,
 				$this->field( 'title' )      => $titleStr,
 				'titleStrict'                => $titleStr,
-				'url'                        => $this->service->getUrlFromPageId( $pageId ),
-				'ns'                         => $this->service->getNamespaceFromPageId( $pageId ),
-				'host'                       => $this->service->getHostName(),
-				'lang'                       => $this->service->getSimpleLanguageCode(),
-				$this->field( 'wikititle' )  => $this->service->getGlobal( 'Sitename' ),
+				'url'                        => $this->getService()->getUrlFromPageId( $pageId ),
+				'ns'                         => $this->getService()->getNamespaceFromPageId( $pageId ),
+				'host'                       => $this->getService()->getHostName(),
+				'lang'                       => $this->getService()->getSimpleLanguageCode(),
+				$this->field( 'wikititle' )  => $this->getService()->getGlobal( 'Sitename' ),
 				'page_images'                => count( $response['parse']['images'] ),
-				'iscontent'                  => $this->service->isPageIdContent( $pageId ) ? 'true' : 'false',
-				'is_main_page'               => $this->getService->isPageIdMainPage( $pageId ) ? 'true' : 'false',
+				'iscontent'                  => $this->getService()->isPageIdContent( $pageId ) ? 'true' : 'false',
+				'is_main_page'               => $this->getService()->isPageIdMainPage( $pageId ) ? 'true' : 'false',
 				];
 		return array_merge( 
 				$this->getResultFromHtml( $html ), 
@@ -54,7 +54,7 @@ class DefaultContent extends AbstractService
 	 * @return string
 	 */
 	protected function field( $field ) {
-		return $this->service->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field; 
+		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field; 
 	}
 	
 	/**
@@ -64,7 +64,7 @@ class DefaultContent extends AbstractService
 	 * @return array
 	 */
 	protected function getResultFromHtml( $html ) {
-		if ( $this->service->getGlobal( 'AppStripsHtml' ) ) {
+		if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
 			return $this->prepValuesFromHtml( $html );
 		}
 		return array( 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
