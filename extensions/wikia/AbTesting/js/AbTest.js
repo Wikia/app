@@ -24,7 +24,7 @@
 	var log = (function( console ) {
 
 		// Internal logging, becomes a no-op if window.console isn't present
-		return console ? function( methodName, message ) {
+		return (console && console.log) ? function( methodName, message ) {
 			if ( !message ) {
 				message = methodName;
 				methodName = undefined;
@@ -33,7 +33,7 @@
 			// Don't display duplicate messages (BugId:96400)
 			if ( !logCache[ message ] ) {
 				logCache[ message ] = true;
-				console.log.call( console, 'Wikia.AbTest' + ( methodName ? '.' + methodName + '()' : '' ) + ':', message );
+				console.log( 'Wikia.AbTest' + ( methodName ? '.' + methodName + '()' : '' ) + ':', message );
 			}
 		} : function() {};
 	})( window.console );
