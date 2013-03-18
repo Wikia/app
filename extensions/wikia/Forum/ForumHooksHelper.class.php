@@ -446,7 +446,7 @@ class ForumHooksHelper {
 
 		if ($target->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD) {
 			$topicTitle =  Title::newFromURL($target->getText());
-			if ($topicTitle->getArticleId() > 0) {
+			if ($topicTitle->exists()) {
 				$index = array_search('broken', $options);
 				unset($options[$index]);
 				$options[] = 'known';
