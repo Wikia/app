@@ -52,6 +52,11 @@ class PhalanxHooks extends WikiaObject {
 			return true;
 		}
 
+		if ($this->wg->User->isAllowed( 'phalanxexempt' )) {
+			$this->wf->profileOut( __METHOD__ );
+			return true;
+		}
+
 		// get type ID -> type mapping
 		$types = Phalanx::getAllTypeNames();
 		$ret = true;
@@ -79,7 +84,7 @@ class PhalanxHooks extends WikiaObject {
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;
 	}
-	
+
 	/**
 	 * Add/edit Phalanx block
 	 *
@@ -90,16 +95,16 @@ class PhalanxHooks extends WikiaObject {
 	 */
 	public function onEditPhalanxBlock( &$data ) {
 		$this->wf->profileIn( __METHOD__ );
-		
+
 		if ( !isset( $data['id'] ) ) {
 			return false;
 		}
-		
+
 		$phalanx = Phalanx::newFromId( $data['id'] );
-		
+
 		foreach ( $data as $key => $val ) {
 			if ( $key == 'id' ) continue;
-			
+
 			$phalanx[ $key ] = $val;
 		}
 
@@ -109,14 +114,14 @@ class PhalanxHooks extends WikiaObject {
 				$typemask |= $type;
 			}
 		}
-		
+
 		$multitext = '';
 		if ( isset( $phalanx['multitext'] ) && !empty( $phalanx['multitext'] ) ) {
 			$multitext = $phalanx['multitext'];
 		}
 
 		unset( $phalanx['multitext'] );
-			
+
 		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $typemask ) ) {
 			$this->wf->profileOut( __METHOD__ );
 			return false;
@@ -165,18 +170,18 @@ class PhalanxHooks extends WikiaObject {
 				$result = false;
 			}
 		}
-		
+
 		if ( $result !== false ) {
 			$service = new PhalanxService();
 			$ret = $service->reload( $result["success"] );
 		} else {
 			$ret = $result;
 		}
-		
+
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;
 	}
-	
+
 	/**
 	 * Delete Phalanx block
 	 *
