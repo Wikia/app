@@ -1,35 +1,35 @@
 <?php
-	// get wiki thumbnail
+	// get wiki thumbnail and thumbnail tracking
 	$images = $resultSet->getHeader( 'images' );
 	$helper = new \WikiaHomePageHelper();
 
 	if ( !empty( $images ) ) {
 		foreach($images as $k=>$v) {
-			$images[$k] = $helper->getImageUrl($v, 150, 100);
+			$images[$k] = $helper->getImageUrl($v, 180, 120);
 
 		}
 		$imageURL = $images[0];
+		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-thumb"';
 	} else {
 		// display placeholder image if no thumbnail
 		$imageURL = $wgExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
+		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';
 	}
 ?>
 
 <?php if($resultSet->getResultsFound() > 1): ?>
-    <!-- grouped search result-->
     <li class="result">
 
 		<?php
-		$trackingData = 'class="ResultLink" data-wid="' . $resultSet->getHeader('wid') . '" data-gpos="' . $pos
-			. '" data-pos="0" data-sterm="' . addslashes($query) . '" data-stype="' .( $isInterWiki ? 'inter' :
-			'intra' ) . '" data-rver="' . WikiaSearchController::RVERSION . '" data-event="search_click_wiki"';
+		$trackingData = 'class="result-link" data-pos="' . $pos . '" data-event="search_click_wiki"';
 		?>
-
-        <img src="<?= $imageURL; ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail grid-1 alpha" />
-        <div class="grid-5 result-description">
+	    <a href="<?= $resultSet->getHeader('url'); ?>" title="<?= $resultSet->getHeader('title'); ?> <?= $thumbTracking ?>">
+            <img src="<?= $imageURL; ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail" />
+		</a>
+        <div class=" result-description">
 
             <h1>
-                <a href="<?= $resultSet->getHeader('host'); ?>" <?=$trackingData;?> ><?= $resultSet->getHeader
+                <a href="<?= $resultSet->getHeader('url'); ?>" <?=$trackingData;?> ><?= $resultSet->getHeader
 				('wikititle'); ?></a>
             </h1>
 
@@ -46,10 +46,10 @@
 <?php else: ?>
 	<?= $app->getView( 'WikiaSearch', 'CrossWiki_exactResult', array(
 		'resultSet' => $resultSet,
-		'gpos' => 0,
 		'pos' => $pos,
 		'query' => $query,
 		'rank' =>  $resultSet->getHeader('cityRank'),
-		'imageURL' => $imageURL
+		'imageURL' => $imageURL,
+		'$humbTracking' => $thumbTracking
 		)); ?>
 <?php endif; ?>

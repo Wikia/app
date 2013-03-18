@@ -49,8 +49,6 @@
 								$pos++;
 								echo $app->getView( 'WikiaSearch', 'CrossWiki_result', array(
 									'resultSet' => $result,
-									'gpos' => 0,
-									'isInterWiki' => $isInterWiki,
 									'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 									'query' => $query,
 									'hub' => $hub,

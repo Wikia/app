@@ -1,20 +1,16 @@
 <li class="result">
 
 	<?php
-	$trackingData = 'class="ResultLink" data-wid="' . $resultSet->getHeader('wid') . '" data-gpos="' . $pos
-		. '" data-pos="0" data-sterm="' . addslashes($query) . '" data-stype="inter" data-rver="' . WikiaSearchController::RVERSION . '" data-event="search_click_wiki"';
+		$trackingData = 'class="result-link" data-pos="' . $pos . '" data-event="search_click_match"';
 	?>
 
-	<?php
-		$urlInfo = parse_url( $resultSet->getHeader( 'url' ) );
-		$host = $urlInfo[ 'host' ] ;
-	?>
-    <img src="<?= $imageURL ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail grid-1 alpha"
-	    />
-    <div class="grid-5 result-description">
+    <a href="<?= $resultSet->getHeader( 'url' ) ?>" title="<?= $resultSet->getHeader('title'); ?>">
+	    <img src="<?= $imageURL ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail" />
+	</a>
+    <div class="result-description">
 
         <h1>
-            <a href="<?= $host; ?>" <?=$trackingData;?> ><?= $resultSet->getHeader
+            <a href="<?= $resultSet->getHeader( 'url' ) ?>" <?=$trackingData;?> ><?= $resultSet->getHeader
 			('title'); ?></a>
         </h1>
 
