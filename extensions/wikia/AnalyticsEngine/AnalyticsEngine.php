@@ -32,16 +32,23 @@ class AnalyticsEngine {
 	}
 
 	private static function getProvider($provider) {
-		switch ($provider){
-		  case 'GA_Urchin': $AP = new AnalyticsProviderGAS(); break;
-		  case 'QuantServe': $AP = new AnalyticsProviderQuantServe(); break;
-		  case 'Comscore': $AP = new AnalyticsProviderComscore(); break;
-		  case 'Exelate': $AP = new AnalyticsProviderExelate(); break;
-		  case 'GAS': $AP = new AnalyticsProviderGAS; break;
-		  case 'IVW': $AP = new AnalyticsProviderIVW; break;
-		  default: return null;
+		switch ($provider) {
+			case 'GA_Urchin':
+				return new AnalyticsProviderGAS();
+			case 'QuantServe':
+				return new AnalyticsProviderQuantServe();
+			case 'Comscore':
+				return new AnalyticsProviderComscore();
+			case 'Exelate':
+				return new AnalyticsProviderExelate();
+			case 'GAS':
+				return new AnalyticsProviderGAS();
+			case 'IVW':
+				return new AnalyticsProviderIVW();
+			case 'AmazonDirectTargetedBuy':
+				return new AnalyticsProviderAmazonDirectTargetedBuy();
 		}
 
-		return $AP;
+		return null;
 	}
 }
