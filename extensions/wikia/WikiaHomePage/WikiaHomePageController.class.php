@@ -51,7 +51,7 @@ class WikiaHomePageController extends WikiaController {
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 
-	//const HUBS_IMAGES_MEMC_KEY_VER = '1.03';
+	const HUBS_IMAGES_MEMC_KEY_VER = '1.03';
 
 	/**
 	 * @var WikiaHomePageHelper
