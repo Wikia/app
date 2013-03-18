@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Proposed Phing build file for MediaWiki app at Wikia --> 
+<!-- Primary purpose of this is to make a package -->
+
+<project name="Wikia App" default="assemble-timestamp" basedir=".">
+  <tstamp>
+    <format property="WIKIA_VERSION" pattern="%Y%m%d%H%M%S"/>
+  </tstamp>
+
+  <target name="assemble-timestamp">
+    <phingcall target="assemble">
+      <property name="release_option" value="version" override="false" />
+    </phingcall>
+  </target>
+
+  <target name="jenkinsBuild">
+    <phingcall target="assemble">
+      <property name="release_option" value="version" override="false" />
+      <property name="WIKIA_VERSION" value="${env.GIT_BRANCH}.${env.BUILD_NUMBER}"/>
+    </phingcall>
+  </target>
+  <target name="assemble">
+
+    <property name="version.number" value="${WIKIA_VERSION}" />
+
+    <copy todir="build/app-${version.number}" >
+      <fileset dir=".">
+        <include name="**/*" />
+        <include name="*" />
+        <exclude name=".git" />
+        <exclude name="build.xml" />
+        <exclude name="build" />
+        <exclude name="build/*" />
+        <exclude name="build/**" />
+      </fileset>
+    </copy>
+
+    <tar destfile="build/app-${version.number}.tar.gz" compression="gzip">
+      <fileset dir="build/app-${version.number}">
+        <include name="**/*" />
+        <include name="*" />
+        <exclude name=".git" />
+        <exclude name="build" />
+        <exclude name="build/*" />
+        <exclude name="build/**" />
+      </fileset>
+    </tar>
+
+  </target>
+
+  <target name="clean">
+    <delete dir="build" />
+  </target>
+
+  <target name="clean">
+    <delete dir="build" />
+  </target>
+
+</project>
