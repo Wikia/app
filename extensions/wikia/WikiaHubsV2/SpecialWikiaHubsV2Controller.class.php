@@ -192,8 +192,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 	protected function initModel() {
 		$this->model = F::build('WikiaHubsV2Model');
-		$date = $this->getRequest()->getVal('date', date('Y-m-d'));
-		$lang = $this->getRequest()->getVal('cityId', $this->wg->cityId);
 		$this->model->setVertical($this->verticalId);
 	}
 
