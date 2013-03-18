@@ -102,13 +102,12 @@ class VideoEmbedToolController extends WikiaController {
 			
 			$requestedFields = $this->wg->ContLang->mCode == 'en' 
 							? array( 'pageid' ) // get English for free
-							: array( 'pageid', WikiaSearch::field( 'title', 'en' ), WikiaSearch::field( 'html', 'en' ) );
+							: array( 'pageid', Wikia\Search\Utilities::field( 'title', 'en' ), Wikia\Search\Utilities::field( 'html', 'en' ) );
 							  
 			$wikiaSearchConfig->setQuery( $phrase )
 							  ->setRequestedFields( array_merge( $wikiaSearchConfig->getRequestedFields(), $requestedFields ) );
 			
-			$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $container ) );
-			$search = Wikia\Search\QueryService\Factory::getInstance()->get( $container );
+			$search = (new Wikia\Search\QueryService\Factory)->getFromConfig( $wikiaSearchConfig );
 
 			$searchResults = $search->search();
 			$response = $this->processSearchResponse( $searchResults, $svStart, $svSize, $trimTitle );
