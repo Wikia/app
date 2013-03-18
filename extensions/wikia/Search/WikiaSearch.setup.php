@@ -69,11 +69,11 @@ $app->registerHook('WikiaMobileAssetsPackages', 'Wikia\Search\Hooks', 'onWikiaMo
 
 global $wgExternalSharedDB;
 if ( empty( $wgExternalSharedDB ) ) {
-	$app->registerHook('ArticleDeleteComplete', 'WikiaSearchIndexer', 'onArticleDeleteComplete');
-	$app->registerHook('ArticleSaveComplete', 'WikiaSearchIndexer', 'onArticleSaveComplete');
-	$app->registerHook('ArticleUndelete', 'WikiaSearchIndexer', 'onArticleUndelete');
+	$app->registerHook('ArticleDeleteComplete', 'Wikia\Search\Hooks', 'onArticleDeleteComplete');
+	$app->registerHook('ArticleSaveComplete', 'Wikia\Search\Hooks', 'onArticleSaveComplete');
+	$app->registerHook('ArticleUndelete', 'Wikia\Search\Hooks', 'onArticleUndelete');
 } else {
-	$app->registerHook('WikiFactoryPublicStatusChange', 'WikiaSearchIndexer', 'onWikiFactoryPublicStatusChange');
+	$app->registerHook('WikiFactoryPublicStatusChange', 'Wikia\Search\Hook', 'onWikiFactoryPublicStatusChange');
 }
 
 $wgExtensionCredits['other'][] = array(
