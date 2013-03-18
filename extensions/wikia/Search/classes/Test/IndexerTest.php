@@ -366,7 +366,7 @@ class IndexerTest extends BaseTest
 		    ->method ( 'log' )
 		    ->with   ( 'Wikia\Search\Indexer::updateDocuments', '', $exception )
 		;*/
-		$this->assertNull(
+		$this->assertTrue(
 				$indexer->deleteWikiDocs( 123 )
 		);
 	}
