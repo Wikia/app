@@ -15,7 +15,7 @@ $messages['en'] = array(
 The WAM is calculated daily for the top 5,000 Wikis and includes an overall and vertical rank as well as a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, so be sure to check back regularly to see the latest trends. The WAM can also be viewed daily on each of our [[Video Games|Video Game]], [[Entertainment]] and [[Lifestyle]] hub pages.
 
 [[$1|Frequently Asked Questions]]',
-	'wampage-faq' => '__NOTOC__===How is the WAM calculated?===
+	'wampage-faq' => '__NOTOC____NOEDITSECTION__===How is the WAM calculated?===
 	The WAM rank is a combination of traffic, engagement and growth. We are not able to provide the specifics because we do not want Wikis attempting to manipulate the rankings. But rest assured, we have included all the essential ingredients for a successful and thriving Wiki.
 ===Why should I care about the WAM?===
 	At Wikia we believe knowledge is power. While we have always been open about data and statistics, the WAM represents a huge step forward in the measurement of online communities. The WAM is a valuable feedback loop for founders, admins and contributors as they look to better understand where their Wiki ranks and how their activity is moving the needle.
