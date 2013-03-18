@@ -5,7 +5,7 @@
  * @author Jakub 'Student' Olek
  **/
 
-require(['throbber', 'toast', 'modal', 'track', 'JSMessages'], function(throbber, toast, modal, track, msg){
+require(['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload'], function(throbber, toast, modal, track, msg, lazyload){
 	"use strict";
 	/** @private **/
 
@@ -74,6 +74,9 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages'], function(throbber
 					((forward) ? loadPrev : loadMore).style.display = 'block';
 
 					wkArtCom.scrollIntoView();
+
+					//load all images that might be on a comments page
+					lazyload(wkArtCom.querySelectorAll('.lazy'));
 				}
 			);
 		}
