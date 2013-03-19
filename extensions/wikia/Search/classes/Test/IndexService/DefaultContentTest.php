@@ -383,7 +383,10 @@ ENDIT;
 		             ->disableOriginalConstructor()
 		             ->setMethods( [ '__get', '__set' ] )
 		             ->getMock();
-		$remove = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'extractTablesFromDom' );
+		$garbage = new ReflectionProperty( 'Wikia\Search\IndexService\DefaultContent', 'asideSelectors' );
+		$garbage->setAccessible( true );
+		$garbage->setValue( $service, [ 'table' ] );
+		$remove = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'extractAsidesFromDom' );
 		$remove->setAccessible( true );
 		$dom
 		    ->expects( $this->at( 0 ) )
@@ -461,7 +464,7 @@ ENDIT;
 	public function testGetPlaintextFromDom() {
 		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
 		                ->disableOriginalConstructor()
-		                ->setMethods( [ 'extractTablesFromDom' ] )
+		                ->setMethods( [ 'extractAsidesFromDom' ] )
 		                ->getMock();
 		$dom = $this->getMockBuilder( 'simple_html_dom' )
 		            ->disableOriginalConstructor()
@@ -471,7 +474,7 @@ ENDIT;
 		$get->setAccessible( true );
 		$service
 		    ->expects( $this->once() )
-		    ->method ( 'extractTablesFromDom' )
+		    ->method ( 'extractAsidesFromDom' )
 		    ->with   ( $dom )
 		    ->will   ( $this->returnValue( 'this is my table' ) )
 		;
