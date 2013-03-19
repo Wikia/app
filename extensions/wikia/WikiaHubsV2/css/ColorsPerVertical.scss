@@ -145,8 +145,13 @@
 					background-color: $color-wikiahome-hubcolor;
 				}
 			}
-			.score-table .url a {
-				color: $color-wikiahome-hubcolor;
+			.score-table {
+				.rank {
+					padding-left: 3px;
+				}
+				.url a {
+					color: $color-wikiahome-hubcolor;
+				}
 			}
 		}
 	}
