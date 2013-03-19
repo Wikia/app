@@ -16,11 +16,11 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'getArticleMatchForTermAndNamespaces' ) )
+		                      ->setMethods( array( 'getArticleMatchForTermAndNamespaces', 'getWikiMatchByHost', 'getGlobal' ) )
 		                      ->getMock();
 		
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
-		                   ->setMethods( array( 'getQuery', 'getNamespaces', 'setArticleMatch', 'getMatch' ) )
+		                   ->setMethods( array( 'getQuery', 'getNamespaces', 'setArticleMatch', 'getMatch', 'setWikiMatch', 'getQuery' ) )
 		                   ->getMock();
 		
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
@@ -34,6 +34,10 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
+		
+		$mockWikiMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                      ->disableOriginalConstructor()
+		                      ->getMock();
 		
 		$mockConfig
 		    ->expects( $this->once() )
@@ -60,6 +64,29 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->expects( $this->once() )
 		    ->method ( 'setArticleMatch' )
 		    ->with   ( $mockMatch )
+		;
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'OnWikiSearchIncludesWikiMatch' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getQuery' )
+		    ->with   ( \Wikia\Search\Config::QUERY_RAW )
+		    ->will   ( $this->returnValue( 'star wars' ) )
+		;
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiMatchByHost' )
+		    ->with   ( 'starwars' )
+		    ->will   ( $this->returnValue( $mockWikiMatch ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setWikiMatch' )
+		    ->with   ( $mockWikiMatch )
 		;
 		$mockConfig
 		    ->expects( $this->once() )
