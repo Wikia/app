@@ -368,9 +368,9 @@ ENDIT;
 	}
 	
 	/**
-	 * @covers Wikia\Search\IndexService\DefaultContent::extractTablesFromDom
+	 * @covers Wikia\Search\IndexService\DefaultContent::extractAsidesFromDom
 	 */
-	public function testExtractTablesFromDom() {
+	public function testExtractAsidesFromDom() {
 		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
 		                ->disableOriginalConstructor()
 		                ->setMethods( null )
