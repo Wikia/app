@@ -21,12 +21,11 @@ define('share', ['wikia.cache', 'JSMessages', 'wikia.loader'], function (cache, 
 		$1 = /__1__/g,
 		$2 = /__2__/g,
 		$3 = /__3__/g,
-		$4 = /__4__/g;
+		$4 = /__4__/g,
+		cacheKey = 'shareButtons';
 
 	return function(link){
 		return function(cnt){
-			var cacheKey = 'shareButtons' + wgStyleVersion;
-
 			function handle(html){
 				if(link){
 					var imgUrl = pageUrl + '?file=' + encodeURIComponent(encodeURIComponent(link));
@@ -38,7 +37,6 @@ define('share', ['wikia.cache', 'JSMessages', 'wikia.loader'], function (cache, 
 
 			if(!shrData){
 				shrData = cache.get(cacheKey);
-				loader.processStyle(cache.get(cacheKey + 'style'));
 				shrPageTxt = msg('wikiamobile-sharing-page-text', wgTitle, wgSitename);
 				shrMailPageTxt = encodeURIComponent(msg('wikiamobile-sharing-email-text', shrPageTxt));
 				shrImgTxt = msg('wikiamobile-sharing-modal-text', msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);
@@ -46,7 +44,8 @@ define('share', ['wikia.cache', 'JSMessages', 'wikia.loader'], function (cache, 
 			}
 
 			if(shrData){
-				handle(shrData);
+				loader.processStyle(shrData[1]);
+				handle(shrData[0]);
 			}else{
 				loader({
 					type: loader.MULTI,
@@ -64,10 +63,10 @@ define('share', ['wikia.cache', 'JSMessages', 'wikia.loader'], function (cache, 
 							style = res.styles;
 
 						loader.processStyle(style);
-						cache.set(cacheKey, html, 604800);/*7 days*/
-						cache.set(cacheKey + 'style', style, 604800);
-						shrData = html;
 						handle(html);
+
+						shrData = [html, style];
+						cache.set(cacheKey, shrData, 604800);/*7 days*/
 					}
 				)
 			}

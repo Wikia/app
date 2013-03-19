@@ -19,7 +19,7 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 		lazyLoadedSections = [],
 		tablesProcessedSections = [],
 		tablesModule,
-		tablesKey = 'wideTables' + wgStyleVersion,
+		tablesKey = 'wideTables',
 		ttl = 604800, //7days
 		assets,
 		process = function(res){

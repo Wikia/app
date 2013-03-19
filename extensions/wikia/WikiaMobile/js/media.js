@@ -423,7 +423,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	}
 
 	function openModal(num){
-		var cacheKey = 'mediaGalleryAssets' + wgStyleVersion,
+		var cacheKey = 'mediaGalleryAssets',
 			galleryData,
 			ttl = 604800; //7days
 
