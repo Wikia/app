@@ -188,7 +188,146 @@ class DefaultContentTest extends BaseTest
 				$expectedResult,
 				$result
 		);
-		
 	}
 	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::getPageContentFromParseResponse
+	 */
+	public function testGetPagContentFromParseResponse() {
+		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'getService', 'prepValuesFromHtml' ) );
+		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getGlobal' ) );
+		$html = '<div>this is my html &amp; stuff</div>';
+		$response = [ 'parse' => [ 'text' => [ '*' => $html ] ] ];
+		$get = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'getPageContentFromParseResponse' );
+		$get->setAccessible( true );
+		$service
+		    ->expects( $this->any() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $mwService ) )
+		;
+		$mwService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'AppStripsHtml' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$this->assertEquals(
+				[ 'html' => '<div>this is my html & stuff</div>' ],
+				$get->invoke( $service, $response )
+		);
+		$service
+		    ->expects( $this->any() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $mwService ) )
+		;
+		$mwService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'AppStripsHtml' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$prepped = [ 'html' => 'this is my html & stuff' ];
+		$service
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'prepValuesFromHtml' )
+		    ->will   ( $this->returnValue( $prepped ) )
+		;
+		$this->assertEquals(
+				$prepped,
+				$get->invoke( $service, $response )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::getCategoriesFromParseResponse
+	 */
+	public function testGetCategoriesFromParseResponse() {
+		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'field' ) );
+		$get = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'getCategoriesFromParseResponse' );
+		$get->setAccessible( true );
+		$response = [ 'parse' => [ 'categories' => [ [ '*' => 'this_is_an_example' ], [ '*' => 'here_is_another' ] ] ] ];
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'field' )
+		    ->with   ( 'categories' )
+		    ->will   ( $this->returnValue( 'categories_mv_en' ) )
+		;
+		$this->assertEquals(
+				[ 'categories_mv_en' => [ 'this is an example', 'here is another' ] ],
+				$get->invoke( $service, $response )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::getHeadingsFromParseResponse
+	 */
+	public function testGetHeadingsFromParseResponse() {
+		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'field' ) );
+		$get = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'getHeadingsFromParseResponse' );
+		$get->setAccessible( true );
+		$response = [ 'parse' => [ 'sections' => [ [ 'line' => 'first' ], [ 'line' => 'second' ] ] ] ];
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'field' )
+		    ->with   ( 'headings' )
+		    ->will   ( $this->returnValue( 'headings_mv_en' ) )
+		;
+		$this->assertEquals(
+				[ 'headings_mv_en' => [ 'first', 'second' ] ],
+				$get->invoke( $service, $response )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::prepValuesFromHtml
+	 */
+	public function testPrepValuesFromHtml() {
+		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'field' ) );
+		$prep = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'prepValuesFromHtml' );
+		$prep->setAccessible( true );
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'field' )
+		    ->with   ( 'html' )
+		    ->will   ( $this->returnValue( 'html_en' ) )
+		;
+		$html = <<<ENDIT
+This is a very long example so we can do some counts and stuff.
+We're no strangers to love
+You know the rules and so do I
+A full commitment's what I'm thinking of
+You wouldn't get this from any other guy
+I just wanna tell you how I'm feeling
+Gotta make you understand
+Never gonna give you up
+Never gonna let you down
+Never gonna run around and desert you
+Never gonna make you cry
+Never gonna say goodbye
+Never gonna tell a lie and hurt you
+We've known each other for so long
+Your heart's been aching but
+You're too shy to say it
+Inside we both know what's been going on
+We know the game and we're gonna play it
+And if you ask me how I'm feeling
+Don't tell me you're too blind to see
+Never gonna give you up
+Never gonna let you down
+Never gonna run around and desert you
+Never gonna make you cry
+Never gonna say goodbye
+Never gonna tell a lie and hurt you
+ENDIT;
+		
+		$result = $prep->invoke( $service, $html );
+		$this->assertEquals(
+				preg_replace( '/\s+/', ' ', $html ) . ' ',
+				$result['html_en']
+		);
+		$this->assertGreaterThanOrEqual(
+				str_word_count( $result['nolang_txt'] ), 
+				$result['words']
+		);
+	}
 }
