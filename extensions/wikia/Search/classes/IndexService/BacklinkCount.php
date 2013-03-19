@@ -19,7 +19,7 @@ class BacklinkCount extends AbstractService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
-		$response = array( 'backlinks' => $this->service->getBacklinksCountFromPageId( $this->currentPageId ) );
+		$response = array( 'backlinks' => $this->getService()->getBacklinksCountFromPageId( $this->currentPageId ) );
 		wfProfileOut(__METHOD__);
 		return $response;
 	}
