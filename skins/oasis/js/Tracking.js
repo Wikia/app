@@ -13,6 +13,12 @@ jQuery(function($){
 	});
 
 	var trackWithEventData = function(e) {
+
+		// Primary mouse button only
+		if (e.type === 'mousedown' && e.which !== 1) {
+			return;
+		}
+
 		track({
 			browserEvent: e
 		}, e.data);
@@ -32,6 +38,11 @@ jQuery(function($){
 			var label,
 				el = $(e.currentTarget),
 				id = el.data('id');
+
+			// Primary mouse button only
+			if (e.which !== 1) {
+				return;
+			}
 
 			switch(id) {
 				case 'comment': {
@@ -63,6 +74,11 @@ jQuery(function($){
 		$wikiaArticle.on('mousedown', 'a', function(e) {
 			var label,
 				el = $(e.currentTarget);
+
+			// Primary mouse button only
+			if (e.which !== 1) {
+				return;
+			}
 
 			if (el.hasClass('video')) {
 				label = 'video';
@@ -130,6 +146,11 @@ jQuery(function($){
 			el = $(e.target),
 			id = el.data('id');
 
+		// Primary mouse button only
+		if (e.which !== 1) {
+			return;
+		}
+
 		switch(id) {
 			case 'createpage': {
 				label = 'add-a-page';
@@ -191,6 +212,11 @@ jQuery(function($){
 			var label,
 				el = $(e.currentTarget);
 
+			// Primary mouse button only
+			if (e.which !== 1) {
+				return;
+			}
+
 			if (el.hasClass('RTEImageButton')) {
 				label = 'add-photo';
 			} else if (el.hasClass('RTEGalleryButton')) {
@@ -221,6 +247,11 @@ jQuery(function($){
 		var label,
 			el = $(e.target);
 
+		// Primary mouse button only
+		if (e.which !== 1) {
+			return;
+		}
+
 		if (el.hasClass('thumbimage')) {
 			label = 'photos-module-thumbnail';
 		} else if (el.hasClass('upphotos')) {
@@ -245,6 +276,11 @@ jQuery(function($){
 			var label,
 				el = $(e.target),
 				href = el.attr('href');
+
+			// Primary mouse button only
+			if (e.which !== 1) {
+				return;
+			}
 
 			if (rHrefDiff.test(href)) {
 				label = 'diff';
@@ -271,6 +307,11 @@ jQuery(function($){
 	$wikiaRail.find('.WikiaActivityModule').on('mousedown', 'a', function(e) {
 		var label,
 			el = $(e.target);
+
+		// Primary mouse button only
+		if (e.which !== 1) {
+			return;
+		}
 
 		if (el.hasClass('more')) {
 			label = 'activity-more';
@@ -307,7 +348,7 @@ jQuery(function($){
 			label: 'search-suggest'
 		}, trackWithEventData).on('mousedown', '.wikia-button', function(e) {
 			// Prevent tracking 'fake' form submission clicks
-			if (e.clientX > 0) {
+			if (e.which === 1 && e.clientX > 0) {
 				track({
 					category: category,
 					label: 'search-button'
@@ -371,6 +412,11 @@ jQuery(function($){
 		var label,
 			el = $(e.target);
 
+		// Primary mouse button only
+		if (e.which !== 1) {
+			return;
+		}
+
 		if (el.hasClass('forum-thread-title')) {
 			label = 'title';
 		} else if (el.hasClass('forum-new-post')) {
@@ -394,6 +440,11 @@ jQuery(function($){
 		var label,
 			el = $(e.target),
 			name = el.data('name');
+
+		// Primary mouse button only
+		if (e.which !== 1) {
+			return;
+		}
 
 		switch(name) {
 			case 'customize':
@@ -427,6 +478,11 @@ jQuery(function($){
 			var label,
 				el = $(e.target),
 				id = el.data('id');
+
+			// Primary mouse button only
+			if (e.which !== 1) {
+				return;
+			}
 
 			if (id !== undefined) {
 				switch(id) {
@@ -481,6 +537,11 @@ jQuery(function($){
 				el = $(e.target),
 				id = el.attr('id');
 
+			// Primary mouse button only
+			if (e.which !== 1) {
+				return;
+			}
+
 			switch(id) {
 				case 'wall-notifications-markasread-this-wiki':
 				case 'wall-notifications-markasread-all-wikis': {
@@ -506,6 +567,11 @@ jQuery(function($){
 			var label, type,
 				el = $(e.target),
 				parent = el.parent();
+
+			// Primary mouse button only
+			if (e.which !== 1) {
+				return;
+			}
 
 			if (el.hasClass('title')) {
 				label = 'title';
@@ -542,6 +608,11 @@ jQuery(function($){
 	$wikiHeader.on('mousedown', 'a', function(e) {
 		var label,
 			el = $(e.target);
+
+		// Primary mouse button only
+		if (e.which !== 1) {
+			return;
+		}
 
 		if (el.closest('.wordmark').length > 0) {
 			label = 'wordmark';
