@@ -76,7 +76,7 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
 					query: encodeURIComponent(query),
 					page: pageIndex
 				}
-			).done(
+            }).done(
 				function(result){
 					var finished;
 
