@@ -8,60 +8,9 @@ if( !defined( 'MEDIAWIKI' ) )
  *
  * @ingroup Media
  */
-class WikiaVideoPage extends ImagePage {
+class WikiaVideoPage extends WikiaImagePage {
 
 	protected static $videoWidth = 670;
-
-	/**
-	 * TOC override so Video Page does not return any TOC
-	 *
-	 * @param $metadata Boolean - doesn't matter
-	 * @return String - will return empty string to add
-	 */
-	protected function showTOC( $metadata ) {
-		global $wgEnableVideoPageRedesign;
-		if(empty($wgEnableVideoPageRedesign)) {
-			return parent::showTOC($metadata);
-		}
-		return '';
-	}
-
-	/**
-	 * imageDetails override
-	 * Image page doesn't need the wrapper, but VideoPage does
-	 */
-	protected function imageDetails($showmeta, $formattedMetadata) {
-		global $wgOut, $wgEnableVideoPageRedesign;
-		
-		if(empty($wgEnableVideoPageRedesign)) {
-			parent::imageDetails($showmeta, $formattedMetadata);
-			return;
-		}
-		
-		$app = F::app();
-		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'local') ) );
-		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'global') ) );
-		$wgOut->addHtml( $app->renderPartial( 'VideoPageController', 'seeMore', array() ));
-		$wgOut->addHtml('<div class="more-info-wrapper">');
-		parent::imageDetails($showmeta, $formattedMetadata);
-		$wgOut->addHtml('</div>');
-		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'relatedPages', array() ) );
-	}
-
-	/**
-	 * imageListing override.
-	 * for VideoPage, imageListing will be printed under additionalDetails()
-	 */
-	protected function imageListing() {
-		global $wgEnableVideoPageRedesign;
-		
-		if(empty($wgEnableVideoPageRedesign)) {
-			parent::imageListing();
-			return;
-		}
-	
-		// do nothing on purpose
-	}
 
 	function openShowImage(){
 		global $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath, $wgEnableVideoPageRedesign;
@@ -96,10 +45,7 @@ class WikiaVideoPage extends ImagePage {
 		if(empty($wgEnableVideoPageRedesign)) {
 			$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>' );
 		} else {
-			// add these two to VideoPage package after full release
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoHandlers/css/VideoPage.scss'));
-			$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/VideoPage.js\"></script>\n" );
-	
+
 			$html = '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
 	
 			$captionDetails = array(

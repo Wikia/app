@@ -43,6 +43,7 @@ $app->registerClass( 'ThumbnailVideo',		$dir . '/ThumbnailVideo.class.php' );
 $app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.class.php' );
 $app->registerClass( 'VideoHandlerHooks',	$dir . '/VideoHandlerHooks.class.php' );
 $app->registerClass( 'VideoFileUploader',	$dir . '/VideoFileUploader.class.php' );
+$app->registerClass( 'WikiaImagePage', $dir . '/ImagePage.php' );
 $app->registerClass( 'WikiaVideoPage',		$dir . '/VideoPage.php' );
 $app->registerClass( 'VideoHandlerHelper', $dir . '/VideoHandlerHelper.class.php' );
 
