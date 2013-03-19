@@ -5,10 +5,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 
 	const INVALID_USERNAME = '75.246.151.75';
 	const INVALID_EMAIL = 'test@porn.com';
-	
+
 	const VALID_TITLE = 'This_is_good_article';
 	const INVALID_TITLE = 'Porn_article';
-	
+
 	const VALID_WIKIA_NAME = 'Szumo';
 	const INVALID_WIKIA_NAME = 'Pornology';
 
@@ -26,40 +26,40 @@ class PhalanxModelTest extends WikiaBaseTest {
 	}
 
 	private function setUpUser( $userName, $email, $isAnon ){
-		// User 
-		$userMock = $this->mockClassWithMethods( 'User', 
-			array( 
+		// User
+		$userMock = $this->mockClassWithMethods( 'User',
+			array(
 				'isAnon'  => $isAnon,
 				'getName' => $userName,
 				'getEmail' => $email
 			)
 		);
 
-		$this->mockGlobalVariable('wgUser', $userMock);	
-		
+		$this->mockGlobalVariable('wgUser', $userMock);
+
 		return $userMock;
 	}
-	
+
 	private function setUpTitle( $title ){
-		// User 
-		$titleMock = $this->mockClassWithMethods( 'Title', 
-			array( 
+		// User
+		$titleMock = $this->mockClassWithMethods( 'Title',
+			array(
 				'newFromText'  => null,
 				'getFullText' => $title,
 				'getPrefixedText' => $title
-			), 
+			),
 			'newFromText'
 		);
-		
-		$this->mockGlobalVariable('wgTitle', $titleMock);	
-		
+
+		$this->mockGlobalVariable('wgTitle', $titleMock);
+
 		return $titleMock;
 	}
-	
+
 	private function setUpTest( $block ) {
 		// PhalanxService
-		$this->mockClassWithMethods( 'PhalanxService', array( 'match' => $block, 'setUser' => null, 'setLimit' => null ) );	
-		$this->mockApp();	
+		$this->mockClassWithMethods( 'PhalanxService', array( 'match' => $block, 'setUser' => null, 'setLimit' => null ) );
+		$this->mockApp();
 	}
 
 	/* PhalanxUserModel class */
@@ -67,23 +67,23 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider phalanxUserModelDataProvider
 	 */
-	public function testPhalanxUserModelMatchUser( $isAnon, $userName, $email, $block, $result, $errorMsg ) {		
+	public function testPhalanxUserModelMatchUser( $isAnon, $userName, $email, $block, $result, $errorMsg ) {
 		$userMock = $this->setUpUser( $userName, $email, $isAnon );
 		$this->setUpTest( $block );
 
 		// model
 		$model = new PhalanxUserModel( $userMock );
 		$ret = ( int ) $model->match_user();
-		
+
 		$this->assertEquals( $result, $ret );
 	}
-	
+
 	/* PhalanxUserModel class */
 	/* match_email method */
 	/**
 	 * @dataProvider phalanxUserModelDataProvider
 	 */
-	public function testPhalanxUserModelMatchEmail( $isAnon, $userName, $email, $block, $result, $errorMsg ) {		
+	public function testPhalanxUserModelMatchEmail( $isAnon, $userName, $email, $block, $result, $errorMsg ) {
 		$userMock = $this->setUpUser( $userName, $email, $isAnon );
 		$this->setUpTest( $block );
 
@@ -95,21 +95,21 @@ class PhalanxModelTest extends WikiaBaseTest {
 	}
 
 	/* PhalanxTextModel class */
-	 
+
 	/* wiki_creation method */
 	/**
 	 * @dataProvider phalanxTextModelDataProvider
 	 */
 	public function testPhalanxTextModelWikiCreation( $text, $block, $result ) {
 		$this->setUpTest( $block );
-		
+
 		$model = new PhalanxTextModel( $text );
 		$ret = ( int ) $model->match_wiki_creation();
-		
-		$this->assertEquals( $result, $ret );	
+
+		$this->assertEquals( $result, $ret );
 	}
-	
-	/* PhalanxContentModel class */	 
+
+	/* PhalanxContentModel class */
 	/* match_question_title method */
 	/**
 	 * @dataProvider phalanxTitleDataProvider
@@ -117,13 +117,13 @@ class PhalanxModelTest extends WikiaBaseTest {
 	public function testPhalanxContentModelQuestionTitle( $title, $block, $language, $result ) {
 		$titleMock = $this->setUpTitle( $title );
 		$this->setUpTest( $block );
-		
+
 		$model = new PhalanxContentModel( $titleMock, $language );
 		$ret = ( int ) $model->match_question_title();
-		
+
 		$this->assertEquals( $result, $ret );
 	}
-	
+
 	/* PhalanxContentModel class */
 	/* match_summary method */
 	/**
@@ -132,13 +132,13 @@ class PhalanxModelTest extends WikiaBaseTest {
 	public function testPhalanxContentModelSummary( $title, $text, $summary, $block_text, $block_summary, $result_text, $result_summary ) {
 		$titleMock = $this->setUpTitle( $title );
 		$this->setUpTest( $block_summary );
-		
+
 		$model = new PhalanxContentModel( $titleMock );
 		$ret = ( int ) $model->match_summary( $summary );
-		
+
 		$this->assertEquals( $result_summary, $ret );
 	}
-	
+
 	/* PhalanxContentModel class */
 	/* match_content method */
 	/**
@@ -147,13 +147,13 @@ class PhalanxModelTest extends WikiaBaseTest {
 	public function testPhalanxContentModelContent( $title, $text, $summary, $block_text, $block_summary, $result_text, $result_summary ) {
 		$titleMock = $this->setUpTitle( $title );
 		$this->setUpTest( $block_text );
-		
+
 		$model = new PhalanxContentModel( $titleMock );
 		$ret = ( int ) $model->match_content( $text );
-		
+
 		$this->assertEquals( $result_text, $ret );
 	}
-	
+
 	/* PhalanxContentModel class */
 	/* match_title method */
 	/**
@@ -162,13 +162,60 @@ class PhalanxModelTest extends WikiaBaseTest {
 	public function testPhalanxContentModelTitle( $title, $block, $language, $result ) {
 		$titleMock = $this->setUpTitle( $title );
 		$this->setUpTest( $block );
-		
+
 		$model = new PhalanxContentModel( $titleMock );
 		$ret = ( int ) $model->match_title();
-		
+
 		$this->assertEquals( $result, $ret );
 	}
-	
+
+	/**
+	 * Test models factory
+	 *
+	 * @dataProvider phalanxNewFromTypeProvider
+	 */
+	public function testPhalanxNewFromType( $type, $content, $className, $methodName ) {
+		$model = PhalanxModel::newFromType($type, $content);
+
+		if ($className === false) {
+			$this->assertNull($model);
+		}
+		else {
+			$this->assertInstanceOf($className, $model);
+			$this->assertEquals($content, $model->$methodName());
+		}
+	}
+
+	public function phalanxNewFromTypeProvider() {
+		return array(
+			array(
+				'type' => Phalanx:: TYPE_TITLE,
+				'content' => $this->mockClassWithMethods('Title', array('getText' => 'foo')),
+				'className' => 'PhalanxContentModel',
+				'methodName' => 'getTitle'
+			),
+			array(
+				'type' => Phalanx::TYPE_CONTENT,
+				'content' => 'text',
+				'className' => 'PhalanxTextModel',
+				'methodName' => 'getText'
+			),
+			array(
+				'type' => Phalanx::TYPE_USER,
+				'content' => $this->mockClassWithMethods('User', array('getUser' => 'foo')),
+				'className' => 'PhalanxUserModel',
+				'methodName' => 'getUser'
+			),
+			// invalid type ID
+			array(
+				'type' => -1,
+				'content' => false,
+				'className' => false,
+				'methodName' => false
+			),
+		);
+	}
+
 	/* data providers */
 	public function phalanxUserModelDataProvider() {
 		/* valid user */
@@ -192,9 +239,9 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'text' => self::INVALID_USERNAME,
 				'reason' => 'Test',
 				'exact' => '',
-				'caseSensitive' => '', 
+				'caseSensitive' => '',
 				'id' => 4009,
-				'language' => '', 
+				'language' => '',
 				'authorId' => 184532,
 			),
 			'result'    	=> 0,
@@ -212,9 +259,9 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'text' => self::INVALID_EMAIL,
 				'reason' => 'Test Email',
 				'exact' => '',
-				'caseSensitive' => '', 
+				'caseSensitive' => '',
 				'id' => 4010,
-				'language' => '', 
+				'language' => '',
 				'authorId' => 184532,
 			),
 			'result'    	=> 0,
@@ -222,7 +269,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 		);
 
 		/* phalanxexempt */
-		$okUser = array(                         
+		$okUser = array(
 			'isAnon'    => false,
 			'getName'   => self::VALID_USERNAME,
 			'email'		=> self::VALID_EMAIL,
@@ -230,10 +277,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 			'result'    => 1,
 			'error'		=> ''
 		);
-	
+
 		return array( $validUser, $invalidUser, $invalidUserEmail, $okUser );
 	}
-	
+
 	public function phalanxTextModelDataProvider() {
 		/* valid text */
 		$validWiki = array(
@@ -241,7 +288,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			'block'     => 0,
 			'result'    => 1,
 		);
-	
+
 		/* invalid text */
 		$invalidWiki = array(
 			'title'		=> self::INVALID_WIKIA_NAME,
@@ -251,24 +298,24 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'text' => self::INVALID_WIKIA_NAME,
 				'reason' => 'Test wiki creation block',
 				'exact' => '',
-				'caseSensitive' => '', 
+				'caseSensitive' => '',
 				'id' => 4013,
-				'language' => 'en', 
+				'language' => 'en',
 				'authorId' => 184532,
 			),
 			'result'    => 0,
 		);
-		
+
 		/* empty text */
 		$invalidWiki = array(
 			'text'		=> '',
 			'block'     => 0,
 			'result'    => 1,
 		);
-		
+
 		return array( $validWiki, $invalidWiki );
 	}
-	
+
 	public function phalanxContentModelDataProvider() {
 		/* valid textbox & summary */
 		$validContent = array(
@@ -280,7 +327,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			'result_text'  	=> 1,
 			'result_summary'=> 1
 		);
-	
+
 		/* invalid content, valid summary */
 		$invalidContent = array(
 			'title'     	=> self::VALID_TITLE,
@@ -292,16 +339,16 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'text' => self::INVALID_CONTENT,
 				'reason' => 'Test content block',
 				'exact' => '',
-				'caseSensitive' => '', 
+				'caseSensitive' => '',
 				'id' => 4014,
-				'language' => 'en', 
+				'language' => 'en',
 				'authorId' => 184532,
 			),
 			'block_summary' => 0,
 			'result_text'   => 0,
 			'result_summary'=> 1
 		);
-		
+
 		/* valid content, invalid summary */
 		$invalidSummary = array(
 			'title'     	=> self::VALID_TITLE,
@@ -314,9 +361,9 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'text' => self::INVALID_SUMMARY,
 				'reason' => 'Test content block',
 				'exact' => '',
-				'caseSensitive' => '', 
+				'caseSensitive' => '',
 				'id' => 4015,
-				'language' => 'en', 
+				'language' => 'en',
 				'authorId' => 184532,
 			),
 			'result_text'   => 1,
@@ -325,7 +372,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 
 		return array( $validContent, $invalidContent, $invalidSummary );
 	}
-	
+
 	public function phalanxTitleDataProvider() {
 		/* valid title */
 		$validTitle = array(
@@ -334,7 +381,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			'language'  => 'en',
 			'result'    => 1,
 		);
-	
+
 		/* invalid title */
 		$invalidTitle = array(
 			'title'		=> self::INVALID_TITLE,
@@ -344,15 +391,15 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'text' => self::INVALID_TITLE,
 				'reason' => 'Test answers block',
 				'exact' => '',
-				'caseSensitive' => '', 
+				'caseSensitive' => '',
 				'id' => 4011,
-				'language' => 'en', 
+				'language' => 'en',
 				'authorId' => 184532,
 			),
 			'language'  => 'en',
 			'result'    => 0,
 		);
-		
+
 		return array( $validTitle, $invalidTitle );
 	}
 }
