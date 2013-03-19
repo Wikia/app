@@ -37,6 +37,17 @@ class OnWiki extends AbstractSelect
 		if (! empty( $match ) ) {
 			$this->config->setArticleMatch( $match );
 		}
+		if ( $this->service->getGlobal( 'OnWikiSearchIncludesWikiMatch' ) ) {
+			$domain = preg_replace(
+				'/[^a-zA-Z]/',
+				'',
+				strtolower( $this->config->getQuery( \Wikia\Search\Config::QUERY_RAW ) ) 
+				);
+			$wikiMatch = $this->service->getWikiMatchByHost( $domain );
+			if (! empty( $wikiMatch ) ) {
+				$this->config->setWikiMatch( $wikiMatch );
+			}
+		}
 		return $this->config->getMatch();
 	}
 	
