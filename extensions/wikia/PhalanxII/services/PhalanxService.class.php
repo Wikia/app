@@ -2,6 +2,7 @@
 
 /**
  * @method setLimit
+ * @method setUser
  */
 class PhalanxService extends Service {
 	/* limit of blocks */
@@ -13,6 +14,11 @@ class PhalanxService extends Service {
 	const RES_FAILURE = 'failure';
 	const RES_STATUS = 'PHALANX ALIVE';
 
+	/**
+	 * @param $name
+	 * @param $args
+	 * @return null|PhalanxService
+	 */
 	public function __call($name, $args) {
 		$method = substr($name, 0, 3);
 		$key = strtolower( substr( $name, 3 ) );

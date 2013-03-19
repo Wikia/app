@@ -1,11 +1,19 @@
 <?php
 
+/**
+ * @method setBlock
+ * @method getBlock
+ * @method getText
+ * @method getLang
+ */
 abstract class PhalanxModel extends WikiaObject {
 	public $model = null;
 	public $text = null;
 	public $block = null;
 	public $lang = null;
+	/* @var User */
 	public $user = null;
+	/* @var PhalanxService */
 	private $service = null;
 	public $ip = null;
 
@@ -22,10 +30,44 @@ abstract class PhalanxModel extends WikiaObject {
 		$this->ip = $this->wg->request->getIp();
 	}
 
+	/**
+	 * Returns instence of a proper PhalanxModel based on provided block type (Phalanx::TYPE_*)
+	 *
+	 * @param $typeId int type ID
+	 * @param $content string|Title|User content to check (text, title, user name, ...)
+	 * @return PhalanxModel|null
+	 */
+	public static function newFromType($typeId, $content) {
+		$instance = null;
+
+		switch($typeId) {
+			case Phalanx:: TYPE_TITLE:
+				$title = ($content instanceof Title) ? $content : Title::newFromText($content);
+				$instance = new PhalanxContentModel($title);
+				break;
+
+			case Phalanx:: TYPE_SUMMARY:
+			case Phalanx:: TYPE_CONTENT:
+			case Phalanx:: TYPE_ANSWERS_QUESTION_TITLE:
+			case Phalanx:: TYPE_ANSWERS_RECENT_QUESTIONS:
+			case Phalanx:: TYPE_WIKI_CREATION:
+			case Phalanx:: TYPE_EMAIL:
+				$instance = new PhalanxTextModel($content);
+				break;
+
+			case Phalanx:: TYPE_USER:
+				$user = ($content instanceof User) ? $content : User::newFromName($content);
+				$instance = new PhalanxUserModel($user);
+				break;
+		}
+
+		return $instance;
+	}
+
 	public function isOk() {
 		return (
 			$this->wg->User->isAllowed( 'phalanxexempt' ) ||
-			( !empty( $this->user ) && $this->user->isAllowed( 'phalanxexempt' ) )
+			( ( $this->user instanceof User) && $this->user->isAllowed( 'phalanxexempt' ) )
 		);
 	}
 
@@ -67,7 +109,7 @@ abstract class PhalanxModel extends WikiaObject {
 		$ret = true;
 
 		if ( !$this->isOk() ) {
-			$isUser = isset( $this->user ) && ( $this->user->getName() == $this->wg->User->getName() );
+			$isUser = ($this->user instanceof User) && ( $this->user->getName() == $this->wg->User->getName() );
 
 			$content = $this->getText();
 
@@ -93,7 +135,7 @@ abstract class PhalanxModel extends WikiaObject {
 
 	public function check( $type ) {
 		# send request to service
-		$result = $this->service->check( $type, $this->getText, $this->getLang() );
+		$result = $this->service->check( $type, $this->getText(), $this->getLang() );
 
 		if ( $result !== false ) {
 			# we have response from Phalanx service - 0/1
