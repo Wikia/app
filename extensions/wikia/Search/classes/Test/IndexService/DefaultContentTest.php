@@ -330,4 +330,40 @@ ENDIT;
 				$result['words']
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::removeGarbageFromDom
+	 */
+	public function testRemoveGarbageFromDom() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( null )
+		                ->getMock();
+		$dom = $this->getMockBuilder( 'simple_html_dom' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( array( 'find' ) )
+		            ->getMock();
+		$node = $this->getMockBuilder( 'simple_html_dom_node' )
+		             ->disableOriginalConstructor()
+		             ->setMethods( null )
+		             ->getMock();
+		$node->outertext = '<div class="foo">bar</div>';
+		$this->assertNotEmpty( $node->outertext );
+		$garbage = new ReflectionProperty( 'Wikia\Search\IndexService\DefaultContent', 'garbageSelectors' );
+		$garbage->setAccessible( true );
+		$garbage->setValue( $service, array( 'div.foo' ) );
+		$remove = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'removeGarbageFromDom' );
+		$remove->setAccessible( true );
+		$dom
+		    ->expects( $this->once() )
+		    ->method ( 'find' )
+		    ->with   ( 'div.foo' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$remove->invoke( $service, $dom );
+		$this->assertEquals(
+				' ',
+				$node->outertext
+		);
+	}
 }
