@@ -45,11 +45,6 @@
         <exclude name="build/**" />
       </fileset>
     </tar>
-
-  </target>
-
-  <target name="clean">
-    <delete dir="build" />
   </target>
 
   <target name="clean">
