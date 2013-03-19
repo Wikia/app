@@ -95,7 +95,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$format = $this->response->getFormat();
 		if( ($format == 'json' || $format == 'jsonp') && ($searchConfig->getResultsFound() > 0) ){
-			$searchConfig->setResults( $searchConfig->getResults()->toNestedArray() );
+			$searchConfig->setResults( $searchConfig->getResults()->toNestedArray( array( 'title', 'url', 'pageid' ) ) );
 		}
 
 		$tabsArgs = array(

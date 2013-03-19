@@ -25,7 +25,7 @@ class RelatedPagesController extends WikiaController {
 			// check for mainpage
 			Wikia::isMainPage() ||
 			// check for content namespaces
-			!empty( $wgTitle ) && !in_array( $wgTitle->getNamespace(), $wgContentNamespaces ) ||
+			(!empty( $wgTitle ) && !in_array( $wgTitle->getNamespace(), $wgContentNamespaces )) ||
 			// check if we have any categories
 			count( $relatedPages->getCategories( $articleid ) ) == 0 ||
 			// check action
@@ -57,6 +57,13 @@ class RelatedPagesController extends WikiaController {
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
+	}
+
+	static function onWikiaMobileAssetsPackages(&$jsHead, &$jsBody, &$scss) {
+		$jsBody[] = 'wikiamobile_relatedpages_js';
+		$scss[] = 'wikiamobile_relatedpages_scss';
+
+		return true;
 	}
 
 	/**

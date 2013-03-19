@@ -172,95 +172,29 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->wf->profileIn( __METHOD__ );
 
 		$id = $this->wg->Request->getInt( 'id', 0 );
-		$multitext = $this->wg->Request->getText( 'wpPhalanxFilterBulk' );
-
 		$isBlockUpdate = ($id !== 0);
-
-		/* init Phalanx helper class */
-		$phalanx = Phalanx::newFromId($id);
-
-		$phalanx['text'] = $this->wg->Request->getText( 'wpPhalanxFilter' );
-		$phalanx['exact'] = $this->wg->Request->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0;
-		$phalanx['case'] = $this->wg->Request->getCheck( 'wpPhalanxFormatCase' ) ? 1 : 0;
-		$phalanx['regex'] = $this->wg->Request->getCheck( 'wpPhalanxFormatRegex' ) ? 1 : 0;
-		$phalanx['timestamp'] = wfTimestampNow();
-		$phalanx['author_id'] = $this->wg->User->getId();
-		$phalanx['reason'] = $this->wg->Request->getText( 'wpPhalanxReason' );
-		$phalanx['lang'] = $this->wg->Request->getVal( 'wpPhalanxLanguages', null );
-		$phalanx['type'] = $this->wg->Request->getArray( 'wpPhalanxType' );
-
-		$typemask = 0;
-		if ( is_array( $phalanx['type'] ) ) {
-			foreach ( $phalanx['type'] as $type ) {
-				$typemask |= $type;
-			}
-		}
-
-		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $typemask ) ) {
-			$this->wf->profileOut( __METHOD__ );
-			return self::RESULT_ERROR;
-		}
-
-		$phalanx['type'] = $typemask;
-		$expire = $this->wg->Request->getText('wpPhalanxExpire');
-		if ( !empty( $expire ) ) {
-			$phalanx['expire'] = $expire;
-		}
-
-		if ( $phalanx['lang'] == 'all' ) {
-			$phalanx['lang'] = null;
-		}
-
-		if ( $phalanx['expire'] != 'infinite' ) {
-			$expire = strtotime( $phalanx['expire'] );
-			if ( $expire < 0 || $expire === false ) {
-				$this->wf->profileOut( __METHOD__ );
-				return self::RESULT_ERROR;
-			}
-			$phalanx['expire'] = wfTimestamp( TS_MW, $expire );
+		$data = array(
+			'id'         => $id,
+			'text'       => $this->wg->Request->getText( 'wpPhalanxFilter' ),
+			'exact'      => $this->wg->Request->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0,
+			'case'       => $this->wg->Request->getCheck( 'wpPhalanxFormatCase' ) ? 1 : 0,
+			'regex'      => $this->wg->Request->getCheck( 'wpPhalanxFormatRegex' ) ? 1 : 0,
+			'timestamp'  => wfTimestampNow(),
+			'author_id'  => $this->wg->User->getId(),
+			'reason'     => $this->wg->Request->getText( 'wpPhalanxReason' ),
+			'lang'       => $this->wg->Request->getVal( 'wpPhalanxLanguages', null ),
+			'type'       => $this->wg->Request->getArray( 'wpPhalanxType' ),
+			'multitext'  => $this->wg->Request->getText( 'wpPhalanxFilterBulk' ),
+			'expire'     => $this->wg->Request->getText('wpPhalanxExpire')
+		);
+		if ( !wfRunHooks( "EditPhalanxBlock", array( &$data ) ) ) {
+			$ret = self::RESULT_ERROR;
 		} else {
-			$phalanx['expire'] = null ;
-		}
-
-		if ( empty( $multitext ) ) {
-			/* single mode - insert/update record */
-			$id = $phalanx->save();
-			$result = $id ? array( "success" => array( $id ), "failed" => 0 ) : false;
-		}
-		else {
-			/* non-empty bulk field */
-			$bulkdata = explode( "\n", $multitext );
-			if ( count($bulkdata) > 0 ) {
-				$result = array( 'success' => array(), 'failed' => 0 );
-				foreach ( $bulkdata as $bulkrow ) {
-					$bulkrow = trim($bulkrow);
-					$phalanx['id'] = null;
-					$phalanx['text'] = $bulkrow;
-
-					$id = $phalanx->save();
-					if ( $id ) {
-						$result[ 'success' ][] = $id;
-					} else {
-						$result[ 'failed' ]++;
-					}
-				}
-			} else {
-				$result = false;
-			}
-		}
-
-		if ( $result !== false ) {
-			$this->refresh( $result["success"] );
+			$ret = $isBlockUpdate ? self::RESULT_BLOCK_UPDATED : self::RESULT_BLOCK_ADDED;
 		}
 
 		$this->wf->profileOut( __METHOD__ );
-
-		if ($result === false) {
-			return self::RESULT_ERROR;
-		}
-		else {
-			return $isBlockUpdate ? self::RESULT_BLOCK_UPDATED : self::RESULT_BLOCK_ADDED;
-		}
+		return $ret;
 	}
 
 	/**
@@ -337,14 +271,10 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 
 		// delete a block
-		$phalanx = Phalanx::newFromId($id);
-
-		$id = $phalanx->delete();
-		if ( $id ) {
-			$result = array( "success" => array( $id ), "failed" => 0 );
-			$this->refresh( $result["success"] );
-		} else {
+		if ( !wfRunHooks( "DeletePhalanxBlock", array( $id ) ) ) {
 			$result = false;
+		} else {
+			$result = true;
 		}
 
 		$this->setVal('success', $result !== false);
@@ -391,10 +321,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			}
 		}
 		$this->setVal('blocks', $result);
-	}
-
-	private function refresh( /*Array*/ $ids )  {
-		$this->setVal('valid', $this->service->reload( $ids ));
 	}
 
 	private function getToken() {

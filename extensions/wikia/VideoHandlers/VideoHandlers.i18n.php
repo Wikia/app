@@ -25,6 +25,11 @@ $messages['en'] = array(
 	'videohandler-remove-video-modal-ok' => 'Remove',
 	'videohandler-remove-video-modal-success' => 'File:$1 has been removed from this wiki',
 	'videohandler-remove-video-modal-cancel' => 'Cancel',
+	'videohandler-remove-error-unknow' => 'We are sorry, but something went wrong with the deletion.',
+	'videos-error-empty-title' => 'Empty title.',
+	'videos-error-blocked-user' => 'Blocked user.',
+	'videos-error-readonly' => 'Read only mode.',
+	'videos-error-permissions' => 'you cannot delete this video.',
 	'videohandler-error-restricted-video' => 'This video contains restricted content that cannot be displayed on this wiki',
 
 	'videos-add-video' => 'Add a video',

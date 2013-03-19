@@ -16,8 +16,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 		$functionWrapperMock->expects($this->once())
 			->method('msg')
-			->with('marketing-toolbox-hub-module-top10-list')
-			->will($this->returnValue('testNameFor Top 10 list'));
+			->with('marketing-toolbox-hub-module-slider')
+			->will($this->returnValue('testNameFor slider'));
 
 		$app = new WikiaApp(null, null, null, $functionWrapperMock);
 
@@ -26,21 +26,19 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$model->setApp($app);
 
 		$this->assertEquals(
-			'testNameFor Top 10 list',
-			$model->getModuleName(MarketingToolboxModuleTop10listService::MODULE_ID)
+			'testNameFor slider',
+			$model->getModuleName(MarketingToolboxModuleSliderService::MODULE_ID)
 		);
 	}
 
 	public function testGetNotTranslatedModuleName() {
 		$testDatas = array(
 			MarketingToolboxModuleSliderService::MODULE_ID => 'Slider',
-			MarketingToolboxModulePulseService::MODULE_ID => 'Pulse',
 			MarketingToolboxModuleWikiaspicksService::MODULE_ID => 'Wikiaspicks',
 			MarketingToolboxModuleFeaturedvideoService::MODULE_ID => 'Featuredvideo',
 			MarketingToolboxModuleExploreService::MODULE_ID => 'Explore',
 			MarketingToolboxModuleFromthecommunityService::MODULE_ID => 'Fromthecommunity',
 			MarketingToolboxModulePollsService::MODULE_ID => 'Polls',
-			MarketingToolboxModuleTop10listService::MODULE_ID => 'Top10list',
 			MarketingToolboxModulePopularvideosService::MODULE_ID => 'Popularvideos'
 		);
 
@@ -100,7 +98,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 	public function testGetModuleUrl() {
 		$params = array(
-			'moduleId' => MarketingToolboxModulePulseService::MODULE_ID,
+			'moduleId' => MarketingToolboxModuleSliderService::MODULE_ID,
 			'date' => 123456,
 			'region' => 'pl',
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
@@ -197,7 +195,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertNull($modulesData['lastEditTime']);
 		$this->assertNull($modulesData['lastEditor']);
 		$this->assertNotNull($modulesData['activeModuleName']);
-		$this->assertEquals(9, count($modulesData['moduleList']));
+		$this->assertEquals(7, count($modulesData['moduleList']));
 
 		foreach ($modulesData['moduleList'] as $module) {
 			$this->assertArrayHasKey('status', $module);
@@ -240,13 +238,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'data' => array('second test variable' => 'variable')
 		);
 
-		$mockedModulesData = array();
-		for ($i = 1; $i < 9; $i++) {
-			$mockedModulesData[$i] = $mockDataForModule;
-		}
-		$mockedModulesData[9] = $mockDataForLastModule;
-
-
 		// Mock database
 		$dbMock = $this->getMock('DatabaseMysql', array('selectField', 'makeList'));
 		$dbMock->expects($this->once())
@@ -283,6 +274,14 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			array('getModulesDataFromDb', 'getModuleUrl', 'getDefaultModuleList'),
 			array($app)
 		);
+
+		$moduleIds = $modelMock->getEditableModulesIds();
+
+		$mockedModulesData = array();
+		for ($i = 1; $i < 9; $i++) {
+			if(in_array($i, $moduleIds)) $mockedModulesData[$i] = $mockDataForModule;
+		}
+		$mockedModulesData[9] = $mockDataForLastModule;
 
 		$modelMock->expects($this->at(0))
 			->method('getModulesDataFromDb')
@@ -331,24 +330,26 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals(123654, $modulesData['lastEditTime']);
 		$this->assertEquals($lastEditorName, $modulesData['lastEditor']);
 		$this->assertNotNull($modulesData['activeModuleName']);
-		$this->assertEquals(9, count($modulesData['moduleList']));
+		$this->assertEquals(7, count($modulesData['moduleList']));
 
 		for ($i = 1; $i < 9; $i++) {
-			$module = $modulesData['moduleList'][$i];
+			if(in_array($i, $moduleIds)) {
+				$module = $modulesData['moduleList'][$i];
 
-			$this->assertArrayHasKey('status', $module);
-			$this->assertArrayHasKey('data', $module);
-			$this->assertArrayHasKey('lastEditTime', $module);
-			$this->assertArrayHasKey('lastEditorId', $module);
-			$this->assertArrayHasKey('name', $module);
-			$this->assertArrayHasKey('href', $module);
+				$this->assertArrayHasKey('status', $module);
+				$this->assertArrayHasKey('data', $module);
+				$this->assertArrayHasKey('lastEditTime', $module);
+				$this->assertArrayHasKey('lastEditorId', $module);
+				$this->assertArrayHasKey('name', $module);
+				$this->assertArrayHasKey('href', $module);
 
-			$this->assertEquals(1, $module['status']);
-			$this->assertEquals($mockDataForModule['lastEditTime'], $module['lastEditTime']);
-			$this->assertEquals($mockDataForModule['lastEditorId'], $module['lastEditorId']);
-			$this->assertEquals($mockDataForModule['data'], $module['data']);
-			$this->assertNotNull($module['name']);
-			$this->assertEquals('test href', $module['href']);
+				$this->assertEquals(1, $module['status']);
+				$this->assertEquals($mockDataForModule['lastEditTime'], $module['lastEditTime']);
+				$this->assertEquals($mockDataForModule['lastEditorId'], $module['lastEditorId']);
+				$this->assertEquals($mockDataForModule['data'], $module['data']);
+				$this->assertNotNull($module['name']);
+				$this->assertEquals('test href', $module['href']);
+			}
 		}
 
 		$module = $modulesData['moduleList'][9];
@@ -694,4 +695,173 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals($statuses['NOT_PUBLISHED'], $data['2013-01-08']);
 	}
 
+	/**
+	 * @dataProvider getDataModulesSavedDataProvider
+	 */
+	public function testCheckModulesSaved($savedModules, $expectedVal) {
+		$dbMock = $this->getMock('DatabaseMysql', array( 'select', 'fetchRow'));
+
+		$dbMock->expects($this->any())
+			->method('fetchRow')
+			->will($this->returnValue($savedModules));
+
+		$dbMock->expects($this->once())
+			->method('select')
+			->will($this->returnValue(array()));
+
+		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockApp();
+
+		$model = new MarketingToolboxModel();
+		$returnedVal = $model->checkModulesSaved('en', '2','1360454400');
+
+		$this->assertEquals($expectedVal, $returnedVal);
+	}
+
+	public function getDataModulesSavedDataProvider() {
+		return array(
+			array(
+				'4', false
+			),
+			array(
+				'7', true
+			),
+			array(
+				'3', false
+			),
+			array(
+				'5', false
+			)
+		);
+	}
+
+	private $visualizationData = array (
+		'de' => array(
+			'wikiId' => 111264,
+			'wikiTitle' => 'Wikia Deutschland',
+			'url' => 'http://de.wikia.com/',
+			'db' => 'dehauptseite',
+			'lang' => 'de'
+		),
+		'fr' => array(
+			'wikiId' => 208826,
+			'wikiTitle' => 'Wikia',
+			'url' => 'http://fr.wikia.com/',
+			'db' => 'fraccueil',
+			'lang' => 'fr'
+		),
+		'es' => array(
+			'wikiId' => 583437,
+			'wikiTitle' => 'Wiki Esglobal',
+			'url' => 'http://es.wikia.com/',
+			'db' => 'esesglobal',
+			'lang' => 'es'
+		),
+		'en' => array(
+			'wikiId' => 80433,
+			'wikiTitle' => 'Wikia',
+			'url' => 'http://www.wikia.com/',
+			'db' => 'wikiaglobal',
+			'lang' => 'en'
+		),
+	);
+
+	private $hubsV2Pages = array(
+		'en' => array (
+			2 => 'Video_Games',
+			3 => 'Entertainment',
+			9 => 'Lifestyle',
+		),
+		'de' => array (
+			2 => 'Videospiele',
+			3 => 'Entertainment',
+		),
+		'fr' => array (
+			2 => 'Mode_de_vie',
+			3 => 'Jeux_vidéo',
+			9 => 'Divertissement',
+		),
+		'es' => array (
+			2 => 'Videojuegos',
+			3 => 'Entretenimiento',
+			9 => 'Lista_de_Wikis',
+		),
+	);
+
+	/**
+	 * @dataProvider getHubUrlDataProvider
+	 */
+	public function testGetHubUrl($expectedUrl, $langCode, $verticalId, $wikiaHubsV2Pages) {
+		$toolBoxModelMock = $this->getMock(
+			'MarketingToolboxModel',
+			array('getVisualizationData', 'getHubsV2Pages')
+		);
+
+		$toolBoxModelMock
+			->expects($this->once())
+			->method('getVisualizationData')
+			->will($this->returnValue($this->visualizationData));
+
+
+		$toolBoxModelMock
+			->expects($this->once())
+			->method('getHubsV2Pages')
+			->will($this->returnValue($wikiaHubsV2Pages));
+
+		$this->mockApp();
+
+		$this->assertEquals($expectedUrl, $toolBoxModelMock->getHubUrl($langCode, $verticalId));
+	}
+
+	public function getHubUrlDataProvider() {
+		return array(
+			array('http://www.wikia.com/Video_Games', 'en', 2, $this->hubsV2Pages['en']),
+			array('http://www.wikia.com/Entertainment', 'en', 3, $this->hubsV2Pages['en']),
+			array('http://www.wikia.com/Lifestyle', 'en', 9, $this->hubsV2Pages['en']),
+
+			array('http://de.wikia.com/Videospiele', 'de', 2, $this->hubsV2Pages['de']),
+			array('http://de.wikia.com/Entertainment', 'de', 3, $this->hubsV2Pages['de']),
+
+			array('http://fr.wikia.com/Mode_de_vie', 'fr', 2, $this->hubsV2Pages['fr']),
+			array('http://fr.wikia.com/Jeux_vidéo', 'fr', 3, $this->hubsV2Pages['fr']),
+			array('http://fr.wikia.com/Divertissement', 'fr', 9, $this->hubsV2Pages['fr']),
+
+			array('http://es.wikia.com/Videojuegos', 'es', 2, $this->hubsV2Pages['es']),
+			array('http://es.wikia.com/Entretenimiento', 'es', 3, $this->hubsV2Pages['es']),
+			array('http://es.wikia.com/Lista_de_Wikis', 'es', 9, $this->hubsV2Pages['es']),
+		);
+	}
+
+	public function testGetHubUrlForWrongLang() {
+		$pollsModuleMock = $this->getMock(
+			'MarketingToolboxModel',
+			array('getVisualizationData')
+		);
+
+		$pollsModuleMock
+			->expects($this->once())
+			->method('getVisualizationData')
+			->will($this->returnValue($this->visualizationData));
+
+		$this->setExpectedException('Exception');
+		$pollsModuleMock->getHubUrl('xxx', 9);
+	}
+
+	public function testGetHubUrlForWrongVertical() {
+		$pollsModuleMock = $this->getMock(
+			'MarketingToolboxModel',
+			array('getVisualizationData')
+		);
+
+		$pollsModuleMock
+			->expects($this->once())
+			->method('getVisualizationData')
+			->will($this->returnValue($this->visualizationData));
+
+		$this->mockGlobalVariable('wgWikiaHubsV2Pages', $this->hubsV2Pages['en']);
+		$this->mockApp();
+
+		$this->setExpectedException('Exception');
+		$pollsModuleMock->getHubUrl('en', 666);
+	}
 }

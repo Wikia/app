@@ -872,7 +872,7 @@ function wfDebug( $text, $logonly = false ) {
 			$cache = array();
 		}
 	}
-	if ( wfRunHooks( 'Debug', array( $text, null /* no log group */ ) ) ) {
+	# if ( wfRunHooks( 'Debug', array( $text, null ) ) ) { // Wikia change - BAC-91
 		if ( $wgDebugLogFile != '' && !$wgProfileOnly ) {
 			# Strip unprintables; they can switch terminal modes when binary data
 			# gets dumped, which is pretty annoying.
@@ -880,7 +880,7 @@ function wfDebug( $text, $logonly = false ) {
 			$text = $wgDebugLogPrefix . $text;
 			wfErrorLog( $text, $wgDebugLogFile );
 		}
-	}
+	#} // Wikia change - BAC-91
 
 	MWDebug::debugMsg( $text );
 }

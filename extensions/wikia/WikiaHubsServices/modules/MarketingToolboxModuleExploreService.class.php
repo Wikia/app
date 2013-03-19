@@ -1,5 +1,5 @@
 <?php
-class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService {
+class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditableService {
 	const SECTION_FIELD_PREFIX = 'exploreSectionHeader';
 	const LINK_TEXT = 'exploreLinkText';
 	const LINK_URL = 'exploreLinkUrl';

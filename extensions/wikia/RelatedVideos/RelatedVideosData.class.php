@@ -68,22 +68,7 @@ class RelatedVideosData {
 			return wfMsg('related-videos-error-no-article-id');
 		}
 
-		/*
-		$targetTitle = F::build('Title', array($articleId), 'newFromId');
-		if (!$targetTitle->exists()) {
-			wfProfileOut( __METHOD__ );
-			return wfMsg('related-videos-error-unknown', 876462);
-		}
-
-		// check permission
-		$permErrors = $targetTitle->getUserPermissionsErrors( 'edit', F::app()->wg->user );
-		if ($permErrors) {
-			wfProfileOut( __METHOD__ );
-			return wfMsg('related-videos-error-permission-article');
-		}*/
-
-		/** @var $videoService VideoService */
-		$videoService = F::build( 'VideoService' );
+		$videoService = new VideoService();
 		$retval = $videoService->addVideo( $url );
 		if ( !is_array($retval) ) {
 			wfProfileOut( __METHOD__ );
@@ -93,13 +78,12 @@ class RelatedVideosData {
 		list($videoTitle, $videoPageId, $videoProvider) = $retval;
 
 		// add to article's whitelist
-		//$rvn = F::build( 'RelatedVideosNamespaceData', array( $targetTitle ), 'newFromTargetTitle' );
 		$rvn = RelatedVideosNamespaceData::newFromGeneralMessage();
-		if(empty($rvn)) {
+		if ( empty($rvn) ) {
 			$rvn = RelatedVideosNamespaceData::createGlobalList();
 		}
 		$entry = $rvn->createEntry( $videoTitle->getText(), $videoProvider == self::V_WIKIAVIDEO );
-		$retval = $rvn->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array( $entry ), $articleId );
+		$retval = $rvn->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array( $entry ) );
 		if ( is_array( $rvn->entries ) ){
 			$entry = end( $rvn->entries );
 		}
@@ -137,7 +121,7 @@ class RelatedVideosData {
 		return $title;
 	}
 
-	public function removeVideo($articleId, $title, $isExternal) {
+	public function removeVideo( $title, $isExternal ) {
 		wfProfileIn( __METHOD__ );
 		// general validation
 		if ( empty( $title ) ) {
@@ -145,37 +129,30 @@ class RelatedVideosData {
 			return wfMsg('related-videos-add-video-error-bad-url');
 		}
 
-		if ( empty( $articleId ) ) {
-			wfProfileOut( __METHOD__ );
-			return wfMsg('related-videos-error-unknown', 876463);
-		}
-
-		$targetTitle = F::build('Title', array($articleId), 'newFromId');
-		if (!$targetTitle->exists()) {
+		$targetTitle =  Title::newFromText( RelatedVideosNamespaceData::GLOBAL_RV_LIST, NS_MEDIAWIKI );
+		if ( !$targetTitle->exists() ) {
 			wfProfileOut( __METHOD__ );
 			return wfMsg('related-videos-error-unknown', 876464);
 		}
 
 		// check permission
 		$permErrors = $targetTitle->getUserPermissionsErrors( 'edit', F::app()->wg->user );
-		if ($permErrors) {
+		if ( $permErrors ) {
 			wfProfileOut( __METHOD__ );
 			return wfMsg('related-videos-error-permission-article');
 		}
 
-		$rvn = F::build('RelatedVideosNamespaceData', array(), 'newFromGeneralMessage');
-		if ( empty($rvn) ) {
-			$rvn = F::build('RelatedVideosNamespaceData', array(), 'createGlobalList');
+		$rvn = RelatedVideosNamespaceData::newFromGeneralMessage();
+		if( empty($rvn) ) {
+			$rvn = RelatedVideosNamespaceData::createGlobalList();
 		}
 
 		// standardize format of title
-		$titleObj = F::build('Title', array($title), 'newFromText');
-		$title = $titleObj->getText();
-		$entry = $rvn->createEntry($title, $isExternal); /** @var $rvs RelatedVideosNamespaceData */
+		$titleObj = Title::newFromText($title);
+		$entry = $rvn->createEntry( $titleObj->getText(), $isExternal );
 
 		// check video exists
-		$rvs = F::build('RelatedVideosService');
-
+		$rvs = new RelatedVideosService();
 		$entry['articleId'] = 0;
 		$data = $rvs->getRelatedVideoData( $entry );
 		if ( empty( $data['title'] ) ) {
@@ -183,7 +160,7 @@ class RelatedVideosData {
 			return wfMsg( 'related-videos-remove-video-error-nonexisting' );
 		}
 
-		$retval = $rvn->addToList( RelatedVideosNamespaceData::BLACKLIST_MARKER, array($entry), $articleId );
+		$retval = $rvn->addToList( RelatedVideosNamespaceData::BLACKLIST_MARKER, array($entry) );
 		if (is_object($retval)) {
 			if ($retval->ok) {
 				wfProfileOut( __METHOD__ );

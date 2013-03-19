@@ -115,6 +115,7 @@ class WikiaHomePageTest extends WikiaBaseTest {
 	 */
 	public function testGetHubImages($mockRawText, $mockFileParams, $mockImageServingParams, $expHubImages) {
 		// setup
+		$this->mockGlobalVariable('wgEnableWikiaHubsV2Ext', false);
 		$this->setUpMockObject('Title', array('newFromText' => null, 'exists' => true), true);
 		$this->setUpMockObject('Article', array('getRawText' => $mockRawText), true, null, false);
 		$this->setUpMockObject('ImageServing', $mockImageServingParams, true, null, false);
@@ -125,7 +126,6 @@ class WikiaHomePageTest extends WikiaBaseTest {
 		}
 
 		$this->setUpMock();
-
 		// test
 		$response = $this->app->sendRequest('WikiaHomePage', 'getHubImages');
 
@@ -137,9 +137,9 @@ class WikiaHomePageTest extends WikiaBaseTest {
 		// 1 - empty html
 		$mockRawText1 = '';
 		$expHubImages1 = array(
-			'Entertainment' => '',
-			'Video_Games' => '',
-			'Lifestyle' => '',
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => '',
+			WikiFactoryHub::CATEGORY_ID_GAMING => '',
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => '',
 		);
 		$mockFileParams1 = false;
 		$mockImageServingParams1 = 0;
@@ -184,23 +184,23 @@ TXT;
 		);
 
 		$expHubImages3 = array(
-			'Entertainment' => '',
-			'Video_Games' => '',
-			'Lifestyle' => '',
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => '',
+			WikiFactoryHub::CATEGORY_ID_GAMING => '',
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => '',
 		);
 
 		// 4 - not empty html + gallery tag exists with orientation="mosaic" + file does not exist
 		$expHubImages4 = array(
-			'Entertainment' => self::BLANK_IMG_URL,
-			'Video_Games' => self::BLANK_IMG_URL,
-			'Lifestyle' => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_GAMING => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => self::BLANK_IMG_URL,
 		);
 
 		// 5 - not empty html + gallery tag exists with orientation="mosaic" + file exists
 		$expHubImages5 = array(
-			'Entertainment' => self::BLANK_IMG_URL,
-			'Video_Games' => self::BLANK_IMG_URL,
-			'Lifestyle' => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_GAMING => self::BLANK_IMG_URL,
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => self::BLANK_IMG_URL,
 		);
 		$mockFileParams5 = array(
 			'exists' => true,
@@ -222,6 +222,71 @@ TXT;
 			array($mockRawText4, $mockFileParams4, $mockImageServingParams1, $expHubImages4),
 			// 5 - not empty html + gallery tag exists with orientation="mosaic" + file exists
 			array($mockRawText4, $mockFileParams5, $mockImageServingParams1, $expHubImages5),
+		);
+	}
+
+	/**
+	 * @dataProvider getHubV2ImagesDataProvider
+	 */
+	public function testGetHubV2Images($mockedImageUrl, $expHubImages) {
+		// setup
+		$this->mockGlobalVariable('wgEnableWikiaHubsV2Ext', true);
+		$this->mockGlobalVariable('wgWikiaHubsV2Pages', array(
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
+			WikiFactoryHub::CATEGORY_ID_GAMING => 'Video_games',
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'Lifestyle',
+		));
+
+		$mock_cache = $this->getMock('stdClass', array('get', 'set'));
+		$mock_cache->expects($this->any())
+			->method('get')
+			->will($this->returnValue(null));
+		$mock_cache->expects($this->any())
+			->method('set');
+		$this->mockGlobalVariable('wgMemc', $mock_cache);
+
+		$homePageMock = $this->getMock('WikiaHomePageController', array('getHubSliderData'));
+		$homePageMock->expects($this->any())
+			->method('getHubSliderData')
+			->will($this->returnValue(array(
+					'data' => array(
+						'slides' => array(
+							0 => array(
+								'photoUrl' => $mockedImageUrl
+							)
+						)
+					)
+				)
+			));
+
+		$this->mockClass('WikiaHomePageController', $homePageMock);
+
+		$this->setUpMock();
+
+		$response = $this->app->sendRequest('WikiaHomePage', 'getHubImages');
+		$responseData = $response->getVal('hubImages');
+
+		$this->assertEquals($expHubImages, $responseData);
+	}
+
+	public function getHubV2ImagesDataProvider() {
+		return array(
+			array(
+				null,
+				array(
+					WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => null,
+					WikiFactoryHub::CATEGORY_ID_GAMING => null,
+					WikiFactoryHub::CATEGORY_ID_LIFESTYLE => null,
+				)
+			),
+			array(
+				'testUrl',
+				array(
+					WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'testUrl',
+					WikiFactoryHub::CATEGORY_ID_GAMING => 'testUrl',
+					WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'testUrl',
+				)
+			),
 		);
 	}
 

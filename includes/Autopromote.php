@@ -139,7 +139,7 @@ class Autopromote {
 	 * @return bool Whether the condition is true for the user
 	 */
 	private static function checkCondition( $cond, User $user ) {
-		global $wgEmailAuthentication;
+		global $wgEmailAuthentication, $wgEnableEditCountLocal;
 		if ( count( $cond ) < 1 ) {
 			return false;
 		}

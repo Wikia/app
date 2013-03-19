@@ -24,7 +24,7 @@
 				throw "Only Json,Jsonp and Html format are allowed";
 			}
 
-			url = attr.scriptPath || context.wgScriptPath;
+			url = attr.scriptPath || context.wgServer + context.wgScriptPath;
 
 			getUrl = {
 				//Iowa strips out POST parameters, Nirvana requires these to be set
@@ -47,7 +47,7 @@
 					sortedKeys[sortedKeys.length] = key;
 				}
 				sortedKeys.sort();
-				var sortedDict = {};
+				sortedDict = {};
 				for(var i = 0; i < sortedKeys.length; i++) {
 					sortedDict[sortedKeys[i]] = data[sortedKeys[i]];
 				}

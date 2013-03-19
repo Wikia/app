@@ -29,9 +29,15 @@
 			</a>
 			<?php endif; ?>
 			<span>
-				<?php echo $sk->link( $title , $value2['wl_title'], array( 'class' => 'title-link' ) ); ?>
+				<?php
+				$title = !empty( $value2['wl_title_obj'] ) ? $value2['wl_title_obj'] : $title;
+				echo $sk->link( $title, $value2['wl_title'], array( 'class' => 'title-link' ) );
+				?>
 				<?php if(!empty($value2['by_user'])): ?>
 					<?php echo wfMsg('wikiafollowedpages-special-blog-by', array("$1" => $value2['by_user']) ) ?>
+				<?php endif;?>
+				<?php if ( !empty( $value2['on_board'] ) ): ?>
+					<?= wfMessage( 'wikiafollowedpages-special-board' )->rawParams( $value2['on_board'] )->escaped() ?>
 				<?php endif;?>
 			</span>
 			<?php if(!empty($value2['other_namespace'])): ?>

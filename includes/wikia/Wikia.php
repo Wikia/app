@@ -39,6 +39,10 @@ $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPag
 $wgHooks['OutputPageCheckLastModified'][] = 'Wikia::onOutputPageCheckLastModified';
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 
+# User hooks
+$wgHooks['UserNameLoadFromId']       [] = "Wikia::onUserNameLoadFromId";
+$wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -1920,8 +1924,8 @@ class Wikia {
 	 * @author macbre
 	 *
 	 * @param UploadBase $upload
-	 * @param $mime
-	 * @param $error
+	 * @param string $mime
+	 * @param array $error
 	 * @return bool
 	 */
 	public static function onUploadVerifyFile(UploadBase $upload, $mime, &$error) {
@@ -1936,26 +1940,54 @@ class Wikia {
 			return true;
 		}
 
-		// validate an image
+		// validate an image using ImageMagick
 		$imageFile = $upload->getTempPath();
-		$img = @imagecreatefromstring( file_get_contents($imageFile) );
-		$isValid = is_resource($img);
+
+		$output = wfShellExec("identify -verbose {$imageFile} 2>&1", $retVal);
+		$isValid = ($retVal === 0);
 
 		if (!$isValid) {
-			$msg = sprintf(
-				'File "%s" claimed to be "%s"',
-				$upload->getTitle()->getText(),
-				$mime
-			);
-			Wikia::log(__METHOD__, 'failed', $msg, true);
+			Wikia::log(__METHOD__, 'failed',  rtrim($output), true);
 
 			// pass an error to UploadBase class
 			$error = array('verification-error');
 		}
-		else {
-			imagedestroy($img);
-		}
 
-		return $isValid;
+		return $isValid;	
+	}
+	
+	/*
+	 * @param $user_name String
+	 * @param $s ResultWrapper
+	 */
+	public static function onUserNameLoadFromId( $user_name, &$s ) {
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType ) {
+			$mExtUser = ExternalUser::newFromName( $user_name );
+			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
+				$mExtUser->linkToLocal( $mExtUser->getId() );
+				$s = $mExtUser->getLocalUser( false );
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * @param $user User
+	 * @param $s ResultWrapper
+	 */
+	public static function onUserLoadFromDatabase( $user, &$s ) {
+		/* wikia change */
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType ) {
+			$mExtUser = ExternalUser::newFromId( $user->mId );
+			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
+				$mExtUser->linkToLocal( $mExtUser->getId() );
+				$s = $mExtUser->getLocalUser( false );
+			}
+		}
+		
+		return true;
 	}
 }

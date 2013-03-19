@@ -349,7 +349,7 @@
 			var data = [];
 
 			this.getCategories( filter ).each(function() {
-				data.push( CategorySelect.normalize( $.data( this ) ) );
+				data.push( CategorySelect.normalize( $(this).data() ) );
 			});
 
 			return data;

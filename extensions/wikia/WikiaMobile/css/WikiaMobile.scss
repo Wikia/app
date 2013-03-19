@@ -8,7 +8,6 @@
 @import "footer";
 @import "navigation";
 @import "search_page";
-@import "extensions/wikia/RelatedPages/css/RelatedPages.wikiamobile";
 @import "image_stack";
 @import "ad";
 @import "category_page";
@@ -66,7 +65,7 @@ body {
 
 #wkMainCntHdr {
 	border-bottom: 1px solid $border-color;
-	padding: $page-padding 50px $page-padding $page-padding;
+	padding: $page-padding 50px $page-padding 0;
 	position: relative;
 
 	h1{
@@ -213,7 +212,9 @@ blockquote {
 
 #wkTst{
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	//for those browsers that don't support fixed
 	position: absolute;
+	position: fixed;
 	margin: 10px auto;
 	padding: 10px 20px;
 	border-radius: 5px;

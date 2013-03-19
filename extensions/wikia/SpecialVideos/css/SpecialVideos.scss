@@ -34,7 +34,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 	border-bottom: 1px solid $color-page-border;
 	padding: 8px 0 18px;
 	margin-bottom: 18px;
-	
+
 	> label {
 		display: block;
 		float: left;
@@ -42,7 +42,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 		line-height: 21px;
 		margin-right: 8px;
 	}
-	
+
 	.WikiaDropdown {
 		float:left;
 		.dropdown {
@@ -58,7 +58,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 .VideoGrid {
 	@include clearfix;
 	border-bottom: 1px solid $color-page-border;
-	margin-bottom: 18px;	
+	margin-bottom: 18px;
 	// Override article p styles
 	p, p + p {
 		margin: 0;
@@ -83,7 +83,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 		height: 205px;
 		margin-bottom: 8px;
 		width: 100%;
-		
+
 		&:hover {
 			@include opacity(65);
 		}
@@ -93,6 +93,22 @@ $placeholder-bg-color: darken($color-page, 10%);
 		padding-right: 5px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+	.video-element {
+		position: relative;
+		&:hover .remove {
+			display: block;
+		}
+		.remove {
+			background-color: #ddd;	/* hardcoded because this is admin only feature */
+			cursor: pointer;
+			display: none;
+			padding: 0px 2px 4px 5px;
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 101;
+		}
 	}
 }
 

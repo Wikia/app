@@ -96,6 +96,13 @@
 	.photo {
 		right: 55px;
 	}
+
+	.photo-remove {
+		background-image: url('/extensions/wikia/GameGuides/images/remove_photo.png'); /* base64 */
+		background-position: center;
+
+		padding: 0 1px;
+	}
 }
 
 .image {

@@ -73,6 +73,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -87,7 +88,7 @@ $messages['br'] = array(
 	'tagsreportmainnspace' => 'Pennañ',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pajenn|pajennoù}})',
 	'tagsreportpagesfound' => 'Kavet <strong>$1</strong> pajennoù, zo enno ur valizenn arbennik (dpl, youtube, ...)', # Fuzzy
-	'tagsreportgenerated' => "Krouet d'an $1 $2", # Fuzzy
+	'tagsreportgenerated' => "Krouet d'an $1 da $2",
 );
 
 /** Catalan (català)

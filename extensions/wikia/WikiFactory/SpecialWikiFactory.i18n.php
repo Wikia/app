@@ -895,6 +895,9 @@ $messages['br'] = array(
 	'closed-confirm-btn' => 'Gwiriañ ar serriñ',
 	'closed-redirect-alert' => 'Roit un URL adkas, mar plij !',
 	'closed-reason' => 'Abeg :',
+	'newwikisgraph-wikis-created' => 'wikioù krouet',
+	'newwikisgraph-param-all' => 'An holl',
+	'newwikisgraph-param-other' => 'All',
 );
 
 /** Bosnian (bosanski)

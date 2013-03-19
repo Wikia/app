@@ -1303,8 +1303,12 @@ $messages['ko'] = array(
  */
 $messages['ku-latn'] = array(
 	'cnw-or' => 'an',
+	'cnw-name-wiki-label' => 'Navê wîkîya te',
 	'cnw-signup' => 'Hesabekî çêke',
+	'cnw-desc-choose' => 'Kategoriyekê hilbijêre',
 	'cnw-desc-lang' => 'Ziman',
+	'cnw-desc-wiki-submit-error' => 'Ji kerema xwe re kategoriyekê hilbijêre',
+	'cnw-error-blocked-header' => 'Hesab hat astengkirin',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

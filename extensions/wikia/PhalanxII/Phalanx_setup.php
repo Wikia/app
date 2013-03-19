@@ -21,8 +21,6 @@ $dir = __DIR__ . '/';
 $app = F::app();
 
 $classes = array(
-	/* controllers */
-	'PhalanxController'        => $dir . 'PhalanxController.class.php',
 	/* models */
 	'Phalanx'                  => $dir . 'classes/Phalanx.class.php',
 	'PhalanxModel'             => $dir . 'models/PhalanxModel.php',
@@ -64,24 +62,26 @@ $phalanxhooks = array(
 		),
 	'PhalanxTitleBlock' =>
 		array(
-			'SpecialMovepageBeforeMove'            => 'beforeMove',
-			'EditFilter'                           => 'editFilter',
-			'CreateDefaultQuestionPageFilter'      => 'checkTitle',
-			'CreatePageTitleCheck'                 => 'checkTitle',
-			'PageTitleFilter'                      => 'pageTitleFilter',
+			'SpecialMovepageBeforeMove'       => 'beforeMove',
+			'EditFilter'                      => 'editFilter',
+			'CreateDefaultQuestionPageFilter' => 'checkTitle',
+			'CreatePageTitleCheck'            => 'checkTitle',
+			'PageTitleFilter'                 => 'pageTitleFilter',
 		),
 	'PhalanxAnswersBlock' =>
 		array(
-			'CreateDefaultQuestionPageFilter'      => 'badWordsTest'
+			'CreateDefaultQuestionPageFilter' => 'badWordsTest'
 		),
 	'PhalanxWikiCreationBlock' =>
 		array(
-			'AutoCreateWiki::checkBadWords'        => 'isAllowedText'
+			'AutoCreateWiki::checkBadWords'   => 'isAllowedText'
 		),
 	'PhalanxHooks' =>
 		array(
-			'ContributionsToolLinks'               => 'loadLinks',
-			'SpamFilterCheck'                      => 'onSpamFilterCheck'
+			'ContributionsToolLinks'          => 'loadLinks',
+			'SpamFilterCheck'                 => 'onSpamFilterCheck',
+			'EditPhalanxBlock'                => 'onEditPhalanxBlock',
+			'DeletePhalanxBlock'              => 'onDeletePhalanxBlock',
 		)
 );
 

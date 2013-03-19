@@ -6,20 +6,17 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	var logGroup = 'AdProviderAdDriver2',
 		slotMap,
 		forgetAdsShownAfterTime = 3600, // an hour
-		incrementItemInStorage,
-		fillInSlot,
-		canHandleSlot,
-		formatTrackTime,
 		country = Geo.getCountryCode(),
 		now = window.wgNow || new Date(),
 		maxCallsToDART,
-		isHighValueCountry;
+		isHighValueCountry,
+		gptConfig,
+		gptFlushed = false;
 
 	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
 	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
 
 	// TODO: tile is not used, keys without apostrophes
-
 	slotMap = {
 		'CORP_TOP_LEADERBOARD': {'size': '728x90,468x60,980x130,1030x130,1030x70,1x1', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,1x1', 'tile': 1, 'loc': 'top'},
@@ -41,9 +38,39 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		'TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x100,1x1', 'tile': 1, 'loc': 'top'},
 		'WIKIA_BAR_BOXAD_1': {'size': '320x50,1x1', 'tile': 4, 'loc': 'bottom'}
 	};
+	// TODO: integrate this array to slotMap if it makes sense
+	gptConfig = { // slots to use SRA with
+		TOP_LEADERBOARD: 'wait',
+		HOME_TOP_LEADERBOARD: 'wait',
+		TOP_RIGHT_BOXAD: 'flush',
+		HOME_TOP_RIGHT_BOXAD: 'flush'
+	};
 
-	incrementItemInStorage = function (storageKey) {
-		log('incrementNumCall ' + storageKey, 5, logGroup);
+	wikiaGpt.init(slotMap);
+
+	// Private methods
+
+	function formatTrackTime(t, max) {
+		if (isNaN(t)) {
+			log('Error, time tracked is NaN: ' + t, 7, logGroup);
+			return "NaN";
+		}
+
+		if (t < 0) {
+			log('Error, time tracked is a negative number: ' + t, 7, logGroup);
+			return "negative";
+		}
+
+		t = t / 1000;
+		if (t > max) {
+			return "more_than_" + max;
+		}
+
+		return t.toFixed(1);
+	}
+
+	function incrementItemInStorage(storageKey) {
+		log('incrementItemInStorage ' + storageKey, 5, logGroup);
 
 		var numCallForSlot = cacheStorage.get(storageKey, now) || 0;
 
@@ -51,22 +78,34 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		cacheStorage.set(storageKey, numCallForSlot, forgetAdsShownAfterTime, now);
 
 		return numCallForSlot;
-	};
+	}
 
-	canHandleSlot = function (slotinfo) {
+	function canHandleSlot(slotinfo) {
 		log(['canHandleSlot', slotinfo], 5, logGroup);
 
 		if (slotMap[slotinfo[0]]) {
 			return true;
 		}
 		return false;
-	};
+	}
 
-	fillInSlot = function (slot) {
+	// Public methods
+
+	/**
+	 * Flush GPT ads (if not flushed already).
+	 *
+	 * This function will cause all ads pushed to GPT to be fetched and rendered.
+	 * All other ads will go through the legacy DART API.
+	 */
+	function flushGpt() {
+		gptFlushed = true;
+		wikiaGpt.flushAds();
+	}
+
+	function fillInSlot(slot) {
 		log(['fillInSlot', slot], 5, logGroup);
 
 		var slotname = slot[0],
-
 			slotsize = slotMap[slotname].size,
 			loc = slotMap[slotname].loc,
 			dcopt = slotMap[slotname].dcopt,
@@ -142,16 +181,19 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		if (window.wgAdDriverUseGpt) {
 			// Use the new GPT library:
 
-			wikiaGpt.pushAd({
-				slotname: slotname,
-				slotsize: slotsize,
-				dcopt: dcopt,
-				loc: loc
-			}, function() {
-				// TODO: detect success and hop situations and handle them
+			wikiaGpt.pushAd(
+				slotname,
+				function () {
+					// TODO: detect success and hop situations and handle them
 
-				success();
-			});
+					success();
+				}
+			);
+
+			// Once we flush, we want to flush all the remaining ads one by one
+			if (gptConfig[slotname] === 'flush' || gptFlushed) {
+				flushGpt();
+			}
 		} else {
 			// Legacy DART call:
 
@@ -200,30 +242,12 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				}
 			});
 		}
-	};
-
-	formatTrackTime = function (t, max) {
-		if (isNaN(t)) {
-			log('Error, time tracked is NaN: ' + t, 7, logGroup);
-			return "NaN";
-		}
-
-		if (t < 0) {
-			log('Error, time tracked is a negative number: ' + t, 7, logGroup);
-			return "negative";
-		}
-
-		t = t / 1000;
-		if (t > max) {
-			return "more_than_" + max;
-		}
-
-		return t.toFixed(1);
-	};
+	}
 
 	return {
 		name: 'AdDriver2',
 		fillInSlot: fillInSlot,
-		canHandleSlot: canHandleSlot
+		canHandleSlot: canHandleSlot,
+		flushGpt: flushGpt
 	};
 };
