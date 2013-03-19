@@ -18,8 +18,8 @@ $messages['en'] = array(
 	'wikiahome-visualisation-remix-button' => 'Remix',
 
 	'wikiahome-stats-heading' => 'Collaboration in action',
-	'wikiahome-stats-visitors' => 'Visitors this month',
-	'wikiahome-stats-mobile-visitors' => 'Mobile visitors this month',
+	'wikiahome-stats-visitors' => 'Monthly visitors',
+	'wikiahome-stats-mobile-visitors' => 'Monthly mobile visitors',
 	'wikiahome-stats-edits' => 'Changes today',
 	'wikiahome-stats-communities' => 'Total Communities',
 	'wikiahome-stats-new-communities' => 'Communities today',
@@ -251,7 +251,7 @@ $messages['es'] = array(
 	'wikiahome-visualisation-remix-button' => 'Mover',
 
 	'wikiahome-stats-heading' => 'La colaboración en acción',
-	'wikiahome-stats-visitors' => 'Visitantes este mes',
+	'wikiahome-stats-visitors' => 'Visitantes mensuales',
 	'wikiahome-stats-edits' => 'Cambios hechos hoy',
 	'wikiahome-stats-communities' => 'Comunidades en total',
 	'wikiahome-stats-totalpages' => 'Páginas en total',
