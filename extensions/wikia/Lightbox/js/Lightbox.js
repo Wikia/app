@@ -414,24 +414,29 @@ var Lightbox = {
 	video: {
 		trackingTimeout: false,
 		renderVideo: function(data) {
+console.log('render video');
 			// render mustache template
 			var renderedResult = Lightbox.openModal.videoTemplate.mustache(data);
 
 			Lightbox.openModal.media
 				.addClass('video-media')
-				.html(renderedResult)
+				//.html(renderedResult)
 				.css('line-height','normal');
 
-			if(data.playerScript) {
+			/*if(data.playerScript) {
 				$('body').append('<script>' + data.playerScript + '</script>');
-			}
+			}*/
+			
+			require(['wikia.videoBootstrap'], function (videoBootstrap) {
+				videoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode);
+			});
+
 
 		},
 		destroyVideo: function() {
 			Lightbox.openModal.media.html('');
 		},
 		updateLightbox: function(data) {
-
 			// Set lightbox css
 			var css = {
 				height: LightboxLoader.defaults.height

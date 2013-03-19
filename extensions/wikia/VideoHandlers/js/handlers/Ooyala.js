@@ -2,7 +2,8 @@
 	'use strict';
 
 	function ooyala() {
-		if(!(this instanceof ooyala)) {
+
+		/*if(!(this instanceof ooyala)) {
 			return new ooyala();
 		}
 		
@@ -10,16 +11,15 @@
 			return;
 		}
 
-		var p = window.ooyalaParams,
-			that = this;
+		var that = this;*/
 
-		var loadOoyala = function(){
-			$.getScript(p.jsFile).done(function() {
-				window.OO.Player.create(p.playerId, p.videoId, { width: p.width + 'px', height: p.height + 'px', autoplay: p.autoPlay, onCreate: onCreate });
-			});
-		};
+
+		function Ooyala(params) {
+			window.OO.Player.create(params.playerId, params.videoId, { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay/*, onCreate: onCreate*/ });
+		}
 		
-		var resetTracking = function() {
+		
+		/*var resetTracking = function() {
 			this.duration = null;
 			this.timeAtHalf = null;
 			this.halfAchieved = false;
@@ -68,22 +68,22 @@
 			});
 			
 			// Log all events and values
-			/*messageBus.subscribe('*', 'tracking', function(eventName, payload) {
+			messageBus.subscribe('*', 'tracking', function(eventName, payload) {
 				console.log(eventName);
 				console.log(payload);
-			});*/
+			});
 			
-		}
+		}*/
 
-		wgAfterContentAndJS.push(loadOoyala);
+		return Ooyala;		
 	}
 
-	// Exports
-	context.Wikia = context.Wikia || {};
-	context.Wikia.Ooyala = ooyala( context );
 
 	if (context.define && context.define.amd) {
-		context.define('wikia.ooyala', ['wikia.window'], ooyala);
+		context.define('wikia.ooyala', [], ooyala);
 	}
+
+	context.Wikia = context.Wikia || {};
+	context.Wikia.Ooyala = ooyala();
 
 })(this);

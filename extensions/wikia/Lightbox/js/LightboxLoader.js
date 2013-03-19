@@ -327,6 +327,9 @@ var LightboxLoader = {
 	/* function to normalize backend deficiencies */
 	normalizeMediaDetail: function(json, callback) {
 		/* normalize JWPlayer instances */
+// TODO: get rid of this function.  For now, just skip it.
+return;
+
 		var embedCode = json['videoEmbedCode'];
 
 		/* embedCode can be a json object, not a html.  It is implied that only JWPlayer (Screenplay) items do this. */

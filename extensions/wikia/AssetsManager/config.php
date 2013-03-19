@@ -101,6 +101,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/VideoHandlers/js/VideoHandlers.js',
 		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
+		'//extensions/wikia/VideoHandlers/js/videoBootstrap.js',
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',

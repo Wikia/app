@@ -52,7 +52,6 @@
 	</script>
 
 	<script id="LightboxVideoTemplate" class="template" type="text/template">
-		{{{videoEmbedCode}}}
 	</script>
 
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">

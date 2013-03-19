@@ -25,22 +25,25 @@ class OoyalaVideoHandler extends VideoHandler {
 
 		$autoPlayStr = ( $autoplay && !$this->isAgeGate() ) ? 'true' : 'false';
 
-		$embed = <<<EOT
+		$html = <<<EOT
 <div id='{$playerId}' style='width:{$width}px;height:{$height}px;'></div>
-<script type="text/javascript">
-	window.ooyalaParams = {
-		jsFile: "{$jsFile}",
-		playerId: "{$playerId}",
-		videoId: "{$this->videoId}",
-		width: "{$width}",
-		height: "{$height}",
-		autoPlay: "{$autoPlayStr}"
-	}
-</script>
-<script type="text/javascript" src="{$extensionsPath}/wikia/VideoHandlers/js/handlers/Ooyala.js"></script>
 EOT;
 
-		return $embed;
+		return array(
+			'html' => $html,
+			'jsParams' => array(
+				'playerId'=> $playerId,
+				'videoId'=> $this->videoId,
+				'width'=> $width,
+				'height'=> $height,
+				'autoPlay'=> $autoPlayStr
+			),
+			'init' => 'wikia.ooyala',
+			'scripts' => array(
+				$jsFile,
+				$extensionsPath . "/wikia/VideoHandlers/js/handlers/Ooyala.js"
+			),
+		);
 	}
 
 }
