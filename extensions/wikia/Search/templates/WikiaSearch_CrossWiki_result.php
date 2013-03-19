@@ -15,6 +15,11 @@
 		$imageURL = $wgExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';
 	}
+
+	$msgHelper = new WikiaSearchHelper();
+	$pagesMsg = $msgHelper->shortNumForMsg($resultSet->getHeader('articles_count'), 'wikiasearch2-pages');
+	$imgMsg = $msgHelper->shortNumForMsg($resultSet->getHeader('images_count'), 'wikiasearch2-images');
+	$videoMsg = $msgHelper->shortNumForMsg($resultSet->getHeader('videos_count'), 'wikiasearch2-videos');
 ?>
 
 <?php if($resultSet->getResultsFound() > 1): ?>
@@ -37,9 +42,9 @@
             <p class="description"><?= $resultSet->getHeader('description'); ?></p>
 
             <ul class="wiki-statistics subtle">
-                <li><?= wfMsg( 'wikiasearch2-pages', $wg->Lang->formatNum($resultSet->getHeader('articles_count')) ); ?></li>
-                <li><?= wfMsg( 'wikiasearch2-images', $wg->Lang->formatNum($resultSet->getHeader('images_count')) ); ?></li>
-                <li><?= wfMsg( 'wikiasearch2-videos', $wg->Lang->formatNum($resultSet->getHeader('videos_count')) ); ?></li>
+                <li><?= $pagesMsg ?></li>
+                <li><?= $imgMsg ?></li>
+                <li><?= $videoMsg ?></li>
             </ul>
         </div>
     </li>
@@ -50,6 +55,9 @@
 		'query' => $query,
 		'rank' =>  $resultSet->getHeader('cityRank'),
 		'imageURL' => $imageURL,
-		'$humbTracking' => $thumbTracking
+		'$humbTracking' => $thumbTracking,
+		'pagesMsg' => $pagesMsg,
+		'imgMsg' => $imgMsg,
+		'videoMsg' => $videoMsg
 		)); ?>
 <?php endif; ?>

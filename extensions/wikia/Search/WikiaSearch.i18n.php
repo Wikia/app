@@ -15,9 +15,15 @@ $messages['en'] = array(
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Search $1',
 	'wikiasearch2-search-all-wikia' => 'Search all of Wikia',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|result|results}}',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|page|pages}}',
-	'wikiasearch2-images' => '$1 {{PLURAL:$1|image|images}}',
-	'wikiasearch2-videos' => '$1 {{PLURAL:$1|video|videos}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|page|pages}}',
+	'wikiasearch2-images' => '$1 {{PLURAL:$2|image|images}}',
+	'wikiasearch2-videos' => '$1 {{PLURAL:$2|video|videos}}',
+	'wikiasearch2-pages-k' => '$1k {{PLURAL:$2|page|pages}}',
+	'wikiasearch2-images-k' => '$1k {{PLURAL:$2|image|images}}',
+	'wikiasearch2-videos-k' => '$1k {{PLURAL:$2|video|videos}}',
+	'wikiasearch2-pages-M' => '$1M {{PLURAL:$2|page|pages}}',
+	'wikiasearch2-images-M' => '$1M {{PLURAL:$2|image|images}}',
+	'wikiasearch2-videos-M' => '$1M {{PLURAL:$2|video|videos}}',
 	'wikiasearch2-search-on-wiki' => 'Search within this wiki',
 	'wikiasearch2-results-count' => 'About $1 {{PLURAL:$1|result|results}} for $2 from {{SITENAME}}',
 	'wikiasearch2-results-for' => 'Results for $1 from {{SITENAME}}',
@@ -75,8 +81,17 @@ $messages['qqq'] = array(
 	'wikiasearch2-tabs-articles' => 'Name of a tab with articles. This tab is displayed in the right column on search page',
 	'wikiasearch2-tabs-photos-and-videos' => 'Name of a tab with photos and videos. This tab is displayed in the right column on search page',
 	'wikiasearch2-users' => 'Name of a tab with users. This tab is displayed in the right column on search page',
-	'wikiasearch2-users-tooltip' => 'Search in UsersTooltip displayed on hover on Blogs Tab in the right column on search page'
-
+	'wikiasearch2-users-tooltip' => 'Search in UsersTooltip displayed on hover on Blogs Tab in the right column on
+	search page',
+	'wikiasearch2-pages' => 'Parameters: $1 - number of Pages below 1000',
+	'wikiasearch2-images' => 'Parameters: $1 - number of Images below 1000',
+	'wikiasearch2-videos' => 'Parameters: $1 - number of Videos below 1000',
+	'wikiasearch2-pages-k' => 'Parameters: $1 - number of Pages below 1000000',
+	'wikiasearch2-images-k' => 'Parameters: $1 - number of Images below 1000000',
+	'wikiasearch2-videos-k' => 'Parameters: $1 - number of Videos below 1000000',
+	'wikiasearch2-pages-M' => 'Parameters: $1 - number of Pages above 1000000',
+	'wikiasearch2-images-M' => 'Parameters: $1 - number of Images above 1000000',
+	'wikiasearch2-videos-M' => 'Parameters: $1 - number of Videos above 1000000',
 );
 
 /** Afrikaans (Afrikaans)

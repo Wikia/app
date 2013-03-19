@@ -18,9 +18,9 @@
         <p class="description"><?= $resultSet->getHeader('description'); ?></p>
 
         <ul class="wiki-statistics subtle">
-            <li><?= wfMsg( 'wikiasearch2-pages', $wg->Lang->formatNum($resultSet->getHeader('articles_count')) ); ?></li>
-            <li><?= wfMsg( 'wikiasearch2-images', $wg->Lang->formatNum($resultSet->getHeader('images_count')) ); ?></li>
-            <li><?= wfMsg( 'wikiasearch2-videos', $wg->Lang->formatNum($resultSet->getHeader('videos_count')) ); ?></li>
+            <li><?= $pagesMsg ?></li>
+            <li><?= $imgMsg ?></li>
+            <li><?= $videoMsg ?></li>
         </ul>
     </div>
 </li>
