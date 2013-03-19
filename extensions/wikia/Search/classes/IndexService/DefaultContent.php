@@ -14,6 +14,22 @@ use Wikia\Search\Utilities, simple_html_dom;
 class DefaultContent extends AbstractService
 {
 	/**
+	 * Text from selectors in this list should be removed during HTML stripping.
+	 * @var unknown_type
+	 */
+	protected $garbageSelectors = [
+				'span.editsection',
+				'img',
+				'noscript',
+				'div.picture-attribution',
+				'table#toc',
+				'ol.references',
+				'sup.reference',
+				'script',
+				'style',
+				];
+	
+	/**
 	 * Returns the fields required to make the document searchable (specifically, wid and title and body content)
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()
 	 * @return array
@@ -166,19 +182,7 @@ class DefaultContent extends AbstractService
 	 * @param simple_html_dom $dom
 	 */
 	protected function removeGarbageFromDom( simple_html_dom $dom ) {
-		// content in these selectors should be removed
-		$garbageSelectors  = [
-				'span.editsection',
-				'img',
-				'noscript',
-				'div.picture-attribution',
-				'table#toc',
-				'ol.references',
-				'sup.reference',
-				'script',
-				'style',
-				];
-		foreach ( $garbageSelectors as $selector ) {
+		foreach ( $this->garbageSelectors as $selector ) {
 			foreach ( $dom->find( $selector ) as $node ) {
 				$node->outertext = ' ';
 			}
