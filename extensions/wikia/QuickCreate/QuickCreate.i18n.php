@@ -23,11 +23,12 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Loya
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'quickcreate-desc' => 'يضيف زر "إنشاء صفحة جديدة" مع القدرة على تسجيل الدخول للمستخدمين المجهولين', # Fuzzy
+	'quickcreate-desc' => 'يضيف زر "إنشاء صفحة جديدة" مع القدرة على تسجيل الدخول للمستخدمين المجهولين',
 	'quickcreate' => 'أرسل وصفتك',
 );
 

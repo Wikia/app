@@ -862,6 +862,7 @@ $messages['br'] = array(
 	'wall-message-unfollow' => 'Chom hep heuliañ',
 	'wall-message-undoremove' => 'Dizober',
 	'wall-message-edited' => '<a href="$3" >Kemmet gant</a> <a class="username" href="$1">$2</a>',
+	'wall-message-edited-summary' => '<a href="$4" >$1 gant </a><a class="username" href="$2">$3</a>',
 	'wall-message-mywall' => 'Ma moger',
 	'wall-toolbar-history' => 'Istor',
 	'wall-message-notify' => 'Kelaouiñ ar merourien',
@@ -943,33 +944,72 @@ $messages['br'] = array(
 	'wall-deleted-msg-pagetitle' => 'Kemennadenn dilamet',
 	'wall-deleted-msg-return-to' => 'Distreiñ da voger $1.',
 	'wall-deleted-msg-view' => '(Gwelet/Adsevel)',
+	'wall-recentchanges-new-message' => 'war <a href="$1">moger $2</a>',
 	'wall-recentchanges-edit' => '(kemennadenn aozet)',
+	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-removed-thread' => 'en deus dilamet an neudennad "[[$1|$2]]" eus [[$3|moger $4]]',
+	'wall-recentchanges-removed-reply' => 'en deus dilamet ur respont da "[[$1|$2]]" eus [[$3|moger $4]]',
+	'wall-recentchanges-deleted-thread' => 'en deus diverket an neudennad "[[$1|$2]]" eus [[$3|moger $4]]',
+	'wall-recentchanges-deleted-reply' => 'en deus diverket ur respont da "[[$1|$2]]" eus [[$3|moger $4]]',
+	'wall-recentchanges-closed-thread' => 'en deus serret an neudennad "[[$1|$2]]" eus [[$3|moger $4]]',
+	'wall-recentchanges-reopened-thread' => 'en deus addigoret an neudennad "[[$1|$2]]" eus [[$3|moger $4]]',
+	'wall-recentchanges-deleted-reply-title' => 'Ur respont war ar voger',
 	'wall-recentchanges-namespace-selector-message-wall' => "Moger ar c'homzoù",
+	'wall-recentchanges-thread-group' => '$1 war <a href="$2">moger $3</a>',
 	'wall-recentchanges-history-link' => 'istor ar voger',
 	'wall-recentchanges-thread-history-link' => 'istor ar gaoz',
+	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> war <a href="$3">moger $4</a>',
+	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> war <a href="$3">moger $4</a>',
+	'wall-message-staff-text' => 'An implijer-mañ a zo ezel eus skipailh Wikia',
+	'wall-wiki-activity-on' => 'war $1',
+	'wall-wiki-activity-wall-owner' => 'Moger $1',
 	'wall-removed-thread-undo' => 'Lamet eo bet an neudennad-mañ. $1',
-	'wall-removed-reply' => 'Lamet eo bet ar respont-mañ.',
-	'wall-deleted-thread-undo' => 'Dilamet eo nbet an neudennad-mañ. $1',
+	'wall-removed-reply-undo' => 'Lamet eo bet ar respont-mañ. $1',
+	'wall-removed-reply' => 'Lamet eo bet ar respont-mañ',
+	'wall-deleted-thread-undo' => 'Diverket eo bet an neudennad-mañ. $1',
+	'wall-deleted-reply-undo' => 'Diverket eo bet ar respont-mañ. $1',
+	'wall-deleted-reply' => 'Diverket eo bet ar respont-mañ',
+	'wall-history' => 'Istor',
+	'wall-history-title' => 'istor ar voger',
+	'wall-history-who-involved-wall-title' => 'Piv en deus kemeret perzh ?',
+	'wall-history-who-involved-thread-title' => 'Piv en deus kemer perzh er gaoz-mañ ?',
 	'wall-history-thread-created' => '$1 krouet gant $2',
 	'wall-history-thread-removed' => '$1 lamet gant $2',
 	'wall-history-thread-restored' => '$1 assavet gant $2',
 	'wall-history-thread-admin-deleted' => '$1 dilamet gant $2',
 	'wall-history-sorting-newest-first' => 'Ar re nevesañ da gentañ',
 	'wall-history-sorting-oldest-first' => 'Ar re goshañ da gentañ',
+	'wall-history-summary-label' => 'Diverradur',
 	'wall-history-rail-wall' => 'moger',
+	'wall-history-rail-contribs' => 'degasadennoù',
+	'wall-history-rail-block' => 'stankañ',
 	'wall-history-action-view' => 'gwelet',
 	'wall-history-action-restore' => 'assevel',
 	'wall-history-action-thread-history' => 'istor an neudennad',
 	'wall-thread-history-title' => 'istor an neudennad',
 	'wall-thread-history-thread-created' => '$1 $2 en deus krouet an neudennad-mañ',
+	'wall-thread-history-reply-created' => '$1 $2 en deus laosket ur respont',
+	'wall-thread-history-thread-removed' => '$1 $2 en deus dilammet an neudennad-mañ',
+	'wall-thread-history-reply-removed' => '$1 $2 en deus dilammet respont $5 a-berzh $3',
+	'wall-thread-history-reply-deleted' => '$1 $2 en deus diverket respont $3',
+	'wall-thread-history-thread-deleted' => '$1 $2 en deus diverket an neudennad-mañ',
+	'wall-thread-history-thread-edited' => '$1 $2 en deus kemmet kemennadenn $5 $3',
+	'wall-thread-history-reply-edited' => '$1 $2 en deus kemmet kemennadenn $5 $3',
+	'wall-thread-history-thread-closed' => '$2 en deus serret an neudennad-mañ',
+	'wall-thread-history-thread-reopened' => '$2 en deus addigoret an neudennad-mañ',
 	'wall-history-action-restore-reply' => 'Adsevel ar respont',
 	'wall-history-action-restore-thread' => 'Adsevel an neudennad',
 	'mail-notification-html-greeting' => "Demat deoc'h $1,",
 	'mail-notification-html-button' => 'Gwelet ar gaoz',
+	'tog-enotifwallthread-v2' => 'Kas din ur postel...',
+	'tog-enotifmywall-every' => 'Evit pep kemennadenn ha respont',
+	'tog-enotifmywall-sincevisited' => 'Unan dre neudennad abaoe ma gweladenn ziwezhañ',
 	'wall-quote-author' => '$1 en deus skrivet :',
 	'wall-quote-reply-to' => 'respont da #$1',
 	'wall-preview-modal-title' => 'Rakwelet',
+	'wall-preview-modal-button-back' => 'Distreiñ',
 	'wall-preview-modal-button-publish' => 'Embann',
+	'wall-topic-input-heading' => 'Tem',
 	'wall-topic-edit-save' => 'Enrollañ',
 	'wall-topic-edit-cancel' => 'Nullañ',
 );
@@ -1040,7 +1080,40 @@ $messages['ca'] = array(
 	'wall-action-all-confirm-notify' => 'Notificar a un admin',
 	'wall-action-remove-reply-title' => 'Retirar aquesta resposta',
 	'wall-action-remove-thread-title' => 'Retirar aquest tema',
+	'wall-confirm-monobook-remove' => "Si us plau, diga'ns per què vols retirar això.
+
+El missatge original i el teu resum apareixeran a l'historial del wiki.",
+	'wall-confirm-monobook-admin' => "Si us plau, diga'ns per què vols esborrar això.
+
+El missatge original i el teu resum apareixeran a l'historial del wiki.",
+	'wall-confirm-monobook-restore' => "Si us plau, diga'ns per què vols restaurar això",
 	'wall-delete-error-title' => 'Error',
+	'wall-delete-error-content' => 'El missatge va ser esborrat prèviament i ja no existeix.',
+	'wall-confirm-monobook-lack-of-reason' => 'Si us plau, inclou un motiu per a retirar aquest tema o resposta.',
+	'wall-action-remove-confirm' => "Si us plau, diga'ns per què vols retirar això:",
+	'wall-action-remove-thread-confirm-info' => "El missatge original i el teu resum apareixeran a l'historial del wiki.",
+	'wall-action-remove-reply-confirm-info' => "El missatge original i el teu resum continuaran apareixent a l'historial del wiki.",
+	'wall-action-remove-confirm-ok' => 'Retirar',
+	'wall-action-admin-thread-title' => 'Esborrar aquest tema',
+	'wall-action-admin-reply-title' => 'Esborrar aquesta resposta',
+	'wall-action-admin-confirm' => "Si us plau, diga'ns per què vols esborrar això:",
+	'wall-action-admin-thread-confirm-info' => "El missatge original i el teu resum continuaran apareixent a l'historial del wiki.",
+	'wall-action-admin-reply-confirm-info' => "El missatge original i el teu resum continuaran apareixent a l'historial del wiki. Només els administradors podran veure aquest tema.",
+	'wall-action-admin-confirm-ok' => 'Esborrar',
+	'wall-action-restore-thread-title' => 'Restaurar aquest tema',
+	'wall-action-restore-reply-title' => 'Restaurar aquesta resposta',
+	'wall-action-restore-confirm' => "Si us plau, diga'ns per què vols restaurar això:",
+	'wall-action-restore-confirm-ok' => 'Restaurar',
+	'wall-action-rev-thread-title' => 'Eliminar aquest tema?',
+	'wall-action-rev-reply-title' => 'Eliminar aquesta resposta?',
+	'wall-action-rev-reply-confirm' => 'Estàs segur que vols esborrar aquest missatge?',
+	'wall-action-rev-thread-confirm' => 'Estàs segur que vols eliminar aquest tema i tot el seu historial del wiki? Això no ho podràs revertir.',
+	'wall-action-rev-confirm-ok' => 'Sí, esborra-ho',
+	'wall-action-move-thread-heading' => 'Reanomenar aquest tema',
+	'wall-action-move-validation-select-wall' => 'Si us plau, selecciona un subfòrum',
+	'wall-action-move-topics-summary' => 'Tema reanomenat',
+	'wall-action-move-thread-ok' => 'Reanomenar tema',
+	'wall-action-move-board-label' => 'Selecciona un subfòrum per moure',
 	'wall-notifications' => 'Notificacions',
 	'wall-notifications-all' => 'Totes les notificacions',
 	'wall-notifications-markasread' => "Marca'ls tots com a llegits",
@@ -1113,6 +1186,11 @@ $messages['ca'] = array(
 	'wall-recentchanges-history-link' => 'Historial del mur',
 	'wall-recentchanges-thread-history-link' => 'Historial del tema',
 	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> en el <a href="$3">Mur de $4</a>',
+	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> al <a href="$3">mur de $4</a>',
+	'wall-message-not-found' => "Aquest missatge no s'ha trobat. Si veus aquest error, si us plau, contacta amb Wikia a través d' [[Special:Contact|Especial:Contactar]] i aporta tots els detalls que puguis sobre com pot reproduir-se aquest error. Gràcies!",
+	'wall-message-staff-text' => "Aquest usuari és un membre de l'Staff de Wikia",
+	'wall-ipballowusertalk' => 'Permetre a aquest usuari deixar missatges al seu propi Mur de missatges mentre que està bloquejat',
+	'wall-ipbwatchuser' => "Seguir el perfil d'aquest usuari i el seu Mur de missatges",
 	'wall-wiki-activity-on' => 'a $1',
 	'wall-wiki-activity-wall-owner' => 'mur de $1',
 	'wall-removed-thread-undo' => 'Aquest tema ha estat retirat. $1',
@@ -1153,7 +1231,52 @@ $messages['ca'] = array(
 	'wall-thread-history-thread-reopened' => '$2 ha reobert aquest tema',
 	'wall-history-action-restore-reply' => 'restaurar resposta',
 	'wall-history-action-restore-thread' => 'restaurar tema',
+	'wall-message-not-found-in-db' => 'No hem pogut trobar aquest missatge a la nostra base de dades, ho sentim.',
+	'mail-notification-new-someone' => '$AUTHOR_NAME ha escrit un missatge nou a $WIKI.',
+	'mail-notification-new-your' => '$AUTHOR_NAME t\'ha deixat un missatge nou a $WIKI.',
+	'mail-notification-reply-your' => '$AUTHOR_NAME ha respost el teu missatge a $WIKI.',
+	'mail-notification-reply-his' => '$AUTHOR_NAME ha respost a un missatge a $WIKI.',
+	'mail-notification-reply-someone' => '$AUTHOR_NAME ha respost el missatge de $PARENT_AUTHOR_NAME a $WIKI.',
+	'mail-notification-html-greeting' => 'Hola $1,',
+	'mail-notification-html-button' => 'Veure la conversació',
+	'mail-notification-html-footer-line1' => 'Per a comprovar les últimes novetats de Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://ca.wikia.com">ca.wikia.com</a>',
+	'mail-notification-html-footer-line2' => 'Vols controlar els emails que reps? Vés a les teves <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferències</a>',
+	'mail-notification-body' => 'Hola $WATCHER,
+	
+$SUBJECT
+			
+$METATITLE
+		
+$MESSAGE_NO_HTML
+			
+-- $AUTHOR
+
+Veure la conversació($MESSAGE_LINK)
+ 
+L\'equip de Wikia
+
+___________________________________________
+* Troba l\'ajuda i els consells que necessites a la Central de Wikia en català: http://ca.wikia.com
+* Vols rebre menys missatges de nosaltres? Pots canviar les teves preferències respecte als emails aquí: http://ca.wikia.com/wiki/Especial:Preferències',
+	'mail-notification-body-HTML' => 'Hola $WATCHER,
+<p>$SUBJECT.</p> 
+<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+<p>$MESSAGE_HTML</p>
+<p>-- $AUTHOR_SIGNATURE<p> 			
+<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veure la conversació</a></p>
+<p>L\'equip de Wikia</p>
+___________________________________________<br />
+* Troba l\'ajuda i els consells que necessites a la Central de Wikia en català: http://ca.wikia.com
+* Vols rebre menys missatges de nosaltres? Pots canviar les teves preferències respecte als emails aquí: http://ca.wikia.com/wiki/Especial:Preferències',
 	'prefs-email-wall-v2' => 'Mur de missatges i Fòrum',
+	'tog-enotifwallthread-v2' => "Envia'm un correu...",
+	'tog-enotifmywall-every' => 'Per a cada missatge i resposta',
+	'tog-enotifmywall-sincevisited' => 'Un cop per a cada tema des de la meva última visita',
+	'tog-enotifmywall-reminder' => 'Amb un recordatori diari',
+	'tog-enotifmywall-noemail' => "Mai. No m'envieu cap correu electrònic sobre el mur de missatge o el fòrum",
+	'wallshowsource-toggle-v2' => "Activar l'opció {{int:user-action-menu-view-source}} als temes",
+	'wallshowsource-toggle' => 'Activar el {{int:user-action-menu-view-source}} a les publicacions en el Mur de Missatges',
+	'walldelete-toggle' => "Activar l'eliminació de revisions als temes",
 	'wall-notifications-notifyeveryone' => 'Destacat per $1',
 	'wall-message-notifyeveryone' => 'Destacar aquest tema',
 	'wall-message-unnotifyeveryone' => 'Deixar de destacar aquest tema',
@@ -4671,6 +4794,7 @@ endre e-post-innstillingene dine her: http://community.wikia.com/Special:Prefere
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
+ * @author Flightmare
  * @author Randykitty
  * @author SPQRobin
  * @author Saruman
@@ -4949,7 +5073,7 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'wall-votes-vote-tooltip' => 'Kudus aan dit bericht geven',
 	'wall-votes-voted-tooltip' => 'U heeft Kudos aan dit bericht gegeven!',
 	'wall-quote-author' => '$1 schreef:',
-	'wall-quote-reply-to' => 'reageren op bericht #$1',
+	'wall-quote-reply-to' => 'reactie op bericht #$1',
 	'wall-preview-modal-title' => 'Voorvertoning',
 	'wall-preview-modal-button-back' => 'Terug',
 	'wall-preview-modal-button-publish' => 'Publiceren',

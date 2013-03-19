@@ -7,27 +7,29 @@ namespace Wikia\Search\IndexService;
 /**
  * Returns additioanl data about images and videos 
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class MediaData extends AbstractService
 {
 	/**
 	 * Extracts data from images and videos
-	 * @see WikiaSearchIndexServiceAbstract::execute()
+	 * @see Wikia\Search\IndexService\AbstractService::execute()
 	 * @return array
 	 */
 	public function execute() {
 		$results = array();
 		
-		if (! ( $this->interface->getNamespaceFromPageId( $this->currentPageId ) == NS_FILE
-			    && $this->interface->pageIdHasFile( $this->currentPageId ) ) ) {
+		if (! ( $this->service->getNamespaceFromPageId( $this->currentPageId ) == NS_FILE
+			    && $this->service->pageIdHasFile( $this->currentPageId ) ) ) {
 			return $results;
 		}
 	
 		$fileHelper = new \WikiaFileHelper();
-		$detail     = $this->interface->getMediaDetailFromPageId( $this->currentPageId );
-		$metadata   = $this->interface->getMediaDataFromPageId( $this->currentPageId );
+		$detail     = $this->service->getMediaDetailFromPageId( $this->currentPageId );
+		$metadata   = $this->service->getMediaDataFromPageId( $this->currentPageId );
 
-		$results['is_video'] = $this->interface->pageIdIsVideoFile( $this->currentPageId ) ? 'true' : 'false';
+		$results['is_video'] = $this->service->pageIdIsVideoFile( $this->currentPageId ) ? 'true' : 'false';
 		$results['is_image'] = ( ($detail['mediaType'] == 'image') && $results['is_video'] == 'false' ) ? 'true' : 'false';
 
 		if (! empty( $metadata ) ) {

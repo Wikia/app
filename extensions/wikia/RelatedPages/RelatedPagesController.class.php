@@ -8,10 +8,14 @@ class RelatedPagesController extends WikiaController {
 		$this->skipRendering = false;
 	}
 
-	public function executeIndex() {
+	public function executeIndex( $params = null ) {
 		global $wgTitle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgRelatedPagesAddAfterSection;
 
-		$articleid = $wgTitle->getArticleId();
+		$altTitle = $this->request->getVal('altTitle', null);
+
+		$title = empty($altTitle) ? $wgTitle : $altTitle;
+
+		$articleid = $title->getArticleId();
 
 		$relatedPages = RelatedPages::getInstance();
 
@@ -25,7 +29,7 @@ class RelatedPagesController extends WikiaController {
 			// check for mainpage
 			Wikia::isMainPage() ||
 			// check for content namespaces
-			!empty( $wgTitle ) && !in_array( $wgTitle->getNamespace(), $wgContentNamespaces ) ||
+			(!empty( $wgTitle ) && !in_array( $wgTitle->getNamespace(), $wgContentNamespaces )) ||
 			// check if we have any categories
 			count( $relatedPages->getCategories( $articleid ) ) == 0 ||
 			// check action

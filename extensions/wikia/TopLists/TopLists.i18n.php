@@ -128,6 +128,7 @@ $messages['qqq'] = array(
 	'toplists-desc' => '{{desc}}',
 	'toplists-category' => 'The name for the category that lists all the Top 10 Lists on a wiki',
 	'action-toplists-create-edit-list' => '{{doc-action|toplists-create-edit}}',
+	'toplists-editor-remove-item-tooltip' => '{{Identical|Remove item}}',
 	'toplists-create-button' => '{{Identical|Create list}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
@@ -137,6 +138,7 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Imksa
  * @author Meno25
  * @author OsamaK
@@ -161,7 +163,7 @@ $messages['ar'] = array(
 	'toplists-error-empty-item-name' => 'لا يمكن أن يكون اسم عنصر القائمة فارغة.',
 	'toplists-item-cannot-delete' => 'فشل في حذف هذا البند.',
 	'toplists-error-image-already-exists' => 'صورة مع نفس الاسم موجود مسبقا.',
-	'toplists-error-add-item-anon' => 'ولا يسمح للمستخدمين المجهولين إضافة عناصر إلى القوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 "> الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .', # Fuzzy
+	'toplists-error-add-item-anon' => 'لا يسمح للمستخدمين المجهولين إضافة قوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 ">تسجيل الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .', # Fuzzy
 	'toplists-error-add-item-permission' => 'خطأ في إذن الوصول: الحساب الخاص بك لم يتم منح الحق في إنشاء عناصر جديدة.',
 	'toplists-error-add-item-list-not-exists' => '"$1" لا توجد في قائمة أعلى 10',
 	'toplists-upload-error-unknown' => 'حدث خطأ أثناء معالجة طلب التحميل. يرجى المحاولة مرة أخرى.',
@@ -264,6 +266,7 @@ $messages['br'] = array(
 	'toplists-editor-title-placeholder' => 'Roit un anv evit ar roll',
 	'toplists-editor-related-article-label' => 'Pajenn kar <small>(diret, met termeniñ a ra ur skeudenn)</small>',
 	'toplists-editor-related-article-placeholder' => "Merkañ anv ur bajenn zo anezhi c'hoazh",
+	'toplists-editor-description-placeholder' => 'Ebarzhiñ un deskrivadur',
 	'toplists-editor-image-browser-tooltip' => 'Ouzhpennañ ur skeudenn',
 	'toplists-editor-remove-item-tooltip' => 'Tennañ an elfenn',
 	'toplists-editor-drag-item-tooltip' => 'Lakait da riklañ evit cheñch an urzh',
@@ -1904,6 +1907,17 @@ $messages['ro'] = array(
 	'toplists-create-button' => 'Crează lista',
 	'toplists-update-button' => 'Salvează lista',
 	'toplists-cancel-button' => 'Renunţă',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'toplists-create-button' => "ccreje 'n'elenghe",
+	'toplists-update-button' => "Reggìstre l'elenghe",
+	'toplists-cancel-button' => 'Annulle',
+	'toplists-image-browser-upload-btn' => 'Scacchie',
+	'toplists-list-item-voted' => 'Vutate',
 );
 
 /** Russian (русский)

@@ -326,6 +326,7 @@ $messages['ar'] = array(
 	'swm-list-table-content' => 'المحتوى',
 	'swm-list-table-tools' => 'أدوات',
 	'swm-list-table-lang' => 'اللغات',
+	'swm-list-table-hub' => 'المحور',
 	'swm-yes' => 'نعم',
 	'swm-no' => 'لا',
 	'swm-error-no-such-wiki' => 'لا توجد ويكي كهذه!',

@@ -61,6 +61,14 @@ $messages['bs'] = array(
 	'wikiarelatedpages-heading' => 'Pročitaj više',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'wikiarelatedpages-desc' => 'Afegir una llista en pàgines de pàgines relacionades',
+	'wikiarelatedpages-heading' => 'Llegir més',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */

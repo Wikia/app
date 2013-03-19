@@ -453,7 +453,7 @@ class ScribeProducer {
 	}
 	
 	/**
-	 * @see WikiaSearchIndexer::reindexWiki
+	 * @see Wikia\Search\Indexer::reindexWiki
 	 */
 	public function reindexPage()
 	{

@@ -4,9 +4,12 @@
  * @author relwell
  */
 namespace Wikia\Search\IndexService;
+use Wikia\Search\Utilities;
 /**
  * This is intended to provide core article content
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class DefaultContent extends AbstractService
 {
@@ -18,11 +21,11 @@ class DefaultContent extends AbstractService
 	public function execute() {
 		wfProfileIn(__METHOD__);
 		
-		$pageId = $this->interface->getCanonicalPageIdFromPageId( $this->currentPageId );
+		$pageId = $this->service->getCanonicalPageIdFromPageId( $this->currentPageId );
 
 		// we still assume the response is the same format as MediaWiki's
-		$response = $this->interface->getParseResponseFromPageId( $pageId ); 
-		$titleStr = $this->interface->getTitleStringFromPageId( $pageId );
+		$response = $this->service->getParseResponseFromPageId( $pageId ); 
+		$titleStr = $this->service->getTitleStringFromPageId( $pageId );
 		$html     = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
 
 		$categories = array();
@@ -39,12 +42,12 @@ class DefaultContent extends AbstractService
 			}
 		}
 
-		if ( $this->interface->getGlobal( 'AppStripsHtml' ) ) {
+		if ( $this->service->getGlobal( 'AppStripsHtml' ) ) {
 			$result = $this->prepValuesFromHtml( $html );
-			$titleKey = \WikiaSearch::field( 'title' );
-    		$wikiTitleKey = \WikiaSearch::field( 'wikititle' );
-    		$categoriesKey = \WikiaSearch::field( 'categories' );
-    		$headingsKey = \WikiaSearch::field( 'headings' );
+			$titleKey = Utilities::field( 'title' );
+    		$wikiTitleKey = Utilities::field( 'wikititle' );
+    		$categoriesKey = Utilities::field( 'categories' );
+    		$headingsKey = Utilities::field( 'headings' );
 		} else {
 			// backwards compatibility
 			$result = array( 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
@@ -54,23 +57,23 @@ class DefaultContent extends AbstractService
     		$headingsKey = 'headings';
 		}
 
-		$result['wid']			= $this->interface->getWikiId();
+		$result['wid']			= $this->service->getWikiId();
 		$result['pageid']		= $pageId;
 		$result[$titleKey]		= $titleStr;
 		$result['titleStrict']	= $titleStr;
-		$result['url']			= $this->interface->getUrlFromPageId( $pageId );
-		$result['ns']			= $this->interface->getNamespaceFromPageId( $pageId );
-		$result['host']			= substr( $this->interface->getGlobal( 'Server' ), 7);
-		$result['lang']			= $this->interface->getSimpleLanguageCode();
-		$result[$wikiTitleKey]	= $this->interface->getGlobal( 'Sitename' );
+		$result['url']			= $this->service->getUrlFromPageId( $pageId );
+		$result['ns']			= $this->service->getNamespaceFromPageId( $pageId );
+		$result['host']			= substr( $this->service->getGlobal( 'Server' ), 7);
+		$result['lang']			= $this->service->getSimpleLanguageCode();
+		$result[$wikiTitleKey]	= $this->service->getGlobal( 'Sitename' );
 		$result[$categoriesKey]	= $categories;
 		$result['page_images']	= count( $response['parse']['images'] );
 		$result[$headingsKey]	= $headings;
 		
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
-		$result['iscontent']	= $this->interface->isPageIdContent( $pageId ) ? 'true' : 'false';
+		$result['iscontent']	= $this->service->isPageIdContent( $pageId ) ? 'true' : 'false';
 	    $result['is_main_page'] = 'false';
-		if ( $this->interface->getMainPageArticleId() == $pageId ) {
+		if ( $this->service->getMainPageArticleId() == $pageId ) {
 			$result['is_main_page'] = 'true';
 		}
 		
@@ -137,7 +140,7 @@ class DefaultContent extends AbstractService
     		foreach ( $dom->find( 'p' ) as $pNode ) {
     			$paragraphs[] = $pNode->plaintext;
     		}
-    		$plaintext = $dom->plaintext . ' ' . $plaintext;
+    		$plaintext = strip_tags( $dom->plaintext . ' ' . $plaintext ); // simple_html_dom can leave remnants
 		} else {
 			$plaintext = html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' );
 		}
@@ -154,7 +157,7 @@ class DefaultContent extends AbstractService
 			$result['words'] = substr_count( $plaintext, ' ' );
 		}
 
-		$result[\WikiaSearch::field( 'html' )] = $plaintext;
+		$result[Utilities::field( 'html' )] = $plaintext;
 
 		wfProfileOut(__METHOD__);
 		return $result;

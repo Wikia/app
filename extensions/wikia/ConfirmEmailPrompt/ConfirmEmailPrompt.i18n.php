@@ -18,6 +18,14 @@ $messages['qqq'] = array(
 * $3 is a link to the e-mail address change form',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'confirmemailprompt-desc' => "Mostra un missatge d'advertència, si l'usuari té una adreça de correu electrònic sense confirmar",
+	'confirmemailprompt-error' => 'Es aquesta la teva direcció de correu electrònic?: <strong>$1</strong>? [[$2|Confirmar-la]] o [[$3|canvia-la]].',
+);
+
 /** Czech (česky)
  * @author Jezevec
  */

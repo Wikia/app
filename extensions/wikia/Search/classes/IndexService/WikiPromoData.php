@@ -8,6 +8,8 @@ namespace Wikia\Search\IndexService;
 /**
  * Responsible for wiki promo info for a wiki
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class WikiPromoData extends AbstractWikiService
 {
@@ -23,9 +25,9 @@ class WikiPromoData extends AbstractWikiService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
-		if ( $this->result == array() && $this->interface->getGlobal( 'EnableWikiaHomePageExt' ) ) {
+		if ( $this->result == array() && $this->service->getGlobal( 'EnableWikiaHomePageExt' ) ) {
 			$homepageHelper = new \WikiaHomePageHelper();
-			$detail = $homepageHelper->getWikiInfoForVisualization( $this->interface->getWikiId(), $this->interface->getLanguageCode() );
+			$detail = $homepageHelper->getWikiInfoForVisualization( $this->service->getWikiId(), $this->service->getLanguageCode() );
 			$this->result = array(
 				'wiki_description_txt' => $detail['description'],
 				'wiki_new_b' => empty( $detail['new'] ) ? 'false' : 'true',

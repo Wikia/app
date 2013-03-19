@@ -477,8 +477,6 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 
 					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
-				} else {
-					Wikia::log( __METHOD__, '', 'No revision for Title (ID: ' . $t->getArticleID() . ', Text: ' . $t->getText() . ')', true );
 				}
 
 			}

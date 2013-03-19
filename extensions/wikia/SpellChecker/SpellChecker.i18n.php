@@ -354,11 +354,12 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'spellchecker-desc' => "A dà n'antërfacia për ël contròl ortogràfich për ël mòdul PHP d'ancant",
-	'enablespellchecker' => 'Abìlita spellchecker an manera visual',
+	'spellchecker-desc' => "A forniss n'antërfacia për ël contròl ortogràfich për ël mòdul PHP d'ancant",
+	'enablespellchecker' => 'Abilité ël coretor ortogràfich an manera visual',
 	'spellchecker-info' => 'Anformassion dël coretor ortogràfich',
 	'spellchecker-info-languages' => 'Lenghe disponìbij ($1)',
 	'spellchecker-info-provider' => 'Fornidor',
