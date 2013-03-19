@@ -4,7 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search\IndexService;
-use Wikia\Search\Utilities;
+use Wikia\Search\Utilities, simple_html_dom;
 /**
  * This is intended to provide core article content
  * @author relwell
@@ -68,7 +68,7 @@ class DefaultContent extends AbstractService
 		if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
 			return $this->prepValuesFromHtml( $html );
 		}
-		return array( 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
+		return [ 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') ];
 	}
 	
 	/**
@@ -117,7 +117,10 @@ class DefaultContent extends AbstractService
 		
 		$dom = new \simple_html_dom( html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
 		if ( $dom->root ) {
-			$this->extractInfoboxes( $dom, $result );
+			/**
+			 * @todo reintroduce once we have 4.1 figured out
+			 * $this->extractInfoboxes( $dom, $result );
+			 */
 			$this->removeGarbageFromDom( $dom );
 			$plaintext = $this->getPlaintextFromDom( $dom );
 			$paragraphs = $this->getParagraphsFromDom( $dom );
@@ -125,10 +128,10 @@ class DefaultContent extends AbstractService
 		$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) ); // can be empty
 		$words = str_word_count( $paragraphString?:$plaintext, 1 );
 		$wordCount = count( $words );
-		$upTo500Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 500 ) ) ) );
+		$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
 		
 		return  [
-				'nolang_txt'           => $upTo500Words,
+				'nolang_txt'           => $upTo100Words,
 				'words'                => $wordCount,
 				$this->field( 'html' ) => $plaintext
 				];
@@ -146,12 +149,12 @@ class DefaultContent extends AbstractService
 			$infoboxRows = $infobox->find( 'tr' );
 			
 			if ( $infoboxRows ) {
+				$result['infoboxes_txt'] = [];
 				foreach ( $infoboxRows as $row ) {
 					$infoboxCells = $row->find( 'td' );
 					// we only care about key-value pairs in infoboxes
 					if ( count( $infoboxCells ) == 2 ) {
-						$keyName = preg_replace( '/_+/', '_', sprintf( 'box_%s_txt', strtolower( preg_replace( '/\W+/', '_', $infoboxCells[0]->plaintext ) ) ) );
-						$result[$keyName] = preg_replace( '/\s+/', ' ', $infoboxCells[1]->plaintext  );
+						$result['infoboxes_txt'][] = preg_replace( '/\s+/', ' ', $infoboxCells[1]->plaintext  );
 					}
 				}
 			}
