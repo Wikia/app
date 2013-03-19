@@ -42,6 +42,9 @@
 <td style="color:#2c85d5;font-size:17px;font-weight:bold" valign="top"><?= wfMsgForContent('founderemails-email-0-day-tips-heading') ?></td>
 <td width="30">&nbsp;</td>
 </tr>
+<tr>
+<td colspan="3" height="20">&nbsp;</td>
+</tr>
 </table>
 
 <table cellpadding="0" cellspacing="0" width="100%" style="background:#f6f6f6;border-top:1px solid #ececec">

@@ -1,5 +1,5 @@
 <?php
-class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleService {
+class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 3;
 
 	protected function getFormFields() {

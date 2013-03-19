@@ -19,6 +19,14 @@ $messages['qqq'] = array(
 	'globalnotification-general-ajax-failure' => 'General message for AJAX failure to be put on global notification',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'globalnotification-desc' => "Sistema de notificació de Wikia. Mostra el sistema de notificació per events tals com falles d'AJAX",
+	'globalnotification-general-ajax-failure' => 'El navegador no ha pogut connectar-se a Wikia. Intenta-ho més tard.',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  */
@@ -156,6 +164,14 @@ $messages['pt'] = array(
 $messages['pt-br'] = array(
 	'globalnotification-desc' => 'Exibe notificações de sistema para eventos como falhas de AJAX',
 	'globalnotification-general-ajax-failure' => 'O navegador não pode se conectar a Wikia. Tente novamente mais tarde.',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'globalnotification-desc' => "Face vedè le notifiche d'u sisteme pe le avveneminde cumme a le falleminde AJAX",
+	'globalnotification-general-ajax-failure' => "'U browser non ge pò collegarse a 'a Uicchia. Pruève arrete.",
 );
 
 /** Russian (русский)

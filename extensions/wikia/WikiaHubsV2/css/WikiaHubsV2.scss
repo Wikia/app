@@ -3,15 +3,14 @@
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import 'Explore';
-@import 'Pulse';
 @import 'VideoModule';
-@import 'HubsTopWikis';
 @import 'HubsPopularVideos';
 @import 'FeaturedVideo';
 @import 'WikitextModule';
 @import 'CorporateFooter';
 @import 'ColorsPerVertical';
 @import 'SponsoredBox';
+@import 'WamScore';
 
 $wikiahubs-line-height: 16px;
 
@@ -27,6 +26,9 @@ $wikiahubs-line-height: 16px;
 	font-size: 13px;	/* reset font size */
 	line-height: $wikiahubs-line-height;	/* reset line height */
 
+	h1 {
+		margin: 23px 0 22px 0;
+	}
 	/* reset article styling */
 	p {
 		margin: 0;
@@ -101,17 +103,25 @@ $wikiahubs-line-height: 16px;
 			}
 		}
 	}
+
 	.RelatedHubsVideos {
 		height: 170px;
 	}
+
 	.sponsored-image {
 		margin: 4px 0 0 0;
+	}
+
+	.wikiahubs-newstabs {
+		p {
+			margin-top: 10px;
+		}
 	}
 }
 
 .WikiaHubsModal {
 	.WikiaForm {
-		input[type="url"],
+		input[type="text"],
 		textarea {
 			width: 450px;
 			padding: 7px;
@@ -129,7 +139,7 @@ $wikiahubs-line-height: 16px;
 			}
 		}
 	}
-	.close-button {
+	.success-view {
 		display: none;
 	}
 }

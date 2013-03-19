@@ -221,6 +221,7 @@ $(function(){
 				}
 
 				$save.removeClass();
+				$form.startThrobbing();
 
 				nirvana.sendRequest({
 					controller: 'GameGuidesSpecialContent',
@@ -261,7 +262,9 @@ $(function(){
 					function(){
 						$save.addClass('err');
 					}
-				);
+				).then(function(){
+						$form.stopThrobbing();
+				});
 			}
 		});
 
@@ -272,15 +275,13 @@ $(function(){
 			function onFail(){
 				$currentImage
 					.css( 'backgroundImage', '' )
-					.data('id', 0);
+					.removeAttr('data-id');
 
 				$currentImage.stopThrobbing();
 			}
 
-			$(window).bind('WMU_addFromSpecialPage', function(event, wmuData) {
-				var imgTitle = wmuData.imageTitle;
-
-				$currentImage.startThrobbing()
+			function loadImage(imgTitle, catImage){
+				$currentImage.startThrobbing();
 
 				nirvana.getJson(
 					'GameGuidesSpecialContent',
@@ -291,9 +292,12 @@ $(function(){
 				).done(
 					function(data){
 						if(data.url && data.id) {
-							$currentImage
-								.css( 'backgroundImage', 'url(' + data.url + ')' )
-								.data('id', data.id);
+							$currentImage.css( 'backgroundImage', 'url(' + data.url + ')' )
+
+							if(!catImage) {
+								$currentImage.attr('data-id', data.id);
+								$currentImage.siblings().last().addClass('photo-remove');
+							};
 
 							$currentImage.stopThrobbing();
 						} else {
@@ -301,15 +305,31 @@ $(function(){
 						}
 					}
 				).fail(onFail);
+			}
+
+			$(window).bind('WMU_addFromSpecialPage', function(event, wmuData) {
+				loadImage(wmuData.imageTitle);
 			});
 
-			$form.on('click', '.photo, .image', function(){
-				$currentImage = $(this).parent().find('.image');
+			$form.
+				on('click', '.photo-remove', function(){
+					var $this = $(this),
+						$line = $this.parent();
 
-				window.WMU_skipDetails = true;
-				window.WMU_show();
-				window.WMU_openedInEditor = false;
-			});
+					$currentImage = $line.find('.image');
+					$currentImage.removeAttr('data-id');
+
+					$this.removeClass('photo-remove');
+
+					loadImage(wgFormattedNamespaces[wgNamespaceIds.category] + ':' + $line.find('.cat-input').val(), true);
+				})
+				.on('click', '.photo:not(.photo-remove), .image', function(){
+					$currentImage = $(this).parent().find('.image');
+
+					window.WMU_skipDetails = true;
+					window.WMU_show();
+					window.WMU_openedInEditor = false;
+				});
 
 			$ul.sortable({
 				opacity: 0.5,

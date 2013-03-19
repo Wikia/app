@@ -52,6 +52,14 @@ $messages['br'] = array(
 	'interwikidispatcher-desc' => 'Diskoulmañ a ra al liammoù etrewiki evit bihanaat an adkasoù Apache',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'interwikidispatcher' => 'Despatxador Interwiki',
+	'interwikidispatcher-desc' => 'Resol els enllaços interwiki per reduir els redireccionaments Apache',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
@@ -239,6 +247,14 @@ $messages['pt'] = array(
 $messages['pt-br'] = array(
 	'interwikidispatcher' => 'Despachador Interwiki',
 	'interwikidispatcher-desc' => 'Resolve os links interwikis para reduzir os reencaminhamentos do servidor Apache',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'interwikidispatcher' => 'Smistatore de interuicchi',
+	'interwikidispatcher-desc' => 'Resolve le collegaminde de interuicchi pe diminuì le redirezionaminde de Apache',
 );
 
 /** Russian (русский)

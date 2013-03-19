@@ -133,6 +133,7 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author ترجمان05
  */
 $messages['ar'] = array(
@@ -140,6 +141,7 @@ $messages['ar'] = array(
 	'editaccount-title' => 'خاص:EditAccount',
 	'editaccount-label-select' => 'حدّد حساب مستخدم',
 	'editaccount-frame-account' => 'تعديل حساب المستخدم: $1',
+	'editaccount-submit-button' => 'حفظ',
 	'editaccount-log-entry-close' => 'الحساب معطّل $2',
 );
 
@@ -232,6 +234,7 @@ $messages['br'] = array(
 	'editaccount-label-pass' => 'Termeniñ ur ger-tremen nevez',
 	'editaccount-label-realname' => 'Termeniñ un anv klok nevez',
 	'editaccount-label-clearunsub' => 'Digoumanantet',
+	'editaccount-label-reason' => 'Abeg',
 	'editaccount-submit-email' => 'Enrollañ ar postel',
 	'editaccount-submit-pass' => 'Enrollañ ar ger-tremen',
 	'editaccount-submit-realname' => 'Enrollañ an anv klok',
@@ -274,8 +277,14 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Davidpar
+ * @author Marcmpujol
  */
 $messages['ca'] = array(
+	'editaccount' => 'Editar Compte',
+	'editaccount-desc' => "Permite als membres del staff gestionar informació de compte d'usuari",
+	'editaccount-title' => 'Especial:EditAccount',
+	'editaccount-frame-manage' => 'Editar un compte',
+	'editaccount-frame-usage' => 'Nota',
 	'editaccount-log-entry-pass' => "contrasenya canviada de l'usuari $2",
 	'editaccount-log-entry-realname' => "canviat el nom real de l'usuari $2",
 	'editaccount-log-entry-close' => 'compte desactivat $2',
@@ -1511,9 +1520,9 @@ $messages['pms'] = array(
 	'editaccount-label-pass' => 'Ampòsta neuva ciav',
 	'editaccount-label-realname' => 'Ampòsta neuv nòm ver',
 	'editaccount-label-clearunsub' => "Anulà l'abonament",
-	'editaccount-label-toggleadopt' => "Modìfica lë stat d'adotator (për AutomaticWikiAdopt):",
-	'editaccount-label-toggleadopt-prevent' => 'Evité auto adossion',
-	'editaccount-label-toggleadopt-allow' => 'Përmëtte auto adossion',
+	'editaccount-label-toggleadopt' => "Modìfica lë statù d'adotant (për AutomaticWikiAdopt):",
+	'editaccount-label-toggleadopt-prevent' => "Evité l'adossion automàtica",
+	'editaccount-label-toggleadopt-allow' => "Përmëtte l'adossion automàtica",
 	'editaccount-label-reason' => 'Rason:',
 	'editaccount-submit-email' => "Salvé l'adrëssa ëd pòsta eletrònica",
 	'editaccount-submit-pass' => 'Salva Ciav',
@@ -1584,6 +1593,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Pttraduc
  * @author SandroHc
  */
 $messages['pt'] = array(
@@ -1601,11 +1611,14 @@ $messages['pt'] = array(
 	'editaccount-label-pass' => 'Definir palavra-chave nova',
 	'editaccount-label-realname' => 'Definir nome verdadeiro novo',
 	'editaccount-label-clearunsub' => 'Não subscrito',
+	'editaccount-label-reason' => 'Motivo:',
 	'editaccount-submit-email' => 'Gravar Correio Electrónico',
 	'editaccount-submit-pass' => 'Gravar Palavra-chave',
 	'editaccount-submit-realname' => 'Gravar Nome Verdadeiro',
 	'editaccount-submit-clearunsub' => 'Limpar indicação de não subscrito',
+	'editaccount-submit-cleardisable' => 'Limpar marca de desativação',
 	'editaccount-submit-close' => 'Fechar Conta',
+	'editaccount-submit-button' => 'Guardar',
 	'editaccount-usage-close' => 'Também pode desactivar uma conta de utilizador misturando a palavra-chave e removendo o endereço electrónico. Note que estes dados serão perdidos e não podem ser recuperados.',
 	'editaccount-warning-close' => '<b>Cuidado!</b> Está prestes a desactivar definitivamente a conta do utilizador <b>$1</b>. Esta operação não pode ser desfeita. Tem a certeza de que pretende fazê-lo?',
 	'editaccount-status' => 'Estado',
@@ -1614,6 +1627,7 @@ $messages['pt'] = array(
 	'editaccount-success-pass' => 'Alterou com sucesso a palavra-chave da conta $1.',
 	'editaccount-success-realname' => 'Alterou com sucesso o nome verdadeiro da conta $1.',
 	'editaccount-success-unsub' => 'O bit de indicação de não subscrito foi removido da conta $1.',
+	'editaccount-success-disable' => 'Removida com sucesso a marca de desativado para a conta $1.',
 	'editaccount-success-close' => 'Desactivou com sucesso a conta $1.',
 	'editaccount-error-email' => 'O endereço electrónico não foi alterado. Tente novamente ou contacte o Suporte Técnico.',
 	'editaccount-error-pass' => 'A palavra-chave não foi alterada. Tente novamente ou contacte o Suporte Técnico.',
@@ -1621,6 +1635,7 @@ $messages['pt'] = array(
 	'editaccount-error-close' => 'Ocorreu um problema ao fechar a conta. Tente novamente ou contacte o Suporte Técnico.',
 	'editaccount-invalid-email' => '"$1" não é um endereço electrónico válido!',
 	'editaccount-nouser' => 'A conta "$1" não existe!',
+	'editaccount-requested' => 'Nota: O usuário solicitou um encerramento de conta',
 	'editaccount-labal-account-status' => 'Estado da Conta',
 	'editaccount-labal-email-status' => 'Estado do E-mail',
 	'editaccount-status-confirmed' => 'Confirmado',

@@ -1163,7 +1163,7 @@ $messages['tr'] = array(
  * @author Steve.rusyn
  */
 $messages['uk'] = array(
-	'app-loading' => 'Завантаження...',
+	'app-loading' => 'Завантаження…',
 	'app-tab-search' => 'Пошук',
 	'app-tab-about' => 'Про програму',
 	'app-tab-browse' => 'A..Z',

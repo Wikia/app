@@ -16,7 +16,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	 *
 	 * @requestParam integer $module [REQUIRED] module id see MarketingToolboxModel.class.php from line 9 to 17
 	 * @requestParam integer $vertical [REQUIRED] vertical id see WikiFactoryHub::CATEGORY_ID_GAMING, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, WikiFactoryHub::CATEGORY_ID_LIFESTYLE
-	 * @requestParam integer $timestamp [REQUIRED] unix timestamp
+	 * @requestParam integer $timestamp [OPTIONAL] unix timestamp, default current date
 	 * @requestParam string $lang [OPTIONAL] default set to EN
 	 *
 	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
@@ -31,7 +31,7 @@ class WikiaHubsApiController extends WikiaApiController {
 		
 		$moduleId = $this->request->getInt(self::PARAMETER_MODULE);
 		$verticalId = $this->request->getInt(self::PARAMETER_VERTICAL);
-		$timestamp = $this->request->getInt(self::PARAMETER_TIMESTAMP);
+		$timestamp = $this->request->getInt(self::PARAMETER_TIMESTAMP, strtotime('00:00'));
 		$lang = $this->request->getVal(self::PARAMETER_LANG, self::DEFAULT_LANG);
 		
 		$model = $this->getModel();
@@ -52,7 +52,11 @@ class WikiaHubsApiController extends WikiaApiController {
 		$moduleService = MarketingToolboxModuleService::getModuleByName($moduleName, $lang, MarketingToolboxModel::SECTION_HUBS, $verticalId);
 		
 		if( $this->isValidModuleService($moduleService) ) {
-			$data = $moduleService->loadData($model, $timestamp);
+			$data = $moduleService->loadData($model, [
+				'lang' => $lang,
+				'vertical_id' => $verticalId,
+				'ts' => $timestamp,
+			]);
 			$this->response->setVal('data', $data);
 		} else {
 			throw new BadRequestApiException();
@@ -75,7 +79,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	}
 	
 	protected function isValidModule(MarketingToolboxModel $model, $moduleId) {
-		if( $moduleId > 0 ) { 
+		if( $moduleId > 0 ) {
 			return in_array($moduleId, $model->getModulesIds());
 		}
 		

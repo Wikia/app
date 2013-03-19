@@ -143,6 +143,12 @@ class ParserOutput extends CacheTime {
 	private $mIndexPolicy = '';       # 'index' or 'noindex'?  Any other value will result in no change.
 	private $mAccessedOptions = array(); # List of ParserOptions (stored in the keys)
 
+	# <Wikia>
+	public $mPerformanceStats = array();
+	function getPerformanceStats( $k )     { return @$this->mPerformanceStats[$k]; }
+	function setPerformanceStats( $k, $v ) { $this->mPerformanceStats[$k] = $v; }
+	# </Wikia>
+
 	const EDITSECTION_REGEX = '#<(?:mw:)?editsection page="(.*?)" section="(.*?)"(?:/>|>(.*?)(</(?:mw:)?editsection>))#';
 
 	function __construct( $text = '', $languageLinks = array(), $categoryLinks = array(),

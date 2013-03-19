@@ -46,3 +46,13 @@
 	background-image: none;
 	background-color: $background-color;
 }
+
+@mixin radial-gradient($color1: false, $color2: false) {
+	background-image: $color1; /* Old browsers */
+	background-image: -moz-radial-gradient(center, ellipse cover, $color1 0%, $color2 100%); /* FF3.6+ */
+	background-image: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,$color1), color-stop(100%,$color2)); /* Chrome,Safari4+ */
+	background-image: -webkit-radial-gradient(center, ellipse cover, $color1 0%,$color2 100%); /* Chrome10+,Safari5.1+ */
+	background-image: -o-radial-gradient(center, ellipse cover, $color1 0%,$color2 100%); /* Opera 12+ */
+	background-image: -ms-radial-gradient(center, ellipse cover, $color1 0%,$color2 100%); /* IE10+ */
+	background-image: radial-gradient(ellipse at center, $color1 0%,$color2 100%); /* W3C */
+}

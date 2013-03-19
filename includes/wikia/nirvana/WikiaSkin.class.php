@@ -195,7 +195,8 @@ abstract class WikiaSkin extends SkinTemplate {
 			// Mocking mw.loader.state so the script can be loaded up high
 			// Whatever is passed to mw.loader.state is saved to window.preMwLdrSt
 			// Once the real mw.loader.state is available this variable will be passed to it
-			$scripts .= Html::inlineScript('window.mw||(mw={fk:1,loader:{state:function(s){preMwLdrSt=s}}});') . "\n";
+			$scripts = Html::inlineScript('window.mw||(mw={fk:1,loader:{state:function(s){preMwLdrStA=window.preMwLdrStA||[];preMwLdrStA.push(s)}}});') . "\n"
+				. $scripts;
 			$scripts .= ResourceLoader::makeCustomLink($this->wg->out, $scriptModules, 'scripts') . "\n";
 			// Replacing mw with the original function
 			$scripts .= Html::inlineScript('window.mw.fk&&delete mw;') . "\n";

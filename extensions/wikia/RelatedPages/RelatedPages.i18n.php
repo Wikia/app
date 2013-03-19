@@ -61,6 +61,14 @@ $messages['bs'] = array(
 	'wikiarelatedpages-heading' => 'Pročitaj više',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'wikiarelatedpages-desc' => 'Afegir una llista en pàgines de pàgines relacionades',
+	'wikiarelatedpages-heading' => 'Llegir més',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
@@ -262,6 +270,14 @@ $messages['pt'] = array(
 $messages['pt-br'] = array(
 	'wikiarelatedpages-desc' => 'Adiciona a páginas uma lista de páginas relacionadas',
 	'wikiarelatedpages-heading' => 'Leia mais',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikiarelatedpages-desc' => "Aggiunge 'n'elenghe cu le pàggene collegate a le pàggene",
+	'wikiarelatedpages-heading' => 'Ligge de cchiù',
 );
 
 /** Russian (русский)

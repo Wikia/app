@@ -16,8 +16,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 		$functionWrapperMock->expects($this->once())
 			->method('msg')
-			->with('marketing-toolbox-hub-module-top10-list')
-			->will($this->returnValue('testNameFor Top 10 list'));
+			->with('marketing-toolbox-hub-module-slider')
+			->will($this->returnValue('testNameFor slider'));
 
 		$app = new WikiaApp(null, null, null, $functionWrapperMock);
 
@@ -26,21 +26,19 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$model->setApp($app);
 
 		$this->assertEquals(
-			'testNameFor Top 10 list',
-			$model->getModuleName(MarketingToolboxModuleTop10listService::MODULE_ID)
+			'testNameFor slider',
+			$model->getModuleName(MarketingToolboxModuleSliderService::MODULE_ID)
 		);
 	}
 
 	public function testGetNotTranslatedModuleName() {
 		$testDatas = array(
 			MarketingToolboxModuleSliderService::MODULE_ID => 'Slider',
-			MarketingToolboxModulePulseService::MODULE_ID => 'Pulse',
 			MarketingToolboxModuleWikiaspicksService::MODULE_ID => 'Wikiaspicks',
 			MarketingToolboxModuleFeaturedvideoService::MODULE_ID => 'Featuredvideo',
 			MarketingToolboxModuleExploreService::MODULE_ID => 'Explore',
 			MarketingToolboxModuleFromthecommunityService::MODULE_ID => 'Fromthecommunity',
 			MarketingToolboxModulePollsService::MODULE_ID => 'Polls',
-			MarketingToolboxModuleTop10listService::MODULE_ID => 'Top10list',
 			MarketingToolboxModulePopularvideosService::MODULE_ID => 'Popularvideos'
 		);
 
@@ -100,7 +98,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 	public function testGetModuleUrl() {
 		$params = array(
-			'moduleId' => MarketingToolboxModulePulseService::MODULE_ID,
+			'moduleId' => MarketingToolboxModuleSliderService::MODULE_ID,
 			'date' => 123456,
 			'region' => 'pl',
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
@@ -147,10 +145,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		);
 
 		// Mock database
-		$dbMock = $this->getMock('DatabaseMysql', array('selectField', 'makeList'));
-		$dbMock->expects($this->once())
-			->method('selectField')
-			->will($this->returnValue(0));
+		$dbMock = $this->getMock('DatabaseMysql', array('makeList'));
 		$dbMock->expects($this->any())
 			->method('makeList')
 			->will($this->returnValue(''));
@@ -164,7 +159,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$app = new WikiaApp(null, null, null, $functionWrapperMock);
 
 		// Mock model
-		$modelMock = $this->getMock('MarketingToolboxModel', array('getModulesDataFromDb', 'getModuleUrl'), array($app));
+		$modelMock = $this->getMock('MarketingToolboxModel', array('getModulesDataFromDb', 'getModuleUrl', 'getLastPublishedTimestamp'), array($app));
 
 		$modelMock->expects($this->once())
 			->method('getModulesDataFromDb')
@@ -179,6 +174,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$modelMock->expects($this->any())
 			->method('getModuleUrl')
 			->will($this->returnValue('test href'));
+
+		$modelMock->expects($this->any())
+			->method('getLastPublishedTimestamp')
+			->will($this->returnValue(0));
 
 		$modulesData = $modelMock->getModulesData(
 			$params['langCode'],
@@ -197,7 +196,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertNull($modulesData['lastEditTime']);
 		$this->assertNull($modulesData['lastEditor']);
 		$this->assertNotNull($modulesData['activeModuleName']);
-		$this->assertEquals(9, count($modulesData['moduleList']));
+		$this->assertEquals(7, count($modulesData['moduleList']));
 
 		foreach ($modulesData['moduleList'] as $module) {
 			$this->assertArrayHasKey('status', $module);
@@ -240,18 +239,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'data' => array('second test variable' => 'variable')
 		);
 
-		$mockedModulesData = array();
-		for ($i = 1; $i < 9; $i++) {
-			$mockedModulesData[$i] = $mockDataForModule;
-		}
-		$mockedModulesData[9] = $mockDataForLastModule;
-
-
 		// Mock database
-		$dbMock = $this->getMock('DatabaseMysql', array('selectField', 'makeList'));
-		$dbMock->expects($this->once())
-			->method('selectField')
-			->will($this->returnValue($lastPublishTimestamp));
+		$dbMock = $this->getMock('DatabaseMysql', array('makeList'));
 		$dbMock->expects($this->any())
 			->method('makeList')
 			->will($this->returnValue(''));
@@ -280,11 +269,19 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		// Mock model
 		$modelMock = $this->getMock(
 			'MarketingToolboxModel',
-			array('getModulesDataFromDb', 'getModuleUrl', 'getDefaultModuleList'),
+			array('getModulesDataFromDb', 'getModuleUrl', 'getDefaultModuleList', 'getLastPublishedTimestamp'),
 			array($app)
 		);
 
-		$modelMock->expects($this->at(0))
+		$moduleIds = $modelMock->getEditableModulesIds();
+
+		$mockedModulesData = array();
+		foreach ($moduleIds as $i) {
+			$mockedModulesData[$i] = $mockDataForModule;
+		}
+		$mockedModulesData[9] = $mockDataForLastModule;
+
+		$modelMock->expects($this->at(1))
 			->method('getModulesDataFromDb')
 			->with(
 			$this->equalTo($params['langCode']),
@@ -293,7 +290,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			$this->equalTo($lastPublishTimestamp)
 		)
 			->will($this->returnValue($mockedModulesData));
-		$modelMock->expects($this->at(1))
+		$modelMock->expects($this->at(2))
 			->method('getModulesDataFromDb')
 			->with(
 			$this->equalTo($params['langCode']),
@@ -308,6 +305,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$modelMock->expects($this->any())
 			->method('getModuleUrl')
 			->will($this->returnValue('test href'));
+
+		$modelMock->expects($this->any())
+			->method('getLastPublishedTimestamp')
+			->will($this->returnValue($lastPublishTimestamp));
 
 		$modelMock->expects($this->exactly(0))
 			->method('getDefaultModuleList');
@@ -331,9 +332,12 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals(123654, $modulesData['lastEditTime']);
 		$this->assertEquals($lastEditorName, $modulesData['lastEditor']);
 		$this->assertNotNull($modulesData['activeModuleName']);
-		$this->assertEquals(9, count($modulesData['moduleList']));
+		$this->assertEquals(7, count($modulesData['moduleList']));
 
-		for ($i = 1; $i < 9; $i++) {
+		foreach ($moduleIds as $i) {
+			if ($i == end($moduleIds)){
+				continue;
+			}
 			$module = $modulesData['moduleList'][$i];
 
 			$this->assertArrayHasKey('status', $module);
@@ -720,10 +724,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	public function getDataModulesSavedDataProvider() {
 		return array(
 			array(
-				'8', false
+				'4', false
 			),
 			array(
-				'9', true
+				'7', true
 			),
 			array(
 				'3', false

@@ -1,5 +1,5 @@
 <?php
-class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleService {
+class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 4;
 
 	protected function getFormFields() {
@@ -113,7 +113,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 		$structuredData = array();
 
 		$structuredData['header'] = $data['header'];
-		$structuredData['description'] = $data['description'];
+		$structuredData['description'] = isset($data['description']) ? $data['description'] : '';
 		$structuredData['articleUrl'] = $data['articleUrl'];
 
 		if (!empty($data['sponsoredImage'])) {

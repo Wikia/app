@@ -776,7 +776,7 @@ $messages['ps'] = array(
 	'contact' => 'ويکيا سره اړيکه',
 	'specialcontact-wikia' => 'ويکيا سره اړيکه',
 	'specialcontact-pagetitle' => 'ويکيا سره اړيکه',
-	'specialcontact-username' => 'کارن-نوم', # Fuzzy
+	'specialcontact-username' => 'ستاسې کارن نوم',
 	'specialcontact-realname' => 'ستاسې نوم',
 	'specialcontact-yourmail' => 'برېښليک پته',
 	'specialcontact-problemdesc' => 'پيغام',
@@ -1100,12 +1100,13 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Simon Shek
  */
 $messages['zh-hant'] = array(
 	'contact' => '聯絡Wikia',
 	'specialcontact-wikia' => '聯絡Wikia',
 	'specialcontact-pagetitle' => '聯絡Wikia',
-	'specialcontact-username' => '用戶名', # Fuzzy
+	'specialcontact-username' => '您的用戶名',
 	'specialcontact-wikiname' => '哪個 wiki',
 	'specialcontact-realname' => '您的名字',
 	'specialcontact-yourmail' => '電擬郵件地址',

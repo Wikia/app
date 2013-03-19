@@ -58,6 +58,13 @@ $messages['bs'] = array(
 	'categorygalleries-desc' => 'Prikazuje galeriju na stranici kategorije',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'categorygalleries-desc' => 'Mostra una galeria de pàgines sobre les pàgines de la categoria',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */

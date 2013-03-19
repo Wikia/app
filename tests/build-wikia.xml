@@ -3,7 +3,7 @@
     <description>Wikia QA Tests</description>
 
     <property name="localsettings" value="/usr/wikia/docroot/wiki.factory/LocalSettings.php" />
-    <property name="phpunitexcludegroups" value="deprecated" />
+    <property name="phpunitexcludegroups" value="deprecated,Broken" />
 
 	<target name="php">
 		<mkdir dir="${basedir}/build/logs" />
@@ -57,7 +57,7 @@
             <env key="SERVER_ID" value="165" />
             <arg line="run-test.js
             		../extensions/wikia
-            		../resources/wikia/modules
+            		../resources/wikia
 					--output=${basedir}/build
             	" />
         </exec>

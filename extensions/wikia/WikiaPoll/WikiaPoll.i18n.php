@@ -144,6 +144,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
@@ -159,10 +160,15 @@ $messages['br'] = array(
 	'wikiapoll-addnewitem-label' => 'Ouzhpennañ un elfenn nevez',
 	'wikiapoll-cancel-label' => 'Nullañ',
 	'wikiapoll-publish-label' => 'Embann',
+	'wikiamobile-wikiapoll-open-poll' => 'Petra a soñjit ?',
+	'wikiamobile-wikiapoll-thanks-voting' => "Trugarez deoc'h da vezañ votet !",
+	'wikiamobile-wikiapoll-poll' => 'Sontadeg',
+	'wikiamobile-wikiapoll-user-voted' => 'Votet ho peus war "$1"',
 );
 
 /** Catalan (català)
  * @author BroOk
+ * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'wikiapoll-desc' => 'Proporciona una forma fàcil de crear i gestionar enquestes',
@@ -179,6 +185,10 @@ $messages['ca'] = array(
 	'wikiapoll-publish-label' => 'Publica',
 	'wikiapoll-error-duplicate' => 'Una enquesta amb aquest nom ja existeix.',
 	'wikiapoll-error-invalid-title' => 'Text de la pregunta no és vàlid.',
+	'wikiamobile-wikiapoll-open-poll' => 'Què et sembla?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Gràcies per votar!',
+	'wikiamobile-wikiapoll-poll' => 'Enquesta',
+	'wikiamobile-wikiapoll-user-voted' => 'Has votat per " $1 "',
 );
 
 /** Czech (česky)
@@ -475,6 +485,9 @@ $messages['lb'] = array(
 	'wikiapoll-vote' => 'Ofstëmmen!',
 	'wikiapoll-votes' => '({{PLURAL:$1|1 Stëmm|$1 Stëmmen}})',
 	'wikiapoll-question-label' => 'Fro',
+	'wikiapoll-cancel-label' => 'Ofbriechen',
+	'wikiapoll-publish-label' => 'Verëffentlechen',
+	'wikiamobile-wikiapoll-poll' => 'Ëmfro',
 );
 
 /** Macedonian (македонски)

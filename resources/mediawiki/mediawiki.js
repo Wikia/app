@@ -769,7 +769,7 @@ var mw = ( function ( $, undefined ) {
 					// This needs to NOT use mw.log because these errors are common in production mode
 					// and not in debug mode, such as when a symbol that should be global isn't exported
 					if ( window.console && typeof window.console.log === 'function' ) {
-						console.log( 'mw.loader::execute> Exception thrown by ' + module + ': ' + e.message );
+						console.log( 'mw.loader::execute> Exception thrown by ' + module + ': ' + e.message, e );
 					}
 					registry[module].state = 'error';
 				}
@@ -972,6 +972,12 @@ var mw = ( function ( $, undefined ) {
 							}
 		
 							currReqBase = $.extend( { 'version': formatVersionNumber( maxVersion ) }, reqBase );
+							// Wikia change - begin - @author: wladek
+							// PER-58: add style version
+							currReqBase.version = (window.wgStyleVersion ? window.wgStyleVersion + '-' : '')
+								+ currReqBase.version;
+							// Wikia change - end
+
 							currReqBaseLength = $.param( currReqBase ).length;
 							async = true;
 							// We may need to split up the request to honor the query string length limit,

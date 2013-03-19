@@ -82,9 +82,7 @@ Happy editing!",
 
 If the local admins are not active, you can submit a request for admin status. Please visit the [[w:c:adopt|adoption wiki]] for more information, including the adoption criteria and the request page. Please remember to always provide a link to the wiki you wish to adopt.
 
-If there's an active user community on the wiki you wish to adopt, please start a discussion on the wiki about who would make the best admins, and why you would like to become one. Please provide a link to this discussion at the [[w:c:adopt|Adoption wiki]]. Best of luck and happy editing!
-
-Happy editing!",
+If there's an active user community on the wiki you wish to adopt, please start a discussion on the wiki about who would make the best admins, and why you would like to become one. Please provide a link to this discussion at the [[w:c:adopt|Adoption wiki]]. Best of luck and happy editing!",
 
 	'specialcontact-intro-account-issue' => "Sorry to hear you are having problems accessing your account. A couple of things to check:
 

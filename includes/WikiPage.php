@@ -2971,6 +2971,10 @@ class PoolWorkArticleView extends PoolCounterWork {
 			$this->parserOptions, true, true, $this->revid );
 		$time += microtime( true );
 
+		# <Wikia>
+		$this->parserOutput->setPerformanceStats( 'time', $time );
+		# </Wikia>
+
 		# Timing hack
 		if ( $time > 3 ) {
 			wfDebugLog( 'slow-parse', sprintf( "%-5.2f %s", $time,

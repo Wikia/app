@@ -618,6 +618,7 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 	'blog-movepage-badtitle' => 'Titl blogadenn direizh',
 	'blog-comment-sending' => 'O kas...',
 	'blog-by' => '$1 gant $2',
+	'user-blog-url-link' => 'Blog implijer : $1',
 );
 
 /** Catalan (català)
@@ -2586,10 +2587,13 @@ $messages['lb'] = array(
 
 /** Lithuanian (lietuvių)
  * @author Eitvys200
+ * @author Vilius
  */
 $messages['lt'] = array(
 	'createblogpage' => 'Sukurti dienoraštį',
+	'createbloglistingpage' => '↓Kurti dienoraščio sarašą',
 	'create-blog-spam' => 'Atrodo kaip šlamštas',
+	'create-blog-cant-edit' => '↓Nepavyko atlikti redagavimo',
 	'create-blog-post-recent-listing' => 'Naujausios žinutės',
 	'create-blog-post-recent-listing-title' => 'Naujausios žinutės',
 	'create-blog-post-title' => 'Sukurti naują dienoraščio įrašą',
@@ -2805,7 +2809,7 @@ $messages['mk'] = array(
 	'blog-comments-anonymous' => 'Анонимен корисник',
 	'blog-comment-delete' => 'избриши',
 	'blog-comment-hide' => 'скриј',
-	'blog-comment-unhide' => 'покажи',
+	'blog-comment-unhide' => 'откриј',
 	'blog-comment-history' => 'историја',
 	'blog-comment-edit' => 'уреди',
 	'blog-comment-error' => 'Коментарот не можеше да се зачува',
@@ -3187,11 +3191,11 @@ Gebruik alstublieft een van de beschikbare parameters: <code>$2</code>.',
 	'blog-edited' => 'bewerkt',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Nog geen opmerkingen.',
-	'blog-comment-post' => 'Opmerking plaatsen',
+	'blog-comment-post' => 'Reactie plaatsen',
 	'blog-comments' => 'Opmerkingen',
 	'blog-rc-comments' => 'Opmerkingen bij blog',
-	'blog-comments-new' => 'Nieuwe opmerking in blog',
-	'blog-comments-save' => 'Opmerking in blog opslaan',
+	'blog-comments-new' => 'Nieuwe reactie in blog',
+	'blog-comments-save' => 'Reactie in blog opslaan',
 	'blog-comments-label' => 'Opmerkingen',
 	'blog-voting-label' => 'Stemmen',
 	'blog-comments-info' => 'In dit venster kunt u wikitekst gebruiken',
@@ -3204,7 +3208,7 @@ Gebruik alstublieft een van de beschikbare parameters: <code>$2</code>.',
 	'blog-comment-unhide' => 'weergeven',
 	'blog-comment-history' => 'geschiedenis',
 	'blog-comment-edit' => 'bewerken',
-	'blog-comment-error' => 'De opmerking kon niet opgeslagen worden',
+	'blog-comment-error' => 'De reactie kon niet worden opgeslagen',
 	'blog-comment-cannot-add' => 'U kunt geen opmerkingen bij blogberichten plaatsen',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Artikel waarderen:',
@@ -3219,7 +3223,7 @@ Gebruik alstublieft een van de beschikbare parameters: <code>$2</code>.',
 	'blog-userblog' => 'Blog van $1',
 	'blog-fromsitename' => 'Van $1',
 	'blogs-reportproblem' => 'Probleem melden',
-	'blogs-comment-hidden' => 'Opmerking verborgen.',
+	'blogs-comment-hidden' => 'Reactie verborgen.',
 	'right-blog-comments-toggle' => 'Opmerkingen bij blogberichten in- en uitschakelen',
 	'right-blog-comments-delete' => 'Opmerkingen bij blogberichten verwijderen',
 	'right-blog-articles-edit' => "Blogpagina's bewerken",

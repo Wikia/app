@@ -10,43 +10,34 @@ $messages = array();
 $messages['en'] = array(
 	// general
 	'wikiahubs-button-cancel' => 'Cancel',
-	'wikiahubs-button-close' => 'Finished',
-
-	// suggest video
-	'wikiahubs-suggest-video-submit-button' => 'Suggest Video',
-	'wikiahubs-suggest-video-what-video' => 'What video do you want to share?',
-	'wikiahubs-suggest-video-what-video-default-value' => 'From YouTube, Hulu, your favorite wiki, etc.',
-	'wikiahubs-suggest-video-which-wiki' => 'Which wiki is this from?',
-	'wikiahubs-suggest-video-which-wiki-default-value' => 'Star Wars, ...',
-	'wikiahubs-suggest-video-success' => 'Thanks for suggesting a video, our editors will look over it. Check back often to see if it\'s up!',
-	'wikiahubs-error-invalid-video-url-length' => 'Video url requires at least 10 characters',
-	'wikiahubs-error-invalid-wikiname-length' => 'Wikiname requires at least 1 character',
+	'wikiahubs-search-placeholder' => 'Search Wikia',
 
 	// suggest article
 	'wikiahubs-suggest-article-header' => 'Suggest an Article',
 	'wikiahubs-suggest-article-submit-button' => 'Submit',
-	'wikiahubs-suggest-article-what-article' => 'What do you want to share?',
+	'wikiahubs-suggest-article-what-article' => 'What URL do you want to share? (255 character limit)',
 	'wikiahubs-suggest-article-reason' => 'Why is this cool? (140 characters limit)',
 	'wikiahubs-suggest-article-success' => 'Thanks for suggesting an article, our editors will look over it. Check back often to see if it\'s up!',
 	'wikiahubs-error-invalid-article-url-length' => 'Article url requires at least 10 characters',
 	'wikiahubs-error-invalid-reason-length' => 'Comment must be between 1 and 140 characters',
-
-	//popular videos
-	'wikiahubs-popular-videos-suggested-by' => 'Suggested by [[User:$1|$1]]',
-	'wikiahubs-popular-videos-suggested-by-profile' => 'Suggested by [$2 $1]',
 
 	// wikia hubs
 	'wikiahubs-vertical-VideoGames' => 'Video Games',
 	'wikiahubs-vertical-Entertainment' => 'Entertainment',
 	'wikiahubs-vertical-Lifestyle' => 'Lifestyle',
 	
+	//WAM
+	'wikiahubs-wam-header' => 'WAM Score',
+	'wikiahubs-wam-see-full-wam-ranking' => 'Read more about WAM',
+	'wikiahubs-wam-top-wikis-headline' => 'Top $1 Wikis',
+	'wikiahubs-wam-rank' => 'Rank',
+	'wikiahubs-wam-score' => 'WAM Score',
+	'wikiahubs-wam-wiki-url' => "Wiki's Name",
+	
 	// from the community
 	'wikiahubs-from-community-promoted' => 'Get Promoted',
 	'wikiahubs-from-community-caption' => 'From [$1 $2] on [$3 $4]',
-	
-	// pulse
-	'wikiahubs-pulse' => 'The Pulse on [$1 $2]',
-	'wikiahubs-pulse-whats-your-game' => 'What\'s your game?',
+	'wikiahubs-from-community-headline' => 'From the Community',
 
 	//featured video
 	'wikiahubs-sponsored-by' => 'Sponsored by $1',
@@ -58,21 +49,11 @@ $messages['en'] = array(
 
 $messages['de'] = array(
 	'wikiahubs-button-cancel' => 'Abbrechen',
-	'wikiahubs-button-close' => 'Schließen',
 
-	'wikiahubs-suggest-video-header' => 'Schlag ein Video vor',
-	'wikiahubs-suggest-video-submit-button' => 'Video vorschlagen',
-	'wikiahubs-suggest-video-what-video' => 'Welches Video möchtest du teilen?',
-	'wikiahubs-suggest-video-what-video-default-value' => 'Von YouTube, aus deinem Lieblingswiki, etc.',
-	'wikiahubs-suggest-video-which-wiki' => 'Aus welchem Wiki stammt dieses Video?',
-	'wikiahubs-suggest-video-which-wiki-default-value' => 'StarWars, Harry Potter, ...',
-	'wikiahubs-suggest-video-success' => 'Danke für deinen Vorschlag! Wir schauen ihn uns schnellstmöglich an. Schau bald wieder vorbei!',
-	'wikiahubs-error-invalid-video-url-length' => 'Die Video-URL muss mindestens 10 Zeichen lang sein.',
-	'wikiahubs-error-invalid-wikiname-length' => 'Der Wiki-Name muss mindestens 1 Zeichen lang sein.',
-
+	// suggest article
 	'wikiahubs-suggest-article-header' => 'Artikel vorschlagen',
 	'wikiahubs-suggest-article-submit-button' => 'Abschicken',
-	'wikiahubs-suggest-article-what-article' => 'Was möchtest du teilen?',
+	'wikiahubs-suggest-article-what-article' => 'Was möchtest du teilen? (255 Zeichen maximal)',
 	'wikiahubs-suggest-article-reason' => 'Warum ist das cool? (140 Zeichen maximal)',
 	'wikiahubs-suggest-article-success' => 'Danke für deinen Vorschlag! Wie schauen ihn uns schnellstmöglich an. Schau bald wieder vorbei!',
 	'wikiahubs-error-invalid-article-url-length' => 'Die Artikel-URL muss mindestens 10 Zeichen lang sein.',
@@ -82,12 +63,111 @@ $messages['de'] = array(
 	'wikiahubs-vertical-video-games' => 'Videospiele',
 	'wikiahubs-vertical-entertainment' => 'Entertainment',
 	'wikiahubs-vertical-lifestyle' => 'Lifestyle',
+
+	// from the community
+	'wikiahubs-from-community-promoted' => 'Artikel vorschlagen',
+	'wikiahubs-from-community-caption' => 'Von [$1 $2] aus [$3 $4]',
+	'wikiahubs-from-community-headline' => 'Aus der Community',
+
+	//featured video
+	'wikiahubs-sponsored-by' => 'Gesponsert von $1',
+
+	// 404 page
+	'wikiahubs-404-title' => 'Die angegebene Seite konnte nicht gefunden werden',
+	'wikiahubs-404-message' => "Wir konnten die angegebene Seite leider nicht finden. Umfangreiche und aktuelle Inhalte finden sich in unserem [[$1|Hub von heute]]."
+);
+
+$messages['fr'] = array(
+	// general
+	'wikiahubs-button-cancel' => 'Annuler',
+
+	// suggest article
+	'wikiahubs-suggest-article-header' => 'Suggérer un article',
+	'wikiahubs-suggest-article-submit-button' => 'Suggérer',
+	'wikiahubs-suggest-article-what-article' => 'Que souhaitez-vous partager ? (255 caractères max.)',
+	'wikiahubs-suggest-article-reason' => 'Pourquoi est-ce si intéressant ? (140 caractères max.)',
+	'wikiahubs-suggest-article-success' => 'Merci d\'avoir suggéré un article, ceux qui s\'occupent de la page vont le regarder. Revenez souvent pour voir s\'il est en ligne !',
+	'wikiahubs-error-invalid-article-url-length' => 'L\'URL de l\'article doit faire 10 caractères au moins',
+	'wikiahubs-error-invalid-reason-length' => 'Le commentaire doit faire entre 1 et 140 caractères',
+
+	// wikia hubs
+	'wikiahubs-vertical-VideoGames' => 'Jeux vidéo',
+	'wikiahubs-vertical-Entertainment' => 'Divertissement',
+	'wikiahubs-vertical-Lifestyle' => 'Mode de vie',
+
+	// from the community
+	'wikiahubs-from-community-promoted' => 'Promouvoir',
+	'wikiahubs-from-community-caption' => 'De [$1 $2] sur [$3 $4]',
+	'wikiahubs-from-community-headline' => 'En provenance de la communauté',
+
+	//featured video
+	'wikiahubs-sponsored-by' => 'Sponsorisée par $1',
+
+	// 404 page
+	'wikiahubs-404-title' => 'Impossible de trouver la page que vous cherchez',
+	'wikiahubs-404-message' => 'Nous n\'avons pas trouvé la page que vous cherchez. [[$1|Cliquez ici]] pour le thème du jour.'
+);
+
+$messages['es'] = array(
+	// general
+	'wikiahubs-button-cancel' => 'Cancelar',
+
+	// suggest article
+	'wikiahubs-suggest-article-header' => 'Sugerir un artículo',
+	'wikiahubs-suggest-article-submit-button' => 'Enviar',
+	'wikiahubs-suggest-article-what-article' => '¿Qué quieres compartir? (limitado a 255 caracteres)',
+	'wikiahubs-suggest-article-reason' => '¿Por qué te gusta tanto? (limitado a 140 caracteres)',
+	'wikiahubs-suggest-article-success' => 'Gracias por sugerirnos un artículo, nuestros editores lo revisarán. ¡Vuelve pronto para ver si ya está publicado!',
+	'wikiahubs-error-invalid-article-url-length' => 'La url del artículo requiere al menos 10 caracteres',
+	'wikiahubs-error-invalid-reason-length' => 'El comentario tiene que tener entre 1 y 140 caracteres',
+
+	// wikia hubs
+	'wikiahubs-vertical-VideoGames' => 'Videojuegos',
+	'wikiahubs-vertical-Entertainment' => 'Entretenimiento',
+	'wikiahubs-vertical-Lifestyle' => 'Otros',
+
+	// from the community
+	'wikiahubs-from-community-promoted' => 'Promociónate',
+	'wikiahubs-from-community-caption' => 'De [$1 $2] en [$3 $4]',
+	'wikiahubs-from-community-headline' => 'De la comunidad',
+
+	//featured video
+	'wikiahubs-sponsored-by' => 'Patrocinado por $1',
+
+	// 404 page
+	'wikiahubs-404-title' => 'La página que estás buscando no se pudo encontrar',
+	'wikiahubs-404-message' => 'No pudimos encontrar la página que estás buscando. [[$1|Haz clic aquí]] para ir a la página con noticias de hoy.'
 );
 
 $messages['qqq'] = array(
-	'wikiahubs-popular-videos-suggested-by' => 'A link under video thumbnail on hubs page. The only parameter is username.',
-	'wikiahubs-popular-videos-suggested-by-profile' => "A link under video thumbnail on hubs page. The first parameter is username and second one is a full page address to user's profile page.",
+	// general
+	'wikiahubs-button-cancel' => 'Cancel',
+
+	// suggest article
+	'wikiahubs-suggest-article-header' => 'Get promoted - modal title',
+	'wikiahubs-suggest-article-submit-button' => 'Get promoted - text on submit button on modal',
+	'wikiahubs-suggest-article-what-article' => 'Get promoted - Label for article Url field - should include info about 255 chars max',
+	'wikiahubs-suggest-article-reason' => 'Get promoted - Label for reason field - should include info about 140 chars max',
+	'wikiahubs-suggest-article-success' => 'Get promoted - message after successful add',
+	'wikiahubs-error-invalid-article-url-length' => 'Get promoted - Article url validation error message',
+	'wikiahubs-error-invalid-reason-length' => 'Get promoted - Reason validation error message',
+
+	// wikia hubs
+	'wikiahubs-vertical-VideoGames' => 'Video Games hub name',
+	'wikiahubs-vertical-Entertainment' => 'Entertainment hub name',
+	'wikiahubs-vertical-Lifestyle' => 'Lifestyle hub name',
+
+	//WAM
+	'wikiahubs-wam-top-wikis-headline' => 'the parameter is a vertical name i.e. Video Games or Entertainment',
+	
+	// from the community
+	'wikiahubs-from-community-promoted' => 'Text on button next to FTC title - suggest new article',
+	'wikiahubs-from-community-caption' => 'From [$1 $2] on [$3 $4] - 1st parameter: Users URL, 2nd - User Name, 3rd - Article Url, 4th - wiki name',
+
+	//featured video
 	'wikiahubs-sponsored-by' => 'Just a text next to the sponsor image (logo). First parameter is <img /> tag with the image path',
+
+	// 404 page
 	'wikiahubs-404-title' => '404 page title',
 	'wikiahubs-404-message' => '404 page message, first parameter is link to actual hub page'
 );

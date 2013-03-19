@@ -108,11 +108,14 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 	public function tag() {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
-		$id = $this->request->getVal( 'image_id' );
+		$id = $this->request->getVal( 'image_id', 0 );
 
 		$this->response->setVal( 'value', $this->request->getVal( 'value' ), '' );
-		$this->response->setVal( 'image_id', $id, 0 );
+		$this->response->setVal( 'image_id', $id );
 		$this->response->setVal( 'image_url', $this->getImage( $id ) );
+		if ( $id != 0 ) {
+			$this->response->setVal( 'image_set', true );
+		}
 
 		$this->response->setVal( 'tag_placeholder', $this->wf->Msg( 'wikiagameguides-content-tag' ) );
 	}
@@ -120,13 +123,25 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 	public function category() {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
-		$id = $this->request->getVal( 'image_id' );
+		$id = $this->request->getVal( 'image_id', 0 );
+		$category = $this->request->getVal( 'category_value', '' );
 
-		$this->response->setVal( 'category_value', $this->request->getVal('category_value'), '');
-		$this->response->setVal( 'name_value', $this->request->getVal('name_value'), '');
-		$this->response->setVal( 'image_id', $id, 0 );
+		$this->response->setVal( 'category_value', $category );
+		$this->response->setVal( 'name_value', $this->request->getVal('name_value'), '' );
+		$this->response->setVal( 'image_id', $id );
+
+
+		if ( $id == 0 && $category != '' ) {
+			$cat = Title::newFromText( $category, NS_CATEGORY );
+
+			if ( $cat instanceof Title ) {
+				$id = $cat->getArticleID();
+			}
+		} else {
+			$this->response->setVal( 'image_set', true );
+		}
+
 		$this->response->setVal( 'image_url', $this->getImage( $id ) );
-
 		$this->response->setVal( 'category_placeholder', $this->wf->Msg( 'wikiagameguides-content-category' ) );
 		$this->response->setVal( 'name_placeholder', $this->wf->Msg( 'wikiagameguides-content-name' ) );
 	}

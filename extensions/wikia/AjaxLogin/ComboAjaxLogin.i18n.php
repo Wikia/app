@@ -61,6 +61,7 @@ $messages['ar'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; العودة',
 	'comboajaxlogin-connectmarketing-forward' => 'إبذأ &raquo',
+	'comboajaxlogin-ajaxerror' => 'ويكيا لا يمكنها الاستجابة لك. الرجاء التحقق من الشبكة الخاصة بك',
 );
 
 /** Asturian (asturianu)
@@ -224,11 +225,30 @@ Treiwch eto neu [[Special:Contact|dywedwch rhywbeth]].",
 );
 
 /** Danish (dansk)
+ * @author Claus chr
+ * @author Kaare
  * @author Sarrus
  */
 $messages['da'] = array(
 	'comboajaxlogin-createlog' => 'Log på eller opret en konto',
 	'comboajaxlogin-actionmsg' => 'For at udføre denne handling, skal du først logge på eller oprette en konto',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Tilslut din Wikia konto til Facebook</h1>
+<ul>
+<li>Beholde dit nuværende brugernavn, historik, redigeringer... intet ændres bortset fra hvordan du logger ind</li>
+<li>Dele din aktivitet på Wikia med dine venner på Facebook, med fuld kontrol over hvad der bliver offentliggjort</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '« Tilbage',
+	'comboajaxlogin-connectmarketing-forward' => 'Kom i gang »',
+	'comboajaxlogin-connectdirections' => 'Indtast dit Wikia-brugernavn og kodeord her - vi vil på magisk vis forbinde dine Wikia og Facebook konti i baggrunden.
+
+Når du er færdig, kan du let logge ind med  enhver Facebook Connect-knap.',
+	'comboajaxlogin-post-not-understood' => 'Der opstod en fejl i den måde denne formular blev konstrueret på.
+Prøv igen eller [[Special: Contact|rapportér dette]].', # Fuzzy
+	'comboajaxlogin-readonlytext' => '<h2>Beklager!</h2>
+<p>Du kan ikke oprette en konto i øjeblikket - vi skulle være oppe og køre igen snart. Her er hvad der sker:<br><em>$1</em></p>
+<p>Kontrollér <a href="http://twitter.com/wikia">Twitter</a> eller <a href="http://facebook.com/wikia">Facebook</a> for mere information.
+<br>
+(Hvis du allerede har en konto, kan du <a href="#">logge ind</a> som normalt, men du vil ikke kunne redigere).</p>', # Fuzzy
 );
 
 /** German (Deutsch)
@@ -653,9 +673,11 @@ $messages['lb'] = array(
 
 /** Lithuanian (lietuvių)
  * @author Eitvys200
+ * @author Vilius
  */
 $messages['lt'] = array(
 	'comboajaxlogin-createlog' => 'Prisijungti arba sukurti sąskaitą',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Prisijungti su FaceBook Prisijungimu</h1>',
 );
 
 /** Macedonian (македонски)

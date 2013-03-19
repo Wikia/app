@@ -230,7 +230,7 @@ $messages['br'] = array(
 	'themedesigner-small' => 'Bihan',
 	'themedesigner-medium' => 'Etre',
 	'themedesigner-large' => 'Bras',
-	'themedesigner-tile-background' => 'drekleur ar garrezenn', # Fuzzy
+	'themedesigner-tile-background' => 'Mozaikenn',
 	'themedesigner-transparency' => 'treuzwelusted',
 	'themedesigner-tab-theme' => 'Dodenn',
 	'themedesigner-tab-customize' => 'Personelaat',
@@ -1660,6 +1660,10 @@ $messages['roa-tara'] = array(
 	'themedesigner-small' => 'Piccinne',
 	'themedesigner-medium' => 'Medie',
 	'themedesigner-large' => 'Granne',
+	'themedesigner-fix-background' => 'corregge',
+	'themedesigner-tab-theme' => 'Teme',
+	'themedesigner-tab-customize' => 'Personalizze',
+	'themedesigner-button-save' => 'Reggìstre',
 );
 
 /** Russian (русский)

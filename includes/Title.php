@@ -205,12 +205,19 @@ class Title {
 	 * @return Title the new object, or NULL on an error
 	 */
 	public static function newFromID( $id, $flags = 0 ) {
-		$db = ( $flags & self::GAID_FOR_UPDATE ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
-		$row = $db->selectRow( 'page', '*', array( 'page_id' => $id ), __METHOD__ );
-		if ( $row !== false ) {
-			$title = Title::newFromRow( $row );
-		} else {
+		/* wikia change here */
+		if ( $id == 0 ) {
 			$title = null;
+		} 
+		/* </wikia> */
+		else {
+			$db = ( $flags & self::GAID_FOR_UPDATE ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
+			$row = $db->selectRow( 'page', '*', array( 'page_id' => $id ), __METHOD__ );
+			if ( $row !== false ) {
+				$title = Title::newFromRow( $row );
+			} else {
+				$title = null;
+			}
 		}
 		return $title;
 	}

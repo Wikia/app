@@ -361,15 +361,16 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'main-tab-discover' => 'Dëscoaté',
 	'main-tab-personal' => 'Mia Wikia',
 	'main-tab-search' => 'Sërca',
-	'main-tab-offline' => 'Fòra linia',
+	'main-tab-offline' => 'Assent',
 	'tab-discover-loading-message' => 'A caria ...',
-	'tab-discover-no-network-dialog-title' => 'Rej pa disponìbila',
+	'tab-discover-no-network-dialog-title' => 'Rej pa disponìbil',
 	'tab-discover-no-network-dialog-message' => 'Gnun-a conession ëd rej trovà',
 	'tab-discover-no-network-dialog-close-button' => 'Va bin',
 	'tab-search-loading-message' => 'Sërché...',
@@ -522,11 +523,11 @@ $messages['ug-arab'] = array(
 $messages['uk'] = array(
 	'main-tab-search' => 'Пошук',
 	'main-tab-offline' => 'Офлайн',
-	'tab-discover-loading-message' => 'Завантаження...',
+	'tab-discover-loading-message' => 'Завантаження…',
 	'tab-discover-no-network-dialog-title' => 'Мережа недоступна',
 	'tab-discover-no-network-dialog-close-button' => 'Гаразд',
 	'tab-search-loading-message' => 'Пошук...',
-	'browser-loading-message' => 'Завантаження...',
+	'browser-loading-message' => 'Завантаження…',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -13,6 +13,13 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	private $mockedConfig = array(
+		'debug' => false,
+		'baseUrl' => 'http://data-stage.wikia.net/',
+		'apiPath' => 'api/v0.1/',
+		'schemaPath' => 'callofduty',
+	);
+
 	private $codCharacterTemplate = '{"@context":"/contexts/cod.jsonld","type":"cod:Character","schema:description":null,"wikia:wikiText":[],"schema:name":null,"schema:url":null,"schema:video":[],"wikia:element":[],"schema:audio":[],"wikia:elementIn":[],"schema:photos":[],"wikia:restriction":null,"wikia:includeWith":[],"wikia:playableIn":[],"wikia:playable":null,"wikia:characterIn":[],"cod:voiceActor":[],"schema:birthDate":null,"wikia:weapon":[],"cod:status":null,"cod:rank":null,"cod:timeline":[]}';
 
 	private $codContext = '{
@@ -111,6 +118,7 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 		$mock_cache->expects($this->any())
 			->method('set');
 		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
+		$this->mockGlobalVariable('wgStructuredDataConfig', $this->mockedConfig);
 		$this->mockApp();
 
 		$apiClient = F::build( 'StructuredDataAPIClient' );
@@ -159,6 +167,7 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 		$mock_cache->expects($this->any())
 			->method('set');
 		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
+		$this->mockGlobalVariable('wgStructuredDataConfig', $this->mockedConfig);
 		$this->mockApp();
 
 		$apiClient = F::build( 'StructuredDataAPIClient' );

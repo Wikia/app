@@ -3,13 +3,19 @@
  * Class definition for \Wikia\Search\IndexService\All
  */
 namespace Wikia\Search\IndexService;
-use Wikia\Search\MediaWikiInterface;
+use Wikia\Search\MediaWikiService;
 /**
  * Aggregates all other services into a single request -- good for populating a full index
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class All extends AbstractService
 {
+	/**
+	 * These are the services whose outputs will be aggregated during execute. 
+	 * @var array
+	 */
 	protected $services = array(
 			'DefaultContent'  => null,
 			'BacklinkCount'   => null,
@@ -34,7 +40,7 @@ class All extends AbstractService
 		$result = array();
 		foreach ( $this->services as $serviceName => $service ) {
 			if ( $service === null ) {
-				$service = Factory::getInstance()->get( $serviceName );
+				$service = new $service();
 				$this->services[$serviceName] = $service;
 			}
 			$subResult = $service->setPageId( $this->currentPageId )->execute();

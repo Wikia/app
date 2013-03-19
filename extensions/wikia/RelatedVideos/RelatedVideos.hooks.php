@@ -54,12 +54,10 @@ class RelatedVideosHookHandler {
 					break;
 				case NS_MEDIAWIKI:
 					if ( $title->getText() == RelatedVideosNamespaceData::GLOBAL_RV_LIST ) {
-						$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle($title);
-						$relatedVideosNSData->purge();
-
-						if ( VideoInfoHelper::videoInfoExists() ) {
-							$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
-							if ( !empty($relatedVideos) ) {
+						$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
+						if ( !empty($relatedVideos) ) {
+							$relatedVideos->purge();
+							if ( VideoInfoHelper::videoInfoExists() ) {
 								$data = $relatedVideos->getData();
 								if ( !empty($data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER]) ) {
 									$images = array();
@@ -75,7 +73,7 @@ class RelatedVideosHookHandler {
 										$userId = $user->getId();
 										$videoInfoHelper = new VideoInfoHelper();
 										foreach( $images as $img ) {
-											$videoData = $videoInfoHelper->getVideoDataByTitle( $img, true );
+											$videoData = $videoInfoHelper->getVideoDataFromTitle( $img, true );
 											if ( !empty($videoData) ) {
 												$videoInfo = new VideoInfo( $videoData );
 												if ( $videoInfo->addPremiumVideo( $userId ) ) {
@@ -193,4 +191,50 @@ class RelatedVideosHookHandler {
 		return true;
 	}
 
+	/**
+	 * Hook: delete video from related videos module when the file page is deleted
+	 * @param WikiPage $wikiPage
+	 * @param User $user
+	 * @param string $reason
+	 * @param integer $pageId
+	 * @return true
+	 */
+	public static function onArticleDeleteComplete( &$wikiPage, &$user, $reason, $pageId  ) {
+		$title = $wikiPage->getTitle();
+		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
+			$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
+			if( !empty($relatedVideos) ) {
+				// add video only if the videos already exists in blacklist
+				$entry = $relatedVideos->getEntry( $title->getText(), RelatedVideosNamespaceData::WHITELIST_MARKER );
+				if ( !empty($entry) ) {
+					// move title from white list to black list
+					$result = $relatedVideos->addToList( RelatedVideosNamespaceData::BLACKLIST_MARKER, array( $entry ) );
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: restore video to related videos module when the file page is undeleted
+	 * @param Title $title
+	 * @param User $wgUser
+	 * @param string $reason
+	 * @return true
+	 */
+	public static function onUndeleteComplete( &$title, &$user, $reason ) {
+		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
+			$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
+			if( !empty($relatedVideos) ) {
+				// add video only if the videos already exists in blacklist
+				$entry = $relatedVideos->getEntry( $title->getText(), RelatedVideosNamespaceData::BLACKLIST_MARKER );
+				if ( !empty($entry) ) {
+					$result = $relatedVideos->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array( $entry ) );
+				}
+			}
+		}
+
+		return true;
+	}
 }

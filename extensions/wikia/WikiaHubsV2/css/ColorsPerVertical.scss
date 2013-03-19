@@ -134,25 +134,22 @@
 			.title-wrapper {
 				border-bottom: 4px solid $color-wikiahome-hubcolor;
 			}
-			.tabberlive {
-				li a {
+		}
+		.wikiahubs-wam .wam-content {
+			.title {
+				border-bottom: 4px solid $color-wikiahome-hubcolor;
+				a {
 					color: $color-wikiahome-hubcolor;
 				}
-				li a:hover {
-					background-color: $color-wikiahome-hubcolor;
-					color: $whitecolor;
-				}
-				li a:visited {
+				img {
 					background-color: $color-wikiahome-hubcolor;
 				}
-				li.tabberactive a {
-					background-color: $color-wikiahome-hubcolor;
-					color: $whitecolor;
+			}
+			.score-table {
+				.rank {
+					padding-left: 3px;
 				}
-				li.tabberactive a:hover {
-					background-color: $color-wikiahome-hubcolor;
-				}
-				.tabbertab a {
+				.url a {
 					color: $color-wikiahome-hubcolor;
 				}
 			}

@@ -6,7 +6,7 @@
 		regExpNamespace = new RegExp(w.wgArticlePath.replace('$1', "([^:]*)")),
 		//not all namespaces in GG should be clickable
 		//there are custom namespaces on wikis therefore black list will be better suited here
-		disabledNs = [-2,-1,1,2,3,5,6,7,10,11,12,13,15,110,111,500,501,700,701,1200,1201,1202],
+		disabledNs = [-2,-1,1,2,3,4,5,6,7,10,11,12,13,15,110,111,500,501,700,701,1200,1201,1202],
 		link,
 		path,
 		parent,
@@ -68,7 +68,7 @@
 				'Linker',
 				'goTo',
 				{
-					title: title,
+					title: decodeURIComponent(title),
 					ns: ns
 				}
 			);
@@ -129,11 +129,13 @@
 			return toggle('full', 'left', alignment)
 		};
 
-		this.setOptions = function(size, type, alignment){
+		this.setOptions = function(options){
+			options = options || {};
+
 			return {
-				size: size !== undefined && this.setSize(size),
-				type: type && this.toggleType(type),
-				alignment: alignment && this.toggleAlignment(alignment)
+				size: options.size !== undefined && this.setSize(options.size),
+				type: options.type !== undefined && this.toggleType(options.type),
+				alignment: options.alignment !== undefined && this.toggleAlignment(options.alignment)
 			};
 
 		};
@@ -171,11 +173,11 @@
 		function Sections(){
 			this.open = function(id){
 				s.open(id, true);
-			}
+			};
 			this.close = s.close;
 			this.toggle = function(id) {
 				s.toggle(id, true);
-			}
+			};
 		}
 
 		Ponto.PontoBaseHandler.derive(Sections);
@@ -185,6 +187,14 @@
 		};
 
 		w.Sections = Sections;
+
+		s.addEventListener('open', function(){
+			document.documentElement.style.minHeight = document.documentElement.offsetHeight + 'px';
+		});
+
+		s.addEventListener('close', function(){
+			document.documentElement.style.minHeight = 0;
+		});
 	});
 
 	window.addEventListener('DOMContentLoaded', function(){
@@ -203,4 +213,5 @@
 			);
 		});
 	});
+
 })(document.documentElement, this);

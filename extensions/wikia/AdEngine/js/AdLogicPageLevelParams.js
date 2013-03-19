@@ -8,17 +8,9 @@ var AdLogicPageLevelParams = function (
 	'use strict';
 
 	var logGroup = 'AdLogicPageLevelParams',
-		getCustomKeyValues,
-		getDomain,
-		getDartHubName,
-		getHostname,
-		getKruxKeyValues,
-		getCategories,
-		getAb,
-		getPageLevelParams,
 		hostname = window.location.hostname.toString();
 
-	getDartHubName = function () {
+	function getDartHubName() {
 		if (window.cscoreCat === 'Entertainment') {
 			return 'ent';
 		}
@@ -26,9 +18,9 @@ var AdLogicPageLevelParams = function (
 			return 'gaming';
 		}
 		return 'life';
-	};
+	}
 
-	getDomain = function () {
+	function getDomain() {
 		var lhost, pieces, sld = '', np;
 		lhost = hostname.toLowerCase();
 
@@ -43,24 +35,24 @@ var AdLogicPageLevelParams = function (
 		}
 
 		return sld.replace(/\./g, '');
-	};
+	}
 
-	getHostname = function () {
+	function getHostname() {
 		var lhost = hostname.toLowerCase(),
 			pieces = lhost.split('.');
 
 		if (pieces.length) {
 			return pieces[0];
 		}
-	};
+	}
 
-	getCategories = function () {
+	function getCategories() {
 		if (window.wgCategories instanceof Array) {
 			return window.wgCategories.join('|').toLowerCase().replace(/ /g, '_').split('|');
 		}
-	};
+	}
 
-	getAb = function () {
+	function getAb() {
 		var experiments, experimentsNumber, i, ab = [];
 
 		if (abTest) {
@@ -72,21 +64,66 @@ var AdLogicPageLevelParams = function (
 		}
 
 		return ab;
-	};
+	}
 
-	getPageLevelParams = function () {
+	/**
+	 * Adds the info from the second hash into the first.
+	 * If the same key is in both, the key in the second object overrides what's in the first object.
+	 *
+	 * @param {Object} target object to extend (modified in-place AND returned)
+	 * @param {Object} obj extending object
+	 * @return {Object} the extended object
+	 */
+	function extend(target, obj) {
+		var key;
+
+		for (key in obj) {
+			if (obj.hasOwnProperty(key)) {
+				target[key] = obj[key];
+			}
+		}
+
+		return target;
+	}
+
+	/**
+	 * Decode legacy dart string
+	 *
+	 * @param {string} dartString the string to decode
+	 * @return {Object} decoded parameters as plain object
+	 */
+	function decodeLegacyDartParams(dartString) {
+		var params = {},
+			kvs,
+			kv,
+			key,
+			value,
+			i,
+			len;
+
+		log(['decodeLegacyDartParams', dartString], 9, logGroup);
+
+		if (typeof dartString === 'string') {
+			kvs = dartString.split(';');
+			for (i = 0, len = kvs.length; i < len; i += 1) {
+				kv = kvs[i].split('=');
+				key = kv[0];
+				value = kv[1];
+				params[key] = params[key] || [];
+				params[key].push(value);
+			}
+		}
+
+		return params;
+	}
+
+	function getPageLevelParams() {
 		log('getPageLevelParams', 9, logGroup);
 
 		var site,
 			zone1,
 			zone2,
-			params,
-			customParams,
-			customParamsNumber,
-			customParam,
-			i,
-			key,
-			value;
+			params;
 
 		if (window.wikiaPageIsHub) {
 			site = 'hub';
@@ -102,7 +139,7 @@ var AdLogicPageLevelParams = function (
 			s0: site,
 			s1: zone1,
 			s2: zone2,
-			artid: window.wgArticleId,
+			artid: window.wgArticleId && window.wgArticleId.toString(),
 			dmn: getDomain(),
 			hostpre: getHostname(),
 			wpage: window.wgPageName && window.wgPageName.toLowerCase(),
@@ -122,21 +159,12 @@ var AdLogicPageLevelParams = function (
 			params.ksgmnt = Krux.segments;
 		}
 
-		if (window.wgDartCustomKeyValues) {
-			customParams = window.wgDartCustomKeyValues.split(';');
-			customParamsNumber = customParams.length;
-			for (i = 0; i < customParamsNumber; i += 1) {
-				customParam = customParams[i].split('=');
-				key = customParam[0];
-				value = customParam[1];
-				params[key] = params[key] || [];
-				params[key].push(value);
-			}
-		}
+		extend(params, decodeLegacyDartParams(window.wgDartCustomKeyValues));
+		extend(params, decodeLegacyDartParams(window.amzn_targs));
 
 		log(params, 9, logGroup);
 		return params;
-	};
+	}
 
 	return {
 		getPageLevelParams: getPageLevelParams

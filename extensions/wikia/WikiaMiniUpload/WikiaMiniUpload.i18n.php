@@ -396,6 +396,7 @@ $messages['bjn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -425,7 +426,7 @@ $messages['br'] = array(
 	'wmu-thumbnail' => 'Munud',
 	'wmu-fullsize' => 'Ment wirion ($1x$2px)',
 	'wmu-width' => 'Ledander',
-	'wmu-layout' => 'Fichañ',
+	'wmu-layout' => 'Pajennaozañ',
 	'wmu-caption' => "Alc'hwez",
 	'wmu-link' => 'Liamm',
 	'wmu-optional' => '(diret)',
@@ -439,7 +440,7 @@ $messages['br'] = array(
 	'wmu-success' => "<h1>Berzh</h1>Ensoc'het eo bet ho skeudenn.",
 	'wmu-success-placeholder' => '<h1>Berzh</h1>',
 	'wmu-return' => "Distreiñ d'ar c'hemm",
-	'wmu-back' => 'distreiñ', # Fuzzy
+	'wmu-back' => 'Dibab ur skeudenn all',
 	'wmu-warn1' => "Ret eo deoc'h spisait ho reked da gentañ !",
 	'wmu-warn2' => 'Rankout a rit dibab ar restr da gentañ !',
 	'wmu-warn3' => "Ret eo deoc'h spisaat un anv restr da gentañ !",
@@ -471,6 +472,7 @@ $messages['br'] = array(
 	'wmu-replace-default-caption' => "Erlec'hiañ an notenn dre ziouer",
 	'wmu-appearance-in-article' => 'Tres er pennad',
 	'wmu-alignment' => 'Linennadur',
+	'wmu-file-protected' => 'Gwarezet eo ar skeudenn-mañ',
 );
 
 /** Catalan (català)
@@ -2295,6 +2297,8 @@ $messages['ps'] = array(
 	'wmu-layout' => 'ليدنمخ',
 	'wmu-link' => 'تړنه',
 	'wmu-insert2' => 'دوتنه ورټومبل',
+	'wmu-insert3' => 'دا انځور ورټومبل',
+	'wmu-back' => 'يو بل انځور ټاکل',
 	'wmu-imagebutton' => 'انځورونه ورګډول',
 	'wmu-gallery' => 'انځورتون',
 	'wmu-gallery-btn1' => 'يو بل انځور ورګډول',
@@ -2461,6 +2465,19 @@ $messages['pt-br'] = array(
 	'wmu-alignment' => 'Alinhamento',
 	'wmu-file-protected' => 'Esta imagem esta protegida',
 	'wmu-file-error' => 'Desculpe, houve um erro no processo de carregamento. Por favor, tente novamente.',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wmu-upload-image' => "Careche 'a fote",
+	'wmu-title' => "Careche 'a fote",
+	'wmu-upload' => 'Careche',
+	'wmu-find' => 'Cirche',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Careche',
+	'wmu-find-btn' => 'Cirche',
 );
 
 /** Russian (русский)

@@ -243,8 +243,6 @@
 						self.trigger( 'update' );
 					});
 
-					input.val( '' );
-
 					if ( options.autocomplete ) {
 						input.autocomplete( 'close' );
 					}
@@ -252,6 +250,8 @@
 					if ( options.popover ) {
 						input.popover( 'hide' );
 					}
+
+					input.val( '' );
 				}
 			}
 
@@ -349,7 +349,7 @@
 			var data = [];
 
 			this.getCategories( filter ).each(function() {
-				data.push( CategorySelect.normalize( $.data( this ) ) );
+				data.push( CategorySelect.normalize( $(this).data() ) );
 			});
 
 			return data;

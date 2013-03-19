@@ -34,6 +34,14 @@ $messages['br'] = array(
 	'centralhelpsearch-placeholder' => 'Klask er skoazell...',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'centralhelpsearch-desc' => "Permèt la inclusió d'un formulari per buscar ajuda en Community Central",
+	'centralhelpsearch-placeholder' => 'Buscar en Ajuda...',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Darth Daron
@@ -193,6 +201,14 @@ $messages['pt'] = array(
 $messages['pt-br'] = array(
 	'centralhelpsearch-desc' => 'Permitir a inclusão de um formulário para pesquisar ajuda na Central da Comunidade',
 	'centralhelpsearch-placeholder' => 'Procurar em Ajuda...',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'centralhelpsearch-desc' => "Permette 'nglusiune de 'nu module pe cercà 'a Comunitate Cendrale d'Aijute",
+	'centralhelpsearch-placeholder' => 'Cirche aijute...',
 );
 
 /** Russian (русский)

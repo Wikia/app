@@ -107,6 +107,7 @@ $messages['qqq'] = array(
 	'wikiaquiz-error-missing-answers' => 'Error message when no answer given.',
 	'wikiaquiz-error-invalid-correct-answer' => 'Error message when no correct answer given.',
 	'wikiaquiz-error-invalid-article-with-details' => 'Error message when article is invalid, with details.',
+	'wikiaquiz-game-start-button' => '{{Identical|Start game}}',
 	'wikiaquiz-game-cadence-3' => 'First part of "Ready - Set - Go!" (sports countdown)',
 	'wikiaquiz-game-cadence-2' => 'Second part of "Ready - Set - Go!" (sports countdown)',
 	'wikiaquiz-game-cadence-1' => 'Third part of "Ready - Set - Go!" (sports countdown)',
@@ -150,12 +151,17 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
+	'wikiaquiz-createquiz-headline' => "Krouiñ ur c'hwiz",
+	'wikiaquiz-editquiz-headline' => "Aozañ ar c'hwiz",
 	'wikiaquiz-title-label' => 'Titl',
+	'wikiaquiz-moreinfolinks-label' => 'Liammoù "muioc\'h a ditouroù"',
 	'wikiaquiz-moreinfoarticle-label' => 'Pennad',
+	'wikiaquiz-moreinfolinktext-label' => 'Testenn al liamm',
 	'wikiaquiz-question-label' => 'Goulenn',
 	'wikiaquiz-image-label' => 'Skeudenn (diret)',
 	'wikiaquiz-explanation-label' => 'Displegadenn ar respont (diret)',
@@ -167,13 +173,33 @@ $messages['br'] = array(
 	'wikiaquiz-addnewitem-label' => 'Ouzhpennañ un elfenn nevez',
 	'wikiaquiz-cancel-label' => 'Nullañ',
 	'wikiaquiz-publish-label' => 'Embann',
+	'wikiaquiz-error-invalid-question' => 'Direizh eo testenn ar goulenn.',
+	'wikiaquiz-error-invalid-image' => "N'eo ket reizh ar skeudenn : $1",
+	'wikiaquiz-error-invalid-video' => "N'eo ket reizh ar video : $1",
+	'wikiaquiz-error-missing-answers' => "Ret eo deoc'h reiñ ur respont da nebeutañ",
+	'wikiaquiz-error-invalid-correct-answer' => "Ret eo deoc'h reiñ ur respont reizh.",
+	'wikiaquiz-error-invalid-quiz' => "N'eo ket reizh anv ar c'hwiz.",
+	'wikiaquiz-error-invalid-article' => "N'eo ket reizh ID ar pennad.",
+	'wikiaquiz-error-invalid-article-with-details' => "N'eo ket reizh ar pennad : $1",
 	'wikiaquiz-game-start-button' => "Kregiñ da c'hoari",
 	'wikiaquiz-game-cadence-3' => 'Prest',
+	'wikiaquiz-game-cadence-2' => 'Prest',
 	'wikiaquiz-game-cadence-1' => "Kit de'i!",
 	'wikiaquiz-game-question-label' => 'GOULENN',
 	'wikiaquiz-game-next-button' => 'Goulenn da-heul',
 	'wikiaquiz-game-finish-button' => 'Echuiñ',
+	'wikiaquiz-game-correct-label' => "Reizh ! Barrek hoc'h.",
+	'wikiaquiz-game-congratulations' => "Gourc'hemennoù, $1 !",
+	'wikiaquiz-game-congratulations-anon' => "Gourc'hemennoù !",
+	'wikiaquiz-game-your-score' => 'HO SKOR A ZO',
 	'wikiaquiz-game-continue-button' => "Kenderc'hel",
+	'wikiaquiz-game-thanks' => "Trugarez deoc'h da c'hoari !",
+	'wikiaquiz-game-provide-email' => "Ebarzhit ho chomlec'h postel, mar plij",
+	'wikiaquiz-game-email-placeholder' => 'hoanv@hopostel.com',
+	'wikiaquiz-game-email-button' => 'Kas din traoù digoust',
+	'wikiaquiz-game-email-valid-please' => "Ebarzhit ur chomlec'h postel reizh, mar plij.",
+	'wikiaquiz-game-email-subject' => "Trugarez deoc'h evit ho kasadenn !",
+	'wikiaquiz-game-mute' => 'Hep son',
 );
 
 /** Catalan (català)

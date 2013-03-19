@@ -182,6 +182,7 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Meno25
  * @author OsamaK
  * @author ترجمان05
@@ -193,14 +194,43 @@ $messages['ar'] = array(
 	'cnw-or' => 'أو',
 	'cnw-title' => 'إنشاء ويكي جديدة',
 	'cnw-name-wiki-headline' => 'بدء ويكي',
+	'cnw-name-wiki-label' => 'اختر اسما للويكي',
+	'cnw-name-wiki-wiki' => 'ويكي',
+	'cnw-name-wiki-domain-label' => 'اختر عنوان للويكي',
 	'cnw-login' => 'تسجيل الدخول',
 	'cnw-signup' => 'أنشئ حسابا',
+	'cnw-signup-prompt' => 'تحتاج إلى حساب؟',
+	'cnw-call-to-signup' => 'قم بالتسجيل هنا',
 	'cnw-call-to-login' => 'لج هنا',
 	'cnw-auth-headline' => 'تسجيل الدخول',
 	'cnw-auth-headline2' => 'أنشئ حسابًا',
+	'cnw-auth-facebook-signup' => 'قم بالإشتراك عن طريق الفايسبوك',
+	'cnw-auth-facebook-login' => 'زر "تسجيل الدخول عبر فيس بوك"',
+	'cnw-userauth-headline' => 'لديك حساب؟',
 	'cnw-userauth-creative' => 'تسجيل الدخول',
 	'cnw-userauth-marketing-heading' => 'ليس لديك حساب؟',
+	'cnw-userauth-marketing-body' => 'أنت بحاجة إلى حساب لإنشاء ويكي على ويكيا. التسجيل يستغرق سوى دقيقة!',
+	'cnw-userauth-signup-button' => 'التسجيل',
+	'cnw-desc-headline' => 'ماهو موضوع الويكي؟',
+	'cnw-desc-creative' => 'قم بوصف الموضوع الخاص بالويكي',
+	'cnw-desc-placeholder' => 'سوف يظهر هذا عل الصفحة الرئيسية في الويكي',
+	'cnw-desc-tip1' => 'نصيحة',
+	'cnw-desc-tip1-creative' => 'استخدم هذه المساحة لتقول للناس حول الويكي الخاصة بك في جملة أو اثنين',
+	'cnw-desc-tip2' => 'ملاحظة',
+	'cnw-desc-tip2-creative' => 'قم بإعطاء الزوار بعض التفاصيل حول موضوع هذه الويكي',
+	'cnw-desc-tip3' => 'نصيحة للمحترفين',
+	'cnw-desc-tip3-creative' => 'دع الناس يعرفون بأنه بإمكانهم مساعدتك في تنمية الويكي عبر التحرير فيها و إضافة الصفحات',
+	'cnw-desc-choose' => 'إختيار فئة',
+	'cnw-desc-select-one' => 'إختر واحدة',
+	'cnw-desc-default-lang' => 'سوف تكون هذه الويكي باللغة $1',
+	'cnw-desc-change-lang' => 'تغيير',
 	'cnw-desc-lang' => 'اللغة',
+	'cnw-desc-wiki-submit-error' => 'الرجاء اختيار فئة',
+	'cnw-theme-headline' => 'إختيار المظهر',
+	'cnw-theme-creative' => 'اختر أحد المظاهر أدناه، سوف تتمكن من رؤية معاينة حول كل مظهر لكي تختاره',
+	'cnw-theme-instruction' => 'يمكنك أيضا تصميم مظهر خاص بك في وقت لاحق عن طريق "أدواتي".',
+	'cnw-welcome-headline' => 'تهانينا! لقد تم إنشاء $1',
+	'cnw-welcome-instruction1' => 'انقر الزر أدناه لبدء إضافة صفحات في الويكي الخاص بك.',
 );
 
 /** Kotava (Kotava)
@@ -1303,8 +1333,12 @@ $messages['ko'] = array(
  */
 $messages['ku-latn'] = array(
 	'cnw-or' => 'an',
+	'cnw-name-wiki-label' => 'Navê wîkîya te',
 	'cnw-signup' => 'Hesabekî çêke',
+	'cnw-desc-choose' => 'Kategoriyekê hilbijêre',
 	'cnw-desc-lang' => 'Ziman',
+	'cnw-desc-wiki-submit-error' => 'Ji kerema xwe re kategoriyekê hilbijêre',
+	'cnw-error-blocked-header' => 'Hesab hat astengkirin',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

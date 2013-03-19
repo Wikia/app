@@ -52,6 +52,7 @@ $messages['br'] = array(
 	'places-geolocation-button-label' => "Ouzhpennañ ul lec'hiadur",
 	'places-geolocation-modal-add-title' => "Ouzhpennañ ul lec'hiadur",
 	'places-geolocation-modal-error-title' => 'Fazi',
+	'places-error-no-article' => "Ret eo deoc'h diferiñ ur bajenn",
 );
 
 /** Czech (česky)
@@ -467,6 +468,7 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'places-editor-search' => 'پلټل',
+	'places-geolocation-modal-error-title' => 'تېروتنه',
 );
 
 /** Portuguese (português)
@@ -484,6 +486,16 @@ $messages['pt-br'] = array(
 	'places-geolocation-button-label' => 'Adicionar localização',
 	'places-geolocation-modal-add-title' => 'Adicionar localização',
 	'places-geolocation-modal-error-title' => 'Erro',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'places' => 'Luèche sus a sta uicchi',
+	'places-in-category' => "Luèche jndr'à categorije $1",
+	'places-editor-search' => 'Cirche',
+	'places-geolocation-modal-error-title' => 'Errore',
 );
 
 /** Russian (русский)

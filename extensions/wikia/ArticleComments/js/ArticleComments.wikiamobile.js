@@ -5,7 +5,7 @@
  * @author Jakub 'Student' Olek
  **/
 
-require(['throbber', 'toast', 'modal', 'track', 'JSMessages'], function(throbber, toast, modal, track, msg){
+require(['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload'], function(throbber, toast, modal, track, msg, lazyload){
 	"use strict";
 	/** @private **/
 
@@ -74,6 +74,9 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages'], function(throbber
 					((forward) ? loadPrev : loadMore).style.display = 'block';
 
 					wkArtCom.scrollIntoView();
+
+					//load all images that might be on a comments page
+					lazyload(wkArtCom.querySelectorAll('.lazy'));
 				}
 			);
 		}
@@ -104,6 +107,7 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages'], function(throbber
 	function post(ev) {
 		ev.preventDefault();
 		ev.stopPropagation();
+
 		if(!loginRequired(ev)){
 
 			var form = ev.target,
@@ -111,7 +115,7 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages'], function(throbber
 				parentId = (parent) ? parent.id : false,
 				submit = form.getElementsByTagName('input')[0],
 				textArea = form.getElementsByClassName('commText')[0],
-				text = textArea.value.trim();
+				text = encodeURIComponent(textArea.value.trim());
 
 			if(text !== '') {
 				submit.disabled =  true;
@@ -138,9 +142,8 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages'], function(throbber
 					type: 'POST'
 				}).done(
 					function(json) {
-						textArea.value = '';
-
 						if(!json.error && json.text){
+							textArea.value = '';
 
 							if(currentPage > 1){
 								commsUl.innerHTML = firstPage;
@@ -240,6 +243,9 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages'], function(throbber
 			})()
 		});
 	}
+
+	//load all images that might be on a comments page
+	lazyload(wkArtCom.querySelectorAll('.lazy'));
 
 	if(totalPages > 1 && wgArticleId){
 		loadMore.addEventListener(clickEvent, clickHandler, true);

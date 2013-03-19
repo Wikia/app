@@ -284,6 +284,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -302,7 +303,7 @@ $messages['br'] = array(
 	'multiwikiedit_task_added' => 'Ouzhpennet eo bet an trevell lieskemmañ #$1.',
 	'multiwikiedit_task_error' => 'Ur fazi zo bet en ur ouzhpennañ ar poellad lieskemmañ.',
 	'multiwikiedit_task_none_selected' => "N'hoc'h eus ouzhpennet pennad ebet. N'eo ket bet ouzhpennet an trevell.",
-	'multiwikiedit_on' => 'war', # Fuzzy
+	'multiwikiedit_on' => 'Seveniñ ar skript war',
 	'multiwikiedit_page' => 'Pajennoù da gemmañ',
 	'multiwikiedit_page_text' => 'Testenn da enrollañ',
 	'multiwikiedit_reason' => "Abeg ar c'hemm",
@@ -387,6 +388,7 @@ $messages['br'] = array(
 	'multidelete_french_wikis' => 'an holl wikioù gallek',
 	'multidelete_swedish_wikis' => 'an holl wikioù svedek',
 	'multidelete_german_wikis' => 'an holl wikioù alamanek',
+	'action-multidelete' => 'Dilemel ur strobad pajennoù',
 	'multiwikifinder' => 'Klasker titloù lieswiki',
 	'multiwikifindpagenames' => 'Kavout anvioù pajennoù',
 	'multiwikienterpagename' => 'Lakait un anv pajenn :',
@@ -1595,7 +1597,7 @@ $messages['lb'] = array(
 	'multiwikiedit_confirm' => 'CONFIRMÉIEREN',
 	'multiwikiedit_caption' => 'Lëscht vu Säiten',
 	'multiwikiedit_or' => '<b>ODER</b>',
-	'multiwikiedit_on' => 'op', # Fuzzy
+	'multiwikiedit_on' => 'Skript ausféieren op',
 	'multiwikiedit_page_text' => 'Text fir ze späicheren',
 	'multiwikiedit_reason' => "Grond fir d'Ännerung",
 	'multiwikiedit_minoredit_caption' => 'Kleng Ännerung',
@@ -1632,7 +1634,7 @@ $messages['lb'] = array(
 	'multidelete_german_wikis' => 'all däitsch Wkien',
 	'multiwikifindpagenames' => 'Säitennimm fannen',
 	'multiwikienterpagename' => 'Gitt w.e.g. ee Säitennumm un:',
-	'multiwikirecords' => '$1 Wikie fonnt', # Fuzzy
+	'multiwikirecords' => '{{PLURAL:$1|Eng Wiki|$1 Wikie}} fonnt',
 );
 
 /** Macedonian (македонски)
@@ -2429,7 +2431,10 @@ $messages['ps'] = array(
 	'multidelete_this_wiki' => 'همدا ويکي',
 	'multidelete_all_wikis' => 'ټولې ويکي ګانې',
 	'multidelete_selected_wikis' => 'ټاکلې ويکي ګانې',
+	'multidelete_success_subtitle' => 'د $1 لپاره',
 	'multidelete_brazilian_portuguese_wikis' => 'ټولې برازيلۍ پارتوګالي ويکي ګانې',
+	'multidelete_hebrew_wikis' => 'ټولې عبري ويکي ګانې',
+	'multidelete_chinese_wikis' => 'ټولې چينايي ويکي ګانې',
 	'multidelete_german_wikis' => 'ټولې جرمنۍ ويکي ګانې',
 	'multiwikifindpagenames' => 'د مخ نوم موندل',
 );

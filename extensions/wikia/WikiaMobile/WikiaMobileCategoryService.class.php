@@ -23,8 +23,7 @@ class WikiaMobileCategoryService extends WikiaService {
 	public function index(){
 		$categoryLinks = $this->request->getVal( 'categoryLinks', '' );
 
-		//MW1.16 always returns non empty $catlinks
-		//TODO: remove since we're on 1.17+?
+		//$catlinks are always returned even empty
 		if (strpos($categoryLinks, ' catlinks-allhidden\'></div>') !== false) {
 			$categoryLinks = '';
 		}
@@ -68,7 +67,6 @@ class WikiaMobileCategoryService extends WikiaService {
 		/**
 		 * @var $categoryPage CategoryPage
 		 */
-
 		$categoryPage = $this->request->getVal( 'categoryPage' );
 
 		if ( $categoryPage instanceof CategoryPage ) {
@@ -76,13 +74,10 @@ class WikiaMobileCategoryService extends WikiaService {
 
 			$title = $categoryPage->getTitle();
 			$category = Category::newFromTitle( $title );
-			/**
-			 * @var $data WikiaMobileCategoryContents
-			 */
-			$data = $this->model->getItemsCollection( $category );
+			$collections = $this->model->getCollection( $category );
 
-			$this->response->setVal( 'total', $data->getCount() );
-			$this->response->setVal( 'collections', $data->getItems() );
+			$this->response->setVal( 'total', $collections['count'] );
+			$this->response->setVal( 'collections', $collections['items'] );
 			$this->response->setVal( 'requestedIndex', $this->wg->Request->getText( 'index', null ) );
 			$this->response->setVal( 'requestedBatch', $this->wg->Request->getInt( 'page', 1 ) );
 		} else {
@@ -105,22 +100,25 @@ class WikiaMobileCategoryService extends WikiaService {
 			$category = Category::newFromTitle( Title::newFromText( $categoryName, NS_CATEGORY ) );
 
 			if ( $category instanceof Category ) {
-				/**
-				 * @var $categoryModel WikiaMobileCategoryModel
-				 */
-				$categoryModel = new WikiaMobileCategoryModel;
-				$data = $categoryModel->getItemsCollection( $category );
-				
-				if ( !empty( $data[$index] ) && $batch > 0) {
+				$this->initModel();
+
+				$data = $this->wf->PaginateArray(
+					$this->model->getCollection( $category )['items'][$index],
+					WikiaMobileCategoryModel::BATCH_SIZE,
+					$batch
+				);
+
+				if ( !empty( $data['items'] ) ) {
 					//cache response for 3 hours in varnish and browser
 					$this->response->setCacheValidity(
 						WikiaMobileCategoryService::CACHE_TIME,
 						WikiaMobileCategoryService::CACHE_TIME,
-						array(
+						[
 							WikiaResponse::CACHE_TARGET_BROWSER,
 							WikiaResponse::CACHE_TARGET_VARNISH
-						));
-					$this->response->setVal( 'itemsBatch', $data[$index]->getItems( $batch ) );
+						]
+					);
+					$this->response->setVal( 'itemsBatch', $data['items'] );
 				} else {
 					$err = "No Data for given index or batch";
 				}

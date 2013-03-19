@@ -126,7 +126,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->date,
 			$this->selectedModuleId
 		);
-		
+
 		$this->prepareLayoutData($this->selectedModuleId, $modulesData);
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
@@ -163,6 +163,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 					$this->wg->user->getId()
 				);
 
+				$this->purgeMemcache( $module );
+
 				$this->putFlashMessage($this->wf->msg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
 
 				$nextUrl = $this->getNextModuleUrl();
@@ -196,6 +198,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
 					. '/' . $date->format('Y-m-d');
 				$this->successText = $this->wf->msg('marketing-toolbox-module-publish-success', $this->wg->lang->date($this->date));
+				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null )) {
+					$this->purgeWikiaHomepageHubs();
+				}
 			} else {
 				$this->errorMsg = $result->errorMsg;
 			}
@@ -203,10 +208,14 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	private function getNextModuleUrl() {
-		$nextModuleId = $this->selectedModuleId;
+		$moduleIds = $this->toolboxModel->getEditableModulesIds();
 
-		if ($nextModuleId + 1 <= max($this->toolboxModel->getModulesIds())) {
-			$nextModuleId++;
+		$actualModuleIndex = array_search($this->selectedModuleId, $moduleIds);
+
+		if (isset($moduleIds[$actualModuleIndex + 1])) {
+			$nextModuleId = $moduleIds[$actualModuleIndex + 1];
+		} else {
+			$nextModuleId = $moduleIds[$actualModuleIndex];
 		}
 
 		$nextUrl = $this->toolboxModel->getModuleUrl(
@@ -418,5 +427,18 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->fileUrl = $this->request->getVal('fileUrl', '');
 		$this->imageWidth = $this->request->getVal('imageWidth', '');
 		$this->imageHeight = $this->request->getVal('imageHeight', '');
+	}
+
+	private function purgeMemcache($module) {
+		$module->purgeMemcache($this->date);
+
+		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
+			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null )) {
+				$this->purgeWikiaHomepageHubs();
+		}
+	}
+
+	private function purgeWikiaHomepageHubs() {
+		WikiaDataAccess::cachePurge( WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($this->langCode) );
 	}
 }

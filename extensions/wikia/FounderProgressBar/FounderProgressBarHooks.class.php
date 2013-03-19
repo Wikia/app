@@ -12,7 +12,7 @@ class FounderProgressBarHooks {
 	 *
 	 * @param Article $article
 	 */
-	function onArticleSaveComplete (&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	public static function onArticleSaveComplete (&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 
 		// Quick exit if we are already done with Founder Progress Bar (memcache key set for 30 days)
 		if (self::allTasksComplete()) {
@@ -111,7 +111,7 @@ class FounderProgressBarHooks {
 	 * Adding a photo
 	 *
 	 */
-	function onUploadComplete (&$image) {
+	public static function onUploadComplete (&$image) {
 		// Quick exit if tasks are all completed
 		if (self::allTasksComplete()) {
 			return true;
@@ -137,7 +137,7 @@ class FounderProgressBarHooks {
 	 * uploading a new wordmark
 	 *
 	 */
-	function onUploadWordmarkComplete(&$image) {
+	public static function onUploadWordmarkComplete(&$image) {
 		// Quick exit if tasks are all completed
 		if (self::allTasksComplete()) {
 			return true;
@@ -148,7 +148,7 @@ class FounderProgressBarHooks {
 		return true;
 	}
 
-	function onAddNewAccount ($user) {
+	public static function onAddNewAccount ($user) {
 
 		// Quick exit if tasks are all completed
 		if (self::allTasksComplete()) {
@@ -160,7 +160,7 @@ class FounderProgressBarHooks {
 	}
 
 	// Initialize schema for a new wiki
-	function onWikiCreation ( $params ) {
+	public static function onWikiCreation ( $params ) {
 
 		// Always initialize for new wikis
 		if (isset($params['city_id'])) {

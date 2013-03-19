@@ -38,10 +38,6 @@ $item-width: 415px;
 			margin-bottom: 25px;
 			position: relative;
 
-			span {
-				margin-left: 25px;				
-			}
-
 			span.author {
 				margin: 0px;
 			}
@@ -68,6 +64,7 @@ $item-width: 415px;
 				color: #999999; /*$color-module-highlight;*/
 
 				span {
+					margin-left: 25px;
 					display: block;
 				}
 				

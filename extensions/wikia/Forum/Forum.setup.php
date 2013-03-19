@@ -28,6 +28,7 @@ $app->registerClass( 'RelatedForumDiscussionController', $dir . 'RelatedForumDis
 
 // i18n mapping
 $app->registerExtensionMessageFile( 'Forum', $dir . 'Forum.i18n.php' );
+$app->registerExtensionMessageFile( 'ForumAliases', $dir . 'Forum.alias.php');
 
 // special pages
 $app->registerSpecialPage( 'Forum', 'ForumSpecialController' );
@@ -74,6 +75,9 @@ $app->registerHook( 'ArticleFromTitle', 'ForumHooksHelper', 'onArticleFromTitle'
 
 // For activity module tag
 $app->registerHook( 'ParserFirstCallInit', 'ForumHooksHelper', 'onParserFirstCallInit' );
+
+// Hook for topic red links
+$app->registerHook( 'LinkBegin', 'ForumHooksHelper', 'onLinkBegin' );
 
 include ($dir . '/Forum.namespace.setup.php');
 
