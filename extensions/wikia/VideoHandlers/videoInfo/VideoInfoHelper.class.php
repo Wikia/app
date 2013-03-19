@@ -79,6 +79,27 @@ class VideoInfoHelper extends WikiaModel {
 	}
 
 	/**
+	 * get VideoInfo from title
+	 * @param Title|string $title
+	 * @param boolean $premiumOnly
+	 * @return VideoInfo|null $videoInfo
+	 */
+	public function getVideoInfoFromTitle( $title, $premiumOnly = false ) {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$videoInfo = null;
+
+		$videoData = $this->getVideoDataFromTitle( $title, $premiumOnly );
+		if ( !empty($videoData) ) {
+			$videoInfo = new VideoInfo( $videoData );
+		}
+
+		$this->wf->ProfileOut( __METHOD__ );
+
+		return $videoInfo;
+	}
+
+	/**
 	 * get total view from database
 	 * @return array $videoList
 	 */
@@ -185,9 +206,8 @@ class VideoInfoHelper extends WikiaModel {
 		}
 
 		// add new video
-		$videoData = $this->getVideoDataFromTitle( $newTitle );
-		if ( !empty($videoData) ) {
-			$videoInfo = new VideoInfo( $videoData );
+		$videoInfo = $this->getVideoInfoFromTitle( $newTitle );
+		if ( !empty($videoInfo) ) {
 			$affected = $videoInfo->addVideo();
 		}
 
@@ -209,10 +229,9 @@ class VideoInfoHelper extends WikiaModel {
 		if ( $title instanceof Title ) {
 			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
 			if ( empty($videoInfo) ) {
-				$videoData = $this->getVideoDataFromTitle( $title, true );
-				if ( !empty($videoData) ) {
+				$newVideoInfo = $this->getVideoInfoFromTitle( $title, true );
+				if ( !empty($newVideoInfo) ) {
 					// add premium video if not exist
-					$newVideoInfo = new VideoInfo( $videoData );
 					$affected = $newVideoInfo->addPremiumVideo( $userId );
 				}
 			} else {
