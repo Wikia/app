@@ -30,6 +30,8 @@ class VideoHandlerHooks extends WikiaObject{
 			$oFile = wfFindFile( $oTitle );
 			if ( WikiaFileHelper::isVideoFile( $oFile ) ){
 				$oArticle = new WikiaVideoPage( $oTitle );
+			} else {
+				$oArticle = new WikiaImagePage( $oTitle );
 			}
 		}
 
