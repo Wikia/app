@@ -8,6 +8,9 @@ class MarketingToolboxModel extends WikiaModel {
 	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'MarketingToolbox';
 
+	const CACHE_KEY = 'HubsV2v1.00';
+	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'lastPublishedTimestamp';
+
 	protected $statuses = array();
 	protected $modules = array();
 	protected $editableModules = array();
@@ -461,6 +464,11 @@ class MarketingToolboxModel extends WikiaModel {
 			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-db-error');
 		}
 
+		$actualPublishedTimestamp = $this->getLastPublishedTimestamp($langCode, self::SECTION_HUBS, $verticalId);
+		if ($actualPublishedTimestamp < $timestamp && $timestamp < time()) {
+			$this->purgeLastPublishedTimestampCache($langCode, self::SECTION_HUBS, $verticalId);
+		}
+
 		$this->wf->ProfileOut(__METHOD__);
 	}
 
@@ -578,10 +586,32 @@ class MarketingToolboxModel extends WikiaModel {
 	 *
 	 * @return int timestamp
 	 */
-	protected function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null) {
+	public function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null) {
 		if ($timestamp === null) {
 			$timestamp = time();
 		}
+		$timestamp = strtotime('00:00', $timestamp);
+
+		if ($timestamp == strtotime('00:00')) {
+			$lastPublishedTimestamp = WikiaDataAccess::cache(
+				$this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId),
+				6 * 60 * 60,
+				function () use ($langCode, $sectionId, $verticalId, $timestamp) {
+					return $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp);
+				}
+			);
+		} else {
+			$lastPublishedTimestamp = $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp);
+		}
+
+		return $lastPublishedTimestamp;
+	}
+
+	protected function purgeLastPublishedTimestampCache($langCode, $sectionId, $verticalId) {
+		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId));
+	}
+
+	protected function getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp) {
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$table = $this->getTablesBySectionId($sectionId);
 
@@ -676,6 +706,16 @@ class MarketingToolboxModel extends WikiaModel {
 		}
 
 		return $table;
+	}
+
+	protected function getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId) {
+		return F::app()->wf->SharedMemcKey(
+			self::CACHE_KEY,
+			$langCode,
+			$sectionId,
+			$verticalId,
+			self::CACHE_KEY_LAST_PUBLISHED_TIMESTAMP
+		);
 	}
 
 	protected function getSpecialPageClass() {

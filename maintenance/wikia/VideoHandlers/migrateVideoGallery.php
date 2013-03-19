@@ -61,7 +61,7 @@ class EditCLI extends Maintenance {
 	public function replaceForWiki ( $conf, $wikiId, $userName, $test = null ) {
 		$dir = dirname( __FILE__ );
 		$cmd = "SERVER_ID=$wikiId php $dir/wikiMigrateVideoGallery.php --conf $conf --user '$userName'";
-		if (isset($test)) {
+		if ($test) {
 			$cmd .= ' --test';
 		}
 		system($cmd, $retval);

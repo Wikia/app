@@ -203,6 +203,22 @@ describe('AdLogicPageLevelParams', function(){
 		expect(params.key3).toEqual(['value3', 'value4'], 'key3=value3;key3=value4');
 	});
 
+	it('getPageLevelParams Amazon Direct Targeted Buy params', function() {
+		var logMock = function() {},
+			windowMock = {
+				location: {hostname: 'an.example.org'},
+				amzn_targs: 'amzn_300x250=1;amzn_728x90=1;'
+			},
+			adLogicShortPageMock = {hasPreFooters: function() {return true;}},
+			kruxMock,
+			abTestMock,
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock),
+			params = adLogicPageLevelParams.getPageLevelParams();
+
+		expect(params.amzn_300x250).toEqual(['1']);
+		expect(params.amzn_728x90).toEqual(['1']);
+	});
+
 	it('getPageLevelParams Page categories', function() {
 		var logMock = function() {},
 			windowMock = {

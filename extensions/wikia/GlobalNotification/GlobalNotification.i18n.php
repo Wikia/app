@@ -19,6 +19,14 @@ $messages['qqq'] = array(
 	'globalnotification-general-ajax-failure' => 'General message for AJAX failure to be put on global notification',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'globalnotification-desc' => "Sistema de notificació de Wikia. Mostra el sistema de notificació per events tals com falles d'AJAX",
+	'globalnotification-general-ajax-failure' => 'El navegador no ha pogut connectar-se a Wikia. Intenta-ho més tard.',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  */

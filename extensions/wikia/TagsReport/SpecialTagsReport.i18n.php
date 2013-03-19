@@ -92,12 +92,20 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Marcmpujol
  * @author Paucabot
  */
 $messages['ca'] = array(
+	'tagsreport' => "Informe d'etiquetes",
+	'tagsreporttitle' => "Informe d'etiquetes",
+	'tagsreportselecttag' => 'Seleccionar etiqueta:',
 	'tagsreportgo' => 'Mostra',
+	'tagsreportnotspecify' => 'Encara no has seleccionat cap etiqueta especial',
+	'tagsreportnoresults' => 'No hi ha coincidències',
 	'tagsreportmainnspace' => 'Principal',
-	'tagsreportgenerated' => 'Generat el $1 $2', # Fuzzy
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pàgina|pàgines}})',
+	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|pàgina trobada|pàgines trobades}}, que continguin alguna etiqueta especial (dpl, youtube, etc.)',
+	'tagsreportgenerated' => 'Generat el $1 a les $2',
 );
 
 /** Czech (česky)

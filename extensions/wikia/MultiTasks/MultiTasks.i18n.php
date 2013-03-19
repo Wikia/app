@@ -1597,7 +1597,7 @@ $messages['lb'] = array(
 	'multiwikiedit_confirm' => 'CONFIRMÉIEREN',
 	'multiwikiedit_caption' => 'Lëscht vu Säiten',
 	'multiwikiedit_or' => '<b>ODER</b>',
-	'multiwikiedit_on' => 'op', # Fuzzy
+	'multiwikiedit_on' => 'Skript ausféieren op',
 	'multiwikiedit_page_text' => 'Text fir ze späicheren',
 	'multiwikiedit_reason' => "Grond fir d'Ännerung",
 	'multiwikiedit_minoredit_caption' => 'Kleng Ännerung',
@@ -1634,7 +1634,7 @@ $messages['lb'] = array(
 	'multidelete_german_wikis' => 'all däitsch Wkien',
 	'multiwikifindpagenames' => 'Säitennimm fannen',
 	'multiwikienterpagename' => 'Gitt w.e.g. ee Säitennumm un:',
-	'multiwikirecords' => '$1 Wikie fonnt', # Fuzzy
+	'multiwikirecords' => '{{PLURAL:$1|Eng Wiki|$1 Wikie}} fonnt',
 );
 
 /** Macedonian (македонски)

@@ -111,6 +111,19 @@ $messages['br'] = array(
 	'ajaxpoll-submitting' => 'Gortozit mar plij, emeur o kas ho vot...',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp; de tots els vots',
+	'ajaxpoll-thankyou' => 'Gràcies pel teu vot!',
+	'ajaxpoll-error' => 'Hi ha hagut un problema en processar el teu vot, si us plau, intenta-ho de nou.',
+	'ajaxpoll-summary' => "L'enquesta va ser creat el $1 $2, i per ara $3 persones han votat.",
+	'ajaxpoll-submit' => 'Vota!',
+	'ajaxpoll-closed' => "L'enquesta es tancarà ara. Gaudeix dels resultats.",
+	'ajaxpoll-submitting' => "Espera si us plau, s'està processant el teu vot.",
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */

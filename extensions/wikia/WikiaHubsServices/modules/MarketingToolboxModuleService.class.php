@@ -25,16 +25,37 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	public function loadData($model, $params) {
-		$params = $this->prepareParameters($params);
-		$timestamp = $params['ts'];
-		$moduleId = $this->getModuleId();
+		$lastTimestamp = $model->getLastPublishedTimestamp(
+			$this->langCode,
+			$this->sectionId,
+			$this->verticalId,
+			$params['ts']
+		);
 
-		$moduleData = $model->getPublishedData($this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp, $moduleId);
+		$structuredData = WikiaDataAccess::cache(
+				$this->getMemcacheKey($lastTimestamp),
+				6 * 60 * 60,
+				function () use( $model, $params ) {
+					return $this->loadStructuredData( $model, $params );
+				}
+		);
 
-		if( empty($moduleData[$moduleId]['data']) ) {
+		return $structuredData;
+	}
+
+	protected function loadStructuredData( $model, $params ) {
+		$moduleData = $model->getPublishedData(
+			$this->langCode,
+			$this->sectionId,
+			$this->verticalId,
+			$params['ts'],
+			$this->getModuleId()
+		);
+
+		if( empty($moduleData[$this->getModuleId()]['data']) ) {
 			$moduleData = array();
 		} else {
-			$moduleData = $moduleData[$moduleId]['data'];
+			$moduleData = $moduleData[$this->getModuleId()]['data'];
 		}
 
 		return $this->getStructuredData($moduleData);
@@ -83,5 +104,19 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		}
 
 		return $link;
+	}
+
+	public function purgeMemcache($timestamp) {
+		$this->app->wg->Memc->delete( $this->getMemcacheKey($timestamp) );
+	}
+
+	protected function getMemcacheKey( $timestamp ) {
+		return  $this->wf->SharedMemcKey(
+			MarketingToolboxModel::CACHE_KEY,
+			$timestamp,
+			$this->verticalId,
+			$this->langCode,
+			$this->getModuleId()
+		);
 	}
 }

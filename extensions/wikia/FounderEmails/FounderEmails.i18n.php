@@ -403,16 +403,26 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Mutarjem horr
  */
 $messages['ar'] = array(
+	'founderemails-email-user-registered-subject' => 'لقد انضم شخص جديد إلى $WIKINAME',
+	'founderemails-email-user-registered-signature' => 'فريق ويكيا',
+	'founderemails-email-3-days-passed-subject' => 'كيف تسير الأمور في الويكي الخاصة بك',
 	'founderemails-email-first-edit-greeting' => 'مرحباً $USERNAME,',
 	'founderemails-email-first-edit-signature' => 'طاقم ويكيا',
 	'founderemails-email-general-edit-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-general-edit-signature' => 'فريق ويكيا',
+	'founderemails-email-general-edit-button' => 'التحقق من ذلك!',
 	'founderemails-email-anon-edit-greeting' => 'مرحباً $USERNAME,',
 	'founderemails-email-anon-edit-signature' => 'طاقم ويكيا',
+	'founderemails-email-anon-edit-button' => 'التحقق من ذلك!',
 	'founderemails-email-lot-happening-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-lot-happening-signature' => 'فريق ويكيا',
+	'founderemails-email-0-day-addpages-heading' => 'إضافة صفحات.',
 	'founderemails-email-0-day-addpages-button' => 'أضف صفحة',
+	'founderemails-email-0-day-addphotos-heading' => 'إضافة صور.',
 	'founderemails-email-0-day-addphotos-button' => 'أضف صورة',
 	'founderemails-email-3-day-addphotos-button' => 'أضف صور',
 	'founderemails-email-views-digest-button' => 'أضف المزيد من الصفحات',

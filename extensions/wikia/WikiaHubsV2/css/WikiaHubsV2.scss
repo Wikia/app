@@ -26,6 +26,9 @@ $wikiahubs-line-height: 16px;
 	font-size: 13px;	/* reset font size */
 	line-height: $wikiahubs-line-height;	/* reset line height */
 
+	h1 {
+		margin: 14px 0 16px 0;
+	}
 	/* reset article styling */
 	p {
 		margin: 0;
@@ -100,11 +103,19 @@ $wikiahubs-line-height: 16px;
 			}
 		}
 	}
+
 	.RelatedHubsVideos {
 		height: 170px;
 	}
+
 	.sponsored-image {
 		margin: 4px 0 0 0;
+	}
+
+	.wikiahubs-newstabs {
+		p img {
+			margin-top: 2px;
+		}
 	}
 }
 

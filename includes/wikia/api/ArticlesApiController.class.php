@@ -48,17 +48,18 @@ class ArticlesApiController extends WikiaApiController {
 		$ids = null;
 
 		if ( !empty( $category )) {
-			$category = Title::makeTitleSafe( NS_CATEGORY, $category, false, false );
+			$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
 
 			if ( !is_null( $category ) && $category->exists() ) {
-				$category = self::followRedirect( $category );
+				self::followRedirect( $category );
 
 				$ids = self::getCategoryMembers( $category->getFullText(), 5000, '', '', 'timestamp' , 'desc' );
 
 				if ( !empty( $ids ) ) {
-					$ids = array_reduce($ids[0], function( $ret, $item ) {
-						$ret[] = $item['pageid'];
-						return $ret;
+					$ids = $ids[0];
+
+					array_walk( $ids, function( &$val ) {
+						$val = $val['pageid'];
 					});
 				}
 			} else {
@@ -73,15 +74,22 @@ class ArticlesApiController extends WikiaApiController {
 			$ids,
 			$namespaces,
 			false,
-			self::MAX_ITEMS
+			self::MAX_ITEMS + 1 //compensation for Main Page
 		);
 
-		$collection = array();
+		$collection = [];
 
 		if ( !empty( $articles ) ) {
-			$ids = array();
+			$ids = [];
+
+			$mainPageId = Title::newMainPage()->getArticleID();
 
 			foreach ( array_keys( $articles ) as $i ) {
+
+				if ( $i == $mainPageId ) {
+					continue;
+				}
+
 				//data is cached on a per-article basis
 				//to avoid one article requiring purging
 				//the whole collection
@@ -103,12 +111,12 @@ class ArticlesApiController extends WikiaApiController {
 					foreach ( $titles as $t ) {
 						$id = $t->getArticleID();
 
-						$article = array(
+						$article = [
 							'id' => $id,
 							'title' => $t->getText(),
 							'url' => $t->getLocalURL(),
 							'ns' => $t->getNamespace()
-						);
+						];
 
 						$collection[] = $article;
 
@@ -126,11 +134,16 @@ class ArticlesApiController extends WikiaApiController {
 		$this->response->setCacheValidity(
 			self::CLIENT_CACHE_VALIDITY,
 			self::CLIENT_CACHE_VALIDITY,
-			array(
+			[
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
-			)
+			]
 		);
+
+		//if no mainpages were found and deleted we want to always return collection of self::MAX_ITEMS items
+		if ( count( $collection ) > self::MAX_ITEMS ) {
+			$collection = array_slice( $collection, 0, self::MAX_ITEMS );
+		}
 
 		$this->response->setVal( 'items', $collection );
 		$this->response->setVal( 'basepath', $this->wg->Server );
@@ -196,23 +209,23 @@ class ArticlesApiController extends WikiaApiController {
 					continue;
 				}
 
-				$item = array(
-					'wiki' => array(
+				$item = [
+					'wiki' => [
 						'id' => $wikiId,
 						//WF data has it's own cache
 						'name' => WikiFactory::getVarValueByName( 'wgSitename', $wikiId ),
 						'language' => WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId ),
 						'domain' => WikiFactory::getVarValueByName( 'wgServer', $wikiId )
-					),
-					'articles' => array()
-				);
+					],
+					'articles' => []
+				];
 
 				foreach ( $articles as $articleId => $article ) {
 					$found++;
-					$item['articles'][] = array(
+					$item['articles'][] = [
 						'id' => $articleId,
 						'ns' => $article['namespace_id']
-					);
+					];
 				}
 
 				$res[] = $item;
@@ -262,10 +275,10 @@ class ArticlesApiController extends WikiaApiController {
 		$offset = $this->request->getVal( 'offset', '' );
 
 		if ( !empty( $category ) ) {
-			$category = Title::makeTitleSafe( NS_CATEGORY, $category, false, false );
+			$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
 
 			if ( !is_null( $category ) && $category->exists() ) {
-				$category = self::followRedirect( $category );
+				self::followRedirect( $category );
 
 				if ( !empty( $namespaces ) ) {
 					foreach ( $namespaces as &$n ) {
@@ -303,12 +316,12 @@ class ArticlesApiController extends WikiaApiController {
 				self::CLIENT_CACHE_VALIDITY,
 				function() use ( $limit, $offset, $namespace ) {
 
-					$params = array(
+					$params = [
 						'action' => 'query',
 						'list' => 'allpages',
 						'aplimit' => $limit,
 						'apfrom' => $offset
-					);
+					];
 
 					//even if this is $namespace empty string allpages fail to fallback to Main namespace
 					if ( !empty( $namespace ) ) {
@@ -318,7 +331,10 @@ class ArticlesApiController extends WikiaApiController {
 					$pages = ApiService::call( $params );
 
 					if ( !empty( $pages ) ) {
-						return array( $pages['query']['allpages'], !empty( $pages['query-continue']) ? $pages['query-continue']['allpages']['apfrom'] : null );
+						return [
+							$pages['query']['allpages'],
+							!empty( $pages['query-continue']) ? $pages['query-continue']['allpages']['apfrom'] : null
+						];
 					} else {
 						return null;
 					}
@@ -332,7 +348,7 @@ class ArticlesApiController extends WikiaApiController {
 			foreach( $articles[0] as $article ) {
 				$title = Title::newFromText( $article['title'] );
 
-				if ( $title ) {
+				if ( $title instanceof Title ) {
 					$ret[] = [
 						'id' => $article['pageid'],
 						'title' => $title->getText(),
@@ -357,10 +373,10 @@ class ArticlesApiController extends WikiaApiController {
 		$this->response->setCacheValidity(
 			self::CLIENT_CACHE_VALIDITY,
 			self::CLIENT_CACHE_VALIDITY,
-			array(
+			[
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
-			)
+			]
 		);
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -383,12 +399,7 @@ class ArticlesApiController extends WikiaApiController {
 	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
 
-		$articles = $this->request->getVal( self::PARAMETER_ARTICLES, null );
-		$titleKeys = $this->request->getVal( self::PARAMETER_TITLES, null );
 		$abstractLen = $this->request->getInt( self::PARAMETER_ABSTRACT, 100 );
-		$width = $this->request->getInt( 'width', 200 );
-		$height = $this->request->getInt( 'height', 200 );
-		$collection = array();
 
 		//avoid going through the whole routine
 		//if the requested length is out of range
@@ -396,15 +407,22 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $abstractLen > ArticleService::MAX_LENGTH ) {
 			throw new OutOfRangeApiException( self::PARAMETER_ABSTRACT, 0, ArticleService::MAX_LENGTH );
 		}
+
+		$articles = $this->request->getVal( self::PARAMETER_ARTICLES, null );
+		$titleKeys = $this->request->getVal( self::PARAMETER_TITLES, null );
 		
 		if ( empty( $articles ) && empty( $titleKeys ) ) {
 			throw new MissingParameterApiException( self::PARAMETER_ARTICLES );
 		}
 
-		$titles = array();
+		$width = $this->request->getInt( 'width', 200 );
+		$height = $this->request->getInt( 'height', 200 );
+		$collection = [];
+		$titles = [];
+
 		if ( !empty( $articles ) ) {
 			$articles = explode( ',', $articles );
-			$ids = array();
+			$ids = [];
 
 			foreach ( $articles as $i ) {
 				//data is cached on a per-article basis
@@ -459,8 +477,6 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 
 					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
-				} else {
-					Wikia::log( __METHOD__, '', 'No revision for Title (ID: ' . $t->getArticleID() . ', Text: ' . $t->getText() . ')', true );
 				}
 
 			}
@@ -562,14 +578,12 @@ class ArticlesApiController extends WikiaApiController {
 		);
 	}
 
-	static private function followRedirect( $category ) {
+	static private function followRedirect( &$category ) {
 		$redirect = (new WikiPage( $category ))->getRedirectTarget();
 
 		if ( !empty( $redirect ) ) {
-			return $redirect;
+			$category = $redirect;
 		}
-
-		return $category;
 	}
 
 	/**

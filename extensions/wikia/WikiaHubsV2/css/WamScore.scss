@@ -29,7 +29,9 @@
 		margin-top: 8px;
 	}
 	.wam-content {
+		border-top: 1px solid #ccc;
 		clear: both;
+		padding-top: 10px;
 		.title {
 			height: 25px;
 			a {
@@ -40,7 +42,7 @@
 				background-image: url("/extensions/wikia/WikiaHubsV2/images/headicon.png"); /* base64 */
 				display: block;
 				float: left;
-				height: 25px;
+				height: 24px;
 				margin-right: 10px;
 				width: 25px;
 			}

@@ -15,8 +15,11 @@ class MarketingToolboxModuleWAMServiceTest extends WikiaBaseTest {
 	 * @dataProvider getStructuredDataProvider
 	 */
 	public function testGetStructuredData($inputData, $expectedData) {
-		$wamService = new MarketingToolboxModuleWAMService($inputData['lang'], 1, $inputData['vertical_id']);
-		$result = $wamService->getStructuredData($inputData);
+		$wamServiceMock = $this->getMock('MarketingToolboxModuleWAMService', array('getWamPageUrl'), array($inputData['lang'], 1, $inputData['vertical_id']));
+		$wamServiceMock->expects($this->any())
+			->method('getWamPageUrl')
+			->will($this->returnValue('http://www.wikia.com/WAM'));
+		$result = $wamServiceMock->getStructuredData($inputData);
 		$this->assertEquals($expectedData, $result);
 	}
 
@@ -125,42 +128,42 @@ class MarketingToolboxModuleWAMServiceTest extends WikiaBaseTest {
 				'ranking' => [
 					[
 						'rank' => 1,
-						'wamScore' => '99.9554',
+						'wamScore' => 99.96,
 						'imageUrl' => 'http://images1.wikia.nocookie.net/__cb20121004184329/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/150px-Wikia-Visualization-Main%2Crunescape.png',
 						'wikiName' => 'RuneScape Wiki',
-						'wikiUrl' => 'runescape.wikia.com',
+						'wikiUrl' => 'http://runescape.wikia.com',
 						'change' => 1,
 					],
 					[
 						'rank' => 2,
-						'wamScore' => '99.8767',
+						'wamScore' => 99.88,
 						'imageUrl' => 'http://images4.wikia.nocookie.net/__cb20120828154214/wikiaglobal/images/thumb/e/ea/Wikia-Visualization-Main%2Cleagueoflegends.png/150px-Wikia-Visualization-Main%2Cleagueoflegends.png.jpeg',
 						'wikiName' => 'League of Legends Wiki',
-						'wikiUrl' => 'leagueoflegends.wikia.com',
+						'wikiUrl' => 'http://leagueoflegends.wikia.com',
 						'change' => 1,
 					],
 					[
 						'rank' => 3,
-						'wamScore' => '99.7942',
+						'wamScore' => 99.79,
 						'imageUrl' => 'http://images1.wikia.nocookie.net/__cb20121214183339/wikiaglobal/images/thumb/d/d4/Wikia-Visualization-Main%2Celderscrolls.png/150px-Wikia-Visualization-Main%2Celderscrolls.png',
 						'wikiName' => 'Elder Scrolls',
-						'wikiUrl' => 'elderscrolls.wikia.com',
+						'wikiUrl' => 'http://elderscrolls.wikia.com',
 						'change' => -1,
 					],
 					[
 						'rank' => 4,
-						'wamScore' => '99.6520',
+						'wamScore' => 99.65,
 						'imageUrl' => 'http://images1.wikia.nocookie.net/__cb20121113183421/wikiaglobal/images/thumb/3/35/Wikia-Visualization-Main%2Cfallout.png/150px-Wikia-Visualization-Main%2Cfallout.png',
 						'wikiName' => 'Fallout Wiki',
-						'wikiUrl' => 'fallout.wikia.com',
+						'wikiUrl' => 'http://fallout.wikia.com',
 						'change' => 1,
 					],
 					[
 						'rank' => 5,
-						'wamScore' => '99.5516',
+						'wamScore' => 99.55,
 						'imageUrl' => 'http://images3.wikia.nocookie.net/__cb20120828154219/wikiaglobal/images/thumb/d/da/Wikia-Visualization-Main%2CCallofduty.png/150px-Wikia-Visualization-Main%2CCallofduty.png.jpeg',
 						'wikiName' => 'Call of Duty Wiki',
-						'wikiUrl' => 'callofduty.wikia.com',
+						'wikiUrl' => 'http://callofduty.wikia.com',
 						'change' => -1,
 					],
 				]

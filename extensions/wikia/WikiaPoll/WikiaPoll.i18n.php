@@ -168,6 +168,7 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'wikiapoll-desc' => 'Proporciona una forma fàcil de crear i gestionar enquestes',
@@ -184,6 +185,10 @@ $messages['ca'] = array(
 	'wikiapoll-publish-label' => 'Publica',
 	'wikiapoll-error-duplicate' => 'Una enquesta amb aquest nom ja existeix.',
 	'wikiapoll-error-invalid-title' => 'Text de la pregunta no és vàlid.',
+	'wikiamobile-wikiapoll-open-poll' => 'Què et sembla?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Gràcies per votar!',
+	'wikiamobile-wikiapoll-poll' => 'Enquesta',
+	'wikiamobile-wikiapoll-user-voted' => 'Has votat per " $1 "',
 );
 
 /** Czech (česky)

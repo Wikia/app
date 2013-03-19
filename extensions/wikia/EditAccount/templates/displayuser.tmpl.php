@@ -1,5 +1,5 @@
 <!-- s:<?= __FILE__ ?> -->
-<small><a href="<?php print $returnURL; ?>">Return</a></small>
+<small><a href="<?php print $returnURL; ?>">Return</a><?= wfMessage( 'pipe-separator' )->plain() . $logLink ?></small>
 <?php if (!is_null($status)) { ?>
 <fieldset>
 	<legend><?php echo wfMsg('editaccount-status') ?></legend>

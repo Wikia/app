@@ -53,18 +53,18 @@ class PhalanxShadowing {
 			return;
 		}
 
-		wfProfileIn(__METHOD__);
-
 		if (mt_rand(1, 100) <= $wgPhalanxShadowingPercentage) {
+			wfProfileIn(__METHOD__);
 			if (self::$typeName !== null) {
 				wfDebug(__METHOD__ . '::' . self::$typeName ."\n");
 
 				$service = new PhalanxService();
-				$service->check(self::$typeName, $content);
+				$service->match(self::$typeName, $content);
 			}
+			wfProfileOut(__METHOD__);
 		}
 
 		self::$typeName = null;
-		wfProfileOut(__METHOD__);
+	
 	}
 }

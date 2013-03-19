@@ -199,23 +199,27 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'categoryselect-desc' => "Proporciona una interfície per gestionar les categories dels articles sense editar tot l'article.",
 	'categoryselect-button-add' => 'Afegir categoria',
 	'categoryselect-button-cancel' => 'Cancel·la',
 	'categoryselect-button-save' => 'Desa',
-	'categoryselect-category-add' => 'Afegir una categoria', # Fuzzy
-	'categoryselect-category-edit' => 'Opcions de categoria', # Fuzzy
+	'categoryselect-category-add' => 'Afegir una categoria...',
+	'categoryselect-category-edit' => 'Editar categoria',
+	'categoryselect-category-remove' => 'Suprimir categoria',
 	'categoryselect-edit-summary' => 'Afegint categories',
-	'categoryselect-error-article-doesnt-exist' => "L'article [id=$1] no existeix.", # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => 'La pàgina "$1" no existeix.',
+	'categoryselect-error-category-name-length' => "S'ha assolit el límit màxim per a el nom de la categoria.",
 	'categoryselect-error-db-locked' => 'La base de dades està bloquejada.',
-	'categoryselect-error-edit-abort' => "La modificació que has intentat fer ha estat avortada per un ganxo d'extensió.", # Fuzzy
-	'categoryselect-error-empty-category-name' => 'Posa el nom de la categoria (part abans de |)', # Fuzzy
-	'categoryselect-error-user-rights' => "Error de drets d'usuari.", # Fuzzy
-	'categoryselect-modal-category-name' => 'Posa el nom de la categoria:', # Fuzzy
-	'categoryselect-modal-category-sortkey' => 'Classifica aquest article a la categoria "$1" amb el nom:', # Fuzzy
-	'categoryselect-tooltip-add' => 'Pressiona "Enter" quan acabis', # Fuzzy
+	'categoryselect-error-duplicate-category-name' => 'La categoria "$1" ja existeix.',
+	'categoryselect-error-edit-abort' => 'La modificació que has intentat realitzar ha estat avortada per un problema de la extensió.',
+	'categoryselect-error-empty-category-name' => 'Si us plau, indiqueu un nom de categoria.',
+	'categoryselect-error-user-rights' => "L'usuari no té els permisos per realitzar aquesta acció.",
+	'categoryselect-modal-category-name' => 'Proporciona el nom de la categoria:',
+	'categoryselect-modal-category-sortkey' => 'Opcionalment, pots alfabetitzar aquesta pàgina en la categoria "$1" amb el nom:',
+	'categoryselect-tooltip-add' => 'Pressiona Enter o Retrocés quan acabis.',
 	'tog-disablecategoryselect' => "Desactivar el mòdul de categories (només s'aplica si l'edició en mode visual està desactivada).",
 	'tog-disablecategoryselect-v2' => "Desactivar el mòdul de categories (només s'aplica si l'edició en mode visual està desactivada).",
 );
@@ -627,6 +631,8 @@ $messages['ko'] = array(
  */
 $messages['ku-latn'] = array(
 	'categoryselect-button-cancel' => 'Betal bike',
+	'categoryselect-button-save' => 'Tomar bike',
+	'categoryselect-category-remove' => 'Kategoriyê jê bibe',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -636,13 +642,15 @@ $messages['lb'] = array(
 	'categoryselect-button-add' => 'Kategorie derbäisetzen',
 	'categoryselect-button-cancel' => 'Ofbriechen',
 	'categoryselect-button-save' => 'Späicheren',
-	'categoryselect-category-add' => 'Eng Kategorie derbäisetzen', # Fuzzy
-	'categoryselect-category-edit' => 'Optioune vun der Kategorie', # Fuzzy
+	'categoryselect-category-add' => 'Kategorie derbäisetzen...',
+	'categoryselect-category-edit' => 'Kategorie änneren',
+	'categoryselect-category-remove' => 'Kategorie ewechhuelen',
 	'categoryselect-edit-summary' => 'Kategorien derbäisetzen',
-	'categoryselect-error-article-doesnt-exist' => 'Den Artikel [id=$1] gëtt et net.', # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => "D'Säit [id=$1] gëtt et net.",
 	'categoryselect-error-db-locked' => "D'Datebank ass gespaart.",
-	'categoryselect-error-user-rights' => 'Feeler bäi de Benotzerrechter.', # Fuzzy
-	'categoryselect-tooltip-add' => "Dréckt 'Enter' wann Dir fäerdeg sidd", # Fuzzy
+	'categoryselect-error-duplicate-category-name' => 'D\'Kategorie "$1" gëtt et schonn.',
+	'categoryselect-error-user-rights' => "De Benotzer huet net d'Rechter fir dës Aktioun ze maachen.",
+	'categoryselect-tooltip-add' => "Dréckt 'Enter' oder 'Return' wann Dir fäerdeg sidd",
 );
 
 /** Lithuanian (lietuvių)
