@@ -58,8 +58,13 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 			$moduleData = $moduleData[$this->getModuleId()]['data'];
 		}
 
-		return $this->getStructuredData($moduleData);
-	}
+		$structuredData = array();
+		if (!empty($moduleData)) {
+			$structuredData = $this->getStructuredData($moduleData);
+		}
+
+		return $structuredData;
+		}
 
 	protected function getModuleId() {
 		return static::MODULE_ID;
