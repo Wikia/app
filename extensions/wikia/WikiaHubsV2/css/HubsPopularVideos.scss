@@ -78,7 +78,7 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 				margin: 35px 4px;
 			}
 			&.left {
-				left: 10px;
+				left: 0;
 				.chevron {
 					border-color: transparent $color-buttons transparent transparent;
 					margin: 35px -9px;

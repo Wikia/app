@@ -271,8 +271,11 @@ $messages['bcl'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'userlogin-login-heading' => 'Kevreañ',
 	'userlogin-forgot-password' => 'Ankouaet ho peus ho ker-tremen ?',
 	'userlogin-forgot-password-button' => "Kenderc'hel",
+	'userlogin-forgot-password-go-to-login' => 'Ho ker tremen ho peus dija ? [[Special:UserLogin|Kevreañ]]',
+	'userlogin-remembermypassword' => 'Chom kevreet',
 	'userlogin-error-invalidemailaddress' => "Ebarzhit ur chomlec'h postel reizh, mar plij.",
 	'userlogin-error-invalid-username' => 'Anv implijer direizh',
 	'userlogin-error-user-not-allowed' => "An anv implijer-mañ n'eo ket aotreet.",
@@ -284,16 +287,22 @@ N'haller ket cheñch ar gerioù-termen",
 	'userlogin-retypenew' => 'Adskrivañ ar ger-tremen nevez',
 	'userlogin-password-email-greeting' => 'Ac\'hanta $USERNAME,',
 	'userlogin-provider-or' => 'Pe',
+	'userlogin-provider-tooltip-facebook' => 'Klikañ war ar bouton evit kevreañ gant Facebook',
+	'userlogin-provider-tooltip-facebook-signup' => 'Klikañ war ar bouton evit en em enskrivañ gant Facebook',
 	'userlogin-loginreqlink' => 'kevreañ',
+	'userlogin-changepassword-needlogin' => 'Rankout a rit $1 evit kemm ho ker tremen',
 	'wikiamobile-sendpassword-label' => 'Kas ur ger-tremen nevez',
 );
 
 /** Catalan (català)
  * @author BroOk
+ * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'userlogin-login-heading' => 'Iniciar sessió',
 	'userlogin-forgot-password' => 'Has oblidat la teva contrasenya?',
+	'userlogin-forgot-password-button' => 'Continuar',
+	'userlogin-forgot-password-go-to-login' => "Ja tens la teva contrasenya? [[Special:UserLogin|Identifica't]]",
 	'userlogin-remembermypassword' => 'Continuar connectat',
 	'userlogin-error-noname' => "Si us plau, omple el camp del nom d'usuari.",
 	'userlogin-error-sessionfailure' => 'El registre de la sessió ha caducat. Si us plau, inicia sessió un altre cop.',

@@ -1660,6 +1660,10 @@ $messages['roa-tara'] = array(
 	'themedesigner-small' => 'Piccinne',
 	'themedesigner-medium' => 'Medie',
 	'themedesigner-large' => 'Granne',
+	'themedesigner-fix-background' => 'corregge',
+	'themedesigner-tab-theme' => 'Teme',
+	'themedesigner-tab-customize' => 'Personalizze',
+	'themedesigner-button-save' => 'Reggìstre',
 );
 
 /** Russian (русский)

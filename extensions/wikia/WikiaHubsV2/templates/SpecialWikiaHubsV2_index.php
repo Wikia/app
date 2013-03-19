@@ -6,6 +6,7 @@
 
 	<div class="WikiaGrid WikiaHubs" id="WikiaHubs">
 		<div class="grid-3 alpha">
+			<h1><?= $verticalName ?></h1>
 			<section class="grid-3 alpha wikiahubs-slider wikiahubs-module">
 				<?= $app->renderView('SpecialWikiaHubsV2', 'slider', $app->wg->request->getValues()); ?>
 			</section>

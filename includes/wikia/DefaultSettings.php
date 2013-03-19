@@ -274,6 +274,7 @@ $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMart
 $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 $wgAutoloadClasses['SassService']  =  $IP.'/includes/wikia/services/SassService.php';
 $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
+$wgAutoloadClasses['VideoUsageService'] = $IP . '/includes/wikia/services/VideoUsageService.php';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -477,6 +478,7 @@ include_once( "$IP/extensions/wikia/ImageServing/Test/ImageServingTest.setup.php
 include_once( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 include_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnusedVideos/SpecialUnusedVideos.setup.php" );
+include_once( "$IP/extensions/wikia/ArticleSummary/ArticleSummary.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1051,6 +1053,12 @@ $wgWikiaSeasonsWikiaBar = false;
 $wgWikiaSeasonsPencilUnit = false;
 
 /**
+ * @name $wgEnableWAMPageExt
+ * Enables WAMPage extension (corporate pages extension)
+ */
+$wgEnableWAMPageExt = false;
+
+/**
  * @name $wgEnableQuickToolsExt
  * Enables QuickTools extension
  */
@@ -1082,6 +1090,12 @@ $wgWikiaHubsFileRepoPath = 'http://community.wikia.com/';
  * filesystem path for hubs' images
  */
 $wgWikiaHubsFileRepoDirectory = '/images/c/central/';
+
+/**
+ * @name $wgEnableAmazonDirectTargetedBuy
+ * Enables AmazonDirectTargetedBuy integration
+ */
+$wgEnableAmazonDirectTargetedBuy = false;
 
 /**
  * trusted proxy service registry

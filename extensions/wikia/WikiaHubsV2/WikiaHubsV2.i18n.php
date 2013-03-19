@@ -46,6 +46,7 @@ $messages['en'] = array(
 $messages['de'] = array(
 	'wikiahubs-button-cancel' => 'Abbrechen',
 
+	// suggest article
 	'wikiahubs-suggest-article-header' => 'Artikel vorschlagen',
 	'wikiahubs-suggest-article-submit-button' => 'Abschicken',
 	'wikiahubs-suggest-article-what-article' => 'Was möchtest du teilen? (255 Zeichen maximal)',
@@ -58,6 +59,80 @@ $messages['de'] = array(
 	'wikiahubs-vertical-video-games' => 'Videospiele',
 	'wikiahubs-vertical-entertainment' => 'Entertainment',
 	'wikiahubs-vertical-lifestyle' => 'Lifestyle',
+
+	// from the community
+	'wikiahubs-from-community-promoted' => 'Artikel vorschlagen',
+	'wikiahubs-from-community-caption' => 'Von [$1 $2] aus [$3 $4]',
+	'wikiahubs-from-community-headline' => 'Aus der Community',
+
+	//featured video
+	'wikiahubs-sponsored-by' => 'Gesponsert von $1',
+
+	// 404 page
+	'wikiahubs-404-title' => 'Die angegebene Seite konnte nicht gefunden werden',
+	'wikiahubs-404-message' => "Wir konnten die angegebene Seite leider nicht finden. Umfangreiche und aktuelle Inhalte finden sich in unserem [[$1|Hub von heute]]."
+);
+
+$messages['fr'] = array(
+	// general
+	'wikiahubs-button-cancel' => 'Annuler',
+
+	// suggest article
+	'wikiahubs-suggest-article-header' => 'Suggérer un article',
+	'wikiahubs-suggest-article-submit-button' => 'Suggérer',
+	'wikiahubs-suggest-article-what-article' => 'Que souhaitez-vous partager ? (255 caractères max.)',
+	'wikiahubs-suggest-article-reason' => 'Pourquoi est-ce si intéressant ? (140 caractères max.)',
+	'wikiahubs-suggest-article-success' => 'Merci d\'avoir suggéré un article, ceux qui s\'occupent de la page vont le regarder. Revenez souvent pour voir s\'il est en ligne !',
+	'wikiahubs-error-invalid-article-url-length' => 'L\'URL de l\'article doit faire 10 caractères au moins',
+	'wikiahubs-error-invalid-reason-length' => 'Le commentaire doit faire entre 1 et 140 caractères',
+
+	// wikia hubs
+	'wikiahubs-vertical-VideoGames' => 'Jeux vidéo',
+	'wikiahubs-vertical-Entertainment' => 'Divertissement',
+	'wikiahubs-vertical-Lifestyle' => 'Mode de vie',
+
+	// from the community
+	'wikiahubs-from-community-promoted' => 'Promouvoir',
+	'wikiahubs-from-community-caption' => 'De [$1 $2] sur [$3 $4]',
+	'wikiahubs-from-community-headline' => 'En provenance de la communauté',
+
+	//featured video
+	'wikiahubs-sponsored-by' => 'Sponsorisée par $1',
+
+	// 404 page
+	'wikiahubs-404-title' => 'Impossible de trouver la page que vous cherchez',
+	'wikiahubs-404-message' => 'Nous n\'avons pas trouvé la page que vous cherchez. [[$1|Cliquez ici]] pour le thème du jour.'
+);
+
+$messages['es'] = array(
+	// general
+	'wikiahubs-button-cancel' => 'Cancelar',
+
+	// suggest article
+	'wikiahubs-suggest-article-header' => 'Sugerir un artículo',
+	'wikiahubs-suggest-article-submit-button' => 'Enviar',
+	'wikiahubs-suggest-article-what-article' => '¿Qué quieres compartir? (limitado a 255 caracteres)',
+	'wikiahubs-suggest-article-reason' => '¿Por qué te gusta tanto? (limitado a 140 caracteres)',
+	'wikiahubs-suggest-article-success' => 'Gracias por sugerirnos un artículo, nuestros editores lo revisarán. ¡Vuelve pronto para ver si ya está publicado!',
+	'wikiahubs-error-invalid-article-url-length' => 'La url del artículo requiere al menos 10 caracteres',
+	'wikiahubs-error-invalid-reason-length' => 'El comentario tiene que tener entre 1 y 140 caracteres',
+
+	// wikia hubs
+	'wikiahubs-vertical-VideoGames' => 'Videojuegos',
+	'wikiahubs-vertical-Entertainment' => 'Entretenimiento',
+	'wikiahubs-vertical-Lifestyle' => 'Otros',
+
+	// from the community
+	'wikiahubs-from-community-promoted' => 'Promociónate',
+	'wikiahubs-from-community-caption' => 'De [$1 $2] en [$3 $4]',
+	'wikiahubs-from-community-headline' => 'De la comunidad',
+
+	//featured video
+	'wikiahubs-sponsored-by' => 'Patrocinado por $1',
+
+	// 404 page
+	'wikiahubs-404-title' => 'La página que estás buscando no se pudo encontrar',
+	'wikiahubs-404-message' => 'No pudimos encontrar la página que estás buscando. [[$1|Haz clic aquí]] para ir a la página con noticias de hoy.'
 );
 
 $messages['qqq'] = array(

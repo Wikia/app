@@ -13,11 +13,12 @@ $messages['en'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Malhargan
  */
 $messages['ar'] = array(
 	'skinchooser-desc' => 'يسمح للمستخدمين باختيار skins في التفضيلات الخاصة بهم',
-	'new-look' => 'شكل جديدة للويكي', # Fuzzy
+	'new-look' => 'ويكيا',
 	'site-layout' => 'موقع تخطيطات',
 );
 
@@ -213,6 +214,15 @@ $messages['pt-br'] = array(
 	'skinchooser-desc' => 'Permite que os utilizadores escolham temas nas suas preferências',
 	'new-look' => 'Wikia',
 	'site-layout' => 'Composições do Site',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'skinchooser-desc' => "Permette a l'utinde de scacchià le teme jndr'à sezione Me piace accussì",
+	'new-look' => 'Uicchia',
+	'site-layout' => "Disposiziune d'u site",
 );
 
 /** Russian (русский)

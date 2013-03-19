@@ -12,8 +12,6 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	protected $model;
 	
 	const MODULE_ID = 10;
-	//TODO: remove const below after WAM page finished
-	const WIKIA_HOME_PAGE_WAM_URL = 'http://www.wikia.com/WAM';
 
 	/**
 	 * @param Array $params
@@ -160,11 +158,16 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		return $this->getStructuredData($data);
 	}
 
+	public function getWamPageUrl () {
+		$devboxUrl = ($this->app->wg->DevelEnvironment == true) ? '/wiki' : '';
+		return !empty($this->app->wg->WAMPageConfig['pageName']) ? $devboxUrl.'/'.$this->app->wg->WAMPageConfig['pageName'] : '#';
+	}
 	public function getStructuredData($data) {
 		$hubModel = $this->getWikiaHubsModel();
 
+
 		$structuredData = [
-			'wamPageUrl' => self::WIKIA_HOME_PAGE_WAM_URL,
+			'wamPageUrl' => $this->getWamPageUrl(),
 			'verticalName' => $hubModel->getVerticalName($data['vertical_id']),
 			'ranking' => []
 		];

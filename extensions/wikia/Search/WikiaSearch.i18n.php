@@ -1,10 +1,7 @@
 <?php
-
-   /*********************************************************/
-  /*  Original messages associated with search extension   */
- /* See below for V2 extensions, appended to these arrays */
-/*********************************************************/
-
+/**
+ * Wikia Search Internationalization Messages
+ */
 $messages = array();
 
 

@@ -488,6 +488,16 @@ $messages['pt-br'] = array(
 	'places-geolocation-modal-error-title' => 'Erro',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'places' => 'Luèche sus a sta uicchi',
+	'places-in-category' => "Luèche jndr'à categorije $1",
+	'places-editor-search' => 'Cirche',
+	'places-geolocation-modal-error-title' => 'Errore',
+);
+
 /** Russian (русский)
  * @author Kuzura
  */

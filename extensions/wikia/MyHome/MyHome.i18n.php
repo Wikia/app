@@ -238,7 +238,7 @@ $messages['ar'] = array(
 جربه!',
 	'myhome-hot-spots-number-of-editors' => 'محرر',
 	'myhome-log-in' => "<center>خاصية \"صفحتي الرئيسية\" غير متوفرة إلا إذا سجلت الدخول. <br /><br /><big>'''[{{fullurl:خاص:Signup|\$1}} الرجاء التسجيل لرؤية هذه الصفحة.]''' </big></center>",
-	'myhome-community-corner-header' => 'ركن المجتمع', # Fuzzy
+	'myhome-community-corner-header' => 'رسائل المجتمع',
 	'myhome-community-corner-edit' => 'عدل الرسالة',
 	'community-corner' => "'''مرحبا بك في صفحتي الرئيسية'''
 

@@ -64,6 +64,24 @@ $messages['bs'] = array(
 	'batchuserrights-userload-error' => "Nisam mogao učitati korisnika \"'''\$1'''\".",
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'batchuserrights' => "Drets d'usuaris per lots",
+	'batchuserrights-desc' => 'Permet afegir un o diversos usuaris a un grup en una sola acció',
+	'batchuserrights-names' => "Noms d'usuari per afegir a aquest grup (un per línia):",
+	'batchuserrights-intro' => "Aquesta pàgina et permet afegir a un grup diversos usuaris a la vegada.
+Per raons de seguretat, la llista de grups agregables es troba en la configuració de l'extensió i no pot ser canviada des de dins del wiki.
+Si us plau, pregunta a un administrador del sistema si necessites afegir altres grups.",
+	'batchuserrights-single-progress-update' => 'Afegit {{PLURAL:$1|grup|grups}} a <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Afegint {{PLURAL:$1|un usuari|$1 usuaris}} {{PLURAL:$2|al següent grup|als següents grups}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "No s'ha pogut carregar l'usuari \"'''\$1'''\".",
+	'batchuserrights-no-groups' => "No has triar cap grup.
+D'aquesta manera no passarà res.
+La resta de la pàgina serà executada sol per a que puguis veure fàcilment si algun nom d'usuari no es pot carregar.",
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  * @author Reaperman

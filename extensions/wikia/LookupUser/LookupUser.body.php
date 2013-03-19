@@ -268,6 +268,9 @@ EOT
 		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched ) ) );
 		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-info-authenticated', $authenticated ) );
 
+		$allowedAdoption = $user->getOption( 'AllowAdoption', true );
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-user' . ( !$allowedAdoption ? '-not' : '' ) . '-allowed-adoption' )->plain() );
+
 		//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		if( !empty($wgEnableLookupContribsExt) ) {
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css");

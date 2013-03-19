@@ -46,8 +46,6 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		HOME_TOP_RIGHT_BOXAD: 'flush'
 	};
 
-	wikiaGpt.init(slotMap);
-
 	// Private methods
 
 	function formatTrackTime(t, max) {
@@ -98,8 +96,10 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	 * All other ads will go through the legacy DART API.
 	 */
 	function flushGpt() {
-		gptFlushed = true;
-		wikiaGpt.flushAds();
+		if (!gptFlushed) {
+			gptFlushed = true;
+			wikiaGpt.flushAds();
+		}
 	}
 
 	function fillInSlot(slot) {
@@ -178,20 +178,27 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			trackingMethod: 'ad'
 		});
 
-		if (window.wgAdDriverUseGpt) {
+		/*
+		 * We can only issue one request for SRA for now, so we only do the request for
+		 * the slots defined in gptConfig. Slots with 'wait' strategy are pushed to wikiaGpt
+		 * and the first slot to have 'flush' flushes all the slots and the ads are requested.
+		 * gptFlush flag is set, so all the other slots will go through legacy DART API.
+		 */
+		if (window.wgAdDriverUseGpt && gptConfig[slotname] && !gptFlushed) {
 			// Use the new GPT library:
 
-			wikiaGpt.pushAd(
-				slotname,
-				function () {
-					// TODO: detect success and hop situations and handle them
+			wikiaGpt.pushAd({
+				slotname: slotname,
+				slotsize: slotsize,
+				dcopt: dcopt,
+				loc: loc
+			}, function () {
+				// TODO: detect success and hop situations and handle them
 
-					success();
-				}
-			);
+				success();
+			});
 
-			// Once we flush, we want to flush all the remaining ads one by one
-			if (gptConfig[slotname] === 'flush' || gptFlushed) {
+			if (gptConfig[slotname] === 'flush') {
 				flushGpt();
 			}
 		} else {

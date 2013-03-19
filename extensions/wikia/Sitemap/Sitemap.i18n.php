@@ -47,6 +47,13 @@ $messages['br'] = array(
 	'sitemap-desc' => 'Genel steuñvennoù eus ar wiki war ar prim.',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'sitemap-desc' => 'Generar mapes del lloc sobre la marxa',
+);
+
 /** Czech (česky)
  * @author Mormegil
  */

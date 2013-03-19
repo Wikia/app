@@ -3,9 +3,13 @@
 <?php endif; ?>
 
 <article>
-
-	<?php if($result->getThumbnail() != null): ?>
-		<div class="grid-1 alpha"><?= $result->getThumbnail()->toHtml(array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)); ?></div>
+	<?php 
+	if ( $result['ns'] == NS_FILE ) {
+		$thumbnailHtml = $result->getThumbnailHtml();
+	}
+	?>
+	<?php if(! empty( $thumbnailHtml ) ): ?>
+		<div class="grid-1 alpha"><?= $thumbnailHtml ?></div>
 		<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
 	<?php endif; ?>
 	
@@ -13,13 +17,13 @@
 		<?php $title = ( empty($inGroup) && $isInterWiki && empty( $result['isWikiMatch'] ) ) ? str_replace('$1', $result->getTitle(), $result->getVar('wikititle')) : $result->getTitle(); ?>
 
 		<?php
-			$trackingData = 'class="result-link" data-wid="'.$result->getCityId().'" data-pageid="'.$result->getVar('pageId').'" data-pagens="'.$result->getVar('ns').'" data-title="'.$result->getTitle().'" data-gpos="'.( !empty($gpos) ? $gpos : 0 ).'" data-pos="'.$pos.'" data-sterm="'.addslashes($query).'" data-stype="'.( $isInterWiki ? 'inter' : 'intra' ).'" data-rver="'.$relevancyFunctionId.'"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );
+			$trackingData = 'class="result-link" data-wid="'.$result->getCityId().'" data-pageid="'.$result->getVar('pageId').'" data-pagens="'.$result->getVar('ns').'" data-title="'.$result->getTitle().'" data-gpos="'.( !empty($gpos) ? $gpos : 0 ).'" data-pos="'.$pos.'" data-sterm="'.addslashes($query).'" data-stype="'.( $isInterWiki ? 'inter' : 'intra' ).'" data-rver="6"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );
 		?>
 
-		<?= $debug ? $pos.'. ' : ''; ?><a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?= $title ?></a>
+		<a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?= $title ?></a>
 	</h1>
 	<? if ($redirectTitle = $result->getVar('redirectTitle')): ?>
-		<p class="redirect-title">&mdash; redirected from <a href="<?=$redirectTitle->getFullUrl()?>" <?=$trackingData?>><?= $redirectTitle->getText() ?></a></p>
+		<p class="redirect-title">&mdash; <?= wfMessage( 'wikiasearch2-results-redirected-from' )->text() ?> <a href="<?=$result->getVar('redirectUrl')?>" <?=$trackingData?>><?= $result->getVar('redirectTitle') ?></a></p>
 	<? endif; ?>
 	
 	<? if ($result->getVar('ns') == NS_FILE): ?>
@@ -47,12 +51,7 @@
 		</ul>
 	<?php endif; ?>
 	
-	<?php if($debug): ?>
-		<i>[id: <?=$result->getId();?>, score: <?=$result->getVar('score', '?');?>, backlinks: <?=$result->getVar('backlinks', '?');?>, views: <?=$result->getVar('views', '?');?>]</i><br />
-		<i>Categories: <?=implode(" | ", $result->getVar('categories', array("NONE")))?></i><br/>
-	<?php endif; //debug ?>
-
-	<?php if($result->getThumbnail() != null): ?>
+	<?php if(! empty( $thumbnailHtml ) ): ?>
 		</div> <? // Close media-text div when there's a thumbnail ?>
 	<?php endif; ?>
 

@@ -34,6 +34,14 @@ $messages['br'] = array(
 	'centralhelpsearch-placeholder' => 'Klask er skoazell...',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'centralhelpsearch-desc' => "Permèt la inclusió d'un formulari per buscar ajuda en Community Central",
+	'centralhelpsearch-placeholder' => 'Buscar en Ajuda...',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Darth Daron

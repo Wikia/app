@@ -55,6 +55,13 @@ $messages['br'] = array(
 	'healthcheck-desc' => 'Ur [[Special:HealthCheck|bajenn dibar]] evit gwiriañ stad ar servijerien',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'healthcheck-desc' => "Una [[Special:HealthCheck|pàgina especial]] per verificar l'estat del servidor",
+);
+
 /** Czech (česky)
  * @author Mormegil
  */
