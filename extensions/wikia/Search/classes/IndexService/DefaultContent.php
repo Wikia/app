@@ -29,6 +29,8 @@ class DefaultContent extends AbstractService
 				'style',
 				];
 	
+	protected $asideSelectors = [ 'table', 'figure', 'div.noprint', 'div.quote', '.dablink' ];
+	
 	/**
 	 * Returns the fields required to make the document searchable (specifically, wid and title and body content)
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()
@@ -197,11 +199,13 @@ class DefaultContent extends AbstractService
 	 * @param simple_html_dom $dom
 	 * @return string
 	 */
-	protected function extractTablesFromDom( simple_html_dom $dom ) {
+	protected function extractAsidesFromDom( simple_html_dom $dom ) {
 		$plaintext = '';
-		foreach( $dom->find( 'table' ) as $table ) {
-			$plaintext .= $table->plaintext;
-			$table->outertext = ' '; 
+		foreach ( $this->asideSelectors as $aside ) {
+			foreach( $dom->find( $aside ) as $aside ) {
+				$plaintext .= $aside->plaintext;
+				$aside->outertext = ' ';
+			} 
 		}
 		$dom->load( $dom->save() );
 		return $plaintext;
@@ -226,7 +230,7 @@ class DefaultContent extends AbstractService
 	 * @return string
 	 */
 	protected function getPlaintextFromDom( simple_html_dom $dom ) {
-		$tables = $this->extractTablesFromDom( $dom );
+		$tables = $this->extractAsidesFromDom( $dom );
 		return preg_replace( '/\s+/', ' ', strip_tags( $dom->plaintext . ' ' . $tables ) );
 	}
 }
