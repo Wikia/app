@@ -208,6 +208,16 @@ jQuery(function($){
 			label: 'publish'
 		}, trackWithEventData);
 
+		// DAR-36: catch hitting 'enter' in summary to submit edit
+		$('#wpSummary').on('keypress', function(e) {
+			if (e.which === 13) {
+				track({
+					category: category,
+					label: 'publish'
+				});
+			}
+		});
+
 		$('#EditPageRail').on('mousedown', '.module_insert .cke_button', function(e) {
 			var label,
 				el = $(e.currentTarget);
