@@ -351,19 +351,194 @@ ENDIT;
 		$this->assertNotEmpty( $node->outertext );
 		$garbage = new ReflectionProperty( 'Wikia\Search\IndexService\DefaultContent', 'garbageSelectors' );
 		$garbage->setAccessible( true );
-		$garbage->setValue( $service, array( 'div.foo' ) );
+		$garbage->setValue( $service, [ 'div.foo' ] );
 		$remove = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'removeGarbageFromDom' );
 		$remove->setAccessible( true );
 		$dom
 		    ->expects( $this->once() )
 		    ->method ( 'find' )
 		    ->with   ( 'div.foo' )
-		    ->will   ( $this->returnValue( array( $node ) ) )
+		    ->will   ( $this->returnValue( [ $node ] ) )
 		;
 		$remove->invoke( $service, $dom );
 		$this->assertEquals(
 				' ',
 				$node->outertext
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::extractTablesFromDom
+	 */
+	public function testExtractTablesFromDom() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( null )
+		                ->getMock();
+		$dom = $this->getMockBuilder( 'simple_html_dom' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( [ 'find', 'load', 'save' ] )
+		            ->getMock();
+		$node = $this->getMockBuilder( 'simple_html_dom_node' )
+		             ->disableOriginalConstructor()
+		             ->setMethods( [ '__get', '__set' ] )
+		             ->getMock();
+		$remove = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'extractTablesFromDom' );
+		$remove->setAccessible( true );
+		$dom
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'table' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
+		    ->expects( $this->at( 0 ) )
+		    ->method ( '__get' )
+		    ->with   ( 'plaintext' )
+		    ->will   ( $this->returnValue( 'crap' ) )
+		;
+		$node
+		    ->expects( $this->at( 1 ) )
+		    ->method ( '__set' )
+		    ->with   ( 'outertext', ' ' )
+		;
+		$dom
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'save' )
+		    ->will   ( $this->returnValue( '<div>other stuff</div>' ) )
+		;
+		$dom
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'load' )
+		    ->with   ( '<div>other stuff</div>' )
+		;
+		$this->assertEquals(
+				'crap',
+				$remove->invoke( $service, $dom )
+		);
+	}
+	
+
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::getParagraphsFromDom
+	 */
+	public function testGetParagraphsFromDom() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( null )
+		                ->getMock();
+		$dom = $this->getMockBuilder( 'simple_html_dom' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( [ 'find' ] )
+		            ->getMock();
+		$node = $this->getMockBuilder( 'simple_html_dom_node' )
+		             ->disableOriginalConstructor()
+		             ->setMethods( [ '__get' ] )
+		             ->getMock();
+		$remove = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'getParagraphsFromDom' );
+		$remove->setAccessible( true );
+		$dom
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'p' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
+		    ->expects( $this->at( 0 ) )
+		    ->method ( '__get' )
+		    ->with   ( 'plaintext' )
+		    ->will   ( $this->returnValue( 'graph' ) )
+		;
+		$this->assertEquals(
+				array( 'graph' ),
+				$remove->invoke( $service, $dom )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::getPlaintextFromDom
+	 */
+	public function testGetPlaintextFromDom() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( [ 'extractTablesFromDom' ] )
+		                ->getMock();
+		$dom = $this->getMockBuilder( 'simple_html_dom' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( [ '__get' ] )
+		            ->getMock();
+		$get = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'getPlaintextFromDom' );
+		$get->setAccessible( true );
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'extractTablesFromDom' )
+		    ->with   ( $dom )
+		    ->will   ( $this->returnValue( 'this is my table' ) )
+		;
+		$dom
+		    ->expects( $this->once() )
+		    ->method ( '__get' )
+		    ->with   ( 'plaintext' )
+		    ->will   ( $this->returnValue( "dom <b>without</b>\n tables" ) )
+		;
+		$this->assertEquals(
+				'dom without tables this is my table',
+				$get->invoke( $service, $dom )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::extractInfoBoxes
+	 */
+	public function testExtractInfoBoxes() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( null )
+		                ->getMock();
+		$dom = $this->getMockBuilder( 'simple_html_dom' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( [ 'find'  ] )
+		            ->getMock();
+		$node = $this->getMockBuilder( 'simple_html_dom_node' )
+		             ->disableOriginalConstructor()
+		             ->setMethods( [ '__get', 'find' ] )
+		             ->getMock();
+		$result = array();
+		$extract = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'extractInfoboxes' );
+		$extract->setAccessible( true );
+		$dom
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'table.infobox' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'tr' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'td' )
+		    ->will   ( $this->returnValue( array( $node, $node ) ) )
+		;
+		$node
+		    ->expects( $this->at( 2 ) )
+		    ->method ( '__get' )
+		    ->with   ( 'plaintext' )
+		    ->will   ( $this->returnValue( "here   is my \n key" ) )
+		;
+		$node
+		    ->expects( $this->at( 3 ) )
+		    ->method ( '__get' )
+		    ->with   ( 'plaintext' )
+		    ->will   ( $this->returnValue( 'value' ) )
+		;
+		$this->assertEquals(
+				[ 'infoboxes_txt' => [ 'here is my key value' ] ],
+				$extract->invoke( $service, $dom, $result )
 		);
 	}
 }

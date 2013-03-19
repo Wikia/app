@@ -135,7 +135,7 @@ class DefaultContent extends AbstractService
 		if ( $dom->root ) {
 			/**
 			 * @todo reintroduce once we have 4.1 figured out
-			 * $this->extractInfoboxes( $dom, $result );
+			 * $result = array_merge( $result, $this->extractInfoboxes( $dom, $result ) );
 			 */
 			$this->removeGarbageFromDom( $dom );
 			$plaintext = $this->getPlaintextFromDom( $dom );
@@ -158,7 +158,8 @@ class DefaultContent extends AbstractService
 	 * @param simple_html_dom $dom
 	 * @param array $result
 	 */
-	protected function extractInfoboxes( simple_html_dom $dom, array &$result ) {
+	protected function extractInfoboxes( simple_html_dom $dom ) {
+		$result = array();
 		$infoboxes = $dom->find( 'table.infobox' );
 		if ( count( $infoboxes ) > 0 ) {
 			$infobox = $infoboxes[0];
@@ -170,11 +171,13 @@ class DefaultContent extends AbstractService
 					$infoboxCells = $row->find( 'td' );
 					// we only care about key-value pairs in infoboxes
 					if ( count( $infoboxCells ) == 2 ) {
-						$result['infoboxes_txt'][] = preg_replace( '/\s+/', ' ', $infoboxCells[1]->plaintext  );
+						// should there be a separator?
+						$result['infoboxes_txt'][] = preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' ' . $infoboxCells[1]->plaintext  );
 					}
 				}
 			}
 		}
+		return $result;
 	}
 	
 	/**
@@ -224,6 +227,6 @@ class DefaultContent extends AbstractService
 	 */
 	protected function getPlaintextFromDom( simple_html_dom $dom ) {
 		$tables = $this->extractTablesFromDom( $dom );
-		return preg_replace( '/\s+/', ' ', strip_tags( $dom->plaintext . "\n" . $tables ) );
+		return preg_replace( '/\s+/', ' ', strip_tags( $dom->plaintext . ' ' . $tables ) );
 	}
 }
