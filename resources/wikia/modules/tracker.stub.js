@@ -26,6 +26,9 @@
 				ADD: 'add',
 
 				// Generic click, mostly javascript clicks
+				// NOTE: When tracking clicks, consider binding to 'onMouseDown' instead of 'onClick'
+				// to allow the browser time to send these events naturally. For more information on
+				// this issue, see the `track()` method in "resources/modules/tracker.js"
 				CLICK: 'click',
 
 				// Click on navigational button
