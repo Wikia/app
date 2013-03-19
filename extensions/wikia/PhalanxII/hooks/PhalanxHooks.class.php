@@ -52,32 +52,19 @@ class PhalanxHooks extends WikiaObject {
 			return true;
 		}
 
-		if ($this->wg->User->isAllowed( 'phalanxexempt' )) {
-			$this->wf->profileOut( __METHOD__ );
-			return true;
+		$model = PhalanxModel::newFromType($typeId, $text);
+
+		if (is_null($model)) {
+			throw new WikiaException("Unsupported block type passed - #{$typeId}");
 		}
 
 		// get type ID -> type mapping
 		$types = Phalanx::getAllTypeNames();
-		$ret = true;
+		$ret = $model->match($types[$typeId]);
 
-		if (isset($types[$typeId])) {
-			$type = $types[$typeId];
-
-			$service = new PhalanxService();
-
-			// get info about the block that was applied
-			$service->setLimit(1);
-			$res = $service->match($type, $text);
-
-			if (is_object($res)) {
-				$blockData = (array) $res;
-			}
-
-			$ret = ($res === 1);
-		}
-
+		// pass matching block details
 		if ( $ret === false ) {
+			$blockData = (array) $model->getBlock();
 			$this->wf->Debug( __METHOD__ . ": spam check blocked '{$text}'\n" );
 		}
 
@@ -89,7 +76,7 @@ class PhalanxHooks extends WikiaObject {
 	 * Add/edit Phalanx block
 	 *
 	 * @param $data Array contains block information, possible keys: id, author_id, text, type, timestamp, expire, exact, regex, case, reason, lang, ip_hex
-	 * @return id block or false if error
+	 * @return int id block or false if error
 	 *
 	 * @author moli
 	 */
@@ -186,7 +173,7 @@ class PhalanxHooks extends WikiaObject {
 	 * Delete Phalanx block
 	 *
 	 * @param $id Int - block ID
-	 * @return true or false if error
+	 * @return boolean true or false if error
 	 *
 	 * @author moli
 	 */
