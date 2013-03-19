@@ -48,6 +48,8 @@ $messages['en'] = array(
 	'related-videos-empty' => 'Be the first to add a video',
 	'related-videos-video-views' => '$1 {{PLURAL:$1|view|views}}',
 	'related-videos-see-all' => 'See all videos',
+	'related-videos-remove-module-only' => 'Remove this video from the Video module only',
+	'related-videos-remove-all-wiki' => 'Remove this video from the Video module and the wiki',
 
 	//popular videos on hubs
 	'related-videos-hubs-suggested-by' => 'Suggested by $1',
