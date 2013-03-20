@@ -829,13 +829,16 @@ class MediaWikiService
 	}
 
 	/**
-	 * Convert 1000 to 1k
+	 * Put a number into the i18n message based on the quantity. For $number smaller than 1000, $msgName is used.
+	 * For $number between 1K and 1M a message with '-k' postfix is used to display the number of thousands.
+	 * For $number 1M and greated a message with '-M' postfix is used to display the number of millions
 	 * TODO: should be abstracted and added to $wg->Lang
 	 *
 	 * @author Rafal
-	 * @param int $number
-	 * @param string $msgName
-	 * @return function
+	 * @author Mech
+	 * @param int $number - number to be put into the i18n message
+	 * @param string $msgName - message id, for bigger $number values a message with postfix is used
+	 * @return string
 	 */
 	public function shortNumForMsg($number, $msgName) {
 		if ($number >= 1000000) {
