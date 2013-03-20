@@ -154,6 +154,7 @@ class Indexer
 		} catch ( \Exception $e ) {
 			$this->getLogger()->log( __METHOD__, '', $e );
 		}
+		return true;
 	}
 	
 	/**
