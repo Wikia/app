@@ -116,4 +116,28 @@ class Grouping extends Base
 		return $this->getHeader();
 	}
 
+	/**
+	 * Returns a formatted message about the number of articles on a wiki
+	 * @return string
+	 */
+	public function getArticlesCountMsg() {
+		return $this->service->shortNumForMsg($this->getHeader('articles_count'), 'wikiasearch2-pages');
+	}
+
+	/**
+	 * Returns a formatted message about the number of images on a wiki
+	 * @return string
+	 */
+	public function getImagesCountMsg() {
+		return $this->service->shortNumForMsg($this->getHeader('images_count'), 'wikiasearch2-images');
+	}
+
+	/**
+	 * Returns a formatted message about the number of videos on a wiki
+	 * @return string
+	 */
+	public function getVideosCountMsg() {
+		return $this->service->shortNumForMsg($this->getHeader('videos_count'), 'wikiasearch2-videos');
+	}
+
 }

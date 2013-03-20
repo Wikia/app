@@ -16,10 +16,9 @@
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';
 	}
 
-	$msgHelper = new WikiaSearchHelper();
-	$pagesMsg = $msgHelper->shortNumForMsg($resultSet->getHeader('articles_count'), 'wikiasearch2-pages');
-	$imgMsg = $msgHelper->shortNumForMsg($resultSet->getHeader('images_count'), 'wikiasearch2-images');
-	$videoMsg = $msgHelper->shortNumForMsg($resultSet->getHeader('videos_count'), 'wikiasearch2-videos');
+	$pagesMsg = $resultSet->getArticlesCountMsg();
+	$imgMsg = $resultSet->getImagesCountMsg();
+	$videoMsg =  $resultSet->getVideosCountMsg();
 ?>
 
 <?php if($resultSet->getResultsFound() > 1): ?>

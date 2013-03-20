@@ -38,7 +38,6 @@ spl_autoload_register( function( $class ) {
 $app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class.php');
 $app->registerClass('WikiaSearchIndexerController', $dir . 'WikiaSearchIndexerController.class.php');
 $app->registerClass('WikiaSearchAjaxController', $dir . 'WikiaSearchAjaxController.class.php');
-$app->registerClass('WikiaSearchHelper', $dir . 'WikiaSearchHelper.class.php');
 
 /**
  * special pages
