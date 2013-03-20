@@ -2312,4 +2312,27 @@ class MediaWikiServiceTest extends BaseTest
 				$service
 		);
 	}
+
+	/**
+	 * @covers Wikia\Search\MediaWikiService::shortNumForMsg
+	 * @dataProvider dataShortNumForMsg
+	 */
+	public function testShortNumForMsg($number, $baseMessageId, $usedNumber, $usedMessageId) {
+		$this->mockGlobalFunction('message', 'mocked message', 1, array( $usedMessageId, $usedNumber, $number ) );
+		$this->mockApp();
+		$service = (new MediaWikiService);
+		$this->assertEquals('mocked message', $service->shortNumForMsg($number, $baseMessageId));
+
+	}
+
+	public function dataShortNumForMsg() {
+		return array(
+			array(1, 'message-id', 1, 'message-id'),
+			array(999, 'message-id', 999, 'message-id'),
+			array(1000, 'message-id', 1, 'message-id-k'),
+			array(999999, 'message-id', 999, 'message-id-k'),
+			array(1000000, 'message-id', 1, 'message-id-M'),
+			array(10000000000, 'message-id', 10000, 'message-id-M'),
+		);
+	}
 }
