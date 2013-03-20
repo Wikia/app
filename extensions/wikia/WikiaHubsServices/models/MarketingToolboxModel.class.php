@@ -629,37 +629,21 @@ class MarketingToolboxModel extends WikiaModel {
 		return $result;
 	}
 
+	/**
+	 * Get hub url
+	 *
+	 * @param $langCode
+	 * @param $verticalId
+	 *
+	 * @return String
+	 */
 	public function getHubUrl($langCode, $verticalId) {
-		$visualizationData = $this->getVisualizationData();
+		$wikiId = WikiaHubsServicesHelper::getCorporateWikiIdByLang($langCode);
+		$hubName = WikiaHubsServicesHelper::getHubName($wikiId, $verticalId);
 
-		if (!isset($visualizationData[$langCode]['url'])) {
-			throw new Exception('Corporate Wiki not defined for this lang');
-		}
+		$title = GlobalTitle::newFromText($hubName, NS_MAIN, $wikiId);
 
-		$hubPages = $this->getHubsV2Pages($visualizationData[$langCode]['wikiId']);
-
-		if (!isset($hubPages[$verticalId])) {
-			throw new Exception('Hub page not defined for selected vertical');
-		}
-
-		$url = http_build_url(
-			$visualizationData[$langCode]['url'],
-			array(
-				'path' => $hubPages[$verticalId]
-			),
-			HTTP_URL_JOIN_PATH
-		);
-
-		return $url;
-	}
-
-	protected function getHubsV2Pages($wikiId) {
-		return WikiFactory::getVarValueByName('wgWikiaHubsV2Pages', $wikiId);
-	}
-
-	protected function getVisualizationData() {
-		$visualizationModel = new CityVisualization();
-		return $visualizationModel->getVisualizationWikisData();
+		return $title->getFullURL();
 	}
 
 	/**
