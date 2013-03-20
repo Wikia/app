@@ -32,7 +32,7 @@ class WikiaHubsServicesHelper
 		$wikiId = static::getCorporateWikiIdByLang($lang);
 
 		$mainPageName = static::getMainPageNameByWikiId($wikiId);
-		$mainPageTitle = GlobalTitle::newFromText($mainPageName, NS_MAIN, $wikiId);
+		$mainPageTitle = static::getGlobalTitleFromText($mainPageName, $wikiId);
 		$mainPageTitle->purgeSquid();
 	}
 
@@ -44,7 +44,7 @@ class WikiaHubsServicesHelper
 	 */
 	public static function purgeHubVarnish($lang, $verticalId) {
 		$wikiId = static::getCorporateWikiIdByLang($lang);
-		$hubTitle = GlobalTitle::newFromText(static::getHubName($wikiId, $verticalId), NS_MAIN, $wikiId);
+		$hubTitle = static::getGlobalTitleFromText(static::getHubName($wikiId, $verticalId), $wikiId);
 		$hubTitle->purgeSquid();
 	}
 
@@ -83,6 +83,20 @@ class WikiaHubsServicesHelper
 		return $visualizationData[$lang]['wikiId'];
 	}
 
+
+
+	/**
+	 * Get global title
+	 *
+	 * @param $mainPageName
+	 * @param $wikiId
+	 *
+	 * @return GlobalTitle|null|Title
+	 */
+	protected static function getGlobalTitleFromText($mainPageName, $wikiId) {
+		return GlobalTitle::newFromText($mainPageName, NS_MAIN, $wikiId);
+	}
+
 	/**
 	 * Get mainPage name by wikiId
 	 *
@@ -92,7 +106,7 @@ class WikiaHubsServicesHelper
 	 *
 	 * @throws Exception
 	 */
-	protected function getMainPageNameByWikiId($wikiId) {
+	protected static function getMainPageNameByWikiId($wikiId) {
 		$dbname = WikiFactory::IDtoDB($wikiId);
 
 		$param = array(
