@@ -113,6 +113,7 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Gemmaa
+ * @author Marcmpujol
  * @author Paucabot
  */
 $messages['ca'] = array(
@@ -126,6 +127,7 @@ $messages['ca'] = array(
 	'wva-notlogged' => "Vostè necessita connectar-se o inscriure's per inserir vídeos.",
 	'wva-notallowed' => 'No es pot inserir vídeos en aquest wiki.',
 	'wva-protected' => 'Aquest vídeo està protegit.',
+	'wva-thumbnail-upload-failed' => "Error al afegir el vídeo, no s'ha pogut obtindre una miniatura adequada",
 );
 
 /** Czech (česky)

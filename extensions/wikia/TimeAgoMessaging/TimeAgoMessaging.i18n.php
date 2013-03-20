@@ -69,10 +69,17 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'timeago-year' => '{{PLURAL:$1|ur|$1}} bloaz zo',
+	'timeago-month' => '{{PLURAL:$1|ur|$1}} miz zo',
 	'timeago-day' => '{{PLURAL:$1|un devezh|$1 devezh}} zo',
 	'timeago-hour' => '{{PLURAL:$1|un eurvezh|$1 eurvezh}} zo',
 	'timeago-minute' => '{{PLURAL:$1|ur vunutenn|$1 munutenn}} zo',
 	'timeago-second' => 'ur vunutenn zo',
+	'timeago-day-from-now' => '{{PLURAL:$1|a|$1}} devezh adalek bremañ',
+	'timeago-hour-from-now' => '{{PLURAL:$1|un|$1}} eurvezh adalek bremañ',
+	'timeago-minute-from-now' => '{{PLURAL:$1|ur|$1}} munutenn adalek bremañ',
+	'timeago-month-from-now' => '{{PLURAL:$1|ur|$1}} miz adalek bremañ',
+	'timeago-second-from-now' => 'ur munutenn adalek bremañ',
 );
 
 /** Catalan (català)
@@ -295,6 +302,15 @@ $messages['ja'] = array(
 	'timeago-minute-from-now' => '$1分前',
 	'timeago-month-from-now' => '$1ヶ月前',
 	'timeago-second-from-now' => '1分前',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'timeagomessaging-desc' => 'i18n fir de Plugin jquery.timeago.js',
+	'timeago-second' => 'virun enger Minutt',
+	'timeago-second-from-now' => 'eng Minutt vun elo un',
 );
 
 /** Macedonian (македонски)

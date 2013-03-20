@@ -4,6 +4,10 @@ class TestUploadClass extends UploadBase {
 	public function initializeFromRequest( &$request ) {}
 }
 
+/**
+ * @category Wikia
+ * @group Integration
+ */
 class UploadVerifyFile extends WikiaBaseTest {
 	private $tmpPath = false;
 

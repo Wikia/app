@@ -61,6 +61,7 @@ $messages['ar'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; العودة',
 	'comboajaxlogin-connectmarketing-forward' => 'إبذأ &raquo',
+	'comboajaxlogin-ajaxerror' => 'ويكيا لا يمكنها الاستجابة لك. الرجاء التحقق من الشبكة الخاصة بك',
 );
 
 /** Asturian (asturianu)

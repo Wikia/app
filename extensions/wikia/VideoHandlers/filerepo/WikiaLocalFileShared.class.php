@@ -116,6 +116,15 @@ class WikiaLocalFileShared  {
 		return false;
 	}
 
+	public function getExpirationDate() {
+		$handler = $this->oFile->getHandler();
+		if ( $this->isVideo() && !empty( $handler ) ){
+			return $handler->getExpirationDate();
+		}
+
+		return false;
+	}
+
 	/*
 	 * Force file to use some specyfic mimetype
 	 *

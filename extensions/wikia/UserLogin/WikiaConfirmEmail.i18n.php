@@ -30,6 +30,19 @@ $messages['br'] = array(
 	'wikiaconfirmemail-username' => 'Anv implijer',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'Codi de confirmació buit',
+	'wikiaconfirmemail-error-invalid-code' => 'Codi de confirmació invàlid',
+	'wikiaconfirmemail-error-user-not-match' => "Oops, aquest enllaç de confirmació no coincideix amb el nom d'usuari. Assegura't que estas introduint el nom d'usuari correcte. Si vols iniciar sessió amb una conta diferent, fes clic <a href=\"{{fullurl:{{ns:special}}:UserLogin}}\">aquí</a>",
+	'wikiaconfirmemail-login-button' => 'Confirmar i iniciar sesió',
+	'wikiaconfirmemail-heading' => 'Ja gairebé!',
+	'wikiaconfirmemail-subheading' => "Inicia sessió amb el teu nom d'usuari i la contrasenya per saber que has rebut el correu electrònic.",
+	'wikiaconfirmemail-username' => "Nom d'usuari",
+);
+
 /** Czech (česky)
  * @author Jezevec
  */
@@ -217,15 +230,16 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Còdes ëd conferma veuid',
 	'wikiaconfirmemail-error-invalid-code' => 'Còdes ëd conferma pa bon',
-	'wikiaconfirmemail-error-user-not-match' => "Contacc, sto colegament ëd conferma a corispond pa con ël nòm utent ch'it l'has anserì. Sigurte d'avèj anserì ël nòm utent giust. S'it veule intré con un cont diferent, sgnaca <a href=\"{{fullurl:{{ns:special}}:UserLogin}}\">ambelessì</a>",
-	'wikiaconfirmemail-login-button' => 'Confirma e intra',
+	'wikiaconfirmemail-error-user-not-match' => "Contacc, sa liura ëd conferma a corispond pa a lë stranòm ch'a l'ha anserì. Ch'as sigura d'avèj anserì lë stranòm giust. S'a veul intré ant ël sistema con un cont diferent, ch'a sgnaca <a href=\"{{fullurl:{{ns:special}}:UserLogin}}\">ambelessì</a>",
+	'wikiaconfirmemail-login-button' => 'Confirmé e intré ant ël sistema',
 	'wikiaconfirmemail-heading' => 'Almanch sì!',
-	'wikiaconfirmemail-subheading' => "Intra con tò nòm utent e ciav parèj noi i savoma ch'it l'has arseivù ël corel.",
+	'wikiaconfirmemail-subheading' => "Ch'a intra ant ël sistema con sò stranòm e ciav parèj noi i savoma ch'a l'ha arseivù ël mëssagi.",
 	'wikiaconfirmemail-username' => 'Stranòm',
 );
 

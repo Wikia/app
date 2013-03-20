@@ -7,6 +7,8 @@ namespace Wikia\Search\IndexService;
 /**
  * Allows us to access mediawiki-dependent metadata
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class Metadata extends AbstractService
 {
@@ -16,11 +18,11 @@ class Metadata extends AbstractService
 	 * @return array
 	 */
 	public function execute() {
-		wfProfileIn(__METHOD__);
 		$result = array();
+		
+		$service = $this->getService();
 	
-		$sharedDb = $this->interface->getGlobal( 'ExternalSharedDB' );
-		if ( empty( $sharedDb ) ) {
+		if (! $this->getService()->isOnDbCluster() ) {
 			return array();
 		}
 		
@@ -29,7 +31,7 @@ class Metadata extends AbstractService
 			throw new \WikiaException( 'A pageId-dependent indexer service was executed without a page ID queued' );
 		}
 
-		$data = $this->interface->getApiStatsForPageId( $pageId );
+		$data = $this->service->getApiStatsForPageId( $pageId );
 		if( isset( $data['query']['pages'][$pageId] ) ) {
 			$pageData = $data['query']['pages'][$pageId];
 			$result['views'] = $pageData['views'];
@@ -40,7 +42,6 @@ class Metadata extends AbstractService
 			
 		$result['hub'] = isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
 	
-		wfProfileOut(__METHOD__);
 		return $result;
 	}
 	

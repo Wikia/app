@@ -6,7 +6,7 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages'], 
 			function(response){
 				if(typeof response === 'object' && response.status == 'connected'){
 					// now check FB account (is it connected with Wikia account?)
-					nirvana.postJson('FacebookSignupController', 'index').done(
+					nirvana.postJson('FacebookSignup', 'index').done(
 						function(resp){
 							if(resp.loggedIn){
 								track.event('login', track.CLICK, {

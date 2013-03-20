@@ -24,7 +24,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 	protected $format;
 	protected $verticalId;
-	protected $verticalName;
 
 	public function __construct() {
 		parent::__construct('WikiaHubsV2', '', false);
@@ -44,42 +43,14 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		}
 
 		$toolboxModel = new MarketingToolboxModel();
-		$modulesData = $toolboxModel->getPublishedData(
-			$this->wg->ContLang->getCode(),
-			MarketingToolboxModel::SECTION_HUBS,
-			$this->verticalId,
-			$this->hubTimestamp
-		);
 
 		$this->modules = array();
 
-		foreach ($toolboxModel->getEditableModulesIds() as $moduleId) {
-				if (!empty($modulesData[$moduleId]['data'])) {
-					$this->modules[$moduleId] = $this->renderModule(
-						$this->wg->ContLang->getCode(),
-						$this->verticalId,
-						$toolboxModel->getNotTranslatedModuleName($moduleId),
-						$modulesData[$moduleId]['data']
-					);
-				} else {
-					$this->modules[$moduleId] = null;
-					Wikia::log(
-						__METHOD__,
-						'',
-						'no module data for day: ' . $this->wg->lang->date($this->hubTimestamp)
-							. ', lang: ' . $this->wg->ContLang->getCode()
-							. ', vertical: ' . $this->verticalId
-							. ', moduleId: ' . $moduleId
-					);
-				}
-		}
-
-		foreach ($toolboxModel->getNonEditableModulesIds() as $moduleId) {
+		foreach($toolboxModel->getModulesIds() as $moduleId) {
 			$this->modules[$moduleId] = $this->renderModule(
-				$this->wg->ContLang->getCode(),
-				$this->verticalId,
-				$toolboxModel->getNotTranslatedModuleName($moduleId),
-				null
+				$toolboxModel,
+				$moduleId,
+				$toolboxModel->getNotTranslatedModuleName($moduleId)
 			);
 		}
 
@@ -120,31 +91,37 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	 *
 	 * @return string
 	 */
-	protected function renderModule($langCode, $verticalId, $moduleName, $moduleData) {
+	protected function renderModule( $toolboxModel, $moduleId, $moduleName ) {
+		$params = $this->getParams();
+
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$moduleName,
-			$langCode,
+			$this->wg->ContLang->getCode(),
 			MarketingToolboxModel::SECTION_HUBS,
-			$verticalId
+			$this->verticalId
 		);
 
-		if( $module instanceof MarketingToolboxModuleNonEditableService ) {
-			$moduleData = $module->loadData($this->getMarketingToolboxModel(), [
-				'lang' => $langCode,
-				'vertical_id' => $verticalId,
-				'ts' => $this->hubTimestamp,
-			]);
-		} else {
-			$moduleData = $module->getStructuredData($moduleData);
-		}
+		$moduleData = $module->loadData( $toolboxModel, $params );
 
-		return $module->render($moduleData);
+		if (!empty($moduleData)) {
+			return $module->render( $moduleData );
+		} else {
+			Wikia::log(
+				__METHOD__,
+				'',
+				'no module data for day: ' . $this->wg->lang->date($this->hubTimestamp)
+					. ', lang: ' . $this->wg->ContLang->getCode()
+					. ', vertical: ' . $this->verticalId
+					. ', moduleId: ' . $moduleId
+			);
+			return null;
+		}
 	}
 
-	public function fromthecommunity() {
-		$fromTheCommunityData = $this->model->getDataForModuleFromTheCommunity();
-		$this->headline = $fromTheCommunityData['headline'];
-		$this->entries = $fromTheCommunityData['entries'];
+	protected function getParams() {
+		return [
+			'ts' => $this->hubTimestamp
+		];
 	}
 
 	public function init() {
@@ -198,10 +175,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 	protected function initModel() {
 		$this->model = F::build('WikiaHubsV2Model');
-		$date = $this->getRequest()->getVal('date', date('Y-m-d'));
-		$lang = $this->getRequest()->getVal('cityId', $this->wg->cityId);
-		$this->model->setDate($date);
-		$this->model->setLang($lang);
 		$this->model->setVertical($this->verticalId);
 	}
 

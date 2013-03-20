@@ -227,7 +227,7 @@ var STATUS_STATE_AWAY = 'away';
 			'statusState': STATUS_STATE_PRESENT,
 			'isModerator': false,
 			'isStaff': false,
-			'isCanGiveChatMode': false,
+			'isCanGiveChatMod': false,
 			'avatarSrc': "http://placekitten.com/50/50",
 			'editCount': '?',
 			'isPrivate': false,

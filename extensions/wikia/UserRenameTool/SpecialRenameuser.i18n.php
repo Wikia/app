@@ -214,10 +214,27 @@ $messages['ar'] = array(
 );
 
 /** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
  */
 $messages['arc'] = array(
-	'renameuser' => 'ܫܚܠܦ ܫܡܐ ܕܡܦܠܚܢܐ',
-	'userrenametool-submit' => 'ܡܨܝܘܬܐ',
+	'userrenametool' => 'ܫܚܠܦ ܫܡܐ ܕܡܦܠܚܢܐ',
+	'renameuser' => 'ܬܢܝ ܫܘܡܗܐ ܕܡܦܠܚܢܐ',
+	'userrenametool-old' => 'ܫܡܐ ܕܡܦܠܚܢܐ ܗܫܝܐ:',
+	'userrenametool-new' => 'ܫܡܐ ܕܡܦܠܚܢܐ ܚܕܬܐ:',
+	'userrenametool-reason' => 'ܥܠܬܐ ܕܬܢܝ ܫܘܡܗܐ:',
+	'userrenametool-warnings' => 'ܙܘܗܪ̈ܐ:',
+	'userrenametool-confirm' => 'ܐܝܢ، ܫܚܠܦ ܫܡܐ ܕܡܦܠܚܢܐ',
+	'userrenametool-submit' => 'ܫܚܠܦ ܫܡܐ ܕܡܦܠܚܢܐ',
+	'userrenametool-confirm-intro' => 'ܐܪܐ ܫܪܝܪܐܝܬ ܨܒܬ ܕܬܥܒܕ ܗܢܐ؟',
+	'userrenametool-confirm-yes' => 'ܐܝܢ',
+	'userrenametool-confirm-no' => 'ܠܐ',
+	'userrenametool-logpage' => 'ܣܓܠܐ ܕܬܘܢܝ ܫܘܡܗܐ ܕܡܦܠܚܢܐ',
+	'userrenametool-logpagetext' => 'ܗܢܘ ܣܓܠܐ ܕܫܘܚܠܦ̈ܐ ܕܫܡܗ̈ܐ ܕܡܦܠܚܢܐ.',
+	'userrenametool-logentry' => 'ܬܢܝ ܫܘܡܗܐ $1 ܠ "$2"',
+	'userrenametool-log' => '{{PLURAL:$1|1 ܫܘܚܠܦܐ|$1 ܫܘܚܠܦ̈ܐ}}.
+ܥܠܬܐ: $2',
+	'userrenametool-move-log' => 'ܝܬܐܝܬ ܫܢܐ ܦܐܬܐ ܟܕ ܬܢܝ ܫܘܡܗܐ ܕܡܦܠܚܢܐ "[[User:$1|$1]]" ܠ "[[User:$2|$2]]"',
+	'right-renameuser' => 'ܬܢܝ ܫܘܡܗܐ ܕܡܦܠܚܢܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)

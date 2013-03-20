@@ -2,12 +2,14 @@
 /**
  * Class definition for \Wikia\Search\IndexService\Redirects
  * @author relwell
- *
  */
 namespace Wikia\Search\IndexService;
+use Wikia\Search\Utilities;
 /**
  * Reports on redirect titles for a given page
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class Redirects extends AbstractService
 {
@@ -17,10 +19,9 @@ class Redirects extends AbstractService
 	 * @return array
 	 */
 	public function execute() {
-		wfProfileIn(__METHOD__);
-		$key = $this->interface->getGlobal( 'AppStripsHtml' ) ? \WikiaSearch::field( 'redirect_titles' ) : 'redirect_titles';
-		$result = array( $key => $this->interface->getRedirectTitlesForPageId( $this->currentPageId ) );
-		wfProfileOut(__METHOD__);
+		$service = $this->getService();
+		$key = $service->getGlobal( 'AppStripsHtml' ) ? Utilities::field( 'redirect_titles' ) : 'redirect_titles';
+		$result = array( $key => $service->getRedirectTitlesForPageId( $this->currentPageId ) );
 		return $result;
 	}
 }

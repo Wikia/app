@@ -503,8 +503,7 @@ $config['wikiamobile_relatedpages_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-
-		'//resources/wikia/modules/sloth.js',
+		'//resources/wikia/libraries/sloth/sloth.js',
 		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js',
 	)
 );
@@ -1053,6 +1052,23 @@ $config['wikiahubs_v2_scss_mobile'] = array(
 	'skin' => array('wikiamobile'),
 	'assets' => array(
 		'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV2Mobile.scss'
+	)
+);
+
+/** WAMPage **/
+$config['wampage_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array('oasis'),
+	'assets' => array(
+		'//extensions/wikia/WAMPage/css/WAMPage.scss'
+	)
+);
+
+$config['wampage_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array('oasis'),
+	'assets' => array(
+		'//extensions/wikia/WAMPage/js/WAMPage.js',
 	)
 );
 

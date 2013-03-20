@@ -420,24 +420,25 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'unsubscribe' => 'Disiscrivte',
-	'unsubscribe-badaccess' => 'Spiasent, sta pagina a peul pa esse dovrà diretament. Për piasì và dré al colegament da toa e-mail.',
-	'unsubscribe-badtoken' => "Spiasent, a l'é stàit-ie un problem con ël geton ëd sicurëssa.",
-	'unsubscribe-bademail' => "Spiasent, a l'é stàit-ie un problem con ël corel.",
-	'unsubscribe-badtime' => "Spiasent, ël colegament a l'é scadù. Për piasì dòvra un colegament che a l'ha men che 7 di.",
-	'unsubscribe-nousers' => "Gnun utent trovà con l'adrëssa ëd corel.",
-	'unsubscribe-noconfusers' => 'Gnun utent confirmà trovà con cola adrëssa ëd corel.',
+	'unsubscribe' => "Scancelé l'anscrission",
+	'unsubscribe-badaccess' => "An dëspias, costa pàgina a peul pa esse dovrà diretament. Për piasì, ch'a-j vada dapress a la liura da soa pòsta eletrònica.",
+	'unsubscribe-badtoken' => 'An dëspias, a-i é staje un problema con ël geton ëd sicurëssa.',
+	'unsubscribe-bademail' => 'An dëspias, a-i é staje un problema con la pòsta eletrònica.',
+	'unsubscribe-badtime' => "An dëspias, la liura a l'é scadùa. Për piasì, ch'a deuvra na liura che a l'abia men che 7 di.",
+	'unsubscribe-nousers' => 'Gnun utent trovà con costa adrëssa ëd pòsta eletrònica.',
+	'unsubscribe-noconfusers' => 'Gnun utent confirmà trovà con costa adrëssa ëd pòsta eletrònica.',
 	'unsubscribe-confirm-legend' => 'Conferma',
-	'unsubscribe-confirm-text' => 'Disiscrivse da tùit ij cont con <code>$1</code>?',
-	'unsubscribe-confirm-button' => "E'!, i son sigur",
-	'unsubscribe-working' => 'Disiscriv $1 {{PLURAL:$1|cont}} për $2',
-	'unsubscribe-working-problem' => 'problem cariand anformassion utent për: $1',
+	'unsubscribe-confirm-text' => "Scancelé l'anscrission ëd tùit ij cont con <code>$1</code>?",
+	'unsubscribe-confirm-button' => 'É, i son sigur',
+	'unsubscribe-working' => "Scancelassion ëd l'anscrission ëd $1 {{PLURAL:$1|cont}} për $2",
+	'unsubscribe-working-problem' => "problema cariand j'anformassion ëd l'utent për: $1",
 	'unsubscribe-working-done' => 'Completa.',
-	'unsubscribe-preferences-toggle' => "Disiscriv da tùit ij corej da Wikia (deselession-a sòn da acede a j'opsion sota)",
-	'unsubscribe-preferences-notice' => "Ij corej a l'han stàit disabilità për tò cont. Vìsita la scheda dël Profil Utent për riabiliteje.",
+	'unsubscribe-preferences-toggle' => "Scancelé l'anscrission da tùit ij mëssagi da Wikia (gavé la selession ambelessì për andé a j'opsion sì-sota)",
+	'unsubscribe-preferences-notice' => "Ij mëssagi ëd pòsta eletrònica a son ëstàit disabilità për sò cont. Ch'a vìsita la scheda dël Profil Utent për abiliteje torna.",
 );
 
 /** Pashto (پښتو)

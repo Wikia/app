@@ -8,6 +8,8 @@ use \WAMService;
 /**
  * Reponsible for retrieving WAM score for a given wiki
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class Wam extends AbstractWikiService
 {
@@ -22,16 +24,12 @@ class Wam extends AbstractWikiService
 	 * @return array
 	 */
 	public function execute() {
-		wfProfileIn(__METHOD__);
-		// note that we don't need the interface for this because it uses the data mart service, which is our own thing.
-		$sharedDb = $this->interface->getGlobal( 'ExternalSharedDB' );
-		if ( empty( $this->result ) && !empty( $sharedDb ) ) {
+		if ( empty( $this->result ) && $this->getService()->isOnDbCluster() ) {
 			$wamService = new WAMService();
-			$wam = $wamService->getCurrentWamScoreForWiki( $this->interface->getWikiId() );
+			$wam = $wamService->getCurrentWamScoreForWiki( $this->service->getWikiId() );
 			$wam = $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
 			$this->result = array( 'wam' => $wam );
 		}
-		wfProfileOut(__METHOD__);
 		return $this->result;
 	}
 }

@@ -222,11 +222,11 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 
 				$entries[] = array(
 					'articleTitle' => $data['title' . $i],
-					'articleUrl' => $data['url' . $i],
+					'articleUrl' => str_replace(' ', '_', $data['url' . $i]),
 					'imageAlt' => empty($imageData->title) ? null : $imageData->title,
 					'imageUrl' => empty($imageData->url) ? null : $imageData->url,
 					'userName' => $data['UserName' . $i],
-					'userUrl' => $data['usersUrl' . $i],
+					'userUrl' => str_replace(' ', '_', $data['usersUrl' . $i]),
 					'wikiUrl' => $data['wikiUrl' . $i],
 					'quote' => $data['quote' . $i],
 				);

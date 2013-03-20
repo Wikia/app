@@ -1,6 +1,6 @@
 <?php
 /**
- * Change <videogallery> to just <gallery>
+ * Fix image attribution from WikiBot to the user who actually uploaded it
  *
  * @author garth@wikia-inc.com
  * @ingroup Maintenance
@@ -13,7 +13,7 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 class EditCLI extends Maintenance {
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Change <videogallery> tags to <gallery>";
+		$this->mDescription = "Fix image attribution";
 		$this->addOption( 'test', 'Test', false, false, 't' );
 		$this->addOption( 'conf', 'Configuration file', true, true, 't' );
 	}
@@ -37,11 +37,14 @@ class EditCLI extends Maintenance {
 			$query = "select distinct(wiki_id) as wiki_id " .
 					"from video_imagetable_backup";
 			$res = $dbs->query($query);
-			$this->output("done\n");
+			$numRows = $dbs->numRows($res);
+			$this->output("done ($numRows rows)\n");
 
+			$curRow = 1;
 			while ($row = $dbs->fetchObject($res)) {
-				$this->output("== Fixing wiki ID: " . $row->wiki_id . "\n");
+				$this->output("== [$curRow/$numRows] Fixing wiki ID: " . $row->wiki_id . "\n");
 				$this->fixForWiki($conf, $row->wiki_id, $test);
+				$curRow++;
 			}
 			$dbs->freeResult($res);
 		}
@@ -49,8 +52,8 @@ class EditCLI extends Maintenance {
 
 	public function fixForWiki ( $conf, $wikiId, $test = null ) {
 		$dir = dirname( __FILE__ );
-		$cmd = "SERVER_ID=$wikiId php $dir/wikiMigrateVideoGallery.php --conf $conf";
-		if (isset($test)) {
+		$cmd = "SERVER_ID=$wikiId php $dir/wikiFixAttribution.php --conf $conf";
+		if ($test) {
 			$cmd .= ' --test';
 		}
 		system($cmd, $retval);

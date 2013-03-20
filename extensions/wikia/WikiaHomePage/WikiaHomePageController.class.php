@@ -379,12 +379,7 @@ class WikiaHomePageController extends WikiaController {
 
 		if ($this->app->wg->EnableWikiaHubsV2Ext) {
 			$hubImages = WikiaDataAccess::cache(
-				F::app()->wf->SharedMemcKey(
-					'wikiahomepage',
-					'hubv2 images',
-					$lang,
-					self::HUBS_IMAGES_MEMC_KEY_VER
-				),
+				WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($lang),
 				24 * 60 * 60,
 				function () use ($lang) {
 					$hubImages = [];

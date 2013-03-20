@@ -38,7 +38,6 @@ class ParserSpeedHooks extends WikiaObject {
 				);
 				$data = json_encode( $fields );
 				WScribeClient::singleton( self::SCRIBE_KEY )->send( $data );
-				wfDebug( 'parser speed article' . $data . "\n" );
 			}
 			catch( TException $e ) {
 				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );

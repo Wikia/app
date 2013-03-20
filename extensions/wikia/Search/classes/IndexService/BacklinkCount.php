@@ -7,6 +7,8 @@ namespace Wikia\Search\IndexService;
 /**
  * This class provides backlink info for a page  
  * @author relwell
+ * @package Search
+ * @subpackage IndexService
  */
 class BacklinkCount extends AbstractService
 {
@@ -17,7 +19,7 @@ class BacklinkCount extends AbstractService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
-		$response = array( 'backlinks' => $this->interface->getBacklinksCountFromPageId( $this->currentPageId ) );
+		$response = array( 'backlinks' => $this->getService()->getBacklinksCountFromPageId( $this->currentPageId ) );
 		wfProfileOut(__METHOD__);
 		return $response;
 	}

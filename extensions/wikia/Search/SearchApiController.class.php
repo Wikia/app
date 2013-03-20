@@ -1,10 +1,14 @@
 <?php
 /**
- * Controller to execute searches in the content of a wiki.
- *
- * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ * Class definition for SearchApiController
  */
-
+use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
+/**
+ * Controller to execute searches in the content of a wiki.
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ * @package Search
+ * @subpackage Controller
+ */
 class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 
@@ -34,7 +38,7 @@ class SearchApiController extends WikiaApiController {
 	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
-		$searchConfig = F::build('WikiaSearchConfig');
+		$searchConfig = new Config();
 		$type = $this->request->getVal( 'type', 'articles' );
 		$query = $this->getVal( 'query', null );
 		$rank = $this->request->getVal( 'rank', 'default' );
@@ -74,24 +78,19 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		if ( $searchConfig->getQueryNoQuotes( true ) ) {
-			$wikiaSearch = F::build( 'WikiaSearch' );
+			$container = new DependencyContainer( array( 'config' => $searchConfig ) );
+			$wikiaSearch = (new Factory)->get( $container );
 
-			//if some articles match the query lets display it
-			//this has to run before doSearch runs
-			$wikiaSearch->getArticleMatch( $searchConfig );
-
-			$resultSet = $wikiaSearch->doSearch( $searchConfig );
+			$resultSet = $wikiaSearch->search( $searchConfig );
 			$total = $searchConfig->getResultsFound();
 
 			if ( $total ) {
 				foreach ( $resultSet as $result ) {
-					$title = $result->getTitleObject();
-
 					$results[] = [
-						'id' => $title->getArticleID(),
-						'title' => $title->getText(),
-						'url' => $title->getLocalUrl(),
-						'ns' => $title->getNamespace()
+						'id' => $result['pageid'],
+						'title' => $result->getTitle(),
+						'url' => $result->getUrl(),
+						'ns' => $result['ns']
 					];
 				}
 

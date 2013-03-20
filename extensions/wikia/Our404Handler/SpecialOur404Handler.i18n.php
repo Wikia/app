@@ -108,6 +108,21 @@ N'eo ket bet kavet ar pennad '''$1'''.
 * Evit distreiñ da bajenn degemer al lec'hienn, klikit amañ : [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'our404handler' => 'Error 404: Pàgina no trobada!',
+	'our404handler-oops' => "Aquestes no són les pàgines que estàs buscant. Surt d'aquí, si us plau.",
+	'message404' => "'''Ho sentim molt, però per alguna raó la pàgina que busques no existeix.'''
+
+L'article '''$1''' no s'ha trobat.
+
+* Pots intentar-ho amb l'article [[$2]]
+* Pots utilitzar el quadre de cerca de la part esquerra de la pàgina
+* Per anar a la portada d'aquest lloc, fes clic a l'enllaç: [{{SERVER}} {{SITENAME}}]",
+);
+
 /** Czech (česky)
  * @author Mormegil
  */

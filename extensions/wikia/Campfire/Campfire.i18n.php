@@ -37,6 +37,14 @@ $messages['br'] = array(
 	'campfire-licensed-under' => 'Dindan an aotre-implijout $1',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'campfire-page-header' => '$1 de $2',
+	'campfire-licensed-under' => 'Sota la llicència $1',
+);
+
 /** Czech (česky)
  * @author Jezevec
  */

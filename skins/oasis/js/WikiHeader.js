@@ -2,10 +2,11 @@ var WikiHeader = {
 	lastSubnavClicked: -1,
 	isDisplayed: false,
 	activeL1: null,
+	isTouchScreen: $().isTouchscreen(),
 
 	settings: {
-		mouseoverDelay: 200,
-		mouseoutDelay: 350
+		mouseoverDelay: this.isTouchScreen ? 0 : 200,
+		mouseoutDelay: this.isTouchScreen ? 0 : 350
 	},
 
 	log: function(msg) {
@@ -22,6 +23,9 @@ var WikiHeader = {
 
 		this.positionNav();
 
+		this.navLI.hover($.proxy(this.mouseoverL1,this), $.proxy(this.mouseoutL1,this));
+		this.subnav2LI.hover($.proxy(this.mouseoverL2,this), $.proxy(this.mouseoutL2,this));
+
 		//Events
 		this.navLI
 			.click($.proxy(this.mouseclickL1,this))
@@ -35,12 +39,6 @@ var WikiHeader = {
 				this.hideNavL3();
 				this.showSubNavL3($(event.target).parent('li'));
 			},this));
-
-		//Apply a hover state if the device is not touch enabled
-		if(!$().isTouchscreen()) {
-			this.navLI.hover($.proxy(this.mouseoverL1,this), $.proxy(this.mouseoutL1,this));
-			this.subnav2LI.hover($.proxy(this.mouseoverL2,this), $.proxy(this.mouseoutL2,this));
-		}
 
 		// BugID: 64318 - hiding publish button on nav edit
 		if ( (window.wgIsWikiNavMessage) && (wgAction == "edit") ) {

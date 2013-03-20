@@ -1,15 +1,21 @@
 <?php
-
+/**
+ * Class definition for WikiaSearchAjaxController
+ */
+use Wikia\Search\QueryService;
+/**
+ * Responsible for handling AJAX requests in search.
+ * @author relwell
+ * @package Search
+ * @subpackage Controller
+ */
 class WikiaSearchAjaxController extends WikiaController {
 
     const RESULTS_PER_PAGE = 25;
 
-    protected $wikiaSearch = null;
-
-    public function __construct() {
-        $this->wikiaSearch = F::build('WikiaSearch');
-    }
-
+    /**
+     * Handles accessing paginated results via AJAX.
+     */
     public function getNextResults(){
         $this->wf->ProfileIn(__METHOD__);
 
@@ -39,14 +45,13 @@ class WikiaSearchAjaxController extends WikiaController {
 			'query'			=>	$query,
 		);
 
-        $searchConfig = F::build( 'WikiaSearchConfig', array( $params ) );
-
-        $results = $this->wikiaSearch->doSearch( $searchConfig );
+        $container = new QueryService\DependencyContainer( array( 'config' => new Wikia\Search\Config( $params ) ) );
+        $results = (new QueryService\Factory)->get( $container )->search();
 
         $text = $this->app->getView('WikiaSearch', 'WikiaMobileResultList', array(
                 'currentPage'=> $page,
                 'isInterWiki' => $isInterWiki,
-                'relevancyFunctionId' => WikiaSearch::RELEVANCY_FUNCTION_ID,
+                'relevancyFunctionId' => 6,
                 'results' => $results,
                 'resultsPerPage' => self::RESULTS_PER_PAGE,
                 'query' => $query)

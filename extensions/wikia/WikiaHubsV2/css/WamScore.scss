@@ -1,5 +1,6 @@
-.wikiahubs-wam {
+.WikiaGrid .wikiahubs-wam {
 	height: 380px;
+	margin-top: 10px;
 	.social-links {
 		float: left;
 		a {
@@ -28,10 +29,15 @@
 		float: right;
 		margin-top: 8px;
 	}
+	.wam-header {
+		height: 52px;
+	}
 	.wam-content {
+		border-top: 1px solid #ccc;
 		clear: both;
+		padding-top: 10px;
 		.title {
-			height: 25px;
+			height: 30px;
 			a {
 				float: right;
 				margin-top: 8px;

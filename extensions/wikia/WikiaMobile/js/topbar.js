@@ -308,8 +308,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 						useskin: w.skin
 					}
 				}
-			}
-			).done(
+			}).done(
 				function(res){
 					throbber.remove(wkPrf);
 

@@ -107,6 +107,9 @@ class CategorySelect {
 		// we will ignore categories added inside following list of tags (BugId:8208)
 		self::$tagsWhiteList = array_keys( $app->wg->Parser->mTagHooks );
 
+		// and includeonly tags (BugId:99450)
+		self::$tagsWhiteList[] = 'includeonly';
+
 		//create XML DOM document from provided XML
 		$dom = new DOMDocument();
 		$dom->loadXML( $xml );
