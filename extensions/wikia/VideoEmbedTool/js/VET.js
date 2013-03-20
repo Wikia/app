@@ -297,7 +297,14 @@
 
 		// wlee: responseText could include <script>. Use jQuery to parse
 		// and execute this script
-		$('#VideoEmbed' + VET_curScreen).html(responseText);
+		$('#VideoEmbedDetails').html(responseText);
+		
+		var element = $('<div></div>').appendTo('#VideoEmbedThumb');
+
+		require(['wikia.videoBootstrap'], function (videoBootstrap) {
+			videoBootstrap(element[0], window.VETPlayerParams);
+		});
+		
 		VET_updateHeader();
 
 
