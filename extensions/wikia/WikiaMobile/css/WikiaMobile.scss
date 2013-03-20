@@ -94,11 +94,6 @@ a {
 	background-color: white;
 	padding: $page-padding;
 }
-//for browsers that don't know that these should be block
-//all our browsers support these (Removed by Jakub Olek according to: http://caniuse.com/#search=figu)
-//section, article, header, footer, aside, figure, figcaption {
-//	display: block;
-//}
 
 #wkMainCnt{
 	//fixes for fluid content
