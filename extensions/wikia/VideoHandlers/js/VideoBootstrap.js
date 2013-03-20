@@ -47,7 +47,45 @@
 						init(jsParams);
 					});			
 				}
-			} 			
+			}
+
+			// loader() attempts:
+			
+			/*loader({
+				type: loader.JS,
+				resources: 'http://player.ooyala.com/v3/52bc289bedc847e3aa8eb2b347644f68'
+			})*/
+			
+			//loader('http://player.ooyala.com/v3/52bc289bedc847e3aa8eb2b347644f68')
+			
+			
+			/*loader({
+				type: loader.JS,
+				resources: {
+					scripts: json.scripts[1]
+				}
+				//resources: json.scripts[1]
+			})
+			.done(function(res) {
+				console.log(res);
+
+				var script = res.scripts;
+
+				console.log('done');
+				console.log(script);
+
+				loader.processScript(script);
+
+				loader(json.scripts[1]).done(function(res) {
+
+					require([json.init], function(init) {
+						init(json.jsParams);
+					});
+					
+				});
+			});*/
+
+
 			
 		}
 
