@@ -8,7 +8,7 @@
  * @author Sebastian Marzjan
  *
  */
-class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
+class WikiaHubsV2Controller extends WikiaController {
 	const CACHE_VALIDITY_BROWSER = 86400;
 	const CACHE_VALIDITY_VARNISH = 86400;
 
