@@ -29,8 +29,9 @@ $chevron-color: #888;
 	}
 
 	p.alternative {
-		margin-left: 7px;
-		margin-right: 7px;
+		margin: 0 7px;
+		padding-top: 7px;
+		clear: left;
 	}
 
 	.input-group {
@@ -322,7 +323,6 @@ $chevron-color: #888;
 			margin-top: 10px;
 		}
 		p {
-			margin: 10px 0 0 8px;
 			float: left;
 		}
 	}
