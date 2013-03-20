@@ -476,6 +476,14 @@ class GameGuidesController extends WikiaController {
 				}
 			}
 
+			//Use 'id' instead of image_id
+			foreach( $ret as &$value ) {
+				if($value['image_id'] !== 0) {
+					$value['id'] = $value['image_id'];
+				}
+				unset($value['image_id']);
+			}
+
 			$this->response->setVal( 'items', $ret );
 		} else if ( $requestTag !== '' ) {
 			$this->wf->profileOut( __METHOD__ );
@@ -502,7 +510,7 @@ class GameGuidesController extends WikiaController {
 					if( $item['title'] !== '' ) {
 						$ret[] = array(
 							'title' => $item['title'],
-							'image_id' => isset( $item['image_id'] ) ? $item['image_id'] : 0
+							'id' => isset( $item['image_id'] ) ? $item['image_id'] : 0
 						);
 					}
 
