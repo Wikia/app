@@ -102,7 +102,7 @@ describe("CacheTest", function(){
 
 
 	it('Get returns the value that was set last', function() {
-		var	wc = define.getModule(window.localStorage);
+		var wc = define.getModule(window.localStorage);
 
 		wc.set('e', 'some-value');
 		wc.set('e', 'other-value');
@@ -110,7 +110,7 @@ describe("CacheTest", function(){
 	});
 
 	it('Value expires after given TTL', function() {
-		var wc = define.getModule(window.localStorage);
+		var wc = define.getModule(window.localStorage),
 			fakeNowTimestamp = 8723687632,
 			fakeNow = {getTime: function() {return fakeNowTimestamp;}},
 			anHourLater = {getTime: function() {return fakeNowTimestamp + 3600 * 1000;}},
