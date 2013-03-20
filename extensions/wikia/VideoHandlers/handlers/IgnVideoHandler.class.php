@@ -19,11 +19,11 @@ class IgnVideoHandler extends VideoHandler {
 		$autoplay = $autoplay ? '&' . self::$autoplayParam . '=' . self::$autoplayValue : '';
 		$url = self::$providerPlayerUrl.'?url='.$this->getEmbedUrl().$autoplay;
 
-		$code = <<<EOT
+		$html = <<<EOT
 <iframe src="{$url}" width="{$width}" height="{$height}" scrolling="no" frameborder="0" allowfullscreen></iframe>
 EOT;
 
-		return $code;
+		return array( 'html' => $html );
 	}
 
 	public function getEmbedUrl() {

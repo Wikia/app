@@ -10,21 +10,20 @@ class YoutubeVideoHandler extends VideoHandler {
 	protected static $autoplayValue = "1";
 
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
-		return $this->getEmbedNative($width, $autoplay);
-	}
-
-	private function getEmbedNative($width, $autoplay=false) {
 		// YouTube parameters: http://code.google.com/apis/youtube/player_parameters.html
 		$height =  $this->getHeight( $width );
 		$url = $this->getEmbedUrl();
-		$params = array('rel'=>0);
-		if ($autoplay) $params[self::$autoplayParam] = self::$autoplayValue;
+		$params = array( 'rel' => 0 );
+		if ( $autoplay ) {
+			$params[self::$autoplayParam] = self::$autoplayValue;
+		}
 		$qs = http_build_query($params);
 
-		$code = <<<EOT
-<iframe width="$width" height="$height" src="{$url}?$qs&wmode=opaque" frameborder="0" allowfullscreen></iframe>
+		$html = <<<EOT
+<iframe width="{$width}" height="{$height}" src="{$url}?{$qs}&wmode=opaque" frameborder="0" allowfullscreen></iframe>
 EOT;
-		return $code;
+
+		return array( 'html' => $html );
 	}
 
 	public function addExtraBorder( $width ){

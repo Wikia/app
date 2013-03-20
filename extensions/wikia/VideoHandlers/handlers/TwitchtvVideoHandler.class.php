@@ -13,7 +13,7 @@ class TwitchtvVideoHandler extends VideoHandler {
 		$autoplayStr = $autoplay ? 'true' : 'false';
 
 		$html = <<<EOT
-<object type="application/x-shockwave-flash" height="$height" width="$width" data="$url">
+<object type="application/x-shockwave-flash" height="{$height}" width="{$width}" data="{$url}">
 	<param name="allowFullScreen" value="true" />
 	<param name="allowScriptAccess" value="always" />
 	<param name="allowNetworking" value="all" />
@@ -22,7 +22,7 @@ class TwitchtvVideoHandler extends VideoHandler {
 </object>
 EOT;
 
-		return $html;
+		return array( 'html' => $html );
 	}
 
 }

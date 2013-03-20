@@ -1,7 +1,7 @@
 <?php
 
 class VimeoVideoHandler extends VideoHandler {
-	
+
 	protected $apiName = 'VimeoApiWrapper';
 	protected $googleSitemapCustomVideoUrl = 'http://vimeo.com/moogaloop.swf?clip_id=$1';
 	protected static $urlTemplate = 'http://player.vimeo.com/video/$1';
@@ -19,15 +19,15 @@ class VimeoVideoHandler extends VideoHandler {
 	}
 
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
-		return $this->getEmbedNative( $width, $autoplay );
-	}
-		
-	private function getEmbedNative( $width, $autoplay = false ) {
 		$height =  $this->getHeight( $width );
-		$autoplayStrParam = self::$autoplayParam;
-		$autoplayStrValue = $autoplay ? self::$autoplayValue : '0';
-		$url = $this->getEmbedUrl();
-		return '<iframe src="'.$url.'?'.$autoplayStrParam.'='.$autoplayStrValue.'" width="'.$width.'" height="'.$height.'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+		$autoplayStr = $autoplay ? self::$autoplayValue : '0';
+		$url = $this->getEmbedUrl().'?'.self::$autoplayParam.'='.$autoplayStr;
+
+		$html = <<<EOT
+<iframe src="{$url}" width="{$width}" height="{$height}" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+EOT;
+
+		return array( 'html' => $html );
 	}
 
 	public function getEmbedSrcData() {

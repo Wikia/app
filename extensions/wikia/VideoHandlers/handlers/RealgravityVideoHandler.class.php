@@ -26,7 +26,7 @@ class RealgravityVideoHandler extends VideoHandler {
 			$playerId = self::REALGRAVITY_PLAYER_NO_AUTOSTART_ID;
 		}
 
-		$embed = <<<EOT
+		$html = <<<EOT
 <object id="rg_player_{$playerId}" name="rg_player_{$playerId}" type="application/x-shockwave-flash"
 width="{$width}" height="{$height}" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" style="visibility: visible;">
 	<param name="movie" value="http://anomaly.realgravity.com/flash/player.swf"></param>
@@ -45,7 +45,7 @@ width="{$width}" height="{$height}" classid="clsid:d27cdb6e-ae6d-11cf-96b8-44455
 </object>
 EOT;
 
-		return $embed;
+		return array( 'html' => $html );
 	}
 
 	public function getEmbedSrcData() {
