@@ -478,7 +478,7 @@ class GameGuidesController extends WikiaController {
 
 			//Use 'id' instead of image_id
 			foreach( $ret as &$value ) {
-				if($value['image_id'] !== 0) {
+				if ( !empty( $value['image_id'] ) ) {
 					$value['id'] = $value['image_id'];
 				}
 				unset($value['image_id']);
