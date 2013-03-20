@@ -880,7 +880,13 @@
 					$('body').append('<script>' + data.videoEmbedCode.script + ' loadJWPlayer(); </script>');
 				});
 			} else {
-				videoWrapper.html('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>');
+				var embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
+				
+				require(['wikia.videoBootstrap'], function (videoBootstrap) {
+					videoBootstrap(embedWrapper[0], data.videoEmbedCode);
+				});
+				
+				//videoWrapper.html('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>');
 			}
 
 			// expand preview is hidden
