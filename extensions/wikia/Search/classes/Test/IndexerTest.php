@@ -299,7 +299,7 @@ class IndexerTest extends BaseTest
 		    ->method ( 'getDB' )
 		    ->will   ( $this->throwException( $exception ) )
 		;
-		$indexer->reindexWiki( 123 );
+		$this->assertTrue( $indexer->reindexWiki( 123 ) );
 	}
 	
 	/**
