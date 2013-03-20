@@ -33,10 +33,6 @@ $app->registerClass('WikiaHubsV2HooksModel', $dir . 'models/WikiaHubsV2HooksMode
 
 $app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
 
-
-// pages
-$app->registerSpecialPage('WikiaHubsV2', 'SpecialWikiaHubsV2Controller');
-
 // i18n mapping
 $app->registerExtensionMessageFile('WikiaHubsV2', $dir.'WikiaHubsV2.i18n.php');
 
