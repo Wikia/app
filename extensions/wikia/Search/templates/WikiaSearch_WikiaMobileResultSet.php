@@ -1,21 +1,22 @@
-<?php if($resultSet->getResultsFound() > 1 ): ?>
+<?php if($resultSet->getResultsFound() >= 1 || $resultSet instanceof Wikia\Search\ResultSet\MatchGrouping): ?>
 <li class=group>
 <?php
-	$trackingData = 'class=ResultLink data-wid="'.$resultSet->getHeader('cityId').
+	$trackingData = 'class=ResultLink data-wid="'.$resultSet->getHeader('wikiId').
 		'" data-gpos="' . $pos .
 		'" data-pos=0 data-sterm="' . addslashes($query).
 		'" data-stype="' . ( $isInterWiki ? 'inter' : 'intra' ).
-		'" data-rver="' . $relevancyFunctionId.
+		'" data-rver="' . 6 .
 		'" data-event=search_click_wiki';
 ?>
 	<p>
-		<a class=groupTitle href="<?= $resultSet->getHeader( 'cityUrl' );?>" <?= $trackingData; ?> ><?= $resultSet->getHeader( 'cityTitle' );?></a>
-		<a class=searchGroup href="<?= $resultSet->getHeader('cityUrl') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search';?>"></a>
+		<a class=groupTitle href="<?= $resultSet->getHeader( 'url' );?>" <?= $trackingData; ?> ><?= $resultSet->getHeader( 'wikititle' );?></a>
+		<a class=searchGroup href="<?= $resultSet->getHeader('url') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search';?>"></a>
 	</p>
-	<a class=url href="<?= $resultSet->getHeader( 'cityUrl' );?>" <?= $trackingData; ?> ><?=$resultSet->getHeader( 'cityUrl' );?></a>
-	<?php for($i = 1; $i < 5; $i++){
-		$result = $resultSet->next();
-		if($result instanceof WikiaSearchResult): ?>
+	<a class=url href="<?= $resultSet->getHeader( 'url' );?>" <?= $trackingData; ?> ><?=$resultSet->getHeader( 'url' );?></a>
+	<?php 
+	$i = 1;
+	foreach( $resultSet as $result ) {
+		if($result instanceof Wikia\Search\Result): ?>
 		<div class=groupResults>
 			<?= $app->getView( 'WikiaSearch', 'WikiaMobileResult', array(
 				'result' => $result,
@@ -24,10 +25,10 @@
 				'query' => $query,
 				'inGroup' => true,
 				'isInterWiki' => $isInterWiki,
-				'relevancyFunctionId' => $relevancyFunctionId ) ); ?>
+				'relevancyFunctionId' => 6 ) ); ?>
 		</div>
-		<?php else: break; endif; ?>
-	<?php }; ?>
+		<?php $i++; else: break; endif; ?>
+	<?php if ( $i == 5 ) { break; } }; ?>
 </li>
 <?php elseif ($nextResult = $resultSet->next()): ?>
 	<?= $app->getView( 'WikiaSearch', 'WikiaMobileResult', array(
@@ -35,7 +36,6 @@
 		'gpos' => 0,
 		'pos' => $pos,
 		'query' => $query,
-		'rank' =>  $resultSet->getHeader('cityRank'),
 		'isInterWiki'=> true,
-		'relevancyFunctionId' => $relevancyFunctionId ) ); ?>
+		'relevancyFunctionId' => 6 ) ); ?>
 <?php endif; ?>

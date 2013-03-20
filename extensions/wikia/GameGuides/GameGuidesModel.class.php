@@ -227,7 +227,7 @@ class GameGuidesModel{
 						try {
 							$textResults[] = array(
 									'textForm' => $result->getTitle(),
-									'urlForm' => $mwService->getLocalUrlFromPageId( $result['pageid'], array( 'useskin' => 'wikiaapp' ) )
+									'urlForm' => $mwService->getLocalUrlForPageId( $result['pageid'], array( 'useskin' => 'wikiaapp' ) )
 									);
 							$count++;
 						} catch ( Exception $e ) {} // result is probably stale/deleted
