@@ -153,6 +153,11 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
 					log('There was no ad for this slot last time and reached max number of calls to DART', 5, logGroup);
 					log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 6, logGroup);
+
+					if (window.wgAdDriverUseGpt && gptConfig[slotname] === 'flush') {
+						flushGpt();
+					}
+
 					error();
 					return;
 				}
