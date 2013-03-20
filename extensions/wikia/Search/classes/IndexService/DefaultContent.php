@@ -41,7 +41,9 @@ class DefaultContent extends AbstractService
 		$pageId = $service->getCanonicalPageIdFromPageId( $this->currentPageId );
 
 		// we still assume the response is the same format as MediaWiki's
-		$response   = $service->getParseResponseFromPageId( $pageId ); 
+		$response   = $service->getParseResponseFromPageId( $pageId );
+		// ensure the response is an array, even if empty.
+		$response   = $response == false ? array() : $response;
 		$titleStr   = $service->getTitleStringFromPageId( $pageId );
 		
 		$pageFields = [
@@ -81,7 +83,7 @@ class DefaultContent extends AbstractService
 	 * @param array $response
 	 * @return array
 	 */
-	protected function getPageContentFromParseResponse( $response ) {
+	protected function getPageContentFromParseResponse( array $response ) {
 		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
 		if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
 			return $this->prepValuesFromHtml( $html );
