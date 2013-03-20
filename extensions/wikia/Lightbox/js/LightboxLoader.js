@@ -266,14 +266,18 @@ var LightboxLoader = {
 			height: targetChildImg.height(),
 			width: targetChildImg.width()
 		}, function(json) {
-			//retrieve DOM reference
 			var	embedCode = json['videoEmbedCode'];
-			target.hide().after(embedCode);
+
+			var inlineDiv = $('<div></div>').insertAfter(target.hide());
+
+			require(['wikia.videoBootstrap'], function (videoBootstrap) {
+				videoBootstrap(inlineDiv[0], embedCode);
+			});
 
 			// if player script, run it
-			if(json.playerScript) {
+			/*if(json.playerScript) {
 				$('body').append('<script>' + json.playerScript + '</script>');
-			}
+			}*/
 
 			// save references for inline video removal later
 			LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
