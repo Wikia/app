@@ -36,7 +36,7 @@ define('share', ['wikia.cache', 'JSMessages', 'wikia.loader'], function (cache, 
 			}
 
 			if(!shrData){
-				shrData = cache.get(cacheKey);
+				shrData = cache.getVersioned(cacheKey);
 				shrPageTxt = msg('wikiamobile-sharing-page-text', wgTitle, wgSitename);
 				shrMailPageTxt = encodeURIComponent(msg('wikiamobile-sharing-email-text', shrPageTxt));
 				shrImgTxt = msg('wikiamobile-sharing-modal-text', msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);

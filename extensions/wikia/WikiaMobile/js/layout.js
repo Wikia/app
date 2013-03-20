@@ -69,7 +69,7 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 
 	//tables
 	if(tables && tables.length > 0){
-		assets = cache && cache.get(tablesKey);
+		assets = cache && cache.getVersioned(tablesKey);
 
 		if(Features.gameguides || assets){
 			//if gameguides or we already have all our asses

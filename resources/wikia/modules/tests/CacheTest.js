@@ -102,14 +102,15 @@ describe("CacheTest", function(){
 
 
 	it('Get returns the value that was set last', function() {
-		var wc = define.getModule(window.localStorage);
+		var	wc = define.getModule(window.localStorage);
+
 		wc.set('e', 'some-value');
 		wc.set('e', 'other-value');
 		expect(wc.get('e')).toEqual('other-value');
 	});
 
 	it('Value expires after given TTL', function() {
-		var wc = define.getModule(window.localStorage),
+		var wc = define.getModule(window.localStorage);
 			fakeNowTimestamp = 8723687632,
 			fakeNow = {getTime: function() {return fakeNowTimestamp;}},
 			anHourLater = {getTime: function() {return fakeNowTimestamp + 3600 * 1000;}},
@@ -118,6 +119,19 @@ describe("CacheTest", function(){
 		wc.set('f', 'some-value', 3601, fakeNow);
 		expect(wc.get('f', anHourLater)).toEqual('some-value');
 		expect(wc.get('f', twoHoursLater)).toEqual(null);
+	});
+
+	it('returns null if cachebuster value get changed', function() {
+		var windowMock = {
+				wgStyleVersion: 1
+			},
+			wc = define.getModule(window.localStorage, windowMock);
+
+		wc.setVersioned('f', 'some-value1');
+		expect(wc.getVersioned('f')).toEqual('some-value1');
+
+		windowMock.wgStyleVersion = 100;
+		expect(wc.getVersioned('f')).toEqual(null);
 	});
 
 });

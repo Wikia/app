@@ -465,7 +465,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 					mg.init();
 				});
 			} else {
-				galleryData = cache && cache.get(cacheKey);
+				galleryData = cache && cache.getVersioned(cacheKey);
 
 				if(galleryData){
 					loader.processStyle(galleryData[0]);
