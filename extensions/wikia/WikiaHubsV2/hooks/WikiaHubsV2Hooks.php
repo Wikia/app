@@ -18,7 +18,7 @@ class WikiaHubsV2Hooks {
 
 		$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-		if ( $model->isHubsPage($hubName) ) {
+		if( $model->isHubsPage($hubName) && !$this->isOffShotPage($title) ) {
 			$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
 			$app->wg->SuppressPageHeader = true;
@@ -31,6 +31,16 @@ class WikiaHubsV2Hooks {
 		wfProfileOut(__METHOD__);
 		return true;
 
+	}
+
+	/**
+	 * @desc Off-shot pages are real subpages of a hub (real articles [Video_Games/Video_Game_Olympics/] instead of specific day's versions of a hub page [Video_Games/19-03-2013/])
+	 * 
+	 * @param Title $title
+	 * @return bool
+	 */
+	protected function isOffShotPage(Title $title) {
+		return $title->isSubpage() && $title->exists();
 	}
 
 	/**
