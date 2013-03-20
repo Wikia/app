@@ -5,7 +5,7 @@
 		<?php
 		$title = ( empty( $inGroup ) && $isInterWiki && empty( $result['isWikiMatch'] ) ) ? str_replace('$1', $result->getTitle(), $result->getVar('wikititle')) : $result->getTitle();
 		$trackingData = 'class=result-link data-wid="' . $result->getCityId().
-			'" data-pageid="' . $result->getVar('pageId') .
+			'" data-pageid="' . $result->getVar('pageid') .
 			'" data-pagens="' . $result->getVar('ns').
 			'" data-title="'. $result->getTitle().
 			'" data-gpos="'. ( !empty($gpos) ? $gpos : 0 ).
