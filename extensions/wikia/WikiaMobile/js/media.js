@@ -489,7 +489,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 							loader.processStyle(style);
 							loader.processScript(script);
 
-							cache && cache.set(cacheKey, [style, script], ttl);
+							cache && cache.setVersioned(cacheKey, [style, script], ttl);
 							require(['mediagallery'], function(mg){
 								mg.init();
 							});

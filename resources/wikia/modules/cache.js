@@ -16,7 +16,7 @@
 		storage,
 		undef;
 
-	function cache(localStorage) {
+	function cache(localStorage, window) {
 		var moduleStorage = {};
 
 		/**
@@ -76,15 +76,13 @@
 		 *
 		 * @param {String}  key       Key to save the value at
 		 * @param {Mixed}   value     Any serializable object to store under the key
-		 * @param {Integer} ttl       [OPTIONAL] TTL in seconds. If falsy: live forever or as long CB won't be updated
-		 * @param {Boolean} vary      [OPTIONAL] If should vary based on CB. If false: live forever or as long as ttl won't expire
+		 * @param {Integer} ttl       [OPTIONAL] TTL in seconds.
 		 * @param {Date}    customNow [OPTIONAL] Custom now (date object) for computing TTL
 		 */
-		function set(key, value, ttl, vary, customNow) {
+		function set(key, value, ttl, customNow) {
 			var now = customNow || new Date();
 
 			ttl = parseInt(ttl, 10);
-			vary = vary === undef ? true : vary;
 
 			if (ttl) {
 				uniSet(CACHE_TTL_PREFIX + key, now.getTime() + ttl * 1000);
@@ -92,17 +90,11 @@
 				uniDel(CACHE_TTL_PREFIX + key);
 			}
 
-			if (vary) {
-				uniSet(CACHE_VARY_PREFIX + key, context.wgStyleVersion);
-			} else {
-				uniDel(CACHE_VARY_PREFIX + key);
-			}
-
 			uniSet(CACHE_VALUE_PREFIX + key, JSON.stringify(value));
 		}
 
 		/**
-		 * Delete the value under given key
+		 * Delete the value under given key along with a cachebuster value associated with it
 		 *
 		 * @public
 		 *
@@ -126,11 +118,10 @@
 		 */
 		function get(key, customNow) {
 			var ttl = uniGet(CACHE_TTL_PREFIX + key),
-				vary = uniGet(CACHE_VARY_PREFIX + key),
 				value,
 				now = customNow || new Date();
 
-			if ((!ttl || ttl > now.getTime()) && (!vary || vary == context.wgStyleVersion)) {
+			if ((!ttl || ttl > now.getTime())) {
 				value = uniGet(CACHE_VALUE_PREFIX + key);
 				if (value) {
 					return JSON.parse(value);
@@ -141,10 +132,49 @@
 			return null;
 		}
 
+		/**
+		 * Set a value under given name that will be vaild as long cachebuster don't get changed
+		 *
+		 * @public
+		 *
+		 * @param {String}  key       Key to save the value at
+		 * @param {Mixed}   value     Any serializable object to store under the key
+		 * @param {Integer} ttl       [OPTIONAL] TTL in seconds.
+		 * @param {Date}    customNow [OPTIONAL] Custom now (date object) for computing TTL
+		 */
+		function setVersioned(key, value, ttl, customNow){
+			set(key, value, ttl, customNow);
+			uniSet(CACHE_VARY_PREFIX + key, window.wgStyleVersion);
+		}
+
+		/**
+		 * Get previously saved value. If value is not available or expired, return null
+		 *
+		 * @public
+		 *
+		 * @param {String} key       Key to get
+		 * @param {Date}   customNow [OPTIONAL] Custom now (date object) for computing TTL
+		 *
+		 * @return {Mixed} The value stored in the key or null
+		 */
+		function getVersioned(key, customNow){
+			var vary = uniGet(CACHE_VARY_PREFIX + key);
+
+			if(!vary || vary == window.wgStyleVersion) {
+				return get(key, customNow);
+			}
+
+			del(key);
+			return null;
+		}
+
 		return {
 			get: get,
 			set: set,
-			del: del
+			del: del,
+			setVersioned: setVersioned,
+			getVersioned: getVersioned,
+			delVersioned: del
 		};
 	}
 
@@ -160,9 +190,9 @@
 	} catch( e ) {}
 
 	//namespace
-	context.Wikia.Cache = cache(storage);
+	context.Wikia.Cache = cache(storage, context);
 
 	if (context.define && context.define.amd) {
-		context.define('wikia.cache', ['wikia.localStorage'], cache);
+		context.define('wikia.cache', ['wikia.localStorage', 'wikia.window'], cache);
 	}
 }(this));

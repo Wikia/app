@@ -66,7 +66,7 @@ define('share', ['wikia.cache', 'JSMessages', 'wikia.loader'], function (cache, 
 						handle(html);
 
 						shrData = [html, style];
-						cache.set(cacheKey, shrData, 604800);/*7 days*/
+						cache.setVersioned(cacheKey, shrData, 604800);/*7 days*/
 					}
 				)
 			}

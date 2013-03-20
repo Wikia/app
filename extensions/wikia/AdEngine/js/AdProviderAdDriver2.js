@@ -73,7 +73,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		var numCallForSlot = cacheStorage.get(storageKey, now) || 0;
 
 		numCallForSlot += 1;
-		cacheStorage.set(storageKey, numCallForSlot, forgetAdsShownAfterTime, false, now);
+		cacheStorage.set(storageKey, numCallForSlot, forgetAdsShownAfterTime, now);
 
 		return numCallForSlot;
 	}
@@ -229,7 +229,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				 */
 				if (window.adDriverLastDARTCallNoAds && window.adDriverLastDARTCallNoAds[slotname]) {
 					log(slotname + ' was not filled by DART', 2, logGroup);
-					cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, false, now);
+					cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
 
 					// Track hop time
 					hopTime = new Date().getTime() - hopTimer;

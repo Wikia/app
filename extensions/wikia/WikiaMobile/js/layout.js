@@ -23,7 +23,7 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 		ttl = 604800, //7days
 		assets,
 		process = function(res){
-			!assets && cache && cache.set(tablesKey, res, ttl);
+			!assets && cache && cache.setVersioned(tablesKey, res, ttl);
 
 			if(res) {
 				var scripts = res.scripts,
