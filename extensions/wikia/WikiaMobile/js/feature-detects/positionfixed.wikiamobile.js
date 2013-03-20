@@ -25,8 +25,8 @@ Features.addTest('positionfixed', function(){
 			||
 			( operammobilematch && omversion < 7458 )
 			||
-			//Android lte 2.1: Platform is Android and Webkit version is less than 534 (Android 2.2)
-			( ua.indexOf( "Android" ) > -1 && wkversion && wkversion < 534 )
+			//Android lte 2.1: Platform is Android and Webkit version is less than 532 (Android 2.2)
+			( ua.indexOf( "Android" ) > -1 && wkversion && wkversion < 532 )
 			||
 			// Firefox Mobile before 6.0 -
 			( ffversion && ffversion < 6 )
