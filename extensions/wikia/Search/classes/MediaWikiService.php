@@ -723,6 +723,17 @@ class MediaWikiService
 	}
 	
 	/**
+	 * Provides a relative URL provided a page id, with optional query string as array. 
+	 * @param int $pageId
+	 * @param array $query
+	 * @param bool $query2
+	 * @return string
+	 */
+	public function getLocalUrlForPageId( $pageId, $query = array(), $query2 = false ) {
+		return $this->getTitleFromPageId( $pageId )->getLocalUrl( $query, $query2 );
+	}
+	
+	/**
 	 * Provides a format, provided a revision's default timestamp format.
 	 * @param string $timestamp
 	 */
