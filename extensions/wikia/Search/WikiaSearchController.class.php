@@ -214,6 +214,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $wgExtensionsPath);
+		
+		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
+			$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
+			$this->setVal( 'wikiMatch', $this->app->getView( 'WikiaSearch', 'CrossWiki_exactResult', [ 'pos' => -1, 'resultSet' => $resultSet, 'pagesMsg' => 'foo', 'imgMsg' => 'bar', 'videoMsg' => 'baz', 'imageURL' => 'foo' ] ) );
+		}
 	}
 	
 	/**
