@@ -1,4 +1,4 @@
-
+/*global setTimeout */
 var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 	'use strict';
 
@@ -7,8 +7,19 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '/' + pageLevelParams.s2,
 		slotsToDisplay = [],
-		doneCallbacks = [],
+		doneCallbacks = {},// key: slot name, value: callback
 		googletag;
+
+	function triggerDone(slotname) {
+		var callback = doneCallbacks[slotname];
+
+		log(['triggerDone', slotname], 3, logGroup);
+
+		if (callback) {
+			delete doneCallbacks[slotname];
+			setTimeout(callback, 0); // escape from GPT's error-catching
+		}
+	}
 
 	function loadGpt() {
 		if (!gptLoaded) {
@@ -29,6 +40,45 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 
 			node.parentNode.insertBefore(gads, node);
 			googletag = window.googletag;
+
+			log(['loadGpt', 'googletag.cmd.push', 'bind to GPT events'], 4, logGroup);
+			googletag.cmd.push(function () {
+				var debug_log = googletag.debug_log,
+					oldLog = debug_log.log;
+
+				// We're plugging into the log function in GPT so we get some insight of what
+				// happens in GPT internals. We're looking for logging messages and comparing them
+				// to the pattern that is the most interesting for us. We chose out of those 4
+				// (listed here in the order of appearing for each slot GPT loads):
+				//
+				//  /^Fetching ad/i
+				//  /^Receiving ad/i
+				//  /^Rendering ad/i
+				//  /^Completed rendering ad/i
+				//
+				// Inspiration: https://github.com/mcountis/dfp-events
+
+				googletag.debug_log.log = function (level, message, service, slot) {
+					var domId,
+						donePattern = /^Rendering ad/i;
+
+					// Play extra-safe with this
+					try {
+						domId = slot.getSlotId().getDomId();
+
+						if (typeof message === 'string') {
+							if (message.search(donePattern) === 0) {
+								// If the message is what we look for, trigger the event
+								triggerDone(domId);
+							}
+						}
+					} catch (e) {
+					}
+
+					// Call the original function
+					return oldLog.apply(debug_log, arguments);
+				};
+			});
 
 			// Set page level params
 			log(['loadGpt', 'googletag.cmd.push', 'page level targeting'], 4, logGroup);
@@ -99,7 +149,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 
 			slotsToDisplay.push(slotname);
 			if (typeof done === 'function') {
-				doneCallbacks.push(done);
+				doneCallbacks[slotname] = done;
 			}
 		});
 	}
@@ -124,10 +174,6 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 				googletag.display(slotname);
 			}
 
-			while (doneCallbacks.length > 0) {
-				callback = doneCallbacks.shift();
-				callback();
-			}
 			log(['flushAds', 'done'], 4, logGroup);
 		});
 	}

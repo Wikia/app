@@ -1,6 +1,6 @@
 // TODO: move Wikia.Tracker outside
 
-var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain, abTest, wikiaGpt) {
+var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain, abTest, wikiaGpt, document) {
 	'use strict';
 
 	var logGroup = 'AdProviderAdDriver2',
@@ -111,8 +111,14 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			dcopt = slotMap[slotname].dcopt,
 			ord,
 
+			noAdStorageKey = 'dart_noad_' + slotname,
+			numCallForSlotStorageKey = 'dart_calls_' + slotname,
+
 			// Do this when DART hops or doesn't handle
 			error = function () {
+				log(slotname + ' was not filled by DART', 2, logGroup);
+				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
+
 				slot[2] = 'Liftium2';
 				window.adslots2.push(slot);
 			},
@@ -122,9 +128,6 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				slotTweaker.removeDefaultHeight(slotname);
 				slotTweaker.removeTopButtonIfNeeded(slotname);
 			},
-
-			noAdStorageKey = 'dart_noad_' + slotname,
-			numCallForSlotStorageKey = 'dart_calls_' + slotname,
 
 			noAdLastTime = cacheStorage.get(noAdStorageKey, now) || false,
 			numCallForSlot = cacheStorage.get(numCallForSlotStorageKey, now) || 0,
@@ -198,9 +201,18 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				dcopt: dcopt,
 				loc: loc
 			}, function () {
-				// TODO: detect success and hop situations and handle them
+				var slot = document.getElementById(slotname),
+					iframes = slot.getElementsByTagName('iframe');
 
-				success();
+				try {
+					if (iframes[0].offsetHeight > 1) {
+						success();
+						return;
+					}
+				} catch (e) {
+				}
+
+				error();
 			});
 
 			if (gptConfig[slotname] === 'flush') {
@@ -233,9 +245,6 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				 * We're handling this here.
 				 */
 				if (window.adDriverLastDARTCallNoAds && window.adDriverLastDARTCallNoAds[slotname]) {
-					log(slotname + ' was not filled by DART', 2, logGroup);
-					cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
-
 					// Track hop time
 					hopTime = new Date().getTime() - hopTimer;
 					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms', 7, logGroup);
