@@ -186,8 +186,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		if ($this->format != 'json') {
 			$this->wgWikiaHubType = $this->verticalName;
 		}
-		RequestContext::getMain()->getRequest()->setVal('vertical', $this->verticalName);
-		RequestContext::getMain()->getRequest()->setVal('verticalid', $this->verticalId);
 		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $this->canonicalVerticalName));
 	}
 
