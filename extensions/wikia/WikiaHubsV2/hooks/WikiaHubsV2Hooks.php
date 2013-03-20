@@ -28,6 +28,10 @@ class WikiaHubsV2Hooks {
 			$article = F::build( 'WikiaHubsV2Article', array($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp) );
 		}
 
+		if( $model->isHubsPage($hubName) && $this->isOffShotPage($title) ) {
+			$app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV1/WikiaHubs.scss'));
+		}
+
 		wfProfileOut(__METHOD__);
 		return true;
 
