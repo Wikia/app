@@ -11,6 +11,9 @@
 						<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
 					<? endif ?>
 				</span>
+                <p class="alternative">
+					<?= $wf->MsgExt('marketing-toolbox-hub-module-slider-image-tip', array('parseinline')) ?>
+                </p>
 				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
