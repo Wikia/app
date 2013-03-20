@@ -68,7 +68,7 @@ console.log(script);
 						init(json.jsParams);
 					});							
 				
-				},1000)
+				}, 1000)
 			});
 			
 			/*$.getScript(json.scripts[0]).done(function() {

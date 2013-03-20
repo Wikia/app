@@ -414,7 +414,6 @@ var Lightbox = {
 	video: {
 		trackingTimeout: false,
 		renderVideo: function(data) {
-console.log('render video');
 			// render mustache template
 			var renderedResult = Lightbox.openModal.videoTemplate.mustache(data);
 
