@@ -73,6 +73,36 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @covers \Wikia\Search\MediaWikiService::getLocalUrlForPageId
+	 */
+	public function testGetLocalUrlForPageId() {
+		$service = $this->service->setMethods( array( 'getTitleFromPageId' ) )->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getLocalUrl' ) )
+		                  ->getMock();
+		
+		$service
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitleFrompageId' )
+		    ->with   ( $this->pageId )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getLocalUrl' )
+		    ->with   ( [ 'foo' => 'bar' ], false )
+		    ->will   ( $this->returnValue( 'Stuff?foo=bar' ) )
+		;
+		$this->assertEquals(
+				'Stuff?foo=bar',
+				$service->getLocalUrlForPageId( $this->pageId, [ 'foo' => 'bar' ] ),
+				'\Wikia\Search\MediaWikiService::getLocalUrlFromPageId should return the string value of local url based on a page ID'
+		);
+	}
+	
+	/**
 	 * @covers \Wikia\Search\MediaWikiService::getTitleFromPageId
 	 */
 	public function testGetTitleFromPageIdFreshPage() {
