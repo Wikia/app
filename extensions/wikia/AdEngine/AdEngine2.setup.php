@@ -2,6 +2,7 @@
 
 $app = F::app();
 
+$app->registerClass('AdServer', __DIR__ . '/AdServer.php');
 $app->registerClass('AdEngine2Controller', __DIR__ . '/AdEngine2Controller.class.php');
 
 $app->registerHook('WikiaSkinTopScripts', 'AdEngine2Controller', 'onWikiaSkinTopScripts');
