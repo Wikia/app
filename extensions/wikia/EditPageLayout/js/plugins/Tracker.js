@@ -7,57 +7,38 @@
 		WikiaEditor = window.WikiaEditor;
 
 	WikiaEditor.plugins.tracker = $.createClass( WikiaEditor.plugin, {
-		category: 'editor',
+		config: {
+			action: Wikia.Tracker.ACTIONS.CLICK,
+			category: 'editor',
+			trackingMethod: 'ga'
+		},
 
 		init: function() {
-			var editPageType;
-
-			// Differentiate mini editor from main editor
-			if ( this.editor.config.isMiniEditor ) {
-				this.category += '-mini';
+			var isMiniEditor = this.editor.config.isMiniEditor,
+				editorType = ( isMiniEditor ? 'mini-' : '-' ) +
+					( window.RTE !== undefined && !window.RTEEdgeCase ) ? 'ck' : 'mw';
 
 			// Track edit page views and page type
-			} else {
-				switch( window.wgCanonicalSpecialPageName ) {
-					case 'CreatePage': {
-						editPageType = 2;
-						break;
-					}
-					case 'CreateBlogPage': {
-						editPageType = 3;
-						break;
-					}
-					default: {
-						editPageType = window.wgIsMainpage ? 1 : 0;
-					}
-				}
-
+			if ( !isMiniEditor ) {
 				this.track({
 					action: Wikia.Tracker.ACTIONS.VIEW,
-					category: 'edit-' + this.editor.mode,
-					label: 'edit-page',
-					value: editPageType
+					category: 'edit' + editorType,
+					label: 'edit-page'
 				});
 			}
+
+			// Add editor type to config category
+			this.config.category += editorType;
 
 			// Add the tracking function to the editor object for easy reference elsewhere
 			this.editor.track = this.proxy( this.track );
 		},
 
 		track: function( data ) {
-
 			// Support string as shortcut for label (common use case)
-			if ( typeof data === 'string' ) {
-				data = {
-					label: data
-				};
-			}
-
-			Wikia.Tracker.track({
-				action: Wikia.Tracker.ACTIONS.CLICK,
-				category: this.category + '-' + this.editor.mode,
-				trackingMethod: 'ga'
-			}, data );
+			Wikia.Tracker.track( this.config, typeof data === 'string' ? {
+				label: data
+			} : data );
 		}
 	});
 
