@@ -5,8 +5,7 @@
 	<div class="deleteConfirmTitle messageHolder"><?=wfMsg('related-videos-remove-confirm-title');?></div>
 	<div class="deleteConfirm messageHolder">
 		<?=wfMsg('related-videos-remove-confirm');?><br />
-		<input type="radio" name="delete-type" value="vid-module-only" checked="checked"><?=wfMessage('related-videos-remove-module-only');?><br />
-		<input type="radio" name="delete-type" value="all-wiki"><?=wfMessage('related-videos-remove-all-wiki');?>
+		<input type="checkbox" name="delete-from-wiki" value="1"><?=wfMessage('related-videos-delete-from-wiki');?><br />
 	</div>
 	<div class="removingProcess messageHolder"><?=wfMsg('related-videos-remove-call');?></div>
 	<div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
