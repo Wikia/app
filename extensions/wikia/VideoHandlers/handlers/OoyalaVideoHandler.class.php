@@ -14,7 +14,6 @@ class OoyalaVideoHandler extends VideoHandler {
 		$height = $this->getHeight($width);
 		//$url = $this->getEmbedUrl();
 		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.intval($isAjax).'-';
-		$extensionsPath = F::app()->wg->ExtensionsPath;
 
 		if ( $this->isAgeGate() ) {
 			$ooyalaPlayerId = self::OOYALA_PLAYER_ID_AGEGATE;

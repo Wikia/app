@@ -20,7 +20,6 @@ class AnyclipVideoHandler extends VideoHandler {
 		$ajaxStr = (bool) $isAjax;
 		$playerId = "AnyClipPlayer-{$this->videoId}-{$ajaxStr}";
 		$jsFile = 'http://player.anyclip.com/embed/AnyClipPlayer.js';
-		$extensionsPath = F::app()->wg->ExtensionsPath;
 
 		$html = <<<EOT
 <div id="$playerId" style="width: {$width}px; height: {$height}px;"></div>
@@ -29,7 +28,7 @@ EOT;
 		$code = array(
 			'html' => $html,
 			'jsParams' => array(
-				'playerId'=> "#$playerId",
+				'playerId'=> $playerId,
 				'videoId'=> $this->videoId,
 				'width'=> $width,
 				'height'=> $height,
@@ -38,7 +37,7 @@ EOT;
 			'init' => 'wikia.anyclip',
 			'scripts' => array(
 				$jsFile,
-				$extensionsPath . "/wikia/VideoHandlers/js/handlers/Anyclip.js"
+				"extensions/wikia/VideoHandlers/js/handlers/Anyclip.js"
 			),
 		);
 
