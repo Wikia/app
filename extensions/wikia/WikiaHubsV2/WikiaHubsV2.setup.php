@@ -19,7 +19,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // constroller classes
-$app->registerClass('SpecialWikiaHubsV2Controller', $dir . 'SpecialWikiaHubsV2Controller.class.php');
+$app->registerClass('WikiaHubsV2Controller', $dir . 'WikiaHubsV2Controller.class.php');
 $app->registerClass('WikiaHubsV2SuggestController', $dir . 'WikiaHubsV2SuggestController.class.php');
 
 // hook classes
@@ -33,10 +33,6 @@ $app->registerClass('WikiaHubsV2Model', $dir . 'models/WikiaHubsV2Model.class.ph
 $app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
 
 $app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
-
-
-// pages
-$app->registerSpecialPage('WikiaHubsV2', 'SpecialWikiaHubsV2Controller');
 
 // i18n mapping
 $app->registerExtensionMessageFile('WikiaHubsV2', $dir.'WikiaHubsV2.i18n.php');

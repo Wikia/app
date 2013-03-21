@@ -12,12 +12,12 @@
 	?>
 	<div class="module-box grid-4 alpha">
 		<div class="grid-3 alpha">
-			<input type="button" class="vet-show" value="<?= $wf->Msg('marketing-toolbox-edithub-add-video-button') ?>" />
+			<input type="button" class="vet-show" value="<?= $wf->Message('marketing-toolbox-edithub-add-video-button')->text() ?>" />
 			<span class="filename-placeholder alternative">
 				<?php if( !empty($fields['video']['value']) ): ?>
 				<?= $fields['video']['value']; ?>
 				<?php else: ?>
-				<?= $wf->msg('marketing-toolbox-edithub-video-name') ?>
+				<?= $wf->Message('marketing-toolbox-edithub-video-name')->text() ?>
 				<?php endif ?>
 			</span>
 			<?= $app->renderView(
@@ -44,7 +44,7 @@
 					array('inputData' => $fields['description'])
 				);
 			?>
-			<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-html-text-tip', array('parseinline')); ?></p>
+			<p class="alternative"><?= $wf->Message('marketing-toolbox-hub-module-html-text-tip')->parse(); ?></p>
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder video">

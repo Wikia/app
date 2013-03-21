@@ -1943,7 +1943,9 @@ class Wikia {
 		// validate an image using ImageMagick
 		$imageFile = $upload->getTempPath();
 
-		$output = wfShellExec("identify -verbose {$imageFile} 2>&1", $retVal);
+		$output = wfShellExec("identify -regard-warnings {$imageFile} 2>&1", $retVal);
+		wfDebug("Exit code #{$retVal}\n{$output}\n");
+
 		$isValid = ($retVal === 0);
 
 		if (!$isValid) {
@@ -1953,9 +1955,9 @@ class Wikia {
 			$error = array('verification-error');
 		}
 
-		return $isValid;	
+		return $isValid;
 	}
-	
+
 	/*
 	 * @param $user_name String
 	 * @param $s ResultWrapper
@@ -1969,10 +1971,10 @@ class Wikia {
 				$s = $mExtUser->getLocalUser( false );
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * @param $user User
 	 * @param $s ResultWrapper
@@ -1987,7 +1989,7 @@ class Wikia {
 				$s = $mExtUser->getLocalUser( false );
 			}
 		}
-		
+
 		return true;
 	}
 }

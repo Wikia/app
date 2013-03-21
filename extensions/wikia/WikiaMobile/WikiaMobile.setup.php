@@ -172,7 +172,11 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'JSSnippetsStack',
 
 			//skin
-			'skin'
+			'skin',
+
+			//facebook login
+			'fbAppId',
+			'fbUseMarkup'
 		]
 	);
 }

@@ -8,6 +8,9 @@ class MarketingToolboxModel extends WikiaModel {
 	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'MarketingToolbox';
 
+	const CACHE_KEY = 'HubsV2v1.00';
+	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'lastPublishedTimestamp';
+
 	protected $statuses = array();
 	protected $modules = array();
 	protected $editableModules = array();
@@ -361,6 +364,115 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
+	 * Check if all modules in current hub (lang, vertical and date) are filled and saved
+	 *
+	 * @param string $langCode
+	 * @param int $verticalId
+	 * @param int $timestamp
+	 */
+	public function checkModulesSaved($langCode, $verticalId, $timestamp) {
+		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$hubDate = date('Y-m-d', $timestamp);
+
+		$fields = array('count(module_id)');
+		$conds = array(
+			'lang_code' => $langCode,
+			'vertical_id' => $verticalId,
+			'hub_date' => $hubDate
+		);
+
+		$result = $sdb->select(self::HUBS_TABLE_NAME, $fields, $conds);
+
+		$row = $sdb->fetchRow($result);
+
+		return ($row[0] == $this->modulesCount) ? true : false;
+	}
+
+	/**
+	 * @desc Main method to publish hub page of specific vertical in specific language and on specific day
+	 * 
+	 * @param $langCode
+	 * @param $sectionId
+	 * @param $verticalId
+	 * @param $timestamp
+	 * 
+	 * @return stdClass (properties: boolean $success, string $errorMsg)
+	 */
+	public function publish($langCode, $sectionId, $verticalId, $timestamp) {
+		$this->wf->ProfileIn(__METHOD__);
+		
+		$results = new stdClass();
+		$results->success = null;
+		$results->errorMsg = null;
+		
+		if( $this->wf->ReadOnly() ) {
+			$results->success = false;
+			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-read-only');
+
+			$this->wf->ProfileOut(__METHOD__);
+			return $results;
+		}
+		
+		switch($sectionId) {
+			case self::SECTION_HUBS:
+				$this->publishHub($langCode, $verticalId, $timestamp, $results);
+				break;
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return $results;
+	}
+
+	/**
+	 * @param $langCode
+	 * @param $verticalId
+	 * @param $timestamp
+	 * @param stdClass $results
+	 * 
+	 * @return stdClass (properties: boolean $success, string $errorMsg)
+	 */
+	protected function publishHub($langCode, $verticalId, $timestamp, &$results) {
+		if( !$this->checkModulesSaved($langCode, $verticalId, $timestamp) ) {
+			$results->success = false;
+			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-modules-not-saved');
+
+			$this->wf->ProfileOut(__METHOD__);
+			return;
+		}
+
+		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$hubDate = date('Y-m-d', $timestamp);
+
+		$changes = array(
+			'module_status' => $this->statuses['PUBLISHED']
+		);
+
+		$conditions = array(
+			'lang_code' => $langCode,
+			'vertical_id' => $verticalId,
+			'hub_date' => $hubDate
+		);
+
+		$dbSuccess = $mdb->update(self::HUBS_TABLE_NAME, $changes, $conditions, __METHOD__);
+
+		if( $dbSuccess ) {
+			$mdb->commit(__METHOD__);
+			$results->success = true;
+		} else {
+			$results->success = false;
+			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-db-error');
+		}
+
+		$actualPublishedTimestamp = $this->getLastPublishedTimestamp($langCode, self::SECTION_HUBS, $verticalId);
+		if ($actualPublishedTimestamp < $timestamp && $timestamp < time()) {
+			$this->purgeLastPublishedTimestampCache($langCode, self::SECTION_HUBS, $verticalId);
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+	}
+
+	/**
 	 * Get data for module list from DB
 	 *
 	 * @param string $langCode
@@ -474,10 +586,32 @@ class MarketingToolboxModel extends WikiaModel {
 	 *
 	 * @return int timestamp
 	 */
-	protected function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null) {
+	public function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null) {
 		if ($timestamp === null) {
 			$timestamp = time();
 		}
+		$timestamp = strtotime('00:00', $timestamp);
+
+		if ($timestamp == strtotime('00:00')) {
+			$lastPublishedTimestamp = WikiaDataAccess::cache(
+				$this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId),
+				6 * 60 * 60,
+				function () use ($langCode, $sectionId, $verticalId, $timestamp) {
+					return $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp);
+				}
+			);
+		} else {
+			$lastPublishedTimestamp = $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp);
+		}
+
+		return $lastPublishedTimestamp;
+	}
+
+	protected function purgeLastPublishedTimestampCache($langCode, $sectionId, $verticalId) {
+		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId));
+	}
+
+	protected function getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp) {
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$table = $this->getTablesBySectionId($sectionId);
 
@@ -539,6 +673,16 @@ class MarketingToolboxModel extends WikiaModel {
 		}
 
 		return $table;
+	}
+
+	protected function getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId) {
+		return F::app()->wf->SharedMemcKey(
+			self::CACHE_KEY,
+			$langCode,
+			$sectionId,
+			$verticalId,
+			self::CACHE_KEY_LAST_PUBLISHED_TIMESTAMP
+		);
 	}
 
 	protected function getSpecialPageClass() {

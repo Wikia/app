@@ -705,6 +705,35 @@ class MediaWikiService
 	}
 	
 	/**
+	 * Compares a pageid to the main page's article ID for this wiki.
+	 * False if the main page ID is 0.
+	 * @param int $pageId
+	 * @return boolean
+	 */
+	public function isPageIdMainPage( $pageId ) {
+		return $pageId !== 0 && $pageId == $this->getMainPageArticleId();
+	}
+	
+	/**
+	 * Returns the hostname for a wiki. e.g. returns 'rap.wikia.com' for $wgServer = http://rap.wikia.com.
+	 * @return string
+	 */
+	public function getHostName() {
+		return substr( $this->getGlobal( 'Server' ), 7);
+	}
+	
+	/**
+	 * Provides a relative URL provided a page id, with optional query string as array. 
+	 * @param int $pageId
+	 * @param array $query
+	 * @param bool $query2
+	 * @return string
+	 */
+	public function getLocalUrlForPageId( $pageId, $query = array(), $query2 = false ) {
+		return $this->getTitleFromPageId( $pageId )->getLocalUrl( $query, $query2 );
+	}
+	
+	/**
 	 * Provides a format, provided a revision's default timestamp format.
 	 * @param string $timestamp
 	 */

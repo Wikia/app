@@ -73,6 +73,36 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @covers \Wikia\Search\MediaWikiService::getLocalUrlForPageId
+	 */
+	public function testGetLocalUrlForPageId() {
+		$service = $this->service->setMethods( array( 'getTitleFromPageId' ) )->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getLocalUrl' ) )
+		                  ->getMock();
+		
+		$service
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitleFrompageId' )
+		    ->with   ( $this->pageId )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getLocalUrl' )
+		    ->with   ( [ 'foo' => 'bar' ], false )
+		    ->will   ( $this->returnValue( 'Stuff?foo=bar' ) )
+		;
+		$this->assertEquals(
+				'Stuff?foo=bar',
+				$service->getLocalUrlForPageId( $this->pageId, [ 'foo' => 'bar' ] ),
+				'\Wikia\Search\MediaWikiService::getLocalUrlFromPageId should return the string value of local url based on a page ID'
+		);
+	}
+	
+	/**
 	 * @covers \Wikia\Search\MediaWikiService::getTitleFromPageId
 	 */
 	public function testGetTitleFromPageIdFreshPage() {
@@ -2310,6 +2340,43 @@ class MediaWikiServiceTest extends BaseTest
 				\F::app(),
 				'app',
 				$service
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getHostName
+	 */
+	public function testGetHostName() {
+		$service = (new MediaWikiService);
+		$this->assertEquals(
+				substr( $service->getGlobal( 'Server' ), 7 ),
+				$service->getHostName()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::isPageIdMainPage
+	 */
+	public function testPageIdIsMainPage() {
+		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getMainPageArticleId' ] );
+		$mockService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getMainPageArticleId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$this->assertTrue(
+				$mockService->isPageIdMainPage( 123 )
+		);
+		$mockService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getMainPageArticleId' )
+		    ->will   ( $this->returnValue( 234 ) )
+		;
+		$this->assertFalse(
+				$mockService->isPageIdMainPage( 123 )
+		);
+		$this->assertFalse(
+				$mockService->isPageIdMainPage( 0 )
 		);
 	}
 }

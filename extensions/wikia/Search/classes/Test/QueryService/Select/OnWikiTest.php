@@ -400,8 +400,8 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'getBoostQueryString' );
 		$method->setAccessible( true );
 		$boostQueries = array(
-				Wikia\Search\Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'quote'=>'\"' ) ),
-				Wikia\Search\Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'quote'=>'\"' ) ),
+				Wikia\Search\Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'valueQuote'=>'\"' ) ),
+				Wikia\Search\Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'valueQuote'=>'\"' ) ),
 		);
 		$this->assertEquals(
 				implode( ' ', $boostQueries ),

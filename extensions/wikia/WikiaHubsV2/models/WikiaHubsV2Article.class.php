@@ -28,7 +28,7 @@ class WikiaHubsV2Article extends Article {
 		//render hub page
 		$app = F::app();
 		$app->wg->Out->clearHTML();
-		$app->wg->Out->addHTML( $app->sendRequest('SpecialWikiaHubsV2Controller', 'index', $params) );
+		$app->wg->Out->addHTML( $app->sendRequest('WikiaHubsV2Controller', 'index', $params) );
 		wfProfileOut(__METHOD__);
 	}
 }

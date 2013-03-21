@@ -1,4 +1,4 @@
-<div>
+<div class="wam-header">
 	<div class="social-links">
 		<a href="<?= wfMessage('oasis-community-social-facebook-link')->text() ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
 		<a href="<?= wfMessage('oasis-community-social-twitter-link')->text() ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>

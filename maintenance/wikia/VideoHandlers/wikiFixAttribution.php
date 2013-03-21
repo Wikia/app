@@ -1,6 +1,6 @@
 <?php
 /**
- * Change <videogallery> to just <gallery> for a specific wiki
+ * Fix image attribution from WikiaBot for a specific wiki
  *
  * @author garth@wikia-inc.com
  * @ingroup Maintenance

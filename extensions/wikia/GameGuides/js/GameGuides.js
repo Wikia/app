@@ -129,11 +129,13 @@
 			return toggle('full', 'left', alignment)
 		};
 
-		this.setOptions = function(size, type, alignment){
+		this.setOptions = function(options){
+			options = options || {};
+
 			return {
-				size: size !== undefined && this.setSize(size),
-				type: type && this.toggleType(type),
-				alignment: alignment && this.toggleAlignment(alignment)
+				size: options.size !== undefined && this.setSize(options.size),
+				type: options.type !== undefined && this.toggleType(options.type),
+				alignment: options.alignment !== undefined && this.toggleAlignment(options.alignment)
 			};
 
 		};

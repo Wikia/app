@@ -12,7 +12,7 @@
 	?>
 	<div class="module-box grid-4 alpha">
 		<div class="grid-3 alpha">
-			<input type="button" class="wmu-show" value="<?= $wf->Msg('marketing-toolbox-hub-module-explore-add-photo') ?>" />
+			<input type="button" class="wmu-show" value="<?= $wf->Message('marketing-toolbox-hub-module-explore-add-photo')->text() ?>" />
 			<span class="filename-placeholder alternative">
 				<?php if( !empty($fields['fileName']['value']) ): ?>
 					<?= $fields['fileName']['value']; ?>
@@ -38,7 +38,7 @@
 					array('inputData' => $fields['text'])
 				);
 			?>
-			<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-html-text-tip', array('parseinline')); ?></p>
+			<p class="alternative"><?= $wf->Message('marketing-toolbox-hub-module-html-text-tip')->parse(); ?></p>
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder">

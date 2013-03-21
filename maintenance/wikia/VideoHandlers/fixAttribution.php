@@ -1,6 +1,6 @@
 <?php
 /**
- * Change <videogallery> to just <gallery>
+ * Fix image attribution from WikiBot to the user who actually uploaded it
  *
  * @author garth@wikia-inc.com
  * @ingroup Maintenance
@@ -13,7 +13,7 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 class EditCLI extends Maintenance {
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Change <videogallery> tags to <gallery>";
+		$this->mDescription = "Fix image attribution";
 		$this->addOption( 'test', 'Test', false, false, 't' );
 		$this->addOption( 'conf', 'Configuration file', true, true, 't' );
 	}
