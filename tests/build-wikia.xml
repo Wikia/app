@@ -72,9 +72,9 @@
 	<!-- JS Tests -->
     <target name="jsunit">
 		<mkdir dir="${basedir}/build" />
-        <exec executable="/Users/jolek/node_modules/testacular/bin/testacular" dir="${basedir}" failonerror="true">
+        <exec executable="karma" dir="${basedir}" failonerror="true">
             <arg line="start
-            		js-unit-testacular.config.js
+            		js-unit.config.js
 					--single-run
 					--no-auto-watch
 					--reporters junit
@@ -84,9 +84,9 @@
 
 	<target name="jsintegration">
 		<mkdir dir="${basedir}/build" />
-		<exec executable="/Users/jolek/node_modules/testacular/bin/testacular" dir="${basedir}" failonerror="true">
+		<exec executable="karma" dir="${basedir}" failonerror="true">
 			<arg line="start
-					js-integration-testacular.config.js
+					js-integration.config.js
 					--single-run
 					--no-auto-watch
 					--reporters junit
@@ -96,9 +96,9 @@
 
 	<target name="jsunit-coverage">
 		<mkdir dir="${basedir}/build" />
-		<exec executable="/Users/jolek/node_modules/testacular/bin/testacular" dir="${basedir}" failonerror="true">
+		<exec executable="karma" dir="${basedir}" failonerror="true">
 			<arg line="start
-					js-unit-testacular.config.js
+					js-unit.config.js
 					--single-run
 					--no-auto-watch
 					--reporters coverage
@@ -108,9 +108,9 @@
 
 	<target name="jsintegration-coverage">
 		<mkdir dir="${basedir}/build" />
-		<exec executable="/Users/jolek/node_modules/testacular/bin/testacular" dir="${basedir}" failonerror="true">
+		<exec executable="karma" dir="${basedir}" failonerror="true">
 			<arg line="start
-					js-integration-testacular.config.js
+					js-integration.config.js
 					--single-run
 					--no-auto-watch
 					--reporters coverage

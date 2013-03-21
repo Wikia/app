@@ -1,2 +1,2 @@
 #!/bin/sh
-testacular start js-unit-testacular.config.js
+karma start js-unit.config.js
