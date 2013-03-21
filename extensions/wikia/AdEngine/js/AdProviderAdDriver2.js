@@ -24,6 +24,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		'HOME_TOP_LEADERBOARD': {'size': '728x90,468x60,980x130,1030x130,1030x70,1x1', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,1x1', 'tile': 1, 'loc': 'top'},
 		'HUB_TOP_LEADERBOARD': {'size': '728x90,468x60,980x130,1030x130,1030x70,1x1', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
+		'INVISIBLE_1': {'size': '1x1'},
 		'LEFT_SKYSCRAPER_2': {'size': '160x600,120x600,1x1', 'tile': 3, 'loc': 'middle'},
 		'LEFT_SKYSCRAPER_3': {'size': '160x600,1x1', 'tile': 6, 'loc': 'footer'},
 		'MODAL_INTERSTITIAL': {'size': '600x400,300x250,1x1', 'tile': 2, 'loc': 'modal'},
@@ -42,7 +43,8 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	gptConfig = { // slots to use SRA with
 		TOP_LEADERBOARD: 'wait',
 		HOME_TOP_LEADERBOARD: 'wait',
-		TOP_RIGHT_BOXAD: 'flush',
+		INVISIBLE_1: 'flush',
+		TOP_RIGHT_BOXAD: 'wait',
 		HOME_TOP_RIGHT_BOXAD: 'flush'
 	};
 
