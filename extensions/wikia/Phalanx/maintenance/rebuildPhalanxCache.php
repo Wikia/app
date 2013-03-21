@@ -12,30 +12,22 @@ include __DIR__ . '/../../../../maintenance/commandLine.inc';
 
 // Phalanx caches its blocks by the type and by the language. Let's
 // get supported types and languages.
-$aTypes     = array_keys( PhalanxFallback::$typeNames );
+$aTypes     = array_keys( Phalanx::$typeNames );
 $aLanguages = array_keys( $wgPhalanxSupportedLanguages );
-
-function getmicrotime(){ 
-    list($usec, $sec) = explode(" ",microtime()); 
-    return ((float)$usec + (float)$sec); 
-    } 
 
 // Walk through all types...
 foreach ( $aTypes as $iType ) {
 	// ... and languages.
 	foreach ( $aLanguages as $sLanguage ) {
-		$time_start = getmicrotime();
 		// Fill the cache with the current data from DB_MASTER.
-		PhalanxFallback::getFromFilter( $iType, $sLanguage, true, true );
+		Phalanx::getFromFilter( $iType, $sLanguage, true, true );
 		if ( $iType == Phalanx::TYPE_USER ) {
-			PhalanxFallback::getFromFilterShort( $iType, $sLanguage, true, true );
+			Phalanx::getFromFilterShort( $iType, $sLanguage, true, true );
 		}
-$time_end = getmicrotime();
-$time = $time_end - $time_start;
 		echo "iType = $iType, $sLanguage, $time sec \n";
 	}
 	// Touch.
-	PhalanxFallback::setLastUpdate();
+	Phalanx::setLastUpdate();
 }
 
 exit( 0 );
