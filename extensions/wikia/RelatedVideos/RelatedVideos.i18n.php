@@ -48,8 +48,7 @@ $messages['en'] = array(
 	'related-videos-empty' => 'Be the first to add a video',
 	'related-videos-video-views' => '$1 {{PLURAL:$1|view|views}}',
 	'related-videos-see-all' => 'See all videos',
-	'related-videos-remove-module-only' => 'Remove this video from the Video module only',
-	'related-videos-remove-all-wiki' => 'Remove this video from the Video module and the wiki',
+	'related-videos-delete-from-wiki' => 'And also remove from wiki',
 
 	//popular videos on hubs
 	'related-videos-hubs-suggested-by' => 'Suggested by $1',
@@ -65,6 +64,7 @@ $messages['qqq'] = array(
 	'related-videos-hubs-suggested-by' => 'This is suffix text displayed after a video title in "Popular Videos" module on a hub page. Parameters:
 * $1 is a username which can be linked to a user page',
 	'releted-videos-see-all' => 'This text comes at the end of the list of related videos.  Clicking on it takes you to a larger list of wiki videos.',
+	'related-videos-delete-from-wiki' => 'For a checkbox that allows the user to delete the current video from the wiki in addition to removing it from the Videos rail module',
 );
 
 /** Breton (brezhoneg)

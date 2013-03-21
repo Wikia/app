@@ -482,9 +482,9 @@ var RelatedVideos = {
 	removeVideoItem: function(parentItem) {
 		$( parentItem ).fadeTo( 'slow', 0 );
 		var item = $(parentItem).find('a.video-thumbnail');
-		var deleteType = $('input[name=delete-type]:checked').val();
+		var deleteFromWiki = $('input[name=delete-from-wiki]:checked').val();
 		$.nirvana.sendRequest({
-			controller: (deleteType == 'vid-module-only' ? 'RelatedVideos' : 'VideoHandlerController'),
+			controller: ( deleteFromWiki ? 'VideoHandlerController' : 'RelatedVideos' ),
 			method: 'removeVideo',
 			format: 'json',
 			data: {
