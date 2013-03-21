@@ -1,7 +1,7 @@
 (function( context ) {
 	'use strict';
 
-	function ooyala() {
+	context.define('wikia.ooyala', ['wikia.window'], function() {
 
 		/*if(!(this instanceof ooyala)) {
 			return new ooyala();
@@ -15,7 +15,13 @@
 
 
 		function Ooyala(params) {
-			window.OO.Player.create(params.playerId, params.videoId, { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay/*, onCreate: onCreate*/ });
+			var time = new Date().getTime(),
+				container = document.getElementById(params.playerId),
+				newId = params.playerId + time;
+			
+			container.id = newId;
+	
+			window.OO.Player.create(newId, params.videoId, { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay/*, onCreate: onCreate*/ });
 		}
 
 
@@ -76,11 +82,6 @@
 		}*/
 
 		return Ooyala;
-	}
-
-
-	if (context.define && context.define.amd) {
-		context.define('wikia.ooyala', [], ooyala);
-	}
+	});
 
 })(this);
