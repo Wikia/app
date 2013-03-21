@@ -19,11 +19,11 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 		lazyLoadedSections = [],
 		tablesProcessedSections = [],
 		tablesModule,
-		tablesKey = 'wideTables' + wgStyleVersion,
+		tablesKey = 'wideTables',
 		ttl = 604800, //7days
 		assets,
 		process = function(res){
-			!assets && cache && cache.set(tablesKey, res, ttl);
+			!assets && cache && cache.setVersioned(tablesKey, res, ttl);
 
 			if(res) {
 				var scripts = res.scripts,
@@ -69,7 +69,7 @@ define('layout', ['sections', 'media', require.optional('wikia.cache'), 'wikia.l
 
 	//tables
 	if(tables && tables.length > 0){
-		assets = cache && cache.get(tablesKey);
+		assets = cache && cache.getVersioned(tablesKey);
 
 		if(Features.gameguides || assets){
 			//if gameguides or we already have all our asses
