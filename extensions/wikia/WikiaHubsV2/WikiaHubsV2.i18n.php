@@ -49,6 +49,7 @@ $messages['en'] = array(
 
 $messages['de'] = array(
 	'wikiahubs-button-cancel' => 'Abbrechen',
+	'wikiahubs-search-placeholder' => 'Wikia durchsuchen',
 
 	// suggest article
 	'wikiahubs-suggest-article-header' => 'Artikel vorschlagen',
@@ -58,6 +59,14 @@ $messages['de'] = array(
 	'wikiahubs-suggest-article-success' => 'Danke für deinen Vorschlag! Wie schauen ihn uns schnellstmöglich an. Schau bald wieder vorbei!',
 	'wikiahubs-error-invalid-article-url-length' => 'Die Artikel-URL muss mindestens 10 Zeichen lang sein.',
 	'wikiahubs-error-invalid-reason-length' => 'Dein Kommentar muss zwischen 1 und 140 Zeichen lang sein.',
+
+	//WAM
+	'wikiahubs-wam-header' => 'WAM-Punktzahl',
+	'wikiahubs-wam-see-full-wam-ranking' => 'Mehr über WAM',
+	'wikiahubs-wam-top-wikis-headline' => 'Top $1 Wikis',
+	'wikiahubs-wam-rank' => 'Rang',
+	'wikiahubs-wam-score' => 'WAM-Punktzahl',
+	'wikiahubs-wam-wiki-url' => "Wikiname",
 
 	// wikia hubs
 	'wikiahubs-vertical-video-games' => 'Videospiele',
@@ -80,6 +89,7 @@ $messages['de'] = array(
 $messages['fr'] = array(
 	// general
 	'wikiahubs-button-cancel' => 'Annuler',
+	'wikiahubs-search-placeholder' => 'Rechercher sur Wikia',
 
 	// suggest article
 	'wikiahubs-suggest-article-header' => 'Suggérer un article',
@@ -89,6 +99,14 @@ $messages['fr'] = array(
 	'wikiahubs-suggest-article-success' => 'Merci d\'avoir suggéré un article, ceux qui s\'occupent de la page vont le regarder. Revenez souvent pour voir s\'il est en ligne !',
 	'wikiahubs-error-invalid-article-url-length' => 'L\'URL de l\'article doit faire 10 caractères au moins',
 	'wikiahubs-error-invalid-reason-length' => 'Le commentaire doit faire entre 1 et 140 caractères',
+
+	//WAM
+	'wikiahubs-wam-header' => 'Score WAM',
+	'wikiahubs-wam-see-full-wam-ranking' => 'En lire plus sur WAM',
+	'wikiahubs-wam-top-wikis-headline' => 'Wikis - Top $1',
+	'wikiahubs-wam-rank' => 'Classement',
+	'wikiahubs-wam-score' => 'Score WAM',
+	'wikiahubs-wam-wiki-url' => "Nom du wiki",
 
 	// wikia hubs
 	'wikiahubs-vertical-VideoGames' => 'Jeux vidéo',
@@ -111,6 +129,7 @@ $messages['fr'] = array(
 $messages['es'] = array(
 	// general
 	'wikiahubs-button-cancel' => 'Cancelar',
+	'wikiahubs-search-placeholder' => 'Buscar en Wikia',
 
 	// suggest article
 	'wikiahubs-suggest-article-header' => 'Sugerir un artículo',
@@ -120,6 +139,14 @@ $messages['es'] = array(
 	'wikiahubs-suggest-article-success' => 'Gracias por sugerirnos un artículo, nuestros editores lo revisarán. ¡Vuelve pronto para ver si ya está publicado!',
 	'wikiahubs-error-invalid-article-url-length' => 'La url del artículo requiere al menos 10 caracteres',
 	'wikiahubs-error-invalid-reason-length' => 'El comentario tiene que tener entre 1 y 140 caracteres',
+
+	//WAM
+	'wikiahubs-wam-header' => 'Puntuación en el WAM',
+	'wikiahubs-wam-see-full-wam-ranking' => 'Leer más acerca del WAM',
+	'wikiahubs-wam-top-wikis-headline' => 'Wikis - Top $1',
+	'wikiahubs-wam-rank' => 'Clasificación',
+	'wikiahubs-wam-score' => 'Puntuación en el WAM',
+	'wikiahubs-wam-wiki-url' => "Nombre del wiki",
 
 	// wikia hubs
 	'wikiahubs-vertical-VideoGames' => 'Videojuegos',
