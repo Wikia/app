@@ -27,11 +27,10 @@ var SlotTweaker = function(log, document, window) {
 
 	// TODO: fix it, it's a hack!
 	removeTopButtonIfNeeded = function(slotname) {
-		var slot = document.getElementById(slotname)
-			, topAds = document.getElementById('WikiaTopAds')
-			, isLeaderboard = slot && slotname.indexOf('LEADERBOARD') !== -1
-			, isStandardSize = slot && slot.offsetHeight >= 90 && slot.offsetHeight <= 95
-		;
+		var slot = document.getElementById(slotname),
+			topAds = document.getElementById('WikiaTopAds'),
+			isLeaderboard = slot && slotname.indexOf('LEADERBOARD') !== -1,
+			isStandardSize = slot && slot.offsetHeight >= 90 && slot.offsetHeight <= 95 && slot.offsetWidth <= 728;
 
 		if (isLeaderboard && !isStandardSize) {
 			log('#' + slotname + ' height: ' + slot.offsetHeight + ' not standard, removing TOP_BUTTON(_WIDE)', 3, logGroup);
