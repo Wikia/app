@@ -30,6 +30,7 @@ class WikiaHubsV2Hooks {
 
 		if( $model->isHubsPage($hubName) && $this->isOffShotPage($title) ) {
 			$app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV1/WikiaHubs.scss'));
+			$app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'));
 		}
 
 		wfProfileOut(__METHOD__);
@@ -74,4 +75,31 @@ class WikiaHubsV2Hooks {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+
+	/**
+	 * Backward compatibility for old hubs off-shot pages
+	 *
+	 * @param Parser parser
+	 * @return true
+	 */
+	public function onParserFirstCallInit( Parser $parser ) {
+			wfProfileIn(__METHOD__);
+
+			$app = F::app();
+			$title = $app->wg->title;
+
+			$dbKeyName = $title->getDBKey();
+			$dbKeyNameSplit = explode('/', $dbKeyName);
+
+			$model = new WikiaHubsV2HooksModel();
+			$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
+
+			if( $model->isHubsPage($hubName) && $this->isOffShotPage($title) ) {
+				$parser->setHook('hubspopularvideos', array(new WikiaHubsParserHelper(), 'renderTag'));
+			}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
 }
