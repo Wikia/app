@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Hax for backward compatibility for HubsV1
+ * Remove it as fast as possible
+ */
 class WikiaHubsParserHelper {
 	public function renderTag($input) {
 
@@ -49,7 +52,7 @@ class WikiaHubsParserHelper {
 
 		$data['header'] = wfMessage('wikiahubs-popular-videos')->text();
 
-		//use images passed inside <gallery> tag
+		//use images passed inside <hubspopularvideos> tag
 		$lines = StringUtils::explode("\n", $input);
 
 		foreach($lines as $line) {
