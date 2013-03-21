@@ -648,6 +648,7 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.src.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
