@@ -253,6 +253,40 @@ $article3 = <<<TEXT
 </p>
 TEXT;
 
+$article4 = <<<TEXT
+<div class="boilerplate metadata" id="delete" style="background-color: #fee; margin: 0 1em 0 1em; padding: 0 10px; border: 1px solid #aaa;">
+<p><b>Please review this tip:</b>
+</p>
+<ul><li>This tip was imported from vim.org and needs <a href="http://vim.wikia.com/wiki/Vim_Tips_Wiki:General_guidelines" title="Vim Tips Wiki:General guidelines">general review</a>.
+</li><li>You might <a href="http://vim.wikia.com/wiki/Vim_Tips_Wiki:Comment_guidelines" title="Vim Tips Wiki:Comment guidelines">clean up comments</a> or <a href="http://vim.wikia.com/wiki/Vim_Tips_Wiki:Merge_guidelines" title="Vim Tips Wiki:Merge guidelines">merge similar tips</a>.
+</li><li>Add suitable <a href="http://vim.wikia.com/wiki/Vim_Tips_Wiki:Category_guidelines" title="Vim Tips Wiki:Category guidelines">categories</a> so people can find the tip.
+</li><li>Please <a href="http://vim.wikia.com/wiki/Vim_Tips_Wiki:Discussion_guidelines" title="Vim Tips Wiki:Discussion guidelines">avoid the discussion page</a> (use the Comments section below for notes).
+</li><li>If the tip contains good advice for current Vim, remove the <code>{{review}}</code> line.
+</li></ul>
+</div>
+<div><b><a  class="text" href="http://vim.wikia.com/wiki/STL_help_using_tags_-_C%2B%2B_Standard_Template_Library">Tip 931</a></b> <a  class="text" href="http://vim.wikia.com/wiki/STL_help_using_tags_-_C%2B%2B_Standard_Template_Library?printable=yes">Printable</a> <a  class="text" href="http://vim.wikia.com/wiki/STL_help_using_tags_-_C%2B%2B_Standard_Template_Library?useskin=monobook">Monobook</a> <a href="http://vim.wikia.com/wiki/VimTip929" title="VimTip929" class="mw-redirect"><small>Previous</small></a> <a href="http://vim.wikia.com/wiki/VimTip933" title="VimTip933" class="mw-redirect"><small>Next</small></a>
+<p><b>created</b>&#160;2005&#32;&#183; <b>complexity</b>&#160;basic&#32;&#183; <b>author</b>&#160;mixedvolume&#32;&#183; <b>version</b>&#160;5.7
+</p>
+<hr />
+</div>
+<p>This tip builds on <a href="http://vim.wikia.com/wiki/VimTip926" title="VimTip926" class="mw-redirect">VimTip926</a> (tagging QT help). With a different Perl parser given below for tagging STL documentation.
+</p><p>In vim, you can now do
+</p>
+<pre>
+:ta vector
+</pre>
+<p>Or press Control-T on <code>vector</code> to open stl/vector.html in your browser.
+</p><p>Or do <code>:ts /push</code> to find all tags names ~ push.
+</p><p>How:
+</p>
+<pre>
+wget http://www.sgi.com/tech/stl/STL_doc.zip
+unzip STL_doc.zip
+cd STL_doc
+perl stl_tags.pl &gt; tags # script given below.
+</pre>
+TEXT;
+
 		return array(
 			array( // article is empty
 				100,
@@ -282,12 +316,17 @@ TEXT;
 			array( // example real article 2 - Glee_TV_Show_Wiki (glee)
 				100,
 				$article2,
-				'Learn about Next Season:Season Four Read more > Learn about Last Ep:Goodbye Read more > Learn...',
+				'2,021,323 edits | 1,192 articles | 1,248 active users',
 			),
             array( // example real article 3 - muppets Episode 112 )
                 100,
                 $article3,
                 'The Muppet Babies are playing outer space explorers when a strange creature enters the nursery...'
+			),
+            array( // example real article 4 - STL help using tags - C++ Standard Template Library (vim)
+                100,
+                $article4,
+                'This tip builds on VimTip926 (tagging QT help). With a different Perl parser given below for...'
              )
 		);
 	}
