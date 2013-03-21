@@ -17,15 +17,15 @@ class All extends AbstractService
 	 * @var array
 	 */
 	protected $services = array(
-			'DefaultContent'  => null,
-			'BacklinkCount'   => null,
-			'MediaData'       => null,
-			'Metadata'        => null,
-			'Redirects'       => null,
-			'Wam'             => null,
-			'WikiPromoData'   => null,
-			'WikiStats'       => null,
-			'WikiViews'       => null
+			'Wikia\Search\IndexService\DefaultContent'  => null,
+			'Wikia\Search\IndexService\BacklinkCount'   => null,
+			'Wikia\Search\IndexService\MediaData'       => null,
+			'Wikia\Search\IndexService\Metadata'        => null,
+			'Wikia\Search\IndexService\Redirects'       => null,
+			'Wikia\Search\IndexService\Wam'             => null,
+			'Wikia\Search\IndexService\WikiPromoData'   => null,
+			'Wikia\Search\IndexService\WikiStats'       => null,
+			'Wikia\Search\IndexService\WikiViews'       => null
 			);
 	
 	/**
@@ -40,7 +40,7 @@ class All extends AbstractService
 		$result = array();
 		foreach ( $this->services as $serviceName => $service ) {
 			if ( $service === null ) {
-				$service = new $service();
+				$service = new $serviceName();
 				$this->services[$serviceName] = $service;
 			}
 			$subResult = $service->setPageId( $this->currentPageId )->execute();
