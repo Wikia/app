@@ -16,10 +16,10 @@ describe("Share module", function () {
 
 
 	var cache = {
-		get: function(){
+		getVersioned: function(){
 			return false;
 		},
-		set: function(){}
+		setVersioned: function(){}
 	};
 
 	var JSMessages = function(){

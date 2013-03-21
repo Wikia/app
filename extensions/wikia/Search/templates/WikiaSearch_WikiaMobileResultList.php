@@ -10,7 +10,7 @@ if ( count( $results ) ) {
 			'isInterWiki' => $isInterWiki,
 		);
 
-        if($result instanceof \Wikia\Search\ResultSet\Grouping) {
+        if($result instanceof Wikia\Search\ResultSet\AbstractResultSet) {
 			$props['resultSet'] = $result;
             echo $app->getView( 'WikiaSearch', 'CrossWiki_WikiaMobileResult', $props);
         }

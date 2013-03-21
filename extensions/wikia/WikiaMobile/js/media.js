@@ -423,7 +423,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	}
 
 	function openModal(num){
-		var cacheKey = 'mediaGalleryAssets' + wgStyleVersion,
+		var cacheKey = 'mediaGalleryAssets',
 			galleryData,
 			ttl = 604800; //7days
 
@@ -465,7 +465,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 					mg.init();
 				});
 			} else {
-				galleryData = cache && cache.get(cacheKey);
+				galleryData = cache && cache.getVersioned(cacheKey);
 
 				if(galleryData){
 					loader.processStyle(galleryData[0]);
@@ -489,7 +489,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 							loader.processStyle(style);
 							loader.processScript(script);
 
-							cache && cache.set(cacheKey, [style, script], ttl);
+							cache && cache.setVersioned(cacheKey, [style, script], ttl);
 							require(['mediagallery'], function(mg){
 								mg.init();
 							});

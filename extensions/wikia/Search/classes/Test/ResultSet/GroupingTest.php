@@ -9,7 +9,6 @@ use Wikia, ReflectionProperty, ReflectionMethod, Exception;
  */
 class GroupingTest extends Wikia\Search\Test\BaseTest
 {
-	
 	/**
 	 * Convenience method to easily handle the necessary dependencies & method mocking for recurrent mocks
 	 * @param array $resultSetMethods
@@ -17,7 +16,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 	 * @param array $resultMethods
 	 */
 	protected function prepareMocks( $resultSetMethods = array(), $configMethods = array(), $resultMethods = array(), $serviceMethods = array() ) { 
-	
+
 		$this->searchResult		=	$this->getMockBuilder( 'Solarium_Result_Select' )
 									->disableOriginalConstructor()
 									->setMethods( $resultMethods )
@@ -244,7 +243,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 	
 	/**
 	 * @covers Wikia\Search\ResultSet\Grouping::setResultsFromHostGrouping
-	 */
+	 *
 	public function testSetResultsFromHostGrouping() {
 		$mockFieldGroup = $this->getMockBuilder( 'Solarium_Result_Select_Grouping_FieldGroup' )
 							->disableOriginalConstructor()
@@ -314,7 +313,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 				20,
 				$found->getValue( $mockGrouping )
 		);
-	}
+	}*/
 	
 	/**
 	 * @covers Wikia\Search\ResultSet\Grouping::configureHeaders

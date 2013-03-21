@@ -197,9 +197,9 @@ class InterWiki extends AbstractSelect
 	{
 		$queryNoQuotes = preg_replace( '/ wiki\b/i', '', $this->config->getQueryNoQuotes( true ) );
 		$boostQueries = array(
-				Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'quote'=>'\"' ) ),
-				Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'quote'=>'\"' ) ),
-				Utilities::valueForField( 'wikititle', $queryNoQuotes, array( 'boost' => 15, 'quote' => '\"' ) ),
+				Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'valueQuote'=>'\"' ) ),
+				Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'valueQuote'=>'\"' ) ),
+				Utilities::valueForField( 'wikititle', $queryNoQuotes, array( 'boost' => 15, 'valueQuote' => '\"' ) ),
 				Utilities::valueForField( 'host', 'answers', array( 'boost' => 10, 'negate' => true ) ),
 				Utilities::valueForField( 'host', 'respuestas', array( 'boost' => 10, 'negate' => true ) )
 		);

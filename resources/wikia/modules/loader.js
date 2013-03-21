@@ -19,8 +19,9 @@
 			slashRegex = /^\\/,
 			rExtension = /(js|s?css)$/,
 			getURL = function(path, type, params){
-				if(~path.indexOf('__am')) {
+				if(~path.indexOf('__am') || ~path.search(/^https?:/i)) {
 					//most definatelly you already have proper url to asset
+					//or full url was passed
 					return path;
 				} else {
 					//we might convert links to go through AssetManager

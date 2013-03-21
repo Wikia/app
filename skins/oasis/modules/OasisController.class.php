@@ -40,6 +40,7 @@ class OasisController extends WikiaController {
 		$this->comScore = null;
 		$this->quantServe = null;
 		$this->ivw = null;
+		$this->amazonDirectTargetedBuy = null;
 
 		$this->app->registerHook('MakeGlobalVariablesScript', 'OasisController', 'onMakeGlobalVariablesScript');
 		wfProfileOut(__METHOD__);
@@ -61,7 +62,7 @@ class OasisController extends WikiaController {
 	 * at the bottom for performance reasons, but there are some exceptions for engineering reasons).
 	 *
 	 * TODO: make sure JavaScripts can be always loaded on bottom
-	 * 
+	 *
 	 * Note: NS_FILE pages need JS at top because AnyClips relies on jQuery.
 	 */
 	public static function JsAtBottom(){
@@ -116,6 +117,14 @@ class OasisController extends WikiaController {
 		);
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
+
+		// TODO: move to CreateNewWiki extension - this code should use a hook
+		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
+
+		if(!empty($wikiWelcome)) {
+			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/CreateNewWiki/css/WikiWelcome.scss' ) );
+			$wgOut->addScript( '<script src="' . $this->wg->ExtensionsPath . '/wikia/CreateNewWiki/js/WikiWelcome.js"></script>' );
+		}
 
 		$renderContentOnly = false;
 		if (!empty($this->wg->EnableRenderContentOnlyExt)) {
