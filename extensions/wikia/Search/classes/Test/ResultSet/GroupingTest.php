@@ -476,4 +476,79 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 				$resultSet->toArray()
 		);
 	}
+
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::getArticlesCountMsg
+	 */
+	public function testGetArticlesCountMsg() {
+		$count = 1000;
+		$msg = 'get_msg_result';
+
+		$this->prepareMocks( array( 'getHeader' ), array(), array(), array( 'shortNumForMsg' ) );
+		$this->resultSet
+			->expects( $this->once() )
+			->method( 'getHeader' )
+			->with( 'articles_count' )
+			->will( $this->returnValue( $count ) )
+		;
+
+		$this->service
+			->expects( $this->once() )
+			->method( 'shortNumForMsg' )
+			->with( $count )
+			->will( $this->returnValue( $msg ) )
+		;
+
+		$this->assertEquals( $msg, $this->resultSet->getArticlesCountMsg() );
+	}
+
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::getImagesCountMsg
+	 */
+	public function testGetImagesCountMsg() {
+		$count = 1000;
+		$msg = 'get_msg_result';
+
+		$this->prepareMocks( array( 'getHeader' ), array(), array(), array( 'shortNumForMsg' ) );
+		$this->resultSet
+			->expects( $this->once() )
+			->method( 'getHeader' )
+			->with( 'images_count' )
+			->will( $this->returnValue( $count ) )
+		;
+
+		$this->service
+			->expects( $this->once() )
+			->method( 'shortNumForMsg' )
+			->with( $count )
+			->will( $this->returnValue( $msg ) )
+		;
+
+		$this->assertEquals( $msg, $this->resultSet->getImagesCountMsg() );
+	}
+
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::getVideosCountMsg
+	 */
+	public function testGetVideosCountMsg() {
+		$count = 1000;
+		$msg = 'get_msg_result';
+
+		$this->prepareMocks( array( 'getHeader' ), array(), array(), array( 'shortNumForMsg' ) );
+		$this->resultSet
+			->expects( $this->once() )
+			->method( 'getHeader' )
+			->with( 'videos_count' )
+			->will( $this->returnValue( $count ) )
+		;
+
+		$this->service
+			->expects( $this->once() )
+			->method( 'shortNumForMsg' )
+			->with( $count )
+			->will( $this->returnValue( $msg ) )
+		;
+
+		$this->assertEquals( $msg, $this->resultSet->getVideosCountMsg() );
+	}
 }
