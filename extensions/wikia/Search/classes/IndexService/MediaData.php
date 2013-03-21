@@ -42,7 +42,6 @@ class MediaData extends AbstractService
 				 * This maps video metadata field keys to dynamic fields
 				 */
 				$videoMetadataMapper = array(
-						'duration'		=>	'video_duration_i',
 						'provider'		=>	'video_provider_s',
 						'videoId'		=>	'video_id_s',
 						'altVideoId'	=>	'video_altid_s',
@@ -55,6 +54,9 @@ class MediaData extends AbstractService
 					}
 				}
 				// special cases
+				if ( isset( $metadata['duration'] ) ) {
+					$results['video_duration_i'] = (int) $metadata['duration'];
+				}
 				if ( isset( $metadata['hd'] ) ) {
 					$results['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
 				}
