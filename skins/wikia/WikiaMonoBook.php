@@ -29,13 +29,13 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	}
 
 	function initPage(&$out) {
-		global $wgHooks, $wgShowAds, $wgUseAdServer, $wgRequest, $wgOut;
+		global $wgHooks, $wgShowAds, $wgRequest, $wgOut;
 
 		parent::initPage( $out );
 
 		$diff = $wgRequest->getVal('diff');
 
-		if($wgShowAds == false || $wgUseAdServer == false || isset($diff)) {
+		if($wgShowAds == false || isset($diff)) {
 			$this->ads = false;
 		}
 
