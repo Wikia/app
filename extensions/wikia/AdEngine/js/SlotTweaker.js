@@ -40,7 +40,7 @@ var SlotTweaker = function(log, document, window) {
 			removeClass(topAds, 'WikiaTopButtonRight');
 		}
 		if (isLeaderboard && isStandardSize) {
-			log('#' + slotname + ' height: ' + slot.offsetHeight + ' is standard, pushing TOP_BUTTON(_WIDE).force to Liftium2 queue', 2, logGroup);
+			log('#' + slotname + ' size: ' + slot.offsetHeight + 'x' + slot.offsetWidth + ' is standard, pushing TOP_BUTTON(_WIDE).force to Liftium2 queue', 2, logGroup);
 			window.adslots2.push(['TOP_BUTTON.force', null, 'Liftium2']);
 			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
 		}
