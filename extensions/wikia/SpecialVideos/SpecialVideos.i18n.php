@@ -93,14 +93,14 @@ $messages['fr'] = array(
 $messages['pl'] = array(
 	'specialvideos-html-title' => 'Filmy na {{SITENAME}}',
 	'specialvideos-page-title' => 'Filmy',
-	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span> {{PLURAL:$1|film na<br /> tej wiki|filmÛw na<br /> tej wiki}}</span>',
-	'specialvideos-sort-by' => 'SposÛb sortowania',
+	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span> {{PLURAL:$1|film na<br /> tej wiki|filmów na<br /> tej wiki}}</span>',
+	'specialvideos-sort-by' => 'Sposób sortowania',
 	'specialvideos-sort-latest' => 'Najnowsze',
 	'specialvideos-sort-most-popular' => 'Najpopularniejsze',
 	'specialvideos-sort-trending' => 'Na fali',
-	'specialvideos-sort-featured' => 'èrÛd≥o: Wikia Library',
-	'specialvideos-uploadby' => 'doda≥(a) $1',
-	'specialvideos-posted-in' => 'Uøyto w $1',
+	'specialvideos-sort-featured' => 'Źródło: Wikia Library',
+	'specialvideos-uploadby' => 'dodał(a) $1',
+	'specialvideos-posted-in' => 'Użyto w $1',
 	'special-videos-add-video' => 'Dodaj film',
 );
 
