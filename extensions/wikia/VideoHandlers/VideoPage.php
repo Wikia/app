@@ -12,7 +12,7 @@ class WikiaVideoPage extends WikiaImagePage {
 
 	protected static $videoWidth = 670;
 
-	function openShowImage(){
+	protected function openShowImage(){
 		global $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath, $wgEnableVideoPageRedesign;
 		wfProfileIn( __METHOD__ );
 		$timestamp = $wgRequest->getInt('t', 0);
@@ -57,11 +57,7 @@ class WikiaVideoPage extends WikiaImagePage {
 			);
 			$html .= F::app()->renderView( 'WikiaFilePageController', 'videoCaption', $captionDetails );
 	
-			$content = $this->getContent();
-			$isContentEmpty = empty($content);
-			$html .= F::app()->renderPartial( 'WikiaFilePageController', 'description', array('isContentEmpty' => $isContentEmpty) );
-	
-			$wgOut->addHTML( $html );
+			$this->renderDescriptionHeader();
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -67,5 +67,24 @@ class WikiaImagePage extends ImagePage {
 	
 		// do nothing on purpose
 	}
+	
+	protected function openShowImage() {
+		global $wgEnableVideoPageRedesign;
+		
+		parent::openShowImage();
+		if(!empty($wgEnableVideoPageRedesign)) {
+			$this->renderDescriptionHeader();
+		}
+	}
+	
+	protected function renderDescriptionHeader() {
+		global $wgOut;
+		
+		$content = $this->getContent();
+		$isContentEmpty = empty($content);
+		$html = F::app()->renderPartial( 'WikiaFilePageController', 'description', array('isContentEmpty' => $isContentEmpty) );
+
+		$wgOut->addHTML( $html );
+	}
 
 }
