@@ -4,12 +4,16 @@
 			display: inline;
 			border: none;
 		}
-		.title-wraper {
+		.title-wrapper {
 			display: block;
 			width: 100%;
 			border-bottom: 4px solid #D8E3E7;
 			line-height: 30px;
 		}
+		& > .title-wrapper:first-child {
+			display: none;
+		}
+
 		#RelatedVideos {
 			margin: 0;
 		}
@@ -39,16 +43,3 @@
 		}
 	}
 }
-
-/* temp transition code until grid is fully rolled out, remove and integrate after transition */
-.WikiaPage.WikiaGrid .WikiaArticle {
-	.wikiahubs-popular-videos {
-		.button.left {
-			left: 633px;
-		}
-		.scrollleft {
-			left: 0;
-		}
-	}
-}
-/* end temp transistion code */
