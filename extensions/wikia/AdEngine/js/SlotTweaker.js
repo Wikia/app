@@ -33,7 +33,7 @@ var SlotTweaker = function(log, document, window) {
 			isStandardSize = slot && slot.offsetHeight >= 90 && slot.offsetHeight <= 95 && slot.offsetWidth <= 728;
 
 		if (isLeaderboard && !isStandardSize) {
-			log('#' + slotname + ' height: ' + slot.offsetHeight + ' not standard, removing TOP_BUTTON(_WIDE)', 3, logGroup);
+			log('#' + slotname + ' size: ' + slot.offsetHeight + 'x' + slot.offsetWidth + ' not standard, removing TOP_BUTTON(_WIDE)', 3, logGroup);
 			hide('TOP_BUTTON');
 			hide('TOP_BUTTON_WIDE');
 			removeClass(topAds, 'WikiaTopButtonLeft');
