@@ -29,7 +29,7 @@ class WikiaImagePage extends ImagePage {
 	
 	/**
 	 * imageDetails override
-	 * Image page doesn't need the wrapper, but VideoPage does
+	 * Image page doesn't need the wrapper, but WikiaFilePage does
 	 */
 	protected function imageDetails($showmeta, $formattedMetadata) {
 		global $wgOut, $wgEnableVideoPageRedesign, $wgJsMimeType, $wgExtensionsPath;
@@ -39,23 +39,23 @@ class WikiaImagePage extends ImagePage {
 			return;
 		}
 		
-		// add these two to VideoPage package after full release
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoHandlers/css/VideoPage.scss'));
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/VideoPage.js\"></script>\n" );
+		// move these two to WikiaFilePage package after full release
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoHandlers/css/WikiaFilePage.scss'));
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/WikiaFilePage.js\"></script>\n" );
 		
 		$app = F::app();
-		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'local') ) );
-		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'global') ) );
-		$wgOut->addHtml( $app->renderPartial( 'VideoPageController', 'seeMore', array() ));
+		$wgOut->addHtml( $app->renderView( 'WikiaFilePageController', 'fileUsage', array('type' => 'local') ) );
+		$wgOut->addHtml( $app->renderView( 'WikiaFilePageController', 'fileUsage', array('type' => 'global') ) );
+		$wgOut->addHtml( $app->renderPartial( 'WikiaFilePageController', 'seeMore', array() ));
 		$wgOut->addHtml('<div class="more-info-wrapper">');
 		parent::imageDetails($showmeta, $formattedMetadata);
 		$wgOut->addHtml('</div>');
-		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'relatedPages', array() ) );
+		$wgOut->addHtml( $app->renderView( 'WikiaFilePageController', 'relatedPages', array() ) );
 	}
 
 	/**
 	 * imageListing override.
-	 * for VideoPage, imageListing will be printed under additionalDetails()
+	 * for WikiaFilePage, imageListing will be printed under additionalDetails()
 	 */
 	protected function imageListing() {
 		global $wgEnableVideoPageRedesign;

@@ -55,11 +55,11 @@ class WikiaVideoPage extends WikiaImagePage {
 				'detailUrl' => $img->getProviderDetailUrl(),
 				'views' => MediaQueryService::getTotalVideoViewsByTitle( $img->getTitle()->getDBKey() ),
 			);
-			$html .= F::app()->renderView( 'VideoPageController', 'videoCaption', $captionDetails );
+			$html .= F::app()->renderView( 'WikiaFilePageController', 'videoCaption', $captionDetails );
 	
 			$content = $this->getContent();
 			$isContentEmpty = empty($content);
-			$html .= F::app()->renderPartial( 'VideoPageController', 'description', array('isContentEmpty' => $isContentEmpty) );
+			$html .= F::app()->renderPartial( 'WikiaFilePageController', 'description', array('isContentEmpty' => $isContentEmpty) );
 	
 			$wgOut->addHTML( $html );
 		}

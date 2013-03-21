@@ -84,7 +84,7 @@ $app->registerClass( 'VideoInfoHelper', $dir . '/videoInfo/VideoInfoHelper.class
 $app->registerClass( 'VideoInfoHooksHelper', $dir . '/videoInfo/VideoInfoHooksHelper.class.php' );
 
 // video page controller
-$app->registerClass( 'VideoPageController', $dir . '/VideoPageController.class.php' );
+$app->registerClass( 'WikiaFilePageController', $dir . '/WikiaFilePageController.class.php' );
 
 /**
  * messages
