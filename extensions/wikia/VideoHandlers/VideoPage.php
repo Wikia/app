@@ -32,12 +32,12 @@ class WikiaVideoPage extends ImagePage {
 	 */
 	protected function imageDetails($showmeta, $formattedMetadata) {
 		global $wgOut, $wgEnableVideoPageRedesign;
-		
+
 		if(empty($wgEnableVideoPageRedesign)) {
 			parent::imageDetails($showmeta, $formattedMetadata);
 			return;
 		}
-		
+
 		$app = F::app();
 		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'local') ) );
 		$wgOut->addHtml( $app->renderView( 'VideoPageController', 'fileUsage', array('type' => 'global') ) );
@@ -54,12 +54,12 @@ class WikiaVideoPage extends ImagePage {
 	 */
 	protected function imageListing() {
 		global $wgEnableVideoPageRedesign;
-		
+
 		if(empty($wgEnableVideoPageRedesign)) {
 			parent::imageListing();
 			return;
 		}
-	
+
 		// do nothing on purpose
 	}
 
@@ -92,16 +92,20 @@ class WikiaVideoPage extends ImagePage {
 		}
 
 		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
-		
+		$embedCode = $img->getEmbedCode( self::$videoWidth, $autoplay );
+		if ( !empty( $embedCode['scripts'] ) ) {
+			$wgOut->addHTML('<script type="text/javascript">window.playerParams = '.json_encode( $embedCode ).';</script>');
+		}
+
 		if(empty($wgEnableVideoPageRedesign)) {
-			$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>' );
+			$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$embedCode['html'].$this->getVideoInfoLine().'</div>' );
 		} else {
 			// add these two to VideoPage package after full release
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoHandlers/css/VideoPage.scss'));
 			$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/VideoPage.js\"></script>\n" );
-	
-			$html = '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
-	
+
+			$html = '<div class="fullImageLink" id="file">'.$embedCode['html'].'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
+
 			$captionDetails = array(
 				'expireDate' => $img->getExpirationDate(),
 				'provider' => $img->getProviderName(),
@@ -110,20 +114,20 @@ class WikiaVideoPage extends ImagePage {
 				'views' => MediaQueryService::getTotalVideoViewsByTitle( $img->getTitle()->getDBKey() ),
 			);
 			$html .= F::app()->renderView( 'VideoPageController', 'videoCaption', $captionDetails );
-	
+
 			$content = $this->getContent();
 			$isContentEmpty = empty($content);
 			$html .= F::app()->renderPartial( 'VideoPageController', 'description', array('isContentEmpty' => $isContentEmpty) );
-	
+
 			$wgOut->addHTML( $html );
 		}
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	protected function getVideoInfoLine() {
 		global $wgWikiaVideoProviders;
-		
+
 		$img = $this->getDisplayedFile();
 		$detailUrl = $img->getProviderDetailUrl();
 		$provider = $img->getProviderName();
@@ -132,7 +136,7 @@ class WikiaVideoPage extends ImagePage {
 			$provider = array_pop( $providerName );
 		}
 		$providerUrl = $img->getProviderHomeUrl();
-		
+
 		$link = '<a href="' . $detailUrl . '" class="external" target="_blank">' . $this->mTitle->getText() . '</a>';
 		$providerLink = '<a href="' . $providerUrl . '" class="external" target="_blank">' . $provider . '</a>';
 		$s = '<div id="VideoPageInfo">' . wfMsgExt( 'videohandler-video-details', array('replaceafter'), $link, $providerLink )  . '</div>';
