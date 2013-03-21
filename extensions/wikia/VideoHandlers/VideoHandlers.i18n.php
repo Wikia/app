@@ -58,6 +58,8 @@ $messages['en'] = array(
 	'video-page-description-heading' => 'Description',
 	'video-page-description-zero-state' => 'There is no description for this file yet.',
 	'video-page-file-list-pagination' => '$1 of $2',
+	
+	'wikia-file-page-replace-button' => 'Replace',
 );
 
 /** Message documentation (Message documentation) */
@@ -97,6 +99,8 @@ $messages['qqq'] = array(
 	'video-page-description-heading' => 'Description heading',
 	'video-page-description-zero-state' => 'Page content that states there is no description for this file',
 	'video-page-file-list-pagination' => 'Pagination for file listing.  e.g. 1 of 2.  $1 is current page, $2 is total pages',
+	
+	'wikia-file-page-replace-button' => 'Replace button label, hidden in menu button',
 );
 
 /** Afrikaans (Afrikaans)
