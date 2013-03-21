@@ -44,7 +44,10 @@ $messages['en'] = array(
 
 	// 404 page
 	'wikiahubs-404-title' => 'The page you are looking for cannot be found',
-	'wikiahubs-404-message' => "We couldn't find the page you are looking for. [[$1|Click here]] to go to today's hub."
+	'wikiahubs-404-message' => "We couldn't find the page you are looking for. [[$1|Click here]] to go to today's hub.",
+
+	// off-shot pages
+	'wikiahubs-popular-videos' => 'Popular videos'
 );
 
 $messages['de'] = array(
@@ -83,7 +86,11 @@ $messages['de'] = array(
 
 	// 404 page
 	'wikiahubs-404-title' => 'Die angegebene Seite konnte nicht gefunden werden',
-	'wikiahubs-404-message' => "Wir konnten die angegebene Seite leider nicht finden. Umfangreiche und aktuelle Inhalte finden sich in unserem [[$1|Hub von heute]]."
+	'wikiahubs-404-message' => "Wir konnten die angegebene Seite leider nicht finden. Umfangreiche und aktuelle Inhalte finden sich in unserem [[$1|Hub von heute]].",
+
+	// off-shot pages
+	'wikiahubs-popular-videos' => 'Beliebte Videos'
+
 );
 
 $messages['fr'] = array(
@@ -123,7 +130,10 @@ $messages['fr'] = array(
 
 	// 404 page
 	'wikiahubs-404-title' => 'Impossible de trouver la page que vous cherchez',
-	'wikiahubs-404-message' => 'Nous n\'avons pas trouvé la page que vous cherchez. [[$1|Cliquez ici]] pour le thème du jour.'
+	'wikiahubs-404-message' => 'Nous n\'avons pas trouvé la page que vous cherchez. [[$1|Cliquez ici]] pour le thème du jour.',
+
+	// off-shot pages
+	'wikiahubs-popular-videos' => 'Nos vidéos préférées'
 );
 
 $messages['es'] = array(
@@ -196,5 +206,8 @@ $messages['qqq'] = array(
 
 	// 404 page
 	'wikiahubs-404-title' => '404 page title',
-	'wikiahubs-404-message' => '404 page message, first parameter is link to actual hub page'
+	'wikiahubs-404-message' => '404 page message, first parameter is link to actual hub page',
+
+	// off-shot pages
+	'wikiahubs-popular-videos' => 'Nuestros vídeos favoritos'
 );
