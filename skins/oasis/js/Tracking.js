@@ -1,4 +1,9 @@
-/* tracking for oasis skin */
+/**
+ * This file contains most of the tracking calls for the Oasis skin.
+ * Some tracking calls live elsewhere due to the complexity of tracking
+ * them in this file, but general preference is to have any Oasis related
+ * tracking in this file if at all possible.
+ */
 jQuery(function($){
 	var $body = $('body'),
 		$wikiaArticle = $('#WikiaArticle'),
@@ -196,27 +201,6 @@ jQuery(function($){
 		if(!$body.hasClass('editor')) {
 			return;
 		}
-
-		track({
-			action: Wikia.Tracker.ACTIONS.VIEW,
-			category: category,
-			label: 'edit-page'
-		});
-
-		$('#wpSave').on('mousedown', {
-			category: category,
-			label: 'publish'
-		}, trackWithEventData);
-
-		// DAR-36: catch hitting 'enter' in summary to submit edit
-		$('#wpSummary').on('keypress', function(e) {
-			if (e.which === 13) {
-				track({
-					category: category,
-					label: 'publish'
-				});
-			}
-		});
 
 		$('#EditPageRail').on('mousedown', '.module_insert .cke_button', function(e) {
 			var label,
