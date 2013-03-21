@@ -13,7 +13,7 @@ class OoyalaVideoHandler extends VideoHandler {
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
 		$height = $this->getHeight($width);
 		//$url = $this->getEmbedUrl();
-		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.time().'-'.intval($isAjax);
+		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.intval($isAjax).'-';
 		$extensionsPath = F::app()->wg->ExtensionsPath;
 
 		if ( $this->isAgeGate() ) {
@@ -41,7 +41,7 @@ EOT;
 			'init' => 'wikia.ooyala',
 			'scripts' => array(
 				$jsFile,
-				$extensionsPath . "/wikia/VideoHandlers/js/handlers/Ooyala.js"
+				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js"
 			),
 		);
 	}
