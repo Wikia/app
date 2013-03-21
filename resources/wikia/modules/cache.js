@@ -76,7 +76,7 @@
 		 *
 		 * @param {String}  key       Key to save the value at
 		 * @param {Mixed}   value     Any serializable object to store under the key
-		 * @param {Integer} ttl       [OPTIONAL] TTL in seconds.
+		 * @param {Integer} ttl       [OPTIONAL] TTL in seconds. If falsy: live forever
 		 * @param {Date}    customNow [OPTIONAL] Custom now (date object) for computing TTL
 		 */
 		function set(key, value, ttl, customNow) {
@@ -121,7 +121,7 @@
 				value,
 				now = customNow || new Date();
 
-			if ((!ttl || ttl > now.getTime())) {
+			if (!ttl || ttl > now.getTime()) {
 				value = uniGet(CACHE_VALUE_PREFIX + key);
 				if (value) {
 					return JSON.parse(value);
