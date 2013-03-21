@@ -174,8 +174,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				// handle clicks on [delete] button
 				preview.find('.RTEPlaceholderPreviewToolsDelete').bind('click', function(ev) {
-					RTE.track('visualMode', self.getTrackingType($(placeholder)), 'hover', 'delete');
-
 					RTE.tools.confirm(title, lang.confirmDelete, function() {
 						RTE.tools.removeElement(placeholder);
 
@@ -190,9 +188,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 						// hide preview
 						preview.hide();
 
-						// tracking code
-						RTE.track('visualMode', self.getTrackingType($(placeholder)), 'hover', 'edit');
-
 						// call editor for this type of placeholder
 						$(placeholder).trigger('edit');
 					});
@@ -205,8 +200,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				// close button
 				preview.find('.RTEPlaceholderPreviewTitleBar').children('span').bind('click', function(ev) {
-					RTE.track('visualMode', self.getTrackingType($(placeholder)), 'hover', 'close');
-
 					self.hidePreview(placeholder, true);
 				});
 
@@ -263,11 +256,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 		// hover preview popup delay: 150ms (cursor should be kept over an placeholder for 150ms for preview to show up)
 		var self = this;
 		placeholder.data('showTimeout', setTimeout(function() {
-			// trigger custom event only when preview is about to be shown (used for tracking)
-			var visible = preview.css('display') == 'block';
-			if (!visible) {
-				placeholder.trigger('hover');
-			}
 
 			// show preview pop-up
 			preview.fadeIn();
@@ -354,14 +342,9 @@ CKEDITOR.plugins.add('rte-placeholder',
 			}
 		});
 
-		// tracking code when hovered
-		placeholder.bind('hover.placeholder', function(ev) {
-			RTE.track('visualMode', self.getTrackingType($(this)), 'hover', 'init');
-		});
-
 		// setup events once more on each drag&drop
 		RTE.getEditor().unbind('dropped.placeholder').bind('dropped.placeholder', function(ev) {
-                        var target = $(ev.target);
+			var target = $(ev.target);
 
 			// filter out non placeholders
 			target = target.filter('img.placeholder');
@@ -373,27 +356,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 		if (RTE.config.disableDragDrop) {
 			RTE.tools.disableDragDrop(placeholder);
 		}
-	},
-
-	// get type name for tracking code
-	getTrackingType: function(placeholder) {
-		var type;
-		var data = $(placeholder).getData();
-
-		switch(data.type) {
-			case 'double-brackets':
-				type = 'template';
-				break;
-
-			case 'comment':
-				type = 'comment';
-				break;
-
-			default:
-				type = 'advancedCode';
-		}
-
-		return type;
 	},
 
 	// expand placeholder preview (RT #34048)
