@@ -16,40 +16,27 @@ class ScreenplayVideoHandler extends VideoHandler {
 
 		$app = F::app();
 
-		if ( $app->checkSkin( 'wikiamobile' ) ) {
-			$url = $this->getEmbedUrl();
-			$fileObj = $app->wf->FindFile( $this->getTitle() );
-			$poster = '';
+		$metadata = $this->getMetadata( true );
+		$file = $this->getStreamUrl( $metadata );
+		$hdfile = $this->getStreamHdUrl( $metadata );
 
-			if ( $fileObj instanceof File ) {
-				$thumb = $fileObj->transform( array( 'width' => $width, 'height' => $height ) );
-				$poster = ' poster="' . $app->wf->ReplaceImageServer( $thumb->getUrl(), $fileObj->getTimestamp() ) . '"';
-			}
+		$jwplayer = new JWPlayer($this->getVideoId());
+		$jwplayer->setArticleId($articleId);
+		$jwplayer->setUrl($file);
+		$jwplayer->setTitle($this->getTitle());
+		$jwplayer->setWidth($width);
+		$jwplayer->setHeight($height);
+		$jwplayer->setDuration($this->getDuration());
+		$jwplayer->setHd($this->isHd());
+		$jwplayer->setHdFile($hdfile);
+		$jwplayer->setThumbUrl($this->thumbnailImage->url);
+		$jwplayer->setAgeGate($this->isAgeGate());
+		$jwplayer->setAutoplay($autoplay);
+		$jwplayer->setShowAd(true);
+		$jwplayer->setAjax($isAjax);
+		$jwplayer->setPostOnload($postOnload);
 
-			$result = '<video controls width="' . $width . '" height="' . $height . '"' . $poster . '><source src="' . $url . '">' . $app->wf->Msg( 'wikiamobile-unsupported-video-download', $url ) . '</video>';
-		} else {
-			$metadata = $this->getMetadata( true );
-			$file = $this->getStreamUrl( $metadata );
-			$hdfile = $this->getStreamHdUrl( $metadata );
-
-			$jwplayer = new JWPlayer($this->getVideoId());
-			$jwplayer->setArticleId($articleId);
-			$jwplayer->setUrl($file);
-			$jwplayer->setTitle($this->getTitle());
-			$jwplayer->setWidth($width);
-			$jwplayer->setHeight($height);
-			$jwplayer->setDuration($this->getDuration());
-			$jwplayer->setHd($this->isHd());
-			$jwplayer->setHdFile($hdfile);
-			$jwplayer->setThumbUrl($this->thumbnailImage->url);
-			$jwplayer->setAgeGate($this->isAgeGate());
-			$jwplayer->setAutoplay($autoplay);
-			$jwplayer->setShowAd(true);
-			$jwplayer->setAjax($isAjax);
-			$jwplayer->setPostOnload($postOnload);
-
-			$result = $jwplayer->getEmbedCode();
-		}
+		$result = $jwplayer->getEmbedCode();
 
 		return $result;
 	}
