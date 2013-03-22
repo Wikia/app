@@ -35,9 +35,10 @@ class WikiaSearchAjaxController extends WikiaController {
 
         $cityId = $isInterWiki ? 0 : $this->wg->CityId;
 
+        $resultsPerPage = $isInterWiki ? 10 : self::RESULTS_PER_PAGE;
         $params = array(
 			'page'			=>	$page,
-			'length'		=>	self::RESULTS_PER_PAGE,
+			'length'		=>	$resultsPerPage,
 			'cityId'		=>	$cityId,
 			'rank'			=>	$rank,
 			'hub'			=>	$hub,
@@ -53,7 +54,7 @@ class WikiaSearchAjaxController extends WikiaController {
                 'isInterWiki' => $isInterWiki,
                 'relevancyFunctionId' => 6,
                 'results' => $results,
-                'resultsPerPage' => self::RESULTS_PER_PAGE,
+                'resultsPerPage' => $resultsPerPage,
                 'query' => $query)
         )->render();
 
