@@ -15,8 +15,8 @@
 
 		init: function() {
 			var isMiniEditor = this.editor.config.isMiniEditor,
-				editorType = ( isMiniEditor ? 'mini-' : '-' ) +
-					( window.RTE !== undefined && !window.RTEEdgeCase ) ? 'ck' : 'mw';
+				editorType = ( isMiniEditor ? '-mini-' : '-' ) +
+					( ( window.RTE !== undefined && !window.RTEEdgeCase ) ? 'ck' : 'mw' );
 
 			// Track edit page views and page type
 			if ( !isMiniEditor ) {
