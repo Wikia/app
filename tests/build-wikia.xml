@@ -77,7 +77,7 @@
             		karma/js-unit.config.js
 					--single-run
 					--no-auto-watch
-					--reporters junit
+					--reporters junit,coverage
             	" />
         </exec>
     </target>
