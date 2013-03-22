@@ -367,6 +367,9 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 		 * '/path/to/file.scss'
 		 * ).then(onSuccess, onFail);
 		 *
+		 * You can also pass arrays of files to be loaded
+		 * @example loader({type: JS, resources: ['one.js', 'some/other/file']})
+		 *
 		 * @author macbre
 		 * @author kflorence
 		 * @author Jakub Olek <jolek@wikia-inc.com>
