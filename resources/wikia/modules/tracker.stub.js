@@ -123,8 +123,8 @@
 	context.Wikia = context.Wikia || {};
 	context.Wikia.Tracker = tracker( context );
 
-	if (context.define && context.define.amd) {
-		context.define('wikia.tracker', ['wikia.window'], tracker);
+	if ( context.define && context.define.amd ) {
+		context.define( 'wikia.tracker', [ 'wikia.window' ], tracker );
 	}
 
-})(this);
+})( this );
