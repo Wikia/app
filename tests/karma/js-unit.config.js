@@ -186,7 +186,7 @@ singleRun = false;
 
 coverageReporter = {
 	type : 'html',
-	dir : '~/js-coverage'
+	dir : 'tests/build/jsunit-coverage'
 };
 
 reportSlowerThan = 500;
