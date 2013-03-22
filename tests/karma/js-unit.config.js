@@ -185,7 +185,7 @@ captureTimeout = 10000;
 singleRun = false;
 
 coverageReporter = {
-	type : 'html',
+	type : 'cobertura',
 	dir : 'tests/build/jsunit-coverage'
 };
 
