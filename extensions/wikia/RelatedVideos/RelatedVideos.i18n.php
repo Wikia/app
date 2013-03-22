@@ -29,7 +29,7 @@ $messages['en'] = array(
 	'related-videos-remove-video-error-duplicate' => 'This video has already been removed.',
 	'related-videos-remove-video-error-nonexisting' => 'The video you are trying to remove does not exist.',
 	'related-videos-remove-confirm-title' => 'Remove video',
-	'related-videos-remove-confirm' => 'Are you sure you want to remove this video from Related Videos?',
+	'related-videos-remove-confirm' => 'Are you sure you want to remove this video from the Videos list?',
 	'related-videos-remove-call' => 'Please wait wile we are removing the video',
 	'related-videos-wiki-summary-blacklist' => 'Removed [[:$2|$1]] from Related Videos.',
 	'related-videos-wiki-summary-whitelist' => 'Added [[:$2|$1]] to Related Videos.',
@@ -48,7 +48,7 @@ $messages['en'] = array(
 	'related-videos-empty' => 'Be the first to add a video',
 	'related-videos-video-views' => '$1 {{PLURAL:$1|view|views}}',
 	'related-videos-see-all' => 'See all videos',
-	'related-videos-delete-from-wiki' => 'And also remove from wiki',
+	'related-videos-delete-from-wiki' => 'Also delete this video from the wiki',
 
 	//popular videos on hubs
 	'related-videos-hubs-suggested-by' => 'Suggested by $1',
