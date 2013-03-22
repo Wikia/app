@@ -399,7 +399,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 						if(!failed.length) {
 							// Resolve the deferred object
 
-							dfd.resolve({result: result});
+							dfd.resolve(result);
 						}else{
 							dfd.reject({
 								error: loader.NOT_LOADED,
