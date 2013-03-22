@@ -74,7 +74,7 @@
 		<mkdir dir="${basedir}/build" />
         <exec executable="karma" dir="${basedir}" failonerror="true">
             <arg line="start
-            		js-unit.config.js
+            		karma/js-unit.config.js
 					--single-run
 					--no-auto-watch
 					--reporters junit
@@ -86,7 +86,7 @@
 		<mkdir dir="${basedir}/build" />
 		<exec executable="karma" dir="${basedir}" failonerror="true">
 			<arg line="start
-					js-integration.config.js
+					karma/js-integration.config.js
 					--single-run
 					--no-auto-watch
 					--reporters junit
@@ -98,7 +98,7 @@
 		<mkdir dir="${basedir}/build" />
 		<exec executable="karma" dir="${basedir}" failonerror="true">
 			<arg line="start
-					js-unit.config.js
+					karma/js-unit.config.js
 					--single-run
 					--no-auto-watch
 					--reporters coverage
@@ -110,7 +110,7 @@
 		<mkdir dir="${basedir}/build" />
 		<exec executable="karma" dir="${basedir}" failonerror="true">
 			<arg line="start
-					js-integration.config.js
+					karma/js-integration.config.js
 					--single-run
 					--no-auto-watch
 					--reporters coverage
