@@ -586,7 +586,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 *
 	 * @return int timestamp
 	 */
-	public function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null) {
+	public function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null, $useMaster = false) {
 		if ($timestamp === null) {
 			$timestamp = time();
 		}
@@ -596,12 +596,12 @@ class MarketingToolboxModel extends WikiaModel {
 			$lastPublishedTimestamp = WikiaDataAccess::cache(
 				$this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId),
 				6 * 60 * 60,
-				function () use ($langCode, $sectionId, $verticalId, $timestamp) {
-					return $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp);
+				function () use ($langCode, $sectionId, $verticalId, $timestamp, $useMaster) {
+					return $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp, $useMaster);
 				}
 			);
 		} else {
-			$lastPublishedTimestamp = $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp);
+			$lastPublishedTimestamp = $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp, $useMaster);
 		}
 
 		return $lastPublishedTimestamp;
@@ -611,8 +611,13 @@ class MarketingToolboxModel extends WikiaModel {
 		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId));
 	}
 
-	protected function getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp) {
-		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+	public function getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp, $useMaster = false) {
+		$sdb = $this->wf->GetDB(
+			($useMaster) ? DB_MASTER : DB_SLAVE,
+			array(),
+			$this->wg->ExternalSharedDB
+		);
+
 		$table = $this->getTablesBySectionId($sectionId);
 
 		$conds = array(
