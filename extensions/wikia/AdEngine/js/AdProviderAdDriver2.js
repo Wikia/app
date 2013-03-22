@@ -10,6 +10,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		now = window.wgNow || new Date(),
 		maxCallsToDART,
 		isHighValueCountry,
+		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
 		gptConfig,
 		gptFlushed = false;
 
@@ -24,7 +25,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		'HOME_TOP_LEADERBOARD': {'size': '728x90,468x60,980x130,1030x130,1030x70,1030x250,1x1', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,1x1', 'tile': 1, 'loc': 'top'},
 		'HUB_TOP_LEADERBOARD': {'size': '728x90,468x60,980x130,1030x130,1030x70,1030x250,1x1', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
-		'INVISIBLE_SKIN': {'size': '1x1'},
+		'INVISIBLE_SKIN': {'size': '1x1', 'gptOnly': true},
 		'LEFT_SKYSCRAPER_2': {'size': '160x600,120x600,1x1', 'tile': 3, 'loc': 'middle'},
 		'LEFT_SKYSCRAPER_3': {'size': '160x600,1x1', 'tile': 6, 'loc': 'footer'},
 		'MODAL_INTERSTITIAL': {'size': '600x400,300x250,1x1', 'tile': 2, 'loc': 'modal'},
@@ -83,10 +84,11 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	function canHandleSlot(slotinfo) {
 		log(['canHandleSlot', slotinfo], 5, logGroup);
 
-		if (slotMap[slotinfo[0]]) {
-			return true;
-		}
-		return false;
+		var gpt = window.wgAdDriverUseGpt,
+			slotItem = slotMap[slotinfo[0]],
+			gptOnly = slotItem && slotItem.gptOnly;
+
+		return slotItem && (gpt || !gptOnly);
 	}
 
 	// Public methods
@@ -134,6 +136,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			noAdLastTime = cacheStorage.get(noAdStorageKey, now) || false,
 			numCallForSlot = cacheStorage.get(numCallForSlotStorageKey, now) || 0,
 			url,
+			dontCallDart = false,
 
 			hopTimer,
 			hopTime,
@@ -151,22 +154,34 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				return;
 			}
 
-			// Always have an ad for MODAL_INTERSTITIAL
-			if (!slotname.match(/^MODAL_INTERSTITIAL/)) {
+			// Show INVISIBLE_SKIN when leaderboard was shown
+			if (slotname === 'INVISIBLE_SKIN') {
+				if (!leaderboardCalled) {
+					dontCallDart = true;
+				}
+			} else if (!slotname.match(/^MODAL_INTERSTITIAL/)) {
+				// Always have an ad for MODAL_INTERSTITIAL
 				// Otherwise check if there was ad last time
 				// If not, check if desired number of DART calls were made
 				if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
 					log('There was no ad for this slot last time and reached max number of calls to DART', 5, logGroup);
 					log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 6, logGroup);
 
-					if (window.wgAdDriverUseGpt && gptConfig[slotname] === 'flush') {
-						flushGpt();
-					}
-
-					error();
-					return;
+					dontCallDart = true;
 				}
 			}
+
+			if (dontCallDart) {
+				if (window.wgAdDriverUseGpt && gptConfig[slotname] === 'flush') {
+					flushGpt();
+				}
+				error();
+				return;
+			}
+		}
+
+		if (slotname.search('LEADERBOARD') > -1) {
+			leaderboardCalled = true;
 		}
 
 		// Don't show skin ads for logged in users
