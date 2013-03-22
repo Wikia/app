@@ -56,6 +56,9 @@ $wikiahubs-line-height: 16px;
 		h1 {
 			margin-bottom: 10px;
 		}
+		h2 button {
+			display: none;
+		}
 		.wikiahubs-ftc-item {
 			@include clearfix;
 			border-bottom: 1px solid $color-page-border;
