@@ -69,27 +69,16 @@ var Lightbox = {
 		// Set up carousel
 		Lightbox.setUpCarousel();
 
-		// callback to finish lighbox loading
-		var updateCallback = function(json) {
-			LightboxLoader.cache.details[Lightbox.current.title] = json;
-			Lightbox.updateMedia();
-			Lightbox.showOverlay();
-			Lightbox.hideOverlay(3000);
+		LightboxLoader.cache.details[Lightbox.current.title] = Lightbox.initialFileDetail;
+		Lightbox.updateMedia();
+		Lightbox.showOverlay();
+		Lightbox.hideOverlay(3000);
 
-			LightboxLoader.lightboxLoading = false;
+		LightboxLoader.lightboxLoading = false;
 
-			/* tracking after lightbox has fully loaded */
-			var trackingTitle = Lightbox.getTitleDbKey();
-			LightboxTracker.track(Wikia.Tracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
-		};
-
-		// Update modal with main image/video content
-		if(Lightbox.current.type == 'image') {
-			updateCallback(Lightbox.initialFileDetail);
-		} else {
-			// normalize for jwplayer
-			LightboxLoader.normalizeMediaDetail(Lightbox.initialFileDetail, updateCallback);
-		}
+		/* tracking after lightbox has fully loaded */
+		var trackingTitle = Lightbox.getTitleDbKey();
+		LightboxTracker.track(Wikia.Tracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
 
 		// attach event handlers
 		Lightbox.bindEvents();

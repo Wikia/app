@@ -298,7 +298,7 @@ var LightboxLoader = {
 	getMediaDetail: function(mediaParams, callback, nocache) {
 		var title = mediaParams['fileTitle'];
 
-		if(LightboxLoader.cache.details[title]) {
+		if(!nocache && LightboxLoader.cache.details[title]) {
 			callback(LightboxLoader.cache.details[title]);
 		} else {
 			$.nirvana.sendRequest({
@@ -308,13 +308,11 @@ var LightboxLoader = {
 				format: 'json',
 				data: mediaParams,
 				callback: function(json) {
-					LightboxLoader.normalizeMediaDetail(json, function(json) {
-						// Don't cache videos played inline because width will be off for lightbox version bugid-42269
-						if(!nocache) {
-							LightboxLoader.cache.details[title] = json;
-						}
-						callback(json);
-					});
+					// Don't cache videos played inline because width will be off for lightbox version bugid-42269
+					if(!nocache) {
+						LightboxLoader.cache.details[title] = json;
+					}
+					callback(json);
 				}
 			});
 		}
@@ -328,27 +326,6 @@ var LightboxLoader = {
 		return deferred;
 	},
 
-	/* function to normalize backend deficiencies */
-	normalizeMediaDetail: function(json, callback) {
-		/* normalize JWPlayer instances */
-// TODO: get rid of this function.  For now, just skip it.
-callback(json);
-return;
-
-		var embedCode = json['videoEmbedCode'];
-
-		/* embedCode can be a json object, not a html.  It is implied that only JWPlayer (Screenplay) items do this. */
-		if(typeof embedCode === 'object') {
-			var playerJson = embedCode;	// renaming to keep my sanity
-			$.getScript(json['playerAsset'], function() {
-				json['videoEmbedCode'] = '<div id="' + playerJson['id'] + '"></div>';
-				json['playerScript'] = playerJson['script'] + ' loadJWPlayer();';
-				callback(json);
-			});
-		} else {
-			callback(json);
-		}
-	},
 	loadFromURL: function() {
 		var fileTitle = window.Wikia.Querystring().getVal('file'),
 			openModal = $('#LightboxModal');
