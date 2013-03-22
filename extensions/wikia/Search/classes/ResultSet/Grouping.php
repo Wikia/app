@@ -26,6 +26,18 @@ class Grouping extends Base
 	protected $host;
 	
 	/**
+	 * Returns a truncated description based on desired word count.
+	 * @param int $wordCount
+	 * @return string
+	 */
+	public function getDescription( $wordCount = 60 ) {
+		$desc = $this->getHeader( 'description' );
+		$count = str_word_count( $desc );
+		$ellipses = $count > $wordCount ? '&hellip;' : '';
+		return empty( $desc ) ? '' : implode( ' ', array_slice( explode( ' ', $desc ), 0, $wordCount ) ) . $ellipses;
+	}
+	
+	/**
 	 * Uses DependencyContainer to pre-populate attributes, and then configures stuff.
 	 * @param DependencyContainer $container
 	 */

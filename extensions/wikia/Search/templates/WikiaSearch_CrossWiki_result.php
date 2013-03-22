@@ -40,7 +40,7 @@
             </h1>
 
             <p class="hub subtle"><?= strtoupper( $resultSet->getHeader( 'hub' ) ); ?></p>
-            <p class="description"><?= $resultSet->getHeader('description'); ?></p>
+            <p class="description"><?= $resultSet->getDescription(); ?></p>
 
             <ul class="wiki-statistics subtle">
                 <li><?= $pagesMsg ?></li>
