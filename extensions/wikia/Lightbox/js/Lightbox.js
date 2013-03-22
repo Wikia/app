@@ -408,13 +408,8 @@ var Lightbox = {
 
 			Lightbox.openModal.media
 				.addClass('video-media')
-				//.html(renderedResult)
 				.css('line-height','normal');
 
-			/*if(data.playerScript) {
-				$('body').append('<script>' + data.playerScript + '</script>');
-			}*/
-			
 			require(['wikia.videoBootstrap'], function (videoBootstrap) {
 				videoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode);
 			});
