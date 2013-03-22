@@ -4,6 +4,10 @@
 .wikiahubs-newstabs {
 	@include bodytext;
 
+	&.grid-3 p {
+		margin-top: 0px;
+	}
+
 	.title-wrapper {
 		width: 100%;
 		@include clearfix;
