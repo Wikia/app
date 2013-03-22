@@ -27,21 +27,20 @@ var SlotTweaker = function(log, document, window) {
 
 	// TODO: fix it, it's a hack!
 	removeTopButtonIfNeeded = function(slotname) {
-		var slot = document.getElementById(slotname)
-			, topAds = document.getElementById('WikiaTopAds')
-			, isLeaderboard = slot && slotname.indexOf('LEADERBOARD') !== -1
-			, isStandardSize = slot && slot.offsetHeight >= 90 && slot.offsetHeight <= 95
-		;
+		var slot = document.getElementById(slotname),
+			topAds = document.getElementById('WikiaTopAds'),
+			isLeaderboard = slot && slotname.indexOf('LEADERBOARD') !== -1,
+			isStandardSize = slot && slot.offsetHeight >= 90 && slot.offsetHeight <= 95 && slot.offsetWidth <= 728;
 
 		if (isLeaderboard && !isStandardSize) {
-			log('#' + slotname + ' height: ' + slot.offsetHeight + ' not standard, removing TOP_BUTTON(_WIDE)', 3, logGroup);
+			log('#' + slotname + ' size: ' + slot.offsetWidth + 'x' + slot.offsetHeight + ' not standard, removing TOP_BUTTON(_WIDE)', 3, logGroup);
 			hide('TOP_BUTTON');
 			hide('TOP_BUTTON_WIDE');
 			removeClass(topAds, 'WikiaTopButtonLeft');
 			removeClass(topAds, 'WikiaTopButtonRight');
 		}
 		if (isLeaderboard && isStandardSize) {
-			log('#' + slotname + ' height: ' + slot.offsetHeight + ' is standard, pushing TOP_BUTTON(_WIDE).force to Liftium2 queue', 2, logGroup);
+			log('#' + slotname + ' size: ' + slot.offsetWidth + 'x' + slot.offsetHeight + ' is standard, pushing TOP_BUTTON(_WIDE).force to Liftium2 queue', 2, logGroup);
 			window.adslots2.push(['TOP_BUTTON.force', null, 'Liftium2']);
 			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
 		}

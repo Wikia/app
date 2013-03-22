@@ -5,7 +5,7 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 
 .carousel-container {
 	height: 160px;
-	left: 61px;
+	left: 65px;
 	overflow: hidden;
 	position: relative;
 	width: 550px;
@@ -13,7 +13,7 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 		position: relative;
 	}
 	.carousel {
-		margin-top: 15px;
+		margin-top: 10px;
 		position: absolute;
 		li {
 			border: 0;
@@ -70,7 +70,7 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 			height: 90px;
 			width: 15px;
 			position: absolute;
-			margin-top: 15px;
+			margin-top: 10px;
 			left: 623px;
 			.chevron {
 				border-color: transparent transparent transparent $color-buttons;
@@ -78,7 +78,7 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 				margin: 35px 4px;
 			}
 			&.left {
-				left: 10px;
+				left: 0;
 				.chevron {
 					border-color: transparent $color-buttons transparent transparent;
 					margin: 35px -9px;

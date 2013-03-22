@@ -222,18 +222,15 @@ class GameGuidesModel{
 
 				if ( $resultSet->hasResults() ) {
 					$textResults = array();
-
+					$mwService = new Wikia\Search\MediaWikiService;
 					foreach ( $resultSet as $result ) {
-						$title = $result->getTitleObject();
-
-						if ( $title instanceof Title ) {
+						try {
 							$textResults[] = array(
-								'textForm' => $result->getTitle(),
-								'urlForm' => $title->getLocalUrl( array( 'useskin' => 'wikiaapp') )
-							);
-
+									'textForm' => $result->getTitle(),
+									'urlForm' => $mwService->getLocalUrlForPageId( $result['pageid'], array( 'useskin' => 'wikiaapp' ) )
+									);
 							$count++;
-						}
+						} catch ( Exception $e ) {} // result is probably stale/deleted
 					}
 
 					$ret['textResults'] = $textResults;

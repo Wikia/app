@@ -55,7 +55,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\InterWiki::registerComponents
-	 */
+	 *
 	public function testRegisterComponents() {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
@@ -95,7 +95,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 				$mockSelect,
 				$register->invoke( $mockSelect, $mockQuery )
 		);
-	}
+	} */
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\InterWiki::registerGrouping
@@ -396,9 +396,9 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'getBoostQueryString' );
 		$method->setAccessible( true );
 		$boostQueries = array(
-				Wikia\Search\Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'quote'=>'\"' ) ),
-				Wikia\Search\Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'quote'=>'\"' ) ),
-				Wikia\Search\Utilities::valueForField( 'wikititle', $queryNoQuotes, array( 'boost' => 15, 'quote' => '\"' ) ),
+				Wikia\Search\Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'valueQuote'=>'\"' ) ),
+				Wikia\Search\Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'valueQuote'=>'\"' ) ),
+				Wikia\Search\Utilities::valueForField( 'wikititle', $queryNoQuotes, array( 'boost' => 15, 'valueQuote' => '\"' ) ),
 				Wikia\Search\Utilities::valueForField( 'host', 'answers', array( 'boost' => 10, 'negate' => true ) ),
 				Wikia\Search\Utilities::valueForField( 'host', 'respuestas', array( 'boost' => 10, 'negate' => true ) )
 		);

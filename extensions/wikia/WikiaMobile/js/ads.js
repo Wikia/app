@@ -14,7 +14,7 @@
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
-define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log'], function (dw, ck, track, log) {
+define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window', 'wikia.utils'], function (dw, ck, track, log, w, $) {
 	'use strict';
 
 	var AD_TYPES = {
@@ -30,14 +30,13 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log'], function (dw
 		adSlotStyle,
 		contentWrapper,
 		close,
-		d = document,
+		d = w.document,
 		found = false,
 		fixed = false,
 		ftr,
 		inited,
-		positionfixed = Features.positionfixed,
+		positionfixed = w.Features.positionfixed,
 		type,
-		w = window,
 		dartHelper = w.WikiaDartMobileHelper(log, w, d);
 
 	/**

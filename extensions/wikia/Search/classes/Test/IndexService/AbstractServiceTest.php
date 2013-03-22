@@ -271,4 +271,30 @@ class AbstractServiceTest extends BaseTest
 				$service->getResponseForPageIds()
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\AbstractService::getService
+	 */
+	public function testGetService() {
+		$service = $this->service
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( null ) )
+		                ->getMockForAbstractClass();
+		$this->assertAttributeEmpty(
+				'service',
+				$service
+		);
+		$get = new \ReflectionMethod( 'Wikia\Search\IndexService\AbstractService', 'getService' );
+		$get->setAccessible( true );
+		$this->assertInstanceOf(
+				'Wikia\Search\MediaWikiService',
+				$get->invoke( $service )
+		);
+		$this->assertAttributeInstanceOf(
+				'Wikia\Search\MediaWikiService',
+				'service',
+				$service
+		);
+		
+	}
 }

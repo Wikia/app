@@ -6,18 +6,14 @@
  */
 /*global window, define*/
 
-define('events', function () {
+define('events', ['wikia.window'], function (window, undef) {
 	'use strict';
 
-	var w = window,
-		//undefined, helps minification
-		u;
-
 	return {
-		size: (w.onorientationchange !== u) ? 'orientationchange' : 'resize',
-		touch: (w.ontouchstart !== u) ? 'touchstart' : 'mousedown',
-		move: (w.ontouchmove !== u) ? 'touchmove' : 'mousemove',
-		end: (w.ontouchend !== u) ? 'touchend' : 'mouseup',
-		cancel: (w.ontouchcancel !== u) ? 'touchcancel' : 'mouseup'
+		size: (window.onorientationchange !== undef) ? 'orientationchange' : 'resize',
+		touch: (window.ontouchstart !== undef) ? 'touchstart' : 'mousedown',
+		move: (window.ontouchmove !== undef) ? 'touchmove' : 'mousemove',
+		end: (window.ontouchend !== undef) ? 'touchend' : 'mouseup',
+		cancel: (window.ontouchcancel !== undef) ? 'touchcancel' : 'mouseup'
 	};
 });

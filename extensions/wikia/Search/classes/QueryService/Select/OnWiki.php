@@ -140,8 +140,8 @@ class OnWiki extends AbstractSelect
 	{
 		$queryNoQuotes = $this->config->getQueryNoQuotes( true );
 		$boostQueries = array(
-				Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'quote'=>'\"' ) ),
-		        Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'quote'=>'\"' ) ),
+				Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'valueQuote'=>'\"' ) ),
+		        Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'valueQuote'=>'\"' ) ),
 		);
 		return implode( ' ', $boostQueries );
 	}

@@ -22,7 +22,7 @@ class Article extends AbstractMatch
 		$pageId = $this->service->getCanonicalPageIdFromPageId( $this->id );
 		$fieldsArray = array(
 				'id'            => sprintf( '%s_%s', $wikiId, $pageId ),
-				'pageId'        => $pageId,
+				'pageid'        => $pageId,
 				'wid'           => $wikiId,
 				'title'         => $this->service->getTitleStringFromPageId( $this->id ),
 				'url'           => urldecode( $this->service->getUrlFromPageId( $this->id ) ),

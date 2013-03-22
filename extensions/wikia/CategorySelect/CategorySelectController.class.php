@@ -243,7 +243,7 @@ class CategorySelectController extends WikiaController {
 
 				default:
 					$dbw->rollback();
-					$response[ 'error' ] = $this->wf->Message( 'categoryselect-edit-abort' )->text();
+					$response[ 'error' ] = $this->wf->Message( 'categoryselect-error-edit-abort' )->text();
 			}
 		}
 

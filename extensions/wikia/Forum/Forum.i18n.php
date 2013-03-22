@@ -306,7 +306,6 @@ $messages['qqq'] = array(
 
 	'forum-admin-page-heading' => 'Page label and heading for board admin page',
 	'forum-admin-page-breadcrumb' => 'Breadcrumb heading',
-	'forum-admin-create-new-board-label' => 'Call to action on creating new board',
 	'forum-admin-create-new-board-modal-heading' => 'Modal heading for create a new board dialog',
 	'forum-admin-create-new-board-title' => 'Form input label for board title',
 	'forum-admin-create-new-board-description' => 'Form input label board description',

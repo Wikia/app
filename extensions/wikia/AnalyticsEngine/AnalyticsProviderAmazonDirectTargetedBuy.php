@@ -4,17 +4,19 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 
 	private static $code = <<< SCRIPT
 		<script>
-			(function() {
-				var aax_src='3006';
-				var aax_url = encodeURIComponent(document.location);
-				try { aax_url = encodeURIComponent("" + window.top.location); } catch(e) {}
-				var s = document.createElement('script');
-				s.type = 'text/javascript';
-				s.async = true;
-				s.src = '//aax-us-east.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
-				var insertLoc = document.getElementsByTagName('script')[0];
-				insertLoc.parentNode.insertBefore(s, insertLoc);
-			})();
+			require(['wikia.geo'], function (geo) {
+				if (geo.getCountryCode() === 'US') {
+					var aax_src='3006';
+					var aax_url = encodeURIComponent(document.location);
+					try { aax_url = encodeURIComponent("" + window.top.location); } catch(e) {}
+					var s = document.createElement('script');
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//aax-us-east.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
+					var insertLoc = document.getElementsByTagName('script')[0];
+					insertLoc.parentNode.insertBefore(s, insertLoc);
+				}
+			});
 		</script>
 SCRIPT;
 
@@ -53,8 +55,8 @@ function amzn_render(slot) {
 
 amzn_Ads({
    "Ads":{
-		  "amzn_728x90": "<div style='width: 728px; height:  90px; background: #000; color: #fff; font-size: 20px'>Fake amazon test ad 728x90 </iframe>",
-		  "amzn_300x250":"<div style='width: 300px; height: 250px; background: #000; color: #fff; font-size: 20px'>Fake amazon test ad 300x250</iframe>",
+		  "amzn_728x90": "<div style='width: 728px; height:  90px; background: #000; color: #fff; font-size: 20px'>Fake amazon test ad 728x90 </div>",
+		  "amzn_300x250":"<div style='width: 300px; height: 250px; background: #000; color: #fff; font-size: 20px'>Fake amazon test ad 300x250</div>"
    },
 	"status":"ok"
 });

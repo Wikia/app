@@ -19,7 +19,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // constroller classes
-$app->registerClass('SpecialWikiaHubsV2Controller', $dir . 'SpecialWikiaHubsV2Controller.class.php');
+$app->registerClass('WikiaHubsV2Controller', $dir . 'WikiaHubsV2Controller.class.php');
 $app->registerClass('WikiaHubsV2SuggestController', $dir . 'WikiaHubsV2SuggestController.class.php');
 
 // hook classes
@@ -33,9 +33,7 @@ $app->registerClass('WikiaHubsV2HooksModel', $dir . 'models/WikiaHubsV2HooksMode
 
 $app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
 
-
-// pages
-$app->registerSpecialPage('WikiaHubsV2', 'SpecialWikiaHubsV2Controller');
+$app->registerClass('WikiaHubsParserHelper', $dir . 'WikiaHubsParserHelper.class.php');
 
 // i18n mapping
 $app->registerExtensionMessageFile('WikiaHubsV2', $dir.'WikiaHubsV2.i18n.php');
@@ -44,6 +42,7 @@ $app->registerExtensionMessageFile('WikiaHubsV2', $dir.'WikiaHubsV2.i18n.php');
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsV2Mobile', 'onWikiaMobileAssetsPackages');
 $app->registerHook('ArticleFromTitle', 'WikiaHubsV2Hooks', 'onArticleFromTitle');
 $app->registerHook('WikiaCanonicalHref', 'WikiaHubsV2Hooks', 'onWikiaCanonicalHref');
+$app->registerHook('ParserFirstCallInit', 'WikiaHubsV2Hooks', 'onParserFirstCallInit');
 
 // foreign file repo
 $wgForeignFileRepos[] = array(

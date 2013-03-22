@@ -118,7 +118,7 @@
 	//expose it to the world
 	//$ is forbackward compatability
 	w.Wikia = Wikia;
-	w.$ = Wikia;
+	w.$ = w.$ || Wikia;
 
 	//AMD
 	if (w.define && w.define.amd) {

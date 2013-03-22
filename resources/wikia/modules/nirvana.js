@@ -7,6 +7,7 @@
 	'use strict';
 
 	function nirvana(ajax) {
+
 		function sendRequest(attr) {
 			var type = (attr.type || 'POST').toUpperCase(),
 				format = (attr.format || 'json').toLowerCase(),
@@ -33,7 +34,15 @@
 				method: attr.method
 			};
 
-			(type == 'POST' ? getUrl : data).format = format;
+			if(type === 'POST') {
+				getUrl.format = format;
+			} else {
+				if(typeof data == 'string') {
+					data += '&format=' + format;
+				}else{
+					data.format = format;
+				}
+			}
 
 			// If data is a string just pass it directly along as is.  Otherwise
 			// sort the structured data so that the URL is consistant (for cache

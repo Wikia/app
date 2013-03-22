@@ -24,7 +24,7 @@ class InterWiki extends AbstractSelect
 	 * Number of results per grouping we want in a grouped search
 	 * @var int
 	 */
-	const GROUP_RESULTS_GROUPING_ROW_LIMIT = 1;
+	const GROUP_RESULTS_GROUPING_ROW_LIMIT = 4;
 	
 	/**
 	 * The field to group over.
@@ -89,6 +89,7 @@ class InterWiki extends AbstractSelect
 	protected function registerComponents( Solarium_Query_Select $query ) {
 		return $this->configureQueryFields()
 		            ->registerQueryParams   ( $query )
+		            ->registerHighlighting  ( $query )
 		            ->registerFilterQueries ( $query )
 		            ->registerGrouping      ( $query )
 		;
@@ -197,9 +198,9 @@ class InterWiki extends AbstractSelect
 	{
 		$queryNoQuotes = preg_replace( '/ wiki\b/i', '', $this->config->getQueryNoQuotes( true ) );
 		$boostQueries = array(
-				Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'quote'=>'\"' ) ),
-				Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'quote'=>'\"' ) ),
-				Utilities::valueForField( 'wikititle', $queryNoQuotes, array( 'boost' => 15, 'quote' => '\"' ) ),
+				Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'valueQuote'=>'\"' ) ),
+				Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'valueQuote'=>'\"' ) ),
+				Utilities::valueForField( 'wikititle', $queryNoQuotes, array( 'boost' => 15, 'valueQuote' => '\"' ) ),
 				Utilities::valueForField( 'host', 'answers', array( 'boost' => 10, 'negate' => true ) ),
 				Utilities::valueForField( 'host', 'respuestas', array( 'boost' => 10, 'negate' => true ) )
 		);
