@@ -4,11 +4,12 @@
 		$host = $urlInfo[ 'host' ] ;
 	?>
 	<p>
-		<a class=groupTitle href="<?= $host ?>"><?=
+		<a class=groupTitle href="<?= $resultSet->getHeader( 'url' ) ?>"><?=
 			$resultSet->getHeader('title');?></a>
-		<a class=searchGroup href="<?= $host .'/wiki/Special:Search?search='.urlencode
+		<a class=searchGroup href="<?= 'http://www.' . $host .'/wiki/Special:Search?search='
+			.urlencode
 		($query).'&fulltext=Search';?>"></a>
 	</p>
-	<a class=url href="<?= $host ?>"><?=$host ?></a>
+	<a class=url href="<?= $resultSet->getHeader( 'url' ) ?>"><?= $host ?></a>
 	<span class=desc><?= $resultSet->getHeader('description'); ?></span>
 </li>
