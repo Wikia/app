@@ -43,9 +43,10 @@ class WikiaSearchAjaxController extends WikiaController {
 			'hub'			=>	$hub,
 			'query'			=>	$query,
 		);
-
-        $container = new QueryService\DependencyContainer( array( 'config' => new Wikia\Search\Config( $params ) ) );
-        $results = (new QueryService\Factory)->get( $container )->search();
+        $config = new Wikia\Search\Config( $params );
+        $config->setIsInterWiki( $isInterWiki )
+               ->setGroupResults( $isInterWiki );
+        $results = (new QueryService\Factory)->getFromConfig( $config )->search();
 
         $text = $this->app->getView('WikiaSearch', 'WikiaMobileResultList', array(
                 'currentPage'=> $page,
