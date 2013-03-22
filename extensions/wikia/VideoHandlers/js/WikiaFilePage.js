@@ -78,7 +78,7 @@ Paginator.prototype = {
 		}
 		
 		$.nirvana.sendRequest({
-			controller: 'VideoPageController',
+			controller: 'WikiaFilePageController',
 			method: 'fileList',
 			type: 'get',
 			format: 'html',
