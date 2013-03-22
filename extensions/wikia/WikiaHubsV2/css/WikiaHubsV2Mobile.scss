@@ -1,6 +1,8 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
 .WikiaHubs {
 	h2 {
-		border-left: 6px solid;
 		background: #484848;
 		color: #FFF;
 		font-weight: bold;
@@ -21,14 +23,31 @@
 			padding: 0;
 		}
 	}
-}
-
-.artSec {
 	.wikiahubs-ftc-list {
 		list-style-type: none;
+		padding: 0;
+		margin: 0;
 
-		img {
-			width: 480px;
+		.wikiahubs-ftc-item {
+			@include clearfix;
+			border-bottom: 1px solid $color-page-border;
+			font-size: 13px;
+			line-height: 20px;
+			margin: 0;
+			padding: 10px 0;
+
+			&:last-child {
+				border-bottom: none;
+			}
+
+			.wikiahubs-ftc-title p {
+				font-size: medium;
+				font-weight: bold;
+			}
+
+			img {
+				width: 480px;
+			}
 		}
 	}
 }
