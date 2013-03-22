@@ -58,6 +58,8 @@ class WikiaVideoPage extends WikiaImagePage {
 			$html .= F::app()->renderView( 'WikiaFilePageController', 'videoCaption', $captionDetails );
 	
 			$this->renderDescriptionHeader();
+			
+			$wgOut->addHTML($html);
 		}
 
 		wfProfileOut( __METHOD__ );
