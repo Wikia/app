@@ -147,7 +147,7 @@ singleRun = false;
 
 coverageReporter = {
 	type : 'html',
-	dir : '~/js-coverage'
+	dir : '/tests/build/jsintegration-coverage'
 };
 
 preprocessors = {
