@@ -53,37 +53,23 @@ class JWPlayer {
 	public function getEmbedCode() {
 		$jwplayerjs = self::getJavascriptPlayerUrl();
 
-		if ($this->ajax) {
-			$code = array('id'=>$this->playerId, 'script'=>$this->getCombinedScript());
-		}
-		else {
-			$script = $this->getCombinedScript();
-
-			$code = <<<EOT
+		$html = <<<EOT
 <div id="{$this->playerId}"></div>
-<script type="text/javascript">
-EOT;
-			if (!$this->postOnload) {
-				$code .= <<<EOT
-	wgAfterContentAndJS.push( function() {
-EOT;
-			}
-
-			$code .= <<<EOT
-		$script
-		$.getScript("$jwplayerjs", loadJWPlayer);
 EOT;
 
-			if (!$this->postOnload) {
-				$code .= <<<EOT
-	});
-EOT;
-			}
+		$jwScript = $this->getCombinedScript();
 
-			$code .= <<<EOT
-</script>
-EOT;
-		}
+		$code = array(
+			'html' => $html,
+			'jsParams' => array(
+				'jwScript' => $jwScript,
+			),
+			'init' => 'wikia.jwplayer',
+			'scripts' => array(
+				$jwplayerjs,
+				"extensions/wikia/JWPlayer/js/JWPlayer.js"
+			),
+		);
 
 		return $code;
 	}
@@ -112,16 +98,16 @@ EOT;
 		switch ($mode) {
 			case 'normal':
 				$jwplayerConfigJSON = json_encode_jsfunc( $this->getPlayerConfig($this->url, $mode) );
-				$script = "loadJWPlayer = function() { jwplayer(\"{$this->playerId}\").setup($jwplayerConfigJSON); };\n";
+				$script = "jwplayer(\"{$this->playerId}\").setup($jwplayerConfigJSON);\n";
 				break;
 			case 'preroll':
 				$file = self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$BLANK_MP4, self::JWPLAYER_VERSION);
 				$prerollPlayerConfigJSON = json_encode_jsfunc( $this->getPlayerConfig($file, $mode) );
-				$script = "loadJWPlayer = function() { jwplayer(\"{$this->playerId}\").setup($prerollPlayerConfigJSON); };\n";
+				$script = "jwplayer(\"{$this->playerId}\").setup($prerollPlayerConfigJSON);\n";
 				break;
 			case 'agegate':
 				$agegatePlayerConfigJSON = json_encode_jsfunc( $this->getPlayerConfig($this->url, $mode) );
-				$script = "loadAgegatePlayer = function() { jwplayer(\"{$this->playerId}\").setup($agegatePlayerConfigJSON); };\n";
+				$script = "jwplayer(\"{$this->playerId}\").setup($agegatePlayerConfigJSON);\n";
 				break;
 			case 'ad':
 				$googimaDataVariable = self::GOOGIMA_DATA_VARIABLE;
