@@ -881,21 +881,13 @@
 		showVideoPreview: function(data) {
 			var previewWrapper = this.cachedSelectors.previewWrapper,
 				videoWrapper = this.cachedSelectors.videoWrapper;
-			if ( data.playerAsset && data.playerAsset.length > 0 ) { // screenplay special case
-				$.getScript(data.playerAsset, function() {
-					videoWrapper.html( '<div id="'+data.videoEmbedCode.id+'" class="Wikia-video-enabledEmbedCode"></div>');
-					$('body').append('<script>' + data.videoEmbedCode.script + ' loadJWPlayer(); </script>');
-				});
-			} else {
-				var embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
-				
-				require(['wikia.videoBootstrap'], function (videoBootstrap) {
-					videoBootstrap(embedWrapper[0], data.videoEmbedCode);
-				});
-				
-				//videoWrapper.html('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>');
-			}
 
+			var embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
+			
+			require(['wikia.videoBootstrap'], function (videoBootstrap) {
+				videoBootstrap(embedWrapper[0], data.videoEmbedCode);
+			});
+			
 			// expand preview is hidden
 			if (!previewWrapper.is(':visible')) {
 				previewWrapper.stop().slideDown('slow');
