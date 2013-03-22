@@ -75,7 +75,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 
 			while(url = urls[i++]){
 				if(type == loader.CSS || type == loader.SCSS){
-					element = createElement('script', {
+					element = createElement('link', {
 						rel: style,
 						type: styleType,
 						href: url
@@ -96,7 +96,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				// don't use it when loading CSS in WebKit
 				else if(element.onload === null && (element.all /* exclude WebKit */ || type !== loader.CSS)) {
 					element.onload = success;
-					element.onerror = function(){failure()};
+					element.onerror = function(){failure(this.src || this.href)};
 				}
 				// use polling when loading CSS in Webkit :(
 				else if (type === loader.CSS) {
@@ -396,7 +396,6 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 
 					// All files have been downloaded
 					if ( remaining == 0 ) {
-
 						if(!failed.length) {
 							// Resolve the deferred object
 
@@ -411,7 +410,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 					}
 				},
 				failure = function(res){
-					log(res, log.levels.error, 'loader');
+					log({errorLoading: res}, log.levels.error, 'loader');
 
 					return function(override){
 						failed.push(override || res);
