@@ -4,7 +4,8 @@
 		$trackingData = 'class="result-link" data-pos="' . $pos . '" data-event="search_click_match"';
 	?>
 
-    <a href="<?= $resultSet->getHeader( 'url' ) ?>" title="<?= $resultSet->getHeader('title'); ?>">
+    <a href="<?= $resultSet->getHeader( 'url' ) ?>" title="<?= $resultSet->getHeader('title'); ?>" <?= $thumbTracking
+	    ?>>
 	    <img src="<?= $imageURL ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail" />
 	</a>
     <div class="result-description">
