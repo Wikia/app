@@ -22,6 +22,10 @@ $wikiahubs-line-height: 16px;
 	font-size: 13px;	/* reset font size */
 	line-height: $wikiahubs-line-height;	/* reset line height */
 
+	#suggestVideo {
+		display: none;
+	}
+
 	/* reset article styling */
 	p {
 		margin: 0;
