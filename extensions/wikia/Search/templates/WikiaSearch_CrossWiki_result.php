@@ -54,7 +54,7 @@
 		'query' => $query,
 		'rank' =>  $resultSet->getHeader('cityRank'),
 		'imageURL' => $imageURL,
-		'$thumbTracking' => $thumbTracking,
+		'thumbTracking' => $thumbTracking,
 		'pagesMsg' => $pagesMsg,
 		'imgMsg' => $imgMsg,
 		'videoMsg' => $videoMsg
