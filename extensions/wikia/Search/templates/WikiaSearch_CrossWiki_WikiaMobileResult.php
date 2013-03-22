@@ -3,7 +3,7 @@
 		<p>
 			<a class=groupTitle href="<?= $resultSet->getHeader( 'url' );?>"><?=
 				$resultSet->getHeader( 'wikititle' );?></a>
-			<a class=searchGroup href="<?= 'http://www.' . $resultSet->getHeader('host')
+			<a class=searchGroup href="<?= 'http://' . $resultSet->getHeader('host')
 				.'/wiki/Special:Search?search='.urlencode
 			($query).'&fulltext=Search';?>"></a>
 		</p>
