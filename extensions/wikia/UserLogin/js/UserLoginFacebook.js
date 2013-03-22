@@ -115,7 +115,7 @@ var UserLoginFacebook = {
 
 		this.signupAjaxForm = new UserSignupAjaxForm(
 			this.wikiaForm,
-			['username', 'password'],
+			null,
 			this.form.el.find('input[type=submit]'));
 		this.wikiaForm.el
 			.find('input[name=username], input[name=password]')
