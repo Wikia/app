@@ -204,17 +204,21 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				loc: loc
 			}, function () {
 				var slot = document.getElementById(slotname),
-					iframes = slot.getElementsByTagName('iframe');
+					iframes = slot.getElementsByTagName('iframe'),
+					isSuccess = false;
 
 				try {
 					if (iframes[0].offsetHeight > 1) {
-						success();
-						return;
+						isSuccess = true;
 					}
 				} catch (e) {
 				}
 
-				error();
+				if (isSuccess) {
+					success();
+				} else {
+					error();
+				}
 			});
 
 			if (gptConfig[slotname] === 'flush') {
