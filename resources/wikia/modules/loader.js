@@ -5,7 +5,7 @@
  *
  * @author Jakub Olek <jolek@wikia-inc.com>
  */
-define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nirvana', 'wikia.log'], function loader(w, mw, nirvana, log){
+define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'wikia.deferred', 'wikia.log'], function loader(w, mw, nirvana, Deferred, log){
 	'use strict';
 
 	var loader,
@@ -19,6 +19,11 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 		rExtension = /(js|s?css)$/,
 		isArray = function(obj){
 			return obj instanceof Array;
+		},
+		createElement = function(type, options){
+			var element = doc.createElement(type);
+
+			return options ? w.$.extend(element, options) : element;
 		},
 		getURL = function(path, type, params){
 			if(~path.indexOf('__am') || ~path.search(/^https?:/i)) {
@@ -37,7 +42,7 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 				return w.wgCdnRootUrl + w.wgAssetsManagerQuery.
 					replace('%1$s', type).
 					replace('%2$s', path.replace(slashRegex, '')). // remove first slash
-					replace('%3$s', params ? encodeURIComponent($.param(params)) : '-').
+					replace('%3$s', params ? encodeURIComponent(w.$.param(params)) : '-').
 					replace('%4$d', w.wgStyleVersion);
 			}
 		},
@@ -55,16 +60,11 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 				}
 			}
 
+			//it always return array so get function can be more generic
 			return [getURL(path, type, params)];
 		},
-		addScript = function (content){
-			var script = doc.createElement('script');
-
-			script.type = 'text/javascript';
-			script.text = content;
-
-			// add it to DOM
-			head.appendChild(script);
+		addScript = function(content){
+			head.appendChild(createElement('script', {text: content}));
 		},
 		// TODO: ease mocking
 		get = function(urls, success, failure, type){
@@ -75,13 +75,13 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 
 			while(url = urls[i++]){
 				if(type == loader.CSS || type == loader.SCSS){
-					element = doc.createElement('link');
-					element.rel   = style;
-					element.type  = styleType;
-					element.href  = url;
+					element = createElement('script', {
+						rel: style,
+						type: styleType,
+						href: url
+					});
 				}else{
-					element = doc.createElement('script');
-					element.src = url;
+					element = createElement('script', {src: url});
 				}
 
 				if (element.readyState) {
@@ -210,7 +210,7 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 			 * 		resources: ['facebook', 'googlemaps']
 			 * });
 		 */
-		getLibrary =  function(libs, callback, failure) {
+		getLibrary = function(libs, callback, failure) {
 			if(!isArray(libs)) {
 				libs = [libs];
 			}
@@ -227,13 +227,12 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 					}
 				};
 
-			//find libraries to be loaded
-			//from libraryMap
+			//find libraries to be loaded from libraryMap
 			while(l--) {
 				var name = libs[l],
 					n = librariesMap[name];
 
-				if(!n) throw "Library not known " + name;
+				if(!n) throw "Library unknown: " + name;
 
 				if(typeof n == 'string'){
 					use.push(n);
@@ -326,7 +325,7 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 
 			if(send){
 				if(typeof options.params == 'object'){
-					options = $.extend(options, options.params);
+					options = w.$.extend(options, options.params);
 					delete options.params;
 				}
 
@@ -334,14 +333,14 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 				options.cb = w.wgStyleVersion;
 
 				nirvana.getJson(
-						'AssetsManager',
-						'getMultiTypePackage',
-						options
-					).done(
+					'AssetsManager',
+					'getMultiTypePackage',
+					options
+				).done(
 					function(resources, event) {
 						// "register" JS messages
 						if (resources.messages) {
-							w.wgMessages = $.extend(w.wgMessages, resources.messages);
+							w.wgMessages = w.$.extend(w.wgMessages, resources.messages);
 						}
 
 						complete(event, resources);
@@ -376,11 +375,21 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 			var l = remaining = arguments.length,
 				matches,
 				remaining,
-				dfd = new $.Deferred(),
+				dfd = new Deferred(),
 				failed = [],
 				func,
 				result,
-				onEnd = function(){
+				complete = function(ev, res){
+					/*
+					 res is saved locally and the only function here that returns it is getMultiTypePackage
+					 but I can not ensure that this is last to be loaded
+
+					 This means there is lack for multiple getMultiTypePackage calls - but should be discouraged
+					 */
+					if(res){
+						result = res;
+					}
+
 					remaining--;
 
 					log(remaining + ' remaining...', log.levels.info, 'loader');
@@ -406,21 +415,8 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 
 					return function(override){
 						failed.push(override || res);
-						onEnd();
+						complete();
 					}
-				},
-			// This will be called everytime a resource is loaded
-				complete = function(ev, res) {
-					/*
-					 res is saved locally and the only function here that returns it is getMultiTypePackage
-					 but I can not ensure that this is last to be loaded
-
-					 This means there is lack for multiple getMultiTypePackage calls - but should be discouraged
-					 */
-					if(res){
-						result = res;
-					}
-					onEnd();
 				};
 
 			// Nothing to load
@@ -484,16 +480,16 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 					}
 
 					/*
-					 this is for letting the loader know that current function will fire more onEnd callbacks than 1
+					 this is for letting the loader know that current function will fire more complete callbacks than 1
 
-					 used by getLibrary which is called once but might load more files
+					 used by get and getLibrary as they accept arrays as resources
 
 					 ~~ is an 'better' version of parseInt as it'll return 0 instead of a NaN
 					 when unexpected value is passed to it ie. undefined or 'string'
 
 					 ie. loader({
-					 type: loader.LIBRARY,
-					 resources: ['googlemaps', 'facebook']
+					 	type: loader.LIBRARY,
+					 	resources: ['googlemaps', 'facebook']
 					 });
 
 					 before I run function that loads files I don't know how many files will be loaded
@@ -543,9 +539,7 @@ define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nir
 		 * css - CSS code to be applied
 		 */
 		loader.processStyle = function(css) {
-			var style = doc.createElement('style');
-
-			style.type = styleType;
+			var style = createElement('style', {type: styleType});
 
 			if (style.styleSheet) {
 				// for *&$#^# IE
