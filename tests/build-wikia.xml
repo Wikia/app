@@ -5,6 +5,7 @@
     <property name="localsettings" value="/usr/wikia/docroot/wiki.factory/LocalSettings.php" />
     <property name="phpunitexcludegroups" value="deprecated,Broken" />
 
+	<!-- PHP Tests -->
 	<target name="php">
 		<mkdir dir="${basedir}/build/logs" />
 		<exec executable="php" dir="${basedir}" failonerror="true">
@@ -42,52 +43,83 @@
         </exec>
     </target>
 
-    <target name="js-single">
-        <exec executable="phantomjs" dir="${basedir}" failonerror="true">
-            <env key="SERVER_ID" value="165" />
-            <arg line="run-test.js
-                       ${unittest}
-                       " />
-        </exec>
-    </target>
-
-    <target name="js">
-		<mkdir dir="${basedir}/build" />
-        <exec executable="phantomjs" dir="${basedir}" failonerror="true">
-            <env key="SERVER_ID" value="165" />
-            <arg line="run-test.js
-            		../extensions/wikia
-            		../resources/wikia
-					--output=${basedir}/build
-            	" />
-        </exec>
-    </target>
-
-    <target name="phpunit-coverage">
+	<target name="phpunit-coverage">
 		<mkdir dir="${basedir}/build/coverage" />
-        <exec executable="php" dir="${basedir}" failonerror="true">
-            <env key="SERVER_ID" value="165" />
-            <arg line="run-test.php
+		<exec executable="php" dir="${basedir}" failonerror="true">
+			<env key="SERVER_ID" value="165" />
+			<arg line="run-test.php
                        --conf ${localsettings}
                        --configuration ${basedir}/phpunit.xml
                        --coverage-html ${basedir}/build/coverage
                        --exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
                        " />
-        </exec>
-    </target>
+		</exec>
+	</target>
 
-    <target name="phpunit-single-coverage">
-        <exec executable="php" dir="${basedir}" failonerror="true">
-            <env key="SERVER_ID" value="165" />
-            <arg line="run-test.php
+	<target name="phpunit-single-coverage">
+		<exec executable="php" dir="${basedir}" failonerror="true">
+			<env key="SERVER_ID" value="165" />
+			<arg line="run-test.php
                        --conf ${localsettings}
                        --configuration ${basedir}/phpunit.xml
                        --coverage-html ${basedir}/build/coverage
                        ${unittest}
                        " />
+		</exec>
+	</target>
+	<!-- /PHP Tests -->
+
+	<!-- JS Tests -->
+    <target name="jsunit">
+		<mkdir dir="${basedir}/build" />
+        <exec executable="karma" dir="${basedir}" failonerror="true">
+            <arg line="start
+            		karma/js-unit.config.js
+					--single-run
+					--no-auto-watch
+					--reporters junit,coverage
+            	" />
         </exec>
     </target>
 
+	<target name="jsintegration">
+		<mkdir dir="${basedir}/build" />
+		<exec executable="karma" dir="${basedir}" failonerror="true">
+			<arg line="start
+					karma/js-integration.config.js
+					--single-run
+					--no-auto-watch
+					--reporters junit
+            	" />
+		</exec>
+	</target>
+
+	<target name="jsunit-coverage">
+		<mkdir dir="${basedir}/build" />
+		<exec executable="karma" dir="${basedir}" failonerror="true">
+			<arg line="start
+					karma/js-unit.config.js
+					--single-run
+					--no-auto-watch
+					--reporters coverage
+            	" />
+		</exec>
+	</target>
+
+	<target name="jsintegration-coverage">
+		<mkdir dir="${basedir}/build" />
+		<exec executable="karma" dir="${basedir}" failonerror="true">
+			<arg line="start
+					karma/js-integration.config.js
+					--single-run
+					--no-auto-watch
+					--reporters coverage
+            	" />
+		</exec>
+	</target>
+	<!-- /JS Tests -->
+
+	<!-- Linters -->
 	<target name="codelint-php">
 		<mkdir dir="${basedir}/build" />
 		<exec executable="php" dir="${basedir}/../maintenance/wikia" failonerror="true">
@@ -117,4 +149,5 @@
 					   " />
 		</exec>
 	</target>
+	<!-- /Linters -->
 </project>

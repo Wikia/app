@@ -1682,7 +1682,8 @@ class MediaWikiServiceTest extends BaseTest
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
 	public function testGetWikiMatchByHost() {
-		$service = $this->service->setMethods( null )->getMock();
+		$service = $this->service->setMethods( array( 'getGlobal' ) )->getMock();
+		$mockLang = $this->getMock( 'Language', array( 'getCode' ) );
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
@@ -1711,6 +1712,17 @@ class MediaWikiServiceTest extends BaseTest
 		$reflApp->setAccessible( true );
 		$reflApp->setValue( $service, $app );
 		
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'Lang' )
+		    ->will   ( $this->returnValue( $mockLang ) )
+		;
+		$mockLang
+		    ->expects( $this->once() )
+		    ->method ( 'getCode' )
+		    ->will   ( $this->returnValue( 'fr' ) )
+		;
 		$mockWrapper
 		    ->expects( $this->once() )
 		    ->method ( 'GetDB' )
@@ -1720,7 +1732,11 @@ class MediaWikiServiceTest extends BaseTest
 		$mockDb
 		    ->expects( $this->once() )
 		    ->method ( 'select' )
-		    ->with   ( array( 'city_domains' ), array( 'city_id' ), array( 'city_domain' => "{$domain}.wikia.com" ) )
+		    ->with   (  [ 'city_domains' ], 
+		                [ 'city_id' ], [ 'city_domain' => [ "fr.{$domain}.wikia.com", "{$domain}.wikia.com" ] ], 
+		                'Wikia\Search\MediaWikiService::getWikiMatchByHost', 
+		                ['ORDER BY' => 'LENGTH(city_domain) DESC'] 
+		             )
 		    ->will   ( $this->returnValue( $mockResult ) ) 
 		;
 		$mockDb
@@ -2213,7 +2229,7 @@ class MediaWikiServiceTest extends BaseTest
 		$fcArray = [ 'action' => 'query', 'meta' => 'allmessages', 'ammessages' => 'description', 'amlang' => 'en' ];
 		$responseArray = [ 'query' => ['allmessages' => [ ['*' => '{{SITENAME}} is a wiki' ] ] ] ];
 		$apiservice
-		    ->staticExpects( $this->once() )
+		    ->staticExpects( $this->at( 0 ) )
 		    ->method ( 'foreignCall' )
 		    ->with   ( 'foo', $fcArray )
 		    ->will   ( $this->returnValue( $responseArray ) )
@@ -2222,6 +2238,41 @@ class MediaWikiServiceTest extends BaseTest
 		$this->mockApp();
 		$this->assertEquals(
 				'foo wiki is a wiki',
+				$service->getDescriptionTextForWikiId( 123 )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getDescriptionTextForWikiId
+	 */
+	public function testGetDescriptionTextForWikiIdMissingMessage() {
+		$service = $this->service->setMethods( [ 'getDbNameForWikiId', 'getGlobalForWiki' ] )->getMock();
+		$apiservice = $this->getMock( 'ApiService', [ 'foreignCall' ] );
+		
+		$service
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getDbNameForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$service
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getGlobalForWiki' )
+		    ->with   ( 'wgLanguageCode', 123 )
+		    ->will   ( $this->returnValue( 'en' ) )
+		;
+		$fcArray = [ 'action' => 'query', 'meta' => 'allmessages', 'ammessages' => 'description', 'amlang' => 'en' ];
+		$responseArray = [ 'query' => ['allmessages' => [ ['missing' => '' ] ] ] ];
+		$apiservice
+		    ->staticExpects( $this->at( 0 ) )
+		    ->method ( 'foreignCall' )
+		    ->with   ( 'foo', $fcArray )
+		    ->will   ( $this->returnValue( $responseArray ) )
+		;
+		$this->proxyClass( 'ApiService', $apiservice );
+		$this->mockApp();
+		$this->assertEquals(
+				'',
 				$service->getDescriptionTextForWikiId( 123 )
 		);
 	}

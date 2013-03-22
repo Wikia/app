@@ -1,2 +1,2 @@
 #!/bin/sh
-ant -f build-wikia.xml js
+karma start js-unit.config.js

@@ -5,11 +5,9 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('ads'), 'track', 'throbber'], function (qs, loader, toc, ads, track, throbber) {
+define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('ads'), 'track', 'throbber', 'wikia.window'], function (qs, loader, toc, ads, track, throbber, w) {
 	'use strict';
-	var w = window,
-		d = document,
-		loc = w.location,
+	var	d = w.document,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
 		navigationTgl = d.getElementById('wkNavTgl'),
@@ -31,7 +29,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 		//close WikiNav on back button
 		if ('onhashchange' in w) {
 			w.addEventListener('hashchange', function() {
-				if (!loc.hash && navBar.className) {
+				if (!qs().getHash() && navBar.className) {
 					closeDropDown();
 				}
 			}, false);
@@ -44,7 +42,11 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 		!barSetUp && setupTopBar();
 		!stopScrolling && wkPrfTgl.scrollIntoView();
 		toc.close();
-		(loc.hash !== '#topbar') && (loc.hash = 'topbar');
+
+		var qs = qs(),
+			hash = qs.getHash();
+
+		(hash !== '#topbar') && (qs.setHash('topbar'));
 		hidePage();
 	}
 
@@ -85,7 +87,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 			ev.preventDefault();
 		}else{
 			track.event('search', track.SUBMIT, {
-				label: window.wgCanonicalSpecialPageName == 'Search' ? 'search' : 'article'
+				label: w.wgCanonicalSpecialPageName == 'Search' ? 'search' : 'article'
 			});
 		}
 	});
@@ -276,7 +278,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 	function openProfile(hash){
 		reset();
 
-		if(window.wgUserName){
+		if(w.wgUserName){
 			//track('profile/open');
 		}else{
 			openLogin(hash);
@@ -353,7 +355,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 		closeNav();
 		closeProfile();
 		closeSearch();
-		if(w.location.hash == "#topbar") {
+		if(qs().getHash() == "#topbar") {
 			var pos = w.scrollY;
 			w.history.back();
 			w.scrollTo(0,pos);

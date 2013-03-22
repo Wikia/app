@@ -11,7 +11,7 @@
 		<li class="wikiahubs-ftc-item">
 			<div class="floatleft">
 				<a href="<?= $entry['articleUrl'] ?>">
-					<img alt="<?= $entry['imageAlt'] ?>" src="<?= $entry['imageUrl'] ?>" width="570" height="300" />
+					<img alt="<?= $entry['imageAlt'] ?>" src="<?= $entry['imageUrl'] ?>" />
 				</a>
 			</div>
 			<div class="wikiahubs-ftc-title">

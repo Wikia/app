@@ -7,14 +7,14 @@
 (function(){
 	if(define){
 		//AMD
-		define('toast', toast);//late binding
+		define('toast', ['wikia.window'], toast);//late binding
 	}else{
-		window.Toast = toast();//late binding
+		window.Toast = toast(window);//late binding
 	}
 
-	function toast(){
+	function toast(w){
 		var wkTst,
-			d = document;
+			d = w.document;
 
 		return{
 			show: function(msg, opt){

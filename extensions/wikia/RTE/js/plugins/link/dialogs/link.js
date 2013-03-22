@@ -292,9 +292,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
 
 								isValid = validPageNameFunc.apply(this);
-								if (!isValid) {
-									RTE.track('link', 'dialog', 'error');
-								}
 							} else {
 								// validate URL
 								re = new RegExp('^(' + RTE.constants.urlProtocols + ')');
@@ -304,9 +301,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badUrl);
 
 								isValid = validUrlFunc.apply(this);
-								if (!isValid) {
-									RTE.track('link', 'dialog', 'error');
-								}
 							}
 
 							return isValid;
@@ -333,12 +327,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								RTE.log("mode changed to "+e.data.value);
 								if ( e.data && e.data.value == 'ext' ) {
 									setMode('external');
-
-									RTE.track('link', 'dialog', 'tab', 'internal2external');
 								} else {
 									setMode('internal');
-
-									RTE.track('link', 'dialog', 'tab', 'external2internal');
 								}
 							}
 						}
@@ -384,10 +374,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				return;
 			}
 
-			// for tracking
-			var type = '',
-				// get selected type
-				currentType = this.getContentElement('internal', 'linktype').getValue(),
+			// get selected type
+			var currentType = this.getContentElement('internal', 'linktype').getValue(),
 				element;
 
 			// create new link
@@ -444,16 +432,12 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						'wikitext': null
 					};
 
-					type = 'externalNamed';
-
 					if ( data.text == '' ) {
 						// autonumbered link
 						data.linktype = 'autonumber';
 						data.text = '[1]';
 
 						element.addClass('autonumber');
-
-						type = 'externalNumbered';
 					}
 
 					element.setAttribute('href',data.link);
@@ -471,14 +455,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						'noforce': true,
 						'wikitext': null
 					};
-
-
-
-					if (data.text == '') {
-						type = 'internalSimple';
-					} else {
-						type = 'internalNamed';
-					}
 
 					// add .new CSS class if needed
 					RTE.tools.checkInternalLink(element, data.link);
@@ -505,8 +481,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			}
 
 			RTE.getInstanceEditor().fire('editorAddLink');
-
-			RTE.track('link', 'dialog', 'type', type);
 		}
 	};
 } );

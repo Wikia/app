@@ -9,11 +9,6 @@
 (function( context ) {
 	'use strict';
 
-	// quick fix for fb#98739
-	if ( context.Wikia && context.Wikia.Tracker ) {
-		return;
-	}
-
 	function tracker( window ) {
 		/** @private **/
 
@@ -26,6 +21,9 @@
 				ADD: 'add',
 
 				// Generic click, mostly javascript clicks
+				// NOTE: When tracking clicks, consider binding to 'onMouseDown' instead of 'onClick'
+				// to allow the browser time to send these events naturally. For more information on
+				// this issue, see the `track()` method in "resources/modules/tracker.js"
 				CLICK: 'click',
 
 				// Click on navigational button
@@ -125,11 +123,8 @@
 	context.Wikia = context.Wikia || {};
 	context.Wikia.Tracker = tracker( context );
 
-	// quick fix for fb#98739
-	context.WikiaTracker = context.Wikia.Tracker;
-
-	if (context.define && context.define.amd) {
-		context.define('wikia.tracker', ['wikia.window'], tracker);
+	if ( context.define && context.define.amd ) {
+		context.define( 'wikia.tracker', [ 'wikia.window' ], tracker );
 	}
 
-})(this);
+})( this );
