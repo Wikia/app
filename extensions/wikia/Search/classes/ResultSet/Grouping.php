@@ -70,6 +70,9 @@ class Grouping extends Base
 			if (! $this->getHeader( 'description' ) ) {
 				$this->setHeader( 'description', $this->service->getDescriptionTextForWikiId( $wikiId ) );
 			}
+			if ( $this->getHeader( 'wikititle' ) == '' ) {
+				$this->setHeader( 'wikititle', $this->getHeader( 'title' ) );
+			}
 		}
 		return $this;
 	}

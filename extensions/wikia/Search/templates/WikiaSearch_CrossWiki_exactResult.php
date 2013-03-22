@@ -4,7 +4,7 @@
 		$trackingData = 'class="result-link" data-pos="' . $pos . '" data-event="search_click_match"';
 	?>
 
-    <a href="<?= $resultSet->getHeader( 'url' ) ?>" title="<?= $resultSet->getHeader('wikititle'); ?>" <?= $thumbTracking
+    <a href="<?= $resultSet->getHeader( 'url' ) ?>" title="<?= $resultSet->getHeader('title'); ?>" <?= $thumbTracking
 	    ?>>
 	    <img src="<?= $imageURL ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail" />
 	</a>
@@ -12,7 +12,7 @@
 
         <h1>
             <a href="<?= $resultSet->getHeader( 'url' ) ?>" <?=$trackingData;?> ><?= $resultSet->getHeader
-			('wikititle'); ?></a>
+			('title'); ?></a>
         </h1>
 
         <p class="hub subtle"><?= strtoupper( $resultSet->getHeader( 'hub' ) ); ?></p>
