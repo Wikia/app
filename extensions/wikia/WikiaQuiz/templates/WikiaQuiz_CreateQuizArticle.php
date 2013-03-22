@@ -13,10 +13,13 @@
 		<input type="text" name="image">
 	</div>
 	
+<? /* Video is broken
 	<label><?= wfMsg('wikiaquiz-video-label') ?></label>	
 	<div class="image">
 		<input type="text" name="video">
 	</div>
+*/ ?>
+	<input type="hidden" name="video">
 
 	<label><?= wfMsg('wikiaquiz-explanation-label') ?></label>	
 	<div class="explanation">
