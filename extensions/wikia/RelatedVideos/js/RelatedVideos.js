@@ -470,12 +470,14 @@ var RelatedVideos = {
 
 	removeVideoClick: function(target) {
 		var parentItem = $(target).parents('.item');
+
 		$.confirm({
 			title: $( '.deleteConfirmTitle', RelatedVideos.rvModule ).html(),
 			content: $( '.deleteConfirm', RelatedVideos.rvModule ).html(),
 			onOk: function(){
 				RelatedVideos.removeVideoItem( parentItem );
-			}
+			},
+			className: 'rv-delete-confirm'
 		});
 	},
 
