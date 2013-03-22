@@ -3,83 +3,64 @@
 
 	context.define('wikia.ooyala', ['wikia.window'], function() {
 
-		/*if(!(this instanceof ooyala)) {
-			return new ooyala();
-		}
-
-		if(typeof context.Wikia.Ooyala == 'object') {
-			return;
-		}
-
-		var that = this;*/
-
+		var videoTitle;
 
 		function Ooyala(params) {
 			var time = new Date().getTime(),
 				container = document.getElementById(params.playerId),
 				newId = params.playerId + time;
 			
+			videoTitle = params.title;
+			
 			container.id = newId;
 	
-			window.OO.Player.create(newId, params.videoId, { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay/*, onCreate: onCreate*/ });
+			window.OO.Player.create(newId, params.videoId, { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay, onCreate: onCreate });
 		}
-
-
-		/*var resetTracking = function() {
-			this.duration = null;
-			this.timeAtHalf = null;
-			this.halfAchieved = false;
-			this.timeAtFull = null;
-			this.fullAchieved = false;
-		};
-
-		resetTracking.call(this);
 
 		var onCreate = function(player) {
 			var messageBus = player.mb;
 
-			messageBus.subscribe(OO.EVENTS.PLAYING, 'tracking', function() {
-				console.log('playing');
-
-				// Duration is not available until the video starts playing
-				if(!that.duration) {
-					that.duration = player.getDuration();
-					that.timeAtHalf = Math.floor(that.duration / 2);
-					// Subtract 1 from duration so we're sure to catch the event
-					that.timeAtFull = Math.floor(that.duration) - 1;
-				}
-			});
-
+			// Player has loaded
 			messageBus.subscribe(OO.EVENTS.PLAYER_CREATED, 'tracking', function(eventName, payload) {
-				console.log('player created');
+				track('player-load');
 			});
 
-			messageBus.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'tracking', function(eventName, payload) {
-				if(!that.duration) {
-					return;
-				}
-				var pl = Math.floor(payload);
+			// Actual content starts playing (past any ads or age-gates)
+			messageBus.subscribe(OO.EVENTS.PLAYING, 'tracking', function() {
+				track('content-begin');
 
-				if(!that.halfAchieved && pl > that.timeAtHalf) {
-					console.log('half!');
-					that.halfAchieved = true;
-					return;
-				}
-
-				if(!that.fullAchieved && pl > that.timeAtFull) {
-					console.log('full!');
-					that.fullAchieved = true;
-					return;
-				}
 			});
 
-			// Log all events and values
-			messageBus.subscribe('*', 'tracking', function(eventName, payload) {
+			// Ad starts
+			messageBus.subscribe(OO.EVENTS.WILL_PLAY_ADS, 'tracking', function(eventName, payload) {
+				track('ad-start');
+			});
+
+			// Ad has been fully watched
+			messageBus.subscribe(OO.EVENTS.ADS_PLAYED, 'tracking', function(eventName, payload) {
+				track('ad-finish');
+			});
+
+			// Log all events and values (for debugging)
+			/*messageBus.subscribe('*', 'tracking', function(eventName, payload) {
 				console.log(eventName);
 				console.log(payload);
-			});
+			});*/
 
-		}*/
+		}
+		
+		var track = function(action) {
+			Wikia.Tracker.track({
+				action: action,
+				category: 'video-player-stats',
+				label: 'ooyala',
+				trackingMethod: 'internal',
+				value: 0
+			}, {
+				title: videoTitle
+			});
+		}
+
 
 		return Ooyala;
 	});
