@@ -84,7 +84,22 @@
 					status = req.status;
 
 				if((status >= 200 && status < 300) || status === 304){
-					dfd.resolve((dataType === 'json') ? JSON.parse(data) : data);
+					if(dataType === 'json'){
+						try {
+							dfd.resolve(JSON.parse(data));
+						} catch(e) {
+							dfd.reject({
+								error: data,
+								status: status,
+								request: req,
+								exception: e
+							})
+						}
+					}else{
+						dfd.resolve(data);
+					}
+
+
 				} else {
 					dfd.reject({
 						error: data,
