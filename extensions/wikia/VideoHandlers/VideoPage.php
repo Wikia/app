@@ -56,10 +56,11 @@ class WikiaVideoPage extends WikiaImagePage {
 				'views' => MediaQueryService::getTotalVideoViewsByTitle( $img->getTitle()->getDBKey() ),
 			);
 			$html .= F::app()->renderView( 'WikiaFilePageController', 'videoCaption', $captionDetails );
+			
+			$wgOut->addHTML($html);
 	
 			$this->renderDescriptionHeader();
 			
-			$wgOut->addHTML($html);
 		}
 
 		wfProfileOut( __METHOD__ );
