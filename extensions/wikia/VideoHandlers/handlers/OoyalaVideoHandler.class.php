@@ -25,7 +25,7 @@ class OoyalaVideoHandler extends VideoHandler {
 		$autoPlayStr = ( $autoplay && !$this->isAgeGate() ) ? 'true' : 'false';
 
 		$html = <<<EOT
-<div id='{$playerId}' style='width:{$width}px;height:{$height}px;'></div>
+<div id='{$playerId}' width="{$width}" height="{$height}"></div>
 EOT;
 
 		return array(

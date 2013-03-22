@@ -443,7 +443,10 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//resources/wikia/modules/ajax.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
-		'//resources/wikia/modules/cache.js'
+		'//resources/wikia/modules/cache.js',
+		
+		// video 
+		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 	)
 );
 
