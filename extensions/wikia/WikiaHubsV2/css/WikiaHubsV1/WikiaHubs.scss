@@ -14,6 +14,10 @@ $wikiahubs-line-height: 16px;
 
 /* Hax for backward compatibility with HUbsV1 - remove when after disabling off-shot pages */
 
+.WikiaPage.V2 .WikiaPageHeader p {
+	display: block;
+}
+
 .WikiaHubs {
 	font-size: 13px;	/* reset font size */
 	line-height: $wikiahubs-line-height;	/* reset line height */
