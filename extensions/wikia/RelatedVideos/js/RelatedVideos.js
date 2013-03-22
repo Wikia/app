@@ -470,20 +470,23 @@ var RelatedVideos = {
 
 	removeVideoClick: function(target) {
 		var parentItem = $(target).parents('.item');
+
 		$.confirm({
 			title: $( '.deleteConfirmTitle', RelatedVideos.rvModule ).html(),
 			content: $( '.deleteConfirm', RelatedVideos.rvModule ).html(),
 			onOk: function(){
 				RelatedVideos.removeVideoItem( parentItem );
-			}
+			},
+			className: 'rv-delete-confirm'
 		});
 	},
 
 	removeVideoItem: function(parentItem) {
 		$( parentItem ).fadeTo( 'slow', 0 );
 		var item = $(parentItem).find('a.video-thumbnail');
+		var deleteFromWiki = $('input[name=delete-from-wiki]:checked').val();
 		$.nirvana.sendRequest({
-			controller: 'RelatedVideos',
+			controller: ( deleteFromWiki ? 'VideoHandlerController' : 'RelatedVideos' ),
 			method: 'removeVideo',
 			format: 'json',
 			data: {
