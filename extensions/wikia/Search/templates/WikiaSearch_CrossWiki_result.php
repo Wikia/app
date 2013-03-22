@@ -27,8 +27,10 @@
 		<?php
 		$trackingData = 'class="result-link" data-pos="' . $pos . '" data-event="search_click_wiki"';
 		?>
-	    <a href="<?= $resultSet->getHeader('url'); ?>" title="<?= $resultSet->getHeader('title'); ?>" <?= $thumbTracking ?>>
-            <img src="<?= $imageURL; ?>" alt="<?= $resultSet->getHeader('title'); ?>" class="wikiPromoteThumbnail" />
+	    <a href="<?= $resultSet->getHeader('url'); ?>" title="<?= $resultSet->getHeader('wikititle'); ?>" <?=
+		    $thumbTracking ?>>
+            <img src="<?= $imageURL; ?>" alt="<?= $resultSet->getHeader('wikititle'); ?>" class="wikiPromoteThumbnail"
+	            />
 		</a>
         <div class=" result-description">
 
