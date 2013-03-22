@@ -67,7 +67,6 @@ class Grouping extends Base
 			     ->addHeaders( $this->service->getStatsInfoForWikiId( $wikiId ) )
 			     ->setHeader ( 'wikititle', $this->service->getGlobalForWiki( 'wgSitename', $wikiId ) )
 			     ->setHeader ( 'hub', $this->service->getHubForWikiId( $wikiId ) );
-			
 			if (! $this->getHeader( 'description' ) ) {
 				$this->setHeader( 'description', $this->service->getDescriptionTextForWikiId( $wikiId ) );
 			}
