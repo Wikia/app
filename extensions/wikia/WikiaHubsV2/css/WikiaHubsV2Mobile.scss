@@ -9,8 +9,19 @@
 		font-size: 14px;
 		line-height: 30px;
 		margin: 20px 0 0 0;
-		padding: 0 0 0 10px;
+		padding: 0 10px;
 		text-transform: uppercase;
+
+		.sponsorbox {
+			float: right;
+
+			ins {
+				font-size: 13px;
+				font-weight: normal;
+				text-decoration: none;
+				text-transform: none;
+			}
+		}
 	}
 
 	.explore-content {
@@ -48,6 +59,12 @@
 			img {
 				width: 480px;
 			}
+		}
+	}
+
+	.wikias-picks-content {
+		p img {
+			width: 480px;
 		}
 	}
 }
