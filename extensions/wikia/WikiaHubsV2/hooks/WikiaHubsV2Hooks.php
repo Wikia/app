@@ -29,6 +29,10 @@ class WikiaHubsV2Hooks {
 		}
 
 		if( $model->isHubsPage($hubName) && $this->isOffShotPage($title) ) {
+			$hubsModel = new WikiaHubsV2Model();
+			$canonicalHubName = $hubsModel->getCanonicalVerticalName($model->getHubPageId($dbKeyNameSplit[0]));
+			OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $canonicalHubName));
+
 			$app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV1/WikiaHubs.scss'));
 			$app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'));
 		}
