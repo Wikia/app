@@ -56,9 +56,6 @@ class WikiaSearchAjaxController extends WikiaController {
                 'query' => $query)
         )->render();
 
-	    $this->response->setVal('params', $params);
-	    $this->response->setVal('container', $container);
-
         $this->response->setVal('text', $text);
         $this->wf->ProfileOut(__METHOD__);
     }
