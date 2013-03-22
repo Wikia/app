@@ -1,7 +1,7 @@
 @import "../../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../../skins/oasis/css/mixins/bodytext";
 
-.wikiahubs-newstabs {
+.WikiaHubs .wikiahubs-newstabs {
 	@include bodytext;
 
 	&.grid-3 p {
