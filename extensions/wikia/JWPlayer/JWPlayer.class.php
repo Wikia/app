@@ -33,7 +33,7 @@ class JWPlayer {
 
 	public function __construct($videoId) {
 		$this->videoId = $videoId;
-		$this->playerId = 'player-' . $this->videoId . '-' . mt_rand();
+		$this->playerId = 'player-' . $this->videoId . '-' . mt_rand() . '-';
 	}
 
 	/**
@@ -57,7 +57,16 @@ class JWPlayer {
 <div id="{$this->playerId}"></div>
 EOT;
 
-		$jwScript = $this->getCombinedScript();
+		$jwScript = <<<EOT
+var playerId = "{$this->playerId}",
+	time = new Date().getTime(),
+	container = document.getElementById(playerId),
+	newId = playerId + time;
+	container.id = newId;
+
+EOT;
+
+		$jwScript .= $this->getCombinedScript();
 
 		$code = array(
 			'html' => $html,
@@ -88,6 +97,7 @@ EOT;
 			$script .= $this->getScript('normal');
 		}
 		$script = str_replace('"' . self::GOOGIMA_DATA_TOKEN . '"', self::GOOGIMA_DATA_VARIABLE, $script);
+		$script = str_replace('"' . $this->playerId . '"', 'newId', $script);
 
 		return $script;
 	}
