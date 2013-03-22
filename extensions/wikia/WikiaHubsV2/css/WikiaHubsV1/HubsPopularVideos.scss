@@ -1,8 +1,7 @@
 .WikiaArticle {
 	.wikiahubs-popular-videos {
-		h2 {
-			display: inline;
-			border: none;
+		.grid-4 h2 {
+			display: block;
 		}
 		.title-wrapper {
 			display: block;
