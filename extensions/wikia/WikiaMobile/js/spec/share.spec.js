@@ -3,35 +3,35 @@ describe("Share module", function () {
 	'use strict';
 
 	var cache = {
-		getVersioned: function(){
-			return false;
+			getVersioned: function(){
+				return false;
+			},
+			setVersioned: function(){}
 		},
-		setVersioned: function(){}
-	},
-	window = {
-		wgStyleVersion: 1234567890,
-		wgServer: 'http://test.com',
-		wgArticlePath: '/$1',
-		wgPageName: 'Test',
-		wgTitle: 'Test',
-		wgSitename: 'Test Wiki'
-	},
-	JSMessages = function(){
-		return function(){
-			return 'TEST';
-		}
-	},
-	loader = function(){
-		return {
-			done: function(callback){
-				callback({
-					templates: {
-						WikiaMobileSharingService_index: 'SHARING_HTML __1__'
-					},
-					styles: ''
-				})
+		window = {
+			wgStyleVersion: 1234567890,
+			wgServer: 'http://test.com',
+			wgArticlePath: '/$1',
+			wgPageName: 'Test',
+			wgTitle: 'Test',
+			wgSitename: 'Test Wiki'
+		},
+		JSMessages = function(){
+			return function(){
+				return 'TEST';
 			}
-		};
+		},
+		loader = function(){
+			return {
+				done: function(callback){
+					callback({
+						templates: {
+							WikiaMobileSharingService_index: 'SHARING_HTML __1__'
+						},
+						styles: ''
+					})
+				}
+			};
 	};
 
 	loader.processStyle = function(){};

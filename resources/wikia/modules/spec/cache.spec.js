@@ -120,7 +120,7 @@ describe("CacheTest", function(){
 		var windowMock = {
 				wgStyleVersion: 1
 			},
-			wc = define.getModule(window.localStorage, windowMock);
+			wc = modules['wikia.cache'](window.localStorage, windowMock);
 
 		wc.setVersioned('f', 'some-value1');
 		expect(wc.getVersioned('f')).toEqual('some-value1');
