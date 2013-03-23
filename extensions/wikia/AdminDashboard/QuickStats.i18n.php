@@ -46,7 +46,9 @@ $messages['ar'] = array(
 	'quickstats-header-likes' => 'الإعجابات',
 	'quickstats-totals-label' => 'المجموع',
 	'quickstats-see-more-stats-link' => '[[خاص:WikiStats|شاهد المزيد من الإحصائيات]]', # Fuzzy
-	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening' => '$1 ألف',
+	'quickstats-number-shortening-millions' => '$1 مليون',
+	'quickstats-number-shortening-billions' => '$1 بليون',
 );
 
 /** Aramaic (ܐܪܡܝܐ)

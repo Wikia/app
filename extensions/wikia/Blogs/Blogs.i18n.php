@@ -377,6 +377,8 @@ $messages['ar'] = array(
 	'blog-movepage-badtitle' => 'عنوان مدونة غير صالح',
 	'blog-comment-sending' => 'جاري الإرسال...',
 	'blog-by' => '$1 بواسطة $2',
+	'blogs-searchprofile' => 'مدونات',
+	'user-blog-url-link' => 'مدونة المستخدم:$1',
 );
 
 /** Aramaic (ܐܪܡܝܐ)

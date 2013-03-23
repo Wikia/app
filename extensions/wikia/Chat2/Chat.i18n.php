@@ -197,14 +197,27 @@ $messages['af'] = array(
  * @author Malhargan
  */
 $messages['ar'] = array(
-	'chat-desc' => '[[دردشة : خاصة  | دردشة مباشرة]]', # Fuzzy
+	'chat' => 'دردشة',
+	'chat-desc' => '[[خاص:دردشة|دردشة مباشرة]]', # Fuzzy
 	'chat-no-login' => 'يجب تسجيل الدخول إلى الدردشة.',
 	'chat-no-login-text' => 'يرجى تسجيل الدخول للمحادثة.',
-	'chat-default-topic' => 'مرحبا بكم في دردشة SAR4', # Fuzzy
+	'chat-default-topic' => 'مرحبا بكم في دردشة $1',
+	'chat-welcome-message' => 'مرحبا بكم في دردشة $1',
 	'chat-user-joined' => '$1 انضمت إلى الدردشة.',
+	'chat-read-only' => 'الدردشة تصبح غير متوفرة عندما تكون الويكي في وضع القراءة فقط.',
+	'chat-private-messages' => 'الرسائل الخاصة',
 	'chat-user-parted' => '$1 تركت الدردشة.',
-	'chat-user-blocked' => 'SAR4 حظر SAR8 .', # Fuzzy
-	'chat-user-allow' => 'SAR4 سمحت SAR8 .', # Fuzzy
+	'chat-user-blocked' => '$1 قام بمنع $2.',
+	'chat-user-allow' => '$1 سمح بعودة $2.',
+	'chat-kick-you-need-permission' => 'أنت لا تمتلك الصلاحية لطرد المستخدمين',
+	'chat-kick-cant-kick-moderator' => 'ليس بإمكانك طرد مراقب الدردشة',
+	'chat-user-was-kicked' => 'تم طرد $1 من قبل $2.',
+	'chat-you-were-kicked' => 'تم طردك من قبل $1.',
+	'chat-user-was-banned' => 'تم منع $1 من الدردشة من قبل $2 $3.',
+	'chat-you-were-banned' => 'قد تم منعك من الدردشة من قبل $1.',
+	'chat-user-was-unbanned' => 'أزال $2 منع $1 من الدردشة',
+	'chat-ban-modal-button-cancel' => 'إلغاء',
+	'chat-live2' => 'دردشة مباشرة!',
 	'chat-checkuser-join-action' => 'انضممت للدردشة',
 	'chat-status-away' => 'مشغول',
 );
@@ -2442,7 +2455,7 @@ $messages['pt-br'] = array(
 	'chat-chatbanadd-log-entry' => 'banido $1 do chat por $2, terminando em $3',
 	'chat-chatbanremove-log-entry' => 'desbanido $1 do chat',
 	'chat-chatbanchange-log-entry' => 'mudou o ban de $1 por $2, terminando em $3',
-	'chat-contributions-ban-notice' => 'Este usuário está banido do chat. O último registro de ban do chat está sendo mostrado abaixo como referência:', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Este usuário}} está banido do chat. O último registro de ban do chat está sendo mostrado abaixo como referência:',
 	'chat-browser-is-notsupported' => 'Seu navegador não é compatível. Para uma experiência melhor, use um <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navegador mais recente</a>.',
 	'chat-checkuser-join-action' => 'Uniu-se ao Chat',
 	'chat-status-away' => 'Ausente',

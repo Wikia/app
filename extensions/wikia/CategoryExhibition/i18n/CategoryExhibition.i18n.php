@@ -39,15 +39,20 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Mutarjem horr
  */
 $messages['ar'] = array(
+	'category-exhibition-sorttype' => 'نوع الفرز:',
 	'category-exhibition-alphabetical' => 'أبجديأّ',
 	'category-exhibition-mostvisited' => 'الأكثر مشاهدة',
 	'category-exhibition-recentedits' => 'تحرير مؤخراّ',
 	'category-exhibition-page-header' => 'الصفحات في التصنيف " $1 "',
 	'category-exhibition-subcategories-header' => 'التصنيفات الفرعية',
 	'category-exhibition-media-header' => 'الوسائل في الفئة "$1"',
+	'category-exhibition-blogs-header' => 'المشاركات في المدونة',
+	'category-exhibition-display-old' => 'عرض قائمة التصنيف',
+	'category-exhibition-display-new' => 'عرض معرض التصنيف',
 );
 
 /** Bulgarian (български)

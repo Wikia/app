@@ -212,7 +212,9 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'scribe-desc' => "[[Special:Scribeevents|Strumende]] pe cercà 'nu titole de ìna pàgene specifiche sus a tutte le uicchi",
 	'scribeevents' => 'Avveneminde recende',
+	'scribeeventsrecords' => 'Righe',
 );
 
 /** Russian (русский)
