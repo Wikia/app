@@ -518,31 +518,36 @@ class MediaWikiService
 	
 	/**
 	 * Provided a prepped domain string, (e.g. 'runescape'), return a wiki match.
-	 * If the language is not in English, checks for language-specific site.
 	 * @param string $domain
 	 * @return \Wikia\Search\Match\Wiki|NULL
 	 */
 	public function getWikiMatchByHost( $domain ) {
 		$match = null;
-		$domains = ["{$domain}.wikia.com"];
-		$lang = $this->getGlobal( 'Lang' )->getCode();
-		if ( $lang !== 'en' ) {
-			array_unshift( $domains, "{$lang}.{$domain}.wikia.com" );
-		}
-		$dbr = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
-		$query = $dbr->select(
-				[ 'city_domains' ],
-				[ 'city_id' ],
-				[ 'city_domain' => $domains ],
-				__METHOD__,
-				[ 'ORDER BY' => 'LENGTH(city_domain) DESC' ] // hack to prefer prefixed domains
-				);
-		if ( $row = $dbr->fetchObject( $query ) ) {
-			$match = new \Wikia\Search\Match\Wiki( $row->city_id, $this );
+		if ( $wikiId = $this->getWikiIdByHost( $domain ) ) {
+			$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
 		}
 		return $match;
 	}
 	
+	/**
+	 * Given a domain, returns a wiki ID.
+	 * @param string $domain
+	 * @return int|null
+	 */
+	public function getWikiIdByHost( $domain ) {
+		$match = null;
+		$dbr = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
+		$query = $dbr->select(
+				array( 'city_domains' ),
+				array( 'city_id' ),
+				array( 'city_domain' => "{$domain}.wikia.com" )
+				);
+		$id = null;
+		if ( $row = $dbr->fetchObject( $query ) ) {
+			$id = $row->city_id;
+		}
+		return $id;
+	}
 
 	/**
 	 * Returns the URL string for a wiki ID
@@ -584,9 +589,7 @@ class MediaWikiService
 					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
 					) 
 			);
-		return (! empty( $response['query']['allmessages'][0]['*'] ) )
-		    ? str_replace( '{{SITENAME}}', $this->getGlobalForWiki( 'wgSitename', $wikiId ), $response['query']['allmessages'][0]['*'] )
-		    : '';
+		return str_replace( '{{SITENAME}}', $this->getGlobalForWiki( 'wgSitename', $wikiId ), $response['query']['allmessages'][0]['*'] );
 	}
 	
 	/**

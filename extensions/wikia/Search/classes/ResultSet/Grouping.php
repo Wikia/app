@@ -72,19 +72,20 @@ class Grouping extends Base
 	 */
 	protected function configureHeaders() {
 		$doc = end( $this->results ); // there's only one
+		$wikiId = $doc['wid'];
+		$wikiId = $wikiId ?: $this->service->getWikiIdByHost( $this->host );
 		if (! empty( $doc ) ) {
-			$wikiId = $doc['wid'];
-			$this->addHeaders( $doc->getFields() )
-			     ->addHeaders( $this->service->getVisualizationInfoForWikiId( $wikiId ) )
-			     ->addHeaders( $this->service->getStatsInfoForWikiId( $wikiId ) )
-			     ->setHeader ( 'wikititle', $this->service->getGlobalForWiki( 'wgSitename', $wikiId ) )
-			     ->setHeader ( 'hub', $this->service->getHubForWikiId( $wikiId ) );
-			if (! $this->getHeader( 'description' ) ) {
-				$this->setHeader( 'description', $this->service->getDescriptionTextForWikiId( $wikiId ) );
-			}
-			if ( $this->getHeader( 'wikititle' ) == '' ) {
-				$this->setHeader( 'wikititle', $this->getHeader( 'title' ) );
-			}
+			$this->addHeaders( $doc->getFields() );
+		}
+		$this->addHeaders( $this->service->getVisualizationInfoForWikiId( $wikiId ) )
+			 ->addHeaders( $this->service->getStatsInfoForWikiId( $wikiId ) )
+			 ->setHeader ( 'wikititle', $this->service->getGlobalForWiki( 'wgSitename', $wikiId ) )
+			 ->setHeader ( 'hub', $this->service->getHubForWikiId( $wikiId ) );
+		if (! $this->getHeader( 'description' ) ) {
+			$this->setHeader( 'description', $this->service->getDescriptionTextForWikiId( $wikiId ) );
+		}
+		if ( $this->getHeader( 'wikititle' ) == '' ) {
+			$this->setHeader( 'wikititle', $this->getHeader( 'title' ) );
 		}
 		return $this;
 	}

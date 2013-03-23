@@ -44,7 +44,6 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 			$fullName = 'Wikia\Search\ResultSet\\'.$name;
 			$setMocks[$name] = $this->getMockBuilder( $fullName )
 			                        ->disableOriginalConstructor()
-			                        ->setMethods( array( 'getResultsNum', 'getId' ) )
 			                        ->getMock();
 			$this->proxyClass( $fullName, $setMocks[$name] );
 		}
@@ -179,68 +178,8 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getWikiMatch' )
 		    ->will   ( $this->returnValue( null ) )
 		;
-		$setMocks['Grouping']
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getResultsNum' )
-		    ->will   ( $this->returnValue( 100 ) ) 
-		;
 		$this->assertEquals(
 				get_class( $setMocks['Grouping'] ),
-				$factory->get( $mockDc )->_mockClassName
-		);
-		$mockDc
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getConfig' )
-		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getParent' )
-		    ->will   ( $this->returnValue( $setMocks['GroupingSet'] ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 2 ) )
-		    ->method ( 'getMetaposition' )
-		    ->will   ( $this->returnValue( 2 ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 3 ) )
-		    ->method ( 'getResult' )
-		    ->will   ( $this->returnValue( $mockResult ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 4 ) )
-		    ->method ( 'getWikiMatch' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$setMocks['Grouping']
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getResultsNum' )
-		    ->will   ( $this->returnValue( 0 ) ) 
-		;
-		$setMocks['Grouping']
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getId' )
-		    ->will   ( $this->returnValue( 'foo.wikia.com' ) ) 
-		;
-		$mockDc
-		    ->expects( $this->at( 5 ) )
-		    ->method ( 'getService' )
-		    ->will   ( $this->returnValue( $mockService ) )
-		;
-		$mockService
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getWikiMatchByHost' )
-		    ->with   ( 'foo' )
-		    ->will   ( $this->returnValue( $mockMatch ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 6 ) )
-		    ->method ( 'setWikiMatch' )
-		    ->with   ( $mockMatch )
-		;
-		$this->assertEquals(
-				get_class( $setMocks['MatchGrouping'] ),
 				$factory->get( $mockDc )->_mockClassName
 		);
 		$mockDc

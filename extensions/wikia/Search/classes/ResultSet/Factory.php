@@ -36,14 +36,7 @@ class Factory
 		} else if ( $parent === null && $searchConfig->getGroupResults() ) {
 			return new GroupingSet( $container );
 		} else if ( $parent !== null && $metaposition !== null ) {
-			$grouping = new Grouping( $container );
-			if ( $grouping->getResultsNum() == 0 ) {
-				// back-off for malformed groupings -- wiki match
-				$subdomain = array_shift( explode( '.', $grouping->getId() ) );
-				$container->setWikiMatch( $container->getService()->getWikiMatchByHost( $subdomain ) );
-				$grouping = new MatchGrouping( $container );
-			}
-			return $grouping;
+			return new Grouping( $container );
 		} else if ( $parent !== null && $wikiMatch !== null ) {
 			return new MatchGrouping( $container );
 		}
