@@ -102,17 +102,22 @@ $messages['ar'] = array(
 	'categoryselect-button-add' => 'أضف تصنيفا',
 	'categoryselect-button-cancel' => 'إلغاء',
 	'categoryselect-button-save' => 'سجل',
-	'categoryselect-category-edit' => 'خيارات التصنيف', # Fuzzy
+	'categoryselect-category-add' => 'أضف تصنيفا',
+	'categoryselect-category-edit' => 'عدل التصنيف',
+	'categoryselect-category-remove' => 'إزالة التصنيف',
 	'categoryselect-edit-summary' => 'إضافة التصانيف',
-	'categoryselect-error-article-doesnt-exist' => 'المقالة [id=$1] لا وجود لها', # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => 'المقالة ذات [الإسم=$1] لا وجود لها.',
+	'categoryselect-error-category-name-length' => 'لا يمكن تجاوز الحد الأقصى لطول اسم تصنيف.',
 	'categoryselect-error-db-locked' => 'قاعدة البيانات مغلقة',
-	'categoryselect-error-edit-abort' => 'التعديل الذي تحاول أن تقوم به أجهض من قبل تمديد هوك', # Fuzzy
-	'categoryselect-error-empty-category-name' => 'أضف اسم التصنيف (الجزء قبل |)', # Fuzzy
-	'categoryselect-error-user-rights' => 'خطأ في حقوق المستخدم', # Fuzzy
-	'categoryselect-modal-category-name' => 'يقدم إسما للتصنيف', # Fuzzy
-	'categoryselect-modal-category-sortkey' => 'يرتب أبجديا هذا المقال في صفحة تصنيف "$1" تحت الاسم', # Fuzzy
-	'categoryselect-tooltip-add' => 'إظغط على Enter اذا انتهيت', # Fuzzy
-	'tog-disablecategoryselect' => 'تعطيل وسم التصنيفات', # Fuzzy
+	'categoryselect-error-duplicate-category-name' => 'الفئة " $1 " موجود بالفعل.',
+	'categoryselect-error-edit-abort' => 'التعديل الذي تحاول أن تقوم به تم تعطيله من قبل مقياس امتدادي.',
+	'categoryselect-error-empty-category-name' => 'الرجاء توفير اسم للتصنيف.',
+	'categoryselect-error-user-rights' => 'المستخدم ليس لديه الإذن لتنفيذ هذا الإجراء.',
+	'categoryselect-modal-category-name' => 'قدم إسما للتصنيف:',
+	'categoryselect-modal-category-sortkey' => 'يمكنك ترتيب هذه الصفحة أبجديا تحت تصنيف "$1" حسب الإسم:',
+	'categoryselect-tooltip-add' => 'اضغط على المفتاح Enter أو Return عند القيام به.',
+	'tog-disablecategoryselect' => 'تعطيل وسم التصنيفات (لن يعمل إلا إذا تم تغيير محرر النص المتطور)',
+	'tog-disablecategoryselect-v2' => 'تعطيل إختيار التصنيفات (لن يعمل إلا إذا تم تغيير محرر النص المتطور)',
 );
 
 /** Assamese (অসমীয়া)
@@ -935,6 +940,9 @@ $messages['pt-br'] = array(
 	'categoryselect-error-db-locked' => 'O banco de dados está bloqueado.',
 	'categoryselect-error-duplicate-category-name' => 'A categoria "$1" já existe.',
 	'categoryselect-error-user-rights' => 'Erro nos direitos de usuário.', # Fuzzy
+	'categoryselect-modal-category-name' => 'Escreva o nome da categoria:',
+	'categoryselect-modal-category-sortkey' => 'Opcionalmente, você pode alfabetizar esta página na página da categoria "$1" sob o nome:',
+	'categoryselect-tooltip-add' => 'Pressione a tecla Enter ou Return quando pronto.',
 	'tog-disablecategoryselect' => 'Desabilitar o módulo de categorias (apenas aplicado caso a edição em modo visual foi desabilitada)',
 	'tog-disablecategoryselect-v2' => 'Desativar o módulo de Categorias (aplicado apenas se o Modo Visual está desativado)',
 );

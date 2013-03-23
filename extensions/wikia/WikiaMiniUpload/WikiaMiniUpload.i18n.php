@@ -251,10 +251,12 @@ $messages['ang'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'wmu-upload-image' => 'تحميل صورة',
 	'wmu-flickr' => 'فلكر',
 	'wmu-upload-btn' => 'رفع',
 	'wmu-insert' => 'أدرج',
@@ -873,11 +875,11 @@ $messages['de-formal'] = array(
 $messages['diq'] = array(
 	'wmu-upload-image' => 'Resim Barke',
 	'wmu-title' => 'Resim Barke',
-	'wmu-upload' => 'Barke',
+	'wmu-upload' => 'Bar ke',
 	'wmu-find' => 'Bıvin',
 	'wmu-thiswiki' => 'E na wiki',
 	'wmu-flickr' => 'Flickr',
-	'wmu-upload-btn' => 'Barke',
+	'wmu-upload-btn' => 'Bar ke',
 	'wmu-find-btn' => 'Bıvin',
 	'wmu-rename' => 'Resimi fına name ke',
 	'wmu-insert' => 'Têare ker',

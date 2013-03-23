@@ -242,13 +242,37 @@ $messages['ar'] = array(
 	'autocreatewiki-info-blurry-word' => 'لمساعدة في حماية ضد إنشاء الحساب الآلي ، يرجى كتابة كلمة الباهتة التي تشاهدها في هذا المجال.',
 	'autocreatewiki-info-terms-agree' => 'عن طريق إنشاء ويكي و حساب مستخدم، أنت توافق على <a href="http://www.wikia.com/wiki/Terms_of_use">شروط استخدام ويكيا</a>',
 	'autocreatewiki-info-staff-username' => '<b>للموظفين فقط:</b> هذا المستخدم المحدد سيكون مدرجا كمؤسس.',
+	'autocreatewiki-title-template' => 'ويكي $1',
 	'autocreatewiki-limit-day' => 'لقد تجاوزت عدد ويكيا الأقصى لإنشاء الويكيات في هذا اليوم($1).',
 	'autocreatewiki-limit-creation' => 'لقد تجاوزت الحد الأقصى لعدد من إنشاء ويكي في 24 ساعة ($1).',
 	'autocreatewiki-empty-field' => 'يرجى استكمال هذا المجال.',
 	'autocreatewiki-bad-name' => 'هذا الإسم لا يمكنه أن يحتوي على أحرف خاصة (مثل $ أو @)و يجب أن يكون كلمة مفردة بدون مسافات.',
 	'autocreatewiki-invalid-wikiname' => 'الإسم لا يمكن أن يحتوي على أحرف خاصة (مثل  $ أو @) و لا يمكن أن يكون فارغا',
+	'autocreatewiki-violate-policy' => 'اسم الويكي هذا يحتوي على كلمة تخالف سياسة التسمية',
+	'autocreatewiki-similar-wikis' => 'فيما يلي ويكيات تم إنشاؤها سابقاً تحمل نفس هذا الموضوع. نقترح عليك المشاركة في واحدة منهم.',
+	'autocreatewiki-invalid-username' => 'اسم المستخدم هذا غير صحيح.',
+	'autocreatewiki-busy-username' => 'اسم المستخدم هذا مستعمل من قبل مسخدم آخر',
+	'autocreatewiki-blocked-username' => 'لا يمكنك إنشاء حساب.',
+	'autocreatewiki-user-notloggedin' => 'تم إنشاء الحساب الخاص بك ولكن لم تسجل دخولك!',
+	'autocreatewiki-empty-language' => 'الرجاء تحديد لغة الويكي.',
+	'autocreatewiki-empty-category' => 'الرجاء تحديد فئة.',
+	'autocreatewiki-empty-wikiname' => 'لا يمكن أن يكون اسم الويكي فارغا.',
+	'autocreatewiki-empty-username' => 'لا يمكن أن يكون اسم المستخدم فارغاً.',
+	'autocreatewiki-empty-password' => 'لا يمكن أن تكون كلمة السر فارغة.',
+	'autocreatewiki-empty-retype-password' => 'لا يمكن أن تكون إعادة كتابة كلمة السر فارغة.',
+	'autocreatewiki-category-label' => 'الفئة:',
+	'autocreatewiki-category-other' => 'أخرى',
+	'autocreatewiki-set-username' => 'قم بتعيين اسم المستخدم أولاً.',
+	'autocreatewiki-invalid-category' => 'فئة غير صحيحة.
+الرجاء اختيار فئة مناسبة من القائمة المنسدلة.',
+	'autocreatewiki-invalid-language' => 'لغة غير صحيحة.
+الرجاء اختيار لغة مناسبة من القائمة المنسدلة.',
+	'autocreatewiki-invalid-retype-passwd' => 'الرجاء إعادة كتابة كلمة السر الواردة أعلاه',
+	'autocreatewiki-invalid-birthday' => 'تاريخ الميلاد غير صحيح',
 	'autocreatewiki-log-title' => 'يتم الآن إنشاء الويكي',
 	'autocreatewiki-step0' => 'تهيئة العملية ...',
+	'autocreatewiki-stepdefault' => 'العملية قيد التشغيل، الرجاء الانتظار...',
+	'autocreatewiki-errordefault' => 'لم يتم الإنتهاء من العملية...',
 	'autocreatewiki-congratulation' => 'مبروك!',
 	'autocreatewiki-welcometalk-log' => 'رسالة ترحيب',
 	'autocreatewiki-welcometalk' => "== أهلا و سهلا ! ==
@@ -266,6 +290,7 @@ $messages['ar'] = array(
 
 -- [[مستخدم:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'ويكيات جديدة',
+	'newwikisstart' => 'عرض الويكيات إنطلاقا من:',
 );
 
 /** Assamese (অসমীয়া)
