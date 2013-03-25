@@ -400,19 +400,19 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		$this->resultSet
 		    ->expects( $this->at( 5 ) )
 		    ->method ( 'getHeader' )
-		    ->with   ( "description" )
+		    ->with   ( "wikititle" )
 		    ->will   ( $this->returnValue( "" ) )
-		;
-		$this->service
-		    ->expects( $this->any() )
-		    ->method ( 'getDescriptionTextForWikiId' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( "This be the text" ) )
 		;
 		$this->resultSet
 		    ->expects( $this->at( 6 ) )
+		    ->method ( 'getHeader' )
+		    ->with   ( "title" )
+		    ->will   ( $this->returnValue( "foo" ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 7 ) )
 		    ->method ( 'setHeader' )
-		    ->with   ( "description", "This be the text" )
+		    ->with   ( "wikititle", "foo" )
 		;
 		$conf = new ReflectionMethod( 'Wikia\Search\ResultSet\Grouping', 'configureHeaders' );
 		$conf->setAccessible( true );
