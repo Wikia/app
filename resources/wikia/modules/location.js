@@ -1,11 +1,6 @@
 /**
  * AMD module wrapping location
  */
-(function(context) {
-	'use strict';
-
-	define('wikia.location', function() {
-		return context.location;
-	});
-
-}(this));
+define('wikia.location', ['wikia.window'], function(window) {
+	return window.location;
+});

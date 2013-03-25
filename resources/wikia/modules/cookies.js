@@ -8,7 +8,7 @@
 (function (context) {
 	'use strict';
 
-	function cookies() {
+	function cookies(window) {
 		var cookieReplaceRegEx1 = /^\s*/,
 			cookieReplaceRegEx2 = /\s*$/,
 			lastCookieContent,
@@ -22,7 +22,7 @@
 		 * @return {Object} An object representation of the user's cookies
 		 */
 		function fetchCookies() {
-			var cookieString = context.document.cookie,
+			var cookieString = window.document.cookie,
 				pair,
 				name,
 				value,
@@ -78,7 +78,7 @@
 		 */
 		function set(name, value, options) {
 			var expDate,
-				cookieString = '',
+				cookieString,
 				data = [],
 				x,
 				y;
@@ -120,7 +120,7 @@
 				cookieString += data[x];
 			}
 
-			context.document.cookie = cookieString;
+			window.document.cookie = cookieString;
 			return cookieString;
 		}
 
@@ -136,9 +136,9 @@
 	}
 
 	//namespace
-	context.Wikia.Cookies = cookies();
+	context.Wikia.Cookies = cookies(context);
 
 	if (context.define && context.define.amd) {
-		context.define('wikia.cookies', cookies);
+		context.define('wikia.cookies', ['wikia.window'], cookies);
 	}
 }(this));
