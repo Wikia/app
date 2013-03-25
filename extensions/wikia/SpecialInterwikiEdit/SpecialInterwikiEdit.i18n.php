@@ -444,6 +444,13 @@ $messages['pt-br'] = array(
 	'iwedit-success' => '<p>Criação de link com sucesso.</p>',
 );
 
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'iwedit-update' => 'Musuqchay',
+);
+
 /** Russian (русский)
  * @author Kuzura
  * @author Lockal

@@ -43,6 +43,7 @@ $app->registerClass( 'ThumbnailVideo',		$dir . '/ThumbnailVideo.class.php' );
 $app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.class.php' );
 $app->registerClass( 'VideoHandlerHooks',	$dir . '/VideoHandlerHooks.class.php' );
 $app->registerClass( 'VideoFileUploader',	$dir . '/VideoFileUploader.class.php' );
+$app->registerClass( 'WikiaImagePage', $dir . '/ImagePage.php' );
 $app->registerClass( 'WikiaVideoPage',		$dir . '/VideoPage.php' );
 $app->registerClass( 'VideoHandlerHelper', $dir . '/VideoHandlerHelper.class.php' );
 
@@ -83,7 +84,7 @@ $app->registerClass( 'VideoInfoHelper', $dir . '/videoInfo/VideoInfoHelper.class
 $app->registerClass( 'VideoInfoHooksHelper', $dir . '/videoInfo/VideoInfoHooksHelper.class.php' );
 
 // video page controller
-$app->registerClass( 'VideoPageController', $dir . '/VideoPageController.class.php' );
+$app->registerClass( 'WikiaFilePageController', $dir . '/WikiaFilePageController.class.php' );
 
 /**
  * messages
@@ -219,6 +220,10 @@ $app->registerClass( 'IvaVideoHandler', $dir . '/handlers/IvaVideoHandler.class.
 $app->registerClass( 'IvaApiWrapper', $dir . '/apiwrappers/IvaApiWrapper.class.php' );
 $wgMediaHandlers['video/iva'] = 'IvaVideoHandler';
 
+$app->registerClass( 'SnappytvVideoHandler', $dir . '/handlers/SnappytvVideoHandler.class.php' );
+$app->registerClass( 'SnappytvApiWrapper', $dir . '/apiwrappers/SnappytvApiWrapper.class.php' );
+$wgMediaHandlers['video/snappytv'] = 'SnappytvVideoHandler';
+
 /**
  * Feed ingesters
  */
@@ -253,6 +258,7 @@ $wgVideoMigrationProviderMap = array(
 	27 => 'Twitchtv',
 	28 => 'Ooyala',
 	29 => 'Iva',
+	30 => 'Snappytv',
 );
 
 

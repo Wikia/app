@@ -2,9 +2,9 @@
 
 //init toc
 
-define('toc', ['track', 'sections'], function toc(track, sections){
+define('toc', ['track', 'sections', 'wikia.window'], function toc(track, sections, w){
 	//private
-	var d = document,
+	var d = w.document,
 		table,
 		conStyle;
 

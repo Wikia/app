@@ -32,7 +32,7 @@
 	 * ...
 	 * @return string - localised message
 	 */
-	function JSMessages(nirvana, deferred) {
+	function JSMessages(nirvana, deferred, window) {
 		var JSMessages = function(){
 			// get the first function parameter
 			// then the rest are parameters to a message
@@ -41,7 +41,7 @@
 				ret = key;
 
 			if (window.wgMessages) {
-				ret = wgMessages[key] || ret;
+				ret = window.wgMessages[key] || ret;
 
 				// replace $1, $2, $3, ...  with parameters provided
 				if (ret !== key && arguments.length) {
@@ -115,7 +115,7 @@
 
 	//UMD inclusive
 	if(jQuery){
-		var msg = JSMessages(jQuery.nirvana, deferred);
+		var msg = JSMessages(jQuery.nirvana, deferred, window);
 		jQuery.extend(jQuery, {
 			msg: msg,
 			getMessages: msg.get,
@@ -125,6 +125,6 @@
 
 	if (context.define && context.define.amd) {
 		//AMD
-		context.define('JSMessages', ['wikia.nirvana', 'wikia.deferred'], JSMessages);
+		context.define('JSMessages', ['wikia.nirvana', 'wikia.deferred', 'wikia.window'], JSMessages);
 	}
 })(this, this.jQuery, this.Wikia);

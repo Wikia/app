@@ -3479,12 +3479,14 @@ $messages['id'] = array(
 
 /** Italian (italiano)
  * @author Minerva Titani
+ * @author Sactage
  */
 $messages['it'] = array(
 	'wall-thread-isnotifyeveryone' => 'Evidenziata',
 	'wall-recentchanges-new-message' => 'nella <a href="$1">Bacheca di $2</a>',
 	'wall-recentchanges-removed-thread' => 'ha rimosso la discussione "[[$1|$2]]" nella [[$3|Bacheca di $4]]',
 	'wall-recentchanges-removed-reply' => 'ha rimosso un messaggio da "[[$1|$2]]" nella [[$3|Bacheca di $4]]',
+	'wall-recentchanges-closed-thread' => 'ha chiuso la discussione "[[$1|$2]]" nella [[$3|Bacheca di $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Un messaggio nella Bacheca',
 	'wall-recentchanges-thread-group' => '$1 nella <a href="$2">Bacheca di $3</a>',
 	'wall-recentchanges-history-link' => 'cronologia della Bacheca',
@@ -5838,6 +5840,13 @@ suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferên
 	'tog-enotifwallthread-v2' => 'Enviar-me um email...',
 	'wall-quote-author' => '$1 escreveu:',
 	'wall-quote-reply-to' => 'responder a #$1',
+);
+
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'wall-notifications-markasread' => 'Tukuykunata ñawirisqa nispa unanchay',
 );
 
 /** tarandíne (tarandíne)

@@ -31,9 +31,6 @@ class WikiaSpecialPageController extends WikiaController {
 		$this->specialPage = F::build( 'SpecialPage', array( $name, $restriction, $listed, $function, $file, $includable ) );
 		F::setInstance( get_class($this), $this);
 		parent::__construct();
-
-		$out = $this->specialPage->getOutput();
-		$out->setRobotPolicy( "noindex,nofollow" );
 	}
 
 	public function execute( $par ) {

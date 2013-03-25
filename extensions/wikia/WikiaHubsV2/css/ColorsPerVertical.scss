@@ -134,6 +134,9 @@
 			.title-wrapper {
 				border-bottom: 4px solid $color-wikiahome-hubcolor;
 			}
+			a {
+				color: $color-wikiahome-hubcolor;
+			}
 		}
 		.wikiahubs-wam .wam-content {
 			.title {
@@ -145,8 +148,13 @@
 					background-color: $color-wikiahome-hubcolor;
 				}
 			}
-			.score-table .url a {
-				color: $color-wikiahome-hubcolor;
+			.score-table {
+				.rank {
+					padding-left: 3px;
+				}
+				.url a {
+					color: $color-wikiahome-hubcolor;
+				}
 			}
 		}
 	}

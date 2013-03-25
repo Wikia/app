@@ -32,3 +32,5 @@ $app->registerClass('MarketingToolboxModuleFeaturedvideoService', $dir . 'module
 $app->registerClass('MarketingToolboxModuleFromthecommunityService', $dir . 'modules/MarketingToolboxModuleFromthecommunityService.class.php');
 $app->registerClass('MarketingToolboxModulePollsService', $dir . 'modules/MarketingToolboxModulePollsService.class.php');
 $app->registerClass('MarketingToolboxModuleWAMService', $dir . 'modules/MarketingToolboxModuleWAMService.class.php');
+
+$app->registerClass('WikiaHubsServicesHelper', $dir . 'WikiaHubsServicesHelper.class.php');

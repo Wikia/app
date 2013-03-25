@@ -19,10 +19,9 @@ class Redirects extends AbstractService
 	 * @return array
 	 */
 	public function execute() {
-		wfProfileIn(__METHOD__);
-		$key = $this->service->getGlobal( 'AppStripsHtml' ) ? Utilities::field( 'redirect_titles' ) : 'redirect_titles';
-		$result = array( $key => $this->service->getRedirectTitlesForPageId( $this->currentPageId ) );
-		wfProfileOut(__METHOD__);
+		$service = $this->getService();
+		$key = $service->getGlobal( 'AppStripsHtml' ) ? Utilities::field( 'redirect_titles' ) : 'redirect_titles';
+		$result = array( $key => $service->getRedirectTitlesForPageId( $this->currentPageId ) );
 		return $result;
 	}
 }

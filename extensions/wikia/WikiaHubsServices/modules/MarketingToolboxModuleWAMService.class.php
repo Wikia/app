@@ -19,7 +19,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	 */
 	protected function prepareParameters($params) {
 		$params['limit'] = $this->getModel()->getWamLimitForHubPage();
-		
+
 		if( empty($params['ts']) ) {
 			$params['ts'] = strtotime('00:00 -1 day');
 		}
@@ -39,8 +39,8 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		return parent::prepareParameters([
 			'wam_day' => $params['ts'],
 			'wam_previous_day' => $params['ts_previous_day'],
-			'vertical_id' => $params['vertical_id'],
-			'wiki_lang' => $params['lang'],
+			'vertical_id' => $this->verticalId,
+			'wiki_lang' => $this->langCode,
 			'fetch_admins' => true,
 			'fetch_wiki_images' => true,
 			'limit' => $params['limit'],
@@ -52,6 +52,13 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	public function loadData($model, $params) {
+		$lastTimestamp = $model->getLastPublishedTimestamp(
+									$this->langCode,
+									$this->sectionId,
+									$this->verticalId,
+									$params['ts']
+						);
+
 		$params = $this->prepareParameters($params);
 		
 		if( !empty($this->app->wg->DevelEnvironment) ) {
@@ -146,15 +153,40 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'wiki_image' => null,
 					],
 			]];
+
+			$data = [
+				'vertical_id' => $this->verticalId,
+				'api_response' => $apiResponse,
+			];
+
+			$structuredData = $this->getStructuredData($data);
+
 		} else {
-			$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+			$structuredData = WikiaDataAccess::cache(
+				$this->getMemcacheKey(
+					$lastTimestamp,
+					$this->verticalId,
+					$this->langCode,
+					$this->getModuleId()
+				),
+				6 * 60 * 60,
+				function () use( $params ) {
+					return $this->loadStructuredData($params);
+				}
+			);
 		}
+
+		return $structuredData;
+	}
+
+	protected function loadStructuredData($params) {
+		$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 
 		$data = [
 			'vertical_id' => $params['vertical_id'],
 			'api_response' => $apiResponse,
 		];
-		
+
 		return $this->getStructuredData($data);
 	}
 

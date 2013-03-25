@@ -1032,7 +1032,7 @@ $config['wikiahubs_v2'] = array(
 
 $config['wikiahubs_v2_modal'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => array('oasis', 'wikiamobile'),
+	'skin' => array('oasis'),
 	'assets' => array(
 		'//extensions/wikia/WikiaHubsV2/js/WikiaHubsV2Modals.js'
 	)

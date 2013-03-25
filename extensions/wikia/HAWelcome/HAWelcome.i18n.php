@@ -1068,6 +1068,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!", # Fuzzy
 );
 
 /** Dutch (Nederlands)
+ * @author Konovalov
  * @author McDutchie
  * @author Siebrand
  */
@@ -1101,33 +1102,31 @@ Hallo,
 
 welkom bij {{SITENAME}} en dank u wel voor uw bewerking aan de pagina [[:$1]]. Als u hulp zoekt, kijk dan eens naar onze [[Help:Contents|hulppagina's]]. Ga langs bij [[w:c:community|Community Central]] om op de hoogte te blijven via onze [[w:c:community:Blog:Wikia_Staff_Blog|medewerkersblog]], stel vragen op ons [[w:c:community:Special:Forum|gemeenschapsforum]], neem deel aan onze [[w:c:community:Help:Webinars|webinars]] of chat live met mede-Wikianen. Veel plezier met bewerken!
 $3",
-	'welcome-message-anon-staff' => "==Welkom==
+	'welcome-message-anon-staff' => '==Welcome==
 
-Hallo! Welkom bij {{SITENAME}}. Dank u wel voor uw bewerking aan de pagina [[:$1]].
+Hallo,
 
-'''[[Special:UserLogin|Meld u zich alstublieft aan of maak een gebruiker aan]]'''. Zo kunt u eenvoudig uw bewerkingen bijhouden en contact houden met de andere leden van de gemeenschap.
+Welkom bij {{SITENAME}} en dank u wel voor uw bewerking van de [[:$1]] pagina. We moedigen alle mensen die bijdragen aan om [[Special:UserLogin|een gebruikersnaam aan te maken]], zodat u uw bijdragen kunt bijhouden, u toegang heeft tot meer Wikia mogelijkheden en de rest van de {{SITENAME}} community leert kennen.
 
-Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3", # Fuzzy
+Als u hulp nodig heeft, bekijk dan eerst onze [[Help:Contents|help pages]] en bezoek dan [[w:c:community|Community Central]] om meer te weten te komen. Veel succes met bewerken! $3',
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum voor hulp]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HA Welkom bewerken',
 	'welcome-message-wall-user' => 'Hallo en welkom bij {{SITENAME}}! Dank u wel voor uw bewerking aan de pagina [[:$1]].
 
 Laat een bericht voor me achter als ik ergens mee kan helpen.',
-	'welcome-message-wall-user-staff' => 'Hallo en welkom bij {{SITENAME}}! Dank u wel voor uw bewerking aan de pagina [[:$1]].
+	'welcome-message-wall-user-staff' => "Hallo,
 
-Als u hulp nodig hebt en als er hier geen lokale beheerders zijn, kom dan langs op de [[wikia:Forum:Community Central Forum|forums op Community Central Wiki]]. U kunt ook kijken op onze [[w:c:community:Blog:Wikia_Staff_Blog|Stafblog]] om op de hoogte te blijven van het laatste nieuws en evenementen rondom Wikia.', # Fuzzy
+Welkom bij {{SITENAME}} en dank u wel voor het bewerken van de [[:$1]] pagina. Als u hulp nodig heeft, begin dan met het bekijken van onze [[Help:Contents|help pagina's]]. Bezoek [[w:c:community|de centrale gemeenschap]] om op de hoogte te blijven van onze [[w:c:community:Blog:Wikia_Staff_Blog|medewerkers blog]], stel uw vragen op ons [[w:c:community:Special:Forum|gemeenschapsforum]], neem deel aan onze [[w:c:community:Help:Webinars|webinar series]], of chat live met mede Wikianen. Veel plezier met bewerken!",
 	'welcome-message-wall-anon' => "Hallo, welkom bij {{SITENAME}}. Dank u wel voor uw werk aan de pagina [[:$1]].
 
 '''[[Special:Userlogin|Maak alstublieft een gebruiker aan of meld u aan]]'''.
 Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderhouden van contacten met de rest van de gemeenschap.
 
 Laat alstublieft een bericht achter als ik u ergens mee kan helpen!",
-	'welcome-message-wall-anon-staff' => "Hallo, welkom bij {{SITENAME}}. Dank u wel voor uw werk aan de pagina [[:$1]].
+	'welcome-message-wall-anon-staff' => "Hallo,
+Welkom bij {{SITENAME}} en dank u wel voor uw bewerking van de [[:$1]] pagina. We raden alle mensen die bijdragen aan om [[Special:UserLogin|om een gebruikersnaam aan te maken]], zodat u uw bijdragen kunt bijhouden, toegang heeft tot meer Wikia mogelijkheden en de rest van de {{SITENAME}} gemeenschap leert kennen.
 
-'''[[Special:Userlogin|Maak alstublieft een gebruiker aan of meld u aan]]'''.
-Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderhouden van contacten met de rest van de gemeenschap.
-
-Laat alstublieft een bericht achter als ik u ergens mee kan helpen!", # Fuzzy
+Als u hulp nodig heeft, bekijk dan eerst onze [[Help:Contents|help pagina's]] en bezoek dan [[w:c:community|de centrale gemeenschap]] om meer te weten te komen. Veel plezier met bewerken!",
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)

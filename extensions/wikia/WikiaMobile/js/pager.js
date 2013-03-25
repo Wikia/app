@@ -3,7 +3,7 @@
  *
  * @author Jakub "Student" Olek
  */
-define('pager', function () {
+define('pager', ['wikia.window'], function (window) {
 	var tr = ('ontransitionend' in window) ? 'transitionEnd' : ('onwebkittransitionend' in window) ?  'webkitTransitionEnd' : false,
 		addTransitionEnd = (function(){
 			return (tr) ?
@@ -11,7 +11,7 @@ define('pager', function () {
 					elm.addEventListener(tr, c, true);
 				} :
 				function(elm, c, t){
-					setTimeout(c, t);
+					window.setTimeout(c, t);
 				};
 		})(),
 		removeTransitionEnd = (function(){
