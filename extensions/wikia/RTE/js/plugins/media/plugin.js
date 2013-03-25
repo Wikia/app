@@ -89,11 +89,11 @@ CKEDITOR.plugins.add('rte-media',
 				label: msgs['delete'],
 				'class': 'RTEMediaOverlayDelete',
 				callback: function(node) {
-					var type = self.getTrackingType(node);
+					var msgMediaType = self.getMediaTypeForMsg(node);
 
 					// show modal version of confirm()
-					var title = RTE.getInstance().lang[type].confirmDeleteTitle;
-					var msg = RTE.getInstance().lang[type].confirmDelete;
+					var title = RTE.getInstance().lang[msgMediaType].confirmDeleteTitle;
+					var msg = RTE.getInstance().lang[msgMediaType].confirmDelete;
 
 					RTE.tools.confirm(title, msg, function() {
 						RTE.tools.removeElement(node);
@@ -334,8 +334,8 @@ CKEDITOR.plugins.add('rte-media',
 		}
 	},
 
-	// get type name for tracking code
-	getTrackingType: function(media) {
+	// maps media type to messages' group name
+	getMediaTypeForMsg: function(media) {
 		var type;
 
 		switch($(media).attr('type')) {
