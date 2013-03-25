@@ -44,6 +44,10 @@
 			}
 		},
 
+		init: function() {
+			this.track(this.wide ? 'initOn' : 'initOff');
+		},
+
 		modeChanged: function() {
 			var toolbar = this.editor.getSpace('toolbar');
 
@@ -63,6 +67,8 @@
 		toggle: function() {
 			this.setState(!this.getState());
 			this.saveState();
+
+			this.track(this.wide ? 'switchOn' : 'switchOff');
 
 			// toolbar height can change - resize the editor (BugId:5694)
 			this.modeChanged();
@@ -95,6 +101,10 @@
 
 		getState: function() {
 			return this.editor.element.hasClass(this.wideClassName);
+		},
+
+		track: function(ev) {
+			this.editor.track('widescreenSource', ev);
 		}
 	});
 

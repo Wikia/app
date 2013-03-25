@@ -525,7 +525,7 @@
 			action: action,
 			category: 'vet',
 			label: label || '',
-			trackingMethod: 'both'
+			trackingMethod: 'internal'
 		});
 	}
 

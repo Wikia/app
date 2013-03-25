@@ -310,14 +310,13 @@
 			}
 
 			// Handle links which navigate away from the current page
-			// NOTE: This is a hack and it should be avoided whenever possible. For most cases, you can bind to
-			// the 'onMouseDown' event instead of 'onClick' to allow the browser time to send these events naturally.
 			if ( data.href && ( !browserEvent || !isMiddleClick( browserEvent ) && !isCtrlLeftClick( browserEvent ) ) ) {
 				if ( browserEvent && typeof browserEvent.preventDefault === 'function' ) {
 					browserEvent.preventDefault();
 				}
 
 				// Delay at the end to make sure all of the above was at least invoked
+				// FIXME: there must be a better way to do this that avoids using setTimeout.
 				setTimeout(function() {
 					document.location = data.href;
 				}, 100 );
