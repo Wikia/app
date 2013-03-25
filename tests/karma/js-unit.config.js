@@ -136,8 +136,10 @@ notCovered = [
 	//'extensions/wikia/WikiFeatures/js/WikiFeatures.js',
 ];
 
-//uncomment this line to have bigger table in code coverage
-//files = files.concat(notCovered);
+//if full parameter is passed generate code coverage even for not tested files
+//if( ~process.argv.indexOf('--full') ) {
+//	files = files.concat(notCovered);
+//}
 
 // list of files to exclude
 exclude = [];
