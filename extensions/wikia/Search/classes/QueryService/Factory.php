@@ -23,16 +23,15 @@ class Factory
 		$config = $container->getConfig();
 		$this->validateClient( $container );
 		
+		$terminal = 'OnWiki';
 		if ( $config->isInterWiki() ) {
-			return new Select\InterWiki( $container );
+			$terminal = 'InterWiki';
+		} elseif ( $config->getVideoSearch() ) {
+			$terminal = 'Video';
+		} elseif ( $config->getDirectLuceneQuery() ) {
+			$terminal = 'Lucene';
 		}
-		if ( $config->getVideoSearch() ) {
-			return new Select\Video( $container );
-		}
-		if ( $config->getDirectLuceneQuery() ) {
-			return new Select\Lucene( $container );
-		}
-		return new Select\OnWiki( $container );
+		return (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\\Search\\QueryService\\Select\\' . $terminal, array( $container ) );
 	}
 	
 	/**
@@ -51,7 +50,7 @@ class Factory
 	 * @param DependencyContainer $container
 	 */
 	protected function validateClient( DependencyContainer $container ) {
-		$service = new MediaWikiService;
+		$service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
 			$host = $service->isOnDbCluster() ? $service->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';  

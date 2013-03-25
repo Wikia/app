@@ -37,7 +37,7 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		                  ->getMock();
 		
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getGroupResults' ) );
-		
+		$pcf = $this->getMock( 'Wikia\Search\ProfiledClassFactory', [ 'get' ] );
 		$setMockStrings = array( 'Base', 'Grouping', 'GroupingSet', 'EmptySet', 'MatchGrouping' );
 		$setMocks = array();
 		foreach ( $setMockStrings as $name ) {
@@ -47,6 +47,7 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 			                        ->getMock();
 			$this->proxyClass( $fullName, $setMocks[$name] );
 		}
+		$this->proxyClass( 'Wikia\Search\ProfiledClassFactory', $pcf );
 		$this->mockApp();
 		
 		$mockDc
@@ -86,9 +87,15 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getWikiMatch' )
 		    ->will   ( $this->returnValue( null ) )
 		;
+		$pcf
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'get' )
+		    ->with   ( 'Wikia\Search\ResultSet\EmptySet', [ $mockDc ] )
+		    ->will   ( $this->returnValue( $setMocks['EmptySet'] ) )
+		;
 		$this->assertEquals(
-				get_class( $setMocks['EmptySet'] ),
-				$factory->get( $mockDc )->_mockClassName
+				$setMocks['EmptySet'],
+				$factory->get( $mockDc )
 		);
 		$mockDc
 		    ->expects( $this->at( 0 ) )
@@ -115,9 +122,15 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getWikiMatch' )
 		    ->will   ( $this->returnValue( null ) )
 		;
+		$pcf
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'get' )
+		    ->with   ( 'Wikia\Search\ResultSet\EmptySet', [ $mockDc ] )
+		    ->will   ( $this->returnValue( $setMocks['EmptySet'] ) )
+		;
 		$this->assertEquals(
-				get_class( $setMocks['EmptySet'] ),
-				$factory->get( $mockDc )->_mockClassName
+				$setMocks['EmptySet'],
+				$factory->get( $mockDc )
 		);
 		$mockDc
 		    ->expects( $this->at( 0 ) )
@@ -149,9 +162,15 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getGroupResults' )
 		    ->will   ( $this->returnValue( true ) )
 		;
+		$pcf
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'get' )
+		    ->with   ( 'Wikia\Search\ResultSet\GroupingSet', [ $mockDc ] )
+		    ->will   ( $this->returnValue( $setMocks['GroupingSet'] ) )
+		;
 		$this->assertEquals(
-				get_class( $setMocks['GroupingSet'] ),
-				$factory->get( $mockDc )->_mockClassName
+				$setMocks['GroupingSet'],
+				$factory->get( $mockDc )
 		);
 		$mockDc
 		    ->expects( $this->at( 0 ) )
@@ -178,9 +197,15 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getWikiMatch' )
 		    ->will   ( $this->returnValue( null ) )
 		;
+		$pcf
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'get' )
+		    ->with   ( 'Wikia\Search\ResultSet\Grouping', [ $mockDc ] )
+		    ->will   ( $this->returnValue( $setMocks['Grouping'] ) )
+		;
 		$this->assertEquals(
-				get_class( $setMocks['Grouping'] ),
-				$factory->get( $mockDc )->_mockClassName
+				$setMocks['Grouping'],
+				$factory->get( $mockDc )
 		);
 		$mockDc
 		    ->expects( $this->at( 0 ) )
@@ -207,9 +232,15 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getWikiMatch' )
 		    ->will   ( $this->returnValue( $mockMatch ) )
 		;
+		$pcf
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'get' )
+		    ->with   ( 'Wikia\Search\ResultSet\MatchGrouping', [ $mockDc ] )
+		    ->will   ( $this->returnValue( $setMocks['MatchGrouping'] ) )
+		;
 		$this->assertEquals(
-				get_class( $setMocks['MatchGrouping'] ),
-				$factory->get( $mockDc )->_mockClassName
+				$setMocks['MatchGrouping'],
+				$factory->get( $mockDc )
 		);
 		$mockDc
 		    ->expects( $this->at( 0 ) )
@@ -241,9 +272,15 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getGroupResults' )
 		    ->will   ( $this->returnValue( false ) )
 		;
+		$pcf
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'get' )
+		    ->with   ( 'Wikia\Search\ResultSet\Base', [ $mockDc ] )
+		    ->will   ( $this->returnValue( $setMocks['Base'] ) )
+		;
 		$this->assertEquals(
-				get_class( $setMocks['Base'] ),
-				$factory->get( $mockDc )->_mockClassName
+				$setMocks['Base'],
+				$factory->get( $mockDc )
 		);
 	}
 	
