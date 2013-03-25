@@ -71,8 +71,10 @@ class AbTesting extends WikiaObject {
 		return strtotime($date);
 	}
 
-	protected function generateConfigScript( $data ) {
+	protected function generateConfigScript( $data, &$externalData = array() ) {
 		$config = array();
+
+		$externalData = array();
 
 		foreach ($data as $exp) {
 			$expName = $this->normalizeName($exp['name']);
@@ -84,22 +86,34 @@ class AbTesting extends WikiaObject {
 			);
 			$versions = &$config[$expName]['versions'];
 			foreach ($exp['versions'] as $ver) {
+				$versionId = intval($ver['id']);
 				$version = array(
+					'id' => $versionId,
 					'startTime' => $this->getTimestampForUTCDate($ver['start_time']),
 					'endTime' => $this->getTimestampForUTCDate($ver['end_time']),
 					'gaSlot' => $ver['ga_slot'],
 					'flags' => $this->getFlagsInObject( $ver['flags'] ),
+					'external' => false,
 					'groups' => array(),
 				);
 				$groups = &$version['groups'];
 				foreach ($ver['group_ranges'] as $grn) {
-					$group = $exp['groups'][$grn['group_id']];
+					$groupId = intval($grn['group_id']);
+					$group = $exp['groups'][$groupId];
 					$groupName = $this->normalizeName($group['name']);
 					$groups[$groupName] = array(
 						'id' => intval($group['id']),
 						'name' => $groupName,
 						'ranges' => $this->parseRanges($grn['ranges']),
 					);
+					if ( !empty($grn['styles']) ) {
+						$version['external'] = true;
+						$externalData[$expName][$versionId][$groupId]['styles'] = $grn['styles'];
+					}
+					if ( !empty($grn['scripts']) ) {
+						$version['external'] = true;
+						$externalData[$expName][$versionId][$groupId]['scripts'] = $grn['scripts'];
+					}
 				}
 				$versions[] = $version;
 			}
@@ -117,7 +131,7 @@ class AbTesting extends WikiaObject {
 	*/
 	protected function getConfig() {
 		$memcKey = $this->getMemcKey();
-		$data = $this->wg->memc->get($memcKey);
+//		$data = $this->wg->memc->get($memcKey);
 		if ( empty( $data ) ) {
 			$data = $this->generateConfigObj();
 		}
@@ -143,9 +157,13 @@ class AbTesting extends WikiaObject {
 			$ttl = max( 1, min( $ttl, $nextModification - time() + 1 ) );
 		}
 
+		$externalData = array();
+		$script = $this->generateConfigScript($dataClass->getCurrent(),$externalData);
+
 		$data = array(
 			'modifiedTime' => $lastModified,
-			'script' => $this->generateConfigScript($dataClass->getCurrent()),
+			'script' => $script,
+			'externalData' => $externalData,
 		);
 		$this->wg->memc->set($memcKey,$data,$ttl);
 		return $data;
@@ -159,6 +177,11 @@ class AbTesting extends WikiaObject {
 	public function getConfigModifiedTime() {
 		$data = $this->getConfig();
 		return $data['modifiedTime'] ? $data['modifiedTime'] : 1;
+	}
+
+	public function getConfigExternalData() {
+		$data = $this->getConfig();
+		return $data['externalData'];
 	}
 
 	public function invalidateCache() {

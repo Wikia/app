@@ -122,6 +122,23 @@
 		return list;
 	};
 
+	AbTest.loadExternalData = function( data ) {
+		var index, groupData, html = '';
+		log('init', 'Received external configuration');
+		for ( index in data ) {
+			groupData = data[index];
+			if ( groupData.styles ) {
+				html += '<style>'+groupData.styles+'</style>';
+			}
+			if ( groupData.scripts ) {
+				html += '<script>'+groupData.scripts+'</script>';
+			}
+		}
+		if ( html != '' ) {
+			document.write(html);
+		}
+	};
+
 	// Set up instance methods for AbTest. Allows you to call any of the listed methods
 	// with a pre-determined experiment context (which is provided on instantiation).
 	(function( prototype ) {
@@ -237,7 +254,8 @@
 		var matches,
 			rTreatmentGroups = /AbTest\.([^=]+)=([^?&]+)/gi,
 			queryString = window.location.search,
-			expName, groupName, exp, slot;
+			expName, groupName, exp, slot,
+			externalIds = [];
 
 		if ( queryString ) {
 			while ( ( matches = rTreatmentGroups.exec( queryString ) ) != null ) {
@@ -269,6 +287,20 @@
 					setActiveGroup( expName, groupName );
 				}
 			}
+		}
+
+		// Handle fetching external data
+		for ( expName in experiments ) {
+			exp = experiments[expName];
+			if ( exp.current.external && exp.group ) {
+				externalIds.push(exp.name+'.'+exp.current.id+'.'+exp.group.id);
+			}
+		}
+		if ( externalIds.length > 0 ) {
+			log('init', 'Loading external configuration');
+			var url = '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
+			url += externalIds.join(',');
+			document.write('<scr'+'ipt src="'+encodeURI(url)+'"></script>');
 		}
 	})( AbTest.experiments );
 
