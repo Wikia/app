@@ -127,8 +127,6 @@ class InterWiki extends AbstractSelect
 	 * @return Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function prepareRequest() {
-		$this->config->setLength( self::GROUP_RESULTS_GROUPINGS_LIMIT )
-		             ->setIsInterWiki( true );
 		if ( $this->config->getPage() > 1 ) {
 			$this->config->setStart( ( $this->config->getPage() - 1 ) * $this->config->getLength() );
 		}
