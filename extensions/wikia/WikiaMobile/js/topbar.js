@@ -7,6 +7,7 @@
 
 define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('ads'), 'track', 'throbber', 'wikia.window'], function (qs, loader, toc, ads, track, throbber, w) {
 	'use strict';
+
 	var	d = w.document,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
@@ -43,10 +44,10 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 		!stopScrolling && wkPrfTgl.scrollIntoView();
 		toc.close();
 
-		var qs = qs(),
-			hash = qs.getHash();
+		var query = qs(),
+			hash = query.getHash();
 
-		(hash !== '#topbar') && (qs.setHash('topbar'));
+		(hash !== '#topbar') && (query.setHash('topbar'));
 		hidePage();
 	}
 
