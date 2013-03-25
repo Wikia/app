@@ -60,8 +60,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 			}
 
-			//it always return array so get function can be more generic
-			return [getURL(path, type, params)];
+			return getURL(path, type, params);
 		},
 		addScript = function(content){
 			head.appendChild(createElement('script', {text: content}));
@@ -72,6 +71,10 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				timer,
 				url,
 				i = 0;
+
+			if(!isArray(urls)) {
+				urls = [urls];
+			}
 
 			while(url = urls[i++]){
 				if(type == loader.CSS || type == loader.SCSS){
@@ -398,7 +401,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 					log(remaining + ' remaining...', log.levels.info, 'loader');
 
 					// All files have been downloaded
-					if ( remaining == 0 ) {
+					if ( remaining <= 0 ) {
 						if(!failed.length) {
 							// Resolve the deferred object
 
