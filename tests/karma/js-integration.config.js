@@ -130,3 +130,7 @@ preprocessors = {
 	'**/resources/wikia/modules/*.js': 'coverage',
 	'**/js/*.js': 'coverage'
 };
+
+junitReporter = {
+	outputFile: 'tests/build/test-results.xml'
+};
