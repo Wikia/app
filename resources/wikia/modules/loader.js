@@ -417,9 +417,9 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 					}
 				},
 				failure = function(res){
-					log({errorLoading: res}, log.levels.error, 'loader');
-
 					return function(override){
+						log({errorLoading: res}, log.levels.error, 'loader');
+
 						failed.push(override || res);
 						complete();
 					}
