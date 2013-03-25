@@ -88,14 +88,22 @@ class FixWikiCreation extends Maintenance {
 		} elseif ( $this->wikiaID > 0 ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$tables_to_fix = array();
-			if ( !empty( $this->tables ) ) {
-				foreach ( $this->tables as $table ) { 
-					if ( !$dbr->tableExists( $table , __METHOD__ ) ) {
-						$tables_to_fix[] = $table;
+			/* check if page table exists */
+			if ( !$dbr->tableExists( 'page', __METHOD__ ) ) {
+				/* wiki to close */
+				if ( $this->fix ) {
+					WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $this->wikiaID, 'No SQL tables' );
+				}
+			} else {
+				if ( !empty( $this->tables ) ) {
+					foreach ( $this->tables as $table ) { 
+						if ( !$dbr->tableExists( $table , __METHOD__ ) ) {
+							$tables_to_fix[] = $table;
+						}
 					}
 				}
 			}
-			
+				
 			echo implode(",", $tables_to_fix);
 		}
 	}

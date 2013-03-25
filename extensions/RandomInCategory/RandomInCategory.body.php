@@ -70,12 +70,13 @@ class RandomPageInCategory extends RandomPage {
 		// FIXME: FORCE INDEX gets added in wrong place, goes after table join, should be before
 		// bug 27081
 		unset( $query['options']['USE INDEX'] );
+		$query['options']['USE INDEX'] = array( 'page' => 'page_random' );
 
 		$query['join_conds'] = array(
-				'categorylinks' => array(
-					'JOIN', array( 'page_id=cl_from' )
-				)
-			);
+			'categorylinks' => array(
+				'JOIN', array( 'page_id=cl_from' )
+			)
+		);
 
 		return $query;
 	}
