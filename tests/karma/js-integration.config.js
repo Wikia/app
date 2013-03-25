@@ -123,7 +123,7 @@ singleRun = false;
 
 coverageReporter = {
 	type : 'cobertura',
-	dir : '/tests/build/jsintegration-coverage'
+	dir : 'tests/build/jsintegration-coverage'
 };
 
 preprocessors = {
