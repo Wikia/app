@@ -66,6 +66,8 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 									}
 
 									RTE.templateEditor.selectTemplate(dialog, templateName);
+
+									RTE.track('visualMode', 'template', 'dialog', 'search', 'suggest', templateName);
 								}
 							}
 						]
@@ -142,6 +144,8 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 									RTE.templateEditor.doPreview.apply(RTE.templateEditor, [function() {
 										self.enable();
 									}]);
+
+									RTE.track('visualMode', 'template', 'dialog', 'editor', 'preview');
 								}
 							},
 							{
@@ -281,12 +285,22 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 				*/
 			}
 
+			// tracking
+			this.getButton('ok').on('click', function(ev) {
+				RTE.track('visualMode', 'template', 'dialog', 'editor', 'ok');
+			});
+			this.getButton('chooseAnotherTpl').on('click', function(ev) {
+				RTE.track('visualMode', 'template', 'dialog', 'editor', 'chooseAnother');
+			});
+
 			// let's show proper step
 			RTE.templateEditor.selectStep(step);
 		},
 		onHide: function() {
 			// detect current step
 			var step = (this.getActiveTab() == 'step1') ? 'search' : 'editor';
+
+			RTE.track('visualMode', 'template', 'dialog', step, 'close');
 		},
 		// don't focus on first page when starting template editor on second page
 		onFocus: function() {}

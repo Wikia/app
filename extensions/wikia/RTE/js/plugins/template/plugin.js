@@ -35,7 +35,7 @@ CKEDITOR.plugins.add('rte-template',
 				this.add('--other--',
 					'<strong>' + editor.lang.templateDropDown.chooseAnotherTpl  + '</strong>',
 					editor.lang.templateDropDown.chooseAnotherTpl);
-
+				
 				// add "List of used templates"
 				this.add('--list--',
 					'<strong>' + editor.lang.templateDropDown.showUsedList  + '</strong>',
@@ -61,6 +61,8 @@ CKEDITOR.plugins.add('rte-template',
 						RTE.templateHelpers.makeLayout(editor);
 						break;
 					default:
+						RTE.track('visualMode', 'template', 'dialog', 'search', 'dropdown', value);
+	
 						// show template editor with selected template
 						RTE.templateEditor.createTemplateEditor(value);
 				}
@@ -72,14 +74,14 @@ CKEDITOR.plugins.add('rte-template',
 				}, 50);
 			}
 		});
-
+		
 		// list of templates to be added to dropdown
 		/*
 		var templates = window.RTETemplatesDropdown;
 
 		for (var t=0; t < templates.length && t < 4; t++) {
 			var name = templates[t].replace(/_/g, ' ');
-
+			
 			editor.ui.addButton('Template_Popular'+t, {
 				label: name,
 				title: name,
@@ -179,7 +181,7 @@ RTE.templateEditor = {
 			currentData = this.placeholder ? this.placeholder.getData() : false,
 			bracketPattern = /\[\[(.*?)\]\]/g;
 
-		// Check for any bracketed syntax and mark the pipes within (BugID: 2264 and 69126)
+		// Check for any bracketed syntax and mark the pipes within (BugID: 2264 and 69126)			
 		if ( bracketPattern.test( currentData.wikitext ) ) {
 			var	results = currentData.wikitext.match( bracketPattern ),
 				i = 0,

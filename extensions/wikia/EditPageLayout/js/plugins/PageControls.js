@@ -71,10 +71,6 @@
 			// pressing enter on minor edit checkbox should not save the edition
 			this.minorEditCheck.bind('keypress', this.proxy(this.onMinorEditKeypress));
 
-			this.minorEditCheck.bind('change', this.proxy(function() {
-				this.editor.track( 'minor-edit' );
-			}));
-
 			// attach events
 			$('#wpPreview').bind('click', this.proxy(this.onPreview));
 
@@ -103,6 +99,7 @@
 					// show it only when hovering over #EditPageHeader
 					addClass('enabled').
 					bind('click', this.proxy(function(ev) {
+						this.editor.track('title', 'edit');
 						this.renderHiddenFieldsDialog();
 					}));
 
@@ -125,6 +122,15 @@
 				this.updateEditedTitle();
 			}
 
+			// track clicks on page title and help link
+			this.titleNode.children('a').bind('click', this.proxy(function(ev) {
+				this.editor.track('title', 'pagename');
+			}));
+
+			$('#HelpLink').bind('click', this.proxy(function(ev) {
+				this.editor.track('title', 'help');
+			}));
+
 			// show form rendered by edit form callback (e.g. captcha)
 			if (this.callbackFields.exists()) {
 				this.renderCallbackFieldsDialog();
@@ -146,7 +152,7 @@
 		// handle "Preview" button
 		onPreview: function(ev) {
 			this.renderPreview({});
-			this.editor.track( 'preview' );
+			this.editor.track(this.editor.getTrackerInitialMode(), 'pageControls', 'preview', this.editor.getTrackerMode());
 
 			ev.preventDefault();
 		},
@@ -154,7 +160,7 @@
 		// handle "Show changes" button
 		onDiff: function(ev) {
 			this.renderChanges({});
-			this.editor.track( 'diff' );
+			this.editor.track(this.editor.getTrackerInitialMode(), 'pageControls', 'diff', this.editor.getTrackerMode());
 
 			ev.preventDefault();
 		},
@@ -167,7 +173,7 @@
 
 			this.editor.setState(this.editor.states.SAVING);
 
-			this.editor.track( 'publish' );
+			this.editor.track('visualMode', 'pageControls', 'save', this.editor.getTrackerMode(), 'button');
 
 			// block "Publish" button
 			$('#wpSave').attr('disabled', true);
@@ -176,10 +182,7 @@
 		// handle keypressing in "Edit summary" field
 		onSummaryKeypress: function(ev) {
 			if (ev.keyCode == 13 /* enter */) {
-				this.editor.track({
-					action: Wikia.Tracker.ACTIONS.SUBMIT,
-					label: 'summary-enter'
-				});
+				this.editor.track('visualMode', 'pageControls', 'save', this.editor.getTrackerMode(), 'enter');
 
 				// submit the form
 				var form = this.textarea.closest('form');

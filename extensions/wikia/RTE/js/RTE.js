@@ -74,7 +74,8 @@
 				'rte-template,' +
 				'rte-temporary-save,' +
 				'rte-toolbar,' +
-				'rte-tools',
+				'rte-tools,' +
+				'rte-track',
 			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
 			//readOnly: true,
 			resize_enabled: false,
@@ -85,6 +86,7 @@
 		},
 
 		// Unique editor instance Id, set on modeswitch
+		// It is used mostly for paste tracking (detecting where pasted content came from)
 		// See RTE::getInstanceID() for details
 		instanceId: null,
 

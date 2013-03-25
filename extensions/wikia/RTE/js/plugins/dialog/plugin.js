@@ -89,6 +89,49 @@ CKEDITOR.plugins.add('rte-dialog',
 			}
 		};
 
+		// setup click tracking when dialog is about to be shown
+		if(!CKEDITOR.dialog.prototype.showOriginal){
+			CKEDITOR.dialog.prototype.showOriginal = CKEDITOR.dialog.prototype.show;
+			CKEDITOR.dialog.prototype.show = function() {
+				this.showOriginal();
+
+				if(!this._.trackingSetUp) {
+					this.initTracking();
+
+					// run this just once per dialog's instance
+					this._.trackingSetUp = true;
+				}
+			};
+		}
+
+		// setup tracking for given dialog
+		CKEDITOR.dialog.prototype.initTracking = function() {
+			this.on('show', $.proxy(this.track, this));
+			this.on('close', $.proxy(this.track, this));
+
+			// dialog field did not pass validation
+			this.on('notvalid', $.proxy(this.track, this));
+
+			// handle clicks on OK button - set a flag (to be read by "onHide" event)
+			this.on('ok', $.proxy(function(ev) {
+				this._.okClicked = true;
+			}, this));
+
+			// when dialog is being closed check whether if was caused by clicking "Ok" button
+			this.on('hide', $.proxy(function() {
+				if (this._.okClicked) {
+					this.track({name: 'ok'});
+
+					delete this._.okClicked;
+				}
+			}, this));
+		};
+
+		// report "<dialogName>/dialog/<eventName>" events
+		CKEDITOR.dialog.prototype.track = function(ev) {
+			RTE.track(this._.name, 'dialog', ev.name);
+		};
+
 		// always show body's scrollbars when modal is shown (BugId:7498)
 		editor.on('dialogShow', function(ev) {
 			$(document.body).addClass('modalShown');

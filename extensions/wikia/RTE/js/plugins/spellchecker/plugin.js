@@ -489,6 +489,8 @@ CKEDITOR.spellchecker.prototype = {
 
 		// save undo step
 		this.editor.fire('saveSnapshot');
+
+		RTE.track('spellchecker', 'applySuggestion');
 	},
 
 	// setup SCAYT (SpellCheckAsYouType) feature

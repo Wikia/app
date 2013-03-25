@@ -58,6 +58,9 @@ CKEDITOR.plugins.add('rte-modeswitch',
 			// remove loading indicator, don't switch mode
 			editor.fire('modeSwitchCancelled');
 
+			// track errors
+			RTE.track('switchMode', 'error');
+
 			// modal with a message
 			$.showModal(editor.lang.errorPopupTitle, editor.lang.modeSwitch.error, {width: 400});
 		};
@@ -72,6 +75,8 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 					editor.setMode('source');
 					editor.setData(data.wikitext);
+
+					RTE.track('switchMode', 'wysiwyg2source');
 				});
 				break;
 
@@ -101,6 +106,9 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 						// stay in source mode
 						editor.fire('modeSwitchCancelled');
+
+						// tracking
+						RTE.track('switchMode', 'edgecase', data.edgecase.type);
 						return;
 					}
 
@@ -110,6 +118,8 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 					// RT #84586: update instanceId
 					RTE.instanceId = data.instanceId;
+
+					RTE.track('switchMode', 'source2wysiwyg');
 				});
 				break;
 		}
