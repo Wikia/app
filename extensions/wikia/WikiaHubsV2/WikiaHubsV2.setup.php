@@ -35,10 +35,6 @@ $app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2Suggest
 
 $app->registerClass('WikiaHubsParserHelper', $dir . 'WikiaHubsParserHelper.class.php');
 
-
-// pages
-$app->registerSpecialPage('WikiaHubsV2', 'SpecialWikiaHubsV2Controller');
-
 // i18n mapping
 $app->registerExtensionMessageFile('WikiaHubsV2', $dir.'WikiaHubsV2.i18n.php');
 

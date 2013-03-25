@@ -227,7 +227,6 @@ class GameGuidesModel{
 						try {
 							$textResults[] = array(
 									'textForm' => $result->getTitle(),
-
 									'urlForm' => $mwService->getLocalUrlForPageId( $result['pageid'], array( 'useskin' => 'wikiaapp' ) )
 									);
 							$count++;
