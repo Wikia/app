@@ -9,7 +9,7 @@
 
 define('track', ['wikia.tracker'], function( tracker ) {
 	'use strict';
-	var ACTIONS = tracker.ACTIONS;
+	var ACTIONS = tracker.ACTIONS || {};
 
 	return {
 		event: function (category, action, options, ev) {

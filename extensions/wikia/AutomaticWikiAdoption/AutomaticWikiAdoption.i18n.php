@@ -116,11 +116,14 @@ Helpful Tools:
 );
 
 /** Message documentation (Message documentation)
+ * @author Siebrand
  * @author TK-999
  */
 $messages['qqq'] = array(
-	'tog-adoptionmails' => '$1 is the wiki name potentially up for adoption.',
-	'wikiadoption-pref-label' => 'This message is located within the Email tab of Special:Preferences; $1 is the wiki name the user opened it in.',
+	'tog-adoptionmails' => 'Parameters:
+* $1 is the wiki name potentially up for adoption.',
+	'wikiadoption-pref-label' => 'This message is located within the Email tab of Special:Preferences. Parameters:
+* $1 is the wiki name the user opened it in.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -134,6 +137,12 @@ $messages['af'] = array(
  * @author Achraf94
  */
 $messages['ar'] = array(
+	'wikiadoption' => 'تبنى ويكي أوتوماتيكي',
+	'wikiadoption-desc' => 'ملحق تبني ويكي أوتوماتيكي خاص بميدياويكي',
+	'wikiadoption-header' => 'تبنى هذه الويكي',
+	'wikiadoption-button-adopt' => 'نعم أريد أن أتبنى {{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'اكتشف المزيد!',
+	'wikiadoption-know-more-header' => 'هل تريد معرفة المزيد؟',
 	'wikiadoption-adoption-successed' => 'تهانينا! أنت الآن إداري مسؤول عن هذه الويكي!',
 	'wikiadoption-not-allowed' => 'نحن نأسف. لا يمكن لك تبني هذه الويكي حاليا',
 	'wikiadoption-not-enough-edits' => 'عفوا! تحتاج إلى أكثر من 10 تعديلات لكي تتمكن من تبني هذه الويكي',

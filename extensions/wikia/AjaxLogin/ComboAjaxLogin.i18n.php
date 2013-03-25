@@ -53,12 +53,14 @@ $messages['ar'] = array(
 	'comboajaxlogin-desc' => 'صندوق ديناميكي يسمح للمستخدمين بتسجيل الدخول كما يذكرهم بكلمة السر و المستخدمين المسجلين.',
 	'comboajaxlogin-createlog' => 'تسجيل الدخول أو إنشاء حساب',
 	'comboajaxlogin-actionmsg' => 'لكي تقوم بهذه العملية يجب عليك أولا تسجيل الدخول أو إنشاء حساب',
+	'comboajaxlogin-actionmsg-protected' => 'لتنفيذ هذا الإجراء، تحتاج أولاً لتسجيل الدخول أو إنشاء حساب.',
 	'comboajaxlogin-connectmarketing' => '<h1>اربط حساباتك</h1>
 <ul>
 <li>حافظ على اسم المستخدم الحالي, تاريخ المساهمات, التعديلات... لا شيء يتغير إلا كيفية تسجيل الدخول</li>
 <li>شارك نشاطك في ويكيا مع أصدقائك في الفيسبوك</li>
 <li>تحكم فيما ينشر على الفيسبوك الخاص بك</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>سجل الدخول عبر فيسبوك كونيكت</h1>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; العودة',
 	'comboajaxlogin-connectmarketing-forward' => 'إبذأ &raquo',
 	'comboajaxlogin-ajaxerror' => 'ويكيا لا يمكنها الاستجابة لك. الرجاء التحقق من الشبكة الخاصة بك',
@@ -1032,8 +1034,23 @@ $messages['roa-tara'] = array(
 <li>Condrolle comblete de quidde ca pubbleche</li>
 </ul>",
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Tràse cu Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => "<h1>Colleghe 'u cunde tue de Uicchia a Feisbuc</h1>
+<ul>
+<li>Mandìne 'u nome utende tune de mò, 'a storie, le cangiaminde... nò cange ninde accume tràse</li>
+<li>Condivide le attivitate tune sus a Uicchia cu le amice tue de Feisbuc, cu 'nu condrolle comblete de quidde ca ste pubbleche</li>
+</ul>",
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Rrète',
 	'comboajaxlogin-connectmarketing-forward' => 'Ccu accumenze &raquo;',
+	'comboajaxlogin-connectdirections' => "Mitte 'u nome utende tune de Uicchia e 'a passuord aqquà - nuje maggecamende te collegame le cunde de Uicchia e Feisbuc da rrete.
+
+'Na vote ca è fatte, tu puè trasè facilmende ausanne ogne buttone de collegamende de Feisbuc.",
+	'comboajaxlogin-post-not-understood' => "Stave 'n'errore jndr'à 'u mode jndr'à 'u quale 'u module ha state fatte.
+Pe piacere pruève arrete o [[Special:Contact|segnalale]].",
+	'comboajaxlogin-readonlytext' => '<h2>Ne despiace!</h2>
+<p>Non ge puè ccrejà \'nu cunde utende jndr\'à stu mumende - nuje avessema funzionà arrete tra quacche mumende. Quiste jè quidde ca ha successe:<br /><em>$1</em></p>
+<p>Pe piacere verifiche <a href="http://twitter.com/wikia">Tuitter</a> o <a href="http://facebook.com/wikia">Feisbuc</a> pe cchiù \'mbormaziune.
+<br />
+(Ce tu tìne ggià \'nu cunde, tu puè <a href="#">trasè</a> normalmende, ma non ge puè fà le cangiaminde.)</p>',
 	'comboajaxlogin-ajaxerror' => "Uicchia non ge ste resppnne. Pe piacere condrolle 'a connessione d'a rezza toje.",
 );
 

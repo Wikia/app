@@ -9,8 +9,8 @@ class Wall extends WikiaModel {
 	protected $mRelatedPageId = false;
 	protected $cacheable = true;
 
-	static public function newFromId( $id ) {
-		$title = Title::newFromId($id);
+	static public function newFromId( $id, $flags = 0 ) {
+		$title = Title::newFromId($id, $flags);
 		if( empty($title) ) {
 			return null;
 		}

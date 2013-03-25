@@ -532,7 +532,7 @@
 			action: action,
 			category: 'vet',
 			label: label || '',
-			trackingMethod: 'internal'
+			trackingMethod: 'both'
 		});
 	}
 

@@ -70,6 +70,10 @@ $color-borders: #CECECE;
 			.wikiaThrobber {
 				background-color: #fff;
 			}
+			.error-msg {
+				float: left;
+				margin-right: 10px;
+			}
 		}
 		&.back-controls {
 			left: 20px;

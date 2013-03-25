@@ -30,7 +30,7 @@
 				requires: [
 					$.loadYUI,
 					$.loadJQueryAIM,
-					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
+					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss' ),
 					wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
 				]
 			}
@@ -88,6 +88,12 @@
 			editor.fire('editorActivated', event);
 			$().log('instance "' + WE.instanceId + '" activated', 'WikiaEditor');
 		}
+	};
+
+	// Convience function for tracking the current instance
+	// @see /extensions/wikia/EditPageLayout/js/plugins/Tracker.js
+	WE.track = function( data ) {
+		WE.getInstance().track( data );
 	};
 
 	// Returns the currently active instance

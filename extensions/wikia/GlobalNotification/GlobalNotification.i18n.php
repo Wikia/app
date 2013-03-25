@@ -19,6 +19,13 @@ $messages['qqq'] = array(
 	'globalnotification-general-ajax-failure' => 'General message for AJAX failure to be put on global notification',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'globalnotification-general-ajax-failure' => 'تعذر على المتصفح الدخول إلى ويكيا.  حاول مرة أخرى لاحقاً.',
+);
+
 /** Catalan (català)
  * @author Marcmpujol
  */

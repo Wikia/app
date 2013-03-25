@@ -53,6 +53,17 @@ $messages['qqq'] = array(
 * $2 is are the error details.',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'lightbox-forum' => 'منتدى',
+	'lightbox-share-button-email' => 'البريد الإلكتروني',
+	'lightbox-share-button-www' => 'انشرها',
+	'lightbox-share-button-embed' => 'تضمين',
+	'lightbox-share-email-error-caption' => 'خطأ',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */

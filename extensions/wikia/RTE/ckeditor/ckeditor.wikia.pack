@@ -219,7 +219,6 @@ packages :
 					'../js/plugins/temporary-save/plugin.js',
 					'../js/plugins/toolbar/plugin.js',
 					'../js/plugins/tools/plugin.js',
-					'../js/plugins/track/plugin.js',
 
 						// Wikia skin
 					'_source/themes/wikia/theme.js',

@@ -14,9 +14,11 @@ $messages['en'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Mutarjem horr
  */
 $messages['ar'] = array(
+	'centralhelpsearch-desc' => 'يسمح بإدراج نموذج للبحث في مركز ويكيا العربية',
 	'centralhelpsearch-placeholder' => 'مساعدة على البحث...',
 );
 

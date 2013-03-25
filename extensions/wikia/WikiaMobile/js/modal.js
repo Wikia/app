@@ -61,7 +61,9 @@ define('modal', ['throbber', require.optional('ads')], function modal(throbber, 
 	}
 
 	function onOrientationChange(ev){
-		wrapper.style.minHeight = ev.height + 'px';
+		//Setting minHeight is essential to hide url bar in a browser
+		//in GameGuides though there is nothing to hide
+		!Features.gameguides && (wrapper.style.minHeight = ev.height + 'px');
 		!w.pageYOffset && w.scrollTo(0, 1);
 
 		if(typeof onResize == 'function') onResize(ev);

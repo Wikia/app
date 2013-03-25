@@ -53,7 +53,7 @@
 							}
 
 							this.className += ' ' + position;
-							var pos = (horizontal)?(position == 'top'?'bottom':'top'):(position == 'left'?'right':'left');
+							var pos = horizontal ? (position == 'top' ? 'bottom' : 'top') : (position == 'left' ? 'right' : 'left');
 							cnt.style[pos] = (offset + 13) + 'px';
 
 							cnt.style.cssText += style;
