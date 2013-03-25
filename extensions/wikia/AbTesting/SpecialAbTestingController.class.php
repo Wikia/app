@@ -129,10 +129,14 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		$rangesInfo = wfMsg( 'abtesting-ranges-info' );
 		foreach ($experiment['groups'] as $group) {
 			$ranges = '';
+			$styles = '';
+			$scripts = '';
 			$groupId = $group['id'];
 
 			if ($lastVersion && !empty($lastVersion['group_ranges'][$groupId])) {
 				$ranges = $lastVersion['group_ranges'][$groupId]['ranges'];
+				$styles = $lastVersion['group_ranges'][$groupId]['styles'];
+				$scripts = $lastVersion['group_ranges'][$groupId]['scripts'];
 			}
 
 			$groups[] = array(
@@ -147,9 +151,13 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$groups[] = array(
 				'type' => 'text',
 				'name' => 'ranges[]',
+				'class' => 'ranges',
 				'label' => $group['name'] . ' ' . $rangesInfo,
 				'value' => $ranges,
 			);
+
+			$groups[] = $this->getPopupButtonField('Styles','group-styles','styles[]',$styles);
+			$groups[] = $this->getPopupButtonField('Scripts','group-scripts','scripts[]',$scripts);
 
 		}
 
@@ -299,8 +307,10 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		$groups = array();
 		foreach ($data['groups'] as $i => $groupName) {
 			$ranges = $data['ranges'][$i];
+			$styles = $data['styles'][$i];
+			$scripts = $data['scripts'][$i];
 
-			if ( empty( $groupName ) && empty( $ranges ) ) {
+			if ( empty( $groupName ) && empty( $ranges ) && empty( $styles ) && empty( $scripts ) ) {
 				continue;
 			}
 
@@ -321,6 +331,8 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 
 			// save group-to-range assignment in a more helpful way
 			$groups[$normalizedName]['ranges'] = $ranges;
+			$groups[$normalizedName]['styles'] = $styles;
+			$groups[$normalizedName]['scripts'] = $scripts;
 
 			// if group doesn't exist schedule it for adding
 			if ( !isset($existingGroups[$normalizedName] ) ) {
@@ -332,6 +344,8 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			} else {
 				$grpId = $existingGroups[$normalizedName];
 				$this->checkValueChanged(@$info['lastVersion']['group_ranges'][$grpId]['ranges'],$ranges,$versionChanged);
+				$this->checkValueChanged(@$info['lastVersion']['group_ranges'][$grpId]['styles'],$styles,$versionChanged);
+				$this->checkValueChanged(@$info['lastVersion']['group_ranges'][$grpId]['scripts'],$scripts,$versionChanged);
 			}
 
 		}
@@ -413,11 +427,15 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				// save group ranges
 				foreach ($groups as $normalizedName => $info) {
 					$ranges = $info['ranges'];
+					$styles = $info['styles'];
+					$scripts = $info['scripts'];
 					$grpId = $existingGroups[$normalizedName];
 					$grn = array(
 						'group_id' => $grpId,
 						'version_id' => $verId,
 						'ranges' => $ranges,
+						'styles' => $styles ? $styles : null,
+						'scripts' => $scripts ? $scripts : null,
 					);
 					$abData->saveGroupRange($grn);
 				}
@@ -488,4 +506,15 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 
 		return $info;
 	}
+
+	protected function getPopupButtonField( $caption, $class, $name, $value ) {
+		return array(
+			'type' => 'custom',
+			'class' => 'value-dialog ' . $class . (!empty( $value ) ? ' value-active' : ''),
+			'output' =>
+				"<input name=\"".htmlspecialchars($name)."\" type=\"hidden\" value=\"".htmlspecialchars($value)."\" />".
+				"<span>$caption: <span class=\"value-empty-text\">(none)</span><span class=\"value-present-text\">(present)</span> <a class=\"wikia-button value-edit\">Edit</a></span>",
+		);
+	}
+
 }
