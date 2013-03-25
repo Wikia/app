@@ -31,7 +31,6 @@
 			this.editor.on('state', this.proxy(this.onStateChange));
 
 			$(window).bind('beforeunload.leaveconfirm', this.proxy(this.onBeforeUnload));
-			$(window).bind('unload.leaveconfirm', this.proxy(this.onUnload));
 			$(window).bind('UserLoginSubmit', this.proxy(this.onUserLoginSubmit));
 
 			$('#wpSummary').on('change', $.proxy(function() {this.editor.fire('markDirty')}, this));
@@ -62,7 +61,6 @@
 		// @see https://developer.mozilla.org/en/DOM/window.onbeforeunload
 		onBeforeUnload: function(ev) {
 			if (this.shouldDisplayConfirm()) {
-				this.track('init');
 				this.dialogShown = true;
 
 				if (ev) {
@@ -73,19 +71,8 @@
 			}
 		},
 
-		// user decided to leave the page
-		onUnload: function(ev) {
-			if (this.dialogShown) {
-				this.track('ok');
-			}
-		},
-
 		onUserLoginSubmit: function() {
 			this.disableLeaveConfirm = true;
-		},
-
-		track: function(ev) {
-			this.editor.track('quitdialog', ev);
 		},
 
 		isEditorDirty: function() {
