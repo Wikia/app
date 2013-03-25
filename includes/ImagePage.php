@@ -84,18 +84,18 @@ class ImagePage extends Article {
 	public function view() {
 		global $wgOut, $wgShowEXIF, $wgRequest, $wgUser, $wgAddNoIndexToFilePages;
 
-		/** 
+		/**
 		 * Wikia change start
-		 * 
+		 *
 		 * https://wikia.fogbugz.com/default.asp?70212#475120
-		 */ 
+		 */
 		if(!empty($wgAddNoIndexToFilePages)) {
-			$wgOut->addMeta('robots', 'noindex, follow');				
+			$wgOut->addMeta('robots', 'noindex, follow');
 		}
 		/**
 		 * wikia change end
 		 */
-	
+
 		$diff = $wgRequest->getVal( 'diff' );
 		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
 
@@ -128,6 +128,9 @@ class ImagePage extends Article {
 			$showmeta = $formattedMetadata !== false;
 		} else {
 			$showmeta = false;
+			/* Wikia change begin */
+			$formattedMetadata = false;
+			/* Wikia change end */
 		}
 
 		if ( !$diff && $this->displayImg->exists() ) {
@@ -169,13 +172,13 @@ class ImagePage extends Article {
 		// always show the local local Filepage.css, bug 29277
 		$wgOut->addModuleStyles( 'filepage' );
 	}
-	
+
 	/**
 	 * Wikia - abstracted out part of view() function, so it can be wrapped by WikiaVideoPage
 	 */
 	protected function imageDetails($showmeta, $formattedMetadata) {
 		global $wgOut;
-		
+
 		# Show shared description, if needed
 		if ( $this->mExtraDescription ) {
 			$fol = wfMessage( 'shareddescriptionfollows' );
@@ -192,21 +195,21 @@ class ImagePage extends Article {
 		/* Wikia Change - abstracted this out to protected function */
 		$this->imageListing();	// generates image dupes and image links
 		/* End Wikia Change */
-		
+
 		# Allow extensions to add something after the image links
 		$html = '';
 		wfRunHooks( 'ImagePageAfterImageLinks', array( $this, &$html ) );
 		if ( $html ) {
 			$wgOut->addHTML( $html );
 		}
-		
+
 		if ( $showmeta ) {
 			$wgOut->addHTML( Xml::element( 'h2', array( 'id' => 'metadata' ), wfMsg( 'metadata' ) ) . "\n" );
 			$wgOut->addWikiText( $this->makeMetadataTable( $formattedMetadata ) );
 			$wgOut->addModules( array( 'mediawiki.action.view.metadata' ) );
 		}
 	}
-	
+
 	/**
 	 * Wikia - abstracted out part of view() function, so it can be overwritten by WikiaVideoPage
 	 */
