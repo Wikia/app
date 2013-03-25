@@ -243,7 +243,7 @@ EOT;
 		}
 
 		$plugins = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID),
-						'timeslidertooltipplugin-2'=>array(),
+						'timeslidertooltipplugin-3'=>array(),
                         // wlee 2012/04/14: turning off infobox.js due to a conflict with pre-roll ads (https://wikia.fogbugz.com/default.asp?20871)
 						//self::getAssetUrl(F::app()->wg->ExtensionsPath.self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js', self::INFOBOX_VERSION)=>array('title'=>htmlspecialchars($this->title))
 						);
