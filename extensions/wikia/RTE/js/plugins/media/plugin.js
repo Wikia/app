@@ -89,10 +89,11 @@ CKEDITOR.plugins.add('rte-media',
 				label: msgs['delete'],
 				'class': 'RTEMediaOverlayDelete',
 				callback: function(node) {
+					var msgMediaType = self.getMediaTypeForMsg(node);
 
 					// show modal version of confirm()
-					var title = RTE.getInstance().lang[type].confirmDeleteTitle;
-					var msg = RTE.getInstance().lang[type].confirmDelete;
+					var title = RTE.getInstance().lang[msgMediaType].confirmDeleteTitle;
+					var msg = RTE.getInstance().lang[msgMediaType].confirmDelete;
 
 					RTE.tools.confirm(title, msg, function() {
 						RTE.tools.removeElement(node);
@@ -331,6 +332,39 @@ CKEDITOR.plugins.add('rte-media',
 		if (RTE.config.disableDragDrop) {
 			RTE.tools.disableDragDrop(placeholder);
 		}
+	},
+
+	// maps media type to messages' group name
+	getMediaTypeForMsg: function(media) {
+		var type;
+
+		switch($(media).attr('type')) {
+			case 'image':
+				type = 'image';
+				break;
+
+			case 'video':
+				type = 'video';
+				break;
+
+			case 'image-placeholder':
+				type = 'imagePlaceholder';
+				break;
+
+			case 'video-placeholder':
+				type = 'videoPlaceholder';
+				break;
+
+			case 'image-gallery':
+				type = 'photoGallery';
+				break;
+
+			case 'poll':
+				type = 'poll';
+				break;
+		}
+
+		return type;
 	}
 });
 
@@ -358,7 +392,7 @@ RTE.mediaEditor = {
 
 		this._add(wikitext, data);
 	},
-
+	
 	// add a video (wikitext will parser to HTML, params stored in metadata)
 	addVideo: function(wikitext, params) {
 		RTE.log('adding a video');
