@@ -162,6 +162,9 @@ class OoyalaApiWrapper extends ApiWrapper {
 		if ( !isset($overrideFields['expirationDate']) ) {
 			$overrideFields['expirationDate'] = $this->getVideoExpirationDate();
 		}
+		if ( !isset($overrideFields['playerId']) ) {
+			$overrideFields['playerId'] = $this->getVideoPlayerId();
+		}
 
 		parent::loadMetadata( $overrideFields );
 	}
@@ -350,4 +353,15 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	protected function getVideoPlayerId() {
+		if ( !empty($this->metadata['playerId']) ) {
+			return $this->metadata['playerId'];
+		}
+
+		if ( !empty($this->interfaceObj['metadata']['playerId']) ) {
+			return strtotime( $this->interfaceObj['metadata']['playerId'] );
+		}
+
+		return '';
+	}
 }
