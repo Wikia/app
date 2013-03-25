@@ -15,11 +15,11 @@ class Forum extends Walls {
 
 	public function getBoardList($db = DB_SLAVE) {
 		$boardsIds = $this->getList( $db, NS_WIKIA_FORUM_BOARD );
-
 		$boards = array();
+		$boardFlags = ($db == DB_MASTER) ? Title::GAID_FOR_UPDATE : 0;
 
 		foreach($boardsIds as $key => $id) {
-			$board = ForumBoard::newFromId( $id );
+			$board = ForumBoard::newFromId( $id, $boardFlags);
 
 			if(empty($board)) {
 				continue;
@@ -30,7 +30,7 @@ class Forum extends Walls {
 			$boardInfo['name'] = $board->getTitle()->getText();
 			$boardInfo['description'] = $board->getDescription();
 			$boardInfo['url'] = $board->getTitle()->getFullURL();
-			$orderIndex = wfGetWikiaPageProp(WPP_WALL_ORDER_INDEX, $id, DB_SLAVE);
+			$orderIndex = wfGetWikiaPageProp(WPP_WALL_ORDER_INDEX, $id, $db);
 			$boards[$orderIndex] = $boardInfo;
 		}
 
@@ -287,7 +287,6 @@ class Forum extends Walls {
 	public function createDefaultBoard() {
 		$this->wf->ProfileIn( __METHOD__ );
 		$app = F::App();
-
 		if ( !$this->hasAtLeast( NS_WIKIA_FORUM_BOARD, 0 ) ) {
 			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasAtLeast', NS_WIKIA_FORUM_BOARD, 0 ) );
 			/* the wgUser swap is the only way to create page as other user then current */
