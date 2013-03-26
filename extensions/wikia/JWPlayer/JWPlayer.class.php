@@ -128,7 +128,6 @@ EOT;
 				$jwplayerAdMessage = F::app()->wf->Msg('jwplayer-ad-message');
 				$script = <<<EOT
 if (!window.wgUserName || window.wgUserShowAds) {
-	var wikiaDartHelper = WikiaDartHelper(Wikia.log, window, document, Krux, AdLogicShortPage(document), DartUrl());
 	var jwplayer_ad_tag = wikiaDartHelper.getUrl({
 		slotname: 'JWPLAYER',
 		slotsize: '320x240',
