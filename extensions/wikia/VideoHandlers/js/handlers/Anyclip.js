@@ -1,12 +1,7 @@
-(function( context ) {
+define('wikia.anyclip', ['wikia.window'], function Anyclip(window) {
 	'use strict';
 
-	context.define('wikia.anyclip', ['wikia.window'], function() {
-		function Anyclip(params) {
-			window.AnyClipPlayer.load(['#'+params.playerId, {clipID:params.videoId, autoPlay:params.autoPlay}, {wmode: "opaque"}]);
-		}
-
-		return Anyclip;
-	});
-
-})(this);
+	return function (params) {
+		window.AnyClipPlayer.load(['#'+params.playerId, {clipID:params.videoId, autoPlay:params.autoPlay}, {wmode: "opaque"}]);
+	}
+});

@@ -118,7 +118,6 @@ window.addEventListener('DOMContentLoaded', function () {
 			// TODO: this is only for video file pages - Mobile team can decide where to actually put it. 
 			var element = document.getElementById('file');
 			if(element && window.playerParams) {
-				console.log(element);
 				require(['wikia.videoBootstrap'], function (videoBootstrap) {
 					videoBootstrap(element, window.playerParams);
 				});
