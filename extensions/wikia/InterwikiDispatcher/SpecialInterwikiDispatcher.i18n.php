@@ -52,6 +52,14 @@ $messages['br'] = array(
 	'interwikidispatcher-desc' => 'Diskoulmañ a ra al liammoù etrewiki evit bihanaat an adkasoù Apache',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'interwikidispatcher' => 'Despatxador Interwiki',
+	'interwikidispatcher-desc' => 'Resol els enllaços interwiki per reduir els redireccionaments Apache',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */

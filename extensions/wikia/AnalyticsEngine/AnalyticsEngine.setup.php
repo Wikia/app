@@ -4,17 +4,16 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Nick Sullivan'
 );
 
-$dir = dirname(__FILE__);
-
 // autoloaded classes
-$wgAutoloadClasses['iAnalyticsProvider'] = "$dir/iAnalyticsProvider.php";
-$wgAutoloadClasses['AnalyticsEngine'] = "$dir/AnalyticsEngine.php";
-$wgAutoloadClasses['AnalyticsProviderQuantServe'] = "$dir/AnalyticsProviderQuantServe.php";
-$wgAutoloadClasses['AnalyticsProviderGA_Urchin'] = "$dir/AnalyticsProviderGA_Urchin.php";
-$wgAutoloadClasses['AnalyticsProviderComscore'] = "$dir/AnalyticsProviderComscore.php";
-$wgAutoloadClasses['AnalyticsProviderExelate'] = "$dir/AnalyticsProviderExelate.php";
-$wgAutoloadClasses['AnalyticsProviderGAS'] = "$dir/AnalyticsProviderGAS.php";
-$wgAutoloadClasses['AnalyticsProviderIVW'] = "$dir/AnalyticsProviderIVW.php";
+$wgAutoloadClasses['iAnalyticsProvider'] = __DIR__ . '/iAnalyticsProvider.php';
+$wgAutoloadClasses['AnalyticsEngine'] = __DIR__ . '/AnalyticsEngine.php';
+$wgAutoloadClasses['AnalyticsProviderQuantServe'] = __DIR__ . '/AnalyticsProviderQuantServe.php';
+$wgAutoloadClasses['AnalyticsProviderGA_Urchin'] = __DIR__ . '/AnalyticsProviderGA_Urchin.php';
+$wgAutoloadClasses['AnalyticsProviderComscore'] = __DIR__ . '/AnalyticsProviderComscore.php';
+$wgAutoloadClasses['AnalyticsProviderExelate'] = __DIR__ . '/AnalyticsProviderExelate.php';
+$wgAutoloadClasses['AnalyticsProviderGAS'] = __DIR__ . '/AnalyticsProviderGAS.php';
+$wgAutoloadClasses['AnalyticsProviderIVW'] = __DIR__ . '/AnalyticsProviderIVW.php';
+$wgAutoloadClasses['AnalyticsProviderAmazonDirectTargetedBuy'] = __DIR__ . '/AnalyticsProviderAmazonDirectTargetedBuy.php';
 
 //hooks
 //register hook to inject gas js library (MW 1.19)

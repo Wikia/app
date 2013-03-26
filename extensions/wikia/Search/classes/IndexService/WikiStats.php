@@ -25,10 +25,9 @@ class WikiStats extends AbstractWikiService
 	 * @return array containing result data
 	 */
 	public function execute() {
-		wfProfileIn(__METHOD__);
-		$sharedDb = $this->service->getGlobal( 'ExternalSharedDB' );
-		if (! empty( $sharedDb ) ) { 
-			$data = $this->service->getApiStatsForWiki();
+		$service = $this->getService();
+		if ( $service->isOnDbCluster() ) { 
+			$data = $service->getApiStatsForWiki();
 			$statistics = $data['query']['statistics'];
 			if( is_array($statistics) ) {
 				$this->result['wikipages']      = $statistics['pages'];
@@ -37,7 +36,6 @@ class WikiStats extends AbstractWikiService
 				$this->result['wiki_images']    = $statistics['images'];
 			}
 		}
-		wfProfileOut(__METHOD__);
 		return $this->result;
 	}
 }

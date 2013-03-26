@@ -223,6 +223,21 @@ $messages['af'] = array(
 	'multiwikirecords' => "Gevind op $1 wiki's", # Fuzzy
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'multidelete_italian_wikis' => 'جميع الويكيات الإيطالية',
+	'multidelete_russian_wikis' => 'جميع الويكات الروسية',
+	'multidelete_english_wikis' => 'جميع الويكيات الإنجليزية',
+	'multidelete_japanese_wikis' => 'جميع الويكيات اليابانية',
+	'multidelete_finnish_wikis' => 'جميع الويكيات الفنلندية',
+	'multidelete_spanish_wikis' => 'جميع الويكيات الإسبانية',
+	'multidelete_french_wikis' => 'جميع الويكيات الفرنسية',
+	'multidelete_swedish_wikis' => 'جميع الويكيات السويدية',
+	'multidelete_german_wikis' => 'جميع الويكيات الألمانية',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
@@ -1597,7 +1612,7 @@ $messages['lb'] = array(
 	'multiwikiedit_confirm' => 'CONFIRMÉIEREN',
 	'multiwikiedit_caption' => 'Lëscht vu Säiten',
 	'multiwikiedit_or' => '<b>ODER</b>',
-	'multiwikiedit_on' => 'op', # Fuzzy
+	'multiwikiedit_on' => 'Skript ausféieren op',
 	'multiwikiedit_page_text' => 'Text fir ze späicheren',
 	'multiwikiedit_reason' => "Grond fir d'Ännerung",
 	'multiwikiedit_minoredit_caption' => 'Kleng Ännerung',
@@ -1634,7 +1649,7 @@ $messages['lb'] = array(
 	'multidelete_german_wikis' => 'all däitsch Wkien',
 	'multiwikifindpagenames' => 'Säitennimm fannen',
 	'multiwikienterpagename' => 'Gitt w.e.g. ee Säitennumm un:',
-	'multiwikirecords' => '$1 Wikie fonnt', # Fuzzy
+	'multiwikirecords' => '{{PLURAL:$1|Eng Wiki|$1 Wikie}} fonnt',
 );
 
 /** Macedonian (македонски)

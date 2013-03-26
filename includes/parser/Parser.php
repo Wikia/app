@@ -3943,6 +3943,12 @@ class Parser {
 		if ( strlen( $url ) > 255 ) {
 			return wfMsgForContent( 'scarytranscludetoolong' );
 		}
+		/* Wikia change begin - Stop w::c: style interwiki links (BugID: 97023) */
+		$actionQuery = "?action=$action";
+		if ( substr_compare( $url, $actionQuery, -strlen( $actionQuery ), strlen( $actionQuery ) ) !== 0 ) {
+			return wfMessage( 'scarytranscludebadinterwiki' )->inContentLanguage()->text();
+		}
+		/* Wikia change end */
 		return $this->fetchScaryTemplateMaybeFromCache( $url );
 	}
 

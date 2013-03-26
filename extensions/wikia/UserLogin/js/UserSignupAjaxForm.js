@@ -83,7 +83,7 @@ UserSignupAjaxForm.prototype.checkFieldsValid = function() {
 		}
 	}
 
-	if (this.checkFieldEmpty(this.wikiaForm.inputs[this.captchaField])) {
+	if (this.captchaField && this.checkFieldEmpty(this.wikiaForm.inputs[this.captchaField])) {
 		isValid = false;
 	}
 

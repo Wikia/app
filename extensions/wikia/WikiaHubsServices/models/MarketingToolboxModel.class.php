@@ -8,6 +8,9 @@ class MarketingToolboxModel extends WikiaModel {
 	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'MarketingToolbox';
 
+	const CACHE_KEY = 'HubsV2v1.00';
+	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'lastPublishedTimestamp';
+
 	protected $statuses = array();
 	protected $modules = array();
 	protected $editableModules = array();
@@ -174,7 +177,10 @@ class MarketingToolboxModel extends WikiaModel {
 			$htmlParams = array(
 				'file-link' => true,
 				'duration' => true,
+				'img-class' => 'media',
+				'linkAttribs' => array('class' => 'video-thumbnail lightbox', 'data-video-name' => $fileName )
 			);
+
 			$thumb = $file->transform(array('width' => $thumbSize));
 
 			$videoData['videoThumb'] = $thumb->toHtml($htmlParams);
@@ -460,6 +466,11 @@ class MarketingToolboxModel extends WikiaModel {
 			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-db-error');
 		}
 
+		$actualPublishedTimestamp = $this->getLastPublishedTimestamp($langCode, self::SECTION_HUBS, $verticalId);
+		if ($actualPublishedTimestamp < $timestamp && $timestamp < time()) {
+			$this->purgeLastPublishedTimestampCache($langCode, self::SECTION_HUBS, $verticalId);
+		}
+
 		$this->wf->ProfileOut(__METHOD__);
 	}
 
@@ -577,11 +588,38 @@ class MarketingToolboxModel extends WikiaModel {
 	 *
 	 * @return int timestamp
 	 */
-	protected function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null) {
+	public function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null, $useMaster = false) {
 		if ($timestamp === null) {
 			$timestamp = time();
 		}
-		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$timestamp = strtotime('00:00', $timestamp);
+
+		if ($timestamp == strtotime('00:00')) {
+			$lastPublishedTimestamp = WikiaDataAccess::cache(
+				$this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId),
+				6 * 60 * 60,
+				function () use ($langCode, $sectionId, $verticalId, $timestamp, $useMaster) {
+					return $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp, $useMaster);
+				}
+			);
+		} else {
+			$lastPublishedTimestamp = $this->getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp, $useMaster);
+		}
+
+		return $lastPublishedTimestamp;
+	}
+
+	protected function purgeLastPublishedTimestampCache($langCode, $sectionId, $verticalId) {
+		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId));
+	}
+
+	public function getLastPublishedTimestampFromDB($langCode, $sectionId, $verticalId, $timestamp, $useMaster = false) {
+		$sdb = $this->wf->GetDB(
+			($useMaster) ? DB_MASTER : DB_SLAVE,
+			array(),
+			$this->wg->ExternalSharedDB
+		);
+
 		$table = $this->getTablesBySectionId($sectionId);
 
 		$conds = array(
@@ -598,37 +636,21 @@ class MarketingToolboxModel extends WikiaModel {
 		return $result;
 	}
 
+	/**
+	 * Get hub url
+	 *
+	 * @param $langCode
+	 * @param $verticalId
+	 *
+	 * @return String
+	 */
 	public function getHubUrl($langCode, $verticalId) {
-		$visualizationData = $this->getVisualizationData();
+		$wikiId = WikiaHubsServicesHelper::getCorporateWikiIdByLang($langCode);
+		$hubName = WikiaHubsServicesHelper::getHubName($wikiId, $verticalId);
 
-		if (!isset($visualizationData[$langCode]['url'])) {
-			throw new Exception('Corporate Wiki not defined for this lang');
-		}
+		$title = GlobalTitle::newFromText($hubName, NS_MAIN, $wikiId);
 
-		$hubPages = $this->getHubsV2Pages($visualizationData[$langCode]['wikiId']);
-
-		if (!isset($hubPages[$verticalId])) {
-			throw new Exception('Hub page not defined for selected vertical');
-		}
-
-		$url = http_build_url(
-			$visualizationData[$langCode]['url'],
-			array(
-				'path' => $hubPages[$verticalId]
-			),
-			HTTP_URL_JOIN_PATH
-		);
-
-		return $url;
-	}
-
-	protected function getHubsV2Pages($wikiId) {
-		return WikiFactory::getVarValueByName('wgWikiaHubsV2Pages', $wikiId);
-	}
-
-	protected function getVisualizationData() {
-		$visualizationModel = new CityVisualization();
-		return $visualizationModel->getVisualizationWikisData();
+		return $title->getFullURL();
 	}
 
 	/**
@@ -675,6 +697,16 @@ class MarketingToolboxModel extends WikiaModel {
 		}
 
 		return $table;
+	}
+
+	protected function getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId) {
+		return F::app()->wf->SharedMemcKey(
+			self::CACHE_KEY,
+			$langCode,
+			$sectionId,
+			$verticalId,
+			self::CACHE_KEY_LAST_PUBLISHED_TIMESTAMP
+		);
 	}
 
 	protected function getSpecialPageClass() {

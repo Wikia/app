@@ -18,11 +18,11 @@ class Metadata extends AbstractService
 	 * @return array
 	 */
 	public function execute() {
-		wfProfileIn(__METHOD__);
 		$result = array();
+		
+		$service = $this->getService();
 	
-		$sharedDb = $this->service->getGlobal( 'ExternalSharedDB' );
-		if ( empty( $sharedDb ) ) {
+		if (! $this->getService()->isOnDbCluster() ) {
 			return array();
 		}
 		
@@ -42,7 +42,6 @@ class Metadata extends AbstractService
 			
 		$result['hub'] = isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
 	
-		wfProfileOut(__METHOD__);
 		return $result;
 	}
 	

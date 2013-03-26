@@ -14,9 +14,11 @@ $messages['en'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Mutarjem horr
  */
 $messages['ar'] = array(
+	'centralhelpsearch-desc' => 'يسمح بإدراج نموذج للبحث في مركز ويكيا العربية',
 	'centralhelpsearch-placeholder' => 'مساعدة على البحث...',
 );
 
@@ -32,6 +34,14 @@ $messages['az'] = array(
  */
 $messages['br'] = array(
 	'centralhelpsearch-placeholder' => 'Klask er skoazell...',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'centralhelpsearch-desc' => "Permèt la inclusió d'un formulari per buscar ajuda en Community Central",
+	'centralhelpsearch-placeholder' => 'Buscar en Ajuda...',
 );
 
 /** Czech (česky)

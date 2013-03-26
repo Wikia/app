@@ -403,16 +403,26 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Mutarjem horr
  */
 $messages['ar'] = array(
+	'founderemails-email-user-registered-subject' => 'لقد انضم شخص جديد إلى $WIKINAME',
+	'founderemails-email-user-registered-signature' => 'فريق ويكيا',
+	'founderemails-email-3-days-passed-subject' => 'كيف تسير الأمور في الويكي الخاصة بك',
 	'founderemails-email-first-edit-greeting' => 'مرحباً $USERNAME,',
 	'founderemails-email-first-edit-signature' => 'طاقم ويكيا',
 	'founderemails-email-general-edit-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-general-edit-signature' => 'فريق ويكيا',
+	'founderemails-email-general-edit-button' => 'التحقق من ذلك!',
 	'founderemails-email-anon-edit-greeting' => 'مرحباً $USERNAME,',
 	'founderemails-email-anon-edit-signature' => 'طاقم ويكيا',
+	'founderemails-email-anon-edit-button' => 'التحقق من ذلك!',
 	'founderemails-email-lot-happening-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-lot-happening-signature' => 'فريق ويكيا',
+	'founderemails-email-0-day-addpages-heading' => 'إضافة صفحات.',
 	'founderemails-email-0-day-addpages-button' => 'أضف صفحة',
+	'founderemails-email-0-day-addphotos-heading' => 'إضافة صور.',
 	'founderemails-email-0-day-addphotos-button' => 'أضف صورة',
 	'founderemails-email-3-day-addphotos-button' => 'أضف صور',
 	'founderemails-email-views-digest-button' => 'أضف المزيد من الصفحات',
@@ -5890,8 +5900,23 @@ A Equipe da Wikia',
 	'founderemails-email-first-edit-content' => 'Acesse $PAGETITLE para verificar o que foi ad adicionado.',
 	'founderemails-email-first-edit-signature' => 'A Equipe da Wikia',
 	'founderemails-email-first-edit-button' => 'Confira!',
+	'founderemails-email-page-edited-reg-user-subject' => 'Nova edição em $WIKINAME!',
+	'founderemails-email-page-edited-reg-user-body' => 'Olá $USERNAME,
+
+$EDITORNAME acaba de fazer mais uma edição em $WIKINAME na página $PAGETITLE.
+
+Vá à $PAGETITLE para ver o quê ele lá mudou.
+
+$PAGEURL
+
+A Equipe Wikia',
 	'founderemails-email-general-edit-greeting' => 'Olá $USERNAME,',
+	'founderemails-email-general-edit-content' => 'Confira a página $PAGETITLE para ver o quê ele lá adicionou.',
+	'founderemails-email-general-edit-signature' => 'A Equipe Wikia',
+	'founderemails-email-general-edit-button' => 'Confira só!',
 	'founderemails-email-anon-edit-greeting' => 'Olá $USERNAME,',
+	'founderemails-email-anon-edit-signature' => 'A Equipe Wikia',
+	'founderemails-email-anon-edit-button' => 'Confira só!',
 	'founderemails-email-lot-happening-greeting' => 'Olá $USERNAME,',
 	'founderemails-email-lot-happening-button' => 'Ver atividades',
 	'founderemails-email-0-day-heading' => 'Prazer em te conhecer $USERNAME,',

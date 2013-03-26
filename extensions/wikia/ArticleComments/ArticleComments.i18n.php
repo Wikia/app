@@ -133,12 +133,14 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author DRIHEM
  * @author Meno25
  * @author OsamaK
  * @author ترجمان05
  */
 $messages['ar'] = array(
+	'article-comments-file-page' => "<a href='$1'>تعليق من $2</a> on <a href='$3'>$4</a>",
 	'article-comments-anonymous' => 'مستخدم مجهول',
 	'article-comments-comments' => 'التعليقات ($1)',
 	'article-comments-post' => 'أرسل تعليقا',
@@ -176,31 +178,30 @@ $messages['ar'] = array(
 	'wikiamobile-article-comments-placeholder' => 'أرسل تعليقا',
 	'wikiamobile-article-comments-show' => 'أظهر',
 	'wikiamobile-article-comments-login-post' => 'الرجاء تسجيل الدخول لإضافة تعليق.',
+	'wikiamobile-article-comments-post-fail' => 'فشل في حفظ التعليق, الرجاء المحاولة مرة أخرى لاحقاً',
 	'enotif_subject_article_comment' => '$PAGEEDITOR قام بالتعليق على "$PAGETITLE" على {{SITENAME}}',
-	'enotif_body_article_comment' => 'عزيزي $WATCHINGUSERNAME،
+	'enotif_body_article_comment' => 'مرحبا $WATCHINGUSERNAME،
 
-$PAGEEDITOR قدم تعليقا على "$PAGETITLE".
+$PAGEEDITOR قدم تعليقا على $PAGETITLE في {{SITENAME}}. إستخدم هذا الرابط لترى جميع التعليقات: $PAGETITLE_URL#WikiaArticleComments
 
-لمشاهدة موضوع التعليق، أتبع الرابط أدناه:
-$PAGETITLE_URL
+- فريق دعم مجتمع ويكيا
 
-الرجاء قم بزيارتنا والتعديل غالبا...
-
-Wikia', # Fuzzy
-	'enotif_body_article_comment-HTML' => '<p>عزيزي $WATCHINGUSERNAME،
+___________________________________________
+* زر موقع ويكيا العربي لكي تجد المساعدة والنصائح: http://ar.wikia.com
+* تريد تلقي رسائل أقل منا؟ يمكنك إلغاء الاشتراك أو تغيير تفضيلات البريد الإلكتروني الخاص بك هنا:  http://ar.wikia.com/خاص:تفضيلات',
+	'enotif_body_article_comment-HTML' => 'مرحبا $WATCHINGUSERNAME،
 <br /><br />
-$PAGEEDITOR قدم تعليقا على "$PAGETITLE".
+هنالك تعليق جديد على $PAGETITLE في {{SITENAME}}. إستخدم هذا الرابط لترى جميع التعليقات: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-لمشاهدة موضوع التعليق، أتبع الرابط التالي: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- فريق دعم مجتمع ويكيا
 <br /><br />
-الرجاء قم بزيارتنا والتعديل غالبا...
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>هل تريد التحكم في رسائل البريد المرسلة إليك؟ <a href="{{fullurl:Special:Preferences}}">قم بتحديث التفضيلات الخاصة بك<a>.</li>
+<li>* زر موقع ويكيا العربي لكي تجد المساعدة والنصائح:  <a href="http://ar.wikia.com">http://ar.wikia.com</a>
+<li>
+<li>* تريد تلقي رسائل أقل منا؟ يمكنك إلغاء الاشتراك أو تغيير تفضيلات البريد الإلكتروني الخاص بك هنا:  <a href="http://ar.wikia.com/خاص:تفضيلات">http://ar.wikia.com/خاص:تفضيلات</a></li>
 </ul>
-</p>', # Fuzzy
+</p>',
 );
 
 /** Aramaic (ܐܪܡܝܐ)
@@ -1996,18 +1997,18 @@ $messages['nl'] = array(
 	'article-blog-comments-file-page' => "<a href='$1'>Reactie van $2</a> op bericht <a href='$3'>$4</a> op het blog van <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Anonieme gebruiker',
 	'article-comments-comments' => 'Opmerkingen ($1)',
-	'article-comments-post' => 'Opmerking plaatsen',
+	'article-comments-post' => 'Reactie plaatsen',
 	'article-comments-cancel' => 'Annuleren',
 	'article-comments-delete' => 'verwijderen',
 	'article-comments-edit' => 'bewerken',
 	'article-comments-history' => 'geschiedenis',
-	'article-comments-error' => 'De opmerking kon niet opgeslagen worden',
-	'article-comments-undeleted-comment' => 'Heeft een opmerking op blogpagina $1 teruggeplaatst',
-	'article-comments-rc-comment' => 'Opmerking bij pagina (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-error' => 'De reactie kon niet worden opgeslagen',
+	'article-comments-undeleted-comment' => 'Reactie teruggeplaatst op blogpagina $1',
+	'article-comments-rc-comment' => 'Reactie bij pagina (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Opmerkingen bij pagina ([[$1]])',
 	'article-comments-fblogin' => '<a href="$1">Meld u aan en verbind met Facebook</a> om een opmerking in deze wiki te plaatsen.',
 	'article-comments-fbconnect' => '<a href="$1">Verbind deze gebruiker met Facebook</a> om opmerkingen te plaatsen.',
-	'article-comments-rc-blog-comment' => 'Opmerking bij blog (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comment' => 'Reactie bij blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Opmerkingen bij blog ([[$1]])',
 	'article-comments-login' => '<a href="$1">Meld u aan</a> om een opmerking in deze wiki te kunnen plaatsen.',
 	'article-comments-toc-item' => 'Opmerkingen',
@@ -2028,7 +2029,7 @@ $messages['nl'] = array(
 	'wikiamobile-article-comments-replies' => 'antwoorden',
 	'wikiamobile-article-comments-post-reply' => 'Reactie plaatsen',
 	'wikiamobile-article-comments-post' => 'Opslaan',
-	'wikiamobile-article-comments-placeholder' => 'Opmerking plaatsen',
+	'wikiamobile-article-comments-placeholder' => 'Reactie plaatsen',
 	'wikiamobile-article-comments-show' => 'Weergeven',
 	'wikiamobile-article-comments-login-post' => 'Meld u aan om te reageren.',
 	'wikiamobile-article-comments-post-fail' => 'Het opslaan van de reactie is mislukt. Probeer het later opnieuw.',
@@ -2445,7 +2446,9 @@ $messages['roa-tara'] = array(
 	'article-comments-history' => 'cunde',
 	'article-comments-error' => "Non g'è state possibbele ccu salve 'u commende",
 	'article-comments-undeleted-comment' => "Commende no scangellate p'a pàgene $1 d'u blog",
+	'article-comments-rc-comment' => 'Commende d\'a vôsce (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => "Commende d'a vôsce ([[$1]])",
+	'article-comments-fblogin' => 'Pe piacere <a href="$1" rel="nofollow">tràse e connettite cu Feisbuk</a> pe mannà \'nu commende sus a stu messàgge sus a sta uicchi!',
 	'article-comments-rc-blog-comments' => "Commende d'u blog ([[$1]])",
 	'article-comments-toc-item' => 'Commende',
 	'article-comments-comment-cannot-add' => "Tu non ge puè aggiungere 'nu commende a 'a vôsce.",

@@ -15,8 +15,11 @@ class MarketingToolboxModuleWAMServiceTest extends WikiaBaseTest {
 	 * @dataProvider getStructuredDataProvider
 	 */
 	public function testGetStructuredData($inputData, $expectedData) {
-		$wamService = new MarketingToolboxModuleWAMService($inputData['lang'], 1, $inputData['vertical_id']);
-		$result = $wamService->getStructuredData($inputData);
+		$wamServiceMock = $this->getMock('MarketingToolboxModuleWAMService', array('getWamPageUrl'), array($inputData['lang'], 1, $inputData['vertical_id']));
+		$wamServiceMock->expects($this->any())
+			->method('getWamPageUrl')
+			->will($this->returnValue('http://www.wikia.com/WAM'));
+		$result = $wamServiceMock->getStructuredData($inputData);
 		$this->assertEquals($expectedData, $result);
 	}
 

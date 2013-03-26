@@ -19,17 +19,17 @@ class MediaData extends AbstractService
 	 */
 	public function execute() {
 		$results = array();
-		
-		if (! ( $this->service->getNamespaceFromPageId( $this->currentPageId ) == NS_FILE
-			    && $this->service->pageIdHasFile( $this->currentPageId ) ) ) {
+		$service = $this->getService();
+		if (! ( $service->getNamespaceFromPageId( $this->currentPageId ) == NS_FILE
+			    && $service->pageIdHasFile( $this->currentPageId ) ) ) {
 			return $results;
 		}
 	
 		$fileHelper = new \WikiaFileHelper();
-		$detail     = $this->service->getMediaDetailFromPageId( $this->currentPageId );
-		$metadata   = $this->service->getMediaDataFromPageId( $this->currentPageId );
+		$detail     = $service->getMediaDetailFromPageId( $this->currentPageId );
+		$metadata   = $service->getMediaDataFromPageId( $this->currentPageId );
 
-		$results['is_video'] = $this->service->pageIdIsVideoFile( $this->currentPageId ) ? 'true' : 'false';
+		$results['is_video'] = $service->pageIdIsVideoFile( $this->currentPageId ) ? 'true' : 'false';
 		$results['is_image'] = ( ($detail['mediaType'] == 'image') && $results['is_video'] == 'false' ) ? 'true' : 'false';
 
 		if (! empty( $metadata ) ) {
@@ -42,7 +42,6 @@ class MediaData extends AbstractService
 				 * This maps video metadata field keys to dynamic fields
 				 */
 				$videoMetadataMapper = array(
-						'duration'		=>	'video_duration_i',
 						'provider'		=>	'video_provider_s',
 						'videoId'		=>	'video_id_s',
 						'altVideoId'	=>	'video_altid_s',
@@ -55,6 +54,9 @@ class MediaData extends AbstractService
 					}
 				}
 				// special cases
+				if ( isset( $metadata['duration'] ) ) {
+					$results['video_duration_i'] = (int) $metadata['duration'];
+				}
 				if ( isset( $metadata['hd'] ) ) {
 					$results['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
 				}

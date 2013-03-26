@@ -356,6 +356,14 @@ Page content for confirm page when byemail=1 is used.  Parameters:
 	'usersignup-confirmation-reminder-email_body-HTML' => 'Stand-alone HTML version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'usersignup-welcome-email-edit-profile-heading' => 'تعديل صفحتك الشخصية',
+	'usersignup-facebook-problem' => 'هناك مشكلة في الاتصال مع فيسبوك. الرجاء المحاولة مرة أخرى لاحقاً.',
+);
+
 /** South Azerbaijani (تورکجه)
  * @author Arjanizary
  */
@@ -374,13 +382,21 @@ $messages['br'] = array(
 	'usersignup-error-username-length' => "Oc'ho, ne c'hall ket bezañ ouzhpenn {{PLURAL:$1|un arouezenn|$1 arouezenn}} en hoc'h anv implijer.",
 	'usersignup-facebook-create-account' => 'Krouiñ ur gont',
 	'usersignup-facebook-have-an-account-heading' => "Ur gont hoc'h eus dija ?",
+	'usersignup-user-pref-emailconfirmlink' => 'Goulenn ur postel kadarnaat nevez',
+	'usersignup-user-pref-confirmemail_send' => 'Adkas ma fostel kadarnaat',
 	'usersignup-confirm-page-title' => "Kadarnait ho chomlec'h postel",
+	'usersignup-confirm-email-resend-email' => 'Kas din ur postel kadarnaat all',
 	'usersignup-confirm-email-change-email-content' => "Fellout a ra din implijout ur chomlec'h postel disheñvel.",
 	'usersignup-confirm-email-change-email' => "Cheñch ma chomlec'h postel",
 	'usersignup-confirm-email-new-email-label' => 'Postel nevez',
 	'usersignup-confirm-email-update' => 'Hizivaat',
 	'usersignup-resend-email-heading-success' => 'Kaset ez eus bet ur postel nevez',
+	'usersignup-resend-email-heading-failure' => "N'eo ket bet adkaset ar postel",
 	'usersignup-confirm-page-heading-confirmed-user' => "Gourc'hemennoù",
+	'usersignup-confirm-page-subheading-confirmed-user' => "Kadarnaet hoc'h dija",
+	'usersignup-confirmation-heading' => 'Tost echu',
+	'usersignup-confirmation-heading-email-resent' => 'Kaset ez eus bet ur postel nevez',
+	'usersignup-confirmation-subheading' => 'Gwiriekait ho posteloù',
 	'usersignup-confirmation-email-greeting' => 'Ac\'hanta $USERNAME,',
 	'usersignup-confirmation-email-signature' => 'Skipailh Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Ac\'hanta $USERNAME',
@@ -405,6 +421,13 @@ $messages['br'] = array(
 	'usersignup-confirmation-reminder-email_subject' => 'Na vezit ket un estrañjour...',
 	'usersignup-confirmation-reminder-email-greeting' => 'Ac\'hanta $USERNAME',
 	'usersignup-confirmation-reminder-email-signature' => 'Skipailh Wikia',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'usersignup-page-title' => 'Uneix-te a Wikia',
 );
 
 /** Czech (česky)
@@ -3129,6 +3152,7 @@ $messages['ps'] = array(
 	'usersignup-confirmation-subheading' => 'خپل برېښليک وګورۍ',
 	'usersignup-confirmation-email-signature' => 'د ويکيا ډله',
 	'usersignup-reconfirmation-email-signature' => 'د ويکيا ډله',
+	'usersignup-welcome-email-explore-wiki-content' => 'په ويکيا کې په زرګونو ويکي ګانې شته، نورې هغه ويکي ګانې چې تاسې يې لېواله ياست، زموږ زېرمتون ته په ورتللو سره موندلی شی: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">ويډيويي لوبې</a>، <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">تفريحي</a>، يا <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">ژوند توګه</a>.',
 	'usersignup-welcome-email-signature' => 'د ويکيا ډله',
 	'usersignup-heading' => 'ويکيا سره همدا نن يوځای شۍ',
 	'usersignup-marketing-global-heading' => 'جوړول',

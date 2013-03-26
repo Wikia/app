@@ -1,6 +1,6 @@
 <?php
 class WAMPageHooks {
-	protected $WamPageConfig = null;
+	protected $WAMPageConfig = null;
 	protected $EnableWAMPageExt = null;
 	protected $app = null;
 
@@ -11,7 +11,7 @@ class WAMPageHooks {
 			$this->app = F::app();
 		}
 		
-		foreach(['WamPageConfig', 'EnableWAMPageExt'] as $var) {
+		foreach(['WAMPageConfig', 'EnableWAMPageExt'] as $var) {
 			if( is_null($this->$var) ) {
 				$this->$var = $this->app->wg->$var;
 			}
@@ -29,18 +29,12 @@ class WAMPageHooks {
 	public function onArticleFromTitle(&$title, &$article) {
 		wfProfileIn(__METHOD__);
 		$this->init();
-		
-		$dbKey = null;
-		$wamPageName = mb_strtolower( $this->WamPageConfig['pageName'] );
-		$wamPageFaqPageName = mb_strtolower( $this->WamPageConfig['faqPageName'] );
-		
-		if( $title instanceof Title ) {
-			$dbKey = mb_strtolower( $title->getDBKey() );
-		}
 
-		if( !empty($this->EnableWAMPageExt) && ($dbKey === $wamPageName || $dbKey === $wamPageFaqPageName) ) {
+		if( $this->isWAMPage($title) ) {
 			$this->app->wg->SuppressPageHeader = true;
+			$this->app->wg->SuppressWikiHeader = true;
 			$this->app->wg->SuppressRail = true;
+			$this->app->wg->SuppressFooter = true;
 			$article = new WAMPageArticle($title);
 		}
 
@@ -52,10 +46,47 @@ class WAMPageHooks {
 		$this->init();
 		
 		if( !empty($this->EnableWAMPageExt) ) {
-			$vars['wgWAMPageName'] = $this->WamPageConfig['pageName'];
-			$vars['wgWAMFAQPageName'] = $this->WamPageConfig['faqPageName'];
+			$vars['wgWAMPageName'] = $this->WAMPageConfig['pageName'];
+			$vars['wgWAMFAQPageName'] = $this->WAMPageConfig['faqPageName'];
 		}
 
 		return true;
+	}
+
+	/**
+	 * @desc If a link goes to WAM page and the WAMPage extension is enabled mark the link as known 
+	 * 
+	 * @param $skin
+	 * @param $target
+	 * @param $text
+	 * @param $customAttribs
+	 * @param $query
+	 * @param $options
+	 * @param $ret
+	 * 
+	 * @return bool
+	 */
+	public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
+		$this->init();
+		
+		if( $this->isWAMPage($target) ) {
+			$index = array_search('broken', $options);
+			unset($options[$index]);
+			$options[] = 'known';
+		}
+
+		return true;
+	}
+	
+	protected function isWAMPage($title) {
+		$dbKey = null;
+		$wamPageName = mb_strtolower( $this->WAMPageConfig['pageName'] );
+		$wamPageFaqPageName = mb_strtolower( $this->WAMPageConfig['faqPageName'] );
+
+		if( $title instanceof Title ) {
+			$dbKey = mb_strtolower( $title->getDBKey() );
+		}
+		
+		return !empty($this->EnableWAMPageExt) && ($dbKey === $wamPageName || $dbKey === $wamPageFaqPageName);
 	}
 }

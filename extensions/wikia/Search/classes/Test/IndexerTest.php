@@ -299,7 +299,7 @@ class IndexerTest extends BaseTest
 		    ->method ( 'getDB' )
 		    ->will   ( $this->throwException( $exception ) )
 		;
-		$indexer->reindexWiki( 123 );
+		$this->assertTrue( $indexer->reindexWiki( 123 ) );
 	}
 	
 	/**
@@ -366,7 +366,7 @@ class IndexerTest extends BaseTest
 		    ->method ( 'log' )
 		    ->with   ( 'Wikia\Search\Indexer::updateDocuments', '', $exception )
 		;*/
-		$this->assertNull(
+		$this->assertTrue(
 				$indexer->deleteWikiDocs( 123 )
 		);
 	}

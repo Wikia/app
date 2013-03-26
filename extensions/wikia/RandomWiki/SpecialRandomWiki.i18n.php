@@ -23,9 +23,11 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'randomwiki-desc' => 'يتيح للمستخدمين استكشاف ويكي عشوائي',
 	'randomwiki' => 'ويكي عشوائية',
 );
 

@@ -39,15 +39,20 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Mutarjem horr
  */
 $messages['ar'] = array(
+	'category-exhibition-sorttype' => 'نوع الفرز:',
 	'category-exhibition-alphabetical' => 'أبجديأّ',
 	'category-exhibition-mostvisited' => 'الأكثر مشاهدة',
 	'category-exhibition-recentedits' => 'تحرير مؤخراّ',
 	'category-exhibition-page-header' => 'الصفحات في التصنيف " $1 "',
 	'category-exhibition-subcategories-header' => 'التصنيفات الفرعية',
 	'category-exhibition-media-header' => 'الوسائل في الفئة "$1"',
+	'category-exhibition-blogs-header' => 'المشاركات في المدونة',
+	'category-exhibition-display-old' => 'عرض قائمة التصنيف',
+	'category-exhibition-display-new' => 'عرض معرض التصنيف',
 );
 
 /** Bulgarian (български)
@@ -72,6 +77,22 @@ $messages['br'] = array(
 	'category-exhibition-blogs-header' => 'Pennad ar blog',
 	'category-exhibition-display-old' => 'Gwelet Roll rummadoù',
 	'category-exhibition-display-new' => 'Gwel diskouez ar rummad',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'category-exhibition-sorttype' => 'Classificant tipus:',
+	'category-exhibition-alphabetical' => 'Alfabètic',
+	'category-exhibition-mostvisited' => 'Més visitat',
+	'category-exhibition-recentedits' => 'Editades recentement',
+	'category-exhibition-page-header' => 'Pàgines en la categoraa "$1"',
+	'category-exhibition-subcategories-header' => 'Subcategories',
+	'category-exhibition-media-header' => 'Multimèdia en la categoria "$1"',
+	'category-exhibition-blogs-header' => 'Entrades de bloc',
+	'category-exhibition-display-old' => 'Visualització de la llista de categories',
+	'category-exhibition-display-new' => "Visualització d'exposició de la categoria",
 );
 
 /** Czech (česky)
@@ -422,19 +443,20 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'category-exhibition-sorttype' => 'Sòrt ordinament:',
+	'category-exhibition-sorttype' => "Sòrt d'ordinament:",
 	'category-exhibition-alphabetical' => 'Alfabétich',
 	'category-exhibition-mostvisited' => 'Pi visità',
 	'category-exhibition-recentedits' => 'Modificà ëd recent',
 	'category-exhibition-page-header' => 'Artìcoj ant la categorìa "$1"',
-	'category-exhibition-subcategories-header' => 'Sotacategorìe',
+	'category-exhibition-subcategories-header' => 'Sot-categorìe',
 	'category-exhibition-media-header' => 'Archivi ant la categorìa "$1"',
 	'category-exhibition-blogs-header' => 'Mëssagi dë Scartari',
-	'category-exhibition-display-old' => 'Varda Lista Categorìe',
-	'category-exhibition-display-new' => 'Vista Esibission Categorìe',
+	'category-exhibition-display-old' => 'Visualisassion dla categorìa an lista',
+	'category-exhibition-display-new' => 'Visualisassion dla categorìa an esposission',
 );
 
 /** Pashto (پښتو)

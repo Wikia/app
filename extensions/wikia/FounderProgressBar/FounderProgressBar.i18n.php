@@ -103,6 +103,13 @@ $messages['qqq'] = array(
 	'founderprogressbar-category-add3-label' => '',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'founderprogressbar-browse-page-name' => 'تصفّح',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Gwenn-Ael

@@ -54,6 +54,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Marcmpujol
  * @author Paucabot
  * @author SMP
  */
@@ -63,6 +64,8 @@ $messages['ca'] = array(
 	'taskmanager_tasklist' => 'Torna a la Llista de Tasques',
 	'right-taskmanager' => 'Poder mostrar les tasques en segon pla',
 	'right-taskmanager-action' => 'Poder gestionar les tasques en segon pla',
+	'taskmanager-invert' => 'Invertir',
+	'action-taskmanager' => 'Mostra i gestiona les tasques en segon pla',
 );
 
 /** Czech (česky)

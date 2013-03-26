@@ -171,20 +171,19 @@ class HubService extends Service {
 	}
 
 	private static function getHubIdForCurrentPageV2() {
-		$hubsPages = F::app()->wg->WikiaHubsPages;
-		$vertical = RequestContext::getMain()->getRequest()->getVal('vertical');
-		$title = F::build('Title', array($vertical), 'newFromText');
+		$baseText = F::app()->wg->Title->getBaseText();
 
-		if ($title instanceof Title) {
+		/** @var $tmpTitle Title */
+		$tmpTitle = F::build('Title', array($baseText), 'newFromText');
+
+		$hubsPages = F::app()->wg->WikiaHubsV2Pages;
+
+		if ($tmpTitle instanceof Title) {
 			/* @var $title Title */
-			$hubName = $title->getDbKey();
+			$hubName = $tmpTitle->getDbKey();
 
 			if ($hubName) {
-				foreach ($hubsPages as $hubId => $hubGroup) {
-					if (in_array($hubName, $hubGroup)) {
-						return $hubId;
-					}
-				}
+				return array_search($hubName, $hubsPages);
 			}
 		}
 		return false;

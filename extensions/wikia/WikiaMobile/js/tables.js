@@ -1,21 +1,20 @@
-define('tables', ['events', 'track'], function(ev, track){
+define('tables', ['events', 'track', 'wikia.window'], function(ev, track, w){
 	'use strict';
 
-	var w = window,
-		d = document,
+	var d = w.document,
 		pageContent = d.getElementById('mw-content-text') || d.getElementById('wkMainCnt'),
 		realWidth = pageContent.offsetWidth,
 		inited = false,
 		handledTables = [];
 
 	function wrap(elm){
-		var wrapper = document.createElement('div'),
+		var wrapper = d.createElement('div'),
 			parent = elm.parentElement;
 
 		wrapper.className = 'bigTable';
 		wrapper.appendChild(elm.cloneNode(true));
 
-		elm.parentElement.replaceChild(wrapper, elm);
+		parent.replaceChild(wrapper, elm);
 		//keep references to parent and wrapper as cloning nodes does not copy parentElement properties
 		elm.parent = parent;
 		elm.wrapper = wrapper;
@@ -121,12 +120,12 @@ define('tables', ['events', 'track'], function(ev, track){
 			});
 
 			if(!Features.overflow){
-				document.body.addEventListener(ev.touch, function(ev){
+				d.body.addEventListener(ev.touch, function(ev){
 					var t = ev.target;
 
 					if(~t.className.indexOf('bigTable')){
 						if(!t.wkScroll) {
-							new iScroll(t, function(){
+							new w.iScroll(t, function(){
 								track.event('tables', track.SWIPE);
 							});
 							t.wkScroll = true;

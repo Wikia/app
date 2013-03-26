@@ -23,6 +23,13 @@ $messages['af'] = array(
 	'categorygalleries-desc' => "Wys 'n galery met bladsye op kategoriebladsye",
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'categorygalleries-desc' => 'يظهر معرض صور صفحة في صفحات التصنيف',
+);
+
 /** Asturian (asturianu)
  * @author Xuacu
  */
@@ -56,6 +63,13 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'categorygalleries-desc' => 'Prikazuje galeriju na stranici kategorije',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'categorygalleries-desc' => 'Mostra una galeria de pàgines sobre les pàgines de la categoria',
 );
 
 /** Czech (česky)

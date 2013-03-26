@@ -8,8 +8,13 @@ WAMPage.prototype = {
 			action: WikiaTracker.ACTIONS.IMPRESSION
 		});
 		
-		if( window.wgTitle && window.wgWAMPageName && wgTitle === wgWAMPageName ) track({label: 'index'});
-		if( window.wgTitle && window.wgWAMFAQPageName && wgTitle === wgWAMFAQPageName ) track({label: 'faq'});
+		if( window.wgTitle ) {
+			if( window.wgWAMPageName && wgTitle === wgWAMPageName ) {
+				track({label: 'index'});
+			} else if( window.wgWAMFAQPageName && wgTitle === wgWAMFAQPageName ) {
+				track({label: 'faq'});
+			}
+		}
 	}
 };
 

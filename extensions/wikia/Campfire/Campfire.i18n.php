@@ -21,6 +21,14 @@ Parameters:
 * $1 pulls in the name of the copyright license the wiki uses.',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'campfire-page-header' => '$1 من $2',
+	'campfire-licensed-under' => 'المرخص لها بموجب $1',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author AZISS
  */
@@ -35,6 +43,14 @@ $messages['az'] = array(
 $messages['br'] = array(
 	'campfire-page-header' => '$1 eus $2',
 	'campfire-licensed-under' => 'Dindan an aotre-implijout $1',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'campfire-page-header' => '$1 de $2',
+	'campfire-licensed-under' => 'Sota la llicència $1',
 );
 
 /** Czech (česky)

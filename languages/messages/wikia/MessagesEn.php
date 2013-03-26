@@ -1069,4 +1069,6 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'user-properties-method-nonexistent' => 'Handler method non-existent',
 'user-properties-handler-nonexistent' => 'Handler class non-existent',
 
+'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
+
 ));

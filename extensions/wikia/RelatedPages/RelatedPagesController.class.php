@@ -8,10 +8,14 @@ class RelatedPagesController extends WikiaController {
 		$this->skipRendering = false;
 	}
 
-	public function executeIndex() {
+	public function executeIndex( $params = null ) {
 		global $wgTitle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgRelatedPagesAddAfterSection;
 
-		$articleid = $wgTitle->getArticleId();
+		$altTitle = $this->request->getVal('altTitle', null);
+
+		$title = empty($altTitle) ? $wgTitle : $altTitle;
+
+		$articleid = $title->getArticleId();
 
 		$relatedPages = RelatedPages::getInstance();
 

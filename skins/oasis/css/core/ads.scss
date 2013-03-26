@@ -2,6 +2,11 @@
 @import "layout";
 @import "../mixins/clearfix";
 
+/** Hide 1x1 iframes **/
+.wikia-ad iframe[width="1"][height="1"] {
+	display: none;
+}
+
 /** Leaderboards **/
 
 .WikiaTopAds {

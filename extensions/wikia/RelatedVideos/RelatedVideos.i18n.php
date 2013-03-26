@@ -29,7 +29,7 @@ $messages['en'] = array(
 	'related-videos-remove-video-error-duplicate' => 'This video has already been removed.',
 	'related-videos-remove-video-error-nonexisting' => 'The video you are trying to remove does not exist.',
 	'related-videos-remove-confirm-title' => 'Remove video',
-	'related-videos-remove-confirm' => 'Are you sure you want to remove this video from Related Videos?',
+	'related-videos-remove-confirm' => 'Are you sure you want to remove this video from the Videos list?',
 	'related-videos-remove-call' => 'Please wait wile we are removing the video',
 	'related-videos-wiki-summary-blacklist' => 'Removed [[:$2|$1]] from Related Videos.',
 	'related-videos-wiki-summary-whitelist' => 'Added [[:$2|$1]] to Related Videos.',
@@ -48,6 +48,7 @@ $messages['en'] = array(
 	'related-videos-empty' => 'Be the first to add a video',
 	'related-videos-video-views' => '$1 {{PLURAL:$1|view|views}}',
 	'related-videos-see-all' => 'See all videos',
+	'related-videos-delete-from-wiki' => 'Also delete this video from the wiki',
 
 	//popular videos on hubs
 	'related-videos-hubs-suggested-by' => 'Suggested by $1',
@@ -63,6 +64,7 @@ $messages['qqq'] = array(
 	'related-videos-hubs-suggested-by' => 'This is suffix text displayed after a video title in "Popular Videos" module on a hub page. Parameters:
 * $1 is a username which can be linked to a user page',
 	'releted-videos-see-all' => 'This text comes at the end of the list of related videos.  Clicking on it takes you to a larger list of wiki videos.',
+	'related-videos-delete-from-wiki' => 'For a checkbox that allows the user to delete the current video from the wiki in addition to removing it from the Videos rail module',
 );
 
 /** Breton (brezhoneg)

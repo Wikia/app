@@ -31,6 +31,17 @@ $color-related-videos-background: darken($color-page, 20%);
 	margin-bottom: 20px;
 }
 
+.rv-delete-confirm {
+	span {
+		display: block;
+		margin-bottom: .5em;
+	}
+	input[type="checkbox"] {
+		margin-left: 0;
+	}
+}
+
+
 .modalContent .RelatedVideos {
 	.item-title {
 		overflow: hidden;

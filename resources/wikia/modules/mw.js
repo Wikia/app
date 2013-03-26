@@ -1,8 +1,7 @@
 /**
  * AMD wrapper for mw global object
  */
-(function(context) {
-	define('mw', function() {
-		return context.mw;
-	});
-}(this));
+define('mw', ['wikia.window'], function(window) {
+	return window.mw;
+});
+

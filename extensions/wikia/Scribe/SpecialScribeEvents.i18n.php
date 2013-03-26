@@ -29,6 +29,15 @@ $messages['br'] = array(
 	'scribeeventsrecords' => 'Enrolladennoù',
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'scribe-desc' => "[[Special:Scribeevents|Eines]] per buscar el títul d'una pàgina específica a través dels wikis",
+	'scribeevents' => 'Esdeveniments recents',
+	'scribeeventsrecords' => 'Registres',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
@@ -197,6 +206,15 @@ $messages['pt-br'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Ferramenta]] para procurar um título específico de página em todas as wikis',
 	'scribeevents' => 'Acontecimentos recentes',
 	'scribeeventsrecords' => 'Registros',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'scribe-desc' => "[[Special:Scribeevents|Strumende]] pe cercà 'nu titole de ìna pàgene specifiche sus a tutte le uicchi",
+	'scribeevents' => 'Avveneminde recende',
+	'scribeeventsrecords' => 'Righe',
 );
 
 /** Russian (русский)

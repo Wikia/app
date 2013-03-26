@@ -1068,6 +1068,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!", # Fuzzy
 );
 
 /** Dutch (Nederlands)
+ * @author Konovalov
  * @author McDutchie
  * @author Siebrand
  */
@@ -1095,38 +1096,37 @@ Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderh
 
 Laat alstublieft een bericht achter op [[$2|mijn overleg pagina]] als ik u ergens mee kan helpen! $3",
 	'welcome-message-log' => 'nieuwe gebruiker aan het verwelkomen',
-	'welcome-message-user-staff' => '==Welkom==
+	'welcome-message-user-staff' => "==Welkom==
 
-Hallo! Welkom bij {{SITENAME}}. Dank u wel voor uw bewerking aan de pagina [[:$1]].
+Hallo,
 
-Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3', # Fuzzy
-	'welcome-message-anon-staff' => "==Welkom==
+welkom bij {{SITENAME}} en dank u wel voor uw bewerking aan de pagina [[:$1]]. Als u hulp zoekt, kijk dan eens naar onze [[Help:Contents|hulppagina's]]. Ga langs bij [[w:c:community|Community Central]] om op de hoogte te blijven via onze [[w:c:community:Blog:Wikia_Staff_Blog|medewerkersblog]], stel vragen op ons [[w:c:community:Special:Forum|gemeenschapsforum]], neem deel aan onze [[w:c:community:Help:Webinars|webinars]] of chat live met mede-Wikianen. Veel plezier met bewerken!
+$3",
+	'welcome-message-anon-staff' => '==Welcome==
 
-Hallo! Welkom bij {{SITENAME}}. Dank u wel voor uw bewerking aan de pagina [[:$1]].
+Hallo,
 
-'''[[Special:UserLogin|Meld u zich alstublieft aan of maak een gebruiker aan]]'''. Zo kunt u eenvoudig uw bewerkingen bijhouden en contact houden met de andere leden van de gemeenschap.
+Welkom bij {{SITENAME}} en dank u wel voor uw bewerking van de [[:$1]] pagina. We moedigen alle mensen die bijdragen aan om [[Special:UserLogin|een gebruikersnaam aan te maken]], zodat u uw bijdragen kunt bijhouden, u toegang heeft tot meer Wikia mogelijkheden en de rest van de {{SITENAME}} community leert kennen.
 
-Als u hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3", # Fuzzy
+Als u hulp nodig heeft, bekijk dan eerst onze [[Help:Contents|help pages]] en bezoek dan [[w:c:community|Community Central]] om meer te weten te komen. Veel succes met bewerken! $3',
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum voor hulp]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HA Welkom bewerken',
 	'welcome-message-wall-user' => 'Hallo en welkom bij {{SITENAME}}! Dank u wel voor uw bewerking aan de pagina [[:$1]].
 
 Laat een bericht voor me achter als ik ergens mee kan helpen.',
-	'welcome-message-wall-user-staff' => 'Hallo en welkom bij {{SITENAME}}! Dank u wel voor uw bewerking aan de pagina [[:$1]].
+	'welcome-message-wall-user-staff' => "Hallo,
 
-Als u hulp nodig hebt en als er hier geen lokale beheerders zijn, kom dan langs op de [[wikia:Forum:Community Central Forum|forums op Community Central Wiki]]. U kunt ook kijken op onze [[w:c:community:Blog:Wikia_Staff_Blog|Stafblog]] om op de hoogte te blijven van het laatste nieuws en evenementen rondom Wikia.', # Fuzzy
+Welkom bij {{SITENAME}} en dank u wel voor het bewerken van de [[:$1]] pagina. Als u hulp nodig heeft, begin dan met het bekijken van onze [[Help:Contents|help pagina's]]. Bezoek [[w:c:community|de centrale gemeenschap]] om op de hoogte te blijven van onze [[w:c:community:Blog:Wikia_Staff_Blog|medewerkers blog]], stel uw vragen op ons [[w:c:community:Special:Forum|gemeenschapsforum]], neem deel aan onze [[w:c:community:Help:Webinars|webinar series]], of chat live met mede Wikianen. Veel plezier met bewerken!",
 	'welcome-message-wall-anon' => "Hallo, welkom bij {{SITENAME}}. Dank u wel voor uw werk aan de pagina [[:$1]].
 
 '''[[Special:Userlogin|Maak alstublieft een gebruiker aan of meld u aan]]'''.
 Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderhouden van contacten met de rest van de gemeenschap.
 
 Laat alstublieft een bericht achter als ik u ergens mee kan helpen!",
-	'welcome-message-wall-anon-staff' => "Hallo, welkom bij {{SITENAME}}. Dank u wel voor uw werk aan de pagina [[:$1]].
+	'welcome-message-wall-anon-staff' => "Hallo,
+Welkom bij {{SITENAME}} en dank u wel voor uw bewerking van de [[:$1]] pagina. We raden alle mensen die bijdragen aan om [[Special:UserLogin|om een gebruikersnaam aan te maken]], zodat u uw bijdragen kunt bijhouden, toegang heeft tot meer Wikia mogelijkheden en de rest van de {{SITENAME}} gemeenschap leert kennen.
 
-'''[[Special:Userlogin|Maak alstublieft een gebruiker aan of meld u aan]]'''.
-Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderhouden van contacten met de rest van de gemeenschap.
-
-Laat alstublieft een bericht achter als ik u ergens mee kan helpen!", # Fuzzy
+Als u hulp nodig heeft, bekijk dan eerst onze [[Help:Contents|help pagina's]] en bezoek dan [[w:c:community|de centrale gemeenschap]] om meer te weten te komen. Veel plezier met bewerken!",
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -1270,7 +1270,7 @@ Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.", # Fuzzy
 $messages['pms'] = array(
 	'welcome-user-page' => "==A propòsit ëd mi==
 
-''Sta sì a l'é soa pàgina utent. Për piasì ch'a modìfica sta pàgina-sì për parlé ëd chiel a la comunità!''
+''Costa-sì a l'é soa pàgina utent. Për piasì ch'a modìfica sta pàgina-sì për parlé ëd chiel a la comunità!''
 
 ==Mie contribussion==
 
@@ -1305,24 +1305,22 @@ Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]
 S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia:Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3", # Fuzzy
 	'staffsig-text' => "$1<staff /> <small>([[w:forums|piassa d'agiut]] | [[w:sblog|blog]])</small>",
 	'hawelcomeedit' => 'HAWelcomeEdit',
-	'welcome-message-wall-user' => "Cerea, bin ëvnù a {{SITENAME}}! Mersì për soe modìfiche a la pàgina [[:$1]].
+	'welcome-message-wall-user' => "Cerea, bin ëvnù su {{SITENAME}}! Mersì për soe modìfiche a la pàgina [[:$1]].
 
 Për piasì ch'am lassa un mëssagi se i peuss giuté con cheicòs!",
-	'welcome-message-wall-user-staff' => "Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pagina [[:$1]].
+	'welcome-message-wall-user-staff' => "Cerea,
 
-S'a l'ha dabzògn d'agiut, e a-i é gnun admin locaj sì, a peul visité ij [[wikia:Forum:Community Central Forum|forum dzor la Community Central Wiki]]. A peul ëdcò controlé nòst [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] për mantense agiornà con j'ùltime neuve e event d'antorn a Wikia.
-
-Bon-e modìfiche!", # Fuzzy
+Bin ëvnù su {{SITENAME}} e mersì për soa modìfica a la pàgina [[:$1]]. S'a l'ha damanca d'agiut, ch'a ancamin-a an dasend n'ociada a nòstre [[Help:Contents|pàgine d'agiut]]. Ch'a vìsita la [[w:c:community|Sentral dla Comunità]] për ten-se anformà con nòstr [[w:c:community:Blog:Wikia_Staff_Blog|ëscartari d'anformassion]], ch'a ciama dle chestion an s'nòstra [[w:c:community:Special:Forum|piassa dla comunità]], ch'a partìssipa a la nòstra [[w:c:community:Help:Webinars|serie ëd seminari an sl'aragnà]], o ch'a ciaciara dal viv con dj'amis Wikian. Bon-e modìfiche!",
 	'welcome-message-wall-anon' => "Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]].
 
-'''[[Special:Userlogin|Per piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera belfé ëd manten-e na marca ëd soe contribussion e a lo giuta a comuniché con ël rest ëd la comunità.
+'''[[Special:Userlogin|Per piasì ch'a intra ant ël sistema e ch'a crea në stranòm]]'''. A l'é na manera sempia ëd manten-e na marca ëd soe contribussion e a lo giuta a comuniché con ël rest ëd la comunità.
 
 Për piasì ch'am lassa un mëssagi s'i peuss giuté con cheicòs!",
-	'welcome-message-wall-anon-staff' => "Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]].
+	'welcome-message-wall-anon-staff' => "Cerea,
 
-'''[[Special:Userlogin|Per piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera belfé ëd manten-e na marca ëd soe contribussion e a lo giuta a comuniché con ël rest ëd la comunità.
+Bin ëvnù su {{SITENAME}} e mersì për soa modìfica a la pàgina [[:$1]]. I ancoragioma tuti ij contributor a [[Special:UserLogin|creé në stranòm]], parèj a peul ten-e ël cont ëd soe contribussion, acede a d'àutre caraterìstiche ëd Wikia e conòsse ël rest ëd la comunità ëd {{SITENAME}}.
 
-Për piasì ch'am lassa un mëssagi s'i peuss giuté con cheicòs!", # Fuzzy
+S'a l'ha damanca d'agiut, ch'a daga për prima còsa n'ociada a nòstra [[Help:Contents|pàgina d'agiut]] e peui ch'a vìsita la [[w:c:community|Sentral dla comunità]] për amprende ëd pi. Bon-e modìfiche!",
 );
 
 /** Pashto (پښتو)

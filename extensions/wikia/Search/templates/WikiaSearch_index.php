@@ -57,7 +57,7 @@
 					<?php foreach( $results as $result ): ?>
 						<?php
 							$pos++;
-							if($result instanceof \Wikia\Search\ResultSet\Grouping) {
+							if($result instanceof \Wikia\Search\ResultSet\Grouping || $result instanceof \Wikia\Search\ResultSet\MatchGrouping) {
 								echo $app->getView( 'WikiaSearch', 'resultSet', array(
 								  'resultSet' => $result,
 								  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),

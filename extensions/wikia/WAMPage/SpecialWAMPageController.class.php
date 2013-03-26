@@ -12,7 +12,7 @@ class SpecialWAMPageController extends WikiaSpecialPageController
 	}
 
 	public function index() {
-		//just for the template now...
+		$this->faqPage = !empty($this->app->wg->WAMPageConfig['faqPageName']) ? $this->app->wg->WAMPageConfig['faqPageName'] : '#';
 	}
 	
 	public function faq() {

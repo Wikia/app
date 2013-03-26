@@ -1,13 +1,17 @@
 var AchievementsThing = {
 	init: function() {
 		AchievementsThing.page = 0;
-		AchievementsThing.user = $(".AchievementsModule, .WikiaLatestEarnedBadgesModule").find(".data").attr("data-user");
-		AchievementsThing.badgesCount = ~~$(".AchievementsModule, .WikiaLatestEarnedBadgesModule").find(".data").attr("data-badges-count");
-		AchievementsThing.badgesPerPage = ~~$(".AchievementsModule, .WikiaLatestEarnedBadgesModule").find(".data").attr("data-badges-per-page");
+		AchievementsThing.module = $(".AchievementsModule, .WikiaLatestEarnedBadgesModule");
+
+		var data = AchievementsThing.module.find(".data");
+
+		AchievementsThing.user = data.attr("data-user");
+		AchievementsThing.badgesCount = ~~data.attr("data-badges-count");
+		AchievementsThing.badgesPerPage = ~~data.attr("data-badges-per-page");
 		AchievementsThing.pageCount = Math.floor(AchievementsThing.badgesCount/AchievementsThing.badgesPerPage);
-		AchievementsThing.badgesUl = $(".AchievementsModule, .WikiaLatestEarnedBadgesModule").find(".badges-icons");
-		AchievementsThing.next = $(".AchievementsModule, .WikiaLatestEarnedBadgesModule").find(".badges-next");
-		AchievementsThing.prev = $(".AchievementsModule, .WikiaLatestEarnedBadgesModule").find(".badges-prev");
+		AchievementsThing.badgesUl = AchievementsThing.module.find(".badges-icons");
+		AchievementsThing.next = AchievementsThing.module.find(".badges-next");
+		AchievementsThing.prev = AchievementsThing.module.find(".badges-prev");
 
 		if(AchievementsThing.next && AchievementsThing.prev){
 			AchievementsThing.next.click(AchievementsThing.loadBadges);
@@ -22,7 +26,7 @@ var AchievementsThing = {
 	},
 
 	showBadgesDescription: function(){
-		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.badges li > img, .badges .sponsored-link').add("#LeaderboardTable .badge-icon").each(function(){
+		AchievementsThing.module.find('.badges li > img, .badges .sponsored-link').add("#LeaderboardTable .badge-icon").each(function(){
 			var badge = $(this);
 			var html = badge.prevAll(".profile-hover").clone().wrap('<div>').parent().html();
 			badge.popover({
@@ -33,7 +37,7 @@ var AchievementsThing = {
 	},
 
 	trackSponsoredBadges: function(){
-		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.sponsored-link img').each(function(){
+		AchievementsThing.module.find('.sponsored-link img').each(function(){
 			AchievementsThing.trackSponsored($(this).parent().attr('data-badgetrackurl'));
 		});
 	},
@@ -57,7 +61,7 @@ var AchievementsThing = {
 		AchievementsThing.page = (element.getAttribute('class') == 'badges-prev') ? AchievementsThing.page - 1 : AchievementsThing.page + 1;
 
 		$.nirvana.sendRequest({
-			controller: 'AchievementsController',
+			controller: 'Achievements',
 			method: 'Badges',
 			format: 'html',
 			type: 'GET',

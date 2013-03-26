@@ -97,9 +97,9 @@ class CategorySelectController extends WikiaController {
 		$this->response->setVal( 'link', $this->request->getVal( 'link', '' ) );
 		$this->response->setVal( 'name', $this->request->getVal( 'name', '' ) );
 		$this->response->setVal( 'namespace', $this->request->getVal( 'namespace', '' ) );
-		$this->response->setVal( 'outerTag', $this->request->getVal( 'outerTag', '' ) );
+		$this->response->setVal( 'outertag', $this->request->getVal( 'outertag', '' ) );
 		$this->response->setVal( 'remove', $this->wf->Message( 'categoryselect-category-remove' )->text() );
-		$this->response->setVal( 'sortKey', $this->request->getVal( 'sortKey', '' ) );
+		$this->response->setVal( 'sortkey', $this->request->getVal( 'sortkey', '' ) );
 		$this->response->setVal( 'type', $this->request->getVal( 'type', 'normal' ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
@@ -243,7 +243,7 @@ class CategorySelectController extends WikiaController {
 
 				default:
 					$dbw->rollback();
-					$response[ 'error' ] = $this->wf->Message( 'categoryselect-edit-abort' )->text();
+					$response[ 'error' ] = $this->wf->Message( 'categoryselect-error-edit-abort' )->text();
 			}
 		}
 

@@ -76,6 +76,9 @@ $app->registerHook( 'ArticleFromTitle', 'ForumHooksHelper', 'onArticleFromTitle'
 // For activity module tag
 $app->registerHook( 'ParserFirstCallInit', 'ForumHooksHelper', 'onParserFirstCallInit' );
 
+// Hook for topic red links
+$app->registerHook( 'LinkBegin', 'ForumHooksHelper', 'onLinkBegin' );
+
 include ($dir . '/Forum.namespace.setup.php');
 
 //add this namespace to list of wall namespaces

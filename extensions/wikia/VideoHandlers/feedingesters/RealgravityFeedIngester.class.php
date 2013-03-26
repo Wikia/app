@@ -13,6 +13,34 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			'name' => 'HowCast',
 			'categories' => array( 'HowTo', 'Lifestyle' )
 		),
+		647 => array(
+			'name' => 'Howcast - Cars and Transportation',
+			'categories' => array( 'HowTo', 'HowCast', 'Lifestyle', 'Cars', 'Transportation' )
+		),
+		648 => array(
+			'name' => 'Howcast - Crafts and Hobbies',
+			'categories' => array( 'HowTo', 'HowCast', 'Lifestyle', 'Crafts', 'Hobbies' )
+		),
+		649 => array(
+			'name' => 'Howcast - Food and Drink',
+			'categories' => array( 'HowTo', 'HowCast', 'Lifestyle', 'Food', 'Drink' )
+		),
+		650 => array(
+			'name' => 'Howcast - Health and Nutrition',
+			'categories' => array( 'HowTo', 'HowCast', 'Lifestyle', 'Health', 'Nutrition' )
+		),
+		651 => array(
+			'name' => 'Howcast - Parenting and Family',
+			'categories' => array( 'HowTo', 'HowCast', 'Lifestyle', 'Parenting', 'Family' )
+		),
+		652 => array(
+			'name' => 'Howcast - Personal Care and Style',
+			'categories' => array( 'HowTo', 'HowCast', 'Lifestyle', 'Personal Care', 'Style' )
+		),
+		655 => array(
+			'name' => 'Howcast - Sports and Fitness',
+			'categories' => array( 'HowTo', 'HowCast', 'Lifestyle', 'Sports', 'Fitness' )
+		),
 		202 => array(
 			'name' => 'Howdini',
 			'categories' => array( 'HowTo', 'Lifestyle' )

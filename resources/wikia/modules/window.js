@@ -1,11 +1,8 @@
 /**
  * AMD module wrapping window global object
  */
-(function(context) {
+define('wikia.window', function() {
 	'use strict';
 
-	define('wikia.window', function() {
-		return context;
-	});
-
-}(this));
+	return window;
+});

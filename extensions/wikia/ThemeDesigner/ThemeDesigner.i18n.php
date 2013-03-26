@@ -493,8 +493,8 @@ $messages['diq'] = array(
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-button-cancel' => 'Bıterkne',
 	'themedesigner-button-ok' => 'Temam',
-	'themedesigner-button-upload' => 'Barke',
-	'themedesigner-button-upload-wordmark' => 'Barke',
+	'themedesigner-button-upload' => 'Bar ke',
+	'themedesigner-button-upload-wordmark' => 'Bar ke',
 	'themedesigner-rules-background' => 'jpg, gif yana png. limita cı {{PLURAL:$1|$1 kilobayt bo|$1 kilobayti bê}}',
 	'themedesigner-default' => 'Hesıbyaye',
 	'themedesigner-size' => 'gırdiye',
@@ -1660,6 +1660,10 @@ $messages['roa-tara'] = array(
 	'themedesigner-small' => 'Piccinne',
 	'themedesigner-medium' => 'Medie',
 	'themedesigner-large' => 'Granne',
+	'themedesigner-fix-background' => 'corregge',
+	'themedesigner-tab-theme' => 'Teme',
+	'themedesigner-tab-customize' => 'Personalizze',
+	'themedesigner-button-save' => 'Reggìstre',
 );
 
 /** Russian (русский)

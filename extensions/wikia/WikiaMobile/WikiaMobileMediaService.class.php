@@ -260,7 +260,7 @@ class WikiaMobileMediaService extends WikiaService {
 		$result = $this->sendSelfRequest(
 			'renderFigureTag',
 			array(
-				'class' => [( ( !empty( $link ) ) ? 'link' : 'thumb' )] + $class,
+				'class' => array_merge([( ( !empty( $link ) ) ? 'link' : 'thumb' )], $class),
 				'content' => $image->toString(),
 				'caption' => $caption,
 				'showRibbon' => self::showRibbon( $attribs['width'], $attribs['height'] ),
