@@ -1175,7 +1175,8 @@ var Lightbox = {
 				thumbs.each(function() {
 					var $thisThumb = $(this),
 						thumbUrl = $thisThumb.data('src') || $thisThumb.attr('src'),
-						title = $thisThumb.attr('data-image-name');
+						title = $thisThumb.attr('data-image-name'),
+						key = $thisThumb.attr('data-image-key');
 
 					if(title) {
 						// Check for dupes
@@ -1186,6 +1187,7 @@ var Lightbox = {
 
 						thumbArr.push({
 							thumbUrl: Lightbox.thumbParams(thumbUrl, 'image'),
+							key: key,
 							title: title,
 							type: 'image',
 							playButtonSpan: ''
