@@ -38,11 +38,17 @@ return array(
 	),
 	'wikia.location' => array(
 		'scripts' => 'resources/wikia/modules/location.js',
-		'dependencies' => 'amd',
+		'dependencies' => [
+			'amd',
+			'wikia.window'
+		],
 	),
 	'wikia.localStorage' => array(
 		'scripts' => 'resources/wikia/modules/localStorage.js',
-		'dependencies' => 'amd',
+		'dependencies' => [
+			'amd',
+			'wikia.window'
+		],
 	),
 	'wikia.deferred' => array(
 		'scripts' => 'resources/wikia/modules/deferred.js',
@@ -64,7 +70,10 @@ return array(
 	),
 	'wikia.mw' => array(
 		'scripts' => 'resources/wikia/modules/mw.js',
-		'dependencies' => 'amd',
+		'dependencies' => [
+			'amd',
+			'wikia.window'
+		],
 	),
 	'wikia.loader' => array(
 		'scripts' => 'resources/wikia/modules/loader.js',
@@ -84,7 +93,10 @@ return array(
 	),
 	'wikia.cookies' => array(
 		'scripts' => 'resources/wikia/modules/cookies.js',
-		'dependencies' => 'amd'
+		'dependencies' => [
+			'amd',
+			'wikia.window'
+		]
 	),
 	'wikia.log' => array(
 		'scripts' => 'resources/wikia/modules/log.js',
