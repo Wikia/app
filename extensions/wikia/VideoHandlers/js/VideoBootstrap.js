@@ -1,4 +1,4 @@
-define('wikia.videoBootstrap', ['wikia.loader'], function videoBootstrap(loader) {
+context.define('wikia.videoBootstrap', ['wikia.loader'], function videoBootstrap(loader) {
 
 	return function(element, json) {
 		var init = json.init,
@@ -11,20 +11,28 @@ define('wikia.videoBootstrap', ['wikia.loader'], function videoBootstrap(loader)
 			element.innerHTML = html;
 		}
 
+		// load the script (Load all JS files with jQuery for now, while we sort out loader())
 		if(scripts) {
-			loader({
-				type: loader.JS,
-				resources: scripts
-			}).done(
-				function() {
-					// execute the init function
-					if(init) {
-						require([init], function(init) {
-							init(jsParams);
-						});
-					}
+			var i,
+				args = [];
+
+			for(i=0; i<scripts.length; i++){
+				args.push({
+					type: loader.JS,
+					resources: scripts[i]
+				});
+			}
+
+			loader
+			.apply(context, args)
+			.done(function() {
+				// execute the init function
+				if(init) {
+					require([init], function(init) {
+						init(jsParams);
+					});
 				}
-			);
+			});
 		}
 	}
 });
