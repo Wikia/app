@@ -26,7 +26,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( null )
+		                   ->setMethods( array( 'getCrossWikiMatch' ) )
 		                   ->getMock();
 		
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
@@ -64,16 +64,9 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( 'OnWikiSearchIncludesWikiMatch' )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$mockConfig
+		$mockSelect
 		    ->expects( $this->once() )
-		    ->method ( 'getQuery' )
-		    ->with   ( \Wikia\Search\Config::QUERY_RAW )
-		    ->will   ( $this->returnValue( 'star wars' ) )
-		;
-		$mockService
-		    ->expects( $this->once() )
-		    ->method ( 'getWikiMatchByHost' )
-		    ->with   ( 'starwars' )
+		    ->method ( 'getCrossWikiMatch' )
 		    ->will   ( $this->returnValue( $mockWikiMatch ) )
 		;
 		$mockConfig
