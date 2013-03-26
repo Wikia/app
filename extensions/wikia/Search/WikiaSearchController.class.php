@@ -254,7 +254,22 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
-			$this->setVal( 'wikiMatch', $this->app->getView( 'WikiaSearch', 'CrossWiki_exactResult', [ 'pos' => -1, 'resultSet' => $resultSet, 'pagesMsg' => 'foo', 'imgMsg' => 'bar', 'videoMsg' => 'baz', 'imageURL' => 'foo' ] ) );
+			$images = $resultSet->getHeader( 'images' );
+			$imageUrl = empty( $images ) ? $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png' : (new \WikiaHomePageHelper)->getImageUrl( $images[0], 180, 120 );
+			$thumbTracking = 'class="wiki-thumb-tracking" data-pos="-1" data-event="search_click_wiki-';
+			$thumbTracking .= empty( $images ) ? 'no-thumb"' : 'thumb"';
+			$this->setVal( 'wikiMatch', 
+					$this->app->getView( 'WikiaSearch', 'CrossWiki_exactResult', 
+							[ 'pos' => -1, 
+							'resultSet' => $resultSet, 
+							'pagesMsg' => $resultSet->getArticlesCountMsg(), 
+							'imgMsg' => $resultSet->getImagesCountMsg(), 
+							'videoMsg' => $resultSet->getVideosCountMsg(), 
+							'imageURL' => $imageUrl,
+							'thumbTracking' => $thumbTracking
+							] 
+							) 
+					);
 		}
 	}
 	
