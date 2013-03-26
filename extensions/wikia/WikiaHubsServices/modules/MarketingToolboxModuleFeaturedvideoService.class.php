@@ -148,7 +148,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 		);
 
 		$structuredData = WikiaDataAccess::cache(
-			$this->wf->SharedMemcKey($this->getMemcacheKey($lastTimestamp), $this->skinName),
+			$this->getMemcacheKey($lastTimestamp, $this->skinName),
 			6 * 60 * 60,
 			function () use( $model, $params ) {
 				return $this->loadStructuredData( $model, $params );
@@ -160,8 +160,19 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 
 	public function purgeMemcache($timestamp) {
 		foreach(Skin::getSkinNames() as $key => $skin) {
-			$this->app->wg->Memc->delete( $this->wf->SharedMemcKey($this->getMemcacheKey($timestamp), $key) );
+			$this->app->wg->Memc->delete( $this->getMemcacheKey($timestamp, $key) );
 		}
+	}
+
+	protected function getMemcacheKey( $timestamp, $skin ) {
+		return  $this->wf->SharedMemcKey(
+			MarketingToolboxModel::CACHE_KEY,
+			$timestamp,
+			$this->verticalId,
+			$this->langCode,
+			$this->getModuleId(),
+			$skin
+		);
 	}
 
 	protected function getToolboxModel() {
