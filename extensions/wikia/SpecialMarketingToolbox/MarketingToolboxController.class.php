@@ -162,7 +162,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 					$this->wg->user->getId()
 				);
 
-				$this->purgeMemcache( $module );
+				$this->purgeCache( $module );
 
 				$this->putFlashMessage($this->wf->msg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
 
@@ -197,7 +197,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
 					. '/' . $date->format('Y-m-d');
 				$this->successText = $this->wf->msg('marketing-toolbox-module-publish-success', $this->wg->lang->date($this->date));
-				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null )) {
+				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null, true)) {
 					$this->purgeWikiaHomepageHubs();
 				}
 			} else {
@@ -421,8 +421,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->imageHeight = $this->request->getVal('imageHeight', '');
 	}
 
-	private function purgeMemcache($module) {
+	private function purgeCache($module) {
 		$module->purgeMemcache($this->date);
+		WikiaHubsServicesHelper::purgeHubVarnish($this->langCode, $this->verticalId);
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
 			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null )) {
@@ -432,5 +433,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 	private function purgeWikiaHomepageHubs() {
 		WikiaDataAccess::cachePurge( WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($this->langCode) );
+		WikiaHubsServicesHelper::purgeHomePageVarnish($this->langCode);
 	}
 }

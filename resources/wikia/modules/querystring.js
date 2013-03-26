@@ -261,7 +261,7 @@
 			}
 			data = data || {};
 			win.history.pushState(data, win.document.title, this.toString());
-		}
+		};
 
 		/**
 		 * Updates the URL without navigating away from the page
@@ -276,14 +276,20 @@
 			}
 			data = data || {};
 			win.history.replaceState(data, win.document.title, this.toString());
-		}
+		};
 
 		return Querystring;
 	}
 
+	//UMD inclusive
+	if (!context.Wikia) {
+		context.Wikia = {};
+	}
+
+	//namespace
+	context.Wikia.Querystring = querystring(window.location, context);
+
 	if (context.define && context.define.amd) {
 		context.define('wikia.querystring', ['wikia.location', 'wikia.window'], querystring);
 	}
-	context.Wikia = context.Wikia || {};
-	context.Wikia.Querystring = querystring(context.location, context);
 }(this));

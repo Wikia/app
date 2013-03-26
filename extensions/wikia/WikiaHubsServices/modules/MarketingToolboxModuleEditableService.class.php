@@ -5,10 +5,6 @@ abstract class MarketingToolboxModuleEditableService extends MarketingToolboxMod
 	abstract public function getStructuredData($data);
 	abstract protected function getFormFields();
 
-	public function __construct($langCode, $sectionId, $verticalId) {
-		parent::__construct( $langCode, $sectionId, $verticalId );
-	}
-
 	public function renderEditor($data) {
 		$data['fields'] = $this->prepareFieldsDefinition($data['values'], $data['validationErrors']);
 		return $this->getView('editor', $data);

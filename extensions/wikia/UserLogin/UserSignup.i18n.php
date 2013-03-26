@@ -356,6 +356,14 @@ Page content for confirm page when byemail=1 is used.  Parameters:
 	'usersignup-confirmation-reminder-email_body-HTML' => 'Stand-alone HTML version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'usersignup-welcome-email-edit-profile-heading' => 'تعديل صفحتك الشخصية',
+	'usersignup-facebook-problem' => 'هناك مشكلة في الاتصال مع فيسبوك. الرجاء المحاولة مرة أخرى لاحقاً.',
+);
+
 /** South Azerbaijani (تورکجه)
  * @author Arjanizary
  */
@@ -413,6 +421,13 @@ $messages['br'] = array(
 	'usersignup-confirmation-reminder-email_subject' => 'Na vezit ket un estrañjour...',
 	'usersignup-confirmation-reminder-email-greeting' => 'Ac\'hanta $USERNAME',
 	'usersignup-confirmation-reminder-email-signature' => 'Skipailh Wikia',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'usersignup-page-title' => 'Uneix-te a Wikia',
 );
 
 /** Czech (česky)

@@ -6,13 +6,14 @@
  */
 class ArticleService extends WikiaObject {
 	const MAX_LENGTH = 500;
-	const CACHE_VERSION = 7;
+	const CACHE_VERSION = 8;
 
 	private $article = null;
 	private $tags = array(
 			'script',
 			'style',
 			'noscript',
+			'div',
 			'table',
 			'figure',
 			'figcaption',

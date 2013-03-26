@@ -223,6 +223,21 @@ $messages['af'] = array(
 	'multiwikirecords' => "Gevind op $1 wiki's", # Fuzzy
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'multidelete_italian_wikis' => 'جميع الويكيات الإيطالية',
+	'multidelete_russian_wikis' => 'جميع الويكات الروسية',
+	'multidelete_english_wikis' => 'جميع الويكيات الإنجليزية',
+	'multidelete_japanese_wikis' => 'جميع الويكيات اليابانية',
+	'multidelete_finnish_wikis' => 'جميع الويكيات الفنلندية',
+	'multidelete_spanish_wikis' => 'جميع الويكيات الإسبانية',
+	'multidelete_french_wikis' => 'جميع الويكيات الفرنسية',
+	'multidelete_swedish_wikis' => 'جميع الويكيات السويدية',
+	'multidelete_german_wikis' => 'جميع الويكيات الألمانية',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */

@@ -25,8 +25,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'rte-edgecase-triplecurls' => '{{Identical|Template parameter}}',
 	'rte-edgecase-redirect' => '{{Identical|Redirect}}',
 );
 
@@ -38,10 +40,28 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'rte-desc' => 'محرر متطور مدمج في ميدياويكي',
+	'rte-no-js-fallback' => 'محرر النص المتطور لا يعمل عندما يكون جافاسكريبت مغلقا. الرجاء إما تشغيله من خلال خيارات المتصفح الخاص بك، أو زيارة [[خاص:تفضيلات|صفحة تفضيلاتك]] للتبديل إلى محرر ميدياويكي القديم.', # Fuzzy
+	'rte-edgecase-info-title' => 'يجب أن يكون المحرر معدلا في وضع محرر المصدر',
+	'rte-edgecase-info' => 'تم تعطيل محرر النص المتطور لأن الصفحة تحتوي على تعليمات برمجية معقدة.',
 	'rte-edgecase-comment' => 'تعليقات HTML',
+	'rte-edgecase-triplecurls' => 'عيارات القالب',
+	'rte-edgecase-nowysiwyg' => 'الأوامر اللامرئية',
+	'rte-edgecase-complex-description' => 'عنوان URL خارجي أو قالب أثناء وصف لوصلة',
+	'rte-edgecase-template-with-link' => 'قالب يحتوي على وصلة كعيار',
+	'rte-edgecase-syntax' => 'جملة غير مسموح بها',
+	'rte-edgecase-image-with-link' => 'وصف صورة يحتوي على وصلة',
+	'rte-edgecase-redirect' => 'تحويلة (إعادة توجيه)',
+	'rte-edgecase-templateintable' => 'تعريف جدول يحتوي على قالب',
+	'rte-edgecase-unclosed-tags' => 'علامة HTML غير مغلقة',
+	'enablerichtexteditor' => 'تغيير المحرر إلى وضع محرر النص المتطور (بالإضافة إلى محرر المصدر)',
+	'rte-enablerichtexteditormessage' => 'تم تشغيل محرر النص المتطور',
+	'rte-first-run-notice' => 'لقد قمنا ببعض التحسينات للمحرر. لمعرفة المزيد الرجاء [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news قراءة هذا الإعلان].',
+	'prefs-rte' => 'محرر النص المتطور',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)

@@ -3,7 +3,13 @@
 <div class="RelatedVideos RelatedVideosHidden noprint" id="RelatedVideosRL" data-count="<?=$pageCount;?>">
 	<h1><?= wfMsg('related-videos-tally'); ?></h1>
 	<div class="deleteConfirmTitle messageHolder"><?=wfMsg('related-videos-remove-confirm-title');?></div>
-	<div class="deleteConfirm messageHolder"><?=wfMsg('related-videos-remove-confirm');?></div>
+	<div class="deleteConfirm messageHolder">
+		<span><?=wfMsg('related-videos-remove-confirm');?></span>
+		<label>
+			<input type="checkbox" name="delete-from-wiki" value="1">
+			<?=wfMessage('related-videos-delete-from-wiki');?>
+		</lable>
+	</div>
 	<div class="removingProcess messageHolder"><?=wfMsg('related-videos-remove-call');?></div>
 	<div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
 	<div class="RVHeader">

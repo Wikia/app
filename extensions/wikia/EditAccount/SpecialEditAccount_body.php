@@ -385,6 +385,7 @@ class EditAccount extends SpecialPage {
 			global $wgUser, $wgTitle;
 			// Mark as disabled in a more real way, that doesnt depend on the real_name text
 			$this->mUser->setOption( 'disabled', 1 );
+			$this->mUser->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
 			// BugId:18085 - setting a new token causes the user to be logged out.
 			$this->mUser->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
 
@@ -437,6 +438,7 @@ class EditAccount extends SpecialPage {
 	 */
 	function clearDisable() {
 		$this->mUser->setOption( 'disabled', null );
+		$this->mUser->setOption( 'disabled_date', null );
 		$this->mUser->saveSettings();
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-disable', $this->mUser->mName );

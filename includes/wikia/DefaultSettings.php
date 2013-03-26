@@ -1095,7 +1095,7 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/central/';
  * @name $wgEnableAmazonDirectTargetedBuy
  * Enables AmazonDirectTargetedBuy integration
  */
-$wgEnableAmazonDirectTargetedBuy = false;
+$wgEnableAmazonDirectTargetedBuy = true;
 
 /**
  * trusted proxy service registry
