@@ -26,25 +26,10 @@ class WikiaVideoPage extends WikiaImagePage {
 			$img = $this->getDisplayedFile();
 		}
 
+		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
+
 		$app = F::app();
 		$autoplay = $app->wg->VideoPageAutoPlay;
-
-		// If autoplay is false, see if its turned on for any specific hubs
-		if (empty($autoplay) && count($app->wg->VideoPageAutoPlayHub)) {
-			$hub = WikiFactoryHub::getInstance();
-			$cat_id = $hub->getCategoryId( $app->wg->CityId );
-
-			// If autoplay is enabled for this hub, flip $autoplay
-			if (in_array($cat_id, $app->wg->VideoPageAutoPlayHub)) {
-				$autoplay = true;
-			}
-		}
-
-		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
-		$embedCode = $img->getEmbedCode( self::$videoWidth, $autoplay );
-		if ( !empty( $embedCode['scripts'] ) ) {
-			$wgOut->addHTML('<script type="text/javascript">window.playerParams = '.json_encode( $embedCode ).';</script>');
-		}
 
 		if(empty($wgEnableVideoPageRedesign)) {
 			$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$embedCode['html'].$this->getVideoInfoLine().'</div>' );
@@ -58,7 +43,7 @@ class WikiaVideoPage extends WikiaImagePage {
 				'detailUrl' => $img->getProviderDetailUrl(),
 				'views' => MediaQueryService::getTotalVideoViewsByTitle( $img->getTitle()->getDBKey() ),
 			);
-			$html .= F::app()->renderView( 'WikiaFilePageController', 'videoCaption', $captionDetails );
+			$html .= $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
 
 			$wgOut->addHTML($html);
 

@@ -9,7 +9,7 @@
 			</div>
 		</h2>
 		<ul class="page-list-content WikiaGrid">
-			<?= F::app()->renderPartial('WikiaFilePageController', 'fileList', array('fileList' => $fileList, 'type' => $type)) ?>
+			<?= F::app()->renderPartial('FilePageController', 'fileList', array('fileList' => $fileList, 'type' => $type)) ?>
 		</ul>
 	</section>
 	<script>
