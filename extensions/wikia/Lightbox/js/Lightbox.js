@@ -413,8 +413,6 @@ var Lightbox = {
 			require(['wikia.videoBootstrap'], function (videoBootstrap) {
 				videoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode);
 			});
-
-
 		},
 		destroyVideo: function() {
 			Lightbox.openModal.media.html('');

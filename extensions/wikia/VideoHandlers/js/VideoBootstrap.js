@@ -1,4 +1,4 @@
-context.define('wikia.videoBootstrap', ['wikia.loader'], function videoBootstrap(loader) {
+define('wikia.videoBootstrap', ['wikia.loader'], function videoBootstrap(loader) {
 
 	return function(element, json) {
 		var init = json.init,
@@ -24,7 +24,7 @@ context.define('wikia.videoBootstrap', ['wikia.loader'], function videoBootstrap
 			}
 
 			loader
-			.apply(context, args)
+			.apply(loader, args)
 			.done(function() {
 				// execute the init function
 				if(init) {
