@@ -35,6 +35,7 @@
 					foreach( $videos as $id => $video ){
 						// Cache video ids in their already randomized order
 						$videoArray[] = array(
+							"key" => $video['key'], 
 							"title" => $video['title'], 
 							"thumb" => $video['thumbnailData']['thumb'],
 						);

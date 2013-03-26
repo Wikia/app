@@ -748,7 +748,7 @@ var Lightbox = {
 		if(clear) {
 			qs.removeVal('file').replaceState();
 		} else {
-			qs.setVal('file', this.current.key).replaceState();		
+			qs.setVal('file', this.current.key, true).replaceState();		
 		}
 	},
 
@@ -1139,6 +1139,7 @@ var Lightbox = {
 				for(i = 0, arrLength = RVI.length; i < arrLength; i++) {
 					thumbArr.push({
 						thumbUrl: Lightbox.thumbParams(RVI[i].thumb, 'video'),
+						key: RVI[i].key,
 						title: RVI[i].title,
 						type: 'video',
 						playButtonSpan: playButton
