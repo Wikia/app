@@ -31,14 +31,14 @@ Paginator.prototype = {
 			}
 
 		});
-		
+
 		this.flatSummary = [];
-		
+
 		// flatten summary structure
 		for(wiki in this.summary) {
 			this.flatSummary = this.flatSummary.concat(this.summary[wiki]);
 		}
-		
+
 		this.totalCount = this.flatSummary.length;
 		this.maxPage = Math.ceil(this.totalCount / Paginator.prototype.ARTICLES_PER_PAGE) - 1;
 		if(this.maxPage > 0) {
@@ -52,23 +52,23 @@ Paginator.prototype = {
 		this.$backward.removeClass('disabled');
 		if(this.currentPage === 0) {
 			this.$backward.addClass('disabled');
-		} 
+		}
 		if(this.currentPage === this.maxPage) {
 			this.$forward.addClass('disabled');
 		}
-		
+
 		this.$current.text(this.currentPage + 1);
 	},
 	updateContent: function() {
 		this.$content.startThrobbing();
-	
+
 		var index = this.currentPage * Paginator.prototype.ARTICLES_PER_PAGE,
 			flatSubSummary = this.flatSummary.slice(index, index + Paginator.prototype.ARTICLES_PER_PAGE),
 			summary = {},
 			i = 0,
 			self = this,
 			flatSubSummaryLength = flatSubSummary.length;
-			
+
 		for(i = 0; i < flatSubSummaryLength; i++) {
 			var wiki = flatSubSummary[i].wiki;
 			if(!summary[wiki]) {
@@ -76,9 +76,9 @@ Paginator.prototype = {
 			}
 			summary[wiki].push(flatSubSummary[i]);
 		}
-		
+
 		$.nirvana.sendRequest({
-			controller: 'WikiaFilePageController',
+			controller: 'FilePageController',
 			method: 'fileList',
 			type: 'get',
 			format: 'html',
@@ -88,7 +88,7 @@ Paginator.prototype = {
 			},
 			callback: function(html) {
 				self.$content.html(html).stopThrobbing();
-				
+
 			}
 		});
 	}
@@ -99,17 +99,17 @@ Paginator.prototype = {
 var VideoPage = {
 	init: function() {
 		var self = this;
-		
+
 		$('.page-list-pagination').each(function() {
 			new Paginator($(this));
 		});
 
 		var moreInfoWrapper = $('.more-info-wrapper'),
 			$table = $('#mw_metadata');
-			
+
 		// temporary hiding from UI.  remove this after the GlobalUsage hook is removed as well
 		$('#globalusage, #mw-imagepage-section-globalusage').hide();
-		
+
 		$('#SeeMore').on('click', function(e) {
 			e.preventDefault();
 			$(this).toggleClass('toggled');
