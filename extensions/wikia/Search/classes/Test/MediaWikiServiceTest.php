@@ -2423,4 +2423,39 @@ class MediaWikiServiceTest extends BaseTest
 			array(10000000000, 'message-id', 10000, 'message-id-M'),
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getSimpleMessage
+	 */
+	public function testGetSimpleMessage() {
+		
+		$mockWf = $this->getMock( 'WikiaFunctionWrapper', array( 'Message' ) );
+		$mockMessage = $this->getMockBuilder( 'Message' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'text' ) )
+		                    ->getMock();
+		
+		$service = $this->service->setMethods( null )->getMock();
+		
+		$mockWf
+		    ->expects( $this->once() )
+		    ->method ( 'Message' )
+		    ->with   ( 'foo' )
+		    ->will   ( $this->returnValue( $mockMessage ) )
+		;
+		$mockMessage
+		    ->expects( $this->once() )
+		    ->method ( 'text' )
+		    ->will   ( $this->returnValue( 'bar' ) )
+		;
+		
+		$app = new ReflectionProperty( '\Wikia\Search\MediaWikiService' , 'app' );
+		$app->setAccessible( true );
+		$app->setValue( $service, (object) array( 'wf' => $mockWf ) );
+		
+		$this->assertEquals(
+				'bar',
+				$service->getSimpleMessage( 'foo' )
+		);
+	}
 }

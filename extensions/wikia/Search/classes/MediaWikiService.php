@@ -736,6 +736,15 @@ class MediaWikiService
 	}
 	
 	/**
+	 * Wrapper for wfMessage('foo')->text()
+	 * @param string $messageName
+	 * @return string
+	 */
+	public function getSimpleMessage( $messageName ) {
+		return $this->app->wf->Message( $messageName )->text();
+	}
+	
+	/**
 	 * Provides a relative URL provided a page id, with optional query string as array. 
 	 * @param int $pageId
 	 * @param array $query

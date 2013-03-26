@@ -77,12 +77,14 @@ class Grouping extends Base
 		if (! empty( $doc ) ) {
 			$this->addHeaders( $doc->getFields() );
 		}
+		$title = $this->service->getGlobalForWiki( 'wgSitename', $wikiId );
 		$this->addHeaders( $this->service->getVisualizationInfoForWikiId( $wikiId ) )
 			 ->addHeaders( $this->service->getStatsInfoForWikiId( $wikiId ) )
-			 ->setHeader ( 'wikititle', $this->service->getGlobalForWiki( 'wgSitename', $wikiId ) )
+			 ->setHeader ( 'wikititle', $title )
+			 ->setHeader ( 'title', $title )
 			 ->setHeader ( 'hub', $this->service->getHubForWikiId( $wikiId ) );
-		if ( $this->getHeader( 'wikititle' ) == '' ) {
-			$this->setHeader( 'wikititle', $this->getHeader( 'title' ) );
+		if ( $this->getDescription() == '' ) {
+			$this->setHeader( 'description', $this->service->getSimpleMessage( 'wikiasearch2-crosswiki-description' ) );
 		}
 		return $this;
 	}
