@@ -55,6 +55,7 @@ files = [
 	'extensions/wikia/WikiaMobile/js/spec/integration/*.spec.js',
 
 	//core modules
+	'resources/wikia/modules/window.js',
 	'resources/wikia/modules/aim.js',
 	'resources/wikia/modules/cache.js',
 	'resources/wikia/modules/cookies.js',
