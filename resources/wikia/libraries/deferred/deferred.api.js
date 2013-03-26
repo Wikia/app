@@ -23,7 +23,6 @@ Wikia = window.Wikia || {};
 
 	// jQuery specific methods from "wrapping" promise object
 	deferred.Deferred.prototype.always = deferred.Deferred.prototype.both;
-	deferred.Deferred.prototype.done = deferred.Deferred.prototype.then;
 
 	// deferred.all requires full API to be available via promise object
 	deferred.Deferred.prototype.promise = function () {

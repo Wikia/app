@@ -31,9 +31,6 @@
 						return function(sourceEditor) {
 							// XXX: fix for multiple instances
 							insertTags('{{'+templateName,'}}','');
-
-							// tracking
-							self.track(buttonId);
 						};
 					})(templateName),
 					ckcommand: 'InsertTemplate',
@@ -43,23 +40,6 @@
 					}
 				});
 				this.items.push(buttonId);
-			}
-
-			// tracking specific for CKeditor
-			if (this.editor.ck) {
-				this.editor.ck.on('insertTemplate', this.proxy(this.onInsertTemplate));
-			}
-		},
-
-		track: function(ev) {
-			this.editor.track(this.editor.getTrackerMode(), 'templates', ev);
-		},
-
-		onInsertTemplate: function(ev) {
-			var data = ev.data;
-
-			if (typeof data.buttonId != 'undefined') {
-				this.track(data.buttonId + 1);
 			}
 		},
 
@@ -76,17 +56,14 @@
 			if (typeof window.RTE != 'undefined') {
 				tmpl += this.getLinkHtml('tmpl_other','otherTemplates',function(){
 					self.openTemplatesShowcase();
-					self.track('other');
 				});
 			}
 			tmpl += this.getLinkHtml('tmpl_listused','showUsedList',function(){
 				self.showUsedTemplates();
-				self.track('list');
 			});
 			if (typeof window.PLBMakeLayoutUrl != 'undefined') {
 				tmpl += this.getLinkHtml('tmpl_makelayout','makeLayout',function(){
 					self.makeLayoutFromPage();
-					self.track('plbLayout');
 				});
 			}
 			tmpl += '</ul>';

@@ -6,10 +6,6 @@ CKEDITOR.plugins.add('rte-paste',
 		return RTE.getInstance().document.getBody().getHtml();
 	},
 
-	track: function(ev) {
-		RTE.track('visualMode', 'paste', ev);
-	},
-
 	init: function(editor) {
 		var self = this;
 
@@ -40,27 +36,20 @@ CKEDITOR.plugins.add('rte-paste',
 				// store HTML before paste
 				self.htmlBeforePaste = self.getHtml();
 
-				// handle pasted HTML for tracking and dom fixes
+				// handle pasted HTML for dom fixes
 				setTimeout(function() {
 					self.handlePaste(editor);
 				}, 250);
 			});
 		}
 
-		// track pasting from "Paste as Plain text" dialog
-		editor.on('paste', function(ev) {
-			if (typeof ev.data.text != 'undefined') {
-				self.track('plainText');
-			}
-		});
-		
 		editor.on('pastedRemoveBG', function(ev) {
 			RTE.tmpPasted = self.removeBG(ev.data);
 		});
 
 		// remove CSS added by WebKit when pasting the content (BugId:9841)
 		// @see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Data_Processor#HTML_Parser_Filters
-		// This bit actually get's run on init, not when pasting. 
+		// This bit actually get's run on init, not when pasting.
 		if (CKEDITOR.env.webkit) {
 			var badStyles = [
 				'border-top-width:0px;',
@@ -86,7 +75,7 @@ CKEDITOR.plugins.add('rte-paste',
 							}
 							value = value.replace(badStyles[i], "");
 						}
-						return value.length ? value : false;  
+						return value.length ? value : false;
 					}
 				}
 			});
@@ -112,31 +101,6 @@ CKEDITOR.plugins.add('rte-paste',
 		}
 
 		var pasted = diff.pasted;
-		
-		// try to get instance data (city ID and RTE instance ID)
-		var matches = pasted.match(/data-rte-instance="([a-z0-9-]+)"/);
-		if (matches) {
-			var instanceId = matches[1];
-			if (instanceId == RTE.instanceId) {
-				// pasted content from the same editor instance
-				this.track('inside');
-			}
-			else {
-				// check paste "source" city ID
-				var cityId = parseInt( instanceId.split('-').shift() );
-				if ( cityId != parseInt(wgCityId) ) {
-					// pasted from different wiki
-					this.track('anotherWiki');
-				}
-				else {
-					// pasted content from different editor instance
-					this.track('outside');
-				}
-			}
-		}
-		else {
-			this.track('plainText');
-		}
 
 		var html;
 		// double single line breaks (<br />) - RT #38978
@@ -155,7 +119,7 @@ CKEDITOR.plugins.add('rte-paste',
 			var newPasted = this.removeBG(pasted);
 			if(newPasted != pasted) {
 				html = diff.prefix + newPasted + diff.suffix;
-	
+
 				editor.setData(html, function(){
 					editor.fire('afterPaste');
 				});
@@ -223,7 +187,7 @@ CKEDITOR.plugins.add('rte-paste',
 
 		return {pasted: pasted, prefix: prefix, suffix: suffix, 'new': n, 'old': o, 'start': idx.start, 'end': idx.end};
 	},
-	
+
 	// remove all incoming background-color style rules (BugId:23788)
 	removeBG: function(pasted) {
 		var doRemove = function(content) {

@@ -16,7 +16,8 @@
 	"use strict";
 
 	var htmlProto = HTMLElement.prototype,
-		fired;
+		fired,
+		slice = Array.prototype.slice;
 
 	//'polyfill' for a conistent matchesSelector
 	htmlProto.matchesSelector = htmlProto.matchesSelector ||
@@ -36,7 +37,7 @@
 		var ret = [];
 
 		if(elements && selector){
-			elements = Array.prototype.slice.call(elements);
+			elements = slice.call(elements);
 
 			for(var i = 0, l = elements.length; i < l; i++){
 				if(!elements[i].matchesSelector(selector)){
@@ -83,7 +84,22 @@
 					status = req.status;
 
 				if((status >= 200 && status < 300) || status === 304){
-					dfd.resolve((dataType === 'json') ? JSON.parse(data) : data);
+					if(dataType === 'json'){
+						try {
+							dfd.resolve(JSON.parse(data));
+						} catch(e) {
+							dfd.reject({
+								error: data,
+								status: status,
+								request: req,
+								exception: e
+							})
+						}
+					}else{
+						dfd.resolve(data);
+					}
+
+
 				} else {
 					dfd.reject({
 						error: data,
@@ -101,7 +117,7 @@
 	};
 
 	Wikia.extend = function(target){
-		var args = Array.prototype.slice.call(arguments, 1),
+		var args = slice.call(arguments, 1),
 			l = args.length,
 			i = 0,
 			arg;
@@ -126,5 +142,4 @@
 			return Wikia;
 		});
 	}
-
-})(this, document);
+})(this);

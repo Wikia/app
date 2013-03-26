@@ -146,6 +146,7 @@ class AdEngine2Controller extends WikiaController {
 
 	public function onWikiaSkinTopModules(&$scriptModules, $skin) {
 		if (F::app()->wg->EnableAmazonDirectTargetedBuy || self::areAdsInHead()) {
+			$scriptModules[] = 'wikia.window';
 			$scriptModules[] = 'wikia.cookies';
 			$scriptModules[] = 'wikia.geo';
 		}
