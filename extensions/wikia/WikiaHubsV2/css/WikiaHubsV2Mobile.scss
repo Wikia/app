@@ -35,35 +35,6 @@
 	}
 	.featured-video-content {
 		margin-top: 15px;
-		.video:after {
-			position: relative;
-			background: none;
-			content: none;
-		}
-		.video-thumbnail {
-			color: #FFF;
-			display: block;
-			position: relative;
-			.info-overlay {
-				background-color: rgba(0, 0, 0, 0.5);
-				bottom: 0px;
-				font-size: 13px;
-				left: 0px;
-				padding: 0 7px;
-				position: absolute;
-			}
-			.timer {
-				display: none;
-			}
-			.Wikia-video-play-button {
-				background: url("data:image/png;base64,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") no-repeat 50% 50%;
-				position: absolute;
-			}
-			.Wikia-video-thumb {
-				display: block;
-			}
-
-		}
 	}
 	.wikiahubs-ftc-list {
 		list-style-type: none;
