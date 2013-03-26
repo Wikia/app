@@ -161,4 +161,7 @@
 		}
 	};
 
+	// Register window.wikiaDartHelper so jwplayer can use it
+	window.wikiaDartHelper = wikiaDart;
+
 }(Wikia.log, Wikia.Tracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));
