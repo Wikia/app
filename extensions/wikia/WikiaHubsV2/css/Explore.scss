@@ -1,5 +1,6 @@
 .WikiaArticle {
 	.wikiahubs-explore {
+		margin-top: 10px;
 		.title-wrapper {
 			width: 100%;
 			@include clearfix;
@@ -7,7 +8,7 @@
 		.explore-content {
 			border-left: 1px dotted #B9B9B9;
 			border-right: 1px dotted #B9B9B9;
-			margin-top: 10px;
+			margin-top: 20px;
 			overflow: hidden;
 			padding-left:8px;
 			padding-right:8px;
