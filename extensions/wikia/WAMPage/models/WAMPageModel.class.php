@@ -31,9 +31,15 @@ class WAMPageModel extends WikiaModel {
 		return $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 	}
 
+	/**
+	 * MOCKED data for devboxes for testing
+	 * because we don't have wam data on devboxes
+	 *
+	 * @return array
+	 */
 	protected function getMockedDataForDev() {
 		return ['wam_results_total' => 3147, 'wam_index' => [
-			304 => [ //mocket data - need for testing WAM on devbox
+			304 => [
 				'wiki_id' => '304',
 				'wam'=> '99.9554',
 				'wam_rank' => '1',
