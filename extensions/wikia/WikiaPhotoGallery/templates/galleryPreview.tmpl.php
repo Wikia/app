@@ -14,9 +14,9 @@ $extraClass = empty($fromFeed) ? ' WikiaPhotoGalleryPreviewDraggable' : ' WikiaP
 	} else {
 		foreach ($gallery['images'] as $index => $image) { ?>
 
-			<?php if ($perRow != 'dynamic' && ($index % $perRow) == 0) { ?>
+			<?php if ($perRow != 'dynamic' && ($index % $perRow) == 0): ?>
 				<div class="wikia-gallery-row">
-			<?php } ?>
+			<?php endif; ?>
 
 			<span class="wikia-gallery-item WikiaPhotoGalleryPreviewItem<?= $image['placeholder'] ? ' WikiaPhotoGalleryPreviewItemPlaceholder' : $extraClass ;?>" style="width: <?= $width ;?>px;" imageid="<?= $index ;?>">
 				<div class="thumb" style="height: <?= $maxHeight ;?>px;">
@@ -26,15 +26,13 @@ $extraClass = empty($fromFeed) ? ' WikiaPhotoGalleryPreviewDraggable' : ' WikiaP
 							style="<?= ($image['thumbnail']) ? " background-image: url({$image['thumbnail']});" : null ;?>; line-height:<?= $image['height'] ;?>px; height:<?= $image['height'] ;?>px; width:<?= $image['width'] ;?>px;"
 							title="<?= ($image['placeholder']) ? wfMsg('wikiaPhotoGallery-preview-add-photo') : null ;?>">
 							<?= (!empty($image['titleText'])) ? $image['titleText'] : null ;?>
-							<? if (!empty($image['link'])) { ?>
+							<? if (!empty($image['link'])): ?>
 								<? $msg = htmlspecialchars(wfMsg('wikiaPhotoGallery-preview-link-tooltip', $image['link'])); ?>
 								<span class="WikiaPhotoGalleryPreviewItemLink" title="<?= $msg ?>"></span>
-							<? }
-								if (!empty($image['image'])) { ?>
+							<? endif; ?>
+							<? if (!empty($image['image'])): ?>
 								<img data-src="<?= htmlspecialchars($image['image']) ?>" alt="" width="<?= $image['width'] ?>" height="<?= $width['height'] ?>" />
-							<?
-								}
-							?>
+							<? endif; ?>
 						</a>
 			<?php if ($captionsPosition == 'below') { ?>
 					</div>
