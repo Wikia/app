@@ -7,6 +7,10 @@ class AdEngine2Controller extends WikiaController {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
 
+	const AD_LEVEL_NONE = 'none';           // show no ads
+	const AD_LEVEL_LIMITED = 'limited';     // show some ads (logged in users on main page)
+	const AD_LEVEL_ALL = 'all';             // show all ads
+
 	private static $slotsDisplayShinyAdSelfServe = ['CORP_TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'TEST_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD'];
 
 	private static $EXITSTITIAL_URLS_WHITE_LIST; // links to those domains won't display exitstitial ads
@@ -16,35 +20,76 @@ class AdEngine2Controller extends WikiaController {
 	 */
 
 	/**
-	 * Check if for current page the ads can be displayed or not
-	 * We only want ads on regular article pages plug a few
-	 * special pages. The logic lays here.
+	 * Get ad level for the current page. Take into account type of the page and user status.
+	 * Return one of the AD_LEVEL_* const
 	 *
-	 * @return bool
+	 * @return string
 	 */
-	public static function areAdsShowableOnPage() {
-		// Don't show ads on:
+	public static function getAdLevelForPage() {
 		if (WikiaPageType::isActionPage()) {
-			return false;
+			return self::AD_LEVEL_NONE;
 		}
 
 		$wg = F::app()->wg;
-		$title = $wg->Title;
 
-		// Show ads only on the following page types:
 		$runAds = $wg->Out->isArticle()
 			|| WikiaPageType::isSearch()
 			|| WikiaPageType::isForum()
 			|| WikiaPageType::isWikiaHub();
 
-		if ($title) {
-			$runAds = $runAds
-				|| (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ))
-				|| $title->isSpecial('Videos')
-				|| $title->isSpecial('Leaderboard');
+		if (!$runAds) {
+			$title = $wg->title;
+			if ($title) {
+				$runAds = (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ))
+					|| $title->isSpecial('Videos')
+					|| $title->isSpecial('Leaderboard');
+			}
 		}
 
-		return $runAds;
+		if (!$runAds) {
+			return self::AD_LEVEL_NONE;
+		}
+
+		// Anonymous users get all ads
+		$user = $wg->User;
+		if (!$user->isLoggedIn() || $user->getOption('showAds')) {
+			return self::AD_LEVEL_ALL;
+		}
+
+		// Logged in get some ads on the main page
+		if (WikiaPageType::isMainPage()) {
+			return self::AD_LEVEL_LIMITED;
+		}
+
+		return self::AD_LEVEL_NONE;
+	}
+
+	public static function getAdLevelForSlot($slotname) {
+		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD/', $slotname)) {
+			return self::AD_LEVEL_LIMITED;
+		}
+		return self::AD_LEVEL_ALL;
+	}
+
+	public static function compareAdLevels($level1, $level2) {
+		if ($level1 === $level2) {
+			return 0;
+		}
+		if ($level1 === self::AD_LEVEL_NONE || $level2 === self::AD_LEVEL_ALL) {
+			// $level1 < $level2
+			return -1;
+		}
+		// $level1 > $level2
+		return 1;
+	}
+
+	/**
+	 * Check if for current page the ads can be displayed or not.
+	 *
+	 * @return bool
+	 */
+	public static function areAdsShowableOnPage() {
+		return (self::getAdLevelForPage() !== self::AD_LEVEL_NONE);
 	}
 
 	public static function getAdsInHeadGroup() {
@@ -90,7 +135,10 @@ class AdEngine2Controller extends WikiaController {
 			}
 		}
 
-		$this->showAd = true;
+		$this->pageLevel = self::getAdLevelForPage();
+		$this->slotLevel = self::getAdLevelForSlot($this->slotname);
+
+		$this->showAd = (self::compareAdLevels($this->pageLevel, $this->slotLevel) >= 0);
 	}
 
 	/*
@@ -176,6 +224,7 @@ class AdEngine2Controller extends WikiaController {
 			$scriptModules[] = 'wikia.window';
 			$scriptModules[] = 'wikia.cookies';
 			$scriptModules[] = 'wikia.geo';
+			$scriptModules[] = 'wikia.window';
 		}
 		if (self::areAdsInHead()) {
 			$scriptModules[] = 'wikia.location';
