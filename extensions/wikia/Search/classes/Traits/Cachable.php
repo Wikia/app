@@ -7,7 +7,7 @@ namespace Wikia\Search\Traits;
 use WikiaGlobalRegistry as Registry;
 use WikiaFunctionWrapper as Wrapper;
 /**
- * This trait lets us expose protected methods preceded by an underscore
+ * This trait lets us expose protected methods preceded by '_cached_'
  * as cached methods.
  * All caching logic is stored in the traits, and all
  * business logic is stored in the classes that use this trait.
@@ -37,18 +37,18 @@ trait Cachable {
 	
 	/**
 	 * Magic method that allows us to cache any public method
-	 * by turning it into a protected method with an underscore preceding it.
+	 * by turning it into a protected method with _cached_ preceding it.
 	 * 
 	 * @param string $name
 	 * @param array $args
 	 * @throws \BadMethodCallException
 	 * @return Ambigous <\Wikia\Search\mixed, mixed>
 	 */
-	public function __call($name, array $args = array()) {
-		if (method_exists ( $this, '_' . $name )) {
-			return $this->getCachedMethodCall ( '_' . $name, $args );
+	public function __call( $name, array $args = array() ) {
+		if ( method_exists( $this, '_cached_' . $name ) ) {
+			return $this->getCachedMethodCall( '_cached_' . $name, $args );
 		}
-		throw new \BadMethodCallException ( "Method by name of {$name} does not exist (and not cached)." );
+		throw new \BadMethodCallException( "Method by name of {$name} does not exist (and not cached)." );
 	}
 	
 	/**
@@ -75,7 +75,7 @@ trait Cachable {
 	 * @param string $key
 	 * @return string
 	 */
-	public function getCacheKey($key) {
+	public function getCacheKey( $key ) {
 		return $this->getWf()->SharedMemcKey( $key, $this->getWikiId () );
 	}
 	
@@ -85,7 +85,7 @@ trait Cachable {
 	 * @param string $key
 	 * @return array
 	 */
-	public function getCacheResult($key) {
+	public function getCacheResult( $key ) {
 		return $this->getWg()->Memc->get( $key );
 	}
 	
@@ -96,7 +96,7 @@ trait Cachable {
 	 * @param string $key
 	 * @return multitype
 	 */
-	public function getCacheResultFromString($key) {
+	public function getCacheResultFromString( $key ) {
 		return $this->getCacheResult ( $this->getCacheKey ( $key ) );
 	}
 	
@@ -109,8 +109,8 @@ trait Cachable {
 	 * @param int $ttl
 	 * @return \Wikia\Search\MediaWikiService
 	 */
-	public function setCacheFromStringKey($key, $value, $ttl = null) {
-		$this->getWg()->Memc->set ( $this->getCacheKey ( $key ), $value, $ttl ?  : $this->cacheTttl );
+	public function setCacheFromStringKey( $key, $value, $ttl = null ) {
+		$this->getWg()->Memc->set( $this->getCacheKey( $key ), $value, $ttl ?  : $this->cacheTttl );
 		return $this;
 	}
 	
@@ -118,21 +118,18 @@ trait Cachable {
 	 * Allows us to cache method calls.
 	 * Suggested practice is to write a protected method with core logic,
 	 * and then a public method that invokes this method. Prefix
-	 * cached methods with an underscore.
+	 * cached methods with the _cached_ prefix.
 	 * 
 	 * @param string $method
 	 * @param array $args
 	 * @return mixed
 	 */
-	protected function getCachedMethodCall($method, array $args = array()) {
-		$sig = sha1 ( $method . serialize ( $args ) );
-		$result = $this->getCacheResultFromString ( $sig );
+	protected function getCachedMethodCall( $method, array $args = array() ) {
+		$sig = sha1 ( $method . serialize( $args ) );
+		$result = $this->getCacheResultFromString( $sig );
 		if ( empty( $result ) ) {
-			$result = call_user_func_array ( array (
-					$this,
-					$method 
-			), $args );
-			$this->setCacheFromStringKey ( $sig, $result, $this->cacheTtl );
+			$result = call_user_func_array( [ $this, $method ], $args );
+			$this->setCacheFromStringKey( $sig, $result, $this->cacheTtl );
 		}
 		return $result;
 	}

@@ -848,8 +848,8 @@ class MediaWikiService
 	
 	/**
 	 * BEGIN CACHED METHODS
-	 * All cached methods should begin with an underscore.
-	 * This automatically regsiters them as publicly available magic methods
+	 * All cached methods should begin with '_cached_'.
+	 * This automatically regsiters them as publicly available magic methods, minus the prefix.
 	 * using Wikia\Search\Trait\Cachable::getCachedMethodCall.
 	 * Please only include such methods below.
 	 */
@@ -861,7 +861,7 @@ class MediaWikiService
 	 * @param int $wikiId
 	 * @return array
 	 */
-	protected function _getVisualizationInfoForWikiId( $wikiId ) {
+	protected function _cached_getVisualizationInfoForWikiId( $wikiId ) {
 		return (new \WikiaHomePageHelper)->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
 	}
 
@@ -873,7 +873,7 @@ class MediaWikiService
 	 * @param int $wikiId
 	 * @return array
 	 */
-	protected function _getStatsInfoForWikiId( $wikiId ) {
+	protected function _cached_getStatsInfoForWikiId( $wikiId ) {
 		$statsInfo = (new \WikiaHomePageHelper)->getWikiStats( $wikiId );
 		foreach ( $statsInfo as $key => $val ) {
 			$statsInfo[$key.'_count'] = $val;

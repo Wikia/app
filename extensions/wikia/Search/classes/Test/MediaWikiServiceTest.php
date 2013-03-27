@@ -557,8 +557,8 @@ class MediaWikiServiceTest extends BaseTest
 	 * @covers \Wikia\Search\Cachable::__call
 	 */
 	public function testGetCachedMethodCall() {
-		$service = $this->service->setMethods( [ '_getVisualizationInfoForWikiId', 'getCacheResultFromString', 'setCacheFromStringKey' ] )->getMock();
-		$sig = sha1( '_getVisualizationInfoForWikiId' . serialize( [ 123 ] ) );
+		$service = $this->service->setMethods( [ '_cached_getVisualizationInfoForWikiId', 'getCacheResultFromString', 'setCacheFromStringKey' ] )->getMock();
+		$sig = sha1( '_cached_getVisualizationInfoForWikiId' . serialize( [ 123 ] ) );
 		$service->setCacheTtl( 900 );
 		$response = [ 'response' ];
 		$service
@@ -569,7 +569,7 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$service
 		    ->expects( $this->at( 1 ) )
-		    ->method ( '_getVisualizationInfoForWikiId' )
+		    ->method ( '_cached_getVisualizationInfoForWikiId' )
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( $response ) )
 		;
@@ -582,7 +582,7 @@ class MediaWikiServiceTest extends BaseTest
 		$method->setAccessible( true );
 		$this->assertEquals(
 				$response,
-				$method->invoke( $service, '_getVisualizationInfoForWikiId', array( 123 ) )
+				$method->invoke( $service, '_cached_getVisualizationInfoForWikiId', array( 123 ) )
 		);
 	}
 	
@@ -2157,7 +2157,7 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$this->proxyClass( 'WikiaHomePageHelper', $hph );
 		$this->mockApp();
-		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', '_getVisualizationInfoForWikiId' );
+		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', '_cached_getVisualizationInfoForWikiId' );
 		$method->setAccessible( true );
 		$this->assertEquals(
 				$info,
@@ -2181,7 +2181,7 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$this->proxyClass( 'WikiaHomePageHelper', $hph );
 		$this->mockApp();
-		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', '_getStatsInfoForWikiId' );
+		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', '_cached_getStatsInfoForWikiId' );
 		$method->setAccessible( true );
 		$this->assertEquals(
 				array( 'this_count' => 'yup' ),
