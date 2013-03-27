@@ -873,6 +873,7 @@
 			'modeSwitch',
 			'modeSwitchCancelled',
 			'panelClick',
+			'panelShow',
 			'themeLoaded',
 			'wysiwygModeReady'
 		],

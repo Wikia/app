@@ -3,7 +3,7 @@
  */
 
 (function( window, $ ) {
-	var Wikia = window.Wikia,
+	var	Wikia = window.Wikia,
 		WikiaEditor = window.WikiaEditor;
 
 	WikiaEditor.plugins.tracker = $.createClass( WikiaEditor.plugin, {
@@ -14,7 +14,7 @@
 		},
 
 		init: function() {
-			var isMiniEditor = this.editor.config.isMiniEditor,
+			var	isMiniEditor = this.editor.config.isMiniEditor,
 				editorType = ( isMiniEditor ? '-mini-' : '-' ) +
 					( ( window.RTE !== undefined && !window.RTEEdgeCase ) ? 'ck' : 'mw' );
 
@@ -33,6 +33,27 @@
 			// Add the tracking function to the editor object for easy reference elsewhere
 			this.editor.track = this.proxy( this.track );
 			this.editor.trackWithEventData = this.proxy( this.trackWithEventData );
+
+			// Richcombo panel tracking
+			this.editor.on( 'ck-panelClick', this.proxy( this.onPanelClick ) );
+			this.editor.on( 'ck-panelShow', this.proxy( this.onPanelShow ) );
+		},
+
+		onPanelClick: function( editor, event ) {
+			var	label = event.data.me.label.toLowerCase(),
+				title = event.data.value;
+
+			if ( label && title ) {
+				this.track( 'panel-' + label + '-item-' + title );
+			}
+		},
+
+		onPanelShow: function( editor, event ) {
+			var label = event.data.me.label.toLowerCase();
+
+			if ( label ) {
+				this.track( 'panel-' + label + '-open' );
+			}
 		},
 
 		track: function( data ) {
@@ -75,7 +96,7 @@
 
 	// Proxy tracker methods onto WikiaEditor for static access
 	(function() {
-		var i,
+		var	i,
 			l,
 			methodNames = [ 'track', 'trackWithEventData' ],
 			slice = [].slice;
@@ -102,7 +123,7 @@
 
 		// Module: Panel Buttons
 		$( '#EditPageRail' ).on( 'mousedown', '.module_insert .cke_button', function( e ) {
-			var label,
+			var	label,
 				el = $( e.currentTarget );
 
 			// Primary mouse button only
@@ -150,9 +171,6 @@
 						WikiaEditor.track( label + 'button-' + title.toLowerCase() );
 					}
 				})
-				.on( 'mousedown', '.cke_format a', {
-					label: label + 'menu-format-open'
-				}, WikiaEditor.trackWithEventData )
 				.on( 'mousedown', '.cke_toolbar_expand', function( e ) {
 					var title = $( e.currentTarget ).find( '.expand' ).is( ':visible' ) ? 'more' : 'less';
 					WikiaEditor.track( label + title );
