@@ -31,6 +31,26 @@
 	}
 }
 
-.wam-tabs {
-
+.WikiaArticle .wam-tabs {
+	margin: 0;
+	overflow: hidden;
+	li {
+		border-left: 1px solid red;
+		float: left;
+		height: 72px;
+		list-style: none;
+		margin: 0;
+		a {
+			border-bottom: 4px solid blue;
+			display: block;
+			height: 68px;
+			width: 171px;
+		}
+	}
+	li:first-child {
+		border-left: none;
+		a {
+			width: 170px;
+		}
+	}
 }
