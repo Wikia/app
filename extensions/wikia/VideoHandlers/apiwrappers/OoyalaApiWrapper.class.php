@@ -358,8 +358,8 @@ class OoyalaApiWrapper extends ApiWrapper {
 			return $this->metadata['playerId'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['playerId']) ) {
-			return strtotime( $this->interfaceObj['metadata']['playerId'] );
+		if ( !empty( $this->interfaceObj['metadata']['playerid'] ) ) {
+			return $this->interfaceObj['metadata']['playerid'];
 		}
 
 		return '';
