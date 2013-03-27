@@ -120,10 +120,15 @@
 			th {
 				background-color: #f7f7f7;
 				text-align: left;
+				font-size: 90%;
 			}
 
-			td {
-				font-size: 110%;
+			td:first-child, th:first-child {
+				padding-left: 20px;
+			}
+
+			td:last-child, th:last-child {
+				padding-left: 20px;
 			}
 
 			td:first-child {
@@ -135,7 +140,23 @@
 				border: 1px solid #e8e8e8;
 				border-left: none;
 				border-right: none;
-				padding: 0 20px;
+				padding: 0 10px;
+			}
+
+			.score {
+				background-repeat: no-repeat;
+				background-position: 10px 50%;
+				padding-left: 30px;
+
+				&.down {
+					background-image: url("/skins/oasis/images/wam/down.png"); /* base64 */
+				}
+				&.up {
+					background-image: url("/skins/oasis/images/wam/up.png"); /* base64 */
+				}
+				&.nochange {
+					background-image: url("/skins/oasis/images/wam/nochange.png"); /* base64 */
+				}
 			}
 		}
 	}

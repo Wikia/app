@@ -55,7 +55,7 @@
 		</tr>
 		<tr>
 			<td>1.</td>
-			<td>99.91</td>
+			<td class="score up">99.91</td>
 			<td><a href="http://www.wikia.com">runescape.wikia.com</a></td>
 			<td>Video Games</td>
 			<td>1</td>
@@ -63,7 +63,15 @@
 		</tr>
 		<tr>
 			<td>2.</td>
-			<td>99.91</td>
+			<td class="score down">99.91</td>
+			<td><a href="http://www.wikia.com">runescape.wikia.com</a></td>
+			<td>Video Games</td>
+			<td>1</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>3.</td>
+			<td class="score nochange">99.91</td>
 			<td><a href="http://www.wikia.com">runescape.wikia.com</a></td>
 			<td>Video Games</td>
 			<td>1</td>
