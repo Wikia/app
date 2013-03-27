@@ -271,7 +271,7 @@ class VideoEmbedTool {
 
 				$placeholder_tag = $placeholder[0];
 				$file = wfFindFile( $title );
-				$embed_code = $file->transform( array('width'=>$width) )>toHtml();
+				$embed_code = $file->transform( array('width'=>$width) )->toHtml();
 				$html_params = array( 
 					'imageHTML' => $embed_code,
 					'align' => $layout,
