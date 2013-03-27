@@ -90,12 +90,6 @@
 		}
 	};
 
-	// Convience function for tracking the current instance
-	// @see /extensions/wikia/EditPageLayout/js/plugins/Tracker.js
-	WE.track = function( data ) {
-		WE.getInstance().track( data );
-	};
-
 	// Returns the currently active instance
 	WE.getInstance = function(instanceId) {
 		return WE.instances[instanceId || WE.instanceId];
