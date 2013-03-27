@@ -4,7 +4,8 @@ class WAMPageModel extends WikiaModel {
 	const VISUALIZATION_ITEMS_COUNT = 4;
 	const VISUALIZATION_ITEM_IMAGE_WIDTH = 150;
 	const VISUALIZATION_ITEM_IMAGE_HEIGHT = 95;
-	
+	const SCORE_ROUND_PRECISION = 2;
+
 	protected $config = null;
 	
 	public function __construct() {
@@ -18,8 +19,6 @@ class WAMPageModel extends WikiaModel {
 	public function getConfig() {
 		return $this->config;
 	}
-
-	const SCORE_ROUND_PRECISION = 2;
 
 	public function getItemsPerPage() {
 		return self::ITEMS_PER_PAGE;
