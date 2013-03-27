@@ -198,8 +198,8 @@ class ImageTweaksHooks extends WikiaObject {
 					$linkAttribs['class'] = 'image';
 				}
 				
-				if ( !empty( $attribs['data-image-name'] ) ) {
-					$imageParams['name'] = $attribs['data-image-name'];
+				if ( !empty( $linkAttribs['data-image-name'] ) ) {
+					$imageParams['name'] = $linkAttribs['data-image-name'];
 				}
 
 				if ( !empty( $fullImageUrl ) ) {
