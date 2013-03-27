@@ -76,7 +76,7 @@ trait Cachable {
 	 * @return string
 	 */
 	public function getCacheKey($key) {
-		return $this->getWf()->SharedMemcKey ( $key, $this->getWikiId () );
+		return $this->getWf()->SharedMemcKey( $key, $this->getWikiId () );
 	}
 	
 	/**
@@ -86,7 +86,7 @@ trait Cachable {
 	 * @return array
 	 */
 	public function getCacheResult($key) {
-		return $this->getWg()->Memc->get ( $key );
+		return $this->getWg()->Memc->get( $key );
 	}
 	
 	/**
@@ -115,28 +115,6 @@ trait Cachable {
 	}
 	
 	/**
-	 * Lazy-loading for WikiaGlobalRegistry
-	 * @return WikiaGlobalRegistry
-	 */
-	protected function getWg() {
-		if ( $this->wg === null ) {
-			$this->wg = new Registry;
-		}
-		return $this->wg;
-	}
-	
-	/**
-	 * Lazy-loading for WikiaFunctionWrapper
-	 * @return WikiaFunctionWrapper
-	 */
-	protected function getWf() {
-		if ( $this->wf === null ) {
-			$this->wf = new Wrapper;
-		}
-		return $this->wf;
-	}
-	
-	/**
 	 * Allows us to cache method calls.
 	 * Suggested practice is to write a protected method with core logic,
 	 * and then a public method that invokes this method. Prefix
@@ -157,5 +135,27 @@ trait Cachable {
 			$this->setCacheFromStringKey ( $sig, $result, $this->cacheTtl );
 		}
 		return $result;
+	}
+	
+	/**
+	 * Lazy-loading for WikiaGlobalRegistry
+	 * @return WikiaGlobalRegistry
+	 */
+	protected function getWg() {
+		if ( $this->wg === null ) {
+			$this->wg = new Registry;
+		}
+		return $this->wg;
+	}
+	
+	/**
+	 * Lazy-loading for WikiaFunctionWrapper
+	 * @return WikiaFunctionWrapper
+	 */
+	protected function getWf() {
+		if ( $this->wf === null ) {
+			$this->wf = new Wrapper;
+		}
+		return $this->wf;
 	}
 }

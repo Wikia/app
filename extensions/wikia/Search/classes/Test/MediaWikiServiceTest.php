@@ -429,10 +429,10 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
-	 * @covers \Wikia\Search\MediaWikiService::getCacheKey
+	 * @covers \Wikia\Search\Traits\Cachable::getCacheKey
 	 */
 	public function testGetCacheKey() {
-		$service = $this->service->setMethods( array( 'getWikiId' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getWikiId', 'getWf' ) )->getMock();
 		
 		$mockWf = $this->getMockBuilder( 'WikiaFunctionWrapper' )
 		              ->disableOriginalConstructor()
@@ -447,16 +447,17 @@ class MediaWikiServiceTest extends BaseTest
 		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( $wid ) )
 		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getWf' )
+		    ->will   ( $this->returnValue( $mockWf ) )
+		;
 		$mockWf
 		    ->expects( $this->any() )
 		    ->method ( 'SharedMemcKey' )
 		    ->with   ( $key, $wid )
 		    ->will   ( $this->returnValue( 'bar' ) )
 		;
-		$app = new ReflectionProperty( '\Wikia\Search\MediaWikiService' , 'app' );
-		$app->setAccessible( true );
-		$app->setValue( $service, (object) array( 'wf' => $mockWf ) );
-		
 		$this->assertEquals(
 				'bar',
 				$service->getCacheKey( $key )
@@ -464,25 +465,26 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
-	 * @covers \Wikia\Search\MediaWikiService::getCacheResult
+	 * @covers \Wikia\Search\Trait\Cachable::getCacheResult
 	 */
 	public function testGetCacheResult() {
 		
-		$service = $this->service->setMethods( array( 'getGlobal' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getGlobal', 'getWg' ) )->getMock();
 		
 		$mockMc = $this->getMockBuilder( '\MemcachedClientForWiki' )
 		               ->disableOriginalConstructor()
 		               ->setMethods( array( 'get' ) )
 		               ->getMock();
+		
+		$mockWg = (object) array( 'Memc' => $mockMc );
 
 		$key = 'bar';
 		$result = 'foo';
 		
 		$service
 		    ->expects( $this->any() )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'Memc' )
-		    ->will   ( $this->returnValue( $mockMc ) )
+		    ->method ( 'getWg' )
+		    ->will   ( $this->returnValue( $mockWg ) )
 		;
 		$mockMc
 		    ->expects( $this->any() )
@@ -498,7 +500,7 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
-	 * @covers \Wikia\Search\MediaWikiService::getCacheResultFromString
+	 * @covers \Wikia\Search\Traits\Cachable::getCacheResultFromString
 	 */
 	public function testGetCacheResultFromString() {
 		$service = $this->service->setMethods( array( 'getCacheResult', 'getCacheKey' ) )->getMock();
@@ -525,17 +527,98 @@ class MediaWikiServiceTest extends BaseTest
 		);
 	}
 	
+	/**
+	 * @covers \Wikia\Search\Cachable::getCacheTtl
+	 * @covers \Wikia\Search\Cachable::setCacheTtl
+	 */
+	public function testCacheTtl() {
+		$service = $this->service->setMethods( null )->getMock();
+		$this->assertEquals(
+				86400,
+				$service->getCacheTtl()
+		);
+		$this->assertEquals(
+				$service,
+				$service->setCacheTtl( 600 )
+		);
+		$this->assertAttributeEquals(
+				600,
+				'cacheTtl',
+				$service
+		);
+		$this->assertEquals(
+				600,
+				$service->getCacheTtl()
+		);
+	}
+	
+	/**
+	 * @covers \Wikia\Search\Cachable::getCacheTtl
+	 * @covers \Wikia\Search\Cachable::__call
+	 */
+	public function testGetCachedMethodCall() {
+		$service = $this->service->setMethods( [ '_getVisualizationInfoForWikiId', 'getCacheResultFromString', 'setCacheFromStringKey' ] )->getMock();
+		$sig = sha1( '_getVisualizationInfoForWikiId' . serialize( [ 123 ] ) );
+		$service->setCacheTtl( 900 );
+		$response = [ 'response' ];
+		$service
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getCacheResultFromString' )
+		    ->with   ( $sig )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$service
+		    ->expects( $this->at( 1 ) )
+		    ->method ( '_getVisualizationInfoForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $response ) )
+		;
+		$service
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'setCacheFromStringKey' )
+		    ->with   ( $sig, $response, 900 )
+		;
+		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', 'getCachedMethodCall' );
+		$method->setAccessible( true );
+		$this->assertEquals(
+				$response,
+				$method->invoke( $service, '_getVisualizationInfoForWikiId', array( 123 ) )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Traits\Cachable::getWg
+	 * @covers Wikia\Search\Traits\Cachable::getWf
+	 */
+	public function testgetWgGetWf() {
+		$service = $this->service->setMethods( null )->getMock();
+		$getWf = new ReflectionMethod( 'Wikia\Search\MediaWikiService', 'getWf' );
+		$getWg = new ReflectionMethod( 'Wikia\Search\MediaWikiService', 'getWg' );
+		$getWf->setAccessible( true );
+		$getWg->setAccessible( true );
+		$this->assertInstanceOf(
+				'WikiaFunctionWrapper',
+				$getWf->invoke( $service )
+		);
+		$this->assertInstanceOf(
+				'WikiaGlobalRegistry',
+				$getWg->invoke( $service )
+		);
+	}
+	
     /**
-	 * @covers \Wikia\Search\MediaWikiService::setCacheFromStringKey
+	 * @covers \Wikia\Search\Cachable::setCacheFromStringKey
 	 */
 	public function testSetCacheFromStringKey() {
 		
-		$service = $this->service->setMethods( array( 'getCacheKey', 'getGlobal' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getCacheKey', 'getWg' ) )->getMock();
 		
 		$mockMc = $this->getMockBuilder( '\MemcachedClientForWiki' )
 		               ->disableOriginalConstructor()
 		               ->setMethods( array( 'set' ) )
 		               ->getMock();
+		
+		$mockWg = (object) array( 'Memc' => $mockMc );
 
 		$key = 'bar';
 		$value = 'foo';
@@ -543,9 +626,8 @@ class MediaWikiServiceTest extends BaseTest
 		
 		$service
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'Memc' )
-		    ->will   ( $this->returnValue( $mockMc ) )
+		    ->method ( 'getWg' )
+		    ->will   ( $this->returnValue( $mockWg ) )
 		;
 		$service
 		    ->expects( $this->at( 1 ) )
@@ -2076,7 +2158,7 @@ class MediaWikiServiceTest extends BaseTest
 		$this->proxyClass( 'WikiaHomePageHelper', $hph );
 		$this->mockApp();
 		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', '_getVisualizationInfoForWikiId' );
-		$method->setAccessibel( true );
+		$method->setAccessible( true );
 		$this->assertEquals(
 				$info,
 				$method->invoke( $service, 123 )
@@ -2100,7 +2182,7 @@ class MediaWikiServiceTest extends BaseTest
 		$this->proxyClass( 'WikiaHomePageHelper', $hph );
 		$this->mockApp();
 		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', '_getStatsInfoForWikiId' );
-		$method->setAccessibel( true );
+		$method->setAccessible( true );
 		$this->assertEquals(
 				array( 'this_count' => 'yup' ),
 				$method->invoke( $service, 123 )
