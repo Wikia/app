@@ -20,8 +20,6 @@ class WAMPageModel extends WikiaModel {
 		return $this->config;
 	}
 
-	const SCORE_ROUND_PRECISION = 2;
-
 	public function getItemsPerPage() {
 		return self::ITEMS_PER_PAGE;
 	}
