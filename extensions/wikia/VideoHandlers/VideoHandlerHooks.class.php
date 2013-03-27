@@ -238,14 +238,14 @@ class VideoHandlerHooks extends WikiaObject{
 	 */
 	public function onSkinTemplateNavigation($skin, &$tabs) {
 		global $wgUser;
-		
+
 		$app = F::app();
-		
+
 		$title = $app->wg->Title;
-		
+
 		if ( ( $title instanceof Title ) && ( $title->getNamespace() == NS_FILE ) && $title->exists() ) {
 			$file = $app->wf->FindFile( $title );
-			if (UploadBase::userCanReUpload( $wgUser, $file->getName() )) {
+			if ( ( $file instanceof File ) && UploadBase::userCanReUpload( $wgUser, $file->getName() ) ) {
 				if ( WikiaFileHelper::isTitleVideo( $title ) ) {
 					$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
 					$href = $uploadTitle->getFullURL( array(
@@ -270,7 +270,7 @@ class VideoHandlerHooks extends WikiaObject{
 		if( $app->wg->CityId == self::VIDEO_WIKI ) {
 			return true;
 		}
-		
+
 		if ( WikiaFileHelper::isTitleVideo( $title ) ) {
 			$file = $app->wf->FindFile( $title );
 			if( !$file->isLocal() ) {

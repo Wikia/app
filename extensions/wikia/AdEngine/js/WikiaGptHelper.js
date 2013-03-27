@@ -85,7 +85,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 			googletag.cmd.push(function () {
 				var name, value, pubads = googletag.pubads();
 
-				pubads.setTargeting('src', 'driver');
+				pubads.setTargeting('src', 'gpt');
 
 				log(['loadGpt', 'pageLevelParams', pageLevelParams], 9, logGroup);
 
