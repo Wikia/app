@@ -7,9 +7,13 @@ class AdEngine2Controller extends WikiaController {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
 
+	private static $slotsDisplayShinyAdSelfServe = ['CORP_TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'TEST_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD'];
+
 	private static $EXITSTITIAL_URLS_WHITE_LIST; // links to those domains won't display exitstitial ads
 
-	// BIG TODO: Move all show some/show some/show none logic to this file
+	/*
+	 * Public static methods for querying ad engine for ad states
+	 */
 
 	/**
 	 * Check if for current page the ads can be displayed or not
@@ -69,6 +73,28 @@ class AdEngine2Controller extends WikiaController {
 	public static function areAdsInHead() {
 		return self::getAdsInHeadGroup() === 1;
 	}
+
+	/*
+	 * Action to display an ad (or not)
+	 */
+	public function ad() {
+		global $wgEnableShinyAdsSelfServeUrl, $wgShinyAdsSelfServeUrl;
+
+		$this->selfServeUrl = null;
+		if ($wgEnableShinyAdsSelfServeUrl && $wgShinyAdsSelfServeUrl) {
+			if (array_search($this->slotname, self::$slotsDisplayShinyAdSelfServe) !== FALSE) {
+				if (!(AdEngine::getInstance()->getAdProvider($this->slotname) instanceof AdProviderNull)) {	// will we show an ad?
+					$this->selfServeUrl = $wgShinyAdsSelfServeUrl;
+				}
+			}
+		}
+
+		$this->slotname = $this->request->getVal('slotname');
+	}
+
+	/*
+	 * Hooks
+	 */
 
 	/**
 	 * Register ad-related vars on top
