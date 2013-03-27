@@ -31,6 +31,11 @@ class WikiaVideoPage extends WikiaImagePage {
 		$app = F::app();
 		$autoplay = $app->wg->VideoPageAutoPlay;
 
+		$embedCode = $img->getEmbedCode( self::$videoWidth, $autoplay );
+		if ( !empty( $embedCode['scripts'] ) ) {
+			$wgOut->addHTML('<script type="text/javascript">window.playerParams = '.json_encode( $embedCode ).';</script>');
+		}
+
 		if(empty($wgEnableVideoPageRedesign)) {
 			$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$embedCode['html'].$this->getVideoInfoLine().'</div>' );
 		} else {
