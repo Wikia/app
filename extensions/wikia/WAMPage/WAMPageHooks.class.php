@@ -11,10 +11,13 @@ class WAMPageHooks {
 			$this->app = F::app();
 		}
 		
-		foreach(['WAMPageConfig', 'EnableWAMPageExt'] as $var) {
-			if( is_null($this->$var) ) {
-				$this->$var = $this->app->wg->$var;
-			}
+		if( is_null($this->EnableWAMPageExt) ) {
+			$this->EnableWAMPageExt = $this->app->wg->EnableWAMPageExt;
+		}
+
+		if( is_null($this->WAMPageConfig) ) {
+			$WAMPageModel = new WAMPageModel();
+			$this->WAMPageConfig = $WAMPageModel->getConfig();
 		}
 		
 		wfProfileOut(__METHOD__);

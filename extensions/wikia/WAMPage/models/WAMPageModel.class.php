@@ -4,6 +4,20 @@ class WAMPageModel extends WikiaModel {
 	const VISUALIZATION_ITEMS_COUNT = 4;
 	const VISUALIZATION_ITEM_IMAGE_WIDTH = 150;
 	const VISUALIZATION_ITEM_IMAGE_HEIGHT = 95;
+	
+	protected $config = null;
+	
+	public function __construct() {
+		parent::__construct();
+
+		if( is_null($this->config) ) {
+			$this->config = $this->app->wg->WAMPageConfig;
+		}
+	}
+	
+	public function getConfig() {
+		return $this->config;
+	}
 
 	const SCORE_ROUND_PRECISION = 2;
 
@@ -53,6 +67,23 @@ class WAMPageModel extends WikiaModel {
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
 		return $this->wf->Message('wam-' . $wikiaHub['name'])->inContentLanguage()->text();
+	}
+
+	/**
+	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
+	 */
+	public function getTabs() {
+		$tabs = [];
+		$config = $this->getConfig();
+		$tabsNames = !empty($config['tabsNames']) ? $config['tabsNames'] : [];
+		
+		foreach($tabsNames as $tabName) {
+			$tabTitle = Title::newFromText($config['pageName'] . '/'. $tabName);
+			$tabUrl = $tabTitle->getLocalURL();
+			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
+		}
+		
+		return $tabs;
 	}
 
 	/**
