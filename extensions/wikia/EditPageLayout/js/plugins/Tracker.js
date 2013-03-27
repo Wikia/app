@@ -30,16 +30,46 @@
 			// Add editor type to config category
 			this.config.category += editorType;
 
-			// Add the tracking function to the editor object for easy reference elsewhere
+			// Add the tracking functions to the editor object for easy reference elsewhere
 			this.editor.track = this.proxy( this.track );
 			this.editor.trackWithEventData = this.proxy( this.trackWithEventData );
-
-			// Richcombo panel tracking
-			this.editor.on( 'ck-panelClick', this.proxy( this.onPanelClick ) );
-			this.editor.on( 'ck-panelShow', this.proxy( this.onPanelShow ) );
+			this.editor.on( 'ckInstanceCreated', this.proxy( this.onCkInstanceCreated ) );
 		},
 
-		onPanelClick: function( editor, event ) {
+		// CKEditor only events
+		onCkInstanceCreated: function( ck ) {
+			ck.on( 'dialogCancel', this.proxy( this.onCkDialogCancel ) );
+			ck.on( 'dialogOk', this.proxy( this.onCkDialogOk ) );
+			ck.on( 'dialogShow', this.proxy( this.onCkDialogShow ) );
+			ck.on( 'panelClick', this.proxy( this.onCkPanelClick ) );
+			ck.on( 'panelShow', this.proxy( this.onCkPanelShow ) );
+		},
+
+		onCkDialogCancel: function( event ) {
+			var label = event.data._.name.toLowerCase();
+
+			if ( label ) {
+				this.track( 'dialog-' + label + '-cancel' );
+			}
+		},
+
+		onCkDialogOk: function( event ) {
+			var label = event.data._.name.toLowerCase();
+
+			if ( label ) {
+				this.track( 'dialog-' + label + '-ok' );
+			}
+		},
+
+		onCkDialogShow: function( event ) {
+			var label = event.data._.name.toLowerCase();
+
+			if ( label ) {
+				this.track( 'dialog-' + label + '-open' );
+			}
+		},
+
+		onCkPanelClick: function( event ) {
 			var	label = event.data.me.label.toLowerCase(),
 				title = event.data.value;
 
@@ -48,7 +78,7 @@
 			}
 		},
 
-		onPanelShow: function( editor, event ) {
+		onCkPanelShow: function( event ) {
 			var label = event.data.me.label.toLowerCase();
 
 			if ( label ) {
@@ -161,13 +191,18 @@
 
 		// Module: CKEditor Toolbar
 		(function() {
-			var label = 'toolbar-';
+
+			// Blacklisted items are tracked elsewhere
+			var blacklist = [
+					'link'
+				],
+				label = 'toolbar-';
 
 			$( '#EditPageToolbar' )
 				.on( 'mousedown', '.cke_button a', function( e ) {
 					var title = getCkButtonTitle( e.currentTarget );
 
-					if ( title ) {
+					if ( title && !~$.inArray( title, blacklist ) ) {
 						WikiaEditor.track( label + 'button-' + title.toLowerCase() );
 					}
 				})
