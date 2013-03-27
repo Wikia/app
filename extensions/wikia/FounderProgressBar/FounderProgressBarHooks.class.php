@@ -226,8 +226,10 @@ class FounderProgressBarHooks {
 		}
 		$dbw->commit();
 
-		$memKey = $app->wf->MemcKey('FounderLongTaskList');
-		$app->wg->Memc->delete($memKey);
+		// also clear out any lingering memcache keys
+		$memc = $app->wg->Memc;
+		$memc->delete($app->wf->MemcKey('FounderLongTaskList'));
+		$memc->delete($app->wf->MemcKey('FounderTasksComplete'));
 
 		wfProfileOut(__METHOD__);
 	}

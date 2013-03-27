@@ -42,7 +42,7 @@ class FilePageHooks extends WikiaObject{
 
 		if ( ( $title instanceof Title ) && ( $title->getNamespace() == NS_FILE ) && $title->exists() ) {
 			$file = $app->wf->FindFile( $title );
-			if (UploadBase::userCanReUpload( $wgUser, $file->getName() )) {
+			if ( ( $file instanceof File ) && UploadBase::userCanReUpload( $wgUser, $file->getName() ) ) {
 				if ( WikiaFileHelper::isTitleVideo( $title ) ) {
 					$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
 					$href = $uploadTitle->getFullURL( array(

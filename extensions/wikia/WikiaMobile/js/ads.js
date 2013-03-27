@@ -4,6 +4,7 @@
  *
  * @define ads
  * @require events
+ * @require dartmobilehelper
  * @require domwriter
  * @require cookies
  * @require track
@@ -14,7 +15,7 @@
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
-define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window', 'wikia.utils'], function (dw, ck, track, log, w, $) {
+define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window', 'wikia.utils', 'wikia.dartmobilehelper'], function (dw, ck, track, log, w, $, dartHelper) {
 	'use strict';
 
 	var AD_TYPES = {
@@ -35,9 +36,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 		fixed = false,
 		ftr,
 		inited,
-		positionfixed = w.Features.positionfixed,
-		type,
-		dartHelper = w.WikiaDartMobileHelper(log, w, d);
+		type;
 
 	/**
 	 * @private
@@ -105,7 +104,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 		if (shouldRequestAd()) {
 			var url = dartHelper.getMobileUrl({
 					slotname: name,
-					positionfixed: (Features.positionfixed ? 'css' : 'js'),
+					size: '5x5',
 					uniqueId: getUniqueId()
 				}),
 				s = d.createElement('script');

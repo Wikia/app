@@ -4,9 +4,9 @@
 	<?php endif; ?>
 	<?= $title ?>
 </h2>
-<p>
+<p class="wikias-picks-content">
 	<?php if( !is_null($imageLink) ): ?>
-		<a href="<?= $imageLink ?>">
+		<a class="wikias-picks-image" href="<?= $imageLink ?>">
 	<?php endif; ?>
 	
 	<img class="floatright" src="<?= $imageUrl ?>" alt="<?= $imageAlt ?>" />
