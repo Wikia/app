@@ -26,11 +26,21 @@ class AdEngine2Controller extends WikiaController {
 	 * @return string
 	 */
 	public static function getAdLevelForPage() {
-		if (WikiaPageType::isActionPage()) {
-			return self::AD_LEVEL_NONE;
+		$wg = F::app()->wg;
+
+		static $pageLevel = null;
+
+		if ($pageLevel) {
+			return $pageLevel;
 		}
 
-		$wg = F::app()->wg;
+		if (WikiaPageType::isActionPage()
+			|| $wg->Request->getBool('noexternals', $wg->NoExternals)
+			|| $wg->Request->getBool('noads', false)
+		) {
+			$pageLevel = self::AD_LEVEL_NONE;
+			return $pageLevel;
+		}
 
 		$runAds = $wg->Out->isArticle()
 			|| WikiaPageType::isSearch()
@@ -38,30 +48,33 @@ class AdEngine2Controller extends WikiaController {
 			|| WikiaPageType::isWikiaHub();
 
 		if (!$runAds) {
-			$title = $wg->title;
-			if ($title) {
-				$runAds = (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ))
-					|| $title->isSpecial('Videos')
-					|| $title->isSpecial('Leaderboard');
+			if ($wg->Title) {
+				$runAds = (defined('NS_WIKIA_PLAYQUIZ') && $wg->Title->inNamespace(NS_WIKIA_PLAYQUIZ))
+					|| $wg->Title->isSpecial('Videos')
+					|| $wg->Title->isSpecial('Leaderboard');
 			}
 		}
 
 		if (!$runAds) {
-			return self::AD_LEVEL_NONE;
+			$pageLevel = self::AD_LEVEL_NONE;
+			return $pageLevel;
 		}
 
 		// Anonymous users get all ads
 		$user = $wg->User;
 		if (!$user->isLoggedIn() || $user->getOption('showAds')) {
-			return self::AD_LEVEL_ALL;
+			$pageLevel = self::AD_LEVEL_ALL;
+			return $pageLevel;
 		}
 
 		// Logged in get some ads on the main page
 		if (WikiaPageType::isMainPage()) {
-			return self::AD_LEVEL_LIMITED;
+			$pageLevel = self::AD_LEVEL_LIMITED;
+			return $pageLevel;
 		}
 
-		return self::AD_LEVEL_NONE;
+		$pageLevel = self::AD_LEVEL_NONE;
+		return $pageLevel;
 	}
 
 	public static function getAdLevelForSlot($slotname) {
@@ -117,6 +130,48 @@ class AdEngine2Controller extends WikiaController {
 
 	public static function areAdsInHead() {
 		return self::getAdsInHeadGroup() === 1;
+	}
+
+	const cacheKeyVersion = "2.03a";
+	const cacheTimeout = 1800;
+	/* Category name/id is needed multiple times for multiple providers. Be gentle on our dbs by adding a thin caching layer. */
+	public static function getCachedCategory() {
+		wfProfileIn(__METHOD__);
+
+		static $cat;
+		if (! empty($cat)){
+			wfProfileOut(__METHOD__);
+			// This function already called
+			return $cat;
+		}
+
+		if (!empty($_GET['forceCategory'])){
+			wfProfileOut(__METHOD__);
+			// Passed in through the url, or hard coded on a test_page. ;-)
+			return $_GET['forceCategory'];
+		}
+
+		global $wgMemc, $wgCityId, $wgRequest;
+		$cacheKey = wfMemcKey(__CLASS__ . 'category', self::cacheKeyVersion);
+
+		$cat = $wgMemc->get($cacheKey);
+		if (!empty($cat) && $wgRequest->getVal('action') != 'purge'){
+			wfProfileOut(__METHOD__);
+			return $cat;
+		}
+
+		$hub = WikiFactoryHub::getInstance();
+		$cat = array(
+			'id'=>$hub->getCategoryId($wgCityId),
+			'name'=>$hub->getCategoryName($wgCityId),
+			'short'=>$hub->getCategoryShort($wgCityId),
+		);
+
+		$wgMemc->set($cacheKey, $cat, self::cacheTimeout);
+
+		wfProfileOut(__METHOD__);
+
+		return $cat;
 	}
 
 	/**
@@ -175,7 +230,7 @@ class AdEngine2Controller extends WikiaController {
 		if (!empty($this->wg->DartCustomKeyValues)) {
 			$vars['wgDartCustomKeyValues'] = $this->wg->DartCustomKeyValues;
 		}
-		$cat = AdEngine::getCachedCategory();
+		$cat = self::getCachedCategory();
 		$vars['cityShort'] = $cat['short'];
 
 		wfProfileOut(__METHOD__);
