@@ -24,11 +24,13 @@ $wgExtensionCredits['specialpage'][] = array(
 $app->registerClass( 'WAMPageArticle', $dir . 'WAMPageArticle.class.php' );
 $app->registerClass( 'WAMPageController', $dir . 'WAMPageController.class.php' );
 $app->registerClass( 'WAMPageHooks', $dir . 'WAMPageHooks.class.php' );
+$app->registerClass( 'WAMPageModel', $dir . 'models/WAMPageModel.class.php' );
 
 // hooks
 $app->registerHook('ArticleFromTitle', 'WAMPageHooks', 'onArticleFromTitle');
 $app->registerHook('MakeGlobalVariablesScript', 'WAMPageHooks', 'onMakeGlobalVariablesScript');
 $app->registerHook('LinkBegin', 'WAMPageHooks', 'onLinkBegin');
+
 
 // i18n
 $app->registerExtensionMessageFile( 'WAMPage', $dir . 'WAMPage.i18n.php' );

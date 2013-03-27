@@ -7,3 +7,5 @@
 		$faqPage
 	)->parse(); ?>
 </div>
+
+<? var_dump(wamWikis); ?>
