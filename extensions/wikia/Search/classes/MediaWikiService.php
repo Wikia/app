@@ -3,7 +3,8 @@
  * Class definition for \Wikia\Search\MediaWikiService
  * @author relwell
  */
-namespace Wikia\Search; 
+namespace Wikia\Search;
+use Wikia\Search\Traits\Cachable;
 /**
  * Encapsulates MediaWiki functionalities.
  * This will allow us to abstract our behavior away from MediaWiki if we want.
@@ -13,18 +14,13 @@ namespace Wikia\Search;
  */
 class MediaWikiService
 {
+	use Cachable;
+	
 	/**
 	 * Application interface
 	 * @var \WikiaApp
 	 */
 	protected $app;
-	
-	/**
-	 * Constructor method
-	 */
-	public function __construct() {
-		$this->app = \F::app();
-	}
 	
 	/**
 	 * Allows us to memoize article instantiation based on pageid
@@ -61,7 +57,14 @@ class MediaWikiService
 	 * @var array
 	 */
 	static protected $wikiDataSources = array();
-
+	
+	/**
+	 * Constructor method
+	 */
+	public function __construct() {
+		$this->app = \F::app();
+	}
+	
 	/**
 	 * Given a page ID, get the title string
 	 * @param int $pageId
@@ -69,21 +72,6 @@ class MediaWikiService
 	 */
 	public function getTitleStringFromPageId( $pageId ) {
 		return $this->getTitleString( $this->getTitleFromPageId( $pageId ) );
-	}
-	
-	/**
-	 * Gets a title from a page id
-	 * @param int $pageId
-	 * @return Title
-	 */
-	protected function getTitleFromPageId( $pageId ) {
-		wfProfileIn( __METHOD__ );
-		if (! isset( static::$pageIdsToTitles[$pageId] ) ) {
-			$page = $this->getPageFromPageId( $pageId );
-			static::$pageIdsToTitles[$pageId] = $page->getTitle();
-		}
-		wfProfileOut( __METHOD__ );
-		return static::$pageIdsToTitles[$pageId];
 	}
 	
 	/**
@@ -168,45 +156,6 @@ class MediaWikiService
 					'pageid'	=> $pageId,
 					'action'	=> 'parse',
 				));
-	}
-	
-	/**
-	 * Returns the memcache key for the given string
-	 * @param string $key
-	 * @return string
-	 */
-	public function getCacheKey( $key ) {
-		return $this->app->wf->SharedMemcKey( $key, $this->getWikiId() );
-	}
-	
-	/**
-	 * Returns what's set in memcache through the app
-	 * @param string $key
-	 * @return array
-	 */
-	public function getCacheResult( $key ) {
-		return $this->getGlobal( 'Memc' )->get( $key );
-	}
-	
-	/**
-	 * Returns the cached result without the intermediate cache query in consumer logic
-	 * @param string $key
-	 * @return multitype
-	 */
-	public function getCacheResultFromString( $key ) {
-		return $this->getCacheResult( $this->getCacheKey( $key ) );
-	}
-	
-	/**
-	 * Allows us to set values in global memcache without knowing the memcache key
-	 * @param string $key
-	 * @param mixed $value
-	 * @param int $ttl
-	 * @return \Wikia\Search\MediaWikiService
-	 */
-	public function setCacheFromStringKey( $key, $value, $ttl ) {
-		$this->getGlobal( 'Memc' )->set( $this->getCacheKey( $key ), $value, $ttl );
-		return $this;
 	}
 	
 	/**
@@ -694,30 +643,6 @@ class MediaWikiService
 	}
 	
 	/**
-	 * Uses Wikia Homepage Helper to acces visualization info
-	 * @param int $wikiId
-	 * @return array
-	 */
-	public function getVisualizationInfoForWikiId( $wikiId ) {
-		return (new \WikiaHomePageHelper)->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
-	}
-
-	/**
-	 * Uses Wikia Homepage Helper to access stats info. 
-	 * We add '_count' to each key to avoid collisions with visualization info (e.g. images) 
-	 * @param int $wikiId
-	 * @return array
-	 */
-	public function getStatsInfoForWikiId( $wikiId ) {
-		$statsInfo = (new \WikiaHomePageHelper)->getWikiStats( $wikiId );
-		foreach ( $statsInfo as $key => $val ) {
-			$statsInfo[$key.'_count'] = $val;
-			unset( $statsInfo[$key] );
-		}
-		return $statsInfo;
-	}
-	
-	/**
 	 * Compares a pageid to the main page's article ID for this wiki.
 	 * False if the main page ID is 0.
 	 * @param int $pageId
@@ -742,6 +667,32 @@ class MediaWikiService
 	 */
 	public function getSimpleMessage( $messageName ) {
 		return $this->app->wf->Message( $messageName )->text();
+	}
+
+	/**
+	 * Put a number into the i18n message based on the quantity. For $number smaller than 1000, $msgName is used.
+	 * For $number between 1K and 1M a message with '-k' postfix is used to display the number of thousands.
+	 * For $number 1M and greated a message with '-M' postfix is used to display the number of millions
+	 * TODO: should be abstracted and added to $wg->Lang
+	 *
+	 * @author Rafal
+	 * @author Mech
+	 * @param int $number - number to be put into the i18n message
+	 * @param string $msgName - message id, for bigger $number values a message with postfix is used
+	 * @return string
+	 */
+	public function shortNumForMsg($number, $msgName) {
+		if ($number >= 1000000) {
+			$shortNum = floor($number / 1000000);
+			$msgName = $msgName . '-M';
+		} else if ($number >= 1000) {
+			$shortNum = floor($number / 1000);
+			$msgName = $msgName . '-k';
+		} else {
+			$shortNum = $number;
+		}
+
+		return $this->app->wf->Message($msgName, $shortNum, $number);
 	}
 	
 	/**
@@ -872,36 +823,66 @@ class MediaWikiService
 					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
 					) 
 			);
-	    $title = \GlobalTitle::newFromText( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
-	    if ( $title->isRedirect() ) {
-	    	$title = $title->getRedirectTarget();
-	    }
-	    return $title;
+		$title = \GlobalTitle::newFromText( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
+		if ( $title->isRedirect() ) {
+			$title = $title->getRedirectTarget();
+		}
+		return $title;
+	}
+	
+
+	/**
+	 * Gets a title from a page id
+	 * @param int $pageId
+	 * @return Title
+	 */
+	protected function getTitleFromPageId( $pageId ) {
+		wfProfileIn( __METHOD__ );
+		if (! isset( static::$pageIdsToTitles[$pageId] ) ) {
+			$page = $this->getPageFromPageId( $pageId );
+			static::$pageIdsToTitles[$pageId] = $page->getTitle();
+		}
+		wfProfileOut( __METHOD__ );
+		return static::$pageIdsToTitles[$pageId];
+	}
+	
+	/**
+	 * BEGIN CACHED METHODS
+	 * All cached methods should begin with an underscore.
+	 * This automatically regsiters them as publicly available magic methods
+	 * using Wikia\Search\Trait\Cachable::getCachedMethodCall.
+	 * Please only include such methods below.
+	 */
+	
+	/**
+	 * Uses Wikia Homepage Helper to acces visualization info
+	 * The underscore indicates that it is public exposed as a cached magic method.
+	 * @see Wikia\Search\Trait\Cachable::__call
+	 * @param int $wikiId
+	 * @return array
+	 */
+	protected function _getVisualizationInfoForWikiId( $wikiId ) {
+		return (new \WikiaHomePageHelper)->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
 	}
 
 	/**
-	 * Put a number into the i18n message based on the quantity. For $number smaller than 1000, $msgName is used.
-	 * For $number between 1K and 1M a message with '-k' postfix is used to display the number of thousands.
-	 * For $number 1M and greated a message with '-M' postfix is used to display the number of millions
-	 * TODO: should be abstracted and added to $wg->Lang
-	 *
-	 * @author Rafal
-	 * @author Mech
-	 * @param int $number - number to be put into the i18n message
-	 * @param string $msgName - message id, for bigger $number values a message with postfix is used
-	 * @return string
+	 * Uses Wikia Homepage Helper to access stats info. 
+	 * We add '_count' to each key to avoid collisions with visualization info (e.g. images)
+	 * The underscore indicates that it is public exposed as a cached magic method.
+	 * @see Wikia\Search\Trait\Cachable::__call 
+	 * @param int $wikiId
+	 * @return array
 	 */
-	public function shortNumForMsg($number, $msgName) {
-		if ($number >= 1000000) {
-			$shortNum = floor($number / 1000000);
-			$msgName = $msgName . '-M';
-		} else if ($number >= 1000) {
-			$shortNum = floor($number / 1000);
-			$msgName = $msgName . '-k';
-		} else {
-			$shortNum = $number;
+	protected function _getStatsInfoForWikiId( $wikiId ) {
+		$statsInfo = (new \WikiaHomePageHelper)->getWikiStats( $wikiId );
+		foreach ( $statsInfo as $key => $val ) {
+			$statsInfo[$key.'_count'] = $val;
+			unset( $statsInfo[$key] );
 		}
-
-		return $this->app->wf->Message($msgName, $shortNum, $number);
+		return $statsInfo;
 	}
+	
+	/**
+	 * END CACHED METHODS
+	 */
 }

@@ -2055,7 +2055,7 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\MediaWikiService::getVisualizationInfoForWikiId
+	 * @covers Wikia\Search\MediaWikiService::_getVisualizationInfoForWikiId
 	 */
 	public function testGetVisualizationInfoForWikiId() {
 		$service = $this->service->setMethods( array( 'getLanguageCode' ) )->getMock();
@@ -2075,14 +2075,16 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$this->proxyClass( 'WikiaHomePageHelper', $hph );
 		$this->mockApp();
+		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', '_getVisualizationInfoForWikiId' );
+		$method->setAccessibel( true );
 		$this->assertEquals(
 				$info,
-				$service->getVisualizationInfoForWikiId( 123 )
+				$method->invoke( $service, 123 )
 		);
 	}
 	
 	/**
-	 * @covers Wikia\Search\MediaWikiService::getStatsInfoForWikiId
+	 * @covers Wikia\Search\MediaWikiService::_getStatsInfoForWikiId
 	 */
 	public function testGetStatsInfoForWikiId() {
 		$service = $this->service->setMethods( null )->getMock();
@@ -2097,9 +2099,11 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$this->proxyClass( 'WikiaHomePageHelper', $hph );
 		$this->mockApp();
+		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', '_getStatsInfoForWikiId' );
+		$method->setAccessibel( true );
 		$this->assertEquals(
 				array( 'this_count' => 'yup' ),
-				$service->getStatsInfoForWikiId( 123 )
+				$method->invoke( $service, 123 )
 		);
 	}
 	
