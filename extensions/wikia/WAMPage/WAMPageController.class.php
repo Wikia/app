@@ -1,6 +1,6 @@
 <?php
 
-class SpecialWAMPageController extends WikiaSpecialPageController
+class WAMPageController extends WikiaController
 {
 	public function __construct() {
 		parent::__construct( 'WAMPage', '', false );

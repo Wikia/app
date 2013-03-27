@@ -28,7 +28,7 @@ class WAMPageArticle extends Article {
 			$action = 'index';
 		}
 		
-		$app->wg->Out->addHTML( $app->sendRequest('SpecialWAMPageController', $action) );
+		$app->wg->Out->addHTML( $app->sendRequest('WAMPageController', $action) );
 		wfProfileOut(__METHOD__);
 	}
 
