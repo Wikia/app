@@ -167,7 +167,10 @@
 
 			this.editor.setState(this.editor.states.SAVING);
 
-			this.editor.track( 'publish' );
+			this.editor.track({
+				action: Wikia.Tracker.ACTIONS.SUBMIT,
+				label: 'publish'
+			});
 
 			// block "Publish" button
 			$('#wpSave').attr('disabled', true);
