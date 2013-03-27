@@ -22,7 +22,7 @@
 	}
 	.explore-content {
 		figure {
-			text-align: left;
+			text-align: center;
 		}
 		h4 {
 			margin: 1.5em 0 0 0;
@@ -47,6 +47,9 @@
 			margin: 0;
 			padding: 10px 0;
 			font-size: 13px;
+			.floatleft {
+				text-align: center;
+			}
 			&:last-child {
 				border-bottom: none;
 			}
@@ -62,8 +65,12 @@
 		}
 	}
 	.wikias-picks-content {
-		p img {
+		img {
 			width: 480px;
+		}
+		.wikias-picks-image {
+			display: block;
+			text-align: center;
 		}
 	}
 	.WikiaMosaicSlider {
