@@ -13,7 +13,7 @@
 					<img src="<?= $wiki['wiki_image'] ?>" alt="<?= $wiki['title'] ?>" title="<?= $wiki['title'] ?>" />
 					<span><?= $wiki['title'] ?></span>
 				</figure>
-				<div class="wam-score"><?= $wiki['wam'] ?></div>
+				<div class="wam-score vertical<?= $wiki['hub_id'] ?>"><?= $wiki['wam'] ?></div>
 				<span class="wam-vertical"><?= $wiki['hub_id'] ?></span>
 			</a>
 		<? } // end foreach ?>

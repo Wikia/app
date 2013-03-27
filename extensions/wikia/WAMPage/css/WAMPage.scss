@@ -32,14 +32,15 @@
 			margin-right: 10px;
 			padding: 7px 5px;
 			position: relative;
+			text-decoration: none;
 			width: 150px;
-			.wam-img {
+			figure {
 				background-color: #eee;
 				height: 95px;
 				overflow: hidden;
 				position: relative;
 				width: 150px;
-				.wam-img-info {
+				span {
 					background-color: rgba(0,0,0,0.5 );
 					line-height: 1;
 					padding: 8px;
@@ -49,12 +50,20 @@
 				}
 			}
 			.wam-score {
-				background-color: #ff6600;
 				height: 18px;
 				line-height: 1;
 				margin-top: 7px;
 				padding: 7px 0 0 20px;
 				width: 40px;
+			}
+			.vertical2 {
+				background-color: #8ca038
+			}
+			.vertical3 {
+				background-color: #07b2e0
+			}
+			.vertical9 {
+				background-color: #ff6600;
 			}
 			.wam-vertical {
 				bottom: 3px;
