@@ -17,9 +17,9 @@ var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl) {
 	 *     slotname
 	 *     slotsize
 	 *   OPTIONAL:
-	 *     adType (default: adj, adi, jwplayer, mobile)
+	 *     adType (default: adj, adi, jwplayer)
 	 *     src (default: driver)
-	 *     loc, dcopt, tile, positionfixed
+	 *     loc, dcopt, tile
 	 * }
 	 * @return {String} URL of DART script
 	 */
@@ -27,7 +27,6 @@ var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl) {
 		var slotname = params.slotname,
 			size = params.slotsize,
 			adType = params.adType || 'adj',
-			pathPrefix,
 			src = params.src || 'driver',
 			localTile,
 			localOrd = params.ord || ord,
@@ -41,12 +40,6 @@ var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl) {
 			adType = 'pfadx';
 		}
 
-		if (adType === 'mobile') {
-			pathPrefix = 'DARTProxy/mobile.handler?k=';
-		}
-
-		pathPrefix = pathPrefix || adType + '/';
-
 		if (params.tile) {
 			localTile = params.tile;
 		} else {
@@ -58,7 +51,7 @@ var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl) {
 
 		url = dartUrl.urlBuilder(
 			subdomain + '.doubleclick.net',
-			pathPrefix + 'wka.' + pageParams.s0 + '/' + pageParams.s1 + '/' + pageParams.s2
+			adType + '/' + 'wka.' + pageParams.s0 + '/' + pageParams.s1 + '/' + pageParams.s2
 		);
 
 		// per page params
@@ -76,7 +69,6 @@ var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl) {
 				}
 			}
 		}
-		url.addParam('positionfixed', params.positionfixed);
 
 		// global params
 		url.addParam('src', src);
@@ -91,9 +83,7 @@ var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl) {
 
 		// sync params
 		url.addParam('tile', localTile);
-		if (!params.omitEndTag) {
-			url.addString('endtag=$;');
-		}
+		url.addString('endtag=$;');
 		url.addString('ord=' + localOrd + '?');
 
 		log(url.toString(), 5, logGroup);
