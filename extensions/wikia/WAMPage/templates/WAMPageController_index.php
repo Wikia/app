@@ -14,9 +14,6 @@
 	<li>
 		<a href="#">5</a>
 	</li>
-	<li>
-		<a href="#">6</a>
-	</li>
 </ul>
 <div class="wam-header">
 	<div class="wam-cards">
