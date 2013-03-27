@@ -7,14 +7,23 @@ describe("Loader Module", function () {
 			document: window.document,
 			wgCdnRootUrl: '',
 			wgAssetsManagerQuery: "/__am/%4$d/%1$s/%3$s/%2$s",
-			wgStyleVersion: ~~(Math.random()*99999)
+			wgStyleVersion: ~~(Math.random()*99999),
+			$: {
+				extend: function(a, b){
+					for(var key in b){
+						a[key] = b[key];
+					}
+					return a;
+				}
+			}
 		},
 		mwMock = undefined,
 		nirvanaMock = {},
-		logMock = function() {},
-		loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, logMock);
+		logMock = function(){};
 
 	logMock.levels = {};
+
+	var loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, Wikia.Deferred, logMock);
 
 	it('registers itself', function() {
 		expect(typeof loader).toBe('function');
@@ -61,9 +70,9 @@ describe("Loader Module", function () {
 
 	async.it('should fire on fail callback', function(done) {
 		var path = 'some/path/asd',
-			someOtherPath = 'and/thi/thiss.js';
+			path1 = 'some/other/path/dd'
 
-		loader(path, someOtherPath)
+		loader(path, path1)
 
 		.done(function(){
 			//if this runs there is something wrong
@@ -73,13 +82,22 @@ describe("Loader Module", function () {
 		})
 
 		.fail(function(resources){
-
 			expect(resources).toBeDefined();
-			expect(resources.error).toEqual(loader.NOT_LOADED);
-			expect(resources.resources[1].type).toEqual('js');
+			expect(resources.value.error).toEqual(loader.NOT_LOADED);
+			expect(resources.value.resources[1].type).toEqual(loader.UNKNOWN);
 
 			done();
 		});
+	});
+
+	async.it('should accept arrays as resources', function(done){
+		loader({
+			type: loader.JS,
+			resources: ['test', 'test/test']
+		}).always(function(fail){
+			expect(fail.value.resources.length).toBe(2);
+			done()
+		})
 	});
 
 	async.it('RL module is properly loaded', function(done) {
@@ -101,7 +119,7 @@ describe("Loader Module", function () {
 					}
 				}
 			},
-			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, logMock);
+			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, Wikia.Deferred, logMock);
 
 		// check calls to this function
 		spyOn(mwMock.loader, 'use').andCallThrough();
@@ -119,9 +137,12 @@ describe("Loader Module", function () {
 	async.it('Facebook library is properly initialized when lazy loaded', function(done) {
 		var windowMock = {
 				document: window.document,
-				onFBloaded:  function() {}
+				onFBloaded:  function() {},
+				$: {
+					extend: function(a){return a}
+				}
 			},
-			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, logMock);
+			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, Wikia.Deferred, logMock);
 
 		document.head.appendChild = function(script){
 			script.onload();

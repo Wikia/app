@@ -170,3 +170,10 @@ var AdLogicPageLevelParams = function (
 		getPageLevelParams: getPageLevelParams
 	};
 };
+
+(function (context) {
+	'use strict';
+	if (context.define && context.define.amd) {
+		context.define('wikia.adlogicpageparams', ['wikia.log', 'wikia.window'], AdLogicPageLevelParams);
+	}
+}(this));

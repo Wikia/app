@@ -153,6 +153,7 @@ $messages['qqq'] = array(
 	'rte-ck-photoGallery-slideshow' => '{{Identical|Slideshow}}',
 	'rte-ck-photoGallery-tooltipSlider' => 'Tooltip for the slider placeholder in the editor.',
 	'rte-ck-signature-label' => '{{Identical|Signature}}',
+	'rte-ck-table-toolbarTooltip' => 'Appears when hovering over the button to add a table into the article. Tooltips inform users that button adds a table to article code',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'See [[mw:Help:Magic words]] for the term.',
 	'rte-ck-templateDropDown-label' => '{{Identical|Template}}',
 	'rte-ck-templateEditor-dialog-insert' => '{{Identical|Insert}}',

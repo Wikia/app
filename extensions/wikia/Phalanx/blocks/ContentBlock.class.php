@@ -168,4 +168,51 @@ class ContentBlock {
 		wfProfileOut( __METHOD__ );
 		return $text;
 	}
+	
+	# hooks added after Phalanx redesign - this hooks is used in CreateWiki extension
+	public static function onCheckContent( $text, &$blockedKeyword ) {
+		wfProfileIn( __METHOD__ );
+		
+		$keywords = array();
+		$filters = Phalanx::getFromFilter( Phalanx::TYPE_CONTENT );
+		foreach( $filters as $filter ) {
+			$result = Phalanx::isBlocked( $text, $filter );
+			if($result['blocked']) {
+				$keywords[] = $result['msg'];
+			}
+		}
+
+		if ( count($keywords) > 0 ) {
+			$blockedKeyword = '';
+			for ($i = 0; $i < count($keywords); $i++) {
+				if($i != 0) {
+					$blockedKeyword .= ', ';
+				}
+				$blockedKeyword .= $keywords[$i];
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
+	public static function onSpamFilterCheck($text, $type, &$blockData) {
+		wfProfileIn( __METHOD__ );
+		
+		if (!empty($text)) {
+			$filters = Phalanx::getFromFilter($type);
+
+			foreach ($filters as $filter) {
+				$result = Phalanx::isBlocked($text, $filter);
+
+				if ($result['blocked']) {
+					wfProfileOut(__METHOD__);
+					return false;
+				}
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		
+		return true;
+	}
 }

@@ -211,5 +211,4 @@ class VideoHandlerHooks extends WikiaObject{
 
 		return true;
 	}
-
 }
