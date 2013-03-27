@@ -1,5 +1,6 @@
 (function(window,$){
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
+		slice = [].slice;
 
 	// config defaults
 	WE.config = {};
@@ -864,10 +865,28 @@
 		requires: ['ui'],
 
 		// These events are proxied from ck and fired on the editor with the 'ck' prefix
-		proxyEvents: ['blur', 'focus', 'instanceReady', 'mode', 'modeSwitch', 'modeSwitchCancelled', 'themeLoaded', 'wysiwygModeReady'],
+		proxyEvents: [
+			'blur',
+			'focus',
+			'instanceReady',
+			'mode',
+			'modeSwitch',
+			'modeSwitchCancelled',
+			'panelClick',
+			'themeLoaded',
+			'wysiwygModeReady'
+		],
 
 		// These methods will be publicly available on the editor instance
-		proxyMethods: ['getContent', 'setContent', 'getEditbox', 'getEditboxWrapper', 'getEditorElement', 'editorFocus', 'editorBlur'],
+		proxyMethods: [
+			'getContent',
+			'setContent',
+			'getEditbox',
+			'getEditboxWrapper',
+			'getEditorElement',
+			'editorFocus',
+			'editorBlur'
+		],
 
 		beforeInit: function() {
 			var i = 0,
@@ -920,7 +939,7 @@
 			for (var i = 0, l = this.proxyEvents.length; i < l; i++) {
 				(function(eventName) {
 					this.editor.ck.on(eventName, function() {
-						this.editor.fire.apply(this.editor, ['ck-' + eventName, this.editor].concat(arguments));
+						this.editor.fire.apply(this.editor, ['ck-' + eventName, this.editor].concat(slice.call(arguments)));
 					}, this);
 				}).call(this, this.proxyEvents[i]);
 			}
