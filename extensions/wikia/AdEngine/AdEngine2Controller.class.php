@@ -223,11 +223,13 @@ class AdEngine2Controller extends WikiaController {
 	}
 
 	private function getExitstitialUrlsWhiteList() {
-		if (is_array(self::$EXITSTITIAL_URLS_WHITE_LIST)) {
-			return self::$EXITSTITIAL_URLS_WHITE_LIST;
+		static $whiteList = null;
+
+		if (is_array($whiteList)) {
+			return $whiteList;
 		}
 
-		$whiteList = array();
+		$whiteList = [];
 		$whiteListContent = $this->wf->MsgExt('outbound-screen-whitelist', array('language' => 'en'));
 
 		if (!empty($whiteListContent)) {
@@ -248,9 +250,6 @@ class AdEngine2Controller extends WikiaController {
 		if ($this->wg->DevelEnvironment && !empty($_SERVER['SERVER_NAME'])) {
 			array_unshift($whiteList, $_SERVER['SERVER_NAME']);
 		}
-
-		// Save for later
-		self::$EXITSTITIAL_URLS_WHITE_LIST = $whiteList;
 
 		return $whiteList;
 	}
