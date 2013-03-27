@@ -4,8 +4,8 @@
 }
 
 .wam-header {
-	background-image: url("/extensions/wikia/WAMPage/images/wamheader.png");
-	height: 100px;
+	background-image: url("/extensions/wikia/WAMPage/images/wamheaderbg.jpg");
+	height: 285px;
 	width: 1030px;
 	h2 {
 		border: 0;
@@ -14,7 +14,62 @@
 		margin: 0;
 		padding: 50px 25px;
 		text-transform: uppercase;
+		width: 300px;
 	}
+	.wam-cards {
+		width: 680px;
+		height: 220px;
+		float: right;
+		margin-top: 65px;
+		overflow: hidden;
+		.wam-card {
+			background-color: #fff;
+			bottom: 0;
+			color: #fff;
+			display: block;
+			float: left;
+			height: 206px;
+			margin-right: 10px;
+			padding: 7px 5px;
+			position: relative;
+			width: 150px;
+			.wam-img {
+				background-color: #eee;
+				height: 95px;
+				overflow: hidden;
+				position: relative;
+				width: 150px;
+				.wam-img-info {
+					background-color: rgba(0,0,0,0.5 );
+					line-height: 1;
+					padding: 8px;
+					position: absolute;
+					left: 0;
+					bottom: 0;
+				}
+			}
+			.wam-score {
+				background-color: #ff6600;
+				height: 18px;
+				line-height: 1;
+				margin-top: 7px;
+				padding: 7px 0 0 20px;
+				width: 40px;
+			}
+			.wam-vertical {
+				bottom: 3px;
+				color: #666;
+				left: 10px;
+				position: absolute;
+			}
+		}
+	}
+}
+
+.wam-progressbar {
+	background-color: #e5e5e5;
+	height: 4px;
+	width: 1030px;
 }
 
 .wam-content {
