@@ -32,24 +32,8 @@ Test file needs to match ``*Test.php``.
 
 ```
 cd /usr/wikia/source/wiki/tests
-ant -f build-wikia.xml js
+karma start karma/js-unit.config.js
 ```
 
-This command will run all tests from ``tests`` subdirectories of:
-
-* /extensions/wikia
-* /resources/wikia/modules
-
-## Running extension unit tests
-
-The following commands will run all unit tests from ``/extensions/wikia/Foo/tests`` directory:
-
-```
-cd /usr/wikia/source/wiki/tests
-./js-extension Foo
-```
-
-```
-cd /usr/wikia/source/wiki/tests
-./php-extension Foo
-```
+For more info see
+https://internal.wikia-inc.com/wiki/Unit_Testing/JS
