@@ -53,6 +53,23 @@ class WAMPageModel extends WikiaModel {
 		return $this->prepareIndex($WAMData['wam_index']);
 	}
 
+	/**
+	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
+	 */
+	public function getTabs() {
+		$tabs = [];
+		$config = $this->getConfig();
+		$tabsNames = !empty($config['tabsNames']) ? $config['tabsNames'] : [];
+
+		foreach($tabsNames as $tabName) {
+			$tabTitle = Title::newFromText($config['pageName'] . '/'. $tabName);
+			$tabUrl = $tabTitle->getLocalURL();
+			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
+		}
+
+		return $tabs;
+	}
+
 	protected function prepareIndex($wamWikis) {
 		foreach ($wamWikis as &$wiki) {
 			$wiki['wam'] = round($wiki['wam'], self::SCORE_ROUND_PRECISION);
@@ -67,23 +84,6 @@ class WAMPageModel extends WikiaModel {
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
 		return $this->wf->Message('wam-' . $wikiaHub['name'])->inContentLanguage()->text();
-	}
-
-	/**
-	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
-	 */
-	public function getTabs() {
-		$tabs = [];
-		$config = $this->getConfig();
-		$tabsNames = !empty($config['tabsNames']) ? $config['tabsNames'] : [];
-		
-		foreach($tabsNames as $tabName) {
-			$tabTitle = Title::newFromText($config['pageName'] . '/'. $tabName);
-			$tabUrl = $tabTitle->getLocalURL();
-			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
-		}
-		
-		return $tabs;
 	}
 
 	/**
