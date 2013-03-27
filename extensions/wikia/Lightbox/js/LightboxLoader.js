@@ -50,9 +50,6 @@ var LightboxLoader = {
 		}
 	},
 	videoThumbWidthThreshold: 400,
-	log: function(content) {
-		$().log(content, "LightboxLoader");
-	},
 	init: function() {
 		var that = this,
 			article = $('#WikiaArticle'),
@@ -105,9 +102,11 @@ var LightboxLoader = {
 				if(!fileKey) {
 					// might be old/cached DOM.  TODO: delete this when cache is flushed
 					fileKey = $this.attr('data-image-name') || $this.attr('data-video-name');
+					LightboxLoader.handleOldDom();
 				}
 				
 				if(!fileKey) {
+					LightboxLoader.handleOldDom();
 					return;
 				}
 
@@ -303,6 +302,13 @@ var LightboxLoader = {
 				openModal.closeModal();
 			}
 		}
+	},
+	isOldDom: null,
+	handleOldDom: function() {
+		if(LightboxLoader.isOldDom === null) {
+			$().log("Send old DOM tracking", "Lightbox");
+		}
+		LightboxLoader.isOldDom = true;
 	}
 
 };

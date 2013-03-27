@@ -853,7 +853,12 @@ var Lightbox = {
 
 			Lightbox.current.index = idx;
 			if(idx > -1 && idx < mediaArr.length) {
-				Lightbox.current.key = mediaArr[idx].key.toString(); // Added toString() for edge cases where titles are numbers
+				var key = mediaArr[idx].key;
+				if(!key) {
+					key = mediaArr[idx].title;
+					LightboxLoader.handleOldDom();
+				}
+				Lightbox.current.key = key.toString(); // Added toString() for edge cases where titles are numbers
 				Lightbox.current.type = mediaArr[idx].type;
 			}
 
@@ -1060,6 +1065,11 @@ var Lightbox = {
 					infobox = article.find('.infobox');
 				// Collect images from DOM
 				var thumbs = article.find('img[data-image-name], img[data-video-name]');
+				
+				if(!thumbs.length) {
+					LightboxLoader.handleOldDom();
+					thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));				
+				}
 
 				thumbs.each(function() {
 					var $thisThumb = $(this),
@@ -1073,7 +1083,8 @@ var Lightbox = {
 						return;
 					}
 
-					var videoName = $thisThumb.attr('data-video-name');
+					var videoName = $thisThumb.attr('data-video-name') || $thisThumb.parent().attr('data-video-name');
+
 					if(videoName) {
 						type = 'video';
 						title = videoName;
@@ -1081,9 +1092,14 @@ var Lightbox = {
 						playButtonSpan = Lightbox.thumbPlayButton;
 					} else {
 						type = 'image';
-						title = $thisThumb.attr('data-image-name');
+						title = $thisThumb.attr('data-image-name') || $thisThumb.parent().attr('data-image-name');
 						key = $thisThumb.attr('data-image-key')
 						playButtonSpan = '';
+					}
+					
+					if(!key) {
+						key = title;
+						LightboxLoader.handleOldDom();
 					}
 
 					if(title) {
@@ -1136,11 +1152,20 @@ var Lightbox = {
 					i,
 					arrLength;
 
+
 				for(i = 0, arrLength = RVI.length; i < arrLength; i++) {
+					var key = RVI[i].key,
+						title = RVI[i].title;
+
+					if(!key) {
+						key = title;
+						LightboxLoader.handleOldDom();
+					}
+
 					thumbArr.push({
 						thumbUrl: Lightbox.thumbParams(RVI[i].thumb, 'video'),
-						key: RVI[i].key,
-						title: RVI[i].title,
+						key: key,
+						title: title,
 						type: 'video',
 						playButtonSpan: playButton
 					});
@@ -1177,6 +1202,11 @@ var Lightbox = {
 						thumbUrl = $thisThumb.data('src') || $thisThumb.attr('src'),
 						title = $thisThumb.attr('data-image-name'),
 						key = $thisThumb.attr('data-image-key');
+
+					if(!key) {
+						key = title;
+						LightboxLoader.handleOldDom();
+					}
 
 					if(title) {
 						// Check for dupes
@@ -1233,6 +1263,13 @@ var Lightbox = {
 					}
 
 					var thumbArr = json.thumbs;
+					
+					for(thumb in thumbArr) {
+						if(!thumb.key) {
+							thumb.key = thumb.title;
+							LightboxLoader.handleOldDom();
+						}
+					}
 
 					// Add thumbs to wikiPhotos cache
 					LightboxLoader.cache.wikiPhotos = LightboxLoader.cache.wikiPhotos.concat(thumbArr);
