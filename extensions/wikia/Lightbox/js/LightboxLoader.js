@@ -89,24 +89,28 @@ var LightboxLoader = {
 				// Allow links to open lightbox without a thumbnail. The link itself must contain data-image-key. Used in RelatedVideos. 
 				if($this.hasClass('lightbox-link-to-open')) {
 					fileKey = $this.attr('data-image-key') || $this.attr('data-video-key');
-				// Display video inline, don't open lightbox
-				} else if($thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('wikiaPhotoGallery-slider')) {
-					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, LightboxTracker.clickSource.EMBED);
-					return;
 				// TODO: refactor wikia slideshow
 				} else if($this.hasClass('wikia-slideshow-popout')) {
-					var $slideshowImg = $this.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').find('img').first(),
-						fileKey = $slideshowImg.attr('data-image-name') || $slideshowImg.attr('data-vide-name');
+					var $slideshowImg = $this.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').find('img').first();
+					fileKey = $slideshowImg.attr('data-image-name') || $slideshowImg.attr('data-vide-name');
 				}
 				
 				if(!fileKey) {
 					// might be old/cached DOM.  TODO: delete this when cache is flushed
 					fileKey = $this.attr('data-image-name') || $this.attr('data-video-name');
+					fileKey = fileKey ? fileKey.replace(/ /g, '_') : fileKey;
 					LightboxLoader.handleOldDom();
 				}
-				
+
 				if(!fileKey) {
 					LightboxLoader.handleOldDom();
+					// TODO: add error logging code here
+					return;
+				}
+				
+				// Display video inline, don't open lightbox
+				if($thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('wikiaPhotoGallery-slider')) {
+					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, LightboxTracker.clickSource.EMBED);
 					return;
 				}
 
@@ -280,7 +284,7 @@ var LightboxLoader = {
 			// If Lightbox is already open, update it
 			if(openModal.length) {
 				LightboxLoader.getMediaDetail({fileTitle: fileTitle}, function(data) {
-					Lightbox.current.key = data.title;
+					Lightbox.current.key = data.title.replace(/ /g, '_');
 					Lightbox.current.type = data.mediaType;
 
 					Lightbox.setCarouselIndex();

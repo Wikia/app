@@ -1,7 +1,5 @@
 /*global LightboxLoader:true, RelatedVideosIds, LightboxTracker*/
 
-/* TDOO: We need to normalize all readable titles and dbKeys so that we always know which one is which. This includes updating the DOM for every image and video element site-wide */
-
 (function(window, $) {
 
 var Lightbox = {
@@ -855,7 +853,7 @@ var Lightbox = {
 			if(idx > -1 && idx < mediaArr.length) {
 				var key = mediaArr[idx].key;
 				if(!key) {
-					key = mediaArr[idx].title;
+					key = mediaArr[idx].title.replace(/ /g, '_');
 					LightboxLoader.handleOldDom();
 				}
 				Lightbox.current.key = key.toString(); // Added toString() for edge cases where titles are numbers
@@ -1060,15 +1058,15 @@ var Lightbox = {
 			} else {
 				var article = $('#WikiaArticle, #WikiaArticleComments'),
 					playButton = Lightbox.thumbPlayButton,
-					titles = [], // array to check for title dupes
+					keys = [], // array to check for title dupes
 					thumbArr = [],
 					infobox = article.find('.infobox');
 				// Collect images from DOM
 				var thumbs = article.find('img[data-image-name], img[data-video-name]');
 				
 				if(!thumbs.length) {
-					LightboxLoader.handleOldDom();
 					thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));				
+					LightboxLoader.handleOldDom();
 				}
 
 				thumbs.each(function() {
@@ -1098,16 +1096,16 @@ var Lightbox = {
 					}
 					
 					if(!key) {
-						key = title;
+						key = title && title.replace(/ /g, '_');
 						LightboxLoader.handleOldDom();
 					}
 
-					if(title) {
+					if(key) {
 						// Check for dupes
-						if($.inArray(title, titles) > -1) {
+						if($.inArray(key, keys) > -1) {
 							return true;
 						}
-						titles.push(title);
+						keys.push(key);
 
 						thumbArr.push({
 							thumbUrl: Lightbox.thumbParams($thisThumb.data('src') || $thisThumb.attr('src'), type),
@@ -1158,7 +1156,7 @@ var Lightbox = {
 						title = RVI[i].title;
 
 					if(!key) {
-						key = title;
+						key = title.replace(/ /g, '_');
 						LightboxLoader.handleOldDom();
 					}
 
@@ -1195,7 +1193,7 @@ var Lightbox = {
 			} else {
 
 				var thumbs = $("#LatestPhotosModule .thumbimage"),
-					titles = []; // array to check for title dupes
+					keys = []; // array to check for title dupes
 
 				thumbs.each(function() {
 					var $thisThumb = $(this),
@@ -1204,16 +1202,16 @@ var Lightbox = {
 						key = $thisThumb.attr('data-image-key');
 
 					if(!key) {
-						key = title;
+						key = title && title.replace(/ /g, '_');
 						LightboxLoader.handleOldDom();
 					}
 
-					if(title) {
+					if(key) {
 						// Check for dupes
-						if($.inArray(title, titles) > -1) {
+						if($.inArray(key, keys) > -1) {
 							return true;
 						}
-						titles.push(title);
+						keys.push(key);
 
 						thumbArr.push({
 							thumbUrl: Lightbox.thumbParams(thumbUrl, 'image'),
@@ -1266,7 +1264,7 @@ var Lightbox = {
 					
 					for(thumb in thumbArr) {
 						if(!thumb.key) {
-							thumb.key = thumb.title;
+							thumb.key = thumb.title && thumb.title.replace(/ /g, '_');
 							LightboxLoader.handleOldDom();
 						}
 					}
