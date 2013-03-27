@@ -17,10 +17,8 @@ describe("Ads module", function () {
 			this.parentNode = parentNode;
 			this.className = '';
 		},
+		dartHelper = function(){},
 		window = {
-			WikiaDartMobileHelper: function(){
-				return function(){};
-			},
 			document: {
 				getElementById: function(name){
 					return elements[name] || (elements[name] = new Element());
@@ -31,7 +29,7 @@ describe("Ads module", function () {
 		utils = function(func){
 			func();
 		},
-		ads = modules.ads(domwriter, cookies, track, log, window, utils);
+		ads = modules.ads(domwriter, cookies, track, log, window, utils, dartHelper);
 
 	it("is defined as a module", function () {
 		expect(ads).toBeDefined();

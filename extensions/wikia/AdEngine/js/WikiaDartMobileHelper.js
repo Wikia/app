@@ -1,29 +1,79 @@
-// Relies on AdLogicPageLevelParams, WikiaDartHelper and DartUrl
+// Relies on AdLogicPageLevelParams, DartUrl
 
-var WikiaDartMobileHelper = function (log, window, document) {
+var WikiaDartMobileHelper = function (log, window, adLogicPageLevelParams, dartUrl) {
 	'use strict';
 
-	var dartUrl = DartUrl(),
-		adLogicPageLevelParams = AdLogicPageLevelParams(log, window),
-		wikiaDartHelper = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl);
+	var logGroup = 'WikiaDartMobileHelper',
+		features = window.Features, // TODO: AMD
+		ord = Math.round(Math.random() * 23456787654),
+		tile = 0,
+		categoryStrMaxLength = 300;
+
+	function getMobileUrl(params) {
+		var slotname = params.slotname,
+			pageParams = adLogicPageLevelParams.getPageLevelParams(),
+			url = dartUrl.urlBuilder(
+				'ad.mo.doubleclick.net',
+				'DARTProxy/mobile.handler?k=wka.' + pageParams.s0 + '/' + pageParams.s1 + '/' + pageParams.s2
+			),
+			name,
+			value;
+
+		log(['getMobileUrl', slotname], 5, logGroup);
+
+		tile += 1;
+
+		// per page params
+		for (name in pageParams) {
+			if (pageParams.hasOwnProperty(name)) {
+				value = pageParams[name];
+				if (value) {
+					if (name === 'cat') {
+						url.addParam(name, value, categoryStrMaxLength);
+					} else {
+						url.addParam(name, value);
+					}
+				}
+			}
+		}
+
+		// global params
+		url.addParam('positionfixed', features.positionfixed ? 'css' : 'js');
+		url.addParam('src', 'mobile');
+		url.addString('mtfIFPath=/extensions/wikia/AdEngine/;');
+		url.addParam('mtfInline', 'true');	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
+
+		// per slot params
+		url.addParam('pos', params.slotname);
+		url.addParam('loc', params.loc);
+		url.addParam('dcopt', params.dcopt);
+		url.addParam('sz', params.size);
+
+		// sync params
+		url.addParam('tile', tile);
+		url.addString('ord=' + ord + '?');
+
+		url = url.toString() + '&csit=1&dw=1&u=' + params.uniqueId;
+
+		log(['getMobileUrl', url], 5, logGroup);
+
+		return url;
+	}
 
 	return {
 		/**
 		 * Get URL for a mobile ad
 		 *
-		 * @param params (slotname, positionfixed, uniqueId)
+		 * @param params (slotname, size, uniqueId)
 		 * @return {String} URL of DART script
 		 */
-		getMobileUrl: function (params) {
-			return wikiaDartHelper.getUrl({
-				slotname: params.slotname,
-				positionfixed: params.positionfixed,
-				subdomain: 'ad.mo',
-				adType: 'mobile',
-				src: 'mobile',
-				slotsize: '5x5',
-				omitEndTag: true
-			}) + '&csit=1&dw=1&u=' + params.uniqueId;
-		}
+		getMobileUrl: getMobileUrl
 	};
 };
+
+(function (context) {
+	'use strict';
+	if (context.define && context.define.amd) {
+		context.define('wikia.dartmobilehelper', ['wikia.log', 'wikia.window', 'wikia.adlogicpageparams', 'wikia.darturl'], WikiaDartMobileHelper);
+	}
+}(this));
