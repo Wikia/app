@@ -46,19 +46,24 @@
 		 * Convenience method for tracking with data stored in a jQuery Event object.
 		 *
 		 * @param {Object} event
-		 *        The event object.
+		 *        The event object which should contain tracking data. A function to
+		 *        determine whether or not the tracking call should be sent can be provided
+		 *        in the key 'condition.'
 		 *
-		 * @param {Function} [condition]
-		 *        A function to determine whether or not to send the tracking call.
-		 *        Should return a boolean. Gets 'event' as first argument.
-		 *
+		 * @example
+		 *     $( '.element' ).on( 'mousedown', 'a', {
+		 *         category: category,
+		 *         condition: function( event ) { ... },
+		 *         label: 'related-pages'
+		 *     }, WikiaEditor.trackWithEventData );
 		 */
-		trackWithEventData: function( event, condition ) {
+		trackWithEventData: function( event ) {
 			var data;
 
 			if ( typeof event === 'object' &&
 					typeof event.data === 'object' &&
-					( typeof condition !== 'function' || condition() !== false )
+					// If the condition function returns false, tracking will be canceled
+					( typeof event.condition !== 'function' || event.condition() !== false )
 			) {
 				data = event.data;
 				data.browserEvent = event;
@@ -85,7 +90,16 @@
 		}
 	})();
 
+	// Edit page tracking. Anything that is always visible on the edit page should be
+	// tracked here. Other tracking will have to be embedded into code outside of this file.
 	$(function() {
+		var rCkButtonTitle = /cke_button_(\w+)/;
+
+		function getCkButtonTitle( element ) {
+			var matches = element.className.match( rCkButtonTitle );
+			return matches && matches[ 1 ];
+		}
+
 		// Module: Panel Buttons
 		$( '#EditPageRail' ).on( 'mousedown', '.module_insert .cke_button', function( e ) {
 			var label,
@@ -114,6 +128,36 @@
 				WikiaEditor.track( label );
 			}
 		});
+
+		// Module: CKEditor Tabs
+		$( '#EditPageTabs' ).on( 'mousedown', '.cke_button a', function( e ) {
+			var title = getCkButtonTitle( e.currentTarget );
+
+			if ( title ) {
+				WikiaEditor.track( 'tab-' + title.toLowerCase() );
+			}
+		});
+
+		// Module: CKEditor Toolbar
+		(function() {
+			var label = 'toolbar-';
+
+			$( '#EditPageToolbar' )
+				.on( 'mousedown', '.cke_button a', function( e ) {
+					var title = getCkButtonTitle( e.currentTarget );
+
+					if ( title ) {
+						WikiaEditor.track( label + 'button-' + title.toLowerCase() );
+					}
+				})
+				.on( 'mousedown', '.cke_format a', {
+					label: label + 'menu-format-open'
+				}, WikiaEditor.trackWithEventData )
+				.on( 'mousedown', '.cke_toolbar_expand', function( e ) {
+					var title = $( e.currentTarget ).find( '.expand' ).is( ':visible' ) ? 'more' : 'less';
+					WikiaEditor.track( label + title );
+				});
+		})();
 	});
 
 })( this, jQuery );
