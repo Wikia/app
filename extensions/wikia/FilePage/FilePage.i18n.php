@@ -26,6 +26,8 @@ $messages['qqq'] = array(
 	/* video page */
 	'video-page-file-list-header' => 'Heading for file list on Video File Page',
 	'video-page-global-file-list-header' => 'Heading for global usage list on Video File Page',
+	'video-page-from-provider' => 'The provider is where we got the video content from.  Some current examples are IGN and Ooyala.',
+	'video-page-expires' => 'After the date specified, the video content will no longer be available to view.',
 	'video-page-see-more-info' => 'Label to uncollapse UI that shows more info',
 	'video-page-see-less-info' => 'Label to collapse UI that shows more info',
 	'video-page-description-heading' => 'Description heading',
