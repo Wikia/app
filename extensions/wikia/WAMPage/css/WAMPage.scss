@@ -73,7 +73,7 @@
 }
 
 .wam-content {
-	padding: 50px 25px 115px 25px;
+	padding: 50px 25px 25px 25px;
 }
 
 .wam-content-faq {
@@ -106,6 +106,37 @@
 		border-left: none;
 		a {
 			width: 170px;
+		}
+	}
+}
+
+.wam-index {
+	table {
+		width: 98%;
+		border-collapse:collapse;
+		margin: 25px 10px 50px;
+
+		tr {
+			th {
+				background-color: #f7f7f7;
+				text-align: left;
+			}
+
+			td {
+				font-size: 110%;
+			}
+
+			td:first-child {
+				font-weight: bold;
+			}
+
+			td, th {
+				height: 35px;
+				border: 1px solid #e8e8e8;
+				border-left: none;
+				border-right: none;
+				padding: 0 20px;
+			}
 		}
 	}
 }

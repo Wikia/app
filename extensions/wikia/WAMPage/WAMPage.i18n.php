@@ -36,6 +36,13 @@ We encourage you to display your WAM score or rank on your Wiki, but we ask you 
 ===Who can I speak to if I have other questions about the WAM?===
 Please contact community support at [mailto:support@wikia-inc.com support@wikia-inc.com].
 	',
+
+	'wam-index-header-rank' => 'Rank',
+	'wam-index-header-score' => 'WAM Score',
+	'wam-index-header-wiki-name' => 'Wiki\'s Name',
+	'wam-index-header-vertical' => 'Vertical',
+	'wam-index-header-vertical-rank' => 'Vertical Rank',
+	'wam-index-header-peak-rank' => 'Peak Rank'
 );
 
 $messages['qqq'] = array(
