@@ -42,6 +42,7 @@ class ResourceLoaderContext {
 
 	/* Added by Wikia */
 	protected $sassParams;
+	protected $scriptsOnly;
 
 	/* Methods */
 
@@ -73,6 +74,7 @@ class ResourceLoaderContext {
 			}
 		}
 		ksort($this->sassParams);
+		$this->realOnly  = $this->only;
 		// Wikia - change end
 
 		$skinnames = Skin::getSkinNames();
@@ -221,6 +223,11 @@ class ResourceLoaderContext {
 	 * @return bool
 	 */
 	public function shouldIncludeStyles() {
+		// Wikia change - begin - @author: wladek
+		if ( !empty( $this->scriptsOnly ) ) {
+			return false;
+		}
+		// Wikia change - end
 		return is_null( $this->only ) || $this->only === 'styles';
 	}
 
@@ -228,6 +235,11 @@ class ResourceLoaderContext {
 	 * @return bool
 	 */
 	public function shouldIncludeMessages() {
+		// Wikia change - begin - @author: wladek
+		if ( !empty( $this->scriptsOnly ) ) {
+			return false;
+		}
+		// Wikia change - end
 		return is_null( $this->only ) || $this->only === 'messages';
 	}
 
@@ -245,5 +257,9 @@ class ResourceLoaderContext {
 			) );
 		}
 		return $this->hash;
+	}
+
+	public function setScriptsOnly( $scriptsOnly ) {
+		$this->scriptsOnly = $scriptsOnly;
 	}
 }
