@@ -1,8 +1,5 @@
-<?php if(!empty($ad)) { ?>
-<!-- BEGIN SLOTNAME: <?= $slotname ?> -->
-<?= $ad ?>
-<?php if(!empty($selfServeUrl)) { ?>
-<div class="SelfServeUrl">Advertisement | <a href="<?= $selfServeUrl?>">Your ad here</a></div>
-<?php } ?>
-<!-- END SLOTNAME: <?= $slotname ?> -->
-<?php } ?>
+<?php
+
+if ($wg->EnableAdEngineExt && isset($slotname)) {
+	echo F::app()->renderView('AdEngine2', 'Ad', ['slotname' => $slotname]);
+}

@@ -2,9 +2,7 @@
 
 class AdController extends WikiaController {
 
-	private static $config;
-	private static $slotsUseGetAd = array( 'INVISIBLE_1', 'INVISIBLE_2', 'HOME_TOP_RIGHT_BUTTON', 'TOP_RIGHT_BUTTON' );
-	private static $slotsDisplayShinyAdSelfServe = array( 'CORP_TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'TEST_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD' );
+	private static $config = null;
 
 	private function configure() {
 		global $wgTitle, $wgContentNamespaces, $wgEnableFAST_HOME2, $wgExtraNamespaces;
@@ -150,54 +148,16 @@ class AdController extends WikiaController {
 		}
 	}
 
-	/*
-	public $slotname;
-
-	public $ad;
-	 */
-
 	public function executeIndex(array $params) {
-		global $wgEnableShinyAdsSelfServeUrl, $wgShinyAdsSelfServeUrl;
+		$slotname = $params['slotname'];
 
 		if(self::$config === null) {
 			$this->configure();
 		}
 
-		$this->slotname = $params['slotname'];
-		$this->selfServeUrl = null;
-		if ($wgEnableShinyAdsSelfServeUrl && $wgShinyAdsSelfServeUrl) {
-			if (array_search($this->slotname, self::$slotsDisplayShinyAdSelfServe) !== FALSE) {
-				if (!(AdEngine::getInstance()->getAdProvider($this->slotname) instanceof AdProviderNull)) {	// will we show an ad?
-					$this->selfServeUrl = $wgShinyAdsSelfServeUrl;
-				}
-			}
+		if (isset(self::$config[$slotname])) {
+			$this->slotname = $slotname;
 		}
-
-		// TODO remove unused providers
-		if(isset(self::$config[$this->slotname])) {
-			if (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdDriver') {
-				$this->ad = AdEngine::getInstance()->getAd($this->slotname, $params);
-			}
-			elseif (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'LiftDNA') {
-				$this->ad = AdEngine::getInstance()->getPlaceHolderDiv($this->slotname);
-			}
-			elseif (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'DARTGP' ||
-					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdEngine2' ||
-					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'Liftium2' ||
-					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'GamePro') {
-				$this->ad = AdEngine::getInstance()->getAd($this->slotname);
-			}
-			else {
-				if (in_array($this->slotname, self::$slotsUseGetAd)) {
-					$this->ad = AdEngine::getInstance()->getAd($this->slotname);
-				}
-				else {
-					$this->ad = AdEngine::getInstance()->getPlaceHolderIframe($this->slotname);
-				}
-			}
-		}
-		wfRunHooks('AfterAdModuleExecute', array( &$this ));
-
 	}
 
 	//public $conf;
@@ -213,6 +173,5 @@ class AdController extends WikiaController {
 	}
 	
 	public function executeTop() {
-
 	}
 }
