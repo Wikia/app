@@ -510,7 +510,12 @@ class MediaWikiService
 		$title = $searchEngine->getNearMatch( $term );
 		if( ( $title !== null ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
 			// initialize our memoized data
-			$this->getPageFromPageId( $title->getArticleId() );
+			try {
+				$this->getPageFromPageId( $title->getArticleId() );
+			} catch ( \Exception $e ) {
+				// temporary fix for bugid:100047
+				return null;
+			}
 			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this );
 		}
 		return $articleMatch;
@@ -784,7 +789,7 @@ class MediaWikiService
 			return self::$pageIdsToArticles[$pageId];
 		}
 	    $page = \Article::newFromID( $pageId );
-	
+
 		if( $page === null ) {
 			throw new \WikiaException( 'Invalid Article ID' );
 		}
