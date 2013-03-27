@@ -229,7 +229,7 @@ var Lightbox = {
 			$.loadJQueryAutocomplete()
 		).then($.proxy(function() {
 			var input = elem.hide().next('input').show();
-			
+
 			input.autocomplete({
 				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 				onSelect: function(value, data, event) {
@@ -238,7 +238,7 @@ var Lightbox = {
 						location = wgArticlePath.
 							replace(/\$1/, valueEncoded).
 							replace(encodeURIComponent('/'), '/');
-					
+
 					location = location + "?action=edit&addFile=" + Lightbox.current.key;
 
 					/*this.track({
@@ -266,7 +266,7 @@ var Lightbox = {
 				skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 			});
 		}, this));
-	
+
 	},
 	clearTrackingTimeouts: function() {
 		// Clear video tracking timeout
@@ -746,7 +746,7 @@ var Lightbox = {
 		if(clear) {
 			qs.removeVal('file').replaceState();
 		} else {
-			qs.setVal('file', this.current.key, true).replaceState();		
+			qs.setVal('file', this.current.key, true).replaceState();
 		}
 	},
 
@@ -1063,9 +1063,9 @@ var Lightbox = {
 					infobox = article.find('.infobox');
 				// Collect images from DOM
 				var thumbs = article.find('img[data-image-name], img[data-video-name]');
-				
+
 				if(!thumbs.length) {
-					thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));				
+					thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));
 					LightboxLoader.handleOldDom();
 				}
 
@@ -1076,7 +1076,7 @@ var Lightbox = {
 						title,
 						key,
 						playButton;
-						
+
 					if($thisThumb.closest('.ogg_player').length) {
 						return;
 					}
@@ -1094,7 +1094,7 @@ var Lightbox = {
 						key = $thisThumb.attr('data-image-key')
 						playButtonSpan = '';
 					}
-					
+
 					if(!key) {
 						key = title && title.replace(/ /g, '_');
 						LightboxLoader.handleOldDom();
@@ -1261,7 +1261,7 @@ var Lightbox = {
 					}
 
 					var thumbArr = json.thumbs;
-					
+
 					for(thumb in thumbArr) {
 						if(!thumb.key) {
 							thumb.key = thumb.title && thumb.title.replace(/ /g, '_');

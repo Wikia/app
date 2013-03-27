@@ -68,7 +68,7 @@ var LightboxLoader = {
 					$thumb = $this.children('img').first(),
 					fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
 					parent;
-				
+
 				if($this.closest(article).length) {
 					parent = article;
 				} else if($this.closest(videos).length) {
@@ -78,15 +78,15 @@ var LightboxLoader = {
 				} else if($this.closest(comments).length) {
 					parent = comments;
 				}
-					
+
 				var trackingInfo = {
 					target: $this,
 					parent: parent
 				};
-				
+
 				// Handle edge cases
-				
-				// Allow links to open lightbox without a thumbnail. The link itself must contain data-image-key. Used in RelatedVideos. 
+
+				// Allow links to open lightbox without a thumbnail. The link itself must contain data-image-key. Used in RelatedVideos.
 				if($this.hasClass('lightbox-link-to-open')) {
 					fileKey = $this.attr('data-image-key') || $this.attr('data-video-key');
 				// TODO: refactor wikia slideshow
@@ -94,7 +94,7 @@ var LightboxLoader = {
 					var $slideshowImg = $this.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').find('img').first();
 					fileKey = $slideshowImg.attr('data-image-name') || $slideshowImg.attr('data-vide-name');
 				}
-				
+
 				if(!fileKey) {
 					// might be old/cached DOM.  TODO: delete this when cache is flushed
 					fileKey = $this.attr('data-image-name') || $this.attr('data-video-name');
@@ -107,7 +107,7 @@ var LightboxLoader = {
 					// TODO: add error logging code here
 					return;
 				}
-				
+
 				// Display video inline, don't open lightbox
 				if($thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('wikiaPhotoGallery-slider')) {
 					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, LightboxTracker.clickSource.EMBED);
