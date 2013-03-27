@@ -334,6 +334,13 @@ class ResourceLoaderHooks {
 			return true;
 		}
 
+		// if we have already short TTL set, there's no need to do further checks
+		if ( $maxage == $wgResourceLoaderMaxage['unversioned']['client']
+			&& $smaxage == $wgResourceLoaderMaxage['unversioned']['server']
+		) {
+			return true;
+		}
+
 		$forceShortTTL = false;
 
 		$version = explode('-',(string)($context->getVersion()),2);
