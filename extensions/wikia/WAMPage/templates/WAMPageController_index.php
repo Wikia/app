@@ -9,9 +9,9 @@
 	<div class="wam-cards">
 		<? foreach($visualizationWikis as $wiki) { ?>
 			<a href="<?= $wiki['url'] ?>" class="wam-card">
-				<figure class="wam-img">
+				<figure>
 					<img src="<?= $wiki['wiki_image'] ?>" alt="<?= $wiki['title'] ?>" title="<?= $wiki['title'] ?>" />
-					<span class="wam-img-info"><?= $wiki['title'] ?></span>
+					<span><?= $wiki['title'] ?></span>
 				</figure>
 				<div class="wam-score"><?= $wiki['wam'] ?></div>
 				<span class="wam-vertical"><?= $wiki['hub_id'] ?></span>
@@ -21,7 +21,6 @@
 	
     <h2><?= wfMessage('wampage-header')->text(); ?></h2>
 </div>
-
 <div class="wam-progressbar"></div>
 <div class="wam-content">
 	<?= wfMessage(
