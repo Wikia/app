@@ -181,10 +181,8 @@ class UserStatsService extends Service {
 
 		if( $field === null ) { // it has not been initialized. do so.
 
-			$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
-			$dbname = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
-			$dbw = wfGetDB( DB_MASTER, array(), $dbname );
-
+			$userName = $this->getUser()->getName();
+			
 			//count revisions
 			$editCount = $dbr->selectField(
 				'revision', 'count(*)',
@@ -193,9 +191,13 @@ class UserStatsService extends Service {
 			);
 			$editCount += $dbr->selectField(
 				'archive', 'count(*)',
-				array( 'ar_user' => $this->userId ),
+				array( 'ar_user' => $userName ),
 				__METHOD__
 			);
+			
+			$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+			$dbname = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+			$dbw = wfGetDB( DB_MASTER, array(), $dbname );
 
 			//write to wikicities (acting 'user' will redirect result to wikicites)
 			$dbw->update(

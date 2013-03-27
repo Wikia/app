@@ -5,7 +5,10 @@ describe("Cookies", function () {
 	document.cookie = 'foo=bar';
 	document.cookie = 'wikia_beacon_id=mCizgIam7U';
 
-	var cookies = modules['wikia.cookies']();
+	var windowMock = {
+		document: document
+	},
+		cookies = modules['wikia.cookies'](windowMock);
 
 	it('registers AMD module', function() {
 		expect(typeof cookies).toBe('object');
