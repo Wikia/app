@@ -21,34 +21,16 @@
 	</ul>
 
 	<div class="wam-cards">
-		<a href="#" class="wam-card">
-			<figure class="wam-img">
-				<span class="wam-img-info">Lorem ipsum</span>
-			</figure>
-			<div class="wam-score">4.18</div>
-			<span class="wam-vertical">Lifestyle</span>
-		</a>
-        <a href="#" class="wam-card">
-            <figure class="wam-img">
-                <span class="wam-img-info">Lorem ipsum</span>
-            </figure>
-            <div class="wam-score">4.18</div>
-            <span class="wam-vertical">Lifestyle</span>
-        </a>
-    	<a href="#" class="wam-card">
-            <figure class="wam-img">
-                <span class="wam-img-info">Lorem ipsum</span>
-            </figure>
-            <div class="wam-score">4.18</div>
-            <span class="wam-vertical">Lifestyle</span>
-    	</a>
-        <a href="#" class="wam-card">
-            <figure class="wam-img">
-                <span class="wam-img-info">Lorem ipsum</span>
-            </figure>
-            <div class="wam-score">4.18</div>
-            <span class="wam-vertical">Lifestyle</span>
-        </a>
+		<? foreach($visualizationWikis as $wiki) { ?>
+			<a href="<?= $wiki['url'] ?>" class="wam-card">
+				<figure class="wam-img">
+					<img src="<?= $wiki['wiki_image'] ?>" alt="<?= $wiki['title'] ?>" title="<?= $wiki['title'] ?>" />
+					<span class="wam-img-info"><?= $wiki['title'] ?></span>
+				</figure>
+				<div class="wam-score"><?= $wiki['wam'] ?></div>
+				<span class="wam-vertical"><?= $wiki['hub_id'] ?></span>
+			</a>
+		<? } // end foreach ?>
 	</div>
 	
     <h2><?= wfMessage('wampage-header')->text(); ?></h2>

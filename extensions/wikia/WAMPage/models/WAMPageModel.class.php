@@ -15,25 +15,26 @@ class WAMPageModel extends WikiaModel {
 
 	public function getVisualizationWikis($lang, $verticalId = null) {
 		if( !empty($this->app->wg->DevelEnvironment) ) {
-			return $this->getMockedDataForDev();
+			$WAMData = $this->getMockedDataForDev();
+		} else {
+			$lastDay = strtotime('00:00 -1 day');
+
+			$params = [
+				'wam_day' => $lastDay,
+				'wam_previous_day' => strtotime('-1 day', $lastDay),
+				'wiki_lang' => $lang,
+				'vertical_id' => $verticalId,
+				'limit' => $this->getVisualizationItemsCount(),
+				'sort_column' => 'wam_index',
+				'sort_direction' => 'DESC',
+				'wiki_image_height' => self::VISUALIZATION_ITEM_IMAGE_HEIGHT,
+				'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
+				'fetch_wiki_images' => true,
+			];
+
+			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
-
-		$lastDay = strtotime('00:00 -1 day');
-
-		$params = [
-			'wam_day' => $lastDay,
-			'wam_previous_day' => strtotime('-1 day', $lastDay),
-			'wiki_lang' => $lang,
-			'vertical_id' => $verticalId,
-			'limit' => $this->getVisualizationItemsCount(),
-			'sort_column' => 'wam_index',
-			'sort_direction' => 'DESC',
-			'wiki_image_height' => self::VISUALIZATION_ITEM_IMAGE_HEIGHT,
-			'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
-			'fetch_wiki_images' => true,
-		];
-
-		return $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+		return $WAMData['wam_index'];
 	}
 
 	/**
