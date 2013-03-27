@@ -24,12 +24,12 @@ class WAMPageController extends WikiaController
 			'wam_day' => $lastDay,
 			'wam_previous_day' => strtotime('-1 day', $lastDay),
 			'wiki_lang' => $this->wg->ContLang->getCode(),
-			'limit' => $this->model->getItemsPerPage(),
+			'limit' => $this->model->getVisualizationItemsCount(),
 			'sort_column' => 'wam_index',
 			'sort_direction' => 'DESC',
 		];
 
-		$this->wamWikis = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+		$this->visualizationWikis = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 	}
 	
 	public function faq() {
