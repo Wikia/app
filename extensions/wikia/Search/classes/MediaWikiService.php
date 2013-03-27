@@ -508,14 +508,9 @@ class MediaWikiService
 		$articleMatch = null;
 		$searchEngine = new \SearchEngine();
 		$title = $searchEngine->getNearMatch( $term );
-		if( ( $title !== null ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
-			// initialize our memoized data
-			try {
-				$this->getPageFromPageId( $title->getArticleId() );
-			} catch ( \Exception $e ) {
-				// temporary fix for bugid:100047
-				return null;
-			}
+		$articleId = ( $title !== null ) ? $title->getArticleId() : 0;
+		if( ( $articleId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
+			$this->getPageFromPageId( $articleId );
 			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this );
 		}
 		return $articleMatch;
