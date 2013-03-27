@@ -8,4 +8,4 @@
 	)->parse(); ?>
 </div>
 
-<? var_dump(wamWikis); ?>
+<? var_dump($wamWikis); ?>
