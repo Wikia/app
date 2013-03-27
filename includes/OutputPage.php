@@ -2671,6 +2671,7 @@ $templates
 						$resourceLoader->makeModuleResponse( $context, $modules )
 					);
 				} else {
+					$context->setScriptsOnly(true);
 					$links .= Html::inlineScript(
 						ResourceLoader::makeLoaderConditionalScript(
 							$resourceLoader->makeModuleResponse( $context, $modules )
