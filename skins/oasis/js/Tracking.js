@@ -192,19 +192,6 @@ jQuery(function($){
 		}
 	});
 
-	/** edit **/
-
-	(function() {
-		var category = 'edit';
-
-		// Stop here if not an edit page
-		if(!$body.hasClass('editor')) {
-			return;
-		}
-
-
-	})();
-
 	/** photos-module **/
 
 	$wikiaRail.find('.LatestPhotosModule').on('mousedown', 'a', function(e) {
