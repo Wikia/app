@@ -1,3 +1,5 @@
+@import "../../../../skins/oasis/css/core/color";
+
 .oasis-one-column .WikiaMainContent.grid-6 {
 	margin: 0;
 	width: 1030px;
@@ -20,10 +22,11 @@
 		width: 680px;
 		height: 220px;
 		float: right;
+		font-size: 12px;
 		margin-top: 65px;
 		overflow: hidden;
 		.wam-card {
-			background-color: #fff;
+			background-color: #f1f2f2;
 			bottom: 0;
 			color: #fff;
 			display: block;
@@ -53,17 +56,28 @@
 				height: 18px;
 				line-height: 1;
 				margin-top: 7px;
-				padding: 7px 0 0 20px;
+				padding: 7px 0 0 23px;
 				width: 40px;
+				background-repeat: no-repeat;
+				background-position: 5px 50%;
 			}
-			.vertical2 {
-				background-color: #8ca038
+			.vertical-2 {
+				background-color: $color-wikiahome-videogames;
 			}
-			.vertical3 {
-				background-color: #07b2e0
+			.vertical-3 {
+				background-color: $color-wikiahome-entertainment;
 			}
-			.vertical9 {
-				background-color: #ff6600;
+			.vertical-9 {
+				background-color: $color-wikiahome-lifestyle;
+			}
+			.wam-up {
+				background-image: url("/extensions/wikia/WAMPage/images/wam-up.png");
+			}
+			.wam-down {
+				background-image: url("/extensions/wikia/WAMPage/images/wam-down.png");
+			}
+			.wam-eq {
+				background-image: url("/extensions/wikia/WAMPage/images/wam-eq.png");
 			}
 			.wam-vertical {
 				bottom: 3px;

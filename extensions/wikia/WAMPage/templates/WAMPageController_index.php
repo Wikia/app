@@ -8,13 +8,13 @@
 <div class="wam-header">
 	<div class="wam-cards">
 		<? foreach($visualizationWikis as $wiki) { ?>
-			<a href="<?= $wiki['url'] ?>" class="wam-card">
+			<a href="http://<?= $wiki['url'] ?>" class="wam-card">
 				<figure>
 					<img src="<?= $wiki['wiki_image'] ?>" alt="<?= $wiki['title'] ?>" title="<?= $wiki['title'] ?>" />
 					<span><?= $wiki['title'] ?></span>
 				</figure>
-				<div class="wam-score vertical<?= $wiki['hub_id'] ?>"><?= $wiki['wam'] ?></div>
-				<span class="wam-vertical"><?= $wiki['hub_id'] ?></span>
+				<div class="wam-score vertical-<?= $wiki['hub_id'] ?> wam-<?= $wiki['change'] ?>"><?= $wiki['wam'] ?></div>
+				<span class="wam-vertical"><?= $wiki['hub_name'] ?></span>
 			</a>
 		<? } // end foreach ?>
 	</div>

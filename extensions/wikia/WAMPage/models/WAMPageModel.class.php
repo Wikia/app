@@ -75,6 +75,13 @@ class WAMPageModel extends WikiaModel {
 		foreach ($wamWikis as &$wiki) {
 			$wiki['wam'] = round($wiki['wam'], self::SCORE_ROUND_PRECISION);
 			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
+			if($wiki['wam_change'] > 0) {
+				$wiki['change'] = 'up';
+			} elseif($wiki['wam_change'] < 0) {
+				$wiki['change'] = 'down';
+			} else {
+				$wiki['change'] = 'eq';
+			}
 		}
 
 		return $wamWikis;
