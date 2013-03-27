@@ -66,6 +66,15 @@ class MediaWikiService
 	}
 	
 	/**
+	 * Integration for Cachable trait.
+	 */
+	public function __call( $name, $args ) {
+		if ( $this->isMethodWithCaching( $name ) ) {
+			return $this->getCachedMethodCall( $name, $args );
+		}
+	}
+	
+	/**
 	 * Given a page ID, get the title string
 	 * @param int $pageId
 	 * @return string
@@ -579,7 +588,30 @@ class MediaWikiService
 		return $this->app->wg->Lang ? $this->app->wg->Lang->date( $this->app->wf->Timestamp( TS_MW, $timestamp ) ) : '';
 	}
 	
-	
+	/**
+	 * Uses Wikia Homepage Helper to acces visualization info
+	 * The underscore indicates that it is public exposed as a cached magic method.
+	 * @param int $wikiId
+	 * @return array
+	 */
+	public function getVisualizationInfoForWikiId( $wikiId ) {
+		return (new \WikiaHomePageHelper)->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
+	}
+
+	/**
+	 * Uses Wikia Homepage Helper to access stats info. 
+	 * We add '_count' to each key to avoid collisions with visualization info (e.g. images)
+	 * @param int $wikiId
+	 * @return array
+	 */
+	public function getStatsInfoForWikiId( $wikiId ) {
+		$statsInfo = (new \WikiaHomePageHelper)->getWikiStats( $wikiId );
+		foreach ( $statsInfo as $key => $val ) {
+			$statsInfo[$key.'_count'] = $val;
+			unset( $statsInfo[$key] );
+		}
+		return $statsInfo;
+	}	
 	
 	/**
 	 * Determines if the current globally registered language code is supported by search for dynamic support.
@@ -845,44 +877,4 @@ class MediaWikiService
 		wfProfileOut( __METHOD__ );
 		return static::$pageIdsToTitles[$pageId];
 	}
-	
-	/**
-	 * BEGIN CACHED METHODS
-	 * All cached methods should begin with '_cached_'.
-	 * This automatically regsiters them as publicly available magic methods, minus the prefix.
-	 * using Wikia\Search\Trait\Cachable::getCachedMethodCall.
-	 * Please only include such methods below.
-	 */
-	
-	/**
-	 * Uses Wikia Homepage Helper to acces visualization info
-	 * The underscore indicates that it is public exposed as a cached magic method.
-	 * @see Wikia\Search\Trait\Cachable::__call
-	 * @param int $wikiId
-	 * @return array
-	 */
-	protected function _cached_getVisualizationInfoForWikiId( $wikiId ) {
-		return (new \WikiaHomePageHelper)->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
-	}
-
-	/**
-	 * Uses Wikia Homepage Helper to access stats info. 
-	 * We add '_count' to each key to avoid collisions with visualization info (e.g. images)
-	 * The underscore indicates that it is public exposed as a cached magic method.
-	 * @see Wikia\Search\Trait\Cachable::__call 
-	 * @param int $wikiId
-	 * @return array
-	 */
-	protected function _cached_getStatsInfoForWikiId( $wikiId ) {
-		$statsInfo = (new \WikiaHomePageHelper)->getWikiStats( $wikiId );
-		foreach ( $statsInfo as $key => $val ) {
-			$statsInfo[$key.'_count'] = $val;
-			unset( $statsInfo[$key] );
-		}
-		return $statsInfo;
-	}
-	
-	/**
-	 * END CACHED METHODS
-	 */
 }

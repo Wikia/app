@@ -321,7 +321,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 	public function testConfigureHeaders() {
 		$mockResult = $this->getMock( 'Wikia\Search\Result', array( 'offsetGet', 'getFields' ) );
 		$results = new \ArrayIterator( array( $mockResult ) );
-		$this->prepareMocks( array( 'addHeaders', 'setHeader', 'getHeader', 'getDescription' ), array(), array(), array( 'getSimpleMessage', 'getWikiIdByHost', 'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getGlobalForWiki', 'getHubForWikiId', 'getDescriptionTextForWikiId' ) );
+		$this->prepareMocks( array( 'addHeaders', 'setHeader', 'getHeader', 'getDescription' ), array(), array(), array( 'getSimpleMessage', 'getWikiIdByHost', 'getStatsInfoForWikiId_withCaching', 'getVisualizationInfoForWikiId_withCaching', 'getGlobalForWiki', 'getHubForWikiId_withCaching' ) );
 		$fields = array( 'id' => 123 );
 		$vizInfo = array( 'description' => 'yup' );
 		$mockResult
@@ -340,13 +340,13 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		;
 		$this->service
 		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getVisualizationInfoForWikiId' )
+		    ->method ( 'getVisualizationInfoForWikiId_withCaching' )
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( $vizInfo ) )
 		;
 		$this->service
 		    ->expects( $this->at( 2 ) )
-		    ->method ( 'getStatsInfoForWikiId' )
+		    ->method ( 'getStatsInfoForWikiId_withCaching' )
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( array( 'users_count' => 100 ) ) )
 		;
@@ -387,7 +387,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		;
 		$this->service
 		    ->expects( $this->any() )
-		    ->method ( 'getHubForWikiId' )
+		    ->method ( 'getHubForWikiId_withCaching' )
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( "Edutainment" ) )
 		;

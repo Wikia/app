@@ -7,10 +7,16 @@ namespace Wikia\Search\Traits;
 use WikiaGlobalRegistry as Registry;
 use WikiaFunctionWrapper as Wrapper;
 /**
- * This trait lets us expose protected methods preceded by '_cached_'
- * as cached methods.
+ * This trait lets us expose optional caching for methods using a magic method.
+ * In order to implement this class, you must register the following logic in __call( $name, $args ):
+ * <code>
+ * if ( $this->isMethodWithCaching( $name ) ) {
+ *     return $this->getCachedMethodCall( $name, $args );
+ * }
+ * </code>
  * All caching logic is stored in the traits, and all
  * business logic is stored in the classes that use this trait.
+ * In order to invoke a method with caching, simply add _withCaching to the method string.
  * 
  * @author relwell
  */
@@ -34,22 +40,6 @@ trait Cachable {
 	 * @var WikiaFunctionWrapper
 	 */
 	protected $wf;
-	
-	/**
-	 * Magic method that allows us to cache any public method
-	 * by turning it into a protected method with _cached_ preceding it.
-	 * 
-	 * @param string $name
-	 * @param array $args
-	 * @throws \BadMethodCallException
-	 * @return Ambigous <\Wikia\Search\mixed, mixed>
-	 */
-	public function __call( $name, array $args = array() ) {
-		if ( method_exists( $this, '_cached_' . $name ) ) {
-			return $this->getCachedMethodCall( '_cached_' . $name, $args );
-		}
-		throw new \BadMethodCallException( "Method by name of {$name} does not exist (and not cached)." );
-	}
 	
 	/**
 	 * Sets the cached result time to live.
@@ -114,17 +104,29 @@ trait Cachable {
 		return $this;
 	}
 	
+
 	/**
-	 * Allows us to cache method calls.
-	 * Suggested practice is to write a protected method with core logic,
-	 * and then a public method that invokes this method. Prefix
-	 * cached methods with the _cached_ prefix.
+	 * Determines if a method that is not found is an existing method with 
+	 * '_withCaching' at the end, which indicates we should push it through 
+	 * this caching component.
+	 * 
+	 * @param string $name
+	 * @return bool
+	 */
+	protected function isMethodWithCaching( $name ) {
+		return method_exists( $this, preg_replace( '/_withCaching$/', '', $name ) );
+	}
+	
+	/**
+	 * Allows us to cache method calls. 
+	 * This should be invoked in __call by any method that uses this trait.
 	 * 
 	 * @param string $method
 	 * @param array $args
 	 * @return mixed
 	 */
 	protected function getCachedMethodCall( $method, array $args = array() ) {
+		$method = preg_replace( '/_withCaching$/', '', $method ); // remove caching suffix
 		$sig = sha1 ( $method . serialize( $args ) );
 		$result = $this->getCacheResultFromString( $sig );
 		if ( empty( $result ) ) {
@@ -136,6 +138,7 @@ trait Cachable {
 	
 	/**
 	 * Lazy-loading for WikiaGlobalRegistry
+	 * @todo probably move to separate trait
 	 * @return WikiaGlobalRegistry
 	 */
 	protected function getWg() {
@@ -147,6 +150,7 @@ trait Cachable {
 	
 	/**
 	 * Lazy-loading for WikiaFunctionWrapper
+	 * @todo probably move to separate trait
 	 * @return WikiaFunctionWrapper
 	 */
 	protected function getWf() {
