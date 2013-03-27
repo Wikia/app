@@ -109,3 +109,10 @@ var DartUrl = function () {
 		urlBuilder: urlBuilder
 	};
 };
+
+(function (context) {
+	'use strict';
+	if (context.define && context.define.amd) {
+		context.define('wikia.darturl', DartUrl);
+	}
+}(this));
