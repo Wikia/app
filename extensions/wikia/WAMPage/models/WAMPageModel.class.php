@@ -5,6 +5,8 @@ class WAMPageModel extends WikiaModel {
 	const VISUALIZATION_ITEM_IMAGE_WIDTH = 150;
 	const VISUALIZATION_ITEM_IMAGE_HEIGHT = 95;
 
+	const SCORE_ROUND_PRECISION = 2;
+
 	public function getItemsPerPage() {
 		return self::ITEMS_PER_PAGE;
 	}
@@ -34,7 +36,23 @@ class WAMPageModel extends WikiaModel {
 
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
-		return $WAMData['wam_index'];
+		return $this->prepareIndex($WAMData['wam_index']);
+	}
+
+	protected function prepareIndex($wamWikis) {
+		foreach ($wamWikis as &$wiki) {
+			$wiki['wam'] = round($wiki['wam'], self::SCORE_ROUND_PRECISION);
+			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
+		}
+
+		return $wamWikis;
+	}
+
+	protected function getVerticalName($verticalId) {
+		/** @var WikiFactoryHub $wikiFactoryHub */
+		$wikiFactoryHub = WikiFactoryHub::getInstance();
+		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
+		return $this->wf->Message('wam-' . $wikiaHub['name'])->inContentLanguage()->text();
 	}
 
 	/**
