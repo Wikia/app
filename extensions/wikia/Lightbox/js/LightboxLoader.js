@@ -307,6 +307,7 @@ var LightboxLoader = {
 	handleOldDom: function() {
 		if(LightboxLoader.isOldDom === null) {
 			$().log("Send old DOM tracking", "Lightbox");
+			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', null, null, 'ga');
 		}
 		LightboxLoader.isOldDom = true;
 	}
@@ -317,12 +318,12 @@ LightboxTracker = {
 	inlineVideoTrackingTimeout: 0,
 	// @param data - any extra params we want to pass to internal tracking
 	// Don't add willy nilly though... check with Jonathan.
-	track: function(action, label, value, data) {
+	track: function(action, label, value, data, method) {
 		Wikia.Tracker.track({
 			action: action,
 			category: 'lightbox',
 			label: label || '',
-			trackingMethod: 'internal',
+			trackingMethod: method || 'internal',
 			value: value || 0
 		}, data);
 	},
