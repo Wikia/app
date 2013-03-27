@@ -102,13 +102,21 @@
 		list-style: none;
 		margin: 0;
 		a {
-			border-bottom: 4px solid #0a5fa3;
 			color: #666;
 			display: block;
 			font-weight: bold;
-			height: 43px;
-			padding: 25px 0 0 25px;
+			height: 40px;
+			line-height: 13px;
+			padding: 28px 0 0 25px;
+			text-transform: uppercase;
 			width: 180px;
+		}
+		a:hover {
+			color: #0a5fa3;
+			text-decoration: none;
+		}
+		a.selected {
+			border-bottom: 4px solid #0a5fa3;
 		}
 	}
 	li:first-child {
