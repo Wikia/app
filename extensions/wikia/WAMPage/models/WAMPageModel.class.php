@@ -60,7 +60,7 @@ class WAMPageModel extends WikiaModel {
 		
 		foreach($tabsNames as $tabName) {
 			$tabTitle = Title::newFromText($config['pageName'] . '/'. $tabName);
-			$tabUrl = $tabTitle->getFullURL();
+			$tabUrl = $tabTitle->getLocalURL();
 			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
 		}
 		
