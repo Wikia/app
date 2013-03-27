@@ -57,8 +57,8 @@ class WallHooksHelper {
 			}
 
 			if(empty($dbkey) || !$helper->isDbkeyFromWall($dbkey) ) {
-				// no dbkey or not from wall, redirect to wall
-				$app->wg->Out->redirect($this->getWallTitle()->getFullUrl(), 301);
+				// On Wall NS but no dbkey found or dbkey not from wall, fall back to User wall instead of "empty"
+				$app->wg->Out->redirect($this->getWallTitle(null, $app->wg->User)->getFullUrl(), 301);
 
 				wfProfileOut(__METHOD__);
 				return true;
@@ -616,8 +616,6 @@ class WallHooksHelper {
 	 */
 	protected function getWallTitle($subpage = null, $user = null) {
 		$helper = F::build('WallHelper', array());
-		$app = F::app();
-
 		return $helper->getTitle(NS_USER_WALL, $subpage, $user);
 	}
 
