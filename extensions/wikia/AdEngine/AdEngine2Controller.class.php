@@ -74,22 +74,23 @@ class AdEngine2Controller extends WikiaController {
 		return self::getAdsInHeadGroup() === 1;
 	}
 
-	/*
+	/**
 	 * Action to display an ad (or not)
 	 */
 	public function ad() {
-		global $wgEnableShinyAdsSelfServeUrl, $wgShinyAdsSelfServeUrl;
+		$wgEnableShinyAdsSelfServeUrl = $this->wg->EnableShinyAdsSelfServeUrl;
+		$wgShinyAdsSelfServeUrl = $this->wg->ShinyAdsSelfServeUrl;
+
+		$this->slotname = $this->request->getVal('slotname');
 
 		$this->selfServeUrl = null;
 		if ($wgEnableShinyAdsSelfServeUrl && $wgShinyAdsSelfServeUrl) {
 			if (array_search($this->slotname, self::$slotsDisplayShinyAdSelfServe) !== FALSE) {
-				if (!(AdEngine::getInstance()->getAdProvider($this->slotname) instanceof AdProviderNull)) {	// will we show an ad?
-					$this->selfServeUrl = $wgShinyAdsSelfServeUrl;
-				}
+				$this->selfServeUrl = $wgShinyAdsSelfServeUrl;
 			}
 		}
 
-		$this->slotname = $this->request->getVal('slotname');
+		$this->showAd = isset($this->configure()[$this->slotname]);
 	}
 
 	/*
@@ -218,6 +219,178 @@ class AdEngine2Controller extends WikiaController {
 	public function onLinkerMakeExternalLink(&$url, &$text, &$link, &$attribs) {
 		$this->handleExternalLink($url, $attribs);
 		return true;
+	}
+
+	private function configure() {
+		static $config;
+
+		if ($config !== null) {
+			return $config;
+		}
+
+		$config = [];
+
+		$wgTitle = $this->wg->Title;
+		$wgContentNamespaces = $this->wg->ContentNamespaces;
+		$wgEnableFAST_HOME2 = $this->wg->EnableFAST_HOME2;
+		$wgExtraNamespaces = $this->wg->ExtraNamespaces;
+
+		if (!AdEngine2Controller::areAdsShowableOnPage()) {
+			return $config;
+		}
+
+		if(WikiaPageType::isWikiaHub() && AdEngine::isAdsEnabledOnWikiaHub()) {
+			$config['HUB_TOP_LEADERBOARD'] = true;
+			$config['INVISIBLE_1'] = true;
+			$config['INVISIBLE_2'] = true;
+			return $config;
+		}
+
+		if ($this->wg->EnableCorporatePageExt) {
+			$config['TOP_LEADERBOARD'] = true;
+			$config['TOP_RIGHT_BOXAD'] = true;
+			$config['CORP_TOP_LEADERBOARD'] = true;
+			$config['CORP_TOP_RIGHT_BOXAD'] = true;
+			return $config;
+		}
+
+		$namespace = $wgTitle->getNamespace();
+
+		if(WikiaPageType::isWikiaHub() && AdEngine::isAdsEnabledOnWikiaHub()) {
+			$config['HUB_TOP_LEADERBOARD'] = true;
+			$config['INVISIBLE_SKIN'] = true;
+			$config['INVISIBLE_1'] = true;
+			$config['INVISIBLE_2'] = true;
+			return;
+		}
+
+		if ($this->wg->EnableCorporatePageExt) {
+			$config['TOP_LEADERBOARD'] = true;
+			$config['INVISIBLE_SKIN'] = true;
+			$config['TOP_RIGHT_BOXAD'] = true;
+			$config['CORP_TOP_LEADERBOARD'] = true;
+			$config['CORP_TOP_RIGHT_BOXAD'] = true;
+			return;
+		}
+
+		$namespace = $wgTitle->getNamespace();
+
+		if(WikiaPageType::isMainPage()) {
+			// main page
+			$config['HOME_TOP_LEADERBOARD'] = true;
+			$config['INVISIBLE_SKIN'] = true;
+			$config['INVISIBLE_1'] = true;
+			$config['INVISIBLE_2'] = true;
+			$config['PREFOOTER_LEFT_BOXAD'] = true;
+			$config['PREFOOTER_RIGHT_BOXAD'] = true;
+			if($wgEnableFAST_HOME2) {
+				$config['HOME_TOP_RIGHT_BOXAD'] = true;
+				$config['TEST_HOME_TOP_RIGHT_BOXAD'] = true;
+			}
+			$config['HOME_TOP_RIGHT_BUTTON'] = true;
+			$config['TOP_BUTTON'] = true;
+			$config['TOP_BUTTON_WIDE'] = true;
+		} else {
+			if(in_array($namespace, $wgContentNamespaces)) {
+				// content page
+				$config['TOP_LEADERBOARD'] = true;
+				$config['INVISIBLE_SKIN'] = true;
+				$config['TOP_RIGHT_BOXAD'] = true;
+				$config['TEST_TOP_RIGHT_BOXAD'] = true;
+				$config['MIDDLE_RIGHT_BOXAD'] = true;
+				$config['INVISIBLE_1'] = true;
+				$config['INVISIBLE_2'] = true;
+				$config['LEFT_SKYSCRAPER_2'] = true;
+				$config['LEFT_SKYSCRAPER_3'] = true;
+				$config['PREFOOTER_LEFT_BOXAD'] = true;
+				$config['PREFOOTER_RIGHT_BOXAD'] = true;
+				$config['TOP_RIGHT_BUTTON'] = true;
+				$config['TOP_BUTTON'] = true;
+				$config['TOP_BUTTON_WIDE'] = true;
+			} else if($namespace == NS_FILE) {
+				// file/image page
+				$config['TOP_LEADERBOARD'] = true;
+				$config['INVISIBLE_SKIN'] = true;
+				$config['TOP_RIGHT_BOXAD'] = true;
+				$config['TOP_BUTTON'] = true;
+				$config['TOP_BUTTON_WIDE'] = true;
+			} else if(WikiaPageType::isForum()) {
+				$config['TOP_LEADERBOARD'] = true;
+				$config['INVISIBLE_SKIN'] = true;
+				$config['TOP_RIGHT_BOXAD'] = true;
+				$config['TOP_BUTTON'] = true;
+				$config['TOP_BUTTON_WIDE'] = true;
+				$config['LEFT_SKYSCRAPER_3'] = true;
+				$config['PREFOOTER_LEFT_BOXAD'] = true;
+				$config['PREFOOTER_RIGHT_BOXAD'] = true;
+			} else if (WikiaPageType::isSearch()) {
+				// search results page
+				if (empty($this->wg->EnableWikiaSearchAds)) {
+					// regular ads if search ads are disabled
+					$config['TOP_LEADERBOARD'] = true;
+					$config['INVISIBLE_SKIN'] = true;
+					$config['TOP_RIGHT_BOXAD'] = true;
+					$config['TEST_TOP_RIGHT_BOXAD'] = true;
+					$config['TOP_BUTTON'] = true;
+					$config['TOP_BUTTON_WIDE'] = true;
+					$config['PREFOOTER_LEFT_BOXAD'] = true;
+					$config['PREFOOTER_RIGHT_BOXAD'] = true;
+				}
+			} else if($namespace == NS_SPECIAL) {
+				if($wgTitle->isSpecial('Leaderboard')) {
+					$config['TOP_LEADERBOARD'] = true;
+					$config['INVISIBLE_SKIN'] = true;
+					$config['TOP_RIGHT_BOXAD'] = true;
+					$config['TOP_BUTTON'] = true;
+					$config['TOP_BUTTON_WIDE'] = true;
+				} else if($wgTitle->isSpecial('Videos')) {
+					$config['TOP_LEADERBOARD'] = true;
+					$config['INVISIBLE_SKIN'] = true;
+					$config['TOP_BUTTON'] = true;
+					$config['TOP_BUTTON_WIDE'] = true;
+				}
+			} else if($namespace == NS_CATEGORY) {
+				// category page
+				$config['TOP_LEADERBOARD'] = true;
+				$config['INVISIBLE_SKIN'] = true;
+				$config['TOP_RIGHT_BOXAD'] = true;
+				$config['TEST_TOP_RIGHT_BOXAD'] = true;
+				$config['MIDDLE_RIGHT_BOXAD'] = true;
+				$config['LEFT_SKYSCRAPER_2'] = true;
+				$config['INVISIBLE_1'] = true;
+				$config['INVISIBLE_2'] = true;
+				$config['PREFOOTER_LEFT_BOXAD'] = true;
+				$config['PREFOOTER_RIGHT_BOXAD'] = true;
+				$config['TOP_BUTTON'] = true;
+				$config['TOP_BUTTON_WIDE'] = true;
+			} else if($namespace == NS_PROJECT) {
+				$config['TOP_LEADERBOARD'] = true;
+				$config['INVISIBLE_SKIN'] = true;
+				$config['TOP_RIGHT_BOXAD'] = true;
+				$config['TOP_BUTTON'] = true;
+				$config['TOP_BUTTON_WIDE'] = true;
+			} else if( BodyController::isBlogListing() ) {
+				$config['TOP_LEADERBOARD'] = true;
+				$config['INVISIBLE_SKIN'] = true;
+				$config['TOP_RIGHT_BOXAD'] = true;
+				$config['TOP_BUTTON'] = true;
+				$config['TOP_BUTTON_WIDE'] = true;
+			} else if( BodyController::isBlogPost() ) {
+				$config['TOP_LEADERBOARD'] = true;
+				$config['INVISIBLE_SKIN'] = true;
+				$config['TOP_RIGHT_BOXAD'] = true;
+				$config['TEST_TOP_RIGHT_BOXAD'] = true;
+				$config['TOP_BUTTON'] = true;
+				$config['TOP_BUTTON_WIDE'] = true;
+			} else if (array_key_exists($namespace, $wgExtraNamespaces)) {
+				$config['TOP_LEADERBOARD'] = true;
+				$config['INVISIBLE_SKIN'] = true;
+				$config['TOP_BUTTON'] = true;
+				$config['TOP_BUTTON_WIDE'] = true;
+			}
+		}
+
+		return $config;
 	}
 
 	/**

@@ -1,3 +1,5 @@
+<?php if ($showAd) { ?>
+
 <!-- BEGIN SLOTNAME: <?= htmlspecialchars($slotname) ?> -->
 <div id="<?= htmlspecialchars($slotname) ?>" class="wikia-ad noprint default-height">
 	<script>
@@ -5,6 +7,8 @@
 	</script>
 </div>
 <?php if(!empty($selfServeUrl)) { ?>
-	<div class="SelfServeUrl">Advertisement | <a href="<?= $selfServeUrl?>">Your ad here</a></div>
+	<div class="SelfServeUrl">Advertisement | <a href="<?= htmlspecialchars($selfServeUrl) ?>">Your ad here</a></div>
 <?php } ?>
 <!-- END SLOTNAME: <?= htmlspecialchars($slotname) ?> -->
+
+<?php } ?>
