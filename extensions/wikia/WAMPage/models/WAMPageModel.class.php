@@ -2,6 +2,8 @@
 class WAMPageModel extends WikiaModel {
 	const ITEMS_PER_PAGE = 20;
 	const VISUALIZATION_ITEMS_COUNT = 4;
+	const VISUALIZATION_ITEM_IMAGE_WIDTH = 150;
+	const VISUALIZATION_ITEM_IMAGE_HEIGHT = 95;
 
 	public function getItemsPerPage() {
 		return self::ITEMS_PER_PAGE;
@@ -26,6 +28,9 @@ class WAMPageModel extends WikiaModel {
 			'limit' => $this->getVisualizationItemsCount(),
 			'sort_column' => 'wam_index',
 			'sort_direction' => 'DESC',
+			'wiki_image_height' => self::VISUALIZATION_ITEM_IMAGE_HEIGHT,
+			'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
+			'fetch_wiki_images' => true,
 		];
 
 		return $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
