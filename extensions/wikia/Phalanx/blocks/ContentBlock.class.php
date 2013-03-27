@@ -195,4 +195,24 @@ class ContentBlock {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
+	
+	public static function onSpamFilterCheck($text, $type, &$blockData) {
+		wfProfileIn( __METHOD__ );
+		
+		if (!empty($text)) {
+			$filters = Phalanx::getFromFilter($type);
+
+			foreach ($filters as $filter) {
+				$result = Phalanx::isBlocked($text, $filter);
+
+				if ($result['blocked']) {
+					wfProfileOut(__METHOD__);
+					return false;
+				}
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		
+		return true;
+	}
 }
