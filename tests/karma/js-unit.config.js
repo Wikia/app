@@ -74,6 +74,10 @@ files = [
 	'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 	'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
 	'extensions/wikia/AdEngine/js/spec/*.spec.js',
+
+	//Video
+	'extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
+	'extensions/wikia/VideoHandlers/js/spec/*.spec.js',
 ];
 
 notCovered = [
