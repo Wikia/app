@@ -40,11 +40,7 @@ class WAMPageModel extends WikiaModel {
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$WAMData = $this->getMockedDataForDev();
 		} else {
-			$lastDay = strtotime('00:00 -1 day');
-
 			$params = [
-				'wam_day' => $lastDay,
-				'wam_previous_day' => strtotime('-1 day', $lastDay),
 				'wiki_lang' => $lang,
 				'vertical_id' => $verticalId,
 				'limit' => $this->getVisualizationItemsCount(),
@@ -58,6 +54,22 @@ class WAMPageModel extends WikiaModel {
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
 		return $this->prepareIndex($WAMData['wam_index']);
+	}
+
+	public function getIndexWikis() {
+		if( !empty($this->app->wg->DevelEnvironment) ) {
+			$WAMData = $this->getMockedDataForDev();
+		} else {
+			$params = [
+				'limit' => $this->getItemsPerPage(),
+				'sort_column' => 'wam_index',
+				'sort_direction' => 'DESC',
+			];
+			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+		}
+
+		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index']);
+		return $WAMData;
 	}
 
 	/**
@@ -185,7 +197,7 @@ class WAMPageModel extends WikiaModel {
 				'title' => 'Fallout Wiki',
 				'url' => 'fallout.wikia.com',
 				'hub_id' => '2',
-				'wam_change' => '0.0091',
+				'wam_change' => '0',
 				'admins' => [],
 				'wiki_image' => null,
 			],

@@ -5,7 +5,7 @@ class WAMPageController extends WikiaController
 	protected $model;
 
 	public function __construct() {
-		parent::__construct( 'WAMPage', '', false );
+		parent::__construct();
 
 		$this->model = new WAMPageModel();
 	}
@@ -19,6 +19,8 @@ class WAMPageController extends WikiaController
 		$this->faqPage = !empty($this->app->wg->WAMPageConfig['faqPageName']) ? $this->app->wg->WAMPageConfig['faqPageName'] : '#';
 		$this->tabs = $this->model->getTabs();
 		$this->visualizationWikis = $this->model->getVisualizationWikis($this->wg->ContLang->getCode());
+
+		$this->indexWikis = $this->model->getIndexWikis();
 	}
 	
 	public function faq() {

@@ -47,29 +47,17 @@
 			<th><?= wfMessage('wam-index-header-vertical-rank')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-peak-rank')->text() ?></th>
 		</tr>
-		<tr>
-			<td>1.</td>
-			<td class="score up">99.91</td>
-			<td><a href="http://www.wikia.com">runescape.wikia.com</a></td>
-			<td>Video Games</td>
-			<td>1</td>
-			<td>1</td>
-		</tr>
-		<tr>
-			<td>2.</td>
-			<td class="score down">99.91</td>
-			<td><a href="http://www.wikia.com">runescape.wikia.com</a></td>
-			<td>Video Games</td>
-			<td>1</td>
-			<td>1</td>
-		</tr>
-		<tr>
-			<td>3.</td>
-			<td class="score nochange">99.91</td>
-			<td><a href="http://www.wikia.com">runescape.wikia.com</a></td>
-			<td>Video Games</td>
-			<td>1</td>
-			<td>1</td>
-		</tr>
+
+		<? $i = 1; ?>
+		<? foreach ($indexWikis['wam_index'] as $wiki): ?>
+			<tr>
+				<td><?=$i++ ?>.</td>
+				<td class="score <?=$wiki['change']?>"><?=$wiki['wam']?></td>
+				<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
+				<td><?=$wiki['hub_name']?></td>
+				<td><?=$wiki['peak_hub_wam_rank']?></td>
+				<td><?=$wiki['peak_wam_rank']?></td>
+			</tr>
+		<? endforeach ?>
 	</table>
 </div>
