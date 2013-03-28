@@ -1517,6 +1517,83 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$mockController->videoSearch();
 	}
+	
+	/**
+	 * @covers WikiaSearchController::searchVideosByTitle
+	 */
+	public function testSearchVideosByTitle() {
+		$mockConfig		=	$this->getMock( 'Wikia\Search\Config', array( 'setVideoTitleSearch', 'setQuery' ) );
+		$mockController	=	$this->searchController->setMethods( array( 'getResponse', 'getVal' ) )->getMock();
+		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\VideoTitle' )
+								->setMethods( array( 'searchAsApi' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		$mockFactory = $this->getMockBuilder( 'Wikia\Search\QueryService\Factory' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'getFromConfig' ) )
+		                    ->getMock();
+		$mockResults	=	$this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'toArray' ) )
+								->getMock();
+		$mockResponse	=	$this->getMockBuilder( 'WikiaResponse' )
+								->setMethods( array( 'setData', 'setFormat' ) )
+								->disableOriginalConstructor()
+								->getMock();
+
+		$mockController
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVal' )
+			->with		( 'title' )
+			->will		( $this->returnValue( 'title' ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'setVideoTitleSearch' )
+			->with		( true )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 1 ) )
+			->method	( 'setQuery' )
+			->with		( 'title' )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockFactory
+		    ->expects( $this->once() )
+		    ->method ( 'getFromConfig' )
+		    ->will   ( $this->returnValue( $mockSearch ) )
+		;
+		$mockSearch
+			->expects	( $this->at( 0 ) )
+			->method	( 'searchAsApi' )
+			->will		( $this->returnValue( array( 'my results' ) ) )
+		;
+		$mockController
+			->expects	( $this->any() )
+			->method	( 'getResponse' )
+			->will		( $this->returnValue( $mockResponse ) )
+		;
+		$mockResponse
+			->expects	( $this->at( 0 ) )
+			->method	( 'setFormat' )
+			->with		( 'json' )
+		;
+		$mockResponse
+			->expects	( $this->at( 1 ) )
+			->method	( 'setData' )
+			->with		( array( 'my results' ) )
+		;
+
+		$searchRefl = new ReflectionProperty( 'WikiaSearchController', 'queryServiceFactory' );
+		$searchRefl->setAccessible( true );
+		$searchRefl->setValue( $mockController, $mockFactory );
+
+		$this->proxyClass( 'Wikia\Search\Config', $mockConfig );
+		$this->mockApp();
+
+		$mockController->searchVideosByTitle();
+	}
 
 	/**
 	 * @covers WikiaSearchController::getPages
