@@ -54,8 +54,10 @@ class WAMPageModel extends WikiaModel {
 
 	/**
 	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
+	 *
+	 * @param int $selectedIdx array index of selected tab
 	 */
-	public function getTabs() {
+	public function getTabs($selectedIdx = 0) {
 		$tabs = [];
 		$config = $this->getConfig();
 		$tabsNames = !empty($config['tabsNames']) ? $config['tabsNames'] : [];
@@ -64,6 +66,10 @@ class WAMPageModel extends WikiaModel {
 			$tabTitle = Title::newFromText($config['pageName'] . '/'. $tabName);
 			$tabUrl = $tabTitle->getLocalURL();
 			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
+		}
+
+		if( !empty($tabs[$selectedIdx]) ) {
+			$tabs[$selectedIdx]['selected'] = true;
 		}
 
 		return $tabs;
