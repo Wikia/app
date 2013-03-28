@@ -51,8 +51,8 @@ class GlobalHeaderController extends WikiaController {
 		$this->response->setVal('centralUrl', $centralUrl);
 		$this->response->setVal('createWikiUrl', $createWikiUrl);
 		$this->response->setVal('menuNodes', $this->menuNodes);
-		$this->response->setVal('menuNodesHash', $this->menuNodes[0]['hash']);
-		$this->response->setVal('topNavMenuItems', $this->menuNodes[0]['children']);
+		$this->response->setVal('menuNodesHash', !empty($this->menuNodes[0]) ? $this->menuNodes[0]['hash'] : null);
+		$this->response->setVal('topNavMenuItems', !empty($this->menuNodes[0]) ? $this->menuNodes[0]['children'] : null);
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
 		$this->response->setVal('isGameStarLogoEnabled', $isGameStarLogoEnabled);
 		if($isGameStarLogoEnabled) {
