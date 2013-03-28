@@ -2666,6 +2666,13 @@ $templates
 			// getHeadScripts() before the first loader call. Otherwise other modules can't
 			// properly use them as dependencies (bug 30914)
 			if ( $group === 'private' ) {
+				// Wikia change - begin - @author: wladek
+				// PER-25:Disabled processing messages in private modules.
+				// Currently private modules don't include any messages as they are more like configuration wrappers.
+				// However the underlying logic still needs to go through some checks which are likely
+				// to cause serious DB spikes when msg_resource table lacks the metadata for these modules.
+				$context->setSkipMessages(true);
+				// Wikia change - end
 				if ( $only == ResourceLoaderModule::TYPE_STYLES ) {
 					$links .= Html::inlineStyle(
 						$resourceLoader->makeModuleResponse( $context, $modules )
