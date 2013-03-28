@@ -48,10 +48,9 @@
 			<th><?= wfMessage('wam-index-header-peak-rank')->text() ?></th>
 		</tr>
 
-		<? $i = 1; ?>
 		<? foreach ($indexWikis['wam_index'] as $wiki): ?>
 			<tr>
-				<td><?=$i++ ?>.</td>
+				<td><?=$wiki['wam_rank']?>.</td>
 				<td class="score <?=$wiki['change']?>"><?=$wiki['wam']?></td>
 				<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
 				<td><?=$wiki['hub_name']?></td>
