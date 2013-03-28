@@ -1,23 +1,8 @@
-(function( context ) {
+define('wikia.ooyala', ['wikia.window'], function(window) {
 	'use strict';
 
-	context.define('wikia.ooyala', ['wikia.window'], function() {
-
-		var videoTitle;
-
-		function Ooyala(params) {
-			var time = new Date().getTime(),
-				container = document.getElementById(params.playerId),
-				newId = params.playerId + time;
-			
-			videoTitle = params.title;
-			
-			container.id = newId;
-	
-			window.OO.Player.create(newId, params.videoId, { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay, onCreate: onCreate });
-		}
-
-		var onCreate = function(player) {
+	var videoTitle,
+		onCreate = function(player) {
 			var messageBus = player.mb;
 
 			// Player has loaded
@@ -47,9 +32,8 @@
 				console.log(payload);
 			});*/
 
-		}
-		
-		var track = function(action) {
+		},
+		track = function(action) {
 			Wikia.Tracker.track({
 				action: action,
 				category: 'video-player-stats',
@@ -59,10 +43,18 @@
 			}, {
 				title: videoTitle
 			});
-		}
+		};
 
 
-		return Ooyala;
-	});
+	return function(params) {
+		var time = new Date().getTime(),
+			container = document.getElementById(params.playerId),
+			newId = params.playerId + time;
 
-})(this);
+		videoTitle = params.title;
+
+		container.id = newId;
+
+		window.OO.Player.create(newId, params.videoId, { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay, onCreate: onCreate });
+	}
+});
