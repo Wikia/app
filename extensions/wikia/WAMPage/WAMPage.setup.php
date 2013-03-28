@@ -30,6 +30,7 @@ $app->registerClass( 'WAMPageModel', $dir . 'models/WAMPageModel.class.php' );
 $app->registerHook('ArticleFromTitle', 'WAMPageHooks', 'onArticleFromTitle');
 $app->registerHook('MakeGlobalVariablesScript', 'WAMPageHooks', 'onMakeGlobalVariablesScript');
 $app->registerHook('LinkBegin', 'WAMPageHooks', 'onLinkBegin');
+$app->registerHook('WikiaCanonicalHref', 'WAMPageHooks', 'onWikiaCanonicalHref');
 
 
 // i18n

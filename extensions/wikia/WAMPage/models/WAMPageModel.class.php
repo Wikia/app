@@ -6,14 +6,20 @@ class WAMPageModel extends WikiaModel {
 	const VISUALIZATION_ITEM_IMAGE_HEIGHT = 94;
 	const SCORE_ROUND_PRECISION = 2;
 
+	const TAB_INDEX_TOP_WIKIS = 0;
+	const TAB_INDEX_BIGGEST_GAINERS = 1;
+	const TAB_INDEX_GAMING = 2;
+	const TAB_INDEX_ENTERTAINMENT = 3;
+	const TAB_INDEX_LIFESTYLE = 4;
+	
 	protected $config = null;
 	
 	static protected $failoverTabsNames = [
-		'Top wikis',
-		'The biggest gainers',
-		'Top video games wikis',
-		'Top entertainment wikis',
-		'Top lifestyle wikis'
+		self::TAB_INDEX_TOP_WIKIS => 'Top wikis',
+		self::TAB_INDEX_BIGGEST_GAINERS => 'The biggest gainers',
+		self::TAB_INDEX_GAMING => 'Top video games wikis',
+		self::TAB_INDEX_ENTERTAINMENT => 'Top entertainment wikis',
+		self::TAB_INDEX_LIFESTYLE => 'Top lifestyle wikis'
 	];
 	
 	public function __construct() {
@@ -41,11 +47,11 @@ class WAMPageModel extends WikiaModel {
 			$WAMData = $this->getMockedDataForDev();
 		} else {
 			switch($tabIndex) {
-				case 0: $params = $this->getVisualizationParams(); break;
-				case 1: $params = $this->getVisualizationParams( null, 'wam_change' ); break;
-				case 2: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_GAMING ); break;
-				case 3: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT ); break;
-				case 4: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_LIFESTYLE ); break;
+				case self::TAB_INDEX_BIGGEST_GAINERS: $params = $this->getVisualizationParams( null, 'wam_change' ); break;
+				case self::TAB_INDEX_GAMING: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_GAMING ); break;
+				case self::TAB_INDEX_ENTERTAINMENT: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT ); break;
+				case self::TAB_INDEX_LIFESTYLE: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_LIFESTYLE ); break;
+				default: $params = $this->getVisualizationParams(); break;
 			}
 
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
@@ -73,10 +79,20 @@ class WAMPageModel extends WikiaModel {
 		$config = $this->getConfig();
 		return $config['pageName'];
 	}
+	
+	public function getWAMMainPageUrl() {
+		$title = Title::newFromText($this->getWAMMainPageName());
+		
+		return ($title instanceof Title) ? $title->getFullUrl() : null;
+	}
 
 	public function getWAMFAQPageName() {
 		$config = $this->getConfig();
 		return $config['faqPageName'];
+	}
+	
+	public function isWAMFAQPage(Title $title) {
+		return mb_strtolower($title->getText()) === mb_strtolower($this->getWAMFAQPageName());
 	}
 	
 	public function getTabsNamesArray() {
@@ -85,17 +101,7 @@ class WAMPageModel extends WikiaModel {
 	}
 	
 	public function getTabIndexBySubpageText($subpageText) {
-		$tabIndex = 0;
-		$subpageText = mb_strtolower($subpageText);
-		
-		foreach($this->getTabsNamesArray() as $tabIdx => $tabName) {
-			if( mb_strtolower($tabName) === $subpageText ) {
-				$tabIndex = $tabIdx;
-				break;
-			}
-		}
-		
-		return $tabIndex;
+		return array_search($subpageText, $this->getTabsNamesArray());
 	}
 
 	/**

@@ -18,16 +18,27 @@ class WAMPageController extends WikiaController
 	public function index() {
 		$faqPageName = $this->model->getWAMFAQPageName();
 
-		$currentTabIndex = 0;
 		$title = $this->wg->Title;
 		if( $title instanceof Title ) {
-			$currentTabIndex = $this->model->getTabIndexBySubpageText( $title->getSubpageText() );
+			$subpageText = $title->getSubpageText();
+			$currentTabIndex = $this->model->getTabIndexBySubpageText($subpageText);
+			
+			$this->redirectIfFirstTab($currentTabIndex, $subpageText);
 		}
 		
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
 		$this->tabs = $this->model->getTabs($currentTabIndex);
 		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
 		$this->indexWikis = $this->model->getIndexWikis();
+	}
+	
+	protected function redirectIfFirstTab($tabIndex, $subpageText) {
+		$isFirstTab = $tabIndex === WAMPageModel::TAB_INDEX_TOP_WIKIS && !empty($subpageText);
+		$mainWAMPageUrl = $this->model->getWAMMainPageUrl();
+		
+		if( $isFirstTab && !empty($mainWAMPageUrl) ) {
+			$this->wg->Out->redirect($mainWAMPageUrl, HTTP_REDIRECT_PERM);
+		}
 	}
 	
 	public function faq() {
