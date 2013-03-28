@@ -106,6 +106,7 @@ class VideoEmbedTool {
 			$props['id'] = $apiwrapper->getVideoId();
 			$props['vname'] = $apiwrapper->getTitle();
 			$props['metadata'] = '';
+			$props['description'] = $file->getMetaDescription();
 			$props['provider'] = $provider;
 
 			$props['code'] = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
@@ -152,12 +153,12 @@ class VideoEmbedTool {
 			}
 
 			$embedCode = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
-
 			$props['provider'] = 'FILE';
 			$props['id'] = $file->getHandler()->getVideoId();
 			$props['vname'] = $file->getTitle()->getText();
 			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 			$props['metadata'] = '';
+			$props['description'] = $file->getMetaDescription();
 			$props['premiumVideo'] = ($wgRequest->getVal( 'searchType' ) == 'premium');		
 		}
 

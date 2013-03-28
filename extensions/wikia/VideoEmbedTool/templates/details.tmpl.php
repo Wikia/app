@@ -19,6 +19,9 @@ global $wgExtensionsPath;
 					<input type="hidden" id="VideoEmbedName" name="wpVideoEmbedName" value="<?= htmlspecialchars($props['vname']) ?>" />
 				<? endif; ?>
 			</div>
+			<div>
+				Description: <?= htmlspecialchars(!empty($props['description']) ? $props['description'] : '') ?>
+			</div>
 		</div>
 	</div>
 
