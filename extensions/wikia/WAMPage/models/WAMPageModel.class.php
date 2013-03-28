@@ -50,7 +50,7 @@ class WAMPageModel extends WikiaModel {
 
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
-		return $tabIndex != 1 ? $this->prepareIndex($WAMData['wam_index']) : $this->prepareChangeIndex($WAMData['wam_index']);
+		return $this->prepareIndex($WAMData['wam_index'], $tabIndex);
 	}
 
 	public function getIndexWikis() {
@@ -65,7 +65,7 @@ class WAMPageModel extends WikiaModel {
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
 
-		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index']);
+		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index'], 0);
 		return $WAMData;
 	}
 	
@@ -140,20 +140,10 @@ class WAMPageModel extends WikiaModel {
 		return self::$failoverTabsNames;
 	}
 
-	protected function prepareIndex($wamWikis) {
+	protected function prepareIndex($wamWikis, $tabIndex) {
+		$wamScoreName = ($tabIndex != 1) ? 'wam' : 'wam_change';
 		foreach ($wamWikis as &$wiki) {
-			$wamScore = $wiki['wam'];
-			$wiki['wam'] = round($wamScore, self::SCORE_ROUND_PRECISION);
-			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
-			$wiki['change'] = $this->getScoreChangeName($wamScore, $wiki['wam_change']);
-		}
-
-		return $wamWikis;
-	}
-
-	protected function prepareChangeIndex($wamWikis) {
-		foreach ($wamWikis as &$wiki) {
-			$wamScore = $wiki['wam_change'];
+			$wamScore = $wiki[$wamScoreName];
 			$wiki['wam'] = round($wamScore, self::SCORE_ROUND_PRECISION);
 			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
 			$wiki['change'] = $this->getScoreChangeName($wamScore, $wiki['wam_change']);
