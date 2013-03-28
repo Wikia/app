@@ -1,7 +1,14 @@
 <ul class="wam-tabs">
 	<? foreach($tabs as $tab): ?>
 		<li>
-			<a href="<?= $tab['url'] ?>"><?= $tab['name'] ?></a>
+			<a 
+				href="<?= $tab['url'] ?>"
+				<?php if( !empty($tab['selected']) ): ?>
+					class="selected"
+				<?php endif; ?>
+			>
+				<?= $tab['name'] ?>
+			</a>
 		</li>
 	<? endforeach; ?>
 </ul>

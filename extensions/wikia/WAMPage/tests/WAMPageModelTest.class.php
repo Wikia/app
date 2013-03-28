@@ -9,47 +9,90 @@ class WAMPageModelTest extends WikiaBaseTest {
 		
 		parent::setUp();
 	}
-	
-	public function testGetTabs() {
+
+	/**
+	 * @dataProvider getTabsProvider
+	 * @param $configData
+	 * @param $expectedTabs
+	 */
+	public function testGetTabs($configData, $expectedTabs) {
 		$modelMock = $this->getMock('WAMPageModel', array('getConfig'), array(), '', false);
 		$modelMock->expects($this->once())
 			->method('getConfig')
-			->will($this->returnValue([
-				'pageName' => 'WAM',
-				'faqPageName' => 'WAM/FAQ',
-				'tabsNames' => array(
-					'Top wikis',
-					'The biggest gainers',
-					'Top video games wikis',
-					'Top entertainment wikis',
-					'Top lifestyle wikis',
-				),
-			]));
+			->will($this->returnValue($configData));
 		
-		$this->assertEquals(
+		$this->assertEquals($expectedTabs, $modelMock->getTabs());
+	}
+	
+	public function getTabsProvider() {
+		return [
+			//all fine
 			[
-				[
-					'name' => 'Top wikis',
-					'url' => '/wiki/WAM/Top_wikis',
+				'configData' => [
+					'pageName' => 'WAM',
+					'faqPageName' => 'WAM/FAQ',
+					'tabsNames' => array(
+						'Top wikis',
+						'The biggest gainers',
+						'Top video games wikis',
+						'Top entertainment wikis',
+						'Top lifestyle wikis',
+					),
 				],
-				[
-					'name' => 'The biggest gainers',
-					'url' => '/wiki/WAM/The_biggest_gainers',
+				'expectedTabs' => [
+					[
+						'name' => 'Top wikis',
+						'url' => '/wiki/WAM/Top_wikis',
+						'selected' => true,
+					],
+					[
+						'name' => 'The biggest gainers',
+						'url' => '/wiki/WAM/The_biggest_gainers',
+					],
+					[
+						'name' => 'Top video games wikis',
+						'url' => '/wiki/WAM/Top_video_games_wikis',
+					],
+					[
+						'name' => 'Top entertainment wikis',
+						'url' => '/wiki/WAM/Top_entertainment_wikis',
+					],
+					[
+						'name' => 'Top lifestyle wikis',
+						'url' => '/wiki/WAM/Top_lifestyle_wikis',
+					],
 				],
-				[
-					'name' => 'Top video games wikis',
-					'url' => '/wiki/WAM/Top_video_games_wikis',
+			],
+			//no tabsNames element in WikiFactory
+			[
+				'configData' => [
+					'pageName' => 'WAM',
+					'faqPageName' => 'WAM/FAQ',
 				],
-				[
-					'name' => 'Top entertainment wikis',
-					'url' => '/wiki/WAM/Top_entertainment_wikis',
+				'expectedTabs' => [
+					[
+						'name' => 'Top wikis',
+						'url' => '/wiki/WAM/Top_wikis',
+						'selected' => true,
+					],
+					[
+						'name' => 'The biggest gainers',
+						'url' => '/wiki/WAM/The_biggest_gainers',
+					],
+					[
+						'name' => 'Top video games wikis',
+						'url' => '/wiki/WAM/Top_video_games_wikis',
+					],
+					[
+						'name' => 'Top entertainment wikis',
+						'url' => '/wiki/WAM/Top_entertainment_wikis',
+					],
+					[
+						'name' => 'Top lifestyle wikis',
+						'url' => '/wiki/WAM/Top_lifestyle_wikis',
+					],
 				],
-				[
-					'name' => 'Top lifestyle wikis',
-					'url' => '/wiki/WAM/Top_lifestyle_wikis',
-				],
-			], 
-			$modelMock->getTabs()
-		);
+			],
+		];
 	}
 }

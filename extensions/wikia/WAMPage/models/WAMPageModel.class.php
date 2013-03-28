@@ -8,6 +8,14 @@ class WAMPageModel extends WikiaModel {
 
 	protected $config = null;
 	
+	static protected $failoverTabsNames = [
+		'Top wikis',
+		'The biggest gainers',
+		'Top video games wikis',
+		'Top entertainment wikis',
+		'Top lifestyle wikis'
+	];
+	
 	public function __construct() {
 		parent::__construct();
 
@@ -54,11 +62,13 @@ class WAMPageModel extends WikiaModel {
 
 	/**
 	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
+	 *
+	 * @param int $selectedIdx array index of selected tab
 	 */
-	public function getTabs() {
+	public function getTabs($selectedIdx = 0) {
 		$tabs = [];
 		$config = $this->getConfig();
-		$tabsNames = !empty($config['tabsNames']) ? $config['tabsNames'] : [];
+		$tabsNames = !empty($config['tabsNames']) ? $config['tabsNames'] : $this->getDefaultTabsNames();
 
 		foreach($tabsNames as $tabName) {
 			$tabTitle = Title::newFromText($config['pageName'] . '/'. $tabName);
@@ -66,7 +76,15 @@ class WAMPageModel extends WikiaModel {
 			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
 		}
 
+		if( !empty($tabs[$selectedIdx]) ) {
+			$tabs[$selectedIdx]['selected'] = true;
+		}
+
 		return $tabs;
+	}
+	
+	protected function getDefaultTabsNames() {
+		return self::$failoverTabsNames;
 	}
 
 	protected function prepareIndex($wamWikis) {
