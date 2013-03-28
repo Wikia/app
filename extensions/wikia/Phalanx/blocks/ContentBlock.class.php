@@ -215,4 +215,19 @@ class ContentBlock {
 		
 		return true;
 	}
+	
+	public static function onEditPhalanxBlock( &$data ) {
+		wfProfileIn( __METHOD__ );
+		unset( $data['id'] );
+		$data['id'] = PhalanxHelper::save( $data, false /* do not rebuild the cache */ );
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
+	public static function onDeletePhalanxBlock( $block_id ) {
+		wfProfileIn( __METHOD__ );
+		$ret = PhalanxHelper::removeFilter( $block_id, false /* do not touch Phalanx's cache */ );
+		wfProfileOut( __METHOD__ );
+		return ( $ret['error'] == true ) ? false : true ;
+	}
 }
