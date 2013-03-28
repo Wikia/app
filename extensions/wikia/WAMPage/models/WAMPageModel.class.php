@@ -100,18 +100,30 @@ class WAMPageModel extends WikiaModel {
 
 	protected function prepareIndex($wamWikis) {
 		foreach ($wamWikis as &$wiki) {
-			$wiki['wam'] = round($wiki['wam'], self::SCORE_ROUND_PRECISION);
+			$wamScore = $wiki['wam'];
+			$wiki['wam'] = round($wamScore, self::SCORE_ROUND_PRECISION);
 			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
-			if($wiki['wam_change'] > 0) {
-				$wiki['change'] = 'up';
-			} elseif($wiki['wam_change'] < 0) {
-				$wiki['change'] = 'down';
-			} else {
-				$wiki['change'] = 'eq';
-			}
+			$wiki['change'] = $this->getScoreChangeName($wamScore, $wiki['wam_change']);
 		}
 
 		return $wamWikis;
+	}
+
+	protected function getScoreChangeName($score, $change) {
+		$prevScore = $score - $change;
+		$score = round($score, self::SCORE_ROUND_PRECISION);
+		$prevScore = round($prevScore, self::SCORE_ROUND_PRECISION);
+		$wamChange = $score - $prevScore;
+
+		if($wamChange > 0) {
+			$out = 'up';
+		} elseif($wamChange < 0) {
+			$out = 'down';
+		} else {
+			$out = 'eq';
+		}
+
+		return $out;
 	}
 
 	protected function getVerticalName($verticalId) {
@@ -197,7 +209,7 @@ class WAMPageModel extends WikiaModel {
 				'title' => 'Fallout Wiki',
 				'url' => 'fallout.wikia.com',
 				'hub_id' => '9',
-				'wam_change' => '0.0091',
+				'wam_change' => '0.0001',
 				'admins' => [],
 				'wiki_image' => null,
 			],
