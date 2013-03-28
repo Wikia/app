@@ -33,7 +33,7 @@ class WAMPageController extends WikiaController
 	}
 	
 	protected function redirectIfFirstTab($tabIndex, $subpageText) {
-		$isFirstTab = $tabIndex === WAMPageModel::TAB_INDEX_TOP_WIKIS && !empty($subpageText);
+		$isFirstTab = ($tabIndex === WAMPageModel::TAB_INDEX_TOP_WIKIS && !empty($subpageText));
 		$mainWAMPageUrl = $this->model->getWAMMainPageUrl();
 		
 		if( $isFirstTab && !empty($mainWAMPageUrl) ) {
