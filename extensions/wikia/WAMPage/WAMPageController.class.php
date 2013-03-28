@@ -18,7 +18,6 @@ class WAMPageController extends WikiaController
 	public function index() {
 		$faqPageName = $this->model->getWAMFAQPageName();
 
-		$currentTabIndex = 0;
 		$title = $this->wg->Title;
 		if( $title instanceof Title ) {
 			$currentTabIndex = $this->model->getTabIndexBySubpageText( $title->getSubpageText() );
