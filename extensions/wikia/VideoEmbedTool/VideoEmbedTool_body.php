@@ -69,6 +69,7 @@ class VideoEmbedTool {
 		$props['vname'] = $file->getTitle()->getText();
 		$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 		$props['metadata'] = '';
+		$props['description'] = $this->getVideoDescription($file);
 		$props['href'] = $title->getPrefixedText();
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -106,7 +107,7 @@ class VideoEmbedTool {
 			$props['id'] = $apiwrapper->getVideoId();
 			$props['vname'] = $apiwrapper->getTitle();
 			$props['metadata'] = '';
-			$props['description'] = $file->getMetaDescription();
+			$props['description'] = $this->getVideoDescription($file);
 			$props['provider'] = $provider;
 
 			$props['code'] = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
@@ -158,7 +159,7 @@ class VideoEmbedTool {
 			$props['vname'] = $file->getTitle()->getText();
 			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 			$props['metadata'] = '';
-			$props['description'] = $file->getMetaDescription();
+			$props['description'] = $this->getVideoDescription($file);
 			$props['premiumVideo'] = ($wgRequest->getVal( 'searchType' ) == 'premium');		
 		}
 
@@ -334,4 +335,21 @@ class VideoEmbedTool {
 
 	}
 
+	private function getVideoDescription($file) {
+		// Get the file page for this file
+		$page = WikiPage::factory( $file->getTitle() );
+
+		// Strip out the category tags so they aren't shown to the user
+		$text = preg_replace( '/\[\[Category[^\]]+\]\]/', '', $page->getText() );
+
+		// If we have an empty string or a bunch of whitespace, use the default description
+		// from the file metadata
+		if ( preg_match('/^\s*$/', $text) ) {
+			if ( method_exists($file, 'getMetaDescription') ) {
+				$text = $file->getMetaDescription();
+			}
+		}
+
+		return $text;
+	}
 }
