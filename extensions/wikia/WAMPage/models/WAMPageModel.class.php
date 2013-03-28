@@ -79,10 +79,20 @@ class WAMPageModel extends WikiaModel {
 		$config = $this->getConfig();
 		return $config['pageName'];
 	}
+	
+	public function getWAMMainPageUrl() {
+		$title = Title::newFromText($this->getWAMMainPageName());
+		
+		return ($title instanceof Title) ? $title->getFullUrl() : null;
+	}
 
 	public function getWAMFAQPageName() {
 		$config = $this->getConfig();
 		return $config['faqPageName'];
+	}
+	
+	public function isWAMFAQPage(Title $title) {
+		return mb_strtolower($title->getText()) === mb_strtolower($this->getWAMFAQPageName());
 	}
 	
 	public function getTabsNamesArray() {

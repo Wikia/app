@@ -3,6 +3,10 @@ class WAMPageHooks {
 	protected $WAMPageConfig = null;
 	protected $EnableWAMPageExt = null;
 	protected $app = null;
+
+	/**
+	 * @var WAMPageModel $model
+	 */
 	protected $model = null;
 
 	protected function init() {
@@ -50,6 +54,8 @@ class WAMPageHooks {
 	}
 
 	public function onMakeGlobalVariablesScript(&$vars) {
+		wfProfileIn(__METHOD__);
+		
 		$this->init();
 		
 		if( !empty($this->EnableWAMPageExt) ) {
@@ -57,6 +63,7 @@ class WAMPageHooks {
 			$vars['wgWAMFAQPageName'] = $this->WAMPageConfig['faqPageName'];
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -74,6 +81,7 @@ class WAMPageHooks {
 	 * @return bool
 	 */
 	public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
+		wfProfileIn(__METHOD__);		
 		$this->init();
 		
 		if( $this->isWAMPage($target) ) {
@@ -81,17 +89,41 @@ class WAMPageHooks {
 			unset($options[$index]);
 			$options[] = 'known';
 		}
-		
+
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 	
 	protected function isWAMPage($title) {
+		wfProfileIn(__METHOD__);
+		$this->init();
 		$dbKey = null;
 		
 		if( $title instanceof Title ) {
 			$dbKey = mb_strtolower( $title->getDBKey() );
 		}
-		
+
+		wfProfileOut(__METHOD__);
 		return !empty($this->EnableWAMPageExt) && in_array($dbKey, $this->model->getWamPagesDbKeysLower());
+	}
+
+	/**
+	 * Change canonical url if we are displaying WAM subpages
+	 *
+	 * @param string $url
+	 * @param Title  $title
+	 *
+	 * @return bool
+	 */
+	public function onWikiaCanonicalHref(&$url, $title) {
+		wfProfileIn(__METHOD__);
+		$this->init();
+		
+		if( $title instanceof Title && $this->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
+			$url = $this->model->getWAMMainPageUrl();
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
 	}
 }
