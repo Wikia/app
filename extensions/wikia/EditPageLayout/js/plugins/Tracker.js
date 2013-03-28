@@ -43,6 +43,7 @@
 
 		// CKEditor only events
 		onCkInstanceCreated: function( ck ) {
+			ck.on( 'buttonClick', this.proxy( this.onCkButtonClick ) );
 			ck.on( 'dialogCancel', this.proxy( this.onCkDialogCancel ) );
 			ck.on( 'dialogOk', this.proxy( this.onCkDialogOk ) );
 			ck.on( 'dialogShow', this.proxy( this.onCkDialogShow ) );
@@ -50,45 +51,36 @@
 			ck.on( 'panelShow', this.proxy( this.onCkPanelShow ) );
 		},
 
+		onCkButtonClick: function( event ) {
+			var label = event.data.button.label.toLowerCase();
+			this.track( 'button-' + label );
+		},
+
 		onCkDialogCancel: function( event ) {
 			var label = event.data._.name.toLowerCase();
-
-			if ( label ) {
-				this.track( 'dialog-' + label + '-cancel' );
-			}
+			this.track( 'dialog-' + label + '-cancel' );
 		},
 
 		onCkDialogOk: function( event ) {
 			var label = event.data._.name.toLowerCase();
-
-			if ( label ) {
-				this.track( 'dialog-' + label + '-ok' );
-			}
+			this.track( 'dialog-' + label + '-ok' );
 		},
 
 		onCkDialogShow: function( event ) {
-			var label = event.data._.name.toLowerCase();
-
-			if ( label ) {
-				this.track( 'dialog-' + label + '-open' );
-			}
+			var label = event.data._.name.toLowerCase()
+			this.track( 'dialog-' + label + '-open' );
 		},
 
 		onCkPanelClick: function( event ) {
 			var	label = event.data.me.label.toLowerCase(),
-				title = event.data.value;
+				value = event.data.value;
 
-			if ( label && title ) {
-				this.track( 'panel-' + label + '-item-' + title );
-			}
+			this.track( 'panel-' + label + '-item-' + value );
 		},
 
 		onCkPanelShow: function( event ) {
 			var label = event.data.me.label.toLowerCase();
-
-			if ( label ) {
-				this.track( 'panel-' + label + '-open' );
-			}
+			this.track( 'panel-' + label + '-open' );
 		},
 
 		// Wrapper for Wikia.Tracker so we can perform some magic
@@ -172,69 +164,16 @@
 		}
 	})();
 
-	// Edit page tracking. Anything that is always visible on the edit page should be
-	// tracked here. Other tracking will have to be embedded into code outside of this file.
+	// Anything that is shared across the main editor and MiniEditor should be
+	// tracked above, the stuff down here is just for edit page chrome that can't
+	// be tracked through CKEditor events.
 	$(function() {
-		var rCkButtonTitle = /cke_button_(\w+)/;
 
-		function getCkButtonTitle( element ) {
-			var matches = element.className.match( rCkButtonTitle );
-			return matches && matches[ 1 ];
-		}
-
-		// Module: Panel Buttons
-		$( '#EditPageRail' ).on( 'mousedown', '.module_insert .cke_button', function( e ) {
-			var	label,
-				el = $( e.currentTarget );
-
-			// Primary mouse button only
-			if ( e.which !== 1 ) {
-				return;
-			}
-
-			if ( el.hasClass( 'RTEGalleryButton' ) ) {
-				label = 'add-gallery';
-			} else if ( el.hasClass( 'RTESlideshowButton' ) ) {
-				label = 'add-slideshow';
-			} else if ( el.hasClass( 'RTEVideoButton' ) ) {
-				label = 'add-video';
-			} else if ( el.hasClass( 'RTEPollButton' ) ) {
-				label = 'add-poll';
-			} else if ( el.hasClass( 'cke_button_table' ) ) {
-				label = 'add-table';
-			}
-
-			if ( label !== undefined ) {
-				WikiaEditor.track( label );
-			}
-		});
-
-		// Module: CKEditor Tabs
-		$( '#EditPageTabs' ).on( 'mousedown', '.cke_button a', function( e ) {
-			var title = getCkButtonTitle( e.currentTarget );
-
-			if ( title ) {
-				WikiaEditor.track( 'tab-' + title.toLowerCase() );
-			}
-		});
-
-		// Module: CKEditor Toolbar
+		// Module: Page Controls
 		(function() {
-
-			// Blacklisted items are tracked elsewhere
-			var blacklist = [
-					'link'
-				],
-				label = 'toolbar-';
+			var label = 'toolbar-';
 
 			$( '#EditPageToolbar' )
-				.on( 'mousedown', '.cke_button a', function( e ) {
-					var title = getCkButtonTitle( e.currentTarget );
-
-					if ( title && !~$.inArray( title, blacklist ) ) {
-						WikiaEditor.track( label + 'button-' + title.toLowerCase() );
-					}
-				})
 				.on( 'mousedown', '.cke_toolbar_expand', function( e ) {
 					var title = $( e.currentTarget ).find( '.expand' ).is( ':visible' ) ? 'more' : 'less';
 					WikiaEditor.track( label + title );
