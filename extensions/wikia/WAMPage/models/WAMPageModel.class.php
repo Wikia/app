@@ -41,8 +41,6 @@ class WAMPageModel extends WikiaModel {
 			$WAMData = $this->getMockedDataForDev();
 		} else {
 			$params = [
-				'wam_day' => $lastDay,
-				'wam_previous_day' => strtotime('-1 day', $lastDay),
 				'vertical_id' => $verticalId,
 				'limit' => $this->getVisualizationItemsCount(),
 				'sort_column' => 'wam_index',
