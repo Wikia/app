@@ -118,7 +118,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 	
 	/**
-	 * Delives a JSON response for videos matching a provided title
+	 * Delivers a JSON response for videos matching a provided title
+	 * Expects query param "title" for the title value.
 	 */
 	public function searchVideosByTitle() {
 		$searchConfig = new Wikia\Search\Config;
