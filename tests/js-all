@@ -1,2 +1,2 @@
 #!/bin/sh
-karma start js-unit.config.js
+karma start karma/js-unit.config.js --single-run
