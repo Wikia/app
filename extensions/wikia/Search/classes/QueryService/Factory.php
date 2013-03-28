@@ -32,6 +32,9 @@ class Factory
 		if ( $config->getDirectLuceneQuery() ) {
 			return new Select\Lucene( $container );
 		}
+		if ( $config->getVideoTitleSearch() ) {
+			return new Select\VideoTitle( $container );
+		}
 		return new Select\OnWiki( $container );
 	}
 	
