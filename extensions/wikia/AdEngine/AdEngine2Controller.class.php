@@ -13,8 +13,6 @@ class AdEngine2Controller extends WikiaController {
 
 	private static $slotsDisplayShinyAdSelfServe = ['CORP_TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'TEST_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD'];
 
-	private static $EXITSTITIAL_URLS_WHITE_LIST; // links to those domains won't display exitstitial ads
-
 	/*
 	 * Public static methods for querying ad engine for ad states
 	 */
@@ -172,6 +170,47 @@ class AdEngine2Controller extends WikiaController {
 		wfProfileOut(__METHOD__);
 
 		return $cat;
+	}
+
+	public static function getLiftiumOptionsScript() {
+		wfProfileIn(__METHOD__);
+
+		global $wgDBname, $wgTitle, $wgLang;
+
+		// See Liftium.js for documentation on options
+		$options = array();
+		$options['pubid'] = 999;
+		$options['baseUrl'] = '/__varnish_liftium/';
+		$options['kv_wgDBname'] = $wgDBname;
+		if (is_object($wgTitle)){
+			$options['kv_article_id'] = $wgTitle->getArticleID();
+			$options['kv_wpage'] = $wgTitle->getPartialURL();
+		}
+		$cat = AdEngine2Controller::getCachedCategory();
+		$options['kv_Hub'] = $cat['name'];
+		$options['kv_skin'] = RequestContext::getMain()->getSkin()->getSkinName();
+		$options['kv_user_lang'] = $wgLang->getCode();
+		$options['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];
+		$options['kv_isMainPage'] = WikiaPageType::isMainPage();
+		$options['kv_page_type'] = WikiaPageType::getPageType();
+		$options['geoUrl'] = "http://geoiplookup.wikia.com/";
+		if (!empty($wgDartCustomKeyValues)) {
+			$options['kv_dart'] = $wgDartCustomKeyValues;
+		}
+
+		$options['kv_domain'] = $_SERVER['HTTP_HOST'];
+		$options['hasMoreCalls'] = true;
+		$options['isCalledAfterOnload'] = true;
+		$options['maxLoadDelay'] = 6000;
+
+		$js = "LiftiumOptions = " . json_encode($options) . ";\n";
+
+		$out = "\n<!-- Liftium options -->\n";
+		$out .= Html::inlineScript( $js )."\n";
+
+		wfProfileOut(__METHOD__);
+
+		return $out;
 	}
 
 	/**
