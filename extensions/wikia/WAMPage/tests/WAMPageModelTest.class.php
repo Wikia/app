@@ -1,5 +1,13 @@
 <?php
 class WAMPageModelTest extends WikiaBaseTest {
+
+	static protected $failoverTabsNames = [
+		'Top wikis',
+		'The biggest gainers',
+		'Top video games wikis',
+		'Top entertainment wikis',
+		'Top lifestyle wikis'
+	];
 	
 	public function setUp() {
 		include_once __DIR__ . DIRECTORY_SEPARATOR
@@ -16,10 +24,19 @@ class WAMPageModelTest extends WikiaBaseTest {
 	 * @param $expectedTabs
 	 */
 	public function testGetTabs($configData, $expectedTabs) {
-		$modelMock = $this->getMock('WAMPageModel', array('getConfig'), array(), '', false);
+		$modelMock = $this->getMock('WAMPageModel', array('getWAMMainPageName', 'getConfig', 'getDefaultTabsNames'), array(), '', false);
+		
 		$modelMock->expects($this->once())
+			->method('getWAMMainPageName')
+			->will($this->returnValue('WAM'));
+
+		$modelMock->expects($this->any())
 			->method('getConfig')
 			->will($this->returnValue($configData));
+
+		$modelMock->expects($this->any())
+			->method('getDefaultTabsNames')
+			->will($this->returnValue(self::$failoverTabsNames));
 		
 		$this->assertEquals($expectedTabs, $modelMock->getTabs());
 	}
