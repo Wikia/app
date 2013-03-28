@@ -50,7 +50,7 @@ class WAMPageModel extends WikiaModel {
 
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
-		return $tabIndex == 1 ? $this->prepareIndex($WAMData['wam_index']) : $this->prepareChangeIndex($WAMData['wam_index']);
+		return $tabIndex != 1 ? $this->prepareIndex($WAMData['wam_index']) : $this->prepareChangeIndex($WAMData['wam_index']);
 	}
 
 	public function getIndexWikis() {
