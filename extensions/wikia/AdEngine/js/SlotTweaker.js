@@ -2,7 +2,7 @@ var SlotTweaker = function(log, document, window) {
 	'use strict';
 
 	var logGroup = 'SlotTweaker'
-		, removeClass, removeDefaultHeight, hide, removeTopButtonIfNeeded
+		, addDefaultHeight, removeClass, removeDefaultHeight, hide, removeTopButtonIfNeeded
 		, defaultHeightClass = 'default-height'
 		, rclass = /[\t\r\n]/g
 	;
@@ -22,6 +22,16 @@ var SlotTweaker = function(log, document, window) {
 
 		if (slot) {
 			removeClass(slot, defaultHeightClass);
+		}
+	};
+
+	addDefaultHeight = function(slotname) {
+		var slot = document.getElementById(slotname);
+
+		log('addDefaultHeight ' + slotname, 6, logGroup);
+
+		if (slot) {
+			slot.className += ' ' + defaultHeightClass;
 		}
 	};
 
@@ -57,6 +67,7 @@ var SlotTweaker = function(log, document, window) {
 	};
 
 	return {
+		addDefaultHeight: addDefaultHeight,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		hide: hide
