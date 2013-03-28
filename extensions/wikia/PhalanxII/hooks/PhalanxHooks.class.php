@@ -120,7 +120,11 @@ class PhalanxHooks extends WikiaObject {
 			$phalanx['lang'] = null;
 		}
 
-		if ( $phalanx['expire'] != 'infinite' ) {
+		if ( $phalanx['expire'] === '' ) {
+			// don't change expire
+			unset($phalanx['expire']);
+		}
+		else if ( $phalanx['expire'] != 'infinite' ) {
 			$expire = strtotime( $phalanx['expire'] );
 			if ( $expire < 0 || $expire === false ) {
 				$this->wf->profileOut( __METHOD__ );

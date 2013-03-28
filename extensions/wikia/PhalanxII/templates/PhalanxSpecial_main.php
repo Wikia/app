@@ -45,12 +45,13 @@
 							<label>
 								<strong><?= wfMsg( 'phalanx-label-expiry' ) ?></strong>
 								<?php if (!empty($editMode)): ?>
-								<span class="expires"><?=
-									($data['expire'] === null)
-									?
-									wfMsg('phalanx-expires-infinite')
-									:
-									wfMsg('phalanx-expires', $app->wg->Lang->timeanddate($data['expire']))
+								<span class="expires"><?php
+									if ($data['expire'] === null) {
+										echo wfMsg('phalanx-expires-infinite');
+									}
+									else if (is_numeric($data['expire'])) {
+										echo wfMsg('phalanx-expires', $app->wg->Lang->timeanddate($data['expire']));
+									}
 								?></span>
 								<?php endif; ?>
 								<select name="wpPhalanxExpire" id="wpPhalanxExpire" class="blue" >

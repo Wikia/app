@@ -148,7 +148,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 			if (is_null($row->p_expire)) {
 				$html .= sprintf( " &bull; %s ", $this->app->wf->Msg('phalanx-display-row-expire-infinity'));
 			}
-			else {
+			else if (is_numeric($row->p_expire)) {
 				$html .= sprintf( " &bull; %s ",
 					$this->app->wf->Msg( 'phalanx-display-row-expire', $this->app->wg->Lang->timeanddate( $row->p_expire ))
 				);
