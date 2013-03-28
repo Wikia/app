@@ -1215,7 +1215,7 @@ var WMU_uploadCallback = {
 var WMU_track = (function( Wikia, WikiaEditor ) {
 	var config = {
 			action: Wikia.Tracker.ACTIONS.CLICK,
-			category: 'photo-tool',
+			category: 'wmu',
 			trackingMethod: 'both'
 		},
 		slice = [].slice,
