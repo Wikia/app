@@ -9,6 +9,9 @@ $messages = array();
 
 $messages['en'] = array(
 	'wampage-header' => 'Wam',
+	'wam-Gaming' => 'Video Games',
+	'wam-Entertainment' => 'Entertainment',
+	'wam-Lifestyle' => 'Lifestyle',
 	'wampage-header-faq' => 'Faq',
 	'wampage-content' => 'Wikia Activity Monitor (WAM) is an indicator of a Wiki’s health and vitality. WAM is a custom measurement developed by Wikia to capture a number of independent indicators into one overall index, like the Billboard or Parker score. It’s based on weighted algorithm of unique users, page views, momentum, multi-media and more.
 
@@ -55,6 +58,9 @@ $messages['qqq'] = array(
 
 $messages['fr'] = array(
 	'wampage-header' => 'WAM',
+	'wam-Gaming' => 'Jeux vidéo',
+	'wam-Entertainment' => 'Divertissement',
+	'wam-Lifestyle' => 'Mode de vie',
 	'wampage-header-faq' => 'FAQ',
 	'wampage-content' => 'Le Moniteur d\'Activité Wikia (WAM) est un indicateur de la santé et de la vitalité d\'un wiki. WAM est un outil de mesure développé par Wikia pour rassembler un certains nombre d\'indicateurs en un seul index, comme la note Billboard ou Parker. Il est basé sur un algorithme pondérant le nombre d\'utilisateurs uniques, de pages vues de l\'élan, du contenu multimédia et plus.
 
@@ -87,6 +93,9 @@ Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.co
 
 $messages['de'] = array(
 	'wampage-header' => 'Wikia Aktivitätsmonitor (WAM)',
+	'wam-Gaming' => 'Videospiele',
+	'wam-Entertainment' => 'Entertainment',
+	'wam-Lifestyle' => 'Lifestyle',
 	'wampage-header-faq' => 'Fragen und Antworten',
 	'wampage-content' => 'Der Wikia Aktivitätsmonitor (WAM) zeigt an, wie es um dein Wiki steht, und wie bekannt dein Wiki ist. WAM wurde von Wikia entwickelt, um durch den Vergleich mehrerer Daten eine Wiki-Rangliste erstellen zu können, ähnlich der Billboard- oder Parker-Punktzahl. Die Punktzahl setzt sich aus einer Mischung aus Besucheranzahl, Seitenaufrufen, aktueller Aktivität, Multimedia und mehr zusammen.
 
@@ -124,6 +133,9 @@ Dem Community-Team unter [mailto:support@wikia-inc.com support@wikia-inc.com].'
 
 $messages['es'] = array(
 	'wampage-header' => 'WAM',
+	'wam-Gaming' => 'Videojuegos',
+	'wam-Entertainment' => 'Entretenimiento',
+	'wam-Lifestyle' => 'Estilo de vida',
 	'wampage-header-faq' => 'Preguntas frecuentes',
 	'wampage-content' => 'El Monitor de Actividad de Wikia (WAM) es un indicador de la salud y vitalidad de los wikis. El WAM es una herramienta desarrollada por Wikia capaz de obtener diferentes indicadores independientes y dar una puntuación global, como las estrellas de los hoteles. Se basa en un algoritmo que tiene en cuenta los usuarios únicos, las páginas vistas, la popularidad en cada momento, los archivos que tiene, y algunos factores más.
 

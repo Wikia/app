@@ -20,29 +20,29 @@
 	}
 	.wam-cards {
 		width: 680px;
-		height: 220px;
+		height: 235px;
 		float: right;
 		font-size: 12px;
-		margin-top: 65px;
+		margin-top: 50px;
 		overflow: hidden;
+		position: relative;
 		.wam-card {
 			background-color: #f1f2f2;
 			bottom: 0;
 			color: #fff;
 			display: block;
-			float: left;
-			height: 206px;
-			margin-right: 10px;
-			padding: 7px 5px;
-			position: relative;
+			height: 219px;
+			left: 0;
+			padding: 8px;
+			position: absolute;
 			text-decoration: none;
-			width: 150px;
+			width: 144px;
 			figure {
 				background-color: #eee;
-				height: 95px;
+				height: 94px;
 				overflow: hidden;
 				position: relative;
-				width: 150px;
+				width: 144px;
 				span {
 					background-color: rgba(0,0,0,0.5 );
 					line-height: 1;
@@ -85,6 +85,18 @@
 				left: 10px;
 				position: absolute;
 			}
+		}
+		.card2 {
+			height: 198px;
+			left: 170px;
+		}
+		.card3 {
+			height: 176px;
+			left: 340px;
+		}
+		.card4 {
+			height: 154px;
+			left: 510px;
 		}
 	}
 }

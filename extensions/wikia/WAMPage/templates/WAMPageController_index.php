@@ -14,8 +14,9 @@
 </ul>
 <div class="wam-header">
 	<div class="wam-cards">
-		<? foreach($visualizationWikis as $wiki) { ?>
-			<a href="http://<?= $wiki['url'] ?>" class="wam-card">
+		<? 	$i = 1;
+			foreach($visualizationWikis as $k => $wiki) { ?>
+			<a href="http://<?= $wiki['url'] ?>" class="wam-card card<?= $i++ ?>">
 				<figure>
 					<img src="<?= $wiki['wiki_image'] ?>" alt="<?= $wiki['title'] ?>" title="<?= $wiki['title'] ?>" />
 					<span><?= $wiki['title'] ?></span>
