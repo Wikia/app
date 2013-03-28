@@ -108,7 +108,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['actors'] = empty($video['metadata']['actors']) ? '' : $video['metadata']['actors'];
 				$clipData['startDate'] = empty($video['time_restrictions']['start_date']) ? '' : $video['time_restrictions']['start_date'];
 				$clipData['expirationDate'] = empty($video['metadata']['expirationdate']) ? '' : $video['metadata']['expirationdate'];
-				$clipData['playerId'] =  empty( $video['metadata']['playerid'] ) ? '' : $video['metadata']['playerid'];
+				$clipData['playerId'] = OoyalaApiWrapper::getPlayerId( $clipData['videoId'] );
 
 				$msg = '';
 				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'provider' => $clipData['provider'] );
