@@ -3,14 +3,11 @@
 class WAMPageController extends WikiaController
 {
 	protected $model;
-	protected $tabIndex;
 
 	public function __construct() {
-		parent::__construct( 'WAMPage', '', false );
+		parent::__construct();
 
 		$this->model = new WAMPageModel();
-		// MOCKED tab index
-		$this->tabIndex = 0;
 	}
 
 	public function init() {
@@ -29,7 +26,7 @@ class WAMPageController extends WikiaController
 		
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
 		$this->tabs = $this->model->getTabs($currentTabIndex);
-		$this->visualizationWikis = $this->model->getVisualizationWikis($this->wg->ContLang->getCode());
+		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
 		$this->indexWikis = $this->model->getIndexWikis();
 	}
 	

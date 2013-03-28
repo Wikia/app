@@ -6,10 +6,6 @@ class WAMPageModel extends WikiaModel {
 	const VISUALIZATION_ITEM_IMAGE_HEIGHT = 94;
 	const SCORE_ROUND_PRECISION = 2;
 
-	const VIDEO_GAMES_ID = 2;
-	const ENTERTAINMENT_ID = 2;
-	const LIFESTYLE_ID = 2;
-
 	protected $config = null;
 	
 	static protected $failoverTabsNames = [
@@ -47,14 +43,10 @@ class WAMPageModel extends WikiaModel {
 			switch($tabIndex) {
 				case 0: $params = $this->getVisualizationParams(); break;
 				case 1: $params = $this->getVisualizationParams( null, 'wam_change' ); break;
-				case 2: $params = $this->getVisualizationParams( VIDEO_GAMES_ID ); break;
-				case 3: $params = $this->getVisualizationParams( ENTERTAINMENT_ID ); break;
-				case 4: $params = $this->getVisualizationParams( LIFESTYLE_ID ); break;
+				case 2: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_GAMING ); break;
+				case 3: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT ); break;
+				case 4: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_LIFESTYLE ); break;
 			}
-
-			$lastDay = strtotime('00:00 -1 day');
-
-			$params = array_merge($params, $this->getDefaultParams($lastDay));
 
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
@@ -184,13 +176,17 @@ class WAMPageModel extends WikiaModel {
 	}
 
 	protected function getVisualizationParams($verticalId = null, $sortColumn = 'wam_index') {
-		return [
+		$params = [
 			'vertical_id' => $verticalId,
 			'sort_column' => $sortColumn
 		];
+
+		return array_merge($params, $this->getDefaultParams());
 	}
 
-	protected function getDefaultParams($lastDay) {
+	protected function getDefaultParams() {
+		$lastDay = strtotime('00:00 -1 day');
+
 		return [
 			'wam_day' => $lastDay,
 			'wam_previous_day' => strtotime('-1 day', $lastDay),
