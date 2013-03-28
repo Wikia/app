@@ -135,6 +135,7 @@ class WAMPageModel extends WikiaModel {
 				'wiki_id' => '304',
 				'wam'=> '99.9554',
 				'wam_rank' => '1',
+				'hub_wam_rank' => '1',
 				'peak_wam_rank' => '1',
 				'peak_hub_wam_rank' => '1',
 				'top_1k_days' => '431',

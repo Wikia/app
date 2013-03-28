@@ -55,7 +55,7 @@
 				<td class="score <?=$wiki['change']?>"><?=$wiki['wam']?></td>
 				<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
 				<td><?=$wiki['hub_name']?></td>
-				<td><?=$wiki['peak_hub_wam_rank']?></td>
+				<td><?=$wiki['hub_wam_rank']?></td>
 				<td><?=$wiki['peak_wam_rank']?></td>
 			</tr>
 		<? endforeach ?>
