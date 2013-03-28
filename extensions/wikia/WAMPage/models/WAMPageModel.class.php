@@ -8,6 +8,14 @@ class WAMPageModel extends WikiaModel {
 
 	protected $config = null;
 	
+	static protected $failoverTabsNames = [
+		'Top wikis',
+		'The biggest gainers',
+		'Top video games wikis',
+		'Top entertainment wikis',
+		'Top lifestyle wikis'
+	];
+	
 	public function __construct() {
 		parent::__construct();
 
@@ -60,7 +68,7 @@ class WAMPageModel extends WikiaModel {
 	public function getTabs($selectedIdx = 0) {
 		$tabs = [];
 		$config = $this->getConfig();
-		$tabsNames = !empty($config['tabsNames']) ? $config['tabsNames'] : [];
+		$tabsNames = !empty($config['tabsNames']) ? $config['tabsNames'] : $this->getDefaultTabsNames();
 
 		foreach($tabsNames as $tabName) {
 			$tabTitle = Title::newFromText($config['pageName'] . '/'. $tabName);
@@ -73,6 +81,10 @@ class WAMPageModel extends WikiaModel {
 		}
 
 		return $tabs;
+	}
+	
+	protected function getDefaultTabsNames() {
+		return self::$failoverTabsNames;
 	}
 
 	protected function prepareIndex($wamWikis) {
