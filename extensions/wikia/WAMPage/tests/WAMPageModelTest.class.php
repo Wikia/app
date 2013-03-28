@@ -63,6 +63,36 @@ class WAMPageModelTest extends WikiaBaseTest {
 					],
 				],
 			],
+			//no tabsNames element in WikiFactory
+			[
+				'configData' => [
+					'pageName' => 'WAM',
+					'faqPageName' => 'WAM/FAQ',
+				],
+				'expectedTabs' => [
+					[
+						'name' => 'Top wikis',
+						'url' => '/wiki/WAM/Top_wikis',
+						'selected' => true,
+					],
+					[
+						'name' => 'The biggest gainers',
+						'url' => '/wiki/WAM/The_biggest_gainers',
+					],
+					[
+						'name' => 'Top video games wikis',
+						'url' => '/wiki/WAM/Top_video_games_wikis',
+					],
+					[
+						'name' => 'Top entertainment wikis',
+						'url' => '/wiki/WAM/Top_entertainment_wikis',
+					],
+					[
+						'name' => 'Top lifestyle wikis',
+						'url' => '/wiki/WAM/Top_lifestyle_wikis',
+					],
+				],
+			],
 		];
 	}
 }
