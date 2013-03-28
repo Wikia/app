@@ -59,6 +59,35 @@ class WAMPageModel extends WikiaModel {
 		}
 		return $this->prepareIndex($WAMData['wam_index']);
 	}
+	
+	public function getWAMMainPageName() {
+		$config = $this->getConfig();
+		return $config['pageName'];
+	}
+
+	public function getWAMFAQPageName() {
+		$config = $this->getConfig();
+		return $config['faqPageName'];
+	}
+	
+	public function getTabsNamesArray() {
+		$config = $this->getConfig();
+		return !empty($config['tabsNames']) ? $config['tabsNames'] : $this->getDefaultTabsNames();
+	}
+	
+	public function getTabIndexBySubpageText($subpageText) {
+		$tabIndex = 0;
+		$subpageText = mb_strtolower($subpageText);
+		
+		foreach($this->getTabsNamesArray() as $tabIdx => $tabName) {
+			if( mb_strtolower($tabName) === $subpageText ) {
+				$tabIndex = $tabIdx;
+				break;
+			}
+		}
+		
+		return $tabIndex;
+	}
 
 	/**
 	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
@@ -67,11 +96,11 @@ class WAMPageModel extends WikiaModel {
 	 */
 	public function getTabs($selectedIdx = 0) {
 		$tabs = [];
-		$config = $this->getConfig();
-		$tabsNames = !empty($config['tabsNames']) ? $config['tabsNames'] : $this->getDefaultTabsNames();
-
+		$pageName = $this->getWAMMainPageName();
+		$tabsNames = $this->getTabsNamesArray();
+		
 		foreach($tabsNames as $tabName) {
-			$tabTitle = Title::newFromText($config['pageName'] . '/'. $tabName);
+			$tabTitle = Title::newFromText($pageName . '/'. $tabName);
 			$tabUrl = $tabTitle->getLocalURL();
 			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
 		}
@@ -81,6 +110,21 @@ class WAMPageModel extends WikiaModel {
 		}
 
 		return $tabs;
+	}
+	
+	public function getWamPagesDbKeysLower() {
+		$pagesLowerCase = [];
+		$pageName = mb_strtolower($this->getWAMMainPageName());
+		
+		foreach($this->getTabsNamesArray() as $tabName) {
+			$tabTitle = Title::newFromText($pageName . '/'. $tabName);
+			$pagesLowerCase[] = mb_strtolower($tabTitle->getDBKey());
+		}
+		
+		$pagesLowerCase[] = $pageName;
+		$pagesLowerCase[] = mb_strtolower($this->getWAMFAQPageName());
+		
+		return $pagesLowerCase;
 	}
 	
 	protected function getDefaultTabsNames() {

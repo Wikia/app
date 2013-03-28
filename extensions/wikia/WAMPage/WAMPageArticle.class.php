@@ -22,6 +22,7 @@ class WAMPageArticle extends Article {
 
 		$app = F::app();
 		$app->wg->Out->clearHTML();
+		
 		if( $this->isWAMFAQPage($this->getTitle()) ) {
 			$action = 'faq';
 		} else {

@@ -3,6 +3,7 @@ class WAMPageHooks {
 	protected $WAMPageConfig = null;
 	protected $EnableWAMPageExt = null;
 	protected $app = null;
+	protected $model = null;
 
 	protected function init() {
 		wfProfileIn(__METHOD__);
@@ -14,10 +15,13 @@ class WAMPageHooks {
 		if( is_null($this->EnableWAMPageExt) ) {
 			$this->EnableWAMPageExt = $this->app->wg->EnableWAMPageExt;
 		}
+		
+		if( is_null($this->model) ) {
+			$this->model = new WAMPageModel();
+		}
 
 		if( is_null($this->WAMPageConfig) ) {
-			$WAMPageModel = new WAMPageModel();
-			$this->WAMPageConfig = $WAMPageModel->getConfig();
+			$this->WAMPageConfig = $this->model->getConfig();
 		}
 		
 		wfProfileOut(__METHOD__);
@@ -77,19 +81,17 @@ class WAMPageHooks {
 			unset($options[$index]);
 			$options[] = 'known';
 		}
-
+		
 		return true;
 	}
 	
 	protected function isWAMPage($title) {
 		$dbKey = null;
-		$wamPageName = mb_strtolower( $this->WAMPageConfig['pageName'] );
-		$wamPageFaqPageName = mb_strtolower( $this->WAMPageConfig['faqPageName'] );
-
+		
 		if( $title instanceof Title ) {
 			$dbKey = mb_strtolower( $title->getDBKey() );
 		}
 		
-		return !empty($this->EnableWAMPageExt) && ($dbKey === $wamPageName || $dbKey === $wamPageFaqPageName);
+		return !empty($this->EnableWAMPageExt) && in_array($dbKey, $this->model->getWamPagesDbKeysLower());
 	}
 }

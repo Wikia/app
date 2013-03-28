@@ -16,8 +16,16 @@ class WAMPageController extends WikiaController
 	}
 
 	public function index() {
-		$this->faqPage = !empty($this->app->wg->WAMPageConfig['faqPageName']) ? $this->app->wg->WAMPageConfig['faqPageName'] : '#';
-		$this->tabs = $this->model->getTabs();
+		$faqPageName = $this->model->getWAMFAQPageName();
+
+		$currentTabIndex = 0;
+		$title = $this->wg->Title;
+		if( $title instanceof Title ) {
+			$currentTabIndex = $this->model->getTabIndexBySubpageText( $title->getSubpageText() );
+		}
+		
+		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
+		$this->tabs = $this->model->getTabs($currentTabIndex);
 		$this->visualizationWikis = $this->model->getVisualizationWikis($this->wg->ContLang->getCode());
 	}
 	
