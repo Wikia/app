@@ -647,6 +647,10 @@ function WMU_chooseImage(sourceId, itemId) {
 		WMU_displayDetails(o.responseText);
 	};
 
+	WMU_track({
+		label: 'link-add-photo'
+	});
+
 	WMU_indicator(1, true);
 	WMU_jqXHR.abort();
 	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId, {
@@ -854,7 +858,7 @@ function WMU_insertPlaceholder( box ) {
 }
 
 function WMU_insertImage(type) {
-	var params = Array();
+	var params = [];
 	params.push('type='+type);
 	params.push('mwname='+$('#ImageUploadMWname').val());
 	params.push('tempid='+$('#ImageUploadTempid').val());
@@ -1066,6 +1070,12 @@ function WMU_insertImage(type) {
 		WMU_indicator(1, false);
 	};
 
+	if ( type == 'details' ) {
+		WMU_track({
+			label: 'button-add-photo'
+		});
+	}
+
 	WMU_indicator(1, true);
 	WMU_jqXHR.abort();
 	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), {
@@ -1205,7 +1215,7 @@ var WMU_uploadCallback = {
 var WMU_track = (function( Wikia, WikiaEditor ) {
 	var config = {
 			action: Wikia.Tracker.ACTIONS.CLICK,
-			category: 'wmu',
+			category: 'photo-tool',
 			trackingMethod: 'both'
 		},
 		slice = [].slice,

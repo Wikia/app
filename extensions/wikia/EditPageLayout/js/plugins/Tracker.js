@@ -110,11 +110,13 @@
 				// the dataset so it won't override the editor category.
 				} else if ( arg.category ) {
 					labelParts.push( arg.category );
-					delete arg.category;
 				}
 
 				$.extend( data, arg );
 			});
+
+			// Remove category
+			delete data.category;
 
 			// Update label
 			labelParts.push( data.label );
@@ -190,9 +192,7 @@
 				return;
 			}
 
-			if ( el.hasClass( 'RTEImageButton' ) ) {
-				label = 'add-photo';
-			} else if ( el.hasClass( 'RTEGalleryButton' ) ) {
+			if ( el.hasClass( 'RTEGalleryButton' ) ) {
 				label = 'add-gallery';
 			} else if ( el.hasClass( 'RTESlideshowButton' ) ) {
 				label = 'add-slideshow';
