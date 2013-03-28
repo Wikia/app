@@ -74,7 +74,6 @@ class ResourceLoaderContext {
 			}
 		}
 		ksort($this->sassParams);
-		$this->realOnly  = $this->only;
 		// Wikia - change end
 
 		$skinnames = Skin::getSkinNames();
