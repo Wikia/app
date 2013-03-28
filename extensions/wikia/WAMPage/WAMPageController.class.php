@@ -18,7 +18,8 @@ class WAMPageController extends WikiaController
 	public function index() {
 		$this->faqPage = !empty($this->app->wg->WAMPageConfig['faqPageName']) ? $this->app->wg->WAMPageConfig['faqPageName'] : '#';
 		$this->tabs = $this->model->getTabs();
-		$this->visualizationWikis = $this->model->getVisualizationWikis($this->wg->ContLang->getCode());
+
+		$this->visualizationWikis = $this->model->getVisualizationWikis();
 
 		$this->indexWikis = $this->model->getIndexWikis();
 	}

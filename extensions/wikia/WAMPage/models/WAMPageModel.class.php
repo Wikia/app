@@ -36,12 +36,13 @@ class WAMPageModel extends WikiaModel {
 		return self::VISUALIZATION_ITEMS_COUNT;
 	}
 
-	public function getVisualizationWikis($lang, $verticalId = null) {
+	public function getVisualizationWikis($verticalId = null) {
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$WAMData = $this->getMockedDataForDev();
 		} else {
 			$params = [
-				'wiki_lang' => $lang,
+				'wam_day' => $lastDay,
+				'wam_previous_day' => strtotime('-1 day', $lastDay),
 				'vertical_id' => $verticalId,
 				'limit' => $this->getVisualizationItemsCount(),
 				'sort_column' => 'wam_index',
@@ -160,7 +161,7 @@ class WAMPageModel extends WikiaModel {
 				'last_peak' => '2013-02-18',
 				'title' => 'League of Legends Wiki',
 				'url' => 'leagueoflegends.wikia.com',
-				'hub_id' => '2',
+				'hub_id' => '3',
 				'wam_change' => '0.0039',
 				'admins' => [],
 				'wiki_image' => 'http://images4.wikia.nocookie.net/__cb20120828154214/wikiaglobal/images/thumb/e/ea/Wikia-Visualization-Main%2Cleagueoflegends.png/150px-Wikia-Visualization-Main%2Cleagueoflegends.png.jpeg',
@@ -196,8 +197,8 @@ class WAMPageModel extends WikiaModel {
 				'last_peak' => '2013-09-11',
 				'title' => 'Fallout Wiki',
 				'url' => 'fallout.wikia.com',
-				'hub_id' => '2',
-				'wam_change' => '0',
+				'hub_id' => '9',
+				'wam_change' => '0.0091',
 				'admins' => [],
 				'wiki_image' => null,
 			],
