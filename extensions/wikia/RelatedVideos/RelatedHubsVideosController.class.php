@@ -7,7 +7,7 @@ class RelatedHubsVideosController extends RelatedVideosController {
 		parent::__construct($app);
 	}
 	
-	public function getCarusel() {
+	public function getCarousel() {
 		if( Wikia::isMainPage() || ( !$this->app->wg->Title instanceof Title ) || !$this->app->wg->Title->exists() ) {
 			return false;
 		}
