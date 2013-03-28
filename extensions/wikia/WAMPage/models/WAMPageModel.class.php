@@ -6,6 +6,10 @@ class WAMPageModel extends WikiaModel {
 	const VISUALIZATION_ITEM_IMAGE_HEIGHT = 94;
 	const SCORE_ROUND_PRECISION = 2;
 
+	const VIDEO_GAMES_ID = 2;
+	const ENTERTAINMENT_ID = 2;
+	const LIFESTYLE_ID = 2;
+
 	protected $config = null;
 	
 	static protected $failoverTabsNames = [
@@ -36,23 +40,41 @@ class WAMPageModel extends WikiaModel {
 		return self::VISUALIZATION_ITEMS_COUNT;
 	}
 
-	public function getVisualizationWikis($verticalId = null) {
+	public function getVisualizationWikis($tabIndex) {
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$WAMData = $this->getMockedDataForDev();
 		} else {
-			$params = [
-				'vertical_id' => $verticalId,
-				'limit' => $this->getVisualizationItemsCount(),
-				'sort_column' => 'wam_index',
-				'sort_direction' => 'DESC',
-				'wiki_image_height' => self::VISUALIZATION_ITEM_IMAGE_HEIGHT,
-				'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
-				'fetch_wiki_images' => true,
-			];
+			switch($tabIndex) {
+				case 0: $params = $this->getVisualizationParams(); break;
+				case 1: $params = $this->getVisualizationParams( null, 'wam_change' ); break;
+				case 2: $params = $this->getVisualizationParams( VIDEO_GAMES_ID ); break;
+				case 3: $params = $this->getVisualizationParams( ENTERTAINMENT_ID ); break;
+				case 4: $params = $this->getVisualizationParams( LIFESTYLE_ID ); break;
+			}
+
+			$lastDay = strtotime('00:00 -1 day');
+
+			$params = array_merge($params, $this->getDefaultParams($lastDay));
 
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
 		return $this->prepareIndex($WAMData['wam_index']);
+	}
+
+	public function getIndexWikis() {
+		if( !empty($this->app->wg->DevelEnvironment) ) {
+			$WAMData = $this->getMockedDataForDev();
+		} else {
+			$params = [
+				'limit' => $this->getItemsPerPage(),
+				'sort_column' => 'wam_index',
+				'sort_direction' => 'DESC',
+			];
+			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+		}
+
+		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index']);
+		return $WAMData;
 	}
 	
 	public function getWAMMainPageName() {
@@ -82,22 +104,6 @@ class WAMPageModel extends WikiaModel {
 		}
 		
 		return $tabIndex;
-	}
-
-	public function getIndexWikis() {
-		if( !empty($this->app->wg->DevelEnvironment) ) {
-			$WAMData = $this->getMockedDataForDev();
-		} else {
-			$params = [
-				'limit' => $this->getItemsPerPage(),
-				'sort_column' => 'wam_index',
-				'sort_direction' => 'DESC',
-			];
-			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
-		}
-
-		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index']);
-		return $WAMData;
 	}
 
 	/**
@@ -175,6 +181,25 @@ class WAMPageModel extends WikiaModel {
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
 		return $this->wf->Message('wam-' . $wikiaHub['name'])->inContentLanguage()->text();
+	}
+
+	protected function getVisualizationParams($verticalId = null, $sortColumn = 'wam_index') {
+		return [
+			'vertical_id' => $verticalId,
+			'sort_column' => $sortColumn
+		];
+	}
+
+	protected function getDefaultParams($lastDay) {
+		return [
+			'wam_day' => $lastDay,
+			'wam_previous_day' => strtotime('-1 day', $lastDay),
+			'limit' => $this->getVisualizationItemsCount(),
+			'sort_direction' => 'DESC',
+			'wiki_image_height' => self::VISUALIZATION_ITEM_IMAGE_HEIGHT,
+			'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
+			'fetch_wiki_images' => true,
+		];
 	}
 
 	/**

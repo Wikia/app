@@ -3,11 +3,14 @@
 class WAMPageController extends WikiaController
 {
 	protected $model;
+	protected $tabIndex;
 
 	public function __construct() {
-		parent::__construct();
+		parent::__construct( 'WAMPage', '', false );
 
 		$this->model = new WAMPageModel();
+		// MOCKED tab index
+		$this->tabIndex = 0;
 	}
 
 	public function init() {
