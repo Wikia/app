@@ -71,7 +71,7 @@ class WAMPageModel extends WikiaModel {
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
 
-		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index'], 0);
+		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index'], self::TAB_INDEX_TOP_WIKIS);
 		return $WAMData;
 	}
 	
