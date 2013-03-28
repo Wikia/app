@@ -3,14 +3,20 @@
  */
 
 (function( window, $ ) {
-	var	Wikia = window.Wikia,
+	var	slice = [].slice,
+		Wikia = window.Wikia,
 		WikiaEditor = window.WikiaEditor;
+
+	// Depends on Wikia.Tracker
+	if ( !( Wikia || Wikia.Tracker ) ) {
+		return;
+	}
 
 	WikiaEditor.plugins.tracker = $.createClass( WikiaEditor.plugin, {
 		config: {
 			action: Wikia.Tracker.ACTIONS.CLICK,
 			category: 'editor',
-			trackingMethod: 'ga'
+			trackingMethod: 'both'
 		},
 
 		init: function() {
@@ -18,17 +24,16 @@
 				editorType = ( isMiniEditor ? '-mini-' : '-' ) +
 					( ( window.RTE !== undefined && !window.RTEEdgeCase ) ? 'ck' : 'mw' );
 
+			// Add editor type to category
+			this.config.category += editorType;
+
 			// Track edit page views and page type
 			if ( !isMiniEditor ) {
 				this.track({
 					action: Wikia.Tracker.ACTIONS.VIEW,
-					category: 'edit' + editorType,
 					label: 'edit-page'
 				});
 			}
-
-			// Add editor type to config category
-			this.config.category += editorType;
 
 			// Add the tracking functions to the editor object for easy reference elsewhere
 			this.editor.track = this.proxy( this.track );
@@ -86,11 +91,36 @@
 			}
 		},
 
-		track: function( data ) {
-			// Support string as shortcut for label (common use case)
-			Wikia.Tracker.track( this.config, typeof data === 'string' ? {
-				label: data
-			} : data );
+		// Wrapper for Wikia.Tracker so we can perform some magic
+		track: function() {
+			var	args = slice.call( arguments ),
+				data = {},
+				labelParts = [];
+
+			// Merge arguments left
+			$.each( args, function( i, arg ) {
+
+				// Support string arguments as shorthand for { label: 'label' }
+				if ( typeof arg === 'string' ) {
+					arg = {
+						label: arg
+					};
+
+				// Append category information to label and remove it from
+				// the dataset so it won't override the editor category.
+				} else if ( arg.category ) {
+					labelParts.push( arg.category );
+					delete arg.category;
+				}
+
+				$.extend( data, arg );
+			});
+
+			// Update label
+			labelParts.push( data.label );
+			data.label = labelParts.join( '-' );
+
+			Wikia.Tracker.track( this.config, data );
 		},
 
 		/**
@@ -128,8 +158,7 @@
 	(function() {
 		var	i,
 			l,
-			methodNames = [ 'track', 'trackWithEventData' ],
-			slice = [].slice;
+			methodNames = [ 'track', 'trackWithEventData' ];
 
 		for ( i = 0, l = methodNames.length; i < l; i++ ) {
 			(function( methodName ) {

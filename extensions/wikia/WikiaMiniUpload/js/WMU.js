@@ -125,8 +125,8 @@ function WMU_loadDetails() {
 			if(FCK.wysiwygData[WMU_refid].align && FCK.wysiwygData[WMU_refid].align == 'left') {
 				$('#ImageUploadLayoutLeft').click();
 			}
-			
-			/* 
+
+			/*
 			 * This is run if modifying an existing image in the article
 			 * with a precise width set.
 			 */
@@ -160,7 +160,7 @@ function WMU_loadDetails() {
 	};
 
 	WMU_jqXHR.abort();
-	
+
 
 	var params = new Array();
 	params.push('sourceId=0');
@@ -360,6 +360,9 @@ function WMU_loadMainFromView() {
 
 
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
+	WMU_track({
+		label: 'open'
+	});
 
 	// reset mode to support normal editor usage
 	WMU_openedInEditor = true;
@@ -381,7 +384,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			wikiaEditor.plugins.MiniEditor.hasFocus = true;
 		}
 	}
-
 
 	WMU_refid = null;
 	WMU_wysiwygStart = 1;
@@ -644,7 +646,7 @@ function WMU_chooseImage(sourceId, itemId) {
 	var callback = function(o) {
 		WMU_displayDetails(o.responseText);
 	};
-		
+
 	WMU_indicator(1, true);
 	WMU_jqXHR.abort();
 	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId, {
@@ -817,7 +819,7 @@ function WMU_displayDetails(responseText) {
 		$( '#ImageUploadManualWidth' ).val(WMU_size);
 		WMU_manualWidthInput();
 	}
-	
+
 	if( '' != WMU_caption ) {
 		$( '#ImageUploadCaption' ).val(WMU_caption);
 	}
@@ -983,12 +985,12 @@ function WMU_insertImage(type) {
 					imageWikiText: $responseHTML.find('#ImageUploadTag').val()
 				};
 				$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
-				
+
 				// prevent checking for editor if WMU used outside of the editor context
 				if(!WMU_openedInEditor) {
 					return false;
 				}
-				
+
 				if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
 					if( -2 == WMU_gallery) {
 						WMU_insertPlaceholder( WMU_box );
@@ -1063,7 +1065,7 @@ function WMU_insertImage(type) {
 		}
 		WMU_indicator(1, false);
 	};
-		
+
 	WMU_indicator(1, true);
 	WMU_jqXHR.abort();
 	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), {
@@ -1199,3 +1201,21 @@ var WMU_uploadCallback = {
 		WMU_displayDetails(response);
 	}
 }
+
+var WMU_track = (function( Wikia, WikiaEditor ) {
+	var config = {
+			action: Wikia.Tracker.ACTIONS.CLICK,
+			category: 'wmu',
+			trackingMethod: 'both'
+		},
+		slice = [].slice,
+		// Use editor tracking if available, fall back to global tracking or noop
+		// if tracking isn't available.
+		track = ( WikiaEditor && WikiaEditor.track ) ||
+			( Wikia.Tracker && Wikia.Tracker.track ) ||
+			$.noop;
+
+	return function() {
+		track.apply( track, [ config ].concat( slice.call( arguments ) ) );
+	};
+})( window.Wikia, window.WikiaEditor );
