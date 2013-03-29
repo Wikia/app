@@ -360,9 +360,6 @@ function WMU_loadMainFromView() {
 
 
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
-	WMU_track({
-		label: 'open'
-	});
 
 	// reset mode to support normal editor usage
 	WMU_openedInEditor = true;
@@ -468,6 +465,10 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			}
 		}
 	}
+
+	WMU_track({
+		label: window.WMU_RTEImage ? 'modify' : 'open'
+	});
 
 	$('#header_ad').css('display', 'none');
 	if(WMU_modal != null) {
@@ -648,7 +649,7 @@ function WMU_chooseImage(sourceId, itemId) {
 	};
 
 	WMU_track({
-		label: 'link-add-photo'
+		label: 'photo-add-recent'
 	});
 
 	WMU_indicator(1, true);
@@ -1219,11 +1220,7 @@ var WMU_track = (function( Wikia, WikiaEditor ) {
 			trackingMethod: 'both'
 		},
 		slice = [].slice,
-		// Use editor tracking if available, fall back to global tracking or noop
-		// if tracking isn't available.
-		track = ( WikiaEditor && WikiaEditor.track ) ||
-			( Wikia.Tracker && Wikia.Tracker.track ) ||
-			$.noop;
+		track = ( WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
 
 	return function() {
 		track.apply( track, [ config ].concat( slice.call( arguments ) ) );

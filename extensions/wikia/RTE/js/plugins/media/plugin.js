@@ -82,6 +82,7 @@ CKEDITOR.plugins.add('rte-media',
 				label: msgs['edit'],
 				'class': 'RTEMediaOverlayEdit',
 				callback: function(node) {
+					// Set up some janky tracking here
 					node.trigger('edit');
 				}
 			},
@@ -392,7 +393,7 @@ RTE.mediaEditor = {
 
 		this._add(wikitext, data);
 	},
-	
+
 	// add a video (wikitext will parser to HTML, params stored in metadata)
 	addVideo: function(wikitext, params) {
 		RTE.log('adding a video');
