@@ -247,7 +247,7 @@ class Config implements ArrayAccess
 	 * @return integer
 	 */
 	public function getLength() {
-		return ( $this->getArticleMatch() !== null && $this->getStart() === 0 ) 
+		return ( $this->hasMatch() && $this->getStart() === 0 ) 
 			? ( (int) $this->params['length'] ) - 1 
 			: $this->params['length'];
 	}

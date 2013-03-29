@@ -1717,6 +1717,11 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'isCorporateWiki' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
 		    ->method ( 'getVal' )
 		    ->with   ( 'search' )
 		    ->will   ( $this->returnValue( $query ) )
