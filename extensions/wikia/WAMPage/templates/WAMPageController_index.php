@@ -15,16 +15,18 @@
 <div class="wam-header">
 	<div class="wam-cards">
 		<? 	$i = 1;
-			foreach($visualizationWikis as $k => $wiki) { ?>
+			foreach($visualizationWikis as $k => $wiki): ?>
 			<a href="http://<?= $wiki['url'] ?>" class="wam-card card<?= $i++ ?>">
 				<figure>
 					<img src="<?= $wiki['wiki_image'] ?>" alt="<?= $wiki['title'] ?>" title="<?= $wiki['title'] ?>" />
 					<span><?= $wiki['title'] ?></span>
 				</figure>
-				<div class="wam-score vertical-<?= $wiki['hub_id'] ?> wam-<?= $wiki['change'] ?>"><?= $wiki['wam'] ?></div>
+				<div class="wam-score vertical-<?= $wiki['hub_id'] ?> wam-<?= $wiki['change'] ?>">
+					<?= $wg->Lang->formatNum(number_format($wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION)) ?>
+				</div>
 				<span class="wam-vertical"><?= $wiki['hub_name'] ?></span>
 			</a>
-		<? } // end foreach ?>
+		<? endforeach ?>
 	</div>
 	
     <h2><?= $subpageText ?></h2>
@@ -51,7 +53,9 @@
 		<? foreach ($indexWikis['wam_index'] as $wiki): ?>
 			<tr>
 				<td><?=$wiki['wam_rank']?>.</td>
-				<td class="score <?=$wiki['change']?>"><?=$wiki['wam']?></td>
+				<td class="score <?=$wiki['change']?>">
+					<?= $wg->Lang->formatNum(number_format($wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION))?>
+				</td>
 				<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
 				<td><?=$wiki['hub_name']?></td>
 				<td><?=$wiki['hub_wam_rank']?></td>

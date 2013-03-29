@@ -104,6 +104,11 @@ class WAMPageModel extends WikiaModel {
 		return array_search($subpageText, $this->getTabsNamesArray());
 	}
 
+	public function getTabNameByIndex($tabIndex) {
+		$tabNames = $this->getTabsNamesArray();
+		return array_key_exists($tabIndex, $tabNames) ? $tabNames[$tabIndex] : false;
+	}
+
 	/**
 	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
 	 *
@@ -151,7 +156,7 @@ class WAMPageModel extends WikiaModel {
 		foreach ($wamWikis as &$wiki) {
 			$wamScore = $wiki[$wamScoreName];
 			$wiki['change'] = $this->getScoreChangeName($wiki['wam'], $wiki['wam_change']);
-			$wiki['wam'] = number_format(round($wamScore, self::SCORE_ROUND_PRECISION), self::SCORE_ROUND_PRECISION);
+			$wiki['wam'] = round($wamScore, self::SCORE_ROUND_PRECISION);
 			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
 		}
 

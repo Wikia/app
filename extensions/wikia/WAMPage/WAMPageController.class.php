@@ -19,11 +19,14 @@ class WAMPageController extends WikiaController
 		$faqPageName = $this->model->getWAMFAQPageName();
 
 		$title = $this->wg->Title;
-		if( $title instanceof Title ) {
+		if( $title instanceof Title && $title->isSubpage() ) {
 			$this->subpageText = $title->getSubpageText();
 			$currentTabIndex = $this->model->getTabIndexBySubpageText($this->subpageText);
 			
 			$this->redirectIfFirstTab($currentTabIndex, $this->subpageText);
+		} else {
+			$currentTabIndex = WAMPageModel::TAB_INDEX_TOP_WIKIS;
+			$this->subpageText = $this->model->getTabNameByIndex($currentTabIndex);
 		}
 		
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
