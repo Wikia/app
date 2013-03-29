@@ -102,7 +102,7 @@ class InterWiki extends AbstractSelect
 	protected function registerGrouping( Solarium_Query_Select $query ) {
 		$grouping = $query->getGrouping();
 		$grouping->setLimit( self::GROUP_RESULTS_GROUPING_ROW_LIMIT )
-		         ->setOffset( $this->config->getStart() )
+		         ->setOffset( 0 )
 		         ->setFields( array( self::GROUP_RESULTS_GROUPING_FIELD ) )
 		;
 		return $this;
