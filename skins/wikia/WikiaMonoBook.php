@@ -103,11 +103,11 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	 * Setup ads handling
 	 */
 	protected function setupAds(BaseTemplate &$tpl) {
+		$tpl->set('ads-column', '');
 		$tpl->set('ads_top', '');
 		$tpl->set('ads_topleft', '');
 		$tpl->set('ads_topright', '');
 		$tpl->set('ads_bot','');
-		$tpl->set('ads-column', '');
 	}
 
 	/**
@@ -117,7 +117,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		global $wgCityId;
 
 		return AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW) .
-			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory()) .
+			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine2Controller::getCachedCategory()) .
 			AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)) .
 			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 	}
