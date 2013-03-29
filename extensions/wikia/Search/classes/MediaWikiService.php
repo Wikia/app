@@ -484,7 +484,6 @@ class MediaWikiService
 		if ( $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' ) ) {
 			$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
 		}
-		print "getWikiMatchByHost for ".$domain." is ".$wikiId."<br/>\n";
 		return $match;
 	}
 	
