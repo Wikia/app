@@ -91,8 +91,8 @@ $messages['en'] = array(
 	'vet-search-filter-caption' => 'Search filter',
 	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com Wikia Video Library] for high quality videos licensed by Wikia.',
 	'vet-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
-	'vet-description-placeholder' => 'Write the description of this video here.',
-	'vet-description-help-text' => 'This description will be displayed on the video\'s file page',
+	'vet-description-placeholder' => 'Add a description for your video',
+	'vet-description-help-text' => 'The description will be displayed on the File page.',
 	'vet-details-about-video' => 'About the video',
 );
 
