@@ -148,23 +148,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $searchConfig->getPage() != 1 ) {
 			return false;
 		}
-		$title = Title::newFromText( $searchConfig->getOriginalQuery() );
-		$track = new Track();
-		if ( $searchConfig->hasArticleMatch() && $this->getVal('fulltext', '0') === '0') {
-
-		    $this->wf->RunHooks( 'SpecialSearchIsgomatch', array( $title, $searchConfig->getOriginalQuery() ) );
-
-		    $track->event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
-		    $this->response->redirect( $title->getFullUrl() );
-		}
-		else if ( $searchConfig->hasArticlematch() ) {
-		    $track->event( 'search_start_match', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+		
+		if ( $searchConfig->hasArticleMatch() ) {
+			$article = Article::newFromID( $searchConfig->getArticleMatch()->getId() );
+			$title = $article->getTitle();
+			$track = new Track();
+			if ( $this->getVal('fulltext', '0') === '0') {
+				$this->wf->RunHooks( 'SpecialSearchIsgomatch', array( $title, $searchConfig->getOriginalQuery() ) );
+				$track->event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+				$this->response->redirect( $title->getFullUrl() );
+			} else {
+				$track->event( 'search_start_match', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+			}
 		} else {
-		    if ( $title !== null ) {
-		        $this->wf->RunHooks( 'SpecialSearchNogomatch', array( &$title ) );
-		    }
+			$title = Title::newFromText( $searchConfig->getOriginalQuery() );
+			if ( $title !== null ) {
+				$this->wf->RunHooks( 'SpecialSearchNogomatch', array( &$title ) );
+			}
 		}
-
 		return true;
 	}
 	
