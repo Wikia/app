@@ -12,10 +12,17 @@
 class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
-	 * Default results per page
+	 * Default results per page for intra wiki search
 	 * @var int
 	 */
 	const RESULTS_PER_PAGE = 25;
+
+	/**
+	 * Default results per page for inter wiki search
+	 * @var int
+	 */
+	const INTERWIKI_RESULTS_PER_PAGE = 7;
+
 	/**
 	 * Default pages per window
 	 * @var int
@@ -150,14 +157,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		return true;
 	}
-	
+
 	/**
 	 * Passes the appropriate values to the config object from the request during index method.
 	 * @return \Wikia\Search\Config
 	 */
 	protected function getSearchConfigFromRequest() {
 		$searchConfig = new Wikia\Search\Config();
-		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? self::RESULTS_PER_PAGE : $this->wg->SearchResultsPerPage;
+		$resultsPerPage = $this->isCorporateWiki() ? self::INTERWIKI_RESULTS_PER_PAGE : self::RESULTS_PER_PAGE;
+		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? $resultsPerPage : $this->wg->SearchResultsPerPage;
 		$searchConfig
 			->setQuery                   ( $this->getVal( 'query', $this->getVal( 'search' ) ) )
 			->setCityId                  ( $this->wg->CityId )

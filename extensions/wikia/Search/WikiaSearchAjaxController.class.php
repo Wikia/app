@@ -11,8 +11,6 @@ use Wikia\Search\QueryService;
  */
 class WikiaSearchAjaxController extends WikiaController {
 
-    const RESULTS_PER_PAGE = 25;
-
     /**
      * Handles accessing paginated results via AJAX.
      */
@@ -35,7 +33,7 @@ class WikiaSearchAjaxController extends WikiaController {
 
         $cityId = $isInterWiki ? 0 : $this->wg->CityId;
 
-        $resultsPerPage = $isInterWiki ? 10 : self::RESULTS_PER_PAGE;
+        $resultsPerPage = $isInterWiki ? WikiaSearchController::INTERWIKI_RESULTS_PER_PAGE : WikiaSearchController::RESULTS_PER_PAGE;
         $params = array(
 			'page'			=>	$page,
 			'length'		=>	$resultsPerPage,
