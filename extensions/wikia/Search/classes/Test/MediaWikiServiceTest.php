@@ -1778,61 +1778,6 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\MediaWikiService::getWikiIdByHost
-	 */
-	public function testGetWikiIdByHost() {
-		$service = $this->service->setMethods( null )->getMock();
-
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'GetDB' ) )
-		                    ->getMock();
-		
-		$mockDb = $this->getMockBuilder( 'DatabaseMysql' )
-		               ->disableOriginalConstructor()
-		               ->setMethods( array( 'select', 'fetchObject' ) )
-		               ->getMock();
-		
-		$mockResult = $this->getMockBuilder( 'ResultWrapper' )
-		                   ->disableOriginalConstructor()
-		                   ->getMock();
-		
-		$mockRow = (object) array( 'city_id' => 321 );
-		$domain = 'foo';
-		$db = 'foo';
-		$wg = (object) array( 'ExternalSharedDB' => $db );
-		$app = (object) array( 'wf' => $mockWrapper, 'wg' => $wg );
-		
-		$reflApp = new ReflectionProperty( 'Wikia\Search\MediaWikiService', 'app' );
-		$reflApp->setAccessible( true );
-		$reflApp->setValue( $service, $app );
-		
-		$mockWrapper
-		    ->expects( $this->once() )
-		    ->method ( 'GetDB' )
-		    ->with   ( DB_SLAVE, array(), $db )
-		    ->will   ( $this->returnValue( $mockDb ) )
-		;
-		$mockDb
-		    ->expects( $this->once() )
-		    ->method ( 'select' )
-		    ->with   ( array( 'city_domains' ), array( 'city_id' ), array( 'city_domain' => "{$domain}.wikia.com" ) )
-		    ->will   ( $this->returnValue( $mockResult ) ) 
-		;
-		$mockDb
-		    ->expects( $this->once() )
-		    ->method ( 'fetchObject' )
-		    ->with   ( $mockResult ) 
-		    ->will   ( $this->returnValue( $mockRow ) )
-		;
-		$this->mockApp();
-		$this->assertEquals(
-				321,
-				$service->getWikiIdByHost( $domain )
-		);
-	}
-	
-	/**
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
 	public function testGetWikiMatchByHost() {
@@ -1846,14 +1791,14 @@ class MediaWikiServiceTest extends BaseTest
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiIdByHost' )
-		    ->with   ( $domain )
+		    ->with   ( 'foo.wikia.com' )
 		    ->will   ( $this->returnValue( 123 ) )
 		;
 		
 		$this->proxyClass( 'Wikia\Search\Match\Wiki', $mockMatch );
 		$this->mockApp();
 		$this->assertInstanceOf(
-				$service->getWikiMatchByHost( $domain )->_mockClassName,
+				$service->getWikiMatchByHost( 'foo' )->_mockClassName,
 				$mockMatch
 		);
 	}

@@ -481,9 +481,10 @@ class MediaWikiService
 	 */
 	public function getWikiMatchByHost( $domain ) {
 		$match = null;
-		if ( $wikiId = $this->getWikiIdByHost( $domain ) ) {
+		if ( $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' ) ) {
 			$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
 		}
+		print "getWikiMatchByHost for ".$domain." is ".$wikiId."<br/>\n";
 		return $match;
 	}
 	
@@ -493,18 +494,7 @@ class MediaWikiService
 	 * @return int|null
 	 */
 	public function getWikiIdByHost( $domain ) {
-		$match = null;
-		$dbr = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
-		$query = $dbr->select(
-				array( 'city_domains' ),
-				array( 'city_id' ),
-				array( 'city_domain' => "{$domain}.wikia.com" )
-				);
-		$id = null;
-		if ( $row = $dbr->fetchObject( $query ) ) {
-			$id = $row->city_id;
-		}
-		return $id;
+		return (new \WikiFactory)->DomainToID( $domain );
 	}
 
 	/**
