@@ -7,19 +7,19 @@
 class VideoEmbedTool {
 
 	function getMsgVars() {
-	
-	
+
+
 		$vars = array(
-			'vet-back', 
+			'vet-back',
 			'vet-imagebutton',
 			'vet-close',
 			'vet-warn1',
 			'vet-warn2',
 			'vet-warn3',
 		);
-		
+
 		$ret = array();
-		
+
 		foreach($vars as $var) {
 			$ret[$var] = wfMsg($var);
 		}
@@ -159,8 +159,9 @@ class VideoEmbedTool {
 			$props['vname'] = $file->getTitle()->getText();
 			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 			$props['metadata'] = '';
+
 			$props['description'] = $this->getVideoDescription($file);
-			$props['premiumVideo'] = ($wgRequest->getVal( 'searchType' ) == 'premium');		
+			$props['premiumVideo'] = ($wgRequest->getVal( 'searchType' ) == 'premium');
 		}
 
 		wfProfileOut(__METHOD__);
@@ -184,8 +185,9 @@ class VideoEmbedTool {
 		$provider = $wgRequest->getVal('provider');
 		$ns_file = $wgContLang->getFormattedNsText( NS_FILE );
 
+		$description = urldecode( $wgRequest->getVal('description') );
 		$name = urldecode( $wgRequest->getVal('name') );
-		
+
 		$embed_code = '';
 		$tag = '';
 		$message = '';
@@ -232,7 +234,7 @@ class VideoEmbedTool {
 				return wfMsg( 'wva-thumbnail-upload-failed' );
 			}
 		}
-		
+
 		$message = wfMsg( 'vet-single-success' );
 		$ns_file = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal('caption');
@@ -256,7 +258,7 @@ class VideoEmbedTool {
 		$editingFromArticle = $wgRequest->getVal( 'placeholder' );
 		if( $editingFromArticle ) {
 			Wikia::setVar('EditFromViewMode', true);
-			
+
 			$article_title = $wgRequest->getVal( 'article' );
 			$ns = $wgRequest->getVal( 'ns' );
 			$box = $wgRequest->getVal( 'box' );
@@ -275,7 +277,7 @@ class VideoEmbedTool {
 				$file = wfFindFile( $title );
 				$thumb = $file->transform( array('width'=>$width) );
 				$embed_code = $thumb->toHtml( array('desc-link' => true) );
-				$html_params = array( 
+				$html_params = array(
 					'imageHTML' => $embed_code,
 					'align' => $layout,
 					'width' => $width,
@@ -283,21 +285,21 @@ class VideoEmbedTool {
 					'caption' => $caption,
 					'showPictureAttribution' => true,
 				);
-				
+
 				// Get all html to insert into article view page
 				$image_service = F::app()->sendRequest( 'ImageTweaksService', 'getTag', $html_params );
 				$image_data = $image_service->getData();
 				$embed_code = $image_data['tag'];
-	
+
 				// Make output match what's in a saved article
 				if($layout == 'center') {
 					$embed_code = '<div class="center">'.$embed_code.'</div>';
 				}
 
 				$summary = wfMsg( 'vet-added-from-placeholder' );
-	
+
 				$text = substr_replace( $text, $tag, $placeholder[1], strlen( $placeholder_tag ) );
-				
+
 				$button_message = wfMessage('vet-placeholder-return');
 				$success = $article_obj->doEdit( $text, $summary);
 			}

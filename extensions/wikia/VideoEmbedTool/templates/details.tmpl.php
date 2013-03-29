@@ -1,4 +1,4 @@
-<h1 id="VideoEmbedTitle2" ><?=wfMsg('vet-details-inf2') ?></h1>
+<h1><?=wfMsg('vet-details-about-video') ?></h2>
 <form class="VideoEmbedOptionsTable WikiaForm" id="VET-display-options<? if( $screenType == 'edit' ){ ?>-update<? } ?>">
 
 <?php
@@ -19,11 +19,15 @@ global $wgExtensionsPath;
 					<input type="hidden" id="VideoEmbedName" name="wpVideoEmbedName" value="<?= htmlspecialchars($props['vname']) ?>" />
 				<? endif; ?>
 			</div>
-			<div>
-				Description: <?= htmlspecialchars(!empty($props['description']) ? $props['description'] : '') ?>
-			</div>
+		</div>
+		<div class="input-group last" id="VideoEmbedDescriptionRow">
+			<p class="hint"><?= wfMessage('vet-description-help-text') ?></p>
+			<label class="option-label">Description:</label>
+			<textarea id="VideoEmbedDescription" class="video-description" name="description" placeholder="<?= wfMessage('vet-description-placeholder') ?>"><?= htmlspecialchars(!empty($props['description']) ? $props['description'] : '') ?></textarea>
 		</div>
 	</div>
+
+	<h2 class="main-header"><?=wfMsg('vet-details-inf2') ?></h2>
 
 	<div class="preview-options">
 		<div class="input-group" id="VideoEmbedSizeRow">
@@ -50,7 +54,7 @@ global $wgExtensionsPath;
 				</span>
 			</div>
 		</div>
-		<div class="input-group" id="VideoEmbedLayoutRow">
+		<div class="input-group last" id="VideoEmbedLayoutRow">
 			<label class="option-label"><?= wfMsg('vet-layout') ?></label>
 			<div>
 				<span id="VET_LayoutLeftBox">

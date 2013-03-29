@@ -143,7 +143,7 @@
 	// macbre: move back button inside dialog content and add before provided selector (Oasis changes)
 	function VET_moveBackButton(selector) {
 		// store back button
-		if (typeof window.VETbackButton == 'undefined') {
+		if (!window.VETbackButton) {
 			var backButtonOriginal = $('#VideoEmbedBack');
 			var backButton = backButtonOriginal.clone();
 
@@ -380,6 +380,7 @@
 			}
 		}
 
+		params.push('description='+encodeURIComponent($('#VideoEmbedDescription').val()));
 		params.push('oname='+encodeURIComponent( $('#VideoEmbedOname').val() ) );
 		params.push('name='+encodeURIComponent( $('#VideoEmbedName').val() ) );
 
@@ -422,6 +423,7 @@
 						VET_switchScreen('Summary');
 						$('#VideoEmbedBack').css('display', 'none');
 						$('#VideoEmbed' + VET_curScreen).html(o.responseText);
+						VET_updateHeader();
 
 						if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
 							var wikitext = $('#VideoEmbedTag').val();
@@ -504,6 +506,7 @@
 
 	function VET_close() {
 		VET_switchScreen('Main');
+		window.VETbackButton = false;
 
 		VET_loader.modal.closeModal();
 

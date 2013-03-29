@@ -22,7 +22,8 @@ $modal-border-opacity: 80;
 	@include border-opacity($color-body, $modal-border-opacity);
 	color: $color-text;
 	position: absolute;
-	>h1 {
+	// give option to style other header tags like an h1
+	>h1, h2.main-header {
 		color: $color-links;
 		font-size: 22px;
 		margin: 20px 60px 20px 20px;
@@ -46,7 +47,7 @@ $modal-border-opacity: 80;
 			margin-left: 10px;
 		}
 	}
-	
+
 	#WikiaConfirmOk {
 		margin-left: 2px;
 	}
@@ -57,11 +58,16 @@ $modal-border-opacity: 80;
 	@include bodytext;
 	display: block;
 	margin: 0 20px 20px 20px;
-        .MyToolsConfiguration {
-            .options-list {
-                line-height: 1;
-            }
+	// header tags inside modal content don't need the padding
+	h2.main-header {
+		margin-left: 0;
+		margin-top: 0;
+	}
+    .MyToolsConfiguration {
+        .options-list {
+            line-height: 1;
         }
+    }
 }
 
 .blackout {
