@@ -1540,7 +1540,30 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 								->setMethods( array( 'setData', 'setFormat' ) )
 								->disableOriginalConstructor()
 								->getMock();
+		
+		$mockException = $this->getMockBuilder( 'Exception' )
+		                      ->disableOriginalConstructor()
+		                      ->getMock();
 
+		$mockController
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVal' )
+			->with		( 'title' )
+			->will		( $this->returnValue( null ) )
+		;
+		try {
+			$mockController->searchVideosByTitle();
+		} catch ( \Exception $e ) {}
+		$this->assertInstanceOf(
+				'Exception',
+				$e
+		);
+		$mockController
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVal' )
+			->with		( 'title' )
+			->will		( $this->returnValue( 'title' ) )
+		;
 		$mockController
 			->expects	( $this->at( 0 ) )
 			->method	( 'getVal' )
