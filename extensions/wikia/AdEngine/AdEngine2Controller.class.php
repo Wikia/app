@@ -130,9 +130,11 @@ class AdEngine2Controller extends WikiaController {
 		return self::getAdsInHeadGroup() === 1;
 	}
 
+	// Category name/id is needed multiple times for multiple providers. Be gentle on our dbs by adding a thin caching layer
 	const cacheKeyVersion = "2.03a";
 	const cacheTimeout = 1800;
-	/* Category name/id is needed multiple times for multiple providers. Be gentle on our dbs by adding a thin caching layer. */
+
+	// TODO: move the caching to HubService (if not present yet) and remove it from here
 	public static function getCachedCategory() {
 		wfProfileIn(__METHOD__);
 
