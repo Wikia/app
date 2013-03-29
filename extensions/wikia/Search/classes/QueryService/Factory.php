@@ -53,7 +53,8 @@ class Factory
 		$service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
-			$host = $service->isOnDbCluster() ? $service->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';  
+			$host = $service->isOnDbCluster() ? $service->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';
+			$host = (! empty( $_GET['solrhost'] ) ) ? $_GET['solrhost'] : $host;
 			$solariumConfig = array(
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(

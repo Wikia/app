@@ -89,31 +89,7 @@
 					karma/js-integration.config.js
 					--single-run
 					--no-auto-watch
-					--reporters junit
-            	" />
-		</exec>
-	</target>
-
-	<target name="jsunit-coverage">
-		<mkdir dir="${basedir}/build" />
-		<exec executable="karma" dir="${basedir}" failonerror="true">
-			<arg line="start
-					karma/js-unit.config.js
-					--single-run
-					--no-auto-watch
-					--reporters coverage
-            	" />
-		</exec>
-	</target>
-
-	<target name="jsintegration-coverage">
-		<mkdir dir="${basedir}/build" />
-		<exec executable="karma" dir="${basedir}" failonerror="true">
-			<arg line="start
-					karma/js-integration.config.js
-					--single-run
-					--no-auto-watch
-					--reporters coverage
+					--reporters junit,coverage
             	" />
 		</exec>
 	</target>

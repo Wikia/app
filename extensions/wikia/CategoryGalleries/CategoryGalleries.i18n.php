@@ -23,6 +23,13 @@ $messages['af'] = array(
 	'categorygalleries-desc' => "Wys 'n galery met bladsye op kategoriebladsye",
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'categorygalleries-desc' => 'يظهر معرض صور صفحة في صفحات التصنيف',
+);
+
 /** Asturian (asturianu)
  * @author Xuacu
  */

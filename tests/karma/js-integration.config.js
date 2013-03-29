@@ -26,12 +26,11 @@ files = [
 
 	//JSMessages
 	'extensions/wikia/JSMessages/js/JSMessages.js',
-	'extensions/wikia/JSMessages/js/spec/JSMessages.spec.js',
 
 	//Chat Tests
-	'extensions/wikia/Chat2/js/spec/views.mocks.js',
+	'extensions/wikia/Chat2/js/spec/integration/views.mocks.js',
 	'extensions/wikia/Chat2/js/views/views.js',
-	'extensions/wikia/Chat2/js/spec/ChatController.spec.js',
+	'extensions/wikia/Chat2/js/spec/integration/ChatController.spec.js',
 
 	//WikiaMobile
 	'extensions/wikia/WikiaMobile/js/autocomplete.js',
@@ -53,10 +52,10 @@ files = [
 	'extensions/wikia/WikiaMobile/js/topbar.js',
 	'extensions/wikia/WikiaMobile/js/features.js',
 	'extensions/wikia/WikiaMobile/js/track.js',
-	'extensions/wikia/WikiaMobile/js/spec/*.spec.js',
 	'extensions/wikia/WikiaMobile/js/spec/integration/*.spec.js',
 
 	//core modules
+	'resources/wikia/modules/window.js',
 	'resources/wikia/modules/aim.js',
 	'resources/wikia/modules/cache.js',
 	'resources/wikia/modules/cookies.js',
@@ -70,34 +69,12 @@ files = [
 	'resources/wikia/modules/stringhelper.js',
 	'resources/wikia/modules/thumbnailer.js',
 	'resources/wikia/modules/uniqueId.js',
-	'resources/wikia/modules/spec/*.spec.js',
 	'resources/wikia/modules/spec/integration/*.spec.js',
 
-	//Advertisment
-	'extensions/wikia/AdEngine/js/AdConfig2.js',
-	'extensions/wikia/AdEngine/js/AdConfig2Late.js',
-	'extensions/wikia/AdEngine/js/AdEngine2.js',
-	'extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
-	'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
-	'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
-	'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
-	'extensions/wikia/AdEngine/js/AdLogicShortPage.js',
-	'extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
-	'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
-	'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
-	'extensions/wikia/AdEngine/js/AdProviderLater.js',
-	'extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
-	'extensions/wikia/AdEngine/js/AdProviderNull.js',
-	'extensions/wikia/AdEngine/js/DartUrl.js',
-	'extensions/wikia/AdEngine/js/EvolveHelper.js',
-	'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
-	'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
-	'extensions/wikia/AdEngine/js/spec/*.spec.js',
-
 	//SpecialPromote
-	'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.mocks.js',
+	'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.mocks.js',
 	'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
-	'extensions/wikia/SpecialPromote/js/spec/SpecialPromote.spec.js',
+	'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js',
 ];
 
 // list of files to exclude
@@ -146,11 +123,15 @@ captureTimeout = 10000;
 singleRun = false;
 
 coverageReporter = {
-	type : 'html',
-	dir : '/tests/build/jsintegration-coverage'
+	type : 'cobertura',
+	dir : 'tests/build/jsintegration-coverage'
 };
 
 preprocessors = {
 	'**/resources/wikia/modules/*.js': 'coverage',
 	'**/js/*.js': 'coverage'
+};
+
+junitReporter = {
+	outputFile: 'tests/build/test-results.xml'
 };

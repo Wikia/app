@@ -103,6 +103,12 @@ function efPhalanxInit() {
 	// fb#5311 - prevent a phalanx blocked name from being created.
 	$wgHooks['AbortNewAccount'][] = 'UserBlock::onAbortNewAccount';
 	$wgHooks['cxValidateUserName'][] = 'UserBlock::onValidateUserName';
+	
+	// new PhalanxII hooks
+	$wgHooks['CheckContent'][] = 'ContentBlock::onCheckContent';
+	$wgHooks['SpamFilterCheck'][] = 'ContentBlock::onSpamFilterCheck';
+	$wgHooks['EditPhalanxBlock'][] = 'ContentBlock::onEditPhalanxBlock';
+	$wgHooks['DeletePhalanxBlock'][] = 'ContentBlock::onDeletePhalanxBlock';
 }
 
 

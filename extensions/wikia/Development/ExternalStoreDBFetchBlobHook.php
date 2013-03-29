@@ -32,13 +32,19 @@ $wgHooks[ "ExternalStoreDB::fetchBlob" ][ ] = "ExternalStoreDBFetchBlobHook";
  * @param string  $cluster storage identifier
  * @param integer $id blob identifier
  * @param integer $itemID item identifier when revision text is merged & archived
- * @param string  $ret returned text
+ * @param string  $ret returned blob text
  */
 function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
-
-	global $wgTheSchwartzSecretToken, $wgFetchBlobApiURL;
-	// wikia doesn't use $itemID
+	global $wgTheSchwartzSecretToken;
 	wfProfileIn( __METHOD__ );
+
+	// there's already blob text
+	if ($ret !== false) {
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	// wikia doesn't use $itemID
 	$url = sprintf( "%s?action=fetchblob&store=%s&id=%d&token=%s&format=json",
 		F::app()->wg->FetchBlobApiURL,
 		$cluster,
@@ -47,7 +53,6 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 	);
 
 	$response = json_decode( Http::get( $url, "default", array( 'noProxy' => true ) ) );
-
 
 	if( isset( $response->fetchblob ) ) {
 		$blob = isset( $response->fetchblob->blob ) ? $response->fetchblob->blob : false;

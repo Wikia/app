@@ -627,12 +627,12 @@ To jest lista wpisów na obserwowanych blogach, które zostały zmienione lub sk
 
 $3
 
-Odwiedzaj i edytuj często...
+Odwiedź wiki aby wziąć udział w edycji
 
-Wikia
+- Zespół Wikii
 
- * Aby zmienić preferencje powiadomień listy obserwowanych stron, przejdź na http://www.wikia.com/wiki/Special:Preferences
- * Aby oznaczyć wszystkie strony z tego tygodniowego streszczenia jako przeczytane, odwiedź kartę "Obserwowane" w swoich preferencjach',
+* Aby zmienić preferencje powiadomień listy obserwowanych stron, przejdź na http://www.wikia.com/wiki/Special:Preferences
+* Aby oznaczyć wszystkie strony z tego tygodniowego streszczenia jako przeczytane, odwiedź kartę "Obserwowane" w swoich preferencjach',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|komentarz|komentarze|komentarzy}})',
 	'globalwatchlist-no-page-found' => 'Nie znaleziono strony.',
 	'globalwatchlist-no-blog-page-found' => 'Nie znaleziono wpisu na blogu.',

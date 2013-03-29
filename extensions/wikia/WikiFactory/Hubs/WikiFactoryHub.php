@@ -190,21 +190,27 @@ class WikiFactoryHub {
 	 * @return integer	category id from city_cat_mapping table
 	 */
 	public function getCategoryId( $city_id ) {
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB, $wgMemc;
 
 		wfProfileIn( __METHOD__ );
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$oRow = $dbr->selectRow(
-			array( "city_cat_mapping" ),
-			array( "cat_id" ),
-			array( "city_id" => $city_id ),
-			__METHOD__
-		);
+		$memkey = sprintf("%s:%d", __METHOD__, $city_id);
+		$cat_id = $wgMemc->get($memkey);
+		if ( empty( $cat_id ) ) {
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+			$oRow = $dbr->selectRow(
+				array( "city_cat_mapping" ),
+				array( "cat_id" ),
+				array( "city_id" => $city_id ),
+				__METHOD__
+			);
+			$cat_id = isset( $oRow->cat_id ) ? $oRow->cat_id : null ;
+			if ( $cat_id ) $wgMemc->set( $memkey, $cat_id, 60 * 60 * 24 );
+		}
 
 		wfProfileOut( __METHOD__ );
 
-		return isset( $oRow->cat_id ) ? $oRow->cat_id : null ;
+		return $cat_id;
 	}
 
 	/**

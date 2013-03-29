@@ -323,6 +323,7 @@ $messages['an'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Alexknight12
  * @author Meno25
  * @author Moemin05
@@ -365,7 +366,7 @@ $messages['ar'] = array(
 	'wikiaPhotoGallery-upload-select-images' => 'اختر',
 	'wikiaPhotoGallery-photooptions-title' => 'خيارات الصور',
 	'wikiaPhotoGallery-photooptions-done' => 'تم.',
-	'wikiaPhotoGallery-preview-title' => 'حرّر المعرض', # Fuzzy
+	'wikiaPhotoGallery-preview-title' => 'إنشاء معرض صور',
 	'wikiaPhotoGallery-preview-hover-modify' => 'عدّل',
 	'wikiaPhotoGallery-preview-hover-delete' => 'حذف',
 	'wikiaPhotoGallery-preview-previewtitle' => 'معاينة المعرض',
@@ -1540,6 +1541,7 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Merkezi',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Raşt',
 	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Fotraf deke',
+	'wikiaPhotoGallery-upload-uploadtitle' => 'Fotrafê xo bıvêne',
 	'wikiaPhotoGallery-upload-uploadbutton' => 'Resim Barke',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'ena pele',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Weçine',

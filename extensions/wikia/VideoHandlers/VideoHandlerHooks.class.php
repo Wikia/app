@@ -30,6 +30,8 @@ class VideoHandlerHooks extends WikiaObject{
 			$oFile = wfFindFile( $oTitle );
 			if ( WikiaFileHelper::isVideoFile( $oFile ) ){
 				$oArticle = new WikiaVideoPage( $oTitle );
+			} else {
+				$oArticle = new WikiaImagePage( $oTitle );
 			}
 		}
 
@@ -230,18 +232,45 @@ class VideoHandlerHooks extends WikiaObject{
 	}
 
 	/*
+	 * Add "replace" button to File pages
 	 * Add "remove" action to MenuButtons on premium video file pages
 	 * This button will remove a video from a wiki but keep it on the Video Wiki.
 	 */
 	public function onSkinTemplateNavigation($skin, &$tabs) {
+		global $wgUser;
+
 		$app = F::app();
 
-		// Ignore Video Wiki videos
+		$title = $app->wg->Title;
+
+		if ( ( $title instanceof Title ) && ( $title->getNamespace() == NS_FILE ) && $title->exists() ) {
+			$file = $app->wf->FindFile( $title );
+			if ( ( $file instanceof File ) && UploadBase::userCanReUpload( $wgUser, $file->getName() ) ) {
+				if ( WikiaFileHelper::isTitleVideo( $title ) ) {
+					$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
+					$href = $uploadTitle->getFullURL( array(
+						'name' => $file->getName()
+					 ) );
+				} else {
+					$uploadTitle = SpecialPage::getTitleFor( 'Upload' );
+					$href = $uploadTitle->getFullURL( array(
+						'wpDestFile' => $file->getName(),
+						'wpForReUpload' => 1
+					 ) );
+				}
+				$tabs['actions']['replace-file'] = array(
+					'class' => 'replace-file',
+					'text' => wfMessage('wikia-file-page-replace-button'),
+					'href' => $href,
+				);
+			}
+		}
+
+		// Ignore Video Wiki videos beyond this point
 		if( $app->wg->CityId == self::VIDEO_WIKI ) {
 			return true;
 		}
 
-		$title = $app->wg->Title;
 		if ( WikiaFileHelper::isTitleVideo( $title ) ) {
 			$file = $app->wf->FindFile( $title );
 			if( !$file->isLocal() ) {

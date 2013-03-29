@@ -49,7 +49,7 @@ class VideoEmbedToolController extends WikiaController {
 
 			
 			$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
-			$search = Wikia\Search\QueryService\Factory::getInstance()->get( $container );
+			$search = (new Wikia\Search\QueryService\Factory)->get( $container );
 			$response = $search->search();
 			
 			if ( $response->getResultsFound() == 0 ) {

@@ -68,7 +68,7 @@
 		 * @param {Integer} level The log level
 		 * @param {String} group The log group
 		 */
-		function printMessage(msg, level, group) {
+		function printMessage(msg, group) {
 			if (console !== undef) {
 				if (group) {
 					//forcing space as IE doesn't
@@ -125,7 +125,7 @@
 				return false;
 			}
 
-			printMessage(msg, level, group);
+			printMessage(msg, group);
 			return true;
 		}
 
@@ -165,7 +165,7 @@
 			}
 
 			if (outputLevel > 0) {
-				printMessage('initialized at level ' + outputLevel + ((groupsCount > 0) ? ' for ' + groupsString : ''), 'info', 'Wikia.log');
+				printMessage('initialized at level ' + outputLevel + ((groupsCount > 0) ? ' for ' + groupsString : ''), 'Wikia.log');
 				enabled = true;
 			}
 		}

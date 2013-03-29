@@ -150,12 +150,14 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author OsamaK
  */
 $messages['ar'] = array(
 	'phalanx-label-reason' => 'السبب:',
 	'phalanx-label-lang' => 'اللغة:',
 	'phalanx-stats-table-reason' => 'السبب',
+	'phalanx-stats-table-wiki-last-edited' => 'آخر تعديل',
 );
 
 /** Azerbaijani (azərbaycanca)

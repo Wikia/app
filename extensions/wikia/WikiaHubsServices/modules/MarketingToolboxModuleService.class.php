@@ -6,6 +6,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	protected $langCode;
 	protected $sectionId;
 	protected $verticalId;
+	protected $skinName;
 
 	public function __construct($langCode, $sectionId, $verticalId) {
 		parent::__construct();
@@ -13,6 +14,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		$this->langCode = $langCode;
 		$this->sectionId = $sectionId;
 		$this->verticalId = $verticalId;
+		$this->skinName = RequestContext::getMain()->getSkin()->getSkinName();
 	}
 
 	static public function getModuleByName($name, $langCode, $sectionId, $verticalId) {
@@ -31,6 +33,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 			$this->verticalId,
 			$params['ts']
 		);
+
 
 		$structuredData = WikiaDataAccess::cache(
 				$this->getMemcacheKey($lastTimestamp),

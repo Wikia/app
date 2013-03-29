@@ -177,8 +177,10 @@ class MarketingToolboxModel extends WikiaModel {
 			$htmlParams = array(
 				'file-link' => true,
 				'duration' => true,
-				'linkAttribs' => array('class' => 'video-thumbnail lightbox')
+				'img-class' => 'media',
+				'linkAttribs' => array('class' => 'video-thumbnail lightbox', 'data-video-name' => $fileName )
 			);
+
 			$thumb = $file->transform(array('width' => $thumbSize));
 
 			$videoData['videoThumb'] = $thumb->toHtml($htmlParams);

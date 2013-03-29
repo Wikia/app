@@ -1,14 +1,18 @@
+// TODO: proper UNIT tests for this
+
 describe('WikiaDartMobileHelper', function(){
-	it('getsMobileUrl', function() {
-		var logMock = function() {},
+	it('getMobileUrl', function () {
+		var logMock = function () {},
 			windowMock = {
 				location: {hostname: 'example.org'},
 				cityShort: 'vertical',
 				wgDBname: 'dbname',
-				wgContentLanguage: 'xx'
+				wgContentLanguage: 'xx',
+				Features: {positionfixed: true}
 			},
-			documentMock = {documentElement: {}, body: {}},
-			dartHelper = WikiaDartMobileHelper(logMock, windowMock, documentMock),
+			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock),
+			dartUrl = DartUrl(),
+			dartHelper = WikiaDartMobileHelper(logMock, windowMock, adLogicPageLevelParams, dartUrl),
 			expected = 'http://ad.mo.doubleclick.net/DARTProxy/mobile.handler?k=wka.vertical/_dbname/article;' +
 				's0=vertical;s1=_dbname;s2=article;' +
 				'dmn=exampleorg;' +
@@ -27,7 +31,7 @@ describe('WikiaDartMobileHelper', function(){
 		expect(
 			dartHelper.getMobileUrl({
 				slotname: 'SLOTNAME_MOBILE',
-				positionfixed: 'css',
+				size: '5x5',
 				uniqueId: 'someuniqid'
 			}).replace(/ord=[0-9]+/, 'ord=XXX')
 		).toBe(expected);

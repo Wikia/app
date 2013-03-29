@@ -7,7 +7,7 @@
  * @author hyun@wikia-inc.com
  */
 
-class VideoPageController extends WikiaController {
+class WikiaFilePageController extends WikiaController {
 
 	/**
 	 * Collects data about what articles the current file appears in, either
@@ -34,7 +34,7 @@ class VideoPageController extends WikiaController {
 			$heading = wfMsg('video-page-global-file-list-header');
 
 			// Forward to the getGlobalUsage method
-			$summary = $app->sendRequest('VideoPageController', 'getGlobalUsage')->getData()['summary'];
+			$summary = $app->sendRequest('WikiaFilePageController', 'getGlobalUsage')->getData()['summary'];
 			
 			if (array_key_exists($this->wg->DBname, $summary)) {
 				unset($summary[$this->wg->DBname]);
@@ -63,7 +63,7 @@ class VideoPageController extends WikiaController {
 			}
 		} else {
 			$heading = wfMsg('video-page-file-list-header');
-			$summary = $app->sendRequest('VideoPageController', 'getLocalUsage')->getData()['summary'];
+			$summary = $app->sendRequest('WikiaFilePageController', 'getLocalUsage')->getData()['summary'];
 
 			// Shorten the list down to three articles much like above in global, but
 			// here we also need to make the $shortentedSummary structure uniform to match
@@ -76,7 +76,7 @@ class VideoPageController extends WikiaController {
 
 		// Send the $shortenedSummary to fileList to flesh out the details
 		$params = array('summary' => $shortenedSummary, 'type' => $type);
-		$data = $app->sendRequest( 'VideoPageController', 'fileList', $params )->getData();
+		$data = $app->sendRequest( 'WikiaFilePageController', 'fileList', $params )->getData();
 		$fileList = empty($data['fileList']) ? array() : $data['fileList'];
 
 		// Set template variables
