@@ -1,4 +1,4 @@
-<h1><?=wfMsg('vet-details-about-video') ?></h2>
+<h1><?=wfMsg('vet-details-about-video') ?></h1>
 <form class="VideoEmbedOptionsTable WikiaForm" id="VET-display-options<? if( $screenType == 'edit' ){ ?>-update<? } ?>">
 
 <?php

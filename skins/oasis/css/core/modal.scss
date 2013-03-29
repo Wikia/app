@@ -23,7 +23,7 @@ $modal-border-opacity: 80;
 	color: $color-text;
 	position: absolute;
 	// give option to style other header tags like an h1
-	>h1, h2.main-header {
+	>h1, .main-header {
 		color: $color-links;
 		font-size: 22px;
 		margin: 20px 60px 20px 20px;
@@ -59,7 +59,7 @@ $modal-border-opacity: 80;
 	display: block;
 	margin: 0 20px 20px 20px;
 	// header tags inside modal content don't need the padding
-	h2.main-header {
+	.main-header {
 		margin-left: 0;
 		margin-top: 0;
 	}
