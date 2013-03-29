@@ -151,7 +151,7 @@ class WAMPageModel extends WikiaModel {
 		foreach ($wamWikis as &$wiki) {
 			$wamScore = $wiki[$wamScoreName];
 			$wiki['change'] = $this->getScoreChangeName($wiki['wam'], $wiki['wam_change']);
-			$wiki['wam'] = round($wamScore, self::SCORE_ROUND_PRECISION);
+			$wiki['wam'] = number_format(round($wamScore, self::SCORE_ROUND_PRECISION), self::SCORE_ROUND_PRECISION);
 			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
 		}
 
@@ -215,7 +215,7 @@ class WAMPageModel extends WikiaModel {
 		return ['wam_results_total' => 3147, 'wam_index' => [
 			304 => [
 				'wiki_id' => '304',
-				'wam'=> '99.9554',
+				'wam'=> '98.499',
 				'wam_rank' => '1',
 				'hub_wam_rank' => '1',
 				'peak_wam_rank' => '1',

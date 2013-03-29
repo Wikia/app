@@ -27,7 +27,7 @@
 		<? } // end foreach ?>
 	</div>
 	
-    <h2><?= wfMessage('wampage-header')->text(); ?></h2>
+    <h2><?= $subpageText ?></h2>
 </div>
 <div class="wam-progressbar"></div>
 <div class="wam-content">

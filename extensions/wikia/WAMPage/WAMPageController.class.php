@@ -20,10 +20,10 @@ class WAMPageController extends WikiaController
 
 		$title = $this->wg->Title;
 		if( $title instanceof Title ) {
-			$subpageText = $title->getSubpageText();
-			$currentTabIndex = $this->model->getTabIndexBySubpageText($subpageText);
+			$this->subpageText = $title->getSubpageText();
+			$currentTabIndex = $this->model->getTabIndexBySubpageText($this->subpageText);
 			
-			$this->redirectIfFirstTab($currentTabIndex, $subpageText);
+			$this->redirectIfFirstTab($currentTabIndex, $this->subpageText);
 		}
 		
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
