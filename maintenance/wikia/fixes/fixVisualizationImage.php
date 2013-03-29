@@ -10,7 +10,7 @@ class FixVisualizationImage extends Maintenance {
 		$rows = $dbr->select(
 			array( 'city_visualization' ),
 			array( 'city_id', 'city_main_image' ),
-			array(),
+			array( 'city_main_image is not null' ),
 			__METHOD__
 		);
 
@@ -23,7 +23,7 @@ class FixVisualizationImage extends Maintenance {
 
 			if ($file === false) {
 				// TODO add re-upload code here
-				//var_dump($row['city_id']);
+				var_dump($row['city_id'], $row['city_main_image']);
 				$i++;
 			}
 		}
