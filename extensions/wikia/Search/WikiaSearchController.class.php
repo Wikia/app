@@ -123,10 +123,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function searchVideosByTitle() {
 		$searchConfig = new Wikia\Search\Config;
+		$title = $this->getVal( 'title' );
+		if ( empty( $title ) ) {
+			throw new Exception( "Please include a value for 'title'." );
+		}
 		$searchConfig
 		    ->setVideoTitleSearch( true )
-		    ->setQuery( $this->getVal( 'title' ) )
-		;
+		    ->setQuery( $title );
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $this->queryServiceFactory->getFromConfig( $searchConfig )->searchAsApi() );
 	}
