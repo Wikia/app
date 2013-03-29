@@ -130,11 +130,6 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( Wikia\Search\QueryService\Select\InterWiki::GROUP_RESULTS_GROUPING_ROW_LIMIT )
 		    ->will   ( $this->returnValue( $mockGrouping ) )
 		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getStart' )
-		    ->will   ( $this->returnValue( 0 ) )
-		;
 		$mockGrouping
 		    ->expects( $this->once() )
 		    ->method ( 'setOffset' )
