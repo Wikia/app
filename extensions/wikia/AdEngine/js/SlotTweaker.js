@@ -2,7 +2,7 @@ var SlotTweaker = function(log, document, window) {
 	'use strict';
 
 	var logGroup = 'SlotTweaker'
-		, removeClass, removeDefaultHeight, hide, removeTopButtonIfNeeded
+		, addDefaultHeight, removeClass, removeDefaultHeight, hide, removeTopButtonIfNeeded
 		, defaultHeightClass = 'default-height'
 		, rclass = /[\t\r\n]/g
 		, isLeaderboard, isStandardLeaderboardSize, adjustLeaderboardSize
@@ -51,6 +51,16 @@ var SlotTweaker = function(log, document, window) {
 		log('isStandardLeaderboardSize: ' + slotname + ' missing', 3, logGroup);
 	};
 
+	addDefaultHeight = function(slotname) {
+		var slot = document.getElementById(slotname);
+
+		log('addDefaultHeight ' + slotname, 6, logGroup);
+
+		if (slot) {
+			slot.className += ' ' + defaultHeightClass;
+		}
+	};
+
 	// TODO: fix it, it's a hack!
 	adjustLeaderboardSize = function(slotname) {
 		var slot = document.getElementById(slotname);
@@ -85,6 +95,7 @@ var SlotTweaker = function(log, document, window) {
 	};
 
 	return {
+		addDefaultHeight: addDefaultHeight,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
