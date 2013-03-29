@@ -8,10 +8,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * Global functions used everywhere for Wikia purposes.
  */
 
-/**
- * @FIXME: use classes autoloader instead
- */
-require( "$IP/extensions/wikia/AdServer.php" );
 require_once( "$IP/extensions/wikia/AdEngine/AdEngine.php" );
 
 /**
