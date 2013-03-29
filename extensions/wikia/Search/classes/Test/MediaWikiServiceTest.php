@@ -1786,8 +1786,6 @@ class MediaWikiServiceTest extends BaseTest
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
 		
-		$domain = 'foo';
-		
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiIdByHost' )
