@@ -147,12 +147,12 @@ class WAMPageModel extends WikiaModel {
 	}
 
 	protected function prepareIndex($wamWikis, $tabIndex) {
-		$wamScoreName = ($tabIndex != 1) ? 'wam' : 'wam_change';
+		$wamScoreName = ($tabIndex != self::TAB_INDEX_BIGGEST_GAINERS) ? 'wam' : 'wam_change';
 		foreach ($wamWikis as &$wiki) {
 			$wamScore = $wiki[$wamScoreName];
+			$wiki['change'] = $this->getScoreChangeName($wiki['wam'], $wiki['wam_change']);
 			$wiki['wam'] = round($wamScore, self::SCORE_ROUND_PRECISION);
 			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
-			$wiki['change'] = $this->getScoreChangeName($wamScore, $wiki['wam_change']);
 		}
 
 		return $wamWikis;
