@@ -411,7 +411,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		$this->service
 		    ->expects( $this->once() )
 		    ->method ( 'getSimpleMessage' )
-		    ->with   ( 'wikiasearch2-crosswiki-description' )
+		    ->with   ( 'wikiasearch2-crosswiki-description', array( 'my title' ) )
 		    ->will   ( $this->returnValue( "description message" ) )
 		;
 		$this->resultSet

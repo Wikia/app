@@ -2480,17 +2480,17 @@ class MediaWikiServiceTest extends BaseTest
 		                    ->getMock();
 		
 		$service = $this->service->setMethods( null )->getMock();
-		
+		$params = array( 'whatever' );
 		$mockWf
 		    ->expects( $this->once() )
 		    ->method ( 'Message' )
-		    ->with   ( 'foo' )
+		    ->with   ( 'foo', $params )
 		    ->will   ( $this->returnValue( $mockMessage ) )
 		;
 		$mockMessage
 		    ->expects( $this->once() )
 		    ->method ( 'text' )
-		    ->will   ( $this->returnValue( 'bar' ) )
+		    ->will   ( $this->returnValue( 'bar whatever' ) )
 		;
 		
 		$app = new ReflectionProperty( '\Wikia\Search\MediaWikiService' , 'app' );
@@ -2498,8 +2498,8 @@ class MediaWikiServiceTest extends BaseTest
 		$app->setValue( $service, (object) array( 'wf' => $mockWf ) );
 		
 		$this->assertEquals(
-				'bar',
-				$service->getSimpleMessage( 'foo' )
+				'bar whatever',
+				$service->getSimpleMessage( 'foo', $params )
 		);
 	}
 }

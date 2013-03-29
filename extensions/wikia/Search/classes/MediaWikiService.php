@@ -686,8 +686,8 @@ class MediaWikiService
 	 * @param string $messageName
 	 * @return string
 	 */
-	public function getSimpleMessage( $messageName ) {
-		return $this->app->wf->Message( $messageName )->text();
+	public function getSimpleMessage( $messageName, array $params = array() ) {
+		return $this->app->wf->Message( $messageName, $params )->text();
 	}
 
 	/**

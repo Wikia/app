@@ -53,7 +53,7 @@ $messages['en'] = array(
 	'wikiasearch2-sort-publish-date' => 'Publish Date',
 	'wikiasearch2-sort-duration' => 'Duration',
 	'wikiasearch2-choose-category' => 'Choose Category',
-	'wikiasearch2-crosswiki-description' => '{{SITENAME}} is a community site that anyone can contribute to. Discover, share and add your knowledge!',
+	'wikiasearch2-crosswiki-description' => '$1 is a community site that anyone can contribute to. Discover, share and add your knowledge!',
 	
 
 	'wikiamobile-wikiasearch2-next' => 'Next',
