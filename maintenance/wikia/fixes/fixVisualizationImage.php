@@ -10,7 +10,10 @@ class FixVisualizationImage extends Maintenance {
 		$rows = $dbr->select(
 			array( 'city_visualization' ),
 			array( 'city_id', 'city_main_image' ),
-			array( 'city_main_image is not null' ),
+			array(
+				'city_lang_code' => $app->wg->ContLang->getCode(),
+				'city_main_image is not null'
+			),
 			__METHOD__
 		);
 
