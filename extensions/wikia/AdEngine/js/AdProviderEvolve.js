@@ -10,12 +10,14 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 		getReskinAndSilverScript,
 		getUrl,
 		getKv,
+		getHeight,
 		iface,
 		sanitizeSlotname,
 		formatTrackTime,
 		hop,
 		canHandleSlot,
-		fillInSlot;
+		fillInSlot,
+		undef;
 
 	slotMap = {
 		'HOME_TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
@@ -42,6 +44,32 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 		}
 
 		return false;
+	};
+
+	/**
+	 * Get element height like $.height. For IE get offsetHeight and subtracts margin and padding.
+	 *
+	 * TODO: in future we should rely entirely on offsetHeight, so the actual ad should be loaded
+	 * in a div with no paddings and margins.
+	 *
+	 * @param {DomElement} slot
+	 * @return {Number}
+	 */
+	getHeight = function (slot) {
+		var margins = 0;
+
+		if (window.getComputedStyle) {
+			return parseInt(window.getComputedStyle(slot).getPropertyValue('height'), 10);
+		}
+		// IE8
+		if (slot.currentStyle) {
+			margins += parseInt('0' + slot.currentStyle.marginTop, 10);
+			margins += parseInt('0' + slot.currentStyle.marginBottom, 10);
+			margins += parseInt('0' + slot.currentStyle.paddingTop, 10);
+			margins += parseInt('0' + slot.currentStyle.paddingBottom, 10);
+
+			return slot.offsetHeight - margins;
+		}
 	};
 
 	fillInSlot = function (slot) {
@@ -79,9 +107,23 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 			);
 		} else {
 			scriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function () {
+				var slot = document.getElementById(slotname),
+					height;
+
+				// Don't rely completely on Evolve hop
 				if (!hoppedSlots[slotname]) {
 					slotTweaker.removeDefaultHeight(slotname);
-					slotTweaker.removeTopButtonIfNeeded(slotname);
+					height = getHeight(slot);
+
+					// Only assume success if > 1x1 ad is returned
+					if (height === undef || height > 1) {
+						// Real success
+						slotTweaker.removeTopButtonIfNeeded(slotname);
+					} else {
+						slotTweaker.addDefaultHeight(slotname);
+						log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, 'AdProviderEvolve');
+						hop(slotname, '1x1');
+					}
 				}
 			});
 		}
@@ -159,7 +201,9 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 		return url;
 	};
 
-	hop = function (slotname) {
+	hop = function (slotname, method) {
+		method = method || 'hop';
+
 		log('hop', 5, 'AdProviderEvolve');
 		log(slotname, 5, 'AdProviderEvolve');
 
@@ -177,7 +221,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 			eventName: 'liftium.hop2',
 			ga_category: 'hop2/evolve',
 			ga_action: 'slot ' + slotname,
-			ga_label: formatTrackTime(time, 5),
+			ga_label: method + '/' + formatTrackTime(time, 5),
 			trackingMethod: 'ad'
 		});
 
