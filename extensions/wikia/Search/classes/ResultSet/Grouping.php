@@ -135,7 +135,7 @@ class Grouping extends Base
 	 * @return string
 	 */
 	public function getArticlesCountMsg() {
-		return $this->service->shortNumForMsg($this->getHeader('articles_count'), 'wikiasearch2-pages');
+		return $this->service->shortNumForMsg($this->getHeader('articles_count')?:0, 'wikiasearch2-pages');
 	}
 
 	/**
@@ -143,7 +143,7 @@ class Grouping extends Base
 	 * @return string
 	 */
 	public function getImagesCountMsg() {
-		return $this->service->shortNumForMsg($this->getHeader('images_count'), 'wikiasearch2-images');
+		return $this->service->shortNumForMsg($this->getHeader('images_count')?:0, 'wikiasearch2-images');
 	}
 
 	/**
@@ -151,7 +151,7 @@ class Grouping extends Base
 	 * @return string
 	 */
 	public function getVideosCountMsg() {
-		return $this->service->shortNumForMsg($this->getHeader('videos_count'), 'wikiasearch2-videos');
+		return $this->service->shortNumForMsg($this->getHeader('videos_count')?:0, 'wikiasearch2-videos');
 	}
 
 }
