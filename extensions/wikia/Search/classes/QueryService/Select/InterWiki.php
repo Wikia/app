@@ -103,6 +103,7 @@ class InterWiki extends AbstractSelect
 		$grouping = $query->getGrouping();
 		$grouping->setLimit( self::GROUP_RESULTS_GROUPING_ROW_LIMIT )
 		         ->setOffset( 0 )
+		         ->setNumberOfGroups( true )
 		         ->setFields( array( self::GROUP_RESULTS_GROUPING_FIELD ) )
 		;
 		return $this;
