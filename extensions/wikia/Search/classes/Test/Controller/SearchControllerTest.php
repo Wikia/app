@@ -1564,12 +1564,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->with		( 'title' )
 			->will		( $this->returnValue( 'title' ) )
 		;
-		$mockController
-			->expects	( $this->at( 0 ) )
-			->method	( 'getVal' )
-			->with		( 'title' )
-			->will		( $this->returnValue( 'title' ) )
-		;
 		$mockConfig
 			->expects	( $this->at( 0 ) )
 			->method	( 'setVideoTitleSearch' )
