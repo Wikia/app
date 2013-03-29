@@ -131,6 +131,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			success = function () {
 				slotTweaker.removeDefaultHeight(slotname);
 				slotTweaker.removeTopButtonIfNeeded(slotname);
+				slotTweaker.adjustLeaderboardSize(slotname);
 			},
 
 			noAdLastTime = cacheStorage.get(noAdStorageKey, now) || false,
