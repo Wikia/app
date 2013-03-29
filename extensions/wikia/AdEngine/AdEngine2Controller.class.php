@@ -175,7 +175,7 @@ class AdEngine2Controller extends WikiaController {
 	public static function getLiftiumOptionsScript() {
 		wfProfileIn(__METHOD__);
 
-		global $wgDBname, $wgTitle, $wgLang;
+		global $wgDBname, $wgTitle, $wgLang, $wgDartCustomKeyValues;
 
 		// See Liftium.js for documentation on options
 		$options = array();
