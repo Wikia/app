@@ -116,6 +116,23 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $this->getResponse()->setData( $wikiaSearch->searchAsApi() );
 
 	}
+	
+	/**
+	 * Delivers a JSON response for videos matching a provided title
+	 * Expects query param "title" for the title value.
+	 */
+	public function searchVideosByTitle() {
+		$searchConfig = new Wikia\Search\Config;
+		$title = $this->getVal( 'title' );
+		if ( empty( $title ) ) {
+			throw new Exception( "Please include a value for 'title'." );
+		}
+		$searchConfig
+		    ->setVideoTitleSearch( true )
+		    ->setQuery( $title );
+		$this->getResponse()->setFormat( 'json' );
+		$this->getResponse()->setData( $this->queryServiceFactory->getFromConfig( $searchConfig )->searchAsApi() );
+	}
 
 	/**
 	 * Controller Helper Methods
