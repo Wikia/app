@@ -346,10 +346,8 @@ class VideoEmbedTool {
 
 		// If we have an empty string or a bunch of whitespace, use the default description
 		// from the file metadata
-		if ( preg_match('/^\s*$/', $text) ) {
-			if ( method_exists($file, 'getMetaDescription') ) {
-				$text = $file->getMetaDescription();
-			}
+		if ( preg_match('/^\s*$/ms', $text) ) {
+			$text = $file->getMetaDescription();
 		}
 
 		return $text;
