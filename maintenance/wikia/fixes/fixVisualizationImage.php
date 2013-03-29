@@ -21,12 +21,21 @@ class FixVisualizationImage extends Maintenance {
 		$i = 0;
 		while ($row = $rows->fetchRow()) {
 			$title = Title::newFromText($row['city_main_image'], NS_FILE);
-
 			$file = $app->wf->findFile($title);
 
-			if ($file === false) {
-				// TODO add re-upload code here
-				var_dump($row['city_id'], $row['city_main_image']);
+
+			if ($file->isMissing()) {
+
+				$t = GlobalTitle::newFromText('Wikia-Visualization-Main.png', NS_FILE, $row['city_id']);
+
+				$task = new PromoteImageReviewTask();
+
+				var_dump($t->getArticleID(), $row['city_main_image'], $app->wg->cityId, $row['city_id']);
+
+				$res = $task->uploadSingleImage($t->getArticleID(), 'Wikia-Visualization-Main.png', $app->wg->cityId, $row['city_id']);
+
+				var_dump($res);
+
 				$i++;
 			}
 		}
