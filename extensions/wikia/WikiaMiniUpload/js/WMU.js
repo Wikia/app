@@ -360,6 +360,9 @@ function WMU_loadMainFromView() {
 
 
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
+	WMU_track({
+		label: 'open'
+	});
 
 	// reset mode to support normal editor usage
 	WMU_openedInEditor = true;
@@ -465,10 +468,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			}
 		}
 	}
-
-	WMU_track({
-		label: window.WMU_RTEImage ? 'modify' : 'open'
-	});
 
 	$('#header_ad').css('display', 'none');
 	if(WMU_modal != null) {
@@ -1216,7 +1215,7 @@ var WMU_uploadCallback = {
 var WMU_track = (function( Wikia, WikiaEditor ) {
 	var config = {
 			action: Wikia.Tracker.ACTIONS.CLICK,
-			category: 'wmu',
+			category: 'photo-tool',
 			trackingMethod: 'both'
 		},
 		slice = [].slice,
