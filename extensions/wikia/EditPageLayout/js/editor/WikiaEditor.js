@@ -436,6 +436,7 @@
 
 			if (config.forceLogin && wgUserName == null && typeof UserLogin != 'undefined') {
 				config.click = function() {
+					WE.track( 'force-login-' + config.ckcommand );
 					UserLogin.rteForceLogin();
 				}
 
