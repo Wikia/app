@@ -546,6 +546,10 @@
 			this.editor.from = params.from;
 			this.target = params.target;
 
+			this.track({
+				label: 'open'
+			});
+
 			// setup search field
 			this.setupSearch();
 
@@ -563,8 +567,20 @@
 			this.setupLinkSuggest('WikiaPhotoSlideshowLink');
 
 			// add handlers to buttons
-			$('#WikiaPhotoGalleryEditorSave').unbind('.save').bind('click.save', function() {self.onSave.apply(self);});
-			$('#WikiaPhotoGalleryEditorCancel').unbind('.cancel').bind('click.cancel', function() {self.onCancel.apply(self);});
+			$('#WikiaPhotoGalleryEditorSave').unbind('.save').bind('click.save', function() {
+				self.track({
+					label: 'button-finish'
+				});
+
+				self.onSave.apply(self);
+			});
+			$('#WikiaPhotoGalleryEditorCancel').unbind('.cancel').bind('click.cancel', function() {
+				self.track({
+					label: 'button-back'
+				});
+
+				self.onCancel.apply(self);
+			});
 
 			// and render this page
 			this.selectPage(firstPage);
@@ -744,6 +760,10 @@
 			// setup clicks on "Select" button
 			$('#WikiaPhotoGallerySearchResultsSelect').unbind('.selectImage').bind('click.selectImage', function(ev) {
 				var selected = results.find('input:checked');
+
+				self.track({
+					label: 'button-select'
+				});
 
 				if (!selected.exists()) {
 					// no images selected
@@ -1537,6 +1557,10 @@
 
 				ev.preventDefault();
 
+				self.track({
+					label: 'button-add-photo'
+				});
+
 				self.selectPage(self.UPLOAD_FIND_PAGE, {});
 			});
 
@@ -2163,6 +2187,10 @@
 
 						// save & quit
 						buttons.eq(0).click(function() {
+							self.track({
+								label: 'exit-button-save'
+							});
+
 							$('#WikiaPhotoGalleryShowSaveQuitDialog').closeModal();
 
 							// save changes (let's pretend we're on gallery preview where user can click "Save")
@@ -2177,13 +2205,26 @@
 
 						// discard changes
 						buttons.eq(1).click(function() {
+							self.track({
+								label: 'exit-button-discard-changes'
+							});
+
 							$('#WikiaPhotoGalleryShowSaveQuitDialog').closeModal();
 							$('#WikiaPhotoGalleryEditor').hideModal();
 						});
 
 						// cancel
 						buttons.eq(2).click(function() {
+							self.track({
+								label: 'exit-button-cancel'
+							});
+
 							$('#WikiaPhotoGalleryShowSaveQuitDialog').closeModal();
+						});
+					},
+					onClose: function() {
+						self.track({
+							label: 'exit-button-close'
 						});
 					}
 				}
@@ -2194,10 +2235,6 @@
 		showEditor: function(params) {
 			$().log(params, "showEdit params");
 			var self = WikiaPhotoGallery;
-
-			this.track({
-				label: 'open'
-			});
 
 			// for anons show ComboAjaxLogin
 			if (typeof showComboAjaxForPlaceHolder == 'function') {
@@ -2568,13 +2605,16 @@
 		track: (function() {
 			var config = {
 					action: Wikia.Tracker.ACTIONS.CLICK,
-					category: 'gallery',
 					trackingMethod: 'both'
 				},
 				slice = [].slice;
 
 			return function() {
-				var track = ( WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
+				var	track = ( WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track,
+					type = WikiaPhotoGallery.editor.gallery.type;
+
+				config.category = ( type == 3 ? 'slider' : type == 2 ? 'slideshow' : 'gallery' ) + '-tool';
+
 				track.apply( track, [ config ].concat( slice.call( arguments ) ) );
 			};
 		})()
