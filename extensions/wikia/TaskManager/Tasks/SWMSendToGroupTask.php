@@ -1392,7 +1392,7 @@ class SWMSendToGroupTask extends BatchTask {
 
 			//step 3 of 3: add records about new message to right users
 			while ($row = $dbr->FetchObject($dbResult)) {
-				$sqlValues[] = "($wikiID, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+				$sqlValues[] = "({$row->wiki_id}, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 			}
 			$dbr->FreeResult($dbResult);
 		}
