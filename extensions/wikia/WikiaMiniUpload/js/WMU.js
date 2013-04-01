@@ -1189,6 +1189,11 @@ function WMU_close(e) {
 	if(e) {
 		e.preventDefault();
 	}
+
+	WMU_track({
+		label: 'close'
+	});
+
 	WMU_modal.hideModal();
 	if(typeof window.RTE == 'undefined' && $('#wpTextbox1').length) $('#wpTextbox1').focus();
 	WMU_switchScreen('Main');
