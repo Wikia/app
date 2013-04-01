@@ -172,6 +172,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
 		;
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
+		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
+			$requestedFields = $searchConfig->getRequestedFields();
+			$jsonFields = $this->getVal( 'jsonfields' );
+			if (! empty( $jsonFields ) ) {
+				foreach ( explode( ',', $jsonFields ) as $field ) {
+					if (! in_array( $field, $requestedFields ) ) {
+						$requestedFields[] = $field;
+					}
+				}
+				$searchConfig->setRequestedFields( $requestedFields );
+			}
+		}
 		return $searchConfig;
 	}
 	
