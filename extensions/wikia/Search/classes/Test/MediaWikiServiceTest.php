@@ -2101,24 +2101,19 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetVisualizationInfoForWikiId() {
 		$service = $this->service->setMethods( array( 'getLanguageCode' ) )->getMock();
-		$hph = $this->getMock( 'WikiaHomePageHelper', array( 'getWikiInfoForVisualization' ) );
-		
-		$info = array( 'yup' );
-		$service
+		$model = $this->getMock( 'WikisModel', array( 'getDetails' ) );
+		$details = [ 'yup' ];
+		$info = [ 123 => $details ];
+		$model
 		    ->expects( $this->once() )
-		    ->method ( 'getLanguageCode' )
-		    ->will   ( $this->returnValue( 'en' ) )
-		;
-		$hph
-		    ->expects( $this->once() )
-		    ->method ( 'getWikiInfoForVisualization' )
-		    ->with   ( 123, 'en' )
+		    ->method ( 'getDetails' )
+		    ->with   ( [ 123 ] )
 		    ->will   ( $this->returnValue( $info ) )
 		;
-		$this->proxyClass( 'WikiaHomePageHelper', $hph );
+		$this->proxyClass( 'WikisModel', $model );
 		$this->mockApp();
 		$this->assertEquals(
-				$info,
+				$details,
 				$service->getVisualizationInfoForWikiId( 123 )
 		);
 	}

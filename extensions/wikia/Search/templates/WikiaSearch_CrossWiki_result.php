@@ -1,14 +1,8 @@
 <?php
 	// get wiki thumbnail and thumbnail tracking
-	$images = $resultSet->getHeader( 'images' );
-	$helper = new \WikiaHomePageHelper();
-
-	if ( !empty( $images ) ) {
-		foreach($images as $k=>$v) {
-			$images[$k] = $helper->getImageUrl($v, 180, 120);
-
-		}
-		$imageURL = $images[0];
+	$image = $resultSet->getHeader( 'image' );
+	if (! empty( $image ) ) {
+		$imageURL = (new WikiaHomePageHelper)->getImageUrl( $image, 180, 120 );
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-thumb"';
 	} else {
 		// display placeholder image if no thumbnail

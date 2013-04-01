@@ -321,7 +321,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 	public function testConfigureHeaders() {
 		$mockResult = $this->getMock( 'Wikia\Search\Result', array( 'offsetGet', 'getFields' ) );
 		$results = new \ArrayIterator( array( $mockResult ) );
-		$this->prepareMocks( array( 'addHeaders', 'setHeader', 'getHeader', 'getDescription' ), array(), array(), array( 'getSimpleMessage', 'getWikiIdByHost', 'getStatsInfoForWikiId_withCaching', 'getVisualizationInfoForWikiId_withCaching', 'getGlobalForWiki', 'getHubForWikiId_withCaching' ) );
+		$this->prepareMocks( array( 'addHeaders', 'setHeader', 'getHeader', 'getDescription' ), array(), array(), array( 'getSimpleMessage', 'getWikiIdByHost', 'getStatsInfoForWikiId_withCaching', 'getVisualizationInfoForWikiId', 'getGlobalForWiki', 'getHubForWikiId_withCaching' ) );
 		$fields = array( 'id' => 123 );
 		$vizInfo = array( 'description' => 'yup' );
 		$mockResult
@@ -340,7 +340,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		;
 		$this->service
 		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getVisualizationInfoForWikiId_withCaching' )
+		    ->method ( 'getVisualizationInfoForWikiId' )
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( $vizInfo ) )
 		;
@@ -417,7 +417,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		$this->resultSet
 		    ->expects( $this->at( 7 ) )
 		    ->method ( 'setHeader' )
-		    ->with   ( 'description', "description message" )
+		    ->with   ( 'desc', "description message" )
 		;
 		$conf = new ReflectionMethod( 'Wikia\Search\ResultSet\Grouping', 'configureHeaders' );
 		$conf->setAccessible( true );

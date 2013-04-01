@@ -31,7 +31,7 @@ class Grouping extends Base
 	 * @return string
 	 */
 	public function getDescription( $wordCount = 60 ) {
-		$desc = $this->getHeader( 'description' );
+		$desc = $this->getHeader( 'desc' );
 		$count = str_word_count( $desc );
 		$ellipses = $count > $wordCount ? '&hellip;' : '';
 		return empty( $desc ) ? '' : implode( ' ', array_slice( explode( ' ', $desc ), 0, $wordCount ) ) . $ellipses;
@@ -78,13 +78,13 @@ class Grouping extends Base
 			$this->addHeaders( $doc->getFields() );
 		}
 		$title = $this->service->getGlobalForWiki( 'wgSitename', $wikiId );
-		$this->addHeaders( $this->service->getVisualizationInfoForWikiId_withCaching( $wikiId ) )
+		$this->addHeaders( $this->service->getVisualizationInfoForWikiId( $wikiId ) )
 			 ->addHeaders( $this->service->getStatsInfoForWikiId_withCaching( $wikiId ) )
 			 ->setHeader ( 'wikititle', $title )
 			 ->setHeader ( 'title', $title )
 			 ->setHeader ( 'hub', $this->service->getHubForWikiId_withCaching( $wikiId ) );
 		if ( $this->getDescription() == '' ) {
-			$this->setHeader( 'description', $this->service->getSimpleMessage( 'wikiasearch2-crosswiki-description', array( $title ) ) );
+			$this->setHeader( 'desc', $this->service->getSimpleMessage( 'wikiasearch2-crosswiki-description', array( $title ) ) );
 		}
 		return $this;
 	}

@@ -578,13 +578,13 @@ class MediaWikiService
 	}
 	
 	/**
-	 * Uses Wikia Homepage Helper to acces visualization info
+	 * Access visualization info for a wiki.
 	 * The underscore indicates that it is public exposed as a cached magic method.
 	 * @param int $wikiId
 	 * @return array
 	 */
 	public function getVisualizationInfoForWikiId( $wikiId ) {
-		return (new \WikiaHomePageHelper)->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
+		return array_shift( (new \WikisModel )->getDetails( [ $wikiId ] ) );
 	}
 
 	/**
