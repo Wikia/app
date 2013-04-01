@@ -588,13 +588,13 @@ class MediaWikiService
 	}
 
 	/**
-	 * Uses Wikia Homepage Helper to access stats info. 
-	 * We add '_count' to each key to avoid collisions with visualization info (e.g. images)
+	 * Uses WikiService to access stats info. 
+	 * We add '_count' to each key clarify these are count values
 	 * @param int $wikiId
 	 * @return array
 	 */
 	public function getStatsInfoForWikiId( $wikiId ) {
-		$statsInfo = (new \WikiaHomePageHelper)->getWikiStats( $wikiId );
+		$statsInfo = (new \WikiService)->getSiteStats( $wikiId );
 		foreach ( $statsInfo as $key => $val ) {
 			$statsInfo[$key.'_count'] = $val;
 			unset( $statsInfo[$key] );

@@ -2123,16 +2123,16 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetStatsInfoForWikiId() {
 		$service = $this->service->setMethods( null )->getMock();
-		$hph = $this->getMock( 'WikiaHomePageHelper', array( 'getWikiStats' ) );
+		$wikisvc = $this->getMock( 'WikiService', array( 'getSiteStats' ) );
 		
 		$info = array( 'this' => 'yup' );
-		$hph
+		$wikisvc
 		    ->expects( $this->once() )
-		    ->method ( 'getWikiStats' )
+		    ->method ( 'getSiteStats' )
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( $info ) )
 		;
-		$this->proxyClass( 'WikiaHomePageHelper', $hph );
+		$this->proxyClass( 'WikiService', $wikisvc );
 		$this->mockApp();
 		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', 'getStatsInfoForWikiId' );
 		$method->setAccessible( true );

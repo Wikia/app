@@ -79,7 +79,7 @@ class Grouping extends Base
 		}
 		$title = $this->service->getGlobalForWiki( 'wgSitename', $wikiId );
 		$this->addHeaders( $this->service->getVisualizationInfoForWikiId( $wikiId ) )
-			 ->addHeaders( $this->service->getStatsInfoForWikiId_withCaching( $wikiId ) )
+			 ->addHeaders( $this->service->getStatsInfoForWikiId( $wikiId ) )
 			 ->setHeader ( 'wikititle', $title )
 			 ->setHeader ( 'title', $title )
 			 ->setHeader ( 'hub', $this->service->getHubForWikiId_withCaching( $wikiId ) );
