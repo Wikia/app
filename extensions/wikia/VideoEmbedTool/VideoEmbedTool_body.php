@@ -185,7 +185,6 @@ class VideoEmbedTool {
 		$provider = $wgRequest->getVal('provider');
 		$ns_file = $wgContLang->getFormattedNsText( NS_FILE );
 
-		$description = urldecode( $wgRequest->getVal('description') );
 		$name = urldecode( $wgRequest->getVal('name') );
 
 		$embed_code = '';
@@ -234,6 +233,9 @@ class VideoEmbedTool {
 				return wfMsg( 'wva-thumbnail-upload-failed' );
 			}
 		}
+
+		$description = urldecode( $wgRequest->getVal('description') );
+		$this->setVideoDescription($oTitle, $description);
 
 		$message = wfMsg( 'vet-single-success' );
 		$ns_file = $wgContLang->getFormattedNsText( $title->getNamespace() );
@@ -351,5 +353,31 @@ class VideoEmbedTool {
 		}
 
 		return $text;
+	}
+
+	private function setVideoDescription( $title, $description ) {
+		// Get the file page for this file
+		$page = WikiPage::factory( $title );
+
+		$text = $page->getText();
+
+		// Separate any category tags
+		preg_match_all( '/(\[\[Category[^\]]+\]\])/', $text, $matches );
+
+		$catString = '';
+		if (!empty($matches[0]) && is_array($matches[0])) {
+			$catString = "\n" . implode(' ', $matches[0]);
+		}
+
+		$text = $description . $catString;
+
+		$summary = 'Adding video description';
+		$status = $page->doEdit( $text, $summary );
+
+		if ( $status->isOK() ) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 }
