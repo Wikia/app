@@ -2132,7 +2132,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	{
 		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
 		                       ->disableOriginalConstructor()
-		                       ->setMethods( array( 'getResponse' ) )
+		                       ->setMethods( array( 'getResponse', 'getVal' ) )
 		                       ->getMock();
 		
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
@@ -2164,9 +2164,16 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getResults' )
 		    ->will   ( $this->returnValue( $mockResults ) ) 
 		;
+		$mockController
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'jsonfields', 'title,url,pageid' )
+		    ->will   ( $this->returnValue( 'title,url,pageid' ) )
+		;
 		$mockResults
 		    ->expects( $this->once() )
 		    ->method ( 'toArray' )
+		    ->with   ( array( 'title', 'url', 'pageid' ) )
 		    ->will   ( $this->returnValue( array( 'foo' ) ) )
 		;
 		$mockResponse
@@ -2178,7 +2185,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->expects( $this->never() )
 		    ->method ( 'getIsInterWiki' )
 		;
-		
 		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setResponseValuesFromConfig' );
 		$reflSet->setAccessible( true );
 		$reflSet->invoke( $mockController, $mockConfig );
