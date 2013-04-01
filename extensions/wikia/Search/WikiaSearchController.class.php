@@ -190,6 +190,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
 		;
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
+		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
+			$requestedFields = $searchConfig->getRequestedFields();
+			$jsonFields = $this->getVal( 'jsonfields' );
+			if (! empty( $jsonFields ) ) {
+				foreach ( explode( ',', $jsonFields ) as $field ) {
+					if (! in_array( $field, $requestedFields ) ) {
+						$requestedFields[] = $field;
+					}
+				}
+				$searchConfig->setRequestedFields( $requestedFields );
+			}
+		}
 		return $searchConfig;
 	}
 	
@@ -201,7 +213,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response = $this->getResponse();
 		$format = $response->getFormat();
 		if ( $format == 'json' || $format == 'jsonp' ){
-			$response->setData( $searchConfig->getResults()->toArray() );
+			$response->setData( $searchConfig->getResults()->toArray( explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) ) ) );
 			return;
 		}
 		if(! $searchConfig->getIsInterWiki() ) {
