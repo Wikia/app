@@ -254,8 +254,8 @@
 						});
 
 						CategorySelect.track({
-							action: Wikia.Tracker.ACTIONS.SUBMIT,
-							label: 'add'
+							action: Wikia.Tracker.ACTIONS.ADD,
+							label: 'new-category'
 						});
 
 						self.trigger( 'update' );
