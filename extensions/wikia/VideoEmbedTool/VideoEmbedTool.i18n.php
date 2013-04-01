@@ -93,7 +93,8 @@ $messages['en'] = array(
 	'vet-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
 	'vet-description-placeholder' => 'Add a description for your video',
 	'vet-description-help-text' => 'The description will be displayed on the File page.',
-	'vet-details-about-video' => 'About the video',
+	'vet-details-about-video' => 'About this video',
+	'vet-description-save-error' => 'There was an error while saving the video description',
 );
 
 /** Message documentation (Message documentation)

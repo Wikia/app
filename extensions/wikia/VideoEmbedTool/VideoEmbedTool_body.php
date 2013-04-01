@@ -355,7 +355,7 @@ class VideoEmbedTool {
 		return $text;
 	}
 
-	private function setVideoDescription( $title, $description ) {
+	public function setVideoDescription( $title, $description ) {
 		// Get the file page for this file
 		$page = WikiPage::factory( $title );
 
@@ -370,7 +370,6 @@ class VideoEmbedTool {
 		}
 
 		$text = $description . $catString;
-
 		$summary = 'Adding video description';
 		$status = $page->doEdit( $text, $summary );
 
