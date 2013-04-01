@@ -60,11 +60,11 @@ class Factory
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
 							'host'    => $host,
-							'port'    => $service->getGlobalWithDefault( 'SolrPort', 8180 ),
+							'port'    => empty( $_GET['solrhost'] ) ? $service->getGlobalWithDefault( 'SolrPort', 8180 ) : 8983,
 							'path'    => '/solr/',
 							)
 					);
-			if ( $service->isOnDbCluster() && $service->getGlobal( 'WikiaSearchUseProxy' ) && $service->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
+			if ( $service->isOnDbCluster() && $service->getGlobal( 'WikiaSearchUseProxy' ) && $service->getGlobalWithDefault( 'SolrProxy' ) !== null && empty( $_GET['solrhost'] ) ) {
 				$solariumConfig['adapteroptions']['proxy'] = $service->getGlobal( 'SolrProxy' );
 				$solariumConfig['adapteroptions']['port'] = null;
 			}
