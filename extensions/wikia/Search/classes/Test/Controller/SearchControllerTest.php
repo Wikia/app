@@ -1684,7 +1684,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testGetSearchConfigFromRequest() {
 		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
 		                       ->disableOriginalConstructor()
-		                       ->setMethods( array( 'getVal', 'getRequest', 'setNamespacesFromRequest', 'isCorporateWiki' ) )
+		                       ->setMethods( array( 'getVal', 'getRequest', 'setNamespacesFromRequest', 'isCorporateWiki', 'getResponse' ) )
 		                       ->getMock();
 		
 		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
@@ -1695,6 +1695,11 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockUser = $this->getMockBuilder( 'User' )
 		                 ->disableOriginalConstructor()
 		                 ->getMock();
+		
+		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
+		                     ->disableOriginalConstructor()
+		                     ->setMethods( array( 'getFormat', 'setData' ) )
+		                     ->getMock();
 		
 		$configMethods = array( 
 				'setQuery', 'setCityId', 'setLimit', 'setPage', 'setRank', 'setAdvanced', 'setHub', '__call', 
@@ -1855,6 +1860,16 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'setNamespacesFromRequest' )
 		    //->with   ( $mockConfig, $mockUser ) // mock proxy is screwing this one up
 		;
+		$mockController
+		    ->expects( $this->any() )
+		    ->method ( 'getResponse' )
+		    ->will   ( $this->returnValue( $mockResponse ) )
+		;
+		$mockResponse
+		    ->expects( $this->once() )
+		    ->method ( 'getFormat' )
+		    ->will   ( $this->returnValue( 'html' ) )
+		;
 		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
 		$reflWg->setAccessible( true );
 		$reflWg->setValue( $mockController, $wg );
@@ -1867,6 +1882,229 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		
 		$reflGet->invoke( $mockController );
 	}
+	
+	/**
+	 * @covers WikiaSearchController::getSearchConfigFromRequest
+	 */
+	public function testGetSearchConfigFromRequestWithJson() {
+		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
+		                       ->disableOriginalConstructor()
+		                       ->setMethods( array( 'getVal', 'getRequest', 'setNamespacesFromRequest', 'isCorporateWiki', 'getResponse' ) )
+		                       ->getMock();
+		
+		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'getBool' ) )
+		                    ->getMock();
+		
+		$mockUser = $this->getMockBuilder( 'User' )
+		                 ->disableOriginalConstructor()
+		                 ->getMock();
+		
+		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
+		                     ->disableOriginalConstructor()
+		                     ->setMethods( array( 'getFormat', 'setData' ) )
+		                     ->getMock();
+		
+		$configMethods = array( 
+				'setQuery', 'setCityId', 'setLimit', 'setPage', 'setRank', 'setAdvanced', 'setHub', '__call', 
+				'setIsInterWiki', 'setVideoSearch', 'setGroupResults', 'setFilterQueriesFromCodes', 'isInterWiki',
+				'getRequestedFields', 'setRequestedFields'
+				);
+		
+		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
+		                   ->setMethods( $configMethods )
+		                   ->getMock();
+		
+		$query = 'foo';
+		$cityId = 123;
+		$resultsPerPage = 10;
+		$page = 1;
+		$rank = 'default';
+		
+		$controllerIncr = 0;
+		
+		$wg = (object) array( 'CityId' => $cityId, 'SearchResultsPerPage' => $resultsPerPage, 'User' => $mockUser );
+		
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'search' )
+		    ->will   ( $this->returnValue( $query ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'query', $query )
+		    ->will   ( $this->returnValue( $query ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setQuery' )
+		    ->with   ( $query )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setCityId' )
+		    ->with   ( $cityId )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'limit', $resultsPerPage )
+		    ->will   ( $this->returnValue( $resultsPerPage ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setLimit' )
+		    ->with   ( $resultsPerPage )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'page', 1 )
+		    ->will   ( $this->returnValue( 1 ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setPage' )
+		    ->with   ( 1 )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'rank', 'default' )
+		    ->will   ( $this->returnValue( 'default' ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setRank' )
+		    ->with   ( 'default' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getRequest' )
+		    ->will   ( $this->returnValue( $mockRequest ) )
+		;
+		$mockRequest
+		    ->expects( $this->once() )
+		    ->method ( 'getBool' )
+		    ->with   ( 'advanced', false )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setAdvanced' )
+		    ->with   ( false )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'hub', false )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setHub' )
+		    ->with   ( false )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'isCorporateWiki' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setIsInterWiki' )
+		    ->with   ( false )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'videoSearch', false )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setVideoSearch' )
+		    ->with   ( false )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'isInterWiki' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setGroupResults' )
+		    ->with   ( false )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'filters', array() )
+		    ->will   ( $this->returnValue( array() ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setFilterQueriesFromCodes' )
+		    ->with   ( array() )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'setNamespacesFromRequest' )
+		    //->with   ( $mockConfig, $mockUser ) // mock proxy is screwing this one up
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getResponse' )
+		    ->will   ( $this->returnValue( $mockResponse ) )
+		;
+		$mockResponse
+		    ->expects( $this->once() )
+		    ->method ( 'getFormat' )
+		    ->will   ( $this->returnValue( 'json' ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'jsonfields' )
+		    ->will   ( $this->returnValue( 'title,pageid,html' ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getRequestedFields' )
+		    ->will   ( $this->returnValue( [ 'pageid', 'title', 'url' ] ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setRequestedFields' )
+		    ->with   ( [ 'pageid', 'title', 'url', 'html' ] )
+		;
+		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$reflWg->setAccessible( true );
+		$reflWg->setValue( $mockController, $wg );
+		
+		$reflGet = new ReflectionMethod( 'WikiaSearchController', 'getSearchConfigFromRequest' );
+		$reflGet->setAccessible( true );
+		
+		$this->proxyClass( 'Wikia\Search\Config', $mockConfig );
+		$this->mockApp();
+		
+		$reflGet->invoke( $mockController );
+	}
+	
 	
 	/**
 	 * @covers WikiaSearchController::setPageTitle
@@ -1993,7 +2231,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	{
 		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
 		                       ->disableOriginalConstructor()
-		                       ->setMethods( array( 'getResponse' ) )
+		                       ->setMethods( array( 'getResponse', 'getVal' ) )
 		                       ->getMock();
 		
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
@@ -2025,9 +2263,16 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getResults' )
 		    ->will   ( $this->returnValue( $mockResults ) ) 
 		;
+		$mockController
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'jsonfields', 'title,url,pageid' )
+		    ->will   ( $this->returnValue( 'title,url,pageid' ) )
+		;
 		$mockResults
 		    ->expects( $this->once() )
 		    ->method ( 'toArray' )
+		    ->with   ( array( 'title', 'url', 'pageid' ) )
 		    ->will   ( $this->returnValue( array( 'foo' ) ) )
 		;
 		$mockResponse
@@ -2039,7 +2284,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->expects( $this->never() )
 		    ->method ( 'getIsInterWiki' )
 		;
-		
 		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setResponseValuesFromConfig' );
 		$reflSet->setAccessible( true );
 		$reflSet->invoke( $mockController, $mockConfig );
