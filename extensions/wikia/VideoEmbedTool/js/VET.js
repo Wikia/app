@@ -523,6 +523,10 @@
 	function VET_close() {
 		VET_switchScreen('Main');
 
+		VET_tracking({
+			label: 'close'
+		});
+
 		VET_loader.modal.closeModal();
 
 		// Handle MiniEditor focus
@@ -762,9 +766,13 @@
 			});
 			$('#VideoEmbedDetails').on('submit', '#VET-display-options-update', function(event) {
 				event.preventDefault();
+
+				VET_tracking({
+					label: 'button-update-video'
+				});
+
 				VET_doEditVideo();
 			});
-
 
 			// create dropdown for search filters
 			this.cachedSelectors.searchDropDown.wikiaDropdown({
@@ -1056,6 +1064,11 @@
 		.on('click.VET', '#VideoEmbedRenameButton, #VideoEmbedExistingButton, #VideoEmbedOverwriteButton', VET_insertFinalVideo)
 		.on('click.VET', '.vet-close', function(e) {
 			e.preventDefault();
+
+			VET_tracking({
+				label: 'success-button-return'
+			});
+
 			VET_close();
 		});
 
