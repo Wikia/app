@@ -2123,7 +2123,7 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetStatsInfoForWikiId() {
 		$service = $this->service->setMethods( null )->getMock();
-		$wikisvc = $this->getMock( 'WikiService', array( 'getSiteStats' ) );
+		$wikisvc = $this->getMock( 'WikiService', array( 'getSiteStats', 'getTotalVideos' ) );
 		
 		$info = array( 'this' => 'yup' );
 		$wikisvc
@@ -2132,12 +2132,18 @@ class MediaWikiServiceTest extends BaseTest
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( $info ) )
 		;
+		$wikisvc
+		    ->expects( $this->once() )
+		    ->method ( 'getTotalVideos' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( 4321 ) )
+		;
 		$this->proxyClass( 'WikiService', $wikisvc );
 		$this->mockApp();
 		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', 'getStatsInfoForWikiId' );
 		$method->setAccessible( true );
 		$this->assertEquals(
-				array( 'this_count' => 'yup' ),
+				array( 'this_count' => 'yup', 'videos_count' => 4321 ),
 				$service->getStatsInfoForWikiId( 123 )
 		);
 	}

@@ -594,7 +594,9 @@ class MediaWikiService
 	 * @return array
 	 */
 	public function getStatsInfoForWikiId( $wikiId ) {
-		$statsInfo = (new \WikiService)->getSiteStats( $wikiId );
+		$service = new \WikiService;
+		$statsInfo = $service->getSiteStats( $wikiId );
+		$statsInfo['videos'] = $service->getTotalVideos( $wikiId ); 
 		foreach ( $statsInfo as $key => $val ) {
 			$statsInfo[$key.'_count'] = $val;
 			unset( $statsInfo[$key] );
