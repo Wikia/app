@@ -59,13 +59,16 @@ window.RTE.tools = {
 				'<a id="RTEConfirmOk" class="wikia-button"><span>' + RTE.getInstance().lang.common.ok + '</span></a>' +
 			'</div>';
 
-		$.showModal(title, html, {
+		var wrapper = $.showModal(title, html, {
 			id: 'RTEConfirm',
 			className: 'RTEModal',
 			width: 500,
+			onClose: function() {
+				$('#RTEConfirm').trigger('close.RTEConfirm');
+			},
 			callbackBefore: function() {
 				$('#RTEConfirmOk').click(function() {
-					$('#RTEConfirm').closeModal();
+					$('#RTEConfirm').trigger('ok.RTEConfirm').closeModal();
 
 					// try to call callback when Ok is pressed
 					if (typeof callback == 'function') {
@@ -74,10 +77,12 @@ window.RTE.tools = {
 				});
 
 				$('#RTEConfirmCancel').click(function() {
-					$('#RTEConfirm').closeModal();
+					$('#RTEConfirm').trigger('cancel.RTEConfirm').closeModal();
 				});
 			}
 		});
+
+		return wrapper;
 	},
 
 	// creates new placeholder of given type and with given meta data
