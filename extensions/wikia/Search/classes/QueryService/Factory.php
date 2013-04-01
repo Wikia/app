@@ -55,16 +55,16 @@ class Factory
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
 			$host = $service->isOnDbCluster() ? $service->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';
-			$host = (! empty( $_GET['solrhost'] ) ) ? $_GET['solrhost'] : $host;
+			$host = (! empty( $_GET['newsolrhost'] ) ) ? $service->getGlobal( 'AlternateSolrHost' ) : $host;
 			$solariumConfig = array(
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
 							'host'    => $host,
-							'port'    => empty( $_GET['solrhost'] ) ? $service->getGlobalWithDefault( 'SolrPort', 8180 ) : 8983,
+							'port'    => empty( $_GET['newsolrhost'] ) ? $service->getGlobalWithDefault( 'SolrPort', 8180 ) : 8983,
 							'path'    => '/solr/',
 							)
 					);
-			if ( $service->isOnDbCluster() && $service->getGlobal( 'WikiaSearchUseProxy' ) && $service->getGlobalWithDefault( 'SolrProxy' ) !== null && empty( $_GET['solrhost'] ) ) {
+			if ( $service->isOnDbCluster() && $service->getGlobal( 'WikiaSearchUseProxy' ) && $service->getGlobalWithDefault( 'SolrProxy' ) !== null && empty( $_GET['newsolrhost'] ) ) {
 				$solariumConfig['adapteroptions']['proxy'] = $service->getGlobal( 'SolrProxy' );
 				$solariumConfig['adapteroptions']['port'] = null;
 			}
