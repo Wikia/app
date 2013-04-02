@@ -1,9 +1,3 @@
-/*
- @test-require-asset resources/wikia/libraries/define.mock.js
- @test-require-asset resources/jquery/jquery-1.8.2.js
- @test-require-asset extensions/wikia/PhalanxII/js/modules/phalanx.js
- */
-
 describe("Phalanx", function () {
 	'use strict';
 
