@@ -83,3 +83,10 @@ if ( empty($wgRelatedVideosAdminOnly) ) {
 	$wgGroupPermissions['staff']['relatedvideosedit'] = true;
 	$wgGroupPermissions['sysop']['relatedvideosedit'] = true;
 }
+
+$wgAvailableRights[] = 'relatedvideosdelete';
+$wgGroupPermissions['*']['relatedvideosdelete'] = false;
+$wgGroupPermissions['staff']['relatedvideosdelete'] = true;
+$wgGroupPermissions['sysop']['relatedvideosdelete'] = true;
+$wgGroupPermissions['helper']['relatedvideosdelete'] = true;
+
