@@ -78,11 +78,26 @@ class WikiaImagePage extends ImagePage {
 	}
 
 	protected function renderDescriptionHeader() {
-		global $wgOut;
+		global $wgOut, $wgLang;
 
-		$content = $this->getContent();
+		// Contstruct the h2 with edit link
+		$skin = $wgOut->getSkin();
+		$headline = wfMessage('video-page-description-heading')->text();
+		$args = array(
+			$this->getTitle(), // title obj
+			0, // section
+			$headline, // heading text
+			$wgLang->getCode() // lang
+		);
+		$editSection = call_user_func_array( array( $skin, 'doEditSectionLink' ), $args );
+
+		$descriptionHeaderHtml = Linker::makeHeadline("2", ">", $headline, $headline, $editSection);
+
+		// Display description text or default message
+		$content = FilePageHelper::stripCategoriesFromDescription( $this->getContent() );
 		$isContentEmpty = empty($content);
-		$html = F::app()->renderPartial( 'FilePageController', 'description', array('isContentEmpty' => $isContentEmpty) );
+
+		$html = F::app()->renderPartial( 'FilePageController', 'description', array('isContentEmpty' => $isContentEmpty, 'descriptionHeaderHtml' => $descriptionHeaderHtml) );
 
 		$wgOut->addHTML( $html );
 	}
