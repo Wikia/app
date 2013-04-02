@@ -213,7 +213,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		$mockResult
 		    ->expects( $this->once() )
 		    ->method ( 'toArray' )
-		    ->with   ( array( 'title', 'url' ) )
+		    ->with   ( array( 'title', 'url', 'pageid' ) )
 		    ->will   ( $this->returnValue( $docArray ) )
 		;
 		$this->assertEquals(

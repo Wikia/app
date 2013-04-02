@@ -560,7 +560,7 @@ class SWMSendToGroupTask extends BatchTask {
 			if ( !$userId ) {
 				$this->log("Given user $userName does not exist.");
 			} else {
-				$sqlValues[] = "(NULL, $userId, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+				$sqlValues[] = "(0, $userId, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 			}
 		}
 
@@ -767,7 +767,7 @@ class SWMSendToGroupTask extends BatchTask {
 			__METHOD__
 		);
 		while ( $row = $dbr->fetchObject( $res ) ) {
-			$sqlValues[] = "(NULL, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			$sqlValues[] = "(0, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 		}
 		$dbr->freeResult( $res );
 
@@ -825,7 +825,7 @@ class SWMSendToGroupTask extends BatchTask {
 			)
 		);
 		while ( $row = $dbr->fetchObject( $res ) ) {
-			$sqlValues[] = "(NULL, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			$sqlValues[] = "(0, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 		}
 		$dbr->freeResult( $res );
 
@@ -1392,9 +1392,7 @@ class SWMSendToGroupTask extends BatchTask {
 
 			//step 3 of 3: add records about new message to right users
 			while ($row = $dbr->FetchObject($dbResult)) {
-				//if the group is 'staff' - display (==send) the message on a local wiki [John's request, 2008-03-06] - Marooned
-				$wikiID = in_array($params['groupName'], array('staff')) ? 'NULL' : $row->wiki_id;
-				$sqlValues[] = "($wikiID, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+				$sqlValues[] = "({$row->wiki_id}, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 			}
 			$dbr->FreeResult($dbResult);
 		}
