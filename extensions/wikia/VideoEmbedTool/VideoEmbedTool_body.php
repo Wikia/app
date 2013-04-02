@@ -339,6 +339,11 @@ class VideoEmbedTool {
 
 	}
 
+	/**
+	* Get video description, which is the content of the file page minus the category wiki tags
+	* @param File $file
+	* @return string $text
+	*/
 	private function getVideoDescription($file) {
 		// Get the file page for this file
 		$page = WikiPage::factory( $file->getTitle() );

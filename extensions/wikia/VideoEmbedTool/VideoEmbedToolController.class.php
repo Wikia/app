@@ -205,6 +205,13 @@ class VideoEmbedToolController extends WikiaController {
 		$this->response->setData( $data );
 	}
 
+	/**
+	 * Modify the description of a video
+	 * @requestParam string title
+	 * @requestParam string description
+	 * @responseParam string status [success/fail]
+	 * @responseParam string errMsg
+	*/
 	public function editDescription() {
 		$title = urldecode( $this->request->getVal('title') );
 		$title = Title::newFromText($title, NS_FILE);
@@ -213,7 +220,7 @@ class VideoEmbedToolController extends WikiaController {
 		$vet = new VideoEmbedTool();
 		$status = $vet->setVideoDescription($title, $description);
 
-		if($status) {
+		if ($status) {
 			$this->status = 'success';
 		} else {
 			$this->status = 'fail';
