@@ -225,7 +225,8 @@ class MatchTest extends BaseTest {
 	public function testWikiMatchCreateResult() {
 		$serviceMethods = array(
 				'getGlobalForWiki', 'getMainPageUrlForWikiId', 'getDescriptionTextForWikiId',
-				'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getHubForWikiId' 
+				'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getHubForWikiId_withCaching',
+				'getSimpleMessage'
 				);
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
@@ -239,7 +240,7 @@ class MatchTest extends BaseTest {
 		
 		$title = 'My title';
 		$url = 'http://foo.wikia.com/wiki/';
-		$text = 'this is a wiki about foo';
+		$text = 'this is a default description';
 		$desc = 'this is a better description';
 		$visualization = array( 'description' => $desc );
 		$stats = array( 'users_count' => 100 );
@@ -257,14 +258,14 @@ class MatchTest extends BaseTest {
 		   ->will   ( $this->returnValue( $url ) )
 		;
 		$mockService
-		   ->expects( $this->once() )
-		   ->method ( 'getDescriptionTextForWikiId' )
-		   ->with   ( 123 )
-		   ->will   ( $this->returnValue( $text ) )
+			->expects( $this->once() )
+			->method ( 'getSimpleMessage' )
+			->with   ( 'wikiasearch2-crosswiki-description', array( $title ) )
+			->will   ( $this->returnValue( $text ) )
 		;
 		$mockService
 		   ->expects( $this->once() )
-		   ->method ( 'getHubForWikiId' )
+		   ->method ( 'getHubForWikiId_withCaching' )
 		   ->with   ( 123 )
 		   ->will   ( $this->returnValue( $hub ) )
 		;
@@ -303,6 +304,10 @@ class MatchTest extends BaseTest {
 		$this->assertEquals(
 				$url,
 				$result['url']
+		);
+		$this->assertEquals(
+			$text,
+			$result['desc']
 		);
 	}
 }
