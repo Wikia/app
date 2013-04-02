@@ -2757,7 +2757,13 @@ Liftium.maxHopTime = Liftium.getRequestVal('liftium_timeout', 0) || Liftium.cook
 
 LiftiumOptions.error_beacon = !Liftium.debugLevel && !Liftium.getRequestVal('liftium_onerror', 0) && !Liftium.cookie("liftium_onerror");
 if (LiftiumOptions.error_beacon !== false ){
-	window.onerror = Liftium.catchError;
+	(function () {
+		var originalOnError = window.onerror;
+		window.onerror = function(m, l, e) {
+			originalOnError && originalOnError(m, l, e);
+			Liftium.catchError(m, l, e);
+		}
+	}());
 }
 
 } // \if (typeof Liftium == "undefined" )

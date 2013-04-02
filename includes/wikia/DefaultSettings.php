@@ -1099,6 +1099,12 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/central/';
 $wgEnableAmazonDirectTargetedBuy = true;
 
 /**
+ * @name $wgEnableJavaScriptErrorLogging
+ * Enables JavaScript error logging mechanism
+ */
+$wgEnableJavaScriptErrorLogging = false;
+
+/**
  * trusted proxy service registry
  */
 $app->registerClass( 'TrustedProxyService', "$IP/includes/wikia/services/TrustedProxyService.class.php" );
