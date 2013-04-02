@@ -35,11 +35,14 @@ $databaseDirectories = array ("database_A", "database_B", "database_C", "databas
 $USAGE =
 	"Usage:\tphp getDatabase.php -c [cluster A,B,C,D] [ -l [config] ] [[-f [dbname] | -d [dbname] ]| -i [filename] | -?]\n" .
 	"\toptions:\n" .
+	"\t\t-c          cluster the wiki is on\n" .
 	"\t\t--help      show this message\n" .
 	"\t\t-f          Fetch a new database dump from s3\n" .
-	"\t\t-d         Fetch and import to dev db\n" .
+	"\t\t-d          Fetch and import to dev db\n" .
 	"\t\t-i          Import a downloaded file to dev db\n" .
-	"\t\t-l          Read settings from external file\n";
+	"\t\t-l          Read settings from external file\n" .
+	"\n" .
+	"Or use " . __DIR__ . "/getDatabase.sh host\n";
 
 $opts = getopt ("l:i:d:f:c:?::");
 if( empty( $opts ) ) die( $USAGE );
@@ -65,6 +68,14 @@ if (array_key_exists( 'l', $opts )) {
 
 if(array_key_exists( 'c', $opts )) {
 	$databaseDirectories = array("database_".trim($opts['c']));
+} else {
+	echo PHP_EOL . PHP_EOL;
+	echo 'No -c passed. Use ' . __DIR__ . '/getDatabase.sh if you want auto cluster discovery.' . PHP_EOL;
+	echo 'We\'ll now go through all cluster to see if there\'s a backup, but this can result in old backup' . PHP_EOL;
+	echo PHP_EOL . PHP_EOL;
+	echo 'Ctr-C to break, wait 4 second to continue' . PHP_EOL;
+	sleep(4);
+	echo 'Going on...'. PHP_EOL;
 };
 
 

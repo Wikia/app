@@ -56,7 +56,7 @@ class QueryServiceTest extends Search\Test\BaseTest {
 	 */
 	public function testFactoryGet() {
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
-		                   ->setMethods( array( 'isInterWiki', 'getVideoSearch', 'getDirectLuceneQuery' ) )
+		                   ->setMethods( array( 'isInterWiki', 'getVideoSearch', 'getDirectLuceneQuery', 'getVideoTitleSearch' ) )
 		                   ->getMock();
 		
 		$mockFactory = $this->getMockBuilder( 'Wikia\Search\QueryService\Factory' )
@@ -126,6 +126,35 @@ class QueryServiceTest extends Search\Test\BaseTest {
 		$mockConfig
 		    ->expects( $this->at( 2 ) )
 		    ->method ( 'getDirectLuceneQuery' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockConfig
+		    ->expects( $this->at( 3 ) )
+		    ->method ( 'getVideoTitleSearch' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->assertInstanceOf(
+				'Wikia\Search\QueryService\Select\VideoTitle',
+				$mockFactory->get( $dc )
+		);
+		$mockConfig
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'isInterWiki' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockConfig
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getVideoSearch' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockConfig
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getDirectLuceneQuery' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockConfig
+		    ->expects( $this->at( 3 ) )
+		    ->method ( 'getVideoTitleSearch' )
 		    ->will   ( $this->returnValue( false ) )
 		;
 		$this->assertInstanceOf(

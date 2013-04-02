@@ -56,7 +56,7 @@ class WallMessage {
 			// if you fail from slave try again from master
 			return self::newFromId( $id, true );
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return null;
 	}
@@ -199,7 +199,7 @@ class WallMessage {
 		if(empty($this->commentsIndex)) {
 			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() );
 		}
-		
+
 		return $this->commentsIndex;
 	}
 
@@ -248,7 +248,7 @@ class WallMessage {
 
 	public function doSaveComment($body, $user, $summary = '', $force = false) {
 		wfProfileIn( __METHOD__ );
-				
+
 		if($this->canEdit($user) || $force){
 			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true, $summary );
 		}
@@ -314,7 +314,7 @@ class WallMessage {
 	public function canAdminDelete(User $user) {
 		return $this->can($user, 'walladmindelete') && !$this->isAdminDelete() && $this->isRemove() && $this->isMain();
 	}
-	
+
 	public function canFastAdminDelete(User $user) {
 		return $this->can($user, 'wallfastadmindelete');
 	}
@@ -412,13 +412,18 @@ class WallMessage {
 			$this->getArticleComment()->setMetaData('lastmove', time(), true);
 			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-action-move-topics-summary', $this->getWall()->getTitle()->getPrefixedText() ), true );
 		}
-		return true; 
+		return true;
 	}
 
 
 	public function getWallOwnerName() {
-		$parts = explode( '/', $this->getWallTitle()->getText() );
-		return $parts[0];
+		$title = $this->getWallTitle();
+		$parts = explode( '/', $title->getText() );
+		$wallOwnerName = $parts[0];
+
+		wfRunHooks( 'WallMessageGetWallOwnerName', array( $title, &$wallOwnerName ) );
+
+		return $wallOwnerName;
 	}
 
 	public function getWallOwner() {
@@ -443,22 +448,22 @@ class WallMessage {
 
 	public function getArticleTitle(){
 		$commentsIndex = $this->getCommentsIndex();
-		
+
 		if(empty($commentsIndex)) {
-			return Title::newFromText('empty');			
+			return Title::newFromText('empty');
 		}
-		
+
 		$pageId = $commentsIndex->getParentPageId();
-		
+
 		static $cache = array();
-		if(empty($cache[$pageId])) {			
-			$cache[$pageId] = Title::newFromId($pageId);	
-		} 
-		
+		if(empty($cache[$pageId])) {
+			$cache[$pageId] = Title::newFromId($pageId);
+		}
+
 		if( empty($cache[$pageId]) ){
 			return Title::newFromText('empty');
 		}
-	
+
 		return $cache[$pageId];
 	}
 
@@ -568,15 +573,15 @@ class WallMessage {
 		wfProfileIn(__METHOD__);
 
 		static $topObjectCache = array();
-		
+
 		//TODO: some cache or pre setting of parentPageId during list fetching
-		
+
 		$index = $this->getCommentsIndex();
 		if(empty($index)) {
 			wfProfileOut(__METHOD__);
 			return null;
 		}
-		
+
 		$id = $index->getParentCommentId();
 		if( !empty($topObjectCache[$id]) ) {
 			wfProfileOut(__METHOD__);
@@ -587,7 +592,7 @@ class WallMessage {
 		$topObjectCache[$id] = WallMessage::newFromId($id);
 		return $topObjectCache[$id];
 	}
-	
+
 	public function	getTopParentId() {
 		$top = $this->getTopParentObj();
 		if(empty($top)) {
@@ -595,7 +600,7 @@ class WallMessage {
 		}
 		return $this->getId();
 	}
-	
+
 	public function isMain() {
 		$top = $this->getTopParentObj();
 		if(empty($top)) {
@@ -643,19 +648,19 @@ class WallMessage {
 			return User::newFromName('0.0.0.0', false);
 		}
 	}
-	
+
 	/**
 	 * Will return either username if user exists, or it will return "A Wikia Contributor" (i18n translated) if user is an anon
 	 */
 	public function getUserDisplayName() {
 		$displayName = '';
-		
+
 		if($this->getUser()->getId() == 0) {
 			$displayName = wfMsg('oasis-anon-user');
 		} else {
 			$displayName = $this->getUser()->getName();
 		}
-		
+
 		return $displayName;
 	}
 
@@ -683,14 +688,14 @@ class WallMessage {
 	public function getText() {
 		return $this->getArticleComment()->getText();
 	}
-	
+
 	public function getHeadItems() {
 		$ac = $this->getArticleComment();
-		 
+
 		if(!empty($ac->mHeadItems)) {
 			return $ac->mHeadItems;
 		}
-		
+
 		return array();
 	}
 
@@ -781,14 +786,14 @@ class WallMessage {
 	public function isEdited() {
 		return $this->getArticleComment()->mLastRevId != $this->getArticleComment()->mFirstRevId;
 	}
-	
+
 	public function getLastEditSummery() {
 		$lastRev = Revision::newFromId($this->getArticleComment()->mLastRevId);
-		
+
 		if(empty($lastRev)) {
-			return false;	
+			return false;
 		}
-				
+
 		return $lastRev->getComment();
 	}
 
@@ -893,7 +898,7 @@ class WallMessage {
 		$userIdRemoving = $user->getId();
 		$userIdWallOwner = $this->getWallOwner()->getId();
 		$parentPageId = $this->getArticleTitle()->getArticleId();
-		
+
 		$url = $this->getMessagePageUrl();
 		$title = $this->getMetaTitle();
 		$messageId = $this->getId();
@@ -967,12 +972,12 @@ class WallMessage {
 
 		return $status;
 	}
-	
+
 	public function fastAdminDelete($user) {
 		if( $this->adminDelete($user) ){
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -1388,7 +1393,7 @@ class WallMessage {
 		$app = F::App();
 		return $this->helper->isAllowedNotifyEveryone($this->title->getNamespace(), $app->wg->User);
 	}
-	
+
 	public function canMove(User $user) {
 		return ( $this->isMain() && !$this->isRemove() && $this->can($user, 'wallmessagemove') && in_array(MWNamespace::getSubject($this->title->getNamespace()), F::App()->wg->WallTopicsNS) );
 	}

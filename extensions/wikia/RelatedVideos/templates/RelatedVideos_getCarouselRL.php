@@ -42,7 +42,7 @@
 						if( $i <= 6 ) {
 							echo F::app()->renderView(
 								'RelatedVideos',
-								'getCaruselElementRL',
+								'getCarouselElementRL',
 								array(
 									'video' => $video,
 									'preloaded' => true,

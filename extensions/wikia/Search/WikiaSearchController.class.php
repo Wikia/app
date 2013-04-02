@@ -116,6 +116,23 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $this->getResponse()->setData( $wikiaSearch->searchAsApi() );
 
 	}
+	
+	/**
+	 * Delivers a JSON response for videos matching a provided title
+	 * Expects query param "title" for the title value.
+	 */
+	public function searchVideosByTitle() {
+		$searchConfig = new Wikia\Search\Config;
+		$title = $this->getVal( 'title' );
+		if ( empty( $title ) ) {
+			throw new Exception( "Please include a value for 'title'." );
+		}
+		$searchConfig
+		    ->setVideoTitleSearch( true )
+		    ->setQuery( $title );
+		$this->getResponse()->setFormat( 'json' );
+		$this->getResponse()->setData( $this->queryServiceFactory->getFromConfig( $searchConfig )->searchAsApi() );
+	}
 
 	/**
 	 * Controller Helper Methods
@@ -131,23 +148,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $searchConfig->getPage() != 1 ) {
 			return false;
 		}
-		$title = Title::newFromText( $searchConfig->getOriginalQuery() );
-		$track = new Track();
-		if ( $searchConfig->hasArticleMatch() && $this->getVal('fulltext', '0') === '0') {
-
-		    $this->wf->RunHooks( 'SpecialSearchIsgomatch', array( $title, $searchConfig->getOriginalQuery() ) );
-
-		    $track->event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
-		    $this->response->redirect( $title->getFullUrl() );
-		}
-		else if ( $searchConfig->hasArticlematch() ) {
-		    $track->event( 'search_start_match', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+		
+		if ( $searchConfig->hasArticleMatch() ) {
+			$article = Article::newFromID( $searchConfig->getArticleMatch()->getId() );
+			$title = $article->getTitle();
+			$track = new Track();
+			if ( $this->getVal('fulltext', '0') === '0') {
+				$this->wf->RunHooks( 'SpecialSearchIsgomatch', array( $title, $searchConfig->getOriginalQuery() ) );
+				$track->event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+				$this->response->redirect( $title->getFullUrl() );
+			} else {
+				$track->event( 'search_start_match', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+			}
 		} else {
-		    if ( $title !== null ) {
-		        $this->wf->RunHooks( 'SpecialSearchNogomatch', array( &$title ) );
-		    }
+			$title = Title::newFromText( $searchConfig->getOriginalQuery() );
+			if ( $title !== null ) {
+				$this->wf->RunHooks( 'SpecialSearchNogomatch', array( &$title ) );
+			}
 		}
-
 		return true;
 	}
 	
@@ -172,6 +190,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
 		;
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
+		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
+			$requestedFields = $searchConfig->getRequestedFields();
+			$jsonFields = $this->getVal( 'jsonfields' );
+			if (! empty( $jsonFields ) ) {
+				foreach ( explode( ',', $jsonFields ) as $field ) {
+					if (! in_array( $field, $requestedFields ) ) {
+						$requestedFields[] = $field;
+					}
+				}
+				$searchConfig->setRequestedFields( $requestedFields );
+			}
+		}
 		return $searchConfig;
 	}
 	
@@ -183,7 +213,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response = $this->getResponse();
 		$format = $response->getFormat();
 		if ( $format == 'json' || $format == 'jsonp' ){
-			$response->setData( $searchConfig->getResults()->toArray() );
+			$response->setData( $searchConfig->getResults()->toArray( explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) ) ) );
 			return;
 		}
 		if(! $searchConfig->getIsInterWiki() ) {

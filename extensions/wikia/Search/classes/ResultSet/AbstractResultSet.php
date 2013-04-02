@@ -159,7 +159,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * @param array $expectedFields the fields we should surface
 	 * @return array
 	 */
-	public function toArray( array $expectedFields = array( 'title', 'url' ) ) {
+	public function toArray( array $expectedFields = array( 'title', 'url', 'pageid' ) ) {
 		$tempResults = array();
 		foreach( $this->getResults() as $result ){
 			$tempResults[] = $result->toArray( $expectedFields );
