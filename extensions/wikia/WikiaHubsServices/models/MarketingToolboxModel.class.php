@@ -22,7 +22,7 @@ class MarketingToolboxModel extends WikiaModel {
 	protected $specialPageClass = 'SpecialPage';
 	protected $userClass = 'User';
 
-	protected $allowedTags = array('<a>');
+	protected $allowedTags = array('<a>', '<br>');
 
 	public function __construct($app = null) {
 		parent::__construct();
