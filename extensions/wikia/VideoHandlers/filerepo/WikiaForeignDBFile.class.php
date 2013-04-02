@@ -91,5 +91,10 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		parent::loadFromFile();
 		$this->getLocalFileLogic()->afterLoadFromFile();
 		wfProfileOut( __METHOD__ );
-	}	
+	}
+
+	public function getMetaDescription () {
+		$meta = unserialize($this->getMetadata());
+		return empty($meta['description']) ? '' : $meta['description'];
+	}
 }
