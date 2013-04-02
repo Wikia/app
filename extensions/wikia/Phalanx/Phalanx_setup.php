@@ -106,6 +106,9 @@ function efPhalanxInit() {
 	
 	// new PhalanxII hooks
 	$wgHooks['CheckContent'][] = 'ContentBlock::onCheckContent';
+	$wgHooks['SpamFilterCheck'][] = 'ContentBlock::onSpamFilterCheck';
+	$wgHooks['EditPhalanxBlock'][] = 'ContentBlock::onEditPhalanxBlock';
+	$wgHooks['DeletePhalanxBlock'][] = 'ContentBlock::onDeletePhalanxBlock';
 }
 
 

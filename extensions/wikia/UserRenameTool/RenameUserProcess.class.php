@@ -628,7 +628,6 @@ class RenameUserProcess {
 			
 			wfRunHooks( "EditPhalanxBlock", array( &$data ) );
 			$this->mPhalanxBlockId = $data['id'];
-			
 			if(!$this->mPhalanxBlockId) {
 				$this->addLog("Creation of the block failed.");
 				$this->addError(wfMsgForContent('userrenametool-error-cannot-create-block'));
@@ -909,8 +908,7 @@ class RenameUserProcess {
 	public function cleanup(){
 		//remove phalanx user block
 
-		if($this->mPhalanxBlockId){
-
+		if ( $this->mPhalanxBlockId ) {
 			if ( !wfRunHooks( "DeletePhalanxBlock", array( $this->mPhalanxBlockId ) ) ) {
 				$result = false;
 			} else {

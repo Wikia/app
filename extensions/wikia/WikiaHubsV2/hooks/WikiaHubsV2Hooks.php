@@ -87,11 +87,12 @@ class WikiaHubsV2Hooks {
 	 * @return true
 	 */
 	public function onParserFirstCallInit( Parser $parser ) {
-			wfProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
-			$app = F::app();
-			$title = $app->wg->title;
+		$app = F::app();
+		$title = $app->wg->title;
 
+		if ($title instanceof Title) {
 			$dbKeyName = $title->getDBKey();
 			$dbKeyNameSplit = explode('/', $dbKeyName);
 
@@ -101,6 +102,7 @@ class WikiaHubsV2Hooks {
 			if( $model->isHubsPage($hubName) && $this->isOffShotPage($title) ) {
 				$parser->setHook('hubspopularvideos', array(new WikiaHubsParserHelper(), 'renderTag'));
 			}
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;

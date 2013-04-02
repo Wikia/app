@@ -385,7 +385,7 @@ class UserIdentityBox {
 	 * @return string empty string if text was blocked; given text otherwise
 	 * @FIXME this needs to be MOVED to Phalanx and called using hooks
 	 */
-	private function doPhalanxFilter($text, $type = Phalanx::TYPE_CONTENT) {
+	private function doPhalanxFilter( $text, $type = Phalanx::TYPE_CONTENT ) {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$blockData = array();
