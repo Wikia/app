@@ -35,6 +35,7 @@
 </div>
 <div class="wam-progressbar"></div>
 <div class="wam-content">
+	<h2><?= wfMessage('wampage-header-wam')->text(); ?></h2>
 	<?= wfMessage(
 		'wampage-content',
 		$faqPage
