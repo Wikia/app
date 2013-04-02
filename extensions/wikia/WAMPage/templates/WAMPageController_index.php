@@ -18,7 +18,9 @@
 			foreach($visualizationWikis as $k => $wiki): ?>
 			<a href="http://<?= $wiki['url'] ?>" class="wam-card card<?= $i++ ?>">
 				<figure>
-					<img src="<?= $wiki['wiki_image'] ?>" alt="<?= $wiki['title'] ?>" title="<?= $wiki['title'] ?>" />
+					<? if(!empty($wiki['wiki_image'])): ?>
+						<img src="<?= $wiki['wiki_image'] ?>" alt="<?= $wiki['title'] ?>" title="<?= $wiki['title'] ?>" />
+					<? endif ?>
 					<span><?= $wiki['title'] ?></span>
 				</figure>
 				<div class="wam-score vertical-<?= $wiki['hub_id'] ?> wam-<?= $wiki['change'] ?>">
