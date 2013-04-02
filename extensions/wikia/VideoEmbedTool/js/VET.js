@@ -25,15 +25,15 @@
 	var VET_wysiwygStart = 1;
 	var VET_ratio = 1;
 	var VET_shownMax = false;
-	var VET_notificationTimout = 4000;
+	var VET_notificationTimout = 4000; // Show notifications for this long and then hide them
 	var VET_options = {};
 	var VET_embedPresets = false;
 	var VET_callbackAfterSelect = $.noop;
 	var VET_callbackAfterEmbed = $.noop;
-	var VET_MAX_WIDTH = 670, // 670 max width on oasis
-		VET_MIN_WIDTH = 100,
-		VET_DEFAULT_WIDTH = 335,
-		VET_thumbSize = VET_DEFAULT_WIDTH;	// variable that can change later, defaulted to DEFAULT
+	var VET_MAX_WIDTH = 670; // 670 max width on oasis
+	var VET_MIN_WIDTH = 100;
+	var VET_DEFAULT_WIDTH = 335;
+	var VET_thumbSize = VET_DEFAULT_WIDTH;	// variable that can change later, defaulted to DEFAULT
 
 	// ajax call for 2nd screen (aka embed screen)
 	function VET_editVideo() {
@@ -113,37 +113,56 @@
 	// Collect embed settings from form and send to callbackAfterEmbed
 	function VET_doEditVideo() {
 
-		// setup metadata
-		var extraData = {};
+		var description = encodeURIComponent($('#VideoEmbedDescription').val());
 
-		extraData.href = $('#VideoEmbedHref').val();
-		extraData.width= $('#VideoEmbedManualWidth').val();
+		$.nirvana.sendRequest({
+			controller: 'VideoEmbedTool',
+			method: 'editDescription',
+			type: 'POST',
+			format: 'json',
+			data: {
+				title: $('#VideoEmbedName').val(),
+				description: description
+			}
+		}).done(function(json) {
+			if(json.status == "fail") {
+				GlobalNotification.show( json.errMsg, 'error', null, VET_notificationTimout );
+			} else {
+				// setup metadata
+				var extraData = {};
 
-		if ($('#VideoEmbedThumbOption').is(':checked')) {
-			extraData.thumb = 1;
-		}
+				extraData.href = $('#VideoEmbedHref').val();
+				extraData.width= $('#VideoEmbedManualWidth').val();
 
-		if( $('#VideoEmbedLayoutLeft').is(':checked') ) {
-			extraData.align = 'left';
-		} else if ($('#VideoEmbedLayoutCenter').is(':checked') ) {
-			extraData.align = 'center';
-		} else {
-			extraData.align = 'right';
-		}
+				if ($('#VideoEmbedThumbOption').is(':checked')) {
+					extraData.thumb = 1;
+				}
 
-		if ($('#VideoEmbedCaption').val()) {
-			 extraData.caption = $('#VideoEmbedCaption').val();
-		}
+				if( $('#VideoEmbedLayoutLeft').is(':checked') ) {
+					extraData.align = 'left';
+				} else if ($('#VideoEmbedLayoutCenter').is(':checked') ) {
+					extraData.align = 'center';
+				} else {
+					extraData.align = 'right';
+				}
 
-		if(VET_callbackAfterEmbed) {
-			VET_callbackAfterEmbed(extraData);
-		}
+				if ($('#VideoEmbedCaption').val()) {
+					 extraData.caption = $('#VideoEmbedCaption').val();
+				}
+
+				if(VET_callbackAfterEmbed) {
+					// Callback from extensions
+					VET_callbackAfterEmbed(extraData);
+				}
+			}
+		});
+
 	}
 
 	// macbre: move back button inside dialog content and add before provided selector (Oasis changes)
 	function VET_moveBackButton(selector) {
 		// store back button
-		if (typeof window.VETbackButton == 'undefined') {
+		if (!window.VETbackButton) {
 			var backButtonOriginal = $('#VideoEmbedBack');
 			var backButton = backButtonOriginal.clone();
 
@@ -380,6 +399,7 @@
 			}
 		}
 
+		params.push('description='+encodeURIComponent($('#VideoEmbedDescription').val()));
 		params.push('oname='+encodeURIComponent( $('#VideoEmbedOname').val() ) );
 		params.push('name='+encodeURIComponent( $('#VideoEmbedName').val() ) );
 
@@ -422,6 +442,7 @@
 						VET_switchScreen('Summary');
 						$('#VideoEmbedBack').css('display', 'none');
 						$('#VideoEmbed' + VET_curScreen).html(o.responseText);
+						VET_updateHeader();
 
 						if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
 							var wikitext = $('#VideoEmbedTag').val();
@@ -504,6 +525,7 @@
 
 	function VET_close() {
 		VET_switchScreen('Main');
+		window.VETbackButton = false;
 
 		VET_loader.modal.closeModal();
 
