@@ -102,7 +102,7 @@
 				width: 48px;
 			}
 			.wiki-thumb img {
-				@include radial-gradient(#003a6e, #002e54);
+				background: url("/extensions/wikia/WikiaHubsV2/images/image-placeholder.png"); /* base64 */;
 			}
 		}
 	}
