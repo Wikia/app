@@ -2105,10 +2105,10 @@ class MediaWikiServiceTest extends BaseTest
 		$details = [ 'yup' ];
 		$info = [ 123 => $details ];
 		$model
-		    ->expects( $this->once() )
+		    ->expects( $this->exactly( 2 ) )
 		    ->method ( 'getDetails' )
-		    ->with   ( [ 123 ] )
-		    ->will   ( $this->returnValue( $info ) )
+		    ->will   ( $this->returnValueMap( [ [ [ 123 ], $info ],
+				[ [ 321 ], [] ] ] ) )
 		;
 		$this->proxyClass( 'WikisModel', $model );
 		$this->mockApp();
@@ -2116,8 +2116,12 @@ class MediaWikiServiceTest extends BaseTest
 				$details,
 				$service->getVisualizationInfoForWikiId( 123 )
 		);
+		$this->assertEquals(
+			[],
+			$service->getVisualizationInfoForWikiId( 321 )
+		);
 	}
-	
+
 	/**
 	 * @covers Wikia\Search\MediaWikiService::getStatsInfoForWikiId
 	 */
