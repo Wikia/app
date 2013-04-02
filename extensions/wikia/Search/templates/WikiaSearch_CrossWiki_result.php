@@ -16,33 +16,34 @@
 ?>
 
 <?php if($resultSet->getResultsFound() > 1): ?>
-    <li class="result">
+	<?php if ( $resultSet->getHeader('wikititle') ): ?>
+		<li class="result">
+			<?php
+			$trackingData = 'class="result-link" data-pos="' . $pos . '" data-event="search_click_wiki"';
+			?>
+			<a href="<?= $resultSet->getHeader('url'); ?>" title="<?= $resultSet->getHeader('wikititle'); ?>" <?=
+				$thumbTracking ?>>
+				<img src="<?= $imageURL; ?>" alt="<?= $resultSet->getHeader('wikititle'); ?>" class="wikiPromoteThumbnail"
+					/>
+			</a>
+			<div class=" result-description">
 
-		<?php
-		$trackingData = 'class="result-link" data-pos="' . $pos . '" data-event="search_click_wiki"';
-		?>
-	    <a href="<?= $resultSet->getHeader('url'); ?>" title="<?= $resultSet->getHeader('wikititle'); ?>" <?=
-		    $thumbTracking ?>>
-            <img src="<?= $imageURL; ?>" alt="<?= $resultSet->getHeader('wikititle'); ?>" class="wikiPromoteThumbnail"
-	            />
-		</a>
-        <div class=" result-description">
+				<h1>
+					<a href="<?= $resultSet->getHeader('url'); ?>" <?=$trackingData;?> ><?= $resultSet->getHeader
+							('wikititle'); ?></a>
+				</h1>
 
-            <h1>
-                <a href="<?= $resultSet->getHeader('url'); ?>" <?=$trackingData;?> ><?= $resultSet->getHeader
-				('wikititle'); ?></a>
-            </h1>
+				<p class="hub subtle"><?= strtoupper( $resultSet->getHeader( 'hub' ) ); ?></p>
+				<p class="description"><?= $resultSet->getDescription(); ?></p>
 
-            <p class="hub subtle"><?= strtoupper( $resultSet->getHeader( 'hub' ) ); ?></p>
-            <p class="description"><?= $resultSet->getDescription(); ?></p>
-
-            <ul class="wiki-statistics subtle">
-                <li><?= $pagesMsg ?></li>
-                <li><?= $imgMsg ?></li>
-                <li><?= $videoMsg ?></li>
-            </ul>
-        </div>
-    </li>
+				<ul class="wiki-statistics subtle">
+					<li><?= $pagesMsg ?></li>
+					<li><?= $imgMsg ?></li>
+					<li><?= $videoMsg ?></li>
+				</ul>
+			</div>
+		</li>
+	<?php endif; ?>
 <?php else: ?>
 	<?= $app->getView( 'WikiaSearch', 'CrossWiki_exactResult', array(
 		'resultSet' => $resultSet,
