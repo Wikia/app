@@ -183,14 +183,13 @@ class RelatedVideosController extends WikiaController {
 
 			$video['viewsMsg'] = wfMsg('related-videos-video-views', $this->wg->ContLang->formatNum($video['views']));
 
-			$userGroups = $this->wg->User->getEffectiveGroups();
-			$isAdmin = in_array('sysop', $userGroups) || in_array('staff', $userGroups);
+			$canDelete = $this->wg->User->isAllowed( 'relatedvideosdelete' );
 
 			$this->removeTooltip = $this->wf->Message( 'related-videos-tooltip-remove' );
 			$this->videoThumb = $videoThumb;
 			$this->video = $video;
 			$this->preloaded = $preloaded;
-			$this->isAdmin = $isAdmin;
+			$this->canDelete = $canDelete;
 			$this->totalVideos = $this->getTotalVideos();
 			$this->isNew = empty($video['isNew']) ? false : true ;
 			$this->isNewMsg = $this->wf->Message( 'related-videos-video-is-new' );
