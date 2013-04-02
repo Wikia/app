@@ -4,7 +4,6 @@
  * @author relwell
  */
 namespace Wikia\Search;
-use Wikia\Search\Traits\Cachable;
 /**
  * Encapsulates MediaWiki functionalities.
  * This will allow us to abstract our behavior away from MediaWiki if we want.
@@ -14,8 +13,6 @@ use Wikia\Search\Traits\Cachable;
  */
 class MediaWikiService
 {
-	use Cachable;
-	
 	/**
 	 * Application interface
 	 * @var \WikiaApp
@@ -63,15 +60,6 @@ class MediaWikiService
 	 */
 	public function __construct() {
 		$this->app = \F::app();
-	}
-	
-	/**
-	 * Integration for Cachable trait.
-	 */
-	public function __call( $name, $args ) {
-		if ( $this->isMethodWithCaching( $name ) ) {
-			return $this->getCachedMethodCall( $name, $args );
-		}
 	}
 	
 	/**
@@ -729,6 +717,51 @@ class MediaWikiService
 	 */
 	public function getLocalUrlForPageId( $pageId, $query = array(), $query2 = false ) {
 		return $this->getTitleFromPageId( $pageId )->getLocalUrl( $query, $query2 );
+	}
+
+	/**
+	 * Returns the memcache key for the given string
+	 * 
+	 * @param string $key
+	 * @return string
+	 */
+	public function getCacheKey( $key ) {
+		return $this->app->wf->SharedMemcKey( $key, $this->getWikiId() );
+	}
+	
+	/**
+	 * Returns what's set in memcache through the app
+	 * 
+	 * @param string $key
+	 * @return array
+	 */
+	public function getCacheResult( $key ) {
+		return $this->app->wg->Memc->get( $key );
+	}
+	
+	/**
+	 * Returns the cached result without the intermediate cache query in
+	 * consumer logic
+	 * 
+	 * @param string $key
+	 * @return multitype
+	 */
+	public function getCacheResultFromString( $key ) {
+		return $this->getCacheResult( $this->getCacheKey( $key ) );
+	}
+	
+	/**
+	 * Allows us to set values in global memcache without knowing the memcache
+	 * key
+	 * 
+	 * @param string $key
+	 * @param mixed $value
+	 * @param int $ttl defaults to a day
+	 * @return \Wikia\Search\MediaWikiService
+	 */
+	public function setCacheFromStringKey( $key, $value, $ttl = 86400 ) {
+		$this->app->wg->Memc->set( $this->getCacheKey( $key ), $value, $ttl );
+		return $this;
 	}
 	
 	/**

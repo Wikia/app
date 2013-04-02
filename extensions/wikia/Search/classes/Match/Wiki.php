@@ -26,9 +26,8 @@ class Wiki extends AbstractMatch
 				'wid' => $this->id,
 				'title' => $title,
 				'isWikiMatch' => true,
-//				'text' => $this->service->getDescriptionTextForWikiId( $this->id ),
 				'url' => $this->service->getMainPageUrlForWikiId( $this->id ),
-				'hub' => $this->service->getHubForWikiId_withCaching( $this->id ),
+				'hub' => $this->service->getHubForWikiId( $this->id ),
 				);
 		$fields = array_merge( $fields, $this->service->getVisualizationInfoForWikiId( $this->id ), $this->service->getStatsInfoForWikiId( $this->id ) );
 		if ( empty($fields['desc']) ) {

@@ -225,7 +225,7 @@ class MatchTest extends BaseTest {
 	public function testWikiMatchCreateResult() {
 		$serviceMethods = array(
 				'getGlobalForWiki', 'getMainPageUrlForWikiId', 'getDescriptionTextForWikiId',
-				'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getHubForWikiId_withCaching',
+				'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getHubForWikiId',
 				'getSimpleMessage'
 				);
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
@@ -265,7 +265,7 @@ class MatchTest extends BaseTest {
 		;
 		$mockService
 		   ->expects( $this->once() )
-		   ->method ( 'getHubForWikiId_withCaching' )
+		   ->method ( 'getHubForWikiId' )
 		   ->with   ( 123 )
 		   ->will   ( $this->returnValue( $hub ) )
 		;

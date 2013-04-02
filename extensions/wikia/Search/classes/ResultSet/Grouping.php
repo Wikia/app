@@ -82,7 +82,7 @@ class Grouping extends Base
 			 ->addHeaders( $this->service->getStatsInfoForWikiId( $wikiId ) )
 			 ->setHeader ( 'wikititle', $title )
 			 ->setHeader ( 'title', $title )
-			 ->setHeader ( 'hub', $this->service->getHubForWikiId_withCaching( $wikiId ) );
+			 ->setHeader ( 'hub', $this->service->getHubForWikiId( $wikiId ) );
 		if ( $this->getDescription() == '' ) {
 			$this->setHeader( 'desc', $this->service->getSimpleMessage( 'wikiasearch2-crosswiki-description', array( $title ) ) );
 		}
