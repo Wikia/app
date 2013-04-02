@@ -25,7 +25,10 @@ SCRIPT;
 		if (!$called) {
 			$called = true;
 
-			if (F::app()->wg->EnableDynamicYield) {
+			if (F::app()->wg->EnableDynamicYield
+				&& F::app()->wg->ShowAds
+				&& AdEngine2Controller::areAdsShowableOnPage()
+			) {
 				$code = self::$code;
 			}
 		}
