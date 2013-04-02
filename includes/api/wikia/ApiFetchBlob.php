@@ -61,12 +61,7 @@ class ApiFetchBlob extends ApiBase {
 		# check token first
 		#
 		if( !( isset( $params[ "token" ] ) && $params[ "token" ] == $wgTheSchwartzSecretToken ) ) {
-			#
-			# then check for permissions
-			#
-			if( !$wgUser->isAllowed( "runjob" ) ) {
-				$this->dieUsageMsg( array( "cantrunjobs" ) );
-			}
+			$this->dieUsageMsg( array( "cantrunjobs" ) );
 		}
 
 		$blob = null;
