@@ -76,7 +76,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				urls = [urls];
 			}
 
-			while(url = urls[i++]){
+			while((url = urls[i++])){
 				if(type == loader.CSS || type == loader.SCSS){
 					element = createElement('link', {
 						rel: style,
@@ -103,47 +103,47 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 				// use polling when loading CSS in Webkit :(
 				else if (type === loader.CSS) {
-					timer = w.setInterval(function () {
-						var stylesheet,
-							stylesheets = doc.styleSheets,
-							i = stylesheets.length;
-
-						while (i--) {
-							stylesheet = stylesheets[i];
-							if ((url == stylesheet.href)) {
-								try {
-									// We store so that minifiers don't remove the code
-									var r = stylesheet.cssRules;
-									// Webkit:
-									// Webkit browsers don't create the stylesheet object
-									// before the link has been loaded.
-									// When requesting rules for crossDomain links
-									// they simply return nothing (no exception thrown)
-									// Gecko:
-									// NS_ERROR_DOM_INVALID_ACCESS_ERR thrown if the stylesheet is not loaded
-									// If the stylesheet is loaded:
-									//  * no error thrown for same-domain
-									//  * NS_ERROR_DOM_SECURITY_ERR thrown for cross-domain
-									throw 'SECURITY';
-								} catch(e) {
-									// Gecko: catch NS_ERROR_DOM_SECURITY_ERR
-									// Webkit: catch SECURITY
-									if (/SECURITY/.test(e) || /SECURITY/i.test(e.name)) {
-										timer = w.clearInterval(timer);
-										success();
+					timer = w.setInterval((function (url) {
+						return function() {
+							var stylesheet,
+								stylesheets = doc.styleSheets,
+								i = stylesheets.length;
+							while (i--) {
+								stylesheet = stylesheets[i];
+								if (url === stylesheet.href) {
+									try {
+										// We store so that minifiers don't remove the code
+										var r = stylesheet.cssRules;
+										// Webkit:
+										// Webkit browsers don't create the stylesheet object
+										// before the link has been loaded.
+										// When requesting rules for crossDomain links
+										// they simply return nothing (no exception thrown)
+										// Gecko:
+										// NS_ERROR_DOM_INVALID_ACCESS_ERR thrown if the stylesheet is not loaded
+										// If the stylesheet is loaded:
+										//  * no error thrown for same-domain
+										//  * NS_ERROR_DOM_SECURITY_ERR thrown for cross-domain
+										throw 'SECURITY';
+									} catch(e) {
+										// Gecko: catch NS_ERROR_DOM_SECURITY_ERR
+										// Webkit: catch SECURITY
+										if (/SECURITY/.test(e) || /SECURITY/i.test(e.name)) {
+											timer = w.clearInterval(timer);
+											success();
+										}
 									}
 								}
 							}
-						}
-					}, 13);
+						};
+					})(url), 50);
 				}
 
 				log('[' + type + '] ' + url, log.levels.info, 'loader');
 
 				head.appendChild(element);
 			}
-
-			return --urls.length;
+			return urls.length - 1;
 		},
 
 		librariesMap = {
