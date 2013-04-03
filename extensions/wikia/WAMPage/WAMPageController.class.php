@@ -56,6 +56,6 @@ class WAMPageController extends WikiaController
 	}
 	
 	public function faq() {
-		//just for the template now...
+		$this->wamPageUrl = $this->model->getWAMMainPageUrl();
 	}
 }
