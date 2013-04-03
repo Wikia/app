@@ -42,7 +42,7 @@
 	)->parse(); ?>
 </div>
 
-<div class="wam-index">
+<div class="wam-index" id="wam-index">
 	<form method="get" action="" class="wam-index-search">
 
 		<select name="langCode">

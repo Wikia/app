@@ -2,6 +2,12 @@ var WAMPage = function() {};
 
 WAMPage.prototype = {
 	init: function() {
+		document.getElementById('wam-index').addEventListener(
+			'click',
+			WAMPage.clickTrackingHandler,
+			true
+		);
+
 		var track = Wikia.Tracker.buildTrackingFunction({
 			category: 'WAMPage',
 			trackingMethod: 'internal',
@@ -26,6 +32,30 @@ WAMPage.prototype = {
 				maxDate: 0
 			})
 		}, this));
+	},
+
+	trackClick: function (category, action, label, value, params, event) {
+		Wikia.Tracker.track({
+			action: action,
+			browserEvent: event,
+			category: category,
+			label: label,
+			trackingMethod: 'internal',
+			value: value
+		}, params);
+	},
+
+	clickTrackingHandler: function (e) {
+		var node = $(e.target),
+			lang = wgContentLanguage,
+			searchPhrase;
+		if (node.closest('.wam-index-search button').length > 0) {
+			searchPhrase = $('.wam-index-search button img')
+				.parents('form')
+				.find('input[name="searchPhrase"]')
+				.val();
+			WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.SUBMIT, 'wamsearch', null, {lang: lang, phrase: searchPhrase}, e);
+		}
 	}
 };
 
