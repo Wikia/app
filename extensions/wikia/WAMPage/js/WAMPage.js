@@ -2,7 +2,7 @@ var WAMPage = function() {};
 
 WAMPage.prototype = {
 	init: function() {
-		var track = WikiaTracker.buildTrackingFunction({
+		var track = Wikia.Tracker.buildTrackingFunction({
 			category: 'WAMPage',
 			trackingMethod: 'internal',
 			action: WikiaTracker.ACTIONS.IMPRESSION

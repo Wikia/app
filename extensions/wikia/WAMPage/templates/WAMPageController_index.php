@@ -43,7 +43,7 @@
 </div>
 
 <div class="wam-index">
-	<form method="get" action="">
+	<form method="get" action="" class="wam-index-search">
 
 		<select name="langCode">
 			<option><?= wfMessage('wam-index-filter-language-default')->text() ?></option>
