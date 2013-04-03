@@ -27,8 +27,11 @@ spl_autoload_register( function( $class ) {
 	if ( substr_count( $class, 'Wikia\\Search\\' ) > 0 ) {
 		$class = preg_replace( '/\\\\?Wikia\\\\Search\\\\/', '', $class );
 		$file = __DIR__ . '/classes/'.strtr( $class, '\\', '/' ).'.php';
-		require_once( $file );
-		return true;
+		if ( file_exists( $file ) ) {
+			require_once( $file );
+			return true;
+		}
+		return false;
 	}  
 });
 

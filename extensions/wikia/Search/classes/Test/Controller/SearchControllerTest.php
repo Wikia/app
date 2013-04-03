@@ -1223,7 +1223,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 	/**
 	 * @see WikiaSearch
-	 */
+	 *
 	public function testSkinSettings() {
 
 		$mockSearchController	=	$this->getMockBuilder( 'WikiaSearchController' )
@@ -1312,7 +1312,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 				$mockSearchController->wg->SuppressRail,
 				'WikiaSearchController::handleSkinSettings should set wgSuppressRail to true.'
 		);
-	}
+	}*/
 
 	/**
 	 * @covers WikiaSearchController::setNamespacesFromRequest
@@ -1861,6 +1861,11 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'isCorporateWiki' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
 		    ->method ( 'getVal' )
 		    ->with   ( 'search' )
 		    ->will   ( $this->returnValue( $query ) )
@@ -2065,6 +2070,11 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		
 		$wg = (object) array( 'CityId' => $cityId, 'SearchResultsPerPage' => $resultsPerPage, 'User' => $mockUser );
 		
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'isCorporateWiki' )
+		    ->will   ( $this->returnValue( false ) )
+		;
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
 		    ->method ( 'getVal' )

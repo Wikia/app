@@ -25,15 +25,14 @@ class WikiPromoData extends AbstractWikiService
 	 */
 	public function execute() {
 		$service = $this->getService();
-		if ( $this->result == array() && $service->getGlobal( 'EnableWikiaHomePageExt' ) ) {
-			$homepageHelper = new \WikiaHomePageHelper();
-			$detail = $homepageHelper->getWikiInfoForVisualization( $service->getWikiId(), $service->getLanguageCode() );
+		if ( $this->result == array() ) {
+			$detail = $service->getVisualizationInfoForWikiId( $service->getWikiId() );
 			$this->result = array(
-				'wiki_description_txt' => $detail['description'],
-				'wiki_new_b' => empty( $detail['new'] ) ? 'false' : 'true',
-				'wiki_hot_b' => empty( $detail['hot'] ) ? 'false' : 'true',
-				'wiki_official_b' => empty( $detail['official'] ) ? 'false' : 'true',
-				'wiki_promoted_b' => empty( $detail['promoted'] ) ? 'false' : 'true',
+				'wiki_description_txt' => $detail['desc'],
+				'wiki_new_b' => empty( $detail['flags']['new'] ) ? 'false' : 'true',
+				'wiki_hot_b' => empty( $detail['flags']['hot'] ) ? 'false' : 'true',
+				'wiki_official_b' => empty( $detail['flags']['official'] ) ? 'false' : 'true',
+				'wiki_promoted_b' => empty( $detail['flags']['promoted'] ) ? 'false' : 'true',
 			);
 		}
 		return $this->result;

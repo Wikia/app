@@ -29,7 +29,7 @@ class GroupingSet extends Grouping
 		$this->searchConfig       = $container->getConfig();
 		$this->service          = $container->getService();
 		$this->results            = new ArrayIterator( array() );
-		$this->resultsFound       = $this->getHostGrouping()->getMatches();
+		$this->resultsFound       = $this->getHostGrouping()->getNumberOfGroups();
 		$this->factory            = new Factory;
 		$this->prependWikiMatchIfExists()
 		     ->setResultGroupings();
