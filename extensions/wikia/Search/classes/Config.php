@@ -164,7 +164,7 @@ class Config implements ArrayAccess
 	 * @param array $params
 	 */
 	public function __construct( array $params = array() ) {
-		$this->service = new MediaWikiService;
+		$this->service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		
 		$dynamicFilterCodes = array(
 				self::FILTER_CAT_VIDEOGAMES    => Utilities::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' ) ),
@@ -247,7 +247,7 @@ class Config implements ArrayAccess
 	 * @return integer
 	 */
 	public function getLength() {
-		return ( $this->getArticleMatch() !== null && $this->getStart() === 0 ) 
+		return ( $this->hasMatch() && $this->getStart() === 0 ) 
 			? ( (int) $this->params['length'] ) - 1 
 			: $this->params['length'];
 	}

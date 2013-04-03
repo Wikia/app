@@ -31,15 +31,16 @@ class Factory
 		$result = $container->getResult();
 		$wikiMatch = $container->getWikiMatch();
 		
+		$terminal = 'Base';
 		if ( $result === null || $result instanceof Solarium_Result_Select_Empty ) {
-			return new EmptySet( $container );
+			$terminal = 'EmptySet';
 		} else if ( $parent === null && $searchConfig->getGroupResults() ) {
-			return new GroupingSet( $container );
+			$terminal = 'GroupingSet';
 		} else if ( $parent !== null && $metaposition !== null ) {
-			return new Grouping( $container );
+			$terminal = 'Grouping';
 		} else if ( $parent !== null && $wikiMatch !== null ) {
-			return new MatchGrouping( $container );
+			$terminal = 'MatchGrouping';
 		}
-		return new Base( $container );
+		return (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\\Search\\ResultSet\\' . $terminal, [ $container ] );
 	}
 }
