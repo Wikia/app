@@ -1,5 +1,5 @@
 @import "../../../../skins/oasis/css/core/color";
-.page-WAM, .page-WAM_FAQ {
+.WAMPage {
 	.WikiaPage .WikiaPageContentWrapper {
 		padding-top: 0;
 	}
@@ -8,6 +8,18 @@
 .oasis-one-column .WikiaMainContent.grid-6 {
 	margin: 0;
 	width: 1030px;
+}
+
+.page-WAM_FAQ {
+	.wam-header {
+		background-image: url("/extensions/wikia/WAMPage/images/wamheader.png");
+		height: 100px;
+		width: 1030px;
+		h2 {
+			text-transform: uppercase;
+			padding: 40px 0 0 25px;
+		}
+	}
 }
 
 .wam-header {

@@ -13,6 +13,8 @@ class WAMPageController extends WikiaController
 	public function init() {
 		$this->response->addAsset('wampage_scss');
 		$this->response->addAsset('wampage_js');
+
+		OasisController::addBodyClass('WAMPage');
 	}
 
 	public function index() {
@@ -28,7 +30,7 @@ class WAMPageController extends WikiaController
 			$currentTabIndex = WAMPageModel::TAB_INDEX_TOP_WIKIS;
 			$this->subpageText = $this->model->getTabNameByIndex($currentTabIndex);
 		}
-		
+
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
 		$this->tabs = $this->model->getTabs($currentTabIndex);
 		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
