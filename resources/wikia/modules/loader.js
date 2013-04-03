@@ -25,7 +25,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 
 			return options ? window.$.extend(element, options) : element;
 		},
-		getURL = function(path, type, params){
+		getUrl = function(path, type, params){
 			if(~path.indexOf('__am') || ~path.search(/^https?:/i)) {
 				//most definitely you already have proper url to asset
 				//or full url was passed
@@ -46,7 +46,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 					replace('%4$d', window.wgStyleVersion);
 			}
 		},
-		getURLS = function(path, type, params){
+		getUrls = function(path, type, params){
 			var i = 0,
 				url;
 
@@ -54,13 +54,13 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				if(type == 'groups'){
 					path = path.join(',');
 				}else{
-					while(url = path[i]) path[i++] = getURL(url, type, params);
+					while(url = path[i]) path[i++] = getUrl(url, type, params);
 
 					return path;
 				}
 			}
 
-			return getURL(path, type, params);
+			return getUrl(path, type, params);
 		},
 		addScript = function(content){
 			head.appendChild(createElement('script', {text: content}));
@@ -468,16 +468,16 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 							func = getLibrary;
 							break;
 						case loader.JS:
-							files = getURLS(files, 'one', params);
+							files = getUrls(files, 'one', params);
 							break;
 						case loader.AM_GROUPS:
-							files = getURLS(files, 'groups', params);
+							files = getUrls(files, 'groups', params);
 							break;
 						case loader.CSS:
-							files = getURLS(files, 'one', params);
+							files = getUrls(files, 'one', params);
 							break;
 						case loader.SCSS:
-							files = getURLS(files, 'sass', params);
+							files = getUrls(files, 'sass', params);
 							break;
 						case loader.UNKNOWN:
 						default:
