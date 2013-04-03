@@ -31,7 +31,7 @@
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
-	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document);
+	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, slotTweaker);
 	adProviderLiftium2Dom = AdProviderLiftium2Dom(tracker, log, document, slotTweaker, fakeLiftium, scriptWriter);
 
 	adConfig = AdConfig2Late(
