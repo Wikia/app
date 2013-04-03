@@ -479,7 +479,6 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 						case loader.SCSS:
 							files = getUrls(files, 'sass', params);
 							break;
-						case loader.UNKNOWN:
 						default:
 							failure({type: type, resources: files})();
 							continue;
