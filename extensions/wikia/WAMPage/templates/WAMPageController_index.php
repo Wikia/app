@@ -63,7 +63,7 @@
 		<input type="text" name="date" value="<?=$selectedDate?>" />
 
 		<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" />
-		<button type="submit" value="<?= wfMessage('wam-index-search-button')->text() ?>">
+		<button type="submit" value="<?= wfMessage('wam-index-search-button')->text() ?>" class="secondary">
 			<img src="<?= $wg->BlankImgUrl ?>" />
 		</button>
 	</form>
