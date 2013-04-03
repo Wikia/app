@@ -84,6 +84,8 @@ switch($wgWikiaDatacenter) {
 		break;
 }
 
+$wgDevboxDefaultWikiDomain = 'www.wikia.com';
+
 # NOTE: THIS MUST BE DONE _BEFORE_ CALLING WikiFactory::execute IF WIKIFACTORY IS BEING USED.
 include("$IP/extensions/wikia/Development/SpecialDevBoxPanel/Special_DevBoxPanel.php");
 
