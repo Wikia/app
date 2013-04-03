@@ -42,6 +42,10 @@
 	)->parse(); ?>
 </div>
 
+<form method="get" action="">
+	<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" />
+	<input type="submit" value="<?= wfMessage('wam-index-search-button')->text() ?>" />
+</form>
 <div class="wam-index">
 	<table>
 		<tr>

@@ -59,15 +59,11 @@ class WAMPageModel extends WikiaModel {
 		return $this->prepareIndex($WAMData['wam_index'], $tabIndex);
 	}
 
-	public function getIndexWikis() {
+	public function getIndexWikis($params) {
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$WAMData = $this->getMockedDataForDev();
 		} else {
-			$params = [
-				'limit' => $this->getItemsPerPage(),
-				'sort_column' => 'wam_index',
-				'sort_direction' => 'DESC',
-			];
+			$params = $this->getIndexParams($params);
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
 
@@ -208,6 +204,17 @@ class WAMPageModel extends WikiaModel {
 			'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
 			'fetch_wiki_images' => true,
 		];
+	}
+
+	protected function getIndexParams($params) {
+		$apiParams = [
+			'limit' => $this->getItemsPerPage(),
+			'sort_column' => 'wam_index',
+			'sort_direction' => 'DESC',
+			'wiki_word' => isset($params['searchPhrase']) ? $params['searchPhrase'] : null,
+		];
+
+		return $apiParams;
 	}
 
 	/**

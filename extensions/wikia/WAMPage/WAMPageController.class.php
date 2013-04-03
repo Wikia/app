@@ -32,7 +32,16 @@ class WAMPageController extends WikiaController
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
 		$this->tabs = $this->model->getTabs($currentTabIndex);
 		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
-		$this->indexWikis = $this->model->getIndexWikis();
+
+		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
+	}
+
+	protected function getIndexParams() {
+		$this->searchPhrase = $this->getVal('searchPhrase', null);
+		$indexParams = [
+			'searchPhrase' => $this->searchPhrase
+		];
+		return $indexParams;
 	}
 	
 	protected function redirectIfFirstTab($tabIndex, $subpageText) {

@@ -29,7 +29,7 @@ class WAMPageArticle extends Article {
 			$action = 'index';
 		}
 		
-		$app->wg->Out->addHTML( $app->sendRequest('WAMPageController', $action) );
+		$app->wg->Out->addHTML( $app->sendRequest('WAMPageController', $action, $app->wg->request->getValues()) );
 		wfProfileOut(__METHOD__);
 	}
 
