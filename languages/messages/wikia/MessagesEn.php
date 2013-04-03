@@ -1071,4 +1071,6 @@ Text should be placed on this page if you wish to explain usage, style and polic
 
 'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
 
+'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
+
 ));

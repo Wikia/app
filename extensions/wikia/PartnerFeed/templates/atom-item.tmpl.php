@@ -3,7 +3,7 @@
 			<title><![CDATA[ <?=$item->getTitle(); ?>]]></title>
 			<link><![CDATA[ <?=$item->getUrl(); ?>]]></link>
 			<summary><![CDATA[ <?=$item->getDescription(); ?>]]></summary>
-<? if( $item->getDate() ) { ?>			<updated><![CDATA[ <?=gmdate( 'D, d M Y H:i:s \G\M\T', wfTimestamp( TS_UNIX, $item->getDate() ) ); ?>]]></updated>
+<? if( $item->getDate() ) { ?>			<updated><![CDATA[ <?= $item->getDate() ?>]]></updated>
 <?}?>
 <? if( $item->getAuthor() ) {?>			<author><![CDATA[ <?=$item->getAuthor(); ?>]]></author>
 <?}?>
