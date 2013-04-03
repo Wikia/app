@@ -36,9 +36,10 @@ $wgGroupPermissions['devboxpanel']['devboxpanel'] = true;
 $wgSpecialPageGroups['DevBoxPanel'] = 'wikia';
 
 // Hooks
-$dir = dirname(__FILE__) . '/';
+$dir = __DIR__ . '/';
 $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
 $wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
+$wgHooks['WikiFactory::executeBeforeTransferToGlobals'][] = "wfDevBoxDisableWikiFactory";
 $wgHooks['PageRenderingHash'][] = 'wfDevBoxSeparateParserCache';
 $wgExceptionHooks['MWExceptionRaw'][] = "wfDevBoxLogExceptions";
 
@@ -110,6 +111,8 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 			// If the overridden name doesn't exist AT ALL, use a default just to let the panel run.
 			$forcedWikiDomain = $wgDevboxDefaultWikiDomain;
 			$cityId = WikiFactory::DomainToID($forcedWikiDomain);
+
+			wfDebug(__METHOD__ . ": domain forced to {$forcedWikiDomain}\n");
 		}
 
 		if($wgCommandLineMode) {
@@ -137,7 +140,6 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 				}
 			}
 		}
-
 
 		if($cityId){
 			$wikiFactoryLoader->mServerName = $forcedWikiDomain;
@@ -176,6 +178,42 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 	}
 	return true;
 } // end wfDevBoxForceWiki()
+
+/**
+ * "Disable" WikiFactory wiki-specific settings when $wgDevboxSkipWikiFactoryVariables = true
+ *
+ * @author macbre
+ *
+ * @param WikiFactoryLoader $wikiFactoryLoader
+ * @return bool true
+ */
+function wfDevBoxDisableWikiFactory(WikiFactoryLoader $wikiFactoryLoader) {
+	global $wgDevboxSkipWikiFactoryVariables;
+
+	if (!empty($wgDevboxSkipWikiFactoryVariables)) {
+		wfDebug(__METHOD__ . ": WikiFactory settings are disabled!\n");
+
+		$whitelist = array(
+			'wgDBcluster',
+			'wgDBname',
+			'wgSitename',
+			'wgArticlePath',
+			'wgUploadPath',
+			'wgUploadDirectory',
+			'wgLogo',
+			'wgFavicon',
+			'wgLanguageCode'
+		);
+
+		foreach($wikiFactoryLoader->mVariables as $key => $value) {
+			if (!in_array($key, $whitelist)) {
+				unset($wikiFactoryLoader->mVariables[$key]);
+			}
+		}
+	}
+
+	return true;
+}
 
 /**
  * Modify parser cache key to be different on each devbox (BugId:24647)
@@ -348,7 +386,7 @@ function getHtmlForInfo(){
 	$index = 0;
 	foreach($settings as $name => $val){
 		$html .= "<tr".($index%2==1?" class='odd'":"").">";
-		$html .= "<td width=150>$name</td><td width=150>$val</td>";
+		$html .= "<td width=150>$name</td><td><tt>$val</tt></td>";
 		$html .= "</tr>\n";
 		$index++;
 	}

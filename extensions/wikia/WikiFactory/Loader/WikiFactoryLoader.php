@@ -697,6 +697,9 @@ class WikiFactoryLoader {
 			}
 		}
 
+		// @author macbre
+		wfRunHooks( 'WikiFactory::executeBeforeTransferToGlobals', array( &$this ) );
+
 		/**
 		 * transfer configuration variables from database to GLOBALS
 		 */

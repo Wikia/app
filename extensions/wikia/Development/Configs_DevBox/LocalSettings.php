@@ -1,12 +1,5 @@
 <?php
 
-// NOTE: SINCE DevBoxes ARE A SPECIAL CASE, THIS FILE IS CONTAINED IN /extensions/wikia/Development/Configs_DevBox AND
-// IS COPIED OVER TO THE DOCROOT WHEN updateDevBox.sh IS RUN.
-
-// IT IS NOT RECOMMENDED TO MODIFY THIS FILE DIRECTLY BECAUSE IT WILL BE OVERWRITTEN THE NEXT TIME YOU RUN updateDevBox.sh
-// INSTEAD, MODIFY THE DevBoxSettings.php WHICH IS IN THE DOCROOT DIRECTORY. IT IS DESIGNED FOR MAKING CHANGES JUST ON YOUR
-// DEVBOX.
-
 error_reporting(E_ALL & ~ E_STRICT);
 ini_set('display_errors', '1');
 $wgShowExceptionDetails = true;
@@ -85,6 +78,7 @@ switch($wgWikiaDatacenter) {
 }
 
 $wgDevboxDefaultWikiDomain = 'www.wikia.com';
+#$wgDevboxSkipWikiFactoryVariables = true; // uncomment to skip loading of wiki-specific setup from WikiFactory
 
 # NOTE: THIS MUST BE DONE _BEFORE_ CALLING WikiFactory::execute IF WIKIFACTORY IS BEING USED.
 include("$IP/extensions/wikia/Development/SpecialDevBoxPanel/Special_DevBoxPanel.php");
