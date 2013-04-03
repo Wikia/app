@@ -5,7 +5,7 @@ WAMPage.prototype = {
 		var track = Wikia.Tracker.buildTrackingFunction({
 			category: 'WAMPage',
 			trackingMethod: 'internal',
-			action: WikiaTracker.ACTIONS.IMPRESSION
+			action: Wikia.Tracker.ACTIONS.IMPRESSION
 		});
 		
 		if( window.wgTitle ) {
