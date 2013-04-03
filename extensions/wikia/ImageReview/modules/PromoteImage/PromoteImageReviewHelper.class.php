@@ -359,27 +359,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 			return $data;
 		}
 
-		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
-		$ids = array();
-		$cnt = 0;
-		if (!$this->wg->DevelEnvironment) {
-			$result = $db->select(
-				array('google_analytics.pageviews'),
-				array('city_id', 'sum(pageviews) as cnt'),
-				array('date > curdate() - interval 31 day'),
-				__METHOD__,
-				array(
-					'GROUP BY' => 'city_id',
-					'ORDER BY' => 'cnt desc',
-					'HAVING' => 'cnt > 10000'
-				)
-			);
-
-			while ($cnt < 200 && $row = $db->fetchRow($result)) {
-				$cnt++;
-				$ids[$row['city_id']] = 1;
-			}
-		}
+		$ids = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY, 200 );
 
 		$this->wg->memc->set($key, $ids, 86400 /* 24h */);
 		$this->wf->ProfileOut(__METHOD__);
