@@ -21,15 +21,18 @@ class Wiki extends AbstractMatch
 	 */
 	public function createResult()
 	{
+		$title = $this->service->getGlobalForWiki( 'wgSitename', $this->id );
 		$fields = array(
 				'wid' => $this->id,
-				'title' => $this->service->getGlobalForWiki( 'wgSitename', $this->id ),
+				'title' => $title,
 				'isWikiMatch' => true,
-				'text' => $this->service->getDescriptionTextForWikiId( $this->id ),
 				'url' => $this->service->getMainPageUrlForWikiId( $this->id ),
 				'hub' => $this->service->getHubForWikiId( $this->id ),
 				);
 		$fields = array_merge( $fields, $this->service->getVisualizationInfoForWikiId( $this->id ), $this->service->getStatsInfoForWikiId( $this->id ) );
+		if ( empty($fields['desc']) ) {
+			$fields['desc'] = $this->service->getSimpleMessage( 'wikiasearch2-crosswiki-description', array( $title ) );
+		}
 		$result = new Result( $fields );
 		if ( isset( $result['description'] ) ) {
 			$result->setText( $result['description'] );

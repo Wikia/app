@@ -1,8 +1,5 @@
-<?php if(empty($inGroup)): ?>
-	<li class="result">
-<?php endif; ?>
-
-<article>
+<li class="result">
+	<article>
 	<?php 
 	if ( $result['ns'] == NS_FILE ) {
 		$thumbnailHtml = $result->getThumbnailHtml();
@@ -14,10 +11,10 @@
 	<?php endif; ?>
 	
 	<h1>
-		<?php $title = ( empty($inGroup) && $isInterWiki && empty( $result['isWikiMatch'] ) ) ? str_replace('$1', $result->getTitle(), $result->getVar('wikititle')) : $result->getTitle(); ?>
+		<?php $title = $result->getTitle(); ?>
 
 		<?php
-			$trackingData = 'class="result-link" data-wid="'.$result->getCityId().'" data-pageid="'.$result->getVar('pageid').'" data-pagens="'.$result->getVar('ns').'" data-title="'.$result->getTitle().'" data-gpos="'.( !empty($gpos) ? $gpos : 0 ).'" data-pos="'.$pos.'" data-sterm="'.addslashes($query).'" data-stype="'.( $isInterWiki ? 'inter' : 'intra' ).'" data-rver="6"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );
+			$trackingData = 'class="result-link" data-pos="'.$pos.'"' . ( $result->getVar('isArticleMatch') ? 'data-event="search_click_match"' : '' );
 		?>
 
 		<a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?= $title ?></a>
@@ -40,14 +37,11 @@
 			?>
 		</p>
 	<? endif; ?>
-	<?= $result->getText(); ?>
+	<?= htmlspecialchars($result->getText()); ?>
 	
 	<?php if(empty($inGroup)): ?>
 		<ul>
 			<li><a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getTextUrl(), 90);?></a></li>
-			<?php if($isInterWiki): ?>
-				<li><a href="http://<?= $result['host'] .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search'; ?>"><?= wfMsg( 'wikiasearch2-search-on-wiki') ?></a></li>
-			<?php endif; ?>
 		</ul>
 	<?php endif; ?>
 	
@@ -56,7 +50,5 @@
 	<?php endif; ?>
 
 </article>
+</li>
 
-<?php if(empty($inGroup)): ?>
-	</li>
-<?php endif; ?>

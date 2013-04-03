@@ -23,6 +23,7 @@ class Factory
 		$config = $container->getConfig();
 		$this->validateClient( $container );
 		
+		$terminal = 'OnWiki';
 		if ( $config->isInterWiki() ) {
 			return new Select\InterWiki( $container );
 		}
@@ -54,7 +55,7 @@ class Factory
 	 * @param DependencyContainer $container
 	 */
 	protected function validateClient( DependencyContainer $container ) {
-		$service = new MediaWikiService;
+		$service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
 			$host = $service->isOnDbCluster() ? $service->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';

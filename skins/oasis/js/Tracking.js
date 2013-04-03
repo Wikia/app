@@ -374,6 +374,15 @@ jQuery(function($){
 					label: 'result-' + (el.data('event') === 'search_click_match' ? 'push-top' : 'item-' + el.data('pos')),
 					trackingMethod: 'both'
 				});
+			}).on('mousedown',  '.Results .wiki-thumb-tracking', function(e){
+				var el = $(e.currentTarget);
+
+					track({
+					browserEvent: e,
+					category: category,
+					label: 'result-item-' + el.data('pos') + '-image' + (el.data('event') === 'search_click_wiki-no-thumb' ? '-placeholder' : ''),
+					trackingMethod: 'both'
+				});
 			}).on('mousedown', '.image', function(e) {
 				track({
 					browserEvent: e,

@@ -111,7 +111,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockGrouping = $this->getMockBuilder( 'Solarium_Query_Select_Component_Grouping' )
 		                     ->disableOriginalConstructor()
-		                     ->setMethods( array( 'setLimit', 'setOffset', 'setFields' ) )
+		                     ->setMethods( array( 'setLimit', 'setOffset', 'setFields', 'setNumberOfGroups' ) )
 		                     ->getMock();
 		
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
@@ -130,15 +130,16 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( Wikia\Search\QueryService\Select\InterWiki::GROUP_RESULTS_GROUPING_ROW_LIMIT )
 		    ->will   ( $this->returnValue( $mockGrouping ) )
 		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getStart' )
-		    ->will   ( $this->returnValue( 0 ) )
-		;
 		$mockGrouping
 		    ->expects( $this->once() )
 		    ->method ( 'setOffset' )
 		    ->with   ( 0 )
+		    ->will   ( $this->returnValue( $mockGrouping ) )
+		;
+		$mockGrouping
+		    ->expects( $this->once() )
+		    ->method ( 'setNumberOfGroups' )
+		    ->with   ( true )
 		    ->will   ( $this->returnValue( $mockGrouping ) )
 		;
 		$mockGrouping
@@ -212,20 +213,6 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( array( null ) )
 		                   ->getMockForAbstractClass();
-		
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'setLength' )
-		    ->with   ( Wikia\Search\QueryService\Select\InterWIki::GROUP_RESULTS_GROUPINGS_LIMIT )
-		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'setIsInterWiki' )
-		    ->with   ( true )
-		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		
 		$mockConfig
 		    ->expects( $this->any() )
 		    ->method ( 'getPage' )
