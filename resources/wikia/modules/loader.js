@@ -113,7 +113,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 								if (url === stylesheet.href) {
 									try {
 										// We store so that minifiers don't remove the code
-										var r = stylesheet.cssRules;
+										var cssRules = stylesheet.cssRules;
 										// Webkit:
 										// Webkit browsers don't create the stylesheet object
 										// before the link has been loaded.
@@ -125,10 +125,10 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 										//  * no error thrown for same-domain
 										//  * NS_ERROR_DOM_SECURITY_ERR thrown for cross-domain
 										throw 'SECURITY';
-									} catch(e) {
+									} catch(err) {
 										// Gecko: catch NS_ERROR_DOM_SECURITY_ERR
 										// Webkit: catch SECURITY
-										if (/SECURITY/.test(e) || /SECURITY/i.test(e.name)) {
+										if (/SECURITY/.test(err) || /SECURITY/i.test(err.name)) {
 											timer = window.clearInterval(timer);
 											success();
 										}
@@ -222,7 +222,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				useNames = [],
 				internal = [],
 				lib,
-				l = libs.length,
+				libLength = libs.length,
 				load = 0,
 				fail = function(f, failed){
 					return function(){
@@ -231,8 +231,8 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				};
 
 			//find libraries to be loaded from libraryMap
-			while(l--) {
-				var name = libs[l],
+			while(libLength--) {
+				var name = libs[libLength],
 					n = librariesMap[name];
 
 				if(!n) throw "Library unknown: " + name;
@@ -252,11 +252,11 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			}
 
 			if(internal.length){
-				l = internal.length;
-				load += l;
+				libLength = internal.length;
+				load += libLength;
 
-				while(l--) {
-					lib = internal[l];
+				while(libLength--) {
+					lib = internal[libLength];
 
 					if(lib.check() == 'undefined') {
 						if(lib.addition) {
@@ -271,7 +271,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 			}
 
-			return --load;
+			return load - 1;
 		},
 
 		/**
@@ -378,7 +378,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 		 * @author Jakub Olek <jolek@wikia-inc.com>
 		 */
 		loader = function() {
-			var l = remaining = arguments.length,
+			var assetsLength = remaining = arguments.length,
 				matches,
 				remaining,
 				dfd = new Deferred(),
@@ -426,12 +426,12 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				};
 
 			// Nothing to load
-			if (!l) {
+			if (!assetsLength) {
 				complete();
 			}
 
-			while (l--) {
-				var resource = arguments[l],
+			while (assetsLength--) {
+				var resource = arguments[assetsLength],
 					files,
 					type,
 					params;
