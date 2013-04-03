@@ -102,11 +102,10 @@ __NOEDITSECTION__',
 *[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
-	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Advertise]===
-*[http://mediakit.wikia.com/Solutions/Audience Audience]
-*[http://mediakit.wikia.com/Solutions Solutions]
-*[http://mediakit.wikia.com/Advertising-Products Ad products]
-__NOEDITSECTION__',
+	'wikiahome-footer-partner' => "===Partner===
+*[http://www.mediakit.wikia.com Media kit]
+*'''[http://mediakit.wikia.com/wiki/Contact Advertise with us]'''
+__NOEDITSECTION__",
 
 	'wikia-home-page-hot' => 'Hot',
 	'wikia-home-page-new' => 'New',
@@ -220,10 +219,9 @@ $messages['de'] = array(
 *[http://de.wikia.com/Mobil/GameGuides Videospiele-Apps]
 *[http://de.wikia.com/Mobil/LyricWiki Entertainment-Apps]
 *[http://api.wikia.com API (en)]',
-	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Auf Wikia werben]===
-*[http://mediakit.wikia.com/Solutions/Audience Zielgruppe]
-*[http://mediakit.wikia.com/Solutions Lösungen]
-*[http://mediakit.wikia.com/Advertising-Products Produkte]',
+	'wikiahome-footer-partner' => "===Partner===
+*[http://www.mediakit.wikia.com Pressekit]
+*'''[http://mediakit.wikia.com/wiki/Contact Auf Wikia werben]'''",
 
 	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Seite|'''$1''' Seiten }}",
 	'wikiahome-preview-stats-photos' => "{{PLURAL:$1|'''1''' Foto|'''$1''' Fotos}}",
@@ -335,11 +333,11 @@ __NOEDITSECTION__',
 *[http://es.wikia.com/Móbiles/PhotoPop Ap. Entretenimiento]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
-	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Publicidad]===
-*[http://mediakit.wikia.com/Solutions/Audience Audiencia]
-*[http://mediakit.wikia.com/Solutions Soluciones]
-*[http://mediakit.wikia.com/Advertising-Products Anuncios]
-__NOEDITSECTION__',
+	'wikiahome-footer-partner' => "===Publicidad===
+*[http://www.mediakit.wikia.com Kit de prensa]
+*'''[http://mediakit.wikia.com/wiki/Contact Anúnciate con nosotros]'''
+__NOEDITSECTION__",
+
 
 	'wikia-home-page-hot' => 'Calentito',
 	'wikia-home-page-new' => 'Nuevo',
@@ -443,11 +441,11 @@ __NOEDITSECTION__',
 *[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
-	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Publicité]===
-*[http://mediakit.wikia.com/Solutions/Audience Taux d’écoute]
-*[http://mediakit.wikia.com/Solutions Solutions]
-*[http://mediakit.wikia.com/Advertising-Products Produits publicitaires]
-__NOEDITSECTION__',
+	'wikiahome-footer-partner' => "===Partenaire===
+*[http://www.mediakit.wikia.com Kit de presse ]
+*'''[http://mediakit.wikia.com/wiki/Contact Faire de la publicité avec nous]'''
+__NOEDITSECTION__",
+
 	'wikia-home-page-hot' => 'Chaud',
 	'wikia-home-page-new' => 'Nouveau',
 	'wikia-home-page-official' => 'Officiel',
