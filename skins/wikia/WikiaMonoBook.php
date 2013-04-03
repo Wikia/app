@@ -103,42 +103,11 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	 * Setup ads handling
 	 */
 	protected function setupAds(BaseTemplate &$tpl) {
-		AdEngine::getInstance()->setLoadType('inline');
-
-		// BugId:26735 We want spotlights regardless of whether ads have been enabled.
-		$adsColumn = '<div id="column-google" class="noprint">'."\n".
-			AdEngine::getInstance()->getSetupHtml() .
-			'<div id="wikia_header" style="display:none"></div>'; // Hack because ads have code that referenc    es this. Awful.
-
-		if($this->ads === false) {
-			// FIXME: not used anymore?
-			$tpl->set('ads_top', '');
-			$tpl->set('ads_topleft', '');
-			$tpl->set('ads_topright', '');
-			$tpl->set('ads_bot','');
-
-			$adsColumn .= '<!-- not USING ad server! -->'."\n".'</div>'."\n</div>\n";
-		} else {
-			// FIXME: not used anymore?
-			$tpl->set('ads_top', AdServer::getInstance()->getAd('t'));
-			$tpl->set('ads_topleft', AdServer::getInstance()->getAd('tl'));
-			$tpl->set('ads_topright', AdServer::getInstance()->getAd('tr'));
-			$tpl->set('ads_bot', AdServer::getInstance()->getAd('b'));
-
-			$adsColumn .= '<!-- USING ad server! -->'."\n".
-				'<div id="column-google-right">'.AdEngine::getInstance()->getAd('RIGHT_SKYSCRAPER_1').'</div></div>'."\n";
-		}
-
-		// BugId:26735 We want spotlights regardless of whether ads have been enabled.
-		$adsColumn .= '<table id="spotlight_container"><tr>' .
-			'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_1').'</div></td>' .
-			'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_2').'</div></td>' .
-			'<td><div>'.AdEngine::getInstance()->getPlaceHolderIframe('SPOTLIGHT_FOOTER_3').'</div></td>'.
-			"</tr></table>\n".
-			AdEngine::getInstance()->getDelayedIframeLoadingCode();
-
-		// add ads column after content
-		$tpl->set('ads-column', $adsColumn);
+		$tpl->set('ads_top', '');
+		$tpl->set('ads_topleft', '');
+		$tpl->set('ads_topright', '');
+		$tpl->set('ads_bot','');
+		$tpl->set('ads-column', '');
 	}
 
 	/**
