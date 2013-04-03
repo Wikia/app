@@ -42,11 +42,13 @@
 	)->parse(); ?>
 </div>
 
-<form method="get" action="">
-	<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" />
-	<input type="submit" value="<?= wfMessage('wam-index-search-button')->text() ?>" />
-</form>
 <div class="wam-index">
+	<form method="get" action="" class="wam-index-search">
+		<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" />
+		<button type="submit" value="<?= wfMessage('wam-index-search-button')->text() ?>">
+			<img src="<?= $wg->BlankImgUrl ?>" />
+		</button>
+	</form>
 	<table>
 		<tr>
 			<th><?= wfMessage('wam-index-header-rank')->text() ?></th>

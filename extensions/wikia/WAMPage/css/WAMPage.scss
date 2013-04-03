@@ -1,4 +1,5 @@
 @import "../../../../skins/oasis/css/core/color";
+
 .WAMPage {
 	.WikiaPage .WikiaPageContentWrapper {
 		padding-top: 0;
@@ -187,11 +188,25 @@
 }
 
 .wam-index {
+	width: 1010px;
+	margin: 25px 10px 50px;
+	.wam-index-search {
+		button {
+			height: 28px;
+			vertical-align: top;
+		}
+		img {
+			background-image: url("/extensions/wikia/WAMPage/images/wam-searchicon.png"); /* base64 */
+			height: 13px;
+			width: 16px;
+		}
+		input {
+			height: 22px;
+		}
+	}
 	table {
-		width: 98%;
 		border-collapse:collapse;
-		margin: 25px 10px 50px;
-
+		width: 100%;
 		tr {
 
 			&:hover {
