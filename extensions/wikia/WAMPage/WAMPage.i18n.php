@@ -46,7 +46,8 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wam-index-header-wiki-name' => 'Wiki Url',
 	'wam-index-header-vertical' => 'Vertical',
 	'wam-index-header-vertical-rank' => 'Vertical Rank',
-	'wam-index-header-peak-rank' => 'Peak Rank'
+	'wam-index-header-peak-rank' => 'Peak Rank',
+	'wampage-breadcrumb-back-to-wam' => 'WAM Score',
 );
 
 $messages['qqq'] = array(
@@ -54,6 +55,7 @@ $messages['qqq'] = array(
 	'wampage-header-faq' => 'Header of the /wam/faq page on corporate wiki',
 	'wampage-content' => 'Content of the /wam page on corporate wiki',
 	'wampage-faq' => 'Content of the /wam/faq page on corporate wiki',
+	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text.',
 );
 
 
