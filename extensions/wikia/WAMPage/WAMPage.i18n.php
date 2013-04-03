@@ -55,6 +55,7 @@ $messages['qqq'] = array(
 	'wampage-header-faq' => 'Header of the /wam/faq page on corporate wiki',
 	'wampage-content' => 'Content of the /wam page on corporate wiki',
 	'wampage-faq' => 'Content of the /wam/faq page on corporate wiki',
+	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki',
 );
 
 
