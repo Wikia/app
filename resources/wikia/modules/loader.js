@@ -1,9 +1,11 @@
+/* jslint global wgCdnRootUrl: true */
 /**
  * Single place to call when you want to load something from server
  *
- * Think of it as a replacment for ResourceLoader and AssetsManager
+ * Think of it as a replacement for ResourceLoader and AssetsManager
  *
  * @author Jakub Olek <jolek@wikia-inc.com>
+ *
  */
 define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'wikia.deferred', 'wikia.log'], function loader(window, mw, nirvana, Deferred, log){
 	'use strict';
@@ -97,7 +99,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 				// If onload is available, use it
 				// don't use it when loading CSS in WebKit
-				else if(element.onload === null && (element.all /* exclude WebKit */ || type !== loader.CSS)) {
+				else if(element.onload === null && ( type !== loader.CSS)) {
 					element.onload = success;
 					element.onerror = function(){failure(this.src || this.href)};
 				}
