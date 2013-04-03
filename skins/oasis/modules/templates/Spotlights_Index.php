@@ -1,4 +1,4 @@
-<? if ($wg->NoExternals && !$wg->SuppressSpotlights) { ?>
+<? if (!$wg->NoExternals && !$wg->SuppressSpotlights) { ?>
 <section>
 	<div class="header-container">
 		<h1><?= wfMsg('oasis-spotlights-footer-title') ?></h1>
