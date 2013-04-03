@@ -1,4 +1,3 @@
-/* jslint global wgCdnRootUrl: true */
 /**
  * Single place to call when you want to load something from server
  *
@@ -99,7 +98,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 				// If onload is available, use it
 				// don't use it when loading CSS in WebKit
-				else if(element.onload === null && ( type !== loader.CSS)) {
+				else if(element.onload === null && (element.all /* exclude WebKit */ || type !== loader.CSS)) {
 					element.onload = success;
 					element.onerror = function(){failure(this.src || this.href)};
 				}
