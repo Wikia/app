@@ -49,6 +49,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->wg->SuppressPageHeader = true;
 			$this->wg->SuppressFooter = true;
 			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
+			$this->response->addAsset('/skins/oasis/css/modules/CorporateDatepicker.scss');
 
 			$action = $this->getRequestedAction();
 

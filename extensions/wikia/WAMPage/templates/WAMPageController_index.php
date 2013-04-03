@@ -46,21 +46,20 @@
 	<form method="get" action="" class="wam-index-search">
 
 		<select name="langCode">
-			<option><?= wfMessage('wam-index-filter-language-default')->text() ?></option>
+			<option value=""><?= wfMessage('wam-index-filter-language-default')->text() ?></option>
 			<? foreach ($filterLanguages as $langCode): ?>
 				<option value="<?=$langCode?>"<? if ($selectedLangCode == $langCode): ?>selected="selected"<? endif ?>><?= $wg->ContLang->getLanguageName( $langCode )?></option>
 			<? endforeach ?>
 		</select>
 
 		<select name="verticalId">
-
-			<option><?= wfMessage('wam-index-filter-vertical-default')->text() ?></option>
+			<option value=""><?= wfMessage('wam-index-filter-vertical-default')->text() ?></option>
 			<? foreach ($filterVerticals as $verticalId => $verticalName): ?>
 				<option value="<?=$verticalId?>"<? if ($selectedVerticalId == $verticalId): ?>selected="selected"<? endif ?>><?=$verticalName?></option>
 			<? endforeach ?>
 		</select>
 
-		<input type="text" name="date" value="<?=$selectedDate?>" />
+		<input type="text" name="date" id="WamFilterDate" value="<?=$selectedDate?>" />
 
 		<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" />
 		<button type="submit" value="<?= wfMessage('wam-index-search-button')->text() ?>" class="secondary">

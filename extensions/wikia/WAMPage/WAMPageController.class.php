@@ -18,6 +18,8 @@ class WAMPageController extends WikiaController
 	}
 
 	public function index() {
+		$this->response->addAsset('/skins/oasis/css/modules/CorporateDatepicker.scss');
+
 		$faqPageName = $this->model->getWAMFAQPageName();
 
 		$title = $this->wg->Title;

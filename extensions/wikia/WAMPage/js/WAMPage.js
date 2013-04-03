@@ -15,6 +15,16 @@ WAMPage.prototype = {
 				track({label: 'faq'});
 			}
 		}
+
+		$.when(
+			// jQuery UI datepicker plugin
+			mw.loader.use(['jquery.ui.datepicker'])
+		).done($.proxy(function(getResourcesData) {
+			$('#WamFilterDate').datepicker({
+				showOtherMonths: true,
+				selectOtherMonths: true
+			})
+		}, this));
 	}
 };
 
