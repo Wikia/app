@@ -46,7 +46,8 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wam-index-header-wiki-name' => 'Wiki Url',
 	'wam-index-header-vertical' => 'Vertical',
 	'wam-index-header-vertical-rank' => 'Vertical Rank',
-	'wam-index-header-peak-rank' => 'Peak Rank'
+	'wam-index-header-peak-rank' => 'Peak Rank',
+	'wampage-breadcrumb-back-to-wam' => '&lt; WAM Score',
 );
 
 $messages['qqq'] = array(
