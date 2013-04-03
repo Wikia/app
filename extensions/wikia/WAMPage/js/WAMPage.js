@@ -22,7 +22,8 @@ WAMPage.prototype = {
 		).done($.proxy(function(getResourcesData) {
 			$('#WamFilterDate').datepicker({
 				showOtherMonths: true,
-				selectOtherMonths: true
+				selectOtherMonths: true,
+				maxDate: 0
 			})
 		}, this));
 	}

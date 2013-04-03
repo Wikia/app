@@ -38,15 +38,17 @@ $color-toolbox-datepicker-border: mix($color-page, $color-page-opposite, 76%);
 		text-align: center;
 	}
 
-	.ui-priority-secondary, .ui-datepicker-year {
+	.ui-priority-secondary, .ui-datepicker-year, .ui-datepicker-unselectable span {
 		color: $color-alternate-text;
 	}
 
-	.ui-datepicker-calendar a {
-		border: 1px solid #fff;
-		width: 24px;
-		height: 22px;
-		line-height: 23px;
+	.ui-datepicker-calendar {
+		a, span {
+			border: 1px solid #fff;
+			width: 24px;
+			height: 22px;
+			line-height: 23px;
+		}
 	}
 
 	.ui-datepicker-today a {
