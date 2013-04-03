@@ -21,6 +21,12 @@ class WAMPageModel extends WikiaModel {
 		self::TAB_INDEX_ENTERTAINMENT => 'Top entertainment wikis',
 		self::TAB_INDEX_LIFESTYLE => 'Top lifestyle wikis'
 	];
+
+	static protected $verticalIds = [
+		WikiFactoryHub::CATEGORY_ID_GAMING,
+		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+		WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+	];
 	
 	public function __construct() {
 		parent::__construct();
@@ -42,6 +48,12 @@ class WAMPageModel extends WikiaModel {
 		return self::VISUALIZATION_ITEMS_COUNT;
 	}
 
+	/**
+	 * Get wikis for visualization
+	 *
+	 * @param int $tabIndex
+	 * @return mixed
+	 */
 	public function getVisualizationWikis($tabIndex) {
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$WAMData = $this->getMockedDataForDev();
@@ -59,6 +71,17 @@ class WAMPageModel extends WikiaModel {
 		return $this->prepareIndex($WAMData['wam_index'], $tabIndex);
 	}
 
+	/**
+	 * Get wam index
+	 *
+	 * @param array $params - available keys:
+	 * 		searchPhrase
+	 * 		verticalId
+	 * 		langCode
+	 * 		date
+	 *
+	 * @return array
+	 */
 	public function getIndexWikis($params) {
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$WAMData = $this->getMockedDataForDev();
@@ -142,6 +165,36 @@ class WAMPageModel extends WikiaModel {
 		
 		return $pagesLowerCase;
 	}
+
+	/**
+	 * Get corporate wikis languages for filters
+	 *
+	 * @return array
+	 */
+	public function getCorporateWikisLanguages() {
+		$visualizationModel = new CityVisualization();
+		$wikisData = $visualizationModel->getVisualizationWikisData();
+
+		$langs = array();
+
+		foreach ($wikisData as $wikiData) {
+			$langs[] = $wikiData['lang'];
+		}
+		return $langs;
+	}
+
+	/**
+	 * Get verticals for filters
+	 * @return array
+	 */
+	public function getVerticals() {
+		$verticals = [];
+
+		foreach (self::$verticalIds as $id) {
+			$verticals[$id] = $this->getVerticalName($id);
+		}
+		return $verticals;
+	}
 	
 	protected function getDefaultTabsNames() {
 		return self::$failoverTabsNames;
@@ -206,12 +259,26 @@ class WAMPageModel extends WikiaModel {
 		];
 	}
 
+	/**
+	 * Get wam index parameters
+	 *
+	 * @param array $params - available keys:
+	 * 		searchPhrase
+	 * 		verticalId
+	 * 		langCode
+	 * 		date
+	 *
+	 * @return array
+	 */
 	protected function getIndexParams($params) {
 		$apiParams = [
 			'limit' => $this->getItemsPerPage(),
 			'sort_column' => 'wam_index',
 			'sort_direction' => 'DESC',
 			'wiki_word' => isset($params['searchPhrase']) ? $params['searchPhrase'] : null,
+			'vertical_id' => isset($params['verticalId']) ? $params['verticalId'] : null,
+			'wiki_lang' =>  isset($params['langCode']) ? $params['langCode'] : null,
+			'wam_day' => isset($params['date']) ? $params['date'] : null,
 		];
 
 		return $apiParams;

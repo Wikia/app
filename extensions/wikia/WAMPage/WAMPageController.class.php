@@ -36,12 +36,24 @@ class WAMPageController extends WikiaController
 		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
 
 		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
+
+		$this->filterLanguages = $this->model->getCorporateWikisLanguages();
+		$this->filterVerticals = $this->model->getVerticals();
 	}
 
 	protected function getIndexParams() {
 		$this->searchPhrase = $this->getVal('searchPhrase', null);
+		$this->selectedVerticalId = $this->getVal('verticalId', null);
+		$this->selectedLangCode = $this->getVal('langCode', null);
+		$this->selectedDate = $this->getVal('date', null);
+
+		// TODO validation
+
 		$indexParams = [
-			'searchPhrase' => $this->searchPhrase
+			'searchPhrase' => $this->searchPhrase,
+			'verticalId' => $this->selectedVerticalId,
+			'langCode' => $this->selectedLangCode,
+			'date' => $this->selectedDate
 		];
 		return $indexParams;
 	}
