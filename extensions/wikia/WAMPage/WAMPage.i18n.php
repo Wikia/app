@@ -43,7 +43,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 
 	'wam-index-header-rank' => 'Rank',
 	'wam-index-header-score' => 'WAM Score',
-	'wam-index-header-wiki-name' => 'Wiki Url',
+	'wam-index-header-wiki-name' => 'Wiki URL',
 	'wam-index-header-vertical' => 'Vertical',
 	'wam-index-header-vertical-rank' => 'Vertical Rank',
 	'wam-index-header-peak-rank' => 'Peak Rank',
@@ -67,7 +67,9 @@ $messages['fr'] = array(
 	'wampage-header-faq' => 'Foire aux questions',
 	'wampage-content' => 'Le Moniteur d\'Activité Wikia (WAM) est un indicateur de la santé et de la vitalité d\'un wiki. WAM est un outil de mesure développé par Wikia pour rassembler un certains nombre d\'indicateurs en un seul index, comme la note Billboard ou Parker.
 
-Le WAM est calculé chaque jour pour les 5000 wikis plus gros wikis et inclut un classement global et trié ainsi qu\'une note comprise entre 0 et 100. Les classements WAM sont sensibles aux événements du monde réel et varient souvent, aussi revenez régulièrement pour voir les dernières tendances. Le WAM peut aussi être consulté tous les jours sur nos pages de thème [[Jeux vidéo]], [[Divertissement]] et [[Mode de vie]].',
+Le WAM est calculé chaque jour pour les 5000 wikis plus gros wikis et inclut un classement global et trié ainsi qu\'une note comprise entre 0 et 100. Les classements WAM sont sensibles aux événements du monde réel et varient souvent, aussi revenez régulièrement pour voir les dernières tendances. Le WAM peut aussi être consulté tous les jours sur nos pages de thème [[Jeux vidéo]], [[Divertissement]] et [[Mode de vie]].
+
+[[$1|Foire aux questions]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===Comment le WAM est-il calculé ?===
 Le classement WAM est une combinaison du trafic, de l\'engagement et de la croissance. Nous ne pouvons pas rentrer dans les détails car nous ne voulons pas que les wikis essaient de manipuler le classement. Mais soyez sûr que nous avons intégré tous les ingrédients essentiels pour un wiki réussi et florissant.
 
@@ -102,7 +104,9 @@ $messages['de'] = array(
 	'wampage-header-faq' => 'Fragen und Antworten',
 	'wampage-content' => 'Der Wikia Aktivitätsmonitor (WAM) zeigt an, wie es um dein Wiki steht, und wie bekannt dein Wiki ist. WAM wurde von Wikia entwickelt, um durch den Vergleich mehrerer Daten eine Wiki-Rangliste erstellen zu können, ähnlich der Billboard- oder Parker-Punktzahl.
 
-	Die WAM-Punktzahl wird täglich für die 5.000 Top-Wikis berechnet und beinhaltet einmal eine Platzierung innerhalb aller Top-Wikis, innerhalb der zugehörigen Wiki-Kategorie (Videospiele, Entertainment, Lifestyle) und eine Punktzahl von 0 bis 100. Die WAM-Punktzahl reagiert auf aktuelle Themen und ändert sich oft, also stelle sicher, dass dein Wiki immer auf dem aktuellsten Stand ist. Die WAM-Platzierung kann ebenfalls in jedem unserer Hubs ([[Videospiele]], [[Entertainment]], [[Lifestyle]]) eingesehen werden.',
+	Die WAM-Punktzahl wird täglich für die 5.000 Top-Wikis berechnet und beinhaltet einmal eine Platzierung innerhalb aller Top-Wikis, innerhalb der zugehörigen Wiki-Kategorie (Videospiele, Entertainment, Lifestyle) und eine Punktzahl von 0 bis 100. Die WAM-Punktzahl reagiert auf aktuelle Themen und ändert sich oft, also stelle sicher, dass dein Wiki immer auf dem aktuellsten Stand ist. Die WAM-Platzierung kann ebenfalls in jedem unserer Hubs ([[Videospiele]], [[Entertainment]], [[Lifestyle]]) eingesehen werden.
+
+	[[$1|Häufig gestellte Fragen]]',
 
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
 ===Wie wird die WAM-Punktzahl ermittelt?===
@@ -142,7 +146,9 @@ $messages['es'] = array(
 	'wampage-header-faq' => 'Preguntas frecuentes',
 	'wampage-content' => 'El Monitor de Actividad de Wikia (WAM) es un indicador de la salud y vitalidad de los wikis. El WAM es una herramienta desarrollada por Wikia capaz de obtener diferentes indicadores independientes y dar una puntuación global, como las estrellas de los hoteles.
 
-El WAM calcula diariamente las puntuaciones para los 5.000 wikis más visitados y hace una clasificación general y vertical con puntuaciones del 0 al 100. La clasificación del WAM es sensible a los eventos del mundo real y cambia frecuentemente, aseguraros de comprobar regularmente los resultados de las últimas tendencias. El WAM se puede ver diariamente desde nuestras páginas globales de [[w:c:es:Videojuegos|videojuegos]], [[w:c:es:Entretenimiento|entretenimiento]] y [[w:c:es:Estilo_de_vida|estilo de vida]].',
+El WAM calcula diariamente las puntuaciones para los 5.000 wikis más visitados y hace una clasificación general y vertical con puntuaciones del 0 al 100. La clasificación del WAM es sensible a los eventos del mundo real y cambia frecuentemente, aseguraros de comprobar regularmente los resultados de las últimas tendencias. El WAM se puede ver diariamente desde nuestras páginas globales de [[w:c:es:Videojuegos|videojuegos]], [[w:c:es:Entretenimiento|entretenimiento]] y [[w:c:es:Estilo_de_vida|estilo de vida]].
+
+[[$1|Preguntas frecuentes]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
 ===¿Cómo hace los cálculos el WAM?===
 La clasificación del WAM es una combinación de tráfico, compromiso y crecimiento. No podemos deciros los detalles concretos porque no queremos que los wikis intenten manipular las valoraciones. Pero tened por seguro que hemos incluido todos los ingredientes esenciales para valorar qué wikis son exitosos.
