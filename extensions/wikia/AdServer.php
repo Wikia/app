@@ -3,6 +3,8 @@ if(!defined('MEDIAWIKI')) {
 	die(1);
 }
 
+error_log('File marked for deletion, but still used: ' . __FILE__);
+
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AdServer',
 	'author' => 'Inez Korczyński'
