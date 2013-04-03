@@ -443,7 +443,7 @@ __NOEDITSECTION__',
 __NOEDITSECTION__',
 	'wikiahome-footer-partner' => "===Partenaire===
 *[http://www.mediakit.wikia.com Kit de presse ]
-*'''[http://mediakit.wikia.com/wiki/Contact Faire de la publicité avec nous]'''
+*'''[http://mediakit.wikia.com/wiki/Contact Publicité]'''
 __NOEDITSECTION__",
 
 	'wikia-home-page-hot' => 'Chaud',
