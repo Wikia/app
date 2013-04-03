@@ -5,11 +5,11 @@
  *
  * @author Jakub Olek <jolek@wikia-inc.com>
  */
-define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'wikia.deferred', 'wikia.log'], function loader(w, mw, nirvana, Deferred, log){
+define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'wikia.deferred', 'wikia.log'], function loader(window, mw, nirvana, Deferred, log){
 	'use strict';
 
 	var loader,
-		doc = w.document,
+		doc = window.document,
 		head = doc.head || doc.getElementsByTagName('head')[0],
 		loadedCompleteRegExp = /loaded|complete/,
 		style = 'stylesheet',
@@ -23,7 +23,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 		createElement = function(type, options){
 			var element = doc.createElement(type);
 
-			return options ? w.$.extend(element, options) : element;
+			return options ? window.$.extend(element, options) : element;
 		},
 		getURL = function(path, type, params){
 			if(~path.indexOf('__am') || ~path.search(/^https?:/i)) {
@@ -33,17 +33,17 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			} else {
 				//we might convert links to go through AssetManager
 				//so we can minify them all!! YAY!
-				path = path.replace(w.wgCdnRootUrl, '').replace(/__cb\d*/, '');
+				path = path.replace(window.wgCdnRootUrl, '').replace(/__cb\d*/, '');
 
 				if (type == 'sass') {
-					params = params || w.wgSassParams;
+					params = params || window.wgSassParams;
 				}
 
-				return w.wgCdnRootUrl + w.wgAssetsManagerQuery.
+				return window.wgCdnRootUrl + window.wgAssetsManagerQuery.
 					replace('%1$s', type).
 					replace('%2$s', path.replace(slashRegex, '')). // remove first slash
-					replace('%3$s', params ? encodeURIComponent(w.$.param(params)) : '-').
-					replace('%4$d', w.wgStyleVersion);
+					replace('%3$s', params ? encodeURIComponent(window.$.param(params)) : '-').
+					replace('%4$d', window.wgStyleVersion);
 			}
 		},
 		getURLS = function(path, type, params){
@@ -103,7 +103,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 				// use polling when loading CSS in Webkit :(
 				else if (type === loader.CSS) {
-					timer = w.setInterval((function (url) {
+					timer = window.setInterval((function (url) {
 						return function() {
 							var stylesheet,
 								stylesheets = doc.styleSheets,
@@ -129,7 +129,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 										// Gecko: catch NS_ERROR_DOM_SECURITY_ERR
 										// Webkit: catch SECURITY
 										if (/SECURITY/.test(e) || /SECURITY/i.test(e.name)) {
-											timer = w.clearInterval(timer);
+											timer = window.clearInterval(timer);
 											success();
 										}
 									}
@@ -155,26 +155,26 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			twitter: {
 				file: '//platform.twitter.com/widgets.js',
 				check: function(){
-					return typeof (w.twttr && w.twttr.widgets);
+					return typeof (window.twttr && window.twttr.widgets);
 				}
 			},
 			googleplus: {
 				file: '//apis.google.com/js/plusone.js',
 				check: function(){
-					return typeof (w.gapi && w.gapi.plusone);
+					return typeof (window.gapi && window.gapi.plusone);
 				}
 			},
 			facebook: {
-				file: w.fbScript || '//connect.facebook.net/en_US/all.js',
+				file: window.fbScript || '//connect.facebook.net/en_US/all.js',
 				check: function(){
-					return typeof w.FB;
+					return typeof window.FB;
 				},
 				addition: function(callbacks) {
 					callbacks.success = (function(callback){
 						return function(){
 							// always initialize FB API when SDK is loaded on-demand
-							if (typeof w.onFBloaded === 'function') {
-								w.onFBloaded();
+							if (typeof window.onFBloaded === 'function') {
+								window.onFBloaded();
 							}
 
 							callback();
@@ -187,12 +187,12 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			googlemaps: {
 				file: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
 				check: function(){
-					return typeof (w.google && w.google.maps);
+					return typeof (window.google && window.google.maps);
 				},
 				addition: function(callbacks){
-					w.onGoogleMapsLoaded = (function(callback) {
+					window.onGoogleMapsLoaded = (function(callback) {
 						return function(){
-							delete w.onGoogleMapsLoaded;
+							delete window.onGoogleMapsLoaded;
 
 							callback();
 						}
@@ -328,12 +328,12 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 
 			if(send){
 				if(typeof options.params == 'object'){
-					options = w.$.extend(options, options.params);
+					options = window.$.extend(options, options.params);
 					delete options.params;
 				}
 
 				// add a cache buster
-				options.cb = w.wgStyleVersion;
+				options.cb = window.wgStyleVersion;
 
 				nirvana.getJson(
 					'AssetsManager',
@@ -343,7 +343,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 					function(resources, event) {
 						// "register" JS messages
 						if (resources.messages) {
-							w.wgMessages = w.$.extend(w.wgMessages, resources.messages);
+							window.wgMessages = window.$.extend(window.wgMessages, resources.messages);
 						}
 
 						complete(event, resources);
