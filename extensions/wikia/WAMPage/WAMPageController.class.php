@@ -3,7 +3,6 @@
 class WAMPageController extends WikiaController
 {
 	const FIRST_PAGE = 1;
-	const ITEMS_PER_PAGE = 20;
 	
 	protected $model;
 
@@ -44,10 +43,11 @@ class WAMPageController extends WikiaController
 		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
 		
 		$total = ( empty($this->indexWikis['wam_results_total']) ) ? 0 : $this->indexWikis['wam_results_total'];
-		if( $total > self::ITEMS_PER_PAGE ) {
-			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), self::ITEMS_PER_PAGE );
-			$paginator->setActivePage( $this->pageNo - 1 );
-			$this->paginatorBar = $paginator->getBarHTML('/wiki/WAM?page=%s');
+		$itemsPerPage = $this->model->getItemsPerPage();
+		if( $total > $itemsPerPage ) {
+			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );
+			$paginator->setActivePage( $this->page - 1 );
+			$this->paginatorBar = $paginator->getBarHTML( $this->getUrlWithAllParams() );
 		}
 	}
 
@@ -64,7 +64,7 @@ class WAMPageController extends WikiaController
 		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
 		$this->selectedDate = ($this->selectedDate !== '') ? $this->selectedDate : null;
 		
-		$this->pageNo = $this->getVal('page', self::FIRST_PAGE);
+		$this->page = $this->getVal('page', self::FIRST_PAGE);
 
 		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
 		if (!$langValidator->isValid($this->selectedLangCode)) {
@@ -79,14 +79,27 @@ class WAMPageController extends WikiaController
 		// TODO add min and max date on calendar
 	}
 
-	protected function getIndexParams() {
+	protected function getIndexParams($wildcardForPage = false) {
 		$indexParams = [
 			'searchPhrase' => $this->searchPhrase,
 			'verticalId' => $this->selectedVerticalId,
 			'langCode' => $this->selectedLangCode,
-			'date' => isset($this->selectedDate) ? strtotime($this->selectedDate) : null
+			'date' => $this->selectedDate,
+			'page' => ( ($wildcardForPage === true) ? '%s' : $this->page),
 		];
+		
 		return $indexParams;
+	}
+	
+	protected function getUrlWithAllParams() {
+		$url = '#';
+		$title = $this->wg->Title;
+		if( $title instanceof Title ) {
+			$url = $title->getLocalURL($this->getIndexParams(true));
+			$url = str_replace('%25', '%', $url); //todo: is there a better way?
+		}
+		
+		return $url;
 	}
 	
 	protected function redirectIfFirstTab($tabIndex, $subpageText) {
