@@ -174,11 +174,16 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				// handle clicks on [delete] button
 				preview.find('.RTEPlaceholderPreviewToolsDelete').bind('click', function(ev) {
+					self.track( 'button-delete' );
+
 					RTE.tools.confirm(title, lang.confirmDelete, function() {
 						RTE.tools.removeElement(placeholder);
 
 						// remove preview
 						preview.remove();
+
+					}).data( 'tracking', {
+						category: 'placeholder'
 					});
 				});
 
@@ -187,6 +192,8 @@ CKEDITOR.plugins.add('rte-placeholder',
 					preview.find('.RTEPlaceholderPreviewToolsEdit').bind('click', function(ev) {
 						// hide preview
 						preview.hide();
+
+						self.track( 'button-edit' );
 
 						// call editor for this type of placeholder
 						$(placeholder).trigger('edit');
@@ -200,6 +207,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				// close button
 				preview.find('.RTEPlaceholderPreviewTitleBar').children('span').bind('click', function(ev) {
+					self.track( 'button-close' );
 					self.hidePreview(placeholder, true);
 				});
 
@@ -258,7 +266,14 @@ CKEDITOR.plugins.add('rte-placeholder',
 		placeholder.data('showTimeout', setTimeout(function() {
 
 			// show preview pop-up
-			preview.fadeIn();
+			if (!preview.is(':visible')) {
+				preview.fadeIn();
+
+				self.track({
+					action: Wikia.Tracker.ACTIONS.HOVER,
+					label: 'show'
+				});
+			}
 
 			// try to remove scrollbars (RT #34048)
 			self.expandPlaceholder(placeholder);
@@ -415,5 +430,17 @@ CKEDITOR.plugins.add('rte-placeholder',
 				previewArea.removeClass('RTEPlaceholderPreviewExpanded');
 			}
 		}
-	}
+	},
+
+	track: (function() {
+		var	config = {
+				category: 'placeholder'
+			},
+			slice = [].slice,
+			track = WikiaEditor.track;
+
+		return function() {
+			track.apply( track, [ config ].concat( slice.call( arguments ) ) );
+		};
+	})()
 });
