@@ -11,5 +11,5 @@
 		($query).'&fulltext=Search';?>"></a>
 	</p>
 	<a class=url href="<?= $resultSet->getHeader( 'url' ) ?>"><?= $host ?></a>
-	<span class=desc><?= $resultSet->getHeader('description'); ?></span>
+	<span class=desc><?= $resultSet->getDescription(); ?></span>
 </li>
