@@ -49,6 +49,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wampage-breadcrumb-back-to-wam' => 'WAM Score',
 	'wam-index-header-peak-rank' => 'Peak Rank',
 	'wam-index-no-results' => 'No Results Found',
+	'wam-index-filter-date-placeholder' => 'Most Recent',
 );
 
 $messages['qqq'] = array(

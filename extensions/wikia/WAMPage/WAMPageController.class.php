@@ -68,12 +68,11 @@ class WAMPageController extends WikiaController
 	}
 
 	protected function getIndexParams() {
-
 		$indexParams = [
 			'searchPhrase' => $this->searchPhrase,
 			'verticalId' => $this->selectedVerticalId,
 			'langCode' => $this->selectedLangCode,
-			'date' => $this->selectedDate
+			'date' => isset($this->selectedDate) ? strtotime($this->selectedDate) : null
 		];
 		return $indexParams;
 	}

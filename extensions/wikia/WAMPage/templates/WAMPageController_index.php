@@ -59,7 +59,7 @@
 			<? endforeach ?>
 		</select>
 
-		<input type="text" name="date" id="WamFilterDate" value="<?=$selectedDate?>" />
+		<input type="text" name="date" id="WamFilterDate" value="<?=$selectedDate?>" placeholder="<?= wfMessage('wam-index-filter-date-placeholder')->text() ?>"/>
 
 		<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" />
 		<button type="submit" value="<?= wfMessage('wam-index-search-button')->text() ?>" class="secondary">
