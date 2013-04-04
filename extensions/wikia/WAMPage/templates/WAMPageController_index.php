@@ -44,27 +44,30 @@
 
 <div class="wam-index" id="wam-index">
 	<form method="get" action="" class="wam-index-search" id="wam-index-search">
-
-		<select name="langCode">
-			<option value=""><?= wfMessage('wam-index-filter-language-default')->text() ?></option>
-			<? foreach ($filterLanguages as $langCode): ?>
-				<option value="<?=$langCode?>"<? if ($selectedLangCode == $langCode): ?>selected="selected"<? endif ?>><?= $wg->ContLang->getLanguageName( $langCode )?></option>
-			<? endforeach ?>
-		</select>
-
-		<select name="verticalId">
-			<option value=""><?= wfMessage('wam-index-filter-vertical-default')->text() ?></option>
-			<? foreach ($filterVerticals as $verticalId => $verticalName): ?>
-				<option value="<?=$verticalId?>"<? if ($selectedVerticalId == $verticalId): ?>selected="selected"<? endif ?>><?=$verticalName?></option>
-			<? endforeach ?>
-		</select>
-
-		<input type="text" name="date" id="WamFilterDate" value="<?=$selectedDate?>" placeholder="<?= wfMessage('wam-index-filter-date-placeholder')->text() ?>"/>
-
-		<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" />
-		<button type="submit" value="<?= wfMessage('wam-index-search-button')->text() ?>" class="secondary">
-			<img src="<?= $wg->BlankImgUrl ?>" />
-		</button>
+		<div class="filtering">
+			<span><?= wfMessage('wam-index-filter-sort-label')->text() ?></span>
+			<select name="langCode">
+				<option value=""><?= wfMessage('wam-index-filter-language-default')->text() ?></option>
+				<? foreach ($filterLanguages as $langCode): ?>
+					<option value="<?=$langCode?>"<? if ($selectedLangCode == $langCode): ?>selected="selected"<? endif ?>><?= $wg->ContLang->getLanguageName( $langCode )?></option>
+				<? endforeach ?>
+			</select>
+			<span><?= wfMessage('wam-index-filter-date-label')->text() ?></span>
+			<select name="verticalId">
+				<option value=""><?= wfMessage('wam-index-filter-vertical-default')->text() ?></option>
+				<? foreach ($filterVerticals as $verticalId => $verticalName): ?>
+					<option value="<?=$verticalId?>"<? if ($selectedVerticalId == $verticalId): ?>selected="selected"<? endif ?>><?=$verticalName?></option>
+				<? endforeach ?>
+			</select>
+			<span><?= wfMessage('wam-index-filter-lang-label')->text() ?></span>
+			<input type="text" name="date" id="WamFilterDate" value="<?=$selectedDate?>" placeholder="<?= wfMessage('wam-index-filter-date-placeholder')->text() ?>"/>
+		</div>
+		<div class="searching">
+			<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" />
+			<button type="submit" value="<?= wfMessage('wam-index-search-button')->text() ?>" class="secondary">
+				<img src="<?= $wg->BlankImgUrl ?>" />
+			</button>
+		</div>
 	</form>
 	<table>
 		<tr>

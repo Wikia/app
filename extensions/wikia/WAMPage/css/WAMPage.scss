@@ -199,8 +199,17 @@
 	margin: 25px 10px 50px;
 	width: 1010px;
 	.wam-index-search {
-		float: right;
+		.filtering {
+			float: left;
+			select, input {
+				vertical-align: middle;
+			}
+		}
+		.searching {
+			float: right;
+		}
 		margin-bottom: 18px;
+		overflow: hidden;
 		button {
 			height: 22px;
 			vertical-align: middle;
