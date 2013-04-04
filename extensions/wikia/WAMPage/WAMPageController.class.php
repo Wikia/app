@@ -2,6 +2,9 @@
 
 class WAMPageController extends WikiaController
 {
+	const FIRST_PAGE = 1;
+	const ITEMS_PER_PAGE = 20;
+	
 	protected $model;
 
 	public function __construct() {
@@ -39,6 +42,13 @@ class WAMPageController extends WikiaController
 		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
 
 		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
+		
+		$total = ( empty($this->indexWikis['wam_results_total']) ) ? 0 : $this->indexWikis['wam_results_total'];
+		if( $total > self::ITEMS_PER_PAGE ) {
+			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), self::ITEMS_PER_PAGE );
+			$paginator->setActivePage( $this->pageNo - 1 );
+			$this->paginatorBar = $paginator->getBarHTML('/wiki/WAM?page=%s');
+		}
 	}
 
 	protected function collectRequestParameters() {
@@ -53,6 +63,8 @@ class WAMPageController extends WikiaController
 		$this->selectedVerticalId = ($this->selectedVerticalId !== '') ? $this->selectedVerticalId : null;
 		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
 		$this->selectedDate = ($this->selectedDate !== '') ? $this->selectedDate : null;
+		
+		$this->pageNo = $this->getVal('page', self::FIRST_PAGE);
 
 		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
 		if (!$langValidator->isValid($this->selectedLangCode)) {

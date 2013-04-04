@@ -97,4 +97,7 @@
 			</td></tr>
 		<? endif; ?>
 	</table>
+	<?php if( !empty($paginatorBar) ): ?>
+		<?= $paginatorBar; ?>
+	<?php endif; ?>
 </div>
