@@ -338,8 +338,7 @@
 											});
 
 											CategorySelect.track({
-												action: Wikia.Tracker.ACTIONS.SUBMIT,
-												label: 'edit'
+												label: 'button-edit-save'
 											});
 
 											self.trigger( 'update' );
@@ -727,7 +726,7 @@
 			return function() {
 				var track = ( WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
 				track.apply( track, [ config ].concat( slice.call( arguments ) ) );
-			}
+			};
 		})()
 	});
 
