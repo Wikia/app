@@ -76,12 +76,40 @@ CKEDITOR.plugins.add('rte-media',
 		// setup overlay
 		var msgs = RTE.getInstance().lang.media;
 
+		var getTrackingCategory = function( node ) {
+			var type;
+
+			switch( node.attr( 'type' ) ) {
+				case 'image':
+				case 'image-placeholder': {
+					type = node.hasClass( 'video' ) ? 'vet' : 'photo-tool';
+					break;
+				}
+				case 'image-gallery': {
+					type = ( node.hasClass( 'image-slideshow' ) ?
+							'slideshow' : node.hasClass( 'image-gallery-slider' ) ?
+							'slider' : 'gallery' ) + '-tool';
+					break;
+				}
+			}
+
+			return type;
+		};
 
 		var standardButtons = [
 			{
 				label: msgs['edit'],
 				'class': 'RTEMediaOverlayEdit',
 				callback: function(node) {
+					var category = getTrackingCategory( node );
+
+					if ( category ) {
+						WikiaEditor.track({
+							category: category,
+							label: 'modify'
+						});
+					}
+
 					node.trigger('edit');
 				}
 			},
@@ -90,6 +118,14 @@ CKEDITOR.plugins.add('rte-media',
 				'class': 'RTEMediaOverlayDelete',
 				callback: function(node) {
 					var msgMediaType = self.getMediaTypeForMsg(node);
+					var category = getTrackingCategory( node );
+
+					if ( category ) {
+						WikiaEditor.track({
+							category: category,
+							label: 'remove'
+						});
+					}
 
 					// show modal version of confirm()
 					var title = RTE.getInstance().lang[msgMediaType].confirmDeleteTitle;
@@ -103,6 +139,9 @@ CKEDITOR.plugins.add('rte-media',
 						// Resize editor area
 						wikiaEditor.fire('editorResize');
 						wikiaEditor.editorFocus();
+
+					}).data( 'tracking', {
+						category: category
 					});
 				}
 			}
@@ -392,7 +431,7 @@ RTE.mediaEditor = {
 
 		this._add(wikitext, data);
 	},
-	
+
 	// add a video (wikitext will parser to HTML, params stored in metadata)
 	addVideo: function(wikitext, params) {
 		RTE.log('adding a video');

@@ -78,9 +78,17 @@
 		// Attach listeners
 		element
 			.on( 'click.' + namespace, options.selectors.editCategory, function( event ) {
+				CategorySelect.track({
+					label: 'button-edit'
+				});
+
 				self.editCategory( $( event.currentTarget ).closest( options.selectors.category ) );
 			})
 			.on( 'click.' + namespace, options.selectors.removeCategory, function( event ) {
+				CategorySelect.track({
+					label: 'button-remove'
+				});
+
 				self.removeCategory( $( event.currentTarget ).closest( options.selectors.category ) );
 			})
 			.on( 'reset.' + namespace, $.proxy( self.resetCategories, self ) );
@@ -177,6 +185,11 @@
 				.sortable( $.extend( options.sortable, {
 					update: function( event, ui ) {
 						self.dirty = true;
+
+						CategorySelect.track({
+							label: 'sort'
+						});
+
 						self.trigger( 'update' );
 					}
 				}));
@@ -238,6 +251,11 @@
 						self.trigger( 'add', {
 							category: category,
 							element: element
+						});
+
+						CategorySelect.track({
+							action: Wikia.Tracker.ACTIONS.ADD,
+							label: 'new-category'
 						});
 
 						self.trigger( 'update' );
@@ -319,6 +337,10 @@
 												element: element
 											});
 
+											CategorySelect.track({
+												label: 'button-edit-save'
+											});
+
 											self.trigger( 'update' );
 										}
 
@@ -328,6 +350,11 @@
 							}
 						],
 						id: 'CategorySelectEditModal',
+						onClose: function() {
+							CategorySelect.track({
+								label: 'button-edit-close'
+							});
+						},
 						width: 500
 					});
 				});
@@ -687,7 +714,20 @@
 				placeholder: 'placeholder',
 				tolerance: 'pointer'
 			}
-		}
+		},
+
+		track: (function() {
+			var config = {
+				action: Wikia.Tracker.ACTIONS.CLICK,
+				category: 'category-tool',
+				trackingMethod: 'both'
+			};
+
+			return function() {
+				var track = ( WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
+				track.apply( track, [ config ].concat( slice.call( arguments ) ) );
+			};
+		})()
 	});
 
 	/**

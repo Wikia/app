@@ -90,7 +90,7 @@
 			$('#wpDiff').bind('click', this.proxy(this.onDiff));
 
 			// remove placeholder text when user submits the form without providing the summary
-			$('#editform').bind('submit', this.proxy(this.onSave));
+			this.editform = $('#editform').bind('submit', this.proxy(this.onSave));
 
 			// hidden form fields / page title in the header
 			this.hiddenFields = $('#EditPageHiddenFields');
@@ -160,14 +160,24 @@
 		},
 
 		// handle "Save" button
-		onSave: function() {
+		onSave: function( event ) {
 			if (this.textarea.val() == this.textarea.attr('placeholder')) {
 				this.textarea.val('');
 			}
 
 			this.editor.setState(this.editor.states.SAVING);
 
-			this.editor.track( 'publish' );
+			this.editor.track({
+				action: Wikia.Tracker.ACTIONS.SUBMIT,
+				label: 'publish'
+			});
+
+			// prevent submitting immediately so we can track this event
+			event.preventDefault();
+			this.editform.unbind( 'submit' );
+			setTimeout(this.proxy(function() {
+				this.editform.submit();
+			}), 100 );
 
 			// block "Publish" button
 			$('#wpSave').attr('disabled', true);
@@ -181,9 +191,7 @@
 					label: 'summary-enter'
 				});
 
-				// submit the form
-				var form = this.textarea.closest('form');
-				form.submit();
+				this.editform.submit();
 			}
 		},
 

@@ -192,49 +192,6 @@ jQuery(function($){
 		}
 	});
 
-	/** edit **/
-
-	(function() {
-		var category = 'edit';
-
-		// Stop here if not an edit page
-		if(!$body.hasClass('editor')) {
-			return;
-		}
-
-		$('#EditPageRail').on('mousedown', '.module_insert .cke_button', function(e) {
-			var label,
-				el = $(e.currentTarget);
-
-			// Primary mouse button only
-			if (e.which !== 1) {
-				return;
-			}
-
-			if (el.hasClass('RTEImageButton')) {
-				label = 'add-photo';
-			} else if (el.hasClass('RTEGalleryButton')) {
-				label = 'add-gallery';
-			} else if (el.hasClass('RTESlideshowButton')) {
-				label = 'add-slideshow';
-			} else if (el.hasClass('RTEVideoButton')) {
-				label = 'add-video';
-			} else if (el.hasClass('RTEPollButton')) {
-				label = 'add-poll';
-			} else if (el.hasClass('cke_button_table')) {
-				label = 'add-table';
-			}
-
-			if (label !== undefined) {
-				track({
-					browserEvent: e,
-					category: category,
-					label: label
-				});
-			}
-		});
-	})();
-
 	/** photos-module **/
 
 	$wikiaRail.find('.LatestPhotosModule').on('mousedown', 'a', function(e) {
