@@ -76,17 +76,25 @@
 			<th><?= wfMessage('wam-index-header-peak-rank')->text() ?></th>
 		</tr>
 
-		<? foreach ($indexWikis['wam_index'] as $wiki): ?>
-			<tr>
-				<td><?=$wiki['wam_rank']?>.</td>
-				<td class="score <?=$wiki['change']?>">
-					<?= $wg->Lang->formatNum(number_format($wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION))?>
-				</td>
-				<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
-				<td><?=$wiki['hub_name']?></td>
-				<td><?=$wiki['hub_wam_rank']?></td>
-				<td><?=$wiki['peak_wam_rank']?></td>
-			</tr>
-		<? endforeach ?>
+		<? if($indexWikis['wam_index']): ?>
+			<? foreach ($indexWikis['wam_index'] as $wiki): ?>
+				<tr>
+					<td><?=$wiki['wam_rank']?>.</td>
+					<td class="score <?=$wiki['change']?>">
+						<?= $wg->Lang->formatNum(number_format($wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION))?>
+					</td>
+					<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
+					<td><?=$wiki['hub_name']?></td>
+					<td><?=$wiki['hub_wam_rank']?></td>
+					<td><?=$wiki['peak_wam_rank']?></td>
+				</tr>
+			<? endforeach ?>
+		<? else: ?>
+			<tr class="no-results"><td colspan="6">
+				<p>
+					<?= wfMessage('wam-index-no-results')->text() ?>
+				</p>
+			</td></tr>
+		<? endif; ?>
 	</table>
 </div>

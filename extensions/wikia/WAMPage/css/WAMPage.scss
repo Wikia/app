@@ -222,12 +222,10 @@
 		border-collapse:collapse;
 		clear: both;
 		width: 100%;
+		tr:not(.no-results):hover {
+			background-color: #f2f2f2;
+		}
 		tr {
-
-			&:hover {
-				background-color: #f2f2f2;
-			}
-
 			th {
 				background-color: #f7f7f7;
 				text-align: left;
@@ -270,5 +268,10 @@
 				}
 			}
 		}
+	}
+	.no-results p {
+		clear: both;
+		line-height: 100px;
+		text-align: center;
 	}
 }
