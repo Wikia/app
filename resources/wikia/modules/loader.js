@@ -1,15 +1,16 @@
 /**
  * Single place to call when you want to load something from server
  *
- * Think of it as a replacment for ResourceLoader and AssetsManager
+ * Think of it as a replacement for ResourceLoader and AssetsManager
  *
  * @author Jakub Olek <jolek@wikia-inc.com>
+ *
  */
-define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'wikia.deferred', 'wikia.log'], function loader(w, mw, nirvana, Deferred, log){
+define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'wikia.deferred', 'wikia.log'], function loader(window, mw, nirvana, Deferred, log){
 	'use strict';
 
 	var loader,
-		doc = w.document,
+		doc = window.document,
 		head = doc.head || doc.getElementsByTagName('head')[0],
 		loadedCompleteRegExp = /loaded|complete/,
 		style = 'stylesheet',
@@ -23,9 +24,9 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 		createElement = function(type, options){
 			var element = doc.createElement(type);
 
-			return options ? w.$.extend(element, options) : element;
+			return options ? window.$.extend(element, options) : element;
 		},
-		getURL = function(path, type, params){
+		getUrl = function(path, type, params){
 			if(~path.indexOf('__am') || ~path.search(/^https?:/i)) {
 				//most definitely you already have proper url to asset
 				//or full url was passed
@@ -33,20 +34,20 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			} else {
 				//we might convert links to go through AssetManager
 				//so we can minify them all!! YAY!
-				path = path.replace(w.wgCdnRootUrl, '').replace(/__cb\d*/, '');
+				path = path.replace(window.wgCdnRootUrl, '').replace(/__cb\d*/, '');
 
 				if (type == 'sass') {
-					params = params || w.wgSassParams;
+					params = params || window.wgSassParams;
 				}
 
-				return w.wgCdnRootUrl + w.wgAssetsManagerQuery.
+				return window.wgCdnRootUrl + window.wgAssetsManagerQuery.
 					replace('%1$s', type).
 					replace('%2$s', path.replace(slashRegex, '')). // remove first slash
-					replace('%3$s', params ? encodeURIComponent(w.$.param(params)) : '-').
-					replace('%4$d', w.wgStyleVersion);
+					replace('%3$s', params ? encodeURIComponent(window.$.param(params)) : '-').
+					replace('%4$d', window.wgStyleVersion);
 			}
 		},
-		getURLS = function(path, type, params){
+		getUrls = function(path, type, params){
 			var i = 0,
 				url;
 
@@ -54,13 +55,13 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				if(type == 'groups'){
 					path = path.join(',');
 				}else{
-					while(url = path[i]) path[i++] = getURL(url, type, params);
+					while(url = path[i]) path[i++] = getUrl(url, type, params);
 
 					return path;
 				}
 			}
 
-			return getURL(path, type, params);
+			return getUrl(path, type, params);
 		},
 		addScript = function(content){
 			head.appendChild(createElement('script', {text: content}));
@@ -103,7 +104,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 				// use polling when loading CSS in Webkit :(
 				else if (type === loader.CSS) {
-					timer = w.setInterval((function (url) {
+					timer = window.setInterval((function (url) {
 						return function() {
 							var stylesheet,
 								stylesheets = doc.styleSheets,
@@ -113,7 +114,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 								if (url === stylesheet.href) {
 									try {
 										// We store so that minifiers don't remove the code
-										var r = stylesheet.cssRules;
+										var cssRules = stylesheet.cssRules;
 										// Webkit:
 										// Webkit browsers don't create the stylesheet object
 										// before the link has been loaded.
@@ -125,11 +126,11 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 										//  * no error thrown for same-domain
 										//  * NS_ERROR_DOM_SECURITY_ERR thrown for cross-domain
 										throw 'SECURITY';
-									} catch(e) {
+									} catch(err) {
 										// Gecko: catch NS_ERROR_DOM_SECURITY_ERR
 										// Webkit: catch SECURITY
-										if (/SECURITY/.test(e) || /SECURITY/i.test(e.name)) {
-											timer = w.clearInterval(timer);
+										if (/SECURITY/.test(err) || /SECURITY/i.test(err.name)) {
+											timer = window.clearInterval(timer);
 											success();
 										}
 									}
@@ -155,26 +156,26 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			twitter: {
 				file: '//platform.twitter.com/widgets.js',
 				check: function(){
-					return typeof (w.twttr && w.twttr.widgets);
+					return typeof (window.twttr && window.twttr.widgets);
 				}
 			},
 			googleplus: {
 				file: '//apis.google.com/js/plusone.js',
 				check: function(){
-					return typeof (w.gapi && w.gapi.plusone);
+					return typeof (window.gapi && window.gapi.plusone);
 				}
 			},
 			facebook: {
-				file: w.fbScript || '//connect.facebook.net/en_US/all.js',
+				file: window.fbScript || '//connect.facebook.net/en_US/all.js',
 				check: function(){
-					return typeof w.FB;
+					return typeof window.FB;
 				},
 				addition: function(callbacks) {
 					callbacks.success = (function(callback){
 						return function(){
 							// always initialize FB API when SDK is loaded on-demand
-							if (typeof w.onFBloaded === 'function') {
-								w.onFBloaded();
+							if (typeof window.onFBloaded === 'function') {
+								window.onFBloaded();
 							}
 
 							callback();
@@ -187,12 +188,12 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			googlemaps: {
 				file: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
 				check: function(){
-					return typeof (w.google && w.google.maps);
+					return typeof (window.google && window.google.maps);
 				},
 				addition: function(callbacks){
-					w.onGoogleMapsLoaded = (function(callback) {
+					window.onGoogleMapsLoaded = (function(callback) {
 						return function(){
-							delete w.onGoogleMapsLoaded;
+							delete window.onGoogleMapsLoaded;
 
 							callback();
 						}
@@ -222,7 +223,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				useNames = [],
 				internal = [],
 				lib,
-				l = libs.length,
+				libLength = libs.length,
 				load = 0,
 				fail = function(f, failed){
 					return function(){
@@ -231,8 +232,8 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				};
 
 			//find libraries to be loaded from libraryMap
-			while(l--) {
-				var name = libs[l],
+			while(libLength--) {
+				var name = libs[libLength],
 					n = librariesMap[name];
 
 				if(!n) throw "Library unknown: " + name;
@@ -252,11 +253,11 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			}
 
 			if(internal.length){
-				l = internal.length;
-				load += l;
+				libLength = internal.length;
+				load += libLength;
 
-				while(l--) {
-					lib = internal[l];
+				while(libLength--) {
+					lib = internal[libLength];
 
 					if(lib.check() == 'undefined') {
 						if(lib.addition) {
@@ -271,7 +272,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 			}
 
-			return --load;
+			return load - 1;
 		},
 
 		/**
@@ -328,12 +329,12 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 
 			if(send){
 				if(typeof options.params == 'object'){
-					options = w.$.extend(options, options.params);
+					options = window.$.extend(options, options.params);
 					delete options.params;
 				}
 
 				// add a cache buster
-				options.cb = w.wgStyleVersion;
+				options.cb = window.wgStyleVersion;
 
 				nirvana.getJson(
 					'AssetsManager',
@@ -343,7 +344,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 					function(resources, event) {
 						// "register" JS messages
 						if (resources.messages) {
-							w.wgMessages = w.$.extend(w.wgMessages, resources.messages);
+							window.wgMessages = window.$.extend(window.wgMessages, resources.messages);
 						}
 
 						complete(event, resources);
@@ -378,7 +379,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 		 * @author Jakub Olek <jolek@wikia-inc.com>
 		 */
 		loader = function() {
-			var l = remaining = arguments.length,
+			var assetsLength = remaining = arguments.length,
 				matches,
 				remaining,
 				dfd = new Deferred(),
@@ -426,12 +427,12 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				};
 
 			// Nothing to load
-			if (!l) {
+			if (!assetsLength) {
 				complete();
 			}
 
-			while (l--) {
-				var resource = arguments[l],
+			while (assetsLength--) {
+				var resource = arguments[assetsLength],
 					files,
 					type,
 					params;
@@ -468,18 +469,17 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 							func = getLibrary;
 							break;
 						case loader.JS:
-							files = getURLS(files, 'one', params);
+							files = getUrls(files, 'one', params);
 							break;
 						case loader.AM_GROUPS:
-							files = getURLS(files, 'groups', params);
+							files = getUrls(files, 'groups', params);
 							break;
 						case loader.CSS:
-							files = getURLS(files, 'one', params);
+							files = getUrls(files, 'one', params);
 							break;
 						case loader.SCSS:
-							files = getURLS(files, 'sass', params);
+							files = getUrls(files, 'sass', params);
 							break;
-						case loader.UNKNOWN:
 						default:
 							failure({type: type, resources: files})();
 							continue;
