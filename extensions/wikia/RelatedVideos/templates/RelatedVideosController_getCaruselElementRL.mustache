@@ -1,7 +1,7 @@
 <div class="item" data-total-count="{{totalVideos}}">
-	{{#isAdmin}}
+	{{#canDelete}}
 		<a class="remove" title="{{removeTooltip}}" href="#"><span class="sprite trash"></span></a>
-	{{/isAdmin}}
+	{{/canDelete}}
 	{{{videoThumb}}}
 	{{#isNew}}
 		<div class="new">{{isNewMsg}}<div class="newRibbon" ></div></div>

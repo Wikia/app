@@ -46,7 +46,7 @@ class DependencyContainer
 	 */
 	public function __construct( array $dependencies = array() ) {
 		$this->resultSetFactory = new ResultSet\Factory;
-		$this->service = new MediaWikiService;
+		$this->service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		$this->configureByArray( $dependencies );
 	}
 	

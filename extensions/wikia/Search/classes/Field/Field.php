@@ -59,7 +59,7 @@ class Field
 	 */
 	public function __construct( $fieldName, $languageCode = null ) {
 		$this->fieldName = $fieldName;
-		$this->service = new MediaWikiService;
+		$this->service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		$this->languageCode = $languageCode ?: $this->service->getLanguageCode();
 	}
 	

@@ -23,6 +23,7 @@ class Factory
 		$config = $container->getConfig();
 		$this->validateClient( $container );
 		
+		$terminal = 'OnWiki';
 		if ( $config->isInterWiki() ) {
 			return new Select\InterWiki( $container );
 		}
@@ -54,20 +55,20 @@ class Factory
 	 * @param DependencyContainer $container
 	 */
 	protected function validateClient( DependencyContainer $container ) {
-		$service = new MediaWikiService;
+		$service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
 			$host = $service->isOnDbCluster() ? $service->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';
-			$host = (! empty( $_GET['solrhost'] ) ) ? $_GET['solrhost'] : $host;
+			$host = (! empty( $_GET['newsolrhost'] ) ) ? $service->getGlobal( 'AlternateSolrHost' ) : $host;
 			$solariumConfig = array(
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
 							'host'    => $host,
-							'port'    => $service->getGlobalWithDefault( 'SolrPort', 8180 ),
+							'port'    => empty( $_GET['newsolrhost'] ) ? $service->getGlobalWithDefault( 'SolrPort', 8180 ) : 8983,
 							'path'    => '/solr/',
 							)
 					);
-			if ( $service->isOnDbCluster() && $service->getGlobal( 'WikiaSearchUseProxy' ) && $service->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
+			if ( $service->isOnDbCluster() && $service->getGlobal( 'WikiaSearchUseProxy' ) && $service->getGlobalWithDefault( 'SolrProxy' ) !== null && empty( $_GET['newsolrhost'] ) ) {
 				$solariumConfig['adapteroptions']['proxy'] = $service->getGlobal( 'SolrProxy' );
 				$solariumConfig['adapteroptions']['port'] = null;
 			}
