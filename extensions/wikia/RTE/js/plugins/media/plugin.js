@@ -131,7 +131,7 @@ CKEDITOR.plugins.add('rte-media',
 					var title = RTE.getInstance().lang[msgMediaType].confirmDeleteTitle;
 					var msg = RTE.getInstance().lang[msgMediaType].confirmDelete;
 
-					var modal = RTE.tools.confirm(title, msg, function() {
+					RTE.tools.confirm(title, msg, function() {
 						RTE.tools.removeElement(node);
 
 						var wikiaEditor = RTE.getInstanceEditor();
@@ -139,21 +139,10 @@ CKEDITOR.plugins.add('rte-media',
 						// Resize editor area
 						wikiaEditor.fire('editorResize');
 						wikiaEditor.editorFocus();
-					});
 
-					modal
-						.on( 'cancel.RTEConfirm', {
-							category: category,
-							label: 'button-remove-cancel'
-						}, WikiaEditor.trackWithEventData )
-						.on( 'close.RTEConfirm', {
-							category: category,
-							label: 'button-remove-close'
-						}, WikiaEditor.trackWithEventData )
-						.on( 'ok.RTEConfirm', {
-							category: category,
-							label: 'button-remove-ok'
-						}, WikiaEditor.trackWithEventData );
+					}).data( 'tracking', {
+						category: category
+					});
 				}
 			}
 		];

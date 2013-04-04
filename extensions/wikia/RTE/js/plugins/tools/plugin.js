@@ -59,16 +59,25 @@ window.RTE.tools = {
 				'<a id="RTEConfirmOk" class="wikia-button"><span>' + RTE.getInstance().lang.common.ok + '</span></a>' +
 			'</div>';
 
+		function track(label) {
+			var data = $('#RTEConfirm').data('tracking');
+			if (data) {
+				WikiaEditor.track(data, label);
+			}
+		}
+
 		var wrapper = $.showModal(title, html, {
 			id: 'RTEConfirm',
 			className: 'RTEModal',
 			width: 500,
 			onClose: function() {
-				$('#RTEConfirm').trigger('close.RTEConfirm');
+				track('rte-confirm-close');
 			},
 			callbackBefore: function() {
 				$('#RTEConfirmOk').click(function() {
-					$('#RTEConfirm').trigger('ok.RTEConfirm').closeModal();
+					track('button-rte-confirm-ok');
+
+					$('#RTEConfirm').closeModal();
 
 					// try to call callback when Ok is pressed
 					if (typeof callback == 'function') {
@@ -77,7 +86,9 @@ window.RTE.tools = {
 				});
 
 				$('#RTEConfirmCancel').click(function() {
-					$('#RTEConfirm').trigger('cancel.RTEConfirm').closeModal();
+					track('button-rte-confirm-cancel');
+
+					$('#RTEConfirm').closeModal();
 				});
 			}
 		});
