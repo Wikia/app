@@ -13,6 +13,11 @@
 	</span>
 	<h1><?= htmlspecialchars($wikiInfo['name']) ?></h1>
 	<ul class="stats">
+		<? if (!empty($wikiWamScore)): ?>
+			<li class="stat">
+				<?= wfMsgExt('wikiahome-preview-stats-wam', 'parseinline', $wikiWamScore ) ?>
+			</li>
+		<? endif ?>
 		<li class="stat">
 			<?= wfMsgExt('wikiahome-preview-stats-page', 'parseinline', empty($wikiStats['articles']) ? 0 : $wikiStats['articles'] ) ?>
 		</li>
