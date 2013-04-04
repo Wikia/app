@@ -33,7 +33,7 @@ class OnWiki extends AbstractSelect
 	 * @return Wikia\Search\Match\Article|null
 	 */
 	public function extractMatch() {
-		$match = $this->service->getArticleMatchForTermAndNamespaces( $this->config->getOriginalQuery(), $this->config->getNamespaces() );
+		$match = $this->service->getArticleMatchForTermAndNamespaces( $this->config->getQuery()->getSanitizedQuery(), $this->config->getNamespaces() );
 		if (! empty( $match ) ) {
 			$this->config->setArticleMatch( $match );
 		}
