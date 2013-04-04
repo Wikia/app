@@ -45,6 +45,7 @@
 		onCkInstanceCreated: function( ck ) {
 			ck.on( 'buttonClick', this.proxy( this.onCkButtonClick ) );
 			ck.on( 'dialogCancel', this.proxy( this.onCkDialogCancel ) );
+			ck.on( 'dialogHide', this.proxy( this.onCkDialogHide ) );
 			ck.on( 'dialogOk', this.proxy( this.onCkDialogOk ) );
 			ck.on( 'dialogShow', this.proxy( this.onCkDialogShow ) );
 			ck.on( 'panelClick', this.proxy( this.onCkPanelClick ) );
@@ -58,12 +59,17 @@
 
 		onCkDialogCancel: function( event ) {
 			var label = event.data._.name.toLowerCase();
-			this.track( 'dialog-' + label + '-cancel' );
+			this.track( 'dialog-' + label + '-button-cancel' );
+		},
+
+		onCkDialogHide: function( event ) {
+			var label = event.data._.name.toLowerCase()
+			this.track( 'dialog-' + label + '-close' );
 		},
 
 		onCkDialogOk: function( event ) {
 			var label = event.data._.name.toLowerCase();
-			this.track( 'dialog-' + label + '-ok' );
+			this.track( 'dialog-' + label + '-button-ok' );
 		},
 
 		onCkDialogShow: function( event ) {
