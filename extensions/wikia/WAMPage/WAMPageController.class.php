@@ -19,6 +19,7 @@ class WAMPageController extends WikiaController
 
 	public function index() {
 		$this->response->addAsset('/skins/oasis/css/modules/CorporateDatepicker.scss');
+		$this->collectRequestParameters();
 
 		$faqPageName = $this->model->getWAMFAQPageName();
 
@@ -38,12 +39,12 @@ class WAMPageController extends WikiaController
 		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
 
 		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
-
-		$this->filterLanguages = $this->model->getCorporateWikisLanguages();
-		$this->filterVerticals = $this->model->getVerticals();
 	}
 
-	protected function getIndexParams() {
+	protected function collectRequestParameters() {
+		$this->filterLanguages = $this->model->getCorporateWikisLanguages();
+		$this->filterVerticals = $this->model->getVerticals();
+
 		$this->searchPhrase = $this->getVal('searchPhrase', null);
 		$this->selectedVerticalId = $this->getVal('verticalId', null);
 		$this->selectedLangCode = $this->getVal('langCode', null);
@@ -52,7 +53,21 @@ class WAMPageController extends WikiaController
 		$this->selectedVerticalId = ($this->selectedVerticalId !== '') ? $this->selectedVerticalId : null;
 		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
 		$this->selectedDate = ($this->selectedDate !== '') ? $this->selectedDate : null;
-		// TODO validation
+
+		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
+		if (!$langValidator->isValid($this->selectedLangCode)) {
+			$this->selectedLangCode = null;
+		}
+		$verticalValidator = new WikiaValidatorSelect(array('allowed' => array_keys($this->filterVerticals)));
+		if (!$verticalValidator->isValid($this->selectedVerticalId)) {
+			$this->selectedVerticalId = null;
+		}
+
+		// TODO add date validator - depanding on min and max date from WAM api
+		// TODO add min and max date on calendar
+	}
+
+	protected function getIndexParams() {
 
 		$indexParams = [
 			'searchPhrase' => $this->searchPhrase,
