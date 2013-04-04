@@ -271,8 +271,12 @@ class WAMPageModel extends WikiaModel {
 	 * @return array
 	 */
 	protected function getIndexParams($params) {
+		$itemsPerPage = $this->getItemsPerPage();
+		$offset = (!empty($params['page']) && $params['page'] > 1) ? ($params['page'] * $itemsPerPage) : 0;
+		
 		$apiParams = [
-			'limit' => $this->getItemsPerPage(),
+			'limit' => $itemsPerPage,
+			'offset' => $offset,
 			'sort_column' => 'wam_index',
 			'sort_direction' => 'DESC',
 			'wiki_word' => isset($params['searchPhrase']) ? $params['searchPhrase'] : null,
