@@ -55,8 +55,8 @@ class WAMApiController extends WikiaApiController {
 	 */
 	public function getWAMIndex () {
 		$options = array();
-		$options['currentTimestamp'] = $this->request->getInt('wam_day', strtotime('00:00 -1 day'));
-		$options['previousTimestamp'] = $this->request->getInt('wam_previous_day', $options['currentTimestamp'] - 60 * 60 * 24);
+		$options['currentTimestamp'] = $this->request->getInt('wam_day', null);
+		$options['previousTimestamp'] = $this->request->getInt('wam_previous_day', null);
 		$options['verticalId'] = $this->request->getInt('vertical_id', null);
 		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
@@ -73,6 +73,25 @@ class WAMApiController extends WikiaApiController {
 
 		if ($options['limit'] > self::MAX_PAGE_SIZE) {
 			throw new InvalidParameterApiException('limit');
+		}
+
+		$wamDates = $this->getMinMaxWamIndexDate();
+
+		if($options['currentTimestamp'] == null) {
+			$options['currentTimestamp'] = $wamDates['max_date'];
+			$options['previousTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
+		} else {
+			if($options['currentTimestamp'] > $wamDates['max_date'] || $options['currentTimestamp'] <= $wamDates['min_date']) {
+				throw new OutOfRangeApiException('currentTimestamp', $wamDates['min_day'], $wamDates['max_day']);
+			}
+
+			if($options['previousTimestamp'] == null) {
+				$options['previosTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
+			}
+
+			if($options['previousTimestamp'] >= $wamDates['max_date'] || $options['previousTimestamp'] < $wamDates['min_date']) {
+				throw new OutOfRangeApiException('previousTimestamp', $wamDates['min_day'], $wamDates['max_day']);
+			}
 		}
 
 		$wamIndex = WikiaDataAccess::cacheWithLock(
@@ -121,5 +140,21 @@ class WAMApiController extends WikiaApiController {
 			)
 		);
 
+	}
+
+	public function getMinMaxWamIndexDate() {
+		$wamDates = WikiaDataAccess::cacheWithLock(
+			F::app()->wf->SharedMemcKey(
+				'wam_minmax_date'
+			),
+			2 * 60 * 60,
+			function () {
+				$wamService = new WAMService();
+
+				return $wamService->getWamIndexDates();
+			}
+		);
+
+		return $wamDates;
 	}
 }
