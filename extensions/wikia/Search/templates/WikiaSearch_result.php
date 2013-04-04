@@ -37,7 +37,7 @@
 			?>
 		</p>
 	<? endif; ?>
-	<?= htmlspecialchars($result->getText()); ?>
+	<?= $result->getText(); ?>
 	
 	<?php if(empty($inGroup)): ?>
 		<ul>
