@@ -23,6 +23,8 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 				className: 'cke_dialog_choose_another_tpl',
 				buttonType: 'secondary',
 				onClick: function (ev) {
+					WikiaEditor.track( 'dialog-rte-template-button-choose-another' );
+
 					// go back to step #1
 					RTE.templateEditor.selectStep(1);
 				}
@@ -64,6 +66,8 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 									if (templateName == '') {
 										return;
 									}
+
+									WikiaEditor.track( 'dialog-rte-template-button-insert' );
 
 									RTE.templateEditor.selectTemplate(dialog, templateName);
 								}
@@ -134,6 +138,8 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 								label: lang.editor.previewButton,
 								onClick: function() {
 									var self = this;
+
+									WikiaEditor.track( 'dialog-rte-template-button-preview' );
 
 									// disable the button
 									this.disable();
@@ -283,10 +289,6 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 
 			// let's show proper step
 			RTE.templateEditor.selectStep(step);
-		},
-		onHide: function() {
-			// detect current step
-			var step = (this.getActiveTab() == 'step1') ? 'search' : 'editor';
 		},
 		// don't focus on first page when starting template editor on second page
 		onFocus: function() {}
