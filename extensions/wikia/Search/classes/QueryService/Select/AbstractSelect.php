@@ -299,7 +299,7 @@ abstract class AbstractSelect
 			\Track::event(
 					( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ),
 					array(
-							'sterm'	=> $this->config->getQuery(), 
+							'sterm'	=> $this->config->getQuery()->getSanitizedQuery(), 
 							'stype'	=> $this->searchType 
 							)
 					);
@@ -318,7 +318,7 @@ abstract class AbstractSelect
 	 */
 	protected function getNestedQuery() {
 		$nestedQuery = $this->client->createSelect();
-		$nestedQuery->setQuery( $this->config->getQuery() );
+		$nestedQuery->setQuery( $this->config->getQuery()->getSolrQuery() );
 		
 		$queryFieldsString = $this->getQueryFieldsString();
 		$dismax = $nestedQuery->getDismax()

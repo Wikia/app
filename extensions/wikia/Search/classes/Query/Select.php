@@ -124,14 +124,22 @@ class Select
 	}
 	
 	/**
+	 * Says whether we have an actionable value for searching
+	 * @return boolean
+	 */
+	public function hasTerms() {
+		return strlen( preg_replace( '[^a-zA-Z0-9]', '', $this->getSanitizedQuery() ) ) > 0;
+	} 
+	
+	/**
 	 * This is factored out of getNamespaceId and getNamespacePrefix so we can just lazy load them for either.
 	 * @return bool
 	 */
 	protected function initializeNamespaceData() {
-		$query = $this->getSanitizedQueryString();
+		$query = $this->getSanitizedQuery();
 		if ( (! $this->namespaceChecked ) && ( $this->namespacePrefix === null ) && strpos( $query, ':' ) !== false ) {
 			$colonSploded = explode( ':', $query );
-			$queryNamespace = $this->service->getNamespaceIdForString( $colonSploded[0] );
+			$queryNamespace = $this->getService()->getNamespaceIdForString( $colonSploded[0] );
 			if ( is_int( $queryNamespace ) && $queryNamespace > 0 ) {
 				$this->namespaceId = $queryNamespace;
 				$this->namespacePrefix = $colonSploded[0];

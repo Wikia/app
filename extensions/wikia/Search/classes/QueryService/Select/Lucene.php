@@ -17,7 +17,7 @@ class Lucene extends AbstractSelect
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getQueryClausesString()
 	 */
 	protected function getFormulatedQuery() {
-		return $this->config->getQuery( \Wikia\Search\Config::QUERY_RAW );
+		return $this->config->getQuery()->getSanitizedQuery();
 	}
 	
 	/**
