@@ -1,5 +1,5 @@
 <style>
-	.preview {
+	.gg-preview {
 		width: 320px;
 		height: 480px;
 		margin: 5px;
@@ -9,5 +9,5 @@
 	}
 </style>
 <? foreach ( $urls as $url ): ?>
-<iframe class='preview' src="<?= $url; ?>"></iframe>
+<iframe class='gg-preview' src="<?= $url; ?>"></iframe>
 <? endforeach; ?>
