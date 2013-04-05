@@ -1,7 +1,6 @@
 <?php
 class ImageServingDriverMainNS extends ImageServingDriverBase {
 	protected $queryLimit = 50;
-	protected $maxCount = 10;
 	protected $minSize = 75;
 
 	protected function getImagesFromDB($articles = array()) {
@@ -104,7 +103,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 		// filter out images that are too widely used
 		if ( !empty($imageNames) ) {
-			$imageRefs = $this->getImagesPopularity($imageNames,$this->maxCount);
+			$imageRefs = $this->getImagesPopularity($imageNames,$this->app->wg->ImageServingMaxReuseCount);
 		}
 
 		// collect metadata about images
