@@ -32,6 +32,7 @@ $app->registerSpecialPage( 'WAMPage', 'SpecialWAMPageController' );
 $app->registerHook('ArticleFromTitle', 'WAMPageHooks', 'onArticleFromTitle');
 $app->registerHook('MakeGlobalVariablesScript', 'WAMPageHooks', 'onMakeGlobalVariablesScript');
 $app->registerHook('LinkBegin', 'WAMPageHooks', 'onLinkBegin');
+$app->registerHook('ShowMissingArticle', 'WAMPageHooks', 'onShowMissingArticle');
 
 // i18n
 $app->registerExtensionMessageFile( 'WAMPage', $dir . 'WAMPage.i18n.php' );

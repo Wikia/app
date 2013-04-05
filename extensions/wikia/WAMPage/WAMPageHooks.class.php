@@ -78,6 +78,16 @@ class WAMPageHooks {
 		return true;
 	}
 	
+	public function onShowMissingArticle($article) {
+		$this->init();
+
+		if( $article instanceof Article && $this->isWAMPage($article->getTitle()) ) {
+			$this->app->wg->Send404Code = false;
+		}
+
+		return true;
+	}
+	
 	protected function isWAMPage($title) {
 		$dbKey = null;
 		$wamPageName = mb_strtolower( $this->WAMPageConfig['pageName'] );
