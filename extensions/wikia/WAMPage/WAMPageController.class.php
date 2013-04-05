@@ -96,7 +96,7 @@ class WAMPageController extends WikiaController
 		$title = $this->wg->Title;
 		if( $title instanceof Title ) {
 			$url = $title->getLocalURL($this->getIndexParams(true));
-			$url = str_replace('%25', '%', $url); //todo: is there a better way?
+			$url = urldecode($url);
 		}
 		
 		return $url;
