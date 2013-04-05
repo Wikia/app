@@ -339,6 +339,14 @@ $wgAutoloadClasses['FooterCustomizeItemService'] = $IP.'/skins/oasis/modules/foo
 $wgAutoloadClasses['FooterDevinfoItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterDevinfoItem.class.php';
 $wgAutoloadClasses['FooterDisabledItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterDisabledItem.class.php';
 
+// Sass-related classes
+$wgAutoloadClasses['SassSource']               = $IP.'/includes/wikia/services/sass/SassSource.class.php';
+$wgAutoloadClasses['SassFileSource']           = $IP.'/includes/wikia/services/sass/SassFileSource.class.php';
+$wgAutoloadClasses['SassStringSource']         = $IP.'/includes/wikia/services/sass/SassStringSource.class.php';
+$wgAutoloadClasses['SassSourceContext']        = $IP.'/includes/wikia/services/sass/SassSourceContext.class.php';
+$wgAutoloadClasses['SassSourceContextFactory'] = $IP.'/includes/wikia/services/sass/SassSourceContextFactory.class.php';
+$wgAutoloadClasses['SassException']            = $IP.'/includes/wikia/services/sass/SassException.class.php';
+
 // TODO:move this inclusions to CommonExtensions?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
