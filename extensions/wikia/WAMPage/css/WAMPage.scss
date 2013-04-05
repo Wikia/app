@@ -229,6 +229,18 @@
 			padding: 0;
 			vertical-align: middle;
 		}
+		input::-webkit-input-placeholder { /* WebKit browsers */
+			color: $color-text;
+		}
+		input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			color: $color-text;
+		}
+		input::-moz-placeholder { /* Mozilla Firefox 19+ */
+			color: $color-text;
+		}
+		input:-ms-input-placeholder { /* Internet Explorer 10+ */
+			color: $color-text;
+		}
 	}
 	table {
 		border-collapse:collapse;

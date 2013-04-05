@@ -49,7 +49,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wampage-breadcrumb-back-to-wam' => 'WAM Score',
 	'wam-index-header-peak-rank' => 'Peak Rank',
 	'wam-index-no-results' => 'No Results Found',
-	'wam-index-filter-date-placeholder' => 'Today',
+	'wam-index-filter-date-placeholder' => 'Most Recent',
 	'wam-index-filter-search-placeholder' => 'Search',
 	'wam-index-filter-sort-label' => 'Sort by',
 	'wam-index-filter-date-label' => 'Date',
