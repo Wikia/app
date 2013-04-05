@@ -203,21 +203,29 @@ $color-related-videos-background: darken($color-page, 20%);
 .VideoEmbedOptionsTable {
 	padding-top: 20px;
 	width: 100%;
-}
-.VideoEmbedOptionsTable th {
-	font-weight: bold;
-	font-size: 11pt;
-	width: 50px;
-}
-.VideoEmbedOptionsTable td, .VideoEmbedOptionsTable th {
-	border-bottom: 1px solid #CCC;
-	padding: 5px 5px;
-}
-VideoEmbedOptionsTable img {
-	vertical-align: middle;
-}
-.VideoEmbedOptionsTable label {
-	margin-right: 10px;
+
+	th {
+		font-weight: bold;
+		font-size: 11pt;
+		width: 50px;
+	}
+	td, th {
+		border-bottom: 1px solid #CCC;
+		padding: 5px 5px;
+	}
+	img {
+		vertical-align: middle;
+	}
+	label {
+		margin-right: 10px;
+	}
+	h2 {
+		clear: left;
+		padding-top: 20px;
+	}
+	.video-description {
+
+	}
 }
 .VideoEmbedNoBorder td, .VideoEmbedNoBorder th {
 	border: 0 !important;
@@ -307,7 +315,7 @@ VideoEmbedOptionsTable img {
 }
 
 //*************************************
-// 
+//
 // NEW VET STUFF - SUGGESTIONS + SEARCH
 //
 // author: Rafal Leszczynski
@@ -316,7 +324,7 @@ VideoEmbedOptionsTable img {
 #VideoEmbedBody {
 	.WikiaForm {
 		border-bottom: 1px solid $color-page-border;
-		
+
 		margin: 20px 0 0 0;
 		padding: 0 0 20px 0;
 		@include clearfix;
@@ -342,6 +350,9 @@ VideoEmbedOptionsTable img {
 			input[type="text"] {
 				padding: 6px 8px;
 			}
+			&.last {
+				border-bottom: none;
+			}
 		}
 		p {
 			font-size: 12px;
@@ -358,7 +369,7 @@ VideoEmbedOptionsTable img {
 	font-weight: bold;
 }
 #VET-search-submit {
-	margin-left: 2px;	
+	margin-left: 2px;
 }
 .VET-carousel-wrapper {
 	display: none;
@@ -480,7 +491,7 @@ VideoEmbedOptionsTable img {
 		margin: 0 5px;
 		overflow: hidden;
 		position: relative;
-		width: 824px; 
+		width: 824px;
 		& > div {
 			position: relative;
 		}
@@ -544,12 +555,13 @@ VideoEmbedOptionsTable img {
 		margin-left: 0;
 	}
 	.WikiaForm {
+		margin: 0;
 		border: none;
 		padding: 10px 0 0;
 		.VideoEmbedNoBorder {
 			clear: both;
 			float: right;
-			padding-top: 80px;
+			padding-top: 20px;
 		}
 	}
 }
@@ -580,6 +592,9 @@ VideoEmbedOptionsTable img {
 	width: 540px;
 	#VideoEmbedNameRow {
 		padding-top: 0;
+		p {
+			padding-top: 8px;
+		}
 	}
 	#VideoEmbedInputWidth {
 		border: none;
@@ -605,13 +620,23 @@ VideoEmbedOptionsTable img {
 		.option-label, & > div {
 			float: left;
 		}
-		& > div {
+		& > div, & > textarea {
 			width: 412px;
+			box-sizing: border-box;
+		}
+		& > textarea {
+			min-height: 75px;
 		}
 		.option-label {
 			font-size: 12px;
 			padding-left: 10px;
 			width: 90px;
+		}
+		p.hint {
+			margin-left: 128px;
+			& + label {
+				padding-top: 0;
+			}
 		}
 	}
 	span {
@@ -624,7 +649,7 @@ VideoEmbedOptionsTable img {
 		}
 		input.hidden {
 			// display: none;
-			// hide imputs hack for IE8 - "diaplay none" cause clicking on label doesn't make radio button checked  
+			// hide imputs hack for IE8 - "diaplay none" cause clicking on label doesn't make radio button checked
 			height: 0px;
 			left: -9999px;
 			position: absolute;
@@ -657,10 +682,10 @@ VideoEmbedOptionsTable img {
 			width: 50px;
 			white-space: nowrap;
 			&.VideoEmbedLayoutCenter {
-				background-position: 0px -127px; 
+				background-position: 0px -127px;
 			}
 			&.VideoEmbedLayoutRight {
-				background-position: 0px -165px; 
+				background-position: 0px -165px;
 			}
 		}
 	}
@@ -675,8 +700,8 @@ VideoEmbedOptionsTable img {
 	    margin-right:39px;
 	    float:right;
 	    width:180px;
-	    .dropdown { 
-    		width: 215px; 
+	    .dropdown {
+    		width: 215px;
     	}
     }
     label.dropdown-label { float:right; margin-right:10px; font-weight: bold;  }

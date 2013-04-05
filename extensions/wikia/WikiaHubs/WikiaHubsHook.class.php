@@ -33,7 +33,7 @@ class WikiaHubsPopularVideos {
 
 		$returnString = (string) $app->sendRequest(
 			'RelatedHubsVideos',
-			'getCarusel',
+			'getCarousel',
 			array(
 				'data' => $this->data,
 			)

@@ -26,31 +26,31 @@ class WikiaImagePage extends ImagePage {
 		}
 		return '';
 	}
-	
+
 	/**
 	 * imageDetails override
 	 * Image page doesn't need the wrapper, but WikiaFilePage does
 	 */
 	protected function imageDetails($showmeta, $formattedMetadata) {
 		global $wgOut, $wgEnableVideoPageRedesign, $wgJsMimeType, $wgExtensionsPath;
-		
+
 		if(empty($wgEnableVideoPageRedesign)) {
 			parent::imageDetails($showmeta, $formattedMetadata);
 			return;
 		}
-		
+
 		// move these two to WikiaFilePage package after full release
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoHandlers/css/WikiaFilePage.scss'));
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/WikiaFilePage.js\"></script>\n" );
-		
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/FilePage/css/FilePage.scss'));
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/FilePage/js/FilePage.js\"></script>\n" );
+
 		$app = F::app();
-		$wgOut->addHtml( $app->renderView( 'WikiaFilePageController', 'fileUsage', array('type' => 'local') ) );
-		$wgOut->addHtml( $app->renderView( 'WikiaFilePageController', 'fileUsage', array('type' => 'global') ) );
-		$wgOut->addHtml( $app->renderPartial( 'WikiaFilePageController', 'seeMore', array() ));
+		$wgOut->addHtml( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
+		$wgOut->addHtml( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
+		$wgOut->addHtml( $app->renderPartial( 'FilePageController', 'seeMore', array() ));
 		$wgOut->addHtml('<div class="more-info-wrapper">');
 		parent::imageDetails($showmeta, $formattedMetadata);
 		$wgOut->addHtml('</div>');
-		$wgOut->addHtml( $app->renderView( 'WikiaFilePageController', 'relatedPages', array() ) );
+		$wgOut->addHtml( $app->renderView( 'FilePageController', 'relatedPages', array() ) );
 	}
 
 	/**
@@ -59,30 +59,30 @@ class WikiaImagePage extends ImagePage {
 	 */
 	protected function imageListing() {
 		global $wgEnableVideoPageRedesign;
-		
+
 		if(empty($wgEnableVideoPageRedesign)) {
 			parent::imageListing();
 			return;
 		}
-	
+
 		// do nothing on purpose
 	}
-	
+
 	protected function openShowImage() {
 		global $wgEnableVideoPageRedesign;
-		
+
 		parent::openShowImage();
 		if(!empty($wgEnableVideoPageRedesign)) {
 			$this->renderDescriptionHeader();
 		}
 	}
-	
+
 	protected function renderDescriptionHeader() {
 		global $wgOut;
-		
+
 		$content = $this->getContent();
 		$isContentEmpty = empty($content);
-		$html = F::app()->renderPartial( 'WikiaFilePageController', 'description', array('isContentEmpty' => $isContentEmpty) );
+		$html = F::app()->renderPartial( 'FilePageController', 'description', array('isContentEmpty' => $isContentEmpty) );
 
 		$wgOut->addHTML( $html );
 	}

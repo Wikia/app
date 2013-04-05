@@ -13,7 +13,7 @@
 						$i++;
 						echo F::app()->renderView(
 							'RelatedHubsVideos',
-							'getCaruselElement',
+							'getCarouselElement',
 							array(
 								'video' => $video,
 								'preloaded' => ( $i <= 6 )
