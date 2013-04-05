@@ -230,6 +230,10 @@ WikiaHomePageRemix.prototype = {
 			else if (node.is('.visit') || node.hasParent('.visit')) {
 				this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'interstitial-visit', {}, ev);
 			}
+			else if ( node.hasParent('.wam') ) {
+				var wamLinkState = (node.hasClass('inactive')) ? 'inactive' : 'active';
+				this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'interstitial-wam-score-click', {'wam-link-state': wamLinkState}, ev);
+			}
 		}
 	},
 	preload: function () {
