@@ -201,7 +201,10 @@
 	.wam-index-search {
 		.filtering {
 			float: left;
+			font-weight: bold;
 			select, input {
+				margin-right: 35px;
+				max-width: 140px;
 				vertical-align: middle;
 			}
 		}

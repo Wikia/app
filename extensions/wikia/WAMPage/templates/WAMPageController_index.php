@@ -46,21 +46,21 @@
 	<form method="get" action="" class="wam-index-search" id="wam-index-search">
 		<div class="filtering">
 			<span><?= wfMessage('wam-index-filter-sort-label')->text() ?></span>
-			<select name="langCode">
-				<option value=""><?= wfMessage('wam-index-filter-language-default')->text() ?></option>
-				<? foreach ($filterLanguages as $langCode): ?>
-					<option value="<?=$langCode?>"<? if ($selectedLangCode == $langCode): ?>selected="selected"<? endif ?>><?= $wg->ContLang->getLanguageName( $langCode )?></option>
-				<? endforeach ?>
-			</select>
-			<span><?= wfMessage('wam-index-filter-date-label')->text() ?></span>
 			<select name="verticalId">
 				<option value=""><?= wfMessage('wam-index-filter-vertical-default')->text() ?></option>
 				<? foreach ($filterVerticals as $verticalId => $verticalName): ?>
-					<option value="<?=$verticalId?>"<? if ($selectedVerticalId == $verticalId): ?>selected="selected"<? endif ?>><?=$verticalName?></option>
+				<option value="<?=$verticalId?>"<? if ($selectedVerticalId == $verticalId): ?>selected="selected"<? endif ?>><?=$verticalName?></option>
 				<? endforeach ?>
 			</select>
-			<span><?= wfMessage('wam-index-filter-lang-label')->text() ?></span>
+			<span><?= wfMessage('wam-index-filter-date-label')->text() ?></span>
 			<input type="text" name="date" id="WamFilterDate" value="<?=$selectedDate?>" placeholder="<?= wfMessage('wam-index-filter-date-placeholder')->text() ?>"/>
+			<span><?= wfMessage('wam-index-filter-lang-label')->text() ?></span>
+			<select name="langCode">
+				<option value=""><?= wfMessage('wam-index-filter-language-default')->text() ?></option>
+				<? foreach ($filterLanguages as $langCode): ?>
+				<option value="<?=$langCode?>"<? if ($selectedLangCode == $langCode): ?>selected="selected"<? endif ?>><?= $wg->ContLang->getLanguageName( $langCode )?></option>
+				<? endforeach ?>
+			</select>
 		</div>
 		<div class="searching">
 			<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" />
