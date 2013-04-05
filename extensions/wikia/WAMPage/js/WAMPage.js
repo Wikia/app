@@ -12,7 +12,7 @@ WAMPage.prototype = {
 			'change',
 			$.proxy(function() {
 				WAMPage.clickTrackingHandler(event);
-				WAMPage.filterWamIndex(event);
+				WAMPage.filterWamIndex($(event.target));
 			}, this),
 			true
 		);
@@ -39,11 +39,12 @@ WAMPage.prototype = {
 				showOtherMonths: true,
 				selectOtherMonths: true,
 				maxDate: 0,
-				onSelect: function() {
+				onSelect: $.proxy(function() {
 					if( $(this).closest('#WamFilterDate') ) {
 						WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: wgContentLanguage, filter: 'date'});
 					}
-				}
+					WAMPage.filterWamIndex($('#WamFilterDate'));
+				}, this)
 			})
 		}, this));
 	},
@@ -77,8 +78,8 @@ WAMPage.prototype = {
 		}
 	},
 
-	filterWamIndex: function(e) {
-		$(e.target).parents('.wam-index-search').submit();
+	filterWamIndex: function(target) {
+		target.parents('.wam-index-search').submit();
 	}
 };
 
