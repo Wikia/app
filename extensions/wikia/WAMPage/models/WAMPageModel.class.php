@@ -98,6 +98,19 @@ class WAMPageModel extends WikiaModel {
 		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index'], self::TAB_INDEX_TOP_WIKIS);
 		return $WAMData;
 	}
+
+	public function getMinMaxIndexDate() {
+		$dates = $this->app->sendRequest('WAMApi', 'getMinMaxWamIndexDate')->getData();
+		if (isset($dates['min_max_dates'])) {
+			$dates = $dates['min_max_dates'];
+		} else {
+			$dates = [
+				'min_date' => null,
+				'max_date' => null
+			];
+		}
+		return $dates;
+	}
 	
 	public function getWAMMainPageName() {
 		$config = $this->getConfig();

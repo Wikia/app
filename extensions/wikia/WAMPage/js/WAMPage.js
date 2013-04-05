@@ -34,19 +34,28 @@ WAMPage.prototype = {
 		$.when(
 			// jQuery UI datepicker plugin
 			mw.loader.use(['jquery.ui.datepicker'])
-		).done($.proxy(function(getResourcesData) {
-			$('#WamFilterDate').datepicker({
-				showOtherMonths: true,
-				selectOtherMonths: true,
-				maxDate: 0,
-				onSelect: $.proxy(function() {
-					if( $(this).closest('#WamFilterDate') ) {
-						WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: wgContentLanguage, filter: 'date'});
-					}
-					WAMPage.filterWamIndex($('#WamFilterDate'));
-				}, this)
-			})
-		}, this));
+		).done(
+			$.proxy(function(getResourcesData) {
+				var minDate = new Date(window.wamFilterMinMaxDates['min_date'] * 1000);
+				minDate.setMinutes(minDate.getMinutes() + minDate.getTimezoneOffset());
+				var maxDate = new Date(window.wamFilterMinMaxDates['max_date'] * 1000);
+				maxDate.setMinutes(maxDate.getMinutes() + maxDate.getTimezoneOffset());
+
+				$('#WamFilterDate').datepicker({
+					showOtherMonths: true,
+					selectOtherMonths: true,
+					minDate: minDate,
+					maxDate: maxDate,
+					onSelect: $.proxy(function() {
+						if( $(this).closest('#WamFilterDate') ) {
+							WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: wgContentLanguage, filter: 'date'});
+						}
+						WAMPage.filterWamIndex($('#WamFilterDate'));
+					}, this)
+				})
+			}
+			, this)
+		);
 	},
 
 	trackClick: function (category, action, label, value, params, event) {

@@ -114,6 +114,10 @@ class WAMApiController extends WikiaApiController {
 	 * 		max_date = last available date
 	 */
 	public function getMinMaxWamIndexDate() {
+		$this->response->setVal('min_max_dates', $this->getMinMaxWamIndexDateInternal());
+	}
+
+	private function getMinMaxWamIndexDateInternal() {
 		$wamDates = WikiaDataAccess::cache(
 			F::app()->wf->SharedMemcKey(
 				'wam_minmax_date'
@@ -151,7 +155,7 @@ class WAMApiController extends WikiaApiController {
 			throw new InvalidParameterApiException('limit');
 		}
 
-		$wamDates = $this->getMinMaxWamIndexDate();
+		$wamDates = $this->getMinMaxWamIndexDateInternal();
 
 		if(empty($options['currentTimestamp'])) {
 			if(!empty($options['previousTimestamp'])) {

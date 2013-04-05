@@ -73,8 +73,25 @@ class WAMPageController extends WikiaController
 			$this->selectedVerticalId = null;
 		}
 
-		// TODO add date validator - depanding on min and max date from WAM api
-		// TODO add min and max date on calendar
+		$filterMinMaxDates = $this->model->getMinMaxIndexDate();
+		$this->wg->Out->addJsConfigVars(['wamFilterMinMaxDates' => $filterMinMaxDates]);
+		if (!empty($this->selectedDate)) {
+			$timestamp = strtotime($this->selectedDate);
+
+			if (!empty($filterMinMaxDates['min_date'])) {
+				$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::GREATER_THAN_EQUAL]);
+				if (!$dateValidator->isValid([$timestamp, $filterMinMaxDates['min_date']])) {
+					$this->selectedDate = null;
+				}
+			}
+
+			if (!empty($filterMinMaxDates['max_date'])) {
+				$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::LESS_THAN_EQUAL]);
+				if (!$dateValidator->isValid([$timestamp, $filterMinMaxDates['max_date']])) {
+					$this->selectedDate = null;
+				}
+			}
+		}
 	}
 
 	protected function getIndexParams($wildcardForPage = false) {
@@ -82,7 +99,7 @@ class WAMPageController extends WikiaController
 			'searchPhrase' => $this->searchPhrase,
 			'verticalId' => $this->selectedVerticalId,
 			'langCode' => $this->selectedLangCode,
-			'date' => $this->selectedDate,
+			'date' => isset($this->selectedDate) ? strtotime($this->selectedDate) : null,
 			'page' => ( ($wildcardForPage === true) ? '%s' : $this->page),
 		];
 		
