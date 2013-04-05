@@ -106,8 +106,6 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$table_to_clear = array(
-			'tags_top_users' => array('col' => 'tu_date', 'exp' => 7),
-			'tags_top_articles' => array('col' => 'ta_date', 'exp' => 3),
 			'tags_top_blogs' => array('col' => 'tb_date', 'exp' => 3)
 		);
 
