@@ -7,6 +7,7 @@ class WAMPageArticle extends Article {
 		wfProfileIn(__METHOD__);
 
 		parent::__construct($title);
+		$this->mPage = new WAMPage($title);
 		
 		wfProfileOut(__METHOD__);
 	}

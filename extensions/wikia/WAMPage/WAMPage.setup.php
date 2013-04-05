@@ -21,6 +21,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // classes
+$app->registerClass( 'WAMPage', $dir . 'WAMPage.class.php' );
 $app->registerClass( 'WAMPageArticle', $dir . 'WAMPageArticle.class.php' );
 $app->registerClass( 'SpecialWAMPageController', $dir . 'SpecialWAMPageController.class.php' );
 $app->registerClass( 'WAMPageHooks', $dir . 'WAMPageHooks.class.php' );
@@ -32,7 +33,6 @@ $app->registerSpecialPage( 'WAMPage', 'SpecialWAMPageController' );
 $app->registerHook('ArticleFromTitle', 'WAMPageHooks', 'onArticleFromTitle');
 $app->registerHook('MakeGlobalVariablesScript', 'WAMPageHooks', 'onMakeGlobalVariablesScript');
 $app->registerHook('LinkBegin', 'WAMPageHooks', 'onLinkBegin');
-$app->registerHook('ShowMissingArticle', 'WAMPageHooks', 'onShowMissingArticle');
 
 // i18n
 $app->registerExtensionMessageFile( 'WAMPage', $dir . 'WAMPage.i18n.php' );
