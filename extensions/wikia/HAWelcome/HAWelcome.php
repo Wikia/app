@@ -158,7 +158,7 @@ class HAWelcomeJob extends Job {
                  */
                 global $wgUser;
                 // Abort if the registered contributor has made edits before.
-                if ( $this->oRecipient->getEditCountLocal() ) {
+                if ( $wgUser->getEditCountLocal() ) {
                     // Check the extension settings...
                     /** @type String The user to become the welcomer. */
                     $sSender = trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() );

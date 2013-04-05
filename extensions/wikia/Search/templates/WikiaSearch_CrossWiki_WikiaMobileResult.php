@@ -10,7 +10,7 @@
 			</p>
 			<a class=url href="<?= $resultSet->getHeader( 'url' );?>"><?=$resultSet->getHeader(
 					'host' );?></a>
-			<span class=desc><?= $resultSet->getHeader('description'); ?></span>
+			<span class=desc><?= $resultSet->getDescription(); ?></span>
 		</li>
 	<?php endif; ?>
 <?php else : ?>
