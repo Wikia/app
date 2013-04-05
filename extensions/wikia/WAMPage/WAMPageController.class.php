@@ -54,15 +54,16 @@ class WAMPageController extends WikiaController
 		$this->filterVerticals = $this->model->getVerticals();
 
 		$this->searchPhrase = $this->getVal('searchPhrase', null);
+		$this->searchPhrase = htmlspecialchars($this->searchPhrase);
 		$this->selectedVerticalId = $this->getVal('verticalId', null);
 		$this->selectedLangCode = $this->getVal('langCode', null);
 		$this->selectedDate = $this->getVal('date', null);
-
+		$this->page = $this->request->getInt('page');
+		$this->page = ($this->page <= 0) ? $this->model->getFirstPage() : $this->page;
+		
 		$this->selectedVerticalId = ($this->selectedVerticalId !== '') ? $this->selectedVerticalId : null;
 		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
 		$this->selectedDate = ($this->selectedDate !== '') ? $this->selectedDate : null;
-		
-		$this->page = $this->getVal('page', $this->model->getFirstPage());
 
 		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
 		if (!$langValidator->isValid($this->selectedLangCode)) {
