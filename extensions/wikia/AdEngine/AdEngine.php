@@ -1,7 +1,5 @@
 <?php
 
-require_once dirname(__FILE__) . '/PartnerWidget.php';
-
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AdEngine',
 	'author' => 'Inez Korczynski, Nick Sullivan'

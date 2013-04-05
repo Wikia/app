@@ -20,12 +20,8 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	protected function prepareParameters($params) {
 		$params['limit'] = $this->getModel()->getWamLimitForHubPage();
 
-		if( empty($params['ts']) ) {
-			$params['ts'] = strtotime('00:00 -1 day');
-		}
-
-		if( empty($params['ts_previous_day']) ) {
-			$params['ts_previous_day'] = strtotime('-1 day', $params['ts']);
+		if( !empty($params['ts']) && $params['ts'] >= strtotime(date('d-m-Y'))) {
+			unset($params['ts']);
 		}
 
 		if( empty($params['image_height']) ) {

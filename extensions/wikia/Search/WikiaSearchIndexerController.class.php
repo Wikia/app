@@ -27,6 +27,14 @@ class WikiaSearchIndexerController extends WikiaController
 		$this->service = new MediaWikiService;
 		$this->service->setGlobal( 'AllowMemcacheWrites', false )
 		                ->setGlobal( 'AppStripsHtml', true );
+
+		if ( function_exists( 'newrelic_disable_autorum') ) {
+			newrelic_disable_autorum();
+		}
+		if( function_exists( 'newrelic_background_job' ) ) {
+			newrelic_background_job(true);
+		}
+
 	}
 	
 	/**

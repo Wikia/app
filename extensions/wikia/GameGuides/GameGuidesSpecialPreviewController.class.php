@@ -11,35 +11,35 @@ class GameGuidesSpecialPreviewController extends WikiaSpecialPageController {
 			return false;  // skip rendering
 		}
 
-		$titleName = $this->getPar();
+		$this->wg->Out->setSubtitle( $this->wf->Message( 'wikiagameguides-preview-description' )->parse() );
 
-		//Simple fallback to main page if Title does not exist or none specified
-		if( is_null( $titleName ) ) {
-				$titleName = Title::newMainPage()->getFullText();
-		} else {
-			$title = Title::newFromText( $titleName );
+		$titles = array_unique( explode( '/', $this->getPar() ) );
 
-			if ( $title instanceof Title && $title->exists() ) {
-				$titleName = $title->getFullText();
+		$urls = [];
+
+		foreach ( $titles as $title ) {
+			//Simple fallback to main page if Title does not exist or none specified
+			if( $title == '' ) {
+				$title = Title::newMainPage()->getFullText();
 			} else {
-				$titleName = Title::newMainPage()->getFullText();
+				$title = Title::newFromText( $title );
+
+				if ( $title instanceof Title && $title->exists() ) {
+					$title = $title->getFullText();
+				} else {
+					$title = Title::newMainPage()->getFullText();
+				}
 			}
-		}
 
-		// to get global assets
-		// http://fallout.jolek.wikia-dev.com/wikia.php?controller=AssetsManager&method=getMultiTypePackage&scripts=gameguides_js&styles=//extensions/wikia/GameGuides/css/GameGuides.scss
-
-		$this->setVal(
-			'url',
-			GameGuidesController::getUrl(
+			$urls[] = GameGuidesController::getUrl(
 				'renderFullPage',
 				array(
 					'allinone' => 1,
-					'title' => $titleName
+					'page' => $title
 				)
-			)
-		);
-		return true;
-	}
+			);
+		}
 
+		$this->setVal( 'urls', $urls );
+	}
 }

@@ -26,7 +26,7 @@ class GroupingSetTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockFieldGroup = $this->getMockBuilder( 'Solarium_Result_Select_Grouping_FieldGroup' )
 		                       ->disableOriginalConstructor()
-		                       ->setMethods( array( 'getMatches' ) )
+		                       ->setMethods( array( 'getMatches', 'getNumberOfGroups' ) )
 		                       ->getMock();
 		
 		foreach ( $dcMethods as $method ) {
@@ -42,7 +42,7 @@ class GroupingSetTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockFieldGroup
 		    ->expects( $this->once() )
-		    ->method ( 'getMatches' )
+		    ->method ( 'getNumberOfGroups' )
 		    ->will   ( $this->returnValue( 100 ) )
 		;
 		$mockGrouping

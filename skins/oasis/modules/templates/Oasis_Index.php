@@ -67,6 +67,7 @@
 <?= $googleAnalytics ?>
 <?= $ivw ?>
 <?= $amazonDirectTargetedBuy ?>
+<?= $dynamicYield ?>
 <?= $body ?>
 
 <?php

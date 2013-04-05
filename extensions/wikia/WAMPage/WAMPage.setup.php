@@ -21,6 +21,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // classes
+$app->registerClass( 'WAMPage', $dir . 'WAMPage.class.php' );
 $app->registerClass( 'WAMPageArticle', $dir . 'WAMPageArticle.class.php' );
 $app->registerClass( 'SpecialWAMPageController', $dir . 'SpecialWAMPageController.class.php' );
 $app->registerClass( 'WAMPageHooks', $dir . 'WAMPageHooks.class.php' );

@@ -52,28 +52,10 @@ class WAMApiController extends WikiaApiController {
 	 * 		wam_change - wam score change from $wam_previous_day
 	 * 		wam_is_new - 1 if wiki wasn't classified on $wam_previous_day, 0 if this wiki was in index
 	 * @responseParam array $wam_results_total The total count of wikis available for provided params
+	 * @responseParam integer $wam_index_date date of received list
 	 */
 	public function getWAMIndex () {
-		$options = array();
-		$options['currentTimestamp'] = $this->request->getInt('wam_day', strtotime('00:00 -1 day'));
-		$options['previousTimestamp'] = $this->request->getInt('wam_previous_day', $options['currentTimestamp'] - 60 * 60 * 24);
-		$options['verticalId'] = $this->request->getInt('vertical_id', null);
-		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
-		$options['wikiId'] = $this->request->getInt('wiki_id', null);
-		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
-		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
-		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
-		$options['fetchWikiImages'] = $this->request->getBool('fetch_wiki_images', false);
-		$options['wikiImageWidth'] = $this->request->getInt('wiki_image_width', self::DEFAULT_WIKI_IMAGE_WIDTH);
-		$options['wikiImageHeight'] = $this->request->getInt('wiki_image_height', WikiService::IMAGE_HEIGHT_KEEP_ASPECT_RATIO);
-		$options['sortColumn'] = $this->request->getVal('sort_column', 'wam_rank');
-		$options['sortDirection'] = $this->request->getVal('sort_direction', 'DESC');
-		$options['offset'] = $this->request->getInt('offset', 0);
-		$options['limit'] = $this->request->getInt('limit', self::DEFAULT_PAGE_SIZE);
-
-		if ($options['limit'] > self::MAX_PAGE_SIZE) {
-			throw new InvalidParameterApiException('limit');
-		}
+		$options = $this->getWAMParameters();
 
 		$wamIndex = WikiaDataAccess::cacheWithLock(
 			F::app()->wf->SharedMemcKey(
@@ -112,6 +94,7 @@ class WAMApiController extends WikiaApiController {
 
 		$this->response->setVal('wam_index', $wamIndex['wam_index']);
 		$this->response->setVal('wam_results_total', $wamIndex['wam_results_total']);
+		$this->response->setVal('wam_index_date', $wamIndex['wam_index_date']);
 		$this->response->setCacheValidity(
 			6 * 60 * 60 /* 6h */,
 			6 * 60 * 60 /* 6h */,
@@ -121,5 +104,80 @@ class WAMApiController extends WikiaApiController {
 			)
 		);
 
+	}
+
+	/**
+	 * A method to get WAM score starting and last available dates
+	 *
+	 * @return array with dates
+	 * 		min_date - starting date
+	 * 		max_date = last available date
+	 */
+	public function getMinMaxWamIndexDate() {
+		$wamDates = WikiaDataAccess::cache(
+			F::app()->wf->SharedMemcKey(
+				'wam_minmax_date'
+			),
+			2 * 60 * 60,
+			function () {
+				$wamService = new WAMService();
+
+				return $wamService->getWamIndexDates();
+			}
+		);
+
+		return $wamDates;
+	}
+
+	private function getWAMParameters() {
+		$options = array();
+		$options['currentTimestamp'] = $this->request->getInt('wam_day', null);
+		$options['previousTimestamp'] = $this->request->getInt('wam_previous_day', null);
+		$options['verticalId'] = $this->request->getInt('vertical_id', null);
+		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
+		$options['wikiId'] = $this->request->getInt('wiki_id', null);
+		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
+		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
+		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
+		$options['fetchWikiImages'] = $this->request->getBool('fetch_wiki_images', false);
+		$options['wikiImageWidth'] = $this->request->getInt('wiki_image_width', self::DEFAULT_WIKI_IMAGE_WIDTH);
+		$options['wikiImageHeight'] = $this->request->getInt('wiki_image_height', WikiService::IMAGE_HEIGHT_KEEP_ASPECT_RATIO);
+		$options['sortColumn'] = $this->request->getVal('sort_column', 'wam_rank');
+		$options['sortDirection'] = $this->request->getVal('sort_direction', 'DESC');
+		$options['offset'] = $this->request->getInt('offset', 0);
+		$options['limit'] = $this->request->getInt('limit', self::DEFAULT_PAGE_SIZE);
+
+		if ($options['limit'] > self::MAX_PAGE_SIZE) {
+			throw new InvalidParameterApiException('limit');
+		}
+
+		$wamDates = $this->getMinMaxWamIndexDate();
+
+		if(empty($options['currentTimestamp'])) {
+			if(!empty($options['previousTimestamp'])) {
+				throw new  MissingParameterApiException('currentTimestamp');
+			}
+
+			$options['currentTimestamp'] = $wamDates['max_date'];
+			$options['previousTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
+		} else {
+			if($options['currentTimestamp'] > $wamDates['max_date'] || $options['currentTimestamp'] <= $wamDates['min_date']) {
+				throw new OutOfRangeApiException('currentTimestamp', $wamDates['min_date'], $wamDates['max_date']);
+			}
+
+			if(empty($options['previousTimestamp'])) {
+				$options['previousTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
+			} else {
+				if($options['currentTimestamp'] <= $options['previousTimestamp']) {
+					throw new InvalidParameterApiException('previousTimestamp');
+				}
+			}
+
+			if($options['previousTimestamp'] >= $wamDates['max_date'] || $options['previousTimestamp'] < $wamDates['min_date']) {
+				throw new OutOfRangeApiException('previousTimestamp', $wamDates['min_date'], $wamDates['max_date']);
+			}
+		}
+
+		return $options;
 	}
 }

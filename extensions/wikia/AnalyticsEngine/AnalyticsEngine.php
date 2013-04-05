@@ -47,6 +47,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderIVW();
 			case 'AmazonDirectTargetedBuy':
 				return new AnalyticsProviderAmazonDirectTargetedBuy();
+			case 'DynamicYield':
+				return new AnalyticsProviderDynamicYield();
 		}
 
 		return null;
