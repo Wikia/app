@@ -2,8 +2,6 @@
 
 class WAMPageController extends WikiaController
 {
-	const FIRST_PAGE = 1;
-	
 	protected $model;
 
 	public function __construct() {
@@ -64,7 +62,7 @@ class WAMPageController extends WikiaController
 		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
 		$this->selectedDate = ($this->selectedDate !== '') ? $this->selectedDate : null;
 		
-		$this->page = $this->getVal('page', self::FIRST_PAGE);
+		$this->page = $this->getVal('page', $this->model->getFirstPage());
 
 		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
 		if (!$langValidator->isValid($this->selectedLangCode)) {
