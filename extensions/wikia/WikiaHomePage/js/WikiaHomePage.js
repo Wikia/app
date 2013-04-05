@@ -143,7 +143,7 @@ WikiaHomePageRemix.prototype = {
 		this.wikiSetStack = wgInitialWikiBatchesForVisualization;
 
 		$('#WikiaArticle').on(
-			'click',
+			'mousedown',
 			'.WikiaHomePage',
 			$.proxy(this.trackClick, this)
 		);
@@ -231,8 +231,8 @@ WikiaHomePageRemix.prototype = {
 				this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'interstitial-visit', {}, ev);
 			}
 			else if ( node.hasParent('.wam') ) {
-				var wamLinkState = (node.hasClass('inactive')) ? 'inactive' : 'active';
-				this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'interstitial-wam-score-click', {'wam-link-state': wamLinkState}, ev);
+				var wamLinkState = (node.hasClass('inactive') || node.hasParent('.inactive')) ? 'inactive' : 'active';
+				this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'interstitial-wam-score', {'wam-link-state': wamLinkState}, ev);
 			}
 		}
 	},
