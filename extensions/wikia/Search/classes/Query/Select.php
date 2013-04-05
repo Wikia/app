@@ -157,6 +157,7 @@ class Select
 		if ( $this->service === null ) {
 			$this->service = new MediaWikiService;
 		}
+		return $this->service;
 	}
 	
 }
