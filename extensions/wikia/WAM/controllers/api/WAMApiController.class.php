@@ -77,20 +77,20 @@ class WAMApiController extends WikiaApiController {
 
 		$wamDates = $this->getMinMaxWamIndexDate();
 
-		if($options['currentTimestamp'] == null) {
+		if(is_null($options['currentTimestamp'])) {
 			$options['currentTimestamp'] = $wamDates['max_date'];
 			$options['previousTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
 		} else {
 			if($options['currentTimestamp'] > $wamDates['max_date'] || $options['currentTimestamp'] <= $wamDates['min_date']) {
-				throw new OutOfRangeApiException('currentTimestamp', $wamDates['min_day'], $wamDates['max_day']);
+				throw new OutOfRangeApiException('currentTimestamp', $wamDates['min_date'], $wamDates['max_date']);
 			}
 
-			if($options['previousTimestamp'] == null) {
-				$options['previosTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
+			if(is_null($options['previousTimestamp'])) {
+				$options['previousTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
 			}
 
 			if($options['previousTimestamp'] >= $wamDates['max_date'] || $options['previousTimestamp'] < $wamDates['min_date']) {
-				throw new OutOfRangeApiException('previousTimestamp', $wamDates['min_day'], $wamDates['max_day']);
+				throw new OutOfRangeApiException('previousTimestamp', $wamDates['min_date'], $wamDates['max_date']);
 			}
 		}
 
@@ -143,7 +143,7 @@ class WAMApiController extends WikiaApiController {
 	}
 
 	public function getMinMaxWamIndexDate() {
-		$wamDates = WikiaDataAccess::cacheWithLock(
+		$wamDates = WikiaDataAccess::cache(
 			F::app()->wf->SharedMemcKey(
 				'wam_minmax_date'
 			),

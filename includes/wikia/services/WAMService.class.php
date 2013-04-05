@@ -147,11 +147,14 @@ class WAMService extends Service {
 			);
 
 			$result = $db->select(
-				'fact_wam_score',
+				'fact_wam_scores',
 				$fields
 			);
 
-			$dates = $db->fetchObject($result);
+			$row = $db->fetchRow($result);
+
+			$dates['max_date'] = strtotime($row['max_date']);
+			$dates['min_date'] = strtotime($row['min_date']);
 		}
 
 		$app->wf->profileOut(__METHOD__);
