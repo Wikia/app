@@ -81,6 +81,9 @@ class Select
 	 */
 	public function getSolrQuery() {
 		$query = $this->getSanitizedQuery();
+		if (! $this->namespaceChecked ) {
+			$this->initializeNamespaceData();
+		}
 		// we don't want the namespace prefix
 		if ( $this->namespacePrefix !== null ) {
 			$query = substr( $query, strlen( $this->namespacePrefix ) + 1 ); // prefix plus colon
@@ -128,7 +131,7 @@ class Select
 	 * @return boolean
 	 */
 	public function hasTerms() {
-		return strlen( preg_replace( '[^a-zA-Z0-9]', '', $this->getSanitizedQuery() ) ) > 0;
+		return strlen( preg_replace( '/[^a-zA-Z0-9]/', '', $this->getSanitizedQuery() ) ) > 0;
 	} 
 	
 	/**
