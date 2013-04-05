@@ -272,7 +272,8 @@ class WAMPageModel extends WikiaModel {
 	 */
 	protected function getIndexParams($params) {
 		$itemsPerPage = $this->getItemsPerPage();
-		$offset = (!empty($params['page']) && $params['page'] > 1) ? ($params['page'] * $itemsPerPage) : 0;
+		$page = !empty($params['page']) ? intval($params['page']) : 1;
+		$offset = ($page > 1) ? (($page - 1) * $itemsPerPage) : 0;
 		
 		$apiParams = [
 			'limit' => $itemsPerPage,
