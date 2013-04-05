@@ -23,7 +23,6 @@ class Factory
 		$config = $container->getConfig();
 		$this->validateClient( $container );
 		
-		$terminal = 'OnWiki';
 		if ( $config->isInterWiki() ) {
 			return new Select\InterWiki( $container );
 		}
