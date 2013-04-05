@@ -2,8 +2,6 @@
 
 class WAMPageController extends WikiaController
 {
-	const FIRST_PAGE = 1;
-	
 	protected $model;
 
 	public function __construct() {
@@ -64,7 +62,7 @@ class WAMPageController extends WikiaController
 		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
 		$this->selectedDate = ($this->selectedDate !== '') ? $this->selectedDate : null;
 		
-		$this->page = $this->getVal('page', self::FIRST_PAGE);
+		$this->page = $this->getVal('page', $this->model->getFirstPage());
 
 		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
 		if (!$langValidator->isValid($this->selectedLangCode)) {
@@ -96,7 +94,7 @@ class WAMPageController extends WikiaController
 		$title = $this->wg->Title;
 		if( $title instanceof Title ) {
 			$url = $title->getLocalURL($this->getIndexParams(true));
-			$url = str_replace('%25', '%', $url); //todo: is there a better way?
+			$url = urldecode($url);
 		}
 		
 		return $url;

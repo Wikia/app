@@ -1,5 +1,6 @@
 <?php
 class WAMPageModel extends WikiaModel {
+	const FIRST_PAGE = 1;
 	const ITEMS_PER_PAGE = 20;
 	const VISUALIZATION_ITEMS_COUNT = 4;
 	const VISUALIZATION_ITEM_IMAGE_WIDTH = 144;
@@ -46,6 +47,10 @@ class WAMPageModel extends WikiaModel {
 
 	public function getVisualizationItemsCount() {
 		return self::VISUALIZATION_ITEMS_COUNT;
+	}
+	
+	public function getFirstPage() {
+		return self::FIRST_PAGE;
 	}
 
 	/**
@@ -272,7 +277,9 @@ class WAMPageModel extends WikiaModel {
 	 */
 	protected function getIndexParams($params) {
 		$itemsPerPage = $this->getItemsPerPage();
-		$offset = (!empty($params['page']) && $params['page'] > 1) ? ($params['page'] * $itemsPerPage) : 0;
+		$firstPageNo = $this->getFirstPage();
+		$page = !empty($params['page']) ? intval($params['page']) : $firstPageNo;
+		$offset = ($page > $firstPageNo) ? (($page - 1) * $itemsPerPage) : 0;
 		
 		$apiParams = [
 			'limit' => $itemsPerPage,
