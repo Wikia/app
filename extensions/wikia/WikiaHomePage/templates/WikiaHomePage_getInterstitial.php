@@ -14,18 +14,18 @@
 	<h1><?= htmlspecialchars($wikiInfo['name']) ?></h1>
 	<ul class="stats">
 		<? if (!empty($wikiWamScore)): ?>
-			<li class="stat">
-				<?= wfMsgExt('wikiahome-preview-stats-wam', 'parseinline', $wikiWamScore ) ?>
+			<li class="stat wam">
+				<?= wfMessage('wikiahome-preview-stats-wam')->params($wikiWamScore)->parse() ?>
 			</li>
 		<? endif ?>
 		<li class="stat">
-			<?= wfMsgExt('wikiahome-preview-stats-page', 'parseinline', empty($wikiStats['articles']) ? 0 : $wikiStats['articles'] ) ?>
+			<?= wfMessage('wikiahome-preview-stats-page')->params(empty($wikiStats['articles']) ? 0 : $wikiStats['articles'])->parse() ?>
 		</li>
 		<li class="stat">
-			<?= wfMsgExt('wikiahome-preview-stats-photos', 'parseinline', empty($wikiStats['images']) ? 0 : $wikiStats['images'] ) ?>
+			<?= wfMessage('wikiahome-preview-stats-photos')->params(empty($wikiStats['images']) ? 0 : $wikiStats['images'])->parse() ?>
 		</li>
 		<li class="stat">
-			<?= wfMsgExt('wikiahome-preview-stats-videos', 'parseinline', empty($wikiStats['videos']) ? 0 : $wikiStats['videos'] ) ?>
+			<?= wfMessage('wikiahome-preview-stats-videos')->params(empty($wikiStats['videos']) ? 0 : $wikiStats['videos'])->parse() ?>
 		</li>
 	</ul>
 </header>
