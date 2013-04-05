@@ -7,21 +7,17 @@
  * @author hyun@wikia-inc.com
  */
 
-class WikiaFilePageController extends WikiaController {
+class FilePageController extends WikiaController {
 
 	/**
 	 * Collects data about what articles the current file appears in, either
 	 * locally and globally.
-	 * 
+	 *
 	 * @requestParam string type (optional) Possible values are 'global' or 'local', defaulting to 'local' if not given.
 	 *                                      Determines whether this collects a local or global file usage data
 	 */
 	public function fileUsage() {
 		$app = F::app();
-
-		// The 'limit' parameter is used by both usage methods we forward to as a way to limit
-		// the number of rows returned.  This is a safeguard against extreme cases
-		$this->setVal('limit', 50);
 
 		$heading = '';               // The message to use for the section header
 		$shortenedSummary = array(); // A subset of the data returned to show immediately
@@ -29,19 +25,23 @@ class WikiaFilePageController extends WikiaController {
 
 		$type = $this->getVal('type', 'local');
 
-		// Based on $typoe get global or local data
+		// Based on $type get global or local data
 		if ($type === 'global') {
+			// The 'limit' parameter is used by both usage methods we forward to as a way to limit
+			// the number of rows returned.  This is a safeguard against extreme cases
+			$this->setVal('limit', 50);
+
 			$heading = wfMsg('video-page-global-file-list-header');
 
 			// Forward to the getGlobalUsage method
-			$summary = $app->sendRequest('WikiaFilePageController', 'getGlobalUsage')->getData()['summary'];
-			
+			$summary = $app->sendRequest('FilePageController', 'getGlobalUsage')->getData()['summary'];
+
 			if (array_key_exists($this->wg->DBname, $summary)) {
 				unset($summary[$this->wg->DBname]);
 			}
-			
+
 			$count = 0;
-			
+
 			// Shorten the list to 3 articles.  We'll flesh out these three with full
 			// details to display now and flesh out the others dynamically from JS when
 			// the user pages forward
@@ -63,7 +63,7 @@ class WikiaFilePageController extends WikiaController {
 			}
 		} else {
 			$heading = wfMsg('video-page-file-list-header');
-			$summary = $app->sendRequest('WikiaFilePageController', 'getLocalUsage')->getData()['summary'];
+			$summary = $app->sendRequest('FilePageController', 'getLocalUsage')->getData()['summary'];
 
 			// Shorten the list down to three articles much like above in global, but
 			// here we also need to make the $shortentedSummary structure uniform to match
@@ -76,7 +76,7 @@ class WikiaFilePageController extends WikiaController {
 
 		// Send the $shortenedSummary to fileList to flesh out the details
 		$params = array('summary' => $shortenedSummary, 'type' => $type);
-		$data = $app->sendRequest( 'WikiaFilePageController', 'fileList', $params )->getData();
+		$data = $app->sendRequest( 'FilePageController', 'fileList', $params )->getData();
 		$fileList = empty($data['fileList']) ? array() : $data['fileList'];
 
 		// Set template variables
@@ -85,7 +85,7 @@ class WikiaFilePageController extends WikiaController {
 		$this->summary = $summary;
 		$this->type = $type;
 	}
-	
+
 	/**
 	 * This method takes the minimum data provided in summary (at least an article title
 	 * an article ID and namespace ID) and fills in additional details needed to show
@@ -113,13 +113,13 @@ class WikiaFilePageController extends WikiaController {
 		}
 
 		$result = array();
-		
+
 		foreach($expandedSummary as $wiki => $articles) {
 			foreach($articles as $article) {
 				$result[] = $article;
 			}
 		}
-		
+
 		$this->fileList = $result;
 		$this->type = $type;
 	}
@@ -208,7 +208,7 @@ class WikiaFilePageController extends WikiaController {
 		// has at least one category associated with it.  The categor(ies) are how
 		// the RelatedPages extention determines what's related.  The query looks something
 		// like:
-		// 
+		//
 		//     SELECT distinct(page_id) as page_id
 		//       FROM imagelinks, page, categorylinks
 		//      WHERE il_to = 'Scooby_Eats_Scooby_Snacks'
@@ -235,7 +235,6 @@ class WikiaFilePageController extends WikiaController {
 	 */
 	public function getLocalUsage () {
 		$target = $this->getVal('fileTitle', $this->wg->Title->getDBkey());
-		$limit = $this->wg->Request->getInt('limit', 50);
 
 		$dbr = wfGetDB( DB_SLAVE );
 
@@ -245,9 +244,10 @@ class WikiaFilePageController extends WikiaController {
 		$res = $dbr->select(
 			array( 'imagelinks', 'page' ),
 			array( 'page_id', 'page_namespace', 'page_title', 'page_is_redirect', 'il_to' ),
-			array( 'il_to' => $target, 'il_from = page_id' ),
-			__METHOD__,
-			array( 'LIMIT' => $limit )
+			array( 'il_to' => $target,
+				   'il_from = page_id',
+				   'page_namespace != ' . NS_FILE ),
+			__METHOD__
 		);
 
 		$summary = array();
@@ -272,9 +272,9 @@ class WikiaFilePageController extends WikiaController {
 
 		// Query the global usage table to see where the current File title is used
 		$query = new GlobalUsageQuery( $titleObj->getDBkey() );
-		
+
 		$titleObj = null;
-		
+
 		if ( $this->getVal('offset') ) {
 			$query->setOffset( $this->getVal('offset') );
 		}
@@ -282,7 +282,7 @@ class WikiaFilePageController extends WikiaController {
 		$query->execute();
 
 		$summary = $query->getSingleImageResult();
-		
+
 		// Translate key names and add some additional data
 		foreach ($summary as $dbName => $articles) {
 			foreach ($articles as $info) {
@@ -297,7 +297,7 @@ class WikiaFilePageController extends WikiaController {
 	}
 
 	/**
-	 * Add more detail for local articles to the current $data by forwarding to 
+	 * Add more detail for local articles to the current $data by forwarding to
 	 * the ArticleSummaryController
 	 */
 	public function addLocalSummary ( $data ) {
