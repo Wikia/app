@@ -264,7 +264,7 @@ class WAMPageModel extends WikiaModel {
 	}
 
 	protected function getDefaultParams() {
-		$lastDay = strtotime('00:00 -1 day');
+		$lastDay = strtotime('00:00');
 
 		return [
 			'wam_day' => $lastDay,
