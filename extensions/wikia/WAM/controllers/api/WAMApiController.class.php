@@ -52,6 +52,7 @@ class WAMApiController extends WikiaApiController {
 	 * 		wam_change - wam score change from $wam_previous_day
 	 * 		wam_is_new - 1 if wiki wasn't classified on $wam_previous_day, 0 if this wiki was in index
 	 * @responseParam array $wam_results_total The total count of wikis available for provided params
+	 * @responseParam integer $wam_index_date date of received list
 	 */
 	public function getWAMIndex () {
 		$options = $this->getWAMParameters();
@@ -105,6 +106,13 @@ class WAMApiController extends WikiaApiController {
 
 	}
 
+	/**
+	 * A method to get WAM score starting and last available dates
+	 *
+	 * @return array with dates
+	 * 		min_date - starting date
+	 * 		max_date = last available date
+	 */
 	public function getMinMaxWamIndexDate() {
 		$wamDates = WikiaDataAccess::cache(
 			F::app()->wf->SharedMemcKey(
