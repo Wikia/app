@@ -221,14 +221,6 @@ class WikiaStatsAutoHubsConsumer {
 					$time = Wikia::timeDuration($end - $start);
 					Wikia::log( __METHOD__, 'events', 'Inserts done in: ' . $time );
 
-					# articles
-					$start = time();
-					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['articles']) . ' articles' );
-					$producerDB->insertArticleEdit($data['articles']);
-					$end = time();
-					$time = Wikia::timeDuration($end - $start);
-					Wikia::log( __METHOD__, 'events', 'Inserts done in: ' . $time );
-
 					$start = time();
 					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['user']) . ' users' );
 					$producerDB->insertUserEdit($data['user']);
