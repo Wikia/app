@@ -51,11 +51,11 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wam-index-no-results' => 'No Results Found',
 	'wam-index-filter-date-placeholder' => 'Most Recent',
 	'wam-index-filter-search-placeholder' => 'Search',
-	'wam-index-filter-sort-label' => 'Sort by',
+	'wam-index-filter-sort-label' => 'Vertical',
 	'wam-index-filter-date-label' => 'Date',
 	'wam-index-filter-lang-label' => 'Language',
-	'wam-index-filter-language-default' => 'All Languages',
-	'wam-index-filter-vertical-default' => 'All Wikis',
+	'wam-index-filter-language-default' => 'All',
+	'wam-index-filter-vertical-default' => 'All',
 );
 
 $messages['qqq'] = array(
