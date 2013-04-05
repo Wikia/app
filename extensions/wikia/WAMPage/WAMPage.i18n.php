@@ -50,6 +50,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wam-index-header-peak-rank' => 'Peak Rank',
 	'wam-index-no-results' => 'No Results Found',
 	'wam-index-filter-date-placeholder' => 'Today',
+	'wam-index-filter-search-placeholder' => 'Search',
 	'wam-index-filter-sort-label' => 'Sort by',
 	'wam-index-filter-date-label' => 'Date',
 	'wam-index-filter-lang-label' => 'Language',

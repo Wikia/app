@@ -10,7 +10,10 @@ WAMPage.prototype = {
 		
 		document.getElementById('wam-index-search').addEventListener(
 			'change',
-			WAMPage.clickTrackingHandler,
+			$.proxy(function() {
+				WAMPage.clickTrackingHandler(event);
+				WAMPage.filterWamIndex(event);
+			}, this),
 			true
 		);
 
@@ -72,6 +75,10 @@ WAMPage.prototype = {
 		} else if ( e.type === 'change' && node.closest('.wam-index-search select[name=verticalId]').length > 0 ) {
 			WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: lang, filter: 'verticalId'}, e);
 		}
+	},
+
+	filterWamIndex: function(e) {
+		$(e.target).parents('.wam-index-search').submit();
 	}
 };
 

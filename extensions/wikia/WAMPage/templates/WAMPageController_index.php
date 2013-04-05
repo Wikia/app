@@ -53,7 +53,7 @@
 				<? endforeach ?>
 			</select>
 			<span><?= wfMessage('wam-index-filter-date-label')->text() ?></span>
-			<input type="text" name="date" id="WamFilterDate" value="<?=$selectedDate?>" placeholder="<?= wfMessage('wam-index-filter-date-placeholder')->text() ?>"/>
+			<input type="text" name="date" id="WamFilterDate" value="<?=$selectedDate?>" placeholder=" <?= wfMessage('wam-index-filter-date-placeholder')->text() ?>"/>
 			<span><?= wfMessage('wam-index-filter-lang-label')->text() ?></span>
 			<select name="langCode">
 				<option value=""><?= wfMessage('wam-index-filter-language-default')->text() ?></option>
@@ -63,7 +63,7 @@
 			</select>
 		</div>
 		<div class="searching">
-			<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" />
+			<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" placeholder=" <?= wfMessage('wam-index-filter-search-placeholder')->text() ?>" />
 			<button type="submit" value="<?= wfMessage('wam-index-search-button')->text() ?>" class="secondary">
 				<img src="<?= $wg->BlankImgUrl ?>" />
 			</button>
