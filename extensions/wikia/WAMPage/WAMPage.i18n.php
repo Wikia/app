@@ -24,15 +24,15 @@ The WAM is calculated daily for the top 5,000 Wikis and includes an overall and 
 ===Why should I care about the WAM?===
 	At Wikia we believe knowledge is power. While we have always been open about data and statistics, the WAM represents a huge step forward in the measurement of online communities. The WAM is a valuable feedback loop for founders, admins and contributors as they look to better understand where their Wiki ranks and how their activity is moving the needle.
 ===How can I improve my WAM score?===
-	The WAM is a complex algorithm, and there isn’t a simple way to instantly improve your score and ranking. That said, there are steps you can take that will put you in a good position to move up the ranks. First and foremost, we suggest that you [http://community.wikia.com/wiki/Help:Attracting_contributors encourage participation on your Wiki]. Wikis that have a large number of active contributions and contributors are more likely to do well in the WAM rankings. But it is important to remember that you can’t game the system. The more authentic and relevant the content is, the more likely it will resonate with your readers.
+	The WAM is a complex algorithm, and there isn’t a simple way to instantly improve your score and ranking. That said, there are steps you can take that will put you in a good position to move up the ranks. First and foremost, we suggest that you [[w:c:en:help:Attracting_contributors|encourage participation on your Wiki]]. Wikis that have a large number of active contributions and contributors are more likely to do well in the WAM rankings. But it is important to remember that you can’t game the system. The more authentic and relevant the content is, the more likely it will resonate with your readers.
 
-	We also recommend reaching out to your fellow contributors to [http://community.wikia.com/wiki/Help:Making_a_successful_wiki see if there are improvements you can make to the Wiki]. Is the navigation intuitive? Do you have enough rich media (videos & images)?  Are there gaps in the content?  Of course, we can [http://community.wikia.com/wiki/Help:Contents help guide you in the right direction].
+	We also recommend reaching out to your fellow contributors to [[w:c:en:help:Making_a_successful_wiki|see if there are improvements you can make to the Wiki]]. Is the navigation intuitive? Do you have enough rich media (videos & images)?  Are there gaps in the content?  Of course, we can [[w:c:en:help:Contents|help guide you in the right direction]].
 
 ===How much historical WAM data is available?===
 	WAM data goes back to January 1, 2012
 
 ===Where is the WAM currently displayed?===
-	You can currently find the WAM on this product page, the [[Video Games]], [[Entertainment]] and [[Lifestyle]] hub pages, and the preview interstitial page for each Wiki.
+	You can currently find the WAM on this product page, the [[w:c:en:Video Games|Video Games]], [[w:c:en:Entertainment|Entertainment]] and [[w:c:en:Lifestyle|Lifestyle]] hub pages, and the preview interstitial page for each Wiki.
 
 ===Am I allowed to display my WAM score on my Wiki?===
 We encourage you to display your WAM score or rank on your Wiki, but we ask you that you link back to the product page. In the coming months we will be rolling out tools that will make it easier to display the WAM on your Wiki.
@@ -62,8 +62,7 @@ $messages['qqq'] = array(
 	'wampage-header-faq' => 'Header of the /wam/faq page on corporate wiki',
 	'wampage-content' => 'Content of the /wam page on corporate wiki',
 	'wampage-faq' => 'Content of the /wam/faq page on corporate wiki',
-	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text.',
-	'wam-index-no-results' => 'Error message when search results, or filtering results are empty',
+	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text.'
 );
 
 
@@ -87,18 +86,16 @@ Chez Wikia, nous pensons que la connaissance est le pouvoir. Bien que nous avons
 ===Comment puis-je améliorer ma note WAM ?===
 Le WAM est un algorithme complexe et il n\'y a pas de moyen simple d\'améliorer instantanément votre note et classement. Ceci dit, il y a des étapes que vous pouvez suivre qui vous placeront en bonne voie pour monter dans le classement. D\'abord et avant tout, nous vous suggérons [http://communaute.wikia.com/wiki/Aide:Attirer_des_contributeurs d\'encourager la participation sur votre wiki]. Les wikis qui ont un grand nombre de contributions et de contributeurs actifs ont plus de chance d\'être bien positionnés dans le classement WAM. Mais il est important de vous rappeler que vous ne pouvez pas abuser le système. Plus votre contenu est authentique et pertinent et plus il aura de chances de parler à vos lecteurs.
 
-Nous vous recommandons aussi de contacter vos co-contributeurs et [http://communaute.wikia.com/wiki/Aide:B%C3%A2tir_une_communaut%C3%A9 voir s\'il y a des améliorations que vous pourriez apporter au wiki]. La navigation est-elle intuitive ? Avez-vous suffisamment de médias riches (vidéos et images) ? Y a-t-il des trous dans le contenu ? Bien sûr, nous pouvons [http://communaute.wikia.com/wiki/Aide:Contenu vous aider à partir dans la bonne direction].
+Nous vous recommandons aussi de contacter vos co-contributeurs et voir s\'il y a des améliorations [[w:c:fr:aide:B%C3%A2tir_une_communaut%C3%A9|que vous pourriez apporter au wiki]]. La navigation est-elle intuitive ? Avez-vous suffisamment de médias riches (vidéos et images) ? Y a-t-il des trous dans le contenu ? Bien sûr, nous pouvons [http://communaute.wikia.com/wiki/Aide:Contenu vous aider à partir dans la bonne direction].
 
 ===Combien de temps les données WAM couvrent-elles ?===
 Les données de WAM remontent au 1<sup>er</sup> janvier 2012.
 
 ===Où le WAM est-il actuellement affiché ?===
-Vous pouvez trouver actuellement le WAM sur cette page produit, les pages de thème [[Jeux vidéo]], [[Divertissement]] et [[Mode de vie]] et la page interstitielle d\'aperçu pour chaque wiki.
-
+Vous pouvez trouver actuellement le WAM sur cette page produit, les pages de thème [[w:c:fr:Jeux vidéo|Jeux vidéo]], [[Divertissement]] et [[Mode de vie]] et la page interstitielle d\'aperçu pour chaque wiki.
 
 ===Puis-je afficher ma note WAM sur mon wiki?===
 Nous vous encourageons à afficher votre note WAM sur votre wiki, mais nous vous demandons de mettre un lien vers la page produit. Dans les mois à venir nous mettrons en place des outils qui rendront plus facile l\'affichage du WAM sur votre wiki.
-
 
 ===À qui puis-je parler si j\'ai d\'autres questions sur le WAM?===
 Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.com support@wikia-inc.com].'
@@ -125,9 +122,9 @@ Die WAM-Punktzahl setzt sich aus einer Kombination aus Traffic, Aktivität und W
 Wir von Wikia glauben daran, dass Wissen Macht ist. Wir sind bislang immer offen im Bezug auf Daten und Statistiken gewesen, und WAM ist ein großer Schritt nach vorne beim Messen von Online-Gemeinschaften. Die WAM-Punktzahl ist ein Wert, mit dem Wiki-Gründer, -Administratoren und -Benutzer direkte Rückmeldung darüber haben, wo ihr Wiki momentan steht und wie ihre Arbeit dazu beiträgt, einen bedeutenden Unterschied zu machen.
 
 ===Wie kann ich meine WAM-Punktzahl verbessern?===
-WAM ist ein komplexer Algorithmus, und es gibt keine schnelle Möglichkeit, deine Platzierung oder Punktzahl umgehend zu verbessern. Es gibt jedoch Dinge, die du tun kannst [http://de.community.wikia.com/wiki/Hilfe:Benutzer_begeistern um die Platzierung deines Wikis zu verbessern]. Wikis mit einer großen Anzahl an Benutzern haben in der Regel eine relativ gute Platzierung. Dennoch kann man damit das System nicht austricksen - je authentischer und sinnvoller der Inhalt ist, desto ehr wird er Leser ansprechen.
+WAM ist ein komplexer Algorithmus, und es gibt keine schnelle Möglichkeit, deine Platzierung oder Punktzahl umgehend zu verbessern. Es gibt jedoch Dinge, die du tun kannst [[w:c:de:hilfe:Benutzer_begeistern|um die Platzierung deines Wikis zu verbessern]]. Wikis mit einer großen Anzahl an Benutzern haben in der Regel eine relativ gute Platzierung. Dennoch kann man damit das System nicht austricksen - je authentischer und sinnvoller der Inhalt ist, desto eher wird er Leser ansprechen.
 
-	Wir empfehlen dir ebenfalls, deine Benutzerschaft zu fragen, [http://de.community.wikia.com/wiki/Hilfe:Erschaffe_eine_Gemeinschaft ob es Dinge am Wiki zu verbessern gibt]. Beinhaltet die Navigation alle wichtigen Seiten? Gibt es genügend Videos und Bilder? Gibt es Lücken im Inhalt selbst? Solltest du Probleme haben, [http://de.community.wikia.com/wiki/Hilfe:%C3%9Cbersicht diese Fragen zu beantworten, können wir dir weiterhelfen].
+	Wir empfehlen dir ebenfalls, deine Benutzerschaft zu fragen, [[w:c:de:hilfe:Erschaffe_eine_Gemeinschaft|ob es Dinge am Wiki zu verbessern gibt]]. Beinhaltet die Navigation alle wichtigen Seiten? Gibt es genügend Videos und Bilder? Gibt es Lücken im Inhalt selbst? Solltest du Probleme haben, diese Fragen zu beantworten, [[w:c:de:hilfe:%C3%9Cbersicht|können wir dir weiterhelfen]].
 
 ===Bis wann gehen die Daten zurück, die für die WAM-Punktzahl verwendet werden?===
 
@@ -135,7 +132,7 @@ Die Daten gehen bis zum 1. Januar 2012 zurück.
 
 ===Wo wird die WAM-Punktzahl im Moment angezeigt?===
 
-Du kannst die WAM-Punktzahl auf dieser Seite finden, im [[Videospiele]]-, [[Entertainment]]- und [[Lifestyle]]-Hub und in der Vorschau-Seite für Wikis auf Wikias Hauptseite.
+Du kannst die WAM-Punktzahl auf dieser Seite finden, im [[w:c:de:Videospiele|Videospiele]]-, [[w:c:de:Entertainment|Entertainment]]- und [[w:c:de:Lifestyle|Lifestyle]]-Hub und in der Vorschau-Seite für Wikis auf Wikias Hauptseite.
 
 ===Ist es mir erlaubt, die WAM-Punktzahl meines Wikis zu veröffentlichen?===
 
@@ -165,9 +162,9 @@ La clasificación del WAM es una combinación de tráfico, compromiso y crecimie
 En Wikia creemos que el conocimiento es poder. Aunque siempre hemos estado abiertos a datos y estadísticas, el WAM representa un gran paso adelante en la medición del éxito de las comunidades online. El WAM es una forma de evaluación para los fundadores, administradores y editores que quieran entender mejor cómo se sitúan sus wikis en cuanto a actividad con respecto a otras comunidades.
 
 ===¿Cómo puedo mejorar mi puntuación en el WAM?===
-El WAM tiene un algoritmo algo complejo, no hay una forma simple de mejorar instantáneamente tus resultados en la clasificación. Como dijimos, hay algunos pasos que se pueden realizar para mejorar la posición del wiki y moverlo hacia arriba en la clasificación. Primero y ante todo, os sugerimos [http://comunidad.wikia.com/wiki/Ayuda:Atrayendo_contribuidores que fomentéis la participación en vuestro wiki]. Los wikis con un mayor número de editores activos funcionan mejor en la clasificación. Pero es importante recordar que no puedes jugar con el sistema. El contenido más auténtico y relevante es el que gusta a tus lectores.
+El WAM tiene un algoritmo algo complejo, no hay una forma simple de mejorar instantáneamente tus resultados en la clasificación. Como dijimos, hay algunos pasos que se pueden realizar para mejorar la posición del wiki y moverlo hacia arriba en la clasificación. Primero y ante todo, os sugerimos [[w:c:es:ayuda:Atrayendo_contribuidores|que fomentéis la participación en vuestro wiki]]. Los wikis con un mayor número de editores activos funcionan mejor en la clasificación. Pero es importante recordar que no puedes jugar con el sistema. El contenido más auténtico y relevante es el que gusta a tus lectores.
 
-También recomendamos hablar con algunos editores del wiki [http://comunidad.wikia.com/wiki/Ayuda:Haciendo_un_wiki_exitoso para ver si hay mejoras que se deberían hacer]. ¿Es intuitiva la navegación del wiki? ¿Tiene suficientes imágenes y vídeos? ¿Hay lagunas en el contenido? Por supuesto, nosotros también podemos [http://comunidad.wikia.com/wiki/Ayuda:Contenidos guiaros en la dirección correcta].
+También recomendamos hablar con algunos editores del wiki [[w:c:es:ayuda:Haciendo_un_wiki_exitoso|para ver si hay mejoras que se deberían hacer]]. ¿Es intuitiva la navegación del wiki? ¿Tiene suficientes imágenes y vídeos? ¿Hay lagunas en el contenido? Por supuesto, nosotros también podemos [[w:c:es:ayuda:Contenidos|guiaros en la dirección correcta]].
 
 ===¿Desde cuándo hay datos disponibles en el WAM?===
 El WAM es capaz de retroceder hasta el 1 de enero de 2012.
