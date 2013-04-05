@@ -700,6 +700,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                    ->setMethods( array( 'get' ) )
 		                    ->getMock();
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'setResults', 'setResultsFound', 'getPage', 'getQuery' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
 		
 		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
 		                   ->disableOriginalConstructor()
@@ -750,6 +751,11 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getQuery' )
+	        ->will   ( $this->returnValue( $mockQuery ) )
+        ;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'prepareResponse' );
@@ -811,6 +817,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                   ->setMethods( array( 'getMinimumMatch', 'getSkipBoostFunctions', 'getQuery' ) )
 		                   ->getMock();
 		
+		$mockQueryWrapper = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSolrQuery' ), array( 'foo' ) );
+		
 		$deps = array( 'config' => $mockConfig, 'client' => $mockClient, 'service' => $mockService  );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( $deps );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
@@ -826,6 +834,11 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQueryWrapper ) )
+	    ;
+		$mockQueryWrapper
+		    ->expects( $this->once() )
+		    ->method ( 'getSolrQuery' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 		$mockQuery
