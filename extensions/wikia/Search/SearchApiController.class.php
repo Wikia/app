@@ -77,7 +77,7 @@ class SearchApiController extends WikiaApiController {
 			$searchConfig->setNamespaces( $namespaces );
 		}
 
-		if ( $searchConfig->getQueryNoQuotes( true ) ) {
+		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$container = new DependencyContainer( array( 'config' => $searchConfig ) );
 			$wikiaSearch = (new Factory)->get( $container );
 
