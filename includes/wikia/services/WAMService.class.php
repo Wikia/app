@@ -122,6 +122,7 @@ class WAMService extends Service {
 			}
 			$count = $resultCount->fetchObject();
 			$wamIndex['wam_results_total'] = $count->wam_results_total;
+			$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
 		}
 
 		$app->wf->profileOut(__METHOD__);
