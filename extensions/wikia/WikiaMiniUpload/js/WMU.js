@@ -117,13 +117,27 @@ function WMU_loadDetails() {
 
 		$('#ImageUploadBack').hide();
 
+		$('#ImageUploadLayoutLeft').on('click', function() {
+			WMU_track({
+				label: 'checkbox-alignment-left'
+			});
+		});
+
+		$('#ImageUploadLayoutRight').on('click', function() {
+			WMU_track({
+				label: 'checkbox-alignment-right'
+			});
+		});
+
 		setTimeout(function() {
 			// FIXME: FCK is mocked here so this code would still work even though we're not using FCK anymore
 			if(!FCK.wysiwygData[WMU_refid].thumb) {
-				$('#ImageUploadFullOption').click();
+				$('#ImageUploadThumbOption').prop('checked', false);
+				$('#ImageUploadFullOption').prop('checked', true);
 			}
 			if(FCK.wysiwygData[WMU_refid].align && FCK.wysiwygData[WMU_refid].align == 'left') {
-				$('#ImageUploadLayoutLeft').click();
+				$('#ImageUploadLayoutLeft').prop('checked', true);
+				$('#ImageUploadLayoutRight').prop('checked', false);
 			}
 
 			/*
@@ -160,7 +174,6 @@ function WMU_loadDetails() {
 	};
 
 	WMU_jqXHR.abort();
-
 
 	var params = new Array();
 	params.push('sourceId=0');
@@ -552,6 +565,11 @@ function WMU_loadLicense( license ) {
 			$('#ImageUploadLicenseText').html(o['parse']['text']['*']);
 			WMU_indicator(1, false);
 		}
+
+		WMU_track({
+			label: 'upload-licensing-dropdown'
+		});
+
 		WMU_indicator(1, true);
 		$.ajax(url, {
 			method: 'get',
@@ -566,6 +584,11 @@ function WMU_recentlyUploaded(param, pagination) {
 		$('#WMU_results_0').html(html);
 		WMU_indicator(2, false);
 	};
+
+	WMU_track({
+		label: 'paginate-' + pagination
+	});
+
 	WMU_indicator(2, true);
 	$.get(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=recentlyUploaded&'+param, callback);
 }
@@ -583,6 +606,10 @@ function WMU_changeSource(e) {
 			$('#WMU_results_' + sourceId).show();
 
 			if($('#ImageQuery').length) $('#ImageQuery').focus();
+
+			WMU_track({
+				label: sourceId == 0 ? 'find-this-wiki' : 'find-flickr'
+			});
 
 			WMU_curSourceId = sourceId;
 			WMU_trySendQuery();
@@ -617,6 +644,11 @@ function WMU_sendQuery(query, page, sourceId, pagination) {
 		$('#WMU_results_' + sourceId).html(o.responseText);
 		WMU_indicator(2, false);
 	};
+
+	WMU_track({
+		label: 'button-find'
+	});
+
 	WMU_lastQuery[sourceId] = query;
 	WMU_indicator(2, true);
 	WMU_jqXHR.abort();
@@ -648,7 +680,7 @@ function WMU_chooseImage(sourceId, itemId) {
 	};
 
 	WMU_track({
-		label: 'photo-add-recent'
+		label: 'add-recent-photo'
 	});
 
 	WMU_indicator(1, true);
@@ -665,6 +697,10 @@ function WMU_upload(e) {
 		return false;
 	} else {
 		if (WMU_initialCheck( $('#ImageUploadFile').val() )) {
+			WMU_track({
+				label: 'button-upload'
+			});
+
 			WMU_indicator(1, true);
 			return true;
 		} else {
@@ -747,9 +783,17 @@ function WMU_displayDetails(responseText) {
 	$('#WMU_showhide').click(function(event) {
 		event.preventDefault();
 		if ($(".advanced").is(":visible")) {
+			WMU_track({
+				label: 'upload-fewer-options'
+			});
+
 			$(".ImageUploadRight .chevron").removeClass("up");
 			$(this).text($(this).data("more"));
 		}	else {
+			WMU_track({
+				label: 'upload-more-options'
+			});
+
 			$(".ImageUploadRight .chevron").addClass("up");
 			$(this).text($(this).data("fewer"));
 		}
@@ -1108,6 +1152,11 @@ function MWU_imageSizeChanged(size) {
 
 	if($('#ImageUploadThumb').length) {
 		var image = $('#ImageUploadThumb').children(':first');
+
+		WMU_track({
+			label: 'checkbox-size-' + size
+		});
+
 		if(size == 'thumb') {
 			image.width(WMU_thumbSize[0]);
 			image.height(WMU_thumbSize[1]);
@@ -1131,10 +1180,18 @@ function MWU_imageSizeChanged(size) {
 function WMU_toggleLicenseMesg(e) {
 	e.preventDefault();
 	if ('none' == $('#ImageUploadLicenseText').css('display') ) {
+		WMU_track({
+			label: 'upload-licensing-show'
+		});
+
 		$('#ImageUploadLicenseText').show();
 		$('#ImageUploadLicenseLink').html('[' + wmu_hide_license_message  + ']');
 		document.cookie = "wmulicensemesg=1";
 	} else {
+		WMU_track({
+			label: 'upload-licensing-hide'
+		});
+
 		$('#ImageUploadLicenseText').hide();
 		$('#ImageUploadLicenseLink').html('[' + wmu_show_license_message  + ']');
 		document.cookie = "wmulicensemesg=0";
@@ -1178,6 +1235,11 @@ function WMU_switchScreen(to) {
 
 function WMU_back(e) {
 	e.preventDefault();
+
+	WMU_track({
+		label: 'button-back'
+	});
+
 	if(WMU_curScreen == 'Details') {
 		WMU_switchScreen('Main');
 	} else if(WMU_curScreen == 'Conflict' && WMU_prevScreen == 'Details') {
