@@ -54,16 +54,15 @@ class WAMPageController extends WikiaController
 		$this->filterVerticals = $this->model->getVerticals();
 
 		$this->searchPhrase = $this->getVal('searchPhrase', null);
-		$this->searchPhrase = htmlspecialchars($this->searchPhrase);
 		$this->selectedVerticalId = $this->getVal('verticalId', null);
 		$this->selectedLangCode = $this->getVal('langCode', null);
 		$this->selectedDate = $this->getVal('date', null);
-		$this->page = $this->request->getInt('page');
-		$this->page = ($this->page <= 0) ? $this->model->getFirstPage() : $this->page;
-		
+
 		$this->selectedVerticalId = ($this->selectedVerticalId !== '') ? $this->selectedVerticalId : null;
 		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
 		$this->selectedDate = ($this->selectedDate !== '') ? $this->selectedDate : null;
+		
+		$this->page = $this->getVal('page', $this->model->getFirstPage());
 
 		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
 		if (!$langValidator->isValid($this->selectedLangCode)) {
@@ -95,13 +94,21 @@ class WAMPageController extends WikiaController
 		}
 	}
 
-	protected function getIndexParams($wildcardForPage = false) {
+	protected function getIndexParams($forPaginator = false) {
+		if( $forPaginator ) {
+			$date = isset($this->selectedDate) ? $this->selectedDate : null;
+			$page = '%s';
+		} else {
+			$date = isset($this->selectedDate) ? strtotime($this->selectedDate) : null;
+			$page = $this->page;
+		}
+		
 		$indexParams = [
 			'searchPhrase' => $this->searchPhrase,
 			'verticalId' => $this->selectedVerticalId,
 			'langCode' => $this->selectedLangCode,
-			'date' => isset($this->selectedDate) ? strtotime($this->selectedDate) : null,
-			'page' => ( ($wildcardForPage === true) ? '%s' : $this->page),
+			'date' => $date,
+			'page' => $page,
 		];
 		
 		return $indexParams;
