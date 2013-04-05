@@ -88,42 +88,6 @@ class WikiaStatsAutoHubsConsumerDB {
 		wfProfileOut( __METHOD__ );
 	 }
 
-	 /**
-	 * instert stats for article per tag
-	 *
-	 * @param String $type
-	 * @author Tomasz Odrobny, Piotr Molski
-	 * @access private
-	 *
-	 */
-	 public function insertArticleEdit($data) {
-		wfProfileIn( __METHOD__ );
-
-		if ( empty($data) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-  		foreach ( $data as $lang => $tags ) {
-			if ( !empty($tags) ) {
-				foreach ( $tags as $tag_id => $records ) {
-					$sql = $this->makeInsert("tags_top_articles", $records, array('ignore'), "ON DUPLICATE KEY UPDATE ta_count = ta_count + 1");
-					if ( $sql ) {
-						$this->dbs->query($sql, __METHOD__);
-					}
-					Wikia::log( __METHOD__, 'events', 'Rebuild article data in memcache for tag: ' . $tag_id . ', lang: ' . $lang );
-					$this->rebuildMemc($tag_id,$lang,"article");
-				}
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-	 }
 
 	 /**
 	 * instert stats for users per tag
