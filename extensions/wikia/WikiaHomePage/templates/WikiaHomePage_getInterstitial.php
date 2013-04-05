@@ -13,9 +13,11 @@
 	</span>
 	<h1><?= htmlspecialchars($wikiInfo['name']) ?></h1>
 	<ul class="stats">
-		<? if (!empty($wikiWamScore)): ?>
+		<? if (!empty($wg->EnableWAMPageExt)): ?>
 			<li class="stat wam">
-				<?= wfMessage('wikiahome-preview-stats-wam')->params($wikiWamScore)->parse() ?>
+				<a href="<?=$wamUrl?>"<? if (is_null($wikiWamScore)): ?> class="inactive"<? endif ?>>
+					<?= wfMessage('wikiahome-preview-stats-wam')->params( isset($wikiWamScore) ? $wg->Lang->formatNum($wikiWamScore) : wfMessage('wikiahome-preview-stats-wam-empty-label')->text())->parse() ?>
+				</a>
 			</li>
 		<? endif ?>
 		<li class="stat">

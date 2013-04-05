@@ -936,7 +936,12 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	private function getMockedScoreForDev() {
-		return rand(100, 9999) / 100;
+		if (rand(0, 3)) {
+			$wam = rand(100, 9999) / 100;
+		} else {
+			$wam = null;
+		}
+		return $wam;
 	}
 
 }

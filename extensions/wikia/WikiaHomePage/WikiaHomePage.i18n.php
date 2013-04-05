@@ -114,6 +114,7 @@ __NOEDITSECTION__",
 	'wikia-home-parse-exception-empty-data-from-database' => 'There were no data pulled from database. Database table is empty or all wikis are blocked.',
 	'wikia-home-parse-exception-read-only' => 'Our databases are in read-only mode.',
 
+	'wikiahome-preview-stats-wam-empty-label' => 'WAM',
 	'wikiahome-preview-stats-wam' => "'''$1''' WAM Score",
 	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Page|'''$1''' Pages}}",
 	'wikiahome-preview-stats-photos' => "{{PLURAL:$1|'''1''' Photo|'''$1''' Photos}}",

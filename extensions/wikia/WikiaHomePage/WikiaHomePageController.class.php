@@ -606,6 +606,12 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 		if (!empty($this->app->wg->EnableWAMPageExt)) {
+			if (isset($this->app->wg->WAMPageConfig['pageName'])) {
+				$this->wamUrl = Title::newFromText($this->app->wg->WAMPageConfig['pageName'])->getLocalURL();
+			} else {
+				$this->wamUrl = '#';
+			}
+
 			$this->wikiWamScore = $this->helper->getWamScore($wikiId);
 		}
 
