@@ -54,6 +54,7 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Mutarjem horr
  * @author OsamaK
  */
@@ -61,7 +62,7 @@ $messages['ar'] = array(
 	'contact' => 'اتصل بويكيا',
 	'specialcontact-wikia' => 'اتصل بويكيا',
 	'specialcontact-pagetitle' => 'اتصل بويكيا',
-	'specialcontact-username' => 'اسم المستخدم', # Fuzzy
+	'specialcontact-username' => 'اسم المستخدم الخاص بك',
 	'specialcontact-wikiname' => 'أي ويكي',
 	'specialcontact-realname' => 'اسمك',
 	'specialcontact-yourmail' => 'عنوان البريد الإلكتروني',
@@ -123,6 +124,7 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'contact' => 'Contactar amb Wikia',
@@ -133,7 +135,7 @@ $messages['ca'] = array(
 Pots trobar informació addicional sobre com reportar els problemes de Wikia [[w:project:Report_a_problem|aquí]] o pots obrir un [[w:Forum:Index|Fòrum]]per cercar ajuda dels usuaris. 
 
 Si prefereixes l'ús regular del correu electrònic amb dades adjuntes, pots contactar amb nosaltres a [mailto:community@wikia.com community@wikia.com].",
-	'specialcontact-username' => "Nom d'usuari", # Fuzzy
+	'specialcontact-username' => "El teu nom d'usuari",
 	'specialcontact-wikiname' => 'Quin wiki?',
 	'specialcontact-realname' => 'El teu nom',
 	'specialcontact-yourmail' => 'Adreça de correu electrònic',

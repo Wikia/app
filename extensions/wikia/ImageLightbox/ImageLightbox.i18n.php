@@ -32,7 +32,7 @@ $1
 	'lightbox-visit-the-wiki' => 'Visit the wiki:'
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Shirayuki
  * @author Siebrand
  */
@@ -696,19 +696,20 @@ Szczegóły: $2',
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'lightbox_details_tooltip' => 'Vëdde ij detaj dla fòto',
-	'lightbox-forum' => 'Forum',
-	'lightbox-standard-link' => 'Colegament standard',
-	'lightbox-blog-link' => 'Colegament dlë scartari',
+	'lightbox-forum' => 'Piassa ëd discussion',
+	'lightbox-standard-link' => 'Liura stàndard',
+	'lightbox-blog-link' => 'Liura dë scartari',
 	'lightbox-send' => 'Mandé',
 	'lightbox-share-description' => 'Fòto an $1 dzor $2',
 	'lightbox-share-email-subject' => "$1 a l'ha mandate na fòto dzor Wikia",
 	'lightbox-share-email-body' => "Cerea,
 
-Quaidun a veul mostete na fòto dzor Wikia. Contròla:
+Quaidun a veul mostretj na fòto dzora Wikia. Ch'a la bèica:
 
 $1
 
@@ -717,14 +718,14 @@ $1
 	'lightbox-share-button-www' => 'Condivid',
 	'lightbox-share-button-embed' => 'Ancastra',
 	'lightbox-share-email-label' => "Manda sta figura a n'amis",
-	'lightbox-share-email-page-label' => "Manda sta pagina a n'amis",
+	'lightbox-share-email-page-label' => "Mandé costa pàgina a n'amis për pòsta eletrònica",
 	'lightbox-share-email-page-label-address' => 'Adrëssa ëd pòsta eletrònica',
 	'lightbox-share-email-ok-caption' => 'Confirma',
-	'lightbox-share-email-ok-content' => "{{PLURAL:$1|N'email a l'é stàita|De email a son stàite}} mandà.",
+	'lightbox-share-email-ok-content' => "{{PLURAL:$1|Ël mëssagi a l'é stàit|Ij mëssagi a son ëstàit}} mandà.",
 	'lightbox-share-email-error-caption' => 'Eror',
-	'lightbox-share-email-error-content' => 'Eror mandand {{PLURAL:$1|na email|dle email}}.
+	'lightbox-share-email-error-content' => 'Eror a la spedission {{PLURAL:$1|dël mëssagi|dij mëssagi}}.
 Detaj: $2',
-	'lightbox-share-email-error-login' => 'Për mandé email it deuve intré',
+	'lightbox-share-email-error-login' => 'Për mandé dij mëssagi ëd pòsta eletrònica a dev intré ant ël sistema',
 	'lightbox-share-email-error-noaddress' => 'Gnun-e adrësse a son stàite specificà',
 	'lightbox-visit-the-wiki' => 'Vìsita la wiki:',
 );

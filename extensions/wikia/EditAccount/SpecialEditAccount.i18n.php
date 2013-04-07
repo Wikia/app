@@ -80,7 +80,7 @@ $messages['en'] = array(
 	'action-editaccount' => "edit other users' information",
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Lloffiwr
  * @author Michał Roszka (Mix) <michal@wikia-inc.com>
  * @author Shirayuki
@@ -198,7 +198,7 @@ $messages['bg'] = array(
 	'right-editaccount' => 'Редактиране на настройките на други потребители',
 );
 
-/** bh (भोजपुरी)
+/** bh (bh)
  * @author Ganesh
  */
 $messages['bh'] = array(
@@ -278,17 +278,38 @@ $messages['br'] = array(
 /** Catalan (català)
  * @author Davidpar
  * @author Marcmpujol
+ * @author Toniher
  */
 $messages['ca'] = array(
-	'editaccount' => 'Editar Compte',
+	'editaccount' => 'Edita el compte',
 	'editaccount-desc' => "Permite als membres del staff gestionar informació de compte d'usuari",
 	'editaccount-title' => 'Especial:EditAccount',
-	'editaccount-frame-manage' => 'Editar un compte',
+	'editaccount-frame-manage' => 'Edita un compte',
 	'editaccount-frame-usage' => 'Nota',
+	'editaccount-usage' => "Les dades d'usuari estan en una memòria intermèdia separada per cada wiki. Quan es reiniciï una contrasenya o una adreça electrònica, la memòria intermèdia serà únicament anul·lada per aquest wiki. Si us plau, dirigeix l'usuari a aquest wiki per accedir en el sistema amb una nova contrasenya i evitar problemes de memòria intermèdia.",
+	'editaccount-label-select' => "Seleccionar un compte d'usuari",
+	'editaccount-submit-account' => 'Gestionar Compte',
+	'editaccount-frame-account' => "Editant compte d'usuari: $1",
+	'editaccount-frame-close' => "Desactivar el compte d'usuari: $1",
+	'editaccount-label-email' => 'Fixar una nova adreça electrònica',
+	'editaccount-label-pass' => 'Fixar una nova contrasenya',
+	'editaccount-label-realname' => 'Fixar un nou nom real',
+	'editaccount-label-clearunsub' => 'No subscrit',
+	'editaccount-label-toggleadopt' => "Canviar l'estat del adoptant (per Adopció Automàtica de Wikis):",
+	'editaccount-label-toggleadopt-prevent' => "Prevenir l'adopció automàtica",
+	'editaccount-label-toggleadopt-allow' => "Permetre l'adopció automàtica",
+	'editaccount-label-reason' => 'Motiu:',
+	'editaccount-submit-email' => "Guarda i confirma l'adreça electrònica",
+	'editaccount-submit-pass' => 'Guardar contrasenya',
+	'editaccount-submit-realname' => 'Guardar el nom real',
+	'editaccount-submit-clearunsub' => 'Borrar la no subscripció',
+	'editaccount-submit-cleardisable' => 'Retirar la marca de desactivat',
+	'editaccount-submit-close' => 'Tancar compte',
+	'editaccount-submit-button' => 'Guardar',
 	'editaccount-log-entry-pass' => "contrasenya canviada de l'usuari $2",
 	'editaccount-log-entry-realname' => "canviat el nom real de l'usuari $2",
 	'editaccount-log-entry-close' => 'compte desactivat $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Aquest compte ha estat desactivat.</div>', # Fuzzy
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Aquest compte ha estat desactivat globalment en Wikia.</div>',
 	'right-editaccount' => 'Edita les preferències dels altres usuaris',
 );
 
