@@ -52,11 +52,6 @@
 						$wrapper
 							.find( '.last' )
 							.before( data.element );
-						
-						$wrapper
-							.find('#CategorySelectSave')
-							.attr('disabled', false);
-
 					}).on( 'click.' + namespace, '.cancel', function() {
 						$wrapper
 							.removeClass( 'editMode' )
@@ -100,7 +95,7 @@
 
 					}).on( 'update', function() {
 						var modified = $wrapper.find( '.category.new' ).length > 0;
-
+						
 						$wrapper
 							.toggleClass( 'modified', modified )
 							.find( '.save' )
