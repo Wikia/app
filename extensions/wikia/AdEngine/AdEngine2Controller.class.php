@@ -438,7 +438,6 @@ class AdEngine2Controller extends WikiaController {
 
 	public function onWikiaSkinTopModules(&$scriptModules, $skin) {
 		if (self::areAdsInHead() || AnalyticsProviderAmazonDirectTargetedBuy::isEnabled()) {
-			$scriptModules[] = 'wikia.window';
 			$scriptModules[] = 'wikia.cookies';
 			$scriptModules[] = 'wikia.geo';
 			$scriptModules[] = 'wikia.window';
@@ -448,7 +447,6 @@ class AdEngine2Controller extends WikiaController {
 			$scriptModules[] = 'wikia.log';
 			$scriptModules[] = 'wikia.querystring';
 			$scriptModules[] = 'wikia.tracker';
-			$scriptModules[] = 'wikia.window';
 		}
 		return true;
 	}
