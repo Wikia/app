@@ -1286,7 +1286,7 @@ var WMU_track = (function( Wikia, WikiaEditor ) {
 			trackingMethod: 'both'
 		},
 		slice = [].slice,
-		track = ( WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
+		track = ( window.WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
 
 	return function() {
 		track.apply( track, [ config ].concat( slice.call( arguments ) ) );
