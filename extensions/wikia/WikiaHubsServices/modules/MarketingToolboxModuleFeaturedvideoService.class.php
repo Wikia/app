@@ -75,15 +75,17 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 
 	public function renderEditor($data) {
 		$model = new MarketingToolboxModel();
-
+		
 		if( !empty($data['values']['video']) ) {
 			$videoData = $model->getVideoData($data['values']['video'], $model->getThumbnailSize());
 			$data['videoThumb'] =  $videoData['videoThumb'];
 		}
+
 		if( !empty($data['values']['sponsoredImage']) ) {
 			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
 			$data['sponsoredImage'] = $imageModel->getImageThumbData();
 		}
+
 		return parent::renderEditor($data);
 	}
 

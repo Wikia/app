@@ -70,18 +70,6 @@ class WikiaHubsV2Controller extends WikiaController {
 	}
 
 	/**
-	 * Check if user has access to see hub page in future date
-	 *
-	 * @return bool
-	 */
-	protected function checkAccess() {
-		return $this->hubTimestamp !== false
-			&& ($this->hubTimestamp <= time()
-				|| $this->wg->User->isLoggedIn() && $this->wg->User->isAllowed('marketingtoolbox')
-			);
-	}
-
-	/**
 	 * Render one module with given data
 	 *
 	 * @param string $langCode
@@ -131,7 +119,6 @@ class WikiaHubsV2Controller extends WikiaController {
 		$this->initModel();
 		$this->initVertical();
 		$this->initVerticalSettings();
-		$this->initHubTimestamp();
 	}
 
 	protected function initCacheValidityTimes() {
@@ -187,9 +174,5 @@ class WikiaHubsV2Controller extends WikiaController {
 			$this->wgWikiaHubType = $this->verticalName;
 		}
 		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $this->canonicalVerticalName));
-	}
-
-	protected function initHubTimestamp() {
-		$this->hubTimestamp = $this->getRequest()->getVal('hubTimestamp');
 	}
 }

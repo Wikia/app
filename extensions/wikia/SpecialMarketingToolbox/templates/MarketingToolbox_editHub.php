@@ -38,6 +38,5 @@
 
 <?= $app->renderView(
 	'MarketingToolbox',
-	'Footer',
-	$footerData
+	'Footer'
 ) ?>

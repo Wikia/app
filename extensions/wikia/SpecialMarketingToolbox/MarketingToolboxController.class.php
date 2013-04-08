@@ -26,7 +26,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		if (!$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('marketingtoolbox')) {
 			$this->wf->ProfileOut(__METHOD__);
-			$this->app->wg->Out->setStatusCode ( 403 );
 			$this->specialPage->displayRestrictionError();
 			return false;
 		}
@@ -244,7 +243,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	protected function prepareLayoutData($selectedModuleId, $modulesData) {
 		$this->prepareHeaderData($modulesData, $this->date);
 		$this->prepareLeftMenuData($modulesData, $selectedModuleId);
-		$this->prepareFooterData($this->langCode, $this->verticalId, $this->date);
 	}
 
 	/**
@@ -276,12 +274,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				'anchor' => $moduleData['name'],
 			);
 		}
-	}
-
-	protected  function prepareFooterData($langCode, $verticalId, $timestamp) {
-		$this->footerData = array(
-			'allModulesSaved' => $this->toolboxModel->checkModulesSaved($langCode, $verticalId, $timestamp)
-		);
 	}
 
 	/**
@@ -347,7 +339,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 */
 	public function executeFooter($data) {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss');
-		$this->allModulesSaved = $data['allModulesSaved'] ? '' : 'disabled="disabled"' ;
 	}
 
 	/**
@@ -392,6 +383,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->toolboxModel->getThumbnailSize()
 		);
 		$this->videoFileName = $fileName;
+		$this->videoFileMarkup = $thumb;
 		$this->videoUrl = $url;
 	}
 

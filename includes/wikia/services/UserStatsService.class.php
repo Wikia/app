@@ -1,5 +1,5 @@
 <?php
-class UserStatsService extends WikiaModel {
+class UserStatsService extends Service {
 
 	const CACHE_TTL = 86400;
 	const GET_GLOBAL_STATS_CACHE_VER = 'v1.0';
@@ -31,7 +31,7 @@ class UserStatsService extends WikiaModel {
 	 * Get cache key for given entry
 	 */
 	private function getKey($entry) {
-		return $this->wf->MemcKey('services', 'userstats', $entry, $this->userId);
+		return wfMemcKey('services', 'userstats', $entry, $this->userId);
 	}
 
 	/**
@@ -221,26 +221,28 @@ class UserStatsService extends WikiaModel {
 	 * Update service cache for current user
 	 */
 	function increaseEditsCount() {
+		global $wgMemc;
+
 		wfProfileIn(__METHOD__);
 
 		// update edit counts
 		$key = $this->getKey('stats4');
-		$stats = $this->wg->Memc->get($key);
+		$stats = $wgMemc->get($key);
 
 		if (!empty($stats)) {
 			$stats['edits']++;
 
 			// populate 'member since' date if it's not set (i.e. it's the first edit)
 			if ( empty( $stats['date'] ) && $stats['edits'] == 1 ) {
-				$stats['date'] = $this->wf->TimestampNow();
+				$stats['date'] = wfTimestampNow();
 			}
 
-			$this->wg->Memc->set($key, $stats, self::CACHE_TTL);
+			$wgMemc->set($key, $stats, self::CACHE_TTL);
 
-			$this->wf->Debug(__METHOD__ . ": user #{$this->userId}\n");
+			wfDebug(__METHOD__ . ": user #{$this->userId}\n");
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -248,35 +250,35 @@ class UserStatsService extends WikiaModel {
 	 * Get likes count, edit points and date of first edit done by the user
 	 */
 	function getStats() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		// try to get cached data
 		$key = $this->getKey('stats4');
 
-		$stats = $this->wg->memc->get($key);
+		$stats = F::app()->wg->memc->get($key);
 		if (empty($stats)) {
-			$this->wf->ProfileIn(__METHOD__ . '::miss');
-			$this->wf->Debug(__METHOD__ . ": cache miss\n");
+			wfProfileIn(__METHOD__ . '::miss');
+			wfDebug(__METHOD__ . ": cache miss\n");
 
 			// get edit points / first edit date
-			$dbr = $this->wf->GetDB(DB_SLAVE);
+			$dbr = wfGetDB(DB_SLAVE);
 			$stats = $this->doStatsQuery($dbr);
 
 			// TODO: get likes
 			$stats['likes'] = 20 + ($this->userId % 50);
 
 			if (!empty($stats)) {
-				$this->wg->memc->set($key, $stats, self::CACHE_TTL);
+				F::app()->wg->memc->set($key, $stats, self::CACHE_TTL);
 			}
 
-			$this->wf->ProfileOut(__METHOD__ . '::miss');
+			wfProfileOut(__METHOD__ . '::miss');
 		}
 
 		// allow other extensions to update edits points
 		$stats['points'] = isset($stats['edits']) ? $stats['edits'] : 0;
-		$this->wf->RunHooks('Masthead::editCounter', array(&$stats['points'], User::newFromId($this->userId)));
+		wfRunHooks('Masthead::editCounter', array(&$stats['points'], User::newFromId($this->userId)));
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $stats;
 	}
 
@@ -289,39 +291,39 @@ class UserStatsService extends WikiaModel {
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
 	public function getGlobalStats($wikiId) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		// try to get cached data
 		$key = $this->getKey('stats5' . self::GET_GLOBAL_STATS_CACHE_VER);
-		$stats = $this->wg->memc->get($key);
+		$stats = F::app()->wg->memc->get($key);
 
 		if( empty($stats) ) {
-			$this->wf->ProfileIn(__METHOD__ . '::miss');
-			$this->wf->Debug(__METHOD__ . ": cache miss\n");
+			wfProfileIn(__METHOD__ . '::miss');
+			wfDebug(__METHOD__ . ": cache miss\n");
 
 			$wikiDbName = WikiFactory::IDtoDB($wikiId);
 
 			if( !empty($wikiDbName) ) {
 				// get edit points / first edit date
-				$dbr = $this->wf->GetDB( DB_SLAVE, array(), $wikiDbName );
+				$dbr = wfGetDB( DB_SLAVE, array(), $wikiDbName );
 				$stats = $this->doStatsQuery($dbr);
 
 				// TODO: get likes
 				$stats['likes'] = 20 + ($this->userId % 50);
 
 				if( !empty($stats) ) {
-					$this->wg->memc->set($key, $stats, self::CACHE_TTL);
+					F::app()->wg->memc->set($key, $stats, self::CACHE_TTL);
 				}
 			}
 
-			$this->wf->ProfileOut(__METHOD__ . '::miss');
+			wfProfileOut(__METHOD__ . '::miss');
 		}
 
 		// allow other extensions to update edits points
 		$stats['points'] = isset($stats['edits']) ? $stats['edits'] : 0;
-		$this->wf->RunHooks('Masthead::editCounter', array(&$stats['points'], User::newFromId($this->userId)));
+		wfRunHooks('Masthead::editCounter', array(&$stats['points'], User::newFromId($this->userId)));
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $stats;
 	}
 

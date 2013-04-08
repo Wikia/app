@@ -581,11 +581,6 @@ class ResourceLoader {
 			$maxage  = $wgResourceLoaderMaxage['versioned']['client'];
 			$smaxage = $wgResourceLoaderMaxage['versioned']['server'];
 		}
-
-		// Wikia - change begin - @author: macbre
-		wfRunHooks('ResourceLoaderModifyMaxAge',array($context,$mtime,&$maxage,&$smaxage));
-		// Wikia - change end
-
 		if ( $context->getOnly() === 'styles' ) {
 			header( 'Content-Type: text/css; charset=utf-8' );
 		} else {

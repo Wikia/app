@@ -138,6 +138,32 @@ class CategorySelectController extends WikiaController {
 	}
 
 	/**
+	 * Rerturns all of the categories for the given article.
+	 * FIXME: this doesn't actually get all of the categories that may be displayed
+	 * on the article, for example, those that are added outside of the article itself.
+	 */
+	public function getArticleCategories() {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$articleId = $this->request->getVal( 'articleId', 0 );
+		$categories = array();
+
+		$title = Title::newFromID( $articleId );
+
+		if ( !empty( $title ) ) {
+			$article = new Article( $title );
+			$wikitext = $article->fetchContent();
+
+			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
+			$categories = $data[ 'categories' ];
+		}
+
+		$this->response->setVal( 'categories', $categories );
+
+		$this->wf->ProfileOut( __METHOD__ );
+	}
+
+	/**
 	 * Returns all of the categories on the current wiki.
 	 */
 	public function getWikiCategories() {

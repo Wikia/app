@@ -16,7 +16,7 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return array of $userIds
 	 */
-	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
+	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$userIds = array();
@@ -29,12 +29,12 @@ class WikiService extends WikiaModel {
 
 				// get admin and bureaucrat
 				if ( empty($this->wg->EnableAnswers) ) {
-					$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots, $limit );
+					$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots );
 
 					$adminIds = WikiaDataAccess::cache(
 						$memKey,
 						60 * 60 * 3,
-						function() use ($wiki, $useMaster, $excludeBots, $limit) {
+						function() use ($wiki, $useMaster, $excludeBots) {
 							$dbname = $wiki->city_dbname;
 							$dbType = ( $useMaster ) ? DB_MASTER : DB_SLAVE;
 							$db = $this->wf->GetDB( $dbType, array(), $dbname );
@@ -51,8 +51,7 @@ class WikiService extends WikiaModel {
 								'user_groups',
 								'distinct ug_user',
 								array ("ug_group in ('sysop','bureaucrat')"),
-								__METHOD__,
-								(!empty($limit))?(array('LIMIT' => $limit)):array()
+								__METHOD__
 							);
 
 							$adminIds = array();
@@ -80,12 +79,11 @@ class WikiService extends WikiaModel {
 	 *
 	 * @param integer $wikiId
 	 * @param bool    $excludeBots
-	 * @param integer $limit
 	 *
 	 * @return string memcache key
 	 */
-	public function getMemKeyAdminIds( $wikiId, $excludeBots, $limit ) {
-		return $this->wf->SharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots, $limit );
+	public function getMemKeyAdminIds( $wikiId, $excludeBots ) {
+		return $this->wf->SharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots );
 	}
 
 	/**
@@ -105,7 +103,7 @@ class WikiService extends WikiaModel {
 				$db = $this->wf->GetDB( DB_SLAVE, array(), $dbname );
 
 				$row = $db->selectRow(
-					array( 'image' ),
+					array( 'image' ), 
 					array( 'count(*) cnt' ),
 					array( 'img_media_type' => 'VIDEO' ),
 					__METHOD__
@@ -149,8 +147,8 @@ class WikiService extends WikiaModel {
 			if ( !empty($dbname) ) {
 				$db = $this->wf->GetDB( DB_SLAVE, 'vslow', $dbname );
 
-				$row = $db->selectRow(
-					array( 'site_stats' ),
+				$row = $db->selectRow( 
+					array( 'site_stats' ), 
 					array( '*' ),
 					array(),
 					__METHOD__
@@ -232,6 +230,44 @@ class WikiService extends WikiaModel {
 			}
 		}
 		return $isBot;
+	}
+
+	/**
+	 * get user edits
+	 * @param type $userId
+	 * @param type $wikiId
+	 * @return integer $userEdits
+	 */
+	public function getUserEdits( $userId, $wikiId = 0 ) {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+		$memKey = $this->wf->SharedMemcKey( 'wiki_user_edits', $wikiId, $userId );
+		$userEdits = $this->wg->Memc->get( $memKey );
+		if ( $userEdits === false ) {
+			$userEdits = 0;
+			$dbname = WikiFactory::IDtoDB( $wikiId );
+			if ( !empty($dbname) ) {
+				$db = $this->wf->GetDB( DB_SLAVE, array(), $dbname );
+
+				$row = $db->selectRow(
+					'revision',
+					array('count(*) cnt'),
+					array('rev_user' => $userId),
+					__METHOD__
+				);
+
+				if ( $row ) {
+					$userEdits = intval( $row->cnt );
+				}
+
+				$this->wg->Memc->set( $memKey, $userEdits, 60*60*3 );
+			}
+		}
+
+		$this->wf->ProfileOut( __METHOD__ );
+
+		return $userEdits;
 	}
 
 	/**

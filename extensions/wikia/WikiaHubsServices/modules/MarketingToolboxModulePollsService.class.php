@@ -81,11 +81,9 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 			$model = new MarketingToolboxPollsModel();
 			$optionsLimit = $model->getTotalOptionsLimit();
 
-			$toolBoxModel = $this->getToolboxModel();
-
 			$structuredData['headline'] = $data['pollsTitle'];
 			$structuredData['pollsQuestion'] = $data['pollsQuestion'];
-			$structuredData['hubUrl'] = $toolBoxModel->getHubUrl($this->langCode, $this->verticalId);
+			$structuredData['hubUrl'] = $this->getHubUrl();
 
 			for ($i = 1; $i <= $optionsLimit; $i++) {
 				if(isset($data['pollsOption' . $i])) {
@@ -104,7 +102,32 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 		return parent::render($data);
 	}
 
-	protected function getToolboxModel() {
-		return new MarketingToolboxModel();
+
+	public function getHubUrl() {
+		$visualizationData = $this->getVisualizationData();
+
+		if (!isset($visualizationData[$this->langCode]['url'])) {
+			throw new Exception('Corporate Wiki not defined for this lang');
+		}
+
+		$hubPages = F::app()->wg->WikiaHubsV2Pages;
+		if (!isset($hubPages[$this->verticalId])) {
+			throw new Exception('Hub page not defined for selected vertical');
+		}
+
+		$url = http_build_url(
+			$visualizationData[$this->langCode]['url'],
+			array(
+				'path' => $hubPages[$this->verticalId]
+			),
+			HTTP_URL_JOIN_PATH
+		);
+
+		return $url;
+	}
+
+	protected function getVisualizationData() {
+		$visualizationModel = new CityVisualization();
+		return $visualizationModel->getVisualizationWikisData();
 	}
 }

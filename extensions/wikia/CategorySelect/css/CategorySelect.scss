@@ -6,7 +6,7 @@
 .CategorySelect.articlePage {
 	@include clear-linear-gradient();
 	line-height: normal;
-	margin: 10px 0 40px 0;
+	margin: 0 0 40px 0;
 	padding: 0;
 	position: relative;
 
@@ -35,12 +35,6 @@
 		margin: 0;
 		overflow: hidden;
 		padding: 0;
-
-		&.showHidden {
-			.category.hidden {
-				display: block;
-			}
-		}
 	}
 
 	.category,
@@ -55,10 +49,6 @@
 		border-right: 1px solid $color-page-border;
 		margin-top: 3px;
 		padding-right: 6px;
-
-		&.hidden {
-			display: none;
-		}
 
 		&.new {
 			margin-top: 0;

@@ -55,8 +55,10 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 
 	public function renderEditor($data) {
 		$model = new MarketingToolboxModel();
-
+		
 		if( !empty($data['values']['video']) ) {
+			$videoDataHelper = new RelatedVideosData();
+			
 			foreach($data['values']['video'] as $i => $video) {
 				$data['videos'][$i] = $model->getVideoData($video, $model->getThumbnailSize());
 				$data['videos'][$i]['title'] = $video;

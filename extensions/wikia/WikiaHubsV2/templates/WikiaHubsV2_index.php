@@ -8,10 +8,10 @@
 		<div class="grid-3 alpha">
 			<h1><?= $verticalName ?></h1>
 			<section class="grid-3 alpha wikiahubs-slider wikiahubs-module">
-				<?= $modules[MarketingToolboxModuleSliderService::MODULE_ID] ?>
+				<?= $app->renderView('SpecialWikiaHubsV2', 'slider', $app->wg->request->getValues()); ?>
 			</section>
 			<section class="grid-3 alpha wikiahubs-newstabs wikiahubs-module">
-				<?= $modules[MarketingToolboxModuleWikiaspicksService::MODULE_ID] ?>
+				<?= $app->renderView('SpecialWikiaHubsV2', 'tabber', $app->wg->request->getValues()); ?>
 			</section>
 		</div>
 		<section class="grid-3 wikiahubs-wam wikiahubs-module">

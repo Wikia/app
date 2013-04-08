@@ -14,4 +14,3 @@
 .buildpath
 sftp-config.json
 *.iml
-/build

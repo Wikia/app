@@ -48,8 +48,13 @@
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder video">
-				<? if (!empty($videoThumb)): ?>
-					<?= $videoThumb ?>
+				<? if (!empty($videoData)): ?>
+					<?= $app->renderView(
+						'MarketingToolboxVideos',
+						'index',
+						array('video' => $videoData)
+					);
+					?>
 				<? endif ?>
 			</div>
 		</div>

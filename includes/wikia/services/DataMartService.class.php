@@ -1,7 +1,7 @@
 <?php
 
 /*
- * DataMart Service
+ * DataMart Services
  */
 class DataMartService extends Service {
 
@@ -480,23 +480,34 @@ class DataMartService extends Service {
 	 *
 	 * @return Array The list, the key contains article ID's and each item as a "namespace_id" and "pageviews" key
 	 */
-	public static function getTopArticlesByPageview( $wikiId, Array $articleIds = null, Array $namespaces = null, $excludeNamespaces = false, $limit = 200 ) {
+	public static function getTopArticlesByPageview ($wikiId, Array $articleIds = null, Array $namespaces = null, $excludeNamespaces = false, $limit = 200) {
 		$app = F::app();
-		$app->wf->ProfileIn( __METHOD__ );
+		$app->wf->ProfileIn(__METHOD__);
 
-		$cacheVersion = 4;
+		$cacheVersion = 2;
 		$limitDefault = 200;
-		$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault ;
+		$limitUsed = ($limit > $limitDefault) ? $limit : $limitDefault;
+
+		//in Dev environment data is not updated, use an available range
+		if (!empty($app->wg->DevelEnvironment)) {
+			$startDate = '2012-10-07';
+			$endDate = '2012-10-14';
+		} else {
+			$startDate = date('Y-m-d', strtotime('last week last monday'));
+			$endDate = date('Y-m-d', strtotime('last week next sunday'));
+		}
+
 		$keyToken = '';
 
-		if ( !empty( $namespaces ) && is_array( $namespaces ) ) {
-			$keyToken .= implode( ':', $namespaces );
+		if (!empty($namespaces) && is_array($namespaces)) {
+			$keyToken .= implode(':', $namespaces);
 		} else {
 			$namespaces = null;
 		}
 
-		if ( !empty( $articleIds ) && is_array( $articleIds ) ) {
-			$keyToken .= implode( ':', $articleIds );
+
+		if (!empty($articleIds) && is_array($articleIds)) {
+			$keyToken .= implode(':', $articleIds);
 		} else {
 			$articleIds = null;
 		}
@@ -507,46 +518,43 @@ class DataMartService extends Service {
 			$cacheVersion,
 			$wikiId,
 			$limitUsed,
-			( !empty( $keyToken ) ) ? md5( $keyToken ) : null,
+			(!empty($keyToken)) ? md5($keyToken) : null,
 			$excludeNamespaces
 		);
 
-		$getData = function() use ( $app, $wikiId, $namespaces, $excludeNamespaces, $articleIds, $limitUsed ) {
-			$app->wf->ProfileIn( __CLASS__ . '::TopArticlesQuery' );
+		$getData = function () use ($app, $wikiId, $namespaces, $excludeNamespaces, $articleIds, $startDate, $endDate, $limitUsed) {
+			$app->wf->ProfileIn(__CLASS__ . '::TopArticlesQuery');
 			$topArticles = array();
 
-			if ( !empty( $app->wg->StatsDBEnabled ) ) {
-				$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+			if (!empty($app->wg->StatsDBEnabled)) {
+				$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 				$where = array(
-					//the rollup_wiki_article_pageviews contains only summarized data
-					//with the time_id of last sunday, so fetch just that one as
-					//the table is partitioned on a per-day basis and crossing
-					//multiple partitions kills kittens
-					'time_id = curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY',
-					//for now this table supports only this period ID
-					'period_id' => DataMartService::PERIOD_ID_WEEKLY,
+					'time_id' => array($startDate, $endDate),
+					'period_id' => DataMartService::PERIOD_ID_WEEKLY, //for now this table supports only this period ID
 					'wiki_id' => $wikiId
 				);
 
-				if ( !empty( $namespaces ) ) {
-					$namespaces = array_filter( $namespaces, function( $val ) {
-						return is_integer( $val );
-					} );
 
-					$where[] = 'namespace_id ' . ( ( !empty( $excludeNamespaces ) ) ? 'NOT ' : null ) . ' IN (' . implode( ',' , $namespaces ) . ')';
+				if (!empty($namespaces)) {
+					$namespaces = array_filter($namespaces, function ($val) {
+						return is_integer($val);
+					});
+
+					$where[] = 'namespace_id ' . ((!empty($excludeNamespaces)) ? 'NOT ' : null) . ' IN (' . implode(',', $namespaces) . ')';
 				}
 
-				if ( !empty( $articleIds ) ) {
-					$articleIds = array_filter( $articleIds, function( $val ) {
-						return is_integer( $val );
-					} );
+				if (!empty($articleIds)) {
+					$articleIds = array_filter($articleIds, function ($val) {
+						return is_integer($val);
+					});
 
-					$where[] = 'article_id IN (' . implode( ',' , $articleIds ) . ')';
+					$where[] = 'article_id IN (' . implode(',', $articleIds) . ')';
 				}
+
 
 				$result = $db->select(
-					array( 'rollup_wiki_article_pageviews' ),
+					array('rollup_wiki_article_pageviews'),
 					array(
 						'namespace_id',
 						'article_id',
@@ -555,28 +563,67 @@ class DataMartService extends Service {
 					$where,
 					__METHOD__,
 					array(
-						'GROUP BY' => array( 'namespace_id', 'article_id' ),
+						'GROUP BY' => array('namespace_id', 'article_id'),
 						'ORDER BY' => 'pv DESC',
-						'LIMIT'    => $limitUsed
+						'LIMIT' => $limitUsed
 					)
 				);
 
-				while ( $row = $db->fetchObject( $result ) ) {
-					$topArticles[ $row->article_id ] = array(
+				while ($row = $db->fetchObject($result)) {
+					$topArticles[$row->article_id] = array(
 						'namespace_id' => $row->namespace_id,
 						'pageviews' => $row->pv
 					);
 				}
-			};
+			}
+			;
 
-			$app->wf->ProfileOut( __CLASS__ . '::TopArticlesQuery' );
+			$app->wf->ProfileOut(__CLASS__ . '::TopArticlesQuery');
 			return $topArticles;
 		};
 
-		$topArticles = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
-		$topArticles = array_slice( $topArticles, 0, $limit, true );
-		$app->wf->ProfileOut( __METHOD__ );
+		$topArticles = WikiaDataAccess::cacheWithLock($memKey, 86400 /* 24 hours */, $getData);
+		$topArticles = array_slice($topArticles, 0, $limit, true);
+
+		$app->wf->ProfileOut(__METHOD__);
 		return $topArticles;
+	}
+
+	/**
+	 * Returns the latest WAM score provided a wiki ID
+	 * @param int $wikiId
+	 * @return number
+	 */
+	public static function getCurrentWamScoreForWiki ($wikiId) {
+		$app = F::app();
+		$app->wf->ProfileIn(__METHOD__);
+
+		$memKey = $app->wf->SharedMemcKey('datamart', 'wam', $wikiId);
+
+		$getData = function () use ($app, $wikiId) {
+			$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+
+			$result = $db->select(
+				array('fact_wam_scores'),
+				array(
+					'wam'
+				),
+				array(
+					'wiki_id' => $wikiId
+				),
+				__METHOD__,
+				array(
+					'ORDER BY' => 'time_id DESC',
+					'LIMIT' => 1
+				)
+			);
+
+			return ($row = $db->fetchObject($result)) ? $row->wam : 0;
+		};
+
+		$wamScore = WikiaDataAccess::cacheWithLock($memKey, 86400 /* 24 hours */, $getData);
+		$app->wf->ProfileOut(__METHOD__);
+		return $wamScore;
 	}
 
 	/**

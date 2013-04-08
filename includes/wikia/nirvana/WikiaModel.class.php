@@ -12,14 +12,11 @@
  * @author Owen Davis <owen(at)wikia-inc.com>
  */
 abstract class WikiaModel extends WikiaObject {
+
 	/* Handy helper functions for getting a database connection */
-
+	
 	public function getDB( $db_type = DB_SLAVE ) {
-		return $this->wf->GetDB( $db_type );
-	}
-
-	public function getWikiDB( $db_type = DB_SLAVE, $db_name = false ) {
-		return $this->wf->GetDB( $db_type, array(), $db_name );
+	   return $this->wf->GetDB( $db_type );
 	}
 
 	public function getSharedDB( $db_type = DB_SLAVE ) {

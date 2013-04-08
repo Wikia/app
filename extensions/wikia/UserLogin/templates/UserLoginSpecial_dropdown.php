@@ -35,6 +35,7 @@
 			),
 			array(
 				'type' => 'custom',
+				'class' => 'forgot-password',
 				'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMsg('userlogin-forgot-password').'</a>',
 			),
 			array(
@@ -48,7 +49,6 @@
 			array(
 				'type' => 'submit',
 				'value' => wfMsg('login'),
-				'class' => 'login-button',
 				'tabindex' => ++$tabIndex,
 			),
 		),

@@ -32,13 +32,3 @@ class RedirectToVideos extends SpecialRedirectToSpecial {
 // Fake special page for 301 redirect (Video->Videos)
 $app->registerSpecialPage('Video', 'RedirectToVideos');
 
-F::build('JSMessages')->registerPackage('SpecialVideos', array(
-	'specialvideos-remove-modal-title',
-	'specialvideos-remove-modal-message',
-));
-
-$wgGroupPermissions['*']['specialvideosdelete'] = false;
-$wgGroupPermissions['staff']['specialvideosdelete'] = true;
-$wgGroupPermissions['sysop']['specialvideosdelete'] = true;
-$wgGroupPermissions['helper']['specialvideosdelete'] = true;
-$wgGroupPermissions['vstf']['specialvideosdelete'] = true;
