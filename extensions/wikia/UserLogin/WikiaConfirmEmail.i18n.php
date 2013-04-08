@@ -17,6 +17,19 @@ $messages['en'] = array(
 	'wikiaconfirmemail-username' => 'Username',
 );
 
+/** Asturian (asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'Códigu de confirmación baleru',
+	'wikiaconfirmemail-error-invalid-code' => 'Códigu de confirmación inválidu',
+	'wikiaconfirmemail-error-user-not-match' => "Vaya, esti enllaz de confirmación nun casa col nome d'usuariu qu'escrbió. Asegurese d'escribir el nome d'usuariu correutu. Si quier aniciar sesión con una cuenta diferente, calque <a href=\"{{fullurl:{{ns:special}}:UserLogin}}\">equí</a>",
+	'wikiaconfirmemail-login-button' => 'Confirmar y aniciar sesión',
+	'wikiaconfirmemail-heading' => '¡Yá casi ta!',
+	'wikiaconfirmemail-subheading' => "Anicie sesión col so nome d'usuariu y contraseña pa que sepamos que recibió'l corréu electrónicu.",
+	'wikiaconfirmemail-username' => "Nome d'usuariu",
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  */

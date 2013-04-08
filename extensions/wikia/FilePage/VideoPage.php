@@ -26,16 +26,17 @@ class WikiaVideoPage extends WikiaImagePage {
 			$img = $this->getDisplayedFile();
 		}
 
-		$autoplay = F::app()->wg->VideoPageAutoPlay;
-
 		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
-		
+
+		$app = F::app();
+		$autoplay = $app->wg->VideoPageAutoPlay;
+
 		if(empty($wgEnableVideoPageRedesign)) {
 			$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>' );
 		} else {
 
 			$html = '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
-	
+
 			$captionDetails = array(
 				'expireDate' => $img->getExpirationDate(),
 				'provider' => $img->getProviderName(),
@@ -43,20 +44,20 @@ class WikiaVideoPage extends WikiaImagePage {
 				'detailUrl' => $img->getProviderDetailUrl(),
 				'views' => MediaQueryService::getTotalVideoViewsByTitle( $img->getTitle()->getDBKey() ),
 			);
-			$html .= F::app()->renderView( 'WikiaFilePageController', 'videoCaption', $captionDetails );
-			
+			$html .= $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
+
 			$wgOut->addHTML($html);
-	
+
 			$this->renderDescriptionHeader();
-			
+
 		}
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	protected function getVideoInfoLine() {
 		global $wgWikiaVideoProviders;
-		
+
 		$img = $this->getDisplayedFile();
 		$detailUrl = $img->getProviderDetailUrl();
 		$provider = $img->getProviderName();
@@ -65,7 +66,7 @@ class WikiaVideoPage extends WikiaImagePage {
 			$provider = array_pop( $providerName );
 		}
 		$providerUrl = $img->getProviderHomeUrl();
-		
+
 		$link = '<a href="' . $detailUrl . '" class="external" target="_blank">' . $this->mTitle->getText() . '</a>';
 		$providerLink = '<a href="' . $providerUrl . '" class="external" target="_blank">' . $provider . '</a>';
 		$s = '<div id="VideoPageInfo">' . wfMsgExt( 'videohandler-video-details', array('replaceafter'), $link, $providerLink )  . '</div>';

@@ -425,9 +425,177 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Marcmpujol
+ * @author Toniher
  */
 $messages['ca'] = array(
 	'usersignup-page-title' => 'Uneix-te a Wikia',
+	'usersignup-page-captcha-label' => 'Paraula borrosa',
+	'usersignup-error-username-length' => 'Vaja, el teu nom no pot ser més de {{PLURAL:$1|un caràcter |$1 caràcters}}.',
+	'usersignup-error-invalid-user' => "L'usuari no és vàlid. Si us plau identifique't primer.",
+	'usersignup-error-invalid-email' => 'Si us plau, introdueix una adreça electrònica vàlida.',
+	'usersignup-error-symbols-in-username' => "Vaja, el teu nom d'usuari només pot contenir lletres i números.",
+	'usersignup-error-empty-email' => 'Vaja, si us plau, escriu la teva adreça electrònica.',
+	'usersignup-error-empty-username' => "Vaja, si us plau, emplena el camp de nom d'usuari.",
+	'usersignup-error-already-confirmed' => 'Ja has confirmat aquesta adreça electrònica.',
+	'usersignup-error-throttled-email' => 'Vaja, avui has sol·licitat masses missatges de confirmació. Intenta aquest cop en poc temps.',
+	'usersignup-error-too-many-changes' => "Has arribat al límit màxim d'avui per canviar l'adreça electrònica. Si us plau, prova-ho més tard.",
+	'usersignup-error-password-length' => 'La teva contrasenya és massa llarga. Escull una contrasenya de 50 caràcters o menys.',
+	'usersignup-error-confirmed-user' => "Sembla que ja has confirmat l'adreça electrònica per a $1! Comprova el teu [$2 perfil d'usuari].",
+	'usersignup-facebook-heading' => "Acaba d'inscriure't",
+	'usersignup-facebook-create-account' => 'Crear un compte',
+	'usersignup-facebook-email-tooltip' => 'Si vols utilitzar una altra adreça electrònica, es pot canviar més tard en les teves preferències.',
+	'usersignup-facebook-have-an-account-heading' => 'Ja tens un compte?',
+	'usersignup-facebook-have-an-account' => "Connectar el teu nom d'usuari existent de Wikia amb el Facebook.",
+	'usersignup-facebook-proxy-email' => 'Adreça electrònica anònim de Facebook',
+	'usersignup-user-pref-emailconfirmlink' => "Sol·licita una nova confirmació d'adreça electrònica",
+	'usersignup-user-pref-confirmemail_send' => 'Tornar a enviar la confirmació de la meva adreça electrònica',
+	'usersignup-user-pref-emailauthenticated' => 'Gràcies! La teva adreça electrònica va ser confirmada en $2 a les $3.',
+	'usersignup-user-pref-emailnotauthenticated' => "Comprova el teu correu electrònic i fes clic a l'enllaç de confirmació per acabar de canviar la teva adreça electrònica a:$1",
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Oh, no! La teva adreça electrònica no està confirmada. Les funcionalitats del correu electrònic no funcionaran fins que no confirmis la teva adreça electrònica.',
+	'usersignup-user-pref-reconfirmation-email-sent' => "Ja gairebé! Hem enviat una nova confirmació a l'adreça $1. Comprova la teva adreça electrònica i fes clic a l'enllaç per acabar de confirmar la teva adreça de correu electrònic.",
+	'usersignup-user-pref-noemailprefs' => 'Sembla que no tenim una adreça de correu electrònic per tu. Si us plau, introdueix una adreça de correu electrònic a dalt.',
+	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => "Oh, no! La teva adreça electrònica no està confirmada. Hem enviat un correu electrònic, fes clic a l'enllaç de confirmació per confirmar.",
+	'usersignup-user-pref-confirmemail_noemail' => 'Sembla que no tenim una adreça de correu electrònic per tu. Vés a [[Special:Preferences| preferències]] per introduir-hi una.',
+	'usersignup-confirm-page-title' => 'Confirma la teva adreça electrònica',
+	'usersignup-confirm-email-resend-email' => "Enviar-me una altra confirmació d'adreça electrònica",
+	'usersignup-confirm-email-change-email-content' => 'Vull utilitzar una adreça electrònica diferent.',
+	'usersignup-confirm-email-change-email' => 'Canviar la meva adreça electrònica',
+	'usersignup-confirm-email-new-email-label' => 'Nou correu electrònic',
+	'usersignup-confirm-email-update' => 'Actualitza',
+	'usersignup-confirm-email-tooltip' => "Has escrit una adreça electrònica que no pots confirmar o vols utilitzar una adreça diferent? No et preocupis, utilitza l'enllaç de sota per canviar la teva adreça electrònica i rebre una confirmació nova.",
+	'usersignup-resend-email-heading-success' => 'Nou correu electrònic enviat',
+	'usersignup-resend-email-heading-failure' => 'Correo electrònic no reenviat',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Felicitats!',
+	'usersignup-confirm-page-subheading-confirmed-user' => 'Ja estàs confirmat',
+	'usersignup-confirmation-heading' => 'Ja gairebé!',
+	'usersignup-confirmation-heading-email-resent' => 'Nou correu electrònic enviat',
+	'usersignup-confirmation-subheading' => 'Comprova el teu correu electrònic',
+	'usersignup-confirmation-email-sent' => "Hem enviat un correu electrònic a '''$1'''.
+
+Fes clic en l'enllaç de confirmació en la teva adreça per a acabar de crear el teu compte.",
+	'usersignup-confirmation-email_subject' => 'Ja gairebé! Confirma el teu compte de Wikia',
+	'usersignup-confirmation-email-greeting' => 'Hola $USERNAME,',
+	'usersignup-confirmation-email-content' => 'Ets a un pas de crear el teu compte en Wikia! Fes clic a l\'enllaç de sota per confirmar la teva adreça de correu electrònic i començar a editar.
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
+	'usersignup-confirmation-email-signature' => "L'Equip de Wikia",
+	'usersignup-confirmation-email_body' => "Hola $2,
+
+Estàs a un pas de crear el teu compte en Wikia! Fes clic en l'enllaç de sota per confirmar la teva adreça electrònica i començar a editar.
+
+$3
+
+L'Equip de Wikia
+
+
+___________________________________________
+
+Per consultar les últimes notícies de Wikia, visita http://ca.wikia.com
+Vols controlar els correus que rebs? Vés a: {{fullurl:{{ns:special}}:Preferencies}}",
+	'usersignup-reconfirmation-email-sent' => 'La teva adreça electrònica ha estat canviada a $1. Hem enviat un nou missatge de confirmació. Si us plau, confirma la nova adreça de correu electrònic.',
+	'usersignup-reconfirmation-email_subject' => "Confirma el canvi d'adreça electrònica en Wikia",
+	'usersignup-reconfirmation-email-greeting' => 'Hola $USERNAME',
+	'usersignup-reconfirmation-email-content' => 'Si us plau, fes clic en el enllaç de sota per confirmar el canvi d\'adreça electrònica en Wikia.
+<br /><br />
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
+<br /><br />
+Seguiràs rebent missatges en la teva adreça electrònica vella fins que confirmis aquest altre.',
+	'usersignup-reconfirmation-email-signature' => "L'Equip de Wikia",
+	'usersignup-reconfirmation-email_body' => "Hola $2,
+
+Si us plau, fes clic en l'enllaç de sota per confirmar el canvi d'adreça electrònica en Wikia.
+
+$3
+
+Seguiràs rebent missatges en la teva adreça electrònica vella fins que confirmis aquesta altre.
+
+L'Equip de Wikia
+
+
+___________________________________________
+
+Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
+¿Quieres controlar los mensajes que recibes?? Ve a: {{fullurl:{{ns:special}}:Preferencias}}",
+	'usersignup-welcome-email-subject' => 'Benvingut a Wikia, $USERNAME!',
+	'usersignup-welcome-email-greeting' => 'Hola $USERNAME',
+	'usersignup-welcome-email-heading' => 'Estem encantats de donar-te la benvinguda a Wikia i a {{SITENAME}}! Aquí hi ha algunes coses que pots fer per començar.',
+	'usersignup-welcome-email-edit-profile-heading' => 'Edita el teu perfil.',
+	'usersignup-welcome-email-edit-profile-content' => 'Afegeix una imatge de perfil i altres coses més sobre tu en el teu perfil de {{SITENAME}}.',
+	'usersignup-welcome-email-edit-profile-button' => 'Anar al teu perfil',
+	'usersignup-welcome-email-learn-basic-heading' => 'Aprèn els conceptes bàsics.',
+	'usersignup-welcome-email-learn-basic-content' => "Aconsegueix un tutorial ràpid sobre els conceptes bàsics de Wikia; com editar una pàgina, el teu perfil d'usuari, canviar les teves preferències i molt més.",
+	'usersignup-welcome-email-learn-basic-button' => "Fes-li un cop d'ull!",
+	'usersignup-welcome-email-explore-wiki-heading' => 'Explora més wikis.',
+	'usersignup-welcome-email-explore-wiki-button' => 'Anar a ca.wikia.com',
+	'usersignup-welcome-email-content' => 'Vols més informació? Troba consells i respostes en la comunitat de Wikia <a style="color:#2C85D5;" href="http://ca.wikia.com">Wikia en Català</a>.',
+	'usersignup-welcome-email-signature' => "L'Equip de Wikia",
+	'usersignup-heading' => 'Uneix-te avui a Wikia',
+	'usersignup-heading-byemail' => 'Crear un compte per algú altre',
+	'usersignup-marketing-wikia' => 'Comença a col·laborar amb milions de persones de tot el mon qui es reuneixen per compartir el que coneixen i estimen.',
+	'usersignup-marketing-login' => 'Ja ets un usuari? [[Special:UserLogin|Inicia sessió]]',
+	'usersignup-marketing-benefits' => 'Sigues part de quelcom enorme',
+	'usersignup-marketing-community-heading' => 'Col·labora',
+	'usersignup-marketing-community' => 'Descobreix i explora temes que van des de videojocs fins pel·lícules i televisió. Coneix gent amb interessos i passions similars.',
+	'usersignup-marketing-global-heading' => 'Crear',
+	'usersignup-marketing-global' => "Comença un wiki. Comença amb poc i creix amb l'ajuda d'altres.",
+	'usersignup-marketing-creativity-heading' => 'Sigues original',
+	'usersignup-marketing-creativity' => "Fes servir Wikia per expressar la teva creativitat amb enquestes i llistes, galeries d'imatges i vídeos, aplicacions i més.",
+	'usersignup-createaccount-byemail' => 'Crea un compte per algú altre',
+	'usersignup-error-captcha' => 'La paraula que has ingressat no coincideix amb la paraula en la caixa, intenta-ho de nou!',
+	'usersignup-account-creation-heading' => 'Llest!',
+	'usersignup-account-creation-subheading' => 'Hem enviat un correu electrònic a $1',
+	'usersignup-account-creation-email-sent' => "Has començat el procés de creació d'un compte per $2. Hem enviat un correu a $1 amb una contrasenya temporal i l'enllaç de confirmació.
+
+$2 tindrà que fer clic en l'enllaç del correu que li vam enviar per confirmar el seu compte i canviar la contrasenya temporal per acabar de crear el compte.
+
+
+[{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Crear més comptes] en {{SITENAME}}",
+	'usersignup-account-creation-email-subject' => "S'ha creat un compte per tu en Wikia!",
+	'usersignup-account-creation-email-greeting' => 'Hola,',
+	'usersignup-account-creation-email-content' => 'S\'ha creat un compte per tu en {{SITENAME}}. Per accedir al vostre compte i canviar la contrasenya temporal fes clic en l\'enllaç de sota i inicia sessió amb el nom d\'usuari "$USERNAME" i la contrasenya "$NEWPASSWORD".
+
+Si us plau, inicia sessió en <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl: {{ns:special}}: UserLogin}}</a>
+
+Si no volies crear aquest compte simplement ignora aquest correu o contacta amb el nostre Equip de Suport de la Comunitat amb qualsevol pregunta.',
+	'usersignup-account-creation-email-signature' => "L'Equip de Wikia",
+	'usersignup-account-creation-email-body' => 'Hola,
+
+S\'ha creat un compte per tu en {{SITENAME}}. Per accedir al teu compte i canviar la contrasenya temporal fes clic en l\'enllaç de sota i inicia sessió amb el nom d\'usuari "$2" i la contrasenya "$3".
+
+Si us plau, inicia sesió en {{fullurl:{{ns:special}}:UserLogin}}
+
+Si no volies crear aquest compte simplement ignora aquest correu o contacta amb el nuestre Equipo de Suport de la Comunitat amb qualsevol pregunta.
+
+L\'Equip de Wikia
+
+
+___________________________________________
+Per veure les noticies més recents en Wikia, visita http://ca.wikia.com
+¿Vols controlar els missatges que reps? Vés a: {{fullurl:{{ns:special}}:Preferències}}',
+	'usersignup-confirmation-reminder-email_subject' => 'No siguis un desconegut...',
+	'usersignup-confirmation-reminder-email-greeting' => 'Hola $USERNAME',
+	'usersignup-confirmation-reminder-email-content' => 'Han passat uns quants dies, però sembla que encara no has acabat de crear el teu compte en Wikia. És fàcil. Només cal fer clic en l\'enllaç de confirmació de sota:
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
+
+Si no confirmes el teu comte en 23 dies, el teu nom d\'usuari, $USERNAME, tornarà a estar disponible altre cop, així que no esperis!',
+	'usersignup-confirmation-reminder-email-signature' => "L'Equip de Wikia",
+	'usersignup-confirmation-reminder-email_body' => "Hola $2,
+
+Han passat uns quants dies, però sembla que no has acabat encara de crear el teu compte en Wikia. És fàcil. Només cal fer clic en l'enllaç de confirmació de sota:
+
+$3
+
+Si no confirmes el teu compte en 23 dies el teu nom d'usuari, $2, tornarà a estar disponible altre cop, per tant, no esperis!
+
+L'Equip de Wikia
+
+
+___________________________________________
+
+Per veure els darrers esdeveniments a Wikia, visita http://ca.wikia.com
+Vols controlar els correus que reps? Vés a: {{fullurl: {{ns:special}}:Preferències}}",
+	'usersignup-facebook-problem' => 'Hi ha hagut un problema de comunicació amb Facebook. Si us plau, torna-ho a provar altre cop més tard.',
 );
 
 /** Czech (česky)

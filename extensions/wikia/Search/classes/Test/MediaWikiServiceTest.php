@@ -1200,7 +1200,7 @@ class MediaWikiServiceTest extends BaseTest
 		
 		$title = $this->getMockBuilder( '\Title' )
 		              ->disableOriginalConstructor()
-		              ->setMethods( array( '__toString', 'getNamespace' ) )
+		              ->setMethods( array( 'getBaseText', 'getNamespace' ) )
 		              ->getMock();
 		
 		$title
@@ -1210,7 +1210,7 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$title
 		    ->expects( $this->at( 1 ) )
-		    ->method ( '__toString' )
+		    ->method ( 'getBaseText' )
 		    ->will   ( $this->returnValue( 'title' ) )
 		;
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );

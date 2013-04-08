@@ -14,6 +14,7 @@ class LuceneTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testGetFormulatedQuery() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Lucene' )
 		                   ->setConstructorArgs( array( $dc ) )
@@ -23,7 +24,11 @@ class LuceneTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getQuery' )
-		    ->with   ( Wikia\Search\Config::QUERY_RAW )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+	    ;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( 'foo:bar' ) )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Lucene', 'getFormulatedQuery' );

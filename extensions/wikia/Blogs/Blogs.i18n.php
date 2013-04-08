@@ -134,7 +134,7 @@ Avatar6.jpg",
 	'user-blog-url-link' => 'User blog:$1',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author EugeneZelenko
  * @author Lloffiwr
  * @author Shirayuki
@@ -153,6 +153,7 @@ Parameters:
 	'create-blog-invalid-title-error' => '{{Identical|Invalid title}}',
 	'create-blog-no-login' => '{{Identical|Not logged in}}',
 	'create-blog-categories-textinput' => '{{Identical|Add new category}}',
+	'create-blog-save' => '{{Identical|Save page}}',
 	'create-blog-preview' => '{{Identical|Show preview}}',
 	'create-blog-listing-preview' => 'This is an H2 level header above a preview.',
 	'create-blog-listing-matches-calculate' => 'Button label. User presses to calculate how many blogs would be included in the blog listing given the user-selected criteria. After button is triggered, message gets switched to [[Wikia:Create-blog-listing-matches-recalculate]].',
@@ -783,6 +784,8 @@ $messages['cs'] = array(
 	'create-blog-updated' => 'Příspěvek do blogu byl vytvořen nebo změněn.',
 	'create-blog-permission-denied' => 'Chyba při ukládání stránky blogu: oprávnění odepřeno.',
 	'create-blog-listing-preview' => 'Náhled',
+	'create-blog-listing-matches-calculate' => 'Výpočet',
+	'create-blog-listing-matches-recalculate' => 'Přepočítat',
 	'create-blog-listing-sortby' => 'Řadit dle',
 	'create-blog-listing-sortby-date' => 'Nejnovější',
 	'create-blog-listing-sortby-author' => 'Autor',
@@ -988,6 +991,7 @@ $messages['diq'] = array(
 	'create-blog-post-title-edit' => 'Rıştena blogi timar kerê',
 	'create-blog-form-title' => 'Rıştena blog çıçiya?',
 	'create-blog-form-post-text' => 'Metnê blogi',
+	'create-blog-no-login' => 'Şıma cıkewtış nêvıraşto',
 	'create-blog-categories-textinput' => 'Kategoriya newi deke',
 	'create-blog-categories-submit' => 'Bırşê',
 	'create-blog-save' => 'Ena pele qeyd ke',
@@ -1011,7 +1015,7 @@ $messages['diq'] = array(
 	'blog-comments' => 'Vatışi',
 	'blog-comments-label' => 'Vatışkerden',
 	'blog-voting-label' => 'Deya',
-	'blog-comments-anonymous' => 'Karbero anonim',
+	'blog-comments-anonymous' => 'Karbero bêname',
 	'blog-comment-delete' => 'bestere',
 	'blog-comment-hide' => 'bınımne',
 	'blog-comment-unhide' => 'menımne',

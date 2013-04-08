@@ -121,7 +121,7 @@ $messages['en'] = array(
     'chat-status-away' => 'Away'
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Aldnonymous
  * @author Claudia Hattitten
  * @author Lloffiwr
@@ -198,7 +198,7 @@ $messages['af'] = array(
  */
 $messages['ar'] = array(
 	'chat' => 'دردشة',
-	'chat-desc' => '[[خاص:دردشة|دردشة مباشرة]]', # Fuzzy
+	'chat-desc' => '[[خاص:Chat|دردشة مباشرة]]', # Fuzzy
 	'chat-no-login' => 'يجب تسجيل الدخول إلى الدردشة.',
 	'chat-no-login-text' => 'يرجى تسجيل الدخول للمحادثة.',
 	'chat-default-topic' => 'مرحبا بكم في دردشة $1',
@@ -216,6 +216,8 @@ $messages['ar'] = array(
 	'chat-user-was-banned' => 'تم منع $1 من الدردشة من قبل $2 $3.',
 	'chat-you-were-banned' => 'قد تم منعك من الدردشة من قبل $1.',
 	'chat-user-was-unbanned' => 'أزال $2 منع $1 من الدردشة',
+	'chat-ban-cannt-undo' => 'الحظر قد تم التراجع عنه بالفعل',
+	'chat-user-permanently-disconnected' => 'تم قطع اتصال، تحقق من اتصال الإنترنت وقم بتحديث متصفحك',
 	'chat-ban-modal-button-cancel' => 'إلغاء',
 	'chat-live2' => 'دردشة مباشرة!',
 	'chat-checkuser-join-action' => 'انضممت للدردشة',
@@ -841,10 +843,12 @@ Por favor, contáctalo para más información.',
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Dalba
+ * @author جواد
  * @author پاناروما
  */
 $messages['fa'] = array(
 	'chat' => 'چت',
+	'chat-desc' => '[[ویژه:Chat|گفتگوی زنده]]', # Fuzzy
 	'chat-no-login' => 'برای گپ‌زدن باید ثبت ورود کرده باشید.',
 	'chat-no-login-text' => 'لطفاً برای گپ‌زدن ثبت ورود کنید.',
 	'chat-default-topic' => 'به چت $1 خوش‌آمدید',
@@ -881,6 +885,7 @@ $messages['fa'] = array(
 	'chat-ban-modal-change-ban-label' => 'تغییر به',
 	'chat-ban-modal-end-ban' => 'پایان‌دادن به تحریم',
 	'chat-log-reason-banchange' => 'هیچ دلیلی بیان نشده',
+	'chat-log-reason-banremove' => 'هیچ دلیلی بیان نشده',
 	'chat-ban-cant-ban-moderator' => 'شما نمی‌توانید یک میاندار گپ دیگر را تحریم کنید/بیرون برانید.',
 	'chat-ban-already-banned' => '$1 پیش‌تر از گپ‌زدن در این ویکی تحریم شده است.',
 	'chat-ban-you-need-permission' => 'شما دسترسی $1 را که برای بیرون‌راندن/تحریم کاربران لازم است ندارید.',
@@ -909,9 +914,10 @@ $messages['fa'] = array(
 	'chat-user-menu-private-block' => 'بندآوردن پیام‌های خصوصی',
 	'chat-user-menu-private-allow' => 'مجازدانستن پیام‌های خصوصی',
 	'chat-user-menu-private-close' => 'بستن اتاق خصوصی',
-	'chat-private-headline' => 'گپ خصوصی با $1',
+	'chat-private-headline' => 'چت خصوصی با $1',
 	'group-chatmoderator' => 'مدیر چت',
 	'group-chatmoderator-member' => 'مدیر چت',
+	'group-bannedfromchat' => 'تحریم‌شده از چت',
 	'group-bannedfromchat-member' => 'تحریم‌شده از گپ',
 	'chat-ban-option-list' => '۲ ساعت:2 hours,۱ روز:1 day,۳ روز:3 days,۱ هفته:1 week,۲ هفته:2 weeks,۱ ماه:1 month,۳ ماه:3 months,۶ ماه:6 months,۱ سال:1 year,بی‌پایان:infinite',
 	'chat-ban-log-change-ban-link' => 'تغییردادن تحریم',
@@ -2151,7 +2157,7 @@ $messages['pl'] = array(
 	'chat-chatbanadd-log-entry' => 'zablokował(a) $1 na czacie na okres: $2, koniec blokady: $3',
 	'chat-chatbanremove-log-entry' => 'odblokował(a) użytkownika $1 na czacie',
 	'chat-chatbanchange-log-entry' => 'zmienił(a) ustawienia blokady użytkownika $1 na czacie na okres: $2, koniec blokady: $3',
-	'chat-contributions-ban-notice' => 'Ten użytkownik jest obecnie zablokowany na czacie. Poniżej znajduje się ostatni wpis z rejestru blokad na czacie:', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Ten użytkownik|Ta użytkowniczka}} jest obecnie {{GENDER:$1|zablokowany|zablokowana}} na czacie. Poniżej znajduje się ostatni wpis z rejestru blokad na czacie:',
 	'chat-browser-is-notsupported' => 'Twoja przeglądarka nie jest obsługiwana. Dla najlepszych rezultatów użyj <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nowszej przeglądarki</a>.',
 	'chat-checkuser-join-action' => 'Dołączył na czat',
 	'chat-status-away' => 'Zaraz wracam',

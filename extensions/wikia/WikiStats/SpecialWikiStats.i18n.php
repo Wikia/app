@@ -358,7 +358,7 @@ $messages['af'] = array(
 	'wikistats_distrib_wikians' => 'Geregistreerde outeurs',
 	'wikistats_distrib_edits_total' => 'Totale wysigings',
 	'wikistats_date' => 'Datum',
-	'wikistats_namespace' => 'Naamspasie',
+	'wikistats_namespace' => 'Naamruimte',
 	'wikistats_show' => 'Wys',
 	'wikistats_stats' => 'Wys %s se statistieke',
 	'wikistats_hide' => 'Versteek',
@@ -490,6 +490,8 @@ $messages['ar'] = array(
 	'wikistats_comparision' => 'مقارنات',
 	'wikistats_showstats_btn' => 'أظهر الإحصاءات',
 	'wikistats_wikia_information' => 'معلومات ويكيا',
+	'wikiastast_refresh_data' => 'تحديث البيانات',
+	'wikistats_showcharts' => 'عرض المخططات',
 	'wikistats_export_xls' => 'صدّر إلى XLS',
 	'wikistats_panel_close_btn' => 'أغلق',
 	'wikistats_daterange_from' => 'من:',
@@ -593,7 +595,7 @@ $messages['ar'] = array(
 	'wikistats_content_editors' => 'محرري المحتوى',
 	'wikistats_userns' => 'المستخدم',
 	'wikistats_other_namespace' => 'مساحات الأسماء <br /> الأخرى',
-	'wikistats_restricted_page' => 'صفحة محدودة (حصرية) <br />
+	'wikistats_restricted_page' => 'صفحة محدودة (حصرية) <br/>
 يجب أن تسجل الدخول لكي ترى إحصائيات ويكيا.
 الرجاء [[خاص:دخول_المستخدم|تسجيل الدخول أو إنشاء حساب جديد]] إذا كنت لا تملك واحدا.', # Fuzzy
 	'wikistats_code_version' => 'نسخة الكود:',

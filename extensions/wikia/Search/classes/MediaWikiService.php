@@ -842,7 +842,7 @@ class MediaWikiService
 			return (string) $wm->getMetaTitle();
 		}
 		wfProfileOut(__METHOD__);
-		return (string) $title;
+		return $title->getBaseText();
 	}
 	
 	/**

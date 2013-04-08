@@ -71,7 +71,7 @@ class InterWiki extends AbstractSelect
 		$domain = preg_replace(
 				'/[^a-zA-Z]/',
 				'',
-				strtolower( $this->config->getQuery( \Wikia\Search\Config::QUERY_RAW ) ) 
+				strtolower( $this->config->getQuery()->getSanitizedQuery() ) 
 				);
 		$match =  $this->service->getWikiMatchByHost( $domain );
 		if (! empty( $match ) ) {

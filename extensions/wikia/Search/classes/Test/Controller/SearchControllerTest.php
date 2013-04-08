@@ -29,7 +29,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValuesFromConfig' );
 		$mockController = $this->searchController->setMethods( $methods )->getMock();
 		
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryNoQuotes' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'hasTerms' ), array( 'foo' ) );
 		
 		$mockSearch = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
 		                   ->setMethods( array( 'search', 'getMatch' ) )
@@ -52,9 +53,13 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockConfig
 		    ->expects( $this->once() )
-		    ->method ( 'getQueryNoQuotes' )
-		    ->with   ( true )
-		    ->will   ( $this->returnValue( "query" ) )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'hasTerms' )
+		    ->will   ( $this->returnValue( true ) )
 		;
 		$mockFactory
 		    ->expects( $this->once() )
@@ -113,7 +118,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testArticleMatchTrackingWithMatch() {
 		$mockController = $this->searchController->setMethods( array( 'getVal' ) )->getMock();
-		$searchConfig = $this->getMock( 'Wikia\Search\Config', array( 'getOriginalQuery', 'getPage', 'hasArticleMatch', 'getArticleMatch' ) );
+		$searchConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery', 'getPage', 'hasArticleMatch', 'getArticleMatch' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query', array( 'getSanitizedQuery' ) );
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getFullUrl' ) )
@@ -143,7 +149,12 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$searchConfig
 		    ->expects( $this->any() )
-		    ->method ( 'getOriginalQuery' )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+	    ;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 		$searchConfig
@@ -223,7 +234,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testArticleMatchTrackingWithoutMatch() {
 
 		$mockController = $this->searchController->setMethods( array( 'getVal' ) )->getMock();
-		$searchConfig = $this->getMock( 'Wikia\Search\Config', array( 'getOriginalQuery', 'getPage', 'hasArticleMatch' ) );
+		$searchConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery', 'getPage', 'hasArticleMatch' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query', array( 'getSanitizedQuery' ) );
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getFullUrl' ) )
@@ -244,7 +256,12 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$searchConfig
 		    ->expects( $this->any() )
-		    ->method ( 'getOriginalQuery' )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( $originalQuery ) )
 		;
 		$searchConfig
@@ -285,7 +302,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testHandleArticleMatchTrackingWithoutGoSearch() {
 		$mockController = $this->searchController->setMethods( array( 'getVal' ) )->getMock();
-		$searchConfig = $this->getMock( 'Wikia\Search\Config', array( 'getOriginalQuery', 'getPage', 'hasArticleMatch', 'getArticleMatch' ) );
+		$searchConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery', 'getPage', 'hasArticleMatch', 'getArticleMatch' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query', array( 'getSanitizedQuery' ) );
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getFullUrl' ) )
@@ -330,7 +348,12 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$searchConfig
 		    ->expects( $this->any() )
-		    ->method ( 'getOriginalQuery' )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( $originalQuery ) )
 		;
 		$searchConfig
@@ -531,6 +554,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 										'getSkipCache', 'getDebug', 'getNamespaces', 'getAdvanced', 'getIncludeRedirects',
 										'getLimit', 'getPublicFilterKeys', 'getRank' );
 		$mockConfig			=	$this->getMock( 'Wikia\Search\Config', $configMethods );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
 
 		$mockWgRefl = new ReflectionProperty( 'WikiaSearchController', 'wg' );
 		$mockWgRefl->setAccessible( true );
@@ -561,8 +585,12 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig
 			->expects	( $this->at( $incr++ ) )
 			->method	( 'getQuery' )
-			->with		( Wikia\Search\Config::QUERY_RAW )
-			->will		( $this->returnValue( 'foo' ) )
+			->will		( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
+		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 		$mockConfig
 			->expects	( $this->at( $incr++ ) )
@@ -779,6 +807,9 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 									->disableOriginalConstructor()
 									->setMethods( array( 'getNamespaces', 'getQuery', 'getSearchProfiles', 'getIncludeRedirects', 'getActiveTab', 'getFilterQueries', 'getRank' ) )
 									->getMock();
+		
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
+		
 
 		$this->mockGlobalVariable( 'wgDefaultSearchProfile', SEARCH_PROFILE_DEFAULT );
 
@@ -858,8 +889,12 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockSearchConfig
 			->expects	( $this->once() )
 			->method	( 'getQuery' )
-			->with		( Wikia\Search\Config::QUERY_RAW )
-			->will		( $this->returnValue( 'foo' ) )
+			->will		( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects   ( $this->once() )
+		    ->method    ( 'getSanitizedQuery' )
+		    ->will      ( $this->returnValue( 'foo' ) )
 		;
 		$mockSearchConfig
 			->expects	( $this->once() )
@@ -926,6 +961,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 									->setMethods( array( 'getNamespaces', 'getQuery', 'getSearchProfiles', 'getIncludeRedirects', 'getActiveTab', 'getFilterQueries', 'getRank' ) )
 									->getMock();
 
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ),  array( 'foo' ) );
+		
 		$this->mockGlobalVariable( 'wgDefaultSearchProfile', SEARCH_PROFILE_DEFAULT );
 
 		$defaultNamespaces = array( NS_MAIN, NS_CATEGORY );
@@ -1003,8 +1040,12 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockSearchConfig
 			->expects	( $this->once() )
 			->method	( 'getQuery' )
-			->with		( Wikia\Search\Config::QUERY_RAW )
-			->will		( $this->returnValue( 'foo' ) )
+			->will		( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects   ( $this->once() )
+		    ->method    ( 'getSanitizedQuery' )
+		    ->will      ( $this->returnValue( 'foo' ) )
 		;
 		$mockSearchConfig
 			->expects	( $this->once() )
@@ -2270,6 +2311,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		               ->setMethods( array( 'msg' ) )
 		               ->getMock();
 		
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'hasTerms', 'getSanitizedQuery' ), array( 'foo' ) );
+		
 		$mockOut = $this->getMockBuilder( 'OutputPage' )
 		                ->disableOriginalConstructor()
 		                ->setMethods( array( 'setPageTitle' ) )
@@ -2277,7 +2320,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( array( 'getQueryNoQuotes', 'getQuery', 'getIsInterWiki' ) )
+		                   ->setMethods( array( 'getQuery', 'getIsInterWiki' ) )
 		                   ->getMock();
 		
 		$sitename = "Foo Wiki";
@@ -2298,14 +2341,22 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockConfig
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getQueryNoQuotes' )
-		    ->with   ( true )
-		    ->will   ( $this->returnValue( $query ) )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'hasTerms' )
+		    ->will   ( $this->returnValue( true ) )
 		;
 		$mockConfig
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getQuery' )
-		    ->with   ( Wikia\Search\Config::QUERY_RAW )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( $query ) )
 		;
 		$mockWf
@@ -2324,9 +2375,13 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockConfig
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getQueryNoQuotes' )
-		    ->with   ( true )
-		    ->will   ( $this->returnValue( null ) )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'hasTerms' )
+		    ->will   ( $this->returnValue( false ) )
 		;
 		$mockConfig
 		    ->expects( $this->at( 1 ) )
@@ -2349,9 +2404,13 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockConfig
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getQueryNoQuotes' )
-		    ->with   ( true )
-		    ->will   ( $this->returnValue( null ) )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'hasTerms' )
+		    ->will   ( $this->returnValue( false ) )
 		;
 		$mockConfig
 		    ->expects( $this->at( 1 ) )
@@ -2382,6 +2441,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( array( 'getResponse', 'getVal' ) )
 		                       ->getMock();
+		
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getQueryForHtml' ), array( 'foo' ) );
 		
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
 		                     ->disableOriginalConstructor()
@@ -2452,6 +2513,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                     ->disableOriginalConstructor()
 		                     ->setMethods( array( 'getFormat', 'setData' ) )
 		                     ->getMock();
+		
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getQueryForHtml' ), array( 'foo' ) );
 		
 		$configMethods = array( 
 				'getResults', 'getResultsFound', 'getQuery', 
@@ -2596,7 +2659,11 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig
 		    ->expects( $this->any() )
 		    ->method ( 'getQuery' )
-		    ->with   ( Wikia\Search\Config::QUERY_ENCODED )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getQueryForHtml' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 		$mockController

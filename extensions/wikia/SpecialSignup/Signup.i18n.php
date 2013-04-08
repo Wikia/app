@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'signup' => 'Signup',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -71,6 +71,13 @@ $messages['cs'] = array(
 $messages['de'] = array(
 	'signup-desc' => 'Fügt einen Alias [[{{#Special:Signup}}]] für die Seite [[{{#Special:UserLogin}}/signup]] hinzu.',
 	'signup' => 'Benutzerkonto erstellen',
+);
+
+/** Zazaki (Zazaki)
+ * @author Mirzali
+ */
+$messages['diq'] = array(
+	'signup' => 'Qeydbiyayış',
 );
 
 /** Divehi (ދިވެހިބަސް)

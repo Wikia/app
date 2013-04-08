@@ -122,7 +122,7 @@ $messages['en'] = array(
 	'swm-error-created-tobeforefrom' => 'Wiki creation end date is before start date.',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author EugeneZelenko
  * @author Lloffiwr
  * @author Shirayuki
@@ -269,6 +269,7 @@ $messages['an'] = array(
  * @author Malhargan
  * @author Meno25
  * @author OsamaK
+ * @author ترجمان05
  */
 $messages['ar'] = array(
 	'sitewidemessages' => 'موقع الرسائل على نطاق واسع',
@@ -298,6 +299,7 @@ $messages['ar'] = array(
 	'swm-label-mode-users-group-hint' => '<i>اختيار مجموعة من القائمة المنسدلة أو اكتب اسم باليد إلى القائمة المنسدلة الاختياره.</i>',
 	'swm-label-mode-users-user' => 'المستخدم المحدد',
 	'swm-label-mode-users-user-hint' => '<i>يتجاهل هذا الخيار التحديد في مجموعة "الويكي".</i>',
+	'swm-label-mode-users-user-multi' => 'قائمة المستخدمين',
 	'swm-label-content' => 'المحتوى',
 	'swm-label-comment' => 'التعليق',
 	'swm-label-dismissed' => 'رفضت',
@@ -336,6 +338,9 @@ $messages['ar'] = array(
 	'swm-error-long-message' => 'رسائل تقتصر على 500 حرف.',
 	'swm-error-empty-group' => 'أدخل اسم المجموعة.',
 	'swm-lang-other' => 'جميع اللغات المتبقية',
+	'swm-mode-wikis-created-after' => 'بعد',
+	'swm-mode-wikis-created-before' => 'قبل',
+	'swm-mode-wikis-created-between' => 'بين',
 );
 
 /** Assamese (অসমীয়া)
@@ -2310,12 +2315,12 @@ $messages['pms'] = array(
 	'swm-label-recipient-wikis' => 'Wiki',
 	'swm-label-recipient-users' => 'Utent',
 	'swm-label-expiration' => 'Temp ëd fin',
-	'swm-label-expiration-hint' => "<i>Selession-a n'ora ëd fin dal menù a tendin-a e scriv n'ora a man për coaté la selession dël menù a tendin-a. L'ora scrivùa manualment a deuv esse ant la forma 2012-04-01 00:00:00</i>",
+	'swm-label-expiration-hint' => "<i>Ch'a selession-a n'ora ëd fin da lë mnù a ridò o ch'a scriva n'ora a man për rampiassé la selession ëd lë mnù a ridò. L'ora scrivùa a man a dev esse ant la forma 2012-04-01 00:00:00</i>",
 	'swm-label-mode-wikis-all' => 'Tute le wiki',
 	'swm-label-mode-wikis-hub' => 'Pòrt selessionà',
 	'swm-label-mode-wikis-cluster' => 'Baron selessionà',
 	'swm-label-mode-wikis-wiki' => 'Wiki selessionà',
-	'swm-label-mode-wikis-wiki-multi' => 'Lista ëd wiki',
+	'swm-label-mode-wikis-wiki-multi' => 'Lista ëd le wiki',
 	'swm-label-mode-wikis-wiki-multi-hint' => '<i>Anseriss na wiki për linia.</i>',
 	'swm-label-mode-users-all' => "Tùit j'utent",
 	'swm-label-mode-users-active' => 'Utent ativ',
@@ -2323,10 +2328,10 @@ $messages['pms'] = array(
 	'swm-label-mode-users-group-hint' => '<i>Pija na partìa da la lista o scriv un nòm a man për coaté la selession ëd la lista.</i>',
 	'swm-label-mode-users-user' => 'Utent selessionà',
 	'swm-label-mode-users-user-hint' => '<i>St\'opsion-sì a ignora le selession ant la partìa "Wiki".</i>',
-	'swm-label-mode-users-user-multi' => "Lista d'utent",
-	'swm-label-mode-users-user-multi-hint' => '<i>Anseriss un nòm utent për linia. Sta opsion a ignora le selession ant la partìa "Wikis".</i>',
+	'swm-label-mode-users-user-multi' => "Lista dj'utent",
+	'swm-label-mode-users-user-multi-hint' => "<i>Ch'a anseriss në stranòm d'utent për linia. Costa opsion a ignora la selession ant la partìa «Wiki».</i>",
 	'swm-label-mode-users-anon' => "Tùit j'utent anònim",
-	'swm-label-mode-users-anon-hint' => '<i>Sta opsion al moment a travaja mach o con l\'opsion "Tute le wiki", "Lista ëd wiki" o la "Selession-a wiki".</i>',
+	'swm-label-mode-users-anon-hint' => "<i>Costa opsion al moment a marcia mach con l'opsion «Tute le wiki», «Lista ëd le wiki» o la «Wiki selessionà».</i>",
 	'swm-label-content' => 'Contnù',
 	'swm-label-comment' => 'Coment',
 	'swm-label-dismissed' => 'Arfudà',
@@ -2340,7 +2345,7 @@ $messages['pms'] = array(
 	'swm-button-new' => '[ Neuv ]',
 	'swm-msg-sent-ok' => "<h3>Ël mëssagi a l'é stàit mandà.</h3>",
 	'swm-msg-sent-err' => "<h3>Ël mëssagi a l'é PA stàit mandà.</h3>Varda ël registr ëd j'eror për pi d'anformassion.",
-	'swm-msg-sent-task' => 'Travaj creà për mandé mëssagi: $1',
+	'swm-msg-sent-task' => 'Travaj creà për mandé ël mëssagi: $1',
 	'swm-msg-remove' => 'É-lo sigur ëd vorèj gavé sto mëssagi-sì? As peul pa tornesse andré!',
 	'swm-expire-info' => 'Sto mëssagi a scad ai $1.',
 	'swm-link-dismiss' => 'arfudé ës mëssagi',
@@ -2357,37 +2362,37 @@ $messages['pms'] = array(
 	'swm-list-table-content' => 'Contnù',
 	'swm-list-table-tools' => 'Utiss',
 	'swm-list-table-lang' => 'Lenghe',
-	'swm-list-table-hub' => 'Hub',
+	'swm-list-table-hub' => 'Tema',
 	'swm-yes' => 'É!',
 	'swm-no' => 'Nò',
 	'swm-error-no-such-wiki' => 'Na wiki parèj a-i é pa!',
-	'swm-error-no-wiki-list' => 'Almanch na wiki a deuv esse dàita',
+	'swm-error-no-wiki-list' => 'A venta buté almanch na wiki',
 	'swm-error-no-such-user' => "L'utent spessificà a esist pa.",
-	'swm-error-no-user-list' => "Almanch n'utent a deuv esse dàit",
+	'swm-error-no-user-list' => "A venta buté almanch n'utent",
 	'swm-error-empty-message' => "Ch'a anserissa ël contnù dël mëssagi.",
 	'swm-error-long-message' => 'Ij mëssagi a son limità a 500 caràter.',
 	'swm-error-empty-group' => "Ch'a anserissa ël nòm ëd la partìa.",
-	'swm-error-invalid-time' => 'Ora pa bon-a dàita.',
+	'swm-error-invalid-time' => 'Durà butà nen bon-a.',
 	'swm-lang-other' => "tute j'àutre lenghe",
-	'action-messagetool' => 'manda mëssagi a livel ëd sit',
-	'swm-label-mode-users-registration' => 'Data registrassion',
-	'swm-mode-users-registration-after' => "D'apress",
+	'action-messagetool' => 'mandé dij mëssagi a tut ël sit',
+	'swm-label-mode-users-registration' => 'Data ëd registrassion',
+	'swm-mode-users-registration-after' => 'Apress',
 	'swm-mode-users-registration-before' => 'Prima',
 	'swm-mode-users-registration-between' => 'Tra',
-	'swm-label-mode-users-registration-hint' => '<i>Le date a deuvo esse an la forma 2012-04-01 00:00:00</i>',
-	'swm-error-registered-tobeforefrom' => "La data fin dla registrassion utent a l'é prima dla data inissi.",
+	'swm-label-mode-users-registration-hint' => '<i>Le date a devo esse dla forma 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => "La data ëd fin dla registrassion dl'utent a l'é prima dla data d'inissi.",
 	'swm-label-mode-users-editcount' => 'Conteur ëd modìfiche',
 	'swm-mode-users-editcount-more' => 'Pi',
 	'swm-mode-users-editcount-less' => 'Men',
 	'swm-mode-users-editcount-between' => 'Tra',
-	'swm-error-editcount-tolessthanfrom' => "Lìmit superior dël conteur ëd modifiche utent a l'é men dël limit inferior.",
-	'swm-error-editcount-notnumber' => 'Conteur ëd modìfiche a deuv esse un nùmer bon.',
-	'swm-label-mode-wikis-created' => 'Data ëd creassion wiki.',
-	'swm-mode-wikis-created-after' => "D'apress",
+	'swm-error-editcount-tolessthanfrom' => "Ël lìmit superior dël conteur ëd modifiche d'utent a l'é pi cit dël limit inferior.",
+	'swm-error-editcount-notnumber' => 'Ël conteur ëd modìfiche a dev esse un nùmer bon.',
+	'swm-label-mode-wikis-created' => 'Data ëd creassion ëd la wiki.',
+	'swm-mode-wikis-created-after' => 'Apress',
 	'swm-mode-wikis-created-before' => 'Prima',
 	'swm-mode-wikis-created-between' => 'Tra',
-	'swm-label-mode-wikis-created-hint' => '<i>Le date a deuvo esse an la forma 2012-04-01 00:00:00</i>',
-	'swm-error-created-tobeforefrom' => "La data fin dla creassion wiki a l'é prima dla data inissi.",
+	'swm-label-mode-wikis-created-hint' => '<i>Le date a devo esse ant la forma 2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => "La data ëd fin dla creassion ëd la wiki a l'é prima dla data d'inissi.",
 );
 
 /** Pashto (پښتو)

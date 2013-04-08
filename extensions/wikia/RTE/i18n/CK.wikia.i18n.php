@@ -124,7 +124,7 @@ $messages['en'] = array(
 	'rte-ck-format-tag_h5' => 'Heading 5',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author EugeneZelenko
  * @author NavaRose
  * @author Nemo bis
@@ -295,6 +295,13 @@ $messages['ar'] = array(
 	'rte-ck-format-tag_h3' => 'عنوان 3',
 	'rte-ck-format-tag_h4' => 'عنوان 4',
 	'rte-ck-format-tag_h5' => 'عنوان 5',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'rte-ck-link-label-target' => 'ܦܐܬܐ ܕܢܘܦܐ ܐܘ ܡܘܢܥܐ ܕURL',
 );
 
 /** Asturian (asturianu)
@@ -2286,6 +2293,7 @@ $messages['nb'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Fjern dette galleriet?',
 	'rte-ck-photoGallery-tooltip' => 'Dette er et galleri.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Dette er en lysbildefremvisning',
+	'rte-ck-photoGallery-tooltipSlider' => 'Dette er en glidebryter.',
 	'rte-ck-poll-add' => 'Legg til avstemning',
 	'rte-ck-poll-poll' => 'Avstemning',
 	'rte-ck-signature-add' => 'Legg til signaturen din',
@@ -2671,15 +2679,15 @@ $messages['pms'] = array(
 	'rte-ck-media-edit' => 'modìfica',
 	'rte-ck-modeSwitch-toSource' => 'Sorgiss',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Visual',
-	'rte-ck-modeSwitch-toSourceTooltip' => 'Cangia a manera Sorziss',
-	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Cangia a manera Visual',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Passé an manera sorgiss',
+	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Passé an manera Visual',
 	'rte-ck-modeSwitch-error' => "A l'é ancapitaje n'eror durant ël cangiament ëd manera. Për piasì, ch'a preuva torna.",
 	'rte-ck-photoGallery-gallery' => 'Galarìa',
 	'rte-ck-photoGallery-slideshow' => 'Sequensa ëd diapositive',
-	'rte-ck-photoGallery-slider' => 'Letor ëd diapo',
+	'rte-ck-photoGallery-slider' => 'Letor ëd diapositive',
 	'rte-ck-photoGallery-addGallery' => 'Gionta na galarìa ëd fòto',
-	'rte-ck-photoGallery-addSlideshow' => 'Gionta na sequensa ëd diapo',
-	'rte-ck-photoGallery-addSlider' => 'Gionta un letor ëd diapo',
+	'rte-ck-photoGallery-addSlideshow' => 'Gionta na sequensa ëd diapositive',
+	'rte-ck-photoGallery-addSlider' => 'Gionté un letor ëd diapositive',
 	'rte-ck-photoGallery-confirmDelete' => 'É-lo sigur ëd vorèj gavé la galarìa da sta pàgina?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Gavé sta galarìa?',
 	'rte-ck-photoGallery-tooltip' => "Costa a l'é na galarìa.",
@@ -2692,10 +2700,10 @@ $messages['pms'] = array(
 	'rte-ck-table-alignNotSet' => 'Pa ampostà',
 	'rte-ck-table-invalidCols' => 'Ël nùmer ëd colòne a dev esse pi gròss ëd 0.',
 	'rte-ck-table-invalidRows' => 'Ël nùmer ëd righe a dev esse pi gròss ëd 0.',
-	'rte-ck-table-toolbarTooltip' => 'Gionta Tabela',
+	'rte-ck-table-toolbarTooltip' => 'Gionté na tàula',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Àutr stamp / paròla màgica',
-	'rte-ck-templateDropDown-showUsedList' => 'Mosta lista djë stamp dovrà',
-	'rte-ck-templateDropDown-makeLayout' => 'Fà un layout da sta pagina',
+	'rte-ck-templateDropDown-showUsedList' => 'Smon-e la lista djë stamp dovrà',
+	'rte-ck-templateDropDown-makeLayout' => 'Creé na presentassion a parte da costa pàgina',
 	'rte-ck-templateDropDown-label' => 'Stamp',
 	'rte-ck-templateDropDown-title' => 'Sern në stamp',
 	'rte-ck-templateEditor-dialog-browse' => 'Serca në stamp',
@@ -2727,7 +2735,7 @@ $messages['pms'] = array(
 	'rte-ck-poll-confirmDeleteTitle' => "Gavé 's chestionari?",
 	'rte-ck-spellchecker-moreSuggestions' => "Pi 'd sugeriment",
 	'rte-ck-pasteText-title' => 'Ancòla tò test',
-	'rte-ck-clipboard-pasteMsg' => "Për rason ëd sicurëssa, l'editor a peul pa acede tò ancolagi diretament. Për piasì ancòla ant la casela sota dovrand ij tast dla tastera (Ctrl/Cmd+V) e sgnaca 'OK'.<br /><br />Nòta: tò test a sarà polidà da la formatassion për evité ëd creé dël test wiki complicà.",
+	'rte-ck-clipboard-pasteMsg' => "Për dle rason ëd sicurëssa, l'editor a peul pa ancolé sò test diretament. Për piasì, ch'a lo ancòla ant la casela sì-sota dovrand ij tast dla tastadura (Ctrl/Cmd+V) e ch'a sgnaca 'Va bin'.<br /><br />Nòta: sò test a sarà polidà da tuta formatassion për evité ëd creé dël test wiki complicà.",
 	'rte-ck-format-tag_p' => 'Test normal',
 	'rte-ck-format-tag_pre' => 'Còdes (test preformatà)',
 	'rte-ck-format-tag_h2' => 'Antestassion 2',
@@ -3006,11 +3014,23 @@ $messages['ro'] = array(
  */
 $messages['roa-tara'] = array(
 	'rte-ck-bucket-textAppearance' => "Aspette d'u teste",
+	'rte-ck-bucket-insert' => "'Nzerisce",
 	'rte-ck-bucket-controls' => 'Condrolle',
 	'rte-ck-errorPopupTitle' => 'Errore!',
+	'rte-ck-hoverPreview-comment-title' => 'Commende',
 	'rte-ck-hoverPreview-delete' => 'scangille',
 	'rte-ck-hoverPreview-edit' => 'cange',
+	'rte-ck-hoverPreview-template-intro' => "Quiste jè 'nu template.",
+	'rte-ck-image-add' => "Aggiunge 'n'immaggine",
 	'rte-ck-link-error-title' => 'Errore',
+	'rte-ck-link-external-url' => 'URL',
+	'rte-ck-media-delete' => 'live',
+	'rte-ck-media-edit' => 'cange',
+	'rte-ck-templateEditor-dialog-insert' => "'Nzerisce",
+	'rte-ck-templateEditor-editor-parameters' => 'Parametre',
+	'rte-ck-templateEditor-editor-previewButton' => 'Andeprime',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Andeprime',
+	'rte-ck-video-video' => 'Video',
 );
 
 /** Russian (русский)
