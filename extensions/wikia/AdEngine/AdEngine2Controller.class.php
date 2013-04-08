@@ -40,16 +40,28 @@ class AdEngine2Controller extends WikiaController {
 			return $pageLevel;
 		}
 
-		$runAds = $wg->Out->isArticle()
-			|| WikiaPageType::isSearch()
+
+		$runAds = WikiaPageType::isSearch()
 			|| WikiaPageType::isForum()
 			|| WikiaPageType::isWikiaHub();
 
 		if (!$runAds) {
 			if ($wg->Title) {
-				$runAds = (defined('NS_WIKIA_PLAYQUIZ') && $wg->Title->inNamespace(NS_WIKIA_PLAYQUIZ))
-					|| $wg->Title->isSpecial('Videos')
-					|| $wg->Title->isSpecial('Leaderboard');
+				$title = $wg->Title;
+				$namespace = $title->getNamespace();
+				$runAds = in_array($namespace, $wg->ContentNamespaces)
+					|| isset($wg->ExtraNamespaces[$namespace])
+
+				// Blogs:
+					|| BodyController::isBlogListing()
+					|| BodyController::isBlogPost()
+
+				// Quiz:
+					|| (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ))
+
+				// Chosen special pages:
+					|| $title->isSpecial('Videos')
+					|| $title->isSpecial('Leaderboard');
 			}
 		}
 
