@@ -2761,7 +2761,7 @@ if (LiftiumOptions.error_beacon !== false ){
 		var originalOnError = window.onerror;
 		window.onerror = function(m, l, e) {
 			originalOnError && originalOnError(m, l, e);
-			Liftium.catchError(m, l, e);
+			return Liftium.catchError(m, l, e);
 		}
 	}());
 }
