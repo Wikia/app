@@ -187,11 +187,19 @@ class FixWikiCreation extends Maintenance {
 			$job_params->founderName = $wgUser->getName();
 		}
 		
+		# no welcome email
+		$job_params->disableWelcome = 1; 
+		# disable reminder
+		$job_params->disableReminder = 1;
+		# don't execute CreateWikiLocalJob-complete hook
+		$job_params->disableCompleteHook = 1;
+		
 		// run job 
 		$localJob = new CreateWikiLocalJob( 
 			Title::newFromText( NS_MAIN, "Main" ), 
 			$job_params
 		);
+		
 		$localJob->WFinsert( $job_params->city_id, $job_params->dbname );
 		wfDebugLog( "createwiki", __METHOD__ . ": New createWiki local job created \n", true );
 

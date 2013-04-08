@@ -22,7 +22,7 @@ $messages['en'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -45,7 +45,7 @@ $messages['ar'] = array(
 	'quickstats-header-photos' => 'الصور',
 	'quickstats-header-likes' => 'الإعجابات',
 	'quickstats-totals-label' => 'المجموع',
-	'quickstats-see-more-stats-link' => '[[خاص:WikiStats|شاهد المزيد من الإحصائيات]]', # Fuzzy
+	'quickstats-see-more-stats-link' => '[[خاص:WikiStats|مشاهدة المزيد من الإحصائيات]]', # Fuzzy
 	'quickstats-number-shortening' => '$1 ألف',
 	'quickstats-number-shortening-millions' => '$1 مليون',
 	'quickstats-number-shortening-billions' => '$1 بليون',
@@ -728,6 +728,7 @@ $messages['pfl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Chrumps
  * @author Cloudissimo
  * @author Sovq
  * @author Woytecr
@@ -742,9 +743,9 @@ $messages['pl'] = array(
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Łącznie',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Więcej statystyk]]',
-	'quickstats-number-shortening' => '$1 tys',
-	'quickstats-number-shortening-millions' => '$1mln',
-	'quickstats-number-shortening-billions' => '$1mlrd',
+	'quickstats-number-shortening' => '$1 tys.',
+	'quickstats-number-shortening-millions' => '$1 mln',
+	'quickstats-number-shortening-billions' => '$1 mld',
 );
 
 /** Piedmontese (Piemontèis)

@@ -17,7 +17,7 @@ $messages['en'] = array(
 	'interwikidispatcher-desc' => 'Solves interwiki links to reduce Apache redirects',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Siebrand
  * @author Umherirrender
  */
@@ -32,6 +32,14 @@ $messages['qqq'] = array(
 $messages['af'] = array(
 	'interwikidispatcher' => 'Interwikiverdeler',
 	'interwikidispatcher-desc' => 'Los interwikiskakels op om Apache-aansture te verminder',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'interwikidispatcher' => 'مرسل الإنترويكي',
+	'interwikidispatcher-desc' => 'يحل وصلات الإنترويكي للحد من موجهات أباتشي',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)

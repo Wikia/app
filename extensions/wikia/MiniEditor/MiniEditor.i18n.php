@@ -11,7 +11,7 @@ $messages['en'] = array(
 	'minieditor-placeholder-reply' => 'Reply to the message here',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  */
 $messages['qqq'] = array(
 	'minieditor-specialpage-title' => 'Browser title for the page',
@@ -20,6 +20,18 @@ $messages['qqq'] = array(
 	'minieditor-message-edit' => 'Notification text shown when a message is being edited (as opposed to created)',
 	'minieditor-reply' => 'Button text for replying to a message',
 	'minieditor-placeholder-reply' => 'Placeholder text, showin in an input field, disappears when clicked',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'minieditor-specialpage-title' => 'صفحة عرض المحرر الصغير',
+	'minieditor-new-heading' => 'قم بإنشاء رسالة جديدة',
+	'minieditor-placeholder-new' => 'أدخل رسالتك هنا',
+	'minieditor-message-edit' => 'هذه رسالة موجودة',
+	'minieditor-reply' => 'رُد',
+	'minieditor-placeholder-reply' => 'الرد على الرسالة هنا',
 );
 
 /** Breton (brezhoneg)
@@ -160,6 +172,13 @@ $messages['ku-latn'] = array(
 	'minieditor-message-edit' => 'Ev peyameke heye',
 	'minieditor-reply' => 'Bersiv bide',
 	'minieditor-placeholder-reply' => 'Peyamê li vir bibersivîne',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'minieditor-reply' => 'Äntwerten',
 );
 
 /** Macedonian (македонски)

@@ -33,7 +33,7 @@ class OnWiki extends AbstractSelect
 	 * @return Wikia\Search\Match\Article|null
 	 */
 	public function extractMatch() {
-		$match = $this->service->getArticleMatchForTermAndNamespaces( $this->config->getOriginalQuery(), $this->config->getNamespaces() );
+		$match = $this->service->getArticleMatchForTermAndNamespaces( $this->config->getQuery()->getSanitizedQuery(), $this->config->getNamespaces() );
 		if (! empty( $match ) ) {
 			$this->config->setArticleMatch( $match );
 		}
@@ -75,7 +75,7 @@ class OnWiki extends AbstractSelect
 	protected function registerSpellcheck( Select $query ) {
 		if ( $this->service->getGlobal( 'WikiaSearchSpellcheckActivated' ) ) {
 			$query->getSpellcheck()
-			      ->setQuery( $this->config->getQueryNoQuotes( true ) )
+			      ->setQuery( $this->config->getQuery()->getSanitizedQuery() )
 			      ->setCollate( true )
 			      ->setCount( self::SPELLING_RESULT_COUNT )
 			      ->setMaxCollationTries( self::SPELLING_MAX_COLLATION_TRIES )
@@ -138,7 +138,7 @@ class OnWiki extends AbstractSelect
 	 */
 	protected function getBoostQueryString()
 	{
-		$queryNoQuotes = $this->config->getQueryNoQuotes( true );
+		$queryNoQuotes = str_replace( '\"', '', $this->config->getQuery()->getSolrQuery() );
 		$boostQueries = array(
 				Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'valueQuote'=>'\"' ) ),
 		        Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'valueQuote'=>'\"' ) ),

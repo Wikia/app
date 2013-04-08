@@ -234,8 +234,10 @@ $messages['ms'] = array(
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Nghtwlkr
  */
 $messages['nb'] = array(
+	'linksuggest-desc' => 'Foreslår lenker til bidragsytere på redigeringsvisningen',
 	'tog-disablelinksuggest' => 'Ikke vis lenkeforslag i kildemodus',
 	'tog-redirected-from' => '&ndash; Omdirigert fra $1',
 );

@@ -81,7 +81,7 @@ $messages['en'] = array(
 	'cnw-error-bot-header' => 'You have been detected as a bot',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author EugeneZelenko
  * @author Shirayuki
  * @author Siebrand
@@ -189,21 +189,27 @@ $messages['af'] = array(
  * @author زكريا
  */
 $messages['ar'] = array(
+	'createnewwiki-desc' => '[[خاص:CreateNewWiki|صانع الويكيات]]', # Fuzzy
 	'cnw-next' => 'التالي',
 	'cnw-back' => 'رجوع',
 	'cnw-or' => 'أو',
 	'cnw-title' => 'إنشاء ويكي جديدة',
 	'cnw-name-wiki-headline' => 'بدء ويكي',
+	'cnw-name-wiki-creative' => 'ويكيا هو أفضل مكان لبناء موقع على شبكة الإنترنت وتنمية مجتمع حول ما تحب.',
 	'cnw-name-wiki-label' => 'اختر اسما للويكي',
 	'cnw-name-wiki-wiki' => 'ويكي',
 	'cnw-name-wiki-domain-label' => 'اختر عنوان للويكي',
+	'cnw-name-wiki-submit-error' => 'عفوا! أنت بحاجة لملء كلا من المربعين أعلاه للمواصلة.',
 	'cnw-login' => 'تسجيل الدخول',
 	'cnw-signup' => 'أنشئ حسابا',
 	'cnw-signup-prompt' => 'تحتاج إلى حساب؟',
 	'cnw-call-to-signup' => 'قم بالتسجيل هنا',
+	'cnw-login-prompt' => 'لديك حساب؟',
 	'cnw-call-to-login' => 'لج هنا',
 	'cnw-auth-headline' => 'تسجيل الدخول',
 	'cnw-auth-headline2' => 'أنشئ حسابًا',
+	'cnw-auth-creative' => 'سجل الدخول إلى الحساب الخاص بك لمواصلة بناء الويكي.',
+	'cnw-auth-signup-creative' => 'تحتاج إلى حساب لمواصلة بناء الويكي.<br/>التسجيل لن يستغرق سوى دقيقة واحدة!', # Fuzzy
 	'cnw-auth-facebook-signup' => 'قم بالإشتراك عن طريق الفايسبوك',
 	'cnw-auth-facebook-login' => 'زر "تسجيل الدخول عبر فيس بوك"',
 	'cnw-userauth-headline' => 'لديك حساب؟',
@@ -231,6 +237,19 @@ $messages['ar'] = array(
 	'cnw-theme-instruction' => 'يمكنك أيضا تصميم مظهر خاص بك في وقت لاحق عن طريق "أدواتي".',
 	'cnw-welcome-headline' => 'تهانينا! لقد تم إنشاء $1',
 	'cnw-welcome-instruction1' => 'انقر الزر أدناه لبدء إضافة صفحات في الويكي الخاص بك.',
+	'cnw-welcome-instruction2' => 'سوف ترى هذا الزر في جميع أنحاء الويكي الخاصة بك، استخدمه في أي وقت تريد أن تضيف صفحة جديدة.',
+	'cnw-welcome-help' => 'إبحث عن إجابات و نصائح و معلومات أكثر في  <a href="http://ar.wikia.com"> مركز ويكيا</a>.',
+	'cnw-error-general' => 'عفوا! حدث خطأ من جهتنا! الرجاء المحاولة مرة أخرى أو <a href="/Special:Contact">الاتصال بنا</a> للحصول على المساعدة.',
+	'cnw-error-general-heading' => 'نحن نعتذر',
+	'cnw-badword-header' => 'قف هناك',
+	'cnw-badword-msg' => 'مرحبا، يرجى عدم استعمال الكلمات السيئة والعبارات المحظورة هذه في وصف الويكي: $1',
+	'cnw-error-wiki-limit-header' => 'لقد وصلت للحد الأعلى للويكي',
+	'cnw-error-wiki-limit' => 'مرحبا، ليس بإمكانك إلا {{PLURAL:$1|إنشاء ويكي $1|إنشاء $1 ويكي}} في اليوم الواحد. انتظر لمدة ٢٤ ساعة قبل إنشاء ويكي آخر.',
+	'cnw-error-blocked-header' => 'الحساب محظور',
+	'cnw-error-blocked' => 'لقد تم حظرك من قبل $1. السبب الذي قدم هو: $2. (رقم الحظر المرجعي: $3)',
+	'cnw-error-torblock' => 'إنشاء الويكي عن طريق شبكة تور غير مسموح.',
+	'cnw-error-bot' => 'لقد اكتشفنا بأنك بوت. إذا ارتكبنا خطأ الرجاء الاتصال بنا لإعلامنا بأنه تم رصدك كبوت بالخطأ، و سوف نساعدك في إنشاء الويكي: [http://www.wikia.com/Special:Contact/general إتصل بنا]',
+	'cnw-error-bot-header' => 'لقد تم رصدك بأنك بوت (مستخدم أوتوماتيكي)',
 );
 
 /** Kotava (Kotava)
@@ -598,7 +617,7 @@ $messages['diq'] = array(
 	'cnw-auth-facebook-signup' => 'Ebe Facebook cı kewê',
 	'cnw-auth-facebook-login' => "Facebook'a cıkewtış",
 	'cnw-userauth-headline' => 'Yew hesabê şıma esto?',
-	'cnw-userauth-creative' => 'Ronıştış akerê',
+	'cnw-userauth-creative' => 'Cı kewe',
 	'cnw-userauth-signup-button' => 'Hesabo Newe Ake',
 	'cnw-desc-tip2' => 'Psst',
 	'cnw-desc-select-one' => 'Yewi weçine',
@@ -2073,6 +2092,35 @@ $messages['ro'] = array(
 	'cnw-desc-wiki-submit-error' => 'Te rugăm alege o categorie',
 	'cnw-theme-headline' => 'Alege o temă',
 	'cnw-welcome-instruction1' => 'Apasă pe butonul de mai jos pentru a începe să adaugi pagini wiki-ului tău.',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'createnewwiki-desc' => "[[Special:CreateNewWiki|Procedure de ccrejazione d'a Uicchi]]",
+	'cnw-next' => 'Prossime',
+	'cnw-back' => 'Rrete',
+	'cnw-or' => 'o',
+	'cnw-title' => "Ccreje 'na uicchi nove",
+	'cnw-name-wiki-label' => "Nome d'a uicchi tune",
+	'cnw-name-wiki-wiki' => 'Uicchi',
+	'cnw-login' => 'Tràse',
+	'cnw-signup' => "Ccreje 'nu cunde",
+	'cnw-call-to-login' => 'Tràse aqquà',
+	'cnw-auth-headline' => 'Tràse',
+	'cnw-auth-headline2' => 'Reggistrate',
+	'cnw-userauth-headline' => "Tìne 'nu cunde?",
+	'cnw-userauth-creative' => 'Tràse',
+	'cnw-userauth-marketing-heading' => "Non ge tìne 'nu cunde?",
+	'cnw-userauth-signup-button' => 'Reggistrate',
+	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-choose' => "Scacchie 'na categorije",
+	'cnw-desc-select-one' => 'Scacchie une',
+	'cnw-desc-change-lang' => 'cange',
+	'cnw-desc-lang' => 'Lènghe',
+	'cnw-desc-wiki-submit-error' => "Pe piacere scacchie 'na categorije",
+	'cnw-theme-headline' => "Scacchie 'nu teme",
 );
 
 /** Russian (русский)

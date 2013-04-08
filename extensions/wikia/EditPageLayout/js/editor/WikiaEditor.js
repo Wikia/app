@@ -1,5 +1,6 @@
 (function(window,$){
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
+		slice = [].slice;
 
 	// config defaults
 	WE.config = {};
@@ -88,12 +89,6 @@
 			editor.fire('editorActivated', event);
 			$().log('instance "' + WE.instanceId + '" activated', 'WikiaEditor');
 		}
-	};
-
-	// Convience function for tracking the current instance
-	// @see /extensions/wikia/EditPageLayout/js/plugins/Tracker.js
-	WE.track = function( data ) {
-		WE.getInstance().track( data );
 	};
 
 	// Returns the currently active instance
@@ -441,6 +436,7 @@
 
 			if (config.forceLogin && wgUserName == null && typeof UserLogin != 'undefined') {
 				config.click = function() {
+					WE.track( 'force-login-' + config.ckcommand );
 					UserLogin.rteForceLogin();
 				}
 
@@ -870,10 +866,27 @@
 		requires: ['ui'],
 
 		// These events are proxied from ck and fired on the editor with the 'ck' prefix
-		proxyEvents: ['blur', 'focus', 'instanceReady', 'mode', 'modeSwitch', 'modeSwitchCancelled', 'themeLoaded', 'wysiwygModeReady'],
+		proxyEvents: [
+			'blur',
+			'focus',
+			'instanceReady',
+			'mode',
+			'modeSwitch',
+			'modeSwitchCancelled',
+			'themeLoaded',
+			'wysiwygModeReady'
+		],
 
 		// These methods will be publicly available on the editor instance
-		proxyMethods: ['getContent', 'setContent', 'getEditbox', 'getEditboxWrapper', 'getEditorElement', 'editorFocus', 'editorBlur'],
+		proxyMethods: [
+			'getContent',
+			'setContent',
+			'getEditbox',
+			'getEditboxWrapper',
+			'getEditorElement',
+			'editorFocus',
+			'editorBlur'
+		],
 
 		beforeInit: function() {
 			var i = 0,
@@ -926,7 +939,7 @@
 			for (var i = 0, l = this.proxyEvents.length; i < l; i++) {
 				(function(eventName) {
 					this.editor.ck.on(eventName, function() {
-						this.editor.fire.apply(this.editor, ['ck-' + eventName, this.editor].concat(arguments));
+						this.editor.fire.apply(this.editor, ['ck-' + eventName, this.editor].concat(slice.call(arguments)));
 					}, this);
 				}).call(this, this.proxyEvents[i]);
 			}

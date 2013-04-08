@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'campfire-licensed-under' => 'Licensed under $1',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  */
 $messages['qqq'] = array(
 	'campfire-page-header' => 'Message that formats H1 page title presentation in Campfire skin.
@@ -27,6 +27,14 @@ Parameters:
 $messages['ar'] = array(
 	'campfire-page-header' => '$1 من $2',
 	'campfire-licensed-under' => 'المرخص لها بموجب $1',
+);
+
+/** Asturian (asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'campfire-page-header' => '$1 de $2',
+	'campfire-licensed-under' => 'Baxo la llicencia $1',
 );
 
 /** Azerbaijani (azərbaycanca)

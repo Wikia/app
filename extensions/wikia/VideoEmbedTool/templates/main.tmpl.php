@@ -14,7 +14,7 @@
 	} else {
 		if ($error) { ?>
 		<span id="VET_error_box"><?= $error ?></span>
-		<?php } ?>		
+		<?php } ?>
 		<div class="input-group">
 			<label for="VideoEmbedUrl" class="with-info-p"><?= wfMsg('vet-url-label') ?></label>
 			<div>

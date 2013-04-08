@@ -1094,25 +1094,31 @@ $wgPhalanxService = false;
  * @name $wgWikiaHubsFileRepoDBName
  * DB name of wiki that contains images for WikiaHubs
  */
-$wgWikiaHubsFileRepoDBName = 'wikia';
+$wgWikiaHubsFileRepoDBName = 'corp';
 
 /**
  * @name $wgWikiaHubsFileRepoPath
  * URL prefix for the wiki with hubs images
  */
-$wgWikiaHubsFileRepoPath = 'http://community.wikia.com/';
+$wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 
 /**
  * @name $wgWikiaHubsFileRepoDirectory
  * filesystem path for hubs' images
  */
-$wgWikiaHubsFileRepoDirectory = '/images/c/central/';
+$wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
  * @name $wgEnableAmazonDirectTargetedBuy
  * Enables AmazonDirectTargetedBuy integration
  */
 $wgEnableAmazonDirectTargetedBuy = true;
+
+/**
+ * @name $wgEnableJavaScriptErrorLogging
+ * Enables JavaScript error logging mechanism
+ */
+$wgEnableJavaScriptErrorLogging = false;
 
 /**
  * trusted proxy service registry

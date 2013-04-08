@@ -12,10 +12,17 @@
 class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
-	 * Default results per page
+	 * Default results per page for intra wiki search
 	 * @var int
 	 */
 	const RESULTS_PER_PAGE = 25;
+
+	/**
+	 * Default results per page for inter wiki search
+	 * @var int
+	 */
+	const INTERWIKI_RESULTS_PER_PAGE = 7;
+
 	/**
 	 * Default pages per window
 	 * @var int
@@ -49,8 +56,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function index() {
 		$this->handleSkinSettings();
 		$searchConfig = $this->getSearchConfigFromRequest();
-		
-		if( $searchConfig->getQueryNoQuotes( true ) ) {
+		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig);
 			// explicity called to accommodate go-search
 			$search->getMatch();
@@ -148,34 +154,35 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $searchConfig->getPage() != 1 ) {
 			return false;
 		}
-		
+		$query = $searchConfig->getQuery()->getSanitizedQuery();
 		if ( $searchConfig->hasArticleMatch() ) {
 			$article = Article::newFromID( $searchConfig->getArticleMatch()->getId() );
 			$title = $article->getTitle();
 			$track = new Track();
 			if ( $this->getVal('fulltext', '0') === '0') {
-				$this->wf->RunHooks( 'SpecialSearchIsgomatch', array( $title, $searchConfig->getOriginalQuery() ) );
-				$track->event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+				$this->wf->RunHooks( 'SpecialSearchIsgomatch', array( $title, $query ) );
+				$track->event( 'search_start_gomatch', array( 'sterm' => $query, 'rver' => 0 ) );
 				$this->response->redirect( $title->getFullUrl() );
 			} else {
-				$track->event( 'search_start_match', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+				$track->event( 'search_start_match', array( 'sterm' => $query, 'rver' => 0 ) );
 			}
 		} else {
-			$title = Title::newFromText( $searchConfig->getOriginalQuery() );
+			$title = Title::newFromText( $query );
 			if ( $title !== null ) {
 				$this->wf->RunHooks( 'SpecialSearchNogomatch', array( &$title ) );
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Passes the appropriate values to the config object from the request during index method.
 	 * @return \Wikia\Search\Config
 	 */
 	protected function getSearchConfigFromRequest() {
 		$searchConfig = new Wikia\Search\Config();
-		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? self::RESULTS_PER_PAGE : $this->wg->SearchResultsPerPage;
+		$resultsPerPage = $this->isCorporateWiki() ? self::INTERWIKI_RESULTS_PER_PAGE : self::RESULTS_PER_PAGE;
+		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? $resultsPerPage : $this->wg->SearchResultsPerPage;
 		$searchConfig
 			->setQuery                   ( $this->getVal( 'query', $this->getVal( 'search' ) ) )
 			->setCityId                  ( $this->wg->CityId )
@@ -210,6 +217,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
+
+		global $wgExtensionsPath;
+
 		$response = $this->getResponse();
 		$format = $response->getFormat();
 		if ( $format == 'json' || $format == 'jsonp' ){
@@ -231,7 +241,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'currentPage',           $searchConfig->getPage() );
 		$this->setVal( 'paginationLinks',       $this->sendSelfRequest( 'pagination', $tabsArgs ) );
 		$this->setVal( 'tabs',                  $this->sendSelfRequest( 'tabs', $tabsArgs ) );
-		$this->setVal( 'query',                 $searchConfig->getQuery( Wikia\Search\Config::QUERY_ENCODED ) );
+		$this->setVal( 'query',                 $searchConfig->getQuery()->getQueryForHtml() );
 		$this->setVal( 'resultsPerPage',        $searchConfig->getLimit() );
 		$this->setVal( 'pageUrl',               $this->wg->Title->getFullUrl() );
 		$this->setVal( 'isInterWiki',           $searchConfig->getIsInterWiki() );
@@ -240,6 +250,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'hasArticleMatch',       $searchConfig->hasArticleMatch() );
 		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
+		$this->setVal( 'wgExtensionsPath',      $wgExtensionsPath);
 	}
 	
 	/**
@@ -247,9 +258,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function setPageTitle( Wikia\Search\Config $searchConfig ) {
-		if ( $searchConfig->getQueryNoQuotes( true ) ) {
+		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query',
-												array( ucwords( $searchConfig->getQuery( Wikia\Search\Config::QUERY_RAW ) ), $this->wg->Sitename) )  );
+												array( ucwords( $searchConfig->getQuery()->getSanitizedQuery() ), $this->wg->Sitename) )  );
 		}
 		else {
 			if( $searchConfig->getIsInterWiki() ) {
@@ -302,6 +313,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->wg->SuppressRail = true;
 		if ($this->isCorporateWiki() ) {
 			OasisController::addBodyClass('inter-wiki-search');
+			$this->overrideTemplate('CrossWiki_index');
 		}
 		$skin = $this->wg->User->getSkin();
 		if ( $skin instanceof SkinMonoBook ) {
@@ -388,7 +400,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$form['no_filter'] = 0;
 		}
 
-		$this->setVal( 'bareterm', 			$config->getQuery( Wikia\Search\Config::QUERY_RAW ) );
+		$this->setVal( 'bareterm', 			$config->getQuery()->getSanitizedQuery() );
 		$this->setVal( 'searchProfiles', 	$config->getSearchProfiles() );
 		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
 		$this->setVal( 'activeTab', 		$config->getActiveTab() );
@@ -422,7 +434,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						? ( $page + self::PAGES_PER_WINDOW )
 						: $config->getNumPages() ) ;
 
-		$this->setVal( 'query', 			$config->getQuery( Wikia\Search\Config::QUERY_RAW ) );
+		$this->setVal( 'query', 			$config->getQuery()->getSanitizedQuery() );
 		$this->setVal( 'pagesNum', 			$config->getNumPages() );
 		$this->setVal( 'currentPage', 		$page );
 		$this->setVal( 'windowFirstPage', 	$windowFirstPage );

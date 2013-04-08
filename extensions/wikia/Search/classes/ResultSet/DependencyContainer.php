@@ -55,7 +55,7 @@ class DependencyContainer
 	 * @param array $dependencies optional method of prepopulating the dependencies. Can also call mutators.
 	 */
 	public function __construct( array $dependencies = array() ) {
-		$this->setService( new MediaWikiService )
+		$this->setService( (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' ) )
 		     ->configureByArray( $dependencies );
 	}
 	

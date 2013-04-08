@@ -77,6 +77,7 @@ $messages['af'] = array(
  * @author Achraf94
  * @author Meno25
  * @author OsamaK
+ * @author ترجمان05
  */
 $messages['ar'] = array(
 	'wikiapoll-desc' => ' يوفر طريقة سهلة لإنشاء وإدارة تصويتات في ويكيا.',
@@ -93,6 +94,10 @@ $messages['ar'] = array(
 	'wikiapoll-publish-label' => 'انشر',
 	'wikiapoll-error-duplicate' => 'يوجد اقتراع بهذا الاسم بالفعل.',
 	'wikiapoll-error-invalid-title' => 'نص السؤال غير صالح.',
+	'wikiamobile-wikiapoll-open-poll' => 'ماذا ترى؟',
+	'wikiamobile-wikiapoll-thanks-voting' => 'شكرا للتصويت!',
+	'wikiamobile-wikiapoll-poll' => 'تصويت',
+	'wikiamobile-wikiapoll-user-voted' => 'لقد صوتت ل"$1"',
 );
 
 /** Azerbaijani (azərbaycanca)

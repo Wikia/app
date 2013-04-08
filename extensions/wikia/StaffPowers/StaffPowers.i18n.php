@@ -22,6 +22,13 @@ $messages['qqq'] = array(
 	'staffpowers-ipblock-abort' => "Do not translate (but do add additional text if you like) <nowiki>[[Special:Contact</nowiki>'''|optional additional text'''<nowiki>]]</nowiki>.",
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'staffpowers-ipblock-abort' => 'لا يمكن منع أو حظر فريق عمل ويكيا، أو مساعدي ويكيا أو أعضاء فريق مكافحة الرسائل المزعجة (سبام). الرجاء استخدام [[خاص:Contact|نموذج الاتصال]] للإبلاغ عن أي مسائل أو مشاكل مع موظفينا.', # Fuzzy
+);
+
 /** Catalan (català)
  * @author Marcmpujol
  */
@@ -86,6 +93,13 @@ $messages['ia'] = array(
  */
 $messages['it'] = array(
 	'staffpowers-ipblock-abort' => 'Non è possibile bloccare gli utenti che appartengono allo staff di Wikia, i collaboratori di Wikia, o i membri volontari della squadra speciale Spam (VSTF). Si prega di utilizzare il [[Special:Contact|modulo dei contatti]] per segnalare eventuali problemi con il nostro staff.',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'staffpowers-ipblock-abort' => 'De Offizjälle udder Methellfer un Freiwellije jääje SPAM (VSTF) vun Wikia ze spärre, es nit möjjelesch. Bes esu jood un jang övver et[[Special:Contact|Fommolaa för der Kumtak]], öm Saache wiggerzejävve, di met unsere Verantwootlesche ze donn han.',
 );
 
 /** Macedonian (македонски)

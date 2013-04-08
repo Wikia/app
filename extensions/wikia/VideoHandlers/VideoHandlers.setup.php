@@ -43,8 +43,6 @@ $app->registerClass( 'ThumbnailVideo',		$dir . '/ThumbnailVideo.class.php' );
 $app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.class.php' );
 $app->registerClass( 'VideoHandlerHooks',	$dir . '/VideoHandlerHooks.class.php' );
 $app->registerClass( 'VideoFileUploader',	$dir . '/VideoFileUploader.class.php' );
-$app->registerClass( 'WikiaImagePage', $dir . '/ImagePage.php' );
-$app->registerClass( 'WikiaVideoPage',		$dir . '/VideoPage.php' );
 $app->registerClass( 'VideoHandlerHelper', $dir . '/VideoHandlerHelper.class.php' );
 
 // api wrappers
@@ -83,9 +81,6 @@ $app->registerClass( 'VideoInfo', $dir . '/videoInfo/VideoInfo.class.php' );
 $app->registerClass( 'VideoInfoHelper', $dir . '/videoInfo/VideoInfoHelper.class.php' );
 $app->registerClass( 'VideoInfoHooksHelper', $dir . '/videoInfo/VideoInfoHooksHelper.class.php' );
 
-// video page controller
-$app->registerClass( 'WikiaFilePageController', $dir . '/WikiaFilePageController.class.php' );
-
 /**
  * messages
  */
@@ -102,17 +97,11 @@ $app->registerHook( 'Parser::FetchTemplateAndTitle', 'VideoHandlerHooks', 'Wikia
 $app->registerHook( 'ParserBeforeStrip', 'VideoHandlerHooks', 'WikiaVideoParserBeforeStrip'); // <videogallery>
 
 $app->registerHook( 'FileRevertFormBeforeUpload', 'VideoHandlerHooks', 'onFileRevertFormBeforeUpload' );
-$app->registerHook( 'ArticleFromTitle', 'VideoHandlerHooks', 'onArticleFromTitle' );
 $app->registerHook( 'SetupAfterCache', 'VideoHandlerHooks', 'onSetupAfterCache' );
 $app->registerHook( 'BeforePageDisplay', 'VideoHandlerHooks', 'onBeforePageDisplay' );
 $app->registerHook( 'LinkerMakeThumbLink2FileOriginalSize', 'VideoHandlerHooks', 'onLinkerMakeThumbLink2FileOriginalSize' );
 $app->registerHook( 'ParserAfterStrip', 'VideoHandlerHooks', 'convertOldInterwikiToNewInterwiki' );
 $app->registerHook( 'File::checkExtensionCompatibilityResult', 'VideoHandlerHooks', 'checkExtensionCompatibilityResult' );
-
-$app->registerHook( 'SkinTemplateNavigation', 'VideoHandlerHooks', 'onSkinTemplateNavigation' );
-
-$app->registerHook( 'GlobalUsageFormatItemWikiLink', 'VideoHandlerHooks', 'onGlobalUsageFormatItemWikiLink' );
-$app->registerHook( 'GlobalUsageImagePageWikiLink', 'VideoHandlerHooks', 'onGlobalUsageImagePageWikiLink' );
 
 $app->registerHook( 'FileUpload', 'VideoInfoHooksHelper', 'onFileUpload' );
 $app->registerHook( 'ArticleSaveComplete', 'VideoInfoHooksHelper', 'onArticleSaveComplete' );

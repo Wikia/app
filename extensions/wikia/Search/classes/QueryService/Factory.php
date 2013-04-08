@@ -54,7 +54,7 @@ class Factory
 	 * @param DependencyContainer $container
 	 */
 	protected function validateClient( DependencyContainer $container ) {
-		$service = new MediaWikiService;
+		$service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		$client = $container->getClient();
 		if ( empty( $client ) ) {
 			$host = $service->isOnDbCluster() ? $service->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';

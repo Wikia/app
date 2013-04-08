@@ -39,7 +39,7 @@ $messages['en'] = array(
 	'unsubscribe-preferences-notice' => 'Emails have been disabled for your account. Visit the User Profile tab to re-enable them.',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author HvW
  */
 $messages['qqq'] = array(
@@ -153,9 +153,11 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Silvonen
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'unsubscribe-confirm-legend' => 'Vahvista',
 	'unsubscribe-working-done' => 'Valmis.',
 );
 

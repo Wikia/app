@@ -13,7 +13,7 @@ $messages['en'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Page body is required'
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  */
 $messages['qqq'] = array(
 	'contentfeeds-desc' => "Description of extension as listed on [[Special:Version]].

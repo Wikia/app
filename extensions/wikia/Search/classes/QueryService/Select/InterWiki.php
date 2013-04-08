@@ -24,7 +24,7 @@ class InterWiki extends AbstractSelect
 	 * Number of results per grouping we want in a grouped search
 	 * @var int
 	 */
-	const GROUP_RESULTS_GROUPING_ROW_LIMIT = 4;
+	const GROUP_RESULTS_GROUPING_ROW_LIMIT = 1;
 	
 	/**
 	 * The field to group over.
@@ -71,7 +71,7 @@ class InterWiki extends AbstractSelect
 		$domain = preg_replace(
 				'/[^a-zA-Z]/',
 				'',
-				strtolower( $this->config->getQuery( \Wikia\Search\Config::QUERY_RAW ) ) 
+				strtolower( $this->config->getQuery()->getSanitizedQuery() ) 
 				);
 		$match =  $this->service->getWikiMatchByHost( $domain );
 		if (! empty( $match ) ) {
@@ -89,7 +89,6 @@ class InterWiki extends AbstractSelect
 	protected function registerComponents( Solarium_Query_Select $query ) {
 		return $this->configureQueryFields()
 		            ->registerQueryParams   ( $query )
-		            ->registerHighlighting  ( $query )
 		            ->registerFilterQueries ( $query )
 		            ->registerGrouping      ( $query )
 		;
@@ -103,7 +102,8 @@ class InterWiki extends AbstractSelect
 	protected function registerGrouping( Solarium_Query_Select $query ) {
 		$grouping = $query->getGrouping();
 		$grouping->setLimit( self::GROUP_RESULTS_GROUPING_ROW_LIMIT )
-		         ->setOffset( $this->config->getStart() )
+		         ->setOffset( 0 )
+		         ->setNumberOfGroups( true )
 		         ->setFields( array( self::GROUP_RESULTS_GROUPING_FIELD ) )
 		;
 		return $this;
@@ -128,8 +128,6 @@ class InterWiki extends AbstractSelect
 	 * @return Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function prepareRequest() {
-		$this->config->setLength( self::GROUP_RESULTS_GROUPINGS_LIMIT )
-		             ->setIsInterWiki( true );
 		if ( $this->config->getPage() > 1 ) {
 			$this->config->setStart( ( $this->config->getPage() - 1 ) * $this->config->getLength() );
 		}

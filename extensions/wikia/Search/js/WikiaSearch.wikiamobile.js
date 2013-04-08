@@ -3,7 +3,6 @@
  *
  * @author Artur Klajnerok<arturk(at)wikia-inc.com>
  **/
-
 require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], function(throbber, topbar, track, nirvana, window){
 
     var d = window.document,
@@ -67,15 +66,17 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
 				label: forward ? 'next' : 'previous'
 			});
 
-            nirvana.getJson(
-				'WikiaSearchAjax',
-				'getNextResults',
-				{
+            nirvana.sendRequest({
+				controller: 'WikiaSearchAjaxController',
+				method: 'getNextResults',
+				format: 'json',
+				type: 'GET',
+				data: {
 					useskin: skin,
 					query: encodeURIComponent(query),
 					page: pageIndex
 				}
-			).done(
+            }).done(
 				function(result){
 					var finished;
 
