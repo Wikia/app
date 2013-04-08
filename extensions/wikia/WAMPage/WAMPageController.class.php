@@ -53,7 +53,7 @@ class WAMPageController extends WikiaController
 		$this->filterLanguages = $this->model->getCorporateWikisLanguages();
 		$this->filterVerticals = $this->model->getVerticals();
 
-		$this->searchPhrase = $this->getVal('searchPhrase', null);
+		$this->searchPhrase = htmlspecialchars($this->getVal('searchPhrase', null));
 		$this->selectedVerticalId = $this->getVal('verticalId', null);
 		$this->selectedLangCode = $this->getVal('langCode', null);
 		$this->selectedDate = $this->getVal('date', null);
