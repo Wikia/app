@@ -166,10 +166,11 @@ class Result extends ReadWrite {
 							preg_replace('/ ?\.{2,3}$/', '', 
 							preg_replace('/ ?&hellip;$/', '',
 							str_replace('�', '', $text)))))));
-		return strlen($text) > 0 && $addEllipses 
+		$text = strlen($text) > 0 && $addEllipses 
 				? preg_replace('/(<\/span)$/', '$1>', preg_replace('/[[:punct:]]+$/', '', $text)).'&hellip;' 
 				: $text;
-
+		$text = strip_tags( $text, '<span>' );
+		return $text;
 	}
 
 	/**
