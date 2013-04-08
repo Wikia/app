@@ -2506,7 +2506,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	{
 		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
 		                       ->disableOriginalConstructor()
-		                       ->setMethods( array( 'getResponse', 'setVal', 'getVal', 'sendSelfRequest', 'isCorporateWiki' ) )
+		                       ->setMethods( array( 'getResponse', 'setVal', 'getVal', 'sendSelfRequest', 'isCorporateWiki', 'registerWikiMatch' ) )
 		                       ->getMock();
 		
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
@@ -2518,7 +2518,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		
 		$configMethods = array( 
 				'getResults', 'getResultsFound', 'getQuery', 
-				'getNumPages', 'getPage', 'getLimit',
+				'getNumPages', 'getPage', 'getLimit', 'hasWikiMatch',
 				'getIsInterWiki', 'getNamespaces', 'getHub', 'hasArticleMatch'
 				);
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
@@ -2541,7 +2541,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                 ->setMethods( array( 'getSkin' ) )
 		                 ->getMock();
 		
-		$mockWg = (object) array( 'Title' => $mockTitle, 'User' => $mockUser );
+		$mockWg = (object) array( 'Title' => $mockTitle, 'User' => $mockUser, 'OnWikiSearchIncludesWikiMatch' => true );
 		
 		$controllerIncr = 0;
 		$tabsArgs = array( 'config' => $mockConfig, 'by_category' => false );
@@ -2746,6 +2746,15 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'setVal' )
 		    ->with   ( 'isCorporateWiki', false )
 		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'hasWikiMatch' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'registerWikiMatch' )
+		;
 		
 		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
 		$reflWg->setAccessible( true );
@@ -2755,4 +2764,102 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$reflSet->setAccessible( true );
 		$reflSet->invoke( $mockController, $mockConfig );
 	}
+	
+	/**
+	 * @covers WikiaSearchController::registerWikiMatch
+	 */
+	public function testRegisterWikiMatch() {
+		$mockResultSet = $this->getMockBuilder( 'Wikia\Search\ResultSet\MatchGrouping' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( [ 'getHeader', 'getArticlesCountMsg', 'getImagesCountMsg', 'getVideosCountMsg' ] )
+		                      ->getMock();
+		
+		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
+		                       ->disableOriginalConstructor()
+		                       ->setMethods( [ 'setVal', 'getApp' ] )
+		                       ->getMock();
+		
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getWikiMatch' ] );
+		$mockApp = $this->getMockBuilder( 'WikiaApp' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( [ 'getView' ] )
+		                ->getMock();
+		
+		$homepageHelper = $this->getMock( 'WikiaHomePageHelper', [ 'getImageUrl' ] );
+		
+		$articles = 123;
+		$images = 234;
+		$videos = 456;
+		$thumbtracking = 'class="wiki-thumb-tracking" data-pos="-1" data-event="search_click_wiki-thumb';
+		$imageUrl = 'image.180.120.png';
+		
+		$vars = [ 
+				'pos' => -1, 'resultSet' => $mockResultSet, 'pagesMsg' => $articles, '
+				imgMsg' => $images, 'videoMsg' => $videos, 'imageUrl' => $imageUrl, 
+				'thumbTracking' => $thumbtracking 
+				];
+		
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiMatch' )
+		    ->will   ( $this->returnValue( $mockMatch ) )
+		;
+		$mockResultSet
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getHeader' )
+		    ->with   ( 'image' )
+		    ->will   ( $this->returnValue( 'image.png' ) )
+		;
+		$homepageHelper
+		    ->expects( $this->once() )
+		    ->method ( 'getImageUrl' )
+		    ->with   ( 'image.png', 180, 120 )
+		    ->will   ( $this->returnValue( $imageUrl ) )
+		;
+		$mockResultSet
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getArticlesCountMsg' )
+		    ->will   ( $this->returnValue( $articles ) )
+		;
+		$mockResultSet
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getImagesCountMsg' )
+		    ->will   ( $this->returnValue( $images ) )
+		;
+		$mockResultSet
+		    ->expects( $this->at( 3 ) )
+		    ->method ( 'getVideosCountMsg' )
+		    ->will   ( $this->returnValue( $videos ) )
+		;
+		$mockController
+		    ->expects( $this->once() )
+		    ->method ( 'getApp' )
+		    ->will   ( $this->returnValue( $mockApp ) )
+		;
+		/** busted by WikiaMockProxy
+		$mockApp
+		    ->expects( $this->once() )
+		    ->method ( 'getView' )
+		    ->with   ( 'WikiaSearch', 'CrossWiki_exactResult', $vars )
+		    ->will   ( $this->returnValue( 'template' ) )
+		;
+		$mockController
+		    ->expects( $this->once() )
+		    ->method ( 'setVal' )
+		    ->with   ( 'wikiMatch', 'template' )
+		;
+		**/
+		
+		$this->proxyClass( 'Wikia\Search\ResultSet\MatchGrouping', $mockResultSet );
+		$this->proxyClass( 'WikiaHomePageHelper', $homepageHelper );
+		$this->mockApp();
+		$register = new ReflectionMethod( 'WikiaSearchController', 'registerWikiMatch' );
+		$register->setAccessible( true );
+		$register->invoke( $mockController, $mockConfig );
+	}
+	
 }

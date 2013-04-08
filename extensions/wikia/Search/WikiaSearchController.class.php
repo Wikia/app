@@ -253,24 +253,33 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'wgExtensionsPath',      $wgExtensionsPath);
 		
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
-			$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
-			$images = $resultSet->getHeader( 'images' );
-			$imageUrl = empty( $images ) ? $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png' : (new \WikiaHomePageHelper)->getImageUrl( $images[0], 180, 120 );
-			$thumbTracking = 'class="wiki-thumb-tracking" data-pos="-1" data-event="search_click_wiki-';
-			$thumbTracking .= empty( $images ) ? 'no-thumb"' : 'thumb"';
-			$this->setVal( 'wikiMatch', 
-					$this->app->getView( 'WikiaSearch', 'CrossWiki_exactResult', 
-							[ 'pos' => -1, 
-							'resultSet' => $resultSet, 
-							'pagesMsg' => $resultSet->getArticlesCountMsg(), 
-							'imgMsg' => $resultSet->getImagesCountMsg(), 
-							'videoMsg' => $resultSet->getVideosCountMsg(), 
-							'imageURL' => $imageUrl,
-							'thumbTracking' => $thumbTracking
-							] 
-							) 
-					);
+			$this->registerWikiMatch( $searchConfig );
 		}
+	}
+	
+	/**
+	 * Sets wiki match view script variable in view
+	 * @param Wikia\Search\Config $searchConfig
+	 */
+	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
+		$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
+		$image = $resultSet->getHeader( 'image' );
+		$imageUrl = empty( $image ) ? $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png' : (new \WikiaHomePageHelper)->getImageUrl( $image, 180, 120 );
+		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="-1" data-event="search_click_wiki-';
+		$thumbTracking .= empty( $image ) ? 'no-thumb"' : 'thumb"';
+		$this->setVal(
+				'wikiMatch',
+				$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_exactResult', 
+						[ 'pos' => -1, 
+						'resultSet' => $resultSet, 
+						'pagesMsg' => $resultSet->getArticlesCountMsg(), 
+						'imgMsg' => $resultSet->getImagesCountMsg(), 
+						'videoMsg' => $resultSet->getVideosCountMsg(), 
+						'imageURL' => $imageUrl,
+						'thumbTracking' => $thumbTracking
+						] 
+						) 
+				);
 	}
 	
 	/**

@@ -573,7 +573,7 @@ class MediaWikiService
 	 */
 	public function getVisualizationInfoForWikiId( $wikiId ) {
 		$visualization = (new \WikisModel )->getDetails( [ $wikiId ] );
-		if ( empty( $visualization ) ) return array();
+		$visualization = empty( $visualization ) ? [ [] ] : $visualization;
 		return array_shift( $visualization );
 	}
 
