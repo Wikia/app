@@ -7,10 +7,10 @@ WAMPage.prototype = {
 			WAMPage.clickTrackingHandler,
 			true
 		);
-		
+
 		document.getElementById('wam-index-search').addEventListener(
 			'change',
-			$.proxy(function() {
+			$.proxy(function(event) {
 				WAMPage.clickTrackingHandler(event);
 				WAMPage.filterWamIndex($(event.target));
 			}, this),
