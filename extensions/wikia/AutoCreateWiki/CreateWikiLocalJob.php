@@ -131,10 +131,14 @@ class CreateWikiLocalJob extends Job {
 		$this->changeStarterContributions();
 		$this->changeImagesTimestamps();
 		$this->setWelcomeTalkPage();
-		$this->sendWelcomeMail();
+		if ( !empty( $this->mParams->disableWelcome ) ) { 
+			$this->sendWelcomeMail();
+		}
 		$this->populateCheckUserTables();
 		$this->protectKeyPages();
-		$this->queueReminderMail();
+		if ( !empty( $this->mParams->disableReminder ) ) { 
+			$this->queueReminderMail();
+		}
 		$this->sendRevisionToScribe();
 		$this->addStarterImagesToUploadLog();
 
@@ -153,7 +157,9 @@ class CreateWikiLocalJob extends Job {
 			'city_id' => $this->mParams->city_id
 		);
 		
-		wfRunHooks( 'CreateWikiLocalJob-complete', array( $params ) );
+		if ( !empty( $this->mParams->disableCompleteHook ) ) {
+			wfRunHooks( 'CreateWikiLocalJob-complete', array( $params ) );
+		}
 
 		wfProfileOut( __METHOD__ );
 
