@@ -494,6 +494,15 @@ class MediaWikiService
 	}
 	
 	/**
+	 * Returns the article ID of a main page for the wiki ID passed.
+	 * @param int $wikiId
+	 * @return Ambigous <number, boolean>
+	 */
+	public function getMainPageIdForWikiId( $wikiId ) {
+		return $this->getMainPageTitleForWikiId( $wikiId )->getArticleId();
+	}
+	
+	/**
 	 * Returns text from the main page of a provided wiki.
 	 * @param int $wikiId
 	 * @return string
