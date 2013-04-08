@@ -131,12 +131,12 @@ class CreateWikiLocalJob extends Job {
 		$this->changeStarterContributions();
 		$this->changeImagesTimestamps();
 		$this->setWelcomeTalkPage();
-		if ( !empty( $this->mParams->disableWelcome ) ) { 
+		if ( empty( $this->mParams->disableWelcome ) ) { 
 			$this->sendWelcomeMail();
 		}
 		$this->populateCheckUserTables();
 		$this->protectKeyPages();
-		if ( !empty( $this->mParams->disableReminder ) ) { 
+		if ( empty( $this->mParams->disableReminder ) ) { 
 			$this->queueReminderMail();
 		}
 		$this->sendRevisionToScribe();
@@ -157,7 +157,7 @@ class CreateWikiLocalJob extends Job {
 			'city_id' => $this->mParams->city_id
 		);
 		
-		if ( !empty( $this->mParams->disableCompleteHook ) ) {
+		if ( empty( $this->mParams->disableCompleteHook ) ) {
 			wfRunHooks( 'CreateWikiLocalJob-complete', array( $params ) );
 		}
 
