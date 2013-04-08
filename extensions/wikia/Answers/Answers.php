@@ -12,6 +12,7 @@ $wgSkipSkins[] = 'monobook';
 // remove answers from $wgSkipSkins
 unset($wgSkipSkins[ array_search('answers', $wgSkipSkins) ]);
 
+$wgHooks['ArticleSaveComplete'][] = 'AttributionCache::purgeArticleContribs';
 $wgHooks['TitleMoveComplete'][] = 'AttributionCache::purgeArticleContribsAfterMove';
 
 // FIXME: this SHOULD NOT be here. Move to Skin.
