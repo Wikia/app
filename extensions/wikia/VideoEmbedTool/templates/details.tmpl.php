@@ -87,7 +87,7 @@ global $wgExtensionsPath;
 		<div class="input-group VideoEmbedNoBorder">
 			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-update') ?>"/>
 		</div>
-		<div id="VideoReplaceLink"><?= wfMessageExt('vet-video-replace-link', 'parse', $props['href']); ?></div>
+		<div id="VideoReplaceLink"><?= wfMessage('vet-video-replace-link', $props['href'])->parse(); ?></div>
 		<input id="VideoEmbedHref" type="hidden" value="<?= htmlspecialchars($props['href']) ?>" />
 	<? endif; ?>
 </form>
