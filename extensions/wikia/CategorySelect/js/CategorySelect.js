@@ -724,7 +724,7 @@
 			};
 
 			return function() {
-				var track = ( typeof(WikiaEditor) !== 'undefined' && WikiaEditor.track ) || Wikia.Tracker.track;
+				var track = ( window.WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
 				track.apply( track, [ config ].concat( slice.call( arguments ) ) );
 			};
 		})()
