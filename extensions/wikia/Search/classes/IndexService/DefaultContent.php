@@ -38,16 +38,22 @@ class DefaultContent extends AbstractService
 	 */
 	public function execute() {
 		$service = $this->getService();
+		if ( $service->getGlobal( 'BacklinksEnabled' ) ) {
+			$service->registerHook( 'LinkEnd', 'Wikia\Search\Hooks', 'onLinkEnd' );
+		}
+		$service->setGlobal( 'EnableParserCache', false );
 		$pageId = $service->getCanonicalPageIdFromPageId( $this->currentPageId );
 
 		// we still assume the response is the same format as MediaWiki's
 		$response   = $service->getParseResponseFromPageId( $pageId );
+		
 		// ensure the response is an array, even if empty.
 		$response   = $response == false ? array() : $response;
 		$titleStr   = $service->getTitleStringFromPageId( $pageId );
+		$wid = $service->getWikiId();
 		
 		$pageFields = [
-				'wid'                        => $service->getWikiId(),
+				'wid'                        => $wid,
 				'pageid'                     => $pageId,
 				$this->field( 'title' )      => $titleStr,
 				'titleStrict'                => $titleStr,
@@ -64,8 +70,33 @@ class DefaultContent extends AbstractService
 				$this->getPageContentFromParseResponse( $response ), 
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
+				$this->getCurrentBacklinks( $wid, $pageId ),
 				$pageFields 
 				);
+	}
+	
+	/**
+	 * Provides an array of outbound links from the current document to other doc IDs.
+	 * Filters out self-links (e.g. Edit and the like)
+	 * @param int $wid
+	 * @param int $pageid
+	 * @return array
+	 */
+	protected function getCurrentBacklinks( $wid, $pageId ) {
+		$service = $this->getService();
+		$result = [];
+		$docId = sprintf( '%s_%s', $wid, $pageId );
+		if ( $service->getGlobal( 'BacklinksEnabled' ) ) {
+			$backlinks = (new \Wikia\Search\Hooks)->popBacklinks();
+			$backlinksProcessed = [];
+			foreach ( $backlinks as $backlink ) {
+				if ( substr_count( $backlink, $docId.'|' ) == 0 ) {
+					$backlinksProcessed[] = $backlink;
+				}
+			}
+			$result = [ 'outbound_links_txt' => $backlinksProcessed ];
+		}
+		return $result;
 	}
 	
 	/**
