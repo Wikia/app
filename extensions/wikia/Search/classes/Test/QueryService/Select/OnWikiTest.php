@@ -20,7 +20,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                      ->getMock();
 		
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
-		                   ->setMethods( array( 'getQuery', 'getNamespaces', 'setArticleMatch', 'getMatch', 'setWikiMatch', 'getQuery' ) )
+		                   ->setMethods( array( 'getQuery', 'getNamespaces', 'setArticleMatch', 'getMatch', 'setWikiMatch' ) )
 		                   ->getMock();
 		
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
@@ -47,7 +47,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$mockQuery
 		    ->expects( $this->once() )
 		    ->method ( 'getSanitizedQuery' )
-		    ->will   ( $this->returnValue( 'term' ) )
+		    ->will   ( $this->returnValue( 'star wars' ) )
 		;
 		$mockConfig
 		    ->expects( $this->once() )
@@ -57,7 +57,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getArticleMatchForTermAndNamespaces' )
-		    ->with   ( 'term', array( 0, 14 ) )
+		    ->with   ( 'star wars', array( 0, 14 ) )
 		    ->will   ( $this->returnValue( $mockMatch ) )
 		;
 		$mockConfig
@@ -70,12 +70,6 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'OnWikiSearchIncludesWikiMatch' )
 		    ->will   ( $this->returnValue( true ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getQuery' )
-		    ->with   ( \Wikia\Search\Config::QUERY_RAW )
-		    ->will   ( $this->returnValue( 'star wars' ) )
 		;
 		$mockService
 		    ->expects( $this->once() )

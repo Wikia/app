@@ -33,7 +33,8 @@ class OnWiki extends AbstractSelect
 	 * @return Wikia\Search\Match\Article|null
 	 */
 	public function extractMatch() {
-		$match = $this->service->getArticleMatchForTermAndNamespaces( $this->config->getQuery()->getSanitizedQuery(), $this->config->getNamespaces() );
+		$query = $this->config->getQuery()->getSanitizedQuery();
+		$match = $this->service->getArticleMatchForTermAndNamespaces( $query, $this->config->getNamespaces() );
 		if (! empty( $match ) ) {
 			$this->config->setArticleMatch( $match );
 		}
@@ -41,7 +42,7 @@ class OnWiki extends AbstractSelect
 			$domain = preg_replace(
 				'/[^a-zA-Z]/',
 				'',
-				strtolower( $this->config->getQuery( \Wikia\Search\Config::QUERY_RAW ) ) 
+				strtolower( $query ) 
 				);
 			$wikiMatch = $this->service->getWikiMatchByHost( $domain );
 			if (! empty( $wikiMatch ) ) {
