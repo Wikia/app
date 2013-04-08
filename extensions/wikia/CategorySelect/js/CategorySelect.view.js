@@ -52,6 +52,10 @@
 						$wrapper
 							.find( '.last' )
 							.before( data.element );
+						
+						$wrapper
+							.find('#CategorySelectSave')
+							.attr('disabled', false);
 
 					}).on( 'click.' + namespace, '.cancel', function() {
 						$wrapper
@@ -63,7 +67,7 @@
 					}).on( 'click.' + namespace, '.save', function() {
 						var $container = $wrapper.find( '.container' ).startThrobbing(),
 							$saveButton = $( this ).attr( 'disabled', true );
-
+						
 						$.nirvana.sendRequest({
 							controller: 'CategorySelectController',
 							data: {
