@@ -36,6 +36,7 @@ class AdEngine2Controller extends WikiaController {
 			|| $wg->Request->getBool('noexternals', $wg->NoExternals)
 			|| $wg->Request->getBool('noads', false)
 			|| $wg->ShowAds === false
+			|| $wg->EnableAdEngineExt === false
 			|| !F::app()->checkSkin(['oasis'])
 		) {
 			$pageLevel = self::AD_LEVEL_NONE;
