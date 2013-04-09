@@ -36,7 +36,7 @@
 					}
 				} ?>
 				<div class="action">
-					<a class="video-thumbnail" href="#" >
+					<a class="video" href="#" >
 						<div class="addVideo"></div>
 					</a>
 				</div>

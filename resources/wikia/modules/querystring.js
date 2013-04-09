@@ -131,19 +131,20 @@
 		 *
 		 * @param {String} name The parameter's name
 		 * @param {Mixed} val The parameter's value
+		 * @param {Boolean} safe Val has already been uri encoded
 		 */
-		p.setVal = function (name, val) {
+		p.setVal = function (name, val, safe) {
 			if (name) {
 				if(typeof name === 'object') {
 					val = val || '';
 
 					for(var key in name) {
 						if(name.hasOwnProperty(key)) {
-							this.cache[val + key] = encodeURIComponent(name[key]);
+							this.cache[val + key] = safe ? name[key] : encodeURIComponent(name[key]);
 						}
 					}
 				} else if(val){
-					this.cache[name] = encodeURIComponent(val);
+					this.cache[name] = safe ? val : encodeURIComponent(val);
 				}
 			}
 			return this;
