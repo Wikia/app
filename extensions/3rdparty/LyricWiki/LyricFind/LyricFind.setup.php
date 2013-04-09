@@ -17,5 +17,6 @@ $wgLyricFindTrackingUrl = '/__lyricfind_tracking';
 
 $dir = __DIR__;
 
+$app->registerClass('LyricFindController', $dir . '/LyricFindController.class.php');
 $app->registerClass('LyricFindHooks', $dir . '/LyricFindHooks.class.php');
 $app->registerHook('OasisSkinAssetGroups', 'LyricFindHooks', 'onOasisSkinAssetGroups');
