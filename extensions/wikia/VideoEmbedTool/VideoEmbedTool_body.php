@@ -349,13 +349,7 @@ class VideoEmbedTool {
 		$page = WikiPage::factory( $file->getTitle() );
 
 		// Strip out the category tags so they aren't shown to the user
-		$text = preg_replace( '/\[\[Category[^\]]+\]\]/', '', $page->getText() );
-
-		// If we have an empty string or a bunch of whitespace, use the default description
-		// from the file metadata
-		if ( preg_match('/^\s*$/ms', $text) ) {
-			$text = $file->getMetaDescription();
-		}
+		$text = FilePageHelper::stripCategoriesFromDescription($page->getText());
 
 		return $text;
 	}
