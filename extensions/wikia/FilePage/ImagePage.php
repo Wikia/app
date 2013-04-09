@@ -89,7 +89,7 @@ class WikiaImagePage extends ImagePage {
 
 		$editSection = $skin->doEditSectionLink($title, $section, $headline, $lang);
 
-		// Contstruct the h2 with edit link
+		// Construct the h2 with edit link
 		$level = 2; // h2
 		$attribs = ">"; // odd mediawiki thing, no custom attributes so we're sending the closing ">" for the html tag :P
 		$descriptionHeaderHtml = Linker::makeHeadline($level, $attribs, $headline, $headline, $editSection);
