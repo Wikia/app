@@ -291,6 +291,66 @@ class ResultTest extends BaseTest {
 				$method->invoke( $result, $text ),
 				'Wikia\Search\Result::fixSnippeting should strip all tags except spans.'
 		);
+		$text = '<style foo';
+		$this->assertNotContains('<',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all characters that can break markup.'
+		);
+		$text = '</style foo';
+		$this->assertNotContains('<',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all characters that can break markup.'
+		);
+		$text = 'style> foo';
+		$this->assertNotContains('>',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all characters that can break markup.'
+		);
+		$text = '< &';
+		$this->assertNotContains('<',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all characters that can break markup.'
+		);
+		$text = 'foo<style';
+		$this->assertEquals('foo',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all characters that can break markup.'
+		);
+		$text = '<div> foo';
+		$this->assertEquals(' foo',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all tags except spans.'
+		);
+		$text = '</div> bar';
+		$this->assertEquals(' bar',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all tags except spans.'
+		);
+		$text = '<style> buz';
+		$this->assertEquals(' buz',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all tags except spans.'
+		);
+		$text = '<style>';
+		$this->assertEquals('',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all tags except spans.'
+		);
+		$text = '<br/>foo';
+		$this->assertEquals('foo',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all tags except spans.'
+		);
+		$text = '<style></style>';
+		$this->assertEquals('',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all tags except spans.'
+		);
+		$text = '</style>';
+		$this->assertEquals('',
+			$method->invoke( $result, $text ),
+			'Wikia\Search\Result::fixSnippeting should strip all tags except spans.'
+		);
 	}
 
 	/**
