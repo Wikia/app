@@ -16,7 +16,7 @@ class LatestPhotosController extends WikiaController {
 	 * Just a string concatanated with other in creation of Memc Key
 	 * @var String
 	 */
-	const MEMC_KEY_VER = '1.0';
+	const MEMC_KEY_VER = '1.1';
 
 	public function executeIndex() {
 		global $wgUser, $wgMemc;
