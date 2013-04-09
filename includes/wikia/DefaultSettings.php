@@ -1063,6 +1063,22 @@ $wgWikiaSeasonsPencilUnit = false;
 $wgEnableWAMPageExt = false;
 
 /**
+ * @name $wgWAMPageConfig
+ * WAMPage extension configuration -- default configuration
+ */
+$wgWAMPageConfig = array(
+	'pageName' => 'WAM',
+	'faqPageName' => 'WAM/FAQ',
+	'tabsNames' => array(
+		'Top wikis',
+		'The biggest gainers',
+		'Top video games wikis',
+		'Top entertainment wikis',
+		'Top lifestyle wikis',
+	),
+);
+
+/**
  * @name $wgEnableQuickToolsExt
  * Enables QuickTools extension
  */

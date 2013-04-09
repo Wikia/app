@@ -1,23 +1,23 @@
 <footer class="wikiahomepage-footer WikiaGrid">
 	<section class="grid-1 alpha">
-		<?= wfMsgExt('wikiahome-footer-wikiainc', array('parse','language' => $wg->lang->getCode())) ?>
+		<?= wfMessage('wikiahome-footer-wikiainc')->parse() ?>
 	</section>
 	<section class="grid-1">
-		<?= wfMsgExt('wikiahome-footer-get-started-heading', array('parse','language' => $wg->lang->getCode())) ?>
-		<p><?= wfMsg('wikiahome-footer-get-started-creative') ?></p>
-		<a href="<?= wfMsg('wikiahome-footer-get-started-button') ?>" class="button"><?= wfMsg('cnw-name-wiki-headline') ?></a>
+		<?= wfMessage('wikiahome-footer-get-started-heading')->parse() ?>
+		<p><?= wfMessage('wikiahome-footer-get-started-creative')->text() ?></p>
+		<a href="<?= wfMessage('wikiahome-footer-get-started-button')->text() ?>" class="button"><?= wfMessage('cnw-name-wiki-headline')->text() ?></a>
 	</section>
 	<section class="grid-1">
-		<?= wfMsgExt('wikiahome-footer-follow-us', array('parse','language' => $wg->lang->getCode())) ?>
+		<?= wfMessage('wikiahome-footer-follow-us')->parse() ?>
 	</section>
 	<section class="grid-1">
-		<?= wfMsgExt('wikiahome-footer-community', array('parse','language' => $wg->lang->getCode())) ?>
+		<?= wfMessage('wikiahome-footer-community')->parse() ?>
 	</section>
 	<section class="grid-1">
-		<?= wfMsgExt('wikiahome-footer-everywhere', array('parse','language' => $wg->lang->getCode())) ?>
+		<?= wfMessage('wikiahome-footer-everywhere')->parse() ?>
 	</section>
 	<section class="grid-1">
-		<?= wfMsgExt('wikiahome-footer-advertise', array('parse','language' => $wg->lang->getCode())) ?>
+		<?= wfMessage('wikiahome-footer-partner')->parse() ?>
 		<? if($interlang): ?>
 			<?= F::app()->renderView('MenuButton', 'Index', array(
 				'action' => array('text' => ''),

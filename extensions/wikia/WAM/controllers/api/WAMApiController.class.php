@@ -13,6 +13,8 @@ class WAMApiController extends WikiaApiController {
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
 
+	const MEMCACHE_VER = '1.01';
+
 	/**
 	 * A method to get WAM index (list of wikis with their WAM ranks)
 	 *
@@ -60,6 +62,7 @@ class WAMApiController extends WikiaApiController {
 		$wamIndex = WikiaDataAccess::cacheWithLock(
 			F::app()->wf->SharedMemcKey(
 				'wam_index_table',
+				self::MEMCACHE_VER,
 				implode(':', $options)
 			),
 			6 * 60 * 60,
@@ -114,9 +117,14 @@ class WAMApiController extends WikiaApiController {
 	 * 		max_date = last available date
 	 */
 	public function getMinMaxWamIndexDate() {
+		$this->response->setVal('min_max_dates', $this->getMinMaxWamIndexDateInternal());
+	}
+
+	private function getMinMaxWamIndexDateInternal() {
 		$wamDates = WikiaDataAccess::cache(
 			F::app()->wf->SharedMemcKey(
-				'wam_minmax_date'
+				'wam_minmax_date',
+				self::MEMCACHE_VER
 			),
 			2 * 60 * 60,
 			function () {
@@ -151,7 +159,7 @@ class WAMApiController extends WikiaApiController {
 			throw new InvalidParameterApiException('limit');
 		}
 
-		$wamDates = $this->getMinMaxWamIndexDate();
+		$wamDates = $this->getMinMaxWamIndexDateInternal();
 
 		if(empty($options['currentTimestamp'])) {
 			if(!empty($options['previousTimestamp'])) {
