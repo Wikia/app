@@ -1,8 +1,8 @@
 (function(context) {
 
-	var url = context.wgServer + '/tracking.php',
+	var trackingServiceUrl = context.wgServer + '/tracking.php',
 		img = new Image();
 
-	img.src = url + '?pageid=' + context.wgArticleId;
+	img.src = trackingServiceUrl + '?pageid=' + context.wgArticleId;
 
 })(window);
