@@ -87,6 +87,7 @@ class WikiaImagePage extends ImagePage {
 		$headline = wfMessage('video-page-description-heading')->text(); // heading text ("Description")
 		$lang = $wgLang->getCode();
 
+		// Returns a string of HTML for edit link
 		$editSection = $skin->doEditSectionLink($title, $section, $headline, $lang);
 
 		// Construct the h2 with edit link
