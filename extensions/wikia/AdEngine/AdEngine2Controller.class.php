@@ -381,8 +381,10 @@ class AdEngine2Controller extends WikiaController {
 		$vars['adslots2'] = array();
 		$vars['wgLoadAdsInHead'] = self::areAdsInHead();
 		$vars['wgAdsInHeadGroup'] = self::getAdsInHeadGroup();
+
+		// TODO: clean up
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
-		$vars['wgShowAds'] = $this->wg->ShowAds;
+		$vars['wgShowAds'] = self::areAdsShowableOnPage();
 
 		$vars['wgAdDriverUseGpt'] = $req->getBool('usegpt', (bool) $this->wg->AdDriverUseGpt);
 		$vars['wgAdDriverStartLiftiumOnLoad'] = $req->getBool('liftiumonload', (bool) $this->wg->LiftiumOnLoad);
