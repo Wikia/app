@@ -92,6 +92,7 @@ $messages['en'] = array(
 	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com Wikia Video Library] for high quality videos licensed by Wikia.',
 	'vet-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
 	'vet-description-placeholder' => 'Add a description for your video',
+	'vet-description-label' => 'Description',
 	'vet-description-help-text' => 'The description will be displayed on the File page.',
 	'vet-details-about-video' => 'About this video',
 	'vet-description-save-error' => 'There was an error while saving the video description',
@@ -141,6 +142,7 @@ $messages['qqq'] = array(
 	'vet-no-caption' => 'Info that no caption is available for plain image style option',
 	'vet-video-wiki' => 'dropdown label for search filter - Wikia Video Library',
 	'vet-description-placeholder' => 'When adding a video to a wiki or article, the user has the option of adding a description for the video.  The description will show up on that video\'s file page.  This is the placeholder text for the description textarea.',
+	'vet-description-label' => 'This is the form label for the textarea where users can add a description to a video when adding it to their article.',
 	'vet-description-help-text' => 'This help text is found above the description textarea when adding a video to an article or wiki.  It\'s important to make it clear to the user that the description text will not appear in their article.',
 	'vet-details-about-video' => 'this is header text for the section in the video embed tool where users can edit the name and description of the video.',
 );

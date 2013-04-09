@@ -22,7 +22,7 @@ global $wgExtensionsPath;
 		</div>
 		<div class="input-group last" id="VideoEmbedDescriptionRow">
 			<p class="hint"><?= wfMessage('vet-description-help-text') ?></p>
-			<label class="option-label">Description:</label>
+			<label class="option-label"><?= wfMessage('vet-description-label') ?></label>
 			<textarea id="VideoEmbedDescription" class="video-description" name="description" placeholder="<?= wfMessage('vet-description-placeholder') ?>"><?= htmlspecialchars(!empty($props['description']) ? $props['description'] : '') ?></textarea>
 		</div>
 	</div>
