@@ -15,7 +15,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
 			$this->response->addAsset( 'resources/wikia/modules/querystring.js' );
 		}
-	
+
 		$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumSpecial.scss' );
 		$this->response->setJsVar( 'wgIsForum', true );
@@ -26,19 +26,19 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->wf->profileIn( __METHOD__ );
 
 		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
-		
+
 		$policies = Title::newFromText( 'forum-policies-and-faq', NS_MEDIAWIKI);
 		$this->response->setJsVar( 'wgCanEditPolicies', $this->wg->User->isAllowed('forumadmin'));
 		$this->response->setJsVar( 'wgPoliciesRev', $policies->getLatestRevID()  );
 		$this->response->setJsVar( 'wgPoliciesEditURL', $policies->getFullUrl( 'action=edit' )  );
-		
+
 		//getLatestRevID
-		
+
 		F::build('JSMessages')->enqueuePackage('Forum', JSMessages::EXTERNAL);
 		$this->response->addAsset( 'extensions/wikia/Forum/js/Forum.js' );
 
 		if ( $this->request->getVal( 'showWarning', 0 ) == 1 ) {
-			NotificationsController::addConfirmation( wfMsg( 'forum-board-no-board-worning' ), NotificationsController::CONFIRMATION_WARN );
+			NotificationsController::addConfirmation( wfMsg( 'forum-board-no-board-warning' ), NotificationsController::CONFIRMATION_WARN );
 		}
 
 		$action = $this->getVal( 'action', '' );
