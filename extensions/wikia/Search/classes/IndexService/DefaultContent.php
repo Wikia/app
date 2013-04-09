@@ -38,6 +38,7 @@ class DefaultContent extends AbstractService
 	 */
 	public function execute() {
 		$service = $this->getService();
+		$sitename = $service->getGlobal( 'Sitename' );
 		if ( $service->getGlobal( 'BacklinksEnabled' ) ) {
 			$service->registerHook( 'LinkEnd', 'Wikia\Search\Hooks', 'onLinkEnd' );
 		}
@@ -60,7 +61,7 @@ class DefaultContent extends AbstractService
 				'ns'                         => $service->getNamespaceFromPageId( $pageId ),
 				'host'                       => $service->getHostName(),
 				'lang'                       => $service->getSimpleLanguageCode(),
-				$this->field( 'wikititle' )  => $service->getGlobal( 'Sitename' ),
+				$this->field( 'wikititle' )  => $sitename,
 				'page_images'                => count( $response['parse']['images'] ),
 				'iscontent'                  => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 				'is_main_page'               => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
@@ -69,7 +70,7 @@ class DefaultContent extends AbstractService
 				$this->getPageContentFromParseResponse( $response ), 
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
-				$this->getCurrentBacklinks(),
+				$this->getOutboundLinks(),
 				$pageFields 
 				);
 	}
@@ -81,7 +82,7 @@ class DefaultContent extends AbstractService
 	 * @param int $pageid
 	 * @return array
 	 */
-	protected function getCurrentBacklinks() {
+	protected function getOutboundLinks() {
 		$service = $this->getService();
 		$result = [];
 		$docId = $this->getCurrentDocumentId();
