@@ -122,11 +122,45 @@ class WAMService extends Service {
 			}
 			$count = $resultCount->fetchObject();
 			$wamIndex['wam_results_total'] = $count->wam_results_total;
+			$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
 		}
 
 		$app->wf->profileOut(__METHOD__);
 
 		return $wamIndex;
+	}
+
+	public function getWamIndexDates() {
+		$dates = array(
+			'max_date' => null,
+			'min_date' => null
+		);
+
+		$app = F::app();
+		$app->wf->ProfileIn(__METHOD__);
+
+		if (!empty($app->wg->StatsDBEnabled)) {
+			$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+
+			$fields = array(
+				'MAX(time_id) AS max_date',
+				'MIN(time_id) AS min_date'
+			);
+
+			$result = $db->select(
+				'fact_wam_scores',
+				$fields
+			);
+
+			$row = $db->fetchRow($result);
+
+			$dates['max_date'] = strtotime($row['max_date']);
+			$dates['min_date'] = strtotime($row['min_date']);
+		}
+
+		$app->wf->profileOut(__METHOD__);
+
+		return $dates;
 	}
 
 	protected function getWamIndexJoinConditions ($options) {
