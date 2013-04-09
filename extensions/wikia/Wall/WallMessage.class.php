@@ -445,7 +445,7 @@ class WallMessage {
 		$commentsIndex = $this->getCommentsIndex();
 		
 		if(empty($commentsIndex)) {
-			Wikia::logBacktrace(__METHOD__ . ' -empty commentsIndex');
+			Wikia::logBacktrace(__METHOD__ . ' -empty commentsIndex (' . F::app()->wg->Title->getFullUrl() . ')');
 			return Title::newFromText('empty');			
 		}
 		
@@ -457,7 +457,7 @@ class WallMessage {
 		} 
 		
 		if( empty($cache[$pageId]) ){
-			Wikia::logBacktrace(__METHOD__ . ' -empty titleCache');
+			Wikia::logBacktrace(__METHOD__ . ' -empty titleCache (' . F::app()->wg->Title->getFullUrl() . ')');
 			return Title::newFromText('empty');
 		}
 	
