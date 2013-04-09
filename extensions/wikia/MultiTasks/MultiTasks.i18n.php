@@ -116,7 +116,7 @@ $messages['en'] = array(
 	'action-multiwikifinder' => 'search for a specific title across Wikia',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author EugeneZelenko
  * @author IAlex
  * @author Kghbln
@@ -131,6 +131,7 @@ $messages['qqq'] = array(
 	'multiwikiedit_max_display_size' => 'Parameters:
 * $1 is a number of pages.',
 	'action-multiwikiedit' => '{{doc-action|multiwikiedit}}',
+	'multidelete' => '{{Identical|Delete batch of pages}}',
 	'multidelete_button' => '{{Identical|Delete}}',
 	'multidelete_select_all' => '{{Identical|Select all}}',
 	'multidelete_reason' => '{{Identical|Reason for deletion}}',
@@ -225,8 +226,17 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author ترجمان05
  */
 $messages['ar'] = array(
+	'multiwikiedit_this_wiki' => 'هذا الويكي',
+	'multiwikiedit_all_wikis' => 'كل الويكيات',
+	'multidelete_select_all' => 'اختر الكل',
+	'multidelete_this_wiki' => 'هذا الويكي',
+	'multidelete_all_wikis' => 'كل الويكيات',
+	'multidelete_chinese_wikis' => 'جميع الويكيات الصينية',
+	'multidelete_polish_wikis' => 'جميع الويكيات البولندية',
+	'multidelete_portuguese_wikis' => 'جميع الويكيات البرتغالية',
 	'multidelete_italian_wikis' => 'جميع الويكيات الإيطالية',
 	'multidelete_russian_wikis' => 'جميع الويكات الروسية',
 	'multidelete_english_wikis' => 'جميع الويكيات الإنجليزية',

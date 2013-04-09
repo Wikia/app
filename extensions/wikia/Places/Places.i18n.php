@@ -42,6 +42,14 @@ $messages['qqq'] = array(
 	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
 );
 
+/** Arabic (العربية)
+ * @author ترجمان05
+ */
+$messages['ar'] = array(
+	'places' => 'أماكن في هذا الويكي',
+	'places-geolocation-modal-error-title' => 'خطأ',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D

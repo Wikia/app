@@ -131,16 +131,18 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'right-phalanxemailblock' => 'Can file, view and manage e-mail based blocks',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author McDutchie
  * @author PtM
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'phalanx-type-title' => '{{Identical|Page title}}',
 	'phalanx-add-block' => 'This message is used as a button label (like "Save", "Show preview" and "Show changes" in <code>action=edit</code>). Clicking on the button adds a new block to the Phalanx database. ([[Thread:Support/About_Wikia:Phalanx-add-block/fi/reply|documentation]] by [[User:Jack Phoenix|Jack Phoenix]])',
 	'phalanx-label-filter' => '{{Identical|Filter}}',
 	'phalanx-label-type' => '{{Identical|Type}}',
 	'phalanx-test-submit' => '{{Identical|Test}}',
+	'phalanx-link-unblock' => '{{Identical|Unblock}}',
 	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
 	'phalanx-stats-table-language' => '{{Identical|Language}}',
 	'phalanx-stats-table-text' => '{{Identical|Text}}',
@@ -230,6 +232,7 @@ $messages['br'] = array(
  * @author Chmee2
  */
 $messages['cs'] = array(
+	'phalanx-type-content' => 'obsah stránky',
 	'phalanx-type-title' => 'název stránky',
 	'phalanx-type-user' => 'uživatel',
 	'phalanx-type-user-email' => 'e-mail',

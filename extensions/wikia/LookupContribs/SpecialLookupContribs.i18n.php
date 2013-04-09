@@ -60,7 +60,7 @@ Check given username for possible typos.</p>',
 	'action-lookupcontribs' => "lookup a user's contributions on multiple wikis",
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author EugeneZelenko
  * @author Shirayuki
  * @author Siebrand
@@ -117,8 +117,54 @@ $messages['af'] = array(
 $messages['ar'] = array(
 	'lookupcontribs' => 'البحث عن المساهمات',
 	'lookupcontribstitle' => 'البحث عن المساهمات',
+	'lookupcontribsrecentcontributions' => 'مساهمات $1 الحديثة',
+	'lookupcontribsfinalcontributions' => 'مساهمات $1 النهائية',
+	'lookupcontribshelp' => 'يمكن استخدام هذه الصفحة الخاصة لأجل عرض مساهمات أي مستخدم في ويكيات متعددة.
+لعرض القائمة، اكتب اسم المستخدم أدناه.',
+	'lookupcontribusernotspecify' => 'أنت لم تقم بتحديد أي مستخدم.',
 	'lookupcontribsselectuser' => 'اختر مستخدما:',
+	'lookupcontribsselectfor' => 'إختر ل:',
+	'lookupcontribsdisplaymode' => 'كيفية العرض:',
+	'lookupcontribsselectmodenormal' => 'المساهمات الحديثة لذلك المستخدم',
+	'lookupcontribsselectmodefinal' => 'المساهمات النهائية لذلك المستخدم',
+	'lookupcontribsselectmodeall' => 'كل مساهمات ذلك المستخدم',
+	'lookupcontribsfullurls' => 'عناوين URL كاملة',
+	'lookupcontribslinks' => 'روابط المساهمات',
+	'lookupcontribsgo' => 'عرض',
+	'lookupcontribsinvaliduser' => '<p class="error">المستخدم "<b>$1</b>" غير موجود.
+الرجاء التحقق من الاسم المقدم لأي أخطاء ممكنة.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" ليست طريقة عرض صحيحة.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" ليست وضعا صحيحا.</p>',
+	'lookupcontribsselectwikis' => 'حدد الويكيات:',
+	'lookupcontribslistwikiainfo' => 'قائمة الويكيات التي تم تعديل مقالات فيها من قبل <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'لا توجد نتائج',
+	'lookupcontribsinvalidresults' => 'نتائج غير صحيحة!',
+	'lookupcontribswiki' => 'ويكي',
+	'lookupcontribswikidbname' => 'اسم قاعدة البيانات',
+	'lookupcontribswikiurl' => 'عنوان URL',
+	'lookupcontribswikititle' => 'العنوان',
+	'lookupcontribswikioptions' => 'الخيارات',
+	'lookupcontribscontribslink' => 'رابط المساهمات',
+	'lookupcontribsdetails' => 'راجع تفاصيل عن:',
+	'lookupcontribslastedited' => 'آخر تعديل',
+	'lookupcontribsrecordspager' => "عرض من '''$1''' إلى '''$2''' من مجموع '''$3''' سجلا.",
+	'lookupcontribsnbrresult' => 'عدد النتائج:',
+	'lookupcontribsnext' => 'التالي',
+	'lookupcontribsprevious' => 'سابق',
+	'lookupcontribspageremoved' => 'تمت إزالتها:',
+	'lookupcontribsrestore' => 'استرجاع',
+	'lookupcontribslog' => 'سجلات',
+	'lookupcontribscontribs' => 'مساهمات',
+	'lookupcontribshist' => 'تاريخ',
+	'lookupcontribsdiff' => 'فرق',
+	'right-lookupcontribs' => 'عرض عمليات التحرير العامة للمستخدم',
+	'lookupcontribsshowpages' => 'كل الصفحات (في نطاق $1)',
+	'lookupcontribscontent' => 'محتوى',
+	'lookupcontribscontribtitleforuser' => 'مساهمات المستخدم:',
+	'lookupcontribsnormal' => 'الأخيرة',
+	'lookupcontribsfinal' => 'نهائي',
 	'lookupcontribsall' => 'الكل',
+	'action-lookupcontribs' => 'البحث عن مساهمات المستخدم في ويكيات متعددة',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -1026,6 +1072,7 @@ Sjekk oppgitt brukernavn for mulige skrivefeil.</p>',
 	'lookupcontribsnormal' => 'siste',
 	'lookupcontribsfinal' => 'siste',
 	'lookupcontribsall' => 'alle',
+	'action-lookupcontribs' => 'slå opp en brukers bidrag på flere wikier',
 );
 
 /** Dutch (Nederlands)

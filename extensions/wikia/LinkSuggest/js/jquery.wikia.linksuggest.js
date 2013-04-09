@@ -382,6 +382,8 @@ $.widget( 'wikia.linksuggest', {
 		//Bugid: 100516 - prevent from showing the dropdown outside the screen
 		if ( offset[1] + height > this.element.outerHeight() ) {
 			props.my = 'left bottom';
+			offset[1] = offset[1] - 25;
+			props.offset = offset.join( ' ' );
 		}
 		menu.width( '' ).position( props );
 	}

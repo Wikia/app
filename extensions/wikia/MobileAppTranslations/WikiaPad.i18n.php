@@ -418,6 +418,22 @@ $messages['pt-br'] = array(
 	'browser-loading-message' => 'Carregando...',
 );
 
+/** Romanian (română)
+ * @author Minisarm
+ */
+$messages['ro'] = array(
+	'main-tab-discover' => 'Descoperă',
+	'main-tab-personal' => 'My Wikia',
+	'main-tab-search' => 'Căutare',
+	'main-tab-offline' => 'Off-line',
+	'tab-discover-loading-message' => 'Se încarcă...',
+	'tab-discover-no-network-dialog-title' => 'Rețea indisponibilă',
+	'tab-discover-no-network-dialog-message' => 'Nici o conexiune de rețea detectată',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Se caută...',
+	'browser-loading-message' => 'Se încarcă...',
+);
+
 /** Russian (русский)
  * @author Kuzura
  */
