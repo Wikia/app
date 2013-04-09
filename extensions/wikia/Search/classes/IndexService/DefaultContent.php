@@ -87,10 +87,10 @@ class DefaultContent extends AbstractService
 		$result = [];
 		$docId = $this->getCurrentDocumentId();
 		if ( $service->getGlobal( 'BacklinksEnabled' ) ) {
-			$backlinks = (new \Wikia\Search\Hooks)->popBacklinks();
+			$backlinks = (new \Wikia\Search\Hooks)->popLinks();
 			$backlinksProcessed = [];
 			foreach ( $backlinks as $backlink ) {
-				if ( substr_count( $backlink, $docId.'|' ) == 0 ) {
+				if ( substr_count( $backlink, $docId.' |' ) == 0 ) {
 					$backlinksProcessed[] = $backlink;
 				}
 			}

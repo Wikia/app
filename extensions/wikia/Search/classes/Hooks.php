@@ -17,7 +17,7 @@ class Hooks
 	 * Stores backlinks for each target article, listing the backlink text, and which source articles link to them
 	 * @var unknown_type
 	 */
-	protected static $backlinkRows = array();
+	protected static $outboundLinks = array();
 	
 	/**
 	 * Encapsulates MediaWiki logic
@@ -130,7 +130,7 @@ class Hooks
 	}
 	
 	/**
-	 * Uses MediaWiki LinkEnd hook to store backlinks
+	 * Uses MediaWiki LinkEnd hook to store outbound links
 	 * @param unknown_type $skin
 	 * @param Title $target
 	 * @param array $options
@@ -145,19 +145,19 @@ class Hooks
 		$targetId = $service->getCanonicalPageIdFromPageId( $target->getArticleId() );
 		if ( $targetId !== 0 ) {
 			$targetDocId = $service->getWikiId() . '_' . $service->getCanonicalPageIdFromPageId( $targetId );
-			self::$backlinkRows[] = sprintf( "%s | %s", $targetDocId, strip_tags( $text ) );
+			self::$outboundLinks[] = sprintf( "%s | %s", $targetDocId, strip_tags( $text ) );
 		}
 		return true;
 	}
 	
 	/**
-	 * Returns the current parse's backlinks and resets the backlink queue.
+	 * Returns the current parse's outbound links and reinitializes the array.
 	 * @return array
 	 */
-	public function popBacklinks() {
-		$backlinks = self::$backlinkRows;
-		self::$backlinkRows = [];
-		return $backlinks;
+	public function popLinks() {
+		$links = self::$outboundLinks;
+		self::$outboundLinks = [];
+		return $links;
 	}
 	
 }
