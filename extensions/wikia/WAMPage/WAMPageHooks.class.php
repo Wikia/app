@@ -4,6 +4,11 @@ class WAMPageHooks {
 	protected $EnableWAMPageExt = null;
 	protected $app = null;
 
+	/**
+	 * @var WAMPageModel $model
+	 */
+	protected $model = null;
+
 	protected function init() {
 		wfProfileIn(__METHOD__);
 		
@@ -11,10 +16,16 @@ class WAMPageHooks {
 			$this->app = F::app();
 		}
 		
-		foreach(['WAMPageConfig', 'EnableWAMPageExt'] as $var) {
-			if( is_null($this->$var) ) {
-				$this->$var = $this->app->wg->$var;
-			}
+		if( is_null($this->EnableWAMPageExt) ) {
+			$this->EnableWAMPageExt = $this->app->wg->EnableWAMPageExt;
+		}
+		
+		if( is_null($this->model) ) {
+			$this->model = new WAMPageModel();
+		}
+
+		if( is_null($this->WAMPageConfig) ) {
+			$this->WAMPageConfig = $this->model->getConfig();
 		}
 		
 		wfProfileOut(__METHOD__);
@@ -43,6 +54,8 @@ class WAMPageHooks {
 	}
 
 	public function onMakeGlobalVariablesScript(&$vars) {
+		wfProfileIn(__METHOD__);
+		
 		$this->init();
 		
 		if( !empty($this->EnableWAMPageExt) ) {
@@ -50,6 +63,7 @@ class WAMPageHooks {
 			$vars['wgWAMFAQPageName'] = $this->WAMPageConfig['faqPageName'];
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -67,6 +81,7 @@ class WAMPageHooks {
 	 * @return bool
 	 */
 	public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
+		wfProfileIn(__METHOD__);		
 		$this->init();
 		
 		if( $this->isWAMPage($target) ) {
@@ -75,18 +90,40 @@ class WAMPageHooks {
 			$options[] = 'known';
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 	
 	protected function isWAMPage($title) {
+		wfProfileIn(__METHOD__);
+		$this->init();
 		$dbKey = null;
-		$wamPageName = mb_strtolower( $this->WAMPageConfig['pageName'] );
-		$wamPageFaqPageName = mb_strtolower( $this->WAMPageConfig['faqPageName'] );
-
+		
 		if( $title instanceof Title ) {
 			$dbKey = mb_strtolower( $title->getDBKey() );
 		}
+
+		wfProfileOut(__METHOD__);
+		return !empty($this->EnableWAMPageExt) && in_array($dbKey, $this->model->getWamPagesDbKeysLower());
+	}
+
+	/**
+	 * Change canonical url if we are displaying WAM subpages
+	 *
+	 * @param string $url
+	 * @param Title  $title
+	 *
+	 * @return bool
+	 */
+	public function onWikiaCanonicalHref(&$url, $title) {
+		wfProfileIn(__METHOD__);
+		$this->init();
 		
-		return !empty($this->EnableWAMPageExt) && ($dbKey === $wamPageName || $dbKey === $wamPageFaqPageName);
+		if( $title instanceof Title && $this->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
+			$url = $this->model->getWAMMainPageUrl();
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
 	}
 }

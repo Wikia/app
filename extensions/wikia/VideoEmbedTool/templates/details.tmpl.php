@@ -24,7 +24,7 @@ global $wgExtensionsPath;
 		</div>
 		<div class="input-group last" id="VideoEmbedDescriptionRow">
 			<p class="hint"><?= wfMessage('vet-description-help-text') ?></p>
-			<label class="option-label">Description:</label>
+			<label class="option-label"><?= wfMessage('vet-description-label') ?></label>
 			<textarea id="VideoEmbedDescription" class="video-description" name="description" placeholder="<?= wfMessage('vet-description-placeholder') ?>"><?= htmlspecialchars(!empty($props['description']) ? $props['description'] : '') ?></textarea>
 		</div>
 	</div>
@@ -89,7 +89,7 @@ global $wgExtensionsPath;
 		<div class="input-group VideoEmbedNoBorder">
 			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-update') ?>"/>
 		</div>
-		<div id="VideoReplaceLink"><?= wfMessageExt('vet-video-replace-link', 'parse', $props['href']); ?></div>
+		<div id="VideoReplaceLink"><?= wfMessage('vet-video-replace-link', $props['href'])->parse(); ?></div>
 		<input id="VideoEmbedHref" type="hidden" value="<?= htmlspecialchars($props['href']) ?>" />
 	<? endif; ?>
 </form>

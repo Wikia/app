@@ -25,7 +25,7 @@ class Result extends ReadWrite {
 	 */
 	public function __construct( $fields = array(), $boosts = array() ) {
 		parent::__construct( $fields, $boosts );
-		$this->service = new MediaWikiService;
+		$this->service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 	}
 	
 	/**
@@ -166,10 +166,11 @@ class Result extends ReadWrite {
 							preg_replace('/ ?\.{2,3}$/', '', 
 							preg_replace('/ ?&hellip;$/', '',
 							str_replace('�', '', $text)))))));
-		return strlen($text) > 0 && $addEllipses 
+		$text = strlen($text) > 0 && $addEllipses 
 				? preg_replace('/(<\/span)$/', '$1>', preg_replace('/[[:punct:]]+$/', '', $text)).'&hellip;' 
 				: $text;
-
+		$text = strip_tags( $text, '<span>' );
+		return $text;
 	}
 
 	/**

@@ -25,6 +25,7 @@ $app = F::app( );
 $app->registerClass( 'WikiaImagePage', $dir . 'ImagePage.php' );
 $app->registerClass( 'WikiaVideoPage', $dir . 'VideoPage.php' );
 $app->registerClass( 'FilePageHooks', $dir . 'FilePageHooks.class.php' );
+$app->registerClass( 'FilePageHelper', $dir . 'FilePageHelper.class.php' );
 
 // file page controller
 $app->registerClass( 'FilePageController', $dir . 'FilePageController.class.php' );
@@ -37,3 +38,4 @@ $app->registerHook( 'ArticleFromTitle', 'FilePageHooks', 'onArticleFromTitle' );
 $app->registerHook( 'SkinTemplateNavigation', 'FilePageHooks', 'onSkinTemplateNavigation' );
 $app->registerHook( 'GlobalUsageFormatItemWikiLink', 'FilePageHooks', 'onGlobalUsageFormatItemWikiLink' );
 $app->registerHook( 'GlobalUsageImagePageWikiLink', 'FilePageHooks', 'onGlobalUsageImagePageWikiLink' );
+$app->registerHook( 'GlobalUsageLinksUpdateComplete', 'FilePageHooks', 'onGlobalUsageLinksUpdateComplete' );

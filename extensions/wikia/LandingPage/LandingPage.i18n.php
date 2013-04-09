@@ -24,7 +24,7 @@ $messages['en'] = array(
 			* http://poptarts.wikia.com|Pop Tarts Wikii|landingpage-wikis-en.png",
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -32,10 +32,11 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Malhargan
  */
 $messages['ar'] = array(
-	'landingpage' => 'مرحبا بك في Wikia',
+	'landingpage' => 'مرحبا بك في ويكيا',
 	'landingpage-start-exploring' => 'أنت مستعد لبدء الاستكشاف؟',
 	'landingpage-start-exploring-text' => 'البحث عن موضوعات مفضلة لك أو تصفح بعض المفضلة لدى المجتمع أدناه.',
 	'landingpage-readfaq' => 'هل لديك أسئلة؟ قراءة الأسئلة الشائعة &gt;',

@@ -230,7 +230,13 @@ var WikiaPhotoGalleryView = {
 		var self = this;
 
 		this.log('lazy loading images...');
-		$('.gallery-image-wrapper').find('img[data-src]:not(.lzyPlcHld)').each(
+		$('.gallery-image-wrapper').find('img[data-src]:not(.lzyPlcHld)')
+			.filter(function() {
+				var elem = $(this);
+				// make sure that those images weren't loaded already by ImgLzy
+				return elem.attr('src') != elem.attr('data-src');
+			})
+			.each(
 			function() {
 				var image = $(this);
 

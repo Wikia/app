@@ -380,6 +380,7 @@ $wgAutoloadClasses[ "WikiFactoryTags"               ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiQueryEventsData"       ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryEventsData.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
+$wgAutoloadClasses[ "WikiaApiResetPasswordTime"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiResetPasswordTime.php";
 $wgAutoloadClasses[ "ApiRunJob"                     ] = "$IP/extensions/wikia/WikiaApi/ApiRunJob.php";
 $wgAutoloadClasses[ "ApiFetchBlob"                  ] = "$IP/includes/api/wikia/ApiFetchBlob.php";
 
@@ -453,6 +454,7 @@ $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
 $wgAPIModules[ "fetchblob"         ] = "ApiFetchBlob";
+$wgAPIModules[ "resetpasswordtime" ] = 'WikiaApiResetPasswordTime';
 
 $wgUseAjax                = true;
 $wgValidateUserName       = true;
@@ -1061,6 +1063,22 @@ $wgWikiaSeasonsPencilUnit = false;
 $wgEnableWAMPageExt = false;
 
 /**
+ * @name $wgWAMPageConfig
+ * WAMPage extension configuration -- default configuration
+ */
+$wgWAMPageConfig = array(
+	'pageName' => 'WAM',
+	'faqPageName' => 'WAM/FAQ',
+	'tabsNames' => array(
+		'Top wikis',
+		'The biggest gainers',
+		'Top video games wikis',
+		'Top entertainment wikis',
+		'Top lifestyle wikis',
+	),
+);
+
+/**
  * @name $wgEnableQuickToolsExt
  * Enables QuickTools extension
  */
@@ -1076,25 +1094,31 @@ $wgPhalanxService = false;
  * @name $wgWikiaHubsFileRepoDBName
  * DB name of wiki that contains images for WikiaHubs
  */
-$wgWikiaHubsFileRepoDBName = 'wikia';
+$wgWikiaHubsFileRepoDBName = 'corp';
 
 /**
  * @name $wgWikiaHubsFileRepoPath
  * URL prefix for the wiki with hubs images
  */
-$wgWikiaHubsFileRepoPath = 'http://community.wikia.com/';
+$wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 
 /**
  * @name $wgWikiaHubsFileRepoDirectory
  * filesystem path for hubs' images
  */
-$wgWikiaHubsFileRepoDirectory = '/images/c/central/';
+$wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
  * @name $wgEnableAmazonDirectTargetedBuy
  * Enables AmazonDirectTargetedBuy integration
  */
 $wgEnableAmazonDirectTargetedBuy = true;
+
+/**
+ * @name $wgEnableJavaScriptErrorLogging
+ * Enables JavaScript error logging mechanism
+ */
+$wgEnableJavaScriptErrorLogging = false;
 
 /**
  * trusted proxy service registry

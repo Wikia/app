@@ -35,6 +35,20 @@
 	var VET_DEFAULT_WIDTH = 335;
 	var VET_thumbSize = VET_DEFAULT_WIDTH;	// variable that can change later, defaulted to DEFAULT
 
+	var VET_tracking = (function() {
+		var config = {
+				action: Wikia.Tracker.ACTIONS.CLICK,
+				category: 'vet',
+				trackingMethod: 'both'
+			},
+			slice = [].slice,
+			track = ( window.WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
+
+		return function() {
+			track.apply( track, [ config ].concat( slice.call( arguments ) ) );
+		};
+	})();
+
 	// ajax call for 2nd screen (aka embed screen)
 	function VET_editVideo() {
 		$('#VideoEmbedMain').hide();
@@ -240,7 +254,9 @@
 		VET_callbackAfterSelect = options.callbackAfterSelect || $.noop;
 		VET_callbackAfterEmbed = options.callbackAfterEmbed || $.noop;
 
-		VET_tracking(Wikia.Tracker.ACTIONS.CLICK, 'open');
+		VET_tracking({
+			label: 'open'
+		});
 
 		if(VET_wysiwygStart == 2) {
 			if(options.size) {
@@ -384,7 +400,9 @@
 	}
 
 	function VET_insertFinalVideo(e) {
-		VET_tracking(Wikia.Tracker.ACTIONS.CLICK, 'complete');
+		VET_tracking({
+			label: 'complete'
+		});
 
 		e.preventDefault();
 
@@ -534,6 +552,10 @@
 		VET_switchScreen('Main');
 		window.VETbackButton = false;
 
+		VET_tracking({
+			label: 'close'
+		});
+
 		VET_loader.modal.closeModal();
 
 		// Handle MiniEditor focus
@@ -547,15 +569,6 @@
 		}
 
 		UserLogin.refreshIfAfterForceLogin();
-	}
-
-	function VET_tracking(action, label, value) {
-		Wikia.Tracker.track({
-			action: action,
-			category: 'vet',
-			label: label || '',
-			trackingMethod: 'both'
-		});
 	}
 
 	/*
@@ -629,15 +642,6 @@
 			searchOrder: 'default'
 		},
 
-		track: function(action, label, data) {
-			Wikia.Tracker.track({
-				action: action,
-				category: 'vet',
-				label: label,
-				trackingMethod: 'internal'
-			}, data);
-		},
-
 		init: function(searchSettings) {
 			var that = this;
 
@@ -680,10 +684,9 @@
 			this.cachedSelectors.carousel.on('click', 'li > a', function(event) {
 				event.preventDefault();
 				VET_sendQueryEmbed($(this).attr('href'));
-
-				// track event
-				var label = that.carouselMode === 'search' ? 'add-video' : 'add-video-suggested';
-				that.track(Wikia.Tracker.ACTIONS.CLICK, label);
+				VET_tracking({
+					label: that.carouselMode === 'search' ? 'add-video' : 'add-video-suggested'
+				});
 			});
 
 			// attach handlers - play button (open video preview)
@@ -762,9 +765,9 @@
 
 					that.fetchSearch();
 
-					// tracking
-					var label = that.searchCachedStuff.searchType === 'local' ? 'find-local' : 'find-wikia-library';
-					that.track(Wikia.Tracker.ACTIONS.CLICK, label);
+					VET_tracking({
+						label: that.searchCachedStuff.searchType === 'local' ? 'find-local' : 'find-wikia-library'
+					});
 				}
 			});
 
@@ -792,9 +795,13 @@
 			});
 			$('#VideoEmbedDetails').on('submit', '#VET-display-options-update', function(event) {
 				event.preventDefault();
+
+				VET_tracking({
+					label: 'button-update-video'
+				});
+
 				VET_doEditVideo();
 			});
-
 
 			// create dropdown for search filters
 			this.cachedSelectors.searchDropDown.wikiaDropdown({
@@ -1084,6 +1091,11 @@
 		.on('click.VET', '#VideoEmbedRenameButton, #VideoEmbedExistingButton, #VideoEmbedOverwriteButton', VET_insertFinalVideo)
 		.on('click.VET', '.vet-close', function(e) {
 			e.preventDefault();
+
+			VET_tracking({
+				label: 'success-button-return'
+			});
+
 			VET_close();
 		});
 

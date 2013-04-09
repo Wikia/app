@@ -91,7 +91,7 @@ function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
 		}
 
 		$oRes = $db->select( "city_domains", "city_id, city_domain",
-	            array("city_domain" => $wikia), array("limit" => 1), __METHOD__);
+	            array("city_domain" => $wikia), __METHOD__, array("limit" => 1) );
 
 		if ($dbobject = $db->fetchObject($oRes)){
 			$wikiaID = $dbobject->city_id;
@@ -252,7 +252,7 @@ function wfSIWEEditInterwiki(){
    						$ret.= "<p>Prefix <b>". $fields['iw_prefix']. "</b> edited for <a href='$wikiaURL'>$wikiaURL</a> to:<ul>\n
   							<li>url: ". $fields['iw_url']. "</li>\n
   							<li>local: ". $fields['iw_local']. "</li>\n
-  							<li>trans: ". $fields['$iw_trans']. "</li>\n
+  							<li>trans: ". $fields['iw_trans']. "</li>\n
 							</ul></p>\n";
   						}else{
 	  		        			$ret .= "Database error: data not changed</p>\n";

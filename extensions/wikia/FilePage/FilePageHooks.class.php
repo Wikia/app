@@ -109,4 +109,22 @@ class FilePageHooks extends WikiaObject{
 
 		return true;
 	}
+
+	/**
+	 * Hook: check for video files
+	 * @param array $images
+	 * @return true
+	 */
+	public function onGlobalUsageLinksUpdateComplete( &$images ) {
+		$videoFiles = array();
+		foreach( $images as $image ) {
+			$file = wfFindFile( $image );
+			if ( $file instanceof File && WikiaFileHelper::isFileTypeVideo( $file ) ) {
+				$videoFiles[] = $image;
+			}
+		}
+		$images = $videoFiles;
+
+		return true;
+	}
 }

@@ -59,7 +59,7 @@ $messages['en'] = array(
 	'themedesigner-wodmark-preview' => 'Preview',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author EugeneZelenko
  * @author Sam Wang
  * @author Shirayuki
@@ -284,8 +284,10 @@ $messages['bs'] = array(
 /** Catalan (català)
  * @author BroOk
  * @author CuBaN VeRcEttI
+ * @author Marcmpujol
  */
 $messages['ca'] = array(
+	'themedesigner-or' => 'o',
 	'themedesigner-desc' => 'Permet als administradors del wiki dissenyar un tema per a un wiki',
 	'themedesigner-title' => 'Wikia Theme Designer',
 	'themedesigner-background' => 'Fons',
@@ -319,14 +321,16 @@ $messages['ca'] = array(
 	'themedesigner-upload-your-own' => 'Carrega el teu propi disseny',
 	'themedesigner-button-upload' => 'Carrega',
 	'themedesigner-button-upload-wordmark' => 'Carrega',
-	'themedesigner-rules-background' => 'jpg, gif or png. Límit de 100 kilobyte', # Fuzzy
+	'themedesigner-rules-background' => 'jpg, gif o png. De màxim {{PLURAL:$1|$1 kilobyte|$1 kilobytes}}',
 	'themedesigner-default' => 'Per defecte',
 	'themedesigner-font' => 'tipus de lletra',
 	'themedesigner-size' => 'mida',
 	'themedesigner-button-save' => 'Desa',
 	'themedesigner-upload-a-graphic' => 'carrega un gràfic',
-	'themedesigner-rules-wordmark' => 'fins a 250 x 65 píxels (només arxius .png)', # Fuzzy
-	'themedesigner-dont-use-a-graphic' => 'No utilitzeu un gràfic', # Fuzzy
+	'themedesigner-rules-wordmark' => 'Carregar un arxiu en format .png de 250x65 píxels o menys.',
+	'themedesigner-rules-favicon' => 'Pujar un arxiu en format .ico de 16x16 píxels. Un favicon és una icona petita que apareix en la pestanya del teu navegador.',
+	'themedesigner-rules-favicon-learn-more-link' => 'Aprendre més',
+	'themedesigner-dont-use-a-graphic' => 'treure',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Canvia el text',
 	'themedesigner-reason' => 'Dissenyador de Temes - guardat de $1',
@@ -335,6 +339,8 @@ $messages['ca'] = array(
 	'themedesigner-type-error' => 'Tipus de fitxer incorrecte',
 	'themedesigner-unknown-error' => "S'ha produït un error, per desgràcia no hem estat capaços d'identificar-lo, si us plau provi una altra vegada",
 	'themedesigner-manual-upload-error' => 'Utilitza el Dissenyador de Temes per a pujar un logo o uns fons per al teu wiki',
+	'themedesigner-favicon-heading' => 'Favicon',
+	'themedesigner-wodmark-preview' => 'Previsualització',
 );
 
 /** Czech (česky)
@@ -1475,8 +1481,8 @@ $messages['pms'] = array(
 	'themedesigner-size' => 'dimension',
 	'themedesigner-button-save' => 'Salva',
 	'themedesigner-upload-a-graphic' => 'caria un gràfich',
-	'themedesigner-rules-wordmark' => "Carié n0archivi .png ch'a l'é 250 x 65 pontin o men.",
-	'themedesigner-rules-favicon' => "carié n'archivi .ico ëd 16x16 pontin. Na favicon a l'é na cita icon-a ch'as vëdd dzor la scheda dël navigator ëd toa wiki.",
+	'themedesigner-rules-wordmark' => "Carié n'archivi .png ch'a l'é 250 x 65 pontin o men.",
+	'themedesigner-rules-favicon' => "Ch'a caria n'archivi .ico ëd 16x16 pontin. Un favicon a l'é na cita plancia ch'as vëd ant la scheda dël navigator ëd soa wiki.",
 	'themedesigner-rules-favicon-learn-more-link' => 'Ampara ëd pi.',
 	'themedesigner-dont-use-a-graphic' => 'gava',
 	'themedesigner-history-item' => '$1 da $2',
@@ -1486,7 +1492,7 @@ $messages['pms'] = array(
 	'themedesigner-dimensions-error' => 'La figura a passa ij lìmit ëd dimension',
 	'themedesigner-type-error' => "Sòrt d'archivi pa giusta",
 	'themedesigner-unknown-error' => "A l'é capitaje n'eror, për maleur i podoma pa identifichelo, për piasì preuva torna",
-	'themedesigner-manual-upload-error' => 'Dòvra Theme Designer për carié marcador ëd paròle o sfond ëd wiki',
+	'themedesigner-manual-upload-error' => "Ch'a deuvra Theme Designer për carié na marca o në sfond për la wiki",
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Preuva',
 );

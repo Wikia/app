@@ -20,8 +20,10 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                      ->getMock();
 		
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
-		                   ->setMethods( array( 'getOriginalQuery', 'getNamespaces', 'setArticleMatch', 'getMatch' ) )
+		                   ->setMethods( array( 'getQuery', 'getNamespaces', 'setArticleMatch', 'getMatch' ) )
 		                   ->getMock();
+		
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
 		
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
@@ -35,7 +37,12 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockConfig
 		    ->expects( $this->once() )
-		    ->method ( 'getOriginalQuery' )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+	    ;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( 'term' ) )
 		;
 		$mockConfig
@@ -192,7 +199,8 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getGlobal' ) )
 		                      ->getMock();
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryNoQuotes', 'getCityId'  ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery', 'getCityId'  ) );
+		$mockQueryWrapper = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
 		
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
@@ -213,8 +221,12 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	    ;
 		$mockConfig
 		    ->expects( $this->once() )
-		    ->method ( 'getQueryNoQuotes' )
-		    ->with   ( true )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQueryWrapper ) )
+	    ;
+		$mockQueryWrapper
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 		$mockSpellcheck
@@ -384,18 +396,24 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\OnWiki::getBoostQueryString
 	 */
 	public function testGetBoostQueryString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryNoQuotes' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSolrQuery' ), array( 'foo' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
 		$queryNoQuotes = 'foo';
+		$queryWithQuotes = '\"foo\"';
 		$mockConfig
 		    ->expects( $this->once() )
-		    ->method ( 'getQueryNoQuotes' )
-		    ->with   ( true )
-		    ->will   ( $this->returnValue( $queryNoQuotes ) )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+	    ;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSolrQuery' )
+		    ->will   ( $this->returnValue( $queryWithQuotes ) )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'getBoostQueryString' );
 		$method->setAccessible( true );

@@ -9,9 +9,10 @@ EditHub.prototype = {
 	lastActiveWmuButton: undefined,
 
 	disableArrow: function() {
-		$('#marketing-toolbox-form').find('.module-box').find('button.navigation').removeAttr('disabled')
-			.end().filter(':first').find('.nav-up').attr('disabled', 'disabled')
-			.end().end().filter(':last').find('.nav-down').attr('disabled', 'disabled');
+		var toolboxForm = $('#marketing-toolbox-form').find('.module-box');
+		toolboxForm.find('button.navigation').removeAttr('disabled');
+		toolboxForm.filter(':first').find('.nav-up').attr('disabled', 'disabled');
+		toolboxForm.filter(':last').find('.nav-down').attr('disabled', 'disabled');
 	},
 
 	init: function () {

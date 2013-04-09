@@ -14,6 +14,7 @@ $wgAutoloadClasses['AnalyticsProviderExelate'] = __DIR__ . '/AnalyticsProviderEx
 $wgAutoloadClasses['AnalyticsProviderGAS'] = __DIR__ . '/AnalyticsProviderGAS.php';
 $wgAutoloadClasses['AnalyticsProviderIVW'] = __DIR__ . '/AnalyticsProviderIVW.php';
 $wgAutoloadClasses['AnalyticsProviderAmazonDirectTargetedBuy'] = __DIR__ . '/AnalyticsProviderAmazonDirectTargetedBuy.php';
+$wgAutoloadClasses['AnalyticsProviderDynamicYield'] = __DIR__ . '/AnalyticsProviderDynamicYield.php';
 
 //hooks
 //register hook to inject gas js library (MW 1.19)

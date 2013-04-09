@@ -19,18 +19,18 @@ class FilePageController extends WikiaController {
 	public function fileUsage() {
 		$app = F::app();
 
-		// The 'limit' parameter is used by both usage methods we forward to as a way to limit
-		// the number of rows returned.  This is a safeguard against extreme cases
-		$this->setVal('limit', 50);
-
 		$heading = '';               // The message to use for the section header
 		$shortenedSummary = array(); // A subset of the data returned to show immediately
 		$fileList = array();         // The list of other articles to show based on $shortenedSummary
 
 		$type = $this->getVal('type', 'local');
 
-		// Based on $typoe get global or local data
+		// Based on $type get global or local data
 		if ($type === 'global') {
+			// The 'limit' parameter is used by both usage methods we forward to as a way to limit
+			// the number of rows returned.  This is a safeguard against extreme cases
+			$this->setVal('limit', 50);
+
 			$heading = wfMsg('video-page-global-file-list-header');
 
 			// Forward to the getGlobalUsage method
@@ -235,7 +235,6 @@ class FilePageController extends WikiaController {
 	 */
 	public function getLocalUsage () {
 		$target = $this->getVal('fileTitle', $this->wg->Title->getDBkey());
-		$limit = $this->wg->Request->getInt('limit', 50);
 
 		$dbr = wfGetDB( DB_SLAVE );
 
@@ -245,9 +244,10 @@ class FilePageController extends WikiaController {
 		$res = $dbr->select(
 			array( 'imagelinks', 'page' ),
 			array( 'page_id', 'page_namespace', 'page_title', 'page_is_redirect', 'il_to' ),
-			array( 'il_to' => $target, 'il_from = page_id' ),
-			__METHOD__,
-			array( 'LIMIT' => $limit )
+			array( 'il_to' => $target,
+				   'il_from = page_id',
+				   'page_namespace != ' . NS_FILE ),
+			__METHOD__
 		);
 
 		$summary = array();

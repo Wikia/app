@@ -285,6 +285,12 @@ class ResultTest extends BaseTest {
 		        $method->invoke( $result, $text, true ),
 		        'Wikia\Search\Result::fixSnippeting should append an ellipses to the end of a string if second parameter passed as true. Broken span tags should be repaired, as well.'
 		);
+		$text = '<span class="searchmatch">foo</span></div>';
+		$this->assertEquals(
+				'<span class="searchmatch">foo</span>',
+				$method->invoke( $result, $text ),
+				'Wikia\Search\Result::fixSnippeting should strip all tags except spans.'
+		);
 	}
 
 	/**

@@ -41,6 +41,7 @@ class OasisController extends WikiaController {
 		$this->quantServe = null;
 		$this->ivw = null;
 		$this->amazonDirectTargetedBuy = null;
+		$this->dynamicYield = null;
 
 		$this->app->registerHook('MakeGlobalVariablesScript', 'OasisController', 'onMakeGlobalVariablesScript');
 		wfProfileOut(__METHOD__);
@@ -263,6 +264,7 @@ class OasisController extends WikiaController {
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw = AnalyticsEngine::track('IVW', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonDirectTargetedBuy = AnalyticsEngine::track('AmazonDirectTargetedBuy', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		$this->mainSassFile = 'skins/oasis/css/oasis.scss';

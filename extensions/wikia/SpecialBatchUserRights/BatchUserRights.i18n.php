@@ -22,7 +22,7 @@ This will not accomplish anything.
 The rest of the page will be allowed to run just so that you can easily see if any of the usernames could not be loaded.",
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author The Evil IP address
  */
 $messages['qqq'] = array(

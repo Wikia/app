@@ -365,10 +365,11 @@ $.widget( 'wikia.linksuggest', {
 		return [ left, top ];
 	},
 	_open: function( event, ui ) {
-		var menu = this.element.data( 'autocomplete' ).menu.element;
-		var offset = this._getCaretPosition();
-		var width = menu.outerWidth();
-		var props = {
+		var menu = this.element.data( 'autocomplete' ).menu.element,
+			offset = this._getCaretPosition(),
+			width = menu.outerWidth(),
+			height = menu.outerHeight(),
+			props = {
 			my: 'left top',
 			at: 'left top',
 			of: this.element,
@@ -377,6 +378,12 @@ $.widget( 'wikia.linksuggest', {
 		};
 		if ( offset.left + width > this.element.outerWidth() ) {
 			props.my = 'right top';
+		}
+		//Bugid: 100516 - prevent from showing the dropdown outside the screen
+		if ( offset[1] + height > this.element.outerHeight() ) {
+			props.my = 'left bottom';
+			offset[1] = offset[1] - 25;
+			props.offset = offset.join( ' ' );
 		}
 		menu.width( '' ).position( props );
 	}

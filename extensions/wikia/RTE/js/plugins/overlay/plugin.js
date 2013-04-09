@@ -251,7 +251,7 @@ RTE.overlay = {
 	// add overlay menu and block CKeditor context menu
 	add: function(node, items) {
 		var self = this.plugin;
-		
+
 		// store items
 		node.data('items', items);
 

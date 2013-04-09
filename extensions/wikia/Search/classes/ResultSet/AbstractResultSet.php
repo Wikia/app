@@ -149,7 +149,7 @@ abstract class AbstractResultSet implements Iterator, ArrayAccess
 	 * @return string
 	 */
 	public function getQuery() {
-		return $this->searchConfig->getQuery( Config::QUERY_ENCODED );
+		return $this->searchConfig->getQuery()->getQueryForHtml();
 	}
 	
 	/**

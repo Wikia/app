@@ -22,7 +22,8 @@ class MarketingToolboxModel extends WikiaModel {
 	protected $specialPageClass = 'SpecialPage';
 	protected $userClass = 'User';
 
-	protected $allowedTags = array('<a>');
+	// Tags that will NOT get stripped from curator-provided text
+	protected $allowedTags = array('<a>', '<br>');
 
 	public function __construct($app = null) {
 		parent::__construct();

@@ -10,7 +10,7 @@ $messages['en'] = array(
 	'imgplc-notinhistory-video' => 'You cannot add a video in history mode.',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -24,6 +24,18 @@ $messages['af'] = array(
 	'imgplc-add-image' => 'Voeg beeld by',
 	'imgplc-placeholder' => 'Plekhouer',
 	'imgplc-image' => 'Beeld',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'imgplc-add-image' => 'أضف صورة',
+	'imgplc-add-video' => 'أضف فيديو',
+	'imgplc-placeholder' => 'حامل صور',
+	'imgplc-image' => 'صورة',
+	'imgplc-notinhistory' => 'لا يمكنك إضافة صورة في وضع عرض التاريخ.',
+	'imgplc-notinhistory-video' => 'لا يمكنك إضافة فيديو في وضع عرض التاريخ.',
 );
 
 /** Asturian (asturianu)
@@ -317,6 +329,7 @@ $messages['ms'] = array(
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Nghtwlkr
  */
 $messages['nb'] = array(
 	'imgplc-add-image' => 'Legg til bilde',
@@ -324,6 +337,7 @@ $messages['nb'] = array(
 	'imgplc-placeholder' => 'Plassholder',
 	'imgplc-image' => 'Bilde',
 	'imgplc-notinhistory' => 'Du kan ikke legge til bilder i historikkmodus',
+	'imgplc-notinhistory-video' => 'Du kan ikke legge til en video i historikkmodus',
 );
 
 /** Dutch (Nederlands)
