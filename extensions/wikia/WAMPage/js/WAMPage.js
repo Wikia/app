@@ -46,6 +46,9 @@ WAMPage.prototype = {
 					selectOtherMonths: true,
 					minDate: minDate,
 					maxDate: maxDate,
+					dateFormat: (typeof window.wamFilterDateFormat !== 'undefined' && window.wamFilterDateFormat)
+						? window.wamFilterDateFormat
+						: undefined,
 					onSelect: $.proxy(function() {
 						if( $(this).closest('#WamFilterDate') ) {
 							WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: wgContentLanguage, filter: 'date'});

@@ -74,7 +74,12 @@ class WAMPageController extends WikiaController
 		}
 
 		$filterMinMaxDates = $this->model->getMinMaxIndexDate();
-		$this->wg->Out->addJsConfigVars(['wamFilterMinMaxDates' => $filterMinMaxDates]);
+		$this->wg->Out->addJsConfigVars(
+			[
+				'wamFilterMinMaxDates' => $filterMinMaxDates,
+				'wamFilterDateFormat' => $this->getJsDateFormat()
+			]
+		);
 		if (!empty($this->selectedDate)) {
 			$timestamp = strtotime($this->selectedDate);
 
@@ -92,6 +97,11 @@ class WAMPageController extends WikiaController
 				}
 			}
 		}
+	}
+
+	protected function getJsDateFormat() {
+		$format = $this->wg->ContLang->getDateFormatString( 'date', $this->wg->ContLang->dateFormat( true ) );
+		return DateFormatHelper::convertFormatToJqueryUiFormat($format);
 	}
 
 	protected function getIndexParams($forPaginator = false) {
