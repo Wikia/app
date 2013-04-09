@@ -144,7 +144,7 @@ class Hooks
 		self::$service = $service;
 		$targetId = $service->getCanonicalPageIdFromPageId( $target->getArticleId() );
 		if ( $targetId !== 0 ) {
-			$targetDocId = $service->getWikiId() . '_' . $service->getCanonicalPageIdFromPageId( $targetId );
+			$targetDocId = $service->getWikiId() . '_' . $targetId;
 			self::$outboundLinks[] = sprintf( "%s | %s", $targetDocId, strip_tags( $text ) );
 		}
 		return true;
