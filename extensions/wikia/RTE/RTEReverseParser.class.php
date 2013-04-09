@@ -41,12 +41,6 @@ class RTEReverseParser {
 	 */
 	private $nodeOutputs = array();
 
-	/**
-	 * Stores nodes that have had the fix for table cells applied to them.
-	 * @var array
-	 */
-	private $fixedTableCellNodes = array();
-
 	// node ID counter
 	private $nodeId = 0;
 
@@ -1534,7 +1528,6 @@ class RTEReverseParser {
 							!self::nextSiblingIs($node, 'sup')
 						) {
 							$out = "{$out}\n";
-							$fixedTableCellNodes[] = $node;
 						}
 						break;
 
@@ -1554,11 +1547,10 @@ class RTEReverseParser {
 		} else if (
 			// Break before lists if previous node is text node (RT #34043)
 			( self::isListNode( $node ) && self::previousSiblingIsTextNode( $node ) ) ||
-			// (BugId:11235, BugId:95911) Break before paragraphs created by newlines,
-			// as opposed to explicit <p> tags, but only in certain scenarios.
-			( $node->nodeName == 'p' && !self::wasHtml( $node ) && ( self::previousSiblingIsTextNode( $node ) ||
-				!self::isFirstChild( $node->previousSibling ) || in_array( $node->previousSibling, $this->fixedTableCellNodes )
-			) )
+			// (BugId:11235, BugId:95911) Fix paragraphs created by newlines.
+			( self::isNewlineParagraph( $node ) && !self::isNewlineParagraph( $node->previousSibling ) &&
+				( self::previousSiblingIsTextNode( $node ) || !self::isFirstChild( $node->previousSibling ) )
+			)
 		) {
 			$out = "\n{$out}";
 		}
@@ -1566,6 +1558,14 @@ class RTEReverseParser {
 		wfProfileOut(__METHOD__);
 
 		return $out;
+	}
+
+	/**
+	 * Checks if given node is a paragraph created by newlines
+	 * (as opposed to an explicit <p> tag).
+	 */
+	private function isNewlineParagraph( $node ) {
+		return $node->nodeName == 'p' && !self::wasHtml( $node );
 	}
 
 	/**
