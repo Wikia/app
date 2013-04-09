@@ -26,7 +26,11 @@ class EditPageNotice {
 	}
 
 	public function getMessageId() {
-		return (string)$this->messageId;
+		if (is_array($this->messageId)) {
+			return $this->messageId[0];
+		} else {
+			return (string)$this->messageId;
+		}
 	}
 
 	public function getHash() {

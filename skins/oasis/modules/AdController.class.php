@@ -17,6 +17,7 @@ class AdController extends WikiaController {
 
 		if(WikiaPageType::isWikiaHub() && AdEngine::isAdsEnabledOnWikiaHub()) {
 			self::$config['HUB_TOP_LEADERBOARD'] = true;
+			self::$config['INVISIBLE_SKIN'] = true;
 			self::$config['INVISIBLE_1'] = true;
 			self::$config['INVISIBLE_2'] = true;
 			return;
@@ -24,6 +25,7 @@ class AdController extends WikiaController {
 
 		if ($this->wg->EnableCorporatePageExt) {
 			self::$config['TOP_LEADERBOARD'] = true;
+			self::$config['INVISIBLE_SKIN'] = true;
 			self::$config['TOP_RIGHT_BOXAD'] = true;
 			self::$config['CORP_TOP_LEADERBOARD'] = true;
 			self::$config['CORP_TOP_RIGHT_BOXAD'] = true;
@@ -35,6 +37,7 @@ class AdController extends WikiaController {
 		if(WikiaPageType::isMainPage()) {
 			// main page
 			self::$config['HOME_TOP_LEADERBOARD'] = true;
+			self::$config['INVISIBLE_SKIN'] = true;
 			self::$config['INVISIBLE_1'] = true;
 			self::$config['INVISIBLE_2'] = true;
 			self::$config['PREFOOTER_LEFT_BOXAD'] = true;
@@ -50,6 +53,7 @@ class AdController extends WikiaController {
 			if(in_array($namespace, $wgContentNamespaces)) {
 				// content page
 				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['INVISIBLE_SKIN'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 				self::$config['MIDDLE_RIGHT_BOXAD'] = true;
@@ -65,11 +69,13 @@ class AdController extends WikiaController {
 			} else if($namespace == NS_FILE) {
 				// file/image page
 				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['INVISIBLE_SKIN'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
 				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if(WikiaPageType::isForum()) {
 				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['INVISIBLE_SKIN'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
 				self::$config['TOP_BUTTON_WIDE'] = true;
@@ -81,6 +87,7 @@ class AdController extends WikiaController {
 				if (empty($this->wg->EnableWikiaSearchAds)) {
 					// regular ads if search ads are disabled
 					self::$config['TOP_LEADERBOARD'] = true;
+					self::$config['INVISIBLE_SKIN'] = true;
 					self::$config['TOP_RIGHT_BOXAD'] = true;
 					self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 					self::$config['TOP_BUTTON'] = true;
@@ -91,17 +98,20 @@ class AdController extends WikiaController {
 			} else if($namespace == NS_SPECIAL) {
 				if($wgTitle->isSpecial('Leaderboard')) {
 					self::$config['TOP_LEADERBOARD'] = true;
+					self::$config['INVISIBLE_SKIN'] = true;
 					self::$config['TOP_RIGHT_BOXAD'] = true;
 					self::$config['TOP_BUTTON'] = true;
 					self::$config['TOP_BUTTON_WIDE'] = true;
 				} else if($wgTitle->isSpecial('Videos')) {
 					self::$config['TOP_LEADERBOARD'] = true;
+					self::$config['INVISIBLE_SKIN'] = true;
 					self::$config['TOP_BUTTON'] = true;
 					self::$config['TOP_BUTTON_WIDE'] = true;
 				}
 			} else if($namespace == NS_CATEGORY) {
 				// category page
 				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['INVISIBLE_SKIN'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 				self::$config['MIDDLE_RIGHT_BOXAD'] = true;
@@ -114,22 +124,26 @@ class AdController extends WikiaController {
 				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if($namespace == NS_PROJECT) {
 				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['INVISIBLE_SKIN'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
 				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if( BodyController::isBlogListing() ) {
 				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['INVISIBLE_SKIN'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
 				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if( BodyController::isBlogPost() ) {
 				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['INVISIBLE_SKIN'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
 				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if (array_key_exists($namespace, $wgExtraNamespaces)) {
 				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['INVISIBLE_SKIN'] = true;
 				self::$config['TOP_BUTTON'] = true;
 				self::$config['TOP_BUTTON_WIDE'] = true;
 			}
@@ -199,16 +213,6 @@ class AdController extends WikiaController {
 	}
 	
 	public function executeTop() {
-		if ($this->wg->EnableTopButton) {
-			if (strtolower($this->wg->EnableTopButton) == 'right') {
-				$this->topAdsExtraClasses = ' WikiaTopButtonRight';
-			}
-			else {
-				$this->topAdsExtraClasses = ' WikiaTopButtonLeft';
-			}
-		}
-		else {
-			$this->topAdsExtraClasses = '';
-		}
+
 	}
 }

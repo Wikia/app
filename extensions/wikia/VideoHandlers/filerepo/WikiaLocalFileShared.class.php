@@ -12,6 +12,7 @@ class WikiaLocalFileShared  {
 	var $videoId = '';
 	var $trackingArticleId = false;
 	var $embedCodeMaxHeight = false;
+	var $metadata = null;
 
 	function __construct( $oWikiaLocalFile ){
 		$this->oFile = $oWikiaLocalFile;
@@ -85,14 +86,15 @@ class WikiaLocalFileShared  {
 	}
 
 	public function getProviderName() {
-		if ( !empty( $this->oFile->metadata ) ) {
-			$metadata = unserialize( $this->oFile->metadata );
-			if ( !empty($metadata['provider']) ) {
-				return $metadata['provider'];
-			}
-		}
+		return $this->metaValue('provider', $this->oFile->minor_mime);
+	}
 
-		return $this->oFile->minor_mime;
+	/**
+	 * Get the metadata description field.  There is a description field on the image
+	 * table so this calls out that this grabs the metadata description
+	 */
+	public function getMetaDescription() {
+		return $this->metaValue('description');
 	}
 
 	public function getProviderDetailUrl() {
@@ -152,20 +154,10 @@ class WikiaLocalFileShared  {
 	}
 
 	function getVideoId(){
-		wfProfileIn( __METHOD__ );
-		if ( !empty( $this->videoId ) ) {
-			wfProfileOut( __METHOD__ );
-			return $this->videoId;
+		if ( empty( $this->videoId ) ) {
+			$this->videoId = $this->metaValue('videoId');
 		}
 
-		// check metadata
-		if ( !empty( $this->oFile->metadata ) ) {
-			$metadata = unserialize($this->oFile->metadata);
-			if (!empty($metadata['videoId'])) {
-				$this->videoId = $metadata['videoId'];
-			}
-		}
-		wfProfileOut( __METHOD__ );
 		return $this->videoId;
 	}
 
@@ -244,5 +236,29 @@ class WikiaLocalFileShared  {
 		return 	$this->oFile->getSize() == 0
 			? true
 			: $this->oFile->getHandler()->isBroken();
+	}
+
+	/**
+	 * Deserialize the file metadata once and serve up values when requested
+	 * @param $key string The metadata key to retrieve
+	 * @param $default string What to return if there is no value set
+	 */
+	function metaValue( $key, $default = '' ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( empty($this->metadata) ) {
+			if ( !empty( $this->oFile->metadata ) ) {
+				$this->metadata = unserialize( $this->oFile->metadata );
+			}
+		}
+
+		if ( !empty($this->metadata[$key]) ) {
+			$value = $this->metadata[$key];
+		} else {
+			$value = $default;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $value;
 	}
 }

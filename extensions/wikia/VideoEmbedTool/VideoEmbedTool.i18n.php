@@ -12,11 +12,6 @@ $messages['en'] = array(
 	'vet-upload-btn' => 'Add',
 	'vet-find-btn' => 'Search',
 	'vet-flickr-inf' => 'Search properly licensed free photos from Flickr and import them into your wiki.',
-	'vet-conflict-inf' => '<h1>Oops, a video with that name already exists.</h1>What do you want to do about <b>$1</b>?',
-	'vet-rename' => 'Rename video',
-	'vet-existing' => 'Use existing video',
-	'vet-overwrite' => 'Overwrite the existing video with yours',
-	'vet-insert' => 'Insert',
 	'vet-details-inf' => '<h1>File details</h1>Specify a name for this video. Make it something descriptive.',
 	'vet-name' => 'Name',
 	'vet-license' => 'License',
@@ -27,7 +22,7 @@ $messages['en'] = array(
 	'vet-fullsize' => 'Full-size ($1x$2px)',
 	'vet-width' => 'Width',
 	'vet-layout' => 'Position',
-	'vet-style' => 'Style',
+	'vet-style' => 'Caption',
  	'vet-caption' => 'Caption',
  	'vet-no-caption' => 'No caption',
 	'vet-optional' => ' (Optional)',
@@ -96,6 +91,11 @@ $messages['en'] = array(
 	'vet-search-filter-caption' => 'Search filter',
 	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com Wikia Video Library] for high quality videos licensed by Wikia.',
 	'vet-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
+	'vet-description-placeholder' => 'Add a description for your video',
+	'vet-description-label' => 'Description',
+	'vet-description-help-text' => 'The description will be displayed on the File page.',
+	'vet-details-about-video' => 'About this video',
+	'vet-description-save-error' => 'There was an error while saving the video description',
 );
 
 /** Message documentation (Message documentation)
@@ -138,9 +138,13 @@ $messages['qqq'] = array(
 	'vet-search-results-WVL' => 'Number of results found for keyword in Wikia Video Library. $1 = number, $2 = keyword',
 	'vet-search-results-local' => 'Number of results found for keyword on local wiki. $1 = number, $2 = keyword',
 	'vet-center' => 'Label for video center position layout option',
-	'vet-style' => 'Style label in display options (plain image or with border and caption)',
+	'vet-style' => 'This is the label that displays the input option of whether to display a caption or not when the video appears in an article (plain image or with border and caption)',
 	'vet-no-caption' => 'Info that no caption is available for plain image style option',
-	'vet-video-wiki' => 'dropdown label for search filter - Wikia Video Library'
+	'vet-video-wiki' => 'dropdown label for search filter - Wikia Video Library',
+	'vet-description-placeholder' => 'When adding a video to a wiki or article, the user has the option of adding a description for the video.  The description will show up on that video\'s file page.  This is the placeholder text for the description textarea.',
+	'vet-description-label' => 'This is the form label for the textarea where users can add a description to a video when adding it to their article.',
+	'vet-description-help-text' => 'This help text is found above the description textarea when adding a video to an article or wiki.  It\'s important to make it clear to the user that the description text will not appear in their article.',
+	'vet-details-about-video' => 'this is header text for the section in the video embed tool where users can edit the name and description of the video.',
 );
 
 /** Abkhazian (Аҧсшәа)
@@ -991,7 +995,7 @@ $messages['he'] = array(
 	'vet-imagebutton' => 'הוספת סרטונים',
 	'vet-license-cc' => 'רשיון לפי Creative Commons Attribution Share-Alike 3.0',
 	'vet-name-incorrect' => 'שם הסרטון מכיל תווים לא חוקיים',
-	'vet-uploadtext' => "'''טופס זה מאפשר לך להעלות ולהציג קבצי הדפים בקלות.''' 
+	'vet-uploadtext' => "'''טופס זה מאפשר לך להעלות ולהציג קבצי הדפים בקלות.'''
 
 ''ראו גם  [[Special:Log/upload|יומן העלאות]] ו[[Special:ImageList|רשימת כל הקבצים באתר]].''",
 	'vet-show-message' => 'הצגת הודעה',

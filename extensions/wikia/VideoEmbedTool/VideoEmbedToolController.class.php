@@ -4,7 +4,7 @@ class VideoEmbedToolController extends WikiaController {
 
 	const VIDEO_THUMB_DEFAULT_WIDTH = 160;
 	const VIDEO_THUMB_DEFAULT_HEIGHT = 90;
-	
+
 	public function modal() {
 		// empty on purpose
 	}
@@ -33,12 +33,12 @@ class VideoEmbedToolController extends WikiaController {
 			$svStart = $this->request->getInt( 'svStart', 0 );
 			$svSize = $this->request->getInt( 'svSize', 20 );
 			$trimTitle = $this->request->getInt( 'trimTitle', 0 );
-			
+
 			$articleId         = $this->request->getInt('articleId', 0 );
 			$article           = ( $articleId > 0 ) ? F::build( 'Article', array( $articleId ), 'newFromId' ) : null;
 			$articleTitle      = ( $article !== null ) ? $article->getTitle() : '';
 			$wikiTitleSansWiki = preg_replace( '/\bwiki\b/i', '', $this->wg->Sitename );
-			
+
 			$wikiaSearchConfig = new Wikia\Search\Config();
 			$wikiaSearchConfig  ->setStart( $svStart )
 								->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
@@ -47,16 +47,16 @@ class VideoEmbedToolController extends WikiaController {
 								->setNamespaces( array( NS_FILE ) )
 								->setQuery( $articleTitle . ' ' . $wikiTitleSansWiki );
 
-			
+
 			$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
-			$search = Wikia\Search\QueryService\Factory::getInstance()->get( $container );
+			$search = (new Wikia\Search\QueryService\Factory)->get( $container );
 			$response = $search->search();
-			
+
 			if ( $response->getResultsFound() == 0 ) {
-				$wikiaSearchConfig->setQuery( $articleTitle == '' ? $wikiTitleSansWiki : $articleTitle ); 
+				$wikiaSearchConfig->setQuery( $articleTitle == '' ? $wikiTitleSansWiki : $articleTitle );
 				$response = $search->search();
 			}
-			
+
 			//TODO: fill $currentVideosByTitle array with unwated videos
 			$currentVideosByTitle = array();
 
@@ -99,14 +99,14 @@ class VideoEmbedToolController extends WikiaController {
 		}
 
 		if ( !empty( $phrase ) && strlen( $phrase ) > 0 ) {
-			
-			$requestedFields = $this->wg->ContLang->mCode == 'en' 
+
+			$requestedFields = $this->wg->ContLang->mCode == 'en'
 							? array( 'pageid' ) // get English for free
 							: array( 'pageid', Wikia\Search\Utilities::field( 'title', 'en' ), Wikia\Search\Utilities::field( 'html', 'en' ) );
-							  
+
 			$wikiaSearchConfig->setQuery( $phrase )
 							  ->setRequestedFields( array_merge( $wikiaSearchConfig->getRequestedFields(), $requestedFields ) );
-			
+
 			$search = (new Wikia\Search\QueryService\Factory)->getFromConfig( $wikiaSearchConfig );
 
 			$searchResults = $search->search();
@@ -183,7 +183,7 @@ class VideoEmbedToolController extends WikiaController {
 		// luckily in this case - when there is only one page of results - we
 		// can count the exact number of videos ourselves
 		if (!$svStart && ( count( $data ) < $svSize ) ) $totalItemCount = count( $data );
-		return array( 'totalItemCount' => $totalItemCount, 'nextStartFrom' => $nextStartFrom, 'items' => $data );	
+		return array( 'totalItemCount' => $totalItemCount, 'nextStartFrom' => $nextStartFrom, 'items' => $data );
 	}
 
 	public function getEmbedCode() {
@@ -204,4 +204,28 @@ class VideoEmbedToolController extends WikiaController {
 
 		$this->response->setData( $data );
 	}
+
+	/**
+	 * Modify the description of a video
+	 * @requestParam string title
+	 * @requestParam string description
+	 * @responseParam string status [success/fail]
+	 * @responseParam string errMsg
+	*/
+	public function editDescription() {
+		$title = urldecode( $this->request->getVal('title') );
+		$title = Title::newFromText($title, NS_FILE);
+
+		$description = urldecode( $this->request->getVal('description') );
+		$vet = new VideoEmbedTool();
+		$status = $vet->setVideoDescription($title, $description);
+
+		if ($status) {
+			$this->status = 'success';
+		} else {
+			$this->status = 'fail';
+			$this->errMsg = wfMessage('vet-description-save-error')->text();
+		}
+	}
+
 }

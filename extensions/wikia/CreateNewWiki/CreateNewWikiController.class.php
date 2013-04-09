@@ -227,28 +227,15 @@ class CreateNewWikiController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$text = $wgRequest->getVal('text','');
-		$blockedKeywords = array();
-
-		$filters = Phalanx::getFromFilter( Phalanx::TYPE_CONTENT );
-		foreach( $filters as $filter ) {
-			$result = Phalanx::isBlocked( $text, $filter );
-			if($result['blocked']) {
-				$blockedKeywords[] = $result['msg'];
-			}
-		}
+		$blockedKeyword = '';
+		
+		wfRunHooks( 'CheckContent', array( $text, &$blockedKeyword ) );
 
 		$this->msgHeader = '';
 		$this->msgBody = '';
-		if(count($blockedKeywords) > 0) {
-			$keywords = '';
-			for ($i = 0; $i < count($blockedKeywords); $i++) {
-				if($i != 0) {
-					$keywords .= ', ';
-				}
-				$keywords .= $blockedKeywords[$i];
-			}
+		if ( !empty( $blockedKeyword ) ) {
 			$this->msgHeader = wfMsg('cnw-badword-header');
-			$this->msgBody = wfMsg('cnw-badword-msg', $keywords);
+			$this->msgBody = wfMsg('cnw-badword-msg', $blockedKeyword);
 		}
 
 		wfProfileOut( __METHOD__ );

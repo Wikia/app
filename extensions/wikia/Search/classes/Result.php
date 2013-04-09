@@ -25,7 +25,7 @@ class Result extends ReadWrite {
 	 */
 	public function __construct( $fields = array(), $boosts = array() ) {
 		parent::__construct( $fields, $boosts );
-		$this->service = new MediaWikiService;
+		$this->service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 	}
 	
 	/**
@@ -166,10 +166,11 @@ class Result extends ReadWrite {
 							preg_replace('/ ?\.{2,3}$/', '', 
 							preg_replace('/ ?&hellip;$/', '',
 							str_replace('�', '', $text)))))));
-		return strlen($text) > 0 && $addEllipses 
+		$text = strlen($text) > 0 && $addEllipses 
 				? preg_replace('/(<\/span)$/', '$1>', preg_replace('/[[:punct:]]+$/', '', $text)).'&hellip;' 
 				: $text;
-
+		$text = strip_tags( $text, '<span>' );
+		return $text;
 	}
 
 	/**
@@ -206,13 +207,31 @@ class Result extends ReadWrite {
 	 */
 	public function toArray( $keys ) {
 		$array = array();
-		foreach ( $this->_fields as $key => $value )
-		{
-			if( in_array( $key, $keys ) ) {
-				$array[$key] = $value;
-			}
+		foreach ( $keys as $key ) {
+			$array[$key] = $this[$key];
 		}
 		return $array;
+	}
+	
+	/**
+	 * Allows us to overload parent offsetGet with getTitle(), getText(), etc.
+	 * This is good when using $result->toArray()
+	 * @see Solarium_Document_ReadOnly::offsetGet()
+	 */
+	public function offsetGet( $key ) {
+		$value = null;
+		$nolangKey = array_shift( explode( '_', $key ) );
+		switch ( $nolangKey ) {
+		    case 'title':
+		    	$value = $this->getTitle(); break;
+		    case 'text':
+		    	$value = $this->getText(); break;
+		    case 'videoViews':
+		    	$value = $this->getVideoViews(); break;
+		    default:
+		    	$value = parent::offsetGet( Utilities::field( $nolangKey ) );
+		}
+		return $value;
 	}
 	
 	/**

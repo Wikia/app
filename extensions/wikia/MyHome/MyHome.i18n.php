@@ -101,7 +101,7 @@ For example, you could:
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|one message|$1 messages}}',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author EugeneZelenko
  * @author McDutchie
  * @author Shirayuki
@@ -484,6 +484,7 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
 /** Catalan (català)
  * @author Anskar
  * @author BroOk
+ * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'myhome-desc' => "Una pàgina d'inici privada pels usuaris registrats.",
@@ -542,6 +543,22 @@ Proveu-ho!',
 	'myhome-community-corner-header' => 'Missatges de la Comunitat',
 	'oasis-myhome-community-corner-edit' => 'editar el missatge &gt;',
 	'myhome-community-corner-edit' => 'editar el missatge',
+	'community-corner' => "'''Benvingut a la Meva pàgina d'inici!'''
+
+Aquesta pàgina t'ajudarà a mantenir-te al dia sobre el que està passant en el wiki.
+
+Si ets el fundador o un administrador d'aquest wiki, pots canviar aquest missatge per explicar-li a la comunitat quines coses importants estan passant en el lloc.
+Per exemple, pots:
+
+* Organitzar un projecte per construir una àrea del wiki
+
+* Mostrar algunes pàgines noves que tots deurien veure
+
+* Fer que la gent s'involucri en una discussió que està passant en el lloc
+
+* Anunciar a un editor que ha afegit quelcom especial al wiki
+
+* O sol per publicar algunes paraules que encoratgin l'edició!",
 	'myhome-hot-spots-definition' => "Pàgines amb més editors {{PLURAL:$1|a l'últim dia|als últims $1 dies}}.",
 	'myhome-default-view-checkbox' => 'Fer de $1 la meva vista per defecte',
 	'myhome-default-view-success' => "Perfecte, així serà a partir d'ara",
@@ -2223,6 +2240,7 @@ Du kan bruke overvåkningslisten for å holde styr på siste endringer på sider
 	'myhome-hot-spots-feed-empty' => "Denne wikien venter på at du skal bli involvert.
 Klikk på '''[[Special:CreatePage|Ny side]]''' for å begynne å skrive.",
 	'myhome-hot-spots-newest' => 'Nye sider på wikien',
+	'tog-userlandingpage' => 'Målside:',
 	'prefs-myhome' => 'Mitt hjem',
 	'myhome-feed-newpage' => 'ny side',
 	'myhome-feed-edit' => 'redigert',

@@ -25,4 +25,11 @@ if ($wg->EnableTopButtonWide) {
 ?>
 
 </div>
+
+<?php
+
+echo $app->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_SKIN'));
+
+?>
+
 </div>

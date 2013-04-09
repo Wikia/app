@@ -385,31 +385,14 @@ class UserIdentityBox {
 	 * @return string empty string if text was blocked; given text otherwise
 	 * @FIXME this needs to be MOVED to Phalanx and called using hooks
 	 */
-	private function doPhalanxFilter($text, $type = null) {
+	private function doPhalanxFilter( $text, $type = Phalanx::TYPE_CONTENT ) {
 		$this->app->wf->ProfileIn(__METHOD__);
 
-		if (!empty($this->app->wg->EnablePhalanxExt) && !empty($text)) {
-			if (is_null($type)) {
-				$type = Phalanx::TYPE_CONTENT;
-			} else {
-				//fb#23473
-				$type = constant("Phalanx::$type");
-			}
-
-			$filters = Phalanx::getFromFilter($type);
-
-			foreach ($filters as $filter) {
-				$result = Phalanx::isBlocked($text, $filter);
-
-				if ($result['blocked']) {
-					$this->app->wf->ProfileOut(__METHOD__);
-					return '';
-				}
-			}
-		}
+		$blockData = array();
+		$res = wfRunHooks('SpamFilterCheck', array($text, $type, &$blockData));
 
 		$this->app->wf->ProfileOut(__METHOD__);
-		return $text;
+		return $res === true ? $text : '';
 	}
 
 	/**

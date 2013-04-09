@@ -35,8 +35,14 @@
 				// Click on text link
 				CLICK_LINK_TEXT: 'click-link-text',
 
+				// Generic hover
+				HOVER: 'hover',
+
 				// impression of item on page/module
 				IMPRESSION: 'impression',
+
+				// Generic keypress
+				KEYPRESS: 'keypress',
 
 				// Video play
 				PLAY_VIDEO: 'play-video',

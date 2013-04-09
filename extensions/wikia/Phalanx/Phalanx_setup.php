@@ -62,7 +62,9 @@ function efPhalanxInit() {
 	// former RegexBlock (TYPE_USER)
 	$wgHooks['GetBlockedStatus'][] = 'UserBlock::blockCheck';
 	$wgHooks['GetBlockedStatus'][] = 'UserCookieBlock::blockCheck';
-
+	$wgHooks['EditPhalanxBlock'][] = 'ContentBlock::onEditPhalanxBlock';
+	$wgHooks['DeletePhalanxBlock'][] = 'ContentBlock::onDeletePhalanxBlock';
+	
 	// don't bother initializing hooks if user is immune to Phalanx
 	if ( $wgUser->isAllowed( 'phalanxexempt' ) ) {
 		wfDebug(__METHOD__.": user has 'phalanxexempt' right - no block will be applied\n");
@@ -103,6 +105,10 @@ function efPhalanxInit() {
 	// fb#5311 - prevent a phalanx blocked name from being created.
 	$wgHooks['AbortNewAccount'][] = 'UserBlock::onAbortNewAccount';
 	$wgHooks['cxValidateUserName'][] = 'UserBlock::onValidateUserName';
+	
+	// new PhalanxII hooks
+	$wgHooks['CheckContent'][] = 'ContentBlock::onCheckContent';
+	$wgHooks['SpamFilterCheck'][] = 'ContentBlock::onSpamFilterCheck';
 }
 
 

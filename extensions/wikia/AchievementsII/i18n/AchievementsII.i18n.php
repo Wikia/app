@@ -298,7 +298,7 @@ Click on "{{int:blogs-recent-url-text}}" in the sidebar, and then the link on th
 	'achievements-badge-to-get-blogcomment-details' => 'Add your two cents!
 Read any of the recent blog posts, and write your thoughts in the comments box.',
 	'achievements-badge-to-get-love-details' => 'The counter resets if you miss a day, so be sure to come back to the wiki every day!',
-	'achievements-badge-to-get-welcome-details' => 'Click the "{{int:autocreatewiki-create-account}}" button at the top right to join the community.
+	'achievements-badge-to-get-welcome-details' => 'Click the "{{int:oasis-signup}}" button at the top right to join the community.
 You can start earning your own badges!',
 	'achievements-badge-to-get-introduction-details' => 'Is your user page empty?
 Click on your user name at the top of the screen to see.
@@ -1249,7 +1249,7 @@ Klikit war "{{int:blogs-recent-url-text}}" ar barenn kostez ha goude war al liam
 	'achievements-badge-to-get-blogcomment-details' => "Kemerit perzh !
 Lennit ur blogadenn eus ar re nevez ha roit oc'h ali e maezienn an evezhiadennoù.",
 	'achievements-badge-to-get-love-details' => "Adderaouekaat e vez ar c'honter ma c'hwitit un devezh. Bezit sur distreiñ bemdez war ar wiki !",
-	'achievements-badge-to-get-welcome-details' => 'Klikit war ar bouton "{{int:autocreatewiki-create-account}}" en nec\'h a zehou evit dont er gumuniezh.
+	'achievements-badge-to-get-welcome-details' => 'Klikit war ar bouton "{{int:oasis-signup}}" en nec\'h a zehou evit dont er gumuniezh.
 Gellout a rit kregiñ da c\'hounid ho badjoù !',
 	'achievements-badge-to-get-introduction-details' => 'Goullo eo ho pajenn implijer ?
 Klikit war ho anv implijer e penn uhelañ ar skramm evit gwelet.
@@ -2003,7 +2003,7 @@ Klicke auf „{{int:blogs-recent-url-text}}“ in der Sidebar und danach den Lin
 	'achievements-badge-to-get-blogcomment-details' => 'Gib deinen Senf dazu!
 Lies einen der aktuellen Blog-Posts und schreib deine Meinung in das Kommentarfeld!',
 	'achievements-badge-to-get-love-details' => 'Der Zähler geht auf null zurück, wenn du einen Tag verpasst. Komm also jeden Tag zum Wiki zurück!',
-	'achievements-badge-to-get-welcome-details' => 'Klick auf den „{{int:autocreatewiki-create-account}}“-Button oben rechts, um der Gemeinschaft beizutreten.
+	'achievements-badge-to-get-welcome-details' => 'Klick auf den „{{int:oasis-signup}}“-Button oben rechts, um der Gemeinschaft beizutreten.
 Du kannst dir dann sofort eigene Auszeichnungen verdienen.',
 	'achievements-badge-to-get-introduction-details' => 'Ist deine Benutzerseite leer?
 Klicke auf deinen Benutzernamen oben rechts, um nachzusehen!
@@ -2162,7 +2162,7 @@ Klicken Sie auf „{{int:blogs-recent-url-text}}“ in der Sidebar und danach de
 	'achievements-badge-to-get-blogcomment-details' => 'Machen Sie ihre Meinung laut!
 Lesen Sie einen der aktuellen Blog-Posts und schreiben Sie Ihre Meinung in das Kommentarfeld!',
 	'achievements-badge-to-get-love-details' => 'Der Zähler geht auf null zurück, wenn Sie einen Tag auslassen. Sie sollten also jeden Tag das Wiki aufsuchen.',
-	'achievements-badge-to-get-welcome-details' => 'Klicken Sie auf den „{{int:autocreatewiki-create-account}}“-Button oben rechts, um der Gemeinschaft beizutreten.
+	'achievements-badge-to-get-welcome-details' => 'Klicken Sie auf den „{{int:oasis-signup}}“-Button oben rechts, um der Gemeinschaft beizutreten.
 Sie können sich dann sofort eigene Auszeichnungen verdienen.',
 	'achievements-badge-to-get-introduction-details' => 'Ist Ihre Benutzerseite leer?
 Klicken Sie auf Ihren Benutzernamen oben rechts, um nachzusehen!
@@ -2551,7 +2551,7 @@ Echa un vistazo a este logro de lujo en tu <a href="$5">perfil de usuario</a>.',
 	'achievements-badge-to-get-blogcomment-details' => '¡Añade tu granito de arena!
 Lee cualquiera de las entradas de blog, y escribe tus propias opiniones en los comentarios.',
 	'achievements-badge-to-get-love-details' => '¡El contador se reinicia si dejas de editar durante un día, asegúrate de volver al wiki cada día!',
-	'achievements-badge-to-get-welcome-details' => 'Haz clic en el botón "{{int:autocreatewiki-create-account}}" arriba a la derecha para participar en la comunidad. ¡Así podrás comenzar a ganar tus propios logros!',
+	'achievements-badge-to-get-welcome-details' => 'Haz clic en el botón "{{int:oasis-signup}}" arriba a la derecha para participar en la comunidad. ¡Así podrás comenzar a ganar tus propios logros!',
 	'achievements-badge-to-get-introduction-details' => '¿Tu página de usuario está vacía? Haz clic en tu nombre de usuario al comienzo de la pantalla para verla. ¡Haz clic en "{{int:edit}}" para añadir algo de información sobre ti!',
 	'achievements-badge-to-get-sayhi-details' => 'Puede dejar mensajes a otros usuarios haciendo clic en "{{int:addsection}}" en su página de discusión.
 Pida ayuda, agradezca su trabajo o simplemente diga ¡hola!',
@@ -2894,7 +2894,7 @@ $messages['fa'] = array(
 	'achievements-badge-to-get-blogcomment-details' => 'دو سنت خود را بیفزایید!
 یکی از آخرین پست‌های وبلاگ را بخوانید، و افکار خود را در بخش جعبهٔ نظرات بنویسید.',
 	'achievements-badge-to-get-love-details' => 'در صورتی که یک روز را از دست بدهید شمارشگر ازنو خواهد شد، بنابراین مطمئن باشید که هر روز به ویکی سر بزنید!',
-	'achievements-badge-to-get-welcome-details' => 'بر دکمهٔ «{{int:autocreatewiki-create-account}}» در بالا سمت چپ برای پیوستن به جامعه کلیک کنید.
+	'achievements-badge-to-get-welcome-details' => 'بر دکمهٔ «{{int:oasis-signup}}» در بالا سمت چپ برای پیوستن به جامعه کلیک کنید.
 شما می‌توانید شروع به کسب نشان‌های خود بکنید!',
 	'achievements-badge-to-get-introduction-details' => 'آیا صفحهٔ کاربری‌تان خالی است؟
 بر نام کاربری خود در بالای صفحه برای دیدن کلیک کنید.
@@ -3360,7 +3360,7 @@ Cliquez sur « {{int:blogs-recent-url-text}} » dans la barre latérale et ensui
 	'achievements-badge-to-get-blogcomment-details' => 'Ajoutez votre grain de sel !
 Lisez un des billets de blog récents et donnez votre avis dans le champ commentaires.',
 	'achievements-badge-to-get-love-details' => 'Le compteur se réinitialise si vous ratez un jour, assurez-vous de revenir sur le wiki tous les jours !',
-	'achievements-badge-to-get-welcome-details' => 'Cliquez sur le bouton « {{int:autocreatewiki-create-account}} » en haut à droite pour rejoindre la communauté.
+	'achievements-badge-to-get-welcome-details' => 'Cliquez sur le bouton « {{int:oasis-signup}} » en haut à droite pour rejoindre la communauté.
 Vous pourrez commencer à gagner vos propres badges !',
 	'achievements-badge-to-get-introduction-details' => 'Votre page utilisateur est vide ?
 Cliquez sur votre nom d’utilisateur en haut de l’écran pour voir.
@@ -3666,7 +3666,7 @@ Prema en "{{int:blogs-recent-url-text}}" na barra lateral e logo na ligazón á 
 	'achievements-badge-to-get-blogcomment-details' => 'Poña o seu gran de area!
 Lea calquera das mensaxe de blogue recentes e escriba o que pensa na caixa de comentarios.',
 	'achievements-badge-to-get-love-details' => 'O contador reiníciase se deixa de editar un día. Asegúrese de volver ao wiki todos os días!',
-	'achievements-badge-to-get-welcome-details' => 'Prema sobre o botón "{{int:autocreatewiki-create-account}}" no canto superior dereito para unirse á comunidade.
+	'achievements-badge-to-get-welcome-details' => 'Prema sobre o botón "{{int:oasis-signup}}" no canto superior dereito para unirse á comunidade.
 Pode comezar a gañar as súas propias insignias!',
 	'achievements-badge-to-get-introduction-details' => 'A súa páxina de usuario está baleira?
 Prema no seu nome de usuario na parte superior da pantalla para comprobalo.
@@ -4075,7 +4075,7 @@ Kattints a ''{{int:categoryselect-addcategory-button}}'' gombra az oldal alján 
 	'achievements-badge-to-get-blogpost-details' => 'Írd meg véleményedet és kérdéseidet!
 Kattints a "{{int:blogs-recent-url-text}}" hivatkozásra az oldalsávban, majd a baloldali linkre, hogy "{{int:create-blog-post-title}}".',
 	'achievements-badge-to-get-love-details' => 'A számláló nullázódik, ha kihagysz egy napot, úgyhogy térj vissza a wikihez minden nap!',
-	'achievements-badge-to-get-welcome-details' => 'Kattints a "{{int:autocreatewiki-create-account}}" gombra a jobb felső sarokban a közösséghez való csatlakozáshoz&mdash;így elkezdhetsz jelványeket gyűjteni!',
+	'achievements-badge-to-get-welcome-details' => 'Kattints a "{{int:oasis-signup}}" gombra a jobb felső sarokban a közösséghez való csatlakozáshoz&mdash;így elkezdhetsz jelványeket gyűjteni!',
 	'achievements-badge-to-get-introduction-details' => 'Üres a felhasználói lapod?
 Kattints a felhasználónevedre a képernyő tetején az ellenőrzéshez.
 Klikkelj a "{{int:edit}}"  gombra, hogy információt addhass meg magadról!',
@@ -4370,7 +4370,7 @@ Clicca super "{{int:blogs-recent-url-text}}" in le barra lateral, e postea super
 	'achievements-badge-to-get-blogcomment-details' => 'Adde tu grano de sal!
 Lege un del recente articulos de blog, e scribe tu pensamentos in le quadro a commentos.',
 	'achievements-badge-to-get-love-details' => 'Le contator se reinitialisa si tu perde un die, dunque assecura te de revenir al wiki cata die!',
-	'achievements-badge-to-get-welcome-details' => 'Clicca super le button "{{int:autocreatewiki-create-account}}" in alto a dextra pro junger te al communitate.
+	'achievements-badge-to-get-welcome-details' => 'Clicca super le button "{{int:oasis-signup}}" in alto a dextra pro junger te al communitate.
 Tu pote comenciar a ganiar tu proprie insignias!',
 	'achievements-badge-to-get-introduction-details' => 'Tu pagina de usator es vacue?
 Clicca super tu nomine de usator in alto del schermo pro vider lo.
@@ -4874,7 +4874,7 @@ Clicca su "{{int:blogs-recent-url-text}}" nella colonna laterale e poi sul link 
 	'achievements-badge-to-get-blogcomment-details' => 'Dii la tua!
 Leggi un qualsiasi blog post recente e scrivi quello che pensi nella sezione dei commenti.',
 	'achievements-badge-to-get-love-details' => 'Il contatore viene resettato se salti un giorno, perciò cerca di tornare nella wiki ogni giorno!',
-	'achievements-badge-to-get-welcome-details' => 'Clicca sul pulsante "{{int:autocreatewiki-create-account}}" in alto a destra per unirti alla community.
+	'achievements-badge-to-get-welcome-details' => 'Clicca sul pulsante "{{int:oasis-signup}}" in alto a destra per unirti alla community.
 Puoi iniziare a guadagnare le medaglie anche tu!',
 	'achievements-badge-to-get-introduction-details' => 'La tua pagina utente è vuota?
 Clicca sul tuo nome utente in cima allo schermo per controllare.
@@ -6004,7 +6004,7 @@ $5',
 Кликнете на „{{int:blogs-recent-url-text}}“ во страничната лента, а потоа на врската лево за „{{int:create-blog-post-title}}“.',
 	'achievements-badge-to-get-blogcomment-details' => 'Искажете се! Прочитајте некој од скорешните блог-записи и запишете ги вашите размисли во полето за коментари.',
 	'achievements-badge-to-get-love-details' => 'Бројачот се враќа почеток ако пропуштите ден, па затоа навраќајте на викито секој ден!',
-	'achievements-badge-to-get-welcome-details' => 'Кликнете на копчето „{{int:autocreatewiki-create-account}}“ во горниот десен агол за да се приклучите кон заеднцата.
+	'achievements-badge-to-get-welcome-details' => 'Кликнете на копчето „{{int:oasis-signup}}“ во горниот десен агол за да се приклучите кон заеднцата.
 Потоа можете да почнете да си печалите значки!',
 	'achievements-badge-to-get-introduction-details' => 'Дали ви е празна корисничката страница?
 Кликнете на вашето корисничко име најгоре за да видите.
@@ -6359,7 +6359,7 @@ Klik pada "{{int:blogs-recent-url-text}}" dalam bar sisi, kemudian klik pautan d
 	'achievements-badge-to-get-blogcomment-details' => 'Luahkan pendapat anda!
 Baca mana-mana kiriman blog terkini, dan tuliskan nukilan hati anda dalam ruangan ulasan.',
 	'achievements-badge-to-get-love-details' => 'Pembilang mereset jika anda terlepas sehari, jadi anda harus kembali ke wiki ini setiap hari!',
-	'achievements-badge-to-get-welcome-details' => 'Klik butang "{{int:autocreatewiki-create-account}}" di kanan atas untuk menyertai komuniti.
+	'achievements-badge-to-get-welcome-details' => 'Klik butang "{{int:oasis-signup}}" di kanan atas untuk menyertai komuniti.
 Anda boleh bermula meraih lencana sendiri!',
 	'achievements-badge-to-get-introduction-details' => 'Adakah laman pengguna anda kosong?
 Klik nama pengguna anda di atas skrin untuk tengok.
@@ -6719,7 +6719,7 @@ Trykk på «{{int:categoryselect-addcategory-button}}»-knappen på bunnen av en
 Trykk på «{{int:blogs-recent-url-text}}» i sidepanelet, og så lenken til venstre for Opprett et nytt «{{int:create-blog-post-title}}».',
 	'achievements-badge-to-get-blogcomment-details' => 'Legg til din mening! Les et hvilken som helst av de siste blogginnleggene, og skriv dine tanker i kommentarfeltet.',
 	'achievements-badge-to-get-love-details' => 'Telleren tilbakestilles hvis du går glipp av en dag, så sørg for å komme tilbake til wikien hver dag!',
-	'achievements-badge-to-get-welcome-details' => 'Trykk på «{{int:autocreatewiki-create-account}}»-knappen øverst til høyre for å bli med i fellesskapet.
+	'achievements-badge-to-get-welcome-details' => 'Trykk på «{{int:oasis-signup}}»-knappen øverst til høyre for å bli med i fellesskapet.
 Du kan begynne å motta egne utmerkelser!',
 	'achievements-badge-to-get-introduction-details' => 'Er brukersiden din tom? Trykk på brukernavnet ditt på toppen av skjermen for å sjekke.
 Trykk «{{int:edit}}» for å legge til litt informasjon om deg selv!',
@@ -7016,7 +7016,7 @@ Klik op "{{int:blogs-recent-url-text}}" in het menu en daarna op de verwijzing "
 	'achievements-badge-to-get-blogcomment-details' => 'Laat uw mening gelden!
 Lees de recente blogberichten en schrijf uw gedachten op in het opmerkingenveld.',
 	'achievements-badge-to-get-love-details' => 'De teller wordt op nul gezet als u een dag mist, dus zorg ervoor dat u iedere dag naar de wiki komt!',
-	'achievements-badge-to-get-welcome-details' => 'Klik op de knop "{{int:autocreatewiki-create-account}}" rechts bovenaan om bij de gemeenschap te komen.
+	'achievements-badge-to-get-welcome-details' => 'Klik op de knop "{{int:oasis-signup}}" rechts bovenaan om bij de gemeenschap te komen.
 U kunt nu beginnen met het verzamelen van speldjes!',
 	'achievements-badge-to-get-introduction-details' => 'Is uw gebruikerspagina leeg?
 Klik op uw gebruikersnaam bovenaan het scherm om te kijken of dat zo is.
@@ -7162,7 +7162,7 @@ Klik op "{{int:blogs-recent-url-text}}" in het menu en daarna op de verwijzing "
 	'achievements-badge-to-get-blogcomment-details' => 'Laat je mening gelden!
 Lees de recente blogberichten en schrijf je gedachten op in het opmerkingenveld.',
 	'achievements-badge-to-get-love-details' => 'De teller wordt op nul gezet als je een dag mist, dus zorg ervoor dat je iedere dag naar de wiki komt!',
-	'achievements-badge-to-get-welcome-details' => 'Klik op de knop "{{int:autocreatewiki-create-account}}" rechts bovenaan om bij de gemeenschap te komen.
+	'achievements-badge-to-get-welcome-details' => 'Klik op de knop "{{int:oasis-signup}}" rechts bovenaan om bij de gemeenschap te komen.
 Je kunt nu beginnen met het verzamelen van speldjes!',
 	'achievements-badge-to-get-introduction-details' => 'Is je gebruikerspagina leeg?
 Klik op je gebruikersnaam bovenaan het scherm om te kijken of dat zo is.
@@ -7504,7 +7504,7 @@ Kliknij na "{{int:blogs-recent-url-text}}" w panelu bocznym, a następnie na lin
 	'achievements-badge-to-get-blogcomment-details' => 'Wtrąć własne pięć groszy!
 Zapoznaj się z którymś z ostatnich blogów i dodaj swoją opinię w komentarzach.',
 	'achievements-badge-to-get-love-details' => 'Licznik resetuje się jeżeli ominiesz dzień, więc odwiedzaj wiki każdego dnia!',
-	'achievements-badge-to-get-welcome-details' => 'Kliknij na przycisk "{{int:autocreatewiki-create-account}}" w górnym prawym rogu aby stać się częścią społeczności wiki.
+	'achievements-badge-to-get-welcome-details' => 'Kliknij na przycisk "{{int:oasis-signup}}" w górnym prawym rogu aby stać się częścią społeczności wiki.
 Możesz rozpocząć zbieranie własnych odznaczeń!',
 	'achievements-badge-to-get-introduction-details' => 'Czy Twoja strona użytkownika jest pusta?
 Kliknij na swoją nazwę użytkownika aby się dowiedzieć.
@@ -7810,7 +7810,7 @@ Ch\'a sgnaca su "{{int:blogs-recent-url-text}}" ant la bara lateral, e peui an s
 	'achievements-badge-to-get-blogcomment-details' => "Ch'a gionta ij sò doi sòld!
 Ch'a un mëssagi recent ëd lë scartari, e ch'a scriva lòn ch'a pensa ant la casela dij coment.",
 	'achievements-badge-to-get-love-details' => "Ël conteur a part da zero s'it perde un di, parèj sigurte ëd torné a la wiki minca di!",
-	'achievements-badge-to-get-welcome-details' => 'Ch\'a sgnaca ël boton "{{int:autocreatewiki-create-account}}" an àut a drita për gionz-se a la comunità.
+	'achievements-badge-to-get-welcome-details' => 'Ch\'a sgnaca ël boton "{{int:oasis-signup}}" an àut a drita për gionz-se a la comunità.
 A peul ancaminé a vagné ij sò distintiv!',
 	'achievements-badge-to-get-introduction-details' => "Soa pàgina utent a l'é veuida?
 Ch'a sgnaca su sò stranòm an cò dlë scren për vëdde.
@@ -8160,7 +8160,7 @@ Clique "{{int:blogs-recent-url-text}}" na barra lateral e depois clique à esque
 	'achievements-badge-to-get-blogcomment-details' => 'Dê a sua opinião!
 Leia qualquer das entradas de blogue recentes e escreva a sua opinião na caixa de comentários.',
 	'achievements-badge-to-get-love-details' => 'O contador volta a zeros se faltar um dia, por isso tem de voltar à wiki todos os dias!',
-	'achievements-badge-to-get-welcome-details' => 'Clique o botão "{{int:autocreatewiki-create-account}}" em cima à direita, para se juntar à comunidade. Pode começar a ganhar as suas próprias medalhas!',
+	'achievements-badge-to-get-welcome-details' => 'Clique o botão "{{int:oasis-signup}}" em cima à direita, para se juntar à comunidade. Pode começar a ganhar as suas próprias medalhas!',
 	'achievements-badge-to-get-introduction-details' => 'A sua página de utilizador está vazia?
 Para vê-la, clique o seu nome de utilizador no topo da página.
 Depois, clique "{{int:edit}}" para acrescentar informação sobre si!',
@@ -8467,7 +8467,7 @@ Clique "{{int:blogs-recent-url-text}}" na barra lateral e depois clique à esque
 	'achievements-badge-to-get-blogcomment-details' => 'Dê a sua opinião!
 Leia qualquer das entradas de blogue recentes e escreva a sua opinião na caixa de comentários.',
 	'achievements-badge-to-get-love-details' => 'O contador volta a zeros se faltar um dia, por isso tem de voltar à wiki todos os dias!',
-	'achievements-badge-to-get-welcome-details' => 'Clique o botão "{{int:autocreatewiki-create-account}}" em cima à direita, para se juntar à comunidade. Pode começar a ganhar as suas próprias medalhas!',
+	'achievements-badge-to-get-welcome-details' => 'Clique o botão "{{int:oasis-signup}}" em cima à direita, para se juntar à comunidade. Pode começar a ganhar as suas próprias medalhas!',
 	'achievements-badge-to-get-introduction-details' => 'A sua página de utilizador está vazia?
 Para vê-la, clique o seu nome de utilizador no topo da página.
 Depois, clique "{{int:edit}}" para acrescentar informação sobre si!',
@@ -8773,7 +8773,7 @@ Dă click pe "{{int:blogs-recent-url-text}}" în bara laterală, şi apoi pe leg
 	'achievements-badge-to-get-blogcomment-details' => 'Adaugă un comentariu!
 Citește orice postare pe blog, și scrie-ți părerea în câmpul pentru comentarii.',
 	'achievements-badge-to-get-love-details' => 'Cronometrul se resetează dacă ratezi o zi, aşa că asigură-te că nu pierzi niciuna!',
-	'achievements-badge-to-get-welcome-details' => 'Apasă butonul „{{int:autocreatewiki-create-account}}” din dreapta-sus pentru a te alătura comunității.
+	'achievements-badge-to-get-welcome-details' => 'Apasă butonul „{{int:oasis-signup}}” din dreapta-sus pentru a te alătura comunității.
 Poți începe să câștigi propriile medalii!',
 	'achievements-badge-to-get-introduction-details' => 'Este pagina ta de utilizator goală?
 Dă click pe numele tău de utilizator pentru a verifica.
@@ -9143,7 +9143,7 @@ $5',
 	'achievements-badge-to-get-blogcomment-details' => 'Добавьте ваши два цента!
 Читайте последние сообщения в блоге, и пишите ваши мысли в полях комментариев.',
 	'achievements-badge-to-get-love-details' => 'Счетчик сбрасывается, если вы пропустите один день, поэтому не забудьте возвращаться в вики каждый день!',
-	'achievements-badge-to-get-welcome-details' => 'Нажмите на кнопку «{{int:autocreatewiki-create-account}}» в правом верхнем углу, чтобы присоединиться к сообществу.
+	'achievements-badge-to-get-welcome-details' => 'Нажмите на кнопку «{{int:oasis-signup}}» в правом верхнем углу, чтобы присоединиться к сообществу.
 Вы можете начать зарабатывать собственные значки!',
 	'achievements-badge-to-get-introduction-details' => 'Страница пользователя пуста?
 Нажмите на имя пользователя в верхней части экрана, чтобы увидеть страницу пользователя.
@@ -9672,7 +9672,7 @@ Klicka på "{{int:blogs-recent-url-text}}" i sidofältet och sedan på länken t
 	'achievements-badge-to-get-blogcomment-details' => 'Lägg till din mening!
 Läs någon av de senaste bloggarna och skriva dina tankar i kommentarfältet.',
 	'achievements-badge-to-get-love-details' => 'Räknaren återställs om du missar en dag, så se till att komma tillbaka till wiki varje dag!',
-	'achievements-badge-to-get-welcome-details' => 'Klicka på knappen "{{int:autocreatewiki-create-account}}" längst upp för att gå med i gemenskapen.
+	'achievements-badge-to-get-welcome-details' => 'Klicka på knappen "{{int:oasis-signup}}" längst upp för att gå med i gemenskapen.
 Du kan börja tjäna egna emblem!',
 	'achievements-badge-to-get-introduction-details' => 'Är din användarsida tom?
 Klicka på ditt användarnamn längst upp på skärmen för att se.

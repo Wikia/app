@@ -7,19 +7,19 @@
 class VideoEmbedTool {
 
 	function getMsgVars() {
-	
-	
+
+
 		$vars = array(
-			'vet-back', 
+			'vet-back',
 			'vet-imagebutton',
 			'vet-close',
 			'vet-warn1',
 			'vet-warn2',
 			'vet-warn3',
 		);
-		
+
 		$ret = array();
-		
+
 		foreach($vars as $var) {
 			$ret[$var] = wfMsg($var);
 		}
@@ -69,6 +69,7 @@ class VideoEmbedTool {
 		$props['vname'] = $file->getTitle()->getText();
 		$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 		$props['metadata'] = '';
+		$props['description'] = $this->getVideoDescription($file);
 		$props['href'] = $title->getPrefixedText();
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -106,6 +107,7 @@ class VideoEmbedTool {
 			$props['id'] = $apiwrapper->getVideoId();
 			$props['vname'] = $apiwrapper->getTitle();
 			$props['metadata'] = '';
+			$props['description'] = $this->getVideoDescription($file);
 			$props['provider'] = $provider;
 
 			$props['code'] = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
@@ -152,13 +154,14 @@ class VideoEmbedTool {
 			}
 
 			$embedCode = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
-
 			$props['provider'] = 'FILE';
 			$props['id'] = $file->getHandler()->getVideoId();
 			$props['vname'] = $file->getTitle()->getText();
 			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 			$props['metadata'] = '';
-			$props['premiumVideo'] = ($wgRequest->getVal( 'searchType' ) == 'premium');		
+
+			$props['description'] = $this->getVideoDescription($file);
+			$props['premiumVideo'] = ($wgRequest->getVal( 'searchType' ) == 'premium');
 		}
 
 		wfProfileOut(__METHOD__);
@@ -183,7 +186,7 @@ class VideoEmbedTool {
 		$ns_file = $wgContLang->getFormattedNsText( NS_FILE );
 
 		$name = urldecode( $wgRequest->getVal('name') );
-		
+
 		$embed_code = '';
 		$tag = '';
 		$message = '';
@@ -230,7 +233,10 @@ class VideoEmbedTool {
 				return wfMsg( 'wva-thumbnail-upload-failed' );
 			}
 		}
-		
+
+		$description = urldecode( $wgRequest->getVal('description') );
+		$this->setVideoDescription($oTitle, $description);
+
 		$message = wfMsg( 'vet-single-success' );
 		$ns_file = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal('caption');
@@ -254,7 +260,7 @@ class VideoEmbedTool {
 		$editingFromArticle = $wgRequest->getVal( 'placeholder' );
 		if( $editingFromArticle ) {
 			Wikia::setVar('EditFromViewMode', true);
-			
+
 			$article_title = $wgRequest->getVal( 'article' );
 			$ns = $wgRequest->getVal( 'ns' );
 			$box = $wgRequest->getVal( 'box' );
@@ -272,7 +278,7 @@ class VideoEmbedTool {
 				$placeholder_tag = $placeholder[0];
 				$file = wfFindFile( $title );
 				$embed_code = $file->transform( array('width'=>$width) )->toHtml();
-				$html_params = array( 
+				$html_params = array(
 					'imageHTML' => $embed_code,
 					'align' => $layout,
 					'width' => $width,
@@ -280,21 +286,21 @@ class VideoEmbedTool {
 					'caption' => $caption,
 					'showPictureAttribution' => true,
 				);
-				
+
 				// Get all html to insert into article view page
 				$image_service = F::app()->sendRequest( 'ImageTweaksService', 'getTag', $html_params );
 				$image_data = $image_service->getData();
 				$embed_code = $image_data['tag'];
-	
+
 				// Make output match what's in a saved article
 				if($layout == 'center') {
 					$embed_code = '<div class="center">'.$embed_code.'</div>';
 				}
 
 				$summary = wfMsg( 'vet-added-from-placeholder' );
-	
+
 				$text = substr_replace( $text, $tag, $placeholder[1], strlen( $placeholder_tag ) );
-				
+
 				$button_message = wfMessage('vet-placeholder-return');
 				$success = $article_obj->doEdit( $text, $summary);
 			}
@@ -332,4 +338,49 @@ class VideoEmbedTool {
 
 	}
 
+	/**
+	* Get video description, which is the content of the file page minus the category wiki tags
+	* @param File $file
+	* @return string $text
+	*/
+	private function getVideoDescription($file) {
+		// Get the file page for this file
+		$page = WikiPage::factory( $file->getTitle() );
+
+		// Strip out the category tags so they aren't shown to the user
+		$text = preg_replace( '/\[\[Category[^\]]+\]\]/', '', $page->getText() );
+
+		// If we have an empty string or a bunch of whitespace, use the default description
+		// from the file metadata
+		if ( preg_match('/^\s*$/ms', $text) ) {
+			$text = $file->getMetaDescription();
+		}
+
+		return $text;
+	}
+
+	public function setVideoDescription( $title, $description ) {
+		// Get the file page for this file
+		$page = WikiPage::factory( $title );
+
+		$text = $page->getText();
+
+		// Separate any category tags
+		preg_match_all( '/(\[\[Category[^\]]+\]\])/', $text, $matches );
+
+		$catString = '';
+		if (!empty($matches[0]) && is_array($matches[0])) {
+			$catString = "\n" . implode(' ', $matches[0]);
+		}
+
+		$text = $description . $catString;
+		$summary = 'Adding video description';
+		$status = $page->doEdit( $text, $summary );
+
+		if ( $status->isOK() ) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 }

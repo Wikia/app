@@ -19,7 +19,13 @@
 		function getGeoData() {
 			if (geoData === false) {
 				var jsonData = decodeURIComponent(cookies.get(cookieName));
-				geoData = JSON.parse(jsonData) || {};
+
+				// Fix for broken json in cookie
+				try {
+					geoData = JSON.parse(jsonData) || {};
+				} catch (e) {
+					geoData = {};
+				}
 			}
 
 			return geoData;

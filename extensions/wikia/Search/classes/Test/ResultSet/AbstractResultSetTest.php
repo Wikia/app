@@ -177,6 +177,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		                  ->getMockForAbstractClass();
 		
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getQueryForHtml' ), array( 'foo' ) );
 		$configRefl = new ReflectionProperty( 'Wikia\Search\ResultSet\AbstractResultSet', 'searchConfig' );
 		$configRefl->setAccessible( true );
 		$configRefl->setValue( $resultSet, $mockConfig );
@@ -184,7 +185,11 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getQuery' )
-		    ->with   ( Wikia\Search\Config::QUERY_ENCODED )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+	    ;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getQueryForHtml' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 		$this->assertEquals(
@@ -213,7 +218,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		$mockResult
 		    ->expects( $this->once() )
 		    ->method ( 'toArray' )
-		    ->with   ( array( 'title', 'url' ) )
+		    ->with   ( array( 'title', 'url', 'pageid' ) )
 		    ->will   ( $this->returnValue( $docArray ) )
 		;
 		$this->assertEquals(

@@ -42,24 +42,4 @@ class Utilities
 		$field = new Field\Field( $field, $lang );
 		return $field->__toString();
 	}
-	
-	/**
-	 * Prevents XSS and escapes characters used in Lucene query syntax.
-	 * Any query string transformations before sending to backend should be placed here.
-	 * @see    WikiaSearchTest::testSanitizeQuery
-	 * @param  string $query
-	 * @return string
-	 */
-	public static function sanitizeQuery( $query )
-	{
-		if ( self::$queryHelper === null ) {
-			self::$queryHelper = new Solarium_Query_Helper();
-		}
-		// non-indexed number-string phrases issue workaround (RT #24790)
-		$query = preg_replace('/(\d+)([a-zA-Z]+)/i', '$1 $2', $query);
-	
-		// escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
-		// added html entity decoding now that we're doing extra work to prevent xss
-		return self::$queryHelper->escapeTerm( html_entity_decode( $query,  ENT_COMPAT, 'UTF-8' ) );
-	}
 }

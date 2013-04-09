@@ -32,17 +32,6 @@ class RenameUserProcess {
 	);
 
 	/**
-	 * Stores the predefined tasks to do for global (wikicities) database.
-	 * Here should be mentioned all core tables not connected to any extension.
-	 *
-	 * @var $mStatsDefaults array
-	 */
-	static private $mStatsDefaults = array(
-		//user table is processed separately
-		array( 'table' => '`noreptemp`.`tags_top_users`', 'userid_column' => 'tu_user_id', 'username_column' => 'tu_username' ),
-	);
-
-	/**
 	 * Stores the predefined tasks to do for every local wiki database.
 	 * Here should be mentioned all core tables not connected to any extension.
 	 *
@@ -612,19 +601,22 @@ class RenameUserProcess {
 		$this->addLog("Creating a Phalanx block for the user.");
 
 		if(empty($this->mPhalanxBlockId)){
-			$this->mPhalanxBlockId = PhalanxHelper::save(array(
-				'text' => $this->mNewUsername,
-				'exact' => 1,
-				'case' => 1,
-				'regex' => 0,
-				'timestamp' => wfTimestampNow(),
-				'expire' => null,
-				'author_id' => $this->mRequestorId,
-				'reason' => 'User rename process requested',
-				'lang' => null,
-				'type' => Phalanx::TYPE_USER
-			),
-			false /* do not rebuild the cache */ );
+			$data = array(
+				'id'          => $this->mPhalanxBlockId,
+				'text'        => $this->mNewUsername,
+				'exact'       => 1,
+				'case'        => 1,
+				'regex'       => 0,
+				'timestamp'   => wfTimestampNow(),
+				'expire'      => 'infinite',
+				'author_id'   => $this->mRequestorId,
+				'reason'      => 'User rename process requested',
+				'lang'        => null,
+				'type'        => Phalanx::TYPE_USER
+			);
+			
+			wfRunHooks( "EditPhalanxBlock", array( &$data ) );
+			$this->mPhalanxBlockId = $data['id'];
 
 			if(!$this->mPhalanxBlockId) {
 				$this->addLog("Creation of the block failed.");
@@ -657,7 +649,7 @@ class RenameUserProcess {
 					'rename_user_id'  => $this->mUserId,
 					'rename_old_name' => $this->mOldUsername,
 					'rename_new_name' => $this->mNewUsername,
-					'tasks'           => self::$mStatsDefaults
+					'tasks'           => array()
 				),
 				TASK_QUEUED
 		);
@@ -906,14 +898,16 @@ class RenameUserProcess {
 	public function cleanup(){
 		//remove phalanx user block
 
-		if($this->mPhalanxBlockId){
-			$ret = PhalanxHelper::removeFilter($this->mPhalanxBlockId, false /* do not touch Phalanx's cache */ );
-
-			if($ret['error'] == true) {
-				$this->addLog("Error removing Phalanx user block with ID {$this->mPhalanxBlockId}");
+		if ( $this->mPhalanxBlockId ) {
+			if ( !wfRunHooks( "DeletePhalanxBlock", array( $this->mPhalanxBlockId ) ) ) {
+				$result = false;
+			} else {
+				$result = true;
 			}
-			else
-			{
+
+			if ( !$result ) {
+				$this->addLog("Error removing Phalanx user block with ID {$this->mPhalanxBlockId}");
+			} else {
 				$this->addLog("Phalanx user block with ID {$this->mPhalanxBlockId} has been removed");
 			}
 		}

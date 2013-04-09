@@ -455,4 +455,12 @@ class ForumHooksHelper {
 
 		return true;
 	}
+
+	public static function onWallMessageGetWallOwnerName( $title, &$wallOwnerName ) {
+		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
+			$wallOwnerName = $title->getText();
+		}
+
+		return true;
+	}
 }

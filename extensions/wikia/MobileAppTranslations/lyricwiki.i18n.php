@@ -59,7 +59,7 @@ $messages['en'] = array(
 	'ringtone-matcher-by-song' => 'Send %s Ringtone to your Cell'
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author SPQRobin
  * @author Shirayuki
  */
@@ -870,6 +870,7 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
@@ -877,14 +878,14 @@ $messages['pms'] = array(
 	'app-tab-search' => 'Sërca',
 	'app-tab-about' => 'A propòsit',
 	'app-tab-browse' => 'A..Z',
-	'app-tab-sotd' => 'SotD (Canson dël Di)',
+	'app-tab-sotd' => 'Canson dël Di',
 	'app-async-error-title' => 'Contacc',
-	'app-async-error-message' => 'Problem temporani con la conession. Për piasì preuva torna pi tard.',
-	'app-nonetwork-dialog-title' => 'Rej pa disponìbila',
+	'app-async-error-message' => "Problema temporani con la conession. Për piasì, ch'a preuva torna pi tard.",
+	'app-nonetwork-dialog-title' => 'Rej nen disponìbil',
 	'app-nonetwork-dialog-message' => 'Gnun-a conession ëd rej trovà.',
 	'app-nonetwork-dialog-close-button' => 'Va bin',
 	'search-go' => 'Va!',
-	'search-hint-text' => "esempi 'John Lennon:Figura'",
+	'search-hint-text' => "për esempi 'John Lennon:Imagine'",
 	'search-no-match-found' => 'Gnun-a corispondensa trovà.',
 	'search-no-match-found-query' => 'Sercà: %s',
 	'search-results-title' => "Arzultà dl'arserca për: %s",
@@ -892,21 +893,21 @@ $messages['pms'] = array(
 	'login-username-hint' => 'Stranòm',
 	'login-password-hint' => 'Ciav',
 	'login-submit-button' => 'Intré ant ël sistema',
-	'about-heading' => 'LyricWiki',
+	'about-heading' => 'WikiParòle',
 	'about-credits' => 'da %s',
 	'about-heading-tips' => 'Sërché',
-	'about-tips-0' => "Ancamin-a a scrive un nòm d'artista për auto-completé comcom it të scrive.",
-	'about-tips-1' => 'Le figure dzor dzr la fnesta prinsipal a son le prime 9 canson dzor iTunes pròpi adess.',
+	'about-tips-0' => "Ch'a ancamin-a a scrive ël nòm ëd n'artista për ch'a sia completà an automàtich antramentre ch'a scriv.",
+	'about-tips-1' => 'Le figure an slë scren prinsipal a son le prime 9 canson dzora iTunes ant ës moment.',
 	'about-heading-licensing' => "Drit d'autor",
-	'about-licensing-0' => "Sta app a l'é legal al 100%. Ij drit a son pagà ai proprietari dij drit dla canson via Gracenote - pròpi com dzor ël sit web LyricWiki.",
-	'about-heading-feedback' => 'Artorn',
-	'about-feedback-0' => 'It veus-to dine quaicòs a propòdit dla app? Scrivme: %s',
-	'about-heading-rate' => 'Vàluta la app për piasì!',
-	'about-rate-0-android' => "S'at pias sta app, për piasì vàlutla 5 stèile ant ël Market Android!",
-	'about-rate-0-ios' => "S'at pias sta app, për piasì vàlutla 5 stèile ant l'App Store!",
-	'gracenote-takedown' => "Contacc! Për maleur, i soma pa licensià për mosté la lìrica completa për sta canson al moment (sòn-sì a càpita për men dl'1% dël nòste canson). Për piasì preuva torna la sman-a ch'a ven.",
+	'about-licensing-0' => "Costa aplicassion a l'é legal al 100%. Ij drit a son pagà ai proprietari dij drit dla canson via Gracenote - pròpi com dzor ël sit dl'aragnà WikiParòle.",
+	'about-heading-feedback' => 'Opinion',
+	'about-feedback-0' => "Veul-lo dine quaicòs a propòsit dl'aplicassion? Ch'a na scriva: %s",
+	'about-heading-rate' => "Ch'a vàluta l'aplicassion, për piasì!",
+	'about-rate-0-android' => "S'a-j pias costa aplicassion, për piasì ch'a la vàluta 5 stèile an sl'Android Market!",
+	'about-rate-0-ios' => "S'a-j pias costa aplicassion, për piasì ch'a la vàluta 5 stèile an sl'App Store!",
+	'gracenote-takedown' => "An dëspias! Për maleur, i l'oma pa ij drit për ësmon-e le paròle complete për costa canson al moment (sòn a-i riva për men dl'1% ëd nòstre canson). Për piasì, ch'a preuva torna la sman-a ch'a-i ven.",
 	'lyrics-artist-byline' => 'da %s',
-	'ringtone-matcher-by-song' => 'Manda %s Ringtone a tò Cell',
+	'ringtone-matcher-by-song' => 'Mandé la sonarìa %s a sò sacociàbil',
 );
 
 /** Pashto (پښتو)

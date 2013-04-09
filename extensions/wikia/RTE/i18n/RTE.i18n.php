@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'prefs-rte' => 'Rich Text Editor',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author EugeneZelenko
  * @author Shirayuki
  */
@@ -45,7 +45,7 @@ $messages['af'] = array(
  */
 $messages['ar'] = array(
 	'rte-desc' => 'محرر متطور مدمج في ميدياويكي',
-	'rte-no-js-fallback' => 'محرر النص المتطور لا يعمل عندما يكون جافاسكريبت مغلقا. الرجاء إما تشغيله من خلال خيارات المتصفح الخاص بك، أو زيارة [[خاص:تفضيلات|صفحة تفضيلاتك]] للتبديل إلى محرر ميدياويكي القديم.', # Fuzzy
+	'rte-no-js-fallback' => 'محرر النص المتطور لا يعمل عندما يكون جافاسكريبت مغلقا. الرجاء إما تشغيله من خلال خيارات المتصفح الخاص بك، أو زيارة [[خاص:تفضيلات|صفحة تفضيلاتك]] للتبديل نحو محرر ميدياويكي القديم.', # Fuzzy
 	'rte-edgecase-info-title' => 'يجب أن يكون المحرر معدلا في وضع محرر المصدر',
 	'rte-edgecase-info' => 'تم تعطيل محرر النص المتطور لأن الصفحة تحتوي على تعليمات برمجية معقدة.',
 	'rte-edgecase-comment' => 'تعليقات HTML',
@@ -122,10 +122,11 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'rte-desc' => 'CKeditor integrat per MediaWiki',
-	'rte-no-js-fallback' => "L'editor de text enriquit no funciona si JavaScript està desactivat. Si us plau, deixeu-lo activitat a les opcions del vostre navegador, o visita les teves [[Especial:Preferències|preferències]] per canviar l'antic editor de MediaWiki", # Fuzzy
+	'rte-no-js-fallback' => "L'editor de text enriquit no funciona si el JavaScript està desactivat. Si us plau, activa'l en les opcions del teu navegador, o visita les teves [[Especial:Preferències|preferències]] per canviar l'antic editor de MediaWiki", # Fuzzy
 	'rte-edgecase-info-title' => 'Requereix mode font',
 	'rte-edgecase-info' => "L'editor de text enriquit s'ha desactivat perquè la pàgina conté un codi complex.",
 	'rte-edgecase-comment' => 'Comentaris HTML',
@@ -389,6 +390,14 @@ $messages['ja'] = array(
  */
 $messages['ksh'] = array(
 	'rte-edgecase-redirect' => 'en Ömleidung',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'rte-edgecase-comment' => 'HTML-Bemierkungen',
+	'rte-edgecase-redirect' => 'Viruleedung',
 );
 
 /** Macedonian (македонски)

@@ -382,7 +382,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-topic-edit-cancel' => 'Cancel',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Metalhead64
  * @author PtM
  * @author SandroHc
@@ -514,7 +514,8 @@ See also:
 	'wall-action-move-board-label' => 'Label for list of board dropdown',
 	'wall-notifications' => 'Title of notification dropdown.
 {{Identical|Notification}}',
-	'wall-notifications-all' => 'Text in notification dropdown menu',
+	'wall-notifications-all' => 'Text in notification dropdown menu.
+{{Identical|All notifications}}',
 	'wall-notifications-markasread' => 'Option in notification dropdown menu to mark all threads as read',
 	'wall-notifications-markasread-all-wikis' => 'Option to mark all cross-wiki notifications as read',
 	'wall-notifications-markasread-this-wiki' => "Option to mark only this wiki's notifications as read",
@@ -2197,6 +2198,7 @@ $messages['fa'] = array(
  * @author Ilkea
  * @author Lukkipoika
  * @author Nike
+ * @author Silvonen
  */
 $messages['fi'] = array(
 	'wall-no-title' => 'Ei otsikkoa',
@@ -2340,7 +2342,13 @@ Tätä ei voi peruuttaa.',
 	'wall-recentchanges-restored-reply' => 'palautettiin keskusteluun  "[[$1|$2]]" kuuluva vastaus [[$3|$4 seinälle]]',
 	'wall-recentchanges-deleted-thread' => 'poistettiin keskustelu  "[[$1|$2]]" [[$3|$4 seinältä]]',
 	'wall-recentchanges-deleted-reply' => 'poistettiin keskustelun "[[$1|$2]]" vastaus [[$3|$4 seinältä]]',
+	'wall-removed-reply-undo' => 'Tämä vastaus on poistettu. $1',
 	'wall-removed-reply' => 'Tämä vastaus on poistettu',
+	'wall-preview-modal-title' => 'Esikatselu',
+	'wall-preview-modal-button-back' => 'Takaisin',
+	'wall-topic-input-heading' => 'Aihe',
+	'wall-topic-edit' => 'Muokkaa aiheita',
+	'wall-topic-edit-save' => 'Tallenna',
 );
 
 /** French (français)
@@ -5409,7 +5417,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Zobacz kto jeszcze dał OKejkę',
 	'wall-votes-modal-title' => 'OKejka',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Jedna osoba dała|$1 osoby dały|$1 osób dało}} OKejkę tej wiadomości',
-	'wall-votes-number' => '$1 {{PLURAL:$1|OKejka|OKejki|OKejek}}', # Fuzzy
+	'wall-votes-number' => '$1 {{PLURAL:$1|OKejka|OKejki|OKejek}}',
 	'wall-votes-number-tooltip' => 'Zobacz kto dał OKejkę tej wiadomości',
 	'wall-votes-vote-tooltip' => 'Daj OKejkę tej wiadomości',
 	'wall-votes-voted-tooltip' => 'Przyznano OKejkę tej wiadomości!',
@@ -5421,7 +5429,7 @@ ___________________________________________<br />
 	'wall-topic-input-heading' => 'Temat',
 	'wall-topic-input-placeholder' => 'Dodaj temat (opcjonalne)',
 	'wall-topic-input-error' => 'Artykuł o nazwie "$1" nie istnieje. Użyj nazwy istniejącego artykułu.',
-	'wall-topic-input-error-limit' => 'Wątek może mieć nie więcej niż $1 tematów.', # Fuzzy
+	'wall-topic-input-error-limit' => 'Wątek może mieć nie więcej niż $1 {{PLURAL:$1|temat|tematy|tematów}}.',
 	'wall-topic-heading' => 'Tematy tego wątku:',
 	'wall-topic-edit' => 'Edytuj tematy',
 	'wall-topic-edit-save' => 'Zapisz zmiany',
@@ -7518,6 +7526,7 @@ $messages['zh-hans'] = array(
 	'wall-message-edit' => '编辑',
 	'wall-message-delete' => '删除',
 	'wall-action-all-confirm-cancel' => '取消',
+	'wall-action-remove-reply-title' => '删除此回复',
 	'wall-delete-error-title' => '错误',
 	'wall-action-remove-confirm-ok' => '删除',
 	'wall-action-admin-reply-title' => '删除本条回复',
@@ -7525,6 +7534,7 @@ $messages['zh-hans'] = array(
 	'wall-notifications' => '通知',
 	'wall-notifications-markasread' => '标记全部为已读',
 	'wall-notifications-markasread-all-wikis' => '全部维基',
+	'wall-notifications-markasread-this-wiki' => '本维基',
 	'wall-notifications-empty' => '暂无通知',
 	'wall-notifications-loading' => '加载通知',
 	'wall-notifications-reminder' => '您有<span>$1</span>条未读消息 {{PLURAL:$1|消息|消息}}',

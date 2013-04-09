@@ -76,7 +76,7 @@ ___________________________________________
 </p>',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Lizlux
  * @author Shirayuki
  * @author Siebrand
@@ -141,6 +141,7 @@ $messages['af'] = array(
  */
 $messages['ar'] = array(
 	'article-comments-file-page' => "<a href='$1'>تعليق من $2</a> on <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>التعليق من  $2  </a> في <a href='$3'> $4 </a> على <a href='$5'>  $6 في مدونة</a>",
 	'article-comments-anonymous' => 'مستخدم مجهول',
 	'article-comments-comments' => 'التعليقات ($1)',
 	'article-comments-post' => 'أرسل تعليقا',
@@ -715,9 +716,10 @@ Wikia', # Fuzzy
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
-	'article-comments-anonymous' => 'Karbero anonim',
+	'article-comments-anonymous' => 'Karbero bêname',
 	'article-comments-comments' => 'Vatışi ($1)',
 	'article-comments-post' => 'Mışewri bıvurne',
 	'article-comments-cancel' => 'Bıterkne',
@@ -2179,6 +2181,7 @@ ___________________________________________
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
@@ -2195,53 +2198,53 @@ $messages['pms'] = array(
 	'article-comments-undeleted-comment' => 'Coment ripristinà për pàgina dë scartari $1',
 	'article-comments-rc-comment' => 'Coment d\'artìcol (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => "Coment d'artìcol ([[$1]])",
-	'article-comments-fblogin' => 'Për piasì <a href="$1" rel="nofollow">intra e colegh-te con Facebook</a> për mandé un coment dzor sta wiki!',
+	'article-comments-fblogin' => 'Për piasì, ch\'a <a href="$1" rel="nofollow">intra ant ël sistema e ch\'as colega a Facebook</a> për mandé un coment dzora sta wiki!',
 	'article-comments-fbconnect' => 'Për piasì <a href="$1">colega sto cont con Facebook</a> për comenté!',
 	'article-comments-rc-blog-comment' => 'Coment dë scartari (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Coment dë scartari ([[$1]])',
-	'article-comments-login' => 'Për piasì <a href="$1">intra</a> Për mandé un coment dzor sta wiki.',
+	'article-comments-login' => 'Për piasì, ch\'a <a href="$1">intra ant ël sistema</a> për mandé un coment dzora sta wiki.',
 	'article-comments-toc-item' => 'Coment',
 	'article-comments-comment-cannot-add' => 'It peule pa gionté un coment a la vos.',
-	'article-comments-vote' => 'Voté a pro',
-	'article-comments-reply' => 'Arspond',
-	'article-comments-show-all' => 'Mosta tùit ij coment',
+	'article-comments-vote' => 'Anteressant',
+	'article-comments-reply' => 'Rësponde',
+	'article-comments-show-all' => 'Smon-e tùit ij coment',
 	'article-comments-prev-page' => 'Andaré',
 	'article-comments-next-page' => 'Apress',
 	'article-comments-page-spacer' => '&#160...&#160',
-	'article-comments-delete-reason' => "L'artìcol pare / coment pare a l'é stàit scanselà.",
-	'article-comments-empty-comment' => "It peule pa mandé un coment veuid. <a href='$1'>Scanselelo anvece?</a>",
+	'article-comments-delete-reason' => "L'artìcol pare o ël coment pare a l'é stàit ësganfà.",
+	'article-comments-empty-comment' => "A peul pa mandé un coment veuid. <a href='$1'>Sganfelo, pitòst?</a>",
 	'wikiamobile-article-comments-header' => 'coment <span class=cnt id=wkArtCnt>$1</span>',
 	'wikiamobile-article-comments-more' => "Caria anco'",
-	'wikiamobile-article-comments-prev' => 'caria prima',
+	'wikiamobile-article-comments-prev' => 'Carié ël precedent',
 	'wikiamobile-article-comments-none' => 'Gnun coment',
-	'wikiamobile-article-comments-view' => 'Varda arspòste',
-	'wikiamobile-article-comments-replies' => 'arspòste',
-	'wikiamobile-article-comments-post-reply' => "Manda n'arspòsta",
+	'wikiamobile-article-comments-view' => 'Smon-e le rispòste',
+	'wikiamobile-article-comments-replies' => 'rispòste',
+	'wikiamobile-article-comments-post-reply' => 'Mandé na rispòsta',
 	'wikiamobile-article-comments-post' => 'Spediss',
 	'wikiamobile-article-comments-placeholder' => 'Manda un coment',
 	'wikiamobile-article-comments-show' => 'Smon',
-	'wikiamobile-article-comments-login-post' => 'Për piasì intra për mandé un coment.',
+	'wikiamobile-article-comments-login-post' => "Për piasì, ch'a intra ant ël sistema për mandé un coment.",
 	'enotif_subject_article_comment' => '$PAGEEDITOR a l\'ha comentà dzor "$PAGETITLE" dzor {{SITENAME}}',
-	'enotif_body_article_comment' => 'Cerea $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => "Cerea \$WATCHINGUSERNAME,
 
-A-i é un neuv coment a $PAGETITLE dzor {{SITENAME}}. Dòvra sto colegament për vëdde tùit ij coment:
-$PAGETITLE_URL#WikiaArticleComments
+A-i é un neuv coment a \$PAGETITLE dzora {{SITENAME}}. Ch'a deuvra sa liura për vëdde tùit ij coment:
+\$PAGETITLE_URL#WikiaArticleComments
 
-- Apògg dla Comunità Wikia
+- L'echip d'agiut ëd la Comunità Wikia
 
 ___________________________________________
-* Treuva agiut e avis dzor Community Central: http://community.wikia.com
-* It Veus-to arseive men mëssagi da noi? It peule disiscrivte o cangé it tò gust d\'email belessì: http://community.wikia.com/Special:Preferences',
+* Ch'a truva d'agiut e 'd consèj a la sentral dla comunità: http://community.wikia.com
+* Veul-lo arsèive men ëd mëssagi da noi? A peul disabonesse o modifiché ij sò gust ëd pòsta eletrònica ambelessì: http://community.wikia.com/Special:Preferences",
 	'enotif_body_article_comment-HTML' => '<p>Cerea $WATCHINGUSERNAME,
 <br /><br />
-A-i é un neuv coment a $PAGETITLE dzor {{SITENAME}}. Dòvra sto colegament për vëdde tùit ij coment:
+A-i é un neuv coment a $PAGETITLE dzora {{SITENAME}}. Ch\'a deuvra sa liura për vëdde tùit ij coment:
 <br /><br />
-- Apògg dla Comunità Wikia
+- Echip d\'agiut ëd la Comunità Wikia
 <br /><br />
 ___________________________________________
 <ul>
-<li>Treuva agiut e avis dzor Community Central: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
-<li>It veus-to arseive men mëssagi da noi? It peule disiscrivte o cangé it tò gust d\'email belessì: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+<li>Ch\'a treuva d\'agiut e ëd consèj a la sentral dla comunità: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Veul-lo arsèive men mëssagi da noi? A peul ëscancelé l\'abonament o modifiché ij sò gust ëd pòsta eletrònica ambelessì: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );

@@ -3,7 +3,7 @@
  * Class definition for \Wikia\Search\MediaWikiService
  * @author relwell
  */
-namespace Wikia\Search; 
+namespace Wikia\Search;
 /**
  * Encapsulates MediaWiki functionalities.
  * This will allow us to abstract our behavior away from MediaWiki if we want.
@@ -18,13 +18,6 @@ class MediaWikiService
 	 * @var \WikiaApp
 	 */
 	protected $app;
-	
-	/**
-	 * Constructor method
-	 */
-	public function __construct() {
-		$this->app = \F::app();
-	}
 	
 	/**
 	 * Allows us to memoize article instantiation based on pageid
@@ -61,7 +54,14 @@ class MediaWikiService
 	 * @var array
 	 */
 	static protected $wikiDataSources = array();
-
+	
+	/**
+	 * Constructor method
+	 */
+	public function __construct() {
+		$this->app = \F::app();
+	}
+	
 	/**
 	 * Given a page ID, get the title string
 	 * @param int $pageId
@@ -69,21 +69,6 @@ class MediaWikiService
 	 */
 	public function getTitleStringFromPageId( $pageId ) {
 		return $this->getTitleString( $this->getTitleFromPageId( $pageId ) );
-	}
-	
-	/**
-	 * Gets a title from a page id
-	 * @param int $pageId
-	 * @return Title
-	 */
-	protected function getTitleFromPageId( $pageId ) {
-		wfProfileIn( __METHOD__ );
-		if (! isset( static::$pageIdsToTitles[$pageId] ) ) {
-			$page = $this->getPageFromPageId( $pageId );
-			static::$pageIdsToTitles[$pageId] = $page->getTitle();
-		}
-		wfProfileOut( __METHOD__ );
-		return static::$pageIdsToTitles[$pageId];
 	}
 	
 	/**
@@ -168,45 +153,6 @@ class MediaWikiService
 					'pageid'	=> $pageId,
 					'action'	=> 'parse',
 				));
-	}
-	
-	/**
-	 * Returns the memcache key for the given string
-	 * @param string $key
-	 * @return string
-	 */
-	public function getCacheKey( $key ) {
-		return $this->app->wf->SharedMemcKey( $key, $this->getWikiId() );
-	}
-	
-	/**
-	 * Returns what's set in memcache through the app
-	 * @param string $key
-	 * @return array
-	 */
-	public function getCacheResult( $key ) {
-		return $this->getGlobal( 'Memc' )->get( $key );
-	}
-	
-	/**
-	 * Returns the cached result without the intermediate cache query in consumer logic
-	 * @param string $key
-	 * @return multitype
-	 */
-	public function getCacheResultFromString( $key ) {
-		return $this->getCacheResult( $this->getCacheKey( $key ) );
-	}
-	
-	/**
-	 * Allows us to set values in global memcache without knowing the memcache key
-	 * @param string $key
-	 * @param mixed $value
-	 * @param int $ttl
-	 * @return \Wikia\Search\MediaWikiService
-	 */
-	public function setCacheFromStringKey( $key, $value, $ttl ) {
-		$this->getGlobal( 'Memc' )->set( $this->getCacheKey( $key ), $value, $ttl );
-		return $this;
 	}
 	
 	/**
@@ -508,9 +454,9 @@ class MediaWikiService
 		$articleMatch = null;
 		$searchEngine = new \SearchEngine();
 		$title = $searchEngine->getNearMatch( $term );
-		if( ( $title !== null ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
-			// initialize our memoized data
-			$this->getPageFromPageId( $title->getArticleId() );
+		$articleId = ( $title !== null ) ? $title->getArticleId() : 0;
+		if( ( $articleId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
+			$this->getPageFromPageId( $articleId );
 			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this );
 		}
 		return $articleMatch;
@@ -518,31 +464,25 @@ class MediaWikiService
 	
 	/**
 	 * Provided a prepped domain string, (e.g. 'runescape'), return a wiki match.
-	 * If the language is not in English, checks for language-specific site.
 	 * @param string $domain
 	 * @return \Wikia\Search\Match\Wiki|NULL
 	 */
 	public function getWikiMatchByHost( $domain ) {
 		$match = null;
-		$domains = ["{$domain}.wikia.com"];
-		$lang = $this->getGlobal( 'Lang' )->getCode();
-		if ( $lang !== 'en' ) {
-			array_unshift( $domains, "{$lang}.{$domain}.wikia.com" );
-		}
-		$dbr = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
-		$query = $dbr->select(
-				[ 'city_domains' ],
-				[ 'city_id' ],
-				[ 'city_domain' => $domains ],
-				__METHOD__,
-				[ 'ORDER BY' => 'LENGTH(city_domain) DESC' ] // hack to prefer prefixed domains
-				);
-		if ( $row = $dbr->fetchObject( $query ) ) {
-			$match = new \Wikia\Search\Match\Wiki( $row->city_id, $this );
+		if ( $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' ) ) {
+			$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
 		}
 		return $match;
 	}
 	
+	/**
+	 * Given a domain, returns a wiki ID.
+	 * @param string $domain
+	 * @return int|null
+	 */
+	public function getWikiIdByHost( $domain ) {
+		return (new \WikiFactory)->DomainToID( $domain );
+	}
 
 	/**
 	 * Returns the URL string for a wiki ID
@@ -584,9 +524,7 @@ class MediaWikiService
 					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
 					) 
 			);
-		return (! empty( $response['query']['allmessages'][0]['*'] ) )
-		    ? str_replace( '{{SITENAME}}', $this->getGlobalForWiki( 'wgSitename', $wikiId ), $response['query']['allmessages'][0]['*'] )
-		    : '';
+		return str_replace( '{{SITENAME}}', $this->getGlobalForWiki( 'wgSitename', $wikiId ), $response['query']['allmessages'][0]['*'] );
 	}
 	
 	/**
@@ -627,7 +565,34 @@ class MediaWikiService
 		return $this->app->wg->Lang ? $this->app->wg->Lang->date( $this->app->wf->Timestamp( TS_MW, $timestamp ) ) : '';
 	}
 	
-	
+	/**
+	 * Access visualization info for a wiki.
+	 * The underscore indicates that it is public exposed as a cached magic method.
+	 * @param int $wikiId
+	 * @return array
+	 */
+	public function getVisualizationInfoForWikiId( $wikiId ) {
+		$visualization = (new \WikisModel )->getDetails( [ $wikiId ] );
+		if ( empty( $visualization ) ) return array();
+		return array_shift( $visualization );
+	}
+
+	/**
+	 * Uses WikiService to access stats info. 
+	 * We add '_count' to each key clarify these are count values
+	 * @param int $wikiId
+	 * @return array
+	 */
+	public function getStatsInfoForWikiId( $wikiId ) {
+		$service = new \WikiService;
+		$statsInfo = $service->getSiteStats( $wikiId );
+		$statsInfo['videos'] = $service->getTotalVideos( $wikiId ); 
+		foreach ( $statsInfo as $key => $val ) {
+			$statsInfo[$key.'_count'] = $val;
+			unset( $statsInfo[$key] );
+		}
+		return $statsInfo;
+	}	
 	
 	/**
 	 * Determines if the current globally registered language code is supported by search for dynamic support.
@@ -691,30 +656,6 @@ class MediaWikiService
 	}
 	
 	/**
-	 * Uses Wikia Homepage Helper to acces visualization info
-	 * @param int $wikiId
-	 * @return array
-	 */
-	public function getVisualizationInfoForWikiId( $wikiId ) {
-		return (new \WikiaHomePageHelper)->getWikiInfoForVisualization( $wikiId, $this->getLanguageCode() );
-	}
-
-	/**
-	 * Uses Wikia Homepage Helper to access stats info. 
-	 * We add '_count' to each key to avoid collisions with visualization info (e.g. images) 
-	 * @param int $wikiId
-	 * @return array
-	 */
-	public function getStatsInfoForWikiId( $wikiId ) {
-		$statsInfo = (new \WikiaHomePageHelper)->getWikiStats( $wikiId );
-		foreach ( $statsInfo as $key => $val ) {
-			$statsInfo[$key.'_count'] = $val;
-			unset( $statsInfo[$key] );
-		}
-		return $statsInfo;
-	}
-	
-	/**
 	 * Compares a pageid to the main page's article ID for this wiki.
 	 * False if the main page ID is 0.
 	 * @param int $pageId
@@ -733,6 +674,41 @@ class MediaWikiService
 	}
 	
 	/**
+	 * Wrapper for wfMessage('foo')->text()
+	 * @param string $messageName
+	 * @return string
+	 */
+	public function getSimpleMessage( $messageName, array $params = array() ) {
+		return $this->app->wf->Message( $messageName, $params )->text();
+	}
+
+	/**
+	 * Put a number into the i18n message based on the quantity. For $number smaller than 1000, $msgName is used.
+	 * For $number between 1K and 1M a message with '-k' postfix is used to display the number of thousands.
+	 * For $number 1M and greated a message with '-M' postfix is used to display the number of millions
+	 * TODO: should be abstracted and added to $wg->Lang
+	 *
+	 * @author Rafal
+	 * @author Mech
+	 * @param int $number - number to be put into the i18n message
+	 * @param string $msgName - message id, for bigger $number values a message with postfix is used
+	 * @return string
+	 */
+	public function shortNumForMsg($number, $msgName) {
+		if ($number >= 1000000) {
+			$shortNum = floor($number / 1000000);
+			$msgName = $msgName . '-M';
+		} else if ($number >= 1000) {
+			$shortNum = floor($number / 1000);
+			$msgName = $msgName . '-k';
+		} else {
+			$shortNum = $number;
+		}
+
+		return $this->app->wf->Message($msgName, $shortNum, $number);
+	}
+	
+	/**
 	 * Provides a relative URL provided a page id, with optional query string as array. 
 	 * @param int $pageId
 	 * @param array $query
@@ -741,6 +717,51 @@ class MediaWikiService
 	 */
 	public function getLocalUrlForPageId( $pageId, $query = array(), $query2 = false ) {
 		return $this->getTitleFromPageId( $pageId )->getLocalUrl( $query, $query2 );
+	}
+
+	/**
+	 * Returns the memcache key for the given string
+	 * 
+	 * @param string $key
+	 * @return string
+	 */
+	public function getCacheKey( $key ) {
+		return $this->app->wf->SharedMemcKey( $key, $this->getWikiId() );
+	}
+	
+	/**
+	 * Returns what's set in memcache through the app
+	 * 
+	 * @param string $key
+	 * @return array
+	 */
+	public function getCacheResult( $key ) {
+		return $this->app->wg->Memc->get( $key );
+	}
+	
+	/**
+	 * Returns the cached result without the intermediate cache query in
+	 * consumer logic
+	 * 
+	 * @param string $key
+	 * @return multitype
+	 */
+	public function getCacheResultFromString( $key ) {
+		return $this->getCacheResult( $this->getCacheKey( $key ) );
+	}
+	
+	/**
+	 * Allows us to set values in global memcache without knowing the memcache
+	 * key
+	 * 
+	 * @param string $key
+	 * @param mixed $value
+	 * @param int $ttl defaults to a day
+	 * @return \Wikia\Search\MediaWikiService
+	 */
+	public function setCacheFromStringKey( $key, $value, $ttl = 86400 ) {
+		$this->app->wg->Memc->set( $this->getCacheKey( $key ), $value, $ttl );
+		return $this;
 	}
 	
 	/**
@@ -784,7 +805,7 @@ class MediaWikiService
 			return self::$pageIdsToArticles[$pageId];
 		}
 	    $page = \Article::newFromID( $pageId );
-	
+
 		if( $page === null ) {
 			throw new \WikiaException( 'Invalid Article ID' );
 		}
@@ -821,7 +842,7 @@ class MediaWikiService
 			return (string) $wm->getMetaTitle();
 		}
 		wfProfileOut(__METHOD__);
-		return (string) $title;
+		return $title->getBaseText();
 	}
 	
 	/**
@@ -860,10 +881,26 @@ class MediaWikiService
 					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
 					) 
 			);
-	    $title = \GlobalTitle::newFromText( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
-	    if ( $title->isRedirect() ) {
-	    	$title = $title->getRedirectTarget();
-	    }
-	    return $title;
+		$title = \GlobalTitle::newFromText( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
+		if ( $title->isRedirect() ) {
+			$title = $title->getRedirectTarget();
+		}
+		return $title;
+	}
+	
+
+	/**
+	 * Gets a title from a page id
+	 * @param int $pageId
+	 * @return Title
+	 */
+	protected function getTitleFromPageId( $pageId ) {
+		wfProfileIn( __METHOD__ );
+		if (! isset( static::$pageIdsToTitles[$pageId] ) ) {
+			$page = $this->getPageFromPageId( $pageId );
+			static::$pageIdsToTitles[$pageId] = $page->getTitle();
+		}
+		wfProfileOut( __METHOD__ );
+		return static::$pageIdsToTitles[$pageId];
 	}
 }

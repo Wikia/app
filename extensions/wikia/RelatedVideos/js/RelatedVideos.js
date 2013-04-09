@@ -108,7 +108,7 @@ var RelatedVideos = {
 								RelatedVideos.showError( formRes.error );
 							} else {
 								VET_loader.modal.closeModal();
-								RelatedVideos.injectCaruselElement( formRes.html );
+								RelatedVideos.injectCarouselElement( formRes.html );
 							}
 						},
 						// error callback
@@ -312,7 +312,7 @@ var RelatedVideos = {
 				// Load new videos
 				$.nirvana.sendRequest({
 					controller: 'RelatedVideos',
-					method: 'getCaruselElementRL',
+					method: 'getCarouselElementRL',
 					type: 'GET',
 					format: 'json',
 					data: {
@@ -336,7 +336,7 @@ var RelatedVideos = {
 			$.when(
 				$.loadMustache(),
 				Wikia.getMultiTypePackage({
-					mustache: 'extensions/wikia/RelatedVideos/templates/RelatedVideosController_getCaruselElementRL.mustache'
+					mustache: 'extensions/wikia/RelatedVideos/templates/RelatedVideosController_getCarouselElementRL.mustache'
 				})
 			).done(function(libData, packagesData) {
 				// cache mustache template for carousel item
@@ -414,7 +414,7 @@ var RelatedVideos = {
 	},
 
 	// Inject newly added video into carousel - different from lazy loading
-	injectCaruselElement: function( html ){
+	injectCarouselElement: function( html ){
 		var scrollLength = -1 * ( RelatedVideos.currentRoom - 1 );
 		RelatedVideos.scroll(
 			scrollLength,

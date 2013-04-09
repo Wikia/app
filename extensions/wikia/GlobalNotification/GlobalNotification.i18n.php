@@ -12,7 +12,7 @@ $messages['en'] = array(
 	'globalnotification-general-ajax-failure' => 'The browser could not connect to the Wikia.  Try again later.',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  */
 $messages['qqq'] = array(
 	'globalnotification-desc' => 'Description of this extension',

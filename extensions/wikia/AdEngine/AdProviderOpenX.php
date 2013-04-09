@@ -1,5 +1,14 @@
 <?php
 
+if (empty($wgDevelEnvironment)) {
+	error_log('File marked for deletion, but still used: ' . __FILE__);
+	if (mt_rand(0, 1000) === 0) {
+		Wikia::logBacktrace('AdProviderOpenX');
+	}
+} else {
+	die('File marked for deletion, but still used: ' . __FILE__);
+}
+
 class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 
 	public $enable_lazyload = true;

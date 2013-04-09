@@ -223,6 +223,28 @@ $messages['fi'] = array(
 	'alert-download-updated-wikis-button-ok' => 'Ok',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'window-wikis-title' => 'Wikia Spæl Vegleiðing',
+	'window-wikis-wikilist-search-hint' => 'Leita eftir best umtóktu spølum...',
+	'window-category-load-batch' => 'Meira',
+	'window-article-button-close' => 'Lat aftur',
+	'window-article-button-back' => 'Aftur',
+	'window-article-menu-search-label' => 'Leita',
+	'window-article-menu-dashboard-label' => 'Innihald av leiðbeining',
+	'window-article-menu-cancel-label' => 'Ógildað',
+	'searchview-no-results' => 'Ongi úrslit fyri "%s"',
+	'searchview-button-back-list' => 'Aftur til lista',
+	'searchview-button-back-article' => 'Aftur til grein',
+	'searchbar-hint' => 'Leita %s...',
+	'alert-download-updated-wikis-message' => 'Listin yvir tøkar vegleiðingar verður dagførdur.',
+	'alert-download-updated-wikis-button-ok' => 'Í lagi',
+	'error-update-required' => 'Ein dagføring fyri hesa appina er tøk og er eitt krav.',
+	'error-no-connection' => 'Onki internet samband er at finna. \\n Vinarliga royn aftur.',
+);
+
 /** French (français)
  * @author Wyz
  */
@@ -547,12 +569,13 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'activityindicator-message' => 'A caria ...',
 	'window-wikis-title' => 'Guide dij Gieugh Wikia',
-	'window-wikis-wikilist-search-hint' => 'Serca nòst Mej Gieugh...',
+	'window-wikis-wikilist-search-hint' => 'Sërché nòstri Mej Gieugh...',
 	'window-category-load-batch' => 'Pi',
 	'window-article-button-close' => 'Sara',
 	'window-article-button-back' => 'André',
@@ -565,10 +588,10 @@ $messages['pms'] = array(
 	'searchbar-hint' => 'Sërché %s...',
 	'alert-download-updated-wikis-message' => 'La lista dle guide disponìbij a sarà agiornà.',
 	'alert-download-updated-wikis-button-ok' => 'Va bin',
-	'error-update-required' => "N'agiornament për sta app a l'é disponìbil e obligatòri.",
-	'error-no-connection' => 'Gnun-e conession sla Ragnà dosponìbij.\\nPër piasì preuva torna.',
-	'error-server' => "Ij nòst sërvent a l'han arspondù con n'eror, spiasent.\\nPër piasì preuva torna.",
-	'error-json-parse' => "A l'é stàit-ie un problem con ij dat artornà dai nòst sërvent, spiasent.\\nPër piasì preuva torna.",
+	'error-update-required' => "N'agiornament për costa aplicassion a l'é disponìbil e obligatòri.",
+	'error-no-connection' => "Gnun-e conession sla Ragnà disponìbij.\\nPër piasì, ch'a preuva torna.",
+	'error-server' => "Ij nòstri servent a l'han rëspondù con n'eror, an dëspias spiasent.\\nPër piasì, ch'a preuva torna.",
+	'error-json-parse' => "A-i é staje un problema con ij dat artornà dai nòst servent, an dëspias.\\nPër piasì, ch'a preuva torna.",
 );
 
 /** Pashto (پښتو)

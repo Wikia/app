@@ -42,7 +42,7 @@ $messages['en'] = array(
 	'tog-disablecategoryselect-v2' => 'Disable Category module (only applies if visual mode editing is disabled)',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Kflorence
  * @author Shirayuki
  */
@@ -236,6 +236,7 @@ $messages['ckb'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -246,6 +247,7 @@ $messages['cs'] = array(
 	'categoryselect-button-save' => 'Uložit',
 	'categoryselect-category-add' => 'Přidat kategorii', # Fuzzy
 	'categoryselect-category-edit' => 'Možnosti kategorie', # Fuzzy
+	'categoryselect-category-remove' => 'Odstranit kategorii',
 	'categoryselect-edit-summary' => 'Přidávání kategorií',
 	'categoryselect-error-article-doesnt-exist' => 'Článek [id=$1] neexistuje.', # Fuzzy
 	'categoryselect-error-db-locked' => 'Databáze je uzamčena.',
@@ -363,11 +365,13 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author ZxxZxxZ
+ * @author جواد
  */
 $messages['fa'] = array(
 	'categoryselect-button-add' => 'افزودن رده',
 	'categoryselect-button-cancel' => 'لغو',
 	'categoryselect-button-save' => 'ذخیره کردن',
+	'categoryselect-category-edit' => 'ویرایش رده',
 	'categoryselect-edit-summary' => 'افزودن رده',
 	'categoryselect-tooltip-add' => 'پس از اتمام دکمه اینتر را فشار دهید', # Fuzzy
 );
@@ -628,7 +632,7 @@ $messages['ko'] = array(
 	'categoryselect-error-empty-category-name' => '분류 이름을 제공하세요.',
 	'categoryselect-error-user-rights' => '사용자는 이 작업을 수행할 권한이 없습니다.',
 	'categoryselect-modal-category-name' => '분류의 이름 제공:',
-	'categoryselect-modal-category-sortkey' => '선택적으로 이름에 따라 "$1" 분류 문서에 이 문서를 알파벳순으로 할 수 있습니다:',
+	'categoryselect-modal-category-sortkey' => '선택적으로 이름에 따라 "$1" 분류 문서에 이 문서를 알파벳순으로 정렬할 수 있습니다:',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -753,17 +757,20 @@ $messages['nb'] = array(
 	'categoryselect-button-add' => 'Legg til kategori',
 	'categoryselect-button-cancel' => 'Avbryt',
 	'categoryselect-button-save' => 'Lagre',
-	'categoryselect-category-add' => 'Legg til en kategori', # Fuzzy
-	'categoryselect-category-edit' => 'Kategorivalg', # Fuzzy
+	'categoryselect-category-add' => 'Legg til en kategori...',
+	'categoryselect-category-edit' => 'Rediger kategori',
+	'categoryselect-category-remove' => 'Fjern kategori',
 	'categoryselect-edit-summary' => 'Legger til kategorier',
-	'categoryselect-error-article-doesnt-exist' => 'Artikkel [id=$1] finnes ikke.', # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => 'Siden [id=$1] finnes ikke.',
+	'categoryselect-error-category-name-length' => 'Den maksimale lengden for et kategorinavn er nådd.',
 	'categoryselect-error-db-locked' => 'Database er låst.',
-	'categoryselect-error-edit-abort' => 'Endringene du prøvde å utføre ble avbrutt av en utvidelseskrok', # Fuzzy
-	'categoryselect-error-empty-category-name' => 'Oppgi kategorinavn (del før |)', # Fuzzy
-	'categoryselect-error-user-rights' => 'Feil med brukerrettigheter.', # Fuzzy
-	'categoryselect-modal-category-name' => 'Oppgi navnet på kategorien:', # Fuzzy
-	'categoryselect-modal-category-sortkey' => 'Alfabetiser denne artikkelen under kategorisiden «$1» under navnet:', # Fuzzy
-	'categoryselect-tooltip-add' => 'Trykk Enter når du er ferdig', # Fuzzy
+	'categoryselect-error-duplicate-category-name' => 'Kategorien «$1» finnes allerede.',
+	'categoryselect-error-edit-abort' => 'Endringene du prøvde å utføre ble avbrutt av en utvidelseskrok.',
+	'categoryselect-error-empty-category-name' => 'Angi et kategorinavn.',
+	'categoryselect-error-user-rights' => 'Brukeren har ikke tillatelse til å utføre denne handlingen.',
+	'categoryselect-modal-category-name' => 'Oppgi navnet på kategorien:',
+	'categoryselect-modal-category-sortkey' => 'Alternativt kan du alfabetisere denne siden under kategorisiden «$1» under navnet:',
+	'categoryselect-tooltip-add' => 'Trykk på Enter- eller Linjeskift-tasten når du er ferdig.',
 	'tog-disablecategoryselect' => 'Deaktiver kategorimodulen (gjelder kun dersom redigering i visuell modus er deaktivert)',
 	'tog-disablecategoryselect-v2' => 'Deaktiver kategorimodulen (gjelder kun dersom redigering i visuell modus er deaktivert)',
 );
@@ -939,7 +946,9 @@ $messages['pt-br'] = array(
 	'categoryselect-error-category-name-length' => 'Atingiu-se o comprimento máximo para um nome de categoria.',
 	'categoryselect-error-db-locked' => 'O banco de dados está bloqueado.',
 	'categoryselect-error-duplicate-category-name' => 'A categoria "$1" já existe.',
-	'categoryselect-error-user-rights' => 'Erro nos direitos de usuário.', # Fuzzy
+	'categoryselect-error-edit-abort' => 'As mudanças que você tentou fazer foram abortadas por um anzol de extensão.',
+	'categoryselect-error-empty-category-name' => 'Por favor forneça um nome para a categoria.',
+	'categoryselect-error-user-rights' => 'O usuário não têm permissão para realizar esta ação.',
 	'categoryselect-modal-category-name' => 'Escreva o nome da categoria:',
 	'categoryselect-modal-category-sortkey' => 'Opcionalmente, você pode alfabetizar esta página na página da categoria "$1" sob o nome:',
 	'categoryselect-tooltip-add' => 'Pressione a tecla Enter ou Return quando pronto.',

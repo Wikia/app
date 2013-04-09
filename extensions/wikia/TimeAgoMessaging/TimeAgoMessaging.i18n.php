@@ -47,10 +47,16 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Mutarjem horr
  */
 $messages['ar'] = array(
 	'timeagomessaging-desc' => 'يزود بـi18n لــjquery.timeago.js plugin',
+	'timeago-year' => 'منذ {{PLURAL:$1|صفر سنوات|سنة واحدة|سنتان|$1 سنوات|$1 سنة}}',
+	'timeago-month' => 'منذ {{PLURAL:$1|صفر أشهر|شهر واحد|شهرين|$1 أشهر|$1 شهرا}}',
+	'timeago-day' => 'منذ {{PLURAL:$1|صفر أيام|يوم واحد|يومين|$1 أيام|$1 يوما}}',
+	'timeago-hour' => 'منذ {{PLURAL:$1|صفر ساعات|ساعة واحدة|ساعتان|$1 ساعات|$1 ساعة}}',
+	'timeago-minute' => 'منذ {{PLURAL:$1|صفر دقائق|دقيقة واحدة|دقيقتان|$1 دقائق|$1 دقيقة}}',
 	'timeago-second' => 'قبل دقيقة',
 	'timeago-second-from-now' => 'دقيقة من الآن',
 );
