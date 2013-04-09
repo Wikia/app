@@ -12,6 +12,7 @@ $color-input-field-shadow: mix($color-input-field, #000, 95%);
 	@include linear-gradient($color-input-field, top, $color-input-field-shadow, 0%, $color-input-field, 40%);
 	border: 1px solid $color-page-border;
 	font-size: 15px;
+	font-family: "Lucida Grande", sans-serif;
 	height: 19px;
 	outline: 0;
 	padding: 3px;
@@ -21,7 +22,7 @@ $color-input-field-shadow: mix($color-input-field, #000, 95%);
 	&::-webkit-input-placeholder {
 		color: mix($color-page, $color-text, 30%);
 	}
-	
+
 	&:-moz-placeholder {
 		color: mix($color-page, $color-text, 30%);
 	}
@@ -41,6 +42,7 @@ $color-input-field-shadow: mix($color-input-field, #000, 95%);
 	background-color: mix($color-page-opposite, $color-page, 3%);
 	border: 1px solid $color-page-border;
 	color: $color-text;
+	font-family: "Lucida Grande", sans-serif;
 	font-size: 13px;
 	margin: 0;
 	padding: 8px;
