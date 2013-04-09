@@ -13,7 +13,7 @@ class LyricFindController extends WikiaController {
 			$res = false;
 		}
 
-		$this->response->setCode( $res ? 204 : 500 );
+		$this->response->setCode( $res ? 204 : 400 /* bad request */ );
 	}
 
 	/**
@@ -23,10 +23,8 @@ class LyricFindController extends WikiaController {
 	private function doTrack($pageId) {
 		wfProfileIn(__METHOD__);
 
-		// TODO: get trackId from pageId
-		$trackId = 'amg:3039';
-
 		$url = $this->wg->LyricFindApiUrl . '/lyric.do';
+		$trackId = $this->getTrackId($pageId);
 		$data = array(
 			'apikey' => $this->wg->LyricFindApiKeys['display'],
 			'reqtype' => 'default',
@@ -49,6 +47,11 @@ class LyricFindController extends WikiaController {
 				102, // track is instrumental
 				111 // LRC is available
 			));
+
+			// log errors
+			if ($success === false) {
+				Wikia::log(__METHOD__, false, "got #{$code} response code from API (for page #{$pageId})", true);
+			}
 		}
 		else {
 			$success = false;
@@ -56,5 +59,16 @@ class LyricFindController extends WikiaController {
 
 		wfProfileOut(__METHOD__);
 		return $success;
+	}
+
+	/**
+	 * Gets All Music Guide track ID for page with given ID
+	 *
+	 * @param $pageId int page ID
+	 * @return string AMG track ID
+	 */
+	private function getTrackId($pageId) {
+		// perform a query
+		return 'amg:3039';
 	}
 }
