@@ -50,10 +50,9 @@ class DefaultContent extends AbstractService
 		// ensure the response is an array, even if empty.
 		$response   = $response == false ? array() : $response;
 		$titleStr   = $service->getTitleStringFromPageId( $pageId );
-		$wid = $service->getWikiId();
 		
 		$pageFields = [
-				'wid'                        => $wid,
+				'wid'                        => $service->getWikiId(),
 				'pageid'                     => $pageId,
 				$this->field( 'title' )      => $titleStr,
 				'titleStrict'                => $titleStr,
@@ -70,7 +69,7 @@ class DefaultContent extends AbstractService
 				$this->getPageContentFromParseResponse( $response ), 
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
-				$this->getCurrentBacklinks( $wid, $pageId ),
+				$this->getCurrentBacklinks(),
 				$pageFields 
 				);
 	}
@@ -82,10 +81,10 @@ class DefaultContent extends AbstractService
 	 * @param int $pageid
 	 * @return array
 	 */
-	protected function getCurrentBacklinks( $wid, $pageId ) {
+	protected function getCurrentBacklinks() {
 		$service = $this->getService();
 		$result = [];
-		$docId = sprintf( '%s_%s', $wid, $pageId );
+		$docId = $this->getCurrentDocumentId();
 		if ( $service->getGlobal( 'BacklinksEnabled' ) ) {
 			$backlinks = (new \Wikia\Search\Hooks)->popBacklinks();
 			$backlinksProcessed = [];
