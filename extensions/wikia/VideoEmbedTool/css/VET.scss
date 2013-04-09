@@ -224,7 +224,7 @@ $color-related-videos-background: darken($color-page, 20%);
 		padding-top: 20px;
 	}
 	.video-description {
-
+		resize: vertical;
 	}
 }
 .VideoEmbedNoBorder td, .VideoEmbedNoBorder th {
@@ -622,18 +622,17 @@ $color-related-videos-background: darken($color-page, 20%);
 		}
 		& > div, & > textarea {
 			width: 412px;
-			box-sizing: border-box;
+			@include box-sizing-border-box;
 		}
 		& > textarea {
 			min-height: 75px;
 		}
 		.option-label {
 			font-size: 12px;
-			padding-left: 10px;
 			width: 90px;
 		}
 		p.hint {
-			margin-left: 128px;
+			margin-left: 118px;
 			& + label {
 				padding-top: 0;
 			}
