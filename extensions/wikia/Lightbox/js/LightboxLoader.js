@@ -404,13 +404,11 @@ LightboxTracker = {
 };
 
 $(function() {
-	//TODO: remove || statement (leave only !window.wgEnableLightboxExt) once WikiaHubsV2 is released and WikiaHubs extension is removed
-	if (!window.wgEnableLightboxExt || (window.wikiaPageIsHub && !window.isWikiaHubsV2Page) ) {
-		return;
+	if (window.wgEnableLightboxExt) {
+		LightboxLoader.init();
+		LightboxLoader.loadFromURL();
 	}
 
-	LightboxLoader.init();
-	LightboxLoader.loadFromURL();
 });
 
 window.LightboxLoader = LightboxLoader;
