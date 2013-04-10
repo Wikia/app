@@ -151,8 +151,6 @@ class WAMPageModel extends WikiaModel {
 	 * @return string
 	 */
 	public function getWAMSubpageUrl(Title $title, $fullUrl = true) {
-		$url = ($fullUrl) ? $title->getFullUrl() : $title->getLocalURL();
-		
 		if( $this->isWAMPage($title) ) {
 			$dbkeysMap = $this->getWamPagesDbKeysMap();
 			$dbkeyLower = mb_strtolower($title->getDBKey());
@@ -160,9 +158,10 @@ class WAMPageModel extends WikiaModel {
 			
 			if( $wamPageDbkey ) {
 				$title = Title::newFromText($wamPageDbkey);
-				$url = ($fullUrl) ? $title->getFullUrl() : $title->getLocalURL();
 			}
 		}
+
+		$url = ($fullUrl) ? $title->getFullUrl() : $title->getLocalURL();
 		
 		return $url;
 	}
