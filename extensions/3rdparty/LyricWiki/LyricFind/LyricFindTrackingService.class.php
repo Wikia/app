@@ -24,7 +24,7 @@ class LyricFindTrackingService extends WikiaService {
 		$data = array(
 			'apikey' => $this->wg->LyricFindApiKeys['display'],
 			'reqtype' => 'default',
-			'trackid' => $trackId,
+			'trackid' => "amg:{$trackId}",
 			'output' => 'json'
 		);
 
