@@ -71,6 +71,7 @@
 	</form>
 	<table>
 		<tr>
+			<th></th>
 			<th><?= wfMessage('wam-index-header-rank')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-score')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-wiki-name')->text() ?></th>
@@ -82,6 +83,7 @@
 		<? if($indexWikis['wam_index']): ?>
 			<? foreach ($indexWikis['wam_index'] as $wiki): ?>
 				<tr>
+					<td><?=$wiki['index']?>.</td>
 					<td><?=$wiki['wam_rank']?>.</td>
 					<td class="score <?=$wiki['change']?>">
 						<?= $wg->Lang->formatNum(number_format($wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION))?>

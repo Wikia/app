@@ -88,14 +88,17 @@ class WAMPageModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getIndexWikis($params) {
+		$params = $this->getIndexParams($params);
+
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$WAMData = $this->getMockedDataForDev();
 		} else {
-			$params = $this->getIndexParams($params);
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
 
 		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index'], self::TAB_INDEX_TOP_WIKIS);
+		$WAMData['wam_index'] = $this->calculateFilterIndex($WAMData['wam_index'], $params);
+
 		return $WAMData;
 	}
 
@@ -227,6 +230,14 @@ class WAMPageModel extends WikiaModel {
 			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
 		}
 
+		return $wamWikis;
+	}
+
+	protected function calculateFilterIndex($wamWikis, $params) {
+		$i = 1;
+		foreach ($wamWikis as &$wiki) {
+			$wiki['index'] = $params['offset'] + $i++;
+		}
 		return $wamWikis;
 	}
 
