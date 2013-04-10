@@ -2,6 +2,9 @@
 
 class LyricFindController extends WikiaController {
 
+	const RESPONSE_OK = 204;
+	const RESPONSE_ERR = 400;
+
 	public function track() {
 		$pageId = intval($this->getVal('pageid'));
 
@@ -14,6 +17,6 @@ class LyricFindController extends WikiaController {
 			$res = false;
 		}
 
-		$this->response->setCode( $res ? 204 : 400 /* bad request */ );
+		$this->response->setCode( $res ? self::RESPONSE_OK : self::RESPONSE_ERR /* bad request */ );
 	}
 }
