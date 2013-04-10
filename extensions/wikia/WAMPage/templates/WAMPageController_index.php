@@ -72,8 +72,8 @@
 	<table>
 		<tr>
 			<th></th>
-			<th><?= wfMessage('wam-index-header-rank')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-score')->text() ?></th>
+			<th><?= wfMessage('wam-index-header-rank')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-wiki-name')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-vertical')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-vertical-rank')->text() ?></th>
@@ -84,10 +84,10 @@
 			<? foreach ($indexWikis['wam_index'] as $wiki): ?>
 				<tr>
 					<td><?=$wiki['index']?>.</td>
-					<td><?=$wiki['wam_rank']?>.</td>
 					<td class="score <?=$wiki['change']?>">
 						<?= $wg->Lang->formatNum(number_format($wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION))?>
 					</td>
+					<td><?=$wiki['wam_rank']?></td>
 					<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
 					<td><?=$wiki['hub_name']?></td>
 					<td><?=$wiki['hub_wam_rank']?></td>
