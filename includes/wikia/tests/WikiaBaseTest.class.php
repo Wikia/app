@@ -120,6 +120,20 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Mock a static class method
+	 *
+	 * @param $className string class name
+	 * @param $methodName string method name
+	 * @param $retVal mixed result to be returned by mocked method
+	 */
+	protected function mockClassStaticMethod($className, $methodName, $retVal) {
+		// runkit doesn't resolve autoloaded classes, we need to force it by calling "new" object
+		new $className();
+		WikiaMockProxy::proxy($className, $className, $retVal);
+		WikiaMockProxy::redefineStaticConstructor($className, $methodName);
+	}
+
+	/**
 	 * Mock global ($wg...) variable.
 	 *
 	 * Should be followed by the call to $this->mockApp()
