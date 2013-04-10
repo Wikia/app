@@ -80,7 +80,7 @@ class WAMApiController extends WikiaApiController {
 					}
 					foreach ($wamIndex['wam_index'] as &$row) {
 						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize'], self::DEFAULT_WIKI_ADMINS_LIMIT);
-						if(empty($row['admins'][0]['userId'])) unset($row['admins'][0]);
+						$row['admins'] = $this->prepareAdmins($row['admins'], self::DEFAULT_WIKI_ADMINS_LIMIT);
 					}
 				}
 				if ($options['fetchWikiImages']) {
@@ -191,5 +191,13 @@ class WAMApiController extends WikiaApiController {
 		}
 
 		return $options;
+	}
+
+	private function prepareAdmins($admins, $limit) {
+		if(empty($admins[0]['userId'])) unset($admins[0]);
+		if(count($admins) > $limit) {
+			$admins = array_slice($admins, 0, $limit);
+		}
+		return $admins;
 	}
 }
