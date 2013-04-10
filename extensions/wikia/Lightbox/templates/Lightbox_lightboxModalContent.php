@@ -57,15 +57,15 @@
 
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
 		<button class="share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></button>
-		<button class="more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></button>
+		<a href="{{fileUrl}}"><button class="more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></button></a>
 		
 		<div id="lightbox-add-to-article" class="lightbox-add-to-article">
 			<button class="article-add-button secondary"><?= wfMsg('lightbox-header-add-video-button') ?></button>
 			<input class="lightbox-article-input" />
 		</div>
 
-		<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
-		<a href="{{rawImageUrl}}" class="see-full-size-link" target="_blank"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
+		<h1><a href="{{fileUrl}}">{{fileTitle}}</a></h1>
+		<a href="{{rawImageUrl}}" class="see-full-size-link"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
 		<span class="video-views">{{{views}}}</span>
 		<div class="user-details caption">
 			{{#caption}}<p>{{caption}}</p>{{/caption}}
@@ -100,31 +100,6 @@
 
 	<script id="LightboxCarouselProgressTemplate" type="text/template">
 		<?= wfMsg('lightbox-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{{total}}}")); ?>
-	</script>
-
-	<script id="LightboxMoreInfoTemplate" type="text/template">
-		<button class="more-info-close secondary"><?= wfMsg('lightbox-more-info-back-button') ?></button>
-		<div class="content">
-			<div class="hero">
-				<div class="hero-inner">
-					<img src="{{imageUrl}}">
-				</div>
-			</div>
-			<div class="more-info-details">
-				<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
-				<span class="video-views">{{{views}}}</span>
-				<div class="user-details">
-					<img class="avatar" src="{{userThumbUrl}}">
-					<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}" target="_blank">{{userName}}</a>') ?>
-				</div>
-				<h2><?= wfMsg('lightbox-more-info-filelinks-heading') ?></h2>
-				<ul>
-				{{#articles}}
-					<li><a href="{{url}}" target="_blank">{{titleText}}</a></li>
-				{{/articles}}
-				</ul>
-			</div>
-		</div>
 	</script>
 
 	<script id="LightboxShareTemplate" type="text/template">
