@@ -42,7 +42,7 @@
 				trackingMethod: 'both'
 			},
 			slice = [].slice,
-			track = ( WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
+			track = ( window.WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
 
 		return function() {
 			track.apply( track, [ config ].concat( slice.call( arguments ) ) );
@@ -685,7 +685,7 @@
 			// attach handlers - play button (open video preview)
 			this.cachedSelectors.carousel.on('click', 'li a.video', function(event){
 				event.preventDefault();
-				var videoTitle = $(".Wikia-video-thumb", this).attr("data-video");
+				var videoTitle = $(".Wikia-video-thumb", this).attr("data-video-key");
 				that.fetchVideoPlayer(videoTitle);
 
 				// remove in-preview class from previously check item if exists

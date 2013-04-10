@@ -40,6 +40,8 @@ class WikiaHomePageHelper extends WikiaModel {
 	const FAILSAFE_COMMUNITIES_COUNT = 280000;
 	const FAILSAFE_NEW_COMMUNITIES_COUNT = 200;
 
+	const WAM_SCORE_ROUND_PRECISION = 2;
+
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
 	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.7';
 
@@ -916,6 +918,29 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getWikisForStaffTool($options) {
 		return $this->getVisualization()->getWikisForStaffTool($options);
+	}
+
+	public function getWamScore($wikiId) {
+		$wamScore = null;
+
+		if( !empty($this->app->wg->DevelEnvironment) ) {
+			$wamScore = $this->getMockedScoreForDev();
+		} else {
+			$wamData = $this->app->sendRequest('WAMApi', 'getWAMIndex', ['wiki_id' => $wikiId])->getData();
+			if (!empty($wamData['wam_index'][$wikiId]['wam'])) {
+				$wamScore = round($wamData['wam_index'][$wikiId]['wam'], self::WAM_SCORE_ROUND_PRECISION);
+			}
+		}
+		return $wamScore;
+	}
+
+	private function getMockedScoreForDev() {
+		if (rand(0, 3)) {
+			$wam = rand(100, 9999) / 100;
+		} else {
+			$wam = null;
+		}
+		return $wam;
 	}
 
 }

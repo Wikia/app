@@ -102,11 +102,10 @@ __NOEDITSECTION__',
 *[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
-	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Advertise]===
-*[http://mediakit.wikia.com/Solutions/Audience Audience]
-*[http://mediakit.wikia.com/Solutions Solutions]
-*[http://mediakit.wikia.com/Advertising-Products Ad products]
-__NOEDITSECTION__',
+	'wikiahome-footer-partner' => "===Partner===
+*[http://www.mediakit.wikia.com Media kit]
+*'''[http://mediakit.wikia.com/wiki/Contact Advertise with us]'''
+__NOEDITSECTION__",
 
 	'wikia-home-page-hot' => 'Hot',
 	'wikia-home-page-new' => 'New',
@@ -115,6 +114,8 @@ __NOEDITSECTION__',
 	'wikia-home-parse-exception-empty-data-from-database' => 'There were no data pulled from database. Database table is empty or all wikis are blocked.',
 	'wikia-home-parse-exception-read-only' => 'Our databases are in read-only mode.',
 
+	'wikiahome-preview-stats-wam-empty-label' => 'WAM',
+	'wikiahome-preview-stats-wam' => "'''$1''' WAM Score",
 	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Page|'''$1''' Pages}}",
 	'wikiahome-preview-stats-photos' => "{{PLURAL:$1|'''1''' Photo|'''$1''' Photos}}",
 	'wikiahome-preview-stats-videos' => "{{PLURAL:$1|'''1''' Video|'''$1''' Videos}}",
@@ -220,10 +221,9 @@ $messages['de'] = array(
 *[http://de.wikia.com/Mobil/GameGuides Videospiele-Apps]
 *[http://de.wikia.com/Mobil/LyricWiki Entertainment-Apps]
 *[http://api.wikia.com API (en)]',
-	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Auf Wikia werben]===
-*[http://mediakit.wikia.com/Solutions/Audience Zielgruppe]
-*[http://mediakit.wikia.com/Solutions Lösungen]
-*[http://mediakit.wikia.com/Advertising-Products Produkte]',
+	'wikiahome-footer-partner' => "===Partner===
+*[http://www.mediakit.wikia.com Pressekit]
+*'''[http://mediakit.wikia.com/wiki/Contact Auf Wikia werben]'''",
 
 	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Seite|'''$1''' Seiten }}",
 	'wikiahome-preview-stats-photos' => "{{PLURAL:$1|'''1''' Foto|'''$1''' Fotos}}",
@@ -335,11 +335,11 @@ __NOEDITSECTION__',
 *[http://es.wikia.com/Móbiles/PhotoPop Ap. Entretenimiento]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
-	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Publicidad]===
-*[http://mediakit.wikia.com/Solutions/Audience Audiencia]
-*[http://mediakit.wikia.com/Solutions Soluciones]
-*[http://mediakit.wikia.com/Advertising-Products Anuncios]
-__NOEDITSECTION__',
+	'wikiahome-footer-partner' => "===Publicidad===
+*[http://www.mediakit.wikia.com Kit de prensa]
+*'''[http://mediakit.wikia.com/wiki/Contact Anúnciate con nosotros]'''
+__NOEDITSECTION__",
+
 
 	'wikia-home-page-hot' => 'Calentito',
 	'wikia-home-page-new' => 'Nuevo',
@@ -443,11 +443,11 @@ __NOEDITSECTION__',
 *[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
-	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Publicité]===
-*[http://mediakit.wikia.com/Solutions/Audience Taux d’écoute]
-*[http://mediakit.wikia.com/Solutions Solutions]
-*[http://mediakit.wikia.com/Advertising-Products Produits publicitaires]
-__NOEDITSECTION__',
+	'wikiahome-footer-partner' => "===Partenaire===
+*[http://www.mediakit.wikia.com Kit de presse ]
+*'''[http://mediakit.wikia.com/wiki/Contact Publicité]'''
+__NOEDITSECTION__",
+
 	'wikia-home-page-hot' => 'Chaud',
 	'wikia-home-page-new' => 'Nouveau',
 	'wikia-home-page-official' => 'Officiel',

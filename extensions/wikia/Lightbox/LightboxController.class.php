@@ -106,6 +106,7 @@ class LightboxController extends WikiaController {
 			$thumb = array(
 				'thumbUrl' => $url,
 				'type' => $entry['type'],
+				'key' => $media->getDBKey(),
 				'title' => $media->getText(),
 				'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay(self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT) : ''
 			);

@@ -134,7 +134,6 @@ class ImageTweaksHooks extends WikiaObject {
 
 		$this->wf->profileIn( __METHOD__ );
 
-
 		if (
 			/**
 			* Images SEO project
@@ -157,12 +156,6 @@ class ImageTweaksHooks extends WikiaObject {
 
 			if ( is_array( $linkAttribs ) ) {
 				if ( !empty( $file ) ) {
-					$title = $file->getTitle();
-
-					if ( $title instanceof Title ) {
-						$linkAttribs['data-image-name'] = $title->getText();
-					}
-
 					$linkAttribs['href'] = $this->wf->ReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
 					$fullImageUrl = $linkAttribs['href'];
 				}
@@ -178,6 +171,7 @@ class ImageTweaksHooks extends WikiaObject {
 					$link = $title->getLinkUrl();
 				} elseif ( !empty( $options['file-link'] ) && empty( $options['desc-link'] ) ) {
 					$linkAttribs['href'] = $this->wf->ReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
+					$linkAttribs['class'] = empty($linkAttribs['class']) ? ' lightbox' : $linkAttribs['class'] . ' lightbox';
 				}
 
 				//override any previous value if title is passed as an option

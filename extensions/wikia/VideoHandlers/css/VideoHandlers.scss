@@ -49,7 +49,7 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
     @include opacity(95);
 }
 
-.video-thumbnail .timer, .video .timer {
+.video .timer {
     position: absolute;
     right: 3px;
     bottom: 3px;

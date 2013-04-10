@@ -605,6 +605,13 @@ class WikiaHomePageController extends WikiaController {
 			$this->wikiMainImageUrl = $this->wg->blankImgUrl;
 		}
 
+		if (!empty($this->app->wg->EnableWAMPageExt)) {
+			$wamModel = new WAMPageModel();
+			$this->wamUrl = $wamModel->getWAMMainPageUrl();
+
+			$this->wikiWamScore = $this->helper->getWamScore($wikiId);
+		}
+
 		$this->imagesSlider = $this->sendRequest('WikiaMediaCarouselController', 'renderSlider', array('data' => $images));
 	}
 
