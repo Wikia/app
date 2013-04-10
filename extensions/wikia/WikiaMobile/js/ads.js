@@ -34,6 +34,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 		d = w.document,
 		found = false,
 		fixed = false,
+		positionfixed = Features.positionfixed,
 		ftr,
 		inited,
 		type;
