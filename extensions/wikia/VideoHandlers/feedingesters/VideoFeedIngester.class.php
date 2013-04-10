@@ -156,7 +156,8 @@ abstract class VideoFeedIngester {
 
 		// parepare article body
 		$apiWrapper = new static::$API_WRAPPER($id, $metadata);
-		$body = $categoryStr."\n".$apiWrapper->getDescription();
+		$descriptionHeader = '=='.F::app()->wf->Message( 'videohandler-description' ).'==';
+		$body = $categoryStr."\n".$descriptionHeader."\n".$apiWrapper->getDescription();
 
 		if ($debug) {
 			print "Ready to create video\n";
