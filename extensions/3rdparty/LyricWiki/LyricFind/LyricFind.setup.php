@@ -19,4 +19,5 @@ $dir = __DIR__;
 
 $app->registerClass('LyricFindController', $dir . '/LyricFindController.class.php');
 $app->registerClass('LyricFindHooks', $dir . '/LyricFindHooks.class.php');
+$app->registerClass('LyricFindTrackingService', $dir . '/LyricFindTrackingService.class.php');
 $app->registerHook('OasisSkinAssetGroups', 'LyricFindHooks', 'onOasisSkinAssetGroups');
