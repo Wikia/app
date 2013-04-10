@@ -724,8 +724,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				return filemtime($fileName);
 				break;
 			case self::FILE_TYPE_SASS:
-				$sass = new SassService($fileName);
-				return $sass->getModificationTime();
+				return SassService::newFromFile($fileName)->getModifiedTime();
 				break;
 
 		}

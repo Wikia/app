@@ -1,22 +1,54 @@
 <?php
 
+/**
+ * SassSourceContext is a class containing context for spawning new Sass sources.
+ *
+ * @author Władysław Bodzek <wladek@wikia-inc.com>
+ */
 class SassSourceContext {
 
 	protected $rootDir;
+	protected $tempDir;
 	protected $instances = array();
 	protected $filesMap = array();
 
-	public function __construct( $rootDir ) {
+	/**
+	 * Create new context instance
+	 *
+	 * @param $rootDir string Base root dir (relative file paths are searched here as well)
+	 * @param $tempDir string|null Temporary directory
+	 */
+	public function __construct( $rootDir, $tempDir = null ) {
 		$this->rootDir = $rootDir;
+		$this->tempDir = $tempDir ?: sys_get_temp_dir();
 	}
 
+	/**
+	 * Get a base root directory
+	 *
+	 * @return string Base root directory
+	 */
 	public function getRootDir() {
 		return $this->rootDir;
 	}
 
 	/**
-	 * @param $fileName
-	 * @return SassSource
+	 * Get a temporary directory
+	 *
+	 * @return string Temporary directory
+	 */
+	public function getTempDir() {
+		return $this->tempDir;
+	}
+
+	/**
+	 * Get a Sass source representing regular file specified by file name
+	 * and optionally an extra path to search for this file in
+	 *
+	 * @param $fileName string File path (can be relative or absolute)
+	 * @param $relativeToPath string|null Extra path to search for this file in (optional)
+	 * @return SassSource SassSource instance
+	 * @throws SassException
 	 */
 	public function getFile( $fileName, $relativeToPath = null ) {
 		$requested = $fileName;
@@ -33,11 +65,14 @@ class SassSourceContext {
 
 	const NOT_FOUND = '__NOT_FOUND__';
 
+	/**
+	 * Find an existing file that matches Ruby's Sass processor searching order.
+	 *
+	 * @param $fileName string File path (can be relative or absolute)
+	 * @param $relativeToPath string|null Extra path to search for this file in (optional)
+	 * @return string|false Absolute file path or false if file was not found
+	 */
 	public function findFile( $fileName, $relativeToPath = null ) {
-		if ( file_exists( $fileName ) ) {
-			return realpath($fileName);
-		}
-
 		$requested = $fileName;
 
 		$prefixes = array();
@@ -48,8 +83,10 @@ class SassSourceContext {
 		$prefixes[] = '';
 
 		foreach ($prefixes as $prefix) {
+//			var_dump("pref $prefix");
 			if ( !empty( $this->filesMap[$prefix][$requested] ) ) {
 				$value = $this->filesMap[$prefix][$requested];
+//				var_dump("map $value");
 				if ( $value !== self::NOT_FOUND ) {
 					return $value;
 				} else {
@@ -79,6 +116,7 @@ class SassSourceContext {
 			if ( file_exists( $directory ) ) {
 				foreach( $filenames as $f ) {
 					$fullPath = $directory . $f;
+//					var_dump("chk $fullPath");
 					if ( file_exists( $fullPath ) ) {
 						$fileName = realpath($fullPath);
 						break;

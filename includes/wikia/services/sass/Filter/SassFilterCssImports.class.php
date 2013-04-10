@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * CssImports filter handles embedding external CSS files referenced in @import directives.
+ *
+ * @author Inez Korczyński <korczynski@gmail.com>
+ * @author Piotr Bablok <piotr.bablok@gmail.com>
+ * @author Władysław Bodzek <wladek@wikia-inc.com>
+ */
 class SassFilterCssImports {
 
 	protected $rootDir;
@@ -8,12 +15,14 @@ class SassFilterCssImports {
 		$this->rootDir = $rootDir;
 	}
 
-	public function apply( $contents ) {
+	public function process( $contents ) {
 		wfProfileIn(__METHOD__);
 
+		// since this is stored in a string, remember to escape quotes, slashes, etc.
+		$importRegexOne = "/@import ['\\\"]([^\\n]*?\\.css)['\\\"]([^;\\n]*)(;|\\n|$)/is";
+		$importRegexTwo = "/@import url[\\( ]['\\\"]?([^\\n]*?\\.css)['\\\"]?[ \\)]([^;\\n]*)(;|\\n|$)/is";
+
 		$matches = array();
-		$importRegexOne = "/@import ['\\\"]([^\\n]*\\.css)['\\\"]([^\\n]*)(\\n|$)/is"; // since this stored is in a string, remember to escape quotes, slashes, etc.
-		$importRegexTwo = "/@import url[\\( ]['\\\"]?([^\\n]*\\.css)['\\\"]?[ \\)]([^\\n]*)(\\n|$)/is";
 		while ((0 < preg_match_all($importRegexOne, $contents, $matches, PREG_SET_ORDER)) || (0 < preg_match_all($importRegexTwo, $contents, $matches, PREG_SET_ORDER))) {
 			foreach($matches as $match) {
 				$lineMatched = $match[0];

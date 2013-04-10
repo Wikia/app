@@ -1,18 +1,21 @@
 <?php
 
+/**
+ * SassSource is a base class for sources containing SASS source code.
+ * You can request last modification time, hash of all the included sources
+ * and the output compiled CSS code.
+ *
+ * @author Władysław Bodzek <wladek@wikia-inc.com>
+ */
 abstract class SassSource {
 
 	protected $context;
 
 	protected $hash;
 	protected $modifiedTime;
-
 	protected $dependencies;
-	protected $currentDir;
 
 	protected $humanName;
-	protected $rawSource;
-	protected $rawModifiedTime;
 
 	public function __construct( SassSourceContext $context ) {
 		$this->context = $context;
@@ -27,7 +30,8 @@ abstract class SassSource {
 			$modifiedTime = $this->getRawModifiedTime();
 
 			$deps = $this->getDependencies();
-			$currentDir = $this->hasCurrentDir() ? $this->getCurrentDir() : null;
+			$currentDir = $this->hasPermanentFile() ? $this->getCurrentDir() : null;
+//			var_dump(get_class($this),$currentDir);
 			foreach ($deps as $dep) {
 				$source = $this->getContext()->getFile($dep,$currentDir);
 				$modifiedTime = max( $modifiedTime, $source->getModifiedTime() );
@@ -43,7 +47,8 @@ abstract class SassSource {
 			$hashSource = md5($this->getRawSource());
 			$deps = $this->getDependencies();
 //			var_dump($this->getHumanName(),$deps);
-			$currentDir = $this->hasCurrentDir() ? $this->getCurrentDir() : null;
+			$currentDir = $this->hasPermanentFile() ? $this->getCurrentDir() : null;
+//			var_dump(get_class($this),$currentDir);
 			foreach ($deps as $dep) {
 //				var_dump("in   ".$this->getHumanName());
 //				var_dump('  do '.$dep);
@@ -58,38 +63,18 @@ abstract class SassSource {
 	}
 
 
+	abstract public function hasPermanentFile();
+	abstract public function getLocalFile();
+	abstract public function releaseLocalFile();
+
+
 	protected function getHumanName() {
 		return $this->humanName !== null ? $this->humanName : "(unknown)";
 	}
 
-	protected function getRawSource() {
-		if ( $this->rawSource === null ) {
-			throw new SassException( sprintf( '%s::getRawSource[%s]: Raw source is not available.',
-				get_class($this), $this->getHumanName() ) );
-		}
-		return $this->rawSource;
-	}
-
-	protected function getRawModifiedTime() {
-		if ( $this->rawModifiedTime === null ) {
-			throw new SassException( sprintf( '%s::getRawSource[%s]: Raw modified time is not available.',
-				get_class($this), $this->getHumanName() ) );
-		}
-		return $this->rawModifiedTime;
-	}
-
-
-	protected function hasCurrentDir() {
-		return $this->currentDir !== null;
-	}
-
-	protected function getCurrentDir() {
-		if ( $this->currentDir === null ) {
-			throw new SassException( sprintf( '%s::getRawSource[%s]: Current directory is not available.',
-				get_class($this), $this->getHumanName() ) );
-		}
-		return $this->currentDir;
-	}
+	abstract protected function getRawSource();
+	abstract protected function getRawModifiedTime();
+	abstract protected function getCurrentDir();
 
 	protected function getDependencies() {
 		if ( $this->dependencies === null ) {

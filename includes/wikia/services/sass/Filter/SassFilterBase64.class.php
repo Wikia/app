@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Base64 filter handles encoding and embedding files in CSS stylesheet
+ * for URLs marked to be processed that way.
+ *
+ * @author Inez Korczyński <korczynski@gmail.com>
+ * @author Piotr Bablok <piotr.bablok@gmail.com>
+ * @author Władysław Bodzek <wladek@wikia-inc.com>
+ */
 class SassFilterBase64 {
 
 	protected $rootDir;

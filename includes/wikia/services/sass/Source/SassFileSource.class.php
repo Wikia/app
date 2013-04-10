@@ -1,10 +1,32 @@
 <?php
 
+/**
+ * SassFileSource represents a regular file containing SASS source code.
+ *
+ * @author Władysław Bodzek <wladek@wikia-inc.com>
+ */
 class SassFileSource extends SassSource {
 
+	/**
+	 * @var string File path
+	 */
 	protected $fileName;
-	protected $dirName;
 
+	/**
+	 * @var srting|null File contents (cache)
+	 */
+	protected $rawSource;
+	/**
+	 * @var int|null Last modified time (cache)
+	 */
+	protected $rawModifiedTime;
+
+	/**
+	 * Create Sass source instance associated with regular file
+	 *
+	 * @param $context SassSourceContext Context
+	 * @param $fileName string File path
+	 */
 	public function __construct( SassSourceContext $context, $fileName ) {
 		if ( !is_file($fileName) ) {
 			throw new SassException( __METHOD__ . ': File is not a regular file: ' . $fileName );
@@ -15,11 +37,16 @@ class SassFileSource extends SassSource {
 		$this->humanName = $this->fileName;
 	}
 
-	protected function getRawModifiedTime() {
-		if ( $this->rawModifiedTime === null ) {
-			$this->rawModifiedTime = filemtime($this->fileName);
-		}
-		return $this->rawModifiedTime;
+	public function hasPermanentFile() {
+		return true;
+	}
+
+	public function getLocalFile() {
+		return $this->fileName;
+	}
+
+	public function releaseLocalFile() {
+		// noop
 	}
 
 	protected function getRawSource() {
@@ -36,6 +63,17 @@ class SassFileSource extends SassSource {
 			$this->rawSource = $contents;
 		}
 		return $this->rawSource;
+	}
+
+	protected function getRawModifiedTime() {
+		if ( $this->rawModifiedTime === null ) {
+			$this->rawModifiedTime = filemtime($this->fileName);
+		}
+		return $this->rawModifiedTime;
+	}
+
+	protected function getCurrentDir() {
+		return $this->currentDir;
 	}
 
 }

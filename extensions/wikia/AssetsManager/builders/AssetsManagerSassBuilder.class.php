@@ -30,7 +30,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	}
 
 	public function getContent() {
-		global $wgDevelEnvironment, $wgDevelEnvironmentName;
+		global $wgDevelEnvironment, $wgDevelEnvironmentName, $IP;
 		wfProfileIn(__METHOD__);
 
 		$processingTimeStart = null;
@@ -38,7 +38,11 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		if ( $this->mForceProfile ) {
 			$processingTimeStart = microtime( true );
 		}
-		$hash = wfAssetManagerGetSASShash( $this->mOid );
+
+		$sassService = SassService::newFromFile("{$IP}/{$this->mOid}");
+		$sassService->setSassVariables($this->mParams);
+
+		$hash = $sassService->getHash();
 		$paramsHash = md5( urldecode( http_build_query( $this->mParams, '', ' ' ) ) );
 		$cacheId = "sass-{$paramsHash}-{$hash}-" . self::CACHE_VERSION;
 
@@ -48,13 +52,16 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		}
 
 		$memc = F::App()->wg->Memc;
-		$cachedContent = $memc->get( $cacheId );
+		// todo: remove debugging ;-P
+//		$cachedContent = $memc->get( $cacheId );
+		$cachedContent = false;
 
 		if ( $cachedContent ) {
 			$this->mContent = $cachedContent;
 
 		} else {
-			$this->processContent();
+			// todo: add extra logging of AM request in case of any error
+			$this->mContent = $sassService->getCss();
 
 			// This is the final pass on contents which, among other things, performs minification
 			parent::getContent( $processingTimeStart );

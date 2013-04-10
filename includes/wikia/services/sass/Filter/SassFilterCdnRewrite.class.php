@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * CdnRewrite filter handles rewriting local paths to CDN paths
+ * when URLs are marked to be processed that way.
+ *
+ * @author Inez Korczyński <korczynski@gmail.com>
+ * @author Piotr Bablok <piotr.bablok@gmail.com>
+ * @author Władysław Bodzek <wladek@wikia-inc.com>
+ */
 class SassFilterCdnRewrite {
 
 	protected $cdnUrl;
