@@ -295,6 +295,7 @@ class WAMPageModel extends WikiaModel {
 		$offset = ($page > $firstPageNo) ? (($page - 1) * $itemsPerPage) : 0;
 		
 		$apiParams = [
+			'avatar_size' => 21,
 			'fetch_admins' => true,
 			'limit' => $itemsPerPage,
 			'offset' => $offset,

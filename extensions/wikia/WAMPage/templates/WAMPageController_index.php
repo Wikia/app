@@ -92,11 +92,15 @@
 					<td><?=$wiki['hub_wam_rank']?></td>
 					<td><?=$wiki['peak_wam_rank']?></td>
 					<td class="admins">
-						<? foreach($wiki['admins'] as $admin): ?>
-							<a href="<?= $admin['userPageUrl'] ?>">
-								<img src="<?= $admin['avatarUrl'] ?>" alt="<?= $admin['name'] ?>" title="<?= $admin['name'] ?>" />
-							</a>
-						<? endforeach ?>
+						<? if(!empty($wiki['admins'])): ?>
+							<ul>
+							<? foreach($wiki['admins'] as $admin): ?>
+								<li><a href="<?= $admin['userPageUrl'] ?>">
+									<img src="<?= $admin['avatarUrl'] ?>" alt="<?= $admin['name'] ?>" title="<?= $admin['name'] ?>" />
+								</a></li>
+							<? endforeach ?>
+							</ul>
+						<? endif ?>
 					</td>
 				</tr>
 			<? endforeach ?>

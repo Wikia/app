@@ -279,8 +279,20 @@
 				padding: 0 10px;
 			}
 
-			.admins>a {
-				text-decoration: none;
+			.admins {
+				a {
+					text-decoration: none;
+				}
+				ul {
+					height: 21px;
+					li {
+						display: inline-block;
+						height: 21px;
+						list-style-type: none;
+						overflow: hidden;
+						width: 21px;
+					}
+				}
 			}
 
 			.score {
