@@ -57,12 +57,15 @@ class WAMApiController extends WikiaApiController {
 	 * @responseParam integer $wam_index_date date of received list
 	 */
 	public function getWAMIndex () {
+		$app = F::app();
+
 		$options = $this->getWAMParameters();
 
 		$wamIndex = WikiaDataAccess::cacheWithLock(
-			F::app()->wf->SharedMemcKey(
+			$app->wf->SharedMemcKey(
 				'wam_index_table',
 				self::MEMCACHE_VER,
+				$app->wg->ContLang->getCode(),
 				implode(':', $options)
 			),
 			6 * 60 * 60,
