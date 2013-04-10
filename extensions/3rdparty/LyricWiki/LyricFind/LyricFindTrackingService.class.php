@@ -28,8 +28,7 @@ class LyricFindTrackingService extends WikiaService {
 			'output' => 'json'
 		);
 
-		$client = new Http();
-		$resp = $client->post($url, array(
+		$resp = Http::post($url, array(
 			'postData' => $data
 		));
 
@@ -64,7 +63,7 @@ class LyricFindTrackingService extends WikiaService {
 	 * @return string AMG track ID
 	 */
 	private function getTrackId($pageId) {
-		$dbr = wfGetDB( DB_SLAVE, array(), $this->wg->StatsDB);
+		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->StatsDB);
 
 		$trackId = $dbr->selectField(
 			'lyricfind.lf_track',
