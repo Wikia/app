@@ -44,8 +44,6 @@ $messages['qqq'] = array(
 	'specialvideos-meta-description-entertainment' => 'Entertainment hub description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
 	'specialvideos-meta-description-lifestyle' => 'Lifestyle hub description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
 	'specialvideos-meta-description-corporate' => 'Corporate hub description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
-	'specialvideos-remove-modal-title' => 'Modal dialog title to delete video',
-	'specialvideos-remove-modal-message' => 'Modal dialog message to confirm whether or not user wants to delete',
 );
 
 $messages['de'] = array(

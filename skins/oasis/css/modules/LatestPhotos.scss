@@ -40,9 +40,6 @@ $color-see-more-images-placeholder: darken($color-page, 5%);
 			height: 4em;
 			width: 425px;
 		}
-        input[type=text] {
-            width: 100%;
-        }
 	}
 	.toggles {
 		margin-top: 15px;
@@ -68,11 +65,6 @@ $color-see-more-images-placeholder: darken($color-page, 5%);
 		display: none;
 		padding: 10px;
 	}
-    .step-1 {
-        input[type=file] {
-            width: 80%;
-        }
-    }
 	.step-2 {
 		display: none;
 		.wikia-gallery-item {

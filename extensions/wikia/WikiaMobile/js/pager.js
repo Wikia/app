@@ -21,32 +21,12 @@ define('pager', ['wikia.window'], function (window) {
 				} :
 				function(){};
 		})(),
-		setTransform = function(prev, current, next, x, padding){
-			x = ~~(x * 1.2);
-			var	translate = 'translate3d(' + x + 'px,0,0)',
-				style;
+		setTransform = function(prev, current, next, x){
+			var translate = 'translate3d(' + ~~(x * 1.2) + 'px,0,0)';
 
 			current.style.webkitTransform = translate;
-
-			if (prev) {
-				style = prev.style;
-
-				if(x > padding) {
-					style.webkitTransform = translate;
-				}else if(style.webkitTransform != '') {
-					style.webkitTransform = '';
-				}
-			}
-
-			if (next) {
-				style = next.style;
-
-				if(x < -padding) {
-					style.webkitTransform = translate;
-				}else if(style.webkitTransform != '') {
-					style.webkitTransform = '';
-				}
-			}
+			if (prev) { prev.style.webkitTransform = (x > 0) ? translate : ''; }
+			if (next) { next.style.webkitTransform = (x < 0) ? translate : ''; }
 		},
 		wrap = function(pages){
 			var i = pages.length-1;
@@ -77,9 +57,8 @@ define('pager', ['wikia.window'], function (window) {
 			prev,
 			next,
 			toX,
-			lastPage,
 			width,
-			padding,
+			lastPage,
 			eventsNotAdded = true,
 			end = function(){
 				var insertPage,
@@ -180,7 +159,6 @@ define('pager', ['wikia.window'], function (window) {
 				if(next) next.className = 'swiperPage next';
 
 				width = container.offsetWidth;
-				padding = width * 0.2;
 			},
 			goTo = function(delta){
 				toX = (delta < -100 && next) ? -width :
@@ -194,7 +172,7 @@ define('pager', ['wikia.window'], function (window) {
 				animating = true;
 				addTransitionEnd(current, end, 300);
 
-				setTransform(prev, current, next, toX, padding);
+				setTransform(prev, current, next, toX);
 			},
 			onTouchStart = function(ev){
 				if (ev.touches.length == 1) {
@@ -228,7 +206,7 @@ define('pager', ['wikia.window'], function (window) {
 
 						onStartFired = true;
 
-						!animating && setTransform(prev, current, next, delta, padding);
+						!animating && setTransform(prev, current, next, delta);
 					}
 				}
 			},
@@ -258,7 +236,6 @@ define('pager', ['wikia.window'], function (window) {
 			},
 			onResize = function(){
 				width = wrapper.offsetWidth;
-				padding = width * 0.2;
 				onOrientCallback && onOrientCallback();
 			};
 

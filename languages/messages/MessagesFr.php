@@ -472,7 +472,7 @@ $messages = array(
 'dec'           => 'déc',
 
 # Categories related messages
-'pagecategories'		 => '{{PLURAL:$1|Catégorie|Catégories}}',
+'pagecategories'                 => 'Catégorie{{PLURAL:$1||s}}',
 'category_header'                => 'Pages dans la catégorie « $1 »',
 'subcategories'                  => 'Sous-catégories',
 'category-media-header'          => 'Fichiers multimédias dans la catégorie « $1 »',

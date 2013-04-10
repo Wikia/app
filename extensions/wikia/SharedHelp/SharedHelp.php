@@ -380,7 +380,6 @@ function SharedHelpLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, 
 /**
  * does $title article exist @help.wikia?
  *
- * @param Title $title
  * @see SharedHelpHook
  */
 function SharedHelpArticleExists($title) {
@@ -390,14 +389,14 @@ function SharedHelpArticleExists($title) {
 	$exists = false;
 
 	$sharedLinkKey = $wgSharedDB . ':sharedLinks:' . $wgHelpWikiId . ':' .
-		md5(MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey());
+		MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey();
 	$sharedLink = $wgMemc->get($sharedLinkKey);
 
 	if ( $sharedLink ) {
 		$exists =  true;
 	} else {
 		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
-			md5(MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey()) . ':' . SHAREDHELP_CACHE_VERSION;
+			MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey() . ':' . SHAREDHELP_CACHE_VERSION;
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
 
 		if ( !empty($sharedArticle['timestamp']) ) {

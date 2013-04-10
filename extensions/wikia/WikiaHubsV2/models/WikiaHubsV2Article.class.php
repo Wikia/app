@@ -1,14 +1,12 @@
 <?php
 class WikiaHubsV2Article extends Article {
 	protected $verticalId = null;
-	protected $hubTimestamp;
 
-	public function __construct($title, $verticalId, $hubTimestamp = null) {
+	public function __construct($title, $verticalId) {
 		wfProfileIn(__METHOD__);
 
 		parent::__construct($title);
 		$this->verticalId = $verticalId;
-		$this->hubTimestamp = $hubTimestamp;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -25,9 +23,6 @@ class WikiaHubsV2Article extends Article {
 		$params = array();
 		if (!empty($this->verticalId)) {
 			$params['verticalid'] = $this->verticalId;
-		}
-		if (isset($this->hubTimestamp)) {
-			$params['hubTimestamp'] = $this->hubTimestamp;
 		}
 
 		//render hub page

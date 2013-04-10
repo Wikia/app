@@ -181,7 +181,7 @@ $dateFormats = array(
  */
 $bookstoreList = array(
 
-	'Amazon.com' => 'http://www.amazon.com/gp/search/?field-isbn=$1',
+	'Amazon.com' => 'http://astore.amazon.com/amazon-books-20/detail/$1',
         'Amazon.de' => 'http://www.amazon.de/s?search-alias=stripbooks&field-keywords=$1',
         'Amazon.fr' => 'http://astore.amazon.fr/www.amazon.fr-21/detail/$1',
         'Amazon.co.uk' => 'http://astore.amazon.co.uk/dozertractfor-21/detail/$1',

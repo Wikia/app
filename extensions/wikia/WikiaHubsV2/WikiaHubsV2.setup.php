@@ -33,6 +33,8 @@ $app->registerClass('WikiaHubsV2HooksModel', $dir . 'models/WikiaHubsV2HooksMode
 
 $app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
 
+$app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
+
 $app->registerClass('WikiaHubsParserHelper', $dir . 'WikiaHubsParserHelper.class.php');
 
 // i18n mapping
@@ -60,3 +62,4 @@ $wgForeignFileRepos[] = array(
 	'checkRedirects'   => false,
 	'checkDuplicates'  => false,
 );
+

@@ -5,8 +5,10 @@
 		'name' => 'username',
 		'isRequired' => true,
 		'label' => wfMsg('yourname'),
+		'isInvalid' => (!empty($errParam) && $errParam === 'username'),
 		'value' => ''
 	);
+	$userNameInput['errorMsg'] = $userNameInput['isInvalid'] ? $msg : '';
 
 	$forgotPasswordBtn = array(
 		'type' => 'submit',
@@ -19,11 +21,6 @@
 		'output' => $wf->msgExt('userlogin-forgot-password-go-to-login', 'parseinline'),
 	);
 
-	if (isset($result) && ($result == 'error')) {
-		$userNameInput['isInvalid'] = true;
-		$userNameInput['errorMsg'] = $msg;
-	}
-
 	$form = array(
 		'inputs' => array(
 			$userNameInput,
@@ -33,10 +30,8 @@
 		'method' => 'post',
 	);
 
-	if (isset($result) && ($result == 'ok')) {
-		$form['success'] = true;
-		$form['errorMsg'] = $msg;
-	}
+	$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
+	$form['errorMsg'] = !empty($msg) ? $msg : '';
 
 	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 	?>

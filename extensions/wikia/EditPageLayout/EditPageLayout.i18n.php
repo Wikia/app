@@ -83,7 +83,7 @@ $messages['en'] = array(
 	'restore-edits-diff-notice' => "Welcome back! We've restored some changes you had not published. However, the page has been updated since then. Would you like to: <a class='notice-action restoreeditlink'>Delete my changes and start with the latest text</a> or <a class='notice-action difflink'>View a comparison of changes with the latest page</a>",
 	'mainpagewarning-notice' => "Learn more about [[w:c:community:Help:Main_page|editing the main page]].",
 	'explainconflict-notice' => "'''Warning!''' Someone else has changed this page since you started editing it! [More info]",
-	'wikia-editor-add-file-notice' => 'Your $1 has been added. Drag and drop the $1 anywhere on the page or hover over the thumbnail and click "modify" for embed options.',
+	'wikia-editor-add-file-notice' => 'Your $1 has been added. Drag and drop the $1 anywhere you want on your page or select "modify" for embed options.',
 	'wikia-editor-add-file-notice-no-wysiwyg' => 'Your $1 has been added.',
 
 	// "editing" preferences sections

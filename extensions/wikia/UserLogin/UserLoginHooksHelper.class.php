@@ -23,6 +23,8 @@ class UserLoginHooksHelper {
 		} else if ( $abortError == $app->wf->Msg('captcha-createaccount-fail') ) {
 			$abortError = $app->wf->Msg( 'userlogin-error-captcha-createaccount-fail' );
 			$errParam = 'wpCaptchaWord';
+		} else if ( $abortError == $app->wf->Msg('phalanx-help-type-user-email') ) {
+			$errParam = 'email';
 		}
 
 		return true;

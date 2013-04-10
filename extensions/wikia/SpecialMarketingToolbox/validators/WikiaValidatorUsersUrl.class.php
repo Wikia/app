@@ -10,9 +10,8 @@ class WikiaValidatorUsersUrl extends WikiaValidatorToolboxUrl {
 	public function isValidInternal($value = null) {
 		$isCorrectUrl = parent::isValidInternal($value);
 
-		if( $isCorrectUrl ) {
+		if ($isCorrectUrl) {
 			$userName = $this->getUserNameFromUrl($value);
-			
 			if ($userName !== false) {
 				return true;
 			} else {

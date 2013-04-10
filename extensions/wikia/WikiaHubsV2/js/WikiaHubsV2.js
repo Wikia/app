@@ -144,6 +144,7 @@ var WikiaHubs = {
 				WikiaHubs.trackClick('HubWam', Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT, 'readmore', null, {lang: lang, href: url}, e);
 			}
 		}
+>>>>>>> dev
 
 		$().log('tracking took ' + (new Date() - startTime) + ' ms');
 	},

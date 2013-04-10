@@ -18,7 +18,7 @@ class FogbugzTag {
 
 	//private static $frame;
 
-	public static function onFogbugzTagInit(Parser $parser) {
+	public function onFogbugzTagInit(Parser $parser) {
 		$parser->setHook('fogbugz_tck', 'FogbugzTag::renderTag');
 		return true;
 	}
