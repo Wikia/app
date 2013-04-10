@@ -77,6 +77,7 @@
 			<th><?= wfMessage('wam-index-header-vertical')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-vertical-rank')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-peak-rank')->text() ?></th>
+            <th><?= wfMessage('wam-index-header-admins')->text() ?></th>
 		</tr>
 
 		<? if($indexWikis['wam_index']): ?>
@@ -90,6 +91,13 @@
 					<td><?=$wiki['hub_name']?></td>
 					<td><?=$wiki['hub_wam_rank']?></td>
 					<td><?=$wiki['peak_wam_rank']?></td>
+					<td class="admins">
+						<? foreach($wiki['admins'] as $admin): ?>
+							<a href="<?= $admin['userPageUrl'] ?>">
+								<img src="<?= $admin['avatarUrl'] ?>" alt="<?= $admin['name'] ?>" title="<?= $admin['name'] ?>" />
+							</a>
+						<? endforeach ?>
+					</td>
 				</tr>
 			<? endforeach ?>
 		<? else: ?>

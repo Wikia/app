@@ -295,6 +295,7 @@ class WAMPageModel extends WikiaModel {
 		$offset = ($page > $firstPageNo) ? (($page - 1) * $itemsPerPage) : 0;
 		
 		$apiParams = [
+			'fetch_admins' => true,
 			'limit' => $itemsPerPage,
 			'offset' => $offset,
 			'sort_column' => 'wam_index',
@@ -331,7 +332,48 @@ class WAMPageModel extends WikiaModel {
 				'url' => 'runescape.wikia.com',
 				'hub_id' => '2',
 				'wam_change' => '0.0045',
-				'admins' => [],
+				'admins' => [
+						0 => [
+							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+							'edits' => 0,
+							'name' => 'Merovingian',
+							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Merovingian',
+							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Merovingian',
+							'since' => 'Apr 2005'
+						],
+						2 => [
+							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+							'edits' => 0,
+							'name' => 'Oddlyoko',
+							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Oddlyoko',
+							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Oddlyoko',
+							'since' => 'Oct 2005'
+						],
+						3 => [
+							'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
+							'edits' => 0,
+							'name' => 'Vimescarrot',
+							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
+							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
+							'since' => 'Feb 2006'
+						],
+						4 => [
+							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+							'edits' => 0,
+							'name' => 'Eucarya',
+							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Eucarya',
+							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Eucarya',
+							'since' => 'May 2006'
+						],
+						5 => [
+							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+							'edits' => 0,
+							'name' => 'Hyenaste',
+							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Hyenaste',
+							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Hyenaste',
+							'since' => 'Jul 2006'
+						]
+				],
 				'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121004184329/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/150px-Wikia-Visualization-Main%2Crunescape.png',
 			],
 			14764 => [
@@ -349,7 +391,32 @@ class WAMPageModel extends WikiaModel {
 				'url' => 'leagueoflegends.wikia.com',
 				'hub_id' => '3',
 				'wam_change' => '0.0039',
-				'admins' => [],
+				'admins' => [
+					2 => [
+						'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+						'edits' => 0,
+						'name' => 'Oddlyoko',
+						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Oddlyoko',
+						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Oddlyoko',
+						'since' => 'Oct 2005'
+					],
+					3 => [
+						'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
+						'edits' => 0,
+						'name' => 'Vimescarrot',
+						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
+						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
+						'since' => 'Feb 2006'
+					],
+					4 => [
+						'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+						'edits' => 0,
+						'name' => 'Eucarya',
+						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Eucarya',
+						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Eucarya',
+						'since' => 'May 2006'
+					]
+				],
 				'wiki_image' => 'http://images4.wikia.nocookie.net/__cb20120828154214/wikiaglobal/images/thumb/e/ea/Wikia-Visualization-Main%2Cleagueoflegends.png/150px-Wikia-Visualization-Main%2Cleagueoflegends.png.jpeg',
 			],
 			1706 => [
@@ -367,7 +434,16 @@ class WAMPageModel extends WikiaModel {
 				'url' => 'elderscrolls.wikia.com',
 				'hub_id' => '2',
 				'wam_change' => '-0.0016',
-				'admins' => [],
+				'admins' => [
+					3 => [
+						'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
+						'edits' => 0,
+						'name' => 'Vimescarrot',
+						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
+						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
+						'since' => 'Feb 2006'
+					]
+				],
 				'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121214183339/wikiaglobal/images/thumb/d/d4/Wikia-Visualization-Main%2Celderscrolls.png/150px-Wikia-Visualization-Main%2Celderscrolls.png',
 			],
 			3035 => [

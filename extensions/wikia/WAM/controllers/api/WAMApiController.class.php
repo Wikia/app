@@ -9,7 +9,7 @@
 class WAMApiController extends WikiaApiController {
 	const DEFAULT_PAGE_SIZE = 20;
 	const MAX_PAGE_SIZE = 20;
-	const DEFAULT_AVATAR_SIZE = 28;
+	const DEFAULT_AVATAR_SIZE = 21;
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
 
