@@ -27,6 +27,7 @@ return array(
 			'wikia.thumbnailer',
 			'wikia.geo',
 			'wikia.tracker',
+			'wikia.throbber',
 		),
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	),
@@ -131,6 +132,12 @@ return array(
 		'dependencies' => array(
 			'amd',
 			'wikia.window'
+		)
+	),
+	'wikia.throbber' => array(
+		'scripts' => 'resources/wikia/modules/throbber.js',
+		'dependencies' => array(
+			'amd',
 		)
 	),
 
