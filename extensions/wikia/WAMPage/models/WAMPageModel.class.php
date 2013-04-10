@@ -21,13 +21,6 @@ class WAMPageModel extends WikiaModel {
 	protected $config = null;
 
 	/**
-	 * @desc Cache all WAM subpages
-	 * 
-	 * @var null
-	 */
-	protected $pagesLowerCase = null;
-
-	/**
 	 * @desc Cache for db key maps where the key is lower-case dbkey and value is just dbkey
 	 *
 	 * @var null
@@ -228,23 +221,6 @@ class WAMPageModel extends WikiaModel {
 
 		return $this->pagesMap;
 	}
-	
-	public function getWamPagesDbKeysLower() {
-		if( is_null($this->pagesLowerCase) ) {
-			$this->pagesLowerCase = [];
-			$pageName = mb_strtolower($this->getWAMMainPageName());
-			
-			foreach($this->getTabsNamesArray() as $tabName) {
-				$tabTitle = Title::newFromText($pageName . '/'. $tabName);
-				$this->pagesLowerCase[] = mb_strtolower($tabTitle->getDBKey());
-			}
-	
-			$this->pagesLowerCase[] = $pageName;
-			$this->pagesLowerCase[] = mb_strtolower($this->getWAMFAQPageName());
-		}
-		
-		return $this->pagesLowerCase;
-	}
 
 	/**
 	 * Get corporate wikis languages for filters
@@ -377,9 +353,9 @@ class WAMPageModel extends WikiaModel {
 		if( $title instanceof Title ) {
 			$dbKey = mb_strtolower( $title->getDBKey() );
 		}
-
+		
 		wfProfileOut(__METHOD__);
-		return in_array($dbKey, $this->getWamPagesDbKeysLower());
+		return in_array($dbKey, array_keys($this->getWamPagesDbKeysMap()));
 	}
 
 	/**
