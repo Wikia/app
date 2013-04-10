@@ -285,6 +285,9 @@ class Config implements ArrayAccess
 		if (! isset( $this->params['query'] ) ) {
 			return false;
 		}
+		if ( is_string( $this->params['query'] ) ) {
+			$this->setQuery( $this->params['query'] );
+		}
 		return $this->params['query'];
 	}
 	
