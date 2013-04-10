@@ -80,6 +80,7 @@ class WAMApiController extends WikiaApiController {
 					}
 					foreach ($wamIndex['wam_index'] as &$row) {
 						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize'], self::DEFAULT_WIKI_ADMINS_LIMIT);
+						if(empty($row['admins'][0]['userId'])) unset($row['admins'][0]);
 					}
 				}
 				if ($options['fetchWikiImages']) {
