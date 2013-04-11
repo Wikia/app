@@ -2,6 +2,8 @@
 
 class WAMPageController extends WikiaController
 {
+	const DEFAULT_LANG_CODE = 'en';
+
 	protected $model;
 
 	public function __construct() {
@@ -136,7 +138,7 @@ class WAMPageController extends WikiaController
 	protected function getTimestampFromLocalDate($localDate) {
 		$engMonthNames = array_map(
 			'mb_strtolower',
-			Language::factory('en')->getMonthNamesArray()
+			Language::factory(self::DEFAULT_LANG_CODE)->getMonthNamesArray()
 		);
 
 		$localMonthNames = array_map(
@@ -151,7 +153,7 @@ class WAMPageController extends WikiaController
 		// get month short version
 		$engShortMonthNames = array_map(
 			'mb_strtolower',
-			Language::factory('en')->getMonthAbbreviationsArray()
+			Language::factory(self::DEFAULT_LANG_CODE)->getMonthAbbreviationsArray()
 		);
 
 		$localShortMonthNames = array_map(
@@ -165,7 +167,7 @@ class WAMPageController extends WikiaController
 
 		$monthMap += $shortMonthMap;
 
-		$engDate = strtr(mb_strtolower($localDate, 'UTF-8'), $monthMap);
+		$engDate = strtr(mb_strtolower($localDate), $monthMap);
 
 		$timestamp = strtotime($engDate);
 
