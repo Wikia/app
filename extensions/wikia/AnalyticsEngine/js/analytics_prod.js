@@ -91,10 +91,11 @@
                       !!window.wgUserName ? 'user' : 'anon', 3]);
 
     /**** Medium-Priority CVs ****/
-    _gaqWikiaPush(['_setCustomVar', 8, 'PageType',
-                      window.wikiaPageType, 3],
+    _gaqWikiaPush(['_setCustomVar', 8, 'PageType', window.wikiaPageType, 3],
                   ['_setCustomVar', 9, 'CityId', window.wgCityId, 3],
-                  ['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3]);
+                  ['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
+                  ['ads._setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 1 : 0, 3]
+    );
 
     /**** Include A/B testing status ****/
     if ( window.Wikia && window.Wikia.AbTest ) {
@@ -168,10 +169,11 @@
                   !!window.wgUserName ? 'user' : 'anon', 3]);
 
     /**** Medium-Priority CVs ****/
-    window._gaq.push(['ads._setCustomVar', 8, 'PageType',
-                  window.wikiaPageType, 3],
+    window._gaq.push(['ads._setCustomVar', 8, 'PageType', window.wikiaPageType, 3],
               ['ads._setCustomVar', 9, 'CityId', window.wgCityId, 3],
-              ['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3]);
+              ['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
+              ['ads._setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 1 : 0, 3]
+    );
 
 	/**** Include A/B testing status ****/
 	if ( window.Wikia && window.Wikia.AbTest ) {

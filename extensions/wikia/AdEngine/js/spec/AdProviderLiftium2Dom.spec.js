@@ -13,8 +13,8 @@ describe('AdProviderLiftium2Dom', function(){
 		);
 
 		expect(adProviderLiftium2Dom.canHandleSlot(['foo'])).toBeFalsy('foo');
-		expect(adProviderLiftium2Dom.canHandleSlot(['TOP_RIGHT_BUTTON'])).toBeFalsy('TOP_RIGHT_BUTTON');
-		expect(adProviderLiftium2Dom.canHandleSlot(['HOME_TOP_RIGHT_BUTTON'])).toBeFalsy('HOME_TOP_RIGHT_BUTTON');
+		expect(adProviderLiftium2Dom.canHandleSlot(['TOP_BUTTON'])).toBeTruthy('TOP_BUTTON');
+		expect(adProviderLiftium2Dom.canHandleSlot(['TOP_BUTTON_WIDE'])).toBeTruthy('TOP_BUTTON_WIDE');
 		expect(adProviderLiftium2Dom.canHandleSlot(['TOP_LEADERBOARD'])).toBeTruthy('TOP_LEADERBOARD');
 		expect(adProviderLiftium2Dom.canHandleSlot(['TOP_RIGHT_BOXAD'])).toBeTruthy('TOP_RIGHT_BOXAD');
 	});
