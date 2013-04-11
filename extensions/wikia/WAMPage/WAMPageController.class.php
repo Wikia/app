@@ -27,6 +27,8 @@ class WAMPageController extends WikiaController
 
 		$title = $this->wg->Title;
 		if( $title instanceof Title ) {
+			$this->redirectIfMisspelledWamMainPage($title);
+			
 			$this->subpageText = $title->getSubpageText();
 			$currentTabIndex = $this->model->getTabIndexBySubpageText($this->subpageText);
 
@@ -179,20 +181,39 @@ class WAMPageController extends WikiaController
 		
 		return $url;
 	}
-	
-	protected function redirectIfUnknownTab($currentTabIndex, $title) {
+
+	private function redirectIfUnknownTab($currentTabIndex, $title) {
+		// we don't check here if $title is instance of Title
+		// because this method is called after this check and isWAMPage() check
+		
 		if( $title->isSubpage() && !$currentTabIndex ) {
-		// the current tab is not set when somebody types WAM/faq instead of WAM/FAQ in example
 			$this->wg->Out->redirect($this->model->getWAMSubpageUrl($title), HTTP_REDIRECT_PERM);
 		}
 	}
 	
-	protected function redirectIfFirstTab($tabIndex, $subpageText) {
+	private function redirectIfFirstTab($tabIndex, $subpageText) {
+		// we don't check here if $title is instance of Title
+		// because this method is called after this check and isWAMPage() check
+		
 		$isFirstTab = ($tabIndex === WAMPageModel::TAB_INDEX_TOP_WIKIS && !empty($subpageText));
 		$mainWAMPageUrl = $this->model->getWAMMainPageUrl();
 		
 		if( $isFirstTab && !empty($mainWAMPageUrl) ) {
 			$this->wg->Out->redirect($mainWAMPageUrl, HTTP_REDIRECT_PERM);
+		}
+	}
+
+	private function redirectIfMisspelledWamMainPage($title) {
+		// we don't check here if $title is instance of Title
+		// because this method is called after this check and isWAMPage() check
+		
+		$dbkey = $title->getDbKey();
+		$mainPage = $this->model->getWAMMainPageName();
+		$isMainPage = (mb_strtolower($dbkey) === mb_strtolower($mainPage));
+		$isMisspeledMainPage = !($dbkey === $mainPage);
+
+		if( $isMainPage && $isMisspeledMainPage ) {
+			$this->wg->Out->redirect($this->model->getWAMMainPageUrl(), HTTP_REDIRECT_PERM);
 		}
 	}
 	
