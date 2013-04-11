@@ -450,7 +450,7 @@ __NOEDITSECTION__',
 *[http://www.mediakit.wikia.com Kit de presse ]
 *'''[http://mediakit.wikia.com/wiki/Contact Publicité]'''
 __NOEDITSECTION__",
-	'wikiahome-footer-community-wam' =>'*[$1 TODO WAM Scores]',
+	'wikiahome-footer-community-wam' =>'*[$1 Classement WAM]',
 
 	'wikia-home-page-hot' => 'Chaud',
 	'wikia-home-page-new' => 'Nouveau',
