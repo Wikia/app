@@ -39,11 +39,6 @@ class WikiaVideoPage extends WikiaImagePage {
 
 			$wgOut->addHTML($imageLink);
 
-			$this->renderTabs();
-
-			// Open div for about section (closed in imageDetails);
-			$wgOut->addHtml('<div data-tab-body="about" class="tabBody selected">');
-
 			$captionDetails = array(
 				'expireDate' => $img->getExpirationDate(),
 				'provider' => $img->getProviderName(),
@@ -54,6 +49,11 @@ class WikiaVideoPage extends WikiaImagePage {
 			$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
 
 			$wgOut->addHTML($caption);
+
+			$this->renderTabs();
+
+			// Open div for about section (closed in imageDetails);
+			$wgOut->addHtml('<div data-tab-body="about" class="tabBody selected">');
 
 			$this->renderDescriptionHeader();
 
