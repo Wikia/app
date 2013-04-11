@@ -162,8 +162,8 @@ class HAWelcomeJob extends Job {
                  * @see http://www.mediawiki.org/wiki/Manual:$wgUser
                  */
                 global $wgUser;
-                // Abort if the registered contributor has made edits before.
-                if ( 1 < $wgUser->getEditCountLocal() ) {
+                // Abort if the registered contributor has made edits before this one.
+                if ( 2 > $wgUser->getEditCountLocal() ) {
                     // Check the extension settings...
                     /** @type String The user to become the welcomer. */
                     $sSender = trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() );
