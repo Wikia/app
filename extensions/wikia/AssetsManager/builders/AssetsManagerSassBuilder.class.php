@@ -30,7 +30,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	}
 
 	public function getContent() {
-		global $wgDevelEnvironment, $wgDevelEnvironmentName, $IP;
+		global $IP;
 		wfProfileIn(__METHOD__);
 
 		$processingTimeStart = null;
@@ -45,11 +45,6 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			SassService::FILTER_IMPORT_CSS | SassService::FILTER_CDN_REWRITE
 			| SassService::FILTER_BASE64 | SassService::FILTER_JANUS
 		);
-
-		// vary SASS caching between devboxes
-		if (!empty($wgDevelEnvironment)) {
-			$sassService->setCacheVariant("dev-{$wgDevelEnvironmentName}");
-		}
 
 		$cacheId = __CLASS__ . "-minified-".$sassService->getCacheKey();
 

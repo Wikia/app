@@ -8,6 +8,7 @@ use Wikia\Sass\Filter\CssImportsFilter;
 use Wikia\Sass\Filter\CdnRewriteFilter;
 use Wikia\Sass\Filter\Base64Filter;
 use Wikia\Sass\Filter\JanusFilter;
+use Wikia\Sass\Filter\MinifyFilter;
 use Wikia\Sass\Compiler\Compiler;
 use Wikia\Sass\Compiler\ExternalRubyCompiler;
 
@@ -30,7 +31,7 @@ class SassService extends WikiaObject {
 	const FILTER_CDN_REWRITE = 2;
 	const FILTER_BASE64 = 4;
 	const FILTER_JANUS = 8;
-	const FILTER_ALL = 255;
+	const FILTER_MINIFY = 16;
 
 	const DEFAULT_ERROR_MESSAGE = 'SASS compilation failed. Check PHP error log for more information.';
 
@@ -38,7 +39,7 @@ class SassService extends WikiaObject {
 	protected static $defaultCompiler;
 
 	protected $sassVariables = null;
-	protected $filters = self::FILTER_ALL;
+	protected $filters = 0;
 	protected $cacheVariant = '';
 	protected $debug = null;
 
@@ -51,6 +52,11 @@ class SassService extends WikiaObject {
 	public function __construct( Source $source ) {
 		parent::__construct();
 		$this->source = $source;
+
+		// set up default cache variant
+		if (!empty($this->wg->DevelEnvironment)) {
+			$this->setCacheVariant("dev-{$this->wg->DevelEnvironmentName}");
+		}
 	}
 
 	/* METADATA ACCESSORS */
@@ -261,6 +267,9 @@ class SassService extends WikiaObject {
 		}
 		if ( $this->filters & self::FILTER_JANUS ) {
 			$filters[] = new JanusFilter($IP,$this->getRtl());
+		}
+		if ( $this->filters & self::FILTER_MINIFY ) {
+			$filters[] = new MinifyFilter();
 		}
 		return $filters;
 	}

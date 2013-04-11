@@ -61,8 +61,21 @@ class AbTestingController extends WikiaController {
 	protected function processData( $input ) {
 		$result = array();
 		if ( isset($input['styles']) ) {
-			// todo: sass processing
-			$result['styles'] = $input['styles'];
+			$styles = $input['styles'];
+			try {
+				$sassService = SassService::newFromString($input['styles'],0,'');
+				$sassService->setFilters(
+					  SassService::FILTER_IMPORT_CSS
+					| SassService::FILTER_CDN_REWRITE
+					| SassService::FILTER_BASE64
+					| SassService::FILTER_JANUS
+					| SassService::FILTER_MINIFY
+				);
+				$styles = '/*SASS*/' . $sassService->getCss();
+			} catch (Exception $e) {
+				$styles = $input['styles'];
+			}
+			$result['styles'] = $styles;
 		}
 		if ( isset($input['scripts']) ) {
 			$result['scripts'] = $input['scripts'];
