@@ -470,7 +470,7 @@ EOT;
 			$this->jsFiles = $jsFiles;
 		}
 
-		$this->jsFiles = AdEngine::getLiftiumOptionsScript() . $this->jsFiles;
+		$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
 
 		wfProfileOut(__METHOD__);
 	}
