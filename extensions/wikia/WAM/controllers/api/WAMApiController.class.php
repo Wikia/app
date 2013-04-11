@@ -26,6 +26,7 @@ class WAMApiController extends WikiaApiController {
 	 * @requestParam string $wiki_lang [OPTIONAL] Language code if narrowing the results to specific language. Defaults to null
 	 * @requestParam integer $wiki_id [OPTIONAL] Id of specific wiki to pull. Defaults to null
 	 * @requestParam string $wiki_word [OPTIONAL] Fragment of url to search for amongst wikis. Defaults to null
+	 * @requestParam boolean $exclude_blacklist [OPTIONAL] Determines if exclude blacklisted wikis (with Content Warning enabled). Defaults to false
 	 * @requestParam boolean $fetch_admins [OPTIONAL] Determines if admins of each wiki are to be returned. Defaults to false
 	 * @requestParam integer $avatar_size [OPTIONAL] Size of admin avatars in pixels if fetch_admins is enabled
 	 * @requestParam boolean $fetch_wiki_images [OPTIONAL] Determines if image of each wiki isto be returned. Defaults to false
@@ -149,6 +150,7 @@ class WAMApiController extends WikiaApiController {
 		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
 		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
+		$options['excludeBlacklist'] = $this->request->getVal('exclude_blacklist', false);
 		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
 		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
 		$options['fetchWikiImages'] = $this->request->getBool('fetch_wiki_images', false);
