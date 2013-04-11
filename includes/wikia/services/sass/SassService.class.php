@@ -1,5 +1,16 @@
 <?php
 
+use Wikia\Sass\Source\Context;
+use Wikia\Sass\Source\Source;
+use Wikia\Sass\Source\StringSource;
+use Wikia\Sass\Filter\Filter;
+use Wikia\Sass\Filter\CssImportsFilter;
+use Wikia\Sass\Filter\CdnRewriteFilter;
+use Wikia\Sass\Filter\Base64Filter;
+use Wikia\Sass\Filter\JanusFilter;
+use Wikia\Sass\Compiler\Compiler;
+use Wikia\Sass\Compiler\ExternalRubyCompiler;
+
 /**
  * SassService is a one and only class that you will call from Mediawiki code.
  * It's meant to be a high-level API to the rest of supporting classes.
@@ -12,6 +23,8 @@
  *
  */
 class SassService extends WikiaObject {
+
+	const CACHE_VERSION = 1;
 
 	const FILTER_IMPORT_CSS = 1;
 	const FILTER_CDN_REWRITE = 2;
@@ -26,15 +39,16 @@ class SassService extends WikiaObject {
 
 	protected $sassVariables = null;
 	protected $filters = self::FILTER_ALL;
+	protected $cacheVariant = '';
 	protected $debug = null;
 
 	/**
 	 * Creates a new SassService object based on the Sass source provided.
 	 * Please use static constructors instead of calling this constructor directly.
 	 *
-	 * @param SassSource $source
+	 * @param Source $source
 	 */
-	public function __construct( SassSource $source ) {
+	public function __construct( Source $source ) {
 		parent::__construct();
 		$this->source = $source;
 	}
@@ -87,6 +101,26 @@ class SassService extends WikiaObject {
 	}
 
 	/**
+	 * Set cache variant name
+	 *
+	 * @param $cacheVariant string Cache variant name
+	 * @return $this fluent interface
+	 */
+	public function setCacheVariant( $cacheVariant ) {
+		$this->cacheVariant = $cacheVariant;
+		return $this;
+	}
+
+	/**
+	 * Get cache variant name
+	 *
+	 * @return string Cache variant name
+	 */
+	public function getCacheVariant() {
+		return $this->cacheVariant;
+	}
+
+	/**
 	 * Set filter set that will be applied after compilation.
 	 * Filters are controlled by binary flags.
 	 *
@@ -133,16 +167,28 @@ class SassService extends WikiaObject {
 	 * Compute CSS stylesheet from the given Sass source.
 	 * Performs compilation and applies all requested filters on top of it.
 	 *
-	 * Important: It doesn't use any cache.
-	 *
+	 * @param $useCache bool Use cache?
 	 * @return string CSS stylesheet
 	 */
-	public function getCss() {
+	public function getCss( $useCache = true ) {
+		// first try cache
+		$memc = self::getMemcached();
+		$cacheKey = null;
+		if ( $useCache ) {
+			$cacheKey = __CLASS__ . '-cache-' . $this->getCacheKey();
+			$cachedStyles = $memc->get( $cacheKey );
+			if ( is_string( $cachedStyles ) ) {
+				return $cachedStyles;
+			}
+		}
+
+		// otherwise generate it from the scratch
+		$ok = false;
 		$start = 0;
 		$afterCompilation = 0;
 		$end = 0;
 		try {
-			/** @var $compiler SassCompiler */
+			/** @var $compiler Compiler */
 			$compiler = self::getDefaultCompiler()->withOptions(array(
 				'sassVariables' => $this->getSassVariables()
 			));
@@ -152,11 +198,13 @@ class SassService extends WikiaObject {
 			$afterCompilation = microtime(true);
 
 			$filters = $this->getFilterObjects();
-			/** @var $filter SassFilter */
+			/** @var $filter Filter */
 			foreach ($filters as $filter) {
 				$styles = $filter->process($styles);
 			}
 			$end = microtime(true);
+
+			$ok = true;
 
 		} catch (Exception $e) {
 			$errorId = $this->getUniqueId();
@@ -174,7 +222,23 @@ class SassService extends WikiaObject {
 			($end - $start) * 1000
 		));
 
+		// save it to the cache if everything went correct
+		if ( $useCache && $ok ) {
+			$memc->set( $cacheKey, $styles );
+		}
+
 		return $styles;
+	}
+
+	public function getCacheKey() {
+		return sprintf("%s%s",
+			$this->getCacheVariant() ? $this->getCacheVariant() . '-' : '',
+			md5(serialize(array(
+				$this->getHash(),
+				$this->getSassVariables(),
+				$this->getFilters(),
+			)))
+		);
 	}
 
 	/**
@@ -187,16 +251,16 @@ class SassService extends WikiaObject {
 		$IP = $this->wg->get('IP');
 		$filters = array();
 		if ( $this->filters & self::FILTER_IMPORT_CSS ) {
-			$filters[] = new SassFilterCssImports($IP);
+			$filters[] = new CssImportsFilter($IP);
 		}
 		if ( $this->filters & self::FILTER_CDN_REWRITE ) {
-			$filters[] = new SassFilterCdnRewrite($this->wg->CdnStylePath);
+			$filters[] = new CdnRewriteFilter($this->wg->CdnStylePath);
 		}
 		if ( $this->filters & self::FILTER_BASE64 ) {
-			$filters[] = new SassFilterBase64($IP);
+			$filters[] = new Base64Filter($IP);
 		}
 		if ( $this->filters & self::FILTER_JANUS ) {
-			$filters[] = new SassFilterJanus($IP,$this->getRtl());
+			$filters[] = new JanusFilter($IP,$this->getRtl());
 		}
 		return $filters;
 	}
@@ -233,40 +297,14 @@ class SassService extends WikiaObject {
 	/* STATIC UTILITIES */
 
 	/**
-	 * Create a new SassService instance associated with the given file inside the codebase.
-	 *
-	 * @param $fileName string Path to Sass file (relative to code base root)
-	 * @return SassService SassService instance
-	 */
-	public static function newFromFile( $fileName ) {
-		$context = self::getDefaultContext();
-		$source = $context->getFile($fileName);
-		return new self($source);
-	}
-
-	/**
-	 * Create a new SassService instance associated with the Sass source in the given string
-	 *
-	 * @param $sourceString string Sass source code
-	 * @param $modifiedTime int Last modified time (unix timestamp)
-	 * @param $description string Human readable description of the content
-	 * @return SassService SassService instance
-	 */
-	public static function newFromString( $sourceString, $modifiedTime, $description ) {
-		$context = self::getDefaultContext();
-		$source = new SassStringSource($context,$sourceString,$modifiedTime,$description);
-		return new self($source);
-	}
-
-	/**
 	 * Get a default Sass source context instance
 	 *
-	 * @return SassSourceContext
+	 * @return Context
 	 */
 	public static function getDefaultContext() {
 		if ( self::$defaultContext === null ) {
 			$app = F::app();
-			self::$defaultContext = new SassSourceContext($app->getGlobal('IP'));
+			self::$defaultContext = new Context($app->getGlobal('IP'));
 		}
 
 		return self::$defaultContext;
@@ -275,12 +313,12 @@ class SassService extends WikiaObject {
 	/**
 	 * Get a default Sass compiler instance
 	 *
-	 * @return SassExternalRubyCompiler
+	 * @return ExternalRubyCompiler
 	 */
 	public static function getDefaultCompiler() {
 		if ( self::$defaultCompiler === null ) {
 			$app = F::app();
-			self::$defaultCompiler = new SassExternalRubyCompiler(array(
+			self::$defaultCompiler = new ExternalRubyCompiler(array(
 				'rootDir' => $app->getGlobal('IP'),
 				'sassExecutable' => $app->wg->SassExecutable,
 //				'outputStyle' => 'expanded',
@@ -309,6 +347,39 @@ class SassService extends WikiaObject {
 	protected static function getDefaultDebug() {
 		$app = F::app();
 		return !empty($app->wg->DevelEnvironment);
+	}
+
+	protected static function getMemcached() {
+		$app = F::app();
+		return $app->wg->Memc;
+	}
+
+	/* STATIC CONSTRUCTORS */
+
+	/**
+	 * Create a new SassService instance associated with the given file inside the codebase.
+	 *
+	 * @param $fileName string Path to Sass file (relative to code base root)
+	 * @return SassService SassService instance
+	 */
+	public static function newFromFile( $fileName ) {
+		$context = self::getDefaultContext();
+		$source = $context->getFile($fileName);
+		return new self($source);
+	}
+
+	/**
+	 * Create a new SassService instance associated with the Sass source in the given string
+	 *
+	 * @param $sourceString string Sass source code
+	 * @param $modifiedTime int Last modified time (unix timestamp)
+	 * @param $description string Human readable description of the content
+	 * @return SassService SassService instance
+	 */
+	public static function newFromString( $sourceString, $modifiedTime, $description ) {
+		$context = self::getDefaultContext();
+		$source = new StringSource($context,$sourceString,$modifiedTime,$description);
+		return new self($source);
 	}
 
 }

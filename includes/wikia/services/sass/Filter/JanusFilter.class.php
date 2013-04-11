@@ -1,11 +1,14 @@
 <?php
 
+namespace Wikia\Sass\Filter;
+use CSSJanus;
+
 /**
  * Janus filter performs LTR to RTL conversion if language is RTL.
  *
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-class SassFilterJanus {
+class JanusFilter extends Filter {
 
 	protected $rootDir;
 	protected $rtl;

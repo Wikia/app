@@ -1,11 +1,14 @@
 <?php
 
+namespace Wikia\Sass\Source;
+use Wikia\Sass\Source\Context;
+
 /**
- * SassFileSource represents a regular file containing SASS source code.
+ * FileSource represents a regular file containing SASS source code.
  *
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-class SassFileSource extends SassSource {
+class FileSource extends Source {
 
 	/**
 	 * @var string File path
@@ -27,7 +30,7 @@ class SassFileSource extends SassSource {
 	 * @param $context SassSourceContext Context
 	 * @param $fileName string File path
 	 */
-	public function __construct( SassSourceContext $context, $fileName ) {
+	public function __construct( Context $context, $fileName ) {
 		if ( !is_file($fileName) ) {
 			throw new SassException( __METHOD__ . ': File is not a regular file: ' . $fileName );
 		}

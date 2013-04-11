@@ -1,11 +1,13 @@
 <?php
 
+namespace Wikia\Sass\Source;
+
 /**
- * SassStringSource represents a string containing Sass source code
+ * StringSource represents a string containing Sass source code
  *
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-class SassStringSource extends SassSource {
+class StringSource extends Source {
 
 	protected $localFile;
 	protected $rawSource;
@@ -14,12 +16,12 @@ class SassStringSource extends SassSource {
 	/**
 	 * Create Sass source associated with given string
 	 *
-	 * @param $context SassSourceContext Context
+	 * @param $context Context Context
 	 * @param $source string Sass source code
 	 * @param $modifiedTime int Last modified time (unix timestamp)
 	 * @param $humanName string|null Human-readable description (used for debugging)
 	 */
-	public function __construct( SassSourceContext $context, $source, $modifiedTime, $humanName = null ) {
+	public function __construct( Context $context, $source, $modifiedTime, $humanName = null ) {
 		parent::__construct( $context );
 		$this->rawSource = $source;
 		$this->rawModifiedTime = $modifiedTime;

@@ -1,5 +1,8 @@
 <?php
 
+namespace Wikia\Sass;
+use Exception;
+
 /**
  * Sass-specific exception class
  *

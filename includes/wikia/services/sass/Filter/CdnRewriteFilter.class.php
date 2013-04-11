@@ -1,5 +1,7 @@
 <?php
 
+namespace Wikia\Sass\Filter;
+
 /**
  * CdnRewrite filter handles rewriting local paths to CDN paths
  * when URLs are marked to be processed that way.
@@ -8,7 +10,7 @@
  * @author Piotr Bablok <piotr.bablok@gmail.com>
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-class SassFilterCdnRewrite {
+class CdnRewriteFilter extends Filter {
 
 	protected $cdnUrl;
 	public function __construct( $cdnUrl ) {

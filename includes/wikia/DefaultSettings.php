@@ -341,7 +341,7 @@ $wgAutoloadClasses['FooterDisabledItemService'] = $IP.'/skins/oasis/modules/foot
 // Sass-related classes
 
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
-$wgAutoloadClasses['SassSourceContextFactory'] = $IP.'/includes/wikia/services/sass/SassSourceContextFactory.class.php';
+/*
 $wgAutoloadClasses['SassSourceContext']        = $IP.'/includes/wikia/services/sass/SassSourceContext.class.php';
 $wgAutoloadClasses['SassException']            = $IP.'/includes/wikia/services/sass/SassException.class.php';
 $wgAutoloadClasses['SassSource']               = $IP.'/includes/wikia/services/sass/Source/SassSource.class.php';
@@ -354,19 +354,18 @@ $wgAutoloadClasses['SassFilterBase64']         = $IP.'/includes/wikia/services/s
 $wgAutoloadClasses['SassFilterCdnRewrite']     = $IP.'/includes/wikia/services/sass/Filter/SassFilterCdnRewrite.class.php';
 $wgAutoloadClasses['SassFilterCssImports']     = $IP.'/includes/wikia/services/sass/Filter/SassFilterCssImports.class.php';
 $wgAutoloadClasses['SassFilterJanus']          = $IP.'/includes/wikia/services/sass/Filter/SassFilterJanus.class.php';
+*/
 
-/*
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
 	if ( strpos( $class, 'Wikia\\Sass\\' ) !== false ) {
-		$class = preg_replace( '/\\\\?Wikia\\\\Sass\\\\/', '', $class );
-		$file = $GLOBALS['IP'] . '/includes/wikia/services/sass/'.strtr( $class, '\\', '/' ).'.php';
+		$class = preg_replace( '/^\\\\?Wikia\\\\Sass\\\\/', '', $class );
+		$file = $GLOBALS['IP'] . '/includes/wikia/services/sass/'.strtr( $class, '\\', '/' ).'.class.php';
 		require_once( $file );
 		return true;
 	}
 	return false;
 });
-*/
 
 // TODO:move this inclusions to CommonExtensions?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );

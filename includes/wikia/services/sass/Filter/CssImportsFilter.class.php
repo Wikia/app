@@ -1,5 +1,7 @@
 <?php
 
+namespace Wikia\Sass\Filter;
+
 /**
  * CssImports filter handles embedding external CSS files referenced in @import directives.
  *
@@ -7,7 +9,7 @@
  * @author Piotr Bablok <piotr.bablok@gmail.com>
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-class SassFilterCssImports {
+class CssImportsFilter extends Filter {
 
 	protected $rootDir;
 

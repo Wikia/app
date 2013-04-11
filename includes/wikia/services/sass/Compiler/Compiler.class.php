@@ -1,12 +1,15 @@
 <?php
 
+namespace Wikia\Sass\Compiler;
+use Wikia\Sass\Source\Source;
+
 /**
  * SassCompiler is a base class that defines the public interface
  * of Sass compiler subclasses.
  *
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-abstract class SassCompiler {
+abstract class Compiler {
 
 	/**
 	 * Create a new instance and configure it with provided options
@@ -22,7 +25,7 @@ abstract class SassCompiler {
 	 *
 	 * @param $key string|array Option name or array with options
 	 * @param $value mixed|null Option value
-	 * @return SassCompiler fluent interface
+	 * @return Compiler fluent interface
 	 */
 	public function setOptions( $key, $value = null ) {
 		if ( !is_array( $key ) ) {
@@ -41,7 +44,7 @@ abstract class SassCompiler {
 	 *
 	 * @param $key string|array Option name or array with options
 	 * @param $value mixed|null Option value
-	 * @return SassCompiler Cloned instance
+	 * @return Compiler Cloned instance
 	 */
 	public function withOptions( $key, $value = null ) {
 		$res = clone $this;
@@ -52,10 +55,10 @@ abstract class SassCompiler {
 	/**
 	 * Compile the given SASS source
 	 *
-	 * @param SassSource $source Sass source
+	 * @param Source $source Sass source
 	 * @throws SassException
 	 * @return string Css stylesheet
 	 */
-	abstract public function compile( SassSource $source );
+	abstract public function compile( Source $source );
 
 }

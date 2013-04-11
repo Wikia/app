@@ -1,5 +1,7 @@
 <?php
 
+namespace Wikia\Sass\Filter;
+
 /**
  * Base64 filter handles encoding and embedding files in CSS stylesheet
  * for URLs marked to be processed that way.
@@ -8,7 +10,7 @@
  * @author Piotr Bablok <piotr.bablok@gmail.com>
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-class SassFilterBase64 {
+class Base64Filter extends Filter {
 
 	protected $rootDir;
 

@@ -41,27 +41,27 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 		$sassService = SassService::newFromFile("{$IP}/{$this->mOid}");
 		$sassService->setSassVariables($this->mParams);
-
-		$hash = $sassService->getHash();
-		$paramsHash = md5( urldecode( http_build_query( $this->mParams, '', ' ' ) ) );
-		$cacheId = "sass-{$paramsHash}-{$hash}-" . self::CACHE_VERSION;
+		$sassService->setFilters(
+			SassService::FILTER_IMPORT_CSS | SassService::FILTER_CDN_REWRITE
+			| SassService::FILTER_BASE64 | SassService::FILTER_JANUS
+		);
 
 		// vary SASS caching between devboxes
 		if (!empty($wgDevelEnvironment)) {
-			$cacheId .= "-dev-{$wgDevelEnvironmentName}";
+			$sassService->setCacheVariant("dev-{$wgDevelEnvironmentName}");
 		}
 
+		$cacheId = __CLASS__ . "-minified-".$sassService->getCacheKey();
+
 		$memc = F::App()->wg->Memc;
-		// todo: remove debugging ;-P
-//		$cachedContent = $memc->get( $cacheId );
-		$cachedContent = false;
+		$cachedContent = $memc->get( $cacheId );
 
 		if ( $cachedContent ) {
 			$this->mContent = $cachedContent;
 
 		} else {
 			// todo: add extra logging of AM request in case of any error
-			$this->mContent = $sassService->getCss();
+			$this->mContent = $sassService->getCss( /* useCache */ false);
 
 			// This is the final pass on contents which, among other things, performs minification
 			parent::getContent( $processingTimeStart );

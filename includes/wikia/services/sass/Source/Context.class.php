@@ -1,11 +1,13 @@
 <?php
 
+namespace Wikia\Sass\Source;
+
 /**
- * SassSourceContext is a class containing context for spawning new Sass sources.
+ * Context is a class containing context for spawning new Sass sources.
  *
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-class SassSourceContext {
+class Context {
 
 	protected $rootDir;
 	protected $tempDir;
@@ -47,7 +49,7 @@ class SassSourceContext {
 	 *
 	 * @param $fileName string File path (can be relative or absolute)
 	 * @param $relativeToPath string|null Extra path to search for this file in (optional)
-	 * @return SassSource SassSource instance
+	 * @return Source instance
 	 * @throws SassException
 	 */
 	public function getFile( $fileName, $relativeToPath = null ) {
@@ -58,7 +60,7 @@ class SassSourceContext {
 			throw new SassException( __METHOD__ . ': Requested SASS file not found: ' . $requested );
 		}
 		if ( empty( $this->instances[$fileName] ) ) {
-			$this->instances[$fileName] = new SassFileSource($this,$fileName);
+			$this->instances[$fileName] = new FileSource($this,$fileName);
 		}
 		return $this->instances[$fileName];
 	}
@@ -70,7 +72,7 @@ class SassSourceContext {
 	 *
 	 * @param $fileName string File path (can be relative or absolute)
 	 * @param $relativeToPath string|null Extra path to search for this file in (optional)
-	 * @return string|false Absolute file path or false if file was not found
+	 * @return string|bool Absolute file path or false if file was not found
 	 */
 	public function findFile( $fileName, $relativeToPath = null ) {
 		$requested = $fileName;

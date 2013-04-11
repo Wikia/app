@@ -1,13 +1,15 @@
 <?php
 
+namespace Wikia\Sass\Source;
+
 /**
- * SassSource is a base class for sources containing SASS source code.
+ *Source is a base class for sources containing SASS source code.
  * You can request last modification time, hash of all the included sources
  * and the output compiled CSS code.
  *
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-abstract class SassSource {
+abstract class Source {
 
 	protected $context;
 
@@ -17,7 +19,7 @@ abstract class SassSource {
 
 	protected $humanName;
 
-	public function __construct( SassSourceContext $context ) {
+	public function __construct( Context $context ) {
 		$this->context = $context;
 	}
 

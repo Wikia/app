@@ -1,5 +1,9 @@
 <?php
 
+namespace Wikia\Sass\Compiler;
+use Wikia\Sass\Source\Source;
+use Wikia;
+
 /**
  * SassExternalRubyCompiler implements a Sass compiler interface
  * giving you access to use external Ruby compiler.
@@ -8,7 +12,7 @@
  * @author Piotr Bablok <piotr.bablok@gmail.com>
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-class SassExternalRubyCompiler extends SassCompiler {
+class ExternalRubyCompiler extends Compiler {
 
 	protected $tempDir;
 	protected $rootDir;
@@ -19,11 +23,11 @@ class SassExternalRubyCompiler extends SassCompiler {
 	/**
 	 * Compile the given SASS source
 	 *
-	 * @param SassSource $source Sass source
+	 * @param Source $source Sass source
 	 * @throws SassException
 	 * @return string CSS stylesheet
 	 */
-	public function compile( SassSource $source ) {
+	public function compile( Source $source ) {
 		wfProfileIn(__METHOD__);
 
 		$tempDir = $this->tempDir ?: sys_get_temp_dir();

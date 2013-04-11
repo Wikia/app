@@ -1,12 +1,14 @@
 <?php
 
+namespace Wikia\Sass\Filter;
+
 /**
- * SassFilter is a base class that defines the public interface
+ * Filter is a base class that defines the public interface
  * of Sass filter subclasses
  *
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-abstract class SassFilter {
+abstract class Filter {
 
 	/**
 	 * Apply filter rules to given string
