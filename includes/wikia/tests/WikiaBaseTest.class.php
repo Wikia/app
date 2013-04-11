@@ -122,12 +122,16 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Mock a static class method
 	 *
+	 * Example:
+	 *
+	 * $this->mockClassStaticMethod('Http', 'post', json_encode(['foo' => 'bar']));
+	 *
 	 * @param $className string class name
 	 * @param $methodName string method name
 	 * @param $retVal mixed result to be returned by mocked method
 	 */
 	protected function mockClassStaticMethod($className, $methodName, $retVal) {
-		// runkit doesn't resolve autoloaded classes, we need to force it by calling "new" object
+		// runkit doesn't resolve autoloaded classes, we need to force it here...
 		if (!class_exists($className)) {
 			// TODO: add support for namespaces
 			require_once $this->app->wg->AutoloadClasses[$className];
