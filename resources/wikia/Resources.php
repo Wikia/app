@@ -14,6 +14,7 @@ return [
 	'amd.shared' => [
 		'dependencies' => [
 			'wikia.ajax',
+			'wikia.cache',
 			'wikia.cookies',
 			'wikia.deferred',
 			'wikia.document',
@@ -37,6 +38,14 @@ return [
 	'wikia.window' => [
 		'scripts' => 'resources/wikia/modules/window.js',
 		'dependencies' => 'amd',
+	],
+	'wikia.cache' => [
+		'scripts' => 'resources/wikia/modules/cache.js',
+		'dependencies' => [
+			'amd',
+			'wikia.localStorage',
+			'wikia.window',
+		],
 	],
 	'wikia.document' => [
 		'scripts' => 'resources/wikia/modules/document.js',
