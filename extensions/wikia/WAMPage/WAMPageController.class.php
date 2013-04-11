@@ -25,11 +25,14 @@ class WAMPageController extends WikiaController
 
 		$title = $this->wg->Title;
 		if( $title instanceof Title && $title->isSubpage() ) {
+		// main tabs on the top of WAM Scores page
 			$this->subpageText = $title->getSubpageText();
 			$currentTabIndex = $this->model->getTabIndexBySubpageText($this->subpageText);
 			
+			$this->redirectIfUnknownTab($currentTabIndex, $title);
 			$this->redirectIfFirstTab($currentTabIndex, $this->subpageText);
 		} else {
+		// default subpage for first tab/main page
 			$currentTabIndex = WAMPageModel::TAB_INDEX_TOP_WIKIS;
 			$this->subpageText = $this->model->getTabNameByIndex($currentTabIndex);
 		}
@@ -133,6 +136,13 @@ class WAMPageController extends WikiaController
 		}
 		
 		return $url;
+	}
+	
+	protected function redirectIfUnknownTab($currentTabIndex, $title) {
+		if( !$currentTabIndex ) {
+		// the current tab is not set when somebody types WAM/faq instead of WAM/FAQ in example
+			$this->wg->Out->redirect($this->model->getWAMSubpageUrl($title), HTTP_REDIRECT_PERM);
+		}
 	}
 	
 	protected function redirectIfFirstTab($tabIndex, $subpageText) {

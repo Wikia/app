@@ -12,8 +12,20 @@ class WAMPageModel extends WikiaModel {
 	const TAB_INDEX_GAMING = 2;
 	const TAB_INDEX_ENTERTAINMENT = 3;
 	const TAB_INDEX_LIFESTYLE = 4;
-	
+
+	/**
+	 * @desc Cache for config array from WikiFactory
+	 * 
+	 * @var mixed|null
+	 */
 	protected $config = null;
+
+	/**
+	 * @desc Cache for db key maps where the key is lower-case dbkey and value is just dbkey
+	 *
+	 * @var null
+	 */
+	protected $pagesMap = null;
 	
 	static protected $failoverTabsNames = [
 		self::TAB_INDEX_TOP_WIKIS => 'Top wikis',
@@ -121,9 +133,33 @@ class WAMPageModel extends WikiaModel {
 	}
 	
 	public function getWAMMainPageUrl() {
-		$title = Title::newFromText($this->getWAMMainPageName());
+		$title = $this->getTitleFromText($this->getWAMMainPageName());
 		
 		return ($title instanceof Title) ? $title->getFullUrl() : null;
+	}
+
+	/**
+	 * @desc Checks if given title is a WAM page/subpage and if it is returns its url
+	 * 
+	 * @param Title $title instance of class Title
+	 * @param bool $fullUrl flag which informs method to return full url by default or local url when false passed
+	 * 
+	 * @return string
+	 */
+	public function getWAMSubpageUrl(Title $title, $fullUrl = true) {
+		if( $this->isWAMPage($title) ) {
+			$dbkeysMap = $this->getWamPagesDbKeysMap();
+			$dbkeyLower = mb_strtolower($title->getDBKey());
+			$wamPageDbkey = isset($dbkeysMap[$dbkeyLower]) ? $dbkeysMap[$dbkeyLower] : false;
+			
+			if( $wamPageDbkey ) {
+				$title = $this->getTitleFromText($wamPageDbkey);
+			}
+		}
+		
+		$url = ($fullUrl) ? $title->getFullUrl() : $title->getLocalURL();
+		
+		return $url;
 	}
 
 	public function getWAMFAQPageName() {
@@ -160,7 +196,7 @@ class WAMPageModel extends WikiaModel {
 		$tabsNames = $this->getTabsNamesArray();
 		
 		foreach($tabsNames as $tabName) {
-			$tabTitle = Title::newFromText($pageName . '/'. $tabName);
+			$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
 			$tabUrl = $tabTitle->getLocalURL();
 			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
 		}
@@ -172,19 +208,21 @@ class WAMPageModel extends WikiaModel {
 		return $tabs;
 	}
 	
-	public function getWamPagesDbKeysLower() {
-		$pagesLowerCase = [];
-		$pageName = mb_strtolower($this->getWAMMainPageName());
-		
-		foreach($this->getTabsNamesArray() as $tabName) {
-			$tabTitle = Title::newFromText($pageName . '/'. $tabName);
-			$pagesLowerCase[] = mb_strtolower($tabTitle->getDBKey());
+	public function getWamPagesDbKeysMap() {
+		if( is_null($this->pagesMap) ) {
+			$this->pagesMap = [];
+			$pageName = $this->getWAMMainPageName();
+
+			foreach($this->getTabsNamesArray() as $tabName) {
+				$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
+				$this->pagesMap[mb_strtolower($tabTitle->getDBKey())] = $tabTitle->getDBKey();
+			}
+
+			$this->pagesMap[mb_strtolower($pageName)] = $pageName;
+			$this->pagesMap[mb_strtolower($this->getWAMFAQPageName())] = $this->getWAMFAQPageName();
 		}
-		
-		$pagesLowerCase[] = $pageName;
-		$pagesLowerCase[] = mb_strtolower($this->getWAMFAQPageName());
-		
-		return $pagesLowerCase;
+
+		return $this->pagesMap;
 	}
 
 	/**
@@ -319,6 +357,18 @@ class WAMPageModel extends WikiaModel {
 		return $apiParams;
 	}
 
+	public function isWAMPage($title) {
+		wfProfileIn(__METHOD__);
+		$dbKey = null;
+
+		if( $title instanceof Title ) {
+			$dbKey = mb_strtolower( $title->getDBKey() );
+		}
+		
+		wfProfileOut(__METHOD__);
+		return in_array($dbKey, array_keys($this->getWamPagesDbKeysMap()));
+	}
+
 	/**
 	 * MOCKED data for devboxes for testing
 	 * because we don't have wam data on devboxes
@@ -400,5 +450,9 @@ class WAMPageModel extends WikiaModel {
 				'wiki_image' => null,
 			],
 		]];
+	}
+	
+	protected function getTitleFromText($text) {
+		return Title::newFromText($text);
 	}
 }

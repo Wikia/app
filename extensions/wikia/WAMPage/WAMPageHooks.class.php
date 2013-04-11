@@ -41,7 +41,7 @@ class WAMPageHooks {
 		wfProfileIn(__METHOD__);
 		$this->init();
 
-		if( $this->isWAMPage($title) ) {
+		if( $this->model->isWAMPage($title) ) {
 			$this->app->wg->SuppressPageHeader = true;
 			$this->app->wg->SuppressWikiHeader = true;
 			$this->app->wg->SuppressRail = true;
@@ -84,7 +84,7 @@ class WAMPageHooks {
 		wfProfileIn(__METHOD__);		
 		$this->init();
 		
-		if( $this->isWAMPage($target) ) {
+		if( $this->model->isWAMPage($target) ) {
 			$index = array_search('broken', $options);
 			unset($options[$index]);
 			$options[] = 'known';
@@ -92,19 +92,6 @@ class WAMPageHooks {
 
 		wfProfileOut(__METHOD__);
 		return true;
-	}
-	
-	protected function isWAMPage($title) {
-		wfProfileIn(__METHOD__);
-		$this->init();
-		$dbKey = null;
-		
-		if( $title instanceof Title ) {
-			$dbKey = mb_strtolower( $title->getDBKey() );
-		}
-
-		wfProfileOut(__METHOD__);
-		return !empty($this->EnableWAMPageExt) && in_array($dbKey, $this->model->getWamPagesDbKeysLower());
 	}
 
 	/**
@@ -119,7 +106,7 @@ class WAMPageHooks {
 		wfProfileIn(__METHOD__);
 		$this->init();
 		
-		if( $title instanceof Title && $this->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
+		if( $title instanceof Title && $this->model->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
 			$url = $this->model->getWAMMainPageUrl();
 		}
 
