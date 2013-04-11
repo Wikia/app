@@ -37,6 +37,11 @@ $wgExtensionCredits['other'][] = array(
     'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/HAWelcome/'
 );
 /**
+ * @global Array The list of message files.
+ * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionMessagesFiles
+ */
+$wgExtensionMessagesFiles[ 'HAWelcome' ] = __DIR__ . '/HAWelcome.i18n.php';
+/**
  * @global Array The list of hooks.
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  * @see http://www.mediawiki.org/wiki/Manual:Hooks/RevisionInsertComplete
