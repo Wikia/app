@@ -1,7 +1,7 @@
 <?php
 /**
  * @addtogroup Extensions
-*/
+ */
 
 $messages = array();
 $messages['en'] = array(
@@ -19,6 +19,10 @@ $messages['en'] = array(
 
 	/* file page */
 	'file-page-replace-button' => 'Replace',
+	'file-page-tab-about' => 'About',
+	'file-page-tab-history' => 'File History',
+	'file-page-tab-metadata' => 'Metadata',
+
 );
 
 /** Message documentation (Message documentation) */
