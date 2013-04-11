@@ -30,6 +30,8 @@ class LyricFindTrackingService extends WikiaService {
 
 		$resp = Http::post($url, ['postData' => $data]);
 
+		wfDebug(__METHOD__ . ": API response - {$resp}\n");
+
 		// get the code from API response
 		if ($resp !== false) {
 			$json = json_decode($resp, true);
@@ -48,6 +50,7 @@ class LyricFindTrackingService extends WikiaService {
 		}
 		else {
 			$success = false;
+			Wikia::log(__METHOD__, false, "LyricFind API request failed!", true);
 		}
 
 		wfProfileOut(__METHOD__);
