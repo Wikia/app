@@ -190,7 +190,7 @@ EOT;
 	}
 
 	function getHub() {
-		$cat = AdEngine::getCachedCategory();
+		$cat = AdEngine2Controller::getCachedCategory();
 		return $cat['short'];
 	}
 
