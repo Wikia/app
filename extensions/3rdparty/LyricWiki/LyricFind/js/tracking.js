@@ -1,12 +1,4 @@
-require(['wikia.window','jquery', 'wikia.log'], function(window, $, log) {
-	var img = new Image(),
-		data = {
-			controller: 'LyricFind',
-			method: 'track',
-			pageid: window.wgArticleId || 0
-		},
-		url = window.wgServer + window.wgScriptPath + '/wikia.php?' + $.param(data);
-
-	img.src = url;
+require(['wikia.window','LyricFindTracker', 'wikia.log'], function(window, tracker, log) {
+	tracker(window.wgArticleId);
 	log('tracking page view', log.levels.info, 'LyricFind');
 });
