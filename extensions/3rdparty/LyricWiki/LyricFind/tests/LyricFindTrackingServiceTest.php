@@ -26,6 +26,9 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 
 		$this->mockClassStaticMethod('Http', 'post', $respMock);
 
+		// disable memcache
+		$this->mockGlobalVariable('wgMemc', $this->mockClassWithMethods('MWMemcached', ['get' => null]));
+
 		// mock database
 		$this->mockGlobalFunction('GetDB', $this->mockClassWithMethods('DatabaseMysql', ['selectField' => $trackId]));
 		$this->mockApp();

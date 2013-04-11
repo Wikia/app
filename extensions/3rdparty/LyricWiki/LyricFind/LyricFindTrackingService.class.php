@@ -5,6 +5,8 @@
  */
 class LyricFindTrackingService extends WikiaService {
 
+	const TTL = 86400; // 24h
+
 	/**
 	 * @param $pageId int page ID to track page view for
 	 * @return bool success
@@ -47,7 +49,7 @@ class LyricFindTrackingService extends WikiaService {
 
 			// log errors
 			if ($success === false) {
-				Wikia::log(__METHOD__, false, "got #{$code} response code from API (for page #{$pageId})", true);
+				Wikia::log(__METHOD__, false, "got #{$code} response code from API (for page #{$pageId} / track #{$trackId})", true);
 			}
 		}
 		else {
@@ -66,14 +68,16 @@ class LyricFindTrackingService extends WikiaService {
 	 * @return string AMG track ID
 	 */
 	private function getTrackId($pageId) {
-		$dbr = $this->wf->GetDB( DB_SLAVE, [], $this->wg->StatsDB);
+		$trackId =WikiaDataAccess::cache(__METHOD__ . "::{$pageId}", self::TTL, function() use ($pageId) {
+			$dbr = $this->wf->GetDB(DB_SLAVE, [], $this->wg->StatsDB);
 
-		$trackId = $dbr->selectField(
-			'lyricfind.lf_track',
-			'track_id',
-			['lw_id' => $pageId],
-			__METHOD__
-		);
+			return $dbr->selectField(
+				'lyricfind.lf_track',
+				'track_id',
+				['lw_id' => $pageId],
+				__METHOD__
+			);
+		});
 
 		return !empty($trackId) ? intval($trackId) : false;
 	}

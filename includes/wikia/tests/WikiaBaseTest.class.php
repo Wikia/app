@@ -106,7 +106,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @return object mocked object
 	 */
 	protected function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = '') {
-		$mock = $this->getMock($className, array_keys($methods));
+		$mock = $this->getMock($className, array_keys($methods), [], '', false /* $callOriginalConstructor */);
 
 		foreach($methods as $methodName => $retVal) {
 			$mock->expects($this->any())
