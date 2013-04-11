@@ -1,8 +1,12 @@
-(function(context) {
+require(['wikia.window','jquery', 'wikia.log'], function(window, $, log) {
+	var img = new Image(),
+		data = {
+			controller: 'LyricFind',
+			method: 'track',
+			pageid: window.wgArticleId || 0
+		},
+		url = window.wgServer + window.wgScriptPath + '/wikia.php?' + $.param(data);
 
-	var trackingServiceUrl = context.wgServer + '/tracking.php',
-		img = new Image();
-
-	img.src = trackingServiceUrl + '?pageid=' + context.wgArticleId;
-
-})(window);
+	img.src = url;
+	log('tracking page view', log.levels.info, 'LyricFind');
+});
