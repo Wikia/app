@@ -26,17 +26,12 @@ class WAMPageController extends WikiaController
 		$faqPageName = $this->model->getWAMFAQPageName();
 
 		$title = $this->wg->Title;
-		if( $title instanceof Title && $title->isSubpage() ) {
-		// main tabs on the top of WAM Scores page
+		if( $title instanceof Title ) {
 			$this->subpageText = $title->getSubpageText();
 			$currentTabIndex = $this->model->getTabIndexBySubpageText($this->subpageText);
-			
+
 			$this->redirectIfUnknownTab($currentTabIndex, $title);
 			$this->redirectIfFirstTab($currentTabIndex, $this->subpageText);
-		} else {
-		// default subpage for first tab/main page
-			$currentTabIndex = WAMPageModel::TAB_INDEX_TOP_WIKIS;
-			$this->subpageText = $this->model->getTabNameByIndex($currentTabIndex);
 		}
 
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
@@ -44,7 +39,7 @@ class WAMPageController extends WikiaController
 		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
 
 		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
-		
+
 		$total = ( empty($this->indexWikis['wam_results_total']) ) ? 0 : $this->indexWikis['wam_results_total'];
 		$itemsPerPage = $this->model->getItemsPerPage();
 		if( $total > $itemsPerPage ) {
@@ -186,7 +181,7 @@ class WAMPageController extends WikiaController
 	}
 	
 	protected function redirectIfUnknownTab($currentTabIndex, $title) {
-		if( !$currentTabIndex ) {
+		if( $title->isSubpage() && !$currentTabIndex ) {
 		// the current tab is not set when somebody types WAM/faq instead of WAM/FAQ in example
 			$this->wg->Out->redirect($this->model->getWAMSubpageUrl($title), HTTP_REDIRECT_PERM);
 		}
