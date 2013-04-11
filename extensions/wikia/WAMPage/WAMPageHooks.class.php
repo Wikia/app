@@ -41,11 +41,13 @@ class WAMPageHooks {
 		wfProfileIn(__METHOD__);
 		$this->init();
 
-		if( $this->isWAMPage($title) ) {
+		if( $this->model->isWAMPage($title) ) {
 			$this->app->wg->SuppressPageHeader = true;
 			$this->app->wg->SuppressWikiHeader = true;
 			$this->app->wg->SuppressRail = true;
 			$this->app->wg->SuppressFooter = true;
+			
+			$this->redirectIfMisspelledMainPage($title);
 			$article = new WAMPageArticle($title);
 		}
 
@@ -81,10 +83,10 @@ class WAMPageHooks {
 	 * @return bool
 	 */
 	public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
-		wfProfileIn(__METHOD__);		
+		wfProfileIn(__METHOD__);
 		$this->init();
 		
-		if( $this->isWAMPage($target) ) {
+		if( $this->model->isWAMPage($target) ) {
 			$index = array_search('broken', $options);
 			unset($options[$index]);
 			$options[] = 'known';
@@ -92,19 +94,6 @@ class WAMPageHooks {
 
 		wfProfileOut(__METHOD__);
 		return true;
-	}
-	
-	protected function isWAMPage($title) {
-		wfProfileIn(__METHOD__);
-		$this->init();
-		$dbKey = null;
-		
-		if( $title instanceof Title ) {
-			$dbKey = mb_strtolower( $title->getDBKey() );
-		}
-
-		wfProfileOut(__METHOD__);
-		return !empty($this->EnableWAMPageExt) && in_array($dbKey, $this->model->getWamPagesDbKeysLower());
 	}
 
 	/**
@@ -119,11 +108,30 @@ class WAMPageHooks {
 		wfProfileIn(__METHOD__);
 		$this->init();
 		
-		if( $title instanceof Title && $this->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
+		if( $title instanceof Title && $this->model->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
 			$url = $this->model->getWAMMainPageUrl();
 		}
 
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+	
+	private function redirectIfMisspelledMainPage($title) {
+		wfProfileIn(__METHOD__);
+		
+		// we don't check here if $title is instance of Title
+		// because this method is called after this check and isWAMPage() check
+		
+		$this->init();
+		$dbkey = $title->getDbKey();
+		$mainPage = $this->model->getWAMMainPageName();
+		$isMainPage = (mb_strtolower($dbkey) === mb_strtolower($mainPage));
+		$isMisspeledMainPage = !($dbkey === $mainPage);
+		
+		if( $isMainPage && $isMisspeledMainPage ) {
+			$this->app->wg->Out->redirect($this->model->getWAMMainPageUrl(), HTTP_REDIRECT_PERM);
+		}
+
+		wfProfileOut(__METHOD__);
 	}
 }

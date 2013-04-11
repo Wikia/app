@@ -2,6 +2,8 @@
 
 class WAMPageController extends WikiaController
 {
+	const DEFAULT_LANG_CODE = 'en';
+
 	protected $model;
 
 	public function __construct() {
@@ -24,14 +26,12 @@ class WAMPageController extends WikiaController
 		$faqPageName = $this->model->getWAMFAQPageName();
 
 		$title = $this->wg->Title;
-		if( $title instanceof Title && $title->isSubpage() ) {
+		if( $title instanceof Title ) {
 			$this->subpageText = $title->getSubpageText();
 			$currentTabIndex = $this->model->getTabIndexBySubpageText($this->subpageText);
-			
+
+			$this->redirectIfUnknownTab($currentTabIndex, $title);
 			$this->redirectIfFirstTab($currentTabIndex, $this->subpageText);
-		} else {
-			$currentTabIndex = WAMPageModel::TAB_INDEX_TOP_WIKIS;
-			$this->subpageText = $this->model->getTabNameByIndex($currentTabIndex);
 		}
 
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
@@ -39,7 +39,7 @@ class WAMPageController extends WikiaController
 		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
 
 		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
-		
+
 		$total = ( empty($this->indexWikis['wam_results_total']) ) ? 0 : $this->indexWikis['wam_results_total'];
 		$itemsPerPage = $this->model->getItemsPerPage();
 		if( $total > $itemsPerPage ) {
@@ -81,7 +81,7 @@ class WAMPageController extends WikiaController
 			]
 		);
 		if (!empty($this->selectedDate)) {
-			$timestamp = strtotime($this->selectedDate);
+			$timestamp = $this->getTimestampFromLocalDate($this->selectedDate);
 
 			if (!empty($filterMinMaxDates['min_date'])) {
 				$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::GREATER_THAN_EQUAL]);
@@ -100,7 +100,7 @@ class WAMPageController extends WikiaController
 	}
 
 	protected function getJsDateFormat() {
-		$format = $this->wg->ContLang->getDateFormatString( 'date', $this->wg->ContLang->dateFormat( true ) );
+		$format = $this->wg->Lang->getDateFormatString( 'date', $this->wg->Lang->dateFormat( true ) );
 		return DateFormatHelper::convertFormatToJqueryUiFormat($format);
 	}
 
@@ -123,6 +123,51 @@ class WAMPageController extends WikiaController
 		
 		return $indexParams;
 	}
+
+	/**
+	 * Convert date local language into timestamp (workaround for not existing locales)
+	 *
+	 * @param $localDate
+	 * @return int
+	 */
+	protected function getTimestampFromLocalDate($localDate) {
+		$engMonthNames = array_map(
+			'mb_strtolower',
+			Language::factory(self::DEFAULT_LANG_CODE)->getMonthNamesArray()
+		);
+
+		$localMonthNames = array_map(
+			'mb_strtolower',
+			$this->wg->Lang->getMonthNamesArray()
+		);
+
+		$monthMap = array_combine($localMonthNames, $engMonthNames);
+		// remove first element because it's always empty
+		array_shift($monthMap);
+
+		// get month short version
+		$engShortMonthNames = array_map(
+			'mb_strtolower',
+			Language::factory(self::DEFAULT_LANG_CODE)->getMonthAbbreviationsArray()
+		);
+
+		$localShortMonthNames = array_map(
+			'mb_strtolower',
+			$this->wg->Lang->getMonthAbbreviationsArray()
+		);
+
+		$shortMonthMap = array_combine($localShortMonthNames, $engShortMonthNames);
+		// remove first element because it's always empty
+		array_shift($shortMonthMap);
+
+		$monthMap += $shortMonthMap;
+
+		$engDate = strtr(mb_strtolower($localDate), $monthMap);
+
+		$timestamp = strtotime($engDate);
+
+		return $timestamp;
+	}
 	
 	protected function getUrlWithAllParams() {
 		$url = '#';
@@ -133,6 +178,13 @@ class WAMPageController extends WikiaController
 		}
 		
 		return $url;
+	}
+	
+	protected function redirectIfUnknownTab($currentTabIndex, $title) {
+		if( $title->isSubpage() && !$currentTabIndex ) {
+		// the current tab is not set when somebody types WAM/faq instead of WAM/FAQ in example
+			$this->wg->Out->redirect($this->model->getWAMSubpageUrl($title), HTTP_REDIRECT_PERM);
+		}
 	}
 	
 	protected function redirectIfFirstTab($tabIndex, $subpageText) {
