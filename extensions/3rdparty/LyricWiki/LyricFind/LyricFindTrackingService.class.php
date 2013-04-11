@@ -30,13 +30,15 @@ class LyricFindTrackingService extends WikiaService {
 
 		$resp = Http::post($url, ['postData' => $data]);
 
-		wfDebug(__METHOD__ . ": API response - {$resp}\n");
+		if ($resp !== false) {
+			wfDebug(__METHOD__ . ": API response - {$resp}\n");
+		}
 
 		// get the code from API response
 		if ($resp !== false) {
 			$json = json_decode($resp, true);
 
-			$code = intval($json['response']['code']);
+			$code = !empty($json['response']['code']) ? intval($json['response']['code']) : false;
 			$success = in_array($code, [
 				101, // lyric is available
 				102, // track is instrumental

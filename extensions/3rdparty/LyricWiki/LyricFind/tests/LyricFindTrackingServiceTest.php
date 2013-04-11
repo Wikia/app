@@ -22,11 +22,7 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 	 */
 	public function testTrackResponseCode($pageId, $trackId, $apiResponse, $res) {
 		// mock API response
-		$respMock = json_encode([
-			'response' => [
-				'code' => $apiResponse
-			]
-		]);
+		$respMock = is_array($apiResponse) ? json_encode($apiResponse) : $apiResponse;
 
 		$this->mockClassStaticMethod('Http', 'post', $respMock);
 
@@ -43,21 +39,47 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 			[
 				'pageId' => 123,
 				'trackId' => 45812,
-				'apiResponse' => 101,
+				'apiResponse' => [
+					'response' => [
+						'code' => 101
+					]
+				],
 				'res' => true
 			],
 			// can't map given article to lyric ID
 			[
 				'pageId' => 1234,
 				'trackId' => false,
-				'apiResponse' => 101,
+				'apiResponse' => [
+					'response' => [
+						'code' => 101
+					]
+				],
 				'res' => false
 			],
 			// API key was incorrect
 			[
 				'pageId' => 1234,
 				'trackId' => 45812,
-				'apiResponse' => 200,
+				'apiResponse' => [
+					'response' => [
+						'code' => 200
+					]
+				],
+				'res' => false
+			],
+			// API request fauled
+			[
+				'pageId' => 1234,
+				'trackId' => 45812,
+				'apiResponse' => false,
+				'res' => false
+			],
+			// malformed API request
+			[
+				'pageId' => 1234,
+				'trackId' => 45812,
+				'apiResponse' => ['foo' => 'bar'],
 				'res' => false
 			]
 		];
