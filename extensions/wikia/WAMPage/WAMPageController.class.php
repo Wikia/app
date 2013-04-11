@@ -105,7 +105,7 @@ class WAMPageController extends WikiaController
 	}
 
 	protected function getJsDateFormat() {
-		$format = $this->wg->ContLang->getDateFormatString( 'date', $this->wg->ContLang->dateFormat( true ) );
+		$format = $this->wg->Lang->getDateFormatString( 'date', $this->wg->Lang->dateFormat( true ) );
 		return DateFormatHelper::convertFormatToJqueryUiFormat($format);
 	}
 
@@ -143,7 +143,7 @@ class WAMPageController extends WikiaController
 
 		$localMonthNames = array_map(
 			'mb_strtolower',
-			$this->wg->contLang->getMonthNamesArray()
+			$this->wg->Lang->getMonthNamesArray()
 		);
 
 		$monthMap = array_combine($localMonthNames, $engMonthNames);
@@ -158,7 +158,7 @@ class WAMPageController extends WikiaController
 
 		$localShortMonthNames = array_map(
 			'mb_strtolower',
-			$this->wg->contLang->getMonthAbbreviationsArray()
+			$this->wg->Lang->getMonthAbbreviationsArray()
 		);
 
 		$shortMonthMap = array_combine($localShortMonthNames, $engShortMonthNames);
