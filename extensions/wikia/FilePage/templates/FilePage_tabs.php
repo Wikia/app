@@ -1,5 +1,3 @@
-<!-- TODO: i18n !!!! -->
-
 <ul class="tabs">
 	<? if($showmeta): ?>
 		<li data-tab="metadata">
