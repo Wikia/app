@@ -89,7 +89,7 @@
 				
 				<div class="home-top-right-ads">
 				<?php
-					if (WikiaPageType::isMainPage()) {
+					if (!$wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
 						echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
 					}
 				?>

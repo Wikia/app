@@ -43,7 +43,6 @@ class AdEngine2Controller extends WikiaController {
 			return $pageLevel;
 		}
 
-
 		$runAds = WikiaPageType::isSearch()
 			|| WikiaPageType::isForum()
 			|| WikiaPageType::isWikiaHub();
@@ -70,6 +69,12 @@ class AdEngine2Controller extends WikiaController {
 
 		if (!$runAds) {
 			$pageLevel = self::AD_LEVEL_NONE;
+			return $pageLevel;
+		}
+
+		// Only leaderboard and medrec on corporate page
+		if ($wg->EnableWikiaHomePageExt) {
+			$pageLevel = self::AD_LEVEL_LIMITED;
 			return $pageLevel;
 		}
 
