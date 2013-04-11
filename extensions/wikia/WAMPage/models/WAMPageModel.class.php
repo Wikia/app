@@ -130,7 +130,7 @@ class WAMPageModel extends WikiaModel {
 	}
 	
 	public function getWAMMainPageUrl() {
-		$title = Title::newFromText($this->getWAMMainPageName());
+		$title = $this->getTitleFromText($this->getWAMMainPageName());
 		
 		return ($title instanceof Title) ? $title->getFullUrl() : null;
 	}
@@ -150,10 +150,10 @@ class WAMPageModel extends WikiaModel {
 			$wamPageDbkey = isset($dbkeysMap[$dbkeyLower]) ? $dbkeysMap[$dbkeyLower] : false;
 			
 			if( $wamPageDbkey ) {
-				$title = Title::newFromText($wamPageDbkey);
+				$title = $this->getTitleFromText($wamPageDbkey);
 			}
 		}
-
+		
 		$url = ($fullUrl) ? $title->getFullUrl() : $title->getLocalURL();
 		
 		return $url;
@@ -193,7 +193,7 @@ class WAMPageModel extends WikiaModel {
 		$tabsNames = $this->getTabsNamesArray();
 		
 		foreach($tabsNames as $tabName) {
-			$tabTitle = Title::newFromText($pageName . '/'. $tabName);
+			$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
 			$tabUrl = $tabTitle->getLocalURL();
 			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
 		}
@@ -211,7 +211,7 @@ class WAMPageModel extends WikiaModel {
 			$pageName = $this->getWAMMainPageName();
 
 			foreach($this->getTabsNamesArray() as $tabName) {
-				$tabTitle = Title::newFromText($pageName . '/'. $tabName);
+				$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
 				$this->pagesMap[mb_strtolower($tabTitle->getDBKey())] = $tabTitle->getDBKey();
 			}
 
@@ -439,5 +439,9 @@ class WAMPageModel extends WikiaModel {
 				'wiki_image' => null,
 			],
 		]];
+	}
+	
+	protected function getTitleFromText($text) {
+		return Title::newFromText($text);
 	}
 }
