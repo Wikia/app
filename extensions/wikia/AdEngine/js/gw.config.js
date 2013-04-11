@@ -13,19 +13,15 @@
  * This file needs to be included right after ghostwriter's library.
  */
 
-(function (window, document, location, ghostwriter) {
-	'use strict';
-
-	var documentWriteTag,
-		checkHandler,
-		shouldUseNativeWrite;
+(function (window, document, location, ghostwriter, abTest) {
+	'use strict';;
 
 	// Save the original document.write method
 	document.nativeWrite = document.write;
 
 	// Decide whether the script should be written natively (return true)
 	// or can be safely handled by ghostwriter (return false)
-	shouldUseNativeWrite = function (src) {
+	function shouldUseNativeWrite(src) {
 		var i, srcDomain;
 
 		// Check if script source is a full URL. If not it may be
@@ -60,10 +56,10 @@
 
 		// External scripts should not block
 		return false;
-	};
+	}
 
 	// Natively document.write script tag with given attrs
-	documentWriteTag = function (tagName, attrs) {
+	function documentWriteTag(tagName, attrs) {
 		var name,
 			html = '<' + tagName;
 
@@ -74,11 +70,11 @@
 		}
 		html += '><\/' + tagName + '>';
 		document.nativeWrite(html);
-	};
+	}
 
 	// If script is ours, load it natively using documentWriteTag
 	// and return false, otherwise return true
-	checkHandler = function (tagName, attrs) {
+	function checkHandler(tagName, attrs) {
 		// Optional logging
 		var logging = (location.search.indexOf('gwconfiglog=1') !== -1);
 
@@ -100,10 +96,12 @@
 
 		if (logging) { window.console.log('gw.config.js: checkHandler: let GW write'); }
 		return true;
-	};
+	}
+
+	var useGw = !abTest.inGroup('GHOSTWRITER_VS_POSTSCRIBE', 'POSTSCRIBE');
 
 	// If ads in head are enabled register check handler for ghostwriter
-	if (window.wgLoadAdsInHead) {
+	if (useGw) {
 		ghostwriter.handlers = ghostwriter.handlers || {};
 		ghostwriter.handlers.check = checkHandler;
 
@@ -116,4 +114,4 @@
 		document.write = document.nativeWrite;
 	}
 
-}(window, document, location, ghostwriter));
+}(window, document, location, ghostwriter, Wikia.AbTest));

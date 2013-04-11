@@ -3,9 +3,7 @@
  * Once AMD is available, this file will be almost no longer needed.
  */
 
-/*global document, window */
-/*global Geo, Wikia */
-/*global ghostwriter, Krux */
+/*global require */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
 /*global WikiaDartHelper, WikiaGptHelper */
 /*global AdProviderAdDriver2, AdProviderEvolve, AdProviderGamePro, AdProviderLater, AdProviderNull */
@@ -13,10 +11,13 @@
 /*global AdLogicPageLevelParamsLegacy */
 /*jslint newcap:true */
 
-(function (log, tracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
+require(['ad.scriptwriter', 'wikia.cache', 'wikia.cookies', 'wikia.document', 'wikia.geo', 'wikia.lazyqueue', 'wikia.log', 'wikia.tracker', 'wikia.window'], function (scriptWriter, Cache, Cookies, document, Geo, LazyQueue, log, tracker, window) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
+		Krux = window.Krux,
+		abTest = window.Wikia.AbTest,
+
 		adConfig,
 		adEngine,
 		adLogicDartSubdomain,
@@ -24,7 +25,6 @@
 		adLogicPageLevelParams,
 		adLogicPageLevelParamsLegacy,
 		adLogicShortPage,
-		scriptWriter,
 		dartUrl,
 		wikiaDart,
 		wikiaGpt,
@@ -50,7 +50,6 @@
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicShortPage, abTest);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	slotTweaker = SlotTweaker(log, document, window);
-	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl);
 	wikiaGpt = WikiaGptHelper(log, window, document, adLogicPageLevelParams);
 	evolveHelper = EvolveHelper(log, window);
@@ -164,4 +163,4 @@
 	// Register window.wikiaDartHelper so jwplayer can use it
 	window.wikiaDartHelper = wikiaDart;
 
-}(Wikia.log, Wikia.Tracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));
+});
