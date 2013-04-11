@@ -46,6 +46,8 @@ class WAMPageHooks {
 			$this->app->wg->SuppressWikiHeader = true;
 			$this->app->wg->SuppressRail = true;
 			$this->app->wg->SuppressFooter = true;
+			
+			$this->redirectIfMisspelledMainPage($title);
 			$article = new WAMPageArticle($title);
 		}
 
@@ -81,7 +83,7 @@ class WAMPageHooks {
 	 * @return bool
 	 */
 	public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
-		wfProfileIn(__METHOD__);		
+		wfProfileIn(__METHOD__);
 		$this->init();
 		
 		if( $this->model->isWAMPage($target) ) {
@@ -112,5 +114,24 @@ class WAMPageHooks {
 
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+	
+	private function redirectIfMisspelledMainPage($title) {
+		wfProfileIn(__METHOD__);
+		
+		// we don't check here if $title is instance of Title
+		// because this method is called after this check and isWAMPage() check
+		
+		$this->init();
+		$dbkey = $title->getDbKey();
+		$mainPage = $this->model->getWAMMainPageName();
+		$isMainPage = (mb_strtolower($dbkey) === mb_strtolower($mainPage));
+		$isMisspeledMainPage = !($dbkey === $mainPage);
+		
+		if( $isMainPage && $isMisspeledMainPage ) {
+			$this->app->wg->Out->redirect($this->model->getWAMMainPageUrl(), HTTP_REDIRECT_PERM);
+		}
+
+		wfProfileOut(__METHOD__);
 	}
 }
