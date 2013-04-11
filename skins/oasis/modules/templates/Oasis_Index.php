@@ -106,8 +106,6 @@ if(Math.random()<0.01){
 	<?= $jsFiles ?>
 <? endif ?>
 
-<?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
-
 <script type="text/javascript">/*<![CDATA[*/ Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>
 
 <?= $bottomScripts ?>
