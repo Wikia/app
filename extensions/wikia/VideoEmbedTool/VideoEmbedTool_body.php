@@ -348,8 +348,12 @@ class VideoEmbedTool {
 		// Get the file page for this file
 		$page = WikiPage::factory( $file->getTitle() );
 
+		// remove description header
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$text = $videoHandlerHelper->removeDescriptionHeader( $page->getText() );
+
 		// Strip out the category tags so they aren't shown to the user
-		$text = FilePageHelper::stripCategoriesFromDescription($page->getText());
+		$text = FilePageHelper::stripCategoriesFromDescription( $text );
 
 		return $text;
 	}
@@ -369,6 +373,11 @@ class VideoEmbedTool {
 		}
 
 		$text = $description . $catString;
+
+		// add description header
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$text = $videoHandlerHelper->addDescriptionHeader( $text );
+
 		$summary = 'Adding video description';
 		$status = $page->doEdit( $text, $summary );
 
