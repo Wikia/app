@@ -379,7 +379,8 @@ $config['wikiamobile_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//extensions/wikia/WikiaMobile/css/WikiaMobile.scss'
+		'//extensions/wikia/WikiaMobile/css/WikiaMobile.scss',
+		'//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.scss'
 	)
 );
 
@@ -483,6 +484,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/share.js',
 		'//resources/wikia/modules/thumbnailer.js',
 
+		'//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.js',
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
 	)
