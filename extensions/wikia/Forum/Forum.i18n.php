@@ -13,8 +13,8 @@ $messages['en'] = array(
 	'forum-active-threads-on-topic' => '$1 {{PLURAL:$1|Active Discussion|Active Discussions}} about: $2',
 
 	/* Heading Bar */
-	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Thread<br> in this Forum|Threads<br> in this Forum}}</span>',
-	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Active<br> Discussion|Active<br> Discussions}}</span>',
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Thread<br />in this Forum|Threads<br />in this Forum}}</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Active<br />Discussion|Active<br />Discussions}}</span>',
 
 	/* Forum:Special (Index) */
 	'forum-specialpage-heading' => '{{SITENAME}} Forum',
@@ -132,7 +132,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 			<p>-- $AUTHOR_SIGNATURE<p>
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">See the conversation</a></p>
 			<p>The Wikia Team</p>
-___________________________________________<br>
+___________________________________________<br />
 * Find help and advice on Community Central: http://community.wikia.com
 * Want to receive fewer messages from us? You can unsubscribe or change
 your email preferences here: http://community.wikia.com/Special:Preferences',
