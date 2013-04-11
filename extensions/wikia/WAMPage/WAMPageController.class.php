@@ -84,7 +84,7 @@ class WAMPageController extends WikiaController
 			]
 		);
 		if (!empty($this->selectedDate)) {
-			$timestamp = strtotime($this->selectedDate);
+			$timestamp = $this->getTimestampFromLocalDate($this->selectedDate);
 
 			if (!empty($filterMinMaxDates['min_date'])) {
 				$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::GREATER_THAN_EQUAL]);
@@ -125,6 +125,32 @@ class WAMPageController extends WikiaController
 		];
 		
 		return $indexParams;
+	}
+
+	/**
+	 * Convert date local language into timestamp
+	 *
+	 * @param $localDate
+	 * @return int
+	 */
+	protected function getTimestampFromLocalDate($localDate) {
+		$engMonthNames = array_map(
+			'mb_strtolower',
+			Language::factory('en')->getMonthNamesArray()
+		);
+		$localMonthNames = array_map(
+			'mb_strtolower',
+			$this->wg->contLang->getMonthNamesArray()
+		);
+
+		$monthMap = array_combine($localMonthNames, $engMonthNames);
+		// remove first element because it's always empty
+		array_shift($monthMap);
+
+		$engDate = strtr(mb_strtolower($localDate, 'UTF-8'), $monthMap);
+		$timestamp = strtotime($engDate);
+
+		return $timestamp;
 	}
 	
 	protected function getUrlWithAllParams() {
