@@ -9,20 +9,19 @@ $messages = array();
 
 $messages['en'] = array(
 	'forum-forum-title' => 'Forum',
-	'forum-total-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Discussion in this Forum|Threads in this Discussions}}',
-	'forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Active Discussion|Active Discussions}}',
-	'forum-active-threads-on-topic' => '{{FORMATNUM:$1}} {{PLURAL:$1|Active Discussion|Active Discussions}} about: $2',
+	'forum-active-threads' => '$1 {{PLURAL:$1|Active Discussion|Active Discussions}}',
+	'forum-active-threads-on-topic' => '$1 {{PLURAL:$1|Active Discussion|Active Discussions}} about: $2',
 
 	/* Heading Bar */
-	'forum-header-total-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Thread<br> in this Forum|Threads<br> in this Forum}}</span>',
-	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Active<br> Discussion|Active<br> Discussions}}</span>',
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Thread<br> in this Forum|Threads<br> in this Forum}}</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Active<br> Discussion|Active<br> Discussions}}</span>',
 
 	/* Forum:Special (Index) */
 	'forum-specialpage-heading' => '{{SITENAME}} Forum',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading You can edit it<span>',
 	'forum-specialpage-blurb' => '',
-	'forum-specialpage-board-threads' => '{{formatnum:$1}} {{PLURAL:$1|thread|threads}}',
-	'forum-specialpage-board-posts' => '{{formatnum:$1}} {{PLURAL:$1|post|posts}}',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|thread|threads}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|post|posts}}',
 	'forum-specialpage-board-lastpostby' => 'Last post by',
 	'forum-specialpage-policies-edit' => 'Edit',
 	'forum-specialpage-policies' => 'Forum Policies / FAQ',
@@ -316,8 +315,6 @@ $messages['qqq'] = array(
 	'forum-confirmation-board-deleted' => 'Board delete confirmation message. $1 is board name',
 	'forum-sorting-option-newest-threads' => 'Sorting option, newest threads first',
 	'forum-sorting-option-oldest-threads' => 'Sorting option, oldest threads first',
-	'forum-total-threads' => 'Total number of threads in a forum board. Parameters:
-* $1 is the number of threads',
 	'forum-active-threads' => 'Total number of active threads in a forum board. Appears above the list of all threads in a forum board. Parameters:
 * $1 is the number of active threads',
 	'forum-active-threads-on-topic' => 'Total number of active threads in a forum topic. Appears above the list of all threads in a forum topic. Parameters:
