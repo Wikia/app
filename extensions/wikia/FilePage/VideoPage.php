@@ -35,7 +35,14 @@ class WikiaVideoPage extends WikiaImagePage {
 			$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>' );
 		} else {
 
-			$html = '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
+			$imageLink = '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
+
+			$wgOut->addHTML($imageLink);
+
+			$this->renderTabs();
+
+			// Open div for about section (closed in imageDetails);
+			$wgOut->addHtml('<div data-tab-body="about" class="tabBody selected">');
 
 			$captionDetails = array(
 				'expireDate' => $img->getExpirationDate(),
@@ -44,9 +51,9 @@ class WikiaVideoPage extends WikiaImagePage {
 				'detailUrl' => $img->getProviderDetailUrl(),
 				'views' => MediaQueryService::getTotalVideoViewsByTitle( $img->getTitle()->getDBKey() ),
 			);
-			$html .= $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
+			$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
 
-			$wgOut->addHTML($html);
+			$wgOut->addHTML($caption);
 
 			$this->renderDescriptionHeader();
 
