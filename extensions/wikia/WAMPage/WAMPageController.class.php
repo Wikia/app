@@ -128,7 +128,7 @@ class WAMPageController extends WikiaController
 	}
 
 	/**
-	 * Convert date local language into timestamp
+	 * Convert date local language into timestamp (workaround for not existing locales)
 	 *
 	 * @param $localDate
 	 * @return int
@@ -138,6 +138,7 @@ class WAMPageController extends WikiaController
 			'mb_strtolower',
 			Language::factory('en')->getMonthNamesArray()
 		);
+
 		$localMonthNames = array_map(
 			'mb_strtolower',
 			$this->wg->contLang->getMonthNamesArray()
@@ -147,7 +148,25 @@ class WAMPageController extends WikiaController
 		// remove first element because it's always empty
 		array_shift($monthMap);
 
+		// get month short version
+		$engShortMonthNames = array_map(
+			'mb_strtolower',
+			Language::factory('en')->getMonthAbbreviationsArray()
+		);
+
+		$localShortMonthNames = array_map(
+			'mb_strtolower',
+			$this->wg->contLang->getMonthAbbreviationsArray()
+		);
+
+		$shortMonthMap = array_combine($localShortMonthNames, $engShortMonthNames);
+		// remove first element because it's always empty
+		array_shift($shortMonthMap);
+
+		$monthMap += $shortMonthMap;
+
 		$engDate = strtr(mb_strtolower($localDate, 'UTF-8'), $monthMap);
+
 		$timestamp = strtotime($engDate);
 
 		return $timestamp;
