@@ -9,7 +9,7 @@ class LyricFindTrackingTest extends WikiaBaseTest {
 		$this->setupFile = __DIR__ . '/../LyricFind.setup.php';
 		parent::setUp();
 
-		$this->mockGlobalVariable('wgLyricFindTrackingNamespaces', array(self::TEST_NAMESPACE_TRACKED));
+		$this->mockGlobalVariable('wgLyricFindTrackingNamespaces', [self::TEST_NAMESPACE_TRACKED]);
 		$this->mockApp();
 	}
 
@@ -20,36 +20,36 @@ class LyricFindTrackingTest extends WikiaBaseTest {
 	 * @param $expectedResult bool expected result
 	 */
 	public function testPageIsTrackable($ns, $exists, $expectedResult) {
-		$title = $this->mockClassWithMethods('Title', array(
+		$title = $this->mockClassWithMethods('Title', [
 			'getNamespace' => $ns,
 			'exists' => $exists
-		));
+		]);
 
 		$this->assertEquals($expectedResult, LyricFindHooks::pageIsTrackable($title));
 	}
 
 	public function pageIsTrackableProvider() {
-		return array(
-			array(
+		return [
+			[
 				'ns' => self::TEST_NAMESPACE_TRACKED,
 				'exists' => true,
 				'trackable' => true
-			),
-			array(
+			],
+			[
 				'ns' => self::TEST_NAMESPACE_TRACKED,
 				'exists' => false,
 				'trackable' => false
-			),
-			array(
+			],
+			[
 				'ns' => self::TEST_NAMESPACE_NOT_TRACKED,
 				'exists' => true,
 				'trackable' => false
-			),
-			array(
+			],
+			[
 				'ns' => self::TEST_NAMESPACE_NOT_TRACKED,
 				'exists' => false,
 				'trackable' => false
-			),
-		);
+			],
+		];
 	}
 }

@@ -21,27 +21,25 @@ class LyricFindTrackingService extends WikiaService {
 		}
 
 		$url = $this->wg->LyricFindApiUrl . '/lyric.do';
-		$data = array(
+		$data = [
 			'apikey' => $this->wg->LyricFindApiKeys['display'],
 			'reqtype' => 'default',
 			'trackid' => "amg:{$trackId}",
 			'output' => 'json'
-		);
+		];
 
-		$resp = Http::post($url, array(
-			'postData' => $data
-		));
+		$resp = Http::post($url, ['postData' => $data]);
 
 		// get the code from API response
 		if ($resp !== false) {
 			$json = json_decode($resp, true);
 
 			$code = intval($json['response']['code']);
-			$success = in_array($code, array(
+			$success = in_array($code, [
 				101, // lyric is available
 				102, // track is instrumental
 				111 // LRC is available
-			));
+			]);
 
 			// log errors
 			if ($success === false) {
@@ -63,14 +61,12 @@ class LyricFindTrackingService extends WikiaService {
 	 * @return string AMG track ID
 	 */
 	private function getTrackId($pageId) {
-		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->StatsDB);
+		$dbr = $this->wf->GetDB( DB_SLAVE, [], $this->wg->StatsDB);
 
 		$trackId = $dbr->selectField(
 			'lyricfind.lf_track',
 			'track_id',
-			array(
-				'lw_id' => $pageId
-			),
+			['lw_id' => $pageId],
 			__METHOD__
 		);
 

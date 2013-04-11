@@ -11,9 +11,7 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 
 		// mock API settings
 		$this->mockGlobalVariable('wgLyricFindApiUrl', self::SERVICE_URL);
-		$this->mockGlobalVariable('wgLyricFindApiKeys', array(
-			'display' => self::API_KEY
-		));
+		$this->mockGlobalVariable('wgLyricFindApiKeys', ['display' => self::API_KEY]);
 	}
 
 	/**
@@ -24,18 +22,16 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 	 */
 	public function testTrackResponseCode($pageId, $trackId, $apiResponse, $res) {
 		// mock API response
-		$respMock = json_encode(array(
-			'response' => array(
+		$respMock = json_encode([
+			'response' => [
 				'code' => $apiResponse
-			)
-		));
+			]
+		]);
 
 		$this->mockClassStaticMethod('Http', 'post', $respMock);
 
 		// mock database
-		$this->mockGlobalFunction('GetDB', $this->mockClassWithMethods('DatabaseMysql', array(
-			'selectField' => $trackId
-		)));
+		$this->mockGlobalFunction('GetDB', $this->mockClassWithMethods('DatabaseMysql', ['selectField' => $trackId]));
 		$this->mockApp();
 
 		$service = new LyricFindTrackingService();
@@ -43,27 +39,27 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 	}
 
 	public function trackResponseCodeProvider() {
-		return array(
-			array(
+		return [
+			[
 				'pageId' => 123,
 				'trackId' => 45812,
 				'apiResponse' => 101,
 				'res' => true
-			),
+			],
 			// can't map given article to lyric ID
-			array(
+			[
 				'pageId' => 1234,
 				'trackId' => false,
 				'apiResponse' => 101,
 				'res' => false
-			),
+			],
 			// API key was incorrect
-			array(
+			[
 				'pageId' => 1234,
 				'trackId' => 45812,
 				'apiResponse' => 200,
 				'res' => false
-			)
-		);
+			]
+		];
 	}
 }

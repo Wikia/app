@@ -18,39 +18,32 @@ class LyricFindControllerTest extends WikiaBaseTest {
 	public function testTrack($pageId, $trackResult, $responseCode) {
 		$controller = new LyricFindController();
 
-		// mock request and controller's response
-		$controller->setRequest(new WikiaRequest(array(
-			'pageid' => $pageId
-		)));
+		$controller->setRequest(new WikiaRequest(['pageid' => $pageId]));
+		$controller->setResponse(new WikiaResponse('json'));
 
-		$response = new WikiaResponse('json');
-		$controller->setResponse($response);
-
-		$this->mockClassWithMethods('LyricFindTrackingService', array(
-			'track' => $trackResult
-		));
+		$this->mockClassWithMethods('LyricFindTrackingService', ['track' => $trackResult]);
 
 		$controller->track();
 		$this->assertEquals($responseCode, $controller->getResponse()->getCode(), 'HTTP response code should match the expected value');
 	}
 
 	public function trackDataProvider() {
-		return array(
-			array(
+		return [
+			[
 				'pageId' => 1,
 				'trackResult' => true,
 				'responseCode' => 204
-			),
-			array(
+			],
+			[
 				'pageId' => 1,
 				'trackResult' => false,
 				'responseCode' => 400
-			),
-			array(
+			],
+			[
 				'pageId' => 0,
 				'trackResult' => true,
 				'responseCode' => 400
-			),
-		);
+			],
+		];
 	}
 }
