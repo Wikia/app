@@ -17,6 +17,7 @@ class LyricFindController extends WikiaController {
 			$res = false;
 		}
 
+		$this->response->setFormat('json');
 		$this->response->setCode( $res ? self::RESPONSE_OK : self::RESPONSE_ERR /* bad request */ );
 	}
 }
