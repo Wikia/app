@@ -195,9 +195,11 @@ class WAMApiController extends WikiaApiController {
 
 	private function prepareAdmins($admins, $limit) {
 		// WikiService adds to admins array wiki's founder, which sometimes for older wiki's doesn't exists so wrong data are recieved
-		if(empty($admins[0]['userId'])) unset($admins[0]);
-		if(count($admins) > $limit) {
-			$admins = array_slice($admins, 0, $limit);
+		if( empty( $admins[0]['userId'] ) ) {
+			unset( $admins[0] );
+		}
+		if( count($admins) > $limit ) {
+			$admins = array_slice( $admins, 0, $limit );
 		}
 		return $admins;
 	}
