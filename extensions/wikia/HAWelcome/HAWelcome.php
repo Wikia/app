@@ -1,585 +1,892 @@
 <?php
+
 /**
- * Sends a welcome message to users after their first edits.
+ * HAWelcomeJob -- Welcome user after first edit
  *
- * @package Wikia\extensions\HAWelcome
+ * @file
+ * @ingroup JobQueue
  *
- * @version 1009
- *
- * @author Krzysztof 'Eloy' Krzyżaniak <eloy@wikia-inc.com>
- * @author Maciej 'Marooned' Błaszkowski <marooned@wikia-inc.com>
- * @author Michał 'Mix' Roszka <mix@wikia-inc.com>
- *
- * @see https://github.com/Wikia/app/tree/dev/extensions/wikia/HAWelcome/
+ * @copyright Copyright © Krzysztof Krzyżaniak for Wikia Inc.
+ * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+ * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
+ * @date 2009-02-02
+ * @version 0.5
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
-// Terminate the script when called out of MediaWiki context.
+
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo  'Invalid entry point. '
-        . 'This code is a MediaWiki extension and is not meant to be executed standalone. '
-        . 'Try vising the main page: /index.php or running a different script.';
-    exit( 1 );
+	echo "This is a MediaWiki extension and cannot be used standalone.\n";
+	exit( 1 );
 }
-/**
- * @global Array The list of extension credits.
- * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionCredits
- */
+
 $wgExtensionCredits['other'][] = array(
-    'path'              => __FILE__,
-    'name'              => 'HAWelcome',
-    'description'       => 'Sends a welcome message to users after their first edits.',
-    'descriptionmsg'    => 'hawelcome-description',
-    'version'           => 1009,
-    'author'            => array(
-        "Krzysztof 'Eloy' Krzyżaniak <eloy@wikia-inc.com>",
-        "Maciej 'Marooned' Błaszkowski <marooned@wikia-inc.com>",
-        "Michał 'Mix' Roszka <mix@wikia-inc.com>"
-    ),
-    'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/HAWelcome/'
+	'name' => 'HAWelcome',
+	'version' => '0.6',
+	'author' => array('Krzysztof Krzyżaniak', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
+	'description' => 'Highly Automated Welcome Tool',
 );
+
+
 /**
- * @global Array The list of message files.
- * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionMessagesFiles
+ * used hooks
  */
-$wgExtensionMessagesFiles[ 'HAWelcome' ] = __DIR__ . '/HAWelcome.i18n.php';
+$wgHooks[ "RevisionInsertComplete" ][]	= "HAWelcomeJob::revisionInsertComplete";
+
 /**
- * @global Array The list of hooks.
- * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
- * @see http://www.mediawiki.org/wiki/Manual:Hooks/RevisionInsertComplete
+ * register job class
  */
-$wgHooks['RevisionInsertComplete'][] = 'HAWelcomeJob::onRevisionInsertComplete';
+$wgJobClasses[ "HAWelcome" ] = "HAWelcomeJob";
+
 /**
- * @type String Command name for the job aka type of the job.
- * @see http://www.mediawiki.org/wiki/Manual:RunJobs.php
+ * used messages
  */
-define( 'HAWELCOME_JOB_IDENTIFIER', 'HAWelcome' );
+$wgExtensionMessagesFiles[ "HAWelcome" ] = dirname(__FILE__) . '/HAWelcome.i18n.php';
+
 /**
- * @global Array Map jobs to their handling classes.
- * @see http://www.mediawiki.org/wiki/Manual:$wgJobClasses
+ * register task
  */
-$wgJobClasses[HAWELCOME_JOB_IDENTIFIER] = 'HAWelcomeJob';
-/**
- * The class implementing the feature and handling its job.
- *
- * @see http://www.mediawiki.org/wiki/Manual:Job_queue/For_developers
- * @since MediaWiki 1.19.4
- * @internal
- */
+$wgWikiaBatchTasks[ "welcome" ] = "HAWelcomeTask";
+
 class HAWelcomeJob extends Job {
-    /** @type String The default user to send welcome messages. */
-    const DEFAULT_WELCOMER = 'Wikia';
-    /**
-     * Default switches to enable features, explained below.
-     *
-     * message-anon - if enabled, anonymous users will get a welcome message
-     * message-user - if enabled, registered users will get a welcome message
-     * page-user    - if enabled, a user profile page will be created, too (if not exists)
-     *
-     * @type Array
-     */
-    public $aSwitches = array( 'message-anon' => false, 'message-user' => false, 'page-user' => false );
-    /** @type Integer The id of the recipient. */
-    public $iRecipientId;
-    /** @type String The name of the recipient. */
-    public $sRecipientName;
-    /** @type Object User The recipient object. */
-    public $oRecipient;
-    /** @type Object User The sender object. */
-    public $oSender;
-    /** @type Integer Flags for WikiPage::doEdit(). */
-    public $iFlags = 0;
-    /** @type Boolean Show PHP Notices. */
-    public $bShowNotices = false;
-    /**
-     * Enqueues a job based on a few simple preliminary checks.
-     *
-     * Called after a revision is inserted into the database.
-     *
-     * @param $oRevision Object The Revision object.
-     * @param $sData String URL to external object.
-     * @param $sFlags String Flags for this revision.
-     * @return Boolean True so the calling method would continue.
-     * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
-     * @see http://www.mediawiki.org/wiki/Manual:Hooks/RevisionInsertComplete
-     * @since MediaWiki 1.19.4
-     * @internal
-     */
-    public static function onRevisionInsertComplete( &$oRevision, $sData, $sFlags ) {
-        wfProfileIn( __METHOD__ );
-        /** @global Boolean Show PHP Notices. Set via WikiFactory. */
-        global $wgHAWelcomeNotices;
-        /** @type Interget Store the original error reporting level. */
-        $iErrorReporting = error_reporting();
-        error_reporting( E_ALL );
-        // Abort if the feature has been disabled by the admin of the wiki.
-        if ( in_array( trim( wfMessage( 'welcome-user' )->text() ), array( '@disabled', '-' ) ) ) {
-            if ( !empty( $wgHAWelcomeNotices ) ) {
-                trigger_error( sprintf( '%s Terminated. The feature has been disabled.', __METHOD__ ) , E_USER_NOTICE );
-            }
-            // Restore the original error reporting level.
-            error_reporting( $iErrorReporting );
-            wfProfileOut( __METHOD__ );
-            return true;
-        }
-        /**
-         * @global Boolean True in scripts that may be run from the command line.
-         * @see http://www.mediawiki.org/wiki/Manual:$wgCommandLineMode
-         */
-        global $wgCommandLineMode;
-        // Ignore revisions created in the command-line mode. Otherwise HAWelcome::run() could
-        // invoke HAWelcome::onRevisionInsertComplete(), too which may cause an infinite loop
-        // and serious performance problems.
-        if ( !$wgCommandLineMode ) {
-            /**
-             * @global Object MemcachedPhpBagOStuff A pure-PHP memcached client instance.
-             * @see https://doc.wikimedia.org/mediawiki-core/master/php/html/classMemcachedPhpBagOStuff.html
-             */
-            global $wgMemc;
-            // Handle an edit made by an anonymous contributor.
-            if ( ! $oRevision->getRawUser() ) {
-                if ( !empty( $wgHAWelcomeNotices ) ) {
-                    trigger_error( sprintf( '%s An edit made by an anonymous contributor.', __METHOD__ ) , E_USER_NOTICE );
-                }
-                // Abort if the anonymous contributor has been welcomed recently.
-                if ( $wgMemc->get( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ) ) ) {
-                    if ( !empty( $wgHAWelcomeNotices ) ) {
-                        trigger_error( sprintf( '%s Done. The anonymous contributor has been welcomed recently.', __METHOD__ ) , E_USER_NOTICE );
-                    }
-                    // Restore the original error reporting level.
-                    error_reporting( $iErrorReporting );
-                    wfProfileOut( __METHOD__ );
-                    return true;
-                }
-                // Mark that we have handled this particular anonymous contributor to prevent
-                // creating more jobs. Improves performance if the contributor is editing massively.
-                $wgMemc->set( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ), true, 600 ); // for ten minutes ( 60 * 10 )
-            // Handle an edit made by a registered contributor.
-            } else {
-                if ( !empty( $wgHAWelcomeNotices ) ) {
-                    trigger_error( sprintf( '%s An edit made by a registered contributor.', __METHOD__ ) , E_USER_NOTICE );
-                }
-                /**
-                 * @global Object User The state of the user viewing/using the site
-                 * @see http://www.mediawiki.org/wiki/Manual:$wgUser
-                 */
-                global $wgUser;
-                // Abort if the registered contributor has made edits before this one.
-                if ( 1 < $wgUser->getEditCountLocal() ) {
-                    // Check the extension settings...
-                    /** @type String The user to become the welcomer. */
-                    $sSender = trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() );
-                    if ( in_array( $sSender, array( '@latest', '@sysop' ) ) ) {
-                        if ( !empty( $wgHAWelcomeNotices ) ) {
-                            trigger_error( sprintf( '%s Taking the chance to update admin activity.', __METHOD__ ) , E_USER_NOTICE );
+
+	private
+		$mUserId,
+		$mUserName,
+		$mUserIP,
+		$mUser,
+		$mAnon,
+		$mSysop;
+
+	const WELCOMEUSER = "Wikia";
+
+	/**
+	 * Construct a job
+	 *
+	 * @param Title $title The title linked to
+	 * @param array $params Job parameters (table, start and end page_ids)
+	 * @param integer $id job_id
+	 */
+	public function __construct( $title, $params, $id = 0 ) {
+		parent::__construct( "HAWelcome", $title, $params, $id );
+
+		$this->mUserId   = $params[ "user_id" ];
+		$this->mUserIP   = $params[ "user_ip" ];
+		$this->mUserName = $params[ "user_name" ];
+		$this->mAnon     = (bool )$params[ "is_anon" ];
+		$this->mSysop    = false;
+
+		if( $this->mAnon ) {
+			$this->mUser = User::newFromName( $this->mUserIP, false );
+		}
+		else {
+			$this->mUser = User::newFromId( $this->mUserId );
+		}
+
+		/**
+		 * fallback
+		 */
+		if( ! $this->mUser ) {
+			$this->mUser = User::newFromName( $this->mUserName );
+		}
+	}
+
+	/**
+	 * main entry point
+	 *
+	 * @access public
+	 */
+	public function run() {
+		global $wgUser, $wgTitle, $wgErrorLog;
+
+		wfProfileIn( __METHOD__ );
+
+		$oldValue = $wgErrorLog;
+		$wgErrorLog = true;
+
+		/**
+		 * overwrite $wgUser for ~~~~ expanding
+		 */
+		$sysop = trim( wfMsgForContent( "welcome-user" ) );
+		if( !in_array( $sysop, array( "@disabled", "-" ) ) ) {
+			$tmpUser = $wgUser;
+			$wgUser  = User::newFromName( self::WELCOMEUSER );
+
+			$flags = 0;
+			$bot_message = trim( wfMsgForContent( "welcome-bot" ) );
+			if( ($bot_message == '@bot') || ($wgUser && $wgUser->isAllowed( 'bot' )) ) {
+				$flags = EDIT_FORCE_BOT;
+			}
+			wfDebug( __METHOD__ . "-user: " . $this->mUser->getName() );
+
+			if( $this->mUser && $this->mUser->getName() !== self::WELCOMEUSER ) {
+				/**
+				 * check again if talk page exists
+				 */
+				$talkPage  = $this->mUser->getUserPage()->getTalkPage();
+				wfDebug( __METHOD__ . "-talk: " . $talkPage->getFullUrl() );
+
+				if( $talkPage ) {
+					$this->mSysop = $this->getLastSysop();
+					$gEG = $this->mSysop->getEffectiveGroups();
+					$isSysop = in_array('sysop', $gEG);
+					$isStaff = in_array('staff', $gEG);
+					unset($gEG);
+					$tmpTitle     = $wgTitle;
+					$sysopPage    = $this->mSysop->getUserPage()->getTalkPage();
+					$signature    = $this->expandSig();
+
+					$wgTitle     = $talkPage;
+					$welcomeMsg  = false;
+					$talkArticle = new Article( $talkPage, 0 );
+
+					if( !self::isPosted($talkArticle, $this->mUser) ) {
+						if( $this->mAnon ) {
+							if( $this->isEnabled( "message-anon" ) ) {
+								if( $isStaff && !$isSysop ) {
+									$key = $this->getMessageKey("anon-staff");
+								} else {
+									$key = $this->getMessageKey("anon");
+								}
+								$welcomeMsg = wfMsgNoTrans( $key,
+								array(
+									$this->getPrefixedText(),
+									$sysopPage->getPrefixedText(),
+									$signature,
+									wfEscapeWikiText( $this->mUser->getName() ),
+								));
+							}
+							else {
+								wfDebug( __METHOD__ . "-talk: message-anon disabled" );
+							}
+						}
+						else {
+							/**
+							 * now create user page (if not exists of course)
+							 */
+							if( $this->isEnabled( "page-user" ) ) {
+								$userPage = $this->mUser->getUserPage();
+								if( $userPage ) {
+									$wgTitle = $userPage;
+									$userArticle = new Article( $userPage, 0 );
+									wfDebug( __METHOD__ ."-userpage: " . $userPage->getFullUrl() );
+									if( ! $userArticle->exists() ) {
+										$pageMsg = wfMsgForContentNoTrans( 'welcome-user-page', $this->mUser->getName() );
+										$userArticle->doEdit( $pageMsg, false, $flags );
+									}
+								}
+								else {
+									wfDebug( __METHOD__ . "-page: user page already exists." );
+								}
+							}
+							else {
+								wfDebug( __METHOD__ . "-page: page-user disabled" );
+							}
+
+							if( $this->isEnabled( "message-user" ) ) {
+								if( $isStaff && !$isSysop ) {
+									$key = $this->getMessageKey("user-staff");
+								}
+								else {
+									$key = $this->getMessageKey("user");
+								}
+								$welcomeMsg = wfMsgNoTrans( $key,
+								array(
+									$this->getPrefixedText(),
+									$sysopPage->getPrefixedText(),
+									$signature,
+									wfEscapeWikiText( $this->mUser->getName() ),
+								));
+							}
+							else {
+								wfDebug( __METHOD__ . "-talk: message-user disabled" );
+							}
+						}
+						if( $welcomeMsg ) {
+							$wgTitle = $talkPage; /** is it necessary there? **/
+							//we posting it on talk page even when we have message wall
+
+							//hack for notification problem
+							global $wgCityId, $wgServer;
+
+							$wgServer = WikiFactory::getVarValueByName('wgServer', $wgCityId );
+							$this->doPost($talkArticle, $flags,  wfMsgForContent( "welcome-message-log" ), $welcomeMsg, $wgUser,  $this->mUser, $this->mSysop);
+						}
+					}
+					$wgTitle = $tmpTitle;
+				}
+			}
+
+			$wgUser = $tmpUser;
+			$wgErrorLog = $oldValue;
+		}
+		else {
+			wfDebug( __METHOD__ . "-disabled: " . $sysop );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
+
+
+	/**
+	 *
+	 * create message for talk page / wall
+	 *
+	 * @param unknown_type $postFix
+	 */
+
+	public function getMessageKey($postFix) {
+		global $wgEnableWallExt;
+		$prefix = "welcome-message-";
+		if(!empty($wgEnableWallExt)) {
+			$prefix .= 'wall-';
+		}
+		return $prefix.$postFix;
+	}
+
+
+	/**
+	 *
+	 * Post message on talk page or wall
+	 *
+	 * @access public
+	 *
+	 * @return Status
+	 *
+	 */
+
+	public function doPost( $talkArticle, $flags, $title, $message, $from, $to, $admin = false ) {
+		global $wgEnableWallExt, $wgMemc;
+
+		$key = wfMemcKey( "HAWelcome-isPosted", $to->getName());
+
+		if(!empty($wgEnableWallExt)) {
+			$wallMessage = F::build('WallMessage', array($message, $to->getName(), $from, $title, false, array(), false, false), 'buildNewMessageAndPost');
+			if( $wallMessage === false ) {
+				return false;
+			}
+			if($admin) {
+				$wallMessage->setPostedAsBot($admin);
+				$wallMessage->sendNotificationAboutLastRev();
+			}
+		} else {
+			$talkArticle->doEdit( $message, wfMsgForContent( "welcome-message-log" ), $flags );
+		}
+
+		$wgMemc->set( $key, true );
+		return false;
+	}
+
+
+	public static function isPosted( $talk, $user ) {
+		global $wgMemc, $wgEnableWallExt;
+
+		$key = wfMemcKey( "HAWelcome-isPosted", $user->getName());
+
+		$isPosted = $wgMemc->get( $key, false );
+		if($isPosted) {
+			return true;
+		}
+
+		if(!empty($wgEnableWallExt)) {
+			if(WallHelper::haveMsg($user)) {
+				$wgMemc->set( $key, true );
+				return true;
+			}
+		}
+
+		$talkExists = $talk->exists();
+		$wgMemc->set( $key, $talkExists );
+
+		return $talkExists;
+	}
+
+	/**
+	 * get last active sysop for this wiki, use local user database
+	 *
+	 * @access public
+	 *
+	 * @return User class instance
+	 */
+	public function getLastSysop() {
+		global $wgCityId, $wgMemc, $wgLanguageCode;
+
+		wfProfileIn( __METHOD__ );
+
+		/**
+		 * maybe already loaded?
+		 */
+		if( ! $this->mSysop ) {
+
+			$sysop = trim( wfMsgForContent( "welcome-user" ) );
+			if( !in_array( $sysop, array( "@disabled", "-" ) ) ) {
+
+				if( in_array( $sysop, array( "@latest", "@sysop" ) ) ) {
+					/**
+					 * first: check memcache, maybe we have already stored id of sysop
+					 */
+					$sysopId = $wgMemc->get( wfMemcKey( "last-sysop-id" ) );
+					if( $sysopId ) {
+						wfDebug( __METHOD__ . "-sysop: Have sysop id from memcached: {$sysopId}" );
+						$this->mSysop = User::newFromId( $sysopId );
+					}
+					else {
+						/**
+						 * second: check database, could be expensive for database
+						 */
+						$dbr = wfGetDB( DB_SLAVE );
+
+						/**
+						 * prior to September 20, 2012:
+						 * get all users who are sysops or staff or helpers
+						 * but not bots
+						 *
+						 * $groups = ($sysop !== "@sysop")
+						 *	? array( "ug_group" => array( "staff", "sysop", "helper", "bot" ) )
+						 *	: array( "ug_group" => array( "sysop", "bot" ) );
+						 *
+						 * from September 20, 2012 on:
+						 * BugId:41817: get all users who are sysops but not bots or staff or helpers
+						 * (fallback to a staff member by calling Wikia::staffForLang()).
+						 */
+						$groups = array( "ug_group" => array( "sysop", "bot" ) );
+
+						$bots   = array();
+						$admins = array();
+
+						$res = $dbr->select(
+							array( "user_groups" ),
+							array( "ug_user, ug_group" ),
+							$dbr->makeList( $groups, LIST_OR ),
+							__METHOD__
+						);
+						while( $row = $dbr->fetchObject( $res ) ) {
+							if( $row->ug_group == "bot" ) {
+								$bots[] = $row->ug_user;
+							} else {
+								$admins[] = $row->ug_user;
+							}
+						}
+						$dbr->freeResult( $res );
+
+						/**
+						 * remove bots from admins
+						 */
+						$admins = array( "rev_user" => array_unique( array_diff( $admins, $bots ) ) );
+
+						// fetch most recently active admin that edited within the last 60 days
+						$user = $dbr->selectField(
+							"revision",
+							"rev_user",
+							array(
+								$dbr->makeList( $admins, LIST_OR ),
+								"rev_timestamp > " . $dbr->addQuotes(  $dbr->timestamp( time() - 5184000 ) ) // 60 days ago (24*60*60*60)
+							),
+							__METHOD__,
+							array( "ORDER BY" => "rev_timestamp DESC", "DISTINCT" )
+						);
+						wfDebug( __METHOD__ . "-query: " . $dbr->lastQuery() );
+
+						/** if there are no active wiki admins, fall back to default staffers per language
+						* Note: We used to first go to any active staff member first and then go to this method if still empty
+						* However, that was removed in revision 50184 per FB:25277
+						*/
+						if ( empty( $user ) ) {
+							$staffUser = Wikia::staffForLang( $wgLanguageCode );
+							if ($staffUser instanceof User) {
+								$user = $staffUser->getId();
+							}
+						}
+
+						$this->mSysop = User::newFromId( $user );
+
+						// BugId:41817 - if ( 1 == $user ) { notify Mix }
+						if ( 1 == $user ) {
+                                                        $oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
+							UserMailer::send(
+                                                                $oTo,
+								$oFrom,
+								'BugId:41817 Occurrence Report',
+								sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $user, true ) )
+							);
+						}
+						$wgMemc->set( wfMemcKey( "last-sysop-id" ), $user, 86400 );
+					}
+				}
+				else {
+					wfDebug( __METHOD__ . "-sysop: Hardcoded sysop: {$sysop}" );
+					$this->mSysop = User::newFromName( $sysop );
+				}
+			}
+
+			/**
+			 * fallback, if still user is uknown we use Wikia user
+			 */
+			if( $this->mSysop instanceof User && $this->mSysop->getId() ) {
+				wfDebug( __METHOD__ . "-sysop: Found sysop: " . $this->mSysop->getName() );
+			}
+			else {
+				$this->mSysop = Wikia::staffForLang( $wgLanguageCode );
+
+				// BugId:41817 - if ( 1 == $this->mSysop->getId() ) { notify Mix }
+				if ( 1 == $this->mSysop->getId() ) {
+                                        $oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
+					UserMailer::send(
+						$oTo,
+						$oFrom,
+						'BugId:41817 Occurrence Report',
+						sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $this->mSysop->getId(), true ) )
+					);
+				}
+
+				wfDebug( __METHOD__ . "-sysop: Fallback to hardcoded user: " . $this->mSysop->getName() );
+			}
+		}
+		wfProfileOut( __METHOD__ );
+
+		return $this->mSysop;
+	}
+
+	/**
+	 * revisionInsertComplete
+	 *
+	 * static method called as hook
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param Revision	$revision	revision object
+	 * @param string	$url		url to external object
+	 * @param string	$flags		flags for this revision
+	 *
+	 * @return true means process other hooks
+	 */
+	public static function revisionInsertComplete( &$revision, $url, $flags ) {
+		global $wgUser, $wgCityId, $wgCommandLineMode, $wgSharedDB,
+			$wgErrorLog, $wgMemc, $wgRequest;
+
+		wfProfileIn( __METHOD__ );
+
+		/**
+		 * Do not create task when DB is locked (rt#12229)
+		 * Do not create task when we are in $wgCommandLineMode
+		 */
+		$oldValue = $wgErrorLog;
+		$wgErrorLog = true;
+		if( !wfReadOnly() && ! $wgCommandLineMode ) {
+
+			/**
+			 * Revision has valid Title field but sometimes not filled
+			 */
+			$Title = $revision->getTitle();
+			if( !$Title ) {
+				$Title = Title::newFromId( $revision->getPage(), Title::GAID_FOR_UPDATE );
+				$revision->setTitle( $Title );
+			}
+
+			/**
+			 * get groups for user rt#12215
+			 */
+			$groups = $wgUser->getEffectiveGroups();
+			$invalid = array(
+				"bot" => true,
+				"bot-global" => true,
+				"staff" => true,
+				"helper" => true,
+				"sysop" => true,
+				"bureaucrat" => true,
+				"vstf" => true,
+			);
+			$canWelcome = true;
+			foreach( $groups as $group ) {
+				if( isset( $invalid[ $group ] ) && $invalid[ $group ] ) {
+					$canWelcome = false;
+					Wikia::log( __METHOD__, $wgUser->getId(), "Skip welcome, user is at least in group: " . $group );
+					break;
+				}
+			}
+
+			/**
+			 * Skip welcome if edit was made by a different user to the current user (i.e. User:Wikia) (BugID: 97835)
+			 */
+			if ( $wgUser->getId() !== $revision->getUser() ) {
+				$canWelcome = false;
+				Wikia::log( __METHOD__, $wgUser->getId(), "Skip welcome, current user ({$wgUser->getId()}) is different to revision author: " . $revision->getUser() );
+			}
+
+			/**
+			 * put possible welcomer into memcached, RT#14067
+			 */
+			if( $wgUser->getId() && self::isWelcomer( $wgUser ) ) {
+
+				// BugId:41817 - if ( 1 == $wgUser->getId() ) { notify Mix }
+				if ( 1 == $wgUser->getId() ) {
+                                        $oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
+					UserMailer::send(
+						$oTo,
+						$oFrom,
+						'BugId:41817 Occurrence Report',
+						sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $wgUser->getId(), true ) )
+					);
+				}
+
+				$wgMemc->set( wfMemcKey( "last-sysop-id" ), $wgUser->getId(), 86400 );
+				Wikia::log( __METHOD__, $wgUser->getId(), "Store possible welcomer in memcached" );
+			}
+
+			if( $Title && $canWelcome && !empty( $wgSharedDB ) ) {
+
+				Wikia::log( __METHOD__, "title", $Title->getFullURL() );
+
+				$welcomer = trim( wfMsgForContent( "welcome-user" ) );
+				Wikia::log( __METHOD__, "welcomer", $welcomer );
+
+				if( $welcomer !== "@disabled" && $welcomer !== "-" ) {
+
+					/**
+					 * check if talk page for wgUser exists
+					 *
+					 * @todo check editcount for user
+					 */
+					Wikia::log( __METHOD__, "user", $wgUser->getName() );
+					$talkPage = $wgUser->getUserPage()->getTalkPage();
+					if( $talkPage ) {
+						$talkArticle = new Article( $talkPage, 0 );
+						if( !self::isPosted( $talkArticle, $wgUser ) ) {
+							$welcomeJob = new HAWelcomeJob(
+								$Title,
+								array(
+									"is_anon"   => $wgUser->isAnon(),
+									"user_id"   => $wgUser->getId(),
+									"user_ip"   => $wgRequest->getIP(),
+									"user_name" => $wgUser->getName(),
+								)
+							);
+							$welcomeJob->insert();
+							Wikia::log( __METHOD__, "job" );
+
+							/**
+							 * inform task manager
+							 */
+							$Task = new HAWelcomeTask();
+							$taskId = $Task->createTask( array( "city_id" => $wgCityId ), TASK_QUEUED  );
+							Wikia::log( __METHOD__, "task", $taskId );
+						}
+						else {
+							Wikia::log( __METHOD__, "exists", sprintf( "Talk page for user %s already exits", $wgUser->getName() ) );
+						}
+					}
+				}
+				else {
+					Wikia::log( __METHOD__, "disabled" );
+				}
+			}
+		}
+		$wgErrorLog = $oldValue;
+		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
+
+
+	/**
+	 * expandSig -- hack, expand signature from message for sysop
+	 *
+	 * @access private
+	 */
+	private function expandSig( ) {
+
+		global $wgContLang, $wgUser;
+
+		wfProfileIn( __METHOD__ );
+
+		// get the welcomer
+		$this->mSysop = $this->getLastSysop();
+
+		// backup the current
+		$tmpUser = $wgUser;
+		// swap in the welcomer (why do we need to do this?)
+		$wgUser = $this->mSysop;
+
+		// figure out who/what this welcomer is
+		$gEG = $this->mSysop->getEffectiveGroups();
+		$isStaff = in_array('staff', $gEG);
+		$isSysop = in_array('sysop', $gEG);
+
+		// only build these once, since its used both cases
+		$SysopName = wfEscapeWikiText( $this->mSysop->getName() );
+		$userLink = sprintf(
+			'[[%s:%s|%s]]',
+			$wgContLang->getNsText(NS_USER),
+			$SysopName,
+			$SysopName
+			);
+
+		// in cases where user is both staff and sysop, use sysop mode
+		if(!$isStaff || $isSysop) {
+			$signature = sprintf(
+				"-- %s ([[%s:%s|%s]]) %s",
+				$userLink,
+				$wgContLang->getNsText(NS_USER_TALK),
+				$SysopName,
+				wfMsgForContent( "talkpagelinktext" ),
+				$wgContLang->timeanddate( wfTimestampNow( TS_MW ) )
+				);
+		} else {
+			// $1 = wiki link to user's user: page
+			// $2 = plain version of user's name (for future use)
+			$signature = wfMsgForContent('staffsig-text', $userLink, $SysopName);
+		}
+
+		// restore from backup
+		$wgUser = $tmpUser;
+
+		wfProfileOut( __METHOD__ );
+
+		return $signature;
+	}
+
+	/**
+	 * @access public
+	 *
+	 * @return Title instance of Title object
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
+
+	/**
+	 * @access private
+	 *
+	 * @return Title instance of Title object
+	 */
+	public function getPrefixedText() {
+
+		$prefixedText = $this->title->getPrefixedText();
+
+		wfRunHooks( 'HAWelcomeGetPrefixText' , array( &$prefixedText, $this->title ) ); //
+
+		return $prefixedText;
+	}
+
+
+	/**
+	 * check if some (or all) functionality is disabled/enabled
+	 *
+	 * @param String $what default false
+	 *
+	 * possible vaules for $what: page-user, message-anon, message-user
+	 *
+	 * @access public
+	 *
+	 * @return Bool disabled or not
+	 */
+	public function isEnabled( $what ) {
+
+		wfProfileIn( __METHOD__ );
+
+		$return = false;
+		$message = wfMsgForContent( "welcome-enabled" );
+		Wikia::log( __METHOD__, "enabled", $message );
+		if( in_array( $what, array( "page-user", "message-anon", "message-user" ) )
+			&& strpos( $message, $what  ) !== false ) {
+			$return	= true;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $return;
+	}
+
+	/**
+	 * check if user can welcome other users
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param User	$User	instance of User class
+	 *
+	 * @return boolean	status of operation
+	 */
+	static public function isWelcomer( &$User ) {
+
+		wfProfileIn( __METHOD__ );
+
+		$sysop  = trim( wfMsgForContent( "welcome-user" ) );
+		$groups = $User->getEffectiveGroups();
+		$result = false;
+
+		/**
+		 * bots can't welcome
+		 */
+		if( !in_array( "bot", $groups ) ) {
+                        global $wgMemc;
+                        $sysopId = $wgMemc->get( wfMemcKey( "last-sysop-id" ) );
+
+			if( $sysop === "@sysop" || !empty( $sysopId ) ) {
+				$result = in_array( "sysop", $groups ) ? true : false;
                         }
-                        // ... and take the opportunity to update admin activity variable.
-                        /** @type Array Implicit group memberships the user has. */
-                        $aGroups =  $wgUser->getEffectiveGroups();
-                        if ( in_array( 'sysop', $aGroups ) && ! in_array( 'bot' , $aGroups ) ) {
-                            if ( !empty( $wgHAWelcomeNotices ) ) {
-                                trigger_error( sprintf( '%s Updating admin activity.', __METHOD__ ) , E_USER_NOTICE );
-                            }
-                            $wgMemc->set( wfMemcKey( 'last-sysop-id' ),  $wgUser->getId() );
-                        }
-                    }
-                    if ( !empty( $wgHAWelcomeNotices ) ) {
-                        trigger_error( sprintf( '%s Done. The registered contributor has already made edits.', __METHOD__ ) , E_USER_NOTICE );
-                    }
-                    // Restore the original error reporting level.
-                    error_reporting( $iErrorReporting );
-                    wfProfileOut( __METHOD__ );
-                    return true;
-                }
-            }
-            /** @type Object Title Title associated with the revision */
-            $oTitle = $oRevision->getTitle();
-            // Sometimes, for some reason or other, the Revision object
-            // does not contain the associated Title object. It has to be
-            // recreated based on the associated Page object.
-            if ( !$oTitle ) {
-				$oTitle = Title::newFromId( $oRevision->getPage(), Title::GAID_FOR_UPDATE );
-                trigger_error( sprintf(
-                    '%s Recreated Title for page %d, revision %d, URL %s',
-                    __METHOD__, $oRevision->getPage(), $oRevision->getId(), $oTitle->getFullURL()
-                ), E_USER_WARNING );
-            }
-            /** @type Array Parameters for the job */
-            $aParams = array(
-                // The id of the user to be welcome (0 if anon).
-                'iUserId' => $oRevision->getRawUser(),
-                // The name of the user to be welcome (IP if anon).
-                'sUserName' => $oRevision->getRawUserText()
-            );
-            if ( !empty( $wgHAWelcomeNotices ) ) {
-                trigger_error( sprintf( '%s Scheduling a job.', __METHOD__ ) , E_USER_NOTICE );
-            }
-            /** @type Object HAWelcomeJob The job to be enqueued. */
-            $oJob = new self( $oTitle, $aParams );
-            // Enqueue the job.
-            $oJob->insert();
-        }
-        if ( !empty( $wgHAWelcomeNotices ) ) {
-            trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );
-        }
-        // Restore the original error reporting level.
-        error_reporting( $iErrorReporting );
-        wfProfileOut( __METHOD__ );
-        return true;
-    }
-    /**
-     * The constructor.
-     *
-     * Remember, that the constructor is called while scheduling the
-     * job in an HTTP request. For performance reasons it should do
-     * as little as possible. Heavy code goes to the run() method.
-     *
-     * @param $oTitle Object The Title associated with the Job.
-     * @param $aParams Array The Job parameters.
-     * @param $iId Integer The Job identifier.
-     * @since MediaWiki 1.19.4
-     * @internal
-     */
-    public function __construct( $oTitle, $aParams, $iId = 0 ) {
-        wfProfileIn( __METHOD__ );
-        // Convert params to object properties (easier access).
-        $this->iRecipientId = $aParams['iUserId'];
-        $this->sRecipientName = $aParams['sUserName'];
-        /** @global Boolean Show PHP Notices. Set via WikiFactory. */
-        global $wgHAWelcomeNotices;
-        $this->bShowNotices = !empty( $wgHAWelcomeNotices );
-        parent::__construct( HAWELCOME_JOB_IDENTIFIER, $oTitle, $aParams, $iId );
-        wfProfileOut( __METHOD__ );
-    }
-    /**
-     * The main method called by the job executor.
-     *
-     * The heavy code goes here.
-     *
-     * @return Boolean Indicated whether the job has been completed successfully.
-     * @since MediaWiki 1.19.4
-     * @internal
-     */
-    public function run() {
-        wfProfileIn( __METHOD__ );
-        /** @type Interget Store the original error reporting level. */
-        $iErrorReporting = error_reporting();
-        error_reporting( E_ALL );
-        // Complete the job if the feature has been disabled by the admin of the wiki.
-        if ( in_array( trim( wfMessage( 'welcome-user' )->text() ), array( '@disabled', '-' ) ) ) {
-            if ( $this->bShowNotices ) {
-                trigger_error( sprintf( '%s Terminated. The feature has been disabled.', __METHOD__ ) , E_USER_NOTICE );
-            }
-            error_reporting( $iErrorReporting );
-            wfProfileOut( __METHOD__ );
-            return true;
-        }
-        // Create objects related to the recipient of the welcome message.
-        //
-        // A User object.
-        $this->oRecipient = User::newFromId( $this->iRecipientId );
-        // User objects for anonymous contributors don't have the name set.
-        if ( ! $this->iRecipientId ) {
-            $this->oRecipient->setName( $this->sRecipientName );
-        }
-        // A TalkPage object.
-        $this->oRecipientTalkPage = new Article( $this->oRecipient->getUserPage()->getTalkPage() );
-        /**
-         * @global Boolean Indicated whether the Message Wall extension is enabled.
-         */
-        global $wgEnableWallExt;
-        $this->bMessageWallExt = ! empty( $wgEnableWallExt );
-        /** @type String The user-level configuration of the feature. */
-        $sSwitches = wfMessage( 'welcome-enabled' )->text();
-        // Override the default switches with user's values.
-        foreach ( $this->aSwitches as $sSwitch => $bValue ) {
-            if ( false !== strpos( $sSwitches, $sSwitch ) ) {
-                $this->aSwitches[$sSwitch] = true;
-            }
-        }
-        // Refresh the sender data.
-        $this->setSender();
-        // If possible, mark edits as if they were made by a bot.
-        if ( $this->oSender->isAllowed( 'bot' ) || '@bot' == trim( wfMessage( 'welcome-bot' )->text() ) ) {
-            if ( $this->bShowNotices ) {
-                trigger_error( sprintf( '%s All edits will be marked as if they were made by a bot.', __METHOD__ ) , E_USER_NOTICE );
-            }
-            $this->iFlags = EDIT_FORCE_BOT;
-        }
-        // Start: anonymous users block
-        if ( ! $this->iRecipientId && $this->aSwitches['message-anon'] ) {
-            if ( $this->bShowNotices ) {
-                trigger_error( sprintf( '%s Block of code for an anonymous contributor.', __METHOD__ ) , E_USER_NOTICE );
-            }
-            if (
-                // The Message Wall extension is enabled and user's wall is empty or ...
-                ( $this->bMessageWallExt && ! WallHelper::haveMsg( $this->oRecipient ) )
-                // ... or the Message Wall extension is disabled and recipient's Talk Page does not exist
-                || ( !$this->bMessageWallExt && !$this->oRecipientTalkPage->exists() )
-            ) {
-                $this->setMessage();
-                $this->sendMessage();
-            }
-        // End: anonymous users block
-        // Start: registered users block
-        } else if ( $this->iRecipientId ) {
-            if ( $this->bShowNotices ) {
-                trigger_error( sprintf( '%s Block of code for a registered contributor.', __METHOD__ ) , E_USER_NOTICE );
-            }
-            // If configured so, send a welcome message.
-            if ( $this->aSwitches['message-user'] ) {
-                $this->setMessage();
-                $this->sendMessage();
-            }
-            // If configured so, create a user profile page, if not exists.
-            if ( $this->aSwitches['page-user'] ) {
-                if ( $this->bShowNotices ) {
-                    trigger_error( sprintf( '%s Attempting to create a user profile page.', __METHOD__ ) , E_USER_NOTICE );
-                }
-                /** @type Object Article Recipient's profile page. */
-                $oRecipientProfile = new Article( $this->oRecipient->getUserPage() );
-                if ( ! $oRecipientProfile->exists() ) {
-                    if ( $this->bShowNotices ) {
-                        trigger_error( sprintf( '%s The user profile page already exists.', __METHOD__ ) , E_USER_NOTICE );
-                    }
-                    $oRecipientProfile->doEdit( wfMessage( 'welcome-user-page', $this->sRecipientName )->inContentLanguage()->plain(), false, $this->iFlags );
-                }
-            }
-        // End: registered users block
-        }
-        if ( $this->bShowNotices ) {
-            trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );
-        }
-        // Restore the original error reporting level.
-        error_reporting( $iErrorReporting );
-        wfProfileOut( __METHOD__ );
-        return true;
-    }
-    /**
-     * Sends the message to the recipient.
-     *
-     * @since MediaWiki 1.19.4
-     * @internal
-     */
-    public function sendMessage() {
-        wfProfileIn( __METHOD__ );
-        if ( $this->bShowNotices ) {
-            trigger_error( sprintf( '%s Start.', __METHOD__ ) , E_USER_NOTICE );
-        }
-        // Post a message onto a message wall if enabled.
-        if ( $this->bMessageWallExt ) {
-            if ( $this->bShowNotices ) {
-                trigger_error( sprintf( '%s Message Wall enabled.', __METHOD__ ) , E_USER_NOTICE );
-            }
-            // See: extensions/wikia/Wall/WallMessage.class.php
-            /** @type Mixed|Boolean The WallMessage object or logical false. */
-            $mWallMessage = F::build(
-                'WallMessage',
-                array(
-                    $this->sMessage, $this->sRecipientName, $this->oSender,
-                    wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
-                ),
-                'buildNewMessageAndPost'
-            );
-            // Moved from the previous implementation. The relevant code
-            // of the Wall extension has - as expected - no documentation
-            // whatsoever.
-            if ( $mWallMessage ) {
-                $mWallMessage->setPostedAsBot( $this->oSender );
-                $mWallMessage->sendNotificationAboutLastRev();
-            }
-        // Post a message onto a regular talk page.
-        } else {
-            if ( $this->bShowNotices ) {
-                trigger_error( sprintf( '%s Message Wall disabled.', __METHOD__ ) , E_USER_NOTICE );
-            }
-            /** @global Object User The user who runs the script. */
-            global $wgUser;
-            /** @type Object User Store the original $wgUser for a moment. */
-            $tmp = $wgUser;
-            // Replace the current active user object with the sender object for a moment.
-            $wgUser = $this->oSender;
-            // Prepend the message with the existing content of the talk page.
-            /** @type String The contents for the edit. */
-            $sMessage = ( $this->oRecipientTalkPage->exists() )
-                ? $this->oRecipientTalkPage->getContent() . PHP_EOL . $this->sMessage
-                : $this->sMessage;
-            // Do the edit.
-            $this->oRecipientTalkPage->doEdit( $sMessage, wfMsg( 'welcome-message-log' ), $this->iFlags );
-            // Restore the original active user object.
-            $wgUser = $tmp;
-        }
-        if ( $this->bShowNotices ) {
-            trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );
-        }
-        wfProfileOut( __METHOD__ );
-    }
-    /**
-     * Determines the contents of the welcome message.
-     *
-     * @since MediaWiki 1.19.4
-     * @internal
-     */
-    public function setMessage() {
-        wfProfileIn( __METHOD__ );
-        if ( $this->bShowNotices ) {
-            trigger_error( sprintf( '%s Start.', __METHOD__ ) , E_USER_NOTICE );
-        }
-        /** @type String The key for the welcome message. */
-        $sMessageKey = 'welcome-message-';
-        //Determine the proper key
-        //
-        // Is Message Wall enabled?
-        $sMessageKey  .= $this->bMessageWallExt
-            ? 'wall-'  : '';
-        // Is recipient a registered user?
-        $sMessageKey .= $this->iRecipientId
-            ? 'user'  : 'anon';
-        // Is sender a staff member?
-        $sMessageKey .= in_array( 'staff', $this->oSender->getEffectiveGroups() )
-            ? '-staff' : '';
-        if ( $this->bShowNotices ) {
-            trigger_error( sprintf( '%s Message key is %s.', __METHOD__, $sMessageKey ) , E_USER_NOTICE );
-        }
-        /** @type String The title of the page the recipient contributed to, for display. */
-        $sPrefixedText = $this->title->getPrefixedText();
-        // Article Comments and Message Wall hook up to this event.
-        wfRunHooks( 'HAWelcomeGetPrefixText' , array( &$sPrefixedText, $this->title ) );
-        // Put the contents of the welcome message together.
-        $this->sMessage = wfMsgNoTrans(
-            $sMessageKey,
-            array(
-                $sPrefixedText,
-                $this->oSender->getUserPage()->getTalkPage()->getPrefixedText(),
-                '~~~~',
-                wfEscapeWikiText( $this->sRecipientName )
-            )
-        );
-        if ( $this->bShowNotices ) {
-            trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );
-        }
-        wfProfileOut( __METHOD__ );
-    }
-    /**
-     * Determines the sender of the welcome message.
-     *
-     * @since MediaWiki 1.19.4
-     * @internal
-     */
-    public function setSender() {
-        wfProfileIn( __METHOD__ );
-        if ( $this->bShowNotices ) {
-            trigger_error( sprintf( '%s Start.', __METHOD__ ) , E_USER_NOTICE );
-        }
-        /** @type String Get the user-level setting. */
-        $sSender = trim( wfMessage( 'welcome-user' )->inContentLanguage() );
-        if ( $this->bShowNotices ) {
-            trigger_error( sprintf( '%s The user level setting is: %s.', __METHOD__, $sSender ) , E_USER_NOTICE );
-        }
-        // Check for known values indicating that the most recently active admin has to be the sender.
-        if ( in_array( $sSender, array( '@latest', '@sysop' ) ) ) {
-            /**
-             * @global Object MemcachedPhpBagOStuff A pure-PHP memcached client instance.
-             * @see https://doc.wikimedia.org/mediawiki-core/master/php/html/classMemcachedPhpBagOStuff.html
-             */
-            global $wgMemc;
-            /** @type Integer The cached user id of the most recently active admin. */
-            $iSender = (int) $wgMemc->get( wfMemcKey( 'last-sysop-id' ) );
-            // No cached value.
-            if ( ! $iSender ) {
-                if ( $this->bShowNotices ) {
-                    trigger_error( sprintf( '%s No cached value. Querying the database.', __METHOD__ ) , E_USER_NOTICE );
-                }
-                // Fetch the list of users who are sysops and/or bots.
-                /** @type Object DatabaseBase The database object. */
-                $oDB = wfGetDB( DB_SLAVE );
-                /** @type Object ResultWrapper */
-                $oResult = $oDB->select(
-                    array( 'user_groups' ),
-                    array( 'ug_user', 'ug_group' ),
-                    $oDB->makeList( array( 'ug_group' => array( 'sysop', 'bot' ) ), LIST_OR ),
-                    __METHOD__
-                );
-                /** @type Array Placeholder, helps to separate bots from sysops. */
-                $aUsers = array( 'bot' => array(), 'sysop' => array() );
-                // Classify the users as sysops or bots.
-                while( $oRow = $oDB->fetchObject( $oResult ) ) {
-                    array_push( $aUsers[$oRow->ug_group], $oRow->ug_user );
-                }
-                $oDB->freeResult( $oResult );
-                // Separate bots from sysops.
-                /** @type Array Welcomer candidates. */
-                $aAdmins = array( 'rev_user' => array_unique( array_diff( $aUsers['sysop'], $aUsers['bot'] ) ) );
-                // Fetch the id of the latest active sysop (within the last 60 days) or 0.
-                /** @type Integer The user id of the most recently active candidate. */
-                $iSender = (int) $oDB->selectField(
-                    'revision',
-                    'rev_user',
-                    array(
-                        $oDB->makeList( $aAdmins, LIST_OR ),
-                        'rev_timestamp > ' . $oDB->addQuotes( $oDB->timestamp( time() - 5184000 ) ) // 60 days ago (24*60*60*60)
-                    ),
-                    __METHOD__,
-                    array(
-                        'ORDER BY' => 'rev_timestamp DESC',
-                        'DISTINCT'
-                    )
-                );
-                // Cache the fetched value if non-zero.
-                if ( $iSender ) {
-                    if ( $this->bShowNotices ) {
-                        trigger_error( sprintf( '%s Caching a non-zero value from the db: %d.', __METHOD__, $iSender ) , E_USER_NOTICE );
-                    }
-                    $wgMemc->set( wfMemcKey( 'last-sysop-id' ), $iSender );
-                }
-            }
-            if ( $this->bShowNotices ) {
-                trigger_error( sprintf( '%s Attempting to create a user object from id %d.', __METHOD__, $iSender ) , E_USER_NOTICE );
-            }
-            // Create a User object.
-            /** @type Object User The sender for the welcome message. */
-            $oSender = User::newFromId( $iSender );
-        // If another value has been set, assume it is meant to be the name of the sender.
-        } else {
-            if ( $this->bShowNotices ) {
-                trigger_error( sprintf( '%s Attempting to create a user object from name %s.', __METHOD__, $sSender ) , E_USER_NOTICE );
-            }
-            // Create a User object.
-            /** @type Object User The sender for the welcome message. */
-            $oSender = User::newFromName( $sSender );
-        }
-        // Terminate, if a valid user object has been created.
-        if( $oSender instanceof User && $oSender->getId() ) {
-            if ( $this->bShowNotices ) {
-                trigger_error( sprintf( '%s Done. The selected user was %s.', __METHOD__, $oSender->getName() ) , E_USER_NOTICE );
-            }
-            $this->oSender = $oSender;
-            wfProfileOut( __METHOD__ );
-            return;
-        }
-        // If no recently active admin has been found, fall back to a relevant staff member.
-        /**
-         * @global String The language of the wiki.
-         * @see http://www.mediawiki.org/wiki/Manual:$wgLanguageCode
-         */
-        global $wgLanguageCode;
-        // Create a User object.
-        /** @type Object User The sender for the welcome message. */
-        $oSender = Wikia::staffForLang( $wgLanguageCode );
-        // Terminate, if a valid user object has been created.
-        if( $oSender instanceof User && $oSender->getId() ) {
-            if ( $this->bShowNotices ) {
-                trigger_error( sprintf( '%s No active admin. Used a staff member %s.', __METHOD__, $oSender->getName() ) , E_USER_NOTICE );
-            }
-            $this->oSender = $oSender;
-            wfProfileOut( __METHOD__ );
-            return;
-        }
-        // This should not happen. Fall back to the default welcomer and terminate.
-        $this->oSender = User::newFromName( self::DEFAULT_WELCOMER );
-        trigger_error( sprintf(
-            '%s fell back to the default sender while trying to send a welcome message to %s (%d).',
-            __METHOD__, $this->sRecipientName, $this->iRecipientId
-        ), E_USER_WARNING );
-        wfProfileOut( __METHOD__ );
-        return;
-    }
+			else {
+				$result =
+					in_array( "sysop", $groups ) ||
+					in_array( "staff", $groups )
+						? true : false;
+			}
+		}
+		wfProfileOut( __METHOD__ );
+
+		return $result;
+	}
+
+	static public function getStaffAccounts() {
+		global $wgExternalSharedDB;
+
+		$list = array();
+
+		$cond = array( 'ug_group' => array( 'staff' ) );
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+
+		$res = $dbr->select(
+			'user_groups',
+			'ug_user',
+			array(
+				$dbr->makeList( $cond, LIST_OR )
+			)
+		);
+
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$list[] = $row->ug_user;
+		}
+
+		return array( 'rev_user' => $list );
+	}
 }
+
+
+/**
+ * Task, will run runJobs for specified city_id
+ */
+class HAWelcomeTask extends BatchTask {
+
+	private $mParams;
+
+	/**
+	 * contructor
+	 * @access public
+	 */
+	public function  __construct() {
+
+		parent::__construct();
+		$this->mType = "welcome";
+		$this->mVisible = false;
+		$this->mTTL = 1800;
+		$this->mDebug = false;
+	}
+
+	/**
+	 * execute
+	 *
+	 * entry point for TaskExecutor
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @param mixed $params default null - task data from wikia_tasks table
+	 *
+	 * @return boolean - status of operation
+	 */
+	public function execute( $params = null ) {
+		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath, $wgMaxShellTime, $wgMaxShellMemory;
+
+		// temporary fix for wfShellExec
+		$wgMaxShellTime = 0;
+		$wgMaxShellMemory = 0;
+
+		$this->mTaskID = $params->task_id;
+		$this->mParams = unserialize( $params->task_arguments );
+
+		$city_id = $this->mParams["city_id"];
+		if( $city_id ) {
+			/**
+			 * execute maintenance script
+			 */
+			$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/maintenance/runJobs.php --type HAWelcome --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
+			$this->addLog( "Running {$cmd}" );
+			$retval = wfShellExec( $cmd, $status );
+			$this->addLog( $retval );
+		}
+
+		return true;
+	}
+
+	/**
+	 * getForm
+	 *
+	 * this task is not visible in selector so it doesn't have real HTML form
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @param Title $title: Title struct
+	 * @param mixes $data: params from HTML form
+	 *
+	 * @return false
+	 */
+	public function getForm( $title, $data = false ) {
+		return false;
+	}
+
+	/**
+	 * getType
+	 *
+	 * return string with codename type of task
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @return string: unique name
+	 */
+	public function getType() {
+		return $this->mType;
+	}
+
+	/**
+	 * isVisible
+	 *
+	 * check if class is visible in TaskManager from dropdown
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @return boolean: visible or not
+	 */
+	public function isVisible() {
+		return $this->mVisible;
+	}
+
+	/**
+	 * submitForm
+	 *
+	 * since this task is invisible for form selector we use this method for
+	 * saving request data in database
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @return true
+	 */
+	public function submitForm() {
+		return true;
+	}
+}
+
+$wgSpecialPages['HAWelcomeEdit'] = 'HAWelcomeEdit';
+$wgSpecialPageGroups['HAWelcomeEdit'] = 'wikia';
+
+$wgAvailableRights[] = 'HAWelcomeEdit';
+$wgGroupPermissions['*']['HAWelcomeEdit'] = false;
+$wgGroupPermissions['staff']['HAWelcomeEdit'] = true;
+
+$wgAutoloadClasses['HAWelcomeEdit'] = dirname(__FILE__) . '/HAWelcomeEdit.body.php';
