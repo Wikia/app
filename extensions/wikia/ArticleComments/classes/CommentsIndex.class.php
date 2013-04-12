@@ -210,7 +210,7 @@ class CommentsIndex extends WikiaModel {
 			if ( empty($this->lastTouched) ) {
 				$this->lastTouched = $timestamp;
 			}
-			$db->replace(
+			$status = $db->replace(
 				'comments_index',
 				'',
 				array(
@@ -231,6 +231,10 @@ class CommentsIndex extends WikiaModel {
 				),
 				__METHOD__
 			);
+			if ( false === $status ) {
+				Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR Failed to create comments_index entry, parent_page_id={$this->parentPageId}, comment_id={$this->commentId}, parent_comment_id={$this->parentCommentId}", true);
+			}
+
 			$db->commit();
 		}
 
