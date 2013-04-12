@@ -28,14 +28,32 @@ class WikiaImagePage extends ImagePage {
 	}
 
 	/**
+	 * openShowImage override.
+	 * This is called before the wikitext is printed out
+	 */
+	protected function openShowImage() {
+		global $wgEnableVideoPageRedesign, $wgOut;
+
+		parent::openShowImage();
+		if(!empty($wgEnableVideoPageRedesign)) {
+			$this->renderTabs();
+
+			// Open div for about section (closed in imageDetails);
+			$wgOut->addHtml('<div data-tab-body="about" class="tabBody selected">');
+			$this->renderDescriptionHeader();
+		}
+	}
+
+	/**
 	 * imageDetails override
 	 * Image page doesn't need the wrapper, but WikiaFilePage does
+	 * This is called after the wikitext is printed out
 	 */
-	protected function imageDetails($showmeta, $formattedMetadata) {
+	protected function imageDetails() {
 		global $wgOut, $wgEnableVideoPageRedesign, $wgJsMimeType, $wgExtensionsPath;
 
 		if(empty($wgEnableVideoPageRedesign)) {
-			parent::imageDetails($showmeta, $formattedMetadata);
+			parent::imageDetails();
 			return;
 		}
 
@@ -46,11 +64,31 @@ class WikiaImagePage extends ImagePage {
 		$app = F::app();
 		$wgOut->addHtml( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
 		$wgOut->addHtml( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
-		$wgOut->addHtml( $app->renderPartial( 'FilePageController', 'seeMore', array() ));
-		$wgOut->addHtml('<div class="more-info-wrapper">');
-		parent::imageDetails($showmeta, $formattedMetadata);
+
+		// Close div from about section (opened in openShowImage)
 		$wgOut->addHtml('</div>');
-		$wgOut->addHtml( $app->renderView( 'FilePageController', 'relatedPages', array() ) );
+
+		$wgOut->addHtml('<div data-tab-body="history" class="tabBody">');
+		parent::imageDetails();
+		$wgOut->addHtml('</div>');
+	}
+
+	/**
+	 * imageMetadata override
+	 * Image page doesn't need the wrapper, but WikiaFilePage does
+	 */
+	protected function imageMetadata($formattedMetadata) {
+		global $wgOut;
+
+		$wgOut->addHtml('<div data-tab-body="metadata" class="tabBody">');
+		parent::imageMetadata($formattedMetadata);
+		$wgOut->addHtml('</div>');
+	}
+
+	protected function imageFooter() {
+		global $wgOut;
+
+		$wgOut->addHtml( F::app()->renderView( 'FilePageController', 'relatedPages', array() ) );
 	}
 
 	/**
@@ -68,32 +106,28 @@ class WikiaImagePage extends ImagePage {
 		// do nothing on purpose
 	}
 
-	protected function openShowImage() {
-		global $wgEnableVideoPageRedesign;
+	protected function renderTabs() {
+		global $wgOut;
 
-		parent::openShowImage();
-		if(!empty($wgEnableVideoPageRedesign)) {
-			$this->renderDescriptionHeader();
-		}
+		$tabs = F::app()->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
+		$wgOut->addHtml($tabs);
 	}
 
 	protected function renderDescriptionHeader() {
 		global $wgOut, $wgLang;
 
-		// Construct edit link
+		// Contstruct the h2 with edit link
 		$skin = $wgOut->getSkin();
-		$title = $this->getTitle();
-		$section = 0; // Description will always be the first section on the file page page
-		$headline = wfMessage('video-page-description-heading')->text(); // heading text ("Description")
-		$lang = $wgLang->getCode();
+		$headline = wfMessage('video-page-description-heading')->text();
+		$args = array(
+			$this->getTitle(), // title obj
+			0, // section
+			$headline, // heading text
+			$wgLang->getCode() // lang
+		);
+		$editSection = call_user_func_array( array( $skin, 'doEditSectionLink' ), $args );
 
-		// Returns a string of HTML for edit link
-		$editSection = $skin->doEditSectionLink($title, $section, $headline, $lang);
-
-		// Construct the h2 with edit link
-		$level = "2"; // h2
-		$attribs = ">"; // odd mediawiki thing, no custom attributes so we're sending the closing ">" for the html tag :P
-		$descriptionHeaderHtml = Linker::makeHeadline($level, $attribs, $headline, $headline, $editSection);
+		$descriptionHeaderHtml = Linker::makeHeadline("2", ">", $headline, $headline, $editSection);
 
 		// Display description text or default message
 		$content = FilePageHelper::stripCategoriesFromDescription( $this->getContent() );

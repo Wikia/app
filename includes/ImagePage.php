@@ -18,6 +18,10 @@ class ImagePage extends Article {
 	private $repo;
 	private $fileLoaded;
 
+	/* Wikia change begin */
+	protected $showmeta;
+	/* Wikia change end */
+
 	var $mExtraDescription = false;
 
 	/**
@@ -133,6 +137,10 @@ class ImagePage extends Article {
 			/* Wikia change end */
 		}
 
+		/* Wikia change begin */
+		$this->showmeta = $showmeta;
+		/* Wikia change end */
+
 		if ( !$diff && $this->displayImg->exists() ) {
 			$wgOut->addHTML( $this->showTOC( $showmeta ) );
 		}
@@ -159,7 +167,11 @@ class ImagePage extends Article {
 		}
 
 		/* Wikia Change - abstracted this out to protected function */
-		$this->imageDetails($showmeta, $formattedMetadata);
+		$this->imageDetails();
+		if($showmeta) {
+			$this->imageMetadata($formattedMetadata);
+		}
+		$this->imageFooter();
 		/* End Wikia Change */
 
 		// Add remote Filepage.css
@@ -176,7 +188,7 @@ class ImagePage extends Article {
 	/**
 	 * Wikia - abstracted out part of view() function, so it can be wrapped by WikiaVideoPage
 	 */
-	protected function imageDetails($showmeta, $formattedMetadata) {
+	protected function imageDetails() {
 		global $wgOut;
 
 		# Show shared description, if needed
@@ -202,12 +214,24 @@ class ImagePage extends Article {
 		if ( $html ) {
 			$wgOut->addHTML( $html );
 		}
+	}
 
-		if ( $showmeta ) {
-			$wgOut->addHTML( Xml::element( 'h2', array( 'id' => 'metadata' ), wfMsg( 'metadata' ) ) . "\n" );
-			$wgOut->addWikiText( $this->makeMetadataTable( $formattedMetadata ) );
-			$wgOut->addModules( array( 'mediawiki.action.view.metadata' ) );
-		}
+	/**
+	 * Wikia - abstracted out part of view() function, so it can be wrapped by WikiaVideoPage
+	 */
+	protected function imageMetadata($formattedMetadata) {
+		global $wgOut;
+
+		$wgOut->addHTML( Xml::element( 'h2', array( 'id' => 'metadata' ), wfMsg( 'metadata' ) ) . "\n" );
+		$wgOut->addWikiText( $this->makeMetadataTable( $formattedMetadata ) );
+		$wgOut->addModules( array( 'mediawiki.action.view.metadata' ) );
+	 }
+
+	/**
+	 * Wikia - called in view() function, so it can be used by WikiaVideoPage
+	 */
+	protected function imageFooter() {
+		// to be used by child classes
 	}
 
 	/**
