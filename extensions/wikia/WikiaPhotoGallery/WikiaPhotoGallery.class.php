@@ -431,8 +431,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			// store list of images actually shown (to be used by front-end)
 			$this->mData['imagesShown'][] = $imageItem;
 
-
-
 			$this->add(
 				$nt,
 				// use global instance of parser (RT #44689 / RT #44712)
@@ -860,18 +858,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				# Fix 59913 - thumbnail goes as <img /> not as <a> background.
 				if ( $orientation != 'none' ) {
 
-				# Fix 65861 - gallery fix, now images are put inside <p> tags for cropping.
-				# p not div for W3C validation
-
-					$html .= Xml::openElement(
-						'p',
-						array(
-							'style' => "margin:0px; height:{$image['height']}px;".
-								($useBuckets ? '' : " width:{$image['width']}px;").
-								"overflow: hidden; display: block"
-						)
-					);
-
 					# margin calculation for image positioning
 
 					if ( $thumbParams['height'] > $image['height'] ){
@@ -951,9 +937,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= Xml::openElement('a', $linkAttribs);
 				$html .= $thumbHtml;
 				$html .= Xml::closeElement('a');
-				if ( $orientation != 'none' ) {
-					$html .= Xml::closeElement('p');
-				}
 
 				if ($captionsPosition == 'below') {
 					$html .= Xml::closeElement('div');
