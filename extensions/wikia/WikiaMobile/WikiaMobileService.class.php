@@ -50,6 +50,7 @@ class WikiaMobileService extends WikiaService {
 		$scripts = null;
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 		$advert = '';
+		$globalVariables = [];
 
 		F::build( 'JSMessages' )->enqueuePackage( 'WkMbl', JSMessages::INLINE );
 
@@ -128,12 +129,15 @@ class WikiaMobileService extends WikiaService {
 		}
 
 		//Add GameGuides SmartBanner promotion on Gaming Vertical
-		if ( $this->wg->Hub->cat_id == WikiFactoryHub::CATEGORY_ID_GAMING ) {
-			//if ( empty( $_COOKIE['sb-installed'] ) && empty( $_COOKIE['sb-closed'] ) ) {
-				foreach ( $assetsManager->getURL( 'wikiamobile_smartbanner_init_js' ) as $src ) {
-					$jsBodyFiles .= "<script src=\"{$src}\"></script>";
-				}
-			//}
+		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) ) {
+			foreach ( $assetsManager->getURL( 'wikiamobile_smartbanner_init_js' ) as $src ) {
+				$jsBodyFiles .= "<script src=\"{$src}\"></script>";
+			}
+
+			$globalVariables['wgAppName'] = $this->wg->WikiaMobileSmartBannerConfig['name'];
+			$globalVariables['wgAppAuthor'] = $this->wg->WikiaMobileSmartBannerConfig['author'];
+
+			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig );
 		}
 
 		$this->response->setVal( 'jsHeadFiles', $jsHeadFiles );
@@ -152,7 +156,7 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'wikiaNavigation', $nav );
 		$this->response->setVal( 'pageContent', $pageContent );
 		$this->response->setVal( 'wikiaFooter', $footer );
-		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts() );
+		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $globalVariables ) );
 
 		//tracking
 		$trackingCode = '';

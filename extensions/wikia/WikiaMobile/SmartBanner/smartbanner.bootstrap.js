@@ -21,8 +21,7 @@ window.addEventListener('load', function(){
 					mustache: '/extensions/wikia/WikiaMobile/SmartBanner/smartbanner.mustache',
 					scripts: ['wikiamobile_smartbanner_js'],
 					styles: ['//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.scss'],
-					messages: ['SmartBanner'],
-					cb: 1
+					messages: ['SmartBanner']
 				}
 			}).done(function(res){
 				loader.processStyle(res.styles);
@@ -30,8 +29,8 @@ window.addEventListener('load', function(){
 
 				require(['smartbanner'], function(sb){
 					sb({
-						title: 'Game Guides', // What the title of the app should be in the banner (defaults to <title>)
-						author: 'Wikia', // What the author of the app should be in the banner (defaults to <meta name="author"> or hostname)
+						title: window.wgAppName, //set in WikiaMobileService
+						author: window.wgAppAuthor,
 						type: type,
 						template: res.mustache[0],
 						price: msg('wikiasmartbanner-price'), // Price of the app
