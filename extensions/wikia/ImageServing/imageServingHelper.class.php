@@ -86,7 +86,7 @@ class ImageServingHelper{
 		$ig->parse();
 		$data = $ig->getData();
 
-		$ig = new fakeIGimageServing( $ig->mImages );
+		$ig = new fakeIGimageServing( $data['images'] );
 		wfProfileOut(__METHOD__);
 		return false;
 	}
@@ -189,7 +189,7 @@ class fakeIGimageServing extends ImageGallery {
 	function toHTML() {
 		$res = "";
 		foreach ( $this->in as $key => $imageData ) {
-			$file =  $this->getImage($imageData[0]);
+			$file =  $this->getImage($imageData['name']);
 
 			if($file) {
 				$res .= " <image mw='".$file->getTitle()->getDBkey()."' /> ";
