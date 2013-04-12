@@ -196,6 +196,7 @@ class CommentsIndex extends WikiaModel {
 
 		//Just for transition time
 		if(empty($this->wg->EnableWallEngine) || !WallHelper::isWallNamespace($this->namespace) ) {
+			Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR no wall?", true);
 			$this->wf->ProfileOut( __METHOD__ );
 			return false;
 		}
@@ -233,6 +234,8 @@ class CommentsIndex extends WikiaModel {
 			);
 			if ( false === $status ) {
 				Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR Failed to create comments_index entry, parent_page_id={$this->parentPageId}, comment_id={$this->commentId}, parent_comment_id={$this->parentCommentId}", true);
+			} else {
+				Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR Failed to create comments_index entry, db is readonly", true);
 			}
 
 			$db->commit();
