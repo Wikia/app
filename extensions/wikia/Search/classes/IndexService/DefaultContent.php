@@ -168,10 +168,9 @@ class DefaultContent extends AbstractService
 		
 		$dom = new \simple_html_dom( html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
 		if ( $dom->root ) {
-			/**
-			 * @todo reintroduce once we have 4.1 figured out
-			 * $result = array_merge( $result, $this->extractInfoboxes( $dom, $result ) );
-			 */
+			if ( $this->getService()->getGlobal( 'ExtractInfoboxes' ) ) {
+				$result = array_merge( $result, $this->extractInfoboxes( $dom, $result ) );
+			}
 			$this->removeGarbageFromDom( $dom );
 			$plaintext = $this->getPlaintextFromDom( $dom );
 			$paragraphs = $this->getParagraphsFromDom( $dom );
@@ -206,8 +205,7 @@ class DefaultContent extends AbstractService
 					$infoboxCells = $row->find( 'td' );
 					// we only care about key-value pairs in infoboxes
 					if ( count( $infoboxCells ) == 2 ) {
-						// should there be a separator?
-						$result['infoboxes_txt'][] = preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' ' . $infoboxCells[1]->plaintext  );
+						$result['infoboxes_txt'][] = preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
 					}
 				}
 			}
