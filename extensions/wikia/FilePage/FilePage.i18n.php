@@ -1,7 +1,7 @@
 <?php
 /**
  * @addtogroup Extensions
-*/
+ */
 
 $messages = array();
 $messages['en'] = array(
@@ -19,6 +19,10 @@ $messages['en'] = array(
 
 	/* file page */
 	'file-page-replace-button' => 'Replace',
+	'file-page-tab-about' => 'About',
+	'file-page-tab-history' => 'File History',
+	'file-page-tab-metadata' => 'Metadata',
+
 );
 
 /** Message documentation (Message documentation) */
@@ -36,4 +40,7 @@ $messages['qqq'] = array(
 
 	/* file page */
 	'file-page-replace-button' => 'Replace button label, hidden in menu button',
+	'file-page-tab-about' => 'Navigation tab label for the "about" section on a File Page.',
+	'file-page-tab-history' => 'Navigation tab label for the "File History" section on a File Page.',
+	'file-page-tab-metadata' => 'Navigation tab label for the "Metadata" section on a File Page.',
 );
