@@ -196,6 +196,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		$structuredData = [
 			'wamPageUrl' => $this->getWamPageUrl(),
 			'verticalName' => $hubModel->getVerticalName($data['vertical_id']),
+			'canonicalVerticalName' => str_replace(' ', '', $hubModel->getCanonicalVerticalName($data['vertical_id'])),
 			'ranking' => []
 		];
 
