@@ -1,7 +1,15 @@
 <?php
 class ImageServingDriverMainNS extends ImageServingDriverBase {
 	protected $queryLimit = 50;
+	protected $maxCount = 10;
 	protected $minSize = 75;
+
+	function __construct($db, $imageServing, $proportion) {
+		parent::__construct( $db, $imageServing, $proportion );
+		if ( $this->app->wg->ImageServingMaxReuseCount !== NULL ) {
+			$this->maxCount = $this->app->wg->ImageServingMaxReuseCount;
+		}
+	}
 
 	protected function getImagesFromDB($articles = array()) {
 		wfProfileIn( __METHOD__ );
@@ -103,7 +111,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 		// filter out images that are too widely used
 		if ( !empty($imageNames) ) {
-			$imageRefs = $this->getImagesPopularity($imageNames,$this->app->wg->ImageServingMaxReuseCount);
+			$imageRefs = $this->getImagesPopularity($imageNames,$this->maxCount);
 		}
 
 		// collect metadata about images
