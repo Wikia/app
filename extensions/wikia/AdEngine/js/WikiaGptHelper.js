@@ -127,7 +127,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		params.pos = slotParams.slotname;
 		params.positionfixed = slotParams.positionfixed;
 		params.loc = slotParams.loc;
-		params.dcopt = slotParams.dcopt;
+		//params.dcopt = slotParams.dcopt;
 
 		log(['googletag.cmd.push', path, sizes, slotname, params], 4, logGroup);
 
