@@ -1125,6 +1125,12 @@ $wgEnableAmazonDirectTargetedBuy = true;
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
+ * @name $wgEnableAdEngineExt
+ * Enables ad engine
+ */
+$wgEnableAdEngineExt = true;
+
+/**
  * trusted proxy service registry
  */
 $app->registerClass( 'TrustedProxyService', "$IP/includes/wikia/services/TrustedProxyService.class.php" );

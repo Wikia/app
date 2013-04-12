@@ -59,7 +59,7 @@ class AdProviderAthena extends AdProviderIframeFiller implements iAdProvider {
                        $pageVars['article_id'] = $wgTitle->getArticleID();
 		}
 		$pageVars['isMainPage'] = WikiaPageType::isMainPage();
-		$cat = AdEngine::getCachedCategory();
+		$cat = AdEngine2Controller::getCachedCategory();
 		$pageVars['hub'] = $cat['name'];
 		$pageVars['skin'] = RequestContext::getMain()->getSkin()->getSkinName();
 		$pageVars['user_lang'] = $wgLang->getCode();
@@ -87,7 +87,7 @@ class AdProviderAthena extends AdProviderIframeFiller implements iAdProvider {
 
 	public static function getInstance() {
 		if(self::$instance == false) {
-			$h = AdEngine::getCachedCategory();
+			$h = AdEngine2Controller::getCachedCategory();
 			// ***************** Athena has been replaced by Liftium
 			return self::$instance = new AdProviderLiftium();
 		}

@@ -31,7 +31,7 @@ var AdConfig2Late = function (
 
 		// First ask GamePro (german lang wiki)
 		if (cityLang === 'de') {
-			if (slotname === 'PREFOOTER_RIGHT_BOXAD' || slotname === 'LEFT_SKYSCRAPER_3' || slotname === 'TOP_RIGHT_BUTTON') {
+			if (slotname === 'PREFOOTER_RIGHT_BOXAD' || slotname === 'LEFT_SKYSCRAPER_3') {
 				return adProviderNull;
 			}
 			if (adProviderGamePro.canHandleSlot(slot)) {

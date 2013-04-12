@@ -56,6 +56,5 @@ describe('AdConfig2Late', function(){
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderGameProMock, 'adProviderGameProMock');
 		expect(adConfig.getProvider(['PREFOOTER_RIGHT_BOXAD'])).toBe(adProviderNullMock, 'adProviderNullMock');
 		expect(adConfig.getProvider(['LEFT_SKYSCRAPER_3'])).toBe(adProviderNullMock, 'adProviderNullMock');
-		expect(adConfig.getProvider(['TOP_RIGHT_BUTTON'])).toBe(adProviderNullMock, 'adProviderNullMock');
 	});
 });
