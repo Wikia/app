@@ -40,6 +40,7 @@ class Video extends OnWiki
 	protected function getQueryClausesString() {
 		$queryClauses = array(
 				Utilities::valueForField( 'wid', $this->config->getCityId() ),
+				Utilities::valueForField( 'is_video', 'true' ),
 				Utilities::valueForField( 'ns', \NS_FILE )
 				);
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
