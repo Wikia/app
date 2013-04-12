@@ -380,7 +380,6 @@ $config['wikiamobile_scss'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/WikiaMobile/css/WikiaMobile.scss',
-		'//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.scss'
 	)
 );
 
@@ -484,11 +483,28 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/share.js',
 		'//resources/wikia/modules/thumbnailer.js',
 
-		'//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.js',
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
 	)
 );
+
+//mustache is generic but currently only used by smartbanner move if needed
+$config['wikiamobile_smartbanner_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => [
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.js',
+	]
+];
+
+$config['wikiamobile_smartbanner_init_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => [
+		'//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.bootstrap.js',
+	]
+];
 
 $config['wikiamobile_relatedpages_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
