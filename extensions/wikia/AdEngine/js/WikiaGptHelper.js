@@ -5,7 +5,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 	var logGroup = 'WikiaGptHelper',
 		gptLoaded = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
-		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '/' + pageLevelParams.s2,
+		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 		slotsToDisplay = [],
 		doneCallbacks = {},// key: slot name, value: callback
 		googletag;
