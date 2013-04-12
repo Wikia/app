@@ -98,14 +98,14 @@ class WAMPageHooks {
 	 * Change canonical url if we are displaying WAM subpages
 	 *
 	 * @param string $url
-	 * @param Title  $title
 	 *
 	 * @return bool
 	 */
-	public function onWikiaCanonicalHref(&$url, $title) {
+	public function onWikiaCanonicalHref(&$url) {
 		wfProfileIn(__METHOD__);
 		$this->init();
 		
+		$title = Title::newFromURL($url);
 		if( $title instanceof Title && $this->model->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
 			$url = $this->model->getWAMMainPageUrl();
 		}

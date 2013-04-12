@@ -56,17 +56,17 @@ class WikiaHubsV2Hooks {
 	 * Change canonical url if we are displaying hub for selected date
 	 *
 	 * @param string $url
-	 * @param Title  $title
 	 *
 	 * @return bool
 	 */
-	public function onWikiaCanonicalHref(&$url, $title) {
+	public function onWikiaCanonicalHref(&$url) {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
 		if( !empty($app->wg->EnableWikiaHomePageExt)) {
 			$model = new WikiaHubsV2HooksModel();
-
+			
+			$title = Title::newFromURL($url);
 			$dbKeyName = $title->getDBKey();
 			$dbKeyNameSplit = explode('/', $dbKeyName);
 			$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
