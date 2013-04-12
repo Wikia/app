@@ -180,11 +180,12 @@ class DefaultContent extends AbstractService
 		$wordCount = count( $words );
 		$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
 		
-		return  [
+		return  array_merge( $result,
+				[
 				'nolang_txt'           => $upTo100Words,
 				'words'                => $wordCount,
 				$this->field( 'html' ) => $plaintext
-				];
+				]);
 	}
 	
 	/**
