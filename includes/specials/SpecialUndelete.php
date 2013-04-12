@@ -1391,6 +1391,12 @@ class SpecialUndelete extends SpecialPage {
 			throw new ReadOnlyError;
 		}
 
+		# <Wikia> - use Phalanx to check recovered page title
+		if ( !wfRunHooks( 'CreatePageTitleCheck', array( $this->mTargetObj, false ) ) ) {
+			throw new ErrorPageError( 'undelete-error', 'spamprotectiontext' );
+		}
+		# </Wikia>
+
 		$out = $this->getOutput();
 		$archive = new PageArchive( $this->mTargetObj );
 		wfRunHooks( 'UndeleteForm::undelete', array( &$archive, $this->mTargetObj ) );
