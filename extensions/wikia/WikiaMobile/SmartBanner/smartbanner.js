@@ -1,0 +1,86 @@
+/**
+ * Smart Banner by Jakub Olek
+ *
+ * preety much based on:
+ * jQuery Smart Banner
+ * Copyright (c) 2012 Arnold Daniels <arnold@jasny.net>
+ * Based on 'jQuery Smart Web App Banner' by Kurt Zenisek @ kzeni.com
+ */
+define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils', 'track'], function smartbanner(window, cookie, util, track){
+	'use strict';
+
+	var html = window.document.documentElement,
+		defaults = {
+			appStoreLanguage: window.wgUserLanguage || 'us', // Language code for App Store
+			iconGloss: null, // Force gloss effect for iOS even for precomposed
+			url: null, // The URL for the button. Keep null if you want the button to link to the app store.
+			daysHidden: 15, // Duration to hide the banner after being closed (0 = always show banner)
+			daysReminder: 90 // Duration to hide the banner after "VIEW" is clicked *separate from when the close button is clicked* (0 = always show banner)
+		},
+		hide = function(){
+			html.className = html.className.replace(' sb-shown', '');
+		};
+
+	return function(options) {
+		var meta,
+			type = options.type || 'ios',
+			appId,
+			cookieData = {
+				domain: window.wgCookieDomain,
+				path: window.wgCookiePath
+			};
+
+		track.event('smart-banner', track.IMPRESSION, {
+			method: 'both'
+		});
+
+		// Get info from meta data// Get info from meta data
+		if(meta = document.querySelector(type == 'android' ? 'meta[name="google-play-app"]' : 'meta[name="apple-itunes-app"]')){
+			appId = /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1];
+
+			options = util.extend(defaults, options);
+
+			document.body.insertAdjacentHTML('afterbegin', Mustache.render(options.template, {
+				type: type,
+				title: options.title || '',
+				author: options.author || '',
+				inStore: options.price ? options.price.toUpperCase() + ' - ' + (type == 'android' ? options.inGooglePlay : options.inAppStore) : '',
+				gloss: options.iconGloss === null ? type == 'ios' : options.iconGloss,
+				link: (options.url ? options.url : (type == 'android' ? 'market://details?id=' : ('https://itunes.apple.com/' + window.wgUserLanguage + '/app/id')) + appId),
+				button: options.button || 'VIEW',
+				icon: options.icon
+			}));
+
+			html.className += ' sb-shown';
+
+			document.getElementsByClassName('smartbanner')[0].addEventListener('touchend', function(ev) {
+				var t = ev.target,
+					className = t.className;
+
+				if (~className.indexOf('sb-button')) {
+					hide();
+
+					cookie.set('sb-installed', 1, util.extend(cookieData, {
+						expires: options.daysReminder * 86400
+					}));
+
+					track.event('smart-banner', track.CLICK, {
+						label: 'app-store',
+						method: 'both'
+					}, ev);
+				}else if(~className.indexOf('sb-close') || ~className.indexOf('sb-close-btn')) {
+					hide();
+
+					cookie.set('sb-closed', 1, util.extend(cookieData, {
+						expires: options.daysHidden * 86400
+					}));
+
+					track.event('smart-banner', track.CLICK, {
+						label: 'dismiss',
+						method: 'both'
+					});
+				}
+			});
+		}
+	}
+});

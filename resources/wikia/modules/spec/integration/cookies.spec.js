@@ -36,4 +36,16 @@ describe("Cookies", function () {
 		expect(document.cookie).toContain('new_cookie=new_value');
 		expect(document.cookie).toContain(';');
 	});
+
+	it('sets domain for a cookie', function(){
+		expect(cookies.set('test_cookie', 1, {
+			domain: 'test.domain'
+		})).toBe('test_cookie=1; domain=test.domain');
+	});
+
+	it('sets path for a cookie', function(){
+		expect(cookies.set('test_cookie', 1, {
+			path: '/test/path'
+		})).toBe('test_cookie=1; path=/test/path');
+	});
 });
