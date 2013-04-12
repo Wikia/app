@@ -106,17 +106,12 @@ class SpecialCreateTopList extends SpecialPage {
 				$listName = $title->getText();
 				$listUrl = $title->getFullUrl();
 
-				$error_msg = '';
 				if ( !empty( $relatedArticleName ) ) {
 					$title = Title::newFromText( $relatedArticleName );
 
 					if ( empty( $title ) ) {
 						$errors[ 'related_article_name' ] = array( wfMsg( 'toplists-error-invalid-title' )  );
-					} 
-					elseif ( !wfRunHooks( "PageTitleFilter", array( $title, &$error_msg ) ) ) {
-						$errors[ 'related_article_name' ] = array( ( !empty($error_msg) ) ? $error_msg : wfMsg( 'spamprotectiontext' ) );
-					} 
-					else {
+					} else {
 						$setResult = $list->setRelatedArticle( $title );
 
 						if ( $setResult !== true ) {
@@ -138,12 +133,7 @@ class SpecialCreateTopList extends SpecialPage {
 				}
 
 				if ( !empty( $description ) ) {
-					$error_msg = '';
-					if ( !wfRunHooks( "EditContent", array( $description, &$error_msg ) ) ) {
-						$errors[ 'description' ] = array( $error_msg );
-					} else {
-						$list->setDescription( $description );
-					}
+					$list->setDescription( $description );
 				}
 
 				$checkResult = $list->checkForProcessing( TOPLISTS_SAVE_CREATE );

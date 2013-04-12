@@ -60,4 +60,3 @@ $wgForeignFileRepos[] = array(
 	'checkRedirects'   => false,
 	'checkDuplicates'  => false,
 );
-

@@ -133,8 +133,6 @@ class UserLoginForm extends LoginForm {
 				$msg = $app->wf->Msg('usersignup-error-symbols-in-username');
 			} else if ( $result == 'userlogin-bad-username-length' ) {
 				$msg = $app->wf->Msg('usersignup-error-username-length', $app->wg->WikiaMaxNameChars);
-			} else {
-				$msg = $result;
 			}
 
 			$this->mainLoginForm( $msg, 'error', 'username' );

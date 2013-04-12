@@ -162,8 +162,7 @@ class DefaultQuestion {
 
 	// don't allow swear words when generating list of recenlty asked questions (via HPL)
 	function filterWordsTest() {
-		// changed $this->question => $this->title (2013/01/27)
-		if ( !wfRunHooks( 'DefaultQuestion::filterWordsTest' , array( $this->title )) ) {
+		if ( !wfRunHooks( 'DefaultQuestion::filterWordsTest' , array($this->question)) ) {
 			wfDebug(__METHOD__ . ": question '{$this->question}' filtered out by hook\n");
 			return true;
 		}

@@ -344,7 +344,7 @@ class UserIdentityBox {
 
 			if (isset($data->name)) {
 				//phalanx filtering; bugId:21358
-				$data->name = $this->doPhalanxFilter($data->name, Phalanx::TYPE_USER);
+				$data->name = $this->doPhalanxFilter($data->name, 'TYPE_USER');
 				//char limit added; bugId:15593
 				$data->name = mb_substr($data->name, 0, self::USER_NAME_CHAR_LIMIT);
 

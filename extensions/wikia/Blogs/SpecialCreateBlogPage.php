@@ -26,7 +26,8 @@ class CreateBlogPage extends SpecialCustomEditPage {
 		}
 
 		if( $this->user->isBlocked() ) {
-			throw new UserBlockedError( $this->user->mBlock );
+			$this->out->blockedPage();
+			return;
 		}
 
 		if( wfReadOnly() ) {

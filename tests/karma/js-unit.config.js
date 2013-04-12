@@ -74,10 +74,6 @@ files = [
 	'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 	'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
 	'extensions/wikia/AdEngine/js/spec/*.spec.js',
-
-	//PhalanxII
-	'extensions/wikia/PhalanxII/js/modules/phalanx.js',
-	'extensions/wikia/PhalanxII/spec/*.spec.js',
 ];
 
 notCovered = [

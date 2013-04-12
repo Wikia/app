@@ -14,8 +14,6 @@
  * @method checkPermissions
  * @method displayRestrictionError
  * @method msg
- * @method includable
- * @method userCanExecute
  */
 class WikiaSpecialPageController extends WikiaController {
 	protected $specialPage = null;
@@ -59,9 +57,9 @@ class WikiaSpecialPageController extends WikiaController {
 
 	/**
 	 * Any functions that we do not implement, call directly on our specialPage object
-	 * @param String $method
-	 * @param String $args
-	 * @return mixed
+	 * @param type $method
+	 * @param type $args
+	 * @return type
 	 */
 	public function __call( $method, $args ) {
 		return call_user_func_array( array( $this->specialPage, $method ), $args );

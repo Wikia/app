@@ -105,12 +105,12 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @return object mocked object
 	 */
 	protected function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = '') {
-		$mock = $this->getMock( $className, array_keys( $methods ) );
+		$mock = $this->getMock($className, array_keys($methods));
 
 		foreach($methods as $methodName => $retVal) {
-			$mock->expects( $this->any() )
-				->method( $methodName )
-				->will( $this->returnValue( ( is_null( $retVal ) ) ? $mock : $retVal) );
+			$mock->expects($this->any())
+				->method($methodName)
+				->will($this->returnValue($retVal));
 		}
 
 		$this->proxyClass($className, $mock, ($staticConstructor !== '') ? $staticConstructor : null);

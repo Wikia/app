@@ -45,15 +45,13 @@ class TopList extends TopListBase {
 	static public function newFromTitle( Title $title, $skipPhalanxCheck = false ) {
 		global $wgMemc;
 		
-		$notPhalanxBlocked = true;
 		//FB#16388: we don't need to check Phalanx blocks while deleting
 		if( !$skipPhalanxCheck ) {
 			//FB#8083: blocked titles are not being filtered, this should be handled automatically by Phalanx though...
-			$error_msg = '';
-			if ( ! wfRunHooks( "PageTitleFilter", array( $title, &$error_msg ) ) ) {
-				$notPhalanxBlocked = false;
-			}
-		} 
+			$notPhalanxBlocked = TitleBlock::checkTitle($title);
+		} else {
+			$notPhalanxBlocked = true;
+		}
 		
 		if (
 			$title->getNamespace() == NS_TOPLIST &&

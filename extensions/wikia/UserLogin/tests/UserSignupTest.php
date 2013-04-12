@@ -6,8 +6,6 @@
 		const TEST_DNE_USER = 'UserNameThatDoesNotExist';
 		const TEST_EMAIL = 'devbox+test@wikia-inc.com';
 
-		private $originalServer;
-
 		public function setUp() {
 			$this->setupFile = dirname(__FILE__) . '/../UserLogin.setup.php';
 			parent::setUp();
@@ -29,15 +27,6 @@
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
 
 			$this->mockApp();
-
-			// "mock" IP
-			$this->originalServer = $_SERVER;
-			$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
-		}
-
-		protected function tearDown() {
-			parent::tearDown();
-			$_SERVER = $this->originalServer;
 		}
 
 		protected function setUpMockObject( $objectName, $objectParams=null, $needSetInstance=false, $globalVarName=null, $callOriginalConstructor=true ) {
@@ -106,7 +95,8 @@
 		}
 
 		protected function setUpRequest( $params=array() ) {
-			$wgRequest = new WebRequest();
+			F::unsetInstance('WebRequest');
+			$wgRequest = F::build('WebRequest', $params);
 			foreach( $params as $key => $value ) {
 				$wgRequest->setVal( $key, $value );
 			}
