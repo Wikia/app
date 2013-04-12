@@ -54,7 +54,7 @@ class MatchGrouping extends Grouping {
 			$mainId = $this->service->getMainPageIdForWikiId( $wikiId );
 			$counter = 0;
 			unset( $articles[$mainId] );
-			$this->topPages = array_slice( array_values( $articles ), 0, 4 );
+			$this->topPages = array_slice( array_keys( $articles ), 0, 4 );
 		}
 		return $this->topPages;
 	}
