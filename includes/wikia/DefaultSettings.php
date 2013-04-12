@@ -1089,7 +1089,7 @@ $wgEnableQuickToolsExt = true;
  * @name $wgPhalanxService
  * Use phalanx external service
  */
-$wgPhalanxService = true;
+$wgPhalanxService = false;
 $wgPhalanxServiceUrl = "http://phalanx";
 $wgPhalanxServiceOptions = [];
 
