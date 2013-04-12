@@ -392,7 +392,7 @@ class ResultTest extends BaseTest {
 		                   ->getMock();
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'getVideoViewsForPageId' ) )
+		                      ->setMethods( array( 'getFormattedVideoViewsForPageId' ) )
 		                      ->getMock();
 		
 		$reflService = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
@@ -401,12 +401,12 @@ class ResultTest extends BaseTest {
 		
 		$mockService
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getVideoViewsForPageId' )
+		    ->method ( 'getFormattedVideoViewsForPageId' )
 		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( 50 ) )
+		    ->will   ( $this->returnValue( "50 views" ) )
 		;
 		$this->assertEquals(
-				50,
+				"50 views",
 				$mockResult->getVideoViews()
 		);
 	}
@@ -421,7 +421,7 @@ class ResultTest extends BaseTest {
 		                   ->getMock();
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'getVideoViewsForPageId' ) )
+		                      ->setMethods( array( 'getFormattedVideoViewsForPageId' ) )
 		                      ->getMock();
 		$mockException = $this->getMockBuilder( '\Exception' )
 		                      ->disableOriginalConstructor()
@@ -433,7 +433,7 @@ class ResultTest extends BaseTest {
 		
 		$mockService
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getVideoViewsForPageId' )
+		    ->method ( 'getFormattedVideoViewsForPageId' )
 		    ->with   ( 123 )
 		    ->will   ( $this->throwException( $mockException ) )
 		;
