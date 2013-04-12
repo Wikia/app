@@ -607,7 +607,7 @@ ENDIT;
 		    ->will   ( $this->returnValue( 'value' ) )
 		;
 		$this->assertEquals(
-				[ 'infoboxes_txt' => [ 'here is my key value' ] ],
+				[ 'infoboxes_txt' => [ 'here is my key | value' ] ],
 				$extract->invoke( $service, $dom, $result )
 		);
 	}
