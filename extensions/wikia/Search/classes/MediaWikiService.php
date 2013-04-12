@@ -637,12 +637,15 @@ class MediaWikiService
 	 * @param int $pageId
 	 * @return string
 	 */
+	public function getFormattedVideoViewsForPageId( $pageId ) {
+		return $this->app->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), $this->formatNumber( $this->getVideoViewsForPageId( $pageId ) ) );
+	}
+	
 	public function getVideoViewsForPageId( $pageId ) {
-		$videoViews = '';
 		$title = $this->getTitleFromPageId( $pageId );
+		$videoViews = 0;
 		if ( ( new \WikiaFileHelper )->isFileTypeVideo( $title ) ) {
 			$videoViews = ( new \MediaQueryService )->getTotalVideoViewsByTitle( $title->getDBKey() );
-			$videoViews = $this->app->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), $this->formatNumber( $videoViews) );
 		}
 		return $videoViews;
 	}
