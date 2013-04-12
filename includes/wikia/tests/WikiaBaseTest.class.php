@@ -106,7 +106,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @return object mocked object
 	 */
 	protected function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = '') {
-		$mock = $this->getMock($className, array_keys($methods));
+		$mock = $this->getMock($className, array_keys($methods), [], '', false /* $callOriginalConstructor */);
 
 		foreach($methods as $methodName => $retVal) {
 			$mock->expects($this->any())
@@ -117,6 +117,27 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->proxyClass($className, $mock, ($staticConstructor !== '') ? $staticConstructor : null);
 
 		return $mock;
+	}
+
+	/**
+	 * Mock a static class method
+	 *
+	 * Example:
+	 *
+	 * $this->mockClassStaticMethod('Http', 'post', json_encode(['foo' => 'bar']));
+	 *
+	 * @param $className string class name
+	 * @param $methodName string method name
+	 * @param $retVal mixed result to be returned by mocked method
+	 */
+	protected function mockClassStaticMethod($className, $methodName, $retVal) {
+		// runkit doesn't resolve autoloaded classes, we need to force it here...
+		if (!class_exists($className)) {
+			// TODO: add support for namespaces
+			require_once $this->app->wg->AutoloadClasses[$className];
+		}
+		WikiaMockProxy::proxy($className, $className, $retVal);
+		WikiaMockProxy::redefineStaticConstructor($className, $methodName);
 	}
 
 	/**

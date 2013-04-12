@@ -1251,6 +1251,7 @@ $config['categoryselect_edit_js'] = array(
 $config['LyricsFindTracking'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/tracking.js',
 	)
 );

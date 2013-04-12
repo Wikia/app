@@ -11,11 +11,13 @@ $wgExtensionCredits['other'][] = array(
 	'author' => array('Maciej Brencz')
 );
 
-// TODO: move to CommonSettings
-$wgLyricFindTrackingNamespaces = array(NS_MAIN);
-$wgLyricFindTrackingUrl = '/__lyricfind_tracking';
-
 $dir = __DIR__;
 
+// TODO: move to CommonSettings
+$wgLyricFindTrackingNamespaces = array(NS_MAIN);
+
+// LyricFind page views tracking
+$app->registerClass('LyricFindController', $dir . '/LyricFindController.class.php');
 $app->registerClass('LyricFindHooks', $dir . '/LyricFindHooks.class.php');
+$app->registerClass('LyricFindTrackingService', $dir . '/LyricFindTrackingService.class.php');
 $app->registerHook('OasisSkinAssetGroups', 'LyricFindHooks', 'onOasisSkinAssetGroups');
