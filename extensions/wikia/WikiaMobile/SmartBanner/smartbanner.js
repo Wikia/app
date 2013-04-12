@@ -53,7 +53,7 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils', 'track'],
 
 			html.className += ' sb-shown';
 
-			document.getElementsByClassName('smartbanner')[0].addEventListener('touchend', function(ev) {
+			document.getElementsByClassName('smartbanner')[0].addEventListener('click', function(ev) {
 				var t = ev.target,
 					className = t.className;
 
