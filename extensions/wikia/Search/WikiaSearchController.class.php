@@ -107,21 +107,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 	
 	/**
-	 * Self request to handle displaying top articles for a grouping
-	 */
-	public function toparticles() {
-		$resultSet = $this->getVal( 'resultSet' );
-		if (! $resultSet instanceOf Wikia\Search\ResultSet\Grouping ) {
-			throw new Exception( "The topArticles action is only intended to work as a self-request" );
-		}
-		$articles = [];
-		foreach ( $resultSet->getTopPages() as $articleId ) {
-			$articles[] = Article::newFromID( $articleId );
-		}
-		$this->setVal( 'articles', $articles );
-	}
-	
-	/**
 	 * Delivers a JSON response for video searches
 	 */
 	public function videoSearch() {
