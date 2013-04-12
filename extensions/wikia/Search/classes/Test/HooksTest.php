@@ -216,4 +216,60 @@ class HooksTest extends BaseTest {
 		$this->assertArrayHasKey( 'enableGoSearch', $prefs );
 		$this->assertArrayHasKey( 'searchAllNamespaces', $prefs );
 	}
+	
+	/**
+	 * @covers Wikia\Search\Hooks::onLinkEnd
+	 * @covers Wikia\Search\Hooks::popLinks
+	 */
+	public function testOnLinkEndAndPopLinks() {
+		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiId', 'getCanonicalPageIdFromPageId' ] );
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( [ 'getArticleId' ] )
+		                  ->getMock();
+		
+		$mockSkin = $this->getMockBuilder( 'Skin' )
+		                 ->disableOriginalConstructor()
+		                 ->getMock();
+		
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getArticleId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mockService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getCanonicalPageIdFromPageId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( 456 ) )
+		;
+		$mockService
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getWikiId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$options = [];
+		$text = 'foo';
+		$attribs = [];
+		$ret = false;
+		$expected = '123_456 | foo';
+		$this->proxyClass( 'Wikia\Search\MediaWikiService', $mockService );
+		$this->mockApp();
+		$this->assertTrue(
+				\Wikia\Search\Hooks::onLinkEnd( $mockSkin, $mockTitle, $options, $text, $attribs, $ret )
+		);
+		$this->assertAttributeContains(
+				$expected,
+				'outboundLinks',
+				'Wikia\Search\Hooks'
+		);
+		$this->assertEquals(
+				[ $expected ],
+				\Wikia\Search\Hooks::popLinks()
+		);
+		$this->assertAttributeEmpty(
+				'outboundLinks',
+				'Wikia\Search\Hooks'
+		);
+	}
 }

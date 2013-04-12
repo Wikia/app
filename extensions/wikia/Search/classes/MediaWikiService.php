@@ -754,6 +754,16 @@ class MediaWikiService
 	}
 	
 	/**
+	 * Wrapper for WikiaApp::registerHook
+	 * @param string $event
+	 * @param string $class
+	 * @param string $method
+	 */
+	public function registerHook( $event, $class, $method ) {
+		$this->app->registerHook( $event, $class, $method );
+	}
+	
+	/**
 	 * Allows us to set values in global memcache without knowing the memcache
 	 * key
 	 * 
