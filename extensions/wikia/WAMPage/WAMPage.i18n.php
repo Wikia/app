@@ -4,7 +4,6 @@
  *
  * @addtogroup Languages
  */
-
 $messages = array();
 
 $messages['en'] = array(
@@ -49,7 +48,6 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wampage-breadcrumb-back-to-wam' => 'WAM Score',
 	'wam-index-header-peak-rank' => 'Peak Rank',
 	'wam-index-no-results' => 'No Results Found',
-	'wam-index-filter-date-placeholder' => 'Most Recent',
 	'wam-index-filter-search-placeholder' => 'Search',
 	'wam-index-filter-sort-label' => 'Vertical',
 	'wam-index-filter-date-label' => 'Date',
@@ -72,6 +70,7 @@ $messages['fr'] = array(
 	'wam-Gaming' => 'Jeux vidéo',
 	'wam-Entertainment' => 'Divertissement',
 	'wam-Lifestyle' => 'Mode de vie',
+	'wampage-header-wam' => 'Qu\'est-ce que le classement WAM ?',
 	'wampage-header-faq' => 'FAQ',
 	'wampage-content' => 'Le Moniteur d\'Activité Wikia (WAM) est un indicateur de la santé et de la vitalité d\'un wiki. WAM est un outil de mesure développé par Wikia pour rassembler un certains nombre d\'indicateurs en un seul index, comme la note Billboard ou Parker.
 
@@ -99,7 +98,21 @@ Vous pouvez trouver actuellement le WAM sur cette page produit, les pages de th�
 Nous vous encourageons à afficher votre note WAM sur votre wiki, mais nous vous demandons de mettre un lien vers la page produit. Dans les mois à venir nous mettrons en place des outils qui rendront plus facile l\'affichage du WAM sur votre wiki.
 
 ===À qui puis-je parler si j\'ai d\'autres questions sur le WAM?===
-Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.com support@wikia-inc.com].'
+Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.com support@wikia-inc.com].',
+	'wam-index-header-rank' => 'Position',
+	'wam-index-header-score' => 'Score WAM',
+	'wam-index-header-wiki-name' => 'URL du wiki',
+	'wam-index-header-vertical' => 'Thème',
+	'wam-index-header-vertical-rank' => 'Pos. thème',
+	'wampage-breadcrumb-back-to-wam' => 'Classement WAM',
+	'wam-index-header-peak-rank' => 'Pos. max. atteinte',
+	'wam-index-no-results' => 'Aucun résultat trouvé',
+	'wam-index-filter-search-placeholder' => 'Rechercher',
+	'wam-index-filter-sort-label' => 'Thème',
+	'wam-index-filter-date-label' => 'Date',
+	'wam-index-filter-lang-label' => 'Langue',
+	'wam-index-filter-language-default' => 'Toutes',
+	'wam-index-filter-vertical-default' => 'Tous',
 );
 
 $messages['de'] = array(
@@ -107,6 +120,7 @@ $messages['de'] = array(
 	'wam-Gaming' => 'Videospiele',
 	'wam-Entertainment' => 'Entertainment',
 	'wam-Lifestyle' => 'Lifestyle',
+	'wampage-header-wam' => 'Was ist der WAM-Wert?',
 	'wampage-header-faq' => 'FAQ',
 	'wampage-content' => 'Der Wikia Aktivitätsmonitor (WAM) zeigt an, wie es um dein Wiki steht, und wie bekannt dein Wiki ist. WAM wurde von Wikia entwickelt, um durch den Vergleich mehrerer Daten eine Wiki-Rangliste erstellen zu können, ähnlich der Billboard- oder Parker-Punktzahl.
 
@@ -141,7 +155,21 @@ Wir raten dir davon ab, und würden dir ehr dazu raten, auf diese Seite zu verli
 
 ===Wem kann ich Fragen über WAM stellen?===
 
-Dem Community-Team unter [mailto:support@wikia-inc.com support@wikia-inc.com].'
+Dem Community-Team unter [mailto:support@wikia-inc.com support@wikia-inc.com].',
+	'wam-index-header-rank' => 'Rang',
+	'wam-index-header-score' => 'WAM-Punktzahl',
+	'wam-index-header-wiki-name' => 'Wiki-URL',
+	'wam-index-header-vertical' => 'Hub',
+	'wam-index-header-vertical-rank' => 'Hub-Rang',
+	'wampage-breadcrumb-back-to-wam' => 'WAM-Punktzahl',
+	'wam-index-header-peak-rank' => 'Höchster Rang',
+	'wam-index-no-results' => 'Keine Ergebnisse gefunden',
+	'wam-index-filter-search-placeholder' => 'Suche',
+	'wam-index-filter-sort-label' => 'Hub',
+	'wam-index-filter-date-label' => 'Datum',
+	'wam-index-filter-lang-label' => 'Sprache',
+	'wam-index-filter-language-default' => 'Alle',
+	'wam-index-filter-vertical-default' => 'Alle',
 );
 
 $messages['es'] = array(
@@ -149,6 +177,7 @@ $messages['es'] = array(
 	'wam-Gaming' => 'Videojuegos',
 	'wam-Entertainment' => 'Entretenimiento',
 	'wam-Lifestyle' => 'Estilo de vida',
+	'wampage-header-wam' => '¿Qué es la puntuación WAM?',
 	'wampage-header-faq' => 'FAQ',
 	'wampage-content' => 'El Monitor de Actividad de Wikia (WAM) es un indicador de la salud y vitalidad de los wikis. El WAM es una herramienta desarrollada por Wikia capaz de obtener diferentes indicadores independientes y dar una puntuación global, como las estrellas de los hoteles.
 
@@ -177,5 +206,19 @@ Puedes encontrar el Monitor de Actividad de Wikia en esta página, o las página
 Por supuesto, es más, os animamos a mostrar vuestra puntuación o clasificación en vuestro wiki, pero os pedimos que enlacéis hacia la página directamente. En los próximos meses lanzaremos herramientas que harán más efectiva la visualización del WAM.
 
 ===¿Con quién puedo hablar si tengo otras preguntas acerca del WAM?===
-Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:support@wikia-inc.com support@wikia-inc.com].'
+Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:support@wikia-inc.com support@wikia-inc.com].',
+	'wam-index-header-rank' => 'Posición',
+	'wam-index-header-score' => 'Puntuación WAM',
+	'wam-index-header-wiki-name' => 'URL del wiki',
+	'wam-index-header-vertical' => 'Categoría',
+	'wam-index-header-vertical-rank' => 'En su categoría ',
+	'wampage-breadcrumb-back-to-wam' => 'Puntuación WAM',
+	'wam-index-header-peak-rank' => 'Puesto más alto',
+	'wam-index-no-results' => 'No se encontraron resultados',
+	'wam-index-filter-search-placeholder' => 'Buscar',
+	'wam-index-filter-sort-label' => 'Categoría',
+	'wam-index-filter-date-label' => 'Fecha',
+	'wam-index-filter-lang-label' => 'Idioma',
+	'wam-index-filter-language-default' => 'Todos',
+	'wam-index-filter-vertical-default' => 'Todas',
 );
