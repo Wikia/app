@@ -6,7 +6,7 @@
  * Copyright (c) 2012 Arnold Daniels <arnold@jasny.net>
  * Based on 'jQuery Smart Web App Banner' by Kurt Zenisek @ kzeni.com
  */
-define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils'], function smartbanner(window, cookie, util){
+define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils', 'track'], function smartbanner(window, cookie, util, track){
 	'use strict';
 
 	var html = window.document.documentElement,
@@ -24,7 +24,15 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils'], function
 	return function(options) {
 		var meta,
 			type = options.type || 'ios',
-			appId;
+			appId,
+			cookieData = {
+				domain: window.wgCookieDomain,
+				path: window.wgCookiePath
+			};
+
+		track.event('smart-banner', track.IMPRESSION, {
+			method: 'both'
+		});
 
 		// Get info from meta data// Get info from meta data
 		if(meta = document.querySelector(type == 'android' ? 'meta[name="google-play-app"]' : 'meta[name="apple-itunes-app"]')){
@@ -52,18 +60,24 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'wikia.utils'], function
 				if (~className.indexOf('sb-button')) {
 					hide();
 
-					cookie.set('sb-installed', 1, {
-						expires: options.daysReminder * 86400,
-						domain: window.wgCookieDomain,
-						path: window.wgCookiePath
-					});
+					cookie.set('sb-installed', 1, util.extend(cookieData, {
+						expires: options.daysReminder * 86400
+					}));
+
+					track.event('smart-banner', track.CLICK, {
+						label: 'app-store',
+						method: 'both'
+					}, ev);
 				}else if(~className.indexOf('sb-close') || ~className.indexOf('sb-close-btn')) {
 					hide();
 
-					cookie.set('sb-closed', 1, {
-						expires: options.daysHidden * 86400,
-						domain: window.wgCookieDomain,
-						path: window.wgCookiePath
+					cookie.set('sb-closed', 1, util.extend(cookieData, {
+						expires: options.daysHidden * 86400
+					}));
+
+					track.event('smart-banner', track.CLICK, {
+						label: 'dismiss',
+						method: 'both'
 					});
 				}
 			});
