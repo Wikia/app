@@ -38,10 +38,16 @@ class DefaultContent extends AbstractService
 	 */
 	public function execute() {
 		$service = $this->getService();
+		$sitename = $service->getGlobal( 'Sitename' );
+		if ( $service->getGlobal( 'BacklinksEnabled' ) ) {
+			$service->registerHook( 'LinkEnd', 'Wikia\Search\Hooks', 'onLinkEnd' );
+		}
+		$service->setGlobal( 'EnableParserCache', false );
 		$pageId = $service->getCanonicalPageIdFromPageId( $this->currentPageId );
 
 		// we still assume the response is the same format as MediaWiki's
 		$response   = $service->getParseResponseFromPageId( $pageId );
+		
 		// ensure the response is an array, even if empty.
 		$response   = $response == false ? array() : $response;
 		$titleStr   = $service->getTitleStringFromPageId( $pageId );
@@ -55,7 +61,7 @@ class DefaultContent extends AbstractService
 				'ns'                         => $service->getNamespaceFromPageId( $pageId ),
 				'host'                       => $service->getHostName(),
 				'lang'                       => $service->getSimpleLanguageCode(),
-				$this->field( 'wikititle' )  => $service->getGlobal( 'Sitename' ),
+				$this->field( 'wikititle' )  => $sitename,
 				'page_images'                => count( $response['parse']['images'] ),
 				'iscontent'                  => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 				'is_main_page'               => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
@@ -64,8 +70,33 @@ class DefaultContent extends AbstractService
 				$this->getPageContentFromParseResponse( $response ), 
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
+				$this->getOutboundLinks(),
 				$pageFields 
 				);
+	}
+	
+	/**
+	 * Provides an array of outbound links from the current document to other doc IDs.
+	 * Filters out self-links (e.g. Edit and the like)
+	 * @param int $wid
+	 * @param int $pageid
+	 * @return array
+	 */
+	protected function getOutboundLinks() {
+		$service = $this->getService();
+		$result = [];
+		$docId = $this->getCurrentDocumentId();
+		if ( $service->getGlobal( 'BacklinksEnabled' ) ) {
+			$backlinks = (new \Wikia\Search\Hooks)->popLinks();
+			$backlinksProcessed = [];
+			foreach ( $backlinks as $backlink ) {
+				if ( substr_count( $backlink, $docId.' |' ) == 0 ) {
+					$backlinksProcessed[] = $backlink;
+				}
+			}
+			$result = [ 'outbound_links_txt' => $backlinksProcessed ];
+		}
+		return $result;
 	}
 	
 	/**
@@ -137,10 +168,9 @@ class DefaultContent extends AbstractService
 		
 		$dom = new \simple_html_dom( html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
 		if ( $dom->root ) {
-			/**
-			 * @todo reintroduce once we have 4.1 figured out
-			 * $result = array_merge( $result, $this->extractInfoboxes( $dom, $result ) );
-			 */
+			if ( $this->getService()->getGlobal( 'ExtractInfoboxes' ) ) {
+				$result = array_merge( $result, $this->extractInfoboxes( $dom, $result ) );
+			}
 			$this->removeGarbageFromDom( $dom );
 			$plaintext = $this->getPlaintextFromDom( $dom );
 			$paragraphs = $this->getParagraphsFromDom( $dom );
@@ -175,8 +205,7 @@ class DefaultContent extends AbstractService
 					$infoboxCells = $row->find( 'td' );
 					// we only care about key-value pairs in infoboxes
 					if ( count( $infoboxCells ) == 2 ) {
-						// should there be a separator?
-						$result['infoboxes_txt'][] = preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' ' . $infoboxCells[1]->plaintext  );
+						$result['infoboxes_txt'][] = preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
 					}
 				}
 			}
