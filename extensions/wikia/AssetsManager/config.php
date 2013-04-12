@@ -42,7 +42,6 @@ $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// core
-		'//resources/wikia/modules/cache.js',
 		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.min.js',
 		'//extensions/wikia/AdEngine/js/gw.config.js',
 
