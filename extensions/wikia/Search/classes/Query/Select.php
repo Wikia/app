@@ -131,7 +131,7 @@ class Select
 	 * @return boolean
 	 */
 	public function hasTerms() {
-		return strlen( preg_replace( '/[^a-zA-Z0-9]/', '', $this->getSanitizedQuery() ) ) > 0;
+		return strlen( trim( $this->getSanitizedQuery() ) ) > 0;
 	} 
 	
 	/**
