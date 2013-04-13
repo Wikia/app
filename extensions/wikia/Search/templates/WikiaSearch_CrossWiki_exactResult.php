@@ -24,6 +24,5 @@
             <li><?= $videoMsg ?></li>
         </ul>
         <?= $app->getView( 'WikiaSearch', 'toparticles', [ 'resultSet' => $resultSet ] ) ?>
-        ?>
     </div>
 </li>
