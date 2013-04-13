@@ -179,6 +179,7 @@ if (Wikia.AbTest && Wikia.AbTest.inGroup('FLOATING_MEDREC_TESTS', 'FLOATER_DISAB
 if (
 	window.top === window.self
 	&& window.wgEnableAdsInContent
+	&& window.wgShowAds
 	&& !window.wgIsMainpage
 	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search')
 ) {
