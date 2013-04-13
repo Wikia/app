@@ -4,9 +4,9 @@
     <ul>
     <?php foreach ( $resultSet->getTopPages() as $articleId ): ?>
         <?php $title = GlobalTitle::newFromID( $articleId, $wid ); ?>
-        <? if ( $article ): ?>
+        <? if ( $title ): ?>
         <li>
-            <a href="<?=$title->getFullUrl()?>"><?=$title->getText()?></a>: <span class="subtle"><?=$title->getContent()?></span>
+            <a href="<?=$title->getFullUrl()?>"><?=$title->getText()?></a>
         </li>
         <? endif; ?>
     <?php endforeach; ?>
