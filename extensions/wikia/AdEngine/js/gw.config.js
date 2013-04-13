@@ -14,7 +14,7 @@
  */
 
 (function (window, document, location, ghostwriter, abTest) {
-	'use strict';;
+	'use strict';
 
 	// Save the original document.write method
 	document.nativeWrite = document.write;
