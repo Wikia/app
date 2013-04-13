@@ -1,4 +1,3 @@
-
 function Room(client) {
 //	var path = client.wgServer + client.wgArticlePath;
 	this.articlePath = client.wgServer + client.wgArticlePath;
@@ -21,7 +20,7 @@ Room.prototype.processText = function(text) {
 
 	// Linkify local wiki links (eg: http://thiswiki.wikia.com/wiki/Page_Name ) as shortened links (like bracket links)
 	var localWikiLinkReg = this.articlePath.replace(/\$1/, "([-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])");
-	text = text.replace(new RegExp(localWikiLinkReg, "i"), "[[$1]]"); // easy way... will re-write this to a shortened link later in the function.
+	text = text.replace(new RegExp(localWikiLinkReg, "i"), "[[$1]]".replace(/_/g," ")); // easy way... will re-write this to a shortened link later in the function.
 
 	// Linkify http://links
 	var exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])/ig;
