@@ -63,16 +63,18 @@ class WikiaHubsV2Hooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		if( !empty($app->wg->EnableWikiaHomePageExt)) {
+		if( !empty($app->wg->EnableWikiaHomePageExt) ) {
 			$model = new WikiaHubsV2HooksModel();
 			
 			$title = Title::newFromURL($url);
-			$dbKeyName = $title->getDBKey();
-			$dbKeyNameSplit = explode('/', $dbKeyName);
-			$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
+			if( $title instanceof Title ) {
+				$dbKeyName = $title->getDBKey();
+				$dbKeyNameSplit = explode('/', $dbKeyName);
+				$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-			if ( $model->isHubsPage($hubName) && isset($dbKeyNameSplit[1])) {
-				$url = $model->getCanonicalHrefForHub($hubName, $url);
+				if ( $model->isHubsPage($hubName) && isset($dbKeyNameSplit[1])) {
+					$url = $model->getCanonicalHrefForHub($hubName, $url);
+				}
 			}
 		}
 
