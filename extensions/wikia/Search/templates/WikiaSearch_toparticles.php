@@ -1,12 +1,15 @@
+<?php $wid = $resultSet->getHeader( 'wid' ) ?>
+<? if (! empty( $wid ) ): ?>
 <div class="result-top-articles">
     <ul>
     <?php foreach ( $resultSet->getTopPages() as $articleId ): ?>
-        <?php $article = Article::newFromID( $articleId ); ?>
+        <?php $title = GlobalTitle::newFromID( $articleId, $wid ); ?>
         <? if ( $article ): ?>
         <li>
-            <a href="<?=$article->getTitle()->getFullUrl()?>"><?=$article->getTitle()->getText()?></a>: <span class="subtle"><?=(new ArticleService( $article ))->getTextSnippet( 60 )?></span>
+            <a href="<?=$title->getFullUrl()?>"><?=$title->getText()?></a>: <span class="subtle"><?=$title->getContent()?></span>
         </li>
         <? endif; ?>
     <?php endforeach; ?>
     </ul>
 </div>
+<?php endif; ?>
