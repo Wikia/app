@@ -1,6 +1,20 @@
 <?php
+global $IP;
+require_once(__DIR__ . '/../../commandLine.inc');
+require_once($IP . '/lib/GoogleWebmasterTools/WebmasterToolsService.php');
+echo "Not implemented !\n";
+die();
+$service = new WebmasterToolsService();
 
-require_once( __DIR__.'/../commandLine.inc' );
+var_dump($service->getInfo( 'caillou' ));
+//var_dump($service->getInfo( 'visualkei' ));
+//var_dump($service->verify( 'visualkei', null, true ));
+//var_dump($service->add( 5915, new UserCredentials('wikiawebtools001', 'Ugah6zeiCh')));
+//var_dump($service->verify( 5915, new UserCredentials('wikiawebtools001', 'Ugah6zeiCh')));
+//var_dump ();
+//var_dump($service->getInfo( 3490 ));
+//var_dump($service->getInfo( 1346 ));
+
 
 //UserMailer::send(
 //	new MailAddress( 'adamr@wikia-inc.com' ),
