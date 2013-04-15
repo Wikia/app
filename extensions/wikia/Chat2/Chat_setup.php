@@ -168,6 +168,10 @@ function chatAjaxonUserGetRights( $user, &$aRights ) {
 $wgAjaxExportList[] = 'ChatAjax';
 function ChatAjax() {
 
+	if($wgChatDebugEnabled){
+		Wikia::log( __METHOD__, "", "Chat debug:" . json_encode($_REQUEST));
+	}
+
 	global $wgRequest, $wgUser, $wgMemc;
 	$method = $wgRequest->getVal('method', false);
 
