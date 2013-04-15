@@ -7,6 +7,7 @@
 class WAMService extends Service {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
+	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
 
 	protected $defaultIndexOptions = array(
 		'currentTimestamp' => null,
@@ -235,6 +236,13 @@ class WAMService extends Service {
 			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
 		}
 
+		if ($options['excludeBlacklist']) {
+			$blacklistIds = $this->getIdsBlacklistedWikis();
+			if (!empty($blacklistIds)) {
+				$conds[] = 'fw1.wiki_id NOT IN (' . $db->makeList( $blacklistIds ) . ')';
+			}
+		}
+
 		return $conds;
 	}
 
@@ -273,5 +281,26 @@ class WAMService extends Service {
 			'dw' => 'dimension_wikis'
 		);
 		return $tables;
+	}
+
+	protected function getIdsBlacklistedWikis() {
+		$blacklistIds = array();
+		$blacklistExt = WikiFactory::getVarByName(self::WAM_BLACKLIST_EXT_VAR_NAME, null);
+
+		if( $blacklistExt->cv_id ) {
+			$blacklistIds = WikiaDataAccess::cache(
+				F::app()->wf->SharedMemcKey(
+					'wam_blacklist',
+					$blacklistExt->cv_id
+				),
+				24 * 60 * 60,
+				function () use ( $blacklistExt ) {
+					$blacklistWikis = WikiFactory::getListOfWikisWithVar( $blacklistExt->cv_id, 'bool', '=', true, true );
+					return array_keys( $blacklistWikis );
+				}
+			);
+		}
+
+		return $blacklistIds;
 	}
 }
