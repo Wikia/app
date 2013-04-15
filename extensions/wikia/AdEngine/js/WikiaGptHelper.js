@@ -155,6 +155,8 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 	}
 
 	function flushAds() {
+		loadGpt();
+
 		log(['googletag.cmd.push', 'enableServices'], 4, logGroup);
 		log(['googletag.cmd.push', 'display', slotsToDisplay], 4, logGroup);
 
