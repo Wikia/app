@@ -38,13 +38,16 @@ $lastUpload = ( !empty( $row ) ) ? reset( $row ) : date( 'Y-m-d', time() );
 //TODO: get date from command line?
 //TODO: get certain wiki from command line?
 
-$time = strtotime( '2013-05-01' );
-$formatedDate = date('Ymd', $time);
-
+//get date from command line
+if ( isset( $argv[ 2 ] ) ) {
+	$time = strtotime( $argv[ 2 ] );
+	$formatedDate = date('Ymd', $time);
+}
 $where = array(
-	"upload_date IS NULL OR date_format( upload_date, '%Y%m%d' ) <= date'{$formatedDate}'",
 	'ws.wiki_id = cl.city_id'
 );
+$where[] = isset( $formatedDate ) ? "upload_date IS NULL OR date_format( upload_date, '%Y%m%d' ) <= date'{$formatedDate}'" :
+	"upload_date IS NULL";
 
 $result = $db->select(
 	array( 'ws' => 'webmaster_sitemaps', 'cl' => 'city_list' ),
@@ -55,13 +58,14 @@ $result = $db->select(
 
 while( $row = $result->fetchRow() ) {
 	//connect to google and try to upload sitemap
-	//if success
-	$db->update(
-		array( 'webmaster_sitemaps' ),
-		array( 'user_id' => $userId, 'upload_date' => 'NOW()' ),
-		array( "wiki_id = {$id}"),
-		'WebmasterSitemapsUploader'
-	);
 	print_r( $row );
+
+	//if success
+//	$db->update(
+//		array( 'webmaster_sitemaps' ),
+//		array( 'user_id' => $userId, 'upload_date' => 'NOW()' ),
+//		array( "wiki_id = {$id}"),
+//		'WebmasterSitemapsUploader'
+//	);
 }
 
