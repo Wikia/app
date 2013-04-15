@@ -93,8 +93,8 @@ __NOEDITSECTION__',
 	'wikiahome-footer-community' => '===Community===
 *[http://www.community.wikia.com Community Central]
 *[http://community.wikia.com/wiki/Admin_Central:Main_Page Founders & Admins]
-*[http://www.wikia.com/Special:Contact Contact Support]
-*[http://www.wikia.com/Stars Wikia Stars]$1
+*[http://www.wikia.com/Special:Contact Contact Support]$1
+*[http://www.wikia.com/Stars Wikia Stars]
 *[http://help.wikia.com/wiki/Help:Contents Help]
 __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia Everywhere===
@@ -216,8 +216,8 @@ $messages['de'] = array(
 	'wikiahome-footer-community' => '===Community===
 *[http://de.community.wikia.com Community-Wiki]
 *[http://de.community.wikia.com/wiki/Admin-Bereich:Hauptseite Gründer- und Admins ]
-*[http://de.wikia.com/wiki/Spezial:Kontakt Wikia-Support]
-*[http://www.wikia.com/Stars Wikia Stars (en)]$1
+*[http://de.wikia.com/wiki/Spezial:Kontakt Wikia-Support]$1
+*[http://www.wikia.com/Stars Wikia Stars (en)]
 *[http://hilfe.wikia.com Hilfe]',
 	'wikiahome-footer-everywhere' => '===Wikia unterwegs===
 *[http://de.wikia.com/Mobil Wikia mobil]
@@ -330,8 +330,8 @@ __NOEDITSECTION__',
 	'wikiahome-footer-community' => '===Comunidad===
 *[http://comunidad.wikia.com/wiki/Wikia Comunidad Hispana]
 *[http://comunidad.wikia.com/wiki/Foro:%C3%8Dndice Foro]
-*[http://es.wikia.com/Especial:Contactar Contacta con Wikia]
-*[http://www.wikia.com/Stars Wikia Stars (en)]$1
+*[http://es.wikia.com/Especial:Contactar Contacta con Wikia]$1
+*[http://www.wikia.com/Stars Wikia Stars (en)]
 *[http://ayuda.wikia.com/wiki/Ayuda:Contenidos Ayuda]
 __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia para todos===
@@ -440,8 +440,8 @@ __NOEDITSECTION__',
 	'wikiahome-footer-community' => '===Communauté===
 *[http://communaute.wikia.com Wiki des communautés]
 *[http://communaute.wikia.com/wiki/Centre_des_administrateurs:Accueil Fondateurs et administrateurs]
-*[http://fr.wikia.com/Special:Contact Contacter le support]
-*[http://www.wikia.com/Stars Wikia Stars (en)]$1
+*[http://fr.wikia.com/Special:Contact Contacter le support]$1
+*[http://www.wikia.com/Stars Wikia Stars (en)]
 *[http://aide.wikia.com/wiki/Aide:Contenu Aide]
 __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia en tous lieux===
