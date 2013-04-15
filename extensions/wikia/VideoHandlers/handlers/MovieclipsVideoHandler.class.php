@@ -13,9 +13,11 @@ class MovieclipsVideoHandler extends VideoHandler {
 		$height =  $this->getHeight( $width );
 		
 		$url = $this->getEmbedUrl();
+
+		$sizeString = $this->getSizeString( $width, $height );
 		
 		$embedCode = <<<EOT
-<object width="$width" height="$height" type="application/x-shockwave-flash" data="$url/" style="background: #000000; display:block; overflow: hidden;">
+<object $sizeString type="application/x-shockwave-flash" data="$url/" style="background: #000000; display:block; overflow: hidden;">
 	<param name="movie" value="$url" />
 	<param name="allowfullscreen" value="true" />
 	<param name="bgcolor" value="#000000" />

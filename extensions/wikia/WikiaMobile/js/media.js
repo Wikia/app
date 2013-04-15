@@ -187,11 +187,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 						if(data.error){
 							handleError(data.error);
 						}else{
-							//if iframe or object have width and hight andorid 2.3.6 have probles with resizing it
-							var video = '<div class=wkVi>' + data.embedCode.replace(/(width|height)="\d*\"/gi, '') + '</div>';
-
-							videoCache[imgTitle] = video;
-							currentImage.innerHTML = video;
+							videoCache[imgTitle] = data.embedCode;
+							currentImage.innerHTML = data.embedCode;
 						}
 					}
 				);

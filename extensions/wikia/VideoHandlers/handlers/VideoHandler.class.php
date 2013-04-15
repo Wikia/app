@@ -25,6 +25,20 @@ abstract class VideoHandler extends BitmapHandler {
 	protected static $autoplayParam = "";
 	protected static $autoplayValue = "";
 
+	function getSizeString( $width, $height, $type = '' ) {
+
+		if ( !F::app()->checkSkin( 'wikiamobile' ) ) {
+			if( $type == 'inline' ) {
+				return "style='width: {$width}px; height: {$height}px;'";
+			} else {
+				return "width='$width' height='$height'";
+			}
+
+		}
+
+		return '';
+	}
+
 	/**
 	 * @param $image File
 	 * @return array|bool

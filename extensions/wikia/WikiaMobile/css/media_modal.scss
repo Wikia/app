@@ -25,6 +25,12 @@ $chev-color: rgb(157,157,157);
 			-webkit-tap-highlight-color: rgba(0,0,0,0);
 		}
 	}
+
+	video, iframe, object, embed {
+		width: 80%;
+		height: auto;
+		min-height: 70%;
+	}
 }
 
 .chnImg {
@@ -87,4 +93,3 @@ $chev-color: rgb(157,157,157);
 	background-repeat: no-repeat;
 	background-position: center;
 }
-
