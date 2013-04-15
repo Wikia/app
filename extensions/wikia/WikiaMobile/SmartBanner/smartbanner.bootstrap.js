@@ -37,7 +37,7 @@ window.addEventListener('load', function(){
 						button: msg('wikiasmartbanner-view'),
 						inAppStore: msg('wikiasmartbanner-appstore'), // Text of price for iOS
 						inGooglePlay: msg('wikiasmartbanner-googleplay'), // Text of price for Android
-						icon: '/extensions/wikia/GameGuides/images/gameguides_logo.png' // The URL of the icon (defaults to <meta name="apple-touch-icon">)
+						icon: window.wgExtensionsPath + '/wikia/GameGuides/images/gameguides_logo.png' // The URL of the icon (defaults to <meta name="apple-touch-icon">)
 					})
 				})
 			});
