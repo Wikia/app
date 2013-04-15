@@ -21,10 +21,12 @@
 	</noscript>
 </div>
 
+<p><small><?= wfMessage('lyricfind-song-by', $artist)->parse() ?></small></p>
+
 <div class="lyricbox">
-<p><?= $lyric ?></p>
+	<p><?= $lyric ?></p>
 </div>
 
 <div class="lyricfind-branding">
-	<?= wfMessage('lyricfind-copyright')-> parse() ?>
+	<?= wfMessage('lyricfind-copyright')->parse() ?>
 </div>
