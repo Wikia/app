@@ -4106,7 +4106,7 @@ class User {
 	 * Will have no effect for anonymous users.
 	 */
 	public function incEditCount() {
-		global $wgMemc, $wgCityId;
+		global $wgMemc, $wgCityId, $wgEnableEditCountLocal;
 		if( !$this->isAnon() ) {
             // wikia change, load always from first cluster when we use
             // shared users database
