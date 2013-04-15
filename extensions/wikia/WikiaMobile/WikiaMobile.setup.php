@@ -138,6 +138,8 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			//ads
 			'wgDartCustomKeyValues',
 			'cityShort',
+			'wikiaPageIsHub',
+			'wikiaPageType',
 
 			//server/wiki
 			'wgServer',
