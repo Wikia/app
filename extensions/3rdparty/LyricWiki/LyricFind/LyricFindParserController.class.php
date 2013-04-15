@@ -32,12 +32,27 @@ class LyricFindParserController extends WikiaController {
 	}
 
 	/**
+	 * @see http://stackoverflow.com/questions/3005116/how-to-convert-all-characters-to-their-html-entity-equivalent-using-php
+	 */
+	private static function encodeUtf($str) {
+		$str = mb_convert_encoding($str , 'UTF-32', 'UTF-8');
+		$t = unpack("N*", $str);
+		$t = array_map(function($n) {
+			return $n != 10 ? "&#$n;" : "\n"; // keep newlines
+		}, $t);
+
+		return implode("", $t);
+	}
+
+	/**
 	 * Encode and obfuscate lyric content
 	 *
 	 * @param $lyric string content
 	 * @return string processed content
 	 */
 	private static function encodeLyric($lyric) {
+		$lyric = self::encodeUtf($lyric);
+
 		$lyric = strtr(trim($lyric), [
 			"\n\n" => '</p><p>',
 			"\n" => '<br>',

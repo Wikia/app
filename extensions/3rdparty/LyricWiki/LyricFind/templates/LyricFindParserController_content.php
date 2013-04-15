@@ -24,3 +24,7 @@
 <div class="lyricbox">
 <p><?= $lyric ?></p>
 </div>
+
+<div class="lyricfind-branding">
+	<?= wfMessage('lyricfind-copyright')-> parse() ?>
+</div>
