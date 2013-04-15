@@ -26,4 +26,15 @@ class LyricFindHooks extends WikiaObject {
 
 		return true;
 	}
+
+	/**
+	 * Register <lyricfind> parser hook
+	 *
+	 * @param Parser $parser parser instance
+	 * @return bool true
+	 */
+	public function onParserFirstCallInit(Parser $parser) {
+		$parser->setHook(LyricFindParserController::NAME, 'LyricFindParserController::render');
+		return true;
+	}
 }
