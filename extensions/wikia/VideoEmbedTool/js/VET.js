@@ -35,19 +35,11 @@
 	var VET_DEFAULT_WIDTH = 335;
 	var VET_thumbSize = VET_DEFAULT_WIDTH;	// variable that can change later, defaulted to DEFAULT
 
-	var VET_tracking = (function() {
-		var config = {
-				action: Wikia.Tracker.ACTIONS.CLICK,
-				category: 'vet',
-				trackingMethod: 'both'
-			},
-			slice = [].slice,
-			track = ( window.WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
-
-		return function() {
-			track.apply( track, [ config ].concat( slice.call( arguments ) ) );
-		};
-	})();
+	var VET_tracking = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
+		action: Wikia.Tracker.ACTIONS.CLICK,
+		category: 'vet',
+		trackingMethod: 'both'
+	});
 
 	// ajax call for 2nd screen (aka embed screen)
 	function VET_editVideo() {
@@ -238,14 +230,6 @@
 	}
 
 	function VET_show( options ) {
-		// Handle MiniEditor focus
-		// (BugId:18713)
-		if (window.WikiaEditor) {
-			var wikiaEditor = WikiaEditor.getInstance();
-			if(wikiaEditor.config.isMiniEditor) {
-				wikiaEditor.plugins.MiniEditor.hasFocus = true;
-			}
-		}
 
 		/* set options */
 		VET_options = options;
@@ -551,14 +535,8 @@
 
 		VET_loader.modal.closeModal();
 
-		// Handle MiniEditor focus
-		// (BugId:18713)
-		if (window.WikiaEditor) {
-			var wikiaEditor = WikiaEditor.getInstance();
-			if(wikiaEditor.config.isMiniEditor) {
-				wikiaEditor.editorFocus();
-				wikiaEditor.plugins.MiniEditor.hasFocus = false;
-			}
+		if ($.isFunction(VET_options.onClose)) {
+			VET_options.onClose();
 		}
 
 		UserLogin.refreshIfAfterForceLogin();
