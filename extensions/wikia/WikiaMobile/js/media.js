@@ -178,7 +178,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 					{
 						articleId: wgArticleId,
 						fileTitle: imgTitle,
-						width: window.innerWidth - 100
+						width: document.width - 100
 					}
 				).done(
 					function(data) {
