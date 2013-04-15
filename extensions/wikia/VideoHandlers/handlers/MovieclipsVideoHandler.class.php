@@ -15,9 +15,15 @@ class MovieclipsVideoHandler extends VideoHandler {
 		$url = $this->getEmbedUrl();
 
 		$sizeString = $this->getSizeString( $width, $height );
+
+		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+			$style = '';
+		} else {
+			$style = "style='background: #000000; display:block; overflow: hidden;'";
+		}
 		
 		$embedCode = <<<EOT
-<object $sizeString type="application/x-shockwave-flash" data="$url/" style="background: #000000; display:block; overflow: hidden;">
+<object $sizeString type="application/x-shockwave-flash" data="$url/" $style>
 	<param name="movie" value="$url" />
 	<param name="allowfullscreen" value="true" />
 	<param name="bgcolor" value="#000000" />
