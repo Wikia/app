@@ -1135,3 +1135,10 @@ $wgEnableAdEngineExt = true;
  */
 $app->registerClass( 'TrustedProxyService', "$IP/includes/wikia/services/TrustedProxyService.class.php" );
 $app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'onIsTrustedProxy' );
+
+/**
+ * @name $wgChatDebugEnabled
+ * Enables verbose logging from chat
+ */
+//$wgChatDebugEnabled = false;
+
