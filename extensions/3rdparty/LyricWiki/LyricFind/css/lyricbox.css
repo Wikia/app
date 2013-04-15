@@ -24,3 +24,10 @@
 	color: black;
 	background-color: #FFC;
 }
+
+.rtMatcher a {
+	color: red;
+	font-size: 11pt;
+	font-weight: bold;
+	text-decoration: underline;
+}

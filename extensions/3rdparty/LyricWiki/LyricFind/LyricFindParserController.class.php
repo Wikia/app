@@ -21,11 +21,18 @@ class LyricFindParserController extends WikiaController {
 		$data = array_merge($arguments, [
 			'lyric' => self::encodeLyric($content)
 		]);
+
+		// RingTone URL
+		$data['ringtoneUrl'] = 'http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp' . http_build_query([
+			'sid' => 'WILWros',
+			'artist' => $data['artist'],
+			'song' => $data['song']
+		]);
+
 		$html = F::app()->renderPartial('LyricFindParser', 'content', $data);
 
+		// add a category + CSS and JavaScript
 		$parser->getOutput()->addCategory(self::CATEGORY, self::CATEGORY);
-
-		// add CSS and JavaScript
 		$parser->getOutput()->addModules('ext.lyrics.lyricbox');
 
 		wfProfileOut(__METHOD__);
