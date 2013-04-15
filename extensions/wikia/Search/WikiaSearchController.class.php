@@ -67,7 +67,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
 	}
-	
+
 	/**
 	 * Deprecated functionality for indexing.
 	 */
@@ -263,13 +263,31 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
 		$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
+
+//		$wikiId = $resultSet->getHeader( 'wid' );
+//		$wikiDS = new WikiDataSource( $wikiId );
+//
+//		$response = ApiService::foreignCall(
+//			$wikiDS->getDbName(),
+//			array(
+//				'controller' => 'ArticlesApi',
+//				'method' => 'getTop'
+//			),
+//			'wikia.php' );
+
 		$image = $resultSet->getHeader( 'image' );
 		$imageUrl = empty( $image ) ? $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png' : (new \WikiaHomePageHelper)->getImageUrl( $image, 180, 120 );
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="-1" data-event="search_click_wiki-';
 		$thumbTracking .= empty( $image ) ? 'no-thumb"' : 'thumb"';
+
+		//use default exacteResult template
+		$template = 'exactResult';
+		if ( $this->isCorporateWiki() ) {
+			$template = 'CrossWiki_exactResult';
+		}
 		$this->setVal(
 				'wikiMatch',
-				$this->getApp()->getView( 'WikiaSearch', 'CrossWiki_exactResult', 
+				$this->getApp()->getView( 'WikiaSearch', $template,
 						[ 'pos' => -1, 
 						'resultSet' => $resultSet, 
 						'pagesMsg' => $resultSet->getArticlesCountMsg(), 
