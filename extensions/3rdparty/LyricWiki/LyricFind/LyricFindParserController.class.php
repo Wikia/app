@@ -23,9 +23,10 @@ class LyricFindParserController extends WikiaController {
 		]);
 		$html = F::app()->renderPartial('LyricFindParser', 'content', $data);
 
-		#var_dump($data); print_pre($html); die();
-
 		$parser->getOutput()->addCategory(self::CATEGORY, self::CATEGORY);
+
+		// add CSS and JavaScript
+		$parser->getOutput()->addModules('ext.lyrics.lyricbox');
 
 		wfProfileOut(__METHOD__);
 		return $html;

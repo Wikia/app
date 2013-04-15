@@ -29,3 +29,15 @@ $app->registerHook('OasisSkinAssetGroups', 'LyricFindHooks', 'onOasisSkinAssetGr
 // parser hhok
 $app->registerHook('ParserFirstCallInit', 'LyricFindHooks', 'onParserFirstCallInit');
 $app->registerClass('LyricFindParserController', $dir . '/LyricFindParserController.class.php');
+
+// front-end for pages with lyrics
+$wgResourceModules['ext.lyrics.lyricbox'] = array(
+	'scripts' => 'js/lyricbox.js',
+	'styles' => 'css/lyricbox.css',
+	'dependencies' => array(
+		'amd',
+		'wikia.mw',
+	),
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => '3rdparty/LyricWiki/LyricFind'
+);
