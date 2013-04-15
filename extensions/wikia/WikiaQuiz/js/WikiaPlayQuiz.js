@@ -60,6 +60,7 @@ var WikiaQuiz = {
 			WikiaQuiz.trackEvent('click-link-text', 'moreinfo', -1, $(e.target).attr('href'), e );
 		});
 
+		$.loadFacebookAPI();
 
 		$().log('init', 'WikiaQuiz');
 	},
