@@ -1688,6 +1688,7 @@
 
 		// setup tabbed section
 		setupTabs: function(tabsWrapper, switchCallback) {
+			var self = this;
 			var tabs = tabsWrapper.find('.tabs,.wikia-tabs').find('a');
 			var tabsContent = tabsWrapper.find('.WikiaPhotoGalleryOptionsTab');
 
@@ -1715,6 +1716,12 @@
 				ev.preventDefault();
 
 				var index = $(this).index(tabs);
+				var label = (index === 0 ? 'tab-layout' : (index === -1 ? 'tab-borders' : false));
+				if (label !== false) {
+					self.track({
+						label: label
+					});
+				}
 				selectTab(index);
 			});
 		},
