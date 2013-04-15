@@ -72,11 +72,11 @@ $messages['fr'] = array(
 	'wam-Lifestyle' => 'Mode de vie',
 	'wampage-header-wam' => 'Qu\'est-ce que le classement WAM ?',
 	'wampage-header-faq' => 'FAQ',
-	'wampage-content' => 'Le Moniteur d\'Activité Wikia (WAM) est un indicateur de la santé et de la vitalité d\'un wiki. WAM est un outil de mesure développé par Wikia pour rassembler un certains nombre d\'indicateurs en un seul index, comme la note Billboard ou Parker.
+	'wampage-content' => 'Le Moniteur d\'Activité Wikia (WAM) est un indicateur de la santé et de la vitalité d\'un wiki. WAM est un outil de mesure développé par Wikia pour rassembler un certains nombre d\'indicateurs en un seul index, comme le classement Billboard ou Parker. Il est basé sur un algorithme pondérant le nombre d\'utilisateurs uniques, de pages vues de l\'élan, du contenu multimédia et plus.
 
-Le WAM est calculé chaque jour pour les 5000 wikis plus gros wikis et inclut un classement global et trié ainsi qu\'une note comprise entre 0 et 100. Les classements WAM sont sensibles aux événements du monde réel et varient souvent, aussi revenez régulièrement pour voir les dernières tendances. Le WAM peut aussi être consulté tous les jours sur nos pages de thème [[Jeux vidéo]], [[Divertissement]] et [[Mode de vie]].
+	Le WAM est calculé chaque jour pour les 5000 wikis plus gros wikis et inclut un classement global et trié ainsi qu\'une note comprise entre 0 et 100. Les classements WAM sont sensibles aux événements du monde réel et varient souvent, aussi revenez régulièrement pour voir les dernières tendances. Le WAM peut aussi être consulté tous les jours sur nos pages de thème [[w:c:fr:Jeux vidéo|Jeux vidéo]], [[w:c:fr:Divertissement|Divertissement]] et [[w:c:fr:Mode de vie|Mode de vie]].
 
-[[$1|Foire aux questions]]',
+[[$1|Foire Aux Questions]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===Comment le WAM est-il calculé ?===
 Le classement WAM est une combinaison du trafic, de l\'engagement et de la croissance. Nous ne pouvons pas rentrer dans les détails car nous ne voulons pas que les wikis essaient de manipuler le classement. Mais soyez sûr que nous avons intégré tous les ingrédients essentiels pour un wiki réussi et florissant.
 
