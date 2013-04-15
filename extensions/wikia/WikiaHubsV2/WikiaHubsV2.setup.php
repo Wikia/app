@@ -18,6 +18,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => 1.0
 );
 
+$app->registerClass('WikiaHubsV2Page', $dir . 'WikiaHubsV2Page.class.php');
+
 // constroller classes
 $app->registerClass('WikiaHubsV2Controller', $dir . 'WikiaHubsV2Controller.class.php');
 $app->registerClass('WikiaHubsV2SuggestController', $dir . 'WikiaHubsV2SuggestController.class.php');
