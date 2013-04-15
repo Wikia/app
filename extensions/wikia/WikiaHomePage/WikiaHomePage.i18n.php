@@ -435,7 +435,7 @@ __NOEDITSECTION__',
 *[https://twitter.com/#!/wikia_fr Twitter]
 __NOEDITSECTION__',
 	'wikiahome-footer-community' => '===Communauté===
-*[http://communaute.wikia.com Community Central]
+*[http://communaute.wikia.com Wiki des communautés]
 *[http://communaute.wikia.com/wiki/Centre_des_administrateurs:Accueil Fondateurs et administrateurs]
 *[http://fr.wikia.com/Special:Contact Contacter le support]$1
 *[http://aide.wikia.com/wiki/Aide:Contenu Aide]
