@@ -1,6 +1,6 @@
 <?php
 
-class SectionIteratorObjects extends Mustache {
+class SectionIteratorObjects extends MustachePHP {
 	public $start = "It worked the first time.";
 
 	protected $_data = array(

@@ -22,7 +22,7 @@ class MustacheLoaderTest extends PHPUnit_Framework_TestCase {
 			'bar'    => 'BAR',
 		);
 		$output = 'FOO BAR';
-		$m = new Mustache();
+		$m = new MustachePHP();
 		$partials = new MustacheLoader(dirname(__FILE__).'/fixtures');
 		$this->assertEquals($output, $m->render($template, $data, $partials));
 	}
@@ -35,7 +35,7 @@ class MustacheLoaderTest extends PHPUnit_Framework_TestCase {
 			'bar'    => 'BAR',
 		);
 		$output = 'FOO BAR';
-		$m = new Mustache();
+		$m = new MustachePHP();
 		$partials = new DifferentMustacheLoader();
 		$this->assertEquals($output, $m->render($template, $data, $partials));
 	}
