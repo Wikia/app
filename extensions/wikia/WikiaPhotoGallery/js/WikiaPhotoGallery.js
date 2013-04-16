@@ -547,7 +547,7 @@
 			this.target = params.target;
 
 			this.track({
-				label: 'open'
+				action: Wikia.Tracker.ACTIONS.OPEN
 			});
 
 			// setup search field
@@ -2224,7 +2224,7 @@
 					},
 					onClose: function() {
 						self.track({
-							label: 'exit-button-close'
+							action: Wikia.Tracker.ACTIONS.CLOSE
 						});
 					}
 				}

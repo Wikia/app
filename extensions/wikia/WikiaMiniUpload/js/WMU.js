@@ -374,7 +374,7 @@ function WMU_loadMainFromView() {
 
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	WMU_track({
-		label: 'open'
+		action: Wikia.Tracker.ACTIONS.OPEN
 	});
 
 	// reset mode to support normal editor usage
@@ -1253,7 +1253,7 @@ function WMU_close(e) {
 	}
 
 	WMU_track({
-		label: 'close'
+		action: Wikia.Tracker.ACTIONS.CLOSE
 	});
 
 	WMU_modal.hideModal();
