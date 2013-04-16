@@ -1,0 +1,91 @@
+#phalanx-input-filter .blue {
+	margin: 4px 0px 4px 4px;
+}
+
+#phalanx-feedback-msg .error {
+	color: red;
+}
+
+#phalanx-feedback-msg {
+	color: green;
+}
+
+#phalanx-block-texts .left,
+#phalanx-input-filter .left-spacer,
+#phalanx-block-optionals .left {
+	display: block;
+	float: left;
+	font-weight: bold;
+	margin: 6px;
+	text-align: right;
+}
+
+#phalanx-input-filter .left-spacer {
+	clear: both;
+}
+
+#phalanx-mainframe .clear {
+	clear: both;
+}
+
+#phalanx-check-area {
+	clear: both;
+}
+
+#wpPhalanxSubmit {
+	margin: 6px 0 0 6px;
+}
+
+.phalanx-block-types {
+	margin-left: 75px;
+	width: 500px;
+}
+
+.phalanx-block-types label {
+	display: inline-block;
+	margin: 6px 0px 0px 10px;
+	text-align: left;
+	width: 220px;
+}
+
+#phalanx-check-label {
+	font-size: 110%;
+	font-weight: bold;
+}
+
+#phalanx-check-results li {
+	border-bottom: 1px dashed #778899;
+	font-size: 11px;
+	margin-bottom: 0.1em;
+	padding-bottom: 2px;
+}
+
+#phalanx-check-results .blockContent {
+	display: inline-block;
+	max-width: 600px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#phalanx-check-results .removed {
+	opacity: 0.2;
+}
+
+#phalanx-content-area ul {
+	list-style: none;
+	margin: 0;
+}
+
+.phalanx-target {
+	color:#3B7F07;
+	font-size:12px;
+}
+
+#phalanx-check-results .unblock {
+	float: right;
+}
+
+#entersingle {
+	vertical-align: top;
+}

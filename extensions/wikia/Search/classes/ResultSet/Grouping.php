@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\ResultSet\Grouping
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config;
+use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config, DataMartService;
 /**
  * This class handles sub-groupings of results for inter-wiki search.
  * @author relwell
@@ -12,6 +12,12 @@ use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wi
  */
 class Grouping extends Base
 {
+	
+	/**
+	 * Stores top pages' IDs
+	 * @var array
+	 */
+	protected $topPages = [];
 
 	/**
 	 * The wrapper handling this particular grouping instance
@@ -35,6 +41,28 @@ class Grouping extends Base
 		$count = str_word_count( $desc );
 		$ellipses = $count > $wordCount ? '&hellip;' : '';
 		return empty( $desc ) ? '' : implode( ' ', array_slice( explode( ' ', $desc ), 0, $wordCount ) ) . $ellipses;
+	}
+	
+	/**
+	 * Returns the top four articles for this wiki
+	 * @return array of Articles
+	 */
+	public function getTopPages() {
+		if ( empty( $this->topPages ) ) {
+			$wikiId = $this->getHeader( 'wid' );
+			$articles = (new DataMartService)->getTopArticlesByPageview(
+					$wikiId,
+					null,
+					null,
+					false,
+					5 //compensation for Main Page
+					);
+			$mainId = $this->service->getMainPageIdForWikiId( $wikiId );
+			$counter = 0;
+			unset( $articles[$mainId] );
+			$this->topPages = array_slice( array_keys( $articles ), 0, 4 );
+		}
+		return $this->topPages;
 	}
 	
 	/**

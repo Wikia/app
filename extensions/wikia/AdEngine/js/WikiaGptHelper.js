@@ -5,7 +5,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 	var logGroup = 'WikiaGptHelper',
 		gptLoaded = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
-		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '/' + pageLevelParams.s2,
+		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 		slotsToDisplay = [],
 		doneCallbacks = {},// key: slot name, value: callback
 		googletag;
@@ -127,7 +127,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		params.pos = slotParams.slotname;
 		params.positionfixed = slotParams.positionfixed;
 		params.loc = slotParams.loc;
-		params.dcopt = slotParams.dcopt;
+		//params.dcopt = slotParams.dcopt;
 
 		log(['googletag.cmd.push', path, sizes, slotname, params], 4, logGroup);
 

@@ -50,6 +50,7 @@ class WikiaMobileService extends WikiaService {
 		$scripts = null;
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 		$advert = '';
+		$globalVariables = [];
 
 		F::build( 'JSMessages' )->enqueuePackage( 'WkMbl', JSMessages::INLINE );
 
@@ -127,12 +128,18 @@ class WikiaMobileService extends WikiaService {
 			}
 		}
 
-		//Bottom Scripts
-		//do not run this hook, all the functionalities hooking in this don't take into account the pecularity of the mobile skin
-		//$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
+		//Add GameGuides SmartBanner promotion on Gaming Vertical
+		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) ) {
+			foreach ( $assetsManager->getURL( 'wikiamobile_smartbanner_init_js' ) as $src ) {
+				$jsBodyFiles .= "<script src=\"{$src}\"></script>";
+			}
 
-		//AppCache will be disabled for the first several releases
-		//$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
+			$globalVariables['wgAppName'] = $this->wg->WikiaMobileSmartBannerConfig['name'];
+			$globalVariables['wgAppAuthor'] = $this->wg->WikiaMobileSmartBannerConfig['author'];
+
+			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig );
+		}
+
 		$this->response->setVal( 'jsHeadFiles', $jsHeadFiles );
 		$this->response->setVal( 'allowRobots', ( !$this->wg->DevelEnvironment ) );
 		$this->response->setVal( 'cssLinks', $cssLinks );
@@ -149,12 +156,12 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'wikiaNavigation', $nav );
 		$this->response->setVal( 'pageContent', $pageContent );
 		$this->response->setVal( 'wikiaFooter', $footer );
-		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts() );
+		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $globalVariables ) );
 
 		//tracking
 		$trackingCode = '';
 
-		if(!in_array( $this->wg->Request->getVal( 'action' ), array( 'edit', 'submit' ) ) ) {
+		if ( !in_array( $this->wg->Request->getVal( 'action' ), array( 'edit', 'submit' ) ) ) {
 			$trackingCode .= AnalyticsEngine::track(
 				'QuantServe',
 				AnalyticsEngine::EVENT_PAGEVIEW,

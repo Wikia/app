@@ -47,7 +47,20 @@ $messages['en'] = array(
 	'wikiahubs-404-message' => "We couldn't find the page you are looking for. [[$1|Click here]] to go to today's hub.",
 
 	// off-shot pages
-	'wikiahubs-popular-videos' => 'Popular videos'
+	'wikiahubs-popular-videos' => 'Popular videos',
+
+	// social icons
+	'wikiahubs-social-twitter-link-VideoGames' => 'https://twitter.com/#!/WikiaGames',
+	'wikiahubs-social-facebook-link-VideoGames' => 'http://www.facebook.com/Wikia',
+	'wikiahubs-social-googleplus-link-VideoGames' => 'http://gplus.to/wikia',
+
+	'wikiahubs-social-twitter-link-Entertainment' => 'https://twitter.com/#!/WikiaEnt',
+	'wikiahubs-social-facebook-link-Entertainment' => 'http://www.facebook.com/Wikia',
+	'wikiahubs-social-googleplus-link-Entertainment' => 'http://gplus.to/wikia',
+
+	'wikiahubs-social-twitter-link-Lifestyle' => 'https://twitter.com/#!/WikiaLifestyle',
+	'wikiahubs-social-facebook-link-Lifestyle' => 'http://www.facebook.com/Wikia',
+	'wikiahubs-social-googleplus-link-Lifestyle' => 'http://gplus.to/wikia',
 );
 
 $messages['de'] = array(
@@ -89,8 +102,20 @@ $messages['de'] = array(
 	'wikiahubs-404-message' => "Wir konnten die angegebene Seite leider nicht finden. Umfangreiche und aktuelle Inhalte finden sich in unserem [[$1|Hub von heute]].",
 
 	// off-shot pages
-	'wikiahubs-popular-videos' => 'Beliebte Videos'
+	'wikiahubs-popular-videos' => 'Beliebte Videos',
 
+	// social icons
+	'wikiahubs-social-twitter-link-VideoGames' => 'http://twitter.com/wikia_de',
+	'wikiahubs-social-facebook-link-VideoGames' => 'https://www.facebook.com/wikia.de',
+	'wikiahubs-social-googleplus-link-VideoGames' => '',
+
+	'wikiahubs-social-twitter-link-Entertainment' => 'http://twitter.com/wikia_de',
+	'wikiahubs-social-facebook-link-Entertainment' => 'https://www.facebook.com/wikia.de',
+	'wikiahubs-social-googleplus-link-Entertainment' => '',
+
+	'wikiahubs-social-twitter-link-Lifestyle' => '',
+	'wikiahubs-social-facebook-link-Lifestyle' => '',
+	'wikiahubs-social-googleplus-link-Lifestyle' => '',
 );
 
 $messages['fr'] = array(
@@ -133,7 +158,20 @@ $messages['fr'] = array(
 	'wikiahubs-404-message' => 'Nous n\'avons pas trouvé la page que vous cherchez. [[$1|Cliquez ici]] pour le thème du jour.',
 
 	// off-shot pages
-	'wikiahubs-popular-videos' => 'Nos vidéos préférées'
+	'wikiahubs-popular-videos' => 'Nos vidéos préférées',
+
+	// social icons
+	'wikiahubs-social-twitter-link-VideoGames' => 'https://twitter.com/#!/wikia_fr',
+	'wikiahubs-social-facebook-link-VideoGames' => 'http://www.facebook.com/wikia.fr',
+	'wikiahubs-social-googleplus-link-VideoGames' => 'https://plus.google.com/u/0/102929967599324609587/posts',
+
+	'wikiahubs-social-twitter-link-Entertainment' => 'https://twitter.com/#!/wikia_fr',
+	'wikiahubs-social-facebook-link-Entertainment' => 'http://www.facebook.com/wikia.fr',
+	'wikiahubs-social-googleplus-link-Entertainment' => 'https://plus.google.com/u/0/102929967599324609587/posts',
+
+	'wikiahubs-social-twitter-link-Lifestyle' => 'https://twitter.com/#!/wikia_fr',
+	'wikiahubs-social-facebook-link-Lifestyle' => 'http://www.facebook.com/wikia.fr',
+	'wikiahubs-social-googleplus-link-Lifestyle' => '',
 );
 
 $messages['es'] = array(
@@ -173,7 +211,20 @@ $messages['es'] = array(
 
 	// 404 page
 	'wikiahubs-404-title' => 'La página que estás buscando no se pudo encontrar',
-	'wikiahubs-404-message' => 'No pudimos encontrar la página que estás buscando. [[$1|Haz clic aquí]] para ir a la página con noticias de hoy.'
+	'wikiahubs-404-message' => 'No pudimos encontrar la página que estás buscando. [[$1|Haz clic aquí]] para ir a la página con noticias de hoy.',
+
+	// social icons
+	'wikiahubs-social-twitter-link-VideoGames' => 'https://twitter.com/wikia_es',
+	'wikiahubs-social-facebook-link-VideoGames' => 'https://www.facebook.com/wikia.es',
+	'wikiahubs-social-googleplus-link-VideoGames' => '',
+
+	'wikiahubs-social-twitter-link-Entertainment' => 'https://twitter.com/wikia_es',
+	'wikiahubs-social-facebook-link-Entertainment' => 'https://www.facebook.com/wikia.es',
+	'wikiahubs-social-googleplus-link-Entertainment' => '',
+
+	'wikiahubs-social-twitter-link-Lifestyle' => '',
+	'wikiahubs-social-facebook-link-Lifestyle' => '',
+	'wikiahubs-social-googleplus-link-Lifestyle' => '',
 );
 
 $messages['qqq'] = array(

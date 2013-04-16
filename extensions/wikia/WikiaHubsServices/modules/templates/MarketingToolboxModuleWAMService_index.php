@@ -1,8 +1,17 @@
 <div class="wam-header">
 	<div class="social-links">
-		<a href="<?= wfMessage('oasis-community-social-facebook-link')->text() ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
-		<a href="<?= wfMessage('oasis-community-social-twitter-link')->text() ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>
-		<a href="<?= wfMessage('oasis-community-social-googleplus-link')->text() ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
+		<? $fbMsg = wfMessage('wikiahubs-social-facebook-link-' . $canonicalVerticalName)->text(); ?>
+		<? if (!empty($fbMsg)): ?>
+			<a href="<?= $fbMsg ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
+		<? endif ?>
+		<? $twMsg =  wfMessage('wikiahubs-social-twitter-link-' . $canonicalVerticalName)->text()?>
+		<? if (!empty($twMsg)): ?>
+			<a href="<?= $twMsg ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>
+		<? endif ?>
+		<? $gplusMsg =  wfMessage('wikiahubs-social-googleplus-link-' . $canonicalVerticalName)->text()?>
+		<? if (!empty($gplusMsg)): ?>
+			<a href="<?= $gplusMsg ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
+		<? endif ?>
 	</div>
 	<div class="search">
 		<form method="get" action="index.php?title=Special:Search" class="WikiaSearch" id="WikiaSearch">

@@ -75,9 +75,9 @@ class WAMService extends Service {
 	public function getWamIndex ($inputOptions) {
 		$inputOptions += $this->defaultIndexOptions;
 
-		$inputOptions['currentTimestamp'] = $inputOptions['currentTimestamp'] ? $inputOptions['currentTimestamp'] : strtotime('00:00 -1 day');
+		$inputOptions['currentTimestamp'] = $inputOptions['currentTimestamp'] ? strtotime('00:00 -1 day', $inputOptions['currentTimestamp']) : strtotime('00:00 -1 day');
 		$inputOptions['previousTimestamp'] = $inputOptions['previousTimestamp']
-			? $inputOptions['previousTimestamp']
+			? strtotime('00:00 -1 day', $inputOptions['previousTimestamp'])
 			: $inputOptions['currentTimestamp'] - 60 * 60 * 24;
 
 		$app = F::app();
@@ -154,8 +154,8 @@ class WAMService extends Service {
 
 			$row = $db->fetchRow($result);
 
-			$dates['max_date'] = strtotime($row['max_date']);
-			$dates['min_date'] = strtotime($row['min_date']);
+			$dates['max_date'] = strtotime('+1 day', strtotime($row['max_date']));
+			$dates['min_date'] = strtotime('+1 day', strtotime($row['min_date']));
 		}
 
 		$app->wf->profileOut(__METHOD__);

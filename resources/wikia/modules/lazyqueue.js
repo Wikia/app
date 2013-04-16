@@ -91,6 +91,6 @@
 	context.Wikia.LazyQueue = lazyQueue();
 
 	if (context.define && context.define.amd) {
-		context.define('lazyqueue', lazyQueue);
+		context.define('wikia.lazyqueue', lazyQueue);
 	}
 }(this));

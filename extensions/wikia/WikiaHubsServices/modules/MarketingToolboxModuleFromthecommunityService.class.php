@@ -48,10 +48,12 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 			);
 
 			$fields[self::FIELD_NAME_QUOTE . $i] = array(
+				'type' => 'textarea',
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-from-the-community-long-quote'),
 				'validator' => $this->getValidator($i, self::FIELD_NAME_QUOTE),
 				'attributes' => array(
-					'class' => $this->getJsValidator($i, self::FIELD_NAME_QUOTE)
+					'class' => $this->getJsValidator($i, self::FIELD_NAME_QUOTE),
+					'rows' => 3
 				)
 			);
 
@@ -190,21 +192,25 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		$boxesCount = $this->getModel()->getBoxesCount();
 
 		for ($i = 1; $i <= $boxesCount; $i++) {
-			if (!empty($data['url' . $i])) {
-				$data['url' . $i] = $this->addProtocolToLink($data['url' . $i]);
+			if (!empty($data[self::FIELD_NAME_URL  . $i])) {
+				$data[self::FIELD_NAME_URL  . $i] = $this->addProtocolToLink($data[self::FIELD_NAME_URL . $i]);
 			}
 
-			if (!empty($data['usersUrl' . $i])) {
-				$data['usersUrl' . $i] = $this->addProtocolToLink($data['usersUrl' . $i]);
+			if (!empty($data[self::FIELD_NAME_USERSURL . $i])) {
+				$data['usersUrl' . $i] = $this->addProtocolToLink($data[self::FIELD_NAME_USERSURL . $i]);
 
 				// get Wiki URL
-				$parsedUrl = parse_url($data['usersUrl' . $i]);
+				$parsedUrl = parse_url($data[self::FIELD_NAME_USERSURL . $i]);
 				$data['wikiUrl' . $i] = $parsedUrl['host'];
 
-				$userName = UserService::getNameFromUrl($data['usersUrl' . $i]);
+				$userName = UserService::getNameFromUrl($data[self::FIELD_NAME_USERSURL . $i]);
 				if ($userName !== false) {
 					$data['UserName' . $i] = $userName;
 				}
+			}
+			if( !empty($data[self::FIELD_NAME_QUOTE . $i]) ) {
+				$model = new MarketingToolboxModel();
+				$data[self::FIELD_NAME_QUOTE . $i] = strip_tags($data[self::FIELD_NAME_QUOTE . $i], $model->getAllowedTags());
 			}
 		}
 		return $data;

@@ -2610,7 +2610,7 @@
 				slice = [].slice;
 
 			return function() {
-				var	track = ( WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track,
+				var	track = ( window.WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track,
 					type = WikiaPhotoGallery.editor.gallery.type;
 
 				config.category = ( type == 3 ? 'slider' : type == 2 ? 'slideshow' : 'gallery' ) + '-tool';

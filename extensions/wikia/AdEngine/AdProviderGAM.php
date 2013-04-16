@@ -182,7 +182,7 @@ class AdProviderGAM implements iAdProvider {
 	}
 
 	private function getHub(){
-		$cat=AdEngine::getCachedCategory();
+		$cat=AdEngine2Controller::getCachedCategory();
 		return $cat['short'];
 	}
 
