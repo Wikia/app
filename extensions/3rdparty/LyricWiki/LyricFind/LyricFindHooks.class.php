@@ -10,7 +10,8 @@ class LyricFindHooks extends WikiaObject {
 	 */
 	static public function pageIsTrackable(Title $title) {
 		$namespaces = F::app()->wg->LyricFindTrackingNamespaces;
-		return in_array($title->getNamespace(), $namespaces) && $title->exists();
+		$isView = F::app()->wg->Request->getVal('action', 'view') === 'view';
+		return $isView && in_array($title->getNamespace(), $namespaces) && $title->exists();
 	}
 
 	/**
