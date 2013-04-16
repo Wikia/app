@@ -1,6 +1,6 @@
 <?php
 
-class DoubleSection extends Mustache {
+class DoubleSection extends MustachePHP {
 	public function t() {
 		return true;
 	}
