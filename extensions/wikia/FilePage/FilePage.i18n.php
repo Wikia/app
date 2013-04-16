@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'video-page-see-more-info' => 'Show more info',
 	'video-page-see-less-info' => 'Show less info',
 	'video-page-description-heading' => 'Description',
-	'video-page-description-zero-state' => 'There is no description for this file yet.', // file or video? --TOR
+	'video-page-description-zero-state' => 'There is no description yet.',
 	'video-page-file-list-pagination' => '$1 of $2', // why are we using custom pagination instead of one of the existing compoments? --TOR
 
 	/* file page */
@@ -31,9 +31,9 @@ $messages['qqq'] = array(
 	'video-page-see-more-info' => 'Label to uncollapse UI that shows more info',
 	'video-page-see-less-info' => 'Label to collapse UI that shows more info',
 	'video-page-description-heading' => 'Description heading',
-	'video-page-description-zero-state' => 'Placeholder file page content that states there is no description for this file',
+	'video-page-description-zero-state' => 'Placeholder file page content that states there is no description',
 	'video-page-file-list-pagination' => 'Pagination for file listing.  e.g. 1 of 2.  $1 is current page, $2 is total pages',
 
 	/* file page */
-	'file-page-replace-button' => 'Label for a button (part of the "edit" button dropdown menu). This is a verb, like "edit" in that context.', 
+	'file-page-replace-button' => 'Label for a button (part of the "edit" button dropdown menu). This is a verb, like "edit" in that context.',
 );
