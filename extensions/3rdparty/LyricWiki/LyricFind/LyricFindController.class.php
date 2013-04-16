@@ -3,15 +3,15 @@
 class LyricFindController extends WikiaController {
 
 	const RESPONSE_OK = 204;
-	const RESPONSE_ERR = 400;
+	const RESPONSE_ERR = 404;
 
 	public function track() {
-		$pageId = intval($this->getVal('pageid'));
+		$amgId = intval($this->getVal('amgid'));
 
-		if ($pageId > 0) {
+		if ($amgId > 0) {
 			// make a request to LyricFind API
 			$service = new LyricFindTrackingService();
-			$res = $service->track($pageId);
+			$res = $service->track($amgId);
 		}
 		else {
 			$res = false;
