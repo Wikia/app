@@ -212,16 +212,6 @@ class WikiaStatsAutoHubsConsumer {
 						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processed in: ' . $time );
 					}
 
-					// insert data to database
-					# blogs
-					$start = time();
-					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['blogs']) . ' blogs' );
-					$producerDB->insertBlogComment($data['blogs']);
-					$end = time();
-					$time = Wikia::timeDuration($end - $start);
-					Wikia::log( __METHOD__, 'events', 'Inserts done in: ' . $time );
-
-
 					// unset data
 					unset($data);
 				} else {

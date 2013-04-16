@@ -17,7 +17,6 @@ if ( !isset( $wgCorporatePageRedirectWiki ) ) {
 }
 
 $wgAutoloadClasses['CorporatePageHelper']  = $dir . 'CorporatePageHelper.class.php';
-$wgAutoloadClasses['CorporateSiteController'] = $dir . 'modules/CorporateSiteController.class.php';
 $wgAutoloadClasses['BlogsInHubsController'] = $dir . 'modules/BlogsInHubsController.class.php';
 $wgAutoloadClasses['BlogsInHubsService'] = $dir . 'services/BlogsInHubsService.class.php';
 
