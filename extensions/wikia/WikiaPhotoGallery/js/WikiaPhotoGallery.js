@@ -1766,6 +1766,11 @@
 				// update value
 				params[paramName] = value;
 
+				// If the `paramName` starts with "caption" or "border", add a dash for readability.
+				self.track({
+					label: 'dropdown-' + paramName.replace('caption', 'caption-').replace('border', 'border-')
+				});
+
 				if (typeof callback == 'function') {
 					callback.call(self, value);
 				}
@@ -1820,6 +1825,10 @@
 			widget.undelegate('li', 'click.imageOption').delegate('li', 'click.imageOption', function(ev) {
 				var elm = $(this);
 				var value = elm.attr('rel');
+
+				self.track({
+					label: 'orientation-' + value
+				});
 
 				//run callback and assignment only if new value is different (no n-click)
 				if(value != params[paramName]) {
