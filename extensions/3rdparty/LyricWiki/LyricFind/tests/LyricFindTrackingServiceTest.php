@@ -16,32 +16,25 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider trackResponseCodeProvider
-	 * @param $pageId
+	 * @param $amgId
 	 * @param $trackId
 	 * @param $res
 	 */
-	public function testTrackResponseCode($pageId, $trackId, $apiResponse, $res) {
+	public function testTrackResponseCode($amgId, $apiResponse, $res) {
 		// mock API response
 		$respMock = is_array($apiResponse) ? json_encode($apiResponse) : $apiResponse;
 
 		$this->mockClassStaticMethod('Http', 'post', $respMock);
-
-		// disable memcache
-		$this->mockGlobalVariable('wgMemc', $this->mockClassWithMethods('MWMemcached', ['get' => null]));
-
-		// mock database
-		$this->mockGlobalFunction('GetDB', $this->mockClassWithMethods('DatabaseMysql', ['selectField' => $trackId]));
 		$this->mockApp();
 
 		$service = new LyricFindTrackingService();
-		$this->assertEquals($res, $service->track($pageId), 'API response code should match expected value');
+		$this->assertEquals($res, $service->track($amgId), 'API response code should match expected value');
 	}
 
 	public function trackResponseCodeProvider() {
 		return [
 			[
-				'pageId' => 123,
-				'trackId' => 45812,
+				'amgId' => 123,
 				'apiResponse' => [
 					'response' => [
 						'code' => 101
@@ -49,21 +42,9 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 				],
 				'res' => true
 			],
-			// can't map given article to lyric ID
-			[
-				'pageId' => 1234,
-				'trackId' => false,
-				'apiResponse' => [
-					'response' => [
-						'code' => 101
-					]
-				],
-				'res' => false
-			],
 			// API key was incorrect
 			[
-				'pageId' => 1234,
-				'trackId' => 45812,
+				'amgId' => 1234,
 				'apiResponse' => [
 					'response' => [
 						'code' => 200
@@ -73,15 +54,13 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 			],
 			// API request fauled
 			[
-				'pageId' => 1234,
-				'trackId' => 45812,
+				'amgId' => 1234,
 				'apiResponse' => false,
 				'res' => false
 			],
 			// malformed API request
 			[
-				'pageId' => 1234,
-				'trackId' => 45812,
+				'amgId' => 1234,
 				'apiResponse' => ['foo' => 'bar'],
 				'res' => false
 			]

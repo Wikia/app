@@ -1,5 +1,6 @@
 <?php
 /**
+ * @var $amgid
  * @var $artist
  * @var $song
  * @var $songwriter
@@ -12,18 +13,18 @@
 
 $imgPath = $wg->ExtensionsPath . '/3rdparty/LyricWiki/LyricFind/images';
 ?>
-<div itemscope itemtype="http://schema.org/MusicGroup">
+<div id="lyric" itemscope itemtype="http://schema.org/MusicGroup" data-amg-id="<?= htmlspecialchars($amgid) ?>">
 	<meta itemprop="name" content="<?= htmlspecialchars($artist) ?>">
 
 	<div class="lyricfind-header plainlinks">
 		<?= wfMessage('lyricfind-header', $artist, $song)->parse() ?>
 	</div>
 
-	<div class="lyricfind-credits" data-lyricfindid="<?= $lyricfindid ?>">
+	<div class="lyricfind-credits">
 		<p>
-			<?= wfMessage('lyricfind-songwrites') ?>: <em><?= $songwriter ?></em>
+			<?= wfMessage('lyricfind-songwrites') ?>: <em><?= htmlspecialchars($songwriter) ?></em>
 			<br>
-			<?= wfMessage('lyricfind-publishers') ?>: <em><?= $publisher ?></em>
+			<?= wfMessage('lyricfind-publishers') ?>: <em><?= htmlspecialchars($publisher) ?></em>
 		</p>
 
 		<noscript>
