@@ -716,18 +716,11 @@
 			}
 		},
 
-		track: (function() {
-			var config = {
-				action: Wikia.Tracker.ACTIONS.CLICK,
-				category: 'category-tool',
-				trackingMethod: 'both'
-			};
-
-			return function() {
-				var track = ( window.WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
-				track.apply( track, [ config ].concat( slice.call( arguments ) ) );
-			};
-		})()
+		track: Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
+			action: Wikia.Tracker.ACTIONS.CLICK,
+			category: 'category-tool',
+			trackingMethod: 'both'
+		})
 	});
 
 	/**
