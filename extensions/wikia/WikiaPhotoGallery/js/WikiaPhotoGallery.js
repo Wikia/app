@@ -1743,6 +1743,12 @@
 					delete params[paramName];
 				}
 
+				if (paramName == 'usefeed') {
+					self.track({
+						label: 'rss-feed-url'
+					});
+				}
+
 				if (typeof callback == 'function') {
 					callback.call(self);
 				}
@@ -1911,6 +1917,7 @@
 
 		// setup given color picker
 		setupColorPicker: function(colorPicker, paramName, callback) {
+			var self = this;
 			var params = this.editor.gallery.params;
 
 			function hex(x) {
@@ -2117,6 +2124,16 @@
 
 				//hide other opened pickers
 				$('.WikiaPhotoGalleryColorPickerPopUp').hide();
+
+				if (paramName == 'captiontextcolor') {
+					self.track({
+						label: 'color-caption'
+					});
+				} else if (paramName == 'bordercolor') {
+					self.track({
+						label: 'color-border'
+					});
+				}
 
 				colorPickerPopup.css({
 					'left': parseInt(position.left) + 30,
@@ -2360,6 +2377,10 @@
 					if (type.keypress) {
 						return false;
 					}
+
+					self.track({
+						action: Wikia.Tracker.ACTIONS.CLOSE
+					});
 
 					// X has been clicked
 					var currentPage = self.editor.currentPage;
