@@ -262,18 +262,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
-		$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
+		//check if corporate wiki or community wiki
+		if ( !$this->isCorporateWiki() && $this->wg->CityId != 177 ) {
+			return;
+		}
 
-//		$wikiId = $resultSet->getHeader( 'wid' );
-//		$wikiDS = new WikiDataSource( $wikiId );
-//
-//		$response = ApiService::foreignCall(
-//			$wikiDS->getDbName(),
-//			array(
-//				'controller' => 'ArticlesApi',
-//				'method' => 'getTop'
-//			),
-//			'wikia.php' );
+		$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
 
 		$image = $resultSet->getHeader( 'image' );
 		$imageUrl = empty( $image ) ? $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png' : (new \WikiaHomePageHelper)->getImageUrl( $image, 180, 120 );
@@ -295,7 +289,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						'videoMsg' => $resultSet->getVideosCountMsg(), 
 						'imageURL' => $imageUrl,
 						'thumbTracking' => $thumbTracking
-						] 
+						]
 						) 
 				);
 	}
