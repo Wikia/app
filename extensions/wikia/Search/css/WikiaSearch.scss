@@ -222,6 +222,15 @@ $form-negative-side-padding: $form-side-padding*-1;
         .result-count {
             margin-bottom: 20px;
         }
+        .articles {
+            list-style: none;
+            li {
+                width: 45%;
+                margin: 0;
+                padding: 0;
+                display: inline-block;
+            }
+        }
     }
 
 	.Results {
@@ -237,6 +246,11 @@ $form-negative-side-padding: $form-side-padding*-1;
 		margin-bottom: 13px;
 		word-wrap: break-word;
 		padding: 0;
+
+        .wiki-thumb-tracking {
+            display: block;
+            width: 180px;
+        }
 
 		.inter-wiki-search & {
             margin-bottom: 20px;
