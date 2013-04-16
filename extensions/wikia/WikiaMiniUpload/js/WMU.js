@@ -374,7 +374,7 @@ function WMU_loadMainFromView() {
 
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	WMU_track({
-		label: 'open'
+		action: Wikia.Tracker.ACTIONS.OPEN
 	});
 
 	// reset mode to support normal editor usage
@@ -1253,7 +1253,7 @@ function WMU_close(e) {
 	}
 
 	WMU_track({
-		label: 'close'
+		action: Wikia.Tracker.ACTIONS.CLOSE
 	});
 
 	WMU_modal.hideModal();
@@ -1279,16 +1279,8 @@ var WMU_uploadCallback = {
 	}
 }
 
-var WMU_track = (function( Wikia, WikiaEditor ) {
-	var config = {
-			action: Wikia.Tracker.ACTIONS.CLICK,
-			category: 'photo-tool',
-			trackingMethod: 'both'
-		},
-		slice = [].slice,
-		track = ( WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
-
-	return function() {
-		track.apply( track, [ config ].concat( slice.call( arguments ) ) );
-	};
-})( window.Wikia, window.WikiaEditor );
+var WMU_track = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
+	action: Wikia.Tracker.ACTIONS.CLICK,
+	category: 'photo-tool',
+	trackingMethod: 'both'
+});
