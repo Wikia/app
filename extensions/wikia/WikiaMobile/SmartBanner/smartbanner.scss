@@ -1,26 +1,14 @@
-html {
-	-webkit-transition: -webkit-transform 1s;
-	-moz-transition: -webkit-transform 1s;
-	transition: -webkit-transform 1s;
-
-	&.sb-shown {
-		-webkit-transform: translateY(80px);
-		-moz-transform: translateY(80px);
-		transform: translateY(80px);
-	}
-}
-
 .smartbanner {
-	position: absolute;
+	position: relative;
 	left: 0;
-	top: -80px;
 	border-bottom: 1px solid #e8e8e8;
 	width: 100%;
-	height: 80px;
+	height: 0;
 	background: -webkit-linear-gradient(top, #f4f4f4 0%, #cdcdcd 100%);
 	-webkit-font-smoothing: antialiased;
 	overflow: hidden;
 	-webkit-text-size-adjust: none;
+	-webkit-transition: height 1s;
 
 	&.no-icon {
 		.sb-icon {
@@ -29,6 +17,14 @@ html {
 
 		.sb-info {
 			left: 34px;
+		}
+	}
+
+	.sb-shown & {
+		height: 80px;
+
+		&.android{
+			border-top: 5px solid #88B131;
 		}
 	}
 }
@@ -133,7 +129,6 @@ html {
 .android {
 	border-color: #212228;
 	background: #3d3d3d url('/extensions/wikia/WikiaMobile/SmartBanner/dark_background_stripes.gif'); /* base64 */
-	border-top: 5px solid #88B131;
 
 	.sb-close {
 		border-color: #000;

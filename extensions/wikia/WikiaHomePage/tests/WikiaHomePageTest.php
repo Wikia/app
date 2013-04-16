@@ -538,13 +538,14 @@ TXT;
 				'name' => 'TestName',
 				'userPageUrl' => self::TEST_URL,
 				'userContributionsUrl' => self::TEST_URL,
-				'since' => self::TEST_MEMBER_DATE
+				'since' => self::TEST_MEMBER_DATE,
+				'userId' => '123'
 			),
 		);
 
 		// 6 - admins have avatar == LIMIT_ADMIN_AVATARS + user edits != 0
 		$mockWikiServiceParam6 = array(
-			'getWikiAdminIds' => array('1', '2', '3'),
+			'getWikiAdminIds' => array('2', '2', '2'),
 		);
 		$mockUserStatsServiceParam6 = array(
 			'getEditCountWiki' => 5,
@@ -557,13 +558,14 @@ TXT;
 				'name' => 'TestName',
 				'userPageUrl' => self::TEST_URL,
 				'userContributionsUrl' => self::TEST_URL,
-				'since' => self::TEST_MEMBER_DATE
+				'since' => self::TEST_MEMBER_DATE,
+				'userId' => '2'
 			)
 		);
 
 		// 7 - admins have avatar > LIMIT_ADMIN_AVATARS + user edits != 0
 		$mockWikiServiceParam7 = array(
-			'getWikiAdminIds' => array('1', '2', '3', '4', '5', '6'),
+			'getWikiAdminIds' => array('3', '3', '3', '3', '3', '3'),
 		);
 		$mockUserStatsServiceParam7 = array(
 			'getEditCountWiki' => 5,
@@ -577,6 +579,7 @@ TXT;
 				'userPageUrl' => self::TEST_URL,
 				'userContributionsUrl' => self::TEST_URL,
 				'since' => self::TEST_MEMBER_DATE,
+				'userId' => '3'
 			)
 		);
 
@@ -671,6 +674,7 @@ TXT;
 				'userPageUrl' => self::TEST_URL,
 				'userContributionsUrl' => self::TEST_URL,
 				'since' => self::TEST_MEMBER_DATE,
+				'userId' => 123
 			),
 		);
 
@@ -694,6 +698,7 @@ TXT;
 				'userPageUrl' => self::TEST_URL,
 				'userContributionsUrl' => self::TEST_URL,
 				'since' => self::TEST_MEMBER_DATE,
+				'userId' => 17
 			)
 		);
 

@@ -36,6 +36,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 			'wam_day' => $params['ts'],
 			'vertical_id' => $this->verticalId,
 			'wiki_lang' => $this->langCode,
+			'exclude_blacklist' => true,
 			'fetch_admins' => true,
 			'fetch_wiki_images' => true,
 			'limit' => $params['limit'],

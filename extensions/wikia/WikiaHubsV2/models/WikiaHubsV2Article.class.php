@@ -10,6 +10,8 @@ class WikiaHubsV2Article extends Article {
 		$this->verticalId = $verticalId;
 		$this->hubTimestamp = $hubTimestamp;
 
+		$this->mPage = new WikiaHubsV2Page($title);
+
 		wfProfileOut(__METHOD__);
 	}
 

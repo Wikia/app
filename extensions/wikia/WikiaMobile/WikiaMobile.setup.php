@@ -138,6 +138,8 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			//ads
 			'wgDartCustomKeyValues',
 			'cityShort',
+			'wikiaPageIsHub',
+			'wikiaPageType',
 
 			//server/wiki
 			'wgServer',
@@ -156,6 +158,7 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'wgCookiePath',
 			'wgDisableAnonymousEditing',
 			'wgNamespaceIds',
+			'wgExtensionsPath',
 
 			//article
 			'wgArticlePath',
