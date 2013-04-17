@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\ResultSet\Grouping
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config;
+use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config, Wikia\Search\Utilities;
 /**
  * This class handles sub-groupings of results for inter-wiki search.
  * @author relwell
@@ -78,6 +78,7 @@ class Grouping extends Base
 			$this->addHeaders( $doc->getFields() );
 		}
 		$title = $this->service->getGlobalForWiki( 'wgSitename', $wikiId );
+		$title = $title ?: $doc[Utilities::field( 'wikititle' )]; // apparently wgSitename can be false for some wiki IDs
 		$this->addHeaders( $this->service->getVisualizationInfoForWikiId( $wikiId ) )
 			 ->addHeaders( $this->service->getStatsInfoForWikiId( $wikiId ) )
 			 ->setHeader ( 'wikititle', $title )
