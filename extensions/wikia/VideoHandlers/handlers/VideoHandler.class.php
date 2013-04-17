@@ -25,15 +25,14 @@ abstract class VideoHandler extends BitmapHandler {
 	protected static $autoplayParam = "";
 	protected static $autoplayValue = "";
 
+	//WikiaMobile Handles video in fluid way it does not need any width and height
 	function getSizeString( $width, $height, $type = '' ) {
-
 		if ( !F::app()->checkSkin( 'wikiamobile' ) ) {
 			if( $type == 'inline' ) {
 				return "style='width: {$width}px; height: {$height}px;'";
 			} else {
 				return "width='$width' height='$height'";
 			}
-
 		}
 
 		return '';
