@@ -45,18 +45,24 @@ $chev-color: rgb(157,157,157);
 		z-index: 1;
 
 		color: black;
+		font-weight: 800;
 	}
 
 	span:first-of-type {
 		top: 10%;
 		font-size: 2em;
-		font-weight: 800;
-		z-index: 1;
 	}
 
 	span:last-of-type {
 		bottom: 10%;
-		font-size: 1.5em;
+
+		font-size: 0.9em;
+	}
+
+	img {
+		//this is minumum for the message to be readable
+		min-width: 310px;
+		min-height: 180px;
 	}
 
 	&::after {

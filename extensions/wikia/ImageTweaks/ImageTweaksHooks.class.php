@@ -277,10 +277,6 @@ class ImageTweaksHooks extends WikiaObject {
 				'provider' => $provider,
 				'full' => $imageAttribs['src']
 			);
-var_dump($this->app->wg->WikiaMobileSupportedVideos);
-			if( in_array( $provider, $this->app->wg->WikiaMobileSupportedVideos ) ) {
-				$imageParams['supported'] = 1;
-			}
 
 			if ( !empty($imageAttribs['data-video-name'] ) ) {
 				$imageParams['name'] = $imageAttribs['data-video-name'];

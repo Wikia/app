@@ -51,11 +51,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		heightFll,
 		startD,
 		galleryInited = false,
-		inited;
+		inited,
+		supportedVideos = window.supportedVideos || [];
 
 	//Media object that holds all data needed to display it in modal/gallery
 	function Media(elem, data, length, i){
-
 		this.element = elem;
 		this.url = data.full;
 
@@ -65,8 +65,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		if(data.capt) {this.caption = data.capt;}
 		if(data.type === 'video') {
 			this.isVideo = true;
-
-			if(data.supported) {this.supported = true;}
+			this.supported = ~supportedVideos.indexOf(data.provider);
 		}
 
 		if(length > 1){
