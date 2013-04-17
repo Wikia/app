@@ -36,4 +36,26 @@ class VideoHandlerHelper extends WikiaModel {
 		return $status;
 	}
 
+	/**
+	 * remove description header
+	 * @param string $content
+	 * @return string $newContent
+	 */
+	public function removeDescriptionHeader( $content ) {
+		$newContent = preg_replace( '/^==\s*'.$this->wf->Message( 'videohandler-description' ).'\s*==/mi', '', $content );
+
+		return $newContent;
+	}
+
+	/**
+	 * add description header
+	 * @param string $content
+	 * @return string $newContent
+	 */
+	public function addDescriptionHeader( $content ) {
+		$newContent = '=='.$this->wf->Message( 'videohandler-description' ).'=='."\n".$content;
+
+		return $newContent;
+	}
+
 }
