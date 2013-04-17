@@ -85,7 +85,9 @@ F::build( 'JSMessages' )->registerPackage( 'WkMbl', array(
 	'wikiamobile-sharing-page-text',
 	'wikiamobile-sharing-modal-text',
 	'wikiamobile-sharing-email-text',
-	'wikiamobile-image-not-loaded'
+	'wikiamobile-image-not-loaded',
+	'wikiamobile-video-not-friendly',
+	'wikiamobile-video-not-friendly-header'
 ) );
 
 F::build( 'JSMessages' )->registerPackage( 'SmartBanner', [

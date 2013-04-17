@@ -63,7 +63,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		if(data.thumb) {this.thumb = data.thumb;}
 		if(data.med) {this.med = data.med;}
 		if(data.capt) {this.caption = data.capt;}
-		if(data.type === 'video') {this.isVideo = true;}
+		if(data.type === 'video') {
+			this.isVideo = true;
+
+			if(data.supported) {this.supported = true;}
+		}
 
 		if(length > 1){
 			this.length = length;
@@ -151,6 +155,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		currentImage.className += ' imgPlcHld';
 	}
 
+	function setVideo(title, html) {
+		videoCache[title] = html;
+		currentImage.innerHTML = html;
+	}
+
 	function setupImage(){
 		var image = images[current],
 			video;
@@ -161,37 +170,45 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		if(image.isVideo) {// video
 			var imgTitle = image.name;
-			currentImageStyle.backgroundImage = '';
 
 			zoomable = false;
 
 			if(videoCache[imgTitle]){
 				currentImage.innerHTML = videoCache[imgTitle];
 			}else{
-				throbber.show(currentImage, {
-					center: true
-				});
+				if(image.supported) {
+					currentImage.innerHTML = '';
 
-				nirvana.getJson(
-					'VideoHandler',
-					'getEmbedCode',
-					{
-						articleId: wgArticleId,
-						fileTitle: imgTitle,
-						width: document.width - 100
-					}
-				).done(
-					function(data) {
-						throbber.remove(currentImage);
+					throbber.show(currentImage, {
+						center: true
+					});
 
-						if(data.error){
-							handleError(data.error);
-						}else{
-							videoCache[imgTitle] = data.embedCode;
-							currentImage.innerHTML = data.embedCode;
+					nirvana.getJson(
+						'VideoHandler',
+						'getEmbedCode',
+						{
+							articleId: wgArticleId,
+							fileTitle: imgTitle,
+							width: document.width - 100
 						}
-					}
-				);
+					).done(
+						function(data) {
+							throbber.remove(currentImage);
+
+							if(data.error){
+								handleError(data.error);
+							}else{
+								setVideo(imgTitle, data.embedCode);
+							}
+						}
+					);
+				} else {
+					setVideo(imgTitle, "<div class=not-supported><span>" +
+						msg('wikiamobile-video-not-friendly-header') + "</span>" +
+						currentImage.innerHTML + "<span>" +
+						msg('wikiamobile-video-not-friendly') +
+						'</span></div>');
+				}
 			}
 		}else{
 			var img = new Image();
