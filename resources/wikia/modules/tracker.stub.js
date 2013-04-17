@@ -78,8 +78,8 @@
 
 				return obj;
 			})(),
-			slice = [].slice,
-			spool = [];
+			spool = [],
+			slice = spool.slice;
 
 		/**
 		 * Stub method for queueing early tracking calls.
@@ -102,16 +102,24 @@
 		 *         label: 'myLabel'
 		 *     });
 		 *
-		 * @params {Object} defaults
-		 *         A key-value hash of parameters.
+		 * @param {Function} [trackingMethod]
+		 *        An optional tracking method to use instead of Wikia.Tracker.track.
+		 *
+		 * @param {Object} options
+		 *        A key-value hash of parameters.
+		 *
+		 * @param {...Object} [optionsN]
+		 *        Any number of additional hashes that will be merged into the first.
 		 *
 		 * @see The track method above for hash key information.
 		 */
-		function buildTrackingFunction() {
-			var args = slice.call( arguments );
+		function buildTrackingFunction( /* [ trackingMethod, ] options [ , ... optionsN ] */ ) {
+			var args = slice.call( arguments ),
+				trackingFunction = typeof args[ 0 ] === 'function' && args.shift();
 
 			return function() {
-				return Wikia.Tracker.track.apply( null, args.concat( slice.call( arguments ) ) );
+				var track = trackingFunction || Wikia.Tracker.track;
+				return track.apply( track, args.concat( slice.call( arguments ) ) );
 			};
 		}
 

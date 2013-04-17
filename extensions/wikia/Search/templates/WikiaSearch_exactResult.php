@@ -1,4 +1,4 @@
-<div class="exact">
+<div class="Results exact">
 	<p class="result-count subtle">
 		<?= wfMsg('wikiasearch2-exact-result', '<strong>'.$resultSet->getHeader('title').'</strong>'); ?>
 	</p>

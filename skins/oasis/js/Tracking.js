@@ -29,6 +29,26 @@ jQuery(function($){
 		}, e.data);
 	};
 
+	// For tracking components which are used inside and outside of the editor.
+	var trackEditorComponent = (function() {
+		var slice = Array.prototype.slice;
+
+		return function() {
+			var wikiaEditor = window.WikiaEditor && WikiaEditor.getInstance(),
+				track = Wikia.Tracker.track;
+
+			// Determine whether or not to track through the editor tracking method:
+			// - If an editor is present on the page and is not a MiniEditor, then it must be the main editor.
+			// - If an editor is present on the page and is a MiniEditor, make sure it currently has focus.
+			// - Otherwise, assume that we are not tracking through the editor.
+			if ( wikiaEditor && ( !wikiaEditor.config.isMiniEditor || wikiaEditor.plugins.MiniEditor.hasFocus ) ) {
+				track = WikiaEditor.track;
+			}
+
+			track.apply( track, slice.call( arguments ) );
+		};
+	})();
+
 	/** article **/
 
 	(function() {
@@ -616,4 +636,7 @@ jQuery(function($){
 			});
 		}
 	});
+
+	// Exports
+	Wikia.trackEditorComponent = trackEditorComponent;
 });

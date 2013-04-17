@@ -12,7 +12,7 @@
  *
  * @author Justin Hileman {@link http://justinhileman.com}
  */
-class Mustache {
+class MustachePHP {
 
 	const VERSION      = '1.1.0';
 	const SPEC_VERSION = '1.1.2';
@@ -23,11 +23,11 @@ class Mustache {
 	 * @see self::_throwsException()
 	 */
 	protected $_throwsExceptions = array(
-		MustacheException::UNKNOWN_VARIABLE         => false,
-		MustacheException::UNCLOSED_SECTION         => true,
-		MustacheException::UNEXPECTED_CLOSE_SECTION => true,
-		MustacheException::UNKNOWN_PARTIAL          => false,
-		MustacheException::UNKNOWN_PRAGMA           => true,
+		MustachePHPException::UNKNOWN_VARIABLE         => false,
+		MustachePHPException::UNCLOSED_SECTION         => true,
+		MustachePHPException::UNEXPECTED_CLOSE_SECTION => true,
+		MustachePHPException::UNKNOWN_PARTIAL          => false,
+		MustachePHPException::UNKNOWN_PRAGMA           => true,
 	);
 
 	// Override the escaper function. Defaults to `htmlspecialchars`.
@@ -158,7 +158,7 @@ class Mustache {
 		if (isset($options['pragmas'])) {
 			foreach ($options['pragmas'] as $pragma_name => $pragma_value) {
 				if (!in_array($pragma_name, $this->_pragmasImplemented, true)) {
-					throw new MustacheException('Unknown pragma: ' . $pragma_name, MustacheException::UNKNOWN_PRAGMA);
+					throw new MustachePHPException('Unknown pragma: ' . $pragma_name, MustachePHPException::UNKNOWN_PRAGMA);
 				}
 			}
 			$this->_pragmas = $options['pragmas'];
@@ -187,7 +187,7 @@ class Mustache {
 
 		if ($keys = array_keys($this->_context)) {
 			$last = array_pop($keys);
-			if ($this->_context[$last] instanceof Mustache) {
+			if ($this->_context[$last] instanceof MustachePHP) {
 				$this->_context[$last] =& $this;
 			}
 		}
@@ -358,8 +358,8 @@ class Mustache {
 					break;
 				case '/':
 					if (empty($section_stack) || ($tag_name !== array_pop($section_stack))) {
-						if ($this->_throwsException(MustacheException::UNEXPECTED_CLOSE_SECTION)) {
-							throw new MustacheException('Unexpected close section: ' . $tag_name, MustacheException::UNEXPECTED_CLOSE_SECTION);
+						if ($this->_throwsException(MustachePHPException::UNEXPECTED_CLOSE_SECTION)) {
+							throw new MustachePHPException('Unexpected close section: ' . $tag_name, MustachePHPException::UNEXPECTED_CLOSE_SECTION);
 						}
 					}
 
@@ -378,8 +378,8 @@ class Mustache {
 		}
 
 		if (!empty($section_stack)) {
-			if ($this->_throwsException(MustacheException::UNCLOSED_SECTION)) {
-				throw new MustacheException('Unclosed section: ' . $section_stack[0], MustacheException::UNCLOSED_SECTION);
+			if ($this->_throwsException(MustachePHPException::UNCLOSED_SECTION)) {
+				throw new MustachePHPException('Unclosed section: ' . $section_stack[0], MustachePHPException::UNCLOSED_SECTION);
 			}
 		}
 	}
@@ -425,7 +425,7 @@ class Mustache {
 	 * @access protected
 	 * @param mixed $matches
 	 * @return void
-	 * @throws MustacheException unknown pragma
+	 * @throws MustachePHPException unknown pragma
 	 */
 	protected function _renderPragma($matches) {
 		$pragma         = $matches[0];
@@ -433,8 +433,8 @@ class Mustache {
 		$options_string = $matches['options_string'];
 
 		if (!in_array($pragma_name, $this->_pragmasImplemented)) {
-			if ($this->_throwsException(MustacheException::UNKNOWN_PRAGMA)) {
-				throw new MustacheException('Unknown pragma: ' . $pragma_name, MustacheException::UNKNOWN_PRAGMA);
+			if ($this->_throwsException(MustachePHPException::UNKNOWN_PRAGMA)) {
+				throw new MustachePHPException('Unknown pragma: ' . $pragma_name, MustachePHPException::UNKNOWN_PRAGMA);
 			} else {
 				return '';
 			}
@@ -478,12 +478,12 @@ class Mustache {
 	 * @access protected
 	 * @param string $pragma_name
 	 * @return mixed
-	 * @throws MustacheException Unknown pragma
+	 * @throws MustachePHPException Unknown pragma
 	 */
 	protected function _getPragmaOptions($pragma_name) {
 		if (!$this->_hasPragma($pragma_name)) {
-			if ($this->_throwsException(MustacheException::UNKNOWN_PRAGMA)) {
-				throw new MustacheException('Unknown pragma: ' . $pragma_name, MustacheException::UNKNOWN_PRAGMA);
+			if ($this->_throwsException(MustachePHPException::UNKNOWN_PRAGMA)) {
+				throw new MustachePHPException('Unknown pragma: ' . $pragma_name, MustachePHPException::UNKNOWN_PRAGMA);
 			}
 		}
 
@@ -586,7 +586,7 @@ class Mustache {
 	 * @param string $tag_name
 	 * @param string $leading Whitespace
 	 * @param string $trailing Whitespace
-	 * @throws MustacheException Unmatched section tag encountered.
+	 * @throws MustachePHPException Unmatched section tag encountered.
 	 * @return string
 	 */
 	protected function _renderTag($modifier, $tag_name, $leading, $trailing) {
@@ -798,7 +798,7 @@ class Mustache {
 	 *
 	 * @access protected
 	 * @param string $tag_name
-	 * @throws MustacheException Unknown variable name.
+	 * @throws MustachePHPException Unknown variable name.
 	 * @return string
 	 */
 	protected function _getVariable($tag_name) {
@@ -827,7 +827,7 @@ class Mustache {
 	 * @access protected
 	 * @param string $tag_name
 	 * @param array $context
-	 * @throws MustacheException Unknown variable name.
+	 * @throws MustachePHPException Unknown variable name.
 	 * @return string
 	 */
 	protected function _findVariableInContext($tag_name, $context) {
@@ -843,8 +843,8 @@ class Mustache {
 			}
 		}
 
-		if ($this->_throwsException(MustacheException::UNKNOWN_VARIABLE)) {
-			throw new MustacheException("Unknown variable: " . $tag_name, MustacheException::UNKNOWN_VARIABLE);
+		if ($this->_throwsException(MustachePHPException::UNKNOWN_VARIABLE)) {
+			throw new MustachePHPException("Unknown variable: " . $tag_name, MustachePHPException::UNKNOWN_VARIABLE);
 		} else {
 			return '';
 		}
@@ -857,7 +857,7 @@ class Mustache {
 	 *
 	 * @access protected
 	 * @param string $tag_name
-	 * @throws MustacheException Unknown partial name.
+	 * @throws MustachePHPException Unknown partial name.
 	 * @return string
 	 */
 	protected function _getPartial($tag_name) {
@@ -865,8 +865,8 @@ class Mustache {
 			return $this->_partials[$tag_name];
 		}
 
-		if ($this->_throwsException(MustacheException::UNKNOWN_PARTIAL)) {
-			throw new MustacheException('Unknown partial: ' . $tag_name, MustacheException::UNKNOWN_PARTIAL);
+		if ($this->_throwsException(MustachePHPException::UNKNOWN_PARTIAL)) {
+			throw new MustachePHPException('Unknown partial: ' . $tag_name, MustachePHPException::UNKNOWN_PARTIAL);
 		} else {
 			return '';
 		}
@@ -907,7 +907,7 @@ class Mustache {
  *
  * @extends Exception
  */
-class MustacheException extends Exception {
+class MustachePHPException extends Exception {
 
 	// An UNKNOWN_VARIABLE exception is thrown when a {{variable}} is not found
 	// in the current context.
