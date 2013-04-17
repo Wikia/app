@@ -2,6 +2,8 @@
 
 class LyricFindParserController extends WikiaController {
 
+	static $markers = array();
+
 	const NAME = 'lyricfind';
 	const CATEGORY = 'LyricFind Lyrics';
 
@@ -9,6 +11,20 @@ class LyricFindParserController extends WikiaController {
 	 * Call controller view to render <lyricfind> parser hook
 	 *
 	 * Add an article to appriopriate category
+	 *
+	 * Example:
+	 *
+	 * <lyricfind
+	 * 	artist="Paradise Lost"
+	 * 	album="Draconian Times"
+	 * 	additionalAlbums="Draconian Times MMXI"
+	 * 	song="Forever Failure"
+	 * 	songwriter="Nick Holmes"
+	 * 	publisher="Music for Nations"
+	 * 	amgid=28750800>
+	 * Understand procedure, understand war
+	 * ...
+	 * </lyricfind>
 	 *
 	 * @param $content string tag content
 	 * @param array $arguments tag atribbutes
@@ -29,14 +45,24 @@ class LyricFindParserController extends WikiaController {
 			'song' => $data['song']
 		]);
 
+		// merge albums data
+		$data['albums'] = array($data['album']);
+		if (isset($data['additionalalbums'])) {
+			$data['albums'] = array_merge($data['albums'], explode(',', $data['additionalalbums']));
+		}
+
 		$html = F::app()->renderPartial('LyricFindParser', 'content', $data);
 
 		// add a category + CSS and JavaScript
 		$parser->getOutput()->addCategory(self::CATEGORY, self::CATEGORY);
 		$parser->getOutput()->addModules('ext.lyrics.lyricbox');
 
+		// generate a marker
+		$marker = $parser->uniqPrefix() . '-lyricfind-' . count(self::$markers) . "-\x7f";
+		self::$markers[ $marker ] = $html;
+
 		wfProfileOut(__METHOD__);
-		return $html;
+		return $marker;
 	}
 
 	/**

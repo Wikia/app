@@ -6,7 +6,7 @@
  * @var $songwriter
  * @var $lyricfindid
  * @var $publisher
- * @var $album
+ * @var $albums
  * @var $lyric
  * @var $ringtoneUrl
  */
@@ -22,6 +22,8 @@ $imgPath = $wg->ExtensionsPath . '/3rdparty/LyricWiki/LyricFind/images';
 
 	<div class="lyricfind-credits">
 		<p>
+			<?= wfMessage('lyricfind-albums', count($albums))->parse() ?>: <em><?= htmlspecialchars(join(', ', $albums)) ?></em>
+			<br>
 			<?= wfMessage('lyricfind-songwrites') ?>: <em><?= htmlspecialchars($songwriter) ?></em>
 			<br>
 			<?= wfMessage('lyricfind-publishers') ?>: <em><?= htmlspecialchars($publisher) ?></em>
@@ -43,7 +45,7 @@ $imgPath = $wg->ExtensionsPath . '/3rdparty/LyricWiki/LyricFind/images';
 
 	<div class="lyricbox" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
 		<meta itemprop="byArtist" content="<?= htmlspecialchars($artist) ?>">
-		<meta itemprop="inAlbum" content="<?= htmlspecialchars($album) ?>">
+		<meta itemprop="inAlbum" content="<?= htmlspecialchars(reset($albums)) ?>">
 		<meta itemprop="name" content="<?= htmlspecialchars($song) ?>">
 
 		<div class="rtMatcher">

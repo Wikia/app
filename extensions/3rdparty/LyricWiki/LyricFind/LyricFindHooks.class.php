@@ -38,4 +38,13 @@ class LyricFindHooks extends WikiaObject {
 		$parser->setHook(LyricFindParserController::NAME, 'LyricFindParserController::render');
 		return true;
 	}
+
+	/**
+	 * @param Parser $parser parser
+	 * @param string $text parser content
+	 */
+	public function onParserAfterTidy(Parser $parser, &$text) {
+		$text = strtr($text, LyricFindParserController::$markers);
+		return true;
+	}
 }

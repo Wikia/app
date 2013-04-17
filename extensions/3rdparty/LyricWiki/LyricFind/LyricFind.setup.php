@@ -33,6 +33,7 @@ $wgLyricFindTrackingNamespaces = array(NS_LYRICFIND);
 
 // parser hhok
 $app->registerHook('ParserFirstCallInit', 'LyricFindHooks', 'onParserFirstCallInit');
+$app->registerHook('ParserAfterTidy', 'LyricFindHooks', 'onParserAfterTidy');
 $app->registerClass('LyricFindParserController', $dir . '/LyricFindParserController.class.php');
 
 // front-end for pages with lyrics
