@@ -13,7 +13,7 @@
 
 $imgPath = $wg->ExtensionsPath . '/3rdparty/LyricWiki/LyricFind/images';
 ?>
-<div id="lyric" itemscope itemtype="http://schema.org/MusicGroup" data-amg-id="<?= htmlspecialchars($amgid) ?>">
+<div id="lyric" data-amg-id="<?= htmlspecialchars($amgid) ?>">
 	<meta itemprop="name" content="<?= htmlspecialchars($artist) ?>">
 
 	<div class="lyricfind-header plainlinks">
@@ -43,10 +43,12 @@ $imgPath = $wg->ExtensionsPath . '/3rdparty/LyricWiki/LyricFind/images';
 
 	<p><small><?= wfMessage('lyricfind-song-by', $artist)->parse() ?></small></p>
 
-	<div class="lyricbox" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
+	<div class="lyricbox" itemscope itemtype="http://schema.org/MusicRecording">
+		<meta itemprop="name" content="<?= htmlspecialchars($song) ?>">
 		<meta itemprop="byArtist" content="<?= htmlspecialchars($artist) ?>">
 		<meta itemprop="inAlbum" content="<?= htmlspecialchars(reset($albums)) ?>">
-		<meta itemprop="name" content="<?= htmlspecialchars($song) ?>">
+		<meta itemprop="publisher" content="<?= htmlspecialchars($publisher) ?>">
+		<meta itemprop="creator" content="<?= htmlspecialchars($songwriter) ?>">
 
 		<div class="rtMatcher">
 			<a href="<?=  htmlspecialchars($ringtoneUrl)?>" rel="nofollow" target="_blank">
