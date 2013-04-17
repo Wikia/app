@@ -1,3 +1,14 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/curation-elements";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.slots-setup {
+	float: left;
+
+	&, h3, h2 {
+		width: 250px;
+	}
+}
 .slot-forms {
 	overflow: hidden;
 	.wikis-in-slots {
@@ -8,6 +19,9 @@
 			float: left;
 			clear: left;
 		}
+		input {
+			width: 50px;
+		}
 	}
 }
 .WikiaHomePageStaffTool .wiki-list td {
@@ -15,4 +29,34 @@
 }
 .submit-buttons {
 	margin-top: 20px;
+}
+
+.collections-setup {
+	width: 735px;
+	float: left;
+	padding-left: 10px;
+	margin: 0 0 20px 10px;
+	border-left: 1px solid $color-page-border;
+
+	.collection-module {
+		@include module-box;
+
+		.input-group {
+			@include clearfix;
+			float: none;
+			label {
+				clear: both;
+				float: left;
+				margin-top: 10px;
+				width: 145px;
+			}
+			input {
+				width: 400px;
+			}
+		}
+	}
+}
+
+.wikis-setup {
+	clear: left;
 }
