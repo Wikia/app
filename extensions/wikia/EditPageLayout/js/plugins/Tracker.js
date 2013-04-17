@@ -129,7 +129,10 @@
 			delete data.category;
 
 			// Update label
-			labelParts.push( data.label );
+			if ( data.label != undefined && data.label != '' ) {
+				labelParts.push( data.label );
+			}
+
 			data.label = labelParts.join( '-' );
 
 			Wikia.Tracker.track( this.config, data );
