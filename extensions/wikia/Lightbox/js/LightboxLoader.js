@@ -61,14 +61,18 @@ var LightboxLoader = {
 		article.add(photos).add(videos).add(comments)
 			.off('.lightbox')
 			.on('click.lightbox', '.lightbox, a.image', function(e) {
-				//LightboxLoader.handleClick(e, $(this));
-				e.preventDefault();
 
 				var $this = $(this),
 					$thumb = $this.children('img').first(),
 					fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
 					parent,
 					isVideo;
+
+				if($this.hasClass('link-internal')) {
+					return;
+				}
+
+				e.preventDefault();
 
 				if($this.closest(article).length) {
 					parent = article;
