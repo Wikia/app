@@ -59,6 +59,14 @@ class LFEditCLI extends Maintenance {
 			
 		$page = WikiPage::factory( $wgTitle );
 
+		# Read LF params
+		$lfid = $this->getOption('lfid');
+		$artist = $this->getOption('artist');
+		$album = $this->getOption('album');
+		$song = $this->getOption('song');
+		$writer = $this->getOption('writer');
+		$publisher = $this->getOption('publisher');
+
 		# Read the text
 		$lyrics = $this->getStdin( Maintenance::STDIN_ALL );
 
@@ -78,7 +86,7 @@ class LFEditCLI extends Maintenance {
 			$text = "<lyricfind artist=\"%s\" album=\"%s\" additionalAlbums=\"\" song=\"%s\" songwriter=\"%s\" publisher=\"%s\" amgid=%d>\n";
 			$text.= "%s\n";
 			$text.= "</lyricfind>";
-			$text = sprintf( $text, $artist, $album, $song, $writer, $publisher, $lfid );
+			$text = sprintf( $text, $artist, $album, $song, $writer, $publisher, $lfid, $lyrics );
 		}
 		
 		$this->output( "done\n");
