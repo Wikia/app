@@ -89,9 +89,9 @@
 .WikiaArticle .video-page-caption {
 	@include clearfix;
 	border-bottom: solid 1px $color-headline-border;
-	margin: 10px 0 34px;
+	margin: 10px 0;
 	padding-bottom: 15px;
-	
+
 	.video-provider {
 		font-size: 11px;
 		line-height: 11px;
@@ -108,7 +108,15 @@
 }
 
 table.mw_metadata {
-	margin: 10px 0 0;
+	margin: 10px 0;
+	width: 100%;
+
+	&.collapsed tr.collapsable {
+		display: table-row;
+	}
+	.mw-metadata-show-hide-extended {
+		display: none;
+	}
 }
 
 #mw-imagepage-reupload-link {
@@ -121,4 +129,8 @@ table.mw_metadata {
 		float: left;
 		margin-right: 10px;
 	}
+}
+
+ul.tabs {
+	margin: 20px 0;
 }

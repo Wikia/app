@@ -28,14 +28,32 @@ class WikiaImagePage extends ImagePage {
 	}
 
 	/**
+	 * openShowImage override.
+	 * This is called before the wikitext is printed out
+	 */
+	protected function openShowImage() {
+		global $wgEnableVideoPageRedesign, $wgOut;
+
+		parent::openShowImage();
+		if(!empty($wgEnableVideoPageRedesign)) {
+			$this->renderTabs();
+
+			// Open div for about section (closed in imageDetails);
+			$wgOut->addHtml('<div data-tab-body="about" class="tabBody selected">');
+			$this->renderDescriptionHeader();
+		}
+	}
+
+	/**
 	 * imageDetails override
 	 * Image page doesn't need the wrapper, but WikiaFilePage does
+	 * This is called after the wikitext is printed out
 	 */
-	protected function imageDetails($showmeta, $formattedMetadata) {
+	protected function imageDetails() {
 		global $wgEnableVideoPageRedesign, $wgJsMimeType, $wgExtensionsPath;
 
 		if(empty($wgEnableVideoPageRedesign)) {
-			parent::imageDetails($showmeta, $formattedMetadata);
+			parent::imageDetails();
 			return;
 		}
 
@@ -46,11 +64,27 @@ class WikiaImagePage extends ImagePage {
 		$app = F::app();
 		$this->getContext()->getOutput()->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
 		$this->getContext()->getOutput()->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
-		$this->getContext()->getOutput()->addHTML( $app->renderPartial( 'FilePageController', 'seeMore', array() ) );
-		$this->getContext()->getOutput()->addHTML( '<div class="more-info-wrapper">' );
-		parent::imageDetails( $showmeta, $formattedMetadata );
-		$this->getContext()->getOutput()->addHTML( '</div>' );
-		$this->getContext()->getOutput()->addHTML( $app->renderView( 'FilePageController', 'relatedPages', array() ) );
+
+		// Close div from about section (opened in openShowImage)
+		$this->getContext()->getOutput()->addHTML('</div>');
+
+		$this->getContext()->getOutput()->addHTML('<div data-tab-body="history" class="tabBody">');
+		parent::imageDetails();
+		$this->getContext()->getOutput()->addHTML('</div>');
+	}
+
+	/**
+	 * imageMetadata override
+	 * Image page doesn't need the wrapper, but WikiaFilePage does
+	 */
+	protected function imageMetadata($formattedMetadata) {
+		$this->getContext()->getOutput()->addHTML('<div data-tab-body="metadata" class="tabBody">');
+		parent::imageMetadata($formattedMetadata);
+		$this->getContext()->getOutput()->addHTML('</div>');
+	}
+
+	protected function imageFooter() {
+		$this->getContext()->getOutput()->addHTML( F::app()->renderView( 'FilePageController', 'relatedPages', array() ) );
 	}
 
 	/**
@@ -68,13 +102,11 @@ class WikiaImagePage extends ImagePage {
 		// do nothing on purpose
 	}
 
-	protected function openShowImage() {
-		global $wgEnableVideoPageRedesign;
+	protected function renderTabs() {
+		global $wgOut;
 
-		parent::openShowImage();
-		if(!empty($wgEnableVideoPageRedesign)) {
-			$this->renderDescriptionHeader();
-		}
+		$tabs = F::app()->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
+		$wgOut->addHtml($tabs);
 	}
 
 	protected function renderDescriptionHeader() {

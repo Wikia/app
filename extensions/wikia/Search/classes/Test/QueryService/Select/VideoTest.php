@@ -68,7 +68,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Video', 'getQueryClausesString' );
 		$method->setAccessible( true );
 		$this->assertEquals(
-				'((wid:123) AND (ns:6))',
+				'((wid:123) AND (is_video:true) AND (ns:6))',
 				$method->invoke( $mockSelect )
 		);
 	}
