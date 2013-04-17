@@ -39,7 +39,6 @@ class LFEditCLI extends Maintenance {
 		$this->addOption( 'song', 'Song name', true, true );
 		$this->addOption( 'writer', 'Song writer', false, true );
 		$this->addOption( 'publisher', 'Song publisher', false, true );
-		$this->addOption( 'lyrics', 'Song text', true, true );
 	}
 
 	public function execute() {
@@ -70,7 +69,7 @@ class LFEditCLI extends Maintenance {
 		$publisher = $this->getOption('publisher');
 
 		# Read the text
-		$lyrics = $this->getOption('lyrics');
+		$lyrics = $this->getStdin( Maintenance::STDIN_ALL );
 
 $x = "title = " . $this->getArg() . "\n";
 $x .= "user = " . $userName . "\n";
