@@ -10,8 +10,8 @@ class ArticleComment {
 	const AVATAR_BIG_SIZE = 50;
 	const AVATAR_SMALL_SIZE = 30;
 
-	const CACHE_VERSION = 1;
-	const CACHE_TIME = 3600;
+	const CACHE_VERSION = 0;
+	const AN_HOUR = 3600;
 
 	/**
 	 * @var $mProps Bool blogs only
@@ -408,7 +408,7 @@ class ArticleComment {
 				$comment['votes'] = $this->getVotesCount();
 			}
 
-			$wgMemc->set( $articleDataKey, $comment, self::CACHE_TIME );
+			$wgMemc->set( $articleDataKey, $comment, self::AN_HOUR );
 
 			if(!($comment['title'] instanceof Title)) {
 				$comment['title'] = Title::newFromText( $comment['title'], NS_TALK );
