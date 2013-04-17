@@ -192,3 +192,16 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 		]
 	);
 }
+
+//list of Videos provides that we support
+if ( empty( $app->wg->WikiaMobileSupportedVideos ) ) {
+	$app->wg->set( 'wgWikiaMobileSupportedVideos', [
+		'screenplay',
+		'ign',
+		'ooyala',
+		'youtube',
+		'dailymotion',
+		'vimeo',
+		'bliptv'
+	]);
+}
