@@ -27,6 +27,9 @@ jQuery(function($){
 			$('[data-tab-body="'+previousTabName+'"]').removeClass('selected');
 			$('[data-tab-body="'+newTabName+'"]').addClass('selected');
 
+			// Let extensions react to tab switch event.
+			$(window).trigger('wikiaTabClicked', [newTabName]);
+
 		} else {
 			$().log("Tried to switch to tab but could not find data-tab-body: \""+newTabName+"\"");
 		}

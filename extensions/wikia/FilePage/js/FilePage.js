@@ -100,6 +100,8 @@ var VideoPage = {
 	init: function() {
 		var self = this;
 
+		this.initTabCookies();
+
 		$('.page-list-pagination').each(function() {
 			new Paginator($(this));
 		});
@@ -164,6 +166,24 @@ var VideoPage = {
 				}
 			});
 		});
+	},
+	initTabCookies: function() {
+		// Show selected tab body
+		var selected = $('.tabs').attr('data-selected');
+
+		$('[data-tab="' + selected + '"] a').click();
+
+		// Set cookies for logged in users to save which tab is active when they exit the page
+		if(window.wgUserName) {
+			var cookies = window.Wikia.Cookies;
+
+			$(window).on('wikiaTabClicked', function(e, tab) {
+				cookies.set('WikiaFilePageTab', tab, {
+					path: "/"
+				})
+			});
+
+		}
 	}
 }
 

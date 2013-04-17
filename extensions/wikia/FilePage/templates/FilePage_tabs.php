@@ -1,4 +1,4 @@
-<ul class="tabs">
+<ul class="tabs" data-selected="<?= $selectedTab ?>">
 	<li data-tab="about" class="selected">
 		<a><?= wfMessage('file-page-tab-about') ?></a>
 	</li>

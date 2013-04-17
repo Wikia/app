@@ -109,7 +109,15 @@ class WikiaImagePage extends ImagePage {
 	protected function renderTabs() {
 		global $wgOut;
 
-		$tabs = F::app()->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
+		// Default tab selected
+		$selectedTab = 'about';
+
+		// Change selected tab based on previous user interaction
+		if(isset($_COOKIE['WikiaFilePageTab'])) {
+			$selectedTab = $_COOKIE['WikiaFilePageTab'];
+		}
+
+		$tabs = F::app()->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta, 'selectedTab' => $selectedTab ) );
 		$wgOut->addHtml($tabs);
 	}
 
