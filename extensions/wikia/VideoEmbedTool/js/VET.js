@@ -961,6 +961,9 @@
 							length = items.length;
 
 						if (length > 0) {
+                            VET_tracking({
+                                label: 'suggestions'
+                            });
 
 							that.trimTitles(data);
 							that.addSuggestions(data);
@@ -1065,9 +1068,9 @@
 		.on('click.VET', '.vet-close', function(e) {
 			e.preventDefault();
 
-			VET_tracking({
-				label: 'success-button-return'
-			});
+//			VET_tracking({
+//				label: 'success-button-return'
+//			});
 
 			VET_close();
 		});
