@@ -45,6 +45,7 @@ class LFEditCLI extends Maintenance {
 		global $wgUser, $wgTitle;
 
 		$userName = $this->getOption( 'user', 'UberBot' );
+		$bot = $this->hasOption( 'bot' );
 		$noRC = $this->hasOption( 'no-rc' );
 
 		$wgUser = User::newFromName( $userName );
