@@ -202,4 +202,88 @@ class IndexServicesTest extends BaseTest
 				$service->execute()
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\WikiPromoData::execute
+	 */
+	public function testWikiPromoData() {
+		$mwService = $this->service->setMethods( [ 'isOnDbCluster', 'getVisualizationInfoForWikiId', 'getWikiId' ] )->getMock();
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\WikiPromoData' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( [ 'getService' ] )
+		                ->getMock();
+		
+		$desc = "This is my description";
+		$vizInfo = [ 'desc' => $desc, 'flags' => [ 'new' => 1, 'hot' => 0 ] ];
+		$service
+		    ->expects( $this->once() )
+		    ->method ( "getService" )
+		    ->will   ( $this->returnValue( $mwService ) )
+		;
+		$mwService
+		    ->expects( $this->once() )
+		    ->method ( 'isOnDbCluster' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mwService
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mwService
+		    ->expects( $this->once() )
+		    ->method ( 'getVisualizationInfoForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $vizInfo ) )
+		;
+		$expected = [ 'wiki_description_txt' => $desc, 'wiki_new_b' => 'true', 'wiki_hot_b' => 'false', 'wiki_official_b' => 'false', 'wiki_promoted_b' => 'false' ];
+		$this->assertEquals(
+				$expected,
+				$service->execute()
+		);
+		$this->assertAttributeEquals(
+				$expected,
+				'result',
+				$service
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\WikiStats::execute
+	 */
+	public function testWikiStatsExecute() {
+		$mwService = $this->service->setMethods( [ 'isOnDbCluster', 'getApiStatsForWiki' ] )->getMock();
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\WikiStats' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( [ 'getService' ] )
+		                ->getMock();
+		
+		$statsInfo = [ 'query' => [ 'statistics' => [ 'pages' => 123, 'articles' => 456, 'activeusers' => 234, 'images' => 567 ] ] ];
+		$service
+		    ->expects( $this->once() )
+		    ->method ( "getService" )
+		    ->will   ( $this->returnValue( $mwService ) )
+		;
+		$mwService
+		    ->expects( $this->once() )
+		    ->method ( 'isOnDbCluster' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mwService
+		    ->expects( $this->once() )
+		    ->method ( 'getApiStatsForWiki' )
+		    ->will   ( $this->returnValue( $statsInfo ) )
+		;
+		$expected = [ 'wikipages' => 123, 'wikiarticles' => 456, 'activeusers' => 234, 'wiki_images' => 567 ];
+		$this->assertEquals(
+				$expected,
+				$service->execute()
+		);
+		$this->assertAttributeEquals(
+				$expected,
+				'result',
+				$service
+		);
+	}
+	
 }
