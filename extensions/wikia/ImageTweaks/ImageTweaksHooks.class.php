@@ -198,8 +198,8 @@ class ImageTweaksHooks extends WikiaObject {
 					$linkAttribs['class'] = 'image';
 				}
 
-				if ( !empty( $linkAttribs['data-image-name'] ) ) {
-					$imageParams['name'] = $linkAttribs['data-image-name'];
+				if ( !empty( $imageAttribs['data-image-name'] ) ) {
+					$imageParams['name'] = $imageAttribs['data-image-name'];
 				}
 
 				if ( !empty( $fullImageUrl ) ) {
@@ -209,7 +209,7 @@ class ImageTweaksHooks extends WikiaObject {
 				}
 
 				if ( !empty( $options['caption'] ) ) {
-					$imageParams['capt'] = true;
+					$imageParams['capt'] = 1;
 				}
 
 				//images set to be less than 64px are probably
@@ -233,13 +233,13 @@ class ImageTweaksHooks extends WikiaObject {
 				$html = $this->app->sendRequest(
 					'WikiaMobileMediaService',
 					'renderImageTag',
-					array(
+					[
 						'attributes' => $imageAttribs,
-						'parameters' => array( $imageParams ),
+						'parameters' => [ $imageParams ],
 						'anchorAttributes' => $linkAttribs,
 						'linked' => !empty( $link ),
 						'noscript' => $contents
-					),
+					],
 					true
 				)->toString();
 			} else {
@@ -270,18 +270,24 @@ class ImageTweaksHooks extends WikiaObject {
 				unset( $imageAttribs['alt'] );
 			}
 
+			$provider = $file->getProviderName();
+
 			$imageParams = array(
 				'type' => 'video',
-				'provider' => $file->getProviderName(),
+				'provider' => $provider,
 				'full' => $imageAttribs['src']
 			);
+var_dump($this->app->wg->WikiaMobileSupportedVideos);
+			if( in_array( $provider, $this->app->wg->WikiaMobileSupportedVideos ) ) {
+				$imageParams['supported'] = 1;
+			}
 
-			if ( !empty($linkAttribs['data-video-name'] ) ) {
-				$imageParams['name'] = $linkAttribs['data-video-name'];
+			if ( !empty($imageAttribs['data-video-name'] ) ) {
+				$imageParams['name'] = $imageAttribs['data-video-name'];
 			}
 
 			if ( !empty( $options['caption'] ) ) {
-				$imageParams['capt'] = true;
+				$imageParams['capt'] = 1;
 			}
 
 			if ( $file instanceof File ) {
@@ -292,12 +298,12 @@ class ImageTweaksHooks extends WikiaObject {
 				$imageAttribs['height'] = $size['height'];
 			}
 
-			$data = array(
+			$data = [
 				'attributes' => $imageAttribs,
-				'parameters' => array( $imageParams ),
+				'parameters' => [ $imageParams ],
 				'anchorAttributes' => $linkAttribs,
 				'noscript' => $origImg
-			);
+			];
 
 			if ( $file instanceof File ) {
 				$title = $file->getTitle()->getDBKey();
