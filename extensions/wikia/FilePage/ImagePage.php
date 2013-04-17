@@ -50,7 +50,7 @@ class WikiaImagePage extends ImagePage {
 	 * This is called after the wikitext is printed out
 	 */
 	protected function imageDetails() {
-		global $wgOut, $wgEnableVideoPageRedesign, $wgJsMimeType, $wgExtensionsPath;
+		global $wgEnableVideoPageRedesign, $wgJsMimeType, $wgExtensionsPath;
 
 		if(empty($wgEnableVideoPageRedesign)) {
 			parent::imageDetails();
@@ -58,19 +58,19 @@ class WikiaImagePage extends ImagePage {
 		}
 
 		// move these two to WikiaFilePage package after full release
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/FilePage/css/FilePage.scss'));
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/FilePage/js/FilePage.js\"></script>\n" );
+		$this->getContext()->getOutput()->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/FilePage/css/FilePage.scss' ) );
+		$this->getContext()->getOutput()->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/FilePage/js/FilePage.js\"></script>\n" );
 
 		$app = F::app();
-		$wgOut->addHtml( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
-		$wgOut->addHtml( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
+		$this->getContext()->getOutput()->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
+		$this->getContext()->getOutput()->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
 
 		// Close div from about section (opened in openShowImage)
-		$wgOut->addHtml('</div>');
+		$this->getContext()->getOutput()->addHTML('</div>');
 
-		$wgOut->addHtml('<div data-tab-body="history" class="tabBody">');
+		$this->getContext()->getOutput()->addHTML('<div data-tab-body="history" class="tabBody">');
 		parent::imageDetails();
-		$wgOut->addHtml('</div>');
+		$this->getContext()->getOutput()->addHTML('</div>');
 	}
 
 	/**
@@ -78,17 +78,13 @@ class WikiaImagePage extends ImagePage {
 	 * Image page doesn't need the wrapper, but WikiaFilePage does
 	 */
 	protected function imageMetadata($formattedMetadata) {
-		global $wgOut;
-
-		$wgOut->addHtml('<div data-tab-body="metadata" class="tabBody">');
+		$this->getContext()->getOutput()->addHTML('<div data-tab-body="metadata" class="tabBody">');
 		parent::imageMetadata($formattedMetadata);
-		$wgOut->addHtml('</div>');
+		$this->getContext()->getOutput()->addHTML('</div>');
 	}
 
 	protected function imageFooter() {
-		global $wgOut;
-
-		$wgOut->addHtml( F::app()->renderView( 'FilePageController', 'relatedPages', array() ) );
+		$this->getContext()->getOutput()->addHTML( F::app()->renderView( 'FilePageController', 'relatedPages', array() ) );
 	}
 
 	/**
@@ -114,28 +110,13 @@ class WikiaImagePage extends ImagePage {
 	}
 
 	protected function renderDescriptionHeader() {
-		global $wgOut, $wgLang;
-
-		// Contstruct the h2 with edit link
-		$skin = $wgOut->getSkin();
-		$headline = wfMessage('video-page-description-heading')->text();
-		$args = array(
-			$this->getTitle(), // title obj
-			0, // section
-			$headline, // heading text
-			$wgLang->getCode() // lang
-		);
-		$editSection = call_user_func_array( array( $skin, 'doEditSectionLink' ), $args );
-
-		$descriptionHeaderHtml = Linker::makeHeadline("2", ">", $headline, $headline, $editSection);
-
 		// Display description text or default message
 		$content = FilePageHelper::stripCategoriesFromDescription( $this->getContent() );
-		$isContentEmpty = empty($content);
+		$isContentEmpty = empty( $content );
 
-		$html = F::app()->renderPartial( 'FilePageController', 'description', array('isContentEmpty' => $isContentEmpty, 'descriptionHeaderHtml' => $descriptionHeaderHtml) );
+		$html = F::app()->renderPartial( 'FilePageController', 'description', array( 'isContentEmpty' => $isContentEmpty ) );
 
-		$wgOut->addHTML( $html );
+		$this->getContext()->getOutput()->addHTML( $html );
 	}
 
 }
