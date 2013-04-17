@@ -39,6 +39,7 @@ class LFEditCLI extends Maintenance {
 		$this->addOption( 'song', 'Song name', true, true );
 		$this->addOption( 'writer', 'Song writer', false, true );
 		$this->addOption( 'publisher', 'Song publisher', false, true );
+		$this->addOption( 'lyrics', 'Song text', true, true );
 	}
 
 	public function execute() {
@@ -69,7 +70,21 @@ class LFEditCLI extends Maintenance {
 		$publisher = $this->getOption('publisher');
 
 		# Read the text
-		$lyrics = $this->getStdin( Maintenance::STDIN_ALL );
+		$lyrics = $this->getOption('lyrics');
+
+$x = "title = " . $this->getArg() . "\n";
+$x .= "user = " . $userName . "\n";
+$x .= "noRc = " . $noRc . "\n";
+$x .= "bot = " . $bot . "\n";
+$x .= "lfid = " . $lfid . "\n";
+$x .= "artist = " . $artist . "\n";
+$x .= "album = " . $album . "\n";
+$x .= "song = " . $song . "\n";
+$x .= "writer = " . $writer . "\n";
+$x .= "publisher = " . $publisher . "\n";
+$x .= "lyrics = " . $lyrics . "\n";
+error_log( $x, 3, "/tmp/moli.log" );
+exit;
 
 		# Do the edit
 		$this->output( "Creating tag ... " );
