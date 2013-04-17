@@ -8,14 +8,17 @@
  */
 
 $wgExtensionCredits['other'][] = array(
-	'name' => 'LyricFind tracking',
-	'author' => array('Maciej Brencz')
+	'name' => 'LyricFind',
+	'author' => array('Maciej Brencz'),
+	'description' => 'Provides page views tracking and &lt;lyricfind&gt; parser tag'
 );
 
 $dir = __DIR__;
 
-// TODO: move to CommonSettings
-$wgLyricFindTrackingNamespaces = array(NS_MAIN);
+// LyricFind namespace setup
+define('NS_LYRICFIND', 222);
+$wgExtraNamespaces[NS_LYRICFIND] = 'LyricFind';
+$wgNamespacesWithSubpages[NS_LYRICFIND] = false;
 
 // common code
 $app->registerClass('LyricFindHooks', $dir . '/LyricFindHooks.class.php');
@@ -25,6 +28,8 @@ $app->registerExtensionMessageFile('LyricFind', $dir . '/LyricFind.i18n.php');
 $app->registerClass('LyricFindController', $dir . '/LyricFindController.class.php');
 $app->registerClass('LyricFindTrackingService', $dir . '/LyricFindTrackingService.class.php');
 $app->registerHook('OasisSkinAssetGroups', 'LyricFindHooks', 'onOasisSkinAssetGroups');
+
+$wgLyricFindTrackingNamespaces = array(NS_LYRICFIND);
 
 // parser hhok
 $app->registerHook('ParserFirstCallInit', 'LyricFindHooks', 'onParserFirstCallInit');
