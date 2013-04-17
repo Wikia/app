@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../../commandLine.inc');
 require_once($IP . '/lib/GoogleWebmasterTools/WebmasterToolsService.php');
 echo "Not implemented !\n";
 die();
-$service = new WebmasterToolsService();
+$service = new WebmasterToolsUtil();
 
 var_dump($service->getInfo( 'caillou' ));
 //var_dump($service->getInfo( 'visualkei' ));

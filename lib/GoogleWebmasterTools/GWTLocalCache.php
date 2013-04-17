@@ -5,9 +5,7 @@
  * Time: 10:31
  */
 
-namespace GooleWebmasterTools;
-
-class LocalCache {
+class GWTLocalCache {
 	private $map = array();
 
 	function get( $key ) {

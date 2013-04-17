@@ -5,9 +5,11 @@
  * Time: 15:49
  */
 
+// example: SERVER_ID=5915 php maintenance/wikia/GoogleWebmasterToolsSync/initial_sync_account.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
+
 global $IP;
 require_once(__DIR__ . '/../../commandLine.inc');
-require_once($IP . '/lib/GoogleWebmasterTools/WebmasterToolsService.php');
+require_once($IP . '/lib/GoogleWebmasterTools/init.php');
 
 
 
@@ -24,6 +26,7 @@ function generateUserId( $db ) {
 		array(),
 		__METHOD__
 	);
+	if( $res->fetchObject()->maxid == null ) return 1;
 	return $res->fetchObject()->maxid + 1;
 }
 
@@ -66,6 +69,7 @@ function tryInsertWiki( $db ,$wikiId ) {
 	echo "insert: " . $wikiId . "\n";
 	if ( ! $db->insert("webmaster_sitemaps", array(
 			"wiki_id" => $wikiId,
+			"user_id" => null,
 		))) {
 		throw new Exception("can't insert wiki id = " . $wikiId);
 	}
@@ -89,12 +93,23 @@ function tryUpdateWiki( $db, $wikiId, $user ) {
 	if( !$res ) throw new Exception("Failed to update " . $userId . " " . $wikiId);
 }
 
-foreach( $accounts as $i => $u ) {
-	tryInsertUser( $db, $u );
+function updateUserWikiCount( $db, $userId, $wikiCount) {
+	$res = $db->update("webmaster_user_accounts",
+		array(
+			"wikis_number" => $wikiCount,
+		),
+		array(
+			"user_id" => $userId,
+		));
+	if( !$res ) throw new Exception("Failed to update User id=" . $userId . " count = " . $wikiCount);
+
 }
 
 $count = 0;
-$service = new WebmasterToolsService();
+$service = new WebmasterToolsUtil();
+$userRepository = new GWTUserRepository( $db );
+$accounts = $userRepository->all();
+
 foreach( $accounts as $i => $u ) {
 	$sites = $service->getSites( $u );
 	foreach( $sites as $j => $site ) {
@@ -103,10 +118,17 @@ foreach( $accounts as $i => $u ) {
 			tryInsertWiki( $db, $site );
 			tryUpdateWiki( $db, $site, $u );
 			if( $count %100 == 0 ) sleep( 1 );
-			echo $u->getEmail() . " " . $site . " success \n";
+			//echo $u->getEmail() . " " . $site . " success \n";
 		} catch( Exception $e ) {
 			echo $u->getEmail() . " " . $site . " failed \n";
 			echo $e->getMessage() . "\n";
 		}
+	}
+	try {
+		updateUserWikiCount( $db, $u->getId(), count($sites) );
+		echo "" . $u->getEmail() . " has " . count($sites) . " (count updated)\n";
+	} catch( Exception $e ) {
+		echo 'update ' . $u->getEmail() . " " . count($sites) . " failed \n";
+		echo $e->getMessage() . "\n";
 	}
 }

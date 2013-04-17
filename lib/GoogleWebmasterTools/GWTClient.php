@@ -7,10 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-require_once(__DIR__."/LocalCache.php");
-require_once(__DIR__."/GoogleAuthenticationException.php");
-
-class GoogleWebmasterToolsClient {
+class GWTClient {
 	const FEED_URI = 'https://www.google.com/webmasters/tools/feeds';
 
 	private $mAuth, $mEmail, $mPass, $mType, $mSource, $mService, $mWiki, $mSiteURI;
@@ -23,8 +20,8 @@ class GoogleWebmasterToolsClient {
 	 * @access public
 	 */
 	public function __construct( $email, $pass, $wiki = null) {
-		if ( GoogleWebmasterToolsClient::$cache == null )
-			GoogleWebmasterToolsClient::$cache = new GooleWebmasterTools\LocalCache();
+		if ( GWTClient::$cache == null )
+			GWTClient::$cache = new GWTLocalCache();
 
 		global $wgGoogleWebToolsAccts;
 
@@ -72,7 +69,7 @@ class GoogleWebmasterToolsClient {
 
 	private function getAuthToken () {
 		$cacheKey = $this->mEmail;
-		$cached = GoogleWebmasterToolsClient::$cache->get( $cacheKey );
+		$cached = GWTClient::$cache->get( $cacheKey );
 		if( $cached ) return $cached;
 
 		$content = Http::post('https://www.google.com/accounts/ClientLogin',
@@ -88,10 +85,10 @@ class GoogleWebmasterToolsClient {
 		);
 
 		if (preg_match('/Auth=(\S+)/', $content, $matches)) {
-			GoogleWebmasterToolsClient::$cache->set( $cacheKey, $matches[1] );
+			GWTClient::$cache->set( $cacheKey, $matches[1] );
 			return $matches[1];
 		} else {
-			throw new GooleWebmasterTools\GoogleAuthenticationException();
+			throw new GWTAuthenticationException();
 		}
 	}
 
