@@ -47,7 +47,7 @@ class LyricFindParserController extends WikiaController {
 
 		// merge albums data
 		$data['albums'] = array($data['album']);
-		if (isset($data['additionalalbums'])) {
+		if (isset($data['additionalalbums']) && $data['additionalalbums'] != '') {
 			$data['albums'] = array_merge($data['albums'], explode(',', $data['additionalalbums']));
 		}
 
