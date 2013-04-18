@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class GWTUser {
+class GWTUser implements IGoogleCredentials {
 	private $id;
 	private $email;
 	private $password;

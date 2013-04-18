@@ -42,6 +42,14 @@ class GWTService {
 		return $wikis;
 	}
 
+	function uploadWikiAsUser( $wiki, $user ) {
+		$this->webmasterToolsUtil->upload( $wiki, $user );
+	}
+
+	function verifyWiki( $wiki, $user ) {
+		return $this->webmasterToolsUtil->verify( $wiki->getId(), $user );
+	}
+
 	public function setMaxSitesPerAccount($maxSitesPerAccount)
 	{
 		$this->maxSitesPerAccount = $maxSitesPerAccount;

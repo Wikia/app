@@ -14,5 +14,5 @@ $wikiRepository = new GWTWikiRepository();
 $wikis = $wikiRepository->allUnassigned();
 
 foreach ( $wikis as $i => $w ) {
-	echo $w->getDb() . "\n";
+	echo $w->getWikiId() . " " . $w->getDb() . "\n";
 }

@@ -18,6 +18,13 @@ class WebmasterToolsUtil {
 		return $client->site_info();
 	}
 
+	/*
+	 * Sends verify request to google webmaster tools ( uses wgGoogleSiteVerification variable )
+	 * @param $wikiId - id of wiki to verify (city_id)
+	 * @param $credentials - ICredentials implementation or array of credentials where at least one of accounts
+	 *                       must contain site uploaded
+	 * @param $force - send verify request even if already verified.
+	 */
 	public function verify( $wikiId, $credentials = null , $force = false ) {
 		if ( is_array($credentials) ) $credentials = $this->findAccount( $wikiId, $credentials );
 		if ( !$credentials ) throw new InvalidArgumentException("$credentials = null");
@@ -26,6 +33,11 @@ class WebmasterToolsUtil {
 		if( !$force && $info['verified'] ) return true;
 		$client = new GWTClient($credentials->getEmail(), $credentials->getPassword(), $wikiId);
 		return $client->verify_site();
+	}
+
+	public function upload( $wikiId, $credentials ) {
+		$client = new GWTClient($credentials->getEmail(), $credentials->getPassword(), $wikiId);
+		$client->add_site();
 	}
 
 	public function getSites( $credentials ) {

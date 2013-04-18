@@ -21,4 +21,4 @@ $app->registerClass( 'GWTWikiRepository', $dir . 'GWTWikiRepository.php' );
 $app->registerClass( 'WebmasterToolsUtil', $dir . 'WebmasterToolsUtil.php' );
 $app->registerClass( 'GWTService', $dir . 'GWTService.php' );
 $app->registerClass( 'GWTSiteSyncStatus', $dir . 'GWTSiteSyncStatus.php' );
-
+$app->registerClass( 'IGoogleCredentials', $dir . 'IGoogleCredentials.php' );

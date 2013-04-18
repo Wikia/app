@@ -7,6 +7,10 @@
  * To change this template use File | Settings | File Templates.
  */
 
+/*
+ * Internal implementation of Google WebmasterTools client.
+ * Consider using GWTService or WebmasterToolsUtil as public interface.
+ */
 class GWTClient {
 	const FEED_URI = 'https://www.google.com/webmasters/tools/feeds';
 
@@ -220,13 +224,13 @@ class GWTClient {
 			)
 		);
 */
-		echo "==\n".$content . "==\n";
+		//echo "==\n".$content . "==\n";
 		if ($content) {
 //			WikiFactory::setVarByName('wgGoogleWebToolsAccount', $this->mWiki->city_id, $this->mEmail);
 
 			return true;
 		} else {
-			return false;
+			throw new GWTException("Cannot add sitemap (" . $this->mWiki->city_url . ").");
 		}
 	}
 
