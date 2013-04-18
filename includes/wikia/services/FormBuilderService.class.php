@@ -26,6 +26,10 @@ class FormBuilderService extends WikiaService
 		return $this->formFields[$fieldName];
 	}
 
+	protected function setFieldError($fieldName, $errorMessage) {
+		$this->formFields[$fieldName]['errorMessage'] = $errorMessage;
+	}
+
 
 	// TODO rethink if this should be here
 	public function filterData($data) {
@@ -63,6 +67,7 @@ class FormBuilderService extends WikiaService
 					} else {
 						$out[$fieldName] = $validationError->getMsg();
 					}
+					$this->setFieldError($fieldName, $out[$fieldName]);
 				}
 			}
 		}
