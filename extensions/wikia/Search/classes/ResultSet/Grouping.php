@@ -42,7 +42,26 @@ class Grouping extends Base
 		$ellipses = $count > $wordCount ? '&hellip;' : '';
 		return empty( $desc ) ? '' : implode( ' ', array_slice( explode( ' ', $desc ), 0, $wordCount ) ) . $ellipses;
 	}
-	
+
+	public function getDescriptionByLength( $chars = 100 ) {
+		$desc = $this->getHeader( 'desc' );
+		$count = strlen( $desc );
+		$ellipses = $count > $chars ? '&hellip;' : '';
+
+		$words = explode( ' ', $desc );
+		if ( !empty( $words ) ) {
+			$result = 0;
+			foreach( $words as $key => $word ) {
+				if ( $result + strlen( $word ) + strlen( $ellipses ) + 1 > $chars ) {
+					return implode( ' ', array_slice( $words, 0, $key ) ) . $ellipses;
+				}
+				$result += strlen( $word ) + 1;
+			}
+			return $desc;
+		}
+		return '';
+	}
+
 	/**
 	 * Returns the top four articles for this wiki
 	 * @return array of Articles
