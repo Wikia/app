@@ -1246,3 +1246,17 @@ $config['categoryselect_edit_js'] = array(
 		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
 	)
 );
+
+/* FilePage */
+$config['file_page_js'] = array(
+	'type'=> AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/FilePage/js/FilePage.js',
+	)
+);
+$config['file_page_css'] = array(
+	'type' =>AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/FilePage/css/FilePage.scss',
+	)
+);

@@ -57,10 +57,6 @@ class WikiaImagePage extends ImagePage {
 			return;
 		}
 
-		// move these two to WikiaFilePage package after full release
-		$this->getContext()->getOutput()->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/FilePage/css/FilePage.scss' ) );
-		$this->getContext()->getOutput()->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/FilePage/js/FilePage.js\"></script>\n" );
-
 		$app = F::app();
 		$this->getContext()->getOutput()->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
 		$this->getContext()->getOutput()->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );

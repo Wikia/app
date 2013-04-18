@@ -94,8 +94,6 @@ Paginator.prototype = {
 	}
 };
 
-
-
 var VideoPage = {
 	init: function() {
 		var self = this;

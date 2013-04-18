@@ -37,6 +37,14 @@ class BodyController extends WikiaController {
 	}
 
 	/**
+	 * Check whether current page is a file page
+	 */
+	public static function isFilePage() {
+		global $wgTitle;
+		return defined('NS_FILE') && $wgTitle->getNamespace() == NS_FILE;
+	}
+
+	/**
 	 * Check whether current page is blog listing
 	 */
 	public static function isBlogListing() {
@@ -54,7 +62,7 @@ class BodyController extends WikiaController {
 	 */
 	public static function isGridLayoutEnabled() {
 		$app = F::app();
-		
+
 		if( !empty($app->wg->OasisGrid) ) {
 			return true;
 		}
@@ -68,7 +76,7 @@ class BodyController extends WikiaController {
 		if( defined("NS_WIKIA_FORUM_TOPIC_BOARD") && $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -514,7 +522,7 @@ class BodyController extends WikiaController {
 					break;
 			}
 		}
-		
+
 		// bugid-70243: optionally hide navigation h1s for SEO
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 
