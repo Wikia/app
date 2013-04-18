@@ -230,6 +230,7 @@ class Result extends ReadWrite {
 		    	$value = $this->getVideoViews(); break;
 		    default:
 		    	$value = parent::offsetGet( Utilities::field( $nolangKey ) );
+		    	$value = $value ?: parent::offsetGet( $key ); // sometimes an underscore is just an underscore
 		}
 		return $value;
 	}
