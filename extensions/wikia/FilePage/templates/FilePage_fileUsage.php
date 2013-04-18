@@ -12,7 +12,7 @@
 			<?= F::app()->renderPartial('FilePageController', 'fileList', array('fileList' => $fileList, 'type' => $type)) ?>
 		</ul>
 		<? if ($type != 'global'): ?>
-			<a href="<?= $seeMoreLink ?>"><?= $seeMoreText ?> &gt;</a>
+			<a class="see-more-link" href="<?= $seeMoreLink ?>"><?= $seeMoreText ?> &gt;</a>
 		<? endif; ?>
 	</section>
 	<script>
