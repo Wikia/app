@@ -270,11 +270,9 @@ class ImageTweaksHooks extends WikiaObject {
 				unset( $imageAttribs['alt'] );
 			}
 
-			$provider = $file->getProviderName();
-
 			$imageParams = array(
 				'type' => 'video',
-				'provider' => $provider,
+				'provider' => $file->getProviderName(),
 				'full' => $imageAttribs['src']
 			);
 
