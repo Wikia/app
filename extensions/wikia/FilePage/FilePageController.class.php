@@ -19,6 +19,8 @@ class FilePageController extends WikiaController {
 	public function fileUsage() {
 		$app = F::app();
 
+		$seeMoreLink = '';
+		$seeMoreText = '';
 		$heading = '';               // The message to use for the section header
 		$shortenedSummary = array(); // A subset of the data returned to show immediately
 		$fileList = array();         // The list of other articles to show based on $shortenedSummary
@@ -72,6 +74,10 @@ class FilePageController extends WikiaController {
 				$dbName = $this->wg->DBname;
 				$shortenedSummary = array($dbName => array_slice($summary, 0, 3));
 			}
+
+			$seeMoreLink = SpecialPage::getTitleFor("WhatLinksHere")->escapeLocalUrl();
+			$seeMoreLink .= '/'.$app->wg->Title->getPrefixedDBkey();
+			$seeMoreText = wfMessage( 'file-page-more-links' );
 		}
 
 		// Send the $shortenedSummary to fileList to flesh out the details
@@ -84,6 +90,8 @@ class FilePageController extends WikiaController {
 		$this->fileList = $fileList;
 		$this->summary = $summary;
 		$this->type = $type;
+		$this->seeMoreLink = $seeMoreLink;
+		$this->seeMoreText = $seeMoreText;
 	}
 
 	/**

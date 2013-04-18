@@ -22,6 +22,7 @@ $messages['en'] = array(
 	'file-page-tab-about' => 'About',
 	'file-page-tab-history' => 'File History',
 	'file-page-tab-metadata' => 'Metadata',
+	'file-page-more-links' => 'See the full list',
 
 );
 
@@ -43,4 +44,5 @@ $messages['qqq'] = array(
 	'file-page-tab-about' => 'Navigation tab label for the "about" section on a File Page.',
 	'file-page-tab-history' => 'Navigation tab label for the "File History" section on a File Page.',
 	'file-page-tab-metadata' => 'Navigation tab label for the "Metadata" section on a File Page.',
+	'file-page-more-links' => 'A link to the full list of pages that have links to the file on this file page',
 );
