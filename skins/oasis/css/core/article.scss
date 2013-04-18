@@ -508,6 +508,7 @@ table.wikitable {
 	}
 
 	ul {
+		list-style: none;
 		li {
 			border-left: 1px solid $color-page-border;
 			float: left;
