@@ -10,6 +10,10 @@ class FormBuilderService extends WikiaService
 {
 	public $formFields = [];
 
+	public function __construct() {
+		$this->formFields = $this->getMockedData();
+	}
+
 	public function setFields($formFields) {
 		$this->formFields = $formFields;
 	}
@@ -66,34 +70,49 @@ class FormBuilderService extends WikiaService
 		return $out;
 	}
 
-	protected function prepareFieldsDefinition($values, $errorMessages) {
-		$out = array();
-		$fields = $this->getFields();
-		// TODO: check field structure
-		foreach ($fields as $fieldName => $field) {
-			$out[$fieldName] = array(
-				'name' => $fieldName,
-				'value' => isset($values[$fieldName]) ? $values[$fieldName] : '',
-				'attributes' => isset($field['attributes']) ? $this->prepareFieldAttributes($field['attributes']) : '',
-				'errorMessage' => isset($errorMessages[$fieldName]) ? $errorMessages[$fieldName] : ''
-			);
+	/**
+	 * Render form fields set by setFormFields
+	 *
+	 * @return form string
+	 */
+	public function renderFormFields() {
+		$form = '';
 
-			$out[$fieldName] = array_merge($out[$fieldName], $this->prepareFieldOptions($field['options']));
-		}
-
-		return $out;
-	}
-
-	protected function prepareFieldOptions($options) {
-		$out = [];
-
-		if( is_array($options) ) {
-			foreach($options as $name => $option) {
-				$out[$name] = $option;
+		if( !empty( $this->formFields ) ) {
+			foreach ( $this->formFields as $field ) {
+				$form .= $this->renderField($field);
 			}
 		}
 
-		return $out;
+		return $form;
+	}
+
+	/**
+	 * Render form field
+	 *
+	 * @param $field Array Field array with parameters
+	 *
+	 * @requestParam type string				[REQUIRED] field type (text, textarea etc.)
+	 * @requestParam name string				[REQUIRED] field name
+	 * @requestParam label array				[OPTIONAL] array('class' => 'labelClass', 'text' => 'labelText')
+	 * @requestParam attributes array			[OPTIONAL] array with attributes ('class' => 'fieldClass', 'id' => 'fieldId') etc.
+	 * @requestParam validator WikiaValidator 	[OPTIONAL]
+	 * @requestParam icon boolean				[OPTIONAL]
+	 *
+	 * @return WikiaView
+	 */
+	public function renderField( $field ) {
+		// set default values or throw exception ?
+		if ( empty($field['type']) ) {
+			$field['type'] = 'text';
+		}
+		if ( empty($field['name']) ) {
+			$field['name'] = 'defaultName';
+		}
+
+		$field['attributes'] = $this->prepareFieldAttributes($field['attributes']);
+
+		return F::app()->getView('FormBuilderService','renderField', $field);
 	}
 
 	protected function prepareFieldAttributes($attributes) {
@@ -106,10 +125,58 @@ class FormBuilderService extends WikiaService
 		return $out;
 	}
 
+
 	public function renderField($fieldName) {
 		//TODO do something with field data
 		$field = $this->getField($fieldName);
 
 		return F::app()->getView(__CLASS__, 'renderField', $field);
 	}
+
+	private function getMockedData() {
+		return $formFields = array(
+			array(
+				'type' => 'text',
+				'name' => 'exploreTitle',
+				'label' => '',//$this->wf->Msg('marketing-toolbox-hub-module-explore-title'),
+				'validator' => new WikiaValidatorString(
+					array(
+						'required' => true,
+						'min' => 1
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
+				),
+				'attributes' => array(
+					'class' => 'required explore-mainbox-input'
+				)
+			),
+			array(
+				'name' => 'fileName',
+				'type' => 'hidden',
+				'attributes' => array(
+					'class' => 'wmu-file-name-input'
+				),
+				'validator' => new WikiaValidatorFileTitle(
+					array(),
+					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+				)
+			),
+			array(
+				'type' => 'text',
+				'name' => 'imageLink',
+				'label' => '',//$this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
+				'validator' => new WikiaValidatorToolboxUrl(
+					array(),
+					array(
+						'wrong' => 'marketing-toolbox-validator-wrong-url'
+					)
+				),
+				'icon' => true,
+				'attributes' => array(
+					'class' => 'wikiaUrl explore-mainbox-input'
+				)
+			),
+		);
+	}
+
 }
