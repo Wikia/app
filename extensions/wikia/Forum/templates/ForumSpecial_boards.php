@@ -22,8 +22,8 @@
 				<!-- placeholder for future feature -->
 			</div>
 			<ul class="activity">
-				<li class="threads"><?= $wf->MsgExt( 'forum-specialpage-board-threads', array( 'parsemag' ), $board['threadCount'] ) ?></li>
-				<li class="posts"><?= $wf->MsgExt( 'forum-specialpage-board-posts', array( 'parsemag' ), $board['postCount'] ) ?></li>
+				<li class="threads"><?= $wf->MsgExt( 'forum-specialpage-board-threads', array( 'parsemag' ), $wg->Lang->formatNum( $board['threadCount'] ) ) ?></li>
+				<li class="posts"><?= $wf->MsgExt( 'forum-specialpage-board-posts', array( 'parsemag' ), $wg->Lang->formatNum( $board['postCount'] ) ) ?></li>
 			</ul>
 			<? if (!$isEditMode && $board['postCount'] > 0): ?>
 				<p class="last-post"><?= $lastPostByMsg ?>

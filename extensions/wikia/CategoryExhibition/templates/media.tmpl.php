@@ -22,6 +22,11 @@
 						if(!empty($row['dimensions']['h'])){
 							echo ' height="'.$row['dimensions']['h'].'"';
 						}
+						if( $row['useVideoOverlay'] == true ) {
+							echo ' data-video-name=' . htmlspecialchars($row['title']) . ' data-video-key='. htmlspecialchars(urlencode($row['key']));
+						} else {
+							echo ' data-image-name=' . htmlspecialchars($row['title']) . ' data-image-key='. htmlspecialchars(urlencode($row['key']));						
+						}
 					?> />
 					<? if( $row['useVideoOverlay'] == true ) {
 						echo WikiaFileHelper::videoInfoOverlay( $row['dimensions']['w'], $row['data-ref'] );

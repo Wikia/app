@@ -189,7 +189,7 @@ $color-related-videos-background: darken($color-page, 20%);
 							visibility: visible;
 						}
 					}
-					a.video-thumbnail{
+					a.video{
 						display: block;
 						width: 160px;
 						height: 90px;
@@ -245,7 +245,7 @@ $color-related-videos-background: darken($color-page, 20%);
 					margin: 11px;
 					display: inline-block;
 					position: relative;
-					a.video-thumbnail{
+					a.video{
 						width: 160px;
 						height: 90px;
 						display: block;
@@ -373,7 +373,7 @@ $color-related-videos-background: darken($color-page, 20%);
 					.new {
 						top: 14px;
 					}
-					.video-thumbnail {
+					.video {
 						display: block;
 						float: left;
 						margin-right: 12px;
@@ -434,7 +434,7 @@ $color-related-videos-background: darken($color-page, 20%);
     				display: inline-block;
     				position: relative;
     				height: 110px;
-    				a.video-thumbnail{
+    				a.video{
     				    top: 14px;
     					width: 150px;
     					height: 85px;

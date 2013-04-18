@@ -1905,7 +1905,11 @@ Liftium.pullGeo = function (){
 	Liftium.d("Loading geo data from cookie", 3);
 	var cookie = decodeURIComponent(Liftium.cookie("Geo"));
 	if (!Liftium.e(cookie)) {
-		Liftium.geo = eval("(" + cookie + ")");
+		try {
+			Liftium.geo = JSON.parse(cookie) || {};
+		} catch (e) {
+			Liftium.geo = {};
+		}
 		Liftium.d("Geo data loaded:", 7, Liftium.geo);
 		return;
 	}

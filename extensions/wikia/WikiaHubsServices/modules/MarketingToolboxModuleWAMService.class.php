@@ -21,7 +21,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		$params['limit'] = $this->getModel()->getWamLimitForHubPage();
 
 		if( !empty($params['ts']) && $params['ts'] >= strtotime(date('d-m-Y'))) {
-			unset($params['ts']);
+			$params['ts'] = null;
 		}
 
 		if( empty($params['image_height']) ) {
@@ -34,9 +34,9 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 
 		return parent::prepareParameters([
 			'wam_day' => $params['ts'],
-			'wam_previous_day' => $params['ts_previous_day'],
 			'vertical_id' => $this->verticalId,
 			'wiki_lang' => $this->langCode,
+			'exclude_blacklist' => true,
 			'fetch_admins' => true,
 			'fetch_wiki_images' => true,
 			'limit' => $params['limit'],
@@ -197,6 +197,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		$structuredData = [
 			'wamPageUrl' => $this->getWamPageUrl(),
 			'verticalName' => $hubModel->getVerticalName($data['vertical_id']),
+			'canonicalVerticalName' => str_replace(' ', '', $hubModel->getCanonicalVerticalName($data['vertical_id'])),
 			'ranking' => []
 		];
 

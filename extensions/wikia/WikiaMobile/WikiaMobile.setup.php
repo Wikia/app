@@ -88,6 +88,13 @@ F::build( 'JSMessages' )->registerPackage( 'WkMbl', array(
 	'wikiamobile-image-not-loaded'
 ) );
 
+F::build( 'JSMessages' )->registerPackage( 'SmartBanner', [
+	'wikiasmartbanner-appstore',
+	'wikiasmartbanner-googleplay',
+	'wikiasmartbanner-price',
+	'wikiasmartbanner-view'
+] );
+
 /**
  * hooks
  */
@@ -131,6 +138,8 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			//ads
 			'wgDartCustomKeyValues',
 			'cityShort',
+			'wikiaPageIsHub',
+			'wikiaPageType',
 
 			//server/wiki
 			'wgServer',
@@ -149,6 +158,7 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'wgCookiePath',
 			'wgDisableAnonymousEditing',
 			'wgNamespaceIds',
+			'wgExtensionsPath',
 
 			//article
 			'wgArticlePath',

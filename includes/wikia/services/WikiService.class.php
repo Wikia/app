@@ -297,6 +297,7 @@ class WikiService extends WikiaModel {
 			$userInfo['userPageUrl'] = ($userProfileTitle instanceof Title) ? $userProfileTitle->getFullURL() : '#';
 			$userContributionsTitle = F::build('GlobalTitle', array('Contributions/' . $username, NS_SPECIAL, $wikiId), 'newFromTextCached');
 			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
+			$userInfo['userId'] = $userId;
 
 			$userStatsService = F::build('UserStatsService', array($userId));
 			$stats = $userStatsService->getGlobalStats($wikiId);

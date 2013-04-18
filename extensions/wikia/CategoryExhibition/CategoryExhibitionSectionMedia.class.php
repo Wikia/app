@@ -14,7 +14,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 
 		$cachedContent = $this->getFromCache();
 		if ( empty( $cachedContent ) ){
-			// grabs data fo videos and images
+			// grabs data for videos and images
 			$aTmpData = $this->fetchSectionItems( array( NS_FILE ) ); // we wan't old videos
 			if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
 				$pages = Paginator::newFromArray( $aTmpData, $wgCategoryExhibitionMediaSectionRows * 4 );
@@ -65,6 +65,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 					$aData[] = array(
 						'id'			=> $item['page_id'],
 						'title'			=> $itemTitle->getText(),
+						'key'			=> $itemTitle->getDBKey(),
 						'img'			=> (string) $imageSrc,
 						'url'			=> $itemTitle->getFullURL(),
 						'dimensions'		=> array( 'w' => (int) $forceWidth, 'h' => (int) $forceHeight ),

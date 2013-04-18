@@ -70,18 +70,18 @@ class LFEditCLI extends Maintenance {
 
 		# Read the text
 		$lyrics = $this->getStdin( Maintenance::STDIN_ALL );
-
+		
 		# Do the edit
 		$this->output( "Creating tag ... " );
 		if ( $page->exists() ) {
-			$old_text = $page->getText();
+			$text = $page->getText();
 			$re = '/additionalAlbums=([\'"])?((?(1).*?|[^\s>]+))(?(1)\1)/is';
 			
 			$albums = "";
 			if ( preg_match( $re, $text, $match ) ) {
 				$albums = $match[2];
 			}
-			$albums = sprintf( "%s%s%s", $albums, ( empty( $albums ) ) ? "" : ",", $new_album );
+			$albums = sprintf( "%s%s%s", $albums, ( empty( $albums ) ) ? "" : ",", $album );
 			$text = preg_replace( $re, "additionalAlbums=\"$albums\"", $text, 1 );			
 		} else {
 			$text = "<lyricfind artist=\"%s\" album=\"%s\" additionalAlbums=\"\" song=\"%s\" songwriter=\"%s\" publisher=\"%s\" amgid=%d>\n";

@@ -55,12 +55,12 @@ class DefaultContentTest extends BaseTest
 	 * @covers Wikia\Search\IndexService\DefaultContent::execute
 	 */
 	public function testExecute() {
-		$methods = [ 'getService', 'field', 'getPageContentFromParseResponse', 'getCategoriesFromParseResponse', 'getHeadingsFromParseResponse' ];
+		$methods = [ 'getService', 'field', 'getPageContentFromParseResponse', 'getCategoriesFromParseResponse', 'getHeadingsFromParseResponse', 'getOutboundLinks' ];
 		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', $methods, array() );
 		$mwMethods = [
 				'getParseResponseFrompageId', 'getTitleStringFromPageId', 'getUrlFromPageId',
-				'getNamespaceFromPageId', 'getHostName', 'getSimpleLanguageCode', 'getGlobal',
-				'isPageIdContent', 'isPageIdMainPage', 'getCanonicalPageIdFromPageId', 'getWikiId'
+				'getNamespaceFromPageId', 'getHostName', 'getSimpleLanguageCode', 'getGlobal', 'setGlobal',
+				'isPageIdContent', 'isPageIdMainPage', 'getCanonicalPageIdFromPageId', 'getWikiId', 'registerHook'
 				];
 		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', $mwMethods );
 		$html = 'this is my html';
@@ -117,9 +117,25 @@ class DefaultContentTest extends BaseTest
 		;
 		$mwService
 		    ->expects( $this->once() )
+		    ->method ( 'registerHook' )
+		    ->with   ( 'LinkEnd', 'Wikia\Search\Hooks', 'onLinkEnd' )
+		;
+		$mwService
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'BacklinksEnabled' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mwService
+		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'Sitename' )
 		    ->will   ( $this->returnValue( "My Wiki" ) )
+		;
+		$mwService
+		    ->expects( $this->once() )
+		    ->method ( 'setGlobal' )
+		    ->with   ( 'EnableParserCache', false )
 		;
 		$mwService
 		    ->expects( $this->once() )
@@ -163,6 +179,11 @@ class DefaultContentTest extends BaseTest
 		    ->with   ( $parseResponse )
 		    ->will   ( $this->returnValue( [ 'headings_mv_en' => [ 'heading' ] ] ) )
 		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getOutboundLinks' )
+		    ->will   ( $this->returnValue( [ 'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ] ] ) )
+		;
 		$cpid = new \ReflectionProperty( 'Wikia\Search\IndexService\AbstractService', 'currentPageId' );
 		$cpid->setAccessible( true );
 		$cpid->setValue( $service, 123 );
@@ -182,7 +203,8 @@ class DefaultContentTest extends BaseTest
 				'wikititle_en' => 'My Wiki',
 				'page_images' => 2,
 				'iscontent' => 'true',
-				'is_main_page' => 'false'
+				'is_main_page' => 'false',
+				'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ]
 				];
 		$this->assertEquals(
 				$expectedResult,
@@ -235,6 +257,51 @@ class DefaultContentTest extends BaseTest
 		$this->assertEquals(
 				$prepped,
 				$get->invoke( $service, $response )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::getOutboundLinks
+	 */
+	public function testGetOutboundLinks() {
+		$mockMwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
+		$mockHooks = $this->getMock( 'Wikia\Search\Hooks', [ 'popLinks' ] );
+		$mockService = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                    ->setMethods( [ 'getService', 'getCurrentDocumentId' ] )
+		                    ->disableOriginalConstructor()
+		                    ->getMock();
+		$docId = '123_321';
+		$anotherPage = '123_456 | another page';
+		$samePage = '123_321 | edit';
+		$backlinks = [ $samePage, $anotherPage ];
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $mockMwService ) )
+		;
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getCurrentDocumentId' )
+		    ->will   ( $this->returnValue( $docId ) )
+		;
+		$mockMwService
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'BacklinksEnabled' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockHooks
+		    ->expects( $this->once() )
+		    ->method ( 'popLinks' )
+		    ->will   ( $this->returnValue( $backlinks ) )
+		;
+		$this->proxyClass( 'Wikia\Search\Hooks', $mockHooks );
+		$this->mockApp();
+		$get = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'getOutboundLinks' );
+		$get->setAccessible( true );
+		$this->assertEquals(
+				[ 'outbound_links_txt' => [ $anotherPage ] ],
+				$get->invoke( $mockService )
 		);
 	}
 	
@@ -540,7 +607,7 @@ ENDIT;
 		    ->will   ( $this->returnValue( 'value' ) )
 		;
 		$this->assertEquals(
-				[ 'infoboxes_txt' => [ 'here is my key value' ] ],
+				[ 'infoboxes_txt' => [ 'here is my key | value' ] ],
 				$extract->invoke( $service, $dom, $result )
 		);
 	}

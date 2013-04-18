@@ -54,8 +54,7 @@ class ScavengerHuntGetFinalModalArrayTest extends ScavengerHuntTest {
 
 		// test and assertions
 		$result = $scavengerHunt->generateFullInfo();
-		$scavengerHunt->resetCache();
-		
+
 		$this->assertEquals( $expectedResult, isset( $result['completed'] ) );
 	}
 }

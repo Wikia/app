@@ -107,7 +107,7 @@
 			}
 
 			if (options.domain) {
-				data.push('; path=' + options.domain);
+				data.push('; domain=' + options.domain);
 			}
 
 			if (options.secure) {

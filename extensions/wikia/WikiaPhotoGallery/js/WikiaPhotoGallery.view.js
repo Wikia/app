@@ -22,19 +22,16 @@ var WikiaPhotoGalleryView = {
 
 	// load jQuery UI + editor JS (if not loaded yet) and fire callback
 	loadEditorJS: function(callback) {
+		var resources = [
+			$.loadJQueryUI,
+			$.loadJQueryAIM
+		];
+
 		if (typeof WikiaPhotoGallery == 'undefined') {
-			return $.getResources([
-				wgExtensionsPath + '/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
-				$.loadJQueryUI,
-				$.loadJQueryAIM
-			],
-			callback);
-		} else {
-			// create deferred and automatically resolve it to pass promise pattern to callback on else statement
-			var deferred = new jQuery.Deferred();
-			deferred.then(callback).resolve();
-			return deferred;
+			resources.push(wgExtensionsPath + '/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js');
 		}
+
+		return $.getResources(resources, callback);
 	},
 
 	init: function() {
