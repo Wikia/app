@@ -53,34 +53,11 @@
 	.page-listing-title {
 		margin: 5px 0 0;
 	}
+	.see-more-link {
+		float: right;
+	}
 }
 
-.SeeMore {
-	border: 1px solid $color-page-border;
-	display: block;
-	margin: 20px 0 10px;
-	padding: 5px;
-	text-align: center;
-	&.toggled {
-		.see-less {
-			display: inline;
-		}
-		.see-more {
-			display: none;
-		}
-	}
-	.arrow {
-		&.down {
-			@include arrow(4px, $color-text, 'down');
-		}
-		&.up {
-			@include arrow(4px, $color-text, 'up');
-		}
-	}
-	.see-less {
-		display: none;
-	}
-}
 
 .more-info-wrapper {
 	display: none;
