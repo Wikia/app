@@ -12,14 +12,14 @@ class GWTWiki {
 
 	function __construct( $wikiId, $userId, $uploadDate )
 	{
-		$this->userId = $userId;
-		$this->wikiId = $wikiId;
-		$this->uploadDate = $uploadDate;
+		$this->setUserId( $userId );
+		$this->setWikiId( $wikiId );
+		$this->setUploadDate( $uploadDate );
 	}
 
 	public function setUserId($userId)
 	{
-		$this->userId = $userId;
+		$this->userId = intval( $userId );
 	}
 
 	public function getUserId()
@@ -29,7 +29,7 @@ class GWTWiki {
 
 	public function setWikiId($wikiId)
 	{
-		$this->wikiId = $wikiId;
+		$this->wikiId = intval( $wikiId );
 	}
 
 	public function getWikiId()

@@ -50,7 +50,7 @@ class WebmasterToolsUtil {
 		if ( is_array($credentials) ) $credentials = $this->findAccount( $wikiId, $credentials );
 		if ( !$credentials ) throw new InvalidArgumentException("$credentials = null");
 
-		$client = new GWTClient($credentials->getEmail(), $credentials->getPassword(), $wikiId);
+		$client = new GWTClient($credentials->getEmail(), $credentials->getPassword(), intval($wikiId) );
 		return $client->site_info();
 	}
 

@@ -11,7 +11,7 @@ class GWTService {
 	private $webmasterToolsUtil;
 	private $maxSitesPerAccount = 495;
 
-	function __construct( $userRepository, $wikiRepository, $webmasterToolsUtil )
+	function __construct( $userRepository = null, $wikiRepository = null, $webmasterToolsUtil = null )
 	{
 		if( $userRepository == null ) $userRepository = new GWTUserRepository();
 		if( $webmasterToolsUtil == null ) $webmasterToolsUtil = new WebmasterToolsUtil();
@@ -43,11 +43,28 @@ class GWTService {
 	}
 
 	function uploadWikiAsUser( $wiki, $user ) {
-		$this->webmasterToolsUtil->upload( $wiki, $user );
+		if( $this->webmasterToolsUtil->upload( $wiki->getWikiId(), $user ) ) {
+			$user->setCount( $user->getCount() + 1 );
+			$this->userRepository->update( $user );
+			$wiki->setUserId( $user->getId() );
+			$wiki->setUploadDate( date("Y-m-d") );
+			$this->wikiRepository->updateWiki( $wiki );
+			return true;
+		}
+		return false;
+	}
+
+	function getWikiInfo( $wikiId ) {
+		$wiki = $this->wikiRepository->oneByWikiId( $wikiId );
+		if( $wiki && $wiki->getUserId() ) {
+			$user = $this->userRepository->getById( $wiki->getUserId() );
+			return $this->webmasterToolsUtil->getInfo( $wikiId , $user );
+		}
+		return null;
 	}
 
 	function verifyWiki( $wiki, $user ) {
-		return $this->webmasterToolsUtil->verify( $wiki->getId(), $user );
+		return $this->webmasterToolsUtil->verify( $wiki->getWikiId(), $user );
 	}
 
 	public function setMaxSitesPerAccount($maxSitesPerAccount)

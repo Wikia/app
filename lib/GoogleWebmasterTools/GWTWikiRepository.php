@@ -52,7 +52,7 @@ class GWTWikiRepository {
 	public function oneByWikiId( $wikiId ) {
 		$wikis = $this->allByWikiId( $wikiId );
 		if( count( $wikis ) == 1 ) return $wikis[0];
-		throw new GWTException("Fetched wrong number of wikis. Expected 1, was " . count($wikis));
+		throw new GWTException("Fetched wrong number of wikis (id=".$wikiId."). Expected 1, was " . count($wikis));
 	}
 
 	public function deleteAllByWikiId( $wikiId ) {

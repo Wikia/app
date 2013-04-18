@@ -60,10 +60,11 @@ class GWTClient {
 				if( is_string($wiki) ) {
 					$wiki = WikiFactory::DBtoID($wiki);
 				}
-				$wiki = WikiFactory::getWikiByID( $wiki );
-				if (!$wiki) {
-					throw new Exception("Could not find wiki by ID");
+				$wikiId = WikiFactory::getWikiByID( $wiki );
+				if ( !$wikiId ) {
+					throw new Exception("Could not find wiki by ID (id=" . $wiki . ").");
 				}
+				$wiki = $wikiId;
 			}
 			$this->mWiki    = $wiki;
 			$this->mSiteURI = $this->make_site_uri();
