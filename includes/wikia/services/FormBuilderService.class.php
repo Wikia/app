@@ -10,26 +10,29 @@ class FormBuilderService extends WikiaService
 {
 	public $formFields = [];
 
-	public function __construct() {
-	}
-
-	public function setFormFields($formFields) {
+	public function setFields($formFields) {
 		$this->formFields = $formFields;
 	}
 
-	public function getFormFields() {
+	public function getFields() {
 		return $this->formFields;
 	}
 
+	public function getField($fieldName) {
+		return $this->formFields[$fieldName];
+	}
+
+
+	// TODO rethink if this should be here
 	public function filterData($data) {
-		$filteredData = array_intersect_key($data, $this->getFormFields());
+		$filteredData = array_intersect_key($data, $this->getFields());
 		$filteredData = array_filter($filteredData, function ($value) { return !empty($value); });
 		return $filteredData;
 	}
 
 	public function validate($data) {
 		$out = array();
-		$fields = $this->getFormFields();
+		$fields = $this->getFields();
 
 		foreach ($fields as $fieldName => $field) {
 			if (!empty($field['validator'])) {
@@ -65,7 +68,7 @@ class FormBuilderService extends WikiaService
 
 	protected function prepareFieldsDefinition($values, $errorMessages) {
 		$out = array();
-		$fields = $this->getFormFields();
+		$fields = $this->getFields();
 		// TODO: check field structure
 		foreach ($fields as $fieldName => $field) {
 			$out[$fieldName] = array(
@@ -103,7 +106,10 @@ class FormBuilderService extends WikiaService
 		return $out;
 	}
 
-	public function renderField() {
-		return F::app()->getView('FormBuilderService','renderField');
+	public function renderField($fieldName) {
+		//TODO do something with field data
+		$field = $this->getField($fieldName);
+
+		return F::app()->getView(__CLASS__, 'renderField', $field);
 	}
 }

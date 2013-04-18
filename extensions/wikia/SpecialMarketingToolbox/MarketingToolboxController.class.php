@@ -146,13 +146,16 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->verticalId
 		);
 
+		$form = new FormBuilderService();
+		$form->setFields($module->getFormFields());
+
 		$selectedModuleData['validationErrors'] = array();
 
 		if ($this->request->wasPosted()) {
 			$selectedModuleData['values'] = $this->request->getParams();
-
 			$selectedModuleData['values'] = $module->filterData($selectedModuleData['values']);
-			$selectedModuleData['validationErrors'] = $module->validate($selectedModuleData['values']);
+
+			$selectedModuleData['validationErrors'] = $form->validate($selectedModuleData['values']);
 			if (empty($selectedModuleData['validationErrors'])) {
 				$this->toolboxModel->saveModule(
 					$this->langCode,
@@ -176,6 +179,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		}
 
 		$this->moduleName = $modulesData['activeModuleName'];
+		$selectedModuleData['form'] = $form;
 		$this->moduleContent = $module->renderEditor($selectedModuleData);
 
 		$this->overrideTemplate('editHub');

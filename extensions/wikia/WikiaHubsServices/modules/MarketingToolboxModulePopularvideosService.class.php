@@ -2,7 +2,7 @@
 class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 9;
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		return array(
 			'header' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-popular-videos-header'),

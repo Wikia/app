@@ -17,7 +17,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	 */
 	protected $model = null;
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		$fields = array();
 		$boxesCount = $this->getModel()->getBoxesCount();
 

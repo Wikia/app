@@ -14,6 +14,10 @@
 				<p class="alternative">
 					<?= $wf->Message('marketing-toolbox-hub-module-slider-image-tip')->parse() ?>
 				</p>
+
+				<?=$form->renderField('photo' . $i); ?>
+
+
 				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',

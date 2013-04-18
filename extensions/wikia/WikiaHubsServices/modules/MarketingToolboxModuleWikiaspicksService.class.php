@@ -2,7 +2,7 @@
 class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 3;
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		$fields = array(
 			'sponsoredImage' => array(
 				'type' => 'hidden',

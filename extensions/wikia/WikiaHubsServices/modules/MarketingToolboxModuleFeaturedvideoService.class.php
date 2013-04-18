@@ -2,7 +2,7 @@
 class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 4;
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		return array(
 			'sponsoredImage' => array(
 				'type' => 'hidden',

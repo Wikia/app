@@ -23,7 +23,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 		$this->linksLimit = $this->model->getLinksLimit();
 	}
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		$formFields = array(
 			'exploreTitle' => array(
 				'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-title'),

@@ -2,7 +2,7 @@
 class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 1;
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		$fields = array();
 
 		$model = new MarketingToolboxSliderModel();
