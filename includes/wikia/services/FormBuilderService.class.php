@@ -101,8 +101,10 @@ class FormBuilderService extends WikiaService
 	 *
 	 * @return WikiaView
 	 */
-	public function renderField( $field ) {
-		// set default values or throw exception ?
+	public function renderField( $fieldName ) {
+		$field = $this->getField($fieldName);
+
+		// TODO: set default values or throw exception ?
 		if ( empty($field['type']) ) {
 			$field['type'] = 'text';
 		}
@@ -112,7 +114,7 @@ class FormBuilderService extends WikiaService
 
 		$field['attributes'] = $this->prepareFieldAttributes($field['attributes']);
 
-		return F::app()->getView('FormBuilderService','renderField', $field);
+		return F::app()->getView(__CLASS__, 'renderField', $field);
 	}
 
 	protected function prepareFieldAttributes($attributes) {
@@ -123,14 +125,6 @@ class FormBuilderService extends WikiaService
 		}
 
 		return $out;
-	}
-
-
-	public function renderField($fieldName) {
-		//TODO do something with field data
-		$field = $this->getField($fieldName);
-
-		return F::app()->getView(__CLASS__, 'renderField', $field);
 	}
 
 	private function getMockedData() {
