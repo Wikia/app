@@ -265,42 +265,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
 
-		$wikiId = $resultSet->getHeader( 'wid' );
-		$wikiDS = new WikiDataSource( $wikiId );
-
-		$response = ApiService::foreignCall(
-			$wikiDS->getDbName(),
-			array(
-				'controller' => 'ArticlesApi',
-				'method' => 'getTop'
-			),
-			'wikia.php' );
-		$articles = array();
-		if ( isset( $response[ 'items' ] ) ) {
-			$ids = array();
-			foreach ( $response[ 'items' ] as $data ) {
-				$ids[] = $data[ 'id' ];
-				$articles[ $data[ 'id' ] ] = array( 'title' => $data[ 'title' ], 'url' => $response[ 'basepath' ].$data[ 'url' ] );
-			}
-			//add only if at least 4 articles found
-			if ( count( $response[ 'items' ] ) >= 4 ) {
-				$details = ApiService::foreignCall(
-					$wikiDS->getDbName(),
-					array(
-						'controller' => 'ArticlesApi',
-						'method' => 'getDetails',
-						'ids' => implode( ',', $ids ),
-						'abstract' => 65
-					),
-					'wikia.php' );
-				if ( isset( $details[ 'items' ] ) ) {
-					foreach( $details[ 'items' ] as $id => $data ) {
-						$articles[ $id ][ 'abstract' ] = $data[ 'abstract' ];
-					}
-				}
-			}
-		}
-
 		$image = $resultSet->getHeader( 'image' );
 		$imageUrl = empty( $image ) ? $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png' : (new \WikiaHomePageHelper)->getImageUrl( $image, 180, 120 );
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="-1" data-event="search_click_wiki-';
@@ -321,7 +285,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 					'videoMsg' => $resultSet->getVideosCountMsg(),
 					'imageURL' => $imageUrl,
 					'thumbTracking' => $thumbTracking,
-					'topArticlesData' => $articles
 				]
 			)
 		);
