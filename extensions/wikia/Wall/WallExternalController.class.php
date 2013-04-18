@@ -529,18 +529,23 @@ class WallExternalController extends WikiaController {
 		
 	public function replyToMessage() {
 		$this->response->setVal('status', true);
-		
-		$parentTitle = F::build('Title', array( $this->request->getVal('parent') ), 'newFromId');
+
+		$parentId = $this->request->getVal('parent');
+		$parentTitle = F::build('Title', array( $parentId ), 'newFromId');
+		$debugParentDB = 'from slave';   // tracing bug 95249
 
 		if(empty($parentTitle)) {
 			// try again from master
-			$parentTitle = F::build('Title', array( $this->request->getVal('parent'), Title::GAID_FOR_UPDATE ), 'newFromId');
+			$parentTitle = F::build('Title', array( $parentId, Title::GAID_FOR_UPDATE ), 'newFromId');
+			$debugParentDB = 'from master';
 		}
-		
+
 		if(empty($parentTitle)) {
 			$this->response->setVal('status', false);
 			return true;
 		}
+
+		Wikia::log( 'Wall::replyToMessage for parent ' . $parentTitle->getFullUrl() . ' (parentId: ' . $parentId . ') ' . $debugParentDB );
 
 		/**
 		 * @var $wallMessage WallMessage
@@ -568,7 +573,7 @@ class WallExternalController extends WikiaController {
 		 * @var $wn WallNotifications
 		 */
 		$wn = F::build('WallNotifications', array());
-		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $this->request->getVal('parent'));		
+		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $this->request->getVal('parent'));
 		
 	}
 	
