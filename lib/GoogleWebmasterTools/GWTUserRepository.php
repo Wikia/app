@@ -104,7 +104,7 @@ class GWTUserRepository {
 	}
 
 	public function update( $gwtUserObject ) {
-		$res = $this->databaseConnection->update("webmaster_sitemaps",
+		$res = $this->databaseConnection->update("webmaster_user_accounts",
 			array(
 				"user_id" => $gwtUserObject->getId(),
 				"user_name" => $gwtUserObject->getEmail(),
