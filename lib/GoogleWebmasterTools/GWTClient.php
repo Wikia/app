@@ -151,6 +151,15 @@ class GWTClient {
 		return $info;
 	}
 
+	private function parseBoolean($value) {
+		echo "parse boolean " . $value . "\n";
+		if ($value && strtolower($value) !== "false") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public function get_sites() {
 		$uri = self::FEED_URI . '/sites/';
 		$request = MWHttpRequest::factory( $uri );
@@ -169,10 +178,16 @@ class GWTClient {
 		$doc = new DOMDocument();
 		$doc->loadXML($content);
 		$xpath = new DOMXPath($doc);
-		$nodeList = $xpath->query("//*[local-name()='content']/@src");
+		$nodeList = $xpath->query("//*[local-name()='entry']");
 		$sites = array();
-		for($i =0; $i<$nodeList->length; $i++) {
-			$sites[] = $nodeList->item( $i )->nodeValue;
+		for($j =0; $j<$nodeList->length; $j++) {
+			$entry = $nodeList->item( $j );
+			//$entryXpath = new DOMXPath($entry->);
+			$content = $xpath->query($entry->getNodePath() . "//*[local-name()='content']/@src");
+			$verified = $xpath->query($entry->getNodePath() ."//*[local-name()='verified']");
+			if( $content->length > 0 && $verified->length > 0 ) {
+				$sites[] = 	new GWTSiteSyncStatus($content->item(0)->nodeValue, $this->parseBoolean($verified->item(0)->nodeValue));
+			}
 		}
 		return $sites;
 	}

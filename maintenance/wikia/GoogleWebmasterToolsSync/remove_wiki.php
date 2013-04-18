@@ -10,7 +10,7 @@
 $optionsWithArgs = array( 'i' );
 
 require_once(__DIR__ . '/../../commandLine.inc');
-require_once($IP . '/lib/GoogleWebmasterTools/init.php');
+require_once($IP . '/lib/GoogleWebmasterTools/setup.php');
 
 if( !isset($options['i']) ) {
 	echo "Specify wikiid (-i)";

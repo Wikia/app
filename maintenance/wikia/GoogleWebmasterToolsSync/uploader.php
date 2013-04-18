@@ -1,7 +1,7 @@
 <?php
 global $IP;
 require_once(__DIR__ . '/../../commandLine.inc');
-require_once($IP . '/lib/GoogleWebmasterTools/WebmasterToolsService.php');
+require_once($IP . '/lib/GoogleWebmasterTools/setup.php');
 echo "Not implemented !\n";
 die();
 $service = new WebmasterToolsUtil();

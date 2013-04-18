@@ -50,4 +50,22 @@ class GWTWiki {
 	public function getDb() {
 		return WikiFactory::IDtoDB( $this->wikiId );
 	}
+
+	public function getUrl() {
+		$wiki = WikiFactory::getWikiByID( $this->wikiId );
+		return $this->normalize_site( $wiki );
+	}
+
+	private function normalize_site ( $site ) {
+		if (!preg_match('!^http://!', $site)) $site = 'http://'.$site;
+		if (!preg_match('!/$!', $site))       $site = $site.'/';
+
+		return $site;
+	}
+
+	private function make_site_uri ( $wiki ) {
+		$site = $this->normalize_site( $wiki->city_url );
+		$uri = self::FEED_URI . '/sites/' . urlencode($site);
+		return $uri;
+	}
 }

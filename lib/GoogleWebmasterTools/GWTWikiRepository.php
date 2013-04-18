@@ -38,7 +38,7 @@ class GWTWikiRepository {
 	public function allUnassigned() {
 		$result = $this->databaseConnection->select("webmaster_sitemaps"
 			, array("user_id", "wiki_id", "upload_date")
-			, array("user_id" => null ) );
+			, array("upload_date" => null ) );
 		return $this->materializeList($result);
 	}
 

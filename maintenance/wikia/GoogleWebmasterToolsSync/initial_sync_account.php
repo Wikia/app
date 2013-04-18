@@ -9,7 +9,7 @@
 
 global $IP;
 require_once(__DIR__ . '/../../commandLine.inc');
-require_once($IP . '/lib/GoogleWebmasterTools/init.php');
+require_once($IP . '/lib/GoogleWebmasterTools/setup.php');
 
 
 
@@ -40,7 +40,7 @@ function tryInsertUser( $db ,$u ) {
 	);
 	$obj = null;
 	if ( $obj = $res->fetchObject() ) return $obj->user_id;
-	echo "insert: " . $u->getEmail() . "\n";
+	//echo "insert: " . $u->getEmail() . "\n";
 	$user_id = generateUserId( $db );
 	if( $db->insert("webmaster_user_accounts", array(
 			"user_id" => $user_id,
@@ -66,10 +66,10 @@ function tryInsertWiki( $db ,$wikiId ) {
 		__METHOD__
 	);
 	if ( $res->fetchRow() ) return false;
-	echo "insert: " . $wikiId . "\n";
+	//echo "insert: " . $wikiId . "\n";
 	if ( ! $db->insert("webmaster_sitemaps", array(
 			"wiki_id" => $wikiId,
-			"user_id" => null,
+			"user_id" => 0,
 		))) {
 		throw new Exception("can't insert wiki id = " . $wikiId);
 	}
@@ -86,6 +86,7 @@ function tryUpdateWiki( $db, $wikiId, $user ) {
 	$res = $db->update("webmaster_sitemaps",
 		array(
 			"user_id" => $userId,
+			"upload_date" => "1970-01-01",
 		),
 		array(
 			"wiki_id" => $wikiId,
@@ -112,7 +113,8 @@ $accounts = $userRepository->all();
 
 foreach( $accounts as $i => $u ) {
 	$sites = $service->getSites( $u );
-	foreach( $sites as $j => $site ) {
+	foreach( $sites as $j => $s ) {
+		$site = $s->getUrl();
 		$count ++;
 		try {
 			tryInsertWiki( $db, $site );

@@ -42,6 +42,17 @@ class GWTUserRepository {
 		return $this->materializeList($result);
 	}
 
+	public function getByEmail( $email ) {
+		$result = $this->databaseConnection->select("webmaster_user_accounts"
+			, array("user_id", "user_name", "user_password", "wikis_number")
+			, array("user_name" => $email) );
+		$list = $this->materializeList($result);
+		if( count($list) == 0 ) {
+			return null;
+		}
+		return $list[0];
+	}
+
 	public function create( $email, $password ) {
 		if ( $this->exists($email) ) {
 			throw new GWTException( "User exists in database." );

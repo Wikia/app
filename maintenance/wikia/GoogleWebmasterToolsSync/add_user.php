@@ -10,10 +10,11 @@
 $optionsWithArgs = array( 'u', 'p' );
 
 require_once(__DIR__ . '/../../commandLine.inc');
-require_once($IP . '/lib/GoogleWebmasterTools/init.php');
+require_once($IP . '/lib/GoogleWebmasterTools/setup.php');
 
 if( !isset($options['u']) || !isset($options['p']) ) {
 	echo "Specify user (-u) and password (-p)";
+	die(1);
 }
 
 $userRepository = new GWTUserRepository();
