@@ -73,6 +73,7 @@ class GroupingSet extends Grouping
 			;
 			$resultSet = $this->factory->get( new DependencyContainer( $dependencies ) );
 			$this->results[$resultSet->getHeader( 'url' )] = $resultSet;
+			$this->resultsFound++;
 		}
 		return $this;
 	}

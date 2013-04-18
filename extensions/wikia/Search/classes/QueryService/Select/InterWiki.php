@@ -68,12 +68,7 @@ class InterWiki extends AbstractSelect
 	 * @return Wikia\Search\Match\Wiki
 	 */
 	public function extractMatch() {
-		$domain = preg_replace(
-				'/[^a-zA-Z]/',
-				'',
-				strtolower( $this->config->getQuery()->getSanitizedQuery() ) 
-				);
-		$match =  $this->service->getWikiMatchByHost( $domain );
+		$match = $this->getCrossWikiMatch();
 		if (! empty( $match ) ) {
 			$this->config->setWikiMatch( $match );
 		}

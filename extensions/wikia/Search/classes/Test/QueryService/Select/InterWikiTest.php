@@ -13,7 +13,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\InterWiki::extractMatch
 	 */
 	public function testExtractMatch() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery', 'setWikiMatch', 'getWikiMatch' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'setWikiMatch', 'getWikiMatch' ) );
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
@@ -23,26 +23,15 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( null )
+		                   ->setMethods( array( 'getCrossWikiMatch' ) )
 		                   ->getMock();
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
 		
-		$mockConfig
+		$mockSelect
 		    ->expects( $this->once() )
-		    ->method ( 'getQuery' )
-		    ->will   ( $this->returnValue( $mockQuery ) )
-	    ;
-		$mockQuery
-		    ->expects( $this->once() )
-		    ->method ( 'getSanitizedQuery' )
-		    ->will   ( $this->returnValue( 'star wars' ) )
-		;
-		$mockService
-		    ->expects( $this->once() )
-		    ->method ( 'getWikiMatchByHost' )
-		    ->with   ( 'starwars' )
+		    ->method ( 'getCrossWikiMatch' )
 		    ->will   ( $this->returnValue( $mockMatch ) )
 		;
 		$mockConfig
