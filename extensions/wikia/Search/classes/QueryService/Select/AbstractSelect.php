@@ -357,7 +357,7 @@ abstract class AbstractSelect
 		$domain = preg_replace(
 				'/[^a-zA-Z0-9]/',
 				'',
-				strtolower( $this->config->getQuery( \Wikia\Search\Config::QUERY_RAW ) ) 
+				strtolower( $this->config->getQuery()->getSanitizedQuery() ) 
 				);
 		$match = $this->service->getWikiMatchByHost( $domain );
 		if (! empty( $match ) ) {
