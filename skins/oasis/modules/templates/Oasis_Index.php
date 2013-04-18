@@ -32,6 +32,20 @@
 	<style type="text/css"><?= $pageCss ?></style>
 <? endif ?>
 
+<? // 1% of JavaScript errors are logged for $wgEnableJSerrorLogging=true non-devbox wikis ?>
+<? if ( $wg->EnableJavaScriptErrorLogging && !$wg->DevelEnvironment ): ?>
+<script>
+window.onerror=function(m,u,l){
+var q='//jserrorslog.wikia.com/',i=new Image();
+if(Math.random()<0.01){
+	try{var d=[m,u,l];
+		try{d.push(document.cookie.match(/server.([A-Z]*).cache/)[1])}catch(e){}
+		i.src=q+'l?'+JSON.stringify(d)
+	}catch(e){i.src=q+'e?'+e}
+}return!1}
+</script>
+<? endif ?>
+
 <?= $topScripts ?>
 <?= $wikiaScriptLoader; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
@@ -91,8 +105,6 @@
 	<!-- Combined JS files and head scripts -->
 	<?= $jsFiles ?>
 <? endif ?>
-
-<?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
 
 <script type="text/javascript">/*<![CDATA[*/ Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>
 

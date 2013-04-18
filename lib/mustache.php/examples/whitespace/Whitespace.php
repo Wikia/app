@@ -10,7 +10,7 @@
  *
  * @extends Mustache
  */
-class Whitespace extends Mustache {
+class Whitespace extends MustachePHP {
 	public $foo = 'alpha';
 
 	public $bar = 'beta';

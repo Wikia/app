@@ -114,7 +114,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'wikiamobile-facebook-connect-fail' => 'Sorry, your Facebook account is not currently linked with a Wikia account.'
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Shirayuki
  * @author Siebrand
  */
@@ -187,10 +187,12 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Mutarjem horr
+ * @author ترجمان05
  */
 $messages['ar'] = array(
 	'userlogin-login-heading' => 'سجّل الدخول',
 	'userlogin-forgot-password' => 'هل نسيت كلمتك للمرور؟',
+	'userlogin-forgot-password-button' => 'واصل',
 	'userlogin-remembermypassword' => 'إبقى مسجلاً الدخول',
 	'userlogin-error-invalidemailaddress' => 'الرجاء إدخال عنوان بريد إلكتروني صالح.',
 	'userlogin-error-noemailtitle' => 'الرجاء إدخال عنوان بريد إلكتروني صالح.',
@@ -315,19 +317,51 @@ $messages['ca'] = array(
 	'userlogin-error-edit-account-closed-flag' => 'El teu compte ha estat deshabilitat per Wikia.',
 	'userlogin-error-cantcreateaccount-text' => 'La teva direcció IP no està autoritzada per a crear nous comptes.',
 	'userlogin-error-userexists' => "Algú ja té aquest nom d'usuari. Tria'n un altre!",
-	'userlogin-error-invalidemailaddress' => 'Si us plau, insereix una direcció de correu electrònic vàlida.',
+	'userlogin-error-invalidemailaddress' => 'Si us plau, insereix una adreça de correu electrònic vàlida.',
 	'userlogin-get-account' => 'No tens un compte? <a href="$1" tabindex="$2">Registra\'t</a>',
 	'userlogin-error-invalid-username' => "Nom d'usuari no vàlid",
 	'userlogin-error-userlogin-unable-info' => 'Ho sentim, no és possible registrar el teu compte en aquest moment.',
 	'userlogin-error-user-not-allowed' => "Aquest nom d'usuari no està permès.",
 	'userlogin-error-captcha-createaccount-fail' => 'La paraula que has introduït no coincideix amb la paraula del requadre. Torna-ho a provar!',
+	'userlogin-error-userlogin-bad-birthday' => 'Si us plau, omple mes, dia i any.',
+	'userlogin-error-externaldberror' => '¡Ho sentim! El nostre lloc actualment està tenint un problema. Intenta-ho de nou més tard.',
+	'userlogin-error-noemailtitle' => 'Si us plau, insereix una adreça de correu electrònic vàlida.',
+	'userlogin-error-acct_creation_throttle_hit' => 'Ho sentim, però avui aquesta adreça IP ha creat avui molts comptes. Si us plau, prova un altre cop més tard.',
+	'userlogin-error-resetpass_forbidden' => 'No poden canviar-se les contrasenyes',
+	'userlogin-error-blocked-mailpassword' => "No es pots sol·licitar una contrasenya nova perquè aquesta adreça d'IP està bloquejada per Wikia.",
+	'userlogin-error-throttled-mailpassword' => "Ja hem enviat un recordatori de contrasenya d'aquest compte en {{PLURAL:$1|l'última hora|les $1 últimes hores}}. Si us plau, revisa el teu correu electrònic.",
+	'userlogin-error-mail-error' => "Perdó, ha hagut un problema al enviar el teu correu electrònico. Si us plau, [[Special:Contact/general|contacta'ns]].",
+	'userlogin-password-email-sent' => "Hem enviat una nova contrasenya a l'adreça electrònica $1.",
+	'userlogin-error-unconfirmed-user' => "No has confirmat la teva adreça electrònica. Confirma primer l'adreça electrònica.",
 	'userlogin-password-page-title' => 'Canvia la teva contrasenya',
 	'userlogin-oldpassword' => 'Antiga contrasenya',
 	'userlogin-newpassword' => 'Nova contrasenya',
 	'userlogin-retypenew' => 'Confirma la nova contrasenya',
 	'userlogin-password-email-subject' => 'Sol·licitud de contrasenya oblidada',
 	'userlogin-password-email-greeting' => 'Hola, $USERNAME.',
+	'userlogin-password-email-content' => 'Utilitza aquesta contrasenya temporal per iniciar sessió en Wikia: "$NEWPASSWORD"
+<br /><br />
+Si no has sol·licitat una nova contrasenya, no et preocupis! El teu compte està segur. Pots ignorar aquest missatge i continuar iniciant sessió en Wikia la teva antiga contrasenya.
+<br /><br />
+¿Tens preguntes o inquietuds? No dubtis en posar-te en <a href="http://ca.wikia.com/wiki/Especial:Contactar/account-issue">contacte amb nosaltres</a>.',
 	'userlogin-password-email-signature' => 'Equip Comunitari de Wikia',
+	'userlogin-password-email-body' => 'Hola $2,
+
+Utilitza aquesta contrasenya temporal per iniciar sessió en Wikia: "$3"
+
+Si no has sol·licitat una nova contrasenya, no et preocupis! El teu compte està segur. Pots ignorar aquest missatge i continuar iniciant sessió en Wikia amb la teva antiga contrasenya.
+
+¿Tens preguntes o inquietuds? No dubtis en contactar-nos: http://ca.wikia.com/wiki/Especial:Contactar/account-issue
+
+Equip Comunitari de Wikia
+
+
+___________________________________________
+
+Per comprobar els esdeveniments més recents en Wikia, visita http://ca.wikia.com
+Desitges controlar quins missatges de correu electrònic reps? Vés a: {{fullurl:{{ns:special}}:Preferences}}',
+	'userlogin-email-footer-line1' => 'Per comprovar les últimes novetats en Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://ca.wikia.com">ca.wikia.com</a>',
+	'userlogin-email-footer-line2' => 'Desitges controlar els correus electrònics que reps? Vés a les teves <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferències</a>',
 	'userlogin-provider-or' => 'o',
 	'userlogin-provider-tooltip-facebook' => 'Clica el botó per iniciar sessió amb Facebook',
 	'userlogin-provider-tooltip-facebook-signup' => 'Clica el botó per iniciar sessió amb Facebook',
@@ -450,9 +484,10 @@ Möchtest du deine E-Mail-Einstellungen ändern? Besuche {{fullurl:{{ns:special}
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
-	'userlogin-login-heading' => 'Qeyd be',
+	'userlogin-login-heading' => 'Cı kewe',
 	'userlogin-password-page-title' => 'Parolaya xo bıvurne',
 	'userlogin-oldpassword' => 'Parola verên',
 	'userlogin-newpassword' => 'Parola newên',
@@ -1393,12 +1428,13 @@ Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'userlogin-login-heading' => 'Intra',
+	'userlogin-login-heading' => 'Conession',
 	'userlogin-forgot-password' => 'Dësmentià soa ciav?',
-	'userlogin-remembermypassword' => 'Resta an drinta',
+	'userlogin-remembermypassword' => 'Resté andrinta al sistema',
 	'userlogin-error-noname' => 'Contacc, për piasì vemp ël camp dël nòm utent.',
 	'userlogin-error-sessionfailure' => "Toa session a l'é andàita an timeout. Për piasì intra torna.",
 	'userlogin-error-nosuchuser' => 'Hm, i arconossoma pa sto nòm. Dësmentia pa che ij nòm utent a son sensìbij al maiuscolin.',
@@ -1516,11 +1552,14 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
+ * @author JM Pessanha
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'userlogin-login-heading' => 'Login',
 	'userlogin-forgot-password' => 'Esqueceu sua senha?',
+	'userlogin-forgot-password-button' => 'Continuar',
+	'userlogin-forgot-password-go-to-login' => 'Já tem sua senha? [[Special:UserLogin|Faça login]]',
 	'userlogin-remembermypassword' => 'Permanecer logado',
 	'userlogin-error-noname' => 'Ops, por favor preencha o campo de nome de usuário.',
 	'userlogin-error-sessionfailure' => 'Sua sessão de login expirou. Por favor, faça login novamente.',
@@ -1553,10 +1592,40 @@ $messages['pt-br'] = array(
 	'userlogin-oldpassword' => 'Senha antiga',
 	'userlogin-newpassword' => 'Nova senha',
 	'userlogin-retypenew' => 'Confirme a nova senha',
+	'userlogin-password-email-subject' => 'Solicitação de senha esquecida',
 	'userlogin-password-email-greeting' => 'Olá $USERNAME,',
+	'userlogin-password-email-content' => 'Por favor, use essa senha temporária para se conectar na Wikia: "$NEWPASSWORD"
+<br /><br />
+Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login na Wikia com sua antiga senha.
+<br /><br />
+Dúvidas ou preocupações? Sinta-se livre para <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">nos contatar</a>.',
+	'userlogin-password-email-signature' => 'Suporte da Comunidade Wikia',
+	'userlogin-password-email-body' => 'Olá $2,
+
+Por favor, use essa senha temporária para se conectar na Wikia: "$3"
+
+Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login na Wikia com sua antiga senha.
+
+Dúvidas ou preocupações? Sinta-se livre para nos contatar: http://community.wikia.com/wiki/Special:Contact/account-issue
+
+Suporte da Comunidade Wikia
+
+
+___________________________________________
+
+Para ver os últimos acontecimentos na Wikia, visite http://pt.community.wikia.com
+Deseja controlar quais e-mails você recebe? Vá para: {{fullurl:{{ns:special}}:Preferences}}',
+	'userlogin-email-footer-line1' => 'Para ver os últimos acontecimentos na Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="http://pt.community.wikia.com">pt.community.wikia.com</a>',
+	'userlogin-email-footer-line2' => 'Deseja controlar os e-mails que você recebe? Vá para suas <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferências</a>',
 	'userlogin-provider-or' => 'Ou',
+	'userlogin-provider-tooltip-facebook' => 'Clique no botão para fazer login com o Facebook',
+	'userlogin-provider-tooltip-facebook-signup' => 'Clique no botão para se registrar com o Facebook',
+	'userlogin-facebook-show-preferences' => 'Mostrar as preferências de conexão pelo Facebook',
+	'userlogin-facebook-hide-preferences' => 'Ocultar as preferências de conexão pelo Facebook',
 	'userlogin-loginreqlink' => 'entrar',
+	'userlogin-changepassword-needlogin' => 'Você precisa $1 para modificar sua senha.',
 	'wikiamobile-sendpassword-label' => 'Enviar nova senha',
+	'wikiamobile-facebook-connect-fail' => 'Desculpe, atualmente sua conta do Facebook não esta vinculada com uma conta na Wikia.',
 );
 
 /** tarandíne (tarandíne)

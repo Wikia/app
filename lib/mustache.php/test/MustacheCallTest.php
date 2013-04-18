@@ -10,7 +10,7 @@ class MustacheCallTest extends PHPUnit_Framework_TestCase {
 
 		$template = '{{# foo }}{{ label }}: {{ name }}{{/ foo }}';
 		$data = array('label' => 'name', 'foo' => $foo);
-		$m = new Mustache($template, $data);
+		$m = new MustachePHP($template, $data);
 
 		$this->assertEquals('name: Bob', $m->render());
 	}

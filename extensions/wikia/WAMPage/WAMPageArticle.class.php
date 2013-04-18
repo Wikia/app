@@ -7,6 +7,7 @@ class WAMPageArticle extends Article {
 		wfProfileIn(__METHOD__);
 
 		parent::__construct($title);
+		$this->mPage = new WAMPage($title);
 		
 		wfProfileOut(__METHOD__);
 	}
@@ -22,13 +23,14 @@ class WAMPageArticle extends Article {
 
 		$app = F::app();
 		$app->wg->Out->clearHTML();
+		
 		if( $this->isWAMFAQPage($this->getTitle()) ) {
 			$action = 'faq';
 		} else {
 			$action = 'index';
 		}
 		
-		$app->wg->Out->addHTML( $app->sendRequest('SpecialWAMPageController', $action) );
+		$app->wg->Out->addHTML( $app->sendRequest('WAMPageController', $action, $app->wg->request->getValues()) );
 		wfProfileOut(__METHOD__);
 	}
 

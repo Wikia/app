@@ -48,7 +48,7 @@ if ( $app->wg->GameGuidesContentForAdmins ) {
 $wgGroupPermissions['*']['gameguidescontent-switchforadmins'] = false;
 $wgGroupPermissions['staff']['gameguidescontent-switchforadmins'] = true;
 
-F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
+F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', [
 	'wikiagameguides-content-category',
 	'wikiagameguides-content-tag',
 	'wikiagameguides-content-name',
@@ -56,7 +56,7 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
 	'wikiagameguides-content-category-error',
 	'wikiagameguides-content-required-entry',
 	'wikiagameguides-content-empty-tag'
-) );
+] );
 
 //hooks
 $app->registerHook( 'GameGuidesContentSave', 'GameGuidesController', 'onGameGuidesContentSave' );
@@ -68,7 +68,7 @@ $app->registerHook( 'WikiFeatures::onToggleFeature', 'GameGuidesSpecialContentCo
 //the only globals needed in Game Guides
 if ( empty( $app->wg->GameGuidesGlobalsWhiteList ) ) {
 $app->wg->set( 'wgGameGuidesGlobalsWhiteList',
-	array(
+	[
 		'wgNamespaceNumber',
 		'wgCityId',
 		'wgPageName',
@@ -80,7 +80,7 @@ $app->wg->set( 'wgGameGuidesGlobalsWhiteList',
 		'wgAssetsManagerQuery',
 		'wgStyleVersion',
 		'wgRevisionId'
-	) );
+	] );
 }
 
 //minimal package of messages in Game Gudes

@@ -1,6 +1,6 @@
 <?php
 
-class Simple extends Mustache {
+class Simple extends MustachePHP {
 	public $name = "Chris";
 	public $value = 10000;
 

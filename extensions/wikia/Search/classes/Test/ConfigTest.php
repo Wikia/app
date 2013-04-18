@@ -187,197 +187,8 @@ class ConfigTest extends BaseTest {
 				'Setting a limit should set the same key used by size and length methods.'
 		);
 	}
-
-	/**
-	 * @covers \Wikia\Search\Config::setQuery
-	 * @covers \Wikia\Search\Config::getQuery
-	 * @covers \Wikia\Search\Config::getNamespaces
-	 * @covers \Wikia\Search\Config::getQueryNoQuotes
-	 * @todo
-	public function testQueryAndNamespaceMethods() {
-
-		$config = new \Wikia\Search\Config();
-		$noNsQuery = 'foo';
-		$nsQuery = 'File:foo';
-		$phantomNsQuery = 'file';
-
-		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'DefaultNamespaces' ), array() );
-
-		$expectedDefaultNamespaces = array( NS_MAIN );
-
-		$searchEngineMock
-			->staticExpects	( $this->at( 0 ) )
-			->method		( 'DefaultNamespaces' )
-			->will			( $this->returnValue( null ) )
-		;
-		$searchEngineMock
-			->staticExpects	( $this->at( 1 ) )
-			->method		( 'DefaultNamespaces' )
-			->will			( $this->returnValue( $expectedDefaultNamespaces ) )
-		;
-
-		$this->mockClass( 'SearchEngine',	$searchEngineMock );
-		$this->mockApp();
-		F::setInstance( 'SearchEngine', $searchEngineMock );
-
-		$emptyNamespaces = $config->getNamespaces();
-
-		$this->assertEmpty( $emptyNamespaces );
-
-		$originalNamespaces = $config->getNamespaces();
-		$this->assertEquals(
-				$expectedDefaultNamespaces,
-				$originalNamespaces,
-				'\Wikia\Search\Config::getNamespaces should return SearchEngine::DefaultNamespaces if namespaces are not initialized.'
-		);
-		$this->assertFalse( $config->getQuery(), '\Wikia\Search\Config::getQuery should return false if the query has not been set.');
-		$this->assertEquals(
-				$config,
-				$config->setQuery( $noNsQuery ),
-				'\Wikia\Search\Config::setQuery should provide a fluent interface'
-		);
-		$this->assertEquals(
-				$noNsQuery,
-				$config->getQuery(),
-				'Calling setQuery for a basic query should store the query value, accessible using getQuery.'
-		);
-		$this->assertEquals(
-				$config->getQuery(),
-				$config->getOriginalQuery(),
-				'The original query and the actual query should match for non-namespaced queries.'
-		);
-		$this->assertEquals(
-				$originalNamespaces,
-				$config->getNamespaces(),
-				'A query without a valid namespace prefix should not mutate the namespaces stored in the search config.'
-		);
-		$this->assertEquals(
-				$config,
-				$config->setQuery( $nsQuery ),
-				'\Wikia\Search\Config::setQuery should provide a fluent interface'
-		);
-		$this->assertEquals(
-		        $nsQuery,
-		        $config->getOriginalQuery(),
-		        'The original query should be stored under the "originalQuery" key regardless of prefix.'
-		);
-		$this->assertEquals(
-				$noNsQuery,
-				$config->getQuery(),
-				'The namespace prefix for a query should be stripped from the main query value.'
-		);
-		$this->assertNotEquals(
-		        $config->getQuery(),
-		        $config->getOriginalQuery(),
-		        'The actual query and the original query should not be equivalent when passed a valid namespace prefix query.'
-		);
-		$this->assertEquals(
-		        array_merge( $originalNamespaces, array( NS_FILE ) ),
-		        $config->getNamespaces(),
-		        'Setting a namespace-prefixed query should result in the appropriate namespace being appended.'
-		);
-		$tildeQuery = 'foo~';
-		$this->assertEquals(
-				'foo\~',
-				$config->setQuery( $tildeQuery )->getQuery(),
-				'A query with a tilde should be escaped in getQuery.'
-		);
-		$quoteQuery = '"foo bar"';
-		$this->assertEquals(
-				'\"foo bar\"',
-				$config->setQuery( $quoteQuery )->getQuery(),
-				'A query with quotes should have the quotes escaped by default in getQuery.'
-		);
-		$this->assertEquals(
-		        '"foo bar"',
-		        $config->setQuery( $quoteQuery )->getQuery( true ),
-		        'A query with quotes should have its quotes left alone if the first parameter of getQuery is passed as true.'
-		);
-		$this->assertEquals(
-				'foo bar',
-				$config->setQuery( $quoteQuery )->getQueryNoQuotes(),
-				'A query with double quotes should have its quotes stripped in the default versoin of getQueryNoQuotes.'
-		);
-		$this->assertEquals(
-		        'foo bar\~',
-		        $config->setQuery( $quoteQuery.'~' )->getQueryNoQuotes(),
-		        'Tildes should be escaped in the default versoin of getQueryNoQuotes.'
-		);
-		$this->assertEquals(
-		        'foo bar~',
-		        $config->setQuery( $quoteQuery.'~' )->getQueryNoQuotes( true ),
-		        'Tildes should not be escaped in the raw versoin of getQueryNoQuotes.'
-		);
-
-		$xssQuery = "foo'<script type='javascript'>alert('xss');</script>";
-		$this->assertEquals(
-				"foo'alert\\('xss'\\);",
-				$config->setQuery( $xssQuery )->getQuery(),
-				'Setting a query should result in the sanitization and html entity decoding of that query.'
-		);
-		$this->assertEquals(
-				"foo alert\\(xss\\);",
-				$config->getQueryNoQuotes(),
-				"Queries with quotes or apostrophes between two letters should be replaced with spaces with getQueryNoQuotes."
-		);
-
-		$htmlEntityQuery = "'foo & bar &amp; baz' &quot;";
-		$this->assertEquals(
-				"'foo & bar & baz' \\\"",
-				$config->setQuery( $htmlEntityQuery )->getQuery(),
-				"HTML entities in queries should be decoded when being set."
-		);
-		$this->assertEquals(
-		        $config->setQuery( $htmlEntityQuery )->getQuery( \Wikia\Search\Config::QUERY_DEFAULT ),
-		        $config->setQuery( $htmlEntityQuery )->getQuery(),
-		        "The default behavior of the getQuery method should be identical to passing the Wikia\\Search\\Config::QUERY_DEFAULT constant."
-		);
-
-		$this->assertEquals(
-		        "'foo & bar & baz' \"",
-		        $config->setQuery( $htmlEntityQuery )->getQuery( \Wikia\Search\Config::QUERY_RAW ),
-		        "HTML entities in queries should be decoded when being set. Raw-strategy queries shouldn't escape anything."
-		);
-		$this->assertEquals(
-		        "'foo &amp; bar &amp; baz' &quot;",
-		        $config->setQuery( $htmlEntityQuery )->getQuery( \Wikia\Search\Config::QUERY_ENCODED ),
-		        "HTML entities in queries should be decoded when being set. HTML-decoded queries should properly HTML-encode all entities on access if using encoded strategy."
-		);
-
-		$utf8Query = '"аВатаР"';
-		$this->assertEquals(
-				'\"аВатаР\"',
-				$config->setQuery( $utf8Query )->getQuery( \Wikia\Search\Config::QUERY_DEFAULT ),
-				'\Wikia\Search\Config::setQuery should not unnecessarily mutate UTF-8 characters. Retrieving them should return those characters, properly encoded.'
-		);
-		$this->assertEquals(
-				'"аВатаР"',
-				$config->setQuery( $utf8Query )->getQuery( \Wikia\Search\Config::QUERY_RAW ),
-				'\Wikia\Search\Config::getQuery() should not unnecessarily mutate UTF-8 characters, and should not escape quotes when asking for raw query.'
-		);
-		$this->assertEquals(
-		        htmlentities( '"аВатаР"', ENT_COMPAT, 'UTF-8' ),
-		        $config->setQuery( $utf8Query )->getQuery( \Wikia\Search\Config::QUERY_ENCODED ),
-		        '\Wikia\Search\Config::getQuery() should properly HTML-encode UTF-8 characters when using the encoded query strategy.'
-		);
-
-		$config->setQuery( 'foo bar wiki' );
-		$config->setIsInterWiki( true );
-
-		$this->assertEquals(
-				'foo bar',
-				$config->getQuery(),
-				'\Wikia\Search\Config::getQuery() should strip the term "wiki" from the set query if the search is interwiki'
-		);
-
-		$config->setQuery( $phantomNsQuery );
-		$this->assertEquals(
-				$phantomNsQuery,
-				$config->getQuery(),
-				'A query that initially matches a namespaces but does not end with a colon should not strip namespaces'
-		);
-
-	}*/
+	
+	
 
 	/**
 	 * @covers \Wikia\Search\Config::getSort
@@ -1084,40 +895,50 @@ class ConfigTest extends BaseTest {
 	
 	/**
 	 * @covers \Wikia\Search\Config::setQuery
+	 * @covers \Wikia\Search\Config::getQuery
 	 */
-	public function testSetQuery() {
-		$service = $this->service->setMethods( array( 'getNamespaceIdForString' ) )->getMock();
-		$config = $this->config->setMethods( array( 'getNamespaces' ) )->getMock();
-		$this->setService( $config, $service );
+	public function testQueryMethods() {
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getNamespaceId' ], [ 'foo' ] );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getNamespaces' ] );
 		
-		$query = 'Category:Foo';
+		$this->proxyClass( 'Wikia\Search\Query\Select', $mockQuery );
+		$this->mockApp();
 		
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getNamespaceIdForString' )
-		    ->with   ( 'Category' )
-		    ->will   ( $this->returnValue( 14 ) )
+		$this->assertFalse(
+				$mockConfig->getQuery()
+		);
+		$mockQuery
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getNamespaceId' )
+		    ->will   ( $this->returnValue( null ) )
 		;
-		$config
+		$this->assertEquals(
+				$mockConfig,
+				$mockConfig->setQuery( 'foo' )
+		);
+		$this->assertInstanceOf(
+				$mockConfig->getQuery()->_mockClassName, // mockproxy hack
+				$mockQuery
+		);
+		$mockQuery
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getNamespaceId' )
+		    ->will   ( $this->returnValue( NS_CATEGORY ) )
+		;
+		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getNamespaces' )
-		    ->will   ( $this->returnValue( array( 0 ) ) )
+		    ->will   ( $this->returnValue( [ NS_MAIN ] ) )
 		;
 		$this->assertEquals(
-				$config,
-				$config->setQuery( $query )
-		);
-		$paramsRefl = new ReflectionProperty( '\Wikia\Search\Config', 'params' );
-		$paramsRefl->setAccessible( true );
-		$params = $paramsRefl->getValue( $config );
-		$this->assertEquals(
-				$query,
-				$params['originalQuery']
+				$mockConfig,
+				$mockConfig->setQuery( 'foo' )
 		);
 		$this->assertEquals(
-				'Foo',
-				$params['query']
+				NS_CATEGORY,
+				$mockConfig->getQueryNamespace()
 		);
+		
 	}
 	
 	/**
@@ -1140,23 +961,6 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
-	 * @covers \Wikia\Search\Config::getQueryNoQuotes
-	 */
-	public function testGetQueryNoQuotes() {
-		$query = '"foo" and: \'bar\'';
-		$config = new \Wikia\Search\Config;
-		$this->assertEquals(
-				"foo and\\: bar",
-				$config->setQuery( $query )->getQueryNoQuotes()
-		);
-		$query = '"foo" and:\'bar\'';
-		$this->assertEquals(
-				"foo and:bar",
-				$config->setQuery( $query )->getQueryNoQuotes( true )
-		);
-	}
-	
-	/**
 	 * @covers \Wikia\Search\Config::getQuery
 	 */
 	public function testGetQuery() {
@@ -1166,21 +970,18 @@ class ConfigTest extends BaseTest {
 		);
 		$query = "foo and: bar & baz";
 		$config->setQuery( $query );
-		$this->assertEquals(
-				"foo and\\: bar & baz",
+		$this->assertInstanceOf(
+				'Wikia\Search\Query\Select',
 				$config->getQuery()
 		);
-		$this->assertEquals(
-				"foo and: bar &amp; baz",
-				$config->getQuery( \Wikia\Search\Config::QUERY_ENCODED )
-		);
-		$this->assertEquals(
+		$this->assertAttributeContains(
 				$query,
-				$config->getQuery( \Wikia\Search\Config::QUERY_RAW )
+				'rawQuery',
+				$config->getQuery()
 		);
-		$config->setQuery( 'foo wiki' )->setIsInterWiki( true );
-		$this->assertEquals(
-				'foo',
+		$config = new \Wikia\Search\Config( [ 'query' => 'foo' ] );
+		$this->assertInstanceOf(
+				'Wikia\Search\Query\Select',
 				$config->getQuery()
 		);
 	}

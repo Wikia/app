@@ -76,7 +76,6 @@ class ScavengerHuntGetFoundIndexesTest extends ScavengerHuntTest {
 
 		// test and assertions
 		$result = $scavengerHunt->getFoundIndexes();
-		$scavengerHunt->resetCache();
 		
 		$this->assertEquals( $expectedResult, $result );
 	}

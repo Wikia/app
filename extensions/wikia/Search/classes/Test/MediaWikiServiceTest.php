@@ -1200,7 +1200,7 @@ class MediaWikiServiceTest extends BaseTest
 		
 		$title = $this->getMockBuilder( '\Title' )
 		              ->disableOriginalConstructor()
-		              ->setMethods( array( '__toString', 'getNamespace' ) )
+		              ->setMethods( array( 'getBaseText', 'getNamespace' ) )
 		              ->getMock();
 		
 		$title
@@ -1210,7 +1210,7 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$title
 		    ->expects( $this->at( 1 ) )
-		    ->method ( '__toString' )
+		    ->method ( 'getBaseText' )
 		    ->will   ( $this->returnValue( 'title' ) )
 		;
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );
@@ -1901,7 +1901,7 @@ class MediaWikiServiceTest extends BaseTest
 	 * @covers Wikia\Search\MediaWikiService::getVideoViewsForPageId
 	 */
 	public function testGetVideoViewsForPageId() {
-		$service = $this->service->setMethods( array( 'getTitleFromPageId', 'formatNumber' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getTitleFromPageId' ) )->getMock();
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getDBKey' ) )
@@ -1916,12 +1916,6 @@ class MediaWikiServiceTest extends BaseTest
 		            ->disableOriginalConstructor()
 		            ->setMethods( array( 'getTotalVideoViewsByTitle' ) )
 		            ->getMock();
-		
-		$wrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-		                ->disableOriginalConstructor()
-		                ->setMethods( array( 'MsgExt' ) )
-		                ->getMock();
-		
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getTitleFromPageId' )
@@ -1945,6 +1939,31 @@ class MediaWikiServiceTest extends BaseTest
 		    ->with   ( 'Foo_bar' )
 		    ->will   ( $this->returnValue( 1234 ) )
 		;
+		$this->proxyClass( 'WikiaFileHelper', $wfh );
+		$this->proxyClass( 'MediaQueryService', $mqs );
+		$this->mockApp();
+		$this->assertEquals(
+				1234,
+				$service->getVideoViewsForPageId( $this->pageId )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getFormattedVideoViewsForPageId
+	 */
+	public function testGetFormattedVideoViewsForPageId() {
+		$service = $this->service->setMethods( array( 'getVideoViewsForPageId', 'formatNumber' ) )->getMock();
+		$wrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'MsgExt' ) )
+		                ->getMock();
+		
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getVideoViewsForPageId' )
+		    ->with   ( $this->pageId )
+		    ->will   ( $this->returnValue( 1234 ) )
+		;
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'formatNumber' )
@@ -1960,12 +1979,10 @@ class MediaWikiServiceTest extends BaseTest
 		$reflApp = new ReflectionProperty( '\Wikia\Search\MediaWikiService', 'app' );
 		$reflApp->setAccessible( true );
 		$reflApp->setValue( $service, (object) array( 'wf' => $wrapper ) );
-		$this->proxyClass( 'WikiaFileHelper', $wfh );
-		$this->proxyClass( 'MediaQueryService', $mqs );
 		$this->mockApp();
 		$this->assertEquals(
 				'1,234 views',
-				$service->getVideoViewsForPageId( $this->pageId )
+				$service->getFormattedVideoViewsForPageId( $this->pageId )
 		);
 	}
 	

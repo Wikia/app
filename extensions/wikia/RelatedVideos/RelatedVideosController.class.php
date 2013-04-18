@@ -12,19 +12,19 @@ class RelatedVideosController extends WikiaController {
 		}
 	}
 
-	public function getCaruselRL(){
+	public function getCarouselRL(){
 		// just use different template, logic stays the same
-		return $this->getCarusel();
+		return $this->getCarousel();
 	}
 
-	public function getCaruselElementRL(){
+	public function getCarouselElementRL(){
 		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
 
 		// just use different template, logic stays the same
-		return $this->getCaruselElement();
+		return $this->getCarouselElement();
 	}
 
-	public function getCarusel(){
+	public function getCarousel(){
 		if( $this->app->checkSkin( 'wikiamobile' ) || Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
 			return false;
 		}
@@ -137,7 +137,7 @@ class RelatedVideosController extends WikiaController {
 		$this->setVal( 'data', $videoData );
 	}
 
-	public function getCaruselElement() {
+	public function getCarouselElement() {
 		wfProfileIn(__METHOD__);
 
 		$video = $this->getVal( 'video' );
@@ -158,10 +158,7 @@ class RelatedVideosController extends WikiaController {
 														  'height'=>$video['thumbnailData']['height']) );
 			$videoThumb = $videoThumbObj->toHtml(
 				array(
-					'custom-url-link' => $video['fullUrl'],
 					'linkAttribs' => array(
-						'class' => 'video-thumbnail lightbox',
-						'data-video-name' => $video['title'],
 						'data-external' => $video['external'],
 						'data-ref' => $video['prefixedUrl']
 					),
@@ -234,9 +231,9 @@ class RelatedVideosController extends WikiaController {
 			$rvs = F::build( 'RelatedVideosService' ); /** @var $rvs RelatedVideosService */
 			$data = $rvs->getRelatedVideoDataFromMaster( $retval );
 			if ( empty($wgRelatedVideosOnRail) ) {
-				$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCaruselElement', array( 'video' => $data, 'preloaded' => 1 ) ));
+				$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCarouselElement', array( 'video' => $data, 'preloaded' => 1 ) ));
 			} else {
-				$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCaruselElementRL', array( 'video' => $data, 'preloaded' => 1 ) ));
+				$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCarouselElementRL', array( 'video' => $data, 'preloaded' => 1 ) ));
 			}
 			$this->setVal( 'error', isset( $data['error'] ) ? $data['error'] : null);
 		} else {

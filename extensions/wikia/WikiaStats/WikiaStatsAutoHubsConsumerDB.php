@@ -51,117 +51,6 @@ class WikiaStatsAutoHubsConsumerDB {
 		return $this->baned_user_names;
 	}
 
-	 /**
-	 * instert stats for blogs per tag
-	 *
-	 * @param String $type
-	 * @author Tomasz Odrobny, Piotr Molski
-	 * @access private
-	 *
-	 */
-	 public function insertBlogComment($data) {
-		wfProfileIn( __METHOD__ );
-
-		if ( empty($data) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-  		foreach ( $data as $lang => $tags ) {
-			if ( !empty($tags) ) {
-				foreach ( $tags as $tag_id => $records ) {
-					$sql = $this->makeInsert("tags_top_blogs", $records, array('ignore'), "ON DUPLICATE KEY UPDATE tb_count = tb_count + 1");
-					if ( $sql ) {
-						$this->dbs->query($sql, __METHOD__);
-					}
-					Wikia::log( __METHOD__, 'events', 'Rebuild blogs in memcache for tag: ' . $tag_id . ', lang: ' . $lang );
-					$this->rebuildMemc($tag_id,$lang,"blog");
-				}
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-	 }
-
-	 /**
-	 * instert stats for article per tag
-	 *
-	 * @param String $type
-	 * @author Tomasz Odrobny, Piotr Molski
-	 * @access private
-	 *
-	 */
-	 public function insertArticleEdit($data) {
-		wfProfileIn( __METHOD__ );
-
-		if ( empty($data) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-  		foreach ( $data as $lang => $tags ) {
-			if ( !empty($tags) ) {
-				foreach ( $tags as $tag_id => $records ) {
-					$sql = $this->makeInsert("tags_top_articles", $records, array('ignore'), "ON DUPLICATE KEY UPDATE ta_count = ta_count + 1");
-					if ( $sql ) {
-						$this->dbs->query($sql, __METHOD__);
-					}
-					Wikia::log( __METHOD__, 'events', 'Rebuild article data in memcache for tag: ' . $tag_id . ', lang: ' . $lang );
-					$this->rebuildMemc($tag_id,$lang,"article");
-				}
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-	 }
-
-	 /**
-	 * instert stats for users per tag
-	 *
-	 * @param String $type
-	 * @author Tomasz Odrobny, Piotr Molski
-	 * @access private
-	 *
-	 */
-	 public function insertUserEdit($data) {
-		wfProfileIn( __METHOD__ );
-
-		if ( empty($data) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-  		foreach ( $data as $lang => $tags ) {
-			if ( !empty($tags) ) {
-				foreach ( $tags as $tag_id => $records ) {
-					$sql = $this->makeInsert("tags_top_users", $records, array('ignore'), "ON DUPLICATE KEY UPDATE tu_count = tu_count + 1");
-					if ( $sql ) {
-						$this->dbs->query($sql, __METHOD__);
-					}
-					//$this->rebuildMemc($tag_id,$lang,"article");
-				}
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-	 }
-
-
 	/**
 	 * delete old row from stats tables
 	 *
@@ -179,8 +68,6 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$table_to_clear = array(
-			'tags_top_users' => array('col' => 'tu_date', 'exp' => 7),
-			'tags_top_articles' => array('col' => 'ta_date', 'exp' => 3),
 			'tags_top_blogs' => array('col' => 'tb_date', 'exp' => 3)
 		);
 

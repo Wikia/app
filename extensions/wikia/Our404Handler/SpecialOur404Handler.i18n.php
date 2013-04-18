@@ -190,15 +190,15 @@ $messages['el'] = array(
  * @author Fitoschido
  */
 $messages['es'] = array(
-	'our404handler' => 'Error 404: ¡Página no encontrada!',
-	'our404handler-oops' => 'Este no es el tipo de páginas que estás buscando. Sal de aquí, por favor.',
+	'our404handler' => 'Error 404: No se encontró la página.',
+	'our404handler-oops' => 'Aquí no están las páginas que buscas. Puedes seguir tu camino.',
 	'message404' => "'''Lo sentimos mucho, pero por alguna razón la página que buscas no existe.'''
 
-El artículo '''$1''' no pudo ser encontrado.
+No se encontró el artículo '''$1'''.
 
 * Puedes intentarlo con el artículo [[$2]]
-* Puedes usar el cajón de búsqueda en el lado izquierdo de la página
-* Para ir a la portada de este sitio, haz clic en el vínculo: [{{SERVER}} {{SITENAME}}]",
+* Puedes usar el cuadro de búsqueda en el lado izquierdo de la página
+* Para ir a la portada de este sitio, pulsa en el vínculo: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Estonian (eesti)

@@ -72,7 +72,7 @@
 				html += ' ' + name + '="' + attrs[name] + '"';
 			}
 		}
-		html += '><\/script>';
+		html += '><\/' + tagName + '>';
 		document.nativeWrite(html);
 	};
 

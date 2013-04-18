@@ -92,7 +92,7 @@ $messages['en'] = array(
 	'founderprogressbar-browse-page-name' => 'Browse',
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Shirayuki
  * @author Siebrand
  */
@@ -156,7 +156,9 @@ $messages['br'] = array(
 $messages['cs'] = array(
 	'founderprogressbar-skip-for-now' => 'Pro teď přeskočit',
 	'founderprogressbar-task-completed' => 'Dokončeno',
+	'founderprogressbar-total-edit75-label' => 'Dosáhli jste 75 editací',
 	'founderprogressbar-video-add-label' => 'Přidat video',
+	'founderprogressbar-browse-page-name' => 'Procházet',
 );
 
 /** German (Deutsch)
@@ -1358,8 +1360,10 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Luckas Blade
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
+	'founderprogressbar-widget-label' => 'Progresso da {{SITENAME}}',
 	'founderprogressbar-list-task-label' => 'Tarefas',
 	'founderprogressbar-category-edit-label' => 'Editar uma página de categoria',
 	'founderprogressbar-wikialabs-visit-label' => 'Visitar Wikia Labs',

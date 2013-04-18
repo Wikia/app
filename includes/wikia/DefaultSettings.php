@@ -195,7 +195,7 @@ $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ "WikiMover"                       ] = "$IP/extensions/wikia/WikiFactory/Mover/WikiMover.php";
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/SimplePie/simplepie.inc";
-$wgAutoloadClasses[ 'Mustache'                        ] = "$IP/lib/mustache.php/Mustache.php";
+$wgAutoloadClasses[ 'MustachePHP'                        ] = "$IP/lib/mustache.php/Mustache.php";
 $wgAutoloadClasses[ 'Minify_CSS_Compressor'           ] = "$IP/lib/Minify_CSS_Compressor.php";
 $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
@@ -221,6 +221,7 @@ $wgAutoloadClasses[ 'TitleBatch'                      ] = "$IP/includes/wikia/ca
 $wgAutoloadClasses[ 'WikiaUserPropertiesHandlerBase'  ] = "$IP/includes/wikia/models/WikiaUserPropertiesHandlerBase.class.php";
 $wgAutoloadClasses[ 'ParserPool'                      ] = "$IP/includes/wikia/parser/ParserPool.class.php";
 $wgAutoloadClasses[ 'WikiDataSource'                  ] = "$IP/includes/wikia/WikiDataSource.php";
+$wgAutoloadClasses[ 'DateFormatHelper'                ] = "$IP/includes/wikia/DateFormatHelper.php";
 
 /**
  * Resource Loader enhancements
@@ -1063,6 +1064,22 @@ $wgWikiaSeasonsPencilUnit = false;
 $wgEnableWAMPageExt = false;
 
 /**
+ * @name $wgWAMPageConfig
+ * WAMPage extension configuration -- default configuration
+ */
+$wgWAMPageConfig = array(
+	'pageName' => 'WAM',
+	'faqPageName' => 'WAM/FAQ',
+	'tabsNames' => array(
+		'Top wikis',
+		'The biggest gainers',
+		'Top video games wikis',
+		'Top entertainment wikis',
+		'Top lifestyle wikis',
+	),
+);
+
+/**
  * @name $wgEnableQuickToolsExt
  * Enables QuickTools extension
  */
@@ -1073,6 +1090,9 @@ $wgEnableQuickToolsExt = true;
  * Use phalanx external service
  */
 $wgPhalanxService = false;
+$wgPhalanxServiceUrl = "http://phalanx";
+$wgPhalanxServiceOptions = [];
+
 
 /**
  * @name $wgWikiaHubsFileRepoDBName
@@ -1097,6 +1117,18 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
  * Enables AmazonDirectTargetedBuy integration
  */
 $wgEnableAmazonDirectTargetedBuy = true;
+
+/**
+ * @name $wgEnableJavaScriptErrorLogging
+ * Enables JavaScript error logging mechanism
+ */
+$wgEnableJavaScriptErrorLogging = false;
+
+/**
+ * @name $wgEnableAdEngineExt
+ * Enables ad engine
+ */
+$wgEnableAdEngineExt = true;
 
 /**
  * trusted proxy service registry

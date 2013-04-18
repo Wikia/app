@@ -7,11 +7,24 @@ use Wikia\Search\Indexer;
 /**
  * This class is responsible for storing MediaWiki hook logic related to search.
  * Each method must be registered as a hook in the setup file, given the appropriate global settings.
+ * We have also migrated backlink logic here.
  * @author relwell
  * @package Search
  */
 class Hooks
 {
+	/**
+	 * Stores backlinks for each target article, listing the backlink text, and which source articles link to them
+	 * @var unknown_type
+	 */
+	protected static $outboundLinks = array();
+	
+	/**
+	 * Encapsulates MediaWiki logic
+	 * @var Wikia\Search\MediaWikiService
+	 */
+	protected static $service;
+	
 	/**
 	 * Sends delete request to article if it gets deleted
 	 * @param WikiPage $article
@@ -115,4 +128,36 @@ class Hooks
 		}
 		return true;
 	}
+	
+	/**
+	 * Uses MediaWiki LinkEnd hook to store outbound links
+	 * @param unknown_type $skin
+	 * @param Title $target
+	 * @param array $options
+	 * @param unknown_type $text
+	 * @param array $attribs
+	 * @param unknown_type $ret
+	 * @return boolean
+	 */
+	public function onLinkEnd( $skin, \Title $target, array $options, &$text, array &$attribs, &$ret ) {
+		$service = self::$service ?: new MediaWikiService;
+		self::$service = $service;
+		$targetId = $service->getCanonicalPageIdFromPageId( $target->getArticleId() );
+		if ( $targetId !== 0 ) {
+			$targetDocId = $service->getWikiId() . '_' . $targetId;
+			self::$outboundLinks[] = sprintf( "%s | %s", $targetDocId, strip_tags( $text ) );
+		}
+		return true;
+	}
+	
+	/**
+	 * Returns the current parse's outbound links and reinitializes the array.
+	 * @return array
+	 */
+	public function popLinks() {
+		$links = self::$outboundLinks;
+		self::$outboundLinks = [];
+		return $links;
+	}
+	
 }

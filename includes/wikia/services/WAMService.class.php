@@ -7,6 +7,7 @@
 class WAMService extends Service {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
+	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
 
 	protected $defaultIndexOptions = array(
 		'currentTimestamp' => null,
@@ -75,9 +76,9 @@ class WAMService extends Service {
 	public function getWamIndex ($inputOptions) {
 		$inputOptions += $this->defaultIndexOptions;
 
-		$inputOptions['currentTimestamp'] = $inputOptions['currentTimestamp'] ? $inputOptions['currentTimestamp'] : strtotime('00:00 -1 day');
+		$inputOptions['currentTimestamp'] = $inputOptions['currentTimestamp'] ? strtotime('00:00 -1 day', $inputOptions['currentTimestamp']) : strtotime('00:00 -1 day');
 		$inputOptions['previousTimestamp'] = $inputOptions['previousTimestamp']
-			? $inputOptions['previousTimestamp']
+			? strtotime('00:00 -1 day', $inputOptions['previousTimestamp'])
 			: $inputOptions['currentTimestamp'] - 60 * 60 * 24;
 
 		$app = F::app();
@@ -122,11 +123,45 @@ class WAMService extends Service {
 			}
 			$count = $resultCount->fetchObject();
 			$wamIndex['wam_results_total'] = $count->wam_results_total;
+			$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
 		}
 
 		$app->wf->profileOut(__METHOD__);
 
 		return $wamIndex;
+	}
+
+	public function getWamIndexDates() {
+		$dates = array(
+			'max_date' => null,
+			'min_date' => null
+		);
+
+		$app = F::app();
+		$app->wf->ProfileIn(__METHOD__);
+
+		if (!empty($app->wg->StatsDBEnabled)) {
+			$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+
+			$fields = array(
+				'MAX(time_id) AS max_date',
+				'MIN(time_id) AS min_date'
+			);
+
+			$result = $db->select(
+				'fact_wam_scores',
+				$fields
+			);
+
+			$row = $db->fetchRow($result);
+
+			$dates['max_date'] = strtotime('+1 day', strtotime($row['max_date']));
+			$dates['min_date'] = strtotime('+1 day', strtotime($row['min_date']));
+		}
+
+		$app->wf->profileOut(__METHOD__);
+
+		return $dates;
 	}
 
 	protected function getWamIndexJoinConditions ($options) {
@@ -201,6 +236,13 @@ class WAMService extends Service {
 			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
 		}
 
+		if ($options['excludeBlacklist']) {
+			$blacklistIds = $this->getIdsBlacklistedWikis();
+			if (!empty($blacklistIds)) {
+				$conds[] = 'fw1.wiki_id NOT IN (' . $db->makeList( $blacklistIds ) . ')';
+			}
+		}
+
 		return $conds;
 	}
 
@@ -239,5 +281,26 @@ class WAMService extends Service {
 			'dw' => 'dimension_wikis'
 		);
 		return $tables;
+	}
+
+	protected function getIdsBlacklistedWikis() {
+		$blacklistIds = array();
+		$blacklistExt = WikiFactory::getVarByName(self::WAM_BLACKLIST_EXT_VAR_NAME, null);
+
+		if( $blacklistExt->cv_id ) {
+			$blacklistIds = WikiaDataAccess::cache(
+				F::app()->wf->SharedMemcKey(
+					'wam_blacklist',
+					$blacklistExt->cv_id
+				),
+				24 * 60 * 60,
+				function () use ( $blacklistExt ) {
+					$blacklistWikis = WikiFactory::getListOfWikisWithVar( $blacklistExt->cv_id, 'bool', '=', true, true );
+					return array_keys( $blacklistWikis );
+				}
+			);
+		}
+
+		return $blacklistIds;
 	}
 }

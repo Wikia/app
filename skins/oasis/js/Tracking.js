@@ -29,6 +29,26 @@ jQuery(function($){
 		}, e.data);
 	};
 
+	// For tracking components which are used inside and outside of the editor.
+	var trackEditorComponent = (function() {
+		var slice = Array.prototype.slice;
+
+		return function() {
+			var wikiaEditor = window.WikiaEditor && WikiaEditor.getInstance(),
+				track = Wikia.Tracker.track;
+
+			// Determine whether or not to track through the editor tracking method:
+			// - If an editor is present on the page and is not a MiniEditor, then it must be the main editor.
+			// - If an editor is present on the page and is a MiniEditor, make sure it currently has focus.
+			// - Otherwise, assume that we are not tracking through the editor.
+			if ( wikiaEditor && ( !wikiaEditor.config.isMiniEditor || wikiaEditor.plugins.MiniEditor.hasFocus ) ) {
+				track = WikiaEditor.track;
+			}
+
+			track.apply( track, slice.call( arguments ) );
+		};
+	})();
+
 	/** article **/
 
 	(function() {
@@ -191,49 +211,6 @@ jQuery(function($){
 			});
 		}
 	});
-
-	/** edit **/
-
-	(function() {
-		var category = 'edit';
-
-		// Stop here if not an edit page
-		if(!$body.hasClass('editor')) {
-			return;
-		}
-
-		$('#EditPageRail').on('mousedown', '.module_insert .cke_button', function(e) {
-			var label,
-				el = $(e.currentTarget);
-
-			// Primary mouse button only
-			if (e.which !== 1) {
-				return;
-			}
-
-			if (el.hasClass('RTEImageButton')) {
-				label = 'add-photo';
-			} else if (el.hasClass('RTEGalleryButton')) {
-				label = 'add-gallery';
-			} else if (el.hasClass('RTESlideshowButton')) {
-				label = 'add-slideshow';
-			} else if (el.hasClass('RTEVideoButton')) {
-				label = 'add-video';
-			} else if (el.hasClass('RTEPollButton')) {
-				label = 'add-poll';
-			} else if (el.hasClass('cke_button_table')) {
-				label = 'add-table';
-			}
-
-			if (label !== undefined) {
-				track({
-					browserEvent: e,
-					category: category,
-					label: label
-				});
-			}
-		});
-	})();
 
 	/** photos-module **/
 
@@ -659,4 +636,7 @@ jQuery(function($){
 			});
 		}
 	});
+
+	// Exports
+	Wikia.trackEditorComponent = trackEditorComponent;
 });

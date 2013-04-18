@@ -4,6 +4,11 @@ class WAMPageHooks {
 	protected $EnableWAMPageExt = null;
 	protected $app = null;
 
+	/**
+	 * @var WAMPageModel $model
+	 */
+	protected $model = null;
+
 	protected function init() {
 		wfProfileIn(__METHOD__);
 		
@@ -11,10 +16,16 @@ class WAMPageHooks {
 			$this->app = F::app();
 		}
 		
-		foreach(['WAMPageConfig', 'EnableWAMPageExt'] as $var) {
-			if( is_null($this->$var) ) {
-				$this->$var = $this->app->wg->$var;
-			}
+		if( is_null($this->EnableWAMPageExt) ) {
+			$this->EnableWAMPageExt = $this->app->wg->EnableWAMPageExt;
+		}
+		
+		if( is_null($this->model) ) {
+			$this->model = new WAMPageModel();
+		}
+
+		if( is_null($this->WAMPageConfig) ) {
+			$this->WAMPageConfig = $this->model->getConfig();
 		}
 		
 		wfProfileOut(__METHOD__);
@@ -30,7 +41,7 @@ class WAMPageHooks {
 		wfProfileIn(__METHOD__);
 		$this->init();
 
-		if( $this->isWAMPage($title) ) {
+		if( $this->model->isWAMPage($title) ) {
 			$this->app->wg->SuppressPageHeader = true;
 			$this->app->wg->SuppressWikiHeader = true;
 			$this->app->wg->SuppressRail = true;
@@ -43,6 +54,8 @@ class WAMPageHooks {
 	}
 
 	public function onMakeGlobalVariablesScript(&$vars) {
+		wfProfileIn(__METHOD__);
+		
 		$this->init();
 		
 		if( !empty($this->EnableWAMPageExt) ) {
@@ -50,6 +63,7 @@ class WAMPageHooks {
 			$vars['wgWAMFAQPageName'] = $this->WAMPageConfig['faqPageName'];
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -67,26 +81,37 @@ class WAMPageHooks {
 	 * @return bool
 	 */
 	public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
+		wfProfileIn(__METHOD__);
 		$this->init();
 		
-		if( $this->isWAMPage($target) ) {
+		if( $this->model->isWAMPage($target) ) {
 			$index = array_search('broken', $options);
 			unset($options[$index]);
 			$options[] = 'known';
 		}
 
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Change canonical url if we are displaying WAM subpages
+	 *
+	 * @param string $url
+	 *
+	 * @return bool
+	 */
+	public function onWikiaCanonicalHref(&$url) {
+		wfProfileIn(__METHOD__);
+		$this->init();
+		
+		$title = Title::newFromURL($url);
+		if( $title instanceof Title && $this->model->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
+			$url = $this->model->getWAMMainPageUrl();
+		}
+
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 	
-	protected function isWAMPage($title) {
-		$dbKey = null;
-		$wamPageName = mb_strtolower( $this->WAMPageConfig['pageName'] );
-		$wamPageFaqPageName = mb_strtolower( $this->WAMPageConfig['faqPageName'] );
-
-		if( $title instanceof Title ) {
-			$dbKey = mb_strtolower( $title->getDBKey() );
-		}
-		
-		return !empty($this->EnableWAMPageExt) && ($dbKey === $wamPageName || $dbKey === $wamPageFaqPageName);
-	}
 }

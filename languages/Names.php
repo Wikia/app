@@ -398,4 +398,14 @@
 	'kp' => 'Kamelopedia', # Kamelopedia for de.uncyclopedia, trec #801
 	'mu' => 'Mirror Universe', # Mirror Universe for Memory-Alpha, trac #2788
 	'de2' => 'Deutsch', # German, introduced for harrypoter, fb #9935
+	'eshelp' => 'Español', # Spanish help (FB#51521)
+	'ruhelp' => 'Русский', # Russian help (FB#51521)
+	'frhelp' => 'Français', # French help (FB#51521)
+	'ithelp' => 'Italiano', # Italian help (FB#51521)
+	'pthelp' => 'Português', # Portuguese help (FB#51521)
+	'fihelp' => 'Suomi', # Finnish help (FB#51521)
+	'pt-brhelp' => 'Português do Brasil', # Brazilian Portuguese help (FB#51521)
+	'nlhelp' => 'Nederlands', # Dutch help (FB#51521)
+	'jahelp' => '日本語', # Japanese help (FB#51521)
+	'kohelp' => '한국어', # Korean help (FB#51521)
 );

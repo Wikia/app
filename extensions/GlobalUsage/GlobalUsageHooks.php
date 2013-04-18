@@ -17,7 +17,7 @@ class GlobalUsageHooks {
 
 		// Create a list of locally existing images
 		$images = array_keys( $linksUpdater->getImages() );
-		
+
 		//$localFiles = array_keys( RepoGroup::singleton()->getLocalRepo()->findFiles( $images ) );
 		// Unrolling findFiles() here because pages with thousands of images trigger an OOM
 		// error while building an array with thousands of File objects (bug 32598)
@@ -29,8 +29,12 @@ class GlobalUsageHooks {
 				$localFiles[] = $file->getTitle()->getDBkey();
 			}
 		}
-		
+
 		$missingFiles = array_diff( $images, $localFiles );
+
+		/* Wikia change begin */
+		wfRunHooks( 'GlobalUsageLinksUpdateComplete', array( &$missingFiles ) );
+		/* Wikia change end */
 
 		global $wgUseDumbLinkUpdate;
 		$gu = self::getGlobalUsage();

@@ -26,7 +26,7 @@ class MustacheSpecTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider loadCommentSpec
 	 */
 	public function testCommentSpec($desc, $template, $data, $partials, $expected) {
-		$m = new Mustache($template, $data, $partials);
+		$m = new MustachePHP($template, $data, $partials);
 		$this->assertEquals($expected, $m->render(), $desc);
 	}
 
@@ -35,7 +35,7 @@ class MustacheSpecTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider loadDelimitersSpec
 	 */
 	public function testDelimitersSpec($desc, $template, $data, $partials, $expected) {
-		$m = new Mustache($template, $data, $partials);
+		$m = new MustachePHP($template, $data, $partials);
 		$this->assertEquals($expected, $m->render(), $desc);
 	}
 
@@ -44,7 +44,7 @@ class MustacheSpecTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider loadInterpolationSpec
 	 */
 	public function testInterpolationSpec($desc, $template, $data, $partials, $expected) {
-		$m = new Mustache($template, $data, $partials);
+		$m = new MustachePHP($template, $data, $partials);
 		$this->assertEquals($expected, $m->render(), $desc);
 	}
 
@@ -53,7 +53,7 @@ class MustacheSpecTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider loadInvertedSpec
 	 */
 	public function testInvertedSpec($desc, $template, $data, $partials, $expected) {
-		$m = new Mustache($template, $data, $partials);
+		$m = new MustachePHP($template, $data, $partials);
 		$this->assertEquals($expected, $m->render(), $desc);
 	}
 
@@ -67,7 +67,7 @@ class MustacheSpecTest extends PHPUnit_Framework_TestCase {
 		}
 
 		$data = $this->prepareLambdasSpec($data);
-		$m = new Mustache($template, $data, $partials);
+		$m = new MustachePHP($template, $data, $partials);
 		$this->assertEquals($expected, $m->render(), $desc);
 	}
 
@@ -95,7 +95,7 @@ class MustacheSpecTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider loadPartialsSpec
 	 */
 	public function testPartialsSpec($desc, $template, $data, $partials, $expected) {
-		$m = new Mustache($template, $data, $partials);
+		$m = new MustachePHP($template, $data, $partials);
 		$this->assertEquals($expected, $m->render(), $desc);
 	}
 
@@ -104,7 +104,7 @@ class MustacheSpecTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider loadSectionsSpec
 	 */
 	public function testSectionsSpec($desc, $template, $data, $partials, $expected) {
-		$m = new Mustache($template, $data, $partials);
+		$m = new MustachePHP($template, $data, $partials);
 		$this->assertEquals($expected, $m->render(), $desc);
 	}
 

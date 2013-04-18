@@ -115,7 +115,7 @@ Helpful Tools:
 [[Special:UserRights|Manage Rights]]",
 );
 
-/** Message documentation (Message documentation)
+/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
  * @author Siebrand
  * @author TK-999
  */
@@ -1585,6 +1585,7 @@ Pomocne narzędzia:
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
@@ -1595,95 +1596,95 @@ $messages['pms'] = array(
 	'wikiadoption-adopt-inquiry' => 'Për savèjne ëd pi!',
 	'wikiadoption-description' => "$1, pront a adoté {{SITENAME}}?
 <br /><br />
-A l'é pa stàit-ie n'aministrador ativ dzor {{SITENAME}} për un pòch, e i stoma sërcand un neuv leader për giuté ël contnù dë sta wiki e la chërsùa dla comunità! Com quaidun che a l'ha contribuì a {{SITENAME}} is sagrinoma s'at pias ëd travaj.
+A l'é pa staje d'aministrator ativ dzora {{SITENAME}} da 'n bel pòch, e i sërcoma un neuv responsàbil për giuté ël contnù dë sta wiki e la chërsùa dla comunità! Com quaidun che a l'ha contribuì a {{SITENAME}} is ciamoma s'a-j pias ës travaj.
 <br /><br />
-An adotand sta wiki, it saras promovù a aministrador e mangiapapé për dete j'utiss don it l'has dabzògn për gest' la comunità e ël contnù dla wiki. It podras ëdcò creé àutri aministrador për giuté, scanselé, torné andré, tramudé e protegi dle pagine.
+An adotand sta wiki, a sarà promovù a aministrator e mangiapapé për deje j'utiss dont a l'ha dabzògn për gestì la comunità e ël contnù dla wiki. A podrà ëdcò creé d'àutri aministrator për giuté, scancelé, ripristiné, tramudé e protege le pàgine.
 <br /><br />
-It ses-to pront a fé sti neuv pass për giuté {{SITENAME}}?",
-	'wikiadoption-know-more-header' => 'It veus-to savèjne ëd pi?',
-	'wikiadoption-know-more-description' => "Contròla sti colegament për savèjne ëd pi. E oviament, sent-te lìber ëd contatene s'it l'avèisse quaich custion!",
-	'wikiadoption-adoption-successed' => "Congratulassion! It ses adess n'aministrador dzor sta wiki!",
-	'wikiadoption-adoption-failed' => "Spiasent. I l'oma provà a fete aministrador, ma a funsion-a pa. Për piasì [http://community.wikia.com/Special:Contact contatne], e i proveroma a giutete.",
-	'wikiadoption-not-allowed' => 'Spiasent. It peule pa adoté sta wiki pròpi adess.',
-	'wikiadoption-not-enough-edits' => 'Cantacc! It deuve avèj almench 10 modìfiche për adoté sta wiki.',
+É-lo pront a fé ës neuv pass për giuté {{SITENAME}}?",
+	'wikiadoption-know-more-header' => 'Veul-lo savèjne ëd pi?',
+	'wikiadoption-know-more-description' => "Ch'a consulta coste liure për savèjne ëd pi. E, as capiss, ch'an contata pura s'a l'èissa dle chestion!",
+	'wikiadoption-adoption-successed' => "Congratulassion! Adess a l'é aministrator dzora sta wiki!",
+	'wikiadoption-adoption-failed' => "An dëspias. I l'oma provà a felo aministrator, ma a l'ha nen marcià. Për piasì [http://community.wikia.com/Special:Contact ch'an contata], e i proveroma a giutelo.",
+	'wikiadoption-not-allowed' => 'An dëspias. A peul pa adoté sta wiki pròpi adess.',
+	'wikiadoption-not-enough-edits' => 'Contacc! A dev avèj pi che 10 modìfiche për adoté sta wiki.',
 	'wikiadoption-adopted-recently' => "Contacc! It l'has già adotà n'àutra wiki recentement. It deuve speté un pòch prima ëd podèj adoté na neuva wiki.",
 	'wikiadoption-log-reason' => 'Adossion Automàtica ëd Wiki',
-	'wikiadoption-notification' => "{{SITENAME}} a speta n'adossion. Anteressà a dventé un leader belessì? Adòta sta wiki për ancaminé! $2",
+	'wikiadoption-notification' => "{{SITENAME}} a speta n'adossion. Anteressà a dventé na guida ambelessì? Ch'a adòta sta wiki për ancaminé! $2",
 	'wikiadoption-mail-first-subject' => "I l'oma pa vist-te belessì da un pòch",
 	'wikiadoption-mail-first-content' => "Cerea $1,
 
-A l'é stàit na cobia dë sman-e da quand i l'oma vëddù n'aministrador dzor #WIKINAME. J'aministrador a son na part antegral ëd #WIKINAME e a l'é amportant ch'a l'abio na presensa regolar. S'a-i è gnun aministrador ativ për un longh antërval ëd temp, sta wiki a peul esse butà an adossion për përmëtte a n'àutr utent dë vnì n'aministrador.
+A l'é passaje dontré sman-e da quand i l'oma s-ciairà n'aministrator dzora #WIKINAME. J'aministrator a son na part essensial ëd #WIKINAME e a l'é amportant ch'a l'abio na presensa regolar. S'a-i è gnun aministrator ativ për un longh antërval ëd temp, sta wiki a peul esse butà an adossion për përmëtte a n'àutr utent dë vnì aministrator.
 
-S'it l'has dabzògn d'agiut për pijete cura dla wiki, it peule ëdcò përmëtte a àutri mémber dla comunità ëd vnì aministrador adess andand a $2. I speroma ëd vëdd-te dzor #WIKINAME prest!
+S'a l'ha dabzògn d'agiut për cudì la wiki, a peul ëdcò përmëtte a d'àutri mémber dla comunità dë vnì aministrator adess andasend a $2. I speroma ëd vëdd-lo dzor #WIKINAME tòst!
 
-L'Echip Wikia
+L'Echip ëd Wikia
 
-It peule disiscrivte da cambi a sta lista belessì: $3",
+It peule disativé l'abonament a le modìfiche a costa lista belessì: $3",
 	'wikiadoption-mail-first-content-HTML' => "Cerea \$1,<br /><br />
 
-A l'é stàit na cobia dë sman-e da quand i l'oma vëddù n'aministrador dzor #WIKINAME. J'aministrador a son na part antegral ëd #WIKINAME e a l'é amportant ch'a l'abio na presensa regolar. S'a-i è gnun aministrador ativ për un longh antërval ëd temp, sta wiki a peul esse butà an adossion për përmëtte a n'àutr utent dë vnì n'aministrador.<br /><br />
+A l'é dontré sman-e ch'i vëdoma pi gnun aministrator dzor #WIKINAME. J'aministrator a son na part essensial ëd #WIKINAME e a l'é amportant ch'a l'abio na presensa regolar. S'a-i è gnun aministrator ativ për un longh antërval ëd temp, sta wiki a peul esse butà an adossion për përmëtte a n'àutr utent dë vnì aministrator.<br /><br />
 
-S'it l'has dabzògn d'agiut për pijete cura dla wiki, it peule ëdcò përmëtte a àutri mémber dla comunità ëd vnì aministrador adess andand a <a href=\"\$2\">gestion Drit Utent</a>. I speroma ëd vëdd-te dzor #WIKINAME prest!<br /><br />
+S'a l'ha dabzògn d'agiut për cudì la wiki, a peul ëdcò përmëtte a d'àutri mémber dla comunità dë vnì aministrator adess andasend a la <a href=\"\$2\">gestion dij Drit dj'Utent</a>. I speroma ëd vëdd-lo dzor #WIKINAME tòst!<br /><br />
 
-L'Echip Wikia<br /><br />
+L'Echip ëd Wikia<br /><br />
 
-It peule <a href=\"\$3\">disiscrivte</a> da cambi a sta lista.",
+A peul <a href=\"\$3\">anulé l'abonament</a> da le modìfiche a costa lista.",
 	'wikiadoption-mail-second-subject' => '#WIKINAME a sarà butà an adossion prest',
 	'wikiadoption-mail-second-content' => "Cerea $1,
 
-Oh, nò! A l'é stàit almanch 60 di da quand a l'é stàit-ie n'aministrador ativ dzor #WIKINAME. A l'é amportant che j'aministrador a ven-o regolarment e ch'a contribuisso parèj che la wiki a peussa continué a viré seulia.
+Oh, nò! A l'é scasi 60 di da quand a-i é staje n'aministrator ativ dzor #WIKINAME. A l'é amportant che j'aministrator a ven-o e a contribuisso ëd fasson regolar an manera che la wiki a peula continué a marcé 'me ch'as dev.
 
-Da già ch'a l'é stàit-ie tanti di parèj da quand n'aministrador corent a l'é vnù, #WIKINAME a sarà adess ofrìa an adossion a n'àutr editor.
+Da già ch'a son passaje tanti di parèj da quand n'aministrator corent a l'é vnù, #WIKINAME a sarà adess ësmonùa an adossion a d'àutri editor.
 
-L'Echip Wikia
+L'Echip ëd Wikia
 
-It peule disiscrivte da cambi a sta lista belessì: $3",
+A peule anulé l'abonament da le modìfiche a costa lista belessì: $3",
 	'wikiadoption-mail-second-content-HTML' => "Cerea \$1,<br /><br />
-Oh, nò! A l'é stàit almanch 60 di da quand a l'é stàit-ie n'aministrador ativ dzor #WIKINAME. A l'é amportant che j'aministrador a ven-o regolarment e ch'a contribuisso parèj che la wiki a peussa continué a viré seulia.<br /><br />
+Oh, nò! A son passaje scasi 60 di da quand a-i é staje n'aministrator ativ dzor #WIKINAME. A l'é amportant che j'aministrator a ven-o e a contribuisso regolarment ëd fasson che la wiki a peula continué a marcé 'me ch'as dev.<br /><br />
 
-Da già ch'a l'é stàit-ie tanti di parèj da quand n'aministrador corent a l'é vnù, #WIKINAME a sarà adess ofrìa an adossion a n'àutr editor.<br /><br />
+Da già ch'a son passaje tanti di parèj da quand n'aministrator ativ a l'é fasse vëdde, #WIKINAME a sarà adess ësmonùa an adossion a d'àutri editor.<br /><br />
 
-L'Echip Wikia<br /><br />
+L'Echip ëd Wikia<br /><br />
 
-It peule <a href=\"\$3\">disiscrivte</a> da cambi a sta lista.",
+A peul <a href=\"\$3\">anulé l'abonament</a> da le modìfiche a sta lista.",
 	'wikiadoption-mail-adoption-subject' => "#WIKINAME a l'é stàita adotà",
 	'wikiadoption-mail-adoption-content' => "Cerea $1,
 
-#WIKINAME a l'é stàita adotà. Le Wiki a son disponible a esse adotà quand gnun dj'aministrador a son ativ da 60 di o pi.
+#WIKINAME a l'é stàita adotà. Le Wiki a son disponìbij a esse adotà quand gnun dj'aministrador atuaj a son ativ da 60 di o pi.
 
-L'utent ch'a adota #WIKINAME a l'avrà pa lë stat d'admin o mangiapapé. Sagrinte pa, ëdcò ti it l'avras anco' lë stat d'aministrador dzor sta wiki e it ses bin ëvnù a artorné e continué a contribuì an minca moment!
+L'utent ch'a adota #WIKINAME a l'avrà adess lë statù ëd mangiapapé e d'aministrator. Ch'as sagrin-a pa, ëdcò chiel a l'avrà ancor lë statù d'aministrator dzora sta wiki e a l'é bin ëvnù a torné e continué a contribuì a tut moment!
 
-L'Echip Wikia
+L'Echip ëd Wikia
 
-It peule disiscrivte da cambi a sta lista belessì: $3",
+A peul anulé l'abonament da le modìfiche a costa lista belessì: $3",
 	'wikiadoption-mail-adoption-content-HTML' => "Cerea \$1,<br /><br />
 
-#WIKINAME a l'é stàita adotà. Le Wiki a son disponible a esse adotà quand gnun dj'aministrador a son ativ da 60 di o pi.<br /><br />
+#WIKINAME a l'é stàita adotà. Le Wiki a son disponìbij a esse adotà quand gnun dj'aministrator corent a son ativ da 60 di o pi.<br /><br />
 
-L'utent ch'a adota #WIKINAME a l'avrà pa lë stat d'admin o mangiapapé. Sagrinte pa, ëdcò ti it l'avras anco' lë stat d'aministrador dzor sta wiki e it ses bin ëvnù a artorné e continué a contribuì an minca moment!<br /><br />
+L'utent ch'a adota #WIKINAME a l'avrà adess lë statù ëd mangiapapé e d'aministrator. Ch'as sagrin-a nen, ëdcò chiel a goernërà lë statù d'aministrator dzora sta wiki e a l'é bin ëvnù a torné e continué a contribuì a tut moment!<br /><br />
 
-L'Echip Wikia<br /><br />
+L'Echip ëd Wikia<br /><br />
 
-It peule <a href=\"\$3\">disiscrivte</a> da cambi a sta lista.",
+A peul <a href=\"\$3\">anulé l'abonament</a> a le modìfiche a costa lista.",
 	'tog-adoptionmails' => "Scrivme se $1 a dventerà disponìbil për l'adossion da àutri utent",
 	'tog-adoptionmails-v2' => "...se la wiki a dventerà disponìbil për l'adossion da àutri utent",
-	'wikiadoption-pref-label' => 'Cangé ste preferense a tocherà mach ij corej da $1.',
+	'wikiadoption-pref-label' => 'La modìfica ëd costi gust a tocherà mach ij mëssagi da $1.',
 	'wikiadoption-welcome-header' => "Congratulassion! It l'has adotà {{SITENAME}}!",
-	'wikiadoption-welcome-body' => "It ses adess mangiapapé dzor sta wiki. Con tò neuv stat adess it l'has acess a tùit j'utiss ch'at giuteran a gestì {{SITENAME}}.
+	'wikiadoption-welcome-body' => "Adess chiel a l'é mangiapapé dzora sta wiki. Con sò neuv statù adess chiel a l'ha acess a tùit j'utiss ch'a lo giuteran a gestì {{SITENAME}}.
 <br /><br />
-La ròba pi amportanta ch'it peule fé për giuté {{SITENAME}} a chërse a l'é continué a modifiché.
+La ròba pi amportanta ch'a peul fé për giuté {{SITENAME}} a chërse a l'é continué a modifiché.
 <br /><br />
-S'a-i é gnun aministrador dzor na wiki a peul esse butà an adossion parèj da esse sigur ëd controlé la wiki soens.
+S'a-i é gnun aministrator dzora na wiki, costa a peul esse butà an adossion parèj da esse sigur ëd controlé la wiki soens.
 <br /><br />
-Utiss Utij:
+Utiss ch'a ven-o motobin a taj:
 <br /><br />
-[[Special:ThemeDesigner|ThemeDesigner]]
+[[Special:ThemeDesigner|Progetista ëd tema]]
 <br />
-[[Special:LayoutBuilder|Costrutor ëd Layout ëd Pagina]]
+[[Special:LayoutBuilder|Costrutor d'ampaginassion]]
 <br />
-[[Special:ListUsers|Lista Utent]]
+[[Special:ListUsers|List dj'Utent]]
 <br />
-[[Special:UserRights|Gestiss Drit]]",
+[[Special:UserRights|Gestì ij Drit]]",
 );
 
 /** Portuguese (português)

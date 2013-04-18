@@ -26,7 +26,7 @@ class WikiStats extends AbstractWikiService
 	 */
 	public function execute() {
 		$service = $this->getService();
-		if ( $service->isOnDbCluster() ) { 
+		if ( $this->result == array() && $service->isOnDbCluster() ) { 
 			$data = $service->getApiStatsForWiki();
 			$statistics = $data['query']['statistics'];
 			if( is_array($statistics) ) {

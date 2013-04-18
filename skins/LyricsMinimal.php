@@ -774,9 +774,7 @@ wfRunHooks('MonacoBeforeWikiaPage', array($this));
 ?>
 		<div id="wikia_page">
 <?php
-wfRunHooks('MonacoBeforePageBar', array($this));
 if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
-		echo AdEngine::getInstance()->getSetupHtml();
 ?>
 		<div class='lyricsMinimalTop clearfix'>
 			<div id="wiki_logo" style="background-image: url(<?= $wgLogo ?>);"><a href="<?= htmlspecialchars($this->data['nav_urls']['mainpage']['href'])?>" accesskey="z"><?= $wgSitename ?></a></div>
@@ -843,7 +841,7 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 <?php
 // Note, these were placed above the Ad calls intentionally because ad code screws with analytics
 echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
+echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine2Controller::getCachedCategory());
 global $wgCityId;
 echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco'));
@@ -861,12 +859,6 @@ if (43339 == $wgCityId) echo AnalyticsEngine::track("GA_Urchin", "lyrics");
 		$this->html('headscripts');
 	}
 	echo '<script type="text/javascript">/*<![CDATA[*/Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>' . "\n";
-
-if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders())){
-	// Reset elements with a "clear:none" to "clear:right" when the box ad is displayed
-        // Fixes pages like this: http://en.dcdatabaseproject.com/Fang_Zhifu_(New_Earth)
-	echo '<script type="text/javascript">AdEngine.resetCssClear("right");</script>' . "\n";
-}
 
 	// NOTE: Removed wikia_footer.
 
@@ -925,24 +917,7 @@ wfProfileOut( __METHOD__ . '-body');
 	}
 
 	function getTopAdCode(){
-	        echo AdEngine::getInstance()->getSetupHtml();
-
-		global $wgOut, $wgEnableIframeAds, $wgEnableTandemAds, $wgEnableFAST_HOME2;
-		$topAdCode = '';
-		if ($wgOut->isArticle()){
-			if (WikiaPageType::isMainPage()){
-				$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('HOME_TOP_LEADERBOARD');
-				if ($wgEnableFAST_HOME2) {
-					$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('HOME_TOP_RIGHT_BOXAD');
-				}
-			} else if ( WikiaPageType::isContentPage()){
-				$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
-			}
-		} elseif (WikiaPageType::isSearch()) {
-			$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
-			$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('TOP_RIGHT_BOXAD');
-		}
-		return $topAdCode;
+		return '';
 	}
 
 	// Made a separate method so recipes, answers, etc can override.

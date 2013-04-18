@@ -32,17 +32,6 @@ class RenameUserProcess {
 	);
 
 	/**
-	 * Stores the predefined tasks to do for global (wikicities) database.
-	 * Here should be mentioned all core tables not connected to any extension.
-	 *
-	 * @var $mStatsDefaults array
-	 */
-	static private $mStatsDefaults = array(
-		//user table is processed separately
-		array( 'table' => '`noreptemp`.`tags_top_users`', 'userid_column' => 'tu_user_id', 'username_column' => 'tu_username' ),
-	);
-
-	/**
 	 * Stores the predefined tasks to do for every local wiki database.
 	 * Here should be mentioned all core tables not connected to any extension.
 	 *
@@ -628,7 +617,6 @@ class RenameUserProcess {
 			
 			wfRunHooks( "EditPhalanxBlock", array( &$data ) );
 			$this->mPhalanxBlockId = $data['id'];
-
 			if(!$this->mPhalanxBlockId) {
 				$this->addLog("Creation of the block failed.");
 				$this->addError(wfMsgForContent('userrenametool-error-cannot-create-block'));
@@ -660,7 +648,7 @@ class RenameUserProcess {
 					'rename_user_id'  => $this->mUserId,
 					'rename_old_name' => $this->mOldUsername,
 					'rename_new_name' => $this->mNewUsername,
-					'tasks'           => self::$mStatsDefaults
+					'tasks'           => array()
 				),
 				TASK_QUEUED
 		);
