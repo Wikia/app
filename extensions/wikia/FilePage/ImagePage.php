@@ -20,8 +20,9 @@ class WikiaImagePage extends ImagePage {
 	 * @return String - will return empty string to add
 	 */
 	protected function showTOC( $metadata ) {
-		global $wgEnableVideoPageRedesign;
-		if(empty($wgEnableVideoPageRedesign)) {
+		$app = F::app();
+
+		if(empty($app->wg->EnableVideoPageRedesign)) {
 			return parent::showTOC($metadata);
 		}
 		return '';
@@ -32,14 +33,14 @@ class WikiaImagePage extends ImagePage {
 	 * This is called before the wikitext is printed out
 	 */
 	protected function openShowImage() {
-		global $wgEnableVideoPageRedesign, $wgOut;
+		$app = F::app();
 
 		parent::openShowImage();
-		if(!empty($wgEnableVideoPageRedesign)) {
+		if(!empty($app->wg->EnableVideoPageRedesign)) {
 			$this->renderTabs();
 
 			// Open div for about section (closed in imageDetails);
-			$wgOut->addHtml('<div data-tab-body="about" class="tabBody">');
+			$app->wg->Out->addHtml('<div data-tab-body="about" class="tabBody">');
 			$this->renderDescriptionHeader();
 		}
 	}
@@ -50,14 +51,13 @@ class WikiaImagePage extends ImagePage {
 	 * This is called after the wikitext is printed out
 	 */
 	protected function imageDetails() {
-		global $wgEnableVideoPageRedesign, $wgJsMimeType, $wgExtensionsPath;
+		$app = F::app();
 
-		if(empty($wgEnableVideoPageRedesign)) {
+		if(empty($app->wg->EnableVideoPageRedesign)) {
 			parent::imageDetails();
 			return;
 		}
 
-		$app = F::app();
 		$this->getContext()->getOutput()->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
 		$this->getContext()->getOutput()->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
 
@@ -88,9 +88,9 @@ class WikiaImagePage extends ImagePage {
 	 * for WikiaFilePage, imageListing will be printed under additionalDetails()
 	 */
 	protected function imageListing() {
-		global $wgEnableVideoPageRedesign;
+		$app = F::app();
 
-		if(empty($wgEnableVideoPageRedesign)) {
+		if(empty($app->wg->EnableVideoPageRedesign)) {
 			parent::imageListing();
 			return;
 		}
