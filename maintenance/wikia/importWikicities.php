@@ -13,7 +13,8 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
 class ImportWikicities extends Maintenance {
 
-	const S3_PATTERN = 's3://database_A/fulldump_*';
+	const S3_PATTERN = 's3://database_Sharedb/fulldump_*';
+	const S3_DUMP_PATTERN = 'wikicities_devbox';
 	const DEST_DATABASE = 'wikicities';
 
 	/**
@@ -69,9 +70,10 @@ class ImportWikicities extends Maintenance {
 		$lastDump = end($dumps);
 		$this->output("{$lastDump} will be used\n");
 
-		$dumps = $this->ls($lastDump . self::DEST_DATABASE . '_*');
+		$dumps = $this->ls($lastDump . 'wiki*');
+		#$dumps = $this->ls($lastDump . self::S3_DUMP_PATTERN . '_*');
 		var_dump($dumps);
-
+/**
 		// execute devbox specific SQL
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
@@ -84,7 +86,7 @@ class ImportWikicities extends Maintenance {
 			$dbw->sourceFile($sql);
 			$this->output("done\n");
 		}
-
+**/
 		$this->output("\nI'm done!\n");
 	}
 }
