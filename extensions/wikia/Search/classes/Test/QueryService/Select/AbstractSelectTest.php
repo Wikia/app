@@ -971,6 +971,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testGetCrossWikiMatch() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery', 'setWikiMatch', 'getWikiMatch' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSanitizedQuery' ], [ 'foo' ] );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getWikiMatchByHost' ) )
@@ -991,7 +992,11 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getQuery' )
-		    ->with   ( Wikia\Search\Config::QUERY_RAW )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+	    ;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( 'star wars' ) )
 		;
 		$mockService
