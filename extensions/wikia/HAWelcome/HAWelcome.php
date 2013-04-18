@@ -206,11 +206,13 @@ class HAWelcomeJob extends Job {
             // does not contain the associated Title object. It has to be
             // recreated based on the associated Page object.
             if ( !$oTitle ) {
-				$oTitle = Title::newFromId( $oRevision->getPage(), Title::GAID_FOR_UPDATE );
-                trigger_error( sprintf(
-                    '%s Recreated Title for page %d, revision %d, URL %s',
-                    __METHOD__, $oRevision->getPage(), $oRevision->getId(), $oTitle->getFullURL()
-                ), E_USER_NOTICE );
+	    	$oTitle = Title::newFromId( $oRevision->getPage(), Title::GAID_FOR_UPDATE );
+		if ( !empty( $wgHAWelcomeNotices ) ) {
+                	trigger_error( sprintf(
+	                    '%s Recreated Title for page %d, revision %d, URL %s',
+        	            __METHOD__, $oRevision->getPage(), $oRevision->getId(), $oTitle->getFullURL()
+                	), E_USER_NOTICE );
+		}
             }
             /** @type Array Parameters for the job */
             $aParams = array(
