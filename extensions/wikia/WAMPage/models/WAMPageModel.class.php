@@ -306,24 +306,15 @@ class WAMPageModel extends WikiaModel {
 	protected function getVisualizationParams($verticalId = null, $sortColumn = 'wam_index') {
 		$params = [
 			'vertical_id' => $verticalId,
-			'sort_column' => $sortColumn
-		];
-
-		return array_merge($params, $this->getDefaultParams());
-	}
-
-	protected function getDefaultParams() {
-		$lastDay = strtotime('00:00');
-
-		return [
-			'wam_day' => $lastDay,
-			'wam_previous_day' => strtotime('-1 day', $lastDay),
+			'sort_column' => $sortColumn,
 			'limit' => $this->getVisualizationItemsCount(),
 			'sort_direction' => 'DESC',
 			'wiki_image_height' => self::VISUALIZATION_ITEM_IMAGE_HEIGHT,
 			'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
 			'fetch_wiki_images' => true,
 		];
+
+		return $params;
 	}
 
 	/**
