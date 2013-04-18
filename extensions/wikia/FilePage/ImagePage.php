@@ -99,10 +99,10 @@ class WikiaImagePage extends ImagePage {
 	}
 
 	protected function renderTabs() {
-		global $wgOut, $wgUser;
+		$app = F::app();
 
 		$tabs = F::app()->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
-		$wgOut->addHtml($tabs);
+		$app->wg->Out->addHtml($tabs);
 	}
 
 	protected function renderDescriptionHeader() {
