@@ -5,6 +5,8 @@
  */
 class LyricFindTrackingService extends WikiaService {
 
+	const DEFAULT_USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.142 Safari/535.19';
+
 	/**
 	 * @param $amgId int AMG (All Music Guide) lyric ID to track page view for
 	 * @return bool success
@@ -17,7 +19,8 @@ class LyricFindTrackingService extends WikiaService {
 			'apikey' => $this->wg->LyricFindApiKeys['display'],
 			'reqtype' => 'default',
 			'trackid' => "amg:{$amgId}",
-			'output' => 'json'
+			'output' => 'json',
+			'useragent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : self::DEFAULT_USER_AGENT
 		];
 
 		$resp = Http::post($url, ['postData' => $data]);
