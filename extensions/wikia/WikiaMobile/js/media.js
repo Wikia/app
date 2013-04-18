@@ -197,7 +197,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 							if(data.error){
 								handleError(data.error);
 							}else{
-								setVideo(imgTitle, data.embedCode);
+								setVideo(imgTitle, "<div class=player>" + data.embedCode + "</div>");
 							}
 						}
 					);
@@ -248,7 +248,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		//remove any left videos from DOM
 		//videos tend to be heavy on resources we shouldn't have more than one at a time
-		if(video = document.querySelector('.swiperPage:not(.current) .wkVi')) {
+		if(video = document.querySelector('.swiperPage:not(.current) .player')) {
 			video.parentElement.removeChild(video);
 		}
 	}

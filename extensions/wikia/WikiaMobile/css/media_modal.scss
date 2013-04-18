@@ -27,10 +27,13 @@ $chev-color: rgb(157,157,157);
 	}
 
 	video, iframe, object, embed {
-		width: 80%;
+		width: 70%;
 		height: auto;
-		min-height: 70%;
 	}
+}
+
+.player {
+	display: table-cell;
 }
 
 .not-supported {
@@ -46,17 +49,17 @@ $chev-color: rgb(157,157,157);
 
 		color: black;
 		font-weight: 800;
-	}
 
-	span:first-of-type {
-		top: 10%;
-		font-size: 2em;
-	}
+		&:first-of-type {
+			top: 10%;
+			font-size: 2em;
+		}
 
-	span:last-of-type {
-		bottom: 10%;
+		&:last-of-type {
+			bottom: 10%;
 
-		font-size: 0.9em;
+			font-size: 0.9em;
+		}
 	}
 
 	img {
