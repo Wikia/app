@@ -31,7 +31,7 @@
 		</div>
 	</div>
 	<ul class="articles">
-		<?php
+		<?php /**
 		$articlePos = 0;
 		foreach ( $topArticlesData as $articleData ) :
 			$trackingArticles = 'data-pos='.$articlePos++.' data-event="article_click_search_match"';
@@ -42,6 +42,6 @@
 				</h4>
 				<p><?= $articleData['abstract'] ?></p>
 			</li>
-		<?php endforeach; ?>
+		<?php endforeach; **/ ?>
 	</ul>
 </div>
