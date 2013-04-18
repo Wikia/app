@@ -37,14 +37,6 @@ class BodyController extends WikiaController {
 	}
 
 	/**
-	 * Check whether current page is a file page
-	 */
-	public static function isFilePage() {
-		global $wgTitle;
-		return defined('NS_FILE') && $wgTitle->getNamespace() == NS_FILE;
-	}
-
-	/**
 	 * Check whether current page is blog listing
 	 */
 	public static function isBlogListing() {
