@@ -77,4 +77,19 @@ class GWTService {
 		return $this->maxSitesPerAccount;
 	}
 
+	public function getUserRepository()
+	{
+		return $this->userRepository;
+	}
+
+	public function getWebmasterToolsUtil()
+	{
+		return $this->webmasterToolsUtil;
+	}
+
+	public function getWikiRepository()
+	{
+		return $this->wikiRepository;
+	}
+
 }
