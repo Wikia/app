@@ -53,7 +53,7 @@ class WikiaVideoPage extends WikiaImagePage {
 			$this->renderTabs();
 
 			// Open div for about section (closed in imageDetails);
-			$wgOut->addHtml('<div data-tab-body="about" class="tabBody selected">');
+			$wgOut->addHtml('<div data-tab-body="about" class="tabBody">');
 
 			$this->renderDescriptionHeader();
 

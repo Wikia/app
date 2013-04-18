@@ -39,7 +39,7 @@ class WikiaImagePage extends ImagePage {
 			$this->renderTabs();
 
 			// Open div for about section (closed in imageDetails);
-			$wgOut->addHtml('<div data-tab-body="about" class="tabBody selected">');
+			$wgOut->addHtml('<div data-tab-body="about" class="tabBody">');
 			$this->renderDescriptionHeader();
 		}
 	}
@@ -101,15 +101,7 @@ class WikiaImagePage extends ImagePage {
 	protected function renderTabs() {
 		global $wgOut, $wgUser;
 
-		// Default tab selected
-		$selectedTab = 'about';
-
-		// Change selected tab based on previous user interaction
-		if($wgUser->isLoggedIn() && isset($_COOKIE['WikiaFilePageTab'])) {
-			$selectedTab = $_COOKIE['WikiaFilePageTab'];
-		}
-
-		$tabs = F::app()->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta, 'selectedTab' => $selectedTab ) );
+		$tabs = F::app()->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
 		$wgOut->addHtml($tabs);
 	}
 
