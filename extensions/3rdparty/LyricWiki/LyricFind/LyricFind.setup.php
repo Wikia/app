@@ -21,12 +21,6 @@ $wgExtraNamespaces[NS_LYRICFIND] = 'LyricFind';
 $wgNamespacesWithSubpages[NS_LYRICFIND] = false;
 $wgContentNamespaces[] = NS_LYRICFIND;
 
-// edit permissions
-// @see http://www.mediawiki.org/wiki/Manual:$wgNamespaceProtection
-$wgGroupPermissions['*']['editlyricfind'] = false;
-$wgGroupPermissions['staff']['editlyricfind'] = true;
-$wgNamespaceProtection[ NS_LYRICFIND ] = array('editlyricfind');
-
 // common code
 $app->registerClass('LyricFindHooks', $dir . '/LyricFindHooks.class.php');
 $app->registerExtensionMessageFile('LyricFind', $dir . '/LyricFind.i18n.php');
@@ -37,6 +31,14 @@ $app->registerClass('LyricFindTrackingService', $dir . '/LyricFindTrackingServic
 $app->registerHook('OasisSkinAssetGroups', 'LyricFindHooks', 'onOasisSkinAssetGroups');
 
 $wgLyricFindTrackingNamespaces = array(NS_LYRICFIND);
+
+// edit permissions & view-source protection
+// @see http://www.mediawiki.org/wiki/Manual:$wgNamespaceProtection
+$wgGroupPermissions['*']['editlyricfind'] = false;
+$wgGroupPermissions['staff']['editlyricfind'] = true;
+$wgNamespaceProtection[ NS_LYRICFIND ] = array('editlyricfind');
+
+$app->registerHook('AlternateEdit', 'LyricFindHooks', 'onAlternateEdit');
 
 // parser hhok
 $app->registerHook('ParserFirstCallInit', 'LyricFindHooks', 'onParserFirstCallInit');

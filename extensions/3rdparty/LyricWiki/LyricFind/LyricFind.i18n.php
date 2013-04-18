@@ -9,5 +9,6 @@ $messages = [
 		'lyricfind-send-ringtone' => 'Send "$1" Ringtone to your Cell',
 		'lyricfind-song-by' => 'This song is by [[$1]] ([[LyricFind:$1|uneditable LyricFind version]]).',
 		'lyricfind-copyright' => 'Lyrics Provided by LyricFind ([[LyricFind:EULA|Lyrics Terms of Use]])',
+		'lyricfind-edit-blocked' => 'Sorry, but the source can not be viewed on LyricFind pages due to licensing requirements.'
 	]
 ];
