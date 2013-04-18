@@ -159,10 +159,10 @@ class HAWelcomeJob extends Job {
                  * @see http://www.mediawiki.org/wiki/Manual:$wgUser
                  */
                 global $wgUser;
-		// Abort if the contributor is a bot or the default welcomer
-		if ( $wgUser->isAllowed( 'bot' ) || $wgUser->getName() == self::DEFAULT_WELCOMER ) {
+		// Abort if the contributor is a bot or a staff member or the default welcomer
+		if ( $wgUser->isAllowed( 'bot' ) || in_array( 'staff', $wgUser->getEffectiveGroups() ) ||$wgUser->getName() == self::DEFAULT_WELCOMER ) {
 			if ( !empty( $wgHAWelcomeNotices ) ) {
-				trigger_error( sprintf( '%s Done. The registered contributor is a bot.', __METHOD__ ) , E_USER_NOTICE );
+				trigger_error( sprintf( '%s Done. The registered contributor is a bot, a staff member or the default welcomer.', __METHOD__ ) , E_USER_NOTICE );
 			}
 			// Restore the original error reporting level.
 			error_reporting( $iErrorReporting );
