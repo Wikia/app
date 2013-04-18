@@ -683,6 +683,15 @@
 			// setup clicks
 			chooserLinks.unbind('.chooser').bind('click.chooser', function(ev) {
 				var type = parseInt($(this).attr('type'));
+				if (type === 0) {
+					self.track({
+						label: 'find-recent-uploads'
+					});
+				} else if (type === 1) {
+					self.track({
+						label: 'find-this-page'
+					});
+				}
 				self.setupSearchResults(type);
 			});
 
@@ -731,6 +740,10 @@
 			results.find('input').unbind('.imageHover').
 				bind('change.imageHover', function(ev) {
 					var checkbox = $(this);
+
+					self.track({
+						label: 'find-select-photo'
+					});
 
 					if (checkbox.attr('checked')) {
 						selectImage(ev);
@@ -966,6 +979,11 @@
 			if ((query == '') || (query == field.attr('placeholder'))) {
 				return;
 			}
+
+			self.track({
+				action: Wikia.Tracker.ACTIONS.SUBMIT,
+				label: 'find-search-photos'
+			});
 
 			// block "Find" button and add loading indicator
 			button.attr('disabled', true);
