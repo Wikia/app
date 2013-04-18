@@ -157,7 +157,6 @@ class GWTClient {
 	}
 
 	private function parseBoolean($value) {
-		echo "parse boolean " . $value . "\n";
 		if ($value && strtolower($value) !== "false") {
 			return true;
 		} else {
