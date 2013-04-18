@@ -47,7 +47,6 @@ class EditCLI extends Maintenance {
 
 			while ($row = $dbs->fetchObject($res)) {
 				$ret = $this->addDescriptionHeader($row->page_id, $test);
-exit(0);
 			}
 			$dbs->freeResult($res);
 		}
