@@ -99,13 +99,13 @@ class WikiaImagePage extends ImagePage {
 	}
 
 	protected function renderTabs() {
-		global $wgOut;
+		global $wgOut, $wgUser;
 
 		// Default tab selected
 		$selectedTab = 'about';
 
 		// Change selected tab based on previous user interaction
-		if(isset($_COOKIE['WikiaFilePageTab'])) {
+		if($wgUser->isLoggedIn() && isset($_COOKIE['WikiaFilePageTab'])) {
 			$selectedTab = $_COOKIE['WikiaFilePageTab'];
 		}
 
