@@ -70,25 +70,11 @@ class LFEditCLI extends Maintenance {
 
 		# Read the text
 		$lyrics = $this->getStdin( Maintenance::STDIN_ALL );
-
-$x = "title = " . $this->getArg() . "\n";
-$x .= "user = " . $userName . "\n";
-$x .= "noRc = " . $noRc . "\n";
-$x .= "bot = " . $bot . "\n";
-$x .= "lfid = " . $lfid . "\n";
-$x .= "artist = " . $artist . "\n";
-$x .= "album = " . $album . "\n";
-$x .= "song = " . $song . "\n";
-$x .= "writer = " . $writer . "\n";
-$x .= "publisher = " . $publisher . "\n";
-$x .= "lyrics = " . $lyrics . "\n";
-error_log( $x, 3, "/tmp/moli.log" );
-exit;
-
+		
 		# Do the edit
 		$this->output( "Creating tag ... " );
 		if ( $page->exists() ) {
-			$old_text = $page->getText();
+			$text = $page->getText();
 			$re = '/additionalAlbums=([\'"])?((?(1).*?|[^\s>]+))(?(1)\1)/is';
 			
 			$albums = "";
