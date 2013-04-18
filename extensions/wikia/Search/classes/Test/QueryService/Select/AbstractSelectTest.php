@@ -995,7 +995,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->will   ( $this->returnValue( $mockQuery ) )
 	    ;
 		$mockQuery
-		    ->expects( $this->once() )
+		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( 'star wars' ) )
 		;
@@ -1025,7 +1025,11 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getQuery' )
-		    ->with   ( Wikia\Search\Config::QUERY_RAW )
+		        ->will   ( $this->returnValue( $mockQuery ) )
+	    ;
+		$mockQuery
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( 'star wars' ) )
 		;
 		$mockService
