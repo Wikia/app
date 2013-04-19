@@ -11,11 +11,9 @@ class FormBuilderService extends WikiaService
 	public $formFields = [];
 	private $prefix;
 
-	public function __construct($prefix = '') {
-		// TODO: remove mocked data after testing
-		$this->formFields = $this->getMockedData();
-
+	public function __construct($prefix = '', $fields = []) {
 		$this->prefix = $prefix;
+		$this->setFields($fields);
 	}
 
 	public function setFields($formFields) {
@@ -161,51 +159,4 @@ class FormBuilderService extends WikiaService
 
 		return $out;
 	}
-
-	private function getMockedData() {
-		return $formFields = array(
-			array(
-				'type' => 'text',
-				'name' => 'exploreTitle',
-				'label' => '',//$this->wf->Msg('marketing-toolbox-hub-module-explore-title'),
-				'validator' => new WikiaValidatorString(
-					array(
-						'required' => true,
-						'min' => 1
-					),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
-				),
-				'attributes' => array(
-					'class' => 'required explore-mainbox-input'
-				)
-			),
-			array(
-				'name' => 'fileName',
-				'type' => 'hidden',
-				'attributes' => array(
-					'class' => 'wmu-file-name-input'
-				),
-				'validator' => new WikiaValidatorFileTitle(
-					array(),
-					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
-				)
-			),
-			array(
-				'type' => 'text',
-				'name' => 'imageLink',
-				'label' => '',//$this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
-				'validator' => new WikiaValidatorToolboxUrl(
-					array(),
-					array(
-						'wrong' => 'marketing-toolbox-validator-wrong-url'
-					)
-				),
-				'icon' => true,
-				'attributes' => array(
-					'class' => 'wikiaUrl explore-mainbox-input'
-				)
-			),
-		);
-	}
-
 }

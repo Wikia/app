@@ -314,8 +314,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	}
 
 	private function prepareCollectionsForm() {
-		$form = new FormBuilderService();
-		$form->setFields([
+		$fields = [
 			'name' => [
 				'label' => $this->wf->msg('manage-wikia-home-collections-name-field-label'),
 				'validator' => new WikiaValidatorListValue([
@@ -344,8 +343,9 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				]),
 				'isArray' => true
 			],
-		]);
+		];
 
+		$form = new FormBuilderService('collections', $fields);
 		return $form;
 	}
 
