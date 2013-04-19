@@ -49,7 +49,7 @@ $chev-color: rgb(157,157,157);
 
 		z-index: 1;
 
-		color: white;
+		color: #d5d4d4;
 		font-weight: 800;
 
 		&:first-of-type {
@@ -59,14 +59,12 @@ $chev-color: rgb(157,157,157);
 
 		&:last-of-type {
 			bottom: 10%;
-
-			font-size: 0.9em;
 		}
 	}
 
 	img {
 		//this is minumum for the message to be readable
-		min-width: 290px;
+		min-width: 300px;
 		min-height: 180px;
 		max-height: 50%;
 	}
@@ -82,7 +80,7 @@ $chev-color: rgb(157,157,157);
 		background-color: rgba(0,0,0, .5);
 
 		background-image: url(/extensions/wikia/WikiaMobile/images/sad_phone.png);
-		background-position: center;
+		background-position: 55% 55%;
 		background-size: 30%;
 		background-repeat: no-repeat;
 	}
