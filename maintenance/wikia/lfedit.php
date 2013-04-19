@@ -125,6 +125,7 @@ class LFEditCLI extends Maintenance {
 		if ( $status->isOK() ) {
 			$page_id = $page->getId();
 			if ( $page_id ) {
+				global $wgStatsDB;
 				$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
 				$dbw->update( '`lyricfind`.`lf_track`', array( 'lw_id' => $page_id ), array( 'track_id' => $lfid ), __METHOD__ );
 			}
