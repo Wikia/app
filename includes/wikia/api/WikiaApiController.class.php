@@ -33,7 +33,13 @@ abstract class WikiaApiController extends WikiaController {
 	 */
 	final public function init() {
 		if ( !$this->request->isInternal() ) {
-			$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
+			$paramKeys = F::app()->wg->Request->getQueryValues();
+
+			//this is special to mediawiki should never be used in API calls
+			unset( $paramKeys['title'] );
+
+			$paramKeys = array_keys( $paramKeys );
+
 			$count = count( $paramKeys );
 
 			if ( $count >= 2 && $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {
@@ -41,11 +47,10 @@ abstract class WikiaApiController extends WikiaController {
 				if ( $count > 2 ) {
 					$origParam = $paramKeys = array_flip( array_slice( $paramKeys, 2 ) );
 
-					ksort( $paramKeys );
-					ksort( $origParam );
+					ksort( $paramKeys, SORT_NATURAL );
 
 					if ( $paramKeys !== $origParam ) {
-						throw new BadRequestApiException( 'The parameters\' order is incorrect' );
+						throw new BadRequestApiException( 'The parameters\' order is incorrect ' );
 					}
 				}
 			} else {
