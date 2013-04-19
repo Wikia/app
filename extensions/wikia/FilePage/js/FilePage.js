@@ -167,19 +167,19 @@ var VideoPage = {
 	},
 	initTabCookies: function() {
 		// Set cookies for logged in users to save which tab is active when they exit the page
-		if(window.wgUserName) {
-			var cookies = window.Wikia.Cookies,
-				selected = cookies.get('WikiaFilePageTab');
+		require(['wikia.localStorage'], function(ls) {
+			if(window.wgUserName) {
+				var selected = ls.WikiaFilePageTab || 'about';
 
-			$('[data-tab="' + selected + '"] a').click();
+				$('[data-tab="' + selected + '"] a').click();
 
-			$(window).on('wikiaTabClicked', function(e, tab) {
-				cookies.set('WikiaFilePageTab', tab, {
-					path: "/"
-				})
-			});
-
-		}
+				$(window).on('wikiaTabClicked', function(e, tab) {
+					ls.WikiaFilePageTab = tab;
+				});
+			} else {
+				$('[data-tab="about"] a').click();
+			}
+		});
 	}
 }
 
