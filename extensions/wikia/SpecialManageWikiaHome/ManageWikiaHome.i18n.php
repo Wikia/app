@@ -49,6 +49,9 @@ $messages['en'] = array(
 	'manage-wikia-home-modal-content-demoted' => 'Do you want to demote this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-button-no' => 'No',
 	'manage-wikia-home-modal-button-yes' => 'Yes',
+
+	'manage-wikia-home-collections-setup-header' => 'Collections setup',
+	'manage-wikia-home-collections-setup-save-button' => 'Save',
 );
 
 $messages['de'] = array(
