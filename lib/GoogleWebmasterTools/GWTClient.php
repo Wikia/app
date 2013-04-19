@@ -136,14 +136,6 @@ class GWTClient {
 		return GWTSiteSyncStatus::fromDomElement( $e );
 	}
 
-	private function parseBoolean($value) {
-		if ($value && strtolower($value) !== "false") {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public function get_sites() {
 		$uri = self::FEED_URI . '/sites/';
 		$request = MWHttpRequest::factory( $uri );
@@ -191,35 +183,7 @@ class GWTClient {
 			throw new GWTException("Cannot add sitemap (" . $this->mWiki->city_url . ").");
 		}
 	}
-/*
-	public function remove_site () {
-		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
 
-		// Update the wgGoogleSiteVerification variable with this code
-		//WikiFactory::setVarByName('wgGoogleSiteVerification', $this->mWiki->city_id, '');
-		//WikiFactory::setVarByName('wgGoogleWebToolsAccount', $this->mWiki->city_id, '');
-
-		$c = curl_init( $this->mSiteURI );
-		curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
-		curl_setopt($c, CURLOPT_TIMEOUT, $wgHTTPTimeout);
-		curl_setopt($c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion");
-		curl_setopt($c, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'DELETE' );
-		curl_setopt($c, CURLOPT_HTTPHEADER, array('Authorization: GoogleLogin auth='.$this->mAuth));
-
-		curl_exec( $c );
-
-		# Don't return the text of error messages, return false on error
-		$retcode = curl_getinfo( $c, CURLINFO_HTTP_CODE );
-
-		if ( $retcode != 200 ) {
-			error_log("Failed to delete site ".$this->mWiki->site_url." from Webmaster Tools.  Code=".$retcode);
-			return false;
-		} else {
-			return true;
-		}
-	}
-*/
 	public function verify_site ($code = null) {
 
 		if (!$code) {
@@ -240,40 +204,17 @@ class GWTClient {
 
 	private function put_verify ( $xml ) {
 		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
+		$request = MWHttpRequest::factory( $this->mSiteURI, array( 'postData' => $xml, 'method' => 'POST') );
+		$request->setHeader('Content-type', 'application/atom+xml');
+		$request->setHeader('Authorization', 'GoogleLogin auth='.$this->mAuth);
+		$status = $request->execute();
 
-		$c = curl_init( $this->mSiteURI );
-		curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
-		curl_setopt($c, CURLOPT_TIMEOUT, $wgHTTPTimeout);
-		curl_setopt($c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion");
-		curl_setopt($c, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'PUT' );
-
-		curl_setopt($c, CURLOPT_HTTPHEADER, array('Authorization: GoogleLogin auth='.$this->mAuth,
-			'Content-type: application/atom+xml'));
-
-		curl_setopt($c, CURLOPT_POSTFIELDS, $xml);
-
-		ob_start();
-		curl_exec( $c );
-		$text = ob_get_contents();
-		ob_end_clean();
-
-		# Don't return the text of error messages, return false on error
-		$retcode = curl_getinfo( $c, CURLINFO_HTTP_CODE );
-
-		if ( $retcode != 200 ) {
-			wfDebug( __METHOD__ . ": HTTP return code $retcode\n" );
-			throw new GWTException("Bad response from google.\n" . $text);
+		if ( $status->isOK() ) {
+			$text = $request->getContent();
+			GWTLogHelper::debug( $text );
+		} else {
+			throw new GWTException( "Non 200 response.\n"  . "\n" . "message:". $status->getMessage()."\n" . $request->getContent());
 		}
-		# Don't return truncated output
-		$errno = curl_errno( $c );
-		if ( $errno != CURLE_OK ) {
-			$errstr = curl_error( $c );
-			wfDebug( __METHOD__ . ": CURL error code $errno: $errstr\n" );
-			$text = false;
-		}
-		curl_close( $c );
-		// echo "===" . $text . "\n===\n";
 
 		$doc = new DOMDocument();
 		$doc->loadXML($text);
