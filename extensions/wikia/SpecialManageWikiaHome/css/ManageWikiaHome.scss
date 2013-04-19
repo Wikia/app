@@ -3,23 +3,19 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 
 .slots-setup {
+	width: 250px;
 	float: left;
-
-	&, h3, h2 {
-		width: 250px;
-	}
 }
 .slot-forms {
 	overflow: hidden;
 	.wikis-in-slots {
 		float:left;
-		width: 450px;
 		label {
 			width: 140px;
 			float: left;
 			clear: left;
 		}
-		input {
+		input:not([type=submit]) {
 			width: 50px;
 		}
 	}
@@ -52,7 +48,7 @@
 				margin-top: 10px;
 				width: 145px;
 			}
-			input {
+			input:not([type=checkbox]) {
 				width: 400px;
 
 				&:disabled {
@@ -69,4 +65,8 @@
 
 .wikis-setup {
 	clear: left;
+}
+
+input[type=submit] {
+	float: right;
 }

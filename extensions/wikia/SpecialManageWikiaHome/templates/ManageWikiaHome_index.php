@@ -1,6 +1,6 @@
 <section class="WikiaHomePageStaffTool" id="WikiaHomePageStaffTool">
 	<p>
-		<?= wfMsg('manage-wikia-home-visualization-wikis'); ?>
+		<?= wfMessage('manage-wikia-home-visualization-wikis')->text(); ?>
 		<select id="visualizationLanguagesList">
 			<?php foreach($visualizationWikisData as $lang => $wiki): ?>
 			<?php if( $lang === $visualizationLang ): ?>
@@ -18,7 +18,7 @@
 
 	<div class="slots-setup">
 		<h2 class="heading">
-			<?= wfMsg('manage-wikia-home-wikis-in-slots-heading') ?>
+			<?= wfMessage('manage-wikia-home-wikis-in-slots-heading')->text() ?>
 		</h2>
 
 		<?php if( !empty($errorMsg) ): ?>
@@ -34,26 +34,26 @@
 		<?php endif; ?>
 
 		<p>
-			<?= wfMsg('manage-wikia-home-wikis-in-slots-total'); ?>
+			<?= wfMessage('manage-wikia-home-wikis-in-slots-total')->text(); ?>
 			<?= $slotsInTotal; ?>
 		</p>
 
 		<div class="slot-forms">
 			<form id="wikis-in-slots-verticals" class="wikis-in-slots" name="wikis-in-slots" method="post">
-				<h3><?= wfMsg('manage-wikia-home-verticals-proportions'); ?></h3>
-				<p><label for="video-games-amount"><?= wfMsg('hub-Video_Games'); ?></label><input type="text" id="video-games-amount" name="video-games-amount" value="<?= $videoGamesAmount; ?>" /></p>
-				<p><label for="entertainment-amount"><?= wfMsg('hub-Entertainment'); ?></label><input type="text" id="entertainment-amount" name="entertainment-amount" value="<?= $entertainmentAmount; ?>" /></p>
-				<p><label for="lifestyle-amount"><?= wfMsg('hub-Lifestyle'); ?></label><input type="text" id="lifestyle-amount" name="lifestyle-amount" value="<?= $lifestyleAmount; ?>" /></p>
+				<h3><?= wfMessage('manage-wikia-home-verticals-proportions')->text(); ?></h3>
+				<p><label for="video-games-amount"><?= wfMessage('hub-Video_Games')->text(); ?></label><input type="text" id="video-games-amount" name="video-games-amount" value="<?= $videoGamesAmount; ?>" /></p>
+				<p><label for="entertainment-amount"><?= wfMessage('hub-Entertainment')->text(); ?></label><input type="text" id="entertainment-amount" name="entertainment-amount" value="<?= $entertainmentAmount; ?>" /></p>
+				<p><label for="lifestyle-amount"><?= wfMessage('hub-Lifestyle')->text(); ?></label><input type="text" id="lifestyle-amount" name="lifestyle-amount" value="<?= $lifestyleAmount; ?>" /></p>
 				<p><input type="hidden" name="visualization-lang" value="<?= $visualizationLang; ?>"></p>
 				<span class="status-msg"></span>
-				<p><input type="submit" name="wikis-in-slots" value="<?= wfMsg('manage-wikia-home-change-button'); ?>"></p>
+				<p><input type="submit" name="wikis-in-slots" value="<?= wfMessage('manage-wikia-home-change-button')->text(); ?>"></p>
 			</form>
 		</div>
 	</div>
 
 	<div class="collections-setup">
 		<h2 class="heading">
-			<?= wfMsg('manage-wikia-home-collections-setup-header') ?>
+			<?= wfMessage('manage-wikia-home-collections-setup-header')->text() ?>
 		</h2>
 
 		<form method="post" class="WikiaForm" id="collectionsSetupForm">
@@ -65,22 +65,26 @@
 				</div>
 			<? endfor ?>
 
+<<<<<<< HEAD
 			<input type="submit" name="collections" value="<?= wfMsg('manage-wikia-home-collections-setup-save-button'); ?>" />
+=======
+			<input type="submit" value="<?= wfMessage('manage-wikia-home-collections-setup-save-button')->text(); ?>" />
+>>>>>>> CON-22 | Fixed after design review
 		</form>
 	</div>
 
 	<div class="wikis-setup">
 		<h2 class="heading">
-			<?= wfMsg('manage-wikia-home-wikis-in-visualization-heading') ?>
+			<?= wfMessage('manage-wikia-home-wikis-in-visualization-heading')->text() ?>
 		</h2>
 
 		<form id="wiki-name-filter" class="wiki-name-filter" name="wiki-name-filter" method="get">
-			<p><?= wfMsg('manage-wikia-home-wiki-name-filter'); ?></p>
+			<p><?= wfMessage('manage-wikia-home-wiki-name-filter')->text(); ?></p>
 			<p><input type="text" id="wiki-name-filer-input" name="wiki-name-filer-input" value="" /></p>
 		</form>
 
 		<div id="wikisWithVisualizationList">
-			<?= F::app()->renderView('ManageWikiaHome', 'renderWikiListPage', array(
+			<?= $app->renderView('ManageWikiaHome', 'renderWikiListPage', array(
 				'page' => $currentPage,
 				'visualizationLang' => $visualizationLang,
 			)); ?>
