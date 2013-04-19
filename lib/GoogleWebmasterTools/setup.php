@@ -22,3 +22,6 @@ $app->registerClass( 'WebmasterToolsUtil', $dir . 'WebmasterToolsUtil.php' );
 $app->registerClass( 'GWTService', $dir . 'GWTService.php' );
 $app->registerClass( 'GWTSiteSyncStatus', $dir . 'GWTSiteSyncStatus.php' );
 $app->registerClass( 'IGoogleCredentials', $dir . 'IGoogleCredentials.php' );
+$app->registerClass( 'GWTLogHelper', $dir . 'GWTLogHelper.php' );
+
+GWTLogHelper::$logPath = "$IP/maintenance/logs";
