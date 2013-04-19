@@ -45,7 +45,7 @@
 		onCkInstanceCreated: function( ck ) {
 			ck.on( 'buttonClick', this.proxy( this.onCkButtonClick ) );
 			ck.on( 'dialogCancel', this.proxy( this.onCkDialogCancel ) );
-			ck.on( 'dialogHide', this.proxy( this.onCkDialogHide ) );
+			ck.on( 'dialogClose', this.proxy( this.onCkDialogClose ) );
 			ck.on( 'dialogOk', this.proxy( this.onCkDialogOk ) );
 			ck.on( 'dialogShow', this.proxy( this.onCkDialogShow ) );
 			ck.on( 'panelClick', this.proxy( this.onCkPanelClick ) );
@@ -62,13 +62,9 @@
 			this.track( 'dialog-' + label + '-button-cancel' );
 		},
 
-		onCkDialogHide: function( event ) {
+		onCkDialogClose: function( event ) {
 			var label = event.data._.name.toLowerCase();
-
-			this.track({
-				action:  Wikia.Tracker.ACTIONS.CLOSE,
-				label: 'dialog-' + label
-			});
+			this.track( 'dialog-' + label + '-button-close' );
 		},
 
 		onCkDialogOk: function( event ) {
