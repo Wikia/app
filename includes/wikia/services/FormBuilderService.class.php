@@ -55,7 +55,7 @@ class FormBuilderService extends WikiaService
 	}
 
 	public function validate($data) {
-		$hasError = false;
+		$isValid = true;
 		$fields = $this->getFields();
 
 		foreach ($fields as $fieldName => $field) {
@@ -78,19 +78,19 @@ class FormBuilderService extends WikiaService
 							}
 							if (!empty($error)) {
 								$this->setFieldProperty($fieldName, 'errorMessage', $error->getMsg());
-								$hasError = true;
+								$isValid = false;
 							}
 						}
 					} else {
 						if (!empty($validationError)) {
 							$this->setFieldProperty($fieldName, 'errorMessage', $validationError->getMsg());
-							$hasError = true;
+							$isValid = false;
 						}
 					}
 				}
 			}
 		}
-		return $hasError;
+		return $isValid;
 	}
 
 	/**
@@ -118,7 +118,7 @@ class FormBuilderService extends WikiaService
 	 * @requestParam label string				[OPTIONAL] label text
 	 * @requestParam labelclass string			[OPTIONAL] label class
 	 * @requestParam attributes array			[OPTIONAL] array with input attributes etc.
-	 * @requestParam validator WikiaValidator 	[OPTIONAL]
+	 * @requestParam validator WikiaValidator	[OPTIONAL]
 	 * @requestParam icon boolean				[OPTIONAL]
 	 *
 	 * @return WikiaView
