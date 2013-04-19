@@ -20,29 +20,47 @@ class WikiaImagePage extends ImagePage {
 	 * @return String - will return empty string to add
 	 */
 	protected function showTOC( $metadata ) {
-		$app = F::App();
-
-		if ( empty($app->wg->EnableVideoPageRedesign) ) {
+		$app = F::app();
+		if(empty($app->wg->EnableVideoPageRedesign) || $this->isMobile()) {
 			return parent::showTOC($metadata);
 		}
 		return '';
 	}
 
-	protected function imageContent() {
-		$out = $this->getContext()->getOutput();
-
+	protected function isDiffPage() {
 		$app = F::App();
-		if ( !empty($app->wg->EnableVideoPageRedesign) ) {
-			if (! $app->wg->Request->getVal( 'diff' ) ) {
-				$this->renderTabs();
-			}
+		$isDiff = false;
 
-			// Open div for about section (closed in imageDetails);
-			$out->addHtml('<div data-tab-body="about" class="tabBody selected">');
-			$this->renderDescriptionHeader();
+		if ( $app->wg->Request->getVal( 'diff' ) ) {
+			$isDiff = true;
 		}
 
+		return $isDiff;
+	}
+
+	protected function isMobile() {
+		return F::App()->checkSkin('wikiamobile');
+	}
+
+	protected function imageContent() {
+		$out = $this->getContext()->getOutput();
+		$app = F::App();
+
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
+			parent::imageContent();
+			return;
+		}
+		$sectionClass = '';
+		if (! $this->isDiffPage() ) {
+			$this->renderTabs();
+			$sectionClass = ' class="tabBody"';
+		}
+
+		// Open div for about section (closed in imageDetails);
+		$out->addHtml('<div data-tab-body="about"' . $sectionClass . '>');
+		$this->renderDescriptionHeader();
 		parent::imageContent();
+
 	}
 
 	/**
@@ -54,22 +72,23 @@ class WikiaImagePage extends ImagePage {
 		$app = F::App();
 		$out = $this->getContext()->getOutput();
 
-		if ( empty($app->wg->EnableVideoPageRedesign) ) {
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
 			parent::imageDetails();
 			return;
 		}
 
-		// move these two to WikiaFilePage package after full release
-		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/FilePage/css/FilePage.scss' ) );
-		$out->addScript( '<script type="'.$app->wg->JsMimeType.'" src="'.$app->wg->ExtensionsPath.'/wikia/FilePage/js/FilePage.js"></script>'."\n" );
-
 		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
 		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
 
-		// Close div from about section (opened in openShowImage)
+		// Close div from about section (opened in imageContent)
 		$out->addHTML('</div>');
 
-		$out->addHTML('<div data-tab-body="history" class="tabBody">');
+		$sectionClass = '';
+		if (! $this->isDiffPage() ) {
+			$sectionClass = ' class="tabBody"';
+		}
+
+		$out->addHTML('<div data-tab-body="history"' . $sectionClass . '>');
 		parent::imageDetails();
 		$out->addHTML('</div>');
 	}
@@ -79,8 +98,20 @@ class WikiaImagePage extends ImagePage {
 	 * Image page doesn't need the wrapper, but WikiaFilePage does
 	 */
 	protected function imageMetadata($formattedMetadata) {
+		$app = F::App();
 		$out = $this->getContext()->getOutput();
-		$out->addHTML('<div data-tab-body="metadata" class="tabBody">');
+
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
+			parent::imageMetadata($formattedMetadata);
+			return;
+		}
+
+		$sectionClass = '';
+		if (! $this->isDiffPage() ) {
+			$sectionClass = ' class="tabBody"';
+		}
+
+		$out->addHTML('<div data-tab-body="metadata"' . $sectionClass . '>');
 		parent::imageMetadata($formattedMetadata);
 		$out->addHTML('</div>');
 	}
@@ -97,16 +128,17 @@ class WikiaImagePage extends ImagePage {
 	protected function imageListing() {
 		$app = F::App();
 
-		if ( empty($app->wg->EnableVideoPageRedesign) ) {
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
 			parent::imageListing();
 			return;
 		}
 	}
 
 	protected function renderTabs() {
+		$app = F::app();
 		$out = $this->getContext()->getOutput();
 
-		$tabs = F::app()->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
+		$tabs = $app->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
 		$out->addHtml($tabs);
 	}
 

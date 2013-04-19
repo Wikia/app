@@ -94,11 +94,11 @@ Paginator.prototype = {
 	}
 };
 
-
-
 var VideoPage = {
 	init: function() {
 		var self = this;
+
+		this.initTabCookies();
 
 		$('.page-list-pagination').each(function() {
 			new Paginator($(this));
@@ -151,6 +151,22 @@ var VideoPage = {
 					self.modal = $('#remove-video-modal');
 				}
 			});
+		});
+	},
+	initTabCookies: function() {
+		// Set cookies for logged in users to save which tab is active when they exit the page
+		require(['wikia.localStorage'], function(ls) {
+			if(window.wgUserName) {
+				var selected = ls.WikiaFilePageTab || 'about';
+
+				$('[data-tab="' + selected + '"] a').click();
+
+				$(window).on('wikiaTabClicked', function(e, tab) {
+					ls.WikiaFilePageTab = tab;
+				});
+			} else {
+				$('[data-tab="about"] a').click();
+			}
 		});
 	}
 }

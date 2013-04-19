@@ -38,13 +38,23 @@
 		position: relative;
 	}
 	.page-listing-image {
-		background-color: #f0f0f0;
+		background-color: black;
+		display: block;
 		height: 90px;
 		width: 160px;
-		&.no-image {
-			background-image: url(/extensions/wikia/VideoHandlers/images/Brackets.png);	/* base64 */
-			background-position: 50px 25px;
-			background-repeat: no-repeat;
+		img {
+			display: block;
+			height: 90px;
+			margin: 0 auto;
+			max-width: 160px;
+			&.no-image {
+				background-color: #f0f0f0;
+				background-image: url(/extensions/wikia/VideoHandlers/images/Brackets.png);	/* base64 */
+				background-position: 50px 25px;
+				background-repeat: no-repeat;
+				height: 90px;
+				width: 160px;
+			}
 		}
 	}
 	.page-listing-snippet {
@@ -100,14 +110,19 @@ table.mw_metadata {
 	display: none;
 }
 
+ul.tabs {
+	margin: 20px 0;
+}
+
 /* monobook styling */
 .skin-monobook {
 	.page-listing .grid-1 {
 		float: left;
 		margin-right: 10px;
 	}
+	ul.tabs {
+		display: none;
+	}
 }
 
-ul.tabs {
-	margin: 20px 0;
-}
+
