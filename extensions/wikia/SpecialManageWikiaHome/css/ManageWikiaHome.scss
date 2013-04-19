@@ -55,6 +55,9 @@
 					background-color: mix($color-page-opposite, $color-page, 15%);
 				}
 			}
+			input[type=checkbox] {
+				margin-top: 10px;
+			}
 		}
 
 		.navigation {
