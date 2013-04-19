@@ -814,7 +814,7 @@ class ArticleComment {
 			//nested comment
 			$commentTitle = sprintf('%s/%s%s-%s', $parentTitle->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow());
 		}
-
+		$commentTitleText = $commentTitle;
 		$commentTitle = Title::newFromText($commentTitle, MWNamespace::getTalk($title->getNamespace()));
 		/**
 		 * because we save different tile via Ajax request TODO: fix it !!
@@ -823,6 +823,9 @@ class ArticleComment {
 
 
 		if( !($commentTitle instanceof Title) ) {
+			if ($parentId !== false) {
+				Wikia::log("ArticleComment::doPost (reply to " . $parentId . ") - failed to create commentTitle from " . $commentTitleText);
+			}
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -836,6 +839,9 @@ class ArticleComment {
 
 		// add comment to database
 		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
+			if ($parentId !== false) {
+				Wikia::log("ArticleComment::doPost (reply to " . $parentId . ") - saved an article " . $commentTitleText);
+			}
 			$revId = $article->getRevIdFetched();
 			$data = array(
 				'namespace' => $title->getNamespace(),
@@ -848,11 +854,22 @@ class ArticleComment {
 
 			$commentsIndex = new CommentsIndex( $data );
 			$commentsIndex->addToDatabase();
+			if ($parentId !== false) {
+				Wikia::log("ArticleComment::doPost (reply to " . $parentId . ") - added comments index to DB for " . $commentTitleText);
+			}
 
 			// set last child comment id
 			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
 
+			if ($parentId !== false) {
+				Wikia::log("ArticleComment::doPost (reply to " . $parentId . ") - updated parent for " . $commentTitleText);
+			}
+
 			wfRunHooks( 'EditCommentsIndex', array($article->getTitle(), $commentsIndex) );
+		} else {
+			if ($parentId !== false) {
+				Wikia::log("ArticleComment::doPost (reply to " . $parentId . ") - failed to save reply article with title " . $commentTitleText);
+			}
 		}
 
 		$res = ArticleComment::doAfterPost( $retval, $article, $parentId );

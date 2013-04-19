@@ -65,43 +65,57 @@ class LFEditCLI extends Maintenance {
 		$artist = $this->getOption('artist');
 		$album = $this->getOption('album');
 		$song = $this->getOption('song');
-		$writer = $this->getOption('writer');
+		$songwriter = $this->getOption('writer');
 		$publisher = $this->getOption('publisher');
 
 		# Read the text
 		$lyrics = $this->getStdin( Maintenance::STDIN_ALL );
-
-$x = "title = " . $this->getArg() . "\n";
-$x .= "user = " . $userName . "\n";
-$x .= "noRc = " . $noRc . "\n";
-$x .= "bot = " . $bot . "\n";
-$x .= "lfid = " . $lfid . "\n";
-$x .= "artist = " . $artist . "\n";
-$x .= "album = " . $album . "\n";
-$x .= "song = " . $song . "\n";
-$x .= "writer = " . $writer . "\n";
-$x .= "publisher = " . $publisher . "\n";
-$x .= "lyrics = " . $lyrics . "\n";
-error_log( $x, 3, "/tmp/moli.log" );
-exit;
-
+		
 		# Do the edit
 		$this->output( "Creating tag ... " );
 		if ( $page->exists() ) {
-			$old_text = $page->getText();
-			$re = '/additionalAlbums=([\'"])?((?(1).*?|[^\s>]+))(?(1)\1)/is';
-			
-			$albums = "";
-			if ( preg_match( $re, $text, $match ) ) {
-				$albums = $match[2];
+			$text = $page->getText();
+			$re = '/%s=([\'"])?((?(1).*?|[^\s>]+))(?(1)\1)/is';			
+		
+			$all_albums = array();
+			foreach ( array( 'artist', 'album', 'song', 'songwriter', 'publisher', 'lfid' ) as $tag ) {
+				$reTag = sprintf( $re, $tag  );
+				
+				$tag_value = "";
+				if ( preg_match( $reTag, $text, $match ) ) {
+					$tag_value = $match[2];
+				}
+				
+				if ( $tag == 'album' ) {
+					$all_albums[] = $tag_value;
+				}
+				
+				if ( $tag_value != $$tag ) {
+					$text = preg_replace( $reTag, sprintf( "%s=\"%s\"", $tag, $$tag ), $text, 1 );	
+				}
 			}
-			$albums = sprintf( "%s%s%s", $albums, ( empty( $albums ) ) ? "" : ",", $new_album );
-			$text = preg_replace( $re, "additionalAlbums=\"$albums\"", $text, 1 );			
+			
+			# check additionalAlbums
+			if ( !in_array( $album, $all_albums ) ) {
+				$albums = "";
+				$reTag = sprintf( $re, 'additionalAlbums'  );
+				if ( preg_match( $reTag, $text, $match ) ) {
+					$albums = $match[2];
+				}
+				$additionalAlbums = array();
+				if ( !empty( $albums ) ) {
+					$additionalAlbums = explode(",", $albums);
+				}
+				if ( !in_array( $album, $additionalAlbums ) ) {
+					$additionalAlbums[] = $album;
+					$text = preg_replace( $re, "additionalAlbums=\"" . implode( ",", $additionalAlbums ) . "\"", $text, 1 );	
+				}
+			}	
 		} else {
 			$text = "<lyricfind artist=\"%s\" album=\"%s\" additionalAlbums=\"\" song=\"%s\" songwriter=\"%s\" publisher=\"%s\" amgid=%d>\n";
 			$text.= "%s\n";
 			$text.= "</lyricfind>";
-			$text = sprintf( $text, $artist, $album, $song, $writer, $publisher, $lfid, $lyrics );
+			$text = sprintf( $text, $artist, $album, $song, $songwriter, $publisher, $lfid, $lyrics );
 		}
 		
 		$this->output( "done\n");
@@ -109,6 +123,11 @@ exit;
 		$this->output( "Saving... " );
 		$status = $page->doEdit( $text, '', ( $bot ? EDIT_FORCE_BOT : 0 ) | ( $noRC ? EDIT_SUPPRESS_RC : 0 ) );
 		if ( $status->isOK() ) {
+			$page_id = $page->getId();
+			if ( $page_id ) {
+				$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
+				$dbw->update( '`lyricfind`.`lf_track`', array( 'lw_id' => $page_id ), array( 'track_id' => $lfid ), __METHOD__ );
+			}
 			$this->output( "done\n" );
 			$exit = 0;
 		} else {
