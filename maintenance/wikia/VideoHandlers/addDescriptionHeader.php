@@ -1,6 +1,6 @@
 <?php
 /**
- * Remove the ==Description== text from video pages that have it
+ * Add the ==Description== text to video pages that don't have it
  *
  * @author garth@wikia-inc.com
  * @ingroup Maintenance
@@ -14,7 +14,7 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 class EditCLI extends Maintenance {
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Remove the description header";
+		$this->mDescription = "Add the description header";
 		$this->addOption( 'user', 'Username', false, true, 'u' );
 		$this->addOption( 'test', 'Test', false, false, 't' );
 	}
@@ -23,14 +23,16 @@ class EditCLI extends Maintenance {
 		global $wgUser;
 
 		$userName = $this->getOption( 'user', 'Maintenance script' );
-		$test = $this->hasOption('test');
+		$test = $this->hasOption('test') ? true : false;
 
-		$wgUser = User::newFromName( $userName );
-		if ( !$wgUser ) {
-			$this->error( "Invalid username", true );
-		}
-		if ( $wgUser->isAnon() ) {
-			$wgUser->addToDatabase();
+		if (!$test) {
+			$wgUser = User::newFromName( $userName );
+			if ( !$wgUser ) {
+				$this->error( "Invalid username", true );
+			}
+			if ( $wgUser->isAnon() ) {
+				$wgUser->addToDatabase();
+			}
 		}
 
 		$dbs = wfGetDB(DB_SLAVE);
@@ -44,13 +46,18 @@ class EditCLI extends Maintenance {
 			$res = $dbs->query($query);
 
 			while ($row = $dbs->fetchObject($res)) {
-				$ret = $this->removeDescriptionHeader($row->page_id, $test);
+				$ret = $this->addDescriptionHeader($row->page_id, $test);
 			}
 			$dbs->freeResult($res);
 		}
 	}
 
-	public function removeDescriptionHeader ( $pageId, $test = null ) {
+	/**
+	 * @param $pageId integer The file page ID to add a description header to
+	 * @param $test boolean Whether this is a test run or not
+	 * @return boolean Whether the action succeeded
+	 */
+	public function addDescriptionHeader ( $pageId, $test = false ) {
 		global $wgTitle;
 
 		$wgTitle = Title::newFromID( $pageId );
@@ -60,20 +67,21 @@ class EditCLI extends Maintenance {
 
 		$page = WikiPage::factory( $wgTitle );
 
-		# Read the text
+		// Read the text
 		$text = $page->getText();
-		$newText = preg_replace('/^==\s*description\s*==/mi', '', $text);
-		$changed = $newText == $text ? 0 : 1;
 
-		$this->output( "Removing the description for '".$wgTitle->getText()."' ... " );
-		if (!$changed) {
-			$this->output("no match, skipping\n");
-			return 1;
+		// Return early if there's already a description header here
+		if (preg_match('/^==\s*description\s*==/i', $text)) {
+			return true;
 		}
 
-		# Do the edit
+		$newText = "== Description ==\n".$text;
+
+		$this->output( "Adding the description back to '".$wgTitle->getText()."' ... " );
+
+		// Do the edit
 		if ($test) {
-			$this->output("(test: found header) done\n");
+			$this->output("(test) done\n");
 		} else {
 			$summary = 'Removing the description header';
 			$status = $page->doEdit( $newText, $summary, EDIT_MINOR | EDIT_FORCE_BOT | EDIT_SUPPRESS_RC );
@@ -82,14 +90,14 @@ class EditCLI extends Maintenance {
 				$this->output( "done\n" );
 			} else {
 				$this->output( "failed\n" );
-				return 0;
+				return false;
 			}
 			if ( !$status->isGood() ) {
 				$this->output( $status->getWikiText() . "\n" );
 			}
 		}
 
-		return 1;
+		return true;
 	}
 }
 

@@ -11,6 +11,9 @@
 		<ul class="page-list-content WikiaGrid">
 			<?= F::app()->renderPartial('FilePageController', 'fileList', array('fileList' => $fileList, 'type' => $type)) ?>
 		</ul>
+		<? if ($type != 'global'): ?>
+			<a class="see-more-link" href="<?= $seeMoreLink ?>"><?= $seeMoreText ?> &gt;</a>
+		<? endif; ?>
 	</section>
 	<script>
 		var VideoPageSummary = VideoPageSummary || {};

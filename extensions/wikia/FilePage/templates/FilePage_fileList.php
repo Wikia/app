@@ -1,8 +1,8 @@
 <? foreach($fileList as $fileUsage): ?>
 	<li class="page-listing">
 		<div class="grid-1 alpha">
-			<a href="<?= $fileUsage['url'] ?>">
-				<img src="<?= empty($fileUsage['imageUrl']) ? wfBlankImgUrl() : $fileUsage['imageUrl'] ?>" class="page-listing-image<?= empty($fileUsage['imageUrl']) ? ' no-image' : '' ?>" height="90" width="160">
+			<a class="page-listing-image" href="<?= $fileUsage['url'] ?>">
+				<img src="<?= empty($fileUsage['imageUrl']) ? wfBlankImgUrl() : $fileUsage['imageUrl'] ?>" <? if(empty($fileUsage['imageUrl'])): ?> class="no-image" <? endif; ?>>
 			</a>
 		</div>
 		<div class="grid-3">
