@@ -1263,3 +1263,12 @@ $config['categoryselect_edit_js'] = array(
 		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
 	)
 );
+
+$config['manage_wikia_home_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/SpecialManageWikiaHome/js/ManageWikiaHome.js',
+		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsSetup.js',
+		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsNavigation.js',
+	)
+);
