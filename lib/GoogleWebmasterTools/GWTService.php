@@ -11,8 +11,7 @@ class GWTService {
 	private $webmasterToolsUtil;
 	private $maxSitesPerAccount = 495;
 
-	function __construct( $userRepository = null, $wikiRepository = null, $webmasterToolsUtil = null )
-	{
+	function __construct( $userRepository = null, $wikiRepository = null, $webmasterToolsUtil = null ) {
 		if( $userRepository == null ) $userRepository = new GWTUserRepository();
 		if( $webmasterToolsUtil == null ) $webmasterToolsUtil = new WebmasterToolsUtil();
 		if( $wikiRepository == null ) $wikiRepository = new GWTWikiRepository();

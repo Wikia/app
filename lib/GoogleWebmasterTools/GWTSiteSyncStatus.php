@@ -10,8 +10,7 @@ class GWTSiteSyncStatus {
 	private $verified;
 	private $pageVerificationCode;
 
-	function __construct($url = null, $verified = null)
-	{
+	function __construct($url = null, $verified = null) {
 		$this->url = $url;
 		$this->verified = $verified;
 	}
@@ -71,33 +70,27 @@ class GWTSiteSyncStatus {
 		return $sites;
 	}
 
-	public function setUrl($url)
-	{
+	public function setUrl($url) {
 		$this->url = $url;
 	}
 
-	public function getUrl()
-	{
+	public function getUrl() {
 		return $this->url;
 	}
 
-	public function setVerified($verified)
-	{
+	public function setVerified($verified) {
 		$this->verified = $verified;
 	}
 
-	public function getVerified()
-	{
+	public function getVerified() {
 		return $this->verified;
 	}
 
-	public function setPageVerificationCode($pageVerificationCode)
-	{
+	public function setPageVerificationCode($pageVerificationCode) {
 		$this->pageVerificationCode = $pageVerificationCode;
 	}
 
-	public function getPageVerificationCode()
-	{
+	public function getPageVerificationCode() {
 		return $this->pageVerificationCode;
 	}
 }

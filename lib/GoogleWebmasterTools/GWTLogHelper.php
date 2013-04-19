@@ -19,13 +19,11 @@ class GWTLogHelper {
 	);
 	private static $logPath;
 
-	public static function setLogPath($logPath)
-	{
+	public static function setLogPath($logPath) {
 		self::$logPath = $logPath;
 	}
 
-	public static function getLogPath()
-	{
+	public static function getLogPath() {
 		return self::$logPath;
 	}
 

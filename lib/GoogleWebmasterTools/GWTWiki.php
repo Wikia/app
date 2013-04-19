@@ -10,40 +10,33 @@ class GWTWiki {
 	private $userId;
 	private $uploadDate;
 
-	function __construct( $wikiId, $userId, $uploadDate )
-	{
+	function __construct( $wikiId, $userId, $uploadDate ) {
 		$this->setUserId( $userId );
 		$this->setWikiId( $wikiId );
 		$this->setUploadDate( $uploadDate );
 	}
 
-	public function setUserId($userId)
-	{
+	public function setUserId($userId) {
 		$this->userId = intval( $userId );
 	}
 
-	public function getUserId()
-	{
+	public function getUserId() {
 		return $this->userId;
 	}
 
-	public function setWikiId($wikiId)
-	{
+	public function setWikiId($wikiId) {
 		$this->wikiId = intval( $wikiId );
 	}
 
-	public function getWikiId()
-	{
+	public function getWikiId() {
 		return $this->wikiId;
 	}
 
-	public function setUploadDate($uploadDate)
-	{
+	public function setUploadDate($uploadDate) {
 		$this->uploadDate = $uploadDate;
 	}
 
-	public function getUploadDate()
-	{
+	public function getUploadDate() {
 		return $this->uploadDate;
 	}
 

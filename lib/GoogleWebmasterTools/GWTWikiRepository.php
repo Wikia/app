@@ -8,8 +8,7 @@
 class GWTWikiRepository {
 	private $databaseConnection;
 
-	function __construct( $databaseConnection = null )
-	{
+	function __construct( $databaseConnection = null ) {
 		if ( $databaseConnection == null ) {
 			global $wgExternalSharedDB;
 			$app = F::app();
