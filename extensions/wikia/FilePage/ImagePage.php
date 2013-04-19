@@ -31,7 +31,7 @@ class WikiaImagePage extends ImagePage {
 		$app = F::App();
 		$isDiff = false;
 
-		if (! $app->wg->Request->getVal( 'diff' ) ) {
+		if ( $app->wg->Request->getVal( 'diff' ) ) {
 			$isDiff = true;
 		}
 
@@ -51,7 +51,7 @@ class WikiaImagePage extends ImagePage {
 			return;
 		}
 		$sectionClass = '';
-		if ( $this->isDiffPage() ) {
+		if (! $this->isDiffPage() ) {
 			$this->renderTabs();
 			$sectionClass = ' class="tabBody"';
 		}
@@ -84,7 +84,7 @@ class WikiaImagePage extends ImagePage {
 		$out->addHTML('</div>');
 
 		$sectionClass = '';
-		if ( $this->isDiffPage() ) {
+		if (! $this->isDiffPage() ) {
 			$sectionClass = ' class="tabBody"';
 		}
 
@@ -107,7 +107,7 @@ class WikiaImagePage extends ImagePage {
 		}
 
 		$sectionClass = '';
-		if ( $this->isDiffPage() ) {
+		if (! $this->isDiffPage() ) {
 			$sectionClass = ' class="tabBody"';
 		}
 
