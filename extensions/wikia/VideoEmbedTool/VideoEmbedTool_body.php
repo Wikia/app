@@ -364,19 +364,9 @@ class VideoEmbedTool {
 
 		$text = $page->getText();
 
-		// Separate any category tags
-		preg_match_all( '/(\[\[Category[^\]]+\]\])/', $text, $matches );
-
-		$catString = '';
-		if (!empty($matches[0]) && is_array($matches[0])) {
-			$catString = "\n" . implode(' ', $matches[0]);
-		}
-
-		$text = $description . $catString;
-
-		// add description header
+		// Insert description header
 		$videoHandlerHelper = new VideoHandlerHelper();
-		$text = $videoHandlerHelper->addDescriptionHeader( $text );
+		$text = $videoHandlerHelper->replaceDescriptionSection( $text, $description );
 
 		$summary = 'Adding video description';
 		$status = $page->doEdit( $text, $summary );
