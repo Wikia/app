@@ -125,7 +125,6 @@ class FormBuilderService extends WikiaService
 	public function renderField( $fieldName, $index = 0 ) {
 		$field = $this->getField($fieldName);
 
-		// TODO: set default values or throw exception ?
 		if ( empty($field['type']) ) {
 			$field['type'] = 'text';
 		}

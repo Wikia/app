@@ -25,6 +25,10 @@ class CollectionsModel extends WikiaModel {
 		foreach ($collections as $collection) {
 			$this->save($langCode, $collection, $i++);
 		}
+
+		for ($i = $i; $i <= self::COLLECTIONS_COUNT; $i++) {
+			$this->delete($langCode, $i);
+		}
 	}
 
 	public function save($langCode, $collection, $sortIndex) {
@@ -53,6 +57,19 @@ class CollectionsModel extends WikiaModel {
 
 			$mdb->insert(self::TABLE_NAME, $insertData, __METHOD__);
 		}
+
+		$mdb->commit();
+	}
+
+	public function delete($langCode, $sortIndex) {
+		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+
+		$conds = [
+			'lang_code' => $langCode,
+			'sort' => $sortIndex
+		];
+
+		$mdb->delete(self::TABLE_NAME, $conds, __METHOD__);
 
 		$mdb->commit();
 	}
