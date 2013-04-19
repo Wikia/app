@@ -14,7 +14,10 @@
 <? endif ?>
 
 <?	switch ($data['type']):
-		case 'text':
+		case 'checkbox': ?>
+			<input name="<?= $data['name'] ?>" type="checkbox" <?= $data['attributes'] ?> value="1" <? if ($data['value']):?>checked="checked"<? endif?> />
+			<? break ?>
+		<? case 'text':
 		case 'hidden': ?>
 			<input name="<?= $data['name'] ?>" type="<?= $data['type'] ?>" <?= $data['attributes'] ?> value="<?= htmlspecialchars($data['value'])?>"/>
 			<? break; ?>

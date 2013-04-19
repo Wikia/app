@@ -66,6 +66,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$hotWikisAmount = $this->request->getVal('hot-wikis-amount', $this->helper->getNumberOfHotWikiSlots($this->visualizationLang));
 		$newWikisAmount = $this->request->getVal('new-wikis-amount', $this->helper->getNumberOfNewWikiSlots($this->visualizationLang));
 
+		$this->form = $this->prepareCollectionsForm();
+
 		if( $this->request->wasPosted() ) {
 		//todo: separate post request handling
 		//todo: move validation from saveSlotsConfigInWikiFactory() to helper
@@ -296,6 +298,36 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->wf->ProfileOut(__METHOD__);
 		return $result;
+	}
+
+	private function prepareCollectionsForm() {
+		$form = new FormBuilderService();
+		$form->setFields([
+			'name' => [
+				'label' => $this->wf->msg('manage-wikia-home-collections-name-field-label'),
+				'validator' => new WikiaValidatorListValue([
+					'validator' => new WikiaValidatorString()
+				]),
+				'isArray' => true
+			],
+			'enabled' => [
+				'label' => $this->wf->msg('manage-wikia-home-collections-enabled-field-label'),
+				'type' => 'checkbox',
+				'validator' => new WikiaValidatorListValue([
+					'validator' => new WikiaValidatorInteger()
+				]),
+				'isArray' => true
+			],
+			'sponsor_url' => [
+				'label' => $this->wf->msg('manage-wikia-home-collections-sponsur-url-field-label'),
+				'validator' => new WikiaValidatorListValue([
+					'validator' => new WikiaValidatorUrl()
+				]),
+				'isArray' => true
+			],
+		]);
+
+		return $form;
 	}
 
 }

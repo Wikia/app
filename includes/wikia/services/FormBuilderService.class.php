@@ -119,11 +119,13 @@ class FormBuilderService extends WikiaService
 		if ( empty($field['type']) ) {
 			$field['type'] = 'text';
 		}
-
 		$field['name'] = $fieldName;
 
 		$field['attributes'] = isset($field['attributes']) ? $this->prepareFieldAttributes($field['attributes']) : '';
 
+		$field['value'] = isset($field['value']) ? $field['value'] : '';
+
+		// TODO handle isArray type fields
 		return F::app()->getView(__CLASS__, 'renderField', $field);
 	}
 

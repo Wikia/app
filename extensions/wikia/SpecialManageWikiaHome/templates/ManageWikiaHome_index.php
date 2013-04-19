@@ -57,36 +57,13 @@
 		</h2>
 
 		<form method="post" class="WikiaForm">
-			<div class="collection-module">
-				<div class="input-group">
-					<label for="">Label</label>
-					<input type="text" value="test">
+			<? for($i=0; $i < CollectionsModel::COLLECTIONS_COUNT; $i++): ?>
+				<div class="collection-module">
+					<?=$form->renderField('enabled')?>
+					<?=$form->renderField('name')?>
+					<?=$form->renderField('sponsor_url')?>
 				</div>
-				<div class="input-group">
-					<label for="">Label</label>
-					<input type="text" value="test">
-				</div>
-			</div>
-			<div class="collection-module">
-				<div class="input-group">
-					<label for="">Label</label>
-					<input type="text" value="test">
-				</div>
-				<div class="input-group">
-					<label for="">Label</label>
-					<input type="text" value="test">
-				</div>
-			</div>
-			<div class="collection-module">
-				<div class="input-group">
-					<label for="">Label</label>
-					<input type="text" value="test">
-				</div>
-				<div class="input-group">
-					<label for="">Label</label>
-					<input type="text" value="test">
-				</div>
-			</div>
+			<? endfor ?>
 
 			<input type="submit" value="<?= wfMsg('manage-wikia-home-collections-setup-save-button'); ?>" />
 		</form>

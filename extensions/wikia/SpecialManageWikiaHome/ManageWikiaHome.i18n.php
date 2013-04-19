@@ -52,6 +52,10 @@ $messages['en'] = array(
 
 	'manage-wikia-home-collections-setup-header' => 'Collections setup',
 	'manage-wikia-home-collections-setup-save-button' => 'Save',
+
+	'manage-wikia-home-collections-enabled-field-label' => 'Enabled',
+	'manage-wikia-home-collections-name-field-label' => 'Collection name',
+	'manage-wikia-home-collections-sponsur-url-field-label' => 'Sponsors url',
 );
 
 $messages['de'] = array(
