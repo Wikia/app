@@ -59,8 +59,10 @@ class AdEngine2Controller extends WikiaController {
 					|| BodyController::isBlogListing()
 					|| BodyController::isBlogPost()
 
-				// Quiz:
+				// Quiz, category and project pages:
 					|| (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ))
+					|| (defined('NS_CATEGORY') && $namespace == NS_CATEGORY)
+					|| (defined('NS_PROJECT') && $namespace == NS_PROJECT)
 
 				// Chosen special pages:
 					|| $title->isSpecial('Videos')
