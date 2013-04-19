@@ -27,4 +27,4 @@ if ( $u == null && $w == null ) {
 	die( 1 );
 }
 $result = $service->uploadWikiAsUser( $w, $u );
-echo "upload: " . $result . "\n";
+var_dump($result);

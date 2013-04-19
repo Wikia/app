@@ -21,6 +21,10 @@ class GWTService {
 		$this->wikiRepository = $wikiRepository;
 	}
 
+	/*
+	 * Get all users that don't have to much sites added.
+	 * @returns array of GWTClient.
+	 */
 	function getAvailableUsers() {
 		$users = $this->userRepository->allCountLt( $this->getMaxSitesPerAccount() );
 		$resultUsers = array();
@@ -37,12 +41,20 @@ class GWTService {
 		return $resultUsers;
 	}
 
+	/*
+	 * Get all wikis not marked as uploaded to google webmaster toolkit.
+	 * @returns array of GWTWiki.
+	 */
 	function getWikisToUpload() {
 		$wikis = $this->wikiRepository->allUnassigned();
 		return $wikis;
 	}
 
-	function uploadWikiAsUser( $wiki, $user ) {
+	/*
+	 * Sends page to webmaster toolkit. Will update wiki and user
+	 *
+	 */
+	function uploadWikiAsUser( GWTWiki $wiki, GWTUser $user ) {
 		if( $this->webmasterToolsUtil->upload( $wiki->getWikiId(), $user ) ) {
 			$user->setCount( $user->getCount() + 1 );
 			$this->userRepository->update( $user );
@@ -54,7 +66,13 @@ class GWTService {
 		return false;
 	}
 
+	/*
+	 * Get wiki info.
+	 * @param $wikiId - city_id
+	 * @returns GWTSiteSyncStatus
+	 */
 	function getWikiInfo( $wikiId ) {
+		$wikiId = strval($wikiId);
 		$wiki = $this->wikiRepository->oneByWikiId( $wikiId );
 		if( $wiki && $wiki->getUserId() ) {
 			$user = $this->userRepository->getById( $wiki->getUserId() );
@@ -63,8 +81,20 @@ class GWTService {
 		return null;
 	}
 
+	/*
+	 * Sends wiki verification request
+	 * @returns GWTSiteSyncStatus
+	 */
 	function verifyWiki( $wiki, $user ) {
 		return $this->webmasterToolsUtil->verify( $wiki->getWikiId(), $user );
+	}
+
+	/*
+	 * Sends sitemap to google webmaster tools.
+	 * @returns GWTSiteSyncStatus
+	 */
+	function sendSitemap( $wiki, $user ) {
+		return $this->webmasterToolsUtil->sendSitemap( $wiki->getWikiId(), $user );
 	}
 
 	public function setMaxSitesPerAccount($maxSitesPerAccount)

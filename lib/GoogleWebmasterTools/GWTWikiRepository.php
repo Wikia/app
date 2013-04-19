@@ -74,7 +74,7 @@ class GWTWikiRepository {
 		return true;
 	}
 
-	public function create( $wikiId, $userId = null, $uploadDate = null ) {
+	public function create( $wikiId, $userId = 0, $uploadDate = null ) {
 		return $this->insert( $wikiId, $userId, $uploadDate );
 	}
 
@@ -93,7 +93,7 @@ class GWTWikiRepository {
 		$res = $this->databaseConnection->update("webmaster_sitemaps",
 			array(
 				"user_id" => $gwtWikiObject->getUserId(),
-				"upload_date" => $gwtWikiObject->uploadDate(),
+				"upload_date" => $gwtWikiObject->getUploadDate(),
 			),
 			array(
 				"wiki_id" => $gwtWikiObject->getWikiId(),

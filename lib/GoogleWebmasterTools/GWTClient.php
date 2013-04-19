@@ -110,6 +110,12 @@ class GWTClient {
 		return $uri;
 	}
 
+	private function make_sitemaps_uri () {
+		$site = $this->normalize_site($this->mWiki->city_url);
+		$uri = self::FEED_URI . '/' . urlencode($site) . "/sitemaps/";
+		return $uri;
+	}
+
 	private function make_site_id () {
 		return $this->normalize_site($this->mWiki->city_url).'sitemap-index.xml';
 	}
@@ -126,34 +132,8 @@ class GWTClient {
 		}
 		$doc = new DOMDocument();
 		$doc->loadXML($content);
-
 		$e = $doc->documentElement;
-		$info = array();
-
-		foreach ($e->childNodes as $node) {
-			switch ($node->nodeName) {
-				case 'updated':
-					$info['updated'] = $node->nodeValue;
-					break;
-				case 'wt:verified':
-					$info['verified'] = $node->nodeValue == 'true' ? true : false;
-					break;
-				case 'wt:verification-method':
-					if (preg_match('/google([a-f0-9]+)\.html/', $node->nodeValue, $matches)) {
-						$info['verification_code'] = $matches[1];
-					}
-					break;
-				case 'title':
-					$info['site'] = $node->nodeValue;
-					break;
-				default:
-					//error_log("#### NODE: ".$node->nodeName.'='.$node->nodeValue);
-			}
-		}
-
-		$info['account_name'] = $this->mEmail;
-
-		return $info;
+		return GWTSiteSyncStatus::fromDomElement( $e );
 	}
 
 	private function parseBoolean($value) {
@@ -181,19 +161,7 @@ class GWTClient {
 		//return $content;
 		$doc = new DOMDocument();
 		$doc->loadXML($content);
-		$xpath = new DOMXPath($doc);
-		$nodeList = $xpath->query("//*[local-name()='entry']");
-		$sites = array();
-		for($j =0; $j<$nodeList->length; $j++) {
-			$entry = $nodeList->item( $j );
-			//$entryXpath = new DOMXPath($entry->);
-			$content = $xpath->query($entry->getNodePath() . "//*[local-name()='content']/@src");
-			$verified = $xpath->query($entry->getNodePath() ."//*[local-name()='verified']");
-			if( $content->length > 0 && $verified->length > 0 ) {
-				$sites[] = 	new GWTSiteSyncStatus($content->item(0)->nodeValue, $this->parseBoolean($verified->item(0)->nodeValue));
-			}
-		}
-		return $sites;
+		return GWTSiteSyncStatus::arrayFromDomDocument( $doc );
 	}
 
 	public function add_site () {
@@ -216,19 +184,11 @@ class GWTClient {
 			return;
 		}
 
-/*
-		$content = Http::post($uri = self::FEED_URI . '/sites/',
-			array('postData' => $xml,
-				CURLOPT_HTTPHEADER => array(': ',
-					': ')
-			)
-		);
-*/
-		//echo "==\n".$content . "==\n";
 		if ($content) {
-//			WikiFactory::setVarByName('wgGoogleWebToolsAccount', $this->mWiki->city_id, $this->mEmail);
-
-			return true;
+			$doc = new DOMDocument();
+			$doc->loadXML( $content );
+			$e = $doc->documentElement;
+			return GWTSiteSyncStatus::fromDomElement( $e );
 		} else {
 			throw new GWTException("Cannot add sitemap (" . $this->mWiki->city_url . ").");
 		}
@@ -266,7 +226,7 @@ class GWTClient {
 
 		if (!$code) {
 			$info = $this->site_info();
-			$code = $info['verification_code'];
+			$code = $info->getPageVerificationCode();
 		}
 
 		// Update the wgGoogleSiteVerification variable with this code
@@ -277,11 +237,7 @@ class GWTClient {
 		$oTmpl->set_vars( array( "site_id" => $this->make_site_id()) );
 		$xml = $oTmpl->render("wt-verify-request");
 
-		if ($this->put_verify($xml)) {
-			return true;
-		} else {
-			return false;
-		}
+		return $this->put_verify( $xml );
 	}
 
 	private function put_verify ( $xml ) {
@@ -309,7 +265,7 @@ class GWTClient {
 
 		if ( $retcode != 200 ) {
 			wfDebug( __METHOD__ . ": HTTP return code $retcode\n" );
-			$text = false;
+			throw new GWTException("Bad response from google.\n" . $text);
 		}
 		# Don't return truncated output
 		$errno = curl_errno( $c );
@@ -319,7 +275,35 @@ class GWTClient {
 			$text = false;
 		}
 		curl_close( $c );
+		// echo "===" . $text . "\n===\n";
 
-		return $text;
+		$doc = new DOMDocument();
+		$doc->loadXML($text);
+		$e = $doc->documentElement;
+		return GWTSiteSyncStatus::fromDomElement( $e );
+	}
+
+	public function send_sitemap () {
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array( "site_id" => $this->make_site_id()) );
+		$xml = $oTmpl->render("wt-add-sitemap");
+		return $this->put_sitemap( $xml );
+	}
+
+	private function put_sitemap ( $xml ) {
+		echo strval(strlen($xml)) . "bytes to " . $this->make_sitemaps_uri() . "\n";
+		$request = MWHttpRequest::factory( $this->make_sitemaps_uri(), array( 'postData' => $xml, 'method' => 'POST') );
+		$request->setHeader('Content-type', 'application/atom+xml');
+		$request->setHeader('Content-length', strval(strlen($xml)));
+		$request->setHeader('Authorization', 'GoogleLogin auth='.$this->mAuth);
+		$status = $request->execute();
+
+		var_dump($request->getContent());
+		if ( $status->isOK() ) {
+			$text = $request->getContent();
+		} else {
+			throw new GWTException( "Non 200 response.\n"  . "\n" . "message:". $status->getMessage()."\n" . $request->getContent());
+		}
+		return true; // TODO !!!
 	}
 }
