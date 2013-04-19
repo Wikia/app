@@ -132,7 +132,7 @@ class WikiaImagePage extends ImagePage {
 		$app = F::app();
 		$out = $this->getContext()->getOutput();
 
-		$tabs = F::app()->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
+		$tabs = $app->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
 		$out->addHtml($tabs);
 	}
 
