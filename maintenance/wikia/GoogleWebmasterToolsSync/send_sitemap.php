@@ -7,24 +7,31 @@
 
 $optionsWithArgs = array( 'i' );
 
-require_once(__DIR__ . '/../../commandLine.inc');
-require_once($IP . '/lib/GoogleWebmasterTools/setup.php');
+require_once( __DIR__."/configure_log_file.php" );
+GWTLogHelper::notice( __FILE__ . " script starts.");
 
-if( !isset($options['i']) ) {
-	echo "Specify wikiid (-i)";
-}
+try {
+	if( !isset($options['i']) ) {
+		GWTLogHelper::error( "Specify wiki id (-i)" );
+	}
 
-$service = new GWTService();
+	$service = new GWTService();
+	GWTLogHelper::notice("wiki_id: " . $options["i"] );
+	$wiki = $service->getWikiRepository()->oneByWikiId( $options['i'] );
+	if( !$wiki ) {
+		GWTLogHelper::error( "No wiki for " . $options['i'] . "\n" );
+		die(1);
+	}
+	if( !$wiki->getUserId() ) {
+		GWTLogHelper::error( "User id empty for " . $wiki->getWikiId() . "\n" );
+		die(1);
+	}
+	GWTLogHelper::notice("user_id: " . $wiki->getUserId() );
+	$user = $service->getUserRepository()->getById( $wiki->getUserId() );
+	GWTLogHelper::notice("email  : " . $user->getEmail() );
+	$info = $service->sendSitemap( $wiki, $user );
+	GWTLogHelper::notice( __FILE__ . " script end.");
 
-$wiki = $service->getWikiRepository()->oneByWikiId( $options['i'] );
-if( !$wiki ) {
-	echo "No wiki for " . $options['i'] . "\n";
-	die();
+} catch ( Exception $ex ) {
+	GWTLogHelper::error( __FILE__ . " script failed.", $ex);
 }
-if( !$wiki->getUserId() ) {
-	echo "User id empty for " . $wiki->getWikiId() . "\n";
-	die();
-}
-$user = $service->getUserRepository()->getById( $wiki->getUserId() );
-$info = $service->sendSitemap( $wiki, $user );
-var_dump($info);

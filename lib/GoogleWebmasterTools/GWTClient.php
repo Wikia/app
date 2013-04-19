@@ -166,7 +166,6 @@ class GWTClient {
 
 	public function add_site () {
 		$uri = self::FEED_URI . '/sites/';
-		echo "auth:   " . $this->mAuth . "\n";
 		// create request template
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array( "site" => $this->normalize_site($this->mWiki->city_url)));
@@ -180,8 +179,7 @@ class GWTClient {
 		if ( $status->isOK() ) {
 			$content = $request->getContent();
 		} else {
-			Wikia::log("Bad response from google.\n" . $request->getContent());
-			return;
+			throw new GWTException("Bad response from google.\n" . $request->getContent() . ". Cannot add sitemap (" . $this->mWiki->city_url . ").");
 		}
 
 		if ($content) {
@@ -193,7 +191,7 @@ class GWTClient {
 			throw new GWTException("Cannot add sitemap (" . $this->mWiki->city_url . ").");
 		}
 	}
-
+/*
 	public function remove_site () {
 		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
 
@@ -221,7 +219,7 @@ class GWTClient {
 			return true;
 		}
 	}
-
+*/
 	public function verify_site ($code = null) {
 
 		if (!$code) {
@@ -299,6 +297,7 @@ class GWTClient {
 
 		if ( $status->isOK() ) {
 			$text = $request->getContent();
+			GWTLogHelper::debug( $text );
 		} else {
 			throw new GWTException( "Non 200 response.\n"  . "\n" . "message:". $status->getMessage()."\n" . $request->getContent());
 		}

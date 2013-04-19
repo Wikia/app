@@ -9,19 +9,23 @@
 
 $optionsWithArgs = array( 'u', 'p' );
 
-require_once(__DIR__ . '/../../commandLine.inc');
-require_once($IP . '/lib/GoogleWebmasterTools/setup.php');
+require_once( __DIR__."/configure_log_file.php" );
+GWTLogHelper::notice( __FILE__ . " script starts.");
+try {
+	if( !isset($options['u']) || !isset($options['p']) ) {
+		GWTLogHelper::warning( "Specify user (-u) and password (-p)" );
+		die(1);
+	}
 
-if( !isset($options['u']) || !isset($options['p']) ) {
-	echo "Specify user (-u) and password (-p)";
-	die(1);
+	$userRepository = new GWTUserRepository();
+
+	$r = $userRepository->create( $options['u'], $options['p'] );
+	if ( $r == null ) {
+		GWTLogHelper::warning( "error while inserting user." );
+		die( 1 );
+	}
+	GWTLogHelper::notice( $r->getId() . " " . $r->getEmail() . "\n" );
+
+} catch ( Exception $ex ) {
+	GWTLogHelper::error( __FILE__ . " script failed.", $ex);
 }
-
-$userRepository = new GWTUserRepository();
-
-$r = $userRepository->create( $options['u'], $options['p'] );
-if ( $r == null ) {
-	echo "error while inserting user";
-	die( 1 );
-}
-echo $r->getId() . " " . $r->getEmail() . "\n";

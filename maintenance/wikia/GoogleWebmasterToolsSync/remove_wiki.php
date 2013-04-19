@@ -9,13 +9,18 @@
 
 $optionsWithArgs = array( 'i' );
 
-require_once(__DIR__ . '/../../commandLine.inc');
-require_once($IP . '/lib/GoogleWebmasterTools/setup.php');
+require_once( __DIR__."/configure_log_file.php" );
+GWTLogHelper::notice( __FILE__ . " script starts.");
+try {
+	if( !isset($options['i']) ) {
+		GWTLogHelper::error( "Specify wikiid (-i)" );
+		die(1);
+	}
 
-if( !isset($options['i']) ) {
-	echo "Specify wikiid (-i)";
+	$wikiRepository = new GWTWikiRepository();
+
+	$wikiRepository->deleteAllByWikiId( $options['i'] );
+
+} catch ( Exception $ex ) {
+	GWTLogHelper::error( __FILE__ . " script failed.", $ex);
 }
-
-$wikiRepository = new GWTWikiRepository();
-
-$wikiRepository->deleteAllByWikiId( $options['i'] );

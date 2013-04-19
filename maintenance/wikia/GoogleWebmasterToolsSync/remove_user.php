@@ -9,13 +9,19 @@
 
 $optionsWithArgs = array( 'u' );
 
-require_once(__DIR__ . '/../../commandLine.inc');
-require_once($IP . '/lib/GoogleWebmasterTools/setup.php');
+require_once( __DIR__."/configure_log_file.php" );
+GWTLogHelper::notice( __FILE__ . " script starts.");
+try {
+	if( !isset($options['u']) ) {
+		GWTLogHelper::error( "Specify email (-u)" );
+		die(1);
+	}
 
-if( !isset($options['u']) ) {
-	echo "Specify email (-u)";
+	$userRepository = new GWTUserRepository();
+
+	$userRepository->deleteByEmail( $options['u'] );
+
+	GWTLogHelper::notice( __FILE__ . " script end.");
+} catch ( Exception $ex ) {
+	GWTLogHelper::error( __FILE__ . " script failed.", $ex);
 }
-
-$userRepository = new GWTUserRepository();
-
-$userRepository->deleteByEmail( $options['u'] );
