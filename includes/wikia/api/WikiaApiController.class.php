@@ -45,9 +45,7 @@ abstract class WikiaApiController extends WikiaController {
 			if ( $count >= 2 && $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {
 
 				if ( $count > 2 ) {
-					$origParam  = array_flip( array_slice( $paramKeys, 2 ) );
-
-					$paramKeys = $origParam;
+					$origParam = $paramKeys = array_flip( array_slice( $paramKeys, 2 ) );
 
 					ksort( $paramKeys, SORT_NATURAL );
 
