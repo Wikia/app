@@ -56,7 +56,7 @@
 			<?= wfMsg('manage-wikia-home-collections-setup-header') ?>
 		</h2>
 
-		<form method="post" class="WikiaForm">
+		<form method="post" class="WikiaForm" id="collectionsSetupForm">
 			<? for($i=0; $i < CollectionsModel::COLLECTIONS_COUNT; $i++): ?>
 				<div class="collection-module">
 					<?=$form->renderField('enabled')?>

@@ -52,6 +52,10 @@
 			}
 			input {
 				width: 400px;
+
+				&:disabled {
+					background-color: mix($color-page-opposite, $color-page, 15%);
+				}
 			}
 		}
 	}

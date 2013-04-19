@@ -121,6 +121,8 @@ class FormBuilderService extends WikiaService
 		}
 		$field['name'] = $fieldName;
 
+		// TODO add 'id' to fields
+
 		$field['attributes'] = isset($field['attributes']) ? $this->prepareFieldAttributes($field['attributes']) : '';
 
 		$field['value'] = isset($field['value']) ? $field['value'] : '';

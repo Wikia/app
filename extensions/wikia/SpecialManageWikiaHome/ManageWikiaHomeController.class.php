@@ -97,6 +97,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->response->addAsset('/extensions/wikia/SpecialManageWikiaHome/css/ManageWikiaHome.scss');
 		$this->response->addAsset('/extensions/wikia/SpecialManageWikiaHome/js/ManageWikiaHome.js');
+		$this->response->addAsset('/extensions/wikia/SpecialManageWikiaHome/js/CollectionsSetup.js');
 
 		F::build('JSMessages')->enqueuePackage('ManageWikiaHome', JSMessages::EXTERNAL);
 
