@@ -132,9 +132,6 @@ class ImagePage extends Article {
 			$showmeta = $formattedMetadata !== false;
 		} else {
 			$showmeta = false;
-			/* Wikia change begin */
-			$formattedMetadata = false;
-			/* Wikia change end */
 		}
 
 		/* Wikia change begin */
@@ -149,22 +146,7 @@ class ImagePage extends Article {
 			$this->openShowImage();
 		}
 
-		# No need to display noarticletext, we use our own message, output in openShowImage()
-		if ( $this->mPage->getID() ) {
-			# NS_FILE is in the user language, but this section (the actual wikitext)
-			# should be in page content language
-			$pageLang = $this->getTitle()->getPageLanguage();
-			$wgOut->addHTML( Xml::openElement( 'div', array( 'id' => 'mw-imagepage-content',
-				'lang' => $pageLang->getCode(), 'dir' => $pageLang->getDir(),
-				'class' => 'mw-content-'.$pageLang->getDir() ) ) );
-			parent::view();
-			$wgOut->addHTML( Xml::closeElement( 'div' ) );
-		} else {
-			# Just need to set the right headers
-			$wgOut->setArticleFlag( true );
-			$wgOut->setPageTitle( $this->getTitle()->getPrefixedText() );
-			$this->mPage->doViewUpdates( $this->getContext()->getUser() );
-		}
+		$this->imageContent();
 
 		/* Wikia Change - abstracted this out to protected function */
 		$this->imageDetails();
@@ -183,6 +165,30 @@ class ImagePage extends Article {
 		}
 		// always show the local local Filepage.css, bug 29277
 		$wgOut->addModuleStyles( 'filepage' );
+	}
+
+	/**
+	 * Wikia - abstracted out part of view() function, so it can be wrapped by WikiaVideoPage
+	 */
+	protected function imageContent() {
+		global $wgOut;
+
+		# No need to display noarticletext, we use our own message, output in openShowImage()
+		if ( $this->mPage->getID() ) {
+			# NS_FILE is in the user language, but this section (the actual wikitext)
+			# should be in page content language
+			$pageLang = $this->getTitle()->getPageLanguage();
+			$wgOut->addHTML( Xml::openElement( 'div', array( 'id' => 'mw-imagepage-content',
+				'lang' => $pageLang->getCode(), 'dir' => $pageLang->getDir(),
+				'class' => 'mw-content-'.$pageLang->getDir() ) ) );
+			parent::view();
+			$wgOut->addHTML( Xml::closeElement( 'div' ) );
+		} else {
+			# Just need to set the right headers
+			$wgOut->setArticleFlag( true );
+			$wgOut->setPageTitle( $this->getTitle()->getPrefixedText() );
+			$this->mPage->doViewUpdates( $this->getContext()->getUser() );
+		}
 	}
 
 	/**
