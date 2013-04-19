@@ -69,23 +69,36 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->form = $this->prepareCollectionsForm();
 
 		if( $this->request->wasPosted() ) {
-		//todo: separate post request handling
-		//todo: move validation from saveSlotsConfigInWikiFactory() to helper
-			$total = intval($videoGamesAmount) + intval($entertainmentAmount) + intval($lifestyleAmount);
+			if ( $this->request->getVal('wikis-in-slots',false) ) {
+				//todo: separate post request handling
+				//todo: move validation from saveSlotsConfigInWikiFactory() to helper
+				$total = intval($videoGamesAmount) + intval($entertainmentAmount) + intval($lifestyleAmount);
 
-			if ($total !== WikiaHomePageHelper::SLOTS_IN_TOTAL) {
-				$this->setVal('errorMsg', wfMsg('manage-wikia-home-error-invalid-total-no-of-slots', array($total, WikiaHomePageHelper::SLOTS_IN_TOTAL)));
-			} elseif ( $this->isAnySlotNumberNegative($videoGamesAmount, $entertainmentAmount, $lifestyleAmount) ) {
-				$this->setVal('errorMsg', wfMsg('manage-wikia-home-error-negative-slots-number-not-allowed'));
-			} else {
-				$this->saveSlotsConfigInWikiFactory($this->corpWikiId,
-					$visualizationLang,
-					array(
-						WikiaHomePageHelper::VIDEO_GAMES_SLOTS_VAR_NAME => $videoGamesAmount,
-						WikiaHomePageHelper::ENTERTAINMENT_SLOTS_VAR_NAME => $entertainmentAmount,
-						WikiaHomePageHelper::LIFESTYLE_SLOTS_VAR_NAME => $lifestyleAmount,
-					)
-				);
+				if ($total !== WikiaHomePageHelper::SLOTS_IN_TOTAL) {
+					$this->setVal('errorMsg', wfMsg('manage-wikia-home-error-invalid-total-no-of-slots', array($total, WikiaHomePageHelper::SLOTS_IN_TOTAL)));
+				} elseif ( $this->isAnySlotNumberNegative($videoGamesAmount, $entertainmentAmount, $lifestyleAmount) ) {
+					$this->setVal('errorMsg', wfMsg('manage-wikia-home-error-negative-slots-number-not-allowed'));
+				} else {
+					$this->saveSlotsConfigInWikiFactory($this->corpWikiId,
+						$visualizationLang,
+						array(
+							WikiaHomePageHelper::VIDEO_GAMES_SLOTS_VAR_NAME => $videoGamesAmount,
+							WikiaHomePageHelper::ENTERTAINMENT_SLOTS_VAR_NAME => $entertainmentAmount,
+							WikiaHomePageHelper::LIFESTYLE_SLOTS_VAR_NAME => $lifestyleAmount,
+						)
+					);
+				}
+			}
+			elseif ( $this->request->getVal('collections',false) ) {
+				$collectionValues = $this->request->getParams();
+				$collectionValues = $this->form->filterData($collectionValues);
+				$isValid = $this->form->validate($collectionValues);
+				if ($isValid) {
+
+				} else {
+
+				}
+				$this->form->setFieldsValues($collectionValues);
 			}
 		}
 
@@ -306,7 +319,13 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			'name' => [
 				'label' => $this->wf->msg('manage-wikia-home-collections-name-field-label'),
 				'validator' => new WikiaValidatorListValue([
-					'validator' => new WikiaValidatorString()
+					'validator' => new WikiaValidatorString(
+						array(
+							'required' => true,
+							'min' => 1
+						),
+						array('too_short' => 'marketing-toolbox-validator-string-short')
+					)
 				]),
 				'isArray' => true
 			],
@@ -326,7 +345,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				'isArray' => true
 			],
 		]);
-		$form->setFieldsValues();
 
 		return $form;
 	}

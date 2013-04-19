@@ -5,7 +5,7 @@
 <? endif ?>
 
 <? if (!empty($data['label'])): ?>
-    <label for="<?=$data['name']?>" <?= (isset($data['labelclass']))? ' '. 'class="' . $data['labelclass'] . '" ' : '' ?> >
+    <label for="<?=$data['id']?>" <?= (isset($data['labelclass']))? ' '. 'class="' . $data['labelclass'] . '" ' : '' ?> >
 		<? if (!empty($data['icon'])): ?>
         	<img src="<?= $data['wg']->blankImgUrl ?>" class="input-icon" />
 		<? endif ?>
@@ -17,7 +17,7 @@
 		case 'checkbox': ?>
 			<input name="<?= $data['name'] ?>" type="checkbox" <?= $data['attributes'] ?> value="1" <? if ($data['value']):?>checked="checked"<? endif?> />
 			<? break ?>
-		<? case 'text':
+	<?	case 'text':
 		case 'hidden': ?>
 			<input name="<?= $data['name'] ?>" type="<?= $data['type'] ?>" id="<?= $data['id'] ?>" <?= $data['attributes'] ?> value="<?= htmlspecialchars($data['value'])?>"/>
 			<? break; ?>

@@ -59,8 +59,9 @@ class FormBuilderService extends WikiaService
 		$fields = $this->getFields();
 
 		foreach ($fields as $fieldName => $field) {
-			if (!empty($field['validator'])) {
-				$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
+		if (!empty($field['validator'])) {
+
+				$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : [];
 
 				if( $field['validator'] instanceof WikiaValidatorDependent ) {
 					$field['validator']->setFormData($data);
@@ -68,7 +69,6 @@ class FormBuilderService extends WikiaService
 
 				if (!$field['validator']->isValid($fieldData)) {
 					$validationError = $field['validator']->getError();
-
 					if ( !empty($field['isArray']) ) {
 						foreach ($validationError as $key => $error) {
 							if (is_array($error)) {
@@ -77,10 +77,11 @@ class FormBuilderService extends WikiaService
 								$error = array_shift(array_values($error));
 							}
 							if (!empty($error)) {
-								$this->setFieldProperty($fieldName, 'errorMessage', $error->getMsg());
+								$validationError[$key] = $error->getMsg();
 								$isValid = false;
 							}
 						}
+						$this->setFieldProperty($fieldName, 'errorMessage', $validationError);
 					} else {
 						if (!empty($validationError)) {
 							$this->setFieldProperty($fieldName, 'errorMessage', $validationError->getMsg());
@@ -131,6 +132,10 @@ class FormBuilderService extends WikiaService
 			$field['type'] = 'text';
 		}
 
+		if ( !isset($field['value']) ) {
+			$field['value'] = '';
+		}
+
 		$field['name'] = $fieldName;
 		$field['id'] = $this->prefix . $fieldName;
 
@@ -138,11 +143,8 @@ class FormBuilderService extends WikiaService
 			$field['name'] .= '[]';
 			$field['id'] .= $index;
 
-			$value = isset($field['value'][$index]) ? $field['value'][$index] : '';
-			$errorMessage = isset($field['errorMessage'][$index]) ? $field['errorMessage'][$index] : '';
-
-			$this->setFieldProperty($fieldName, 'value', $value);
-			$this->setFieldProperty($fieldName, 'errorMessage', $errorMessage);
+			$field['value'] = isset($field['value'][$index]) ? $field['value'][$index] : '';
+			$field['errorMessage'] = isset($field['errorMessage'][$index]) ? $field['errorMessage'][$index] : '';
 		}
 
 		$field['attributes'] = isset($field['attributes']) ? $this->prepareFieldAttributes($field['attributes']) : '';

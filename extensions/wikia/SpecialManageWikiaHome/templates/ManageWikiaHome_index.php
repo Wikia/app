@@ -46,7 +46,7 @@
 				<p><label for="lifestyle-amount"><?= wfMsg('hub-Lifestyle'); ?></label><input type="text" id="lifestyle-amount" name="lifestyle-amount" value="<?= $lifestyleAmount; ?>" /></p>
 				<p><input type="hidden" name="visualization-lang" value="<?= $visualizationLang; ?>"></p>
 				<span class="status-msg"></span>
-				<p><input type="submit" value="<?= wfMsg('manage-wikia-home-change-button'); ?>"></p>
+				<p><input type="submit" name="wikis-in-slots" value="<?= wfMsg('manage-wikia-home-change-button'); ?>"></p>
 			</form>
 		</div>
 	</div>
@@ -59,13 +59,13 @@
 		<form method="post" class="WikiaForm" id="collectionsSetupForm">
 			<? for($i=0; $i < CollectionsModel::COLLECTIONS_COUNT; $i++): ?>
 				<div class="collection-module">
-					<?=$form->renderField('enabled')?>
-					<?=$form->renderField('name')?>
-					<?=$form->renderField('sponsor_url')?>
+					<?=$form->renderField('enabled', $i)?>
+					<?=$form->renderField('name', $i)?>
+					<?=$form->renderField('sponsor_url', $i)?>
 				</div>
 			<? endfor ?>
 
-			<input type="submit" value="<?= wfMsg('manage-wikia-home-collections-setup-save-button'); ?>" />
+			<input type="submit" name="collections" value="<?= wfMsg('manage-wikia-home-collections-setup-save-button'); ?>" />
 		</form>
 	</div>
 

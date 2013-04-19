@@ -146,7 +146,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->verticalId
 		);
 
-		$form = new FormBuilderService('MarketingToolbox');
+		$form = new FormBuilderService(MarketingToolboxModel::FORM_FIELD_PREFIX);
 		$form->setFields($module->getFormFields());
 
 		$selectedModuleData['validationErrors'] = array();
