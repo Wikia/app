@@ -21,7 +21,7 @@ class WikiaImagePage extends ImagePage {
 	 */
 	protected function showTOC( $metadata ) {
 		$app = F::app();
-		if(empty($app->wg->EnableVideoPageRedesign)) {
+		if(empty($app->wg->EnableVideoPageRedesign) || $this->isMobile()) {
 			return parent::showTOC($metadata);
 		}
 		return '';
@@ -38,23 +38,29 @@ class WikiaImagePage extends ImagePage {
 		return $isDiff;
 	}
 
+	protected function isMobile() {
+		return F::App()->checkSkin('wikiamobile');
+	}
+
 	protected function imageContent() {
 		$out = $this->getContext()->getOutput();
 		$app = F::App();
 
-		if ( !empty($app->wg->EnableVideoPageRedesign) ) {
-			$sectionClass = '';
-			if ( $this->isDiffPage() ) {
-				$this->renderTabs();
-				$sectionClass = ' class="tabBody"';
-			}
-
-			// Open div for about section (closed in imageDetails);
-			$out->addHtml('<div data-tab-body="about"' . $sectionClass . '>');
-			$this->renderDescriptionHeader();
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
+			parent::imageContent();
+			return;
+		}
+		$sectionClass = '';
+		if ( $this->isDiffPage() ) {
+			$this->renderTabs();
+			$sectionClass = ' class="tabBody"';
 		}
 
+		// Open div for about section (closed in imageDetails);
+		$out->addHtml('<div data-tab-body="about"' . $sectionClass . '>');
+		$this->renderDescriptionHeader();
 		parent::imageContent();
+
 	}
 
 	/**
@@ -66,7 +72,7 @@ class WikiaImagePage extends ImagePage {
 		$app = F::App();
 		$out = $this->getContext()->getOutput();
 
-		if ( empty($app->wg->EnableVideoPageRedesign) ) {
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
 			parent::imageDetails();
 			return;
 		}
@@ -95,7 +101,7 @@ class WikiaImagePage extends ImagePage {
 		$app = F::App();
 		$out = $this->getContext()->getOutput();
 
-		if ( empty($app->wg->EnableVideoPageRedesign) ) {
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
 			parent::imageMetadata($formattedMetadata);
 			return;
 		}
@@ -122,7 +128,7 @@ class WikiaImagePage extends ImagePage {
 	protected function imageListing() {
 		$app = F::App();
 
-		if ( empty($app->wg->EnableVideoPageRedesign) ) {
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
 			parent::imageListing();
 			return;
 		}
