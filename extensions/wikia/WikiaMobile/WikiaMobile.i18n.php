@@ -52,6 +52,8 @@ you should definitely check this out:
  	'wikiamobile-media-group-footer' => '1 of $1',
  	'wikiamobile-unsupported-video-download' => 'Your browser doesn\'t support this video format, try clicking <a href="$1">here</a>',
  	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|view|views}}',
+	'wikiamobile-video-not-friendly-header' => 'Oh snap!',
+	'wikiamobile-video-not-friendly' => 'Sorry, this video isn\'t available on mobile.',
 
 	//ad
 	'wikiamobile-ad-close' => 'close',
@@ -92,7 +94,9 @@ $messages['qqq'] = array(
 	'wikiasmartbanner-appstore' => 'Message displayed in smart banner promoting an app on app store',
 	'wikiasmartbanner-googleplay' => 'Message displayed in smart banner promoting an app on google play store',
 	'wikiasmartbanner-price' => 'Message displayed in smart banner indicating a price of an app',
-	'wikiasmartbanner-view' => 'Message displayed in smart banner promoting on a button that leads to a store'
+	'wikiasmartbanner-view' => 'Message displayed in smart banner promoting on a button that leads to a store',
+
+	'wikiamobile-video-not-friendly' => 'Message displayed in modal - to indcate that this video won\'t be loaded in mobile skin'
 );
 
 /** Адыгэбзэ (Адыгэбзэ)

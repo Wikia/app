@@ -10,6 +10,9 @@ class ArticleComment {
 	const AVATAR_BIG_SIZE = 50;
 	const AVATAR_SMALL_SIZE = 30;
 
+	const CACHE_VERSION = 0;
+	const AN_HOUR = 3600;
+
 	/**
 	 * @var $mProps Bool blogs only
 	 */
@@ -153,7 +156,6 @@ class ArticleComment {
 	 *
 	 */
 	public function load($master = false) {
-		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		$result = true;
 
@@ -177,22 +179,6 @@ class ArticleComment {
 				// assume article is bogus, threat as if it doesn't exist
 				wfProfileOut( __METHOD__ );
 				return false;
-			}
-
-			$memckey = wfMemcKey( 'articlecomment', 'basedata', $this->mLastRevId );
-			$acData = $wgMemc->get( $memckey );
-
-			if (!empty( $acData ) && is_array( $acData ) ) {
-				$this->mText = $acData['text'];
-				$this->mMetadata = empty( $this->mMetadata ) ? $acData['metadata'] : $this->mMetadata;
-				$this->mRawtext = $acData['raw'];
-				$this->mHeadItems = empty( $acData['head'] ) ? null : $acData['head'];
-				$this->mFirstRevision = $acData['first'];
-				$this->mFirstRevId = $this->mFirstRevision->getId();
-				$this->mLastRevision = $acData['last'];
-				$this->mUser = $acData['user'];
-				wfProfileOut( __METHOD__ );
-				return true;
 			}
 
 			$this->mFirstRevId = $this->getFirstRevID( DB_SLAVE );
@@ -241,16 +227,7 @@ class ArticleComment {
 			}
 
 			$rawtext = $this->mLastRevision->getText();
-			$this->parseText($rawtext);
-			$wgMemc->set($memckey, array(
-				'text' => $this->mText,
-				'metadata' => $this->mMetadata,
-				'raw' => $this->mRawtext,
-				'head' => $this->mHeadItems,
-				'first' => $this->mFirstRevision,
-				'last' => $this->mLastRevision,
-				'user' => $this->mUser
-			), 3600);
+			$this->parseText( $rawtext );
 		} else { // null title
 			$result = false;
 		}
@@ -335,70 +312,79 @@ class ArticleComment {
 		wfProfileIn( __METHOD__ );
 
 		$comment = false;
-		if ( $this->load($master) ) {
-			$canDelete = $wgUser->isAllowed( 'delete' );
 
-			if ( self::isBlog() ) {
-				$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
-			}
+		$canDelete = $wgUser->isAllowed( 'delete' );
 
-			//vary cache on permision as well so it changes we can show it to a user
-			$articleDataKey = wfMemcKey( 'articlecomment', 'comm_data_v2', $this->mLastRevId, $wgUser->getId(), $canDelete );
-			$data = $wgMemc->get( $articleDataKey );
+		if ( self::isBlog() ) {
+			$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
+		}
 
-			if(!empty($data)) {
-				wfProfileOut( __METHOD__ );
-				$data['timestamp'] = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $data['articleId'] ) ) . '#comm-' . $data['articleId'] . "' class='permalink'>" . wfTimeFormatAgo($data['rawmwtimestamp']) . "</a>";
-				return $data;
-			}
+		$title = $this->getTitle();
+		$commentId = $title->getArticleId();
 
+		//vary cache on permision as well so it changes we can show it to a user
+		$articleDataKey = wfMemcKey(
+			'articlecomment_data',
+			$commentId,
+			$this->mLastRevId,
+			$wgUser->getId(),
+			$canDelete,
+			RequestContext::getMain()->getSkin()->getSkinName(),
+			self::CACHE_VERSION
+		);
+
+		$data = $wgMemc->get( $articleDataKey );
+
+		if ( !empty( $data ) ) {
+			wfProfileOut( __METHOD__ );
+			$data['timestamp'] = "<a href='" . $title->getFullUrl( array( 'permalink' => $data['id'] ) ) . '#comm-' . $data['id'] . "' class='permalink'>" . wfTimeFormatAgo($data['rawmwtimestamp']) . "</a>";
+			return $data;
+		}
+
+		if ( $this->load( $master ) ) {
 			$sig = ( $this->mUser->isAnon() )
 				? AvatarService::renderLink( $this->mUser->getName() )
 				: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
 
-			$articleId = $this->mTitle->getArticleId();
-
 			$isStaff = (int)in_array('staff', $this->mUser->getEffectiveGroups() );
 
-			$parts = self::explode($this->getTitle());
+			$parts = self::explode($title);
 
 			$buttons = array();
 			$replyButton = '';
 
 			//this is for blogs we want to know if commenting on it is enabled
-			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $this->mTitle->getBaseText() ) );
+			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $title->getBaseText() ) );
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';
 			}
-			if( defined('NS_QUESTION_TALK') && ( $this->mTitle->getNamespace() == NS_QUESTION_TALK ) ) {
+			if( defined('NS_QUESTION_TALK') && ( $title->getNamespace() == NS_QUESTION_TALK ) ) {
 				$replyButton = '';
 			}
 
 			if ( $canDelete && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$img = '<img class="remove sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
-				$buttons[] = $img . '<a href="' . $this->mTitle->getLocalUrl('redirect=no&action=delete') . '" class="article-comm-delete">' . wfMsg('article-comments-delete') . '</a>';
+				$buttons[] = $img . '<a href="' . $title->getLocalUrl('redirect=no&action=delete') . '" class="article-comm-delete">' . wfMsg('article-comments-delete') . '</a>';
 			}
 
 			//due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
 			if ( $wgUser->isLoggedIn() && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$display = $this->canEdit() ? 'test=' : ' style="display:none"';
 				$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
-				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $articleId . '" class="article-comm-edit actionButton" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a></span>';
+				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMsg('article-comments-edit') . '</a></span>';
 			}
 
 			if ( !$this->mTitle->isNewPage(Title::GAID_FOR_UPDATE) ) {
-				$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
+				$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $title, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
 			}
 
-			$commentId = $this->getTitle()->getArticleId();
 			$rawmwtimestamp = $this->mFirstRevision->getTimestamp();
 			$rawtimestamp = wfTimeFormatAgo($rawmwtimestamp);
-			$timestamp = "<a rel='nofollow' href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $commentId ) ) . '#comm-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($rawmwtimestamp) . "</a>";
+			$timestamp = "<a rel='nofollow' href='" . $title->getFullUrl( array( 'permalink' => $commentId ) ) . '#comm-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($rawmwtimestamp) . "</a>";
 
 			$comment = array(
 				'id' => $commentId,
-				'articleId' => $articleId,
 				'author' => $this->mUser,
 				'username' => $this->mUser->getName(),
 				'avatar' => AvatarService::renderAvatar($this->mUser->getName(), self::AVATAR_BIG_SIZE),
@@ -414,7 +400,7 @@ class ArticleComment {
 				'timestamp' => $timestamp,
 				'rawtimestamp' => $rawtimestamp,
 				'rawmwtimestamp' =>	$rawmwtimestamp,
-				'title' => $this->mTitle->getText(),
+				'title' => $title->getText(),
 				'isStaff' => $isStaff,
 			);
 
@@ -422,7 +408,7 @@ class ArticleComment {
 				$comment['votes'] = $this->getVotesCount();
 			}
 
-			$wgMemc->set( $articleDataKey, $comment, 60*60 );
+			$wgMemc->set( $articleDataKey, $comment, self::AN_HOUR );
 
 			if(!($comment['title'] instanceof Title)) {
 				$comment['title'] = Title::newFromText( $comment['title'], NS_TALK );

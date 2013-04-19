@@ -6,7 +6,7 @@
 		</a>
 	</div>
 	<blockquote class="speech-bubble-message">
-		<div class="WikiaArticle article-comm-text" id="comm-text-<?= $comment['articleId'] ?>">
+		<div class="WikiaArticle article-comm-text" id="comm-text-<?= $comment['id'] ?>">
 		<?= $comment['text'] ?>
 		</div>
 

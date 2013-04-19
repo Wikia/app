@@ -4,7 +4,7 @@
  * @author Jakub "Student" Olek
  */
 define('pager', ['wikia.window'], function (window) {
-	var tr = ('ontransitionend' in window) ? 'transitionEnd' : ('onwebkittransitionend' in window) ?  'webkitTransitionEnd' : false,
+	var tr = ('ontransitionend' in window) ? 'transitionend' : ('onwebkittransitionend' in window) ?  'webkitTransitionEnd' : false,
 		addTransitionEnd = (function(){
 			return (tr) ?
 				function(elm, c){
@@ -192,6 +192,7 @@ define('pager', ['wikia.window'], function (window) {
 				if(next) next.style.webkitTransition = '-webkit-transform .3s';
 
 				animating = true;
+
 				addTransitionEnd(current, end, 300);
 
 				setTransform(prev, current, next, toX, padding);
