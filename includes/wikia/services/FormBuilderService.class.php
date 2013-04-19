@@ -75,6 +75,12 @@ class FormBuilderService extends WikiaService
 		return $out;
 	}
 
+	public function setFieldsValues($values) {
+		foreach ( $this->formFields as $name => &$field ) {
+			$field['value'] = (isset($values[$name])) ? $values[$name] : '';
+		}
+	}
+
 	/**
 	 * Render form fields set by setFormFields
 	 *
@@ -84,8 +90,8 @@ class FormBuilderService extends WikiaService
 		$form = '';
 
 		if( !empty( $this->formFields ) ) {
-			foreach ( $this->formFields as $field ) {
-				$form .= $this->renderField($field);
+			foreach ( $this->formFields as $name => $field ) {
+				$form .= $this->renderField($name);
 			}
 		}
 
@@ -113,11 +119,10 @@ class FormBuilderService extends WikiaService
 		if ( empty($field['type']) ) {
 			$field['type'] = 'text';
 		}
-		if ( empty($field['name']) ) {
-			$field['name'] = 'defaultName';
-		}
 
-		$field['attributes'] = $this->prepareFieldAttributes($field['attributes']);
+		$field['name'] = $fieldName;
+
+		$field['attributes'] = isset($field['attributes']) ? $this->prepareFieldAttributes($field['attributes']) : '';
 
 		return F::app()->getView(__CLASS__, 'renderField', $field);
 	}

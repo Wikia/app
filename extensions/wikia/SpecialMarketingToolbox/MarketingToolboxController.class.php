@@ -177,7 +177,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				$this->errorMessage = $this->wf->msg('marketing-toolbox-module-save-error');
 			}
 		}
-
+		$form->setFieldsValues($selectedModuleData['values']);
 		$this->moduleName = $modulesData['activeModuleName'];
 		$selectedModuleData['form'] = $form;
 		$this->moduleContent = $module->renderEditor($selectedModuleData);

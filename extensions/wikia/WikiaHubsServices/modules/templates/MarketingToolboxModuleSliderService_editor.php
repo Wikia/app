@@ -16,39 +16,10 @@
 				</p>
 
 				<?=$form->renderField('photo' . $i); ?>
-
-
-				<?=$app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['photo' . $i])
-				);
-				?>
-				<?=$app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array('inputData' => $fields['strapline' . $i])
-			);
-				?>
-				<?=$app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array('inputData' => $fields['shortDesc' . $i])
-			);
-				?>
-				<?=$app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['longDesc' . $i])
-				);
-				?>
-				<?=$app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['url' . $i])
-				);
-				?>
-
+				<?=$form->renderField('strapline' . $i); ?>
+				<?=$form->renderField('shortDesc' . $i); ?>
+				<?=$form->renderField('longDesc' . $i); ?>
+				<?=$form->renderField('url' . $i); ?>
 
 				<input class="secondary clear" type="button" value="<?= $wf->Message('marketing-toolbox-edithub-clear-button')->text() ?>" />
 			</div>

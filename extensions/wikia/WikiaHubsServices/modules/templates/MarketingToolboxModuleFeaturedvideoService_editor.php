@@ -20,30 +20,10 @@
 				<?= $wf->Message('marketing-toolbox-edithub-video-name')->text() ?>
 				<?php endif ?>
 			</span>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['video'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['header'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['articleUrl'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['description'])
-				);
-			?>
+			<?=$form->renderField('video')?>
+			<?=$form->renderField('header')?>
+			<?=$form->renderField('articleUrl')?>
+			<?=$form->renderField('description')?>
 			<p class="alternative"><?= $wf->Message('marketing-toolbox-hub-module-html-text-tip')->parse(); ?></p>
 		</div>
 		<div class="grid-1 alpha">

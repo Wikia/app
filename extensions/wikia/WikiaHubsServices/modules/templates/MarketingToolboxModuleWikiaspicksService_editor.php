@@ -20,30 +20,12 @@
 					<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
 				<?php endif ?>
 			</span>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['fileName'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['moduleTitle'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['imageLink'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['text'])
-				);
-			?>
+
+			<?=$form->renderField('fileName'); ?>
+			<?=$form->renderField('moduleTitle'); ?>
+			<?=$form->renderField('imageLink'); ?>
+			<?=$form->renderField('text'); ?>
+
 			<p class="alternative"><?= $wf->Message('marketing-toolbox-hub-module-html-text-tip')->parse(); ?></p>
 		</div>
 		<div class="grid-1 alpha">

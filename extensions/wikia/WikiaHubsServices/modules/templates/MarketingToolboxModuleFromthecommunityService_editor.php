@@ -11,37 +11,12 @@
 					<?= $wf->Message('marketing-toolbox-edithub-file-name')->text() ?>
 					<? endif ?>
 				</span>
-			<?=$app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array('inputData' => $fields['photo' . $i])
-			);
-			?>
-			<?=$app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array('inputData' => $fields['title' . $i])
-			);
-			?>
-			<?=$app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array('inputData' => $fields['usersUrl' . $i])
-			);
-			?>
-			<?=$app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array('inputData' => $fields['quote' . $i])
-			);
-			?>
-			<?=$app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array('inputData' => $fields['url' . $i])
-			);
-			?>
 
+			<?=$form->renderField('photo' . $i)?>
+			<?=$form->renderField('title' . $i)?>
+			<?=$form->renderField('usersUrl' . $i)?>
+			<?=$form->renderField('quote' . $i)?>
+			<?=$form->renderField('url' . $i)?>
 
 			<input class="secondary clear" type="button" value="<?= $wf->Message('marketing-toolbox-edithub-clear-button')->text() ?>" />
 		</div>
