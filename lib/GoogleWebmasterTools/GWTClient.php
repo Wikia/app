@@ -291,14 +291,12 @@ class GWTClient {
 	}
 
 	private function put_sitemap ( $xml ) {
-		echo strval(strlen($xml)) . "bytes to " . $this->make_sitemaps_uri() . "\n";
 		$request = MWHttpRequest::factory( $this->make_sitemaps_uri(), array( 'postData' => $xml, 'method' => 'POST') );
 		$request->setHeader('Content-type', 'application/atom+xml');
 		$request->setHeader('Content-length', strval(strlen($xml)));
 		$request->setHeader('Authorization', 'GoogleLogin auth='.$this->mAuth);
 		$status = $request->execute();
 
-		var_dump($request->getContent());
 		if ( $status->isOK() ) {
 			$text = $request->getContent();
 		} else {

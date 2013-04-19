@@ -30,6 +30,7 @@ foreach ( $wikis as $i => $wiki ) {
 	try {
 		$service->uploadWikiAsUser( $wiki, $users[$userI] );
 		$service->verifyWiki( $wiki, $users[$userI] );
+		$service->sendSitemap( $wiki, $users[$userI] );
 	} catch ( Exception $e ) {
 		echo "Error while synchronizing " . $wiki->getWikiId() . " " . $users[$userI]->getEmail() .  "\n";
 		echo "" . $e->getMessage() . "\n";
