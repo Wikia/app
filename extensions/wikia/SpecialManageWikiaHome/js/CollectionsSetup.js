@@ -3,8 +3,7 @@ var CollectionsSetup = function() {};
 CollectionsSetup.prototype = {
 	nav: undefined,
 	init: function() {
-		// TODO change select when field name is fixed
-		var checkboxes = $('#collectionsSetupForm input[name="enabled"]');
+		var checkboxes = $('#collectionsSetupForm input[name="enabled[]"]');
 
 		checkboxes.click(this.handleToggleEnabled);
 		checkboxes.each($.proxy(function(i, elem){
@@ -16,7 +15,7 @@ CollectionsSetup.prototype = {
 
 	handleToggleEnabled: function(event) {
 		var checkbox = $(event.target);
-		var switchableElems = checkbox.parents('.collection-module:first').find('input').filter(':not([name="enabled"])');
+		var switchableElems = checkbox.parents('.collection-module:first').find('input').filter(':not([name="enabled[]"])');
 
 		if (checkbox.is(':checked')) {
 			switchableElems.removeAttr('disabled');
