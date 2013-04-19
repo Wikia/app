@@ -1,9 +1,4 @@
 <?php
-/**
- * User: artur
- * Date: 18.04.13
- * Time: 10:11
- */
 
 class GWTSiteSyncStatus {
 	private $url;

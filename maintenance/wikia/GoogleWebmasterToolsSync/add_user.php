@@ -1,9 +1,4 @@
 <?php
-/**
- * User: artur
- * Date: 17.04.13
- * Time: 18:08
- */
 
 // example: SERVER_ID=5915 php maintenance/wikia/GoogleWebmasterToolsSync/add_user.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php -u u2 -p pass
 

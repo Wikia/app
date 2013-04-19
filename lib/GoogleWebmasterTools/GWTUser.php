@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: artur
- * Date: 15.04.13
- * Time: 17:56
- * To change this template use File | Settings | File Templates.
- */
 
 class GWTUser implements IGoogleCredentials {
 	private $id;

@@ -1,9 +1,4 @@
 <?php
-/**
- * User: artur
- * Date: 17.04.13
- * Time: 16:48
- */
 
 class GWTWiki {
 	private $wikiId;

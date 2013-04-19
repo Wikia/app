@@ -1,9 +1,4 @@
 <?php
-/**
- * User: artur
- * Date: 18.04.13
- * Time: 15:52
- */
 
 $optionsWithArgs = array( 'i' );
 

@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: artur
- * Date: 15.04.13
- * Time: 17:55
- * To change this template use File | Settings | File Templates.
- */
+
 
 class WebmasterToolsUtil {
 

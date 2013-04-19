@@ -1,9 +1,4 @@
 <?php
-/**
- * User: artur
- * Date: 16.04.13
- * Time: 10:31
- */
 
 class GWTLocalCache {
 	private $map = array();

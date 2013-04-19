@@ -1,9 +1,4 @@
 <?php
-/**
- * @author: Jacek Jursza <jacek@wikia-inc.com>
- * Date: 19.04.13 11:20
- *
- */
 
 class GWTLogHelper {
 

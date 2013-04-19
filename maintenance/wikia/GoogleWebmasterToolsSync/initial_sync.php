@@ -1,9 +1,4 @@
 <?php
-/**
- * User: artur
- * Date: 16.04.13
- * Time: 15:49
- */
 
 // example: SERVER_ID=5915 php maintenance/wikia/GoogleWebmasterToolsSync/initial_sync.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
 
