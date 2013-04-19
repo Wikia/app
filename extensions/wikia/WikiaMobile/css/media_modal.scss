@@ -21,14 +21,16 @@ $chev-color: rgb(157,157,157);
 
 		* {
 			vertical-align: middle;
-			max-height: 100%;
-			-webkit-tap-highlight-color: rgba(0,0,0,0);
 		}
 	}
 
 	video, iframe, object, embed {
 		width: 70%;
 		height: auto;
+	}
+
+	.wkMblThrobber {
+		display: table-cell;
 	}
 }
 
@@ -47,7 +49,7 @@ $chev-color: rgb(157,157,157);
 
 		z-index: 1;
 
-		color: black;
+		color: white;
 		font-weight: 800;
 
 		&:first-of-type {
@@ -64,8 +66,9 @@ $chev-color: rgb(157,157,157);
 
 	img {
 		//this is minumum for the message to be readable
-		min-width: 310px;
+		min-width: 290px;
 		min-height: 180px;
+		max-height: 50%;
 	}
 
 	&::after {
@@ -76,7 +79,7 @@ $chev-color: rgb(157,157,157);
 		width: 100%;
 		height: 100%;
 
-		background-color: rgba(255,255,255, .5);
+		background-color: rgba(0,0,0, .5);
 
 		background-image: url(/extensions/wikia/WikiaMobile/images/sad_phone.png);
 		background-position: center;
