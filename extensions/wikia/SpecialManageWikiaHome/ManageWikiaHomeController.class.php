@@ -327,6 +327,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				'isArray' => true
 			],
 		]);
+		$form->setFieldsValues();
 
 		return $form;
 	}

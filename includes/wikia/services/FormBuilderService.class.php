@@ -38,7 +38,7 @@ class FormBuilderService extends WikiaService
 		return $this->formFields[$fieldName];
 	}
 
-	public function setFieldsValues($values) {
+	public function setFieldsValues($values = []) {
 		$formFields = $this->getFields();
 
 		foreach ( $formFields as $name => $field ) {
