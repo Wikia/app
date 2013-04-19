@@ -218,21 +218,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 		}
 	}
 
-    .exact {
-        .result-count {
-            margin-bottom: 20px;
-        }
-        .articles {
-            list-style: none;
-            li {
-                width: 45%;
-                margin: 0;
-                padding: 0;
-                display: inline-block;
-            }
-        }
-    }
-
 	.Results {
 		list-style: none;
 		margin: 0;
@@ -343,8 +328,23 @@ $form-negative-side-padding: $form-side-padding*-1;
 		}
 	}
     .exact {
-        border-bottom: 1px solid $color-search-grid-border;
-        padding-bottom: 10px;
+      border-bottom: 1px solid $color-search-grid-border;
+      padding-bottom: 10px;
+      .result-count {
+        margin-bottom: 20px;
+      }
+      .articles {
+        list-style: none;
+        li {
+          width: 45%;
+          margin: 0;
+          padding: 0;
+          display: inline-block;
+        }
+      }
+      .wikiPromoteThumbnail {
+        padding-left: 0;
+      }
     }
 	.searchmatch {
 		font-weight: bold;
