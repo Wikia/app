@@ -63,8 +63,12 @@
 		},
 
 		onCkDialogHide: function( event ) {
-			var label = event.data._.name.toLowerCase()
-			this.track( 'dialog-' + label + '-close' );
+			var label = event.data._.name.toLowerCase();
+
+			this.track({
+				action:  Wikia.Tracker.ACTIONS.CLOSE,
+				label: 'dialog-' + label
+			});
 		},
 
 		onCkDialogOk: function( event ) {
@@ -73,8 +77,12 @@
 		},
 
 		onCkDialogShow: function( event ) {
-			var label = event.data._.name.toLowerCase()
-			this.track( 'dialog-' + label + '-open' );
+			var label = event.data._.name.toLowerCase();
+
+			this.track({
+				action:  Wikia.Tracker.ACTIONS.OPEN,
+				label: 'dialog-' + label
+			});
 		},
 
 		onCkPanelClick: function( event ) {
@@ -86,7 +94,11 @@
 
 		onCkPanelShow: function( event ) {
 			var label = event.data.me.label.toLowerCase();
-			this.track( 'panel-' + label + '-open' );
+
+			this.track({
+				action:  Wikia.Tracker.ACTIONS.OPEN,
+				label: 'panel-' + label
+			});
 		},
 
 		// Wrapper for Wikia.Tracker so we can perform some magic
@@ -117,7 +129,10 @@
 			delete data.category;
 
 			// Update label
-			labelParts.push( data.label );
+			if ( data.label != undefined && data.label != '' ) {
+				labelParts.push( data.label );
+			}
+
 			data.label = labelParts.join( '-' );
 
 			Wikia.Tracker.track( this.config, data );

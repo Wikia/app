@@ -177,7 +177,7 @@ $chevron-color: #888;
 			.module-input-box {
 				float: left;
 
-				input[type="text"] {
+				input[type="text"], textarea {
 					width: 291px;
 				}
 				input[type="text"].video-url-input {
@@ -295,10 +295,6 @@ $chevron-color: #888;
 			width: 321px;
 		}
 
-		.input-group textarea {
-			resize: vertical;
-		}
-
 		.image-placeholder {
 			margin-left: 3px;
 		}
@@ -325,5 +321,9 @@ $chevron-color: #888;
 		p {
 			float: left;
 		}
+	}
+
+	.input-group textarea {
+		resize: vertical;
 	}
 }

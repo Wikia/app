@@ -256,9 +256,6 @@ class BodyController extends WikiaController {
 			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
 		}
 
-		// A/B testing leftovers, leave for now because we will do another one
-		$useTestBoxad = false;
-
 		// Special case rail modules for Corporate Skin
 		if ($wgEnableCorporatePageExt) {
 			$railModuleList = array (
@@ -307,12 +304,7 @@ class BodyController extends WikiaController {
 			return array();
 		}
 
-		if ($useTestBoxad) {
-			$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TEST_TOP_RIGHT_BOXAD'));
-		}
-		else {
-			$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
-		}
+		$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
 		$railModuleList[1291] = array('Ad', 'Index', array('slotname' => 'MIDDLE_RIGHT_BOXAD'));
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
 
@@ -327,9 +319,6 @@ class BodyController extends WikiaController {
 		 */
 		if ( !empty( $wgEnableGamingCalendarExt ) ) {
 			$railModuleList[1430] = array( 'GamingCalendarRail', 'Index', array( ) );
-		}
-		else {
-			$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));
 		}
 
 		unset($railModuleList[1450]);

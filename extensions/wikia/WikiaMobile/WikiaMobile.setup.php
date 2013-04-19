@@ -85,8 +85,17 @@ F::build( 'JSMessages' )->registerPackage( 'WkMbl', array(
 	'wikiamobile-sharing-page-text',
 	'wikiamobile-sharing-modal-text',
 	'wikiamobile-sharing-email-text',
-	'wikiamobile-image-not-loaded'
+	'wikiamobile-image-not-loaded',
+	'wikiamobile-video-not-friendly',
+	'wikiamobile-video-not-friendly-header'
 ) );
+
+F::build( 'JSMessages' )->registerPackage( 'SmartBanner', [
+	'wikiasmartbanner-appstore',
+	'wikiasmartbanner-googleplay',
+	'wikiasmartbanner-price',
+	'wikiasmartbanner-view'
+] );
 
 /**
  * hooks
@@ -131,6 +140,8 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			//ads
 			'wgDartCustomKeyValues',
 			'cityShort',
+			'wikiaPageIsHub',
+			'wikiaPageType',
 
 			//server/wiki
 			'wgServer',
@@ -149,6 +160,7 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'wgCookiePath',
 			'wgDisableAnonymousEditing',
 			'wgNamespaceIds',
+			'wgExtensionsPath',
 
 			//article
 			'wgArticlePath',
@@ -181,4 +193,17 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'fbUseMarkup'
 		]
 	);
+}
+
+//list of Videos provides that we support
+if ( empty( $app->wg->WikiaMobileSupportedVideos ) ) {
+	$app->wg->set( 'wgWikiaMobileSupportedVideos', [
+		'screenplay',
+		'ign',
+		'ooyala',
+		'youtube',
+		'dailymotion',
+		'vimeo',
+		'bliptv'
+	]);
 }

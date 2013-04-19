@@ -1,6 +1,6 @@
 <?php
 
-class I18n extends Mustache {
+class I18n extends MustachePHP {
 
     // Variable to be interpolated
     public $name = 'Bob';

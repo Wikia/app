@@ -8,12 +8,14 @@
 				<li class="wikiaPhotoGallery-slider-<?=$key; ?>" id="wikiaPhotoGallery-slider-<?=$sliderId; ?>-<?= $key ?>">
 
 					<? if( !empty( $val['videoHtml'] ) ): ?>
+						<? // video html ?>
 						<?= $val['videoHtml'] ?>
 					<? else: ?>
+						<? // image html ?>
 						<? if ( !empty( $val['imageLink'] ) ): ?>
 							<a href='<?= $val['imageLink'] ?>'>
 						<? endif; ?>
-						<img width='<?= $val['adjWidth']; ?>' height='<?= $val['adjHeight'] ?>'  src='<?=$val['imageUrl']?>' class='wikiaPhotoGallery-slider' style="top: <?= $val['centerTop'] ?>px; margin-left: <?= $val['centerLeft'] ?>px;">
+						<img width='<?= $val['adjWidth']; ?>' height='<?= $val['adjHeight'] ?>'  src='<?=$val['imageUrl']?>' class='wikiaPhotoGallery-slider' data-image-key="<?= urlencode(htmlspecialchars($val['imageKey'])) ?>" data-image-name="<?= htmlspecialchars($val['imageName']) ?>" style="top: <?= $val['centerTop'] ?>px; margin-left: <?= $val['centerLeft'] ?>px;">
 						<? if (!empty( $val['imageLink'] ) ): ?>
 							</a>
 						<? endif; ?>

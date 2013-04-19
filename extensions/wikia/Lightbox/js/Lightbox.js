@@ -1,7 +1,5 @@
 /*global LightboxLoader:true, RelatedVideosIds, LightboxTracker*/
 
-/* TDOO: We need to normalize all readable titles and dbKeys so that we always know which one is which. This includes updating the DOM for every image and video element site-wide */
-
 (function(window, $) {
 
 var Lightbox = {
@@ -39,7 +37,7 @@ var Lightbox = {
 
 		var trackingObj = this.getClickSource(params);
 
-		Lightbox.current.title = params.title.toString(); // Added toString() for edge cases where titles are numbers
+		Lightbox.current.key = params.key.toString(); // Added toString() for edge cases where titles are numbers
 
 		Lightbox.current.carouselType = trackingObj.carouselType;
 
@@ -71,7 +69,7 @@ var Lightbox = {
 
 		// callback to finish lighbox loading
 		var updateCallback = function(json) {
-			LightboxLoader.cache.details[Lightbox.current.title] = json;
+			LightboxLoader.cache.details[Lightbox.current.key] = json;
 			Lightbox.updateMedia();
 			Lightbox.showOverlay();
 			Lightbox.hideOverlay(3000);
@@ -79,7 +77,7 @@ var Lightbox = {
 			LightboxLoader.lightboxLoading = false;
 
 			/* tracking after lightbox has fully loaded */
-			var trackingTitle = Lightbox.getTitleDbKey();
+			var trackingTitle = Lightbox.current.key;
 			LightboxTracker.track(Wikia.Tracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
 		};
 
@@ -139,7 +137,7 @@ var Lightbox = {
 				Lightbox.video.destroyVideo();
 			}
 			Lightbox.openModal.addClass('share-mode');
-			Lightbox.getShareCodes({fileTitle: Lightbox.current.title, articleTitle:wgTitle}, function(json) {
+			Lightbox.getShareCodes({fileTitle: Lightbox.current.key, articleTitle:wgTitle}, function(json) {
 				Lightbox.openModal.share.append(Lightbox.openModal.shareTemplate.mustache(json))
 					.find('input[type=text]').click(function() {
 						$(this).select();
@@ -147,7 +145,7 @@ var Lightbox = {
 					.filter('.share-input')
 					.click();
 
-				var trackingTitle = Lightbox.getTitleDbKey();
+				var trackingTitle = Lightbox.current.key;
 				LightboxTracker.track(Wikia.Tracker.ACTIONS.CLICK, 'lightboxShare', null, {title: trackingTitle, type: Lightbox.current.type});
 
 				Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
@@ -162,7 +160,7 @@ var Lightbox = {
 		// Close more info and share screens on button click
 		}).on('click.Lightbox', '.more-info-close', function(evt) {
 			if(Lightbox.current.type === 'video') {
-				LightboxLoader.getMediaDetail({fileTitle: Lightbox.current.title}, Lightbox.video.renderVideo);
+				LightboxLoader.getMediaDetail({fileTitle: Lightbox.current.key}, Lightbox.video.renderVideo);
 			}
 			Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 			Lightbox.openModal.share.html('');
@@ -222,7 +220,7 @@ var Lightbox = {
 			$.loadJQueryAutocomplete()
 		).then($.proxy(function() {
 			var input = elem.hide().next('input').show();
-			
+
 			input.autocomplete({
 				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 				onSelect: function(value, data, event) {
@@ -231,8 +229,8 @@ var Lightbox = {
 						location = wgArticlePath.
 							replace(/\$1/, valueEncoded).
 							replace(encodeURIComponent('/'), '/');
-					
-					location = location + "?action=edit&addFile=" + Lightbox.getTitleDbKey();
+
+					location = location + "?action=edit&addFile=" + Lightbox.current.key;
 
 					/*this.track({
 						eventName: 'search_start_suggest',
@@ -259,7 +257,7 @@ var Lightbox = {
 				skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 			});
 		}, this));
-	
+
 	},
 	clearTrackingTimeouts: function() {
 		// Clear video tracking timeout
@@ -315,7 +313,7 @@ var Lightbox = {
 
 				Lightbox.clearTrackingTimeouts();
 
-				var trackingTitle = Lightbox.getTitleDbKey(); // prevent race conditions from timeout
+				var trackingTitle = Lightbox.current.key; // prevent race conditions from timeout
 				Lightbox.image.trackingTimeout = setTimeout(function() {
 					Lightbox.openModal.aggregateViewCount++;
 					LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'image', Lightbox.openModal.aggregateViewCount, {title: trackingTitle, clickSource: Lightbox.openModal.clickSource});
@@ -448,7 +446,7 @@ var Lightbox = {
 
 			Lightbox.clearTrackingTimeouts();
 
-			var trackingTitle = Lightbox.getTitleDbKey(); // prevent race conditions from timeout
+			var trackingTitle = Lightbox.current.key; // prevent race conditions from timeout
 
 			/* Since we don't have an 'onload' event for video views, we're setting a timeout before counting a video as viewed.
 			 * Below are the dates this timeout has been in effect.
@@ -508,7 +506,7 @@ var Lightbox = {
 			}
 		},
 		// Determine if we should show an ad
-		showAd: function(title, type) {
+		showAd: function(key, type) {
 			// Already shown?
 			if(!this.showAds() || this.adWasShownTimes >= this.adShowMaxTimes) {
 				return false;
@@ -518,7 +516,7 @@ var Lightbox = {
 				countToLoad = this.adMediaCountPreload,
 				progress = this.adMediaProgress;
 
-			if(progress.indexOf(title) < 0) {
+			if(progress.indexOf(key) < 0) {
 				if (type !== 'video') {
 					// No ads for video content
 					if(this.adMediaShownSinceLastAd >= countToLoad) {
@@ -530,7 +528,7 @@ var Lightbox = {
 					}
 					this.adMediaShownSinceLastAd += 1;
 				}
-				progress.push(title);
+				progress.push(key);
 			}
 
 			// Not showing an ad.
@@ -638,7 +636,7 @@ var Lightbox = {
 	},
 	renderHeader: function() {
 		var headerTemplate = Lightbox.openModal.headerTemplate;
-		LightboxLoader.getMediaDetail({fileTitle: Lightbox.current.title}, function(json) {
+		LightboxLoader.getMediaDetail({fileTitle: Lightbox.current.key}, function(json) {
 			var renderedResult = headerTemplate.mustache(json);
 			Lightbox.openModal.header
 				.html(renderedResult)
@@ -684,16 +682,16 @@ var Lightbox = {
 	updateMedia: function() {
 		Lightbox.openModal.media.html("").startThrobbing();
 
-		var title = Lightbox.current.title;
+		var key = Lightbox.current.key;
 		var type = Lightbox.current.type;
 
 		// This is where ad UI may interrupt the flow
-		if(Lightbox.ads.showAd(title, type)) {
+		if(Lightbox.ads.showAd(key, type)) {
 			return;
 		}
 
 		LightboxLoader.getMediaDetail({
-			fileTitle: title,
+			fileTitle: key,
 			type: type
 		}, function(data) {
 			if(data.exists === false) {
@@ -739,7 +737,7 @@ var Lightbox = {
 		if(clear) {
 			qs.removeVal('file').replaceState();
 		} else {
-			qs.setVal('file', this.getTitleDbKey()).replaceState();		
+			qs.setVal('file', this.current.key, true).replaceState();
 		}
 	},
 
@@ -844,7 +842,12 @@ var Lightbox = {
 
 			Lightbox.current.index = idx;
 			if(idx > -1 && idx < mediaArr.length) {
-				Lightbox.current.title = mediaArr[idx].title.toString(); // Added toString() for edge cases where titles are numbers
+				var key = mediaArr[idx].key;
+				if(!key) {
+					key = mediaArr[idx].title.replace(/ /g, '_');
+					LightboxLoader.handleOldDom();
+				}
+				Lightbox.current.key = key.toString(); // Added toString() for edge cases where titles are numbers
 				Lightbox.current.type = mediaArr[idx].type;
 			}
 
@@ -943,9 +946,8 @@ var Lightbox = {
 	},
 
 	setCarouselIndex: function() {
-		var readableTitle = Lightbox.current.title.split('_').join(" ");
 		for(var i = 0; i < Lightbox.current.thumbs.length; i++) {
-			if(Lightbox.current.thumbs[i].title == readableTitle) {
+			if(Lightbox.current.thumbs[i].key == Lightbox.current.key) {
 				Lightbox.current.index = i;
 				break;
 			}
@@ -991,7 +993,7 @@ var Lightbox = {
 					}
 					shareEmailForm.find('input[type=text]').val('');
 
-					var trackingTitle = Lightbox.getTitleDbKey(); // prevent race conditions from timeout
+					var trackingTitle = Lightbox.current.key; // prevent race conditions from timeout
 					LightboxTracker.track(Wikia.Tracker.ACTIONS.SHARE, 'email', null, {title: trackingTitle, type: Lightbox.current.type});
 				}
 			});
@@ -1045,45 +1047,63 @@ var Lightbox = {
 			if(cached.length) {
 				thumbArr = cached;
 			} else {
-
 				var article = $('#WikiaArticle, #WikiaArticleComments'),
 					playButton = Lightbox.thumbPlayButton,
-					titles = [], // array to check for title dupes
+					keys = [], // array to check for title dupes
 					thumbArr = [],
 					infobox = article.find('.infobox');
-
 				// Collect images from DOM
-				var thumbs = article.find('.image, .lightbox').find('img');
-				thumbs = thumbs.add(article.find('.thumbimage'));
+				var thumbs = article.find('img[data-image-name], img[data-video-name]');
+
+				if(!thumbs.length) {
+					thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));
+					LightboxLoader.handleOldDom();
+				}
 
 				thumbs.each(function() {
 					var $thisThumb = $(this),
 						$thisParent = $thisThumb.parent(),
-						type = ($thisThumb.hasClass('Wikia-video-thumb') || $thisParent.hasClass('video')) ? 'video' : 'image',
-						title = (type == 'image') ? $thisParent.data('image-name') : $thisParent.data('video-name'),
-						playButtonSpan = (type == 'video') ? playButton : '';
-
+						type,
+						title,
+						key,
+						playButton;
 
 					if($thisThumb.closest('.ogg_player').length) {
 						return;
 					}
 
-					// (BugId:38144)
-					title = title || $thisThumb.attr('alt');
+					var videoName = $thisThumb.attr('data-video-name') || $thisThumb.parent().attr('data-video-name');
 
-					if(title) {
+					if(videoName) {
+						type = 'video';
+						title = videoName;
+						key = $thisThumb.attr('data-video-key')
+						playButtonSpan = Lightbox.thumbPlayButton;
+					} else {
+						type = 'image';
+						title = $thisThumb.attr('data-image-name') || $thisThumb.parent().attr('data-image-name');
+						key = $thisThumb.attr('data-image-key')
+						playButtonSpan = '';
+					}
+
+					if(!key) {
+						key = title && title.replace(/ /g, '_');
+						LightboxLoader.handleOldDom();
+					}
+
+					if(key) {
 						// Check for dupes
-						if($.inArray(title, titles) > -1) {
+						if($.inArray(key, keys) > -1) {
 							return true;
 						}
-						titles.push(title);
+						keys.push(key);
 
 						thumbArr.push({
 							thumbUrl: Lightbox.thumbParams($thisThumb.data('src') || $thisThumb.attr('src'), type),
 							title: title,
+							key: key,
 							type: type,
 							playButtonSpan: playButtonSpan
-							//caption: caption
 						});
 					}
 				});
@@ -1121,10 +1141,20 @@ var Lightbox = {
 					i,
 					arrLength;
 
+
 				for(i = 0, arrLength = RVI.length; i < arrLength; i++) {
+					var key = RVI[i].key,
+						title = RVI[i].title;
+
+					if(!key) {
+						key = title.replace(/ /g, '_');
+						LightboxLoader.handleOldDom();
+					}
+
 					thumbArr.push({
 						thumbUrl: Lightbox.thumbParams(RVI[i].thumb, 'video'),
-						title: RVI[i].title,
+						key: key,
+						title: title,
 						type: 'video',
 						playButtonSpan: playButton
 					});
@@ -1154,22 +1184,29 @@ var Lightbox = {
 			} else {
 
 				var thumbs = $("#LatestPhotosModule .thumbimage"),
-					titles = []; // array to check for title dupes
+					keys = []; // array to check for title dupes
 
 				thumbs.each(function() {
 					var $thisThumb = $(this),
 						thumbUrl = $thisThumb.data('src') || $thisThumb.attr('src'),
-						title = $thisThumb.parent().data('ref').replace('File:', '');
+						title = $thisThumb.attr('data-image-name'),
+						key = $thisThumb.attr('data-image-key');
 
-					if(title) {
+					if(!key) {
+						key = title && title.replace(/ /g, '_');
+						LightboxLoader.handleOldDom();
+					}
+
+					if(key) {
 						// Check for dupes
-						if($.inArray(title, titles) > -1) {
+						if($.inArray(key, keys) > -1) {
 							return true;
 						}
-						titles.push(title);
+						keys.push(key);
 
 						thumbArr.push({
 							thumbUrl: Lightbox.thumbParams(thumbUrl, 'image'),
+							key: key,
 							title: title,
 							type: 'image',
 							playButtonSpan: ''
@@ -1215,6 +1252,13 @@ var Lightbox = {
 					}
 
 					var thumbArr = json.thumbs;
+
+					for(thumb in thumbArr) {
+						if(!thumb.key) {
+							thumb.key = thumb.title && thumb.title.replace(/ /g, '_');
+							LightboxLoader.handleOldDom();
+						}
+					}
 
 					// Add thumbs to wikiPhotos cache
 					LightboxLoader.cache.wikiPhotos = LightboxLoader.cache.wikiPhotos.concat(thumbArr);
@@ -1279,10 +1323,6 @@ var Lightbox = {
 		 */
 		return Wikia.Thumbnailer.getThumbURL(url, type, 90, 55);
 
-	},
-
-	getTitleDbKey: function() {
-		return LightboxLoader.cache.details[Lightbox.current.title].title; // get dbkey title for tracking (BugId:47644)
 	},
 
 	/**

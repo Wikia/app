@@ -50,145 +50,86 @@ var LightboxLoader = {
 		}
 	},
 	videoThumbWidthThreshold: 400,
-	log: function(content) {
-		$().log(content, "LightboxLoader");
-	},
 	init: function() {
-		var clickAreas = $('#WikiaArticle, #LatestPhotosModule, #WikiaArticleComments, #RelatedVideosRL');
+		var that = this,
+			article = $('#WikiaArticle'),
+			videos = $('#RelatedVideosRL'),
+			photos = $('#LatestPhotosModule'),
+			comments = $('#WikiaArticleComments');
 
-		clickAreas.
-			off('.lightbox').
-			on('click.lightbox', function(e) {
-                LightboxLoader.handleClick(e, $(this));
+		// Bind click event to initiate lightbox
+		article.add(photos).add(videos).add(comments)
+			.off('.lightbox')
+			.on('click.lightbox', '.lightbox, a.image', function(e) {
+
+				var $this = $(this),
+					$thumb = $this.children('img').first(),
+					fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
+					parent,
+					isVideo;
+
+				if($this.hasClass('link-internal')) {
+					return;
+				}
+
+				e.preventDefault();
+
+				if($this.closest(article).length) {
+					parent = article;
+				} else if($this.closest(videos).length) {
+					parent = videos;
+				} else if($this.closest(photos).length) {
+					parent = photos;
+				} else if($this.closest(comments).length) {
+					parent = comments;
+				}
+
+				var trackingInfo = {
+					target: $this,
+					parent: parent
+				};
+
+				// Handle edge cases
+
+				// Allow links to open lightbox without a thumbnail. The link itself must contain data-image-key. Used in RelatedVideos.
+				if($this.hasClass('lightbox-link-to-open')) {
+					fileKey = $this.attr('data-image-key') || $this.attr('data-video-key');
+				// TODO: refactor wikia slideshow
+				} else if($this.hasClass('wikia-slideshow-popout')) {
+					var $slideshowImg = $this.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').find('img').first();
+					fileKey = $slideshowImg.attr('data-image-name') || $slideshowImg.attr('data-vide-name');
+				}
+
+				if(!fileKey) {
+					// might be old/cached DOM.  TODO: delete this when cache is flushed
+					fileKey = $this.attr('data-image-name') || $this.attr('data-video-name');
+					fileKey = fileKey ? fileKey.replace(/ /g, '_') : fileKey;
+					LightboxLoader.handleOldDom();
+				}
+
+				if(!fileKey) {
+					LightboxLoader.handleOldDom();
+					// TODO: add error logging code here
+					return;
+				}
+
+				// Display video inline, don't open lightbox
+				isVideo = $this.children('.Wikia-video-play-button').length;
+				if(isVideo && $thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('wikiaPhotoGallery-slider')) {
+					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, LightboxTracker.clickSource.EMBED);
+					return;
+				}
+
+				that.loadLightbox(fileKey, trackingInfo);
+
 			});
 
-	},
-	handleClick: function(ev, parent) {
-		// figure out target
-		if(LightboxLoader.lightboxLoading) {
-			ev.preventDefault();
-			return;
-		}
+		// TODO: refactor wikia slideshow (BugId:43483)
+		article.on('click.lightbox', '.wikia-slideshow-images .thumbimage, .wikia-slideshow-images .wikia-slideshow-image', function(e) {
+			e.preventDefault();
+			$(this).closest('.wikia-slideshow-wrapper').find('.wikia-slideshow-popout').click();
+		});
 
-		var target = $(ev.target),
-			trackingInfo = {
-				// Note: target can change later on but this is for tracking purposes so it doesn't matter
-				target: target,
-				parent: parent
-			}
-
-		// Expand Slideshow button functionality
-		// TODO LightboxLoader.js and WikiPhotoGallery.js needs refactoring, the conditional bellow is just a quick fix for lunching lightbox after clicking expand slideshow button
-		if (target.hasClass('wikia-slideshow-popout')) {
-			var currentSlideMediaTitle = target.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').attr('data-image-name');
-
-			trackingInfo.clickSource = LightboxTracker.clickSource.EMBED;
-			LightboxLoader.loadLightbox(currentSlideMediaTitle, trackingInfo);
-
-	        return;
-        }
-
-        // ignore ogg files
-        if( target.closest('.ogg_player').length ) {
-        	return;
-        }
-
-		// move to parent of an image -> anchor
-		if ( target.is('span') || target.is('img') ) {
-
-			// (BugId:43483) clicking on a slideshow in IE9
-			var next = target.next();
-			if(next.is('.wikia-slideshow-image')) {
-				target = next;
-			} else {
-				target = target.parent();
-				if ( target.hasClass('play') || target.hasClass('Wikia-video-thumb') ) {
-					target.addClass('image');
-				}
-			}
-		}
-
-        // move to parent of a play button
-        if (target.is('div') && (target.hasClass('playButton') || target.hasClass('Wikia-video-play-button'))) {
-            target = target.parent();
-        }
-
-		/* handle click ignore cases */
-
-		// handle clicks on links only
-		if (!target.is('a')) {
-			return;
-		}
-
-		// handle clicks on "a.lightbox, a.image" only
-		if (!target.hasClass('lightbox') && !target.hasClass('image')) {
-			return;
-		}
-
-		// don't show thumbs for gallery images linking to a page
-		if (target.hasClass('link-internal')) {
-			return;
-		}
-
-		// don't open lightbox when user do Ctrl + click (RT #48476)
-		if (ev.ctrlKey) {
-			return;
-		}
-
-		// TODO: Find out how we want to handle external images
-		/* handle shared help images and external images (ask someone who knows about this, probably Macbre) */
-		/* sample: http://lizlux.wikia.com/wiki/Help:Start_a_new_Wikia_wiki */
-		/* (BugId:981) */
-		/* note - let's not implement this for now, let normal lightbox handle it normally, and get back to it after new lightbox is complete - hyun */
-		if (target.attr('data-shared-help') || target.hasClass('link-external')) {
-			return false;
-		}
-
-		ev.preventDefault();
-
-		// get file name
-		var mediaTitle = false;
-
-		// data-image-name="Foo.jpg"
-		if (target.attr('data-image-name')) {
-			mediaTitle = target.attr('data-image-name');
-		}
-		// ref="File:Foo.jpg"
-		else if (target.attr('ref')) {
-			mediaTitle = target.attr('ref').replace('File:', '');
-		}
-		// href="/wiki/File:Foo.jpg"
-		else {
-			var re = wgArticlePath.replace(/\$1/, '(.*)');
-			var matches = target.attr('href').match(re);
-
-			if (matches) {
-				mediaTitle = matches.pop().replace('File:', '');
-			}
-
-		}
-
-		// for Video Thumbnails:
-		var targetChildImg = target.children('img').eq(0);
-		if ( targetChildImg.hasClass('Wikia-video-thumb') || target.hasClass('video') ) {
-			if ( target.data('video-name') ) {
-				mediaTitle = target.data('video-name');
-			} else if (targetChildImg.data('video')) {
-				mediaTitle = targetChildImg.data('video');
-			}
-
-			// check if we need to play video inline, and stop lightbox execution
-			if (mediaTitle && targetChildImg.width() >= LightboxLoader.videoThumbWidthThreshold && !target.hasClass('wikiaPhotoGallery-slider')) {
-				LightboxLoader.displayInlineVideo(target, targetChildImg, mediaTitle, LightboxTracker.clickSource.EMBED);
-				ev.preventDefault();
-				return false;	// stop modal dialog execution
-			}
-		}
-
-		// load modal
-		if(mediaTitle != false) {
-			LightboxLoader.loadLightbox(mediaTitle, trackingInfo);
-		}
 	},
 
 	/**
@@ -196,7 +137,6 @@ var LightboxLoader = {
 	 * @param {Object} trackingInfo Any info we've already gathered for tracking purposes.  Will be fed to Lightbox.getClickSource for processing
 	 */
 	loadLightbox: function(mediaTitle, trackingInfo) {
-
 		// restore inline videos to default state, because flash players overlaps with modal
 		LightboxLoader.removeInlineVideos();
 		LightboxLoader.lightboxLoading = true;
@@ -209,7 +149,7 @@ var LightboxLoader = {
 		openModal.find(".modalContent").startThrobbing();
 
 		var lightboxParams = {
-			title: mediaTitle,
+			key: mediaTitle,
 			modal: openModal
 		};
 
@@ -294,7 +234,7 @@ var LightboxLoader = {
 	getMediaDetail: function(mediaParams, callback, nocache) {
 		var title = mediaParams['fileTitle'];
 
-		if(LightboxLoader.cache.details[title]) {
+		if(!nocache && LightboxLoader.cache.details[title]) {
 			callback(LightboxLoader.cache.details[title]);
 		} else {
 			$.nirvana.sendRequest({
@@ -350,7 +290,7 @@ var LightboxLoader = {
 			// If Lightbox is already open, update it
 			if(openModal.length) {
 				LightboxLoader.getMediaDetail({fileTitle: fileTitle}, function(data) {
-					Lightbox.current.title = data.title;
+					Lightbox.current.key = data.title.replace(/ /g, '_');
 					Lightbox.current.type = data.mediaType;
 
 					Lightbox.setCarouselIndex();
@@ -372,6 +312,14 @@ var LightboxLoader = {
 				openModal.closeModal();
 			}
 		}
+	},
+	isOldDom: null,
+	handleOldDom: function() {
+		if(LightboxLoader.isOldDom === null) {
+			$().log("Send old DOM tracking", "Lightbox");
+			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', null, null, 'ga');
+		}
+		LightboxLoader.isOldDom = true;
 	}
 
 };
@@ -380,12 +328,12 @@ LightboxTracker = {
 	inlineVideoTrackingTimeout: 0,
 	// @param data - any extra params we want to pass to internal tracking
 	// Don't add willy nilly though... check with Jonathan.
-	track: function(action, label, value, data) {
+	track: function(action, label, value, data, method) {
 		Wikia.Tracker.track({
 			action: action,
 			category: 'lightbox',
 			label: label || '',
-			trackingMethod: 'internal',
+			trackingMethod: method || 'internal',
 			value: value || 0
 		}, data);
 	},

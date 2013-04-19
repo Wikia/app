@@ -41,7 +41,7 @@ class WAMPageHooks {
 		wfProfileIn(__METHOD__);
 		$this->init();
 
-		if( $this->isWAMPage($title) ) {
+		if( $this->model->isWAMPage($title) ) {
 			$this->app->wg->SuppressPageHeader = true;
 			$this->app->wg->SuppressWikiHeader = true;
 			$this->app->wg->SuppressRail = true;
@@ -81,10 +81,10 @@ class WAMPageHooks {
 	 * @return bool
 	 */
 	public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
-		wfProfileIn(__METHOD__);		
+		wfProfileIn(__METHOD__);
 		$this->init();
 		
-		if( $this->isWAMPage($target) ) {
+		if( $this->model->isWAMPage($target) ) {
 			$index = array_search('broken', $options);
 			unset($options[$index]);
 			$options[] = 'known';
@@ -93,37 +93,25 @@ class WAMPageHooks {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-	
-	protected function isWAMPage($title) {
-		wfProfileIn(__METHOD__);
-		$this->init();
-		$dbKey = null;
-		
-		if( $title instanceof Title ) {
-			$dbKey = mb_strtolower( $title->getDBKey() );
-		}
-
-		wfProfileOut(__METHOD__);
-		return !empty($this->EnableWAMPageExt) && in_array($dbKey, $this->model->getWamPagesDbKeysLower());
-	}
 
 	/**
 	 * Change canonical url if we are displaying WAM subpages
 	 *
 	 * @param string $url
-	 * @param Title  $title
 	 *
 	 * @return bool
 	 */
-	public function onWikiaCanonicalHref(&$url, $title) {
+	public function onWikiaCanonicalHref(&$url) {
 		wfProfileIn(__METHOD__);
 		$this->init();
 		
-		if( $title instanceof Title && $this->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
+		$title = Title::newFromURL($url);
+		if( $title instanceof Title && $this->model->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
 			$url = $this->model->getWAMMainPageUrl();
 		}
 
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+	
 }

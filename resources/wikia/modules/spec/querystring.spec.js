@@ -166,6 +166,13 @@ describe("Querystring", function () {
 		expect(qs.getVal('prefix0')).toBe('val1');
 		expect(qs.getVal('prefix1')).toBe('val2');
 
+		// URI encoding
+		qs.setVal('val', 'val&val');
+		expect(qs.getVal('val')).toBe('val%26val');
+
+		qs.setVal('val', 'val%26val', true);
+		expect(qs.getVal('val')).toBe('val%26val');
+
 		expect(qs.toString()).toContain('http//poznan.wikia.com/wiki/Gzik?');
 		expect(qs.toString()).toContain('test=test&test1=test1');
 		expect(qs.toString()).toContain('prefixA=a&prefixB=b');

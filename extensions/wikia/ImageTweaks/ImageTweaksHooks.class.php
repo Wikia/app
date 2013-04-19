@@ -134,7 +134,6 @@ class ImageTweaksHooks extends WikiaObject {
 
 		$this->wf->profileIn( __METHOD__ );
 
-
 		if (
 			/**
 			* Images SEO project
@@ -157,12 +156,6 @@ class ImageTweaksHooks extends WikiaObject {
 
 			if ( is_array( $linkAttribs ) ) {
 				if ( !empty( $file ) ) {
-					$title = $file->getTitle();
-
-					if ( $title instanceof Title ) {
-						$linkAttribs['data-image-name'] = $title->getText();
-					}
-
 					$linkAttribs['href'] = $this->wf->ReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
 					$fullImageUrl = $linkAttribs['href'];
 				}
@@ -178,6 +171,7 @@ class ImageTweaksHooks extends WikiaObject {
 					$link = $title->getLinkUrl();
 				} elseif ( !empty( $options['file-link'] ) && empty( $options['desc-link'] ) ) {
 					$linkAttribs['href'] = $this->wf->ReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
+					$linkAttribs['class'] = empty($linkAttribs['class']) ? ' lightbox' : $linkAttribs['class'] . ' lightbox';
 				}
 
 				//override any previous value if title is passed as an option
@@ -204,8 +198,8 @@ class ImageTweaksHooks extends WikiaObject {
 					$linkAttribs['class'] = 'image';
 				}
 
-				if ( !empty( $linkAttribs['data-image-name'] ) ) {
-					$imageParams['name'] = $linkAttribs['data-image-name'];
+				if ( !empty( $imageAttribs['data-image-name'] ) ) {
+					$imageParams['name'] = $imageAttribs['data-image-name'];
 				}
 
 				if ( !empty( $fullImageUrl ) ) {
@@ -215,7 +209,7 @@ class ImageTweaksHooks extends WikiaObject {
 				}
 
 				if ( !empty( $options['caption'] ) ) {
-					$imageParams['capt'] = true;
+					$imageParams['capt'] = 1;
 				}
 
 				//images set to be less than 64px are probably
@@ -239,13 +233,13 @@ class ImageTweaksHooks extends WikiaObject {
 				$html = $this->app->sendRequest(
 					'WikiaMobileMediaService',
 					'renderImageTag',
-					array(
+					[
 						'attributes' => $imageAttribs,
-						'parameters' => array( $imageParams ),
+						'parameters' => [ $imageParams ],
 						'anchorAttributes' => $linkAttribs,
 						'linked' => !empty( $link ),
 						'noscript' => $contents
-					),
+					],
 					true
 				)->toString();
 			} else {
@@ -282,12 +276,12 @@ class ImageTweaksHooks extends WikiaObject {
 				'full' => $imageAttribs['src']
 			);
 
-			if ( !empty($linkAttribs['data-video-name'] ) ) {
-				$imageParams['name'] = $linkAttribs['data-video-name'];
+			if ( !empty($imageAttribs['data-video-name'] ) ) {
+				$imageParams['name'] = $imageAttribs['data-video-name'];
 			}
 
 			if ( !empty( $options['caption'] ) ) {
-				$imageParams['capt'] = true;
+				$imageParams['capt'] = 1;
 			}
 
 			if ( $file instanceof File ) {
@@ -298,12 +292,12 @@ class ImageTweaksHooks extends WikiaObject {
 				$imageAttribs['height'] = $size['height'];
 			}
 
-			$data = array(
+			$data = [
 				'attributes' => $imageAttribs,
-				'parameters' => array( $imageParams ),
+				'parameters' => [ $imageParams ],
 				'anchorAttributes' => $linkAttribs,
 				'noscript' => $origImg
-			);
+			];
 
 			if ( $file instanceof File ) {
 				$title = $file->getTitle()->getDBKey();

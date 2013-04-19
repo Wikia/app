@@ -144,7 +144,7 @@ class FilePageController extends WikiaController {
 	public function relatedPages() {
 		$this->text = '';
 
-		if(empty($this->wg->EnableRelatedPagesExt)) {
+		if( !class_exists( 'RelatedPages' ) ) {
 			return;
 		}
 

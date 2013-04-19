@@ -1,6 +1,6 @@
 <?php
 
-class Sections extends Mustache {
+class Sections extends MustachePHP {
 	public $start = "It worked the first time.";
 
 	public function middle() {

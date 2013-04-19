@@ -95,6 +95,11 @@ class WikiaHomePageController extends WikiaController {
 		$corporateWikis = $this->helper->getVisualizationWikisData();
 		$this->selectedLang = $this->wg->ContLang->getCode();
 		$this->dropDownItems = $this->prepareDropdownItems($corporateWikis, $this->selectedLang);
+
+		if ($this->app->wg->EnableWAMPageExt) {
+			$wamModel = new WAMPageModel();
+			$this->wamPageUrl = $wamModel->getWAMMainPageUrl();
+		}
 	}
 
 	protected function prepareDropdownItems($corpWikis, $selectedLang) {

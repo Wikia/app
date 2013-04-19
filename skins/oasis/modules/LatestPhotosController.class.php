@@ -16,7 +16,7 @@ class LatestPhotosController extends WikiaController {
 	 * Just a string concatanated with other in creation of Memc Key
 	 * @var String
 	 */
-	const MEMC_KEY_VER = '1.0';
+	const MEMC_KEY_VER = '1.1';
 
 	public function executeIndex() {
 		global $wgUser, $wgMemc;
@@ -87,6 +87,7 @@ class LatestPhotosController extends WikiaController {
 		if (! isset($element['file'])) return array();
 
 		$file = $element['file'];
+		$fileTitle = $file->getTitle();
 		// crop the images correctly using extension:imageservice
 		$is = new ImageServing(array(), self::THUMB_SIZE);
 		$thumb_url = $is->getThumbnails(array($file));
@@ -97,8 +98,10 @@ class LatestPhotosController extends WikiaController {
 		$retval = array (
 			"file_url" => $element['url'],
 			"image_url" => $file->getUrl(),
+			"image_name" => $fileTitle->getText(),
+			"image_key" => $fileTitle->getDBKey(),
+			"image_filename" => $fileTitle->getFullText(),
 			"thumb_url" => $thumb_url,
-			"image_filename" => $file->getTitle()->getFullText(),
 			"user_href" => Wikia::link(Title::newFromText($userName, NS_USER), $userName),
 			"links" => $this->getLinkedFiles($file->name),
 			"isVideoThumb"  => WikiaFileHelper::isFileTypeVideo( $file ),

@@ -11,7 +11,8 @@
 		<?= wfMessage('wikiahome-footer-follow-us')->parse() ?>
 	</section>
 	<section class="grid-1">
-		<?= wfMessage('wikiahome-footer-community')->parse() ?>
+		<? $wamLink = (!empty($wamPageUrl)) ? "\n" . wfMessage('wikiahome-footer-community-wam')->params([$wamPageUrl])->text() : '' ?>
+		<?= wfMessage('wikiahome-footer-community')->params($wamLink)->parse() ?>
 	</section>
 	<section class="grid-1">
 		<?= wfMessage('wikiahome-footer-everywhere')->parse() ?>
