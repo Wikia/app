@@ -15,14 +15,14 @@
 
 <?	switch ($data['type']):
 		case 'checkbox': ?>
-			<input name="<?= $data['name'] ?>" type="checkbox" <?= $data['attributes'] ?> value="1" <? if ($data['value']):?>checked="checked"<? endif?> />
+			<input name="<?= $data['name'] ?>" type="checkbox" id="<?= $data['id'] ?>" <?= $data['attributes'] ?> value="1" <? if ($data['value']):?>checked="checked"<? endif?> />
 			<? break ?>
 	<?	case 'text':
 		case 'hidden': ?>
 			<input name="<?= $data['name'] ?>" type="<?= $data['type'] ?>" id="<?= $data['id'] ?>" <?= $data['attributes'] ?> value="<?= htmlspecialchars($data['value'])?>"/>
 			<? break; ?>
 	<?	case 'textarea': ?>
-			<textarea name="<?= $data['name'] ?>" <?= $data['attributes'] ?> ><?= htmlspecialchars($data['value'])?></textarea><? break ?>
+			<textarea name="<?= $data['name'] ?>" id="<?= $data['id'] ?>" <?= $data['attributes'] ?> ><?= htmlspecialchars($data['value'])?></textarea><? break ?>
 <?	endswitch ?>
 
 <? if (!empty($data['errorMessage'])): ?>
