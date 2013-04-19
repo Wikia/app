@@ -39,13 +39,18 @@ abstract class WikiaApiController extends WikiaController {
 			if ( $count >= 2 && $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {
 
 				if ( $count > 2 ) {
-					$origParam = $paramKeys = array_flip( array_slice( $paramKeys, 2 ) );
+					$origParam  = array_flip( array_slice( $paramKeys, 2 ) );
 
-					ksort( $paramKeys );
-					ksort( $origParam );
+					if ( array_key_exists( 'title', $origParam ) && $origParam['title'] == $_SERVER['SCRIPT_URL'] ) {
+						unset( $origParam['title'] );
+					}
+
+					$paramKeys = $origParam;
+
+					ksort( $paramKeys, SORT_NATURAL );
 
 					if ( $paramKeys !== $origParam ) {
-						throw new BadRequestApiException( 'The parameters\' order is incorrect' );
+						throw new BadRequestApiException( 'The parameters\' order is incorrect ' );
 					}
 				}
 			} else {
