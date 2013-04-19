@@ -249,6 +249,42 @@ return testframework.getTestProvider( {
 	  args = { "bar ¡foo¡foo¡ bar", '%b¡¡' },
 	  expect = { 5, 9 }
 	},
+	{ name = 'find: (%f)', func = mw.ustring.find,
+	  args = { "foo ¡foobar ¡foo bar baz", '¡.-%f[%s]' },
+	  expect = { 5, 11 }
+	},
+	{ name = 'find: (%f 2)', func = mw.ustring.find,
+	  args = { "foo ¡foobar ¡foo bar baz", '¡foo%f[%s]' },
+	  expect = { 13, 16 }
+	},
+	{ name = 'find: (%f 3)', func = mw.ustring.find,
+	  args = { "foo foo¡foobar ¡foo bar baz", '%f[%S]¡.-%f[%s]' },
+	  expect = { 16, 19 }
+	},
+	{ name = 'find: (%f 4)', func = mw.ustring.find,
+	  args = { "foo foo¡foobar ¡foo bar baz", '%f[%S]¡.-%f[%s]', 16 },
+	  expect = { 16, 19 }
+	},
+	{ name = 'find: (%f 5)', func = mw.ustring.find,
+	  args = { "foo ¡bar baz", '%f[%Z]' },
+	  expect = { 1, 0 }
+	},
+	{ name = 'find: (%f 6)', func = mw.ustring.find,
+	  args = { "foo ¡bar baz", '%f[%z]' },
+	  expect = { 13, 12 }
+	},
+	{ name = 'find: (%f 7)', func = mw.ustring.find,
+	  args = { "foo ¡b\0r baz", '%f[%Z]', 2 },
+	  expect = { 8, 7 }
+	},
+	{ name = 'find: (%f 8)', func = mw.ustring.find,
+	  args = { "\0foo ¡b\0r baz", '%f[%z]' },
+	  expect = { 8, 7 }
+	},
+	{ name = 'find: (%f 9)', func = mw.ustring.find,
+	  args = { "\0foo ¡b\0r baz", '%f[%Z]' },
+	  expect = { 2, 1 }
+	},
 	{ name = 'find: (%A)', func = mw.ustring.find,
 	  args = { "fóó? bar", '%A+' },
 	  expect = { 4, 5 }

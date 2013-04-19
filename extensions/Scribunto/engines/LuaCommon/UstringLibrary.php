@@ -244,7 +244,7 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 	}
 
 	/* Convert a Lua pattern into a PCRE regex */
-	private function patternToRegex( $pattern, $noAnchor = false ) {
+	private function patternToRegex( $pattern, $anchor ) {
 		$pat = preg_split( '//us', $pattern, null, PREG_SPLIT_NO_EMPTY );
 
 		static $charsets = null, $brcharsets = null;
@@ -307,7 +307,7 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 			switch ( $pat[$i] ) {
 			case '^':
 				$q = $i;
-				$re .= ( $noAnchor || $q ) ? '\\^' : '^';
+				$re .= ( $anchor === false || $q ) ? '\\^' : $anchor;
 				break;
 
 			case '$':
@@ -357,6 +357,19 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 						$bct++;
 						$re .= "(?<b$bct>$d1(?:(?>[^$d1$d2]+)|(?P>b$bct))*$d2)";
 					}
+				} elseif ( $pat[$i] === 'f' ) {
+					if ( $i + 1 >= $len || $pat[++$i] !== '[' ) {
+						throw new Scribunto_LuaError( "missing '[' after %f in pattern at pattern character $ii" );
+					}
+					list( $i, $re2 ) = $this->bracketedCharSetToRegex( $pat, $i, $len, $brcharsets );
+					// Because %f considers the beginning and end of the string
+					// to be \0, determine if $re2 matches that and take it
+					// into account with "^" and "$".
+					if ( preg_match( "/$re2/us", "\0" ) ) {
+						$re .= "(?<!^)(?<!$re2)(?=$re2|$)";
+					} else {
+						$re .= "(?<!$re2)(?=$re2)";
+					}
 				} elseif ( $pat[$i] >= '0' && $pat[$i] <= '9' ) {
 					$n = ord( $pat[$i] ) - 0x30;
 					if ( $n === 0 || $n > count( $capt ) || in_array( $n, $opencapt ) ) {
@@ -370,34 +383,8 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 				break;
 
 			case '[':
-				$re .= '[';
-				$i++;
-				if ( $i < $len && $pat[$i] === '^' ) {
-					$re .= '^';
-					$i++;
-				}
-				for ( ; $i < $len && $pat[$i] !== ']'; $i++ ) {
-					if ( $pat[$i] === '%' ) {
-						$i++;
-						if ( $i >= $len ) {
-							break;
-						}
-						if ( isset( $brcharsets[$pat[$i]] ) ) {
-							$re .= $brcharsets[$pat[$i]];
-						} else {
-							$re .= preg_quote( $pat[$i], '/' );
-						}
-					} elseif( $i + 2 < $len && $pat[$i + 1] === '-' && $pat[$i + 2] !== ']' ) {
-						$re .= preg_quote( $pat[$i], '/' ) . '-' . preg_quote( $pat[$i+2], '/' );
-						$i += 2;
-					} else {
-						$re .= preg_quote( $pat[$i], '/' );
-					}
-				}
-				if ( $i >= $len ) {
-					throw new Scribunto_LuaError( "Missing close-bracket for character set beginning at pattern character $ii" );
-				}
-				$re .= ']';
+				list( $i, $re2 ) = $this->bracketedCharSetToRegex( $pat, $i, $len, $brcharsets );
+				$re .= $re2;
 				$q = true;
 				break;
 
@@ -436,11 +423,44 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 		return array( $re, $capt, $anypos );
 	}
 
-	private function addCapturesFromMatch( $arr, $s, $m, $capt, $offset, $m0_if_no_captures ) {
+	private function bracketedCharSetToRegex( $pat, $i, $len, $brcharsets ){
+		$ii = $i + 1;
+		$re = '[';
+		$i++;
+		if ( $i < $len && $pat[$i] === '^' ) {
+			$re .= '^';
+			$i++;
+		}
+		for ( ; $i < $len && $pat[$i] !== ']'; $i++ ) {
+			if ( $pat[$i] === '%' ) {
+				$i++;
+				if ( $i >= $len ) {
+					break;
+				}
+				if ( isset( $brcharsets[$pat[$i]] ) ) {
+					$re .= $brcharsets[$pat[$i]];
+				} else {
+					$re .= preg_quote( $pat[$i], '/' );
+				}
+			} elseif( $i + 2 < $len && $pat[$i + 1] === '-' && $pat[$i + 2] !== ']' ) {
+				$re .= preg_quote( $pat[$i], '/' ) . '-' . preg_quote( $pat[$i+2], '/' );
+				$i += 2;
+			} else {
+				$re .= preg_quote( $pat[$i], '/' );
+			}
+		}
+		if ( $i >= $len ) {
+			throw new Scribunto_LuaError( "Missing close-bracket for character set beginning at pattern character $ii" );
+		}
+		$re .= ']';
+		return array( $i, $re );
+	}
+
+	private function addCapturesFromMatch( $arr, $s, $m, $capt, $m0_if_no_captures ) {
 		if ( count( $capt ) ) {
 			foreach ( $capt as $n => $pos ) {
 				if ( $pos ) {
-					$o = mb_strlen( substr( $s, 0, $m["m$n"][1] ), 'UTF-8' ) + $offset;
+					$o = mb_strlen( substr( $s, 0, $m["m$n"][1] ), 'UTF-8' ) + 1;
 					$arr[] = $o;
 				} else {
 					$arr[] = $m["m$n"][0];
@@ -464,31 +484,32 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 		}
 
 		if ( $init > 1 ) {
-			$s = mb_substr( $s, $init - 1, $len - $init + 1, 'UTF-8' );
+			$offset = strlen( mb_substr( $s, 0, $init - 1, 'UTF-8' ) );
 		} else {
 			$init = 1;
+			$offset = 0;
 		}
 
 		if ( $plain ) {
 			if ( $pattern !== '' ) {
-				$ret = mb_strpos( $s, $pattern, 0, 'UTF-8' );
+				$ret = mb_strpos( $s, $pattern, $init - 1, 'UTF-8' );
 			} else {
-				$ret = 0;
+				$ret = $init - 1;
 			}
 			if ( $ret === false ) {
 				return array( null );
 			} else {
-				return array( $ret + $init, $ret + $init + mb_strlen( $pattern ) - 1 );
+				return array( $ret + 1, $ret + mb_strlen( $pattern ) );
 			}
 		}
 
-		list( $re, $capt ) = $this->patternToRegex( $pattern );
-		if ( !preg_match( $re, $s, $m, PREG_OFFSET_CAPTURE ) ) {
+		list( $re, $capt ) = $this->patternToRegex( $pattern, '\G' );
+		if ( !preg_match( $re, $s, $m, PREG_OFFSET_CAPTURE, $offset ) ) {
 			return array( null );
 		}
-		$o = mb_strlen( substr( $s, 0, $m[0][1] ), 'UTF-8' ) + $init;
-		$ret = array( $o, $o + mb_strlen( $m[0][0], 'UTF-8' ) - 1 );
-		return $this->addCapturesFromMatch( $ret, $s, $m, $capt, $init, false );
+		$o = mb_strlen( substr( $s, 0, $m[0][1] ), 'UTF-8' );
+		$ret = array( $o + 1, $o + mb_strlen( $m[0][0], 'UTF-8' ) );
+		return $this->addCapturesFromMatch( $ret, $s, $m, $capt, false );
 	}
 
 	public function ustringMatch( $s, $pattern, $init = 1 ) {
@@ -503,23 +524,23 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 			$init = $len + 1;
 		}
 		if ( $init > 1 ) {
-			$s = mb_substr( $s, $init - 1, $len - $init + 1, 'UTF-8' );
+			$offset = strlen( mb_substr( $s, 0, $init - 1, 'UTF-8' ) );
 		} else {
-			$init = 1;
+			$offset = 0;
 		}
 
-		list( $re, $capt ) = $this->patternToRegex( $pattern );
-		if ( !preg_match( $re, $s, $m, PREG_OFFSET_CAPTURE ) ) {
+		list( $re, $capt ) = $this->patternToRegex( $pattern, '\G' );
+		if ( !preg_match( $re, $s, $m, PREG_OFFSET_CAPTURE, $offset ) ) {
 			return array( null );
 		}
-		return $this->addCapturesFromMatch( array(), $s, $m, $capt, $init, true );
+		return $this->addCapturesFromMatch( array(), $s, $m, $capt, true );
 	}
 
 	public function ustringGmatchInit( $s, $pattern ) {
 		$this->checkString( 'gmatch', $s );
 		$this->checkPattern( 'gmatch', $pattern );
 
-		list( $re, $capt ) = $this->patternToRegex( $pattern, true );
+		list( $re, $capt ) = $this->patternToRegex( $pattern, false );
 		return array( $re, $capt );
 	}
 
@@ -528,7 +549,7 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 			return array( $pos, array() );
 		}
 		$pos = $m[0][1] + strlen( $m[0][0] );
-		return array( $pos, $this->addCapturesFromMatch( array( null ), $s, $m, $capt, 1, true ) );
+		return array( $pos, $this->addCapturesFromMatch( array( null ), $s, $m, $capt, true ) );
 	}
 
 	public function ustringGsub( $s, $pattern, $repl, $n = null ) {
@@ -542,7 +563,7 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 			$n = 0;
 		}
 
-		list( $re, $capt, $anypos ) = $this->patternToRegex( $pattern );
+		list( $re, $capt, $anypos ) = $this->patternToRegex( $pattern, '^' );
 		$captures = array();
 
 		if ( $anypos ) {
@@ -557,7 +578,7 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 			for ( $i = 0; $i < $ct; $i++ ) {
 				$m = $mm[$i];
 				$c = array( $m[0][0] );
-				foreach ( $this->addCapturesFromMatch( array(), $s, $m, $capt, 1, false ) as $k => $v ) {
+				foreach ( $this->addCapturesFromMatch( array(), $s, $m, $capt, false ) as $k => $v ) {
 					$k++;
 					$c["m$k"] = $v;
 				}

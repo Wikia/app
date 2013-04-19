@@ -485,8 +485,8 @@ local function find( s, cps, rawpat, pattern, init, noAnchor )
 			if charsets[c] then -- A character set like '%a'
 				return match_charset( sp, pp + 2, charsets[c] )
 			elseif c == 0x62 then -- '%b': balanced delimiter match
-				d1 = pattern.codepoints[pp + 2]
-				d2 = pattern.codepoints[pp + 3]
+				local d1 = pattern.codepoints[pp + 2]
+				local d2 = pattern.codepoints[pp + 3]
 				if not d1 or not d2 then
 					error( 'malformed pattern (missing arguments to \'%b\')', 3 )
 				end
@@ -508,6 +508,18 @@ local function find( s, cps, rawpat, pattern, init, noAnchor )
 					elseif c == d1 then
 						ct = ct + 1
 					end
+				end
+			elseif c == 0x66 then -- '%f': frontier pattern match
+				if pattern.codepoints[pp + 2] ~= 0x5b then
+					error( 'missing \'[\' after %f in pattern at pattern character ' .. pp, 3 )
+				end
+				local pp, charset = parse_charset( pp + 2 )
+				local c1 = cps.codepoints[sp - 1] or 0
+				local c2 = cps.codepoints[sp] or 0
+				if not charset[c1] and charset[c2] then
+					return match( sp, pp )
+				else
+					return nil
 				end
 			elseif c >= 0x30 and c <= 0x39 then -- '%0' to '%9': backreference
 				local m, l = getcapt( c - 0x30, 'invalid capture index %' .. c .. ' at pattern character ' .. pp, 3 )
@@ -705,7 +717,7 @@ local function find( s, cps, rawpat, pattern, init, noAnchor )
 			return sp, ep - 1, unpack( captures )
 		end
 		sp = sp + 1
-	until anchor or sp > cps.len
+	until anchor or sp > cps.len + 1
 	return nil
 end
 

@@ -62,18 +62,14 @@ $pats = array(
 );
 
 $ranges = array();
-function addRange( $k, $start, $end, $arr ) {
+function addRange( $k, $start, $end ) {
 	global $X, $ranges;
 	// Speed/memory tradeoff
 	if ( !( $start >= 0x20 && $start < 0x7f ) && $end - $start >= 10 ) {
 		$ranges[$k][] = sprintf( "c >= 0x%06x and c < 0x%06x", $start, $end );
 	} else {
 		for ( $i = $start; $i < $end; $i++ ) {
-			if ( $arr ) {
-				fprintf( $X, "\t\t1,\n" );
-			} else {
-				fprintf( $X, "\t\t[0x%06x] = 1,\n", $i );
-			}
+			fprintf( $X, "\t\t[0x%06x] = 1,\n", $i );
 		}
 	}
 }
@@ -98,7 +94,6 @@ foreach ( $pats as $k => $pp ) {
 	}
 
 	fprintf( $X, "\t[0x%02x] = {\n", ord( $k ) );
-	$arr = true;
 	$rstart = null;
 	foreach ( $chars as $i => $c ) {
 		if ( preg_match( "/^$re$/u", $c ) && !preg_match( "/^$re2$/u", $c ) ) {
@@ -107,14 +102,13 @@ foreach ( $pats as $k => $pp ) {
 			}
 		} else {
 			if ( $rstart !== null ) {
-				addRange( $k, $rstart, $i, $arr );
+				addRange( $k, $rstart, $i );
 				$rstart = null;
 			}
-			$arr = false;
 		}
 	}
 	if ( $rstart !== null ) {
-		addRange( $k, $rstart, 0x110000, $arr );
+		addRange( $k, $rstart, 0x110000 );
 	}
 	fprintf( $X, "\t},\n" );
 }
