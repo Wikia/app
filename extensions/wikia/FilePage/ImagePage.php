@@ -80,7 +80,7 @@ class WikiaImagePage extends ImagePage {
 		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
 		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
 
-		// Close div from about section (opened in openShowImage)
+		// Close div from about section (opened in imageContent)
 		$out->addHTML('</div>');
 
 		$sectionClass = '';
