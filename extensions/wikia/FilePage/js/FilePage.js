@@ -110,18 +110,6 @@ var VideoPage = {
 		// temporary hiding from UI.  remove this after the GlobalUsage hook is removed as well
 		$('#globalusage, #mw-imagepage-section-globalusage').hide();
 
-		$('#SeeMore').on('click', function(e) {
-			e.preventDefault();
-			$(this).toggleClass('toggled');
-			moreInfoWrapper.toggleClass('show');
-			if(moreInfoWrapper.hasClass('show')) {
-				$table.addClass('expanded').removeClass('collapsed');
-				moreInfoWrapper.slideDown('fast');
-			} else {
-				moreInfoWrapper.slideUp('fast');
-			}
-		});
-
 		$('.WikiaMenuElement').on('click', '.remove', function(e) {
 			e.preventDefault();
 

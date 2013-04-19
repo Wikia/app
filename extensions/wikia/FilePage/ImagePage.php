@@ -21,28 +21,40 @@ class WikiaImagePage extends ImagePage {
 	 */
 	protected function showTOC( $metadata ) {
 		$app = F::app();
-
 		if(empty($app->wg->EnableVideoPageRedesign)) {
 			return parent::showTOC($metadata);
 		}
 		return '';
 	}
 
-	/**
-	 * openShowImage override.
-	 * This is called before the wikitext is printed out
-	 */
-	protected function openShowImage() {
-		$app = F::app();
+	protected function isDiffPage() {
+		$app = F::App();
+		$isDiff = false;
 
-		parent::openShowImage();
-		if(!empty($app->wg->EnableVideoPageRedesign)) {
-			$this->renderTabs();
+		if (! $app->wg->Request->getVal( 'diff' ) ) {
+			$isDiff = true;
+		}
+
+		return $isDiff;
+	}
+
+	protected function imageContent() {
+		$out = $this->getContext()->getOutput();
+		$app = F::App();
+
+		if ( !empty($app->wg->EnableVideoPageRedesign) ) {
+			$sectionClass = '';
+			if ( $this->isDiffPage() ) {
+				$this->renderTabs();
+				$sectionClass = ' class="tabBody"';
+			}
 
 			// Open div for about section (closed in imageDetails);
-			$app->wg->Out->addHtml('<div data-tab-body="about" class="tabBody">');
+			$out->addHtml('<div data-tab-body="about"' . $sectionClass . '>');
 			$this->renderDescriptionHeader();
 		}
+
+		parent::imageContent();
 	}
 
 	/**
@@ -51,22 +63,28 @@ class WikiaImagePage extends ImagePage {
 	 * This is called after the wikitext is printed out
 	 */
 	protected function imageDetails() {
-		$app = F::app();
+		$app = F::App();
+		$out = $this->getContext()->getOutput();
 
-		if(empty($app->wg->EnableVideoPageRedesign)) {
+		if ( empty($app->wg->EnableVideoPageRedesign) ) {
 			parent::imageDetails();
 			return;
 		}
 
-		$this->getContext()->getOutput()->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
-		$this->getContext()->getOutput()->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
+		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
+		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
 
 		// Close div from about section (opened in openShowImage)
-		$this->getContext()->getOutput()->addHTML('</div>');
+		$out->addHTML('</div>');
 
-		$this->getContext()->getOutput()->addHTML('<div data-tab-body="history" class="tabBody">');
+		$sectionClass = '';
+		if ( $this->isDiffPage() ) {
+			$sectionClass = ' class="tabBody"';
+		}
+
+		$out->addHTML('<div data-tab-body="history"' . $sectionClass . '>');
 		parent::imageDetails();
-		$this->getContext()->getOutput()->addHTML('</div>');
+		$out->addHTML('</div>');
 	}
 
 	/**
@@ -74,13 +92,27 @@ class WikiaImagePage extends ImagePage {
 	 * Image page doesn't need the wrapper, but WikiaFilePage does
 	 */
 	protected function imageMetadata($formattedMetadata) {
-		$this->getContext()->getOutput()->addHTML('<div data-tab-body="metadata" class="tabBody">');
+		$app = F::App();
+		$out = $this->getContext()->getOutput();
+
+		if ( empty($app->wg->EnableVideoPageRedesign) ) {
+			parent::imageMetadata($formattedMetadata);
+			return;
+		}
+
+		$sectionClass = '';
+		if ( $this->isDiffPage() ) {
+			$sectionClass = ' class="tabBody"';
+		}
+
+		$out->addHTML('<div data-tab-body="metadata"' . $sectionClass . '>');
 		parent::imageMetadata($formattedMetadata);
-		$this->getContext()->getOutput()->addHTML('</div>');
+		$out->addHTML('</div>');
 	}
 
 	protected function imageFooter() {
-		$this->getContext()->getOutput()->addHTML( F::app()->renderView( 'FilePageController', 'relatedPages', array() ) );
+		$out = $this->getContext()->getOutput();
+		$out->addHTML( F::app()->renderView( 'FilePageController', 'relatedPages', array() ) );
 	}
 
 	/**
@@ -88,31 +120,38 @@ class WikiaImagePage extends ImagePage {
 	 * for WikiaFilePage, imageListing will be printed under additionalDetails()
 	 */
 	protected function imageListing() {
-		$app = F::app();
+		$app = F::App();
 
-		if(empty($app->wg->EnableVideoPageRedesign)) {
+		if ( empty($app->wg->EnableVideoPageRedesign) ) {
 			parent::imageListing();
 			return;
 		}
-
-		// do nothing on purpose
 	}
 
 	protected function renderTabs() {
 		$app = F::app();
+		$out = $this->getContext()->getOutput();
 
 		$tabs = F::app()->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
-		$app->wg->Out->addHtml($tabs);
+		$out->addHtml($tabs);
 	}
 
 	protected function renderDescriptionHeader() {
-		// Display description text or default message
-		$content = FilePageHelper::stripCategoriesFromDescription( $this->getContent() );
-		$isContentEmpty = empty( $content );
+		$app = F::App();
+		$out = $this->getContext()->getOutput();
 
-		$html = F::app()->renderPartial( 'FilePageController', 'description', array( 'isContentEmpty' => $isContentEmpty ) );
+		// Display description text or default message, except when we're showing a diff (we want the diff to only
+		// show actual content, not template injected stuff)
+		if (! $app->wg->Request->getVal( 'diff' ) ) {
+			$content = FilePageHelper::stripCategoriesFromDescription( $this->getContent() );
+			$isContentEmpty = empty( $content );
+		} else {
+			$isContentEmpty = false;
+		}
 
-		$this->getContext()->getOutput()->addHTML( $html );
+		$html = $app->renderPartial( 'FilePageController', 'description', array( 'isContentEmpty' => $isContentEmpty ) );
+
+		$out->addHTML( $html );
 	}
 
 }
