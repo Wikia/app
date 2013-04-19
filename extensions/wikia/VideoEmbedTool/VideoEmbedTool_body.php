@@ -347,14 +347,12 @@ class VideoEmbedTool {
 		// Get the file page for this file
 		$page = WikiPage::factory( $file->getTitle() );
 
-		// Strip out the category tags so they aren't shown to the user
-		$text = preg_replace( '/\[\[Category[^\]]+\]\]/', '', $page->getText() );
+		// remove description header
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$text = $videoHandlerHelper->removeDescriptionHeader( $page->getText() );
 
-		// If we have an empty string or a bunch of whitespace, use the default description
-		// from the file metadata
-		if ( preg_match('/^\s*$/ms', $text) ) {
-			$text = $file->getMetaDescription();
-		}
+		// Strip out the category tags so they aren't shown to the user
+		$text = FilePageHelper::stripCategoriesFromDescription( $text );
 
 		return $text;
 	}
@@ -365,15 +363,10 @@ class VideoEmbedTool {
 
 		$text = $page->getText();
 
-		// Separate any category tags
-		preg_match_all( '/(\[\[Category[^\]]+\]\])/', $text, $matches );
+		// Insert description header
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$text = $videoHandlerHelper->replaceDescriptionSection( $text, $description );
 
-		$catString = '';
-		if (!empty($matches[0]) && is_array($matches[0])) {
-			$catString = "\n" . implode(' ', $matches[0]);
-		}
-
-		$text = $description . $catString;
 		$summary = 'Adding video description';
 		$status = $page->doEdit( $text, $summary );
 

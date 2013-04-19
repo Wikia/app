@@ -1,10 +1,5 @@
 <?php
-/**
- * Remove the ==Description== text from video pages that have it
- *
- * @author garth@wikia-inc.com
- * @ingroup Maintenance
- */
+/** Count all the premium title matches for youtube videos **/
 
 ini_set('display_errors', 'stderr');
 ini_set('error_reporting', E_NOTICE);
@@ -14,27 +9,15 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 class EditCLI extends Maintenance {
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Remove the description header";
-		$this->addOption( 'user', 'Username', false, true, 'u' );
-		$this->addOption( 'test', 'Test', false, false, 't' );
+		$this->mDescription = "Count all the premium title matches for youtube videos";
 	}
 
 	public function execute() {
 		global $wgUser;
 
-		$userName = $this->getOption( 'user', 'Maintenance script' );
-		$test = $this->hasOption('test');
-
-		$wgUser = User::newFromName( $userName );
-		if ( !$wgUser ) {
-			$this->error( "Invalid username", true );
-		}
-		if ( $wgUser->isAnon() ) {
-			$wgUser->addToDatabase();
-		}
-
 		$dbs = wfGetDB(DB_SLAVE);
 		if (!is_null($dbs)) {
+			global $wgCityId;
 
 			# Find all video file pages
 			$query = "select page_id " .
