@@ -1,6 +1,7 @@
 var CollectionsSetup = function() {};
 
 CollectionsSetup.prototype = {
+	nav: undefined,
 	init: function() {
 		// TODO change select when field name is fixed
 		var checkboxes = $('#collectionsSetupForm input[name="enabled"]');
@@ -9,6 +10,8 @@ CollectionsSetup.prototype = {
 		checkboxes.each($.proxy(function(i, elem){
 			this.handleToggleEnabled({target: elem});
 		}, this));
+
+		this.nav = new CollectionsNavigation('.collection-module');
 	},
 
 	handleToggleEnabled: function(event) {

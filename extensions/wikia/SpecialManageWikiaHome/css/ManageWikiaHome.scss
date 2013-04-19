@@ -41,6 +41,8 @@
 	.collection-module {
 		@include module-box;
 
+		position: relative;
+
 		.input-group {
 			@include clearfix;
 			float: none;
@@ -57,6 +59,10 @@
 					background-color: mix($color-page-opposite, $color-page, 15%);
 				}
 			}
+		}
+
+		.navigation {
+			@include navigation;
 		}
 	}
 }
