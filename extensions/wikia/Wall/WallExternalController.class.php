@@ -181,7 +181,6 @@ class WallExternalController extends WikiaController {
 		 */
 		$titleMeta = strip_tags( $this->request->getVal( 'messagetitle', null ) );
 		$titleMeta = substr($titleMeta, 0, 200);
-		$notifyEveryone = $this->request->getVal('notifyeveryone', false) == 1;
 		
 		$body = $this->getConvertedContent($this->request->getVal('body'));
 
@@ -198,6 +197,11 @@ class WallExternalController extends WikiaController {
 			$this->response->setVal('status', false);
 			$this->app->wf->ProfileOut(__METHOD__);
 			return true;
+		}
+
+		$notifyEveryone = false;
+		if ($helper->isAllowedNotifyEveryone($this->wg->Title->getNamespace(), $this->wg->User)) {
+			$notifyEveryone = $this->request->getVal('notifyeveryone', false) == 1;
 		}
 		
 		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace')), 'newFromText');  
