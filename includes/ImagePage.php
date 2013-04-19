@@ -132,9 +132,6 @@ class ImagePage extends Article {
 			$showmeta = $formattedMetadata !== false;
 		} else {
 			$showmeta = false;
-			/* Wikia change begin */
-			$formattedMetadata = false;
-			/* Wikia change end */
 		}
 
 		/* Wikia change begin */
