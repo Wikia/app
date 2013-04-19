@@ -65,11 +65,7 @@
 				</div>
 			<? endfor ?>
 
-<<<<<<< HEAD
-			<input type="submit" name="collections" value="<?= wfMsg('manage-wikia-home-collections-setup-save-button'); ?>" />
-=======
-			<input type="submit" value="<?= wfMessage('manage-wikia-home-collections-setup-save-button')->text(); ?>" />
->>>>>>> CON-22 | Fixed after design review
+			<input type="submit" name="collections" value="<?= wfMessage('manage-wikia-home-collections-setup-save-button')->text(); ?>" />
 		</form>
 	</div>
 
