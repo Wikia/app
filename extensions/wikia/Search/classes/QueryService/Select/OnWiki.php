@@ -51,6 +51,7 @@ class OnWiki extends AbstractSelect
 		            ->registerHighlighting  ( $query )
 		            ->registerFilterQueries ( $query )
 		            ->registerSpellcheck    ( $query )
+		            ->registerDismax        ( $query )
 		;
 	}
 	
@@ -115,7 +116,7 @@ class OnWiki extends AbstractSelect
 	 * @return string
 	 */
 	protected function getFormulatedQuery() {
-		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->getNestedQuery() );
+		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
 	}
 	
 	/**
