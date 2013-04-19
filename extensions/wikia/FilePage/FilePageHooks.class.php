@@ -29,33 +29,26 @@ class FilePageHooks extends WikiaObject{
 	}
 
 
-	/**
-	 * Load JS wtih OasisSkinAssetGroups
-	 */
-	static public function onOasisSkinAssetGroups( &$jsAssetGroups ) {
-		$app = F::app();
 
-		// this is only called in Oasis, so there's no need to double-check it
-		if( !empty($app->wg->EnableVideoPageRedesign) && $app->wg->Title->getNamespace() == NS_FILE ) {
-			$jsAssetGroups[] = 'file_page_js';
-		}
-		return true;
-	}
 	/**
-	 * Load CSS with BeforePageDisplay
+	 * Add JS and CSS to File Page
 	 */
 	public function onBeforePageDisplay( OutputPage $out, $skin ) {
-		wfProfileIn(__METHOD__);
-
 		$app = F::app();
 
-		// load assets when File Page redesign is enabled, on oasis, and on the File Page
-		if( !empty($app->wg->EnableVideoPageRedesign) && $app->checkSkin( 'oasis', $skin ) && $app->wg->Title->getNamespace() == NS_FILE ) {
-			$assetsManager = AssetsManager::getInstance();
+		wfProfileIn(__METHOD__);
+		// load assets when File Page redesign is enabled and on the File Page
+		if( !empty($app->wg->EnableVideoPageRedesign) && $app->wg->Title->getNamespace() == NS_FILE ) {
+			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 			$scssPackage = 'file_page_css';
+			$jsPackage = 'file_page_js';
 
 			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
 				$out->addStyle( $url );
+			}
+
+			foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
+				$out->addScript( "<script src=\"{$url}\"></script>" );
 			}
 		}
 

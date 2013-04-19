@@ -39,5 +39,4 @@ $app->registerHook( 'SkinTemplateNavigation', 'FilePageHooks', 'onSkinTemplateNa
 $app->registerHook( 'GlobalUsageFormatItemWikiLink', 'FilePageHooks', 'onGlobalUsageFormatItemWikiLink' );
 $app->registerHook( 'GlobalUsageImagePageWikiLink', 'FilePageHooks', 'onGlobalUsageImagePageWikiLink' );
 $app->registerHook( 'GlobalUsageLinksUpdateComplete', 'FilePageHooks', 'onGlobalUsageLinksUpdateComplete' );
-$app->registerHook( 'OasisSkinAssetGroups', 'FilePageHooks', 'onOasisSkinAssetGroups' );
 $app->registerHook( 'BeforePageDisplay', 'FilePageHooks', 'onBeforePageDisplay' );

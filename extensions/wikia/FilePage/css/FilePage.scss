@@ -110,14 +110,19 @@ table.mw_metadata {
 	display: none;
 }
 
+ul.tabs {
+	margin: 20px 0;
+}
+
 /* monobook styling */
 .skin-monobook {
 	.page-listing .grid-1 {
 		float: left;
 		margin-right: 10px;
 	}
+	ul.tabs {
+		display: none;
+	}
 }
 
-ul.tabs {
-	margin: 20px 0;
-}
+
