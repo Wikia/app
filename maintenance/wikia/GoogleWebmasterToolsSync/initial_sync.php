@@ -10,13 +10,15 @@
 global $IP;
 require_once( __DIR__."/configure_log_file.php" );
 GWTLogHelper::notice( __FILE__ . " script starts.");
+$minCountOfPagesToSync = 100;
+
 try {
 	global $wgExternalSharedDB, $wgDatamartDB;
 	$app = F::app();
 	$dbmart = $app->wf->getDB( DB_SLAVE, array(), $wgDatamartDB);
 	$db = $app->wf->getDB( DB_MASTER, array(), $wgExternalSharedDB);
 
-	$query = "select wiki_id, count(article_id) as page_count from rollup_wiki_article_pageviews group by wiki_id having count(article_id) >= 1";
+	$query = "select wiki_id, count(article_id) as page_count from rollup_wiki_article_pageviews group by wiki_id having count(article_id) >= $minCountOfPagesToSync";
 	$result = $dbmart->query($query);
 
 	function fetchGroup ( $result, $count ) {

@@ -6,7 +6,7 @@ $optionsWithArgs = array( 'm' );
 require_once( __DIR__."/configure_log_file.php" );
 GWTLogHelper::notice( __FILE__ . " script starts.");
 try {
-	$max_wikis_to_sync = 10;
+	$max_wikis_to_sync = 1000;
 
 	if( isset( $options['m'] ) ) {
 		$max_wikis_to_sync = intval( $options['m'] );

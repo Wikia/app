@@ -118,7 +118,7 @@ try {
 				tryInsertWiki( $db, $site );
 				tryUpdateWiki( $db, $site, $u );
 				GWTLogHelper::notice( "Insert: $site as " . $u->getEmail() );
-				if( $count %100 == 0 ) sleep( 1 );
+				if( $count % 50 == 0 ) sleep( 1 ); // slow down
 				//echo $u->getEmail() . " " . $site . " success \n";
 			} catch( Exception $e ) {
 				GWTLogHelper::error( $u->getEmail() . " " . $site . " failed.", $e );
