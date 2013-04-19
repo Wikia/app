@@ -47,13 +47,16 @@ class VideoHandlerHelper extends WikiaModel {
 		// Grab everything after the description header
 		preg_match("/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches);
 
-		// Get rid of any H2 headings after the description
-		$newContent = preg_replace('/^==[^=]+==.*/sm', '', $matches[1]);
+		$newContent = '';
+		if (!empty($matches[1])) {
+			// Get rid of any H2 headings after the description
+			$newContent = preg_replace('/^==[^=]+==.*/sm', '', $matches[1]);
+		}
 
 		return $newContent;
 	}
 
-	public function replaceDescriptionSection( $content, $descText ) {
+	public function replaceDescriptionSection( $content, $descText = '' ) {
 		$headerText = $this->wf->Message( 'videohandler-description' );
 
 		$preText = preg_replace("/^==\s*$headerText\s*==\n*(.+)/sim", '', $content);
@@ -62,14 +65,17 @@ class VideoHandlerHelper extends WikiaModel {
 		preg_match("/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches);
 
 		// From the above match (if it was successful) try to grab the next H2 heading and below
-		if (!empty($matches[1])) {
+		if (empty($matches[1])) {
+			$postText = $preText;
+			$preText = '';
+		} else {
 			preg_match('/^(==[^=]+==.*)/sm', $matches[1], $postMatch);
+
+			// If we got anything, save it for the final reconstruction
+			$postText = empty($postMatch[1]) ? '' : $postMatch[1];
 		}
 
-		// If we got anything, save it for the final reconstruction
-		$postText = empty($postMatch[1]) ? '' : $postMatch[1];
-
-		return $preText."== $headerText ==\n".$descText.$postText;
+		return $preText."\n== $headerText ==\n".$descText.$postText;
 	}
 
 	/**
