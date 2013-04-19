@@ -1,12 +1,7 @@
 <div class="module-popular-videos">
 	<div class="one-input-box">
 		<div class="module-right-box grid-4 alpha">
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['header'])
-				);
-			?>
+			<?= $form->renderField('header') ?>
 		</div>
 	</div>
 	

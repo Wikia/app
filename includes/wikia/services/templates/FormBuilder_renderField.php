@@ -19,7 +19,7 @@
 			<? break ?>
 		<? case 'text':
 		case 'hidden': ?>
-			<input name="<?= $data['name'] ?>" type="<?= $data['type'] ?>" <?= $data['attributes'] ?> value="<?= htmlspecialchars($data['value'])?>"/>
+			<input name="<?= $data['name'] ?>" type="<?= $data['type'] ?>" id="<?= $data['id'] ?>" <?= $data['attributes'] ?> value="<?= htmlspecialchars($data['value'])?>"/>
 			<? break; ?>
 	<?	case 'textarea': ?>
 			<textarea name="<?= $data['name'] ?>" <?= $data['attributes'] ?> ><?= htmlspecialchars($data['value'])?></textarea><? break ?>

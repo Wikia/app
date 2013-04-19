@@ -155,8 +155,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$selectedModuleData['values'] = $this->request->getParams();
 			$selectedModuleData['values'] = $module->filterData($selectedModuleData['values']);
 
-			$selectedModuleData['validationErrors'] = $form->validate($selectedModuleData['values']);
-			if (empty($selectedModuleData['validationErrors'])) {
+			$hasError = $form->validate($selectedModuleData['values']);
+			if (!$hasError) {
 				$this->toolboxModel->saveModule(
 					$this->langCode,
 					$this->sectionId,

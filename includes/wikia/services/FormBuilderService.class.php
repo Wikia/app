@@ -9,9 +9,13 @@
 class FormBuilderService extends WikiaService
 {
 	public $formFields = [];
+	private $prefix;
 
-	public function __construct() {
+	public function __construct($prefix = '') {
+		// TODO: remove mocked data after testing
 		$this->formFields = $this->getMockedData();
+
+		$this->prefix = $prefix;
 	}
 
 	public function setFields($formFields) {
@@ -22,14 +26,26 @@ class FormBuilderService extends WikiaService
 		return $this->formFields;
 	}
 
+	public function setField($fieldName, $field) {
+		$this->formFields[$fieldName] = $field;
+	}
+
+	public function setFieldProperty($fieldName, $propertyName, $propertyValue) {
+		$this->formFields[$fieldName][$propertyName] = $propertyValue;
+	}
+
 	public function getField($fieldName) {
 		return $this->formFields[$fieldName];
 	}
 
-	protected function setFieldError($fieldName, $errorMessage) {
-		$this->formFields[$fieldName]['errorMessage'] = $errorMessage;
-	}
+	public function setFieldsValues($values) {
+		$formFields = $this->getFields();
 
+		foreach ( $formFields as $name => $field ) {
+			$value = (isset($values[$name])) ? $values[$name] : '';
+			$this->setFieldProperty($name, 'value', $value);
+		}
+	}
 
 	// TODO rethink if this should be here
 	public function filterData($data) {
@@ -39,7 +55,7 @@ class FormBuilderService extends WikiaService
 	}
 
 	public function validate($data) {
-		$out = array();
+		$hasError = false;
 		$fields = $this->getFields();
 
 		foreach ($fields as $fieldName => $field) {
@@ -53,32 +69,28 @@ class FormBuilderService extends WikiaService
 				if (!$field['validator']->isValid($fieldData)) {
 					$validationError = $field['validator']->getError();
 
-					if( !empty($field['isArray']) ) {
-						$out[$fieldName] = array();
-
+					if ( !empty($field['isArray']) ) {
 						foreach ($validationError as $key => $error) {
 							if (is_array($error)) {
 								// maybe in future we should handle many errors from one validator,
 								// but actually we don't need  this feature
 								$error = array_shift(array_values($error));
 							}
-							$out[$fieldName][$key] = $error->getMsg();
+							if (!empty($error)) {
+								$this->setFieldProperty($fieldName, 'errorMessage', $error->getMsg());
+								$hasError = true;
+							}
 						}
 					} else {
-						$out[$fieldName] = $validationError->getMsg();
+						if (!empty($validationError)) {
+							$this->setFieldProperty($fieldName, 'errorMessage', $validationError->getMsg());
+							$hasError = true;
+						}
 					}
-					$this->setFieldError($fieldName, $out[$fieldName]);
 				}
 			}
 		}
-
-		return $out;
-	}
-
-	public function setFieldsValues($values) {
-		foreach ( $this->formFields as $name => &$field ) {
-			$field['value'] = (isset($values[$name])) ? $values[$name] : '';
-		}
+		return $hasError;
 	}
 
 	/**
@@ -103,16 +115,16 @@ class FormBuilderService extends WikiaService
 	 *
 	 * @param $field Array Field array with parameters
 	 *
-	 * @requestParam type string				[REQUIRED] field type (text, textarea etc.)
-	 * @requestParam name string				[REQUIRED] field name
-	 * @requestParam label array				[OPTIONAL] array('class' => 'labelClass', 'text' => 'labelText')
-	 * @requestParam attributes array			[OPTIONAL] array with attributes ('class' => 'fieldClass', 'id' => 'fieldId') etc.
+	 * @requestParam type string				[OPTIONAL] field type (text, textarea etc.) | default text
+	 * @requestParam label string				[OPTIONAL] label text
+	 * @requestParam labelclass string			[OPTIONAL] label class
+	 * @requestParam attributes array			[OPTIONAL] array with input attributes etc.
 	 * @requestParam validator WikiaValidator 	[OPTIONAL]
 	 * @requestParam icon boolean				[OPTIONAL]
 	 *
 	 * @return WikiaView
 	 */
-	public function renderField( $fieldName ) {
+	public function renderField( $fieldName, $index = 0 ) {
 		$field = $this->getField($fieldName);
 
 		// TODO: set default values or throw exception ?
@@ -120,6 +132,18 @@ class FormBuilderService extends WikiaService
 			$field['type'] = 'text';
 		}
 		$field['name'] = $fieldName;
+		$field['id'] = $this->prefix . $fieldName;
+
+		if (!empty($field['isArray'])) {
+			$field['name'] .= '[]';
+			$field['id'] .= $index;
+
+			$value = isset($field['value'][$index]) ? $field['value'][$index] : '';
+			$errorMessage = isset($field['errorMessage'][$index]) ? $field['errorMessage'][$index] : '';
+
+			$this->setFieldProperty($fieldName, 'value', $value);
+			$this->setFieldProperty($fieldName, 'errorMessage', $errorMessage);
+		}
 
 		// TODO add 'id' to fields
 
