@@ -33,17 +33,19 @@ abstract class WikiaApiController extends WikiaController {
 	 */
 	final public function init() {
 		if ( !$this->request->isInternal() ) {
-			$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
+			$paramKeys = F::app()->wg->Request->getQueryValues();
+
+			//this is special to mediawiki should never be used in API calls
+			unset( $paramKeys['title'] );
+
+			$paramKeys = array_keys( $paramKeys );
+
 			$count = count( $paramKeys );
 
 			if ( $count >= 2 && $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {
 
 				if ( $count > 2 ) {
 					$origParam  = array_flip( array_slice( $paramKeys, 2 ) );
-
-					if ( array_key_exists( 'title', $origParam ) && $origParam['title'] == $_SERVER['SCRIPT_URL'] ) {
-						unset( $origParam['title'] );
-					}
 
 					$paramKeys = $origParam;
 
