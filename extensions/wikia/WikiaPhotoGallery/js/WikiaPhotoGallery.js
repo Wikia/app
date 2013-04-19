@@ -1765,6 +1765,10 @@
 					self.track({
 						label: 'rss-feed-url'
 					});
+				} else if (paramName == 'showrecentuploads') {
+					self.track({
+						label: 'create-automatic'
+					});
 				}
 
 				if (typeof callback == 'function') {
