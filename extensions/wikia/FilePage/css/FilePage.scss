@@ -5,6 +5,7 @@
 
 .page-listings {
 	@include clearfix;
+	clear: both;
 	ul {
 		list-style: none;
 		margin: 0;
