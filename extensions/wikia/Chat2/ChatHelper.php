@@ -178,6 +178,7 @@ class ChatHelper {
 
 		$user = User::newFromId($id);
 		if(!empty($user)) {
+			$tools[] = Linker::link(SpecialPage::getSafeTitleFor('Log', 'block'), wfMsgHtml( 'chat-chatban-log' ), array('class' => 'chat-ban-log'), array('page' => $user->getUserPage()->getPrefixedText())); # Add chat ban log link (@author: Sactage)
 			if(Chat::getBanInformation($wgCityId, $user) !== false ) {
 				$dir = "change";
 				LogEventsList::showLogExtract(
