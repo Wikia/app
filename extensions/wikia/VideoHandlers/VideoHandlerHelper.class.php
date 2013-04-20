@@ -75,7 +75,13 @@ class VideoHandlerHelper extends WikiaModel {
 			$postText = empty($postMatch[1]) ? '' : $postMatch[1];
 		}
 
-		return $preText."\n== $headerText ==\n".$descText.$postText;
+		// If there's no newline at the end of the preText, add one so our '==' wiki text
+		// header shows up properly
+		if (! preg_match('/\n$/', $preText)) {
+			$preText .= "\n";
+		}
+
+		return $preText."== $headerText ==\n".$descText.$postText;
 	}
 
 	/**
