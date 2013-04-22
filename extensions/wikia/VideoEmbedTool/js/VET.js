@@ -1130,10 +1130,13 @@
 		.on('click.VET', '#VideoEmbedUrlSubmit', VET_preQuery)
 		.on('click.VET', '#VideoEmbedRenameButton, #VideoEmbedExistingButton, #VideoEmbedOverwriteButton', VET_insertFinalVideo)
 		.on('click.VET', '.vet-close', function(e) {
+			var $target = $(e.target),
+				label = $target.attr('id') === 'VideoEmbedCloseButton' ? 'success-button-return' : 'button-close';
+
 			e.preventDefault();
 
 			VET_tracking({
-				label: 'button-close'
+				label: label
 			});
 
 			VET_close();
