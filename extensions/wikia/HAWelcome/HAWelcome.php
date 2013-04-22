@@ -415,7 +415,7 @@ class HAWelcomeJob extends Job {
                 ? $this->oRecipientTalkPage->getContent() . PHP_EOL . $this->sMessage
                 : $this->sMessage;
             // Do the edit.
-            $this->oRecipientTalkPage->doEdit( $sMessage, wfMessage( 'welcome-message-log' )->text(), $this->iFlags );
+            $this->oRecipientTalkPage->doEdit( $sMessage, wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), $this->iFlags );
             // Restore the original active user object.
             $wgUser = $tmp;
         }
