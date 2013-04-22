@@ -39,7 +39,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wf->ProfileIn(__METHOD__);
-		$this->wg->Out->setPageTitle(wfMsg('managewikiahome'));
+		$this->wg->Out->setPageTitle(wfMessage('managewikiahome')->text());
 
 		if( !$this->checkAccess() ) {
 			$this->wf->ProfileOut(__METHOD__);
@@ -77,9 +77,9 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				$total = intval($videoGamesAmount) + intval($entertainmentAmount) + intval($lifestyleAmount);
 
 				if ($total !== WikiaHomePageHelper::SLOTS_IN_TOTAL) {
-					$this->setVal('errorMsg', wfMsg('manage-wikia-home-error-invalid-total-no-of-slots', array($total, WikiaHomePageHelper::SLOTS_IN_TOTAL)));
+					$this->setVal('errorMsg', wfMessage('manage-wikia-home-error-invalid-total-no-of-slots')->params(array($total, WikiaHomePageHelper::SLOTS_IN_TOTAL))->text());
 				} elseif ( $this->isAnySlotNumberNegative($videoGamesAmount, $entertainmentAmount, $lifestyleAmount) ) {
-					$this->setVal('errorMsg', wfMsg('manage-wikia-home-error-negative-slots-number-not-allowed'));
+					$this->setVal('errorMsg', wfMessage('manage-wikia-home-error-negative-slots-number-not-allowed')->text());
 				} else {
 					$this->saveSlotsConfigInWikiFactory($this->corpWikiId,
 						$visualizationLang,
@@ -100,7 +100,9 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 					$collectionSavedValues = $this->prepareCollectionForSave($collectionValues);
 					$collectionsModel->saveAll($this->visualizationLang, $collectionSavedValues);
 
-					//TODO: msg if saved
+					$this->setVal('infoMsg', wfMessage('manage-wikia-home-collections-success')->text());
+				} else {
+					$this->setVal('errorMsg', wfMessage('manage-wikia-home-collections-failure')->text());
 				}
 			}
 		}
@@ -215,7 +217,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		if( in_array(false, $statusArr) ) {
 			Wikia::log(__METHOD__, false, "A problem with saving WikiFactory variable(s) occured. Status array: " . print_r($statusArr, true));
-			$this->setVal('errorMsg', wfMsg('manage-wikia-home-error-wikifactory-failure'));
+			$this->setVal('errorMsg', wfMessage('manage-wikia-home-error-wikifactory-failure')->text());
 		} else {
 			$visualization = F::build('CityVisualization'); /** @var $visualization CityVisualization */
 			//todo: put purging those caches to CityVisualization class and fire here only one its method here
@@ -228,7 +230,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			//purge visualization list cache
 			$visualization->purgeVisualizationWikisListCache($corpWikiId, $corpWikiLang);
 
-			$this->setVal('infoMsg', wfMsg('manage-wikia-home-wikis-in-slots-success'));
+			$this->setVal('infoMsg', wfMessage('manage-wikia-home-wikis-in-slots-success')->text());
 
 			$result = true;
 		}
@@ -354,6 +356,25 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return $form;
 	}
 
+	/**
+	 * Preparing data received from collection's form to array, which could be easily use to insert data
+	 * to database or update already existing data.
+	 *
+	 * Example:
+	 *
+	 * We get array(
+	 * 			'fieldName1' => array(value1, value2, ... ),
+	 * 			'fieldName2' => array(value1, value2, ... )
+	 * 		  )
+	 *
+	 * We want array(
+	 * 			array('fieldName1' => value1, 'fieldName2' => value1),
+	 * 			array('fieldName1' => value2, 'fieldName2' => value2)
+	 * 		  )
+	 *
+	 * @param array $collectionValues data from form collection's form
+	 * @return array $collections data to save
+	 */
 	private function prepareCollectionForSave($collectionValues) {
 		$collections = [];
 
@@ -366,6 +387,25 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return $collections;
 	}
 
+	/**
+	 * Preparing data received from database to array, which could be easily use to display
+	 * values in form
+	 *
+	 * Example
+	 *
+	 * We get array(
+	 * 			array('fieldName1' => value1, 'fieldName2' => value1),
+	 * 			array('fieldName1' => value2, 'fieldName2' => value2)
+	 * 		  )
+	 *
+	 * We want array(
+	 * 			'fieldName1' => array(value1, value2, ... ),
+	 * 			'fieldName2' => array(value1, value2, ... )
+	 * 		  )
+	 *
+	 * @param array $collections data from database
+	 * @return array $collectionValues data to display
+	 */
 	private function prepareCollectionToShow($collections) {
 		$collectionValues = [];
 

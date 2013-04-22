@@ -16,22 +16,22 @@
 
 	<hr />
 
+	<?php if( !empty($errorMsg) ): ?>
+    <p class="error">
+		<?= $errorMsg; ?>
+    </p>
+	<?php endif; ?>
+
+	<?php if( !empty($infoMsg) ): ?>
+    <p class="success">
+		<?= $infoMsg; ?>
+    </p>
+	<?php endif; ?>
+
 	<div class="slots-setup">
 		<h2 class="heading">
 			<?= wfMessage('manage-wikia-home-wikis-in-slots-heading')->text() ?>
 		</h2>
-
-		<?php if( !empty($errorMsg) ): ?>
-		<p class="error">
-			<?= $errorMsg; ?>
-		</p>
-		<?php endif; ?>
-
-		<?php if( !empty($infoMsg) ): ?>
-		<p class="success">
-			<?= $infoMsg; ?>
-		</p>
-		<?php endif; ?>
 
 		<p>
 			<?= wfMessage('manage-wikia-home-wikis-in-slots-total')->text(); ?>
