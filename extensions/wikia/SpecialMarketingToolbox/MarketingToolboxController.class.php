@@ -135,9 +135,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->response->addAsset('/resources/jquery/jquery.validate.js');
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/jquery.MetaData.js');
 
-		$selectedModuleData = array(
-			'values' => $modulesData['moduleList'][$this->selectedModuleId]['data']
-		);
+		$selectedModuleValues = $modulesData['moduleList'][$this->selectedModuleId]['data'];
 
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$this->toolboxModel->getNotTranslatedModuleName($this->selectedModuleId),
@@ -149,13 +147,11 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$form = new FormBuilderService(MarketingToolboxModel::FORM_FIELD_PREFIX);
 		$form->setFields($module->getFormFields());
 
-		$selectedModuleData['validationErrors'] = array();
-
 		if ($this->request->wasPosted()) {
-			$selectedModuleData['values'] = $this->request->getParams();
-			$selectedModuleData['values'] = $module->filterData($selectedModuleData['values']);
+			$selectedModuleValues = $this->request->getParams();
+			$selectedModuleValues = $module->filterData($selectedModuleValues);
 
-			$isValid = $form->validate($selectedModuleData['values']);
+			$isValid = $form->validate($selectedModuleValues);
 			if ($isValid) {
 				$this->toolboxModel->saveModule(
 					$this->langCode,
@@ -163,7 +159,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 					$this->verticalId,
 					$this->date,
 					$this->selectedModuleId,
-					$selectedModuleData['values'],
+					$selectedModuleValues,
 					$this->wg->user->getId()
 				);
 
@@ -177,9 +173,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				$this->errorMessage = $this->wf->msg('marketing-toolbox-module-save-error');
 			}
 		}
-		$form->setFieldsValues($selectedModuleData['values']);
+		$form->setFieldsValues($selectedModuleValues);
 		$this->moduleName = $modulesData['activeModuleName'];
-		$selectedModuleData['form'] = $form;
 		$this->moduleContent = $module->renderEditor(['form' => $form]);
 
 		$this->overrideTemplate('editHub');
