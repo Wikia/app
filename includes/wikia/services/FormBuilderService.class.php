@@ -1,41 +1,77 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: lukasz
- * Date: 17.04.13
- * Time: 17:22
- * To change this template use File | Settings | File Templates.
- */
+
 class FormBuilderService extends WikiaService
 {
 	public $formFields = [];
 	private $prefix;
 
+	/**
+	 * Constructor
+	 *
+	 * @param string $prefix form name
+	 * @param array $fields  array of form fields
+	 */
 	public function __construct($prefix = '', $fields = []) {
 		$this->prefix = $prefix;
 		$this->setFields($fields);
 	}
 
+	/**
+	 * Set fields
+	 *
+	 * @param $formFields
+	 */
+	// TODO add actual field definition structure in docblock
+	// TODO change fields into Objects in near future
 	public function setFields($formFields) {
 		$this->formFields = $formFields;
 	}
 
+	/**
+	 * Get defined fields
+	 *
+	 * @return array
+	 */
 	public function getFields() {
 		return $this->formFields;
 	}
 
+	/**
+	 * Set field
+	 *
+	 * @param $fieldName
+	 * @param $field
+	 */
 	public function setField($fieldName, $field) {
 		$this->formFields[$fieldName] = $field;
 	}
 
+	/**
+	 * Set field Property
+	 *
+	 * @param $fieldName
+	 * @param $propertyName
+	 * @param $propertyValue
+	 */
 	public function setFieldProperty($fieldName, $propertyName, $propertyValue) {
 		$this->formFields[$fieldName][$propertyName] = $propertyValue;
 	}
 
+	/**
+	 * Get field
+	 *
+	 * @param $fieldName
+	 * @return mixed
+	 */
 	public function getField($fieldName) {
 		return $this->formFields[$fieldName];
 	}
 
+	/**
+	 * Setter for fields values
+	 *
+	 * @param array $values
+	 */
 	public function setFieldsValues($values = []) {
 		$formFields = $this->getFields();
 
@@ -45,13 +81,24 @@ class FormBuilderService extends WikiaService
 		}
 	}
 
-	// TODO rethink if this should be here
+	/**
+	 * Remove all unnecessary data, that is note defined as field in form
+	 *
+	 * @param $data
+	 * @return array
+	 */
 	public function filterData($data) {
 		$filteredData = array_intersect_key($data, $this->getFields());
 		$filteredData = array_filter($filteredData, function ($value) { return !empty($value); });
 		return $filteredData;
 	}
 
+	/**
+	 * Validate if data passes all fields validation
+	 *
+	 * @param $data
+	 * @return bool
+	 */
 	public function validate($data) {
 		$isValid = true;
 		$fields = $this->getFields();
@@ -116,14 +163,8 @@ class FormBuilderService extends WikiaService
 	/**
 	 * Render form field
 	 *
-	 * @param $field Array Field array with parameters
-	 *
-	 * @requestParam type string				[OPTIONAL] field type (text, textarea etc.) | default text
-	 * @requestParam label string				[OPTIONAL] label text
-	 * @requestParam labelclass string			[OPTIONAL] label class
-	 * @requestParam attributes array			[OPTIONAL] array with input attributes etc.
-	 * @requestParam validator WikiaValidator	[OPTIONAL]
-	 * @requestParam icon boolean				[OPTIONAL]
+	 * @param string $fieldName Array Field array with parameters
+	 * @param int    $index
 	 *
 	 * @return WikiaView
 	 */
@@ -154,6 +195,12 @@ class FormBuilderService extends WikiaService
 		return F::app()->getView(__CLASS__, 'renderField', $field);
 	}
 
+	/**
+	 * Convert HTML attributes array into HTML string
+	 *
+	 * @param $attributes
+	 * @return string
+	 */
 	protected function prepareFieldAttributes($attributes) {
 		$out = '';
 
