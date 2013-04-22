@@ -3,7 +3,8 @@
 		'MarketingToolbox',
 		'sponsoredImage',
 		array(
-			'inputData' => $fields['sponsoredImage'],
+			'form' => $form,
+			'fieldName' => 'sponsoredImage',
 			'fileUrl' => (isset($sponsoredImage->url) ? $sponsoredImage->url : ''),
 			'imageWidth' => (isset($sponsoredImage->width) ? $sponsoredImage->width : ''),
 			'imageHeight' => (isset($sponsoredImage->height) ? $sponsoredImage->height : ''),

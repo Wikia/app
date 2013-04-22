@@ -2,18 +2,14 @@
 	<div class="grid-3 alpha">
 		<input type="button" class="wmu-show" value="<?= $wf->Msg('marketing-toolbox-edithub-sponsored-image') ?>" />
 		<span class="filename-placeholder alternative">
-			<?php if( !empty($inputData['value']) ): ?>
-				<?= $inputData['value']; ?>
+			<? $field = $form->getField($fieldName); ?>
+			<?php if( !empty($field['value']) ): ?>
+				<?= $field['value']; ?>
 			<?php else: ?>
 				<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
 			<?php endif ?>
 		</span>
-		<?= $app->renderView(
-			'MarketingToolbox',
-			'FormField',
-			array('inputData' => $inputData)
-			); 
-		?>
+		<?= $form->renderField($fieldName);?>
 	</div>
 	<div class="grid-1 alpha">
 		<div class="image-placeholder">

@@ -180,7 +180,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$form->setFieldsValues($selectedModuleData['values']);
 		$this->moduleName = $modulesData['activeModuleName'];
 		$selectedModuleData['form'] = $form;
-		$this->moduleContent = $module->renderEditor($selectedModuleData);
+		$this->moduleContent = $module->renderEditor(['form' => $form]);
 
 		$this->overrideTemplate('editHub');
 	}
@@ -411,24 +411,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->request->setSessionData(self::FLASH_MESSAGE_SESSION_KEY, $message);
 	}
 
-	public function executeFormField() {
-		$inputData = $this->getVal('inputData');
-
-		if ($inputData['isArray']) {
-			$index = $inputData['index'];
-
-			$inputData['name'] .= '[]';
-			$inputData['id'] .= $index;
-
-			$inputData['value'] = isset($inputData['value'][$index]) ? $inputData['value'][$index] : '';
-			$inputData['errorMessage'] = isset($inputData['errorMessage'][$index]) ? $inputData['errorMessage'][$index] : '';
-		}
-
-		$this->inputData = $inputData;
-	}
-
 	public function sponsoredImage() {
-		$this->inputData = $this->request->getVal('inputData');
+		$this->form = $this->request->getVal('form');
+		$this->fieldName = $this->request->getVal('fieldName');
 		$this->fileUrl = $this->request->getVal('fileUrl', '');
 		$this->imageWidth = $this->request->getVal('imageWidth', '');
 		$this->imageHeight = $this->request->getVal('imageHeight', '');

@@ -93,8 +93,9 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 		$model = new MarketingToolboxModel();
 		$imageSize = $model->getThumbnailSize();
 		for ($i = 1; $i <= $data['slidesCount']; $i++) {
-			if (!empty($data['values']['photo' . $i])) {
-				$imageData = $this->getImageInfo($data['values']['photo' . $i], $imageSize);
+			$photo = $data['form']->getField('photo' . $i);
+			if (!empty($photo['value'])) {
+				$imageData = $this->getImageInfo($photo['value'], $imageSize);
 				$data['photos'][$i]['url'] = $imageData->url;
 				$data['photos'][$i]['imageWidth'] = $imageData->width;
 				$data['photos'][$i]['imageHeight'] = $imageData->height;
