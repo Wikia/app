@@ -113,11 +113,8 @@ class SEOTweaksHooksHelper extends WikiaModel {
 			&& ( isset( $_SERVER['HTTP_REFERER'] ) ) 
 			&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) ) 
 		    ) {
-		    
 			$dbr = $this->wf->GetDB( DB_SLAVE );
-			$sql = sprintf( 'SELECT page_title FROM page WHERE page_title REGEXP "^%s[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1', $title->getDBKey() );
-			$result = $dbr->query( $sql );
-			
+			$result = $dbr->query( sprintf( 'SELECT page_title FROM page WHERE page_title %s LIMIT 1', $dbr->buildLike( $title->getDBKey(), $dbr->anyString() ) ), __METHOD__ );
 			if ( $row = $dbr->fetchObject( $result ) ) {
 				$title = Title::newFromText( $row->page_title );
 				$this->wg->Out->redirect( $title->getFullUrl() );
