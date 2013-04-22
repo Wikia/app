@@ -9,13 +9,20 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
+require_once( __DIR__ . '/../Maintenance.php' );
 
 class ImportWikicities extends Maintenance {
 
 	const S3_PATTERN = 's3://database_Sharedb/fulldump_*';
 	const S3_DUMP_PATTERN = 'wikicities_devbox';
-	const DEST_DATABASE = 'wikicities';
+	#const DEST_DATABASE = 'wikicities';
+	const DEST_DATABASE = 'wikicities_macbre_test';
+
+	const DB_USER = 'devbox';
+	const DB_PASS = 'devbox';
+
+	/* @var DatabaseMysql */
+	private $dbw;
 
 	/**
 	 * Executes command on S3
@@ -56,6 +63,37 @@ class ImportWikicities extends Maintenance {
 		return $ret;
 	}
 
+	/**
+	 * Fetch given file from s3 to local file
+	 *
+	 * @param $path string s3 path
+	 * @param $dest string local file
+	 * @param $params string optional comamnd line parameters
+	 * @return bool result
+	 */
+	private function get($path, $dest, $params = '') {
+		return $this->executeS3cmd('get', "{$params} {$path} {$dest}");
+	}
+
+	/**
+	 * Executes mysql CLI command
+	 *
+	 * @param $cmd string command
+	 * @param $source string source to be put as "source | mysql ..."
+	 */
+	private function executeMysqlCmd($cmd, $source = '') {
+		$mysqlCmd = sprintf('%smysql -h%s -u%s -p%s %s',
+			($source !== '') ? "{$source} | " : '',
+			$this->dbw->getServer(),
+			self::DB_USER,
+			self::DB_PASS,
+			$cmd
+		);
+
+		wfShellExec($mysqlCmd, $retVal);
+		return $retVal === 0;
+	}
+
 	public function execute() {
 		global $IP, $wgExternalSharedDB;
 
@@ -68,25 +106,49 @@ class ImportWikicities extends Maintenance {
 
 		// get the most recent dumps
 		$lastDump = end($dumps);
-		$this->output("{$lastDump} will be used\n");
+		$this->output("{$lastDump} bucket will be used\n\n");
 
-		$dumps = $this->ls($lastDump . 'wiki*');
-		#$dumps = $this->ls($lastDump . self::S3_DUMP_PATTERN . '_*');
-		var_dump($dumps);
-/**
+		$dumps = $this->ls($lastDump . self::S3_DUMP_PATTERN . '_*');
+		$dump = reset($dumps);
+
+		if (empty($dump)) {
+			$this->error('No dump found!');
+		}
+
+		// fetch the most recent dump to /tmp
+		$dumpFile = tempnam(sys_get_temp_dir(), 'wikicities') . '.sql.gz';
+		$this->output("Fetching {$dump} to {$dumpFile}...");
+
+		$res = $this->get($dump, $dumpFile);
+		if ($res === false) {
+			$this->error('Fetching failed!');
+		}
+
+		// connect to devbox shared database
+		$this->dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		$this->dbw->selectDB(self::DEST_DATABASE);
+
+		$dbname = self::DEST_DATABASE;
+		$this->output("\nImporting into {$dbname}...");
+
+		// create a database
+		$this->executeMysqlCmd("-e \"CREATE DATABASE IF NOT EXISTS {$dbname}\" 2>&1;");
+
+		// import a dump
+		$this->executeMysqlCmd("{$dbname} 2>&1", "zcat {$dumpFile}");
+		$this->output(" done!\n");
+
 		// execute devbox specific SQL
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-
 		$additionalSql = array(
 			"$IP/extensions/wikia/Development/sql/city_list.sql"
 		);
 
 		foreach($additionalSql as $sql) {
 			$this->output("Importing {$sql}...");
-			$dbw->sourceFile($sql);
+			$this->dbw->sourceFile($sql);
 			$this->output("done\n");
 		}
-**/
+
 		$this->output("\nI'm done!\n");
 	}
 }
