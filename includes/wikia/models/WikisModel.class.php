@@ -116,7 +116,7 @@ class WikisModel extends WikiaModel {
 	public function getByString( $string, $lang = null, $hub = null, $includeDomain = false ) {
 		$this->wf->profileIn( __METHOD__ );
 
-		$wikis = array();
+		$wikis = [];
 
 		if ( !empty( $string ) ) {
 			$hubId = null;

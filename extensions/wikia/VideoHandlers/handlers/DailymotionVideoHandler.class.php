@@ -15,8 +15,11 @@ class DailymotionVideoHandler extends VideoHandler {
 		if($autoplay) {
 			$url .= '?' . self::$autoplayParam . '=' . self::$autoplayValue;
 		}
+
+		$sizeString = $this->getSizeString( $width, $height );
+
 		$code = <<<EOT
-<iframe frameborder="0" width="$width" height="$height" src="$url" allowfullscreen></iframe>
+<iframe frameborder="0" $sizeString src="$url" allowfullscreen></iframe>
 EOT;
 		return $code;
 	}

@@ -156,7 +156,14 @@ abstract class VideoFeedIngester {
 
 		// parepare article body
 		$apiWrapper = new static::$API_WRAPPER($id, $metadata);
-		$body = $categoryStr."\n".$apiWrapper->getDescription();
+
+		// add category
+		$body = $categoryStr."\n";
+
+		// add description header
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$body .= $videoHandlerHelper->addDescriptionHeader( $apiWrapper->getDescription() );
+
 
 		if ($debug) {
 			print "Ready to create video\n";

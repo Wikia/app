@@ -54,7 +54,7 @@ class BodyController extends WikiaController {
 	 */
 	public static function isGridLayoutEnabled() {
 		$app = F::app();
-		
+
 		if( !empty($app->wg->OasisGrid) ) {
 			return true;
 		}
@@ -68,7 +68,7 @@ class BodyController extends WikiaController {
 		if( defined("NS_WIKIA_FORUM_TOPIC_BOARD") && $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -503,7 +503,7 @@ class BodyController extends WikiaController {
 					break;
 			}
 		}
-		
+
 		// bugid-70243: optionally hide navigation h1s for SEO
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 

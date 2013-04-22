@@ -51,11 +51,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		heightFll,
 		startD,
 		galleryInited = false,
-		inited;
+		inited,
+		supportedVideos = window.supportedVideos || [];
 
 	//Media object that holds all data needed to display it in modal/gallery
 	function Media(elem, data, length, i){
-
 		this.element = elem;
 		this.url = data.full;
 
@@ -63,7 +63,10 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		if(data.thumb) {this.thumb = data.thumb;}
 		if(data.med) {this.med = data.med;}
 		if(data.capt) {this.caption = data.capt;}
-		if(data.type === 'video') {this.isVideo = true;}
+		if(data.type === 'video') {
+			this.isVideo = true;
+			this.supported = ~supportedVideos.indexOf(data.provider);
+		}
 
 		if(length > 1){
 			this.length = length;
@@ -151,6 +154,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		currentImage.className += ' imgPlcHld';
 	}
 
+	function setVideo(title, html) {
+		videoCache[title] = html;
+		currentImage.innerHTML = html;
+	}
+
 	function setupImage(){
 		var image = images[current],
 			video;
@@ -161,40 +169,45 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		if(image.isVideo) {// video
 			var imgTitle = image.name;
-			currentImageStyle.backgroundImage = '';
 
 			zoomable = false;
 
 			if(videoCache[imgTitle]){
 				currentImage.innerHTML = videoCache[imgTitle];
 			}else{
-				throbber.show(currentImage, {
-					center: true
-				});
+				if(image.supported) {
+					currentImage.innerHTML = '';
 
-				nirvana.getJson(
-					'VideoHandler',
-					'getEmbedCode',
-					{
-						articleId: wgArticleId,
-						fileTitle: imgTitle,
-						width: window.innerWidth - 100
-					}
-				).done(
-					function(data) {
-						throbber.remove(currentImage);
+					throbber.show(currentImage, {
+						center: true
+					});
 
-						if(data.error){
-							handleError(data.error);
-						}else{
-							//if iframe or object have width and hight andorid 2.3.6 have probles with resizing it
-							var video = '<div class=wkVi>' + data.embedCode.replace(/(width|height)="\d*\"/gi, '') + '</div>';
-
-							videoCache[imgTitle] = video;
-							currentImage.innerHTML = video;
+					nirvana.getJson(
+						'VideoHandler',
+						'getEmbedCode',
+						{
+							articleId: wgArticleId,
+							fileTitle: imgTitle,
+							width: document.width - 100
 						}
-					}
-				);
+					).done(
+						function(data) {
+							throbber.remove(currentImage);
+
+							if(data.error){
+								handleError(data.error);
+							}else{
+								setVideo(imgTitle, "<div class=player>" + data.embedCode + "</div>");
+							}
+						}
+					);
+				} else {
+					setVideo(imgTitle, "<div class=not-supported><span>" +
+						msg('wikiamobile-video-not-friendly-header') + "</span>" +
+						currentImage.innerHTML + "<span>" +
+						msg('wikiamobile-video-not-friendly') +
+						'</span></div>');
+				}
 			}
 		}else{
 			var img = new Image();
@@ -235,7 +248,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		//remove any left videos from DOM
 		//videos tend to be heavy on resources we shouldn't have more than one at a time
-		if(video = document.querySelector('.swiperPage:not(.current) .wkVi')) {
+		if(video = document.querySelector('.swiperPage:not(.current) .player')) {
 			video.parentElement.removeChild(video);
 		}
 	}

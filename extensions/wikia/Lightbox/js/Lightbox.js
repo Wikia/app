@@ -131,15 +131,6 @@ var Lightbox = {
 		// Hide Lightbox header and footer on mouse leave.
 		}).on('mouseleave.Lightbox', function(evt) {
 			Lightbox.hideOverlay(10);
-		// Show more info screen on button click
-		}).on('click.Lightbox', '.LightboxHeader .more-info-button', function(evt) {
-			if(Lightbox.current.type === 'video') {
-				Lightbox.video.destroyVideo();
-			}
-			Lightbox.openModal.addClass('more-info-mode');
-			LightboxLoader.getMediaDetail({fileTitle: Lightbox.current.key}, function(json) {
-				Lightbox.openModal.moreInfo.append(Lightbox.openModal.moreInfoTemplate.mustache(json));
-			});
 		// Show share screen on button click
 		}).on('click.Lightbox', '.LightboxHeader .share-button', function(evt) {
 			if(Lightbox.current.type === 'video') {

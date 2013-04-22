@@ -9,6 +9,7 @@ class AdEngine2Controller extends WikiaController {
 
 	const AD_LEVEL_NONE = 'none';           // show no ads
 	const AD_LEVEL_LIMITED = 'limited';     // show some ads (logged in users on main page)
+	const AD_LEVEL_CORPORATE = 'corporate'; // show some ads (anonymous users on corporate pages)
 	const AD_LEVEL_ALL = 'all';             // show all ads
 
 	private static $slotsDisplayShinyAdSelfServe = ['CORP_TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'TEST_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD'];
@@ -58,8 +59,10 @@ class AdEngine2Controller extends WikiaController {
 					|| BodyController::isBlogListing()
 					|| BodyController::isBlogPost()
 
-				// Quiz:
+				// Quiz, category and project pages:
 					|| (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ))
+					|| (defined('NS_CATEGORY') && $namespace == NS_CATEGORY)
+					|| (defined('NS_PROJECT') && $namespace == NS_PROJECT)
 
 				// Chosen special pages:
 					|| $title->isSpecial('Videos')
@@ -72,30 +75,35 @@ class AdEngine2Controller extends WikiaController {
 			return $pageLevel;
 		}
 
-		// Only leaderboard and medrec on corporate page
-		if ($wg->EnableWikiaHomePageExt) {
-			$pageLevel = self::AD_LEVEL_LIMITED;
-			return $pageLevel;
-		}
-
-		// Anonymous users get all ads
 		$user = $wg->User;
 		if (!$user->isLoggedIn() || $user->getOption('showAds')) {
+			// Only leaderboard, medrec and invisible on corporate sites for anonymous users
+			if ($wg->EnableWikiaHomePageExt) {
+				$pageLevel = self::AD_LEVEL_CORPORATE;
+				return $pageLevel;
+			}
+
+			// All ads everywhere else
 			$pageLevel = self::AD_LEVEL_ALL;
 			return $pageLevel;
 		}
 
-		// Logged in get some ads on the main page
-		if (WikiaPageType::isMainPage()) {
+		// Logged in users get some ads on the main pages (except on the corporate sites)
+		if (!$wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
 			$pageLevel = self::AD_LEVEL_LIMITED;
 			return $pageLevel;
 		}
 
+		// And no other ads
 		$pageLevel = self::AD_LEVEL_NONE;
 		return $pageLevel;
 	}
 
 	public static function getAdLevelForSlot($slotname) {
+		if ($slotname === 'INVISIBLE_1') {
+			return self::AD_LEVEL_CORPORATE;
+		}
+
 		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD/', $slotname)) {
 			return self::AD_LEVEL_LIMITED;
 		}
@@ -110,6 +118,16 @@ class AdEngine2Controller extends WikiaController {
 			// $level1 < $level2
 			return -1;
 		}
+		if ($level1 === self::AD_LEVEL_ALL || $level2 === self::AD_LEVEL_NONE) {
+			// $level1 > $level2
+			return 1;
+		}
+		if ($level1 === self::AD_LEVEL_LIMITED) {
+			// $level2 === self::AD_LEVEL_CORPORATE
+			// $level1 < $level2
+			return -1;
+		}
+		// $level1 === self::AD_LEVEL_CORPORATE, $level2 === self::AD_LEVEL_LIMITED
 		// $level1 > $level2
 		return 1;
 	}

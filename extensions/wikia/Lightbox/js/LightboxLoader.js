@@ -61,13 +61,18 @@ var LightboxLoader = {
 		article.add(photos).add(videos).add(comments)
 			.off('.lightbox')
 			.on('click.lightbox', '.lightbox, a.image', function(e) {
-				//LightboxLoader.handleClick(e, $(this));
-				e.preventDefault();
 
 				var $this = $(this),
 					$thumb = $this.children('img').first(),
 					fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
-					parent;
+					parent,
+					isVideo;
+
+				if($this.hasClass('link-internal') || $this.hasClass('link-external')) {
+					return;
+				}
+
+				e.preventDefault();
 
 				if($this.closest(article).length) {
 					parent = article;
@@ -104,12 +109,12 @@ var LightboxLoader = {
 
 				if(!fileKey) {
 					LightboxLoader.handleOldDom();
-					// TODO: add error logging code here
 					return;
 				}
 
 				// Display video inline, don't open lightbox
-				if($thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('wikiaPhotoGallery-slider')) {
+				isVideo = $this.children('.Wikia-video-play-button').length;
+				if(isVideo && $thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('wikiaPhotoGallery-slider')) {
 					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, LightboxTracker.clickSource.EMBED);
 					return;
 				}
@@ -228,7 +233,7 @@ var LightboxLoader = {
 	getMediaDetail: function(mediaParams, callback, nocache) {
 		var title = mediaParams['fileTitle'];
 
-		if(LightboxLoader.cache.details[title]) {
+		if(!nocache && LightboxLoader.cache.details[title]) {
 			callback(LightboxLoader.cache.details[title]);
 		} else {
 			$.nirvana.sendRequest({

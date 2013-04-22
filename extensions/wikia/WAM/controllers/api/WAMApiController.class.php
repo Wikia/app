@@ -175,7 +175,7 @@ class WAMApiController extends WikiaApiController {
 			$options['currentTimestamp'] = $wamDates['max_date'];
 			$options['previousTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
 		} else {
-			if($options['currentTimestamp'] > $wamDates['max_date'] || $options['currentTimestamp'] <= $wamDates['min_date']) {
+			if($options['currentTimestamp'] > $wamDates['max_date'] || $options['currentTimestamp'] < $wamDates['min_date']) {
 				throw new OutOfRangeApiException('currentTimestamp', $wamDates['min_date'], $wamDates['max_date']);
 			}
 
@@ -187,8 +187,8 @@ class WAMApiController extends WikiaApiController {
 				}
 			}
 
-			if($options['previousTimestamp'] >= $wamDates['max_date'] || $options['previousTimestamp'] < $wamDates['min_date']) {
-				throw new OutOfRangeApiException('previousTimestamp', $wamDates['min_date'], $wamDates['max_date']);
+			if($options['previousTimestamp'] > $wamDates['max_date']) {
+				throw new OutOfRangeApiException('previousTimestamp', 0, $wamDates['max_date']);
 			}
 		}
 

@@ -13,7 +13,7 @@ class WikiaVideoPage extends WikiaImagePage {
 	protected static $videoWidth = 670;
 
 	protected function openShowImage(){
-		global $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath, $wgEnableVideoPageRedesign;
+		global $wgOut, $wgRequest, $wgEnableVideoPageRedesign;
 		wfProfileIn( __METHOD__ );
 		$timestamp = $wgRequest->getInt('t', 0);
 
@@ -31,11 +31,12 @@ class WikiaVideoPage extends WikiaImagePage {
 		$app = F::app();
 		$autoplay = $app->wg->VideoPageAutoPlay;
 
-		if(empty($wgEnableVideoPageRedesign)) {
+		if ( empty($wgEnableVideoPageRedesign) ) {
 			$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>' );
 		} else {
+			$imageLink = '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
 
-			$html = '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).'</div>';	/* hyun remark 2013-02-19 - do we still need this? */
+			$wgOut->addHTML($imageLink);
 
 			$captionDetails = array(
 				'expireDate' => $img->getExpirationDate(),
@@ -44,12 +45,9 @@ class WikiaVideoPage extends WikiaImagePage {
 				'detailUrl' => $img->getProviderDetailUrl(),
 				'views' => MediaQueryService::getTotalVideoViewsByTitle( $img->getTitle()->getDBKey() ),
 			);
-			$html .= $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
+			$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
 
-			$wgOut->addHTML($html);
-
-			$this->renderDescriptionHeader();
-
+			$wgOut->addHTML($caption);
 		}
 
 		wfProfileOut( __METHOD__ );

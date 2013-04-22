@@ -14,8 +14,10 @@ class GametrailersVideoHandler extends VideoHandler {
 		$autoplayParam = self::$autoplayParam;
 		$autoplayValue = $autoplay ? self::$autoplayValue : 'false';
 
+		$sizeString = $this->getSizeString( $width, $height );
+
 		$html = <<<EOT
-<embed src="$url" width="$width" height="$height" type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" base="." flashVars="$autoplayParam=$autoplayValue"></embed>
+<embed src="$url" $sizeString type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" base="." flashVars="$autoplayParam=$autoplayValue"></embed>
 EOT;
 		
 		return $html;
