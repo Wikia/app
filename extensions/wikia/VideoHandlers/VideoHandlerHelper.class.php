@@ -36,4 +36,63 @@ class VideoHandlerHelper extends WikiaModel {
 		return $status;
 	}
 
+	/**
+	 * remove description header
+	 * @param string $content
+	 * @return string $newContent
+	 */
+	public function removeDescriptionHeader( $content ) {
+		$headerText = $this->wf->Message( 'videohandler-description' );
+
+		// Grab everything after the description header
+		preg_match("/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches);
+
+		$newContent = '';
+		if (!empty($matches[1])) {
+			// Get rid of any H2 headings after the description
+			$newContent = preg_replace('/^==[^=]+==.*/sm', '', $matches[1]);
+		}
+
+		return $newContent;
+	}
+
+	public function replaceDescriptionSection( $content, $descText = '' ) {
+		$headerText = $this->wf->Message( 'videohandler-description' );
+
+		$preText = preg_replace("/^==\s*$headerText\s*==\n*(.+)/sim", '', $content);
+
+		// Grab everything after the description header
+		preg_match("/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches);
+
+		// From the above match (if it was successful) try to grab the next H2 heading and below
+		if (empty($matches[1])) {
+			$postText = $preText;
+			$preText = '';
+		} else {
+			preg_match('/^(==[^=]+==.*)/sm', $matches[1], $postMatch);
+
+			// If we got anything, save it for the final reconstruction
+			$postText = empty($postMatch[1]) ? '' : $postMatch[1];
+		}
+
+		// If there's no newline at the end of the preText, add one so our '==' wiki text
+		// header shows up properly
+		if (! preg_match("/\n$/", $preText)) {
+			$preText .= "\n";
+		}
+
+		return $preText."== $headerText ==\n".$descText.$postText;
+	}
+
+	/**
+	 * add description header
+	 * @param string $content
+	 * @return string $newContent
+	 */
+	public function addDescriptionHeader( $content ) {
+		$newContent = '=='.$this->wf->Message( 'videohandler-description' ).'=='."\n".$content;
+
+		return $newContent;
+	}
+
 }

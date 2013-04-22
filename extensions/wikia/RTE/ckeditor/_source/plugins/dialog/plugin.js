@@ -352,6 +352,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 				{
 					// Wikia - start
 					this.fire('close', {close: true});
+					editor.fire( 'dialogClose', this );
 					// Wikia - end
 
 					if ( this.fire( 'cancel', { hide : true } ).hide !== false )

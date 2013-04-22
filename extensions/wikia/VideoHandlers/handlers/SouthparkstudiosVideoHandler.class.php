@@ -13,9 +13,10 @@ class SouthparkstudiosVideoHandler extends VideoHandler {
 		$url = $this->getEmbedUrl();
 		$autoplayStrParam = self::$autoplayParam;
 		$autoplayStrValue = $autoplay ? self::$autoplayValue : 'false';
+		$sizeString = $this->getSizeString( $width, $height );
 
 		$html = <<<EOT
-<embed src="$url" width="$width" height="$height" type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" base="." flashVars="$autoplayStrParam=$autoplayStrValue"></embed>
+<embed src="$url" $sizeString type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" base="." flashVars="$autoplayStrParam=$autoplayStrValue"></embed>
 EOT;
 		
 		return $html;

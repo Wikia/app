@@ -13,9 +13,10 @@ class ViddlerVideoHandler extends VideoHandler {
 		$url = $this->getEmbedUrl();
 		$embedVideoId = $this->getEmbedVideoId();
 		$flashVars = '';
+		$sizeString = $this->getSizeString( $width, $height );
 
 		$html = <<<EOT
-<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="$width" height="$height" id="viddler_$embedVideoId">
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" $sizeString id="viddler_$embedVideoId">
 EOT;
 		if($autoplay) {
 			$flashVars = ' flashvars="'.self::$autoplayParam.'='.self::$autoplayValue.'"';
@@ -27,7 +28,7 @@ EOT;
 	<param name="movie" value="$url" />
 	<param name="allowScriptAccess" value="always" />
 	<param name="allowFullScreen" value="true" />
-	<embed src="$url" width="$width" height="$height" type="application/x-shockwave-flash" allowScriptAccess="always"{$flashVars} allowFullScreen="true" name="viddler_$embedVideoId"></embed>
+	<embed src="$url" $sizeString type="application/x-shockwave-flash" allowScriptAccess="always"{$flashVars} allowFullScreen="true" name="viddler_$embedVideoId"></embed>
 </object>
 EOT;
 		return $html;

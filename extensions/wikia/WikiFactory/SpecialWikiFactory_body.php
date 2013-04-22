@@ -1234,6 +1234,8 @@ class CityListPager {
 	}
 };
 
+// DEPRECATED
+// use GWTService
 class WebmasterToolsAPI {
 
 	const FEED_URI = 'https://www.google.com/webmasters/tools/feeds';
