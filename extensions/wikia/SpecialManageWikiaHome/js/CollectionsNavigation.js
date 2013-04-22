@@ -37,7 +37,7 @@ var CollectionsNavigation = function(modulesSelector) {
 		var moduleOne = elem.parents(modulesSelector + ':first');
 		var moduleTwo;
 
-		if (elem.hasClass('nav-up')) {
+		if (elem.hasClass('nav-up')  || elem.parent().hasClass('nav-up')) {
 			moduleTwo = moduleOne.prev();
 			switchModules(moduleTwo, moduleOne);
 		} else {
