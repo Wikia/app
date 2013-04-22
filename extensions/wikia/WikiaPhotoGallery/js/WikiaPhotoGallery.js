@@ -1606,6 +1606,10 @@
 			$('#WikiaPhotoGallerySliderAddImage').unbind('.addimage').bind('click.addimage', function(ev) {
 				var button = $(this);
 
+				self.track({
+					label: 'slider-tool-button-add-photo'
+				});
+
 				ev.preventDefault();
 
 				self.selectPage(self.UPLOAD_FIND_PAGE, {});
