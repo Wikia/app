@@ -1,4 +1,11 @@
 <?php
+
+if (empty($wgDevelEnvironment)) {
+	error_log('File marked for deletion, but still used: ' . __FILE__);
+} else {
+	die('File marked for deletion, but still used: ' . __FILE__);
+}
+
 require_once dirname(__FILE__) . '/AdProviderDART.php';
 
 class AdProviderDARTMobile extends AdProviderDART {

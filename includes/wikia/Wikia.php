@@ -406,6 +406,11 @@ class Wikia {
 		$backtrace = trim(strip_tags(wfBacktrace()));
 		$message = str_replace("\n", '/', $backtrace);
 
+		// add URL when logging from AJAX requests
+		if (($_SERVER['REQUEST_METHOD'] === 'GET') && ($_SERVER['SCRIPT_URL'] === '/wikia.php')) {
+			$message .= " URL: {$_SERVER['REQUEST_URI']}";
+		}
+
 		Wikia::log($method, false, $message, true /* $force */);
 	}
 

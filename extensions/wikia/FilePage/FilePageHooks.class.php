@@ -28,6 +28,35 @@ class FilePageHooks extends WikiaObject{
 		return true;
 	}
 
+
+
+	/**
+	 * Add JS and CSS to File Page
+	 */
+	public function onBeforePageDisplay( OutputPage $out, $skin ) {
+		$app = F::app();
+
+		wfProfileIn(__METHOD__);
+		// load assets when File Page redesign is enabled and on the File Page
+		if( !empty($app->wg->EnableVideoPageRedesign) && $app->wg->Title->getNamespace() == NS_FILE ) {
+			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+			$scssPackage = 'file_page_css';
+			$jsPackage = 'file_page_js';
+
+			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
+				$out->addStyle( $url );
+			}
+
+			foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
+				$out->addScript( "<script src=\"{$url}\"></script>" );
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+
 	/*
 	 * Add "replace" button to File pages
 	 * Add "remove" action to MenuButtons on premium video file pages

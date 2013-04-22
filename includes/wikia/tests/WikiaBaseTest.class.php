@@ -54,6 +54,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->appMock = new WikiaAppMock( $this );
 
 		if ($this->setupFile != null) {
+			global $app; 					// used by setup file
 			global $wgAutoloadClasses; 		// used by setup file
 			global $wgDevelEnvironment;  	// used by setup file
 			require_once($this->setupFile);
@@ -105,7 +106,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @return object mocked object
 	 */
 	protected function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = '') {
-		$mock = $this->getMock( $className, array_keys( $methods ) );
+		$mock = $this->getMock($className, array_keys($methods));
 
 		foreach($methods as $methodName => $retVal) {
 			$mock->expects( $this->any() )
@@ -118,6 +119,35 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		return $mock;
 	}
 
+	/**
+	 * Mock a static class method
+	 *
+	 * Example:
+	 *
+	 * $this->mockClassStaticMethod('Http', 'post', json_encode(['foo' => 'bar']));
+	 *
+	 * @param $className string class name
+	 * @param $methodName string method name
+	 * @param $retVal mixed result to be returned by mocked method
+	 */
+	protected function mockClassStaticMethod($className, $methodName, $retVal) {
+		// runkit doesn't resolve autoloaded classes, we need to force it here...
+		if (!class_exists($className)) {
+			// TODO: add support for namespaces
+			require_once $this->app->wg->AutoloadClasses[$className];
+		}
+		WikiaMockProxy::proxy($className, $className, $retVal);
+		WikiaMockProxy::redefineStaticConstructor($className, $methodName);
+	}
+
+	/**
+	 * Mock global ($wg...) variable.
+	 *
+	 * Should be followed by the call to $this->mockApp()
+	 *
+	 * @param $globalName string name of global variable (e.g. wgCity - WITH wg prefix)
+	 * @param $returnValue mixed value variable should be set to
+	 */
 	protected function mockGlobalVariable( $globalName, $returnValue ) {
 		if($this->appMock == null) {
 			$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
@@ -125,6 +155,16 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->appMock->mockGlobalVariable( $globalName, $returnValue );
 	}
 
+	/**
+	 * Mock global (wf...) function.
+	 *
+	 * Should be followed by the call to $this->mockApp()
+	 *
+	 * @param $functionName string name of global function (e.g. findFile - WITHOUT wf prefix)
+	 * @param $returnValue
+	 * @param int $callsNum
+	 * @param array $inputParams
+	 */
 	protected function mockGlobalFunction( $functionName, $returnValue, $callsNum = 1, $inputParams = array() ) {
 		if($this->appMock == null) {
 			$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');

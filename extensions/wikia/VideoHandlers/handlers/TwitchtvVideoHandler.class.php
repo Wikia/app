@@ -11,9 +11,10 @@ class TwitchtvVideoHandler extends VideoHandler {
 		$height = $this->getHeight( $width );
 		$url = $this->getEmbedUrl();
 		$autoplayStr = $autoplay ? 'true' : 'false';
+		$sizeString = $this->getSizeString( $width, $height );
 
 		$html = <<<EOT
-<object type="application/x-shockwave-flash" height="$height" width="$width" data="$url">
+<object type="application/x-shockwave-flash" $sizeString data="$url">
 	<param name="allowFullScreen" value="true" />
 	<param name="allowScriptAccess" value="always" />
 	<param name="allowNetworking" value="all" />

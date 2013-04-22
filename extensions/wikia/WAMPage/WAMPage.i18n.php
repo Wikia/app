@@ -96,7 +96,7 @@ Les données de WAM remontent au 1<sup>er</sup> janvier 2012.
 Vous pouvez trouver actuellement le WAM sur cette page produit, les pages de thème [[w:c:fr:Jeux vidéo|Jeux vidéo]], [[w:c:fr:Divertissement|Divertissement]] et [[w:c:fr:Mode de vie|Mode de vie]] et la page interstitielle d\'aperçu pour chaque wiki.
 
 ===Puis-je afficher ma note WAM sur mon wiki?===
-Nous vous encourageons à afficher votre note WAM sur votre wiki, mais nous vous demandons de mettre un lien vers la page produit. Dans les mois à venir nous mettrons en place des outils qui rendront plus facile l\'affichage du WAM sur votre wiki.
+Nous vous encourageons à afficher votre note WAM sur votre wiki, mais nous vous demandons de mettre un lien vers la page produit.
 
 ===À qui puis-je parler si j\'ai d\'autres questions sur le WAM?===
 Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.com support@wikia-inc.com].',
@@ -153,7 +153,7 @@ Du kannst die WAM-Punktzahl auf dieser Seite finden, im [[w:c:de:Videospiele|Vid
 
 ===Ist es mir erlaubt, die WAM-Punktzahl meines Wikis zu veröffentlichen?===
 
-Wir raten dir davon ab, und würden dir ehr dazu raten, auf diese Seite zu verlinken. In den nächsten Monaten werden wir es einfacher machen, die WAM-Punktzahl deines Wikis zu sehen.
+Wir raten dir davon ab, und würden dir ehr dazu raten, auf diese Seite zu verlinken.
 
 ===Wem kann ich Fragen über WAM stellen?===
 
@@ -206,7 +206,7 @@ El WAM es capaz de retroceder hasta el 1 de enero de 2012.
 Puedes encontrar el Monitor de Actividad de Wikia en esta página, o las páginas principales de [[w:c:es:Videojuegos|videojuegos]], [[w:c:es:Entretenimiento|entretenimiento]] y [[w:c:es:Estilo_de_vida|estilo de vida]], así como el panel de información de cada wiki al previsualizarlo en el wiki corporativo de Wikia.
 
 ===¿Puedo mostrar mi puntuación en el WAM en mi wiki?===
-Por supuesto, es más, os animamos a mostrar vuestra puntuación o clasificación en vuestro wiki, pero os pedimos que enlacéis hacia la página directamente. En los próximos meses lanzaremos herramientas que harán más efectiva la visualización del WAM.
+Por supuesto, es más, os animamos a mostrar vuestra puntuación o clasificación en vuestro wiki, pero os pedimos que enlacéis hacia la página directamente.
 
 ===¿Con quién puedo hablar si tengo otras preguntas acerca del WAM?===
 Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:support@wikia-inc.com support@wikia-inc.com].',

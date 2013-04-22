@@ -137,6 +137,11 @@ class ArticleCommentsController extends WikiaController {
 		$articleID = $this->request->getInt( 'articleID' );
 		$title = null;
 
+		//set mobile skin as this is based on it
+		RequestContext::getMain()->setSkin(
+			Skin::newFromKey( 'wikiamobile' )
+		);
+
 		if ( !empty( $articleID ) ) {
 			$title = Title::newFromId( $articleID );
 		}

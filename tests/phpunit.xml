@@ -30,6 +30,9 @@
 	<testsuite name="Wikia Search Test Suite">
 		<directory>../extensions/wikia/Search/classes/Test</directory>
 	</testsuite>
+	<testsuite name="LyricFind Test Suite">
+		<directory>../extensions/3rdparty/LyricWiki/LyricFind/tests/</directory>
+	</testsuite>
 	<!-- DO NOT run MW tests. These tests are dropping db tables, including users -->
 	<!--
 	 <testsuite name="MediaWiki Test Suite">

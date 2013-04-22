@@ -1133,7 +1133,7 @@
 			e.preventDefault();
 
 			VET_tracking({
-				label: 'success-button-return'
+				label: 'button-close'
 			});
 
 			VET_close();
