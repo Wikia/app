@@ -29,8 +29,11 @@ try {
 		}
 		GWTLogHelper::notice( "Synchronizing: " . $wiki->getWikiId() . " " . $users[$userI]->getEmail() );
 		try {
+			GWTLogHelper::notice( "upload" );
 			$service->uploadWikiAsUser( $wiki, $users[$userI] );
+			GWTLogHelper::notice( "verify" );
 			$service->verifyWiki( $wiki, $users[$userI] );
+			GWTLogHelper::notice( "sendsitemap" );
 			$service->sendSitemap( $wiki, $users[$userI] );
 			if( $i % 10 == 0 ) sleep(1);
 		} catch ( Exception $e ) {

@@ -197,7 +197,7 @@ class GWTClient {
 
 	private function put_verify ( $xml ) {
 		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
-		$request = MWHttpRequest::factory( $this->mSiteURI, array( 'postData' => $xml, 'method' => 'POST') );
+		$request = MWHttpRequest::factory( $this->mSiteURI , array( 'postData' => $xml, 'method' => 'PUT') );
 		$request->setHeader('Content-type', 'application/atom+xml');
 		$request->setHeader('Authorization', 'GoogleLogin auth='.$this->mAuth);
 		$status = $request->execute();

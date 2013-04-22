@@ -49,15 +49,12 @@ class GWTService {
 	 *
 	 */
 	function uploadWikiAsUser( GWTWiki $wiki, GWTUser $user ) {
-		if( $this->webmasterToolsUtil->upload( $wiki->getWikiId(), $user ) ) {
-			$user->setCount( $user->getCount() + 1 );
-			$this->userRepository->update( $user );
-			$wiki->setUserId( $user->getId() );
-			$wiki->setUploadDate( date("Y-m-d") );
-			$this->wikiRepository->updateWiki( $wiki );
-			return true;
-		}
-		return false;
+		$this->webmasterToolsUtil->upload( $wiki->getWikiId(), $user );
+		$user->setCount( $user->getCount() + 1 );
+		$this->userRepository->update( $user );
+		$wiki->setUserId( $user->getId() );
+		$wiki->setUploadDate( date("Y-m-d") );
+		$this->wikiRepository->updateWiki( $wiki );
 	}
 
 	/*
