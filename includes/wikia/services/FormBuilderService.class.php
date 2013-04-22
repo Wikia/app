@@ -57,9 +57,14 @@ class FormBuilderService extends WikiaService
 		$fields = $this->getFields();
 
 		foreach ($fields as $fieldName => $field) {
-		if (!empty($field['validator'])) {
-
-				$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : [];
+			if (!empty($field['validator'])) {
+				if (isset($data[$fieldName])) {
+					$fieldData = $data[$fieldName];
+				} else if (!empty($field['isArray'])) {
+					$fieldData = [];
+				} else {
+					$fieldData = '';
+				}
 
 				if( $field['validator'] instanceof WikiaValidatorDependent ) {
 					$field['validator']->setFormData($data);
