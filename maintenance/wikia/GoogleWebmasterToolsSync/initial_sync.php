@@ -26,7 +26,7 @@ try {
 		while( ( $row = $result->fetchObject() ) && ( $i < $count ) ) {
 			$resultGroup[] = array(
 				"wiki_id" => $row->wiki_id,
-				"user_id" => null,
+				"user_id" => 0,
 				"upload_date" => null,
 			);
 			$i ++;
@@ -70,10 +70,10 @@ try {
 		if( count($group) == 0 ) continue;
 		//var_dump($group);
 		GWTLogHelper::notice( "Fetching " . count($group) . " wikis from mart." );
-		var_dump($group);
 		$db->insert("webmaster_sitemaps", $group);
 		sleep(1);
 	}
+	GWTLogHelper::notice( __FILE__ . " script ends.");
 
 } catch ( Exception $ex ) {
 	GWTLogHelper::error( __FILE__ . " script failed.", $ex);
