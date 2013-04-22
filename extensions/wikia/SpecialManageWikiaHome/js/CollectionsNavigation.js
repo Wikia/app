@@ -37,7 +37,7 @@ var CollectionsNavigation = function(modulesSelector) {
 		var moduleOne = elem.parents(modulesSelector + ':first');
 		var moduleTwo;
 
-		if (elem.hasClass('nav-up')  || elem.parent().hasClass('nav-up')) {
+		if (isNavUpElement(elem)) {
 			moduleTwo = moduleOne.prev();
 			switchModules(moduleTwo, moduleOne);
 		} else {
@@ -46,6 +46,10 @@ var CollectionsNavigation = function(modulesSelector) {
 		}
 		turnOnButtons();
 	};
+
+	var isNavUpElement = function(element) {
+		return element.hasClass('nav-up')  || element.parent().hasClass('nav-up');
+	}
 
 	var switchModules = function(moduleOne, moduleTwo) {
 		moduleOne.before(moduleTwo);
