@@ -67,6 +67,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$newWikisAmount = $this->request->getVal('new-wikis-amount', $this->helper->getNumberOfNewWikiSlots($this->visualizationLang));
 
 		$this->form = $this->prepareCollectionsForm();
+		$collectionsModel = new CollectionsModel();
+		$collectionValues = $this->prepareCollectionToShow($collectionsModel->getList($this->visualizationLang));
 
 		if( $this->request->wasPosted() ) {
 			if ( $this->request->getVal('wikis-in-slots',false) ) {
@@ -93,14 +95,17 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				$collectionValues = $this->request->getParams();
 				$collectionValues = $this->form->filterData($collectionValues);
 				$isValid = $this->form->validate($collectionValues);
+
 				if ($isValid) {
+					$collectionSavedValues = $this->prepareCollectionForSave($collectionValues);
+					$collectionsModel->saveAll($this->visualizationLang, $collectionSavedValues);
 
-				} else {
-
+					//TODO: msg if saved
 				}
-				$this->form->setFieldsValues($collectionValues);
 			}
 		}
+
+		$this->form->setFieldsValues($collectionValues);
 
 		$this->setVal('videoGamesAmount', $videoGamesAmount);
 		$this->setVal('entertainmentAmount', $entertainmentAmount);
@@ -347,6 +352,30 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$form = new FormBuilderService('collections', $fields);
 		return $form;
+	}
+
+	private function prepareCollectionForSave($collectionValues) {
+		$collections = [];
+
+		foreach($collectionValues as $name => $collection) {
+			foreach($collection as $key => $field) {
+				$collections[$key][$name] = $field;
+			}
+		}
+
+		return $collections;
+	}
+
+	private function prepareCollectionToShow($collections) {
+		$collectionValues = [];
+
+		foreach($collections as $key => $collection) {
+			foreach($collection as $name => $value) {
+				$collectionValues[$name][$key] = $value;
+			}
+		}
+
+		return $collectionValues;
 	}
 
 }
