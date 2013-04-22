@@ -415,7 +415,7 @@ class HAWelcomeJob extends Job {
                 ? $this->oRecipientTalkPage->getContent() . PHP_EOL . $this->sMessage
                 : $this->sMessage;
             // Do the edit.
-            $this->oRecipientTalkPage->doEdit( $sMessage, wfMsg( 'welcome-message-log' ), $this->iFlags );
+            $this->oRecipientTalkPage->doEdit( $sMessage, wfMessage( 'welcome-message-log' )->text(), $this->iFlags );
             // Restore the original active user object.
             $wgUser = $tmp;
         }
@@ -456,7 +456,7 @@ class HAWelcomeJob extends Job {
         // Article Comments and Message Wall hook up to this event.
         wfRunHooks( 'HAWelcomeGetPrefixText' , array( &$sPrefixedText, $this->title ) );
         // Put the contents of the welcome message together.
-        $this->sMessage = wfMsgNoTrans(
+        $this->sMessage = wfMessage(
             $sMessageKey,
             array(
                 $sPrefixedText,
@@ -464,7 +464,7 @@ class HAWelcomeJob extends Job {
                 '~~~~',
                 wfEscapeWikiText( $this->sRecipientName )
             )
-        );
+        )->inContentLanguage()->plain();
         if ( $this->bShowNotices ) {
             trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );
         }
