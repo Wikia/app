@@ -102,12 +102,12 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 		pagesNum = 0;
 		dots = '<div class="dot' + ((current === 0) ? ' curr' : '') + '" id=dot0><div></div></div>';
 		pages.length = 0;
-		pages[pagesNum] = '<div>';
+		pages[pagesNum] = '<div class=gallery>';
 
 		for (i = 0;i < imgL; i++) {
 			if(i > 0 && (i%imgsPerPage) === 0){
 				pages[pagesNum++] += '</div>';
-				pages[pagesNum] = '<div>';
+				pages[pagesNum] = '<div class=gallery>';
 				dots += '<div class="dot'+ ((current === pagesNum) ? ' curr':'') + '" id=dot' + pagesNum + '><div></div></div>';
 			}
 

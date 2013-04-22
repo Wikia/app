@@ -27,7 +27,6 @@
 
 html {
 	border: none;
-	cursor: pointer;
 }
 
 body {
@@ -101,6 +100,14 @@ a {
 		width: 100% !important;
 		text-align: center;
     }
+
+	//don't let iframes,objects be wider than a screen (videos)
+	iframe[width], object {
+		width: 75% !important;
+		height: auto;
+		margin: 0 auto;
+		display: block;
+	}
 	//end of fluiding thead content
 }
 

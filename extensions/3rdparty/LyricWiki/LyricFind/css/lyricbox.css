@@ -1,0 +1,33 @@
+.lyricfind-header {
+	background-color: #FFFF80;
+	border: 2px black solid;
+	padding: 15px;
+	font-weight: bold;
+	text-align: center;
+	width: auto;
+	margin: 0 auto;
+}
+
+.lyricfind-header big {
+	display: block;
+}
+
+.lyricfind-credits {
+	font-weight: bold;
+	color: #888;
+	background-color: #EEE;
+}
+
+.lyricbox {
+	padding: 1em;
+	border: 1px solid silver;
+	color: black;
+	background-color: #FFC;
+}
+
+.rtMatcher a {
+	color: red;
+	font-size: 11pt;
+	font-weight: bold;
+	text-decoration: underline;
+}

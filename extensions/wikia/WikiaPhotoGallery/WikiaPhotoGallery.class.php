@@ -809,6 +809,8 @@ class WikiaPhotoGallery extends ImageGallery {
 				} else {
 					$thumbParams = WikiaPhotoGalleryHelper::getThumbnailDimensions($fileObject, $thumbSize, $height, $crop);
 					$image['thumbnail'] = $fileObject->createThumb($thumbParams['width'], $thumbParams['height']);
+					$image['DBKey'] = $fileObject->getTitle()->getDBKey();
+					$image['fileTitle'] = $fileObject->getTitle()->getText();
 
 					$image['height'] = ($orientation == 'none') ? $heights[$index] : min($thumbParams['height'], $height);
 					$imgHeightCompensation = ($height - $image['height']) / 2;
@@ -885,7 +887,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				if (!empty($image['thumbnail'])) {
 					$isVideo = WikiaFileHelper::isFileTypeVideo( $fileObject );
-					
+
 					if ( $isVideo ) {
 						$thumbHtml = WikiaFileHelper::videoPlayButtonOverlay( $image['width'], $image['height'] );
 						$videoOverlay = WikiaFileHelper::videoInfoOverlay( $image['width'], $image['linkTitle'] );
@@ -906,11 +908,11 @@ class WikiaPhotoGallery extends ImageGallery {
 					);
 
 					if ( $isVideo ) {
-						$imgAttribs['data-video-name'] = htmlspecialchars($image['linkTitle']);
-						$imgAttribs['data-video-key'] = urlencode(htmlspecialchars($image['linkTitle']));
+						$imgAttribs['data-video-name'] = htmlspecialchars($image['fileTitle']);
+						$imgAttribs['data-video-key'] = urlencode(htmlspecialchars($image['DBKey']));
 					} else {
-						$imgAttribs['data-image-name'] = htmlspecialchars($image['linkTitle']);	
-						$imgAttribs['data-image-key'] = urlencode(htmlspecialchars($image['linkTitle']));	
+						$imgAttribs['data-image-name'] = htmlspecialchars($image['fileTitle']);
+						$imgAttribs['data-image-key'] = urlencode(htmlspecialchars($image['DBKey']));
 					}
 
 					if ( !empty($image['data-caption']) ) {

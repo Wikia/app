@@ -35,6 +35,9 @@
 				// Click on text link
 				CLICK_LINK_TEXT: 'click-link-text',
 
+				// Generic close
+				CLOSE: 'close',
+
 				// Generic hover
 				HOVER: 'hover',
 
@@ -49,6 +52,9 @@
 
 				// Removal
 				REMOVE: 'remove',
+
+				// Generic open
+				OPEN: 'open',
 
 				// Generic paginate
 				PAGINATE: 'paginate',

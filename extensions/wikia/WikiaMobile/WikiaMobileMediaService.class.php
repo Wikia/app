@@ -79,18 +79,18 @@ class WikiaMobileMediaService extends WikiaService {
 					$wikiText .= "]]\n";
 				} else {
 					if ( empty( $first ) ) {
-						$first = array( 'data' => $item, 'file' => $file );
+						$first = [ 'data' => $item, 'file' => $file ];
 					}
 
 					//prepare data for media collection
-					$info = array(
+					$info = [
 						'name' => $item['title']->getText(),
 						'full' => $this->wf->ReplaceImageServer( $file->getFullUrl(), $file->getTimestamp() )
-					);
+					];
 
 					if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
 						$info['type'] = 'video';
-						$info['provider'] = $file->getProviderName();
+						$info['provider'] = $file->getProviderName();;
 					}
 
 					if ( !empty( $item['caption'] ) ) {

@@ -239,7 +239,7 @@
 		VET_callbackAfterEmbed = options.callbackAfterEmbed || $.noop;
 
 		VET_tracking({
-			label: 'open'
+			action: Wikia.Tracker.ACTIONS.OPEN
 		});
 
 		if(VET_wysiwygStart == 2) {
@@ -530,7 +530,7 @@
 		window.VETbackButton = false;
 
 		VET_tracking({
-			label: 'close'
+			action: Wikia.Tracker.ACTIONS.CLOSE
 		});
 
 		VET_loader.modal.closeModal();
@@ -1066,7 +1066,7 @@
 			e.preventDefault();
 
 			VET_tracking({
-				label: 'success-button-return'
+				label: 'button-close'
 			});
 
 			VET_close();
