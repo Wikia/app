@@ -5,7 +5,6 @@ abstract class MarketingToolboxModuleEditableService extends MarketingToolboxMod
 	abstract public function getFormFields();
 
 	public function renderEditor($data) {
-		//$data['fields'] = $this->prepareFieldsDefinition($data['values'], $data['validationErrors']);
 		return $this->getView('editor', $data);
 	}
 

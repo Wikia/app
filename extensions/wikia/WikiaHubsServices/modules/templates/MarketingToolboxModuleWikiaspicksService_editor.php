@@ -19,7 +19,7 @@
 				<?php if( !empty($fileNameField['value']) ): ?>
 					<?= $fileNameField['value']; ?>
 				<?php else: ?>
-					<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
+					<?= $wf->Message('marketing-toolbox-edithub-file-name')->text() ?>
 				<?php endif ?>
 			</span>
 

@@ -64,8 +64,7 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 				$data['videos'][$i]['title'] = $video;
 
 				//we enabled curators to edit a video url so if they've changed it we change it here
-				// TODO co to full URL
-				$data['videos'][$i]['fullUrl'] = ( !empty($videoUrlField['value'][$i]) ) ? $videoUrlField['value'][$i] : $data['videos'][$i]['fullUrl'];
+				$data['videos'][$i]['fullUrl'] = ( !empty($videoUrlField['value'][$i]) ) ? $videoUrlField['value'][$i] : $data['videos'][$i]['fileUrl'];
 				//numbers next to section starts with 2
 				$data['videos'][$i]['section-no'] = $i + 2;
 			}
