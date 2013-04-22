@@ -33,7 +33,7 @@ class WikiaMobileHooks extends WikiaObject{
 			if (
 				!empty( $translatedNs ) &&
 				preg_match_all(
-					'/(?:\[\[\b(?:' . $translatedNs . ')\b:[^\]]+\]\](\s)*){2,}/',
+					'/(?:\[\[\b(?:' . $translatedNs . ')\b:[^\]\[]*(?:\[\[[^\[]*\]\][^\[]*)*\]\]\s*){2,}/',
 					$text,
 					$matches,
 					PREG_OFFSET_CAPTURE
@@ -49,7 +49,7 @@ class WikiaMobileHooks extends WikiaObject{
 					$submatches = array();
 
 					$itemsCount = preg_match_all(
-						'/\[\[((?:' . $translatedNs . '):.*)\]\]/U',
+						'/\[\[' . $translatedNs . ':[^\]\[]*(?:\[\[[^\[]*\]\][^\[]*)*(?=\]\])/U',
 						$match[0],
 						$submatches,
 						PREG_SET_ORDER
@@ -60,7 +60,7 @@ class WikiaMobileHooks extends WikiaObject{
 
 						//analyze entries
 						foreach ( $submatches as $item ) {
-							$parts = explode( '|', $item[1] );
+							$parts = explode( '|', $item[0] );
 							$components = array();
 							$totalParts = count( $parts );
 
@@ -98,6 +98,8 @@ class WikiaMobileHooks extends WikiaObject{
 					}
 				}
 			}
+
+			var_dump($text);exit();
 		}
 
 		$this->wf->profileOut( __METHOD__ );
