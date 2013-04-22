@@ -13,6 +13,9 @@ class WikiaPoll {
 
 	const CACHE_TTL = 86400;
 	const CACHE_VER = 5;
+	
+	const RTE_PLACEHOLDER_WIDTH = 300;
+	const RTE_PLACEHOLDER_HEIGHT = 200;
 
 	public function __construct($pollId) {
 		$this->mData = null;
@@ -295,5 +298,13 @@ class WikiaPoll {
 		wfDebug(__METHOD__ . ": purged poll #{$this->mPollId}\n");
 
 		wfProfileOut(__METHOD__);
+	}
+	
+	public function getRtePlaceholderSizes() {
+		$out = new stdClass();
+		$out->width = self::RTE_PLACEHOLDER_WIDTH;
+		$out->height = self::RTE_PLACEHOLDER_HEIGHT;
+		
+		return $out;
 	}
 }
