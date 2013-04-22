@@ -32,11 +32,13 @@ try {
 			$service->uploadWikiAsUser( $wiki, $users[$userI] );
 			$service->verifyWiki( $wiki, $users[$userI] );
 			$service->sendSitemap( $wiki, $users[$userI] );
+			if( $i % 10 == 0 ) sleep(1);
 		} catch ( Exception $e ) {
 			GWTLogHelper::error( "Error while synchronizing " . $wiki->getWikiId() . " " . $users[$userI]->getEmail() );
 			GWTLogHelper::error( "" . $e->getMessage() );
 		}
 	}
+	GWTLogHelper::notice( __FILE__ . " script ends.");
 
 } catch ( Exception $ex ) {
 	GWTLogHelper::error( __FILE__ . " script failed.", $ex);
