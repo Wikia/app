@@ -163,7 +163,7 @@ class FormBuilderService extends WikiaService
 	/**
 	 * Render form field
 	 *
-	 * @param string $fieldName Array Field array with parameters
+	 * @param string $fieldName field name
 	 * @param int    $index
 	 *
 	 * @return WikiaView
