@@ -547,7 +547,7 @@
 			this.target = params.target;
 
 			this.track({
-				label: 'open'
+				action: Wikia.Tracker.ACTIONS.OPEN
 			});
 
 			// setup search field
@@ -2224,7 +2224,7 @@
 					},
 					onClose: function() {
 						self.track({
-							label: 'exit-button-close'
+							action: Wikia.Tracker.ACTIONS.CLOSE
 						});
 					}
 				}
@@ -2610,12 +2610,11 @@
 				slice = [].slice;
 
 			return function() {
-				var	track = ( window.WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track,
-					type = WikiaPhotoGallery.editor.gallery.type;
+				var	type = WikiaPhotoGallery.editor.gallery.type;
 
 				config.category = ( type == 3 ? 'slider' : type == 2 ? 'slideshow' : 'gallery' ) + '-tool';
 
-				track.apply( track, [ config ].concat( slice.call( arguments ) ) );
+				Wikia.trackEditorComponent.apply( null, [ config ].concat( slice.call( arguments ) ) );
 			};
 		})()
 	};

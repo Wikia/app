@@ -1,5 +1,11 @@
 <?php
 
+if (empty($wgDevelEnvironment)) {
+	error_log('File marked for deletion, but still used: ' . __FILE__);
+} else {
+	die('File marked for deletion, but still used: ' . __FILE__);
+}
+
 
 
 		// ***************** Athena has been replaced by Liftium
@@ -59,7 +65,7 @@ class AdProviderAthena extends AdProviderIframeFiller implements iAdProvider {
                        $pageVars['article_id'] = $wgTitle->getArticleID();
 		}
 		$pageVars['isMainPage'] = WikiaPageType::isMainPage();
-		$cat = AdEngine::getCachedCategory();
+		$cat = AdEngine2Controller::getCachedCategory();
 		$pageVars['hub'] = $cat['name'];
 		$pageVars['skin'] = RequestContext::getMain()->getSkin()->getSkinName();
 		$pageVars['user_lang'] = $wgLang->getCode();
@@ -87,7 +93,7 @@ class AdProviderAthena extends AdProviderIframeFiller implements iAdProvider {
 
 	public static function getInstance() {
 		if(self::$instance == false) {
-			$h = AdEngine::getCachedCategory();
+			$h = AdEngine2Controller::getCachedCategory();
 			// ***************** Athena has been replaced by Liftium
 			return self::$instance = new AdProviderLiftium();
 		}

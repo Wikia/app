@@ -468,10 +468,6 @@ function answerCategoryOtherSection(&$catView, &$r){
 	$ti = htmlspecialchars( $catView->title->getText() );
 	$cat = $catView->getCat();
 
-	if ( $wgUser->isAnon() && $cat->getSubcatCount() > 0 && ( !empty($catView->answers["answered_questions"]) || !empty($catView->answers["unanswered_questions"]) ) ) {
-		$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_LEADERBOARD_U');
-	}
-
 	$r .= "<table style=\"width: 100%\"><tr>";
 
 	if (!empty($catView->answers["answered_questions"])){
@@ -485,9 +481,6 @@ function answerCategoryOtherSection(&$catView, &$r){
 		}
 		$r .= "</ul>\n";
 		$r .= "</div>\n";
-		if ( $wgUser->isAnon() ) {
-			$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_A');
-		}
 		$r .= "</td>\n";
 	}
 
@@ -502,18 +495,10 @@ function answerCategoryOtherSection(&$catView, &$r){
 		}
 		$r .= "</ul>\n";
 		$r .= "</div>\n";
-		if ( $wgUser->isAnon() ) {
-			$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_U');
-		}
 		$r .= "</td>\n";
 	}
 
 	$r .= "</tr></table>\n";
-
-#	replaced by BOXADs per #19020
-#	if ( $wgUser->isAnon() && ( !empty($catView->answers["unanswered_questions"]) || !empty($catView->answers["answered_questions"]) ) ) {
-#        	$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_LEADERBOARD_B');
-#	}
 
 	/*
 	$dbcnt = $cat->getPageCount() - $cat->getSubcatCount() - $cat->getFileCount();
@@ -566,9 +551,6 @@ function wfCategoryPageWithAds(&$cat){
 	global  $wgOut;
 
 	global $wgUser;
-	if ( $wgUser->isAnon() ) {
-		$wgOut->addHTML( AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_LEADERBOARD_A') );
-	}
 
 	$article = new Article($cat->mTitle);
 	$article->view();

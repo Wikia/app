@@ -67,7 +67,7 @@ $messages['en'] = array(
 	'wikiahome-community-column1-creative' => 'Everything you need to start and grow your community on Wikia from tips and tools to news and access to really helpful people.',
 	'wikiahome-community-column2-heading' => 'Innovation at Wikia',
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
-	'wikiahome-community-column2-creative' => 'See how Wikia is making a dent in the mobile universe with its new mobile website and apps like Game Guides and LyricWiki lyrics.',
+	'wikiahome-community-column2-creative' => 'Wikia Proudly Introduces its First Official Mobile Apps: My Wikia and Game Guides. Each app is designed to Assemble Over 20 Million Pages of Rich, Dynamic Content Authored by Wikia Communities in a Modern, Streamlined Experience. Download [[Mobile|here]].',
 	'wikiahome-community-column3-heading' => 'Follow Us',
 	'wikiahome-community-social-wikia-blog' => 'Wikia Blog',
 	'wikiahome-community-social-wikia-blog-link' => 'http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
@@ -94,6 +94,7 @@ __NOEDITSECTION__',
 *[http://www.community.wikia.com Community Central]
 *[http://community.wikia.com/wiki/Admin_Central:Main_Page Founders & Admins]
 *[http://www.wikia.com/Special:Contact Contact Support]$1
+*[http://www.wikia.com/Stars Wikia Stars]
 *[http://help.wikia.com/wiki/Help:Contents Help]
 __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia Everywhere===
@@ -216,6 +217,7 @@ $messages['de'] = array(
 *[http://de.community.wikia.com Community-Wiki]
 *[http://de.community.wikia.com/wiki/Admin-Bereich:Hauptseite Gründer- und Admins ]
 *[http://de.wikia.com/wiki/Spezial:Kontakt Wikia-Support]$1
+*[http://www.wikia.com/Stars Wikia Stars (en)]
 *[http://hilfe.wikia.com Hilfe]',
 	'wikiahome-footer-everywhere' => '===Wikia unterwegs===
 *[http://de.wikia.com/Mobil Wikia mobil]
@@ -329,6 +331,7 @@ __NOEDITSECTION__',
 *[http://comunidad.wikia.com/wiki/Wikia Comunidad Hispana]
 *[http://comunidad.wikia.com/wiki/Foro:%C3%8Dndice Foro]
 *[http://es.wikia.com/Especial:Contactar Contacta con Wikia]$1
+*[http://www.wikia.com/Stars Wikia Stars (en)]
 *[http://ayuda.wikia.com/wiki/Ayuda:Contenidos Ayuda]
 __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia para todos===
@@ -435,9 +438,10 @@ __NOEDITSECTION__',
 *[https://twitter.com/#!/wikia_fr Twitter]
 __NOEDITSECTION__',
 	'wikiahome-footer-community' => '===Communauté===
-*[http://communaute.wikia.com Community Central]
+*[http://communaute.wikia.com Wiki des communautés]
 *[http://communaute.wikia.com/wiki/Centre_des_administrateurs:Accueil Fondateurs et administrateurs]
 *[http://fr.wikia.com/Special:Contact Contacter le support]$1
+*[http://www.wikia.com/Stars Wikia Stars (en)]
 *[http://aide.wikia.com/wiki/Aide:Contenu Aide]
 __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia en tous lieux===
@@ -450,7 +454,7 @@ __NOEDITSECTION__',
 *[http://www.mediakit.wikia.com Kit de presse ]
 *'''[http://mediakit.wikia.com/wiki/Contact Publicité]'''
 __NOEDITSECTION__",
-	'wikiahome-footer-community-wam' =>'*[$1 TODO WAM Scores]',
+	'wikiahome-footer-community-wam' =>'*[$1 Classement WAM]',
 
 	'wikia-home-page-hot' => 'Chaud',
 	'wikia-home-page-new' => 'Nouveau',

@@ -80,7 +80,7 @@ class MustacheHigherOrderSectionsTest extends PHPUnit_Framework_TestCase {
 	}
 }
 
-class Foo extends Mustache {
+class Foo extends MustachePHP {
 	public $name = 'Justin';
 	public $lorem = 'Lorem ipsum dolor sit amet,';
 	public $wrap;
@@ -107,7 +107,7 @@ class Foo extends Mustache {
 	}
 }
 
-class Monster extends Mustache {
+class Monster extends MustachePHP {
 	public $_template = '{{#title}}{{title}} {{/title}}{{name}}';
 	public $title;
 	public $name;

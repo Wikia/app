@@ -12,8 +12,20 @@ class WAMPageModel extends WikiaModel {
 	const TAB_INDEX_GAMING = 2;
 	const TAB_INDEX_ENTERTAINMENT = 3;
 	const TAB_INDEX_LIFESTYLE = 4;
-	
+
+	/**
+	 * @desc Cache for config array from WikiFactory
+	 * 
+	 * @var mixed|null
+	 */
 	protected $config = null;
+
+	/**
+	 * @desc Cache for db key maps where the key is lower-case dbkey and value is just dbkey
+	 *
+	 * @var null
+	 */
+	protected $pagesMap = null;
 	
 	static protected $failoverTabsNames = [
 		self::TAB_INDEX_TOP_WIKIS => 'Top wikis',
@@ -106,6 +118,11 @@ class WAMPageModel extends WikiaModel {
 		$dates = $this->app->sendRequest('WAMApi', 'getMinMaxWamIndexDate')->getData();
 		if (isset($dates['min_max_dates'])) {
 			$dates = $dates['min_max_dates'];
+
+			// Set min date as next day, because we don't have previous data
+			if (!empty($dates['min_date'])) {
+				$dates['min_date'] += 60 * 60 * 24;
+			}
 		} else {
 			$dates = [
 				'min_date' => null,
@@ -121,9 +138,33 @@ class WAMPageModel extends WikiaModel {
 	}
 	
 	public function getWAMMainPageUrl() {
-		$title = Title::newFromText($this->getWAMMainPageName());
+		$title = $this->getTitleFromText($this->getWAMMainPageName());
 		
 		return ($title instanceof Title) ? $title->getFullUrl() : null;
+	}
+
+	/**
+	 * @desc Checks if given title is a WAM page/subpage and if it is returns its url
+	 * 
+	 * @param Title $title instance of class Title
+	 * @param bool $fullUrl flag which informs method to return full url by default or local url when false passed
+	 * 
+	 * @return string
+	 */
+	public function getWAMSubpageUrl(Title $title, $fullUrl = true) {
+		if( $this->isWAMPage($title) ) {
+			$dbkeysMap = $this->getWamPagesDbKeysMap();
+			$dbkeyLower = mb_strtolower($title->getDBKey());
+			$wamPageDbkey = isset($dbkeysMap[$dbkeyLower]) ? $dbkeysMap[$dbkeyLower] : false;
+			
+			if( $wamPageDbkey ) {
+				$title = $this->getTitleFromText($wamPageDbkey);
+			}
+		}
+		
+		$url = ($fullUrl) ? $title->getFullUrl() : $title->getLocalURL();
+		
+		return $url;
 	}
 
 	public function getWAMFAQPageName() {
@@ -160,7 +201,7 @@ class WAMPageModel extends WikiaModel {
 		$tabsNames = $this->getTabsNamesArray();
 		
 		foreach($tabsNames as $tabName) {
-			$tabTitle = Title::newFromText($pageName . '/'. $tabName);
+			$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
 			$tabUrl = $tabTitle->getLocalURL();
 			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
 		}
@@ -172,19 +213,21 @@ class WAMPageModel extends WikiaModel {
 		return $tabs;
 	}
 	
-	public function getWamPagesDbKeysLower() {
-		$pagesLowerCase = [];
-		$pageName = mb_strtolower($this->getWAMMainPageName());
-		
-		foreach($this->getTabsNamesArray() as $tabName) {
-			$tabTitle = Title::newFromText($pageName . '/'. $tabName);
-			$pagesLowerCase[] = mb_strtolower($tabTitle->getDBKey());
+	public function getWamPagesDbKeysMap() {
+		if( is_null($this->pagesMap) ) {
+			$this->pagesMap = [];
+			$pageName = $this->getWAMMainPageName();
+
+			foreach($this->getTabsNamesArray() as $tabName) {
+				$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
+				$this->pagesMap[mb_strtolower($tabTitle->getDBKey())] = $tabTitle->getDBKey();
+			}
+
+			$this->pagesMap[mb_strtolower($pageName)] = $pageName;
+			$this->pagesMap[mb_strtolower($this->getWAMFAQPageName())] = $this->getWAMFAQPageName();
 		}
-		
-		$pagesLowerCase[] = $pageName;
-		$pagesLowerCase[] = mb_strtolower($this->getWAMFAQPageName());
-		
-		return $pagesLowerCase;
+
+		return $this->pagesMap;
 	}
 
 	/**
@@ -268,24 +311,15 @@ class WAMPageModel extends WikiaModel {
 	protected function getVisualizationParams($verticalId = null, $sortColumn = 'wam_index') {
 		$params = [
 			'vertical_id' => $verticalId,
-			'sort_column' => $sortColumn
-		];
-
-		return array_merge($params, $this->getDefaultParams());
-	}
-
-	protected function getDefaultParams() {
-		$lastDay = strtotime('00:00');
-
-		return [
-			'wam_day' => $lastDay,
-			'wam_previous_day' => strtotime('-1 day', $lastDay),
+			'sort_column' => $sortColumn,
 			'limit' => $this->getVisualizationItemsCount(),
 			'sort_direction' => 'DESC',
 			'wiki_image_height' => self::VISUALIZATION_ITEM_IMAGE_HEIGHT,
 			'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
 			'fetch_wiki_images' => true,
 		];
+
+		return $params;
 	}
 
 	/**
@@ -306,6 +340,8 @@ class WAMPageModel extends WikiaModel {
 		$offset = ($page > $firstPageNo) ? (($page - 1) * $itemsPerPage) : 0;
 		
 		$apiParams = [
+			'avatar_size' => 21,
+			'fetch_admins' => true,
 			'limit' => $itemsPerPage,
 			'offset' => $offset,
 			'sort_column' => 'wam_index',
@@ -317,6 +353,18 @@ class WAMPageModel extends WikiaModel {
 		];
 
 		return $apiParams;
+	}
+
+	public function isWAMPage($title) {
+		wfProfileIn(__METHOD__);
+		$dbKey = null;
+
+		if( $title instanceof Title ) {
+			$dbKey = mb_strtolower( $title->getDBKey() );
+		}
+		
+		wfProfileOut(__METHOD__);
+		return in_array($dbKey, array_keys($this->getWamPagesDbKeysMap()));
 	}
 
 	/**
@@ -342,7 +390,48 @@ class WAMPageModel extends WikiaModel {
 				'url' => 'runescape.wikia.com',
 				'hub_id' => '2',
 				'wam_change' => '0.0045',
-				'admins' => [],
+				'admins' => [
+						0 => [
+							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+							'edits' => 0,
+							'name' => 'Merovingian',
+							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Merovingian',
+							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Merovingian',
+							'since' => 'Apr 2005'
+						],
+						2 => [
+							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+							'edits' => 0,
+							'name' => 'Oddlyoko',
+							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Oddlyoko',
+							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Oddlyoko',
+							'since' => 'Oct 2005'
+						],
+						3 => [
+							'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
+							'edits' => 0,
+							'name' => 'Vimescarrot',
+							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
+							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
+							'since' => 'Feb 2006'
+						],
+						4 => [
+							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+							'edits' => 0,
+							'name' => 'Eucarya',
+							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Eucarya',
+							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Eucarya',
+							'since' => 'May 2006'
+						],
+						5 => [
+							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+							'edits' => 0,
+							'name' => 'Hyenaste',
+							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Hyenaste',
+							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Hyenaste',
+							'since' => 'Jul 2006'
+						]
+				],
 				'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121004184329/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/150px-Wikia-Visualization-Main%2Crunescape.png',
 			],
 			14764 => [
@@ -360,7 +449,32 @@ class WAMPageModel extends WikiaModel {
 				'url' => 'leagueoflegends.wikia.com',
 				'hub_id' => '3',
 				'wam_change' => '0.0039',
-				'admins' => [],
+				'admins' => [
+					2 => [
+						'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+						'edits' => 0,
+						'name' => 'Oddlyoko',
+						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Oddlyoko',
+						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Oddlyoko',
+						'since' => 'Oct 2005'
+					],
+					3 => [
+						'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
+						'edits' => 0,
+						'name' => 'Vimescarrot',
+						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
+						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
+						'since' => 'Feb 2006'
+					],
+					4 => [
+						'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
+						'edits' => 0,
+						'name' => 'Eucarya',
+						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Eucarya',
+						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Eucarya',
+						'since' => 'May 2006'
+					]
+				],
 				'wiki_image' => 'http://images4.wikia.nocookie.net/__cb20120828154214/wikiaglobal/images/thumb/e/ea/Wikia-Visualization-Main%2Cleagueoflegends.png/150px-Wikia-Visualization-Main%2Cleagueoflegends.png.jpeg',
 			],
 			1706 => [
@@ -378,7 +492,16 @@ class WAMPageModel extends WikiaModel {
 				'url' => 'elderscrolls.wikia.com',
 				'hub_id' => '2',
 				'wam_change' => '-0.0016',
-				'admins' => [],
+				'admins' => [
+					3 => [
+						'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
+						'edits' => 0,
+						'name' => 'Vimescarrot',
+						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
+						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
+						'since' => 'Feb 2006'
+					]
+				],
 				'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121214183339/wikiaglobal/images/thumb/d/d4/Wikia-Visualization-Main%2Celderscrolls.png/150px-Wikia-Visualization-Main%2Celderscrolls.png',
 			],
 			3035 => [
@@ -400,5 +523,9 @@ class WAMPageModel extends WikiaModel {
 				'wiki_image' => null,
 			],
 		]];
+	}
+	
+	protected function getTitleFromText($text) {
+		return Title::newFromText($text);
 	}
 }

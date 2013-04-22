@@ -16,7 +16,7 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
         );
         $template = '{{ a }}';
         $output = '{{ b }}';
-        $m = new Mustache();
+        $m = new MustachePHP();
         $this->assertEquals($output, $m->render($template, $data));
     }
 
@@ -27,7 +27,7 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
         );
         $template = '{{{ a }}}';
         $output = '{{ b }}';
-        $m = new Mustache();
+        $m = new MustachePHP();
         $this->assertEquals($output, $m->render($template, $data));
     }
 
@@ -42,7 +42,7 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
         );
         $template = '{{# a }}{{ b }}{{/ a }}';
         $output = '{{ c }}';
-        $m = new Mustache();
+        $m = new MustachePHP();
         $this->assertEquals($output, $m->render($template, $data));
     }
 
@@ -54,7 +54,7 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
         );
         $template = '{{# a }}{{{ b }}}{{/ a }}';
         $output = '{{ c }}';
-        $m = new Mustache();
+        $m = new MustachePHP();
         $this->assertEquals($output, $m->render($template, $data));
     }
 
@@ -71,7 +71,7 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
             'partial' => '{{ a }}',
         );
         $output = '{{ b }}';
-        $m = new Mustache();
+        $m = new MustachePHP();
         $this->assertEquals($output, $m->render($template, $data, $partials));
     }
 
@@ -85,7 +85,7 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
             'partial' => '{{{ a }}}',
         );
         $output = '{{ b }}';
-        $m = new Mustache();
+        $m = new MustachePHP();
         $this->assertEquals($output, $m->render($template, $data, $partials));
     }
 
@@ -100,7 +100,7 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
         );
         $template = '{{ a }}';
         $output = '{{ c }}';
-        $m = new Mustache();
+        $m = new MustachePHP();
         $this->assertEquals($output, $m->render($template, $data));
     }
 
@@ -116,7 +116,7 @@ class MustacheInjectionSectionTest extends PHPUnit_Framework_TestCase {
         );
         $template = '{{# a }}b{{/ a }}';
         $output = '{{ c }}';
-        $m = new Mustache();
+        $m = new MustachePHP();
         $this->assertEquals($output, $m->render($template, $data));
     }
 

@@ -28,7 +28,7 @@ class MustacheObjectSectionTest extends PHPUnit_Framework_TestCase {
 	}
 }
 
-class Alpha extends Mustache {
+class Alpha extends MustachePHP {
 	public $foo;
 
 	public function __construct() {
@@ -38,7 +38,7 @@ class Alpha extends Mustache {
 	}
 }
 
-class Beta extends Mustache {
+class Beta extends MustachePHP {
 	protected $_data = array();
 
 	public function __construct() {
@@ -56,7 +56,7 @@ class Beta extends Mustache {
 	}
 }
 
-class Gamma extends Mustache {
+class Gamma extends MustachePHP {
 	public $bar;
 
 	public function __construct() {
@@ -64,7 +64,7 @@ class Gamma extends Mustache {
 	}
 }
 
-class Delta extends Mustache {
+class Delta extends MustachePHP {
 	protected $_name = 'Foo';
 
 	public function name() {

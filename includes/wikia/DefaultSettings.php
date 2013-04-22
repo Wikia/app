@@ -195,7 +195,7 @@ $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ "WikiMover"                       ] = "$IP/extensions/wikia/WikiFactory/Mover/WikiMover.php";
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/SimplePie/simplepie.inc";
-$wgAutoloadClasses[ 'Mustache'                        ] = "$IP/lib/mustache.php/Mustache.php";
+$wgAutoloadClasses[ 'MustachePHP'                        ] = "$IP/lib/mustache.php/Mustache.php";
 $wgAutoloadClasses[ 'Minify_CSS_Compressor'           ] = "$IP/lib/Minify_CSS_Compressor.php";
 $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
@@ -1090,6 +1090,9 @@ $wgEnableQuickToolsExt = true;
  * Use phalanx external service
  */
 $wgPhalanxService = false;
+$wgPhalanxServiceUrl = "http://phalanx";
+$wgPhalanxServiceOptions = [];
+
 
 /**
  * @name $wgWikiaHubsFileRepoDBName
@@ -1120,6 +1123,12 @@ $wgEnableAmazonDirectTargetedBuy = true;
  * Enables JavaScript error logging mechanism
  */
 $wgEnableJavaScriptErrorLogging = false;
+
+/**
+ * @name $wgEnableAdEngineExt
+ * Enables ad engine
+ */
+$wgEnableAdEngineExt = true;
 
 /**
  * trusted proxy service registry
