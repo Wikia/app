@@ -151,11 +151,13 @@ require(['ad.scriptwriter', 'wikia.cache', 'wikia.cookies', 'wikia.document', 'w
 	// Load Krux asynchronously later
 	// If you call AdEngine_loadKruxLater(Krux) at the end of the HTML Krux
 	// or on DOM ready, it will be loaded after most (if not all) of the ads
-	window.AdEngine_loadKruxLater = function (Krux) {
+	window.AdEngine_loadKruxLater = function () {
 		if (window.wgAdsShowableOnPage) {
-			scriptWriter.callLater(function () {
-				log('Loading Krux code', 8, module);
-				Krux.load(window.wgKruxCategoryId);
+			window.wgAfterContentAndJS.push(function () {
+				scriptWriter.callLater(function () {
+					log('Loading Krux code', 8, module);
+					Krux.load(window.wgKruxCategoryId);
+				});
 			});
 		}
 	};

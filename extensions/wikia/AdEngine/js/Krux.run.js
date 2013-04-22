@@ -1,5 +1,6 @@
-if (window.wgEnableKruxTargeting) {
-	$(window).load(function() {
-		window.AdEngine_loadKruxLater(Krux);
-	});
-}
+require(['wikia.window'], function (window) {
+	'use strict';
+	if (window.wgEnableKruxTargeting) {
+		window.AdEngine_loadKruxLater();
+	}
+});
