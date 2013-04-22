@@ -35,6 +35,9 @@ class Factory
 		if ( $config->getVideoTitleSearch() ) {
 			return new Select\VideoTitle( $container );
 		}
+		if ( $config->getVideoActorSearch() ) {
+			return new Select\VideoActor( $container );
+		}
 		return new Select\OnWiki( $container );
 	}
 	

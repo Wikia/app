@@ -30,6 +30,9 @@ class Video extends OnWiki
 					Utilities::field( 'redirect_titles', 'en' ) => 4
 					));
 		}
+		$this->config->addQueryFields( 
+				[ 'video_actors_txt' => 5, 'video_genres_txt' => 3, 'html_media_extras_txt' => 5 ]
+		);
 		return $this;
 	}
 	
