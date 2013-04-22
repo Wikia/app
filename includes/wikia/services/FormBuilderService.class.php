@@ -9,7 +9,7 @@ class FormBuilderService extends WikiaService
 	 * Constructor
 	 *
 	 * @param string $prefix form name
-	 * @param array $fields  array of form fields
+	 * @param array $fields  array of form fields ( @see setFields )
 	 */
 	public function __construct($prefix = '', $fields = []) {
 		$this->prefix = $prefix;
@@ -19,9 +19,18 @@ class FormBuilderService extends WikiaService
 	/**
 	 * Set fields
 	 *
+	 * @requestParam string type				[OPTIONAL] field type ('text', 'textarea' etc.) | default 'text'
+	 * @requestParam string value				[OPTIONAL] field value | default set to ''
+	 * @requestParam array attributes			[OPTIONAL] array with input attributes
+	 * @requestParam WikiaValidator validator 	[OPTIONAL] WikiaValidator object
+	 * @requestParam string label				[OPTIONAL] label text
+	 * @requestParam string labelclass			[OPTIONAL] label class
+	 * @requestParam string class				[OPTIONAL] field wrapper class
+	 * @requestParam boolean isArray			[OPTIONAL] if set to true, form input field is an array
+	 * @requestParam boolean icon				[OPTIONAL] if set to true, <img/> tag with blank img is added to label
+	 *
 	 * @param $formFields
 	 */
-	// TODO add actual field definition structure in docblock
 	// TODO change fields into Objects in near future
 	public function setFields($formFields) {
 		$this->formFields = $formFields;
@@ -40,7 +49,7 @@ class FormBuilderService extends WikiaService
 	 * Set field
 	 *
 	 * @param $fieldName
-	 * @param $field
+	 * @param $field ( @see setFields )
 	 */
 	public function setField($fieldName, $field) {
 		$this->formFields[$fieldName] = $field;
@@ -164,7 +173,7 @@ class FormBuilderService extends WikiaService
 	 * Render form field
 	 *
 	 * @param string $fieldName field name
-	 * @param int    $index
+	 * @param int    $index field index if isArray is set to true
 	 *
 	 * @return WikiaView
 	 */

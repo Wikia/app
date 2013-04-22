@@ -77,9 +77,9 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				$total = intval($videoGamesAmount) + intval($entertainmentAmount) + intval($lifestyleAmount);
 
 				if ($total !== WikiaHomePageHelper::SLOTS_IN_TOTAL) {
-					$this->setVal('errorMsg', wfMessage('manage-wikia-home-error-invalid-total-no-of-slots')->params(array($total, WikiaHomePageHelper::SLOTS_IN_TOTAL))->text());
+					$this->errorMsg = wfMessage('manage-wikia-home-error-invalid-total-no-of-slots')->params(array($total, WikiaHomePageHelper::SLOTS_IN_TOTAL))->text();
 				} elseif ( $this->isAnySlotNumberNegative($videoGamesAmount, $entertainmentAmount, $lifestyleAmount) ) {
-					$this->setVal('errorMsg', wfMessage('manage-wikia-home-error-negative-slots-number-not-allowed')->text());
+					$this->errorMsg = wfMessage('manage-wikia-home-error-negative-slots-number-not-allowed')->text();
 				} else {
 					$this->saveSlotsConfigInWikiFactory($this->corpWikiId,
 						$visualizationLang,
@@ -100,9 +100,9 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 					$collectionSavedValues = $this->prepareCollectionForSave($collectionValues);
 					$collectionsModel->saveAll($this->visualizationLang, $collectionSavedValues);
 
-					$this->setVal('infoMsg', wfMessage('manage-wikia-home-collections-success')->text());
+					$this->infoMsg = wfMessage('manage-wikia-home-collections-success')->text();
 				} else {
-					$this->setVal('errorMsg', wfMessage('manage-wikia-home-collections-failure')->text());
+					$this->errorMsg = wfMessage('manage-wikia-home-collections-failure')->text();
 				}
 			}
 		}
@@ -217,7 +217,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		if( in_array(false, $statusArr) ) {
 			Wikia::log(__METHOD__, false, "A problem with saving WikiFactory variable(s) occured. Status array: " . print_r($statusArr, true));
-			$this->setVal('errorMsg', wfMessage('manage-wikia-home-error-wikifactory-failure')->text());
+			$this->errorMsg = wfMessage('manage-wikia-home-error-wikifactory-failure')->text();
 		} else {
 			$visualization = F::build('CityVisualization'); /** @var $visualization CityVisualization */
 			//todo: put purging those caches to CityVisualization class and fire here only one its method here
@@ -230,7 +230,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			//purge visualization list cache
 			$visualization->purgeVisualizationWikisListCache($corpWikiId, $corpWikiLang);
 
-			$this->setVal('infoMsg', wfMessage('manage-wikia-home-wikis-in-slots-success')->text());
+			$this->infoMsg = wfMessage('manage-wikia-home-wikis-in-slots-success')->text();
 
 			$result = true;
 		}
