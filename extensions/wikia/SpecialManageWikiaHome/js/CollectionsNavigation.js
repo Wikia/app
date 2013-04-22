@@ -55,7 +55,6 @@ var CollectionsNavigation = function(modulesSelector) {
 		moduleOne.before(moduleTwo);
 	};
 
-	var modulesSelector = modulesSelector;
 	var modules = $(modulesSelector);
 	modules.each(function(i, moduleElem) {
 		addButtons(moduleElem);
