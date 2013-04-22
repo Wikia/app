@@ -51,7 +51,7 @@ class WebmasterToolsUtil {
 	 */
 	public function upload( $wikiId, IGoogleCredentials $credentials ) {
 		$client = new GWTClient($credentials->getEmail(), $credentials->getPassword(), $wikiId);
-		return $client->add_site();
+		$client->add_site();
 	}
 
 	/*

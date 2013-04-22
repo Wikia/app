@@ -219,7 +219,7 @@ class GWTClient {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array( "site_id" => $this->make_site_id()) );
 		$xml = $oTmpl->render("wt-add-sitemap");
-		return $this->put_sitemap( $xml );
+		$this->put_sitemap( $xml );
 	}
 
 	private function put_sitemap ( $xml ) {
@@ -235,6 +235,5 @@ class GWTClient {
 		} else {
 			throw new GWTException( "Non 200 response.\n"  . "\n" . "message:". $status->getMessage()."\n" . $request->getContent());
 		}
-		return true; // TODO !!!
 	}
 }
