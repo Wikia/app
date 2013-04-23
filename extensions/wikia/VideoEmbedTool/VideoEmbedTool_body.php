@@ -354,6 +354,12 @@ class VideoEmbedTool {
 		// Strip out the category tags so they aren't shown to the user
 		$text = FilePageHelper::stripCategoriesFromDescription( $text );
 
+		// If we have an empty string or a bunch of whitespace, use the default description
+		// from the file metadata
+		if ( preg_match('/^\s*$/ms', $text) ) {
+			$text = $file->getMetaDescription();
+		}
+
 		return $text;
 	}
 
