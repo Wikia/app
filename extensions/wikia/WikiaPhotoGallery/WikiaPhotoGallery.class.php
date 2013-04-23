@@ -934,8 +934,6 @@ class WikiaPhotoGallery extends ImageGallery {
 					$thumbHtml .= $videoOverlay;
 				} else {
 					$thumbHtml = $image['linkTitle'];
-//					$thumbHtml .= Xml::openElement('div', ['style' => "height:{$image['height']}px; vertical-align:middle; display:inline-block"]);
-//					$thumbHtml .= Xml::closeElement('div');
 				}
 
 				$html .= Xml::openElement('a', $linkAttribs);
