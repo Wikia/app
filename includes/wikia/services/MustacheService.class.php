@@ -152,7 +152,11 @@ class MustacheService {
 		// so pre-process them before sending to renderer
 		$data = $this->parseData($data);
 
-		$mustache = new Mustache();
+		if( class_exists('Mustache') ) {
+			$mustache = new Mustache();
+		} else {
+			$mustache = new MustachePHP();
+		}
 		return $mustache->render($template,$data,$partials);
 	}
 
