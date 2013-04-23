@@ -97,7 +97,7 @@ class Config implements ArrayAccess
 			'redirect_titles'   => 50,
 			'categories'        => 25,
 			'nolang_txt'        => 10,
-			'backlinks_txt'     => 50,
+			'backlinks_txt'     => 25,
 			);
 	
 
