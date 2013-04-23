@@ -376,6 +376,12 @@ class HAWelcomeJob extends Job {
         if ( $this->bShowNotices ) {
             trigger_error( sprintf( '%s Start.', __METHOD__ ) , E_USER_NOTICE );
         }
+	/** @global Object User The user who runs the script. */
+	global $wgUser;
+	/** @type Object User Store the original $wgUser for a moment. */
+	$tmp = $wgUser;
+	// Replace the current active user object with the sender object for a moment.
+	$wgUser = $this->oSender;
         // Post a message onto a message wall if enabled.
         if ( $this->bMessageWallExt ) {
             if ( $this->bShowNotices ) {
@@ -403,12 +409,6 @@ class HAWelcomeJob extends Job {
             if ( $this->bShowNotices ) {
                 trigger_error( sprintf( '%s Message Wall disabled.', __METHOD__ ) , E_USER_NOTICE );
             }
-            /** @global Object User The user who runs the script. */
-            global $wgUser;
-            /** @type Object User Store the original $wgUser for a moment. */
-            $tmp = $wgUser;
-            // Replace the current active user object with the sender object for a moment.
-            $wgUser = $this->oSender;
             // Prepend the message with the existing content of the talk page.
             /** @type String The contents for the edit. */
             $sMessage = ( $this->oRecipientTalkPage->exists() )
@@ -416,10 +416,10 @@ class HAWelcomeJob extends Job {
                 : $this->sMessage;
             // Do the edit.
             $this->oRecipientTalkPage->doEdit( $sMessage, wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), $this->iFlags );
-            // Restore the original active user object.
-            $wgUser = $tmp;
         }
-        if ( $this->bShowNotices ) {
+	// Restore the original active user object.
+	$wgUser = $tmp;
+	if ( $this->bShowNotices ) {
             trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );
         }
         wfProfileOut( __METHOD__ );
