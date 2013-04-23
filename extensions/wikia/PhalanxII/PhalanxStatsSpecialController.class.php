@@ -23,16 +23,16 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 		$par = $this->getPar();
 		$blockId = $this->wg->Request->getInt('blockId', intval($par));
-		if ( empty( $blockId ) ) {
-			// show help page
-			$this->forward('PhalanxStatsSpecial', 'help');
+		if ( !empty( $blockId ) ) {
+			// show block stats
+			$this->blockStats($blockId);
 		} elseif ( strpos( $par, 'wiki' ) !== false ) {
 			// show per-wiki stats
 			list ( , $wikiId ) = explode( "/", $par, 2 );
 			$this->blockWikia($wikiId);
 		} else {
-			// show block stats
-			$this->blockStats($blockId);
+			// show help page
+			$this->forward('PhalanxStatsSpecial', 'help');
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -111,10 +111,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function blockWikia($wikiId) {
-		$this->wg->Out->addWikiMsg('phalanx-stats-not-implemented');
-
-		/**
-		$oWiki = WikiFactory::getWikiById( $this->wikiId );
+		$oWiki = WikiFactory::getWikiById( $wikiId );
 		if ( !is_object($oWiki) ) {
 			return false;
 		}
@@ -144,14 +141,14 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		);
 
 		$table = Xml::buildTable( array( $data ), $tableAttribs, $headers );
-		$this->wg->Out->addHTML( $table . "<br />\n" );
-
-		$pager = new PhalanxStatsWikiaPager( $this->wikiId );
-		$html  = $pager->getNavigationBar();
-		$html .= $pager->getBody();
-		$html .= $pager->getNavigationBar();
-		$this->wg->Out->addHTML( $html );
-		 **/
+		$this->setVal('table', $table);
+		
+		$pager = new PhalanxStatsWikiaPager( $wikiId );
+		$this->setVal('statsPager',
+			$pager->getNavigationBar() .
+			$pager->getBody() .
+			$pager->getNavigationBar()
+		);
 	}
 
 	public function help() {
