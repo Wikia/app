@@ -1065,9 +1065,9 @@
 		.on('click.VET', '.vet-close', function(e) {
 			e.preventDefault();
 
-			VET_tracking({
-				label: 'button-close'
-			});
+//			VET_tracking({
+//				label: 'button-close'
+//			});
 
 			VET_close();
 		});
