@@ -150,7 +150,7 @@ class WikiaPollHooks {
 		}
 		// store data and mark HTML
 		$dataIdx = RTEData::put('data', $data);
-		$sizes = $poll->getRtePlaceholderSizes();
+		$size = $poll->getRtePlaceholderSize();
 
 		// render poll placeholder
 		$tag = Xml::element('img', array(
@@ -158,8 +158,8 @@ class WikiaPollHooks {
 			'class' => "media-placeholder placeholder-poll",
 			'src' => $wgBlankImgUrl,
 			'type' => 'poll',
-			'width' => $sizes->width,
-			'height' => $sizes->height,
+			'width' => $size->width,
+			'height' => $size->height,
 		));
 		return RTEData::addIdxToTag($dataIdx, $tag);
 	}
