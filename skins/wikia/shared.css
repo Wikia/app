@@ -43,7 +43,7 @@
 	overflow: hidden;
 }
 
-.wikia-gallery-item .thumb a.image {
+.wikia-gallery-item .thumb a.image, .wikia-gallery-item .thumb a.image-no-lightbox {
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	display: table-cell;
