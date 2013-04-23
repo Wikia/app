@@ -22,7 +22,7 @@ $messages['en'] = array(
 	'file-page-tab-about' => 'About',
 	'file-page-tab-history' => 'File History',
 	'file-page-tab-metadata' => 'Metadata',
-	'file-page-more-links' => 'See the full list',
+	'file-page-more-links' => 'See full list',
 
 );
 
