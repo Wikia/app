@@ -278,6 +278,7 @@ $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoServic
 $wgAutoloadClasses['SassService']  =  $IP.'/includes/wikia/services/SassService.php';
 $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
 $wgAutoloadClasses['VideoUsageService'] = $IP . '/includes/wikia/services/VideoUsageService.php';
+$wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/MustacheService.class.php';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
