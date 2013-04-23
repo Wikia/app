@@ -18,6 +18,9 @@ class Video extends OnWiki
 	 */
 	const VIDEO_WIKI_ID = 298117;
 	
+	// skipping boost functions
+	protected $boostFunctions = array();
+	
 	/**
 	 * Video wiki requires english field search
 	 * @see \Wikia\Search\QueryService\Select\OnWiki::configureQueryFields()
@@ -47,5 +50,9 @@ class Video extends OnWiki
 				Utilities::valueForField( 'ns', \NS_FILE )
 				);
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
+	}
+	
+	protected function getBoostQueryString() {
+		return '';
 	}
 }
