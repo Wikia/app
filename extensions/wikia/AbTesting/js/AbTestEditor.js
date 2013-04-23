@@ -3,13 +3,21 @@
 		templates = {
 			addTreatmentGroup: [
 				'<div class="add-new">',
-					'<div class="input-group">',
+					'<div class="input-group group-name">',
 						'<label>Name</label>',
 						'<input type="text" name="groups[]">',
 					'</div>',
-					'<div class="input-group">',
+					'<div class="input-group ranges">',
 						'<label>Range (0--99)</label>',
 						'<input type="text" name="ranges[]">',
+					'</div>',
+					'<div class="input-group value-dialog group-styles">',
+						'<input name="styles[]" type="hidden" value="" />',
+						'<span>Styles: <span class="value-empty-text">(none)</span><span class="value-present-text">(present)</span> <a class="wikia-button value-edit">Edit</a></span>',
+					'</div>',
+					'<div class="input-group value-dialog group-scripts">',
+						'<input name="scripts[]" type="hidden" value="" />',
+						'<span>Scripts: <span class="value-empty-text">(none)</span><span class="value-present-text">(present)</span> <a class="wikia-button value-edit">Edit</a></span>',
 					'</div>',
 				'</div>'
 			].join(''),
@@ -25,6 +33,15 @@
 					'<button type="button" name="okay">Okay</button>',
 					'<button type="button" name="cancel">Cancel</button>',
 				'</div>'
+			].join(''),
+			textareaEditor: [
+				'<form class="textarea-editor">',
+					'<textarea></textarea>',
+					'<div class="buttons">',
+						'<button type="button" name="save">Save</button>',
+						'<button class="secondary" type="button" name="cancel">Cancel</button>',
+					'</div>',
+				'</form>'
 			].join('')
 		},
 
@@ -137,6 +154,8 @@
 				timeFormat: 'HH:mm:ss',
 				showSecond: true
 			});
+
+			modal.on('click', '.value-dialog .value-edit', $.proxy(this.editHiddenTextarea,this));
 		},
 		cancelChange: function( e ) {
 			var button = $( e.currentTarget ),
@@ -237,6 +256,29 @@
 				form.find( '.general-errors' ).remove();
 				form.append( template );
 			}
+		},
+		editHiddenTextarea: function( ev ) {
+			var self = this,
+				inputGroup = $(ev.currentTarget).closest('.value-dialog'),
+				input = inputGroup.find('input'),
+				value = input.val(),
+				title = inputGroup.hasClass('group-styles') ? 'Edit styles' : 'Edit script',
+				modal = $.showModal( title, templates.textareaEditor, {
+					closeOnBlackoutClick: false
+				}),
+				textarea = modal.find('textarea');
+
+			textarea.val(input.val());
+			modal
+				.on('click','button[name=save]',function(){
+					var value = textarea.val();
+					modal.closeModal();
+					input.val(value);
+					inputGroup[value?'addClass':'removeClass']('value-active');
+				})
+				.on('click','button[name=cancel]',function(){
+					modal.closeModal();
+				});
 		}
 	});
 

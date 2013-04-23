@@ -710,10 +710,11 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				return file_get_contents($fileName);
 				break;
 			case self::FILE_TYPE_SASS:
-				$sass = new SassService($fileName);
+				$sassService = SassService::newFromFile($fileName);
 				$params = $context->getRequest()->getVal('sass_params');
 				$params = !empty($params) ? FormatJson::decode($params,true) : array();
-				return $sass->getContents($params);
+				$sassService->setSassVariables($params);
+				return $sassService->getCss();
 				break;
 		}
 	}
@@ -724,8 +725,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				return filemtime($fileName);
 				break;
 			case self::FILE_TYPE_SASS:
-				$sass = new SassService($fileName);
-				return $sass->getModificationTime();
+				return SassService::newFromFile($fileName)->getModifiedTime();
 				break;
 
 		}
