@@ -41,11 +41,11 @@ class VideoEmbedToolController extends WikiaController {
 
 			$wikiaSearchConfig = new Wikia\Search\Config();
 			$wikiaSearchConfig  ->setStart( $svStart )
-								->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
-								->setCityID( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
-								->setIsVideo( true )
-								->setNamespaces( array( NS_FILE ) )
-								->setQuery( $articleTitle . ' ' . $wikiTitleSansWiki );
+				->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+				->setCityID( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
+				->setIsVideo( true )
+				->setNamespaces( array( NS_FILE ) )
+				->setQuery( $articleTitle . ' ' . $wikiTitleSansWiki );
 
 
 			$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
@@ -68,12 +68,12 @@ class VideoEmbedToolController extends WikiaController {
 			}
 
 			$result = array(
-					'searchQuery' => $articleTitle . ' ' . $wikiTitleSansWiki,
-					'caption' => $this->wf->Msg( 'vet-suggestions' ),
-					'totalItemCount' => 0,
-					'nextStartFrom' => $response['nextStartFrom'],
-					'currentSetItemCount' => count($response['items']),
-					'items' => $response['items']
+				'searchQuery' => $articleTitle . ' ' . $wikiTitleSansWiki,
+				'caption' => $this->wf->Msg( 'vet-suggestions' ),
+				'totalItemCount' => 0,
+				'nextStartFrom' => $response['nextStartFrom'],
+				'currentSetItemCount' => count($response['items']),
+				'items' => $response['items']
 			);
 
 			$this->response->setData( $result );
@@ -92,10 +92,10 @@ class VideoEmbedToolController extends WikiaController {
 
 		$wikiaSearchConfig = new Wikia\Search\Config();
 		$wikiaSearchConfig  ->setStart( $svStart )
-							->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
-							->setVideoSearch( true )
-							->setNamespaces( array( NS_FILE ) )
-							->setRank($searchOrder);
+			->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+			->setVideoSearch( true )
+			->setNamespaces( array( NS_FILE ) )
+			->setRank($searchOrder);
 
 		if($searchType == 'premium') {
 			$wikiaSearchConfig->setCityID( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
@@ -107,11 +107,11 @@ class VideoEmbedToolController extends WikiaController {
 		if ( !empty( $phrase ) && strlen( $phrase ) > 0 ) {
 
 			$requestedFields = $this->wg->ContLang->mCode == 'en'
-							? array( 'pageid' ) // get English for free
-							: array( 'pageid', Wikia\Search\Utilities::field( 'title', 'en' ), Wikia\Search\Utilities::field( 'html', 'en' ) );
+				? array( 'pageid' ) // get English for free
+				: array( 'pageid', Wikia\Search\Utilities::field( 'title', 'en' ), Wikia\Search\Utilities::field( 'html', 'en' ) );
 
 			$wikiaSearchConfig->setQuery( $phrase )
-							  ->setRequestedFields( array_merge( $wikiaSearchConfig->getRequestedFields(), $requestedFields ) );
+				->setRequestedFields( array_merge( $wikiaSearchConfig->getRequestedFields(), $requestedFields ) );
 
 			$search = (new Wikia\Search\QueryService\Factory)->getFromConfig( $wikiaSearchConfig );
 
@@ -223,7 +223,7 @@ class VideoEmbedToolController extends WikiaController {
 	 * @requestParam string description
 	 * @responseParam string status [success/fail]
 	 * @responseParam string errMsg
-	*/
+	 */
 	public function editDescription() {
 		$title = urldecode( $this->request->getVal('title') );
 		$title = Title::newFromText($title, NS_FILE);
