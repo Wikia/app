@@ -326,7 +326,7 @@ class ArticleComment {
 		$articleDataKey = wfMemcKey(
 			'articlecomment_data',
 			$commentId,
-			$this->mLastRevId,
+			$title->getLatestRevID(),
 			$wgUser->getId(),
 			$canDelete,
 			RequestContext::getMain()->getSkin()->getSkinName(),
@@ -638,7 +638,7 @@ class ArticleComment {
 	 * @return Array or false on error. - TODO: Document what the array contains.
 	 */
 	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '' ) {
-		global $wgMemc, $wgTitle;
+		global $wgTitle;
 		wfProfileIn( __METHOD__ );
 
 		$this->load(true);
@@ -671,8 +671,9 @@ class ArticleComment {
 			 * add article using EditPage class (for hooks)
 			 */
 
-			$article = new Article( $commentTitle, intval($this->mLastRevId) );
+			$article = new Article( $commentTitle, intval( $this->mLastRevId ) );
 			$retval = self::doSaveAsArticle($text, $article, $user, $this->mMetadata, $summary );
+
 			if(!empty($title)) {
 				$purgeTarget = $title;
 			} else {
@@ -875,7 +876,7 @@ class ArticleComment {
 	static public function doPurge($title, $commentTitle) {
 		wfProfileIn( __METHOD__ );
 
-		global $wgMemc, $wgArticleCommentsLoadOnDemand;
+		global $wgArticleCommentsLoadOnDemand;
 
 		// make sure our comment list is refreshed from the master RT#141861
 		$commentList = ArticleCommentList::newFromTitle($title);
