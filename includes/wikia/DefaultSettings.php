@@ -1140,5 +1140,5 @@ $app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'onIsTrustedProxy' 
  * @name $wgChatDebugEnabled
  * Enables verbose logging from chat
  */
-//$wgChatDebugEnabled = false;
+//$wgChatDebugEnabled = true;
 
