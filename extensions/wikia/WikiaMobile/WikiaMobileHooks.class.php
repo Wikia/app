@@ -49,7 +49,7 @@ class WikiaMobileHooks extends WikiaObject{
 					$submatches = array();
 
 					$itemsCount = preg_match_all(
-						'/\[\[' . $translatedNs . ':[^\]\[]*(?:\[\[[^\[]*\]\][^\[]*)*(?=\]\])/U',
+						'/(?<=\[\[)(?:' . $translatedNs . '):.*(?=\]\])/',
 						$match[0],
 						$submatches,
 						PREG_SET_ORDER
@@ -74,7 +74,7 @@ class WikiaMobileHooks extends WikiaObject{
 										//caption
 										(
 											( $index == ( $totalParts - 1 ) )  &&
-											!preg_match( '/(?:frame|thumb|right|left|[0-9]+px)/', $part )
+											!preg_match( '/(?:frame|thumb|right|left|[0-9]+\s?px)/', $part )
 										)
 									)
 								) {
@@ -98,7 +98,6 @@ class WikiaMobileHooks extends WikiaObject{
 					}
 				}
 			}
-
 			var_dump($text);exit();
 		}
 
