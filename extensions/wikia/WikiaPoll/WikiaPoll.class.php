@@ -300,11 +300,11 @@ class WikiaPoll {
 		wfProfileOut(__METHOD__);
 	}
 	
-	public function getRtePlaceholderSize() {
-		$out = new stdClass();
-		$out->width = self::RTE_PLACEHOLDER_WIDTH;
-		$out->height = self::RTE_PLACEHOLDER_HEIGHT;
-		
-		return $out;
+	public function getRtePlaceholderWidth() {
+		return self::RTE_PLACEHOLDER_WIDTH;
+	}
+
+	public function getRtePlaceholderHeight() {
+		return  self::RTE_PLACEHOLDER_HEIGHT;
 	}
 }
