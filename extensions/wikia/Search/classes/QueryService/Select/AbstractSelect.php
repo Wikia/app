@@ -345,8 +345,27 @@ abstract class AbstractSelect
 	 * Builds the string used with filter queries based on search config
 	 * @return string
 	 */
-	protected function getFilterQueryString()
-	{
+	protected function getFilterQueryString() {
 		return Utilities::valueForField( 'wid', $this->config->getCityId() );
 	}
+	
+	/**
+	 * Returns an inter-wiki match if we have one with >50 pages.
+	 * @return Ambigous <\Wikia\Search\Match\Wiki, NULL>
+	 */
+	protected function getCrossWikiMatch() {
+		$domain = preg_replace(
+				'/[^a-zA-Z0-9]/',
+				'',
+				strtolower( $this->config->getQuery()->getSanitizedQuery() ) 
+				);
+		$match = $this->service->getWikiMatchByHost( $domain );
+		if (! empty( $match ) ) {
+			$result = $match->getResult();
+			if ( $result['articles_count'] >= 50 ) {
+				return $match;
+			}
+		}
+	}
+	
 }

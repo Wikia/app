@@ -966,4 +966,94 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\QueryService\AbstractSelect::getCrossWikiMatch
+	 */
+	public function testGetCrossWikiMatch() {
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery', 'setWikiMatch', 'getWikiMatch' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSanitizedQuery' ], [ 'foo' ] );
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'getWikiMatchByHost' ) )
+		                      ->getMock();
+		
+		$mockResult = $this->getMock( 'Wikia\Search\Result', array( 'offsetGet' ) );
+
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
+		                   ->setConstructorArgs( array( $dc ) )
+		                   ->setMethods( null )
+		                   ->getMock();
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getResult' ) )
+		                  ->getMock();
+		
+		$mockConfig
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+	    ;
+		$mockQuery
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getSanitizedQuery' )
+		    ->will   ( $this->returnValue( 'star wars' ) )
+		;
+		$mockService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getWikiMatchByHost' )
+		    ->with   ( 'starwars' )
+		    ->will   ( $this->returnValue( $mockMatch ) )
+		;
+		$mockMatch
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( $mockResult ) )
+		;
+		$mockResult
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'offsetGet' )
+		    ->with   ( 'articles_count' )
+		    ->will   ( $this->returnValue( 50 ) )
+		;
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'extractMatch' );
+		$method->setAccessible( true );
+		$this->assertEquals(
+				$mockMatch,
+				$method->invoke( $mockSelect )
+		);
+		$mockConfig
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getQuery' )
+		        ->will   ( $this->returnValue( $mockQuery ) )
+	    ;
+		$mockQuery
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getSanitizedQuery' )
+		    ->will   ( $this->returnValue( 'star wars' ) )
+		;
+		$mockService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getWikiMatchByHost' )
+		    ->with   ( 'starwars' )
+		    ->will   ( $this->returnValue( $mockMatch ) )
+		;
+		$mockMatch
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( $mockResult ) )
+		;
+		$mockResult
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'offsetGet' )
+		    ->with   ( 'articles_count' )
+		    ->will   ( $this->returnValue( 49 ) )
+		;
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'extractMatch' );
+		$method->setAccessible( true );
+		$this->assertNull(
+				$method->invoke( $mockSelect )
+		);
+	}
+	
 }

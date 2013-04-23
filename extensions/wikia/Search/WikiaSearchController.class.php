@@ -28,7 +28,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var int
 	 */
 	const PAGES_PER_WINDOW = 5;
-	
+
 	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
@@ -63,11 +63,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->handleArticleMatchTracking( $searchConfig );
 			$search->search();
 		}
-		
+
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
 	}
-	
+
 	/**
 	 * Deprecated functionality for indexing.
 	 */
@@ -105,7 +105,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $this->setVal( 'label',     $label );
 	    $this->setVal( 'tooltip',   $tooltip );
 	}
-	
+
 	/**
 	 * Delivers a JSON response for video searches
 	 */
@@ -117,12 +117,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    	->setNamespaces     ( array(NS_FILE) )
 	    	->setVideoSearch    ( true )
 	    ;
-		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig ); 
+		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig );
 	    $this->getResponse()->setFormat( 'json' );
 	    $this->getResponse()->setData( $wikiaSearch->searchAsApi() );
 
 	}
-	
+
 	/**
 	 * Delivers a JSON response for videos matching a provided title
 	 * Expects query param "title" for the title value.
@@ -148,7 +148,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action.
 	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
 	 * @param  Wikia\Search\Config $searchConfig
-	 * @return boolean true if on page 1 and not routed, false if not on page 1 
+	 * @return boolean true if on page 1 and not routed, false if not on page 1
 	 */
 	protected function handleArticleMatchTracking( Wikia\Search\Config $searchConfig ) {
 		if ( $searchConfig->getPage() != 1 ) {
@@ -211,7 +211,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		return $searchConfig;
 	}
-	
+
 	/**
 	 * Sets values for the view to work with during index method.
 	 * @param Wikia\Search\Config $searchConfig
@@ -251,8 +251,45 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $wgExtensionsPath);
+
+		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
+			$this->registerWikiMatch( $searchConfig );
+		}
 	}
-	
+
+	/**
+	 * Sets wiki match view script variable in view
+	 * @param Wikia\Search\Config $searchConfig
+	 */
+	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
+
+		$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
+
+		$image = $resultSet->getHeader( 'image' );
+		$imageUrl = empty( $image ) ? $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png' : (new \WikiaHomePageHelper)->getImageUrl( $image, 180, 120 );
+		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="-1" data-event="search_click_wiki-';
+		$thumbTracking .= empty( $image ) ? 'no-thumb"' : 'thumb"';
+
+		//use default exacteResult template
+		$template = 'exactResult';
+		if ( $this->isCorporateWiki() ) {
+			$template = 'CrossWiki_exactResult';
+		}
+		$this->setVal(
+			'wikiMatch',
+			$this->getApp()->getView( 'WikiaSearch', $template,
+				[ 'pos' => -1,
+					'resultSet' => $resultSet,
+					'pagesMsg' => $resultSet->getArticlesCountMsg(),
+					'imgMsg' => $resultSet->getImagesCountMsg(),
+					'videoMsg' => $resultSet->getVideosCountMsg(),
+					'imageURL' => $imageUrl,
+					'thumbTracking' => $thumbTracking,
+				]
+			)
+		);
+	}
+
 	/**
 	 * Sets the page title during index method.
 	 * @param Wikia\Search\Config $searchConfig
@@ -276,7 +313,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action. Sets the SearchConfigs namespaces based on MW-core NS request style.
 	 * @see    WikiSearchControllerTest::testSetNamespacesFromRequest
 	 * @param  Wikia\Search\Config $searchConfig
-	 * @param  User $user 
+	 * @param  User $user
 	 * @return boolean true
 	 */
 	protected function setNamespacesFromRequest( $searchConfig, User $user ) {
