@@ -98,7 +98,6 @@ class WikiaMobileHooks extends WikiaObject{
 					}
 				}
 			}
-			var_dump($text);exit();
 		}
 
 		$this->wf->profileOut( __METHOD__ );
