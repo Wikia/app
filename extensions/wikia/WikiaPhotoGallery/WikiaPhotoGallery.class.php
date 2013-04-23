@@ -882,7 +882,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'class' => $image['classes'],
 					'href' => $image['link'],
 					'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
-					'style' => (!empty($image['thumbnail'])? '' : "height:{$image['height']}px;")
+					'style' => "height:{$image['height']}px; width:{$image['width']}px;"
 				);
 
 				if (!empty($image['thumbnail'])) {
@@ -934,6 +934,8 @@ class WikiaPhotoGallery extends ImageGallery {
 					$thumbHtml .= $videoOverlay;
 				} else {
 					$thumbHtml = $image['linkTitle'];
+//					$thumbHtml .= Xml::openElement('div', ['style' => "height:{$image['height']}px; vertical-align:middle; display:inline-block"]);
+//					$thumbHtml .= Xml::closeElement('div');
 				}
 
 				$html .= Xml::openElement('a', $linkAttribs);
