@@ -159,15 +159,18 @@ class WikiaHubsServicesHelper
 	}
 
 	/**
-	 *
+	 * add video to hubs v2 wikis
 	 * @param type $videoUrl
 	 * @return type
 	 */
 	public static function addVideoToHubsV2Wikis( $videoUrl ) {
-		$hubsV2Wikis = self::getHubsV2Wikis();
+		$result = false;
+		if ( !empty($videoUrl) ) {
+			$hubsV2Wikis = self::getHubsV2Wikis();
 
-		$videoService = new VideoService();
-		$result = $videoService->addVideoAcrossWikis( $videoUrl, $hubsV2Wikis );
+			$videoService = new VideoService();
+			$result = $videoService->addVideoAcrossWikis( $videoUrl, $hubsV2Wikis );
+		}
 
 		return $result;
 	}

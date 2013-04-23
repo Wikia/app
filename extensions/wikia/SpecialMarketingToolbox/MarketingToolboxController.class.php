@@ -169,18 +169,14 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				$this->putFlashMessage($this->wf->msg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
 
 				// send request to add popular/featured videos
-				if ( $this->selectedModuleId == MarketingToolboxModulePopularvideosService::MODULE_ID ) {
+				if ( $module->isVideoModule() ) {
 					// get list of videos
 					$structureData = $module->getStructuredData( $selectedModuleData['values'] );
-					if ( array_key_exists( 'video', $structureData ) ) {
-						$videos = $structureData['video'];
-					} else if ( array_key_exists( 'videos', $structureData ) ) {
-						$videos = $structureData['videos'];
-					}
+					$videoData = $module->getVideoDataFromStructureData( $structureData );
 
 					// add video to hub v2 wikis
-					foreach( $videos as $video ) {
-						$response = WikiaHubsServicesHelper::addVideoToHubsV2Wikis( $video['fileUrl'] );
+					foreach( $videoData as $videoUrl ) {
+						$response = WikiaHubsServicesHelper::addVideoToHubsV2Wikis( $videoUrl );
 					}
 				}
 

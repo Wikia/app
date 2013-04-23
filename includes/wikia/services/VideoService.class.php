@@ -68,13 +68,22 @@ class VideoService extends WikiaModel {
 		return array( $title, $title->getArticleID(), null );
 	}
 
+	/**
+	 * add video to other wikis
+	 * @param string $videoUrl
+	 * @param array $wikis
+	 * @return array|false $result
+	 */
 	public function addVideoAcrossWikis( $videoUrl, $wikis ) {
+		wfProfileIn( __METHOD__ );
+
 		$params = array(
 			'controller' => 'VideosController',
 			'method' => 'addVideo',
 			'url'      => $videoUrl,
 		);
 
+		$result = false;
 		foreach( $wikis as $wikiId => $wiki ) {
 			$result[$wikiId] = true;
 			if ( !empty( $wiki['d'] ) ) {
@@ -86,6 +95,8 @@ class VideoService extends WikiaModel {
 				}
 			}
 		}
+
+		wfProfileOut( __METHOD__ );
 
 		return $result;
 	}
