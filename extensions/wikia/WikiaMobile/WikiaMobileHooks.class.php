@@ -33,7 +33,15 @@ class WikiaMobileHooks extends WikiaObject{
 			if (
 				!empty( $translatedNs ) &&
 				preg_match_all(
-					'/(?:\[\[\b(?:' . $translatedNs . ')\b:[^\]]+\]\](\s)*){2,}/',
+					/*
+					 * This regex is to catch situations like these
+					 * [[Image:name.jpg]]
+					 * [[Image:name.jpg]]
+					 * and also images with links in captions
+					 * [[Image:name.jpg|[[Link]] caption]]
+					 * [[Image:name.jpg|[[Link]] caption [[Link|link]]]]
+					 */
+					'/(?:\[\[\b(?:' . $translatedNs . ')\b:[^\]\[]*(?:\[\[[^\[]*\]\][^\[]*)*\]\]\s*){2,}/',
 					$text,
 					$matches,
 					PREG_OFFSET_CAPTURE
@@ -49,7 +57,7 @@ class WikiaMobileHooks extends WikiaObject{
 					$submatches = array();
 
 					$itemsCount = preg_match_all(
-						'/\[\[((?:' . $translatedNs . '):.*)\]\]/U',
+						'/(?<=\[\[)(?:' . $translatedNs . '):.*(?=\]\])/',
 						$match[0],
 						$submatches,
 						PREG_SET_ORDER
@@ -60,7 +68,7 @@ class WikiaMobileHooks extends WikiaObject{
 
 						//analyze entries
 						foreach ( $submatches as $item ) {
-							$parts = explode( '|', $item[1] );
+							$parts = explode( '|', $item[0] );
 							$components = array();
 							$totalParts = count( $parts );
 
@@ -74,7 +82,7 @@ class WikiaMobileHooks extends WikiaObject{
 										//caption
 										(
 											( $index == ( $totalParts - 1 ) )  &&
-											!preg_match( '/(?:frame|thumb|right|left|[0-9]+px)/', $part )
+											!preg_match( '/(?:frame|thumb|right|left|[0-9]+\s?px)/', $part )
 										)
 									)
 								) {
