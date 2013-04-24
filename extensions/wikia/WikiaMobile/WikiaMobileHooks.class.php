@@ -33,6 +33,14 @@ class WikiaMobileHooks extends WikiaObject{
 			if (
 				!empty( $translatedNs ) &&
 				preg_match_all(
+					/*
+					 * This regex is to catch situations like these
+					 * [[Image:name.jpg]]
+					 * [[Image:name.jpg]]
+					 * and also images with links in captions
+					 * [[Image:name.jpg|[[Link]] caption]]
+					 * [[Image:name.jpg|[[Link]] caption [[Link|link]]]]
+					 */
 					'/(?:\[\[\b(?:' . $translatedNs . ')\b:[^\]\[]*(?:\[\[[^\[]*\]\][^\[]*)*\]\]\s*){2,}/',
 					$text,
 					$matches,
