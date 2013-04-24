@@ -6,6 +6,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'filepage-desc' => 'Modification of the standard MediaWiki file page for video support',
 	/* video page */
 	'video-page-file-list-header' => 'Appears on these pages',
 	'video-page-global-file-list-header' => 'Appears on these wikis',
