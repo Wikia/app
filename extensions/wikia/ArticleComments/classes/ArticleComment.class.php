@@ -10,7 +10,7 @@ class ArticleComment {
 	const AVATAR_BIG_SIZE = 50;
 	const AVATAR_SMALL_SIZE = 30;
 
-	const CACHE_VERSION = 0;
+	const CACHE_VERSION = 1;
 	const AN_HOUR = 3600;
 
 	/**
@@ -237,19 +237,22 @@ class ArticleComment {
 	}
 
 	public function parseText( $rawtext ) {
-		global $wgParser, $wgOut;
+		global $wgOut;
 		$this->mRawtext = self::removeMetadataTag( $rawtext );
+
 		global $wgEnableParserCache;
 		$wgEnableParserCache = false;
 
-		$wgParser->ac_metadata = array();
+		$parser = ParserPool::get();
 
-		$head = ParserPool::parse( $rawtext, $this->mTitle, $wgOut->parserOptions());
+		$parser->ac_metadata = [];
+
+		$head = $parser->parse( $rawtext, $this->mTitle, $wgOut->parserOptions());
 		$this->mText = $head->getText();
 		$this->mHeadItems = $head->getHeadItems();
 
-		if( isset($wgParser->ac_metadata) ) {
-			$this->mMetadata = $wgParser->ac_metadata;
+		if( isset($parser->ac_metadata) ) {
+			$this->mMetadata = $parser->ac_metadata;
 		} else {
 			$this->mMetadata = array();
 		}
@@ -336,8 +339,9 @@ class ArticleComment {
 		$data = $wgMemc->get( $articleDataKey );
 
 		if ( !empty( $data ) ) {
-			wfProfileOut( __METHOD__ );
 			$data['timestamp'] = "<a href='" . $title->getFullUrl( array( 'permalink' => $data['id'] ) ) . '#comm-' . $data['id'] . "' class='permalink'>" . wfTimeFormatAgo($data['rawmwtimestamp']) . "</a>";
+
+			wfProfileOut( __METHOD__ );
 			return $data;
 		}
 
