@@ -24,7 +24,7 @@ class ExternalRubyCompiler extends Compiler {
 	 * Compile the given SASS source
 	 *
 	 * @param Source $source Sass source
-	 * @throws SassException
+	 * @throws Wikia\Sass\Exception
 	 * @return string CSS stylesheet
 	 */
 	public function compile( Source $source ) {
@@ -57,7 +57,7 @@ class ExternalRubyCompiler extends Compiler {
 				unlink($outputFile);
 			}
 
-			throw new SassException("SASS compilation failed: {$sassOutput}");
+			throw new \Wikia\Sass\Exception("SASS compilation failed: {$sassOutput}\nFull commandline: $cmd");
 		}
 
 		$styles = file_get_contents($outputFile);
