@@ -946,4 +946,19 @@ class CityVisualization extends WikiaModel {
 		return WikiFactory::getListOfWikisWithVar(self::$wikiFactoryVarId, 'bool', '=', true);
 	}
 
+	/**
+	 * @param Array $collectionsList 2d array in example: [$collection1, $collection2, ...] where $collection1 = [$wikiId1, $wikiId2, ..., $wikiId17]
+	 * @param String $lang language code
+	 */
+	public function getCollectionsWikisData(Array $collectionsList, $lang) {
+		$collectionsWikisData = [];
+		foreach($collectionsList as $collection => $collectionsWikis) {
+			foreach($collectionsWikis as $wikiId) {
+				$collectionsWikisData[$collection][] = $this->getWikiDataForVisualization($wikiId, $lang);
+			}
+		}
+		
+		return $collectionsWikisData;
+	}
+	
 }
