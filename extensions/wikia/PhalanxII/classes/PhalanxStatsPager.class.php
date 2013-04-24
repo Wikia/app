@@ -6,6 +6,7 @@ class PhalanxStatsPager extends PhalanxPager {
 	public function __construct( $id ) {
 		parent::__construct();
 		$this->id = (int) $id;
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $this->app->wg->ExternalDatawareDB );
 		$this->mDefaultQuery['blockId'] = $this->id;
 		$this->qCond = 'ps_blocker_id';
 		$this->pInx = 'blockId';
