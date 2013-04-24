@@ -236,15 +236,15 @@ class ArticleComment {
 		return $result;
 	}
 
-	public function parseText($rawtext) {
+	public function parseText( $rawtext ) {
 		global $wgParser, $wgOut;
-		$this->mRawtext = self::removeMetadataTag($rawtext);
+		$this->mRawtext = self::removeMetadataTag( $rawtext );
 		global $wgEnableParserCache;
 		$wgEnableParserCache = false;
 
 		$wgParser->ac_metadata = array();
 
-		$head = $wgParser->parse( $rawtext, $this->mTitle, $wgOut->parserOptions());
+		$head = ParserPool::parse( $rawtext, $this->mTitle, $wgOut->parserOptions());
 		$this->mText = $head->getText();
 		$this->mHeadItems = $head->getHeadItems();
 
