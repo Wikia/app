@@ -789,7 +789,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	/**
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerDismax
 	 */
-	public function testGetNestedQuery() {
+	public function testRegisterDismax() {
 		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getDismax' ) )
