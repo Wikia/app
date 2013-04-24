@@ -149,12 +149,12 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$data['typeFilter'] = array();
 		}
 		else {
-			// block search
+			// block creation
 			$data['checkBlocker'] = $this->wg->Request->getText( 'wpPhalanxCheckBlocker' , '');
 			$data['checkId'] = $this->wg->Request->getIntOrNull( 'id' );
 			$data['type'] = $this->wg->Request->getArray( 'wpPhalanxType' );
 			$data['typeFilter'] = $this->wg->Request->getArray( 'wpPhalanxTypeFilter' );
-			$data['text'] = '';
+			$data['text'] = $this->wg->Request->getText('target' , ''); // prefill the filter content using target URL parameter
 			$data['lang'] = '';
 			$data['expire'] = '';
 			$data['reason'] = '';
