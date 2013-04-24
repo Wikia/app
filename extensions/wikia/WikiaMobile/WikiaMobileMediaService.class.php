@@ -94,7 +94,7 @@ class WikiaMobileMediaService extends WikiaService {
 					}
 
 					if ( !empty( $item['caption'] ) ) {
-						$info['capt'] = $item['caption'];
+						$info['capt'] = ParserPool::parse( $item['caption'], $this->wg->Title, new ParserOptions )->getText();
 					}
 
 					$params[] = $info;
