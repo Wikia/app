@@ -20,7 +20,6 @@ class WikiaSearchAjaxController extends WikiaController {
         $this->response->setVal('status', true);
 
         $query = $this->request->getVal('query', $this->request->getVal('search'));
-        $query = htmlentities( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8' );
 
         $page = $this->request->getVal('page', 1);
         $rank = $this->request->getVal('rank', 'default');
@@ -40,10 +39,10 @@ class WikiaSearchAjaxController extends WikiaController {
 			'cityId'		=>	$cityId,
 			'rank'			=>	$rank,
 			'hub'			=>	$hub,
-			'query'			=>	$query,
 		);
         $config = new Wikia\Search\Config( $params );
         $config->setIsInterWiki( $isInterWiki )
+               ->setQuery( $query )
                ->setGroupResults( $isInterWiki );
         $results = (new QueryService\Factory)->getFromConfig( $config )->search();
 
@@ -53,7 +52,7 @@ class WikiaSearchAjaxController extends WikiaController {
                 'relevancyFunctionId' => 6,
                 'results' => $results,
                 'resultsPerPage' => $resultsPerPage,
-                'query' => $query)
+                'query' => $config->getQuery()->getQueryForHtml())
         )->render();
 
         $this->response->setVal('text', $text);

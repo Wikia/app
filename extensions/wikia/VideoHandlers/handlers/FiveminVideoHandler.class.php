@@ -16,8 +16,10 @@ class FiveminVideoHandler extends VideoHandler {
 			$url .= '/&' . self::$autoplayParam . '=' . self::$autoplayValue;
 		}
 
+		$sizeString = $this->getSizeString( $width, $height );
+
 		$html = <<<EOT
-<embed src='{$url}' type='application/x-shockwave-flash' width="{$width}" height="{$height}" allowfullscreen='true' allowScriptAccess='always'></embed>
+<embed src='{$url}' type='application/x-shockwave-flash' $sizeString allowfullscreen='true' allowScriptAccess='always'></embed>
 EOT;
 
 		return array( 'html' => $html );

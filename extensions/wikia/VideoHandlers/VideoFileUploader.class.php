@@ -251,7 +251,10 @@ class VideoFileUploader {
 
 		wfProfileIn( __METHOD__ );
 		if ( empty( $this->sDescription ) ) {
-			$this->sDescription = $this->getCategoryVideosWikitext() . $this->getApiWrapper()->getDescription();
+			$headerText = F::App()->wf->Message( 'videohandler-description' );
+			$this->sDescription = "\n== $headerText ==\n" .
+								  $this->getApiWrapper()->getDescription() . "\n" .
+								  $this->getCategoryVideosWikitext();
 		}
 		wfProfileOut( __METHOD__ );
 

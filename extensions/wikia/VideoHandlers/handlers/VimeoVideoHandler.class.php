@@ -20,11 +20,14 @@ class VimeoVideoHandler extends VideoHandler {
 
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
 		$height =  $this->getHeight( $width );
-		$autoplayStr = $autoplay ? self::$autoplayValue : '0';
-		$url = $this->getEmbedUrl().'?'.self::$autoplayParam.'='.$autoplayStr;
+
+		$autoplayStrParam = self::$autoplayParam;
+		$autoplayStrValue = $autoplay ? self::$autoplayValue : '0';
+		$url = $this->getEmbedUrl();
+		$sizeString = $this->getSizeString( $width, $height );
 
 		$html = <<<EOT
-<iframe src="{$url}" width="{$width}" height="{$height}" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+<iframe src="$url?$autoplayStrParam=$autoplayStrValue" $sizeString frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 EOT;
 
 		return array( 'html' => $html );

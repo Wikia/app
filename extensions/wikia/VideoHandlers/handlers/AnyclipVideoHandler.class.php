@@ -18,11 +18,13 @@ class AnyclipVideoHandler extends VideoHandler {
 		$height =  $this->getHeight( $width );
 		$autoPlayStr = ( $autoplay ) ? 'true' : 'false';
 		$ajaxStr = (bool) $isAjax;
-		$playerId = "AnyClipPlayer-{$this->videoId}-{$ajaxStr}";
+
+		$playerId = 'AnyClipPlayer-' . $this->videoId . '-' . $ajaxStr;
 		$jsFile = 'http://player.anyclip.com/embed/AnyClipPlayer.js';
+		$sizeString = $this->getSizeString( $width, $height, 'inline' );
 
 		$html = <<<EOT
-<div id="$playerId" style="width: {$width}px; height: {$height}px;"></div>
+<div id="{$playerId}" {$sizeString}></div>
 EOT;
 
 		$code = array(

@@ -14,10 +14,13 @@ class MyvideoVideoHandler extends VideoHandler {
 
 		$url = $this->getEmbedUrl();
 
+		$sizeString = $this->getSizeString( '611', '383', 'inline' );
+		$sizeStringElement = $this->getSizeString( $width, $height );
+
 		$html = <<<EOT
-<object style='width:611px;height:383px;' width='{$width}' height='{$height}'>
-	<embed src='{$url}' width='{$width}' height='{$height}' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true'></embed>
-	<param name='movie' value='{$url}'></param>
+<object $sizeString $sizeStringElement>
+	<embed src='$url' $sizeStringElement type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true'></embed>
+	<param name='movie' value='$url'></param>
 	<param name='AllowFullscreen' value='true'></param>
 	<param name='AllowScriptAccess' value='always'></param>
 </object>

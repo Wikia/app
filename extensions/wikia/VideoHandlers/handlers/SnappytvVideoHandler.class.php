@@ -14,7 +14,7 @@ class SnappytvVideoHandler extends VideoHandler {
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			$url = $this->getProviderDetailUrl();
 			$html = <<<EOT
-<iframe src='{$url}?w={$width}&h={$height}' width='{$width}' height='{$height}' frameborder='0' scrolling='no' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+<iframe src='{$url}' frameborder='0' scrolling='no' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 EOT;
 		} else {
 			$url = $this->getEmbedUrl().'&autoplay='.$autoPlayStr;
@@ -26,7 +26,10 @@ EOT;
 </object>
 EOT;
 		}
-		return $html;
+
+		return array(
+			'html' => $html,
+		);
 	}
 
 	public function getEmbedUrl() {

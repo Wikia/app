@@ -1,5 +1,11 @@
 <?php
 
+if (empty($wgDevelEnvironment)) {
+	error_log('File marked for deletion, but still used: ' . __FILE__);
+} else {
+	die('File marked for deletion, but still used: ' . __FILE__);
+}
+
 class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 
 	public $enable_lazyload = true;
@@ -190,7 +196,7 @@ EOT;
 	}
 
 	function getHub() {
-		$cat = AdEngine::getCachedCategory();
+		$cat = AdEngine2Controller::getCachedCategory();
 		return $cat['short'];
 	}
 

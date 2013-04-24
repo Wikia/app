@@ -76,7 +76,7 @@ class SelectTest extends BaseTest
 		$mockQuery
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getSanitizedQuery' )
-		    ->will   ( $this->returnValue( '#*%&!*!' ) )
+		    ->will   ( $this->returnValue( ' ' ) )
 		;
 		$this->assertFalse(
 				$mockQuery->hasTerms()

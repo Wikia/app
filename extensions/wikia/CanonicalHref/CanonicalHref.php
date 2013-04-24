@@ -31,7 +31,7 @@ function wfCanonicalHref(&$out, &$sk) {
 	$canonicalUrl = $wgTitle->getFullURL();
 
 	// Allow hooks to change the canonicalUrl that will be used in the page.
-	wfRunHooks( 'WikiaCanonicalHref', array( &$canonicalUrl, &$wgTitle ) );
+	wfRunHooks( 'WikiaCanonicalHref', array( &$canonicalUrl ) );
 
 	$out->addLink(array(
 		'rel' => 'canonical',

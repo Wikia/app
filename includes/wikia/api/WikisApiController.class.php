@@ -92,10 +92,15 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$results = self::$model->getByString($keyword, $lang, $hub, $includeDomain );
-		$batches = $this->wf->PaginateArray( $results, $limit, $batch );
 
-		foreach ( $batches as $name => $value ) {
-			$this->response->setVal( $name, $value );
+		if( is_array( $results ) ) {
+			$batches = $this->wf->PaginateArray( $results, $limit, $batch );
+
+			foreach ( $batches as $name => $value ) {
+				$this->response->setVal( $name, $value );
+			}
+		} else {
+			throw new NotFoundApiException();
 		}
 
 		//store only for 24h to allow new wikis

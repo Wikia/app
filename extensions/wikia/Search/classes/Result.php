@@ -194,7 +194,7 @@ class Result extends ReadWrite {
 	 */
 	public function getVideoViews() {
 		try {
-			return $this->service->getVideoViewsForPageId( $this['pageid'] );
+			return $this->service->getFormattedVideoViewsForPageId( $this['pageid'] );
 		} catch ( \Exception $e ) {
 			return 0;
 		}

@@ -27,7 +27,7 @@ $wgExtensionCredits['other'][] = array(
     'path'              => __FILE__,
     'name'              => 'HAWelcome',
     'description'       => 'Sends a welcome message to users after their first edits.',
-    'descriptionmsg'    => 'hawelcome-description',
+    'descriptionmsg'    => 'welcome-description',
     'version'           => 1009,
     'author'            => array(
         "Krzysztof 'Eloy' Krzyżaniak <eloy@wikia-inc.com>",
@@ -36,6 +36,11 @@ $wgExtensionCredits['other'][] = array(
     ),
     'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/HAWelcome/'
 );
+/**
+ * @global Array The list of message files.
+ * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionMessagesFiles
+ */
+$wgExtensionMessagesFiles[ 'HAWelcome' ] = __DIR__ . '/HAWelcome.i18n.php';
 /**
  * @global Array The list of hooks.
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
@@ -129,24 +134,21 @@ class HAWelcomeJob extends Job {
              * @see https://doc.wikimedia.org/mediawiki-core/master/php/html/classMemcachedPhpBagOStuff.html
              */
             global $wgMemc;
+            // Abort if the contributor has been welcomed recently.
+            if ( $wgMemc->get( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ) ) ) {
+                if ( !empty( $wgHAWelcomeNotices ) ) {
+                    trigger_error( sprintf( '%s Done. The contributor has been welcomed recently.', __METHOD__ ) , E_USER_NOTICE );
+                }
+                // Restore the original error reporting level.
+                error_reporting( $iErrorReporting );
+                wfProfileOut( __METHOD__ );
+                return true;
+            }
             // Handle an edit made by an anonymous contributor.
             if ( ! $oRevision->getRawUser() ) {
                 if ( !empty( $wgHAWelcomeNotices ) ) {
                     trigger_error( sprintf( '%s An edit made by an anonymous contributor.', __METHOD__ ) , E_USER_NOTICE );
                 }
-                // Abort if the anonymous contributor has been welcomed recently.
-                if ( $wgMemc->get( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ) ) ) {
-                    if ( !empty( $wgHAWelcomeNotices ) ) {
-                        trigger_error( sprintf( '%s Done. The anonymous contributor has been welcomed recently.', __METHOD__ ) , E_USER_NOTICE );
-                    }
-                    // Restore the original error reporting level.
-                    error_reporting( $iErrorReporting );
-                    wfProfileOut( __METHOD__ );
-                    return true;
-                }
-                // Mark that we have handled this particular anonymous contributor to prevent
-                // creating more jobs. Improves performance if the contributor is editing massively.
-                $wgMemc->set( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ), true, 600 ); // for ten minutes ( 60 * 10 )
             // Handle an edit made by a registered contributor.
             } else {
                 if ( !empty( $wgHAWelcomeNotices ) ) {
@@ -157,8 +159,18 @@ class HAWelcomeJob extends Job {
                  * @see http://www.mediawiki.org/wiki/Manual:$wgUser
                  */
                 global $wgUser;
-                // Abort if the registered contributor has made edits before.
-                if ( $wgUser->getEditCountLocal() ) {
+		// Abort if the contributor is a bot or a staff member or the default welcomer
+		if ( $wgUser->isAllowed( 'bot' ) || in_array( 'staff', $wgUser->getEffectiveGroups() ) ||$wgUser->getName() == self::DEFAULT_WELCOMER ) {
+			if ( !empty( $wgHAWelcomeNotices ) ) {
+				trigger_error( sprintf( '%s Done. The registered contributor is a bot, a staff member or the default welcomer.', __METHOD__ ) , E_USER_NOTICE );
+			}
+			// Restore the original error reporting level.
+			error_reporting( $iErrorReporting );
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+                // Abort if the registered contributor has made edits before this one.
+                if ( 1 < $wgUser->getEditCountLocal() ) {
                     // Check the extension settings...
                     /** @type String The user to become the welcomer. */
                     $sSender = trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() );
@@ -185,17 +197,22 @@ class HAWelcomeJob extends Job {
                     return true;
                 }
             }
+            // Mark that we have handled this particular contributor to prevent
+            // creating more jobs. Improves performance if the contributor is editing massively.
+            $wgMemc->set( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ), true );
             /** @type Object Title Title associated with the revision */
             $oTitle = $oRevision->getTitle();
             // Sometimes, for some reason or other, the Revision object
             // does not contain the associated Title object. It has to be
             // recreated based on the associated Page object.
             if ( !$oTitle ) {
-                trigger_error( sprintf(
-                    '%s Recreated Title for page %d, revision %d, URL %s',
-                    __METHOD__, $oRevision->getPage(), $oRevision->getId(), $oTitle->getFullURL()
-                ), E_USER_WARNING );
-                $oTitle = Title::newFromId( $oRevision->getPage(), Title::GAID_FOR_UPDATE );
+	    	$oTitle = Title::newFromId( $oRevision->getPage(), Title::GAID_FOR_UPDATE );
+		if ( !empty( $wgHAWelcomeNotices ) ) {
+                	trigger_error( sprintf(
+	                    '%s Recreated Title for page %d, revision %d, URL %s',
+        	            __METHOD__, $oRevision->getPage(), $oRevision->getId(), $oTitle->getFullURL()
+                	), E_USER_NOTICE );
+		}
             }
             /** @type Array Parameters for the job */
             $aParams = array(
@@ -359,6 +376,12 @@ class HAWelcomeJob extends Job {
         if ( $this->bShowNotices ) {
             trigger_error( sprintf( '%s Start.', __METHOD__ ) , E_USER_NOTICE );
         }
+	/** @global Object User The user who runs the script. */
+	global $wgUser;
+	/** @type Object User Store the original $wgUser for a moment. */
+	$tmp = $wgUser;
+	// Replace the current active user object with the sender object for a moment.
+	$wgUser = $this->oSender;
         // Post a message onto a message wall if enabled.
         if ( $this->bMessageWallExt ) {
             if ( $this->bShowNotices ) {
@@ -386,23 +409,17 @@ class HAWelcomeJob extends Job {
             if ( $this->bShowNotices ) {
                 trigger_error( sprintf( '%s Message Wall disabled.', __METHOD__ ) , E_USER_NOTICE );
             }
-            /** @global Object User The user who runs the script. */
-            global $wgUser;
-            /** @type Object User Store the original $wgUser for a moment. */
-            $tmp = $wgUser;
-            // Replace the current active user object with the sender object for a moment.
-            $wgUser = $this->oSender;
             // Prepend the message with the existing content of the talk page.
             /** @type String The contents for the edit. */
             $sMessage = ( $this->oRecipientTalkPage->exists() )
                 ? $this->oRecipientTalkPage->getContent() . PHP_EOL . $this->sMessage
                 : $this->sMessage;
             // Do the edit.
-            $this->oRecipientTalkPage->doEdit( $sMessage, wfMsg( 'welcome-message-log' ), $this->iFlags );
-            // Restore the original active user object.
-            $wgUser = $tmp;
+            $this->oRecipientTalkPage->doEdit( $sMessage, wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), $this->iFlags );
         }
-        if ( $this->bShowNotices ) {
+	// Restore the original active user object.
+	$wgUser = $tmp;
+	if ( $this->bShowNotices ) {
             trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );
         }
         wfProfileOut( __METHOD__ );
@@ -439,7 +456,7 @@ class HAWelcomeJob extends Job {
         // Article Comments and Message Wall hook up to this event.
         wfRunHooks( 'HAWelcomeGetPrefixText' , array( &$sPrefixedText, $this->title ) );
         // Put the contents of the welcome message together.
-        $this->sMessage = wfMsgNoTrans(
+        $this->sMessage = wfMessage(
             $sMessageKey,
             array(
                 $sPrefixedText,
@@ -447,7 +464,7 @@ class HAWelcomeJob extends Job {
                 '~~~~',
                 wfEscapeWikiText( $this->sRecipientName )
             )
-        );
+        )->inContentLanguage()->plain();
         if ( $this->bShowNotices ) {
             trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );
         }

@@ -979,5 +979,10 @@ class ConfigTest extends BaseTest {
 				'rawQuery',
 				$config->getQuery()
 		);
+		$config = new \Wikia\Search\Config( [ 'query' => 'foo' ] );
+		$this->assertInstanceOf(
+				'Wikia\Search\Query\Select',
+				$config->getQuery()
+		);
 	}
 }

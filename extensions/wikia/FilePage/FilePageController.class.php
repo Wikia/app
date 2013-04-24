@@ -19,6 +19,8 @@ class FilePageController extends WikiaController {
 	public function fileUsage() {
 		$app = F::app();
 
+		$seeMoreLink = '';
+		$seeMoreText = '';
 		$heading = '';               // The message to use for the section header
 		$shortenedSummary = array(); // A subset of the data returned to show immediately
 		$fileList = array();         // The list of other articles to show based on $shortenedSummary
@@ -72,6 +74,10 @@ class FilePageController extends WikiaController {
 				$dbName = $this->wg->DBname;
 				$shortenedSummary = array($dbName => array_slice($summary, 0, 3));
 			}
+
+			$seeMoreLink = SpecialPage::getTitleFor("WhatLinksHere")->escapeLocalUrl();
+			$seeMoreLink .= '/'.$app->wg->Title->getPrefixedDBkey();
+			$seeMoreText = wfMessage( 'file-page-more-links' );
 		}
 
 		// Send the $shortenedSummary to fileList to flesh out the details
@@ -84,6 +90,8 @@ class FilePageController extends WikiaController {
 		$this->fileList = $fileList;
 		$this->summary = $summary;
 		$this->type = $type;
+		$this->seeMoreLink = $seeMoreLink;
+		$this->seeMoreText = $seeMoreText;
 	}
 
 	/**
@@ -136,7 +144,7 @@ class FilePageController extends WikiaController {
 	public function relatedPages() {
 		$this->text = '';
 
-		if(empty($this->wg->EnableRelatedPagesExt)) {
+		if( !class_exists( 'RelatedPages' ) ) {
 			return;
 		}
 
@@ -231,36 +239,120 @@ class FilePageController extends WikiaController {
 	}
 
 	/**
-	 * Figure out what articles on the local wiki are using this file.
+	 * Figure out what articles on the local wiki are using this file.  A lot of this code is lifted from the
+	 * includes/ImagePage.php file.  The original code includes a lot of HTML building which means it wasn't
+	 * possible to reuse there.
 	 */
 	public function getLocalUsage () {
 		$target = $this->getVal('fileTitle', $this->wg->Title->getDBkey());
 
-		$dbr = wfGetDB( DB_SLAVE );
+		// Put an upper limit on how many of files to show
+		$limit = 100;
 
-		// This SQL is lifted from the core file page code that shows where a file is
-		// used but it couldn't be resued because it included outputing HTML.  It finds
-		// pages that are referenced from imagelinks rows with our current file.
-		$res = $dbr->select(
-			array( 'imagelinks', 'page' ),
-			array( 'page_id', 'page_namespace', 'page_title', 'page_is_redirect', 'il_to' ),
-			array( 'il_to' => $target,
-				   'il_from = page_id',
-				   'page_namespace != ' . NS_FILE ),
-			__METHOD__
-		);
+		// Do a first pass to get everything that directly points here
+		$res = $this->queryImageLinks( $target, $limit + 1);
+		$rows = array();
+		$redirects = array();
+		foreach ( $res as $row ) {
+			if ( $row->page_is_redirect ) {
+				$redirects[$row->page_title] = array();
+			}
+			$rows[] = $row;
+		}
+		$count = count( $rows );
+
+		// If we haven't reached $limit files yet, check for any pages that point to
+		// redirects of the current target page
+		$hasMore = $count > $limit;
+		if ( !$hasMore && count( $redirects ) ) {
+			$res = $this->queryImageLinks( array_keys( $redirects ),
+				$limit - count( $rows ) + 1 );
+			foreach ( $res as $row ) {
+				$redirects[$row->il_to][] = $row;
+				$count++;
+			}
+		}
+
+		// Sort the list by namespace:title
+		usort( $rows, array( $this, 'compare' ) );
+
+		// We're showing redirects to this File, and sometimes the same File can have multiple
+		// redirects that point to it.  For example say we have File:A and it has File:B and File:C that
+		// redirect to it.  Additinally, page "D" includes links to File:B an File:C.  On the File:A file
+		// page we'll see all the page links to File:B and to File:C.  Since page "D" links to both of those
+		// it will show up twice on the File:A file page.  We just want to show it once.
+		$seen = array();
 
 		$summary = array();
-		foreach ( $res as $row ) {
-			if ( ! $row->page_is_redirect ) {
-				$summary[] = array("title" => $row->page_title,
-								   "id"    => $row->page_id,
-								   "namespace_id" => $row->page_namespace,
-								 );
+		$currentCount = 0;
+		foreach ( $rows as $element ) {
+
+			// Determine if we should summarize this $element as is or if its a redirect to the current file.
+			// If its a redirect we should summarize all the pages that link to this redirect
+			$pages = array();
+			if ( isset( $redirects[$element->page_title] ) ) {
+				$pages = $redirects[$element->page_title];
+			} else {
+				$pages[] = $element;
+			}
+
+			// Iterate over everything to summarize
+			foreach ( $pages as $page ) {
+				// Skip this title if we've already seen it.
+				if (!empty( $seen[$page->page_title] ) ) {
+					break;
+				}
+				$seen[$page->page_title] = 1;
+
+				$summary[] = array("title"        => $page->page_title,
+								   "id"           => $page->page_id,
+								   "namespace_id" => $page->page_namespace,
+				);
+
+				// Keep track of whether we've reach the limit
+				$currentCount++;
+				if ( $currentCount > $limit ) {
+					break;
+				}
 			}
 		}
 
 		$this->summary = $summary;
+	}
+
+	/**
+	 * Callback for usort() to do link sorts by (namespace, title)
+	 * Function copied from Title::compare()
+	 *
+	 * @param $a object page to compare with
+	 * @param $b object page to compare with
+	 * @return Integer: result of string comparison, or namespace comparison
+	 */
+	protected function compare( $a, $b ) {
+		if ( $a->page_namespace == $b->page_namespace ) {
+			return strcmp( $a->page_title, $b->page_title );
+		} else {
+			return $a->page_namespace - $b->page_namespace;
+		}
+	}
+
+	/**
+	 * Query the imagelinks table to find pages that link to the current file page, $target
+	 *
+	 * @param $target string File page title to find links to
+	 * @param $limit integer Limit the number of results returned
+	 * @return ResultWrapper
+	 */
+	protected function queryImageLinks( $target, $limit ) {
+		$dbr = wfGetDB( DB_SLAVE );
+
+		return $dbr->select(
+			array( 'imagelinks', 'page' ),
+			array( 'page_id', 'page_namespace', 'page_title', 'page_is_redirect', 'il_to' ),
+			array( 'il_to' => $target, 'il_from = page_id' ),
+			__METHOD__,
+			array( 'LIMIT' => $limit + 1, 'ORDER BY' => 'il_from', )
+		);
 	}
 
 	/**

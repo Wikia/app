@@ -1,5 +1,5 @@
 <?php
 
-class InvertedSection extends Mustache {
+class InvertedSection extends MustachePHP {
 	public $repo = array();
 }

@@ -4,6 +4,13 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	protected $maxCount = 10;
 	protected $minSize = 75;
 
+	function __construct($db, $imageServing, $proportion) {
+		parent::__construct( $db, $imageServing, $proportion );
+		if ( $this->app->wg->ImageServingMaxReuseCount !== NULL ) {
+			$this->maxCount = $this->app->wg->ImageServingMaxReuseCount;
+		}
+	}
+
 	protected function getImagesFromDB($articles = array()) {
 		wfProfileIn( __METHOD__ );
 

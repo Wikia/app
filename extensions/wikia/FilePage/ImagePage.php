@@ -20,37 +20,105 @@ class WikiaImagePage extends ImagePage {
 	 * @return String - will return empty string to add
 	 */
 	protected function showTOC( $metadata ) {
-		global $wgEnableVideoPageRedesign;
-		if(empty($wgEnableVideoPageRedesign)) {
+		$app = F::app();
+		if(empty($app->wg->EnableVideoPageRedesign) || $this->isMobile()) {
 			return parent::showTOC($metadata);
 		}
 		return '';
 	}
 
+	protected function isDiffPage() {
+		$app = F::App();
+		$isDiff = false;
+
+		if ( $app->wg->Request->getVal( 'diff' ) ) {
+			$isDiff = true;
+		}
+
+		return $isDiff;
+	}
+
+	protected function isMobile() {
+		return F::App()->checkSkin('wikiamobile');
+	}
+
+	protected function imageContent() {
+		$out = $this->getContext()->getOutput();
+		$app = F::App();
+
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
+			parent::imageContent();
+			return;
+		}
+		$sectionClass = '';
+		if (! $this->isDiffPage() ) {
+			$this->renderTabs();
+			$sectionClass = ' class="tabBody"';
+		}
+
+		// Open div for about section (closed in imageDetails);
+		$out->addHtml('<div data-tab-body="about"' . $sectionClass . '>');
+		$this->renderDescriptionHeader();
+		parent::imageContent();
+
+	}
+
 	/**
 	 * imageDetails override
 	 * Image page doesn't need the wrapper, but WikiaFilePage does
+	 * This is called after the wikitext is printed out
 	 */
-	protected function imageDetails($showmeta, $formattedMetadata) {
-		global $wgOut, $wgEnableVideoPageRedesign, $wgJsMimeType, $wgExtensionsPath;
+	protected function imageDetails() {
+		$app = F::App();
+		$out = $this->getContext()->getOutput();
 
-		if(empty($wgEnableVideoPageRedesign)) {
-			parent::imageDetails($showmeta, $formattedMetadata);
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
+			parent::imageDetails();
 			return;
 		}
 
-		// move these two to WikiaFilePage package after full release
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/FilePage/css/FilePage.scss'));
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/FilePage/js/FilePage.js\"></script>\n" );
+		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
+		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
 
-		$app = F::app();
-		$wgOut->addHtml( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
-		$wgOut->addHtml( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
-		$wgOut->addHtml( $app->renderPartial( 'FilePageController', 'seeMore', array() ));
-		$wgOut->addHtml('<div class="more-info-wrapper">');
-		parent::imageDetails($showmeta, $formattedMetadata);
-		$wgOut->addHtml('</div>');
-		$wgOut->addHtml( $app->renderView( 'FilePageController', 'relatedPages', array() ) );
+		// Close div from about section (opened in imageContent)
+		$out->addHTML('</div>');
+
+		$sectionClass = '';
+		if (! $this->isDiffPage() ) {
+			$sectionClass = ' class="tabBody"';
+		}
+
+		$out->addHTML('<div data-tab-body="history"' . $sectionClass . '>');
+		parent::imageDetails();
+		$out->addHTML('</div>');
+	}
+
+	/**
+	 * imageMetadata override
+	 * Image page doesn't need the wrapper, but WikiaFilePage does
+	 */
+	protected function imageMetadata($formattedMetadata) {
+		$app = F::App();
+		$out = $this->getContext()->getOutput();
+
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
+			parent::imageMetadata($formattedMetadata);
+			return;
+		}
+
+		$sectionClass = '';
+		if (! $this->isDiffPage() ) {
+			$sectionClass = ' class="tabBody"';
+		}
+
+		$out->addHTML('<div data-tab-body="metadata"' . $sectionClass . '>');
+		parent::imageMetadata($formattedMetadata);
+		$out->addHTML('</div>');
+	}
+
+	protected function imageFooter() {
+		$out = $this->getContext()->getOutput();
+		$out->addHTML( F::app()->renderView( 'FilePageController', 'relatedPages', array() ) );
 	}
 
 	/**
@@ -58,48 +126,38 @@ class WikiaImagePage extends ImagePage {
 	 * for WikiaFilePage, imageListing will be printed under additionalDetails()
 	 */
 	protected function imageListing() {
-		global $wgEnableVideoPageRedesign;
+		$app = F::App();
 
-		if(empty($wgEnableVideoPageRedesign)) {
+		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
 			parent::imageListing();
 			return;
 		}
-
-		// do nothing on purpose
 	}
 
-	protected function openShowImage() {
-		global $wgEnableVideoPageRedesign;
+	protected function renderTabs() {
+		$app = F::app();
+		$out = $this->getContext()->getOutput();
 
-		parent::openShowImage();
-		if(!empty($wgEnableVideoPageRedesign)) {
-			$this->renderDescriptionHeader();
-		}
+		$tabs = $app->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
+		$out->addHtml($tabs);
 	}
 
 	protected function renderDescriptionHeader() {
-		global $wgOut, $wgLang;
+		$app = F::App();
+		$out = $this->getContext()->getOutput();
 
-		// Contstruct the h2 with edit link
-		$skin = $wgOut->getSkin();
-		$headline = wfMessage('video-page-description-heading')->text();
-		$args = array(
-			$this->getTitle(), // title obj
-			0, // section
-			$headline, // heading text
-			$wgLang->getCode() // lang
-		);
-		$editSection = call_user_func_array( array( $skin, 'doEditSectionLink' ), $args );
+		// Display description text or default message, except when we're showing a diff (we want the diff to only
+		// show actual content, not template injected stuff)
+		if (! $app->wg->Request->getVal( 'diff' ) ) {
+			$content = FilePageHelper::stripCategoriesFromDescription( $this->getContent() );
+			$isContentEmpty = empty( $content );
+		} else {
+			$isContentEmpty = false;
+		}
 
-		$descriptionHeaderHtml = Linker::makeHeadline("2", ">", $headline, $headline, $editSection);
+		$html = $app->renderPartial( 'FilePageController', 'description', array( 'isContentEmpty' => $isContentEmpty ) );
 
-		// Display description text or default message
-		$content = FilePageHelper::stripCategoriesFromDescription( $this->getContent() );
-		$isContentEmpty = empty($content);
-
-		$html = F::app()->renderPartial( 'FilePageController', 'description', array('isContentEmpty' => $isContentEmpty, 'descriptionHeaderHtml' => $descriptionHeaderHtml) );
-
-		$wgOut->addHTML( $html );
+		$out->addHTML( $html );
 	}
 
 }

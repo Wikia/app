@@ -277,8 +277,7 @@ class VideoEmbedTool {
 
 				$placeholder_tag = $placeholder[0];
 				$file = wfFindFile( $title );
-				$thumb = $file->transform( array('width'=>$width) );
-				$embed_code = $thumb->toHtml( array('desc-link' => true) );
+				$embed_code = $file->transform( array('width'=>$width) )->toHtml();
 				$html_params = array(
 					'imageHTML' => $embed_code,
 					'align' => $layout,
@@ -348,8 +347,12 @@ class VideoEmbedTool {
 		// Get the file page for this file
 		$page = WikiPage::factory( $file->getTitle() );
 
+		// remove description header
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$text = $videoHandlerHelper->removeDescriptionHeader( $page->getText() );
+
 		// Strip out the category tags so they aren't shown to the user
-		$text = preg_replace( '/\[\[Category[^\]]+\]\]/', '', $page->getText() );
+		$text = FilePageHelper::stripCategoriesFromDescription( $text );
 
 		// If we have an empty string or a bunch of whitespace, use the default description
 		// from the file metadata
@@ -366,15 +369,10 @@ class VideoEmbedTool {
 
 		$text = $page->getText();
 
-		// Separate any category tags
-		preg_match_all( '/(\[\[Category[^\]]+\]\])/', $text, $matches );
+		// Insert description header
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$text = $videoHandlerHelper->replaceDescriptionSection( $text, $description );
 
-		$catString = '';
-		if (!empty($matches[0]) && is_array($matches[0])) {
-			$catString = "\n" . implode(' ', $matches[0]);
-		}
-
-		$text = $description . $catString;
 		$summary = 'Adding video description';
 		$status = $page->doEdit( $text, $summary );
 

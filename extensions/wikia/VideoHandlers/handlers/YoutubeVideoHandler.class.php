@@ -18,11 +18,11 @@ class YoutubeVideoHandler extends VideoHandler {
 			$params[self::$autoplayParam] = self::$autoplayValue;
 		}
 		$qs = http_build_query($params);
+		$sizeString = $this->getSizeString( $width, $height );
 
 		$html = <<<EOT
-<iframe width="{$width}" height="{$height}" src="{$url}?{$qs}&wmode=opaque" frameborder="0" allowfullscreen></iframe>
+<iframe $sizeString src="{$url}?$qs&wmode=opaque" frameborder="0" allowfullscreen></iframe>
 EOT;
-
 		return array( 'html' => $html );
 	}
 

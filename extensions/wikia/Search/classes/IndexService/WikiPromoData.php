@@ -25,7 +25,7 @@ class WikiPromoData extends AbstractWikiService
 	 */
 	public function execute() {
 		$service = $this->getService();
-		if ( $this->result == array() ) {
+		if ( $this->result == array() && $service->isOnDbCluster() ) {
 			$detail = $service->getVisualizationInfoForWikiId( $service->getWikiId() );
 			$this->result = array(
 				'wiki_description_txt' => $detail['desc'],

@@ -52,6 +52,8 @@ you should definitely check this out:
  	'wikiamobile-media-group-footer' => '1 of $1',
  	'wikiamobile-unsupported-video-download' => 'Your browser doesn\'t support this video format, try clicking <a href="$1">here</a>',
  	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|view|views}}',
+	'wikiamobile-video-not-friendly-header' => 'Oh snap!',
+	'wikiamobile-video-not-friendly' => 'Sorry, this video isn\'t available on mobile.',
 
 	//ad
 	'wikiamobile-ad-close' => 'close',
@@ -61,7 +63,13 @@ you should definitely check this out:
 
 	//404 page
 	'wikiamobile-page-not-found' => "Oops! <b>$1</b> does not exist.",
-	'wikiamobile-page-not-found-tap' => "Tap what's hiding behind the crack to see one that does."
+	'wikiamobile-page-not-found-tap' => "Tap what's hiding behind the crack to see one that does.",
+
+	//Game Guides promotion on wikiamobile
+	'wikiasmartbanner-appstore' => 'On the App Store',
+	'wikiasmartbanner-googleplay' => 'In Google Play',
+	'wikiasmartbanner-price' => 'free',
+	'wikiasmartbanner-view' => 'view'
 );
 
 /** Message documentation (Message documentation) */
@@ -82,6 +90,13 @@ $messages['qqq'] = array(
 	'wikiamobile-unsupported-video-download' => 'feedback message for browsers not supporting html5 videos with link to play the video in a native app (the video URL is in $1)',
 	'wikiamobile-video-views-counter' => 'counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
 	'wikiamobile-ad-close' => 'text on the close button for the ad place',
+
+	'wikiasmartbanner-appstore' => 'Message displayed in smart banner promoting an app on app store',
+	'wikiasmartbanner-googleplay' => 'Message displayed in smart banner promoting an app on google play store',
+	'wikiasmartbanner-price' => 'Message displayed in smart banner indicating a price of an app',
+	'wikiasmartbanner-view' => 'Message displayed in smart banner promoting on a button that leads to a store',
+
+	'wikiamobile-video-not-friendly' => 'Message displayed in modal - to indcate that this video won\'t be loaded in mobile skin'
 );
 
 /** Адыгэбзэ (Адыгэбзэ)

@@ -15,13 +15,15 @@ class GamestarVideoHandler extends VideoHandler {
 		$autoStartParam = self::$autoplayParam;
 		$autoStartValue = ( $autoplay ) ? self::$autoplayValue : 0 ;
 
+		$sizeString = $this->getSizeString( $width, $height );
+
 		$html = <<<EOT
-<object width="{$width}" height="{$height}">
-	<param name="movie" value="{$url}"></param>
-	<param name="flashVars" value="{$autoStartParam}={$autoStartValue}"></param>
+<object $sizeString>
+	<param name="movie" value="$url"></param>
+	<param name="flashVars" value="$autoStartParam=$autoStartValue"></param>
 	<param name="allowFullScreen" value="true"></param>
 	<param name="allowscriptaccess" value="always"></param>
-	<embed src="{$url}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" flashVars="{$autoStartParam}={$autoStartValue}" width="{$width}" height="{$height}"></embed>
+	<embed src="$url" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" flashVars="$autoStartParam=$autoStartValue" $sizeString></embed>
 </object>
 EOT;
 

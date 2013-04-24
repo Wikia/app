@@ -60,6 +60,8 @@ CREATE  TABLE IF NOT EXISTS `ab_experiment_group_ranges` (
   `group_id` INT NOT NULL ,
   `version_id` INT NOT NULL ,
   `ranges` VARCHAR(255) NULL ,
+  `styles` BLOB NULL,
+  `scripts` BLOB NULL,
   INDEX `group_id` (`group_id` ASC) ,
   INDEX `version_id` (`version_id` ASC) ,
   PRIMARY KEY (`version_id`, `group_id`) ,

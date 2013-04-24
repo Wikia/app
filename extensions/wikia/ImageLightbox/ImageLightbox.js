@@ -231,7 +231,7 @@ var ImageLightbox = {
 					action: Wikia.Tracker.ACTIONS.PLAY_VIDEO,
 					browserEvent: ev,
 					category: RelatedVideos.gaCat,
-					label: (target.hasClass('video-thumbnail') ? 'thumbnail' : 'title'),
+					label: (target.hasClass('video') ? 'thumbnail' : 'title'),
 					trackingMethod: 'both',
 					value: eventValue,
 					video_title: imageName

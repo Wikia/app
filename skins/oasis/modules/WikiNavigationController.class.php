@@ -4,8 +4,7 @@ class WikiNavigationController extends WikiaController {
 
 	public function executeIndex() {
 		//fb#1090
-		$isInternalWiki = empty( $this->wg->CityId );
-		$this->response->setVal( 'showMenu', !( ( $isInternalWiki || $this->wg->IsPrivateWiki ) && $this->wg->User->isAnon() ) );
+		$this->response->setVal( 'showMenu', ( $this->wg->User->isAllowed( 'read' ) && !( $this->wg->IsPrivateWiki && $this->wg->User->isAnon() ) ) );
 
 		$model = new NavigationModel();
 

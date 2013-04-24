@@ -12,9 +12,10 @@ class SevenloadVideoHandler extends VideoHandler {
 		$autoplayStr = ( $autoplay ) ? '/' . self::$autoplayParam : '' ;
 		$url = $this->getEmbedUrl();
 		$url .= '/'.$width.'x'.$height.'/swf'.$autoplayStr;
+		$sizeString = $this->getSizeString( $width, $height );
 
 		$html = <<<EOT
-<object type="application/x-shockwave-flash" data="{$url}" width="{$width}" height="{$height}">
+<object type="application/x-shockwave-flash" data="$url" $sizeString>
 	<param name="allowFullscreen" value="true" />
 	<param name="allowScriptAccess" value="always" />
 	<param name="movie" value="{$url}" />
