@@ -549,7 +549,7 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
-		Wikia::log( 'Wall::replyToMessage for parent ' . $parentTitle->getFullUrl() . ' (parentId: ' . $parentId . ') ' . $debugParentDB );
+		Wikia::log( __METHOD__, false, 'Wall::replyToMessage for parent ' . $parentTitle->getFullUrl() . ' (parentId: ' . $parentId . ') ' . $debugParentDB );
 
 		/**
 		 * @var $wallMessage WallMessage
