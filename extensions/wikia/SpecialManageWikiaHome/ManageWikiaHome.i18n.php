@@ -17,6 +17,7 @@ $messages['en'] = array(
 	'manage-wikia-home-wikis-in-slots-change-reason' => 'Wikia Home Page Staff Tool change',
 
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
+	'manage-wikia-home-collections-success' => 'Collections has been saved.',
 
 	'manage-wikia-home-verticals-proportions' => 'Number of wikis for each vertical in WV',
 	'manage-wikia-home-hot-new-numbers' => 'Number of hot/new wikis in WV',
@@ -28,6 +29,7 @@ $messages['en'] = array(
 	'manage-wikia-home-error-exceeded-total-no-of-slots' => "Invalid slots amount for new and hot wikis. Please make sure neither hot nor new slots exceed total amount of slots ($1).",
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Negative number of slots is not allowed',
 	'manage-wikia-home-error-wikifactory-failure' => "Something wrong happened during saving the variables all of them wasn't saved or they were saved partly. Try again.",
+	'manage-wikia-home-collections-failure' => 'There was an error while saving, please check what you entered.',
 
 	'manage-wikia-home-change-button' => 'Change',
 
@@ -49,6 +51,13 @@ $messages['en'] = array(
 	'manage-wikia-home-modal-content-demoted' => 'Do you want to demote this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-button-no' => 'No',
 	'manage-wikia-home-modal-button-yes' => 'Yes',
+
+	'manage-wikia-home-collections-setup-header' => 'Collections setup',
+	'manage-wikia-home-collections-setup-save-button' => 'Save',
+
+	'manage-wikia-home-collections-enabled-field-label' => 'Enabled',
+	'manage-wikia-home-collections-name-field-label' => 'Collection name',
+	'manage-wikia-home-collections-sponsur-url-field-label' => 'Sponsors url',
 );
 
 $messages['de'] = array(
