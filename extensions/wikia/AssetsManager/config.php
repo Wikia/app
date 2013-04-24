@@ -1284,6 +1284,8 @@ $config['LyricsFindTracking'] = array(
 	'assets' => array(
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/tracking.js',
+	)
+);
 
 /* ManageWikiaHome */
 $config['manage_wikia_home_js'] = array(
