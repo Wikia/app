@@ -29,6 +29,8 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
+	'filepage-desc' => '{{desc}}',
+
 	/* video page */
 	'video-page-file-list-header' => 'Heading for file list on Video File Page',
 	'video-page-global-file-list-header' => 'Heading for global usage list on Video File Page',
