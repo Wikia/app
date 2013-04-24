@@ -15,3 +15,4 @@
 sftp-config.json
 *.iml
 /build
+/LocalSettings.php
