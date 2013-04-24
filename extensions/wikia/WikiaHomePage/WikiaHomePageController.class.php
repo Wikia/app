@@ -61,6 +61,11 @@ class WikiaHomePageController extends WikiaController {
 	protected $verticalsSlots = array();
 	protected $verticalsWikis = array();
 
+	/**
+	 * @var CityVisualization
+	 */
+	protected $visualization;
+
 	public function __construct() {
 		parent::__construct();
 		$this->helper = F::build('WikiaHomePageHelper');
@@ -179,8 +184,7 @@ class WikiaHomePageController extends WikiaController {
 				$this->source = $this->getMediaWikiMessage();
 
 				$failoverData = $this->parseSourceMessage();
-				$visualization = F::build('CityVisualization');
-				/** @var $visualization CityVisualization */
+				$visualization = $this->getVisualization();
 				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
 				$failoverBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 
@@ -191,7 +195,7 @@ class WikiaHomePageController extends WikiaController {
 				$status = 'false';
 
 				$failoverData = $this->getFailoverWikiList();
-				$visualization = F::build('CityVisualization');
+				$visualization = $this->getVisualization();
 				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
 				$failoverBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 
@@ -200,6 +204,16 @@ class WikiaHomePageController extends WikiaController {
 			}
 		}
 		$this->response->setVal('wgWikiaBatchesStatus', $status);
+	}
+	
+	public function getCollectionsList() {
+		$collectionsBatches = [];
+		if( $this->wg->WikiaHomePageCollectionsExt && !empty($this->wg->WikiaHomePageCollectionsWikis) ) {
+			$visualization = $this->getVisualization();
+			$collectionsBatches = $visualization->getCollectionsWikisData( $this->wg->WikiaHomePageCollectionsWikis, $this->wg->contLang->getCode() );
+		}
+		
+		$this->response->setVal('collectionsBatches', json_encode($collectionsBatches));
 	}
 
 	public function getMediaWikiMessage() {
@@ -703,5 +717,13 @@ class WikiaHomePageController extends WikiaController {
 			return self::hubsImgHeight;
 		}
 
+	}
+	
+	private function getVisualization() {
+		if( is_null($this->visualization) ) {
+			$this->visualization = new CityVisualization();
+		}
+		
+		return $this->visualization;
 	}
 }
