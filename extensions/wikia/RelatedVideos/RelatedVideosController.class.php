@@ -56,7 +56,7 @@ class RelatedVideosController extends WikiaController {
 		$controlerName = str_replace('Controller', '', $this->getVal('controlerName', 'RelatedVideos'));
 		$wikiLink = $this->getVal('wikiLink', '');
 
-		$oRelatedVideosService = F::build('RelatedVideosService');
+		$oRelatedVideosService = new RelatedVideosService();
 		$result = $oRelatedVideosService->getRelatedVideoDataFromTitle( array( 'title' => $title, 'source' => $external ), RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort, $videoHeight );
 		if ( isset( $result['error'] ) ){
 			$this->setVal( 'error', $result['error'] );
@@ -124,15 +124,12 @@ class RelatedVideosController extends WikiaController {
 		$inAjaxReponse = $this->getVal('inAjaxResponse');
 
 		if ( $videoArticleId ) {
-			$videoTitle = Title::newFromID( $videoArticleId, Title::GAID_FOR_UPDATE );
 			$useMaster = true;
 		} else {
-			$videoTitle = Title::newFromText( $videoName, NS_VIDEO );
-			// var_dump( $videoTitle );
 			$useMaster = ( false || !empty( $useMaster ) );
 		}
 
-		$rvd = F::build('RelatedVideosData'); /* @var $rvd RelatedVideosData */
+		$rvd = new RelatedVideosData();
 		$videoData = $rvd->getVideoData( $videoName, $width, $videoWidth, $autoplay, $useMaster, $cityShort, $videoHeight, $useJWPlayer, $inAjaxReponse );
 		$this->setVal( 'data', $videoData );
 	}
@@ -150,7 +147,7 @@ class RelatedVideosController extends WikiaController {
 
  		$preloaded = $this->getVal( 'preloaded' );
 
-		$videoTitle = F::build('Title', array($video['id'], NS_FILE), 'newFromText');
+		$videoTitle = Title::newFromText($video['id'], NS_FILE);
 		$videoFile = wfFindFile($videoTitle);
 
 		if( $videoFile ) {
@@ -225,10 +222,10 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$articleId = $this->getVal( 'articleId', '' );
-		$rvd = F::build( 'RelatedVideosData' ); /** @var $rvd RelatedVideosData */
+		$rvd = new RelatedVideosData();
 		$retval = $rvd->addVideo( $articleId, $url );
 		if ( is_array( $retval ) ) {
-			$rvs = F::build( 'RelatedVideosService' ); /** @var $rvs RelatedVideosService */
+			$rvs = new RelatedVideosService();
 			$data = $rvs->getRelatedVideoDataFromMaster( $retval );
 			if ( empty($wgRelatedVideosOnRail) ) {
 				$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCarouselElement', array( 'video' => $data, 'preloaded' => 1 ) ));

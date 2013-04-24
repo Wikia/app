@@ -20,7 +20,7 @@ class RelatedVideosHookHandler {
 
 		// don't load it on edit pages (perf improvement)
 		if( F::app()->checkSkin( 'oasis', $skin ) && !BodyController::isEditPage() ) {
-			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+			$assetsManager = AssetsManager::getInstance();
 			$scssPackage = 'relatedvideos_scss';
 			$jsPackage = 'relatedvideos_js';
 
