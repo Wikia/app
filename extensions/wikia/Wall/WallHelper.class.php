@@ -229,7 +229,7 @@ class WallHelper {
 
 			if( !($parent instanceof WallMessage) ) {
 			//this should never happen
-				Wikia::log(__METHOD__, false, 'No WallMessage instance article id: '.$parentId);
+				Wikia::log(__METHOD__, false, 'No WallMessage instance article id: '.$parentId, true);
 
 				$app->wf->ProfileOut(__METHOD__);
 				return array(
