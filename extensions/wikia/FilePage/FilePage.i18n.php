@@ -4,6 +4,7 @@
  */
 
 $messages = array();
+
 $messages['en'] = array(
 	/* video page */
 	'video-page-file-list-header' => 'Appears on these pages',
@@ -23,7 +24,6 @@ $messages['en'] = array(
 	'file-page-tab-history' => 'File History',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'See full list',
-
 );
 
 /** Message documentation (Message documentation) */
