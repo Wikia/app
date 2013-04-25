@@ -39,7 +39,7 @@ $wgExtensionCredits['other'][] = array(
 
 
 $wgAvailableRights[] = 'welcomeexempt';
-$wgGroupPermissions['bot'][] = 'welcomeexempt';
+$wgGroupPermissions['bot']['welcomeexempt'] = true;
 
 /**
  * @global Array The list of message files.
