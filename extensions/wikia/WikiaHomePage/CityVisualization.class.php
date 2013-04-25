@@ -45,7 +45,7 @@ class CityVisualization extends WikiaModel {
 		$this->wf->ProfileIn(__METHOD__);
 		$memKey = $this->getVisualizationWikisListDataCacheKey($corpWikiId, $contLang);
 		$wikis = (!$dontReadMemc) ? $this->wg->Memc->get($memKey) : null;
-
+		
 		if (!$wikis) {
 			$promotedWikis = array();
 
@@ -113,7 +113,7 @@ class CityVisualization extends WikiaModel {
 			}
 		}
 		$this->wf->ProfileOut(__METHOD__);
-
+		
 		return $resultingBatches;
 	}
 
@@ -223,16 +223,7 @@ class CityVisualization extends WikiaModel {
 
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$tables = array('city_visualization', 'city_list');
-		$fields = array(
-			'city_visualization.city_id',
-			'city_visualization.city_vertical',
-			'city_visualization.city_main_image',
-			'city_visualization.city_description',
-			'city_visualization.city_headline',
-			'city_list.city_title',
-			'city_list.city_url',
-			'city_visualization.city_flags',
-		);
+		$fields = $this->getWikiListFields();
 		$conds = array(
 			'city_list.city_public' => 1,
 			'city_visualization.city_main_image is not null',
@@ -240,32 +231,14 @@ class CityVisualization extends WikiaModel {
 			'city_visualization.city_vertical' => $verticalId,
 			'(city_visualization.city_flags & ' . WikisModel::FLAG_BLOCKED . ') != ' . WikisModel::FLAG_BLOCKED,
 		);
-		$joinConds = array(
-			'city_list' => array(
-				'join',
-				'city_visualization.city_id = city_list.city_id'
-			),
-		);
+		$joinConds = $this->getWikiListJoinConditions();
 
 		$results = $db->select($tables, $fields, $conds, __METHOD__, array(), $joinConds);
 
 		while( $row = $db->fetchObject($results) ) {
-			$isPromoted = $this->isPromotedWiki($row->city_flags);
-			$isBlocked = $this->isBlockedWiki($row->city_flags);
-
-			$wikiData = array(
-				'wikiid' => $row->city_id,
-				'wikiname' => $row->city_title,
-				'wikiheadline' => $row->city_headline,
-				'wikiurl' => $row->city_url . '?redirect=no',
-				'wikidesc' => $row->city_description,
-				'main_image' => $row->city_main_image,
-				'wikinew' => $this->isNewWiki($row->city_flags),
-				'wikihot' => $this->isHotWiki($row->city_flags),
-				'wikiofficial' => $this->isOfficialWiki($row->city_flags),
-				'wikipromoted' => $isPromoted,
-				'wikiblocked' => $isBlocked,
-			);
+			$wikiData = $this->makeVisualizationWikiData($row);
+			$isPromoted = $wikiData['wikipromoted'];
+			$isBlocked = $wikiData['wikiblocked'];
 
 			if( !$isBlocked && !$isPromoted ) {
 				$verticalWikis[self::DEMOTED_ARRAY_KEY][] = $wikiData;
@@ -276,6 +249,81 @@ class CityVisualization extends WikiaModel {
 
 		$this->wf->ProfileOut(__METHOD__);
 		return $verticalWikis;
+	}
+
+	protected function getWikiListForCollection($collectionWikiIds) {
+		$this->wf->ProfileIn(__METHOD__);
+
+		$verticalWikis = array(
+			self::PROMOTED_ARRAY_KEY => array(),
+			self::DEMOTED_ARRAY_KEY => array(),
+		);
+
+		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$tables = array('city_visualization', 'city_list');
+		$fields = $this->getWikiListFields();
+		$conds = array(
+			'city_list.city_public' => 1,
+			'city_list.city_id in (' . $db->makeList($collectionWikiIds) . ')',
+			'city_visualization.city_main_image is not null',
+			'(city_visualization.city_flags & ' . WikisModel::FLAG_BLOCKED . ') != ' . WikisModel::FLAG_BLOCKED,
+		);
+		$joinConds = $this->getWikiListJoinConditions();
+
+		$results = $db->select($tables, $fields, $conds, __METHOD__, array(), $joinConds);
+
+		while( $row = $db->fetchObject($results) ) {
+			$wikiData = $this->makeVisualizationWikiData($row);
+			$isPromoted = $wikiData['wikipromoted'];
+			$isBlocked = $wikiData['wikiblocked'];
+
+			if( !$isBlocked && !$isPromoted ) {
+				$verticalWikis[self::DEMOTED_ARRAY_KEY][] = $wikiData;
+			} else if( $isPromoted && !$isBlocked ) {
+				$verticalWikis[self::PROMOTED_ARRAY_KEY][] = $wikiData;
+			}
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return $verticalWikis;
+	}
+	
+	private function getWikiListFields() {
+		return [
+			'city_visualization.city_id',
+			'city_visualization.city_vertical',
+			'city_visualization.city_main_image',
+			'city_visualization.city_description',
+			'city_visualization.city_headline',
+			'city_list.city_title',
+			'city_list.city_url',
+			'city_visualization.city_flags',
+		];
+	}
+
+	private function getWikiListJoinConditions() {
+		return [
+			'city_list' => [
+				'join',
+				'city_visualization.city_id = city_list.city_id'
+			],
+		];
+	}
+	
+	private function makeVisualizationWikiData($row) {
+		return [
+			'wikiid' => $row->city_id,
+			'wikiname' => $row->city_title,
+			'wikiheadline' => $row->city_headline,
+			'wikiurl' => $row->city_url . '?redirect=no',
+			'wikidesc' => $row->city_description,
+			'main_image' => $row->city_main_image,
+			'wikinew' => $this->isNewWiki($row->city_flags),
+			'wikihot' => $this->isHotWiki($row->city_flags),
+			'wikiofficial' => $this->isOfficialWiki($row->city_flags),
+			'wikipromoted' => $this->isPromotedWiki($row->city_flags),
+			'wikiblocked' => $this->isBlockedWiki($row->city_flags),
+		];
 	}
 
 	public function saveVisualizationData($wikiId, $data, $langCode) {
@@ -953,13 +1001,14 @@ class CityVisualization extends WikiaModel {
 	 * @param Array $collectionsList 2d array in example: [$collection1, $collection2, ...] where $collection1 = [$wikiId1, $wikiId2, ..., $wikiId17]
 	 * @param String $lang language code
 	 */
-	public function getCollectionsWikisData(Array $collectionsList, $lang) {
+	public function getCollectionsWikisData(Array $collectionsList) {
+		$helper = $this->getWikiaHomePageHelper();
 		$collectionsWikisData = [];
 		foreach($collectionsList as $collection => $collectionsWikis) {
-			foreach($collectionsWikis as $wikiId) {
-				$collectionsWikisData[$collection][] = $this->getWikiDataForVisualization($wikiId, $lang);
-			}
+			$collectionsWikisData[$collection] = $this->getWikiListForCollection($collectionsWikis);
 		}
+		
+		$collectionsWikisData = $helper->prepareBatchesForVisualization($collectionsWikisData);
 		
 		return $collectionsWikisData;
 	}
