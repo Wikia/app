@@ -194,7 +194,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setHub                     ( $this->getVal( 'hub', false ) )
 			->setInterWiki               ( $this->isCorporateWiki() )
 			->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
-			->setGroupResults            ( $searchConfig->isInterWiki() )
 			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
 		;
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
@@ -361,7 +360,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->setVal( 'namespaces', 			$config->getNamespaces() );
 		$this->setVal( 'searchableNamespaces', 	$searchableNamespaces );
-		$this->setVal( 'redirs', 				$config->getIncludeRedirects() );
 		$this->setVal( 'advanced', 				$config->getAdvanced() );
 	}
 
@@ -403,7 +401,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->setVal( 'bareterm', 			$config->getQuery()->getSanitizedQuery() );
 		$this->setVal( 'searchProfiles', 	$config->getSearchProfiles() );
-		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
 		$this->setVal( 'activeTab', 		$config->getActiveTab() );
 		$this->setVal( 'form',				$form );
 		$this->setVal( 'is_video_wiki',		$is_video_wiki );
@@ -443,11 +440,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'pageTitle', 		$this->wg->Title );
 		$this->setVal( 'crossWikia', 		$config->getInterWiki() );
 		$this->setVal( 'resultsCount', 		$config->getResultsFound() );
-		$this->setVal( 'skipCache', 		$config->getSkipCache() );
-		$this->setVal( 'debug', 			$config->getDebug() );
 		$this->setVal( 'namespaces', 		$config->getNamespaces() );
 		$this->setVal( 'advanced', 			$config->getAdvanced() );
-		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
 		$this->setVal( 'limit', 			$config->getLimit() );
 		$this->setVal( 'filters',			$config->getPublicFilterKeys() );
 		$this->setVal( 'rank', 				$config->getRank() );

@@ -295,7 +295,7 @@ abstract class AbstractSelect
 		
 		if( $this->config->getPage() == 1 ) {
 			\Track::event(
-					( !empty( $results->getResultsFound() ) ? 'search_start' : 'search_start_nomatch' ),
+					( $results->getResultsFound() > 0 ? 'search_start' : 'search_start_nomatch' ),
 					array(
 							'sterm'	=> $this->config->getQuery()->getSanitizedQuery(), 
 							'stype'	=> $this->searchType 

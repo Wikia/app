@@ -69,20 +69,14 @@ class Config
 	 * Default number of results per page
 	 * @var int
 	 */
-	protected $limit = self::RESULTS_PERPAGE;
+	protected $limit = self::RESULTS_PER_PAGE;
 	
 	/**
 	 * Refers to the wiki we're on
 	 * @var int
 	 */
 	protected $wikiId = 0;
-	
-	/**
-	 * Used to correlate a single value to field and ascending/descending
-	 * @var string
-	 */
-	protected $rank = self::RANK_DEFAULT;
-	
+
 	/**
 	 * Result offset for our query
 	 * @var int
@@ -94,7 +88,19 @@ class Config
 	 * For more info check out http://wiki.apache.org/solr/DisMaxQParserPlugin#mm_.28Minimum_.27Should.27_Match.29
 	 * @var string
 	 */
-	protected $minimumMatch = '80%'; 
+	protected $minimumMatch = '80%';
+
+	/**
+	 * Whether we're in an "advanced search" context
+	 * @var bool
+	 */
+	protected $advanced = false;
+	
+	/**
+	 * If we're doing a hub search, the hub we're on
+	 * @var string
+	 */
+	protected $hub;
 	
 	/**
 	 * Here is where we store the user's query
@@ -241,7 +247,7 @@ class Config
 	 * Allows us to tell the factory which service we want
 	 * @var string
 	 */
-	protected $queryService = 'OnWiki';
+	protected $queryService;
 	
 	/**
 	 * Used to shift all MediaWiki logic elsewhere.
@@ -283,6 +289,24 @@ class Config
 	 */
 	public function getStart() {
 		return $this->start;
+	}
+	
+	/**
+	 * Sets the minimum match value
+	 * @param string $mm
+	 * @return Wikia\Search\Config
+	 */
+	public function setMinimumMatch( $mm ) {
+		$this->minimumMatch = $mm;
+		return $this;
+	}
+	
+	/**
+	 * Returns the minimum match value
+	 * @return string
+	 */
+	public function getMinimumMatch() {
+		return $this->minimumMatch;
 	}
 	
 	/**
@@ -378,6 +402,14 @@ class Config
 		$sort = $this->rankOptions[$rank];
 		$this->setSort( $sort[0], $sort[1] );
 		return $this;
+	}
+	
+	/**
+	 * Returns the currently registered rank
+	 * @return string
+	 */
+	public function getRank() {
+		return $this->rank;
 	}
 	
 	/**
@@ -506,6 +538,42 @@ class Config
 	public function setRequestedFields( array $fields ) {
 		$this->requestedFields = $fields;
 		return $this;
+	}
+	
+	/**
+	 * Sets what hub we're on
+	 * @param string $hub
+	 * @return Wikia\Search\Config
+	 */
+	public function setHub( $hub ) {
+		$this->hub = $hub;
+		return $this;
+	}
+	
+	/**
+	 * Returns hub value
+	 * @return string|null
+	 */
+	public function getHub() {
+		return $this->hub;
+	}
+	
+	/**
+	 * Sets whether we're in an 'advanced search' context
+	 * @param bool $bool
+	 * @return Wikia\Search\Config
+	 */
+	public function setAdvanced( $bool ) {
+		$this->advanced = $bool;
+		return $this;
+	}
+	
+	/**
+	 * Whether we're in advanced search
+	 * @return bool
+	 */
+	public function getAdvanced() {
+		return $this->advanced;
 	}
 	
 	/**
@@ -740,7 +808,7 @@ class Config
 	 * @return int
 	 */
 	public function getWikiId() {
-		if ( empty( $this->getWikiId() ) ) {
+		if ( empty( $this->wikId ) ) {
 			$this->wikiId = $this->getService()->getWikiId();
 		}
 		return $this->wikiId;
@@ -770,7 +838,25 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setCityId( $value ) {
-		return $this->getWikiId( $value );
+		return $this->setWikiId( $value );
+	}
+	
+	/**
+	 * Sets the page, which is a shortcut for offset/limit handling
+	 * @param int value
+	 * @return Wikia\Search\Config
+	 */
+	public function setPage( $value ) {
+		$this->page = $value;
+		return $this;
+	}
+	
+	/**
+	 * Returns the page we're on.
+	 * @return int
+	 */
+	public function getPage() {
+		return $this->page;
 	}
 	
 	/**
