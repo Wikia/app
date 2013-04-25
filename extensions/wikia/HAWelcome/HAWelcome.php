@@ -284,6 +284,12 @@ class HAWelcomeJob extends Job {
             wfProfileOut( __METHOD__ );
             return true;
         }
+        /** @global Object User The user who runs the script. */
+        global $wgUser;
+        /** @type Object User Store the original $wgUser for a moment. */
+        $tmp = $wgUser;
+        // Replace the current active user object with the DEFAULT_WELCOMER object for the job.
+        $wgUser = User::newFromName( self::DEFAULT_WELCOMER );
         // Create objects related to the recipient of the welcome message.
         //
         // A User object.
@@ -360,6 +366,8 @@ class HAWelcomeJob extends Job {
         if ( $this->bShowNotices ) {
             trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );
         }
+        // Restore the original active user object.
+        $wgUser = $tmp;
         // Restore the original error reporting level.
         error_reporting( $iErrorReporting );
         wfProfileOut( __METHOD__ );
@@ -376,13 +384,7 @@ class HAWelcomeJob extends Job {
         if ( $this->bShowNotices ) {
             trigger_error( sprintf( '%s Start.', __METHOD__ ) , E_USER_NOTICE );
         }
-	/** @global Object User The user who runs the script. */
-	global $wgUser;
-	/** @type Object User Store the original $wgUser for a moment. */
-	$tmp = $wgUser;
-	// Replace the current active user object with the sender object for a moment.
-	$wgUser = $this->oSender;
-        // Post a message onto a message wall if enabled.
+	    // Post a message onto a message wall if enabled.
         if ( $this->bMessageWallExt ) {
             if ( $this->bShowNotices ) {
                 trigger_error( sprintf( '%s Message Wall enabled.', __METHOD__ ) , E_USER_NOTICE );
@@ -417,9 +419,7 @@ class HAWelcomeJob extends Job {
             // Do the edit.
             $this->oRecipientTalkPage->doEdit( $sMessage, wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), $this->iFlags );
         }
-	// Restore the original active user object.
-	$wgUser = $tmp;
-	if ( $this->bShowNotices ) {
+        if ( $this->bShowNotices ) {
             trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );
         }
         wfProfileOut( __METHOD__ );
@@ -461,7 +461,7 @@ class HAWelcomeJob extends Job {
             array(
                 $sPrefixedText,
                 $this->oSender->getUserPage()->getTalkPage()->getPrefixedText(),
-                '~~~~',
+                '~~~~~',
                 wfEscapeWikiText( $this->sRecipientName )
             )
         )->inContentLanguage()->plain();
