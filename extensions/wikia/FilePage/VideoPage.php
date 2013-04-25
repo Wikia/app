@@ -38,7 +38,6 @@ class WikiaVideoPage extends WikiaImagePage {
 
 		if ( empty($wgEnableVideoPageRedesign) ) {
 			$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$embedCode['html'].$this->getVideoInfoLine().'</div>' );
-			//$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>' );
 		} else {
 			$imageLink = '<div class="fullImageLink" id="file">'.$embedCode['html'].'</div>';
 
