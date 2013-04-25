@@ -210,7 +210,7 @@ class WikiaHomePageController extends WikiaController {
 		$collectionsBatches = [];
 		if( $this->wg->WikiaHomePageCollectionsExt && !empty($this->wg->WikiaHomePageCollectionsWikis) ) {
 			$visualization = $this->getVisualization();
-			$collectionsBatches = $visualization->getCollectionsWikisData( $this->wg->WikiaHomePageCollectionsWikis, $this->wg->contLang->getCode() );
+			$collectionsBatches = $visualization->getCollectionsWikisData($this->wg->WikiaHomePageCollectionsWikis);
 		}
 		
 		$this->response->setVal('collectionsBatches', json_encode($collectionsBatches));
