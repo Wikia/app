@@ -192,7 +192,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setRank                    ( $this->getVal( 'rank', 'default' ) )
 			->setAdvanced                ( $this->getRequest()->getBool( 'advanced', false ) )
 			->setHub                     ( $this->getVal( 'hub', false ) )
-			->setIsInterWiki             ( $this->isCorporateWiki() )
+			->setInterWiki               ( $this->isCorporateWiki() )
 			->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
 			->setGroupResults            ( $searchConfig->isInterWiki() )
 			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
@@ -227,7 +227,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$response->setData( $searchConfig->getResults()->toArray( explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) ) ) );
 			return;
 		}
-		if(! $searchConfig->getIsInterWiki() ) {
+		if(! $searchConfig->getInterWiki() ) {
 			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox', array( 'config' => $searchConfig ) ) );
 		}
 		$tabsArgs = array(
@@ -245,7 +245,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'query',                 $searchConfig->getQuery()->getQueryForHtml() );
 		$this->setVal( 'resultsPerPage',        $searchConfig->getLimit() );
 		$this->setVal( 'pageUrl',               $this->wg->Title->getFullUrl() );
-		$this->setVal( 'isInterWiki',           $searchConfig->getIsInterWiki() );
+		$this->setVal( 'isInterWiki',           $searchConfig->getInterWiki() );
 		$this->setVal( 'namespaces',            $searchConfig->getNamespaces() );
 		$this->setVal( 'hub',                   $searchConfig->getHub() );
 		$this->setVal( 'hasArticleMatch',       $searchConfig->hasArticleMatch() );
@@ -264,7 +264,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 												array( ucwords( $searchConfig->getQuery()->getSanitizedQuery() ), $this->wg->Sitename) )  );
 		}
 		else {
-			if( $searchConfig->getIsInterWiki() ) {
+			if( $searchConfig->getInterWiki() ) {
 				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
 			} else {
 				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki',
@@ -441,7 +441,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'windowFirstPage', 	$windowFirstPage );
 		$this->setVal( 'windowLastPage', 	$windowLastPage );
 		$this->setVal( 'pageTitle', 		$this->wg->Title );
-		$this->setVal( 'crossWikia', 		$config->getIsInterWiki() );
+		$this->setVal( 'crossWikia', 		$config->getInterWiki() );
 		$this->setVal( 'resultsCount', 		$config->getResultsFound() );
 		$this->setVal( 'skipCache', 		$config->getSkipCache() );
 		$this->setVal( 'debug', 			$config->getDebug() );

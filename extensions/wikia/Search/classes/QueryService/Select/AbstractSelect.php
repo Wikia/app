@@ -290,14 +290,12 @@ abstract class AbstractSelect
 		$this->spellcheckResult( $result );
 		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $this->config ) );
 		$results = $this->resultSetFactory->get( $container );
-		$resultCount = $results->getResultsFound();
 		
-		$this->config->setResults( $results )
-		             ->setResultsFound( $resultCount )
-		;
+		$this->config->setResults( $results );
+		
 		if( $this->config->getPage() == 1 ) {
 			\Track::event(
-					( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ),
+					( !empty( $results->getResultsFound() ) ? 'search_start' : 'search_start_nomatch' ),
 					array(
 							'sterm'	=> $this->config->getQuery()->getSanitizedQuery(), 
 							'stype'	=> $this->searchType 
