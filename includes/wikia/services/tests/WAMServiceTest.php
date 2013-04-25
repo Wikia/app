@@ -34,7 +34,8 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => null
+					'wikiLang' => null,
+					'excludeBlacklist' => [],
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
@@ -48,7 +49,8 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => null
+					'wikiLang' => null,
+					'excludeBlacklist' => [],
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
@@ -62,7 +64,8 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 2233,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => null
+					'wikiLang' => null,
+					'excludeBlacklist' => [],
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
@@ -77,7 +80,8 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 2233,
 					'verticalId' => 1,
 					'wikiWord' => null,
-					'wikiLang' => null
+					'wikiLang' => null,
+					'excludeBlacklist' => [],
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
@@ -92,7 +96,8 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'verticalId' => 0,
 					'wikiWord' => 'testWord',
-					'wikiLang' => null
+					'wikiLang' => null,
+					'excludeBlacklist' => [],
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
@@ -107,7 +112,8 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => 'testLang'
+					'wikiLang' => 'testLang',
+					'excludeBlacklist' => [],
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
@@ -122,7 +128,8 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 666,
 					'wikiWord' => 'testWord2',
 					'verticalId' => 5,
-					'wikiLang' => 'testLang'
+					'wikiLang' => 'testLang',
+					'excludeBlacklist' => [],
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
