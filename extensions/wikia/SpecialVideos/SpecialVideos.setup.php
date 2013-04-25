@@ -18,6 +18,7 @@ $app->registerClass( 'SpecialVideosHelper', $dir.'SpecialVideosHelper.class.php'
 
 // i18n mapping
 $app->registerExtensionMessageFile( 'SpecialVideos', $dir.'SpecialVideos.i18n.php' );
+$app->registerExtensionMessageFile( 'SpecialVideosAliases', $dir.'SpecialVideos.alias.php' );
 
 // special pages
 $app->registerSpecialPage( 'Videos', 'SpecialVideosSpecialController' );
