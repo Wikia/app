@@ -54,9 +54,10 @@ class CityVisualization extends WikiaModel {
 
 				$wikis[$verticalTag] = (!$dontReadMemc) ? $this->wg->Memc->get($verticalMemKey) : null;
 				$numberOfSlots = $this->getSlotsNoPerVertical($corpWikiId, $verticalId);
+				$wikiListConditioner = new WikiListConditionerForVertical($contLang, $verticalId);
 				
 				if (!is_array($wikis[$verticalTag])) {
-					$verticalWikis = $this->getWikiListForVertical($contLang, $verticalId);
+					$verticalWikis = $this->getWikisList($wikiListConditioner);
 					$promotedWikis = array_merge($promotedWikis, $verticalWikis[self::PROMOTED_ARRAY_KEY]);
 
 					shuffle($verticalWikis[self::DEMOTED_ARRAY_KEY]);
@@ -213,7 +214,7 @@ class CityVisualization extends WikiaModel {
 		return $batches;
 	}
 
-	protected function getWikiListForVertical($contLang, $verticalId) {
+	protected function getWikisList(WikiListConditioner $conditioner) {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$verticalWikis = array(
@@ -222,74 +223,8 @@ class CityVisualization extends WikiaModel {
 		);
 
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$tables = array('city_visualization', 'city_list');
-		$fields = $this->getWikiListFields();
-		$conds = array(
-			'city_list.city_public' => 1,
-			'city_visualization.city_main_image is not null',
-			'city_visualization.city_lang_code' => $contLang,
-			'city_visualization.city_vertical' => $verticalId,
-			'(city_visualization.city_flags & ' . WikisModel::FLAG_BLOCKED . ') != ' . WikisModel::FLAG_BLOCKED,
-		);
-		$joinConds = $this->getWikiListJoinConditions();
-
-		$results = $db->select($tables, $fields, $conds, __METHOD__, array(), $joinConds);
-
-		while( $row = $db->fetchObject($results) ) {
-			$wikiData = $this->makeVisualizationWikiData($row);
-			$isPromoted = $wikiData['wikipromoted'];
-			$isBlocked = $wikiData['wikiblocked'];
-
-			if( !$isBlocked && !$isPromoted ) {
-				$verticalWikis[self::DEMOTED_ARRAY_KEY][] = $wikiData;
-			} else if( $isPromoted && !$isBlocked ) {
-				$verticalWikis[self::PROMOTED_ARRAY_KEY][] = $wikiData;
-			}
-		}
-
-		$this->wf->ProfileOut(__METHOD__);
-		return $verticalWikis;
-	}
-
-	protected function getWikiListForCollection($collectionWikiIds) {
-		$this->wf->ProfileIn(__METHOD__);
-
-		$verticalWikis = array(
-			self::PROMOTED_ARRAY_KEY => array(),
-			self::DEMOTED_ARRAY_KEY => array(),
-		);
-
-		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$tables = array('city_visualization', 'city_list');
-		$fields = $this->getWikiListFields();
-		$conds = array(
-			'city_list.city_public' => 1,
-			'city_list.city_id in (' . $db->makeList($collectionWikiIds) . ')',
-			'city_visualization.city_main_image is not null',
-			'(city_visualization.city_flags & ' . WikisModel::FLAG_BLOCKED . ') != ' . WikisModel::FLAG_BLOCKED,
-		);
-		$joinConds = $this->getWikiListJoinConditions();
-
-		$results = $db->select($tables, $fields, $conds, __METHOD__, array(), $joinConds);
-
-		while( $row = $db->fetchObject($results) ) {
-			$wikiData = $this->makeVisualizationWikiData($row);
-			$isPromoted = $wikiData['wikipromoted'];
-			$isBlocked = $wikiData['wikiblocked'];
-
-			if( !$isBlocked && !$isPromoted ) {
-				$verticalWikis[self::DEMOTED_ARRAY_KEY][] = $wikiData;
-			} else if( $isPromoted && !$isBlocked ) {
-				$verticalWikis[self::PROMOTED_ARRAY_KEY][] = $wikiData;
-			}
-		}
-
-		$this->wf->ProfileOut(__METHOD__);
-		return $verticalWikis;
-	}
-	
-	private function getWikiListFields() {
-		return [
+		$tables = ['city_visualization', 'city_list'];
+		$fields = [
 			'city_visualization.city_id',
 			'city_visualization.city_vertical',
 			'city_visualization.city_main_image',
@@ -299,15 +234,30 @@ class CityVisualization extends WikiaModel {
 			'city_list.city_url',
 			'city_visualization.city_flags',
 		];
-	}
-
-	private function getWikiListJoinConditions() {
-		return [
+		$joinConds = [
 			'city_list' => [
 				'join',
 				'city_visualization.city_id = city_list.city_id'
 			],
 		];
+		$conds = $conditioner->getCondition();
+
+		$results = $db->select($tables, $fields, $conds, __METHOD__, array(), $joinConds);
+
+		while( $row = $db->fetchObject($results) ) {
+			$wikiData = $this->makeVisualizationWikiData($row);
+			$isPromoted = $wikiData['wikipromoted'];
+			$isBlocked = $wikiData['wikiblocked'];
+
+			if( !$isBlocked && !$isPromoted ) {
+				$verticalWikis[self::DEMOTED_ARRAY_KEY][] = $wikiData;
+			} else if( $isPromoted && !$isBlocked ) {
+				$verticalWikis[self::PROMOTED_ARRAY_KEY][] = $wikiData;
+			}
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return $verticalWikis;
 	}
 	
 	private function makeVisualizationWikiData($row) {
@@ -1005,7 +955,8 @@ class CityVisualization extends WikiaModel {
 		$helper = $this->getWikiaHomePageHelper();
 		$collectionsWikisData = [];
 		foreach($collectionsList as $collection => $collectionsWikis) {
-			$collectionsWikisData[$collection] = $this->getWikiListForCollection($collectionsWikis);
+			$wikiListConditioner = new WikiListConditionerForCollection($collectionsWikis);
+			$collectionsWikisData[$collection] = $this->getWikisList($wikiListConditioner);
 		}
 		
 		$collectionsWikisData = $helper->prepareBatchesForVisualization($collectionsWikisData);
