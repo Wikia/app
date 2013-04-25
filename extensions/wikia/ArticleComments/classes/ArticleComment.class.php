@@ -814,8 +814,9 @@ class ArticleComment {
 
 
 		if( !($commentTitle instanceof Title) ) {
-			if ($parentId !== false) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - failed to create commentTitle from " . $commentTitleText );
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId .
+					") - failed to create commentTitle from " . $commentTitleText, true );
 			}
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -830,8 +831,9 @@ class ArticleComment {
 
 		// add comment to database
 		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
-			if ($parentId !== false) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - saved an article " . $commentTitleText );
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - saved an article " .
+					$commentTitleText . ', commentId is ' . $article->getID(), true );
 			}
 			$revId = $article->getRevIdFetched();
 			$data = array(
@@ -845,21 +847,24 @@ class ArticleComment {
 
 			$commentsIndex = new CommentsIndex( $data );
 			$commentsIndex->addToDatabase();
-			if ($parentId !== false) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - added comments index to DB for " . $commentTitleText );
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - added comments index to DB for " .
+					$commentTitleText . ', commentId is ' . $article->getID(), true );
 			}
 
 			// set last child comment id
 			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
 
-			if ($parentId !== false) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - updated parent for " . $commentTitleText );
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - updated parent for " .
+					$commentTitleText . ', commentId is ' . $article->getID(), true );
 			}
 
 			wfRunHooks( 'EditCommentsIndex', array($article->getTitle(), $commentsIndex) );
 		} else {
-			if ($parentId !== false) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - failed to save reply article with title " . $commentTitleText );
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId .
+					") - failed to save reply article with title " . $commentTitleText, true );
 			}
 		}
 
