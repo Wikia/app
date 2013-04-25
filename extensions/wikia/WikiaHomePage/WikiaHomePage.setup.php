@@ -33,6 +33,9 @@ $app->registerClass('WikiGetDataForPromoteHelper',$dir.'classes/WikiGetDataForPr
 $app->registerClass('WikiDataGetter',$dir.'classes/WikiDataGetter.class.php');
 $app->registerClass('WikiDataGetterForSpecialPromote',$dir.'classes/WikiDataGetterForSpecialPromote.class.php');
 $app->registerClass('WikiDataGetterForVisualization',$dir.'classes/WikiDataGetterForVisualization.class.php');
+$app->registerClass('WikiListConditioner', $dir.'classes/WikiListConditioner.class.php');
+$app->registerClass('WikiListConditionerForVertical',$dir.'classes/WikiListConditionerForVertical.class.php');
+$app->registerClass('WikiListConditionerForCollection',$dir.'classes/WikiListConditionerForCollection.class.php');
 
 //classes
 $app->registerClass('WikiaHomePageController', $dir.'WikiaHomePageController.class.php');
