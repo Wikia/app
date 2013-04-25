@@ -23,8 +23,6 @@ class AutoHubsPagesArticle extends Article {
 		$vars = AutoHubsPagesHelper::getHubsFeedsVariable( $tagname );
 
 		$isManager = $wgUser->isAllowed( 'corporatepagemanager' );
-		$datafeeds = new WikiaStatsAutoHubsConsumerDB(DB_SLAVE);
-
 		$tag_id = AutoHubsPagesHelper::getHubIdFromTitle($wgTitle);
 
 		$tag_name = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
@@ -34,33 +32,7 @@ class AutoHubsPagesArticle extends Article {
 		$pars['var_feeds'] = $vars[$tag_name];
 		$pars['is_manager'] = $isManager;
 		$pars['tag_id'] = $tag_id;
-
-		if ($isManager) {
-			$temp = $datafeeds->getTopWikis($tag_id, $lang, 30, true, true);
-			$pars['topWikis1'] = $temp['value'];
-		} else {
-			$temp = $datafeeds->getTopWikis($tag_id, $lang, 10, false);
-			$pars['topWikis1'] = $temp['value'];
-		}
-
-		$temp = $datafeeds->getTopUsers($tag_id, $lang,5);
-		$pars['topEditors'] = $temp['value'];
-
-		if ($isManager) {
-			$temp = $datafeeds->getTopBlogs($tag_id, $lang, 9, 3, true, true);
-		} else {
-			$temp = $datafeeds->getTopBlogs($tag_id, $lang, 3, 1);
-		}
-
-		$pars['topBlogs'] = $temp['value'];
-
-		if ($isManager) {
-			$temp = $datafeeds->getTopArticles($tag_id, $lang, 15, 3, true, true, true);
-		} else {
-			$temp = $datafeeds->getTopArticles($tag_id, $lang, 5, 1, false, false, true);
-		}
-
-		$pars['hotSpots'] = $temp['value'];
+		$pars['topEditors'] = $pars['topWikis1'] = $pars['topBlogs'] = $pars['hotSpots'] = array();
 		$pars['slider'] = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', true );
 
 		$pars['wikia_whats_up'] = wfMsgExt("corporatepage-wikia-whats-up",array("parsemag"));
@@ -84,7 +56,6 @@ class AutoHubsPagesArticle extends Article {
 			$hubName = $wgTitle->getText();
 
 			$wgOut->addHTML(F::app()->renderView('BlogsInHubs', 'HotNews', array('hubName' => $hubName)));
-			$wgOut->addHTML(F::app()->renderView('CorporateSite', 'TopHubWikis'));
 			parent::view();
 		} else {
 			$wgOut->addHTML( $oTmpl->render("article") );
