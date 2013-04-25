@@ -59,16 +59,16 @@ class AnalyticsProviderIVWTest extends WikiaBaseTest {
 
 			array('http://de.wikia.com/index.php?search=elder&fulltext=Search', 'RC_WIKIA_SEARCH'),
 
-			//array('http://de.elderscrolls.wikia.com/wiki/Elder_Scrolls_Wiki', 'RC_WIKIA_UGCGAMES'),
-			//array('http://de.swtor.wikia.com/wiki/Star_Wars_-_The_Old_Republic_Wiki', 'RC_WIKIA_UGCGAMES'),
+			array('http://de.elderscrolls.wikia.com/wiki/Elder_Scrolls_Wiki', 'RC_WIKIA_UGCGAMES'),
+			array('http://de.swtor.wikia.com/wiki/Star_Wars_-_The_Old_Republic_Wiki', 'RC_WIKIA_UGCGAMES'),
 
 			array('http://de.community.wikia.com/wiki/Forum:%C3%9Cbersicht', 'RC_WIKIA_PIN'),
 
-			//array('http://shaun.wikia.com/wiki/Shaun', 'RC_WIKIA_UGCENT'),
-			//array('http://de.marvel-filme.wikia.com/wiki/Marvel-Filme', 'RC_WIKIA_UGCENT'),
+			array('http://shaun.wikia.com/wiki/Shaun', 'RC_WIKIA_UGCENT'),
+			array('http://de.marvel-filme.wikia.com/wiki/Marvel-Filme', 'RC_WIKIA_UGCENT'),
 
-			//array('http://de.gta.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCGAMES'),
-			//array('http://de.green.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCLIFESTYLE'),
+			array('http://de.gta.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCGAMES'),
+			array('http://de.green.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCLIFESTYLE'),
 			array('http://de.naruto.wikia.com/wiki/Narutopedia', 'RC_WIKIA_UGCANIME'),
 
 			array('http://de.wikia.com/Entertainment/Anime', 'RC_WIKIA_START'),
