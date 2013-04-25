@@ -107,7 +107,11 @@ class LFEditCLI extends Maintenance {
 					$additionalAlbums = explode(",", $albums);
 				}
 				
-				if ( ! in_array( $old_album, $additionalAlbums ) ) {
+				if ( in_array( $album, $additionalAlbums ) ) {
+					 unset($additionalAlbums[array_search($album, $additionalAlbums)]);
+				}
+				
+				if ( !in_array( $old_album, $additionalAlbums ) ) {
 					$additionalAlbums[] = $old_album;
 					$text = preg_replace( $reTag, "additionalAlbums=\"" . implode( ",", $additionalAlbums ) . "\"", $text, 1 );	
 				}
