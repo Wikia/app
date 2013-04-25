@@ -7,6 +7,7 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/mixins/transform";
+@import "../../../../skins/oasis/css/mixins/border-radius";
 
 @mixin interstitial-toggle-animation {
 	-webkit-animation: InterstitialToggle 900ms;
@@ -219,12 +220,13 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					font-size: 16px;
 					font-weight: bold;
 					margin: 0 auto;
-					padding: 9px 26px 15px 24px;
+					overflow: hidden;
+					padding: 9px 40px 15px 13px;
 					position: absolute;
 					.arrow {
 						background: url("/extensions/wikia/WikiaHomePage/images/community-sprite.png") no-repeat 0 -147px; /* $wgCdnStylePath */
 						height: 23px;
-						margin-right: 4px;
+						margin-right: 1px;
 						position: relative;
 						top: 1px;
 						width: 23px;
@@ -283,6 +285,40 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				h2:after {
 					background-color: $color-wikiahome-lifestyle;
 					right: 0;
+				}
+				.collections-button {
+					border: 0;
+					@include border-radius(0);
+					@include border-radius-ne(4px);
+					@include border-radius-se(4px);
+					height: 43px;
+					padding: 0;
+					right: 15px;
+					bottom: 16px;
+					position: absolute;
+					width: 28px;
+					.chevron {
+						border-width: 7px;
+						margin-top: 19px;
+					}
+				}
+				.collections-dropdown {
+					border: 1px solid $color-page-border;
+					border-top: none;
+					display: none;
+					font-weight: bold;
+					left: 15px;
+					position: absolute;
+					top: 193px;
+					text-align: left;
+					width: 129px;
+					z-index: 2;
+					&.show {
+						display: block;
+					}
+					li {
+						padding: 13px;
+					}
 				}
 			}
 			.stats {
