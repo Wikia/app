@@ -455,13 +455,24 @@ class HAWelcomeJob extends Job {
         $sPrefixedText = $this->title->getPrefixedText();
         // Article Comments and Message Wall hook up to this event.
         wfRunHooks( 'HAWelcomeGetPrefixText' , array( &$sPrefixedText, $this->title ) );
+        // Determine the key for the signature.
+        $sSignatureKey = in_array( 'staff', $this->oSender->getEffectiveGroups() )
+            ? 'staffsig-text' : 'signature';
+        // Determine the full signature.
+        $sFullSignature = wfMessage(
+            $sMessageKey,
+            $this->oSender->getName(),
+            Parser::cleanSigInSig( $this->oSender->getName()
+        ) )->inContentLanguage()->text();
+        // Append the timestamp to the signature.
+        $sFullSignature .= ' ~~~~~';
         // Put the contents of the welcome message together.
         $this->sMessage = wfMessage(
             $sMessageKey,
             array(
                 $sPrefixedText,
                 $this->oSender->getUserPage()->getTalkPage()->getPrefixedText(),
-                '~~~~~',
+                $sFullSignature
                 wfEscapeWikiText( $this->sRecipientName )
             )
         )->inContentLanguage()->plain();
