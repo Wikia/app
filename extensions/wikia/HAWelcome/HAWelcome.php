@@ -472,7 +472,7 @@ class HAWelcomeJob extends Job {
             array(
                 $sPrefixedText,
                 $this->oSender->getUserPage()->getTalkPage()->getPrefixedText(),
-                $sFullSignature
+                $sFullSignature,
                 wfEscapeWikiText( $this->sRecipientName )
             )
         )->inContentLanguage()->plain();
