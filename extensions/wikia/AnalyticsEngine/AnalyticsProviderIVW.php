@@ -60,7 +60,7 @@ class AnalyticsProviderIVW implements iAnalyticsProvider {
 
 		if (strpos(F::app()->wg->DartCustomKeyValues, 'anime') !== false) return 'RC_WIKIA_UGCANIME';
 
-		$cat_name = HubService::getCategoryInfoForCurrentPage();
+		$cat_name = HubService::getCategoryInfoForCurrentPage()->cat_name;
 		if ($cat_name == 'Entertainment') return 'RC_WIKIA_UGCENT';
 		if ($cat_name == 'Gaming') return 'RC_WIKIA_UGCGAMES';
 		if ($cat_name == 'Lifestyle') return 'RC_WIKIA_UGCLIFESTYLE';
