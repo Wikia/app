@@ -6,6 +6,8 @@ var WikiaHomePageRemix = function (params) {
 
 	this.wikiSetStack = [];
 	this.wikiSetStackIndex = 0;
+	
+	this.collectionDisplayed = false;
 };
 
 function WikiPreview(el) {
@@ -140,7 +142,8 @@ WikiPreview.prototype = {
 
 WikiaHomePageRemix.prototype = {
 	init: function () {
-		this.wikiSetStack = wgInitialWikiBatchesForVisualization;
+		this.wikiSetStack = window.wgInitialWikiBatchesForVisualization;
+		this.collectionsWikisStack = window.wgCollectionsBatches || [];
 
 		$('#WikiaArticle').on(
 			'mousedown',
@@ -246,7 +249,14 @@ WikiaHomePageRemix.prototype = {
 		}
 	},
 	updateVisualisation: function () {
-		if (this.wikiSetStack.length !== this.wikiSetStackIndex) {
+		if( this.collectionsWikisStack.length > 0 && !this.collectionDisplayed ) {
+			$().log('WikiaHomePageRemix showing collection... ');
+			// 0 index below will be later changed to collection id preferably :)
+			this.remix($('.slot-medium'), this.collectionsWikisStack[0].mediumslots);
+			this.remix($('.slot-small'), this.collectionsWikisStack[0].smallslots);
+			this.remix($('.slot-big'), this.collectionsWikisStack[0].bigslots);
+			this.collectionDisplayed = true;
+		} else if (this.wikiSetStack.length !== this.wikiSetStackIndex) {
 			$().log('WikiaHomePageRemix remixing (batch ' + this.wikiSetStackIndex + ')');
 			this.remix($('.slot-medium'), this.wikiSetStack[this.wikiSetStackIndex].mediumslots);
 			this.remix($('.slot-small'), this.wikiSetStack[this.wikiSetStackIndex].smallslots);
@@ -257,8 +267,7 @@ WikiaHomePageRemix.prototype = {
 			this.wikiSetStackIndex++;
 			this.preload();
 			$().log('WikiaHomePageRemix data remixed');
-		}
-		else {
+		} else {
 			$().log('wikiSetStack is empty');
 			$('.remix').startThrobbing();
 		}
