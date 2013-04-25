@@ -101,10 +101,16 @@ class ApiService extends Service {
 	 */
 	public static function loginAsUser( $userName ) {
 		$app = F::app();
+
+		$options = array();
+
 		if ( $app->wg->User->isLoggedIn() ) {
 			$user = $app->wg->User;
 		} else {
 			$user = User::newFromName( $userName );
+			if ( !($user instanceof User) ) {
+				return $options;
+			}
 		}
 
 		$params = array(
