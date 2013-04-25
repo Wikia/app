@@ -147,7 +147,6 @@ class CityVisualization extends WikiaModel {
 
 		$verticalMap = $this->getVerticalMap();
 		$reverseMap = array_flip($verticalMap);
-		$helper = $this->getWikiaHomePageHelper();
 		$memKey = $this->getVisualizationBatchesCacheKey($corpWikiId, $contLang);
 		$batches = (!$dontReadMemc) ? $this->wg->Memc->get($memKey) : null;
 
@@ -188,7 +187,7 @@ class CityVisualization extends WikiaModel {
 				foreach ($wikis as $verticalName => &$wikilist) {
 					$verticalId = $reverseMap[$verticalName];
 
-					$numberOfSlotsForVertical = $helper->getVarFromWikiFactory($corpWikiId, $this->verticalSlotsMap[$verticalId]);
+					$numberOfSlotsForVertical = $this->getSlotsNoPerVertical($corpWikiId, $verticalId);
 					$batchWikis = array_slice($wikilist, $offsets[$verticalName] * $numberOfSlotsForVertical, ($numberOfSlotsForVertical - $removePerVertical) );
 
 					$offsets[$verticalName]++;
@@ -210,6 +209,7 @@ class CityVisualization extends WikiaModel {
 
 		$this->batches = $batches;
 		$this->wf->ProfileOut(__METHOD__);
+		
 		return $batches;
 	}
 
