@@ -33,6 +33,11 @@ class CityVisualization extends WikiaModel {
 
 	protected $batches;
 
+	/**
+	 * @var WikiaHomePageHelper
+	 */
+	private $helper = null;
+
 	//todo: increase readability
 	//todo: decouple functions possibly extract classes
 	//todo: decrease number of parameters in all functions in this file
@@ -48,10 +53,7 @@ class CityVisualization extends WikiaModel {
 				$verticalMemKey = $this->getVisualizationVerticalWikisListDataCacheKey($verticalId, $corpWikiId, $contLang);
 
 				$wikis[$verticalTag] = (!$dontReadMemc) ? $this->wg->Memc->get($verticalMemKey) : null;
-
-				/* @var $helper WikiaHomePageHelper */
-				$helper = F::build('WikiaHomePageHelper');
-				$numberOfSlots = $helper->getVarFromWikiFactory($corpWikiId, $this->verticalSlotsMap[$verticalId]);
+				$numberOfSlots = $this->getSlotsNoPerVertical($corpWikiId, $verticalId);
 				
 				if (!is_array($wikis[$verticalTag])) {
 					$verticalWikis = $this->getWikiListForVertical($contLang, $verticalId);
@@ -84,7 +86,7 @@ class CityVisualization extends WikiaModel {
 
 		$memKey = $this->getVisualizationBatchesCacheKey($corpWikiId, $contLang);
 		$batches = $this->wg->Memc->get($memKey);
-		
+
 		if (!is_array($batches) || count($batches) < $numberOfBatches) {
 			Wikia::log(__METHOD__, ' not enough batches ', count($batches) . '/' . $numberOfBatches);
 			$this->regenerateBatches($corpWikiId, $contLang);
@@ -145,7 +147,7 @@ class CityVisualization extends WikiaModel {
 
 		$verticalMap = $this->getVerticalMap();
 		$reverseMap = array_flip($verticalMap);
-		$helper = F::build('WikiaHomePageHelper'); /* @var $helper WikiaHomePageHelper */
+		$helper = $this->getWikiaHomePageHelper();
 		$memKey = $this->getVisualizationBatchesCacheKey($corpWikiId, $contLang);
 		$batches = (!$dontReadMemc) ? $this->wg->Memc->get($memKey) : null;
 
@@ -968,5 +970,19 @@ class CityVisualization extends WikiaModel {
 	public function getVerticalMap() {
 		return $this->verticalMap;
 	}
+
+	public function getWikiaHomePageHelper() {
+		if( is_null($this->helper) ) {
+			$this->helper = new WikiaHomePageHelper();
+		}
+		
+		return $this->helper;
+	}
 	
+	public function getSlotsNoPerVertical($corpWikiId, $verticalId) {
+		$helper = $this->getWikiaHomePageHelper();
+		$numberOfSlots = $helper->getVarFromWikiFactory($corpWikiId, $this->verticalSlotsMap[$verticalId]);
+		
+		return $numberOfSlots;
+	}
 }
