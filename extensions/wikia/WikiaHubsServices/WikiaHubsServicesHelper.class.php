@@ -143,4 +143,43 @@ class WikiaHubsServicesHelper
 	protected static function getHubsV2Pages($wikiId) {
 		return WikiFactory::getVarValueByName('wgWikiaHubsV2Pages', $wikiId);
 	}
+
+	/**
+	 * get hubs v2 wikis
+	 * @return array $wikis
+	 */
+	public static function getHubsV2Wikis() {
+		$wikis = array();
+		$var = WikiFactory::getVarByName( 'wgEnableWikiaHubsV2Ext', F::app()->wg->CityId );
+		if ( !empty( $var ) ) {
+			$wikis = WikiFactory::getListOfWikisWithVar( $var->cv_id, 'bool', '=' , true, true );
+		}
+
+		return $wikis;
+	}
+
+	/**
+	 * add video to hubs v2 wikis
+	 * @param MarketingToolboxModuleService $module
+	 * @param array $data
+	 * @return array|false $result
+	 */
+	public static function addVideoToHubsV2Wikis( $module, $data ) {
+		$result = false;
+
+		// get list of videos
+		$videoData = $module->getVideoData( $data );
+
+		// add video to hub v2 wikis
+		foreach( $videoData as $videoUrl ) {
+			if ( !empty($videoUrl) ) {
+				$hubsV2Wikis = self::getHubsV2Wikis();
+
+				$videoService = new VideoService();
+				$result = $videoService->addVideoAcrossWikis( $videoUrl, $hubsV2Wikis );
+			}
+		}
+
+		return $result;
+	}
 }

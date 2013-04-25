@@ -68,4 +68,37 @@ class VideoService extends WikiaModel {
 		return array( $title, $title->getArticleID(), null );
 	}
 
+	/**
+	 * add video to other wikis
+	 * @param string $videoUrl
+	 * @param array $wikis
+	 * @return array|false $result
+	 */
+	public function addVideoAcrossWikis( $videoUrl, $wikis ) {
+		wfProfileIn( __METHOD__ );
+
+		$params = array(
+			'controller' => 'VideosController',
+			'method' => 'addVideo',
+			'url'      => $videoUrl,
+		);
+
+		$result = false;
+		foreach( $wikis as $wikiId => $wiki ) {
+			$result[$wikiId] = true;
+			if ( !empty( $wiki['d'] ) ) {
+				$userName = $this->wg->User->getName();
+				$response = ApiService::foreignCall( $wiki['d'], $params, ApiService::WIKIA, $userName );
+				if ( !empty( $response['error'] ) ) {
+					Wikia::log( __METHOD__, false, "Error: Cannot add video to wiki $wikiId ($response[error])", true, true);
+					$result[$wikiId] = false;
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $result;
+	}
+
 }

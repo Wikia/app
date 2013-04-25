@@ -168,6 +168,11 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 				$this->putFlashMessage($this->wf->msg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
 
+				// send request to add popular/featured videos
+				if ( $module->isVideoModule() ) {
+					$response = WikiaHubsServicesHelper::addVideoToHubsV2Wikis( $module, $selectedModuleData['values'] );
+				}
+
 				$nextUrl = $this->getNextModuleUrl();
 				$this->response->redirect($nextUrl);
 			} else {
