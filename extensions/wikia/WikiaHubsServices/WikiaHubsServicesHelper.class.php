@@ -160,16 +160,24 @@ class WikiaHubsServicesHelper
 
 	/**
 	 * add video to hubs v2 wikis
-	 * @param type $videoUrl
-	 * @return type
+	 * @param MarketingToolboxModuleService $module
+	 * @param array $data
+	 * @return array|false $result
 	 */
-	public static function addVideoToHubsV2Wikis( $videoUrl ) {
+	public static function addVideoToHubsV2Wikis( $module, $data ) {
 		$result = false;
-		if ( !empty($videoUrl) ) {
-			$hubsV2Wikis = self::getHubsV2Wikis();
 
-			$videoService = new VideoService();
-			$result = $videoService->addVideoAcrossWikis( $videoUrl, $hubsV2Wikis );
+		// get list of videos
+		$videoData = $module->getVideoData( $data );
+
+		// add video to hub v2 wikis
+		foreach( $videoData as $videoUrl ) {
+			if ( !empty($videoUrl) ) {
+				$hubsV2Wikis = self::getHubsV2Wikis();
+
+				$videoService = new VideoService();
+				$result = $videoService->addVideoAcrossWikis( $videoUrl, $hubsV2Wikis );
+			}
 		}
 
 		return $result;

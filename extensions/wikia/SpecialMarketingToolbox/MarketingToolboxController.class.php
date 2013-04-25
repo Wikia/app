@@ -170,14 +170,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 				// send request to add popular/featured videos
 				if ( $module->isVideoModule() ) {
-					// get list of videos
-					$structureData = $module->getStructuredData( $selectedModuleData['values'] );
-					$videoData = $module->getVideoDataFromStructureData( $structureData );
-
-					// add video to hub v2 wikis
-					foreach( $videoData as $videoUrl ) {
-						$response = WikiaHubsServicesHelper::addVideoToHubsV2Wikis( $videoUrl );
-					}
+					$response = WikiaHubsServicesHelper::addVideoToHubsV2Wikis( $module, $selectedModuleData['values'] );
 				}
 
 				$nextUrl = $this->getNextModuleUrl();

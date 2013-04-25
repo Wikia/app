@@ -135,13 +135,15 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 	}
 
 	/**
-	 * get list of video url from structure data
+	 * get list of video url
 	 * @param array $data
 	 * @return array $videoData
 	 */
-	public function getVideoDataFromStructureData( $data ) {
+	public function getVideoData( $data ) {
 		$videoData = array();
-		foreach( $data['videos'] as $video ) {
+
+		$structureData = $this->getStructuredData( $data );
+		foreach( $structureData['videos'] as $video ) {
 			$videoData[] = $video['fileUrl'];
 		}
 

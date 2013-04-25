@@ -188,12 +188,13 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 	}
 
 	/**
-	 * get list of video url from structure data
+	 * get list of video url
 	 * @param array $data
 	 * @return array $videoData
 	 */
-	public function getVideoDataFromStructureData( $data ) {
-		$videoData[] = $data['video']['fileUrl'];
+	public function getVideoData( $data ) {
+		$structureData = $this->getStructuredData( $data );
+		$videoData[] = $structureData['video']['fileUrl'];
 
 		return $videoData;
 	}
