@@ -24,45 +24,11 @@ $wgExtensionCredits['other'][] = array(
     'description' => 'adding meta-description tag containing snippet of the Article, provided by the ArticleService'
 );
 
-$wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
+$dir = dirname(__FILE__) . '/';
+$app = F::app();
 
-/**
- * @param OutputPage $out
- * @param string $text
- * @return bool
- */
-function wfArticleMetaDescription(&$out, &$text) {
-	global $wgTitle;
-	wfProfileIn( __METHOD__ );
+$app->registerClass('ArticleMetaDescriptionHelpers', $dir.'ArticleMetaDescriptionHelpers.class.php');
+$app->registerClass('ArticleMetaDescriptionHooks', $dir.'ArticleMetaDescriptionHooks.class.php');
 
-	$sMessage = null;
-	$sMainPage = wfMsgForContent('Mainpage');
-	if(strpos($sMainPage, ':') !== false) {
-	    $sTitle = $wgTitle->getFullText();
-	}
-	else {
-	    $sTitle = $wgTitle->getText();
-	}
-
-	if(strcmp($sTitle, $sMainPage) == 0) {
-		// we're on Main Page, check MediaWiki:Description message
-		$sMessage = wfMsg("Description");
-	}
-
-	if(($sMessage == null) || wfEmptyMsg("Description", $sMessage)) {
-		$DESC_LENGTH = 100;
-		$articleId = $wgTitle->getArticleID();
-		$articleService = new ArticleService( $articleId );
-		$description = $articleService->getTextSnippet( $DESC_LENGTH );
-	} else {
-		// MediaWiki:Description message found, use it
-		$description = $sMessage;
-	}
-
-	if(!empty($description)) {
-		$out->addMeta('description', htmlspecialchars($description));
-	}
-
-	wfProfileOut( __METHOD__ );
-	return true;
-}
+//$wgHooks['OutputPageBeforeHTML'][] = 'ArticleMetaDescription::onOutputPageBeforeHTML';
+$app->registerHook('OutputPageBeforeHTML', 'ArticleMetaDescriptionHooks', 'onOutputPageBeforeHTML');
