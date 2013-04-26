@@ -188,24 +188,7 @@ class InterWiki extends AbstractSelect
 	protected function getFormulatedQuery() {
 		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
 	}
-	
-	/**
-	 * Returns the string used to build out a boost query with Solarium
-	 * @return string
-	 */
-	protected function getBoostQueryString()
-	{
-		$queryNoQuotes = preg_replace( '/ wiki\b/i', '', $this->config->getQueryNoQuotes( true ) );
-		$boostQueries = array(
-				Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'valueQuote'=>'\"' ) ),
-				Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'valueQuote'=>'\"' ) ),
-				Utilities::valueForField( 'wikititle', $queryNoQuotes, array( 'boost' => 15, 'valueQuote' => '\"' ) ),
-				Utilities::valueForField( 'host', 'answers', array( 'boost' => 10, 'negate' => true ) ),
-				Utilities::valueForField( 'host', 'respuestas', array( 'boost' => 10, 'negate' => true ) )
-		);
-		return implode( ' ', $boostQueries );
-	}
-	
+
 	/**
 	 * Return a string of query fields based on configuration
 	 * @todo since this gets repeated across OnWiki as well, this is an another indicator that we need additional class layers
