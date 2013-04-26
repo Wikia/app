@@ -24,7 +24,7 @@ class CorporateSiteController extends WikiaController {
 
 		if (BodyController::isHubPage()) {
 			$this->slider_class = "small";
-			$tag_name = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
+			$tag_name = false;
 			// Beware: the true/false at the end is important, it actually changes the return format slightly
 			$this->slider = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', false );
 

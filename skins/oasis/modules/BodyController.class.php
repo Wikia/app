@@ -45,8 +45,8 @@ class BodyController extends WikiaController {
 	}
 
 	public static function isHubPage() {
-		global $wgArticle;
-		return (get_class ($wgArticle) == "AutoHubsPagesArticle");
+		// AutoHubsPagesArticle class is not used anymore - so this method always return false;
+		return false;
 	}
 
 	/**
