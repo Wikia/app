@@ -418,6 +418,10 @@ class CityVisualization extends WikiaModel {
 		return $this->wf->memcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
 	}
 
+	public function getCollectionCacheKey($collectionId) {
+		return $this->wf->SharedMemcKey('single_collection_wikis_data', self::CITY_VISUALIZATION_MEMC_VERSION, $collectionId, __METHOD__);
+	}
+
 	/**
 	 * Get wiki data for Special:Promote
 	 * @param integer $wikiId
@@ -952,13 +956,20 @@ class CityVisualization extends WikiaModel {
 	 * @param String $lang language code
 	 */
 	public function getCollectionsWikisData(Array $collectionsList) {
-		$helper = $this->getWikiaHomePageHelper();
 		$collectionsWikisData = [];
-		foreach($collectionsList as $collection => $collectionsWikis) {
-			$wikiListConditioner = new WikiListConditionerForCollection($collectionsWikis);
-			$collectionsWikisData[$collection] = $this->getWikisList($wikiListConditioner);
-		}
+		$helper = $this->getWikiaHomePageHelper();
 		
+		foreach($collectionsList as $collection => $collectionsWikis) {
+			$collectionsWikisData[$collection] = WikiaDataAccess::cache(
+				$this->getCollectionCacheKey($collection),
+				6 * 60 * 60,
+				function () use ($collection, $collectionsWikis) {
+					$wikiListConditioner = new WikiListConditionerForCollection($collectionsWikis);
+					return $this->getWikisList($wikiListConditioner); 
+				}
+			);
+		}
+
 		$collectionsWikisData = $helper->prepareBatchesForVisualization($collectionsWikisData);
 		
 		return $collectionsWikisData;
