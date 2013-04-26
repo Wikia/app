@@ -19,7 +19,7 @@ class WikiaCollectionsModel extends WikiaModel {
 
 		$out = array();
 		while( $row = $sdb->fetchRow($results) ) {
-			$out[$row['id']] = $row;
+			$out[] = $row;
 		}
 
 		return $out;
