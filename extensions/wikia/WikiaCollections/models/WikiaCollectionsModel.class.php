@@ -1,5 +1,5 @@
-<?
-class CollectionsModel extends WikiaModel {
+<?php
+class WikiaCollectionsModel extends WikiaModel {
 	const TABLE_NAME = 'wikia_homepage_collections';
 	const COLLECTIONS_COUNT = 3;
 

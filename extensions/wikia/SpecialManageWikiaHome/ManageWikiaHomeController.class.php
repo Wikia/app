@@ -67,7 +67,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$newWikisAmount = $this->request->getVal('new-wikis-amount', $this->helper->getNumberOfNewWikiSlots($this->visualizationLang));
 
 		$this->form = $this->prepareCollectionsForm();
-		$collectionsModel = new CollectionsModel();
+		$collectionsModel = new WikiaCollectionsModel();
 		$collectionValues = $this->prepareCollectionToShow($collectionsModel->getList($this->visualizationLang));
 
 		if( $this->request->wasPosted() ) {

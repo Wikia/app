@@ -25,9 +25,6 @@ $wgExtensionCredits['specialpage'][] = array(
 //classes
 $app->registerController('ManageWikiaHomeController', $dir.'ManageWikiaHomeController.class.php');
 
-//models
-$app->registerClass('CollectionsModel', $dir . 'models/CollectionsModel.class.php');
-
 //special page
 $app->registerSpecialPage('ManageWikiaHome', 'ManageWikiaHomeController', 'wikia');
 
