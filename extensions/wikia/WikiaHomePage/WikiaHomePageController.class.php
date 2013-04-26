@@ -558,6 +558,10 @@ class WikiaHomePageController extends WikiaController {
 	 * draw visualization
 	 */
 	public function visualization() {
+		$collections = new WikiaCollectionsModel();
+		$collectionsList = $collections->getList($this->wg->ContLang->getCode());
+		$this->response->setVal('collectionsList', $collectionsList);
+		
 		$this->response->setVal(
 			'seoSample',
 			$this->getSeoList()

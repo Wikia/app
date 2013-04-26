@@ -57,7 +57,7 @@
 		</h2>
 
 		<form method="post" class="WikiaForm" id="collectionsSetupForm">
-			<? for($i=0; $i < CollectionsModel::COLLECTIONS_COUNT; $i++): ?>
+			<? for($i=0; $i < WikiaCollectionsModel::COLLECTIONS_COUNT; $i++): ?>
 				<div class="collection-module">
 					<?=$form->renderField('enabled', $i)?>
 					<?=$form->renderField('name', $i)?>

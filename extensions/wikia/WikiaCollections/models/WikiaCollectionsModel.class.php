@@ -1,9 +1,14 @@
-<?
-class CollectionsModel extends WikiaModel {
+<?php
+class WikiaCollectionsModel extends WikiaModel {
 	const TABLE_NAME = 'wikia_homepage_collections';
 	const COLLECTIONS_COUNT = 3;
+	const COLLECTIONS_MEMC_VERSION = '0.1';
 
-	public function getList($langCode) {
+	public function getCollectionsListCacheKey($langCode) {
+		return $this->wf->SharedMemcKey('collections_list', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
+	}
+	
+	private function getListFromDb($langCode) {
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$fields = ['id', 'sort', 'name', 'sponsor_hero_image', 'sponsor_image', 'sponsor_url', 'enabled'];
@@ -13,11 +18,21 @@ class CollectionsModel extends WikiaModel {
 		$results = $sdb->select(self::TABLE_NAME, $fields, $conds, __METHOD__, $options);
 
 		$out = array();
-		while ($row = $sdb->fetchRow($results)) {
+		while( $row = $sdb->fetchRow($results) ) {
 			$out[] = $row;
 		}
 
 		return $out;
+	}
+	
+	public function getList($langCode) {
+		return WikiaDataAccess::cache(
+			$this->getCollectionsListCacheKey($langCode),
+			6 * 60 * 60,
+			function() use ($langCode) {
+				return $this->getListFromDb($langCode);
+			}
+		);
 	}
 
 	public function saveAll($langCode, $collections) {
