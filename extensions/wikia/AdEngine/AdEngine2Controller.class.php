@@ -55,6 +55,9 @@ class AdEngine2Controller extends WikiaController {
 				$runAds = in_array($namespace, $wg->ContentNamespaces)
 					|| isset($wg->ExtraNamespaces[$namespace])
 
+				// Main pages (if outside content and extra namespaces):
+					|| WikiaPageType::isMainPage()
+
 				// Blogs:
 					|| BodyController::isBlogListing()
 					|| BodyController::isBlogPost()
