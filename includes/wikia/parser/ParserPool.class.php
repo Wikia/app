@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * ParserPool maintains a pool of Parser instances that may be helpful
+ * when you would normally use $wgParser, but you don't want to pollute
+ * a global state or $wgParser may be in the middle of parsing.
+ *
+ * Use parse() if you don't need to configure Parser instance too much.
+ *
+ * Use get() and then release() if you have to book the Parser instance
+ * for longer time.
+ *
+ * @author Władysław Bodzek <wladek@wikia-inc.com>
+ */
 class ParserPool {
 
 	protected static $origin = null;
@@ -32,6 +44,9 @@ class ParserPool {
 	/**
 	 * Get a Parser instance from the pool
 	 *
+	 * Don't forget to return the instance back to the pool using release()
+	 * after you're done with your job.
+	 *
 	 * @return Parser
 	 */
 	public static function get() {
@@ -45,7 +60,8 @@ class ParserPool {
 	}
 
 	/**
-	 * Return a Parser instane to the pool
+	 * Return a Parser instance to the pool
+	 *
 	 * @param Parser $parser
 	 */
 	public static function release( Parser $parser ) {
@@ -61,7 +77,7 @@ class ParserPool {
 	 */
 	public static function parse( $text, Title $title, ParserOptions $options, $linestart = true, $clearState = true, $revid = null ) {
 		$args = func_get_args();
-		if ( isset( $args[4] ) ) { // always set $clearState to true
+		if ( count( $args ) >= 5 ) { // always set $clearState to true
 			$args[4] = true;
 		}
 
