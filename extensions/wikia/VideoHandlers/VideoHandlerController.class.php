@@ -3,10 +3,9 @@
 class VideoHandlerController extends WikiaController {
 
 	public function getEmbedCode() {
-		$articleId = $this->getVal('articleId', '');
 		$title = $this->getVal('fileTitle', '');
 		$width = $this->getVal('width', '');
-		$autoplay = $this->getVal('autoplay', false);
+		$autoplay = $this->getVal('autoplay', 0);
 
 		$error = '';
 		if (empty($title)) {
@@ -29,7 +28,6 @@ class VideoHandlerController extends WikiaController {
 					$this->setVal('videoId', $videoId);
 					$this->setVal('asset', $assetUrl);
 					$this->setVal('embedCode', $embedCode);
-					//@todo support json embed code
 				}
 			}
 		}

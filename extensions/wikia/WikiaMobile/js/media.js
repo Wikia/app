@@ -187,7 +187,6 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 						'VideoHandler',
 						'getEmbedCode',
 						{
-							articleId: wgArticleId,
 							fileTitle: imgTitle,
 							width: window.innerWidth - 100,
 							autoplay: 1

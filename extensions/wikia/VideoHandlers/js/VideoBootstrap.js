@@ -1,17 +1,19 @@
-define('wikia.videoBootstrap', ['wikia.loader'], function videoBootstrap(loader) {
+define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function videoBootstrap(loader, nirvana) {
 
-	return function(element, json) {
+	// "vb" = video bootstrap
+	function vb (element, json) {
+		this.element = element;
+
 		var init = json.init,
 			html = json.html,
 			scripts = json.scripts,
 			jsParams = json.jsParams;
 
-		// insert html
-		if(html) {
+		// insert html if it hasn't been inserted already
+		if(html && !json.htmlPreloaded) {
 			element.innerHTML = html;
 		}
 
-		// load the script (Load all JS files with jQuery for now, while we sort out loader())
 		if(scripts) {
 			var i,
 				args = [];
@@ -35,4 +37,27 @@ define('wikia.videoBootstrap', ['wikia.loader'], function videoBootstrap(loader)
 			});
 		}
 	}
+
+	vb.prototype = {
+		/**
+		 * This is a full reload of the video player. Use this when you
+		 * need to reset the player with altered settings (such as autoplay).
+		 */
+		reload: function(title, width, autoplay) {
+			var element = this.element;
+			nirvana.getJson(
+				'VideoHandler',
+				'getEmbedCode',
+				{
+					fileTitle: title,
+					width: width,
+					autoplay: autoplay ? 1 : 0 // backend needs an integer
+				}
+			).done(function(data) {
+				vb(element, data.embedCode);
+			});
+		}
+	}
+
+	return vb;
 });
