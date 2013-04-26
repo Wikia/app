@@ -151,17 +151,37 @@ WikiaHomePageRemix.prototype = {
 			$.proxy(this.trackClick, this)
 		);
 
-		$(".remix a").click($.proxy(
+		$(".remix-button").click($.proxy(
 			function (event) {
 				event.preventDefault();
 				this.updateVisualisation();
-			}, this));
+			}, this)
+		);
+
+		// show / hide collections dropdown
+		var $collectionsDropdown = $(".collections-dropdown");
+		$('body').on('click', '.collections-button',
+			function (event) {
+				event.preventDefault();
+				$collectionsDropdown.toggleClass("show");
+			}
+		).on('click', $.proxy(function(event) {
+				var $target = $(event.target);
+				if(this.isTargetOutsideRemixChevron($target)) {
+					$collectionsDropdown.removeClass('show');
+				}
+			}, this)
+		);
 
 		$('.wikia-slot a').removeAttr('title');
 
 		this.updateVisualisation();
 		$().log('WikiaHomePageRemix initialised');
 	},
+	isTargetOutsideRemixChevron: function ($target) {
+		return !($target.is('.collections-button') || $target.is('.collections-button .chevron'));
+	},
+
 	track: function(action, label, params, event) {
 		Wikia.Tracker.track({
 			action: action,
