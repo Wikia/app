@@ -431,46 +431,9 @@ class PartnerFeed extends SpecialPage {
  * Returns data for feed creation. If no cache - creates one.
  */
 	private function PrepareHotContentFeed ( $hubId, $forceRefresh = false ){
-
-		global $wgMemc, $wgHTTPTimeout;
-
-		// local settings
-		$lang = "en";
-		$thumbSize = 288;
-		$thumbHeight = 124;
-		$resultsNumber = 10;
-		$stopCache = false; // switch to false after tests
-
-		if ( $forceRefresh ) $this->clearCache( $hubId );
-		$memcFeedArray = $this->getFromCache( $hubId );
-		if ( $memcFeedArray == null  || !empty($stopCache) ){
-
-			$datafeeds = new WikiaStatsAutoHubsConsumerDB( DB_SLAVE );
-			$out = $datafeeds->getTopArticles($hubId, $lang, $resultsNumber);
-			$feedArray = array();
-			foreach( $out['value'] as $key => $val ){
-				$httpResultArr = $this->getDataFromApi(
-					$val['wikiurl'].'/api.php?action=imagecrop&imgId='.$val['page_id'].'&imgSize='.(integer)$thumbSize.'&imgHeight='.(integer)$thumbHeight.'&format=json'
-				);
-
-				$feedArray[] = array(
-					'title' => $val['page_name'],
-					'description' => $val['all_count'],
-					'url' => $val['page_url'],
-					'date' => time(),
-					'author' => 'Wikia',
-					'otherTags' => array(
-						'image' => $httpResultArr,
-						'fromwikia' => $val['wikiname']
-					)
-				);
-			}
-			$this->saveToCache( $hubId, $feedArray );
-
-		} else {
-			$feedArray = $memcFeedArray;
-		}
-		return $feedArray;
+		# this method used the WikiaStatsAutoHubsConsumer class as data feed. 
+		# Class WikiaStatsAutoHubsConsumer was removed, so this method should be reimplemented
+		return array();
 	}
 
 /**

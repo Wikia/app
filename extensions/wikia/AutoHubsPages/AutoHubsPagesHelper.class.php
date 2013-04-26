@@ -130,39 +130,21 @@ class AutoHubsPagesHelper{
 		$city_id = (int) $wgRequest->getVal('city_id', 0);
 		$page_id = (int) $wgRequest->getVal('page_id', 0);
 		$dir = $wgRequest->getVal('dir', 'add');
-		$ws = new WikiaStatsAutoHubsConsumerDB(DB_MASTER);
 		$result = array();
 		if ($dir == 'add') {
 			if ( $wgRequest->getVal('type') == 'article') {
-				if ($ws->addExludeArticle($tag_id, $city_id, $page_id, $wgLang->getCode())) {
-					$result['response'] = 'ok';
-				}
+				$result['response'] = 'ok';
 			}
 
 			if ( $wgRequest->getVal('type') == 'blog') {
-				if ($ws->addExludeBlog($tag_id, $city_id, $page_id, $wgLang->getCode())) {
-					$result['response'] = 'ok';
-				}
+				$result['response'] = 'ok';
 			}
 
 			if ( $wgRequest->getVal('type') == 'city') {
-				if ($ws->addExludeWiki($tag_id, $city_id, $wgLang->getCode())) {
-					$result['response'] = 'ok';
-				}
+				$result['response'] = 'ok';
 			}
 		} else {
 			$result['response'] = 'ok';
-			if ( $wgRequest->getVal('type') == 'article') {
-				$ws->removeExludeArticle($tag_id, $city_id, $page_id, $wgLang->getCode());
-			}
-
-			if ( $wgRequest->getVal('type') == 'blog') {
-				$ws->removeExludeBlog($tag_id, $city_id, $page_id, $wgLang->getCode());
-			}
-
-			if ( $wgRequest->getVal('type') == 'city') {
-				$ws->removeExludeWiki($tag_id, $city_id, $wgLang->getCode());
-			}
 		}
 
 		$result['response'] = 'ishide';
