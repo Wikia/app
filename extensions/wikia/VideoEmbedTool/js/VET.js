@@ -317,13 +317,13 @@
 		// wlee: responseText could include <script>. Use jQuery to parse
 		// and execute this script
 		$('#VideoEmbedDetails').html(responseText);
-		
+
 		var element = $('<div></div>').appendTo('#VideoEmbedThumb');
 
 		require(['wikia.videoBootstrap'], function (videoBootstrap) {
 			videoBootstrap(element[0], window.VETPlayerParams);
 		});
-		
+
 		VET_updateHeader();
 
 
@@ -427,11 +427,7 @@
 			params.push('caption=' + encodeURIComponent( $('#VideoEmbedCaption').val() ) );
 		}
 
-		/* Allow extensions to add extra params to ajax call
-		 * So far only used by article placeholders
-		 * Making this event driven is tricky because there can be more than 'add video' element on a page.
-		 *   ex: MiniEditor and Article Placeholder
-		 */
+		// Allow extensions to add extra params to ajax call
 		params = params.concat(VET_options.insertFinalVideoParams || []);
 
 		var callback = function(o, status) {
@@ -890,11 +886,11 @@
 				videoWrapper = this.cachedSelectors.videoWrapper;
 
 			var embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
-			
+
 			require(['wikia.videoBootstrap'], function (videoBootstrap) {
 				videoBootstrap(embedWrapper[0], data.videoEmbedCode);
 			});
-			
+
 			// expand preview is hidden
 			if (!previewWrapper.is(':visible')) {
 				previewWrapper.stop().slideDown('slow');
