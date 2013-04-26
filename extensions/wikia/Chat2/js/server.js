@@ -521,7 +521,7 @@ function broadcastDisconnectionInfo(client, socket){
 
 	broadcastUserListToMediaWiki(client, true);
 
-	var PartEvent = new models.PartEvent({
+	var partEvent = new models.PartEvent({
 		name: client.myUser.get('name')
 	});
 	broadcastToRoom(client, socket, {
