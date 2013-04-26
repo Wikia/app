@@ -876,8 +876,6 @@
 				nextClass: "scrollright",
 				prevClass: "scrollleft",
 				trackProgress: function(indexStart, indexEnd, totalItems) {
-					var direction;
-
 					// trackProgress gets called on init, we don't want to count that.
 					if (previousIndexStart !== undefined) {
 						VET_tracking({

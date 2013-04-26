@@ -114,7 +114,7 @@
 			states.left = left;
 
 			if(typeof options.beforeMove == 'function') {
-				options.beforeMove(left);
+				options.beforeMove();
 			}
 
 			dom.carousel.animate({
