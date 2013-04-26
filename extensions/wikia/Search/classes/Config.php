@@ -59,7 +59,7 @@ class Config implements ArrayAccess
 			'cityId'		=>	0,
 			'rank'			=>	'default',
 			'start'			=>	0,
-			'minimumMatch'	=> '80%',
+			'minimumMatch'	=> '66%',
 			);
 	
 	/**
@@ -92,12 +92,11 @@ class Config implements ArrayAccess
 	 * @var array
 	 */
 	private $queryFieldsToBoosts = array(
-			'title'             => 100,
-			'html'              => 5,
-			'redirect_titles'   => 50,
-			'categories'        => 25,
-			'nolang_txt'        => 10,
-			'backlinks_txt'     => 25,
+			'title'             => 5,
+			'html'              => 1.5,
+			'redirect_titles'   => 4,
+			'categories'        => 1,
+			'nolang_txt'        => 7
 			);
 	
 
@@ -340,6 +339,16 @@ class Config implements ArrayAccess
 	public function hasWikiMatch() {
 		return isset( $this->params['wikiMatch'] ) && !empty( $this->params['wikiMatch'] );
 	}
+
+        
+        /**
+	 * Determines whether a category match has been set
+	 * @return boolean
+         * New - Aniuska 22/04/2013
+	 */
+	public function hasCategoryMatch() {
+		return isset( $this->params['categoryMatch'] ) && !empty( $this->params['categoryMatch'] );
+	}
 	
 	/**
 	 * Overloading __set to type hint
@@ -348,6 +357,17 @@ class Config implements ArrayAccess
 	 */
 	public function setArticleMatch( Match\Article $articleMatch ) {
 		$this->params['articleMatch'] = $articleMatch;
+		return $this;
+	}
+        
+        /**
+	 * Overloading __set to type hint
+	 * @param  \Wikia\Search\Match\Category $articleMatch
+	 * @return \Wikia\Search\Config provides fluent interface
+         * New Aniuska 22/04/2013
+	 */
+	public function setCategoryMatch( Match\Category $categoryMatch ) {
+		$this->params['categoryMatch'] = $categoryMatch;
 		return $this;
 	}
 	
@@ -369,6 +389,15 @@ class Config implements ArrayAccess
 		return isset( $this['articleMatch'] ) ? $this['articleMatch'] : null;
 	}
 	
+        /**
+	 * For IDE type-hinting
+	 * @return Wikia\Search\Match\Category
+         * New Aniuska 22/04/2013
+	 */
+	public function getCategoryMatch() {
+		return isset( $this['categoryMatch'] ) ? $this['categoryMatch'] : null;
+	}
+        
 	/**
 	 * For IDE type-hinting
 	 * @return Wikia\Search\Match\Wiki
@@ -381,17 +410,26 @@ class Config implements ArrayAccess
 	/**
 	 * Agnostic match verifier
 	 * @return boolean
+         * Modifiy: Aniuska - 22/04/2013
 	 */
 	public function hasMatch() {
-		return $this->hasArticleMatch() || $this->hasWikiMatch();
+		return $this->hasArticleMatch() || $this->hasWikiMatch() || $this->hasCategoryMatch();
 	}
 	
 	/**
 	 * Agnostic match accessor
-	 * @return Wikia\Search\Match\Article|Wikia\Search\Match\Wiki|false
+	 * @return Wikia\Search\Match\Article|Wikia\Search\Match\Wiki|Wikia\Search\Match\Category|false
+         * * Modifiy: Aniuska - 22/04/2013
 	 */
 	public function getMatch() {
-		return $this->getArticleMatch() ?: $this->getWikiMatch();
+	
+            if ( hasArticleMatch() ) {
+                return $this->getArticleMatch();
+            } elseif ( hasWikiMatch() ) {
+                return $this->getWikiMatch();
+            } else {
+                return $this->getCategoryMatch();
+            }
 	}
 	
 	/**
