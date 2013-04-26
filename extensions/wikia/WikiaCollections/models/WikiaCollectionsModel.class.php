@@ -4,7 +4,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	const COLLECTIONS_COUNT = 3;
 	const COLLECTIONS_MEMC_VERSION = '0.1';
 
-	private function getCollectionsListCacheKey($langCode) {
+	public function getCollectionsListCacheKey($langCode) {
 		return $this->wf->SharedMemcKey('collections_list', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
 	}
 	

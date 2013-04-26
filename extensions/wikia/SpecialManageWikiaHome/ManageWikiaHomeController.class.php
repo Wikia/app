@@ -99,6 +99,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				if ($isValid) {
 					$collectionSavedValues = $this->prepareCollectionForSave($collectionValues);
 					$collectionsModel->saveAll($this->visualizationLang, $collectionSavedValues);
+					// purging cached list
+					$this->wg->Memc->set($collectionsModel->getCollectionsListCacheKey($this->visualizationLang), null);
 
 					$this->infoMsg = wfMessage('manage-wikia-home-collections-success')->text();
 				} else {
@@ -414,7 +416,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				$collectionValues[$name][$key] = $value;
 			}
 		}
-
+		
 		return $collectionValues;
 	}
 
