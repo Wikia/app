@@ -683,6 +683,15 @@
 			// setup clicks
 			chooserLinks.unbind('.chooser').bind('click.chooser', function(ev) {
 				var type = parseInt($(this).attr('type'));
+				if (type === 0) {
+					self.track({
+						label: 'find-recent-uploads'
+					});
+				} else if (type === 1) {
+					self.track({
+						label: 'find-this-page'
+					});
+				}
 				self.setupSearchResults(type);
 			});
 
@@ -731,6 +740,10 @@
 			results.find('input').unbind('.imageHover').
 				bind('change.imageHover', function(ev) {
 					var checkbox = $(this);
+
+					self.track({
+						label: 'find-select-photo'
+					});
 
 					if (checkbox.attr('checked')) {
 						selectImage(ev);
@@ -966,6 +979,11 @@
 			if ((query == '') || (query == field.attr('placeholder'))) {
 				return;
 			}
+
+			self.track({
+				action: Wikia.Tracker.ACTIONS.SUBMIT,
+				label: 'find-search-photos'
+			});
 
 			// block "Find" button and add loading indicator
 			button.attr('disabled', true);
@@ -1588,6 +1606,10 @@
 			$('#WikiaPhotoGallerySliderAddImage').unbind('.addimage').bind('click.addimage', function(ev) {
 				var button = $(this);
 
+				self.track({
+					label: 'slider-tool-button-add-photo'
+				});
+
 				ev.preventDefault();
 
 				self.selectPage(self.UPLOAD_FIND_PAGE, {});
@@ -1688,6 +1710,7 @@
 
 		// setup tabbed section
 		setupTabs: function(tabsWrapper, switchCallback) {
+			var self = this;
 			var tabs = tabsWrapper.find('.tabs,.wikia-tabs').find('a');
 			var tabsContent = tabsWrapper.find('.WikiaPhotoGalleryOptionsTab');
 
@@ -1715,6 +1738,12 @@
 				ev.preventDefault();
 
 				var index = $(this).index(tabs);
+				var label = (index === 0 ? 'tab-layout' : (index === -1 ? 'tab-borders' : false));
+				if (label !== false) {
+					self.track({
+						label: label
+					});
+				}
 				selectTab(index);
 			});
 		},
@@ -1734,6 +1763,16 @@
 				}
 				else {
 					delete params[paramName];
+				}
+
+				if (paramName == 'usefeed') {
+					self.track({
+						label: 'rss-feed-url'
+					});
+				} else if (paramName == 'showrecentuploads') {
+					self.track({
+						label: 'create-automatic'
+					});
 				}
 
 				if (typeof callback == 'function') {
@@ -1758,6 +1797,11 @@
 
 				// update value
 				params[paramName] = value;
+
+				// If the `paramName` starts with "caption" or "border", add a dash for readability.
+				self.track({
+					label: 'dropdown-' + paramName.replace('caption', 'caption-').replace('border', 'border-')
+				});
 
 				if (typeof callback == 'function') {
 					callback.call(self, value);
@@ -1813,6 +1857,10 @@
 			widget.undelegate('li', 'click.imageOption').delegate('li', 'click.imageOption', function(ev) {
 				var elm = $(this);
 				var value = elm.attr('rel');
+
+				self.track({
+					label: 'orientation-' + value
+				});
 
 				//run callback and assignment only if new value is different (no n-click)
 				if(value != params[paramName]) {
@@ -1895,6 +1943,7 @@
 
 		// setup given color picker
 		setupColorPicker: function(colorPicker, paramName, callback) {
+			var self = this;
 			var params = this.editor.gallery.params;
 
 			function hex(x) {
@@ -2101,6 +2150,16 @@
 
 				//hide other opened pickers
 				$('.WikiaPhotoGalleryColorPickerPopUp').hide();
+
+				if (paramName == 'captiontextcolor') {
+					self.track({
+						label: 'color-caption'
+					});
+				} else if (paramName == 'bordercolor') {
+					self.track({
+						label: 'color-border'
+					});
+				}
 
 				colorPickerPopup.css({
 					'left': parseInt(position.left) + 30,
@@ -2344,6 +2403,10 @@
 					if (type.keypress) {
 						return false;
 					}
+
+					self.track({
+						action: Wikia.Tracker.ACTIONS.CLOSE
+					});
 
 					// X has been clicked
 					var currentPage = self.editor.currentPage;
