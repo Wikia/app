@@ -379,7 +379,7 @@ $messages['fr'] = array(
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=fr',
 	'wikiahome-visualisation-remix-mixitup' => 'Mélangez&nbsp;!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Des centaines de wikis à votre portée. Mélangez pour explorer encore plus de wikis.',
-	'wikiahome-visualisation-remix-button' => 'Mélanger',
+	'wikiahome-visualisation-remix-button' => 'Mixer',
 
 	'wikiahome-stats-heading' => 'La collaboration en action',
 	'wikiahome-stats-visitors' => 'Visiteurs / mois',
