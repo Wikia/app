@@ -29,14 +29,14 @@ $.getAssetManagerGroupUrl = function( groups, params ) {
 	params = params || {};
 
 	// Don't minify asset if we're on devbox
-	if(window.wgDevelEnvironment) {
+	if ( window.wgDevelEnvironment ) {
 		params.minify = 0;
 	}
 
 	return wgAssetsManagerQuery .
 		replace( '%1$s', 'groups' ) .
 		replace( '%2$s', groups.join( ',' ) ) .
-		replace( '%3$s', $.isEmptyObject(params) ? '-' : encodeURIComponent( $.param( params ) ) ) .
+		replace( '%3$s', $.isEmptyObject( params ) ? '-' : encodeURIComponent( $.param( params ) ) ) .
 		replace( '%4$d', wgStyleVersion );
 };
 
