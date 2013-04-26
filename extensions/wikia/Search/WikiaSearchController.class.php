@@ -87,14 +87,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $label = $this->getVal('label');
 	    $tooltip = $this->getVal('tooltip');
 	    $params = $this->getVal('params');
-	    $redirs = $this->getVal('redirs');
 
 	    $opt = $params;
 	    foreach( $namespaces as $n ) {
 	        $opt['ns' . $n] = 1;
 	    }
 
-	    $opt['redirs'] = !empty($redirs) ? 1 : 0;
 	    $stParams = array_merge( array( 'search' => $term ), $opt );
 
 	    $title = F::build('SpecialPage', array( 'WikiaSearch' ), 'getTitleFor');
@@ -134,7 +132,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			throw new Exception( "Please include a value for 'title'." );
 		}
 		$searchConfig
-		    ->setMinimumMatch( $this->getVal( 'mm', '75%' ) )
 		    ->setVideoTitleSearch( true )
 		    ->setQuery( $title );
 		$this->getResponse()->setFormat( 'json' );
