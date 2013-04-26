@@ -20,14 +20,17 @@
 				<img src="<?= $wg->BlankImgUrl; ?>" class="arrow" />
 				<?= wfMsg('wikiahome-visualisation-remix-button'); ?>
 			</a>
-			<a href="#" class="wikia-button collections-button">
-				<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
-			</a>
-			<ul class="WikiaMenuElement collections-dropdown">
-				<li>Lorem ipsum</li>
-				<li>Lorem ipsum</li>
-				<li>Lorem ipsum</li>
-			</ul>
+			
+			<?php if( !empty($collectionsList ) ): ?>
+				<a href="#" class="wikia-button collections-button">
+					<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
+				</a>
+				<ul class="WikiaMenuElement collections-dropdown">
+					<?php foreach($collectionsList as $collection): ?>
+						<li data-collection-id="<?= $collection['id']; ?>"><?= $collection['name']; ?></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 		</div>
 		<div class="grid-2 wikia-slot slot-medium">
 			<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">

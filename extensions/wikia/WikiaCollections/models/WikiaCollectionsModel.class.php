@@ -13,8 +13,8 @@ class WikiaCollectionsModel extends WikiaModel {
 		$results = $sdb->select(self::TABLE_NAME, $fields, $conds, __METHOD__, $options);
 
 		$out = array();
-		while ($row = $sdb->fetchRow($results)) {
-			$out[] = $row;
+		while( $row = $sdb->fetchRow($results) ) {
+			$out[$row['id']] = $row;
 		}
 
 		return $out;
