@@ -35,7 +35,7 @@ var ChatView = Backbone.View.extend({
 		localWikiLinkReg = new RegExp(localWikiLinkReg, "i");
 		
 		if (text.substring(0,4) === "/me ") {
-			text = "*" + wgUserName + " " + text.substring(3);
+			text = "* " + wgUserName + " " + text.substring(3);
 		}
 
 
