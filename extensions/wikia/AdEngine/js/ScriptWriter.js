@@ -82,7 +82,7 @@ define('ad.scriptwriter', ['wikia.document', 'wikia.log', 'wikia.window'], funct
 			log('injectScriptByText: injecting script ' + text.substr(0, 20) + '... to slot: ' + elementId, 5, logGroup);
 			postscribe(
 				document.getElementById(elementId),
-				text,
+				'<script>' + text + '</script>',
 				{done: callback}
 			);
 		};
