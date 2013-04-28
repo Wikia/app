@@ -75,7 +75,7 @@ class DPL {
 			$citeObject	=	$parser->mTagHooks['references'][0];
 			$tmpCiteGroupCnt			= $citeObject->mGroupCnt;
 			$tmpCiteOutCnt				= $citeObject->mOutCnt;
-			$tmpCiteInCnt				= $citeObject->mInCnt;
+			$tmpCiteCallCnt				= $citeObject->mCallCnt;
 			$tmpCiteRefs				= $citeObject->mRefs;
 			$tmpCiteReferencesErrors	= $citeObject->mReferencesErrors;
 			$tmpCiteRefCallStack		= $citeObject->mRefCallStack;
@@ -86,7 +86,7 @@ class DPL {
 		if ($citeObject != null) {
 			$citeObject->mGroupCnt			= $tmpCiteGroupCnt;
 			$citeObject->mOutCnt			= $tmpCiteOutCnt;
-			$citeObject->mInCnt				= $tmpCiteInCnt;
+			$citeObject->mCallCnt			= $tmpCiteCallCnt;
 			$citeObject->mRefs				= $tmpCiteRefs;
 			$citeObject->mReferencesErrors	= $tmpCiteReferencesErrors;
 			$citeObject->mRefCallStack		= $tmpCiteRefCallStack;
