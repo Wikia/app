@@ -36,6 +36,10 @@ $wgExtensionCredits['other'][] = array(
     ),
     'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/HAWelcome/'
 );
+
+$wgAvailableRights[] = 'welcomeexempt';
+$wgGroupPermissions['bot']['welcomeexempt'] = true;
+
 /**
  * @global Array The list of message files.
  * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionMessagesFiles
@@ -159,8 +163,8 @@ class HAWelcomeJob extends Job {
                  * @see http://www.mediawiki.org/wiki/Manual:$wgUser
                  */
                 global $wgUser;
-		// Abort if the contributor is a bot or a staff member or the default welcomer
-		if ( $wgUser->isAllowed( 'bot' ) || in_array( 'staff', $wgUser->getEffectiveGroups() ) ||$wgUser->getName() == self::DEFAULT_WELCOMER ) {
+		// Abort if the contributor is a member of a group that should not be welcomed or the default welcomer
+		if ( $wgUser->isAllowed( 'welcomeexempt' ) || $wgUser->getName() == self::DEFAULT_WELCOMER ) {
 			if ( !empty( $wgHAWelcomeNotices ) ) {
 				trigger_error( sprintf( '%s Done. The registered contributor is a bot, a staff member or the default welcomer.', __METHOD__ ) , E_USER_NOTICE );
 			}
