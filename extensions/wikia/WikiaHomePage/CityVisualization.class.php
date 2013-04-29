@@ -360,12 +360,12 @@ class CityVisualization extends WikiaModel {
 
 	public function purgeVisualizationWikisListCache($corpWikiId, $langCode) {
 		$memcKey = $this->getVisualizationBatchesCacheKey($corpWikiId, $langCode);
-		$this->wg->Memc->set($memcKey, null);
+		$this->wg->Memc->delete($memcKey);
 	}
 
 	public function purgeWikiPromoteDataCache($wikiId, $langCode) {
 		$memcKey = $this->getWikiPromoteDataCacheKey($wikiId, $langCode);
-		$this->wg->Memc->set($memcKey, null);
+		$this->wg->Memc->delete($memcKey);
 	}
 
 	public function updateWikiPromoteDataCache($wikiId, $langCode, $data) {
