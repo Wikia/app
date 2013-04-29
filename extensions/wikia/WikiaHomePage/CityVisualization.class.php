@@ -969,7 +969,7 @@ class CityVisualization extends WikiaModel {
 				}
 			);
 		}
-
+		
 		$collectionsWikisData = $helper->prepareBatchesForVisualization($collectionsWikisData);
 		
 		return $collectionsWikisData;
