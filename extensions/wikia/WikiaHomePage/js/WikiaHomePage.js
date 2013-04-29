@@ -200,7 +200,8 @@ WikiaHomePageRemix.prototype = {
 	},
 	trackClick: function(ev) {
 		var node = $(ev.target);
-		if (node.is('a') && node.hasParent('.remix')) {
+		
+		if( node.hasParent('.remix-button') || node.hasClass('remix-button') ) {
 			var remixCounter = $.storage.get('remixCounter') || 0;
 			remixCounter++;
 			this.track(
@@ -264,6 +265,11 @@ WikiaHomePageRemix.prototype = {
 				var wamLinkState = (node.hasClass('inactive') || node.hasParent('.inactive')) ? 'inactive' : 'active';
 				this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'interstitial-wam-score', {'wam-link-state': wamLinkState}, ev);
 			}
+		} else if( node.hasClass('collections-button') || node.hasParent('.collections-button') ) {
+			var collectionListState = ( $('.collections-dropdown').hasClass('show') ) ? 'shown' : 'hidden';
+			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'collections-button', {'collection-list-state': collectionListState}, ev);
+		} else if( node.hasClass('collection-link') || node.hasParent('.collection-link') ) {
+			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'collections-link', {}, ev);
 		}
 	},
 	preload: function () {
