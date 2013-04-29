@@ -4,7 +4,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	const COLLECTIONS_COUNT = 3;
 	const COLLECTIONS_MEMC_VERSION = '0.1';
 
-	public function getCollectionsListCacheKey($langCode) {
+	private function getCollectionsListCacheKey($langCode) {
 		return $this->wf->SharedMemcKey('collections_list', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
 	}
 	
@@ -69,10 +69,12 @@ class WikiaCollectionsModel extends WikiaModel {
 			$mdb->update(self::TABLE_NAME, $updateData, $conds, __METHOD__);
 		} else {
 			$insertData = array_merge($updateData, $conds);
-
 			$mdb->insert(self::TABLE_NAME, $insertData, __METHOD__);
 		}
 
+		// purging cached list
+		$this->wg->Memc->set($this->getCollectionsListCacheKey($langCode), null);
+		
 		$mdb->commit();
 	}
 
