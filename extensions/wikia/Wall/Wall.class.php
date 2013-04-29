@@ -70,8 +70,11 @@ class Wall extends WikiaModel {
 		$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
 		$aOutput = array();
 		// Take the content out of an HTML P element and strip whitespace from the beginning and end.
-		preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $oParserOut->getText(), $aOutput );
-		return $aOutput[1];
+		$res = '';
+		if ( preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $oParserOut->getText(), $aOutput ) ) {
+			$res = $aOutput[1];
+		}
+		return $res;
 	}
 
 	public function getRelatedPageId() {
