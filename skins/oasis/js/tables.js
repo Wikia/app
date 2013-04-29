@@ -29,7 +29,7 @@ var WikiaWideTables = {
 				}
 
 				// Note that this table has been processed already
-				table.addClass('willPopOut')
+				table.addClass('willPopOut');
 
 				//Add wrapper for overflow
 				wrapper = table.wrap('<div class="WikiaWideTablesWrapper"><div class="table"></div></div>').parent().parent();
