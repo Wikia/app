@@ -14,11 +14,7 @@ class Walls extends WikiaModel {
 
 		$dbw = $this->wf->GetDB( $db );
 
-		// get board list
-		$result = $dbw->select(
-			array( 'page', 'page_wikia_props' ),
-			array( 'page.page_id as page_id, page.page_title as page_title' ),
-			array(
+		$titles = TitleBatch::newFromConds('page_wikia_props',array(
 				'page.page_namespace' => $namespace,
 				'page_wikia_props.page_id = page.page_id'
 			),
@@ -27,17 +23,9 @@ class Walls extends WikiaModel {
 		);
 
 		$boards = array();
-		while ( $row = $dbw->fetchObject( $result ) ) {
-			$boardId = $row->page_id;
-			if ( $db == DB_MASTER ) {
-				$title = Title::newFromID( $boardId, Title::GAID_FOR_UPDATE );
-			} else {
-				$title = Title::newFromID( $boardId );
-			}
-
-			if ( $title instanceof Title ) { 
-				$boards[] = $boardId;				
-			}
+		/** @var $title Title */
+		foreach ($titles as $title) {
+			$boards[] = $title->getArticleID();
 		}
 
 		$this->wf->profileOut( __METHOD__ );

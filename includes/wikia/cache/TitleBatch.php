@@ -130,7 +130,7 @@ class TitleBatch {
 	 * Get Title objects for a given set of article IDs. Skips articles that do not exist.
 	 *
 	 * @param $ids array List of article IDs
-	 * @param $dbType int Database connection type
+	 * @param $dbType int Database connection type (supports DB_SLAVE_BEFORE_MASTER)
 	 * @return array Array with article IDs as keys and Title objects as values (non-existent articles ore omitted)
 	 */
 	static public function newFromIds( $ids, $dbType ) {
@@ -163,5 +163,35 @@ class TitleBatch {
 		wfProfileOut( __METHOD__ );
 		return $list;
 	}
+
+	/**
+	 * Get Title objects for all articles that satisfy provided SQL SELECT conditions
+	 *
+	 * @param $tables array|string Additional tables
+	 * @param $conds array|string Conditions
+	 * @param $fname string Function name
+	 * @param $options array Query options
+	 * @param $dbType int Database connection type (doesn't support DB_SLAVE_BEFORE_MASTER)
+	 * @return array Array with article IDs as keys and Title objects as values (non-existent articles ore omitted)
+	 */
+	static public function newFromConds( $tables, $conds, $fname = 'TitleBatch::newFromConds',
+			$options = array(), $dbType = DB_SLAVE ) {
+		wfProfileIn( __METHOD__ );
+
+		$tables = array_merge( array( 'page' ), (array)$tables );
+
+		$list = array();
+
+		$db = wfGetDB( $dbType );
+		$res = $db->select( $tables, 'page.*', $conds, $fname, $options );
+		foreach ($res as $row) {
+			$list[$row->page_id] = Title::newFromRow($row);
+		}
+		$res->free();
+
+		wfProfileOut( __METHOD__ );
+		return $list;
+	}
+
 
 }
