@@ -9,8 +9,6 @@
 	</header>
 	<section class="wikiahomepage-wikis">
 		<?= F::app()->renderView('WikiaHomePageController', 'visualization', array()); ?>
-		<?= F::app()->renderView('WikiaHomePageController', 'getList', array()); ?>
-		<?= F::app()->renderView('WikiaHomePageController', 'getCollectionsList', array()); ?>
 	</section>
 	<div class="wikiahomepage-hubs">
 		<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', array(
