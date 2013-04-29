@@ -216,7 +216,7 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	protected function getCollectionsWikiList() {
 		$collectionsBatches = [];
-		if( $this->wg->WikiaHomePageCollectionsExt && !empty($this->wg->WikiaHomePageCollectionsWikis) ) {
+		if( $this->wg->EnableWikiaHomePageCollections && !empty($this->wg->WikiaHomePageCollectionsWikis) ) {
 			$visualization = $this->getVisualization();
 
 			$tmpCollectionsBatches = $visualization->getCollectionsWikisData($this->wg->WikiaHomePageCollectionsWikis);
