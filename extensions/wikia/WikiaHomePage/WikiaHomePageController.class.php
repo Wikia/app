@@ -206,12 +206,29 @@ class WikiaHomePageController extends WikiaController {
 		}
 		return ['status' => $status, 'batches' => $wikiBatches];
 	}
-	
+
+	/**
+	 * Get collections batches
+	 *
+	 * @return array
+	 * $key = collection id
+	 * $val = visualization wiki batches
+	 */
 	protected function getCollectionsWikiList() {
 		$collectionsBatches = [];
 		if( $this->wg->WikiaHomePageCollectionsExt && !empty($this->wg->WikiaHomePageCollectionsWikis) ) {
 			$visualization = $this->getVisualization();
-			$collectionsBatches = $visualization->getCollectionsWikisData($this->wg->WikiaHomePageCollectionsWikis);
+
+			$tmpCollectionsBatches = $visualization->getCollectionsWikisData($this->wg->WikiaHomePageCollectionsWikis);
+
+			$collections = new WikiaCollectionsModel();
+			$collectionsList = $collections->getList($this->wg->ContLang->getCode());
+
+			for ($i = 0; $i < count($collectionsList); $i++) {
+				if (isset($collectionsList[$i]['id']) && isset($tmpCollectionsBatches[$i])) {
+					$collectionsBatches[$collectionsList[$i]['id']] = $tmpCollectionsBatches[$i];
+				}
+			}
 		}
 
 		return $collectionsBatches;
