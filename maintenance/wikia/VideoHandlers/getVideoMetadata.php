@@ -102,7 +102,7 @@ $fieldMeta = array(
 $header = array_merge( array_keys( $fieldMain ), array_keys( $fieldMeta ) );
 writeToFile( $header );
 
-$limit = 100;
+$limit = 1000;
 $total = 1;
 $lastTitle = '';
 
