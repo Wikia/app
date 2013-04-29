@@ -7,7 +7,7 @@ var WikiaHomePageRemix = function (params) {
 	this.wikiSetStack = [];
 	this.wikiSetStackIndex = 0;
 	
-	this.collectionDisplayed = false;
+	this.collectionsDisplayed = [];
 };
 
 function WikiPreview(el) {
@@ -161,7 +161,7 @@ WikiaHomePageRemix.prototype = {
 		$(".collection-link").click($.proxy(
 			function( event ) {
 				var collectionId = $(event.target).data('collection-id') || 0;
-				this.getCollection(collectionId);
+				this.displayCollection(collectionId);
 			}, this)
 		);
 
@@ -182,7 +182,7 @@ WikiaHomePageRemix.prototype = {
 
 		$('.wikia-slot a').removeAttr('title');
 
-		this.updateVisualisation();
+		this.displayCollection();
 		$().log('WikiaHomePageRemix initialised');
 	},
 	isTargetOutsideRemixChevron: function ($target) {
@@ -283,14 +283,7 @@ WikiaHomePageRemix.prototype = {
 		}
 	},
 	updateVisualisation: function () {
-		if( this.collectionsWikisStack.length > 0 && !this.collectionDisplayed ) {
-			$().log('WikiaHomePageRemix showing collection... ');
-			// 0 index below will be later changed to collection id preferably :)
-			this.remix($('.slot-medium'), this.collectionsWikisStack[0].mediumslots);
-			this.remix($('.slot-small'), this.collectionsWikisStack[0].smallslots);
-			this.remix($('.slot-big'), this.collectionsWikisStack[0].bigslots);
-			this.collectionDisplayed = true;
-		} else if (this.wikiSetStack.length !== this.wikiSetStackIndex) {
+		if (this.wikiSetStack.length !== this.wikiSetStackIndex) {
 			$().log('WikiaHomePageRemix remixing (batch ' + this.wikiSetStackIndex + ')');
 			this.remix($('.slot-medium'), this.wikiSetStack[this.wikiSetStackIndex].mediumslots);
 			this.remix($('.slot-small'), this.wikiSetStack[this.wikiSetStackIndex].smallslots);
@@ -344,10 +337,26 @@ WikiaHomePageRemix.prototype = {
 				.append(previewDivWrapper);
 		});
 	},
-	getCollection: function(collectionId) {
+	displayCollection: function(collectionId) {
+		var selectedCollection;
+		if (collectionId == undefined || !(collectionId in this.collectionsWikisStack)) {
+			var avaliableCollectionIds = Object.keys(this.collectionsWikisStack);
+			if (avaliableCollectionIds.length) {
+				collectionId = avaliableCollectionIds[0];
+			} else {
+				this.updateVisualisation();
+				return false;
+			}
+		}
+
+		this.collectionsDisplayed[collectionId] = true;
 		$().log('displaying collection #' + collectionId);
-		this.collectionDisplayed = false;
-		this.updateVisualisation();
+		
+		selectedCollection = this.collectionsWikisStack[collectionId];
+
+		this.remix($('.slot-medium'), selectedCollection.mediumslots);
+		this.remix($('.slot-small'), selectedCollection.smallslots);
+		this.remix($('.slot-big'), selectedCollection.bigslots);
 	},
 	addWikiToStack: function() {
 		$.nirvana.sendRequest({
