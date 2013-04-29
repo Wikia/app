@@ -140,9 +140,6 @@ class WikiaMobileService extends WikiaService {
 			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig );
 		}
 
-		//send list of supported videos so we can treat not supported ones differently
-		$globalVariables['supportedVideos'] =$this->wg->WikiaMobileSupportedVideos;
-
 		$this->response->setVal( 'jsHeadFiles', $jsHeadFiles );
 		$this->response->setVal( 'allowRobots', ( !$this->wg->DevelEnvironment ) );
 		$this->response->setVal( 'cssLinks', $cssLinks );
