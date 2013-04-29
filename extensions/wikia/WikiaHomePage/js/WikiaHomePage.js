@@ -157,6 +157,13 @@ WikiaHomePageRemix.prototype = {
 				this.updateVisualisation();
 			}, this)
 		);
+		
+		$(".collection-link").click($.proxy(
+			function( event ) {
+				var collectionId = $(event.target).data('collection-id') || 0;
+				this.getCollection(collectionId);
+			}, this)
+		);
 
 		// show / hide collections dropdown
 		var $collectionsDropdown = $(".collections-dropdown");
@@ -329,6 +336,11 @@ WikiaHomePageRemix.prototype = {
 				.append(wikinamehtml)
 				.append(previewDivWrapper);
 		});
+	},
+	getCollection: function(collectionId) {
+		$().log('displaying collection #' + collectionId);
+		this.collectionDisplayed = false;
+		this.updateVisualisation();
 	},
 	addWikiToStack: function() {
 		$.nirvana.sendRequest({
