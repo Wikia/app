@@ -6,6 +6,7 @@ namespace Wikia\Search;
 use Wikia\Search\MediaWikiService, Wikia\Search\Match;
 use Wikia\Search\Query\Select as Query;
 use ArrayAccess, Solarium_Query_Select;
+
 /**
  * A config class intended to handle variable flags for search
  * Intended to be a dependency-injected receptacle for different search requirements

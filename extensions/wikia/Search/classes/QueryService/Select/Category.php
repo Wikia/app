@@ -24,6 +24,7 @@ class Category extends AbstractSelect
 	 * @var int
 	 */
         const GROUP_RESULTS_COUNT = 999; 
+        
 	/**
 	 * Used for tracking
 	 * @var string

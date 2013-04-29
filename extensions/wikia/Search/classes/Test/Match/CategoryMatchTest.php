@@ -40,7 +40,7 @@ class CategoryMatchTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * @covers Wikia\Search\Match\AbstractMatch::getResult
-	 */
+        */
 	public function testAbstractGetResult() {
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\AbstractMatch' )
 		                  ->disableOriginalConstructor()
