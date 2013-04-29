@@ -159,7 +159,7 @@ var AdLogicPageLevelParams = function (
 
 		if (Krux) {
 			params.u = Krux.user;
-			params.ksgmnt = Krux.segments.slice(0, maxNumberOfKruxSegments);
+			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
 		}
 
 		extend(params, decodeLegacyDartParams(window.wgDartCustomKeyValues));
