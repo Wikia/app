@@ -879,10 +879,10 @@ class WikiaPhotoGallery extends ImageGallery {
 				}
 
 				$linkAttribs = array(
-					'class' => $image['classes'],
+					'class' => empty($image['thumbnail']) ? 'image-no-lightbox' : $image['classes'],
 					'href' => $image['link'],
 					'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
-					'style' => (!empty($image['thumbnail'])? '' : "height:{$image['height']}px;")
+					'style' => "height:{$image['height']}px; width:{$image['width']}px;"
 				);
 
 				if (!empty($image['thumbnail'])) {
