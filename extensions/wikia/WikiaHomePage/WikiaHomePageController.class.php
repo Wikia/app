@@ -84,6 +84,13 @@ class WikiaHomePageController extends WikiaController {
 
 		$this->lang = $this->wg->contLang->getCode();
 		F::build('JSMessages')->enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
+
+		$batches = $this->getList();
+		$this->wg->Out->addJsConfigVars([
+			'wgCollectionsBatches' => $this->getCollectionsWikiList(),
+			'wgWikiaBatchesStatus' => $batches['status'],
+			'wgInitialWikiBatchesForVisualization' => $batches['batches']
+		]);
 	}
 
 	public function wikiaMobileIndex() {
@@ -170,12 +177,11 @@ class WikiaHomePageController extends WikiaController {
 	/**
 	 * get list of wikis
 	 */
-	public function getList() {
+	protected function getList() {
 		$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 		if (!empty($wikiBatches)) {
 			Wikia::log(__METHOD__, false, ' pulling visualization data from db');
 			$status = 'true';
-			$this->response->setVal('initialWikiBatchesForVisualization', json_encode($wikiBatches));
 		} else {
 			try {
 				Wikia::log(__METHOD__, false, ' pulling failover visualization data from message');
@@ -186,9 +192,7 @@ class WikiaHomePageController extends WikiaController {
 				$failoverData = $this->parseSourceMessage();
 				$visualization = $this->getVisualization();
 				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
-				$failoverBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
-
-				$this->response->setVal('initialWikiBatchesForVisualization', json_encode($failoverBatches));
+				$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 			} catch (Exception $e) {
 				Wikia::log(__METHOD__, false, ' pulling failover visualization data from file');
 
@@ -197,23 +201,20 @@ class WikiaHomePageController extends WikiaController {
 				$failoverData = $this->getFailoverWikiList();
 				$visualization = $this->getVisualization();
 				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
-				$failoverBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
-
-				$this->response->setVal('initialWikiBatchesForVisualization', json_encode($failoverBatches));
-				$this->response->setVal('exception', $e->getMessage());
+				$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 			}
 		}
-		$this->response->setVal('wgWikiaBatchesStatus', $status);
+		return ['status' => $status, 'batches' => $wikiBatches];
 	}
 	
-	public function getCollectionsList() {
+	protected function getCollectionsWikiList() {
 		$collectionsBatches = [];
 		if( $this->wg->WikiaHomePageCollectionsExt && !empty($this->wg->WikiaHomePageCollectionsWikis) ) {
 			$visualization = $this->getVisualization();
 			$collectionsBatches = $visualization->getCollectionsWikisData($this->wg->WikiaHomePageCollectionsWikis);
 		}
-		
-		$this->response->setVal('collectionsBatches', json_encode($collectionsBatches));
+
+		return $collectionsBatches;
 	}
 
 	public function getMediaWikiMessage() {
