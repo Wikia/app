@@ -73,7 +73,7 @@ class WikiaCollectionsModel extends WikiaModel {
 		}
 
 		// purging cached list
-		$this->wg->Memc->set($this->getCollectionsListCacheKey($langCode), null);
+		$this->wg->Memc->delete( $this->getCollectionsListCacheKey($langCode) );
 		
 		$mdb->commit();
 	}
