@@ -269,7 +269,8 @@ WikiaHomePageRemix.prototype = {
 			var collectionListState = ( $('.collections-dropdown').hasClass('show') ) ? 'shown' : 'hidden';
 			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'collections-button', {'collection-list-state': collectionListState}, ev);
 		} else if( node.hasClass('collection-link') || node.hasParent('.collection-link') ) {
-			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'collections-link', {}, ev);
+			var collectionId = node.data('collection-id');
+			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'collections-link', {'collection-id': collectionId}, ev);
 		}
 	},
 	preload: function () {
