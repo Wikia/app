@@ -14,13 +14,14 @@ class WikiaHomePageCollectionsHooks {
 	
 	public function onWikiFactoryVarChanged($cv_name, $city_id, $value) {
 		$app = F::app();
-		
 		if( $this->isCollectionList($city_id, $cv_name) ) {
 			Wikia::log(__METHOD__, '', 'Updating collection list cache after change');
 			
 			$visualization = new CityVisualization();
 			foreach($value as $collectionId => $collection) {
 				$app->wg->Memc->set($visualization->getCollectionCacheKey($collectionId), null);
+				$title = GlobalTitle::newMainPage($city_id);
+				$title->purgeSquid();
 				Wikia::log(__METHOD__, '', 'Purged memcached for collection #' . $collectionId);
 			}
 		}
