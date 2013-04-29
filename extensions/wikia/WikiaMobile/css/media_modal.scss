@@ -58,14 +58,14 @@ $chev-color: rgb(157,157,157);
 		}
 
 		&:last-of-type {
-			bottom: 10%;
+			bottom: 5%;
 		}
 	}
 
 	img {
 		//this is minumum for the message to be readable
 		min-width: 300px;
-		min-height: 180px;
+		min-height: 210px;
 		max-height: 50%;
 	}
 
