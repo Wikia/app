@@ -819,7 +819,7 @@ class MessageCache {
 			$REGEX = "/(?<!{){{((?P<func>".implode('|',array_keys($INLINE_FUNCS))."):(?P<args>(}[^}]|[^}])+)|(?P<var>".implode('|',array_keys($INLINE_VARS))."))}}/i";
 			$firstTime = true;
 			$message = preg_replace_callback($REGEX,
-				function($matches) use ($firstTime,$popts,$parser,$INLINE_VARS) {
+				function($matches) use (&$firstTime,$popts,$parser,$INLINE_VARS) {
 					if ( !empty($matches['func'] ) ) {
 						if ( $firstTime ) {
 							$firstTime = false;
