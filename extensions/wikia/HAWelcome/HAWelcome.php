@@ -471,14 +471,11 @@ class HAWelcomeJob extends Job {
         // Append the timestamp to the signature.
         $sFullSignature .= ' ~~~~~';
         // Put the contents of the welcome message together.
-        $this->sMessage = wfMessage(
-            $sMessageKey,
-            array(
-                $sPrefixedText,
-                $this->oSender->getUserPage()->getTalkPage()->getPrefixedText(),
-                $sFullSignature,
-                wfEscapeWikiText( $this->sRecipientName )
-            )
+        $this->sMessage = wfMessage( $sMessageKey,
+		$sPrefixedText,
+		$this->oSender->getUserPage()->getTalkPage()->getPrefixedText(),
+		$sFullSignature,
+		wfEscapeWikiText( $this->sRecipientName )
         )->inContentLanguage()->plain();
         if ( $this->bShowNotices ) {
             trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );
