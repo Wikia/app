@@ -460,7 +460,7 @@ class HAWelcomeJob extends Job {
             ? 'staffsig-text' : 'signature';
         // Determine the full signature.
         $sFullSignature = wfMessage(
-            $sMessageKey,
+            $sSignatureKey,
             $this->oSender->getName(),
             Parser::cleanSigInSig( $this->oSender->getName()
         ) )->inContentLanguage()->text();
