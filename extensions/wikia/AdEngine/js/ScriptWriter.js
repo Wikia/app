@@ -75,7 +75,17 @@ define('ad.scriptwriter', ['wikia.document', 'wikia.log', 'wikia.window'], funct
 			postscribe(
 				document.getElementById(elementId),
 				'<script src="' + escapeHtml(url) + '"></script>',
-				{done: callback}
+				{
+					done: function () {
+						log('DONE injectScriptByUrl: (' + url + ' to slot: ' + elementId + ')', 5, logGroup);
+						if (typeof callback === 'function') {
+							callback();
+						}
+					},
+					error: function (e) {
+						log(['ERROR', 'injectScriptByUrl', url, elementId, e], 1, logGroup);
+					}
+				}
 			);
 		};
 		impl.injectScriptByText = function (elementId, text, callback) {
@@ -83,7 +93,17 @@ define('ad.scriptwriter', ['wikia.document', 'wikia.log', 'wikia.window'], funct
 			postscribe(
 				document.getElementById(elementId),
 				'<script>' + text + '</script>',
-				{done: callback}
+				{
+					done: function () {
+						log('DONE injectScriptByText: (' + text.substr(0, 20) + '... to slot: ' + elementId + ')', 5, logGroup);
+						if (typeof callback === 'function') {
+							callback();
+						}
+					},
+					error: function (e) {
+						log(['ERROR', 'injectScriptByText', text.substr(0, 20) + '...', elementId, e], 1, logGroup);
+					}
+				}
 			);
 		};
 		impl.callLater = function (callback) {
