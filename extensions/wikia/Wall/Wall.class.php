@@ -65,7 +65,7 @@ class Wall extends WikiaModel {
 	public function getDescription ( $bParse = true ) {
 		/** @var $title Title */
 		$title = $this->getTitle();
-		$memcKey = $this->wf->memcKey(__METHOD__,$title->getArticleID(),$title->getTouched());
+		$memcKey = $this->wf->memcKey(__METHOD__,$title->getArticleID(),$title->getTouchedCached());
 		$res = $this->wg->memc->get($memcKey);
 		if ( !is_string($res) ) {
 			$oArticle = new Article( $this->getTitle() );

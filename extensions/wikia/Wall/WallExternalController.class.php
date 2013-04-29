@@ -39,6 +39,7 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
+		/** @var $mainWall WallMessage */
 		$mainWall = $wm->getWall();
 
 		if ( !$this->wg->User->isAllowed( 'wallmessagemove' ) ) {
@@ -49,12 +50,14 @@ class WallExternalController extends WikiaController {
 
 		$forum = new Forum();
 
-		$list = $forum->getList(DB_SLAVE, NS_WIKIA_FORUM_BOARD);
+		$list = $forum->getListTitles(DB_SLAVE, NS_WIKIA_FORUM_BOARD);
 
 		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
-		foreach ( $list as $value ) {
+		/** @var $title Title */
+		foreach ( $list as $title ) {
+			$value = $title->getArticleID();
 			if($mainWall->getId() != $value) {
-				$wall = Wall::newFromId($value);
+				$wall = Wall::newFromTitle($title);
 				$this->destinationBoards[$value] = array( 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) );
 			}
 		}

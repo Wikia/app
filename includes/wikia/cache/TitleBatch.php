@@ -127,6 +127,36 @@ class TitleBatch {
 	}
 
 	/**
+	 * Get wikia-properties requested by its ID
+	 *
+	 * @param $propertyIds One or many property IDs to fetch
+	 * @param $dbType int Database connection type
+	 * @return array 1-D or 2-D array representing fetched properties (2-D if more than one property ID was provided)
+	 */
+	public function getWikiaProperties( $propertyIds, $dbType = DB_SLAVE ) {
+		$articleIds = $this->getArticleIds();
+		$res = wfGetDB($dbType)->select(
+			array( 'p' => 'page', 'pp' => 'page_wikia_props' ),
+			array( 'p.page_id, pp.propname, pp.props' ),
+			array(
+				'p.page_id = pp.page_id',
+				'pp.propname' => $propertyIds,
+			),
+			__METHOD__
+		);
+
+		$props = array();
+		foreach ($res as $row) {
+			if ( is_array( $propertyIds ) ) {
+				$props[$row->page_id][$row->propname] = wfUnserializeProp($row->props);
+			} else {
+				$props[$row->page_id] = wfUnserializeProp($row->props);
+			}
+		}
+		return $props;
+	}
+
+	/**
 	 * Get Title objects for a given set of article IDs. Skips articles that do not exist.
 	 *
 	 * @param $ids array List of article IDs

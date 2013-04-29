@@ -1,26 +1,22 @@
 <?php
 
 /**
- * this class provieds basic information about all the walls existing in system
+ * this class provides basic information about all the walls existing in system
  */
 
 class Walls extends WikiaModel {
+
 	/**
-	 * get list of board
-	 * @return array boards
+	 * Get list of existing board IDs
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 *
+	 * @return array List of board IDs
 	 */
 	public function getList( $db = DB_SLAVE, $namespace = NS_USER_WALL ) {
 		$this->wf->profileIn( __METHOD__ );
 
-		$dbw = $this->wf->GetDB( $db );
-
-		$titles = TitleBatch::newFromConds('page_wikia_props',array(
-				'page.page_namespace' => $namespace,
-				'page_wikia_props.page_id = page.page_id'
-			),
-			__METHOD__,
-			array( 'ORDER BY' => 'page_title' )
-		);
+		$titles = $this->getListTitles($db,$namespace);
 
 		$boards = array();
 		/** @var $title Title */
@@ -32,4 +28,28 @@ class Walls extends WikiaModel {
 
 		return $boards;
 	}
+
+	/**
+	 * Get list of Title objects representing existing boards
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 *
+	 * @return array List of board IDs
+	 */
+	public function getListTitles( $db = DB_SLAVE, $namespace = NS_USER_WALL ) {
+		$this->wf->profileIn( __METHOD__ );
+
+		$titles = TitleBatch::newFromConds('page_wikia_props',array(
+				'page.page_namespace' => $namespace,
+				'page_wikia_props.page_id = page.page_id'
+			),
+			__METHOD__,
+			array( 'ORDER BY' => 'page_title' )
+		);
+
+		$this->wf->profileOut( __METHOD__ );
+
+		return $titles;
+	}
+
 }

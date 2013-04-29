@@ -57,7 +57,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->canEdit = $this->wg->User->isAllowed( 'forumadmin' );
 		$this->editUrl = $this->wg->Title->getFullUrl( 'action=editmode' );
 
-		$forum = F::build( 'Forum' );
+		$forum = new Forum();
 
 		if ( $forum->createDefaultBoard() ) {
 			$this->boards = $forum->getBoardList( DB_MASTER, NS_WIKIA_FORUM_BOARD );

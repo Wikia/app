@@ -14,23 +14,24 @@ class Forum extends Walls {
 
 
 	public function getBoardList($db = DB_SLAVE) {
-		$boardsIds = $this->getList( $db, NS_WIKIA_FORUM_BOARD );
+		$boardTitles = $this->getListTitles( $db, NS_WIKIA_FORUM_BOARD );
+		$titlesBatch = new TitleBatch($boardTitles);
+		$orderIndexes = $titlesBatch->getWikiaProperties(WPP_WALL_ORDER_INDEX,$db);
+
 		$boards = array();
-		$boardFlags = ($db == DB_MASTER) ? Title::GAID_FOR_UPDATE : 0;
-
-		foreach($boardsIds as $key => $id) {
-			$board = ForumBoard::newFromId( $id, $boardFlags);
-
-			if(empty($board)) {
-				continue;
-			}
+		/** @var $title Title */
+		foreach($boardTitles as $title) {
+			/** @var $board ForumBoard */
+			$board = ForumBoard::newFromTitle($title);
+			$title = $board->getTitle();
+			$id = $title->getArticleID();
 
 			$boardInfo = $board->getBoardInfo();
-			$boardInfo['id'] = $id;
-			$boardInfo['name'] = $board->getTitle()->getText();
+			$boardInfo['id'] = $title->getArticleID();
+			$boardInfo['name'] = $title->getText();
 			$boardInfo['description'] = $board->getDescription();
-			$boardInfo['url'] = $board->getTitle()->getFullURL();
-			$orderIndex = wfGetWikiaPageProp(WPP_WALL_ORDER_INDEX, $id, $db);
+			$boardInfo['url'] = $title->getFullURL();
+			$orderIndex = $orderIndexes[$id];
 			$boards[$orderIndex] = $boardInfo;
 		}
 
