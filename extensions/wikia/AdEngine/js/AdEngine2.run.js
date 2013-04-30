@@ -51,7 +51,7 @@
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
-	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl);
+	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
 	wikiaGpt = WikiaGptHelper(log, window, document, adLogicPageLevelParams);
 	evolveHelper = EvolveHelper(log, window);
 
@@ -101,7 +101,6 @@
 			return wikiaDart.getUrl({
 				slotname: slotname,
 				slotsize: slotsize,
-				subdomain: adLogicDartSubdomain.getSubdomain(),
 				adType: 'adi',
 				src: 'liftium'
 			});

@@ -1,4 +1,4 @@
-define('wikia.ooyala', ['wikia.window'], function(window) {
+define('wikia.ooyala', ['wikia.window', 'ext.wikia.adengine.darthelper'], function(window, dartHelper) {
 	'use strict';
 
 	var videoTitle,
@@ -49,12 +49,25 @@ define('wikia.ooyala', ['wikia.window'], function(window) {
 	return function(params) {
 		var time = new Date().getTime(),
 			container = document.getElementById(params.playerId),
-			newId = params.playerId + time;
+			newId = params.playerId + time,
+			createParams = { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay, onCreate: onCreate };
 
 		videoTitle = params.title;
 
 		container.id = newId;
 
-		window.OO.Player.create(newId, params.videoId, { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay, onCreate: onCreate });
+		if (window.wgAdVideoTargeting && window.wgShowAds) {
+			createParams['google-ima-ads-manager'] = {
+				adTagUrl: dartHelper.getUrl({
+					slotname: 'JWPLAYER',
+					slotsize: '320x240',
+					adType: 'pfadx',
+					src: 'jwplayer'
+				}),
+				showInAdControlBar : true
+			};
+		}
+
+		window.OO.Player.create(newId, params.videoId, createParams);
 	}
 });

@@ -40,3 +40,10 @@ var AdLogicDartSubdomain = function (Geo) {
 		getSubdomain: getSubdomain
 	};
 };
+
+(function (context) {
+	'use strict';
+	if (context.define && context.define.amd) {
+		context.define('ext.wikia.adengine.adlogic.subdomain', ['wikia.geo'], context.AdLogicDartSubdomain);
+	}
+}(this));

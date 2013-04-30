@@ -128,8 +128,7 @@ if (!window.wgUserName || window.wgUserShowAds) {
 		slotname: 'JWPLAYER',
 		slotsize: '320x240',
 		adType: 'pfadx',
-		src: 'jwplayer',
-		subdomain: AdLogicDartSubdomain(Geo).getSubdomain()
+		src: 'jwplayer'
 	});
 	$googimaDataVariable = {
         'ad.position': 'pre',
