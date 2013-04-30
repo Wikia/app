@@ -8,7 +8,6 @@
  */
 abstract class WikiaSuperFactory {
 	protected static $constructors = array();
-	protected static $setters = array();
 	protected static $reflections = array();
 	const APP_OBJECT = 'App';
 
@@ -67,15 +66,6 @@ abstract class WikiaSuperFactory {
 	}
 
 	/**
-	 * set class setter methods to be called while building an object
-	 * @param string $className class name
-	 * @param array $setters array of setter methods ( setter name => value )
-	 */
-	public static function setClassSetters($className, Array $setters) {
-		self::$setters[$className] = $setters;
-	}
-
-	/**
 	 * build object
 	 * @param string $className class name
 	 * @param array $params array of parameters for constructor or factory method ( param name => value )
@@ -118,11 +108,6 @@ abstract class WikiaSuperFactory {
 			$object = call_user_func_array(array($className, $constructorMethod), $buildParams);
 		}
 
-		if(isset(self::$setters[$className])) {
-			foreach(self::$setters[$className] as $setterName => $value) {
-				call_user_func(array($object, $setterName), $value);
-			}
-		}
 		return $object;
 	}
 
@@ -133,12 +118,10 @@ abstract class WikiaSuperFactory {
 	public static function reset($className = null) {
 		if(!empty($className)) {
 			unset(self::$constructors[$className]);
-			unset(self::$setters[$className]);
 		}
 		else {
 			// @codeCoverageIgnoreStart
 			self::$constructors = array();
-			self::$setters = array();
 			// @codeCoverageIgnoreEnd
 		}
 	}
@@ -153,10 +136,9 @@ abstract class WikiaSuperFactory {
 }
 
 /**
- * WikiaFactory class aliases
+ * WikiaFactory class alias
  * @author ADi
  *
  */
-abstract class WF extends WikiaSuperFactory { }
 abstract class F extends WikiaSuperFactory { }
 

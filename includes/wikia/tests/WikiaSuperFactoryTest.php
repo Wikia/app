@@ -65,24 +65,6 @@ class WikiaSuperFactoryTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(self::TEST_TYPE, $object->type);
 	}
 
-	public function testBuildWithClassSetters() {
-		WikiaSuperFactory::setClassSetters('WikiaSuperFactoryTestClass', array( 'setId' => self::TEST_ID, 'setBar' => self::TEST_BAR ));
-
-		$object = WikiaSuperFactory::build('WikiaSuperFactoryTestClass', array( self::TEST_TYPE ));
-
-		$this->assertInstanceOf('WikiaSuperFactoryTestClass', $object);
-		$this->assertEquals(self::TEST_ID, $object->id);
-		$this->assertEquals(self::TEST_TYPE, $object->type);
-		$this->assertEquals(self::TEST_BAR, $object->bar);
-
-		$object = 	WikiaSuperFactory::build('WikiaSuperFactoryTestClass', array( 'type' => self::TEST_TYPE, 'bar' => 'anotherBarToOverride'), 'newFromTypeAndBar');
-
-		$this->assertInstanceOf('WikiaSuperFactoryTestClass', $object);
-		$this->assertEquals(self::TEST_ID, $object->id);
-		$this->assertEquals(self::TEST_TYPE, $object->type);
-		$this->assertEquals(self::TEST_BAR, $object->bar);
-	}
-
 	public function testSettingInstance() {
 		$id = 12345;
 		$type = '01010101';
