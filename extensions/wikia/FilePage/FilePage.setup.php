@@ -22,8 +22,10 @@ $dir = dirname( __FILE__ ) . '/';
 $app = F::app( );
 
 // classes
-$app->registerClass( 'WikiaImagePage', $dir . 'ImagePage.php' );
+$app->registerClass( 'WikiaImagePageOasis', $dir . 'ImagePageOasis.php' );
+$app->registerClass( 'WikiaVideoPageOasis', $dir . 'VideoPageOasis.php' );
 $app->registerClass( 'WikiaVideoPage', $dir . 'VideoPage.php' );
+
 $app->registerClass( 'FilePageHooks', $dir . 'FilePageHooks.class.php' );
 $app->registerClass( 'FilePageHelper', $dir . 'FilePageHelper.class.php' );
 

@@ -25,7 +25,7 @@ class VideoHandlerHelper extends WikiaModel {
 				$user = User::newFromId( $user );
 			}
 
-			$content = '[['.WikiaVideoPage::getVideosCategory().']]';
+			$content = '[['.FilePageHelper::getVideosCategory().']]';
 
 			$article = new Article( $title );
 			$status = $article->doEdit( $content, 'created video', $flags, false, $user );

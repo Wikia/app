@@ -11,7 +11,7 @@ if( !defined( 'MEDIAWIKI' ) )
  * @ingroup Media
  * @author Hyun
  */
-class WikiaImagePage extends ImagePage {
+class WikiaImagePageOasis extends ImagePage {
 
 	/**
 	 * TOC override so Wikia File Page does not return any TOC

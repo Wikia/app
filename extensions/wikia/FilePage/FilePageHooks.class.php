@@ -15,13 +15,20 @@ class FilePageHooks extends WikiaObject{
 	 * @return WikiaVideoPage if file is video
 	 */
 	public function onArticleFromTitle( &$oTitle, &$oArticle ){
+		$app = F::app();
 
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
 			$oFile = wfFindFile( $oTitle );
-			if ( WikiaFileHelper::isVideoFile( $oFile ) ){
+			$isVideo = WikiaFileHelper::isVideoFile( $oFile );
+
+			if ( $app->checkSkin( 'oasis' ) ) {
+				if ( $isVideo ) {
+					$oArticle = new WikiaVideoPageOasis( $oTitle );
+				} else {
+					$oArticle = new WikiaImagePageOasis( $oTitle );
+				}
+			} else if ( $isVideo ) {
 				$oArticle = new WikiaVideoPage( $oTitle );
-			} else {
-				$oArticle = new WikiaImagePage( $oTitle );
 			}
 		}
 
