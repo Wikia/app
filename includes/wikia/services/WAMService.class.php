@@ -29,7 +29,7 @@ class WAMService extends Service {
 	 */
 	public static function getCurrentWamScoreForWiki ($wikiId) {
 		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$memKey = $app->wf->SharedMemcKey('datamart', 'wam', $wikiId);
 
@@ -55,7 +55,7 @@ class WAMService extends Service {
 		};
 
 		$wamScore = WikiaDataAccess::cacheWithLock($memKey, 86400 /* 24 hours */, $getData);
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $wamScore;
 	}
 
@@ -82,7 +82,7 @@ class WAMService extends Service {
 			: $inputOptions['currentTimestamp'] - 60 * 60 * 24;
 
 		$app = F::app();
-		$app->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$wamIndex = array(
 			'wam_index' => array(),
@@ -126,7 +126,7 @@ class WAMService extends Service {
 			$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
 		}
 
-		$app->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $wamIndex;
 	}
@@ -138,7 +138,7 @@ class WAMService extends Service {
 		);
 
 		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if (!empty($app->wg->StatsDBEnabled)) {
 			$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
@@ -159,7 +159,7 @@ class WAMService extends Service {
 			$dates['min_date'] = strtotime('+1 day', strtotime($row['min_date']));
 		}
 
-		$app->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $dates;
 	}

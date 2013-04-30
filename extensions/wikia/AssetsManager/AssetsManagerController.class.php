@@ -34,7 +34,7 @@ class AssetsManagerController extends WikiaController {
 	 * @responseParam array messages - JS messages
 	 */
 	public function getMultiTypePackage() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
 
@@ -52,7 +52,7 @@ class AssetsManagerController extends WikiaController {
 		// handle templates via sendRequest
 		if ( !is_null( $templates ) ) {
 			$profileId = __METHOD__ . "::templates::{$templates}";
-			$this->wf->profileIn( $profileId );
+			wfProfileIn( $profileId );
 			$templates = json_decode( $templates, true /* $assoc */ );
 			$templatesOutput = array();
 
@@ -68,13 +68,13 @@ class AssetsManagerController extends WikiaController {
 			}
 
 			$this->response->setVal( 'templates', $templatesOutput );
-			$this->wf->profileOut( $profileId );
+			wfProfileOut( $profileId );
 		}
 
 		// handle SASS files
 		if ( !is_null( $styles ) ) {
 			$profileId = __METHOD__ . "::styles::{$styles}";
-			$this->wf->profileIn( $profileId );
+			wfProfileIn( $profileId );
 
 			$key = $this->getComponentMemcacheKey( $styles );
 			$data = $this->wg->Memc->get( $key );
@@ -95,13 +95,13 @@ class AssetsManagerController extends WikiaController {
 			}
 
 			$this->response->setVal('styles', $data);
-			$this->wf->profileOut( $profileId );
+			wfProfileOut( $profileId );
 		}
 
 		// handle assets manager JS packages
 		if ( !is_null( $scripts ) ) {
 			$profileId = __METHOD__ . "::scripts::{$scripts}";
-			$this->wf->profileIn( $profileId );
+			wfProfileIn( $profileId );
 
 			$key = $this->getComponentMemcacheKey( $scripts );
 			$data = $this->wg->Memc->get( $key );
@@ -122,29 +122,29 @@ class AssetsManagerController extends WikiaController {
 			}
 
 			$this->response->setVal( 'scripts', $data );
-			$this->wf->profileOut( $profileId );
+			wfProfileOut( $profileId );
 		}
 
 		// handle JSMessages
 		if ( !is_null( $messages ) ) {
 			$profileId = __METHOD__ . "::messages::{$messages}";
-			$this->wf->profileIn( $profileId );
+			wfProfileIn( $profileId );
 
 			$messagePackages = explode( ',', $messages );
 
 			$this->response->setVal( 'messages', F::getInstance( 'JSMessages' )->getPackages( $messagePackages ) );
-			$this->wf->profileOut( $profileId );
+			wfProfileOut( $profileId );
 		}
 
 		// handle mustache templates (BugId:30841)
 		if ( !is_null( $mustache ) ) {
 			$profileId = __METHOD__ . "::mustache::{$mustache}";
-			$this->wf->profileIn( $profileId );
+			wfProfileIn( $profileId );
 
 			$mustacheTemplates = explode( ',', $mustache );
 
 			$this->response->setVal( 'mustache', $this->getMustacheTemplates($mustacheTemplates));
-			$this->wf->profileOut( $profileId );
+			wfProfileOut( $profileId );
 		}
 
 		// handle cache time
@@ -157,7 +157,7 @@ class AssetsManagerController extends WikiaController {
 		}
 
 		$this->response->setFormat( 'json' );
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function getComponentMemcacheKey( $par ) {

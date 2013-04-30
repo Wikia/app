@@ -35,7 +35,7 @@ class JSSnippets extends WikiaObject {
 	 */
 
 	public function addToStack( $dependencies, $loaders = array(), $callback = null, $options = null ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$js = "";
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' ); /* @var $assetsManager AssetsManager */
 		$skin = RequestContext::getMain()->getSkin();
@@ -94,7 +94,7 @@ class JSSnippets extends WikiaObject {
 		}
 
 		if ( empty( $entry['dependencies'] ) && empty( $entry['loaders'] ) ) {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $js;
 		}
 
@@ -111,7 +111,7 @@ class JSSnippets extends WikiaObject {
 			$entry['callback'] .
 		'})');
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $js;
 	}
 

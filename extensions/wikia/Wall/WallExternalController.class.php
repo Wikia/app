@@ -172,7 +172,7 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function postNewMessage() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$relatedTopics = $this->request->getVal('relatedTopics', array());
 
@@ -198,7 +198,7 @@ class WallExternalController extends WikiaController {
 
 		if( empty($body) ) {
 			$this->response->setVal('status', false);
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -213,13 +213,13 @@ class WallExternalController extends WikiaController {
 		if( $wallMessage === false ) {
 			error_log('WALL_NOAC_ON_POST');
 			$this->response->setVal('status', false);
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
 		$wallMessage->load(true);
 		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'new' => true, 'comment' => $wallMessage ) ));
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	public function deleteMessage() {

@@ -123,7 +123,7 @@ class ArticleService extends WikiaObject {
 		}
 
 		$fname = __METHOD__;
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$id = $this->article->getID();
 		// in case the article is missing just return empty string
@@ -146,7 +146,7 @@ class ArticleService extends WikiaObject {
 				$key,
 				86400 /*24h*/,
 				function() use ( $app, $article, $tags, $pats, $fname ){
-					$app->wf->profileIn( $fname . '::CacheMiss' );
+					wfProfileIn( $fname . '::CacheMiss' );
 
 					//get standard parser cache for anons,
 					//99% of the times it will be available but
@@ -181,7 +181,7 @@ class ArticleService extends WikiaObject {
 						}
 					}
 
-					$app->wf->profileOut( $fname . '::CacheMiss' );
+					wfProfileOut( $fname . '::CacheMiss' );
 					return $content;
 				}
 			);
@@ -189,7 +189,7 @@ class ArticleService extends WikiaObject {
 
 		$snippet = $this->wf->ShortenText( $text, $length, true /*use content language*/ );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $snippet;
 	}
 

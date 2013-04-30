@@ -14,7 +14,7 @@ class Walls extends WikiaModel {
 	 * @return array List of board IDs
 	 */
 	public function getList( $db = DB_SLAVE, $namespace = NS_USER_WALL ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$titles = $this->getListTitles($db,$namespace);
 
@@ -24,7 +24,7 @@ class Walls extends WikiaModel {
 			$boards[] = $title->getArticleID();
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $boards;
 	}
@@ -37,7 +37,7 @@ class Walls extends WikiaModel {
 	 * @return array List of board IDs
 	 */
 	public function getListTitles( $db = DB_SLAVE, $namespace = NS_USER_WALL ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$titles = TitleBatch::newFromConds('page_wikia_props',array(
 				'page.page_namespace' => $namespace,
@@ -47,7 +47,7 @@ class Walls extends WikiaModel {
 			array( 'ORDER BY' => 'page_title' )
 		);
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $titles;
 	}

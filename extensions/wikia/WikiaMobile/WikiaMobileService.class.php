@@ -38,7 +38,7 @@ class WikiaMobileService extends WikiaService {
 	}
 
 	public function index() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$jsHeadPackages = array( 'wikiamobile_js_head' );
 		$jsBodyPackages = array();
@@ -187,6 +187,6 @@ class WikiaMobileService extends WikiaService {
 
 		$this->response->setVal( 'trackingCode', $trackingCode );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 }
