@@ -8,29 +8,19 @@ if( !defined( 'MEDIAWIKI' ) )
  *
  * @ingroup Media
  */
-class WikiaVideoPage extends ImagePage {
+class VideoPageFlat extends ImagePage {
 
 	protected function openShowImage(){
 		global $wgOut, $wgRequest, $wgEnableVideoPageRedesign;
 		wfProfileIn( __METHOD__ );
 
-		// TODO: figure out what this timestamp thing is being used for; If it's needed for all skins, move it to a different place.
-		/*$timestamp = $wgRequest->getInt('t', 0);
-
-		if ( $timestamp > 0 ) {
-			$img = wfFindFile( $this->mTitle, $timestamp );
-			if ( !($img instanceof LocalFile && $img->exists()) ) {
-				$img = $this->getDisplayedFile();
-			}
-		} else {
-			$img = $this->getDisplayedFile();
-		}*/
+		$timestamp = $wgRequest->getInt('t', 0);
 
 		$file = $this->getDisplayedFile();
 
-		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
+		FilePageHelper::setVideoFromTimestamp( $timestamp, $this->mTitle, $file);
 
-		$imageLink = FilePageHelper::getVideoPageVideoEmbedHTML( $file );
+		$imageLink = FilePageHelper::getVideoPageEmbedHTML( $file );
 
 		$imageLink .= $this->getVideoInfoLine( $file );
 

@@ -10,25 +10,24 @@ class FilePageHooks extends WikiaObject{
 	}
 
 	/**
-	 * @param Title $oTitle
+	 * Determine which FilePage to show based on skin and File type (image/video)
 	 *
-	 * @return WikiaVideoPage if file is video
+	 * @param Title $oTitle
+	 * @param Article $oArticle
 	 */
 	public function onArticleFromTitle( &$oTitle, &$oArticle ){
-		$app = F::app();
-
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
 			$oFile = wfFindFile( $oTitle );
 			$isVideo = WikiaFileHelper::isVideoFile( $oFile );
 
-			if ( $app->checkSkin( 'oasis' ) ) {
+			if ( F::app()->checkSkin( 'oasis' ) ) {
 				if ( $isVideo ) {
-					$oArticle = new WikiaVideoPageOasis( $oTitle );
+					$oArticle = new VideoPageTabbed( $oTitle );
 				} else {
-					$oArticle = new WikiaImagePageOasis( $oTitle );
+					$oArticle = new ImagePageTabbed( $oTitle );
 				}
 			} else if ( $isVideo ) {
-				$oArticle = new WikiaVideoPage( $oTitle );
+				$oArticle = new VideoPageFlat( $oTitle );
 			}
 		}
 

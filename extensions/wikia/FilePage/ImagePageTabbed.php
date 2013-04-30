@@ -6,12 +6,15 @@ if( !defined( 'MEDIAWIKI' ) )
 /**
  * This is an override and extension of includes/ImagePage.php
  * As Wikia, we want to output a different markup structure and css for File pages than default MediaWiki.
- * WikiaVideoPage will inherit off of this class
+ * VideoPageTabbed will inherit off of this class
  *
  * @ingroup Media
  * @author Hyun
+ * @author Liz Lee
+ * @author Garth Webb
+ * @author Saipetch
  */
-class WikiaImagePageOasis extends ImagePage {
+class ImagePageTabbed extends ImagePage {
 
 	/**
 	 * TOC override so Wikia File Page does not return any TOC
@@ -20,10 +23,6 @@ class WikiaImagePageOasis extends ImagePage {
 	 * @return String - will return empty string to add
 	 */
 	protected function showTOC( $metadata ) {
-		$app = F::app();
-		if(empty($app->wg->EnableVideoPageRedesign) || $this->isMobile()) {
-			return parent::showTOC($metadata);
-		}
 		return '';
 	}
 
@@ -38,18 +37,10 @@ class WikiaImagePageOasis extends ImagePage {
 		return $isDiff;
 	}
 
-	protected function isMobile() {
-		return F::App()->checkSkin('wikiamobile');
-	}
-
 	protected function imageContent() {
 		$out = $this->getContext()->getOutput();
 		$app = F::App();
 
-		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
-			parent::imageContent();
-			return;
-		}
 		$sectionClass = '';
 		if (! $this->isDiffPage() ) {
 			$this->renderTabs();
@@ -71,11 +62,6 @@ class WikiaImagePageOasis extends ImagePage {
 	protected function imageDetails() {
 		$app = F::App();
 		$out = $this->getContext()->getOutput();
-
-		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
-			parent::imageDetails();
-			return;
-		}
 
 		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
 		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
@@ -101,11 +87,6 @@ class WikiaImagePageOasis extends ImagePage {
 		$app = F::App();
 		$out = $this->getContext()->getOutput();
 
-		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
-			parent::imageMetadata($formattedMetadata);
-			return;
-		}
-
 		$sectionClass = '';
 		if (! $this->isDiffPage() ) {
 			$sectionClass = ' class="tabBody"';
@@ -122,16 +103,10 @@ class WikiaImagePageOasis extends ImagePage {
 	}
 
 	/**
-	 * imageListing override.
-	 * for WikiaFilePage, imageListing will be printed under additionalDetails()
+	 * imageListing override. We're using "appears in these..." section instead
 	 */
 	protected function imageListing() {
-		$app = F::App();
-
-		if ( empty($app->wg->EnableVideoPageRedesign) || $this->isMobile() ) {
-			parent::imageListing();
-			return;
-		}
+		return;
 	}
 
 	protected function renderTabs() {
@@ -142,6 +117,10 @@ class WikiaImagePageOasis extends ImagePage {
 		$out->addHtml($tabs);
 	}
 
+	/* TODO: Rename this and clean up the logic a bit.
+	 * 1) We're no longer rendering a description header, so function name doesn't make sense.
+	 * 2) If content is empty, simply output default message.  We don't need a template for this.
+	 */
 	protected function renderDescriptionHeader() {
 		$app = F::App();
 		$out = $this->getContext()->getOutput();

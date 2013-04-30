@@ -16,7 +16,7 @@ class FilePageHelper {
 		return $content;
 	}
 
-	public static function getVideoPageVideoEmbedHTML( $file ) {
+	public static function getVideoPageEmbedHTML( $file ) {
 		$app = F::app();
 		$autoplay = $app->wg->VideoPageAutoPlay;
 
@@ -30,5 +30,18 @@ class FilePageHelper {
 		return ucfirst($cat) . ':' . wfMsgForContent( 'videohandler-category' );
 	}
 
+	/**
+	 * If a timestamp is specified, show the archived version of the video (if it exists)
+	 */
+	public static function setVideoFromTimestamp( $timestamp, $title, &$file) {
 
+		if ( $timestamp > 0 ) {
+			$archiveFile = wfFindFile( $title, $timestamp );
+			if ( $archiveFile instanceof LocalFile && $archiveFile->exists()) {
+				$file = $archiveFile;
+			}
+		}
+
+		return true;
+	}
 }

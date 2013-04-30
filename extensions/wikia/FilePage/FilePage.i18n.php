@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'video-page-see-less-info' => 'Show less info',
 	'video-page-description-heading' => 'Description',
 	'video-page-description-zero-state' => 'There is no description yet.',
-	'video-page-file-list-pagination' => '$1 of $2', // why are we using custom pagination instead of one of the existing compoments? --TOR
+	'video-page-file-list-pagination' => '$1 of $2',
 
 	/* file page */
 	'file-page-replace-button' => 'Replace',

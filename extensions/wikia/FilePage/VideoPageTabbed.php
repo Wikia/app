@@ -8,29 +8,31 @@ if( !defined( 'MEDIAWIKI' ) )
  *
  * @ingroup Media
  */
-class WikiaVideoPageOasis extends WikiaImagePageOasis {
+class VideoPageTabbed extends ImagePageTabbed {
 
 	protected function openShowImage(){
 		global $wgOut, $wgRequest, $wgEnableVideoPageRedesign;
 		wfProfileIn( __METHOD__ );
 
-		// TODO: figure out what this timestamp thing is being used for; If it's needed for all skins, move it to a different place.
 		$timestamp = $wgRequest->getInt('t', 0);
 
-		if ( $timestamp > 0 ) {
-			$img = wfFindFile( $this->mTitle, $timestamp );
-			if ( !($img instanceof LocalFile && $img->exists()) ) {
-				$img = $this->getDisplayedFile();
-			}
-		} else {
-			$img = $this->getDisplayedFile();
-		}
+		$file = $this->getDisplayedFile();
+
+		FilePageHelper::setVideoFromTimestamp( $timestamp, $this->mTitle, $file);
 
 		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
 
-		$imageLink = FilePageHelper::getVideoPageVideoEmbedHTML( $img );
+		$imageLink = FilePageHelper::getVideoPageEmbedHTML( $file );
 
-		$wgOut->addHTML($imageLink);
+		$caption = $this->getCaptionLine( $file );
+
+		$wgOut->addHTML($imageLink . $caption);
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	protected function getCaptionLine($img) {
+		$app = F::app();
 
 		$captionDetails = array(
 			'expireDate' => $img->getExpirationDate(),
@@ -39,11 +41,10 @@ class WikiaVideoPageOasis extends WikiaImagePageOasis {
 			'detailUrl' => $img->getProviderDetailUrl(),
 			'views' => MediaQueryService::getTotalVideoViewsByTitle( $img->getTitle()->getDBKey() ),
 		);
-		$caption = F::app()->renderView( 'FilePageController', 'videoCaption', $captionDetails );
 
-		$wgOut->addHTML($caption);
+		$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
 
-		wfProfileOut( __METHOD__ );
+		return $caption;
 	}
 
 	// TODO: Move this out and handle it differently.  It's no longer being called as of MW 1.19
