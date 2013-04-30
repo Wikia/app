@@ -593,7 +593,7 @@ class WikiaHomePageController extends WikiaController {
 		$collectionsList = $collections->getList($this->wg->ContLang->getCode());
 		$this->response->setVal( 'collectionsList', $collectionsList );
 		$this->response->setVal( 'areCollectionsAvailable', $this->areCollectionsAvailable() );
-		
+
 		$this->response->setVal(
 			'seoSample',
 			$this->getSeoList()

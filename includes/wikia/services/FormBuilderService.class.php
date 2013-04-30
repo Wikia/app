@@ -12,8 +12,13 @@ class FormBuilderService extends WikiaService
 	 * @param array $fields  array of form fields ( @see setFields )
 	 */
 	public function __construct($prefix = '', $fields = []) {
-		$this->prefix = $prefix;
-		$this->setFields($fields);
+		parent::__construct();
+		if (!empty($prefix)) {
+			$this->prefix = $prefix;
+		}
+		if (!empty($fields)) {
+			$this->setFields($fields);
+		}
 	}
 
 	/**

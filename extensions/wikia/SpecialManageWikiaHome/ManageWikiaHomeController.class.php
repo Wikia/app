@@ -66,7 +66,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$hotWikisAmount = $this->request->getVal('hot-wikis-amount', $this->helper->getNumberOfHotWikiSlots($this->visualizationLang));
 		$newWikisAmount = $this->request->getVal('new-wikis-amount', $this->helper->getNumberOfNewWikiSlots($this->visualizationLang));
 
-		$this->form = $this->prepareCollectionsForm();
+		$this->form = new CollectionsForm();
 		$collectionsModel = new WikiaCollectionsModel();
 		$collectionValues = $this->prepareCollectionToShow($collectionsModel->getList($this->visualizationLang));
 
@@ -317,64 +317,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->wf->ProfileOut(__METHOD__);
 		return $result;
-	}
-
-	private function prepareCollectionsForm() {
-		$fields = [
-			'name' => [
-				'label' => $this->wf->msg('manage-wikia-home-collections-name-field-label'),
-				'validator' => new WikiaValidatorListValue([
-					'validator' => new WikiaValidatorString(
-						array(
-							'required' => true,
-							'min' => 1
-						),
-						array('too_short' => 'marketing-toolbox-validator-string-short')
-					)
-				]),
-				'isArray' => true
-			],
-			'enabled' => [
-				'label' => $this->wf->msg('manage-wikia-home-collections-enabled-field-label'),
-				'type' => 'checkbox',
-				'validator' => new WikiaValidatorListValue([
-					'validator' => new WikiaValidatorInteger()
-				]),
-				'isArray' => true
-			],
-			'sponsor_url' => [
-				'label' => $this->wf->msg('manage-wikia-home-collections-sponsur-url-field-label'),
-				'validator' => new WikiaValidatorListValue([
-					'validator' => new WikiaValidatorUrl()
-				]),
-				'isArray' => true
-			],
-			'sponsor_hero_image' => [
-				'label' => $this->wf->msg('manage-wikia-home-collections-sponsor-hero-image-field-label'),
-				'validator' => new WikiaValidatorListValue([
-					'validator' => new WikiaValidatorFileTitle(
-						array(
-							'required' => false
-						)
-					)
-				]),
-				'isArray' => true
-			],
-			'sponsor_image' => [
-				'label' => $this->wf->msg('manage-wikia-home-collections-sponsor-image-field-label'),
-				'validator' => new WikiaValidatorListValue([
-					'validator' => new WikiaValidatorFileTitle(
-						array(
-							'required' => false
-						)
-					)
-				]),
-				'isArray' => true
-			],
-		];
-
-		$form = new FormBuilderService('collections', $fields);
-		return $form;
 	}
 
 	/**
