@@ -77,11 +77,12 @@ function addFeaturedVideos( $videos, $wikis ) {
 /**
  * add popular videos
  * @global int $failed
+ * @global int $popVideos
  * @param type $videos
  * @param type $wikis
  */
 function addPopularVideos( $videos, $wikis ) {
-	global $failed;
+	global $failed, $popVideos;
 
 	foreach( $videos as $video ) {
 		if ( !empty( $video['data']['videoUrl'] ) ) {
@@ -96,6 +97,8 @@ function addPopularVideos( $videos, $wikis ) {
 					'name' => $video['data']['video'][$i],
 					'videoUrl' => $video['data']['videoUrl'][$i]
 				);
+
+				$popVideos++;
 			}
 
 			addVideoToWikis( $popularVideos, $wikis );
@@ -103,6 +106,7 @@ function addPopularVideos( $videos, $wikis ) {
 			echo "\tUser: ".$video['lastEditorId']."\n";
 			echo "\t\tVideo: ".var_export( $video['data'], TRUE )." .... FAILED (EMPTY videoUrl)\n";
 			$failed++;
+			$popVideos++;
 		}
 	}
 }
@@ -210,6 +214,7 @@ if ( empty( $wikis ) ) {
 
 $success = 0;
 $failed = 0;
+$popVideos = 0;
 
 // add featured videos
 echo "Hub v2 module id (Featured Videos): ".MarketingToolboxModuleFeaturedvideoService::MODULE_ID."\n";
@@ -222,7 +227,7 @@ echo "\nHub v2 module id (Popular Videos): ".MarketingToolboxModulePopularvideos
 $popularVideos = getHubsV2VideosByModuleId( MarketingToolboxModulePopularvideosService::MODULE_ID );
 addPopularVideos( $popularVideos, $wikis );
 
-$totalVideos = count( $featuredVideos ) + count( $popularVideos );
+$totalVideos = count( $featuredVideos ) + $popVideos;
 echo "Total hub v2 wikis: ".count($wikis)." (".implode( ',', array_keys( $wikis ) ).")"."\n";
-echo "Total Videos: $totalVideos (Featured Videos: ".count( $featuredVideos ).", Popular Videos: ".count( $popularVideos ).")\n";
+echo "Total Videos: $totalVideos (Featured Videos: ".count( $featuredVideos ).", Popular Videos: $popVideos [".count( $popularVideos )." sets]).\n";
 echo "Total requests sent: ".( $totalVideos * count( $wikis ) )." (Success: $success, Failed: $failed).\n\n";
