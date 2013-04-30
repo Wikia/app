@@ -45,6 +45,13 @@ function getHubsV2VideosByModuleId( $moduleId ) {
 function addFeaturedVideos( $videos, $wikis ) {
 	global $failed;
 
+	// get url
+	$url = WikiFactory::getVarValueByName( 'wgServer', F::app()->wg->CityId );
+	if ( empty( $url ) ) {
+		$url = rtrim( F::app()->wg->WikiaVideoRepoPath, '/' );
+	}
+
+	// add videos
 	foreach( $videos as $video ) {
 		$featuredVideos = array();
 
@@ -55,7 +62,7 @@ function addFeaturedVideos( $videos, $wikis ) {
 
 			$featuredVideos[] = array(
 				'name' => $video['data']['video'],
-				'videoUrl' => rtrim( F::app()->wg->WikiaVideoRepoPath, '/' ).$title->getLocalURL(),
+				'videoUrl' => $url.$title->getLocalURL(),
 			);
 
 			addVideoToWikis( $featuredVideos, $wikis );
@@ -112,15 +119,18 @@ function addVideoToWikis( $videos, $wikis ) {
 	global $dryRun, $totalRequests, $success, $failed;
 
 	if ( $dryRun ) {
-		echo "\t\tDRY RUN .... DONE\n";
-		return;
+		$wikiIds = array_keys( $wikis );
+		$response = array_fill_keys( $wikiIds, true );
 	}
+
+	$videoService = new VideoService();
 
 	foreach( $videos as $video ) {
 		echo "\t\tVideo: $video[name] ($video[videoUrl]):\n";
 
-		$videoService = new VideoService();
-		$response = $videoService->addVideoAcrossWikis( $video['videoUrl'], $wikis );
+		if ( !$dryRun ) {
+			$response = $videoService->addVideoAcrossWikis( $video['videoUrl'], $wikis );
+		}
 
 		foreach( $response as $id => $status ) {
 			echo "\t\t\tWiki $id";
