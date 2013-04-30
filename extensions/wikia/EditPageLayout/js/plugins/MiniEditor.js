@@ -65,7 +65,7 @@
 			// Handle positioning of RTEOverlay (image overlay etc)
 			wikiaEditor.getEditboxWrapper().bind('mouseenter.MiniEditor', function() {
 				RTE.repositionRTEOverlay(ckeditor.name);
-				RTE.overlayNode.data('editor', wikiaEditor);
+				RTE.overlayNode.data('wikiaEditor', wikiaEditor);
 			});
 		},
 
