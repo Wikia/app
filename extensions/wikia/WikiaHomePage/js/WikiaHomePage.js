@@ -144,6 +144,7 @@ WikiaHomePageRemix.prototype = {
 	init: function () {
 		this.wikiSetStack = window.wgInitialWikiBatchesForVisualization;
 		this.collectionsWikisStack = window.wgCollectionsBatches || [];
+		this.statsContainer = $('#WikiaHomePageStats');
 
 		$('#WikiaArticle').on(
 			'mousedown',
@@ -293,6 +294,9 @@ WikiaHomePageRemix.prototype = {
 			}
 			this.wikiSetStackIndex++;
 			this.preload();
+
+			this.showStats();
+
 			$().log('WikiaHomePageRemix data remixed');
 		} else {
 			$().log('wikiSetStack is empty');
@@ -357,7 +361,44 @@ WikiaHomePageRemix.prototype = {
 		this.remix($('.slot-medium'), selectedCollection.mediumslots);
 		this.remix($('.slot-small'), selectedCollection.smallslots);
 		this.remix($('.slot-big'), selectedCollection.bigslots);
+
+		if ('sponsor_image' in selectedCollection) {
+			var container = this.createSponsorImageContainer(selectedCollection);
+			$('#WikiaHomaPageSponsorImage').remove();
+			this.statsContainer
+				.hide()
+				.after(container);
+		} else {
+			this.showStats();
+		}
 	},
+	showStats: function() {
+		this.statsContainer.show();
+		$('#WikiaHomaPageSponsorImage').remove();
+	},
+
+	createSponsorImageContainer: function(collection) {
+		var imgData = collection['sponsor_image'];
+		var img = $('<img />')
+			.attr('alt', imgData['title'])
+			.attr('witdh', imgData['width'])
+			.attr('witdh', imgData['height'])
+			.attr('src', imgData['url']);
+
+		var container = $('<div />')
+			.attr('id', 'WikiaHomaPageSponsorImage')
+			.addClass('grid-2');
+
+		if ('sponsor_url' in collection) {
+			var link = $('<a />').attr('href', collection['sponsor_url']);
+			link.append(img);
+			container.append(link);
+		} else {
+			container.append(img);
+		}
+		return container;
+	},
+
 	addWikiToStack: function() {
 		$.nirvana.sendRequest({
 			type: 'post',

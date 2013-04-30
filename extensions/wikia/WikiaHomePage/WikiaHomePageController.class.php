@@ -222,11 +222,24 @@ class WikiaHomePageController extends WikiaController {
 			$tmpCollectionsBatches = $visualization->getCollectionsWikisData($this->wg->WikiaHomePageCollectionsWikis);
 
 			$collections = new WikiaCollectionsModel();
-			$collectionsList = $collections->getList($this->wg->ContLang->getCode());
+			$collectionsList = $collections->getListForVisualization($this->wg->ContLang->getCode());
 
 			for ($i = 0; $i < count($collectionsList); $i++) {
-				if (isset($collectionsList[$i]['id']) && isset($tmpCollectionsBatches[$i])) {
+				$coll = $collectionsList[$i];
+				if (isset($coll['id']) && isset($tmpCollectionsBatches[$i])) {
 					$collectionsBatches[$collectionsList[$i]['id']] = $tmpCollectionsBatches[$i];
+
+					if (!empty($coll['sponsor_hero_image'])) {
+						$collectionsBatches[$coll['id']]['sponsor_hero_image'] = $coll['sponsor_hero_image'];
+					}
+
+					if (!empty($coll['sponsor_image'])) {
+						$collectionsBatches[$coll['id']]['sponsor_image'] = $coll['sponsor_image'];
+					}
+
+					if (!empty($coll['sponsor_url'])) {
+						$collectionsBatches[$coll['id']]['sponsor_url'] = $coll['sponsor_url'];
+					}
 				}
 			}
 		}

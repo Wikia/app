@@ -49,7 +49,7 @@
 				</a>
 			</div>
 		</div>
-		<div class="grid-2 stats">
+		<div class="grid-2 stats" id="WikiaHomePageStats">
 			<?= F::app()->renderView( 'WikiaHomePageController', 'getStats' ); ?>
 		</div>
 	</div>
