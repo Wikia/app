@@ -1,6 +1,6 @@
 <?
 class CollectionsForm extends FormBuilderService {
-	public $prefix = 'collections';
+	protected $prefix = 'collections';
 
 	public function __construct($prefix = '', $fields = []) {
 		parent::__construct($prefix, $fields);

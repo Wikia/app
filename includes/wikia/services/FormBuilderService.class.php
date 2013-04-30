@@ -3,7 +3,7 @@
 class FormBuilderService extends WikiaService
 {
 	public $formFields = [];
-	private $prefix;
+	protected $prefix;
 
 	/**
 	 * Constructor
