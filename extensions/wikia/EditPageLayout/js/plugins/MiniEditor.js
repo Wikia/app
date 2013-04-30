@@ -55,6 +55,7 @@
 			// insertion method we should have a universal 'content has changed' event.
 			this.editor.on( 'editorAddMedia', this.proxy( this.editorKeyUp ) );
 			this.editor.on( 'editorAddLink', this.proxy( this.editorKeyUp ) );
+			this.editor.on( 'editorInsertTags', this.proxy( this.editorKeyUp ) );
 		},
 
 		// CKE properties are now available
