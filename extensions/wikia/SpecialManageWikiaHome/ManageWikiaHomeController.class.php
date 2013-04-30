@@ -349,6 +349,28 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				]),
 				'isArray' => true
 			],
+			'sponsor_hero_image' => [
+				'label' => $this->wf->msg('manage-wikia-home-collections-sponsor-hero-image-field-label'),
+				'validator' => new WikiaValidatorListValue([
+					'validator' => new WikiaValidatorFileTitle(
+						array(
+							'required' => false
+						)
+					)
+				]),
+				'isArray' => true
+			],
+			'sponsor_image' => [
+				'label' => $this->wf->msg('manage-wikia-home-collections-sponsor-image-field-label'),
+				'validator' => new WikiaValidatorListValue([
+					'validator' => new WikiaValidatorFileTitle(
+						array(
+							'required' => false
+						)
+					)
+				]),
+				'isArray' => true
+			],
 		];
 
 		$form = new FormBuilderService('collections', $fields);
