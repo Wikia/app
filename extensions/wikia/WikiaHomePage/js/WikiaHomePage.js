@@ -364,7 +364,7 @@ WikiaHomePageRemix.prototype = {
 
 		if ('sponsor_image' in selectedCollection) {
 			var container = this.createSponsorImageContainer(selectedCollection);
-			$('#WikiaHomaPageSponsorImage').remove();
+			$('#WikiaHomePageSponsorImage').remove();
 			this.statsContainer
 				.hide()
 				.after(container);
@@ -374,7 +374,7 @@ WikiaHomePageRemix.prototype = {
 	},
 	showStats: function() {
 		this.statsContainer.show();
-		$('#WikiaHomaPageSponsorImage').remove();
+		$('#WikiaHomePageSponsorImage').remove();
 	},
 
 	createSponsorImageContainer: function(collection) {
@@ -386,7 +386,7 @@ WikiaHomePageRemix.prototype = {
 			.attr('src', imgData['url']);
 
 		var container = $('<div />')
-			.attr('id', 'WikiaHomaPageSponsorImage')
+			.attr('id', 'WikiaHomePageSponsorImage')
 			.addClass('grid-2');
 
 		if ('sponsor_url' in collection) {
