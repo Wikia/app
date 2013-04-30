@@ -243,6 +243,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						@include linear-gradient(#ddd, top, #ddd, 20%, white, 100%);
 					}
 				}
+				a.wikia-button.chevron-not-visible {
+					padding: 9px 26px 15px 24px;
+				}
 				h2 {
 					border-bottom: none;
 					padding: 15px 17px 0;

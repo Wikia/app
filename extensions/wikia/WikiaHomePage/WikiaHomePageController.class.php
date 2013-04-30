@@ -216,7 +216,7 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	protected function getCollectionsWikiList() {
 		$collectionsBatches = [];
-		if( $this->wg->EnableWikiaHomePageCollections && !empty($this->wg->WikiaHomePageCollectionsWikis) ) {
+		if( $this->areCollectionsAvailable() ) {
 			$visualization = $this->getVisualization();
 
 			$tmpCollectionsBatches = $visualization->getCollectionsWikisData($this->wg->WikiaHomePageCollectionsWikis);
@@ -590,8 +590,9 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	public function visualization() {
 		$collections = new WikiaCollectionsModel();
-		$collectionsList = $collections->getListForVisualization($this->wg->ContLang->getCode());
-		$this->response->setVal('collectionsList', $collectionsList);
+		$collectionsList = $collections->getList($this->wg->ContLang->getCode());
+		$this->response->setVal( 'collectionsList', $collectionsList );
+		$this->response->setVal( 'areCollectionsAvailable', $this->areCollectionsAvailable() );
 		
 		$this->response->setVal(
 			'seoSample',
@@ -760,5 +761,9 @@ class WikiaHomePageController extends WikiaController {
 		}
 		
 		return $this->visualization;
+	}
+	
+	private function areCollectionsAvailable() {
+		return $this->wg->EnableWikiaHomePageCollections && !empty($this->wg->WikiaHomePageCollectionsWikis);
 	}
 }

@@ -16,12 +16,12 @@
 		<div class="grid-1 alpha remix">
 			<h2><?= wfMsg('wikiahome-visualisation-remix-mixitup'); ?></h2>
 			<h3><?= wfMsg('wikiahome-visualisation-remix-mixituptext'); ?></h3>
-			<a href="#" class="wikia-button secondary remix-button">
+			<a href="#" class="wikia-button secondary remix-button <?= ( !$areCollectionsAvailable ? 'chevron-not-visible' : '' ); ?>">
 				<img src="<?= $wg->BlankImgUrl; ?>" class="arrow" />
 				<?= wfMsg('wikiahome-visualisation-remix-button'); ?>
 			</a>
 			
-			<?php if( !empty($collectionsList ) ): ?>
+			<?php if( $areCollectionsAvailable ): ?>
 				<a href="#" class="wikia-button collections-button">
 					<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 				</a>
