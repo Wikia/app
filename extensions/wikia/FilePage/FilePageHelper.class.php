@@ -32,6 +32,8 @@ class FilePageHelper {
 
 	/**
 	 * If a timestamp is specified, show the archived version of the video (if it exists)
+	 *
+	 * @param $timestamp Int
 	 */
 	public static function setVideoFromTimestamp( $timestamp, $title, &$file) {
 
@@ -43,5 +45,21 @@ class FilePageHelper {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @param $file File
+	 * @return String Url where user can re-upload the file
+	 */
+	public static function getUploadUrl( $file ) {
+		wfProfileIn( __METHOD__ );
+
+		$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
+		$name = $file->getName();
+		$url = $uploadTitle->getFullUrl( array( 'name' => $name ) );
+
+		wfProfileOut( __METHOD__ );
+
+		return $url;
 	}
 }

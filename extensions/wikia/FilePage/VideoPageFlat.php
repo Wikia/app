@@ -4,12 +4,20 @@ if( !defined( 'MEDIAWIKI' ) )
 	die( 1 );
 
 /**
- * Special handling for video description pages in skins that aren't Oasis
+ * Special handling for video file pages in skins that aren't Oasis
+ * No tabs will be applied and the current goal is to keep this as much like core mediawiki as possible
  *
  * @ingroup Media
+ * @author Hyun
+ * @author Liz Lee
+ * @author Garth Webb
+ * @author Saipetch
  */
 class VideoPageFlat extends ImagePage {
 
+	/**
+	 * Render the video player
+	 */
 	protected function openShowImage(){
 		global $wgOut, $wgRequest, $wgEnableVideoPageRedesign;
 		wfProfileIn( __METHOD__ );
@@ -29,6 +37,9 @@ class VideoPageFlat extends ImagePage {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Display info about the video below the video player
+	 */
 	protected function getVideoInfoLine( $file ) {
 		global $wgWikiaVideoProviders;
 
@@ -46,38 +57,20 @@ class VideoPageFlat extends ImagePage {
 		return $s;
 	}
 
-	// TODO: Move this out and handle it differently.  It's no longer being called as of MW 1.19
-	/*public function getDuplicates() {
+	/**
+	 * @param $title Title
+	 * @return WikiVideoFilePage
+	 */
+	protected function newPage( Title $title ) {
+		// Overload mPage with a file-specific page
+		return new WikiVideoFilePage( $title );
+	}
 
-		wfProfileIn( __METHOD__ );
-		$img =  $this->getDisplayedFile();
-		$handler = $img->getHandler();
-		if ( $handler instanceof VideoHandler && $handler->isBroken() ) {
-			$res = $this->dupes = array();
-		} else {
-			$dupes = parent::getDuplicates();
-			$finalDupes = array();
-			foreach( $dupes as $dupe ) {
-		                if ( WikiaFileHelper::isFileTypeVideo( $dupe ) && $dupe instanceof WikiaLocalFile ) {
-		                    if ( $dupe->getProviderName() != $img->getProviderName() ) continue;
-		                    if ( $dupe->getVideoId() != $img->getVideoId() ) continue;
-		                    $finalDupes[] = $dupe;
-		                }
-			}
-			$res = $finalDupes;
-		}
-		wfProfileOut( __METHOD__ );
-		return $res;
-	}*/
-
-	// TODO: Move this somewhere else so it can continue to override ImagePage::getUploadUrl() for all video pages on all skins
+	/**
+	 * @return String Url where user can re-upload the file
+	 */
 	public function getUploadUrl() {
-		wfProfileIn( __METHOD__ );
 		$this->loadFile();
-		$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
-		wfProfileOut( __METHOD__ );
-		return $uploadTitle->getFullUrl( array(
-			'name' => $this->getDisplayedFile()->getName()
-		 ) );
+		return FilePageHelper::getUploadUrl( $this->getDisplayedFile() );
 	}
 }

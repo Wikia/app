@@ -44,7 +44,7 @@ class FilePageHooks extends WikiaObject{
 
 		wfProfileIn(__METHOD__);
 		// load assets when File Page redesign is enabled and on the File Page
-		if( !empty($app->wg->EnableVideoPageRedesign) && $app->wg->Title->getNamespace() == NS_FILE ) {
+		if( $app->checkSkin( 'oasis' ) && $app->wg->Title->getNamespace() == NS_FILE ) {
 			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 			$scssPackage = 'file_page_css';
 			$jsPackage = 'file_page_js';

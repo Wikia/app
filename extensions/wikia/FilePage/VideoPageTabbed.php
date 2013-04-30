@@ -5,11 +5,19 @@ if( !defined( 'MEDIAWIKI' ) )
 
 /**
  * Special handling for video description pages in Oasis
+ * Content is grouped into tabs; Tab states are remembered with LocalStorage
  *
  * @ingroup Media
+ * @author Hyun
+ * @author Liz Lee
+ * @author Garth Webb
+ * @author Saipetch
  */
 class VideoPageTabbed extends ImagePageTabbed {
 
+	/**
+	 * Render the video player
+	 */
 	protected function openShowImage(){
 		global $wgOut, $wgRequest, $wgEnableVideoPageRedesign;
 		wfProfileIn( __METHOD__ );
@@ -31,6 +39,9 @@ class VideoPageTabbed extends ImagePageTabbed {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Display info about the video below the video player
+	 */
 	protected function getCaptionLine($img) {
 		$app = F::app();
 
@@ -47,38 +58,11 @@ class VideoPageTabbed extends ImagePageTabbed {
 		return $caption;
 	}
 
-	// TODO: Move this out and handle it differently.  It's no longer being called as of MW 1.19
-	/*public function getDuplicates() {
-
-		wfProfileIn( __METHOD__ );
-		$img =  $this->getDisplayedFile();
-		$handler = $img->getHandler();
-		if ( $handler instanceof VideoHandler && $handler->isBroken() ) {
-			$res = $this->dupes = array();
-		} else {
-			$dupes = parent::getDuplicates();
-			$finalDupes = array();
-			foreach( $dupes as $dupe ) {
-		                if ( WikiaFileHelper::isFileTypeVideo( $dupe ) && $dupe instanceof WikiaLocalFile ) {
-		                    if ( $dupe->getProviderName() != $img->getProviderName() ) continue;
-		                    if ( $dupe->getVideoId() != $img->getVideoId() ) continue;
-		                    $finalDupes[] = $dupe;
-		                }
-			}
-			$res = $finalDupes;
-		}
-		wfProfileOut( __METHOD__ );
-		return $res;
-	}*/
-
-	// TODO: Move this somewhere else so it can continue to override ImagePage::getUploadUrl() for all video pages on all skins
+	/**
+	 * @return String Url where user can re-upload the file
+	 */
 	public function getUploadUrl() {
-		wfProfileIn( __METHOD__ );
 		$this->loadFile();
-		$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
-		wfProfileOut( __METHOD__ );
-		return $uploadTitle->getFullUrl( array(
-			'name' => $this->getDisplayedFile()->getName()
-		 ) );
+		return FilePageHelper::getUploadUrl( $this->getDisplayedFile() );
 	}
 }
