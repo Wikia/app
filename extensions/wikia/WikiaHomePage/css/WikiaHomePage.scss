@@ -268,7 +268,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					height: 4px;
 					position: absolute;
 					top: 0;
-					width: 39px;
+					width: 40px;
 				}
 				&:before {
 					background-color: $color-wikiahome-community;
@@ -276,11 +276,11 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				}
 				&:after {
 					background-color: $color-wikiahome-videogames;
-					left: 39px;
+					left: 40px;
 				}
 				h2:before {
 					background-color: $color-wikiahome-entertainment;
-					right: 39px;
+					right: 40px;
 				}
 				h2:after {
 					background-color: $color-wikiahome-lifestyle;
