@@ -119,6 +119,14 @@ CKEDITOR.keystrokeHandler = function( editor )
 		}
 	};
 
+	// Wikia change - begin
+	// @author kflorence
+	var onKeyUp = function( event )
+	{
+		this._.editor.fire( 'keyUp', { keyCode: event.data.getKeystroke() } );
+	};
+	// Wikia change - end
+
 	CKEDITOR.keystrokeHandler.prototype =
 	{
 		/**
@@ -130,6 +138,11 @@ CKEDITOR.keystrokeHandler = function( editor )
 		 */
 		attach : function( domObject )
 		{
+			// Wikia change - begin
+			// @author kflorence
+			domObject.on( 'keyup', onKeyUp, this );
+			// Wikia change - end
+
 			// For most browsers, it is enough to listen to the keydown event
 			// only.
 			domObject.on( 'keydown', onKeyDown, this );
