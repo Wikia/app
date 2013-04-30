@@ -99,7 +99,7 @@
 		editorKeyUp: function() {
 			this.editorToggleButtonsDisabled();
 
-			if ( this.editor.ck != 'undefined' ) {
+			if ( this.editor.ck != undefined ) {
 				this.editorResize();
 			}
 		},
