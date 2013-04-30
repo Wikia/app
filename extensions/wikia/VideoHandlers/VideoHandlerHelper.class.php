@@ -59,7 +59,9 @@ class VideoHandlerHelper extends WikiaModel {
 	public function replaceDescriptionSection( $content, $descText = '' ) {
 		$headerText = $this->wf->Message( 'videohandler-description' );
 
-		$preText = preg_replace("/^==\s*$headerText\s*==\n*(.+)/sim", '', $content);
+		// Get any text before the first description header by deleting the first decription
+		// header and everything after it.
+		$preText = preg_replace("/^==\s*$headerText\s*==\n*(.*)/sim", '', $content);
 
 		// Grab everything after the description header
 		preg_match("/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches);
