@@ -51,8 +51,8 @@ function wfArticleMetaDescription(&$out, &$text) {
 
 	if(($sMessage == null) || wfEmptyMsg("Description", $sMessage)) {
 		$DESC_LENGTH = 100;
-		$articleId = $wgTitle->getArticleID();
-		$articleService = new ArticleService( $articleId );
+		$article = new Article($wgTitle);
+		$articleService = new ArticleService( $article );
 		$description = $articleService->getTextSnippet( $DESC_LENGTH );
 	} else {
 		// MediaWiki:Description message found, use it

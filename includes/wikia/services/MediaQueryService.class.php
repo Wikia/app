@@ -180,7 +180,7 @@ class MediaQueryService extends WikiaService {
 		if( !isset($this->mediaCache[ $media->getDBKey() ] ) ) {
 			$file = wfFindFile( $media );
 			if( !empty( $file ) && $file->canRender() ) {
-				$articleService = F::build('ArticleService', array( $media->getArticleID() ));
+				$articleService = F::build('ArticleService', array( $media ));
 
 				$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 				if( $isVideo ) {

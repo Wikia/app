@@ -8,6 +8,7 @@ class ArticleService extends WikiaObject {
 	const MAX_LENGTH = 500;
 	const CACHE_VERSION = 8;
 
+	/** @var Article $article */
 	private $article = null;
 	private $tags = array(
 			'script',
@@ -39,7 +40,7 @@ class ArticleService extends WikiaObject {
 	/**
 	 * ArticleService constructor
 	 *
-	 * @param mixed $articleOrId [OPTIONAL] An Article instance or a valid article ID
+	 * @param Article|Title|int $articleOrId [OPTIONAL] An Article or Title instance or a valid article ID (lower performance)
 	 */
 	public function __construct( $articleOrId = null ) {
 		parent::__construct();
@@ -49,6 +50,8 @@ class ArticleService extends WikiaObject {
 				$this->setArticleById( $articleOrId );
 			} elseif ( $articleOrId instanceof Article ) {
 				$this->setArticle( $articleOrId );
+			} elseif ( $articleOrId instanceof Title ) {
+				$this->setArticleByTitle( $articleOrId );
 			}
 		}
 	}
@@ -57,9 +60,11 @@ class ArticleService extends WikiaObject {
 	 * Sets the Article instance
 	 * @param Article $article An instance of the Article
 	 * class to use as a source of content
+	 * @return ArticleService fluent interface
 	 */
 	public function setArticle( Article $article ) {
 		$this->article = $article;
+		return $this;
 	}
 
 	/**
@@ -67,9 +72,22 @@ class ArticleService extends WikiaObject {
 	 * @param integer $articleId A valid article ID from which
 	 * an Article instance will be constructed to be used as a
 	 * source of content
+	 * @return ArticleService fluent interface
 	 */
 	public function setArticleById( $articleId ) {
 		$this->article = F::build('Article',array($articleId), 'newFromID');
+		return $this;
+	}
+
+	/**
+	 * Sets the Article instance via Title object
+	 * @param Title $article Title object
+	 * class to use as a source of content
+	 * @return ArticleService fluent interface
+	 */
+	public function setArticleByTitle( Title $title ) {
+		$this->article = new Article($title);
+		return $this;
 	}
 
 	/**
@@ -108,6 +126,10 @@ class ArticleService extends WikiaObject {
 		$this->wf->profileIn( __METHOD__ );
 
 		$id = $this->article->getID();
+		// in case the article is missing just return empty string
+		if ( $id <= 0 ) {
+			return '';
+		}
 
 		//memoize to avoid Memcache access overhead
 		//when the same article needs to be processed
