@@ -26,14 +26,12 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description-msg' => 'autocreatewiki-desc',
 );
 
+$dir = __DIR__ . '/';
+
 /**
- * Set up the new special page
+ * i18n - used in various places :(
  */
-$dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles[ "AutoCreateWiki" ] = $dir . "AutoCreateWiki.i18n.php";
-$wgAutoloadClasses[ "AutoCreateWikiPage" ] = $dir. "AutoCreateWiki_body.php";
-$wgAutoloadClasses[ "TextRegexCore" ] = "$IP/extensions/wikia/TextRegex/TextRegex.php";
-$wgSpecialPageGroups['CreateWiki'] = 'wikia';
 
 /**
  * user permissions
@@ -57,15 +55,3 @@ define( 'AWC_GENERIC_STARTER', 'aastarter' );
  * AutoCreateWiki class
  */
 require_once( $dir . "AutoCreateWiki_helper.php" );
-
-/**
- * ajax functions
- */
-require_once( $dir . "AutoCreateWiki_ajax.php" );
-
-global $wgAjaxExportList;
-$wgAjaxExportList[] = 'axACWRequestCheckName';
-$wgAjaxExportList[] = 'axACWRequestCheckAccount';
-$wgAjaxExportList[] = 'axACWRequestCheckBirthday';
-$wgAjaxExportList[] = 'axACWRequestCheckLog';
-$wgAjaxExportList[] = 'axACWRequestCheckWikiName';
