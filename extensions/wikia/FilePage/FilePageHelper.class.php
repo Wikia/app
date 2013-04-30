@@ -25,11 +25,6 @@ class FilePageHelper {
 		return $imageLink;
 	}
 
-	public static function getVideosCategory() {
-		$cat = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
-		return ucfirst($cat) . ':' . wfMsgForContent( 'videohandler-category' );
-	}
-
 	/**
 	 * If a timestamp is specified, show the archived version of the video (if it exists)
 	 *

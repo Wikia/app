@@ -516,5 +516,10 @@ class WikiaFileHelper extends Service {
 		return '';
 	}
 
+	public static function getVideosCategory() {
+		$cat = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
+		return ucfirst($cat) . ':' . wfMsgForContent( 'videohandler-category' );
+	}
+
 
 }
