@@ -35,6 +35,19 @@ class WikiaCollectionsModel extends WikiaModel {
 		);
 	}
 
+	public function getListForVisualization($langCode) {
+		$list = $this->getList($langCode);
+		foreach ($list as &$collection) {
+			if (!empty($collection['sponsor_hero_image'])) {
+				$collection['sponsor_hero_image'] = ImagesService::getLocalFileThumbUrlAndSizes($collection['sponsor_hero_image']);
+			}
+			if (!empty($collection['sponsor_image'])) {
+				$collection['sponsor_image'] = ImagesService::getLocalFileThumbUrlAndSizes($collection['sponsor_image']);
+			}
+		}
+		return $list;
+	}
+
 	public function saveAll($langCode, $collections) {
 		$i = 1;
 		foreach ($collections as $collection) {
@@ -44,6 +57,7 @@ class WikiaCollectionsModel extends WikiaModel {
 		for ($i = $i; $i <= self::COLLECTIONS_COUNT; $i++) {
 			$this->delete($langCode, $i);
 		}
+		$this->wg->Memc->delete( $this->getCollectionsListCacheKey($langCode) );
 	}
 
 	public function save($langCode, $collection, $sortIndex) {
