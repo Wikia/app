@@ -28,7 +28,7 @@ class WikiaVideoPageOasis extends WikiaImagePageOasis {
 
 		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
 
-		$imageLink = FilePageHelper::getVideoPageVideoEmbedHTML( $img, $this->mTitle->getText()	 );
+		$imageLink = FilePageHelper::getVideoPageVideoEmbedHTML( $img );
 
 		$wgOut->addHTML($imageLink);
 
