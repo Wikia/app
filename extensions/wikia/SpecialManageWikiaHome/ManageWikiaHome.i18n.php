@@ -58,6 +58,8 @@ $messages['en'] = array(
 	'manage-wikia-home-collections-enabled-field-label' => 'Enabled',
 	'manage-wikia-home-collections-name-field-label' => 'Collection name',
 	'manage-wikia-home-collections-sponsur-url-field-label' => 'Sponsors url',
+	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Hero image',
+	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsor image',
 );
 
 $messages['de'] = array(
