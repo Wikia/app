@@ -8,7 +8,9 @@ var AdLogicPageLevelParams = function (
 	'use strict';
 
 	var logGroup = 'AdLogicPageLevelParams',
-		hostname = window.location.hostname.toString();
+		hostname = window.location.hostname.toString(),
+		maxNumberOfCategories = 3,
+		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
 
 	function getDartHubName() {
 		if (window.cscoreCat === 'Entertainment') {
@@ -47,8 +49,9 @@ var AdLogicPageLevelParams = function (
 	}
 
 	function getCategories() {
-		if (window.wgCategories instanceof Array) {
-			return window.wgCategories.join('|').toLowerCase().replace(/ /g, '_').split('|');
+		if (window.wgCategories instanceof Array && window.wgCategories.length > 0) {
+			var categories = window.wgCategories.slice(0, maxNumberOfCategories);
+			return categories.join('|').toLowerCase().replace(/ /g, '_').split('|');
 		}
 	}
 
@@ -156,7 +159,7 @@ var AdLogicPageLevelParams = function (
 
 		if (Krux) {
 			params.u = Krux.user;
-			params.ksgmnt = Krux.segments;
+			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
 		}
 
 		extend(params, decodeLegacyDartParams(window.wgDartCustomKeyValues));
