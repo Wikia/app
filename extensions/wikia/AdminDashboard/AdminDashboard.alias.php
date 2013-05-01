@@ -12,8 +12,3 @@ $specialPageAliases = array();
 $specialPageAliases['en'] = array(
 	'AdminDashboard' => array( 'AdminDashboard' ),
 );
-
-/** Polish (Polski) */
-$specialPageAliases['pl'] = array(
-	'AdminDashboard' => array( 'Panel_administratora', 'AdminDashboard' ),
-);

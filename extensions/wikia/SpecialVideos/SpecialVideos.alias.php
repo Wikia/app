@@ -18,11 +18,6 @@ $specialPageAliases['fr'] = array(
 	'Videos' => array( 'Vidéos', 'Videos' ),
 );
 
-/** Italian (Italiano) */
-$specialPageAliases['it'] = array(
-	'Videos' => array( 'Video', 'Videos' ),
-);
-
 /** Polish (Polski) */
 $specialPageAliases['pl'] = array(
 	'Videos' => array( 'Filmy', 'Videos' ),
