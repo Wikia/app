@@ -23,16 +23,6 @@ $app->registerExtensionMessageFile( 'SpecialVideosAliases', $dir.'SpecialVideos.
 // special pages
 $app->registerSpecialPage( 'Videos', 'SpecialVideosSpecialController' );
 
-// redirects from Video to Videos
-class RedirectToVideos extends SpecialRedirectToSpecial {
-	function __construct() {
-		parent::__construct( 'Video', 'Videos', false, array() );
-	}
-}
-
-// Fake special page for 301 redirect (Video->Videos)
-$app->registerSpecialPage('Video', 'RedirectToVideos');
-
 F::build('JSMessages')->registerPackage('SpecialVideos', array(
 	'specialvideos-remove-modal-title',
 	'specialvideos-remove-modal-message',
