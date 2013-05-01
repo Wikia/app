@@ -459,7 +459,7 @@ class BodyController extends WikiaController {
 			$this->headerModuleName = null;
 			$this->wgSuppressAds = true;
 			$this->displayAdminDashboard = true;
-			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != Title::newFromText("AdminDashboard", NS_SPECIAL)->getText());
+			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
 		} else {
 			$this->displayAdminDashboard = false;
 			$this->displayAdminDashboardChromedArticle = false;
