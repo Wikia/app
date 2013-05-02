@@ -128,6 +128,7 @@ class ArticleService extends WikiaObject {
 		$id = $this->article->getID();
 		// in case the article is missing just return empty string
 		if ( $id <= 0 ) {
+			wfProfileOut( __METHOD__ );
 			return '';
 		}
 
