@@ -83,7 +83,13 @@ class VideoHandlerHelper extends WikiaModel {
 			$preText .= "\n";
 		}
 
-		return $preText."== $headerText ==\n".$descText.$postText;
+		// Don't include the description section if there's no description text
+		$descSection = '';
+		if (trim($descText) != '') {
+			$descSection = "== $headerText ==\n".$descText;
+		}
+
+		return $preText.$descSection.$postText;
 	}
 
 	/**
