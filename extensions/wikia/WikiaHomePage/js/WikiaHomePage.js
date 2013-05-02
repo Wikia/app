@@ -6,8 +6,6 @@ var WikiaHomePageRemix = function (params) {
 
 	this.wikiSetStack = [];
 	this.wikiSetStackIndex = 0;
-	
-	this.collectionsDisplayed = [];
 };
 
 function WikiPreview(el) {
@@ -142,12 +140,13 @@ WikiPreview.prototype = {
 
 WikiaHomePageRemix.prototype = {
 	remixesWhenShowCollection: [0, 3, 5],
+	COLLECTIONS_LS_KEY: 'WHP_collections',
 	init: function () {
 		this.wikiSetStack = window.wgInitialWikiBatchesForVisualization;
 		this.collectionsWikisStack = window.wgCollectionsBatches || [];
-		this.remixCount = 0;
+
 		this.statsContainer = $('#WikiaHomePageStats');
-		this.initShownCollections();
+		this.initCollectionRemixVariables();
 
 		$('#WikiaArticle').on(
 			'mousedown',
@@ -354,43 +353,16 @@ WikiaHomePageRemix.prototype = {
 				.append(previewDivWrapper);
 		});
 	},
+
 	remixHandler: function() {
 		var collectionId = this.getNextCollectionId();
 		if (collectionId) {
 			this.displayCollection(collectionId)
-			this.markCollectionAsShown(collectionId);
 		} else {
 			this.updateVisualisation();
 		}
 	},
-	initShownCollections: function() {
-		this.shownCollections = {};
-		for (collectionId in this.collectionsWikisStack) {
-			this.shownCollections[collectionId] = false;
-		}
-	},
-	markCollectionAsShown: function(collectionId) {
-		this.shownCollections[collectionId] = true;
-	},
-	getNextCollectionId: function() {
-		var nextCollectionId;
-		var out;
 
-		for (collectionId in this.shownCollections) {
-			if (!this.shownCollections[collectionId]) {
-				nextCollectionId = collectionId;
-				break;
-			}
-		}
-
-		if (nextCollectionId && $.inArray(this.remixCount, this.remixesWhenShowCollection) > -1) {
-			out = nextCollectionId;
-		}
-
-		this.remixCount++;
-
-		return out;
-	},
 	displayCollection: function(collectionId) {
 		var selectedCollection;
 		if (collectionId == undefined || !(collectionId in this.collectionsWikisStack)) {
@@ -403,7 +375,7 @@ WikiaHomePageRemix.prototype = {
 			}
 		}
 
-		this.collectionsDisplayed[collectionId] = true;
+		this.markCollectionAsShown(collectionId);
 		$().log('displaying collection #' + collectionId);
 		
 		selectedCollection = this.collectionsWikisStack[collectionId];
@@ -423,6 +395,89 @@ WikiaHomePageRemix.prototype = {
 			this.showStats();
 		}
 	},
+
+	initCollectionRemixVariables: function() {
+		this.remixCount = 0;
+		this.shownCollections = {};
+		for (collectionId in this.collectionsWikisStack) {
+			this.shownCollections[collectionId] = false;
+		}
+
+		var lsData = $.storage.get(this.COLLECTIONS_LS_KEY);
+		var lsShownCollections;
+		if (lsData) {
+			if ('date' in lsData && 'collections' in lsData) {
+				var tmpDate = new Date();
+				tmpDate.setDate(tmpDate.getDate() - 1);
+				if (new Date(lsData.date) > tmpDate) {
+					lsShownCollections = lsData.collections;
+					if ('remixCount' in lsData) {
+						this.remixCount = lsData.remixCount;
+					}
+				}
+			}
+
+			if (lsShownCollections) {
+				$.extend(this.shownCollections, lsShownCollections);
+			} else {
+				$.storage.set(this.COLLECTIONS_LS_KEY, null);
+			}
+		}
+	},
+
+	icreaseRemixCount: function() {
+		this.remixCount++;
+		this.saveLSData(undefined, this.remixCount);
+	},
+
+	markCollectionAsShown: function(collectionId) {
+		this.shownCollections[collectionId] = true;
+		this.saveLSData(collectionId);
+	},
+
+	saveLSData: function(collectionId, remixCount) {
+		var lsData = $.storage.get(this.COLLECTIONS_LS_KEY);
+		if (!lsData) {
+			lsData = {};
+		}
+
+		if (!('collections' in lsData)) {
+			lsData.collections = {};
+		}
+		if (collectionId != undefined) {
+			lsData.collections[collectionId] = true;
+		}
+		if (remixCount != undefined) {
+			lsData.remixCount = remixCount;
+		}
+
+		if (!('date' in lsData)) {
+			lsData.date = new Date();
+		}
+
+		$.storage.set(this.COLLECTIONS_LS_KEY, lsData);
+	},
+
+	getNextCollectionId: function() {
+		var nextCollectionId;
+		var out;
+
+		for (collectionId in this.shownCollections) {
+			if (!this.shownCollections[collectionId]) {
+				nextCollectionId = collectionId;
+				break;
+			}
+		}
+
+		if (nextCollectionId && $.inArray(this.remixCount, this.remixesWhenShowCollection) > -1) {
+			out = nextCollectionId;
+		}
+
+		this.icreaseRemixCount();
+
+		return out;
+	},
+
 	showStats: function() {
 		this.statsContainer.show();
 		$('#WikiaHomePageSponsorImage').remove();
