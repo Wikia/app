@@ -36,11 +36,13 @@ class FilePageHooks extends WikiaObject{
 	 * Add JS and CSS to File Page
 	 */
 	public function onBeforePageDisplay( OutputPage $out, $skin ) {
+		global $wgEnableVideoPageRedesign;
+
 		$app = F::app();
 
 		wfProfileIn(__METHOD__);
 		// load assets when File Page redesign is enabled and on the File Page
-		if( $app->checkSkin( 'oasis' ) && $app->wg->Title->getNamespace() == NS_FILE ) {
+		if( $app->checkSkin( 'oasis' ) && $app->wg->Title->getNamespace() == NS_FILE &&  !empty( $wgEnableVideoPageRedesign ) ) {
 			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 			$scssPackage = 'file_page_css';
 			$jsPackage = 'file_page_js';
