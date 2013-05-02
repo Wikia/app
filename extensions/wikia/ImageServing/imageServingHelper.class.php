@@ -128,7 +128,7 @@ class ImageServingHelper{
 	 * @return boolean
 	 */
 
-	public static function buildIndex($articleId, $images, $ignoreEmpty = false) {
+	public static function buildIndex( $articleId, $images, $ignoreEmpty = false ) {
 		/* 0 and 1 image don't need to be indexed */
 		wfProfileIn(__METHOD__);
 		$db = wfGetDB(DB_MASTER, array());
@@ -142,8 +142,8 @@ class ImageServingHelper{
 
 		array_walk( $images, create_function( '&$n', '$n = urldecode( $n );' ) );
 
-		if( (count($images) < 1) ) {
-			if ($ignoreEmpty) {
+		if( count($images) < 1 ) {
+			if( $ignoreEmpty) {
 				wfProfileOut(__METHOD__);
 				return true;
 			}
@@ -156,12 +156,6 @@ class ImageServingHelper{
 			wfProfileOut(__METHOD__);
 			return true;
 		}
-		$db->delete( 'page_wikia_props',
-			array(
-				'page_id' =>  $articleId,
-				'propname' => "imageOrder"),
-			__METHOD__
-		);
 
 		$db->replace('page_wikia_props','',
 			array(
