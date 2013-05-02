@@ -165,6 +165,12 @@ WikiaHomePageRemix.prototype = {
 				this.displayCollection(collectionId);
 			}, this)
 		);
+		
+		$('#WikiaHomePageSponsorImage').on(
+			'click', 
+			'.sponsor-image-link', 
+			$.proxy(this.trackClick, this)
+		);
 
 		// show / hide collections dropdown
 		var $collectionsDropdown = $(".collections-dropdown");
@@ -272,6 +278,9 @@ WikiaHomePageRemix.prototype = {
 		} else if( node.hasClass('collection-link') || node.hasParent('.collection-link') ) {
 			var collectionId = node.data('collection-id');
 			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'collections-link', {'collection-id': collectionId}, ev);
+		} else if( node.hasClass('sponsor-image-link') ) {
+			var collectionId = node.data('collection-id');
+			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'collection-sponsor', {'collection-id': collectionId}, ev);
 		}
 	},
 	preload: function () {
@@ -357,12 +366,13 @@ WikiaHomePageRemix.prototype = {
 		$().log('displaying collection #' + collectionId);
 		
 		selectedCollection = this.collectionsWikisStack[collectionId];
+		selectedCollection['collection_id'] = collectionId;
 
 		this.remix($('.slot-medium'), selectedCollection.mediumslots);
 		this.remix($('.slot-small'), selectedCollection.smallslots);
 		this.remix($('.slot-big'), selectedCollection.bigslots);
 
-		if ('sponsor_image' in selectedCollection) {
+		if( 'sponsor_image' in selectedCollection ) {
 			var container = this.createSponsorImageContainer(selectedCollection);
 			$('#WikiaHomePageSponsorImage').remove();
 			this.statsContainer
@@ -383,7 +393,9 @@ WikiaHomePageRemix.prototype = {
 			.attr('alt', imgData['title'])
 			.attr('witdh', imgData['width'])
 			.attr('witdh', imgData['height'])
-			.attr('src', imgData['url']);
+			.attr('src', imgData['url'])
+			.addClass('sponsor-image-link')
+			.data('collection-id', collection['collection_id']);
 
 		var container = $('<div />')
 			.attr('id', 'WikiaHomePageSponsorImage')
