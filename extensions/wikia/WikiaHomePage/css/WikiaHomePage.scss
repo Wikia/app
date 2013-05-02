@@ -114,6 +114,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 
 	/* visualization */
 	#visualization {
+		#WikiaHomePageHeroImage {
+			position: absolute;
+		}
 		.grid-1 {
 			width: 160px;
 		}
