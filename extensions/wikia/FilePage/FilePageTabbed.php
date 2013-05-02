@@ -153,7 +153,7 @@ class FilePageTabbed extends WikiaFilePage {
 
 		if ( $isContentEmpty ) {
 			$file = $this->getDisplayedFile();
-			$editLink = $file->getTitle()->getLocalURL( array( 'action' => 'edit', 'useMessage' => 'video-page-default-description-header') );
+			$editLink = $file->getTitle()->getLocalURL( array( 'action' => 'edit', 'useMessage' => 'video-page-default-description-header-and-text') );
 			$html = $app->renderPartial( 'FilePageController', 'defaultDescription', array( 'editLink' => $editLink ) );
 			$out->addHTML( $html );
 		}
