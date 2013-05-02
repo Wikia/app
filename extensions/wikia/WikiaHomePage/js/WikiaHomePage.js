@@ -358,13 +358,8 @@ WikiaHomePageRemix.prototype = {
 	remixHandler: function() {
 		var collectionId = this.getNextCollectionId();
 		if (collectionId) {
-			this.displayCollection(collectionId)
-			
-			if( this.isFirstCollection(collectionId) && !this.heroImageDisplayed ) {
-				var heroContainer = this.createHeroImageContainer();
-				$('#visualization').append(heroContainer);
-				this.heroImageDisplayed = true;
-			}
+			this.displayCollection(collectionId);
+			this.displaySponsorHeroImage(collectionId);
 		} else {
 			this.updateVisualisation();
 		}
@@ -530,6 +525,14 @@ WikiaHomePageRemix.prototype = {
 		});
 		
 		return container;
+	},
+	
+	displaySponsorHeroImage: function(collectionId) {
+		if( this.isFirstCollection(collectionId) && !this.heroImageDisplayed ) {
+			var heroContainer = this.createHeroImageContainer();
+			$('#visualization').append(heroContainer);
+			this.heroImageDisplayed = true;
+		}
 	},
 
 	isFirstCollection: function(collectionId) {
