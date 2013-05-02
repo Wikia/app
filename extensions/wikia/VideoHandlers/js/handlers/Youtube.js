@@ -7,14 +7,23 @@ define('wikia.youtube', ['wikia.window', 'wikia.loader'], function Youtube(windo
 	'use strict';
 
 	return function(params, vb) {
-		var player;
-console.log(vb);
+		var player,
+			started = false;
+
 		function onPlayerReady() {
 			vb.track('player-load');
-			console.log('ready');
 		}
+
+		function onPlayerStateChange(e) {
+			if ( !started && e.data == 1 ) {
+				vb.track('content-begin');
+				started = true;
+			}
+		}
+
 		params.events = {
-			'onReady': onPlayerReady
+			'onReady': onPlayerReady,
+			'onStateChange': onPlayerStateChange
 		}
 
 		// Make sure iframe_api is fully loaded before binding onYouTubeIframeAPIReady event
@@ -23,7 +32,7 @@ console.log(vb);
 			resources: 'https://www.youtube.com/iframe_api'
 		}).done(function() {
 			window.onYouTubeIframeAPIReady = function() {
-				player = new YT.Player( 'youtubeVideoPlayer', params );
+				player = new YT.Player('youtubeVideoPlayer', params);
 			}
 		});
 	}
