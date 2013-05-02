@@ -16,9 +16,11 @@ class FilePageHooks extends WikiaObject{
 	 * @param Article $oArticle
 	 */
 	public function onArticleFromTitle( &$oTitle, &$oArticle ){
+		global $wgEnableVideoPageRedesign;
+
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
 
-			if ( F::app()->checkSkin( 'oasis' ) ) {
+			if ( F::app()->checkSkin( 'oasis' ) &&  !empty( $wgEnableVideoPageRedesign ) ) {
 				$oArticle = new FilePageTabbed( $oTitle );
 			} else {
 				$oArticle = new FilePageFlat( $oTitle );

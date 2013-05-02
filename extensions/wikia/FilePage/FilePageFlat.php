@@ -1,8 +1,9 @@
 <?php
 
 /**
- * This class overrides MW's ImagePage.  It's used as a base class for all
- * customizations to file pages (both image and video) and in all skins.
+ * This is for any wikia customizations to the mediawiki
+ * file page. It's used on WikiaMobile and Monobook. Customizations
+ * specific to Oasis should go in FilePageTabbed
  *
  * @ingroup Media
  * @author Hyun
@@ -28,11 +29,11 @@ class FilePageFlat extends WikiaFilePage {
 
 		$link = '<a href="' . $detailUrl . '" class="external" target="_blank">' . $this->mTitle->getText() . '</a>';
 		$providerLink = '<a href="' . $providerUrl . '" class="external" target="_blank">' . $provider . '</a>';
-		$cation = '<div id="VideoPageInfo">' . wfMsgExt( 'videohandler-video-details', array('replaceafter'), $link, $providerLink )  . '</div>';
+		$caption = '<div id="VideoPageInfo">' . wfMsgExt( 'videohandler-video-details', array('replaceafter'), $link, $providerLink )  . '</div>';
 
 		wfProfileOut( __METHOD__ );
 
-		return $cation;
+		return $caption;
 	}
 
 }

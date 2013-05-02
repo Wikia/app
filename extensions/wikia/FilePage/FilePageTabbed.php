@@ -1,8 +1,11 @@
 <?php
 
 /**
- * This class overrides MW's ImagePage.  It's used as a base class for all
- * customizations to file pages (both image and video) and in all skins.
+ * This class modifies the default file page UI to include
+ * tabs to separate out the different sections of the page.
+ * The idea is that it's more SEO friendly and is a better
+ * experience for users coming to the file page from search
+ * engines.
  *
  * @ingroup Media
  * @author Hyun
@@ -34,6 +37,8 @@ class FilePageTabbed extends WikiaFilePage {
 	}
 
 	protected function imageContent() {
+		wfProfileIn( __METHOD__ );
+
 		$out = $this->getContext()->getOutput();
 		$app = F::App();
 
@@ -48,6 +53,7 @@ class FilePageTabbed extends WikiaFilePage {
 		$this->renderDescriptionHeader();
 		parent::imageContent();
 
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -56,6 +62,8 @@ class FilePageTabbed extends WikiaFilePage {
 	 * This is called after the wikitext is printed out
 	 */
 	protected function imageDetails() {
+		wfProfileIn( __METHOD__ );
+
 		$app = F::App();
 		$out = $this->getContext()->getOutput();
 
@@ -73,6 +81,8 @@ class FilePageTabbed extends WikiaFilePage {
 		$out->addHTML('<div data-tab-body="history"' . $sectionClass . '>');
 		parent::imageDetails();
 		$out->addHTML('</div>');
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -80,6 +90,8 @@ class FilePageTabbed extends WikiaFilePage {
 	 * Image page doesn't need the wrapper, but WikiaFilePage does
 	 */
 	protected function imageMetadata($formattedMetadata) {
+		wfProfileIn( __METHOD__ );
+
 		$app = F::App();
 		$out = $this->getContext()->getOutput();
 
@@ -91,8 +103,13 @@ class FilePageTabbed extends WikiaFilePage {
 		$out->addHTML('<div data-tab-body="metadata"' . $sectionClass . '>');
 		parent::imageMetadata($formattedMetadata);
 		$out->addHTML('</div>');
+
+		wfProfileOut( __METHOD__ );
 	}
 
+	/*
+	 * Render related pages section at the bottom of a file page
+	 */
 	protected function imageFooter() {
 		$out = $this->getContext()->getOutput();
 		$out->addHTML( F::app()->renderView( 'FilePageController', 'relatedPages', array() ) );
@@ -106,11 +123,15 @@ class FilePageTabbed extends WikiaFilePage {
 	}
 
 	protected function renderTabs() {
+		wfProfileIn( __METHOD__ );
+
 		$app = F::app();
 		$out = $this->getContext()->getOutput();
 
 		$tabs = $app->renderPartial( 'FilePageController', 'tabs', array('showmeta' => $this->showmeta ) );
 		$out->addHtml($tabs);
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/* TODO: Rename this and clean up the logic a bit.
@@ -118,6 +139,8 @@ class FilePageTabbed extends WikiaFilePage {
 	 * 2) If content is empty, simply output default message.  We don't need a template for this.
 	 */
 	protected function renderDescriptionHeader() {
+		wfProfileIn( __METHOD__ );
+
 		$app = F::App();
 		$out = $this->getContext()->getOutput();
 
@@ -133,12 +156,16 @@ class FilePageTabbed extends WikiaFilePage {
 		$html = $app->renderPartial( 'FilePageController', 'description', array( 'isContentEmpty' => $isContentEmpty ) );
 
 		$out->addHTML( $html );
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * Display info about the video below the video player
 	 */
 	protected function getVideoInfoLine( $file ) {
+		wfProfileIn( __METHOD__ );
+
 		$app = F::app();
 
 		$captionDetails = array(
@@ -150,6 +177,8 @@ class FilePageTabbed extends WikiaFilePage {
 		);
 
 		$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
+
+		wfProfileOut( __METHOD__ );
 
 		return $caption;
 	}

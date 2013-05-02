@@ -25,7 +25,7 @@ $app = F::app( );
 $app->registerClass( 'WikiaFilePage', $dir . 'WikiaFilePage.php' );
 $app->registerClass( 'FilePageFlat', $dir . 'FilePageFlat.php' );
 $app->registerClass( 'FilePageTabbed', $dir . 'FilePageTabbed.php' );
-$app->registerClass( 'WikiVideoFilePage', $dir . 'WikiVideoFilePage.php'); // Override for WikiFilePage
+$app->registerClass( 'WikiaWikiFilePage', $dir . 'WikiaWikiFilePage.php'); // Override for WikiFilePage
 
 $app->registerClass( 'FilePageHooks', $dir . 'FilePageHooks.class.php' );
 $app->registerClass( 'FilePageHelper', $dir . 'FilePageHelper.class.php' );
