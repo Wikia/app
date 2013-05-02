@@ -141,10 +141,13 @@ WikiPreview.prototype = {
 };
 
 WikiaHomePageRemix.prototype = {
+	remixesWhenShowCollection: [0, 3, 5],
 	init: function () {
 		this.wikiSetStack = window.wgInitialWikiBatchesForVisualization;
 		this.collectionsWikisStack = window.wgCollectionsBatches || [];
+		this.remixCount = 0;
 		this.statsContainer = $('#WikiaHomePageStats');
+		this.initShownCollections();
 
 		$('#WikiaArticle').on(
 			'mousedown',
@@ -155,7 +158,7 @@ WikiaHomePageRemix.prototype = {
 		$(".remix-button").click($.proxy(
 			function (event) {
 				event.preventDefault();
-				this.updateVisualisation();
+				this.remixHandler();
 			}, this)
 		);
 		
@@ -183,7 +186,7 @@ WikiaHomePageRemix.prototype = {
 
 		$('.wikia-slot a').removeAttr('title');
 
-		this.displayCollection();
+		this.remixHandler();
 		$().log('WikiaHomePageRemix initialised');
 	},
 	isTargetOutsideRemixChevron: function ($target) {
@@ -340,6 +343,43 @@ WikiaHomePageRemix.prototype = {
 				.append(wikinamehtml)
 				.append(previewDivWrapper);
 		});
+	},
+	remixHandler: function() {
+		var collectionId = this.getNextCollectionId();
+		if (collectionId) {
+			this.displayCollection(collectionId)
+			this.markCollectionAsShown(collectionId);
+		} else {
+			this.updateVisualisation();
+		}
+	},
+	initShownCollections: function() {
+		this.shownCollections = {};
+		for (collectionId in this.collectionsWikisStack) {
+			this.shownCollections[collectionId] = false;
+		}
+	},
+	markCollectionAsShown: function(collectionId) {
+		this.shownCollections[collectionId] = true;
+	},
+	getNextCollectionId: function() {
+		var nextCollectionId;
+		var out;
+
+		for (collectionId in this.shownCollections) {
+			if (!this.shownCollections[collectionId]) {
+				nextCollectionId = collectionId;
+				break;
+			}
+		}
+
+		if (nextCollectionId && $.inArray(this.remixCount, this.remixesWhenShowCollection) > -1) {
+			out = nextCollectionId;
+		}
+
+		this.remixCount++;
+
+		return out;
 	},
 	displayCollection: function(collectionId) {
 		var selectedCollection;
