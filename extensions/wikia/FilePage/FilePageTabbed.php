@@ -50,7 +50,7 @@ class FilePageTabbed extends WikiaFilePage {
 
 		// Open div for about section (closed in imageDetails);
 		$out->addHtml('<div data-tab-body="about"' . $sectionClass . '>');
-		$this->renderDescriptionHeader();
+		$this->renderDefaultDescription();
 		parent::imageContent();
 
 		wfProfileOut( __METHOD__ );
@@ -134,28 +134,29 @@ class FilePageTabbed extends WikiaFilePage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/* TODO: Rename this and clean up the logic a bit.
-	 * 1) We're no longer rendering a description header, so function name doesn't make sense.
-	 * 2) If content is empty, simply output default message.  We don't need a template for this.
+	/**
+	 * If there's no description text, render the default message
 	 */
-	protected function renderDescriptionHeader() {
+	protected function renderDefaultDescription() {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::App();
 		$out = $this->getContext()->getOutput();
+		$isContentEmpty = false;
 
 		// Display description text or default message, except when we're showing a diff (we want the diff to only
 		// show actual content, not template injected stuff)
 		if (! $app->wg->Request->getVal( 'diff' ) ) {
 			$content = FilePageHelper::stripCategoriesFromDescription( $this->getContent() );
 			$isContentEmpty = empty( $content );
-		} else {
-			$isContentEmpty = false;
 		}
 
-		$html = $app->renderPartial( 'FilePageController', 'description', array( 'isContentEmpty' => $isContentEmpty ) );
-
-		$out->addHTML( $html );
+		if ( $isContentEmpty ) {
+			$file = $this->getDisplayedFile();
+			$editLink = $file->getTitle()->getLocalURL( array( 'action' => 'edit', 'useMessage' => 'video-page-default-description-header') );
+			$html = $app->renderPartial( 'FilePageController', 'defaultDescription', array( 'editLink' => $editLink ) );
+			$out->addHTML( $html );
+		}
 
 		wfProfileOut( __METHOD__ );
 	}

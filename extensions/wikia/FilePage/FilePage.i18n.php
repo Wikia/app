@@ -15,6 +15,9 @@ $messages['en'] = array(
 	'video-page-see-less-info' => 'Show less info',
 	'video-page-description-heading' => 'Description',
 	'video-page-description-zero-state' => 'There is no description yet.',
+	'video-page-add-description-link-text' => 'Add a description.',
+	'video-page-default-description-header' => '==Description==
+Enter the description here.',
 	'video-page-file-list-pagination' => '$1 of $2',
 
 	/* file page */
