@@ -9,6 +9,17 @@ class WAMService extends Service {
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
 
+	protected static $verticalNames = [
+		WikiFactoryHub::CATEGORY_ID_GAMING => 'Gaming',
+		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
+		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'Lifestyle'
+	];
+	protected static $verticalIds = [
+		'Gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
+		'Entertainment' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+		'Lifestyle' => WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+	];
+
 	protected $defaultIndexOptions = array(
 		'currentTimestamp' => null,
 		'previousTimestamp' => null,
@@ -119,6 +130,7 @@ class WAMService extends Service {
 			/* @var $db DatabaseMysql */
 			while ($row = $db->fetchObject($result)) {
 				$row = (array)$row;
+				$row['hub_id'] = $this->getVerticalId($row['hub_name']);
 				$wamIndex['wam_index'][$row['wiki_id']] = $row;
 			}
 			$count = $resultCount->fetchObject();
@@ -223,14 +235,15 @@ class WAMService extends Service {
 		}
 
 		if ($options['verticalId']) {
-			$conds ['dw.hub_id'] = $options['verticalId'];
+			$vericals = $options['verticalId'];
 		} else {
-			$conds ['dw.hub_id'] = array(
+			$vericals = array(
 				WikiFactoryHub::CATEGORY_ID_GAMING,
 				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
 				WikiFactoryHub::CATEGORY_ID_LIFESTYLE
 			);
 		}
+		$conds['fw1.hub_name'] = $this->translateVerticalsNames($vericals);
 
 		if (!is_null($options['wikiLang'])) {
 			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
@@ -258,9 +271,9 @@ class WAMService extends Service {
 			'fw1.top_1k_weeks',
 			'fw1.first_peak',
 			'fw1.last_peak',
+			'fw1.hub_name',
 			'dw.title',
 			'dw.url',
-			'dw.hub_id',
 			'fw1.wam - IFNULL(fw2.wam, 0) as wam_change',
 			'ISNULL(fw2.wam) as wam_is_new'
 		);
@@ -302,5 +315,28 @@ class WAMService extends Service {
 		}
 
 		return $blacklistIds;
+	}
+
+	protected function translateVerticalsNames($verticals) {
+		if (is_array($verticals)) {
+			foreach($verticals as &$verticalId) {
+				$verticalId = $this->getVerticalName($verticalId);
+			}
+		} else {
+			$verticals = $this->getVerticalName($verticals);
+		}
+		return $verticals;
+	}
+
+	protected function getVerticalName($verticalId) {
+		if (isset(self::$verticalNames[$verticalId])) {
+			return self::$verticalNames[$verticalId];
+		}
+	}
+
+	protected function getVerticalId($verticalName) {
+		if (isset(self::$verticalIds[$verticalName])) {
+			return self::$verticalIds[$verticalName];
+		}
 	}
 }
