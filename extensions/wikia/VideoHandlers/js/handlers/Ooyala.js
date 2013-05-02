@@ -2,12 +2,8 @@ define('wikia.ooyala', ['wikia.window'/*, 'ext.wikia.adengine.darthelper'*/], fu
 	'use strict';
 
 	return function(params, vb) {
-		var time = new Date().getTime(),
-			container = document.getElementById(params.playerId),
-			newId = params.playerId + time,
+		var containerId = vb.timeStampId( params.playerId ),
 			createParams = { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay, onCreate: onCreate };
-
-		container.id = newId;
 
 		/*if (window.wgAdVideoTargeting && window.wgShowAds) {
 			createParams['google-ima-ads-manager'] = {
@@ -53,6 +49,6 @@ define('wikia.ooyala', ['wikia.window'/*, 'ext.wikia.adengine.darthelper'*/], fu
 
 		}
 
-		window.OO.Player.create(newId, params.videoId, createParams);
+		window.OO.Player.create(containerId, params.videoId, createParams);
 	}
 });
