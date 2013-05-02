@@ -6,6 +6,7 @@ var WikiaHomePageRemix = function (params) {
 
 	this.wikiSetStack = [];
 	this.wikiSetStackIndex = 0;
+	this.heroImageDisplayed = false;
 };
 
 function WikiPreview(el) {
@@ -358,6 +359,12 @@ WikiaHomePageRemix.prototype = {
 		var collectionId = this.getNextCollectionId();
 		if (collectionId) {
 			this.displayCollection(collectionId)
+			
+			if( this.isFirstCollection(collectionId) && !this.heroImageDisplayed ) {
+				var heroContainer = this.createHeroImageContainer();
+				$('#visualization').append(heroContainer);
+				this.heroImageDisplayed = true;
+			}
 		} else {
 			this.updateVisualisation();
 		}
@@ -505,6 +512,36 @@ WikiaHomePageRemix.prototype = {
 			container.append(img);
 		}
 		return container;
+	},
+
+	createHeroImageContainer: function() {
+		var imgData = this.getFirstCollection()['sponsor_hero_image'];
+		
+		var img = $('<img />')
+			.attr('alt', imgData['title'])
+			.attr('witdh', imgData['width'])
+			.attr('witdh', imgData['height'])
+			.attr('src', imgData['url']);
+
+		var container = $('<div />').attr('id', 'WikiaHomePageHeroImage');
+
+		$(img).bind('load', function(){
+			container.append(img);
+		});
+		
+		return container;
+	},
+
+	isFirstCollection: function(collectionId) {
+		return (collectionId === this.getFirstCollectionId());
+	},
+	
+	getFirstCollectionId: function() {
+		return Object.keys(this.collectionsWikisStack)[0];
+	},
+	
+	getFirstCollection: function() {
+		return this.collectionsWikisStack[ this.getFirstCollectionId() ];
 	},
 
 	addWikiToStack: function() {
