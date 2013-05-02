@@ -20,10 +20,26 @@ class YoutubeVideoHandler extends VideoHandler {
 		$qs = http_build_query($params);
 		$sizeString = $this->getSizeString( $width, $height );
 
-		$html = <<<EOT
+		/*$html = <<<EOT
 <iframe $sizeString src="{$url}?$qs&wmode=opaque" frameborder="0" allowfullscreen></iframe>
+EOT;*/
+		$html = <<<EOT
+<div id="youtubeVideoPlayer" $sizeString></div>
 EOT;
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'init' => 'wikia.youtube',
+			'jsParams' => array(
+				'width' => $width,
+				'height' => $height,
+				'videoId'=> $this->videoId,
+			),
+			'scripts' => array(
+				'extensions/wikia/VideoHandlers/js/handlers/Youtube.js',
+			),
+			'title' => $this->DBKey,
+			'provider' => 'youtube',
+		);
 	}
 
 	public function addExtraBorder( $width ){

@@ -50,7 +50,7 @@ class JWPlayer {
 	 * with the setXXX() methods
 	 * @return string
 	 */
-	public function getEmbedCode() {
+	public function getEmbedCode( $provider, $title ) {
 		$jwplayerjs = self::getJavascriptPlayerUrl();
 
 		$html = <<<EOT
@@ -78,6 +78,8 @@ EOT;
 				$jwplayerjs,
 				"extensions/wikia/JWPlayer/js/JWPlayer.js"
 			),
+			'title' => $title,
+			'provider' => $provider,
 		);
 
 		return $code;
@@ -123,7 +125,7 @@ EOT;
 				$googimaDataVariable = self::GOOGIMA_DATA_VARIABLE;
 				$jwplayerAdMessage = F::app()->wf->Msg('jwplayer-ad-message');
 				$script = <<<EOT
-if (!window.wgUserName || window.wgUserShowAds) {
+if (window.wikiaDartHelper && (!window.wgUserName || window.wgUserShowAds)) {
 	var jwplayer_ad_tag = wikiaDartHelper.getUrl({
 		slotname: 'JWPLAYER',
 		slotsize: '320x240',

@@ -205,12 +205,12 @@ var LightboxLoader = {
 			height: targetChildImg.height(),
 			width: targetChildImg.width()
 		}, function(json) {
-			var	embedCode = json['videoEmbedCode'];
-
-			var inlineDiv = $('<div></div>').insertAfter(target.hide());
+			var	videoInstance,
+				embedCode = json['videoEmbedCode'],
+				inlineDiv = $('<div></div>').insertAfter(target.hide());
 
 			require(['wikia.videoBootstrap'], function (videoBootstrap) {
-				videoBootstrap(inlineDiv[0], embedCode);
+				videoInstance = new videoBootstrap(inlineDiv[0], embedCode);
 			});
 
 			// if player script, run it

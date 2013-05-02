@@ -32,7 +32,11 @@ EOT;
 </object>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'title' => $this->DBKey,
+			'provider' => 'viddler',
+		);
 	}
 
 }

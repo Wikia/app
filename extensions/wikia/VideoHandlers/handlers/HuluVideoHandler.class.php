@@ -23,7 +23,11 @@ class HuluVideoHandler extends VideoHandler {
 </object>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'title' => $this->DBKey,
+			'provider' => 'hulu',
+		);
 	}
 
 }
