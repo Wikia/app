@@ -119,7 +119,7 @@ class ImageServingHelper{
 	}
 
 	/**
-	 * bulidIndex - save image index in db
+	 * buildIndex - save image index in db
 	 *
 	 * @param $width \int
 	 * @param $images \type{\arrayof{\string}}
@@ -128,7 +128,7 @@ class ImageServingHelper{
 	 * @return boolean
 	 */
 
-	public static function bulidIndex($articleId, $images, $ignoreEmpty = false) {
+	public static function buildIndex($articleId, $images, $ignoreEmpty = false) {
 		/* 0 and 1 image don't need to be indexed */
 		wfProfileIn(__METHOD__);
 		$db = wfGetDB(DB_MASTER, array());
