@@ -320,7 +320,7 @@ class WAMService extends Service {
 	protected function translateVerticalsNames($verticals) {
 		if (is_array($verticals)) {
 			foreach($verticals as &$verticalId) {
-				$verticalId = $this->getVerticalName($verticals);
+				$verticalId = $this->getVerticalName($verticalId);
 			}
 		} else {
 			$verticals = $this->getVerticalName($verticals);
