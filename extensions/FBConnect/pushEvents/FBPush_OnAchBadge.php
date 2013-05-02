@@ -19,14 +19,18 @@ class FBPush_OnAchBadge extends FBConnectPushEvent {
 	}
 		
 	public static function onAchievementsBadgesGiven($user, $badg ){
-		global $wgContentNamespaces, $wgSitename, $wgUser, $wgServer;
+		global $wgSitename, $wgUser;
 		wfProfileIn(__METHOD__);
 
-                if( $badg->getTypeId() == BADGE_WELCOME ) {
-                    wfProfileOut(__METHOD__);
-                    return true;
-                }
+		if ( !self::checkUserOptions(__CLASS__) ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
 
+		if( $badg->getTypeId() == BADGE_WELCOME ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
 
 		$name = $badg->getName();
 		$img =  $badg->getPictureUrl();
