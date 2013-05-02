@@ -9,6 +9,12 @@ class WAMService extends Service {
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
 
+	protected static $verticalNames = [
+		WikiFactoryHub::CATEGORY_ID_GAMING => 'Gamming',
+		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
+		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'Lifestyle'
+	];
+
 	protected $defaultIndexOptions = array(
 		'currentTimestamp' => null,
 		'previousTimestamp' => null,
@@ -223,14 +229,15 @@ class WAMService extends Service {
 		}
 
 		if ($options['verticalId']) {
-			$conds ['dw.hub_id'] = $options['verticalId'];
+			$vericals = $options['verticalId'];
 		} else {
-			$conds ['dw.hub_id'] = array(
+			$vericals = array(
 				WikiFactoryHub::CATEGORY_ID_GAMING,
 				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
 				WikiFactoryHub::CATEGORY_ID_LIFESTYLE
 			);
 		}
+		$conds['fw1.hub_name'] = $this->translateVerticalsNames($vericals);
 
 		if (!is_null($options['wikiLang'])) {
 			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
@@ -302,5 +309,22 @@ class WAMService extends Service {
 		}
 
 		return $blacklistIds;
+	}
+
+	protected function translateVerticalsNames($verticals) {
+		if (is_array($verticals)) {
+			foreach($verticals as &$verticalId) {
+				$verticalId = $this->getVerticalName($verticals);
+			}
+		} else {
+			$verticals = $this->getVerticalName($verticals);
+		}
+		return $verticals;
+	}
+
+	protected function getVerticalName($verticalId) {
+		if (isset(self::$verticalNames[$verticalId])) {
+			return self::$verticalNames[$verticalId];
+		}
 	}
 }
