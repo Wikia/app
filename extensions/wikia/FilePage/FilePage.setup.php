@@ -22,10 +22,10 @@ $dir = dirname( __FILE__ ) . '/';
 $app = F::app( );
 
 // classes
-$app->registerClass( 'ImagePageTabbed', $dir . 'ImagePageTabbed.php' );
-$app->registerClass( 'VideoPageTabbed', $dir . 'VideoPageTabbed.php' );
-$app->registerClass( 'VideoPageFlat', $dir . 'VideoPageFlat.php' );
-$app->registerClass( 'WikiVideoFilePage', $dir . 'WikiVideoFilePage.php');
+$app->registerClass( 'WikiaFilePage', $dir . 'WikiaFilePage.php' );
+$app->registerClass( 'FilePageFlat', $dir . 'FilePageFlat.php' );
+$app->registerClass( 'FilePageTabbed', $dir . 'FilePageTabbed.php' );
+$app->registerClass( 'WikiVideoFilePage', $dir . 'WikiVideoFilePage.php'); // Override for WikiFilePage
 
 $app->registerClass( 'FilePageHooks', $dir . 'FilePageHooks.class.php' );
 $app->registerClass( 'FilePageHelper', $dir . 'FilePageHelper.class.php' );

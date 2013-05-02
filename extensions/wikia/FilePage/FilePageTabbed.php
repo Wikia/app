@@ -1,14 +1,8 @@
 <?php
 
-// DONE
-
-if( !defined( 'MEDIAWIKI' ) )
-	die( 1 );
-
 /**
- * This is an override and extension of includes/ImagePage.php
- * As Wikia, we want to output a different markup structure and css for File pages than default MediaWiki.
- * VideoPageTabbed will inherit off of this class
+ * This class overrides MW's ImagePage.  It's used as a base class for all
+ * customizations to file pages (both image and video) and in all skins.
  *
  * @ingroup Media
  * @author Hyun
@@ -16,7 +10,7 @@ if( !defined( 'MEDIAWIKI' ) )
  * @author Garth Webb
  * @author Saipetch
  */
-class ImagePageTabbed extends ImagePage {
+class FilePageTabbed extends WikiaFilePage {
 
 	/**
 	 * TOC override so Wikia File Page does not return any TOC
@@ -139,6 +133,25 @@ class ImagePageTabbed extends ImagePage {
 		$html = $app->renderPartial( 'FilePageController', 'description', array( 'isContentEmpty' => $isContentEmpty ) );
 
 		$out->addHTML( $html );
+	}
+
+	/**
+	 * Display info about the video below the video player
+	 */
+	protected function getVideoInfoLine( $file ) {
+		$app = F::app();
+
+		$captionDetails = array(
+			'expireDate' => $file->getExpirationDate(),
+			'provider' => $file->getProviderName(),
+			'providerUrl' => $file->getProviderHomeUrl(),
+			'detailUrl' => $file->getProviderDetailUrl(),
+			'views' => MediaQueryService::getTotalVideoViewsByTitle( $file->getTitle()->getDBKey() ),
+		);
+
+		$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );
+
+		return $caption;
 	}
 
 }

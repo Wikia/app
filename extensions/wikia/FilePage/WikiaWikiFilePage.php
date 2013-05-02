@@ -4,7 +4,7 @@
  *
  * @ingroup Media
  */
-class WikiVideoFilePage extends WikiFilePage {
+class WikiaWikiFilePage extends WikiFilePage {
 
 	/**
 	 * @return array|null

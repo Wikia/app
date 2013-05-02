@@ -17,17 +17,11 @@ class FilePageHooks extends WikiaObject{
 	 */
 	public function onArticleFromTitle( &$oTitle, &$oArticle ){
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
-			$oFile = wfFindFile( $oTitle );
-			$isVideo = WikiaFileHelper::isVideoFile( $oFile );
 
 			if ( F::app()->checkSkin( 'oasis' ) ) {
-				if ( $isVideo ) {
-					$oArticle = new VideoPageTabbed( $oTitle );
-				} else {
-					$oArticle = new ImagePageTabbed( $oTitle );
-				}
-			} else if ( $isVideo ) {
-				$oArticle = new VideoPageFlat( $oTitle );
+				$oArticle = new FilePageTabbed( $oTitle );
+			} else {
+				$oArticle = new FilePageFlat( $oTitle );
 			}
 		}
 

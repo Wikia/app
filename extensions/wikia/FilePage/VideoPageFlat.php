@@ -1,5 +1,7 @@
 <?php
 
+// DONE
+
 if( !defined( 'MEDIAWIKI' ) )
 	die( 1 );
 
