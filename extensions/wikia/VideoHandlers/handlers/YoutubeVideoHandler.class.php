@@ -12,17 +12,16 @@ class YoutubeVideoHandler extends VideoHandler {
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		// YouTube parameters: http://code.google.com/apis/youtube/player_parameters.html
 		$height =  $this->getHeight( $width );
-		$url = $this->getEmbedUrl();
-		$params = array( 'rel' => 0 );
+		$playerVars = array(
+			'rel' => 0,
+			'wmode' => 'opaque',
+			'allowfullscreen' => 1,
+		);
 		if ( $autoplay ) {
-			$params[self::$autoplayParam] = self::$autoplayValue;
+			$playerVars[self::$autoplayParam] = self::$autoplayValue;
 		}
-		$qs = http_build_query($params);
 		$sizeString = $this->getSizeString( $width, $height );
 
-		/*$html = <<<EOT
-<iframe $sizeString src="{$url}?$qs&wmode=opaque" frameborder="0" allowfullscreen></iframe>
-EOT;*/
 		$html = <<<EOT
 <div id="youtubeVideoPlayer" $sizeString></div>
 EOT;
@@ -33,10 +32,12 @@ EOT;
 				'width' => $width,
 				'height' => $height,
 				'videoId'=> $this->videoId,
+				'playerVars' => $playerVars,
 			),
 			'scripts' => array(
 				'extensions/wikia/VideoHandlers/js/handlers/Youtube.js',
 			),
+			// TODO: title and provider are now used by all video handlers.  Let's create a base version of this array and include those two values.
 			'title' => $this->DBKey,
 			'provider' => 'youtube',
 		);

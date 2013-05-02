@@ -8,7 +8,13 @@ define('wikia.youtube', ['wikia.window', 'wikia.loader'], function Youtube(windo
 
 	return function(params, vb) {
 		var player,
-			started = false;
+			started = false,
+			time = new Date().getTime(),
+			oId = "youtubeVideoPlayer",
+			container = document.getElementById(oId),
+			newId = oId + "-" + time;
+
+		container.id = newId;
 
 		function onPlayerReady() {
 			vb.track('player-load');
@@ -26,14 +32,18 @@ define('wikia.youtube', ['wikia.window', 'wikia.loader'], function Youtube(windo
 			'onStateChange': onPlayerStateChange
 		}
 
-		// Make sure iframe_api is fully loaded before binding onYouTubeIframeAPIReady event
-		loader({
-			type: loader.JS,
-			resources: 'https://www.youtube.com/iframe_api'
-		}).done(function() {
-			window.onYouTubeIframeAPIReady = function() {
-				player = new YT.Player('youtubeVideoPlayer', params);
-			}
-		});
+		if ( window.YT ) {
+			player = new YT.Player(newId, params);
+		} else {
+			// Make sure iframe_api is fully loaded before binding onYouTubeIframeAPIReady event
+			loader({
+				type: loader.JS,
+				resources: 'https://www.youtube.com/iframe_api'
+			}).done(function() {
+				window.onYouTubeIframeAPIReady = function() {
+					player = new YT.Player(newId, params);
+				}
+			});
+		}
 	}
 });
