@@ -16,7 +16,7 @@ class FilePageFlat extends WikiaFilePage {
 	/**
 	 * Display info about the video below the video player
 	 */
-	protected function getVideoInfoLine( $file ) {
+	public function getVideoInfoLine( $file ) {
 		wfProfileIn( __METHOD__ );
 
 		$detailUrl = $file->getProviderDetailUrl();

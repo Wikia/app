@@ -10,7 +10,7 @@
  * @author Garth Webb
  * @author Saipetch
  */
-class WikiaFilePage extends ImagePage {
+abstract class WikiaFilePage extends ImagePage {
 
 	public static $videoPageVideoWidth = 670;
 
@@ -60,10 +60,10 @@ class WikiaFilePage extends ImagePage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	// TODO: make this an abstract function?
-	protected function getVideoInfoLine( $file ) {
-		return "";
-	}
+	/**
+	 * Display info about the video below the video player
+	 */
+	abstract function getVideoInfoLine( $file );
 
 	/**
 	 * @return String Url where user can re-upload the file
