@@ -32,6 +32,7 @@ class WikiViews extends AbstractWikiService
 		wfProfileIn(__METHOD__);
 		$service = $this->getService();
 		if ( $this->result !== null || !$service->isOnDbCluster() ) {
+			wfProfileOut(__METHOD__);
 			return $this->result;
 		}
 		
