@@ -283,7 +283,8 @@ WikiaHomePageRemix.prototype = {
 			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'collections-link', {'collection-id': collectionId}, ev);
 		} else if( node.hasClass('sponsor-image-link') ) {
 			var collectionId = node.data('collection-id');
-			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'collection-sponsor', {'collection-id': collectionId}, ev);
+			var isLink = node.hasParent('a');
+			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'collection-sponsor', {'collection-id': collectionId, 'is-link': isLink}, ev);
 		}
 	},
 	preload: function () {
