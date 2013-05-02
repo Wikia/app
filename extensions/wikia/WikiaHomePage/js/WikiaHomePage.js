@@ -142,6 +142,8 @@ WikiPreview.prototype = {
 WikiaHomePageRemix.prototype = {
 	remixesWhenShowCollection: [0, 3, 5],
 	COLLECTIONS_LS_KEY: 'WHP_collections',
+	SPONSOR_HERO_IMG_TIMEOUT: 2000,
+	SPONSOR_HERO_IMG_CONTAINER_ID: 'WikiaHomePageHeroImage',
 	init: function () {
 		this.wikiSetStack = window.wgInitialWikiBatchesForVisualization;
 		this.collectionsWikisStack = window.wgCollectionsBatches || [];
@@ -518,9 +520,9 @@ WikiaHomePageRemix.prototype = {
 			.attr('witdh', imgData['height'])
 			.attr('src', imgData['url']);
 
-		var container = $('<div />').attr('id', 'WikiaHomePageHeroImage');
+		var container = $('<div />').attr('id', this.SPONSOR_HERO_IMG_CONTAINER_ID);
 
-		$(img).bind('load', function(){
+		$(img).bind('load', function() {
 			container.append(img);
 		});
 		
@@ -567,4 +569,10 @@ var WikiaRemixInstance = new WikiaHomePageRemix();
 $(function () {
 	WikiaRemixInstance.init();
 	WikiPreviewInterstitial.init();
+});
+
+$(window).load(function() {
+	setTimeout(function() {
+		$('#' + WikiaRemixInstance.SPONSOR_HERO_IMG_CONTAINER_ID).fadeOut();
+	}, WikiaRemixInstance.SPONSOR_HERO_IMG_TIMEOUT);
 });
