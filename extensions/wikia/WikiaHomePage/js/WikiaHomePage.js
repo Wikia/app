@@ -470,7 +470,9 @@ WikiaHomePageRemix.prototype = {
 
 		var container = $('<div />').attr('id', 'WikiaHomePageHeroImage');
 
-		container.append(img);
+		$(img).bind('load', function(){
+			container.append(img);
+		});
 		
 		return container;
 	},
