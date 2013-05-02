@@ -104,6 +104,10 @@ class Wall extends WikiaModel {
 		$this->cacheable = false;
 	}
 
+	/**
+	 * This can return false instead of where condition in case the where would
+	 * ask for parent_page_id equal 0
+	 */
 	protected function getWhere() {
 		wfProfileIn(__METHOD__);
 
@@ -134,7 +138,7 @@ class Wall extends WikiaModel {
 		$out = array();
 		$where = $this->getWhere();
 
-		if ( !empty( $where ) ) {
+		if ( $where ) {
 			$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
 			$time = date ("Y-m-d H:i:s", time() - 24*7*60*60 ) ;
