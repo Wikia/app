@@ -20,7 +20,7 @@ class YoutubeVideoHandler extends VideoHandler {
 		if ( $autoplay ) {
 			$playerVars[self::$autoplayParam] = self::$autoplayValue;
 		}
-		$sizeString = $this->getSizeString( $width, $height );
+		$sizeString = $this->getSizeString( $width, $height, 'inline' );
 
 		$html = <<<EOT
 <div id="youtubeVideoPlayer" $sizeString></div>

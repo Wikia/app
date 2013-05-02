@@ -48,7 +48,8 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 		 * need to reset the player with altered settings (such as autoplay).
 		 */
 		reload: function(title, width, autoplay) {
-			var element = this.element;
+			var videoInstance,
+				element = this.element;
 			nirvana.getJson(
 				'VideoHandler',
 				'getEmbedCode',
@@ -58,7 +59,7 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 					autoplay: autoplay ? 1 : 0 // backend needs an integer
 				}
 			).done(function(data) {
-				vb(element, data.embedCode);
+				videoInstance = new vb(element, data.embedCode);
 			});
 		},
 		track: function(action) {
@@ -71,6 +72,15 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 			}, {
 				title: this.title
 			});
+		},
+		timeStampId: function(id) {
+			var time = new Date().getTime(),
+				container = document.getElementById(id),
+				newId = id + "-" + time;
+
+			container.id = newId;
+
+			return newId;
 		}
 	}
 

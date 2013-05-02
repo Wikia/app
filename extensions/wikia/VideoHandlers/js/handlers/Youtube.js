@@ -6,20 +6,22 @@
 define('wikia.youtube', ['wikia.window', 'wikia.loader'], function Youtube(window, loader) {
 	'use strict';
 
+	/**
+	 * Set up youtube player and tracking events
+	 * @param {Object} params Player params sent from the video handler
+	 * @param {VideoBootstrap} vb Instance of video player
+	 */
 	return function(params, vb) {
 		var player,
 			started = false,
-			time = new Date().getTime(),
-			oId = "youtubeVideoPlayer",
-			container = document.getElementById(oId),
-			newId = oId + "-" + time;
+			containerId = vb.timeStampId( 'youtubeVideoPlayer' );
 
-		container.id = newId;
-
+		// Track that the player is loaded
 		function onPlayerReady() {
 			vb.track('player-load');
 		}
 
+		// Track when the content first starts playing
 		function onPlayerStateChange(e) {
 			if ( !started && e.data == 1 ) {
 				vb.track('content-begin');
@@ -32,16 +34,20 @@ define('wikia.youtube', ['wikia.window', 'wikia.loader'], function Youtube(windo
 			'onStateChange': onPlayerStateChange
 		}
 
+		function createPlayer() {
+			player = new YT.Player(containerId, params);
+		}
+
+		// Make sure iframe_api is fully loaded before binding onYouTubeIframeAPIReady event
 		if ( window.YT ) {
-			player = new YT.Player(newId, params);
+			createPlayer();
 		} else {
-			// Make sure iframe_api is fully loaded before binding onYouTubeIframeAPIReady event
 			loader({
 				type: loader.JS,
 				resources: 'https://www.youtube.com/iframe_api'
 			}).done(function() {
 				window.onYouTubeIframeAPIReady = function() {
-					player = new YT.Player(newId, params);
+					createPlayer();
 				}
 			});
 		}
