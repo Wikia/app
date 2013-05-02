@@ -450,7 +450,7 @@ class CensusDataRetrieval {
 		if ( empty( $censusData ) ) {
 			wfDebug( __METHOD__ . 'Connection problem or no data' );
                         wfProfileOut(__METHOD__);
-			return false;
+			return array();
 		}
  
                 $this->app->wg->Memc->set( $key, $data, 3600 );
