@@ -3,20 +3,24 @@
 /**
  * Class definition for Wikia\Search\Test\Match\CategoryMatchTest
  */
-require_once 'PHPUnit/Framework.php';
-require_once 'Wikia/Search/Match/Category.php';
-require_once 'Wikia/Search/MediaWikiService.php';
-require_once 'Wikia/Search/Match/AbstractMatch.php';
-require_once 'Wikia/Search/Result.php';
+namespace Wikia\Search\Test\Match;
+use ReflectionProperty, ReflectionMethod,Wikia\Search\MediaWikiService, Wikia\Search\Result;
 
-class CategoryMatchTest extends PHPUnit_Framework_TestCase {
+require_once 'PHPUnit/Autoload.php';
+//require_once '../../MediaWikiService.php';
+//require_once '../../Result.php';
+//require_once '../../Match/AbstractMatch.php';
+//require_once '../../Match/Category.php';
+
+
+class CategoryMatchTest extends \PHPUnit_Framework_TestCase {
          /*
 	 * @covers Wikia\Search\Match\AbstractMatch::__construct
 	 * @covers Wikia\Search\Match\AbstractMatch::getId
 	 */
     
 	public function testAbstractConstruct() {
-                $service = new MediaWikiService;
+                $service = new \MediaWikiService;
             
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\AbstractMatch' )
 		                  ->setConstructorArgs( array( 123, $service ) )
