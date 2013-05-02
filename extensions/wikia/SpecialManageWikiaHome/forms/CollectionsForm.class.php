@@ -65,7 +65,7 @@ class CollectionsForm extends FormBuilderService {
 	public function filterData($data) {
 		if (!empty($data['sponsor_url'])) {
 			foreach ($data['sponsor_url'] as &$url) {
-				if (strpos($url, 'http://') === false && strpos($url, 'https://') === false) {
+				if( !empty($url) && strpos($url, 'http://') === false && strpos($url, 'https://') === false ) {
 					$url = 'http://' . $url;
 				}
 			}
