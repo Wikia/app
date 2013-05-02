@@ -603,6 +603,7 @@ class WallHelper {
 		if(!$wm->isMain()) {
 			$wmw = $wm->getTopParentObj();
 			if( empty($wmw) ) {
+				wfProfileOut(__METHOD__);
 				return true;
 			}
 			$wmw->load();

@@ -83,6 +83,7 @@ class MediaWikiService
 		try {
     		$this->getPageFromPageId( $pageId );
 		} catch ( \Exception $e ) {
+			wfProfileOut( __METHOD__ );
 			return $pageId;
 		}
 		
@@ -815,6 +816,7 @@ class MediaWikiService
 	protected function getPageFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );
 		if ( isset( self::$pageIdsToArticles[$pageId] ) ) {
+			wfProfileOut( __METHOD__ );
 			return self::$pageIdsToArticles[$pageId];
 		}
 		$page = \Article::newFromID( $pageId );
@@ -851,7 +853,8 @@ class MediaWikiService
 				$main->load();
 				$wm = $main;
 			}
-			
+			wfProfileOut( __METHOD__ );
+
 			return (string) $wm->getMetaTitle();
 		}
 		wfProfileOut(__METHOD__);

@@ -364,7 +364,7 @@ class DataMartService extends Service {
 				$topWikis[$row->id] = $row->totalViews;
 			}
 
-			wfProfileOut(__CLASS__ . '::TopWikisQuery');
+			wfProfileOut(__CLASS__ . '::TopWikisVideoViewQuery');
 			return $topWikis;
 		};
 

@@ -436,6 +436,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return stdClass (properties: boolean $success, string $errorMsg)
 	 */
 	protected function publishHub($langCode, $verticalId, $timestamp, &$results) {
+		wfProfileIn(__METHOD__);
 		if( !$this->checkModulesSaved($langCode, $verticalId, $timestamp) ) {
 			$results->success = false;
 			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-modules-not-saved');

@@ -68,6 +68,7 @@ class TitleBatch {
 			$articleIds = $this->getArticleIds();
 			if ( empty( $articleIds ) ) {
 				wfProfileOut( __METHOD__ . '::CacheMiss' );
+				wfProfileOut( __METHOD__ );
 				return $this;
 			}
 

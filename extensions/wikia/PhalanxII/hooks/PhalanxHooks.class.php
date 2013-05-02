@@ -84,6 +84,7 @@ class PhalanxHooks extends WikiaObject {
 		wfProfileIn( __METHOD__ );
 
 		if ( !isset( $data['id'] ) ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
