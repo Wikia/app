@@ -1170,6 +1170,10 @@ class ImageHistoryList {
 				'file-link' => true,
 			);
 
+			/* Wikia change @author liz*/
+			$options['noLightbox'] = true;
+			/* Wikia change end */
+
 			if ( !$thumbnail ) {
 				return wfMsgHtml( 'filehist-nothumb' );
 			}
