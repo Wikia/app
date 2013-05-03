@@ -18,17 +18,18 @@ class RelatedVideosService {
 	 */
 	public function getRelatedVideoData( $params, $videoWidth = RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0, $videoHeight='', $useJWPlayer=true, $autoplay=true, $inAjaxResponse=false ){
 
+		wfProfileIn( __METHOD__ );
+
 		$titleText = isset( $params['title'] ) ? $params['title'] : '';
 		$articleId = isset( $params['articleId'] ) ? $params['articleId'] : 0;
 		$source = isset( $params['source'] ) ? $params['source'] : '';
 
-		wfProfileIn( __METHOD__ );
 		$titleText = urldecode( $titleText );
 		$result = $this->getFromCache( $titleText, $source, $videoWidth, $cityShort );
 		if ( empty( $result ) ){
-			Wikia::log( __METHOD__, 'RelatedVideos', 'Not from cache' );
+			//Wikia::log( __METHOD__, 'RelatedVideos', 'Not from cache' );
 			$result = array();
-			$rvd = F::build('RelatedVideosData'); /* @var $rvd RelatedVideosData */
+			$rvd = new RelatedVideosData();
 			$result['data'] = $rvd->getVideoData(
 				$titleText,
 				self::$width,
@@ -55,7 +56,7 @@ class RelatedVideosService {
 
 			$this->saveToCache( $titleText, $source, $videoWidth, $cityShort, $result );
 		} else {
-			Wikia::log( __METHOD__, 'RelatedVideos', 'From cache' );
+			//Wikia::log( __METHOD__, 'RelatedVideos', 'From cache' );
 		}
 
 		// add local data
@@ -123,7 +124,7 @@ class RelatedVideosService {
 		$videoData['date'] = isset( $localParams['date'] ) ? $localParams['date'] : $videoData['timestamp'];
 
 		if ( isset( $localParams['userName'] ) && !empty( $localParams['userName'] ) ){
-			$oUser = F::build( 'User', array( $localParams['userName'] ), 'newFromName' );
+			$oUser = User::newFromName($localParams['userName'] );
 			if ( is_object( $oUser ) ) {
 				$oUser->load();
 			}
@@ -203,7 +204,7 @@ class RelatedVideosService {
 		return $app->wg->parser->parse(
 			$text,
 			$app->wg->title,
-			F::build('ParserOptions'),
+			new ParserOptions(),
 			false
 		)->getText();
 	}
