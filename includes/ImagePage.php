@@ -642,7 +642,9 @@ EOT
 			return;
 		}
 
-		$wgOut->addHTML( "<br /><ul>\n" );
+		/* Wikia change begin - @author: liz - adding class to ul and removed br */
+		$wgOut->addHTML( "<ul class='mw-upload-links-box'>\n" );
+		/* Wikia change end */
 
 		# "Upload a new version of this file" link
 		/* Wikia change begin - @author: mech - replacing ->name with ->getName(), as File::$name is protected */
