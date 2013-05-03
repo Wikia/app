@@ -114,7 +114,7 @@ class Wall extends WikiaModel {
 		if ( empty( $this->mRelatedPageId ) ) {
 			$pageId = $this->mTitle->getArticleID();
 			if ( empty( $pageId ) ) {
-				// bugid:95249 - $pageId means an empty Wall, so we shouldn't query for anything
+				// bugid:95249 - empty($pageId) means the Wall does not exist yet, so we shouldn't query for anything
 				// otherwise we will get some strange results like WikiaBot's posts on Empty's wall
 				$where = false;
 			} else {
