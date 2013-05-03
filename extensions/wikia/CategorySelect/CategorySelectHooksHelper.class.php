@@ -153,15 +153,15 @@ class CategorySelectHooksHelper {
 
 			JSMessages::enqueuePackage( 'CategorySelect', JSMessages::INLINE );
 
-			$app->registerHook( 'MakeGlobalVariablesScript', 'CategorySelectHooksHelper', 'onMakeGlobalVariablesScript' );
+			$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectHooksHelper::onMakeGlobalVariablesScript';
 
 			// Add hooks for edit pages
 			if ( $action == 'edit' || $action == 'submit' || $force ) {
-				$app->registerHook( 'EditForm::MultiEdit:Form', 'CategorySelectHooksHelper', 'onEditFormMultiEditForm' );
-				$app->registerHook( 'EditPage::CategoryBox', 'CategorySelectHooksHelper', 'onEditPageCategoryBox' );
-				$app->registerHook( 'EditPage::getContent::end', 'CategorySelectHooksHelper', 'onEditPageGetContentEnd' );
-				$app->registerHook( 'EditPage::importFormData', 'CategorySelectHooksHelper', 'onEditPageImportFormData' );
-				$app->registerHook( 'EditPage::showEditForm:fields', 'CategorySelectHooksHelper', 'onEditPageShowEditFormFields' );
+				$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectHooksHelper::onEditFormMultiEditForm';
+				$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectHooksHelper::onEditPageCategoryBox';
+				$wgHooks['EditPage::getContent::end'][] = 'CategorySelectHooksHelper::onEditPageGetContentEnd';
+				$wgHooks['EditPage::importFormData'][] = 'CategorySelectHooksHelper::onEditPageImportFormData';
+				$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectHooksHelper::onEditPageShowEditFormFields';
 			}
 		}
 

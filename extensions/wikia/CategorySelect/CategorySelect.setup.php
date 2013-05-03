@@ -29,8 +29,8 @@ $wgAutoloadClasses[ 'CategorySelectController'] =  $dir . 'CategorySelectControl
 $wgAutoloadClasses[ 'CategorySelectHooksHelper'] =  $dir . 'CategorySelectHooksHelper.class.php' ;
 
 // Hooks
-$app->registerHook( 'GetPreferences', 'CategorySelectHooksHelper', 'onGetPreferences' );
-$app->registerHook( 'MediaWikiPerformAction', 'CategorySelectHooksHelper', 'onMediaWikiPerformAction' );
+$wgHooks['GetPreferences'][] = 'CategorySelectHooksHelper::onGetPreferences';
+$wgHooks['MediaWikiPerformAction'][] = 'CategorySelectHooksHelper::onMediaWikiPerformAction';
 
 // Messages
 $app->registerExtensionMessageFile( 'CategorySelect', $dir . 'CategorySelect.i18n.php' );
