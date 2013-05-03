@@ -12,7 +12,7 @@
  */
 abstract class WikiaFilePage extends ImagePage {
 
-	public static $videoPageVideoWidth = 670;
+	const VIDEO_WIDTH = 670;
 
 	protected function isVideo() {
 		$file = $this->getDisplayedFile();
@@ -51,11 +51,11 @@ abstract class WikiaFilePage extends ImagePage {
 
 		$autoplay = $app->wg->VideoPageAutoPlay;
 
-		$imageLink = '<div class="fullImageLink" id="file">' . $file->getEmbedCode( self::$videoPageVideoWidth, $autoplay ) . '</div>';
+		$videoDisplay = '<div class="fullImageLink" id="file">' . $file->getEmbedCode( self::VIDEO_WIDTH, $autoplay ) . '</div>';
 
-		$imageLink .= $this->getVideoInfoLine( $file );
+		$videoDisplay .= $this->getVideoInfoLine( $file );
 
-		$app->wg->Out->addHTML($imageLink);
+		$app->wg->Out->addHTML($videoDisplay);
 
 		wfProfileOut( __METHOD__ );
 	}

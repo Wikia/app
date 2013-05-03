@@ -15,6 +15,8 @@ class FilePageFlat extends WikiaFilePage {
 
 	/**
 	 * Display info about the video below the video player
+	 *
+	 * @todo Use a template for this
 	 */
 	public function getVideoInfoLine( $file ) {
 		wfProfileIn( __METHOD__ );
