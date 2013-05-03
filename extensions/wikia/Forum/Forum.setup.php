@@ -34,51 +34,51 @@ $app->registerExtensionMessageFile( 'ForumAliases', $dir . 'Forum.alias.php');
 $wgSpecialPages[ 'Forum' ] =  'ForumSpecialController';
 
 // hooks
-$app->registerHook( 'AfterWallWikiActivityFilter', 'ForumHooksHelper', 'onAfterWallWikiActivityFilter' );
-$app->registerHook( 'WallContributionsLine', 'ForumHooksHelper', 'onWallContributionsLine' );
-$app->registerHook( 'getUserPermissionsErrors', 'ForumHooksHelper', 'getUserPermissionsErrors' );
-$app->registerHook( 'WallRecentchangesMessagePrefix', 'ForumHooksHelper', 'onWallRecentchangesMessagePrefix' );
-$app->registerHook( 'WallThreadHeader', 'ForumHooksHelper', 'onWallThreadHeader' );
-$app->registerHook( 'WallMessageGetWallOwnerName', 'ForumHooksHelper', 'onWallMessageGetWallOwnerName' );
+$wgHooks['AfterWallWikiActivityFilter'][] = 'ForumHooksHelper::onAfterWallWikiActivityFilter';
+$wgHooks['WallContributionsLine'][] = 'ForumHooksHelper::onWallContributionsLine';
+$wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::getUserPermissionsErrors';
+$wgHooks['WallRecentchangesMessagePrefix'][] = 'ForumHooksHelper::onWallRecentchangesMessagePrefix';
+$wgHooks['WallThreadHeader'][] = 'ForumHooksHelper::onWallThreadHeader';
+$wgHooks['WallMessageGetWallOwnerName'][] = 'ForumHooksHelper::onWallMessageGetWallOwnerName';
 
-$app->registerHook( 'WallHistoryThreadHeader', 'ForumHooksHelper', 'onWallHistoryThreadHeader' );
-$app->registerHook( 'WallHistoryHeader', 'ForumHooksHelper', 'onWallHistoryHeader' );
+$wgHooks['WallHistoryThreadHeader'][] = 'ForumHooksHelper::onWallHistoryThreadHeader';
+$wgHooks['WallHistoryHeader'][] = 'ForumHooksHelper::onWallHistoryHeader';
 
-$app->registerHook( 'WallHeader', 'ForumHooksHelper', 'onWallHeader' );
-$app->registerHook( 'WallNewMessage', 'ForumHooksHelper', 'onWallNewMessage' );
-$app->registerHook( 'EditCommentsIndex', 'ForumHooksHelper', 'onEditCommentsIndex' );
-$app->registerHook( 'ArticleInsertComplete', 'ForumHooksHelper', 'onArticleInsertComplete' );
-$app->registerHook( 'WallBeforeRenderThread', 'ForumHooksHelper', 'onWallBeforeRenderThread' );
-$app->registerHook( 'AfterBuildNewMessageAndPost', 'ForumHooksHelper', 'onAfterBuildNewMessageAndPost' );
-$app->registerHook( 'WallMessageDeleted', 'ForumHooksHelper', 'onWallMessageDeleted' );
-$app->registerHook( 'ContributionsLineEnding', 'ForumHooksHelper', 'onContributionsLineEnding' );
-$app->registerHook( 'OasisAddPageDeletedConfirmationMessage', 'ForumHooksHelper', 'onOasisAddPageDeletedConfirmationMessage' );
-$app->registerHook( 'FilePageImageUsageSingleLink', 'ForumHooksHelper', 'onFilePageImageUsageSingleLink' );
+$wgHooks['WallHeader'][] = 'ForumHooksHelper::onWallHeader';
+$wgHooks['WallNewMessage'][] = 'ForumHooksHelper::onWallNewMessage';
+$wgHooks['EditCommentsIndex'][] = 'ForumHooksHelper::onEditCommentsIndex';
+$wgHooks['ArticleInsertComplete'][] = 'ForumHooksHelper::onArticleInsertComplete';
+$wgHooks['WallBeforeRenderThread'][] = 'ForumHooksHelper::onWallBeforeRenderThread';
+$wgHooks['AfterBuildNewMessageAndPost'][] = 'ForumHooksHelper::onAfterBuildNewMessageAndPost';
+$wgHooks['WallMessageDeleted'][] = 'ForumHooksHelper::onWallMessageDeleted';
+$wgHooks['ContributionsLineEnding'][] = 'ForumHooksHelper::onContributionsLineEnding';
+$wgHooks['OasisAddPageDeletedConfirmationMessage'][] = 'ForumHooksHelper::onOasisAddPageDeletedConfirmationMessage';
+$wgHooks['FilePageImageUsageSingleLink'][] = 'ForumHooksHelper::onFilePageImageUsageSingleLink';
 
 //notification hooks
-$app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationPlugin', 'onGetNotificationMessage' );
-$app->registerHook( 'NotificationGetMailNotificationMessage', 'ForumNotificationPlugin', 'onGetMailNotificationMessage' );
+$wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
+$wgHooks['NotificationGetMailNotificationMessage'][] = 'ForumNotificationPlugin::onGetMailNotificationMessage';
 
 //old forum archive
-$app->registerHook( 'getUserPermissionsErrors', 'ForumHooksHelper', 'onGetUserPermissionsErrors' );
-$app->registerHook( 'PageHeaderIndexAfterActionButtonPrepared', 'ForumHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared' );
-$app->registerHook( 'ArticleViewHeader', 'ForumHooksHelper', 'onArticleViewHeader' );
+$wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::onGetUserPermissionsErrors';
+$wgHooks['PageHeaderIndexAfterActionButtonPrepared'][] = 'ForumHooksHelper::onPageHeaderIndexAfterActionButtonPrepared';
+$wgHooks['ArticleViewHeader'][] = 'ForumHooksHelper::onArticleViewHeader';
 
 // forum discussion on article
 //It need to be first one !!!
 array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'ForumHooksHelper::onOutputPageBeforeHTML' );
 
-$app->registerHook( 'WallAction', 'ForumHooksHelper', 'onWallAction');
-$app->registerHook( 'WallBeforeStoreRelatedTopicsInDB', 'ForumHooksHelper', 'onWallStoreRelatedTopicsInDB');
-$app->registerHook( 'WallAfterStoreRelatedTopicsInDB', 'ForumHooksHelper', 'onWallStoreRelatedTopicsInDB');
+$wgHooks['WallAction'][] = 'ForumHooksHelper::onWallAction';
+$wgHooks['WallBeforeStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreRelatedTopicsInDB';
+$wgHooks['WallAfterStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreRelatedTopicsInDB';
 
-$app->registerHook( 'ArticleFromTitle', 'ForumHooksHelper', 'onArticleFromTitle' );
+$wgHooks['ArticleFromTitle'][] = 'ForumHooksHelper::onArticleFromTitle';
 
 // For activity module tag
-$app->registerHook( 'ParserFirstCallInit', 'ForumHooksHelper', 'onParserFirstCallInit' );
+$wgHooks['ParserFirstCallInit'][] = 'ForumHooksHelper::onParserFirstCallInit';
 
 // Hook for topic red links
-$app->registerHook( 'LinkBegin', 'ForumHooksHelper', 'onLinkBegin' );
+$wgHooks['LinkBegin'][] = 'ForumHooksHelper::onLinkBegin';
 
 include ($dir . '/Forum.namespace.setup.php');
 
