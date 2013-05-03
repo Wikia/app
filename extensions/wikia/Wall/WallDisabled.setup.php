@@ -25,5 +25,5 @@ $wgAutoloadClasses['WallDisabledHooksHelper'] =  $dir . '/WallDisabledHooksHelpe
 include($dir . '/notification/WallNotifications.setup.php');
 
 //don't let others edit wall messages after turning wall on and off
-$app->registerHook('AfterEditPermissionErrors', 'WallDisabledHooksHelper', 'onAfterEditPermissionErrors');
+$wgHooks['AfterEditPermissionErrors'][] = 'WallDisabledHooksHelper::onAfterEditPermissionErrors';
 include($dir . '/WallNamespaces.php');

@@ -10,7 +10,7 @@ class WallDisabledHooksHelper {
 	 *
 	 * @return boolean true -- because it's a hook
 	 */
-	public function onAfterEditPermissionErrors($permErrors, $title, $removeArray) {
+	static public function onAfterEditPermissionErrors($permErrors, $title, $removeArray) {
 		$app = F::App();
 
 		if( empty($app->wg->EnableWallExt) &&

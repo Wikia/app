@@ -1936,8 +1936,9 @@ class WallHooksHelper {
 	}
 
 	static public function onBeforeInitialize( $title, $unused, $output, $user, $request, $mediawiki ) {
+		global $wgHooks;
 		if( !empty($title) && $title->isSpecial('Allpages') ) {
-			F::app()->registerHook('AfterLanguageGetNamespaces', 'WallHooksHelper', 'onAfterLanguageGetNamespaces');
+			$wgHooks['AfterLanguageGetNamespaces'][] = 'WallHooksHelper::onAfterLanguageGetNamespaces';
 		}
 		return true;
 	}
