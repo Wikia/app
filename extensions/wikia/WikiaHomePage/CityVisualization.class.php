@@ -37,7 +37,7 @@ class CityVisualization extends WikiaModel {
 	//todo: decouple functions possibly extract classes
 	//todo: decrease number of parameters in all functions in this file
 	public function getList($corpWikiId, $contLang, $dontReadMemc = false) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$memKey = $this->getVisualizationWikisListDataCacheKey($corpWikiId, $contLang);
 		$wikis = (!$dontReadMemc) ? $this->wg->Memc->get($memKey) : null;
 
@@ -70,7 +70,7 @@ class CityVisualization extends WikiaModel {
 		$this->generateBatches($corpWikiId, $contLang, $wikis, $dontReadMemc);
 
 		$this->wg->Memc->set($memKey, $wikis, 60 * 60 * 24);
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $wikis;
 	}
@@ -80,7 +80,7 @@ class CityVisualization extends WikiaModel {
 	}
 
 	public function getWikiBatches($corpWikiId, $contLang, $numberOfBatches) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$memKey = $this->getVisualizationBatchesCacheKey($corpWikiId, $contLang);
 
@@ -111,7 +111,7 @@ class CityVisualization extends WikiaModel {
 				}
 			}
 		}
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $resultingBatches;
 	}
@@ -142,7 +142,7 @@ class CityVisualization extends WikiaModel {
 	 * @desc Generates batches for visualization
 	 */
 	public function generateBatches($corpWikiId, $contLang, $wikis, $dontReadMemc = false) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$reverseMap = array_flip($this->verticalMap);
 		$helper = F::build('WikiaHomePageHelper'); /* @var $helper WikiaHomePageHelper */
@@ -207,12 +207,12 @@ class CityVisualization extends WikiaModel {
 		}
 
 		$this->batches = $batches;
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $batches;
 	}
 
 	protected function getWikiListForVertical($contLang, $verticalId) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$verticalWikis = array(
 			self::PROMOTED_ARRAY_KEY => array(),
@@ -272,7 +272,7 @@ class CityVisualization extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $verticalWikis;
 	}
 
@@ -310,7 +310,7 @@ class CityVisualization extends WikiaModel {
 
 
 	public function setFlag($wikiId, $langCode, $flag) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 		$sql = 'update city_visualization set city_flags = (city_flags | ' . $flag . ') where city_id = ' . $wikiId . ' and city_lang_code = "' . $langCode . '"';
@@ -318,12 +318,12 @@ class CityVisualization extends WikiaModel {
 		$result = $mdb->query($sql);
 		$mdb->commit(__METHOD__);
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
 	public function removeFlag($wikiId, $langCode, $flag) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 		$sql = 'update city_visualization set city_flags = (city_flags & ~' . $flag . ') where city_id = ' . $wikiId. ' and city_lang_code = "' . $langCode . '"';;
@@ -331,7 +331,7 @@ class CityVisualization extends WikiaModel {
 		$result = $mdb->query($sql);
 		$mdb->commit(__METHOD__);
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
@@ -444,7 +444,7 @@ class CityVisualization extends WikiaModel {
 	 * @return array $wikiData
 	 */
 	public function getWikiData($wikiId, $langCode, WikiGetDataHelper $dataHelper) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$memcKey = $dataHelper->getMemcKey($wikiId, $langCode);
 		$wikiData = $this->wg->Memc->get($memcKey);
@@ -488,7 +488,7 @@ class CityVisualization extends WikiaModel {
 			$this->wg->Memc->set($memcKey, $wikiData, 60 * 60 * 24);
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $wikiData;
 	}
@@ -513,7 +513,7 @@ class CityVisualization extends WikiaModel {
 	}
 
 	public function getWikiImages($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$memKey = $this->getWikiImagesCacheKey($wikiId, $langCode);
 		$wikiImages = $this->wg->Memc->get($memKey);
@@ -523,13 +523,13 @@ class CityVisualization extends WikiaModel {
 			$wikiImages = $this->getWikiImageData($wikiId, $langCode, $rowAssigner, $filter);
 			$this->wg->Memc->set($memKey, $wikiImages, 60 * 60 * 24);
 		}
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $wikiImages;
 	}
 
 	public function getWikiImageNames($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$memKey = $this->getWikiImageNamesCacheKey($wikiId, $langCode);
 		$wikiImageNames = $this->wg->Memc->get($memKey);
@@ -539,13 +539,13 @@ class CityVisualization extends WikiaModel {
 			$wikiImageNames = $this->getWikiImageData($wikiId, $langCode, $rowAssigner, $filter);
 			$this->wg->Memc->set($memKey, $wikiImageNames, 60 * 60 * 24);
 		}
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $wikiImageNames;
 	}
 
 	public function getWikiImageData($wikiId, $langCode, WikiImageRowAssigner $rowAssigner, $filter = ImageReviewStatuses::STATE_APPROVED) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$wikiImages = array();
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
@@ -567,7 +567,7 @@ class CityVisualization extends WikiaModel {
 			$wikiImages[$row->image_index] = $rowAssigner->returnParsedWikiImageRow($row);
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $wikiImages;
 	}
@@ -714,7 +714,7 @@ class CityVisualization extends WikiaModel {
 	}
 
 	protected function getImagesFromReviewTable($cityId, $langCode) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$wikiImages = array();
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
@@ -733,13 +733,13 @@ class CityVisualization extends WikiaModel {
 			$wikiImages [] = $row;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $wikiImages;
 	}
 
 	public function getImageReviewStatus($wikiId, $pageId, WikiImageRowAssigner $rowAssigner) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$reviewStatus = ImageReviewStatuses::STATE_UNREVIEWED;
 
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
@@ -759,7 +759,7 @@ class CityVisualization extends WikiaModel {
 			$reviewStatus = $rowAssigner->returnParsedWikiImageRow($row);
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $reviewStatus;
 	}
 

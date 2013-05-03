@@ -67,14 +67,14 @@ class JSMessages {
 	 * @param int $mode - how to emit messages (inline / external)
 	 */
 	public function enqueuePackage($package, $mode) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		// add to proper queue
 		$queueName = ($mode == self::INLINE) ? 'inline' : 'external';
 		$this->queue[$queueName][] = $package;
 
 		$this->log(__METHOD__ , "{$package} (added to '{$queueName}' queue)");
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/*
@@ -85,12 +85,12 @@ class JSMessages {
 	 * @return string A string containing the package as an inline-able tag to use in templates
 	 */
 	public function printPackages( Array $packages ) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$pkgs = implode(',', $packages);
 		$ret = '<script>' . $this->app->sendRequest( 'JSMessages', 'getMessages', array( 'packages' => $pkgs ), true )->toString() . '</script>';
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $ret;
 	}
@@ -105,7 +105,7 @@ class JSMessages {
 	 */
 	private function resolveMessagesPattern($pattern) {
 		$fname = __METHOD__ . "::$pattern";
-		$this->app->wf->ProfileIn($fname);
+		wfProfileIn($fname);
 
 		$this->log(__METHOD__, $pattern);
 
@@ -132,7 +132,7 @@ class JSMessages {
 		}
 
 
-		$this->app->wf->ProfileOut($fname);
+		wfProfileOut($fname);
 		return $ret;
 	}
 
@@ -143,10 +143,10 @@ class JSMessages {
 	 * @return array - list of all message keys
 	 */
 	private function getAllMessageKeys(Language $lang) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if (is_null($this->allMessageKeys)) {
-			$this->app->wf->ProfileIn(__METHOD__ . '::miss');
+			wfProfileIn(__METHOD__ . '::miss');
 			$messageKeys = $lang->getAllMessageKeys();
 			$this->allMessageKeys = $messageKeys['messages'];
 
@@ -160,10 +160,10 @@ class JSMessages {
 				);
 			}
 
-			$this->app->wf->ProfileOut(__METHOD__ . '::miss');
+			wfProfileOut(__METHOD__ . '::miss');
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $this->allMessageKeys;
 	}
 
@@ -177,7 +177,7 @@ class JSMessages {
 	 * @return array - key/value array of messages
 	 */
 	private function getPackage($name, $allowWildcards = true) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$ret = null;
 
 		if (isset($this->packages[$name])) {
@@ -200,7 +200,7 @@ class JSMessages {
 					}
 					else {
 						Wikia::logBacktrace(__METHOD__);
-						$this->app->wf->ProfileOut(__METHOD__);
+						wfProfileOut(__METHOD__);
 						trigger_error("JSMessages: '{$name}' package with wildcard matching can only be used in EXTERNAL mode", E_USER_ERROR);
 						return;
 					}
@@ -219,7 +219,7 @@ class JSMessages {
 			}
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -253,7 +253,7 @@ class JSMessages {
 	 *   - JS requested via <script> tag at the bottom of the page (EXTERNAL mode)
 	 */
 	public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$this->log(__METHOD__, 'preparing list of inline messages...');
 
 		// get items to be rendered as a variable in <head> section
@@ -275,7 +275,7 @@ class JSMessages {
 			$this->app->wg->Out->addScript(Html::linkedScript($url));
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -287,7 +287,7 @@ class JSMessages {
 	 * @return string - URL to "dynamic" JS file with messages
 	 */
 	public function getExternalPackagesUrl() {
-		$this->app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		// get items to be loaded via JS file
 		$packages = $this->queue['external'];
@@ -314,7 +314,7 @@ class JSMessages {
 			));
 		}
 
-		$this->app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $url;
 	}
 }

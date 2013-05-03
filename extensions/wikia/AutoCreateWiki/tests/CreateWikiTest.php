@@ -20,6 +20,8 @@ class CreateWikiTest extends WikiaBaseTest {
 
 	protected function setUp() {
 		global $wgUser, $IP;
+		parent::setUp();
+
 		$this->wgUserBackup = $wgUser;
 		$this->mIP = $IP;
 		$wgUser = User::newFromId(self::TEST_USER_ID1);
@@ -33,7 +35,6 @@ class CreateWikiTest extends WikiaBaseTest {
 
 	/**
 	 * CreateWikiProject object
-	 * @var CreateWikiProject
 	 * @group Infrastructure
 	 */
 	public function testWikiCreation() {
@@ -47,19 +48,19 @@ class CreateWikiTest extends WikiaBaseTest {
 		foreach ( $languages as $lang ) {
 			$domain = sprintf("test%stest", date('YmdHis'));
 
-			$this->oCWiki = new CreateWiki(
+			$oCWiki = new CreateWiki(
 				"Test Create Wiki", // sitename
 				$domain, // domain
 				$lang, // lang
 				1 // hub
 			);
 
-			$created = $this->oCWiki->create();
+			$created = $oCWiki->create();
 
 			$this->assertEquals( 0, $created, "CreateWiki failed for language: {$lang}" );
 
 			if ( $created == 0 ) {
-				$city_id = $this->oCWiki->getWikiInfo('city_id');
+				$city_id = $oCWiki->getWikiInfo('city_id');
 				$cmd = sprintf(
 					"SERVER_ID=%d %s %s/extensions/wikia/WikiFactory/Close/simpleclose.php --wiki_id=%d --conf %s",
 					$wgCityId,
@@ -71,7 +72,6 @@ class CreateWikiTest extends WikiaBaseTest {
 				$err = wfShellExec( $cmd, $retval );
 				$this->assertEquals( 0, $retval, "Drop Wiki failed for id: {$city_id}, language: {$lang}, err: {$err}" );
 			}
-		}		
+		}
 	}
 }
-

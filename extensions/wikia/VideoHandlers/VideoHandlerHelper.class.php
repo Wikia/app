@@ -13,7 +13,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return Status|false $status
 	 */
 	public function addCategoryVideos( $title, $user, $flags = EDIT_NEW ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( is_string($title) ) {
 			$title = Title::newFromText( $title, NS_FILE );
@@ -31,7 +31,7 @@ class VideoHandlerHelper extends WikiaModel {
 			$status = $article->doEdit( $content, 'created video', $flags, false, $user );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $status;
 	}

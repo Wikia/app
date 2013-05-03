@@ -18,14 +18,6 @@ $wgAutoloadClasses['PartnerRSSFeed']	= $dir . 'PartnerFeed.class.php';
 $wgAutoloadClasses['PartnerAtomFeed']	= $dir . 'PartnerFeed.class.php';
 $wgAutoloadClasses['PartnerFeed']	= $dir . 'PartnerFeed.body.php';
 
-// other extensions
-
-$wgAutoloadClasses['WikiaStatsAutoHubsConsumerDB'] =
-	$GLOBALS["IP"]."/extensions/wikia/WikiaStats/WikiaStatsAutoHubsConsumerDB.php";
-$wgAutoloadClasses['AutoHubsPagesHelper'] =
-	$GLOBALS["IP"]."/extensions/wikia/AutoHubsPages/AutoHubsPagesHelper.class.php";
-
-
 $wgExtensionMessagesFiles['PartnerFeed'] = $dir . 'PartnerFeed.i18n.php';
 $wgExtensionMessagesFiles['PartnerFeedAliases'] = __DIR__ . '/PartnerFeed.aliases.php';
 

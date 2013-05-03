@@ -134,6 +134,8 @@ class PhpFile {
 	/** @var JSNode */
 	protected $fileTree;
 
+	protected $tokens = array();
+
 	protected $messages = array();
 	protected $errors = array();
 	protected $fixErrors = array();
@@ -346,9 +348,9 @@ class PhpFile {
 					}
 					$i = $this->tokens[$i]['end'] + 1;
 				}
-				$j = $this->findFirst(';',$pos,$end);
-				$k = $this->findFirst('{',$pos,$end);
-				$l = $this->findFirst(':',$pos,$end);
+				$j = $this->findFirst(';',$i,$end);
+				$k = $this->findFirst('{',$i,$end);
+				$l = $this->findFirst(':',$i,$end);
 				if ( $j < $end && $j < $k && $j < $l ) { // single-line
 					$this->intoBlock($state,$i+1,$j);
 					$pos = $j;

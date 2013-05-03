@@ -15,7 +15,7 @@ class PhalanxHooks extends WikiaObject {
 	 * @return boolean true
 	 */
 	public function loadLinks( $id, $nt, &$links ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( $this->wg->User->isAllowed( 'phalanx' ) ) {
 			$links[] = Linker::makeKnownLinkObj(
@@ -30,7 +30,7 @@ class PhalanxHooks extends WikiaObject {
 			);
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -45,10 +45,10 @@ class PhalanxHooks extends WikiaObject {
 	 * @author macbre
 	 */
 	public function onSpamFilterCheck($text, $typeId, &$blockData) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ($text === '') {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -68,7 +68,7 @@ class PhalanxHooks extends WikiaObject {
 			$this->wf->Debug( __METHOD__ . ": spam check blocked '{$text}'\n" );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
@@ -81,9 +81,10 @@ class PhalanxHooks extends WikiaObject {
 	 * @author moli
 	 */
 	public function onEditPhalanxBlock( &$data ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !isset( $data['id'] ) ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -110,7 +111,7 @@ class PhalanxHooks extends WikiaObject {
 		unset( $phalanx['multitext'] );
 
 		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $typemask ) ) {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -127,7 +128,7 @@ class PhalanxHooks extends WikiaObject {
 		else if ( $phalanx['expire'] != 'infinite' ) {
 			$expire = strtotime( $phalanx['expire'] );
 			if ( $expire < 0 || $expire === false ) {
-				$this->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 			$phalanx['expire'] = wfTimestamp( TS_MW, $expire );
@@ -169,7 +170,7 @@ class PhalanxHooks extends WikiaObject {
 			$ret = $result;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
@@ -182,7 +183,7 @@ class PhalanxHooks extends WikiaObject {
 	 * @author moli
 	 */
 	public function onDeletePhalanxBlock( $id ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$phalanx = Phalanx::newFromId($id);
 
@@ -195,7 +196,7 @@ class PhalanxHooks extends WikiaObject {
 			$ret = false;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 }

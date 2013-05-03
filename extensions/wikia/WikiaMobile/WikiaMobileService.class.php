@@ -38,7 +38,7 @@ class WikiaMobileService extends WikiaService {
 	}
 
 	public function index() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$jsHeadPackages = array( 'wikiamobile_js_head' );
 		$jsBodyPackages = array();
@@ -140,9 +140,6 @@ class WikiaMobileService extends WikiaService {
 			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig );
 		}
 
-		//send list of supported videos so we can treat not supported ones differently
-		$globalVariables['supportedVideos'] =$this->wg->WikiaMobileSupportedVideos;
-
 		$this->response->setVal( 'jsHeadFiles', $jsHeadFiles );
 		$this->response->setVal( 'allowRobots', ( !$this->wg->DevelEnvironment ) );
 		$this->response->setVal( 'cssLinks', $cssLinks );
@@ -190,6 +187,6 @@ class WikiaMobileService extends WikiaService {
 
 		$this->response->setVal( 'trackingCode', $trackingCode );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 }

@@ -23,7 +23,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
 
@@ -57,7 +57,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->canEdit = $this->wg->User->isAllowed( 'forumadmin' );
 		$this->editUrl = $this->wg->Title->getFullUrl( 'action=editmode' );
 
-		$forum = F::build( 'Forum' );
+		$forum = new Forum();
 
 		if ( $forum->createDefaultBoard() ) {
 			$this->boards = $forum->getBoardList( DB_MASTER, NS_WIKIA_FORUM_BOARD );
@@ -75,15 +75,15 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		//TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( 0, 0 );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function editMode() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wg->User->isAllowed( 'forumadmin' ) ) {
 			$this->displayRestrictionError();
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 			// skip rendering
 		}
@@ -94,28 +94,28 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$this->boards = F::build( 'Forum' )->getBoardList();
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function createNewBoardModal() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wg->User->isAllowed( 'forumadmin' ) ) {
 			$this->displayRestrictionError();
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 			// skip rendering
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function editBoardModal() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wg->User->isAllowed( 'forumadmin' ) ) {
 			$this->displayRestrictionError();
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 			// skip rendering
 		}
@@ -129,15 +129,15 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->boardTitle = $board->getTitle()->getText();
 		$this->boardDescription = $board->getDescription(false);
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function removeBoardModal() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wg->User->isAllowed( 'forumadmin' ) ) {
 			$this->displayRestrictionError();
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 			// skip rendering
 		}
@@ -161,7 +161,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 }

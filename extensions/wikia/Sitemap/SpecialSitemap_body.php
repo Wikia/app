@@ -408,6 +408,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 		if ( !$isVideo ) {
+			wfProfileOut( __METHOD__ );
 			return '';
 		}
 

@@ -30,7 +30,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	 * @param string $action
 	 */
 	public function updateImageState( $images, $action = '' ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$deletionList = array();
 		$statsInsert = array();
@@ -119,7 +119,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			);
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -192,7 +192,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	* @return array images
 	*/
 	public function refetchImageListByTimestamp( $timestamp ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$db = $this->getDatawareDB( DB_SLAVE );
 
@@ -238,7 +238,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		error_log("ImageReview : refetched " . count($imageList) . " images based on timestamp");
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $imageList;
 	}
@@ -248,7 +248,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	 * @return array imageList
 	 */
 	public function getImageList( $timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = self::ORDER_LATEST ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		// get images
 		$db = $this->getDatawareDB( DB_MASTER );
@@ -399,13 +399,13 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		error_log("ImageReview : fetched new " . count($imageList) . " images");
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $imageList;
 	}
 
 	protected function getWhitelistedWikis() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$topWikis = $this->getTopWikis();
 
@@ -413,19 +413,19 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		$out = array_keys( $whitelistedWikis + $topWikis );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $out;
 	}
 
 	protected function getWhitelistedWikisFromWF() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$key = wfMemcKey( 'ImageReviewSpecialController', __METHOD__ );
 
 		$data = $this->wg->memc->get($key, null);
 
 		if(!empty($data)) {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $data;
 		}
 
@@ -433,33 +433,33 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$fromWf = WikiFactory::getListOfWikisWithVar($oVariable->cv_variable_id, 'bool', '=' ,true);
 
 		$this->wg->memc->set($key, $fromWf, 60*10);
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $fromWf;
 	}
 
 	protected function getTopWikis() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$key = wfMemcKey( 'ImageReviewSpecialController','v2', __METHOD__ );
 		$data = $this->wg->memc->get($key, null);
 		if( !empty($data) ) {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $data;
 		}
 
 		$ids = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY, 200 );
 
 		$this->wg->memc->set( $key, $ids, 86400 /* 24h */ );
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ids;
 	}
 
 	public function getImageCount() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
 		$total = $this->wg->memc->get($key, null);
 		if ( !empty($total) ) {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $total;
 		}
 
@@ -509,7 +509,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 		$this->wg->memc->set( $key, $total, 3600 /* 1h */ );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $total;
 	}
 
@@ -604,7 +604,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	}
 
 	private function getImageStatesForStats() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
 		$states = $this->wg->memc->get($key, null);
@@ -627,12 +627,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$this->wg->memc->set( $key, $states, 60 * 60 * 8 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $states;
 	}
 
 	private function getReviewersForStats() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
 		$reviewers = $this->wg->memc->get($key, null);
@@ -655,7 +655,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$this->wg->memc->set( $key, $reviewers, 60 * 60 * 8 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $reviewers;
 	}
 

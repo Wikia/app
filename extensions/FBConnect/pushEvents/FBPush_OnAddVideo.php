@@ -22,6 +22,7 @@ class FBPush_OnAddVideo extends FBConnectPushEvent {
 		global $wgContentNamespaces, $wgSitename;
 		wfProfileIn(__METHOD__);
 		if( !in_array($article->getTitle()->getNamespace(), $wgContentNamespaces) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 

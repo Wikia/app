@@ -15,7 +15,7 @@ $wgExtensionCredits['filepage'][] = array(
 		"Liz Lee",
 		"Saipetch Kongkatong",
 	),
-	'descriptionmsg' => 'File page',
+	'descriptionmsg' => 'filepage-desc',
 );
 
 $dir = dirname( __FILE__ ) . '/';

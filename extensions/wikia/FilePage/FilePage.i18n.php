@@ -4,13 +4,15 @@
  */
 
 $messages = array();
+
 $messages['en'] = array(
+	'filepage-desc' => 'Modification of the standard MediaWiki file page for video support',
 	/* video page */
 	'video-page-file-list-header' => 'Appears on these pages',
 	'video-page-global-file-list-header' => 'Appears on these wikis',
 	'video-page-from-provider' => 'From $1',
 	'video-page-expires' => 'Content expires on $1',
-	'video-page-views' => '$1 Views',
+	'video-page-views' => '$1 {{PLURAL:$1|View|Views}}',
 	'video-page-see-more-info' => 'Show more info',
 	'video-page-see-less-info' => 'Show less info',
 	'video-page-description-heading' => 'Description',
@@ -25,12 +27,13 @@ Enter the description here.',
 	'file-page-tab-about' => 'About',
 	'file-page-tab-history' => 'File History',
 	'file-page-tab-metadata' => 'Metadata',
-	'file-page-more-links' => 'See the full list',
-
+	'file-page-more-links' => 'See full list',
 );
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
+	'filepage-desc' => '{{desc}}',
+
 	/* video page */
 	'video-page-file-list-header' => 'Heading for file list on Video File Page',
 	'video-page-global-file-list-header' => 'Heading for global usage list on Video File Page',
@@ -43,6 +46,7 @@ $messages['qqq'] = array(
 	'video-page-add-description-link-text' => 'This is a link that takes you to the edit page where you can add a description for a video or image. The description, once added, will be a section in the file page content.',
 	'video-page-default-description-header' => 'When there\'s no description for a file, and you click the link on a file page to add a description, this is the default text that appears in the editor.',
 	'video-page-file-list-pagination' => 'Pagination for file listing.  e.g. 1 of 2.  $1 is current page, $2 is total pages',
+	'video-page-views' => 'Shows total number of views (plays) of the video. $1 is a number of views (integer)',
 
 	/* file page */
 	'file-page-replace-button' => 'Replace button label, hidden in menu button',

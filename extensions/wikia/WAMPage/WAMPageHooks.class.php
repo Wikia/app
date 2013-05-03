@@ -105,7 +105,7 @@ class WAMPageHooks {
 		wfProfileIn(__METHOD__);
 		$this->init();
 		
-		$title = Title::newFromURL($url);
+		$title = $this->app->wg->Title;
 		if( $title instanceof Title && $this->model->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
 			$url = $this->model->getWAMMainPageUrl();
 		}

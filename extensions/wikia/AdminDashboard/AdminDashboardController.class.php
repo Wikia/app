@@ -1,12 +1,12 @@
 <?php
 
 class AdminDashboardController extends WikiaController {
-		
+
 	// Render the Admin Dashboard chrome
 	public function executeChrome () {
 		global $wgRequest, $wgTitle;
-		
-		$adminDashboardTitle = Title::newFromText('AdminDashboard', NS_SPECIAL);
+
+		$adminDashboardTitle = SpecialPage::getTitleFor( 'AdminDashboard' );
 		$this->isAdminDashboard = $wgTitle->getText() == $adminDashboardTitle->getText();
 
 		$this->tab = $wgRequest->getVal("tab", "");
@@ -25,5 +25,5 @@ class AdminDashboardController extends WikiaController {
 		$this->adminDashboardUrlGeneral = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL("tab=general");
 		$this->adminDashboardUrlAdvanced = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL("tab=advanced");
 	}
-	
+
 }
