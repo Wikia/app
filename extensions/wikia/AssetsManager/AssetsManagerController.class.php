@@ -68,7 +68,7 @@ class AssetsManagerController extends WikiaController {
 			}
 
 			$this->response->setVal( 'templates', $templatesOutput );
-			wfProfileIn( $profileId );
+			wfProfileOut( $profileId );
 		}
 
 		// handle SASS files
@@ -95,7 +95,7 @@ class AssetsManagerController extends WikiaController {
 			}
 
 			$this->response->setVal('styles', $data);
-			wfProfileIn( $profileId );
+			wfProfileOut( $profileId );
 		}
 
 		// handle assets manager JS packages
