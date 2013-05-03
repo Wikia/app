@@ -26,7 +26,7 @@ class AutoLinkerController extends WikiaController {
 
 	private function getPagesFrom($source) {
 		$app = F::app();
-		$dbr = $app->wf->GetDb(DB_SLAVE);
+		$dbr = wfGetDb(DB_SLAVE);
 
 		$className = "{$source}Page";
 		if (!class_exists($className)) {

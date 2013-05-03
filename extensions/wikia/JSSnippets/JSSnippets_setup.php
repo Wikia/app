@@ -19,7 +19,7 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 // classes
-$app->registerClass('JSSnippets', $dir . '/JSSnippets.class.php');
+$wgAutoloadClasses['JSSnippets'] =  $dir . '/JSSnippets.class.php';
 
 // hooks
 $app->registerHook('EditPageLayoutModifyPreview', 'JSSnippets', 'onEditPageLayoutModifyPreview');

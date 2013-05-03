@@ -8,7 +8,7 @@ class SearchedKeywordsController extends WikiaSpecialPageController {
 	protected $searchedKeywords = null;
 
 	public function __construct() {
-		$this->searchedKeywords = F::build('SearchedKeywords');
+		$this->searchedKeywords = new SearchedKeywords( F::app() );
 
 		parent::__construct( 'SearchedKeywords', 'SearchedKeywords', false );
 	}

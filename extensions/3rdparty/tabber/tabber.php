@@ -29,7 +29,7 @@ function renderTabber( $paramstring, $params, $parser ){
 	/*
 	 * Wikia Change Start @author: marzjan
 	 */
-	$snippets = F::build('JSSnippets')->addToStack(
+	$snippets = JSSnippets::addToStack(
 		array('/extensions/3rdparty/tabber/tabber.js'),
 		array('$.loadJQueryUI')
 	);

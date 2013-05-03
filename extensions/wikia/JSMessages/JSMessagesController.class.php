@@ -17,7 +17,7 @@ class JSMessagesController extends WikiaController {
 		$packages = explode(',', $this->request->getVal('packages'));
 
 		// get messages from given packages
-		$messages = F::build('JSMessages')->getPackages($packages);
+		$messages = JSMessages::getPackages($packages);
 
 		$this->setVal('messages', $messages);
 

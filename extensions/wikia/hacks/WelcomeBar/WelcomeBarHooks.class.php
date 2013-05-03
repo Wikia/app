@@ -11,7 +11,7 @@ class WelcomeBarHooks extends WikiaObject {
 	 */
 	public function onSkinAfterBottomScripts(Skin $skin, &$text) {
 		if ($this->wg->User->isAnon()) {
-			$text .= F::build('JSSnippets')->addToStack(
+			$text .= JSSnippets::addToStack(
 				array('/extensions/wikia/hacks/WelcomeBar/js/WelcomeBar.js'),
 				array(),
 				'WelcomeBar.init'

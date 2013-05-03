@@ -22,7 +22,7 @@ class VideoEmbedToolController extends WikiaController {
 		if ( $this->wg->VETEnableSuggestions != true ) {
 			// Return empty set if wgVETEnableSuggestions is not enabled
 			$result = array(
-				'caption' => $this->wf->Msg( 'vet-suggestions' ),
+				'caption' => wfMsg( 'vet-suggestions' ),
 				'totalItemCount' => 0,
 				'currentSetItemCount' => 0,
 				'items' => array()
@@ -35,7 +35,7 @@ class VideoEmbedToolController extends WikiaController {
 			$trimTitle = $this->request->getInt( 'trimTitle', 0 );
 
 			$articleId         = $this->request->getInt('articleId', 0 );
-			$article           = ( $articleId > 0 ) ? F::build( 'Article', array( $articleId ), 'newFromId' ) : null;
+			$article           = ( $articleId > 0 ) ? Article::newFromId( $articleId ) : null;
 			$articleTitle      = ( $article !== null ) ? $article->getTitle() : '';
 			$wikiTitleSansWiki = preg_replace( '/\bwiki\b/i', '', $this->wg->Sitename );
 
@@ -63,7 +63,7 @@ class VideoEmbedToolController extends WikiaController {
 			$response = $this->processSearchResponse( $response, $svStart, $svSize, $trimTitle, $currentVideosByTitle );
 
 			$result = array(
-					'caption' => $this->wf->Msg( 'vet-suggestions' ),
+					'caption' => wfMsg( 'vet-suggestions' ),
 					'totalItemCount' => 0,
 					'nextStartFrom' => $response['nextStartFrom'],
 					'currentSetItemCount' => count($response['items']),
@@ -114,7 +114,7 @@ class VideoEmbedToolController extends WikiaController {
 		}
 
 		$result = array (
-			'caption' => $this->wf->MsgExt( ( ( $searchType == 'premium' ) ? 'vet-search-results-WVL' : 'vet-search-results-local' ), array('parsemag'),  $response['totalItemCount'], $phrase ),
+			'caption' => wfMsgExt( ( ( $searchType == 'premium' ) ? 'vet-search-results-WVL' : 'vet-search-results-local' ), array('parsemag'),  $response['totalItemCount'], $phrase ),
 			'totalItemCount' => $response['totalItemCount'],
 			'nextStartFrom' => $response['nextStartFrom'],
 			'currentSetItemCount' => count( $response['items'] ),
@@ -190,7 +190,7 @@ class VideoEmbedToolController extends WikiaController {
 
 		$fileTitle = $this->request->getVal('fileTitle', '');
 		$fileTitle = urldecode($fileTitle);
-		$title = F::build('Title', array($fileTitle, NS_FILE), 'newFromText');
+		$title = Title::newFromText($fileTitle, NS_FILE);
 		if ( !( $title instanceof Title ) ) {
 			return;
 		}

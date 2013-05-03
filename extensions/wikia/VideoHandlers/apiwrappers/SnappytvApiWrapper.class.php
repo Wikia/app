@@ -187,7 +187,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
-		$memcKey = $app->wf->memcKey( static::$CACHE_KEY, md5($url), static::$CACHE_KEY_VERSION );
+		$memcKey = wfmemcKey( static::$CACHE_KEY, md5($url), static::$CACHE_KEY_VERSION );
 		$redirectUrl = $app->wg->memc->get( $memcKey );
 		if ( empty($redirectUrl) ) {
 			$req = MWHttpRequest::factory( $url );

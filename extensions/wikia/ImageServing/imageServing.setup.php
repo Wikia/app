@@ -14,18 +14,18 @@ $app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /*Auto loader setup */
-$app->registerClass('ImageServing', $dir . 'imageServing.class.php');
-$app->registerClass('ImageServingHelper', $dir . 'imageServingHelper.class.php');
+$wgAutoloadClasses['ImageServing'] =  $dir . 'imageServing.class.php';
+$wgAutoloadClasses['ImageServingHelper'] =  $dir . 'imageServingHelper.class.php';
 
-$app->registerClass('ImageServingDriverBase', $dir . 'drivers/ImageServingDriverBase.class.php');
-$app->registerClass('ImageServingDriverMainNS', $dir . 'drivers/ImageServingDriverMainNS.class.php');
-$app->registerClass('ImageServingDriverCategoryNS', $dir . 'drivers/ImageServingDriverCategoryNS.class.php');
+$wgAutoloadClasses['ImageServingDriverBase'] =  $dir . 'drivers/ImageServingDriverBase.class.php';
+$wgAutoloadClasses['ImageServingDriverMainNS'] =  $dir . 'drivers/ImageServingDriverMainNS.class.php';
+$wgAutoloadClasses['ImageServingDriverCategoryNS'] =  $dir . 'drivers/ImageServingDriverCategoryNS.class.php';
 
 
-$app->registerClass('ImageServingDriverUserNS', $dir . 'drivers/ImageServingDriverUserNS.class.php');
-$app->registerClass('ImageServingDriverFileNS', $dir . 'drivers/ImageServingDriverFileNS.class.php');
+$wgAutoloadClasses['ImageServingDriverUserNS'] =  $dir . 'drivers/ImageServingDriverUserNS.class.php';
+$wgAutoloadClasses['ImageServingDriverFileNS'] =  $dir . 'drivers/ImageServingDriverFileNS.class.php';
 
-$app->registerClass('ImageServingController', $dir . 'ImageServingController.class.php');
+$wgAutoloadClasses['ImageServingController'] =  $dir . 'ImageServingController.class.php';
 
 
 $wgImageServingDrivers = array(

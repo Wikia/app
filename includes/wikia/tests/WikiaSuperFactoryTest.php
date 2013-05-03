@@ -24,6 +24,7 @@ class WikiaSuperFactoryTest extends PHPUnit_Framework_TestCase {
 
 	public function testBuildWithDefaultConstructor() {
 		// call default constructor with all params set
+		/* @var $object WikiaSuperFactoryTestClass */
 		$object = WikiaSuperFactory::build('WikiaSuperFactoryTestClass', array( 'type' => self::TEST_TYPE, 'id' => self::TEST_ID));
 
 		$this->assertInstanceOf('WikiaSuperFactoryTestClass', $object);
@@ -42,6 +43,7 @@ class WikiaSuperFactoryTest extends PHPUnit_Framework_TestCase {
 
 	public function testBuildWithFactoryConstructor() {
 		// call factory constructor with all params set
+		/* @var $object WikiaSuperFactoryTestClass */
 		$object = WikiaSuperFactory::build('WikiaSuperFactoryTestClass', array( 'type' => self::TEST_TYPE, 'bar' => self::TEST_BAR), 'newFromTypeAndBar');
 
 		$this->assertInstanceOf('WikiaSuperFactoryTestClass', $object);

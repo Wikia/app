@@ -12,7 +12,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgExtensionMessagesFiles['VisualStatsAliases'] = $dir . 'VisualStats.alias.php';
 
-$app->registerClass('VisualStats', $dir . 'VisualStats.class.php');
-$app->registerClass('VisualStatsSpecialController', $dir . 'VisualStatsSpecialController.class.php');
-$app->registerSpecialPage('VisualStats', 'VisualStatsSpecialController');
+$wgAutoloadClasses['VisualStats'] =  $dir . 'VisualStats.class.php';
+$wgAutoloadClasses['VisualStatsSpecialController'] =  $dir . 'VisualStatsSpecialController.class.php';
+$wgSpecialPages['VisualStats'] = 'VisualStatsSpecialController';
 $app->registerExtensionMessageFile('VisualStats', $dir . 'VisualStats.i18n.php');

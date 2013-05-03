@@ -59,7 +59,7 @@ class ImageLazyLoad extends WikiaObject {
 
 			$lazyImageAttribs = $attribs;
 			$lazyImageAttribs[ 'data-src' ] = $lazyImageAttribs[ 'src' ];
-			$lazyImageAttribs[ 'src' ] = $this->wf->BlankImgUrl();
+			$lazyImageAttribs[ 'src' ] = wfBlankImgUrl();
 			$lazyImageAttribs[ 'class' ] = ( ( !empty( $lazyImageAttribs[ 'class' ] ) ) ? $lazyImageAttribs[ 'class' ] . ' ' : '' ) . self::LAZY_IMAGE_CLASSES;
 			/* for AJAX requests - makes sure that they are handled properly */
 			/* ImgLzy.load is not executed for main content because ImgLzy object is initiated on DOM ready event and those images */
@@ -95,7 +95,7 @@ class ImageLazyLoad extends WikiaObject {
 
 			}
 
-			$image['thumbnail-src'] = $this->wf->BlankImgUrl();
+			$image['thumbnail-src'] = wfBlankImgUrl();
 			$image['thumbnail-classes'] = self::LAZY_IMAGE_CLASSES;
 			$image['thumbnail-onload'] = 'if(typeof ImgLzy=="object"){ImgLzy.load(this)}';
 

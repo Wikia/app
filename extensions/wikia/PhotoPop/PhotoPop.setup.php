@@ -72,7 +72,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopAppCacheController.class.php
  * special pages
  */
 if ( !empty ( $app->wg->AllowPhotoPopGame ) ){
-	$app->registerSpecialPage('PhotoPopSetup', 'PhotoPopSpecialPageController');
+	$wgSpecialPages['PhotoPopSetup'] = 'PhotoPopSpecialPageController';
 }
 
 /**
@@ -88,7 +88,7 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/PhotoPop.i18n.php", 'PhotoPop
  * settings
  */
 
-F::build( 'JSMessages' )->registerPackage( 'PhotoPop', array(
+JSMessages::registerPackage( 'PhotoPop', array(
 	"photopop-game-round",
 	"photopop-game-correct",
 	"photopop-game-points",

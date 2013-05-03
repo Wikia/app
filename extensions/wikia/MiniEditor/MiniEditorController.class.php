@@ -23,7 +23,7 @@ class MiniEditorController extends WikiaController {
 
 		// FIXME: load JSMessages for VET and WMU extensions here too
 		// FIXME: must refactor VET and WMU to use JSMessages first
-		F::build('JSMessages')->enqueuePackage('EditPageLayout', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('EditPageLayout', JSMessages::EXTERNAL);
 
 		// If this function got called, MiniEditor is enabled
 		$this->response->setJSVar('wgEnableMiniEditorExt', true);

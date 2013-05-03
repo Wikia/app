@@ -14,7 +14,7 @@ class FacebookButtonController extends WikiaController {
 		$this->tabindex = $this->request->getVal('tabindex', null);
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			F::build( 'JSMessages' )->registerPackage( 'fblogin' , array( 'wikiamobile-facebook-connect-fail' ) );
+			JSMessages::registerPackage( 'fblogin' , array( 'wikiamobile-facebook-connect-fail' ) );
 			$this->response->setVal( 'requestType', $this->request->getVal( 'requestType' ) );
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}

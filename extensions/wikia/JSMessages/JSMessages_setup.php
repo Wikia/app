@@ -22,9 +22,9 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 // classes
-$app->registerClass('JSMessages', $dir . '/JSMessages.class.php');
-$app->registerClass('JSMessagesHelper', $dir . '/JSMessagesHelper.class.php');
-$app->registerClass('JSMessagesController', $dir . '/JSMessagesController.class.php');
+$wgAutoloadClasses['JSMessages'] =  $dir . '/JSMessages.class.php';
+$wgAutoloadClasses['JSMessagesHelper'] =  $dir . '/JSMessagesHelper.class.php';
+$wgAutoloadClasses['JSMessagesController'] =  $dir . '/JSMessagesController.class.php';
 
 // hooks
 $app->registerHook('WikiaSkinTopScripts', 'JSMessages', 'onWikiaSkinTopScripts');

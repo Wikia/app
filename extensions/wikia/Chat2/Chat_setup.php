@@ -94,7 +94,7 @@ $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['NodeApiClient'] = "$dir/NodeApiClient.class.php";
 $wgAutoloadClasses['ChatfailoverSpecialController'] = "$dir/ChatfailoverSpecialController.class.php";
 
-$app->registerSpecialPage('Chatfailover', 'ChatfailoverSpecialController');
+$wgSpecialPages[ 'Chatfailover'] = 'ChatfailoverSpecialController';
 
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
@@ -133,11 +133,11 @@ $wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHelper::formatLogEntry";
 
 
 // register messages package for JS
-F::build('JSMessages')->registerPackage('Chat', array(
+JSMessages::registerPackage('Chat', array(
 	'chat-*',
 ));
 
-F::build('JSMessages')->registerPackage('ChatBanModal', array(
+JSMessages::registerPackage('ChatBanModal', array(
 	'chat-log-reason-banadd',
 	'chat-ban-modal-change-ban-heading',
 	'chat-ban-modal-button-cancel',

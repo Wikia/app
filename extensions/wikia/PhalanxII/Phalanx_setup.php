@@ -39,7 +39,7 @@ $classes = array(
 );
 
 foreach ( $classes as $class_name => $class_path ) {
-	$app->registerClass( $class_name, $class_path );
+	$wgAutoloadClasses[ $class_name] =  $class_path ;
 }
 
 /*
@@ -108,7 +108,7 @@ $fallback_classes = array(
 );
 
 foreach ( $fallback_classes as $class_name => $class_path ) {
-	$app->registerClass( $class_name, $class_path );
+	$wgAutoloadClasses[ $class_name] =  $class_path ;
 }
 
 /**

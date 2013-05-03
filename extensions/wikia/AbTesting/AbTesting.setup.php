@@ -39,12 +39,12 @@ $app->wg->append(
 /**
  * classes
  */
-$app->registerClass('AbTesting',"{$dir}/AbTesting.class.php");
-$app->registerClass('AbExperiment',"{$dir}/AbTesting.class.php");
-$app->registerClass('AbTestingData',"{$dir}/AbTestingData.class.php");
-$app->registerClass('ResourceLoaderAbTestingModule',"{$dir}/ResourceLoaderAbTestingModule.class.php");
-$app->registerClass('SpecialAbTestingController',"{$dir}/SpecialAbTestingController.class.php");
-$app->registerClass('AbTestingController',"{$dir}/AbTestingController.class.php");
+$wgAutoloadClasses['AbTesting'] = "{$dir}/AbTesting.class.php";
+$wgAutoloadClasses['AbExperiment'] = "{$dir}/AbTesting.class.php";
+$wgAutoloadClasses['AbTestingData'] = "{$dir}/AbTestingData.class.php";
+$wgAutoloadClasses['ResourceLoaderAbTestingModule'] = "{$dir}/ResourceLoaderAbTestingModule.class.php";
+$wgAutoloadClasses['SpecialAbTestingController'] = "{$dir}/SpecialAbTestingController.class.php";
+$wgAutoloadClasses['AbTestingController'] = "{$dir}/AbTestingController.class.php";
 
 /**
  * message files
@@ -91,7 +91,7 @@ $app->wg->set( 'wgResourceModules', array(
 //AbTesting is an Oasis-only experiment for now
 //$app->registerHook( 'WikiaMobileAssetsPackages', 'AbTesting', 'onWikiaMobileAssetsPackages' );
 
-$app->registerSpecialPage('AbTesting', 'SpecialAbTestingController');
+$wgSpecialPages[ 'AbTesting'] = 'SpecialAbTestingController';
 
 
 /*

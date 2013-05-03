@@ -242,7 +242,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 			$sortBy[] = $this->extraDimension;
 		}
 
-		$ga = F::build('gapi', array( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy ) );
+		$ga = new gapi( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy );
 
 		while ( ( $retries > 0 ) && empty( $results ) ) {
 			try {

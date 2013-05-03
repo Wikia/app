@@ -6,13 +6,13 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes (controllers)
  */
-$app->registerClass('ProposalController', $dir . 'ProposalController.class.php');
-$app->registerClass('ProposalPagesController', $dir . 'ProposalPagesController.class.php');
+$wgAutoloadClasses['ProposalController'] =  $dir . 'ProposalController.class.php';
+$wgAutoloadClasses['ProposalPagesController'] =  $dir . 'ProposalPagesController.class.php';
 
 /**
  * classes (model)
  */
-$app->registerClass('ProposalPages', $dir . 'ProposalPages.class.php');
+$wgAutoloadClasses['ProposalPages'] =  $dir . 'ProposalPages.class.php';
 
 /**
  * message files
@@ -28,4 +28,4 @@ $app->registerHook('SpecialPage_initList', 'ProposalController', 'onSpecialPage_
 /**
  * special pages
  */
-$app->registerSpecialPage('Proposal', 'ProposalController');
+$wgSpecialPages['Proposal'] = 'ProposalController';

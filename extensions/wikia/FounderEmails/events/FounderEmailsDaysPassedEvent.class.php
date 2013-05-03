@@ -17,7 +17,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 		$wgTitle = Title::newMainPage();
 		$founderEmailObj = FounderEmails::getInstance();
-		$wikiService = F::build( 'WikiService' );
+		$wikiService = (new WikiService);
 		foreach ( $events as $event ) {
 			$wikiId = $event['wikiId'];
 			if ($wikiId == 0) continue;  // should "never" happen BugId:12717

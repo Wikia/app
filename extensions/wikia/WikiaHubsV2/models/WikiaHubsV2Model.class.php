@@ -26,13 +26,13 @@ class WikiaHubsV2Model extends WikiaModel {
 		/** @var WikiFactoryHub $wikiFactoryHub */
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
-		return $this->wf->Message('hub-' . $wikiaHub['name'])->inContentLanguage()->text();
+		return wfMessage('hub-' . $wikiaHub['name'])->inContentLanguage()->text();
 	}
 
 	public function getCanonicalVerticalName($verticalId) {
 		/** @var WikiFactoryHub $wikiFactoryHub */
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
-		return $this->wf->Message('hub-' . $wikiaHub['name'])->inLanguage(self::HUB_CANONICAL_LANG)->text();
+		return wfMessage('hub-' . $wikiaHub['name'])->inLanguage(self::HUB_CANONICAL_LANG)->text();
 	}
 }

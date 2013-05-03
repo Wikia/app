@@ -17,16 +17,16 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname( __FILE__ ) . '/';
 $app = F::app();
 //classes
-$app->registerClass('GamingCalendarController', $dir . 'GamingCalendarController.class.php');
-$app->registerClass('GamingCalendar', $dir . 'GamingCalendar.class.php');
-$app->registerClass('GamingCalendarEntry', $dir . 'GamingCalendarEntry.class.php');
-$app->registerClass('GamingCalendarRailController', $dir . 'GamingCalendarRailController.class.php');
-$app->registerClass('GamingCalendarSpecialPageController', $dir . 'GamingCalendarSpecialPageController.class.php');
+$wgAutoloadClasses['GamingCalendarController'] =  $dir . 'GamingCalendarController.class.php';
+$wgAutoloadClasses['GamingCalendar'] =  $dir . 'GamingCalendar.class.php';
+$wgAutoloadClasses['GamingCalendarEntry'] =  $dir . 'GamingCalendarEntry.class.php';
+$wgAutoloadClasses['GamingCalendarRailController'] =  $dir . 'GamingCalendarRailController.class.php';
+$wgAutoloadClasses['GamingCalendarSpecialPageController'] =  $dir . 'GamingCalendarSpecialPageController.class.php';
 
 $wgExtensionMessagesFiles['GamingCalendar'] = "$dir/GamingCalendar.i18n.php";
 
 // special pages
-$app->registerSpecialPage('GamingCalendar', 'GamingCalendarSpecialPageController');
+$wgSpecialPages['GamingCalendar'] = 'GamingCalendarSpecialPageController';
 
 // permissions
 $wgAvailableRights[] = 'specialgamingcalendar';

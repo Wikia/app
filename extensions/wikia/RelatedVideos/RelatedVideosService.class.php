@@ -28,7 +28,7 @@ class RelatedVideosService {
 		if ( empty( $result ) ){
 			Wikia::log( __METHOD__, 'RelatedVideos', 'Not from cache' );
 			$result = array();
-			$rvd = F::build('RelatedVideosData'); /* @var $rvd RelatedVideosData */
+			$rvd = new RelatedVideosData();
 			$result['data'] = $rvd->getVideoData(
 				$titleText,
 				self::$width,
@@ -123,7 +123,7 @@ class RelatedVideosService {
 		$videoData['date'] = isset( $localParams['date'] ) ? $localParams['date'] : $videoData['timestamp'];
 
 		if ( isset( $localParams['userName'] ) && !empty( $localParams['userName'] ) ){
-			$oUser = F::build( 'User', array( $localParams['userName'] ), 'newFromName' );
+			$oUser = User::newFromName( $localParams['userName'] );
 			if ( is_object( $oUser ) ) {
 				$oUser->load();
 			}
@@ -203,7 +203,7 @@ class RelatedVideosService {
 		return $app->wg->parser->parse(
 			$text,
 			$app->wg->title,
-			F::build('ParserOptions'),
+			(new ParserOptions),
 			false
 		)->getText();
 	}

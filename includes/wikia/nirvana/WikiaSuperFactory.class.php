@@ -9,7 +9,7 @@
 abstract class WikiaSuperFactory {
 	protected static $constructors = array();
 	protected static $reflections = array();
-	const APP_OBJECT = 'App';
+	protected static $appInstance;
 
 	/**
 	 * add class constructor
@@ -131,7 +131,10 @@ abstract class WikiaSuperFactory {
 	 * @return WikiaApp
 	 */
 	public static function app() {
-		return self::build( self::APP_OBJECT );
+		if (!isset(self::$appInstance)) {
+			self::$appInstance = new WikiaApp();
+		}
+		return self::$appInstance;
 	}
 }
 

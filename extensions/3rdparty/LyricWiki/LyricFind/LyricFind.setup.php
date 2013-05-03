@@ -22,12 +22,12 @@ $wgNamespacesWithSubpages[NS_LYRICFIND] = false;
 $wgContentNamespaces[] = NS_LYRICFIND;
 
 // common code
-$app->registerClass('LyricFindHooks', $dir . '/LyricFindHooks.class.php');
+$wgAutoloadClasses['LyricFindHooks'] =  $dir . '/LyricFindHooks.class.php';
 $app->registerExtensionMessageFile('LyricFind', $dir . '/LyricFind.i18n.php');
 
 // LyricFind page views tracking
-$app->registerClass('LyricFindController', $dir . '/LyricFindController.class.php');
-$app->registerClass('LyricFindTrackingService', $dir . '/LyricFindTrackingService.class.php');
+$wgAutoloadClasses['LyricFindController'] =  $dir . '/LyricFindController.class.php';
+$wgAutoloadClasses['LyricFindTrackingService'] =  $dir . '/LyricFindTrackingService.class.php';
 $app->registerHook('OasisSkinAssetGroups', 'LyricFindHooks', 'onOasisSkinAssetGroups');
 
 $wgLyricFindTrackingNamespaces = array(NS_LYRICFIND);
@@ -46,7 +46,7 @@ $app->registerHook('AlternateEdit', 'LyricFindHooks', 'onAlternateEdit');
 // parser hhok
 $app->registerHook('ParserFirstCallInit', 'LyricFindHooks', 'onParserFirstCallInit');
 $app->registerHook('ParserAfterTidy', 'LyricFindHooks', 'onParserAfterTidy');
-$app->registerClass('LyricFindParserController', $dir . '/LyricFindParserController.class.php');
+$wgAutoloadClasses['LyricFindParserController'] =  $dir . '/LyricFindParserController.class.php';
 
 // front-end for pages with lyrics
 $wgResourceModules['ext.lyrics.lyricbox'] = array(

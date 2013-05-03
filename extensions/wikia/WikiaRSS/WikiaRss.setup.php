@@ -22,10 +22,10 @@ $app = F::app();
 $dir = dirname( __FILE__ );
 
 //classes
-$app->registerClass('WikiaRssModel', $dir . '/WikiaRssModel.class.php');
-$app->registerClass('WikiaRssHooks', $dir . '/WikiaRssHooks.class.php');
-$app->registerClass('WikiaRssHelper', $dir . '/WikiaRssHelper.class.php');
-$app->registerClass('WikiaRssExternalController', $dir . '/WikiaRssExternalController.class.php');
+$wgAutoloadClasses['WikiaRssModel'] =  $dir . '/WikiaRssModel.class.php';
+$wgAutoloadClasses['WikiaRssHooks'] =  $dir . '/WikiaRssHooks.class.php';
+$wgAutoloadClasses['WikiaRssHelper'] =  $dir . '/WikiaRssHelper.class.php';
+$wgAutoloadClasses['WikiaRssExternalController'] =  $dir . '/WikiaRssExternalController.class.php';
 
 //hooks
 $app->registerHook('ParserFirstCallInit', 'WikiaRssHooks', 'onParserFirstCallInit');

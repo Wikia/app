@@ -12,7 +12,7 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$app->registerClass('HelloWorld', $dir . 'HelloWorld.class.php');
+$wgAutoloadClasses['HelloWorld'] =  $dir . 'HelloWorld.class.php';
 
 /**
  * hooks
@@ -22,13 +22,13 @@ $app->registerClass('HelloWorld', $dir . 'HelloWorld.class.php');
 /**
  * controllers
  */
-$app->registerClass('HelloWorldController', $dir . 'HelloWorldController.class.php');
-$app->registerClass('HelloWorldSpecialController', $dir . 'HelloWorldSpecialController.class.php');
+$wgAutoloadClasses['HelloWorldController'] =  $dir . 'HelloWorldController.class.php';
+$wgAutoloadClasses['HelloWorldSpecialController'] =  $dir . 'HelloWorldSpecialController.class.php';
 
 /**
  * special pages
  */
-$app->registerSpecialPage('HelloWorld', 'HelloWorldSpecialController');
+$wgSpecialPages['HelloWorld'] = 'HelloWorldSpecialController';
 
 /**
  * message files

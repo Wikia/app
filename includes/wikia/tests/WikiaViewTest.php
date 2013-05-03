@@ -13,7 +13,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->app = F::app();
-		$this->object = F::build( 'WikiaView' );
+		$this->object = (new WikiaView);
 	}
 
 	protected function tearDown() {
@@ -99,7 +99,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testRenderingForUnknownFormat() {
-		$response = F::build( 'WikiaResponse', array( 'unknownFormat' ) );
+		$response = new WikiaResponse( 'unknownFormat' );
 		$expectedResult = json_encode(array ('exception' => array ('message' => 'Invalid Format, defaulting to JSON', 'code' => 501 )));
 		$this->object->setResponse( $response );
 		$result = $this->object->render();
@@ -121,7 +121,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider testRenderingFormatsDataProvider
 	 */
 	public function testRenderingFormats($format, $responseValueName, $responseValueData,$expectedResult) {
-		$response = F::build( 'WikiaResponse', array( $format ) );
+		$response = new WikiaResponse( $format );
 		$response->setVal( $responseValueName, $responseValueData );
 		$this->object->setResponse( $response );
 

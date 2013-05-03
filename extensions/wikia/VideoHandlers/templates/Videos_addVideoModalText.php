@@ -4,7 +4,7 @@
 	<label>
 		<?= wfMsg('videos-add-video-label-name') ?>
 		<a class="remove" href="<?
-			$oTitle = F::build( 'Title', array( 'Video_Embed_Tool', NS_HELP ), 'newFromText' );
+			$oTitle = Title::newFromText( 'Video_Embed_Tool', NS_HELP );
 			echo $oTitle->getFullURL();
 		?>"><?= wfMsg('videos-add-video-label-all') ?></a>
 		<br>

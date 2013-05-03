@@ -21,8 +21,8 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 // Classes
-$app->registerClass( 'QuickToolsController', $dir . 'QuickToolsController.class.php');
-$app->registerClass( 'QuickToolsHooksHelper', $dir . 'QuickToolsHooksHelper.class.php');
+$wgAutoloadClasses[ 'QuickToolsController'] =  $dir . 'QuickToolsController.class.php';
+$wgAutoloadClasses[ 'QuickToolsHooksHelper'] =  $dir . 'QuickToolsHooksHelper.class.php';
 
 // rights
 $wgAvailableRights[] = 'quicktools';

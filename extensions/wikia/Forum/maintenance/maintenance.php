@@ -24,7 +24,7 @@ if ( empty($app->wg->CityId) ) {
 	die( "Error: Invalid wiki id." );
 }
 
-if ( $app->wf->ReadOnly() ) {
+if ( wfReadOnly() ) {
 	die( "Error: In read only mode." );
 }
 
@@ -38,11 +38,11 @@ $toId = ( isset($options['to_id']) ) ? intval($options['to_id']) : null ;
 
 echo "Wiki $wgCityId:\n";
 
-$db = $app->wf->GetDB( DB_MASTER );
+$db = wfGetDB( DB_MASTER );
 
 if ( !$isDryrun && !$insertDataOnly ) {
 	// create table or patch table schema
-	$commentsIndex = F::build( 'CommentsIndex' );
+	$commentsIndex = (new CommentsIndex);
 
 	echo "Updated database schema for comment_index table.\n";
 
@@ -163,8 +163,8 @@ foreach ( $commentList as $comment ) {
 	$cnt++;
 	echo "$cnt [$fromId-$toId]: ID $comment->page_id(NS $comment->page_namespace): $comment->page_title";
 
-	$title = F::build( 'Title' , array( $comment ), 'newFromRow' );
-	$articleComment = F::build( 'ArticleComment', array( $title ), 'newFromTitle' );
+	$title = Title::newFromRow( $comment );
+	$articleComment = ArticleComment::newFromTitle( $title );
 	$articleComment->load();
 
 	// parent page id

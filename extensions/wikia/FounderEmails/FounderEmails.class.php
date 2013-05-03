@@ -149,7 +149,7 @@ class FounderEmails {
 		global $wgUser, $wgCityId, $wgSitename, $wgEnableUserPreferencesV2Ext;
 		wfProfileIn( __METHOD__ );
 
-		$wikiService = F::build( 'WikiService' ); /* @var $wikiService WikiService */
+		$wikiService = (new WikiService); /* @var $wikiService WikiService */
 		if ( !FounderEmailsEvent::isAnswersWiki() && in_array($wgUser->getId(), $wikiService->getWikiAdminIds()) ) {
 
 			if ( empty($wgEnableUserPreferencesV2Ext) ) {
@@ -220,7 +220,7 @@ class FounderEmails {
 		if (!empty($wgCityId)) {
 			if (($addgroup && (in_array('sysop', $addgroup) || in_array('bureaucrat', $addgroup)))
 				|| ($removegroup && (in_array('sysop', $removegroup) || in_array('bureaucrat', $removegroup)))) {
-				$wikiService = F::build( 'WikiService' ); /* @var $wikiService WikiService */
+				$wikiService = (new WikiService); /* @var $wikiService WikiService */
 				$memKey  = $wikiService->getMemKeyAdminIds( $wgCityId );
 				$wgMemc->delete($memKey);
 				$memKey  = $wikiService->getMemKeyAdminIds( $wgCityId, true );

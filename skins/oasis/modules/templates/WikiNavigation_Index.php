@@ -27,7 +27,7 @@
 											?> href="<?= $menuNode1[ NavigationModel::HREF ] ?>"<? if ( !empty( $menuNode1[ NavigationModel::CANONICAL_NAME ] ) ):
 											?> data-canonical="<?= strtolower( $menuNode1[ NavigationModel::CANONICAL_NAME ] ) ?>"<? endif
 											?>><?= $menuNode1[ NavigationModel::TEXT ] ?><? if ( $hasChildNodes ):
-											?><img src="<?= $wf->BlankImgUrl() ?>" class="chevron"><? endif ?></a>
+											?><img src="<?= wfBlankImgUrl() ?>" class="chevron"><? endif ?></a>
 
 										<? if ( $hasChildNodes ): ?>
 											<ul class="subnav-3 subnav">

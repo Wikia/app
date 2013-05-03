@@ -31,7 +31,7 @@ class EditPageOutputBridge {
 		$this->notices->clear();
 
 		$this->outputPage = F::app()->getGlobal('wgOut');
-		$this->tracer = F::build('ObjectTracer',array($this->outputPage,self::$methods));
+		$this->tracer = new ObjectTracer($this->outputPage,self::$methods);
 		$this->outputPageMock = $this->tracer->begin();
 		$this->editPage->customOutputPage = $this->outputPageMock;
 	}
@@ -136,7 +136,7 @@ class EditPageOutputBridge {
 		$notices = array();
 		foreach ($chunks as $chunk) {
 			if ($chunk[3]) {
-				$notice = F::build('EditPageNotice', array($chunk[2],$chunk[3]));
+				$notice = new EditPageNotice($chunk[2],$chunk[3]);
 				if ($notice->getSummary() != '') {
 					$this->notices->add($notice);
 					$notices[] = $notice;

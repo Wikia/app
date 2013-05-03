@@ -403,7 +403,7 @@ class UserPreferencesV2 {
 		//user identity box/masthead
 		$userIdentityObject = new UserIdentityBox(F::app(), $user, 0);
 		$mastheadOptions = $userIdentityObject->getFullData();
-		$masthead = F::build('Masthead', array($user));
+		$masthead = new Masthead($user);
 		if(!empty($masthead->mUser->mOptionOverrides['avatar'])) {
 			$mastheadOptions['avatar'] = $masthead->mUser->mOptionOverrides['avatar'];
 		}
@@ -439,7 +439,7 @@ class UserPreferencesV2 {
 	// check if email is valid
 	public static function onSavePreferences( &$formData, &$error ) {
 		if ( array_key_exists('emailaddress', $formData) && !Sanitizer::validateEmail($formData['emailaddress']) ) {
-			$error = F::app()->wf->Msg( 'invalidemailaddress' );
+			$error = wfMsg( 'invalidemailaddress' );
 			return false;
 		}
 

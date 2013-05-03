@@ -19,16 +19,6 @@ class ArticlesAsResources extends WikiaObject {
 	const WIKIA_DEFAULT_DOMAIN_SUFFIX = '.wikia.com';
 
 	/**
-	 * Debug logging
-	 *
-	 * @param string $method - name of the method
-	 * @param string $msg - log message to be added
-	 */
-	private function log($method, $msg) {
-		$this->wf->debug($method  . ": {$msg}\n");
-	}
-
-	/**
 	 * Transforms value from GET only= into corresponding
 	 * ResourceLoaderWikiModule type= value.
 	 *

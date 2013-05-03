@@ -14,7 +14,7 @@ class WikiaValidatorFileTitleTest extends PHPUnit_Framework_TestCase {
 
 		$appMock = new stdClass();
 		$appMock->wf = $this->getMock('stdClass', array('findFile'));
-		$appMock->wf->expects($this->once())
+		wfexpects($this->once())
 			->method('findFile')
 			->will($this->returnValue($fileMock));
 

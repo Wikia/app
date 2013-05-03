@@ -11,8 +11,8 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$app->registerClass('EvolutionAbstractLogRenderer', $dir . 'EvolutionAbstractLogRenderer.class.php');
-$app->registerClass('EvolutionGourceLogRenderer', $dir . 'EvolutionGourceLogRenderer.class.php');
-$app->registerClass('EvolutionLogstalgiaLogRenderer', $dir . 'EvolutionLogstalgiaLogRenderer.class.php');
-$app->registerClass('EvolutionModel', $dir . 'EvolutionModel.class.php');
+$wgAutoloadClasses['EvolutionAbstractLogRenderer'] =  $dir . 'EvolutionAbstractLogRenderer.class.php';
+$wgAutoloadClasses['EvolutionGourceLogRenderer'] =  $dir . 'EvolutionGourceLogRenderer.class.php';
+$wgAutoloadClasses['EvolutionLogstalgiaLogRenderer'] =  $dir . 'EvolutionLogstalgiaLogRenderer.class.php';
+$wgAutoloadClasses['EvolutionModel'] =  $dir . 'EvolutionModel.class.php';
 

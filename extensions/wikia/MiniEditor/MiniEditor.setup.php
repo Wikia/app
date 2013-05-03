@@ -21,14 +21,14 @@ $app = F::app();
 /**
  * Controllers
  */
-$app->registerClass('MiniEditorController', $dir . '/MiniEditorController.class.php');
-$app->registerClass('MiniEditorHelper', $dir . '/MiniEditorHelper.class.php');
-$app->registerClass('MiniEditorSpecialController', $dir . 'MiniEditorSpecialController.class.php');
+$wgAutoloadClasses['MiniEditorController'] =  $dir . '/MiniEditorController.class.php';
+$wgAutoloadClasses['MiniEditorHelper'] =  $dir . '/MiniEditorHelper.class.php';
+$wgAutoloadClasses['MiniEditorSpecialController'] =  $dir . 'MiniEditorSpecialController.class.php';
 
 /**
  * Special page
  */
-$app->registerSpecialPage('MiniEditorDemo', 'MiniEditorSpecialController');
+$wgSpecialPages['MiniEditorDemo'] = 'MiniEditorSpecialController';
 
 /**
  * Message files

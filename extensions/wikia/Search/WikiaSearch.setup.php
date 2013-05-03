@@ -32,21 +32,22 @@ spl_autoload_register( function( $class ) {
 			return true;
 		}
 		return false;
-	}  
+	}
+	return true;
 });
 
 /**
  * Keeping the traditional controller registry for now
  */
-$app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class.php');
-$app->registerClass('WikiaSearchIndexerController', $dir . 'WikiaSearchIndexerController.class.php');
-$app->registerClass('WikiaSearchAjaxController', $dir . 'WikiaSearchAjaxController.class.php');
+$wgAutoloadClasses['WikiaSearchController'] =  $dir . 'WikiaSearchController.class.php';
+$wgAutoloadClasses['WikiaSearchIndexerController'] =  $dir . 'WikiaSearchIndexerController.class.php';
+$wgAutoloadClasses['WikiaSearchAjaxController'] =  $dir . 'WikiaSearchAjaxController.class.php';
 
 /**
  * special pages
  */
-$app->registerSpecialPage('WikiaSearch',	'WikiaSearchController');
-$app->registerSpecialPage('Search',			'WikiaSearchController');
+$wgSpecialPages['WikiaSearch'] = 'WikiaSearchController';
+$wgSpecialPages['Search'] = 'WikiaSearchController';
 
 
 

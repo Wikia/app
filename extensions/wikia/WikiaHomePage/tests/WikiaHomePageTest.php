@@ -468,7 +468,7 @@ TXT;
 		$this->setUpMock();
 
 		// test
-		$helper = F::build('WikiaHomePageHelper');
+		$helper = new WikiaHomePageHelper();
 		$adminAvatars = array_values($helper->getWikiAdminAvatars($mockWikiId));
 
 		$this->assertEquals($expAdminAvatars, $adminAvatars);
@@ -623,7 +623,7 @@ TXT;
 		$this->setUpMock();
 
 		// test
-		$helper = F::build('WikiaHomePageHelper');
+		$helper = new WikiaHomePageHelper();
 		$topEditorAvatars = array_values($helper->getWikiTopEditorAvatars($mockWikiId));
 
 		$this->assertEquals($expTopEditorAvatars, $topEditorAvatars);
@@ -722,7 +722,7 @@ TXT;
 	 * @dataProvider getProcessedWikisImgSizesDataProvider
 	 */
 	public function testGetProcessedWikisImgSizes($limit, $width, $height) {
-		$whh = F::build('WikiaHomePageHelper'); /** @var WikiaHomePageHelper $whh */
+		$whh = new WikiaHomePageHelper();
 		$size = $whh->getProcessedWikisImgSizes($limit);
 
 		$this->assertEquals($width, $size->width);
@@ -730,7 +730,7 @@ TXT;
 	}
 
 	public function getProcessedWikisImgSizesDataProvider() {
-		$whh = F::build('WikiaHomePageHelper'); /** @var WikiaHomePageHelper $whh */
+		$whh = new WikiaHomePageHelper();
 		return array(
 			array(WikiaHomePageHelper::SLOTS_BIG, $whh->getRemixBigImgWidth(), $whh->getRemixBigImgHeight()),
 			array(WikiaHomePageHelper::SLOTS_MEDIUM, $whh->getRemixMediumImgWidth(), $whh->getRemixMediumImgHeight()),

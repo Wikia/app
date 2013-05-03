@@ -79,7 +79,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileController.class.php", 'W
  */
 $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/WikiaMobile.i18n.php", 'WikiaMobile' );
 
-F::build( 'JSMessages' )->registerPackage( 'WkMbl', array(
+JSMessages::registerPackage( 'WkMbl', array(
 	'wikiamobile-hide-section',
 	'wikiamobile-sharing-media-image',
 	'wikiamobile-sharing-page-text',
@@ -90,7 +90,7 @@ F::build( 'JSMessages' )->registerPackage( 'WkMbl', array(
 	'wikiamobile-video-not-friendly-header'
 ) );
 
-F::build( 'JSMessages' )->registerPackage( 'SmartBanner', [
+JSMessages::registerPackage( 'SmartBanner', [
 	'wikiasmartbanner-appstore',
 	'wikiasmartbanner-googleplay',
 	'wikiasmartbanner-price',

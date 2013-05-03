@@ -1,8 +1,8 @@
 <?php
 
 class ScribeEventProducerController extends WikiaController {
-	public function __construct( WikiaApp $app ) {
-		$this->app = $app;
+	public function __construct() {
+		$this->app = F::app();
 	}
 
 	public function onSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
@@ -11,7 +11,7 @@ class ScribeEventProducerController extends WikiaController {
 		$key = ( isset( $status->value['new'] ) && $status->value['new'] == 1 ) ? 'create' : 'edit';
 		$is_archive = !empty( $undef1 );
 
- 		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' =>  $key, 'archive' => $is_archive ) ); /* @var $oScribeProducer ScribeEventProducer */
+ 		$oScribeProducer = new ScribeEventProducer( $key, $is_archive );
 		if ( is_object( $oScribeProducer ) ) {
 			if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
 				$oScribeProducer->sendLog();
@@ -27,7 +27,7 @@ class ScribeEventProducerController extends WikiaController {
 
 		# producer
 		if ( $allow ) {
-			$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'edit' ) ); /* @var $oScribeProducer ScribeEventProducer */
+			$oScribeProducer = new ScribeEventProducer( 'edit' );
 			if ( is_object( $oScribeProducer ) ) {
 				if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision, $revision_id ) ) {
 					$oScribeProducer->sendLog();
@@ -42,7 +42,7 @@ class ScribeEventProducerController extends WikiaController {
 	public function onDeleteComplete( &$oPage, &$oUser, $reason, $page_id ) {
 		wfProfileIn( __METHOD__ );
 
- 		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'delete' ) ); /* @var $oScribeProducer ScribeEventProducer */
+ 		$oScribeProducer = new ScribeEventProducer( 'delete' );
 		if ( is_object( $oScribeProducer ) ) {
 			if ( $oScribeProducer->buildRemovePackage ( $oPage, $oUser, $page_id ) ) {
 				$oScribeProducer->sendLog();
@@ -65,7 +65,7 @@ class ScribeEventProducerController extends WikiaController {
 		$oPage = WikiPage::factory( $oTitle );
 		$oUser = User::newFromId( $oRevision->getUser() );
 
- 		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'edit' ) ); /* @var $oScribeProducer ScribeEventProducer */
+ 		$oScribeProducer = new ScribeEventProducer( 'edit' );
 		if ( is_object( $oScribeProducer ) ) {
 			if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
 				$oScribeProducer->sendLog();
@@ -79,7 +79,7 @@ class ScribeEventProducerController extends WikiaController {
 	public function onArticleUndelete( &$oTitle, $is_new = false ) {
 		wfProfileIn( __METHOD__ );
 
- 		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'undelete' ) ); /* @var $oScribeProducer ScribeEventProducer */
+ 		$oScribeProducer = new ScribeEventProducer( 'undelete' );
 		if ( is_object( $oScribeProducer ) ) {
 			if ( $oScribeProducer->buildUndeletePackage( $oTitle ) ) {
 				$oScribeProducer->sendLog();
@@ -93,7 +93,7 @@ class ScribeEventProducerController extends WikiaController {
 	public function onMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $page_id, $redirect_id = 0 ) {
 		wfProfileIn( __METHOD__ );
 
- 		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'edit' ) ); /* @var $oScribeProducer ScribeEventProducer */
+ 		$oScribeProducer = new ScribeEventProducer( 'edit' );
 		if ( is_object( $oScribeProducer ) ) {
 			if ( $oScribeProducer->buildMovePackage( $oNewTitle, $oUser, $page_id ) ) {
 				$oScribeProducer->sendLog();
@@ -101,7 +101,7 @@ class ScribeEventProducerController extends WikiaController {
 		}
 
 		if ( !empty( $redirect_id ) ) {
-			$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'edit' ) ); /* @var $oScribeProducer ScribeEventProducer */
+			$oScribeProducer = new ScribeEventProducer( 'edit' );
 			if ( is_object( $oScribeProducer ) ) {
 				if ( $oScribeProducer->buildMovePackage( $oOldTitle, $oUser, null, $redirect_id ) ) {
 					$oScribeProducer->sendLog();

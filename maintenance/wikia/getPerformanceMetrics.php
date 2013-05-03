@@ -80,7 +80,7 @@ $params = array(
 $beVerbose = isset($options['verbose']);
 
 // use GooglePage speed API
-$metrics = F::build('PerformanceMetrics');
+$metrics = new PerformanceMetrics();
 $report = $metrics->getReport($url, $params);
 
 if (empty($report)) {
@@ -104,7 +104,7 @@ if (isset($options['ganglia']) && isset($options['ganglia-group'])) {
 
 	if ($beVerbose) echo "Sending data to {$host}:{$port} ('{$group}' group)...";
 
-	$gmetric = F::build('GMetricClient');
+	$gmetric = new GMetricClient();
 
 	$gmetric->setHostnameSpoof('10.8.32.34', 'spoofed-performance-metrics');
 	$gmetric->setPrefix(strtolower(str_replace(' ', '-', $group)));

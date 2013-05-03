@@ -16,7 +16,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //classes
-$app->registerClass('WikiaRecentChangesBlockHandler', $dir.'WikiaRecentChangesBlockHandler.php');
+$wgAutoloadClasses['WikiaRecentChangesBlockHandler'] =  $dir.'WikiaRecentChangesBlockHandler.php';
 
 //hooks
 $app->registerHook('ChangesListHeaderBlockGroup', 'WikiaRecentChangesBlockHandler', 'onChangesListHeaderBlockGroup');

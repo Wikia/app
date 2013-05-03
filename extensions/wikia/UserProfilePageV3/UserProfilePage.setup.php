@@ -15,23 +15,23 @@ define ('AVATAR_UPLOAD_FIELD', 'wkUserAvatar');
 /**
  * model
  */
-$app->registerClass('UserProfilePage', $dir . '/UserProfilePage.class.php');
-$app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
-$app->registerClass('UserProfilePageRailHelper', $dir . '/UserProfilePageRailHelper.class.php');
-$app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
+$wgAutoloadClasses['UserProfilePage'] =  $dir . '/UserProfilePage.class.php';
+$wgAutoloadClasses['UserIdentityBox'] =  $dir . '/UserIdentityBox.class.php';
+$wgAutoloadClasses['UserProfilePageRailHelper'] =  $dir . '/UserProfilePageRailHelper.class.php';
+$wgAutoloadClasses['ImageOperationsHelper'] =  $dir . '/ImageOperationsHelper.class.php';
 
 /**
  * controllers
  */
-$app->registerClass('UserProfilePageController', $dir . '/UserProfilePageController.class.php');
-$app->registerClass('Masthead', $dir . '/Masthead.class.php');
+$wgAutoloadClasses['UserProfilePageController'] =  $dir . '/UserProfilePageController.class.php';
+$wgAutoloadClasses['Masthead'] =  $dir . '/Masthead.class.php';
 
 /**
  * helper classes (strategies)
  */
-$app->registerClass('UserTagsStrategyBase', $dir . '/strategies/UserTagsStrategyBase.class.php');
-$app->registerClass('UserOneTagStrategy', $dir . '/strategies/UserOneTagStrategy.class.php');
-$app->registerClass('UserTwoTagsStrategy', $dir . '/strategies/UserTwoTagsStrategy.class.php');
+$wgAutoloadClasses['UserTagsStrategyBase'] =  $dir . '/strategies/UserTagsStrategyBase.class.php';
+$wgAutoloadClasses['UserOneTagStrategy'] =  $dir . '/strategies/UserOneTagStrategy.class.php';
+$wgAutoloadClasses['UserTwoTagsStrategy'] =  $dir . '/strategies/UserTwoTagsStrategy.class.php';
 
 /**
  * special pages
@@ -55,12 +55,6 @@ $app->registerHook('ArticleSaveComplete', 'Masthead', 'userMastheadInvalidateCac
 $app->registerExtensionMessageFile('UserProfilePageV3', $dir . '/UserProfilePage.i18n.php');
 //register messages package for JS
 //$app->registerExtensionJSMessagePackage('UPP3_modals', array('user-identity-box-about-date-*'));
-
-/**
- * DI setup
- */
-F::addClassConstructor( 'UserProfilePage', array( 'app' => $app ) );
-F::addClassConstructor( 'UserProfilePageController', array( 'app' => $app ) );
 
 /**
  * extension related configuration

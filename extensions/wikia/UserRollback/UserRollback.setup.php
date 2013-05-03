@@ -6,13 +6,13 @@ $dir = dirname(__FILE__) . '/';
 /**
  * controllers
  */
-$app->registerClass('UserRollbackSpecialController', $dir . 'UserRollbackSpecialController.class.php');
-$app->registerClass('UserRollbackRequest', $dir . 'UserRollbackRequest.class.php');
+$wgAutoloadClasses['UserRollbackSpecialController'] =  $dir . 'UserRollbackSpecialController.class.php';
+$wgAutoloadClasses['UserRollbackRequest'] =  $dir . 'UserRollbackRequest.class.php';
 
 /**
  * special pages
  */
-$app->registerSpecialPage('UserRollback', 'UserRollbackSpecialController');
+$wgSpecialPages['UserRollback'] = 'UserRollbackSpecialController';
 
 /**
  * message files

@@ -100,12 +100,12 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 }
 
 //JSMEssages setup
-F::build('JSMessages')->registerPackage( 'ArticleCommentsCounter', array(
+JSMessages::registerPackage( 'ArticleCommentsCounter', array(
 	'oasis-comments-header',
 	'oasis-comments-showing-most-recent'
 ));
 
-F::build('JSMessages')->registerPackage( 'WikiaMobileComments', array(
+JSMessages::registerPackage( 'WikiaMobileComments', array(
 	'wikiamobile-article-comments-replies',
 	'wikiamobile-article-comments-view',
 	'wikiamobile-article-comments-post',

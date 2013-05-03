@@ -16,7 +16,7 @@ $wgDefaultUserOptions['watchdeletion'] = 1;
 /**
  * classes
  */
-$app->registerClass('UserPreferencesV2', $dir . 'UserPreferencesV2.class.php');
+$wgAutoloadClasses['UserPreferencesV2'] =  $dir . 'UserPreferencesV2.class.php';
 
 /**
  * hooks

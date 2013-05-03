@@ -9,15 +9,15 @@ class SearchedKeywords {
 	 */
 	private $app;
 
-	public function __construct(WikiaApp $app) {
-		$this->app = $app;
+	public function __construct() {
+		$this->app = F::app();
 	}
 
 	public function recordKeyword( $keyword ) {
 		$keyword = strtolower( $keyword );
 
 		$memc = $this->app->wg->Memc;
-		$cacheKey = $this->app->wf->MemcKey( self::CACHE_KEY );
+		$cacheKey = wfMemcKey( self::CACHE_KEY );
 
 		$data = $memc->get( $cacheKey );
 		if(empty($data)) {

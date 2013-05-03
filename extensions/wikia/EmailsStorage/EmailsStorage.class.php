@@ -10,7 +10,10 @@ class EmailsStorage {
 
 	protected $app = null;
 
-	public function __construct(WikiaApp $app) {
+	public function __construct(WikiaApp $app = null) {
+		if( is_null( $app ) ) {
+			$app = F::app();
+		}
 		$this->app = $app;
 	}
 
@@ -21,7 +24,7 @@ class EmailsStorage {
 	 * @return EmailsStorageEntry entry object
 	 */
 	public function newEntryFromRow($row) {
-		$entry = F::build('EmailsStorageEntry', array('app' => $this->app, 'sourceId' => $row->source_id));
+		$entry = new EmailsStorageEntry($this->app, $row->source_id);
 
 		$entry->setPageId($row->page_id);
 		$entry->setCityId($row->city_id);
@@ -43,7 +46,7 @@ class EmailsStorage {
 	 * @return EmailsStorageEntry entry object
 	 */
 	public function newEntry($sourceId) {
-		$entry = F::build('EmailsStorageEntry', array('app' => $this->app, 'sourceId' => $sourceId));
+		$entry = new EmailsStorageEntry($this->app, $sourceId);
 		$entry->setStorage($this);
 		return $entry;
 	}
@@ -110,7 +113,7 @@ class EmailsStorage {
 			'user_id' => $entry->getUserId(),
 			'beacon_id' => (string) $entry->getBeaconId(),
 			'feedback' => (string) $entry->getFeedback(),
-			'timestamp' => $this->app->wf->TimestampNow(),
+			'timestamp' => wfTimestampNow(),
 		);
 
 		$dbw = $this->getDb(DB_MASTER);
@@ -132,6 +135,6 @@ class EmailsStorage {
 	 * @return DatabaseBase
 	 */
 	protected function getDb($type = DB_SLAVE) {
-		return $this->app->wf->GetDB($type, array(), $this->app->wg->ExternalDatawareDB);
+		return wfGetDB($type, array(), $this->app->wg->ExternalDatawareDB);
 	}
 }

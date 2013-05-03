@@ -29,7 +29,7 @@ class ScavengerHuntController extends WikiaController {
 	 */
 
 	public function getHuntData() {
-		$helper = F::build( 'ScavengerHunt' );
+		$helper = (new ScavengerHunt);
 		$hash = $this->getVal( 'scavengerHuntHash', 0 );
 		$huntData = array();
 
@@ -53,13 +53,13 @@ class ScavengerHuntController extends WikiaController {
 	 */
 
 	public function itemFound(){
-		$helper = F::build( 'ScavengerHunt' );
+		$helper = (new ScavengerHunt);
 		//$hunterId = $helper->getHunterId();
 		$articleTitle =  $this->getVal( 'articleTitle', '' );
 		$huntData = array();
 
 		if ( !empty( $articleTitle ) ){
-			$helper = F::build( 'ScavengerHunt' );
+			$helper = (new ScavengerHunt);
 			$bSuccess = $helper->markItemAsFound( $articleTitle );
 			if ( $bSuccess ){
 				$huntData = $helper->generateFullInfo();
@@ -79,13 +79,13 @@ class ScavengerHuntController extends WikiaController {
 	 */
 
 	public function clearGameData(){
-		$helper = F::build( 'ScavengerHunt' );
+		$helper = (new ScavengerHunt);
 		$helper->resetCache();
 	}
 
 	public function pushEntry() {
 		$app = F::app();
-		$helper = F::build( 'ScavengerHunt' );
+		$helper = (new ScavengerHunt);
 		$this->setVal(
 			'result',
 			$helper->pushEntry(
@@ -97,8 +97,7 @@ class ScavengerHuntController extends WikiaController {
 	}
 
 	public function getGameCacheValue() {
-		$app = F::app();
-		$factory = F::build( 'ScavengerHuntGames' );
+		$factory = (new ScavengerHuntGames);
 		$gameId =  $this->getVal( 'gameId', '' );
 		$readWrite =  $this->getVal( 'readwrite', 0 );
 		$key = wfSharedMemcKey( 'ScavengerHuntGameIndex', $gameId, ( $readWrite ? 1 : 0 ), ScavengerHuntGames::CACHE_VERSION );
@@ -112,7 +111,7 @@ class ScavengerHuntController extends WikiaController {
 	}
 
 	public function getCurrentUserGameData(){
-		$helper = F::build( 'ScavengerHunt' );
+		$helper = (new ScavengerHunt);
 		$this->setVal( 'key', $helper->getCacheKey() );
 		$wgMemc = $this->app->getGlobal('wgMemc');
 		$memcData = $wgMemc->get( $helper->getCacheKey() );

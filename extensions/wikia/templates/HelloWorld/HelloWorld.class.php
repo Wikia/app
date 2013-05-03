@@ -28,7 +28,7 @@ class HelloWorld {
 			throw new WikiaException("Unknown wikiId");
 		}
 
-		$dbr = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
+		$dbr = wfGetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
 		$row = $dbr->selectRow( 'city_list', array('city_url', 'city_title'), array( 'city_id' => $wikiId ), __METHOD__ );
 
 		if( !empty($row) ) {

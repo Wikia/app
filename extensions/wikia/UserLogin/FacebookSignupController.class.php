@@ -18,7 +18,7 @@ class FacebookSignupController extends WikiaController {
 		$fbUserId = $this->getFacebookUserId();
 
 		// try to get connected Wikia account
-		$user = F::build('FBConnectDB', array($fbUserId), 'getUser');
+		$user = FBConnectDB::getUser($fbUserId);
 
 		if ( ($user instanceof User) && ($fbUserId !== 0) ) {
 			// account is connected - log the user in
@@ -57,15 +57,15 @@ class FacebookSignupController extends WikiaController {
 		$email = $resp->getVal('email', false);
 		// check for proxy email
 		if ( $this->fbEmail != $email ) {
-			$this->fbEmail = $this->wf->Msg( 'usersignup-facebook-proxy-email' );
+			$this->fbEmail = wfMsg( 'usersignup-facebook-proxy-email' );
 		}
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
 
-		$this->specialUserLoginUrl = F::build('SpecialPage', array('UserLogin'), 'getTitleFor')->getLocalUrl();
+		$this->specialUserLoginUrl = SpecialPage::getTitleFor('UserLogin')->getLocalUrl();
 
 		// FB feed option checkboxes
-		$this->fbFeedOptions = F::build('FBConnectPushEvent', array(), 'getPreferencesToggles');
+		$this->fbFeedOptions = FBConnectPushEvent::getPreferencesToggles();
 	}
 
 	/**
@@ -98,10 +98,10 @@ class FacebookSignupController extends WikiaController {
 	public function createAccount() {
 		// Init session if necessary
 		if (session_id() == '') {
-			$this->wf->SetupSession();
+			wfSetupSession();
 		}
 
-		$signupForm = F::build( 'UserLoginFacebookForm', array( &$this->wg->request ) );
+		$signupForm = new UserLoginFacebookForm( $this->wg->request );
 		$signupForm->load();
 		$user = $signupForm->addNewAccount();
 
@@ -124,7 +124,7 @@ class FacebookSignupController extends WikiaController {
 
 		if ($fbUserId > 0) {
 			// call Facebook API
-			$FBApi = F::build('FBConnectAPI');
+			$FBApi = new FBConnectAPI();
 			$data = $FBApi->getUserInfo($this->fbUserId, array(
 				'first_name',
 				'name',
@@ -149,7 +149,7 @@ class FacebookSignupController extends WikiaController {
 	 * If no user is logged in, then an ID of 0 is returned.
 	 */
 	private function getFacebookUserId() {
-		$fbApi = F::build('FBConnectAPI');
+		$fbApi = new FBConnectAPI();
 		return $fbApi->user();
 	}
 }

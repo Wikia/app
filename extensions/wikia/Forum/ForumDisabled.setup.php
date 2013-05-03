@@ -16,7 +16,7 @@ $app = F::app( );
 
 include ($dir . '/Forum.namespace.setup.php');
 
-$app->registerClass( 'ForumNotificationPlugin', $dir . 'ForumNotificationPlugin.class.php' );
+$wgAutoloadClasses[ 'ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
 
 $app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationPlugin', 'onGetNotificationMessage' );
 $app->registerHook( 'NotificationGetMailNotificationMessage', 'ForumNotificationPlugin', 'onGetMailNotificationMessage' );

@@ -16,22 +16,22 @@ $dir = dirname( __FILE__ ) . '/';
 $app = F::app( );
 
 // classes
-$app->registerClass( 'ForumSpecialController', $dir . 'ForumSpecialController.class.php' );
-$app->registerClass( 'ForumHooksHelper', $dir . 'ForumHooksHelper.class.php' );
-$app->registerClass( 'ForumController', $dir . 'ForumController.class.php' );
-$app->registerClass( 'ForumNotificationPlugin', $dir . 'ForumNotificationPlugin.class.php' );
-$app->registerClass( 'Forum', $dir . 'Forum.class.php' );
-$app->registerClass( 'ForumBoard', $dir . 'ForumBoard.class.php' );
-$app->registerClass( 'ForumHelper', $dir . 'ForumHelper.class.php' );
-$app->registerClass( 'ForumExternalController', $dir . 'ForumExternalController.class.php' );
-$app->registerClass( 'RelatedForumDiscussionController', $dir . 'RelatedForumDiscussionController.class.php' );
+$wgAutoloadClasses[ 'ForumSpecialController'] =  $dir . 'ForumSpecialController.class.php' ;
+$wgAutoloadClasses[ 'ForumHooksHelper'] =  $dir . 'ForumHooksHelper.class.php' ;
+$wgAutoloadClasses[ 'ForumController'] =  $dir . 'ForumController.class.php' ;
+$wgAutoloadClasses[ 'ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
+$wgAutoloadClasses[ 'Forum'] =  $dir . 'Forum.class.php' ;
+$wgAutoloadClasses[ 'ForumBoard'] =  $dir . 'ForumBoard.class.php' ;
+$wgAutoloadClasses[ 'ForumHelper'] =  $dir . 'ForumHelper.class.php' ;
+$wgAutoloadClasses[ 'ForumExternalController'] =  $dir . 'ForumExternalController.class.php' ;
+$wgAutoloadClasses[ 'RelatedForumDiscussionController'] =  $dir . 'RelatedForumDiscussionController.class.php' ;
 
 // i18n mapping
 $app->registerExtensionMessageFile( 'Forum', $dir . 'Forum.i18n.php' );
 $app->registerExtensionMessageFile( 'ForumAliases', $dir . 'Forum.alias.php');
 
 // special pages
-$app->registerSpecialPage( 'Forum', 'ForumSpecialController' );
+$wgSpecialPages[ 'Forum' ] =  'ForumSpecialController';
 
 // hooks
 $app->registerHook( 'AfterWallWikiActivityFilter', 'ForumHooksHelper', 'onAfterWallWikiActivityFilter' );
@@ -116,7 +116,7 @@ $wgGroupPermissions['sysop']['forumadmin'] = true;
 $wgGroupPermissions['helper']['forumadmin'] = true;
 
 
-F::build('JSMessages')->registerPackage('Forum', array(
+JSMessages::registerPackage('Forum', array(
 	'back',
 	'forum-specialpage-policies-edit',
 	'forum-specialpage-policies'

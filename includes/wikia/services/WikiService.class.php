@@ -37,7 +37,7 @@ class WikiService extends WikiaModel {
 						function() use ($wiki, $useMaster, $excludeBots, $limit) {
 							$dbname = $wiki->city_dbname;
 							$dbType = ( $useMaster ) ? DB_MASTER : DB_SLAVE;
-							$db = $this->wf->GetDB( $dbType, array(), $dbname );
+							$db = wfGetDB( $dbType, array(), $dbname );
 
 							$conditions = array("ug_group in ('sysop','bureaucrat')");
 
@@ -84,8 +84,8 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return string memcache key
 	 */
-	public function getMemKeyAdminIds( $wikiId, $excludeBots, $limit ) {
-		return $this->wf->SharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots, $limit );
+	public function getMemKeyAdminIds( $wikiId, $excludeBots = false, $limit = -1 ) {
+		return wfSharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots, $limit );
 	}
 
 	/**
@@ -96,13 +96,13 @@ class WikiService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
-		$memKey = $this->wf->SharedMemcKey( 'wiki_total_videos', $wikiId );
+		$memKey = wfSharedMemcKey( 'wiki_total_videos', $wikiId );
 		$totalVideos = $this->wg->Memc->get( $memKey );
 		if ( $totalVideos === false ) {
 			$totalVideos = 0;
 			$dbname = WikiFactory::IDtoDB( $wikiId );
 			if ( !empty($dbname) ) {
-				$db = $this->wf->GetDB( DB_SLAVE, array(), $dbname );
+				$db = wfGetDB( DB_SLAVE, array(), $dbname );
 
 				$row = $db->selectRow(
 					array( 'image' ),
@@ -132,7 +132,7 @@ class WikiService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
-		$memKey = $this->wf->SharedMemcKey( 'wiki_sitestats', $wikiId );
+		$memKey = wfSharedMemcKey( 'wiki_sitestats', $wikiId );
 		$sitestats = $this->wg->Memc->get( $memKey );
 		if ( !is_array($sitestats) ) {
 			$sitestats = array(
@@ -147,7 +147,7 @@ class WikiService extends WikiaModel {
 
 			$dbname = WikiFactory::IDtoDB( $wikiId );
 			if ( !empty($dbname) ) {
-				$db = $this->wf->GetDB( DB_SLAVE, 'vslow', $dbname );
+				$db = wfGetDB( DB_SLAVE, 'vslow', $dbname );
 
 				$row = $db->selectRow(
 					array( 'site_stats' ),
@@ -192,12 +192,12 @@ class WikiService extends WikiaModel {
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
 		$topEditors = WikiaDataAccess::cache(
-			$this->wf->SharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots ),
+			wfSharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots ),
 			60 * 60 * 3,
 			function() use ($wikiId, $limit, $excludeBots) {
 				$topEditors = array();
 
-				$db = $this->wf->GetDB( DB_SLAVE, array(), 'specials' );
+				$db = wfGetDB( DB_SLAVE, array(), 'specials' );
 
 				$result = $db->select(
 					array( 'events_local_users' ),
@@ -248,9 +248,9 @@ class WikiService extends WikiaModel {
 			$totalImages = 0;
 			$dbname = WikiFactory::IDtoDB( $wikiId );
 			if ( !empty($dbname) ) {
-				$db = $this->wf->GetDB( DB_SLAVE, array(), $dbname );
+				$db = wfGetDB( DB_SLAVE, array(), $dbname );
 			} else {
-				$db = $this->wf->GetDB( DB_SLAVE );
+				$db = wfGetDB( DB_SLAVE );
 			}
 
 			$row = $db->selectRow(
@@ -284,22 +284,22 @@ class WikiService extends WikiaModel {
 	 */
 	public function getUserInfo($userId, $wikiId, $avatarSize, $checkUserCallback) {
 		$userInfo = array();
-		$user = F::build('User', array($userId), 'newFromId');
+		$user = User::newFromId($userId);
 
 		if ($user instanceof User && $checkUserCallback($user)) {
 			$username = $user->getName();
 
-			$userInfo['avatarUrl'] = F::build('AvatarService', array($user, $avatarSize), 'getAvatarUrl');
+			$userInfo['avatarUrl'] = AvatarService::getAvatarUrl($user, $avatarSize);
 			$userInfo['edits'] = 0;
 			$userInfo['name'] = $username;
 			/** @var $userProfileTitle GlobalTitle */
-			$userProfileTitle = F::build('GlobalTitle', array($username, NS_USER, $wikiId), 'newFromTextCached');
+			$userProfileTitle = GlobalTitle::newFromTextCached($username, NS_USER, $wikiId);
 			$userInfo['userPageUrl'] = ($userProfileTitle instanceof Title) ? $userProfileTitle->getFullURL() : '#';
-			$userContributionsTitle = F::build('GlobalTitle', array('Contributions/' . $username, NS_SPECIAL, $wikiId), 'newFromTextCached');
+			$userContributionsTitle = GlobalTitle::newFromTextCached('Contributions/' . $username, NS_SPECIAL, $wikiId);
 			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
 			$userInfo['userId'] = $userId;
 
-			$userStatsService = F::build('UserStatsService', array($userId));
+			$userStatsService = new UserStatsService($userId);
 			$stats = $userStatsService->getGlobalStats($wikiId);
 
 			if(!empty($stats['date'])) {
@@ -324,7 +324,7 @@ class WikiService extends WikiaModel {
 	public function getWikiImages($wikiIds, $imageWidth, $imageHeight = self::IMAGE_HEIGHT_KEEP_ASPECT_RATIO) {
 		$images = array();
 		try {
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+			$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 			$tables = array('city_visualization');
 			$fields = array('city_id', 'city_main_image');
 			$conds = array('city_id' => $wikiIds);
@@ -332,7 +332,7 @@ class WikiService extends WikiaModel {
 
 			while($row = $results->fetchObject()) {
 				$title = Title::newFromText($row->city_main_image, NS_FILE);
-				$file = $this->wf->findFile($title);
+				$file = wffindFile($title);
 				
 				if ($file instanceof File && $file->exists()) {
 					$imageServing = new ImageServing(null, $imageWidth, $imageHeight);
@@ -347,7 +347,7 @@ class WikiService extends WikiaModel {
 
 	public function getWikiAdmins ($wikiId, $avatarSize, $limit = null) {
 		return WikiaDataAccess::cacheWithLock(
-			$this->wf->sharedMemcKey('get_wiki_admins', $wikiId, $avatarSize, $limit),
+			wfsharedMemcKey('get_wiki_admins', $wikiId, $avatarSize, $limit),
 			3 * 60 * 60,
 			function () use ($wikiId, $avatarSize, $limit) {
 				$admins = array();
@@ -367,7 +367,7 @@ class WikiService extends WikiaModel {
 	}
 
 	protected function getMemcKeyTotalImages( $wikiId ) {
-		return $this->wf->SharedMemcKey( 'wiki_total_images', $wikiId );
+		return wfSharedMemcKey( 'wiki_total_images', $wikiId );
 	}
 
 	public function invalidateCacheTotalImages( $wikiId = 0 ) {

@@ -325,7 +325,7 @@ class WikiaComWikisListImport {
 		$success = false;
 
 		//fb#45624
-		$user = F::build('User', array('WikiaBot'), 'newFromName');
+		$user = User::newFromName('WikiaBot');
 		$user = ($user instanceof User) ? $user : null;
 		$imageData = new stdClass();
 		$imageData->name = $imageName;

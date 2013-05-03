@@ -36,7 +36,7 @@ class WikiaPollArticle extends Article {
 
 		// add CSS/JS
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaPoll/css/WikiaPoll.scss'));
-		$jsFile = F::build('JSSnippets')->addToStack(
+		$jsFile = JSSnippets::addToStack(
 			array( '/extensions/wikia/WikiaPoll/js/WikiaPoll.js' ),
 			array(),
 			'WikiaPoll.init'

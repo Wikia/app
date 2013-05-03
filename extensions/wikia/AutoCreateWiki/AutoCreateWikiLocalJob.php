@@ -550,7 +550,7 @@ class AutoCreateWikiLocalJob extends Job {
 			$oRevision = Revision::newFromId($oRow->rev_id);
 			if ( $wgEnableScribeNewReport ) {
 				$key = ( isset($pages[$oRow->page_id]) ) ? 'edit' : 'create';
-				$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => $key, 'archive' => 0 ) );
+				$oScribeProducer = new ScribeEventProducer( $key, 0 );
 				if ( is_object( $oScribeProducer ) ) {
 					if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision ) ) {
 						$oScribeProducer->sendLog();

@@ -32,7 +32,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 			);
 
 			$fields[self::FIELD_NAME_TITLE . $i] = array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-from-the-community-title'),
+				'label' => wfMsg('marketing-toolbox-hub-module-from-the-community-title'),
 				'validator' => $this->getValidator($i, self::FIELD_NAME_TITLE),
 				'attributes' => array(
 					'class' => $this->getJsValidator($i, self::FIELD_NAME_TITLE)
@@ -40,7 +40,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 			);
 
 			$fields[self::FIELD_NAME_USERSURL . $i] = array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-from-the-community-users-url'),
+				'label' => wfMsg('marketing-toolbox-hub-module-from-the-community-users-url'),
 				'validator' => $this->getValidator($i, self::FIELD_NAME_USERSURL),
 				'attributes' => array(
 					'class' => $this->getJsValidator($i, self::FIELD_NAME_USERSURL)
@@ -49,7 +49,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 
 			$fields[self::FIELD_NAME_QUOTE . $i] = array(
 				'type' => 'textarea',
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-from-the-community-long-quote'),
+				'label' => wfMsg('marketing-toolbox-hub-module-from-the-community-long-quote'),
 				'validator' => $this->getValidator($i, self::FIELD_NAME_QUOTE),
 				'attributes' => array(
 					'class' => $this->getJsValidator($i, self::FIELD_NAME_QUOTE),
@@ -58,7 +58,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 			);
 
 			$fields[self::FIELD_NAME_URL . $i] = array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-from-the-community-url'),
+				'label' => wfMsg('marketing-toolbox-hub-module-from-the-community-url'),
 				'validator' => $this->getValidator($i, self::FIELD_NAME_URL),
 				'attributes' => array(
 					'class' => $this->getJsValidator($i, self::FIELD_NAME_URL)

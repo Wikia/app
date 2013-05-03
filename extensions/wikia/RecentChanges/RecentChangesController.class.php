@@ -25,7 +25,7 @@ class RecentChangesController extends WikiaController {
 	
 	public function dropdownNamespaces() {
 		$selected = $this->getVal( 'selected', array() );
-		$namespaces = $this->wf->GetNamespaces();
+		$namespaces = wfGetNamespaces();
 
 		if(!empty($this->wg->EnableWallEngine)) {
 			$namespaces = WallHelper::clearNamespaceList($namespaces);
@@ -39,7 +39,7 @@ class RecentChangesController extends WikiaController {
 
 			$options[] = array(
 				'value' => $index,
-				'label' => $index === 0 ? $this->wf->Msg( 'blanknamespace' ) : $name
+				'label' => $index === 0 ? wfMsg( 'blanknamespace' ) : $name
 			);
 		}
 

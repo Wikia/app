@@ -12,11 +12,11 @@ class WallBaseController extends WikiaController{
 	static $uniqueHead = array();
 	public function __construct() {
 		$this->app = F::App();
-		$this->helper = F::build('WallHelper', array());
+		$this->helper = new WallHelper();
 	}
 
 	public function addAsset() {
-		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('Wall', JSMessages::EXTERNAL);
 				
 		$this->response->addAsset('wall_topic_js');	// need to load on thread only
 		$this->response->addAsset('wall_js');
@@ -54,7 +54,7 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('condenseMessage', false);
 
 		if( count($this->threads) > 0 ) {
-			$wn = F::build('WallNotifications', array());
+			$wn = new WallNotifications();
 			foreach($this->threads as $key => $val ){
 				$all = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
 				break;
@@ -64,9 +64,9 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('renderUserTalkArchiveAnchor', false);
 		$this->response->setVal('greeting', '');
 
-		$title = F::build('Title', array($id), 'newFromId' );
+		$title = Title::newFromId($id);
 		if(!empty($title) && $title->exists() && in_array(MWNamespace::getSubject( $title->getNamespace() ), $this->app->wg->WallNS) ) {
-			$wallMessage = F::build('WallMessage', array($title), 'newFromTitle' );
+			$wallMessage = WallMessage::newFromTitle($title);
 			$wallMessage->load();
 			$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
 		}
@@ -98,11 +98,11 @@ class WallBaseController extends WikiaController{
 
 		$this->response->setVal('renderUserTalkArchiveAnchor', $this->request->getVal('dontRenderUserTalkArchiveAnchor', false) != true);
 
-		$greeting = F::build('Title', array($title->getText(), NS_USER_WALL_MESSAGE_GREETING), 'newFromText' );
+		$greeting = Title::newFromText($title->getText(), NS_USER_WALL_MESSAGE_GREETING);
 		$greetingText = '';
 
 		if(!empty($greeting) && $greeting->exists() ) {
-			$article = F::build( 'Article', array($greeting));
+			$article = new Article($greeting);
 			$article->getParserOptions();
 			$article->mParserOptions->setIsPreview(true); //create parser option
 			$article->mParserOptions->setEditSection(false);
@@ -243,7 +243,7 @@ class WallBaseController extends WikiaController{
 			$this->response->setVal( 'showEditedTS',  true );
 			$editorName = $wallMessage->getEditor()->getName();
 			$this->response->setVal( 'editorName', $editorName );			
-			$editorUrl = F::build( 'Title', array( $editorName, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK ), 'newFromText' )->getFullUrl();
+			$editorUrl = Title::newFromText( $editorName, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK )->getFullUrl();
 			$this->response->setVal( 'editorUrl',  $editorUrl );
 			$this->response->setVal( 'isEdited',  true);
 			
@@ -373,7 +373,7 @@ class WallBaseController extends WikiaController{
 	protected function getWallMessage() {
 		$comment = $this->request->getVal('comment');
 		if(($comment instanceof ArticleComment)) {
-			$wallMessage = F::build('WallMessage', array($comment), 'newFromArticleComment' );	
+			$wallMessage = WallMessage::newFromArticleComment($comment);
 		} else {
 			$wallMessage = $comment;
 		}
@@ -384,7 +384,7 @@ class WallBaseController extends WikiaController{
 	}
 	
 	public function getWallForIndexPage($title) {
-		$wall = F::build('Wall', array(($title)), 'newFromTitle');
+		$wall = Wall::newFromTitle(($title));
 		return $wall; 
 	}
 	
@@ -464,18 +464,18 @@ class WallBaseController extends WikiaController{
 				//which are needed to click tracking
 				//if you change those keys here, do so in Wall.js file, please
 				$options = array(
-					'nf' => $this->app->wf->Msg('wall-history-sorting-newest-first'),
-					'of' => $this->app->wf->Msg('wall-history-sorting-oldest-first'),
+					'nf' => wfMsg('wall-history-sorting-newest-first'),
+					'of' => wfMsg('wall-history-sorting-oldest-first'),
 				);
 				break;
 			case 'index':
 			default:
 				$options = array(
-					'nt' => $this->app->wf->Msg('wall-sorting-newest-threads'),
-					'ot' => $this->app->wf->Msg('wall-sorting-oldest-threads'),
-					'nr' => $this->app->wf->Msg('wall-sorting-newest-replies'),
-					//'ma' => $this->app->wf->Msg('wall-sorting-most-active'),
-					//'a' => $this->app->wf->Msg('wall-sorting-archived')
+					'nt' => wfMsg('wall-sorting-newest-threads'),
+					'ot' => wfMsg('wall-sorting-oldest-threads'),
+					'nr' => wfMsg('wall-sorting-newest-replies'),
+					//'ma' => wfMsg('wall-sorting-most-active'),
+					//'a' => wfMsg('wall-sorting-archived')
 				);
 				break;
 		}
@@ -502,13 +502,13 @@ class WallBaseController extends WikiaController{
 		$path = array();
 		$this->response->setVal( 'path', $path);
 		
-		$title = F::build('Title', array($this->request->getVal('id')), 'newFromId' );
+		$title = Title::newFromId($this->request->getVal('id'));
 		if(empty($title)) {
-			$title = F::build('Title', array($this->request->getVal('id'), Title::GAID_FOR_UPDATE), 'newFromId' );
+			$title = Title::newFromID($this->request->getVal('id'), Title::GAID_FOR_UPDATE);
 		}
 		
 		if(!empty($title) && $title->isTalkPage() ) {
-			$wallMessage = F::build('WallMessage', array($title), 'newFromTitle' );
+			$wallMessage = WallMessage::newFromTitle($title);
 			
 			$wallMessageParent = $wallMessage->getTopParentObj();
 			if(!empty($wallMessageParent)) {
@@ -575,7 +575,7 @@ class WallBaseController extends WikiaController{
 		$wall_username = $this->helper->getUser()->getName();
 		
 		// only use realname if user made edits (use logic from masthead)
-		$userStatsService = F::build('UserStatsService', array($this->helper->getUser()->getID()));
+		$userStatsService = new UserStatsService($this->helper->getUser()->getID());
 		$userStats = $userStatsService->getStats();
 		if(empty($userStats['edits']) || $userStats['edits'] == 0) {
 			$wall_username = $this->helper->getUser()->getName();
@@ -593,7 +593,7 @@ class WallBaseController extends WikiaController{
 
 		$wall_message = $this->response->getVal('wall_message');
 		if ( empty($wall_message) ) {
-			$wall_message = User::isIP($wall_username) ? $this->wf->Msg('wall-placeholder-message-anon') : $this->wf->Msg('wall-placeholder-message', $wall_username);
+			$wall_message = User::isIP($wall_username) ? wfMsg('wall-placeholder-message-anon') : wfMsg('wall-placeholder-message', $wall_username);
 			$this->response->setVal('wall_message', $wall_message);
 		}
 
@@ -622,7 +622,7 @@ class WallBaseController extends WikiaController{
 	public function getThread($filterid) {
 		wfProfileIn(__METHOD__);
 
-		$wallthread = F::build('WallThread', array($filterid), 'newFromId');
+		$wallthread = WallThread::newFromId($filterid);
 		$wallthread->loadIfCached();
 				
 		$this->threads = array( $filterid => $wallthread );

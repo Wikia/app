@@ -21,7 +21,7 @@ class PromoteImageReviewSpecialController extends ImageReviewSpecialController {
 	}
 
 	protected function getHelper() {
-		return F::build('PromoteImageReviewHelper');
+		return new PromoteImageReviewHelper();
 	}
 
 	protected function getBaseUrl() {

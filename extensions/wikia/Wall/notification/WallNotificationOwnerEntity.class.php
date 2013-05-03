@@ -11,7 +11,7 @@ class WallNotificationOwnerEntity {
 		
 		$this->data->wiki_id = $wikiId;
 		
-		$this->data->timestamp = $app->wf->TimestampNow();
+		$this->data->timestamp = wfTimestampNow();
 		$this->data->url = $url;
 		$this->data->title = $title;
 		$this->data->user_removing_id = $userIdRemoving;

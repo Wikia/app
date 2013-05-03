@@ -21,7 +21,7 @@ class ScavengerHuntGetActiveGameTest extends ScavengerHuntTest {
 	public function testGameAlreadyLoaded() {
 
 		// starting conditions
-		$scavengerHunt = F::build('ScavengerHunt');
+		$scavengerHunt = new ScavengerHunt();
 		$oFakeGame = $this->getFakeGame();
 		$scavengerHunt->setGame( $oFakeGame );
 
@@ -46,7 +46,7 @@ class ScavengerHuntGetActiveGameTest extends ScavengerHuntTest {
 	public function testGameNotLoaded( $isUserAnon, $cookieValue ) {
 
 		// starting conditions
-		$scavengerHunt = F::build('ScavengerHunt');
+		$scavengerHunt = new ScavengerHunt();
 		$scavengerHunt->setGame( null );
 
 		$mockedUser = $this->getMock( 'User', array('isAnon', 'getName') );

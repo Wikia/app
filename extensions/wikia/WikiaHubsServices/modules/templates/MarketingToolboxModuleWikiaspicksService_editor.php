@@ -12,12 +12,12 @@
 	?>
 	<div class="module-box grid-4 alpha">
 		<div class="grid-3 alpha">
-			<input type="button" class="wmu-show" value="<?= $wf->Message('marketing-toolbox-hub-module-explore-add-photo')->text() ?>" />
+			<input type="button" class="wmu-show" value="<?= wfMessage('marketing-toolbox-hub-module-explore-add-photo')->text() ?>" />
 			<span class="filename-placeholder alternative">
 				<?php if( !empty($fields['fileName']['value']) ): ?>
 					<?= $fields['fileName']['value']; ?>
 				<?php else: ?>
-					<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
+					<?= wfMsg('marketing-toolbox-edithub-file-name') ?>
 				<?php endif ?>
 			</span>
 			<?= $app->renderView(
@@ -44,7 +44,7 @@
 					array('inputData' => $fields['text'])
 				);
 			?>
-			<p class="alternative"><?= $wf->Message('marketing-toolbox-hub-module-html-text-tip')->parse(); ?></p>
+			<p class="alternative"><?= wfMessage('marketing-toolbox-hub-module-html-text-tip')->parse(); ?></p>
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder">

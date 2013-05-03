@@ -13,8 +13,8 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 //classes
-$app->registerClass( 'SpecialUnusedVideos', $dir.'SpecialUnusedVideos.class.php' );
-$app->registerClass( 'SpecialUnusedVideosHooks', $dir.'SpecialUnusedVideosHooks.class.php' );
+$wgAutoloadClasses[ 'SpecialUnusedVideos'] =  $dir.'SpecialUnusedVideos.class.php' ;
+$wgAutoloadClasses[ 'SpecialUnusedVideosHooks'] =  $dir.'SpecialUnusedVideosHooks.class.php' ;
 
 // Hook
 $app->registerHook( 'wgQueryPages', 'SpecialUnusedVideosHooks', 'registerUnusedVideos' );
@@ -24,6 +24,6 @@ $app->registerExtensionMessageFile( 'SpecialUnusedVideos', $dir.'SpecialUnusedVi
 $app->registerExtensionMessageFile( 'SpecialUnusedVideosAliases', $dir.'SpecialUnusedVideos.alias.php' );
 
 // special pages
-$app->registerSpecialPage( 'UnusedVideos', 'SpecialUnusedVideos' );
+$wgSpecialPages[ 'UnusedVideos' ] =  'SpecialUnusedVideos';
 
 $wgSpecialPageGroups['UnusedVideos'] = 'maintenance';

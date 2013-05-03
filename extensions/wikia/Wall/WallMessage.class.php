@@ -33,7 +33,7 @@ class WallMessage {
 		//TODO: inject this
 		$this->cityId = $app->wg->CityId;
 
-		$this->helper = F::build('WallHelper', array());
+		$this->helper = new WallHelper();
 		wfProfileOut(__METHOD__);
 	}
 
@@ -41,14 +41,14 @@ class WallMessage {
 		wfProfileIn(__METHOD__);
 
 		if( $master == true ) {
-			$title = F::build('Title', array($id, Title::GAID_FOR_UPDATE), 'newFromId');
+			$title = Title::newFromId($id, Title::GAID_FOR_UPDATE);
 		} else {
-			$title = F::build('Title', array($id), 'newFromId');
+			$title = Title::newFromId($id);
 		}
 
 		if( $title instanceof Title && $title->exists() ) {
 			wfProfileOut(__METHOD__);
-			return  F::build('WallMessage', array($title), 'newFromTitle');
+			return  WallMessage::newFromTitle($title);
 		}
 
 		if( $master == false ) {
@@ -64,7 +64,7 @@ class WallMessage {
 	static public function addMessageWall( $userPageTitle ) {
 		wfProfileIn(__METHOD__);
 		$botUser = User::newFromName( 'WikiaBot' );
-		$article = F::build( 'Article', array($userPageTitle) );
+		$article = new Article($userPageTitle);
 		$status = $article->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
 		$title = ( $status->isOK() ) ? $article->getTitle() : false ;
 		wfProfileOut(__METHOD__);
@@ -88,7 +88,7 @@ class WallMessage {
 		if($page instanceof Title ) {
 			$userPageTitle = $page;
 		} else {
-			$userPageTitle = F::build('Title', array($page, NS_USER_WALL), 'newFromText');
+			$userPageTitle = Title::newFromText($page, NS_USER_WALL);
 		}
 
 		// create wall page by bot if not exist
@@ -114,14 +114,14 @@ class WallMessage {
 				$metaData['related_topics'] = implode('|', $relatedTopics);
 			}
 
-			$acStatus = F::build( 'ArticleComment', array( $body, $user, $userPageTitle, false , $metaData ), 'doPost' );
+			$acStatus = ArticleComment::doPost( $body, $user, $userPageTitle, false , $metaData );
 		} else {
 			if( !$parent->canReply() ) {
 				wfProfileOut(__METHOD__);
 				return false;
 			}
 
-			$acStatus = F::build( 'ArticleComment', array( $body, $user, $userPageTitle, $parent->getId() , null ), 'doPost' );
+			$acStatus = ArticleComment::doPost( $body, $user, $userPageTitle, $parent->getId() , null );
 		}
 
 		if( $acStatus === false ) {
@@ -138,7 +138,7 @@ class WallMessage {
 		/**
 		 * @var $class WallMessage
 		 */
-		$class = F::build( 'WallMessage', array( $ac->getTitle(), $ac ) );
+		$class = new WallMessage( $ac->getTitle(), $ac );
 
 		if($parent === false) {//$db = DB_SLAVE
 			$class->storeRelatedTopicsInDB( $relatedTopics );
@@ -374,13 +374,13 @@ class WallMessage {
 				return false;
 			}
 			$app = F::App();
-			$wne = F::build('WallNotificationsEveryone', array());
+			$wne = new WallNotificationsEveryone();
 			$this->load(true);
 			if($notifyeveryone) {
 				$this->getArticleComment()->setMetaData('notify_everyone', time());
 				$this->doSaveMetadata($app->wg->User, wfMsgForContent('wall-message-update-highlight-summary') );
 				$rev = $this->getArticleComment()->mLastRevision;
-				$notif = F::build('WallNotificationEntity', array($rev, $this->cityId), 'createFromRev');
+				$notif = WallNotificationEntity::createFromRev($rev, $this->cityId);
 				$wne->addNotificationToQueue($notif);
 			} else {
 				$this->getArticleComment()->removeMetadata('notify_everyone');
@@ -471,7 +471,7 @@ class WallMessage {
 	 * @return Wall
 	 */
 	public function getWall() {
-		$wall = F::build('Wall', array( $this->getWallTitle() ), 'newFromTitle');
+		$wall = Wall::newFromTitle( $this->getWallTitle() );
 		return $wall;
 	}
 
@@ -480,7 +480,7 @@ class WallMessage {
 		if( $this->isMain() == false ) {
 			$wm = $this->getTopParentObj();
 		}
-		return F::build('WallThread', array( $wm->getId() ), 'newFromId');
+		return WallThread::newFromId( $wm->getId() );
 	}
 
 	public function getPageUrlPostFix() {
@@ -675,9 +675,9 @@ class WallMessage {
 			if($this->getUser()->getId() == 0) { // anynymous contributor
 				$url = Skin::makeSpecialUrl('Contributions').'/'.$this->getUser()->getName();
 			} else if(empty(F::app()->wg->EnableWallExt)) {
-				$url = F::build( 'Title', array( $name, NS_USER_TALK ), 'newFromText' )->getFullUrl();
+				$url = Title::newFromText( $name, NS_USER_TALK )->getFullUrl();
 			} else {
-				$url = F::build( 'Title', array( $name, NS_USER_WALL ), 'newFromText' )->getFullUrl();
+				$url = Title::newFromText( $name, NS_USER_WALL )->getFullUrl();
 			}
 			self::$wallURLCache[$name] = $url;
 		}
@@ -736,13 +736,13 @@ class WallMessage {
 			return true;
 		}
 
-		$notif = F::build('WallNotificationEntity', array($rev, $this->cityId), 'createFromRev');
+		$notif = WallNotificationEntity::createFromRev($rev, $this->cityId);
 
 		/*
 		 * experimental notfieverone
 		 */
 
-		$wne = F::build('WallNotificationsEveryone', array());
+		$wne = new WallNotificationsEveryone();
 		$wne->addNotificationToQueue($notif);
 	}
 
@@ -751,7 +751,7 @@ class WallMessage {
 			return $this->voteVoteHelper;
 		}
 		$app = F::App();
-		$this->voteVoteHelper = F::build('VoteHelper', array( $app->wg->User, $this->getId() ) );
+		$this->voteVoteHelper = new VoteHelper( $app->wg->User, $this->getId() );
 		return $this->voteVoteHelper;
 	}
 
@@ -842,7 +842,7 @@ class WallMessage {
 			$this->addAdminNotificationFromEntity($wnae);
 		}
 
-		$wh = F::build('WallHistory', array($this->cityId));
+		$wh = new WallHistory($this->cityId);
 		$wh->add( $history, $wnae, $user );
 	}
 
@@ -955,7 +955,7 @@ class WallMessage {
 				$this->addAdminNotificationFromEntity($wnae);
 			}
 
-			$wh = F::build('WallHistory', array($this->cityId));
+			$wh = new WallHistory($this->cityId);
 			$wh->add( WH_DELETE, $wnae, $user );
 
 			if( $this->isMain() === true ) {
@@ -1103,7 +1103,7 @@ class WallMessage {
 		$this->customActionNotifyRC($user, 'wall_restore', $reason);
 
 		$wne = $this->getAdminNotificationEntity($user, $reason);
-		$wh = F::build('WallHistory', array($this->cityId));
+		$wh = new WallHistory($this->cityId);
 		$wh->add( WH_RESTORE, $wne, $user );
 
 		$this->addWatch($user);
@@ -1176,7 +1176,7 @@ class WallMessage {
 			return false;
 		}
 
-		$msg = F::build('WallMessage', array($id), 'newFromId');
+		$msg = WallMessage::newFromId($id);
 
 		if(empty($msg)) {
 			return false;
@@ -1194,7 +1194,7 @@ class WallMessage {
 		/**
 		 * @var $quotedMsg WallMessage
 		 */
-		$quotedMsg = F::build('WallMessage', array($id, true), 'newFromId');
+		$quotedMsg = WallMessage::newFromId($id, true);
 
 		if(empty($quotedMsg)) {
 			return false;
@@ -1229,7 +1229,7 @@ class WallMessage {
 		if( ((int) $val) == 0 ) {
 			return false;
 		}
-		$user = F::build('User', array($val), 'newFromId');
+		$user = User::newFromId($val);
 
 		if( $user instanceof User && $user->getId() > 0 ){
 			return $user;

@@ -19,7 +19,7 @@ class SpellCheckerInfoSpecial extends SpecialPage {
 	}
 
 	function execute() {
-		$this->out->setPageTitle( $this->app->runFunction('wfMsg', 'spellchecker-info') );
+		$this->out->setPageTitle( wfMsg('spellchecker-info') );
 
 		// get information about enchant
 		$dict = new SpellCheckerDictionary();
@@ -33,7 +33,7 @@ class SpellCheckerInfoSpecial extends SpecialPage {
 		}
 
 		$this->out->addHtml( Xml::buildTable($rows, array('class' => 'wikitable'), array(
-			$this->app->runFunction('wfMsg', 'spellchecker-info-languages', count($languages)),
+			wfMsg('spellchecker-info-languages', count($languages)),
 		)) );
 
 		// list providers
@@ -50,8 +50,8 @@ class SpellCheckerInfoSpecial extends SpecialPage {
 		}
 
 		$this->out->addHtml( Xml::buildTable($rows, array('class' => 'wikitable'), array(
-			$this->app->runFunction('wfMsg', 'spellchecker-info-provider'),
-			$this->app->runFunction('wfMsg', 'spellchecker-info-dictionaries'),
+			wfMsg('spellchecker-info-provider'),
+			wfMsg('spellchecker-info-dictionaries'),
 		)) );
 
 		// spell checking demo
@@ -78,7 +78,7 @@ class SpellCheckerInfoSpecial extends SpecialPage {
 
 		$form = new HTMLForm($fields);
 		$form->setTitle($this->title);
-		$form->setSubmitText($this->app->runFunction('wfMsg', 'spellchecker-info-spellcheck-submit'));
+		$form->setSubmitText(wfMsg('spellchecker-info-spellcheck-submit'));
 		$form->loadData();
 		$form->displayForm('');
 
@@ -96,10 +96,10 @@ class SpellCheckerInfoSpecial extends SpecialPage {
 
 			// print out results
 			if ($data === true) {
-				$result = $this->app->runFunction('wfMsg', 'spellchecker-info-spellcheck-is-correct', $text);
+				$result =wfMsg('spellchecker-info-spellcheck-is-correct', $text);
 			}
 			else {
-				$result = $this->app->runFunction('wfMsg', 'spellchecker-info-spellcheck-suggestions', $text, implode(', ', $data));
+				$result = wfMsg('spellchecker-info-spellcheck-suggestions', $text, implode(', ', $data));
 			}
 
 			$this->out->addHtml("<p>{$result}</p>");

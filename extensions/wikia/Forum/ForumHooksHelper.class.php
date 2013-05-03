@@ -28,7 +28,7 @@ class ForumHooksHelper {
 	public function onWallHistoryThreadHeader( $title, $wallMessage, &$path, &$response, &$request ) {
 		if ( MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
 			$app = F::App();
-			$indexPage = F::build( 'Title', array( 'Forum', NS_SPECIAL ), 'newFromText' );
+			$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
 			$path = array_merge( $this->getPath( $wallMessage ), array( $path[1] ) );
 		}
 
@@ -42,7 +42,7 @@ class ForumHooksHelper {
 			$response->setVal( 'pageTitle', wfMsg( 'forum-board-history-title' ) );
 			$app->wg->Out->setPageTitle( wfMsg( 'forum-board-history-title' ) );
 
-			$indexPage = F::build( 'Title', array( 'Forum', NS_SPECIAL ), 'newFromText' );
+			$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
 			$path = array( $this->getIndexPath(), array( 'title' => wfMsg( 'forum-board-title', $title->getText() ), 'url' => $title->getFullUrl() ) );
 		}
 		return true;
@@ -71,7 +71,7 @@ class ForumHooksHelper {
 	protected function getPath($wallMessage) {
 		$path = array();
 		$app = F::App();
-		$indexPage = F::build( 'Title', array( 'Forum', NS_SPECIAL ), 'newFromText' );
+		$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
 		$path[] = $this->getIndexPath();
 		$path[] = array( 'title' => wfMsg( 'forum-board-title', $wallMessage->getArticleTitle()->getText() ), 'url' => $wallMessage->getArticleTitle()->getFullUrl() );
 
@@ -80,7 +80,7 @@ class ForumHooksHelper {
 
 	protected function getIndexPath() {
 		$app = F::App();
-		$indexPage = F::build( 'Title', array( 'Forum', NS_SPECIAL ), 'newFromText' );
+		$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
 		return array( 'title' => wfMsg( 'forum-forum-title', $app->wg->sitename ), 'url' => $indexPage->getFullUrl() );
 	}
 
@@ -180,7 +180,7 @@ class ForumHooksHelper {
 		$app = F::App();
 
 		if ( empty( $wfMsgOptsBase['articleTitleVal'] ) ) {
-			$wfMsgOptsBase['articleTitleTxt'] = $app->wf->Msg( 'forum-recentchanges-deleted-reply-title' );
+			$wfMsgOptsBase['articleTitleTxt'] = wfMsg( 'forum-recentchanges-deleted-reply-title' );
 		}
 
 		$wfMsgOpts = array(
@@ -199,7 +199,7 @@ class ForumHooksHelper {
 			$wfMsgOpts[7] = '';
 		}
 
-		$ret .= $app->wf->Msg( 'forum-contributions-line', $wfMsgOpts );
+		$ret .= wfMsg( 'forum-contributions-line', $wfMsgOpts );
 
 		return false;
 	}
@@ -217,7 +217,7 @@ class ForumHooksHelper {
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 			$parentPageId = $commentsIndex->getParentPageId();
 
-			$board = F::build( 'ForumBoard', array( $parentPageId ), 'newFromId' );
+			$board = ForumBoard::newFromId( $parentPageId );
 			$board->clearCacheBoardInfo();
 		}
 
@@ -230,7 +230,7 @@ class ForumHooksHelper {
 	public function onArticleInsertComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision) {
 		$title = $article->getTitle();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD ) {
-			$commentsIndex = F::build( 'CommentsIndex' );
+			$commentsIndex = (new CommentsIndex);
 			$commentsIndex->createTableCommentsIndex();
 		}
 
@@ -244,7 +244,7 @@ class ForumHooksHelper {
 	public function onAfterBuildNewMessageAndPost(&$mw) {
 		$title = $mw->getTitle();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$forum = F::build( 'Forum' );
+			$forum = (new Forum);
 			$forum->clearCacheTotalActiveThreads();
 			$forum->clearCacheTotalThreads();
 		}
@@ -301,7 +301,7 @@ class ForumHooksHelper {
 		#check namespace(s)
 		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
 			if ( !$this->canEditOldForum( $app->wg->User ) ) {
-				$action = array( 'class' => '', 'text' => $app->wf->Msg( 'viewsource' ), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
+				$action = array( 'class' => '', 'text' => wfMsg( 'viewsource' ), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
 				$response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
 				$response->setVal( 'action', $action );
 				return false;
@@ -366,11 +366,11 @@ class ForumHooksHelper {
 			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => $threadId ));
 
 			//cleare board info
-			$commentsIndex = F::build( 'CommentsIndex', array( $comment_id ), 'newFromId' );
+			$commentsIndex = CommentsIndex::newFromId( $comment_id );
 			if(empty($commentsIndex)) {
 				return true;
 			}
-			$board = F::build( 'ForumBoard', array( $commentsIndex->getParentPageId() ), 'newFromId' );
+			$board = ForumBoard::newFromId( $commentsIndex->getParentPageId() );
 			if(empty($board)) {
 				return true;
 			}
@@ -411,7 +411,7 @@ class ForumHooksHelper {
 		$parser->setHook( 'wikiaforum', array( __CLASS__, 'parseForumActivityTag' ) );
 
 		// Add styling for forum tag
-		$scssFile = F::build( 'AssetsManager', array(), 'getInstance' )->getSassCommonURL( 'extensions/wikia/Forum/css/ForumTag.scss' );
+		$scssFile = AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Forum/css/ForumTag.scss' );
 		F::app()->wg->Out->addStyle( $scssFile );
 		wfProfileOut( __METHOD__ );
 		return true;

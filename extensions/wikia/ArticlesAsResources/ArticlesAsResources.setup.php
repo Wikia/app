@@ -47,7 +47,7 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 // classes
-$app->registerClass('ArticlesAsResources', $dir . '/ArticlesAsResources.class.php');
+$wgAutoloadClasses['ArticlesAsResources'] =  $dir . '/ArticlesAsResources.class.php';
 
 // hooks
 $app->registerHook('ResourceLoaderBeforeRespond', 'ArticlesAsResources', 'onResourceLoaderBeforeRespond');

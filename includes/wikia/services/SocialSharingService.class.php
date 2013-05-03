@@ -45,7 +45,7 @@ class SocialSharingService{
 			$className = ucfirst( $n ) . 'Sharing';
 
 			if ( in_array( $className, $this->networks ) ) {
-				$ret[] = F::build( $className );
+				$ret[] = new $className;
 			}
 		}
 

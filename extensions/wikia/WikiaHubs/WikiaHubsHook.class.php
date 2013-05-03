@@ -45,11 +45,15 @@ class WikiaHubsPopularVideos {
 			$id = 'hubspopularvideos-' . self::$counter++;
 			
 			//render node
-			$html = F::build('Xml', array('div', array(
+			$html = Xml::element(
+				'div',
+				array(
 					'id' => $id,
 					'class' => 'hubspopularvideos',
-					'data-message' => $input,
-			), trim($returnString)), 'element');
+					'data-message' => $input
+				),
+				trim($returnString)
+			);
 			
 			$res = $html;
 		} else {

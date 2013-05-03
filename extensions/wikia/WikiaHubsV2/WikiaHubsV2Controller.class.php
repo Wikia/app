@@ -174,7 +174,7 @@ class WikiaHubsV2Controller extends WikiaController {
 	}
 
 	protected function initModel() {
-		$this->model = F::build('WikiaHubsV2Model');
+		$this->model = new WikiaHubsV2Model();
 		$this->model->setVertical($this->verticalId);
 	}
 

@@ -41,7 +41,7 @@ class WikisApiController extends WikiaApiController {
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$results = self::$model->getTop( $lang, $hub );
-		$batches = $this->wf->PaginateArray( $results, $limit, $batch );
+		$batches = wfPaginateArray( $results, $limit, $batch );
 
 		foreach ( $batches as $name => $value ) {
 			$this->response->setVal( $name, $value );
@@ -94,7 +94,7 @@ class WikisApiController extends WikiaApiController {
 		$results = self::$model->getByString($keyword, $lang, $hub, $includeDomain );
 
 		if( is_array( $results ) ) {
-			$batches = $this->wf->PaginateArray( $results, $limit, $batch );
+			$batches = wfPaginateArray( $results, $limit, $batch );
 
 			foreach ( $batches as $name => $value ) {
 				$this->response->setVal( $name, $value );
@@ -143,7 +143,7 @@ class WikisApiController extends WikiaApiController {
 		foreach ( $results as &$res ) {
 			//image data transformation
 			$imageUrl = null;
-			$img = $this->wf->findFile( $res['image'] );
+			$img = wffindFile( $res['image'] );
 
 			if ( !empty( $img ) ) {
 				$imageUrl = $img->getFullUrl();

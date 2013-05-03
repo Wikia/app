@@ -25,8 +25,8 @@ class PathFinderParser {
 	
 	function __construct(){
 		$this->app = F::app();
-		$this->logger = F::build( 'PathFinderLogger' );
-		$this->cache = F::build( 'PathFinderCache' );
+		$this->logger = (new PathFinderLogger);
+		$this->cache = (new PathFinderCache);
 		
 		$key = $this->cache->makeKey( 'PF', 'hosts' );
 		//$this->hosts = $this->cache->get( $key );

@@ -97,7 +97,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $opt['redirs'] = !empty($redirs) ? 1 : 0;
 	    $stParams = array_merge( array( 'search' => $term ), $opt );
 
-	    $title = F::build('SpecialPage', array( 'WikiaSearch' ), 'getTitleFor');
+	    $title = SpecialPage::getTitleFor( 'WikiaSearch' );
 
 	    $this->setVal( 'class',     str_replace( ' ', '-', strtolower( $label ) ) );
 	    $this->setVal( 'href',      $title->getLocalURL( $stParams ) );
@@ -161,7 +161,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$title = $article->getTitle();
 			$track = new Track();
 			if ( $this->getVal('fulltext', '0') === '0') {
-				$this->wf->RunHooks( 'SpecialSearchIsgomatch', array( $title, $query ) );
+				wfRunHooks( 'SpecialSearchIsgomatch', array( $title, $query ) );
 				$track->event( 'search_start_gomatch', array( 'sterm' => $query, 'rver' => 0 ) );
 				$this->response->redirect( $title->getFullUrl() );
 			} else {
@@ -170,7 +170,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		} else {
 			$title = Title::newFromText( $query );
 			if ( $title !== null ) {
-				$this->wf->RunHooks( 'SpecialSearchNogomatch', array( &$title ) );
+				wfRunHooks( 'SpecialSearchNogomatch', array( &$title ) );
 			}
 		}
 		return true;
@@ -260,14 +260,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function setPageTitle( Wikia\Search\Config $searchConfig ) {
 		if ( $searchConfig->getQuery()->hasTerms() ) {
-			$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query',
+			$this->wg->Out->setPageTitle( wfMsg( 'wikiasearch2-page-title-with-query',
 												array( ucwords( $searchConfig->getQuery()->getSanitizedQuery() ), $this->wg->Sitename) )  );
 		}
 		else {
 			if( $searchConfig->getIsInterWiki() ) {
-				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
+				$this->wg->Out->setPageTitle( wfMsg( 'wikiasearch2-page-title-no-query-interwiki' ) );
 			} else {
-				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki',
+				$this->wg->Out->setPageTitle( wfMsg( 'wikiasearch2-page-title-no-query-intrawiki',
 													array($this->wg->Sitename) )  );
 			}
 		}
@@ -281,7 +281,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @return boolean true
 	 */
 	protected function setNamespacesFromRequest( $searchConfig, User $user ) {
-		$searchEngine = F::build( 'SearchEngine' );
+		$searchEngine = (new SearchEngine);
 		$searchableNamespaces = $searchEngine->searchableNamespaces();
 		$namespaces = array();
 		foreach( $searchableNamespaces as $i => $name ) {
@@ -310,7 +310,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @return boolean true
 	 */
 	protected function handleSkinSettings() {
-		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
+		$this->wg->Out->addHTML( JSSnippets::addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
 		$this->wg->SuppressRail = true;
 		if ($this->isCorporateWiki() ) {
 			OasisController::addBodyClass('inter-wiki-search');
@@ -353,7 +353,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			throw new Exception("This should not be called outside of self-request context.");
 		}
 
-		$searchEngine = F::build( 'SearchEngine' );
+		$searchEngine = (new SearchEngine);
 
 		$searchableNamespaces = $searchEngine->searchableNamespaces();
 

@@ -11,7 +11,7 @@ $wgHooks['EditPage::showEditForm:initial'][] = 'CensusDataRetrieval::retrieveFro
 //$app->registerHook( 'ParserBeforeInternalParse', 'CensusArticleSave', 'replaceLinks' );
 $app->registerHook( 'EditPage::attemptSave', 'CensusArticleSave', 'replaceLinks' );
 //$app->registerHook( 'OutputPageParserOutput', 'CensusDataRetrieval', 'onOutputPageParserOutput' );
-$app->registerClass( 'CensusDataRetrieval', __DIR__ . '/CensusDataRetrieval.class.php' );
-$app->registerClass( 'CensusArticleSave', __DIR__ . '/CensusArticleSave.php' );
-$app->registerClass( 'CensusEnabledPagesUpdate', __DIR__ . '/CensusEnabledPagesUpdate.php' );
+$wgAutoloadClasses[ 'CensusDataRetrieval'] =  __DIR__ . '/CensusDataRetrieval.class.php' ;
+$wgAutoloadClasses[ 'CensusArticleSave'] =  __DIR__ . '/CensusArticleSave.php' ;
+$wgAutoloadClasses[ 'CensusEnabledPagesUpdate'] =  __DIR__ . '/CensusEnabledPagesUpdate.php' ;
 $app->registerExtensionMessageFile( 'CensusDataRetrieval', __DIR__ . '/CensusDataRetrieval.i18n.php' );

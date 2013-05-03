@@ -21,11 +21,11 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 // classes
-$app->registerClass('InWikiGameHelper', $dir . '/InWikiGameHelper.class.php');
-$app->registerClass('InWikiGameParserTag', $dir . '/InWikiGameParserTag.class.php');
-$app->registerClass('InWikiGameController', $dir . '/InWikiGameController.class.php');
-$app->registerClass('InWikiGameRailController', $dir . '/InWikiGameRailController.class.php');
-$app->registerClass('InWikiGameHooks', $dir . '/InWikiGameHooks.class.php');
+$wgAutoloadClasses['InWikiGameHelper'] =  $dir . '/InWikiGameHelper.class.php';
+$wgAutoloadClasses['InWikiGameParserTag'] =  $dir . '/InWikiGameParserTag.class.php';
+$wgAutoloadClasses['InWikiGameController'] =  $dir . '/InWikiGameController.class.php';
+$wgAutoloadClasses['InWikiGameRailController'] =  $dir . '/InWikiGameRailController.class.php';
+$wgAutoloadClasses['InWikiGameHooks'] =  $dir . '/InWikiGameHooks.class.php';
 
 // hooks
 $app->registerHook('GetRailModuleList', 'InWikiGameHelper', 'onGetRailModuleList');
@@ -34,4 +34,4 @@ $app->registerHook('WikiaAssetsPackages', 'InWikiGameHooks', 'onWikiaAssetsPacka
 
 // i18n mapping
 $app->registerExtensionMessageFile('InWikiGame', $dir . '/InWikiGame.i18n.php');
-F::build('JSMessages')->registerPackage('InWikiGame', array('inwikigame-*'));
+JSMessages::registerPackage('InWikiGame', array('inwikigame-*'));

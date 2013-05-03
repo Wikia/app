@@ -59,7 +59,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 			
 			F::setInstance("FounderProgressBarController", $mock);			
 			
-			$this->object = F::build( 'FounderProgressBarController' );
+			$this->object = (new FounderProgressBarController);
 			$this->task_id = 0;
         }
 

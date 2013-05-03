@@ -14,7 +14,7 @@ $destImageName = $options['destimagename'];
 $sourceWikiId = intval($options['wikiid']);
 
 //fb#45624
-$user = F::build('User', array('WikiaBot'), 'newFromName');
+$user = User::newFromName('WikiaBot');
 
 if( !($user instanceof User) ) {
 	echo 'ERROR: Could not get bot user object'."\n";

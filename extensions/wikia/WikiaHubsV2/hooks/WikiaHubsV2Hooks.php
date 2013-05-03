@@ -8,6 +8,7 @@ class WikiaHubsV2Hooks {
 	 * @return true because it's a hook
 	 */
 	public function onArticleFromTitle(&$title, &$article) {
+		global $wgOut;
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
@@ -25,7 +26,7 @@ class WikiaHubsV2Hooks {
 			$app->wg->SuppressWikiHeader = true;
 			$app->wg->SuppressRail = true;
 			$app->wg->SuppressFooter = true;
-			$article = F::build( 'WikiaHubsV2Article', array($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp) );
+			$article = new WikiaHubsV2Article($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp);
 		}
 
 		if( $model->isHubsPage($hubName) && $this->isOffShotPage($title) ) {
@@ -33,8 +34,9 @@ class WikiaHubsV2Hooks {
 			$canonicalHubName = $hubsModel->getCanonicalVerticalName($model->getHubPageId($dbKeyNameSplit[0]));
 			OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $canonicalHubName));
 
-			$app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV1/WikiaHubs.scss'));
-			$app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'));
+			$am = AssetsManager::getInstance();
+			$wgOut->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV1/WikiaHubs.scss'));
+			$wgOut->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'));
 		}
 
 		wfProfileOut(__METHOD__);

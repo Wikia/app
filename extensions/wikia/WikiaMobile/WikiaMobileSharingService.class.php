@@ -12,7 +12,7 @@ class WikiaMobileSharingService extends WikiaService{
 		/**
 		 * @var $socialSharingService SocialSharingService
 		 */
-		$socialSharingService = F::build( 'SocialSharingService' );
+		$socialSharingService = (new SocialSharingService);
 
 		$this->setVal( 'networks', $socialSharingService->getNetworks( array(
 			'facebook',

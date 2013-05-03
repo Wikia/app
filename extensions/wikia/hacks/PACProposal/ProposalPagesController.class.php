@@ -3,7 +3,7 @@
 class ProposalPagesController extends WikiaController {
 
 	public function get() {
-		$pages = F::build( 'ProposalPages' );
+		$pages = (new ProposalPages);
 		$userId = $this->request->getVal( 'userId' );
 
 		if( !empty( $userId ) ) {

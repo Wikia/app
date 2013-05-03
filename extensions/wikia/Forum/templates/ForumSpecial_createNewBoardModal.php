@@ -1,6 +1,6 @@
 <section id="EditBoardModal" class="EditBoardModal">
 	<h1>
-		<?= $wf->Msg('forum-admin-create-new-board-modal-heading') ?>
+		<?= wfMsg('forum-admin-create-new-board-modal-heading') ?>
 	</h1>
 
 <?
@@ -34,10 +34,10 @@
 	
 	<div class="neutral modalToolbar">
 		<button class="secondary cancel">
-			<?= $wf->Msg('cancel') ?>
+			<?= wfMsg('cancel') ?>
 		</button>
 		<button class="submit">
-			<?= $wf->Msg('forum-admin-create-new-board-label') ?>
+			<?= wfMsg('forum-admin-create-new-board-label') ?>
 		</button>
 	</div>
 </section>

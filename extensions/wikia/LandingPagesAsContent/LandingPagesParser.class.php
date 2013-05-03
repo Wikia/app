@@ -50,7 +50,7 @@ class LandingPagesParser {
 			$this->switches = $this->app->wg->memc->get( $key );
 
 			if ( empty( $this->switches ) ) {
-				$article = F::build( 'Article', array( $title ) );
+				$article = new Article( $title );
 				$this->switches = array();
 
 				foreach ( $this->magicWords as $wordID ) {
@@ -117,6 +117,6 @@ class LandingPagesParser {
 	}
 
 	private function generateCacheKey( $articleID ) {
-		return $this->app->wf->memcKey( 'LandingPagesAsContent', $articleID );
+		return wfmemcKey( 'LandingPagesAsContent', $articleID );
 	}
 }

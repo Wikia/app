@@ -42,7 +42,7 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 		array_push($snippetsDependencies, '/extensions/wikia/AchievementsII/css/achievements_sidebar.css');
 	}
 
-	$snippets = F::build('JSSnippets')->addToStack(
+	$snippets = JSSnippets::addToStack(
 		$snippetsDependencies,
 		null,
 		'ActivityFeedTag.initActivityTag',

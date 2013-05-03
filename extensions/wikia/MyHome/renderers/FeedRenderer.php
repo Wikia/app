@@ -561,7 +561,7 @@ class FeedRenderer {
 
 		// intro of new content
 		if (defined('NS_RELATED_VIDEOS') && isset( $row['ns'] ) && $row['ns'] == NS_RELATED_VIDEOS && isset( $row['relatedVideosDescription'] )) {
-			$RelatedVideosService = F::build('RelatedVideosService');
+			$RelatedVideosService = new RelatedVideosService();
 			$html .= $RelatedVideosService->formatRelatedVideosRow($row['relatedVideosDescription']);
 			$row['comment'] = false;
 		} else if (isset($row['intro'])) {
@@ -661,7 +661,7 @@ class FeedRenderer {
 			// localised title for popup
 			$popupTitle = $wgLang->getNsText($namespace) . ':' . $item['name'];
 
-			$titleObj = F::build('Title', array($item['name'], NS_FILE), 'newFromText');
+			$titleObj = Title::newFromText($item['name'], NS_FILE);
 			$fileName = $titleObj->getText(); // Pass display version of title to Lightbox
 
 			// wrapper for thumbnail

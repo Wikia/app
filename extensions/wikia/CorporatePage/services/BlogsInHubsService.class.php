@@ -17,7 +17,7 @@ class BlogsInHubsService extends WikiaService {
 	 * @return string memcache key name
 	 */
 	private function getHotNewsMemcKey($hubName) {
-		return $this->app->wf->MemcKey('hubs', 'hotnews', strtolower($hubName));
+		return wfMemcKey('hubs', 'hotnews', strtolower($hubName));
 	}
 
 	/**
@@ -27,7 +27,7 @@ class BlogsInHubsService extends WikiaService {
 	 */
 	private function purgeHubPage($hubName) {
 		$hubName = ucfirst($hubName);
-		$title = F::build('Title', array($hubName), 'newFromText');
+		$title = Title::newFromText($hubName);
 
 		if ($title instanceof Title) {
 			$title->purgeSquid();
@@ -43,7 +43,7 @@ class BlogsInHubsService extends WikiaService {
 	 */
 	private function parseHotNewsMessage($hubName) {
 		// example: glee|User_blog:AnimeTomboy1998/Glee:_The_Secret_Student_Files
-		$msg = $this->app->wf->msg($hubName . self::HOT_NEWS_MESSAGE_SUFFIX);
+		$msg = wfMsg($hubName . self::HOT_NEWS_MESSAGE_SUFFIX);
 		$parts = explode('|', trim($msg), 2);
 
 		if (count($parts) == 2) {
@@ -116,7 +116,7 @@ class BlogsInHubsService extends WikiaService {
 		}
 
 		// generate full URL to blog post
-		$blogPostTitle = F::build('GlobalTitle', array($pageId, $cityId), 'newFromId');
+		$blogPostTitle = GlobalTitle::newFromId($pageId, $cityId);
 
 		if (empty($blogPostTitle)) {
 			wfProfileOut(__METHOD__);
@@ -129,7 +129,7 @@ class BlogsInHubsService extends WikiaService {
 		$title = end(explode('/', $blogPostTitle->getText(), 2));
 
 		// get creator real name
-		$creator = F::build('User', array($revisionData['user']), 'newFromName');
+		$creator = User::newFromName($revisionData['user']);
 		if (!empty($creator)) {
 			$creatorName = $creator->getRealName();
 			if ($creatorName == '') {
@@ -141,7 +141,7 @@ class BlogsInHubsService extends WikiaService {
 		}
 
 		// get creator user page URL
-		$blogCreatorPageTitle = F::build('GlobalTitle', array($revisionData['user'], NS_USER, $cityId), 'newFromText');
+		$blogCreatorPageTitle = GlobalTitle::newFromText($revisionData['user'], NS_USER, $cityId);
 
 		// get 220x140 image
 		$imageData = ApiService::foreignCall($dbname, array(

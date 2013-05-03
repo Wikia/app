@@ -1,6 +1,6 @@
 <header class="MarketingToolboxHeader">
 	<div class="MarketingToolboxTitle">
-		<h1><a href="<?=$dashboardHref;?>"><?= $wf->msg('marketing-toolbox-header-dashboard'); ?></a></h1>
+		<h1><a href="<?=$dashboardHref;?>"><?= wfMsg('marketing-toolbox-header-dashboard'); ?></a></h1>
 		<? if (isset($moduleName)): ?>
 			<h2><?=$moduleName;?></h2>
 		<? endif ?>
@@ -15,11 +15,11 @@
 
 	<aside class="right">
 		<? if (isset($lastEditTime)): ?>
-		<p><strong><?= $wf->msg('marketing-toolbox-header-right-last-saved'); ?></strong> <?=$wg->lang->timeanddate($lastEditTime, true);?></p>
+		<p><strong><?= wfMsg('marketing-toolbox-header-right-last-saved'); ?></strong> <?=$wg->lang->timeanddate($lastEditTime, true);?></p>
 		<? endif ?>
 
 		<? if (isset($lastEditor)): ?>
-		<p><strong><?= $wf->msg('marketing-toolbox-header-right-by'); ?></strong> <?=$lastEditor?></p>
+		<p><strong><?= wfMsg('marketing-toolbox-header-right-by'); ?></strong> <?=$lastEditor?></p>
 		<? endif ?>
 	</aside>
 </header>

@@ -21,7 +21,7 @@ class LiteSemanticsHooks extends WikiaObject{
 
 	public function onInternalParseBeforeLinks( &$parser, &$text ){
 		if ( $this->canRun() ) {
-			$semanticsDocument = F::build( 'LiteSemanticsParser' )->parse( $text, $parser->getTitle() );
+			$semanticsDocument = (new LiteSemanticsParser)->parse( $text, $parser->getTitle() );
 	
 			//give a chance to extensions to alter the data to be stored
 			if ( F::app()->runHook( 'LiteSemanticsBeforeProcessDocument', array( &$semanticsDocument ) ) !== false ) {

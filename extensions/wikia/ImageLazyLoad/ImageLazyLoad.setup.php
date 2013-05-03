@@ -6,7 +6,7 @@
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
-$app->registerClass( 'ImageLazyLoad', $dir . 'ImageLazyLoad.class.php' );
+$wgAutoloadClasses[ 'ImageLazyLoad'] =  $dir . 'ImageLazyLoad.class.php' ;
 
 /* Hooks */
 $app->registerHook( 'BeforePageDisplay', 'ImageLazyLoad', 'onBeforePageDisplay' );

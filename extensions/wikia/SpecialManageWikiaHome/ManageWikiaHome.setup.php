@@ -23,14 +23,15 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 //classes
-$app->registerController('ManageWikiaHomeController', $dir.'ManageWikiaHomeController.class.php');
+$wgAutoloadClasses['ManageWikiaHomeController'] = $dir.'ManageWikiaHomeController.class.php';
 
 //special page
-$app->registerSpecialPage('ManageWikiaHome', 'ManageWikiaHomeController', 'wikia');
+$wgSpecialPages['ManageWikiaHome'] = 'ManageWikiaHomeController';
+$wgSpecialPageGroups['ManageWikiaHome'] = 'wikia';
 
 //message files
 $app->registerExtensionMessageFile('ManageWikiaHome', $dir.'ManageWikiaHome.i18n.php');
-F::build('JSMessages')->registerPackage('ManageWikiaHome', array('manage-wikia-home-*'));
+JSMessages::registerPackage('ManageWikiaHome', array('manage-wikia-home-*'));
 
 //add wikia staff tool rights to staff users
 $wgGroupPermissions['*']['managewikiahome'] = false;

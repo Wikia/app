@@ -6,8 +6,8 @@
 
 $app = F::app();
 $dir = dirname( __FILE__ );
-$app->registerClass( 'StructuredContentController', $dir . '/StructuredContentController.class.php' );
-$app->registerClass( 'StructuredContentHelper',	$dir . '/StructuredContentHelper.class.php' );
+$wgAutoloadClasses[ 'StructuredContentController'] =  $dir . '/StructuredContentController.class.php' ;
+$wgAutoloadClasses[ 'StructuredContentHelper'] = 	$dir . '/StructuredContentHelper.class.php' ;
 
 
 /**

@@ -14,7 +14,7 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$app->registerClass('WikiaInternalHooks', $dir . 'WikiaInternalHooks.class.php');
+$wgAutoloadClasses['WikiaInternalHooks'] =  $dir . 'WikiaInternalHooks.class.php';
 
 /**
  * hooks
@@ -27,7 +27,3 @@ $app->registerHook('AfterCheckInitialQueries', 'WikiaInternalHooks', 'onAfterChe
 $app->registerExtensionMessageFile('WikiaInternal', $dir . 'WikiaInternal.i18n.php');
 
 
-/**
- * Factory config
- */
-F::addClassConstructor( 'WikiaInternalHooks', array( 'app' => $app ) );

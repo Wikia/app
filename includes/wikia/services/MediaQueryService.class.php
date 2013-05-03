@@ -72,7 +72,7 @@ class MediaQueryService extends WikiaService {
 			'page'=> $page
 		);
 
-		$dbr = $this->wf->GetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 
 		$dbquerylikeLower = $dbr->buildLike( $dbr->anyString(), mb_strtolower( $query ), $dbr->anyString() );
 		$dbquerylike = $dbr->buildLike( $dbr->anyString(), $query, $dbr->anyString() );
@@ -106,7 +106,7 @@ class MediaQueryService extends WikiaService {
 		$memKey = $this->getMemKeyTotalImages( $name );
 		$totalImages = $this->wg->Memc->get( $memKey );
 		if ( !is_numeric($totalImages) ) {
-			$db = $this->wf->GetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE );
 
 			$sqlWhere = array(
 				"img_media_type in ('".MEDIATYPE_BITMAP."','".MEDIATYPE_DRAWING."')",
@@ -140,11 +140,11 @@ class MediaQueryService extends WikiaService {
 			$name = md5( strtolower($name) );
 		}
 
-		return $this->wf->MemcKey( 'media', 'total_images', $name );
+		return wfMemcKey( 'media', 'total_images', $name );
 	}
 
 	protected function getArticleMediaMemcKey(Title $title) {
-		return $this->wf->MemcKey( 'MQSArticleMedia', '1.4', $title->getDBkey() );
+		return wfMemcKey( 'MQSArticleMedia', '1.4', $title->getDBkey() );
 	}
 
 	public function unsetCache( $title ) {
@@ -180,7 +180,7 @@ class MediaQueryService extends WikiaService {
 		if( !isset($this->mediaCache[ $media->getDBKey() ] ) ) {
 			$file = wfFindFile( $media );
 			if( !empty( $file ) && $file->canRender() ) {
-				$articleService = F::build('ArticleService', array( $media ));
+				$articleService = new ArticleService( $media );
 
 				$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 				if( $isVideo ) {
@@ -216,7 +216,7 @@ class MediaQueryService extends WikiaService {
 		if ( empty( $titles ) ) {
 			$articleId = $title->getArticleId();
 			if ( $articleId ) {
-					$db = $this->wf->GetDB( DB_SLAVE );
+					$db = wfGetDB( DB_SLAVE );
 					$result = $db->select(
 							array('imagelinks'),
 							array('il_to'),
@@ -228,7 +228,7 @@ class MediaQueryService extends WikiaService {
 					$titles = array();
 
 					while ($row = $db->fetchObject( $result ) ) {
-						$media = F::build('Title', array($row->il_to, NS_FILE), 'newFromText');
+						$media = Title::newFromText($row->il_to, NS_FILE);
 
 						$mediaData = $this->getMediaDataFromCache( $media );
 						if( $mediaData !== false ) {
@@ -337,7 +337,7 @@ class MediaQueryService extends WikiaService {
 	public function getVideoList( $sort = 'recent', $filter = 'all', $limit = 0, $page = 1 ) {
 		wfProfileIn( __METHOD__ );
 
-		$db = $this->wf->GetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE );
 
 		$sqlWhere = array( 'removed' => 0 );
 		$sqlOptions = array();
@@ -396,7 +396,7 @@ class MediaQueryService extends WikiaService {
 		$memKey = $this->getMemKeyTotalVideos();
 		$totalVideos = $this->wg->Memc->get( $memKey );
 		if ( !is_numeric($totalVideos) ) {
-			$db = $this->wf->GetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE );
 
 			if ( !VideoInfoHelper::videoInfoExists() ) {
 				$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
@@ -419,7 +419,7 @@ SQL;
 				$totalVideos = 0;
 				while ( $row = $db->fetchObject($result) ) {
 					$title = Title::newFromText( $row->name, NS_FILE );
-					$file = $this->wf->FindFile( $title );
+					$file = wfFindFile( $title );
 					if ( $file instanceof File && $file->exists() && WikiaFileHelper::isTitleVideo($title) ) {
 						$totalVideos++;
 					}
@@ -445,7 +445,7 @@ SQL;
 
 	//get memcache key for total videos
 	protected function getMemKeyTotalVideos() {
-		return $this->wf->MemcKey( 'videos', 'total_videos', 'v4' );
+		return wfMemcKey( 'videos', 'total_videos', 'v4' );
 	}
 
 	public function clearCacheTotalVideos() {
@@ -462,7 +462,7 @@ SQL;
 		$memKey = $this->getMemKeyTotalPremiumVideos();
 		$totalVideos = $this->wg->Memc->get( $memKey );
 		if ( !is_numeric($totalVideos) ) {
-			$db = $this->wf->GetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE );
 
 			$row = $db->selectRow(
 				array( 'video_info' ),
@@ -488,7 +488,7 @@ SQL;
 	 * Get memcache key for total premium videos
 	 */
 	protected function getMemKeyTotalPremiumVideos() {
-		return $this->wf->MemcKey( 'videos', 'total_premium_videos', 'v3' );
+		return wfMemcKey( 'videos', 'total_premium_videos', 'v3' );
 	}
 
 	public function clearCacheTotalPremiumVideos() {

@@ -13,7 +13,7 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$app->registerClass('WikiaSeasonsController', $dir . 'WikiaSeasonsController.class.php');
+$wgAutoloadClasses['WikiaSeasonsController'] =  $dir . 'WikiaSeasonsController.class.php';
 
 /**
  * hooks

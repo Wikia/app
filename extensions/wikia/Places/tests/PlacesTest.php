@@ -19,7 +19,7 @@ class PlacesTest extends WikiaBaseTest {
 			'lon' => '16.922124',
 		);
 
-		$this->model = F::build('PlaceModel', array($this->attribs), 'newFromAttributes');
+		$this->model = PlaceModel::newFromAttributes($this->attribs);
 
 		// use main page as an article for this place
 		$mainPage = Title::newMainPage();

@@ -15,7 +15,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct('ManageWikiaHome', 'managewikiahome', true);
-		$this->helper = F::build('WikiaHomePageHelper');
+		$this->helper = new WikiaHomePageHelper();
 	}
 
 	public function isRestricted() {
@@ -96,7 +96,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->response->addAsset('/extensions/wikia/SpecialManageWikiaHome/css/ManageWikiaHome.scss');
 		$this->response->addAsset('/extensions/wikia/SpecialManageWikiaHome/js/ManageWikiaHome.js');
 
-		F::build('JSMessages')->enqueuePackage('ManageWikiaHome', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('ManageWikiaHome', JSMessages::EXTERNAL);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -135,13 +135,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$options->limit = self::WHST_WIKIS_PER_PAGE;
 		$options->offset = (($this->currentPage - 1) * self::WHST_WIKIS_PER_PAGE);
 
-		$specialPage = F::build('Title', array('ManageWikiaHome', NS_SPECIAL), 'newFromText');
+		$specialPage = Title::newFromText('ManageWikiaHome', NS_SPECIAL);
 		//todo: getLocalUrl(array('vl' => $visualizationLang, 'page' => '%s')) doesn't work here because % sign is being escaped
 		$url = $specialPage->getLocalUrl() . '?vl=' . $visualizationLang . '&page=%s';
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
-			/** @var $paginator Paginator */
-			$paginator = F::build('Paginator', array(array_fill(0, $count, ''), self::WHST_WIKIS_PER_PAGE), 'newFromArray');
+			$paginator = Paginator::newFromArray(array_fill(0, $count, ''), self::WHST_WIKIS_PER_PAGE);
 			$paginator->setActivePage($this->currentPage - 1);
 			$this->setVal('pagination', $paginator->getBarHTML($url));
 		}
@@ -197,7 +196,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			Wikia::log(__METHOD__, false, "A problem with saving WikiFactory variable(s) occured. Status array: " . print_r($statusArr, true));
 			$this->setVal('errorMsg', wfMsg('manage-wikia-home-error-wikifactory-failure'));
 		} else {
-			$visualization = F::build('CityVisualization'); /** @var $visualization CityVisualization */
+			$visualization = new CityVisualization(); /** @var $visualization CityVisualization */
 			//todo: put purging those caches to CityVisualization class and fire here only one its method here
 			//purge verticals cache
 			foreach($visualization->getVerticalsIds() as $verticalId) {

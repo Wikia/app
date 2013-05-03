@@ -137,7 +137,7 @@ include_once( "$IP/lib/ApiGate/config.php" );
 //Wikia API Hooks
 $app->registerHook( 'ArticleUpdateCategoryCounts', 'ArticlesApiController', 'onArticleUpdateCategoryCounts' );
 
-$app->registerClass( 'ApiHooks', "{$IP}/includes/wikia/api/ApiHooks.class.php" );
+$wgAutoloadClasses[ 'ApiHooks'] =  "{$IP}/includes/wikia/api/ApiHooks.class.php" ;
 
 $app->registerHook( 'WikiFactoryChanged', 'ApiHooks', 'onWikiFactoryChanged' );
 $app->registerHook( 'MessageCacheReplace', 'ApiHooks', 'onMessageCacheReplace' );
@@ -150,7 +150,7 @@ $app->registerHook( 'ArticleCommentListPurgeComplete', 'ApiHooks', 'ArticleComme
 
 
 //Wikia API base controller, all the others extend this class
-$app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
+$wgAutoloadClasses[ 'WikiaApiController'] =  "{$IP}/includes/wikia/api/WikiaApiController.class.php" ;
 
 //Wikia API controllers
 $app->registerApiController( 'DiscoverApiController', "{$IP}/includes/wikia/api/DiscoverApiController.class.php" );
@@ -161,11 +161,11 @@ $app->registerApiController( 'WikiaHubsApiController', "{$IP}/includes/wikia/api
 $app->registerApiController( 'RelatedPagesApiController', "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php" );
 
 //Wikia Api exceptions classes
-$app->registerClass( 'BadRequestApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
-$app->registerClass( 'OutOfRangeApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
-$app->registerClass( 'MissingParameterApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
-$app->registerClass( 'InvalidParameterApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
-$app->registerClass( 'NotFoundApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
+$wgAutoloadClasses[ 'BadRequestApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
+$wgAutoloadClasses[ 'OutOfRangeApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
+$wgAutoloadClasses[ 'MissingParameterApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
+$wgAutoloadClasses[ 'InvalidParameterApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
+$wgAutoloadClasses[ 'NotFoundApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 
 /**
  * Wikia API end
@@ -177,8 +177,8 @@ $app->registerClass( 'NotFoundApiException', "{$IP}/includes/wikia/api/ApiExcept
  * this need to be autoloaded to avoid PHPUnit replacing the classes definition with mocks
  * and brake the world; Monobook is already autoloaded in /includes/DefaultSettings.php
  */
-$app->registerClass( 'SkinOasis', "{$IP}/skins/Oasis.php" );
-$app->registerClass( 'SkinWikiaMobile', "{$IP}/skins/WikiaMobile.php" );
+$wgAutoloadClasses[ 'SkinOasis'] =  "{$IP}/skins/Oasis.php" ;
+$wgAutoloadClasses[ 'SkinWikiaMobile'] =  "{$IP}/skins/WikiaMobile.php" ;
 
 $wgAutoloadClasses['SpamBlacklist'] = $IP . '/extensions/SpamBlacklist/SpamBlacklist_body.php';
 $wgAutoloadClasses['BaseBlacklist'] = $IP . '/extensions/SpamBlacklist/BaseBlacklist.php';
@@ -1162,7 +1162,7 @@ $wgEnableAdEngineExt = true;
 /**
  * trusted proxy service registry
  */
-$app->registerClass( 'TrustedProxyService', "$IP/includes/wikia/services/TrustedProxyService.class.php" );
+$wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
 $app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'onIsTrustedProxy' );
 
 /**

@@ -1,16 +1,16 @@
 <div class="module-explore">
 	<div class="module-box grid-4 alpha">
 		<div class="grid-3 alpha">
-			<input type="button" class="wmu-show" value="<?= $wf->Message('marketing-toolbox-hub-module-explore-add-photo')->text() ?>" />
+			<input type="button" class="wmu-show" value="<?= wfMessage('marketing-toolbox-hub-module-explore-add-photo')->text() ?>" />
 			<span class="filename-placeholder alternative">
 				<? if (!empty($fields['fileName']['value'])): ?>
 					<?= $fields['fileName']['value']; ?>
 				<? else: ?>
-					<?= $wf->Message('marketing-toolbox-edithub-file-name')->text() ?>
+					<?= wfMessage('marketing-toolbox-edithub-file-name')->text() ?>
 				<? endif ?>
 			</span>
 			<p class="alternative">
-				<?= $wf->Message('marketing-toolbox-hub-module-explore-image-tip')->parse() ?>
+				<?= wfMessage('marketing-toolbox-hub-module-explore-image-tip')->parse() ?>
 			</p>
 			<?=$app->renderView(
 				'MarketingToolbox',

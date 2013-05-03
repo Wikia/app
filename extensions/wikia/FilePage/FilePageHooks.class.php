@@ -39,7 +39,7 @@ class FilePageHooks extends WikiaObject{
 		wfProfileIn(__METHOD__);
 		// load assets when File Page redesign is enabled and on the File Page
 		if( !empty($app->wg->EnableVideoPageRedesign) && $app->wg->Title->getNamespace() == NS_FILE ) {
-			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+			$assetsManager = AssetsManager::getInstance();
 			$scssPackage = 'file_page_css';
 			$jsPackage = 'file_page_js';
 
@@ -70,7 +70,7 @@ class FilePageHooks extends WikiaObject{
 		$title = $app->wg->Title;
 
 		if ( ( $title instanceof Title ) && ( $title->getNamespace() == NS_FILE ) && $title->exists() ) {
-			$file = $app->wf->FindFile( $title );
+			$file = wfFindFile( $title );
 			if ( ( $file instanceof File ) && UploadBase::userCanReUpload( $wgUser, $file->getName() ) ) {
 				if ( WikiaFileHelper::isTitleVideo( $title ) ) {
 					$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
@@ -98,7 +98,7 @@ class FilePageHooks extends WikiaObject{
 		}
 
 		if ( WikiaFileHelper::isTitleVideo( $title ) ) {
-			$file = $app->wf->FindFile( $title );
+			$file = wfFindFile( $title );
 			if( !$file->isLocal() ) {
 				// Prevent move tab being shown.
 				unset( $tabs['actions']['move'] );

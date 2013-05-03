@@ -61,15 +61,15 @@ class SEOTweaksHooksHelper extends WikiaModel {
 
 		if ( !empty( $file ) && !empty( $title ) ) {
 
-			if ( F::build( 'WikiaFileHelper' )->isFileTypeVideo( $file ) ) {
+			if ( (new WikiaFileHelper)->isFileTypeVideo( $file ) ) {
 
-				$newTitle = $this->wf->Msg('seotweaks-video') . ' - ' . $title->getBaseText();
+				$newTitle = wfMsg('seotweaks-video') . ' - ' . $title->getBaseText();
 			} else {
 
 				// It's not Video so lets check if it is Image
 				if ( $file instanceof LocalFile && $file->getHandler() instanceof BitmapHandler ) {
 
-					$newTitle = $this->wf->Msg('seotweaks-image') . ' - ' . $title->getBaseText();
+					$newTitle = wfMsg('seotweaks-image') . ' - ' . $title->getBaseText();
 				}
 			}
 
@@ -113,7 +113,7 @@ class SEOTweaksHooksHelper extends WikiaModel {
 			&& ( isset( $_SERVER['HTTP_REFERER'] ) ) 
 			&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) ) 
 		    ) {
-			$dbr = $this->wf->GetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE );
 			$result = $dbr->query( sprintf( 'SELECT page_title FROM page WHERE page_title %s LIMIT 1', $dbr->buildLike( $title->getDBKey(), $dbr->anyString() ) ), __METHOD__ );
 			if ( $row = $dbr->fetchObject( $result ) ) {
 				$title = Title::newFromText( $row->page_title );

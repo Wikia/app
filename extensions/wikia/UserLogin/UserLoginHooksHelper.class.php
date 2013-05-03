@@ -4,7 +4,7 @@ class UserLoginHooksHelper {
 
 	// send reconfirmation mail
 	public static function onUserSendReConfirmationMail( &$user, &$result ) {
-		$userLoginHelper = F::build( 'UserLoginHelper' );
+		$userLoginHelper = (new UserLoginHelper);
 		$emailTextTemplate = $userLoginHelper->getReconfirmationEmailTempalte( $user );
 		$result = $user->sendConfirmationMail( false, 'ReConfirmationMail', 'usersignup-reconfirmation-email', true, $emailTextTemplate );
 
@@ -14,16 +14,16 @@ class UserLoginHooksHelper {
 	// get error message when abort new account
 	public static function onAbortNewAccountErrorMessage( &$abortError, &$errParam ) {
 		$app = F::app();
-		if ( $abortError == $app->wf->Msg('phalanx-user-block-new-account') ) {
-			$abortError = $app->wf->Msg( 'userlogin-error-user-not-allowed' );
+		if ( $abortError == wfMsg('phalanx-user-block-new-account') ) {
+			$abortError = wfMsg( 'userlogin-error-user-not-allowed' );
 			$errParam = 'username';
-		} else if ( $abortError == $app->wf->Msg('userexists') ) {
-			$abortError = $app->wf->Msg( 'userlogin-error-userexists' );
+		} else if ( $abortError == wfMsg('userexists') ) {
+			$abortError = wfMsg( 'userlogin-error-userexists' );
 			$errParam = 'username';
-		} else if ( $abortError == $app->wf->Msg('captcha-createaccount-fail') ) {
-			$abortError = $app->wf->Msg( 'userlogin-error-captcha-createaccount-fail' );
+		} else if ( $abortError == wfMsg('captcha-createaccount-fail') ) {
+			$abortError = wfMsg( 'userlogin-error-captcha-createaccount-fail' );
 			$errParam = 'wpCaptchaWord';
-		} else if ( $abortError == $app->wf->Msg('phalanx-help-type-user-email') ) {
+		} else if ( $abortError == wfMsg('phalanx-help-type-user-email') ) {
 			$errParam = 'email';
 		}
 
@@ -32,7 +32,7 @@ class UserLoginHooksHelper {
 
 	// save temp user and map temp user to user when mail password
 	public static function onMailPasswordTempUser( &$u, &$tempUser ) {
-		$tempUser = F::build( 'TempUser', array( $u->getName() ), 'getTempUserFromName' );
+		$tempUser = TempUser::getTempUserFromName( $u->getName() );
 		if ( $tempUser ) {
 			$tempUser->saveSettingsTempUserToUser( $u );
 			$u = $tempUser->mapTempUserToUser();
@@ -45,7 +45,7 @@ class UserLoginHooksHelper {
 	public static function onConfirmEmailShowRequestForm( &$pageObj, &$show ) {
 		$show = false;
 		if( Sanitizer::validateEmail( $pageObj->getUser()->getEmail() ) ) {
-			$userLoginHelper = F::build( 'UserLoginHelper' );
+			$userLoginHelper = (new UserLoginHelper);
 			$userLoginHelper->showRequestFormConfirmEmail( $pageObj );
 		} else {
 			$pageObj->getOutput()->addWikiMsg( 'usersignup-user-pref-confirmemail_noemail' );
@@ -100,7 +100,7 @@ class UserLoginHooksHelper {
 	// check if email is empty
 	public static function onSavePreferences( &$formData, &$error ) {
 		if ( array_key_exists( 'emailaddress', $formData ) && empty( $formData['emailaddress'] ) ) {
-			$error = F::app()->wf->msg( 'usersignup-error-empty-email' );
+			$error = wfMsg( 'usersignup-error-empty-email' );
 			return false;
 		}
 
@@ -116,7 +116,7 @@ class UserLoginHooksHelper {
 			$user->setOption( 'new_email', $newEmail );
 			$user->invalidateEmail();
 			if ( $app->wg->EmailAuthentication ) {
-				$userLoginHelper = F::build( 'UserLoginHelper' );
+				$userLoginHelper = (new UserLoginHelper);
 				$result = $userLoginHelper->sendReconfirmationEmail( $user, $newEmail );
 				if ( $result->isGood() ) {
 					$info = 'eauth';

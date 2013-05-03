@@ -57,7 +57,7 @@ class ImageTweaksHooks extends WikiaObject {
 				array(
 					'href' => $url,
 					'class' => "internal sprite details magnify",
-					'title' => $this->wf->Msg( 'thumbnail-more' )
+					'title' => wfMsg( 'thumbnail-more' )
 				),
 				''
 			);
@@ -156,7 +156,7 @@ class ImageTweaksHooks extends WikiaObject {
 
 			if ( is_array( $linkAttribs ) ) {
 				if ( !empty( $file ) ) {
-					$linkAttribs['href'] = $this->wf->ReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
+					$linkAttribs['href'] = wfReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
 					$fullImageUrl = $linkAttribs['href'];
 				}
 
@@ -170,7 +170,7 @@ class ImageTweaksHooks extends WikiaObject {
 					$linkAttribs['title'] = $title->getFullText();
 					$link = $title->getLinkUrl();
 				} elseif ( !empty( $options['file-link'] ) && empty( $options['desc-link'] ) ) {
-					$linkAttribs['href'] = $this->wf->ReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
+					$linkAttribs['href'] = wfReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
 					$linkAttribs['class'] = empty($linkAttribs['class']) ? ' lightbox' : $linkAttribs['class'] . ' lightbox';
 				}
 
@@ -307,7 +307,7 @@ class ImageTweaksHooks extends WikiaObject {
 					'span',
 					array( 'class' => 'videoInfo' ),
 					"{$titleText} (" . $file->getHandler()->getFormattedDuration() .
-						", " . $this->wf->MsgForContent( 'wikiamobile-video-views-counter', MediaQueryService::getTotalVideoViewsByTitle( $title ) ) .
+						", " . wfMsgForContent( 'wikiamobile-video-views-counter', MediaQueryService::getTotalVideoViewsByTitle( $title ) ) .
 						')'
 				);
 			}
@@ -349,7 +349,7 @@ class ImageTweaksHooks extends WikiaObject {
 
 			$html .= Xml::openElement( 'div', array( 'class' => 'picture-attribution' ) ) .
 				$avatar .
-				$this->wf->MsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $attributeTo ) .
+				wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $attributeTo ) .
 				Xml::closeElement( 'div' );
 
 			wfProfileOut( __METHOD__ . '::PictureAttribution' );

@@ -24,9 +24,9 @@ $app = F::app();
 $dir = dirname( __FILE__ ) . '/';
 
 // Classes
-$app->registerClass( 'CategorySelect', $dir . 'CategorySelect.class.php' );
-$app->registerClass( 'CategorySelectController', $dir . 'CategorySelectController.class.php' );
-$app->registerClass( 'CategorySelectHooksHelper', $dir . 'CategorySelectHooksHelper.class.php' );
+$wgAutoloadClasses[ 'CategorySelect'] =  $dir . 'CategorySelect.class.php' ;
+$wgAutoloadClasses[ 'CategorySelectController'] =  $dir . 'CategorySelectController.class.php' ;
+$wgAutoloadClasses[ 'CategorySelectHooksHelper'] =  $dir . 'CategorySelectHooksHelper.class.php' ;
 
 // Hooks
 $app->registerHook( 'GetPreferences', 'CategorySelectHooksHelper', 'onGetPreferences' );
@@ -35,7 +35,7 @@ $app->registerHook( 'MediaWikiPerformAction', 'CategorySelectHooksHelper', 'onMe
 // Messages
 $app->registerExtensionMessageFile( 'CategorySelect', $dir . 'CategorySelect.i18n.php' );
 
-F::build( 'JSMessages' )->registerPackage( 'CategorySelect', array(
+JSMessages::registerPackage( 'CategorySelect', array(
 	'categoryselect-button-save',
 	'categoryselect-category-add',
 	'categoryselect-category-edit',

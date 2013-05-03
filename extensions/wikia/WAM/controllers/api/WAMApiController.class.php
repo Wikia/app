@@ -63,7 +63,7 @@ class WAMApiController extends WikiaApiController {
 		$options = $this->getWAMParameters();
 
 		$wamIndex = WikiaDataAccess::cacheWithLock(
-			$app->wf->SharedMemcKey(
+			wfSharedMemcKey(
 				'wam_index_table',
 				self::MEMCACHE_VER,
 				$app->wg->ContLang->getCode(),

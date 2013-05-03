@@ -11,16 +11,15 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 // classes
-$app->registerClass('WikiaStyleGuideSpecialController', $dir . 'WikiaStyleGuideSpecialController.class.php');
+$wgAutoloadClasses['WikiaStyleGuideSpecialController'] =  $dir . 'WikiaStyleGuideSpecialController.class.php';
 
 // special pages
-$app->registerSpecialPage('WikiaStyleGuide', 'WikiaStyleGuideSpecialController');
+$wgSpecialPages['WikiaStyleGuide'] = 'WikiaStyleGuideSpecialController';
 
 // JS Messages
-F::build('JSMessages')->registerPackage('VideoPage', array(
+JSMessages::registerPackage('VideoPage', array(
   'videohandler-remove-video-modal-*',
 ));
 

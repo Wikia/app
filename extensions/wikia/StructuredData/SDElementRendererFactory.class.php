@@ -5,7 +5,11 @@
 class SDElementRendererFactory {
 	private $config = null;
 
-	public function __construct(Array $config) {
+	public function __construct(Array $config = null) {
+		global $wgStructuredDataConfig;
+		if( is_null($config) ) {
+			$config = $wgStructuredDataConfig;
+		}
 		$this->config = $config;
 	}
 

@@ -1,7 +1,7 @@
 <?php
 	$seocounter = 0;
 	/* @var $homePageHelper WikiaHomePageHelper */
-	$homePageHelper = F::build('WikiaHomePageHelper');
+	$homePageHelper = new WikiaHomePageHelper();
 ?>
 <div id="WikiPreviewInterstitialMask" class="WikiPreviewInterstitialMask hidden">
 	<section class="WikiPreviewInterstitial" class="hidden">

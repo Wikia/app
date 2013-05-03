@@ -68,7 +68,7 @@ class AssetsManagerController extends WikiaController {
 			}
 
 			$this->response->setVal( 'templates', $templatesOutput );
-			wfProfileOut( $profileId );
+			wfProfileIn( $profileId );
 		}
 
 		// handle SASS files
@@ -95,7 +95,7 @@ class AssetsManagerController extends WikiaController {
 			}
 
 			$this->response->setVal('styles', $data);
-			wfProfileOut( $profileId );
+			wfProfileIn( $profileId );
 		}
 
 		// handle assets manager JS packages
@@ -170,7 +170,7 @@ class AssetsManagerController extends WikiaController {
 	 * @param array $options @see getMultiTypePackage
 	 */
 	public function purgeMultiTypePackageCache( Array $options ) {
-		SquidUpdate::purge( array ( F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( $options ) ) );
+		SquidUpdate::purge( array ( AssetsManager::getInstance()->getMultiTypePackageURL( $options ) ) );
 	}
 
 	/**

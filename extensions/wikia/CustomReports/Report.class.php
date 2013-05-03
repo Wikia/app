@@ -54,7 +54,7 @@ class Report extends WikiaModel {
 		
 		// get data
 		$curdate = date('Ymd');
-		$memKey = $this->wf->SharedMemcKey('customreport', $this->code, $curdate, $this->days);
+		$memKey = wfSharedMemcKey('customreport', $this->code, $curdate, $this->days);
 		$this->data = $this->wg->Memc->get($memKey);
 		if ( !is_array($this->data) ) {
 			$this->data = $this->{'get_'.$this->code}();
@@ -78,7 +78,7 @@ class Report extends WikiaModel {
 	protected function get_new_wikis() {
 		wfProfileIn( __METHOD__ );
 		
-		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$sql =<<<SQL
 			select date_format(city_created, '%Y-%m-%d') day, if(city_public=1,'active wikis','deleted wikis') type, count(*) cnt 
@@ -102,7 +102,7 @@ SQL;
 	protected function get_new_users() {
 		wfProfileIn( __METHOD__ );
 		
-		$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
+		$db = wfGetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
 
 		// get total users and confirmed users
 		$result = $db->select(
@@ -166,7 +166,7 @@ SQL;
 	protected function get_founderemails() {
 		wfProfileIn( __METHOD__ );
 		
-		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalDatawareDB);
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalDatawareDB);
 
 		$sql =<<<SQL
 			select date_format(created, '%Y-%m-%d') day, if(category is null,'unknown',category) type, 
@@ -195,7 +195,7 @@ SQL;
 	protected function get_allemails() {
 		wfProfileIn( __METHOD__ );
 		
-		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalDatawareDB);
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalDatawareDB);
 
 		$sql =<<<SQL
 			select date_format(created, '%Y-%m-%d') day, if(category is null,'unknown',category) type, 
@@ -223,9 +223,9 @@ SQL;
 	
 	protected function convertDataToXML($code, $data=array()) {
 		// header
-		$xml = "<graph caption='".$this->wf->Msg('report-name-'.$code).
-				"' xAxisName='".$this->wf->Msg('report-xaxis').
-				"' yAxisName='".$this->wf->Msg('report-yaxis-'.$code).
+		$xml = "<graph caption='".wfMsg('report-name-'.$code).
+				"' xAxisName='".wfMsg('report-xaxis').
+				"' yAxisName='".wfMsg('report-yaxis-'.$code).
 				"' showValues='0' decimalPrecision='0' formatNumberScale='0' showShadow='0' ".
 				$this->graph_set_legend().
 				$this->graph_set_rotate_name().

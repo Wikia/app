@@ -470,7 +470,7 @@ class ArticlesApiController extends WikiaApiController {
 						'revision' => [
 							'id' => $revId,
 							'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
-							'timestamp' => $this->wf->Timestamp( TS_UNIX, $rev->getTimestamp() )
+							'timestamp' => wfTimestamp( TS_UNIX, $rev->getTimestamp() )
 						]
 					];
 
@@ -598,7 +598,7 @@ class ArticlesApiController extends WikiaApiController {
 
 				if ( $n === false ) {
 					if ( $caller !== null ) {
-						F::app()->wf->profileOut( $caller );
+						wfProfileOut( $caller );
 					}
 
 					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );

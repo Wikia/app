@@ -17,7 +17,7 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['GlobalNotification'] = $dir . 'GlobalNotification.i18n.php';
 
 // TODO: make this use JSMessages later instead of JSVar hook
-//F::build('JSMessages')->registerPackage('GlobalNotification', array('globalnotification-*'));
+//JSMessages::registerPackage('GlobalNotification', array('globalnotification-*'));
 
 $wgHooks["MakeGlobalVariablesScript"][] = "wfGlobalNotificationJSVars";
 

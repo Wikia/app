@@ -29,7 +29,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialPromote/css/SpecialPromote.scss'));
 
-		$this->helper = F::build('SpecialPromoteHelper');
+		$this->helper = new SpecialPromoteHelper();
 	}
 
 	public function index() {
@@ -45,7 +45,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 
 		$this->response->addAsset('extensions/wikia/SpecialPromote/js/SpecialPromote.js');
 
-		F::build('JSMessages')->enqueuePackage('SpecialPromote', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('SpecialPromote', JSMessages::EXTERNAL);
 
 		$this->helper->loadWikiInfo();
 		$this->minHeaderLength = $this->helper->getMinHeaderLength();
@@ -91,7 +91,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 			return false;
 		}
 		wfProfileIn(__METHOD__);
-		$upload = F::build('UploadVisualizationImageFromFile');
+		$upload = new UploadVisualizationImageFromFile();
 
 		$status = $this->helper->uploadImage($upload);
 
@@ -128,7 +128,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	public function saveData() {
 		if( !$this->checkAccess() ) {
 			$this->success = false;
-			$this->error = $this->wf->Msg('promote-wrong-rights');
+			$this->error = wfMsg('promote-wrong-rights');
 			return;
 		}
 

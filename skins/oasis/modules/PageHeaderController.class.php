@@ -295,7 +295,7 @@ class PageHeaderController extends WikiaController {
 
 				if($wgTitle->isSpecial('Videos')) {
 					$this->isSpecialVideos = true;
-					$mediaService = F::build( 'MediaQueryService' );
+					$mediaService = (new MediaQueryService);
 					$this->tallyMsg = wfMessage('specialvideos-wiki-videos-tally',$mediaService->getTotalVideos())->parse();
 				}
 

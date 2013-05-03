@@ -41,15 +41,15 @@ class WallHelper {
 
 		if( empty($namespace) ) {
 			$namespace2 = $this->getVal('namespace');
-			$this->title = F::build( 'Title', array( $user->getName(), $namespace2 ), 'newFromText' );
+			$this->title = Title::newFromText( $user->getName(), $namespace2 );
 
 			return $this->title;
 		}
 
 		if( empty($subpage) ) {
-			return F::build( 'Title', array( $user->getName(), $namespace ), 'newFromText' );
+			return Title::newFromText( $user->getName(), $namespace );
 		} else {
-			return F::build( 'Title', array( $user->getName().'/'.$subpage, $namespace ), 'newFromText' );
+			return Title::newFromText( $user->getName().'/'.$subpage, $namespace );
 		}
 	}
 
@@ -75,14 +75,14 @@ class WallHelper {
 			/**
 			 * @var $w Wall
 			 */
-			$w = F::build( 'Wall', array( $title ), 'newFromTitle' );
+			$w = Wall::newFromTitle( $title );
 			$user = $w->getUser();
 		} else if( $ns == NS_USER_WALL_MESSAGE) {
 			/**
 			 * @var $wm WallMessage
 			 */
 			 
-			$wm = F::build( 'WallMessage', array( $title ), 'newFromTitle' );
+			$wm = WallMessage::newFromTitle( $title );
             $user = $wm->getWallOwner();
 		}
 
@@ -126,7 +126,7 @@ class WallHelper {
 		$item['wall-comment'] = $res['rc_params']['intro'];
 		$item['article-id'] = $title->getArticleID();
 
-		$wmessage = F::build('WallMessage', array($title) );
+		$wmessage = new WallMessage($title);
 		$parent = $wmessage->getTopParentObj();
 
 		if( !in_array(true, array($wmessage->isAdminDelete(), $wmessage->isRemove())) ) {
@@ -225,7 +225,7 @@ class WallHelper {
 		$commentsCount = 0;
 
 		if( !is_null($parentId) ) {
-			$parent = F::build('WallMessage', array($parentId), 'newFromId');
+			$parent = WallMessage::newFromId($parentId);
 
 			if( !($parent instanceof WallMessage) ) {
 			//this should never happen
@@ -238,7 +238,7 @@ class WallHelper {
 				);
 			}
 
-			$wallThread = F::build('WallThread', array($parentId), 'newFromId');
+			$wallThread = WallThread::newFromId($parentId);
 			$topMessage = $wallThread->getThreadMainMsg();
 			$comments = $wallThread->getRepliesWallMessages();
 
@@ -314,7 +314,7 @@ class WallHelper {
 
 			if( $user ) {
 				$items[$i]['real-name'] = $user->getName();
-				$userWallTitle = F::build( 'Title', array( $user->getName(), NS_USER_WALL ), 'newFromText' );
+				$userWallTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
 				$items[$i]['user-profile-url'] = $userWallTitle->getFullUrl();
 			} else {
 				$items[$i]['real-name'] = '';
@@ -381,7 +381,7 @@ class WallHelper {
 			$name = wfMsg('oasis-anon-user');
 			$name{0} = strtolower($name{0});
 		}
-		return $app->wf->msg('wall-default-title', array('$1' => $name));
+		return wfMsg('wall-default-title', array('$1' => $name));
 
 	}
 
@@ -407,7 +407,7 @@ class WallHelper {
 
 		// use memcached on top of Parser
 		$textHash = md5($text);
-		$key = $app->wf->memcKey(__METHOD__,$textHash);
+		$key = wfmemcKey(__METHOD__,$textHash);
 		$cachedText = $app->wg->memc->get($key);
 		if ( !empty($cachedText) ) {
 			return $cachedText;
@@ -451,7 +451,7 @@ class WallHelper {
 		if( !empty($row->old_text) && !empty($row->old_flags) ) {
 			$flags = explode(',', $row->old_flags);
 			if( in_array('gzip', $flags) ) {
-				return gzinflate(F::build('ExternalStore', array($row->old_text), 'fetchFromUrl'));
+				return gzinflate(ExternalStore::fetchFromUrl($row->old_text));
 			}
 		}
 
@@ -489,14 +489,14 @@ class WallHelper {
 	public function sendNotification($revOldId, $rcType = RC_NEW) {
 		$app = F::App();
 		$rev = Revision::newFromId($revOldId);
-		$notif = F::build('WallNotificationEntity', array($rev, $app->wg->CityId), 'createFromRev');
+		$notif = WallNotificationEntity::createFromRev($rev, $app->wg->CityId);
 
-		$wh = F::build('WallHistory', array($app->wg->CityId));
+		$wh = new WallHistory($app->wg->CityId);
 		
 		$wh->add($rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User);
 
 		if( $rcType == RC_NEW ) {
-			$wn = F::build('WallNotifications', array());
+			$wn = new WallNotifications();
 			$wn->addNotification($notif);
 		}
 	}
@@ -568,7 +568,7 @@ class WallHelper {
 		wfProfileIn(__METHOD__);
 
 		if( is_object($row) ) {
-			$objTitle = F::build('Title', array($row->page_title, $row->page_namespace), 'newFromText');
+			$objTitle = Title::newFromText($row->page_title, $row->page_namespace);
 			$userText = !empty($row->rev_user_text) ? $row->rev_user_text : '';
 
 			$isNew = (!empty($row->page_is_new) && $row->page_is_new === '1') ? true : false;

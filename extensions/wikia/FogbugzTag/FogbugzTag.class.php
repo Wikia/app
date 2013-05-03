@@ -43,7 +43,7 @@ class FogbugzTag {
 		);
 		//$dataIdx = RTEData::put('data', $data);
 		//$output = RTEData::addIdxToTag($dataIdx, $output);
-		$output .= F::build('JSSnippets')->addToStack(array('/extensions/wikia/FogbugzTag/js/FogbugzTag.js'));
+		$output .= JSSnippets::addToStack(array('/extensions/wikia/FogbugzTag/js/FogbugzTag.js'));
 		return $output;
 	}
 

@@ -55,17 +55,14 @@ class ThumbnailVideo extends ThumbnailImage {
 	 */
 	function renderAsThumbnailImage($options) {
 
-		$thumb = F::build(
-			'ThumbnailImage',
-			array(
-				"file" => $this->getFile(),
-				"url" => $this->getUrl(),
-				"width" => $this->getWidth(),
-				"height" => $this->getHeight(),
-				"path" => $this->getPath(),
-				"page" => $this->getPage()
-			)
-		); /** @var $thumb ThumbnailImage  */
+		$thumb = new ThumbnailImage(
+				$this->getFile(),
+				$this->getUrl(),
+				$this->getWidth(),
+				$this->getHeight(),
+				$this->getPath(),
+				$this->getPage()
+		);
 
 		// make sure to replace 'image' css class whith 'video' css class
 		// in order to make thumbnail be handled correctly by RTE

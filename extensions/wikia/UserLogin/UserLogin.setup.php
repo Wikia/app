@@ -13,17 +13,17 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 //classes
-$app->registerClass('FacebookButtonController', $dir . 'FacebookButtonController.class.php');
-$app->registerClass('FacebookSignupController', $dir . 'FacebookSignupController.class.php');
-$app->registerClass('UserLoginSpecialController', $dir . 'UserLoginSpecialController.class.php');
-$app->registerClass('UserSignupSpecialController', $dir . 'UserSignupSpecialController.class.php');
-$app->registerClass('WikiaConfirmEmailSpecialController', $dir . 'WikiaConfirmEmailSpecialController.class.php');
-$app->registerClass('UserLoginController', $dir . 'UserLoginController.class.php');
-$app->registerClass('UserLoginHelper', $dir . 'UserLoginHelper.class.php');
-$app->registerClass('TempUser', $dir . 'TempUser.class.php');
-$app->registerClass('UserLoginForm', $dir . 'UserLoginForm.class.php');
-$app->registerClass('UserLoginFacebookForm', $dir . 'UserLoginFacebookForm.class.php');
-$app->registerClass('UserLoginHooksHelper', $dir . 'UserLoginHooksHelper.class.php');
+$wgAutoloadClasses['FacebookButtonController'] =  $dir . 'FacebookButtonController.class.php';
+$wgAutoloadClasses['FacebookSignupController'] =  $dir . 'FacebookSignupController.class.php';
+$wgAutoloadClasses['UserLoginSpecialController'] =  $dir . 'UserLoginSpecialController.class.php';
+$wgAutoloadClasses['UserSignupSpecialController'] =  $dir . 'UserSignupSpecialController.class.php';
+$wgAutoloadClasses['WikiaConfirmEmailSpecialController'] =  $dir . 'WikiaConfirmEmailSpecialController.class.php';
+$wgAutoloadClasses['UserLoginController'] =  $dir . 'UserLoginController.class.php';
+$wgAutoloadClasses['UserLoginHelper'] =  $dir . 'UserLoginHelper.class.php';
+$wgAutoloadClasses['TempUser'] =  $dir . 'TempUser.class.php';
+$wgAutoloadClasses['UserLoginForm'] =  $dir . 'UserLoginForm.class.php';
+$wgAutoloadClasses['UserLoginFacebookForm'] =  $dir . 'UserLoginFacebookForm.class.php';
+$wgAutoloadClasses['UserLoginHooksHelper'] =  $dir . 'UserLoginHooksHelper.class.php';
 
 // hooks
 $app->registerHook('MakeGlobalVariablesScript', 'UserLoginHelper', 'onMakeGlobalVariablesScript');
@@ -44,10 +44,10 @@ $wgExtensionMessagesFiles['UserSignupAliases'] = $dir . 'UserSignup.alias.php';
 $wgExtensionMessagesFiles['WikiaConfirmEmail'] = $dir . 'WikiaConfirmEmail.i18n.php';
 
 // special pages
-$app->registerSpecialPage('Userlogin', 'UserLoginSpecialController');
-$app->registerSpecialPage('UserSignup', 'UserSignupSpecialController');
-$app->registerSpecialPage('WikiaConfirmEmail', 'WikiaConfirmEmailSpecialController');
-$app->registerSpecialPage('Signup', 'Signup');
+$wgSpecialPages['Userlogin'] = 'UserLoginSpecialController';
+$wgSpecialPages['UserSignup'] = 'UserSignupSpecialController';
+$wgSpecialPages['WikiaConfirmEmail'] = 'WikiaConfirmEmailSpecialController';
+$wgSpecialPages['Signup'] = 'Signup';
 
 // redirects from Signup to UserLogin or UserSignup
 class Signup extends SpecialRedirectToSpecial {

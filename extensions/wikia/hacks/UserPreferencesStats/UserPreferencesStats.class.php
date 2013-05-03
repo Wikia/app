@@ -24,7 +24,7 @@ class UserPreferencesStats {
 		wfProfileIn( __METHOD__ );
 
 		if ( !$this->dbWikicities ) {
-			$this->dbWikicities = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
+			$this->dbWikicities = wfGetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
 		}
 		$oRes = $this->dbWikicities->select(
 			'user_properties',
@@ -55,10 +55,10 @@ class UserPreferencesStats {
 		wfProfileIn( __METHOD__ );
 
 		$aData = array();
-		$sEmptyProp = $this->app->wf->msg('userpreferencesstats-empty-property');
+		$sEmptyProp = wfMsg('userpreferencesstats-empty-property');
 
 		if (!$this->dbWikicities) {
-			$this->dbWikicities = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
+			$this->dbWikicities = wfGetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
 		}
 		foreach ( $props as $prop ) {
 			$oRes = $this->dbWikicities->select(

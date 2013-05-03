@@ -486,7 +486,7 @@ class SpecialOversight extends SpecialPage {
 				"</ul>\n" .
 				$list );
 			if ( $text === false ) {
-				$wgOut->addWikiText(wfmsg('hiderevision-error-missing'));
+				$wgOut->addWikiText(wfMsg('hiderevision-error-missing'));
 			} else {
 				$wgOut->addHtml(
 					"<div>" .

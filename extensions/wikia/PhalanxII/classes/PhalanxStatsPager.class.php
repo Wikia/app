@@ -48,7 +48,7 @@ class PhalanxStatsPager extends PhalanxPager {
 		$url = ( isset( $oWiki ) ) ? $oWiki->city_url : "";
 
 		$html  = Html::openElement( 'li' );
-		$html .= $this->app->wf->MsgExt( 'phalanx-stats-row', array('parseinline'), $type, $username, $url, $timestamp );
+		$html .= wfMsgExt( 'phalanx-stats-row', array('parseinline'), $type, $username, $url, $timestamp );
 		$html .= Html::closeElement( 'li' );
 
 		return $html;

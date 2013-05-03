@@ -53,7 +53,7 @@ class PhalanxTitleBlock extends WikiaObject {
 	public function checkTitle( $title, $displayBlock = true ) {
 		wfProfileIn( __METHOD__ );
 
-		$phalanxModel = F::build('PhalanxContentModel', array( $title ) );
+		$phalanxModel = new PhalanxContentModel( $title );
 		$ret = $phalanxModel->match_title();
 		
 		if ( $ret === false && $displayBlock ) {
@@ -67,7 +67,7 @@ class PhalanxTitleBlock extends WikiaObject {
 	public function pageTitleFilter( $title, &$error_msg ) {
 		wfProfileIn( __METHOD__ );
 
-		$phalanxModel = F::build('PhalanxContentModel', array( $title ) );
+		$phalanxModel = new PhalanxContentModel( $title );
 		$ret = $phalanxModel->match_title();
 		
 		if ( $ret === false ) {

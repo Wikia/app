@@ -22,13 +22,13 @@ $dir = dirname( __FILE__ );
 
 $app = F::app();
 
-$app->registerClass( 'SpecialSpamWikisController', "{$dir}/SpecialSpamWikisController.class.php" );
-$app->registerClass( 'SpecialSpamWikisData', "{$dir}/SpecialSpamWikisData.class.php" );
-$app->registerClass( 'SpecialSpamWikisSpecialPageController', "{$dir}/SpecialSpamWikisSpecialPageController.class.php" );
+$wgAutoloadClasses[ 'SpecialSpamWikisController'] =  "{$dir}/SpecialSpamWikisController.class.php" ;
+$wgAutoloadClasses[ 'SpecialSpamWikisData'] =  "{$dir}/SpecialSpamWikisData.class.php" ;
+$wgAutoloadClasses[ 'SpecialSpamWikisSpecialPageController'] =  "{$dir}/SpecialSpamWikisSpecialPageController.class.php" ;
 
 $wgExtensionMessagesFiles['SpecialSpamWikis'] = "{$dir}/SpecialSpamWikis.i18n.php";
 
-$app->registerSpecialPage( 'SpamWikis', 'SpecialSpamWikisSpecialPageController' );
+$wgSpecialPages[ 'SpamWikis' ] =  'SpecialSpamWikisSpecialPageController';
 
 $wgGroupPermissions['*']['specialspamwikis'] = false;
 $wgGroupPermissions['util']['specialspamwikis'] = true;

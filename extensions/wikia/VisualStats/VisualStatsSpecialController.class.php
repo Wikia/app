@@ -6,7 +6,7 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
     }
 
     public function init() {
-        $this->businessLogic = F::build( 'VisualStats', array( 'currentTitle' => $this->app->wg->Title ) );
+        $this->businessLogic = new VisualStats( $this->app->wg->Title );
 
     }
 
@@ -63,7 +63,7 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
                 break;
         }
 
-        $this->wg->Out->setPageTitle( $this->wf->msg('visualStats-specialpage-title'));
+        $this->wg->Out->setPageTitle( wfMsg('visualStats-specialpage-title'));
 
         $this->setVal( 'user', $username);
         $this->setVal( 'param', $parameter);
@@ -72,20 +72,20 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
         /*
          * Messages
          */
-        $this->setVal( 'commitActivity', $this->wf->msg('visualStats-commitActivity'));
-        $this->setVal( 'histogram', $this->wf->msg('visualStats-histogram'));
-        $this->setVal( 'punchcard', $this->wf->msg('visualStats-punchcard'));
-        $this->setVal( 'codeFrequency', $this->wf->msg('visualStats-codeFrequency'));
+        $this->setVal( 'commitActivity', wfMsg('visualStats-commitActivity'));
+        $this->setVal( 'histogram', wfMsg('visualStats-histogram'));
+        $this->setVal( 'punchcard', wfMsg('visualStats-punchcard'));
+        $this->setVal( 'codeFrequency', wfMsg('visualStats-codeFrequency'));
 
-        $this->setVal( 'wikiButtonLabel', $this->wf->msg('visualStats-wikiEdits'));
-        $this->setVal( 'edits', $this->wf->msg('visualStats-edits-plural'));
-        $this->setVal( 'edit', $this->wf->msg('visualStats-edits-singular'));
-        $this->setVal( 'shown', $this->wf->msg('visualStats-shown-edits'));
-        $this->setVal( 'added', $this->wf->msg('visualStats-added'));
-        $this->setVal( 'deleted', $this->wf->msg('visualStats-deleted'));
-        $this->setVal( 'addition', $this->wf->msg('visualStats-addition'));
-        $this->setVal( 'totalChars', $this->wf->msg('visualStats-total-chars'));
-        $this->setVal( 'userButtonLabel', $this->wf->msg('visualStats-userEdits', $username));
+        $this->setVal( 'wikiButtonLabel', wfMsg('visualStats-wikiEdits'));
+        $this->setVal( 'edits', wfMsg('visualStats-edits-plural'));
+        $this->setVal( 'edit', wfMsg('visualStats-edits-singular'));
+        $this->setVal( 'shown', wfMsg('visualStats-shown-edits'));
+        $this->setVal( 'added', wfMsg('visualStats-added'));
+        $this->setVal( 'deleted', wfMsg('visualStats-deleted'));
+        $this->setVal( 'addition', wfMsg('visualStats-addition'));
+        $this->setVal( 'totalChars', wfMsg('visualStats-total-chars'));
+        $this->setVal( 'userButtonLabel', wfMsg('visualStats-userEdits', $username));
 
     }
 }

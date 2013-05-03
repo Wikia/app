@@ -8,6 +8,7 @@
  * @todo add logging of actions
  */
 
+
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Image Review',
 	'desc' => 'Internal tool to help review images post-upload and remove Terms of Use violations',
@@ -25,14 +26,16 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 // classes
-$app->registerClass('ImageReviewTask', $dir . 'ImageReviewTask.php');
+$wgAutoloadClasses['ImageReviewTask'] =  $dir . 'ImageReviewTask.php';
 if ( function_exists( 'extAddBatchTask' ) ) {
 	extAddBatchTask( $dir . "../ImageReview/ImageReviewTask.php", "imagereview", "ImageReviewTask" );
 }
-$app->registerClass('ImageReviewSpecialController', $dir . 'ImageReviewSpecialController.class.php');
-$app->registerClass('ImageReviewHelperBase', $dir . 'ImageReviewHelperBase.class.php');
-$app->registerClass('ImageReviewHelper', $dir . 'ImageReviewHelper.class.php');
-$app->registerSpecialPage('ImageReview', 'ImageReviewSpecialController');
+
+$wgAutoloadClasses['ImageReviewSpecialController'] =  $dir . 'ImageReviewSpecialController.class.php';
+$wgAutoloadClasses['ImageReviewHelperBase'] =  $dir . 'ImageReviewHelperBase.class.php';
+$wgAutoloadClasses['ImageReviewHelper'] =  $dir . 'ImageReviewHelper.class.php';
+
+$wgSpecialPages['ImageReview'] = 'ImageReviewSpecialController';
 
 // hooks
 $wgHooks['WikiFactoryPublicStatusChange'][] = 'ImageReviewHelper::onWikiFactoryPublicStatusChange' ;

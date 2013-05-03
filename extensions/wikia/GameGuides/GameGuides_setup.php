@@ -10,15 +10,9 @@ $app = F::app();
 /**
  * classes
  */
-$app->registerClass(
-	array(
-		'GameGuidesController',
-		'GameGuidesWrongAPIVersionException'
-	),
-	"{$dir}/GameGuidesController.class.php"
-);
-
-$app->registerClass( 'GameGuidesModel', "{$dir}/GameGuidesModel.class.php" );
+$wgAutoloadClassesp['GameGuidesController'] = "{$dir}/GameGuidesController.class.php";
+$wgAutoloadClassesp['GameGuidesWrongAPIVersionException'] = "{$dir}/GameGuidesController.class.php";
+$wgAutoloadClasses[ 'GameGuidesModel'] =  "{$dir}/GameGuidesModel.class.php" ;
 
 /**
  * message files
@@ -27,16 +21,16 @@ $app->registerExtensionMessageFile('GameGuides', "{$dir}/GameGuides.i18n.php");
 
 
 //Special Page to preview page in GameGuide style
-$app->registerClass( 'GameGuidesSpecialPreviewController', "{$dir}/GameGuidesSpecialPreviewController.class.php" );
-$app->registerSpecialPage( 'GameGuidesPreview', 'GameGuidesSpecialPreviewController' );
+$wgAutoloadClasses[ 'GameGuidesSpecialPreviewController'] =  "{$dir}/GameGuidesSpecialPreviewController.class.php" ;
+$wgSpecialPages[ 'GameGuidesSpecialPreviewController' ] =  'GameGuidesPreview';
 
 $wgGroupPermissions['*']['gameguidespreview'] = false;
 $wgGroupPermissions['staff']['gameguidespreview'] = true;
 $wgGroupPermissions['sysop']['gameguidespreview'] = true;
 
 //Special Page for Content Managment Tool
-$app->registerClass( 'GameGuidesSpecialContentController', "{$dir}/GameGuidesSpecialContentController.class.php" );
-$app->registerSpecialPage( 'GameGuidesContent', 'GameGuidesSpecialContentController' );
+$wgAutoloadClasses[ 'GameGuidesSpecialContentController'] =  "{$dir}/GameGuidesSpecialContentController.class.php" ;
+$wgSpecialPages[ 'GameGuidesContent' ] =  'GameGuidesSpecialContentController';
 
 $wgGroupPermissions['*']['gameguidescontent'] = false;
 $wgGroupPermissions['staff']['gameguidescontent'] = true;
@@ -48,7 +42,7 @@ if ( $app->wg->GameGuidesContentForAdmins ) {
 $wgGroupPermissions['*']['gameguidescontent-switchforadmins'] = false;
 $wgGroupPermissions['staff']['gameguidescontent-switchforadmins'] = true;
 
-F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', [
+JSMessages::registerPackage( 'GameGuidesContentMsg', [
 	'wikiagameguides-content-category',
 	'wikiagameguides-content-tag',
 	'wikiagameguides-content-name',
@@ -66,7 +60,7 @@ $app->registerHook( 'WikiFeatures::onGetFeatureNormal', 'GameGuidesSpecialConten
 $app->registerHook( 'WikiFeatures::onToggleFeature', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
 
 //minimal package of messages in Game Gudes
-F::build( 'JSMessages' )->registerPackage( 'GameGuides', array(
+JSMessages::registerPackage( 'GameGuides', array(
 	'wikiamobile-hide-section',
 	'wikiamobile-image-not-loaded',
 	'wikiamobile-video-not-friendly',

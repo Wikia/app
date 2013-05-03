@@ -27,7 +27,7 @@ class SDElementPropertyValue extends SDRenderableObject {
 	 */
 	public function getValue() {
 		if ( is_object( $this->value ) && ( !isset($this->value->object) ) && ( !empty($this->value->id) ) ) {
-			$structuredData = F::build( 'StructuredData' );
+			$structuredData = (new StructuredData);
 			try {
 				$SDElement = $structuredData->getSDElementById($this->value->id);
 				$this->value->object = $SDElement;

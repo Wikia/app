@@ -48,10 +48,12 @@ class WikiaHookDispatcher {
 		}
 
 		if ( $this->hookHandlers[$method]['rebuild'] ) {
-			$handler = F::build( $this->hookHandlers[$method]['class'] );
+			$class = $this->hookHandlers[$method]['class'];
+			$handler = new $class;
 		} else {
 			if ( !is_object( $this->hookHandlers[$method]['object'] ) ) {
-				$this->hookHandlers[$method]['object'] = F::build( $this->hookHandlers[$method]['class'] );
+				$class = $this->hookHandlers[$method]['class'];
+				$this->hookHandlers[$method]['object'] = new $class;
 			}
 			$handler = $this->hookHandlers[$method]['object'];
 		}

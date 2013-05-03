@@ -65,8 +65,8 @@ class WikiaQuizIndexArticle extends Article {
 		}
 
 		// purge QuizPlay article
-		$quizPlayTitle = F::build('Title', array($this->getTitle()->getText(), NS_WIKIA_PLAYQUIZ), 'newFromText');
-		$quizPlayArticle = F::build('Article', array($quizPlayTitle));
+		$quizPlayTitle = Title::newFromText($this->getTitle()->getText(), NS_WIKIA_PLAYQUIZ);
+		$quizPlayArticle = new Article($quizPlayTitle);
 		$quizPlayArticle->doPurge();
 	}
 }

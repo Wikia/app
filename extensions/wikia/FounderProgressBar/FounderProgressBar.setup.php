@@ -10,8 +10,8 @@ $dir = dirname(__FILE__).'/';
 $app = F::app();
 
 //Autoload
-$app->registerClass('FounderProgressBarController', $dir . '/FounderProgressBarController.class.php');
-$app->registerClass('FounderProgressBarHooks', $dir . '/FounderProgressBarHooks.class.php');
+$wgAutoloadClasses['FounderProgressBarController'] =  $dir . '/FounderProgressBarController.class.php';
+$wgAutoloadClasses['FounderProgressBarHooks'] =  $dir . '/FounderProgressBarHooks.class.php';
 
 // I18N
 $app->registerExtensionMessageFile('FounderProgressBar', $dir . '/FounderProgressBar.i18n.php');

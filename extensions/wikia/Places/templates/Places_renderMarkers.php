@@ -1,5 +1,5 @@
 <div id="<?= $mapId ?>" class="places-map" style="width:100%; height:<?= $height; ?>px"></div>
-<?=  F::build('JSSnippets')->addToStack(
+<?=  JSSnippets::addToStack(
 		array( 'places_css', 'places_js' ),
 		array( '$.loadGoogleMaps' ),
 		'Places.renderMap',

@@ -26,7 +26,7 @@ class WikiaVideoPage extends WikiaImagePage {
 			$img = $this->getDisplayedFile();
 		}
 
-		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('VideoPage', JSMessages::EXTERNAL);
 
 		$app = F::app();
 		$autoplay = $app->wg->VideoPageAutoPlay;

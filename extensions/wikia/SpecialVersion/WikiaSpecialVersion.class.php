@@ -27,7 +27,7 @@ class WikiaSpecialVersion extends SpecialVersion {
 	/**
 	 * Returns wiki text showing the third party software versions (apache, php, mysql).
 	 * @see SpecialVersion
-	 * @return string
+	 * @return array of strings
 	 */
 	public static function getSoftwareList() {
 	    $dbr = wfGetDB( DB_SLAVE );

@@ -18,7 +18,7 @@ class VisualStats extends WikiaObject {
     }
 
     private function getUserData($name){
-        $user = F::build('User', array($name), 'newFromName');
+        $user = User::newFromName($name);
         return array('id' => $user->getId(), 'name' => $name, 'isAnon' => $user->isAnon());
     }
 
@@ -52,7 +52,7 @@ class VisualStats extends WikiaObject {
     }
 
     private function getDB(){
-        return $this->app->wf->getDB(DB_SLAVE, array(), $this->app->wg->DBname);
+        return wfgetDB(DB_SLAVE, array(), $this->app->wg->DBname);
     }
 
     private function performQuery($username){
@@ -94,7 +94,7 @@ class VisualStats extends WikiaObject {
     public function getDataForCommitActivity($username){
         wfProfileIn( __METHOD__ );
 
-        $key = $this->app->wf->MemcKey('VisualStats', 'commitActivity', $this->app->wg->lang->getCode(), $username );
+        $key = wfMemcKey('VisualStats', 'commitActivity', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
 
         if (is_array($data)){
@@ -155,7 +155,7 @@ class VisualStats extends WikiaObject {
     public function getDataForPunchcard($username){
         wfProfileIn( __METHOD__ );
 
-        $key = $this->app->wf->MemcKey('VisualStats', 'punchcard', $this->app->wg->lang->getCode(), $username );
+        $key = wfMemcKey('VisualStats', 'punchcard', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
         if (is_array($data)){
             $out = $data;
@@ -219,7 +219,7 @@ class VisualStats extends WikiaObject {
     public function getDataForHistogram($username){
         wfProfileIn( __METHOD__ );
 
-        $key = $this->app->wf->MemcKey('VisualStats', 'histogram', $this->app->wg->lang->getCode(), $username );
+        $key = wfMemcKey('VisualStats', 'histogram', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
         if (is_array($data)){
             $out = $data;
@@ -283,7 +283,7 @@ class VisualStats extends WikiaObject {
     public function getDataForCodeFrequency($username){
         wfProfileIn( __METHOD__ );
 
-        $key = $this->app->wf->MemcKey('VisualStats', 'codeFrequency', $this->app->wg->lang->getCode(), $username );
+        $key = wfMemcKey('VisualStats', 'codeFrequency', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
         if (is_array($data)){
             $out = $data;

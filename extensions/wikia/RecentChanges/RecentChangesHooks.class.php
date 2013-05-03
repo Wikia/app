@@ -43,7 +43,7 @@ class RecentChangesHooks {
 			    return true;
 			}
 			
-			$db = $app->wf->GetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE );
 			$cond = 'rc_namespace IN ('.$db->makeList( $selected ).')';
 			
 			$flag = true;

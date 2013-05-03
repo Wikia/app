@@ -21,12 +21,12 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 	public function index(){
 		$this->wg->Out->setPageTitle(wfMsg('places'));
 		$sParam = $this->getPar();
-		$oTitle = F::build( 'Title', array( $sParam ), 'newFromText' );
+		$oTitle = Title::newFromText( $sParam );
 		if ( !empty( $oTitle ) && $oTitle->exists() ){
 			if ( $oTitle->getNamespace() == NS_CATEGORY ){
 				$this->markers = $this->placesForCategory( $oTitle );
 			} else {
-				$oMarker = F::build( 'PlaceStorage', array( $oTitle ), 'newFromTitle' )->getModel();
+				$oMarker = PlaceStorage::newFromTitle( $oTitle )->getModel();
 				$this->center = $oMarker->getForMap();
 				$this->markers = $this->allPlaces();
 			}
@@ -34,7 +34,7 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 			$this->markers = $this->allPlaces();
 		}
 
-		$this->wg->Out->setSubtitle($this->wf->MsgExt('places-on-map', array('parsemag'), count($this->markers)));
+		$this->wg->Out->setSubtitle(wfMsgExt('places-on-map', array('parsemag'), count($this->markers)));
 
 		// use Places controller to render interactive map
 		$this->request->setVal('center', $this->center);
@@ -45,7 +45,7 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 	}
 
 	protected function placesForCategory( Title $oTitle ){
-		$placesModel = F::build( 'PlacesModel' );
+		$placesModel = (new PlacesModel);
 		$categoryName = $oTitle->getText();
 
 		$this->wg->Out->setPageTitle(wfMsg('places-in-category', $categoryName));
@@ -54,7 +54,7 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 	}
 
 	protected function allPlaces(){
-		$placesModel = F::build('PlacesModel');
+		$placesModel = new PlacesModel();
 		return $placesModel->getAll(500); // limit number of places for special pages
 	}
 }

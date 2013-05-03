@@ -12,13 +12,13 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$app->registerClass('WikiaSpecialVersion', $dir . 'WikiaSpecialVersion.class.php');
-$app->registerClass('WikiaSpecialVersionController', $dir . 'WikiaSpecialVersionController.class.php');
+$wgAutoloadClasses['WikiaSpecialVersion'] =  $dir . 'WikiaSpecialVersion.class.php';
+$wgAutoloadClasses['WikiaSpecialVersionController'] =  $dir . 'WikiaSpecialVersionController.class.php';
 
 /**
  * special pages
  */
-$app->registerSpecialPage('Version', 'WikiaSpecialVersionController');
+$wgSpecialPages['Version'] = 'WikiaSpecialVersionController';
 
 /**
  * message files

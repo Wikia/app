@@ -26,7 +26,7 @@ class EmailsStorageSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle(wfMsg('emailsstorage'));
 
 		$this->buttonAction = $this->app->wg->Title->getLocalUrl();
-		$this->typeList = F::build("EmailsStorage")->getSourcesId();
+		$this->typeList = (new EmailsStorage() )->getSourcesId();
 	}
 
 	public function printEntriesAsCsv($typeId) {
@@ -40,7 +40,7 @@ class EmailsStorageSpecialController extends WikiaSpecialPageController {
 			'User ID',
 			'Feedback'
 		));
-		$data = F::build("EmailsStorage")->getAllBySourceId($typeId);
+		$data = ( new EmailsStorage() )->getAllBySourceId($typeId);
 		foreach($data as $row) {
 			$csvRow = array(
 				$row->getPageId(),

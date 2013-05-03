@@ -549,7 +549,7 @@ class AdEngine2Controller extends WikiaController {
 		}
 
 		$whiteList = [];
-		$whiteListContent = $this->wf->MsgExt('outbound-screen-whitelist', array('language' => 'en'));
+		$whiteListContent = wfMsgExt('outbound-screen-whitelist', array('language' => 'en'));
 
 		if (!empty($whiteListContent)) {
 			$lines = explode("\n", $whiteListContent);

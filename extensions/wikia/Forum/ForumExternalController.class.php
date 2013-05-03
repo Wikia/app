@@ -7,7 +7,7 @@ class ForumExternalController extends WallExternalController {
 
 	public function getCommentsPage() {
 		//workaround to prevent index data expose
-		$title = F::build( 'Title', array( $this->request->getVal( 'pagetitle' ), $this->request->getVal( 'pagenamespace' ) ), 'newFromText' );
+		$title = Title::newFromText( $this->request->getVal( 'pagetitle' ), $this->request->getVal( 'pagenamespace' ) );
 		$this->response->setVal( 'html', $this->app->renderView( 'ForumController', 'board', array( 'title' => $title, 'page' => $this->request->getVal( 'page', 1 ) ) ) );
 	}
 
@@ -49,7 +49,7 @@ class ForumExternalController extends WallExternalController {
 	 * @request boardDescription - description of the board (optional)
 	 * @response status - [ok|error|accessdenied]
 	 * @response errorfield - optional error field.  nullable
-	 * @response errormsg - optional error message.  nullable
+	 * @response errormsg - optional error message. ï¿½nullable
 	 */
 
 	public function createNewBoard() {
@@ -89,7 +89,7 @@ class ForumExternalController extends WallExternalController {
 	 * @request boardDescription - description of the board (optional), nullable
 	 * @response status - [ok|error|accessdenied]
 	 * @response errorfield - optional error field.  nullable
-	 * @response errormsg - optional error message.  nullable
+	 * @response errormsg - optional error message. ï¿½nullable
 	 */
 	public function editBoard() {
 		$this->status = self::checkAdminAccess();
@@ -149,7 +149,7 @@ class ForumExternalController extends WallExternalController {
 	 * @request destinationBoardId - board to merge existing threads to
 	 * @response status - [ok|error|accessdenied]
 	 * @response errorfield - optional error field.  nullable
-	 * @response errormsg - optional error message.  nullable
+	 * @response errormsg - optional error message. ï¿½nullable
 	 */
 	public function removeBoard() {
 		$this->status = self::checkAdminAccess();

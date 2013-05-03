@@ -33,7 +33,7 @@ class WikiaView {
 	 * @param string $format
 	 */
 	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = array(), $format = WikiaResponse::FORMAT_HTML ) {
-		$response = F::build( 'WikiaResponse', array( $format ) );
+		$response = new WikiaResponse( $format );
 		$response->setControllerName( $controllerName );
 		$response->setMethodName( $methodName );
 		$response->setData( $data );

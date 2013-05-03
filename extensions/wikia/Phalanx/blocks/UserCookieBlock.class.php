@@ -47,7 +47,7 @@ class UserCookieBlock extends UserBlock {
 			return $cachedState;
 		}
 
-		$tracker = F::build( 'AccountCreationTracker' ); /** @var $tracker AccountCreationTracker */
+		$tracker = (new AccountCreationTracker); /** @var $tracker AccountCreationTracker */
 		$hashes = $tracker->getHashesByUser( $user );
 
 		$blocksData = Phalanx::getFromFilter( self::TYPE );

@@ -26,8 +26,8 @@ $dir = dirname( __FILE__ );
  * classes
  */
 
-$app->registerClass('ImageDrop', $dir . '/ImageDrop.class.php');
-$app->registerClass('ImageDropController', $dir . '/ImageDropController.class.php');
+$wgAutoloadClasses['ImageDrop'] =  $dir . '/ImageDrop.class.php';
+$wgAutoloadClasses['ImageDropController'] =  $dir . '/ImageDropController.class.php';
 
 // hooks
 $wgHooks['BeforePageDisplay'][] = 'ImageDrop::onBeforePageDisplay';

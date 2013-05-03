@@ -26,24 +26,25 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 //models
-$app->registerClass('MarketingToolboxUserPropertiesHandler', $dir . 'models/MarketingToolboxUserPropertiesHandler.class.php');
+$wgAutoloadClasses['MarketingToolboxUserPropertiesHandler'] =  $dir . 'models/MarketingToolboxUserPropertiesHandler.class.php';
 
 //classes
-$app->registerController('MarketingToolboxController', $dir . 'MarketingToolboxController.class.php');
-$app->registerClass('MarketingToolboxVideosController', $dir . 'MarketingToolboxVideosController.class.php');
+$wgAutoloadClasses['MarketingToolboxController'] = $dir . 'MarketingToolboxController.class.php';
+$wgAutoloadClasses['MarketingToolboxVideosController'] =  $dir . 'MarketingToolboxVideosController.class.php';
 
-$app->registerClass('WikiaValidatorToolboxUrl', $dir . 'validators/WikiaValidatorToolboxUrl.class.php');
-$app->registerClass('WikiaValidatorUsersUrl', $dir . 'validators/WikiaValidatorUsersUrl.class.php');
+$wgAutoloadClasses['WikiaValidatorToolboxUrl'] =  $dir . 'validators/WikiaValidatorToolboxUrl.class.php';
+$wgAutoloadClasses['WikiaValidatorUsersUrl'] =  $dir . 'validators/WikiaValidatorUsersUrl.class.php';
 
 WikiaUserPropertiesController::registerHandler('MarketingToolboxUserPropertiesHandler');
 
 // hooks
-$app->registerClass('MarketingToolboxHooks', $dir . 'hooks/MarketingToolboxHooks.class.php');
+$wgAutoloadClasses['MarketingToolboxHooks'] =  $dir . 'hooks/MarketingToolboxHooks.class.php';
 $app->registerHook('MakeGlobalVariablesScript', 'MarketingToolboxHooks', 'onMakeGlobalVariablesScript');
 
 //special page
-$app->registerSpecialPage('MarketingToolbox', 'MarketingToolboxController', 'wikia');
+$wgSpecialPages['MarketingToolbox'] = 'MarketingToolboxController';
+$wgSpecialPageGroups['MarketingToolbox'] = 'wikia';
 
 //message files
 $app->registerExtensionMessageFile('MarketingToolbox', $dir . 'MarketingToolbox.i18n.php');
-F::build('JSMessages')->registerPackage('MarketingToolbox', array('marketing-toolbox-*'));
+JSMessages::registerPackage('MarketingToolbox', array('marketing-toolbox-*'));

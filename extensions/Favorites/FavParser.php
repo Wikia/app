@@ -148,7 +148,7 @@ class FavParser {
 			$output .=  $form ;
 			return $output;
 		} else {
-			$output = wfmsg('nofavoritelist');
+			$output = wfMsg('nofavoritelist');
 			return $output;
 		}
 	}

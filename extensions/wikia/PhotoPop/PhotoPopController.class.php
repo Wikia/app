@@ -14,7 +14,7 @@ class PhotoPopController extends WikiaController {
 	private $isJSON;
 
 	public function init(){
-		$this->model = F::build( 'PhotoPopModel' );
+		$this->model = (new PhotoPopModel);
 		$this->isJSON = $this->response->getFormat() == WikiaResponse::FORMAT_JSON;
 	}
 
@@ -39,7 +39,7 @@ class PhotoPopController extends WikiaController {
 		//$this->response->setVal( 'appCacheManifestPath', self::CACHE_MANIFEST_PATH . "&cb={$this->wg->CacheBuster}" );//$this->wg->StyleVersion
 
 		//Minimize the output size, we don't need all the global variables being exported in MW
-		$jsMsg = F::build('JSMessages');
+		$jsMsg = new JSMessages();
 		$jsMsg->enqueuePackage( self::JS_MESSAGES_PACKAGE, JSMessages::INLINE );
 		$jsVars = array(
 			'wgCacheBuster' => $this->wg->CacheBuster,

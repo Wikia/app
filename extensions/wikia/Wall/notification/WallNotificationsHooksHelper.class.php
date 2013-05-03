@@ -49,7 +49,7 @@ class WallNotificationsHooksHelper {
 		if( $user instanceof User && $user->isLoggedIn() ) {
 			if($app->wg->User->getSkin()->getSkinName() == 'monobook') {
 				$personalUrls['wall-notifications'] = array(
-						'text'=>$app->wf->Msg('wall-notifications'),
+						'text'=>wfMsg('wall-notifications'),
 						//'text'=>print_r($app->wg->User->getSkin(),1),
 						'href'=>'#',
 						'class'=>'wall-notifications-monobook ',

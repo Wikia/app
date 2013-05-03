@@ -91,7 +91,7 @@ class ImagesService extends Service {
 			}
 		}
 
-		$foundFile = $app->wf->FindFile($title);
+		$foundFile = wfFindFile($title);
 
 		if ($foundFile) {
 			$imageWidth = $foundFile->getWidth();
@@ -187,9 +187,8 @@ class ImagesService extends Service {
 			}
 		}
 
-		$upload = F::build('UploadFromUrl');
-		/* @var $upload UploadFromUrl */
-		$upload->initializeFromRequest(F::build('FauxRequest', array($data, true)));
+		$upload = new UploadFromUrl();
+		$upload->initializeFromRequest(new FauxRequest($data, true));
 		$fetchStatus = $upload->fetchFile();
 
 		if ($fetchStatus->isGood()) {
@@ -222,13 +221,10 @@ class ImagesService extends Service {
 		// create destination file
 		$title = Title::newFromText($name, NS_FILE);
 		/** @var $title Title */
-		return F::build(
-			'WikiaLocalFile',
-			array(
+		return new WikiaLocalFile(
 				$title,
 				RepoGroup::singleton()->getLocalRepo()
-			)
-		);
+			);
 		/** @var $file WikiaLocalFile */
 	}
 

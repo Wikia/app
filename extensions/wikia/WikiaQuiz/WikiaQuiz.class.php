@@ -117,7 +117,7 @@ class WikiaQuiz {
 						$moreInfoUrl = $moreInfoChunks[0];
 					}
 					else {
-						$title = F::build('Title', array($moreInfoChunks[0]), 'newFromText');
+						$title = Title::newFromText($moreInfoChunks[0]);
 						$moreInfoUrl = $title->getFullUrl();
 					}
 					$moreInfoLinks[] = array('article'=>$moreInfoChunks[0],
@@ -134,7 +134,7 @@ class WikiaQuiz {
 			// load quiz's elements
 			if (empty($this->mCategory)) {
 				$catName = self::QUIZ_CATEGORY_PREFIX . $titleText;
-				$cat = F::build('Category', array($catName), 'newFromName');
+				$cat = Category::newFromName($catName);
 				$this->mCategory = $cat;
 			}
 

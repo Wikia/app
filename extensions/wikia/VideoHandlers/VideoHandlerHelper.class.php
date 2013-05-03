@@ -42,7 +42,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return string $newContent
 	 */
 	public function removeDescriptionHeader( $content ) {
-		$headerText = $this->wf->Message( 'videohandler-description' );
+		$headerText = wfMessage( 'videohandler-description' );
 
 		// Grab everything after the description header
 		preg_match("/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches);
@@ -57,7 +57,7 @@ class VideoHandlerHelper extends WikiaModel {
 	}
 
 	public function replaceDescriptionSection( $content, $descText = '' ) {
-		$headerText = $this->wf->Message( 'videohandler-description' );
+		$headerText = wfMessage( 'videohandler-description' );
 
 		$preText = preg_replace("/^==\s*$headerText\s*==\n*(.+)/sim", '', $content);
 
@@ -90,7 +90,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return string $newContent
 	 */
 	public function addDescriptionHeader( $content ) {
-		$newContent = '=='.$this->wf->Message( 'videohandler-description' ).'=='."\n".$content;
+		$newContent = '=='.wfMessage( 'videohandler-description' ).'=='."\n".$content;
 
 		return $newContent;
 	}

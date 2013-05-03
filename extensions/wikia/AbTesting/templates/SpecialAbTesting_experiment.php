@@ -1,6 +1,6 @@
 <?
 	/** @var $abTesting AbTesting */
-	$abTesting = F::build('AbTesting');
+	$abTesting = new AbTesting();
 	$yes = wfMsg('abtesting-flag-set-short');
 ?>
 <tr class="exp<?= empty( $showDetails ) ? ' collapsed' : '' ?>" data-id="<?= $experiment[ 'id' ] ?>">

@@ -8,7 +8,10 @@ class SDParser {
 	 */
 	protected $structuredData = null;
 
-	public function __construct( StructuredData $structuredData ) {
+	public function __construct( StructuredData $structuredData = null) {
+		if( is_null( $structuredData ) ) {
+			$structuredData = new StructuredData();
+		}
 		$this->structuredData = $structuredData;
 	}
 
@@ -26,7 +29,7 @@ class SDParser {
 	public function getListFromStringPath( $path ) {
 		$result = array();
 
-		$dataTag = F::build( 'SDParserTag', array( 'parser' => $this, 'tagRawContent' => $path, 'args' => array( 'renderMode' => SDParserTag::RENDER_MODE_OBJECT ) ));
+		$dataTag = new SDParserTag( $this, $path, array( 'renderMode' => SDParserTag::RENDER_MODE_OBJECT ) );
 		$values = $dataTag->render();
 
 		if( !is_array( $values ) ) {
@@ -68,7 +71,7 @@ class SDParser {
 		$args['parser'] = $parser;
 		$args['frame'] = $frame;
 
-		$tag = F::build( 'SDParserTag', array( 'parser' => $this, 'tagRawContent' => $input, 'args' => $args ) );
+		$tag = new SDParserTag( $this, $input, $args );
 
 		return $tag->render();
 	}

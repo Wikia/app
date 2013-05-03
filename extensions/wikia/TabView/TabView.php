@@ -104,7 +104,7 @@ function tabviewRender($input, $params, $parser ) {
 	$out .= '</ul></div>';
 
 	// lazy load JS
-	$out .= F::build('JSSnippets')->addToStack(
+	$out .= JSSnippets::addToStack(
 		array( '/extensions/wikia/TabView/js/TabView.js',
 			'/resources/wikia/libraries/mustache/mustache.js' ),
 		array(),

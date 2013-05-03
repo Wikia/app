@@ -11,10 +11,9 @@
 * @var WikiaApp
 */
 
-$app = F::app();
 $dir = dirname( __FILE__ );
-$app->registerClass( 'WantedPagesPageWikia',		$dir . '/WantedPagesPageWikia.class.php' );
-$app->registerClass( 'WantedFilesPageWikia',		$dir . '/WantedFilesPageWikia.class.php' );
+$wgAutoloadClasses[ 'WantedPagesPageWikia'] = 		$dir . '/WantedPagesPageWikia.class.php' ;
+$wgAutoloadClasses[ 'WantedFilesPageWikia'] = 		$dir . '/WantedFilesPageWikia.class.php' ;
 
 /**
  * Overwrite MediaWiki Special:WantedPages with Wikia version

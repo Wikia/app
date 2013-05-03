@@ -22,13 +22,13 @@ $dir = dirname( __FILE__ ) . '/';
 $app = F::app( );
 
 // classes
-$app->registerClass( 'WikiaImagePage', $dir . 'ImagePage.php' );
-$app->registerClass( 'WikiaVideoPage', $dir . 'VideoPage.php' );
-$app->registerClass( 'FilePageHooks', $dir . 'FilePageHooks.class.php' );
-$app->registerClass( 'FilePageHelper', $dir . 'FilePageHelper.class.php' );
+$wgAutoloadClasses[ 'WikiaImagePage'] =  $dir . 'ImagePage.php' ;
+$wgAutoloadClasses[ 'WikiaVideoPage'] =  $dir . 'VideoPage.php' ;
+$wgAutoloadClasses[ 'FilePageHooks'] =  $dir . 'FilePageHooks.class.php' ;
+$wgAutoloadClasses[ 'FilePageHelper'] =  $dir . 'FilePageHelper.class.php' ;
 
 // file page controller
-$app->registerClass( 'FilePageController', $dir . 'FilePageController.class.php' );
+$wgAutoloadClasses[ 'FilePageController'] =  $dir . 'FilePageController.class.php' ;
 
 // i18n mapping
 $app->registerExtensionMessageFile( 'FilePage', $dir . 'FilePage.i18n.php' );

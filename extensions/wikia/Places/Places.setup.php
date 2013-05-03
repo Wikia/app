@@ -28,28 +28,28 @@ $dir = dirname( __FILE__ );
  * classes
  */
 
-$app->registerClass('PlacesHooks', $dir . '/PlacesHooks.class.php');
-$app->registerClass('PlacesParserHookHandler', $dir . '/PlacesParserHookHandler.class.php');
-$app->registerClass('WikiaApiPlaces', $dir . '/WikiaApiPlaces.class.php');
+$wgAutoloadClasses['PlacesHooks'] =  $dir . '/PlacesHooks.class.php';
+$wgAutoloadClasses['PlacesParserHookHandler'] =  $dir . '/PlacesParserHookHandler.class.php';
+$wgAutoloadClasses['WikiaApiPlaces'] =  $dir . '/WikiaApiPlaces.class.php';
 
 /**
  * controllers
  */
 
-$app->registerClass('PlacesController', $dir . '/PlacesController.class.php');
-$app->registerClass('PlacesCategoryController', $dir . '/PlacesCategoryController.class.php');
-$app->registerClass('PlacesEditorController', $dir . '/PlacesEditorController.class.php');
-$app->registerClass('PlacesSpecialController', $dir . '/PlacesSpecialController.class.php');
-$app->registerSpecialPage('Places', 'PlacesSpecialController');
+$wgAutoloadClasses['PlacesController'] =  $dir . '/PlacesController.class.php';
+$wgAutoloadClasses['PlacesCategoryController'] =  $dir . '/PlacesCategoryController.class.php';
+$wgAutoloadClasses['PlacesEditorController'] =  $dir . '/PlacesEditorController.class.php';
+$wgAutoloadClasses['PlacesSpecialController'] =  $dir . '/PlacesSpecialController.class.php';
+$wgSpecialPages['Places'] = 'PlacesSpecialController';
 
 /**
  * models
  */
 
-$app->registerClass('PlacesModel', $dir . '/models/PlacesModel.class.php');
-$app->registerClass('PlaceModel', $dir . '/models/PlaceModel.class.php');
-$app->registerClass('PlaceStorage', $dir . '/models/PlaceStorage.class.php');
-$app->registerClass('PlaceCategory', $dir . '/models/PlaceCategory.class.php');
+$wgAutoloadClasses['PlacesModel'] =  $dir . '/models/PlacesModel.class.php';
+$wgAutoloadClasses['PlaceModel'] =  $dir . '/models/PlaceModel.class.php';
+$wgAutoloadClasses['PlaceStorage'] =  $dir . '/models/PlaceStorage.class.php';
+$wgAutoloadClasses['PlaceCategory'] =  $dir . '/models/PlaceCategory.class.php';
 
 /**
  * hooks
@@ -76,21 +76,14 @@ $wgAPIModules['places'] = 'WikiaApiPlaces';
  */
 $app->registerExtensionMessageFile('Places', $dir . '/Places.i18n.php');
 
-F::build('JSMessages')->registerPackage('Places', array(
+JSMessages::registerPackage('Places', array(
 	'places-toolbar-button-*',
 	'places-editor-*',
 	'ok',
 ));
 
-F::build('JSMessages')->registerPackage('PlacesEditPageButton', array( 'places-toolbar-button-tooltip' ) );
-F::build('JSMessages')->registerPackage('PlacesGeoLocationModal', array( 'places-geolocation-modal-*' ) );
-
-/**
- * constructors
- */
-F::addClassConstructor( 'PlacesCategoryController', array( 'app' => $app ) );
-F::addClassConstructor( 'PlacesController', array( 'app' => $app ) );
-F::addClassConstructor( 'PlaceStorage', array(), 'newFromId' );
+JSMessages::registerPackage('PlacesEditPageButton', array( 'places-toolbar-button-tooltip' ) );
+JSMessages::registerPackage('PlacesGeoLocationModal', array( 'places-geolocation-modal-*' ) );
 
 /*
  * user rights

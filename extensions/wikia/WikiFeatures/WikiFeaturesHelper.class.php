@@ -69,7 +69,7 @@ class WikiFeaturesHelper extends WikiaModel {
 
 		if (isset($this->wg->WikiFeatures['normal']) && is_array($this->wg->WikiFeatures['normal'])) {
 			//allow adding features in runtime
-			$this->wf->runHooks( 'WikiFeatures::onGetFeatureNormal' );
+			wfrunHooks( 'WikiFeatures::onGetFeatureNormal' );
 
 			foreach ($this->wg->WikiFeatures['normal'] as $feature) {
 				$list[] = array(
@@ -111,7 +111,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		$memKey = $this->getMemcKeyNumActiveWikis($feature);
 		$num = $this->wg->Memc->get($memKey);
 		if ( !is_numeric($num) ) {
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+			$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 			$result = $db->selectRow(
 				array('city_variables_pool', 'city_variables'),
@@ -142,7 +142,7 @@ class WikiFeaturesHelper extends WikiaModel {
 	 * @return string
 	 */
 	public function getMemcKeyNumActiveWikis($feature) {
-		return $this->wf->SharedMemcKey('wikifeatures', 'active_wikis', $feature);
+		return wfSharedMemcKey('wikifeatures', 'active_wikis', $feature);
 	}
 
 	protected function getFeatureEnabled($feature) {
@@ -181,7 +181,7 @@ class WikiFeaturesHelper extends WikiaModel {
 	public function isSpam($userName, $feature) {
 
 		// it didn't work without urlencode($userName) maybe because of multibyte signs
-		$memcKey = $this->wf->MemcKey('wikifeatures', urlencode($userName), $feature, 'spamCheckTime' );
+		$memcKey = wfMemcKey('wikifeatures', urlencode($userName), $feature, 'spamCheckTime' );
 		$result = $this->wg->Memc->get($memcKey);
 
 		if( empty($result) ) {
@@ -195,14 +195,12 @@ class WikiFeaturesHelper extends WikiaModel {
 
 	public function getFogbugzService() {
 		if( $this->fogbugzService == null ) {
-			$this->fogbugzService = F::build(
-					'FogbugzService', array(
+			$this->fogbugzService = new FogbugzService(
 						$this->wg->fogbugzAPIConfig['apiUrl'],
 						$this->wg->fogbugzAPIConfig['username'],
 						$this->wg->fogbugzAPIConfig['password'],
 						$this->app->getGlobal( 'wgHTTPProxy' )
-					)
-				);
+			);
 		}
 		return $this->fogbugzService;
 	}

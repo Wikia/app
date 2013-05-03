@@ -12,19 +12,19 @@ if ( empty( $wgWikiaVideoRepoCategoryPath ) ){
 /**
  * classes
  */
-$app->registerClass('RelatedVideosHookHandler', $dir . '/RelatedVideos.hooks.php');
-$app->registerClass('RelatedVideosElement', $dir . '/models/RelatedVideos.model.php');
-$app->registerClass('RelatedVideosData', $dir . '/RelatedVideosData.class.php');
-$app->registerClass('RelatedVideosService', $dir. '/RelatedVideosService.class.php');
-$app->registerClass('RelatedVideosNamespaceData', $dir . '/RelatedVideosNamespaceData.class.php');
-$app->registerClass('RelatedVideosEmbededData', $dir . '/RelatedVideosEmbededData.class.php');
-$app->registerClass('RelatedVideosRailController', $dir . '/RelatedVideosRailController.class.php');
+$wgAutoloadClasses['RelatedVideosHookHandler'] =  $dir . '/RelatedVideos.hooks.php';
+$wgAutoloadClasses['RelatedVideosElement'] =  $dir . '/models/RelatedVideos.model.php';
+$wgAutoloadClasses['RelatedVideosData'] =  $dir . '/RelatedVideosData.class.php';
+$wgAutoloadClasses['RelatedVideosService'] =  $dir. '/RelatedVideosService.class.php';
+$wgAutoloadClasses['RelatedVideosNamespaceData'] =  $dir . '/RelatedVideosNamespaceData.class.php';
+$wgAutoloadClasses['RelatedVideosEmbededData'] =  $dir . '/RelatedVideosEmbededData.class.php';
+$wgAutoloadClasses['RelatedVideosRailController'] =  $dir . '/RelatedVideosRailController.class.php';
 
 /**
  * controllers
  */
-$app->registerClass('RelatedVideosController', $dir . '/RelatedVideosController.class.php');
-$app->registerClass('RelatedHubsVideosController', $dir . '/RelatedHubsVideosController.class.php');
+$wgAutoloadClasses['RelatedVideosController'] =  $dir . '/RelatedVideosController.class.php';
+$wgAutoloadClasses['RelatedHubsVideosController'] =  $dir . '/RelatedHubsVideosController.class.php';
 
 /**
  * hooks
@@ -52,7 +52,6 @@ $app->registerHook( 'UndeleteComplete', 'RelatedVideosHookHandler', 'onUndeleteC
  * messages
  */
 $app->registerExtensionMessageFile( 'RelatedVideos', $dir . '/RelatedVideos.i18n.php' );
-F::addClassConstructor( 'RelatedVideosController', array( 'app' => $app ) );
 
 /**
  * extension related configuration

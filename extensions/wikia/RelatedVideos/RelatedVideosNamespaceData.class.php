@@ -77,7 +77,7 @@ class RelatedVideosNamespaceData {
 			return;
 		}
 
-		$article = F::build( 'Article', array( $title ) );
+		$article = new Article( $title );
 		$status = $article->doEdit( '', 'Article created', EDIT_NEW, false, F::app()->wg->user);
 
 		wfProfileOut( __METHOD__ );
@@ -335,7 +335,7 @@ class RelatedVideosNamespaceData {
 		}
 
 		// managing WikiActivity
-		$oTmpTitle = F::build( 'Title', array( $newEntry['title'], NS_VIDEO), 'newFromText');
+		$oTmpTitle = Title::newFromText( $newEntry['title'], NS_VIDEO);
 		if ( $list == self::WHITELIST_MARKER ){
 			$summary = wfMsg('related-videos-wiki-summary-whitelist', array( $oTmpTitle->getText(), $oTmpTitle->getFullText() ));
 		} else {
@@ -359,7 +359,7 @@ class RelatedVideosNamespaceData {
 		$content = $this->serialize();
 
 		if ( $this->mId ) {
-			$title = F::build( 'Title', array( $this->mId ), 'newFromID' );
+			$title = Title::newFromID( $this->mId );
 		} elseif ( $this->mTitle ) {
 			$title = $this->mTitle;
 		} else {
@@ -367,7 +367,7 @@ class RelatedVideosNamespaceData {
 			return wfMsg('related-videos-error-unknown', 76543);
 		}
 
-		$article = F::build('Article', array($title)); /* @var $article Article */
+		$article = new Article($title);
 
 		if ( empty( $summary )){
 			$summary = wfMsg( 'related-videos-update-summary-' . strtolower( $list ) );

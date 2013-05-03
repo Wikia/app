@@ -39,7 +39,7 @@ class EditPageLayoutController extends WikiaController {
 	public function executeEditPage() {
 		wfProfileIn(__METHOD__);
 
-		$helper = F::build('EditPageLayoutHelper');
+		$helper = EditPageLayoutHelper::getInstance();
 		$editPage = $helper->getEditPage();
 
 		if ($helper->fullScreen) {
@@ -49,7 +49,7 @@ class EditPageLayoutController extends WikiaController {
 			if (class_exists('RTE') && RTE::isEnabled() && !$editPage->isReadOnlyPage()) {
 				$packageName = 'eplrte';
 			}
-			$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL($packageName);
+			$srcs = AssetsManager::getInstance()->getGroupCommonURL($packageName);
 			$wgJsMimeType = $this->wg->JsMimeType;
 			foreach($srcs as $src) {
 				$this->wg->Out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
@@ -112,7 +112,7 @@ class EditPageLayoutController extends WikiaController {
 		$this->wpSummaryLabelText = wfMsg($wpSummaryLabelText);
 
 		// render help link and point the link to new tab
-		$this->helpLink = $this->app->wf->MsgExt( 'editpagelayout-helpLink', array('parseinline') );
+		$this->helpLink = wfMsgExt( 'editpagelayout-helpLink', array('parseinline') );
 		$this->helpLink = str_replace('<a ', '<a target="_blank" ', $this->helpLink);
 
 		// action for edit form
@@ -140,14 +140,14 @@ class EditPageLayoutController extends WikiaController {
 		// notifications link (BugId:7951)
 		$this->notificationsLink =
 			(count($this->notices) == 0)
-			? $this->app->runFunction('wfMsg', 'editpagelayout-notificationsLink-none')
-			: $this->app->runFunction('wfMsgExt', 'editpagelayout-notificationsLink', array('parsemag'), count($this->notices));
+			? wfMsg('editpagelayout-notificationsLink-none')
+			: wfMsgExt('editpagelayout-notificationsLink', array('parsemag'), count($this->notices));
 
 		// check if we're in read only mode
 		// disable edit form when in read-only mode
-		if ($this->app->runFunction('wfReadOnly')) {
+		if (wfReadOnly()) {
 			$this->bodytext = '<div id="mw-read-only-warning" class="WikiaArticle">'.
-					$this->app->runFunction('wfMsg', 'oasis-editpage-readonlywarning', $this->app->runFunction('wfReadOnlyReason')).
+					wfMsg('oasis-editpage-readonlywarning', wfReadOnlyReason() ).
 					'</div>';
 
 			wfDebug(__METHOD__ . ": edit form disabled because read-only mode is on\n");
@@ -155,7 +155,7 @@ class EditPageLayoutController extends WikiaController {
 
 		$this->hideTitle = $editPage->hideTitle;
 
-		$this->wf->RunHooks('EditPageLayoutExecute', array($this));
+		wfRunHooks('EditPageLayoutExecute', array($this));
 
 		wfProfileOut(__METHOD__);
 	}

@@ -12,9 +12,9 @@ class PathFinderService extends WikiaService {
 	private $parser;
 	
 	public function init() {
-		$this->model = F::build( 'PathFinderModel' );
-		$this->logger = F::build( 'PathFinderLogger' );
-		$this->parser = F::build( 'PathFinderParser' );
+		$this->model = (new PathFinderModel);
+		$this->logger = (new PathFinderLogger);
+		$this->parser = (new PathFinderParser);
 	}
 	
 	/**
@@ -44,7 +44,6 @@ class PathFinderService extends WikiaService {
 			
 			while( ( $src = $this->model->fetchRawDataFilePath() ) !== false ) {
 				$fileHandle = fopen( $src, "r" );
-				$parseResult;
 				$this->logger->log( "Processing: {$src}..." );
 				$parseFailureCount = 0;
 				$totalLinesCount = 0;

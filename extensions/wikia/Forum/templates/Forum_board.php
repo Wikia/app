@@ -11,9 +11,9 @@
 		<?= $app->renderView('ForumController', 'boardNewThread', array('isTopicPage' => $isTopicPage)) ?>
 		<div class="ContentHeader <?php if($isTopicPage): ?> Topic<?php endif; ?>">
 			<?php if($isTopicPage): ?>
-				<div class="activity"><?= $wf->MsgExt(('forum-active-threads-on-topic'), array('parsemag'), $wg->Lang->formatNum( $activeThreads ), "<b><a href='$topicURL'>".$topicText."</a></b>") ?></div>
+				<div class="activity"><?= wfMsgExt(('forum-active-threads-on-topic'), array('parsemag'), $wg->Lang->formatNum( $activeThreads ), "<b><a href='$topicURL'>".$topicText."</a></b>") ?></div>
 			<?php else: ?>
-				<div class="activity"><?= $wf->MsgExt(('forum-active-threads'), array('parsemag'), $wg->Lang->formatNum( $activeThreads )) ?></div>
+				<div class="activity"><?= wfMsgExt(('forum-active-threads'), array('parsemag'), $wg->Lang->formatNum( $activeThreads )) ?></div>
 			<?php endif; ?>
 			<div class="sorting">
 				<span class="selected"><?= $sortingSelected ?><img class="arrow" src="<?= $wg->BlankImgUrl ?>" /></span>

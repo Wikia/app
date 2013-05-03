@@ -141,7 +141,7 @@
 
 			$this->setUpMobileSkin( $mobileSkin );
 
-			$response = $this->app->sendRequest( 'UserLoginSpecial', 'index', array( 'format' => 'html', 'action' => $this->app->wf->Msg( 'resetpass_submit' ) ) );
+			$response = $this->app->sendRequest( 'UserLoginSpecial', 'index', array( 'format' => 'html', 'action' => wfMsg( 'resetpass_submit' ) ) );
 			$response->toString();//triggers set up of template path
 
 			$this->assertEquals(

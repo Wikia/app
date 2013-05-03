@@ -21,7 +21,7 @@ class SpecialLeaderboard extends SpecialPage {
 		$skinName = get_class($this->getSkin());
 
 		if ($skinName == 'SkinOasis') {
-			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+			$assetsManager = AssetsManager::getInstance();
 			$scssPackage = 'special_leaderboard_oasis_css';
 			$jsPackage = 'special_leaderboard_oasis_js';
 

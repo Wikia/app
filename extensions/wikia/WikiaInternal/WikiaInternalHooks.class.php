@@ -2,8 +2,8 @@
 class WikiaInternalHooks {
 	private $app = null;
 
-	public function __construct($app) {
-		$this->app = $app;
+	public function __construct() {
+		$this->app = F::app();
 	}
 
 	public function onAfterCheckInitialQueries($title, $action, $ret) {

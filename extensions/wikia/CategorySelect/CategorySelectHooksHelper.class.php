@@ -105,15 +105,15 @@ class CategorySelectHooksHelper {
 	 * Allow toggling CategorySelect in user preferences
 	 */
 	public static function onGetPreferences( $user, &$preferences ) {
-		$app = F::app();
+		global $wgEnableUserPreferencesV2Ext;
 
-		if ( $app->wg->EnableUserPreferencesV2Ext ) {
+		if ( $wgEnableUserPreferencesV2Ext ) {
 			$section = 'editing/starting-an-edit';
-			$message = $app->wf->Message( 'tog-disablecategoryselect-v2' )->text();
+			$message = wfMessage( 'tog-disablecategoryselect-v2' )->text();
 
 		} else {
 			$section = 'editing/editing-experience';
-			$message = $app->wf->Message( 'tog-disablecategoryselect' )->text();
+			$message = wfMessage( 'tog-disablecategoryselect' )->text();
 		}
 
 		$preferences[ 'disablecategoryselect' ] = array(
@@ -129,13 +129,13 @@ class CategorySelectHooksHelper {
 	 * Set global variables for javascript
 	 */
 	public static function onMakeGlobalVariablesScript( Array &$vars ) {
-		$app = F::app();
+		global $wgContLang, $wgParser, $wgTitle;
 
 		$vars[ 'wgCategorySelect' ] = array(
-			'defaultNamespace' => $app->wg->ContLang->getNsText( NS_CATEGORY ),
+			'defaultNamespace' => $wgContLang->getNsText( NS_CATEGORY ),
 			'defaultNamespaces' => CategorySelect::getDefaultNamespaces(),
-			'defaultSeparator' => trim( $app->wf->Message( 'colon-separator' )->escaped() ),
-			'defaultSortKey' => $app->wg->Parser->getDefaultSort() ?: $app->wg->Title->getText()
+			'defaultSeparator' => trim( wfMessage( 'colon-separator' )->escaped() ),
+			'defaultSortKey' => $wgParser->getDefaultSort() ?: $wgTitle->getText()
 		);
 
 		return true;
@@ -151,7 +151,7 @@ class CategorySelectHooksHelper {
 			$app = F::app();
 			$action = $app->wg->Request->getVal( 'action', 'view' );
 
-			F::build( 'JSMessages' )->enqueuePackage( 'CategorySelect', JSMessages::INLINE );
+			JSMessages::enqueuePackage( 'CategorySelect', JSMessages::INLINE );
 
 			$app->registerHook( 'MakeGlobalVariablesScript', 'CategorySelectHooksHelper', 'onMakeGlobalVariablesScript' );
 

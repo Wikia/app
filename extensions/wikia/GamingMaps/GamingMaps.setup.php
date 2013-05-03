@@ -26,13 +26,13 @@ $dir = dirname( __FILE__ );
 /**
  * classes
  */
-$app->registerClass('GamingMapsHooks', $dir . '/GamingMapsHooks.class.php');
-$app->registerClass('GamingMaps', $dir . '/GamingMaps.class.php');
+$wgAutoloadClasses['GamingMapsHooks'] =  $dir . '/GamingMapsHooks.class.php';
+$wgAutoloadClasses['GamingMaps'] =  $dir . '/GamingMaps.class.php';
 
 /**
  * controllers
  */
-$app->registerClass('GamingMapsController', $dir . '/GamingMapsController.class.php');
+$wgAutoloadClasses['GamingMapsController'] =  $dir . '/GamingMapsController.class.php';
 
 
 /**

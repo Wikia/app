@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/../ImageReview.setup.php';
+//require_once __DIR__.'/../ImageReview.setup.php';
 
 class ImageReviewTest extends WikiaBaseTest {
 	private $fakeUrl = 'http://fake.wikia.com/wiki/Special:ImageReview';
@@ -8,6 +8,11 @@ class ImageReviewTest extends WikiaBaseTest {
 	private $fakeWrongImages = array('img', 'img', 'img');
 	private $fakeTimestamp = 123;
 	private $fakeUserTs = 123;
+
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../ImageReview.setup.php';
+		parent::setUp();
+	}
 
 	public function testImageReviewSpecialControllerIndexCorrect() {
 		$this->setStubsForImageReviewSpecialControllerTests(false);
@@ -89,7 +94,7 @@ class ImageReviewTest extends WikiaBaseTest {
 		);
 		$getOrderMethod->setAccessible(true);
 
-		$this->assertEquals($expected, $getOrderMethod->invoke(F::build('ImageReviewHelper'), $order));
+		$this->assertEquals($expected, $getOrderMethod->invoke((new ImageReviewHelper), $order));
 	}
 
 	public function imageReviewHelperGetOrderDataProvider() {

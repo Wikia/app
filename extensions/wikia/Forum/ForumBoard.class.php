@@ -19,14 +19,14 @@ class ForumBoard extends Wall {
 	public function getBoardInfo($db = DB_SLAVE) {
 		wfProfileIn( __METHOD__ );
 
-		$memKey = $this->wf->MemcKey( 'forum_board_info', $this->getId() );
+		$memKey = wfMemcKey( 'forum_board_info', $this->getId() );
 
 		if ( $db == DB_SLAVE ) {
 			$info = $this->wg->Memc->get( $memKey );
 		}
 
 		if ( empty( $info ) ) {
-			$db = $this->wf->GetDB( $db );
+			$db = wfGetDB( $db );
 
 			$row = $db->selectRow(
 				array( 'comments_index' ),
@@ -45,10 +45,10 @@ class ForumBoard extends Wall {
 				$info = array( 'postCount' => $row->posts, 'threadCount' => $row->threads, );
 
 				// get last post info
-				$revision = F::build( 'Revision', array( $row->rev_id ), 'newFromId' );
+				$revision = Revision::newFromId( $row->rev_id );
 				if ( $revision instanceof Revision ) {
 					if ( $revision->getRawUser() == 0 ) {
-						$username = $this->wf->Msg( 'oasis-anon-user' );
+						$username = wfMsg( 'oasis-anon-user' );
 					} else {
 						$username = $revision->getRawUserText();
 					}
@@ -78,7 +78,7 @@ class ForumBoard extends Wall {
 		wfProfileIn( __METHOD__ );
 
 		if(empty($relatedPageId)) {
-			$memKey = $this->wf->MemcKey( 'forum_board_active_threads', $this->getId() );
+			$memKey = wfMemcKey( 'forum_board_active_threads', $this->getId() );
 
 			if ( $db == DB_SLAVE ) {
 				$activeThreads = $this->wg->Memc->get( $memKey );
@@ -86,7 +86,7 @@ class ForumBoard extends Wall {
 		}
 
 		if ( !empty( $relatedPageId ) || $activeThreads === false ) {
-			$db = $this->wf->GetDB( $db );
+			$db = wfGetDB( $db );
 
 			if ( !empty( $relatedPageId ) ) {
 				$filter = "comment_id in (select comment_id from wall_related_pages where page_id = {$relatedPageId})";
@@ -125,7 +125,7 @@ class ForumBoard extends Wall {
 		$this->getBoardInfo( DB_MASTER );
 		$this->getTotalActiveThreads( DB_MASTER );
 
-		$title = F::build( 'Title', array( $this->getId() ), 'newFromID' );
+		$title = Title::newFromID( $this->getId() );
 		if ( $title instanceof Title ) {
 			$title->purgeSquid();
 		}

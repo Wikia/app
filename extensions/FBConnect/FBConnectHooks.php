@@ -728,7 +728,7 @@ HTML;
 	 * clear facebook session
 	 */
 	public static function UserLogout(&$user){
-		F::build('FBConnectAPI')->logout();
+		(new FBConnectAPI)->logout();
 		return true;
 	}
 }

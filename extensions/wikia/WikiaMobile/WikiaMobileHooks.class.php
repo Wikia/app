@@ -215,10 +215,10 @@ class WikiaMobileHooks extends WikiaObject{
 			$text = $title->getText();
 
 			//converting categoryArticle to Article to avoid circular reference in CategoryPage::view
-			F::build( 'Article', array( $title ) )->view();
+			( new Article( $title ) )->view();
 
 			//add scripts that belongs only to category pages
-			$scripts = F::build( 'AssetsManager', array(), 'getInstance' )->getURL( array( 'wikiamobile_categorypage_js' ) );
+			$scripts = AssetsManager::getInstance()->getURL( array( 'wikiamobile_categorypage_js' ) );
 
 			//this is going to be additional call but at least it won't be loaded on every page
 			foreach ( $scripts as $s ) {
@@ -226,7 +226,7 @@ class WikiaMobileHooks extends WikiaObject{
 			}
 
 			//set proper titles for a page
-			$out->setPageTitle( $text . ' <span id=catTtl>' . $this->wf->MsgForContent( 'wikiamobile-categories-tagline' ) . '</span>');
+			$out->setPageTitle( $text . ' <span id=catTtl>' . wfMsgForContent( 'wikiamobile-categories-tagline' ) . '</span>');
 			$out->setHTMLTitle( $text );
 
 			//render lists: exhibition and alphabetical
@@ -252,12 +252,12 @@ class WikiaMobileHooks extends WikiaObject{
 		$title = $page->getTitle();
 
 		if ( $title->getNamespace() == NS_CATEGORY ) {
-			$category = F::build( 'Category', array( $title ), 'newFromTitle' );
+			$category = Category::newFromTitle( $title );
 
 			/**
 			 * @var $model WikiaMobileCategoryModel
 			 */
-			$model = F::build( 'WikiaMobileCategoryModel' );
+			$model = (new WikiaMobileCategoryModel);
 
 			$model->purgeItemsCollectionCache( $category->getName() );
 			$model->purgeExhibitionItemsCacheKey( $title->getText() );

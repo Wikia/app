@@ -15,7 +15,7 @@ class AutoLinker {
 		$app->wg->Out->addScriptFile($app->wg->ExtensionsPath . '/wikia/hacks/AutoLinker/js/AutoLinkerModule.js');
 
 		// load messages
-		F::build('JSMessages')->enqueuePackage('AutoLinker', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('AutoLinker', JSMessages::EXTERNAL);
 
 		return true;
 	}

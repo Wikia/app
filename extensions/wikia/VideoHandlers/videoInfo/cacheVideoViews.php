@@ -33,13 +33,13 @@ class WikiaTask {
 
 	public static function work ( $wiki_id ) {
 		$app = F::app();
-		if ( $app->wf->ReadOnly() ) {
+		if ( wfReadOnly() ) {
 			die( "Error: In read only mode." );
 		}
 
 		echo "Wiki $wiki_id\n";
 
-		$db = $app->wf->GetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER );
 
 		$tableExists = $db->tableExists( 'video_info' );
 		if ( !$tableExists ) {

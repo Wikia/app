@@ -209,7 +209,7 @@ class DataFeedProvider {
 
 			if( class_exists('Wall') && !empty($item['wall']) ) {
 
-				$wh = F::build('WallHelper', array());
+				$wh = new WallHelper();
 				if( !empty($item['parent-id']) ) {
 					$data = $wh->getWallComments($item['parent-id']);
 					$item['comments'] = $data['comments'];
@@ -348,7 +348,7 @@ class DataFeedProvider {
 
 		} elseif (defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ) {
 			if ( class_exists( 'RelatedVideosService' ) ){
-				$oRVService = F::build( 'RelatedVideosService' );
+				$oRVService = (new RelatedVideosService);
 				$item = $oRVService->editWikiActivityParams( $title, $res, $item );
 
 			}
@@ -420,10 +420,10 @@ class DataFeedProvider {
 				$res['rc_params'] = '';
 			}
 		} elseif ( !empty($wgWallNS) && in_array(MWNamespace::getSubject($res['ns']), $wgWallNS) && $this->proxyType == self::AF ) {
-			$wh = F::build( 'WallHelper' );
+			$wh = (new WallHelper);
 			$item = $wh->wikiActivityFilterMessageWall($title, $res);
 		} elseif ( defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ){
-			$oRVService = F::build( 'RelatedVideosService' );
+			$oRVService = (new RelatedVideosService);
 			$item = $oRVService->createWikiActivityParams($title, $res, $item);
 		}
 

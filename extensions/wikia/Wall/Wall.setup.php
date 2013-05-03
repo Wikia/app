@@ -25,22 +25,22 @@ $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
 $app = F::app();
 
-$app->registerClass('Wall', $dir . '/Wall.class.php');
-$app->registerClass('Walls', $dir . '/Walls.class.php');
-$app->registerClass('WallThread', $dir . '/WallThread.class.php');
+$wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
+$wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
+$wgAutoloadClasses['WallThread'] =  $dir . '/WallThread.class.php';
 
-$app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
-$app->registerClass('WallController', $dir . '/WallController.class.php');
-$app->registerClass('WallExternalController', $dir . '/WallExternalController.class.php');
-$app->registerClass('WallHistoryController', $dir . '/WallHistoryController.class.php');
-$app->registerClass('WallHooksHelper', $dir . '/WallHooksHelper.class.php');
-$app->registerClass('WallRailHelper', $dir . '/WallRailHelper.class.php');
-$app->registerClass('WallRailController', $dir . '/WallRailController.class.php');
-$app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
-$app->registerClass('WallHistory', $dir . '/WallHistory.class.php');
-$app->registerClass('WallBaseController', $dir . '/WallBaseController.class.php');
-$app->registerClass('VoteHelper', $dir . '/VoteHelper.class.php');
-$app->registerClass('WallRelatedPages', $dir . '/WallRelatedPages.class.php');
+$wgAutoloadClasses['WallMessage'] =  $dir . '/WallMessage.class.php';
+$wgAutoloadClasses['WallController'] =  $dir . '/WallController.class.php';
+$wgAutoloadClasses['WallExternalController'] =  $dir . '/WallExternalController.class.php';
+$wgAutoloadClasses['WallHistoryController'] =  $dir . '/WallHistoryController.class.php';
+$wgAutoloadClasses['WallHooksHelper'] =  $dir . '/WallHooksHelper.class.php';
+$wgAutoloadClasses['WallRailHelper'] =  $dir . '/WallRailHelper.class.php';
+$wgAutoloadClasses['WallRailController'] =  $dir . '/WallRailController.class.php';
+$wgAutoloadClasses['WallHelper'] =  $dir . '/WallHelper.class.php';
+$wgAutoloadClasses['WallHistory'] =  $dir . '/WallHistory.class.php';
+$wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.php';
+$wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
+$wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
 
 // register task in task manager
@@ -156,7 +156,7 @@ $app->registerHook( 'HAWelcomeGetPrefixText', 'WallHooksHelper', 'onHAWelcomeGet
 // Monobook toolbar links
 $app->registerHook( 'SkinTemplateToolboxEnd', 'WallHooksHelper', 'onBuildMonobookToolbox');
 
-F::build('JSMessages')->registerPackage('Wall', array(
+JSMessages::registerPackage('Wall', array(
 	'wall-notifications',
 	'wall-notifications-reminder',
 	'wall-notifications-wall-disabled',

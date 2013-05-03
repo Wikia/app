@@ -12,7 +12,7 @@ class PlaceModel {
 	private $caption = false;
 
 	public static function newFromAttributes( $array = null ){
-		$oModel = F::build( 'PlaceModel' );
+		$oModel = (new PlaceModel);
 		if ( is_array( $array ) ){
 			foreach ( $array as $key => $val ){
 				$setter = 'set'.ucfirst( strtolower( $key ) );
@@ -202,7 +202,7 @@ class PlaceModel {
 		wfProfileIn(__METHOD__);
 
 		$pageId = $this->getPageId();
-		$oTitle = F::build('Title', array($pageId), 'newFromID' );
+		$oTitle = Title::newFromID($pageId);
 
 		if (empty($oTitle) || !$oTitle->exists()) {
 			wfProfileOut(__METHOD__);
@@ -219,7 +219,7 @@ class PlaceModel {
 			$imageUrl = '';
 		}
 
-		$oArticleService = F::Build('ArticleService');
+		$oArticleService = new ArticleService();
 		$oArticleService->setArticleById( $pageId );
 
 		$textSnippet = $oArticleService->getTextSnippet( 120 );

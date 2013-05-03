@@ -464,7 +464,7 @@ class Chat {
 
 		if ( empty($entry) ) {
 			$wgMemc->set($memcKey, true, 60*3 /*3 min*/);
-			$log = F::build( 'LogPage', array( 'chatconnect', false, false ) );
+			$log = new LogPage( 'chatconnect', false, false );
 			$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', array($ip), $wgUser);
 
 			$dbw = wfGetDB( DB_MASTER );

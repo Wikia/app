@@ -8,8 +8,8 @@
 				<? if ($isEditMode): ?>
 					<div class="editControls">
 						<!-- Admin editControls here -->
-						<img src="<?= $wf->BlankImgUrl() ?>" class="sprite edit-pencil">
-						<img src="<?= $wf->BlankImgUrl() ?>" class="sprite trash">
+						<img src="<?= wfBlankImgUrl() ?>" class="sprite edit-pencil">
+						<img src="<?= wfBlankImgUrl() ?>" class="sprite trash">
 						<span class="moveup"></span>
 						<span class="movedown"></span>
 					</div>
@@ -22,13 +22,13 @@
 				<!-- placeholder for future feature -->
 			</div>
 			<ul class="activity">
-				<li class="threads"><?= $wf->MsgExt( 'forum-specialpage-board-threads', array( 'parsemag' ), $wg->Lang->formatNum( $board['threadCount'] ) ) ?></li>
-				<li class="posts"><?= $wf->MsgExt( 'forum-specialpage-board-posts', array( 'parsemag' ), $wg->Lang->formatNum( $board['postCount'] ) ) ?></li>
+				<li class="threads"><?= wfMsgExt( 'forum-specialpage-board-threads', array( 'parsemag' ), $wg->Lang->formatNum( $board['threadCount'] ) ) ?></li>
+				<li class="posts"><?= wfMsgExt( 'forum-specialpage-board-posts', array( 'parsemag' ), $wg->Lang->formatNum( $board['postCount'] ) ) ?></li>
 			</ul>
 			<? if (!$isEditMode && $board['postCount'] > 0): ?>
 				<p class="last-post"><?= $lastPostByMsg ?>
 					<a href="<?= $board['lastPost']['userprofile'] ?>"><?= $board['lastPost']['username'] ?></a>
-					<span class="timestamp timeago" title="<?= $wf->Timestamp( TS_ISO_8601, $board['lastPost']['timestamp'] ) ?>"><?= $wg->Lang->timeanddate( $board['lastPost']['timestamp'] ) ?></span>
+					<span class="timestamp timeago" title="<?= wfTimestamp( TS_ISO_8601, $board['lastPost']['timestamp'] ) ?>"><?= $wg->Lang->timeanddate( $board['lastPost']['timestamp'] ) ?></span>
 				</p>
 			<? endif; ?>
 		</li>

@@ -21,10 +21,10 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //classes
-$app->registerClass('WikiaHubsSuggestController', $dir.'WikiaHubsSuggestController.class.php');
-$app->registerClass('WikiaHubsPopularVideos', $dir . 'WikiaHubsHook.class.php');
-$app->registerClass('WikiaHubsMobile', $dir . 'WikiaHubsHook.class.php');
-$app->registerClass('WikiaHubsHelper', $dir . 'WikiaHubsHelper.class.php');
+$wgAutoloadClasses['WikiaHubsSuggestController'] =  $dir.'WikiaHubsSuggestController.class.php';
+$wgAutoloadClasses['WikiaHubsPopularVideos'] =  $dir . 'WikiaHubsHook.class.php';
+$wgAutoloadClasses['WikiaHubsMobile'] =  $dir . 'WikiaHubsHook.class.php';
+$wgAutoloadClasses['WikiaHubsHelper'] =  $dir . 'WikiaHubsHelper.class.php';
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiaHubs'] = $dir . 'WikiaHubs.i18n.php';

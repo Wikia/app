@@ -19,7 +19,7 @@ class VideoInfoHelper extends WikiaModel {
 			$title = Title::newFromText( $title, NS_FILE );
 		}
 
-		$file = $this->wf->FindFile( $title );
+		$file = wfFindFile( $title );
 		$video = $this->getVideoDataFromFile( $file, $premiumOnly );
 
 		wfProfileOut( __METHOD__ );
@@ -47,7 +47,7 @@ class VideoInfoHelper extends WikiaModel {
 			if ( !($premiumOnly && $file->isLocal()) ) {
 				$fileMetadata = $file->getMetadata();
 				$userId = $file->getUser( 'id' );
-				$addedAt = ( $file->getTimestamp() ) ? $file->getTimestamp() : $this->wf->Timestamp( TS_MW );
+				$addedAt = ( $file->getTimestamp() ) ? $file->getTimestamp() : wfTimestamp( TS_MW );
 
 				$duration = 0;
 				$hdfile = 0;
@@ -115,7 +115,7 @@ class VideoInfoHelper extends WikiaModel {
 			return $videoList;
 		}
 
-		$db = $app->wf->GetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE );
 
 		$result = $db->select(
 			array( 'video_info' ),
@@ -251,7 +251,7 @@ class VideoInfoHelper extends WikiaModel {
 		$app = F::app();
 		$exists = false;
 		if ( !empty($app->wg->enableSpecialVideosExt) ) {
-			$db = $app->wf->GetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE );
 			if ( $db->tableExists( 'video_info' ) ) {
 				$exists = true;
 			}

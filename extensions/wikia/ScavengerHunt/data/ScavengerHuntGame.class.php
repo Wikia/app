@@ -57,14 +57,14 @@ class ScavengerHuntGame {
 	protected $progressBarHintLabel = array();
 
 
-	public function __construct( WikiaApp $app, $id = 0 ) {
+	public function __construct( $id = 0 ) {
 		$this->startPopupSprite =
 		$this->finishPopupSprite =
 		$this->progressBarBackgroundSprite =
 		$this->progressBarExitSprite =
 		$this->progressBarHintLabel = ScavengerHuntGameArticle::getSpriteTemplate();
 
-		$this->app = $app;
+		$this->app = F::app();
 		$this->id = $id;
 	}
 
@@ -80,13 +80,13 @@ class ScavengerHuntGame {
 	}
 
 	public function resetLandingParams( $landingTitle ) {
-		$aExplodedURL = (array) F::build( 'GlobalTitle', array( $landingTitle ), 'explodeURL' );
+		$aExplodedURL = (array) GlobalTitle::explodeURL( $landingTitle );
 		$this->landingArticleWikiId = $aExplodedURL['wikiId'];
 		$this->landingArticleName = $aExplodedURL['articleName'];
 	}
 
 	public function getLandingParams() {
-		return F::build( 'GlobalTitle', array( $this->landingTitle ), 'explodeURL' );
+		return GlobalTitle::explodeURL( $this->landingTitle );
 	}
 
 	public function getGoodbyeImageOffset() {
