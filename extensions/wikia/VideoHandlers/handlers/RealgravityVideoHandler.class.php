@@ -48,7 +48,11 @@ $sizeString classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" style="visibili
 </object>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'title' => $this->DBKey,
+			'provider' => 'realgravity',
+		);
 	}
 
 	public function getEmbedSrcData() {

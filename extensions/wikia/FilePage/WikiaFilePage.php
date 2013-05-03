@@ -51,7 +51,13 @@ abstract class WikiaFilePage extends ImagePage {
 
 		$autoplay = $app->wg->VideoPageAutoPlay;
 
-		$videoDisplay = '<div class="fullImageLink" id="file">' . $file->getEmbedCode( self::VIDEO_WIDTH, $autoplay ) . '</div>';
+		// JS for VideoBootstrap
+		$embedCode = $file->getEmbedCode( self::VIDEO_WIDTH, $autoplay );
+		$embedCode['htmlPreloaded'] = 1; // Tell JS that HTML will already be loaded on the page.
+
+		$videoDisplay = '<script type="text/javascript">window.playerParams = '.json_encode( $embedCode ).';</script>';
+
+		$videoDisplay .= '<div class="fullImageLink" id="file">' . $embedCode['html'] . '</div>';
 
 		$videoDisplay .= $this->getVideoInfoLine( $file );
 
@@ -73,6 +79,7 @@ abstract class WikiaFilePage extends ImagePage {
 
 		if ( $this->isVideo() ) {
 			$this->loadFile();
+			$file = $this->getDisplayedFile();
 			$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
 			$name = $file->getName();
 			$url = $uploadTitle->getFullUrl( array( 'name' => $name ) );

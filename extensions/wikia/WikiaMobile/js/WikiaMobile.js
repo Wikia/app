@@ -115,15 +115,17 @@ window.addEventListener('DOMContentLoaded', function () {
 				});
 			}
 
-			// TODO: this is only for video file pages - Mobile team can decide where to actually put it. 
-			var element = document.getElementById('file');
+			// TODO: this is only for video file pages - Mobile team can decide where to actually put it.
+			var element = document.getElementById('file'),
+				videoInstance;
+
 			if(element && window.playerParams) {
 				require(['wikia.videoBootstrap'], function (videoBootstrap) {
-					videoBootstrap(element, window.playerParams);
+					videoInstance = new videoBootstrap(element, window.playerParams);
 				});
 			}
 
-		
+
 		}
 	);
 });

@@ -173,6 +173,7 @@ class WikiaLocalFileShared  {
 					$handler->setVideoId( $videoId );
 				}
 				$handler->setTitle($this->oFile->getTitle()->getText());
+				$handler->setDBKey($this->oFile->getTitle()->getDBKey());
 				$handler->setMetadata($this->oFile->metadata);
 			}
 		}
