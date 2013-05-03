@@ -54,107 +54,107 @@ include($dir . '/notification/WallNotifications.setup.php');
 
 $app->registerExtensionMessageFile('Wall', $dir . '/Wall.i18n.php');
 
-$app->registerHook('AccountNavigationModuleAfterDropdownItems', 'WallHooksHelper', 'onAccountNavigationModuleAfterDropdownItems');
-$app->registerHook('ArticleViewHeader', 'WallHooksHelper', 'onArticleViewHeader');
-$app->registerHook('SkinTemplateTabs', 'WallHooksHelper', 'onSkinTemplateTabs');
-$app->registerHook('AlternateEdit', 'WallHooksHelper', 'onAlternateEdit');
-$app->registerHook('AfterEditPermissionErrors', 'WallHooksHelper', 'onAfterEditPermissionErrors');
-$app->registerHook('BeforePageProtect', 'WallHooksHelper', 'onBeforePageProtect');
-$app->registerHook('BeforePageUnprotect', 'WallHooksHelper', 'onBeforePageUnprotect');
-$app->registerHook('BeforePageDelete', 'WallHooksHelper', 'onBeforePageDelete');
-$app->registerHook('PersonalUrls', 'WallHooksHelper', 'onPersonalUrls');
-$app->registerHook('UserPagesHeaderModuleAfterGetTabs', 'WallHooksHelper', 'onUserPagesHeaderModuleAfterGetTabs');
-$app->registerHook('SkinSubPageSubtitleAfterTitle', 'WallHooksHelper', 'onSkinSubPageSubtitleAfterTitle');
-$app->registerHook('SkinTemplateContentActions', 'WallHooksHelper', 'onSkinTemplateContentActions');
-$app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared');
-$app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpCompleteWatch');
-$app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
+$wgHooks['AccountNavigationModuleAfterDropdownItems'][] = 'WallHooksHelper::onAccountNavigationModuleAfterDropdownItems';
+$wgHooks['ArticleViewHeader'][] = 'WallHooksHelper::onArticleViewHeader';
+$wgHooks['SkinTemplateTabs'][] = 'WallHooksHelper::onSkinTemplateTabs';
+$wgHooks['AlternateEdit'][] = 'WallHooksHelper::onAlternateEdit';
+$wgHooks['AfterEditPermissionErrors'][] = 'WallHooksHelper::onAfterEditPermissionErrors';
+$wgHooks['BeforePageProtect'][] = 'WallHooksHelper::onBeforePageProtect';
+$wgHooks['BeforePageUnprotect'][] = 'WallHooksHelper::onBeforePageUnprotect';
+$wgHooks['BeforePageDelete'][] = 'WallHooksHelper::onBeforePageDelete';
+$wgHooks['PersonalUrls'][] = 'WallHooksHelper::onPersonalUrls';
+$wgHooks['UserPagesHeaderModuleAfterGetTabs'][] = 'WallHooksHelper::onUserPagesHeaderModuleAfterGetTabs';
+$wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'WallHooksHelper::onSkinSubPageSubtitleAfterTitle';
+$wgHooks['SkinTemplateContentActions'][] = 'WallHooksHelper::onSkinTemplateContentActions';
+$wgHooks['PageHeaderIndexAfterActionButtonPrepared'][] = 'WallHooksHelper::onPageHeaderIndexAfterActionButtonPrepared';
+$wgHooks['BlockIpCompleteWatch'][] = 'WallHooksHelper::onBlockIpCompleteWatch';
+$wgHooks['UserIsBlockedFrom'][] = 'WallHooksHelper::onUserIsBlockedFrom';
 
-$app->registerHook( 'ArticleRobotPolicy', 'WallHooksHelper', 'onArticleRobotPolicy' );
+$wgHooks['ArticleRobotPolicy'][] = 'WallHooksHelper::onArticleRobotPolicy';
 
 //wall history in toolbar
-$app->registerHook('BeforeToolbarMenu', 'WallHooksHelper', 'onBeforeToolbarMenu');
-$app->registerHook('BeforePageHistory', 'WallHooksHelper', 'onBeforePageHistory');
-$app->registerHook('GetHistoryDescription', 'WallHooksHelper', 'onGetHistoryDescription');
+$wgHooks['BeforeToolbarMenu'][] = 'WallHooksHelper::onBeforeToolbarMenu';
+$wgHooks['BeforePageHistory'][] = 'WallHooksHelper::onBeforePageHistory';
+$wgHooks['GetHistoryDescription'][] = 'WallHooksHelper::onGetHistoryDescription';
 
-$app->registerHook('AllowNotifyOnPageChange', 'WallHooksHelper', 'onAllowNotifyOnPageChange');
-$app->registerHook('GetPreferences', 'WallHooksHelper', 'onGetPreferences');
+$wgHooks['AllowNotifyOnPageChange'][] = 'WallHooksHelper::onAllowNotifyOnPageChange';
+$wgHooks['GetPreferences'][] = 'WallHooksHelper::onGetPreferences';
 
 //recent changes adjusting
 
-$app->registerHook('AC_RecentChange_Save', 'WallHooksHelper', 'onRecentChangeSave');
-$app->registerHook('ChangesListInsertFlags', 'WallHooksHelper', 'onChangesListInsertFlags');
-$app->registerHook('ChangesListInsertArticleLink', 'WallHooksHelper', 'onChangesListInsertArticleLink');
-$app->registerHook('ChangesListInsertDiffHist', 'WallHooksHelper', 'onChangesListInsertDiffHist');
-$app->registerHook('ChangesListInsertRollback', 'WallHooksHelper', 'onChangesListInsertRollback');
-$app->registerHook('ChangesListInsertLogEntry', 'WallHooksHelper', 'onChangesListInsertLogEntry');
-$app->registerHook('ChangesListInsertComment', 'WallHooksHelper', 'onChangesListInsertComment');
+$wgHooks['AC_RecentChange_Save'][] = 'WallHooksHelper::onRecentChangeSave';
+$wgHooks['ChangesListInsertFlags'][] = 'WallHooksHelper::onChangesListInsertFlags';
+$wgHooks['ChangesListInsertArticleLink'][] = 'WallHooksHelper::onChangesListInsertArticleLink';
+$wgHooks['ChangesListInsertDiffHist'][] = 'WallHooksHelper::onChangesListInsertDiffHist';
+$wgHooks['ChangesListInsertRollback'][] = 'WallHooksHelper::onChangesListInsertRollback';
+$wgHooks['ChangesListInsertLogEntry'][] = 'WallHooksHelper::onChangesListInsertLogEntry';
+$wgHooks['ChangesListInsertComment'][] = 'WallHooksHelper::onChangesListInsertComment';
 
-$app->registerHook('ArticleDoDeleteArticleBeforeLogEntry', 'WallHooksHelper', 'onArticleDoDeleteArticleBeforeLogEntry');
-$app->registerHook('PageArchiveUndeleteBeforeLogEntry', 'WallHooksHelper', 'onPageArchiveUndeleteBeforeLogEntry');
-$app->registerHook('OldChangesListRecentChangesLine', 'WallHooksHelper', 'onOldChangesListRecentChangesLine');
-$app->registerHook('ChangesListMakeSecureName', 'WallHooksHelper', 'onChangesListMakeSecureName');
-$app->registerHook('WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup', 'WallHooksHelper', 'onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup');
-$app->registerHook('ChangesListItemGroupRegular', 'WallHooksHelper', 'onChangesListItemGroupRegular');
+$wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'WallHooksHelper::onArticleDoDeleteArticleBeforeLogEntry';
+$wgHooks['PageArchiveUndeleteBeforeLogEntry'][] = 'WallHooksHelper::onPageArchiveUndeleteBeforeLogEntry';
+$wgHooks['OldChangesListRecentChangesLine'][] = 'WallHooksHelper::onOldChangesListRecentChangesLine';
+$wgHooks['ChangesListMakeSecureName'][] = 'WallHooksHelper::onChangesListMakeSecureName';
+$wgHooks['WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup'][] = 'WallHooksHelper::onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup';
+$wgHooks['ChangesListItemGroupRegular'][] = 'WallHooksHelper::onChangesListItemGroupRegular';
 
-$app->registerHook('ArticleDeleteComplete' , 'WallHooksHelper', 'onArticleDeleteComplete');
-$app->registerHook( 'FilePageImageUsageSingleLink', 'WallHooksHelper', 'onFilePageImageUsageSingleLink' );
+$wgHooks['ArticleDeleteComplete'][] = 'WallHooksHelper::onArticleDeleteComplete';
+$wgHooks['FilePageImageUsageSingleLink'][] = 'WallHooksHelper::onFilePageImageUsageSingleLink';
 
-$app->registerHook('getUserPermissionsErrors', 'WallHooksHelper', 'onGetUserPermissionsErrors');
-$app->registerHook('ComposeCommonBodyMail', 'WallHooksHelper', 'onComposeCommonBodyMail' );
+$wgHooks['getUserPermissionsErrors'][] = 'WallHooksHelper::onGetUserPermissionsErrors';
+$wgHooks['ComposeCommonBodyMail'][] = 'WallHooksHelper::onComposeCommonBodyMail';
 
 //Special:Contributions adjusting
-$app->registerHook('ContributionsLineEnding', 'WallHooksHelper', 'onContributionsLineEnding' );
+$wgHooks['ContributionsLineEnding'][] = 'WallHooksHelper::onContributionsLineEnding';
 
 //Special:Whatlinkshere adjustinb
-$app->registerHook('SpecialWhatlinkshere::renderWhatLinksHereRow', 'WallHooksHelper', 'onRenderWhatLinksHereRow');
-$app->registerHook('ContributionsToolLinks', 'WallHooksHelper', 'onContributionsToolLinks');
+$wgHooks['SpecialWhatlinkshere::renderWhatLinksHereRow'][] = 'WallHooksHelper::onRenderWhatLinksHereRow';
+$wgHooks['ContributionsToolLinks'][] = 'WallHooksHelper::onContributionsToolLinks';
 
 //watchlist
-$app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArticleCommentBeforeWatchlistAdd');
-//$app->registerHook('WatchArticle', 'WallHooksHelper', 'onWatchArticle');
-//$app->registerHook('UnwatchArticle', 'WallHooksHelper', 'onUnwatchArticle');
+$wgHooks['ArticleCommentBeforeWatchlistAdd'][] = 'WallHooksHelper::onArticleCommentBeforeWatchlistAdd';
+//$wgHooks['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
+//$wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 
 //diff page adjusting
-$app->registerHook('DiffViewHeader', 'WallHooksHelper', 'onDiffViewHeader');
-$app->registerHook('PageHeaderEditPage', 'WallHooksHelper', 'onPageHeaderEditPage');
-$app->registerHook('DiffLoadText', 'WallHooksHelper', 'onDiffLoadText');
+$wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
+$wgHooks['PageHeaderEditPage'][] = 'WallHooksHelper::onPageHeaderEditPage';
+$wgHooks['DiffLoadText'][] = 'WallHooksHelper::onDiffLoadText';
 
 //right rail adjusting
-$app->registerHook('GetRailModuleList', 'WallRailHelper', 'onGetRailModuleList');
+$wgHooks['GetRailModuleList'][] = 'WallRailHelper::onGetRailModuleList';
 
 //handmade links to message wall adjusting
-$app->registerHook('LinkBegin', 'WallHooksHelper', 'onLinkBegin');
-$app->registerHook('LinkerUserTalkLinkAfter', 'WallHooksHelper', 'onLinkerUserTalkLinkAfter');
+$wgHooks['LinkBegin'][] = 'WallHooksHelper::onLinkBegin';
+$wgHooks['LinkerUserTalkLinkAfter'][] = 'WallHooksHelper::onLinkerUserTalkLinkAfter';
 
 //saving user talk archive redirects to user talk archive
-$app->registerHook('ArticleSaveComplete', 'WallHooksHelper', 'onArticleSaveComplete');
+$wgHooks['ArticleSaveComplete'][] = 'WallHooksHelper::onArticleSaveComplete';
 
 //cancel API vote adding
-$app->registerHook('ArticleBeforeVote', 'WallHooksHelper', 'onArticleBeforeVote');
+$wgHooks['ArticleBeforeVote'][] = 'WallHooksHelper::onArticleBeforeVote';
 
 // vote invalidation
-$app->registerHook('BlockIpComplete', 'WallHooksHelper', 'onBlockIpComplete');
-$app->registerHook('UnBlockIpComplete', 'WallHooksHelper', 'onBlockIpComplete');
+$wgHooks['BlockIpComplete'][] = 'WallHooksHelper::onBlockIpComplete';
+$wgHooks['UnBlockIpComplete'][] = 'WallHooksHelper::onBlockIpComplete';
 
-$app->registerHook('CategoryViewer::beforeCategoryData', 'WallHooksHelper', 'onBeforeCategoryData');
+$wgHooks['CategoryViewer::beforeCategoryData'][] = 'WallHooksHelper::onBeforeCategoryData';
 
-$app->registerHook('GetRailModuleSpecialPageList', 'WallHooksHelper', 'onGetRailModuleSpecialPageList');
-$app->registerHook('SpecialWikiActivityExecute', 'WallHooksHelper', 'onSpecialWikiActivityExecute');
+$wgHooks['GetRailModuleSpecialPageList'][] = 'WallHooksHelper::onGetRailModuleSpecialPageList';
+$wgHooks['SpecialWikiActivityExecute'][] = 'WallHooksHelper::onSpecialWikiActivityExecute';
 
-$app->registerHook('WantedPages::getQueryInfo', 'WallHooksHelper', 'onWantedPagesGetQueryInfo');
-$app->registerHook('ListredirectsPage::getQueryInfo', 'WallHooksHelper', 'onListredirectsPageGetQueryInfo');
+$wgHooks['WantedPages::getQueryInfo'][] = 'WallHooksHelper::onWantedPagesGetQueryInfo';
+$wgHooks['ListredirectsPage::getQueryInfo'][] = 'WallHooksHelper::onListredirectsPageGetQueryInfo';
 
-$app->registerHook('BeforeInitialize', 'WallHooksHelper', 'onBeforeInitialize');
+$wgHooks['BeforeInitialize'][] = 'WallHooksHelper::onBeforeInitialize';
 // lazy loaded by the previous hook
 
-$app->registerHook( 'WikiFeatures::afterToggleFeature', 'WallHooksHelper', 'onAfterToggleFeature');
-$app->registerHook( 'AdvancedBoxSearchableNamespaces', 'WallHooksHelper', 'onAdvancedBoxSearchableNamespaces');
+$wgHooks['WikiFeatures::afterToggleFeature'][] = 'WallHooksHelper::onAfterToggleFeature';
+$wgHooks['AdvancedBoxSearchableNamespaces'][] = 'WallHooksHelper::onAdvancedBoxSearchableNamespaces';
 
-$app->registerHook( 'HAWelcomeGetPrefixText', 'WallHooksHelper', 'onHAWelcomeGetPrefixText');
+$wgHooks['HAWelcomeGetPrefixText'][] = 'WallHooksHelper::onHAWelcomeGetPrefixText';
 
 // Monobook toolbar links
-$app->registerHook( 'SkinTemplateToolboxEnd', 'WallHooksHelper', 'onBuildMonobookToolbox');
+$wgHooks['SkinTemplateToolboxEnd'][] = 'WallHooksHelper::onBuildMonobookToolbox';
 
 JSMessages::registerPackage('Wall', array(
 	'wall-notifications',
