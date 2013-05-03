@@ -337,33 +337,18 @@
 			}
 		}
 
-		function initSlider() {
-
-			$('.WikiaSlider').slider({
-				min: VET_MIN_WIDTH,
-				max: VET_MAX_WIDTH,
-				value: value,
-				slide: function(event, ui) {
-					$('#VideoEmbedManualWidth').val(ui.value);
-				},
-				create: function(event, ui) {
-					$('#VideoEmbedManualWidth').val(value);
-				}
-			});
-		}
-
-		// VET uses jquery ui slider, lazy load it if needed
-		if (!$.fn.slider) {
-			$.when(
-				$.getResources([
-					wgResourceBasePath + '/resources/jquery.ui/jquery.ui.widget.js',
-					wgResourceBasePath + '/resources/jquery.ui/jquery.ui.mouse.js',
-					wgResourceBasePath + '/resources/jquery.ui/jquery.ui.slider.js'
-				])
-			).done(initSlider);
-		} else {
-			initSlider();
-		}
+		// Init width slider
+		$('.WikiaSlider').slider({
+			min: VET_MIN_WIDTH,
+			max: VET_MAX_WIDTH,
+			value: value,
+			slide: function(event, ui) {
+				$('#VideoEmbedManualWidth').val(ui.value);
+			},
+			create: function(event, ui) {
+				$('#VideoEmbedManualWidth').val(value);
+			}
+		});
 
 		if ($( '#VET_error_box' ).length) {
 			GlobalNotification.show( $( '#VET_error_box' ).html(), 'error', null, VET_notificationTimout );

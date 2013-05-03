@@ -363,47 +363,50 @@ class ArticleCommentInit {
 		return true;
 	}
 
+	/**
+	 * formats links in the "File usage" section of file pages
+	 * @author Jakub Olek
+	 */
 	public static function onFilePageImageUsageSingleLink( &$link, &$element ) {
 		$app = F::app();
 		$ns = $element->page_namespace;
 
-		//comments and talk pages
-		if ( $ns == NS_TALK ) {
-			$title = Title::newFromText( $element->page_title, $ns );
+		$title = Title::newFromText( $element->page_title, $ns );
 
-			if ( !empty( $title ) ) {
-				$parentTitle = reset( explode( '/', $element->page_title) ); // getBaseText returns me parent comment for subcomment
+		if ( empty( $title ) ) {
+			// sanity check
+			return true;
+		}
 
-				$link = wfMsgExt(
-					'article-comments-file-page',
-					array ('parsemag'),
-					$title->getLocalURL(),
-					self::getUserNameFromRevision($title),
-					Title::newFromText( $parentTitle )->getLocalURL(),
-					$parentTitle
-				);
-			}
+		// format links to comment pages
+		if ( $ns == NS_TALK && ArticleComment::isTitleComment( $title ) ) {
+			$parentTitle = reset( explode( '/', $element->page_title) ); // getBaseText returns me parent comment for subcomment
 
-		//comments on blog posts
+			$link = wfMsgExt(
+				'article-comments-file-page',
+				array ('parsemag'),
+				$title->getLocalURL(),
+				self::getUserNameFromRevision($title),
+				Title::newFromText( $parentTitle )->getLocalURL(),
+				$parentTitle
+			);
+
+		// format links to blog posts
 		} else if ( $ns == NS_BLOG_ARTICLE_TALK ) {
-			$blogPostComment = Title::newFromText( $element->page_title, $ns );
+			$baseText = $title->getBaseText();
+			$titleNames = explode( '/', $baseText );
+			$userBlog = Title::newFromText( $titleNames[0], NS_BLOG_ARTICLE );
 
-			if( !empty( $blogPostComment ) ) {
-				$baseText = $blogPostComment->getBaseText();
-				$titleNames = explode( '/', $baseText );
-				$userBlog = Title::newFromText( $titleNames[0], NS_BLOG_ARTICLE );
-
-				$link = wfMsgExt(
-					'article-blog-comments-file-page',
-					array ('parsemag'),
-					$blogPostComment->getLocalURL(),
-					self::getUserNameFromRevision($blogPostComment),
-					Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getLocalURL(),
-					$titleNames[1],
-					$userBlog->getLocalURL(),
-					$userBlog->getBaseText()
-				);
-			}
+			$link = wfMsgExt(
+				'article-blog-comments-file-page',
+				array ('parsemag'),
+				$title->getLocalURL(),
+				self::getUserNameFromRevision($title),
+				Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getLocalURL(),
+				$titleNames[1],
+				$userBlog->getLocalURL(),
+				$userBlog->getBaseText()
+			);
 		}
 
 		return true;

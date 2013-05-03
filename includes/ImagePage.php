@@ -168,7 +168,7 @@ class ImagePage extends Article {
 	}
 
 	/**
-	 * Wikia - abstracted out part of view() function, so it can be wrapped by WikiaVideoPage
+	 * Wikia - abstracted out part of view() function, so it can be wrapped by ImagePageTabbed
 	 */
 	protected function imageContent() {
 		global $wgOut;
@@ -192,7 +192,7 @@ class ImagePage extends Article {
 	}
 
 	/**
-	 * Wikia - abstracted out part of view() function, so it can be wrapped by WikiaVideoPage
+	 * Wikia - abstracted out part of view() function, so it can be wrapped by ImagePageTabbed
 	 */
 	protected function imageDetails() {
 		global $wgOut;
@@ -223,7 +223,7 @@ class ImagePage extends Article {
 	}
 
 	/**
-	 * Wikia - abstracted out part of view() function, so it can be wrapped by WikiaVideoPage
+	 * Wikia - abstracted out part of view() function, so it can be wrapped by ImagePageTabbed
 	 */
 	protected function imageMetadata($formattedMetadata) {
 		global $wgOut;
@@ -234,14 +234,14 @@ class ImagePage extends Article {
 	 }
 
 	/**
-	 * Wikia - called in view() function, so it can be used by WikiaVideoPage
+	 * Wikia - called in view() function, so it can be used by ImagePageTabbed
 	 */
 	protected function imageFooter() {
 		// to be used by child classes
 	}
 
 	/**
-	 * Wikia - abstracted out part of view() function, so it can be overwritten by WikiaVideoPage
+	 * Wikia - abstracted out part of view() function, so it can be overwritten by ImagePageTabbed
 	 */
 	protected function imageListing() {
 		global $wgOut;
