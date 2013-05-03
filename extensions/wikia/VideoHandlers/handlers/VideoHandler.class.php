@@ -15,6 +15,7 @@ abstract class VideoHandler extends BitmapHandler {
 	protected $apiName = 'video/*';
 	protected $videoId = '';
 	protected $title = '';
+	protected $DBKey = '';
 	protected $metadata = null;
 	protected $maxHeight = false;
 	protected $thumbnailImage = null;
@@ -138,6 +139,10 @@ abstract class VideoHandler extends BitmapHandler {
 
 	function getTitle() {
 		return $this->title;
+	}
+
+	function setDBKey( $key ) {
+		$this->DBKey = $key;
 	}
 
 	function getAspectRatio(){

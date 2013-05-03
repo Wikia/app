@@ -2,12 +2,15 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 
 	// "vb" = video bootstrap
 	function vb (element, json) {
-		this.element = element;
-
-		var init = json.init,
+		var self = this,
+			init = json.init,
 			html = json.html,
 			scripts = json.scripts,
 			jsParams = json.jsParams;
+
+		this.element = element;
+		this.title = json.title;
+		this.provider = json.provider;
 
 		// insert html if it hasn't been inserted already
 		if(html && !json.htmlPreloaded) {
@@ -31,7 +34,7 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 				// execute the init function
 				if(init) {
 					require([init], function(init) {
-						init(jsParams);
+						init(jsParams, self);
 					});
 				}
 			});
@@ -44,7 +47,8 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 		 * need to reset the player with altered settings (such as autoplay).
 		 */
 		reload: function(title, width, autoplay) {
-			var element = this.element;
+			var videoInstance,
+				element = this.element;
 			nirvana.getJson(
 				'VideoHandler',
 				'getEmbedCode',
@@ -54,8 +58,28 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 					autoplay: autoplay ? 1 : 0 // backend needs an integer
 				}
 			).done(function(data) {
-				vb(element, data.embedCode);
+				videoInstance = new vb(element, data.embedCode);
 			});
+		},
+		track: function(action) {
+			Wikia.Tracker.track({
+				action: action,
+				category: 'video-player-stats',
+				label: this.provider,
+				trackingMethod: 'internal',
+				value: 0
+			}, {
+				title: this.title
+			});
+		},
+		timeStampId: function(id) {
+			var time = new Date().getTime(),
+				container = document.getElementById(id),
+				newId = id + "-" + time;
+
+			container.id = newId;
+
+			return newId;
 		}
 	}
 

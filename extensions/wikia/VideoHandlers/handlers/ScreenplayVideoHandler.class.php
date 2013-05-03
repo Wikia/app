@@ -28,7 +28,9 @@ class ScreenplayVideoHandler extends VideoHandler {
 			}
 
 			$result = array(
-				'html' => '<video controls ' . $poster . '><source src="' . $url . '">' . $app->wf->Msg( 'wikiamobile-unsupported-video-download', $url ) . '</video>'
+				'html' => '<video controls ' . $poster . '><source src="' . $url . '">' . $app->wf->Msg( 'wikiamobile-unsupported-video-download', $url ) . '</video>',
+				'title' => $this->DBKey,
+				'provider' => 'screenplay',
 			);
 		} else {
 			$metadata = $this->getMetadata( true );
@@ -51,7 +53,7 @@ class ScreenplayVideoHandler extends VideoHandler {
 			$jwplayer->setAjax($isAjax);
 			$jwplayer->setPostOnload($postOnload);
 
-			$result = $jwplayer->getEmbedCode();
+			$result = $jwplayer->getEmbedCode( 'screenplay', $this->DBKey );
 		}
 
 		return $result;

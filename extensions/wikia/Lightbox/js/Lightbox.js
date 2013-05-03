@@ -396,14 +396,15 @@ var Lightbox = {
 		trackingTimeout: false,
 		renderVideo: function(data) {
 			// render mustache template
-			var renderedResult = Lightbox.openModal.videoTemplate.mustache(data);
+			var renderedResult = Lightbox.openModal.videoTemplate.mustache(data),
+				videoInstance;
 
 			Lightbox.openModal.media
 				.addClass('video-media')
 				.css('line-height','normal');
 
 			require(['wikia.videoBootstrap'], function (videoBootstrap) {
-				videoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode);
+				videoInstance = new videoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode);
 			});
 		},
 		destroyVideo: function() {
