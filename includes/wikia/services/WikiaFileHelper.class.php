@@ -369,7 +369,11 @@ class WikiaFileHelper extends Service {
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 					$data['providerName'] = $file->getProviderName();
-					$mediaPage = new WikiaFilePage($fileTitle);
+					if ( F::app()->checkSkin( 'oasis' ) && !empty( $wgEnableVideoPageRedesign ) ) {
+						$mediaPage = new FilePageTabbed($fileTitle);
+					} else {
+						$mediaPage = new FilePageFlat($fileTitle);
+					}
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
 					$mediaPage = F::build( 'ImagePage', array($fileTitle) );
