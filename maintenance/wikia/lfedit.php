@@ -129,6 +129,11 @@ class LFEditCLI extends Maintenance {
 		$status = $page->doEdit( $text, '', ( $bot ? EDIT_FORCE_BOT : 0 ) | ( $noRC ? EDIT_SUPPRESS_RC : 0 ) );
 		if ( $status->isOK() ) {
 			$page_id = $page->getId();
+			if ( empty( $page_id ) ) {
+				if ( !empty( $status->value['revision'] ) ) {
+					$page_id = $status->value['revision']->getPage();
+				}
+			}			
 			if ( $page_id ) {
 				global $wgStatsDB;
 				$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
