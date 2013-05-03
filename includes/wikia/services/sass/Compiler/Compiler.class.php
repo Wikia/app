@@ -56,7 +56,7 @@ abstract class Compiler {
 	 * Compile the given SASS source
 	 *
 	 * @param Source $source Sass source
-	 * @throws SassException
+	 * @throws \Wikia\Sass\Exception
 	 * @return string Css stylesheet
 	 */
 	abstract public function compile( Source $source );

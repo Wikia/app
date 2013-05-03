@@ -6,7 +6,7 @@ class ScribeEventProducerController extends WikiaController {
 	}
 
 	public function onSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
-		$this->app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$key = ( isset( $status->value['new'] ) && $status->value['new'] == 1 ) ? 'create' : 'edit';
 		$is_archive = !empty( $undef1 );
@@ -18,12 +18,12 @@ class ScribeEventProducerController extends WikiaController {
 			}
 		}
 
-		$this->app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public function onSaveRevisionComplete( $oPage, $oRevision, $revision_id, $oUser, $allow = true ) {
-		$this->app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		# producer
 		if ( $allow ) {
@@ -35,12 +35,12 @@ class ScribeEventProducerController extends WikiaController {
 			}
 		}
 
-		$this->app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public function onDeleteComplete( &$oPage, &$oUser, $reason, $page_id ) {
-		$this->app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
  		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'delete' ) ); /* @var $oScribeProducer ScribeEventProducer */
 		if ( is_object( $oScribeProducer ) ) {
@@ -49,16 +49,16 @@ class ScribeEventProducerController extends WikiaController {
 			}
 		}
 
-		$this->app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public function onRevisionUndeleted( &$oTitle, Revision $oRevision, $page_id ) {
-		$this->app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oTitle ) ) {
 			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid title object" );
-			$this->app->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -72,12 +72,12 @@ class ScribeEventProducerController extends WikiaController {
 			}
 		}
 
-		$this->app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public function onArticleUndelete( &$oTitle, $is_new = false ) {
-		$this->app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
  		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'undelete' ) ); /* @var $oScribeProducer ScribeEventProducer */
 		if ( is_object( $oScribeProducer ) ) {
@@ -86,12 +86,12 @@ class ScribeEventProducerController extends WikiaController {
 			}
 		}
 
-		$this->app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public function onMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $page_id, $redirect_id = 0 ) {
-		$this->app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
  		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'edit' ) ); /* @var $oScribeProducer ScribeEventProducer */
 		if ( is_object( $oScribeProducer ) ) {
@@ -109,7 +109,7 @@ class ScribeEventProducerController extends WikiaController {
 			}
 		}
 
-		$this->app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 }

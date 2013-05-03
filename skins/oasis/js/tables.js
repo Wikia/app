@@ -23,6 +23,14 @@ var WikiaWideTables = {
 				var table = this,
 					wrapper;
 
+				// check if we've already handled this table
+				if ( table.hasClass('willPopOut') ) {
+					return;
+				}
+
+				// Note that this table has been processed already
+				table.addClass('willPopOut');
+
 				//Add wrapper for overflow
 				wrapper = table.wrap('<div class="WikiaWideTablesWrapper"><div class="table"></div></div>').parent().parent();
 
@@ -150,6 +158,9 @@ var WikiaWideTables = {
 
 $(function() {
 	WikiaWideTables.init();
+	$(window).on('wikiaTabClicked', function() {
+		WikiaWideTables.init.call(WikiaWideTables);
+	});
 });
 
 }(jQuery));

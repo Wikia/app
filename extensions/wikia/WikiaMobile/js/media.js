@@ -65,7 +65,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		if(data.capt) {this.caption = data.capt;}
 		if(data.type === 'video') {
 			this.isVideo = true;
-			this.supported = ~supportedVideos.indexOf(data.provider);
+			//some providers come with a 'subname' like ooyala/wikiawebinar
+			this.supported = ~supportedVideos.indexOf((data.provider || '').split('/')[0]);
 		}
 
 		if(length > 1){

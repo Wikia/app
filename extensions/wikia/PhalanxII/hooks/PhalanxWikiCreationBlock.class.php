@@ -14,13 +14,13 @@ class PhalanxWikiCreationBlock extends WikiaObject {
 	}
 	
 	public function isAllowedText( $text, $where = '', $split = '' ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$text = trim( $text );
 		$phalanxModel = F::build( 'PhalanxTextModel', array( $text ) );
 		$ret = $phalanxModel->match_wiki_creation();
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 }

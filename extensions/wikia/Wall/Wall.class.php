@@ -1,6 +1,8 @@
 <?php
 
 class Wall extends WikiaModel {
+	const DESCRIPTION_CACHE_TTL = 3600;
+
 	protected $mTitle;
 	protected $mCityId;
 
@@ -61,17 +63,27 @@ class Wall extends WikiaModel {
 	}
 	
 	public function getDescription ( $bParse = true ) {
-		$oArticle = new Article( $this->getTitle() );
-		if ( !$bParse ) {
-			return $oArticle->getText();
+		/** @var $title Title */
+		$title = $this->getTitle();
+		$memcKey = $this->wf->memcKey(__METHOD__,$title->getArticleID(),$title->getTouchedCached());
+		$res = $this->wg->memc->get($memcKey);
+		if ( !is_string($res) ) {
+			$oArticle = new Article( $this->getTitle() );
+			if ( !$bParse ) {
+				return $oArticle->getText();
+			}
+			$oApp = F::App();
+			$oParserOptions = $oApp->wg->Out->parserOptions();
+			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
+			$aOutput = array();
+			// Take the content out of an HTML P element and strip whitespace from the beginning and end.
+			$res = '';
+			if ( preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $oParserOut->getText(), $aOutput ) ) {
+				$res = $aOutput[1];
+			}
+			$this->wg->memc->set($memcKey,$res,self::DESCRIPTION_CACHE_TTL);
 		}
-		$oApp = F::App();
-		$oParserOptions = $oApp->wg->Out->parserOptions();
-		$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
-		$aOutput = array();
-		// Take the content out of an HTML P element and strip whitespace from the beginning and end.
-		preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $oParserOut->getText(), $aOutput );
-		return $aOutput[1];
+		return $res;
 	}
 
 	public function getRelatedPageId() {

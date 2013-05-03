@@ -83,7 +83,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 	/**
 	 * @desc Creates sponsored image markup which is then passed to wfMessage()
-	 * 
+	 *
 	 * @param $imageTitleText
 	 * @return string
 	 */
@@ -127,4 +127,13 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 			$this->getModuleId()
 		);
 	}
+
+	/**
+	 * check if it is video module
+	 * @return boolean
+	 */
+	public function isVideoModule() {
+		return false;
+	}
+
 }

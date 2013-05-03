@@ -261,7 +261,7 @@ class FounderProgressBarController extends WikiaController {
 			$list = $this->getMCache()->get($memKey);
 		}
 		if (empty($list)) {
-			$this->wf->ProfileIn(__METHOD__ . '::miss');
+			wfProfileIn(__METHOD__ . '::miss');
 			$list = array();
 
 			$dbr = $this->getDB($db_type);
@@ -288,7 +288,7 @@ class FounderProgressBarController extends WikiaController {
 				$this->getMCache()->set($memKey, $list, 60*60); // 1 hour
 			}
 
-			$this->wf->ProfileOut(__METHOD__ . '::miss');
+			wfProfileOut(__METHOD__ . '::miss');
 		}
 		$this->buildURLs($list);  // must build urls after getting data from memcache because we can't cache them
 		$this->response->setVal("list", $list);

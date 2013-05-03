@@ -177,6 +177,10 @@ abstract class BagOStuff {
 		return $data;
 	}
 
+	public function clearLocalCache( $key ) {
+		// noop
+	}
+
 }
 
 
