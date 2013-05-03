@@ -70,12 +70,24 @@ class EditCLI extends Maintenance {
 		// Read the text
 		$text = $page->getText();
 
-		// Return early if there's already a description header here
-		if (preg_match('/^==\s*description\s*==/mi', $text)) {
+		$catText = '('.wfMessage( 'nstab-category' ).'|Category)';
+
+		// Get the visible content by removing category tags
+		$content = preg_replace("/\[\[$catText:[^\]]+\]\]/", '', $text);
+
+		// Return early if there's no text at all (don't need a description header when there's nothing there)
+		if ( trim($content) == '' ) {
 			return true;
 		}
 
-		$newText = "== Description ==\n".$text;
+		$headerText = wfMessage( 'videohandler-description' );
+
+		// Return early if there's already a description header here
+		if (preg_match("/^==\s*$headerText\s*==/mi", $text)) {
+			return true;
+		}
+
+		$newText = "== $headerText ==\n".$text;
 
 		$this->output( "Adding the description back to '".$wgTitle->getText()."' ... " );
 
