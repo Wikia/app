@@ -52,9 +52,9 @@ $wgAutoloadClasses['AbTestingController'] = "{$dir}/AbTestingController.class.ph
 $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/AbTesting.i18n.php", 'AbTesting' );
 
 // Embed the experiment/treatment config in the head scripts.
-$app->registerHook( 'WikiaSkinTopScripts', 'AbTesting', 'onWikiaSkinTopScripts' );
+$wgHooks['WikiaSkinTopScripts'][] = 'AbTesting::onWikiaSkinTopScripts';
 // Add js code in Oasis
-$app->registerHook( 'OasisSkinAssetGroupsBlocking', 'AbTesting', 'onOasisSkinAssetGroupsBlocking' );
+$wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AbTesting::onOasisSkinAssetGroupsBlocking';
 
 // Register Resource Loader module
 $app->wg->set( 'wgResourceModules', array(
@@ -89,7 +89,7 @@ $app->wg->set( 'wgResourceModules', array(
 ), 'wikia.ext.abtesting.edit' );
 
 //AbTesting is an Oasis-only experiment for now
-//$app->registerHook( 'WikiaMobileAssetsPackages', 'AbTesting', 'onWikiaMobileAssetsPackages' );
+//$wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
 
 $wgSpecialPages[ 'AbTesting'] = 'SpecialAbTestingController';
 

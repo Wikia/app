@@ -38,19 +38,20 @@ class AbTesting extends WikiaObject {
 	}
 
 	// Keeping the response size (assets minification) and the number of external requests low (aggregation)
-	public function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ) {
+	static public function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ) {
 		array_unshift( $jsHeadPackages, 'abtesting' );
 		return true;
 	}
 
-	public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
+	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
 		array_unshift( $jsAssetGroups, 'abtesting' );
 		return true;
 	}
 
-	public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		if ( $this->app->checkSkin( 'oasis', $skin ) ) {
-			$scripts .= ResourceLoader::makeCustomLink($this->wg->out, array( 'wikia.ext.abtesting' ), 'scripts') . "\n";
+	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
+		global $wgOut;
+		if ( F::app()->checkSkin( 'oasis', $skin ) ) {
+			$scripts .= ResourceLoader::makeCustomLink($wgOut, array( 'wikia.ext.abtesting' ), 'scripts') . "\n";
 		}
 		return true;
 	}
@@ -126,16 +127,8 @@ class AbTesting extends WikiaObject {
 		return sprintf("Wikia.AbTestConfig = %s;\n",json_encode($expConfig));
 	}
 
-	/* gets config from Cache if available
-	   otherwise generates it using helper function
-	*/
 	protected function getConfig() {
-		$memcKey = $this->getMemcKey();
-//		$data = $this->wg->memc->get($memcKey);
-		if ( empty( $data ) ) {
-			$data = $this->generateConfigObj();
-		}
-		return $data;
+		return $this->generateConfigObj();
 	}
 
 	protected function generateConfigObj() {
