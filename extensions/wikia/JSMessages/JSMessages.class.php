@@ -161,12 +161,12 @@ class JSMessages {
 	 * @param boolean $allowWildcards - can packages with wildcard be added?
 	 * @return array - key/value array of messages
 	 */
-	private function getPackage($name, $allowWildcards = true) {
+	static private function getPackage($name, $allowWildcards = true) {
 		wfProfileIn(__METHOD__);
 		$ret = null;
 
 		if (isset(static::$packages[$name])) {
-			$this->log(__METHOD__, $name);
+			static::log(__METHOD__, $name);
 
 			// get messages
 			$messages = static::$packages[$name];
