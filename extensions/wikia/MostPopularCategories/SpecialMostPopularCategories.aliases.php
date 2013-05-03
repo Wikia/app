@@ -9,7 +9,13 @@ $specialPageAliases['en'] = array(
 $specialPageAliases['de'] = array(
     'Mostpopularcategories' => array( 'BeliebtesteKategorien', 'Mostpopularcategories' ),
 );
+
 /** Polish */
 $specialPageAliases['pl'] = array(
 	'Mostpopularcategories' => array( 'Najpopularniejsze kategorie', 'Mostpopularcategories' ),
+);
+
+/** Spanish */
+$specialPageAliases['es'] = array(
+    'Mostpopularcategories' => array( 'CategoríasMásPopulares', 'Mostpopularcategories' ),
 );

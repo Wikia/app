@@ -15,21 +15,21 @@ class WikiMapModel extends WikiaObject {
     */
     public function getColours(){
 
-        $this->app->wf->profileIn( __METHOD__ );
+        wfProfileIn( __METHOD__ );
 
             $result = SassUtil::getOasisSettings();
             $colours['line'] = $result['color-buttons'];
             $colours['labels'] = $result['color-links'];
             $colours['body'] = $result['color-page'];
 
-        $this->app->wf->profileOut( __METHOD__ );
+        wfProfileOut( __METHOD__ );
         return $colours;
 
     }
 
     public function getListOfCategories(){
 
-        $this->app->wf->profileIn( __METHOD__ );
+        wfProfileIn( __METHOD__ );
 
         $key = $this->app->wf->MemcKey('wikiMap', 'categories' );
         $data = $this->app->wg->memc->get($key);
@@ -53,7 +53,7 @@ class WikiMapModel extends WikiaObject {
             $out = array('data' => $res, 'length' => $i);
             $this->app->wg->memc->set($key, $out, 86400);
         }
-        $this->app->wf->profileOut( __METHOD__ );
+        wfProfileOut( __METHOD__ );
         return $out;
     }
 
@@ -65,7 +65,7 @@ class WikiMapModel extends WikiaObject {
 
     private function getMostRevisedArticles(){
 
-        $this->app->wf->profileIn( __METHOD__ );
+        wfProfileIn( __METHOD__ );
 
         $result = ApiService::call(array('action' =>'query',
             'list' => 'querypage',
@@ -89,7 +89,7 @@ class WikiMapModel extends WikiaObject {
         $query = $this->query($res, $map);
         $new = array( 'nodes' => $query, 'all' => 0);
 
-        $this->app->wf->profileOut( __METHOD__ );
+        wfProfileOut( __METHOD__ );
 
         return $new;
 
@@ -97,7 +97,7 @@ class WikiMapModel extends WikiaObject {
 
     private function getMostPopularArticlesFromCat($Category){
 
-        $this->app->wf->profileIn( __METHOD__ );
+        wfProfileIn( __METHOD__ );
 
         //Getting list of articles belonging to specified category using API
         $result = ApiService::call(array('action' =>'query',
@@ -140,14 +140,14 @@ class WikiMapModel extends WikiaObject {
         }
         $new = array( 'nodes' => $this->query($res, $map), 'all' => $allArticlesCount);
 
-        $this->app->wf->profileOut( __METHOD__ );
+        wfProfileOut( __METHOD__ );
 
         return $new;
     }
 
     public function getArticles($Category){
 
-        $this->app->wf->profileIn( __METHOD__ );
+        wfProfileIn( __METHOD__ );
         $result = null;
 
         $key = $this->app->wf->MemcKey( 'wikiMap', 'articles', $Category );
@@ -179,14 +179,14 @@ class WikiMapModel extends WikiaObject {
             if ($localMax > $max) $max = $localMax;
         }
 
-        $this->app->wf->profileOut( __METHOD__ );
+        wfProfileOut( __METHOD__ );
         return array('nodes' => $new['nodes'], 'length' =>count($new['nodes']), 'max' => $max, 'all' => $new['all']);
     }
 
     //Method that performs query to database and format the data
     private function query($item, $map){
 
-        $this->app->wf->profileIn( __METHOD__ );
+        wfProfileIn( __METHOD__ );
 
         $dbr = $this->getDB();
         $keysRev = array();
@@ -212,7 +212,7 @@ class WikiMapModel extends WikiaObject {
             $item[$keysRev[$row->pl_from]]['connections'][] = $map[str_replace('_', ' ', $row->pl_title)];
         };
 
-        $this->app->wf->profileOut( __METHOD__ );
+        wfProfileOut( __METHOD__ );
         return $item;
     }
 }

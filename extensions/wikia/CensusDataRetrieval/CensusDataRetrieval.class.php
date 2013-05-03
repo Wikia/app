@@ -111,22 +111,25 @@ class CensusDataRetrieval {
                 return $text;
 	}
 
-        /**
+	/**
 	 * getInfoboxCode
-         * Retrieves, prepares and returns infobox template code
-         * 
-         * @param $title Title is used to form a query to Census
-         * @return $templateCode String
+	 * Retrieves, prepares and returns infobox template code
+	 *
+	 * @param $title Title is used to form a query to Census
+	 * @return $templateCode String
 	 */
-        public function getInfobox( $title ) {
-                if ( !$this->fetchData() ) {
+	public function getInfobox( $title ) {
+		wfProfileIn(__METHOD__);
+		if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
-                        wfProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return false;
 		}
-                $templateCode = $this->getInfoboxCode();
-                return $templateCode;
-        }
+		$templateCode = $this->getInfoboxCode();
+		wfProfileOut(__METHOD__);
+
+		return $templateCode;
+	}
 
 	/**
 	 * Retrieves data from the Census API and filters the part we care about
@@ -447,7 +450,7 @@ class CensusDataRetrieval {
 		if ( empty( $censusData ) ) {
 			wfDebug( __METHOD__ . 'Connection problem or no data' );
                         wfProfileOut(__METHOD__);
-			return false;
+			return array();
 		}
  
                 $this->app->wg->Memc->set( $key, $data, 3600 );

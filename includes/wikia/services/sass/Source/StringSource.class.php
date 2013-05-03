@@ -64,7 +64,7 @@ class StringSource extends Source {
 	}
 
 	protected function getCurrentDir() {
-		throw new SassException( __METHOD__ . ': Current directory is not available.' );
+		throw new \Wikia\Sass\Exception( __METHOD__ . ': Current directory is not available.' );
 	}
 
 

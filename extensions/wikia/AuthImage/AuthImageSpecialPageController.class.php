@@ -28,7 +28,7 @@ class AuthImageSpecialPageController extends WikiaSpecialPageController {
 	 *
 	 */
 	public function getImage() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( $this->wg->User->isLoggedIn() ) {
 			# make proper thumb path: c/central/images/thumb/....
@@ -84,7 +84,7 @@ class AuthImageSpecialPageController extends WikiaSpecialPageController {
 			$this->_access_forbidden( 'img-auth-accessdenied','img-auth-public', '' );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		exit;
 	}
 

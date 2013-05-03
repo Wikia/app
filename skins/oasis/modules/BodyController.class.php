@@ -267,13 +267,8 @@ class BodyController extends WikiaController {
 			}
 			else if (self::isHubPage()) {
 				$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
-				$railModuleList[1480] = array('CorporateSite', 'HotSpots', null);
-			//	$railModuleList[1470] = array('CorporateSite', 'PopularHubPosts', null);  // temp disabled - data not updating
-				$railModuleList[1460] = array('CorporateSite', 'TopHubUsers', null);
 			} else if ( is_array( $wgSalesTitles ) && in_array( $wgTitle->getText(), $wgSalesTitles ) ){
 				$railModuleList[1470] = array('CorporateSite', 'SalesSupport', null);
-			} else { // content pages
-				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
 			}
 			wfProfileOut(__METHOD__);
 			return $railModuleList;
@@ -464,7 +459,7 @@ class BodyController extends WikiaController {
 			$this->headerModuleName = null;
 			$this->wgSuppressAds = true;
 			$this->displayAdminDashboard = true;
-			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != Title::newFromText("AdminDashboard", NS_SPECIAL)->getText());
+			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
 		} else {
 			$this->displayAdminDashboard = false;
 			$this->displayAdminDashboardChromedArticle = false;

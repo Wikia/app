@@ -34,17 +34,17 @@ abstract class UserTagsStrategyBase {
 	 * @return bool
 	 */
 	protected function isBlocked() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		// check if the user is blocked locally, if not, also check if they're blocked globally (via Phalanx)
 		$isBlocked = $this->user->isBlocked() || $this->user->isBlockedGlobally();
 
 		if( $isBlocked && !$this->isUserInGroup(self::WIKIA_GROUP_STAFF_NAME) ) {
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 
@@ -56,18 +56,18 @@ abstract class UserTagsStrategyBase {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	protected function isFounder() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$wiki = F::build('WikiFactory', array($this->app->wg->CityId), 'getWikiById');
 		if( intval($wiki->city_founding_user) === $this->user->GetId() ) {
 			// mech: BugId 18248
 			$founder = $this->isUserInGroup(self::WIKIA_GROUP_SYSOP_NAME) || $this->isUserInGroup(self::WIKIA_GROUP_BUREAUCRAT_NAME);
 
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return $founder;
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 
@@ -129,7 +129,7 @@ abstract class UserTagsStrategyBase {
 	 * @return string
 	 */
 	protected function getTagFromGroups() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$result = '';
 		$group = $this->getUsersHighestGroup($this->user);
@@ -142,7 +142,7 @@ abstract class UserTagsStrategyBase {
 			$result = wfMsg('user-identity-box-banned-from-chat');
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
@@ -154,12 +154,12 @@ abstract class UserTagsStrategyBase {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	protected function getUsersHighestGroup() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$userGroups = $this->getUsersEffectiveGroups();
-		$this->app->wf->ProfileIn(__METHOD__.'-sort');
+		wfProfileIn(__METHOD__.'-sort');
 		usort($userGroups, array($this, 'sortUserGroups'));
-		$this->app->wf->ProfileOut(__METHOD__.'-sort');
+		wfProfileOut(__METHOD__.'-sort');
 
 
 		//just a regular member by default
@@ -169,7 +169,7 @@ abstract class UserTagsStrategyBase {
 			$group = $userGroups[0];
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $group;
 	}
 

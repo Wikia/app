@@ -818,16 +818,18 @@ class MessageCache {
 			);
 			$REGEX = "/(?<!{){{((?P<func>".implode('|',array_keys($INLINE_FUNCS))."):(?P<args>(}[^}]|[^}])+)|(?P<var>".implode('|',array_keys($INLINE_VARS))."))}}/i";
 			$firstTime = true;
+
+			$tmpParser = null;
 			$message = preg_replace_callback($REGEX,
-				function($matches) use ($firstTime,$popts,$parser,$INLINE_VARS) {
+				function($matches) use (&$firstTime,$popts,&$tmpParser,$INLINE_VARS) {
 					if ( !empty($matches['func'] ) ) {
 						if ( $firstTime ) {
 							$firstTime = false;
-							$parser->startExternalParse(new Title('DoesntExistXYZ'),$popts,Parser::OT_PREPROCESS,true);
+							$tmpParser = $this->getParserFor($popts);
 						}
 						$funcName = strtolower($matches['func']);
 						$args = explode('|',$matches['args']);
-						array_unshift($args,$parser);
+						array_unshift($args,$tmpParser);
 						$callback = array( 'CoreParserFunctions', $funcName );
 						return call_user_func_array($callback,$args);
 					} else if ( !empty($matches['var'] ) ) {
@@ -867,6 +869,46 @@ class MessageCache {
 			}
 		}
 		return $this->mParser;
+	}
+
+
+	static protected $parsersCache = array();
+
+	/**
+	 * Get Parser instance that's suitable for passing it to CoreParserFunctions
+	 * in MessageCache::transform()
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 *
+	 * @param ParserOptions $popts
+	 * @return Parser
+	 */
+	function getParserFor( ParserOptions $popts ) {
+		$interfaceMessage = $popts->getInterfaceMessage();
+		$userLanguage = $popts->getUserLang();
+
+		$hash = array();
+		foreach ( array( $interfaceMessage, $userLanguage ) as $obj ) {
+			if ( is_object( $obj ) ) {
+				$hash[] = get_class($obj);
+			} else {
+				$hash[] = serialize($obj);
+			}
+		}
+		$hash = implode('|',$hash);
+
+		if ( !isset( self::$parsersCache[$hash] ) ) {
+			if ( count( self::$parsersCache ) > 25 ) {
+				foreach (self::$parsersCache as $parser) {
+					ParserPool::release($parser);
+				}
+			}
+			$parser = ParserPool::get();
+			$parser->startExternalParse(new Title('DoesntExistXYZ'),$popts,Parser::OT_PREPROCESS,true);
+			self::$parsersCache[$hash] = $parser;
+		}
+
+		return self::$parsersCache[$hash];
 	}
 
 	/**

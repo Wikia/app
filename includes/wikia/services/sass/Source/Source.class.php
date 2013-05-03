@@ -54,7 +54,12 @@ abstract class Source {
 			foreach ($deps as $dep) {
 //				var_dump("in   ".$this->getHumanName());
 //				var_dump('  do '.$dep);
-				$source = $this->getContext()->getFile($dep,$currentDir);
+				try {
+					$source = $this->getContext()->getFile($dep,$currentDir);
+				} catch( \Exception $e ) {
+					$message = "SASS error: Could not resolve dependency \"{$dep}\" in context of: {$this->getHumanName()} -- {$e->getMessage()}";
+					throw new \Wikia\Sass\Exception($message);
+				}
 //				var_dump('  >> '.$source->getHumanName());
 				$hashSource .= $source->getHash();
 			}
@@ -82,7 +87,7 @@ abstract class Source {
 		if ( $this->dependencies === null ) {
 			$contents = $this->getRawSource();
 			$matches = array();
-			preg_match_all( '/\\@import(\\s)*[\\"\']([^\\"\']*)[\\"\']/', $contents, $matches, PREG_PATTERN_ORDER );
+			preg_match_all( '/^\\s*\\@import(\\s)*[\\"\']([^\\"\']*)[\\"\']/m', $contents, $matches, PREG_PATTERN_ORDER );
 			$this->dependencies = $matches[2];
 		}
 		return $this->dependencies;

@@ -71,7 +71,7 @@ class EditCLI extends Maintenance {
 		$text = $page->getText();
 
 		// Return early if there's already a description header here
-		if (preg_match('/^==\s*description\s*==/i', $text)) {
+		if (preg_match('/^==\s*description\s*==/mi', $text)) {
 			return true;
 		}
 

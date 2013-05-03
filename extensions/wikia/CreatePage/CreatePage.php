@@ -105,15 +105,18 @@ function wfCreatePageSetupVars(Array &$vars ) {
 
 function wfCreatePageLoadPreformattedContent( $editpage ) {
 	global $wgRequest, $wgEnableVideoToolExt;
-	
-	if ( $wgRequest->getCheck( 'useFormat' ) && !$editpage->textbox1 ) {
-		if ( $wgEnableVideoToolExt ) {
-			$editpage->textbox1 = wfMsgForContentNoTrans( 'createpage-with-video' );
-		} else {
-			$editpage->textbox1 = wfMsgForContentNoTrans( 'newpagelayout' );
+
+	if( !$editpage->textbox1 ) {
+		if ( $wgRequest->getCheck( 'useFormat' ) ) {
+			if ( $wgEnableVideoToolExt ) {
+				$editpage->textbox1 = wfMsgForContentNoTrans( 'createpage-with-video' );
+			} else {
+				$editpage->textbox1 = wfMsgForContentNoTrans( 'newpagelayout' );
+			}
+		} else if ( $msg = $wgRequest->getVal( 'useMessage' ) ) {
+			$editpage->textbox1 = wfMsgForContentNoTrans( $msg );
 		}
 	}
-
 	return true ;
 }
 
