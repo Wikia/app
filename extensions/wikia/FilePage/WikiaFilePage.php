@@ -73,6 +73,7 @@ abstract class WikiaFilePage extends ImagePage {
 
 		if ( $this->isVideo() ) {
 			$this->loadFile();
+			$file = $this->getDisplayedFile();
 			$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
 			$name = $file->getName();
 			$url = $uploadTitle->getFullUrl( array( 'name' => $name ) );
