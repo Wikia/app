@@ -443,8 +443,8 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/cache.js',
-		
-		// video 
+
+		// video
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 	)
 );
@@ -1273,16 +1273,22 @@ $config['categoryselect_edit_js'] = array(
 );
 
 /* FilePage */
-$config['file_page_js'] = array(
+$config['wikia_file_page_js'] = array(
 	'type'=> AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/FilePage/js/FilePage.js',
+		'//extensions/wikia/FilePage/js/WikiaFilePage.js',
 	)
 );
-$config['file_page_css'] = array(
+$config['file_page_tabbed_js'] = array(
+	'type'=> AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/FilePage/js/FilePageTabbed.js',
+	)
+);
+$config['file_page_tabbed_css'] = array(
 	'type' =>AssetsManager::TYPE_SCSS,
 	'assets' => array(
-		'//extensions/wikia/FilePage/css/FilePage.scss',
+		'//extensions/wikia/FilePage/css/FilePageTabbed.scss',
 	)
 );
 /* LyricFind */

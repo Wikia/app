@@ -2,7 +2,6 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 
 	// "vb" = video bootstrap
 	function vb (element, json) {
-
 		var self = this,
 			init = json.init,
 			html = json.html,

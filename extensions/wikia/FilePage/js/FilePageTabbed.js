@@ -94,7 +94,7 @@ Paginator.prototype = {
 	}
 };
 
-var FilePage = {
+var FilePageTabbed = {
 	init: function() {
 		this.initVideo();
 
@@ -107,23 +107,6 @@ var FilePage = {
 		// Hide global usage sections in Oasis
 		$('#globalusage, #mw-imagepage-section-globalusage').hide();
 
-	},
-	/*
-	 * Use VideoBootstrap to create a video instance
-	 */
-	initVideo: function() {
-		if(window.playerParams) {
-			require(['wikia.videoBootstrap'], function (videoBootstrap) {
-
-				var element = $('#file'),
-					videoInstance = new videoBootstrap(element[0], window.playerParams);
-
-				$(window).on('lightboxOpened', function() {
-					videoInstance.reload(wgTitle, 670, false);
-				});
-
-			});
-		}
 	},
 	/**
 	 * Set cookies for logged in users to save which tab is active when they exit the page
@@ -202,6 +185,6 @@ var FilePage = {
 	}
 }
 
-FilePage.init();
+FilePageTabbed.init();
 
 });
