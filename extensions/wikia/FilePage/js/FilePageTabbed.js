@@ -96,8 +96,6 @@ Paginator.prototype = {
 
 var FilePageTabbed = {
 	init: function() {
-		this.initVideo();
-
 		this.initTabCookies();
 
 		this.initRemoveVideo();
