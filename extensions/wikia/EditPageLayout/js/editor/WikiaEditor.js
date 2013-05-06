@@ -782,7 +782,8 @@
 			this.textarea
 				.focus(this.proxy(this.editorFocused))
 				.blur(this.proxy(this.editorBlurred))
-				.click(this.proxy(this.editorClicked));
+				.click(this.proxy(this.editorClicked))
+				.keyup(this.proxy(this.editorKeyUp));
 
 			// Editor is ready now
 			this.editor.markAsReady();
@@ -855,6 +856,10 @@
 
 		editorClicked: function() {
 			this.editor.fire('editorClick', this.editor);
+		},
+
+		editorKeyUp: function() {
+			this.editor.fire('editorKeyUp', this.editor);
 		}
 	});
 
@@ -870,6 +875,7 @@
 			'blur',
 			'focus',
 			'instanceReady',
+			'keyUp',
 			'mode',
 			'modeSwitch',
 			'modeSwitchCancelled',
@@ -908,6 +914,7 @@
 			this.editor.on('ck-themeLoaded', this.proxy(this.themeLoaded));
 			this.editor.on('ck-focus', this.proxy(this.editorFocused));
 			this.editor.on('ck-blur', this.proxy(this.editorBlurred));
+			this.editor.on('ck-keyUp', this.proxy(this.editorKeyUp));
 
 			// This one can't be proxied because we need access to it before the proxies are set up
 			this.editor.on('ckInstanceCreated', this.proxy(this.ckInstanceCreated));
@@ -1032,6 +1039,10 @@
 
 		editorClicked: function() {
 			this.editor.fire('editorClick', this.editor);
+		},
+
+		editorKeyUp: function() {
+			this.editor.fire('editorKeyUp', this.editor);
 		}
 	});
 
