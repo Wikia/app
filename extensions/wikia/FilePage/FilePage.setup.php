@@ -37,9 +37,9 @@ $wgAutoloadClasses[ 'FilePageController' ] = $dir . 'FilePageController.class.ph
 $app->registerExtensionMessageFile( 'FilePage', $dir . 'FilePage.i18n.php' );
 
 // hooks
-$app->registerHook( 'ArticleFromTitle', 'FilePageHooks', 'onArticleFromTitle' );
-$app->registerHook( 'SkinTemplateNavigation', 'FilePageHooks', 'onSkinTemplateNavigation' );
-$app->registerHook( 'GlobalUsageFormatItemWikiLink', 'FilePageHooks', 'onGlobalUsageFormatItemWikiLink' );
-$app->registerHook( 'GlobalUsageImagePageWikiLink', 'FilePageHooks', 'onGlobalUsageImagePageWikiLink' );
-$app->registerHook( 'GlobalUsageLinksUpdateComplete', 'FilePageHooks', 'onGlobalUsageLinksUpdateComplete' );
-$app->registerHook( 'BeforePageDisplay', 'FilePageHooks', 'onBeforePageDisplay' );
+$wgHooks['ArticleFromTitle'][] = 'FilePageHooks::onArticleFromTitle';
+$wgHooks['SkinTemplateNavigation'][] = 'FilePageHooks::onSkinTemplateNavigation';
+$wgHooks['GlobalUsageFormatItemWikiLink'][] = 'FilePageHooks::onGlobalUsageFormatItemWikiLink';
+$wgHooks['GlobalUsageImagePageWikiLink'][] = 'FilePageHooks::onGlobalUsageImagePageWikiLink';
+$wgHooks['GlobalUsageLinksUpdateComplete'][] = 'FilePageHooks::onGlobalUsageLinksUpdateComplete';
+$wgHooks['BeforePageDisplay'][] = 'FilePageHooks::onBeforePageDisplay';
