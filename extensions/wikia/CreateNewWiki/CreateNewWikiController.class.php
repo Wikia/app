@@ -182,7 +182,7 @@ class CreateNewWikiController extends WikiaController {
 				return;
 			}
 
-			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory']);
+			$createWiki = F::build('CreateWiki', array($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory'])); /* @var $createWiki CreateWiki */
 			$error_code = $createWiki->create();
 			$cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($cityId)) {
