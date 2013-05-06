@@ -31,7 +31,7 @@ class AbTesting extends WikiaObject {
 		if( is_null(self::$instance) ) {
 			self::$instance == new AbTesting();
 		}
-		return self::$instancen;
+		return self::$instance;
 	}
 
 	// Keeping the response size (assets minification) and the number of external requests low (aggregation)
