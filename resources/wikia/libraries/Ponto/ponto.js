@@ -20,6 +20,19 @@
 	 */
 	var amd = false;
 
+	function createIFrame(href){
+		var iframe = context.document.createElement('iframe');
+
+		iframe.src = href;
+		iframe.style.display = 'none';
+		iframe.onload = iframe.onerror = function(){
+			this.parentElement.removeChild(this);
+		};
+
+		context.document.body.appendChild(iframe);
+
+	}
+
 	/**
 	 * module constructor
 	 *
@@ -86,18 +99,18 @@
 				//a custom protocol for communicating with the webview (e.g. iOS)
 				request: function (execContext, target, method, params, callbackId) {
 					if (execContext.location && execContext.location.href) {
-						execContext.location.href = PROTOCOL_NAME + ':///request?target=' + encodeURIComponent(target) +
+						createIFrame(PROTOCOL_NAME + ':///request?target=' + encodeURIComponent(target) +
 							'&method=' + encodeURIComponent(method) +
 							((params) ? '&params=' + encodeURIComponent(params) : '') +
-							((callbackId) ? '&callbackId=' + encodeURIComponent(callbackId) : '');
+							((callbackId) ? '&callbackId=' + encodeURIComponent(callbackId) : ''));
 					} else {
 						throw "Context doesn't support User Agent location API";
 					}
 				},
 				response: function (execContext, callbackId, params) {
 					if (execContext.location && execContext.location.href) {
-						execContext.location.href = PROTOCOL_NAME + ':///response?callbackId=' + encodeURIComponent(callbackId) +
-							((params) ? '&params=' + encodeURIComponent(JSON.stringify(params)) : '');
+						createIFrame(PROTOCOL_NAME + ':///response?callbackId=' + encodeURIComponent(callbackId) +
+							((params) ? '&params=' + encodeURIComponent(JSON.stringify(params)) : ''));
 					} else {
 						throw "Context doesn't support User Agent location API";
 					}
@@ -176,7 +189,7 @@
 		 * one of RESPONSE_COMPLETE or RESPONSE_ERROR
 		 * @param {ResponseParams} data An hash containing the parameters associated to the response
 		 */
-		function dispatchResponse(scope, data) {
+		function dispatchResponse(data) {
 			var
 				callbackId = data.callbackId,
 				cbGroup = callbacks[callbackId],
@@ -300,7 +313,7 @@
 		PontoDispatcher.prototype.response = function (data) {
 			var params = new ResponseParams(data);
 
-			dispatchResponse(this.context, params);
+			dispatchResponse(params);
 		};
 
 		/**
