@@ -65,7 +65,7 @@ CollectionsSetup.prototype = {
 	getImageNameFromFileTilte: function(title) {
 		var elems = title.split(':');
 		elems.shift();
-		return elems.join();
+		return elems.join(':');
 	}
 };
 
