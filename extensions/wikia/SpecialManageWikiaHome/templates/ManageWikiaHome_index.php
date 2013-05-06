@@ -61,9 +61,9 @@
 				<div class="collection-module">
 					<?=$form->renderField('enabled', $i)?>
 					<?=$form->renderField('name', $i)?>
-					<?=$form->renderField('sponsor_url', $i)?>
 					<?=$form->renderField('sponsor_hero_image', $i)?>
 					<?=$form->renderField('sponsor_image', $i)?>
+					<?=$form->renderField('sponsor_url', $i)?>
 				</div>
 			<? endfor ?>
 
