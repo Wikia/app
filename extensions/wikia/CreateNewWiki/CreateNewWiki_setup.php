@@ -28,4 +28,9 @@ $wgAvailableRights[] = 'createnewwiki';
 $wgGroupPermissions['*']['createnewwiki'] = true;
 $wgGroupPermissions['staff']['createnewwiki'] = true;
 
+$wgAvailableRights[] = 'createwikimakefounder'; // user can give another's name as founder
+$wgAvailableRights[] = 'createwikilimitsexempt'; // user not bound by creation throttle
+$wgGroupPermissions['staff']['createwikilimitsexempt'] = true;
+
+// setup functions
 $wgExtensionFunctions[] = 'CreateNewWikiController::setupCreateNewWiki';
