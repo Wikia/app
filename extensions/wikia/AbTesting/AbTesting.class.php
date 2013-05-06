@@ -25,11 +25,11 @@ class AbTesting extends WikiaObject {
 		self::FLAG_LIMIT_TO_SPECIAL_WIKIS => 'limit_to_special_wikis',
 	);
 
-	static protected $instance;
+	static protected $instance = null;
 
 	static function getInstance() {
 		if( is_null(self::$instance) ) {
-			self::$instance == new AbTesting();
+			self::$instance = new AbTesting();
 		}
 		return self::$instance;
 	}
