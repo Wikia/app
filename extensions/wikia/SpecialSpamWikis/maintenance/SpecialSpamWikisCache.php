@@ -150,10 +150,11 @@ class SpecialSpamWikiCache {
                 __METHOD__
             );
         }
-        
+
         unset( $tmpDbObj );
 
-	$lu = WikiFactory::getVarValueByName( 'wgSpecialSpamWikisLastUpdate', F::app()->wg->cityId );
+		global $wgSpecialSpamWikisLastUpdate;
+		$lu = $wgSpecialSpamWikisLastUpdate;
 
 	$res = $this->dbObj->select(
                 'wikicities.city_list',

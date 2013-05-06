@@ -168,9 +168,6 @@
 			getScope( $fromUserId, $toUserId, $condition );
 		}
 
-		// update url
-		$wgServer = WikiFactory::getVarValueByName( 'wgServer', $wgCityId );
-
 		$cnt = 0;
 		do {
 			$to = ( $toUserId - $fromUserId > $range ) ? $fromUserId + $range : $toUserId ;
