@@ -9,14 +9,14 @@
  * it is not MediaWiki-dependent.  This extension will be the MediaWiki integration with it.
  *
  * The Special:ApiGate page itself will be the landing page for users to manage keys.  It
- * handles requesting keys, 
+ * handles requesting keys,
  *
  * @ingroup SpecialPage
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-$API_GATE_DIR = "$IP/lib/ApiGate"; // this is used for more than just the initial include, please don't remove it.
+$API_GATE_DIR = "$IP/lib/vendor/ApiGate"; // this is used for more than just the initial include, please don't remove it.
 include "$API_GATE_DIR/ApiGate.php";
 
 // TODO: Change to class autoloader.

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $dir = dirname(__FILE__) . '/';
 
@@ -27,4 +27,4 @@ $wgAutoloadClasses['SponsorshipDashboardOutputCSV'] = $dir . 'output/SDOutputCSV
 // Ajax
 $wgAutoloadClasses[ 'SponsorshipDashboardAjax' ] = $dir . 'SponsorshipDashboardAjax.class.php';
 
-$wgAutoloadClasses['gapi'] = $dir . '../../../lib/gapi/gapi.class.php';
+$wgAutoloadClasses['gapi'] = $IP . '/lib/vendor/gapi/gapi.class.php';
