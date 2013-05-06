@@ -369,7 +369,7 @@ WikiaHomePageRemix.prototype = {
 
 	displayCollection: function(collectionId) {
 		var selectedCollection;
-		if (collectionId == undefined || !(collectionId in this.collectionsWikisStack)) {
+		if (typeof collectionId === 'undefined' || !(collectionId in this.collectionsWikisStack)) {
 			var avaliableCollectionIds = Object.keys(this.collectionsWikisStack);
 			if (avaliableCollectionIds.length) {
 				collectionId = avaliableCollectionIds[0];
@@ -448,10 +448,10 @@ WikiaHomePageRemix.prototype = {
 		if (!('collections' in lsData)) {
 			lsData.collections = {};
 		}
-		if (collectionId != undefined) {
+		if (typeof collectionId !== 'undefined') {
 			lsData.collections[collectionId] = true;
 		}
-		if (remixCount != undefined) {
+		if (typeof remixCount !== 'undefined') {
 			lsData.remixCount = remixCount;
 		}
 
