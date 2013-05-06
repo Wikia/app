@@ -6,10 +6,19 @@
 		isReady: false,
 
 		proxyEvents: [
-			'ck-instanceReady', 'ck-wysiwygModeReady', 'editorActivated',
-			'editorAfterActivated', 'editorBeforeReady', 'editorBlur',
-			'editorClear', 'editorDeactivated', 'editorAfterDeactivated',
-			'editorFocus', 'editorReady', 'editorReset', 'editorResize'
+			'ck-instanceReady',
+			'editorActivated',
+			'editorAfterActivated',
+			'editorBeforeReady',
+			'editorBlur',
+			'editorClear',
+			'editorDeactivated',
+			'editorAfterDeactivated',
+			'editorFocus',
+			'editorReady',
+			'editorReset',
+			'editorResize',
+			'editorKeyUp'
 		],
 
 		beforeInit: function() {
@@ -41,6 +50,12 @@
 			if (this.buttonsWrapper.length) {
 				this.buttons = this.buttonsWrapper.find('button, input[submit]');
 			}
+
+			// TODO: instead of having separate events for every type of content
+			// insertion method we should have a universal 'content has changed' event.
+			this.editor.on( 'editorAddMedia', this.proxy( this.editorKeyUp ) );
+			this.editor.on( 'editorAddLink', this.proxy( this.editorKeyUp ) );
+			this.editor.on( 'editorInsertTags', this.proxy( this.editorKeyUp ) );
 		},
 
 		// CKE properties are now available
@@ -51,13 +66,12 @@
 			// Handle positioning of RTEOverlay (image overlay etc)
 			wikiaEditor.getEditboxWrapper().bind('mouseenter.MiniEditor', function() {
 				RTE.repositionRTEOverlay(ckeditor.name);
-				RTE.overlayNode.data('editor', wikiaEditor);
+				RTE.overlayNode.data('wikiaEditor', wikiaEditor);
 			});
 		},
 
-		// Re-bind event listenners for elements inside wysiwyg iframe
 		'ck-wysiwygModeReady': function() {
-			this.editor.getEditbox().bind('keyup.MiniEditor', this.proxy(this.editorResize)).keyup();
+			this.editorResize();
 		},
 
 		editorActivated: function(event) {
@@ -83,8 +97,16 @@
 			this.editor.element.addClass('active');
 		},
 
-		editorButtonsActivate: function() {
-			this.buttons.removeAttr('disabled');
+		editorKeyUp: function() {
+			this.editorToggleButtonsDisabled();
+
+			if ( this.editor.ck != undefined ) {
+				this.editorResize();
+			}
+		},
+
+		editorToggleButtonsDisabled: function() {
+			this.buttons.prop( 'disabled', !this.editor.getContent().length );
 		},
 
 		editorAfterActivated: function() {
@@ -96,17 +118,6 @@
 			if (!this.isReady) {
 				this.isReady = true;
 			}
-
-			this.editor.getEditbox().on(
-				'keyup',
-				$.proxy(this.editorButtonsActivate, this)
-			);
-			this.editor.on({
-				mode: $.proxy(this.editorButtonsActivate, this),
-				editorAddImage: $.proxy(this.editorButtonsActivate, this),
-				editorAddVideo: $.proxy(this.editorButtonsActivate, this),
-				editorAddLink: $.proxy(this.editorButtonsActivate, this)
-			});
 		},
 
 		editorBeforeReady: function() {
@@ -169,7 +180,6 @@
 			if(replacedElement.is('textarea') && typeof this.editor.ck != "undefined") {
 				replacedElement.val("");
 			}
-
 		},
 
 		editorReset: function() {

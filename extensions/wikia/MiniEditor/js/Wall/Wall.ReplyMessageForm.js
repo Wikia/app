@@ -5,7 +5,7 @@ MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.ReplyMessageForm, {
 	constructor: function(page, model) {
 		MiniEditor.Wall.ReplyMessageForm.superclass.constructor.apply(this,arguments);
 	},
-	
+
 	deferred: '',
 	initEvents: function() {
 		var self = this;
@@ -22,11 +22,11 @@ MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.ReplyMessageForm, {
 			}
 		});
 	},
-	
+
 	focus: function(e) {
 		this.initEditor({ target: e.target });
 	},
-	
+
 	setContent: function(replyWrapper, content) {
 		if(content) {
 			var wikiaEditor = this.editor.data('wikiaEditor');
@@ -34,7 +34,7 @@ MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.ReplyMessageForm, {
 			wikiaEditor.getEditbox().putCursorAtEndCE();
 		}
 	},
-	
+
 	activatedCallback: function(event, wikiaEditor) {
 		this.deferred.resolve(wikiaEditor);
 	},
@@ -42,7 +42,7 @@ MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.ReplyMessageForm, {
 	initEditor: function(e) {
 		var target = $(e.target);
 		this.deferred = $.Deferred();
-		
+
 		// check if editor exists before unbinding placeholder (BugId:23781)
 		if (!target.data('wikiaEditor')) {
 			// Unbind placeholder and clear textarea before initing mini editor (BugId:23221)
@@ -64,21 +64,21 @@ MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.ReplyMessageForm, {
 				editorActivated: $.proxy(this.activatedCallback, this)
 			}
 		});
-		
+
 		return this.deferred.promise();
 	},
 
 	getMessageBody: function(reply) {
 		var wikiaEditor = $('.wikiaEditor', reply).data('wikiaEditor');
 		return wikiaEditor.getContent();
-	}, 
-	
+	},
+
 	getFormat: function(reply) {
 		var wikiaEditor = $('.wikiaEditor', reply).data('wikiaEditor');
 		var format = wikiaEditor.mode == 'wysiwyg' ? 'wikitext' : '';
 		return format;
 	},
-	
+
 	resetEditor: function() {
 		var wikiaEditor = $('.wikiaEditor', reply).data('wikiaEditor');
 		reply.find(this.replyBody).val('').trigger('blur');
