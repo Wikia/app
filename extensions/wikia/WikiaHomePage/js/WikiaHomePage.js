@@ -362,6 +362,8 @@ WikiaHomePageRemix.prototype = {
 		if (collectionId) {
 			this.displayCollection(collectionId);
 			this.displaySponsorHeroImage(collectionId);
+
+			this.track(Wikia.Tracker.ACTIONS.IMPRESSION, 'collection-remix', {'collection-id': collectionId, 'remix-count': this.remixCount});
 		} else {
 			this.updateVisualisation();
 		}
