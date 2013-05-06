@@ -83,6 +83,8 @@ class EditPageLayout extends EditPage {
 
 		parent::__construct($article);
 
+		$this->helper = EditPageLayoutHelper::getInstance();
+
 		// default setup of summary box
 		$this->mSummaryBox = array(
 			'name' => 'wpSummary',
