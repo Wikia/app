@@ -164,10 +164,7 @@ class HAWelcomeJob extends Job {
                  */
                 global $wgUser;
 		// Abort if the contributor is a member of a group that should not be welcomed or the default welcomer
-		// Also, don't welcome self
-		if ( $wgUser->isAllowed( 'welcomeexempt' ) ||
-			$wgUser->getName() == self::DEFAULT_WELCOMER ||
-			$wgUser->getId() == $oRevision->getRawUser() ) {
+		if ( $wgUser->isAllowed( 'welcomeexempt' ) || $wgUser->getName() == self::DEFAULT_WELCOMER ) {
 			if ( !empty( $wgHAWelcomeNotices ) ) {
 				trigger_error( sprintf( '%s Done. The registered contributor is a bot, a staff member or the default welcomer.', __METHOD__ ) , E_USER_NOTICE );
 			}

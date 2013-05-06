@@ -642,7 +642,9 @@ EOT
 			return;
 		}
 
-		$wgOut->addHTML( "<br /><ul>\n" );
+		/* Wikia change begin - @author: liz - adding class to ul and removed br */
+		$wgOut->addHTML( "<ul class='mw-upload-links-box'>\n" );
+		/* Wikia change end */
 
 		# "Upload a new version of this file" link
 		/* Wikia change begin - @author: mech - replacing ->name with ->getName(), as File::$name is protected */
@@ -1167,6 +1169,10 @@ class ImageHistoryList {
 					$wgLang->time( $timestamp, true ) ),
 				'file-link' => true,
 			);
+
+			/* Wikia change @author liz*/
+			$options['noLightbox'] = true;
+			/* Wikia change end */
 
 			if ( !$thumbnail ) {
 				return wfMsgHtml( 'filehist-nothumb' );
