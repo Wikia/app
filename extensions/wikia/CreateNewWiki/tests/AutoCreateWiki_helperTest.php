@@ -1,11 +1,10 @@
 <?
 
-include_once( dirname(__FILE__) . "/../AutoCreateWiki.php" );
-include_once( dirname(__FILE__) . "/../CreateWiki.php" );
-
 class AutoCreateWikiTest extends WikiaBaseTest {
 
 	public function setUp() {
+		$this->setupFile = dirname(__FILE__) . '/../CreateNewWiki_setup.php';
+
 		parent::setUp();
 
 		$userMock = $this->getMock('stcClass', array('getGroups'));

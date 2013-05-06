@@ -5,7 +5,7 @@
  */
 
 include( '../../../maintenance/Maintenance.php' );
-include( "CreateWiki.php" );
+include("CreateWiki.php");
 
 
 class TestCreateWiki extends Maintenance {
