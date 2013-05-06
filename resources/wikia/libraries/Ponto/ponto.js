@@ -20,17 +20,20 @@
 	 */
 	var amd = false;
 
-	function createIFrame(href){
-		var iframe = context.document.createElement('iframe');
+	function createIFrame (url){
+		if (context.document) {
+			var iframe = context.document.createElement('iframe');
 
-		iframe.src = href;
-		iframe.style.display = 'none';
-		iframe.onload = iframe.onerror = function(){
-			this.parentElement.removeChild(this);
-		};
+			iframe.src = url;
+			iframe.style.display = 'none';
+			iframe.onload = iframe.onerror = function(){
+				this.parentElement.removeChild(this);
+			};
 
-		context.document.body.appendChild(iframe);
-
+			context.document.body.appendChild(iframe);
+		} else {
+			throw "Context doesn't support DOM API";
+		}
 	}
 
 	/**
@@ -98,22 +101,14 @@
 				//the only other chance is for the native layer to register
 				//a custom protocol for communicating with the webview (e.g. iOS)
 				request: function (execContext, target, method, params, callbackId) {
-					if (execContext.location && execContext.location.href) {
-						createIFrame(PROTOCOL_NAME + ':///request?target=' + encodeURIComponent(target) +
-							'&method=' + encodeURIComponent(method) +
-							((params) ? '&params=' + encodeURIComponent(params) : '') +
-							((callbackId) ? '&callbackId=' + encodeURIComponent(callbackId) : ''));
-					} else {
-						throw "Context doesn't support User Agent location API";
-					}
+					createIFrame(PROTOCOL_NAME + ':///request?target=' + encodeURIComponent(target) +
+						'&method=' + encodeURIComponent(method) +
+						((params) ? '&params=' + encodeURIComponent(params) : '') +
+						((callbackId) ? '&callbackId=' + encodeURIComponent(callbackId) : ''));
 				},
 				response: function (execContext, callbackId, params) {
-					if (execContext.location && execContext.location.href) {
-						createIFrame(PROTOCOL_NAME + ':///response?callbackId=' + encodeURIComponent(callbackId) +
-							((params) ? '&params=' + encodeURIComponent(JSON.stringify(params)) : ''));
-					} else {
-						throw "Context doesn't support User Agent location API";
-					}
+					createIFrame(PROTOCOL_NAME + ':///response?callbackId=' + encodeURIComponent(callbackId) +
+						((params) ? '&params=' + encodeURIComponent(JSON.stringify(params)) : ''));
 				}
 			},
 
