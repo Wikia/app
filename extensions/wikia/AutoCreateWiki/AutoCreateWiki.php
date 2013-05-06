@@ -41,12 +41,6 @@ $wgAvailableRights[] = 'createwikilimitsexempt'; // user not bound by creation t
 $wgGroupPermissions['staff']['createwikilimitsexempt'] = true;
 
 /**
- * register job class
- */
-$wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
-$wgAutoloadClasses[ "AutoCreateWikiLocalJob" ] = $dir. "AutoCreateWikiLocalJob.php";
-
-/**
  * AutoCreateWiki class
  *
  * Used in CreateWiki.php and CreateNewWikiController
