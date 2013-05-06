@@ -32,17 +32,3 @@ $dir = __DIR__ . '/';
  * i18n - used in various places :(
  */
 $wgExtensionMessagesFiles[ "AutoCreateWiki" ] = $dir . "AutoCreateWiki.i18n.php";
-
-/**
- * user permissions
- */
-$wgAvailableRights[] = 'createwikimakefounder'; // user can give another's name as founder
-$wgAvailableRights[] = 'createwikilimitsexempt'; // user not bound by creation throttle
-$wgGroupPermissions['staff']['createwikilimitsexempt'] = true;
-
-/**
- * AutoCreateWiki class
- *
- * Used in CreateWiki.php and CreateNewWikiController
- */
-require_once( $dir . "AutoCreateWiki_helper.php" );
