@@ -81,7 +81,7 @@ var CreateWikiaPoll = {
 			li;
 
 		// add hidden form element for pollId
-		$("#CreateWikiaPoll").find("form").append('<input type="hidden" name="pollId" value="' + pollData.pollid + '">');
+		$("#CreateWikiaPoll").find("form").append('<input type="hidden" name="pollId" value="' + pollData.pollId + '">');
 
 		// store data in main dom element for use when saving
 		$("#CreateWikiaPoll").data(pollData);
@@ -104,8 +104,8 @@ var CreateWikiaPoll = {
 
 	onSave: function(event) {
 		event.preventDefault();
-
-		if ($("#CreateWikiaPoll").data('pollid')) {
+		
+		if ($("#CreateWikiaPoll").data('pollId')) {
 			// editing existing poll
 			$.get(wgScript + '?action=ajax&rs=WikiaPollAjax&method=update', $("#CreateWikiaPoll").find("form").serialize(), function(data) {
 				if ($("#CreateWikiaPoll").closest(".modalWrapper").exists()) { // in modal
