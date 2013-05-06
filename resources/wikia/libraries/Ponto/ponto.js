@@ -20,15 +20,12 @@
 	 */
 	var amd = false;
 
-	function createIFrame (url){
+	function sendRequest (url){
 		if (context.document) {
 			var iframe = context.document.createElement('iframe');
 
 			iframe.src = url;
 			iframe.style.display = 'none';
-			iframe.onload = iframe.onerror = function(){
-				this.parentElement.removeChild(this);
-			};
 
 			context.document.body.appendChild(iframe);
 		} else {
@@ -101,13 +98,13 @@
 				//the only other chance is for the native layer to register
 				//a custom protocol for communicating with the webview (e.g. iOS)
 				request: function (execContext, target, method, params, callbackId) {
-					createIFrame(PROTOCOL_NAME + ':///request?target=' + encodeURIComponent(target) +
+					sendRequest(PROTOCOL_NAME + ':///request?target=' + encodeURIComponent(target) +
 						'&method=' + encodeURIComponent(method) +
 						((params) ? '&params=' + encodeURIComponent(params) : '') +
 						((callbackId) ? '&callbackId=' + encodeURIComponent(callbackId) : ''));
 				},
 				response: function (execContext, callbackId, params) {
-					createIFrame(PROTOCOL_NAME + ':///response?callbackId=' + encodeURIComponent(callbackId) +
+					sendRequest(PROTOCOL_NAME + ':///response?callbackId=' + encodeURIComponent(callbackId) +
 						((params) ? '&params=' + encodeURIComponent(JSON.stringify(params)) : ''));
 				}
 			},
