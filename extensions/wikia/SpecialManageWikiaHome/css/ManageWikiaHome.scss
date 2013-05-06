@@ -60,6 +60,19 @@
 			}
 		}
 
+		.image-input-container {
+			float: left;
+			width: 100%;
+
+			.input-group {
+				width: 563px;
+				float: left;
+			}
+			.wmu-show {
+				margin-top: 11px;
+			}
+		}
+
 		p.alternative {
 			margin: 0 7px 10px 152px;
 		}

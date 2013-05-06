@@ -61,11 +61,18 @@
 				<div class="collection-module">
 					<?=$form->renderField('enabled', $i)?>
 					<?=$form->renderField('name', $i)?>
-					<?=$form->renderField('sponsor_hero_image', $i)?>
+					<div class="image-input-container">
+						<?=$form->renderField('sponsor_hero_image', $i)?>
+						<input type="button" class="wmu-show" value="<?= $wf->Message('manage-wikia-home-collection-add-file-button')->text() ?>" />
+					</div>
 					<p class="alternative">
 						<?= wfMessage('manage-wikia-home-collection-hero-image-tooltip')->text() ?>
 					</p>
-					<?=$form->renderField('sponsor_image', $i)?>
+
+					<div class="image-input-container">
+						<?=$form->renderField('sponsor_image', $i)?>
+						<input type="button" class="wmu-show" value="<?= $wf->Message('manage-wikia-home-collection-add-file-button')->text() ?>" />
+					</div>
 					<p class="alternative">
 						<?= wfMessage('manage-wikia-home-collection-sponsor-image-tooltip')->text() ?>
 					</p>

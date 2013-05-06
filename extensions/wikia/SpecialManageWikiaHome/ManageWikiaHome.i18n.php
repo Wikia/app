@@ -63,6 +63,7 @@ $messages['en'] = array(
 
 	'manage-wikia-home-collection-hero-image-tooltip' => 'This image should be 1010px x 650px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'This image should be 330px x 210px',
+	'manage-wikia-home-collection-add-file-button' => 'Add a photo'
 );
 
 $messages['de'] = array(
