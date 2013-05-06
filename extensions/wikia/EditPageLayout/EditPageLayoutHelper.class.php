@@ -122,8 +122,8 @@ class EditPageLayoutHelper {
 		$this->addJsVariable('wgCopywarn', $this->editPage->getCopyrightNotice());
 
 		// extra hooks for edit page
-		$this->app->registerHook('MakeGlobalVariablesScript', 'EditPageLayoutHooks', 'onMakeGlobalVariablesScript');
-		$this->app->registerHook('SkinGetPageClasses', 'EditPageLayoutHooks', 'onSkinGetPageClasses');
+		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageLayoutHooks::onMakeGlobalVariablesScript';
+		$wgHooks['SkinGetPageClasses'][] = 'EditPageLayoutHooks::onSkinGetPageClasses';
 
 		$this->helper = EditPageLayoutHelper::getInstance();
 

@@ -50,13 +50,13 @@ $wgAutoloadClasses['EditPageService'] =  $dir . '/EditPageService.class.php';
 $wgAutoloadClasses['SpecialCustomEditPage'] =  $dir . '/SpecialCustomEditPage.class.php';
 
 // hooks
-$app->registerHook('AlternateEditPageClass', 'EditPageLayoutHooks', 'onAlternateEditPageClass');
-$app->registerHook('EditPageBeforeConflictDiff', 'EditPageLayoutHooks', 'onEditPageBeforeConflictDiff');
-$app->registerHook('EditPageGetPreviewNote', 'EditPageLayoutHooks', 'onEditPageGetPreviewNote');
-$app->registerHook('EditForm:AfterDisplayingTextbox', 'EditPageLayoutHooks', 'onAfterDisplayingTextbox');
-$app->registerHook('EditForm:BeforeDisplayingTextbox', 'EditPageLayoutHooks', 'onBeforeDisplayingTextbox');
-$app->registerHook('GetPreferences', 'EditPageLayoutHooks', 'onGetPreferences');
-$app->registerHook('LogEventsListShowLogExtract', 'EditPageLayoutHooks', 'onLogEventsListShowLogExtract');
+$wgHooks['AlternateEditPageClass'][] = 'EditPageLayoutHooks::onAlternateEditPageClass';
+$wgHooks['EditPageBeforeConflictDiff'][] = 'EditPageLayoutHooks::onEditPageBeforeConflictDiff';
+$wgHooks['EditPageGetPreviewNote'][] = 'EditPageLayoutHooks::onEditPageGetPreviewNote';
+$wgHooks['EditForm:AfterDisplayingTextbox'][] = 'EditPageLayoutHooks::onAfterDisplayingTextbox';
+$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'EditPageLayoutHooks::onBeforeDisplayingTextbox';
+$wgHooks['GetPreferences'][] = 'EditPageLayoutHooks::onGetPreferences';
+$wgHooks['LogEventsListShowLogExtract'][] = 'EditPageLayoutHooks::onLogEventsListShowLogExtract';
 
 // messages
 $app->registerExtensionMessageFile('EditPageLayout', $dir . '/EditPageLayout.i18n.php');

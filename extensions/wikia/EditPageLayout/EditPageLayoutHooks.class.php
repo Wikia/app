@@ -39,7 +39,7 @@ class EditPageLayoutHooks {
 	/**
 	 * Add CSS class to <body> element when there's an conflict edit or undo revision is about to be performed
 	 */
-	function onSkinGetPageClasses(&$classes) {
+	static function onSkinGetPageClasses(&$classes) {
 		$helper = EditPageLayoutHelper::getInstance();
 		if ($helper->editPage->isConflict || $helper->editPage->formtype == 'diff') {
 			$classes .= ' EditPageScrollable';
@@ -55,7 +55,7 @@ class EditPageLayoutHooks {
 	/**
 	 * Reverse parse wikitext when performing diff for edit conflict
 	 */
-	function onEditPageBeforeConflictDiff(&$editform, &$out ) {
+	static function onEditPageBeforeConflictDiff(&$editform, &$out ) {
 		$helper = EditPageLayoutHelper::getInstance();
 		if (class_exists('RTE') && $helper->getRequest()->getVal('RTEMode') == 'wysiwyg') {
 			$editform->textbox2 = RTE::HtmlToWikitext($editform->textbox2);
@@ -67,7 +67,7 @@ class EditPageLayoutHooks {
 	/**
 	 * Get warning note shown when preview mode is forced and add it to the nofitication area
 	 */
-	function onEditPageGetPreviewNote($editform, &$note) {
+	static function onEditPageGetPreviewNote($editform, &$note) {
 		$helper = EditPageLayoutHelper::getInstance();
 		if (($helper->editPage instanceof EditPageLayout) && ($note != '')) {
 			$helper->editPage->addEditNotice($note);
@@ -79,7 +79,7 @@ class EditPageLayoutHooks {
 	/**
 	 * Apply user preferences changes
 	 */
-	function onGetPreferences($user, &$defaultPreferences) {
+	static function onGetPreferences($user, &$defaultPreferences) {
 		// modify sections for the following user options
 		$prefs = array(
 			// General
@@ -140,7 +140,7 @@ class EditPageLayoutHooks {
 	 * - wrap String: Wrap the message in html (usually something like "<div ...>$1</div>").
 	 * @return boolean return false, so notice will not be emitted by core, but by EditPageLayout code
 	 */
-	function onLogEventsListShowLogExtract($s, $types, $page, $user, $param) {
+	static function onLogEventsListShowLogExtract($s, $types, $page, $user, $param) {
 		$helper = EditPageLayoutHelper::getInstance();
 		if ($helper->editPage instanceof EditPageLayout) {
 			if (!empty($s)) {
@@ -162,7 +162,7 @@ class EditPageLayoutHooks {
 	 * @param $hidden boolean not used
 	 * @return boolean return true
 	 */
-	function onBeforeDisplayingTextbox(EditPage $editPage, &$hidden) {
+	static function onBeforeDisplayingTextbox(EditPage $editPage, &$hidden) {
 		global $wgOut;
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			$wgOut->addHtml('<div class="editpage-editarea" data-space-type="editarea">');
@@ -178,7 +178,7 @@ class EditPageLayoutHooks {
 	 * @param $hidden boolean not used
 	 * @return boolean return true
 	 */
-	function onAfterDisplayingTextbox(EditPage $editPage, &$hidden) {
+	static function onAfterDisplayingTextbox(EditPage $editPage, &$hidden) {
 		global $wgOut;
 		$app = F::app();
 		if ( $app->checkSkin( 'oasis') ) {
