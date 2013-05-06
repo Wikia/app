@@ -84,7 +84,7 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return string memcache key
 	 */
-	public function getMemKeyAdminIds( $wikiId, $excludeBots = false, $limit = -1 ) {
+	public function getMemKeyAdminIds( $wikiId, $excludeBots = false, $limit = null ) {
 		return wfSharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots, $limit );
 	}
 

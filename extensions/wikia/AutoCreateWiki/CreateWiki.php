@@ -14,11 +14,13 @@
 
 class CreateWiki {
 
+	/* @var $mDBw DatabaseMysql */
 	private $mName, $mDomain, $mLanguage, $mHub, $mType, $mStarters, $mIP,
-		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder, $mTables,
+		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables, $mTypeTables,
-		$mStarterTables, $sDbStarter, $mFounderIp;
+		$mStarterTables, $sDbStarter, $mFounderIp,
+		$mCurrTime;
 
 	const ERROR_BAD_EXECUTABLE_PATH                    = 1;
 	const ERROR_DOMAIN_NAME_TAKEN                      = 2;
@@ -179,8 +181,7 @@ class CreateWiki {
 		/**
 		 * local job
 		 */
-		$wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
-		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = dirname(__FILE__) . "/CreateWikiLocalJob.php";
+		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = dirname(__FILE__) . "/../CreateNewWiki/CreateWikiLocalJob.php";
 	}
 
 
@@ -235,7 +236,6 @@ class CreateWiki {
 
 		// start counting time
 		$this->mCurrTime = wfTime();
-		$startTime = $this->mCurrTime;
 
 		// check and create database
 		$this->mDBw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); # central
@@ -376,8 +376,8 @@ class CreateWiki {
 				$job_params->$id = $value;
 			}
 		}
-                // BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
-                $job_params->sDbStarter = $this->sDbStarter;
+		// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
+		$job_params->sDbStarter = $this->sDbStarter;
 		$localJob = new CreateWikiLocalJob( Title::newFromText( NS_MAIN, "Main" ), $job_params );
 		$localJob->WFinsert( $this->mNewWiki->city_id, $this->mNewWiki->dbname );
 		wfDebugLog( "createwiki", __METHOD__ . ": New createWiki local job created \n", true );
@@ -466,7 +466,7 @@ class CreateWiki {
 			$this->mNewWiki->sitename,
 			$wgWikiaLocalSettingsPath
 		);
-		$output = wfShellExec( $cmd );
+		wfShellExec( $cmd );
 		wfDebugLog( "createwiki", __METHOD__ . ": Main page moved \n", true );
 
 		/**
@@ -1138,8 +1138,8 @@ class CreateWiki {
 			$starter[ "dbStarter" ] = $dbStarter;
 			$starter[ "uploadDir" ] = WikiFactory::getVarValueByName( "wgUploadDirectory", WikiFactory::DBtoID( $dbStarter ) );
 
-                        // BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
-                        $this->sDbStarter = $dbStarter;
+			// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
+			$this->sDbStarter = $dbStarter;
 
 			wfDebugLog( "createwiki", __METHOD__ . ": starter $dbStarter exists\n", true );
 		}
