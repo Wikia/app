@@ -38,6 +38,9 @@ class Factory
 		if ( $config->getVideoActorSearch() ) {
 			return new Select\VideoActor( $container );
 		}
+		if ( $config->getVideoEmbedToolSearch() ) {
+			return new Select\VideoEmbedTool( $container );
+		}
 		return new Select\OnWiki( $container );
 	}
 	
