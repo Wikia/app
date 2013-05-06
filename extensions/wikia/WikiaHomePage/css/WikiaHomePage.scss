@@ -295,8 +295,8 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				.collections-button {
 					border: 0;
 					@include border-radius(0);
-					@include border-radius-ne(4px);
-					@include border-radius-se(4px);
+					@include border-radius-ne(3px);
+					@include border-radius-se(3px);
 					height: 43px;
 					padding: 0;
 					right: 15px;
