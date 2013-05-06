@@ -201,5 +201,10 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	public function decodeKey( $key ) {
 		return urldecode( $key );
 	}
+
+	public function clearLocalCache( $key ) {
+		unset($this->client->_dupe_cache[$key]);
+	}
+
 }
 

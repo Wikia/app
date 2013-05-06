@@ -345,19 +345,30 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\InterWiki::getFormulatedQuery
 	 */
 	public function testGetFormulatedQuery() {
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQuery' ] );
+		
+		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
+		
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
-		                   ->disableOriginalConstructor()
-		                   ->setMethods( array( 'getQueryClausesString', 'getNestedQuery' ) )
+		                   ->setConstructorArgs( [ $dc ] )
+		                   ->setMethods( [ 'getQueryClausesString' ] )
 		                   ->getMock();
+		
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSolrQuery' ], [ 'foo' ] );
 		
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'getQueryClausesString' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
-		$mockSelect
+		$mockConfig
 		    ->expects( $this->once() )
-		    ->method ( 'getNestedQuery' )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSolrQuery' )
 		    ->will   ( $this->returnValue( 'bar' ) )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'getFormulatedQuery' );

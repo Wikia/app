@@ -1,6 +1,7 @@
 <?php
 /**
  * @author Sean Colombo
+ * @author Władysław Bodzek
  * @date 20120501
  *
  * Extension which helps with running A/B tests or Split Tests (can actually be a/b/c/d/etc. as needed).
@@ -43,6 +44,7 @@ $app->registerClass('AbExperiment',"{$dir}/AbTesting.class.php");
 $app->registerClass('AbTestingData',"{$dir}/AbTestingData.class.php");
 $app->registerClass('ResourceLoaderAbTestingModule',"{$dir}/ResourceLoaderAbTestingModule.class.php");
 $app->registerClass('SpecialAbTestingController',"{$dir}/SpecialAbTestingController.class.php");
+$app->registerClass('AbTestingController',"{$dir}/AbTestingController.class.php");
 
 /**
  * message files

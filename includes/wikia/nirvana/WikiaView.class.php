@@ -182,8 +182,8 @@ class WikiaView {
 
 		switch($this->response->getTemplateEngine()) {
 			case WikiaResponse::TEMPLATE_ENGINE_MUSTACHE:
-				$m = new MustachePHP;
-				$result = $m->render(file_get_contents( $this->getTemplatePath() ), $data);
+				$m = MustacheService::getInstance();
+				$result = $m->render( $this->getTemplatePath(), $data );
 				wfProfileOut(__METHOD__);
 
 				return $result;

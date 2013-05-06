@@ -62,7 +62,7 @@ class WikiStatsXLS {
 	private function checkColumnStatDate($date, $prev_date)
 	{
 		$addEmptyLine = false;
-		wfProfileOut( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		#---
 		if ( (strpos($prev_date,STATS_COLUMN_PREFIX) !== false) && (strpos($date,STATS_COLUMN_PREFIX) === false) ) {
 			$addEmptyLine = 4;

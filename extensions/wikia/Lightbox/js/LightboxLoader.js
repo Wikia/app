@@ -68,7 +68,7 @@ var LightboxLoader = {
 					parent,
 					isVideo;
 
-				if($this.hasClass('link-internal')) {
+				if($this.hasClass('link-internal') || $this.hasClass('link-external')) {
 					return;
 				}
 
@@ -109,7 +109,6 @@ var LightboxLoader = {
 
 				if(!fileKey) {
 					LightboxLoader.handleOldDom();
-					// TODO: add error logging code here
 					return;
 				}
 

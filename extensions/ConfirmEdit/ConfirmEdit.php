@@ -182,7 +182,7 @@ $wgHooks['UserCreateForm'][] = 'ConfirmEditHooks::injectUserCreate';
 $wgHooks['AbortNewAccount'][] = 'ConfirmEditHooks::confirmUserCreate';
 $wgHooks['LoginAuthenticateAudit'][] = 'ConfirmEditHooks::triggerUserLogin';
 $wgHooks['UserLoginForm'][] = 'ConfirmEditHooks::injectUserLogin';
-$wgHooks['AbortLogin'][] = 'ConfirmEditHooks::confirmUserLogin';
+//$wgHooks['AbortLogin'][] = 'ConfirmEditHooks::confirmUserLogin';
 $wgHooks['EmailUserForm'][] = 'ConfirmEditHooks::injectEmailUser';
 $wgHooks['EmailUser'][] = 'ConfirmEditHooks::confirmEmailUser';
 # Register API hook

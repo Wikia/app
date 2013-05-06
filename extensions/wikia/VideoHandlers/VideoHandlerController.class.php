@@ -66,13 +66,13 @@ class VideoHandlerController extends WikiaController {
 	 * @responseParam string msg - result message
 	 */
 	public function removeVideo() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$videoTitle = $this->getVal( 'title', '' );
 		if ( empty($videoTitle) ) {
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videos-error-empty-title' )->text();
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -80,7 +80,7 @@ class VideoHandlerController extends WikiaController {
 		if ( !$this->wg->User->isLoggedIn() ) {
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videos-error-not-logged-in' )->text();
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -88,7 +88,7 @@ class VideoHandlerController extends WikiaController {
 		if ( $this->wg->User->isBlocked() ) {
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videos-error-blocked-user' )->text();
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -96,7 +96,7 @@ class VideoHandlerController extends WikiaController {
 		if ( $this->wf->ReadOnly() ) {
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videos-error-readonly' )->text();
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -110,7 +110,7 @@ class VideoHandlerController extends WikiaController {
 			if ( count( $permissionErrors ) ) {
 				$this->result = 'error';
 				$this->msg = $this->wf->Message( 'videos-error-permissions' )->text();
-				$this->wf->ProfileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				return;
 			}
 
@@ -172,7 +172,7 @@ class VideoHandlerController extends WikiaController {
 			$this->msg = $error;
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 }

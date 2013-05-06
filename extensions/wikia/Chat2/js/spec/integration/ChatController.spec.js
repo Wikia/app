@@ -71,7 +71,7 @@ describe("ChatView Test", function(){
 			c.processText('http://poznan.mech.wikia-dev.com/wiki/Benutzer_Blog:Mta%C3%84/%C3%84nderungen_am_Geschichtsseiten-Layout')
 		)
 		.toEqual(
-			'<a href="http://poznan.mech.wikia-dev.com/wiki/Benutzer_Blog:Mta%C3%84/%C3%84nderungen_am_Geschichtsseiten-Layout">Benutzer_Blog:MtaÄ/Änderungen_am_Geschichtsseiten-Layout</a>',
+			'<a href="http://poznan.mech.wikia-dev.com/wiki/Benutzer_Blog:Mta%C3%84/%C3%84nderungen_am_Geschichtsseiten-Layout">Benutzer Blog:MtaÄ/Änderungen am Geschichtsseiten-Layout</a>',
 			'local url with national characters'
 		);
 
@@ -126,5 +126,8 @@ describe("ChatView Test", function(){
 
 		expect(c.processText('[[Namespace:Test_pipe_trick:Foo:bar|]]'))
 			.toEqual('<a href="http://poznan.mech.wikia-dev.com/wiki/Namespace:Test_pipe_trick:Foo:bar">Test pipe trick:Foo:bar</a>', 'pipe-trick link with namespace and multiple colons');
+
+		expect(c.processText('http://poznan.mech.wikia-dev.com/wiki/Test_Page'))
+			.toEqual('<a href="http://poznan.mech.wikia-dev.com/wiki/Test_Page">Test Page</a>', 'replace underscores with spaces in local link names');
 	});
 });

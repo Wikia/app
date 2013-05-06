@@ -105,10 +105,10 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 		//sponsoredImageAlt === image file title -> can be used in Title::newFromTitle() to create Title instance
 			$data['sponsoredImageMarkup'] = $this->getSponsoredImageMarkup($data['sponsoredImageAlt']);
 		}
-		
+
 		return parent::render($data);
 	}
-	
+
 	public function getStructuredData($data) {
 		$structuredData = array();
 
@@ -178,4 +178,25 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 	protected function getToolboxModel() {
 		return new MarketingToolboxModel();
 	}
+
+	/**
+	 * check if it is video module
+	 * @return boolean
+	 */
+	public function isVideoModule() {
+		return true;
+	}
+
+	/**
+	 * get list of video url
+	 * @param array $data
+	 * @return array $videoData
+	 */
+	public function getVideoData( $data ) {
+		$structureData = $this->getStructuredData( $data );
+		$videoData[] = $structureData['video']['fileUrl'];
+
+		return $videoData;
+	}
+
 }

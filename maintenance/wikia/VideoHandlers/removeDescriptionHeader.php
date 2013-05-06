@@ -14,7 +14,7 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 class EditCLI extends Maintenance {
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Change <videogallery> tags to <gallery> for a specific wiki";
+		$this->mDescription = "Remove the description header";
 		$this->addOption( 'user', 'Username', false, true, 'u' );
 		$this->addOption( 'test', 'Test', false, false, 't' );
 	}
@@ -35,7 +35,6 @@ class EditCLI extends Maintenance {
 
 		$dbs = wfGetDB(DB_SLAVE);
 		if (!is_null($dbs)) {
-			global $wgCityId;
 
 			# Find all video file pages
 			$query = "select page_id " .

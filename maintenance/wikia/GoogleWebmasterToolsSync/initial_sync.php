@@ -13,7 +13,11 @@ try {
 	$dbmart = $app->wf->getDB( DB_SLAVE, array(), $wgDatamartDB);
 	$db = $app->wf->getDB( DB_MASTER, array(), $wgExternalSharedDB);
 
-	$query = "select wiki_id, count(article_id) as page_count from rollup_wiki_article_pageviews group by wiki_id having count(article_id) >= $minCountOfPagesToSync";
+	$query = "select wiki_id, count(article_id) as page_count
+		 from rollup_wiki_article_pageviews
+		 where period_id = 2 and time_id between '2013-01-01 00:00:00' and '2013-04-14 00:00:00' and namespace_id = 0
+		 group by wiki_id
+		 having count(article_id) >= $minCountOfPagesToSync";
 	$result = $dbmart->query($query);
 
 	function fetchGroup ( $result, $count ) {
