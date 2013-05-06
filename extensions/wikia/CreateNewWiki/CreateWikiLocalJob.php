@@ -72,7 +72,7 @@ class CreateWikiLocalJob extends Job {
 		$wgServer = rtrim( $this->mParams->url, "/" );
 		$wgInternalServer = $wgServer;
 
-		$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
+		$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = __DIR__ . "/../AutoCreateWiki/AutoCreateWiki.i18n.php";
 
 		/**
 		 * very verbose

@@ -611,7 +611,7 @@ $wgLangCreationVariables = array();
  * register job class
  */
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
-include_once( "$IP/extensions/wikia/AutoCreateWiki/CreateWikiLocalJob.php" );
+include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
 
 /*
  * @name wgWikiaStaffLanguages
