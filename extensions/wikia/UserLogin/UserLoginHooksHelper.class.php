@@ -13,7 +13,6 @@ class UserLoginHooksHelper {
 
 	// get error message when abort new account
 	public static function onAbortNewAccountErrorMessage( &$abortError, &$errParam ) {
-		$app = F::app();
 		if ( $abortError == wfMsg('phalanx-user-block-new-account') ) {
 			$abortError = wfMsg( 'userlogin-error-user-not-allowed' );
 			$errParam = 'username';
@@ -133,5 +132,13 @@ class UserLoginHooksHelper {
 		return preg_match('/^[a-z0-9._%+-]+@(?:[a-z0-9\-]+\.)+[a-z]{2,4}$/i', $addr) !== 0;
 	}
 
+	/**
+	 * @param array $vars
+	 * @return bool
+	 */
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
+		$vars['wgEnableUserLoginExt'] = true;
+		return true;
+	}
 
 }

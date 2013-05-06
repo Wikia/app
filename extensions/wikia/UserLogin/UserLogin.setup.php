@@ -11,7 +11,6 @@ $wgExtensionCredits['specialpage'][] = array(
 );
  
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 //classes
 $wgAutoloadClasses['FacebookButtonController'] =  $dir . 'FacebookButtonController.class.php';
 $wgAutoloadClasses['FacebookSignupController'] =  $dir . 'FacebookSignupController.class.php';
@@ -26,16 +25,16 @@ $wgAutoloadClasses['UserLoginFacebookForm'] =  $dir . 'UserLoginFacebookForm.cla
 $wgAutoloadClasses['UserLoginHooksHelper'] =  $dir . 'UserLoginHooksHelper.class.php';
 
 // hooks
-$app->registerHook('MakeGlobalVariablesScript', 'UserLoginHelper', 'onMakeGlobalVariablesScript');
-$app->registerHook('Preferences::SetUserEmail', 'UserLoginHooksHelper', 'onSetUserEmail' );
-$app->registerHook('UserSendReConfirmationMail', 'UserLoginHooksHelper', 'onUserSendReConfirmationMail' );
-$app->registerHook('AbortNewAccountErrorMessage', 'UserLoginHooksHelper', 'onAbortNewAccountErrorMessage' );
-$app->registerHook('MailPasswordTempUser', 'UserLoginHooksHelper', 'onMailPasswordTempUser' );
-$app->registerHook('ConfirmEmailShowRequestForm', 'UserLoginHooksHelper', 'onConfirmEmailShowRequestForm' );
-$app->registerHook('UserSendConfirmationMail', 'UserLoginHooksHelper', 'onUserSendConfirmationMail' );
-$app->registerHook('PreferencesGetEmailAuthentication', 'UserLoginHooksHelper', 'onGetEmailAuthentication' );
-$app->registerHook('isValidEmailAddr', 'UserLoginHooksHelper', 'isValidEmailAddr');
-$app->registerHook('SavePreferences', 'UserLoginHooksHelper', 'onSavePreferences');
+$wgHooks['MakeGlobalVariablesScript'][] = 'UserLoginHooksHelper::onMakeGlobalVariablesScript';
+$wgHooks['Preferences::SetUserEmail'][] = 'UserLoginHooksHelper::onSetUserEmail';
+$wgHooks['UserSendReConfirmationMail'][] = 'UserLoginHooksHelper::onUserSendReConfirmationMail';
+$wgHooks['AbortNewAccountErrorMessage'][] = 'UserLoginHooksHelper::onAbortNewAccountErrorMessage';
+$wgHooks['MailPasswordTempUser'][] = 'UserLoginHooksHelper::onMailPasswordTempUser';
+$wgHooks['ConfirmEmailShowRequestForm'][] = 'UserLoginHooksHelper::onConfirmEmailShowRequestForm';
+$wgHooks['UserSendConfirmationMail'][] = 'UserLoginHooksHelper::onUserSendConfirmationMail';
+$wgHooks['PreferencesGetEmailAuthentication'][] = 'UserLoginHooksHelper::onGetEmailAuthentication';
+$wgHooks['isValidEmailAddr'][] = 'UserLoginHooksHelper::isValidEmailAddr';
+$wgHooks['SavePreferences'][] = 'UserLoginHooksHelper::onSavePreferences';
 
 // i18n mapping
 $wgExtensionMessagesFiles['UserLogin'] = $dir . 'UserLogin.i18n.php';

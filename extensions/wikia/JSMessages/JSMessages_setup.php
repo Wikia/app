@@ -18,15 +18,12 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__);
 
-// WikiaApp
-$app = F::app();
-
 // classes
 $wgAutoloadClasses['JSMessages'] =  $dir . '/JSMessages.class.php';
 $wgAutoloadClasses['JSMessagesHelper'] =  $dir . '/JSMessagesHelper.class.php';
 $wgAutoloadClasses['JSMessagesController'] =  $dir . '/JSMessagesController.class.php';
 
 // hooks
-$app->registerHook('WikiaSkinTopScripts', 'JSMessages', 'onWikiaSkinTopScripts');
-$app->registerHook('MessageCacheReplace', 'JSMessagesHelper', 'onMessageCacheReplace');
+$wgHooks['WikiaSkinTopScripts'][] = 'JSMessages::onWikiaSkinTopScripts';
+$wgHooks['MessageCacheReplace'][] = 'JSMessagesHelper::onMessageCacheReplace';
 

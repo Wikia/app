@@ -34,10 +34,6 @@ $wgWikiaVideoGalleryId = 0;
 $wgWikiaVETLoaded = false;
 $wgWikiaVideosFoundInTemplates = 0;
 
-/**
- * @var WikiaApp
- */
-$app = F::app();
 $dir = dirname( __FILE__ );
 $wgAutoloadClasses[ 'ThumbnailVideo'] = 		$dir . '/ThumbnailVideo.class.php' ;
 $wgAutoloadClasses[ 'VideoHandlerController'] = 	$dir . '/VideoHandlerController.class.php' ;
@@ -91,30 +87,30 @@ $wgExtensionMessagesFiles['VideoHandlers'] = "$dir/VideoHandlers.i18n.php";
  *
 **/
 
-$app->registerHook( 'MWNamespace:isMovable', 'VideoHandlerHooks', 'WikiaVideo_isMovable');
-$app->registerHook( 'SpecialNewImages::beforeQuery', 'VideoHandlerHooks', 'WikiaVideoNewImagesBeforeQuery');
-$app->registerHook( 'Parser::FetchTemplateAndTitle', 'VideoHandlerHooks', 'WikiaVideoFetchTemplateAndTitle');
-$app->registerHook( 'ParserBeforeStrip', 'VideoHandlerHooks', 'WikiaVideoParserBeforeStrip'); // <videogallery>
+$wgHooks['MWNamespace:isMovable'][] = 'VideoHandlerHooks::WikiaVideo_isMovable';
+$wgHooks['SpecialNewImages::beforeQuery'][] = 'VideoHandlerHooks::WikiaVideoNewImagesBeforeQuery';
+$wgHooks['Parser::FetchTemplateAndTitle'][] = 'VideoHandlerHooks::WikiaVideoFetchTemplateAndTitle';
+$wgHooks['ParserBeforeStrip'][] = 'VideoHandlerHooks::WikiaVideoParserBeforeStrip'; // <videogallery>
 
-$app->registerHook( 'FileRevertFormBeforeUpload', 'VideoHandlerHooks', 'onFileRevertFormBeforeUpload' );
-$app->registerHook( 'SetupAfterCache', 'VideoHandlerHooks', 'onSetupAfterCache' );
-$app->registerHook( 'BeforePageDisplay', 'VideoHandlerHooks', 'onBeforePageDisplay' );
-$app->registerHook( 'LinkerMakeThumbLink2FileOriginalSize', 'VideoHandlerHooks', 'onLinkerMakeThumbLink2FileOriginalSize' );
-$app->registerHook( 'ParserAfterStrip', 'VideoHandlerHooks', 'convertOldInterwikiToNewInterwiki' );
-$app->registerHook( 'File::checkExtensionCompatibilityResult', 'VideoHandlerHooks', 'checkExtensionCompatibilityResult' );
+$wgHooks['FileRevertFormBeforeUpload'][] = 'VideoHandlerHooks::onFileRevertFormBeforeUpload';
+$wgHooks['SetupAfterCache'][] = 'VideoHandlerHooks::onSetupAfterCache';
+$wgHooks['BeforePageDisplay'][] = 'VideoHandlerHooks::onBeforePageDisplay';
+$wgHooks['LinkerMakeThumbLink2FileOriginalSize'][] = 'VideoHandlerHooks::onLinkerMakeThumbLink2FileOriginalSize';
+$wgHooks['ParserAfterStrip'][] = 'VideoHandlerHooks::convertOldInterwikiToNewInterwiki';
+$wgHooks['File::checkExtensionCompatibilityResult'][] = 'VideoHandlerHooks::checkExtensionCompatibilityResult';
 
-$app->registerHook( 'FileUpload', 'VideoInfoHooksHelper', 'onFileUpload' );
-$app->registerHook( 'ArticleSaveComplete', 'VideoInfoHooksHelper', 'onArticleSaveComplete' );
-$app->registerHook( 'FileDeleteComplete', 'VideoInfoHooksHelper', 'onFileDeleteComplete' );
-$app->registerHook( 'FileUndeleteComplete', 'VideoInfoHooksHelper', 'onFileUndeleteComplete' );
-$app->registerHook( 'SpecialMovepageAfterMove', 'VideoInfoHooksHelper', 'onFileRenameComplete' );
-$app->registerHook( 'AddPremiumVideo', 'VideoInfoHooksHelper', 'onAddPremiumVideo' );
-$app->registerHook( 'ArticleDeleteComplete', 'VideoInfoHooksHelper', 'onArticleDeleteComplete' );
-$app->registerHook( 'UndeleteComplete', 'VideoInfoHooksHelper', 'onUndeleteComplete' );
-$app->registerHook( 'ForeignFileDeleted', 'VideoInfoHooksHelper', 'onForeignFileDeleted' );
+$wgHooks['FileUpload'][] = 'VideoInfoHooksHelper::onFileUpload';
+$wgHooks['ArticleSaveComplete'][] = 'VideoInfoHooksHelper::onArticleSaveComplete';
+$wgHooks['FileDeleteComplete'][] = 'VideoInfoHooksHelper::onFileDeleteComplete';
+$wgHooks['FileUndeleteComplete'][] = 'VideoInfoHooksHelper::onFileUndeleteComplete';
+$wgHooks['SpecialMovepageAfterMove'][] = 'VideoInfoHooksHelper::onFileRenameComplete';
+$wgHooks['AddPremiumVideo'][] = 'VideoInfoHooksHelper::onAddPremiumVideo';
+$wgHooks['ArticleDeleteComplete'][] = 'VideoInfoHooksHelper::onArticleDeleteComplete';
+$wgHooks['UndeleteComplete'][] = 'VideoInfoHooksHelper::onUndeleteComplete';
+$wgHooks['ForeignFileDeleted'][] = 'VideoInfoHooksHelper::onForeignFileDeleted';
 
 if(!empty($wgVideoHandlersVideosMigrated)) {
-	$app->registerHook( 'ParserFirstCallInit', 'VideoHandlerHooks', 'initParserHook' );
+	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 }
 
 // permissions

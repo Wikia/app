@@ -34,24 +34,24 @@ $app->wg->append(
 /**
  * classes
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/ImageTweaksHooks.class.php", 'ImageTweaksHooks' );
+$wgAutoloadClasses['ImageTweaksHooks'] = "{$dir}/ImageTweaksHooks.class.php";
 
 /**
  * services
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/ImageTweaksService.class.php", 'ImageTweaksService' );
+$wgAutoloadClasses['ImageTweaksService'] = "{$dir}/ImageTweaksService.class.php";
 
 /**
  * hooks
  */
 //hook into Linker::MakeImageLink2
-$app->registerHook( 'ImageAfterProduceHTML', 'ImageTweaksHooks', 'onImageAfterProduceHTML' );
+$wgHooks['ImageAfterProduceHTML'][] = 'ImageTweaksHooks::onImageAfterProduceHTML';
 
 //hook into Linker::MakeThumbLink2
-$app->registerHook( 'ThumbnailAfterProduceHTML', 'ImageTweaksHooks', 'onThumbnailAfterProduceHTML' );
+$wgHooks['ThumbnailAfterProduceHTML'][] = 'ImageTweaksHooks::onThumbnailAfterProduceHTML';
 
 //hook into ImageThumbnail::toHTML
-$app->registerHook( 'ThumbnailImageHTML', 'ImageTweaksHooks', 'onThumbnailImageHTML' );
+$wgHooks['ThumbnailImageHTML'][] = 'ImageTweaksHooks::onThumbnailImageHTML';
 
 //hook into ThumbnailVideo::toHTML
-$app->registerHook( 'ThumbnailVideoHTML', 'ImageTweaksHooks', 'onThumbnailVideoHTML' );
+$wgHooks['ThumbnailVideoHTML'][] = 'ImageTweaksHooks::onThumbnailVideoHTML';

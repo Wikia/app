@@ -1,10 +1,10 @@
 <?php
 
-class ParserSpeedHooks extends WikiaObject {
+class ParserSpeedHooks {
 
 	const SCRIBE_KEY = 'parser_speed_article';
 
-	public function onParserAfterTidy( Parser &$parser, &$text ) {
+	static public function onParserAfterTidy( Parser &$parser, &$text ) {
 		$parser->mOutput->setPerformanceStats('expFuncCount',   $parser->mExpensiveFunctionCount);
 		$parser->mOutput->setPerformanceStats('nodeCount',      $parser->mPPNodeCount);
 		$parser->mOutput->setPerformanceStats('postExpandSize', $parser->mIncludeSizes['post-expand']);
@@ -12,7 +12,8 @@ class ParserSpeedHooks extends WikiaObject {
 		return true;
 	}
 
-	public function onArticleViewAfterParser( Article $article, ParserOutput $parserOutput ) {
+	static public function onArticleViewAfterParser( Article $article, ParserOutput $parserOutput ) {
+		global $wgCityId, $wgDBname;
 		// we collect production data from Oasis only
 		/*if ( !$this->app->checkSkin( 'oasis', $this->wg->Skin )
 				|| $this->wg->DevelEnvironment || $this->wg->StagingEnvironment ) {
@@ -23,8 +24,8 @@ class ParserSpeedHooks extends WikiaObject {
 			try {
 				$title = $article->getTitle();
 				$fields = array(
-					'wikiId'         => intval($this->wg->CityId),
-					'databaseName'   => $this->wg->DBname,
+					'wikiId'         => intval($wgCityId),
+					'databaseName'   => $wgDBname,
 					'articleId'      => $title->getArticleID(),
 					'namespaceId'    => $title->getNamespace(),
 					'articleTitle'   => $title->getText(),

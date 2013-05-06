@@ -501,13 +501,5 @@ class UserLoginHelper extends WikiaModel {
 		}
 	}
 
-	/**
-	 * @param array $vars
-	 * @return bool
-	 */
-	public function onMakeGlobalVariablesScript(Array &$vars) {
-		$vars['wgEnableUserLoginExt'] = true;
-		return true;
-	}
 
 }

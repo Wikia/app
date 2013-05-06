@@ -5,7 +5,7 @@
  *
  * @author macbre
  */
-class JSSnippets extends WikiaObject {
+class JSSnippets {
 	const resourceRegex = '/\.(css|scss|js)$/i';
 	const urlRegex = '/^http[s]?:\/\//i';
 	const cbRegex = '/\?cb=[0-9]+$/i';

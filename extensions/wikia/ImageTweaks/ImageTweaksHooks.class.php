@@ -1,26 +1,30 @@
 <?php
 
-class ImageTweaksHooks extends WikiaObject {
+class ImageTweaksHooks {
 
 	static private $isWikiaMobile = null;
 	static private $isOasis = null;
 
-	function __construct(){
-		parent::__construct();
+	static function init(){
+		$app = F::app();
 
 		if ( self::$isOasis === null )
-			self::$isOasis = $this->app->checkSkin( 'oasis' );
+			self::$isOasis = $app->checkSkin( 'oasis' );
 
 		if ( self::$isWikiaMobile === null )
-			self::$isWikiaMobile = ( !empty( $isOasis ) ) ? false : $this->app->checkSkin( 'wikiamobile' );
+			self::$isWikiaMobile = ( !empty( $isOasis ) ) ? false : $app->checkSkin( 'wikiamobile' );
 	}
 
-	public function onThumbnailAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $thumbParams, $zoomIcon, $url,  $time, $origHTML, &$html ){
-		if ( !empty( $this->app->wg->RTEParserEnabled ) ) {
+	static public function onThumbnailAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $thumbParams, $zoomIcon, $url,  $time, $origHTML, &$html ){
+		global $wgRTEParserEnabled, $wgEnableOasisPictureAttribution;
+		if ( !empty( $wgRTEParserEnabled ) ) {
 			return true;
 		}
 
 		wfProfileIn( __METHOD__ );
+		if ( is_null(self::$isWikiaMobile) ) {
+			self::init();
+		}
 
 		if ( self::$isWikiaMobile ) {
 			$linked = !empty( $frameParams['link-url'] ) || !empty( $frameParams['link-title'] );
@@ -34,7 +38,7 @@ class ImageTweaksHooks extends WikiaObject {
 				$showRibbon = false;
 			}
 
-			$html = $this->app->sendRequest(
+			$html = F::app()->sendRequest(
 				'WikiaMobileMediaService',
 				'renderFigureTag',
 				array(
@@ -62,7 +66,7 @@ class ImageTweaksHooks extends WikiaObject {
 				''
 			);
 
-			$html = $this->getTag(
+			$html = self::getTag(
 				$origHTML,
 				$frameParams['align'],
 				$outerWidth,
@@ -71,7 +75,7 @@ class ImageTweaksHooks extends WikiaObject {
 				$zoomIcon,
 				(
 					self::$isOasis &&
-						!empty( $this->wg->EnableOasisPictureAttribution ) &&
+						!empty( $wgEnableOasisPictureAttribution ) &&
 						!empty( $file ) &&
 						//BugId: 3734 Remove picture attribution for thumbnails 99px wide and under
 						$outerWidth >= 102
@@ -84,9 +88,15 @@ class ImageTweaksHooks extends WikiaObject {
 		return true;
 	}
 
-	public function onImageAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $thumb, $params, $time, $origHTML, &$html ){
-		if ( !empty( $this->app->wg->RTEParserEnabled ) ) {
+	static public function onImageAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $thumb, $params, $time, $origHTML, &$html ){
+		global $wgRTEParserEnabled;
+		if ( !empty( $wgRTEParserEnabled ) ) {
 			return true;
+		}
+
+
+		if ( is_null(self::$isWikiaMobile) ) {
+			self::init();
 		}
 
 		/**
@@ -107,7 +117,7 @@ class ImageTweaksHooks extends WikiaObject {
 				$showRibbon = false;
 			}
 
-			$html = $this->app->sendRequest(
+			$html = F::app()->sendRequest(
 				'WikiaMobileMediaService',
 				'renderFigureTag',
 				array(
@@ -127,12 +137,17 @@ class ImageTweaksHooks extends WikiaObject {
 		return true;
 	}
 
-	public function onThumbnailImageHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
-		if ( !empty( $this->app->wg->RTEParserEnabled ) ) {
+	static public function onThumbnailImageHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
+		global $wgRTEParserEnabled;
+		if ( !empty( $wgRTEParserEnabled ) ) {
 			return true;
 		}
 
+
 		wfProfileIn( __METHOD__ );
+		if ( is_null(self::$isWikiaMobile) ) {
+			self::init();
+		}
 
 		if (
 			/**
@@ -230,7 +245,7 @@ class ImageTweaksHooks extends WikiaObject {
 				 *WikiaMobile: lazy loading images in a SEO-friendly manner
 				 *@author Federico "Lox" Lucignano <federico@wikia-inc.com
 				 */
-				$html = $this->app->sendRequest(
+				$html = F::app()->sendRequest(
 					'WikiaMobileMediaService',
 					'renderImageTag',
 					[
@@ -251,12 +266,17 @@ class ImageTweaksHooks extends WikiaObject {
 		return true;
 	}
 
-	public function onThumbnailVideoHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
-		if ( !empty( $this->app->wg->RTEParserEnabled ) ) {
+	static public function onThumbnailVideoHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
+		global $wgRTEParserEnabled;
+		if ( !empty( $wgRTEParserEnabled ) ) {
 			return true;
 		}
 
+
 		wfProfileIn( __METHOD__ );
+		if ( is_null(self::$isWikiaMobile) ) {
+			self::init();
+		}
 
 		if ( self::$isWikiaMobile ) {
 			/**
@@ -312,7 +332,7 @@ class ImageTweaksHooks extends WikiaObject {
 				);
 			}
 
-			$html = $this->app->sendRequest(
+			$html = F::app()->sendRequest(
 				'WikiaMobileMediaService',
 				'renderImageTag',
 				$data,
@@ -324,7 +344,7 @@ class ImageTweaksHooks extends WikiaObject {
 		return true;
 	}
 
-	private function getTag( $imageHTML, $align, $width, $showCaption = false, $caption = '',  $zoomIcon = '', $showPictureAttribution = false, $attributeTo = null ){
+	static private function getTag( $imageHTML, $align, $width, $showCaption = false, $caption = '',  $zoomIcon = '', $showPictureAttribution = false, $attributeTo = null ){
 		/**
 		 * Images SEO
 		 * @author: Marooned, Federico

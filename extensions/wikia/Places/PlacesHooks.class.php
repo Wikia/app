@@ -1,5 +1,5 @@
 <?php
-class PlacesHooks extends WikiaObject{
+class PlacesHooks {
 
 	private static $modelToSave;
 

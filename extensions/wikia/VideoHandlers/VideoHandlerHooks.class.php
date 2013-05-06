@@ -1,5 +1,5 @@
 <?php
-class VideoHandlerHooks extends WikiaObject{
+class VideoHandlerHooks {
 
 	const VIDEO_WIKI = 298117;
 
