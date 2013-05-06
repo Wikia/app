@@ -610,10 +610,6 @@ $wgLangCreationVariables = array();
 /**
  * register job class
  */
-$wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
-include_once( "$IP/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php" );
-
-// new version
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/AutoCreateWiki/CreateWikiLocalJob.php" );
 
