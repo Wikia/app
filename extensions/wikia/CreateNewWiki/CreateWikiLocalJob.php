@@ -275,10 +275,6 @@ class CreateWikiLocalJob extends Job {
 			if( $wallMessage === false ) {
 				return false;
 			}
-			if($admin) {
-				$wallMessage->setPostedAsBot($wgUser);
-				$wallMessage->sendNotificationAboutLastRev();
-			}
 
 			Wikia::log( __METHOD__, "wall", $this->mFounder->getName() );
 			return true;
