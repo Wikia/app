@@ -25,16 +25,13 @@ class AbTesting extends WikiaObject {
 		self::FLAG_LIMIT_TO_SPECIAL_WIKIS => 'limit_to_special_wikis',
 	);
 
-	static protected $initialized = false;
+	static protected $instance;
 
-	function __construct() {
-		parent::__construct();
-
-		if ( !self::$initialized ) {
-			// Nirvana singleton, please use F::build
-			F::setInstance( __CLASS__, $this );
-			self::$initialized = true;
+	static function getInstance() {
+		if( is_null(self::$instance) ) {
+			self::$instance == new AbTesting();
 		}
+		return self::$instancen;
 	}
 
 	// Keeping the response size (assets minification) and the number of external requests low (aggregation)

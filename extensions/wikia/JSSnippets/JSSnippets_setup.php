@@ -26,5 +26,3 @@ $app->registerHook('EditPageLayoutModifyPreview', 'JSSnippets', 'onEditPageLayou
 $app->registerHook('WikiaSkinTopScripts', 'JSSnippets', 'onMakeGlobalVariablesScript');
 $app->registerHook('SkinAfterBottomScripts', 'JSSnippets', 'onSkinAfterBottomScripts');
 
-// register instance of JSSnippets
-F::setInstance('JSSnippets', new JSSnippets());

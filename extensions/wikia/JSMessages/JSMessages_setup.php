@@ -30,6 +30,3 @@ $wgAutoloadClasses['JSMessagesController'] =  $dir . '/JSMessagesController.clas
 $app->registerHook('WikiaSkinTopScripts', 'JSMessages', 'onWikiaSkinTopScripts');
 $app->registerHook('MessageCacheReplace', 'JSMessagesHelper', 'onMessageCacheReplace');
 
-// register instances
-F::setInstance('JSMessages', new JSMessages());
-F::setInstance('JSMessagesHelper', new JSMessagesHelper());

@@ -10,7 +10,6 @@ class WikiaMobileService extends WikiaService {
 	//const CACHE_MANIFEST_PATH = 'wikia.php?controller=WikiaMobileAppCache&method=serveManifest&format=html';
 	const LYRICSWIKI_ID = 43339;
 
-	static protected $initialized = false;
 	/**
 	* @var $skin WikiaSkin
 	*/
@@ -20,16 +19,6 @@ class WikiaMobileService extends WikiaService {
 	 * @var $templateObject SkinTemplate
 	 */
 	private $templateObject;
-
-	function __construct(){
-		parent::__construct();
-
-		if ( !self::$initialized ) {
-			//singleton
-			F::setInstance( __CLASS__, $this );
-			self::$initialized = true;
-		}
-	}
 
 	function init(){
 		wfLoadExtensionMessages( 'WikiaMobile' );

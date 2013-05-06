@@ -3,16 +3,11 @@ class PlacesHooks extends WikiaObject{
 
 	private static $modelToSave;
 
-	function __construct(){
-			parent::__construct();
-			F::setInstance( __CLASS__, $this );
-	}
-
-	public function setModelToSave( PlaceModel $model ){
+	static public function setModelToSave( PlaceModel $model ){
 		self::$modelToSave = $model;
 	}
 
-	public function onPageHeaderIndexExtraButtons( $response ){
+	static public function onPageHeaderIndexExtraButtons( $response ){
 		$app = F::app();
 		$extraButtons = $response->getVal('extraButtons');
 
@@ -51,14 +46,14 @@ class PlacesHooks extends WikiaObject{
 		return true;
 	}
 
-	public function onParserFirstCallInit( Parser $parser ){
+	static public function onParserFirstCallInit( Parser $parser ){
 		$parser->setHook( 'place', 'PlacesParserHookHandler::renderPlaceTag' );
 		$parser->setHook( 'places', 'PlacesParserHookHandler::renderPlacesTag' );
 
 		return true;
 	}
 
-	public function onBeforePageDisplay( OutputPage $out, Skin $sk ){
+	static public function onBeforePageDisplay( OutputPage $out, Skin $sk ){
 		wfProfileIn( __METHOD__ );
 
 		$title = $out->getTitle();
@@ -81,7 +76,7 @@ class PlacesHooks extends WikiaObject{
 		return true;
 	}
 
-	public function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ){
+	static public function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ){
  		wfProfileIn( __METHOD__ );
 
 		wfDebug( __METHOD__ . "\n" );
@@ -108,7 +103,7 @@ class PlacesHooks extends WikiaObject{
 		return true;
  	}
 
-	public function onRTEUseDefaultPlaceholder( $name, $params, $frame, $wikitextIdx ) {
+	static public function onRTEUseDefaultPlaceholder( $name, $params, $frame, $wikitextIdx ) {
 		if ( $name !== 'place' ) {
 			return true;
 		} else {
@@ -124,10 +119,11 @@ class PlacesHooks extends WikiaObject{
 	 * @param EditPage $editpage edit page instance
 	 * @return bool true it's a hook
 	 */
-	public function onShowEditForm( EditPage $editpage ){
+	static public function onShowEditForm( EditPage $editpage ){
+		global $wgOut, $wgJsMimeType;
 		// add edit toolbar button for adding places
 		$src = AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/Places/js/PlacesEditPage.js' );
-		$this->wg->Out->addScript( "<script type=\"{$this->app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>" );
 
 		// load JS messages
 		JSMessages::enqueuePackage('Places', JSMessages::EXTERNAL);
@@ -138,10 +134,10 @@ class PlacesHooks extends WikiaObject{
 	/**
 	 * Prepends the geolocation button for adding coordinates to a page
 	 */
-	public function onOutputPageBeforeHTML( &$out, &$text ){
-
-		if ( $this->app->wg->request->getVal('action', 'view') == true ) {
-			$text = $this->app->sendRequest( 'Places', 'getGeolocationButton' )->toString() . $text;
+	static public function onOutputPageBeforeHTML( &$out, &$text ){
+		$app = F::app();
+		if ( $app->wg->request->getVal('action', 'view') == true ) {
+			$text = $app->sendRequest( 'Places', 'getGeolocationButton' )->toString() . $text;
 		}
 		return $out;
 	}

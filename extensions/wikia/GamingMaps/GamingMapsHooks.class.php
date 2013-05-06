@@ -1,11 +1,7 @@
 <?php
 class GamingMapsHooks extends WikiaObject{
-	function __construct(){
-        parent::__construct();
-        F::setInstance( __CLASS__, $this );
-	}
 
-	public function onParserFirstCallInit( Parser $parser ){
+	static public function onParserFirstCallInit( Parser $parser ){
 		$parser->setHook( 'gamingMap', 'GamingMapsHooks::renderGamingMapTag' );
 
 		return true;

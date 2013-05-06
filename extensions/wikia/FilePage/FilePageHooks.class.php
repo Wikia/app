@@ -4,18 +4,13 @@ class FilePageHooks extends WikiaObject{
 
 	const VIDEO_WIKI = 298117;
 
-	function __construct(){
-		parent::__construct();
-		F::setInstance( __CLASS__, $this );
-	}
-
 	/**
 	 * Determine which FilePage to show based on skin and File type (image/video)
 	 *
 	 * @param Title $oTitle
 	 * @param Article $oArticle
 	 */
-	public function onArticleFromTitle( &$oTitle, &$oArticle ){
+	static public function onArticleFromTitle( &$oTitle, &$oArticle ){
 		global $wgEnableVideoPageRedesign;
 
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
@@ -35,7 +30,7 @@ class FilePageHooks extends WikiaObject{
 	/**
 	 * Add JS and CSS to File Page
 	 */
-	public function onBeforePageDisplay( OutputPage $out, $skin ) {
+	static public function onBeforePageDisplay( OutputPage $out, $skin ) {
 		global $wgEnableVideoPageRedesign;
 
 		$app = F::app();
@@ -66,7 +61,7 @@ class FilePageHooks extends WikiaObject{
 	 * Add "remove" action to MenuButtons on premium video file pages
 	 * This button will remove a video from a wiki but keep it on the Video Wiki.
 	 */
-	public function onSkinTemplateNavigation($skin, &$tabs) {
+	static public function onSkinTemplateNavigation($skin, &$tabs) {
 		global $wgUser;
 
 		$app = F::app();
@@ -119,7 +114,7 @@ class FilePageHooks extends WikiaObject{
 	 * @param string|false $link
 	 * @return true
 	 */
-	public function onGlobalUsageFormatItemWikiLink( $item, $page, &$link ) {
+	static public function onGlobalUsageFormatItemWikiLink( $item, $page, &$link ) {
 		$link = WikiFactory::DBtoUrl( $item['wiki'] );
 		if ( $link ) {
 			$link .= 'wiki/'.$page;
@@ -134,7 +129,7 @@ class FilePageHooks extends WikiaObject{
 	 * @param string $wikiName
 	 * @return true
 	 */
-	public function onGlobalUsageImagePageWikiLink( &$wikiName ) {
+	static public function onGlobalUsageImagePageWikiLink( &$wikiName ) {
 		$wiki = WikiFactory::getWikiByDB( $wikiName );
 		if ( $wiki ) {
 			$wikiName = '['.$wiki->city_url.' '.$wiki->city_title.']';
@@ -148,7 +143,7 @@ class FilePageHooks extends WikiaObject{
 	 * @param array $images
 	 * @return true
 	 */
-	public function onGlobalUsageLinksUpdateComplete( &$images ) {
+	static public function onGlobalUsageLinksUpdateComplete( &$images ) {
 		$videoFiles = array();
 		foreach( $images as $image ) {
 			$file = wfFindFile( $image );

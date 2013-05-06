@@ -32,6 +32,7 @@ abstract class WikiaSuperFactory {
 	 * add predefined instance of given class (useful for mocks or singletons)
 	 * @param string $className class name
 	 * @param mixed $instance instance
+	 * @deprecated
 	 */
 	public static function setInstance($className, $instance) {
 		if(!isset(self::$constructors[$className])) {

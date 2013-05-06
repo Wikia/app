@@ -115,10 +115,6 @@ $wgAutoloadClasses['NotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaExc
 $wgAutoloadClasses['MethodNotAllowedException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 $wgAutoloadClasses['NotImplementedException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 
-// Since we use this everywhere, we will just set up a global app reference now.
-F::setInstance( 'App', new WikiaApp() );
-$app = F::app();
-
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
@@ -135,17 +131,17 @@ $wgWikiaAPIControllers = array();
 include_once( "$IP/lib/ApiGate/config.php" );
 
 //Wikia API Hooks
-$app->registerHook( 'ArticleUpdateCategoryCounts', 'ArticlesApiController', 'onArticleUpdateCategoryCounts' );
+$wgHooks['ArticleUpdateCategoryCounts'][] = 'ArticlesApiController::onArticleUpdateCategoryCounts';
 
 $wgAutoloadClasses[ 'ApiHooks'] =  "{$IP}/includes/wikia/api/ApiHooks.class.php" ;
 
-$app->registerHook( 'WikiFactoryChanged', 'ApiHooks', 'onWikiFactoryChanged' );
-$app->registerHook( 'MessageCacheReplace', 'ApiHooks', 'onMessageCacheReplace' );
-$app->registerHook( 'ArticleDeleteComplete', 'ApiHooks', 'onArticleDeleteComplete' );
-$app->registerHook( 'ArticleSaveComplete', 'ApiHooks', 'onArticleSaveComplete' );
-$app->registerHook( 'ArticleRollbackComplete', 'ApiHooks', 'onArticleRollbackComplete' );
-$app->registerHook( 'TitleMoveComplete', 'ApiHooks', 'onTitleMoveComplete' );
-$app->registerHook( 'ArticleCommentListPurgeComplete', 'ApiHooks', 'ArticleCommentListPurgeComplete' );
+$wgHooks['WikiFactoryChanged'][] = 'ApiHooks::onWikiFactoryChanged';
+$wgHooks['MessageCacheReplace'][] = 'ApiHooks::onMessageCacheReplace';
+$wgHooks['ArticleDeleteComplete'][] = 'ApiHooks::onArticleDeleteComplete';
+$wgHooks['ArticleSaveComplete'][] = 'ApiHooks::onArticleSaveComplete';
+$wgHooks['ArticleRollbackComplete'][] = 'ApiHooks::onArticleRollbackComplete';
+$wgHooks['TitleMoveComplete'][] = 'ApiHooks::onTitleMoveComplete';
+$wgHooks['ArticleCommentListPurgeComplete'][] = 'ApiHooks::ArticleCommentListPurgeComplete';
 
 
 
@@ -153,12 +149,19 @@ $app->registerHook( 'ArticleCommentListPurgeComplete', 'ApiHooks', 'ArticleComme
 $wgAutoloadClasses[ 'WikiaApiController'] =  "{$IP}/includes/wikia/api/WikiaApiController.class.php" ;
 
 //Wikia API controllers
-$app->registerApiController( 'DiscoverApiController', "{$IP}/includes/wikia/api/DiscoverApiController.class.php" );
-$app->registerApiController( 'NavigationApiController', "{$IP}/includes/wikia/api/NavigationApiController.class.php" );
-$app->registerApiController( 'ArticlesApiController', "{$IP}/includes/wikia/api/ArticlesApiController.class.php" );
-$app->registerApiController( 'StatsApiController', "{$IP}/includes/wikia/api/StatsApiController.class.php" );
-$app->registerApiController( 'WikiaHubsApiController', "{$IP}/includes/wikia/api/WikiaHubsApiController.class.php" );
-$app->registerApiController( 'RelatedPagesApiController', "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php" );
+$wgAutoloadClasses['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
+$wgAutoloadClasses['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
+$wgAutoloadClasses['ArticlesApiController'] = "{$IP}/includes/wikia/api/ArticlesApiController.class.php";
+$wgAutoloadClasses['StatsApiController'] = "{$IP}/includes/wikia/api/StatsApiController.class.php";
+$wgAutoloadClasses['WikiaHubsApiController'] = "{$IP}/includes/wikia/api/WikiaHubsApiController.class.php";
+$wgAutoloadClasses['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php";
+
+$wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
+$wgWikiaApiControllers['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
+$wgWikiaApiControllers['ArticlesApiController'] = "{$IP}/includes/wikia/api/ArticlesApiController.class.php";
+$wgWikiaApiControllers['StatsApiController'] = "{$IP}/includes/wikia/api/StatsApiController.class.php";
+$wgWikiaApiControllers['WikiaHubsApiController'] = "{$IP}/includes/wikia/api/WikiaHubsApiController.class.php";
+$wgWikiaApiControllers['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'BadRequestApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
@@ -1163,7 +1166,7 @@ $wgEnableAdEngineExt = true;
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
-$app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'onIsTrustedProxy' );
+$wgHooks['IsTrustedProxy'][] = 'TrustedProxyService::onIsTrustedProxy';
 
 /**
  * @name $wgChatDebugEnabled

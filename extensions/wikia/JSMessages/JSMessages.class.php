@@ -127,7 +127,7 @@ class JSMessages {
 	 * @param Language $lang - Language object to get all messages from
 	 * @return array - list of all message keys
 	 */
-	private function getAllMessageKeys(Language $lang) {
+	static private function getAllMessageKeys(Language $lang) {
 		wfProfileIn(__METHOD__);
 
 		if (is_null(static::$allMessageKeys)) {

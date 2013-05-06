@@ -80,17 +80,14 @@ class WikiaApp {
 	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
 
 		if(!is_object($globalRegistry)) {
-			F::setInstance('WikiaGlobalRegistry', new WikiaGlobalRegistry());
 			$globalRegistry = (new WikiaGlobalRegistry);
 		}
 
 		if(!is_object($localRegistry)) {
-			F::setInstance('WikiaLocalRegistry', new WikiaLocalRegistry());
 			$localRegistry = (new WikiaLocalRegistry);
 		}
 
 		if(!is_object($hookDispatcher)) {
-			F::setInstance('WikiaHookDispatcher', new WikiaHookDispatcher());
 			$hookDispatcher = (new WikiaHookDispatcher);
 		}
 
@@ -377,6 +374,7 @@ class WikiaApp {
 	 * @param string $className
 	 * @param string $methodName
 	 * @param string $exists - Controler will be only executed if wgTitle exists
+	 * @deprecated
 	 */
 
 	public function registerNamespaceControler( $namespace, $className, $methodName, $exists ) {
@@ -396,6 +394,7 @@ class WikiaApp {
 	 *
 	 * @param string $className The name of the class contained in the file
 	 * @param string $path The path to the file
+	 * @deprecated
 	 */
 	public function registerApiController( $className, $path ) {
 		//register class for autoloading
@@ -483,6 +482,7 @@ class WikiaApp {
 	/**
 	 * register extension init function
 	 * @param string $functionName
+	 * @deprecated
 	 */
 	public function registerExtensionFunction( $functionName ) {
 		$this->wg->append( 'wgExtensionFunctions', $functionName );
@@ -492,6 +492,7 @@ class WikiaApp {
 	 * register extension message file
 	 * @param string $name
 	 * @param string $filePath
+	 * @deprecated
 	 */
 	public function registerExtensionMessageFile( $name, $filePath ) {
 		$this->wg->set( 'wgExtensionMessagesFiles', $filePath, $name );
@@ -501,6 +502,7 @@ class WikiaApp {
 	 * register extension alias file
 	 * @param string $name
 	 * @param string $filePath
+	 * @deprecated
 	 */
 	public function registerExtensionAliasFile( $name, $filePath ) {
 		$this->wg->set( 'wgExtensionAliasesFiles', $filePath, $name );
@@ -511,6 +513,7 @@ class WikiaApp {
 	 * @param string $name special page name
 	 * @param string $className class name
 	 * @param string $group special page group
+	 * @deprecated
 	 */
 	public function registerSpecialPage( $name, $className, $group = null ) {
 		$this->wg->set( 'wgSpecialPages', $className, $name );
@@ -523,6 +526,7 @@ class WikiaApp {
 	/**
 	 * get global variable (alias: WikiaGlobalRegistry::get(var,'mediawiki'))
 	 * @param string $globalVarName
+	 * @deprecated
 	 */
 	public function getGlobal( $globalVarName ) {
 		return $this->wg->get( $globalVarName );
@@ -533,6 +537,7 @@ class WikiaApp {
 	 * @param string $globalVarName variable name
 	 * @param mixed $value value
 	 * @param string $key key (optional)
+	 * @deprecated
 	 */
 	public function setGlobal( $globalVarName, $value, $key = null ) {
 		return $this->wg->set( $globalVarName, $value, $key );
@@ -546,6 +551,7 @@ class WikiaApp {
 	 *
 	 * @params list of global's names, comma separated
 	 * @return array
+	 * @deprecated
 	 */
 	public function getGlobals() {
 		$globals = array();

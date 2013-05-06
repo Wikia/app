@@ -38,37 +38,37 @@ $wgWikiaMobileDisableMediaGrouping = false;
 /**
  * classes
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileHooks.class.php", 'WikiaMobileHooks' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/models/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryItem' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/models/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryItemsCollection' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/models/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryContents' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/ResourceVariablesGetter.class.php", 'ResourceVariablesGetter' );
+$wgAutoloadClasses['WikiaMobileHooks'] = "{$dir}/WikiaMobileHooks.class.php";
+$wgAutoloadClasses['WikiaMobileCategoryItem'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
+$wgAutoloadClasses['WikiaMobileCategoryItemsCollection'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
+$wgAutoloadClasses['WikiaMobileCategoryContents'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
+$wgAutoloadClasses['ResourceVariablesGetter'] = "{$dir}/ResourceVariablesGetter.class.php";
 
 /**
  * services
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileService.class.php", 'WikiaMobileService' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileBodyService.class.php", 'WikiaMobileBodyService' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobilePageHeaderService.class.php", 'WikiaMobilePageHeaderService' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileNavigationService.class.php", 'WikiaMobileNavigationService' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileFooterService.class.php", 'WikiaMobileFooterService' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAdService.class.php", 'WikiaMobileAdService' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileCategoryService.class.php", 'WikiaMobileCategoryService' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileSharingService.class.php", 'WikiaMobileSharingService' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileErrorService.class.php", 'WikiaMobileErrorService' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileMediaService.class.php", 'WikiaMobileMediaService' );
+$wgAutoloadClasses['WikiaMobileService'] = "{$dir}/WikiaMobileService.class.php";
+$wgAutoloadClasses['WikiaMobileBodyService'] = "{$dir}/WikiaMobileBodyService.class.php";
+$wgAutoloadClasses['WikiaMobilePageHeaderService'] = "{$dir}/WikiaMobilePageHeaderService.class.php";
+$wgAutoloadClasses['WikiaMobileNavigationService'] = "{$dir}/WikiaMobileNavigationService.class.php";
+$wgAutoloadClasses['WikiaMobileFooterService'] = "{$dir}/WikiaMobileFooterService.class.php";
+$wgAutoloadClasses['WikiaMobileAdService'] = "{$dir}/WikiaMobileAdService.class.php";
+$wgAutoloadClasses['WikiaMobileCategoryService'] = "{$dir}/WikiaMobileCategoryService.class.php";
+$wgAutoloadClasses['WikiaMobileSharingService'] = "{$dir}/WikiaMobileSharingService.class.php";
+$wgAutoloadClasses['WikiaMobileErrorService'] = "{$dir}/WikiaMobileErrorService.class.php";
+$wgAutoloadClasses['WikiaMobileMediaService'] = "{$dir}/WikiaMobileMediaService.class.php";
 
 /**
  * models
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/models/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryModel' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/models/WikiaMobileStatsModel.class.php", 'WikiaMobileStatsModel' );
+$wgAutoloadClasses['WikiaMobileCategoryModel'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
+$wgAutoloadClasses['WikiaMobileStatsModel'] = "{$dir}/models/WikiaMobileStatsModel.class.php";
 
 /**
  * controllers
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAppCacheController.class.php", 'WikiaMobileAppCacheController' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileController.class.php", 'WikiaMobileController' );
+$wgAutoloadClasses['WikiaMobileAppCacheController'] = "{$dir}/WikiaMobileAppCacheController.class.php";
+$wgAutoloadClasses['WikiaMobileController'] = "{$dir}/WikiaMobileController.class.php";
 
 /**
  * special pages
@@ -77,7 +77,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileController.class.php", 'W
 /**
  * message files
  */
-$app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/WikiaMobile.i18n.php", 'WikiaMobile' );
+$wgExtensionMessagesFiles['WikiaMobile'] = "{$dir}/WikiaMobile.i18n.php";
 
 JSMessages::registerPackage( 'WkMbl', array(
 	'wikiamobile-hide-section',

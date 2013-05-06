@@ -467,7 +467,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 	 */
 	protected function getAbTesting() {
 		if ( !$this->abTesting ) {
-			$this->abTesting = new AbTesting();
+			$this->abTesting = AbTesting::getInstance();
 		}
 		return $this->abTesting;
 	}
