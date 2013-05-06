@@ -60,6 +60,10 @@
 			}
 		}
 
+		p.alternative {
+			margin: 0 7px 10px;
+		}
+
 		.navigation {
 			@include navigation;
 		}
@@ -72,4 +76,8 @@
 
 input[type=submit] {
 	float: right;
+}
+
+.alternative {
+	color: $color-alternate-text;
 }

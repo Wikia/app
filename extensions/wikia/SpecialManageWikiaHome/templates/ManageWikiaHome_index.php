@@ -62,7 +62,13 @@
 					<?=$form->renderField('enabled', $i)?>
 					<?=$form->renderField('name', $i)?>
 					<?=$form->renderField('sponsor_hero_image', $i)?>
+					<p class="alternative">
+						<?= wfMessage('manage-wikia-home-collection-hero-image-tooltip')->text() ?>
+					</p>
 					<?=$form->renderField('sponsor_image', $i)?>
+					<p class="alternative">
+						<?= wfMessage('manage-wikia-home-collection-sponsor-image-tooltip')->text() ?>
+					</p>
 					<?=$form->renderField('sponsor_url', $i)?>
 				</div>
 			<? endfor ?>

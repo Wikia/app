@@ -60,6 +60,9 @@ $messages['en'] = array(
 	'manage-wikia-home-collections-sponsur-url-field-label' => 'Sponsors url',
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Hero image',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsor image',
+
+	'manage-wikia-home-collection-hero-image-tooltip' => 'This image should be 1010px x 650px',
+	'manage-wikia-home-collection-sponsor-image-tooltip' => 'This image should be 330px x 210px',
 );
 
 $messages['de'] = array(
