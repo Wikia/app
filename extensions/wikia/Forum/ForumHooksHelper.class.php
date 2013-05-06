@@ -375,6 +375,8 @@ class ForumHooksHelper {
 				return true;
 			}
 
+			$title->purgeSquid();
+			$title->invalidateCache();
 			$board->clearCacheBoardInfo();
 
 			$thread = WallThread::newFromId($threadId);
