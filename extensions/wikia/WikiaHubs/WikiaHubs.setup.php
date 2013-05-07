@@ -11,7 +11,6 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 $wgExtensionCredits['other'][] = array(
 		'name'		=> 'WikiaHubs',
@@ -30,8 +29,8 @@ $wgAutoloadClasses['WikiaHubsHelper'] =  $dir . 'WikiaHubsHelper.class.php';
 $wgExtensionMessagesFiles['WikiaHubs'] = $dir . 'WikiaHubs.i18n.php';
 
 // hooks
-$app->registerHook('ParserFirstCallInit', 'WikiaHubsPopularVideos', 'onParserFirstCallInit');
-$app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsMobile', 'onWikiaMobileAssetsPackages');
-$app->registerHook('WikiaAssetsPackages', 'WikiaHubsHelper', 'onWikiaAssetsPackages');
-$app->registerHook('OutputPageMakeCategoryLinks','WikiaHubsHelper','onOutputPageMakeCategoryLinks');
-$app->registerHook('OutputPageBeforeHTML','WikiaHubsHelper','onOutputPageBeforeHTML');
+$wgHooks['ParserFirstCallInit'][] = 'WikiaHubsPopularVideos::onParserFirstCallInit';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaHubsMobile::onWikiaMobileAssetsPackages';
+$wgHooks['WikiaAssetsPackages'][] = 'WikiaHubsHelper::onWikiaAssetsPackages';
+$wgHooks['OutputPageMakeCategoryLinks'][] = 'WikiaHubsHelper::onOutputPageMakeCategoryLinks';
+$wgHooks['OutputPageBeforeHTML'][] = 'WikiaHubsHelper::onOutputPageBeforeHTML';

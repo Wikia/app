@@ -11,7 +11,7 @@ class WallController extends WallBaseController {
 
 	public function __construct() {
 		parent::__construct();
-		$this->allowedNamespaces = $this->app->getLocalRegistry()->get('UserProfileNamespaces');
+		$this->allowedNamespaces = $UserProfileNamespaces;
 	}
 
 	public function init() {

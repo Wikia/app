@@ -18,7 +18,6 @@ $wgExtensionCredits['parserhook'][] = array(
 /**
  * @var WikiaApp
  */
-$app = F::app();
 $dir = dirname( __FILE__ );
 
 //classes
@@ -28,7 +27,7 @@ $wgAutoloadClasses['WikiaRssHelper'] =  $dir . '/WikiaRssHelper.class.php';
 $wgAutoloadClasses['WikiaRssExternalController'] =  $dir . '/WikiaRssExternalController.class.php';
 
 //hooks
-$app->registerHook('ParserFirstCallInit', 'WikiaRssHooks', 'onParserFirstCallInit');
+$wgHooks['ParserFirstCallInit'][] = 'WikiaRssHooks::onParserFirstCallInit';
 
 //messages
-$app->registerExtensionMessageFile('WikiaRss', $dir . '/WikiaRss.i18n.php');
+$wgExtensionMessagesFiles['WikiaRss'] = $dir . '/WikiaRss.i18n.php';

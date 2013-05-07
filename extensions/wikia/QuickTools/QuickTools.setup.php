@@ -18,7 +18,6 @@ $wgExtensionCredits['antispam'][] = array(
 );
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 // Classes
 $wgAutoloadClasses[ 'QuickToolsController'] =  $dir . 'QuickToolsController.class.php';
@@ -32,7 +31,7 @@ $wgGroupPermissions['vstf']['quicktools'] = true;
 $wgGroupPermissions['util']['quickadopt'] = true;
 
 // i18n
-$app->registerExtensionMessageFile( 'QuickTools', $dir . 'QuickTools.i18n.php' );
+$wgExtensionMessagesFiles['QuickTools'] = $dir . 'QuickTools.i18n.php' ;
 
 // Resource Loader modules
 $qtResourceTemplate = array(

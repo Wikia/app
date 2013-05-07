@@ -5,7 +5,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  *
  */
-class WikiaMobileHooks extends WikiaObject{
+class WikiaMobileHooks {
 	/**
 	 * @var null
 	 */
@@ -21,12 +21,13 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @param $strip_state
 	 * @return bool
 	 */
-	public function onParserBeforeStrip( &$parser, &$text, &$strip_state ) {
+	static public function onParserBeforeStrip( &$parser, &$text, &$strip_state ) {
+		global $wgWikiaMobileDisableMediaGrouping;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->wg->WikiaMobileDisableMediaGrouping ) && $this->app->checkSkin( 'wikiamobile' ) ) {
+		if ( empty( $wgWikiaMobileDisableMediaGrouping ) && F::app()->checkSkin( 'wikiamobile' ) ) {
 			$matches = array();
-			$translatedNs = $this->getLocalizedMediaNsString();
+			$translatedNs = self::getLocalizedMediaNsString();
 
 			//capture all the clusters (more than one consecuteive item) of wikitext media tags
 			//and convert them to gallery tags (i.e. media grouping)
@@ -117,11 +118,11 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @param $text String
 	 * @return bool
 	 */
-	public function onParserAfterTidy( &$parser, &$text ){
+	static public function onParserAfterTidy( &$parser, &$text ){
 		wfProfileIn( __METHOD__ );
 
 		//cleanup page output from unwanted stuff
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			//remove inline styling to avoid weird results and optimize the output size
 			$text = preg_replace(
 				'/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im',
@@ -139,11 +140,11 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @param $limitReport
 	 * @return bool
 	 */
-	public function onParserLimitReport( $parser, &$limitReport ){
+	static public function onParserLimitReport( $parser, &$limitReport ){
 		wfProfileIn( __METHOD__ );
 
 		//strip out some unneeded content to lower the size of the output
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			$limitReport = null;
 		}
 
@@ -162,10 +163,10 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @param $ret
 	 * @return bool
 	 */
-	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
+	static public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
 		wfProfileIn( __METHOD__ );
 
-		if ( $this->app->checkSkin( 'wikiamobile', $skin ) ) {
+		if ( F::app()->checkSkin( 'wikiamobile', $skin ) ) {
 			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
 
@@ -188,9 +189,9 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @param $ret
 	 * @return bool
 	 */
-	public function onLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ){
+	static public function onLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ){
 		wfProfileIn( __METHOD__ );
-		if ( in_array( 'broken', $options ) && $this->app->checkSkin( 'wikiamobile', $skin ) ) {
+		if ( in_array( 'broken', $options ) && F::app()->checkSkin( 'wikiamobile', $skin ) ) {
 			$ret = $text;
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -205,12 +206,15 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @return bool
 	 */
 
-	public function onCategoryPageView( CategoryPage &$categoryPage ) {
+	static public function onCategoryPageView( CategoryPage &$categoryPage ) {
+		global $wgOut;
 		wfProfileIn( __METHOD__ );
 
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+		$app = F::app();
+
+		if ( $app->checkSkin( 'wikiamobile' ) ) {
 			//lets do some local caching
-			$out = $this->wg->Out;
+			$out = $wgOut;
 			$title = $categoryPage->getTitle();
 			$text = $title->getText();
 
@@ -231,8 +235,8 @@ class WikiaMobileHooks extends WikiaObject{
 
 			//render lists: exhibition and alphabetical
 			$params = array( 'categoryPage' => $categoryPage );
-			$out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', $params ) );
-			$out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'alphabeticalList', $params ) );
+			$out->addHTML( $app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', $params ) );
+			$out->addHTML( $app->renderView( 'WikiaMobileCategoryService', 'alphabeticalList', $params ) );
 
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -246,7 +250,7 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @param WikiPage $page
 	 * @return bool
 	 */
-	public function onArticlePurge( WikiPage &$page ) {
+	static public function onArticlePurge( WikiPage &$page ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = $page->getTitle();
@@ -272,10 +276,10 @@ class WikiaMobileHooks extends WikiaObject{
 	 *
 	 * @return bool
 	 */
-	public function onBeforeDisplayNoArticleText( $article ){
+	static public function onBeforeDisplayNoArticleText( $article ){
 		wfProfileIn( __METHOD__ );
 
-		if ( $this->app->checkSkin( 'wikiamobile' )  ) {
+		if ( F::app()->checkSkin( 'wikiamobile' )  ) {
 			$title = $article->getTitle();
 			$ns = $title->getNamespace();
 
@@ -312,13 +316,14 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @param $skin Skin
 	 * @return bool
 	 */
-	public function onBeforePageDisplay( &$out, &$skin ){
+	static public function onBeforePageDisplay( &$out, &$skin ){
 		wfProfileIn( __METHOD__ );
+		$app = F::app();
 
-		if( $this->app->checkSkin( 'wikiamobile', $skin ) && self::$displayErrorPage ) {
+		if( $app->checkSkin( 'wikiamobile', $skin ) && self::$displayErrorPage ) {
 			$out->clearHTML();
 
-			$out->addHTML( $this->app->renderView( 'WikiaMobileErrorService', 'pageNotFound', array( 'out' => &$out) ) );
+			$out->addHTML( $app->renderView( 'WikiaMobileErrorService', 'pageNotFound', array( 'out' => &$out) ) );
 
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -331,7 +336,8 @@ class WikiaMobileHooks extends WikiaObject{
 	/**
 	 * @return null
 	 */
-	private function getLocalizedMediaNsString() {
+	static private function getLocalizedMediaNsString() {
+		global $wgContLang, $wgNamespaceAliases;
 		wfProfileIn( __METHOD__ );
 
 		if ( self::$mediaNsString === null ) {
@@ -340,9 +346,9 @@ class WikiaMobileHooks extends WikiaObject{
 			//get all the possible variations of the File namespace
 			//and the translation in the wiki's language
 			foreach ( array( NS_FILE, NS_IMAGE, NS_VIDEO ) as $ns ) {
-				$translatedNs[] = $this->wg->ContLang->getNsText( $ns );
+				$translatedNs[] = $wgContLang->getNsText( $ns );
 
-				foreach( $this->wg->NamespaceAliases as $alias => $nsAlias ) {
+				foreach( $wgNamespaceAliases as $alias => $nsAlias ) {
 					if( $nsAlias == $ns ) {
 						$translatedNs[] = $alias;
 					}

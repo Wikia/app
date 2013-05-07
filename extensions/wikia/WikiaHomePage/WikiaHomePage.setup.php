@@ -40,7 +40,7 @@ $wgAutoloadClasses['WikiaHomePageHelper'] =  $dir.'WikiaHomePageHelper.class.php
 $wgAutoloadClasses['CityVisualization'] =  $dir.'CityVisualization.class.php';
 
 //i18n mapping
-$app->registerExtensionMessageFile('WikiaHomePage', $dir.'WikiaHomePage.i18n.php');
+$wgExtensionMessagesFiles['WikiaHomePage'] = $dir.'WikiaHomePage.i18n.php';
 JSMessages::registerPackage('WikiaHomePage', array('wikia-home-page-*'));
 
 $app->registerHook('GetHTMLAfterBody', 'WikiaHomePageController', 'onGetHTMLAfterBody');

@@ -16,7 +16,6 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 /**
  * Controllers
@@ -33,7 +32,7 @@ $wgSpecialPages['MiniEditorDemo'] = 'MiniEditorSpecialController';
 /**
  * Message files
  */
-$app->registerExtensionMessageFile('MiniEditor', $dir . 'MiniEditor.i18n.php');
+$wgExtensionMessagesFiles['MiniEditor'] = $dir . 'MiniEditor.i18n.php';
 
 /**
  * Permissions

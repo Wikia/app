@@ -6,7 +6,6 @@
  */
 
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
@@ -23,7 +22,7 @@ $wgSpecialPages['Version'] = 'WikiaSpecialVersionController';
 /**
  * message files
  */
-$app->registerExtensionMessageFile('WikiaSpecialVersion', $dir . 'WikiaSpecialVersion.i18n.php' );
+$wgExtensionMessagesFiles['WikiaSpecialVersion'] = $dir . 'WikiaSpecialVersion.i18n.php' ;
 
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'Wikia Special:Version',

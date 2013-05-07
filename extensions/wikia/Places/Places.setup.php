@@ -21,7 +21,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'places-desc'
 );
 
-$app = F::app();
 $dir = dirname( __FILE__ );
 
 /**
@@ -74,7 +73,7 @@ $wgAPIModules['places'] = 'WikiaApiPlaces';
 /**
  * messages
  */
-$app->registerExtensionMessageFile('Places', $dir . '/Places.i18n.php');
+$wgExtensionMessagesFiles['Places'] = $dir . '/Places.i18n.php';
 
 JSMessages::registerPackage('Places', array(
 	'places-toolbar-button-*',

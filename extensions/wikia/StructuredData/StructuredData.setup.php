@@ -110,7 +110,7 @@ define('SD_CONTEXT_EDITING', 2);
 /**
  * message files
  */
-$app->registerExtensionMessageFile('StructuredData', $dir . 'StructuredData.i18n.php' );
+$wgExtensionMessagesFiles['StructuredData'] = $dir . 'StructuredData.i18n.php' ;
 
 JSMessages::registerPackage('StructuredData', array('structureddata-*'));
 JSMessages::enqueuePackage('StructuredData', JSMessages::EXTERNAL);

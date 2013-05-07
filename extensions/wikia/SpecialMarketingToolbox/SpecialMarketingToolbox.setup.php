@@ -11,7 +11,6 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Marketing Toolbox',
@@ -39,12 +38,12 @@ WikiaUserPropertiesController::registerHandler('MarketingToolboxUserPropertiesHa
 
 // hooks
 $wgAutoloadClasses['MarketingToolboxHooks'] =  $dir . 'hooks/MarketingToolboxHooks.class.php';
-$app->registerHook('MakeGlobalVariablesScript', 'MarketingToolboxHooks', 'onMakeGlobalVariablesScript');
+$wgHooks['MakeGlobalVariablesScript'][] = 'MarketingToolboxHooks::onMakeGlobalVariablesScript';
 
 //special page
 $wgSpecialPages['MarketingToolbox'] = 'MarketingToolboxController';
 $wgSpecialPageGroups['MarketingToolbox'] = 'wikia';
 
 //message files
-$app->registerExtensionMessageFile('MarketingToolbox', $dir . 'MarketingToolbox.i18n.php');
+$wgExtensionMessagesFiles['MarketingToolbox'] = $dir . 'MarketingToolbox.i18n.php';
 JSMessages::registerPackage('MarketingToolbox', array('marketing-toolbox-*'));

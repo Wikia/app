@@ -19,7 +19,6 @@ $wgExtensionCredits['filepage'][] = array(
 );
 
 $dir = dirname( __FILE__ ) . '/';
-$app = F::app( );
 
 // classes
 $wgAutoloadClasses[ 'WikiaFilePage' ] = $dir . 'WikiaFilePage.php';
@@ -34,7 +33,7 @@ $wgAutoloadClasses[ 'FilePageHelper' ] = $dir . 'FilePageHelper.class.php';
 $wgAutoloadClasses[ 'FilePageController' ] = $dir . 'FilePageController.class.php';
 
 // i18n mapping
-$app->registerExtensionMessageFile( 'FilePage', $dir . 'FilePage.i18n.php' );
+$wgExtensionMessagesFiles['FilePage'] = $dir . 'FilePage.i18n.php' ;
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'FilePageHooks::onArticleFromTitle';

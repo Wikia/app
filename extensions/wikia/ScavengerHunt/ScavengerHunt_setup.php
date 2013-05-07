@@ -28,9 +28,6 @@ $wgExtensionCredits['special'][] = array(
 
 $dir = dirname(__FILE__);
 
-// WikiaApp
-$app = F::app();
-
 // autoloaded classes
 $wgAutoloadClasses['ScavengerHunt'] =  "$dir/ScavengerHunt.class.php";
 $wgAutoloadClasses['SpecialScavengerHunt'] =  "$dir/SpecialScavengerHunt.php";
@@ -47,7 +44,7 @@ $wgExtensionMessagesFiles['ScavengerHunt'] = "$dir/ScavengerHunt.i18n.php";
 $wgSpecialPages['ScavengerHunt'] = 'SpecialScavengerHunt';
 
 // hooks
-$app->registerHook('MakeGlobalVariablesScript', 'ScavengerHunt', 'onMakeGlobalVariablesScript' );
-$app->registerHook('BeforePageDisplay', 'ScavengerHunt', 'onBeforePageDisplay' );
-$app->registerHook('OpenGraphMeta:beforeCustomFields', 'ScavengerHunt', 'onOpenGraphMetaBeforeCustomFields' );
+$wgHooks['MakeGlobalVariablesScript'][] = 'ScavengerHunt::onMakeGlobalVariablesScript';
+$wgHooks['BeforePageDisplay'][] = 'ScavengerHunt::onBeforePageDisplay';
+$wgHooks['OpenGraphMeta:beforeCustomFields'][] = 'ScavengerHunt::onOpenGraphMetaBeforeCustomFields';
 

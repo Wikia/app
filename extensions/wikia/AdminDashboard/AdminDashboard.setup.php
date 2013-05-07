@@ -7,14 +7,14 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
+
 //classes
 $wgAutoloadClasses['AdminDashboardSpecialPageController'] =  $dir . 'AdminDashboardSpecialPageController.class.php';
 $wgAutoloadClasses['AdminDashboardController'] =  $dir . 'AdminDashboardController.class.php';
 $wgAutoloadClasses['AdminDashboardLogic'] =  $dir . 'AdminDashboardLogic.class.php';
 $wgAutoloadClasses['QuickStatsController'] =  $dir . 'QuickStatsController.class.php';
 
-$app->registerHook('BeforeToolbarMenu', 'AdminDashboardLogic', 'onBeforeToolbarMenu');
+$wgHooks['BeforeToolbarMenu'][] = 'AdminDashboardLogic::onBeforeToolbarMenu';
 
 // i18n mapping
 $wgExtensionMessagesFiles['AdminDashboard'] = $dir . 'AdminDashboard.i18n.php';

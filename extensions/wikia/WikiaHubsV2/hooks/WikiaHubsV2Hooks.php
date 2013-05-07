@@ -7,7 +7,7 @@ class WikiaHubsV2Hooks {
 	 *
 	 * @return true because it's a hook
 	 */
-	public function onArticleFromTitle(&$title, &$article) {
+	static public function onArticleFromTitle(&$title, &$article) {
 		global $wgOut;
 		wfProfileIn(__METHOD__);
 		$app = F::app();
@@ -19,7 +19,7 @@ class WikiaHubsV2Hooks {
 
 		$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-		if( $model->isHubsPage($hubName) && !$this->isOffShotPage($title) ) {
+		if( $model->isHubsPage($hubName) && !self::isOffShotPage($title) ) {
 			$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
 			$app->wg->SuppressPageHeader = true;
@@ -29,7 +29,7 @@ class WikiaHubsV2Hooks {
 			$article = new WikiaHubsV2Article($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp);
 		}
 
-		if( $model->isHubsPage($hubName) && $this->isOffShotPage($title) ) {
+		if( $model->isHubsPage($hubName) && self::isOffShotPage($title) ) {
 			$hubsModel = new WikiaHubsV2Model();
 			$canonicalHubName = $hubsModel->getCanonicalVerticalName($model->getHubPageId($dbKeyNameSplit[0]));
 			OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $canonicalHubName));
@@ -50,7 +50,7 @@ class WikiaHubsV2Hooks {
 	 * @param Title $title
 	 * @return bool
 	 */
-	protected function isOffShotPage(Title $title) {
+	static protected function isOffShotPage(Title $title) {
 		return $title->isSubpage() && $title->exists();
 	}
 
@@ -61,7 +61,7 @@ class WikiaHubsV2Hooks {
 	 *
 	 * @return bool
 	 */
-	public function onWikiaCanonicalHref(&$url) {
+	static public function onWikiaCanonicalHref(&$url) {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
@@ -90,7 +90,7 @@ class WikiaHubsV2Hooks {
 	 * @param Parser parser
 	 * @return true
 	 */
-	public function onParserFirstCallInit( Parser $parser ) {
+	static public function onParserFirstCallInit( Parser $parser ) {
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
@@ -103,7 +103,7 @@ class WikiaHubsV2Hooks {
 			$model = new WikiaHubsV2HooksModel();
 			$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-			if( $model->isHubsPage($hubName) && $this->isOffShotPage($title) ) {
+			if( $model->isHubsPage($hubName) && self::isOffShotPage($title) ) {
 				$parser->setHook('hubspopularvideos', array(new WikiaHubsParserHelper(), 'renderTag'));
 			}
 		}

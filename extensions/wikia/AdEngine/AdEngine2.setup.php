@@ -1,7 +1,5 @@
 <?php
 
-$app = F::app();
-
 $wgAutoloadClasses['AdServer'] =  __DIR__ . '/AdServer.php';
 $wgAutoloadClasses['AdEngine2Controller'] =  __DIR__ . '/AdEngine2Controller.class.php';
 
@@ -14,7 +12,7 @@ $wgHooks['OasisSkinAssetGroups'][] = 'AdEngine2Controller::onOasisSkinAssetGroup
 $wgHooks['LinkerMakeExternalLink'][] = 'AdEngine2Controller::onLinkerMakeExternalLink';
 $wgHooks['LinkEnd'][] = 'AdEngine2Controller::onLinkEnd';
 
-$app->registerExtensionMessageFile('AdEngine', __DIR__ . '/AdEngine.i18n.php');
+$wgExtensionMessagesFiles['AdEngine'] = __DIR__ . '/AdEngine.i18n.php';
 
 $wgExtensionFunctions[] = function() {
 	JSMessages::registerPackage('AdEngine', array('adengine-*'));

@@ -58,7 +58,7 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 		return $warnings;
 	}
 
-	public function isVisualizationImageName($fileName) {
+	static public function isVisualizationImageName($fileName) {
 		$destName = strtolower($fileName);
 
 		$visualizationImageNames = array(
@@ -89,9 +89,9 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 	 *
 	 * @return bool true because it's a hook
 	 */
-	public function UploadVerification($destName, $tempPath, &$error) {
+	static public function UploadVerification($destName, $tempPath, &$error) {
 		global $wgDevelEnvironment;
-		$result = $this->isVisualizationImageName($destName);
+		$result = self::isVisualizationImageName($destName);
 
 		if( $result && !$wgDevelEnvironment ) {
 			$error = wfMsg('promote-manual-upload-error');

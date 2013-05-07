@@ -1,6 +1,5 @@
 <?php
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
@@ -17,7 +16,7 @@ $wgSpecialPages['UserRollback'] = 'UserRollbackSpecialController';
 /**
  * message files
  */
-$app->registerExtensionMessageFile('UserRollback', $dir . 'UserRollback.i18n.php');
+$wgExtensionMessagesFiles['UserRollback'] = $dir . 'UserRollback.i18n.php';
 
 /**
  * setup rights

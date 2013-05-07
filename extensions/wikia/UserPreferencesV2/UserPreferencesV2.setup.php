@@ -5,7 +5,6 @@
 *
 */
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
@@ -31,4 +30,4 @@ $wgHooks['UserGetDefaultOptions'][] = 'UserPreferencesV2::onUserGetDefaultOption
 /**
  * messages
  */
-$app->registerExtensionMessageFile('UserPreferencesV2', $dir . '/UserPreferencesV2.i18n.php');
+$wgExtensionMessagesFiles['UserPreferencesV2'] = $dir . '/UserPreferencesV2.i18n.php';

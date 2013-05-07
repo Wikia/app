@@ -59,7 +59,7 @@ $app->registerApiController( 'SearchApiController', "{$dir}SearchApiController.c
 /**
  * message files
  */
-$app->registerExtensionMessageFile('WikiaSearch', $dir . 'WikiaSearch.i18n.php' );
+$wgExtensionMessagesFiles['WikiaSearch'] = $dir . 'WikiaSearch.i18n.php' ;
 
 /**
  * preference settings

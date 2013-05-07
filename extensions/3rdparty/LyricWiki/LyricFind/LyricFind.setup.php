@@ -23,7 +23,7 @@ $wgContentNamespaces[] = NS_LYRICFIND;
 
 // common code
 $wgAutoloadClasses['LyricFindHooks'] =  $dir . '/LyricFindHooks.class.php';
-$app->registerExtensionMessageFile('LyricFind', $dir . '/LyricFind.i18n.php');
+$wgExtensionMessagesFiles['LyricFind'] = $dir . '/LyricFind.i18n.php';
 
 // LyricFind page views tracking
 $wgAutoloadClasses['LyricFindController'] =  $dir . '/LyricFindController.class.php';

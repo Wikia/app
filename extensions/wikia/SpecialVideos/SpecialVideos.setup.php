@@ -10,15 +10,14 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 //classes
 $wgAutoloadClasses[ 'SpecialVideosSpecialController'] =  $dir.'SpecialVideosSpecialController.class.php' ;
 $wgAutoloadClasses[ 'SpecialVideosHelper'] =  $dir.'SpecialVideosHelper.class.php' ;
 
 // i18n mapping
-$app->registerExtensionMessageFile( 'SpecialVideos', $dir.'SpecialVideos.i18n.php' );
-$app->registerExtensionMessageFile( 'SpecialVideosAliases', $dir.'SpecialVideos.alias.php' );
+$wgExtensionMessagesFiles['SpecialVideos'] = $dir.'SpecialVideos.i18n.php' ;
+$wgExtensionMessagesFiles['SpecialVideosAliases'] = $dir.'SpecialVideos.alias.php' ;
 
 // special pages
 $wgSpecialPages[ 'Videos' ] =  'SpecialVideosSpecialController';

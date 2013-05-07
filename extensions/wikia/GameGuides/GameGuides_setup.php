@@ -5,7 +5,6 @@
  * @author Federico "Lox" Lucignano
  */
 $dir = dirname( __FILE__ );
-$app = F::app();
 
 /**
  * classes
@@ -17,7 +16,7 @@ $wgAutoloadClasses[ 'GameGuidesModel'] =  "{$dir}/GameGuidesModel.class.php" ;
 /**
  * message files
  */
-$app->registerExtensionMessageFile('GameGuides', "{$dir}/GameGuides.i18n.php");
+$wgExtensionMessagesFiles['GameGuides'] = "{$dir}/GameGuides.i18n.php";
 
 
 //Special Page to preview page in GameGuide style
@@ -35,7 +34,7 @@ $wgSpecialPages[ 'GameGuidesContent' ] =  'GameGuidesSpecialContentController';
 $wgGroupPermissions['*']['gameguidescontent'] = false;
 $wgGroupPermissions['staff']['gameguidescontent'] = true;
 
-if ( $app->wg->GameGuidesContentForAdmins ) {
+if ( $wgGameGuidesContentForAdmins ) {
 	$wgGroupPermissions['sysop']['gameguidescontent'] = true;
 }
 
@@ -53,11 +52,11 @@ JSMessages::registerPackage( 'GameGuidesContentMsg', [
 ] );
 
 //hooks
-$app->registerHook( 'GameGuidesContentSave', 'GameGuidesController', 'onGameGuidesContentSave' );
-$app->registerHook( 'TitleGetSquidURLs', 'GameGuidesController', 'onTitleGetSquidURLs' );
+$wgHooks['GameGuidesContentSave'][] = 'GameGuidesController::onGameGuidesContentSave';
+$wgHooks['TitleGetSquidURLs'][] = 'GameGuidesController::onTitleGetSquidURLs';
 //add Game Guides Content to WikiFeatures
-$app->registerHook( 'WikiFeatures::onGetFeatureNormal', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
-$app->registerHook( 'WikiFeatures::onToggleFeature', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
+$wgHooks['WikiFeatures::onGetFeatureNormal'][] = 'GameGuidesSpecialContentController::onWikiFeatures';
+$wgHooks['WikiFeatures::onToggleFeature'][] = 'GameGuidesSpecialContentController::onWikiFeatures';
 
 //minimal package of messages in Game Gudes
 JSMessages::registerPackage( 'GameGuides', array(

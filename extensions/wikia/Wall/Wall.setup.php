@@ -23,8 +23,6 @@ include($dir . '/WallNamespaces.php');
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
-$app = F::app();
-
 $wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
 $wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
 $wgAutoloadClasses['WallThread'] =  $dir . '/WallThread.class.php';
@@ -52,7 +50,7 @@ if (function_exists( "extAddBatchTask" ) ) {
 include($dir . '/notification/WallNotifications.setup.php');
 
 
-$app->registerExtensionMessageFile('Wall', $dir . '/Wall.i18n.php');
+$wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 
 $wgHooks['AccountNavigationModuleAfterDropdownItems'][] = 'WallHooksHelper::onAccountNavigationModuleAfterDropdownItems';
 $wgHooks['ArticleViewHeader'][] = 'WallHooksHelper::onArticleViewHeader';
@@ -206,7 +204,6 @@ $userProfileNamespaces = array();
 $userProfileNamespaces[] = NS_USER;
 $userProfileNamespaces[] = NS_USER_TALK;
 $userProfileNamespaces[] = NS_USER_WALL;
-$app->getLocalRegistry()->set('UserProfileNamespaces', $userProfileNamespaces);
 
 define( 'WH_EDIT', 0);
 define( 'WH_NEW', 1);

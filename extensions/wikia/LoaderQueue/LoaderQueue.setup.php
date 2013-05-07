@@ -19,4 +19,4 @@ $wgResourceModules['ext.wikia.loaderQueue'] = array(
 );
 
 $wgAutoloadClasses['LoaderQueueHooks'] =  __DIR__ . '/LoaderQueueHooks.class.php';
-$app->registerHook('WikiaSkinTopScripts', 'LoaderQueueHooks', 'onWikiaSkinTopScripts');
+$wgHooks['WikiaSkinTopScripts'][] = 'LoaderQueueHooks::onWikiaSkinTopScripts';

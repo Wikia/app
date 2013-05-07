@@ -27,8 +27,8 @@ $wgAutoloadClasses[ 'ForumExternalController'] =  $dir . 'ForumExternalControlle
 $wgAutoloadClasses[ 'RelatedForumDiscussionController'] =  $dir . 'RelatedForumDiscussionController.class.php' ;
 
 // i18n mapping
-$app->registerExtensionMessageFile( 'Forum', $dir . 'Forum.i18n.php' );
-$app->registerExtensionMessageFile( 'ForumAliases', $dir . 'Forum.alias.php');
+$wgExtensionMessagesFiles['Forum'] = $dir . 'Forum.i18n.php' ;
+$wgExtensionMessagesFiles['ForumAliases'] = $dir . 'Forum.alias.php';
 
 // special pages
 $wgSpecialPages[ 'Forum' ] =  'ForumSpecialController';

@@ -35,4 +35,4 @@ $app->registerHook('WikiaCanonicalHref', 'WAMPageHooks', 'onWikiaCanonicalHref')
 
 
 // i18n
-$app->registerExtensionMessageFile( 'WAMPage', $dir . 'WAMPage.i18n.php' );
+$wgExtensionMessagesFiles['WAMPage'] = $dir . 'WAMPage.i18n.php' ;

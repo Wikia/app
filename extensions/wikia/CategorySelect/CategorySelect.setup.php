@@ -20,7 +20,6 @@ $wgExtensionCredits[ 'other' ][] = array(
 	'description-msg' => 'categoryselect-desc',
 );
 
-$app = F::app();
 $dir = dirname( __FILE__ ) . '/';
 
 // Classes
@@ -33,7 +32,7 @@ $wgHooks['GetPreferences'][] = 'CategorySelectHooksHelper::onGetPreferences';
 $wgHooks['MediaWikiPerformAction'][] = 'CategorySelectHooksHelper::onMediaWikiPerformAction';
 
 // Messages
-$app->registerExtensionMessageFile( 'CategorySelect', $dir . 'CategorySelect.i18n.php' );
+$wgExtensionMessagesFiles['CategorySelect'] = $dir . 'CategorySelect.i18n.php' ;
 
 JSMessages::registerPackage( 'CategorySelect', array(
 	'categoryselect-button-save',

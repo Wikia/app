@@ -44,7 +44,7 @@ class ScavengerHunt {
 	 *
 	 * @author Marooned
 	 */
-	public function onBeforePageDisplay( OutputPage $out, $skin ) {
+	static public function onBeforePageDisplay( OutputPage $out, $skin ) {
 		global $wgExtensionsPath;
 
 		wfProfileIn(__METHOD__);
@@ -286,7 +286,7 @@ class ScavengerHunt {
 	 *
 	 * @author Marooned
 	 */
-	public function onMakeGlobalVariablesScript( Array &$vars ) {
+	static public function onMakeGlobalVariablesScript( Array &$vars ) {
 		wfProfileIn(__METHOD__);
 
 		$games = (new ScavengerHuntGames); /** @var $games ScavengerHuntGames  */
@@ -468,7 +468,7 @@ class ScavengerHunt {
 		return ( $cityId.'|'.urldecode( $articleName ) );
 	}
 
-	public function onOpenGraphMetaBeforeCustomFields( $articleId, &$titleImage, &$titleDescription) {
+	static public function onOpenGraphMetaBeforeCustomFields( $articleId, &$titleImage, &$titleDescription) {
 		$games = (new ScavengerHuntGames); /* @var $games ScavengerHuntGames */
 		$elements = $games->getOpenGraphMetaElements();
 		if (

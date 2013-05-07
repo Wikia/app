@@ -44,10 +44,9 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $dir = dirname(__FILE__);
-$app = F::app();
 
 // classes
 $wgAutoloadClasses['ArticlesAsResources'] =  $dir . '/ArticlesAsResources.class.php';
 
 // hooks
-$app->registerHook('ResourceLoaderBeforeRespond', 'ArticlesAsResources', 'onResourceLoaderBeforeRespond');
+$wgHooks['ResourceLoaderBeforeRespond'][] = 'ArticlesAsResources::onResourceLoaderBeforeRespond';

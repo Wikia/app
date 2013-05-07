@@ -1,6 +1,5 @@
 <?php
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['Report'] =  $dir.'Report.class.php';
@@ -9,7 +8,7 @@ $wgAutoloadClasses['CustomReportsSpecialController'] =  $dir.'CustomReportsSpeci
 
 $wgSpecialPages['CustomReports'] = 'CustomReportsSpecialController';
 
-$app->registerExtensionMessageFile('CustomReports', $dir.'CustomReports.i18n.php');
+$wgExtensionMessagesFiles['CustomReports'] = $dir.'CustomReports.i18n.php';
 
 $wgAvailableRights[] = 'customreports';
 

@@ -7,7 +7,7 @@
  * @author Sean Colombo
  * @author Wladyslaw Bodzek
  */
-class ArticlesAsResources extends WikiaObject {
+class ArticlesAsResources {
 
 	// Cached (hard-coded) IDs of popular wikis
 	// (may be we should not do it)
@@ -28,7 +28,7 @@ class ArticlesAsResources extends WikiaObject {
 	 * @param $type string
 	 * @return bool|string
 	 */
-	protected function getTypeByOnly( $type ) {
+	static protected function getTypeByOnly( $type ) {
 		switch ( $type ) {
 			case 'scripts': // from only=scripts
 				return 'script'; // type=script
@@ -44,7 +44,7 @@ class ArticlesAsResources extends WikiaObject {
 	 * @param $dbName string Database name
 	 * @return int Wiki ID (or null)
 	 */
-	protected function getCityIdByDbName( $dbName ) {
+	static protected function getCityIdByDbName( $dbName ) {
 		wfProfileIn(__METHOD__);
 		$id = null;
 		if ( $dbName === 'c' ) {
@@ -64,7 +64,7 @@ class ArticlesAsResources extends WikiaObject {
 	 * @param $url string
 	 * @return int Wiki ID (or null)
 	 */
-	protected function getCityIdByUrl( $url ) {
+	static protected function getCityIdByUrl( $url ) {
 		wfProfileIn(__METHOD__);
 		$id = null;
 		if ( $url === 'dev' ) {
@@ -97,7 +97,7 @@ class ArticlesAsResources extends WikiaObject {
 	 * @param $list array
 	 * @return array
 	 */
-	protected function parseArticleNames( $list ) {
+	static protected function parseArticleNames( $list ) {
 		wfProfileIn(__METHOD__);
 		$articles = array();
 		foreach ($list as $k => $name) {
@@ -112,12 +112,12 @@ class ArticlesAsResources extends WikiaObject {
 
 				// Special case for "w:c:" interwiki style links (BugId:45853)
 				if ( $matches[1] ) {
-					$cityId = $this->getCityIdByUrl( $matches[2] );
+					$cityId = self::getCityIdByUrl( $matches[2] );
 				}
 
 				// Fall back to dbName lookup
 				if ( $cityId === null ) {
-					$cityId = $this->getCityIdByDbName( $matches[2] );
+					$cityId = self::getCityIdByDbName( $matches[2] );
 				}
 
 				$articles[] = array(
@@ -128,7 +128,7 @@ class ArticlesAsResources extends WikiaObject {
 			} elseif (preg_match('/^(?:u|url):([^:]+):(.*)$/', $name, $matches)) {
 				$articles[] = array(
 					'originalName' => $name,
-					'cityId' => $this->getCityIdByUrl( $matches[1] ),
+					'cityId' => self::getCityIdByUrl( $matches[1] ),
 					'title' => $matches[2],
 				);
 			} else {
@@ -152,7 +152,7 @@ class ArticlesAsResources extends WikiaObject {
 	 * @param $context ResourceLoaderContext
 	 * @return bool
 	 */
-	public function onResourceLoaderBeforeRespond( $resourceLoader, ResourceLoaderContext &$context ) {
+	static public function onResourceLoaderBeforeRespond( $resourceLoader, ResourceLoaderContext &$context ) {
 		wfProfileIn(__METHOD__);
 		/* @var $request WebRequest */
 		$request = $context->getRequest();
@@ -162,7 +162,7 @@ class ArticlesAsResources extends WikiaObject {
 		}
 
 		$only = $context->getOnly();
-		$type = $this->getTypeByOnly($only);
+		$type = self::getTypeByOnly($only);
 		if ( empty( $type ) ) {
 			wfProfileOut(__METHOD__);
 			return true;
@@ -180,7 +180,7 @@ class ArticlesAsResources extends WikiaObject {
 		$moduleFullName = 'wikia.fake.articles.' . $moduleName;
 		$moduleInfo = array(
 			'class' => 'ResourceLoaderCustomWikiModule',
-			'articles' => $this->parseArticleNames( $articles ),
+			'articles' => self::parseArticleNames( $articles ),
 			'type' => $type,
 		);
 

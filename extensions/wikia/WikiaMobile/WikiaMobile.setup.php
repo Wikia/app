@@ -9,14 +9,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-$app = F::app();
 $dir = dirname( __FILE__ );
 
 /**
  * info
  */
-$app->wg->append(
-	'wgExtensionCredits',
+$wgExtensionCredits[] =
 	array(
 		"name" => "WikiaMobile",
 		"description" => "Mobile Skin for Wikia",
@@ -24,9 +22,7 @@ $app->wg->append(
 			'Federico "Lox" Lucignano <federico(at)wikia-inc.com>',
 			'Jakub Olek <jakubolek(at)wikia-inc.com>'
 		)
-	),
-	'other'
-);
+	);
 
 /**
  * settings
@@ -100,17 +96,17 @@ JSMessages::registerPackage( 'SmartBanner', [
 /**
  * hooks
  */
-$app->registerHook( 'ParserBeforeStrip', 'WikiaMobileHooks', 'onParserBeforeStrip' );
-$app->registerHook( 'ParserAfterTidy', 'WikiaMobileHooks', 'onParserAfterTidy' );
-$app->registerHook( 'ParserLimitReport', 'WikiaMobileHooks', 'onParserLimitReport' );
-$app->registerHook( 'MakeHeadline', 'WikiaMobileHooks', 'onMakeHeadline' );
-$app->registerHook( 'LinkBegin', 'WikiaMobileHooks', 'onLinkBegin' );
-$app->registerHook( 'CategoryPageView', 'WikiaMobileHooks', 'onCategoryPageView' );
-$app->registerHook( 'ArticlePurge', 'WikiaMobileHooks', 'onArticlePurge' );
+$wgHooks['ParserBeforeStrip'][] = 'WikiaMobileHooks::onParserBeforeStrip';
+$wgHooks['ParserAfterTidy'][] = 'WikiaMobileHooks::onParserAfterTidy';
+$wgHooks['ParserLimitReport'][] = 'WikiaMobileHooks::onParserLimitReport';
+$wgHooks['MakeHeadline'][] = 'WikiaMobileHooks::onMakeHeadline';
+$wgHooks['LinkBegin'][] = 'WikiaMobileHooks::onLinkBegin';
+$wgHooks['CategoryPageView'][] = 'WikiaMobileHooks::onCategoryPageView';
+$wgHooks['ArticlePurge'][] = 'WikiaMobileHooks::onArticlePurge';
 
 //404 Pages
-$app->registerHook( 'BeforeDisplayNoArticleText', 'WikiaMobileHooks', 'onBeforeDisplayNoArticleText' );
-$app->registerHook( 'BeforePageDisplay', 'WikiaMobileHooks', 'onBeforePageDisplay' );
+$wgHooks['BeforeDisplayNoArticleText'][] = 'WikiaMobileHooks::onBeforeDisplayNoArticleText';
+$wgHooks['BeforePageDisplay'][] = 'WikiaMobileHooks::onBeforePageDisplay';
 
 
 /*
@@ -118,18 +114,18 @@ $app->registerHook( 'BeforePageDisplay', 'WikiaMobileHooks', 'onBeforePageDispla
  */
 
 //global menu for the mobile skin
-if ( empty($app->wg->WikiaMobileGlobalNavigationMenu ) ) {
-	$app->wg->set( 'wgWikiaMobileGlobalNavigationMenu', '*Special:Random|randompage' );
+if ( empty($wgWikiaMobileGlobalNavigationMenu ) ) {
+	$wgWikiaMobileGlobalNavigationMenu = '*Special:Random|randompage';
 }
 
 //list of special pages (canonical names) to strip out from the navigation menu
-if ( empty( $app->wg->WikiaMobileNavigationBlacklist ) ) {
-	$app->wg->set( 'wgWikiaMobileNavigationBlacklist', array( 'Chat', 'WikiActivity', 'NewFiles' ) );
+if ( empty( $wgWikiaMobileNavigationBlacklist ) ) {
+	$wgWikiaMobileNavigationBlacklist = array( 'Chat', 'WikiActivity', 'NewFiles' );
 }
 
 //black list of JS globals
-if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
-	$app->wg->set( 'wgWikiaMobileIncludeJSGlobals',
+if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
+	$wgWikiaMobileIncludeJSGlobals =
 		[
 			//analytics
 			'_gaq',
@@ -191,13 +187,12 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			//facebook login
 			'fbAppId',
 			'fbUseMarkup'
-		]
-	);
+		];
 }
 
 //list of Videos provides that we support
-if ( empty( $app->wg->WikiaMobileSupportedVideos ) ) {
-	$app->wg->set( 'wgWikiaMobileSupportedVideos', [
+if ( empty( $wgWikiaMobileSupportedVideos ) ) {
+	$wgWikiaMobileSupportedVideos = [
 		'screenplay',
 		'ign',
 		'ooyala',
@@ -205,5 +200,5 @@ if ( empty( $app->wg->WikiaMobileSupportedVideos ) ) {
 		'dailymotion',
 		'vimeo',
 		'bliptv'
-	]);
+	];
 }

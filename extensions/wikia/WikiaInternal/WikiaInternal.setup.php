@@ -8,7 +8,6 @@ EOT;
 	exit( 1 );
 }
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
@@ -19,11 +18,11 @@ $wgAutoloadClasses['WikiaInternalHooks'] =  $dir . 'WikiaInternalHooks.class.php
 /**
  * hooks
  */
-$app->registerHook('AfterCheckInitialQueries', 'WikiaInternalHooks', 'onAfterCheckInitialQueries');
+$wgHooks['AfterCheckInitialQueries'][] = 'WikiaInternalHooks::onAfterCheckInitialQueries';
 
 /**
 * message files
 */
-$app->registerExtensionMessageFile('WikiaInternal', $dir . 'WikiaInternal.i18n.php');
+$wgExtensionMessagesFiles['WikiaInternal'] = $dir . 'WikiaInternal.i18n.php';
 
 

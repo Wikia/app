@@ -1,11 +1,7 @@
 <?php
 
-class ScribeEventProducerController extends WikiaController {
-	public function __construct() {
-		$this->app = F::app();
-	}
-
-	public function onSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
+class ScribeEventProducerController {
+	static public function onSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
 		wfProfileIn( __METHOD__ );
 
 		$key = ( isset( $status->value['new'] ) && $status->value['new'] == 1 ) ? 'create' : 'edit';
@@ -22,7 +18,7 @@ class ScribeEventProducerController extends WikiaController {
 		return true;
 	}
 
-	public function onSaveRevisionComplete( $oPage, $oRevision, $revision_id, $oUser, $allow = true ) {
+	static public function onSaveRevisionComplete( $oPage, $oRevision, $revision_id, $oUser, $allow = true ) {
 		wfProfileIn( __METHOD__ );
 
 		# producer
@@ -39,7 +35,7 @@ class ScribeEventProducerController extends WikiaController {
 		return true;
 	}
 
-	public function onDeleteComplete( &$oPage, &$oUser, $reason, $page_id ) {
+	static public function onDeleteComplete( &$oPage, &$oUser, $reason, $page_id ) {
 		wfProfileIn( __METHOD__ );
 
  		$oScribeProducer = new ScribeEventProducer( 'delete' );
@@ -53,11 +49,12 @@ class ScribeEventProducerController extends WikiaController {
 		return true;
 	}
 
-	public function onRevisionUndeleted( &$oTitle, Revision $oRevision, $page_id ) {
+	static public function onRevisionUndeleted( &$oTitle, Revision $oRevision, $page_id ) {
+		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oTitle ) ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid title object" );
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($wgCityId): invalid title object" );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -76,7 +73,7 @@ class ScribeEventProducerController extends WikiaController {
 		return true;
 	}
 
-	public function onArticleUndelete( &$oTitle, $is_new = false ) {
+	static public function onArticleUndelete( &$oTitle, $is_new = false ) {
 		wfProfileIn( __METHOD__ );
 
  		$oScribeProducer = new ScribeEventProducer( 'undelete' );
@@ -90,7 +87,7 @@ class ScribeEventProducerController extends WikiaController {
 		return true;
 	}
 
-	public function onMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $page_id, $redirect_id = 0 ) {
+	static public function onMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $page_id, $redirect_id = 0 ) {
 		wfProfileIn( __METHOD__ );
 
  		$oScribeProducer = new ScribeEventProducer( 'edit' );

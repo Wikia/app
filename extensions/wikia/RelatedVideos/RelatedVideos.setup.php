@@ -3,7 +3,6 @@
  * @var WikiaApp
  */
 
-$app = F::app();
 $dir = dirname( __FILE__ );
 if ( empty( $wgWikiaVideoRepoCategoryPath ) ){
 	$wgWikiaVideoRepoCategoryPath = '';
@@ -51,7 +50,7 @@ $wgHooks['UndeleteComplete'][] = 'RelatedVideosHookHandler::onUndeleteComplete';
 /**
  * messages
  */
-$app->registerExtensionMessageFile( 'RelatedVideos', $dir . '/RelatedVideos.i18n.php' );
+$wgExtensionMessagesFiles['RelatedVideos'] = $dir . '/RelatedVideos.i18n.php' ;
 
 /**
  * extension related configuration

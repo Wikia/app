@@ -23,9 +23,6 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__);
 
-// WikiaApp
-$app = F::app();
-
 // classes
 $wgAutoloadClasses['EditPageLayout'] =  $dir . '/EditPageLayout.class.php';
 $wgAutoloadClasses['EditPageLayoutAjax'] =  $dir . '/EditPageLayoutAjax.class.php';
@@ -59,7 +56,7 @@ $wgHooks['GetPreferences'][] = 'EditPageLayoutHooks::onGetPreferences';
 $wgHooks['LogEventsListShowLogExtract'][] = 'EditPageLayoutHooks::onLogEventsListShowLogExtract';
 
 // messages
-$app->registerExtensionMessageFile('EditPageLayout', $dir . '/EditPageLayout.i18n.php');
+$wgExtensionMessagesFiles['EditPageLayout'] = $dir . '/EditPageLayout.i18n.php';
 
 // add class to autoloader and register handler for it
 $wgAutoloadClasses['EditorUserPropertiesHandler'] = "$dir/models/EditorUserPropertiesHandler.class.php";

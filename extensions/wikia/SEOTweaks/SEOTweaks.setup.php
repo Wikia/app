@@ -8,7 +8,6 @@
  * 
  */
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 //classes
 $wgAutoloadClasses['SEOTweaksHooksHelper'] =  $dir . 'SEOTweaksHooksHelper.class.php';
@@ -21,4 +20,4 @@ $wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'SEOTweaksHooksHelper::onBef
 $wgHooks['ArticleViewHeader'][] = 'SEOTweaksHooksHelper::onArticleViewHeader';
 
 // messages
-$app->registerExtensionMessageFile('SEOTweaks', $dir . 'SEOTweaks.i18n.php');
+$wgExtensionMessagesFiles['SEOTweaks'] = $dir . 'SEOTweaks.i18n.php';

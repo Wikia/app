@@ -14,7 +14,7 @@ $dir = dirname(__FILE__) . '/';
  */
 $wgAutoloadClasses['BatchVarnishPurgeToolController'] =  $dir . 'BatchVarnishPurgeToolController.class.php';
 
-$app->registerExtensionMessageFile('BatchVarnishPurgeTool', $dir . '/BatchVarnishPurgeTool.i18n.php');
+	$wgExtensionMessagesFiles['BatchVarnishPurgeTool'] = $dir . '/BatchVarnishPurgeTool.i18n.php';
 
 $wgSpecialPages['BatchVarnishPurgeTool'] = 'BatchVarnishPurgeToolController';
 

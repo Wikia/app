@@ -2,7 +2,6 @@
 /**
  * @var WikiaApp
  */
-$app = F::app();
 $dir = dirname( __FILE__ );
 
 define ('AVATAR_DEFAULT_WIDTH', 200);
@@ -57,7 +56,7 @@ $wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
 /**
  * messages
  */
-$app->registerExtensionMessageFile('UserProfilePageV3', $dir . '/UserProfilePage.i18n.php');
+$wgExtensionMessagesFiles['UserProfilePageV3'] = $dir . '/UserProfilePage.i18n.php';
 //register messages package for JS
 //$app->registerExtensionJSMessagePackage('UPP3_modals', array('user-identity-box-about-date-*'));
 

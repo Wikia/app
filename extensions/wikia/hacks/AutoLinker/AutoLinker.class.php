@@ -8,7 +8,7 @@ class AutoLinker {
 	 * @param EditPageLayoutModule $module edit page module
 	 * @return boolean always true
 	 */
-	public function onEditPageLayoutExecute($module) {
+	static public function onEditPageLayoutExecute($module) {
 		$app = F::app();
 
 		// add JS and CSS

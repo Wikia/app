@@ -6,10 +6,9 @@
  *
  */
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 //classes
 $wgAutoloadClasses['SEOTweaksGlobalHooksHelper'] =  $dir . 'SEOTweaksGlobalHooksHelper.class.php';
 
 //hooks
-$app->registerHook( 'OpenGraphMetaHeaders', 'SEOTweaksGlobalHooksHelper', 'onOpenGraphMetaHeaders' );
+$wgHooks['OpenGraphMetaHeaders'][] = 'SEOTweaksGlobalHooksHelper::onOpenGraphMetaHeaders';

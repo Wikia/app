@@ -1,6 +1,5 @@
 <?php
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
@@ -15,4 +14,4 @@ $wgExtensionMessagesFiles['WikiMapAliases'] = $dir . 'WikiMap.alias.php';
 $wgAutoloadClasses['WikiMapModel'] =  $dir . 'WikiMapModel.class.php';
 $wgAutoloadClasses['WikiMapSpecialController'] =  $dir . 'WikiMapSpecialController.class.php';
 $wgSpecialPages['WikiMap'] = 'WikiMapSpecialController';
-$app->registerExtensionMessageFile('WikiMap', $dir . 'WikiMap.i18n.php');
+$wgExtensionMessagesFiles['WikiMap'] = $dir . 'WikiMap.i18n.php';

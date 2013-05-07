@@ -1,6 +1,5 @@
 <?php
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
@@ -17,12 +16,12 @@ $wgAutoloadClasses['ProposalPages'] =  $dir . 'ProposalPages.class.php';
 /**
  * message files
  */
-$app->registerExtensionMessageFile('Proposal', $dir . 'Proposal.i18n.php' );
+$wgExtensionMessagesFiles['Proposal'] = $dir . 'Proposal.i18n.php' ;
 
 /**
  * hookds
  */
-$app->registerHook('SpecialPage_initList', 'ProposalController', 'onSpecialPage_initList');
+$wgHooks['SpecialPage_initList'][] = 'ProposalController::onSpecialPage_initList';
 
 
 /**

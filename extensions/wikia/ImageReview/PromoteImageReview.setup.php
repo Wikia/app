@@ -36,7 +36,7 @@ $wgAutoloadClasses['PromoteImageReviewHelper'] =  $dir . 'PromoteImageReviewHelp
 $wgSpecialPages[ 'PromoteImageReview'] = 'PromoteImageReviewSpecialController';
 
 // hooks
-$app->registerHook('WikiFactory::onPostChangesApplied', 'CityVisualization', 'onWikiDataUpdated');
+$wgHooks['WikiFactory::onPostChangesApplied'][] = 'CityVisualization::onWikiDataUpdated';
 
 // rights
 $wgAvailableRights[] = 'promoteimagereview';

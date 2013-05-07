@@ -6,7 +6,6 @@
  *
  */
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
@@ -33,12 +32,12 @@ $wgSpecialPages['HelloWorld'] = 'HelloWorldSpecialController';
 /**
  * message files
  */
-$app->registerExtensionMessageFile('HelloWorld', $dir . 'HelloWorld.i18n.php');
+$wgExtensionMessagesFiles['HelloWorld'] = $dir . 'HelloWorld.i18n.php';
 
 /**
  * setup functions
  */
-$app->registerExtensionFunction('wfExtensionInit');
+$wgExtensionFunctions[] = 'wfExtensionInit';
 
 function wfExtensionInit() {
 	// place extension init stuff here

@@ -19,7 +19,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__);
 
-$app->registerExtensionMessageFile('Wall', $dir . '/Wall.i18n.php');
+$wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 $wgAutoloadClasses['WallDisabledHooksHelper'] =  $dir . '/WallDisabledHooksHelper.class.php';
 
 include($dir . '/notification/WallNotifications.setup.php');

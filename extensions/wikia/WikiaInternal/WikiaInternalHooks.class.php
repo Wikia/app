@@ -1,12 +1,7 @@
 <?php
 class WikiaInternalHooks {
-	private $app = null;
 
-	public function __construct() {
-		$this->app = F::app();
-	}
-
-	public function onAfterCheckInitialQueries($title, $action, $ret) {
+	static public function onAfterCheckInitialQueries($title, $action, $ret) {
 		global $wgCityId, $wgUser, $wgIsPrivateWiki;
 
 		wfProfileIn(__METHOD__);

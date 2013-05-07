@@ -19,7 +19,6 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__) . '/';
 $wikiaHomePageExtDir = dirname(dirname(__FILE__)) . '/WikiaHomePage/';
 $promoteImageReviewExtDir = dirname(dirname(__FILE__)) . '/ImageReview/modules/PromoteImage/';
-$app = F::app();
 
 // classes
 $wgAutoloadClasses['SpecialPromoteController'] =  $dir . 'SpecialPromoteController.class.php';
@@ -51,12 +50,12 @@ $wgAutoloadClasses['WikiaHomePageHelper'] =  $wikiaHomePageExtDir . 'WikiaHomePa
 $wgAutoloadClasses['CityVisualization'] =  $wikiaHomePageExtDir . 'CityVisualization.class.php';
 
 // hooks
-$app->registerHook('UploadVerification', 'UploadVisualizationImageFromFile', 'UploadVerification');
-$app->registerHook('CityVisualization::wikiDataInserted', 'CityVisualization', 'onWikiDataUpdated');
+$wgHooks['UploadVerification'][] = 'UploadVisualizationImageFromFile::UploadVerification';
+$wgHooks['CityVisualization::wikiDataInserted'][] = 'CityVisualization::onWikiDataUpdated';
 
 // i18n mapping
-$app->registerExtensionMessageFile('SpecialPromote', $dir.'SpecialPromote.i18n.php');
-$app->registerExtensionMessageFile('SpecialPromoteAliases', $dir . 'SpecialPromote.alias.php') ;
+$wgExtensionMessagesFiles['SpecialPromote'] = $dir.'SpecialPromote.i18n.php';
+$wgExtensionMessagesFiles['SpecialPromoteAliases'] = $dir . 'SpecialPromote.alias.php';
 
 JSMessages::registerPackage('SpecialPromote', array('promote-*'));
 

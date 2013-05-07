@@ -9,7 +9,6 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Wikia Home Staff Tool',
@@ -30,7 +29,7 @@ $wgSpecialPages['ManageWikiaHome'] = 'ManageWikiaHomeController';
 $wgSpecialPageGroups['ManageWikiaHome'] = 'wikia';
 
 //message files
-$app->registerExtensionMessageFile('ManageWikiaHome', $dir.'ManageWikiaHome.i18n.php');
+$wgExtensionMessagesFiles['ManageWikiaHome'] = $dir.'ManageWikiaHome.i18n.php';
 JSMessages::registerPackage('ManageWikiaHome', array('manage-wikia-home-*'));
 
 //add wikia staff tool rights to staff users

@@ -12,7 +12,6 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $dir = dirname( __FILE__ ) . '/';
-$app = F::app( );
 
 include ($dir . '/Forum.namespace.setup.php');
 
@@ -21,4 +20,4 @@ $wgAutoloadClasses[ 'ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugi
 $wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
 $wgHooks['NotificationGetMailNotificationMessage'][] = 'ForumNotificationPlugin::onGetMailNotificationMessage';
 
-$app->registerExtensionMessageFile( 'Forum', $dir . 'Forum.i18n.php' );
+$wgExtensionMessagesFiles['Forum'] = $dir . 'Forum.i18n.php' ;
