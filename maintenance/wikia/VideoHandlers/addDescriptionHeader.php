@@ -58,7 +58,7 @@ class EditCLI extends Maintenance {
 	 * @return boolean Whether the action succeeded
 	 */
 	public function addDescriptionHeader ( $pageId, $test = false ) {
-		global $wgTitle;
+		global $wgTitle, $wgServer;
 
 		$wgTitle = Title::newFromID( $pageId );
 		if ( !$wgTitle ) {
@@ -89,7 +89,7 @@ class EditCLI extends Maintenance {
 
 		$newText = "== $headerText ==\n".$text;
 
-		$this->output( "Adding the description back to '".$wgTitle->getText()."' ... " );
+		$this->output( "Adding the description back: '".$wgServer.'/wiki/File:'.$wgTitle->getText()."' ... " );
 
 		// Do the edit
 		if ($test) {
