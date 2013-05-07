@@ -1,6 +1,5 @@
-require(['wikia.window', 'modal', 'sections', 'toc'], function (window, modal, sections, toc){
-	var html = window.documentElement,
-		links = document.querySelectorAll('a:not(.external):not(.extiw)'),
+(function(html, window){
+	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
 		host = window.wgServer.replace(/^http\:\/\//, ''),
 		i = links.length,
 		namespaces = window.wgNamespaceIds,
@@ -98,7 +97,6 @@ require(['wikia.window', 'modal', 'sections', 'toc'], function (window, modal, s
 
 	window.Photos = Photos;
 
-	//Font part
 	function toggle(on, off, force){
 		var hasClass = ~html.className.indexOf(on);
 
@@ -150,68 +148,67 @@ require(['wikia.window', 'modal', 'sections', 'toc'], function (window, modal, s
 	};
 
 	window.Font = Font;
-	//end Font part
 
-	//Modal part
-	function Modal(){
-		this.close = function(){
-			var open = modal.isOpen();
+	require(['modal', 'sections'], function(modal, sections){
+		function Modal(){
+			this.close = function(){
+				var open = modal.isOpen();
 
-			modal.close();
+				modal.close();
 
-			return !!open;
+				return !!open;
+			};
+		}
+
+		Ponto.PontoBaseHandler.derive(Modal);
+
+		Modal.getInstance = function(){
+			return new Modal();
 		};
-	}
 
-	Ponto.PontoBaseHandler.derive(Modal);
+		window.Modal = Modal;
 
-	Modal.getInstance = function(){
-		return new Modal();
-	};
+		function Sections(){
+			this.open = function(id){
+				sections.open(id, true);
+			};
+			this.close = sections.close;
+			this.toggle = function(id) {
+				sections.toggle(id, true);
+			};
+		}
 
-	window.Modal = Modal;
-	//end Modal part
+		Ponto.PontoBaseHandler.derive(Sections);
 
-	//Sections part
-	function Sections(){
-		this.open = function(id){
-			s.open(id, true);
+		Sections.getInstance = function(){
+			return new Sections();
 		};
-		this.close = s.close;
-		this.toggle = function(id) {
-			s.toggle(id, true);
-		};
-	}
 
-	Ponto.PontoBaseHandler.derive(Sections);
+		window.Sections = Sections;
 
-	Sections.getInstance = function(){
-		return new Sections();
-	};
+		sections.addEventListener('open', function(){
+			document.documentElement.style.minHeight = document.documentElement.offsetHeight + 'px';
+		});
 
-	window.Sections = Sections;
-
-	s.addEventListener('open', function(){
-		document.documentElement.style.minHeight = document.documentElement.offsetHeight + 'px';
+		sections.addEventListener('close', function(){
+			document.documentElement.style.minHeight = 0;
+		});
 	});
-
-	s.addEventListener('close', function(){
-		document.documentElement.style.minHeight = 0;
-	});
-	//end Sections part
 
 	window.addEventListener('DOMContentLoaded', function(){
-		Ponto.invoke(
-			'Article',
-			'data',
-			{
-				data: {
-					title: wgTitle,
-					articleId: wgArticleId,
-					cityId: wgCityId
-				},
-				toc: toc.get()
-			}
-		);
+		require(['toc'], function(toc){
+			Ponto.invoke(
+				'Article',
+				'data',
+				{
+					data: {
+						title: window.wgTitle,
+						articleId: window.wgArticleId,
+						cityId: window.wgCityId
+					},
+					toc: toc.get()
+				}
+			);
+		});
 	});
-});
+})(document.documentElement, window);
