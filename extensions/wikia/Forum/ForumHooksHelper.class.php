@@ -375,13 +375,14 @@ class ForumHooksHelper {
 				return true;
 			}
 
-			$title->purgeSquid();
-			$title->invalidateCache();
 			$board->clearCacheBoardInfo();
 
-			$thread = WallThread::newFromId($threadId);
+			$thread = WallThread::newFromId( $threadId );
 			if(!empty($thread)) {
 				$thread->purgeLastMessage();
+				$threadTitle = Title::newFromId( $threadId );
+				$threadTitle->purgeSquid();
+				$threadTitle->invalidateCache();
 			}
 		}
 		return true;
