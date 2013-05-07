@@ -433,15 +433,15 @@ WikiaHomePageRemix.prototype = {
 
 	icreaseRemixCount: function() {
 		this.remixCount++;
-		this.saveLSData(undefined, this.remixCount);
+		this.saveLSData({remixCount: this.remixCount});
 	},
 
 	markCollectionAsShown: function(collectionId) {
 		this.shownCollections[collectionId] = true;
-		this.saveLSData(collectionId);
+		this.saveLSData({collectionId: collectionId});
 	},
 
-	saveLSData: function(collectionId, remixCount) {
+	saveLSData: function(data) {
 		var lsData = $.storage.get(this.COLLECTIONS_LS_KEY);
 		if (!lsData) {
 			lsData = {};
@@ -450,11 +450,11 @@ WikiaHomePageRemix.prototype = {
 		if (!('collections' in lsData)) {
 			lsData.collections = {};
 		}
-		if (typeof collectionId !== 'undefined') {
-			lsData.collections[collectionId] = true;
+		if ('collectionId' in data) {
+			lsData.collections[data.collectionId] = true;
 		}
-		if (typeof remixCount !== 'undefined') {
-			lsData.remixCount = remixCount;
+		if ('remixCount' in data) {
+			lsData.remixCount = data.remixCount;
 		}
 
 		if (!('date' in lsData)) {
