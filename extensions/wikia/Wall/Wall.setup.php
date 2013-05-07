@@ -200,10 +200,9 @@ $wgDefaultUserOptions['enotifwallthread'] = WALL_EMAIL_SINCEVISITED;
 $wgDefaultUserOptions['wallshowsource'] = false;
 $wgDefaultUserOptions['walldelete'] = false;
 
-$userProfileNamespaces = array();
-$userProfileNamespaces[] = NS_USER;
-$userProfileNamespaces[] = NS_USER_TALK;
-$userProfileNamespaces[] = NS_USER_WALL;
+$wgUserProfileNamespaces = array(
+	NS_USER, NS_USER_TALK, NS_USER_WALL
+);
 
 define( 'WH_EDIT', 0);
 define( 'WH_NEW', 1);

@@ -10,8 +10,9 @@ class WallController extends WallBaseController {
 	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestampt for 7 days (improvement 20178)
 
 	public function __construct() {
+		global $wgUserProfileNamespaces;
 		parent::__construct();
-		$this->allowedNamespaces = $UserProfileNamespaces;
+		$this->allowedNamespaces = $wgUserProfileNamespaces;
 	}
 
 	public function init() {
