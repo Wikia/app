@@ -35,12 +35,6 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 		$status = 0;
 
 		if( isset($params[ "token" ] ) && $params[ "token" ] === $wgTheSchwartzSecretToken ) {
-
-			/**
-			 * load i18n
-			 */
-			$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = __DIR__ . "/../AutoCreateWiki/AutoCreateWiki.i18n.php";
-
 			/**
 			 * get creator from param
 			 */
