@@ -64,20 +64,20 @@ $app->registerExtensionMessageFile('WikiaSearch', $dir . 'WikiaSearch.i18n.php' 
 /**
  * preference settings
  */
-$app->registerHook('GetPreferences', 'Wikia\Search\Hooks', 'onGetPreferences');
+$wgHooks['GetPreferences'][] = 'Wikia\Search\Hooks::onGetPreferences';
 
 /**
  * hooks
  */
-$app->registerHook('WikiaMobileAssetsPackages', 'Wikia\Search\Hooks', 'onWikiaMobileAssetsPackages');
+$wgHooks['WikiaMobileAssetsPackages'][] = 'Wikia\Search\Hooks::onWikiaMobileAssetsPackages';
 
 global $wgExternalSharedDB;
 if ( empty( $wgExternalSharedDB ) ) {
-	$app->registerHook('ArticleDeleteComplete', 'Wikia\Search\Hooks', 'onArticleDeleteComplete');
-	$app->registerHook('ArticleSaveComplete', 'Wikia\Search\Hooks', 'onArticleSaveComplete');
-	$app->registerHook('ArticleUndelete', 'Wikia\Search\Hooks', 'onArticleUndelete');
+	$wgHooks['ArticleDeleteComplete'][] = 'Wikia\Search\Hooks::onArticleDeleteComplete';
+	$wgHooks['ArticleSaveComplete'][] = 'Wikia\Search\Hooks::onArticleSaveComplete';
+	$wgHooks['ArticleUndelete'][] = 'Wikia\Search\Hooks::onArticleUndelete';
 } else {
-	$app->registerHook('WikiFactoryPublicStatusChange', 'Wikia\Search\Hooks', 'onWikiFactoryPublicStatusChange');
+	$wgHooks['WikiFactoryPublicStatusChange'][] = 'Wikia\Search\Hooks::onWikiFactoryPublicStatusChange';
 }
 
 $wgExtensionCredits['other'][] = array(

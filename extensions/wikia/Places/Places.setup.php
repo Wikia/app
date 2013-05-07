@@ -55,16 +55,16 @@ $wgAutoloadClasses['PlaceCategory'] =  $dir . '/models/PlaceCategory.class.php';
  * hooks
  */
 
-$app->registerHook('ParserFirstCallInit', 'PlacesHooks', 'onParserFirstCallInit');
-$app->registerHook('BeforePageDisplay', 'PlacesHooks', 'onBeforePageDisplay');
-$app->registerHook('ArticleSaveComplete', 'PlacesHooks', 'onArticleSaveComplete');
-$app->registerHook('RTEUseDefaultPlaceholder', 'PlacesHooks', 'onRTEUseDefaultPlaceholder');
-$app->registerHook('OutputPageBeforeHTML', 'PlacesHooks', 'onOutputPageBeforeHTML');
-$app->registerHook('PageHeaderIndexExtraButtons', 'PlacesHooks', 'onPageHeaderIndexExtraButtons');
-$app->registerHook('EditPage::showEditForm:initial', 'PlacesHooks', 'onShowEditForm');
+$wgHooks['ParserFirstCallInit'][] = 'PlacesHooks::onParserFirstCallInit';
+$wgHooks['BeforePageDisplay'][] = 'PlacesHooks::onBeforePageDisplay';
+$wgHooks['ArticleSaveComplete'][] = 'PlacesHooks::onArticleSaveComplete';
+$wgHooks['RTEUseDefaultPlaceholder'][] = 'PlacesHooks::onRTEUseDefaultPlaceholder';
+$wgHooks['OutputPageBeforeHTML'][] = 'PlacesHooks::onOutputPageBeforeHTML';
+$wgHooks['PageHeaderIndexExtraButtons'][] = 'PlacesHooks::onPageHeaderIndexExtraButtons';
+$wgHooks['EditPage::showEditForm:initial'][] = 'PlacesHooks::onShowEditForm';
 
 // for later
-// $app->registerHook('OutputPageMakeCategoryLinks', 'PlacesHooks', 'onOutputPageMakeCategoryLinks');
+// $wgHooks['OutputPageMakeCategoryLinks'][] = 'PlacesHooks::onOutputPageMakeCategoryLinks';
 
 /**
  * API module

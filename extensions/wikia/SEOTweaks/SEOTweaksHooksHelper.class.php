@@ -7,7 +7,7 @@
  * @author Jacek Jursza <jacek at wikia-inc.com>
  */
 
-class SEOTweaksHooksHelper extends WikiaModel {
+class SEOTweaksHooksHelper {
 	const DELETED_PAGES_STATUS_CODE = 410;
 	
 	/**
@@ -21,12 +21,13 @@ class SEOTweaksHooksHelper extends WikiaModel {
 	 * @param OutputPage $out
 	 * @return bool true
 	 */
-	function onBeforePageDisplay( $out ) {
-		if ( !empty( $this->wg->SEOGoogleSiteVerification ) ) {
-			$out->addMeta( 'google-site-verification', $this->wg->SEOGoogleSiteVerification );
+	static function onBeforePageDisplay( $out ) {
+		global $wgSEOGoogleSiteVerification, $wgSEOGooglePlusLink;
+		if ( !empty( $wgSEOGoogleSiteVerification ) ) {
+			$out->addMeta( 'google-site-verification', $wgSEOGoogleSiteVerification );
 		}
-		if ( !empty( $this->wg->SEOGooglePlusLink ) ) {
-			$out->addLink( array( 'href' => $this->wg->SEOGooglePlusLink, 'rel' => 'publisher' ) );
+		if ( !empty( $wgSEOGooglePlusLink ) ) {
+			$out->addLink( array( 'href' => $wgSEOGooglePlusLink, 'rel' => 'publisher' ) );
 		}
 		return true;
 	}
@@ -39,9 +40,10 @@ class SEOTweaksHooksHelper extends WikiaModel {
 	 * @param Article $article
 	 * @return bool
 	 */
-	public function onArticleFromTitle( &$title, &$article ) {
+	static public function onArticleFromTitle( &$title, &$article ) {
+		global $wgOut;
 		if( !$title->exists() && $title->isDeleted() ) {
-			$this->wg->Out->setStatusCode( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE );
+			$wgOut->setStatusCode( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE );
 		}
 		return true;
 	}
@@ -53,7 +55,8 @@ class SEOTweaksHooksHelper extends WikiaModel {
 	 * @param $html
 	 * @return bool
 	 */
-	function onImagePageAfterImageLinks( $imgPage, $html ) {
+	static function onImagePageAfterImageLinks( $imgPage, $html ) {
+		global $wgOut;
 
 		$file = $imgPage->getDisplayedFile(); /* @var $file LocalRepo */
 		$title = $imgPage->getTitle();  /* @var $title Title */
@@ -74,7 +77,7 @@ class SEOTweaksHooksHelper extends WikiaModel {
 			}
 
 			if ( !empty( $newTitle ) ) {
-				$this->wg->Out->setPageTitle( $newTitle );
+				$wgOut->setPageTitle( $newTitle );
 			}
 		}
 		return true;
@@ -88,7 +91,7 @@ class SEOTweaksHooksHelper extends WikiaModel {
 	 * @param  bool   $descQuery
 	 * @return bool
 	 */
-	public function onBeforeParserMakeImageLinkObjOptions( $parser, $title, &$parts, &$params, &$time, &$descQuery, $options ) {
+	static public function onBeforeParserMakeImageLinkObjOptions( $parser, $title, &$parts, &$params, &$time, &$descQuery, $options ) {
 		$grepped = preg_grep( '/^alt=/', (array) $parts);
 		if ( $title->getNamespace() == NS_FILE && empty( $grepped ) ) {
 			$text = $title->getText();
@@ -106,8 +109,8 @@ class SEOTweaksHooksHelper extends WikiaModel {
 	 * @param bool $outputDone
 	 * @param bool $pcache
 	 */
-	public function onArticleViewHeader( &$article, &$outputDone, &$pcache )
-	{
+	static public function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
+		global $wgOut;
 		$title = $article->getTitle();
 		if ( ( ! $title->exists() ) 
 			&& ( isset( $_SERVER['HTTP_REFERER'] ) ) 
@@ -117,7 +120,7 @@ class SEOTweaksHooksHelper extends WikiaModel {
 			$result = $dbr->query( sprintf( 'SELECT page_title FROM page WHERE page_title %s LIMIT 1', $dbr->buildLike( $title->getDBKey(), $dbr->anyString() ) ), __METHOD__ );
 			if ( $row = $dbr->fetchObject( $result ) ) {
 				$title = Title::newFromText( $row->page_title );
-				$this->wg->Out->redirect( $title->getFullUrl() );
+				$wgOut->redirect( $title->getFullUrl() );
 			    $outputDone = true;
 			}
 		}

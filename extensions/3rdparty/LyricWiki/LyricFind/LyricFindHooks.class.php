@@ -1,6 +1,6 @@
 <?php
 
-class LyricFindHooks extends WikiaObject {
+class LyricFindHooks {
 
 	/**
 	 * Checks whether given page is trackable
@@ -43,8 +43,9 @@ class LyricFindHooks extends WikiaObject {
 	 * @param array $jsAssetGroups AssetsManager groups to load
 	 * @return bool true
 	 */
-	public function onOasisSkinAssetGroups(Array &$jsAssetGroups) {
-		if (self::pageIsTrackable($this->wg->Title)) {
+	static public function onOasisSkinAssetGroups(Array &$jsAssetGroups) {
+		global $wgTitle;
+		if (self::pageIsTrackable($wgTitle)) {
 			$jsAssetGroups[] = 'LyricsFindTracking';
 		}
 
@@ -57,10 +58,11 @@ class LyricFindHooks extends WikiaObject {
 	 * @param EditPage $editPage edit page instance
 	 * @return bool show edit page form?
 	 */
-	public function onAlternateEdit(EditPage $editPage) {
+	static public function onAlternateEdit(EditPage $editPage) {
+		global $wgUser;
 		$title = $editPage->getTitle();
 		$isLyricFind = $title->getNamespace() === NS_LYRICFIND;
-		$isNotAllowedToEdit = $title->isNamespaceProtected($this->wg->user);
+		$isNotAllowedToEdit = $title->isNamespaceProtected($wgUser);
 
 		$blockEdit = ($isLyricFind && $isNotAllowedToEdit);
 		if ($blockEdit) {
@@ -76,7 +78,7 @@ class LyricFindHooks extends WikiaObject {
 	 * @param Parser $parser parser instance
 	 * @return bool true
 	 */
-	public function onParserFirstCallInit(Parser $parser) {
+	static public function onParserFirstCallInit(Parser $parser) {
 		$parser->setHook(LyricFindParserController::NAME, 'LyricFindParserController::render');
 		return true;
 	}
@@ -88,7 +90,7 @@ class LyricFindHooks extends WikiaObject {
 	 * @param string $text parser content
 	 * @return bool true
 	 */
-	public function onParserAfterTidy(Parser $parser, &$text) {
+	static public function onParserAfterTidy(Parser $parser, &$text) {
 		$text = strtr($text, LyricFindParserController::$markers);
 		return true;
 	}
@@ -100,7 +102,7 @@ class LyricFindHooks extends WikiaObject {
 	 * @param Skin $skin
 	 * @return bool true
 	 */
-	public function onBeforePageDisplay(OutputPage $out, Skin $skin ) {
+	static public function onBeforePageDisplay(OutputPage $out, Skin $skin ) {
 		if (!self::pageIsIndexable($out->getTitle())) {
 			$out->setRobotPolicy('noindex,follow');
 		}

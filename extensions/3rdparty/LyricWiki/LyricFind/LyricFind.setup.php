@@ -28,12 +28,12 @@ $app->registerExtensionMessageFile('LyricFind', $dir . '/LyricFind.i18n.php');
 // LyricFind page views tracking
 $wgAutoloadClasses['LyricFindController'] =  $dir . '/LyricFindController.class.php';
 $wgAutoloadClasses['LyricFindTrackingService'] =  $dir . '/LyricFindTrackingService.class.php';
-$app->registerHook('OasisSkinAssetGroups', 'LyricFindHooks', 'onOasisSkinAssetGroups');
+$wgHooks['OasisSkinAssetGroups'][] = 'LyricFindHooks::onOasisSkinAssetGroups';
 
 $wgLyricFindTrackingNamespaces = array(NS_LYRICFIND);
 
 // LyricFind indexing
-$app->registerHook('BeforePageDisplay', 'LyricFindHooks', 'onBeforePageDisplay');
+$wgHooks['BeforePageDisplay'][] = 'LyricFindHooks::onBeforePageDisplay';
 
 // edit permissions & view-source protection
 // @see http://www.mediawiki.org/wiki/Manual:$wgNamespaceProtection
@@ -41,11 +41,11 @@ $wgGroupPermissions['*']['editlyricfind'] = false;
 $wgGroupPermissions['staff']['editlyricfind'] = true;
 $wgNamespaceProtection[ NS_LYRICFIND ] = array('editlyricfind');
 
-$app->registerHook('AlternateEdit', 'LyricFindHooks', 'onAlternateEdit');
+$wgHooks['AlternateEdit'][] = 'LyricFindHooks::onAlternateEdit';
 
 // parser hhok
-$app->registerHook('ParserFirstCallInit', 'LyricFindHooks', 'onParserFirstCallInit');
-$app->registerHook('ParserAfterTidy', 'LyricFindHooks', 'onParserAfterTidy');
+$wgHooks['ParserFirstCallInit'][] = 'LyricFindHooks::onParserFirstCallInit';
+$wgHooks['ParserAfterTidy'][] = 'LyricFindHooks::onParserAfterTidy';
 $wgAutoloadClasses['LyricFindParserController'] =  $dir . '/LyricFindParserController.class.php';
 
 // front-end for pages with lyrics

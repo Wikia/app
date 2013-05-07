@@ -6,14 +6,13 @@
  *
  */ 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 //classes
 $wgAutoloadClasses['LightboxController'] =  $dir . 'LightboxController.class.php';
 
 // hooks
-$app->registerHook('MakeGlobalVariablesScript', 'LightboxController', 'onMakeGlobalVariablesScript');
+$wgHooks['MakeGlobalVariablesScript'][] = 'LightboxController::onMakeGlobalVariablesScript';
 
-//$app->registerHook('ArticleEditUpdates', 'LightboxController', 'onArticleEditUpdates');
+//$wgHooks['ArticleEditUpdates'][] = 'LightboxController::onArticleEditUpdates';
 
 // i18n mapping
 $wgExtensionMessagesFiles['Lightbox'] = $dir . 'Lightbox.i18n.php';

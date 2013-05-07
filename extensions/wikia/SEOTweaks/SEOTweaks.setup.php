@@ -14,11 +14,11 @@ $app = F::app();
 $wgAutoloadClasses['SEOTweaksHooksHelper'] =  $dir . 'SEOTweaksHooksHelper.class.php';
 
 // hooks
-$app->registerHook('BeforePageDisplay', 'SEOTweaksHooksHelper', 'onBeforePageDisplay');
-$app->registerHook('ArticleFromTitle', 'SEOTweaksHooksHelper', 'onArticleFromTitle');
-$app->registerHook('ImagePageAfterImageLinks', 'SEOTweaksHooksHelper', 'onImagePageAfterImageLinks');
-$app->registerHook('BeforeParserMakeImageLinkObjOptions', 'SEOTweaksHooksHelper', 'onBeforeParserMakeImageLinkObjOptions');
-$app->registerHook('ArticleViewHeader', 'SEOTweaksHooksHelper', 'onArticleViewHeader');
+$wgHooks['BeforePageDisplay'][] = 'SEOTweaksHooksHelper::onBeforePageDisplay';
+$wgHooks['ArticleFromTitle'][] = 'SEOTweaksHooksHelper::onArticleFromTitle';
+$wgHooks['ImagePageAfterImageLinks'][] = 'SEOTweaksHooksHelper::onImagePageAfterImageLinks';
+$wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions';
+$wgHooks['ArticleViewHeader'][] = 'SEOTweaksHooksHelper::onArticleViewHeader';
 
 // messages
 $app->registerExtensionMessageFile('SEOTweaks', $dir . 'SEOTweaks.i18n.php');

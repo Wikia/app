@@ -517,9 +517,9 @@ class LightboxController extends WikiaController {
 	 * @param array $vars
 	 * @return bool
 	 */
-	public function onMakeGlobalVariablesScript(&$vars) {
+	static public function onMakeGlobalVariablesScript(&$vars) {
+		global $wgShowAdModalInterstitialTimes;
 		// How many ads to show while browsing Lightbox
-		$wgShowAdModalInterstitialTimes = $this->wg->ShowAdModalInterstitialTimes;
 		if (!$wgShowAdModalInterstitialTimes) {
 			$wgShowAdModalInterstitialTimes = 1; // default: 1
 		}

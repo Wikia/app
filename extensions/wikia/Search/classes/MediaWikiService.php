@@ -759,6 +759,7 @@ class MediaWikiService
 	 * @param string $event
 	 * @param string $class
 	 * @param string $method
+	 * @deprecated
 	 */
 	public function registerHook( $event, $class, $method ) {
 		$this->app->registerHook( $event, $class, $method );
