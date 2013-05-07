@@ -20,6 +20,8 @@ $wgAutoloadClasses['UserIdentityBox'] =  $dir . '/UserIdentityBox.class.php';
 $wgAutoloadClasses['UserProfilePageRailHelper'] =  $dir . '/UserProfilePageRailHelper.class.php';
 $wgAutoloadClasses['ImageOperationsHelper'] =  $dir . '/ImageOperationsHelper.class.php';
 
+$wgAutoloadClasses['UserProfilePageHelper'] =  $dir . '/UserProfilePageHelper.class.php';
+
 /**
  * controllers
  */
@@ -40,14 +42,17 @@ $wgAutoloadClasses['UserTwoTagsStrategy'] =  $dir . '/strategies/UserTwoTagsStra
 /**
  * hooks
  */
-$app->registerHook('SkinTemplateOutputPageBeforeExec', 'UserProfilePageController', 'onSkinTemplateOutputPageBeforeExec');
-$app->registerHook('SkinSubPageSubtitleAfterTitle', 'UserProfilePageController', 'onSkinSubPageSubtitleAfterTitle');
-$app->registerHook('ArticleSaveComplete', 'UserProfilePageController', 'onArticleSaveComplete');
-$app->registerHook('GetRailModuleList', 'UserProfilePageRailHelper', 'onGetRailModuleList');
-$app->registerHook('WikiaMobileAssetsPackages', 'UserProfilePageController', 'onWikiaMobileAssetsPackages');
-$app->registerHook('BeforeDisplayNoArticleText', 'UserProfilePageController', 'onBeforeDisplayNoArticleText');
+$wgAutoloadClasses['UserProfilePageHooks'] =  $dir . '/UserProfilePageHooks.class.php';
 
-$app->registerHook('ArticleSaveComplete', 'Masthead', 'userMastheadInvalidateCache');
+$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfilePageHooks::onSkinTemplateOutputPageBeforeExec';
+$wgHooks['BeforeDisplayNoArticleText'][] = 'UserProfilePageHooks::onBeforeDisplayNoArticleText';
+$wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'UserProfilePageHooks::onSkinSubPageSubtitleAfterTitle';
+$wgHooks['ArticleSaveComplete'][] = 'UserProfilePageHooks::onArticleSaveComplete';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'UserProfilePageHooks::onWikiaMobileAssetsPackages';
+
+$wgHooks['GetRailModuleList'][] = 'UserProfilePageRailHelper::onGetRailModuleList';
+
+$wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
 
 /**
  * messages
@@ -70,8 +75,6 @@ if( defined('NS_USER_WALL') ) {
 if( defined('NS_BLOG_ARTICLE') ) {
 	$UPPNamespaces[] = NS_BLOG_ARTICLE;
 }
-
-$app->getLocalRegistry()->set( 'UserProfilePageNamespaces', $UPPNamespaces );
 
 $wgLogTypes[] = AVATAR_LOG_NAME;
 $wgLogHeaders[AVATAR_LOG_NAME] = 'blog-avatar-alt';

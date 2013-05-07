@@ -16,11 +16,12 @@ class UserProfilePageController extends WikiaController {
 	protected $defaultAvatarPath = 'http://images.wikia.com/messaging/images/';
 
 	public function __construct(WikiaApp $app = null) {
+		global $UPPNamespaces;
 		if( is_null( $app ) ) {
 			$app = F::app();
 		}
 		$this->app = $app;
-		$this->allowedNamespaces = $app->getLocalRegistry()->get('UserProfilePageNamespaces');
+		$this->allowedNamespaces = $UPPNamespaces;
 		$this->title = $app->wg->Title;
 	}
 
@@ -92,7 +93,7 @@ class UserProfilePageController extends WikiaController {
 		$sessionUser = $this->wg->User;
 
 		$this->setRequest(new WikiaRequest($this->app->wg->Request->getValues()));
-		$user = $this->getUserFromTitle();
+		$user = UserProfilePageHelper::getUserFromTitle();
 		/**
 		 * @var $userIdentityBox UserIdentityBox
 		 */
@@ -158,7 +159,7 @@ class UserProfilePageController extends WikiaController {
 		$namespace = $this->title->getNamespace();
 
 		$this->setRequest(new WikiaRequest($this->app->wg->Request->getValues()));
-		$user = $this->getUserFromTitle();
+		$user = UserProfilePageHelper::getUserFromTitle();
 
 		/**
 		 * @var $sessionUser User
@@ -840,166 +841,8 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	/**
-	 * @brief Return current title object
-	 *
-	 * Return current title, which is later used by getUserFromTitle method
-	 * @return Title
-	 *
-	 */
-	public function getCurrentTitle() {
-		wfProfileIn(__METHOD__);
-		$title = $this->getVal('title');
-
-		if (!empty($title) && is_string($title) && strpos($title, ':') !== false) {
-			$title = Title::newFromText($title);
-		}
-
-		if ($title instanceof Title && $title->isRedirect()) {
-			$article = new Article($title);
-			$redirect = Title::newFromRedirectRecurse($article->getContent());
-			if ($redirect instanceof Title) {
-				$title = $redirect;
-			}
-		}
-		wfProfileOut(__METHOD__);
-		return $title;
-	}
-
-	/**
-	 * @brief Get user object from given title
-	 *
-	 * @desc getUserFromTitle() is sometimes called in hooks therefore I added returnUser flag and when
-	 * it is set to true getUserFromTitle() will assign $this->user variable with a user object
-	 *
-	 * @requestParam Title $title title object
-	 * @requestParam Boolean $returnUser a flag set to true or false
-	 *
-	 * @return User
-	 *
-	 * @author ADi
-	 * @author nAndy
-	 */
-	public function getUserFromTitle() {
-		wfProfileIn(__METHOD__);
-		$returnUserInData = (boolean)$this->getVal('returnUser');
-		$title = $this->getCurrentTitle();
-
-		$user = null;
-		if ($title instanceof Title && in_array($title->getNamespace(), $this->allowedNamespaces)) {
-			// get "owner" of this user / user talk / blog page
-			$parts = explode('/', $title->getText());
-		} else {
-			if ($title instanceof Title && $title->getNamespace() == NS_SPECIAL && ($title->isSpecial('Following') || $title->isSpecial('Contributions'))) {
-				$target = $this->getVal('target');
-				$target = (empty($target)) ? $this->app->wg->Request->getVal('target') : $target;
-
-				if (!empty($target)) {
-					// Special:Contributions?target=FooBar (RT #68323)
-					$parts = array($target);
-				} else {
-					// get user this special page referrs to
-					$titleVal = $this->app->wg->Request->getVal('title', false);
-					$parts = explode('/', $titleVal);
-
-					// remove special page name
-					array_shift($parts);
-				}
-
-				if ($title->isSpecial('Following') && !isset($parts[0])) {
-					//following pages are rendered only for profile owners
-					$user = $this->app->wg->User;
-					if ($returnUserInData) {
-						$this->user = $user;
-					}
-
-					wfProfileOut(__METHOD__);
-					return $user;
-				}
-			}
-		}
 
 
-		if (!empty($parts[0])) {
-			$userName = str_replace('_', ' ', $parts[0]);
-			$user = User::newFromName($userName);
-		}
-
-		if (!($user instanceof User) && !empty($userName)) {
-			//it should work only for title=User:AAA.BBB.CCC.DDD where AAA.BBB.CCC.DDD is an IP address
-			//in previous user profile pages when IP was passed it returned false which leads to load
-			//"default" oasis data to Masthead; here it couldn't be done because of new User Identity Box
-			$user = new User();
-			$user->mName = $userName;
-			$user->mFrom = 'name';
-		}
-
-		if (!($user instanceof User) && empty($userName)) {
-			//this is in case Blog:Recent_posts or Special:Contribution will be called
-			//then in title there is no username and "default" user instance is $wgUser
-			$user = $this->app->wg->User;
-		}
-
-		if ($returnUserInData) {
-			$this->user = $user;
-		}
-
-		wfProfileOut(__METHOD__);
-		return $user;
-	}
-
-	/**
-	 * Don't send 404 status for user pages with filled in masthead (bugid:44602)
-	 * @brief hook handler
-	 */
-	public function onBeforeDisplayNoArticleText($article) {
-		$this->setRequest( new WikiaRequest( $this->app->wg->Request->getValues() ) );
-		$title = $this->getCurrentTitle();
-		if ($title instanceof Title && in_array($title->getNamespace(), $this->allowedNamespaces)) {
-			$user = $this->getUserFromTitle();
-			if ( $user instanceof User && $user->getId() > 0) {
-				/**
-				 * @var $userIdentityBox UserIdentityBox
-				 */
-				$userIdentityBox = new UserIdentityBox( $this->app, $user, self::MAX_TOP_WIKIS );
-				$userData = $userIdentityBox->getFullData();
-				if ( is_array( $userData ) && array_key_exists( 'showZeroStates', $userData ) ) {
-					if ( !$userData['showZeroStates'] ) {
-						$this->app->wg->Out->setStatusCode ( 200 );
-					}
-				}
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * @brief hook handler
-	 */
-	public function onSkinTemplateOutputPageBeforeExec($skin, $template) {
-		wfProfileIn(__METHOD__);
-
-		$this->setRequest(new WikiaRequest($this->app->wg->Request->getValues()));
-
-		$user = $this->getUserFromTitle();
-
-		if ($user instanceof User && $user->getId() > 0 ) {
-			$response = $this->app->sendRequest(
-				'UserProfilePage',
-				'index',
-				array(
-					'user' => $user,
-					'userPageBody' => $template->data['bodytext'],
-					'wikiId' => $this->app->wg->CityId,
-				));
-
-			$template->data['bodytext'] = (string)$response;
-		}
-
-		$out = $this->addToUserProfile($skin, $template);
-		wfProfileOut(__METHOD__);
-		return $out;
-	}
 
 	/**
 	 *
@@ -1197,9 +1040,6 @@ class UserProfilePageController extends WikiaController {
 
 		$user = User::newFromId($userId);
 
-		/**
-		 * @var $userIdentityBox UserIdentityBox
-		 */
 		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 		$result = array('success' => true, 'wikis' => $userIdentityBox->getTopWikis(true));
 
@@ -1229,122 +1069,6 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	/**
-	 * @brief remove User:: from back link
-	 *
-	 * @author Tomek Odrobny
-	 *
-	 * @param $title Title
-	 */
-
-	public function onSkinSubPageSubtitleAfterTitle($title, &$ptext) {
-		if (!empty($title) && $title->getNamespace() == NS_USER) {
-			$ptext = $title->getText();
-		}
-
-		return true;
-	}
-
-	/**
-	 * @brief adds wiki id to cache and fav wikis instantly
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		if ($revision !== NULL) { // do not count null edits
-			$wikiId = intval($this->app->wg->CityId);
-
-			if ($user instanceof User && $wikiId > 0) {
-				/**
-				 * @var $userIdentityBox UserIdentityBox
-				 */
-				$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
-				$userIdentityBox->addTopWiki($wikiId);
-			}
-		}
-		return true;
-	}
-
-	/**
-	 *
-	 * Monobook fallback for UUP
-	 *
-	 */
-
-	function addToUserProfile(&$skin, &$tpl) {
-		wfProfileIn(__METHOD__);
-
-		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath;
-
-		// don't output on Oasis
-		if (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis') {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		$action = $wgRequest->getVal('action', 'view');
-		if ($wgTitle->getNamespace() != NS_USER || ($action != 'view' && $action != 'purge')) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		// construct object for the user whose page were' on
-		$user = User::newFromName($wgTitle->getDBKey());
-
-		// sanity check
-		if (!is_object($user)) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		$user->load();
-
-		// abort if user has been disabled
-		if (defined('CLOSED_ACCOUNT_FLAG') && $user->mRealName == CLOSED_ACCOUNT_FLAG) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-		// abort if user has been disabled (v2, both need to be checked for a while)
-		$disabledOpt = $user->getOption('disabled');
-		if (!empty($disabledOpt)) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		$html = '';
-
-		$out = array();
-		wfRunHooks('AddToUserProfile', array(&$out, $user));
-
-		if (count($out) > 0) {
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/UserProfilePageV3/css/UserprofileMonobook.css");
-
-			$html .= "<div id='profile-content'>";
-			$html .= "<div id='profile-content-inner'>";
-			$html .= $tpl->data['bodytext'];
-			$html .= "</div>";
-			$html .= "</div>";
-
-			$wgOut->addStyle("common/article_sidebar.css");
-
-			$html .= '<div class="article-sidebar">';
-			if (isset($out['UserProfile1'])) {
-				$html .= $out['UserProfile1'];
-			}
-			if (isset($out['achievementsII'])) {
-				$html .= $out['achievementsII'];
-			}
-			if (isset($out['followedPages'])) {
-				$html .= $out['followedPages'];
-			}
-			$html .= '</div>';
-
-			$tpl->data['bodytext'] = $html;
-		}
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
 	public function removeavatar() {
 		wfProfileIn(__METHOD__);
 		$this->setVal('status', false);
@@ -1371,11 +1095,4 @@ class UserProfilePageController extends WikiaController {
 		return true;
 	}
 
-	//WikiaMobile hook to add assets so they are minified and concatenated
-	public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
-		if ( $this->app->wg->Title->getNamespace() === NS_USER ) {
-			$scssPackages[] = 'userprofilepage_scss_wikiamobile';
-		}
-		return true;
-	}
 }

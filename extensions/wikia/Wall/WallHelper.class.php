@@ -87,18 +87,7 @@ class WallHelper {
 		}
 
         if( is_null($user) ) {
-            // this is last resort
-            // should no longer be needed
-            $response = F::App()->sendRequest(
-                'UserProfilePage',
-                'getUserFromTitle',
-                array(
-                    'title' => $title,
-                    'returnUser' => true
-                )
-            );
-
-            return $response->getVal('user');
+            return UserProfilePageHelper::getUserFromTitle($title);
         }
 
         return $user;
