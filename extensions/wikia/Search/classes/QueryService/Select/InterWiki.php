@@ -49,11 +49,7 @@ class InterWiki extends AbstractSelect
 	 * @var array
 	 */
 	protected $boostFunctions = array(
-		'log(wikipages)^4',
-		'log(activeusers)^4',
-		'log(revcount)^1',
-		'log(views)^8',
-		'log(words)^0.5',
+		'log(wam)^5',
 	);
 	
 	/**
@@ -140,7 +136,7 @@ class InterWiki extends AbstractSelect
 	 * @return \Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function configureQueryFields() {
-		$this->config->setQueryField( 'wikititle', 7 );
+		$this->config->setQueryField( 'wikititle', 500 );
 		return $this;
 	}
 	
@@ -195,15 +191,7 @@ class InterWiki extends AbstractSelect
 	 */
 	protected function getBoostQueryString()
 	{
-		$queryNoQuotes = preg_replace( '/ wiki\b/i', '', $this->config->getQueryNoQuotes( true ) );
-		$boostQueries = array(
-				Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'valueQuote'=>'\"' ) ),
-				Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'valueQuote'=>'\"' ) ),
-				Utilities::valueForField( 'wikititle', $queryNoQuotes, array( 'boost' => 15, 'valueQuote' => '\"' ) ),
-				Utilities::valueForField( 'host', 'answers', array( 'boost' => 10, 'negate' => true ) ),
-				Utilities::valueForField( 'host', 'respuestas', array( 'boost' => 10, 'negate' => true ) )
-		);
-		return implode( ' ', $boostQueries );
+		return '';
 	}
 	
 	/**
