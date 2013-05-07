@@ -461,6 +461,7 @@ class ArticlesApiController extends WikiaApiController {
 				$id = $t->getArticleID();
 				$revId = $t->getLatestRevID();
 				$rev = Revision::newFromId( $revId );
+				$userText = $rev->getUserText( Revision::FOR_PUBLIC );
 
 				if ( !empty( $rev ) ) {
 					$collection[$id] = [
@@ -469,7 +470,8 @@ class ArticlesApiController extends WikiaApiController {
 						'url' => $t->getLocalURL(),
 						'revision' => [
 							'id' => $revId,
-							'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
+							'user' => $userText,
+							'user_id' => User::idFromName( $userText ),
 							'timestamp' => $this->wf->Timestamp( TS_UNIX, $rev->getTimestamp() )
 						]
 					];
