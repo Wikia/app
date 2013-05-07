@@ -181,7 +181,7 @@ class CreateWiki {
 		/**
 		 * local job
 		 */
-		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = dirname(__FILE__) . "/../CreateNewWiki/CreateWikiLocalJob.php";
+		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = __DIR__ . "/CreateWikiLocalJob.php";
 	}
 
 

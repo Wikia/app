@@ -34,13 +34,12 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 			$params['ts']
 		);
 
-
 		$structuredData = WikiaDataAccess::cache(
-				$this->getMemcacheKey($lastTimestamp),
-				6 * 60 * 60,
-				function () use( $model, $params ) {
-					return $this->loadStructuredData( $model, $params );
-				}
+			$this->getMemcacheKey($lastTimestamp, $this->skinName),
+			6 * 60 * 60,
+			function () use( $model, $params ) {
+				return $this->loadStructuredData( $model, $params );
+			}
 		);
 
 		return $structuredData;
@@ -115,16 +114,19 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	public function purgeMemcache($timestamp) {
-		$this->app->wg->Memc->delete( $this->getMemcacheKey($timestamp) );
+		foreach(Skin::getSkinNames() as $key => $skin) {
+			$this->app->wg->Memc->delete( $this->getMemcacheKey($timestamp, $key) );
+		}
 	}
 
-	protected function getMemcacheKey( $timestamp ) {
+	protected function getMemcacheKey( $timestamp, $skin ) {
 		return  wfSharedMemcKey(
 			MarketingToolboxModel::CACHE_KEY,
 			$timestamp,
 			$this->verticalId,
 			$this->langCode,
-			$this->getModuleId()
+			$this->getModuleId(),
+			$skin
 		);
 	}
 
