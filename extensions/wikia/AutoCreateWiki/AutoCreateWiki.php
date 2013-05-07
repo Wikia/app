@@ -31,4 +31,3 @@ $dir = __DIR__ . '/';
 /**
  * i18n - used in various places :(
  */
-$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = $dir . "AutoCreateWiki.i18n.php";
