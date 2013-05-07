@@ -6,8 +6,6 @@
  * remind to wiki creater that he/she created wiki some time ago
  *
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
- *
- * $Id$
  */
 
 class WikiaApiCreatorReminderEmail extends ApiBase {
@@ -41,7 +39,7 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 			/**
 			 * load i18n
 			 */
-			$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
+			$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = __DIR__ . "/../AutoCreateWiki/AutoCreateWiki.i18n.php";
 
 			/**
 			 * get creator from param

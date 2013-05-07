@@ -4,9 +4,6 @@
  * create wiki tester as maintenance script
  */
 
-include_once( dirname(__FILE__) . "/../AutoCreateWiki.php" );
-include_once( dirname(__FILE__) . "/../CreateWiki.php" );
-
 class CreateWikiTest extends WikiaBaseTest {
 
 	const TEST_PROJECT_NAME = 'CreateWiki Project';
@@ -20,6 +17,9 @@ class CreateWikiTest extends WikiaBaseTest {
 
 	protected function setUp() {
 		global $wgUser, $IP;
+
+		$this->setupFile = dirname(__FILE__) . '/../CreateNewWiki_setup.php';
+
 		parent::setUp();
 
 		$this->wgUserBackup = $wgUser;
