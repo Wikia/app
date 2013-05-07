@@ -341,22 +341,7 @@ $wgAutoloadClasses['FooterDevinfoItemService'] = $IP.'/skins/oasis/modules/foote
 $wgAutoloadClasses['FooterDisabledItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterDisabledItem.class.php';
 
 // Sass-related classes
-
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
-/*
-$wgAutoloadClasses['SassSourceContext']        = $IP.'/includes/wikia/services/sass/SassSourceContext.class.php';
-$wgAutoloadClasses['SassException']            = $IP.'/includes/wikia/services/sass/SassException.class.php';
-$wgAutoloadClasses['SassSource']               = $IP.'/includes/wikia/services/sass/Source/SassSource.class.php';
-$wgAutoloadClasses['SassFileSource']           = $IP.'/includes/wikia/services/sass/Source/SassFileSource.class.php';
-$wgAutoloadClasses['SassStringSource']         = $IP.'/includes/wikia/services/sass/Source/SassStringSource.class.php';
-$wgAutoloadClasses['SassCompiler']             = $IP.'/includes/wikia/services/sass/Compiler/SassCompiler.class.php';
-$wgAutoloadClasses['SassExternalRubyCompiler'] = $IP.'/includes/wikia/services/sass/Compiler/SassExternalRubyCompiler.class.php';
-$wgAutoloadClasses['SassFilter']               = $IP.'/includes/wikia/services/sass/Filter/SassFilter.class.php';
-$wgAutoloadClasses['SassFilterBase64']         = $IP.'/includes/wikia/services/sass/Filter/SassFilterBase64.class.php';
-$wgAutoloadClasses['SassFilterCdnRewrite']     = $IP.'/includes/wikia/services/sass/Filter/SassFilterCdnRewrite.class.php';
-$wgAutoloadClasses['SassFilterCssImports']     = $IP.'/includes/wikia/services/sass/Filter/SassFilterCssImports.class.php';
-$wgAutoloadClasses['SassFilterJanus']          = $IP.'/includes/wikia/services/sass/Filter/SassFilterJanus.class.php';
-*/
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
