@@ -95,7 +95,7 @@ class Phalanx implements arrayaccess {
     }
 
 	public function load() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
 
@@ -118,11 +118,11 @@ class Phalanx implements arrayaccess {
 			);
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function save() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$action = "";
 
@@ -150,15 +150,15 @@ class Phalanx implements arrayaccess {
 		}
 		$dbw->commit();
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return ( $action ) ? $this->data['id'] : false;
 	}
 
 	public function delete() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if (empty($this->data)) {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -170,7 +170,7 @@ class Phalanx implements arrayaccess {
 		}
 		$dbw->commit();
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return ( $removed ) ? $this->data['id'] : false;
 	}
 

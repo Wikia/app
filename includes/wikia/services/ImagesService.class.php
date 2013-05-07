@@ -13,7 +13,7 @@ class ImagesService extends Service {
 	public static function getImageSrc($wikiId, $pageId, $imgSize = 250) {
 		$app = F::app();
 
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
 
@@ -29,13 +29,13 @@ class ImagesService extends Service {
 		$imageSrc = (empty($response['image']['imagecrop'])) ? '' : $response['image']['imagecrop'];
 		$imagePage = (empty($response['imagepage']['imagecrop'])) ? '' : $response['imagepage']['imagecrop'];
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
 
 	public static function getImageOriginalUrl($wikiId, $pageId) {
 		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
 		$title = GlobalTitle::newFromId($pageId, $wikiId);
@@ -58,7 +58,7 @@ class ImagesService extends Service {
 			$imageSrc = '';
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
 
@@ -147,12 +147,12 @@ class ImagesService extends Service {
 	 */
 	public static function getImagePage($wikiId, $pageId) {
 		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$title = GlobalTitle::newFromId($pageId, $wikiId);
 		$imagePage = ($title instanceof Title) ? $title->getFullURL() : '';
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $imagePage;
 	}
 

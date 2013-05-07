@@ -24,11 +24,13 @@ class FBPush_OnAddBlogPost extends FBConnectPushEvent {
 		wfProfileIn(__METHOD__);
 		
 		if( strlen($article->getId()) == 0 ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		
 		// only push if it's a newly created article
 		if ( !( $flags & EDIT_NEW ) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		

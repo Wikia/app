@@ -65,26 +65,10 @@ $app->registerHook( 'TitleGetSquidURLs', 'GameGuidesController', 'onTitleGetSqui
 $app->registerHook( 'WikiFeatures::onGetFeatureNormal', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
 $app->registerHook( 'WikiFeatures::onToggleFeature', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
 
-//the only globals needed in Game Guides
-if ( empty( $app->wg->GameGuidesGlobalsWhiteList ) ) {
-$app->wg->set( 'wgGameGuidesGlobalsWhiteList',
-	[
-		'wgNamespaceNumber',
-		'wgCityId',
-		'wgPageName',
-		'wgArticleId',
-		'wgArticlePath',
-		'wgTitle',
-		'wgServer',
-		'wgScriptPath',
-		'wgAssetsManagerQuery',
-		'wgStyleVersion',
-		'wgRevisionId'
-	] );
-}
-
 //minimal package of messages in Game Gudes
 F::build( 'JSMessages' )->registerPackage( 'GameGuides', array(
 	'wikiamobile-hide-section',
-	'wikiamobile-image-not-loaded'
+	'wikiamobile-image-not-loaded',
+	'wikiamobile-video-not-friendly',
+	'wikiamobile-video-not-friendly-header'
 ) );

@@ -22,7 +22,7 @@ class UserRollback {
 	 * @return array
 	 */
 	public function getWikiData( $wikiId ) {
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if( empty( $wikiId ) ) {
 			throw new WikiaException("Unknown wikiId");
@@ -38,7 +38,7 @@ class UserRollback {
 			throw new WikiaException("Unknown wikiId: $wikiId");
 		}
 
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $wiki;
 	}
 

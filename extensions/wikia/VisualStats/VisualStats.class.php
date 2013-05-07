@@ -56,7 +56,7 @@ class VisualStats extends WikiaObject {
     }
 
     private function performQuery($username){
-        $this->app->wf->profileIn( __METHOD__ );
+        wfProfileIn( __METHOD__ );
 
             $dbr = $this->getDB();
             $userQuery = array();
@@ -85,14 +85,14 @@ class VisualStats extends WikiaObject {
             }
             $out = array('wikia' =>$wikiaQuery, 'user' =>$userQuery, 'db' => $dbr);
 
-        $this->app->wf->profileOut( __METHOD__ );
+        wfProfileOut( __METHOD__ );
 
         return $out;
 
     }
 
     public function getDataForCommitActivity($username){
-        $this->app->wf->profileIn( __METHOD__ );
+        wfProfileIn( __METHOD__ );
 
         $key = $this->app->wf->MemcKey('VisualStats', 'commitActivity', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
@@ -146,14 +146,14 @@ class VisualStats extends WikiaObject {
 
             $this->app->wg->memc->set($key, $out, 600);
         }
-        $this->app->wf->profileOut( __METHOD__ );
+        wfProfileOut( __METHOD__ );
 
         return $out;
 
     }
 
     public function getDataForPunchcard($username){
-        $this->app->wf->profileIn( __METHOD__ );
+        wfProfileIn( __METHOD__ );
 
         $key = $this->app->wf->MemcKey('VisualStats', 'punchcard', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
@@ -210,14 +210,14 @@ class VisualStats extends WikiaObject {
 
             $this->app->wg->memc->set($key, $out, 600);
         }
-        $this->app->wf->profileOut( __METHOD__ );
+        wfProfileOut( __METHOD__ );
 
         return $out;
 
     }
 
     public function getDataForHistogram($username){
-        $this->app->wf->profileIn( __METHOD__ );
+        wfProfileIn( __METHOD__ );
 
         $key = $this->app->wf->MemcKey('VisualStats', 'histogram', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
@@ -275,13 +275,13 @@ class VisualStats extends WikiaObject {
                     'all' => $userHistogramAll));
             $this->app->wg->memc->set($key, $out, 600);
         }
-        $this->app->wf->profileOut( __METHOD__ );
+        wfProfileOut( __METHOD__ );
 
         return $out;
 
     }
     public function getDataForCodeFrequency($username){
-        $this->app->wf->profileIn( __METHOD__ );
+        wfProfileIn( __METHOD__ );
 
         $key = $this->app->wf->MemcKey('VisualStats', 'codeFrequency', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
@@ -414,7 +414,7 @@ class VisualStats extends WikiaObject {
 
         }
 
-        $this->app->wf->profileOut( __METHOD__ );
+        wfProfileOut( __METHOD__ );
 
         return $out;
 

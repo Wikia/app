@@ -24,8 +24,8 @@ class ParserPool {
 	 */
 	public static function create() {
 		global $wgParserConf;
+		# Create base instance for cloning
 		if ( self::$origin === null ) {
-			# Clone it and store it
 			$class = $wgParserConf['class'];
 			if ( $class == 'Parser_DiffTest' ) {
 				self::$origin = false;
@@ -33,6 +33,7 @@ class ParserPool {
 				self::$origin = new Parser( $wgParserConf );
 			}
 		}
+		# Clone it (or create a new one if not possible)
 		if ( self::$origin !== false ) {
 			$parser = clone self::$origin;
 		} else {

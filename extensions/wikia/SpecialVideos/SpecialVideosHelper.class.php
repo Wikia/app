@@ -48,7 +48,7 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @return array $videos
 	 */
 	public function getVideos( $sort, $page ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( $sort == 'premium' ) {
 			$sort = 'recent';
@@ -68,7 +68,7 @@ class SpecialVideosHelper extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $videos;
 	}
@@ -79,7 +79,7 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @return array $videoDetail
 	 */
 	public function getVideoDetail( $videoInfo ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$videoDetail = array();
 		$title = Title::newFromText( $videoInfo['title'], NS_FILE );
@@ -116,7 +116,7 @@ class SpecialVideosHelper extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $videoDetail;
 	}

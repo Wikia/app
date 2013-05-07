@@ -19,7 +19,7 @@ class WikiaMobileStatsModel extends WikiaModel {
 	 * @return Array[] The array of results
 	 */
 	public function getPopularPages(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$memKey = $this->getPopularPagesCacheKey();
 		$pages = $this->wg->Memc->get( $memKey );
 
@@ -58,7 +58,7 @@ class WikiaMobileStatsModel extends WikiaModel {
 			}
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
 
@@ -73,7 +73,7 @@ class WikiaMobileStatsModel extends WikiaModel {
 	 * and the 1st element being the URL of the thumbnail
 	 */
 	public function getRandomPopularPage(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$pages = $this->getPopularPages();
 		$useMainPage = true;
 		$link = '';
@@ -135,7 +135,7 @@ class WikiaMobileStatsModel extends WikiaModel {
 			$imgUrl = "/extensions/wikia/WikiaMobile/images/404_default.png";
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return array( $link, $imgUrl );
 	}
 

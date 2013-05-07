@@ -36,6 +36,10 @@ $wgExtensionCredits['other'][] = array(
     ),
     'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/HAWelcome/'
 );
+
+$wgAvailableRights[] = 'welcomeexempt';
+$wgGroupPermissions['bot']['welcomeexempt'] = true;
+
 /**
  * @global Array The list of message files.
  * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionMessagesFiles
@@ -159,8 +163,8 @@ class HAWelcomeJob extends Job {
                  * @see http://www.mediawiki.org/wiki/Manual:$wgUser
                  */
                 global $wgUser;
-		// Abort if the contributor is a bot or a staff member or the default welcomer
-		if ( $wgUser->isAllowed( 'bot' ) || in_array( 'staff', $wgUser->getEffectiveGroups() ) ||$wgUser->getName() == self::DEFAULT_WELCOMER ) {
+		// Abort if the contributor is a member of a group that should not be welcomed or the default welcomer
+		if ( $wgUser->isAllowed( 'welcomeexempt' ) || $wgUser->getName() == self::DEFAULT_WELCOMER ) {
 			if ( !empty( $wgHAWelcomeNotices ) ) {
 				trigger_error( sprintf( '%s Done. The registered contributor is a bot, a staff member or the default welcomer.', __METHOD__ ) , E_USER_NOTICE );
 			}
@@ -460,21 +464,18 @@ class HAWelcomeJob extends Job {
             ? 'staffsig-text' : 'signature';
         // Determine the full signature.
         $sFullSignature = wfMessage(
-            $sMessageKey,
+            $sSignatureKey,
             $this->oSender->getName(),
             Parser::cleanSigInSig( $this->oSender->getName()
         ) )->inContentLanguage()->text();
         // Append the timestamp to the signature.
         $sFullSignature .= ' ~~~~~';
         // Put the contents of the welcome message together.
-        $this->sMessage = wfMessage(
-            $sMessageKey,
-            array(
-                $sPrefixedText,
-                $this->oSender->getUserPage()->getTalkPage()->getPrefixedText(),
-                $sFullSignature,
-                wfEscapeWikiText( $this->sRecipientName )
-            )
+        $this->sMessage = wfMessage( $sMessageKey,
+		$sPrefixedText,
+		$this->oSender->getUserPage()->getTalkPage()->getPrefixedText(),
+		$sFullSignature,
+		wfEscapeWikiText( $this->sRecipientName )
         )->inContentLanguage()->plain();
         if ( $this->bShowNotices ) {
             trigger_error( sprintf( '%s Done.', __METHOD__ ) , E_USER_NOTICE );

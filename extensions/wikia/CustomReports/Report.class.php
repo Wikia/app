@@ -50,7 +50,7 @@ class Report extends WikiaModel {
 	 * );
 	 */
 	public function get_data() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		// get data
 		$curdate = date('Ymd');
@@ -70,13 +70,13 @@ class Report extends WikiaModel {
 			$xml[] = $this->convertDataToXML($key, $value);
 		}
 		
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		
 		return $xml;
 	}
 
 	protected function get_new_wikis() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
@@ -94,13 +94,13 @@ SQL;
 			$data['new_wikis'][$row['type']][$row['day']] = $row['cnt'];
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $data;
 	}
 	
 	protected function get_new_users() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
 
@@ -158,13 +158,13 @@ SQL;
 
 		$db->freeResult( $result );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $data;
 	}
 
 	protected function get_founderemails() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalDatawareDB);
 
@@ -187,13 +187,13 @@ SQL;
 			$data['founderemails_opens_per_sent'][$row['type']][$row['day']] = self::percentage($row['opens'],$row['sent']);
 		}
 		
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $data;
 	}
 	
 	protected function get_allemails() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalDatawareDB);
 
@@ -216,7 +216,7 @@ SQL;
 			$data['allemails_opens_per_sent'][$row['type']][$row['day']] = self::percentage($row['opens'],$row['sent']);
 		}
 		
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $data;
 	}

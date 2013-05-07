@@ -10,35 +10,35 @@ $specialPageAliases = array();
 
 /** English */
 $specialPageAliases['en'] = array(
-	'Videos' => array( 'Videos' ),
+	'Videos' => array( 'Videos', 'Video' ),
 );
 
 /** French (Français) */
 $specialPageAliases['fr'] = array(
-	'Videos' => array( 'Vidéos', 'Videos' ),
+	'Videos' => array( 'Vidéos' ),
 );
 
 /** Italian (Italiano) */
 $specialPageAliases['it'] = array(
-	'Videos' => array( 'Video', 'Videos' ),
+	'Videos' => array( 'Video' ),
 );
 
 /** Polish (Polski) */
 $specialPageAliases['pl'] = array(
-	'Videos' => array( 'Filmy', 'Videos' ),
+	'Videos' => array( 'Filmy' ),
 );
 
 /** Russian (Русский) */
 $specialPageAliases['ru'] = array(
-	'Videos' => array( 'Видео', 'Videos' ),
+	'Videos' => array( 'Видео' ),
 );
 
 /** Spanish (Español) */
 $specialPageAliases['es'] = array(
-	'Videos' => array( 'Vídeos', 'Videos' ),
+	'Videos' => array( 'Vídeos' ),
 );
 
 /** Ukrainian (Українська) */
 $specialPageAliases['uk'] = array(
-	'Videos' => array( 'Відео', 'Videos' ),
+	'Videos' => array( 'Відео' ),
 );
