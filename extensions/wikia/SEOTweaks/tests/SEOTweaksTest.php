@@ -78,7 +78,7 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
-	 * @covers SEOTweaksHooksHelper::onArticleFromTitle
+	 * @covers SEOTweaksHooksHelper::onAfterInitialize
 	 */
 	public function testOnArticleBeforeTitleValid() {
 		
@@ -113,21 +113,14 @@ class SEOTweaksTest extends WikiaBaseTest
 			->method ( 'setStatusCode' ) 
 		;
 		
-		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
-		$wgRefl->setAccessible( true );
-		
-		$wg = (object) array( 'Out' => $mockOut );
-		
-		$wgRefl->setValue( $mockHelper, $wg );
-		
 		$this->assertTrue(
-				$mockHelper->onArticleFromTitle( $mockTitle, $mockArticle ),
-				'SEOTweaksHooksHelper::onArticleFromTitle should always return true'
+				$mockHelper->onAfterInitialize( $mockTitle, $mockArticle, $mockOut ),
+				'SEOTweaksHooksHelper::onAfterInitialize should always return true'
 		);
 	}
 	
 	/**
-	 * @covers SEOTweaksHooksHelper::onArticleFromTitle
+	 * @covers SEOTweaksHooksHelper::onAfterInitialize
 	 */
 	public function testOnArticleBeforeTitleNotValid() {
 		
@@ -164,16 +157,9 @@ class SEOTweaksTest extends WikiaBaseTest
 			->with   ( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE ) 
 		;
 		
-		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
-		$wgRefl->setAccessible( true );
-		
-		$wg = (object) array( 'Out' => $mockOut );
-		
-		$wgRefl->setValue( $mockHelper, $wg );
-		
 		$this->assertTrue(
-				$mockHelper->onArticleFromTitle( $mockTitle, $mockArticle ),
-				'SEOTweaksHooksHelper::onArticleFromTitle should always return true'
+				$mockHelper->onAfterInitialize( $mockTitle, $mockArticle, $mockOut ),
+				'SEOTweaksHooksHelper::onAfterInitialize should always return true'
 		);
 	}
 	
