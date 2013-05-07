@@ -475,6 +475,15 @@ class HAWelcomeJob extends Job {
 		// Append the timestamp to the signature.
 		$sFullSignature .= ' ~~~~~';
 		// Put the contents of the welcome message together.
+		// Messages that can be used here:
+		// * welcome-message-user
+		// * welcome-message-user-staff
+		// * welcome-message-anon
+		// * welcome-message-anon-staff
+		// * welcome-message-wall-user
+		// * welcome-message-wall-user-staff
+		// * welcome-message-wall-anon
+		// * welcome-message-wall-anon-staff
 		$this->sMessage = wfMessage( $sMessageKey,
 			$sPrefixedText,
 			$this->oSender->getUserPage()->getTalkPage()->getPrefixedText(),
