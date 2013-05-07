@@ -1,21 +1,17 @@
-define('wikia.ooyala', ['wikia.window'/*, 'ext.wikia.adengine.darthelper'*/], function(window/*, dartHelper*/) {
+/*global define*/
+define('wikia.ooyala', ['wikia.window', 'ext.wikia.adengine.dartvideohelper'], function(window, dartVideoHelper) {
 	'use strict';
 
 	return function(params, vb) {
 		var containerId = vb.timeStampId( params.playerId ),
 			createParams = { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay, onCreate: onCreate };
 
-		/*if (window.wgAdVideoTargeting && window.wgShowAds) {
+		if (window.wgAdVideoTargeting && window.wgShowAds) {
 			createParams['google-ima-ads-manager'] = {
-				adTagUrl: dartHelper.getUrl({
-					slotname: 'JWPLAYER',
-					slotsize: '320x240',
-					adType: 'pfadx',
-					src: 'jwplayer'
-				}),
+				adTagUrl: dartVideoHelper.getUrl(),
 				showInAdControlBar : true
 			};
-		}*/
+		}
 
 		function onCreate(player) {
 			var messageBus = player.mb;
@@ -50,5 +46,5 @@ define('wikia.ooyala', ['wikia.window'/*, 'ext.wikia.adengine.darthelper'*/], fu
 		}
 
 		window.OO.Player.create(containerId, params.videoId, createParams);
-	}
+	};
 });
