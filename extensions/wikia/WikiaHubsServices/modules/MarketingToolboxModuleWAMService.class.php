@@ -161,9 +161,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 			$structuredData = WikiaDataAccess::cache(
 				$this->getMemcacheKey(
 					$lastTimestamp,
-					$this->verticalId,
-					$this->langCode,
-					$this->getModuleId()
+					$this->skinName
 				),
 				6 * 60 * 60,
 				function () use( $params ) {
