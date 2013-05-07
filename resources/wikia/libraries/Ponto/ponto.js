@@ -20,6 +20,14 @@
 	 */
 	var amd = false;
 
+	/**
+	 * Send request to native side using iframe
+	 * so concurrent calls are possible
+	 *
+	 * @private
+	 *
+	 * @param url url to ponto protocol to be called
+	 */
 	function call (url){
 		if (context.document) {
 			var iframe = context.document.createElement('iframe');
