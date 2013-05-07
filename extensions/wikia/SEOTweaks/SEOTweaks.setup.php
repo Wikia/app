@@ -15,7 +15,7 @@ $app->registerClass('SEOTweaksHooksHelper', $dir . 'SEOTweaksHooksHelper.class.p
 
 // hooks
 $app->registerHook('BeforePageDisplay', 'SEOTweaksHooksHelper', 'onBeforePageDisplay');
-$app->registerHook('ArticleFromTitle', 'SEOTweaksHooksHelper', 'onArticleFromTitle');
+$app->registerHook('AfterInitialize', 'SEOTweaksHooksHelper', 'onAfterInitialize');
 $app->registerHook('ImagePageAfterImageLinks', 'SEOTweaksHooksHelper', 'onImagePageAfterImageLinks');
 $app->registerHook('BeforeParserMakeImageLinkObjOptions', 'SEOTweaksHooksHelper', 'onBeforeParserMakeImageLinkObjOptions');
 $app->registerHook('ArticleViewHeader', 'SEOTweaksHooksHelper', 'onArticleViewHeader');
