@@ -1,12 +1,12 @@
 /*global define*/
-define('wikia.ooyala', ['wikia.window', 'ext.wikia.adengine.dartvideohelper'], function(window, dartVideoHelper) {
+define('wikia.ooyala', ['wikia.window', require.optional('ext.wikia.adengine.dartvideohelper')], function(window, dartVideoHelper) {
 	'use strict';
 
 	return function(params, vb) {
 		var containerId = vb.timeStampId( params.playerId ),
 			createParams = { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay, onCreate: onCreate };
 
-		if (window.wgAdVideoTargeting && window.wgShowAds) {
+		if (dartVideoHelper && window.wgAdVideoTargeting && window.wgShowAds) {
 			createParams['google-ima-ads-manager'] = {
 				adTagUrl: dartVideoHelper.getUrl(),
 				showInAdControlBar : true
