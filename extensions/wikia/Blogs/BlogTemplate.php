@@ -527,7 +527,9 @@ class BlogTemplateClass {
 		}
 		/* see more */
 		if ( !isset(self::$aOptions['seemore']) ) {
-			self::__makeStringOption('seemore', Title::newFromText(wfMsgForContent('blogs-recent-url'))->getFullURL());
+			$recentUrlTitle = Title::newFromText(wfMsgForContent('blogs-recent-url'));
+			$recentUrl = $recentUrlTitle ? $recentUrlTitle->getFullURL() : '';
+			self::__makeStringOption('seemore', $recentUrl);
 		}
     	wfProfileOut( __METHOD__ );
 	}
