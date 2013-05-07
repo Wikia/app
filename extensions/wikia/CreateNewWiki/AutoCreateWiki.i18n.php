@@ -135,8 +135,6 @@ All of the above links are a great place to start exploring, and have fun!
 
 -- [[User:$2|$3]] <staff />",
 // new wikis - special page
-	"newwikis" => "New wikis",
-	"newwikisstart" => "Display wikis starting at:",
 
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,nl,no,pl,pt,pt-br,ru,zh',
 );
@@ -207,8 +205,6 @@ $messages['af'] = array(
 	'autocreatewiki-step2-error' => 'Databasis bestaan al!',
 	'autocreatewiki-protect-reason' => 'Deel van die amptelike koppelvlak',
 	'autocreatewiki-welcomesubject' => '$1 is geskep!',
-	'newwikis' => "Nuwe wiki's",
-	'newwikisstart' => "Wys wiki's, beginnende by:",
 );
 
 /** Arabic (العربية)
@@ -288,8 +284,6 @@ $messages['ar'] = array(
 جميع الروابط أعلاه هي أفضل طريقة لاستكشاف عالم الويكيات، استمتع بوقتك معنا!
 
 -- [[مستخدم:$2|$3]]<staff />', # Fuzzy
-	'newwikis' => 'ويكيات جديدة',
-	'newwikisstart' => 'عرض الويكيات إنطلاقا من:',
 );
 
 /** Assamese (অসমীয়া)
@@ -316,7 +310,6 @@ $messages['as'] = array(
 	'autocreatewiki-congratulation' => 'অভিন্দন!',
 	'autocreatewiki-welcometalk-log' => 'আদৰণি বাৰ্তা',
 	'autocreatewiki-welcomesubject' => '$1 সৃষ্টি কৰা হ’ল!',
-	'newwikis' => 'নতুন ৱিকিসমূহ',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -390,7 +383,6 @@ $messages['bg'] = array(
 	'autocreatewiki-redirect' => 'Пренасочване към новото уики: $1 ...',
 	'autocreatewiki-congratulation' => 'Поздравления!',
 	'autocreatewiki-step2-error' => 'Базата данни съществува!',
-	'newwikis' => 'Нови уикита',
 );
 
 /** Breton (brezhoneg)
@@ -508,8 +500,6 @@ Ha kendalc'hit goude ! Plijout a ra d'an dud mont war ar wikioù ma vez traoù d
 M'ho peus goulennoù da sevel e c'hallit skrivañ ur gerig dimp war ar bajenn  [[Special:Contact|contact form]]-mañ. Hetiñ a reomp kalz a blijadur deoc'h !
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Wikioù nevez',
-	'newwikisstart' => 'Diskouez ar Wikioù adal :',
 );
 
 /** Catalan (català)
@@ -633,8 +623,6 @@ Ens alegrem que $4 sigui part de la comunitat de Wikia! Encara tens moltes coses
 Tots els enllaços anteriors són llocs magnífics per començar a explorar Wikia i, sobretot, passar-s'ho bé!
 
 -- [[User:$2|$3]] <staff />", # Fuzzy
-	'newwikis' => 'Nous wikis',
-	'newwikisstart' => 'Mostrar wikis començant per:',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -725,8 +713,6 @@ Prosím, vyberte hodnotu ze seznamu.',
 	'autocreatewiki-step6-error' => 'Nelze nastavit výchozí tabulky v databázi!',
 	'autocreatewiki-protect-reason' => 'Součást oficiálního rozhraní',
 	'autocreatewiki-welcomesubject' => '$1 bylo vytvořeno!',
-	'newwikis' => 'Nová wiki',
-	'newwikisstart' => 'Zobrazit wiki založené od:',
 );
 
 /** Welsh (Cymraeg)
@@ -892,8 +878,6 @@ Vi glæder os over at $4 som en del af Wikia fællesskabet. Der er stadig meget 
 Alle de ovenstående henvisninger er gode steder at starte udforskningen og få del i alt det sjove.
 
 -- [[User:$2|$3]] <staff />',
-	'newwikis' => 'Nye wikier',
-	'newwikisstart' => 'Vis wikier fra og med:',
 );
 
 /** German (Deutsch)
@@ -1021,8 +1005,6 @@ Wir freuen uns, dass $4 jetzt Teil der Wikia-Gemeinschaft ist! Es gibt noch Eini
 All diese Links sind gute Startpunkte, um sich zurechtzufinden und Spaß zu haben!
 
 -- [[User:$2|$3]] <staff />',
-	'newwikis' => 'Neue Wikis',
-	'newwikisstart' => 'Zeige Wikis ab:',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -1133,8 +1115,6 @@ $messages['diq'] = array(
 	'autocreatewiki-welcometalk-log' => 'Mesacê Xeyr Amyayışi',
 	'autocreatewiki-welcomesubject' => '$1 vıraziya!',
 	'autocreatewiki-welcometalk-wall-title' => 'Xeyr amey!',
-	'newwikis' => 'Wikiyo newe',
-	'newwikisstart' => 'Asengeya wikiya seroknê :',
 );
 
 /** Ewe (eʋegbe)
@@ -1193,7 +1173,6 @@ $messages['el'] = array(
 	'autocreatewiki-congratulation' => 'Συγχαρητήρια!',
 	'autocreatewiki-welcometalk-log' => 'Χαιρετιστήριο Μήνυμα',
 	'autocreatewiki-step2-error' => 'Η βάση δεδομένων υπάρχει!',
-	'newwikis' => 'Νέα wiki',
 );
 
 /** Esperanto (Esperanto)
@@ -1370,8 +1349,6 @@ Ahora tienes un sitio web entero que completar con información, fotos y videos 
 Todos los enlaces anteriores son un gran lugar para comenzar a explorar, ¡así que diviértete!
 
 -- [[User:\$3|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Nuevos wikis',
-	'newwikisstart' => 'Mostrar wikis comenzando por:',
 );
 
 /** Estonian (eesti)
@@ -1524,8 +1501,6 @@ $3
 
 با آرزوی بهترین‌ها، [[User:$2|$3]] <staff />
 </div>', # Fuzzy
-	'newwikis' => 'ویکی‌های جدید',
-	'newwikisstart' => 'نمایش ویکی‌هایی که شروع می‌شوند در:',
 );
 
 /** Finnish (suomi)
@@ -1648,8 +1623,6 @@ Ja sitten jatka vain samaan malliin! Ihmiset pitävät vierailusta wikeissä kun
 Jos sinulla on kysyttävää, [[Special:Contact|lähetä sähköpostia]] Wikian tukihenkilökunnalle. Pidä hauskaa!
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Uudet wikit',
-	'newwikisstart' => 'Näytä wikit alkaen:',
 );
 
 /** Faroese (føroyskt)
@@ -1789,8 +1762,6 @@ Nous sommes ravis que $4 fasse partie de la communauté Wikia! Il y a encore bea
 Tous les liens ci-dessus sont un endroit important pour commencer à découvrir, et à s’amuser!
 
 -- [[User:$2|$3]] <staff />',
-	'newwikis' => 'Nouveaux wikis',
-	'newwikisstart' => 'Afficher les wikis depuis :',
 );
 
 /** Galician (galego)
@@ -1912,8 +1883,6 @@ Estamos encantados de que $4 sexa parte da comunidade de Wikia! Aínda hai moito
 Todas as ligazóns anteriores son magníficos lugares para comezar a explorar Wikia e divertirse!
 
 -- [[User:$2|$3]] <staff />',
-	'newwikis' => 'Novos wikis',
-	'newwikisstart' => 'Mostrar os wikis que comecen por:',
 );
 
 /** Hebrew (עברית)
@@ -1940,8 +1909,6 @@ $messages['he'] = array(
 	'autocreatewiki-info-email-address' => 'כתובת הדוא"ל שלך נשמרת בסודיות ואף אחד לא יכול לראותה.',
 	'autocreatewiki-info-realname' => 'את תבחרו לציין אותו, הוא ישמש לייחוס עבודתכם אליכם.',
 	'autocreatewiki-category-label' => 'קטגוריה:',
-	'newwikis' => 'אתרי וויקי חדשים',
-	'newwikisstart' => 'הצג אתרי וויקי המתחילים ב:',
 );
 
 /** Hindi (हिन्दी)
@@ -2084,8 +2051,6 @@ Aztán csak menj tovább! Az emberek akkor látogatják a wikiket, ha sok olvasn
 Ha kérdéseid vannak, küldhetsz nekünk e-mailt a [[Special:Contact|kapcsolatfelvételi űrlap]] segítségével. Jó szórakozást!
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Új wikik',
-	'newwikisstart' => 'Wikik megjelenítése a következőtől:',
 );
 
 /** Interlingua (interlingua)
@@ -2200,8 +2165,6 @@ E postea simplemente continua! Un wiki attractive ha multe cosas a leger e regua
 Si tu ha questiones, invia nos e-mail per nostre [[Special:Contact|formulario de contacto]]. Bon divertimento!
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Nove wikis',
-	'newwikisstart' => 'Monstrar wikis a partir de:',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -2321,8 +2284,6 @@ Dan kemudian teruskan! Orang-orang senang mengunjungi wiki ketika ada banyak hal
 Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Contact|formulir]]. Selamat bersenang-senang! 
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Wiki baru',
-	'newwikisstart' => 'Tampilkan wiki diawali dengan:',
 );
 
 /** Igbo (Igbo)
@@ -2331,7 +2292,6 @@ Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Co
 $messages['ig'] = array(
 	'autocreatewiki-category-select' => 'Kpàtá otụ',
 	'autocreatewiki-category-label' => 'Ébéonọr:',
-	'newwikis' => 'Wiki ne ohụru',
 );
 
 /** Ingush (ГӀалгӀай)
@@ -2339,7 +2299,6 @@ $messages['ig'] = array(
  */
 $messages['inh'] = array(
 	'autocreatewiki-category-label' => 'Цатег:',
-	'newwikis' => 'Керда ВIикIаш',
 );
 
 /** Italian (italiano)
@@ -2472,8 +2431,6 @@ Per qualunque altre domanda, puoi leggere le [[w:c:Aiuto:Aiuto_Wiki|pagine di ai
 Buona fortuna! 
 
 [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Nuove wiki',
-	'newwikisstart' => 'Mostra le wiki a partire da:',
 );
 
 /** Japanese (日本語)
@@ -2586,8 +2543,6 @@ $3
 もし質問がありましたら、[[Special:Contact|連絡フォーム]]からメールをお使いください。では、楽しんでください！
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => '新しいウィキ',
-	'newwikisstart' => '次の文字列から始まるウィキを表示:',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -2635,7 +2590,6 @@ $messages['ko'] = array(
 	'autocreatewiki-language-all' => '모든 언어',
 	'autocreatewiki-create-account' => '계정 만들기',
 	'autocreatewiki-haveaccount-question' => '이미 위키아 계정이 있습니까?',
-	'newwikis' => '새 위키',
 );
 
 /** Colognian (Ripoarisch)
@@ -2727,8 +2681,6 @@ Donn eine ööhndlesch uß dä Leß ußwähle.
 	'autocreatewiki-step7-error' => 'Kann de Shprooche ier Aanfäng nit opsäze!',
 	'autocreatewiki-protect-reason' => 'Deil vun de offizjälle Schnettshtäll',
 	'autocreatewiki-welcomesubject' => '$1 es aanjelaat woode!',
-	'newwikis' => 'Neu Wikis',
-	'newwikisstart' => 'Wikis aanzeije af:',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -2781,7 +2733,6 @@ $messages['lb'] = array(
 	'autocreatewiki-congratulation' => 'Gratulatioun!',
 	'autocreatewiki-welcometalk-log' => 'Wëllkommensmessage',
 	'autocreatewiki-step2-error' => "D'Datebank gëtt et!",
-	'newwikis' => 'Nei Wikien',
 );
 
 /** Lezghian (лезги)
@@ -2973,8 +2924,6 @@ $3
 Ако имате било какви прашања, обратете ни се по е-пошта преку вашиот [[Special:Contact|контактен образец]]. Забавувајте се!
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Нови викија',
-	'newwikisstart' => 'Прикажи викија со почеток во:',
 );
 
 /** Malayalam (മലയാളം)
@@ -3123,8 +3072,6 @@ Masih ada banyak kerja yang perlu dilakukan; berikut adalah beberapa petua dan p
 Kesemua pautan di atas sesuai sekali untuk memulakan jelajah anda. Semoga ceria!
 
 -- [[User:$2|$3]] <staff />',
-	'newwikis' => 'Wiki baru',
-	'newwikisstart' => 'Paparkan wiki bermula dengan:',
 );
 
 /** Mazanderani (مازِرونی)
@@ -3260,8 +3207,6 @@ Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese 
 Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Contact|kontaktskjema]]. Ha det gøy!
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Nye wikier',
-	'newwikisstart' => 'Vis wikier fra og med:',
 );
 
 /** Dutch (Nederlands)
@@ -3390,8 +3335,6 @@ We zijn blij dat $4 nu onderdeel is van de Wikiagemeenschap. Er is nog veel te d
 Alle bovenstaande koppelingen zijn een prima plaats om te beginnen met het verkennen van Wikia. Veel plezier!
 
 -- [[User:$2|$3]] <staff />",
-	'newwikis' => "Nieuwe wiki's",
-	'newwikisstart' => "Wiki's weergeven vanaf:",
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -3599,8 +3542,6 @@ Gratulujemy rozpoczęcia edycji $4. Jest to zupełnie nowy projekt, więc potrze
 Życzymy powodzenia i dobrej zabawy!
 
 -- [[User:$2|$3]] <staff /><div style="display:none">[[w:c:community:Blog:Wikia_Staff_Blog|Staff Blog]], [[w:c:community:Special:Forum|community forum]] ,[[w:c:community:Help:Webinars|webinar series]] ,[[Help:Contents|help pages]]</div>',
-	'newwikis' => 'Nowe wiki',
-	'newwikisstart' => 'Wyświetl wiki rozpoczynając od:',
 );
 
 /** Piedmontese (Piemontèis)
@@ -3728,8 +3669,6 @@ E peui ch'a la cudissa! A le përson-e a-i pias visité le wiki quand ch'a-i é 
 S'a l'ha ëd chestion, a peul mandeje për pòsta eletrònica a nòstr [[Special:Contact|formolari ëd contat]]. Tant boneur!
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'neuve wiki',
-	'newwikisstart' => 'Visualisa Wiki partend da:',
 );
 
 /** Pashto (پښتو)
@@ -3764,7 +3703,6 @@ $messages['ps'] = array(
 	'autocreatewiki-welcometalk-log' => 'د ښه راغلاست پيغام',
 	'autocreatewiki-welcomesubject' => '$1 جوړ شو!',
 	'autocreatewiki-welcometalk-wall-title' => 'ښه راغلۍ!',
-	'newwikis' => 'نوې ويکي ګانې',
 );
 
 /** Portuguese (português)
@@ -3885,8 +3823,6 @@ Depois é só continuar! As pessoas gostam de visitar wikis com muito conteúdo 
 Se tiver alguma questão, pode contactar-nos por correio electrónico usando o [[Special:Contact|formulário de contacto]]. Divirta-se!
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Wikis novas',
-	'newwikisstart' => 'Mostrar wikis, começando por:',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -4015,8 +3951,6 @@ Estamos felizes em ter $4 como parte da comunidade Wikia! Ainda há muita coisa 
 Todos os links acima são ótimos lugares para começar explorando, e divirta-se!
 
 -- [[User:$2|$3]] <staff />',
-	'newwikis' => 'Novas wikis',
-	'newwikisstart' => 'Mostrar Wikis começando com:',
 );
 
 /** Romanian (română)
@@ -4059,7 +3993,6 @@ $messages['ro'] = array(
 	'autocreatewiki-congratulation' => 'Felicitări!',
 	'autocreatewiki-welcometalk-log' => 'Mesaj de bun venit',
 	'autocreatewiki-step2-error' => 'Baza de date există!',
-	'newwikis' => 'Wiki-uri noi',
 );
 
 /** tarandíne (tarandíne)
@@ -4216,8 +4149,6 @@ ___________________________________________
 Если у вас есть вопросы, вы можете написать нам через [[Special:Contact|контактную форму]]. Удачи!
 
 — [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Новые вики',
-	'newwikisstart' => 'Показать вики, начиная с:',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -4271,7 +4202,6 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-step2-error' => 'База података постоји!',
 	'autocreatewiki-protect-reason' => 'Део званичног сучеља',
 	'autocreatewiki-welcomesubject' => '$1 је направљена!',
-	'newwikis' => 'Нови викији',
 );
 
 /** Swedish (svenska)
@@ -4399,8 +4329,6 @@ Vi är glada över att ha $4 som en del av Wikia-gemenskapen! Det finns fortfara
 Alla ovanstående länkar är perfekta platser att börja utforska och ha kul!
 
 -- [[User:$2|$3]] <staff />',
-	'newwikis' => 'Nya wikis',
-	'newwikisstart' => 'Visa wikis som börjar med:',
 );
 
 /** Swahili (Kiswahili)
@@ -4426,7 +4354,6 @@ $messages['ta'] = array(
 	'autocreatewiki-category-other' => 'மற்றவை',
 	'autocreatewiki-log-title' => 'தங்களது விக்கி உருவாக்கப்பட்டுவிட்டது',
 	'autocreatewiki-welcometalk-log' => 'வரவேற்பு செய்தி',
-	'newwikis' => 'புதிய விக்கிகள்',
 );
 
 /** Telugu (తెలుగు)
@@ -4443,7 +4370,6 @@ $messages['te'] = array(
 	'autocreatewiki-category-other' => 'ఇతర',
 	'autocreatewiki-congratulation' => 'అభినందనలు!',
 	'autocreatewiki-welcometalk-log' => 'స్వాగత సందేశం',
-	'newwikis' => 'కొత్త వికీలు',
 );
 
 /** Tagalog (Tagalog)
@@ -4560,8 +4486,6 @@ At pagkaraan ay magpatuloy lamang nang magpatuloy! Ang mga tao ay mahihilig duma
 Kung mayroong kang mga katanungan, mapapadalhan mo kami ng e-liham sa pamamagitan ng aming [[Special:Contact|pormularyo ng pakikipag-ugnayan]]. Magsaya ka!
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Bagong mga wiki',
-	'newwikisstart' => 'Ipakita ang mga wiki na nagsisimula sa:',
 );
 
 /** толышә зывон (толышә зывон)
@@ -4734,7 +4658,6 @@ ___________________________________________
 Әгәр сорауларыгыз була икән, сез [[Special:Contact|элемтәгә]] чыга аласыз. Уңышлар!
 
 — [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Яңа викилар',
 );
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
@@ -4749,7 +4672,6 @@ $messages['tzm'] = array(
 	'autocreatewiki-title-template' => '$1 ⵡⵉⴽⵉ',
 	'autocreatewiki-category-label' => 'ⵜⴰⴳⴳⴰⵢⵜ:',
 	'autocreatewiki-welcometalk-wall-title' => 'ⴰⵏⵙⵓⴼ!',
-	'newwikis' => 'ⵉⴷ ⵡⵉⴽⵉ ⵉⵎⴰⵢⵏⵓⵜⵏ',
 );
 
 /** Ukrainian (українська)
@@ -4866,8 +4788,6 @@ $messages['uk'] = array(
 А далі просто рухайтесь вперед! Звернутися до розробників можна  [[Special:Contact|тут]]. Успіхів!
 
 — [[User:\$2|\$3]] <staff /></div>", # Fuzzy
-	'newwikis' => 'Нові вікі',
-	'newwikisstart' => 'Показати вікі, починаючи з:',
 );
 
 /** Veps (vepsän kel’)
@@ -5015,8 +4935,6 @@ $messages['zh-hans'] = array(
 *最后，为了解除您所有的困难或问题，查看我们的[[w:c:community:Help:Contents|帮助页面]]。
 以上的链接都很适合新的创立者查看。如果您有一个无法找到解决答案的问题 —— 请使用[[Special:Contact]]联系我们。但是最要紧的是，要好玩 :D
 祝您编辑快乐！', # Fuzzy
-	'newwikis' => '新的维基',
-	'newwikisstart' => '以此页面打开维基：',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -5100,8 +5018,6 @@ $messages['zh-hant'] = array(
 	'autocreatewiki-step7-error' => '無法複製語言起動器資料庫 ！',
 	'autocreatewiki-protect-reason' => '官方介面的一部分',
 	'autocreatewiki-welcomesubject' => '$1已創建 ！',
-	'newwikis' => '新的 wiki',
-	'newwikisstart' => '顯示從此處開始的wiki:',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

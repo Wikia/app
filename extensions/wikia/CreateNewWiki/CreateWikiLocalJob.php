@@ -1,13 +1,14 @@
 <?php
 
 /**
- * AutoCreateWikiCentralJob -- Welcome user after first edit
+ * CreateWikiCentralJob -- Welcome user after first edit
  *
  * @file
  * @ingroup JobQueue
  *
  * @copyright Copyright © Krzysztof Krzyżaniak for Wikia Inc.
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+ * @author Piotr Molski (moli) <moli@wikia-inc.com>
  * @date 2009-03-12
  * @version 1.0
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -22,7 +23,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * sometimes class Job is uknown in this point
  */
 include_once( "$IP/includes/job/JobQueue.php" );
-$wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
+$wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
+
 
 /**
  * maintenance script from CheckUser
@@ -30,23 +32,22 @@ $wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
 include_once( "$IP/extensions/CheckUser/install.inc" );
 
 
-class AutoCreateWikiLocalJob extends Job {
+class CreateWikiLocalJob extends Job {
 
 	const DEFAULT_USER   = 'Default';
 	const REMINDER_URL   = "http://theschwartz/function/TheSchwartz::Worker::URL";
 	const REMINDER_DELAY =  172800; # 48h
 
-	/* @var User */
-	private $mFounder;
-	public $wikiaName, $wikiaLang;
+	private
+		$mFounder;
 
 	/**
 	 * constructor
 	 *
 	 * @access public
 	 */
-	public function __construct( $title, $params, $id = 0 ) {
-		parent::__construct( "ACWLocal", $title, $params, $id );
+	public function __construct( $title, /*stdClass*/$params, $id = 0 ) {
+		parent::__construct( "CWLocal", $title, $params, $id );
 		$this->mParams = $params;
 	}
 
@@ -57,32 +58,59 @@ class AutoCreateWikiLocalJob extends Job {
 	 */
 	public function run() {
 
-		global $wgUser, $wgErrorLog, $wgExtensionMessagesFiles, $wgInternalServer, $wgServer;
+		global $wgUser, $wgErrorLog, $wgExtensionMessagesFiles, $wgDebugLogFile,
+			$wgServer, $wgInternalServer;
 
 		wfProfileIn( __METHOD__ );
 
 		/**
+		 * overwrite $wgServer. It is sometimes set as localhost which sends broken url
+		 * to purgers
+		 *
 		 * @see SquidUpdate::expand
 		 */
+		$wgServer = rtrim( $this->mParams->url, "/" );
 		$wgInternalServer = $wgServer;
 
-		$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
+		/**
+		 * very verbose
+		 */
+		$debugLogFile = $wgDebugLogFile;
+		$wgDebugLogFile = "php://stdout";
 		$wgErrorLog = false;
 
 		/**
 		 * setup founder user
 		 */
-		if( $this->mParams[ "founder"] ) {
-			$this->mFounder = User::newFromId( $this->mParams[ "founder"] );
+		if ( $this->mParams->founderId ) {
+			Wikia::log( __METHOD__, "user", "Loading user with user_id = {$this->mParams->founderId}" );
+			$this->mFounder = User::newFromId( $this->mParams->founderId );
 			$this->mFounder->load();
 		}
-		if( ! $this->mFounder ) {
-			Wikia::log( __METHOD__, "user", "Cannot load user with user_id = {$this->mParams[ "founder"]}" );
-			if( !empty( $this->mParams[ "founder-name"] ) ) {
-				$this->mFounder = User::newFromName( $this->mParams[ "founder-name"] );
+		else {
+			Wikia::log( __METHOD__, "user", "Founder user_id  is unknown {$this->mParams->founderId}" );
+		}
+
+		# check user name
+		if ( ! $this->mFounder || $this->mFounder->isAnon() ) {
+			Wikia::log( __METHOD__, "user", "Cannot load user with user_id = {$this->mParams->founderId}" );
+			if ( !empty( $this->mParams->founderName  ) ) {
+				$this->mFounder = User::newFromName( $this->mParams->founderName );
 				$this->mFounder->load();
 			}
 		}
+
+		# use ExternalUser to check
+		if ( ! $this->mFounder || $this->mFounder->isAnon() ) {
+			global $wgExternalAuthType;
+			if ( $wgExternalAuthType ) {
+				$oExtUser = ExternalUser::newFromName( $this->mParams->founderName );
+				if ( is_object( $oExtUser ) ) {
+					$oExtUser->linkToLocal( $oExtUser->getId() );
+				}
+			}
+		}
+
 		$wgUser = User::newFromName( "CreateWiki script" );
 
 		/**
@@ -90,36 +118,50 @@ class AutoCreateWikiLocalJob extends Job {
 		 * is too early for that. This is fallback function
 		 */
 
-		$this->wikiaName = isset( $this->mParams[ "title" ] )
-			? $this->mParams[ "title" ]
-			: WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"], true );
-		$this->wikiaLang = isset( $this->mParams[ "language" ] )
-			? $this->mParams[ "language" ]
-			: WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"], true );
-
+		$this->wikiaName = isset( $this->mParams->sitename )
+			? $this->mParams->sitename
+			: WikiFactory::getVarValueByName( "wgSitename", $this->mParams->city_id, true );
+		$this->wikiaLang = isset( $this->mParams->language )
+			? $this->mParams->language
+			: WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams->city_id );
 
 		$this->moveMainPage();
 		$this->changeStarterContributions();
+		$this->changeImagesTimestamps();
 		$this->setWelcomeTalkPage();
-		$this->sendWelcomeMail();
+		if ( empty( $this->mParams->disableWelcome ) ) { 
+			$this->sendWelcomeMail();
+		}
 		$this->populateCheckUserTables();
 		$this->protectKeyPages();
-		$this->queueReminderMail();
+		if ( empty( $this->mParams->disableReminder ) ) { 
+			$this->queueReminderMail();
+		}
 		$this->sendRevisionToScribe();
 		$this->addStarterImagesToUploadLog();
 
 		/**
 		 * different things for different types
 		 */
-		switch( $this->mParams[ "type" ] ) {
+		switch( $this->mParams->type ) {
 			case "answers":
 				$this->copyDefaultAvatars();
 				break;
 		}
 
-		wfRunHooks( 'CreateWikiLocalJob-complete', array( &$this->mParams ) );
+		$params = array(
+			'title' => $this->mParams->sitename,
+			'url'	=> $this->mParams->url,
+			'city_id' => $this->mParams->city_id
+		);
+		
+		if ( empty( $this->mParams->disableCompleteHook ) ) {
+			wfRunHooks( 'CreateWikiLocalJob-complete', array( $params ) );
+		}
 
 		wfProfileOut( __METHOD__ );
+
+		$wgDebugLogFile = $debugLogFile;
 
 		return true;
 	}
@@ -133,7 +175,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 */
 	public function WFinsert( $city_id, $database = false ) {
 
-		global $wgErrorLog;
+		global $wgDBname, $wgErrorLog;
 
 		/**
 		 * we can take local database from city_id in params array
@@ -177,44 +219,68 @@ class AutoCreateWikiLocalJob extends Job {
 	 * @return boolean status
 	 */
 	private function setWelcomeTalkPage() {
-		global $wgUser;
+		global $wgUser, $wgEnableWallExt;
+		$saveUser = $wgUser;
 
-		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki" );
+		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki or Wall" );
+
+		Wikia::log( __METHOD__, "vars", "sitename: {$this->wikiaName}; language: {$this->wikiaLang}" );
+		/**
+		 * set apropriate staff member
+		 */
+		$wgUser = Wikia::staffForLang( $this->wikiaLang );
+		$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
+
+		$talkParams = array(
+			$this->mFounder->getName(),
+			$wgUser->getName(),
+			$wgUser->getRealName(),
+			$this->wikiaName
+		);
+
+		$wallTitle = false;
+		if (! empty( $this->wikiaLang ) ) {
+			$wallTitle = wfMsgExt( "autocreatewiki-welcometalk-wall-title", array( 'language' => $this->wikiaLang ) );
+		}
+
+		if( ! $wallTitle ) {
+			$wallTitle = wfMsg( "autocreatewiki-welcometalk-wall-title" );
+		}
+
+		if( !empty($wgEnableWallExt) ) {
+			$msg = "autocreatewiki-welcometalk-wall";
+		} else {
+                        $msg = "autocreatewiki-welcometalk";
+		}
+
+		$talkBody = false;
+		if (! empty( $this->wikiaLang ) ) {
+			/**
+			 * custom lang translation
+			 */
+			$talkBody = wfMsgExt( $msg, array( 'language' => $this->wikiaLang ), $talkParams );
+		}
+
+		if( ! $talkBody ) {
+			/**
+			 * wfMsgExt should always return message, but just in case...
+			 */
+			$talkBody = wfMsg( $msg, $talkParams );
+		}
+
+		if( !empty($wgEnableWallExt) ) {
+			$wallMessage = F::build('WallMessage', array($talkBody, $this->mFounder->getName(), $wgUser, $wallTitle, false, array(), true, false), 'buildNewMessageAndPost');
+			if( $wallMessage === false ) {
+				return false;
+			}
+
+			Wikia::log( __METHOD__, "wall", $this->mFounder->getName() );
+			return true;
+		}
 
 		$talkPage = $this->mFounder->getTalkPage();
 		if( $talkPage ) {
 			Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
-
-			Wikia::log( __METHOD__, "vars", "sitename: {$this->wikiaName}; language: {$this->wikiaLang}" );
-
-			/**
-			 * set apropriate staff member
-			 */
-			$wgUser = Wikia::staffForLang( $this->wikiaLang );
-			$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Sannse" );
-
-			$talkParams = array(
-				$this->mFounder->getName(),
-				$wgUser->getName(),
-				$wgUser->getRealName(),
-				$this->wikiaName
-			);
-
-			$talkBody = false;
-			if (! empty( $this->wikiaLang ) ) {
-				/**
-				 * custom lang translation
-				 */
-				$talkBody = wfMsgExt( "autocreatewiki-welcometalk", array( 'language' => $this->wikiaLang ), $talkParams );
-			}
-
-			if( ! $talkBody ) {
-				/**
-				 * wfMsgExt should always return message, but just in case...
-				 */
-				$talkBody = wfMsg( "autocreatewiki-welcometalk", $talkParams );
-			}
-
 			/**
 			 * and now create talk article
 			 */
@@ -229,6 +295,7 @@ class AutoCreateWikiLocalJob extends Job {
 		else {
 			Wikia::log( __METHOD__, "error", "Can't take talk page for user " . $this->mFounder->getId() );
 		}
+		$wgUser = $saveUser;  // Restore user object after creating talk message
 		return true;
 	}
 
@@ -236,15 +303,18 @@ class AutoCreateWikiLocalJob extends Job {
 	 * move main page to SEO-friendly name
 	 */
 	private function moveMainPage() {
-		global $wgSitename, $parserMemc, $wgContLanguageCode;
+		global $wgSitename, $wgUser, $parserMemc, $wgContLanguageCode;
 
 		$source = wfMsgForContent('Mainpage');
 		$target = $wgSitename;
 
-		$sourceTitle = Title::newFromText( "Main_Page" );
+		$sourceTitle = Title::newFromText($source);
 		if( !$sourceTitle ) {
-			Wikia::log( __METHOD__, "err", "Invalid page title: {$source} and Main_page" );
-			return;
+			$sourceTitle = Title::newFromText( "Main_Page" );
+			if( !$sourceTitle ) {
+				Wikia::log( __METHOD__, "err", "Invalid page title: {$source} and Main_page" );
+				return;
+			}
 		}
 
 		$mainArticle = new Article( $sourceTitle, 0 );
@@ -347,7 +417,16 @@ class AutoCreateWikiLocalJob extends Job {
 				$ok = $article->updateRestrictions( $restrictions, $reason, $cascade, $expiry_array );
 			}
 			else {
-				$ok = $title->updateTitleProtection( $titleRestrictions, $reason, $expiry_string );
+				$wikiPage = WikiPage::factory($title);
+				$ignored_reference = false;	// doing this because MW1.19 doUpdateRestrictions() is weird, and has this passed by reference
+				$status = $wikiPage->doUpdateRestrictions(
+					array('create' => $titleRestrictions),
+					array('create' => $expiry_string),
+					$ignored_reference,
+					$reason,
+					$wgUser
+				);
+				$ok = $status->isOK();
 			}
 
 			if ( $ok ) {
@@ -383,7 +462,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 * @return boolean status
 	 */
 	private function sendWelcomeMail() {
-		global $wgPasswordSender, $wgWikiaEnableFounderEmailsExt;
+		global $wgUser, $wgPasswordSender, $wgWikiaEnableFounderEmailsExt;
 
 		if(!empty($wgWikiaEnableFounderEmailsExt)) {
 			// skip this step when FounderEmails extension is enabled
@@ -392,13 +471,13 @@ class AutoCreateWikiLocalJob extends Job {
 		}
 
 		$oReceiver = $this->mFounder;
-		$sServer = $this->mParams["url"];
+		$sServer = $this->mParams->url;
 
 		/**
 		 * set apropriate staff member
 		 */
-		$oStaffUser = Wikia::staffForLang( $this->mParams[ "language" ] );
-		$oStaffUser = ( $oStaffUser instanceof User ) ? $oStaffUser : User::newFromName( "Sannse" );
+		$oStaffUser = Wikia::staffForLang( $this->mParams->language );
+		$oStaffUser = ( $oStaffUser instanceof User ) ? $oStaffUser : User::newFromName( CreateWiki::DEFAULT_STAFF );
 
 		$sFrom = new MailAddress( $wgPasswordSender, "The Wikia Community Team" );
 		$sTo = $oReceiver->getEmail();
@@ -413,17 +492,17 @@ class AutoCreateWikiLocalJob extends Job {
 
 		$sBody = $sBodyHTML = $sSubject = null;
 
-		$language = empty($this->mParams['language']) ? 'en' : $this->mParams['language'];
+		$language = @empty($this->mParams->language) ? 'en' : $this->mParams->language;
 		list($sBody, $sBodyHTML) = wfMsgHTMLwithLanguage('autocreatewiki-welcomebody', $language, array(), $aBodyParams);
 
 		$sSubject = wfMsgExt('autocreatewiki-welcomesubject',
 			array( 'language' => $language ),
-			array( $this->mParams[ "title" ] )
+			array( $this->mParams->sitename )
 		);
 
 		if ( !empty($sTo) ) {
 			$status = $oReceiver->sendMail( $sSubject, $sBody, $sFrom, null, 'AutoCreateWiki', $sBodyHTML );
-			if( $status ) {
+			if ( $status ) {
 				Wikia::log( __METHOD__, "mail", "Mail to founder {$sTo} sent." );
 			}
 		} else {
@@ -442,29 +521,127 @@ class AutoCreateWikiLocalJob extends Job {
 	private function changeStarterContributions( ) {
 
 		wfProfileIn( __METHOD__ );
+                $dbw = wfGetDB( DB_MASTER );
+
+                /**
+                 * BugId:15644 - We want to change contributions only for
+                 * revisions created during the starter import - (timestamp not
+                 * greater than the timestamp of the latest starter revision.
+                 */
+                $sCondsRev = array();
+		$sCondsImg = array();
+
+                /**
+                 * determine the timestamp of the latest starter revision and image
+                 */
+                if ( !empty( $this->mParams->sDbStarter ) ) {
+                    $oStarterDb = F::app()->wf->getDb( DB_SLAVE, array(), $this->mParams->sDbStarter );
+
+                    if ( is_object( $oStarterDb ) ) {
+                        $oLatestRevision = $oStarterDb->selectRow(
+                            array( 'revision' ),
+                            array( 'max(rev_timestamp) AS rev_timestamp' ),
+                            array(),
+                            __METHOD__,
+                            array()
+                        );
+
+                        if ( is_object( $oLatestRevision ) ) {
+                            $sCondsRev = array( 'rev_timestamp <= ' . $dbw->addQuotes( $oLatestRevision->rev_timestamp ) );
+                        }
+
+			$oLatestImage = $oStarterDb->selectRow(
+				array( 'image' ),
+				array( 'max(img_timestamp) AS img_timestamp' ),
+				array(),
+				__METHOD__,
+				array()
+			);
+
+			if (is_object( $oLatestImage ) ) {
+				$sCondsImg = array( 'img_timestamp <= ' . $dbw->addQuotes( $oLatestImage->img_timestamp ) );
+			}
+
+                        $oStarterDb->close();
+                    }
+                }
+
+                Wikia::log( __METHOD__, 'info', "about to change rev_user, rev_user_text and rev_timestamp in revisions older than {$sCondsRev}" );
+		Wikia::log( __METHOD__, 'info', "about to change img_user, img_user_text and img_timestamp in images older than {$sCondsImg}" );
 
 		/**
 		 * check if we are connected to local db
 		 *
 		 */
 		$contributor = User::newFromName(self::DEFAULT_USER);
+		$contributorData = array(
+			'id'   => $contributor->getId(),
+			'name' => $contributor->getName()
+		);
 
-		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update(
 			"revision",
 			array(
-				"rev_user"      => $contributor->getId(),
-				"rev_user_text" => $contributor->getName()
+				"rev_user"      => $contributorData['id'],
+				"rev_user_text" => $contributorData['name'],
+                                'rev_timestamp = date_format(now(), "%Y%m%d%H%i%S")'
 			),
-			'*', /* mean all */
+			$sCondsRev,
 			__METHOD__
 		);
 		$rows = $dbw->affectedRows();
 		Wikia::log( __METHOD__, "info", "change rev_user and rev_user_text in revisions: {$rows} rows" );
 
+		$dbw->update(
+			"image",
+			array(
+				'img_user'      => $contributorData['id'],
+				'img_user_text' => $contributorData['name'],
+                                'img_timestamp = date_format(now(), "%Y%m%d%H%i%S")'
+			),
+			$sCondsImg,
+			__METHOD__
+		);
+		$rows = $dbw->affectedRows();
+		Wikia::log( __METHOD__, "info", "change img_user, img_user_text and img_timestamp in image: {$rows} rows" );
+
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * this method updates img_timestamp
+	 * update is performed on local (freshly created) database
+	 *
+	 * @access private
+	 * @author Krzysztof Krzyżaniak (eloy)
+	 *
+	 */
+	private function changeImagesTimestamps( ) {
+
+		wfProfileIn( __METHOD__ );
+		$dbw = wfGetDB( DB_MASTER );
+		$sth = $dbw->select(
+			array( "image" ),
+			array( "img_name" ),
+			false,
+			__METHOD__
+		);
+		$interval = 0;
+		$timestamp = time();
+		while( $row = $dbw->fetchObject( $sth ) ) {
+
+			$ts = date('YmdHis', $timestamp + $interval );
+			$dbw->update(
+				"image",
+				array( "img_timestamp" => $ts ),
+				array( "img_name" => $row->img_name ),
+				__METHOD__
+			);
+			wfDebug( __METHOD__ . ": changing timestamp of {$row->img_name} to {$ts}\n" );
+			$interval++;
+		}
+		wfProfileOut( __METHOD__ );
+	}
 	/**
 	 * send http post to TheSchwartz which queue reminder call for 48hours.
 	 * TheSchwartz will call api.php?method=awcreminder
@@ -529,6 +706,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 */
 	private function sendRevisionToScribe( ) {
 		global $wgEnableScribeNewReport;
+
 		wfProfileIn( __METHOD__ );
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -565,7 +743,7 @@ class AutoCreateWikiLocalJob extends Job {
 				# call function
 				$archive = 0;
 
-				ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
+				$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
 			}
 
 			$pages[$oRow->page_id] = $oRow->rev_id;
@@ -614,7 +792,7 @@ class AutoCreateWikiLocalJob extends Job {
 			$file = wfLocalFile( $oTitle );
 			if ( is_object($file) ) {
 				# add to upload_log
-				UploadInfo::log( $oTitle, $file->getFullPath(), $file->getRel(), "", "u" );
+				UploadInfo::log( $oTitle, $file->getPath(), $file->getRel(), "", "u" );
 				$loop++;
 			}
 		}

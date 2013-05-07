@@ -114,7 +114,7 @@ var LightboxLoader = {
 
 				// Display video inline, don't open lightbox
 				isVideo = $this.children('.Wikia-video-play-button').length;
-				if(isVideo && $thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('wikiaPhotoGallery-slider')) {
+				if(isVideo && $thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
 					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, LightboxTracker.clickSource.EMBED);
 					return;
 				}
