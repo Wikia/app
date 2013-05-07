@@ -20,14 +20,17 @@
 	 */
 	var amd = false;
 
-	function sendRequest (url){
+	function call (url){
 		if (context.document) {
 			var iframe = context.document.createElement('iframe');
 
 			iframe.src = url;
 			iframe.style.display = 'none';
-
 			context.document.body.appendChild(iframe);
+
+			setTimeout(function(){
+				iframe.parentElement.removeChild(iframe);
+			}, 0);
 		} else {
 			throw "Context doesn't support DOM API";
 		}
@@ -98,13 +101,13 @@
 				//the only other chance is for the native layer to register
 				//a custom protocol for communicating with the webview (e.g. iOS)
 				request: function (execContext, target, method, params, callbackId) {
-					sendRequest(PROTOCOL_NAME + ':///request?target=' + encodeURIComponent(target) +
+					call(PROTOCOL_NAME + ':///request?target=' + encodeURIComponent(target) +
 						'&method=' + encodeURIComponent(method) +
 						((params) ? '&params=' + encodeURIComponent(params) : '') +
 						((callbackId) ? '&callbackId=' + encodeURIComponent(callbackId) : ''));
 				},
 				response: function (execContext, callbackId, params) {
-					sendRequest(PROTOCOL_NAME + ':///response?callbackId=' + encodeURIComponent(callbackId) +
+					call(PROTOCOL_NAME + ':///response?callbackId=' + encodeURIComponent(callbackId) +
 						((params) ? '&params=' + encodeURIComponent(JSON.stringify(params)) : ''));
 				}
 			},
