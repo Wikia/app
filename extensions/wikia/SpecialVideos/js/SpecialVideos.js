@@ -37,13 +37,13 @@ var SpecialVideos = {
 					}
 				);
 				// Don't move on to second VET screen.  We're done.
-				return false; 
+				return false;
 			}
 		});
-		
+
 		$('.VideoGrid').on('click', '.remove', function(e) {
 			var videoElement = $(e.target).parents('.video-element'),
-				videoName = videoElement.find('.video').data('video-name');
+				videoName = videoElement.find('.video > img').attr('data-video-name');
 			if(videoName) {
 				$.confirm({
 					title: $.msg('specialvideos-remove-modal-title'),
@@ -64,12 +64,14 @@ var SpecialVideos = {
 								} else {
 									GlobalNotification.show(json['msg'], 'error');
 								}
-								
+
 							}
 						});
-						
+
 					}
 				});
+			} else {
+				GlobalNotification.show( $.msg('oasis-generic-error'), 'error' );
 			}
 		});
 	}

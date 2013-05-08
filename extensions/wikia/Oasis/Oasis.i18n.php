@@ -88,6 +88,7 @@ $messages['en'] = array(
 	'oasis-community-social-twitter-link' => 'http://twitter.com/#!/wikia',
 	'oasis-community-social-facebook-link' => 'http://www.facebook.com/wikia',
 	'oasis-community-social-googleplus-link' => 'http://gplus.to/wikia',
+	'oasis-generic-error' => 'We\'re sorry, there was an error processing your request.  Please try again later.',
 
 	# Toolbar customize
 	'oasis-toolbar-edit-title' => 'Customize Toolbar',
@@ -163,7 +164,7 @@ $messages['en'] = array(
 	'oasis-upload-photos-fewer-options' => 'Fewer Options',
 	'oasis-upload-photos-force' => 'Upload anyway',
 	'oasis-upload-photos-caption' => 'Caption',
-	
+
 	'oasis-corporatefooter-navigation-header' => 'Wikia Inc Navigation',
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Video_Games',
