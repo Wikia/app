@@ -34,6 +34,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * Print out currently run test
 	 */
 	public static function setUpBeforeClass() {
+		error_reporting(E_ALL);
 		$testClass = get_called_class();
 		echo "\nRunning '{$testClass}'...";
 
