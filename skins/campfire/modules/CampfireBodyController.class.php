@@ -62,7 +62,7 @@ class CampfireBodyController extends WikiaController {
 	}
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds;
 
 		$this->isMainPage = WikiaPageType::isMainPage();
 
