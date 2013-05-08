@@ -32,32 +32,7 @@ class ImageServingHelper{
 	}
 
 	/**
-	 * @static
-	 * @param Article $article
-	 * @param bool $ignoreEmpty
-	 * @return mixed
-	 */
-	public static function buildAndGetIndex($article, $ignoreEmpty = false ) {
-		if(!($article instanceof Article)) {
-			return;
-		}
-		wfProfileIn(__METHOD__);
-
-		$article->getRawText();
-		$title = $article->getTitle();
-		$content = $article->getContent();
-		self::hookSwitch();
-		$editInfo = $article->prepareTextForEdit( $content, $title->getLatestRevID() );
-		self::hookSwitch(false);
-		$out = array();
-		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
-
-		self::buildIndex($article->getID(), $out[0], $ignoreEmpty);
-		wfProfileOut(__METHOD__);
-	}
-
-	/**
-	 * replaceGallery - hook replace images with some easy to parse tag
+	 * Replace images with some easy to parse tag
 	 *
 	 * @param $skin
 	 * @param $title
@@ -66,15 +41,16 @@ class ImageServingHelper{
 	 * @param $handlerParams
 	 * @param $time
 	 * @param $res
-	 * @return bool
+	 * @return bool return false to break hooks flow
 	 */
-	public static function replaceImages( $skin, $title, $file, $frameParams, $handlerParams, $time, &$res ) {
+	public static function onImageBeforeProduceHTML( $skin, $title, $file, $frameParams, $handlerParams, $time, &$res ) {
 		if (!self::$hookOnOff) {
 			return true;
 		}
 		wfProfileIn(__METHOD__);
 
 		if( $file instanceof File ||  $file instanceof LocalFile ) {
+			/* @var File $file */
 			$res = " <image mw='".$file->getTitle()->getPartialURL()."' /> ";
 		}
 
@@ -83,13 +59,13 @@ class ImageServingHelper{
 	}
 
 	/**
-	 * replaceGallery - hook replace images from image gallery with some easy to parse tag :
+	 * Replace images from image gallery with some easy to parse tag :
 	 *
 	 * @param Parser $parser
 	 * @param WikiaPhotoGallery $ig
-	 * @return boolean
+	 * @return bool return true to continue hooks flow
 	 */
-	public static function replaceGallery( $parser, &$ig) {
+	public static function onBeforeParserrenderImageGallery( $parser, &$ig) {
 		global $wgEnableWikiaPhotoGalleryExt;
 
 		if ((!self::$hookOnOff) || empty($wgEnableWikiaPhotoGalleryExt)) {
@@ -115,7 +91,9 @@ class ImageServingHelper{
 	}
 
 	/**
-	 * buildImages - helper function to help build list on images in parserHook
+	 * Helper function to help build list on images in parserHook
+	 *
+	 * TODO: remove? not called from anywhere
 	 *
 	 * @param File[] $files
 	 * @return string
@@ -124,6 +102,7 @@ class ImageServingHelper{
 		$res = '';
 		foreach($files as $file) {
 			if( $file instanceof File ||  $file instanceof LocalFile ) {
+				/* @var File $file */
 				$res .= " <image mw='".$file->getTitle()->getPartialURL()."' /> ";
 			}
 		}
@@ -179,6 +158,33 @@ class ImageServingHelper{
 		wfProfileOut(__METHOD__);
 		return;
 	}
+
+	/**
+	 * @param Article $article
+	 * @param bool $ignoreEmpty
+	 * @return mixed
+	 */
+	public static function buildAndGetIndex($article, $ignoreEmpty = false ) {
+		if(!($article instanceof Article)) {
+			return;
+		}
+		wfProfileIn(__METHOD__);
+
+		$article->getRawText();
+		$title = $article->getTitle();
+		$content = $article->getContent();
+
+		self::hookSwitch();
+		$editInfo = $article->prepareTextForEdit( $content, $title->getLatestRevID() );
+		self::hookSwitch(false);
+
+		$out = array();
+		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
+
+		self::buildIndex($article->getID(), $out[0], $ignoreEmpty);
+		wfProfileOut(__METHOD__);
+	}
+
 }
 
 /* fake class for replace image gallery in hook*/

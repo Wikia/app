@@ -36,14 +36,12 @@ $wgImageServingDrivers = array(
 
 
 $wgHooks['LinksUpdateComplete'][] = 'ImageServingHelper::onLinksUpdateComplete';
-/* parser hook */
-
-$wgHooks['ImageBeforeProduceHTML'][] = 'ImageServingHelper::replaceImages';
+$wgHooks['ImageBeforeProduceHTML'][] = 'ImageServingHelper::onImageBeforeProduceHTML';
 
 if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
-	$wgHooks['BeforeParserrenderImageGallery'] = array_merge(array( 'ImageServingHelper::replaceGallery' ), $wgHooks['BeforeParserrenderImageGallery'] );
+	$wgHooks['BeforeParserrenderImageGallery'] = array_merge(array( 'ImageServingHelper::onBeforeParserrenderImageGallery' ), $wgHooks['BeforeParserrenderImageGallery'] );
 } else {
-	$wgHooks['BeforeParserrenderImageGallery'] = array( 'ImageServingHelper::replaceGallery' );
+	$wgHooks['BeforeParserrenderImageGallery'] = array( 'ImageServingHelper::onBeforeParserrenderImageGallery' );
 }
 
 // i18n
