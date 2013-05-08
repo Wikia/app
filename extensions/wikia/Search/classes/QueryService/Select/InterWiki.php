@@ -91,7 +91,6 @@ class InterWiki extends AbstractSelect
 		            ->registerQueryParams   ( $query )
 		            ->registerFilterQueries ( $query )
 		            ->registerGrouping      ( $query )
-		            ->registerDismax        ( $query )
 		;
 	}
 	
@@ -186,7 +185,7 @@ class InterWiki extends AbstractSelect
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery()
 	 */
 	protected function getFormulatedQuery() {
-		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
+		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->getNestedQuery() );
 	}
 	
 	/**

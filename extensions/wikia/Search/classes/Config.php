@@ -59,7 +59,7 @@ class Config implements ArrayAccess
 			'cityId'		=>	0,
 			'rank'			=>	'default',
 			'start'			=>	0,
-			'minimumMatch'	=> '80%',
+			'minimumMatch'	=> '66%',
 			);
 	
 	/**
@@ -92,12 +92,11 @@ class Config implements ArrayAccess
 	 * @var array
 	 */
 	private $queryFieldsToBoosts = array(
-			'title'             => 100,
-			'html'              => 5,
-			'redirect_titles'   => 50,
-			'categories'        => 25,
-			'nolang_txt'        => 10,
-			'backlinks_txt'     => 25,
+			'title'             => 5,
+			'html'              => 1.5,
+			'redirect_titles'   => 4,
+			'categories'        => 1,
+			'nolang_txt'        => 7
 			);
 	
 
