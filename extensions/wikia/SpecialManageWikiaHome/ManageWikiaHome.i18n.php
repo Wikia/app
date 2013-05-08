@@ -76,6 +76,7 @@ $messages['qqq'] = array(
 	'manage-wikia-home-error-invalid-total-no-of-slots' => "An error which is displayed when set numbers in total doesn't equal required number of all slots; first parameter is the sum of entered numbers and second one is the required number",
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => "An error which is displayed when any of set numbers is negative",
 	'manage-wikia-home-error-wikifactory-failure' => 'An error which is displayed when an WikiFactory error occur',
+	'manage-wikia-home-collections-failure' => 'An error message which is displayed when an error occurs while saving changes in collections configuration',
 	
 	'manage-wikia-home-change-button' => 'A label on a submitting form button; the form is to change visualization slots\' configuration',
 	
