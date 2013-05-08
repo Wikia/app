@@ -131,6 +131,8 @@ var ChatView = Backbone.View.extend({
 			this.template = originalTemplate;
 		} else {
 			// "/me" command implementation
+			// note - in case of more commands executed on the message receiver side, there should
+			// be a loop here which goes through all commands and executes callbacks
 			if (msg.text.indexOf('/me ') == 0) {
 				msg.text = msg.text.substr(4);
 				var originalTemplate = this.template;
@@ -138,6 +140,10 @@ var ChatView = Backbone.View.extend({
 				$(this.el).html(this.template(msg));
 				this.template = originalTemplate;
 			} else {
+				if (msg.text.indexOf('//me ') == 0) {
+					msg.text = msg.text.substr(1);
+				}
+				// end of /me implementation
 				$(this.el).html(this.template(msg));
 			}
 		}
