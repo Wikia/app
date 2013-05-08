@@ -86,41 +86,19 @@ class ImageServingHelper {
 		self::$hookOnOff = $onOff;
 	}
 
-	public static function isParsing() {
-		return self::$hookOnOff;
-	}
-
-	/**
-	 * Helper function to help build list on images in parserHook
-	 *
-	 * TODO: remove? not called from anywhere
-	 *
-	 * @param File[] $files
-	 * @return string
-	 **/
-	public static function buildImages($files) {
-		$res = '';
-		foreach($files as $file) {
-			if( $file instanceof File ||  $file instanceof LocalFile ) {
-				/* @var File $file */
-				$res .= " <image mw='".$file->getTitle()->getPartialURL()."' /> ";
-			}
-		}
-		return $res;
-	}
-
 	/**
 	 * buildIndex - save image index in db
 	 *
-	 * @param int $width
+	 * @param int $articleId article ID
 	 * @param array|string $images
 	 * @param $ignoreEmpty boolean
+	 * @return mixed|bool set of images extracted from given article
 	 */
 	public static function buildIndex( $articleId, $images, $ignoreEmpty = false ) {
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
-		$db = $app->wf->GetDB(DB_MASTER, array());
+		$dbw = $app->wf->GetDB(DB_MASTER, array());
 
 		// BugId:95164: limit the number of images to be stored serialized in DB
 		// PHP has an internal limit of 65535 bytes than can be unserialized
@@ -133,9 +111,9 @@ class ImageServingHelper {
 		if( count($images) < 1 ) {
 			if( $ignoreEmpty) {
 				wfProfileOut(__METHOD__);
-				return;
+				return false;
 			}
-			$db->delete( 'page_wikia_props',
+			$dbw->delete( 'page_wikia_props',
 				array(
 					'page_id' =>  $articleId,
 					'propname' => WPP_IMAGE_SERVING
@@ -143,10 +121,10 @@ class ImageServingHelper {
 				__METHOD__
 			);
 			wfProfileOut(__METHOD__);
-			return;
+			return array();
 		}
 
-		$db->replace('page_wikia_props','',
+		$dbw->replace('page_wikia_props','',
 			array(
 				'page_id' =>  $articleId,
 				'propname' => WPP_IMAGE_SERVING,
@@ -155,15 +133,15 @@ class ImageServingHelper {
 			__METHOD__
 		);
 
-		$db->commit();
+		$dbw->commit();
 		wfProfileOut(__METHOD__);
-		return;
+		return $images;
 	}
 
 	/**
 	 * @param Article $article
 	 * @param bool $ignoreEmpty
-	 * @return mixed
+	 * @return mixed|bool set of images extracted from given article
 	 */
 	public static function buildAndGetIndex($article, $ignoreEmpty = false ) {
 		if(!($article instanceof Article)) {
@@ -182,8 +160,9 @@ class ImageServingHelper {
 		$out = array();
 		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
 
-		self::buildIndex($article->getID(), $out[0], $ignoreEmpty);
-		wfProfileOut(__METHOD__);
-	}
+		$images = self::buildIndex($article->getID(), $out[0], $ignoreEmpty);
 
+		wfProfileOut(__METHOD__);
+		return $images;
+	}
 }
