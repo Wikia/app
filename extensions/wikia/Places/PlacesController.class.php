@@ -5,10 +5,6 @@ class PlacesController extends WikiaController {
 	// avoid having interactive maps with the same ID
 	private static $mapId = 1;
 
-	public function __construct( WikiaApp $app ) {
-		$this->app = $app;
-	}
-
 	/**
 	 * Render static map from given set of attributes
 	 *
