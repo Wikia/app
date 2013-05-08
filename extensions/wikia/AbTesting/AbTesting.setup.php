@@ -2,6 +2,7 @@
 /**
  * @author Sean Colombo
  * @author Władysław Bodzek
+ * @author Piotr Bablok
  * @date 20120501
  *
  * Extension which helps with running A/B tests or Split Tests (can actually be a/b/c/d/etc. as needed).
@@ -14,14 +15,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-$app = F::app();
 $dir = dirname( __FILE__ );
 
 /**
  * info
  */
-$app->wg->append(
-	'wgExtensionCredits',
+$wgExtensionCredits['other'][] =
 	array(
 		'name' => 'A/B Testing',
 		'author' => array(
@@ -32,9 +31,7 @@ $app->wg->append(
 		),
 		'descriptionmsg' => 'abtesting-desc',
 		'version' => '1.0',
-	),
-	'other'
-);
+	);
 
 /**
  * classes
@@ -49,7 +46,7 @@ $wgAutoloadClasses['AbTestingController'] = "{$dir}/AbTestingController.class.ph
 /**
  * message files
  */
-$app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/AbTesting.i18n.php", 'AbTesting' );
+$wgExtensionMessagesFiles['AbTesting'] = "{$dir}/AbTesting.i18n.php";
 
 // Embed the experiment/treatment config in the head scripts.
 $wgHooks['WikiaSkinTopScripts'][] = 'AbTesting::onWikiaSkinTopScripts';
@@ -57,11 +54,11 @@ $wgHooks['WikiaSkinTopScripts'][] = 'AbTesting::onWikiaSkinTopScripts';
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AbTesting::onOasisSkinAssetGroupsBlocking';
 
 // Register Resource Loader module
-$app->wg->set( 'wgResourceModules', array(
+$wgResourceModules['wikia.ext.abtesting'] = array(
 	'class' => 'ResourceLoaderAbTestingModule',
-), 'wikia.ext.abtesting' );
+);
 
-$app->wg->set( 'wgResourceModules', array(
+$wgResourceModules['wikia.ext.abtesting.edit.styles'] = array(
 	'styles' => array(
 		'extensions/wikia/AbTesting/css/AbTestEditor.scss',
 		'resources/jquery.ui/themes/default/jquery.ui.core.css',
@@ -70,9 +67,9 @@ $app->wg->set( 'wgResourceModules', array(
 		'resources/jquery.ui/themes/default/jquery.ui.theme.css',
 		'resources/wikia/libraries/jquery-ui/themes/default/jquery.ui.timepicker.css',
 	),
-), 'wikia.ext.abtesting.edit.styles' );
+);
 
-$app->wg->set( 'wgResourceModules', array(
+$wgResourceModules['wikia.ext.abtesting.edit'] = array(
 	'scripts' => array(
 		'extensions/wikia/AbTesting/js/AbTestEditor.js',
 		'resources/jquery.ui/jquery.ui.core.js',
@@ -86,7 +83,7 @@ $app->wg->set( 'wgResourceModules', array(
 		'abtesting-add-experiment-title',
 		'abtesting-edit-experiment-title'
 	)
-), 'wikia.ext.abtesting.edit' );
+);
 
 //AbTesting is an Oasis-only experiment for now
 //$wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
