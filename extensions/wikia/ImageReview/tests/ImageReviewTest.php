@@ -80,7 +80,7 @@ class ImageReviewTest extends WikiaBaseTest {
 		}
 		F::setInstance('ImageReviewHelper', $imageReviewHelperStub);
 
-		$wgMemcStub = $this->getMock('wgMemc', array('get', 'set'));
+		$wgMemcStub = $this->getMock('wgMemc', array('get', 'set', 'add'));
 		$wgMemcStub->expects($this->any())->method('get')->will($this->returnValue($memcTs));
 		$this->mockGlobalVariable('wgMemc', $wgMemcStub);
 	}

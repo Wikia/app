@@ -27,6 +27,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	/* @var WikiaAppMock */
 	private $appMock = null;
 	private $mockedClasses = array();
+	private $mockedGlobals = array();
 
 	private static $testRunTime = 0;
 
@@ -64,6 +65,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected function tearDown() {
 		$this->unsetClassInstances();
+		$this->unsetGlobals();
 		if (is_object($this->appOrig)) {
 			F::setInstance('App', $this->appOrig);
 		}
@@ -74,8 +76,9 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	// TODO: remove mockClass after fixing remaining unit tests
 	protected function mockClass($className, $mock) {
 		// Allow the old tests to run
-		F::setInstance( $className, $mock );
-		$this->mockedClasses[] = $className;
+		//F::setInstance( $className, $mock );
+		//$this->mockedClasses[] = $className;
+		$this->markTestSkipped('Cannot run tests using old mockClass');
 	}
 
 	/**
@@ -150,10 +153,15 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $returnValue mixed value variable should be set to
 	 */
 	protected function mockGlobalVariable( $globalName, $returnValue ) {
+		$this->mockedGlobals[$globalName] = $GLOBALS[$globalName];
+		$GLOBALS[$globalName] = $returnValue;
+
+		/*
 		if($this->appMock == null) {
 			$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
 		}
 		$this->appMock->mockGlobalVariable( $globalName, $returnValue );
+		*/
 	}
 
 	/**
@@ -199,6 +207,13 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			F::unsetInstance( $className );
 		}
 		$this->mockedClasses = array();
+	}
+
+	private function unsetGlobals() {
+		foreach( $this->mockedGlobals as $globalName => $globalValue ) {
+			$GLOBALS[$globalName] = $globalValue;
+		}
+		$this->mockedGlobals = array();
 	}
 
 	public static function markTestSkipped($message = '') {

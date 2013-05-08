@@ -17,6 +17,7 @@ class WikiaMockProxy {
 	public $_constructorArguments = null;
 	public static $instances = array();
 	public static $redefined_functions = array();
+	public static $redefined_global_functions = array();
 	public static $instance = null;  // temporary holder for instance reference during construction
 
 	// proxy takes the name of the class and the mock object classname and the mock object instance
@@ -24,6 +25,17 @@ class WikiaMockProxy {
 	static public function proxy($className, $mockClassName, $mockInstance) {
 		self::$instances[$className] = $mockInstance;
 		self::$instances[$mockClassName] = $mockInstance;
+	}
+
+	static public function redefineGlobalFunction($functionName, $returnValue, $params) {
+		if(isset(self::$redefined_global_functions[$functionName])) {
+			echo "Function $functionName already redefined, skipping\n";
+			return;
+		}
+		self::$redefined_global_functions[$functionName] = $returnValue;
+		$params = '';//implode(",",$params);
+		runkit_function_rename($functionName, "_saved_".$functionName);
+		runkit_function_add($functionName, $params, 'return WikiaMockProxy::$redefined_global_functions["'.$functionName.'"];');
 	}
 
 	// save the old function as _saved_functionName
@@ -58,6 +70,11 @@ class WikiaMockProxy {
 				runkit_method_rename($className, $savedName, $originalName); // restore the original
 			}
 			unset (WikiaMockProxy::$redefined_functions[$className]);
+		}
+		foreach(WikiaMockProxy::$redefined_global_functions as $originalName=>$retValue) {
+			runkit_function_remove($originalName);  // remove the redefined instance
+			runkit_function_rename("_saved_" . $originalName, $originalName); // restore the original
+			unset (WikiaMockProxy::$redefined_global_functions[$originalName]);
 		}
 	}
 

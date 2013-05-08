@@ -7,6 +7,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		parent::setUp();
 		$this->helperMocker = $this->getMockBuilder( 'SEOTweaksHooksHelper' )
 									->disableOriginalConstructor();
+
 	}
 	
 	/**
@@ -45,7 +46,10 @@ class SEOTweaksTest extends WikiaBaseTest
 	 * @covers SEOTweaksHooksHelper::onBeforePageDisplay
 	 */
 	public function testOnBeforePageDisplayWithGoogleVals() {
-		
+
+		$this->mockGlobalVariable('wgSEOGoogleSiteVerification', 'foobar');
+		$this->mockGlobalVariable('wgSEOGooglePlusLink', 'bazqux');
+
 		$mockOut = $this->getMockbuilder( 'OutputPage' )
 						->disableOriginalConstructor()
 						->setMethods( array( 'addMeta', 'addLink' ) )
@@ -57,19 +61,15 @@ class SEOTweaksTest extends WikiaBaseTest
 		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
 		$wgRefl->setAccessible( true );
 		
-		$wg = (object) array( 'SEOGoogleSiteVerification' => 'foobar', 'SEOGooglePlusLink' => 'bazqux' );
-		
-		$wgRefl->setValue( $mockHelper, $wg ); 
-		
 		$mockOut
 			->expects( $this->at( 0 ) )
 			->method ( 'addMeta' )
-			->with   ( 'google-site-verification', $wg->SEOGoogleSiteVerification )
+			->with   ( 'google-site-verification', 'foobar' )
 		;
 		$mockOut
 			->expects( $this->at( 1 ) )
 			->method ( 'addLink' )
-			->with   ( array( 'href' => $wg->SEOGooglePlusLink, 'rel' => 'publisher' ) )
+			->with   ( array( 'href' => 'bazqux', 'rel' => 'publisher' ) )
 		;
 		$this->assertTrue(
 				$mockHelper->onBeforePageDisplay( $mockOut ),
@@ -681,11 +681,13 @@ class SEOTweaksTest extends WikiaBaseTest
 		    ->method ( 'exists' )
 		    ->will   ( $this->returnValue( false ) )
 		;
+		/*
 		$mockWrapper
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getDB' )
 		    ->will   ( $this->returnValue( $mockDb ) )
 		;
+		*/
 		$mockTitle
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getDBKey' )
@@ -713,11 +715,15 @@ class SEOTweaksTest extends WikiaBaseTest
 		    ->method ( 'fetchObject' )
 		    ->will   ( $this->returnValue( null ) )
 		;
-		
+
+		$this->mockGlobalFunction('wfGetDB', $mockDb);
+
+		/*
 		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
 		$reflWf->setAccessible( true );
 		$reflWf->setValue( $mockHelper, $mockWrapper );
-		
+		*/
+
 		$this->assertTrue(
 				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
 				'SEOTweaksHooksHelper::onArticleViewHeader should always return true'

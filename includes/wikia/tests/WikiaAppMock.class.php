@@ -63,15 +63,11 @@ class WikiaAppMock {
 	 * @param array $inputParams array of PHPUnit_Framework_Constraints
 	 */
 	public function mockGlobalFunction($functionName, $returnValue, $callsNum = 1, $inputParams = array() ) {
-		if(!in_array( 'runFunction', $this->methods )) {
-			$this->methods[] = 'runFunction';
+		if(!startsWith($functionName, 'wf')) {
+			$functionName = 'wf'.ucfirst($functionName);
 		}
-		if(!array_key_exists($functionName, $this->mockedFunctions)) {
-			$this->mockedFunctions[$functionName] = array( 'value' => $returnValue, 'calls' => $callsNum, 'params' => $inputParams );
-		}
-		else {
-			$this->markTestSkipped( "Function $functionName already mocked, multiple mocks of the same function not supported." );
-		}
+		// TODO: do not ignore CallsNum and InputParams verification
+		WikiaMockProxy::redefineGlobalFunction($functionName, $returnValue, $inputParams);
 	}
 
 	// If the global variable is not being overridden, return the actual global variable
