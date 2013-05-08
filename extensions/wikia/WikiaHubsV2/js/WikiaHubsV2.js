@@ -36,7 +36,7 @@ var WikiaHubs = {
 			browserEvent: event,
 			category: category,
 			label: label,
-			trackingMethod: 'internal',
+			trackingMethod: 'both',
 			value: value
 		}, params);
 	},
