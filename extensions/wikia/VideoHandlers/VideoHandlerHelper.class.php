@@ -88,7 +88,7 @@ class VideoHandlerHelper extends WikiaModel {
 			}
 
 			// If there are no more sections to check, exit the loop
-			if ($trim($sectionText) == '') {
+			if (trim($sectionText) == '') {
 				break;
 			}
 
