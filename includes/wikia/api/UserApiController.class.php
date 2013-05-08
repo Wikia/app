@@ -1,10 +1,13 @@
 <?php
 /**
- * Created by adam
- * Date: 07.05.13
+ * Controller to fetch information about users
+ *
+ * @author adam
  */
 
-class ArticlesApiController extends WikiaApiController {
+class UserApiController extends WikiaApiController {
+
+	const AVATAR_DEFAULT_SIZE = 100;
 
 	/**
 	 * Get details about one or more user
@@ -18,7 +21,34 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example &ids=2187,23478&size=150
 	 */
 	public function getDetails() {
+		wfProfileIn( __METHOD__ );
+		$ids =  $this->request->getVal( 'ids' );
+		if ( empty( $ids ) ) {
+			throw new InvalidParameterApiException( 'ids' );
+		}
+		$ids = explode( ',', trim( $ids ) );
+		$size = $this->request->getInt( 'size', static::AVATAR_DEFAULT_SIZE );
 
+		//users are cached inside the service
+		$users = UserService::getUsers( $ids );
+		$items = array();
+		foreach ( $users as $user ) {
+
+			$items[ $user->getId() ] = array(
+				'user_id' => $user->getId(),
+				'title' => $user->getTitleKey(),
+				'name' => $user->getName(),
+				'url' => AvatarService::getUrl( $user->getName() ),
+				'numberofedits' => $user->getEditCountLocal()
+			);
+			//add avatar url if size !== 0
+			if ( $size > 0 ) {
+				$items[ $user->getId() ][ 'avatar' ] = AvatarService::getAvatarUrl( $user, $size );
+			}
+		}
+		$this->response->setVal( 'items', $items );
+		$this->response->setVal( 'basepath', $this->wg->Server );
+		wfProfileOut( __METHOD__ );
 	}
 
 }
