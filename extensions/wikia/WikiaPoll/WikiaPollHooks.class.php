@@ -156,7 +156,9 @@ class WikiaPollHooks {
 			'_rte_dataidx' => sprintf('%04d', $dataIdx),
 			'class' => "media-placeholder placeholder-poll",
 			'src' => $wgBlankImgUrl,
-			'type' => 'poll'
+			'type' => 'poll',
+			'width' => $poll->getRtePlaceholderWidth(),
+			'height' => $poll->getRtePlaceholderHeight(),
 		));
 		return RTEData::addIdxToTag($dataIdx, $tag);
 	}
