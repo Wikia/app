@@ -12,8 +12,8 @@ $messages['en'] = array(
 	'manage-wikia-home-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
 
 	'manage-wikia-home-wikis-in-slots-heading' => 'Slots setup',
-	'manage-wikia-home-wikis-in-slots-total' => 'Total amount of slots: ',
-	'manage-wikia-home-visualization-wikis' => 'Corporate wikis with visualization: ',
+	'manage-wikia-home-wikis-in-slots-total' => 'Total amount of slots:',
+	'manage-wikia-home-visualization-wikis' => 'Corporate wikis with visualization:',
 
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
 	'manage-wikia-home-collections-success' => 'Collections has been saved.',
@@ -22,7 +22,7 @@ $messages['en'] = array(
 
 	'manage-wikia-home-error-invalid-total-no-of-slots' => "Invalid slots amount in total ($1). Please make sure sum of each hub's slots equals total amount of slots ($2).",
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Negative number of slots is not allowed',
-	'manage-wikia-home-error-wikifactory-failure' => "Something wrong happened during saving the variables all of them wasn't saved or they were saved partly. Try again.",
+	'manage-wikia-home-error-wikifactory-failure' => "Something went wrong during saving the variables. Please try again.", // @FIXME i18n do we really need two error messages? This and the next one say the same thing
 	'manage-wikia-home-collections-failure' => 'There was an error while saving, please check what you entered.',
 
 	'manage-wikia-home-change-button' => 'Change',
@@ -35,10 +35,10 @@ $messages['en'] = array(
 	'manage-wikia-home-wiki-list-headline' => 'Headline',
 	'manage-wikia-home-wiki-list-blocked' => 'Blocked',
 	'manage-wikia-home-wiki-list-promoted' => 'Promoted',
-	'manage-wikia-home-wiki-list-blocked-no' => 'No',
-	'manage-wikia-home-wiki-list-blocked-yes' => 'Yes',
+	'manage-wikia-home-wiki-list-blocked-no' => 'No', // @FIXMEi18n thuis message is used in 2 different contexts!
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Yes', // @FIXME i18n thuis message is used in 2 different contexts!
 
-	'manage-wikia-home-modal-title' => 'Change wiki status',
+	'manage-wikia-home-modal-title' => 'Change a wiki\'s status',
 	'manage-wikia-home-modal-content-blocked' => 'Do you want to include this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-unblocked' => 'Do you want to exclude this wiki from appearing in the wiki visualization?',
 	'manage-wikia-home-modal-content-promoted' => 'Do you want to promote this wiki in the wiki visualization?',
