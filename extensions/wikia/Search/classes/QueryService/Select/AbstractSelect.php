@@ -314,14 +314,16 @@ abstract class AbstractSelect
 	
 	/**
 	 * Creates a nested query using extended dismax.
-	 * @return AbstractSelect
+	 * @return Solarium_Query_Select
 	 */
-	protected function registerDismax( Solarium_Query_Select $select ) {
+	protected function getNestedQuery() {
+		$nestedQuery = $this->client->createSelect();
+		$nestedQuery->setQuery( $this->config->getQuery()->getSolrQuery() );
 		
 		$queryFieldsString = $this->getQueryFieldsString();
-		$dismax = $select->getDismax()
-		                 ->setQueryFields( $queryFieldsString )
-		                 ->setQueryParser( 'edismax' )
+		$dismax = $nestedQuery->getDismax()
+		                      ->setQueryFields( $queryFieldsString )
+		                      ->setQueryParser( 'edismax' )
 		;
 		
 		if ( $this->service->isOnDbCluster() ) {
@@ -336,7 +338,7 @@ abstract class AbstractSelect
 			    $dismax->setBoostFunctions( implode(' ', $this->boostFunctions ) );
 			}
 		}
-		return $this;
+		return $nestedQuery;
 	}
 	
 	/**
