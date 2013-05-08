@@ -35,7 +35,7 @@ $wgImageServingDrivers = array(
 );
 
 
-$wgHooks['LinksUpdateComplete'][] = 'ImageServingHelper::buildIndexOnPageEdit';
+$wgHooks['LinksUpdateComplete'][] = 'ImageServingHelper::onLinksUpdateComplete';
 /* parser hook */
 
 $wgHooks['ImageBeforeProduceHTML'][] = 'ImageServingHelper::replaceImages';

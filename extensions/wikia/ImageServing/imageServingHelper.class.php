@@ -5,19 +5,27 @@
  */
 
 class ImageServingHelper{
+	const IMAGES_PER_ARTICLE = 230;
+
 	static $hookOnOff = false; // parser hook are off
 
-	public static function buildIndexOnPageEdit( $self ) {
+	/**
+	 * @param LinksUpdate $linksUpdate
+	 * @return bool return true to continue hooks flow
+	 */
+	public static function onLinksUpdateComplete( $linksUpdate ) {
 		wfProfileIn(__METHOD__);
+		$images = $linksUpdate->getImages();
+		$articleId = $linksUpdate->getTitle()->getArticleID();
 
-		if(count($self->mImages) == 1) {
-			$images = array_keys($self->mImages);
-			self::bulidIndex( $self->mId, $images);
+		if(count($images) === 1) {
+			$images = array_keys($images);
+			self::buildIndex( $articleId, $images);
 			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		$article = Article::newFromID( $self->mId );
+		$article = new Article($linksUpdate->getTitle());
 		self::buildAndGetIndex( $article );
 		wfProfileOut(__METHOD__);
 		return true;
@@ -25,7 +33,7 @@ class ImageServingHelper{
 
 	/**
 	 * @static
-	 * @param $article
+	 * @param Article $article
 	 * @param bool $ignoreEmpty
 	 * @return mixed
 	 */
@@ -35,7 +43,7 @@ class ImageServingHelper{
 		}
 		wfProfileIn(__METHOD__);
 
-		$articleText = $article->getRawText();
+		$article->getRawText();
 		$title = $article->getTitle();
 		$content = $article->getContent();
 		self::hookSwitch();
@@ -44,16 +52,22 @@ class ImageServingHelper{
 		$out = array();
 		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
 
-		self::bulidIndex($article->getID(), $out[0], $ignoreEmpty);
+		self::buildIndex($article->getID(), $out[0], $ignoreEmpty);
 		wfProfileOut(__METHOD__);
 	}
 
 	/**
-	 *  replaceGallery - hook replace images with some easy to parse tag
+	 * replaceGallery - hook replace images with some easy to parse tag
 	 *
-	 *  return boolean
+	 * @param $skin
+	 * @param $title
+	 * @param File|LocalFile $file
+	 * @param $frameParams
+	 * @param $handlerParams
+	 * @param $time
+	 * @param $res
+	 * @return bool
 	 */
-
 	public static function replaceImages( $skin, $title, $file, $frameParams, $handlerParams, $time, &$res ) {
 		if (!self::$hookOnOff) {
 			return true;
@@ -69,11 +83,12 @@ class ImageServingHelper{
 	}
 
 	/**
-	 *  replaceGallery - hook replace images from image gallery with some easy to parse tag :
+	 * replaceGallery - hook replace images from image gallery with some easy to parse tag :
 	 *
-	 *  return boolean
+	 * @param Parser $parser
+	 * @param WikiaPhotoGallery $ig
+	 * @return boolean
 	 */
-
 	public static function replaceGallery( $parser, &$ig) {
 		global $wgEnableWikiaPhotoGalleryExt;
 
@@ -102,12 +117,9 @@ class ImageServingHelper{
 	/**
 	 * buildImages - helper function to help build list on images in parserHook
 	 *
-	 *
-	 * @param $files \type{\arrayof{\file}}
-	 *
+	 * @param File[] $files
 	 * @return string
 	 **/
-
 	public static function buildImages($files) {
 		$res = '';
 		foreach($files as $file) {
@@ -121,23 +133,20 @@ class ImageServingHelper{
 	/**
 	 * buildIndex - save image index in db
 	 *
-	 * @param $width \int
-	 * @param $images \type{\arrayof{\string}}
+	 * @param int $width
+	 * @param array|string $images
 	 * @param $ignoreEmpty boolean
-	 *
-	 * @return boolean
 	 */
-
 	public static function buildIndex( $articleId, $images, $ignoreEmpty = false ) {
-		/* 0 and 1 image don't need to be indexed */
 		wfProfileIn(__METHOD__);
-		$db = wfGetDB(DB_MASTER, array());
+
+		$app = F::app();
+		$db = $app->wf->GetDB(DB_MASTER, array());
 
 		// BugId:95164: limit the number of images to be stored serialized in DB
 		// PHP has an internal limit of 65535 bytes than can be unserialized
-		$limit = 230;
-		if (count($images) > $limit) {
-			$images = array_slice($images, 0, $limit);
+		if (count($images) > self::IMAGES_PER_ARTICLE) {
+			$images = array_slice($images, 0, self::IMAGES_PER_ARTICLE);
 		}
 
 		array_walk( $images, create_function( '&$n', '$n = urldecode( $n );' ) );
@@ -145,7 +154,7 @@ class ImageServingHelper{
 		if( count($images) < 1 ) {
 			if( $ignoreEmpty) {
 				wfProfileOut(__METHOD__);
-				return true;
+				return;
 			}
 			$db->delete( 'page_wikia_props',
 				array(
@@ -154,7 +163,7 @@ class ImageServingHelper{
 				__METHOD__
 			);
 			wfProfileOut(__METHOD__);
-			return true;
+			return;
 		}
 
 		$db->replace('page_wikia_props','',
@@ -168,7 +177,7 @@ class ImageServingHelper{
 
 		$db->commit();
 		wfProfileOut(__METHOD__);
-		return true;
+		return;
 	}
 }
 
@@ -182,7 +191,7 @@ class fakeIGimageServing extends ImageGallery {
 
 	function toHTML() {
 		$res = "";
-		foreach ( $this->in as $key => $imageData ) {
+		foreach ( $this->in as $imageData ) {
 			$file =  $this->getImage($imageData['name']);
 
 			if($file) {
