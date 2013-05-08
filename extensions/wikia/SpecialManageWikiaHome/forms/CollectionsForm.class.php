@@ -29,7 +29,7 @@ class CollectionsForm extends FormBuilderService {
 					'isArray' => true
 				],
 				'sponsor_url' => [
-					'label' => $this->wf->msg('manage-wikia-home-collections-sponsur-url-field-label'),
+					'label' => $this->wf->msg('manage-wikia-home-collections-sponsor-url-field-label'),
 					'validator' => new WikiaValidatorListValue([
 						'validator' => new WikiaValidatorUrl()
 					]),
