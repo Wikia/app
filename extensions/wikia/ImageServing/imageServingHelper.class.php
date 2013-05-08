@@ -138,7 +138,8 @@ class ImageServingHelper{
 			$db->delete( 'page_wikia_props',
 				array(
 					'page_id' =>  $articleId,
-					'propname' => "0"),
+					'propname' => WPP_IMAGE_SERVING
+				),
 				__METHOD__
 			);
 			wfProfileOut(__METHOD__);
@@ -148,7 +149,7 @@ class ImageServingHelper{
 		$db->replace('page_wikia_props','',
 			array(
 				'page_id' =>  $articleId,
-				'propname' => "0",
+				'propname' => WPP_IMAGE_SERVING,
 				'props' => serialize($images)
 			),
 			__METHOD__
