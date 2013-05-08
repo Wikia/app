@@ -4,10 +4,10 @@
  * Class to serving list of top 5 images for article use for indexing and keep index up to date
  */
 
-class ImageServingHelper{
+class ImageServingHelper {
 	const IMAGES_PER_ARTICLE = 230;
 
-	static $hookOnOff = false; // parser hook are off
+	private static $hookOnOff = false; // parser hooks are off
 
 	/**
 	 * @param LinksUpdate $linksUpdate
@@ -77,7 +77,7 @@ class ImageServingHelper{
 		$ig->parse();
 		$data = $ig->getData();
 
-		$ig = new fakeIGimageServing( $data['images'] );
+		$ig = new FakeImageGalleryImageServing( $data['images'] );
 		wfProfileOut(__METHOD__);
 		return false;
 	}
@@ -186,38 +186,4 @@ class ImageServingHelper{
 		wfProfileOut(__METHOD__);
 	}
 
-}
-
-/* fake class for replace image gallery in hook*/
-class fakeIGimageServing extends ImageGallery {
-	private $in;
-
-	function __construct($in) {
-		$this->in = $in;
-	}
-
-	function toHTML() {
-		$res = "";
-		foreach ( $this->in as $imageData ) {
-			$file =  $this->getImage($imageData['name']);
-
-			if($file) {
-				$res .= " <image mw='".$file->getTitle()->getDBkey()."' /> ";
-			}
-		}
-		return $res;
-	}
-
-	private function getImage($nt) {
-		wfProfileIn(__METHOD__);
-
-		# Give extensions a chance to select the file revision for us
-		$time = $descQuery = false;
-		wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
-
-		# Render image thumbnail
-		$img = wfFindFile( $nt, $time );
-		wfProfileOut(__METHOD__);
-		return $img;
-	}
 }
