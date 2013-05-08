@@ -205,9 +205,9 @@ WikiaHomePageRemix.prototype = {
 		Wikia.Tracker.track({
 			action: action,
 			browserEvent: event,
-			category: 'wikiaHomePage',
+			category: 'wikia-home-page',
 			label: label,
-			trackingMethod: 'internal'
+			trackingMethod: 'both'
 		}, params);
 	},
 	trackClick: function(ev) {
