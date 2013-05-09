@@ -398,8 +398,10 @@ class ForumHooksHelper {
 	public static function onTitleGetSquidURLs( $title, &$urls ) {
 		if ( $title->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
 			$wallMessage = WallMessage::newFromTitle( $title );
-			$urls[] = $wallMessage->getMessagePageUrl();
-			$urls[] = $wallMessage->getMessagePageUrl() . '?action=history';
+			$urls = array(
+				$wallMessage->getMessagePageUrl(),
+				$wallMessage->getMessagePageUrl() . '?action=history',
+			);
 		}
 
 		return true;
