@@ -30,44 +30,15 @@ $(function(){
 					onSelect: function(){
 						$ul.find('input:focus').next().focus();
 					},
-//					fnPreprocessResults: function(data){
-//						var suggestions = data.suggestions,
-//							suggestion,
-//							l = suggestions.length,
-//							i = 0;
-//
-//						for(; i < l; i++) {
-//							suggestion = suggestions[i];
-//							//get rid of non categories suggestions
-//							//and 'Category:' part of suggestion
-//							if(suggestion.indexOf(categoryName) > -1) {
-//								suggestions[i] = suggestion.replace(categoryName, '');
-//							}else{
-//								delete suggestions[i];
-//							}
-//						}
-//
-//						data.suggestions = suggestions;
-//						return data;
-//					},
 					deferRequestBy: 100,
 					minLength: 3,
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
 			},
 			addNew = function(row, elem){
-				var cat;
-
-				if(elem) {
-					elem.after(row);
-					cat = elem.next().find('.video-url');
-				}else{
-					$ul.append(row);
-					cat = $ul.find('.video-url:last');
-				}
-
-				setup(cat);
-				cat.focus();
+				$ul.append(row);
+				setup($ul.find('.video-url:last'));
+				$ul.find('.wiki-input:last').focus();
 
 				$ul.sortable('refresh');
 			},
