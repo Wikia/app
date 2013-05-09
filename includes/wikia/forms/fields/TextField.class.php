@@ -1,6 +1,6 @@
 <?php
 
-class FormTextField extends FormInputField
+class TextField extends InputField
 {
 	const TYPE = 'text';
 

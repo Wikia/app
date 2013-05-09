@@ -1,6 +1,6 @@
 <?php
 
-class FormPasswordField extends FormInputField
+class PasswordField extends InputField
 {
 	const TYPE = 'password';
 

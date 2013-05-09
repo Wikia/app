@@ -1,6 +1,6 @@
 <?php
 
-class FormSelectField extends BaseField
+class RadioField extends BaseField
 {
 	public function render() {
 		//TODO add logic

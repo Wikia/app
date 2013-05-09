@@ -1,6 +1,6 @@
 <?php
 
-class FormHiddenField extends FormInputField
+class HiddenField extends InputField
 {
 	const TYPE = 'hidden';
 
