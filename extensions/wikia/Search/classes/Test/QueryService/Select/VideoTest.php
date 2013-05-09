@@ -44,7 +44,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'addQueryFields' )
-		    ->with   ( [ 'video_actors_txt' => 5, 'video_genres_txt' => 3, 'html_media_extras_txt' => 5 ] )
+		    ->with   ( [ 'video_actors_txt' => 100, 'video_genres_txt' => 50, 'html_media_extras_txt' => 80 ] )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Video', 'configureQueryFields' );
 		$method->setAccessible( true );
