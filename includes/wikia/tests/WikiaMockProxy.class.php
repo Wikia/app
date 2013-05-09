@@ -27,6 +27,8 @@ class WikiaMockProxy {
 		self::$instances[$mockClassName] = $mockInstance;
 	}
 
+	// save the old function as _saved_functionName
+	// restore in WikiaBaseTest::tearDown
 	static public function redefineGlobalFunction($functionName, $returnValue, $params) {
 		if(isset(self::$redefined_global_functions[$functionName])) {
 			echo "Function $functionName already redefined, skipping\n";

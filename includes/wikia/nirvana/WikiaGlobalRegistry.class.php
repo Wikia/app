@@ -39,6 +39,10 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	);
 
 	public function get($propertyName) {
+		if( isset($GLOBALS[$propertyName]) )
+			return $GLOBALS[$propertyName];
+		return null;
+		/*
 		if($this->has($propertyName)) {
 			if ( $this->checkPropertyMapping( $propertyName ) ) {
 				$value = $this->processPropertyMapping( $propertyName );
@@ -49,7 +53,7 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 			return $value;
 		}
 
-		return null;
+		return null;*/
 	}
 
 	public function append($propertyName, $value, $key = null) {
