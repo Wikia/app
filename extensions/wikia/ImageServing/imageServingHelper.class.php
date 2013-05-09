@@ -145,11 +145,11 @@ class ImageServingHelper {
 	 */
 	public static function buildAndGetIndex($article, $ignoreEmpty = false ) {
 		if(!($article instanceof Article)) {
-			return;
+			return false;
 		}
 		wfProfileIn(__METHOD__);
 
-		$article->getRawText();
+		$article->getRawText(); // TODO: not sure whether it's actually needed
 		$title = $article->getTitle();
 		$content = $article->getContent();
 
