@@ -142,9 +142,9 @@ $(function(){
 			li = $(li);
 
 			return {
-				wiki_url: li.find('.wiki-input').val(),
+				wiki: li.find('.wiki-input').val(),
 				video_title: li.find('.video-title').val(),
-				video_url: li.find('.video-url').val()
+				video_name: li.find('.video-url').val()
 			}
 		}
 
@@ -165,7 +165,6 @@ $(function(){
 						code: code,
 						videos: videos
 					});
-
 				});
 
 				$save.removeClass();
@@ -217,7 +216,7 @@ $(function(){
 		});
 
 		//be sure modules are ready to be used
-		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable', 'wikia.aim', 'wikia.yui'], function(){
+		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable'], function(){
 			$ul.sortable({
 				opacity: 0.5,
 				axis: 'y',

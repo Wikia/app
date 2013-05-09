@@ -83,9 +83,9 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 				if ( !empty( $language['videos'] ) ) {
 					foreach( $language['videos'] as $video ) {
 						$list .= $this->sendSelfRequest( 'video', [
-							'video_url' => $video['video_url'],
+							'video_name' => $video['video_name'],
 							'video_title' => $video['video_title'],
-							'wiki_url' => $video['wiki_url']
+							'wiki' => $video['wiki']
 						] );
 					}
 				}
@@ -109,8 +109,8 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
 		$this->response->setVal( 'video_title', $this->request->getVal( 'video_title', '' ) );
-		$this->response->setVal( 'video_url', $this->request->getVal( 'video_url'), '' );
-		$this->response->setVal( 'wiki_url', $this->request->getVal( 'wiki_url'), '' );
+		$this->response->setVal( 'video_name', $this->request->getVal( 'video_name'), '' );
+		$this->response->setVal( 'wiki', $this->request->getVal( 'wiki'), '' );
 
 		$this->response->setVal( 'wiki_url_placeholder', wfMessage( 'wikiagameguides-sponsored-wiki-url' )->text() );
 		$this->response->setVal( 'video_title_placeholder', wfMessage( 'wikiagameguides-sponsored-video-title' )->text() );
