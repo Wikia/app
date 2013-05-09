@@ -620,7 +620,7 @@ class WallHelper {
 		}
 
 		$ci = $wm->getCommentsIndex();
-		if ( empty($ci) && ($row->page_namespace == NS_USER_WALL) ) {
+		if ( empty( $ci ) && ( $row->page_namespace == NS_USER_WALL ) ) {
 			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
 			$title = F::build( 'title', array( $row->page_title, NS_USER_WALL ), 'newFromText' );
 
@@ -628,7 +628,7 @@ class WallHelper {
 				'articleUrl' => $title->getPrefixedText(),
 				'articleFullUrl' => $title->getFullUrl(),
 				'articleTitleVal' => '',
-				'articleTitleTxt' => wfMsg('wall-recentchanges-wall-created-title'),
+				'articleTitleTxt' => wfMsg( 'wall-recentchanges-wall-created-title' ),
 				'wallPageUrl' => $title->getLocalURL(),
 				'wallPageFullUrl' =>  $title->getFullUrl(),
 				'wallPageName' => $row->page_title,
@@ -638,13 +638,13 @@ class WallHelper {
 			);
 
 		} else {
-			$title = Title::newFromText($articleId, NS_USER_WALL_MESSAGE);
+			$title = Title::newFromText( $articleId, NS_USER_WALL_MESSAGE );
 
 			$out = array(
 				'articleUrl' => $title->getPrefixedText(),
 				'articleFullUrl' => $wm->getMessagePageUrl(),
 				'articleTitleVal' => $articleTitleTxt,
-				'articleTitleTxt' => empty($articleTitleTxt) ? wfMsg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
+				'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMsg( 'wall-recentchanges-deleted-reply-title' ) : $articleTitleTxt,
 				'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
 				'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
 				'wallPageName' => $wm->getArticleTitle()->getText(),

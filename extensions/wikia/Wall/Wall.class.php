@@ -228,7 +228,7 @@ class Wall extends WikiaModel {
 
 
 			while ( $row = $db->fetchObject( $res ) ) {
-				$out[] = WallThread::newFromId($row->comment_id);
+				$out[] = WallThread::newFromId( $row->comment_id );
 			}
 		}
 
