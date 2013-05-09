@@ -25,6 +25,7 @@ class FBPush_OnArticleComment extends FBConnectPushEvent {
 		wfProfileIn(__METHOD__);
 
 		if (empty( $wgEnableArticleCommentsExt) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 

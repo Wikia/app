@@ -79,7 +79,7 @@ class EditPageLayout extends EditPage {
 		$this->out = $this->app->wg->Out;
 		$this->request = $this->app->wg->Request;
 
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		parent::__construct($article);
 
@@ -95,7 +95,7 @@ class EditPageLayout extends EditPage {
 		// add messages (fetch them using <script> tag)
 		F::build('JSMessages')->enqueuePackage('EditPageLayout', JSMessages::EXTERNAL);
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -167,7 +167,7 @@ class EditPageLayout extends EditPage {
 	 * Get HTML of notices shown above the editor and use show it as custom dismissable notice
 	 */
 	protected function showHeader() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$oldHtml = $this->out->getHTML();
 
 		$this->out->clearHTML();
@@ -187,7 +187,7 @@ class EditPageLayout extends EditPage {
 		$this->out->clearHTML();
 		$this->out->addHTML($oldHtml);
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -282,7 +282,7 @@ class EditPageLayout extends EditPage {
 	 *                      near the top, for captchas and the like.
 	 */
 	function showEditForm($formCallback=null) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		// get HTML from form callback
 		if (is_callable($formCallback)) {
@@ -307,7 +307,7 @@ class EditPageLayout extends EditPage {
 		}
 
 		parent::showEditForm($formCallback);
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**

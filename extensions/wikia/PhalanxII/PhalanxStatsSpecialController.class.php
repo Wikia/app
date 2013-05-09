@@ -12,12 +12,12 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$this->wg->Out->setPageTitle( $this->wf->Msg('phalanx-stats-title') );
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			$this->displayRestrictionError();
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -35,7 +35,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			$this->forward('PhalanxStatsSpecial', 'help');
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function blockStats($blockId) {

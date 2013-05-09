@@ -127,4 +127,28 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 	public function getModuleModel() {
 		return new MarketingToolboxPopularvideosModel();
 	}
+
+	/**
+	 * check if it is video module
+	 * @return boolean
+	 */
+	public function isVideoModule() {
+		return true;
+	}
+
+	/**
+	 * get list of video url
+	 * @param array $data
+	 * @return array $videoData
+	 */
+	public function getVideoData( $data ) {
+		$videoData = array();
+
+		$structureData = $this->getStructuredData( $data );
+		foreach( $structureData['videos'] as $video ) {
+			$videoData[] = $video['fileUrl'];
+		}
+
+		return $videoData;
+	}
 }

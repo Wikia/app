@@ -22,13 +22,13 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 
 	public function buildWhiteList() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$whitelist = array();
 		$content = $this->wf->msgForContent( self::SPAM_WHITELIST_TITLE );
 		
 		if ( $this->wf->emptyMsg( self::SPAM_WHITELIST_TITLE, $content ) ) {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $whitelist;
 		}
 			
@@ -47,7 +47,7 @@ class PhalanxContentModel extends PhalanxModel {
 
 		Wikia::log( __METHOD__, __LINE__, count( $whitelist ) . ' whitelist entries loaded.' );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $whitelist;
 	}
 	

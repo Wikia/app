@@ -139,7 +139,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @responseParam integer totalPages
 	 */
 	public function getStats() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'stats', $this->wg->contLang->getCode());
 		$stats = $this->wg->Memc->get($memKey);
@@ -171,7 +171,7 @@ class WikiaHomePageController extends WikiaController {
 			$this->edits = $this->editsDefault . '+';
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -262,7 +262,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @return array
 	 */
 	public function getSeoList() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$list = $this->wg->Memc->get('wikia-home-page-seo-samples' . self::$seoMemcKeyVer);
 
@@ -312,7 +312,7 @@ class WikiaHomePageController extends WikiaController {
 			}
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $list;
 	}
 

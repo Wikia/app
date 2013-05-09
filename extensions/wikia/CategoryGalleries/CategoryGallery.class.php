@@ -177,7 +177,7 @@
 
 		/**
 		 * Fetches short textual snippet for given article
-		 * @param $articleId int Article id
+		 * @param $articleId int|Article|Title Article id
 		 * @param $length int Desired snippet length
 		 * @return string
 		 */
@@ -220,7 +220,7 @@
 					$entry['image_width'] = $this->confThumbWidth;
 					$entry['image_height'] = $this->confThumbHeight;
 				} else {
-					$entry['snippet'] = $this->getArticleSnippet($id,100);
+					$entry['snippet'] = $this->getArticleSnippet($title,100);
 				}
 				$data[$id] = $entry;
 			}

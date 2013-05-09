@@ -124,16 +124,16 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getVarFromWikiFactory($wikiId, $varName) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$value = WikiFactory::getVarValueByName($varName, $wikiId);
 
 		if (is_null($value) || $value === false) {
 			Wikia::log(__METHOD__, false, "Variable's value not found in WikiFactory returning 0");
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return 0;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $value;
 	}
 
@@ -146,7 +146,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @return integer edits
 	 */
 	public function getVisitors() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$visitors = 0;
 		$dates = array(date('Y-m-01', strtotime('-1 month')), date('Y-m-01', strtotime('now')));
@@ -157,7 +157,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $visitors;
 	}
@@ -167,7 +167,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @return integer edits
 	 */
 	public function getEdits() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$edits = 0;
 		if (!empty($this->wg->StatsDBEnabled)) {
@@ -185,7 +185,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $edits;
 	}
@@ -200,7 +200,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 
 	public function getTotalCommunitiesFromDB() {
-		$this->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
 		$row = $db->selectRow(
 			array('city_list'),
@@ -213,7 +213,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		if ($row) {
 			$communities = intval($row->cnt);
 		}
-		$this->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $communities;
 	}
 
@@ -232,7 +232,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	protected function getNewCommunitiesInRangeFromDB($starttimestamp, $endtimestamp) {
-		$this->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
 		$row = $db->selectRow(
 			array('city_list'),
@@ -252,7 +252,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		if ($newCommunities < self::FAILSAFE_NEW_COMMUNITIES_COUNT) {
 			$newCommunities = self::FAILSAFE_NEW_COMMUNITIES_COUNT;
 		}
-		$this->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $newCommunities;
 	}
 
@@ -263,14 +263,14 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @return integer stats
 	 */
 	public function getStatsFromArticle($articleName) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$title = Title::newFromText($articleName);
 		$article = new Article($title);
 		$content = $article->getRawText();
 		$stats = (empty($content)) ? 0 : $content;
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return intval($stats);
 	}
@@ -280,7 +280,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @return integer totalPages
 	 */
 	public function getTotalPages() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$totalPages = 0;
 		if (!empty($this->wg->StatsDBEnabled)) {
@@ -298,7 +298,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $totalPages;
 	}
@@ -441,22 +441,22 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function getWikiInfoForSpecialPromote($wikiId, $langCode) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$dataGetter = F::build('WikiDataGetterForSpecialPromote');
 		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $wikiInfo;
 	}
 
 	public function getWikiInfoForVisualization($wikiId, $langCode) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$dataGetter = F::build('WikiDataGetterForVisualization');
 		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $wikiInfo;
 	}
@@ -470,7 +470,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @return array wikiInfo
 	 */
 	public function getWikiInfo($wikiId, $langCode, WikiDataGetter $dataGetter) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$wikiInfo = array(
 			'name' => '',
@@ -519,7 +519,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $wikiInfo;
 	}
@@ -569,7 +569,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function getImageUrl($imageName, $requestedWidth, $requestedHeight) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$imageUrl = '';
 
 		if (!empty($imageName)) {
@@ -594,12 +594,12 @@ class WikiaHomePageHelper extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $imageUrl;
 	}
 
 	protected function getImageReviewStatus($imageId) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$reviewStatus = false;
 
 		$rowAssigner = F::build('WikiImageReviewStatusRowHelper');
@@ -607,7 +607,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			$reviewStatus = $this->getVisualization()->getImageReviewStatus($this->wg->CityId, $imageId, $rowAssigner);
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $reviewStatus;
 	}
 
@@ -617,7 +617,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @return int page_id or 0 if fails
 	 */
 	protected function getImagesArticleId($imageName) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$imageId = 0;
 
 		$imageTitle = F::build('Title', array($imageName, NS_FILE), 'newFromText');
@@ -625,7 +625,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			$imageId = $imageTitle->getArticleID();
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $imageId;
 	}
 
@@ -677,7 +677,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function prepareBatchesForVisualization($batches) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$processedBatches = array();
 		foreach ($batches as $batch) {
@@ -719,7 +719,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			$processedBatches[] = $processedBatch;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $processedBatches;
 	}
 
@@ -845,7 +845,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function setFlag($wikiId, $flag, $corpWikiId, $langCode) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		/* @var $visualization CityVisualization */
 		$visualization = F::build('CityVisualization');
@@ -861,16 +861,16 @@ class WikiaHomePageHelper extends WikiaModel {
 			//visualization list cache
 			$visualization->purgeVisualizationWikisListCache($corpWikiId, $langCode);
 
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 
 	public function removeFlag($wikiId, $flag, $corpWikiId, $langCode) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		/* @var $visualization CityVisualization */
 		$visualization = F::build('CityVisualization');
@@ -886,11 +886,11 @@ class WikiaHomePageHelper extends WikiaModel {
 			//visualization list cache
 			$visualization->purgeVisualizationWikisListCache($corpWikiId, $langCode);
 
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 

@@ -11,7 +11,7 @@ class SendGridPostbackController extends WikiaApiController {
 	const MAIL_SEND_TABLE = "wikia_mailer.mail_send";
 
 	public function log(){
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		$email_id    = $this->wg->Request->getInt( 'wikia-email-id' );
 		$email_addr  = $this->wg->Request->getVal( 'email', '' );
@@ -87,6 +87,6 @@ class SendGridPostbackController extends WikiaApiController {
 			$this->response->setVal( 'response', 'Postback token did not match expected value.  Ignoring.' );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 }

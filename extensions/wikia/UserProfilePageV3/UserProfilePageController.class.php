@@ -29,7 +29,7 @@ class UserProfilePageController extends WikiaController {
 	 * @requestParam int $wikiId current wiki id
 	 */
 	public function index() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		/**
 		 * @var $user User
@@ -68,7 +68,7 @@ class UserProfilePageController extends WikiaController {
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -79,7 +79,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function renderUserIdentityBox() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$this->setVal('wgBlankImgUrl', $this->wg->BlankImgUrl);
 
@@ -141,7 +141,7 @@ class UserProfilePageController extends WikiaController {
 			$this->overrideTemplate( 'WikiaMobileRenderUserIdentityBox' );
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -150,7 +150,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function renderActionButton() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$namespace = $this->title->getNamespace();
 
@@ -280,7 +280,7 @@ class UserProfilePageController extends WikiaController {
 		$actionButton = $this->wf->RenderModule('MenuButton', 'Index', $actionButtonArray);
 		$this->setVal('actionButton', $actionButton);
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -293,7 +293,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getLightboxData() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$selectedTab = $this->getVal('tab');
 		$userId = $this->getVal('userId');
@@ -315,7 +315,7 @@ class UserProfilePageController extends WikiaController {
 			//$this->setVal( 'interviewQuestions', $this->profilePage->getInterviewQuestions( $wikiId, false, true ) );
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -327,7 +327,7 @@ class UserProfilePageController extends WikiaController {
 	 * @desc Mainly passes two variables to the template: tabs, selectedTab but also if it's about tab or avatar uses private method to pass more data
 	 */
 	public function renderLightbox() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$selectedTab = $this->getVal('tab');
 		$userId = $this->getVal('userId');
@@ -350,11 +350,11 @@ class UserProfilePageController extends WikiaController {
 
 		$this->setVal('facebookPrefsLink', Skin::makeSpecialUrl('Preferences'));
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	public function saveInterviewAnswers() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
 		$wikiId = $this->wg->CityId;
@@ -381,7 +381,7 @@ class UserProfilePageController extends WikiaController {
 			$this->setVal('errorMsg', $errorMsg);
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -390,7 +390,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function saveUserData() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
 		$isAllowed = ($this->app->wg->User->isAllowed('editprofilev3') || intval($user->getId()) === intval($this->app->wg->User->getId()));
@@ -425,7 +425,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal('status', $status);
 		if ($status === 'error') {
 			$this->setVal('errorMsg', $errorMsg);
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -433,12 +433,12 @@ class UserProfilePageController extends WikiaController {
 			$status = $this->saveUsersAvatar($user->getID(), $userData->avatarData);
 			if ($status !== true) {
 				$this->setVal('errorMsg', $errorMsg);
-				$this->app->wf->ProfileOut(__METHOD__);
+				wfProfileOut(__METHOD__);
 				return true;
 			}
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return null;
 	}
 
@@ -451,7 +451,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function saveUsersAvatar($userId = null, $data = null) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if (is_null($userId)) {
 			$user = F::build('User', array($this->getVal('userId')), 'newFromId');
@@ -489,7 +489,7 @@ class UserProfilePageController extends WikiaController {
 			$user->saveSettings();
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -505,7 +505,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function saveAvatarFromUrl(User $user, $url, &$errorMsg) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$userId = $user->getId();
 
@@ -527,7 +527,7 @@ class UserProfilePageController extends WikiaController {
 		} else {
 			$res = $localPath;
 		}
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
@@ -537,7 +537,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onSubmitUsersAvatar() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$this->response->setContentType('text/html; charset=utf-8');
 
@@ -562,7 +562,7 @@ class UserProfilePageController extends WikiaController {
 			if (is_int($thumbnail)) {
 				$result = array('success' => false, 'error' => $this->validateUpload($thumbnail));
 				$this->setVal('result', $result);
-				$this->app->wf->ProfileOut(__METHOD__);
+				wfProfileOut(__METHOD__);
 				return;
 			}
 
@@ -571,13 +571,13 @@ class UserProfilePageController extends WikiaController {
 			$result = array('success' => true, 'avatar' => $thumbnail->url . '?cb=' . date('U'));
 			$this->setVal('result', $result);
 
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
 		$result = array('success' => false, 'error' => $errorMsg);
 		$this->setVal('result', $result);
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return;
 	}
 
@@ -587,10 +587,10 @@ class UserProfilePageController extends WikiaController {
 	 * @return bool|int|MediaTransformOutput
 	 */
 	protected function storeInTempImage($fileName, $fileuploader) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if (filesize($fileName) > self::AVATAR_MAX_SIZE) {
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return UPLOAD_ERR_FORM_SIZE;
 		}
 
@@ -605,7 +605,7 @@ class UserProfilePageController extends WikiaController {
 
 		$out = $ioh->postProcessFile($fileName);
 		if ($out !== true) {
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return $out;
 		}
 
@@ -620,7 +620,7 @@ class UserProfilePageController extends WikiaController {
 			'width' => $width,
 		));
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $thumbnail;
 	}
 
@@ -681,12 +681,12 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function uploadFile($request, $userData, $input, &$errorMsg = '') {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$errorNo = $this->wg->Request->getUploadError($input);
 
 		if ($errorNo != UPLOAD_ERR_OK) {
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return $errorNo;
 		}
 
@@ -704,7 +704,7 @@ class UserProfilePageController extends WikiaController {
 			$errorNo = UPLOAD_ERR_EXTENSION;
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $errorNo;
 	}
 
@@ -720,7 +720,7 @@ class UserProfilePageController extends WikiaController {
 	 * @return Integer error code of operation
 	 */
 	public function uploadByUrl($url, $userData, &$errorMsg = '') {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		//start by presuming there is no error
 		//$errorNo = UPLOAD_ERR_OK;
 		$user = $userData['user'];
@@ -743,7 +743,7 @@ class UserProfilePageController extends WikiaController {
 			$errorNo = UPLOAD_ERR_EXTENSION;
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $errorNo;
 	}
 
@@ -753,7 +753,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function renderAvatarLightbox($userId) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$user = F::build('User', array($userId), 'newFromId');
 
@@ -766,7 +766,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal('avatar', F::build('AvatarService', array($user->getName(), self::AVATAR_DEFAULT_SIZE), 'renderAvatar'));
 		$this->setVal('fbAvatarConnectButton', '<fb:login-button perms="user_about_me" onlogin="UserProfilePage.fbConnectAvatar();">' . $this->app->wf->Msg('user-identity-box-connect-to-fb') . '</fb:login-button>');
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -781,11 +781,11 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function getDefaultAvatars($thumb = '') {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		//parse message only once per request
 		if (empty($thumb) && is_array($this->defaultAvatars) && count($this->defaultAvatars) > 0) {
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return $this->defaultAvatars;
 		}
 
@@ -799,7 +799,7 @@ class UserProfilePageController extends WikiaController {
 			}
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $this->defaultAvatars;
 	}
 
@@ -809,7 +809,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function renderAboutLightbox($userId) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$user = F::build('User', array($userId), 'newFromId');
 
@@ -834,7 +834,7 @@ class UserProfilePageController extends WikiaController {
 			$this->setVal('days', cal_days_in_month(CAL_GREGORIAN, $userData['birthday']['month'], 2000 /* leap year */));
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -845,7 +845,7 @@ class UserProfilePageController extends WikiaController {
 	 *
 	 */
 	public function getCurrentTitle() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$title = $this->getVal('title');
 
 		if (!empty($title) && is_string($title) && strpos($title, ':') !== false) {
@@ -859,7 +859,7 @@ class UserProfilePageController extends WikiaController {
 				$title = $redirect;
 			}
 		}
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $title;
 	}
 
@@ -878,7 +878,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author nAndy
 	 */
 	public function getUserFromTitle() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$returnUserInData = (boolean)$this->getVal('returnUser');
 		$title = $this->getCurrentTitle();
 
@@ -910,7 +910,7 @@ class UserProfilePageController extends WikiaController {
 						$this->user = $user;
 					}
 
-					$this->app->wf->ProfileOut(__METHOD__);
+					wfProfileOut(__METHOD__);
 					return $user;
 				}
 			}
@@ -941,7 +941,7 @@ class UserProfilePageController extends WikiaController {
 			$this->user = $user;
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $user;
 	}
 
@@ -974,7 +974,7 @@ class UserProfilePageController extends WikiaController {
 	 * @brief hook handler
 	 */
 	public function onSkinTemplateOutputPageBeforeExec($skin, $template) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$this->setRequest(new WikiaRequest($this->app->wg->Request->getValues()));
 
@@ -994,7 +994,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$out = $this->addToUserProfile($skin, $template);
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
@@ -1006,7 +1006,7 @@ class UserProfilePageController extends WikiaController {
 	 */
 
 	public function onFacebookConnectAvatar() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$user = $this->app->wg->User;
 
@@ -1039,7 +1039,7 @@ class UserProfilePageController extends WikiaController {
 			$this->setVal('result', $result);
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -1051,7 +1051,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onFacebookConnect() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$user = $this->app->wg->User;
 		//$result = array('success' => false);
@@ -1085,7 +1085,7 @@ class UserProfilePageController extends WikiaController {
 
 		$this->setVal('result', $result);
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -1205,7 +1205,7 @@ class UserProfilePageController extends WikiaController {
 	}
 
 	public function getClosingModal() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$userId = $this->getVal('userId');
 		$user = $this->wg->User;
@@ -1216,15 +1216,15 @@ class UserProfilePageController extends WikiaController {
 			throw new WikiaException('User not logged in');
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	public function renderClosingModal() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		//we want only the template for now...
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**

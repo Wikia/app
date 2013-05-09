@@ -134,6 +134,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			throw new Exception( "Please include a value for 'title'." );
 		}
 		$searchConfig
+		    ->setMinimumMatch( $this->getVal( 'mm', '75%' ) )
 		    ->setVideoTitleSearch( true )
 		    ->setQuery( $title );
 		$this->getResponse()->setFormat( 'json' );

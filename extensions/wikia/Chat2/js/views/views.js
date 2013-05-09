@@ -44,7 +44,7 @@ var ChatView = Backbone.View.extend({
 				// Linkify local wiki links (eg: http://thiswiki.wikia.com/wiki/Page_Name ) as shortened links (like bracket links)
 				var match = localWikiLinkReg.exec(link);
 				if (match !== null) {
-					linkName = match[1];
+					linkName = match[1].replace(/_/g, " ");
 				}
 
 				// (BugId:97945) Invalid URIs can throw "URIError: URI malformed"

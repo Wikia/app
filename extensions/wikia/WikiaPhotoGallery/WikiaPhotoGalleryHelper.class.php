@@ -92,7 +92,7 @@ class WikiaPhotoGalleryHelper {
 	static public function setupEditPage($editform) {
 		$app = F::app();
 
-		$app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js\"></script>\n");
@@ -101,7 +101,7 @@ class WikiaPhotoGalleryHelper {
 			$app->registerHook('MakeGlobalVariablesScript', 'WikiaPhotoGalleryHelper', 'makeGlobalVariablesScript');
 		}
 
-		$app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

@@ -24,7 +24,7 @@ class RelatedPagesApiController extends WikiaApiController {
 	 */
 
 	function getList(){
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !empty( $this->wg->EnableRelatedPagesExt ) && empty( $this->wg->EnableAnswers ) ) {
 			$ids = $this->request->getArray( self::PARAMETER_ARTICLE_IDS, null );
@@ -45,7 +45,7 @@ class RelatedPagesApiController extends WikiaApiController {
 					$relatedPages->reset();
 				}
 			} else {
-				$this->wf->ProfileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				throw new MissingParameterApiException( 'ids' );
 			}
 
@@ -61,9 +61,9 @@ class RelatedPagesApiController extends WikiaApiController {
 				)
 			);
 
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 		} else {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException( 'Related Pages extension not available' );
 		}
 	}

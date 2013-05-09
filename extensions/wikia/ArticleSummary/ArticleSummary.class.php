@@ -13,9 +13,6 @@ class ArticleSummary {
 				break;
 			}
 
-			$dbName = WikiFactory::IDtoDB($app->wg->CityId);
-			$wikiUrl = WikiFactory::DBtoUrl($dbName);
-
 			$service = new ArticleService( $id );
 			$snippet = $service->getTextSnippet();
 
@@ -29,7 +26,7 @@ class ArticleSummary {
 
 			$summary[$id] = array(
 				'wiki'       => $app->wg->Sitename,
-				'wikiUrl'    => $wikiUrl,
+				'wikiUrl'    => $app->wg->Server,
 				'titleDBkey' => $title->getPrefixedDBkey(),
 				'titleText'  => $title->getFullText(),
 				'articleId'  => $title->getArticleID(),

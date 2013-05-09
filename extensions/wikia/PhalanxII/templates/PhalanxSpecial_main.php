@@ -16,7 +16,7 @@
 						<?php endif; ?>
 						<div id="singlemode">
 							<label for="wpPhalanxFilter" class="left"><?php echo wfMsg( 'phalanx-label-filter' ) ?></label>
-							<input type="text" id="wpPhalanxFilter" name="wpPhalanxFilter" class="blue" size="40" value="<?= $data['text'] ?>" />
+							<input type="text" id="wpPhalanxFilter" name="wpPhalanxFilter" class="blue" size="40" value="<?= htmlspecialchars($data['text']) ?>" />
 							<input type="button" id="validate" value="<?php echo wfMsg( 'phalanx-validate-regexp' ) ?>" />
 							<?php if (empty($editMode)): ?>
 							<input type="button" id="enterbulk" value="<?= wfMsg('phalanx-bulkmode') ?>">

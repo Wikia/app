@@ -15,7 +15,7 @@ class WikiaSearchAjaxController extends WikiaController {
      * Handles accessing paginated results via AJAX.
      */
     public function getNextResults(){
-        $this->wf->ProfileIn(__METHOD__);
+        wfProfileIn(__METHOD__);
 
         $this->response->setVal('status', true);
 
@@ -56,6 +56,6 @@ class WikiaSearchAjaxController extends WikiaController {
         )->render();
 
         $this->response->setVal('text', $text);
-        $this->wf->ProfileOut(__METHOD__);
+        wfProfileOut(__METHOD__);
     }
 }

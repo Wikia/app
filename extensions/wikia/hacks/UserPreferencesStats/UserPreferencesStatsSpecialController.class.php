@@ -22,7 +22,7 @@ class UserPreferencesStatsSpecialController extends WikiaSpecialPageController {
 	 * @author Marooned
 	 */
 	public function index() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->wg->Out->setPageTitle( $this->wf->msg( 'userpreferencesstats-specialpage-title' ) );
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPreferencesStats/css/UserPreferencesStats_Oasis.scss' );
@@ -41,6 +41,6 @@ class UserPreferencesStatsSpecialController extends WikiaSpecialPageController {
 			$this->setVal( 'data', $data );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 }
