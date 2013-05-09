@@ -60,7 +60,7 @@ class Config implements ArrayAccess
 			'cityId'		=>	0,
 			'rank'			=>	'default',
 			'start'			=>	0,
-			'minimumMatch'	=> '66%',
+			'minimumMatch'	=> '80%',
 			);
 	
 	/**
@@ -93,11 +93,13 @@ class Config implements ArrayAccess
 	 * @var array
 	 */
 	private $queryFieldsToBoosts = array(
-			'title'             => 5,
-			'html'              => 1.5,
-			'redirect_titles'   => 4,
-			'categories'        => 1,
-			'nolang_txt'        => 7
+			'title'             => 100,
+-			'html'              => 5,
+-			'redirect_titles'   => 50,
+-			'categories'        => 25,
+-			'nolang_txt'        => 10,
+-			'backlinks_txt'     => 25
+
 			);
 	
 
@@ -424,9 +426,9 @@ class Config implements ArrayAccess
 	 */
 	public function getMatch() {
 	
-            if ( hasArticleMatch() ) {
+            if ( $this->hasArticleMatch() ) {
                 return $this->getArticleMatch();
-            } elseif ( hasWikiMatch() ) {
+            } elseif ( $this->hasWikiMatch() ) {
                 return $this->getWikiMatch();
             } else {
                 return $this->getCategoryMatch();

@@ -13,11 +13,6 @@ use \Solarium_Query_Select, \Wikia\Search\Utilities, \Wikia\CategoryGalleries\se
 class Category extends AbstractSelect
 {
 		
-	/**
-	 * The field to group over.
-	 * @var string
-	 */
-	const GROUP_RESULTS_GROUPING_FIELD = 'categories';
         
         /**
 	 * Limit grouped results, in query result.
@@ -44,7 +39,7 @@ class Category extends AbstractSelect
 	 */
 	public function extractMatch() {
 		
-		$match =  $this->service->getArticleMatchForTermAndNamespaces( $this->config->getQuery()->getSanitizedQuery(),  array( NS_CATEGORY ) );
+		$match =  $this->service->getCategoryMatchForTermAndNamespaces( $this->config->getQuery()->getSanitizedQuery(),  array( NS_CATEGORY ) );
 		if (! empty( $match ) ) {
 			$this->config->setCategoryMatch( $match );
 		}
@@ -105,7 +100,9 @@ class Category extends AbstractSelect
 	 */
 	protected function getQueryClausesString()
 	{
-                $articleList = getTopArticles( self::GROUP_RESULTS_COUNT );
+                
+                $catService = new CategoryService($this->service->getTitleStringFromPageId($this->config->getCategoryMatch()->getResult()->getVar( 'id' )));
+                $articleList = $catService->getTopArticles( self::GROUP_RESULTS_COUNT );
                 
                 $pidsQuery = '';
                 foreach ( $articleList as $pageid => $title ) {
