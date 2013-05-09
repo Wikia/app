@@ -18,7 +18,7 @@ class Factory
 	 * @param DependencyContainer $container
 	 * @todo return type hinting for DependencyContainer to constructor when we have a better solution than WikiaMockProxy for testing. (or a dependencycontainerfactory, yuck)
 	 * @throws \Exception
-	 * @return \Wikia\Search\IndexService\AbstractService
+	 * @return \Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	public function get( $container ) {
 		$searchConfig = $container->getConfig();
@@ -34,7 +34,7 @@ class Factory
 		$terminal = 'Base';
 		if ( $result === null || $result instanceof Solarium_Result_Select_Empty ) {
 			$terminal = 'EmptySet';
-		} else if ( $parent === null && $searchConfig->getGroupResults() ) {
+		} else if ( $parent === null && $searchConfig->getInterWiki() ) {
 			$terminal = 'GroupingSet';
 		} else if ( $parent !== null && $metaposition !== null ) {
 			$terminal = 'Grouping';

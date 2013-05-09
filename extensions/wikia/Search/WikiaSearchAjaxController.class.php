@@ -41,7 +41,7 @@ class WikiaSearchAjaxController extends WikiaController {
 			'hub'			=>	$hub,
 		);
         $config = new Wikia\Search\Config( $params );
-        $config->setIsInterWiki( $isInterWiki )
+        $config->setInterWiki( $isInterWiki )
                ->setQuery( $query )
                ->setGroupResults( $isInterWiki );
         $results = (new QueryService\Factory)->getFromConfig( $config )->search();

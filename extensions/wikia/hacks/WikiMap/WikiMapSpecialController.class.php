@@ -11,9 +11,9 @@ class WikiMapSpecialController extends WikiaSpecialPageController {
     }
 
     public function index() {
-        $this->response->addAsset('extensions/wikia/WikiMap/js/d3.v2.js');
-        $this->response->addAsset('extensions/wikia/WikiMap/js/jquery.xcolor.js');
-        $this->response->addAsset('extensions/wikia/WikiMap/js/WikiMapIndexContent.js');
+        $this->response->addAsset('extensions/wikia/hacks/WikiMap/js/d3.v2.js');
+        $this->response->addAsset('extensions/wikia/hacks/WikiMap/js/jquery.xcolor.js');
+        $this->response->addAsset('extensions/wikia/hacks/WikiMap/js/WikiMapIndexContent.js');
 
        // $this->response->addAsset('wiki_map_js');
 
