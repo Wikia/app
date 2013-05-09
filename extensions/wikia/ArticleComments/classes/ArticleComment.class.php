@@ -638,12 +638,13 @@ class ArticleComment {
 	 * doSaveComment -- save comment
 	 *
 	 * @access public
-	 *
+	 * @param $preserveMetadata: hack to fix bug 102384 (prevent metadata override when trying to modify one of metadata keys)
 	 * @return Array or false on error. - TODO: Document what the array contains.
 	 */
-	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '' ) {
+	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '', $preserveMetadata = false ) {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
+		$metadata = $this->mMetadata;
 
 		$this->load(true);
 		if ( $force || ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) ) {
@@ -676,6 +677,7 @@ class ArticleComment {
 			 */
 
 			$article = new Article( $commentTitle, intval( $this->mLastRevId ) );
+			if ($preserveMetadata) $this->mMetadata = $metadata;
 			$retval = self::doSaveAsArticle($text, $article, $user, $this->mMetadata, $summary );
 
 			if(!empty($title)) {
