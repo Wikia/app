@@ -49,11 +49,7 @@ class InterWiki extends AbstractSelect
 	 * @var array
 	 */
 	protected $boostFunctions = array(
-		'log(wikipages)^4',
-		'log(activeusers)^4',
-		'log(revcount)^1',
-		'log(views)^8',
-		'log(words)^0.5',
+		'log(wam)^10',
 	);
 	
 	/**
@@ -140,7 +136,8 @@ class InterWiki extends AbstractSelect
 	 * @return \Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function configureQueryFields() {
-		$this->config->setQueryField( 'wikititle', 7 );
+		$this->config->setQueryField( 'wikititle', 200 )
+		             ->setQueryField( 'wiki_description_txt', 150 );
 		return $this;
 	}
 	
@@ -149,7 +146,7 @@ class InterWiki extends AbstractSelect
 	 * @return string
 	 */
 	protected function getFilterQueryString() {
-		$filterQueries = array( Utilities::valueForField( 'iscontent', 'true') );
+		$filterQueries = [ Utilities::valueForField( 'iscontent', 'true'), '-wikiarticles:[0 TO 50]' ];
 		$hub = $this->config->getHub();
 		if (! empty( $hub ) ) {
 			$filterQueries[] = Utilities::valueForField( 'hub', $hub );

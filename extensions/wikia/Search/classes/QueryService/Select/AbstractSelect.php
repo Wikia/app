@@ -311,7 +311,7 @@ abstract class AbstractSelect
 	abstract protected function getQueryFieldsString();
 	
 	/**
-	 * Creates a nested query using extended dismax.
+	 * Registers our query as an extended dismax query.
 	 * @return AbstractSelect
 	 */
 	protected function registerDismax( Solarium_Query_Select $select ) {
