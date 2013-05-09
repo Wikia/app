@@ -257,6 +257,8 @@ class ArticleComment {
 			$this->mMetadata = array();
 		}
 
+		ParserPool::release($parser);
+
 		return $this->mText;
 	}
 
