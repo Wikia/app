@@ -168,6 +168,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		}
 
 		$this->list = $this->helper->getWikisForStaffTool($options);
+		$this->collections = $this->helper->getCollectionsList($visualizationLang);
 		$collectionsModel = new WikiaCollectionsModel();
 		$collections = $collectionsModel->getList($visualizationLang);
 

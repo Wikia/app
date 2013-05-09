@@ -46,6 +46,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.7';
 
 	protected $visualizationModel = null;
+	protected $collectionsModel;
 
 	protected $excludeUsersFromInterstitial = array(
 		22439, //Wikia
@@ -114,6 +115,17 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 		return $this->visualizationModel;
 	}
+
+	/**
+	 * @return WikiaCollectionsModel
+	 */
+	protected function getCollectionsModel() {
+		if (empty($this->collectionsModel)) {
+			$this->collectionsModel = new WikiaCollectionsModel();
+		}
+		return $this->collectionsModel;
+	}
+
 
 	/**
 	 * @desc Returns WikiFactory variable's value if not found returns 0 and adds information to logs
@@ -919,11 +931,21 @@ class WikiaHomePageHelper extends WikiaModel {
 	public function getWikisForStaffTool($options) {
 		$wikiList = $this->getVisualization()->getWikisForStaffTool($options);
 
-		$collectionsModel = new WikiaCollectionsModel();
 		foreach ($wikiList as &$wiki) {
-			$wiki->collections = $collectionsModel->getCollectionsByCityId($wiki->city_id);
+			$wiki->collections = $this->getCollectionsModel()->getCollectionsByCityId($wiki->city_id);
 		}
 		return $wikiList;
+	}
+
+	public function getCollectionsList($langCode) {
+		$out = [];
+		$collections = $this->getCollectionsModel()->getList($langCode);
+
+		foreach ($collections as $collection) {
+			$out[$collection['id']] = $collection;
+		}
+
+		return $out;
 	}
 
 	public function getWamScore($wikiId) {
