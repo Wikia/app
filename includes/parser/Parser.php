@@ -3225,6 +3225,17 @@ class Parser {
 	 * @return string
 	 */
 	function replaceVariables( $text, $frame = false, $argsOnly = false ) {
+		// Wikia change - begin - @author: wladek
+		// extra debugging
+		if ( !is_callable( array( $this->mOptions, 'getMaxIncludeSize' ) ) ) {
+			$debugMsg = 'mOptions: type='.gettype($this->mOptions);
+			if ( gettype($this->mOptions) == 'object' ) {
+				$debugMsg .= ' (class:'.get_class($this->mOptions).')';
+			}
+			Wikia::log(__METHOD__,false,$debugMsg,true);
+			Wikia::logBacktrace(__METHOD__);
+		}
+		// Wikia change - end
 		# Is there any text? Also, Prevent too big inclusions!
 		if ( strlen( $text ) < 1 || strlen( $text ) > $this->mOptions->getMaxIncludeSize() ) {
 			return $text;
