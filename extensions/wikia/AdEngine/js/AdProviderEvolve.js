@@ -65,7 +65,8 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 	 */
 	getHeight = function (slot) {
 		var margins = 0,
-			height;
+			height,
+			undef;
 
 		log(['getHeight', slot], 5, logGroup);
 
@@ -75,7 +76,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 		}
 
 		// IE8
-		if (!height && slot.currentStyle) {
+		if (height === undef && slot.currentStyle) {
 			margins += parseInt('0' + slot.currentStyle.marginTop, 10);
 			margins += parseInt('0' + slot.currentStyle.marginBottom, 10);
 			margins += parseInt('0' + slot.currentStyle.paddingTop, 10);
