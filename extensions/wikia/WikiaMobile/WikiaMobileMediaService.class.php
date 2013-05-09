@@ -54,7 +54,8 @@ class WikiaMobileMediaService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		$items = $this->request->getVal( 'items', [] );
-		$parser = $this->request->getVal( 'parser' );
+		//This is a parser from ImageGallery
+		$parser = $this->request->getVal( 'parser', $this->wg->Parser );
 		$first = null;
 		$wikiText = '';
 		$result = '';
