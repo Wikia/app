@@ -136,6 +136,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function mockClassStaticMethod($className, $methodName, $retVal) {
 		// runkit doesn't resolve autoloaded classes, we need to force it here...
+		is_callable(array($className,$methodName));
 		if (!class_exists($className)) {
 			// TODO: add support for namespaces
 			require_once $this->app->wg->AutoloadClasses[$className];

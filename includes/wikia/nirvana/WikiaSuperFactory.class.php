@@ -45,6 +45,7 @@ abstract class WikiaSuperFactory {
 	/**
 	 * get predefined instance of given class (useful for mocks or singletons)
 	 * @param string $className class name
+	 * @deprecated
 	 *
 	 * @return JSMessages|mixed the class instance or null if one has not been registered
 	 */
@@ -59,6 +60,7 @@ abstract class WikiaSuperFactory {
 	/**
 	 * reset predefined instance of given class (if any)
 	 * @param string $className
+	 * @deprecated
 	 */
 	public static function unsetInstance($className) {
 		if(isset(self::$constructors[$className]) && array_key_exists('INSTANCE', self::$constructors[$className])) {

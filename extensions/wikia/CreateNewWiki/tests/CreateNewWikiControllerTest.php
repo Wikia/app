@@ -51,10 +51,10 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 			->method('getFullURL')
 			->will($this->returnValue($mainPageUrl));
 
-		F::setInstance('CreateWiki', $createWiki);
-		F::setInstance('GlobalTitle', $mainPageTitle);
+		$this->proxyClass('CreateWiki', $createWiki);
+		$this->proxyClass('GlobalTitle', $mainPageTitle);
 
-		$wgUser = $this->getMock('User');
+		$this->mockApp();
 
 		$response = $app->sendRequest('CreateNewWiki', 'CreateWiki');
 
@@ -75,6 +75,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 			->will($this->onConsecutiveCalls($wikiName, $wikiLang));
 
 		$app = $this->getMock('WikiaApp', array('getGlobal', 'runFunction'));
+		/*
 		$app->expects($this->once())
 			->method('getGlobal')
 			->with($this->equalTo('wgRequest'))
@@ -83,6 +84,10 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 			->method('runFunction')
 			->with($this->equalTo('AutoCreateWiki::checkWikiNameIsCorrect'), $this->equalTo($wikiName), $this->equalTo($wikiLang))
 			->will($this->returnValue(""));
+		*/
+
+		$this->mockGlobalVariable('wgRequest',$wgRequest);
+		$this->mockClassStaticMethod('AutoCreateWiki','checkWikiNameIsCorrect','');
 
 		$response = $app->sendRequest('CreateNewWiki', 'CheckWikiName');
 

@@ -12,7 +12,6 @@ class SEOTweaksHooksHelper {
 	
 	/**
 	 * List of hosts associated with external sharing services
-	 * @var unknown_type
 	 */
 	const SHARING_HOSTS_REGEX = '/\.(facebook)|(twitter)|(google)\./is';
 
@@ -41,7 +40,7 @@ class SEOTweaksHooksHelper {
 	 * @param Article $article
 	 * @return bool
 	 */
-	static public function onAfterInitialize( &$title, &$article, &$output, &$user, $request ) {
+	static public function onAfterInitialize( &$title, &$article, &$output ) {
 		if( !$title->exists() && $title->isDeleted() ) {
 			$setDeletedStatusCode = true;
 			// handle special cases

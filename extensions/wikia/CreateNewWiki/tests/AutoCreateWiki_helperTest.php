@@ -12,7 +12,7 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 			->method('getGroups')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalVariable('user', $userMock);
+		$this->mockGlobalVariable('wgUser', $userMock);
 	}
 
 	/**
