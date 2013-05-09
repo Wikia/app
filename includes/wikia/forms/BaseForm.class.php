@@ -4,6 +4,13 @@ abstract class BaseForm {
 
 	protected $fields = [];
 
+	/**
+	 * Add field to form
+	 *
+	 * @param string $fieldName
+	 * @param BaseField $field
+	 * @param WikiaValidator $validator
+	 */
 	protected function addField($fieldName, BaseField $field, WikiaValidator $validator = null) {
 		if (isset($validator)) {
 			$field->setValidator($validator);
@@ -11,12 +18,20 @@ abstract class BaseForm {
 		$this->fields[$fieldName] = $field;
 	}
 
+	/**
+	 * Get form field by name
+	 *
+	 * @param string $fieldName
+	 * @return BaseField
+	 */
 	public function getField($fieldName) {
 		return $this->fields[$fieldName];
 	}
 
 	/**
-	 * Remove all unnecessary data, that is note defined as field in form
+	 * Before validate data processing
+	 * Remove all unnecessary data, that is not defined as field in form
+	 * and filter data by each field filter
 	 *
 	 * @param $data
 	 * @return array
@@ -50,6 +65,12 @@ abstract class BaseForm {
 		return $isValid;
 	}
 
+	/**
+	 * Render whole form
+	 * with opening tag, all fields submits and closing tag
+	 *
+	 * @return string
+	 */
 	public function render() {
 		$out = '';
 		$out .= $this->renderStart();
@@ -58,6 +79,11 @@ abstract class BaseForm {
 		return $out;
 	}
 
+	/**
+	 * Render all fields defined in form
+	 *
+	 * @return string
+	 */
 	public function renderFields() {
 		$out = '';
 		foreach ($this->fields as $fieldName => $field) {
@@ -66,14 +92,25 @@ abstract class BaseForm {
 		return $out;
 	}
 
+	/**
+	 * Render selected field
+	 *
+	 * @param string $fieldName
+	 */
 	public function renderField($fieldName) {
 		$this->getField($fieldName)->render();
 	}
 
+	/**
+	 * Render opening tag for form
+	 */
 	public function renderStart() {
 		// TODO
 	}
 
+	/**
+	 * Render closing tag for form
+	 */
 	public function renderEnd() {
 		// TODO
 	}
