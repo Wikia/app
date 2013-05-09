@@ -8,6 +8,7 @@ abstract class BaseField {
 
 	// TODO decide what params are required here
 	// TODO maybe array fields should be decorated
+	// TODO think about label for field and div
 	public function __construct() {
 	}
 

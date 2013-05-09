@@ -1,0 +1,1 @@
+<input name="<?= $name ?>" type="checkbox" id="<?= $id ?>" <?= $attributes ?> value="1" <? if ($value):?>checked="checked"<? endif?> />
