@@ -61,7 +61,6 @@ class SearchApiController extends WikiaApiController {
 			->setAdvanced( false )
 			->setHub( false )
 			->setRedirs( false )
-			->setIsInterWiki( false )
 			->setVideoSearch( $type == 'videos' )
 			->setGroupResults( false );
 

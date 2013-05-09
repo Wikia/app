@@ -10,7 +10,6 @@
 				'namespaces' => $profile['namespaces'],
 				'label' => wfMsg( $profile['message'] ),
 				'tooltip' => wfMsg( $profile['tooltip'], $tooltipParam ),
-				'redirs' => $redirs,
 				'params' => isset( $profile['parameters'] ) ? $profile['parameters'] + array('fulltext'=>'Search') : array('fulltext'=>'Search') ) );
 			?>
 			<? // Image/Video tab options ?>

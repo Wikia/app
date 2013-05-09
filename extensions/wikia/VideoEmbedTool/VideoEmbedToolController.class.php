@@ -40,7 +40,7 @@ class VideoEmbedToolController extends WikiaController {
 
 			$wikiaSearchConfig = new Wikia\Search\Config();
 			$wikiaSearchConfig  ->setStart( $svStart )
-								->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+								->setLimit( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
 								->setCityID( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
 								->setVideoEmbedToolSearch( true )
 								->setQuery( $articleTitle );
@@ -77,8 +77,8 @@ class VideoEmbedToolController extends WikiaController {
 
 		$wikiaSearchConfig = new Wikia\Search\Config();
 		$wikiaSearchConfig  ->setStart( $svStart )
-							->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
-							->setVideoSearch( true )
+							->setLimit( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+							->setVideoEmbedToolSearch( true )
 							->setNamespaces( array( NS_FILE ) )
 							->setRank($searchOrder);
 

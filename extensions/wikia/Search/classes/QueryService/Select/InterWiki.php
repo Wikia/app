@@ -185,7 +185,7 @@ class InterWiki extends AbstractSelect
 	protected function getFormulatedQuery() {
 		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
 	}
-		
+
 	/**
 	 * Return a string of query fields based on configuration
 	 * @todo since this gets repeated across OnWiki as well, this is an another indicator that we need additional class layers
