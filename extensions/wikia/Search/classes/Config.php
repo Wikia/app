@@ -740,4 +740,13 @@ class Config implements ArrayAccess
 		}
 		return $this;
 	}
+	
+	/**
+	 * If video search is set to true, then it's video search. It's also video search if we're on the video wiki.
+	 * @return boolean
+	 */
+	public function getVideoSearch() {
+		$videoSearch = isset( $this->params['videoSearch'] ) ? $this->params['videoSearch'] : false;
+		return $videoSearch || ( $this->getCityId() == \Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
+	}
 }
