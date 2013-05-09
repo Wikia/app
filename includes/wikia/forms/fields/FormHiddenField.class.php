@@ -2,5 +2,9 @@
 
 class FormHiddenField extends FormInputField
 {
-	const INPUT_FIELD_TYPE = 'hidden';
+	const TYPE = 'hidden';
+
+	protected function getType() {
+		return self::TYPE;
+	}
 }

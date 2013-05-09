@@ -27,7 +27,7 @@ abstract class FormField {
 	}
 
 	public function getValue() {
-		return $this->getProperty(self::ATTRIBUTE_NAME_VALUE);
+		return $this->getProperty(self::PROPERTY_VALUE);
 	}
 
 	public function setValidator(WikiaValidator $validator) {

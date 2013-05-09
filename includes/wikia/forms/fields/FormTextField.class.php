@@ -2,5 +2,9 @@
 
 class FormTextField extends FormInputField
 {
-	const INPUT_FIELD_TYPE = 'text';
+	const TYPE = 'text';
+
+	protected function getType() {
+		return self::TYPE;
+	}
 }

@@ -1,7 +1,9 @@
 <?php
 
-class FormInputField extends FormField
+abstract class FormInputField extends FormField
 {
+	abstract protected function getType();
+
 	public function render() {
 		//TODO add logic
 	}
