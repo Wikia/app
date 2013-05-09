@@ -50,6 +50,8 @@ var Lightbox = {
 
 		Lightbox.openModal.aggregateViewCount = 0;
 		Lightbox.openModal.clickSource = clickSource;
+		// This is a temporary duplication of clicksource tracking until we switch over to the video-player-stats version
+		Lightbox.openModal.vbClickSource = clickSource;
 
 		// Check screen height for future interactions
 		Lightbox.shortScreen = $(window).height() < LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset ? true : false;
@@ -312,6 +314,7 @@ var Lightbox = {
 
 					// Set all future click sources to Lightbox rather than DOM element
 					Lightbox.openModal.clickSource = LightboxTracker.clickSource.LB;
+					Lightbox.openModal.vbClickSource = LightboxTracker.clickSource.LB;
 				}, 500);
 
 			});
@@ -404,7 +407,8 @@ var Lightbox = {
 				.css('line-height','normal');
 
 			require(['wikia.videoBootstrap'], function (videoBootstrap) {
-				videoInstance = new videoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode);
+				videoInstance = new videoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode, Lightbox.openModal.vbClickSource);
+				Lightbox.openModal.vbClickSource = LightboxTracker.clickSource.LB;
 			});
 		},
 		destroyVideo: function() {
@@ -1361,6 +1365,12 @@ var Lightbox = {
 
 				if(typeof clickSource != 'undefined') {
 					// Click source is already set so we don't have to look for it.
+					break;
+				}
+
+				// Hubs
+				if(window.wgWikiaHubType) {
+					clickSource = VPS.HUBS;
 					break;
 				}
 

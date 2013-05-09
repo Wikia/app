@@ -115,13 +115,13 @@ window.addEventListener('DOMContentLoaded', function () {
 				});
 			}
 
-			// TODO: this is only for video file pages - Mobile team can decide where to actually put it.
+			// Play video on file pages
 			var element = document.getElementById('file'),
 				videoInstance;
 
 			if(element && window.playerParams) {
 				require(['wikia.videoBootstrap'], function (videoBootstrap) {
-					videoInstance = new videoBootstrap(element, window.playerParams);
+					videoInstance = new videoBootstrap(element, window.playerParams, 'mobileFilePage');
 				});
 			}
 

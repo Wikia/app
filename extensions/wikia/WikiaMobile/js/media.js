@@ -159,7 +159,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		var videoInstance;
 
 		require(['wikia.videoBootstrap'], function (videoBootstrap) {
-			videoInstance = new videoBootstrap(image, data);
+			videoInstance = new videoBootstrap(image, data, 'mobileModal');
 		});
 	}
 

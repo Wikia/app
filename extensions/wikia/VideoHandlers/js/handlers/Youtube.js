@@ -1,6 +1,8 @@
 /**
  * Use Youtube's iframe API to play and track videos
- * https://developers.google.com/youtube/iframe_api_reference
+ * Uses player events to track video views
+ *
+ * @see https://developers.google.com/youtube/iframe_api_reference
  */
 
 define('wikia.youtube', ['wikia.window', 'wikia.loader'], function Youtube(window, loader) {
@@ -35,7 +37,7 @@ define('wikia.youtube', ['wikia.window', 'wikia.loader'], function Youtube(windo
 		}
 
 		function createPlayer() {
-			player = new YT.Player(containerId, params);
+			player = new window.YT.Player(containerId, params);
 		}
 
 		// Make sure iframe_api is fully loaded before binding onYouTubeIframeAPIReady event

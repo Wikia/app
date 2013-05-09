@@ -1,7 +1,12 @@
+/**
+ * Initialize a new video instance
+ * Important: If an init function is specified, it must handle it's own tracking
+ */
+
 define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function videoBootstrap(loader, nirvana) {
 
-	// "vb" = video bootstrap
-	function vb (element, json) {
+	 // vb stands for video bootstrap
+	 function vb (element, json, clickSource) {
 		var self = this,
 			init = json.init,
 			html = json.html,
@@ -9,14 +14,16 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 			jsParams = json.jsParams;
 
 		this.element = element;
+		this.clickSource = clickSource;
 		this.title = json.title;
 		this.provider = json.provider;
 
-		// insert html if it hasn't been inserted already
+		// Insert html if it hasn't been inserted already
 		if(html && !json.htmlPreloaded) {
 			element.innerHTML = html;
 		}
 
+		// Load any scripts needed for the video player
 		if(scripts) {
 			var i,
 				args = [];
@@ -38,6 +45,11 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 					});
 				}
 			});
+		}
+
+		// If there's no init function, just send one tracking call so it counts as a view
+		if(!init) {
+			self.timeoutTrack();
 		}
 	}
 
@@ -69,9 +81,27 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 				trackingMethod: 'internal',
 				value: 0
 			}, {
-				title: this.title
+				title: this.title,
+				clickSource: this.clickSource
 			});
 		},
+		/**
+		 * Use this when the video provider doesn't offer a player api for tracking
+		 */
+		timeoutTrack: function() {
+			var self = this;
+			if(window.vbTrackingTimeout) {
+				clearTimeout(window.vbTrackingTimeout);
+			}
+			window.vbTrackingTimeout = setTimeout(function() {
+				self.track('content-begin');
+			}, 3000);
+		},
+		/**
+		 * Some video providers require unique DOM id's in order to initialize
+		 * videos. Timestamping DOM id's makes it so you can create more than
+		 * one instance of the same video on a page.
+		 */
 		timeStampId: function(id) {
 			var time = new Date().getTime(),
 				container = document.getElementById(id),

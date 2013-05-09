@@ -322,7 +322,7 @@
 			element = $('<div></div>').appendTo('#VideoEmbedThumb');
 
 		require(['wikia.videoBootstrap'], function (videoBootstrap) {
-			videoInstance = new videoBootstrap(element[0], window.VETPlayerParams);
+			videoInstance = new videoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
 		});
 
 		VET_updateHeader();
@@ -914,7 +914,7 @@
 				videoInstance;
 
 			require(['wikia.videoBootstrap'], function (videoBootstrap) {
-				videoInstance = new videoBootstrap(embedWrapper[0], data.videoEmbedCode);
+				videoInstance = new videoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
 			});
 
 			// expand preview is hidden
