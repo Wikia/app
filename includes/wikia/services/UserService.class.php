@@ -4,88 +4,8 @@ class UserService extends Service {
 	const CACHE_EXPIRATION = 86400;//1 day
 
 	private static $userCache;
-	private static $userMapping;
+	private static $userCacheMapping;
 
-	private static function getUsersFromCache( &$ids ) {
-		$result = array();
-		//set prefix, so we take correct cached data
-		global $wgCachePrefix;
-		$tmpCachePrefix = $wgCachePrefix;
-		$wgCachePrefix = 'GlobalUserCache';
-
-		if ( !empty( $ids[ 'user_id' ] ) ) {
-			foreach ( $ids[ 'user_id'] as $key => $id ) {
-				if ( isset( static::$userCache[ $id ] ) ) {
-					$result[ $id ] = static::$userCache[ $id ];
-					unset( $ids[ 'user_id' ][ $key ] );
-				} else {
-					//if not cached locally, try memc
-					$cacheIdKey = F::app()->wf->memcKey( $id );
-					if ( ( $value = F::app()->wg->memc->get( $cacheIdKey ) ) !== false ) {
-						//cache locally
-						static::cacheLocalUser( $value );
-						$result[ $value->getId() ] = $value;
-						unset( $ids[ 'user_id' ][ $key ] );
-					}
-				}
-			}
-		}
-		if ( !empty( $ids[ 'user_name' ] ) ) {
-			foreach ( $ids[ 'user_name'] as $key => $name ) {
-				if ( isset( static::$userMapping[ $name ] ) ) {
-					$id = static::$userMapping[ $name ];
-					$result[ $id ] = static::$userCache[ $id ];
-					unset( $ids[ 'user_name' ][ $key ] );
-				} else {
-					//if not cached locally, try memc
-					$cacheNameKey = F::app()->wf->memcKey( $name );
-					if ( ( $value = F::app()->wg->memc->get( $cacheNameKey ) ) !== false ) {
-						$cacheIdKey = F::app()->wf->memcKey( $value );
-						$userValue = F::app()->wg->memc->get( $cacheIdKey );
-						if ( $userValue !== false ) {
-							//cache locally
-							static::cacheLocalUser( $userValue );
-							$result[ $userValue->getId() ] = $userValue;
-							unset( $ids[ 'user_name' ][ $key ] );
-						}
-					}
-				}
-			}
-		}
-		//set global cache prefix back to previous value
-		$wgCachePrefix = $tmpCachePrefix;
-
-		if ( empty( $ids[ 'user_id' ] ) ) {
-			unset ( $ids[ 'user_id' ] );
-		}
-		if ( empty( $ids[ 'user_name' ] ) ) {
-			unset ( $ids[ 'user_name' ] );
-		}
-
-		return $result;
-	}
-
-	/**
-	 * @param $user User
-	 */
-	private static function cacheUser( $user ) {
-		global $wgCachePrefix;
-		$tmpCachePrefix = $wgCachePrefix;
-		$wgCachePrefix = 'GlobalUserCache';
-		$cacheIdKey = F::app()->wf->memcKey( $user->getId() );
-		$cacheNameKey = F::app()->wf->memcKey( $user->getName() );
-		$wgCachePrefix = $tmpCachePrefix;
-		F::app()->wg->memc->set( $cacheIdKey, $user, static::CACHE_EXPIRATION );
-		F::app()->wg->memc->set( $cacheNameKey, $user->getId(), static::CACHE_EXPIRATION );
-
-		static::cacheLocalUser( $user );
-	}
-
-	private static function cacheLocalUser( $user ) {
-		static::$userMapping[ $user->getName() ] = $user->getId();
-		static::$userCache[ $user->getId() ] = $user;
-	}
-	
 	public static function getNameFromUrl($url) {
 		$out = false;
 		
@@ -110,6 +30,55 @@ class UserService extends Service {
 	public static function getUsers( $ids ) {
 		wfProfileIn( __METHOD__ );
 
+		$where = static::parseIds( $ids );
+		//check for cached data
+		//by id first
+		$result = static::getUsersFromCacheById( $where[ 'user_id' ] );
+		//then check for names
+		$result = array_merge( $result, static::getUsersFromCacheByName( $where[ 'user_name' ] ) );
+		//unset empty statements
+		if ( empty( $where[ 'user_id' ] ) ) { unset( $where[ 'user_id' ] );	}
+		if ( empty( $where[ 'user_name' ] ) ) { unset( $where[ 'user_name' ] );	}
+
+		if ( !empty( $where ) ) {
+			//init db connection
+			$result = array_merge( $result, static::queryDbForUsers( $where ) );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+
+	/** Helper methods for getUsers */
+
+	/**
+	 * Gets the users fro given where conditions
+	 * @param $where array filled with where condition for quering db
+	 * @return array
+	 */
+	private static function queryDbForUsers( $where ) {
+		$result = array();
+		$dbr = wfGetDB( DB_SLAVE );
+		$conds = $dbr->makeList( $where, LIST_OR );
+		$s = $dbr->selectSQLText( 'user', '*', $conds, __METHOD__ );
+		$s = $dbr->query( $s, __METHOD__ );
+
+		while ( ( $row = $s->fetchObject() ) !== false ) {
+			$user = User::newFromRow( $row );
+			$result[ $row->user_id ] = $user;
+			static::cacheUser( $user );
+		}
+		return $result;
+	}
+
+
+	/**
+	 * The method parse ids so they can be used in sql query and cache
+	 * @param $ids
+	 * @return array
+	 */
+	private static function parseIds( $ids ) {
+
 		if ( !isset( $ids[ 'user_id' ] ) && !isset( $ids[ 'user_name' ] ) ) {
 			$conds = array();
 			//make it array, so we can filter it using array_filter
@@ -129,27 +98,119 @@ class UserService extends Service {
 			if ( !empty( $text ) ) {
 				$conds[ 'user_name' ] = $text;
 			}
-		} else {
-			$conds = $ids;
+			return $conds;
 		}
+		return $ids;
+	}
 
-		//check for cached data
-		$result = static::getUsersFromCache( $conds );
-		if ( !empty( $conds ) ) {
-			//init db connection
-			$dbr = wfGetDB( DB_SLAVE );
-			$where = $dbr->makeList( $conds, LIST_OR );
-			$s = $dbr->selectSQLText( 'user', '*', $where, __METHOD__ );
-			$s = $dbr->query( $s, __METHOD__ );
-
-			while ( ( $row = $s->fetchObject() ) !== false ) {
-				$user = User::newFromRow( $row );
-				$result[ $row->user_id ] = $user;
-				static::cacheUser( $user );
+	/**
+	 * Gets the users objects from local cache, and in case of miss from memcache
+	 * @param $ids array
+	 * @return array User objects list
+	 */
+	private static function getUsersFromCacheById( &$ids ) {
+		//extract getting from mem cache
+		$result = array();
+		foreach ( $ids as $id ) {
+			if ( ( $value = static::getUserFromLocalCacheById( $id ) ) !== false ) {
+				$result[ $value->getId() ] = $value;
+			} elseif ( ( $value = static::getUserFromMemCacheById( $id ) ) !== false ) {
+				$result[ $value->getId() ] = $value;
+			} else {
+				$idsToQuery[] = $id;
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
+		//set the list of ids that werent found in cache
+		if ( !empty( $idsToQuery ) ) {
+			$ids = $idsToQuery;
+		} else {
+			$ids = null;
+		}
+
 		return $result;
+	}
+
+	/**
+	 * Looks in cache for User object by user name, local cache is firstly check
+	 * @param $names
+	 * @return array
+	 */
+	private static function getUsersFromCacheByName( &$names ) {
+		//extract getting from mem cache
+		$result = array();
+		foreach ( $names as $name ) {
+			if ( ( $value = static::getUserFromLocalCacheByName( $name ) ) !== false ) {
+				$result[ $value->getId() ] = $value;
+			} elseif ( ( $value = static::getUserFromMemCacheByName( $name ) ) !== false ) {
+				$result[ $value->getId() ] = $value;
+			} else {
+				$namesToQuery[] = $name;
+			}
+		}
+
+		//set the list of names that werent found in cache
+		if ( !empty( $namesToQuery ) ) {
+			$names = $namesToQuery;
+		} else {
+			$names = null;
+		}
+
+		return $result;
+	}
+
+
+	private static function getUserFromMemCacheById( $id ) {
+		$cacheIdKey = F::app()->wf->sharedMemcKey( "UserCache:".$id );
+		if ( ( $value = F::app()->wg->memc->get( $cacheIdKey ) ) !== false ) {
+			//cache locally
+			static::cacheLocalUser( $value );
+			return $value;
+		}
+		return false;
+	}
+
+	private static function getUserFromMemCacheByName( $name ) {
+		$cacheNameKey = F::app()->wf->sharedMemcKey( "UserCache:".$name );
+		if ( ( $value = F::app()->wg->memc->get( $cacheNameKey ) ) !== false ) {
+			if ( ( $value = static::getUserFromMemCacheById( $value ) ) !== false ) {
+				return $value;
+			}
+		}
+		return false;
+	}
+
+	private static function getUserFromLocalCacheById( $id ) {
+		if ( isset( static::$userCache[ $id ] ) ) {
+			return static::$userCache[ $id ];
+		}
+		return false;
+	}
+
+	private static function getUserFromLocalCacheByName( $name ) {
+		if ( isset( static::$userCacheMapping[ $name ] ) ) {
+			return static::getUserFromLocalCacheById( static::$userCacheMapping[ $name ] );
+		}
+		return false;
+	}
+
+	/**
+	 * @param $user User
+	 */
+	private static function cacheUser( $user ) {
+		$cacheIdKey = F::app()->wf->sharedMemcKey( "UserCache:".$user->getId() );
+		$cacheNameKey = F::app()->wf->sharedMemcKey( "UserCache:".$user->getName() );
+		F::app()->wg->memc->set( $cacheIdKey, $user, static::CACHE_EXPIRATION );
+		F::app()->wg->memc->set( $cacheNameKey, $user->getId(), static::CACHE_EXPIRATION );
+
+		static::cacheLocalUser( $user );
+	}
+
+	/**
+	 * @param $user User
+	 */
+	private static function cacheLocalUser( $user ) {
+		static::$userCacheMapping[ $user->getName() ] = $user->getId();
+		static::$userCache[ $user->getId() ] = $user;
 	}
 }
