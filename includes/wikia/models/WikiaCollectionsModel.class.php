@@ -1,6 +1,7 @@
 <?php
 class WikiaCollectionsModel extends WikiaModel {
 	const TABLE_NAME = 'wikia_homepage_collections';
+	const COLLECTIONS_CV_TABLE = 'wikia_homepage_collections_city_visualization';
 	const COLLECTIONS_COUNT = 3;
 	const COLLECTIONS_MEMC_VERSION = '0.1';
 
@@ -103,5 +104,122 @@ class WikiaCollectionsModel extends WikiaModel {
 		$mdb->delete(self::TABLE_NAME, $conds, __METHOD__);
 
 		$mdb->commit();
+	}
+
+	/**
+	 * Add wiki (wiki id) to selected collection
+	 *
+	 * @param $cityId
+	 * @param $collectionId
+	 */
+	public function addWikiToCollection($collectionId, $cityId) {
+		if ( !$this->checkWikiCollectionExists($collectionId, $cityId) ) {
+			$db = $this->wf->getDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+
+			$insertData = [
+				'collection_id' => $collectionId,
+				'city_id' => $cityId
+			];
+
+			$db->insert(self::COLLECTIONS_CV_TABLE, $insertData);
+		}
+	}
+
+	/**
+	 * Remove wiki (wiki id) from selected collection
+	 *
+	 * @param $cityId
+	 * @param $collectionId
+	 */
+	public function removeWikiFromCollection($collectionId, $cityId) {
+		$db = $this->wf->getDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+
+		$conds = [
+			'collection_id' => $collectionId,
+			'city_id' => $cityId
+		];
+
+		$result = $db->delete(self::COLLECTIONS_CV_TABLE, $conds);
+	}
+
+	/**
+	 * Get all wikis belonging to selected collection
+	 *
+	 * @param $collectionId
+	 */
+	public function getWikisFromCollection($collectionId) {
+		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$fields = [
+			'city_id',
+			'collection_id'
+		];
+
+		$conds = [
+			'collection_id' => $collectionId
+		];
+
+		$results = $db->select(self::COLLECTIONS_CV_TABLE, $fields, $conds);
+
+		$out = [];
+
+		while( $row = $db->fetchRow($results) ) {
+			$out[] = $row;
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Get all wikis from all collections in selected language
+	 *
+	 * @param $langCode
+	 */
+	public function getCollectionWikisByLang($langCode) {
+		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$tables = [
+			'whc'	=> self::TABLE_NAME,
+			'whccv' => self::COLLECTIONS_CV_TABLE
+		];
+
+		$fields = [
+			'whccv.city_id',
+			'whccv.collection_id'
+		];
+
+		$conds = [
+			'whc.lang_code' => $langCode
+		];
+
+		$joinConds = array(
+			'whc' => array(
+				'left join',
+				'whc.id = whccv.collection_id'
+			)
+		);
+
+		$results = $db->select($tables, $fields, $conds, __METHOD__, [], $joinConds);
+
+		$out = [];
+
+		while( $row = $db->fetchRow($results) ) {
+			$out[] = $row;
+		}
+
+		return $out;
+	}
+
+	private function checkWikiCollectionExists($collectionId, $cityId) {
+		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$conds = [
+			'collection_id' => $collectionId,
+			'city_id' => $cityId
+		];
+
+		$result = $db->selectRow(self::COLLECTIONS_CV_TABLE, 'city_id', $conds);
+
+		return (bool)$result;
 	}
 }
