@@ -21,16 +21,6 @@ abstract class BaseField {
 	abstract public function render();
 
 	/**
-	 * Set field property
-	 *
-	 * @param string $propertyName
-	 * @param mixed $propertyValue
-	 */
-	public function setProperty($propertyName, $propertyValue) {
-		$this->properties[$propertyName] = $propertyValue;
-	}
-
-	/**
 	 * Set field value property
 	 *
 	 * @param mixed $value
@@ -127,5 +117,15 @@ abstract class BaseField {
 			}
 		}
 		return $isValid;
+	}
+
+	/**
+	 * Set field property
+	 *
+	 * @param string $propertyName
+	 * @param mixed $propertyValue
+	 */
+	protected function setProperty($propertyName, $propertyValue) {
+		$this->properties[$propertyName] = $propertyValue;
 	}
 }
