@@ -53,14 +53,12 @@ class WikiaMobileMediaService extends WikiaService {
 	public function renderMediaGroup() {
 		wfProfileIn( __METHOD__ );
 
-		$items = $this->request->getVal( 'items', array() );
+		$items = $this->request->getVal( 'items', [] );
+		$parser = $this->request->getVal( 'parser' );
 		$first = null;
 		$wikiText = '';
 		$result = '';
 		$params = [];
-		$parser = ParserPool::get();
-
-		$parser->startExternalParse( $this->wg->Title, ParserOptions::newFromContext( RequestContext::getMain() ), Parser::OT_HTML );
 
 		//separate linked items from normal ones and select the first one
 		//which will be rendered in the page
@@ -162,7 +160,6 @@ class WikiaMobileMediaService extends WikiaService {
 			$this->wg->WikiaMobileDisableMediaGrouping = $origVal;
 		}
 
-		ParserPool::release( $parser );
 		$this->response->setBody( $result );
 		wfProfileOut( __METHOD__ );
 	}
