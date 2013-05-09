@@ -680,6 +680,15 @@ class Config
 	public function setVideoSearch( $apply ) {
 		return $this->setQueryService( 'Select\\Video', $apply );
 	}
+
+	/**
+	 * Sets (or unsets) video embed tool search as query service
+     * @param bool $apply
+	 * @param Wikia\Search\Config
+     */
+	public function setVideoEmbedToolSearch( $apply ) {
+		return $this->setQueryService( 'Select\\VideoEmbedTool', $apply );
+	}
 	
 	/**
 	 * Sets or unsets Lucene as our query service

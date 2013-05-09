@@ -78,7 +78,7 @@ class VideoEmbedToolController extends WikiaController {
 		$wikiaSearchConfig = new Wikia\Search\Config();
 		$wikiaSearchConfig  ->setStart( $svStart )
 							->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
-							->setVideoSearch( true )
+							->setVideoEmbedToolSearch( true )
 							->setNamespaces( array( NS_FILE ) )
 							->setRank($searchOrder);
 
