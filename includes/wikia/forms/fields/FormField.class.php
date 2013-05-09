@@ -28,7 +28,7 @@ abstract class FormField {
 	}
 
 	public function getValue() {
-		return $this->properties[self::ATTRIBUTE_NAME_VALUE];
+		return $this->getProperty(self::ATTRIBUTE_NAME_VALUE);
 	}
 
 	public function filterValue($value) {
