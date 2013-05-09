@@ -2,23 +2,39 @@
 abstract class BaseField {
 	const PROPERTY_VALUE = 'value';
 	const PROPERTY_ERROR_MESSAGE = 'errorMessage';
+	const PROPERTY_LABEL = 'label';
+	const PROPERTY_NAME = 'name';
 
 	protected $validator;
 	protected $properties = [];
 
 	// TODO decide what params are required here
 	// TODO maybe array fields should be decorated
-	// TODO think about label for field and div
-	public function __construct() {
+	// TODO think about div
+	public function __construct($options = []) {
+		if (isset($options['label'])) {
+			$this->setProperty(self::PROPERTY_LABEL, $options['label']);
+		}
+		if (isset($options['validator'])) {
+			$this->setValidator($options['validator']);
+		}
 	}
 
-	// TODO check if abstract is required or maybe we can create universal logic for all fields
 	/**
 	 * Render field
 	 *
 	 * @return string
 	 */
-	abstract public function render();
+	public function render() {
+		$out = '';
+		$label = $this->getProperty(self::PROPERTY_LABEL);
+		if (isset($label)) {
+			$out .= $label->render($this->getName());
+		}
+
+		// TODO render view
+		return $out;
+	}
 
 	/**
 	 * Set field value property
@@ -30,13 +46,30 @@ abstract class BaseField {
 	}
 
 	/**
+	 * Set field name
+	 *
+	 * @param $name
+	 */
+	public function setName($name) {
+		$this->setProperty(self::PROPERTY_NAME, $name);
+	}
+
+	/**
+	 * Get field name
+	 * @return mixed
+	 */
+	public function getName() {
+		return $this->getProperty(self::PROPERTY_NAME);
+	}
+
+	/**
 	 * Get field property
 	 *
 	 * @param string $propertyName
 	 * @return mixed
 	 */
 	public function getProperty($propertyName) {
-		return $this->properties[$propertyName];
+		return isset($this->properties[$propertyName]) ? $this->properties[$propertyName] : null;
 	}
 
 	/**

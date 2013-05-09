@@ -11,10 +11,8 @@ abstract class BaseForm {
 	 * @param BaseField $field
 	 * @param WikiaValidator $validator
 	 */
-	protected function addField($fieldName, BaseField $field, WikiaValidator $validator = null) {
-		if (isset($validator)) {
-			$field->setValidator($validator);
-		}
+	protected function addField($fieldName, BaseField $field) {
+		$field->setName($fieldName);
 		$this->fields[$fieldName] = $field;
 	}
 
