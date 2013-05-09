@@ -16,6 +16,7 @@ class ImageServingIndexerTest extends WikiaBaseTest {
 	 * This test assumes that:
 	 *  - "Main Page" article
 	 *  - "Wiki-wordmark.png" image
+	 *  - "FireflyLogo-NoBackground.png" image
 	 * exist on a wiki this test is run for
 	 *
 	 * @see ImageServingHelper::buildIndex
@@ -56,6 +57,25 @@ class ImageServingIndexerTest extends WikiaBaseTest {
 			[
 				'wikitext' => '<gallery>Wiki-wordmark.png</gallery>',
 				'expectedImages' => ['Wiki-wordmark.png']
+			],
+			// more images
+			[
+				'wikitext' => '[[File:Wiki-wordmark.png|thumb]][[File:FireflyLogo-NoBackground.png|thumb]]',
+				'expectedImages' => ['Wiki-wordmark.png', 'FireflyLogo-NoBackground.png']
+			],
+			// images order is kept
+			[
+				'wikitext' => '[[File:FireflyLogo-NoBackground.png|thumb]][[File:Wiki-wordmark.png|thumb]]',
+				'expectedImages' => ['FireflyLogo-NoBackground.png', 'Wiki-wordmark.png']
+			],
+			[
+				'wikitext' => "<gallery>\nWiki-wordmark.png\nFireflyLogo-NoBackground.png\n</gallery>",
+				'expectedImages' => ['Wiki-wordmark.png', 'FireflyLogo-NoBackground.png']
+			],
+			// gallery and thumb
+			[
+				'wikitext' => "<gallery>Wiki-wordmark.png</gallery>\n\nFoo bar\n\n[[File:FireflyLogo-NoBackground.png|thumb]]",
+				'expectedImages' => ['Wiki-wordmark.png', 'FireflyLogo-NoBackground.png']
 			],
 			// not existing image
 			[
