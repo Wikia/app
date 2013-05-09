@@ -69,30 +69,29 @@ class WikiaMobileHooks extends WikiaObject{
 						//analyze entries
 						foreach ( $submatches as $item ) {
 							$parts = explode( '|', $item[0] );
-							$components = array();
-							$caption = '';
+							$components = [];
 
 							foreach ( $parts as $index => $part ) {
+								//File name
 								if ( $index == 0 ) {
 									$components[] = $part;
 									continue;
 								}
 
 								if ( !empty( $part ) ) {
+									//Link part
 									if ( strpos( 'link=', $part ) === 0 ) {
 										$components[] = $part;
 										continue;
 									}
 
+									//All parts of caption as this might be exploded ie.:
+									//[[File:aa.jpg|thumb|300px|caption with [[Link|LINK]] right?]]
 									if ( !preg_match( '/(?:frame|thumb|right|left|[0-9]+px)/', $part ) ) {
-										$caption .= $part;
+										$components[] = $part;
 									}
 
 								}
-							}
-
-							if ( !empty( $caption ) ) {
-								$components[] = $caption;
 							}
 
 							$result .= implode( '|', $components ) . "\n";
