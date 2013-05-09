@@ -22,8 +22,8 @@ $messages['en'] = array(
 
 	'manage-wikia-home-error-invalid-total-no-of-slots' => "Invalid slots amount in total ($1). Please make sure sum of each hub's slots equals total amount of slots ($2).",
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Negative number of slots is not allowed',
-	'manage-wikia-home-error-wikifactory-failure' => "Something went wrong during saving the variables. Please try again.", // @FIXME i18n do we really need two error messages? This and the next one say the same thing
-	'manage-wikia-home-collections-failure' => 'There was an error while saving, please check what you entered.',
+	'manage-wikia-home-error-wikifactory-failure' => 'Something went wrong during saving the variables. Please try again.',
+	'manage-wikia-home-collections-validation-error' => 'There was an error while saving, please check what you entered.',
 
 	'manage-wikia-home-change-button' => 'Change',
 
@@ -35,8 +35,10 @@ $messages['en'] = array(
 	'manage-wikia-home-wiki-list-headline' => 'Headline',
 	'manage-wikia-home-wiki-list-blocked' => 'Blocked',
 	'manage-wikia-home-wiki-list-promoted' => 'Promoted',
-	'manage-wikia-home-wiki-list-blocked-no' => 'No', // @FIXMEi18n thuis message is used in 2 different contexts!
-	'manage-wikia-home-wiki-list-blocked-yes' => 'Yes', // @FIXME i18n thuis message is used in 2 different contexts!
+	'manage-wikia-home-wiki-list-blocked-no' => 'No',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Yes',
+	'manage-wikia-home-wiki-list-promoted-no' => 'No',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Yes',
 
 	'manage-wikia-home-modal-title' => 'Change a wiki\'s status',
 	'manage-wikia-home-modal-content-blocked' => 'Do you want to include this wiki in the wiki visualization?',
@@ -75,8 +77,8 @@ $messages['qqq'] = array(
 
 	'manage-wikia-home-error-invalid-total-no-of-slots' => "An error which is displayed when set numbers in total doesn't equal required number of all slots; first parameter is the sum of entered numbers and second one is the required number",
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => "An error which is displayed when any of set numbers is negative",
-	'manage-wikia-home-error-wikifactory-failure' => 'An error which is displayed when an WikiFactory error occur',
-	'manage-wikia-home-collections-failure' => 'An error message which is displayed when an error occurs while saving changes in collections configuration',
+	'manage-wikia-home-error-wikifactory-failure' => 'An error which is displayed when an WikiFactory error occurs',
+	'manage-wikia-home-collections-validation-error' => 'An error message which is displayed when the data passed through collection\'s configuration form is invalid',
 	
 	'manage-wikia-home-change-button' => 'A label on a submitting form button; the form is to change visualization slots\' configuration',
 	
@@ -88,8 +90,10 @@ $messages['qqq'] = array(
 	'manage-wikia-home-wiki-list-headline' => 'WikiList table header Headline column name',
 	'manage-wikia-home-wiki-list-blocked' => 'WikiList table header Blocked column name',
 	'manage-wikia-home-wiki-list-promoted' => 'WikiList table header Promoted column name',
-	'manage-wikia-home-wiki-list-blocked-no' => '\'No\' in column Blocked on table',
-	'manage-wikia-home-wiki-list-blocked-yes' => '\'Yes\' in column Blocked on table',
+	'manage-wikia-home-wiki-list-blocked-no' => '\'No\' in column Blocked on table; tells about wiki status that it\'s NOT blocked from showing in wikis visualization on corporate main pages',
+	'manage-wikia-home-wiki-list-blocked-yes' => '\'Yes\' in column Blocked on table; tells about wiki status that it IS blocked from showing in wikis visualization on corporate main pages',
+	'manage-wikia-home-wiki-list-promoted-no' => '\'No\' in column Promoted on table; tells about wiki status that it\'s NOT promoted in wikis visualization on corporate main pages',
+	'manage-wikia-home-wiki-list-promoted-yes' => '\'Yes\' in column Promoted on table; tells about wiki status that it IS promoted in wikis visualization on corporate main pages',
 
 	'manage-wikia-home-modal-title' => 'blocking/unblocking/promoting/demoting modal title',
 	'manage-wikia-home-modal-content-blocked' => 'change wiki status question (when wiki is blocked)',
