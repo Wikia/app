@@ -57,7 +57,10 @@ class WikiaMobileMediaService extends WikiaService {
 		$first = null;
 		$wikiText = '';
 		$result = '';
-		$params = array();
+		$params = [];
+		$parser = ParserPool::get();
+
+		$parser->startExternalParse( $this->wg->Title, ParserOptions::newFromContext( RequestContext::getMain() ), Parser::OT_HTML );
 
 		//separate linked items from normal ones and select the first one
 		//which will be rendered in the page
@@ -94,7 +97,7 @@ class WikiaMobileMediaService extends WikiaService {
 					}
 
 					if ( !empty( $item['caption'] ) ) {
-						$info['capt'] = ParserPool::parse( $item['caption'], $this->wg->Title, new ParserOptions )->getText();
+						$info['capt'] = $parser->recursiveTagParse( $item['caption'] );
 					}
 
 					$params[] = $info;
@@ -153,12 +156,13 @@ class WikiaMobileMediaService extends WikiaService {
 			//avoid wikitext recursion
 			$this->wg->WikiaMobileDisableMediaGrouping = true;
 
-			$result .= $this->wg->Parser->recursiveTagParse( $wikiText );
+			$result .= $parser->recursiveTagParse( $wikiText );
 
 			//restoring to previous value
 			$this->wg->WikiaMobileDisableMediaGrouping = $origVal;
 		}
 
+		ParserPool::release( $parser );
 		$this->response->setBody( $result );
 		wfProfileOut( __METHOD__ );
 	}

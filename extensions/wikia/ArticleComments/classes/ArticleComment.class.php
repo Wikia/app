@@ -237,27 +237,31 @@ class ArticleComment {
 	}
 
 	public function parseText( $rawtext ) {
-		global $wgOut;
+		global $wgEnableParserCache;
+
 		$this->mRawtext = self::removeMetadataTag( $rawtext );
 
-		global $wgEnableParserCache;
+		$origWgEnableParserCache = $wgEnableParserCache;
 		$wgEnableParserCache = false;
 
 		$parser = ParserPool::get();
 
 		$parser->ac_metadata = [];
 
-		$head = $parser->parse( $rawtext, $this->mTitle, $wgOut->parserOptions());
+		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
+
 		$this->mText = $head->getText();
 		$this->mHeadItems = $head->getHeadItems();
 
-		if( isset($parser->ac_metadata) ) {
+		if( isset( $parser->ac_metadata ) ) {
 			$this->mMetadata = $parser->ac_metadata;
 		} else {
-			$this->mMetadata = array();
+			$this->mMetadata = [];
 		}
 
-		ParserPool::release($parser);
+		ParserPool::release( $parser );
+
+		$wgEnableParserCache = $origWgEnableParserCache;
 
 		return $this->mText;
 	}
