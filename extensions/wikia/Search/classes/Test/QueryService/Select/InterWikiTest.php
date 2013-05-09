@@ -261,9 +261,15 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		
 		
 		$mockConfig
-		    ->expects( $this->once() )
+		    ->expects( $this->at( 0 ) )
 		    ->method ( 'setQueryField' )
-		    ->with   ( 'wikititle', 7 )
+		    ->with   ( 'wikititle', 200 )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'setQueryField' )
+		    ->with   ( 'wiki_description_txt', 150 )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'configureQueryFields' );
 		$method->setAccessible( true );
@@ -291,6 +297,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		
 		$queries = array(
 				Wikia\Search\Utilities::valueForField( 'iscontent', 'true' ),
+				'-wikiarticles:[0 TO 50]',
 				Wikia\Search\Utilities::valueForField( 'hub', 'Entertainment' )
 				);
 		
