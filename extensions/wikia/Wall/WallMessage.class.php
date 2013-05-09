@@ -262,7 +262,7 @@ class WallMessage {
 			 *      in Wall we assume that save on message subscribes you to it
 			 *      so we re-scubscribe it here
 			*/
-			$this->addWatch($user);
+			$this->addWatch( $user );
 		}
 		$out = $this->getArticleComment()->parseText($body);
 		wfProfileOut( __METHOD__ );
@@ -273,10 +273,10 @@ class WallMessage {
 		wfProfileIn( __METHOD__ );
 		//@todo: as getRawText overwrites the metadata, we have to make a copy of it
 		//this is done only to quickly fix case 102384, this whole thing should be refactored
-		$m = $this->getArticleComment()->mMetadata;
+		$metadataCopy = $this->getArticleComment()->mMetadata;
 		$body = $this->getRawText(true);
-		$this->getArticleComment()->mMetadata = $m;
-		$out = $this->doSaveComment($body, $user, $summary, $force, true);
+		$this->getArticleComment()->mMetadata = $metadataCopy;
+		$out = $this->doSaveComment( $body, $user, $summary, $force, true );
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -384,7 +384,7 @@ class WallMessage {
 			$this->load(true);
 			if($notifyeveryone) {
 				$this->getArticleComment()->setMetaData('notify_everyone', time());
-				$this->doSaveMetadata($app->wg->User, wfMsgForContent('wall-message-update-highlight-summary'), false, true );
+				$this->doSaveMetadata( $app->wg->User, wfMsgForContent( 'wall-message-update-highlight-summary' ), false, true );
 				$rev = $this->getArticleComment()->mLastRevision;
 				$notif = F::build('WallNotificationEntity', array($rev, $this->cityId), 'createFromRev');
 				$wne->addNotificationToQueue($notif);
@@ -392,7 +392,7 @@ class WallMessage {
 				$this->getArticleComment()->removeMetadata('notify_everyone');
 				$pageId = $this->getId();
 				$wne->removeNotificationFromQueue($pageId);
-				$this->doSaveMetadata($app->wg->User, wfMsgForContent('wall-message-update-removed-highlight-summary'), false, true );
+				$this->doSaveMetadata( $app->wg->User, wfMsgForContent( 'wall-message-update-removed-highlight-summary' ), false, true );
 			}
 		}
 	}

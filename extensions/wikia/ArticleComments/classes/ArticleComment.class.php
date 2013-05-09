@@ -677,7 +677,9 @@ class ArticleComment {
 			 */
 
 			$article = new Article( $commentTitle, intval( $this->mLastRevId ) );
-			if ($preserveMetadata) $this->mMetadata = $metadata;
+			if ( $preserveMetadata ) {
+				$this->mMetadata = $metadata;
+			}
 			$retval = self::doSaveAsArticle($text, $article, $user, $this->mMetadata, $summary );
 
 			if(!empty($title)) {
