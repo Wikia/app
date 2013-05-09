@@ -1,6 +1,6 @@
 <?php
 
-class FormSelectField extends FormField
+class FormSelectField extends BaseField
 {
 	public function render() {
 		//TODO add logic

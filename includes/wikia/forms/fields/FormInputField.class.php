@@ -1,6 +1,6 @@
 <?php
 
-abstract class FormInputField extends FormField
+abstract class FormInputField extends BaseField
 {
 	abstract protected function getType();
 

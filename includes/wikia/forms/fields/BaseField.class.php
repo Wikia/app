@@ -1,5 +1,5 @@
 <?
-abstract class FormField {
+abstract class BaseField {
 	const PROPERTY_VALUE = 'value';
 	const PROPERTY_ERROR_MESSAGE = 'errorMessage';
 

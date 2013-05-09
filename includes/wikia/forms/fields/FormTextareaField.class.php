@@ -1,6 +1,6 @@
 <?php
 
-class FormTextareaField extends FormField
+class FormTextareaField extends BaseField
 {
 	public function render() {
 		//TODO add logic

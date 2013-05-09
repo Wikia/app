@@ -4,7 +4,7 @@ abstract class BaseForm {
 
 	protected $fields = [];
 
-	protected function addField($fieldName, FormField $field, WikiaValidator $validator = null) {
+	protected function addField($fieldName, BaseField $field, WikiaValidator $validator = null) {
 		if (isset($validator)) {
 			$field->setValidator($validator);
 		}
