@@ -645,7 +645,10 @@ class ArticleComment {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
 
+		$mMetadata = $this->mMetadata;
+
 		$this->load(true);
+
 		if ( $force || ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) ) {
 
 			if ( wfReadOnly() ) {
@@ -661,6 +664,10 @@ class ArticleComment {
 			if ( empty($this->mTitle) && !$commentId ) {
 				wfProfileOut( __METHOD__ );
 				return false;
+			}
+
+			if ( !empty($mMetadata) && $mMetadata != $this->mMetadata ) {
+				$this->mMetadata = $mMetadata;
 			}
 
 			$commentTitle = $this->mTitle ? $this->mTitle : Title::newFromId($commentId);
