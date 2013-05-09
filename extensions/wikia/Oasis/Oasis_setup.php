@@ -82,7 +82,7 @@ function wfOasisSetup() {
 
 	// Generic messages that can be used by all extensions such as error messages
 	$jsMessages->registerPackage('Oasis-generic', array(
-		'oasis-generic-*'
+		'oasis-generic-error',
 	));
 	$jsMessages->enqueuePackage('Oasis-generic', JSMessages::EXTERNAL);
 }

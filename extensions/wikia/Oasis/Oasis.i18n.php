@@ -296,7 +296,8 @@ Example output: deleted by Avatar 3 hours ago',
 	'oasis-on-the-wiki' => 'Name of the first tab of wiki navigation menu',
 	'oasis-global-nav-header' => 'Global Wikia navigation header',
 	'oasis-corporatefooter-navigation-header' => 'Corporate Footer navigation header',
-	'oasis-global-page-header' => 'Global (corporate) header for whole HTML page - first <h1> in <body>'
+	'oasis-global-page-header' => 'Global (corporate) header for whole HTML page - first <h1> in <body>',
+	'oasis-generic-error' => 'This is a generic error message that shows up when something unexpected went wrong in the code.',
 );
 
 /** Afrikaans (Afrikaans)
