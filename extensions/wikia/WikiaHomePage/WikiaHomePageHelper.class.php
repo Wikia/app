@@ -917,7 +917,13 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function getWikisForStaffTool($options) {
-		return $this->getVisualization()->getWikisForStaffTool($options);
+		$wikiList = $this->getVisualization()->getWikisForStaffTool($options);
+
+		$collectionsModel = new WikiaCollectionsModel();
+		foreach ($wikiList as &$wiki) {
+			$wiki->collections = $collectionsModel->getCollectionsByCityId($wiki->city_id);
+		}
+		return $wikiList;
 	}
 
 	public function getWamScore($wikiId) {

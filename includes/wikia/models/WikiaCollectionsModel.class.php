@@ -210,6 +210,28 @@ class WikiaCollectionsModel extends WikiaModel {
 		return $out;
 	}
 
+	public function getCollectionsByCityId($cityId) {
+		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$fields = [
+			'collection_id'
+		];
+
+		$conds = [
+			'city_id' => $cityId
+		];
+
+		$results = $db->select(self::COLLECTIONS_CV_TABLE, $fields, $conds);
+
+		$out = [];
+
+		while( $row = $db->fetchRow($results) ) {
+			$out[] = $row['collection_id'];
+		}
+
+		return $out;
+	}
+
 	private function checkWikiCollectionExists($collectionId, $cityId) {
 		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
