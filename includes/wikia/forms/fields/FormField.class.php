@@ -4,14 +4,13 @@ abstract class FormField {
 	const PROPERTY_ERROR_MESSAGE = 'errorMessage';
 
 	protected $validator;
+	protected $properties = [];
 
 	// TODO decide what params are required here
 	// TODO maybe array fields should be decorated
 	public function __construct(WikiaValidator $validator) {
 		$this->validator = $validator;
 	}
-
-	protected $properties;
 
 	// TODO check if abstract is required or maybe we can create universal logic for all fields
 	abstract public function render();
