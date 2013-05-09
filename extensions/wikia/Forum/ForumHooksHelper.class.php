@@ -389,6 +389,23 @@ class ForumHooksHelper {
 	}
 
 	/**
+	 * Makes sure the correct URLs for thread pages get purged.
+	 *
+	 * @param $title Title
+	 * @param $urls String[]
+	 * @return bool
+	 */
+	public static function onTitleGetSquidURLs( $title, &$urls ) {
+		if ( $title->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+			$wallMessage = WallMessage::newFromTitle( $title );
+			$urls[] = $wallMessage->getMessagePageUrl();
+			$urls[] = $wallMessage->getMessagePageUrl() . '?action=history';
+		}
+
+		return true;
+	}
+
+	/**
 	 * just proxy to onWallStoreRelatedTopicsInDB
 	 */
 	public static function onWallStoreRelatedTopicsInDB($parent, $id, $namespace) {
