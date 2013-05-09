@@ -318,7 +318,7 @@ class ArticleComment {
 
 		$comment = false;
 
-		$canDelete = $wgUser->isAllowed( 'delete' );
+		$canDelete = $wgUser->isAllowed( 'commentdelete' );
 
 		if ( self::isBlog() ) {
 			$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
