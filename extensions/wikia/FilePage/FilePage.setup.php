@@ -15,15 +15,18 @@ $wgExtensionCredits['filepage'][] = array(
 		"Liz Lee",
 		"Saipetch Kongkatong",
 	),
-	'descriptionmsg' => 'File page',
+	'descriptionmsg' => 'filepage-desc',
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $app = F::app( );
 
 // classes
-$app->registerClass( 'WikiaImagePage', $dir . 'ImagePage.php' );
-$app->registerClass( 'WikiaVideoPage', $dir . 'VideoPage.php' );
+$app->registerClass( 'WikiaFilePage', $dir . 'WikiaFilePage.php' );
+$app->registerClass( 'FilePageFlat', $dir . 'FilePageFlat.php' );
+$app->registerClass( 'FilePageTabbed', $dir . 'FilePageTabbed.php' );
+$app->registerClass( 'WikiaWikiFilePage', $dir . 'WikiaWikiFilePage.php'); // Override for WikiFilePage
+
 $app->registerClass( 'FilePageHooks', $dir . 'FilePageHooks.class.php' );
 $app->registerClass( 'FilePageHelper', $dir . 'FilePageHelper.class.php' );
 

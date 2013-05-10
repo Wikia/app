@@ -377,6 +377,7 @@ class SubpageList3 {
 				$nsi = $this->ptitle->getNamespace();
 			} else {
 				$this->error( wfMsg('spl3_debug','parent') );
+				wfProfileOut( __METHOD__ );
 				return null;
 			}
 		} else {

@@ -13,12 +13,22 @@ $specialPageAliases['en'] = array(
 	'ApiExplorer' => array( 'ApiExplorer' ),
 );
 
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'ApiExplorer' => array( 'ApiVerkennen' ),
+);
+
 /** Macedonian (Македонски) */
 $specialPageAliases['mk'] = array(
 	'ApiExplorer' => array( 'ApiИстражувач' ),
 );
 
-/** Dutch (Nederlands) */
-$specialPageAliases['nl'] = array(
-	'ApiExplorer' => array( 'ApiVerkennen' ),
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'ApiExplorer' => array( 'Eksplorator_API' ),
+);
+
+/** Spanish (Español) */
+$specialPageAliases['es'] = array(
+	'ApiExplorer' => array( 'ExplorarApi' ),
 );

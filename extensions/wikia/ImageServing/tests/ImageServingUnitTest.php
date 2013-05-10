@@ -1,5 +1,5 @@
 <?php
-class ImageServingTest extends WikiaBaseTest {
+class ImageServingCroppingTest extends WikiaBaseTest {
 
 	public function setUp() {
 		$this->setupFile = __DIR__ . "/../imageServing.setup.php";

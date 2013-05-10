@@ -120,13 +120,13 @@ class S3Command extends WikiaObject{
 	 * @throws S3CommandException
 	 */
 	public function run( $action, Array $params = array(), Array $options = array() ){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		$output = shell_exec( $this->getCommandLine( $action, $params, $options ) );
 		$matches = array();
 		$errorFound = preg_match( self::REGEX_ERROR, $output, $matches );
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		
 		if ( !empty( $errorFound ) ) {
 			throw new S3CommandException( $matches[1] );

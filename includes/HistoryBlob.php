@@ -213,7 +213,7 @@ class HistoryBlobStub {
 	 */
 	function getText() {
 		$fname = 'HistoryBlobStub::getText';
-		wfProfileOut( $fname );
+		wfProfileIn( $fname );
 
 		if( isset( self::$blobCache[$this->mOldId] ) ) {
 			$obj = self::$blobCache[$this->mOldId];

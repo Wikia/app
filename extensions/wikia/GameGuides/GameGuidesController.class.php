@@ -45,7 +45,7 @@ class GameGuidesController extends WikiaController {
 	 * @see GameGuidesModel::getWikiList
 	 */
 	public function listWikis(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
 		
@@ -57,7 +57,7 @@ class GameGuidesController extends WikiaController {
 			$this->response->setVal( $key, $value );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	/*
@@ -69,7 +69,7 @@ class GameGuidesController extends WikiaController {
 	 */
 
 	public function listWikiContents(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
 		
@@ -79,7 +79,7 @@ class GameGuidesController extends WikiaController {
 			$this->response->setVal( $key, $value );
 		}
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	/*
@@ -93,7 +93,7 @@ class GameGuidesController extends WikiaController {
 	 * @see GameGuidesModel::getCategoryContents
 	 */
 	public function listCategoryContents(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
 		
@@ -108,7 +108,7 @@ class GameGuidesController extends WikiaController {
 			$this->response->setVal( $key, $value );
 		}
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	/**
@@ -122,7 +122,7 @@ class GameGuidesController extends WikiaController {
 	 * @see GameGuidesModel::getSearchResults
 	 */
 	public function search(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
 		
@@ -134,7 +134,7 @@ class GameGuidesController extends WikiaController {
 			$this->response->setVal( $key, $value );
 		}
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -235,7 +235,7 @@ class GameGuidesController extends WikiaController {
 	 * @requestParam String title of a page
 	 */
 	public function renderPage(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$titleName = $this->request->getVal( 'page' );
 
@@ -254,7 +254,7 @@ class GameGuidesController extends WikiaController {
 		$this->response->setVal( 'title', Title::newFromText( $titleName )->getText() );
 		$this->response->setVal( 'html', $html['parse']['text']['*'] );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -262,7 +262,7 @@ class GameGuidesController extends WikiaController {
 	 * it returns a page and all 'global' assets
 	 */
 	public function renderFullPage(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$resources = $this->sendRequest( 'AssetsManager', 'getMultiTypePackage', array(
 			'scripts' => 'gameguides_js',
@@ -286,7 +286,7 @@ class GameGuidesController extends WikiaController {
 		$this->response->setVal( 'js', $scripts );
 		$this->response->setVal( 'css', $styles );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -325,11 +325,11 @@ class GameGuidesController extends WikiaController {
 	 *
 	 */
 	public function getList(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
 
-		$content = WikiFactory::getVarValueByName( GameGuidesSpecialContentController::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId );
+		$content = $this->wg->WikiaGameGuidesContent;
 
 		if ( empty( $content ) ) {
 			$this->getCategories();
@@ -344,7 +344,7 @@ class GameGuidesController extends WikiaController {
 			}
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -358,7 +358,7 @@ class GameGuidesController extends WikiaController {
 	 * @response offset
 	 */
 	private function getCategories(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$limit = $this->request->getVal( 'limit', self::LIMIT * 2 );
 		$offset = $this->request->getVal( 'offset', '' );
@@ -405,11 +405,11 @@ class GameGuidesController extends WikiaController {
 			}
 
 		} else {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException( 'No Categories' );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -422,7 +422,7 @@ class GameGuidesController extends WikiaController {
 	 * @responseReturn Array|false Categories or false if tag was not found
 	 */
 	private function getTagCategories( $content, $requestTag ){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$ret = false;
 
@@ -471,7 +471,7 @@ class GameGuidesController extends WikiaController {
 
 					$ret = array_merge( $sorted, $left );
 				} else {
-					$this->wf->profileOut( __METHOD__ );
+					wfProfileOut( __METHOD__ );
 					throw new InvalidParameterApiException( 'sort' );
 				}
 			}
@@ -486,11 +486,11 @@ class GameGuidesController extends WikiaController {
 
 			$this->response->setVal( 'items', $ret );
 		} else if ( $requestTag !== '' ) {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new InvalidParameterApiException( 'tag' );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -500,7 +500,7 @@ class GameGuidesController extends WikiaController {
 	 * @responseReturn See getTagCategories
 	 */
 	private function getTags( $content ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setVal(
 			'tags',
@@ -522,7 +522,7 @@ class GameGuidesController extends WikiaController {
 		//there also might be some categories without TAG, lets find them as well
 		$this->getTagCategories( $content, '' );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**

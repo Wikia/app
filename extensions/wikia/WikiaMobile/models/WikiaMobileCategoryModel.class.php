@@ -16,19 +16,19 @@ class WikiaMobileCategoryModel extends WikiaModel{
 			$this->getItemsCollectionCacheKey( $category->getID() ),
 			self::CACHE_TTL_ITEMSCOLLECTION,
 			function() use( $category ) {
-				$this->wf->profileIn( __METHOD__ );
+				wfProfileIn( __METHOD__ );
 
 				$viewer = new WikiaMobileCategoryViewer( $category );
 				$viewer->doCategoryQuery();
 
-				$this->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				return $viewer->getData();
 			}
 		);
 	}
 
 	public function getExhibitionItems( Title $title ){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( class_exists( 'CategoryDataService' ) ) {
 			$cacheKey = $this->getExhibitionItemsCacheKey( $title->getText() );
@@ -63,11 +63,11 @@ class WikiaMobileCategoryModel extends WikiaModel{
 				$this->wg->memc->set( $cacheKey, $items, self::CACHE_TTL_EXHIBITION );
 			}
 
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $items;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 

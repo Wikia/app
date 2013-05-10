@@ -17,7 +17,7 @@ class WikiService extends WikiaModel {
 	 * @return array of $userIds
 	 */
 	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$userIds = array();
 		if ( empty($this->wg->FounderEmailsDebugUserId) ) {
@@ -71,7 +71,7 @@ class WikiService extends WikiaModel {
 			$userIds[] = $this->wg->FounderEmailsDebugUserId;
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $userIds;
 	}
 
@@ -84,7 +84,7 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return string memcache key
 	 */
-	public function getMemKeyAdminIds( $wikiId, $excludeBots, $limit ) {
+	public function getMemKeyAdminIds( $wikiId, $excludeBots = false, $limit = null ) {
 		return $this->wf->SharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots, $limit );
 	}
 
@@ -93,7 +93,7 @@ class WikiService extends WikiaModel {
 	 * @return integer totalVideos
 	 */
 	public function getTotalVideos( $wikiId = 0 ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$memKey = $this->wf->SharedMemcKey( 'wiki_total_videos', $wikiId );
@@ -119,7 +119,7 @@ class WikiService extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $totalVideos;
 	}
@@ -129,7 +129,7 @@ class WikiService extends WikiaModel {
 	 * @return array $sitestats
 	 */
 	public function getSiteStats( $wikiId = 0 ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$memKey = $this->wf->SharedMemcKey( 'wiki_sitestats', $wikiId );
@@ -172,7 +172,7 @@ class WikiService extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $sitestats;
 	}
@@ -187,7 +187,7 @@ class WikiService extends WikiaModel {
 	 * @return array topEditors [ array( user_id => edits ) ]
 	 */
 	public function getTopEditors( $wikiId = 0, $limit = 30, $excludeBots = false ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
@@ -217,7 +217,7 @@ class WikiService extends WikiaModel {
 			}
 		);
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $topEditors;
 	}
@@ -239,7 +239,7 @@ class WikiService extends WikiaModel {
 	 * @return integer totalImages
 	 */
 	public function getTotalImages( $wikiId = 0 ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$memKey = $this->getMemcKeyTotalImages( $wikiId );
@@ -267,7 +267,7 @@ class WikiService extends WikiaModel {
 			$this->wg->Memc->set( $memKey, $totalImages, 60*60*3 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $totalImages;
 	}

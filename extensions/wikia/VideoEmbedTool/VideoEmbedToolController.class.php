@@ -37,25 +37,16 @@ class VideoEmbedToolController extends WikiaController {
 			$articleId         = $this->request->getInt('articleId', 0 );
 			$article           = ( $articleId > 0 ) ? F::build( 'Article', array( $articleId ), 'newFromId' ) : null;
 			$articleTitle      = ( $article !== null ) ? $article->getTitle() : '';
-			$wikiTitleSansWiki = preg_replace( '/\bwiki\b/i', '', $this->wg->Sitename );
 
 			$wikiaSearchConfig = new Wikia\Search\Config();
 			$wikiaSearchConfig  ->setStart( $svStart )
-								->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+								->setLimit( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
 								->setCityID( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
-								->setIsVideo( true )
-								->setNamespaces( array( NS_FILE ) )
-								->setQuery( $articleTitle . ' ' . $wikiTitleSansWiki );
+								->setVideoEmbedToolSearch( true )
+								->setQuery( $articleTitle );
 
-
-			$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
-			$search = (new Wikia\Search\QueryService\Factory)->get( $container );
+			$search = (new Wikia\Search\QueryService\Factory)->getFromConfig( $wikiaSearchConfig );
 			$response = $search->search();
-
-			if ( $response->getResultsFound() == 0 ) {
-				$wikiaSearchConfig->setQuery( $articleTitle == '' ? $wikiTitleSansWiki : $articleTitle );
-				$response = $search->search();
-			}
 
 			//TODO: fill $currentVideosByTitle array with unwated videos
 			$currentVideosByTitle = array();
@@ -92,8 +83,8 @@ class VideoEmbedToolController extends WikiaController {
 
 		$wikiaSearchConfig = new Wikia\Search\Config();
 		$wikiaSearchConfig  ->setStart( $svStart )
-							->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
-							->setVideoSearch( true )
+							->setLimit( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+							->setVideoEmbedToolSearch( true )
 							->setNamespaces( array( NS_FILE ) )
 							->setRank($searchOrder);
 
