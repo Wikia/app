@@ -27,6 +27,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
+		$this->wg->Out->addJsConfigVars([
+			'SWITCH_COLLECTION_TYPE_ADD' => self::SWITCH_COLLECTION_TYPE_ADD,
+			'SWITCH_COLLECTION_TYPE_REMOVE' => self::SWITCH_COLLECTION_TYPE_REMOVE
+		]);
 	}
 
 	protected function checkAccess() {

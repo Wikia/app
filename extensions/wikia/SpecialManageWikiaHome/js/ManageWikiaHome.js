@@ -8,7 +8,7 @@ ManageWikiaHome.prototype = {
 	MODAL_TYPE_PROMOTED: 3,
 	MODAL_TYPE_DEMOTED: 4,
 	isListChangingDelayed: false,
-	modalObject: {content: '', type: 0, target: {}},
+	modalObject: {content: '', type: 0, target: {}, collections: 0},
 	init: function() {
 		$('#visualizationLanguagesList').on(
 			'change',
@@ -33,7 +33,9 @@ ManageWikiaHome.prototype = {
 					messageNo: $.msg('manage-wikia-home-modal-button-no')
 				}
 			);
-			$('#wikisWithVisualizationList').on('click', '.wiki-list a', $.proxy(this.showEditModal, this));
+			$('#wikisWithVisualizationList')
+				.on('click', '.wiki-list a', $.proxy(this.showEditModal, this))
+				.on('click', '.collection-checkbox', $.proxy(this.showCollectionEditModal, this));
 		}, this));
 
 		$('body')
@@ -122,8 +124,37 @@ ManageWikiaHome.prototype = {
 			}
 		);
 	},
+	showCollectionEditModal: function(e) {
+		$.showModal(
+			$.msg('manage-wikia-home-modal-title-collection'),
+			this.modalObject.content,
+			{
+				callback: $.proxy(function () {
+					var targetObject = $(e.target);
+
+					if (targetObject.is(':checked')) {
+						$('.question-container').text($.msg('manage-wikia-home-modal-content-add-collection'));
+						this.modalObject.type = window.SWITCH_COLLECTION_TYPE_ADD;
+					} else {
+						$('.question-container').text($.msg('manage-wikia-home-modal-content-remove-collection'));
+						this.modalObject.type = window.SWITCH_COLLECTION_TYPE_REMOVE;
+					}
+
+					this.modalObject.target = targetObject;
+					this.modalObject.collections = 1;
+				}, this)
+			}
+		);
+	},
 	modalCancel: function() {
 		$('.modalWrapper').closeModal();
+		if(this.modalObject.collections) {
+			if(this.modalObject.type == window.SWITCH_COLLECTION_TYPE_ADD) {
+				this.modalObject.target.attr('checked', false);
+			} else {
+				this.modalObject.target.attr('checked', true);
+			}
+		}
 	},
 	modalSubmit: function() {
 		var method, message, flag = '';
@@ -148,7 +179,17 @@ ManageWikiaHome.prototype = {
 				break;
 			default:
 		}
+
 		$('.modalWrapper').startThrobbing(); //we don't fire stopThrobbing() because closeModal() deletes container from DOM
+
+		if(this.modalObject.collections) {
+			this.editWikiCollection();
+		} else {
+			this.editBlockedPromoted(method, message, flag);
+		}
+
+	},
+	editBlockedPromoted: function(method, message, flag) {
 		$.nirvana.sendRequest({
 			controller: 'ManageWikiaHome',
 			method: method,
@@ -161,6 +202,21 @@ ManageWikiaHome.prototype = {
 			callback: $.proxy(function(response) {
 				$('.modalWrapper').closeModal();
 				this.modalObject.target.data('flags', flag).text(message);
+			}, this)
+		});
+	},
+	editWikiCollection: function() {
+		$.nirvana.sendRequest({
+			controller: 'ManageWikiaHome',
+			method: 'switchCollection',
+			type: 'post',
+			data: {
+				switchType: this.modalObject.type,
+				collectionId: this.modalObject.target.val(),
+				wikiId: this.modalObject.target.attr('data-id')
+			},
+			callback: $.proxy(function(response) {
+				$('.modalWrapper').closeModal();
 			}, this)
 		});
 	}
