@@ -31,7 +31,8 @@ class WikiaLocalFile extends LocalFile {
 	 */
 	static function newFromArchiveTitle( $name, $archiveName, $repo ) {
 
-		$dbr = $repo->getSlaveDB();
+		// Query master for the chance that a revert happens before a video saved to oldimage replicates
+		$dbr = $repo->getMasterDB();
 		$res = $dbr->select( 'oldimage', '*',
 			array( 'oi_name'         => $name,
 				   'oi_archive_name' => $archiveName ),
@@ -46,7 +47,7 @@ class WikiaLocalFile extends LocalFile {
 		if (empty($title)) {
 			return null;
 		}
-		
+
 		$file = new static( $title, $repo );
 		$file->loadFromRow( $row, 'oi_' );
 		return $file;
