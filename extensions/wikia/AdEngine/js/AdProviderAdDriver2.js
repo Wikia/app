@@ -38,7 +38,8 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
 		'TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
-		'WIKIA_BAR_BOXAD_1': {'size': '320x50', 'tile': 4, 'loc': 'bottom'}
+		'WIKIA_BAR_BOXAD_1': {'size': '320x50', 'tile': 4, 'loc': 'bottom'},
+		'GPT_FLUSH': 'flushonly'
 	};
 	// TODO: integrate this array to slotMap if it makes sense
 	gptConfig = { // slots to use SRA with
@@ -46,7 +47,8 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		HOME_TOP_LEADERBOARD: 'wait',
 		INVISIBLE_SKIN: 'wait',
 		TOP_RIGHT_BOXAD: 'flush',
-		HOME_TOP_RIGHT_BOXAD: 'flush'
+		HOME_TOP_RIGHT_BOXAD: 'flush',
+		GPT_FLUSH: 'flushonly'
 	};
 
 	// Private methods
@@ -108,6 +110,13 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 
 	function fillInSlot(slot) {
 		log(['fillInSlot', slot], 5, logGroup);
+
+		if (gptConfig[slot[0]] === 'flushonly') {
+			if (window.wgAdDriverUseGpt) {
+				flushGpt();
+			}
+			return;
+		}
 
 		var slotname = slot[0],
 			slotsize = slotMap[slotname].size,
@@ -290,7 +299,6 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	return {
 		name: 'AdDriver2',
 		fillInSlot: fillInSlot,
-		canHandleSlot: canHandleSlot,
-		flushGpt: flushGpt
+		canHandleSlot: canHandleSlot
 	};
 };
