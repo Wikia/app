@@ -53,6 +53,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		galleryInited = false,
 		inited,
 		supportedVideos = window.supportedVideos || [],
+		// Video view click source tracking. Possible values are "embed" and "lightbox" for consistancy with Oasis
 		clickSource;
 
 	//Media object that holds all data needed to display it in modal/gallery
@@ -160,7 +161,6 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		require(['wikia.videoBootstrap'], function (VideoBootstrap) {
 			var videoInstance = new VideoBootstrap(image, data, clickSource);
 			// Future video/image views will come from modal
-			// Calling it 'lightbox' to keep it consistant with other skins
 			clickSource = 'lightbox';
 		});
 	}
@@ -266,7 +266,6 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			}
 
 			// Future video/image views will come from modal
-			// Calling it 'lightbox' to keep it consistant with other skins
 			clickSource = 'lightbox';
 		}
 
