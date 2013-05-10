@@ -8,6 +8,14 @@ class WikiaCollectionsModel extends WikiaModel {
 	private function getCollectionsListCacheKey($langCode) {
 		return $this->wf->SharedMemcKey('collections_list', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
 	}
+	private function getCollectionsListVisualizationCacheKey($langCode) {
+		return $this->wf->SharedMemcKey('collections_list_visualization', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
+	}
+
+	private function clearCache($langCode) {
+		$this->wg->Memc->delete( $this->getCollectionsListCacheKey($langCode) );
+		$this->wg->Memc->delete( $this->getCollectionsListVisualizationCacheKey($langCode) );
+	}
 	
 	private function getListFromDb($langCode) {
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
@@ -37,19 +45,25 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 
 	public function getListForVisualization($langCode) {
-		$list = $this->getList($langCode);
-		foreach ($list as &$collection) {
-			if (!empty($collection['sponsor_hero_image'])) {
-				$collection['sponsor_hero_image'] = ImagesService::getLocalFileThumbUrlAndSizes($collection['sponsor_hero_image']);
-			}
-			if (!empty($collection['sponsor_image'])) {
-				$collection['sponsor_image'] = ImagesService::getLocalFileThumbUrlAndSizes($collection['sponsor_image']);
-			}
+		return WikiaDataAccess::cache(
+			$this->getCollectionsListVisualizationCacheKey($langCode),
+			6 * 60 * 60,
+			function() use ($langCode) {
+				$list = $this->getList($langCode);
+				foreach ($list as &$collection) {
+					if (!empty($collection['sponsor_hero_image'])) {
+						$collection['sponsor_hero_image'] = ImagesService::getLocalFileThumbUrlAndSizes($collection['sponsor_hero_image']);
+					}
+					if (!empty($collection['sponsor_image'])) {
+						$collection['sponsor_image'] = ImagesService::getLocalFileThumbUrlAndSizes($collection['sponsor_image']);
+					}
 
-			$collection['wikis'] = $this->getWikisFromCollection($collection['id']);
-		}
+					$collection['wikis'] = $this->getWikisFromCollection($collection['id']);
+				}
 
-		return $list;
+				return $list;
+			}
+		);
 	}
 
 	public function saveAll($langCode, $collections) {
@@ -61,7 +75,7 @@ class WikiaCollectionsModel extends WikiaModel {
 		for ($i = $i; $i <= self::COLLECTIONS_COUNT; $i++) {
 			$this->delete($langCode, $i);
 		}
-		$this->wg->Memc->delete( $this->getCollectionsListCacheKey($langCode) );
+		$this->clearCache($langCode);
 	}
 
 	public function save($langCode, $collection, $sortIndex) {
@@ -91,7 +105,7 @@ class WikiaCollectionsModel extends WikiaModel {
 		}
 
 		// purging cached list
-		$this->wg->Memc->delete( $this->getCollectionsListCacheKey($langCode) );
+		$this->clearCache($langCode);
 		
 		$mdb->commit();
 	}
@@ -107,6 +121,7 @@ class WikiaCollectionsModel extends WikiaModel {
 		$mdb->delete(self::TABLE_NAME, $conds, __METHOD__);
 
 		$mdb->commit();
+		$this->clearCache($langCode);
 	}
 
 	/**
@@ -127,6 +142,9 @@ class WikiaCollectionsModel extends WikiaModel {
 			$db->insert(self::COLLECTIONS_CV_TABLE, $insertData);
 
 			$db->commit();
+
+			$collection = $this->getById($collectionId);
+			$this->clearCache($collection['lang_code']);
 		}
 	}
 
@@ -144,9 +162,12 @@ class WikiaCollectionsModel extends WikiaModel {
 			'city_id' => $cityId
 		];
 
-		$result = $db->delete(self::COLLECTIONS_CV_TABLE, $conds);
+		$db->delete(self::COLLECTIONS_CV_TABLE, $conds);
 
 		$db->commit();
+
+		$collection = $this->getById($collectionId);
+		$this->clearCache($collection['lang_code']);
 	}
 
 	/**
@@ -155,7 +176,6 @@ class WikiaCollectionsModel extends WikiaModel {
 	 * @param $collectionId
 	 */
 	public function getWikisFromCollection($collectionId) {
-		// TODO add cache'ing
 		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$fields = [
@@ -251,5 +271,16 @@ class WikiaCollectionsModel extends WikiaModel {
 		$result = $db->selectRow(self::COLLECTIONS_CV_TABLE, 'city_id', $conds);
 
 		return (bool)$result;
+	}
+
+	public function getById($id) {
+		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$fields = ['id', 'sort', 'name', 'sponsor_hero_image', 'sponsor_image', 'sponsor_url', 'enabled', 'lang_code'];
+		$conds = ['id' => $id];
+
+		$results = $sdb->select(self::TABLE_NAME, $fields, $conds, __METHOD__);
+
+		return $sdb->fetchRow($results);
 	}
 }
