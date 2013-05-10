@@ -15,10 +15,19 @@ class WikiaCollectionsModel extends WikiaModel {
 	private function clearCache($langCode) {
 		$this->wg->Memc->delete( $this->getCollectionsListCacheKey($langCode) );
 		$this->wg->Memc->delete( $this->getCollectionsListVisualizationCacheKey($langCode) );
+
+		$visualization = new CityVisualization();
+		foreach($this->getList($langCode) as $collection) {
+			$this->wg->Memc->delete($visualization->getCollectionCacheKey($collection['id']));
+// TODO get cityId by lang
+//			$title = GlobalTitle::newMainPage($city_id);
+//			$title->purgeSquid();
+			Wikia::log(__METHOD__, '', 'Purged memcached for collection #' . $collection['id']);
+		}
 	}
 	
-	private function getListFromDb($langCode) {
-		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+	private function getListFromDb($langCode, $useMaster = false) {
+		$sdb = $this->wf->GetDB($useMaster ? DB_MASTER : DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$fields = ['id', 'sort', 'name', 'sponsor_hero_image', 'sponsor_image', 'sponsor_url', 'enabled'];
 		$conds = ['lang_code' => $langCode];
