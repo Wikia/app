@@ -511,7 +511,7 @@ class WallExternalController extends WikiaController {
 		$wallMessage->load();
 
 		$wallMessage->setMetaTitle($newtitle);
-		$text = $wallMessage->doSaveComment( $newbody, $this->wg->User );
+		$text = $wallMessage->doSaveComment( $newbody, $this->wg->User, '', false, true );
 
 		$this->response->setVal('isotime', wfTimestamp(TS_ISO_8601) );
 		$this->response->setVal('fulltime', $this->wg->Lang->timeanddate( wfTimestamp(TS_MW) ) );
