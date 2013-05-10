@@ -53,7 +53,13 @@ class VideoEmbedToolController extends WikiaController {
 
 			$response = $this->processSearchResponse( $response, $svStart, $svSize, $trimTitle, $currentVideosByTitle );
 
+			$i = $svStart;
+			foreach( $response[ 'items' ] as $key => $item ) {
+				$response[ 'items' ][ $key ][ 'pos' ] = $i++;
+			}
+
 			$result = array(
+					'searchQuery' => $articleTitle . ' ' . $wikiTitleSansWiki,
 					'caption' => $this->wf->Msg( 'vet-suggestions' ),
 					'totalItemCount' => 0,
 					'nextStartFrom' => $response['nextStartFrom'],
@@ -102,9 +108,15 @@ class VideoEmbedToolController extends WikiaController {
 
 			$searchResults = $search->search();
 			$response = $this->processSearchResponse( $searchResults, $svStart, $svSize, $trimTitle );
+
+			$i = $svStart;
+			foreach( $response[ 'items' ] as $key => $item ) {
+				$response[ 'items' ][ $key ][ 'pos' ] = $i++;
+			}
 		}
 
 		$result = array (
+			'searchQuery' => $phrase,
 			'caption' => $this->wf->MsgExt( ( ( $searchType == 'premium' ) ? 'vet-search-results-WVL' : 'vet-search-results-local' ), array('parsemag'),  $response['totalItemCount'], $phrase ),
 			'totalItemCount' => $response['totalItemCount'],
 			'nextStartFrom' => $response['nextStartFrom'],
