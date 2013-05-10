@@ -21,7 +21,7 @@ class GWTSiteSyncStatus {
 	/*
 	 * Parse xml content of google response.
 	 * @param xml - xml content of google response ( DOMNode ).
-	 * @returns - GWTSiteSyncStatus.
+	 * @return - GWTSiteSyncStatus.
 	 */
 	public static function fromDomElement( DOMNode $domNode ) {
 		$status = new GWTSiteSyncStatus();
@@ -49,7 +49,7 @@ class GWTSiteSyncStatus {
 	/*
 	 * Parse xml content of google response with many entries.
 	 * @param xml - xml content of google response ( DOMNode ).
-	 * @returns - array of GWTSiteSyncStatus.
+	 * @return - array of GWTSiteSyncStatus.
 	 */
 	public static function arrayFromDomDocument ( DOMDocument $document ) {
 		$xpath = new DOMXPath($document);
