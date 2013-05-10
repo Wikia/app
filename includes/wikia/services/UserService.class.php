@@ -74,7 +74,7 @@ class UserService extends Service {
 
 	/**
 	 * The method parse ids so they can be used in sql query and cache
-	 * @param $ids
+	 * @param $ids array|string ids and names to parse
 	 * @return array
 	 */
 	private static function parseIds( $ids ) {
@@ -88,7 +88,7 @@ class UserService extends Service {
 			foreach ( $ids as $id ) {
 				if ( is_numeric( $id ) ) {
 					$numeric[] = $id;
-				} else {
+				} elseif( !empty( $id ) ) {
 					$text[] = $id;
 				}
 			}
@@ -105,7 +105,7 @@ class UserService extends Service {
 
 	/**
 	 * Gets the users objects from local cache, and in case of miss from memcache
-	 * @param $ids array
+	 * @param $ids array list of user ids to check in cache
 	 * @return array User objects list
 	 */
 	private static function getUsersFromCacheById( &$ids ) {
@@ -132,9 +132,9 @@ class UserService extends Service {
 	}
 
 	/**
-	 * Looks in cache for User object by user name, local cache is firstly check
-	 * @param $names
-	 * @return array
+	 * Looks in cache for User object by user name, local cache is firstly check then memcache
+	 * @param $names array list of user names to check in cache
+	 * @return array list of founded User objects
 	 */
 	private static function getUsersFromCacheByName( &$names ) {
 		//extract getting from mem cache
