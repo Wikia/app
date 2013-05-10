@@ -46,8 +46,12 @@ class UserApiController extends WikiaApiController {
 				$items[ $user->getId() ][ 'avatar' ] = AvatarService::getAvatarUrl( $user, $size );
 			}
 		}
-		$this->response->setVal( 'items', $items );
-		$this->response->setVal( 'basepath', $this->wg->Server );
+		if ( !empty( $items ) ) {
+			$this->response->setVal( 'items', $items );
+			$this->response->setVal( 'basepath', $this->wg->Server );
+		} else {
+			throw new NotFoundApiException();
+		}
 		wfProfileOut( __METHOD__ );
 	}
 
