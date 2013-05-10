@@ -31,6 +31,9 @@ class WikiaRevertVideoAction extends RevertFileAction {
 
 		// This returns a file object for an archived version of a video
 		$archiveImg = WikiaLocalFile::newFromArchiveTitle( $dbKey, $oldImageName, $repo );
+		if ( empty($archiveImg) ) {
+			return false;
+		}
 
 		// Get the original URL used to upload this video
 		$handler = $archiveImg->getHandler();
