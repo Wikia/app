@@ -12,7 +12,7 @@ class PhalanxUserModel extends PhalanxModel {
 	}
 	
 	public function userBlock( $type = 'exact' ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 	
 		$this->user->mBlockedby = $this->block->authorId;
 		$this->user->mBlockedGlobally = true;
@@ -40,7 +40,7 @@ class PhalanxUserModel extends PhalanxModel {
 			$this->user->mBlock->setCreateAccount( 1 );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $this;
 	}
 	

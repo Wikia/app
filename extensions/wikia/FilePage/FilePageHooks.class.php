@@ -10,23 +10,56 @@ class FilePageHooks extends WikiaObject{
 	}
 
 	/**
-	 * @param Title $oTitle
+	 * Determine which FilePage to show based on skin and File type (image/video)
 	 *
-	 * @return WikiaVideoPage if file is video
+	 * @param Title $oTitle
+	 * @param Article $oArticle
 	 */
 	public function onArticleFromTitle( &$oTitle, &$oArticle ){
+		global $wgEnableVideoPageRedesign;
 
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
-			$oFile = wfFindFile( $oTitle );
-			if ( WikiaFileHelper::isVideoFile( $oFile ) ){
-				$oArticle = new WikiaVideoPage( $oTitle );
+
+			if ( F::app()->checkSkin( 'oasis' ) &&  !empty( $wgEnableVideoPageRedesign ) ) {
+				$oArticle = new FilePageTabbed( $oTitle );
 			} else {
-				$oArticle = new WikiaImagePage( $oTitle );
+				$oArticle = new FilePageFlat( $oTitle );
 			}
 		}
 
 		return true;
 	}
+
+
+
+	/**
+	 * Add JS and CSS to File Page
+	 */
+	public function onBeforePageDisplay( OutputPage $out, $skin ) {
+		global $wgEnableVideoPageRedesign;
+
+		$app = F::app();
+
+		wfProfileIn(__METHOD__);
+		// load assets when File Page redesign is enabled and on the File Page
+		if( $app->checkSkin( 'oasis' ) && $app->wg->Title->getNamespace() == NS_FILE &&  !empty( $wgEnableVideoPageRedesign ) ) {
+			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+			$scssPackage = 'file_page_css';
+			$jsPackage = 'file_page_js';
+
+			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
+				$out->addStyle( $url );
+			}
+
+			foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
+				$out->addScript( "<script src=\"{$url}\"></script>" );
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
 
 	/*
 	 * Add "replace" button to File pages

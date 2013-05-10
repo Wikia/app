@@ -40,6 +40,7 @@ $app->registerHook('SavePreferences', 'UserLoginHooksHelper', 'onSavePreferences
 // i18n mapping
 $wgExtensionMessagesFiles['UserLogin'] = $dir . 'UserLogin.i18n.php';
 $wgExtensionMessagesFiles['UserSignup'] = $dir . 'UserSignup.i18n.php';
+$wgExtensionMessagesFiles['UserSignupAliases'] = $dir . 'UserSignup.alias.php';
 $wgExtensionMessagesFiles['WikiaConfirmEmail'] = $dir . 'WikiaConfirmEmail.i18n.php';
 
 // special pages

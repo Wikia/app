@@ -953,6 +953,9 @@ $config['VET_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET.js',
+		'//resources/jquery.ui/jquery.ui.widget.js',
+		'//resources/jquery.ui/jquery.ui.mouse.js',
+		'//resources/jquery.ui/jquery.ui.slider.js',
 	)
 );
 
@@ -1261,5 +1264,27 @@ $config['categoryselect_edit_js'] = array(
 		'//resources/jquery.ui/jquery.ui.mouse.js',
 		'//resources/jquery.ui/jquery.ui.sortable.js',
 		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
+	)
+);
+
+/* FilePage */
+$config['file_page_js'] = array(
+	'type'=> AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/FilePage/js/FilePage.js',
+	)
+);
+$config['file_page_css'] = array(
+	'type' =>AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/FilePage/css/FilePage.scss',
+	)
+);
+/* LyricFind */
+$config['LyricsFindTracking'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
+		'//extensions/3rdparty/LyricWiki/LyricFind/js/tracking.js',
 	)
 );

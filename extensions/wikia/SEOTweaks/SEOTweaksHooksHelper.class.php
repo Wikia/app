@@ -35,13 +35,32 @@ class SEOTweaksHooksHelper extends WikiaModel {
 	 * set appropriate status code for deleted pages
 	 *
 	 * @author ADi
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 * @param Title $title
-	 * @param Article $article
 	 * @return bool
 	 */
-	public function onArticleFromTitle( &$title, &$article ) {
+	public function onAfterInitialize( &$title, &$article, &$output, &$user, $request ) {
 		if( !$title->exists() && $title->isDeleted() ) {
-			$this->wg->Out->setStatusCode( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE );
+			$setDeletedStatusCode = true;
+			// handle special cases
+			switch( $title->getNamespace() ) {
+				case NS_CATEGORY:
+					// skip non-empty categories
+					if ( Category::newFromTitle($title)->getPageCount() > 0 ) {
+						$setDeletedStatusCode = false;
+					}
+					break;
+				case NS_FILE:
+					// skip existing file with deleted description
+					$file = wfFindFile( $title );
+					if ( $file && $file->exists() ) {
+						$setDeletedStatusCode = false;
+					}
+					break;
+			}
+			if ( $setDeletedStatusCode ) {
+				$output->setStatusCode( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE );
+			}
 		}
 		return true;
 	}
@@ -113,11 +132,8 @@ class SEOTweaksHooksHelper extends WikiaModel {
 			&& ( isset( $_SERVER['HTTP_REFERER'] ) ) 
 			&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) ) 
 		    ) {
-		    
 			$dbr = $this->wf->GetDB( DB_SLAVE );
-			$sql = sprintf( 'SELECT page_title FROM page WHERE page_title REGEXP "^%s[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1', $title->getDBKey() );
-			$result = $dbr->query( $sql );
-			
+			$result = $dbr->query( sprintf( 'SELECT page_title FROM page WHERE page_title %s LIMIT 1', $dbr->buildLike( $title->getDBKey(), $dbr->anyString() ) ), __METHOD__ );
 			if ( $row = $dbr->fetchObject( $result ) ) {
 				$title = Title::newFromText( $row->page_title );
 				$this->wg->Out->redirect( $title->getFullUrl() );

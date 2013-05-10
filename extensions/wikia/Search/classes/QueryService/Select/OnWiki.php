@@ -24,7 +24,6 @@ class OnWiki extends AbstractSelect
 	 * @var array
 	 */
 	protected $boostFunctions = array(
-		'log(views)^0.66', 
 		'log(backlinks)'
 	);
 	
@@ -63,6 +62,7 @@ class OnWiki extends AbstractSelect
 		            ->registerHighlighting  ( $query )
 		            ->registerFilterQueries ( $query )
 		            ->registerSpellcheck    ( $query )
+		            ->registerDismax        ( $query )
 		;
 	}
 	
@@ -127,7 +127,7 @@ class OnWiki extends AbstractSelect
 	 * @return string
 	 */
 	protected function getFormulatedQuery() {
-		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->getNestedQuery() );
+		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
 	}
 	
 	/**
@@ -142,19 +142,5 @@ class OnWiki extends AbstractSelect
 		}
 		$queryClauses[] = "({$nsQuery})";
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
-	}
-	
-	/**
-	 * Returns the string used to build out a boost query with Solarium
-	 * @return string
-	 */
-	protected function getBoostQueryString()
-	{
-		$queryNoQuotes = str_replace( '\"', '', $this->config->getQuery()->getSolrQuery() );
-		$boostQueries = array(
-				Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'valueQuote'=>'\"' ) ),
-		        Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'valueQuote'=>'\"' ) ),
-		);
-		return implode( ' ', $boostQueries );
 	}
 }

@@ -19,3 +19,13 @@ $aliases = array();
 $aliases['en'] = array(
     'Connect'    => array( 'Connect', 'ConnectAccount' ),
 );
+
+/** Polish */
+$aliases['pl'] = array(
+    'Connect'    => array( 'Połącz_z_Facebookiem', 'Connect', 'ConnectAccount' ),
+);
+
+/** Spanish */
+$aliases['es'] = array(
+    'Connect'    => array( 'Conectar', 'Connect', 'ConnectAccount' ),
+);

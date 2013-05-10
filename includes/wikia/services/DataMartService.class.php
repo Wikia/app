@@ -27,7 +27,7 @@ class DataMartService extends Service {
 	protected static function getPageviews ($periodId, $startDate, $endDate = null, $wikiId = null) {
 		$app = F::app();
 
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if (empty($wikiId)) {
 			$wikiId = $app->wg->CityId;
@@ -65,7 +65,7 @@ class DataMartService extends Service {
 			}
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $pageviews;
 	}
@@ -81,10 +81,10 @@ class DataMartService extends Service {
 	protected static function getPageviewsForWikis ($periodId, $wikis, $startDate, $endDate = null) {
 		$app = F::app();
 
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if (empty($wikis)) {
-			$app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return array();
 		}
 
@@ -123,7 +123,7 @@ class DataMartService extends Service {
 			}
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $pageviews;
 	}
@@ -136,11 +136,11 @@ class DataMartService extends Service {
 	public static function getSumPageviewsMonthly ($dates = array()) {
 		$app = F::app();
 
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$periodId = self::PERIOD_ID_MONTHLY;
 
 		if (empty($dates)) {
-			$app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return array();
 		}
 
@@ -172,7 +172,7 @@ class DataMartService extends Service {
 			}
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $pageviews;
 	}
@@ -232,7 +232,7 @@ class DataMartService extends Service {
 	 */
 	public static function getTopWikisByPageviews ($periodId, $limit = 200, $lang = null, $hub = null, $public = null) {
 		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$cacheVersion = 2;
 		$limitDefault = 200;
@@ -253,7 +253,7 @@ class DataMartService extends Service {
 
 		$memKey = $app->wf->SharedMemcKey('datamart', 'topwikis', $cacheVersion, $field, $limitUsed, $lang, $hub, $public);
 		$getData = function () use ($app, $limitUsed, $lang, $hub, $public, $field) {
-			$app->wf->ProfileIn(__CLASS__ . '::TopWikisQuery');
+			wfProfileIn(__CLASS__ . '::TopWikisQuery');
 			$topWikis = array();
 
 			if (!empty($app->wg->StatsDBEnabled)) {
@@ -299,14 +299,14 @@ class DataMartService extends Service {
 			}
 			;
 
-			$app->wf->ProfileOut(__CLASS__ . '::TopWikisQuery');
+			wfProfileOut(__CLASS__ . '::TopWikisQuery');
 			return $topWikis;
 		};
 
 		$topWikis = WikiaDataAccess::cache($memKey, 43200 /* 12 hours */, $getData);
 		$topWikis = array_slice($topWikis, 0, $limit, true);
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $topWikis;
 	}
 
@@ -324,7 +324,7 @@ class DataMartService extends Service {
 	 */
 	public static function getTopWikisByVideoviews ($periodId, $lastN, $limit = 200) {
 		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		// Define the function that our caching service will use to retrieve
 		// data after a cache MISS
@@ -333,7 +333,7 @@ class DataMartService extends Service {
 				return array();
 			}
 
-			$app->wf->ProfileIn(__CLASS__ . '::TopWikisVideoViewQuery');
+			wfProfileIn(__CLASS__ . '::TopWikisVideoViewQuery');
 
 			$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
@@ -364,7 +364,7 @@ class DataMartService extends Service {
 				$topWikis[$row->id] = $row->totalViews;
 			}
 
-			$app->wf->ProfileOut(__CLASS__ . '::TopWikisQuery');
+			wfProfileOut(__CLASS__ . '::TopWikisVideoViewQuery');
 			return $topWikis;
 		};
 
@@ -373,7 +373,7 @@ class DataMartService extends Service {
 		$topWikis = WikiaDataAccess::cache($memKey, 43200 /* 12 hours */, $getData);
 		$topWikis = array_slice($topWikis, 0, $limit, true);
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $topWikis;
 	}
 
@@ -390,7 +390,7 @@ class DataMartService extends Service {
 	protected static function getEventsByWikiId ($periodId, $startDate, $endDate = null, $wikiId = null, $eventType = null) {
 		$app = F::app();
 
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if (empty($wikiId)) {
 			$wikiId = $app->wg->CityId;
@@ -443,7 +443,7 @@ class DataMartService extends Service {
 			$events = $temp;
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $events;
 	}
@@ -482,7 +482,7 @@ class DataMartService extends Service {
 	 */
 	public static function getTopArticlesByPageview( $wikiId, Array $articleIds = null, Array $namespaces = null, $excludeNamespaces = false, $limit = 200 ) {
 		$app = F::app();
-		$app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$cacheVersion = 4;
 		$limitDefault = 200;
@@ -512,7 +512,7 @@ class DataMartService extends Service {
 		);
 
 		$getData = function() use ( $app, $wikiId, $namespaces, $excludeNamespaces, $articleIds, $limitUsed ) {
-			$app->wf->ProfileIn( __CLASS__ . '::TopArticlesQuery' );
+			wfProfileIn( __CLASS__ . '::TopArticlesQuery' );
 			$topArticles = array();
 
 			if ( !empty( $app->wg->StatsDBEnabled ) ) {
@@ -569,13 +569,13 @@ class DataMartService extends Service {
 				}
 			};
 
-			$app->wf->ProfileOut( __CLASS__ . '::TopArticlesQuery' );
+			wfProfileOut( __CLASS__ . '::TopArticlesQuery' );
 			return $topArticles;
 		};
 
 		$topArticles = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
 		$topArticles = array_slice( $topArticles, 0, $limit, true );
-		$app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $topArticles;
 	}
 
@@ -594,7 +594,7 @@ class DataMartService extends Service {
 	public static function getTopTagsWikisByPageviews ($tagId, $startDate, $endDate, $langCode = 'en', $periodId = null, $limit = 200) {
 		$app = F::app();
 
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if (empty($endDate)) {
 			if ($periodId == self::PERIOD_ID_MONTHLY) {
@@ -651,7 +651,7 @@ class DataMartService extends Service {
 			}
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $tagViews;
 	}

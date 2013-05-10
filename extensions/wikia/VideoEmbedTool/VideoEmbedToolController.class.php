@@ -37,32 +37,29 @@ class VideoEmbedToolController extends WikiaController {
 			$articleId         = $this->request->getInt('articleId', 0 );
 			$article           = ( $articleId > 0 ) ? F::build( 'Article', array( $articleId ), 'newFromId' ) : null;
 			$articleTitle      = ( $article !== null ) ? $article->getTitle() : '';
-			$wikiTitleSansWiki = preg_replace( '/\bwiki\b/i', '', $this->wg->Sitename );
 
 			$wikiaSearchConfig = new Wikia\Search\Config();
 			$wikiaSearchConfig  ->setStart( $svStart )
-								->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+								->setLimit( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
 								->setCityID( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
-								->setIsVideo( true )
-								->setNamespaces( array( NS_FILE ) )
-								->setQuery( $articleTitle . ' ' . $wikiTitleSansWiki );
+								->setVideoEmbedToolSearch( true )
+								->setQuery( $articleTitle );
 
-
-			$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
-			$search = (new Wikia\Search\QueryService\Factory)->get( $container );
+			$search = (new Wikia\Search\QueryService\Factory)->getFromConfig( $wikiaSearchConfig );
 			$response = $search->search();
-
-			if ( $response->getResultsFound() == 0 ) {
-				$wikiaSearchConfig->setQuery( $articleTitle == '' ? $wikiTitleSansWiki : $articleTitle );
-				$response = $search->search();
-			}
 
 			//TODO: fill $currentVideosByTitle array with unwated videos
 			$currentVideosByTitle = array();
 
 			$response = $this->processSearchResponse( $response, $svStart, $svSize, $trimTitle, $currentVideosByTitle );
 
+			$i = $svStart;
+			foreach( $response[ 'items' ] as $key => $item ) {
+				$response[ 'items' ][ $key ][ 'pos' ] = $i++;
+			}
+
 			$result = array(
+					'searchQuery' => $articleTitle . ' ' . $wikiTitleSansWiki,
 					'caption' => $this->wf->Msg( 'vet-suggestions' ),
 					'totalItemCount' => 0,
 					'nextStartFrom' => $response['nextStartFrom'],
@@ -86,8 +83,8 @@ class VideoEmbedToolController extends WikiaController {
 
 		$wikiaSearchConfig = new Wikia\Search\Config();
 		$wikiaSearchConfig  ->setStart( $svStart )
-							->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
-							->setVideoSearch( true )
+							->setLimit( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+							->setVideoEmbedToolSearch( true )
 							->setNamespaces( array( NS_FILE ) )
 							->setRank($searchOrder);
 
@@ -111,9 +108,15 @@ class VideoEmbedToolController extends WikiaController {
 
 			$searchResults = $search->search();
 			$response = $this->processSearchResponse( $searchResults, $svStart, $svSize, $trimTitle );
+
+			$i = $svStart;
+			foreach( $response[ 'items' ] as $key => $item ) {
+				$response[ 'items' ][ $key ][ 'pos' ] = $i++;
+			}
 		}
 
 		$result = array (
+			'searchQuery' => $phrase,
 			'caption' => $this->wf->MsgExt( ( ( $searchType == 'premium' ) ? 'vet-search-results-WVL' : 'vet-search-results-local' ), array('parsemag'),  $response['totalItemCount'], $phrase ),
 			'totalItemCount' => $response['totalItemCount'],
 			'nextStartFrom' => $response['nextStartFrom'],

@@ -449,6 +449,7 @@ class DataFeedProvider {
 			if( isset($res['move'], $res['move']['new_title'], $res['move']['new_ns']) ) { //FB#35775
 				//RT#27870
 				if (!empty($this->parameters['type']) && $this->parameters['type'] == 'widget') {
+					wfProfileOut(__METHOD__);
 					return;
 				}
 				$newTitle = Title::newFromText($res['move']['new_title'], $res['move']['new_ns']);

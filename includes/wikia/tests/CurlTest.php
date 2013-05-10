@@ -23,9 +23,9 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 	const CURL_TIMEOUT        = 10;
 	const TEST_VALID_URL      = 'http://wikia.com';
 	const TEST_INVALID_HANDLE = 6.6260693;
-	
+
 	private $proxy = null;
-	
+
 	public function setUp() {
 		global $wgHTTPProxy;
 		$this->proxy = $wgHTTPProxy;
@@ -36,11 +36,11 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 	function testEnsureCurlHandleIsLazyInitialized() {
 		$curl = new Curl();
 		$this->assertFalse($curl->hasHandle());
-		
+
 		$curl = new Curl(self::TEST_VALID_URL);
 		$this->assertTrue($curl->hasHandle());
 	}
-	
+
 	function testGettingVersionReturnsValidData() {
 		$curl    = new Curl();
 		$version = $curl->version();
@@ -48,13 +48,13 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 		$this->assertInternalType('array', $version);
 		$this->assertArrayHasKey('version_number', $version);
 	}
-	
+
 	function testEnsureGettingErrorReturnsCorrectInfo() {
 		$curl = new Curl(self::TEST_VALID_URL);
 
 		$this->assertEquals(0, $curl->errno());
 		$this->assertEquals('', $curl->error());
-		
+
 		$curl->setopt(CURLOPT_RETURNTRANSFER, 1);
 		$curl->setopt(CURLOPT_PROXY, $this->proxy);
 		$curl->exec();
@@ -62,7 +62,7 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(0, $curl->errno());
 		$this->assertEquals('', $curl->error());
 	}
-	
+
 	function testEnsureGettingRequestInfoReturnsCorrectInfo() {
 		$curl = new Curl(self::TEST_VALID_URL);
 		$curl->setopt(CURLOPT_RETURNTRANSFER, 1);
@@ -70,13 +70,13 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 		$curl->exec();
 
 		$info = $curl->getinfo();
-		
+
 		$this->assertInternalType('array', $info);
 		$this->assertArrayHasKey('url', $info);
 		$this->assertEquals(self::TEST_VALID_URL, $info['url']);
 		$this->assertEquals(self::TEST_VALID_URL, $curl->getinfo(CURLINFO_EFFECTIVE_URL));
 	}
-	
+
 	function testCurlWrapperCanDoHttpQueries() {
 		$curl = new Curl(self::TEST_VALID_URL);
 		$curl->setopt(CURLOPT_PROXY, $this->proxy);
@@ -85,24 +85,24 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 			CURLOPT_TIMEOUT        => self::CURL_TIMEOUT,
 			CURLOPT_FOLLOWLOCATION => true
 		)));
-		
+
 		$result = $curl->exec();
-		$this->assertStringStartsWith('<!doctype html>', $result);
-		
+		$this->assertStringStartsWith('<!doctype html', strtolower($result));
+
 		$curl->close();
 		$this->assertFalse($curl->hasHandle());
 	}
-	
+
 	function testSettingInvalidHandleTypeThrowsException() {
 		$curl = new Curl();
 		$this->setExpectedException('WikiaException');
 		$curl->setHandle(self::TEST_INVALID_HANDLE);
 	}
-	
+
 	function testClonningMakesHandleCopy() {
 		$curl = new Curl(self::TEST_VALID_URL);
 		$copy = clone $curl;
-		
+
 		$this->assertNotEquals($curl->getHandle(), $copy->getHandle());
 	}
 }

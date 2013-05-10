@@ -83,6 +83,7 @@ class MediaWikiService
 		try {
     		$this->getPageFromPageId( $pageId );
 		} catch ( \Exception $e ) {
+			wfProfileOut( __METHOD__ );
 			return $pageId;
 		}
 		
@@ -819,17 +820,18 @@ class MediaWikiService
 	 * Standard interface for this class's services to access a page
 	 * @param int $pageId
 	 * @return Article
-	 * @throws WikiaException
+	 * @throws Exception
 	 */
 	protected function getPageFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );
 		if ( isset( self::$pageIdsToArticles[$pageId] ) ) {
+			wfProfileOut( __METHOD__ );
 			return self::$pageIdsToArticles[$pageId];
 		}
-	    $page = \Article::newFromID( $pageId );
+		$page = \Article::newFromID( $pageId );
 
 		if( $page === null ) {
-			throw new \WikiaException( 'Invalid Article ID' );
+			throw new \Exception( 'Invalid Article ID' );
 		}
 		if( $page->isRedirect() ) {
 			self::$redirectArticles[$pageId] = $page;
@@ -860,11 +862,12 @@ class MediaWikiService
 				$main->load();
 				$wm = $main;
 			}
-			
+			wfProfileOut( __METHOD__ );
+
 			return (string) $wm->getMetaTitle();
 		}
 		wfProfileOut(__METHOD__);
-		return $title->getBaseText();
+		return $title->getFullText();
 	}
 	
 	/**

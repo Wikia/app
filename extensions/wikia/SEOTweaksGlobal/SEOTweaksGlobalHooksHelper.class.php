@@ -23,7 +23,7 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 	}
 
 	protected function makeKey( $title ) {
-		return $this->wf->memcKey( 'OpenGraphTitleImage', $title->getDBKey() );
+		return $this->wf->memcKey( 'OpenGraphTitleImage', md5( $title->getDBKey() ) );
 	}
 
 	/**

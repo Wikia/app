@@ -10,6 +10,9 @@ class ArticleComment {
 	const AVATAR_BIG_SIZE = 50;
 	const AVATAR_SMALL_SIZE = 30;
 
+	const CACHE_VERSION = 1;
+	const AN_HOUR = 3600;
+
 	/**
 	 * @var $mProps Bool blogs only
 	 */
@@ -153,7 +156,6 @@ class ArticleComment {
 	 *
 	 */
 	public function load($master = false) {
-		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		$result = true;
 
@@ -177,22 +179,6 @@ class ArticleComment {
 				// assume article is bogus, threat as if it doesn't exist
 				wfProfileOut( __METHOD__ );
 				return false;
-			}
-
-			$memckey = wfMemcKey( 'articlecomment', 'basedata', $this->mLastRevId );
-			$acData = $wgMemc->get( $memckey );
-
-			if (!empty( $acData ) && is_array( $acData ) ) {
-				$this->mText = $acData['text'];
-				$this->mMetadata = empty( $this->mMetadata ) ? $acData['metadata'] : $this->mMetadata;
-				$this->mRawtext = $acData['raw'];
-				$this->mHeadItems = empty( $acData['head'] ) ? null : $acData['head'];
-				$this->mFirstRevision = $acData['first'];
-				$this->mFirstRevId = $this->mFirstRevision->getId();
-				$this->mLastRevision = $acData['last'];
-				$this->mUser = $acData['user'];
-				wfProfileOut( __METHOD__ );
-				return true;
 			}
 
 			$this->mFirstRevId = $this->getFirstRevID( DB_SLAVE );
@@ -241,16 +227,7 @@ class ArticleComment {
 			}
 
 			$rawtext = $this->mLastRevision->getText();
-			$this->parseText($rawtext);
-			$wgMemc->set($memckey, array(
-				'text' => $this->mText,
-				'metadata' => $this->mMetadata,
-				'raw' => $this->mRawtext,
-				'head' => $this->mHeadItems,
-				'first' => $this->mFirstRevision,
-				'last' => $this->mLastRevision,
-				'user' => $this->mUser
-			), 3600);
+			$this->parseText( $rawtext );
 		} else { // null title
 			$result = false;
 		}
@@ -259,23 +236,29 @@ class ArticleComment {
 		return $result;
 	}
 
-	public function parseText($rawtext) {
-		global $wgParser, $wgOut;
-		$this->mRawtext = self::removeMetadataTag($rawtext);
+	public function parseText( $rawtext ) {
 		global $wgEnableParserCache;
+
+		$this->mRawtext = self::removeMetadataTag( $rawtext );
+
 		$wgEnableParserCache = false;
 
-		$wgParser->ac_metadata = array();
+		$parser = ParserPool::get();
 
-		$head = $wgParser->parse( $rawtext, $this->mTitle, $wgOut->parserOptions());
+		$parser->ac_metadata = [];
+
+		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
+
 		$this->mText = $head->getText();
 		$this->mHeadItems = $head->getHeadItems();
 
-		if( isset($wgParser->ac_metadata) ) {
-			$this->mMetadata = $wgParser->ac_metadata;
+		if( isset( $parser->ac_metadata ) ) {
+			$this->mMetadata = $parser->ac_metadata;
 		} else {
-			$this->mMetadata = array();
+			$this->mMetadata = [];
 		}
+
+		ParserPool::release( $parser );
 
 		return $this->mText;
 	}
@@ -335,70 +318,80 @@ class ArticleComment {
 		wfProfileIn( __METHOD__ );
 
 		$comment = false;
-		if ( $this->load($master) ) {
-			$canDelete = $wgUser->isAllowed( 'delete' );
 
-			if ( self::isBlog() ) {
-				$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
-			}
+		$canDelete = $wgUser->isAllowed( 'commentdelete' );
 
-			//vary cache on permision as well so it changes we can show it to a user
-			$articleDataKey = wfMemcKey( 'articlecomment', 'comm_data_v2', $this->mLastRevId, $wgUser->getId(), $canDelete );
-			$data = $wgMemc->get( $articleDataKey );
+		if ( self::isBlog() ) {
+			$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
+		}
 
-			if(!empty($data)) {
-				wfProfileOut( __METHOD__ );
-				$data['timestamp'] = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $data['articleId'] ) ) . '#comm-' . $data['articleId'] . "' class='permalink'>" . wfTimeFormatAgo($data['rawmwtimestamp']) . "</a>";
-				return $data;
-			}
+		$title = $this->getTitle();
+		$commentId = $title->getArticleId();
 
+		//vary cache on permision as well so it changes we can show it to a user
+		$articleDataKey = wfMemcKey(
+			'articlecomment_data',
+			$commentId,
+			$title->getLatestRevID(),
+			$wgUser->getId(),
+			$canDelete,
+			RequestContext::getMain()->getSkin()->getSkinName(),
+			self::CACHE_VERSION
+		);
+
+		$data = $wgMemc->get( $articleDataKey );
+
+		if ( !empty( $data ) ) {
+			$data['timestamp'] = "<a href='" . $title->getFullUrl( array( 'permalink' => $data['id'] ) ) . '#comm-' . $data['id'] . "' class='permalink'>" . wfTimeFormatAgo($data['rawmwtimestamp']) . "</a>";
+
+			wfProfileOut( __METHOD__ );
+			return $data;
+		}
+
+		if ( $this->load( $master ) ) {
 			$sig = ( $this->mUser->isAnon() )
 				? AvatarService::renderLink( $this->mUser->getName() )
 				: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
 
-			$articleId = $this->mTitle->getArticleId();
-
 			$isStaff = (int)in_array('staff', $this->mUser->getEffectiveGroups() );
 
-			$parts = self::explode($this->getTitle());
+			$parts = self::explode($title);
 
 			$buttons = array();
 			$replyButton = '';
 
 			//this is for blogs we want to know if commenting on it is enabled
-			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $this->mTitle->getBaseText() ) );
+			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $title->getBaseText() ) );
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';
 			}
-			if( defined('NS_QUESTION_TALK') && ( $this->mTitle->getNamespace() == NS_QUESTION_TALK ) ) {
+			if( defined('NS_QUESTION_TALK') && ( $title->getNamespace() == NS_QUESTION_TALK ) ) {
 				$replyButton = '';
 			}
 
 			if ( $canDelete && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$img = '<img class="remove sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
-				$buttons[] = $img . '<a href="' . $this->mTitle->getLocalUrl('redirect=no&action=delete') . '" class="article-comm-delete">' . wfMsg('article-comments-delete') . '</a>';
+				$buttons[] = $img . '<a href="' . $title->getLocalUrl('redirect=no&action=delete') . '" class="article-comm-delete">' . wfMsg('article-comments-delete') . '</a>';
 			}
 
 			//due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
 			if ( $wgUser->isLoggedIn() && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$display = $this->canEdit() ? 'test=' : ' style="display:none"';
 				$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
-				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $articleId . '" class="article-comm-edit actionButton" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a></span>';
+				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMsg('article-comments-edit') . '</a></span>';
 			}
 
 			if ( !$this->mTitle->isNewPage(Title::GAID_FOR_UPDATE) ) {
-				$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
+				$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $title, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
 			}
 
-			$commentId = $this->getTitle()->getArticleId();
 			$rawmwtimestamp = $this->mFirstRevision->getTimestamp();
 			$rawtimestamp = wfTimeFormatAgo($rawmwtimestamp);
-			$timestamp = "<a rel='nofollow' href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $commentId ) ) . '#comm-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($rawmwtimestamp) . "</a>";
+			$timestamp = "<a rel='nofollow' href='" . $title->getFullUrl( array( 'permalink' => $commentId ) ) . '#comm-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($rawmwtimestamp) . "</a>";
 
 			$comment = array(
 				'id' => $commentId,
-				'articleId' => $articleId,
 				'author' => $this->mUser,
 				'username' => $this->mUser->getName(),
 				'avatar' => AvatarService::renderAvatar($this->mUser->getName(), self::AVATAR_BIG_SIZE),
@@ -414,7 +407,7 @@ class ArticleComment {
 				'timestamp' => $timestamp,
 				'rawtimestamp' => $rawtimestamp,
 				'rawmwtimestamp' =>	$rawmwtimestamp,
-				'title' => $this->mTitle->getText(),
+				'title' => $title->getText(),
 				'isStaff' => $isStaff,
 			);
 
@@ -422,7 +415,7 @@ class ArticleComment {
 				$comment['votes'] = $this->getVotesCount();
 			}
 
-			$wgMemc->set( $articleDataKey, $comment, 60*60 );
+			$wgMemc->set( $articleDataKey, $comment, self::AN_HOUR );
 
 			if(!($comment['title'] instanceof Title)) {
 				$comment['title'] = Title::newFromText( $comment['title'], NS_TALK );
@@ -648,12 +641,13 @@ class ArticleComment {
 	 * doSaveComment -- save comment
 	 *
 	 * @access public
-	 *
+	 * @param $preserveMetadata: hack to fix bug 102384 (prevent metadata override when trying to modify one of metadata keys)
 	 * @return Array or false on error. - TODO: Document what the array contains.
 	 */
-	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '' ) {
-		global $wgMemc, $wgTitle;
+	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '', $preserveMetadata = false ) {
+		global $wgTitle;
 		wfProfileIn( __METHOD__ );
+		$metadata = $this->mMetadata;
 
 		$this->load(true);
 		if ( $force || ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) ) {
@@ -685,8 +679,12 @@ class ArticleComment {
 			 * add article using EditPage class (for hooks)
 			 */
 
-			$article = new Article( $commentTitle, intval($this->mLastRevId) );
+			$article = new Article( $commentTitle, intval( $this->mLastRevId ) );
+			if ( $preserveMetadata ) {
+				$this->mMetadata = $metadata;
+			}
 			$retval = self::doSaveAsArticle($text, $article, $user, $this->mMetadata, $summary );
+
 			if(!empty($title)) {
 				$purgeTarget = $title;
 			} else {
@@ -814,7 +812,7 @@ class ArticleComment {
 			//nested comment
 			$commentTitle = sprintf('%s/%s%s-%s', $parentTitle->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow());
 		}
-
+		$commentTitleText = $commentTitle;
 		$commentTitle = Title::newFromText($commentTitle, MWNamespace::getTalk($title->getNamespace()));
 		/**
 		 * because we save different tile via Ajax request TODO: fix it !!
@@ -823,6 +821,10 @@ class ArticleComment {
 
 
 		if( !($commentTitle instanceof Title) ) {
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId .
+					") - failed to create commentTitle from " . $commentTitleText, true );
+			}
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -836,6 +838,10 @@ class ArticleComment {
 
 		// add comment to database
 		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - saved an article " .
+					$commentTitleText . ', commentId is ' . $article->getID(), true );
+			}
 			$revId = $article->getRevIdFetched();
 			$data = array(
 				'namespace' => $title->getNamespace(),
@@ -848,11 +854,25 @@ class ArticleComment {
 
 			$commentsIndex = new CommentsIndex( $data );
 			$commentsIndex->addToDatabase();
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - added comments index to DB for " .
+					$commentTitleText . ', commentId is ' . $article->getID(), true );
+			}
 
 			// set last child comment id
 			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
 
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - updated parent for " .
+					$commentTitleText . ', commentId is ' . $article->getID(), true );
+			}
+
 			wfRunHooks( 'EditCommentsIndex', array($article->getTitle(), $commentsIndex) );
+		} else {
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId .
+					") - failed to save reply article with title " . $commentTitleText, true );
+			}
 		}
 
 		$res = ArticleComment::doAfterPost( $retval, $article, $parentId );
@@ -872,7 +892,7 @@ class ArticleComment {
 	static public function doPurge($title, $commentTitle) {
 		wfProfileIn( __METHOD__ );
 
-		global $wgMemc, $wgArticleCommentsLoadOnDemand;
+		global $wgArticleCommentsLoadOnDemand;
 
 		// make sure our comment list is refreshed from the master RT#141861
 		$commentList = ArticleCommentList::newFromTitle($title);

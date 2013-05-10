@@ -1,5 +1,11 @@
 <?php
 
+if (empty($wgDevelEnvironment)) {
+	error_log('File marked for deletion, but still used: ' . __FILE__);
+} else {
+	die('File marked for deletion, but still used: ' . __FILE__);
+}
+
 /* Provider class for Google Ad Manager.
  * Documentation:
  * https://www.google.com/admanager/help/en_US/tips/tagging.html

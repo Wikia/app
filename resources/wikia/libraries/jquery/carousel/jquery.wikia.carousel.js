@@ -182,9 +182,9 @@
 			if(isNaN(left)) {
 				left = 0;
 			}
-			
-			// "left" value might not be exact, so we're checking 
-			// if we're within half a thumbnail's width of the end. 
+
+			// "left" value might not be exact, so we're checking
+			// if we're within half a thumbnail's width of the end.
 			if(left < constants.minLeft + constants.itemWidth/2) {
 				// disable right arrow
 				disableNext();
@@ -272,12 +272,12 @@
 			states.enable_previous = false;
 			dom.previous.addClass('disabled');
 		}
-		
+
 		function enablePrevious() {
 			states.enable_previous = true;
 			dom.previous.removeClass('disabled');
 		}
-		
+
 		function getItemWidth() {
 			return dom.items.first().outerWidth(true);
 		}

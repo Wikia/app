@@ -98,6 +98,8 @@ class AbTestingData extends WikiaObject {
 						'version_id' => $v_id,
 						'group_id' => $g_id,
 						'ranges' => $row->r_ranges,
+						'styles' => $row->r_styles,
+						'scripts' => $row->r_scripts,
 					);
 				}
 			}
@@ -125,7 +127,7 @@ class AbTestingData extends WikiaObject {
 				'g.id as g_id, g.name as g_name, g.description as g_description',
 				'v.id as v_id, v.start_time as v_start_time, v.end_time as v_end_time, v.ga_slot as v_ga_slot',
 					'v.flags as v_flags',
-				'r.ranges as r_ranges, r.group_id as r_group_id',
+				'r.ranges as r_ranges, r.group_id as r_group_id, r.styles as r_styles, r.scripts as r_scripts',
 			),
 			$where, // conditions
 			__METHOD__,
