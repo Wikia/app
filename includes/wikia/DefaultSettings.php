@@ -240,9 +240,6 @@ $wgHooks['AlternateResourceLoaderURL'][]                 = "ResourceLoaderHooks:
 $wgHooks['ResourceLoaderMakeQuery'][]                    = "ResourceLoaderHooks::onResourceLoaderMakeQuery";
 $wgHooks['ResourceLoaderModifyMaxAge'][]                 = "ResourceLoaderHooks::onResourceLoaderModifyMaxAge";
 
-// core
-$wgAutoloadClasses['Module']  =  $IP.'/includes/wikia/Module.php';
-
 // services
 $wgAutoloadClasses['Service']  =  $IP.'/includes/wikia/services/Service.php';
 $wgAutoloadClasses['ApiService']  =  $IP.'/includes/wikia/services/ApiService.class.php';
@@ -264,12 +261,6 @@ $wgAutoloadClasses['MobileService'] = $IP . '/includes/wikia/services/MobileServ
 $wgAutoloadClasses['TemplateService'] = $IP . '/includes/wikia/services/TemplateService.class.php';
 $wgAutoloadClasses['SpriteService'] = $IP . '/includes/wikia/services/SpriteService.class.php';
 $wgAutoloadClasses['SocialSharingService'] = $IP . '/includes/wikia/services/SocialSharingService.class.php';
-$wgAutoloadClasses['FacebookSharing'] = $IP . '/includes/wikia/services/FacebookSharing.class.php';
-$wgAutoloadClasses['TwitterSharing'] = $IP . '/includes/wikia/services/TwitterSharing.class.php';
-$wgAutoloadClasses['PlusoneSharing'] = $IP . '/includes/wikia/services/PlusoneSharing.class.php';
-$wgAutoloadClasses['StumbleuponSharing'] = $IP . '/includes/wikia/services/StumbleuponSharing.class.php';
-$wgAutoloadClasses['RedditSharing'] = $IP . '/includes/wikia/services/RedditSharing.class.php';
-$wgAutoloadClasses['EmailSharing'] = $IP . '/includes/wikia/services/EmailSharing.class.php';
 $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.class.php';
 $wgAutoloadClasses['ImagesService'] = $IP . '/includes/wikia/services/ImagesService.class.php';
 $wgAutoloadClasses['WikiService'] = $IP . '/includes/wikia/services/WikiService.class.php';
@@ -277,7 +268,6 @@ $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMart
 $wgAutoloadClasses['WAMService'] = $IP . '/includes/wikia/services/WAMService.class.php';
 $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
-$wgAutoloadClasses['VideoUsageService'] = $IP . '/includes/wikia/services/VideoUsageService.php';
 $wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/MustacheService.class.php';
 
 // data models
@@ -329,35 +319,8 @@ $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorControlle
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
 $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuController.class.php';
 
-// Footer Menu Controller refactor
-$wgAutoloadClasses['FooterMenuItemFactory'] = $IP.'/skins/oasis/modules/footer/FooterMenuItemFactory.class.php';
-$wgAutoloadClasses['FooterMenuItemBaseService'] = $IP.'/skins/oasis/modules/footer/FooterMenuItemBase.class.php';
-$wgAutoloadClasses['FooterShareItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterShareItem.class.php';
-$wgAutoloadClasses['FooterFollowItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterFollowItem.class.php';
-$wgAutoloadClasses['FooterMenuItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterMenuItem.class.php';
-$wgAutoloadClasses['FooterLinkItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterLinkItem.class.php';
-$wgAutoloadClasses['FooterHtmlItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterHtmlItem.class.php';
-$wgAutoloadClasses['FooterCustomizeItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterCustomizeItem.class.php';
-$wgAutoloadClasses['FooterDevinfoItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterDevinfoItem.class.php';
-$wgAutoloadClasses['FooterDisabledItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterDisabledItem.class.php';
-
 // Sass-related classes
-
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
-/*
-$wgAutoloadClasses['SassSourceContext']        = $IP.'/includes/wikia/services/sass/SassSourceContext.class.php';
-$wgAutoloadClasses['SassException']            = $IP.'/includes/wikia/services/sass/SassException.class.php';
-$wgAutoloadClasses['SassSource']               = $IP.'/includes/wikia/services/sass/Source/SassSource.class.php';
-$wgAutoloadClasses['SassFileSource']           = $IP.'/includes/wikia/services/sass/Source/SassFileSource.class.php';
-$wgAutoloadClasses['SassStringSource']         = $IP.'/includes/wikia/services/sass/Source/SassStringSource.class.php';
-$wgAutoloadClasses['SassCompiler']             = $IP.'/includes/wikia/services/sass/Compiler/SassCompiler.class.php';
-$wgAutoloadClasses['SassExternalRubyCompiler'] = $IP.'/includes/wikia/services/sass/Compiler/SassExternalRubyCompiler.class.php';
-$wgAutoloadClasses['SassFilter']               = $IP.'/includes/wikia/services/sass/Filter/SassFilter.class.php';
-$wgAutoloadClasses['SassFilterBase64']         = $IP.'/includes/wikia/services/sass/Filter/SassFilterBase64.class.php';
-$wgAutoloadClasses['SassFilterCdnRewrite']     = $IP.'/includes/wikia/services/sass/Filter/SassFilterCdnRewrite.class.php';
-$wgAutoloadClasses['SassFilterCssImports']     = $IP.'/includes/wikia/services/sass/Filter/SassFilterCssImports.class.php';
-$wgAutoloadClasses['SassFilterJanus']          = $IP.'/includes/wikia/services/sass/Filter/SassFilterJanus.class.php';
-*/
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
@@ -507,7 +470,6 @@ include_once( "$IP/extensions/wikia/EmailsStorage/EmailsStorage.setup.php" );
 include_once( "$IP/extensions/wikia/ShareButtons/ShareButtons.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnlockdb/SpecialUnlockdb.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaWantedQueryPage/WikiaWantedQueryPage.setup.php" );
-//include_once( "$IP/includes/wikia/Resources.php" );
 include_once( "$IP/extensions/wikia/ImageServing/imageServing.setup.php" );
 include_once( "$IP/extensions/wikia/ImageServing/Test/ImageServingTest.setup.php" );
 include_once( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );

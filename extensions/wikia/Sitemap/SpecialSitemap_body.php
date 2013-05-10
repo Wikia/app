@@ -404,7 +404,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$file = wfFindFile( $title );
 
-		$videoTitleData = $this->mMediaService->getMediaData( $title );
+		$videoTitleData = $this->mMediaService->getMediaData( $title, 500 );
 
 		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 		if ( !$isVideo ) {
@@ -419,7 +419,8 @@ class SitemapPage extends UnlistedSpecialPage {
 			return '';
 		}
 
-		$description = !empty($videoTitleData['desc']) ? $videoTitleData['desc'] : ( !empty($metaData['description']) ? $metaData['description'] : $videoTitleData['title'] );
+		$description = !empty($videoTitleData['desc']) ? $videoTitleData['desc'].' ' : ( !empty($metaData['description']) ? $metaData['description'].' ' : '' );
+		$description .= $videoTitleData['title'];
 		$entry =
 				"\t\t<video:video>\n" .
 				"\t\t\t<video:title><![CDATA[{$videoTitleData['title']}]]></video:title>\n" .

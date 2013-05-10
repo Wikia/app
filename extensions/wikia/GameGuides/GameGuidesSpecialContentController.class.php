@@ -2,7 +2,6 @@
 
 class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
-	const WIKI_FACTORY_VARIABLE_NAME = 'wgWikiaGameGuidesContent';
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function __construct() {
@@ -74,7 +73,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 			'tagTemplate' => $tagTemplate
 		]);
 
-		$tags = WikiFactory::getVarValueByName( self::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId );
+		$tags = $this->wg->WikiaGameGuidesContent;
 
 		if ( !empty( $tags ) ) {
 			$list = '';
@@ -186,7 +185,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 			}
 		}
 
-		$status = WikiFactory::setVarByName( self::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId, $tags );
+		$status = WikiFactory::setVarByName( 'wgWikiaGameGuidesContent', $this->wg->CityId, $tags );
 		$this->response->setVal( 'status', $status );
 
 		if ( $status ) {

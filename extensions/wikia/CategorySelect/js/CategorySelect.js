@@ -376,7 +376,7 @@
 			var data = [];
 
 			this.getCategories( filter ).each(function() {
-				data.push( CategorySelect.normalize( $(this).data() ) );
+				data.push( CategorySelect.normalize( $( this ).data() ) );
 			});
 
 			return data;
@@ -417,7 +417,7 @@
 			}
 
 			return filter !== undefined ?
-				( !isNaN( parseInt( filter, 10 ) ) ?
+				( typeof filter === 'number' ?
 					// By category index (relative to other categories)
 					categories.eq( filter ) :
 					// By category name, selector string, jQuery object or DOM Element

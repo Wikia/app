@@ -1,9 +1,9 @@
-(function(html, w){
+(function(html, window){
 	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
-		host = w.wgServer.replace(/^http\:\/\//, ''),
+		host = window.wgServer.replace(/^http\:\/\//, ''),
 		i = links.length,
-		namespaces = w.wgNamespaceIds,
-		regExpNamespace = new RegExp(w.wgArticlePath.replace('$1', "([^:]*)")),
+		namespaces = window.wgNamespaceIds,
+		regExpNamespace = new RegExp(window.wgArticlePath.replace('$1', "([^:]*)")),
 		//not all namespaces in GG should be clickable
 		//there are custom namespaces on wikis therefore black list will be better suited here
 		disabledNs = [-2,-1,1,2,3,4,5,6,7,10,11,12,13,15,110,111,500,501,700,701,1200,1201,1202],
@@ -75,7 +75,7 @@
 		}
 	});
 
-	//handling grabing all links on a page;
+	//handling grabing all photos on a page;
 	function Photos(){
 		this.getList = function(){
 			var images = Array.prototype.slice.call(document.images),
@@ -95,7 +95,7 @@
 		return new Photos();
 	};
 
-	w.Photos = Photos;
+	window.Photos = Photos;
 
 	function toggle(on, off, force){
 		var hasClass = ~html.className.indexOf(on);
@@ -147,14 +147,14 @@
 		return new Font();
 	};
 
-	w.Font = Font;
+	window.Font = Font;
 
-	require(['modal'], function(m){
+	require(['modal', 'sections'], function(modal, sections){
 		function Modal(){
 			this.close = function(){
-				var open = m.isOpen();
+				var open = modal.isOpen();
 
-				m.close();
+				modal.close();
 
 				return !!open;
 			};
@@ -166,17 +166,15 @@
 			return new Modal();
 		};
 
-		w.Modal = Modal;
-	});
+		window.Modal = Modal;
 
-	require(['sections'], function(s){
 		function Sections(){
 			this.open = function(id){
-				s.open(id, true);
+				sections.open(id, true);
 			};
-			this.close = s.close;
+			this.close = sections.close;
 			this.toggle = function(id) {
-				s.toggle(id, true);
+				sections.toggle(id, true);
 			};
 		}
 
@@ -186,13 +184,13 @@
 			return new Sections();
 		};
 
-		w.Sections = Sections;
+		window.Sections = Sections;
 
-		s.addEventListener('open', function(){
+		sections.addEventListener('open', function(){
 			document.documentElement.style.minHeight = document.documentElement.offsetHeight + 'px';
 		});
 
-		s.addEventListener('close', function(){
+		sections.addEventListener('close', function(){
 			document.documentElement.style.minHeight = 0;
 		});
 	});
@@ -204,13 +202,13 @@
 				'data',
 				{
 					data: {
-						title: wgTitle,
-						articleId: wgArticleId,
-						cityId: wgCityId
+						title: window.wgTitle,
+						articleId: window.wgArticleId,
+						cityId: window.wgCityId
 					},
 					toc: toc.get()
 				}
 			);
 		});
 	});
-})(document.documentElement, this);
+})(document.documentElement, window);

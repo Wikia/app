@@ -80,7 +80,7 @@ class SEOTweaksTest extends WikiaBaseTest
 	/**
 	 * @covers SEOTweaksHooksHelper::onAfterInitialize
 	 */
-	public function testOnArticleBeforeTitleValid() {
+	public function testOnAfterInitializeValid() {
 		
 		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
 										->getMock();
@@ -108,6 +108,10 @@ class SEOTweaksTest extends WikiaBaseTest
 			->expects( $this->never() )
 			->method ( 'isDeleted' )
 		;
+		$mockTitle
+			->expects( $this->never() )
+			->method ( 'getNamespace' )
+		;
 		$mockOut
 			->expects( $this->never() )
 			->method ( 'setStatusCode' ) 
@@ -122,14 +126,14 @@ class SEOTweaksTest extends WikiaBaseTest
 	/**
 	 * @covers SEOTweaksHooksHelper::onAfterInitialize
 	 */
-	public function testOnArticleBeforeTitleNotValid() {
+	public function testOnAfterInitializeNotValid() {
 		
 		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
 										->getMock();
 		
 		$mockTitle = $this->getMockBuilder( 'Title' )
 						->disableOriginalConstructor()
-						->setMethods( array( 'exists', 'isDeleted' ) )
+						->setMethods( array( 'exists', 'isDeleted', 'getNamespace' ) )
 						->getMock();
 		
 		$mockArticle = $this->getMockBuilder( 'Article' )
@@ -150,6 +154,11 @@ class SEOTweaksTest extends WikiaBaseTest
 			->expects( $this->at( 1 ) )
 			->method ( 'isDeleted' )
 			->will   ( $this->returnValue( true ) )
+		;
+		$mockTitle
+			->expects( $this->at( 2 ) )
+			->method ( 'getNamespace' )
+			->will   ( $this->returnValue( NS_MAIN ) )
 		;
 		$mockOut
 			->expects( $this->at( 0 ) )
