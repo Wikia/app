@@ -70,7 +70,7 @@ class GWTUserRepository {
 		if ( $this->exists($email) ) {
 			return false;
 		}
-		return insert( $email, $password);
+		return $this->insert( $email, $password);
 	}
 
 	private function exists( $email ) {
