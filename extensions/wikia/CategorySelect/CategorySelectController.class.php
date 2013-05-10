@@ -203,7 +203,7 @@ class CategorySelectController extends WikiaController {
 
 			// Pull in categories from templates inside of the article (BugId:100980)
 			$options = new ParserOptions( $this->wg->User );
-			$wikitext = $this->wg->Parser->preprocess( $wikitext, $title, $options );
+			$wikitext = ParserPool::preprocess( $wikitext, $title, $options );
 
 			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
 
