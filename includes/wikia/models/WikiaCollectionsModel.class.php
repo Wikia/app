@@ -19,9 +19,9 @@ class WikiaCollectionsModel extends WikiaModel {
 		$visualization = new CityVisualization();
 		foreach($this->getList($langCode) as $collection) {
 			$this->wg->Memc->delete($visualization->getCollectionCacheKey($collection['id']));
-// TODO get cityId by lang
-//			$title = GlobalTitle::newMainPage($city_id);
-//			$title->purgeSquid();
+
+			$title = GlobalTitle::newMainPage(WikiaHubsServicesHelper::getCorporateWikiIdByLang($langCode));
+			$title->purgeSquid();
 			Wikia::log(__METHOD__, '', 'Purged memcached for collection #' . $collection['id']);
 		}
 	}
