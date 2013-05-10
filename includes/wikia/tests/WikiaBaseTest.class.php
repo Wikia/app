@@ -199,6 +199,10 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->appMock->init();
 		$this->app = F::app();
 
+		$this->enableMockProxy();
+	}
+
+	protected function enableMockProxy() {
 		// php-test-helpers provides this function
 		set_new_overload('WikiaMockProxy::overload');
 	}

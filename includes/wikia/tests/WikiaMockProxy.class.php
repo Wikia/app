@@ -55,7 +55,13 @@ class WikiaMockProxy {
 
 		if (array_key_exists($className, self::$instances)) {
 			self::$instance = self::$instances[ $className ];
-			return 'WikiaMockProxy';
+			$instanceClassName = get_class(self::$instance);
+			if ( startsWith($instanceClassName,'Mock_') ) {
+				$instanceClassName = self::buildMockClass($instanceClassName);
+			} else {
+				$instanceClassName = 'WikiaMockProxy';
+			}
+			return $instanceClassName;
 		} else {
 			return $className;
 		}
@@ -80,6 +86,27 @@ class WikiaMockProxy {
 		}
 	}
 
+	static protected function buildMockClass( $className ) {
+		$mockClassName = "{$className}_WikiaMockProxy";
+		if ( class_exists( $mockClassName ) ) {
+			return $mockClassName;
+		}
+		$code = <<<EOFF
+class {$mockClassName} extends {$className} {
+public function __construct() {
+	\$instance = WikiaMockProxy::\$instance;
+	\$reflC = new ReflectionClass(\$instance);
+	\$reflP = \$reflC->getProperty('__phpunit_invocationMocker');
+	\$reflP->setAccessible(true);
+	\$value = \$reflP->getValue(\$instance);
+	\$reflP->setValue(\$this,\$value);
+}
+}
+EOFF;
+		eval($code);
+		return $mockClassName;
+	}
+
 	// If something calls new on a MockProxy object, we return our mock object instance
 	// The instance var is stored by overload() and will be lost on the next use of this class
 	// We store our original class name so that __call can find it
@@ -98,4 +125,26 @@ class WikiaMockProxy {
 			return null;
 		}
 	}
+
+	public function __get( $name ) {
+		$mockObject = self::$instances[$this->_mockClassName];
+		return $mockObject->$name;
+	}
+
+	public function __set( $name, $value ) {
+		$mockObject = self::$instances[$this->_mockClassName];
+		$mockObject->$name = $value;
+		return $value;
+	}
+
+	public function __isset( $name ) {
+		$mockObject = self::$instances[$this->_mockClassName];
+		return isset($mockObject->$name);
+	}
+
+	public function __unset( $name ) {
+		$mockObject = self::$instances[$this->_mockClassName];
+		unset($mockObject->$name);
+	}
+
 }
