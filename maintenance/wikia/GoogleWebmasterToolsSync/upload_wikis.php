@@ -31,6 +31,7 @@ try {
 		try {
 			GWTLogHelper::notice( "upload" );
 			$service->uploadWikiAsUser( $wiki, $users[$userI] );
+			sleep(1);
 			GWTLogHelper::notice( "verify" );
 			$service->verifyWiki( $wiki, $users[$userI] );
 			GWTLogHelper::notice( "sendsitemap" );
