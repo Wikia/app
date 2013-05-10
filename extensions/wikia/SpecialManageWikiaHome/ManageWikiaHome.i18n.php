@@ -64,13 +64,12 @@ $messages['en'] = array(
 	'manage-wikia-home-collections-sponsur-url-field-label' => 'Sponsors url',
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Hero image',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsor image',
+	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1/$2',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'This collection will not be visible on corporate main page until there are $1 wikis assigned to it.',
 
 	'manage-wikia-home-collection-hero-image-tooltip' => 'This image should be 1010px x 650px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'This image should be 330px x 210px',
 	'manage-wikia-home-collection-add-file-button' => 'Add a photo'
-);
-
-$messages['de'] = array(
 );
 
 $messages['qqq'] = array(
@@ -101,4 +100,6 @@ $messages['qqq'] = array(
 	'manage-wikia-home-modal-content-remove-collection' => 'remove wiki from selected collection',
 	'manage-wikia-home-modal-button-no' => '\'No\' button on blocking/unblocking modal',
 	'manage-wikia-home-modal-button-yes' => '\'Yes\' button on blocking/unblocking modal',
+	'manage-wikia-home-collections-wikis-in-collection' => 'It says how many wikis are in the collections; $1 = actual number of wikis assigned to a collection; $2 = maximum number of wikis per collection',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'Information about status of a collection; it appears only if the number of wikis assigned to a collection is invalid (it extends the maximum number of wikis per collection); $1 = maximum number of wikis per collection',
 );

@@ -216,9 +216,21 @@ ManageWikiaHome.prototype = {
 				wikiId: this.modalObject.target.attr('data-id')
 			},
 			callback: $.proxy(function(response) {
+				this.recalculateWikisInCollection();
 				$('.modalWrapper').closeModal();
 			}, this)
 		});
+	},
+	recalculateWikisInCollection: function(collectionId, switchType) {
+		var collectionId = this.modalObject.target.val();
+		var action = this.modalObject.type;
+		//var wikisPerCollection = window.wgWikisPerCollection[collectionId]; 
+		
+		if( action == window.SWITCH_COLLECTION_TYPE_ADD ) {
+			window.wgWikisPerCollection[collectionId]++;
+		} else if( action == window.SWITCH_COLLECTION_TYPE_REMOVE ) {
+			window.wgWikisPerCollection[collectionId]--;
+		}
 	}
 };
 

@@ -59,8 +59,15 @@
 		<form method="post" class="WikiaForm" id="collectionsSetupForm">
 			<? for($i=0; $i < WikiaCollectionsModel::COLLECTIONS_COUNT; $i++): ?>
 				<div class="collection-module">
+					<?php if( $wikisPerCollection[$i] != WikiaHomePageHelper::SLOTS_IN_TOTAL ): ?>
+						<div class="input-group">
+							<p class="error"><?= wfMessage('manage-wikia-home-collections-invalid-wikis-number')->numParams([WikiaHomePageHelper::SLOTS_IN_TOTAL])->text(); ?></p>
+						</div>
+					<?php endif; ?>
+					
 					<?=$form->renderField('enabled', $i)?>
 					<?=$form->renderField('name', $i)?>
+					
 					<div class="image-input-container">
 						<?=$form->renderField('sponsor_hero_image', $i)?>
 						<input type="button" class="wmu-show" value="<?= $wf->Message('manage-wikia-home-collection-add-file-button')->text() ?>" />
@@ -77,6 +84,10 @@
 						<?= wfMessage('manage-wikia-home-collection-sponsor-image-tooltip')->text() ?>
 					</p>
 					<?=$form->renderField('sponsor_url', $i)?>
+
+					<div class="input-group collection-wikis-counter">
+						<p><?= wfMessage('manage-wikia-home-collections-wikis-in-collection')->numParams([$wikisPerCollection[$i], WikiaHomePageHelper::SLOTS_IN_TOTAL])->text(); ?></p>
+					</div>
 				</div>
 			<? endfor ?>
 
