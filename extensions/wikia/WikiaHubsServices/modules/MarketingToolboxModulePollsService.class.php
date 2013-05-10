@@ -3,7 +3,7 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 
 	const MODULE_ID = 7;
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		$fields = array(
 			'pollsTitle' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-polls-title'),
