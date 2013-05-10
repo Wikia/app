@@ -650,6 +650,7 @@ class ArticleComment {
 		$metadata = $this->mMetadata;
 
 		$this->load(true);
+
 		if ( $force || ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) ) {
 
 			if ( wfReadOnly() ) {
