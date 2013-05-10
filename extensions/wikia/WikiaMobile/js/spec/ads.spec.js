@@ -40,7 +40,6 @@ describe("Ads module", function () {
 		expect(typeof ads.init).toEqual('function');
 		expect(typeof ads.fix).toEqual('function');
 		expect(typeof ads.unfix).toEqual('function');
-		expect(typeof ads.dismiss).toEqual('function');
 		expect(typeof ads.getAdType).toEqual('function');
 	});
 
@@ -63,13 +62,5 @@ describe("Ads module", function () {
 
 		expect(elements['wkAdPlc'].className).not.toEqual('TEST');
 		expect(ads.getAdType()).not.toEqual('TEST');
-	});
-
-	it("ad slot is removed after dismiss", function () {
-		spyOn(parentNode, 'removeChild');
-
-		ads.dismiss();
-
-		expect(parentNode.removeChild).toHaveBeenCalled();
 	});
 });

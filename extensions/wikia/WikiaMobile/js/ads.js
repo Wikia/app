@@ -326,7 +326,6 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 	/**
 	 * Module initialization
 	 */
-
 	$(function () {
 		adSlot = d.getElementById('wkAdPlc');
 		contentWrapper = d.getElementById('wkAdWrp');
