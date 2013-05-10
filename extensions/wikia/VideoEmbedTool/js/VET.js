@@ -239,7 +239,7 @@
 		VET_callbackAfterEmbed = options.callbackAfterEmbed || $.noop;
 
 		VET_tracking({
-			action: Wikia.Tracker.ACTIONS.OPEN
+			label: 'open'
 		});
 
 		if(VET_wysiwygStart == 2) {
@@ -530,7 +530,7 @@
 		window.VETbackButton = false;
 
 		VET_tracking({
-			action: Wikia.Tracker.ACTIONS.CLOSE
+			label: 'close'
 		});
 
 		VET_loader.modal.closeModal();
@@ -655,8 +655,10 @@
 			this.cachedSelectors.carousel.on('click', 'li > a', function(event) {
 				event.preventDefault();
 				VET_sendQueryEmbed($(this).attr('href'));
+                var node = $(event.currentTarget).data();
+                var trackData = node.phrase + '[' + node.pos + ']';
 				VET_tracking({
-					label: that.carouselMode === 'search' ? 'add-video' : 'add-video-suggested'
+					label: that.carouselMode === 'search' ? 'add-video-' + trackData  : 'add-video-suggested-' + trackData
 				});
 			});
 
@@ -702,7 +704,8 @@
 	            that.updateResultCaption();
 				that.cachedSelectors.closePreviewBtn.click();
 	            that.cachedSelectors.carousel.find('li').remove();
-	            that.addSuggestions({items: that.suggestionsCachedStuff.cashedSuggestions});
+	            that.addSuggestions({ searchQuery: that.suggestionsCachedStuff.suggestionQuery, items: that.suggestionsCachedStuff.cashedSuggestions });
+                that.carouselMode = 'suggestion';
 	            if (that.cachedSelectors.carousel.resetPosition) that.cachedSelectors.carousel.resetPosition();
 
 	            that.isCarouselCheck();
@@ -712,6 +715,7 @@
 			this.cachedSelectors.searchForm.submit(function(event) {
 				event.preventDefault();
 				var keywords = $(this).find('#VET-search-field').val();
+
 				if(keywords !== '' && that.searchCachedStuff.currentKeywords !== keywords) {
 
 					// switch fetch more handler to fetch search mode;
@@ -737,7 +741,7 @@
 					that.fetchSearch();
 
 					VET_tracking({
-						label: that.searchCachedStuff.searchType === 'local' ? 'find-local' : 'find-wikia-library'
+						label: that.searchCachedStuff.searchType === 'local' ? 'find-local-' + keywords : 'find-wikia-library-' + keywords
 					});
 				}
 			});
@@ -822,7 +826,7 @@
 		addSuggestions: function(data) {
 
 			var html,
-				template = '{{#items}}<li><figure>{{{thumbnail}}}<figcaption><strong>{{trimTitle}}</strong></figcaption></figure><a href="{{url}}" title="{{title}}">Add video</a></li>{{/items}}';
+				template = '{{#items}}<li><figure>{{{thumbnail}}}<figcaption><strong>{{trimTitle}}</strong></figcaption></figure><a href="{{url}}" title="{{title}}" data-phrase="' + data.searchQuery + '" data-pos="{{pos}}">Add video</a></li>{{/items}}';
 
 			html = $.mustache(template, data);
 			this.cachedSelectors.carousel.find('ul').append(html);
@@ -961,12 +965,16 @@
 							length = items.length;
 
 						if (length > 0) {
+                            VET_tracking({
+                                label: 'suggestions-loaded-' + data.searchQuery
+                            });
 
 							that.trimTitles(data);
 							that.addSuggestions(data);
 
 							// update results counter
 							that.suggestionsCachedStuff.fetchedResoultsCount = data.nextStartFrom;
+							that.suggestionsCachedStuff.suggestionQuery = data.searchQuery;
 
 							// cache fetched items
 							for (i = 0; i < length; i += 1) {
@@ -1007,7 +1015,6 @@
 						order: that.searchCachedStuff.searchOrder
 					},
 					callback: function(data) {
-
 						var i,
 							items = data.items,
 							length = items.length;
@@ -1066,7 +1073,7 @@
 			e.preventDefault();
 
 //			VET_tracking({
-//				label: 'button-close'
+//				label: 'success-button-return'
 //			});
 
 			VET_close();
