@@ -241,7 +241,6 @@ class ArticleComment {
 
 		$this->mRawtext = self::removeMetadataTag( $rawtext );
 
-		$origWgEnableParserCache = $wgEnableParserCache;
 		$wgEnableParserCache = false;
 
 		$parser = ParserPool::get();
@@ -260,8 +259,6 @@ class ArticleComment {
 		}
 
 		ParserPool::release( $parser );
-
-		$wgEnableParserCache = $origWgEnableParserCache;
 
 		return $this->mText;
 	}
