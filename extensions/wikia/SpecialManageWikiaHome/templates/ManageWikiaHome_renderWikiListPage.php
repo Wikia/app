@@ -34,11 +34,11 @@
 			<td>
 				<? $i = 1;?>
 				<? foreach ($collections as $collection): ?>
-					<label><input type="checkbox" class="collection-checkbox" value="<?= $collection['id']?>" <? if (in_array($collection['id'], $wiki->collections)): ?> checked="checked"<? endif ?> data-id="<?= $wiki->city_id ?>"/> <?= $collection['name']?></label>
+					<label><input type="checkbox" class="collection-checkbox" value="<?= $collection['id']?>" <? if (in_array($collection['id'], $wiki->collections)): ?> checked="checked"<? endif ?> data-id="<?= $wiki->city_id ?>"/> <?= $collection['name']?></label><br/>
 					<? $i++ ?>
 				<? endforeach ?>
 				<? for ($i=$i; $i <= WikiaCollectionsModel::COLLECTIONS_COUNT; $i++): ?>
-					<label class="alternative"><input type="checkbox" disabled="disabled"/> <?=wfMessage('manage-wikia-home-wiki-list-disabled-collection')->text();?></label>
+					<label class="alternative"><input type="checkbox" disabled="disabled"/> <?=wfMessage('manage-wikia-home-wiki-list-disabled-collection')->text();?></label><br/>
 				<? endfor ?>
 			</td>
 		</tr>
