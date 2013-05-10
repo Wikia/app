@@ -219,26 +219,24 @@ class WikiaHomePageController extends WikiaController {
 		if( $this->areCollectionsAvailable() ) {
 			$visualization = $this->getVisualization();
 
-			$tmpCollectionsBatches = $visualization->getCollectionsWikisData($this->wg->WikiaHomePageCollectionsWikis);
-
 			$collections = new WikiaCollectionsModel();
 			$collectionsList = $collections->getListForVisualization($this->wg->ContLang->getCode());
 
-			for ($i = 0; $i < count($collectionsList); $i++) {
-				$coll = $collectionsList[$i];
-				if (isset($coll['id']) && isset($tmpCollectionsBatches[$i])) {
-					$collectionsBatches[$collectionsList[$i]['id']] = $tmpCollectionsBatches[$i];
+			foreach ($collectionsList as $collection) {
+				// TODO what if there is wikis count other than 17
+				if (count($collection['wikis']) == WikiaHomePageHelper::SLOTS_IN_TOTAL) {
+					$collectionsBatches[$collection['id']] = $visualization->getCollectionsWikisData([$collection['id'] => $collection['wikis']])[0];
 
-					if (!empty($coll['sponsor_hero_image'])) {
-						$collectionsBatches[$coll['id']]['sponsor_hero_image'] = $coll['sponsor_hero_image'];
+					if (!empty($collection['sponsor_hero_image'])) {
+						$collectionsBatches[$collection['id']]['sponsor_hero_image'] = $collection['sponsor_hero_image'];
 					}
 
-					if (!empty($coll['sponsor_image'])) {
-						$collectionsBatches[$coll['id']]['sponsor_image'] = $coll['sponsor_image'];
+					if (!empty($collection['sponsor_image'])) {
+						$collectionsBatches[$collection['id']]['sponsor_image'] = $collection['sponsor_image'];
 					}
 
-					if (!empty($coll['sponsor_url'])) {
-						$collectionsBatches[$coll['id']]['sponsor_url'] = $coll['sponsor_url'];
+					if (!empty($collection['sponsor_url'])) {
+						$collectionsBatches[$collection['id']]['sponsor_url'] = $collection['sponsor_url'];
 					}
 				}
 			}

@@ -45,7 +45,10 @@ class WikiaCollectionsModel extends WikiaModel {
 			if (!empty($collection['sponsor_image'])) {
 				$collection['sponsor_image'] = ImagesService::getLocalFileThumbUrlAndSizes($collection['sponsor_image']);
 			}
+
+			$collection['wikis'] = $this->getWikisFromCollection($collection['id']);
 		}
+
 		return $list;
 	}
 
@@ -152,6 +155,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	 * @param $collectionId
 	 */
 	public function getWikisFromCollection($collectionId) {
+		// TODO add cache'ing
 		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$fields = [
@@ -168,7 +172,7 @@ class WikiaCollectionsModel extends WikiaModel {
 		$out = [];
 
 		while( $row = $db->fetchRow($results) ) {
-			$out[] = $row;
+			$out[] = $row['city_id'];
 		}
 
 		return $out;
