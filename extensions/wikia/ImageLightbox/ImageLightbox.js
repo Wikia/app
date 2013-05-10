@@ -269,8 +269,8 @@ var ImageLightbox = {
                 var videoInstance,
                 	element = $('<div  class="Wikia-video-enabledEmbedCode"></div>').append(wrapperTag);
 
-				require(['wikia.videoBootstrap'], function (videoBootstrap) {
-					videoInstance = new videoBootstrap(element[0], res.embedCode, 'imageLightbox');
+				require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+					videoInstance = new VideoBootstrap(element[0], res.embedCode, 'imageLightbox');
 				});
 
 				ImageLightbox.doViewTracking(res.titleKey, res.type, res.provider);
@@ -333,8 +333,8 @@ var ImageLightbox = {
 
 						// Handle video lightbox
 						self.showLightbox(res.title, '<div id="ImageLightboxVideoEmbed"></div>'+res.html, caption, res.width, res.titleKey, res.type, res.provider, function(){
-							require(['wikia.videoBootstrap'], function (videoBootstrap) {
-								var videoInstance = new videoBootstrap($('#ImageLightboxVideoEmbed')[0], res.embedCode, 'imageLightbox');
+							require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+								var videoInstance = new VideoBootstrap($('#ImageLightboxVideoEmbed')[0], res.embedCode, 'imageLightbox');
 							});
 						});
 

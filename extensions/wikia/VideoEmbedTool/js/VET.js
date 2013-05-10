@@ -321,8 +321,8 @@
 		var videoInstance,
 			element = $('<div></div>').appendTo('#VideoEmbedThumb');
 
-		require(['wikia.videoBootstrap'], function (videoBootstrap) {
-			videoInstance = new videoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
+		require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+			videoInstance = new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
 		});
 
 		VET_updateHeader();
@@ -913,8 +913,8 @@
 				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html("")),
 				videoInstance;
 
-			require(['wikia.videoBootstrap'], function (videoBootstrap) {
-				videoInstance = new videoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
+			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+				videoInstance = new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
 			});
 
 			// expand preview is hidden

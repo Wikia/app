@@ -406,8 +406,8 @@ var Lightbox = {
 				.addClass('video-media')
 				.css('line-height','normal');
 
-			require(['wikia.videoBootstrap'], function (videoBootstrap) {
-				videoInstance = new videoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode, Lightbox.openModal.vbClickSource);
+			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+				videoInstance = new VideoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode, Lightbox.openModal.vbClickSource);
 				Lightbox.openModal.vbClickSource = LightboxTracker.clickSource.LB;
 			});
 		},

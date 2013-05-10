@@ -8,6 +8,11 @@
 define('wikia.ooyala', ['wikia.window', 'ext.wikia.adengine.dartvideohelper'], function(window, dartVideoHelper) {
 	'use strict';
 
+	/**
+	 * Set up Ooyala player and tracking events
+	 * @param {Object} params Player params sent from the video handler
+	 * @param {VideoBootstrap} vb Instance of video player
+	 */
 	return function(params, vb) {
 		var containerId = vb.timeStampId( params.playerId ),
 			createParams = { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay, onCreate: onCreate };

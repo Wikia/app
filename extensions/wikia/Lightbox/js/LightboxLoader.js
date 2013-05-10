@@ -210,8 +210,8 @@ var LightboxLoader = {
 				embedCode = json['videoEmbedCode'],
 				inlineDiv = $('<div></div>').insertAfter(target.hide());
 
-			require(['wikia.videoBootstrap'], function (videoBootstrap) {
-				videoInstance = new videoBootstrap(inlineDiv[0], embedCode, clickSource);
+			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+				videoInstance = new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
 			});
 
 			// if player script, run it

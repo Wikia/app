@@ -5,8 +5,10 @@
 
 define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function videoBootstrap(loader, nirvana) {
 
-	 // vb stands for video bootstrap
-	 function vb (element, json, clickSource) {
+	var trackingTimeout = 0;
+
+	// vb stands for video bootstrap
+	function vb (element, json, clickSource) {
 		var self = this,
 			init = json.init,
 			html = json.html,
@@ -90,10 +92,8 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 		 */
 		timeoutTrack: function() {
 			var self = this;
-			if(window.vbTrackingTimeout) {
-				clearTimeout(window.vbTrackingTimeout);
-			}
-			window.vbTrackingTimeout = setTimeout(function() {
+			clearTimeout(trackingTimeout);
+			trackingTimeout = setTimeout(function() {
 				self.track('content-begin');
 			}, 3000);
 		},

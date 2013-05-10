@@ -120,8 +120,8 @@ window.addEventListener('DOMContentLoaded', function () {
 				videoInstance;
 
 			if(element && window.playerParams) {
-				require(['wikia.videoBootstrap'], function (videoBootstrap) {
-					videoInstance = new videoBootstrap(element, window.playerParams, 'mobileFilePage');
+				require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+					videoInstance = new VideoBootstrap(element, window.playerParams, 'mobileFilePage');
 				});
 			}
 

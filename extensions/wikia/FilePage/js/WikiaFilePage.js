@@ -6,10 +6,10 @@ var WikiaFilePage = {
 	 */
 	initVideo: function() {
 		if(window.playerParams) {
-			require(['wikia.videoBootstrap'], function (videoBootstrap) {
+			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
 
 				var element = $('#file'),
-					videoInstance = new videoBootstrap(element[0], window.playerParams, 'filePage');
+					videoInstance = new VideoBootstrap(element[0], window.playerParams, 'filePage');
 
 				$(window).on('lightboxOpened', function() {
 					videoInstance.reload(wgTitle, 670, false);
