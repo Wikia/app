@@ -5,8 +5,9 @@
 			<div class="module-input-box">
 				<input type="button" class="wmu-show" value="<?= $wf->Message('marketing-toolbox-edithub-add-file-button')->text() ?>" />
 				<span class="alternative filename-placeholder">
-					<? if (!empty($fields['photo' . $i]['value'])): ?>
-						<?= $fields['photo' . $i]['value']; ?>
+					<?$photo = $form->getField('photo' . $i); ?>
+					<? if (!empty($photo['value'])): ?>
+						<?= $photo['value']; ?>
 					<? else: ?>
 						<?= $wf->Message('marketing-toolbox-edithub-file-name')->text() ?>
 					<? endif ?>
@@ -14,37 +15,12 @@
 				<p class="alternative">
 					<?= $wf->Message('marketing-toolbox-hub-module-slider-image-tip')->parse() ?>
 				</p>
-				<?=$app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['photo' . $i])
-				);
-				?>
-				<?=$app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array('inputData' => $fields['strapline' . $i])
-			);
-				?>
-				<?=$app->renderView(
-				'MarketingToolbox',
-				'FormField',
-				array('inputData' => $fields['shortDesc' . $i])
-			);
-				?>
-				<?=$app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['longDesc' . $i])
-				);
-				?>
-				<?=$app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['url' . $i])
-				);
-				?>
 
+				<?=$form->renderField('photo' . $i); ?>
+				<?=$form->renderField('strapline' . $i); ?>
+				<?=$form->renderField('shortDesc' . $i); ?>
+				<?=$form->renderField('longDesc' . $i); ?>
+				<?=$form->renderField('url' . $i); ?>
 
 				<input class="secondary clear" type="button" value="<?= $wf->Message('marketing-toolbox-edithub-clear-button')->text() ?>" />
 			</div>

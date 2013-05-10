@@ -1,12 +1,7 @@
 <div class="module-popular-videos">
 	<div class="one-input-box">
 		<div class="module-right-box grid-4 alpha">
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['header'])
-				);
-			?>
+			<?= $form->renderField('header') ?>
 		</div>
 	</div>
 	
@@ -18,18 +13,19 @@
 	</div>
 
 	<div class="popular-videos-list">
-		<?php if( !empty($videos) ): ?>
-				<?php foreach($videos as $idx => $video): ?>
+		<? if( !empty($videos) ): ?>
+				<? foreach($videos as $idx => $video): ?>
+					<? $videoUrlField = $form->getField('videoUrl')?>
 					<?= $app->renderView(
 							'MarketingToolboxVideosController',
 							'popularVideoRow',
 							array(
 								'video' => $video,
-								'errorMsg' => (isset($fields['videoUrl']['errorMessage'][$idx]) ? $fields['videoUrl']['errorMessage'][$idx] : ''),
+								'errorMsg' => (isset($videoUrlField['errorMessage'][$idx]) ? $videoUrlField['errorMessage'][$idx] : ''),
 							)
 						);
 					?>
-				<?php endforeach; ?>
-		<?php endif; ?>
+				<? endforeach; ?>
+		<? endif; ?>
 	</div>
 </div>
