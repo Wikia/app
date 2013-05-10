@@ -122,6 +122,8 @@ class WikiaCollectionsModel extends WikiaModel {
 			];
 
 			$db->insert(self::COLLECTIONS_CV_TABLE, $insertData);
+
+			$db->commit();
 		}
 	}
 
@@ -140,6 +142,8 @@ class WikiaCollectionsModel extends WikiaModel {
 		];
 
 		$result = $db->delete(self::COLLECTIONS_CV_TABLE, $conds);
+
+		$db->commit();
 	}
 
 	/**

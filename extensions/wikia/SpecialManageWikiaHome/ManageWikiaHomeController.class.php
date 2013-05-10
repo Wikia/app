@@ -8,6 +8,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	const FLAG_TYPE_PROMOTE = 'promote';
 	const FLAG_TYPE_DEMOTE = 'remove-promote';
 
+	const SWITCH_COLLECTION_TYPE_ADD = 'add';
+	const SWITCH_COLLECTION_TYPE_REMOVE= 'remove';
+
+
 	/**
 	 * @var WikiaHomePageHelper $helper
 	 */
@@ -243,44 +247,28 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 * @desc A public alias of changeFlag() setting wiki as blocked
 	 */
 	public function setWikiAsBlocked() {
-		if( !$this->checkAccess() ) {
-			$this->status = false;
-		}
-
-		$this->status = $this->changeFlag('block');
+		$this->status = $this->changeFlag(self::FLAG_TYPE_BLOCK);
 	}
 
 	/**
 	 * @desc A public alias of changeFlag() setting wiki as unblocked
 	 */
 	public function removeWikiFromBlocked() {
-		if( !$this->checkAccess() ) {
-			$this->status = false;
-		}
-
-		$this->status = $this->changeFlag('unblock');
+		$this->status = $this->changeFlag(self::FLAG_TYPE_UNBLOCK);
 	}
 
 	/**
 	 * @desc A public alias of changeFlag() setting wiki as promoted
 	 */
 	public function setWikiAsPromoted() {
-		if( !$this->checkAccess() ) {
-			$this->status = false;
-		}
-
-		$this->status = $this->changeFlag('promote');
+		$this->status = $this->changeFlag(self::FLAG_TYPE_PROMOTE);
 	}
 
 	/**
 	 * @desc A public alias of changeFlag() setting wiki as not promoted
 	 */
 	public function removeWikiFromPromoted() {
-		if( !$this->checkAccess() ) {
-			$this->status = false;
-		}
-
-		$this->status = $this->changeFlag('remove-promote');
+		$this->status = $this->changeFlag(self::FLAG_TYPE_DEMOTE);
 	}
 
 	/**
@@ -294,30 +282,59 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	protected function changeFlag($type) {
 		$this->wf->ProfileIn(__METHOD__);
 
-		$wikiId = $this->request->getInt('wikiId', 0);
-		$corpWikiId = $this->request->getInt('corpWikiId', 0);
-		$langCode = $this->request->getVal('lang', 'en');
+		if( !$this->checkAccess() ) {
+			$result = false;
+		} else {
+			$wikiId = $this->request->getInt('wikiId', 0);
+			$corpWikiId = $this->request->getInt('corpWikiId', 0);
+			$langCode = $this->request->getVal('lang', 'en');
 
-		switch($type) {
-			case self::FLAG_TYPE_BLOCK:
-				$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_BLOCKED, $corpWikiId, $langCode);
-				break;
-			case self::FLAG_TYPE_UNBLOCK:
-				$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_BLOCKED, $corpWikiId, $langCode);
-				break;
-			case self::FLAG_TYPE_PROMOTE:
-				$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_PROMOTED, $corpWikiId, $langCode);
-				break;
-			case self::FLAG_TYPE_DEMOTE:
-				$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_PROMOTED, $corpWikiId, $langCode);
-				break;
-			default:
-				$result = false;
-				break;
+			switch($type) {
+				case self::FLAG_TYPE_BLOCK:
+					$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_BLOCKED, $corpWikiId, $langCode);
+					break;
+				case self::FLAG_TYPE_UNBLOCK:
+					$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_BLOCKED, $corpWikiId, $langCode);
+					break;
+				case self::FLAG_TYPE_PROMOTE:
+					$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_PROMOTED, $corpWikiId, $langCode);
+					break;
+				case self::FLAG_TYPE_DEMOTE:
+					$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_PROMOTED, $corpWikiId, $langCode);
+					break;
+				default:
+					$result = false;
+					break;
+			}
+
+			$this->wf->ProfileOut(__METHOD__);
 		}
-
-		$this->wf->ProfileOut(__METHOD__);
 		return $result;
+	}
+
+	public function switchCollection() {
+		if( !$this->checkAccess() ) {
+			$this->status = false;
+		} else {
+			$wikiId = $this->request->getInt('wikiId', 0);
+			$collectionId = $this->request->getVal('collectionId', 0);
+			$type = $this->request->getVal('switchType', self::SWITCH_COLLECTION_TYPE_ADD);
+
+			$collectionsModel = new WikiaCollectionsModel();
+			switch($type) {
+				case self::SWITCH_COLLECTION_TYPE_ADD:
+					$collectionsModel->addWikiToCollection($collectionId, $wikiId);
+					$this->status = true;
+					break;
+				case self::SWITCH_COLLECTION_TYPE_REMOVE:
+					$collectionsModel->removeWikiFromCollection($collectionId, $wikiId);
+					$this->status = true;
+					break;
+				default:
+					$this->status = false;
+					break;
+			}
+		}
 	}
 
 	/**
