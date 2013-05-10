@@ -29,6 +29,9 @@ class WebmasterToolsUtil {
 		if ( !$credentials ) throw new InvalidArgumentException("credentials = null");
 
 		$info = $this->getInfo( $wikiId, $credentials );
+		if( $info == null ) {
+			throw new GWTException("No info for wikiId = $wikiId.");
+		}
 		if( !$force && $info->getVerified() ) return true;
 		$client = new GWTClient($credentials->getEmail(), $credentials->getPassword(), $wikiId);
 		return $client->verify_site();
@@ -73,7 +76,7 @@ class WebmasterToolsUtil {
 	 * Gets wiki sync status
 	 * @param $wikiId - city_id
 	 * @param $credentials - google webmaster tools credentials.
-	 * @return - GWTSiteSyncStatus
+	 * @return GWTSiteSyncStatus
 	 */
 	public function getInfo( $wikiId, IGoogleCredentials $credentials = null ) {
 		//if ( is_array($credentials) ) $credentials = $this->findAccount( $wikiId, $credentials );
