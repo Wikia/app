@@ -59,8 +59,10 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 		/**
 		 * This is a full reload of the video player. Use this when you
 		 * need to reset the player with altered settings (such as autoplay).
+		 * Note: Reloading videos without JS api's can result in extra views
+		 * tracked. Not sure it's worth fixing at this time b/c it's edge-casey.
 		 */
-		reload: function(title, width, autoplay) {
+		reload: function(title, width, autoplay, clickSource) {
 			var videoInstance,
 				element = this.element;
 			nirvana.getJson(
@@ -72,7 +74,7 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 					autoplay: autoplay ? 1 : 0 // backend needs an integer
 				}
 			).done(function(data) {
-				videoInstance = new vb(element, data.embedCode);
+				videoInstance = new vb(element, data.embedCode, clickSource);
 			});
 		},
 		track: function(action) {

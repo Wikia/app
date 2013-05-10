@@ -121,7 +121,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 			if(element && window.playerParams) {
 				require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-					videoInstance = new VideoBootstrap(element, window.playerParams, 'mobileFilePage');
+					videoInstance = new VideoBootstrap(element, window.playerParams, 'filePage');
 				});
 			}
 

@@ -52,7 +52,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		startD,
 		galleryInited = false,
 		inited,
-		supportedVideos = window.supportedVideos || [];
+		supportedVideos = window.supportedVideos || [],
+		clickSource;
 
 	//Media object that holds all data needed to display it in modal/gallery
 	function Media(elem, data, length, i){
@@ -156,10 +157,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	}
 
 	function embedVideo(image, data) {
-		var videoInstance;
-
 		require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-			videoInstance = new VideoBootstrap(image, data, 'mobileModal');
+			var videoInstance = new VideoBootstrap(image, data, clickSource);
+			// Future video/image views will come from modal
+			// Calling it 'lightbox' to keep it consistant with other skins
+			clickSource = 'lightbox';
 		});
 	}
 
@@ -262,6 +264,10 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				origW = img.width;
 				origH = img.height;
 			}
+
+			// Future video/image views will come from modal
+			// Calling it 'lightbox' to keep it consistant with other skins
+			clickSource = 'lightbox';
 		}
 
 		//remove any left videos from DOM
@@ -457,6 +463,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		var cacheKey = 'mediaGalleryAssets',
 			galleryData,
 			ttl = 604800; //7days
+
+		// Video/image view was initiated from article
+		clickSource = "embed";
 
 		current = ~~num;
 
