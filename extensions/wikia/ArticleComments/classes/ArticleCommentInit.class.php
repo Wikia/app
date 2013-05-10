@@ -392,7 +392,7 @@ class ArticleCommentInit {
 			);
 
 		// format links to blog posts
-		} else if ( $ns == NS_BLOG_ARTICLE_TALK ) {
+		} else if ( defined('NS_BLOG_ARTICLE_TALK') && $ns == NS_BLOG_ARTICLE_TALK ) {
 			$baseText = $title->getBaseText();
 			$titleNames = explode( '/', $baseText );
 			$userBlog = Title::newFromText( $titleNames[0], NS_BLOG_ARTICLE );

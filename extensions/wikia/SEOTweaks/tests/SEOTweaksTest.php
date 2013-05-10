@@ -78,9 +78,9 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
-	 * @covers SEOTweaksHooksHelper::onArticleFromTitle
+	 * @covers SEOTweaksHooksHelper::onAfterInitialize
 	 */
-	public function testOnArticleBeforeTitleValid() {
+	public function testOnAfterInitializeValid() {
 		
 		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
 										->getMock();
@@ -108,35 +108,32 @@ class SEOTweaksTest extends WikiaBaseTest
 			->expects( $this->never() )
 			->method ( 'isDeleted' )
 		;
+		$mockTitle
+			->expects( $this->never() )
+			->method ( 'getNamespace' )
+		;
 		$mockOut
 			->expects( $this->never() )
 			->method ( 'setStatusCode' ) 
 		;
 		
-		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
-		$wgRefl->setAccessible( true );
-		
-		$wg = (object) array( 'Out' => $mockOut );
-		
-		$wgRefl->setValue( $mockHelper, $wg );
-		
 		$this->assertTrue(
-				$mockHelper->onArticleFromTitle( $mockTitle, $mockArticle ),
-				'SEOTweaksHooksHelper::onArticleFromTitle should always return true'
+				$mockHelper->onAfterInitialize( $mockTitle, $mockArticle, $mockOut ),
+				'SEOTweaksHooksHelper::onAfterInitialize should always return true'
 		);
 	}
 	
 	/**
-	 * @covers SEOTweaksHooksHelper::onArticleFromTitle
+	 * @covers SEOTweaksHooksHelper::onAfterInitialize
 	 */
-	public function testOnArticleBeforeTitleNotValid() {
+	public function testOnAfterInitializeNotValid() {
 		
 		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
 										->getMock();
 		
 		$mockTitle = $this->getMockBuilder( 'Title' )
 						->disableOriginalConstructor()
-						->setMethods( array( 'exists', 'isDeleted' ) )
+						->setMethods( array( 'exists', 'isDeleted', 'getNamespace' ) )
 						->getMock();
 		
 		$mockArticle = $this->getMockBuilder( 'Article' )
@@ -158,22 +155,20 @@ class SEOTweaksTest extends WikiaBaseTest
 			->method ( 'isDeleted' )
 			->will   ( $this->returnValue( true ) )
 		;
+		$mockTitle
+			->expects( $this->at( 2 ) )
+			->method ( 'getNamespace' )
+			->will   ( $this->returnValue( NS_MAIN ) )
+		;
 		$mockOut
 			->expects( $this->at( 0 ) )
 			->method ( 'setStatusCode' )
 			->with   ( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE ) 
 		;
 		
-		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
-		$wgRefl->setAccessible( true );
-		
-		$wg = (object) array( 'Out' => $mockOut );
-		
-		$wgRefl->setValue( $mockHelper, $wg );
-		
 		$this->assertTrue(
-				$mockHelper->onArticleFromTitle( $mockTitle, $mockArticle ),
-				'SEOTweaksHooksHelper::onArticleFromTitle should always return true'
+				$mockHelper->onAfterInitialize( $mockTitle, $mockArticle, $mockOut ),
+				'SEOTweaksHooksHelper::onAfterInitialize should always return true'
 		);
 	}
 	
