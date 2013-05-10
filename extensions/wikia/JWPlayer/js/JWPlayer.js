@@ -5,6 +5,11 @@
  */
 
 define('wikia.jwplayer', ['wikia.window'], function jwplayer(window) {
+	/**
+	 * Set up JWPlayer and tracking events
+	 * @param {Object} params Player params sent from the video handler
+	 * @param {VideoBootstrap} vb Instance of video player
+	 */
 	return function(params, vb) {
 		var doc = window.document,
 			script = doc.createElement('script');
