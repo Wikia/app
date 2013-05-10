@@ -22,7 +22,7 @@ define('track', ['wikia.tracker'], function( tracker ) {
 					category: 'wikiamobile-' + category,
 					href: options.href,
 					label: options.label,
-					trackingMethod: 'ga',
+					trackingMethod: options.method || 'ga',
 					value: options.value
 				});
 			}
@@ -33,6 +33,7 @@ define('track', ['wikia.tracker'], function( tracker ) {
 		SUBMIT: ACTIONS.SUBMIT,
 		PAGINATE: ACTIONS.PAGINATE,
 		IMAGE_LINK: ACTIONS.CLICK_LINK_IMAGE,
-		TEXT_LINK: ACTIONS.CLICK_LINK_TEXT
+		TEXT_LINK: ACTIONS.CLICK_LINK_TEXT,
+		IMPRESSION: ACTIONS.IMPRESSION
 	};
 });

@@ -106,6 +106,7 @@ class LightboxController extends WikiaController {
 			$thumb = array(
 				'thumbUrl' => $url,
 				'type' => $entry['type'],
+				'key' => $media->getDBKey(),
 				'title' => $media->getText(),
 				'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay(self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT) : ''
 			);
@@ -354,7 +355,7 @@ class LightboxController extends WikiaController {
 	 * @responseParam string to - timestamp
 	 */
 	public function getTotalWikiImages() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$extra = $this->request->getVal( 'count', 0 );
 		$includeLatestPhotos = $this->request->getVal( 'inclusive', '' );
@@ -394,7 +395,7 @@ class LightboxController extends WikiaController {
 		$this->to = $imageInfo['timestamp'];
 		$this->msg = $this->wf->Msg( 'lightbox-carousel-more-items', $this->wg->Lang->formatNum($totalWikiImages) );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -405,7 +406,7 @@ class LightboxController extends WikiaController {
 	 * $imageList = array( 'images' => list of image, 'minTimestamp' => minimum timestamp of the list )
 	 */
 	protected function getImageList( $limit, $to ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$memKey = $this->wf->MemcKey( 'lightbox', 'images', $limit, $to );
 		$imageList = $this->wg->Memc->get( $memKey );
@@ -446,7 +447,7 @@ class LightboxController extends WikiaController {
 			$this->wg->Memc->set( $memKey, $imageList, 60*60 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $imageList;
 	}
@@ -456,7 +457,7 @@ class LightboxController extends WikiaController {
 	 * @return array $latestPhotos [ array( 'title' => imageName, 'type' => 'image' ) ]
 	 */
 	protected function getLatestPhotos() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$memKey = $this->wf->MemcKey( 'lightbox', 'latest_photos' );
 		$latestPhotos = $this->wg->Memc->get( $memKey );
@@ -480,7 +481,7 @@ class LightboxController extends WikiaController {
 			$this->wg->Memc->set( $memKey, $latestPhotos, 60*60 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $latestPhotos;
 	}
@@ -490,7 +491,7 @@ class LightboxController extends WikiaController {
 	 * @return string $timestamp
 	 */
 	protected function getTimestamp() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$response = $this->sendRequest( 'LatestPhotosController', 'executeIndex' );
 		$latestPhotos = $response->getVal( 'thumbUrls', '' );
@@ -507,7 +508,7 @@ class LightboxController extends WikiaController {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $timestamp;
 	}

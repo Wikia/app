@@ -331,7 +331,7 @@ EOT;
 	protected static function getUrlScript($base_url, $slotname='', $zone_id='', $affiliate_id='', $params=null) {
 		wfProfileIn(__METHOD__);
 
-		$cat=AdEngine::getCachedCategory();
+		$cat=AdEngine2Controller::getCachedCategory();
 
 		$additional_params = "";
 		if (!empty($params) && is_array($params)) {

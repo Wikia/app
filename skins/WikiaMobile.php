@@ -21,12 +21,15 @@ class SkinWikiaMobile extends WikiaSkin {
 	 * This is due Wikiamobile needs a lot less global variables
 	 * having separate getTopScripts allows for less injecting itself into  WikiaSkin
 	 */
-	function getTopScripts(){
+	function getTopScripts( $globalVariables = [] ){
 		$vars = [];
 		$scripts = '';
 
 		//this is run to grab all global variables
 		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
+
+		//send list of supported videos so we can treat not supported ones differently
+		$globalVariables['supportedVideos'] = $this->wg->WikiaMobileSupportedVideos;
 
 		//global variables
 		//from Output class
@@ -37,7 +40,7 @@ class SkinWikiaMobile extends WikiaSkin {
 			array_flip( $this->wg->WikiaMobileIncludeJSGlobals )
 		);
 
-		return WikiaSkin::makeInlineVariablesScript( $vars ) . $scripts;
+		return WikiaSkin::makeInlineVariablesScript( $vars + $globalVariables ) . $scripts;
 	}
 }
 

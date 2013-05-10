@@ -376,7 +376,7 @@
 			var data = [];
 
 			this.getCategories( filter ).each(function() {
-				data.push( CategorySelect.normalize( $(this).data() ) );
+				data.push( CategorySelect.normalize( $( this ).data() ) );
 			});
 
 			return data;
@@ -417,7 +417,7 @@
 			}
 
 			return filter !== undefined ?
-				( !isNaN( parseInt( filter, 10 ) ) ?
+				( typeof filter === 'number' ?
 					// By category index (relative to other categories)
 					categories.eq( filter ) :
 					// By category name, selector string, jQuery object or DOM Element
@@ -716,18 +716,11 @@
 			}
 		},
 
-		track: (function() {
-			var config = {
-				action: Wikia.Tracker.ACTIONS.CLICK,
-				category: 'category-tool',
-				trackingMethod: 'both'
-			};
-
-			return function() {
-				var track = ( window.WikiaEditor && WikiaEditor.track ) || Wikia.Tracker.track;
-				track.apply( track, [ config ].concat( slice.call( arguments ) ) );
-			};
-		})()
+		track: Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
+			action: Wikia.Tracker.ACTIONS.CLICK,
+			category: 'category-tool',
+			trackingMethod: 'both'
+		})
 	});
 
 	/**

@@ -62,7 +62,7 @@ class MediaQueryService extends WikiaService {
 	}
 
 	public function searchInTitle( $query, $page=1, $limit=8 ) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$totalImages = $this->getTotalImages( $query );
 
@@ -95,13 +95,13 @@ class MediaQueryService extends WikiaService {
 			$results['images'][] = array('title' => $row->img_name);
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $results;
 	}
 
 	public function getTotalImages( $name = '' ) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$memKey = $this->getMemKeyTotalImages( $name );
 		$totalImages = $this->wg->Memc->get( $memKey );
@@ -130,7 +130,7 @@ class MediaQueryService extends WikiaService {
 			$this->wg->Memc->set( $memKey, $totalImages, 60*60*5 );
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $totalImages;
 	}
@@ -181,7 +181,7 @@ class MediaQueryService extends WikiaService {
 		if( !isset($this->mediaCache[ $media->getDBKey() ] ) ) {
 			$file = wfFindFile( $media );
 			if( !empty( $file ) && $file->canRender() ) {
-				$articleService = F::build('ArticleService', array( $media->getArticleID() ));
+				$articleService = F::build('ArticleService', array( $media ));
 
 				$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 				if( $isVideo ) {
@@ -336,7 +336,7 @@ class MediaQueryService extends WikiaService {
 	 * @return array $videoList
 	 */
 	public function getVideoList( $sort = 'recent', $filter = 'all', $limit = 0, $page = 1 ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$db = $this->wf->GetDB( DB_SLAVE );
 
@@ -382,7 +382,7 @@ class MediaQueryService extends WikiaService {
 			);
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $videoList;
 	}
@@ -392,7 +392,7 @@ class MediaQueryService extends WikiaService {
 	 * @return integer $totalVideos
 	 */
 	public function getTotalVideos() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$memKey = $this->getMemKeyTotalVideos();
 		$totalVideos = $this->wg->Memc->get( $memKey );
@@ -439,7 +439,7 @@ SQL;
 			$this->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $totalVideos;
 	}
@@ -458,7 +458,7 @@ SQL;
 	 * @return integer $totalVideos
 	 */
 	public function getTotalPremiumVideos() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$memKey = $this->getMemKeyTotalPremiumVideos();
 		$totalVideos = $this->wg->Memc->get( $memKey );
@@ -480,7 +480,7 @@ SQL;
 			$this->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $totalVideos;
 	}
@@ -512,7 +512,7 @@ SQL;
 	public static function getTotalVideoViewsByTitle( $title ) {
 		$app = F::app();
 
-		$app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$hashTitle = md5( $title );
 		$memKeyBucket = substr( $hashTitle, 0, 2 );
@@ -535,7 +535,7 @@ SQL;
 
 		$videoViews = isset($videoList[$hashTitle]) ? $videoList[$hashTitle] : 0;
 
-		$app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $videoViews;
 	}

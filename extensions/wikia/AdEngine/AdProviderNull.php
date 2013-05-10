@@ -1,5 +1,11 @@
 <?php
 
+if (empty($wgDevelEnvironment)) {
+	error_log('File marked for deletion, but still used: ' . __FILE__);
+} else {
+	die('File marked for deletion, but still used: ' . __FILE__);
+}
+
 /* This ad provider is effectively a no-op, just return a comment instead of any real code.
  * The idea is that errors with ads should not prevent the page from loading.
  * Null ad is also used in situations when the ads are not displayed, such

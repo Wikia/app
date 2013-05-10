@@ -16,7 +16,7 @@ class FogBugzDiagramsSpecialController extends WikiaSpecialPageController {
 	 * The index page of FogBugzDiagrams Extension
 	 */
 	public function index() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$this->response->addAsset( "resources/wikia/libraries/jquery/flot/jquery.flot.js" );
 		$this->response->addAsset( "resources/wikia/libraries/jquery/flot/jquery.flot.threshold.js" );
 		$this->response->addAsset( "resources/wikia/libraries/jquery/flot/jquery.flot.stack.js" );
@@ -28,6 +28,6 @@ class FogBugzDiagramsSpecialController extends WikiaSpecialPageController {
 		$this->response->setData( $data_send );
 
 		$this->wg->Out->setPageTitle( $this->wf->msg( 'fog-bugz-diagrams-special-page' ) );
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 }

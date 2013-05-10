@@ -14,23 +14,24 @@ class Forum extends Walls {
 
 
 	public function getBoardList($db = DB_SLAVE) {
-		$boardsIds = $this->getList( $db, NS_WIKIA_FORUM_BOARD );
+		$boardTitles = $this->getListTitles( $db, NS_WIKIA_FORUM_BOARD );
+		$titlesBatch = new TitleBatch($boardTitles);
+		$orderIndexes = $titlesBatch->getWikiaProperties(WPP_WALL_ORDER_INDEX,$db);
+
 		$boards = array();
-		$boardFlags = ($db == DB_MASTER) ? Title::GAID_FOR_UPDATE : 0;
-
-		foreach($boardsIds as $key => $id) {
-			$board = ForumBoard::newFromId( $id, $boardFlags);
-
-			if(empty($board)) {
-				continue;
-			}
+		/** @var $title Title */
+		foreach($boardTitles as $title) {
+			/** @var $board ForumBoard */
+			$board = ForumBoard::newFromTitle($title);
+			$title = $board->getTitle();
+			$id = $title->getArticleID();
 
 			$boardInfo = $board->getBoardInfo();
-			$boardInfo['id'] = $id;
-			$boardInfo['name'] = $board->getTitle()->getText();
+			$boardInfo['id'] = $title->getArticleID();
+			$boardInfo['name'] = $title->getText();
 			$boardInfo['description'] = $board->getDescription();
-			$boardInfo['url'] = $board->getTitle()->getFullURL();
-			$orderIndex = wfGetWikiaPageProp(WPP_WALL_ORDER_INDEX, $id, $db);
+			$boardInfo['url'] = $title->getFullURL();
+			$orderIndex = $orderIndexes[$id];
 			$boards[$orderIndex] = $boardInfo;
 		}
 
@@ -44,7 +45,7 @@ class Forum extends Walls {
 	 * @return int board count
 	 */
 	public function getBoardCount( $db = DB_SLAVE ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$dbw = $this->wf->GetDB( $db );
 
@@ -57,7 +58,7 @@ class Forum extends Walls {
 			array() 
 		);
 
-		$this->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $result['cnt'];
 	}
 
@@ -67,7 +68,7 @@ class Forum extends Walls {
 	 * @return integer $totalThreads
 	 */
 	public function getTotalThreads( $days = 0 ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$memKey = $this->getMemKeyTotalThreads( $days );
 		$totalThreads = $this->wg->Memc->get( $memKey );
@@ -102,7 +103,7 @@ class Forum extends Walls {
 			$this->wg->Memc->set( $memKey, $totalThreads, 60 * 60 * 12 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $totalThreads;
 	}
@@ -133,7 +134,7 @@ class Forum extends Walls {
 	}
 
 	public function hasAtLeast( $ns, $count ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasAtLeast', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
 			$app = F::App();
@@ -151,7 +152,7 @@ class Forum extends Walls {
 			}
 		} );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $out == "YES";
 	}
 
@@ -176,7 +177,7 @@ class Forum extends Walls {
 	 */
 
 	public function createOrders() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$dbw = $this->wf->GetDB( DB_MASTER );
 
@@ -192,7 +193,7 @@ class Forum extends Walls {
 			wfSetWikiaPageProp( WPP_WALL_ORDER_INDEX, $row->page_id, $row->page_id );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -200,38 +201,38 @@ class Forum extends Walls {
 	 */
 
 	public function createBoard( $titletext, $body, $bot = false ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->createOrEditBoard( null, $titletext, $body, $bot );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function editBoard( $id, $titletext, $body, $bot = false ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->createOrEditBoard( $id, $titletext, $body, $bot );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 *  create or edit board, if $board = null then we are creating new one
 	 */
 	protected function createOrEditBoard( $board, $titletext, $body, $bot = false ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$id = null;
 		if ( !empty( $board ) ) {
 			$id = $board->getId();
 		}
 
 		if ( strlen( $titletext ) < 4 || strlen( $body ) < 4 ) {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		if ( strlen( $body ) > 255 || strlen( $titletext ) > 40 ) {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -264,7 +265,7 @@ class Forum extends Walls {
 
 		Forum::$allowToEditBoard = false;
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -272,7 +273,7 @@ class Forum extends Walls {
 	 */
 
 	public function deleteBoard( $board ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		Forum::$allowToEditBoard = true;
 
@@ -281,11 +282,11 @@ class Forum extends Walls {
 
 		Forum::$allowToEditBoard = false;
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function createDefaultBoard() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$app = F::App();
 		if ( !$this->hasAtLeast( NS_WIKIA_FORUM_BOARD, 0 ) ) {
 			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasAtLeast', NS_WIKIA_FORUM_BOARD, 0 ) );
@@ -304,11 +305,11 @@ class Forum extends Walls {
 
 			$app->wg->User = $tmpUser;
 
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 

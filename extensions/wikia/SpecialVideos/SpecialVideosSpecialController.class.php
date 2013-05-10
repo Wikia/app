@@ -33,12 +33,14 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// enqueue i18n message for javascript
 		F::build('JSMessages')->enqueuePackage('SpecialVideos', JSMessages::INLINE);
 
+		// Change the <title> attribute and the <h1> for the page
 		$this->getContext()->getOutput()->setPageTitle( $this->wf->Msg('specialvideos-page-title') );
 		$this->getContext()->getOutput()->setHTMLTitle( $this->wf->Msg('specialvideos-html-title') );
 
+		// For search engines
 		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
 
-
+		// Add meta description tag to HTML source
 		$catInfo = HubService::getComscoreCategory($this->wg->CityId);
 
 		$descriptionKey = 'specialvideos-meta-description';
@@ -60,6 +62,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		$this->getContext()->getOutput()->addMeta( 'description', $this->wf->Msg($descriptionKey, $this->wg->Sitename) );
 
+		// Sorting/filtering dropdown values
 		$sort = $this->request->getVal( 'sort', 'trend' );
 		$page = $this->request->getVal( 'page', 1 );
 
@@ -77,6 +80,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			$page = 1;
 		}
 
+		// Variable to display the "add video" link at the end of the results
 		$addVideo = 1;
 
 		$specialVideos = new SpecialVideosHelper();

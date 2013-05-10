@@ -195,7 +195,7 @@ $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ "WikiMover"                       ] = "$IP/extensions/wikia/WikiFactory/Mover/WikiMover.php";
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/SimplePie/simplepie.inc";
-$wgAutoloadClasses[ 'Mustache'                        ] = "$IP/lib/mustache.php/Mustache.php";
+$wgAutoloadClasses[ 'MustachePHP'                        ] = "$IP/lib/mustache.php/Mustache.php";
 $wgAutoloadClasses[ 'Minify_CSS_Compressor'           ] = "$IP/lib/Minify_CSS_Compressor.php";
 $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
@@ -221,6 +221,7 @@ $wgAutoloadClasses[ 'TitleBatch'                      ] = "$IP/includes/wikia/ca
 $wgAutoloadClasses[ 'WikiaUserPropertiesHandlerBase'  ] = "$IP/includes/wikia/models/WikiaUserPropertiesHandlerBase.class.php";
 $wgAutoloadClasses[ 'ParserPool'                      ] = "$IP/includes/wikia/parser/ParserPool.class.php";
 $wgAutoloadClasses[ 'WikiDataSource'                  ] = "$IP/includes/wikia/WikiDataSource.php";
+$wgAutoloadClasses[ 'DateFormatHelper'                ] = "$IP/includes/wikia/DateFormatHelper.php";
 
 /**
  * Resource Loader enhancements
@@ -237,9 +238,6 @@ $wgHooks['ResourceLoaderCacheControlHeaders'][]          = "ResourceLoaderHooks:
 $wgHooks['AlternateResourceLoaderURL'][]                 = "ResourceLoaderHooks::onAlternateResourceLoaderURL";
 $wgHooks['ResourceLoaderMakeQuery'][]                    = "ResourceLoaderHooks::onResourceLoaderMakeQuery";
 $wgHooks['ResourceLoaderModifyMaxAge'][]                 = "ResourceLoaderHooks::onResourceLoaderModifyMaxAge";
-
-// core
-$wgAutoloadClasses['Module']  =  $IP.'/includes/wikia/Module.php';
 
 // services
 $wgAutoloadClasses['Service']  =  $IP.'/includes/wikia/services/Service.php';
@@ -262,21 +260,14 @@ $wgAutoloadClasses['MobileService'] = $IP . '/includes/wikia/services/MobileServ
 $wgAutoloadClasses['TemplateService'] = $IP . '/includes/wikia/services/TemplateService.class.php';
 $wgAutoloadClasses['SpriteService'] = $IP . '/includes/wikia/services/SpriteService.class.php';
 $wgAutoloadClasses['SocialSharingService'] = $IP . '/includes/wikia/services/SocialSharingService.class.php';
-$wgAutoloadClasses['FacebookSharing'] = $IP . '/includes/wikia/services/FacebookSharing.class.php';
-$wgAutoloadClasses['TwitterSharing'] = $IP . '/includes/wikia/services/TwitterSharing.class.php';
-$wgAutoloadClasses['PlusoneSharing'] = $IP . '/includes/wikia/services/PlusoneSharing.class.php';
-$wgAutoloadClasses['StumbleuponSharing'] = $IP . '/includes/wikia/services/StumbleuponSharing.class.php';
-$wgAutoloadClasses['RedditSharing'] = $IP . '/includes/wikia/services/RedditSharing.class.php';
-$wgAutoloadClasses['EmailSharing'] = $IP . '/includes/wikia/services/EmailSharing.class.php';
 $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.class.php';
 $wgAutoloadClasses['ImagesService'] = $IP . '/includes/wikia/services/ImagesService.class.php';
 $wgAutoloadClasses['WikiService'] = $IP . '/includes/wikia/services/WikiService.class.php';
 $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMartService.class.php';
 $wgAutoloadClasses['WAMService'] = $IP . '/includes/wikia/services/WAMService.class.php';
 $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
-$wgAutoloadClasses['SassService']  =  $IP.'/includes/wikia/services/SassService.php';
 $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
-$wgAutoloadClasses['VideoUsageService'] = $IP . '/includes/wikia/services/VideoUsageService.php';
+$wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/MustacheService.class.php';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -327,17 +318,19 @@ $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorControlle
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
 $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuController.class.php';
 
-// Footer Menu Controller refactor
-$wgAutoloadClasses['FooterMenuItemFactory'] = $IP.'/skins/oasis/modules/footer/FooterMenuItemFactory.class.php';
-$wgAutoloadClasses['FooterMenuItemBaseService'] = $IP.'/skins/oasis/modules/footer/FooterMenuItemBase.class.php';
-$wgAutoloadClasses['FooterShareItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterShareItem.class.php';
-$wgAutoloadClasses['FooterFollowItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterFollowItem.class.php';
-$wgAutoloadClasses['FooterMenuItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterMenuItem.class.php';
-$wgAutoloadClasses['FooterLinkItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterLinkItem.class.php';
-$wgAutoloadClasses['FooterHtmlItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterHtmlItem.class.php';
-$wgAutoloadClasses['FooterCustomizeItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterCustomizeItem.class.php';
-$wgAutoloadClasses['FooterDevinfoItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterDevinfoItem.class.php';
-$wgAutoloadClasses['FooterDisabledItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterDisabledItem.class.php';
+// Sass-related classes
+$wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
+
+// Register \Wikia\Sass namespace
+spl_autoload_register( function( $class ) {
+	if ( strpos( $class, 'Wikia\\Sass\\' ) !== false ) {
+		$class = preg_replace( '/^\\\\?Wikia\\\\Sass\\\\/', '', $class );
+		$file = $GLOBALS['IP'] . '/includes/wikia/services/sass/'.strtr( $class, '\\', '/' ).'.class.php';
+		require_once( $file );
+		return true;
+	}
+	return false;
+});
 
 // TODO:move this inclusions to CommonExtensions?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
@@ -375,7 +368,7 @@ $wgAutoloadClasses[ "WikiaApiQueryMostVisitedPages" ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiAjaxLogin"             ] = "$IP/extensions/wikia/WikiaApi/WikiaApiAjaxLogin.php";
 $wgAutoloadClasses[ "WikiaApiQuerySiteInfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQuerySiteinfo.php";
 $wgAutoloadClasses[ "WikiaApiQueryPageinfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
-$wgAutoloadClasses[ "WikiaApiCreatorReminderEmail"  ] = "$IP/extensions/wikia/AutoCreateWiki/WikiaApiCreatorReminderEmail.php";
+$wgAutoloadClasses[ "WikiaApiCreatorReminderEmail"  ] = "$IP/extensions/wikia/CreateNewWiki/WikiaApiCreatorReminderEmail.php";
 $wgAutoloadClasses[ "WikiFactoryTags"               ] = "$IP/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
 $wgAutoloadClasses[ "WikiaApiQueryEventsData"       ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryEventsData.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
@@ -476,7 +469,6 @@ include_once( "$IP/extensions/wikia/EmailsStorage/EmailsStorage.setup.php" );
 include_once( "$IP/extensions/wikia/ShareButtons/ShareButtons.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnlockdb/SpecialUnlockdb.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaWantedQueryPage/WikiaWantedQueryPage.setup.php" );
-//include_once( "$IP/includes/wikia/Resources.php" );
 include_once( "$IP/extensions/wikia/ImageServing/imageServing.setup.php" );
 include_once( "$IP/extensions/wikia/ImageServing/Test/ImageServingTest.setup.php" );
 include_once( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
@@ -580,12 +572,8 @@ $wgLangCreationVariables = array();
 /**
  * register job class
  */
-$wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
-include_once( "$IP/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php" );
-
-// new version
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
-include_once( "$IP/extensions/wikia/AutoCreateWiki/CreateWikiLocalJob.php" );
+include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
 
 /*
  * @name wgWikiaStaffLanguages
@@ -1063,6 +1051,22 @@ $wgWikiaSeasonsPencilUnit = false;
 $wgEnableWAMPageExt = false;
 
 /**
+ * @name $wgWAMPageConfig
+ * WAMPage extension configuration -- default configuration
+ */
+$wgWAMPageConfig = array(
+	'pageName' => 'WAM',
+	'faqPageName' => 'WAM/FAQ',
+	'tabsNames' => array(
+		'Top wikis',
+		'The biggest gainers',
+		'Top video games wikis',
+		'Top entertainment wikis',
+		'Top lifestyle wikis',
+	),
+);
+
+/**
  * @name $wgEnableQuickToolsExt
  * Enables QuickTools extension
  */
@@ -1073,6 +1077,9 @@ $wgEnableQuickToolsExt = true;
  * Use phalanx external service
  */
 $wgPhalanxService = false;
+$wgPhalanxServiceUrl = "http://phalanx";
+$wgPhalanxServiceOptions = [];
+
 
 /**
  * @name $wgWikiaHubsFileRepoDBName
@@ -1105,7 +1112,20 @@ $wgEnableAmazonDirectTargetedBuy = true;
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
+ * @name $wgEnableAdEngineExt
+ * Enables ad engine
+ */
+$wgEnableAdEngineExt = true;
+
+/**
  * trusted proxy service registry
  */
 $app->registerClass( 'TrustedProxyService', "$IP/includes/wikia/services/TrustedProxyService.class.php" );
 $app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'onIsTrustedProxy' );
+
+/**
+ * @name $wgChatDebugEnabled
+ * Enables verbose logging from chat
+ */
+//$wgChatDebugEnabled = true;
+

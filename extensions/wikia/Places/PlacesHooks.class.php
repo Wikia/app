@@ -63,7 +63,7 @@ class PlacesHooks extends WikiaObject{
 	}
 
 	public function onBeforePageDisplay( OutputPage $out, Skin $sk ){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$title = $out->getTitle();
 
@@ -81,12 +81,12 @@ class PlacesHooks extends WikiaObject{
 			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Places/css/GeoEnableButton.scss' ) );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ){
- 		$this->wf->profileIn( __METHOD__ );
+ 		wfProfileIn( __METHOD__ );
 
 		$this->wf->Debug( __METHOD__ . "\n" );
 
@@ -108,7 +108,7 @@ class PlacesHooks extends WikiaObject{
 		// purge autoplaceholdr position
 		F::app()->sendRequest( 'Places', 'purgeGeoLocationButton' );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
  	}
 

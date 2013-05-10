@@ -54,13 +54,6 @@ var WikiaPhotoGallerySlideshow = {
 			lastInView = inView;
 		});
 
-
-		// handle clicks on "Pop Out" button
-		//slideshow.find('.wikia-slideshow-popout').click(this.onPopOutClickFn);
-
-		// handle clicks on slideshow images
-		//slideshow.find('.wikia-slideshow-images a').click(this.onPopOutClickFn);
-
 		// handle clicks on "Add Image"
 		slideshow.find('.wikia-slideshow-addimage').click(function(e) {
 

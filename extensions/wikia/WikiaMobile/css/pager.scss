@@ -4,6 +4,8 @@
 	position: absolute;
 	top: 0;
 
+	display: table;
+
 	&.next{
 		left: 120%;
 	}
@@ -11,12 +13,8 @@
 	&.prev {
 		left: -120%;
 	}
-}
 
-section.swiperPage {
-	display: table;
-
-	> div{
+	.gallery{
 		display: table-cell;
 		vertical-align: middle;
 	}

@@ -36,12 +36,9 @@ $sql = '';
 $countNoEmpty = 0;
 
 
-$tables = 
-	array( 
-		"tags_top_blogs" => array( "tag_id" => "tb_tag_id", "city_id" => "tb_city_id" ),
-		"tags_top_articles" => array( "tag_id" => "ta_tag_id", "city_id" => "ta_city_id" ),
-		"tags_pv" => array( "tag_id" => "tag_id", "city_id" => "city_id" ),	
-	);
+$tables = array(
+	"tags_pv" => array( "tag_id" => "tag_id", "city_id" => "city_id" ),
+);
 
 global $wgStatsDB;
 $dbs = wfGetDB( DB_MASTER, array(), $wgStatsDB);

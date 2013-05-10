@@ -4,7 +4,7 @@
  * Main Category Gallery class
  */
 class CategoryExhibitionSection {
-	const CACHE_VERSION = 2;
+	const CACHE_VERSION = 3;
 
 	protected $thumbWidth = 130;
 	protected $thumbHeight = 115;
@@ -329,7 +329,7 @@ class CategoryExhibitionSection {
 		$imageUrl = $this->getImageFromPageId( $pageId );
 
 		if ( empty( $imageUrl ) ){
-			$snippetService = new ArticleService ( $pageId );
+			$snippetService = new ArticleService ( $oTitle );
 			$snippetText = $snippetService->getTextSnippet();
 		}
 

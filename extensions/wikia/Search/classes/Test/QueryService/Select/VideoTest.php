@@ -37,9 +37,14 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		    ->will   ( $this->returnValue( 'fr' ) )
 	    ;
 		$mockConfig
-		    ->expects( $this->once() )
+		    ->expects( $this->at( 0 ) )
 		    ->method ( 'addQueryFields' )
 		    ->with   ( $videoQueryFields )
+		;
+		$mockConfig
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'addQueryFields' )
+		    ->with   ( [ 'video_actors_txt' => 100, 'video_genres_txt' => 50, 'html_media_extras_txt' => 80 ] )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Video', 'configureQueryFields' );
 		$method->setAccessible( true );
@@ -68,7 +73,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Video', 'getQueryClausesString' );
 		$method->setAccessible( true );
 		$this->assertEquals(
-				'((wid:123) AND (ns:6))',
+				'((wid:123) AND (is_video:true) AND (ns:6))',
 				$method->invoke( $mockSelect )
 		);
 	}

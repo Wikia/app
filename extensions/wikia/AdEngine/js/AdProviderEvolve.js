@@ -11,6 +11,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 		getUrl,
 		getKv,
 		getHeight,
+		hasEmbed,
 		iface,
 		sanitizeSlotname,
 		formatTrackTime,
@@ -46,6 +47,13 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 		return false;
 	};
 
+	hasEmbed = function(slot) {
+		log(['hasEmbed', slot], 5, logGroup);
+		var embedNo = slot.getElementsByTagName('embed').length;
+		log(['hasEmbed', slot, embedNo], 5, logGroup);
+		return !!embedNo;
+	};
+
 	/**
 	 * Get element height like $.height. For IE get offsetHeight and subtracts margin and padding.
 	 *
@@ -56,20 +64,29 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 	 * @return {Number}
 	 */
 	getHeight = function (slot) {
-		var margins = 0;
+		var margins = 0,
+			height,
+			undef;
+
+		log(['getHeight', slot], 5, logGroup);
 
 		if (window.getComputedStyle) {
-			return parseInt(window.getComputedStyle(slot).getPropertyValue('height'), 10);
+			height = parseInt(window.getComputedStyle(slot).getPropertyValue('height'), 10);
+			log(['getHeight (regular browser version)', slot, height], 5, logGroup);
 		}
+
 		// IE8
-		if (slot.currentStyle) {
+		if (height === undef && slot.currentStyle) {
 			margins += parseInt('0' + slot.currentStyle.marginTop, 10);
 			margins += parseInt('0' + slot.currentStyle.marginBottom, 10);
 			margins += parseInt('0' + slot.currentStyle.paddingTop, 10);
 			margins += parseInt('0' + slot.currentStyle.paddingBottom, 10);
 
-			return slot.offsetHeight - margins;
+			height = slot.offsetHeight - margins;
+			log(['getHeight (IE version)', slot, height], 5, logGroup);
 		}
+
+		return height;
 	};
 
 	fillInSlot = function (slot) {
@@ -108,15 +125,18 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, tra
 		} else {
 			scriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function () {
 				var slot = document.getElementById(slotname),
-					height;
+					height,
+					embedPresent;
 
 				// Don't rely completely on Evolve hop
 				if (!hoppedSlots[slotname]) {
 					slotTweaker.removeDefaultHeight(slotname);
 					height = getHeight(slot);
 
-					// Only assume success if > 1x1 ad is returned
-					if (height === undef || height > 1) {
+					// Only assume success if > 1x1 ad is returned or there's embed
+					// in the slot (it seems Evolves returns an embed that causes
+					// more HTML to appear after GhostWriter calls finish callback).
+					if (height === undef || height > 1 || hasEmbed(slot)) {
 						// Real success
 						slotTweaker.removeTopButtonIfNeeded(slotname);
 					} else {

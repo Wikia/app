@@ -62,7 +62,7 @@
 </div>
 
 
-<div class="ui-datepicker-inline ui-datepicker datepicker-example">
+<div class="ui-widget ui-datepicker datepicker-example">
 	<table class="ui-datepicker-calendar">
 		<tr>
 			<td class="ui-datepicker-current-day-legend">

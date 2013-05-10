@@ -69,7 +69,7 @@ class VideoEmbedTool {
 		$props['vname'] = $file->getTitle()->getText();
 		$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 		$props['metadata'] = '';
-		$props['description'] = $this->getVideoDescription($file);
+		$props['description'] = $this->getVideoDescription($file, false);
 		$props['href'] = $title->getPrefixedText();
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -277,8 +277,7 @@ class VideoEmbedTool {
 
 				$placeholder_tag = $placeholder[0];
 				$file = wfFindFile( $title );
-				$thumb = $file->transform( array('width'=>$width) );
-				$embed_code = $thumb->toHtml( array('desc-link' => true) );
+				$embed_code = $file->transform( array('width'=>$width) )->toHtml();
 				$html_params = array(
 					'imageHTML' => $embed_code,
 					'align' => $layout,
@@ -340,20 +339,26 @@ class VideoEmbedTool {
 	}
 
 	/**
-	* Get video description, which is the content of the file page minus the category wiki tags
-	* @param File $file
-	* @return string $text
-	*/
-	private function getVideoDescription($file) {
+	 * Get video description, which is the content of the file page minus the category wiki tags
+	 * @param File $file - The file object for this video
+	 * @param bool $fillFromMeta - Whether or not to use the video meta description if the current
+	 *                             description is blank
+	 * @return string $text
+	 */
+	private function getVideoDescription( $file, $fillFromMeta = true ) {
 		// Get the file page for this file
 		$page = WikiPage::factory( $file->getTitle() );
 
-		// Strip out the category tags so they aren't shown to the user
-		$text = preg_replace( '/\[\[Category[^\]]+\]\]/', '', $page->getText() );
+		// remove description header
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$text = $videoHandlerHelper->removeDescriptionHeader( $page->getText() );
 
-		// If we have an empty string or a bunch of whitespace, use the default description
-		// from the file metadata
-		if ( preg_match('/^\s*$/ms', $text) ) {
+		// Strip out the category tags so they aren't shown to the user
+		$text = FilePageHelper::stripCategoriesFromDescription( $text );
+
+		// If we have an empty string or a bunch of whitespace, and we're asked to do so,
+		// use the default description from the file metadata
+		if ( $fillFromMeta && preg_match('/^\s*$/ms', $text) ) {
 			$text = $file->getMetaDescription();
 		}
 
@@ -366,15 +371,10 @@ class VideoEmbedTool {
 
 		$text = $page->getText();
 
-		// Separate any category tags
-		preg_match_all( '/(\[\[Category[^\]]+\]\])/', $text, $matches );
+		// Insert description header
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$text = $videoHandlerHelper->replaceDescriptionSection( $text, $description );
 
-		$catString = '';
-		if (!empty($matches[0]) && is_array($matches[0])) {
-			$catString = "\n" . implode(' ', $matches[0]);
-		}
-
-		$text = $description . $catString;
 		$summary = 'Adding video description';
 		$status = $page->doEdit( $text, $summary );
 

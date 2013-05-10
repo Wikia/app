@@ -33,15 +33,37 @@ $abTesting-color-text-warning: #c27500;
 			display: block;
 			border: 1px solid $abTesting-color-border;
 			margin: 10px 0;
-			width: 615px;
+			width: 915px;
 			.input-group {
-				width: 600px;
+				width: 300px;
 				input, textarea {
-					width: 580px;
+					width: 280px;
 				}
 				select {
-					width: 596px;
+					width: 296px;
 				}
+				&.ranges, &.value-dialog {
+					display: inline-block;
+					width: auto;
+				}
+				&.value-dialog {
+					.value-present-text {
+						display: none;
+						color: forestgreen;
+						font-weight: bold;
+					}
+					&.value-active {
+						.value-empty-text {
+							display: none;
+						}
+						.value-present-text {
+							display: inline;
+						}
+					}
+				}
+			}
+			.add-new .input-group.group-name {
+				width: 600px;
 			}
 			legend {
 				font-size: 14px;
@@ -136,6 +158,18 @@ $abTesting-color-text-warning: #c27500;
 	}
 	.exp-add td {
 		padding-left: 10px;
+	}
+}
+
+.textarea-editor {
+	textarea {
+		width: 100%;
+		height: 400px;
+	}
+	.buttons {
+		display: block;
+		margin: 10px 5px 5px;
+		text-align: right;
 	}
 }
 

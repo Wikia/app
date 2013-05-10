@@ -13,6 +13,8 @@ class WAMApiController extends WikiaApiController {
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
 
+	const MEMCACHE_VER = '1.01';
+
 	/**
 	 * A method to get WAM index (list of wikis with their WAM ranks)
 	 *
@@ -24,6 +26,7 @@ class WAMApiController extends WikiaApiController {
 	 * @requestParam string $wiki_lang [OPTIONAL] Language code if narrowing the results to specific language. Defaults to null
 	 * @requestParam integer $wiki_id [OPTIONAL] Id of specific wiki to pull. Defaults to null
 	 * @requestParam string $wiki_word [OPTIONAL] Fragment of url to search for amongst wikis. Defaults to null
+	 * @requestParam boolean $exclude_blacklist [OPTIONAL] Determines if exclude blacklisted wikis (with Content Warning enabled). Defaults to false
 	 * @requestParam boolean $fetch_admins [OPTIONAL] Determines if admins of each wiki are to be returned. Defaults to false
 	 * @requestParam integer $avatar_size [OPTIONAL] Size of admin avatars in pixels if fetch_admins is enabled
 	 * @requestParam boolean $fetch_wiki_images [OPTIONAL] Determines if image of each wiki isto be returned. Defaults to false
@@ -55,11 +58,15 @@ class WAMApiController extends WikiaApiController {
 	 * @responseParam integer $wam_index_date date of received list
 	 */
 	public function getWAMIndex () {
+		$app = F::app();
+
 		$options = $this->getWAMParameters();
 
 		$wamIndex = WikiaDataAccess::cacheWithLock(
-			F::app()->wf->SharedMemcKey(
+			$app->wf->SharedMemcKey(
 				'wam_index_table',
+				self::MEMCACHE_VER,
+				$app->wg->ContLang->getCode(),
 				implode(':', $options)
 			),
 			6 * 60 * 60,
@@ -74,6 +81,7 @@ class WAMApiController extends WikiaApiController {
 					}
 					foreach ($wamIndex['wam_index'] as &$row) {
 						$row['admins'] = $wikiService->getWikiAdmins($row['wiki_id'], $options['avatarSize'], self::DEFAULT_WIKI_ADMINS_LIMIT);
+						$row['admins'] = $this->prepareAdmins($row['admins'], self::DEFAULT_WIKI_ADMINS_LIMIT);
 					}
 				}
 				if ($options['fetchWikiImages']) {
@@ -114,9 +122,14 @@ class WAMApiController extends WikiaApiController {
 	 * 		max_date = last available date
 	 */
 	public function getMinMaxWamIndexDate() {
+		$this->response->setVal('min_max_dates', $this->getMinMaxWamIndexDateInternal());
+	}
+
+	private function getMinMaxWamIndexDateInternal() {
 		$wamDates = WikiaDataAccess::cache(
 			F::app()->wf->SharedMemcKey(
-				'wam_minmax_date'
+				'wam_minmax_date',
+				self::MEMCACHE_VER
 			),
 			2 * 60 * 60,
 			function () {
@@ -137,6 +150,7 @@ class WAMApiController extends WikiaApiController {
 		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
 		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
+		$options['excludeBlacklist'] = $this->request->getVal('exclude_blacklist', false);
 		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
 		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
 		$options['fetchWikiImages'] = $this->request->getBool('fetch_wiki_images', false);
@@ -151,7 +165,7 @@ class WAMApiController extends WikiaApiController {
 			throw new InvalidParameterApiException('limit');
 		}
 
-		$wamDates = $this->getMinMaxWamIndexDate();
+		$wamDates = $this->getMinMaxWamIndexDateInternal();
 
 		if(empty($options['currentTimestamp'])) {
 			if(!empty($options['previousTimestamp'])) {
@@ -161,7 +175,7 @@ class WAMApiController extends WikiaApiController {
 			$options['currentTimestamp'] = $wamDates['max_date'];
 			$options['previousTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
 		} else {
-			if($options['currentTimestamp'] > $wamDates['max_date'] || $options['currentTimestamp'] <= $wamDates['min_date']) {
+			if($options['currentTimestamp'] > $wamDates['max_date'] || $options['currentTimestamp'] < $wamDates['min_date']) {
 				throw new OutOfRangeApiException('currentTimestamp', $wamDates['min_date'], $wamDates['max_date']);
 			}
 
@@ -173,11 +187,22 @@ class WAMApiController extends WikiaApiController {
 				}
 			}
 
-			if($options['previousTimestamp'] >= $wamDates['max_date'] || $options['previousTimestamp'] < $wamDates['min_date']) {
-				throw new OutOfRangeApiException('previousTimestamp', $wamDates['min_date'], $wamDates['max_date']);
+			if($options['previousTimestamp'] > $wamDates['max_date']) {
+				throw new OutOfRangeApiException('previousTimestamp', 0, $wamDates['max_date']);
 			}
 		}
 
 		return $options;
+	}
+
+	private function prepareAdmins($admins, $limit) {
+		// WikiService adds to admins array wiki's founder, which sometimes for older wiki's doesn't exists so wrong data are recieved
+		if( empty( $admins[0]['userId'] ) ) {
+			unset( $admins[0] );
+		}
+		if( count($admins) > $limit ) {
+			$admins = array_slice( $admins, 0, $limit );
+		}
+		return $admins;
 	}
 }

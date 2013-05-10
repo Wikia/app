@@ -111,12 +111,20 @@ var STATUS_STATE_AWAY = 'away';
 		}
 	});
 
+	models.PartEvent = Backbone.Model.extend({
+		initialize: function(options){
+			if(!options) return;
+			this.set({
+				name: options.name
+			});
+		}
+	});
+
 	models.LogoutEvent = Backbone.Model.extend({
 		initialize: function(options){
 			if(!options) return;
 			this.set({
-				command: 'logout',
-				leavingUserName: options.leavingUserName
+				name: options.name
 			});
 		}
 	});

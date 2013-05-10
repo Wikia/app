@@ -24,6 +24,7 @@ foreach ( $aTypes as $iType ) {
 		if ( $iType == Phalanx::TYPE_USER ) {
 			Phalanx::getFromFilterShort( $iType, $sLanguage, true, true );
 		}
+		echo "iType = $iType, $sLanguage, $time sec \n";
 	}
 	// Touch.
 	Phalanx::setLastUpdate();

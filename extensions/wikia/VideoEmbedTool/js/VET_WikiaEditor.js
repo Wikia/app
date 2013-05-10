@@ -5,35 +5,49 @@
 		var mode = 'create';
 		var embedPresets = {};
 		var exists = false;
-		
+
 		// Start on first or second screen of VET
 		var startPoint = 1;
-		
+
 		var element = false;
 		if (event && event.data && event.data.element) {
+			// Video or Placeholder element was clicked in RTE
 			element = event.data.element;
 		}
-		
+
+		var onClose = null;
 		var triggeredFromRTE = event && event.type === 'rte';
 		if (triggeredFromRTE) {
+			var wikiaEditor = WikiaEditor.getInstance();
+
+			// Handle MiniEditor focus
+			if (wikiaEditor.config.isMiniEditor) {
+				wikiaEditor.plugins.MiniEditor.hasFocus = true;
+
+				onClose = function() {
+					wikiaEditor.editorFocus();
+					wikiaEditor.plugins.MiniEditor.hasFocus = false;
+				};
+			}
+
 			// get video from event data
 			if (element) {
 				// edit a video
 				mode = 'edit';
 				embedPresets = element.getData();
-				
+
 				if (!event.data.isPlaceholder) {
 					// "regular" video
 					$.extend(embedPresets, embedPresets.params);
 					delete embedPresets.params;
-					
+
 					startPoint = 2;
 				}
 			}
 		}
-		
+
 		var callback = null;
-		
+
 		if(mode === 'create') {
 			callback = function(embedData) {
 				var wikitag = $('#VideoEmbedTag').val();
@@ -59,54 +73,56 @@
 			callback = function (embedData) {
 				if (element != 'undefined') {
 					var wikitext = '';
+
+					// Handle video placeholders in the editor [[File:Placeholder|video]]
 					if(element.hasClass('media-placeholder')) {
 						wikitext = embedData.wikitext;
+						RTE.mediaEditor.update(element, wikitext, embedData);
 					} else {
-						
 						// generate wikitext
 						wikitext = '[[' + embedData.href;
-					
+
 						if (embedData.thumb) {
 							wikitext += '|thumb';
 						}
-					
+
 						if (embedData.align) {
 							wikitext += '|' + embedData.align;
 						}
-					
+
 						if (embedData.width) {
 							wikitext += '|' + embedData.width + 'px';
 						}
-					
+
 						if (embedData.caption) {
 							wikitext += '|' + embedData.caption;
 						}
-					
+
 						wikitext += ']]';
-					}
-					if (element) {
-						// update existing video
-						RTE.mediaEditor.update(element, wikitext, embedData);
-						VET_loader.modal.closeModal();
-					}
-					else {
-						// add new video
-						RTE.mediaEditor.addVideo(wikitext, embedData);
+
+						if (element) {
+							// update existing video
+							RTE.mediaEditor.update(element, wikitext, embedData);
+							VET_loader.modal.closeModal();
+						} else {
+							// add new video
+							RTE.mediaEditor.addVideo(wikitext, embedData);
+						}
 					}
 				}
-				
 			};
 		}
-		
+
 		var options = {
-			embedPresets: embedPresets,
 			callbackAfterEmbed: callback,
+			embedPresets: embedPresets,
+			onClose: onClose,
 			startPoint: startPoint
 		};
-		
+
 		VET_loader.load(options);
 	}
-	
+
 	window.VET_WikiaEditor = VET_WikiaEditor;
 
 })(this, jQuery);

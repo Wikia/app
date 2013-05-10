@@ -3,7 +3,7 @@
 class RelatedVideosService {
 
 	const memcKeyPrefix = 'RelatedVideosService';
-	const memcVersion = 19;
+	const memcVersion = 20;
 	static public $width = 160;
 	static public $height = 90;
 	const howLongVideoIsNew = 3;
@@ -14,7 +14,7 @@ class RelatedVideosService {
 	 * @param type $title if provided, look up article by text.
 	 * @param string $source if video is on an external wiki, DB name of that wiki. Empty value indicates video is stored locally.
 	 * @param int $videoWidth Width of resulting video player, in pixels
-	 * @return Array 
+	 * @return Array
 	 */
 	public function getRelatedVideoData( $params, $videoWidth = RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0, $videoHeight='', $useJWPlayer=true, $autoplay=true, $inAjaxResponse=false ){
 
@@ -46,7 +46,7 @@ class RelatedVideosService {
 				wfProfileOut( __METHOD__ );
 				return array();
 			}
-				
+
 			// just to be sure and to be able to work cross devbox.
 			if ( !isset( $result['data']['uniqueId'] ) ) {
 				wfProfileOut( __METHOD__ );
@@ -77,21 +77,16 @@ class RelatedVideosService {
 
 
 	/**
-	 * Preload information from memcached about given pages
+	 * Prefetch data from memcached for given pages
 	 *
 	 * @author Władysław Bodzek
 	 * @param $pages array
 	 */
-	protected function preloadDataFromMemcached( $pages, $videoWidth = RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ) {
+	protected function prefetchDataFor( $pages, $videoWidth = RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ) {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
 
 		if ( empty( $pages ) ) {
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
-		if ( !is_callable( array( $wgMemc, 'getMulti' ) ) ) {
 			wfProfileOut(__METHOD__);
 			return;
 		}
@@ -104,11 +99,9 @@ class RelatedVideosService {
 		}
 
 		$keys = array_unique($keys);
+		$wgMemc->prefetch( $keys );
 
-		$data = $wgMemc->getMulti( $keys );
 		wfProfileOut(__METHOD__);
-
-		return $data;
 	}
 
 	private function extendVideoByLocalParams( $videoData, $localParams ){
@@ -148,7 +141,7 @@ class RelatedVideosService {
 		$weekInSeconds = 604800;
 		$oMemc->set(
 			$this->getMemcKey( $title, $source, $videoWidth, $cityShort ),
-			$data, 
+			$data,
 			$weekInSeconds
 		);
 	}
@@ -180,7 +173,7 @@ class RelatedVideosService {
 			$item['relatedVideosDescription'] = isset( $res['comment'] ) ? $res['comment'] : '';
 		}
 		return $item;
-		
+
 	}
 
 	public function createWikiActivityParams($title, $res, $item){
@@ -192,7 +185,7 @@ class RelatedVideosService {
 			$item['relatedVideos'] = true;
 			$item['relatedVideosDescription'] = isset( $res['comment'] ) ? $res['comment'] : '';
 		}
-		return $item;	
+		return $item;
 	}
 
 	private function parseSummary( $text ){
@@ -250,7 +243,7 @@ class RelatedVideosService {
 					}
 				}
 			}
-			$this->preloadDataFromMemcached($pages);
+			$this->prefetchDataFor($pages);
 		}
 		// experimental - end
 

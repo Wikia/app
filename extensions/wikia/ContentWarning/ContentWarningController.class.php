@@ -49,7 +49,7 @@ class ContentWarningController extends WikiaController {
 	 * @responseParam integer contentWarningApproved [0/1]
 	 */
 	public function getContentWarningApproved() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$contentWarningApproved = 0;
 		if( $this->wg->User->isLoggedIn() ) {
@@ -63,7 +63,7 @@ class ContentWarningController extends WikiaController {
 			}
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		$this->contentWarningApproved = intval( $contentWarningApproved );
 	}

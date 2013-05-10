@@ -42,7 +42,6 @@ $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// core
-		'//resources/wikia/modules/cache.js',
 		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.min.js',
 		'//extensions/wikia/AdEngine/js/gw.config.js',
 
@@ -379,7 +378,7 @@ $config['wikiamobile_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//extensions/wikia/WikiaMobile/css/WikiaMobile.scss'
+		'//extensions/wikia/WikiaMobile/css/WikiaMobile.scss',
 	)
 );
 
@@ -487,6 +486,24 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
 	)
 );
+
+//mustache is generic but currently only used by smartbanner move if needed
+$config['wikiamobile_smartbanner_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => [
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.js',
+	]
+];
+
+$config['wikiamobile_smartbanner_init_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => [
+		'//extensions/wikia/WikiaMobile/SmartBanner/smartbanner.bootstrap.js',
+	]
+];
 
 $config['wikiamobile_relatedpages_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
@@ -936,6 +953,9 @@ $config['VET_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET.js',
+		'//resources/jquery.ui/jquery.ui.widget.js',
+		'//resources/jquery.ui/jquery.ui.mouse.js',
+		'//resources/jquery.ui/jquery.ui.slider.js',
 	)
 );
 
@@ -1244,5 +1264,27 @@ $config['categoryselect_edit_js'] = array(
 		'//resources/jquery.ui/jquery.ui.mouse.js',
 		'//resources/jquery.ui/jquery.ui.sortable.js',
 		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
+	)
+);
+
+/* FilePage */
+$config['file_page_js'] = array(
+	'type'=> AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/FilePage/js/FilePage.js',
+	)
+);
+$config['file_page_css'] = array(
+	'type' =>AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/FilePage/css/FilePage.scss',
+	)
+);
+/* LyricFind */
+$config['LyricsFindTracking'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
+		'//extensions/3rdparty/LyricWiki/LyricFind/js/tracking.js',
 	)
 );

@@ -7,6 +7,7 @@ var ChatView = Backbone.View.extend({
 	tagName: 'li',
 	template: _.template( $('#message-template').html() ),
 	inlineTemplate: _.template( $('#inline-alert-template').html() ),
+	meMessageTemplate: _.template( $('#me-message-template').html() ),
 	emoticonMapping: new EmoticonMapping(),
 
 	initialize: function(options) {
@@ -44,7 +45,7 @@ var ChatView = Backbone.View.extend({
 				// Linkify local wiki links (eg: http://thiswiki.wikia.com/wiki/Page_Name ) as shortened links (like bracket links)
 				var match = localWikiLinkReg.exec(link);
 				if (match !== null) {
-					linkName = match[1];
+					linkName = match[1].replace(/_/g, " ");
 				}
 
 				// (BugId:97945) Invalid URIs can throw "URIError: URI malformed"
@@ -129,7 +130,22 @@ var ChatView = Backbone.View.extend({
 			$(this.el).html(this.template(msg));
 			this.template = originalTemplate;
 		} else {
-			$(this.el).html(this.template(msg));
+			// "/me" command implementation
+			// note - in case of more commands executed on the message receiver side, there should
+			// be a loop here which goes through all commands and executes callbacks
+			if (msg.text.indexOf('/me ') == 0) {
+				msg.text = msg.text.substr(4);
+				var originalTemplate = this.template;
+				this.template = this.meMessageTemplate;
+				$(this.el).html(this.template(msg));
+				this.template = originalTemplate;
+			} else {
+				if (msg.text.indexOf('//me ') == 0) {
+					msg.text = msg.text.substr(1);
+				}
+				// end of /me implementation
+				$(this.el).html(this.template(msg));
+			}
 		}
 
 		$(this.el).attr('id', 'entry-' + this.model.cid );

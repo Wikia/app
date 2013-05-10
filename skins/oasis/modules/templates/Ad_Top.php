@@ -11,9 +11,10 @@ if (WikiaPageType::isWikiaHub()) {
 	} else {
 		echo $app->renderView('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
 	}
+} elseif (WikiaPageType::isMainPage()) {
+	echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
 } else {
 	echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
-	echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
 }
 
 if ($wg->EnableTopButtonWide) {
@@ -26,10 +27,6 @@ if ($wg->EnableTopButtonWide) {
 
 </div>
 
-<?php
-
-echo $app->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_SKIN'));
-
-?>
+<?= $app->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_SKIN')); ?>
 
 </div>

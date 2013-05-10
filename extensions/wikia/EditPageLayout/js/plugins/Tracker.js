@@ -45,7 +45,7 @@
 		onCkInstanceCreated: function( ck ) {
 			ck.on( 'buttonClick', this.proxy( this.onCkButtonClick ) );
 			ck.on( 'dialogCancel', this.proxy( this.onCkDialogCancel ) );
-			ck.on( 'dialogHide', this.proxy( this.onCkDialogHide ) );
+			ck.on( 'dialogClose', this.proxy( this.onCkDialogClose ) );
 			ck.on( 'dialogOk', this.proxy( this.onCkDialogOk ) );
 			ck.on( 'dialogShow', this.proxy( this.onCkDialogShow ) );
 			ck.on( 'panelClick', this.proxy( this.onCkPanelClick ) );
@@ -62,9 +62,9 @@
 			this.track( 'dialog-' + label + '-button-cancel' );
 		},
 
-		onCkDialogHide: function( event ) {
-			var label = event.data._.name.toLowerCase()
-			this.track( 'dialog-' + label + '-close' );
+		onCkDialogClose: function( event ) {
+			var label = event.data._.name.toLowerCase();
+			this.track( 'dialog-' + label + '-button-close' );
 		},
 
 		onCkDialogOk: function( event ) {
@@ -73,8 +73,12 @@
 		},
 
 		onCkDialogShow: function( event ) {
-			var label = event.data._.name.toLowerCase()
-			this.track( 'dialog-' + label + '-open' );
+			var label = event.data._.name.toLowerCase();
+
+			this.track({
+				action:  Wikia.Tracker.ACTIONS.OPEN,
+				label: 'dialog-' + label
+			});
 		},
 
 		onCkPanelClick: function( event ) {
@@ -86,7 +90,11 @@
 
 		onCkPanelShow: function( event ) {
 			var label = event.data.me.label.toLowerCase();
-			this.track( 'panel-' + label + '-open' );
+
+			this.track({
+				action:  Wikia.Tracker.ACTIONS.OPEN,
+				label: 'panel-' + label
+			});
 		},
 
 		// Wrapper for Wikia.Tracker so we can perform some magic
@@ -117,7 +125,10 @@
 			delete data.category;
 
 			// Update label
-			labelParts.push( data.label );
+			if ( data.label != undefined && data.label != '' ) {
+				labelParts.push( data.label );
+			}
+
 			data.label = labelParts.join( '-' );
 
 			Wikia.Tracker.track( this.config, data );

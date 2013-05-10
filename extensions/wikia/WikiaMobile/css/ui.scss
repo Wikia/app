@@ -31,11 +31,6 @@ html, body {
 	padding: 0;
 }
 
-object {
-	width: 100%;
-	height: auto;
-}
-
 // Error Box
 .wkErr {
 	background-color: $error-bg-color;
@@ -176,11 +171,4 @@ object {
 	td{
 		border:1px solid $border-color;
 	}
-}
-//don't let iframes,objects be wider than a screen (videos)
-iframe[width], object {
-	width: 75% !important;
-	height: auto;
-	margin: 0 auto;
-	display: block;
 }
