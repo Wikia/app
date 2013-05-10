@@ -214,7 +214,7 @@ class CityVisualization extends WikiaModel {
 		return $batches;
 	}
 
-	protected function getWikiListForVertical($contLang, $verticalId) {
+	protected function getWikisList(WikiListConditioner $conditioner) {
 		wfProfileIn(__METHOD__);
 
 		$verticalWikis = array(
