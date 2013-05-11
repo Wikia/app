@@ -1,8 +1,8 @@
 //init
 window.addEventListener('DOMContentLoaded', function () {
 	'use strict';
-	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'layout'],
-		function (qs, topbar, toc, share, popover, cookies, track) {
+	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'wikia.videoBootstrap'],
+		function (qs, topbar, toc, share, popover, cookies, track, VideoBootstrap) {
 			var d = document,
 				clickEvent = 'click',
 				//add chevrons to elements that need it
@@ -116,16 +116,10 @@ window.addEventListener('DOMContentLoaded', function () {
 			}
 
 			// Play video on file pages
-			var element = document.getElementById('file'),
-				videoInstance;
-
-			if(element && window.playerParams) {
-				require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-					videoInstance = new VideoBootstrap(element, window.playerParams, 'filePage');
-				});
+			var filePageContainer = document.getElementById('file');
+			if(filePageContainer && window.playerParams) {
+				new VideoBootstrap(filePageContainer, window.playerParams, 'filePage');
 			}
-
-
 		}
 	);
 });

@@ -318,11 +318,10 @@
 		// and execute this script
 		$('#VideoEmbedDetails').html(responseText);
 
-		var videoInstance,
-			element = $('<div></div>').appendTo('#VideoEmbedThumb');
+		var element = $('<div></div>').appendTo('#VideoEmbedThumb');
 
 		require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-			videoInstance = new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
+			new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
 		});
 
 		VET_updateHeader();
@@ -910,11 +909,10 @@
 		showVideoPreview: function(data) {
 			var previewWrapper = this.cachedSelectors.previewWrapper,
 				videoWrapper = this.cachedSelectors.videoWrapper,
-				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html("")),
-				videoInstance;
+				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
 
 			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-				videoInstance = new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
+				new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
 			});
 
 			// expand preview is hidden

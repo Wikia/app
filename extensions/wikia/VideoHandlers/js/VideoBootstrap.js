@@ -4,7 +4,6 @@
  */
 
 define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function videoBootstrap(loader, nirvana) {
-
 	var trackingTimeout = 0;
 
 	// vb stands for video bootstrap
@@ -21,8 +20,10 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 		this.provider = json.provider;
 
 		// Insert html if it hasn't been inserted already
-		if(html && !json.htmlPreloaded) {
-			element.innerHTML = html;
+		function instertHtml() {
+			if(html && !json.htmlPreloaded) {
+				element.innerHTML = html;
+			}
 		}
 
 		// Load any scripts needed for the video player
@@ -40,6 +41,8 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 			loader
 			.apply(loader, args)
 			.done(function() {
+				// wait till all assets are loaded before overriding any loading images
+				instertHtml();
 				// execute the init function
 				if(init) {
 					require([init], function(init) {
@@ -47,6 +50,8 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 					});
 				}
 			});
+		} else {
+			instertHtml();
 		}
 
 		// If there's no init function, just send one tracking call so it counts as a view
@@ -63,8 +68,7 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 		 * tracked. Not sure it's worth fixing at this time b/c it's edge-casey.
 		 */
 		reload: function(title, width, autoplay, clickSource) {
-			var videoInstance,
-				element = this.element;
+			var element = this.element;
 			nirvana.getJson(
 				'VideoHandler',
 				'getEmbedCode',
@@ -74,7 +78,7 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 					autoplay: autoplay ? 1 : 0 // backend needs an integer
 				}
 			).done(function(data) {
-				videoInstance = new vb(element, data.embedCode, clickSource);
+				new vb(element, data.embedCode, clickSource);
 			});
 		},
 		track: function(action) {

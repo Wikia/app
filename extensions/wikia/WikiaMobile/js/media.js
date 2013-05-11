@@ -4,8 +4,8 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana'],
-	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana){
+define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana', 'wikia.videoBootstrap'],
+	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana, VideoBootstrap){
 	'use strict';
 	/** @private **/
 
@@ -158,11 +158,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	}
 
 	function embedVideo(image, data) {
-		require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-			var videoInstance = new VideoBootstrap(image, data, clickSource);
-			// Future video/image views will come from modal
-			clickSource = 'lightbox';
-		});
+		new VideoBootstrap(image, data, clickSource);
+		// Future video/image views will come from modal
+		clickSource = 'lightbox';
 	}
 
 	function setupImage(){
