@@ -1,12 +1,13 @@
 <?php
-
 /**
+ * EasyTemplate class for easy mixing HTML/JavaScript/CSS/PHP code
+ *
+ * @deprecated
+ * @see Wikia\Template\PHPEngine
+ *
  * @package MediaWiki
  * @author Krzysztof Krzyżaniak <eloy@wikia.com>
- *
  * @version: $Id: EasyTemplate.php 9427 2008-02-15 11:31:05Z eloy $
- *
- * EasyTemplate class for easy mixing HTML/JavaScript/CSS/PHP code
  */
 
 

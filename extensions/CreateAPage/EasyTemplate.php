@@ -1,5 +1,8 @@
 <?php
 /**
+ * @deprecated
+ * @see Wikia\Template\PHPEngine
+ *
  * @file
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @version: $Id: EasyTemplate.php 9427 2008-02-15 11:31:05Z eloy $
