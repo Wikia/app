@@ -20,7 +20,7 @@ class PHPEngine extends Engine {
 	public function exists( $template ) {
 		wfProfileIn( __METHOD__ );
 
-		$found = file_exists( is_null( $this->prefix ) ? $template : $this->prefix . DIRECTORY_SEPARATOR . $template );
+		$found = file_exists( $this->prefix == '' ? $template : $this->prefix . DIRECTORY_SEPARATOR . $template );
 
 		wfProfileOut( __METHOD__ );
 		return $found;
@@ -32,12 +32,9 @@ class PHPEngine extends Engine {
 	public function render( $template ) {
 		wfProfileIn( __METHOD__ );
 
-		$path = is_null( $this->prefix ) ? $template : $this->prefix . DIRECTORY_SEPARATOR . $template;
+		$path = $this->prefix == '' ? $template : $this->prefix . DIRECTORY_SEPARATOR . $template;
 
-		if ( !is_null( $this->values ) ) {
-			extract( $this->values );
-		}
-
+		extract( $this->values );
 		ob_start();
 
 		wfProfileIn( __METHOD__ . " - template: {$path}" );

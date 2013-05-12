@@ -28,7 +28,7 @@ class WikiaTemplateEngineTest extends PHPUnit_Framework_TestCase {
 		$tplEngine = ( new $class );
 
 		//initial status
-		$this->assertNull( $tplEngine->getPrefix() );
+		$this->assertEquals( $tplEngine->getPrefix(), '' );
 
 		//test setting/getting
 		$tplEngine->setPrefix( $prefix );
@@ -36,7 +36,7 @@ class WikiaTemplateEngineTest extends PHPUnit_Framework_TestCase {
 
 		//test clearing, for reusage scenarios
 		$tplEngine->setPrefix( null );
-		$this->assertNull( $tplEngine->getPrefix() );
+		$this->assertEquals( $tplEngine->getPrefix(), '' );
 	}
 
 	/**
@@ -83,7 +83,7 @@ class WikiaTemplateEngineTest extends PHPUnit_Framework_TestCase {
 		$tplEngine = new $class;
 
 		//test initial value
-		$this->assertNull( $tplEngine->getData() );
+		$this->assertEquals( $tplEngine->getData(), [] );
 
 		//test setting values
 		$tplEngine->setData( $data1 );
@@ -99,6 +99,6 @@ class WikiaTemplateEngineTest extends PHPUnit_Framework_TestCase {
 
 		//test cearing data
 		$tplEngine->clearData();
-		$this->assertNull( $tplEngine->getData() );
+		$this->assertEquals( $tplEngine->getData(), [] );
 	}
 }

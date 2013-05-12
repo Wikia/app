@@ -87,8 +87,8 @@ namespace Wikia\Template;
  * @author Federico "Lox" Lucignano
  */
 abstract class Engine {
-	protected $values = null;
-	protected $prefix = null;
+	protected $values = [];
+	protected $prefix = '';
 
 	/**
 	 * Renders the template as a string.
@@ -127,11 +127,7 @@ abstract class Engine {
 	 * @return Engine The current instance
 	 */
 	public function setPrefix ( $prefix ) {
-		wfProfileIn( __METHOD__ );
-
-		$this->prefix = !( is_string( $prefix ) || is_null( $prefix ) ) ? (string) $prefix : $prefix;
-
-		wfProfileOut( __METHOD__ );
+		$this->prefix = (string) $prefix;
 		return $this;
 	}
 
@@ -173,7 +169,7 @@ abstract class Engine {
 	public function updateData( Array $values ) {
 		wfProfileIn( __METHOD__ );
 
-		$this->values = array_merge( ( is_null( $this->values ) ) ? [] : $this->values, $values );
+		$this->values = array_merge( $this->values, $values );
 
 		wfProfileOut( __METHOD__ );
 		return $this;
@@ -187,13 +183,13 @@ abstract class Engine {
 	 * @see Engine::clearVal() if you need to clear only one value
 	 */
 	public function clearData(){
-		$this->values = null;
+		$this->values = [];
 	}
 
 	/**
 	 * Returns the values set for this instance to be passed to a template.
 	 *
-	 * @return array|null The values set for this instance, null if the collection
+	 * @return array The values set for this instance, null if the collection
 	 * wasn't set
 	 *
 	 * @see Engine::getVal() if you need to get only one value
@@ -214,15 +210,7 @@ abstract class Engine {
 	 * of calling this method multiple times
 	 */
 	public function setVal( $name, $value ) {
-		wfProfileIn( __METHOD__ );
-
-		if ( is_null( $this->values ) ) {
-			$this->values = [];
-		}
-
 		$this->values[$name] = $value;
-
-		wfProfileOut( __METHOD__ );
 		return $this;
 	}
 
@@ -252,6 +240,6 @@ abstract class Engine {
 	 * of calling this method multiple times
 	 */
 	public function getVal( $name ) {
-		return is_null( $this->values ) ? null : $this->values[$name];
+		return $this->values[$name];
 	}
 }
