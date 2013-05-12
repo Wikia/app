@@ -97,7 +97,7 @@ $wgAutoloadClasses['WikiaRequest'] = $IP . '/includes/wikia/nirvana/WikiaRequest
 $wgAutoloadClasses['WikiaResponse'] = $IP . '/includes/wikia/nirvana/WikiaResponse.class.php';
 $wgAutoloadClasses['WikiaView'] = $IP . '/includes/wikia/nirvana/WikiaView.class.php';
 $wgAutoloadClasses['WikiaSkin'] = $IP . '/includes/wikia/nirvana/WikiaSkin.class.php';
-$wgAutoloadClasses['WikiaBaseTemplate'] = $IP . '/includes/wikia/nirvana/WikiaBaseTemplate.class.php';
+$wgAutoloadClasses['WikiaSkinTemplate'] = $IP . '/includes/wikia/nirvana/WikiaSkinTemplate.class.php';
 $wgAutoloadClasses['WikiaFunctionWrapper'] = $IP . '/includes/wikia/nirvana/WikiaFunctionWrapper.class.php';
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/WikiaBaseTest.class.php';
 $wgAutoloadClasses['WikiaAppMock'] = $IP . '/includes/wikia/tests/WikiaAppMock.class.php';
@@ -186,10 +186,17 @@ $wgAutoloadClasses['SpamRegexBatch'] = $IP . '/extensions/SpamBlacklist/SpamRege
 $wgAutoloadClasses['WikiaSpamRegexBatch'] = $IP . '/extensions/wikia/WikiaSpamRegexBatch/WikiaSpamRegexBatch.php';
 
 /**
+ * Wikia Templating System
+ */
+$wgAutoloadClasses[ 'Wikia\Template\Engine' ] = "{$IP}/includes/wikia/template/Engine.class.php";
+$wgAutoloadClasses[ 'Wikia\Template\PHPEngine' ] = "{$IP}/includes/wikia/template/PHPEngine.class.php";
+$wgAutoloadClasses[ 'Wikia\Template\MustacheEngine' ] = "{$IP}/includes/wikia/template/MustacheEngine.class.php";
+//deprecated, will be removed
+$wgAutoloadClasses[ 'EasyTemplate' ] = "{$IP}/includes/wikia/EasyTemplate.php";
+
+/**
  * Custom wikia classes
  */
-
-$wgAutoloadClasses[ "EasyTemplate"                    ] = "$IP/includes/wikia/EasyTemplate.php";
 $wgAutoloadClasses[ "GlobalTitle"                     ] = "$IP/includes/wikia/GlobalTitle.php";
 $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/WikiFactory/WikiFactory.php";
 $wgAutoloadClasses[ "WikiMover"                       ] = "$IP/extensions/wikia/WikiFactory/Mover/WikiMover.php";
