@@ -5,7 +5,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 
-abstract class WikiaBaseTemplate extends BaseTemplate {
+abstract class WikiaSkinTemplate extends BaseTemplate {
 	protected $app = null;
 	protected $wg = null;
 	protected $wf = null;
