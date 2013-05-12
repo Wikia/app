@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['THRIFT_ROOT'] = $IP . '/lib/scribe';
+$GLOBALS['THRIFT_ROOT'] = $IP . '/lib/vendor/scribe';
 
 include_once $GLOBALS['THRIFT_ROOT'] . '/scribe.php';
 include_once $GLOBALS['THRIFT_ROOT'] . '/transport/TSocket.php';
