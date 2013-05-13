@@ -1018,6 +1018,12 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->will		( $this->returnValue( 'default' ) )
 		;
 		$mockController
+		    ->expects( $this->at( $incr++ ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'filters', array() )
+		    ->will   ( $this->returnValue( array() ) )
+		;
+		$mockController
 			->expects	( $this->at( $incr++ ) )
 			->method	( 'setVal' )
 			->with		( 'bareterm', 'foo' )
@@ -2478,7 +2484,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockWg = (object) array( 'Title' => $mockTitle, 'User' => $mockUser );
 		
 		$controllerIncr = 0;
-		$tabsArgs = array( 'config' => $mockConfig, 'by_category' => false );
+		$tabsArgs = array( 'config' => $mockConfig, 'by_category' => false, 'filters' => array() );
 		
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
@@ -2511,6 +2517,12 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getVal' )
 		    ->with   ( 'by_category', false )
 		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockController
+		    ->expects( $this->at( $controllerIncr++ ) )
+		    ->method ( 'getVal' )
+		    ->with   ( 'filters', array() )
+		    ->will   ( $this->returnValue( array() ) )
 		;
 		$mockConfig
 		    ->expects( $this->any() )
