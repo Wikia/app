@@ -59,9 +59,10 @@ class WikiaMobileService extends WikiaService {
 		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
 
-		if (WikiaMobileAdService::shouldLoadAssets()) {
+		$mobileAdService = new WikiaMobileAdService();
+		if ($mobileAdService->shouldLoadAssets()) {
 			$jsBodyPackages[] = 'wikiamobile_js_ads';
-			if (WikiaMobileAdService::shouldShowAds()) {
+			if ($mobileAdService->shouldShowAds()) {
 				$advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
 				$globalVariables['wgShowAds'] = true;
 			}
