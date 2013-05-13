@@ -149,14 +149,25 @@ var STATUS_STATE_AWAY = 'away';
 	/** ChatEntries (messages, alerts) **/
 	models.ChatEntry = Backbone.Model.extend({
 		defaults: {
-			'msgType': 'chat', // used by the server to determine how to handle one of these objects.
-			'roomId' : 0,
-			'name': '',
-			'text': '',
-			'avatarSrc': '',
-			'timeStamp': '',
-			'continued': false,
-			'temp': false //use for long time connection with private
+			msgType: 'chat', // used by the server to determine how to handle one of these objects.
+			roomId : 0,
+			name: '',
+			text: '',
+			avatarSrc: '',
+			timeStamp: '',
+			continued: false,
+			temp: false //use for long time connection with private
+		}
+	});
+	models.MeMessage = models.ChatEntry.extend({
+		initialize: function(options) {
+			if(!options) {return;}
+			this.set({
+				me: true,
+				text: options.text,
+				name: options.name,
+				roomId: options.roomId
+			});
 		}
 	});
 	/**

@@ -182,8 +182,9 @@ var NodeRoomController = $.createClass(Observable,{
 
 		this.viewDiscussion = new NodeChatDiscussion({model: this.model, el: $('body'), roomId: roomId});
 		this.viewDiscussion.bind('clickAnchor', $.proxy(this.clickAnchor, this) );
-		this.viewDiscussion.bind('sendMessage', $.proxy(this.sendMessage, this) );
-		this.viewDiscussion.bind('updateCharacterCount', $.proxy(this.updateCharacterCount, this) );
+		this.viewDiscussion.bind('inputKeypress', $.proxy(this.inputListener, this) );
+		this.viewDiscussion.bind('inputKeydown', $.proxy(this.updateCharacterCount, this) );
+		this.viewDiscussion.bind('inputKeyup', $.proxy(this.updateCharacterCount, this) );
 
 		//TODO: move to view ??
 		$(window).focus($.proxy(function(e) {// set focus on the text input
@@ -265,41 +266,50 @@ var NodeRoomController = $.createClass(Observable,{
 		this.viewDiscussion.getTextInput().focus();
 	},
 
-	sendMessage: function(event) {
-		if (this.active && event.which == 13 && !event.shiftKey) {
-			var inputField = $(event.target),
-				inputValue = inputField.val(),
-				inputValueLength = inputValue.length;
+	sendMessage: function(message) {
+		var chatEntry = new models.ChatEntry({
+			roomId: this.roomId,
+			name: wgUserName,
+			text: message
+		});
+
+		if( !this.isMain() ) { // Private message
+			if( this.afterInitQueue.length < 1 || this.model.users.length < 2 ){
+				this.mainController.socket.send( this.model.privateRoom.xport() );
+			}
+			if( !this.isInitialized  ) {
+				this.afterInitQueue.push(chatEntry.xport());
+				//temp chat entry in case of slow connection time
+				chatEntry.set({temp : true, avatarSrc: wgAvatarUrl });
+				this.model.chats.add(chatEntry);
+			} else {
+				this.socket.send(chatEntry.xport());
+			}
+		} else {
+			this.socket.send(chatEntry.xport());
+		}
+	}
+
+	inputListener: function(event) {
+		if(this.active && event.which == 13 && !event.shiftKey) {
+			var inputField = $(event.target);
+			var inputValue = inputField.val();
 
 			event.preventDefault();
 
 			// Prevent empty messages or messages with too many characters
-			if (inputValue.length && inputValueLength <= this.maxCharacterLimit) {
-				var chatEntry = new models.ChatEntry({
-					roomId: this.roomId,
-					name: wgUserName,
-					text: inputValue
-				});
-
-				// Private message
-				if( !this.isMain() ) {
-					if( this.afterInitQueue.length < 1 || this.model.users.length < 2 ){
-						this.mainController.socket.send( this.model.privateRoom.xport() );
-					}
-					if( !this.isInitialized  ) {
-						this.afterInitQueue.push(chatEntry.xport());
-						//temp chat entry in case of slow connection time
-						chatEntry.set({temp : true, avatarSrc: wgAvatarUrl });
-						this.model.chats.add(chatEntry);
-					} else {
-						this.socket.send(chatEntry.xport());
-					}
-				} else {
-					this.socket.send(chatEntry.xport());
-				}
-
+			if(inputValue.length && inputValue.length <= this.maxCharacterLimit) {
 				inputField.val('').focus();
 				$('body').removeClass('warn limit-near limit-reached');
+
+				if(inputValue.charAt(0) == '/') {
+					if(inputValue.charAt(1) == '/') {this.sendMessage(inputValue.substring(1));}
+					else {
+						var result = NodeChatCommands.run.call(this, inputValue.substring(1));
+						if(result) {this.socket.send(result.xport());}
+					}
+				}
+				else {this.sendMessage(inputValue);}
 			}
 		}
 	},
@@ -307,8 +317,7 @@ var NodeRoomController = $.createClass(Observable,{
 	updateCharacterCount: function(event) {
 		var inputField = $(event.target),
 			inputValue = inputField.val(),
-			currentLength = inputValue.length,
-			remaining = this.maxCharacterLimit - currentLength;
+			remaining = this.maxCharacterLimit - inputValue.length;
 
 		// display character count if nearing limit
 		$('.remaining').text(remaining);
@@ -941,6 +950,58 @@ var NodeChatController = $.createClass(NodeRoomController,{
 		}, this));
 	}
 });
+
+/*
+ * Command controller
+ *
+ * NodeChatCommands.run executes a command:
+ *	`text` is a string as it would appear if written in the text area, except without a leading slash (eg. 'command arg1 arg2 arg3').
+ *	Arguments are delimited by spaces; 'foo bar baz' will execute command 'foo' with arguments 'bar', 'baz'.
+ *	The value of `this` is passed to the command (eg. `NodeChatCommands.run.call(foo, 'bar');` will set `this` in 'bar' to `foo`).
+ *
+ * NodeChatCommands.commands is an object containing commands and aliases:
+ *	New commands can be added just by putting them in this object (eg. `NodeChatCommands.commands.foo = function() {};`).
+ *	Functions are treated as commands:
+ *		Arguments may be named (eg. function(arg1, arg2, arg3) {} will have arg1, 2, and 3 properly set).
+ *		Every argument is a string, and no argument will contain a space.
+ *		To use arguments that may contain spaces (like usernames), use `arguments`.
+ *		The value of `this` is set to the NodeRoomController of the active room if the command was executed by the user.
+ *		If the command returns a model (and the command was executed by the user), the model is .xport'd and sent.
+ *		Otherwise, the command should return something that evaluates to false.
+ *	Strings are treated as aliases:
+ *		Aliases should not include a leading slash, and simply name the command they point to.
+ *		You can optionally include arguments to prepend to the command; for example:
+ *			If you define:
+ *			foo: 'bar baz'
+ *			And then run('foo shme'), the alias would resolve to the command 'bar', with arguments 'baz', 'shme'.
+ * 		Aliases may point to aliases. Try to avoid infinite loops, because those are bad.
+ */
+var NodeChatCommands = {
+	commands: {
+		me: function() {
+			return new models.MeMessage({
+				roomId: this.roomId,
+				name: wgUserName,
+				text: Array.prototype.join.call(arguments, ' ')
+			});
+		}
+	},
+	run: function(text) {
+		var args = text.split(' ');
+		var command = NodeChatCommands.commands[args[0]];
+		args = args.slice(1);
+
+		//resolve aliases
+		while(typeof command == 'string') {
+			args = command.split(' ').concat(args);
+			command = NodeChatCommands.commands[args[0]];
+			args = args.slice(1);
+		}
+
+		if(typeof command == 'function') {return command.apply(this, args);}
+		else {return false;}
+	}
+};
 
 //
 // Bootstrap the app

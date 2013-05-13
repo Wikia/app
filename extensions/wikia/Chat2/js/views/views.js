@@ -135,19 +135,12 @@ var ChatView = Backbone.View.extend({
 			this.template = originalTemplate;
 		} else {
 			// "/me" command implementation
-			// note - in case of more commands executed on the message receiver side, there should
-			// be a loop here which goes through all commands and executes callbacks
-			if (msg.text.indexOf('/me ') == 0) {
-				msg.text = msg.text.substr(4);
+			if (this.model.get('me')) {
 				var originalTemplate = this.template;
 				this.template = this.meMessageTemplate;
 				$(this.el).html(this.template(msg));
 				this.template = originalTemplate;
 			} else {
-				if (msg.text.indexOf('//me ') == 0) {
-					msg.text = msg.text.substr(1);
-				}
-				// end of /me implementation
 				$(this.el).html(this.template(msg));
 			}
 		}
@@ -365,9 +358,9 @@ var NodeChatDiscussion = Backbone.View.extend({
 	},
 
 	triggerEvents: {
-		"keyup #Write [name='message']": "updateCharacterCount",
-		"keydown #Write [name='message']": "updateCharacterCount",
-		"keypress #Write [name='message']": "sendMessage"
+		"keyup #Write [name='message']": 'inputKeyup',
+		"keydown #Write [name='message']": 'inputKeydown',
+		"keypress #Write [name='message']": 'inputKeypress'
 	},
 
 	clear: function(chat) {
