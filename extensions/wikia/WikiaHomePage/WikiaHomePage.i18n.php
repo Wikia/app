@@ -30,7 +30,6 @@ $messages['en'] = array(
 
 	'wikia-home-parse-source-empty-exception' => 'The MediaWiki message is empty',
 	'wikia-home-parse-vertical-invalid-data' => 'Invalid vertical data',
-	'wikia-home-parse-source-invalid-slots-number' => 'Invalid vertical\'s slot number',
 	'wikia-home-parse-wiki-too-few-parameters' => 'Invalid wiki data - more parameters required',
 
 	'wikiahome-hubs-videogames-heading' => 'Video Games',
@@ -84,7 +83,7 @@ __NOEDITSECTION__',
 	'wikiahome-footer-get-started-heading' => '===Get Started===
 __NOEDITSECTION__',
 	'wikiahome-footer-get-started-creative' => 'Find your community,<br />start something epic.',
-	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki', // FIXME: why is this in a message?!
+	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki', // FIXME: why is this in a message?! -- we need to pass there Wikia "button" class
 	'wikiahome-footer-follow-us' => '===Follow Us===
 *[http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog Wikia Blog]
 *[http://www.facebook.com/Wikia Facebook]
@@ -111,10 +110,6 @@ __NOEDITSECTION__",
 
 	'wikia-home-page-hot' => 'Hot',
 	'wikia-home-page-new' => 'New',
-	'wikia-home-page-official' => 'Official',
-
-	'wikia-home-parse-exception-empty-data-from-database' => 'There were no data pulled from database. Database table is empty or all wikis are blocked.',
-	'wikia-home-parse-exception-read-only' => 'Our databases are in read-only mode.',
 
 	'wikiahome-preview-stats-wam-empty-label' => 'WAM',
 	'wikiahome-preview-stats-wam' => "'''$1''' WAM Score",
@@ -158,7 +153,6 @@ $messages['de'] = array(
 
 	'wikia-home-parse-source-empty-exception' => 'Die MediaWiki-Systemnachricht ist leer',
 	'wikia-home-parse-vertical-invalid-data' => 'Fehlerhafte Hub-Daten',
-	'wikia-home-parse-source-invalid-percentage' => 'Fehlerhafte Hub-Prozente',
 	'wikia-home-parse-wiki-too-few-parameters' => 'Ungültige Wiki-Daten - mehr Parameter erforderlich',
 
 	'wikiahome-hubs-videogames-heading' => 'Videospiele',
@@ -267,7 +261,6 @@ $messages['es'] = array(
 
 	'wikia-home-parse-source-empty-exception' => 'El mensaje MediaWiki está vacío',
 	'wikia-home-parse-vertical-invalid-data' => 'Datos verticales incorrectos',
-	'wikia-home-parse-source-invalid-slots-number' => 'Número de slot vertical incorrecto',
 	'wikia-home-parse-wiki-too-few-parameters' => 'Datos del wiki incorrectos - se requieren más parámetros',
 
 	'wikiahome-hubs-videogames-heading' => 'Videojuegos',
@@ -349,10 +342,6 @@ __NOEDITSECTION__",
 
 	'wikia-home-page-hot' => 'Calentito',
 	'wikia-home-page-new' => 'Nuevo',
-	'wikia-home-page-official' => 'Oficial',
-
-	'wikia-home-parse-exception-empty-data-from-database' => 'No había datos que extraer desde la base de datos. O la tabla de la base de datos está vacía o todos los wikis están bloqueados.',
-	'wikia-home-parse-exception-read-only' => 'Nuestra base de datos está en modo de solo lectura.',
 
 	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Página|'''$1''' Páginas}}",
 	'wikiahome-preview-stats-photos' => "{{PLURAL:$1|'''1''' Imagen|'''$1''' Imágenes}}",
@@ -379,7 +368,7 @@ $messages['fr'] = array(
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=fr',
 	'wikiahome-visualisation-remix-mixitup' => 'Mélangez&nbsp;!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Des centaines de wikis à votre portée. Mélangez pour explorer encore plus de wikis.',
-	'wikiahome-visualisation-remix-button' => 'Mélanger',
+	'wikiahome-visualisation-remix-button' => 'Mixer',
 
 	'wikiahome-stats-heading' => 'La collaboration en action',
 	'wikiahome-stats-visitors' => 'Visiteurs / mois',
@@ -393,7 +382,6 @@ $messages['fr'] = array(
 	'wikia-home-page-visit' => 'Visiter',
 	'wikia-home-parse-source-empty-exception' => 'Le message MediaWiki est vide.',
 	'wikia-home-parse-vertical-invalid-data' => 'Données verticales non valides.',
-	'wikia-home-parse-source-invalid-slots-number' => 'Nombre de slots verticaux non valide.',
 	'wikia-home-parse-wiki-too-few-parameters' => 'Données du wiki non valides - plus de paramètres sont nécessaires.',
 	'wikiahome-hubs-videogames-heading' => 'Jeux vidéo',
 	'wikiahome-hubs-videogames-url' => 'http://fr.wikia.com/Jeux_vidéo',
@@ -458,10 +446,7 @@ __NOEDITSECTION__",
 
 	'wikia-home-page-hot' => 'Chaud',
 	'wikia-home-page-new' => 'Nouveau',
-	'wikia-home-page-official' => 'Officiel',
-	'wikia-home-parse-exception-empty-data-from-database' => 'Notre base de données n\'a retourné aucune donnée. La table en base est vide ou tous les wikis sont bloqués.',
-	'wikia-home-parse-exception-read-only' => 'Nos bases de données sont en lecture seule.',
-
+	
 	'wikiahome-preview-stats-videos' => "'''1''' {{PLURAL:$1|vidéo|vidéos}}",
 
 	'wikiahome-preview-description-heading' => '$1',
@@ -477,19 +462,83 @@ __NOEDITSECTION__",
 );
 
 $messages['qqq'] = array(
-	'wikia-home-parse-source-empty-exception' => 'Error message when MediaWiki message is empty',
-	'wikia-home-parse-source-first-line-not-a-vertical' => 'Error message when MediaWiki message is not starting with a vertical line',
-	'wikia-home-parse-vertical-invalid-data' => 'Error while parsing a vertical data',
-	'wikia-home-parse-source-invalid-percentage' => 'Error: vertical\'s percentage is invalid < or > than 100',
-	'wikia-home-parse-wiki-too-few-parameters' => 'Error while parsing a wiki data',
+	'wikiahome-page-header-heading' => 'The page title text in H1 tag on the top of the page',
+	'wikiahome-page-header-subheading' => 'The page subtitle text in H4 tag below H1 tag',
+	'wikiahome-page-header-create-wiki-button' => 'A button label',
+	'wikiahome-page-header-create-wiki-button-destination' => 'URL for Special:CreateNewWiki on the language specific corporate wiki',
 
-	'wikiahome-hubs-videogames-heading' => 'Section header for Videogames section',
+	'wikiahome-visualisation-remix-mixitup' => 'The title in "remix container"; it\'s just a regural text',
+	'wikiahome-visualisation-remix-mixituptext' => 'The short description of remixing in "remix container" below the title',
+	'wikiahome-visualisation-remix-button' => 'The remix button label; when you click the button images in visualization remix and change',
 
-	'wikiahome-preview-stats-page' => "Number of pages on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
-	'wikiahome-preview-stats-photos' => "Number of photos on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
-	'wikiahome-preview-stats-videos' => "Number of videos on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
+	'wikiahome-stats-heading' => 'The title in "stats container" it\'s above different statistic numbers connected to Wikia community',
+	'wikiahome-stats-visitors' => 'The text above number telling about our monthly visitors',
+	'wikiahome-stats-mobile-visitors' => 'The text above number telling about our monthly mobile visitors',
+	'wikiahome-stats-edits' => 'The text above number telling about all edits on all our wikis',
+	'wikiahome-stats-communities' => 'The text above number telling about our communities in total',
+	'wikiahome-stats-new-communities' => 'The text above number telling about our new communities',
+	'wikiahome-stats-totalpages' => 'The text above number telling about total pages on all our wikis',
+
+	'wikia-home-page-preview' => 'The text on preview button; when you click the button you\'ll be presented with more detailed information about a wiki; the button is visible when you hover on a wiki image',
+	'wikia-home-page-visit' => 'The text on visit button; when you click the button you\'ll be redirected to chosen wiki; the button is visible when you hover on a wiki image',
+	
+	'wikia-home-parse-source-empty-exception' => 'An exception text when an attempt of loading wikis from message fails because the data is empty',
+	'wikia-home-parse-vertical-invalid-data' => 'An exception text when an attempt of loading wikis from message fails because the vertical data is invalid',
+	'wikia-home-parse-wiki-too-few-parameters' => 'An exception text when an attempt of loading wikis from message fails because the wiki data is invalid',
+
+	'wikiahome-hubs-videogames-heading' => 'Section header for Video Games section',
+	'wikiahome-hubs-videogames-url' => 'An URL to Video Games hub page',
+	'wikiahome-hubs-videogames-creative' => 'The description of Video Games vertical below visualization section',
+	'wikiahome-hubs-videogames-more-heading' => 'The headline in hub section before more links connected to Video Games vertical',
+	'wikiahome-hubs-videogames-more-list' => 'A wikitext with list of Video Games connected links',
+
+	'wikiahome-hubs-entertainment-heading' => 'Section header for Entertainment section',
+	'wikiahome-hubs-entertainment-url' => 'An URL to Entertainment hub page',
+	'wikiahome-hubs-entertainment-creative' => 'The description of Entertainment vertical below visualization section',
+	'wikiahome-hubs-entertainment-more-heading' => 'The headline in hub section before more links connected to Entertainment vertical',
+	'wikiahome-hubs-entertainment-more-list' => 'A wikitext with list of Entertainment connected links',
+
+	'wikiahome-hubs-lifestyle-heading' => 'Section header for Lifestyle section',
+	'wikiahome-hubs-lifestyle-url' => 'An URL to Lifestyle hub page',
+	'wikiahome-hubs-lifestyle-creative' => 'The description of Lifestyle vertical below visualization section',
+	'wikiahome-hubs-lifestyle-more-heading' => 'The headline in hub section before more links connected to Lifestyle vertical',
+	'wikiahome-hubs-lifestyle-more-list' => 'A wikitext with list of Lifestyle connected links',
+
+	'wikiahome-community-column1-heading' => 'The 1st column headline; those columns are placed before footer on corporate pages',
+	'wikiahome-community-column1-link' => 'The link to which 1st column content leads; those columns are placed before footer on corporate pages',
+	'wikiahome-community-column1-creative' => 'Description of 1st column content; those columns are placed before footer on corporate pages',
+	'wikiahome-community-column2-heading' => 'The 2nd column headline; those columns are placed before footer on corporate pages',
+	'wikiahome-community-column2-link' => 'The link to which 2nd column content leads; those columns are placed before footer on corporate pages',
+	'wikiahome-community-column2-creative' => 'Description of 2nd column content; those columns are placed before footer on corporate pages',
+	'wikiahome-community-column3-heading' => 'The 3rd column headline; those columns are placed before footer on corporate pages',
+	'wikiahome-community-social-wikia-blog' => 'Wikia Blog link text',
+	'wikiahome-community-social-wikia-blog-link' => 'Wikia Blog URL address',
+	'wikiahome-community-social-twitter' => 'Wikia at Twitter URL address',
+	'wikiahome-community-social-facebook' => 'Wikia at Facebook URL address',
+	'wikiahome-community-social-googleplus' => 'Wikia at Google+ URL address',
+
+	'wikiahome-footer-wikiainc' => 'First column in the corporate footer; use here wikitext: __NOEDITSECTION__ magic word, bold headline and create list of links; the corporate footer is displayed on all corporate pages and is divided to few columns',
+
+	'wikiahome-footer-get-started-heading' => 'The headline of 2nd column in corporate footer; use here wikitext to bold it; the corporate footer is displayed on all corporate pages and is divided to few columns',
+	'wikiahome-footer-get-started-creative' => 'A short text encouraging to start a new wiki; this text is displayed in the 2nd column in corporate footer; the corporate footer is displayed on all corporate pages and is divided to few columns',
+	'wikiahome-footer-get-started-button' => 'URL for Special:CreateNewWiki on the language specific corporate wiki',
+	'wikiahome-footer-follow-us' => '3rd column in the corporate footer; use here wikitext: __NOEDITSECTION__ magic word, bold headline and create list of links; the corporate footer is displayed on all corporate pages and is divided to few columns',
+	'wikiahome-footer-community' => '4th column in the corporate footer; use here wikitext: __NOEDITSECTION__ magic word, bold headline and create list of links; the corporate footer is displayed on all corporate pages and is divided to few columns',
+	'wikiahome-footer-everywhere' => '5rd column in the corporate footer; use here wikitext: __NOEDITSECTION__ magic word, bold headline and create list of links; the corporate footer is displayed on all corporate pages and is divided to few columns',
+	'wikiahome-footer-partner' => '6th column in the corporate footer; use here wikitext: __NOEDITSECTION__ magic word, bold headline and create list of links; the corporate footer is displayed on all corporate pages and is divided to few columns',
+	'wikiahome-footer-community-wam' => 'A link to WAM Scores page; use here wikitext to make it a list element and to make it working link',
+
+	'wikia-home-page-hot' => 'Mark for wiki, that is flagged as hot',
+	'wikia-home-page-new' => 'Mark for wiki, that is flagged as new',
+
+	'wikiahome-preview-stats-wam-empty-label' => 'Label for WAM score placeholder, when this Wiki is not included in WAM Index',
+	'wikiahome-preview-stats-wam' => "WAM Score label, 1st parameter is score - please bold it with wikitext",
+	
+	'wikiahome-preview-stats-page' => "Number of pages on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
+	'wikiahome-preview-stats-photos' => "Number of photos on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
+	'wikiahome-preview-stats-videos' => "Number of videos on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
 	'wikiahome-preview-user-edits' => "Number of edits for given user of wiki.  Could be singular or plural.",
-	'wikiahome-preview-description-heading' => "Welcome heading for the wiki description.  $1 is the name of the wiki.  Assume the word 'Wiki' is already attached to the $1.",
+	'wikiahome-preview-description-heading' => "Welcome heading for the wiki description. $1 is the name of the wiki.  Assume the word 'Wiki' is already attached to the $1.",
 	'wikiahome-preview-admins-heading' => 'Heading for admin list',
 	'wikiahome-preview-contributors-heading' => 'Heading for top contributors',
 	'wikiahome-preview-user-profile-link-label' => 'Generic link label that navigates to user profile page.',
@@ -497,5 +546,8 @@ $messages['qqq'] = array(
 	'wikiahome-preview-go-to-wiki-label' => 'Generic link label that navigates to a wiki.',
 	'wikiahome-preview-error' => 'Interstitial error',
 	'wikiahome-preview-user-member-since' => 'Member since date',
+	
 	'wikiahome-import-script-no-description' => 'This message should be used only when an edge case occurs and there is no wiki description on wikis list used in importing process. This message will be place in wiki description in Interstitial if original description is not provided.',
+	
+	'wikiahome-hub-current-day' => 'Date in format "day monthname year" using templates: {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );

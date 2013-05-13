@@ -247,36 +247,10 @@ class FBConnectPushEvent {
 			}
 
 			$status = $fb->publishStream( $href, $description, $short, $link, $image);
-			self::addEventStat($status, $class);
 			return $status;
 		}
 
 		return false;
-	}
-
-	/**
-	 * put stats for facebook
-	 * @author Tomasz Odrobny
-	 */
-
-	static public function addEventStat($status, $class){
-		global $wgStatsDB, $wgUser, $wgCityId, $wgStatsDBEnabled, $wgDevelEnvironment;
-
-		if ( !empty( $wgStatsDBEnabled ) && $wgDevelEnvironment !== true ) { // devboxes don't have writable stats
-			if( !wfReadOnly() ){
-				$class = str_replace('FBPush_', '', $class);
-				$dbs = wfGetDB( DB_MASTER, array(), $wgStatsDB);
-				$dbs->begin();
-				$dbs->insert('fbconnect_event_stats',
-					array(
-						 'user_id' => $wgUser->getId(),
-						 'status' => $status,
-						 'city_id' => $wgCityId,
-						 'event_type' =>  $class ,
-					),__METHOD__);
-				$dbs->commit();
-			}
-		}
 	}
 
 	/**
@@ -354,7 +328,6 @@ class FBConnectPushEvent {
 	 * @access private
 	 *
 	 */
-
 	static public function parseArticle(&$qArticle, $text = null) {
 		$articleText = $qArticle->getRawText();
 		if ( $text != null ) {
@@ -367,37 +340,14 @@ class FBConnectPushEvent {
 	}
 
 	/**
-	* put stats for facebook events display
-	* @author Tomasz Odrobny
-	*/
-
-	static public function addDisplayStat($fbuser_id, $time, $class){
-		global $wgUser, $wgCityId, $wgStatsDB;
-		if( !wfReadOnly() ){
-			$class = str_replace('FBPush_', '', $class);
-			$dbs = wfGetDB( DB_MASTER, array(), $wgStatsDB);
-			$dbs->begin();
-			$dbs->insert('fbconnect_event_show',
-				array(
-					'event_type' =>  $class,
-					'user_id' =>  (int) $fbuser_id,
-					'post_time' => (int) $time
-				),__METHOD__);
-			$dbs->commit();
-		}
-	}
-
-	/**
 	 * ajax function to count number of feed display in fbconnect
 	 *
 	 * @author Tomasz Odrobny
 	 * @access public
 	 *
 	 */
-
 	static public function showImage() {
 		global $wgStylePath, $wgRequest;
-		FBConnectPushEvent::addDisplayStat( $wgRequest->getVal('fb_id', '0'), $wgRequest->getVal('time', '0'), $wgRequest->getVal('class') );
 		$redirect = $wgStylePath.'/common/fbconnect/'.$wgRequest->getVal('img', '0');
 		header("Location: $redirect");
 		exit;

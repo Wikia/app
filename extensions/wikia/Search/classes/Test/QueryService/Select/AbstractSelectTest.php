@@ -740,11 +740,6 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockConfig
 		    ->expects( $this->once() )
-		    ->method ( 'setResultsFound' )
-		    ->with   ( 10 )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
 		    ->method ( 'getPage' )
 		    ->will   ( $this->returnValue( 1 ) )
 		;

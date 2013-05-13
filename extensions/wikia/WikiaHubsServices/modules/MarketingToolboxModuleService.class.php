@@ -17,6 +17,8 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		$this->skinName = RequestContext::getMain()->getSkin()->getSkinName();
 	}
 
+	abstract public function getStructuredData($data);
+
 	static public function getModuleByName($name, $langCode, $sectionId, $verticalId) {
 		$moduleClassName = self::CLASS_NAME_PREFIX . $name . self::CLASS_NAME_SUFFIX;
 		return new $moduleClassName($langCode, $sectionId, $verticalId);

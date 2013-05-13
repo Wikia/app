@@ -22,12 +22,12 @@
 			</td>
 			<td>
 				<a href="#" class="status-blocked" data-id="<?= $wiki->city_id; ?>" data-vertical="<?= $wiki->city_vertical ?>" data-flags="<?= CityVisualization::isBlockedWiki($wiki->city_flags) ?>">
-					<?= (CityVisualization::isBlockedWiki($wiki->city_flags)) ? wfMsg('manage-wikia-home-wiki-list-blocked-yes') : wfMsg('manage-wikia-home-wiki-list-blocked-no') ?>
+					<?= (CityVisualization::isBlockedWiki($wiki->city_flags)) ? wfMessage('manage-wikia-home-wiki-list-blocked-yes')->text() : wfMessage('manage-wikia-home-wiki-list-blocked-no')->text() ?>
 				</a>
 			</td>
 			<td>
 				<a href="#" class="status-promoted" data-id="<?= $wiki->city_id; ?>" data-vertical="<?= $wiki->city_vertical ?>" data-flags="<?= CityVisualization::isPromotedWiki($wiki->city_flags) ?>">
-					<?= (CityVisualization::isPromotedWiki($wiki->city_flags)) ? wfMsg('manage-wikia-home-wiki-list-blocked-yes') : wfMsg('manage-wikia-home-wiki-list-blocked-no') ?>
+					<?= (CityVisualization::isPromotedWiki($wiki->city_flags)) ? wfMessage('manage-wikia-home-wiki-list-promoted-yes')->text() : wfMessage('manage-wikia-home-wiki-list-blocked-no')->text() ?>
 				</a>
 			</td>
 		</tr>

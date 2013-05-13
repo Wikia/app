@@ -680,7 +680,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		wfProfileIn(__METHOD__);
 
 		$processedBatches = array();
-
 		foreach ($batches as $batch) {
 			$processedBatch = array(
 				self::SLOTS_BIG_ARRAY_KEY => array(),

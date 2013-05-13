@@ -405,8 +405,8 @@ class PartnerFeed extends SpecialPage {
  * @param format string 'rss' or 'atom'
  */
 	private function FeedHotContent ( $format, $forceReload = false ) {
-
 		global $wgRequest;
+		# this method should be redesign
 
 		$defaultHubTitle ='tv';
 
@@ -418,9 +418,7 @@ class PartnerFeed extends SpecialPage {
 		} else {
 			$oTitle = Title::newFromText( $defaultHubTitle, 150 );
 		}
-		$hubId = AutoHubsPagesHelper::getHubIdFromTitle( $oTitle );
-		$feedArray = $this->PrepareHotContentFeed( $hubId, $forceReload );
-		$this->showFeed( $format, wfMsg( 'feed-title-hot-content', $oTitle->getText() ), $feedArray );
+		$this->showFeed( $format, wfMsg( 'feed-title-hot-content', $oTitle->getText() ), array() );
 	}
 
 /**

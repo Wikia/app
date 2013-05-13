@@ -8,7 +8,7 @@ class GWTClient {
 	const FEED_URI = 'https://www.google.com/webmasters/tools/feeds';
 
 	private $mAuth, $mEmail, $mPass, $mType, $mSource, $mService, $mWiki, $mSiteURI;
-	private static $cache;
+	private static $cache; /* var $cache GWTLocalCache */
 
 	/**
 	 * constructor
@@ -67,7 +67,7 @@ class GWTClient {
 
 	private function getAuthToken () {
 		$cacheKey = $this->mEmail;
-		$cached = GWTClient::$cache->get( $cacheKey );
+		$cached = self::$cache->get( $cacheKey );
 		if( $cached ) return $cached;
 
 		$content = Http::post('https://www.google.com/accounts/ClientLogin',
@@ -83,7 +83,7 @@ class GWTClient {
 		);
 
 		if (preg_match('/Auth=(\S+)/', $content, $matches)) {
-			GWTClient::$cache->set( $cacheKey, $matches[1] );
+			self::$cache->set( $cacheKey, $matches[1] );
 			return $matches[1];
 		} else {
 			throw new GWTAuthenticationException();
@@ -112,7 +112,9 @@ class GWTClient {
 	private function make_site_id () {
 		return $this->normalize_site($this->mWiki->city_url).'sitemap-index.xml';
 	}
-
+	/*
+	* @return - GWTSiteSyncStatus.
+	*/
 	public function site_info () {
 		$request = MWHttpRequest::factory( $this->mSiteURI );
 		$request->setHeader('Authorization', 'GoogleLogin auth='. $this->mAuth);
@@ -121,7 +123,7 @@ class GWTClient {
 		if ( $status->isOK() ) {
 			$content = $request->getContent();
 		} else {
-			return;
+			return null;
 		}
 		$doc = new DOMDocument();
 		$doc->loadXML($content);
@@ -141,7 +143,7 @@ class GWTClient {
 			$content = $request->getContent();
 		} else {
 			Wikia::log("Bad response from google.\n" . $request->getContent());
-			return;
+			return null;
 		}
 		//return $content;
 		$doc = new DOMDocument();
@@ -197,7 +199,7 @@ class GWTClient {
 
 	private function put_verify ( $xml ) {
 		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
-		$request = MWHttpRequest::factory( $this->mSiteURI, array( 'postData' => $xml, 'method' => 'POST') );
+		$request = MWHttpRequest::factory( $this->mSiteURI , array( 'postData' => $xml, 'method' => 'PUT') );
 		$request->setHeader('Content-type', 'application/atom+xml');
 		$request->setHeader('Authorization', 'GoogleLogin auth='.$this->mAuth);
 		$status = $request->execute();

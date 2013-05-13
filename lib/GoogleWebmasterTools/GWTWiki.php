@@ -50,10 +50,4 @@ class GWTWiki {
 
 		return $site;
 	}
-
-	private function make_site_uri ( $wiki ) {
-		$site = $this->normalize_site( $wiki->city_url );
-		$uri = self::FEED_URI . '/sites/' . urlencode($site);
-		return $uri;
-	}
 }

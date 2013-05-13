@@ -44,11 +44,6 @@ class BodyController extends WikiaController {
 		return defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING;
 	}
 
-	public static function isHubPage() {
-		global $wgArticle;
-		return (get_class ($wgArticle) == "AutoHubsPagesArticle");
-	}
-
 	/**
 	 * Returns if current layout should be applying gridlayout
 	 */
@@ -264,9 +259,6 @@ class BodyController extends WikiaController {
 			// No rail on main page or edit page for corporate skin
 			if ( BodyController::isEditPage() || WikiaPageType::isMainPage() ) {
 				$railModuleList = array();
-			}
-			else if (self::isHubPage()) {
-				$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
 			} else if ( is_array( $wgSalesTitles ) && in_array( $wgTitle->getText(), $wgSalesTitles ) ){
 				$railModuleList[1470] = array('CorporateSite', 'SalesSupport', null);
 			}

@@ -62,7 +62,7 @@ Please leave me a message if I can help with anything!",
 Welcome to {{SITENAME}} and thank you for your edit to the [[:$1]] page. We encourage all contributors to [[Special:UserLogin|create a user name]], so you can keep track of your contributions, access more Wikia features and get to know the rest of the {{SITENAME}} community.
 
 If you need help, check out our [[Help:Contents|help pages]] first and then visit [[w:c:community|Community Central]] to learn more. Happy editing!",
-	'welcome-description' => 'Sends a welcome message to users after their first edits.',
+	'welcome-description' => 'Sends a welcome message to users after their first edits',
 );
 
 /** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
@@ -75,7 +75,7 @@ $messages['qqq'] = array(
 	'welcome-message-wall-user-staff' => '$1 is the name of the page edited to trigger the welcome',
 	'welcome-message-wall-anon' => '$1 is the name of the page the user edited that tirggered the welcome',
 	'welcome-message-wall-anon-staff' => '$1 is the name of the page the user edited that tirggered the welcome',
-	'welcome-description' => 'The description of the extension displayed on the Special:Version page.',
+	'welcome-description' => 'The description of the extension displayed on the Special:Version page',
 );
 
 /** Breton (brezhoneg)
