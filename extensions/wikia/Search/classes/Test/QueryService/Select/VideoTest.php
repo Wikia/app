@@ -54,29 +54,4 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		);
 	}
 	
-	/**
-	 * @covers Wikia\Search\QueryService\Select\Video::getQueryClausesString
-	 */
-	public function testGetQueryClausesString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Video' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( null )
-		                   ->getMock();
-		
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getCityId' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Video', 'getQueryClausesString' );
-		$method->setAccessible( true );
-		$this->assertEquals(
-				'((wid:123) AND (is_video:true) AND (ns:6))',
-				$method->invoke( $mockSelect )
-		);
-	}
-	
-	
 }
