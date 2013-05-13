@@ -663,7 +663,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		
 		$mockDb = $this->getMockBuilder( "DatabaseMysql" )
 		               ->disableOriginalConstructor()
-		               ->setMethods( array( 'query', 'fetchObject' ) )
+		               ->setMethods( array( 'query', 'fetchObject', 'buildLike', 'anyString' ) )
 		               ->getMock();
 		
 		$mockResultWrapper = $this->getMockBuilder( 'ResultWrapper' )
@@ -698,12 +698,23 @@ class SEOTweaksTest extends WikiaBaseTest
 		;
 		$mockDb
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'query' )
-		    ->with   ( 'SELECT page_title FROM page WHERE page_title REGEXP "^' . $dbKey . '[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1' )
-		    ->will   ( $this->returnValue( $mockResultWrapper ) )
+		    ->method ( 'anyString' )
+		    ->will   ( $this->returnValue( '%' ) )
 		;
 		$mockDb
 		    ->expects( $this->at( 1 ) )
+		    ->method ( 'buildLike' )
+		    ->with   ( $dbKey, '%' )
+		    ->will   ( $this->returnValue( "LIKE '{$dbKey}%'" ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'query' )
+		    ->with   ( "SELECT page_title FROM page WHERE page_title LIKE '{$dbKey}%' LIMIT 1" )
+		    ->will   ( $this->returnValue( $mockResultWrapper ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 3 ) )
 		    ->method ( 'fetchObject' )
 		    ->will   ( $this->returnValue( null ) )
 		;
@@ -747,7 +758,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		
 		$mockDb = $this->getMockBuilder( "DatabaseMysql" )
 		               ->disableOriginalConstructor()
-		               ->setMethods( array( 'query', 'fetchObject' ) )
+		               ->setMethods( array( 'query', 'fetchObject', 'buildLike', 'anyString' ) )
 		               ->getMock();
 		
 		$mockResultWrapper = $this->getMockBuilder( 'ResultWrapper' )
@@ -789,12 +800,23 @@ class SEOTweaksTest extends WikiaBaseTest
 		;
 		$mockDb
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'query' )
-		    ->with   ( 'SELECT page_title FROM page WHERE page_title REGEXP "^' . $dbKey . '[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1' )
-		    ->will   ( $this->returnValue( $mockResultWrapper ) )
+		    ->method ( 'anyString' )
+		    ->will   ( $this->returnValue( '%' ) )
 		;
 		$mockDb
 		    ->expects( $this->at( 1 ) )
+		    ->method ( 'buildLike' )
+		    ->with   ( $dbKey, '%' )
+		    ->will   ( $this->returnValue( "LIKE '{$dbKey}%'" ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'query' )
+		    ->with   ( "SELECT page_title FROM page WHERE page_title LIKE '{$dbKey}%' LIMIT 1" )
+		    ->will   ( $this->returnValue( $mockResultWrapper ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 3 ) )
 		    ->method ( 'fetchObject' )
 		    ->will   ( $this->returnValue( $resultObject ) )
 		;
