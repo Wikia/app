@@ -24,7 +24,17 @@ $messages['en'] = array(
 	'wikiagameguides-content-description-categories' => 'Add wiki "Categories" and rename them as you\'d like them to appear in Game Guides with "Game Guide Names".',
 	'wikiagameguides-content-description-tag' => 'Does it make sense to group categories under a game series installment? Add a category "Tag," and drag and drop wiki categories under it.',
 	'wikiagameguides-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
-	'wikiagameguides-content-description-no-tag' => 'Categories without tag or with empty tag will be shown as last in Game Guides.'
+	'wikiagameguides-content-description-no-tag' => 'Categories without tag or with empty tag will be shown as last in Game Guides.',
+
+	//Sponsored Videos Managment Tools
+	'wikiagameguides-sponsored-description-language' => 'Highlighted row is a language',
+	'wikiagameguides-sponsored-description-wiki' => 'First input is for Wiki Url',
+	'wikiagameguides-sponsored-description-title' => 'Second input is for Video Title',
+	'wikiagameguides-sponsored-description-url' => 'Third input is for Video Url',
+
+	'wikiagameguides-sponsored-title' => 'Wikia Game Guides Sponsored Videos Tool',
+	'wikiagameguides-sponsored-add-video' => 'Add video',
+	'wikiagameguides-sponsored-add-language' => 'Add Language'
 );
 
 /** Message documentation (Message documentation)

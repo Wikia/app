@@ -58,6 +58,17 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', [
 	'wikiagameguides-content-empty-tag'
 ] );
 
+//Special Page for Sponsored Videos Managment Tool
+$app->registerClass( 'GameGuidesSpecialSponsoredController', "{$dir}/GameGuidesSpecialSponsoredController.class.php" );
+$app->registerSpecialPage( 'GameGuidesSponsored', 'GameGuidesSpecialSponsoredController' );
+
+$wgGroupPermissions['*']['gameguidessponsored'] = false;
+$wgGroupPermissions['staff']['gameguidessponsored'] = true;
+
+F::build( 'JSMessages' )->registerPackage( 'GameGuidesSponsoredMsg', [
+
+] );
+
 //hooks
 $app->registerHook( 'GameGuidesContentSave', 'GameGuidesController', 'onGameGuidesContentSave' );
 $app->registerHook( 'TitleGetSquidURLs', 'GameGuidesController', 'onTitleGetSquidURLs' );
