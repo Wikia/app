@@ -115,9 +115,7 @@ class BodyController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
-			$wgEnableCorporatePageExt,
-			$wgEnableWikiAnswers,
-			$wgSalesTitles, $wgEnableHuluVideoPanel,
+			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
 			$wgEnableGamingCalendarExt, $wgEnableWallEngine, $wgRequest,
 			$wgEnableForumExt, $wgIsForum;
 
@@ -157,12 +155,6 @@ class BodyController extends WikiaController {
 							$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 						}
 					}
-				} elseif ($wgEnableCorporatePageExt) {
-					$railModuleList = array(
-						1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'))
-					);
-					wfProfileOut(__METHOD__);
-					return $railModuleList;
 				}
 			} else if ($wgTitle->isSpecial('Leaderboard')) {
 				$railModuleList = array (
@@ -251,21 +243,6 @@ class BodyController extends WikiaController {
 			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
 		}
 
-		// Special case rail modules for Corporate Skin
-		if ($wgEnableCorporatePageExt) {
-			$railModuleList = array (
-				1500 => array('Search', 'Index', null),
-			);
-			// No rail on main page or edit page for corporate skin
-			if ( BodyController::isEditPage() || WikiaPageType::isMainPage() ) {
-				$railModuleList = array();
-			} else if ( is_array( $wgSalesTitles ) && in_array( $wgTitle->getText(), $wgSalesTitles ) ){
-				$railModuleList[1470] = array('CorporateSite', 'SalesSupport', null);
-			}
-			wfProfileOut(__METHOD__);
-			return $railModuleList;
-		}
-
 		//  No rail on main page or edit page for oasis skin
 		// except &action=history of wall
 		if( !empty($wgEnableWallEngine) ) {
@@ -319,7 +296,7 @@ class BodyController extends WikiaController {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgUser, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableTopButton, $wgTopButtonPosition, $wgEnableWikiaHomePageExt;
+		global $wgOut, $wgTitle, $wgEnableInfoBoxTest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableWikiaHomePageExt;
 
 		wfProfileIn(__METHOD__);
 
@@ -381,21 +358,6 @@ class BodyController extends WikiaController {
 				$this->wg->SuppressPageHeader = true;
 				$this->wg->SuppressWikiHeader = true;
 				$this->wg->SuppressSlider = true;
-			} else if ($wgEnableCorporatePageExt) {
-				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
-
-				$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("extensions/wikia/CorporatePage/css/CorporateSite.scss"));
-
-				global $wgExtensionsPath, $wgJsMimeType;
-				$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/CorporatePage/js/CorporateSlider.js\" type=\"{$wgJsMimeType}\"></script>");
-
-				// $this->wgSuppressFooter = true;
-				$this->wgSuppressArticleCategories = true;
-				if (WikiaPageType::isMainPage()) {
-					$this->wg->SuppressPageHeader = true;
-				} else {
-					$this->headerModuleAction = 'Corporate';
-				}
 			}
 		}
 
