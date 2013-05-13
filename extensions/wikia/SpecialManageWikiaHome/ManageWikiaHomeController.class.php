@@ -17,6 +17,11 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 */
 	protected $helper;
 
+	/**
+	 * @var WikiaCollectionsModel
+	 */
+	private $wikiaCollectionsModel;
+
 	public function __construct() {
 		parent::__construct('ManageWikiaHome', 'managewikiahome', true);
 		$this->helper = F::build('WikiaHomePageHelper');
@@ -76,7 +81,9 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->form = new CollectionsForm();
 		$collectionsModel = new WikiaCollectionsModel();
-		$collectionValues = $this->prepareCollectionToShow($collectionsModel->getList($this->visualizationLang));
+		$collectionsList = $collectionsModel->getList($this->visualizationLang);
+		$collectionValues = $this->prepareCollectionToShow($collectionsList);
+		$wikisPerCollection = $this->getWikisPerCollection($collectionsList);
 
 		if( $this->request->wasPosted() ) {
 			if ( $this->request->getVal('wikis-in-slots',false) ) {
@@ -121,11 +128,17 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->setVal('lifestyleAmount', $lifestyleAmount);
 		$this->setVal('hotWikisAmount', $hotWikisAmount);
 		$this->setVal('newWikisAmount', $newWikisAmount);
+		$this->setVal('wikisPerCollection', $wikisPerCollection);
 
 		$this->response->addAsset('/extensions/wikia/SpecialManageWikiaHome/css/ManageWikiaHome.scss');
 		$this->response->addAsset('manage_wikia_home_js');
 
 		F::build('JSMessages')->enqueuePackage('ManageWikiaHome', JSMessages::EXTERNAL);
+
+		$this->wg->Out->addJsConfigVars([
+			'wgWikisPerCollection' => $wikisPerCollection,
+			'wgSlotsInTotal' => WikiaHomePageHelper::SLOTS_IN_TOTAL,
+		]);
 
 		$this->wf->ProfileOut(__METHOD__);
 	}
@@ -401,6 +414,26 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		}
 		
 		return $collectionValues;
+	}
+	
+	private function getWikisPerCollection($collections) {
+		$wikisPerCollections = [];
+		
+		foreach($collections as $key => $collection) {
+			$collectionId = $collection['id'];
+			$wikis = $this->getWikiaCollectionsModel()->getCountWikisFromCollection($collectionId);
+			$wikisPerCollections[$collectionId] = $wikis;
+		}
+		
+		return $wikisPerCollections;
+	}
+	
+	private function getWikiaCollectionsModel() {
+		if( !isset($this->wikiaCollectionsModel) ) {
+			$this->wikiaCollectionsModel = new WikiaCollectionsModel();
+		}
+		
+		return $this->wikiaCollectionsModel;
 	}
 
 }

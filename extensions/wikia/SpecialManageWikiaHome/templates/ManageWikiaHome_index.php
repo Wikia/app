@@ -59,11 +59,25 @@
 		<form method="post" class="WikiaForm" id="collectionsSetupForm">
 			<? for($i=0; $i < WikiaCollectionsModel::COLLECTIONS_COUNT; $i++): ?>
 				<div class="collection-module">
+
+					<?php
+						$enabled = isset($form->getField('enabled')['value'][$i]) ? $form->getField('enabled')['value'][$i] : false;
+						$collectionId = isset($form->getField('id')['value'][$i]) ? $form->getField('id')['value'][$i] : 0;
+						$wikisCounter = isset($wikisPerCollection[$collectionId]) ? $wikisPerCollection[$collectionId] : 0;
+					?>
+					
+					<?php if( $enabled && $wikisCounter != WikiaHomePageHelper::SLOTS_IN_TOTAL ): ?>
+						<div class="input-group">
+							<p class="error"><?= wfMessage('manage-wikia-home-collections-invalid-wikis-number')->numParams([WikiaHomePageHelper::SLOTS_IN_TOTAL])->text(); ?></p>
+						</div>
+					<?php endif; ?>
+					
 					<?=$form->renderField('enabled', $i)?>
 					<?=$form->renderField('name', $i)?>
+					
 					<div class="image-input-container">
 						<?=$form->renderField('sponsor_hero_image', $i)?>
-						<input type="button" class="wmu-show" value="<?= $wf->Message('manage-wikia-home-collection-add-file-button')->text() ?>" />
+						<input type="button" class="wmu-show" value="<?= wfMessage('manage-wikia-home-collection-add-file-button')->text() ?>" />
 					</div>
 					<p class="alternative">
 						<?= wfMessage('manage-wikia-home-collection-hero-image-tooltip')->text() ?>
@@ -71,12 +85,16 @@
 
 					<div class="image-input-container">
 						<?=$form->renderField('sponsor_image', $i)?>
-						<input type="button" class="wmu-show" value="<?= $wf->Message('manage-wikia-home-collection-add-file-button')->text() ?>" />
+						<input type="button" class="wmu-show" value="<?= wfMessage('manage-wikia-home-collection-add-file-button')->text() ?>" />
 					</div>
 					<p class="alternative">
 						<?= wfMessage('manage-wikia-home-collection-sponsor-image-tooltip')->text() ?>
 					</p>
 					<?=$form->renderField('sponsor_url', $i)?>
+
+					<div class="input-group collection-wikis-counter">
+						<p><?= wfMessage('manage-wikia-home-collections-wikis-in-collection')->numParams( [$wikisCounter, WikiaHomePageHelper::SLOTS_IN_TOTAL])->text(); ?></p>
+					</div>
 				</div>
 			<? endfor ?>
 

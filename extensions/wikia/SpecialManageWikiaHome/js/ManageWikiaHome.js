@@ -8,7 +8,10 @@ ManageWikiaHome.prototype = {
 	MODAL_TYPE_PROMOTED: 3,
 	MODAL_TYPE_DEMOTED: 4,
 	isListChangingDelayed: false,
-	modalObject: {content: '', type: 0, target: {}, collections: 0},
+	modalObject: {content: '', type: 0, target: {}, collectionsEdit: false},
+	wikisPerCollection: [],
+	SLOTS_IN_TOTAL: 0,
+	wereCollectionsWikisChanged: false,
 	init: function() {
 		$('#visualizationLanguagesList').on(
 			'change',
@@ -41,6 +44,9 @@ ManageWikiaHome.prototype = {
 		$('body')
 			.on('click', '.modalWrapper #cancel-button', $.proxy(this.modalCancel, this))
 			.on('click', '.modalWrapper #submit-button', $.proxy(this.modalSubmit, this));
+		
+		this.SLOTS_IN_TOTAL = window.wgSlotsInTotal || 0;
+		this.wikisPerCollection = window.wgWikisPerCollection || [];
 
 		$().log('ManageWikiaHome.init');
 	},
@@ -119,6 +125,7 @@ ManageWikiaHome.prototype = {
 							this.modalObject.type = this.MODAL_TYPE_PROMOTED;
 						}
 					}
+					
 					this.modalObject.target = targetObject;
 				}, this)
 			}
@@ -141,20 +148,24 @@ ManageWikiaHome.prototype = {
 					}
 
 					this.modalObject.target = targetObject;
-					this.modalObject.collections = 1;
+					this.modalObject.collectionsEdit = true;
+				}, this),
+				onAfterClose: $.proxy(function() {
+					if( !this.wereCollectionsWikisChanged ) {
+						this.changeCollectionCheckbox();
+					} else {
+						// wiki was added/removed to/from collection; let's switch the flag
+						this.wereCollectionsWikisChanged = false;
+					}
+					
+					this.modalObject.collectionsEdit = false;
 				}, this)
 			}
 		);
 	},
 	modalCancel: function() {
 		$('.modalWrapper').closeModal();
-		if(this.modalObject.collections) {
-			if(this.modalObject.type == window.SWITCH_COLLECTION_TYPE_ADD) {
-				this.modalObject.target.attr('checked', false);
-			} else {
-				this.modalObject.target.attr('checked', true);
-			}
-		}
+		this.changeCollectionCheckbox();
 	},
 	modalSubmit: function() {
 		var method, message, flag = '';
@@ -182,7 +193,7 @@ ManageWikiaHome.prototype = {
 
 		$('.modalWrapper').startThrobbing(); //we don't fire stopThrobbing() because closeModal() deletes container from DOM
 
-		if(this.modalObject.collections) {
+		if(this.modalObject.collectionsEdit) {
 			this.editWikiCollection();
 		} else {
 			this.editBlockedPromoted(method, message, flag);
@@ -206,19 +217,46 @@ ManageWikiaHome.prototype = {
 		});
 	},
 	editWikiCollection: function() {
-		$.nirvana.sendRequest({
-			controller: 'ManageWikiaHome',
-			method: 'switchCollection',
-			type: 'post',
-			data: {
-				switchType: this.modalObject.type,
-				collectionId: this.modalObject.target.val(),
-				wikiId: this.modalObject.target.attr('data-id')
-			},
-			callback: $.proxy(function(response) {
-				$('.modalWrapper').closeModal();
-			}, this)
-		});
+		var collectionId = this.modalObject.target.val();
+		var action = this.modalObject.type;
+
+		if( action == window.SWITCH_COLLECTION_TYPE_ADD ) {
+			this.wikisPerCollection[collectionId]++;
+		} else if( action == window.SWITCH_COLLECTION_TYPE_REMOVE ) {
+			this.wikisPerCollection[collectionId]--;
+		}
+
+		this.onWikisPerCollectionChange(collectionId, action);
+	},
+	onWikisPerCollectionChange: function(collectionId) {
+		if( !this.wikisPerCollection[collectionId] || this.wikisPerCollection[collectionId] <= this.SLOTS_IN_TOTAL ) {
+			$.nirvana.sendRequest({
+				controller: 'ManageWikiaHome',
+				method: 'switchCollection',
+				type: 'post',
+				data: {
+					switchType: this.modalObject.type,
+					collectionId: this.modalObject.target.val(),
+					wikiId: this.modalObject.target.attr('data-id')
+				},
+				callback: $.proxy(function(response) {
+					this.wereCollectionsWikisChanged = true;
+					$('.modalWrapper').closeModal();
+				}, this)
+			});
+		} else {
+			$('.modalWrapper').closeModal();
+			alert( $.msg('manage-wikia-home-modal-too-many-wikis-in-collection') );
+		}
+	},
+	changeCollectionCheckbox: function() {
+		if( this.modalObject.collectionsEdit ) {
+			if( this.modalObject.type == window.SWITCH_COLLECTION_TYPE_ADD ) {
+				this.modalObject.target.attr('checked', false);
+			} else {
+				this.modalObject.target.attr('checked', true);
+			}
+		}
 	}
 };
 

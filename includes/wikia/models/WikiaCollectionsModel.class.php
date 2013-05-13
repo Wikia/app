@@ -208,6 +208,16 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 
 	/**
+	 * Get all wikis belonging to selected collection
+	 *
+	 * @param $collectionId
+	 */
+	public function getCountWikisFromCollection($collectionId) {
+		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		return $db->selectField(self::COLLECTIONS_CV_TABLE, 'count(city_id)', ['collection_id' => $collectionId]);
+	}
+
+	/**
 	 * Get all wikis from all collections in selected language
 	 *
 	 * @param $langCode
