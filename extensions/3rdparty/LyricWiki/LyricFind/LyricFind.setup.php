@@ -32,6 +32,9 @@ $app->registerHook('OasisSkinAssetGroups', 'LyricFindHooks', 'onOasisSkinAssetGr
 
 $wgLyricFindTrackingNamespaces = array(NS_LYRICFIND);
 
+// LyricFind indexing
+$app->registerHook('BeforePageDisplay', 'LyricFindHooks', 'onBeforePageDisplay');
+
 // edit permissions & view-source protection
 // @see http://www.mediawiki.org/wiki/Manual:$wgNamespaceProtection
 $wgGroupPermissions['*']['editlyricfind'] = false;

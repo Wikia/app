@@ -16,6 +16,9 @@ class GWTWikiRepository {
 		return new GWTWiki( $resultObject->wiki_id, $resultObject->user_id, $resultObject->upload_date );
 	}
 
+	/*
+	 * @return array
+	 */
 	private function materializeList( $queryResult ) {
 		$list = array();
 		while ( $obj = $queryResult->fetchObject() ) {
@@ -29,6 +32,9 @@ class GWTWikiRepository {
 		return $this->materializeList($result);
 	}
 
+	/*
+	 * @return array
+	 */
 	public function allUnassigned() {
 		$result = $this->databaseConnection->select("webmaster_sitemaps"
 			, array("user_id", "wiki_id", "upload_date")
@@ -36,6 +42,9 @@ class GWTWikiRepository {
 		return $this->materializeList($result);
 	}
 
+	/*
+	 * @return array
+	 */
 	public function allByWikiId( $wikiId ) {
 		$result = $this->databaseConnection->select("webmaster_sitemaps"
 			, array("user_id", "wiki_id", "upload_date")
@@ -43,6 +52,9 @@ class GWTWikiRepository {
 		return $this->materializeList($result);
 	}
 
+	/*
+	 * @return GWTWiki
+	 */
 	public function oneByWikiId( $wikiId ) {
 		$wikis = $this->allByWikiId( $wikiId );
 		if( count( $wikis ) == 1 ) return $wikis[0];
@@ -72,7 +84,8 @@ class GWTWikiRepository {
 		return $this->insert( $wikiId, $userId, $uploadDate );
 	}
 
-	public function insert( $wikiId, $userId = null, $uploadDate = null ) {
+	public function insert( $wikiId, $userId = 0, $uploadDate = null ) {
+		if( $userId == null ) $userId = 0;
 		if ( ! $this->databaseConnection->insert("webmaster_sitemaps", array(
 			"wiki_id" => $wikiId,
 			"user_id" => $userId,
@@ -84,9 +97,11 @@ class GWTWikiRepository {
 	}
 
 	public function updateWiki( $gwtWikiObject ) {
+		$userId = $gwtWikiObject->getUserId();
+		if ( $userId == null ) $userId = 0;
 		$res = $this->databaseConnection->update("webmaster_sitemaps",
 			array(
-				"user_id" => $gwtWikiObject->getUserId(),
+				"user_id" => $userId,
 				"upload_date" => $gwtWikiObject->getUploadDate(),
 			),
 			array(

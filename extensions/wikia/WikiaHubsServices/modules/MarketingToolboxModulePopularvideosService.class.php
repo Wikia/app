@@ -2,7 +2,7 @@
 class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 9;
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		return array(
 			'header' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-popular-videos-header'),
@@ -56,13 +56,15 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 	public function renderEditor($data) {
 		$model = new MarketingToolboxModel();
 
-		if( !empty($data['values']['video']) ) {
-			foreach($data['values']['video'] as $i => $video) {
+		$videoField = $data['form']->getField('video');
+		$videoUrlField = $data['form']->getField('videoUrl');
+		if( !empty($videoField['value']) ) {
+			foreach($videoField['value'] as $i => $video) {
 				$data['videos'][$i] = $model->getVideoData($video, $model->getThumbnailSize());
 				$data['videos'][$i]['title'] = $video;
 
 				//we enabled curators to edit a video url so if they've changed it we change it here
-				$data['videos'][$i]['fullUrl'] = ( !empty($data['values']['videoUrl'][$i]) ) ? $data['values']['videoUrl'][$i] : $data['videos'][$i]['fullUrl'];
+				$data['videos'][$i]['fullUrl'] = ( !empty($videoUrlField['value'][$i]) ) ? $videoUrlField['value'][$i] : $data['videos'][$i]['fileUrl'];
 				//numbers next to section starts with 2
 				$data['videos'][$i]['section-no'] = $i + 2;
 			}
@@ -124,5 +126,29 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 
 	public function getModuleModel() {
 		return new MarketingToolboxPopularvideosModel();
+	}
+
+	/**
+	 * check if it is video module
+	 * @return boolean
+	 */
+	public function isVideoModule() {
+		return true;
+	}
+
+	/**
+	 * get list of video url
+	 * @param array $data
+	 * @return array $videoData
+	 */
+	public function getVideoData( $data ) {
+		$videoData = array();
+
+		$structureData = $this->getStructuredData( $data );
+		foreach( $structureData['videos'] as $video ) {
+			$videoData[] = $video['fileUrl'];
+		}
+
+		return $videoData;
 	}
 }

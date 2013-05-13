@@ -148,6 +148,11 @@ $specialPageAliases['oc'] = array(
 	'MultipleUpload' => array( 'Telecargament_multiple', 'TelecargamentMultiple' ),
 );
 
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'MultipleUpload' => array( 'Prześlij_wiele_plików' ),
+);
+
 /** Portuguese (português) */
 $specialPageAliases['pt'] = array(
 	'MultipleUpload' => array( 'Carregamento_múltiplo' ),
@@ -171,6 +176,11 @@ $specialPageAliases['sk'] = array(
 /** Albanian (shqip) */
 $specialPageAliases['sq'] = array(
 	'MultipleUpload' => array( 'MultiNgarkim' ),
+);
+
+/** Spanish (Español) */
+$specialPageAliases['es'] = array(
+	'MultipleUpload' => array( 'SubirMúltiplesArchivos' ),
 );
 
 /** Swedish (svenska) */

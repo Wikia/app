@@ -57,7 +57,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 
 
 	public function getBarContents() {
-		$this->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$dataMemcKey = $this->getMemcKey();
 		Wikia::log(__METHOD__, '', 'Reading ' . $dataMemcKey);
@@ -71,7 +71,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 
 		$data['data'] = $this->structuredData($data['data']);
 
-		$this->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $data;
 	}
 
@@ -160,7 +160,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 	 * @todo: fatal error if $model = false
 	 */
 	protected function getMessageFromModel($model) {
-		$this->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		if ($model instanceof WikiaBarModelBase) {
 			$model->setLang($this->getLang());
 			$model->setVertical($this->getVertical());
@@ -168,7 +168,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		} else {
 			$data = false;
 		}
-		$this->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $data;
 	}
 
@@ -198,7 +198,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 	 */
 	public
 	function parseBarConfigurationMessage($message, WikiaBarDataValidator &$validator) {
-		$this->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$data = array();
 		$valid = true;
 
@@ -231,7 +231,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 			$valid = false;
 		}
 
-		$this->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		if ($valid) {
 			return $data;
 		} else {

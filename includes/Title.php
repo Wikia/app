@@ -86,6 +86,10 @@ class Title {
 	// @}
 
 
+	/* Wikia change - begin - @author: wladek */
+	var $mTouchedCached = null;
+	/* Wikia change - end */
+
 	/**
 	 * Constructor
 	 */
@@ -280,6 +284,10 @@ class Title {
 				$this->mRedirect = (bool)$row->page_is_redirect;
 			if ( isset( $row->page_latest ) )
 				$this->mLatestID = (int)$row->page_latest;
+			/* Wikia change - begin - @author: wladek */
+			if ( isset( $row->page_touched ) )
+				$this->mTouchedCached = (int)$row->page_touched;
+			/* Wikia change - end */
 		} else { // page not found
 			$this->mArticleID = 0;
 			$this->mLength = 0;
@@ -4301,6 +4309,7 @@ class Title {
 		$wgMemc->set( wfMemcKey( "page_touched", implode( "_", $this->pageCond( ) ) ),
 			$dbw->timestamp(),
 			60 );
+		$this->mTouchedCached = null;
 		# end wikia change
 
 		HTMLFileCache::clearFileCache( $this );
@@ -4540,5 +4549,19 @@ class Title {
 		// Hook at the end because we don't want to override the above stuff
 		wfRunHooks( 'PageContentLanguage', array( $this, &$pageLang, $wgLang ) );
 		return wfGetLangObj( $pageLang );
+	}
+
+	/**
+	 * Get the last touched timestamp (uses cache)
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 *
+	 * @return String last-touched timestamp
+	 */
+	public function getTouchedCached() {
+		if ( empty( $this->mTouchedCached ) ) {
+			$this->mTouchedCached = $this->getTouched();
+		}
+		return $this->mTouchedCached;
 	}
 }

@@ -5,7 +5,7 @@ abstract class WikiaValidatorListBase extends WikiaValidator
 		return false;
 	}
 
-	public function isValidInternal($value = null) {
+	public function isValidInternal($value = []) {
 		$this->error = array();
 
 		if(!is_array($value)) {

@@ -163,6 +163,8 @@ function wfGoogleMaps_Install() {
 	// This hook will be called any time the parser encounters a <googlemap>
 	// tag in an article.  This will render the actual Google map code in
 	// the article.
+	/*
+	// This is no longer needed due to wfGoogleMaps_InstallParser
 	if( version_compare( $wgVersion, "1.6" ) >= 0 ) {
 		$wgParser->setHook( 'googlemap', array( $wgGoogleMaps, 'render16' ) );
 		$wgParser->setHook( 'googlemapkml', array( $wgGoogleMaps, 'renderKmlLink' ) );
@@ -170,6 +172,7 @@ function wfGoogleMaps_Install() {
 		$wgParser->setHook( 'googlemap', 'wfGoogleMaps_Render15' );
 		$wgParser->setHook( 'googlemapkml', 'wfGoogleMaps_RenderKmlLink15' );
 	}
+	*/
 
 	// Set up the special page
 	$wgSpecialPages['GoogleMapsKML'] = array('GoogleMapsKML', 'GoogleMapsKML');

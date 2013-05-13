@@ -30,4 +30,19 @@ class CategorySelectTest extends WikiaBaseTest {
 		$this->assertEquals($expectedWikiText, trim($wikiText));
 	}
 
+	public function testGetUniqueCategories() {
+		$categories = [];
+		$categories[] = [
+			'namespace' => 'Category',
+			'name' => 'this is a duplicate'
+		];
+
+		$categories[] = $categories[ 0 ];
+
+		$expected = [ $categories[ 0 ] ];
+
+		$actual = CategorySelect::getUniqueCategories( $categories );
+
+		$this->assertEquals( $expected, $actual );
+	}
 }

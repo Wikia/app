@@ -78,9 +78,9 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
-	 * @covers SEOTweaksHooksHelper::onArticleFromTitle
+	 * @covers SEOTweaksHooksHelper::onAfterInitialize
 	 */
-	public function testOnArticleBeforeTitleValid() {
+	public function testOnAfterInitializeValid() {
 		
 		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
 										->getMock();
@@ -108,35 +108,32 @@ class SEOTweaksTest extends WikiaBaseTest
 			->expects( $this->never() )
 			->method ( 'isDeleted' )
 		;
+		$mockTitle
+			->expects( $this->never() )
+			->method ( 'getNamespace' )
+		;
 		$mockOut
 			->expects( $this->never() )
 			->method ( 'setStatusCode' ) 
 		;
 		
-		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
-		$wgRefl->setAccessible( true );
-		
-		$wg = (object) array( 'Out' => $mockOut );
-		
-		$wgRefl->setValue( $mockHelper, $wg );
-		
 		$this->assertTrue(
-				$mockHelper->onArticleFromTitle( $mockTitle, $mockArticle ),
-				'SEOTweaksHooksHelper::onArticleFromTitle should always return true'
+				$mockHelper->onAfterInitialize( $mockTitle, $mockArticle, $mockOut ),
+				'SEOTweaksHooksHelper::onAfterInitialize should always return true'
 		);
 	}
 	
 	/**
-	 * @covers SEOTweaksHooksHelper::onArticleFromTitle
+	 * @covers SEOTweaksHooksHelper::onAfterInitialize
 	 */
-	public function testOnArticleBeforeTitleNotValid() {
+	public function testOnAfterInitializeNotValid() {
 		
 		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
 										->getMock();
 		
 		$mockTitle = $this->getMockBuilder( 'Title' )
 						->disableOriginalConstructor()
-						->setMethods( array( 'exists', 'isDeleted' ) )
+						->setMethods( array( 'exists', 'isDeleted', 'getNamespace' ) )
 						->getMock();
 		
 		$mockArticle = $this->getMockBuilder( 'Article' )
@@ -158,22 +155,20 @@ class SEOTweaksTest extends WikiaBaseTest
 			->method ( 'isDeleted' )
 			->will   ( $this->returnValue( true ) )
 		;
+		$mockTitle
+			->expects( $this->at( 2 ) )
+			->method ( 'getNamespace' )
+			->will   ( $this->returnValue( NS_MAIN ) )
+		;
 		$mockOut
 			->expects( $this->at( 0 ) )
 			->method ( 'setStatusCode' )
 			->with   ( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE ) 
 		;
 		
-		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
-		$wgRefl->setAccessible( true );
-		
-		$wg = (object) array( 'Out' => $mockOut );
-		
-		$wgRefl->setValue( $mockHelper, $wg );
-		
 		$this->assertTrue(
-				$mockHelper->onArticleFromTitle( $mockTitle, $mockArticle ),
-				'SEOTweaksHooksHelper::onArticleFromTitle should always return true'
+				$mockHelper->onAfterInitialize( $mockTitle, $mockArticle, $mockOut ),
+				'SEOTweaksHooksHelper::onAfterInitialize should always return true'
 		);
 	}
 	
@@ -663,7 +658,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		
 		$mockDb = $this->getMockBuilder( "DatabaseMysql" )
 		               ->disableOriginalConstructor()
-		               ->setMethods( array( 'query', 'fetchObject' ) )
+		               ->setMethods( array( 'query', 'fetchObject', 'buildLike', 'anyString' ) )
 		               ->getMock();
 		
 		$mockResultWrapper = $this->getMockBuilder( 'ResultWrapper' )
@@ -698,12 +693,23 @@ class SEOTweaksTest extends WikiaBaseTest
 		;
 		$mockDb
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'query' )
-		    ->with   ( 'SELECT page_title FROM page WHERE page_title REGEXP "^' . $dbKey . '[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1' )
-		    ->will   ( $this->returnValue( $mockResultWrapper ) )
+		    ->method ( 'anyString' )
+		    ->will   ( $this->returnValue( '%' ) )
 		;
 		$mockDb
 		    ->expects( $this->at( 1 ) )
+		    ->method ( 'buildLike' )
+		    ->with   ( $dbKey, '%' )
+		    ->will   ( $this->returnValue( "LIKE '{$dbKey}%'" ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'query' )
+		    ->with   ( "SELECT page_title FROM page WHERE page_title LIKE '{$dbKey}%' LIMIT 1" )
+		    ->will   ( $this->returnValue( $mockResultWrapper ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 3 ) )
 		    ->method ( 'fetchObject' )
 		    ->will   ( $this->returnValue( null ) )
 		;
@@ -747,7 +753,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		
 		$mockDb = $this->getMockBuilder( "DatabaseMysql" )
 		               ->disableOriginalConstructor()
-		               ->setMethods( array( 'query', 'fetchObject' ) )
+		               ->setMethods( array( 'query', 'fetchObject', 'buildLike', 'anyString' ) )
 		               ->getMock();
 		
 		$mockResultWrapper = $this->getMockBuilder( 'ResultWrapper' )
@@ -789,12 +795,23 @@ class SEOTweaksTest extends WikiaBaseTest
 		;
 		$mockDb
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'query' )
-		    ->with   ( 'SELECT page_title FROM page WHERE page_title REGEXP "^' . $dbKey . '[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1' )
-		    ->will   ( $this->returnValue( $mockResultWrapper ) )
+		    ->method ( 'anyString' )
+		    ->will   ( $this->returnValue( '%' ) )
 		;
 		$mockDb
 		    ->expects( $this->at( 1 ) )
+		    ->method ( 'buildLike' )
+		    ->with   ( $dbKey, '%' )
+		    ->will   ( $this->returnValue( "LIKE '{$dbKey}%'" ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'query' )
+		    ->with   ( "SELECT page_title FROM page WHERE page_title LIKE '{$dbKey}%' LIMIT 1" )
+		    ->will   ( $this->returnValue( $mockResultWrapper ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 3 ) )
 		    ->method ( 'fetchObject' )
 		    ->will   ( $this->returnValue( $resultObject ) )
 		;

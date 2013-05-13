@@ -4,6 +4,7 @@
 
 
 class Wall {
+	/** @var $mTitle Title */
 	private $mTitle;
 	private $mCityId;
 	private $mThreadMapping = null;
@@ -50,7 +51,7 @@ class Wall {
 	public function getId() {
 		return $this->mTitle->getArticleId();
 	}
-	
+
 	public function getTitle() {
 		return $this->mTitle;
 	}

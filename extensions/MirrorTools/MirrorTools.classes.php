@@ -14,6 +14,8 @@ class MirrorEditPage extends EditPage {
 
 		if ( !wfRunHooks( 'EditPage::attemptSave', array( $this ) ) ) {
 			wfDebug( "Hook 'EditPage::attemptSave' aborted article saving\n" );
+			wfProfileOut( __METHOD__ . '-checks' );
+			wfProfileOut( __METHOD__  );
 			return self::AS_HOOK_ERROR;
 		}
 
@@ -21,6 +23,8 @@ class MirrorEditPage extends EditPage {
 		if ( $this->mTitle->getNamespace() == NS_FILE &&
 			Title::newFromRedirect( $this->textbox1 ) instanceof Title &&
 			!$wgUser->isAllowed( 'upload' ) ) {
+				wfProfileOut( __METHOD__ . '-checks' );
+				wfProfileOut( __METHOD__  );
 				if ( $wgUser->isAnon() ) {
 					return self::AS_IMAGE_REDIRECT_ANON;
 				} else {

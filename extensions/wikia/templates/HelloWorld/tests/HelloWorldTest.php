@@ -24,8 +24,6 @@ class HelloWorldTest extends WikiaBaseTest {
 
 		$this->mockGlobalVariable( 'wgExternalSharedDB', '' );
 		$this->mockGlobalFunction( 'getDB', $dbMock );
-		$this->mockGlobalFunction( 'profileIn', null );
-		$this->mockGlobalFunction( 'profileOut', null );
 
 		$this->mockApp();
 

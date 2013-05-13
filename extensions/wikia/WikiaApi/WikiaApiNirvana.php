@@ -20,7 +20,7 @@ class WikiaApiNirvana extends ApiBase {
 	 */
 	public function execute() {
 		$app = F::app();
-		$app->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$format = 'html';
 
@@ -54,7 +54,7 @@ class WikiaApiNirvana extends ApiBase {
 			$this->getResult()->addValue( $this->getModuleName(), 'Error',  'No Controller Specified' );
 		}
 
-		$app->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	public function getAllowedParams() {

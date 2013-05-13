@@ -36,7 +36,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		// Global function call
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		// Global variable access
 		$this->wg->Out->setPageTitle( "Page Title" );
 		$this->wg->Out->setPageTitle( $this->wf->msg( 'helloworld-specialpage-title' ) );
@@ -59,7 +59,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 		// example of setting SpecialPage::mIncluding
 		$this->including(true);
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**

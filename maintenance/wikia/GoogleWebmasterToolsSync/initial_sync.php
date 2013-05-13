@@ -13,7 +13,11 @@ try {
 	$dbmart = $app->wf->getDB( DB_SLAVE, array(), $wgDatamartDB);
 	$db = $app->wf->getDB( DB_MASTER, array(), $wgExternalSharedDB);
 
-	$query = "select wiki_id, count(article_id) as page_count from rollup_wiki_article_pageviews group by wiki_id having count(article_id) >= $minCountOfPagesToSync";
+	$query = "select wiki_id, count(article_id) as page_count
+		 from rollup_wiki_article_pageviews
+		 where period_id = 2 and time_id between '2013-01-01 00:00:00' and '2013-04-14 00:00:00' and namespace_id = 0
+		 group by wiki_id
+		 having count(article_id) >= $minCountOfPagesToSync";
 	$result = $dbmart->query($query);
 
 	function fetchGroup ( $result, $count ) {
@@ -22,7 +26,7 @@ try {
 		while( ( $row = $result->fetchObject() ) && ( $i < $count ) ) {
 			$resultGroup[] = array(
 				"wiki_id" => $row->wiki_id,
-				"user_id" => null,
+				"user_id" => 0,
 				"upload_date" => null,
 			);
 			$i ++;
@@ -66,10 +70,10 @@ try {
 		if( count($group) == 0 ) continue;
 		//var_dump($group);
 		GWTLogHelper::notice( "Fetching " . count($group) . " wikis from mart." );
-		var_dump($group);
 		$db->insert("webmaster_sitemaps", $group);
 		sleep(1);
 	}
+	GWTLogHelper::notice( __FILE__ . " script ends.");
 
 } catch ( Exception $ex ) {
 	GWTLogHelper::error( __FILE__ . " script failed.", $ex);

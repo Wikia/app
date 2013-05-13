@@ -71,8 +71,7 @@ class AnalyticsProviderIVWTest extends WikiaBaseTest {
 			array('http://de.green.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCLIFESTYLE'),
 			array('http://de.naruto.wikia.com/wiki/Narutopedia', 'RC_WIKIA_UGCANIME'),
 
-			// uncomment when fb#69148 goes live
-			//array('http://de.wikia.com/Entertainment/Anime', 'RC_WIKIA_START'),
+			array('http://de.wikia.com/Entertainment/Anime', 'RC_WIKIA_START'),
 		);
 	}
 
@@ -87,4 +86,3 @@ class AnalyticsProviderIVWTest extends WikiaBaseTest {
 		$this->assertEquals($result, $this->getAnalyticsProviderIVWTag($url));
 	}
 }
-

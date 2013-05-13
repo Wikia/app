@@ -65,7 +65,7 @@ if (empty($options['do']) || $options['do'] != 1) {
 	echo "Indexing one count pages\n";
 	
 	while ($row = $db->fetchRow($res)) {
-		ImageServingHelper::bulidIndex($row['il_from'], array( $row['il_to'] ));
+		ImageServingHelper::buildIndex($row['il_from'], array( $row['il_to'] ));
 	}            
 	
 	echo "Indexing more then one count pages\n";

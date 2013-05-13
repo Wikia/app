@@ -670,10 +670,12 @@ class RTEReverseParser {
 		if ( self::nextSiblingIs( $node, 'blockquote' )
 			&& $node->hasAttribute( self::DATA_RTE_FROMPARSER )
 			&& $textContent == "\n" ) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 		if ( self::previousSiblingIs( $node, 'blockquote' )
 			&& $textContent == "\n" ) {
+			wfProfileOut(__METHOD__);
 		    return '';
 		}
 

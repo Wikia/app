@@ -8,5 +8,5 @@ img.lzyLoaded {
 	@include opacity(100);
 }
 img.lzyTrns {
-	@include transition-shorthand(opacity 600ms ease-out);
+	@include transition-shorthand(opacity 300ms ease-out);
 }
