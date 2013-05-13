@@ -7,6 +7,9 @@ class CollectionsForm extends FormBuilderService {
 
 		if (empty($fields)) {
 			$fields = [
+				'id' => [
+					'type' => 'hidden',
+				],
 				'name' => [
 					'label' => $this->wf->msg('manage-wikia-home-collections-name-field-label'),
 					'validator' => new WikiaValidatorListValue([
@@ -29,7 +32,7 @@ class CollectionsForm extends FormBuilderService {
 					'isArray' => true
 				],
 				'sponsor_url' => [
-					'label' => $this->wf->msg('manage-wikia-home-collections-sponsur-url-field-label'),
+					'label' => $this->wf->msg('manage-wikia-home-collections-sponsor-url-field-label'),
 					'validator' => new WikiaValidatorListValue([
 						'validator' => new WikiaValidatorUrl()
 					]),

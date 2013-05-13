@@ -53,6 +53,7 @@ $messages['en'] = array(
 	'manage-wikia-home-modal-content-demoted' => 'Do you want to demote this wiki in the wiki visualization?',
 	'manage-wikia-home-modal-content-add-collection' => 'Do you want to add this wiki to collection?',
 	'manage-wikia-home-modal-content-remove-collection' => 'Do you want to remove this wiki from collection?',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'You can not add more wikis to this collection.',
 	'manage-wikia-home-modal-button-no' => 'No',
 	'manage-wikia-home-modal-button-yes' => 'Yes',
 
@@ -87,6 +88,7 @@ $messages['qqq'] = array(
 	'manage-wikia-home-wiki-list-blocked' => 'WikiList table header Blocked column name',
 	'manage-wikia-home-wiki-list-promoted' => 'WikiList table header Promoted column name',
 	'manage-wikia-home-wiki-list-collection' => 'WikiList table header Collections column name',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'Error telling about too many wikis selected for a collection',
 	'manage-wikia-home-wiki-list-blocked-no' => '\'No\' in column Blocked on table',
 	'manage-wikia-home-wiki-list-blocked-yes' => '\'Yes\' in column Blocked on table',
 

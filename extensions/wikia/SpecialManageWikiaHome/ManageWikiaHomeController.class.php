@@ -422,7 +422,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		foreach($collections as $key => $collection) {
 			$collectionId = $collection['id'];
 			$wikis = $this->getWikiaCollectionsModel()->getCountWikisFromCollection($collectionId);
-			$wikisPerCollections[$key] = $wikis;
 			$wikisPerCollections[$collectionId] = $wikis;
 		}
 		
