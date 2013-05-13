@@ -205,13 +205,10 @@ class CategorySelectController extends WikiaController {
 			$options = new ParserOptions();
 			$wikitext = ParserPool::preprocess( $wikitext, $title, $options );
 
+			// Extract categories from the article, merge them with those passed in, weed out
+			// duplicates and finally append them back to the article.
 			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
-
-			// Merge categories stored in the article with any that were passed in and remove duplicates.
-			$categories = array_merge( $data[ 'categories' ], $categories );
-			$categories = CategorySelect::getUniqueCategories( $categories );
-
-			// Convert categories to wikitext and append them to the article's wikitext
+			$categories = CategorySelect::getUniqueCategories( $data[ 'categories' ], $categories );
 			$wikitext = $data[ 'wikitext' ] . CategorySelect::changeFormat( $categories, 'array', 'wikitext' );
 
 			$dbw = $this->wf->GetDB( DB_MASTER );
