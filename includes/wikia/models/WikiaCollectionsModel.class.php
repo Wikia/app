@@ -208,7 +208,7 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 
 	/**
-	 * Get all wikis belonging to selected collection
+	 * Get number of wikis assigned to specified collection
 	 *
 	 * @param $collectionId
 	 */
