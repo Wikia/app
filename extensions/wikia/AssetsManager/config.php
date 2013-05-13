@@ -548,6 +548,7 @@ $config['wikiamobile_js_ads'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 
 		//modules
 		'//resources/wikia/modules/geo.js',

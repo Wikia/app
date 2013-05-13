@@ -5,7 +5,8 @@
  * @see http://support.ooyala.com/developers/documentation
  */
 
-define('wikia.ooyala', ['wikia.window', 'ext.wikia.adengine.dartvideohelper'], function(window, dartVideoHelper) {
+/*global define, require*/
+define('wikia.ooyala', ['wikia.window', require.optional('ext.wikia.adengine.dartvideohelper')], function(window, dartVideoHelper) {
 	'use strict';
 
 	/**
@@ -15,14 +16,7 @@ define('wikia.ooyala', ['wikia.window', 'ext.wikia.adengine.dartvideohelper'], f
 	 */
 	return function(params, vb) {
 		var containerId = vb.timeStampId( params.playerId ),
-			createParams = { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay, onCreate: onCreate };
-
-		if (window.wgAdVideoTargeting && window.wgShowAds) {
-			createParams['google-ima-ads-manager'] = {
-				adTagUrl: dartVideoHelper.getUrl(),
-				showInAdControlBar : true
-			};
-		}
+			createParams = { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay };
 
 		function onCreate(player) {
 			var messageBus = player.mb;
@@ -54,6 +48,18 @@ define('wikia.ooyala', ['wikia.window', 'ext.wikia.adengine.dartvideohelper'], f
 				console.log(payload);
 			});*/
 
+		}
+
+		createParams.onCreate = onCreate;
+
+		if (window.wgAdVideoTargeting && window.wgShowAds) {
+			if (!dartVideoHelper) {
+				throw 'ext.wikia.adengine.dartvideohelper is not defined and it should as we need to display ads';
+			}
+			createParams['google-ima-ads-manager'] = {
+				adTagUrl: dartVideoHelper.getUrl(),
+				showInAdControlBar : true
+			};
 		}
 
 		window.OO.Player.create(containerId, params.videoId, createParams);
