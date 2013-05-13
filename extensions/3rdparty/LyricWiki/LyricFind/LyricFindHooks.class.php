@@ -15,6 +15,29 @@ class LyricFindHooks extends WikiaObject {
 	}
 
 	/**
+	 * Checks whether given page can be indexed by web crawlers
+	 *
+	 * @param Title $title page to check
+	 * @return bool is trackable?
+	 */
+	static public function pageIsIndexable(Title $title) {
+		wfProfileIn(__METHOD__);
+		$res = true;
+
+		if ($title->getNamespace() === NS_LYRICFIND) {
+			$mainNStitle = Title::newFromText($title->getText(), NS_MAIN);
+
+			// the same lyric exists in main namespace, prevent indexing of LyricFind version
+			if ($mainNStitle->exists()) {
+				$res = false;
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $res;
+	}
+
+	/**
 	 * Loads page views tracking code
 	 *
 	 * @param array $jsAssetGroups AssetsManager groups to load
@@ -63,9 +86,25 @@ class LyricFindHooks extends WikiaObject {
 	 *
 	 * @param Parser $parser parser
 	 * @param string $text parser content
+	 * @return bool true
 	 */
 	public function onParserAfterTidy(Parser $parser, &$text) {
 		$text = strtr($text, LyricFindParserController::$markers);
+		return true;
+	}
+
+	/**
+	 * Prevent indexing of articles in NS_LYRICFIND if the same lyric exists in main namespace
+	 *
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool true
+	 */
+	public function onBeforePageDisplay(OutputPage $out, Skin $skin ) {
+		if (!self::pageIsIndexable($out->getTitle())) {
+			$out->setRobotPolicy('noindex,follow');
+		}
+
 		return true;
 	}
 }

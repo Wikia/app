@@ -35,7 +35,7 @@ class WikiaMobileMediaService extends WikiaService {
 	}
 
 	public function renderMedia() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$attribs = $this->request->getVal( 'attributes', array() );
 		$params = $this->request->getVal( 'parameters', array() );
@@ -47,17 +47,19 @@ class WikiaMobileMediaService extends WikiaService {
 
 		$this->response->setBody( $this->render( self::SINGLE, $attribs, $params, $linkAttribs, $linked, $noscript, $class, $caption ) );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function renderMediaGroup() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
-		$items = $this->request->getVal( 'items', array() );
+		$items = $this->request->getVal( 'items', [] );
+		//This is a parser from ImageGallery
+		$parser = $this->request->getVal( 'parser', $this->wg->Parser );
 		$first = null;
 		$wikiText = '';
 		$result = '';
-		$params = array();
+		$params = [];
 
 		//separate linked items from normal ones and select the first one
 		//which will be rendered in the page
@@ -94,7 +96,7 @@ class WikiaMobileMediaService extends WikiaService {
 					}
 
 					if ( !empty( $item['caption'] ) ) {
-						$info['capt'] = $item['caption'];
+						$info['capt'] = $parser->recursiveTagParse( $item['caption'] );
 					}
 
 					$params[] = $info;
@@ -153,19 +155,19 @@ class WikiaMobileMediaService extends WikiaService {
 			//avoid wikitext recursion
 			$this->wg->WikiaMobileDisableMediaGrouping = true;
 
-			$result .= $this->wg->Parser->recursiveTagParse( $wikiText );
+			$result .= $parser->recursiveTagParse( $wikiText );
 
 			//restoring to previous value
 			$this->wg->WikiaMobileDisableMediaGrouping = $origVal;
 		}
 
 		$this->response->setBody( $result );
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	//WARNING: any change to the template of this method should be reflected in WikiaMobileHooks::onParserAfterTidy
 	public function renderImageTag() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$attribs = $this->request->getVal( 'attributes', array() );
 		$params = $this->request->getVal( 'parameters', null );
@@ -188,12 +190,12 @@ class WikiaMobileMediaService extends WikiaService {
 		$this->response->setVal( 'content', $content );
 		$this->response->setVal( 'width', $attribs['width'] );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	//WARNING: any change to the template of this method should be reflected in WikiaMobileHooks::onParserAfterTidy
 	public function renderFigureTag() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$width = $this->request->getVal( 'width', null );
 		$class = $this->request->getVal( 'class', [] );
@@ -214,11 +216,11 @@ class WikiaMobileMediaService extends WikiaService {
 		$this->response->setVal( 'content', $content );
 		$this->response->setVal( 'caption', $caption );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function render( $type, Array $attribs = [], Array $params = [], Array $linkAttribs = [], $link = false, $noscript = null, $class = null, $caption = null ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !is_array( $class ) ) {
 			$class = [];
@@ -268,7 +270,7 @@ class WikiaMobileMediaService extends WikiaService {
 			)
 		)->toString();
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 }

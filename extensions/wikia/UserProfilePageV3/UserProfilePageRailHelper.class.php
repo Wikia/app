@@ -9,12 +9,12 @@ class UserProfilePageRailHelper {
 	 */
 	public function onGetRailModuleList(&$modules) {
 		$app = F::App();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$title = $app->wg->Title;
 		$namespaces = $app->getGlobal( 'UPPNamespaces', array() );
 
 		if ( !in_array( $title->getNamespace(), $namespaces ) ) {
-			$app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -33,7 +33,7 @@ class UserProfilePageRailHelper {
 			$modules[1101] = array('FollowedPages', 'Index', array('showDeletedPages' => false));
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 

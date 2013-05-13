@@ -21,12 +21,12 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	 * Special page main entry point
 	 */
 	public function index() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->wg->Out->setPageTitle( $this->wf->Msg('phalanx-title') );
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			$this->displayRestrictionError();
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -46,14 +46,14 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		$this->forward('PhalanxSpecial', $currentTab);
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * Renders first tab - blocks creation / edit
 	 */
 	public function main() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		// creating / editing a block
 		if ( $this->wg->Request->wasPosted() ) {
@@ -75,7 +75,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 			$this->wg->Out->redirect($this->title->getFullURL());
 
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -103,7 +103,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'typeFilter', $pager->getSearchFilter() );
 		$this->setVal( 'blockTypes', Phalanx::getAllTypeNames() );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -149,12 +149,12 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$data['typeFilter'] = array();
 		}
 		else {
-			// block search
+			// block creation
 			$data['checkBlocker'] = $this->wg->Request->getText( 'wpPhalanxCheckBlocker' , '');
 			$data['checkId'] = $this->wg->Request->getIntOrNull( 'id' );
 			$data['type'] = $this->wg->Request->getArray( 'wpPhalanxType' );
 			$data['typeFilter'] = $this->wg->Request->getArray( 'wpPhalanxTypeFilter' );
-			$data['text'] = '';
+			$data['text'] = $this->wg->Request->getText('target' , ''); // prefill the filter content using target URL parameter
 			$data['lang'] = '';
 			$data['expire'] = '';
 			$data['reason'] = '';
@@ -169,7 +169,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	 * @return int
 	 */
 	private function handleBlockPost() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$id = $this->wg->Request->getInt( 'id', 0 );
 		$isBlockUpdate = ($id !== 0);
@@ -193,7 +193,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$ret = $isBlockUpdate ? self::RESULT_BLOCK_UPDATED : self::RESULT_BLOCK_ADDED;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
@@ -204,7 +204,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	 * @return string HTML
 	 */
 	private function handleBlockTest($blockText) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$service = new PhalanxService();
 		$service->setLimit(20);
@@ -232,7 +232,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$listing .= $pager->getEmptyBody();
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $listing;
 	}
 
@@ -240,7 +240,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	 * Method called via AJAX from Special:Phalanx to remove blocks
 	 */
 	public function unblock() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat('json');
 		$this->setVal('success', false);
@@ -248,7 +248,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			$this->setVal('error', 'permission');
 
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -259,14 +259,14 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		if (!$id) {
 			$this->setVal('error', 'id');
 
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		if ($token != $this->getToken()) {
 			$this->setVal('error', 'token');
 
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -278,14 +278,14 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->setVal('success', $result !== false);
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * Method called via AJAX from Special:Phalanx to validate regexp
 	 */
 	public function validate() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat('json');
 		$this->setVal( 'valid', false);
@@ -296,7 +296,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			$this->setVal('error', 'permission');
 
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -304,7 +304,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$this->setVal( 'valid', $this->service->validate( $regexp ) );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function matchBlock() {

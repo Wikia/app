@@ -64,33 +64,6 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	}
 
 	/**
-	 * Allow efficient retrieval of multiple items from Memcached
-	 *
-	 * @author Władysław Bodzek
-	 * @param $keys array
-	 * @return Mixed
-	 */
-	public function getMulti( $keys ) {
-		global $wgEnableMemcachedBulkMode;
-		if ( empty( $wgEnableMemcachedBulkMode ) ) {
-			return parent::getMulti($keys);
-		}
-
-		$map = array();
-		foreach ($keys as $key) {
-			$map[$this->encodeKey($key)] = $key;
-		}
-		$mappedData = $this->client->get_multi( array_keys( $map ) );
-
-		$data = array();
-		foreach ($mappedData as $k => $v) {
-			$data[$map[$k]] = $v;
-		}
-
-		return $data;
-	}
-
-	/**
 	 * @param $key string
 	 * @param $value
 	 * @param $exptime int
@@ -201,5 +174,74 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	public function decodeKey( $key ) {
 		return urldecode( $key );
 	}
+
+	/**
+	 * Do a get_multi request and optionally return the data if required
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 * @param $keys array List of keys
+	 * @parma $returnData bool Return the data?
+	 * @return array
+	 */
+	protected function getMultiInternal( $keys, $returnData ) {
+		$map = array();
+		foreach ($keys as $key) {
+			$map[$this->encodeKey($key)] = $key;
+		}
+		$mappedData = $this->client->get_multi( array_keys( $map ) );
+
+		if ( !$returnData ) {
+			return true;
+		}
+
+		$data = array();
+		foreach ($mappedData as $k => $v) {
+			$data[$map[$k]] = $v;
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Get multiple items at once
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 * @param $keys array List of keys
+	 * @return array Data associated with given keys, no data is indicated by "false"
+	 */
+	public function getMulti( $keys ) {
+		global $wgEnableMemcachedBulkMode;
+		if ( empty( $wgEnableMemcachedBulkMode ) ) {
+			return parent::getMulti($keys);
+		}
+
+		return $this->getMultiInternal($keys,true);
+	}
+
+	/**
+	 * Prefetch the following keys if local cache is enabled, otherwise don't do anything
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 * @param $keys array List of keys to prefetch
+	 */
+	public function prefetch( $keys ) {
+		global $wgEnableMemcachedBulkMode;
+		if ( empty( $wgEnableMemcachedBulkMode ) ) {
+			parent::prefetch($keys);
+		}
+
+		$this->getMultiInternal($keys,false);
+	}
+
+	/**
+	 * Remove value from local cache which is associated with a given key
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 * @param $key
+	 */
+	public function clearLocalCache( $key ) {
+		unset($this->client->_dupe_cache[$key]);
+	}
+
 }
 

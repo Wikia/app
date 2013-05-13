@@ -19,6 +19,7 @@ $app->registerHook('BeforeToolbarMenu', 'AdminDashboardLogic', 'onBeforeToolbarM
 // i18n mapping
 $wgExtensionMessagesFiles['AdminDashboard'] = $dir . 'AdminDashboard.i18n.php';
 $wgExtensionMessagesFiles['QuickStats'] = $dir . 'QuickStats.i18n.php';
+$wgExtensionMessagesFiles['AdminDashboardAliases'] = $dir . 'AdminDashboard.alias.php';
 
 // special pages
 $app->registerSpecialPage('AdminDashboard', 'AdminDashboardSpecialPageController');

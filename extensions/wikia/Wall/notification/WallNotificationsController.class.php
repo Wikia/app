@@ -20,7 +20,7 @@ class WallNotificationsController extends WikiaController {
 			$this->response->addAsset('extensions/wikia/Wall/js/WallNotifications.js');
 			$this->response->addAsset('extensions/wikia/Wall/css/WallNotifications.scss');
 			$this->response->setVal('prehide', (empty($this->wg->EnableWallExt) && empty($this->wg->EnableForumExt)));
-			
+
 			$this->response->setVal('user', $this->wg->User);
 		}
 
@@ -38,7 +38,7 @@ class WallNotificationsController extends WikiaController {
 		$this->response->setVal('notificationKey', $this->request->getVal('notificationKey') );
 
 		$notificationCounts = $this->request->getVal('notificationCounts');
-		
+
 		$this->response->setVal('notificationCounts', $notificationCounts);
 
 		$unreadCount = $this->request->getVal('count');
@@ -192,8 +192,16 @@ class WallNotificationsController extends WikiaController {
 		if(!$unread) $authors = array_slice($authors, 0, 1);
 
 		$this->response->setVal( 'msg', $msg );
-		if ( empty( $data->url ) ) $data->url = '';
-		$this->response->setVal( 'url', $this->fixNotificationURL($data->url) );
+
+		// The instances of `WallNotificationEntity` in the `$notify['grouped']` array are sorted in reverse
+		// chronological order. We want the url to point to the oldest unread item (which is the last element in the
+		// array) instead of the most recent so that they start reading where the left off. See bugid 64560.
+		$oldestEntity = end( $notify['grouped'] );
+		if ( empty( $oldestEntity->data->url ) ) {
+			$oldestEntity->data->url = '';
+		}
+
+		$this->response->setVal( 'url', $this->fixNotificationURL( $oldestEntity->data->url ) );
 		$this->response->setVal( 'authors', array_reverse($authors) );
 		$this->response->setVal( 'title', $data->thread_title );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));

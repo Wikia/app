@@ -112,6 +112,7 @@ class PagedTiffImage {
 				if ( $retval ) {
 					$data['errors'][] = "tiffinfo command failed: $cmd";
 					wfDebug( __METHOD__ . ": tiffinfo command failed: $cmd\n" );
+					wfProfileOut( 'PagedTiffImage::retrieveMetaData' );
 					return $data; // fail. we *need* that info
 				}
 
@@ -130,6 +131,7 @@ class PagedTiffImage {
 				if ( $retval ) {
 					$data['errors'][] = "identify command failed: $cmd";
 					wfDebug( __METHOD__ . ": identify command failed: $cmd\n" );
+					wfProfileOut( 'PagedTiffImage::retrieveMetaData' );
 					return $data; // fail. we *need* that info
 				}
 

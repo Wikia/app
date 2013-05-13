@@ -110,6 +110,11 @@
 	.hdn & {
 		bottom: -100%;
 	}
+
+	//caption is an output from parser
+	p {
+		margin: 0;
+	}
 }
 
 #wkMdlClo {

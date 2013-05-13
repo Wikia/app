@@ -1,3 +1,4 @@
+/*global describe, it, expect, AdLogicPageLevelParams*/
 describe('AdLogicPageLevelParams', function(){
 	it('getPageLevelParams Simple params correct', function() {
 		var logMock = function() {},
@@ -215,21 +216,71 @@ describe('AdLogicPageLevelParams', function(){
 		expect(params.amzn_728x90).toEqual(['1']);
 	});
 
+	it('getPageLevelParams Krux segments', function() {
+		var logMock = function() {},
+			kruxMockNone = {segments: []},
+			kruxMockFew = {segments: ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD']},
+			kruxMockLots = {segments: ['kxsgmnt1', 'kxsgmnt2', 'kxsgmnt3', 'kxsgmnt4', 'kxsgmnt5',
+				'kxsgmnt6', 'kxsgmnt7', 'kxsgmnt8', 'kxsgmnt9', 'kxsgmnt10', 'kxsgmnt11',
+				'kxsgmnt12', 'kxsgmnt13', 'kxsgmnt14', 'kxsgmnt15', 'kxsgmnt16', 'kxsgmnt17',
+				'kxsgmnt18', 'kxsgmnt19', 'kxsgmnt20', 'kxsgmnt21', 'kxsgmnt22', 'kxsgmnt23',
+				'kxsgmnt24', 'kxsgmnt25', 'kxsgmnt26', 'kxsgmnt27', 'kxsgmnt28', 'kxsgmnt29',
+				'kxsgmnt30', 'kxsgmnt31', 'kxsgmnt32', 'kxsgmnt33', 'kxsgmnt34', 'kxsgmnt35'
+			]},
+			kruxMock27 = {segments: ['kxsgmnt1', 'kxsgmnt2', 'kxsgmnt3', 'kxsgmnt4', 'kxsgmnt5',
+				'kxsgmnt6', 'kxsgmnt7', 'kxsgmnt8', 'kxsgmnt9', 'kxsgmnt10', 'kxsgmnt11',
+				'kxsgmnt12', 'kxsgmnt13', 'kxsgmnt14', 'kxsgmnt15', 'kxsgmnt16', 'kxsgmnt17',
+				'kxsgmnt18', 'kxsgmnt19', 'kxsgmnt20', 'kxsgmnt21', 'kxsgmnt22', 'kxsgmnt23',
+				'kxsgmnt24', 'kxsgmnt25', 'kxsgmnt26', 'kxsgmnt27'
+			]},
+			windowMock = {
+				location: {hostname: 'an.example.org'}
+			},
+			adLogicShortPageMock,
+			kruxMock = {},
+			abTestMock,
+			adLogicPageLevelParams,
+			params;
+
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMockNone, adLogicShortPageMock, abTestMock);
+		params = adLogicPageLevelParams.getPageLevelParams();
+		expect(params.ksgmnt).toEqual(kruxMockNone.segments, 'No segments');
+
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMockFew, adLogicShortPageMock, abTestMock);
+		params = adLogicPageLevelParams.getPageLevelParams();
+		expect(params.ksgmnt).toEqual(kruxMockFew.segments, 'A few segments');
+
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMockLots, adLogicShortPageMock, abTestMock);
+		params = adLogicPageLevelParams.getPageLevelParams();
+		expect(params.ksgmnt).toEqual(kruxMock27.segments, 'A lot of segments (stripped to first 27 segments)');
+	});
+
 	it('getPageLevelParams Page categories', function() {
 		var logMock = function() {},
 			windowMock = {
 				location: {hostname: 'an.example.org'},
-				wgCategories: ['Category', 'Another Category', 'YetAnother Category']
+				wgCategories: []
 			},
 			adLogicShortPageMock,
 			kruxMock,
 			abTestMock,
 			adLogicPageLevelParams,
-			params;
+			params,
+			undef;
 
 		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
-		expect(params.cat).toEqual(['category', 'another_category', 'yetanother_category']);
+		expect(params.cat).toBeFalsy('No categories');
+
+		windowMock.wgCategories = ['Category', 'Another Category'];
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		params = adLogicPageLevelParams.getPageLevelParams();
+		expect(params.cat).toEqual(['category', 'another_category'], 'Two categories');
+
+		windowMock.wgCategories = ['A Category', 'Another Category', 'Yet Another Category', 'Aaaand One More'];
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicShortPageMock, abTestMock);
+		params = adLogicPageLevelParams.getPageLevelParams();
+		expect(params.cat).toEqual(['a_category', 'another_category', 'yet_another_category'], '4 categories stripped down to first 3');
 	});
 
 	it('getPageLevelParams abTest info', function() {

@@ -953,6 +953,9 @@ $config['VET_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET.js',
+		'//resources/jquery.ui/jquery.ui.widget.js',
+		'//resources/jquery.ui/jquery.ui.mouse.js',
+		'//resources/jquery.ui/jquery.ui.slider.js',
 	)
 );
 

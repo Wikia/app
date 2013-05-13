@@ -31,7 +31,7 @@ class RelatedPagesController extends WikiaController {
 			// check for content namespaces
 			(!empty( $wgTitle ) && !in_array( $wgTitle->getNamespace(), $wgContentNamespaces )) ||
 			// check if we have any categories
-			count( $relatedPages->getCategories( $articleid ) ) == 0 ||
+			count( $relatedPages->getCategories( $title ) ) == 0 ||
 			// check action
 			$wgRequest->getVal('action', 'view') != 'view' ||
 			// skip, if module was already rendered

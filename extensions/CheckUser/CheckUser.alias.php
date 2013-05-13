@@ -67,6 +67,7 @@ $specialPageAliases['eo'] = array(
 /** Spanish (Español) */
 $specialPageAliases['es'] = array(
 	'CheckUser' => array( 'VerificarUsuario', 'ComprobarUsuario', 'Comprobar_usuario' ),
+	'CheckUserLog' => array( 'RegistroDeVerificaciónDeUsuario' ),
 );
 
 /** Persian (فارسی) */

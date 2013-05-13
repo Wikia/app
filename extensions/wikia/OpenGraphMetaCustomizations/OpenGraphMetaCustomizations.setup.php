@@ -88,7 +88,7 @@ function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
 	// Get description from ArticleService
 	if (is_null($titleDescription)) {
 		$DESC_LENGTH = 100;
-		$articleService = new ArticleService( $articleId );
+		$articleService = new ArticleService( $wgTitle );
 		$titleDescription = $articleService->getTextSnippet( $DESC_LENGTH );
 	}
 

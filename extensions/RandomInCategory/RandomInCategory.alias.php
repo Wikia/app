@@ -141,6 +141,11 @@ $specialPageAliases['oc'] = array(
 	'RandomInCategory' => array( 'Pagina a l\'azard dins una categoria' ),
 );
 
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'RandomInCategory' => array( 'Losowa_strona_w_kategorii' ),
+);
+
 /** Sanskrit (संस्कृतम्) */
 $specialPageAliases['sa'] = array(
 	'RandomInCategory' => array( 'अविशिष्टवर्ग' ),

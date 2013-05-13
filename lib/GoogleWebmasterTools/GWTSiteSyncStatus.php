@@ -10,7 +10,7 @@ class GWTSiteSyncStatus {
 		$this->verified = $verified;
 	}
 
-	private function parseBoolean($value) {
+	private static function parseBoolean($value) {
 		if ($value && strtolower($value) !== "false") {
 			return true;
 		} else {
@@ -21,7 +21,7 @@ class GWTSiteSyncStatus {
 	/*
 	 * Parse xml content of google response.
 	 * @param xml - xml content of google response ( DOMNode ).
-	 * @returns - GWTSiteSyncStatus.
+	 * @return - GWTSiteSyncStatus.
 	 */
 	public static function fromDomElement( DOMNode $domNode ) {
 		$status = new GWTSiteSyncStatus();
@@ -41,7 +41,7 @@ class GWTSiteSyncStatus {
 			$status->setUrl($contentSrc->item(0)->nodeValue);
 		}
 		if( $verified->length > 0 ) {
-			$status->setVerified( GWTSiteSyncStatus::parseBoolean($verified->item(0)->nodeValue) );
+			$status->setVerified( self::parseBoolean($verified->item(0)->nodeValue) );
 		}
 		return $status;
 	}
@@ -49,7 +49,7 @@ class GWTSiteSyncStatus {
 	/*
 	 * Parse xml content of google response with many entries.
 	 * @param xml - xml content of google response ( DOMNode ).
-	 * @returns - array of GWTSiteSyncStatus.
+	 * @return - array of GWTSiteSyncStatus.
 	 */
 	public static function arrayFromDomDocument ( DOMDocument $document ) {
 		$xpath = new DOMXPath($document);
@@ -57,7 +57,7 @@ class GWTSiteSyncStatus {
 		$sites = array();
 		for($j =0; $j<$nodeList->length; $j++) {
 			$nodeList->item($j);
-			$siteStatus = GWTSiteSyncStatus::fromDomElement( $nodeList->item($j)  );
+			$siteStatus = self::fromDomElement( $nodeList->item($j)  );
 			if( $siteStatus != null ) {
 				$sites[] = $siteStatus;
 			}

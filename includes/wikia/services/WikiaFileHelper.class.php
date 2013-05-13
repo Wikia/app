@@ -323,6 +323,8 @@ class WikiaFileHelper extends Service {
 	 * TODO - this method is very specific to lightbox.  This needs to be refactored back out to lightbox, and return just the basic objects (file, user, tect)
 	 */
 	public static function getMediaDetail( $fileTitle, $config = array() ) {
+		global $wgEnableVideoPageRedesign;
+
 		$data = array(
 			'mediaType' => '',
 			'videoEmbedCode' => '',
@@ -367,7 +369,11 @@ class WikiaFileHelper extends Service {
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 					$data['providerName'] = $file->getProviderName();
-					$mediaPage = F::build( 'WikiaVideoPage', array($fileTitle) );
+					if ( F::app()->checkSkin( 'oasis' ) && !empty( $wgEnableVideoPageRedesign ) ) {
+						$mediaPage = new FilePageTabbed($fileTitle);
+					} else {
+						$mediaPage = new FilePageFlat($fileTitle);
+					}
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
 					$mediaPage = F::build( 'ImagePage', array($fileTitle) );
@@ -510,6 +516,11 @@ class WikiaFileHelper extends Service {
 			return $ret;
 		}
 		return '';
+	}
+
+	public static function getVideosCategory() {
+		$cat = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
+		return ucfirst($cat) . ':' . wfMsgForContent( 'videohandler-category' );
 	}
 
 

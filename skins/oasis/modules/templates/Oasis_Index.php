@@ -85,6 +85,7 @@ if(Math.random()<0.01){
 <?= $body ?>
 
 <?php
+	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'GPT_FLUSH'));
 	if (empty($wg->SuppressAds)) {
 		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
 		if (!$wg->EnableCorporatePageExt) {

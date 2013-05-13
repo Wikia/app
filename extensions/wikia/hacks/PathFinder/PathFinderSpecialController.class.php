@@ -16,30 +16,30 @@ class PathFinderSpecialController extends WikiaSpecialPageController {
 	}
 	
 	public function init() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$this->model = F::build( 'PathFinderModel' );
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	public function index() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$this->wg->Out->setPageTitle( $this->wf->Msg( 'pathfinder-special-header' ) );
 		$this->response->addAsset( 'extensions/wikia/hacks/PathFinder/css/PathFinder.scss' );
 		$this->response->addAsset( 'extensions/wikia/hacks/PathFinder/js/PathFinder.js' );
 		$this->forward( 'PathFinderSpecial', 'PathFinder' );
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	
 	public function PathFinder() {
-		$this->wf->profileIn( __METHOD__ );		
+		wfProfileIn( __METHOD__ );
 		$this->setVal( 'par', $this->getVal( 'par' ) );
 		$this->mIncluding = true;
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 		
 	public function getNodes() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$path = array();
 		$result = array();
 		$articleIds = array();
@@ -93,11 +93,11 @@ class PathFinderSpecialController extends WikiaSpecialPageController {
 		
 		$this->setVal( 'paths',  $result );
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	public function getRelated() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$result = array();
 		$articleIds = array();
 		$thumbnailsReplaced = array();
@@ -142,11 +142,11 @@ class PathFinderSpecialController extends WikiaSpecialPageController {
 		
 		$this->setVal( 'nodes',  $result );
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	public function getThumbnails( $articleIds = null, $width = null ) {
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		$articleIds = ( !empty( $articleIds ) ) ? $articleIds : $this->getVal( 'articleIds' );
 		$width = ( !empty( $width ) ) ? $width : $this->getVal( 'width' );
@@ -163,7 +163,7 @@ class PathFinderSpecialController extends WikiaSpecialPageController {
 		$result = $source->getImages( 1 );
 		$this->setVal( 'thumbnails', $result );
 		
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $result;	
 	}
 }

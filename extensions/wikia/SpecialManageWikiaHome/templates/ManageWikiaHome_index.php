@@ -34,8 +34,7 @@
 		</h2>
 
 		<p>
-			<?= wfMessage('manage-wikia-home-wikis-in-slots-total')->text(); ?>
-			<?= $slotsInTotal; ?>
+			<?= wfMessage('manage-wikia-home-wikis-in-slots-total')->numParams([$slotsInTotal])->text(); ?>
 		</p>
 
 		<div class="slot-forms">
@@ -80,7 +79,7 @@
 						<input type="button" class="wmu-show" value="<?= wfMessage('manage-wikia-home-collection-add-file-button')->text() ?>" />
 					</div>
 					<p class="alternative">
-						<?= wfMessage('manage-wikia-home-collection-hero-image-tooltip')->text() ?>
+						<?= wfMessage('manage-wikia-home-collection-hero-image-tooltip')->numParams(SpecialManageWikiaHomeModel::HERO_IMAGE_WIDTH, SpecialManageWikiaHomeModel::HERO_IMAGE_HEIGHT)->text() ?>
 					</p>
 
 					<div class="image-input-container">
@@ -88,7 +87,7 @@
 						<input type="button" class="wmu-show" value="<?= wfMessage('manage-wikia-home-collection-add-file-button')->text() ?>" />
 					</div>
 					<p class="alternative">
-						<?= wfMessage('manage-wikia-home-collection-sponsor-image-tooltip')->text() ?>
+						<?= wfMessage('manage-wikia-home-collection-sponsor-image-tooltip')->numParams(SpecialManageWikiaHomeModel::SPONSOR_IMAGE_WIDTH, SpecialManageWikiaHomeModel::SPONSOR_IMAGE_HEIGHT)->text() ?>
 					</p>
 					<?=$form->renderField('sponsor_url', $i)?>
 

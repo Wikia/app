@@ -6,13 +6,13 @@ class ApiService extends Service {
 	 * @var string
 	 */
 	const API = 'api.php';
-	
+
 	/**
 	 * string constant for wikia api endpoint
 	 * @var string
 	 */
 	const WIKIA = 'wikia.php';
-	
+
 	/**
 	 * Simple wrapper for calling MW API
 	 */
@@ -38,9 +38,10 @@ class ApiService extends Service {
 	 * @param string database name
 	 * @param array API query parameters
 	 * @param string endpoint (api.php or wikia.php, generally)
+	 * @param string userName
 	 * @return mixed API response
 	 */
-	static function foreignCall($dbname, Array $params, $endpoint = self::API) {
+	static function foreignCall( $dbname, Array $params, $endpoint = self::API, $userName  = '' ) {
 		wfProfileIn(__METHOD__);
 		$hostName = self::getHostByDbName($dbname);
 
@@ -55,8 +56,13 @@ class ApiService extends Service {
 		$url = "{$hostName}/{$endpoint}?" . implode('&', $parts);
 		wfDebug(__METHOD__ . ": {$url}\n");
 
+		$options = [];
+		if ( !empty($userName) ) {
+			$options = self::loginAsUser( $userName );
+		}
+
 		// send request and parse response
-		$resp = Http::get($url);
+		$resp = Http::get($url, 'default', $options);
 
 		if ($resp === false) {
 			wfDebug(__METHOD__ . ": failed!\n");
@@ -88,4 +94,40 @@ class ApiService extends Service {
 
 		return rtrim($hostName, '/');
 	}
+
+	/**
+	 * get user data
+	 * @param string $userName
+	 * @return array $options
+	 */
+	public static function loginAsUser( $userName ) {
+		$app = F::app();
+
+		$options = array();
+
+		if ( $app->wg->User->isLoggedIn() ) {
+			$user = $app->wg->User;
+		} else {
+			$user = User::newFromName( $userName );
+			if ( !($user instanceof User) ) {
+				return $options;
+			}
+		}
+
+		$params = array(
+			'UserID' => $user->getId(),
+			'UserName' => $user->getName(),
+			'Token' => $user->getToken(),
+		);
+
+		$cookie = '';
+		foreach ( $params as $key => $value ) {
+			$cookie .= $app->wg->CookiePrefix.$key.'='.$value.';';
+		}
+
+		$options['curlOptions'] = array( CURLOPT_COOKIE => $cookie );
+
+		return $options;
+	}
+
 }

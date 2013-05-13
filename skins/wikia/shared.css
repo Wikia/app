@@ -39,13 +39,16 @@
 	text-align: center;
 }
 
-.wikia-gallery-item .thumb a.image {
+.wikia-gallery-item .thumb .gallery-image-wrapper {
+	overflow: hidden;
+}
+
+.wikia-gallery-item .thumb a.image, .wikia-gallery-item .thumb a.image-no-lightbox {
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
-	display: block;
+	display: table-cell;
 	height: 100%;
 	line-height: 1px;
-	overflow: hidden;
 	text-decoration: none;
 	vertical-align: middle;
 	width: 100%;

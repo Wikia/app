@@ -119,7 +119,7 @@ class WikiaPhotoGalleryAjax {
 	 */
 	static public function getSearchResult() {
 		$app = F::app();
-		$app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$query = $app->wg->Request->getVal( 'query' );
 		$results = WikiaPhotoGalleryHelper::getSearchResultThumbs( $query );
@@ -130,7 +130,7 @@ class WikiaPhotoGalleryAjax {
 			$html = false;
 		}
 
-		$app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return array(
 			'html' => $html,

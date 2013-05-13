@@ -16,15 +16,27 @@ $.getSassLocalURL = function(scssFilePath, params) {
 	return $.getSassURL(wgServer, scssFilePath, params);
 };
 
+/**
+ *	Get URL for loading asset manager groups
+ *  @param {String|String[]} groups Assets manager group name
+ *  @param {Object} params Extra params for url string. Ex: {minify:0}
+ */
 $.getAssetManagerGroupUrl = function( groups, params ) {
 	if ( typeof groups == 'string' ) {
 		groups = [ groups ];
 	}
 
+	params = params || {};
+
+	// Don't minify asset if we're on devbox
+	if ( window.wgDevelEnvironment ) {
+		params.minify = 0;
+	}
+
 	return wgAssetsManagerQuery .
 		replace( '%1$s', 'groups' ) .
 		replace( '%2$s', groups.join( ',' ) ) .
-		replace( '%3$s', params ? encodeURIComponent( $.param( params ) ) : '-' ) .
+		replace( '%3$s', $.isEmptyObject( params ) ? '-' : encodeURIComponent( $.param( params ) ) ) .
 		replace( '%4$d', wgStyleVersion );
 };
 

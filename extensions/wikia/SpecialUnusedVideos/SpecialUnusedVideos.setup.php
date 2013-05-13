@@ -21,6 +21,7 @@ $app->registerHook( 'wgQueryPages', 'SpecialUnusedVideosHooks', 'registerUnusedV
 
 // i18n mapping
 $app->registerExtensionMessageFile( 'SpecialUnusedVideos', $dir.'SpecialUnusedVideos.i18n.php' );
+$app->registerExtensionMessageFile( 'SpecialUnusedVideosAliases', $dir.'SpecialUnusedVideos.alias.php' );
 
 // special pages
 $app->registerSpecialPage( 'UnusedVideos', 'SpecialUnusedVideos' );

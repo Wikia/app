@@ -32,7 +32,7 @@ class FileSource extends Source {
 	 */
 	public function __construct( Context $context, $fileName ) {
 		if ( !is_file($fileName) ) {
-			throw new SassException( __METHOD__ . ': File is not a regular file: ' . $fileName );
+			throw new \Wikia\Sass\Exception( __METHOD__ . ': File is not a regular file: ' . $fileName );
 		}
 		parent::__construct( $context );
 		$this->fileName = realpath($fileName);
@@ -55,13 +55,13 @@ class FileSource extends Source {
 	protected function getRawSource() {
 		if ( $this->rawSource === null ) {
 			if ( !is_readable( $this->fileName ) ) {
-				throw new SassException( __METHOD__ . ': Could not find SASS file: ' . $this->fileName);
+				throw new \Wikia\Sass\Exception( __METHOD__ . ': Could not find SASS file: ' . $this->fileName);
 			}
 			wfSuppressWarnings();
 			$contents = file_get_contents($this->fileName);
 			wfRestoreWarnings();
 			if ( $contents === false ) {
-				throw new SassException( __METHOD__ . ': Could not read SASS file: ' . $this->fileName);
+				throw new \Wikia\Sass\Exception( __METHOD__ . ': Could not read SASS file: ' . $this->fileName);
 			}
 			$this->rawSource = $contents;
 		}

@@ -58,6 +58,7 @@ $wgArticleCommentsNamespaces[] = NS_TOPLIST;
 global $wgExtensionMessagesFiles;
 
 $wgExtensionMessagesFiles[ 'TopLists' ] = "{$dir}/TopLists.i18n.php";
+$wgExtensionMessagesFiles[ 'TopListsAliases' ] = "{$dir}/TopLists.alias.php";
 
 //rights
 global $wgAvailableRights, $wgGroupPermissions;

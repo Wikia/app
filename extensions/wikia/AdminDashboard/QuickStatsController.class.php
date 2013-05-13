@@ -38,7 +38,7 @@ class QuickStatsController extends WikiaController {
 
 	// This should probably be Unique Users but we don't have that stat
 	protected function getDailyPageViews( Array &$stats ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$week = date( 'Y-m-d', strtotime('-7 day') );
 
@@ -49,12 +49,12 @@ class QuickStatsController extends WikiaController {
 			$stats['totals']['pageviews'] += $value;
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 
 	public function getDailyEdits (Array &$stats, $cityID) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !empty( $this->wg->StatsDBEnabled ) ) {
 			$today = date( 'Y-m-d', strtotime('-1 day') );
@@ -78,12 +78,12 @@ class QuickStatsController extends WikiaController {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 
 	protected function getDailyPhotos(Array &$stats) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$db = $this->wf->GetDB(DB_SLAVE, array());
 
@@ -105,7 +105,7 @@ class QuickStatsController extends WikiaController {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	protected function getDailyLikes(Array &$stats) {
@@ -116,7 +116,7 @@ class QuickStatsController extends WikiaController {
 		if (!$domain_id)
 			return $result;
 
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$since = strtotime("-7 day 00:00:00");
 		$until = strtotime("-0 day 00:00:00");
@@ -137,7 +137,7 @@ class QuickStatsController extends WikiaController {
 				$result = TRUE;
 			}
 		}
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $result;
 	}

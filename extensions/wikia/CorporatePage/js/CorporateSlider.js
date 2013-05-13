@@ -34,26 +34,14 @@ function autoHubToggle(e) {
 	// todo this is probably only temporary location
 	var tag = $('#autohubTagDB').attr('value');
 
-	$.getJSON(wgScript,
-		{
-			'action':'ajax',
-			'rs':'AutoHubsPagesHelper::setHubsFeedsVariable',
-			'feed':feed,
-			'tag':tag
-		},
-		function(response) {
-			if( response.response == 'ok' ) {
-				var inside_a = me.closest('a');
-				if( inside_a.html() == 'Hide' ) {
-					me.parent().parent().addClass( "hiddenAdminSection" );
-					inside_a.html('Unhide');
-				} else {
-					me.parent().parent().removeClass( "hiddenAdminSection" );
-					inside_a.html('Hide');
-				}
-			}
-		}
-	);
+	var inside_a = me.closest('a');
+	if( inside_a.html() == 'Hide' ) {
+		me.parent().parent().addClass( "hiddenAdminSection" );
+		inside_a.html('Unhide');
+	} else {
+		me.parent().parent().removeClass( "hiddenAdminSection" );
+		inside_a.html('Hide');
+	}
 }
 
 function wikiaSearch_setup() {

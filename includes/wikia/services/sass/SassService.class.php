@@ -33,7 +33,7 @@ class SassService extends WikiaObject {
 	const FILTER_JANUS = 8;
 	const FILTER_MINIFY = 16;
 
-	const DEFAULT_ERROR_MESSAGE = 'SASS compilation failed. Check PHP error log for more information.';
+	const DEFAULT_ERROR_MESSAGE = 'SASS compilation failed. Check PHP error log for more information. Error ID: ';
 
 	protected static $defaultContext;
 	protected static $defaultCompiler;
@@ -66,7 +66,7 @@ class SassService extends WikiaObject {
 	 * (required by Resource Loader)
 	 *
 	 * @return int Unix timestamp
-	 * @throws SassException
+	 * @throws \Wikia\Sass\Exception
 	 */
 	public function getModifiedTime() {
 		return $this->source->getModifiedTime();
@@ -77,7 +77,7 @@ class SassService extends WikiaObject {
 	 * (required by Assets Manager)
 	 *
 	 * @return string Hash value (md5)
-	 * @throws SassException
+	 * @throws \Wikia\Sass\Exception
 	 */
 	public function getHash() {
 		return $this->source->getHash();
@@ -212,18 +212,21 @@ class SassService extends WikiaObject {
 
 			$ok = true;
 
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
+			if ( empty( $afterCompilation ) ) $afterCompilation = microtime(true);
+			if ( empty( $end ) ) $end = microtime(true);
+
 			$errorId = $this->getUniqueId();
 			Wikia::log(__METHOD__, false, "SASS error [{$errorId}]: ". $e->getMessage(), true /* $always */);
 			$styles = $this->makeComment(
 				$this->getDebug()
-					? $this->makeComment($e->getMessage())
-					: self::DEFAULT_ERROR_MESSAGE
+					? $e->getMessage()
+					: self::DEFAULT_ERROR_MESSAGE . $errorId
 			);
 		}
 
 		$styles .= "\n\n";
-		$styles .= $this->makeComment(sprintf("SASS processing time (compilation/total): %.3f/%.3f",
+		$styles .= $this->makeComment(sprintf("SASS processing time (compilation/total): %.3fms/%.3fms",
 			($afterCompilation - $start) * 1000,
 			($end - $start) * 1000
 		));

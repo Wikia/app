@@ -69,7 +69,7 @@ class PathFinderLogger extends WikiaObject{
 	 * @param string $type the log type, one of LOG_TYPE_INFO, LOG_TYPE_WARNING, LOG_TYPE_ERROR
 	 */
 	public function log( $msg, $type = self::LOG_TYPE_INFO ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		if ( $this->wg->DevelEnvironment ) {
 			if ( isset( $msg ) ) {
@@ -77,6 +77,6 @@ class PathFinderLogger extends WikiaObject{
 			}
 		}
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 }

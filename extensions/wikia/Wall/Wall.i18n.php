@@ -197,6 +197,7 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-recentchanges-reopened-thread' => 'reopened thread "[[$1|$2]] on [[$3|$4\'s wall]]"',
 
 	'wall-recentchanges-deleted-reply-title' => 'A reply on message wall',
+	'wall-recentchanges-wall-created-title' => 'Created a message wall',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Message Wall',
 	'wall-recentchanges-thread-group' => '$1 on <a href="$2">$3\'s wall</a>',
 	'wall-recentchanges-history-link' => 'wall history',
@@ -639,6 +640,7 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 * $4 is wall owner
 * $5 is optional username and you can use it with GENDER parameter',
 	'wall-recentchanges-deleted-reply-title' => 'fallback reply title for deleted replies  are not accessible in archive',
+	'wall-recentchanges-wall-created-title' => 'fallback title for wall creation action',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Recent changes, item in namespace dropdown',
 	'wall-recentchanges-thread-group' => 'Grouped recent changes item. Parameters:
 * $1 is thread title

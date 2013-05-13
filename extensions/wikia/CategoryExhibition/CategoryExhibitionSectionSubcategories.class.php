@@ -69,7 +69,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 			$snippetText = $resultArray['snippetText'];
 			$imageUrl = $resultArray['imageUrl'];
 			if ( empty($snippetText) && empty($imageUrl) ){
-				$snippetService = new ArticleService ( $pageId );
+				$snippetService = new ArticleService ( $oTitle );
 				$snippetText = $snippetService->getTextSnippet();
 			}
 		}

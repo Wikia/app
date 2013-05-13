@@ -13,7 +13,7 @@
 				<span class="wiki-name-status-icon status-icon"></span>
 				<input type="text" name="wiki-name" value="<?= empty($params['wikiName']) ? '' : $params['wikiName'] ?>"> <?= wfMsg('cnw-name-wiki-wiki') ?>
 				<div class="wiki-name-error error-msg"></div>
-				<label for="wiki-domain"><?= wfMsg('cnw-name-wiki-domain-label') ?></label>
+				<label for="wiki-domain" dir="ltr"><?= wfMsg('cnw-name-wiki-domain-label') ?></label>
 				<div class="wiki-domain-container">
 					<span class="domain-status-icon status-icon"></span>
 					<span class="domain-country"><?= empty($selectedLang) || $selectedLang === 'en' ? '' : $selectedLang.'.' ?></span>

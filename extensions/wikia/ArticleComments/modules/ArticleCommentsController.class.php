@@ -4,7 +4,7 @@ class ArticleCommentsController extends WikiaController {
 	private static $content = null;
 
 	public function executeIndex() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
 			$isMobile = $this->app->checkSkin( 'wikiamobile' );
@@ -64,7 +64,7 @@ class ArticleCommentsController extends WikiaController {
 			}
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -75,7 +75,7 @@ class ArticleCommentsController extends WikiaController {
 		//this is coming via ajax we need to set correct wgTitle ourselves
 		global $wgTitle;
 
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$articleId = $this->request->getVal( 'articleId', null );
 		$page = $this->request->getVal( 'page', 1 );
@@ -100,7 +100,7 @@ class ArticleCommentsController extends WikiaController {
 			$this->response->setCacheValidity( 0, 0, array( WikiaResponse::CACHE_TARGET_BROWSER ) );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -133,7 +133,7 @@ class ArticleCommentsController extends WikiaController {
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 **/
 	public function executeWikiaMobileCommentsPage() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$articleID = $this->request->getInt( 'articleID' );
 		$title = null;
 
@@ -160,7 +160,7 @@ class ArticleCommentsController extends WikiaController {
 			$this->response->setVal( 'nextPage', $this->page + 1 );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function getCommentsData(Title $title, $page, $perPage = null, $filterid = null) {

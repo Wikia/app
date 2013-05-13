@@ -22,16 +22,16 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 * Check access to this page
 	 */
 	protected function checkAccess() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if (!$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('marketingtoolbox')) {
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			$this->app->wg->Out->setStatusCode ( 403 );
 			$this->specialPage->displayRestrictionError();
 			return false;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -39,7 +39,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 * Main action for this special page
 	 */
 	public function index() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$this->wg->Out->setPageTitle($this->wf->msg('marketing-toolbox-title'));
 
@@ -66,7 +66,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -166,6 +166,11 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				$this->purgeCache( $module );
 
 				$this->putFlashMessage($this->wf->msg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
+
+				// send request to add popular/featured videos
+				if ( $module->isVideoModule() ) {
+					$response = WikiaHubsServicesHelper::addVideoToHubsV2Wikis( $module, $selectedModuleData['values'] );
+				}
 
 				$nextUrl = $this->getNextModuleUrl();
 				$this->response->redirect($nextUrl);
@@ -359,7 +364,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$fileName = $this->getVal('fileHandler', false);
 		if ($fileName) {
@@ -370,7 +375,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->fileTitle = $imageData->title;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	public function getVideoDetails() {

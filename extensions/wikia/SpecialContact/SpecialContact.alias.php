@@ -11,6 +11,11 @@ $specialPageAliases['de'] = array(
     'Contact' => array(  'Kontakt',  ),
 );
 
+/** Italian */
+$specialPageAliases['it'] = array(
+	'Contact' => array( 'Contatta' ),
+);
+
 /** Spanish */
 $specialPageAliases['es'] = array(
     'Contact' => array(  'Contactar',  ),

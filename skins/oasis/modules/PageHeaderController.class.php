@@ -567,9 +567,6 @@ class PageHeaderController extends WikiaController {
 			$this->title = '';
 			$this->subtitle = '';
 		}
-		else if (BodyController::isHubPage()) {
-			$this->title = wfMsg('hub-header', $wgTitle);
-		}
 
 		wfProfileOut( __METHOD__ );
 	}

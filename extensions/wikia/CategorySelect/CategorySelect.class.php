@@ -78,6 +78,7 @@ class CategorySelect {
 		wfProfileIn( __METHOD__ );
 
 		if ( !$force && is_array( self::$data ) ) {
+			wfProfileOut( __METHOD__ );
 			return self::$data;
 		}
 

@@ -153,6 +153,11 @@ $specialPageAliases['oc'] = array(
 	'ImportFreeImages' => array( 'ImportarImatgesLiures' ),
 );
 
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'ImportFreeImages' => array( 'Import_obrazów' ),
+);
+
 /** Portuguese (Português) */
 $specialPageAliases['pt'] = array(
 	'ImportFreeImages' => array( 'Importar_imagens_de_acesso_livre' ),
@@ -171,6 +176,11 @@ $specialPageAliases['sk'] = array(
 /** Albanian (Shqip) */
 $specialPageAliases['sq'] = array(
 	'ImportFreeImages' => array( 'ImportoFiguraFalas' ),
+);
+
+/** Spanish (Español) */
+$specialPageAliases['es'] = array(
+	'ImportFreeImages' => array( 'ImportarImágenesLibres' ),
 );
 
 /** Swedish (Svenska) */

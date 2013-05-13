@@ -22,7 +22,7 @@ class UserLoginHelper extends WikiaModel {
 	 * @responseParam array avatars
 	 */
 	public function getRandomAvatars() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$memKey = $this->wf->MemcKey( 'userlogin', 'random_avatars' );
 		$avatars = $this->wg->Memc->get( $memKey );
@@ -40,7 +40,7 @@ class UserLoginHelper extends WikiaModel {
 			$this->wg->Memc->set( $memKey, $avatars, 60*60*24 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $avatars;
 	}
@@ -75,7 +75,7 @@ class UserLoginHelper extends WikiaModel {
 	 * @return array $wikiUsers
 	 */
 	protected function getWikiUsers( $wikiId=null, $limit=30 ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$wikiId = (empty($wikiId)) ? $this->wg->CityId : $wikiId;
 
@@ -107,7 +107,7 @@ class UserLoginHelper extends WikiaModel {
 			$this->wg->Memc->set( $memKey, $wikiUsers, 60*60*24 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $wikiUsers;
 	}
@@ -164,7 +164,7 @@ class UserLoginHelper extends WikiaModel {
 	 * @return array $popularWikis
 	 */
 	protected function getPopularWikis( $limit=50 ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$memKey = $this->wf->SharedMemcKey( 'userlogin', 'popular_wikis' );
 		$popularWikis = $this->wg->Memc->get( $memKey );
@@ -178,7 +178,7 @@ class UserLoginHelper extends WikiaModel {
 			$this->wg->Memc->set( $memKey, $popularWikis, 60*60*24 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $popularWikis;
 	}

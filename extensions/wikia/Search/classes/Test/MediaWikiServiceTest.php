@@ -389,6 +389,33 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @covers Wikia\Search\MediaWikiService::getMainPageIdForWikiId
+	 */
+	public function testGetMainPageIdForWikiId() {
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( [ 'getArticleId' ] )
+		                  ->getMock();
+		
+		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getMainPageTitleForWikiId' ] );
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getMainPageTitleForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getArticleId' )
+		    ->will   ( $this->returnValue( 321 ) )
+		;
+		$this->assertEquals(
+				321,
+				$mockService->getMainPageIdForWikiId( 123 )
+		);
+	}
+	
+	/**
 	 * @covers \Wikia\Search\MediaWikiService::getSimpleLanguageCode
 	 */
 	public function testGetsimpleLanguageCode() {
@@ -1200,7 +1227,7 @@ class MediaWikiServiceTest extends BaseTest
 		
 		$title = $this->getMockBuilder( '\Title' )
 		              ->disableOriginalConstructor()
-		              ->setMethods( array( 'getBaseText', 'getNamespace' ) )
+		              ->setMethods( array( 'getFullText', 'getNamespace' ) )
 		              ->getMock();
 		
 		$title
@@ -1210,7 +1237,7 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$title
 		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getBaseText' )
+		    ->method ( 'getFullText' )
 		    ->will   ( $this->returnValue( 'title' ) )
 		;
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );

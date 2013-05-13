@@ -39,23 +39,23 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	}
 
 	protected function checkAccess() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('managewikiahome') ) {
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	public function index() {
-		$this->wf->ProfileIn(__METHOD__);
-		$this->wg->Out->setPageTitle(wfMessage('managewikiahome')->text());
+		wfProfileIn(__METHOD__);
+		$this->wg->Out->setPageTitle(wfMsg('managewikiahome'));
 
 		if( !$this->checkAccess() ) {
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			$this->forward('ManageWikiaHome', 'onWrongRights');
 			return false;
 		}
@@ -140,7 +140,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			'wgSlotsInTotal' => WikiaHomePageHelper::SLOTS_IN_TOTAL,
 		]);
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -153,10 +153,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 * @return false if user does not have permissions
 	 */
 	public function renderWikiListPage() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if( !$this->checkAccess() ) {
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -191,7 +191,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->list = $this->helper->getWikisForStaffTool($options);
 		$this->collections = $this->helper->getCollectionsList($visualizationLang);
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	//todo: make from isAnySlotNumberNegative() and isHotOrNewSlotNumberNegative() one method
@@ -224,7 +224,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function saveSlotsConfigInWikiFactory($corpWikiId, $corpWikiLang, $slotsCfgArr) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$statusArr = array();
 		$result = false;
@@ -256,7 +256,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$result = true;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
@@ -297,7 +297,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 * @requestParam string $lang language code of wiki which "hosts" visualization
 	 */
 	protected function changeFlag($type) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if( !$this->checkAccess() ) {
 			$result = false;
@@ -324,8 +324,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 					break;
 			}
 
-			$this->wf->ProfileOut(__METHOD__);
 		}
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 

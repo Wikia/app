@@ -7,7 +7,7 @@
 class WikiaMobileAdService extends WikiaService {
 				
 	public function index() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		// TODO: Use AdEngine logic:
 		// if ($this->wg->EnableAdEngineExt
@@ -19,6 +19,6 @@ class WikiaMobileAdService extends WikiaService {
 			$this->skipRendering();
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 }
