@@ -228,8 +228,8 @@ ManageWikiaHome.prototype = {
 
 		this.onWikisPerCollectionChange(collectionId, action);
 	},
-	onWikisPerCollectionChange: function(collectionId) {
-		if( !this.wikisPerCollection[collectionId] || this.wikisPerCollection[collectionId] <= this.SLOTS_IN_TOTAL ) {
+	onWikisPerCollectionChange: function(collectionId, action) {
+		if( this.isOKtoSendRequest(collectionId, action) ) {
 			$.nirvana.sendRequest({
 				controller: 'ManageWikiaHome',
 				method: 'switchCollection',
@@ -257,6 +257,12 @@ ManageWikiaHome.prototype = {
 				this.modalObject.target.attr('checked', true);
 			}
 		}
+	},
+	isOKtoSendRequest: function(collectionId, action) {
+		return 
+			!this.wikisPerCollection[collectionId] //there are no wikis in the collection yet 
+			|| this.wikisPerCollection[collectionId] <= this.SLOTS_IN_TOTAL //or there is still place for another wiki in the collection
+			|| (this.wikisPerCollection[collectionId] > this.SLOTS_IN_TOTAL && action == window.SWITCH_COLLECTION_TYPE_REMOVE ) //or there are too many wikis in the collection and user is removing them
 	}
 };
 
