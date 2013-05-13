@@ -5,7 +5,7 @@ $app = F::app();
 $dir = __DIR__ . "/";
 
 // classes
-$app->registerClass( 'IRevisionService', $dir . 'IRevisionService.php' );
-$app->registerClass( 'RevisionService', $dir . 'RevisionService.php' );
-$app->registerClass( 'RevisionServiceCacheWrapper', $dir . 'RevisionServiceCacheWrapper.php' );
-$app->registerClass( 'RevisionServiceFactory', $dir . 'RevisionServiceFactory.php' );
+$app->registerClass( 'IRevisionService', $dir . 'services/IRevisionService.class.php' );
+$app->registerClass( 'RevisionService', $dir . 'services/RevisionService.class.php' );
+$app->registerClass( 'RevisionServiceCacheWrapper', $dir . 'services/RevisionServiceCacheWrapper.class.php' );
+$app->registerClass( 'RevisionServiceFactory', $dir . 'services/RevisionServiceFactory.class.php' );

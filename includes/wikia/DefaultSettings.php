@@ -1134,3 +1134,5 @@ $app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'onIsTrustedProxy' 
  */
 //$wgChatDebugEnabled = true;
 
+
+require_once ( $IP."/lib/ActivityApi/setup.php" );
