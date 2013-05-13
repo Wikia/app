@@ -1,19 +1,15 @@
 <div class="module-box grid-4 alpha sponsored-image">
 	<div class="grid-3 alpha">
-		<input type="button" class="wmu-show" value="<?= $wf->Msg('marketing-toolbox-edithub-sponsored-image') ?>" />
+		<input type="button" class="wmu-show" value="<?= $wf->Message('marketing-toolbox-edithub-sponsored-image')->text() ?>" />
 		<span class="filename-placeholder alternative">
-			<?php if( !empty($inputData['value']) ): ?>
-				<?= $inputData['value']; ?>
+			<? $field = $form->getField($fieldName); ?>
+			<?php if( !empty($field['value']) ): ?>
+				<?= $field['value']; ?>
 			<?php else: ?>
-				<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
+				<?= $wf->message('marketing-toolbox-edithub-file-name')->text() ?>
 			<?php endif ?>
 		</span>
-		<?= $app->renderView(
-			'MarketingToolbox',
-			'FormField',
-			array('inputData' => $inputData)
-			); 
-		?>
+		<?= $form->renderField($fieldName);?>
 	</div>
 	<div class="grid-1 alpha">
 		<div class="image-placeholder">
@@ -25,7 +21,7 @@
 		</div>
 	</div>
 	<p class="alternative">
-		<?= $wf->MsgExt('marketing-toolbox-hub-module-sponsored-image-tip', array('parseinline')) ?>
+		<?= $wf->Message('marketing-toolbox-hub-module-sponsored-image-tip')->parse() ?>
 	</p>
-	<input class="secondary remove-sponsored-image" type="button" value="<?= $wf->Msg('marketing-toolbox-edithub-remove') ?>" />
+	<input class="secondary remove-sponsored-image" type="button" value="<?= $wf->Message('marketing-toolbox-edithub-remove')->text() ?>" />
 </div>

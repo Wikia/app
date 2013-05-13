@@ -1,10 +1,10 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/curation-elements";
 @import "../../../../skins/oasis/css/core/color";
 
 $module-background-color: #fafafa;
 $vertical-border-color: #cdcdcd;
 $horizontal-border-color: #eee;
-$chevron-color: #888;
 
 .WikiaGrid .WikiaArticle {
 	border: none;
@@ -122,11 +122,7 @@ $chevron-color: #888;
 
 	.module-explore {
 		.grid-4 {
-			background-color: $module-background-color;
-			border: 1px solid $horizontal-border-color;
-			border-top: 1px solid $vertical-border-color;
-			margin-bottom: 30px;
-			padding: 10px 0px;
+			@include module-box;
 		}
 		.header-group {
 			.url-group {
@@ -186,35 +182,7 @@ $chevron-color: #888;
 			}
 
 			.navigation {
-				width: 25px;
-				height: 40px;
-				position: absolute;
-				right: -1px;
-				margin: 0;
-				padding: 0;
-				border-radius: 0;
-
-				&.nav-up {
-					top: -1px;
-				}
-
-				&.nav-down {
-					bottom: -1px;
-				}
-
-				.chevron {
-					border-width: 5px;
-				}
-
-				.chevron-up {
-					border-color: transparent transparent $chevron-color;
-					margin-top: -5px;
-				}
-
-				.chevron-down {
-					border-color: $chevron-color transparent transparent;
-					margin-top: 5px;
-				}
+				@include navigation;
 			}
 		}
 		.wmu-show, .vet-show {

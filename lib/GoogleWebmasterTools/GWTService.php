@@ -22,7 +22,7 @@ class GWTService {
 	function getAvailableUsers() {
 		$users = $this->userRepository->allCountLt( $this->getMaxSitesPerAccount() );
 		$resultUsers = array();
-		foreach( $users as $i => $u ) {
+		foreach( $users as $i => $u ) { /* @var $u GWTUser */
 			$sites = $this->webmasterToolsUtil->getSites( $u );
 			if( $u->getCount() != count( $sites ) ) {
 				$u->setCount( count( $sites ) );
@@ -49,21 +49,18 @@ class GWTService {
 	 *
 	 */
 	function uploadWikiAsUser( GWTWiki $wiki, GWTUser $user ) {
-		if( $this->webmasterToolsUtil->upload( $wiki->getWikiId(), $user ) ) {
-			$user->setCount( $user->getCount() + 1 );
-			$this->userRepository->update( $user );
-			$wiki->setUserId( $user->getId() );
-			$wiki->setUploadDate( date("Y-m-d") );
-			$this->wikiRepository->updateWiki( $wiki );
-			return true;
-		}
-		return false;
+		$this->webmasterToolsUtil->upload( $wiki->getWikiId(), $user );
+		$user->setCount( $user->getCount() + 1 );
+		$this->userRepository->update( $user );
+		$wiki->setUserId( $user->getId() );
+		$wiki->setUploadDate( date("Y-m-d") );
+		$this->wikiRepository->updateWiki( $wiki );
 	}
 
 	/*
 	 * Get wiki info.
 	 * @param $wikiId - city_id
-	 * @returns GWTSiteSyncStatus
+	 * @return GWTSiteSyncStatus
 	 */
 	function getWikiInfo( $wikiId ) {
 		$wikiId = strval($wikiId);
@@ -77,7 +74,7 @@ class GWTService {
 
 	/*
 	 * Sends wiki verification request
-	 * @returns GWTSiteSyncStatus
+	 * @return GWTSiteSyncStatus
 	 */
 	function verifyWiki( $wiki, $user ) {
 		return $this->webmasterToolsUtil->verify( $wiki->getWikiId(), $user );
@@ -85,7 +82,7 @@ class GWTService {
 
 	/*
 	 * Sends sitemap to google webmaster tools.
-	 * @returns GWTSiteSyncStatus
+	 * @return GWTSiteSyncStatus
 	 */
 	function sendSitemap( $wiki, $user ) {
 		return $this->webmasterToolsUtil->sendSitemap( $wiki->getWikiId(), $user );

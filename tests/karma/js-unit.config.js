@@ -78,6 +78,11 @@ files = [
 	//PhalanxII
 	'extensions/wikia/PhalanxII/js/modules/phalanx.js',
 	'extensions/wikia/PhalanxII/spec/*.spec.js',
+
+	//Wikia HomePage
+	'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.mocks.js',
+	'extensions/wikia/WikiaHomePage/js/WikiaHomePage.js',
+	'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.spec.js',
 ];
 
 notCovered = [

@@ -269,9 +269,13 @@ $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoServic
 $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
 $wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/MustacheService.class.php';
 
+
+$wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
+
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
 $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
+$wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';

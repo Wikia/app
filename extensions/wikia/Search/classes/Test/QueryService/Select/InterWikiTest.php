@@ -261,9 +261,15 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		
 		
 		$mockConfig
-		    ->expects( $this->once() )
+		    ->expects( $this->at( 0 ) )
 		    ->method ( 'setQueryField' )
-		    ->with   ( 'wikititle', 7 )
+		    ->with   ( 'wikititle', 200 )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'setQueryField' )
+		    ->with   ( 'wiki_description_txt', 150 )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'configureQueryFields' );
 		$method->setAccessible( true );
@@ -291,6 +297,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		
 		$queries = array(
 				Wikia\Search\Utilities::valueForField( 'iscontent', 'true' ),
+				'-wikiarticles:[0 TO 50]',
 				Wikia\Search\Utilities::valueForField( 'hub', 'Entertainment' )
 				);
 		
@@ -375,38 +382,6 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$method->setAccessible( true );
 		$this->assertEquals(
 				'foo AND (bar)',
-				$method->invoke( $mockSelect )
-		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\QueryService\Select\InterWiki::getBoostQueryString
-	 */
-	public function testGetBoostQueryString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryNoQuotes' ) );
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( null )
-		                   ->getMock();
-		$queryNoQuotes = 'foo';
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getQueryNoQuotes' )
-		    ->with   ( true )
-		    ->will   ( $this->returnValue( $queryNoQuotes ) )
-		;
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'getBoostQueryString' );
-		$method->setAccessible( true );
-		$boostQueries = array(
-				Wikia\Search\Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'valueQuote'=>'\"' ) ),
-				Wikia\Search\Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'valueQuote'=>'\"' ) ),
-				Wikia\Search\Utilities::valueForField( 'wikititle', $queryNoQuotes, array( 'boost' => 15, 'valueQuote' => '\"' ) ),
-				Wikia\Search\Utilities::valueForField( 'host', 'answers', array( 'boost' => 10, 'negate' => true ) ),
-				Wikia\Search\Utilities::valueForField( 'host', 'respuestas', array( 'boost' => 10, 'negate' => true ) )
-		);
-		$this->assertEquals(
-				implode( ' ', $boostQueries ),
 				$method->invoke( $mockSelect )
 		);
 	}

@@ -97,7 +97,7 @@ var LightboxLoader = {
 				// TODO: refactor wikia slideshow
 				} else if($this.hasClass('wikia-slideshow-popout')) {
 					var $slideshowImg = $this.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').find('img').first();
-					fileKey = $slideshowImg.attr('data-image-name') || $slideshowImg.attr('data-vide-name');
+					fileKey = $slideshowImg.attr('data-image-name') || $slideshowImg.attr('data-video-name');
 				}
 
 				if(!fileKey) {

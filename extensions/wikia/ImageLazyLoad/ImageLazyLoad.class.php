@@ -43,7 +43,7 @@ class ImageLazyLoad extends WikiaObject {
 				$this->app->wg->Parser->lazyLoadedImagesCount += 1;
 
 				// Skip first few images in article
-				if ( $this->app->wg->Parser->lazyLoadedImagesCount < 2 ) {
+				if ( $this->app->wg->Parser->lazyLoadedImagesCount < 4 ) {
 					return true;
 				}
 			}
