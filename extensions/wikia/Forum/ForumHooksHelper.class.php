@@ -381,8 +381,11 @@ class ForumHooksHelper {
 			if(!empty($thread)) {
 				$thread->purgeLastMessage();
 				$threadTitle = Title::newFromId( $threadId );
-				$threadTitle->purgeSquid();
-				$threadTitle->invalidateCache();
+				// the title can be empty if this is a create action
+				if ( !empty( $threadTitle ) ) {
+					$threadTitle->purgeSquid();
+					$threadTitle->invalidateCache();
+				}
 			}
 		}
 		return true;
