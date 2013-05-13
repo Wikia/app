@@ -44,6 +44,7 @@ $messages['en'] = array(
 	'manage-wikia-home-wiki-list-collection' => 'Collections',
 	'manage-wikia-home-wiki-list-blocked-no' => 'No',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Yes',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'Disabled collection',
 
 	'manage-wikia-home-modal-title' => 'Change wiki status',
 	'manage-wikia-home-modal-title-collection' => 'Edit wiki in collection',
@@ -90,6 +91,7 @@ $messages['qqq'] = array(
 	'manage-wikia-home-wiki-list-collection' => 'WikiList table header Collections column name',
 	'manage-wikia-home-wiki-list-blocked-no' => '\'No\' in column Blocked on table',
 	'manage-wikia-home-wiki-list-blocked-yes' => '\'Yes\' in column Blocked on table',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'If collection is disabled, checkbox for selecting wiki in collection is not active',
 
 	'manage-wikia-home-modal-title' => 'blocking/unblocking/promoting/demoting modal title',
 	'manage-wikia-home-modal-title-collection' => 'add/remove wiki in collections modal title',
