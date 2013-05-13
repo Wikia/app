@@ -228,7 +228,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		$tabsArgs = array(
 				'config'		=> $searchConfig,
-				'by_category'	=> $this->getVal( 'by_category', false )
+				'by_category'	=> $this->getVal( 'by_category', false ),
+				'filters'       => $this->getVal( 'filters', array() ),
 				);
 		$this->setVal( 'results',               $searchConfig->getResults() );
 		$this->setVal( 'resultsFound',          $searchConfig->getResultsFound() );
@@ -432,7 +433,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			);
 
 		// Set video wiki to display only videos by default
-		if( $is_video_wiki && $form['no_filter'] == 1 ) {
+		if( $is_video_wiki && $form['no_filter'] == 1 && !in_array( 'no_filter', $this->getVal( 'filters', array() ) ) ) {
 			$form['is_video'] = 1;
 			$form['no_filter'] = 0;
 		}
