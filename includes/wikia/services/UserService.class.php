@@ -112,21 +112,23 @@ class UserService extends Service {
 	private static function getUsersFromCacheById( &$ids ) {
 		//extract getting from mem cache
 		$result = array();
-		foreach ( $ids as $id ) {
-			if ( ( $value = static::getUserFromLocalCacheById( $id ) ) !== false ) {
-				$result[ $value->getId() ] = $value;
-			} elseif ( ( $value = static::getUserFromMemCacheById( $id ) ) !== false ) {
-				$result[ $value->getId() ] = $value;
-			} else {
-				$idsToQuery[] = $id;
+		if ( is_array( $ids ) ) {
+			foreach ( $ids as $id ) {
+				if ( ( $value = static::getUserFromLocalCacheById( $id ) ) !== false ) {
+					$result[ $value->getId() ] = $value;
+				} elseif ( ( $value = static::getUserFromMemCacheById( $id ) ) !== false ) {
+					$result[ $value->getId() ] = $value;
+				} else {
+					$idsToQuery[] = $id;
+				}
 			}
-		}
 
-		//set the list of ids that werent found in cache
-		if ( !empty( $idsToQuery ) ) {
-			$ids = $idsToQuery;
-		} else {
-			$ids = null;
+			//set the list of ids that werent found in cache
+			if ( !empty( $idsToQuery ) ) {
+				$ids = $idsToQuery;
+			} else {
+				$ids = null;
+			}
 		}
 
 		return $result;
@@ -141,21 +143,23 @@ class UserService extends Service {
 	private static function getUsersFromCacheByName( &$names ) {
 		//extract getting from mem cache
 		$result = array();
-		foreach ( $names as $name ) {
-			if ( ( $value = static::getUserFromLocalCacheByName( $name ) ) !== false ) {
-				$result[ $value->getId() ] = $value;
-			} elseif ( ( $value = static::getUserFromMemCacheByName( $name ) ) !== false ) {
-				$result[ $value->getId() ] = $value;
-			} else {
-				$namesToQuery[] = $name;
+		if ( is_array( $names ) ) {
+			foreach ( $names as $name ) {
+				if ( ( $value = static::getUserFromLocalCacheByName( $name ) ) !== false ) {
+					$result[ $value->getId() ] = $value;
+				} elseif ( ( $value = static::getUserFromMemCacheByName( $name ) ) !== false ) {
+					$result[ $value->getId() ] = $value;
+				} else {
+					$namesToQuery[] = $name;
+				}
 			}
-		}
 
-		//set the list of names that werent found in cache
-		if ( !empty( $namesToQuery ) ) {
-			$names = $namesToQuery;
-		} else {
-			$names = null;
+			//set the list of names that werent found in cache
+			if ( !empty( $namesToQuery ) ) {
+				$names = $namesToQuery;
+			} else {
+				$names = null;
+			}
 		}
 
 		return $result;
