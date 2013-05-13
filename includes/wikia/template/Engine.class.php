@@ -8,7 +8,7 @@ namespace Wikia\Template;
  * ------------
  * Rendering a single template requiring a few values:
  *
- * 	(new Wikia\Template\PhpFileEngine)
+ * 	(new Wikia\Template\PHPEngine)
  * 		->setValues( [
  * 			'name' => 'John',
  * 			'nick' => 'GIJoe',
@@ -26,7 +26,7 @@ namespace Wikia\Template;
  *
  * 		function __construct(){
  * 			//pay the instantiation fee only once
- * 			$this->tplEngine = (new Wikia\Template\PhpFileEngine)
+ * 			$this->tplEngine = (new Wikia\Template\PHPEngine)
  * 				->setPrefix( dirname(__FILE__) . '/templates' );
  * 		}
  *
@@ -59,7 +59,7 @@ namespace Wikia\Template;
  * 	];
  *
  * 	//render the list of the Flinstones family members in Bedrock
- * 	$tplEngine = (new Wikia\Template\MustacheFileEngine)
+ * 	$tplEngine = (new Wikia\Template\MustacheEngine)
  * 		->setPrefix( dirname(__FILE__) . '/templates' )
  * 		//shared values across render calls
  * 		->setValues( [
@@ -75,7 +75,7 @@ namespace Wikia\Template;
  *
  * 	foreach ( $family as $member ) {
  * 		//templates/item.mustache:
- * 		//* {{name}} {{lastName}}, born in {{birthdate}}
+ * 		//* {{name}} {{familyName}}, born in {{birthdate}}
  *
  * 		//add/update the values keeping those set previously
  * 		$output .= $tplEngine->updateValues(
