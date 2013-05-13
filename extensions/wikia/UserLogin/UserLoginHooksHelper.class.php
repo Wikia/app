@@ -2,6 +2,14 @@
 
 class UserLoginHooksHelper {
 
+	// set default user options and perform other actions after account creation
+	public static function onAddNewAccount( User $user, $byEmail ) {
+		$user->setOption( 'marketingallowed', 1 );
+		$user->saveSettings();
+
+		return true;
+	}
+
 	// send reconfirmation mail
 	public static function onUserSendReConfirmationMail( &$user, &$result ) {
 		$userLoginHelper = F::build( 'UserLoginHelper' );

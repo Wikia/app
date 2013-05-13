@@ -250,7 +250,6 @@ class UserLoginForm extends LoginForm {
 		}
 
 		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
-		$u->setOption( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
 		if ( $this->mLanguage )
 			$u->setOption( 'language', $this->mLanguage );
 		$u->setOption('skinoverwrite', 1);
