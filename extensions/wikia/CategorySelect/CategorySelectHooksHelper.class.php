@@ -57,11 +57,7 @@ class CategorySelectHooksHelper {
 
 		if ( $request->wasPosted() ) {
 			$categories = $editPage->safeUnicodeInput( $request, 'categories' );
-
-			// Prevents whitespace being added when no categories are present
-			if ( trim( $categories ) == '' ) {
-				$categories = '';
-			}
+			$categories = CategorySelect::changeFormat( $categories, 'json', 'array' );
 
 			// Concatenate categories to article wikitext (if there are any).
 			if ( !empty( $categories ) ) {
@@ -84,7 +80,6 @@ class CategorySelectHooksHelper {
 				// Extract categories from the article, merge them with those passed in, weed out
 				// duplicates and finally append them back to the article (BugId:99348).
 				$data = CategorySelect::extractCategoriesFromWikitext( $editPage->textbox1, true );
-				$categories = CategorySelect::changeFormat( $categories, 'json', 'array' );
 				$categories = CategorySelect::getUniqueCategories( $data[ 'categories' ], $categories );
 				$categories = CategorySelect::changeFormat( $categories, 'array', 'wikitext' );
 
