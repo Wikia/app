@@ -4,8 +4,8 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana'],
-	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana){
+define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana', 'wikia.videoBootstrap'],
+	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana, VideoBootstrap){
 	'use strict';
 	/** @private **/
 
@@ -52,7 +52,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		startD,
 		galleryInited = false,
 		inited,
-		supportedVideos = window.supportedVideos || [];
+		supportedVideos = window.supportedVideos || [],
+		// Video view click source tracking. Possible values are "embed" and "lightbox" for consistancy with Oasis
+		clickSource;
 
 	//Media object that holds all data needed to display it in modal/gallery
 	function Media(elem, data, length, i){
@@ -156,11 +158,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	}
 
 	function embedVideo(image, data) {
-		var videoInstance;
-
-		require(['wikia.videoBootstrap'], function (videoBootstrap) {
-			videoInstance = new videoBootstrap(image, data);
-		});
+		new VideoBootstrap(image, data, clickSource);
+		// Future video/image views will come from modal
+		clickSource = 'lightbox';
 	}
 
 	function setupImage(){
@@ -262,6 +262,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				origW = img.width;
 				origH = img.height;
 			}
+
+			// Future video/image views will come from modal
+			clickSource = 'lightbox';
 		}
 
 		//remove any left videos from DOM
@@ -457,6 +460,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		var cacheKey = 'mediaGalleryAssets',
 			galleryData,
 			ttl = 604800; //7days
+
+		// Video/image view was initiated from article
+		clickSource = "embed";
 
 		current = ~~num;
 

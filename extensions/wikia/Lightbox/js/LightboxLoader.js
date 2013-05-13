@@ -115,7 +115,8 @@ var LightboxLoader = {
 				// Display video inline, don't open lightbox
 				isVideo = $this.children('.Wikia-video-play-button').length;
 				if(isVideo && $thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
-					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, LightboxTracker.clickSource.EMBED);
+					var clickSource = window.wgWikiaHubType ? LightboxTracker.clickSource.HUBS : LightboxTracker.clickSource.EMBED;
+					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, clickSource);
 					return;
 				}
 
@@ -205,12 +206,11 @@ var LightboxLoader = {
 			height: targetChildImg.height(),
 			width: targetChildImg.width()
 		}, function(json) {
-			var	videoInstance,
-				embedCode = json['videoEmbedCode'],
+			var	embedCode = json['videoEmbedCode'],
 				inlineDiv = $('<div></div>').insertAfter(target.hide());
 
-			require(['wikia.videoBootstrap'], function (videoBootstrap) {
-				videoInstance = new videoBootstrap(inlineDiv[0], embedCode);
+			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+				new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
 			});
 
 			// if player script, run it
@@ -331,6 +331,7 @@ LightboxTracker = {
 		SV: 'specialVideos',
 		LB: 'lightbox',
 		SHARE: 'share',
+		HUBS: 'hubs',
 		OTHER: 'other'
 	}
 };

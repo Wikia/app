@@ -1,8 +1,8 @@
 //init
 window.addEventListener('DOMContentLoaded', function () {
 	'use strict';
-	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'layout'],
-		function (qs, topbar, toc, share, popover, cookies, track) {
+	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'layout', 'wikia.videoBootstrap'],
+		function (qs, topbar, toc, share, popover, cookies, track, layout, VideoBootstrap) {
 			var d = document,
 				clickEvent = 'click',
 				//add chevrons to elements that need it
@@ -115,17 +115,11 @@ window.addEventListener('DOMContentLoaded', function () {
 				});
 			}
 
-			// TODO: this is only for video file pages - Mobile team can decide where to actually put it.
-			var element = document.getElementById('file'),
-				videoInstance;
-
-			if(element && window.playerParams) {
-				require(['wikia.videoBootstrap'], function (videoBootstrap) {
-					videoInstance = new videoBootstrap(element, window.playerParams);
-				});
+			// Play video on file pages
+			var filePageContainer = document.getElementById('file');
+			if(filePageContainer && window.playerParams) {
+				new VideoBootstrap(filePageContainer, window.playerParams, 'filePage');
 			}
-
-
 		}
 	);
 });

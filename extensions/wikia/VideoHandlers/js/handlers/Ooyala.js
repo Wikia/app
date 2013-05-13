@@ -1,7 +1,18 @@
-/*global define*/
+/**
+ * Use Ooyala V3 player API to play and track videos
+ * Uses player events to track video views
+ *
+ * @see http://support.ooyala.com/developers/documentation
+ */
+
 define('wikia.ooyala', ['wikia.window', 'ext.wikia.adengine.dartvideohelper'], function(window, dartVideoHelper) {
 	'use strict';
 
+	/**
+	 * Set up Ooyala player and tracking events
+	 * @param {Object} params Player params sent from the video handler
+	 * @param {VideoBootstrap} vb Instance of video player
+	 */
 	return function(params, vb) {
 		var containerId = vb.timeStampId( params.playerId ),
 			createParams = { width: params.width + 'px', height: params.height + 'px', autoplay: params.autoPlay, onCreate: onCreate };
@@ -17,23 +28,23 @@ define('wikia.ooyala', ['wikia.window', 'ext.wikia.adengine.dartvideohelper'], f
 			var messageBus = player.mb;
 
 			// Player has loaded
-			messageBus.subscribe(OO.EVENTS.PLAYER_CREATED, 'tracking', function(eventName, payload) {
+			messageBus.subscribe(window.OO.EVENTS.PLAYER_CREATED, 'tracking', function(eventName, payload) {
 				vb.track('player-load');
 			});
 
 			// Actual content starts playing (past any ads or age-gates)
-			messageBus.subscribe(OO.EVENTS.PLAYING, 'tracking', function() {
+			messageBus.subscribe(window.OO.EVENTS.PLAYING, 'tracking', function() {
 				vb.track('content-begin');
 
 			});
 
 			// Ad starts
-			messageBus.subscribe(OO.EVENTS.WILL_PLAY_ADS, 'tracking', function(eventName, payload) {
+			messageBus.subscribe(window.OO.EVENTS.WILL_PLAY_ADS, 'tracking', function(eventName, payload) {
 				vb.track('ad-start');
 			});
 
 			// Ad has been fully watched
-			messageBus.subscribe(OO.EVENTS.ADS_PLAYED, 'tracking', function(eventName, payload) {
+			messageBus.subscribe(window.OO.EVENTS.ADS_PLAYED, 'tracking', function(eventName, payload) {
 				vb.track('ad-finish');
 			});
 
