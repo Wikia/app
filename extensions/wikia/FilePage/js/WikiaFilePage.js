@@ -1,25 +1,20 @@
 $(function() {
 
-var WikiaFilePage = {
+require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+
 	/*
 	 * Use VideoBootstrap to create a video instance
 	 */
-	initVideo: function() {
-		if(window.playerParams) {
-			require(['wikia.videoBootstrap'], function (videoBootstrap) {
+	if(window.playerParams) {
+		var element = $('#file'),
+			clickSource = 'filePage',
+			videoInstance = new VideoBootstrap(element[0], window.playerParams, clickSource);
 
-				var element = $('#file'),
-					videoInstance = new videoBootstrap(element[0], window.playerParams);
-
-				$(window).on('lightboxOpened', function() {
-					videoInstance.reload(wgTitle, 670, false);
-				});
-
-			});
-		}
+		$(window).on('lightboxOpened', function() {
+			videoInstance.reload(wgTitle, 670, false, clickSource);
+		});
 	}
-}
 
-WikiaFilePage.initVideo();
+});
 
 });
