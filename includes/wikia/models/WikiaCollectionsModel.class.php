@@ -17,10 +17,11 @@ class WikiaCollectionsModel extends WikiaModel {
 		$this->wg->Memc->delete( $this->getCollectionsListVisualizationCacheKey($langCode) );
 
 		$visualization = new CityVisualization();
+		$corporateModel = new WikiaCorporateModel();
 		foreach($this->getList($langCode) as $collection) {
 			$this->wg->Memc->delete($visualization->getCollectionCacheKey($collection['id']));
 
-			$title = GlobalTitle::newMainPage(WikiaHubsServicesHelper::getCorporateWikiIdByLang($langCode));
+			$title = GlobalTitle::newMainPage($corporateModel->getCorporateWikiIdByLang($langCode));
 			$title->purgeSquid();
 			Wikia::log(__METHOD__, '', 'Purged memcached for collection #' . $collection['id']);
 		}

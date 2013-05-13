@@ -421,7 +421,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 	private function purgeCache($module) {
 		$module->purgeMemcache($this->date);
-		WikiaHubsServicesHelper::purgeHubVarnish($this->langCode, $this->verticalId);
+		$hubServicesHelper = new WikiaHubsServicesHelper();
+		$hubServicesHelper->purgeHubVarnish($this->langCode, $this->verticalId);
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
 			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null )) {
@@ -431,6 +432,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 	private function purgeWikiaHomepageHubs() {
 		WikiaDataAccess::cachePurge( WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($this->langCode) );
-		WikiaHubsServicesHelper::purgeHomePageVarnish($this->langCode);
+		$hubServicesHelper = new WikiaHubsServicesHelper();
+		$hubServicesHelper->purgeHomePageVarnish($this->langCode);
 	}
 }
