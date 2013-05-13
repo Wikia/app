@@ -104,7 +104,8 @@ class UserService extends Service {
 	}
 
 	/**
-	 * Gets the users objects from local cache, and in case of miss from memcache
+	 * Gets the users objects from local cache, and in case of miss from memcache. Method changes the ids list,
+	 * ids found in cache are removed from array.
 	 * @param $ids array list of user ids to check in cache
 	 * @return array User objects list
 	 */
@@ -132,7 +133,8 @@ class UserService extends Service {
 	}
 
 	/**
-	 * Looks in cache for User object by user name, local cache is firstly check then memcache
+	 * Looks in cache for User object by user name, local cache is firstly check then memcache. Method changes the names list,
+	 * names found in cache are removed from array.
 	 * @param $names array list of user names to check in cache
 	 * @return array list of founded User objects
 	 */
