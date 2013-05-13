@@ -150,7 +150,6 @@ class WallHistory extends WikiaModel {
 
 	public function  getLastPosts($ns, $count = 5) {
 		$where = array(
-			'action' => WH_NEW,
 			'post_ns' => MWNamespace::getSubject( $ns ),
 			'deleted_or_removed' => 0
 		);
@@ -177,7 +176,7 @@ class WallHistory extends WikiaModel {
 				}
 			}
 		}
-		
+
 		return $out;
 	}
 	

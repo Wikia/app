@@ -33,6 +33,11 @@ class CityVisualization extends WikiaModel {
 
 	protected $batches;
 
+	/**
+	 * @var WikiaHomePageHelper
+	 */
+	private $helper = null;
+
 	//todo: increase readability
 	//todo: decouple functions possibly extract classes
 	//todo: decrease number of parameters in all functions in this file
@@ -40,21 +45,19 @@ class CityVisualization extends WikiaModel {
 		wfProfileIn(__METHOD__);
 		$memKey = $this->getVisualizationWikisListDataCacheKey($corpWikiId, $contLang);
 		$wikis = (!$dontReadMemc) ? $this->wg->Memc->get($memKey) : null;
-
+		
 		if (!$wikis) {
 			$promotedWikis = array();
 
-			foreach ($this->verticalMap as $verticalId => $verticalTag) {
+			foreach( $this->getVerticalMap() as $verticalId => $verticalTag ) {
 				$verticalMemKey = $this->getVisualizationVerticalWikisListDataCacheKey($verticalId, $corpWikiId, $contLang);
 
 				$wikis[$verticalTag] = (!$dontReadMemc) ? $this->wg->Memc->get($verticalMemKey) : null;
-
-				/* @var $helper WikiaHomePageHelper */
-				$helper = F::build('WikiaHomePageHelper');
-				$numberOfSlots = $helper->getVarFromWikiFactory($corpWikiId, $this->verticalSlotsMap[$verticalId]);
-
+				$numberOfSlots = $this->getSlotsNoPerVertical($corpWikiId, $verticalId);
+				$wikiListConditioner = new WikiListConditionerForVertical($contLang, $verticalId);
+				
 				if (!is_array($wikis[$verticalTag])) {
-					$verticalWikis = $this->getWikiListForVertical($contLang, $verticalId);
+					$verticalWikis = $this->getWikisList($wikiListConditioner);
 					$promotedWikis = array_merge($promotedWikis, $verticalWikis[self::PROMOTED_ARRAY_KEY]);
 
 					shuffle($verticalWikis[self::DEMOTED_ARRAY_KEY]);
@@ -83,7 +86,6 @@ class CityVisualization extends WikiaModel {
 		wfProfileIn(__METHOD__);
 
 		$memKey = $this->getVisualizationBatchesCacheKey($corpWikiId, $contLang);
-
 		$batches = $this->wg->Memc->get($memKey);
 
 		if (!is_array($batches) || count($batches) < $numberOfBatches) {
@@ -111,8 +113,8 @@ class CityVisualization extends WikiaModel {
 				}
 			}
 		}
+		
 		wfProfileOut(__METHOD__);
-
 		return $resultingBatches;
 	}
 
@@ -144,8 +146,8 @@ class CityVisualization extends WikiaModel {
 	public function generateBatches($corpWikiId, $contLang, $wikis, $dontReadMemc = false) {
 		wfProfileIn(__METHOD__);
 
-		$reverseMap = array_flip($this->verticalMap);
-		$helper = F::build('WikiaHomePageHelper'); /* @var $helper WikiaHomePageHelper */
+		$verticalMap = $this->getVerticalMap();
+		$reverseMap = array_flip($verticalMap);
 		$memKey = $this->getVisualizationBatchesCacheKey($corpWikiId, $contLang);
 		$batches = (!$dontReadMemc) ? $this->wg->Memc->get($memKey) : null;
 
@@ -168,7 +170,7 @@ class CityVisualization extends WikiaModel {
 
 			$batchPromotedOffset = 0;
 			shuffle($promotedWikis);
-			$verticalsCount = count($this->verticalMap);
+			$verticalsCount = count($verticalMap);
 			unset($wikis[self::PROMOTED_ARRAY_KEY]);
 
 			for( $i = 0; $i < self::WIKI_STANDARD_BATCH_SIZE_MULTIPLIER; $i++ ) {
@@ -186,7 +188,7 @@ class CityVisualization extends WikiaModel {
 				foreach ($wikis as $verticalName => &$wikilist) {
 					$verticalId = $reverseMap[$verticalName];
 
-					$numberOfSlotsForVertical = $helper->getVarFromWikiFactory($corpWikiId, $this->verticalSlotsMap[$verticalId]);
+					$numberOfSlotsForVertical = $this->getSlotsNoPerVertical($corpWikiId, $verticalId);
 					$batchWikis = array_slice($wikilist, $offsets[$verticalName] * $numberOfSlotsForVertical, ($numberOfSlotsForVertical - $removePerVertical) );
 
 					$offsets[$verticalName]++;
@@ -207,11 +209,12 @@ class CityVisualization extends WikiaModel {
 		}
 
 		$this->batches = $batches;
+		
 		wfProfileOut(__METHOD__);
 		return $batches;
 	}
 
-	protected function getWikiListForVertical($contLang, $verticalId) {
+	protected function getWikisList(WikiListConditioner $conditioner) {
 		wfProfileIn(__METHOD__);
 
 		$verticalWikis = array(
@@ -220,8 +223,8 @@ class CityVisualization extends WikiaModel {
 		);
 
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$tables = array('city_visualization', 'city_list');
-		$fields = array(
+		$tables = ['city_visualization', 'city_list'];
+		$fields = [
 			'city_visualization.city_id',
 			'city_visualization.city_vertical',
 			'city_visualization.city_main_image',
@@ -230,40 +233,21 @@ class CityVisualization extends WikiaModel {
 			'city_list.city_title',
 			'city_list.city_url',
 			'city_visualization.city_flags',
-		);
-		$conds = array(
-			'city_list.city_public' => 1,
-			'city_visualization.city_main_image is not null',
-			'city_visualization.city_lang_code' => $contLang,
-			'city_visualization.city_vertical' => $verticalId,
-			'(city_visualization.city_flags & ' . WikisModel::FLAG_BLOCKED . ') != ' . WikisModel::FLAG_BLOCKED,
-		);
-		$joinConds = array(
-			'city_list' => array(
+		];
+		$joinConds = [
+			'city_list' => [
 				'join',
 				'city_visualization.city_id = city_list.city_id'
-			),
-		);
+			],
+		];
+		$conds = $conditioner->getCondition();
 
 		$results = $db->select($tables, $fields, $conds, __METHOD__, array(), $joinConds);
 
 		while( $row = $db->fetchObject($results) ) {
-			$isPromoted = $this->isPromotedWiki($row->city_flags);
-			$isBlocked = $this->isBlockedWiki($row->city_flags);
-
-			$wikiData = array(
-				'wikiid' => $row->city_id,
-				'wikiname' => $row->city_title,
-				'wikiheadline' => $row->city_headline,
-				'wikiurl' => $row->city_url . '?redirect=no',
-				'wikidesc' => $row->city_description,
-				'main_image' => $row->city_main_image,
-				'wikinew' => $this->isNewWiki($row->city_flags),
-				'wikihot' => $this->isHotWiki($row->city_flags),
-				'wikiofficial' => $this->isOfficialWiki($row->city_flags),
-				'wikipromoted' => $isPromoted,
-				'wikiblocked' => $isBlocked,
-			);
+			$wikiData = $this->makeVisualizationWikiData($row);
+			$isPromoted = $wikiData['wikipromoted'];
+			$isBlocked = $wikiData['wikiblocked'];
 
 			if( !$isBlocked && !$isPromoted ) {
 				$verticalWikis[self::DEMOTED_ARRAY_KEY][] = $wikiData;
@@ -274,6 +258,22 @@ class CityVisualization extends WikiaModel {
 
 		wfProfileOut(__METHOD__);
 		return $verticalWikis;
+	}
+	
+	private function makeVisualizationWikiData($row) {
+		return [
+			'wikiid' => $row->city_id,
+			'wikiname' => $row->city_title,
+			'wikiheadline' => $row->city_headline,
+			'wikiurl' => $row->city_url . '?redirect=no',
+			'wikidesc' => $row->city_description,
+			'main_image' => $row->city_main_image,
+			'wikinew' => $this->isNewWiki($row->city_flags),
+			'wikihot' => $this->isHotWiki($row->city_flags),
+			'wikiofficial' => $this->isOfficialWiki($row->city_flags),
+			'wikipromoted' => $this->isPromotedWiki($row->city_flags),
+			'wikiblocked' => $this->isBlockedWiki($row->city_flags),
+		];
 	}
 
 	public function saveVisualizationData($wikiId, $data, $langCode) {
@@ -341,8 +341,9 @@ class CityVisualization extends WikiaModel {
 	 * @return string | bool returns false if the tag id doesn't match one of the main tags
 	 */
 	private function getVerticalNameId($tagId) {
-		if (isset($this->verticalMap[$tagId])) {
-			return $this->verticalMap[$tagId];
+		$verticalMap = $this->getVerticalMap();
+		if (isset($verticalMap[$tagId])) {
+			return $verticalMap[$tagId];
 		}
 
 		return false;
@@ -354,17 +355,17 @@ class CityVisualization extends WikiaModel {
 	 * @return array
 	 */
 	public function getVerticalsIds() {
-		return array_keys($this->verticalMap);
+		return array_keys($this->getVerticalMap());
 	}
 
 	public function purgeVisualizationWikisListCache($corpWikiId, $langCode) {
 		$memcKey = $this->getVisualizationBatchesCacheKey($corpWikiId, $langCode);
-		$this->wg->Memc->set($memcKey, null);
+		$this->wg->Memc->delete($memcKey);
 	}
 
 	public function purgeWikiPromoteDataCache($wikiId, $langCode) {
 		$memcKey = $this->getWikiPromoteDataCacheKey($wikiId, $langCode);
-		$this->wg->Memc->set($memcKey, null);
+		$this->wg->Memc->delete($memcKey);
 	}
 
 	public function updateWikiPromoteDataCache($wikiId, $langCode, $data) {
@@ -415,6 +416,10 @@ class CityVisualization extends WikiaModel {
 
 	public function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
 		return $this->wf->memcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
+	}
+
+	public function getCollectionCacheKey($collectionId) {
+		return $this->wf->SharedMemcKey('single_collection_wikis_data', self::CITY_VISUALIZATION_MEMC_VERSION, $collectionId, __METHOD__);
 	}
 
 	/**
@@ -946,4 +951,49 @@ class CityVisualization extends WikiaModel {
 		return WikiFactory::getListOfWikisWithVar(self::$wikiFactoryVarId, 'bool', '=', true);
 	}
 
+	/**
+	 * @param Array $collectionsList 2d array in example: [$collection1, $collection2, ...] where $collection1 = [$wikiId1, $wikiId2, ..., $wikiId17]
+	 * @param String $lang language code
+	 */
+	public function getCollectionsWikisData(Array $collectionsList) {
+		$collectionsWikisData = [];
+		$helper = $this->getWikiaHomePageHelper();
+		
+		foreach($collectionsList as $collection => $collectionsWikis) {
+			$collectionsWikisData[$collection] = WikiaDataAccess::cache(
+				$this->getCollectionCacheKey($collection),
+				6 * 60 * 60,
+				function () use ($collection, $collectionsWikis) {
+					$wikiListConditioner = new WikiListConditionerForCollection($collectionsWikis);
+					return $this->getWikisList($wikiListConditioner); 
+				}
+			);
+		}
+		
+		$collectionsWikisData = $helper->prepareBatchesForVisualization($collectionsWikisData);
+		
+		return $collectionsWikisData;
+	}
+
+	/**
+	 * @return Array An array where the keys are three main hubs ids (integers) and values are string representation of English names
+	 */
+	public function getVerticalMap() {
+		return $this->verticalMap;
+	}
+
+	public function getWikiaHomePageHelper() {
+		if( is_null($this->helper) ) {
+			$this->helper = new WikiaHomePageHelper();
+		}
+		
+		return $this->helper;
+	}
+	
+	public function getSlotsNoPerVertical($corpWikiId, $verticalId) {
+		$helper = $this->getWikiaHomePageHelper();
+		$numberOfSlots = $helper->getVarFromWikiFactory($corpWikiId, $this->verticalSlotsMap[$verticalId]);
+		
+		return $numberOfSlots;
+	}
 }
