@@ -25,11 +25,18 @@ class RelatedPagesController extends WikiaController {
 			$relatedPages->setCategories( $categories );
 		}
 
+		// Determine if we need to care about the current namespace or not
+		if ( !empty($params["anyNS"]) && $params["anyNS"] ) {
+			$ignoreNS = 0;
+		} else {
+			$ignoreNS = !empty( $wgTitle ) && !in_array( $wgTitle->getNamespace(), $wgContentNamespaces );
+		}
+
 		$this->skipRendering =
 			// check for mainpage
 			Wikia::isMainPage() ||
 			// check for content namespaces
-			(!empty( $wgTitle ) && !in_array( $wgTitle->getNamespace(), $wgContentNamespaces )) ||
+			$ignoreNS ||
 			// check if we have any categories
 			count( $relatedPages->getCategories( $title ) ) == 0 ||
 			// check action
