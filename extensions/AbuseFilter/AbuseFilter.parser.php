@@ -1107,9 +1107,11 @@ class AbuseFilterParser {
 				}
 				break;
 			case AFPToken::TNone:
+				wfProfileOut( __METHOD__ );
 				return; // Handled at entry level
 			case AFPToken::TBrace:
 				if ( $this->mCur->value == ')' ) {
+					wfProfileOut( __METHOD__ );
 					return; // Handled at the entry level
 				}
 			case AFPToken::TSquareBracket:
@@ -1138,6 +1140,7 @@ class AbuseFilterParser {
 					break;
 				}
 			default:
+				wfProfileOut( __METHOD__ );
 				throw new AFPUserVisibleException(
 					'unexpectedtoken',
 					$this->mCur->pos,

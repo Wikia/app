@@ -157,7 +157,7 @@ line-5-href=http://elefanten.wikia.com
 	);
 
 	public function getData() {
-		$this->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		if (
 			!empty($this->data[$this->getLang()])
 			&& !empty($this->data[$this->getLang()][$this->getVertical()])
@@ -166,7 +166,7 @@ line-5-href=http://elefanten.wikia.com
 		} else {
 			$message = null;
 		}
-		$this->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $message;
 

@@ -123,6 +123,7 @@ class WallRelatedPages extends WikiaModel {
 		$db = $this->wf->GetDB( $db );
 		
 		if ( ! $db->tableExists('wall_related_pages') && $this->wf->ReadOnly() ) {
+			wfProfileOut( __METHOD__ );
 			return array();
 		}
 		
@@ -262,6 +263,7 @@ class WallRelatedPages extends WikiaModel {
 		$db = $this->wf->GetDB( DB_SLAVE );
 		
 	    if ( ! $db->tableExists('wall_related_pages') && $this->wf->ReadOnly() ) {
+			wfProfileOut( __METHOD__ );
 			return array();
 		}
 		

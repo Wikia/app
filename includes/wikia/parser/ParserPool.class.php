@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * ParserPool maintains a pool of Parser instances that may be helpful
+ * when you would normally use $wgParser, but you don't want to pollute
+ * a global state or $wgParser may be in the middle of parsing.
+ *
+ * Use parse() if you don't need to configure Parser instance too much.
+ *
+ * Use get() and then release() if you have to book the Parser instance
+ * for longer time.
+ *
+ * @author Władysław Bodzek <wladek@wikia-inc.com>
+ */
 class ParserPool {
 
 	protected static $origin = null;
@@ -12,8 +24,8 @@ class ParserPool {
 	 */
 	public static function create() {
 		global $wgParserConf;
+		# Create base instance for cloning
 		if ( self::$origin === null ) {
-			# Clone it and store it
 			$class = $wgParserConf['class'];
 			if ( $class == 'Parser_DiffTest' ) {
 				self::$origin = false;
@@ -21,6 +33,7 @@ class ParserPool {
 				self::$origin = new Parser( $wgParserConf );
 			}
 		}
+		# Clone it (or create a new one if not possible)
 		if ( self::$origin !== false ) {
 			$parser = clone self::$origin;
 		} else {
@@ -31,6 +44,9 @@ class ParserPool {
 
 	/**
 	 * Get a Parser instance from the pool
+	 *
+	 * Don't forget to return the instance back to the pool using release()
+	 * after you're done with your job.
 	 *
 	 * @return Parser
 	 */
@@ -45,7 +61,8 @@ class ParserPool {
 	}
 
 	/**
-	 * Return a Parser instane to the pool
+	 * Return a Parser instance to the pool
+	 *
 	 * @param Parser $parser
 	 */
 	public static function release( Parser $parser ) {
@@ -61,12 +78,28 @@ class ParserPool {
 	 */
 	public static function parse( $text, Title $title, ParserOptions $options, $linestart = true, $clearState = true, $revid = null ) {
 		$args = func_get_args();
-		if ( isset( $args[4] ) ) { // always set $clearState to true
+		if ( count( $args ) >= 5 ) { // always set $clearState to true
 			$args[4] = true;
 		}
 
 		$parser = self::get();
 		$result = call_user_func_array( array( $parser, 'parse' ), $args );
+		self::release($parser);
+
+		return $result;
+	}
+
+	/**
+	 * Expand templates and variables in the text, producing valid, static wikitext.
+	 * Also removes comments.
+	 *
+	 * @return string
+	 */
+	public static function preprocess( $text, Title $title, ParserOptions $options, $revid = null ) {
+		$args = func_get_args();
+
+		$parser = self::get();
+		$result = call_user_func_array( array( $parser, 'preprocess' ), $args );
 		self::release($parser);
 
 		return $result;

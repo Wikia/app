@@ -248,6 +248,8 @@ abstract class BaseBlacklist {
 		$regexes = $this->buildSharedBlacklists();
 		$wgMemc->set( "$wgDBname:{$listType}_blacklist_regexes", $regexes, $this->expiryTime );
 
+		wfProfileOut( $fname );
+
 		return $regexes;
 	}
 

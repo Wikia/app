@@ -407,7 +407,7 @@ class Wikia {
 		$message = str_replace("\n", '/', $backtrace);
 
 		// add URL when logging from AJAX requests
-		if (($_SERVER['REQUEST_METHOD'] === 'GET') && ($_SERVER['SCRIPT_URL'] === '/wikia.php')) {
+		if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] === 'GET') && ($_SERVER['SCRIPT_URL'] === '/wikia.php')) {
 			$message .= " URL: {$_SERVER['REQUEST_URI']}";
 		}
 

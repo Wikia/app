@@ -240,6 +240,44 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		$configure->invoke( $mockGrouping, $dc );
 	}
 	
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::getTopPages
+	 */
+	public function testGetTopPages() {
+		
+		$this->prepareMocks( [ 'getHeader' ], [], [], [ 'getMainPageIdForWikiId' ] );
+		$mockDmService = $this->getMock( 'DataMartService', [ 'getTopArticlesByPageview' ] );
+		
+		$topPages = [ 1, 2, 3, 4 ];
+		$this->resultSet
+		    ->expects( $this->once() )
+		    ->method ( 'getHeader' )
+		    ->with   ( 'wid' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mockDmService
+		    ->staticExpects( $this->once() )
+		    ->method ( 'getTopArticlesByPageView' )
+		    ->will   ( $this->returnValue( [ 1 => [], 2 => [], 5 => [], 3 => [], 4 => [] ] ) )
+		;
+		$this->service
+		    ->expects( $this->once() )
+		    ->method ( 'getMainPageIdForWikiId' )
+		    ->will   ( $this->returnValue( 5 ) )
+		;
+		$this->proxyClass( 'DataMartService', $mockDmService );
+		$this->mockApp();
+		$this->assertEquals(
+				$topPages,
+				$this->resultSet->getTopPages()
+		);
+		$this->assertAttributeEquals(
+				$topPages,
+				'topPages',
+				$this->resultSet
+		);
+	}
+	
 	
 	/**
 	 * @covers Wikia\Search\ResultSet\Grouping::setResultsFromHostGrouping
@@ -377,6 +415,117 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		    ->expects( $this->any() )
 		    ->method ( 'getGlobalForWiki' )
 		    ->with   ( 'wgSitename', 123 )
+		    ->will   ( $this->returnValue( "my title" ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 3 ) )
+		    ->method ( 'setHeader' )
+		    ->with   ( "wikititle", "my title" )
+		    ->will   ( $this->returnValue( $this->resultSet ) )
+		;
+		$this->service
+		    ->expects( $this->any() )
+		    ->method ( 'getHubForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( "Edutainment" ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 4 ) )
+		    ->method ( 'setHeader' )
+		    ->with   ( "title", "my title" )
+		    ->will   ( $this->returnValue( $this->resultSet ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 5 ) )
+		    ->method ( 'setHeader' )
+		    ->with   ( "hub", "Edutainment" )
+		    ->will   ( $this->returnValue( $this->resultSet ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 6 ) )
+		    ->method ( 'getDescription' )
+		    ->will   ( $this->returnValue( "we already got a descriptiopn" ) )
+		;
+		$this->service
+		    ->expects( $this->never() )
+		    ->method ( 'getSimpleMessage' )
+		;
+		$conf = new ReflectionMethod( 'Wikia\Search\ResultSet\Grouping', 'configureHeaders' );
+		$conf->setAccessible( true );
+		$this->assertEquals(
+				$this->resultSet,
+				$conf->invoke( $this->resultSet )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::configureHeaders
+	 */
+	public function testConfigureHeadersWithDegenerateCases() {
+		$mockResult = $this->getMock( 'Wikia\Search\Result', array( 'offsetGet', 'getFields' ) );
+		$results = new \ArrayIterator( array( $mockResult ) );
+		$this->prepareMocks( array( 'addHeaders', 'setHeader', 'getHeader', 'getDescription' ), array(), array(), array( 'getSimpleMessage', 'getWikiIdByHost', 'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getGlobalForWiki', 'getHubForWikiId' ) );
+		$fields = array( 'id' => 123 );
+		$vizInfo = array( 'description' => 'yup' );
+		$mockResult
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'offsetGet' )
+		    ->with   ( 'wid' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$resultsRefl = new ReflectionProperty( 'Wikia\Search\ResultSet\Grouping', 'results' );
+		$resultsRefl->setAccessible( true );
+		$resultsRefl->setValue( $this->resultSet, $results );
+		$mockResult
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getFields' )
+		    ->will   ( $this->returnValue( array( 'id' => 123 ) ) )
+		;
+		$this->service
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getVisualizationInfoForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $vizInfo ) )
+		;
+		$this->service
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getStatsInfoForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( array( 'users_count' => 100 ) ) )
+		;
+		$mockResult
+		    ->expects( $this->once() )
+		    ->method ( 'getFields' )
+		    ->will   ( $this->returnValue( $fields ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'addHeaders' )
+		    ->with   ( $fields )
+		    ->will   ( $this->returnValue( $this->resultSet ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'addHeaders' )
+		    ->with   ( $vizInfo )
+		    ->will   ( $this->returnValue( $this->resultSet ) )
+		;
+		$this->resultSet
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'addHeaders' )
+		    ->with   ( array( 'users_count' => 100 ) )
+		    ->will   ( $this->returnValue( $this->resultSet ) )
+		;
+		$this->service
+		    ->expects( $this->any() )
+		    ->method ( 'getGlobalForWiki' )
+		    ->with   ( 'wgSitename', 123 )
+		    ->will   ( $this->returnValue( false ) )
+	    ;
+		$mockResult
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'offsetGet' )
+		    ->with   ( \Wikia\Search\Utilities::field( 'wikititle' ) )
 		    ->will   ( $this->returnValue( "my title" ) )
 		;
 		$this->resultSet

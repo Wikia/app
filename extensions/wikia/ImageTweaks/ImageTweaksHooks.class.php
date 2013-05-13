@@ -20,7 +20,7 @@ class ImageTweaksHooks extends WikiaObject {
 			return true;
 		}
 
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( self::$isWikiaMobile ) {
 			$linked = !empty( $frameParams['link-url'] ) || !empty( $frameParams['link-title'] );
@@ -80,7 +80,7 @@ class ImageTweaksHooks extends WikiaObject {
 			);
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -94,7 +94,7 @@ class ImageTweaksHooks extends WikiaObject {
 		 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 		 */
 		if ( self::$isWikiaMobile ) {
-			$this->wf->profileIn( __METHOD__ );
+			wfProfileIn( __METHOD__ );
 
 			$linked = !empty( $frameParams['link-url'] ) || !empty( $frameParams['link-title'] );
 			$caption = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
@@ -121,7 +121,7 @@ class ImageTweaksHooks extends WikiaObject {
 				true
 			)->toString();
 
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 		}
 
 		return true;
@@ -132,7 +132,7 @@ class ImageTweaksHooks extends WikiaObject {
 			return true;
 		}
 
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if (
 			/**
@@ -247,7 +247,7 @@ class ImageTweaksHooks extends WikiaObject {
 			}
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -256,7 +256,7 @@ class ImageTweaksHooks extends WikiaObject {
 			return true;
 		}
 
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( self::$isWikiaMobile ) {
 			/**
@@ -320,7 +320,7 @@ class ImageTweaksHooks extends WikiaObject {
 			)->toString();
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -329,7 +329,7 @@ class ImageTweaksHooks extends WikiaObject {
 		 * Images SEO
 		 * @author: Marooned, Federico
 		 */
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$html = "<figure class=\"thumb" .
 			( ( !empty( $align ) ) ? " t{$align}" : '' ) .
@@ -341,7 +341,7 @@ class ImageTweaksHooks extends WikiaObject {
 
 		//picture attribution
 		if ( !empty( $showPictureAttribution ) && !empty( $attributeTo ) ) {
-			$this->wf->profileIn( __METHOD__ . '::PictureAttribution' );
+			wfProfileIn( __METHOD__ . '::PictureAttribution' );
 
 			// render avatar and link to user page
 			$avatar = AvatarService::renderAvatar( $attributeTo, 16 );
@@ -352,7 +352,7 @@ class ImageTweaksHooks extends WikiaObject {
 				$this->wf->MsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $attributeTo ) .
 				Xml::closeElement( 'div' );
 
-			$this->wf->profileOut( __METHOD__ . '::PictureAttribution' );
+			wfProfileOut( __METHOD__ . '::PictureAttribution' );
 		}
 
 		if ( !empty( $showCaption ) ) {
@@ -361,7 +361,7 @@ class ImageTweaksHooks extends WikiaObject {
 
 		$html .= '</figure>';
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $html;
 	}
 }

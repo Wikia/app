@@ -15,7 +15,7 @@
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
-define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window', 'wikia.utils', 'wikia.dartmobilehelper'], function (dw, ck, track, log, w, $, dartHelper) {
+define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window', 'wikia.utils', 'wikia.dartmobilehelper'], function (dw, ck, track, log, window, $, dartHelper) {
 	'use strict';
 
 	var AD_TYPES = {
@@ -30,11 +30,10 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 		adSlot,
 		adSlotStyle,
 		contentWrapper,
-		close,
-		d = w.document,
+		d = window.document,
 		found = false,
 		fixed = false,
-		positionfixed = w.Features.positionfixed,
+		positionfixed = window.Features.positionfixed,
 		ftr,
 		inited,
 		type;
@@ -174,7 +173,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 	function moveSlot(plus) {
 		if (fixed) {
 			adSlotStyle.top = Math.min(
-				(w.pageYOffset + w.innerHeight - 50 + ~~plus),
+				(window.pageYOffset + window.innerHeight - 50 + ~~plus),
 				ftr.offsetTop + 160
 			) + 'px';
 		}
@@ -236,25 +235,6 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 		fixed = false;
 	}
 
-	/**
-	 * Dismisses the Ad slot and its' contents
-	 *
-	 * @public
-	 */
-	function dismiss() {
-		if (adSlot) {
-			adSlot.parentNode.removeChild(adSlot);
-
-			if (type === AD_TYPES.footer) {
-				//remove the extra space from the footer used
-				//to host the "floating" footer Ad
-				removeClass(ftr, ['ads']);
-			}
-
-			type = close = adSlot = contentWrapper = adSlotStyle = undefined;
-			found = fixed = inited = false;
-		}
-	}
 	/**
 	 * Tries to identify the Ad content and triggers the
 	 * expected position/behaviour accordingly
@@ -319,21 +299,8 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 				}
 
 				if (type === AD_TYPES.footer) {
-					close.addEventListener('click', function () {
-						track.event('ad', track.CLICK, {label: 'close'});
-						addClass(adSlot, ['anim']);
-
-						setTimeout(function () {
-							dismiss();
-						}, 800);
-
-						if (!positionfixed) {
-							w.removeEventListener('scroll', moveSlot);
-						}
-					}, false);
-
 					if (!positionfixed) {
-						w.addEventListener('scroll', moveSlot);
+						window.addEventListener('scroll', moveSlot);
 					}
 				}
 
@@ -359,7 +326,6 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 	/**
 	 * Module initialization
 	 */
-
 	$(function () {
 		adSlot = d.getElementById('wkAdPlc');
 		contentWrapper = d.getElementById('wkAdWrp');
@@ -372,21 +338,19 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 
 			adSlotStyle = adSlot.style;
 			ftr = d.getElementById('wkFtr');
-			close = d.getElementById('wkAdCls');
 		}
 	});
 
 	//global shortcut to be used directly
 	//inside DART creatives
-	w.MobileAd = {
+	window.MobileAd = {
 		setupSlot: setupSlot,
 		init: init,
 		fix: fix,
 		unfix: unfix,
 		getAdType: getAdType,
-		dismiss: dismiss,
 		shouldRequestAd: shouldRequestAd
 	};
 
-	return w.MobileAd;
+	return window.MobileAd;
 });

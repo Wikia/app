@@ -22,6 +22,9 @@
 		<?php echo $tabs; ?>
 
 		<div class="results-wrapper grid-3 alpha">
+			<?php if(!empty($wikiMatch)):?>
+				<?=$wikiMatch?>
+			<?php endif; ?>
 			<?php if(!empty($results)): ?>
 				<?php if( $resultsFound > 0 ): ?>
 					<p class="result-count subtle">

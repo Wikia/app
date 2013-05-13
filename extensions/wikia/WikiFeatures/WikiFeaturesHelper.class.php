@@ -106,7 +106,7 @@ class WikiFeaturesHelper extends WikiaModel {
 	 * @return int $num
 	 */
 	protected function getNumActiveWikis($feature) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$memKey = $this->getMemcKeyNumActiveWikis($feature);
 		$num = $this->wg->Memc->get($memKey);
@@ -131,7 +131,7 @@ class WikiFeaturesHelper extends WikiaModel {
 			$this->wg->Memc->set($memKey, $num, 3600*24);
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return intval($num);
 	}
