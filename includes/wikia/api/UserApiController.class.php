@@ -18,7 +18,7 @@ class UserApiController extends WikiaApiController {
 	 * @responseParam array $items A list of results with the user ID as the index, each item has a title, name, url, avatar, numberofedits
 	 * @responseParam string $basepath domain of a wiki to create a url for an user
 	 *
-	 * @example &ids=2187,23478&size=150
+	 * @example &ids=123&size=150
 	 */
 	public function getDetails() {
 		wfProfileIn( __METHOD__ );
@@ -34,7 +34,7 @@ class UserApiController extends WikiaApiController {
 		$items = array();
 		foreach ( $users as $user ) {
 
-			$items[ $user->getId() ] = array(
+			$item = array(
 				'user_id' => $user->getId(),
 				'title' => $user->getTitleKey(),
 				'name' => $user->getName(),
@@ -43,8 +43,9 @@ class UserApiController extends WikiaApiController {
 			);
 			//add avatar url if size !== 0
 			if ( $size > 0 ) {
-				$items[ $user->getId() ][ 'avatar' ] = AvatarService::getAvatarUrl( $user, $size );
+				$item[ 'avatar' ] = AvatarService::getAvatarUrl( $user, $size );
 			}
+			$items[] = $item;
 		}
 		if ( !empty( $items ) ) {
 			$this->response->setVal( 'items', $items );
