@@ -149,7 +149,7 @@ $(function(){
 		}
 
 		$save.on('click', function(){
-			var data = [];
+			var data = {};
 
 			if(checkForm()) {
 				$ul.find('.language').each(function(){
@@ -161,10 +161,7 @@ $(function(){
 						videos.push(getData(this));
 					});
 
-					data.push({
-						code: code,
-						videos: videos
-					});
+					data[code] = videos;
 				});
 
 				$save.removeClass();

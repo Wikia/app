@@ -75,19 +75,17 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 		if ( !empty( $languages ) ) {
 			$list = '';
 
-			foreach( $languages as $language ) {
+			foreach( $languages as $language => $videos ) {
 				$list .= $this->sendSelfRequest( 'language', [
-					'value' => $language['code']
+					'value' => $language
 				] );
 
-				if ( !empty( $language['videos'] ) ) {
-					foreach( $language['videos'] as $video ) {
-						$list .= $this->sendSelfRequest( 'video', [
-							'video_name' => $video['video_name'],
-							'video_title' => $video['video_title'],
-							'wiki' => $video['wiki']
-						] );
-					}
+				foreach( $videos as $video ) {
+					$list .= $this->sendSelfRequest( 'video', [
+						'video_name' => $video['video_name'],
+						'video_title' => $video['video_title'],
+						'wiki' => $video['wiki']
+					] );
 				}
 			}
 
