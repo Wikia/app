@@ -5,6 +5,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	const FLASH_MESSAGE_SESSION_KEY = 'flash_message';
 
 	protected $toolboxModel;
+	private $hubServicesHelper;
 
 	public function __construct() {
 		parent::__construct('MarketingToolbox', 'marketingtoolbox', true);
@@ -421,8 +422,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 	private function purgeCache($module) {
 		$module->purgeMemcache($this->date);
-		$hubServicesHelper = new WikiaHubsServicesHelper();
-		$hubServicesHelper->purgeHubVarnish($this->langCode, $this->verticalId);
+		$this->getHubsServicesHelper()->purgeHubVarnish($this->langCode, $this->verticalId);
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
 			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null )) {
@@ -432,7 +432,13 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 	private function purgeWikiaHomepageHubs() {
 		WikiaDataAccess::cachePurge( WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($this->langCode) );
-		$hubServicesHelper = new WikiaHubsServicesHelper();
-		$hubServicesHelper->purgeHomePageVarnish($this->langCode);
+		$this->getHubsServicesHelper()->purgeHomePageVarnish($this->langCode);
+	}
+
+	private function getHubsServicesHelper() {
+		if(empty($this->hubServicesHelper)) {
+			$this->hubServicesHelper = new WikiaHubsServicesHelper();
+		}
+		return $this->hubServicesHelper;
 	}
 }

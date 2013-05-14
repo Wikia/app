@@ -31,8 +31,7 @@ class WikiaHubsServicesHelper
 	 * @throws Exception
 	 */
 	public function purgeHomePageVarnish($lang) {
-		$corporateModel = $this->getCorporateModel();
-		$wikiId = $corporateModel->getCorporateWikiIdByLang($lang);
+		$wikiId = $this->getCorporateModel()->getCorporateWikiIdByLang($lang);
 
 		$mainPageName = static::getMainPageNameByWikiId($wikiId);
 		$mainPageTitle = static::getGlobalTitleFromText($mainPageName, $wikiId);
@@ -46,8 +45,7 @@ class WikiaHubsServicesHelper
 	 * @param $verticalId
 	 */
 	public function purgeHubVarnish($lang, $verticalId) {
-		$corporateModel = $this->getCorporateModel();
-		$wikiId = $corporateModel->getCorporateWikiIdByLang($lang);
+		$wikiId = $this->getCorporateModel()->getCorporateWikiIdByLang($lang);
 
 		$hubTitle = static::getGlobalTitleFromText(static::getHubName($wikiId, $verticalId), $wikiId);
 		$hubTitle->purgeSquid();
