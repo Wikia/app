@@ -5,7 +5,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	const FLASH_MESSAGE_SESSION_KEY = 'flash_message';
 
 	protected $toolboxModel;
-	private $hubServicesHelper;
+	private $hubsServicesHelper;
 
 	public function __construct() {
 		parent::__construct('MarketingToolbox', 'marketingtoolbox', true);
@@ -436,9 +436,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	private function getHubsServicesHelper() {
-		if(empty($this->hubServicesHelper)) {
-			$this->hubServicesHelper = new WikiaHubsServicesHelper();
+		if(empty($this->hubsServicesHelper)) {
+			$this->hubsServicesHelper = new WikiaHubsServicesHelper();
 		}
-		return $this->hubServicesHelper;
+		return $this->hubsServicesHelper;
 	}
 }
