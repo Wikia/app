@@ -213,8 +213,9 @@ class WikiaCollectionsModel extends WikiaModel {
 	 *
 	 * @param $collectionId
 	 */
-	public function getCountWikisFromCollection($collectionId) {
-		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+	public function getCountWikisFromCollection($collectionId, $useMaster = false) {
+		$dbType = (!$useMaster) ? DB_SLAVE : DB_MASTER;
+		$db = $this->wf->getDB($dbType, array(), $this->wg->ExternalSharedDB);
 		return $db->selectField(self::COLLECTIONS_CV_TABLE, 'count(city_id)', ['collection_id' => $collectionId]);
 	}
 

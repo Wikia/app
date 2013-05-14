@@ -105,8 +105,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 						)
 					);
 				}
-			}
-			elseif ( $this->request->getVal('collections',false) ) {
+			} elseif ( $this->request->getVal('collections',false) ) {
 				$collectionValues = $this->request->getParams();
 				$collectionValues = $this->form->filterData($collectionValues);
 				$isValid = $this->form->validate($collectionValues);
@@ -114,6 +113,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				if ($isValid) {
 					$collectionSavedValues = $this->prepareCollectionForSave($collectionValues);
 					$collectionsModel->saveAll($this->visualizationLang, $collectionSavedValues);
+
+					$collectionsList = $collectionsModel->getList($this->visualizationLang);
+					$wikisPerCollection = $this->getWikisPerCollection($collectionsList, true);
+					
 					$this->infoMsg = wfMessage('manage-wikia-home-collections-success')->text();
 				} else {
 					$this->errorMsg = wfMessage('manage-wikia-home-collections-failure')->text();
@@ -416,12 +419,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return $collectionValues;
 	}
 	
-	private function getWikisPerCollection($collections) {
+	private function getWikisPerCollection($collections, $useMaster = false) {
 		$wikisPerCollections = [];
 		
 		foreach($collections as $key => $collection) {
 			$collectionId = $collection['id'];
-			$wikis = $this->getWikiaCollectionsModel()->getCountWikisFromCollection($collectionId);
+			$wikis = $this->getWikiaCollectionsModel()->getCountWikisFromCollection($collectionId, $useMaster);
 			$wikisPerCollections[$collectionId] = $wikis;
 		}
 		
