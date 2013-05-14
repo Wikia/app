@@ -343,6 +343,10 @@ abstract class AbstractSelect
 	 */
 	protected function getFilterQueryString()
 	{
-		return Utilities::valueForField( 'wid', $this->config->getCityId() );
+		$namespaces = [];
+		foreach ( $this->config->getNamespaces() as $ns ) {
+			$namespaces[] = Utilities::valueForField( 'ns', $ns );
+		}
+		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
 	}
 }
