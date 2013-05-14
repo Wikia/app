@@ -1,4 +1,4 @@
-<section class="callout">
+<section class="lvs-callout">
 	<h1><?= wfMessage('lvs-callout-header')->text() ?></h1>
 	<ul>
 		<li><?= wfMessage('lvs-callout-reason-licensed')->text() ?></li>
