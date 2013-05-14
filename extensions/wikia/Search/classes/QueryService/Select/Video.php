@@ -39,19 +39,6 @@ class Video extends OnWiki
 		return $this;
 	}
 	
-	/**
-	 * Require the wiki ID we're on (or video wiki), and that everything is a video
-	 * @return string
-	 */
-	protected function getQueryClausesString() {
-		$queryClauses = array(
-				Utilities::valueForField( 'wid', $this->config->getCityId() ),
-				Utilities::valueForField( 'is_video', 'true' ),
-				Utilities::valueForField( 'ns', \NS_FILE )
-				);
-		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
-	}
-	
 	protected function getBoostQueryString() {
 		return '';
 	}
