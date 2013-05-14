@@ -151,10 +151,12 @@ abstract class AbstractSelect
 	}
 	
 	/**
-	 * Introduced flexible in the actual query 
+	 * As an edismax query, gives the required query in the first clause of the conjunction, and then the parseable query stuff in the second clause.
 	 * @return string
 	 */
-	abstract protected function getFormulatedQuery();
+	protected function getFormulatedQuery() {
+		return sprintf( '+(%s) AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
+	}
 	
 	/**
 	 * Prepare boost queries based on the provided instance.
