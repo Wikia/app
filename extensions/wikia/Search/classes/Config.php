@@ -201,8 +201,8 @@ class Config
 	 * @var array
 	 */
 	protected $filterCodes = [
-			self::FILTER_VIDEO => 'is_video:true',
-			self::FILTER_IMAGE => 'is_image:true',
+			self::FILTER_VIDEO => '(is_video:true AND -is_image:true)',
+			self::FILTER_IMAGE => '(is_image:true AND -is_video:true)',
 			self::FILTER_HD    => 'video_hd_b:true',
 	];
 	
@@ -817,7 +817,7 @@ class Config
 	 * @return int
 	 */
 	public function getWikiId() {
-		if ( empty( $this->wikId ) ) {
+		if ( empty( $this->wikiId ) ) {
 			$this->wikiId = $this->getService()->getWikiId();
 		}
 		return $this->wikiId;
