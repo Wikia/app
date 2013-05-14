@@ -78,26 +78,48 @@ class WikiaCollectionsModel extends WikiaModel {
 
 	public function saveAll($langCode, $collections) {
 		$i = 1;
+
+		$collectionsToChange = [];
+		$actualCollections = $this->getList($langCode);
+
+		// update and save new collections
 		foreach ($collections as $collection) {
 			$this->save($langCode, $collection, $i++);
+
+			if (isset($actualCollections[$i - 1]) && $actualCollections[$i - 1]['id'] != $collection['id']){
+				$collectionsToChange[$actualCollections[$i - 1]['id']] = true;
+			}
+			unset($collectionsToChange[$collection['id']]);
 		}
 
+		// delete not used slots
 		for ($i = $i; $i <= self::COLLECTIONS_COUNT; $i++) {
 			$this->delete($langCode, $i);
 		}
+
+		// delete collections that were on used slots
+		foreach ($collectionsToChange as $collectionId => $tmp) {
+			$this->deleteById($collectionId);
+		}
+
 		$this->clearCache($langCode);
 	}
 
-	public function save($langCode, $collection, $sortIndex) {
+	protected function save($langCode, $collection, $sortIndex) {
 		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
-		$conds = [
-			'lang_code' => $langCode,
-			'sort' => $sortIndex
-		];
+		if ($collection['id']) {
+			$conds = ['id' => $collection['id']];
+		} else {
+			$conds = [
+				'lang_code' => $langCode,
+				'sort' => $sortIndex
+			];
+		}
 
 		$updateData = [
+			'sort' => $sortIndex,
 			'name' => $collection['name'],
 			'enabled' => $collection['enabled'],
 			'sponsor_hero_image' => isset($collection['sponsor_hero_image']) ? $collection['sponsor_hero_image'] : null,
@@ -113,9 +135,6 @@ class WikiaCollectionsModel extends WikiaModel {
 			$insertData = array_merge($updateData, $conds);
 			$mdb->insert(self::TABLE_NAME, $insertData, __METHOD__);
 		}
-
-		// purging cached list
-		$this->clearCache($langCode);
 		
 		$mdb->commit();
 	}
@@ -132,6 +151,18 @@ class WikiaCollectionsModel extends WikiaModel {
 
 		$mdb->commit();
 		$this->clearCache($langCode);
+	}
+
+	protected function deleteById($id) {
+		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+
+		$conds = [
+			'id' => $id
+		];
+
+		$mdb->delete(self::TABLE_NAME, $conds, __METHOD__);
+
+		$mdb->commit();
 	}
 
 	/**
