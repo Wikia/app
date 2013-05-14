@@ -269,6 +269,7 @@ $wgAutoloadClasses['WAMService'] = $IP . '/includes/wikia/services/WAMService.cl
 $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
 $wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/MustacheService.class.php';
+$wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/RevisionService.class.php';
 
 
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
@@ -1134,5 +1135,3 @@ $app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'onIsTrustedProxy' 
  */
 //$wgChatDebugEnabled = true;
 
-
-require_once ( $IP."/lib/ActivityApi/setup.php" );
