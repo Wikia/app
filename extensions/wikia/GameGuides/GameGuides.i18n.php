@@ -34,7 +34,14 @@ $messages['en'] = array(
 
 	'wikiagameguides-sponsored-title' => 'Wikia Game Guides Sponsored Videos Tool',
 	'wikiagameguides-sponsored-add-video' => 'Add video',
-	'wikiagameguides-sponsored-add-language' => 'Add Language'
+	'wikiagameguides-sponsored-add-language' => 'Add Language',
+
+	'wikiagameguides-sponsored-video-url' => 'Video Url',
+	'wikiagameguides-sponsored-language' => 'Language',
+	'wikiagameguides-sponsored-video-title' => 'Video Title',
+	'wikiagameguides-sponsored-duplicate-entry' => 'This filed is duplicated',
+	'wikiagameguides-sponsored-required-entry' => 'This field is required',
+	'wikiagameguides-sponsored-empty-language' => 'Language can not be empty'
 );
 
 /** Message documentation (Message documentation)
