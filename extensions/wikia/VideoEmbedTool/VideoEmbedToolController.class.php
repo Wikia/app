@@ -59,7 +59,7 @@ class VideoEmbedToolController extends WikiaController {
 			}
 
 			$result = array(
-					'searchQuery' => $articleTitle . ' ' . $wikiTitleSansWiki,
+					'searchQuery' => $articleTitle,
 					'caption' => $this->wf->Msg( 'vet-suggestions' ),
 					'totalItemCount' => 0,
 					'nextStartFrom' => $response['nextStartFrom'],
