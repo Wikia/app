@@ -55,12 +55,12 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Video::getQueryClausesString
+	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Video' )
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\VideoEmbedTool' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
@@ -70,7 +70,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getCityId' )
 		    ->will   ( $this->returnValue( 123 ) )
 		;
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Video', 'getQueryClausesString' );
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\VideoEmbedTool', 'getQueryClausesString' );
 		$method->setAccessible( true );
 		$this->assertEquals(
 				'((wid:123) AND (is_video:true) AND (ns:6))',
