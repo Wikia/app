@@ -197,53 +197,51 @@ $(function(){
 
 				});
 
-				console.log(data);
-
 				$save.removeClass();
-				//$form.startThrobbing();
+				$form.startThrobbing();
 
-//				nirvana.sendRequest({
-//					controller: 'GameGuidesSpecialSponsored',
-//					method: 'save',
-//					data: {
-//						tags: data
-//					}
-//				}).done(
-//					function(data){
-//						if(data.error) {
-//							var err = data.error,
-//								i = err.length,
-//								categories = $form.find('.cat-input');
-//
-//							while(i--){
-//								//I cannot use value CSS selector as I want to use current value
-//								categories.each(function(){
-//									if(this.value === err[i]){
-//										$(this)
-//											.addClass('error')
-//											.popover('destroy')
-//											.popover({
-//												content: categoryError
-//											});
-//
-//										return false;
-//									}
-//									return true;
-//								});
-//							}
-//
-//							$save.addClass('err');
-//							$save.attr('disabled', true);
-//						}else if(data.status){
-//							$save.addClass('ok');
-//						}
-//				}).fail(
-//					function(){
-//						$save.addClass('err');
-//					}
-//				).then(function(){
-//					$form.stopThrobbing();
-//				});
+				nirvana.sendRequest({
+					controller: 'GameGuidesSpecialSponsored',
+					method: 'save',
+					data: {
+						languages: data
+					}
+				}).done(
+					function(data){
+						if(data.error) {
+							var err = data.error,
+								i = err.length,
+								videos = $form.find('.video-url');
+
+							while(i--){
+								//I cannot use value CSS selector as I want to use current value
+								videos.each(function(){
+									if(this.value === err[i]){
+										$(this)
+											.addClass('error')
+											.popover('destroy')
+											.popover({
+												content: 'This video does not exist'
+											});
+
+										return false;
+									}
+									return true;
+								});
+							}
+
+							$save.addClass('err');
+							$save.attr('disabled', true);
+						}else if(data.status){
+							$save.addClass('ok');
+						}
+				}).fail(
+					function(){
+						$save.addClass('err');
+					}
+				).always(function(){
+					$form.stopThrobbing();
+				});
 			}
 		});
 
