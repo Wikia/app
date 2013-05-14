@@ -222,8 +222,10 @@ ManageWikiaHome.prototype = {
 
 		if( action == window.SWITCH_COLLECTION_TYPE_ADD ) {
 			this.wikisPerCollection[collectionId]++;
+			this.updateCounterDisplay(collectionId);
 		} else if( action == window.SWITCH_COLLECTION_TYPE_REMOVE ) {
 			this.wikisPerCollection[collectionId]--;
+			this.updateCounterDisplay(collectionId);
 		}
 
 		this.onWikisPerCollectionChange(collectionId, action);
@@ -263,6 +265,18 @@ ManageWikiaHome.prototype = {
 			!this.wikisPerCollection[collectionId] //there are no wikis in the collection yet 
 			|| this.wikisPerCollection[collectionId] <= this.SLOTS_IN_TOTAL //or there is still place for another wiki in the collection
 			|| (this.wikisPerCollection[collectionId] > this.SLOTS_IN_TOTAL && action == window.SWITCH_COLLECTION_TYPE_REMOVE ) //or there are too many wikis in the collection and user is removing them
+	},
+	updateCounterDisplay: function(collectionId) {
+		var counterContainer = $('.collection-module[data-collection-id="' + collectionId + '"] .collection-wikis-counter');
+
+		var counterContent = $(document.createElement('p'));
+		counterContent.append( $.msg('manage-wikia-home-collections-wikis-in-collection', 
+			this.wikisPerCollection[collectionId], 
+			this.SLOTS_IN_TOTAL
+		) ); 
+		
+		counterContainer.html('');
+		counterContainer.append(counterContent);
 	}
 };
 
