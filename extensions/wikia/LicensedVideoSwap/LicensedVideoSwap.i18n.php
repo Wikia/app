@@ -16,8 +16,6 @@ $messages['en'] = array(
 	'lvs-callout-reason-collaborative' => 'Wikia videos are collaborative and can be used across multiple wikis',
 	'lvs-callout-reason-more' => 'and more... we will be adding more features and ways to easily use and manage Wikia Libary videos. Stay tuned!',
 	'lvs-instructions' => 'This page lists all unlicensed videos on this wiki that we think we have a licensed video match for in the Wikia Video Library. We recommend that you swap out your unlicensed videos for Wikia Video Libary videos, which have been licensed by Wikia for use on your wikis. Please note that the same video may have different video thumbnails so it\'s best to watch the video before you make a decision.',
-	'lvs-' => '',
-	'lvs-' => '',
 );
 
 $messages['qqq'] = array(
