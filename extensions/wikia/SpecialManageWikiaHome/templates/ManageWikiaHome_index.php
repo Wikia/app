@@ -72,6 +72,7 @@
 					<?php endif; ?>
 					
 					<?=$form->renderField('enabled', $i)?>
+					<?=$form->renderField('id', $i)?>
 					<?=$form->renderField('name', $i)?>
 					
 					<div class="image-input-container">

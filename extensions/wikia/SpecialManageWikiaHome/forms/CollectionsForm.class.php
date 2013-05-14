@@ -9,6 +9,7 @@ class CollectionsForm extends FormBuilderService {
 			$fields = [
 				'id' => [
 					'type' => 'hidden',
+					'isArray' => true
 				],
 				'name' => [
 					'label' => $this->wf->msg('manage-wikia-home-collections-name-field-label'),
