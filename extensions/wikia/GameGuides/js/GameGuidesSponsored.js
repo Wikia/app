@@ -18,18 +18,18 @@ $(function(){
 			ul = form.getElementsByTagName('ul')[0],
 			$ul = $(ul),
 			setup = function(elem){
-//				(elem || $ul.find('.cat-input')).autocomplete({
-//					serviceUrl: wgServer + wgScript,
-//					params: {
-//						action: 'ajax',
-//						rs: 'getLinkSuggest',
-//						format: 'json',
-//						ns: categoryId
-//					},
-//					appendTo: form,
-//					onSelect: function(){
-//						$ul.find('input:focus').next().focus();
-//					},
+				(elem || $ul.find('.video-url')).autocomplete({
+					serviceUrl: window.wgServer + window.wgScript,
+					params: {
+						action: 'ajax',
+						rs: 'getLinkSuggest',
+						format: 'json',
+						ns: window.wgNamespaceIds.video
+					},
+					appendTo: form,
+					onSelect: function(){
+						$ul.find('input:focus').next().focus();
+					},
 //					fnPreprocessResults: function(data){
 //						var suggestions = data.suggestions,
 //							suggestion,
@@ -50,20 +50,20 @@ $(function(){
 //						data.suggestions = suggestions;
 //						return data;
 //					},
-//					deferRequestBy: 50,
-//					minLength: 3,
-//					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
-//				});
+					deferRequestBy: 100,
+					minLength: 3,
+					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
+				});
 			},
 			addNew = function(row, elem){
 				var cat;
 
 				if(elem) {
 					elem.after(row);
-					cat = elem.next().find('.wiki-input');
+					cat = elem.next().find('.video-url');
 				}else{
 					$ul.append(row);
-					cat = $ul.find('.wiki-input:last');
+					cat = $ul.find('.video-url:last');
 				}
 
 				setup(cat);
