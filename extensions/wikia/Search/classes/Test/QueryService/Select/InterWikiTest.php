@@ -349,44 +349,6 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\InterWiki::getFormulatedQuery
-	 */
-	public function testGetFormulatedQuery() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQuery' ] );
-		
-		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
-		                   ->setConstructorArgs( [ $dc ] )
-		                   ->setMethods( [ 'getQueryClausesString' ] )
-		                   ->getMock();
-		
-		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSolrQuery' ], [ 'foo' ] );
-		
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'getQueryClausesString' )
-		    ->will   ( $this->returnValue( 'foo' ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getQuery' )
-		    ->will   ( $this->returnValue( $mockQuery ) )
-		;
-		$mockQuery
-		    ->expects( $this->once() )
-		    ->method ( 'getSolrQuery' )
-		    ->will   ( $this->returnValue( 'bar' ) )
-		;
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'getFormulatedQuery' );
-		$method->setAccessible( true );
-		$this->assertEquals(
-				'foo AND (bar)',
-				$method->invoke( $mockSelect )
-		);
-	}
-	
-	/**
 	 * @covers Wikia\Search\QueryService\Select\InterWiki::getQueryFieldsString 
 	 */
 	public function testGetQueryFieldsString() {

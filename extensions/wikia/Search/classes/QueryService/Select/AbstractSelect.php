@@ -151,10 +151,12 @@ abstract class AbstractSelect
 	}
 	
 	/**
-	 * Introduced flexible in the actual query 
+	 * As an edismax query, gives the required query in the first clause of the conjunction, and then the parseable query stuff in the second clause.
 	 * @return string
 	 */
-	abstract protected function getFormulatedQuery();
+	protected function getFormulatedQuery() {
+		return sprintf( '+(%s) AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
+	}
 	
 	/**
 	 * Prepare boost queries based on the provided instance.
@@ -343,6 +345,10 @@ abstract class AbstractSelect
 	 */
 	protected function getFilterQueryString()
 	{
-		return Utilities::valueForField( 'wid', $this->config->getCityId() );
+		$namespaces = [];
+		foreach ( $this->config->getNamespaces() as $ns ) {
+			$namespaces[] = Utilities::valueForField( 'ns', $ns );
+		}
+		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
 	}
 }

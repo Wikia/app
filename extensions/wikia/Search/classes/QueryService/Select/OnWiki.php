@@ -122,15 +122,6 @@ class OnWiki extends AbstractSelect
 	}
 	
 	/**
-	 * Returns a nested query, with query clauses used to pre-filter things like namespace and wiki ID.
-	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery()
-	 * @return string
-	 */
-	protected function getFormulatedQuery() {
-		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
-	}
-	
-	/**
 	 * Require the wiki ID we're on, and that everything is in the provided namespaces
 	 * @return string
 	 */
