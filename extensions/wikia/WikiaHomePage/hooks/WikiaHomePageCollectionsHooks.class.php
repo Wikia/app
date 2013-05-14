@@ -5,7 +5,6 @@
  * @desc Temporary class which will be removed after we create admin tool to manage collection and we resign from keeping them in WF variable
  */
 $dir = dirname(__FILE__);
-require_once( $dir . '/../CityVisualization.class.php' );
 
 F::app()->registerHook('WikiFactoryChanged', 'WikiaHomePageCollectionsHooks', 'onWikiFactoryVarChanged');
 

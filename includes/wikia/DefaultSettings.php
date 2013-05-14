@@ -283,6 +283,25 @@ $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormB
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
 $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
+$wgAutoloadClasses['CityVisualization'] =  "{$IP}/includes/wikia/models/CityVisualization.class.php";
+
+// city visualization dependencies
+$wgAutoloadClasses['WikiImageRowAssigner'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiImageRowAssigner.lass.php";
+$wgAutoloadClasses['WikiImageRowHelper'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiImageRowHelper.class.php";
+$wgAutoloadClasses['WikiImageNameRowHelper'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiImageNameRowHelper.class.php";
+$wgAutoloadClasses['WikiImageReviewStatusRowHelper'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiImageReviewStatusRowHelper.class.php";
+
+$wgAutoloadClasses['WikiGetDataHelper'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiGetDataHelper.class.php";
+$wgAutoloadClasses['WikiGetDataForVisualizationHelper'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiGetDataForVisualizationHelper.class.php";
+$wgAutoloadClasses['WikiGetDataForPromoteHelper'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiGetDataForPromoteHelper.class.php";
+$wgAutoloadClasses['WikiDataGetter'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiDataGetter.class.php";
+$wgAutoloadClasses['WikiDataGetterForSpecialPromote'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiDataGetterForSpecialPromote.class.php";
+$wgAutoloadClasses['WikiDataGetterForVisualization'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiDataGetterForVisualization.class.php";
+$wgAutoloadClasses['WikiListConditioner'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiListConditioner.class.php";
+$wgAutoloadClasses['WikiListConditionerForVertical'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiListConditionerForVertical.class.php";
+$wgAutoloadClasses['WikiListConditionerForCollection'] = "{$IP}/includes/wikia/models/visualizationdependencies/WikiListConditionerForCollection.class.php";
+
+$wgAutoloadClasses['WikiaHomePageHelper'] = "{$IP}/includes/wikia/helpers/WikiaHomePageHelper.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
