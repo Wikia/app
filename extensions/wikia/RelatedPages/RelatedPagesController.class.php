@@ -26,7 +26,7 @@ class RelatedPagesController extends WikiaController {
 		}
 
 		// Determine if we need to care about the current namespace or not
-		if ( !empty($params["anyNS"]) && $params["anyNS"] ) {
+		if ( !empty($params["anyNS"]) ) {
 			$ignoreNS = false;
 		} else {
 			$ignoreNS = !empty( $wgTitle ) && !in_array( $wgTitle->getNamespace(), $wgContentNamespaces );
