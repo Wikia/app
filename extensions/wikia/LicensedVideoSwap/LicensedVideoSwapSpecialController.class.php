@@ -27,6 +27,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videoList
 	 */
 	public function index() {
+
+		// update h1 text
+		$this->getContext()->getOutput()->setPageTitle( $this->wf->Msg('lvs-page-title') );
+
 		$selectedSort = $this->getVal( 'selectedSort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
