@@ -762,7 +762,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFilterQueryString
 	 */
 	public function testGetFilterQueryString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) ); 
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
 		                   ->setConstructorArgs( array( $dc ) )
@@ -773,10 +773,15 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getCityId' )
 		    ->will   ( $this->returnValue( 123 ) )
 		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getNamespaces' )
+		    ->will   ( $this->returnValue( [ 0, 14 ] ) )
+		;
 		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'getFilterQueryString' );
 		$reflspell->setAccessible( true );
 		$this->assertEquals(
-				Wikia\Search\Utilities::valueForField( 'wid', 123 ),
+				'((ns:0) OR (ns:14)) AND (wid:123)',
 				$reflspell->invoke( $mockSelect )
 		);
 	}
