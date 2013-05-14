@@ -54,17 +54,17 @@
 		<h2 class="heading">
 			<?= wfMessage('manage-wikia-home-collections-setup-header')->text() ?>
 		</h2>
-
+		
 		<form method="post" class="WikiaForm" id="collectionsSetupForm">
 			<? for($i=0; $i < WikiaCollectionsModel::COLLECTIONS_COUNT; $i++): ?>
-				<div class="collection-module">
 
-					<?php
-						$enabled = isset($form->getField('enabled')['value'][$i]) ? $form->getField('enabled')['value'][$i] : false;
-						$collectionId = isset($form->getField('id')['value'][$i]) ? $form->getField('id')['value'][$i] : 0;
-						$wikisCounter = isset($wikisPerCollection[$collectionId]) ? $wikisPerCollection[$collectionId] : 0;
-					?>
-					
+				<?php
+					$enabled = isset($form->getField('enabled')['value'][$i]) ? $form->getField('enabled')['value'][$i] : false;
+					$collectionId = isset($form->getField('id')['value'][$i]) ? $form->getField('id')['value'][$i] : 0;
+					$wikisCounter = isset($wikisPerCollection[$collectionId]) ? $wikisPerCollection[$collectionId] : 0;
+				?>
+				
+				<div class="collection-module" data-collection-id="<?= $collectionId; ?>">
 					<?php if( $enabled && $wikisCounter != WikiaHomePageHelper::SLOTS_IN_TOTAL ): ?>
 						<div class="input-group">
 							<p class="error"><?= wfMessage('manage-wikia-home-collections-invalid-wikis-number')->numParams([WikiaHomePageHelper::SLOTS_IN_TOTAL])->text(); ?></p>
