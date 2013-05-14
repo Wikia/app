@@ -836,4 +836,64 @@ class ConfigTest extends BaseTest {
 				$config->getQuery()
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getWikiId
+	 */
+	public function testGetWikiIdDefault() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'getService' ] )
+		               ->getMock();
+		$service = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		                ->setMethods( [ 'getWikiId' ] )
+		                ->getMock();
+		$this->assertAttributeEmpty(
+				'wikiId',
+				$config
+		);
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$this->assertEquals(
+				123,
+				$config->getWikiId(),
+				'Wikia\Search\Config should default to ID of current wiki if the wiki ID has not been set'
+		);
+		$this->assertAttributeEquals(
+				123,
+				'wikiId',
+				$config,
+				'Calling Wikia\Search\Config::getWikiID on a config whose ID has not been set should store the current wiki in the wikiId attribute'
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setWikiId
+	 * @covers Wikia\Search\Config::getWikiId
+	 */
+	public function testSetAndGetWikiId() {
+		$config = new Config;
+		$this->assertAttributeEmpty(
+				'wikiId',
+				$config
+		);
+		$config->setWikiId( 123 );
+		$this->assertAttributeEquals(
+				123,
+				'wikiId',
+				$config
+		);
+		$this->assertEquals(
+				123,
+				$config->getWikiId()
+		);
+	}
 }
