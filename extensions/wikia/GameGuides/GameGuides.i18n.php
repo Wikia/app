@@ -37,7 +37,7 @@ $messages['en'] = array(
 	'wikiagameguides-sponsored-add-language' => 'Add Language',
 
 	'wikiagameguides-sponsored-video-url' => 'Video Url',
-	'wikiagameguides-sponsored-wiki' => 'Wiki Url',
+	'wikiagameguides-sponsored-wiki-url' => 'Wiki Url',
 	'wikiagameguides-sponsored-language' => 'Language',
 	'wikiagameguides-sponsored-video-title' => 'Video Title',
 	'wikiagameguides-sponsored-duplicate-entry' => 'This filed is duplicated',

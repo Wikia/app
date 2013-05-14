@@ -57,8 +57,8 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 		$this->response->setVal( 'save', wfMessage( 'wikiagameguides-content-save' )->text() );
 
 		$this->response->setVal( 'language_placeholder', wfMessage( 'wikiagameguides-sponsored-language' )->text() );
-		$this->response->setVal( 'wiki_placeholder', wfMessage( 'wikiagameguides-sponsored-wiki' )->text() );
-		$this->response->setVal( 'video_placeholder', wfMessage( 'wikiagameguides-sponsored-video' )->text() );
+		$this->response->setVal( 'wiki_url_placeholder', wfMessage( 'wikiagameguides-sponsored-wiki-url' )->text() );
+		$this->response->setVal( 'video_url_placeholder', wfMessage( 'wikiagameguides-sponsored-video-url' )->text() );
 		$this->response->setVal( 'video_title_placeholder', wfMessage( 'wikiagameguides-sponsored-video-title' )->text() );
 
 
@@ -80,8 +80,8 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 					'value' => $language['code']
 				] );
 
-				if ( !empty( $language['categories'] ) ) {
-					foreach( $language['categories'] as $video ) {
+				if ( !empty( $language['videos'] ) ) {
+					foreach( $language['videos'] as $video ) {
 						$list .= $this->sendSelfRequest( 'video', [
 							'video_url' => $video['video_url'],
 							'video_title' => $video['video_title'],
@@ -109,10 +109,10 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
 		$this->response->setVal( 'video_title', $this->request->getVal( 'video_title', '' ) );
-		$this->response->setVal( 'video_url', $this->request->getVal('video_url'), '' );
-		$this->response->setVal( 'wiki_url', $this->request->getVal('wiki_url'), '' );
+		$this->response->setVal( 'video_url', $this->request->getVal( 'video_url'), '' );
+		$this->response->setVal( 'wiki_url', $this->request->getVal( 'wiki_url'), '' );
 
-		$this->response->setVal( 'wiki_url_placeholder', wfMessage( 'wikiagameguides-sponsored-wiki' )->text() );
+		$this->response->setVal( 'wiki_url_placeholder', wfMessage( 'wikiagameguides-sponsored-wiki-url' )->text() );
 		$this->response->setVal( 'video_title_placeholder', wfMessage( 'wikiagameguides-sponsored-video-title' )->text() );
 		$this->response->setVal( 'video_url_placeholder', wfMessage( 'wikiagameguides-sponsored-video-url' )->text() );
 	}
