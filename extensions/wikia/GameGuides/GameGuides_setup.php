@@ -71,7 +71,8 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesSponsoredMsg', [
 	'wikiagameguides-sponsored-video-title',
 	'wikiagameguides-sponsored-duplicate-entry',
 	'wikiagameguides-sponsored-required-entry',
-	'wikiagameguides-sponsored-empty-language'
+	'wikiagameguides-sponsored-empty-language',
+	'wikiagameguides-sponsored-orphaned-video'
 ] );
 
 //hooks

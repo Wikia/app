@@ -122,42 +122,39 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
+
 		$this->response->setFormat( 'json' );
 
-		$tags = $this->request->getArray( 'tags' );
-		$err = [];
+		$languages = $this->request->getArray( 'languages' );
+		//$err = [];
 
-		if( !empty( $tags ) ) {
-			foreach ( $tags as &$tag ) {
+//		if( !empty( $languages ) ) {
+//			foreach ( $languages as &$tag ) {
+//
+//				if( !empty( $tag['videos'] ) ) {
+//
+//					foreach ( $tag['videos'] as &$video ) {
+//
+//						$videoTitle = $video['title'];
+//
+//						$category = Category::newFromName( $catTitle );
+//						//check if categories exists
+//						if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
+//							$err[] = $catTitle;
+//						} else if ( empty( $err ) ) {
+//							$cat['id'] = $category->getTitle()->getArticleID();
+//						}
+//					}
+//				}
+//			}
+//
+//			if ( !empty( $err ) ) {
+//				$this->response->setVal( 'error', $err );
+//				return true;
+//			}
+//		}
 
-				$tag['image_id'] = (int) $tag['image_id'];
-
-				if( !empty( $tag['categories'] ) ) {
-
-					foreach ( $tag['categories'] as &$cat ) {
-
-						$catTitle = $cat['title'];
-
-						$cat['image_id'] = (int) $cat['image_id'];
-
-						$category = Category::newFromName( $catTitle );
-						//check if categories exists
-						if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
-							$err[] = $catTitle;
-						} else if ( empty( $err ) ) {
-							$cat['id'] = $category->getTitle()->getArticleID();
-						}
-					}
-				}
-			}
-
-			if ( !empty( $err ) ) {
-				$this->response->setVal( 'error', $err );
-				return true;
-			}
-		}
-
-		$status = WikiFactory::setVarByName( 'wgWikiaGameGuidesSponsoredVideos', $this->wg->CityId, $tags );
+		$status = WikiFactory::setVarByName( 'wgWikiaGameGuidesSponsoredVideos', $this->wg->CityId, $languages );
 		$this->response->setVal( 'status', $status );
 
 		if ( $status ) {

@@ -42,7 +42,8 @@ $messages['en'] = array(
 	'wikiagameguides-sponsored-video-title' => 'Video Title',
 	'wikiagameguides-sponsored-duplicate-entry' => 'This filed is duplicated',
 	'wikiagameguides-sponsored-required-entry' => 'This field is required',
-	'wikiagameguides-sponsored-empty-language' => 'Language can not be empty'
+	'wikiagameguides-sponsored-empty-language' => 'Language can not be empty',
+	'wikiagameguides-sponsored-orphaned-video' => 'Video has to have a language'
 );
 
 /** Message documentation (Message documentation)
