@@ -266,16 +266,13 @@ ManageWikiaHome.prototype = {
 			|| (this.wikisPerCollection[collectionId] >= this.SLOTS_IN_TOTAL && action == window.SWITCH_COLLECTION_TYPE_REMOVE ) //or there are too many wikis in the collection and user is removing them
 	},
 	updateCounterDisplay: function(collectionId) {
-		var counterContainer = $('.collection-module[data-collection-id="' + collectionId + '"] .collection-wikis-counter');
-
-		var counterContent = $(document.createElement('p'));
-		counterContent.append( $.msg('manage-wikia-home-collections-wikis-in-collection', 
-			this.wikisPerCollection[collectionId], 
-			this.SLOTS_IN_TOTAL
-		) ); 
+		var counterContainer = $('.collection-module[data-collection-id="' + collectionId + '"] .collection-wikis-counter p');
 		
-		counterContainer.html('');
-		counterContainer.append(counterContent);
+		counterContainer.text('');
+		counterContainer.text($.msg('manage-wikia-home-collections-wikis-in-collection',
+			this.wikisPerCollection[collectionId],
+			this.SLOTS_IN_TOTAL
+		));
 	}
 };
 
