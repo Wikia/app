@@ -30,6 +30,9 @@
 	<testsuite name="Wikia Search Test Suite">
 		<directory>../extensions/wikia/Search/classes/Test</directory>
 	</testsuite>
+	<testsuite name="Wikia Oasis Test Suite">
+		<directory>../skins/oasis/modules/tests</directory>
+	</testsuite>
 	<testsuite name="LyricFind Test Suite">
 		<directory>../extensions/3rdparty/LyricWiki/LyricFind/tests/</directory>
 	</testsuite>
