@@ -47,7 +47,7 @@ ManageWikiaHome.prototype = {
 		
 		this.SLOTS_IN_TOTAL = window.wgSlotsInTotal || 0;
 		this.wikisPerCollection = window.wgWikisPerCollection || [];
-
+		
 		$().log('ManageWikiaHome.init');
 	},
 	changeVisualizationLang: function(e) {
@@ -219,37 +219,36 @@ ManageWikiaHome.prototype = {
 	editWikiCollection: function() {
 		var collectionId = this.modalObject.target.val();
 		var action = this.modalObject.type;
+		var isValid = this.isValidWikisAmount(collectionId, action);
 
-		if( action == window.SWITCH_COLLECTION_TYPE_ADD ) {
+		if( isValid && action == window.SWITCH_COLLECTION_TYPE_ADD ) {
 			this.wikisPerCollection[collectionId]++;
 			this.updateCounterDisplay(collectionId);
-		} else if( action == window.SWITCH_COLLECTION_TYPE_REMOVE ) {
+			this.updateCollection();
+		} else if( isValid && action == window.SWITCH_COLLECTION_TYPE_REMOVE ) {
 			this.wikisPerCollection[collectionId]--;
 			this.updateCounterDisplay(collectionId);
-		}
-
-		this.onWikisPerCollectionChange(collectionId, action);
-	},
-	onWikisPerCollectionChange: function(collectionId, action) {
-		if( this.isOKtoSendRequest(collectionId, action) ) {
-			$.nirvana.sendRequest({
-				controller: 'ManageWikiaHome',
-				method: 'switchCollection',
-				type: 'post',
-				data: {
-					switchType: this.modalObject.type,
-					collectionId: this.modalObject.target.val(),
-					wikiId: this.modalObject.target.attr('data-id')
-				},
-				callback: $.proxy(function(response) {
-					this.wereCollectionsWikisChanged = true;
-					$('.modalWrapper').closeModal();
-				}, this)
-			});
-		} else {
+			this.updateCollection();
+		} else if( !isValid ) {
 			$('.modalWrapper').closeModal();
 			alert( $.msg('manage-wikia-home-modal-too-many-wikis-in-collection') );
 		}
+	},
+	updateCollection: function() {
+		$.nirvana.sendRequest({
+			controller: 'ManageWikiaHome',
+			method: 'switchCollection',
+			type: 'post',
+			data: {
+				switchType: this.modalObject.type,
+				collectionId: this.modalObject.target.val(),
+				wikiId: this.modalObject.target.attr('data-id')
+			},
+			callback: $.proxy(function(response) {
+				this.wereCollectionsWikisChanged = true;
+				$('.modalWrapper').closeModal();
+			}, this)
+		});
 	},
 	changeCollectionCheckbox: function() {
 		if( this.modalObject.collectionsEdit ) {
@@ -260,11 +259,11 @@ ManageWikiaHome.prototype = {
 			}
 		}
 	},
-	isOKtoSendRequest: function(collectionId, action) {
+	isValidWikisAmount: function(collectionId, action) {
 		return 
 			!this.wikisPerCollection[collectionId] //there are no wikis in the collection yet 
-			|| this.wikisPerCollection[collectionId] <= this.SLOTS_IN_TOTAL //or there is still place for another wiki in the collection
-			|| (this.wikisPerCollection[collectionId] > this.SLOTS_IN_TOTAL && action == window.SWITCH_COLLECTION_TYPE_REMOVE ) //or there are too many wikis in the collection and user is removing them
+			|| this.wikisPerCollection[collectionId] < this.SLOTS_IN_TOTAL //or there is still place for another wiki in the collection
+			|| (this.wikisPerCollection[collectionId] >= this.SLOTS_IN_TOTAL && action == window.SWITCH_COLLECTION_TYPE_REMOVE ) //or there are too many wikis in the collection and user is removing them
 	},
 	updateCounterDisplay: function(collectionId) {
 		var counterContainer = $('.collection-module[data-collection-id="' + collectionId + '"] .collection-wikis-counter');
