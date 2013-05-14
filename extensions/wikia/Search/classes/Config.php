@@ -817,7 +817,7 @@ class Config
 	 * @return int
 	 */
 	public function getWikiId() {
-		if ( empty( $this->wikId ) ) {
+		if ( empty( $this->wikiId ) ) {
 			$this->wikiId = $this->getService()->getWikiId();
 		}
 		return $this->wikiId;
