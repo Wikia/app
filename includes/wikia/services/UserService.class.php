@@ -57,8 +57,9 @@ class UserService extends Service {
 	 * @return array
 	 */
 	private static function queryDbForUsers( $where ) {
+		global $wgExternalSharedDB;
 		$result = array();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$conds = $dbr->makeList( $where, LIST_OR );
 		$s = $dbr->selectSQLText( 'user', '*', $conds, __METHOD__ );
 		$s = $dbr->query( $s, __METHOD__ );
