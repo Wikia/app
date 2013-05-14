@@ -177,14 +177,6 @@ class InterWiki extends AbstractSelect
 		}
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
 	}
-	
-	/**
-	 * Returns a nested query, preceded by lucene queries used to filter out bad wikis, and non-content documents.
-	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery()
-	 */
-	protected function getFormulatedQuery() {
-		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
-	}
 
 	/**
 	 * Return a string of query fields based on configuration
