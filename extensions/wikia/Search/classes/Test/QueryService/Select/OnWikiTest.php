@@ -364,44 +364,6 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\OnWiki::getFormulatedQuery
-	 */
-	public function testGetFormulatedQuery() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQuery' ] );
-		
-		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
-		                   ->setConstructorArgs( [ $dc ] )
-		                   ->setMethods( array( 'getQueryClausesString' ) )
-		                   ->getMock();
-		
-		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSolrQuery' ], [ 'foo' ] );
-		
-		$mockSelect
-		    ->expects( $this->once() )
-		    ->method ( 'getQueryClausesString' )
-		    ->will   ( $this->returnValue( 'foo' ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getQuery' )
-		    ->will   ( $this->returnValue( $mockQuery ) )
-		;
-		$mockQuery
-		    ->expects( $this->once() )
-		    ->method ( 'getSolrQuery' )
-		    ->will   ( $this->returnValue( 'bar' ) )
-		;
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'getFormulatedQuery' );
-		$method->setAccessible( true );
-		$this->assertEquals(
-				'foo AND (bar)',
-				$method->invoke( $mockSelect )
-		);
-	}
-	
-	/**
 	 * @covers Wikia\Search\QueryService\Select\OnWiki::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
