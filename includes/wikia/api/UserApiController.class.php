@@ -12,7 +12,7 @@ class UserApiController extends WikiaApiController {
 	/**
 	 * Get details about one or more user
 	 *
-	 * @requestParam string $ids A string with a comma-separated list of user ID's
+	 * @requestParam string $ids A string with a comma-separated list of user ID's, limit for query equals 100
 	 * @requestParam integer $size [OPTIONAL] The desired width and height for the thumbnail, defaults to 100, 0 for no thumbnail
 	 *
 	 * @responseParam array $items A list of results with the user ID as the index, each item has a title, name, url, avatar, numberofedits
@@ -29,6 +29,8 @@ class UserApiController extends WikiaApiController {
 		$ids = explode( ',', trim( $ids ) );
 		$size = $this->request->getInt( 'size', static::AVATAR_DEFAULT_SIZE );
 
+		//limit number of users to 100
+		$ids = array_slice( $ids, 0, 100 );
 		//users are cached inside the service
 		$users = UserService::getUsers( $ids );
 		$items = array();
