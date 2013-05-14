@@ -308,6 +308,9 @@ class PageHeaderController extends WikiaController {
 			case NS_FORUM:
 				$this->pageType = wfMsg('oasis-page-header-subtitle-forum');
 				break;
+
+				wfRunHooks('RenderPageHeader', array(&$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory));
+
 		}
 
 		// render subpage info

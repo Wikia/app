@@ -16,6 +16,9 @@ $app = F::app();
 //classes
 $app->registerClass( 'LicensedVideoSwapSpecialController', $dir.'LicensedVideoSwapSpecialController.class.php' );
 $app->registerClass( 'LicensedVideoSwapHelper', $dir.'LicensedVideoSwapHelper.class.php' );
+$app->registerClass( 'LicensedVideoSwapHooks', $dir.'LicensedVideoSwapHooks.class.php' );
+
+// hooks
 
 // i18n mapping
 $app->registerExtensionMessageFile( 'LicensedVideoSwap', $dir.'LicensedVideoSwap.i18n.php' );
