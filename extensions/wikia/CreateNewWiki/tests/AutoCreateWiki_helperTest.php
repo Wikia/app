@@ -7,7 +7,7 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 
 		parent::setUp();
 
-		$userMock = $this->getMock('stcClass', array('getGroups'));
+		$userMock = $this->getMock('stdClass', array('getGroups'));
 		$userMock->expects($this->any())
 			->method('getGroups')
 			->will($this->returnValue(array()));

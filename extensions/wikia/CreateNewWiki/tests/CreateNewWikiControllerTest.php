@@ -51,8 +51,8 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 			->method('getFullURL')
 			->will($this->returnValue($mainPageUrl));
 
-		$this->proxyClass('CreateWiki', $createWiki);
-		$this->proxyClass('GlobalTitle', $mainPageTitle);
+		$this->mockClass('CreateWiki', $createWiki);
+		$this->mockClass('GlobalTitle', $mainPageTitle);
 
 		$this->mockApp();
 
