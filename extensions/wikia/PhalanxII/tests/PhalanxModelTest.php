@@ -190,7 +190,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 		return array(
 			array(
 				'type' => Phalanx:: TYPE_TITLE,
-				'content' => $this->mockClassWithMethods('Title', array('getText' => 'foo')),
+				'content' => $this->getMockWithMethods('Title', array('getText' => 'foo')),
 				'className' => 'PhalanxContentModel',
 				'methodName' => 'getTitle'
 			),
@@ -202,7 +202,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			),
 			array(
 				'type' => Phalanx::TYPE_USER,
-				'content' => $this->mockClassWithMethods('User', array('getUser' => 'foo')),
+				'content' => $this->getMockWithMethods('User', array('getUser' => 'foo')),
 				'className' => 'PhalanxUserModel',
 				'methodName' => 'getUser'
 			),
