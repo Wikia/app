@@ -96,21 +96,6 @@ class WikiaHomePageTest extends WikiaBaseTest {
 		return $mockObject;
 	}
 
-	protected function setUpGlobalVariables($params) {
-		foreach ($params as $key => $value) {
-			global ${$key}, ${$key . 'Org'};
-			${$key . 'Org'} = ${$key};
-			${$key} = $value;
-		}
-	}
-
-	protected function teardownGlobalVariables($params) {
-		foreach ($params as $key => $value) {
-			global ${$key}, ${$key . 'Org'};
-			${$key} = ${$key . 'Org'};
-		}
-	}
-
 	/**
 	 * @dataProvider getHubImagesDataProvider
 	 */
@@ -123,10 +108,13 @@ class WikiaHomePageTest extends WikiaBaseTest {
 		$mockFile = $this->setUpMockObject('File', $mockFileParams, true, null, false);
 
 		if ($mockFileParams['exists']) {
-			$this->setUpMockObject('WikiaFunctionWrapper', array('FindFile' => $mockFile), true, null, false);
+			$mockFindFile = $this->getGlobalFunctionMock( 'wfFindFile' );
+			$mockFindFile->expects( $this->any() )
+				->method( 'wfFindFile' )
+				->will( $this->returnValue( $mockFile ) );
 		}
-
 		$this->setUpMock();
+
 		// test
 		$response = $this->app->sendRequest('WikiaHomePage', 'getHubImages');
 
@@ -431,8 +419,7 @@ TXT;
 	 */
 	public function testGetWikiAdminAvatars($mockWikiId, $mockWikiServiceParam, $mockUserStatsServiceParam, $mockUserParam, $mockAvatarServiceParam, $expAdminAvatars) {
 		// setup
-		$globalVarParams = array('wgServer' => self::TEST_URL);
-		$this->setUpGlobalVariables($globalVarParams);
+		$this->mockGlobalVariable('wgServer', self::TEST_URL);
 
 		$this->setUpMockObject('WikiService', $mockWikiServiceParam, true);
 		$this->setUpMockObject('UserStatsService', $mockUserStatsServiceParam, true);
@@ -472,9 +459,6 @@ TXT;
 		$adminAvatars = array_values($helper->getWikiAdminAvatars($mockWikiId));
 
 		$this->assertEquals($expAdminAvatars, $adminAvatars);
-
-		// teardown
-		$this->teardownGlobalVariables($globalVarParams);
 	}
 
 	public function getWikiAdminAvatarsDataProvider() {
@@ -605,10 +589,7 @@ TXT;
 	 * @dataProvider getWikiTopEditorAvatarsDataProvider
 	 */
 	public function testGetWikiTopEditorAvatars($mockWikiId, $mockWikiServiceParam, $mockUserParam, $mockAvatarServiceParam, $expTopEditorAvatars) {
-		// setup
-		$globalVarParams = array('wgServer' => self::TEST_URL);
-		$this->setUpGlobalVariables($globalVarParams);
-
+		$this->mockGlobalVariable('wgServer', self::TEST_URL);
 		$this->setUpMockObject('WikiService', $mockWikiServiceParam, true);
 		$this->setUpMockObject('User', $mockUserParam, true);
 		$this->setUpMockObject('AvatarService', $mockAvatarServiceParam, true);
@@ -627,9 +608,6 @@ TXT;
 		$topEditorAvatars = array_values($helper->getWikiTopEditorAvatars($mockWikiId));
 
 		$this->assertEquals($expTopEditorAvatars, $topEditorAvatars);
-
-		// teardown
-		$this->teardownGlobalVariables($globalVarParams);
 	}
 
 	public function getWikiTopEditorAvatarsDataProvider() {
