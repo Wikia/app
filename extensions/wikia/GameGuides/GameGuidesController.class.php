@@ -526,6 +526,18 @@ class GameGuidesController extends WikiaController {
 	}
 
 	/**
+	 * @brief Whenever data is saved in GG Content Managment Tool
+	 * purge Varnish cache for it
+	 *
+	 * @return bool
+	 */
+	static function onGameGuidesContentSave(){
+		self::purgeMethod( 'getList' );
+
+		return true;
+	}
+
+	/**
 	 *
 	 */
 	function getVideos() {
@@ -554,13 +566,15 @@ class GameGuidesController extends WikiaController {
 	}
 
 	/**
-	 * @brief Whenever data is saved in GG Content Managment Tool
+	 * @brief Whenever data is saved in GG Sponsored Videos Tool
 	 * purge Varnish cache for it
 	 *
 	 * @return bool
 	 */
-	static function onGameGuidesContentSave(){
-		self::purgeMethod( 'getList' );
+	static function onGameGuidesSponsoredSave(){
+		self::purgeMethod( 'getVidoes' );
+
+		//TODO: Grab all saved languges and purge them as well
 
 		return true;
 	}

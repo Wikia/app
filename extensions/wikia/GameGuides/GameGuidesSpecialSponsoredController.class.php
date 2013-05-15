@@ -124,33 +124,34 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 		$this->response->setFormat( 'json' );
 
 		$languages = $this->request->getArray( 'languages' );
-		//$err = [];
+		$err = [];
 
-//		if( !empty( $languages ) ) {
-//			foreach ( $languages as &$tag ) {
-//
-//				if( !empty( $tag['videos'] ) ) {
-//
-//					foreach ( $tag['videos'] as &$video ) {
-//
-//						$videoTitle = $video['title'];
-//
-//						$category = Category::newFromName( $catTitle );
-//						//check if categories exists
-//						if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
-//							$err[] = $catTitle;
-//						} else if ( empty( $err ) ) {
-//							$cat['id'] = $category->getTitle()->getArticleID();
-//						}
-//					}
-//				}
-//			}
-//
-//			if ( !empty( $err ) ) {
-//				$this->response->setVal( 'error', $err );
-//				return true;
-//			}
-//		}
+		if( !empty( $languages ) ) {
+			foreach ( $languages as $language => &$videos ) {
+				foreach ( $videos as &$video ) {
+
+					$title = Title::newFromText( $video['video_name'], NS_VIDEO );
+
+					$video['wiki_id'] = (int) WikiFactory::DomainToID( $video['wiki'] );
+
+					if ( !empty( $title ) && $title->exists() ) {
+						$vid = wfFindFile( $title );
+
+						if ( !empty( $vid ) && $vid instanceof WikiaLocalFile ) {
+
+							$handler = $vid->getHandler();
+
+							if ( $handler instanceof OoyalaVideoHandler ) {
+								$video['id'] = $handler->getVideoId();
+								$video['duration'] = $handler->getFormattedDuration();
+							}
+						}
+					}
+
+
+				}
+			}
+		}
 
 		$status = WikiFactory::setVarByName( 'wgWikiaGameGuidesSponsoredVideos', $this->wg->CityId, $languages );
 		$this->response->setVal( 'status', $status );
