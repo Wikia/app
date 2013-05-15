@@ -67,7 +67,8 @@ class WikiaAppMock {
 			$functionName = 'wf'.ucfirst($functionName);
 		}
 		// TODO: do not ignore CallsNum and InputParams verification
-		WikiaMockProxy::redefineGlobalFunction($functionName, $returnValue, $inputParams);
+		$this->testCase->getMockProxy()->getGlobalFunction($functionName)
+			->willReturn($returnValue);
 	}
 
 	// If the global variable is not being overridden, return the actual global variable

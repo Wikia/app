@@ -39,21 +39,10 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	);
 
 	public function get($propertyName) {
+		$this->validatePropertyName($propertyName);
 		if( isset($GLOBALS[$propertyName]) )
 			return $GLOBALS[$propertyName];
 		return null;
-		/*
-		if($this->has($propertyName)) {
-			if ( $this->checkPropertyMapping( $propertyName ) ) {
-				$value = $this->processPropertyMapping( $propertyName );
-			} else {
-				$value = $GLOBALS[$propertyName];
-			}
-
-			return $value;
-		}
-
-		return null;*/
 	}
 
 	public function append($propertyName, $value, $key = null) {
@@ -138,4 +127,9 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 		}
 		return null;
 	}
+
+	public static function isInContext( $propertyName ) {
+		return array_key_exists( $propertyName, self::$requestContextMap );
+	}
+
 }

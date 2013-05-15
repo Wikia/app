@@ -26,8 +26,9 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected $appOrig = null;
 	/* @var WikiaAppMock */
 	private $appMock = null;
-	private $mockedClasses = array();
 	private $mockedGlobals = array();
+	/** @var WikiaMockProxy */
+	private $mockProxy = null;
 
 	private static $testRunTime = 0;
 
@@ -61,24 +62,35 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			global $wgDevelEnvironment;  	// used by setup file
 			require_once($this->setupFile);
 		}
+
+		if ( $this->mockProxy !== null ) {
+			throw new Exception("Previous test did not execute tearDown()");
+		}
+		$this->mockProxy = new WikiaMockProxy();
+		$this->mockProxy->enable();
 	}
 
 	protected function tearDown() {
-		$this->unsetClassInstances();
 		$this->unsetGlobals();
 		if (is_object($this->appOrig)) {
 			F::setInstance('App', $this->appOrig);
 		}
-		unset_new_overload();
-		WikiaMockProxy::cleanup();
+//		debug_print_backtrace();
+		if ( $this->mockProxy === null ) {
+			throw new Exception("Current test did not execute setUp()");
+		}
+		$this->mockProxy->disable();
+		$this->mockProxy = null;
 	}
 
-	// TODO: remove mockClass after fixing remaining unit tests
-	protected function mockClass($className, $mock) {
-		// Allow the old tests to run
-		//F::setInstance( $className, $mock );
-		//$this->mockedClasses[] = $className;
-		$this->markTestSkipped('Cannot run tests using old mockClass');
+	/**
+	 * @return WikiaMockProxy
+	 */
+	public function getMockProxy() {
+		if ( empty( $this->mockProxy ) ) {
+			throw new Exception("WikiaMockProxy is not initialized yet. Are you trying to mock anything in data provider?");
+		}
+		return $this->mockProxy;
 	}
 
 	/**
@@ -93,12 +105,16 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $functionName String name of static constructor
 	 * @return void
 	 */
-	protected function proxyClass($className, $mock, $functionName = null) {
-		$mockClassName = get_class($mock);
-		WikiaMockProxy::proxy($className, $mockClassName, $mock);
-		if ($functionName) {
-			WikiaMockProxy::redefineStaticConstructor($className, $functionName);
+	protected function mockClass($className, $mock, $functionName = null) {
+		if ( empty( $mock ) && empty($functionName) ) { // constructor cannot return null
+			return;
 		}
+		if ( empty($functionName) ) {
+			$action = $this->getMockProxy()->getClassConstructor($className);
+		} else {
+			$action = $this->getMockProxy()->getStaticMethod($className,$functionName);
+		}
+		$action->willReturn($mock);
 	}
 
 	/**
@@ -109,7 +125,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param string $staticConstructor name of the "static" class constructor (e.g. Title::newFromText) that will return mocked object
 	 * @return object mocked object
 	 */
-	protected function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = '') {
+	protected function getMockWithMethods($className, Array $methods = array()) {
 		$mock = $this->getMock($className, array_keys($methods));
 
 		foreach($methods as $methodName => $retVal) {
@@ -118,7 +134,13 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				->will( $this->returnValue( ( is_null( $retVal ) ) ? $mock : $retVal) );
 		}
 
-		$this->proxyClass($className, $mock, ($staticConstructor !== '') ? $staticConstructor : null);
+		return $mock;
+	}
+
+	protected function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = '') {
+		$mock = $this->getMockWithMethods($className,$methods);
+
+		$this->mockClass($className, $mock, ($staticConstructor !== '') ? $staticConstructor : null);
 
 		return $mock;
 	}
@@ -137,12 +159,8 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected function mockClassStaticMethod($className, $methodName, $retVal) {
 		// runkit doesn't resolve autoloaded classes, we need to force it here...
 		is_callable(array($className,$methodName));
-		if (!class_exists($className)) {
-			// TODO: add support for namespaces
-			require_once $this->app->wg->AutoloadClasses[$className];
-		}
-		WikiaMockProxy::proxy($className, $className, $retVal);
-		WikiaMockProxy::redefineStaticConstructor($className, $methodName);
+		$this->getMockProxy()->getStaticMethod($className,$methodName)
+			->willReturn($retVal);
 	}
 
 	/**
@@ -154,7 +172,20 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $returnValue mixed value variable should be set to
 	 */
 	protected function mockGlobalVariable( $globalName, $returnValue ) {
-		$this->mockedGlobals[$globalName] = $GLOBALS[$globalName];
+		if ( WikiaGlobalRegistry::isInContext($globalName) ) {
+			if($this->appMock == null) {
+				$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
+			}
+			$this->appMock->mockGlobalVariable( $globalName, $returnValue );
+		}
+
+		if ( !array_key_exists( $globalName, $this->mockedGlobals ) ) {
+			$exists = array_key_exists( $globalName, $GLOBALS );
+			$this->mockedGlobals[$globalName] = array(
+				'exists' => $exists,
+				'value' => $exists ? $GLOBALS[$globalName] : null,
+			);
+		}
 		$GLOBALS[$globalName] = $returnValue;
 
 		/*
@@ -180,6 +211,11 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
 		}
 		$this->appMock->mockGlobalFunction( $functionName, $returnValue, $callsNum, $inputParams );
+		if ( function_exists( 'wf'.ucfirst($functionName) ) ) {
+			$functionName = 'wf' . ucfirst($functionName);
+		}
+		$this->getMockProxy()->getGlobalFunction($functionName)
+			->willReturn($returnValue);
 	}
 
 	/**
@@ -194,29 +230,40 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		));
 	}
 
+	protected function getGlobalFunctionMock( $functionName ) {
+		$mock = $this->getMockBuilder( 'stdClass' )
+			->disableOriginalConstructor()
+			->setMethods( array( $functionName ) )
+			->getMock();
+		$this->getMockProxy()->getGlobalFunction($functionName)
+			->willCall(array($mock,$functionName));
+		return $mock;
+	}
+
+	protected function getStaticMethodMock( $className, $methodName ) {
+		is_callable( "{$className}::{$methodName}" ); // autoload
+		$mock = $this->getMockBuilder( 'stdClass' )
+			->disableOriginalConstructor()
+			->setMethods( array( $methodName ) )
+			->getMock();
+		$this->getMockProxy()->getStaticMethod($className,$methodName)
+			->willCall(array($mock,$methodName));
+		return $mock;
+	}
+
 	// After calling this, any reference to $this->app in a test now uses the mocked object
 	protected function mockApp() {
 		$this->appMock->init();
 		$this->app = F::app();
-
-		$this->enableMockProxy();
-	}
-
-	protected function enableMockProxy() {
-		// php-test-helpers provides this function
-		set_new_overload('WikiaMockProxy::overload');
-	}
-
-	private function unsetClassInstances() {
-		foreach( $this->mockedClasses as $className ) {
-			F::unsetInstance( $className );
-		}
-		$this->mockedClasses = array();
 	}
 
 	private function unsetGlobals() {
-		foreach( $this->mockedGlobals as $globalName => $globalValue ) {
-			$GLOBALS[$globalName] = $globalValue;
+		foreach( $this->mockedGlobals as $globalName => $globalDef ) {
+			if ( $globalDef['exists'] ) {
+				$GLOBALS[$globalName] = $globalDef['value'];
+			} else {
+				unset($GLOBALS[$globalName]);
+			}
 		}
 		$this->mockedGlobals = array();
 	}

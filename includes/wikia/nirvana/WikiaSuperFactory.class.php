@@ -35,6 +35,9 @@ abstract class WikiaSuperFactory {
 	 * @deprecated
 	 */
 	public static function setInstance($className, $instance) {
+		if ( $className == 'App' || $className == 'WikiaApp' ) {
+			self::$appInstance = $instance;
+		}
 		if(!isset(self::$constructors[$className])) {
 			self::$constructors[$className] = array();
 		}
