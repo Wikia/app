@@ -8,6 +8,7 @@
 class UserApiController extends WikiaApiController {
 
 	const AVATAR_DEFAULT_SIZE = 100;
+	const USER_LIMIT = 100;
 
 	/**
 	 * Get details about one or more user
@@ -29,8 +30,8 @@ class UserApiController extends WikiaApiController {
 		$ids = explode( ',', trim( $ids ) );
 		$size = $this->request->getInt( 'size', static::AVATAR_DEFAULT_SIZE );
 
-		//limit number of users to 100
-		$ids = array_slice( $ids, 0, 100 );
+		//limit number of users
+		$ids = array_slice( $ids, 0, static::USER_LIMIT );
 		//users are cached inside the service
 		$users = (new UserService())->getUsers( $ids );
 		$items = array();
