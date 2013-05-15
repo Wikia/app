@@ -143,7 +143,7 @@ WikiPreview.prototype = {
 WikiaHomePageRemix.prototype = {
 	remixesWhenShowCollection: [0, 3, 5],
 	COLLECTIONS_LS_KEY: 'WHP_collections',
-	SPONSOR_HERO_IMG_TIMEOUT: 2000,
+	SPONSOR_HERO_IMG_TIMEOUT: 3000,
 	SPONSOR_HERO_IMG_CONTAINER_ID: 'WikiaHomePageHeroImage',
 	init: function () {
 		this.wikiSetStack = window.wgInitialWikiBatchesForVisualization;
