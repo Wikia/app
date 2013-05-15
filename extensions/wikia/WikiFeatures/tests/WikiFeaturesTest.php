@@ -14,7 +14,7 @@
 
 		protected function setUpMock($cache_value=null) {
 			if(is_null($cache_value)) {
-				$mock_cache = $this->getMock('stdClass', array('set', 'delete'));
+				$mock_cache = $this->getMock('stdClass', array('get', 'set', 'delete'));
 			} else {
 				$mock_cache = $this->getMock('stdClass', array('get', 'set', 'delete'));
 				$mock_cache->expects($this->any())
