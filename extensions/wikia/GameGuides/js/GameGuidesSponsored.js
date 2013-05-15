@@ -10,6 +10,7 @@ $(function(){
 			requiredError = msg('wikiagameguides-sponsored-required-entry'),
 			emptyTagError = msg('wikiagameguides-sponsored-empty-tag'),
 			orphanedVideo = msg('wikiagameguides-sponsored-orphaned-video'),
+			sure = msg('wikiagameguides-sponsored-are-you-sure'),
 			addCategory = d.getElementById('addCategory'),
 			addTag = d.getElementById('addTag'),
 			$save = $(d.getElementById('save')),
@@ -112,6 +113,18 @@ $(function(){
 				}
 			};
 
+		function isEmpty(obj) {
+			var key;
+
+			for (key in obj) {
+				if (obj.hasOwnProperty(key)) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
 		$form
 			.on('keypress', '.video-url', function(ev){
 				if(ev.keyCode === 13) addNew(category, $(this).parent());
@@ -163,6 +176,10 @@ $(function(){
 
 					data[code] = videos;
 				});
+
+				if ( isEmpty(data) && !confirm(sure) ) {
+					return;
+				}
 
 				$save.removeClass();
 				$form.startThrobbing();

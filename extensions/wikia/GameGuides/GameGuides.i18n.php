@@ -43,7 +43,8 @@ $messages['en'] = array(
 	'wikiagameguides-sponsored-duplicate-entry' => 'This filed is duplicated',
 	'wikiagameguides-sponsored-required-entry' => 'This field is required',
 	'wikiagameguides-sponsored-empty-language' => 'Language can not be empty',
-	'wikiagameguides-sponsored-orphaned-video' => 'Video has to have a language'
+	'wikiagameguides-sponsored-orphaned-video' => 'Video has to have a language',
+	'wikiagameguides-sponsored-are-you-sure' => 'Are you sure you want to erase everything ?'
 );
 
 /** Message documentation (Message documentation)
