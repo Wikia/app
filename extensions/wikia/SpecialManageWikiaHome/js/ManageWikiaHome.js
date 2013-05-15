@@ -7,6 +7,8 @@ ManageWikiaHome.prototype = {
 	MODAL_TYPE_UNBLOCKED: 2,
 	MODAL_TYPE_PROMOTED: 3,
 	MODAL_TYPE_DEMOTED: 4,
+	MODAL_TYPE_ADD_OFFCIAL: 5,
+	MODAL_TYPE_REMOVE_OFFICIAL: 6,
 	isListChangingDelayed: false,
 	visualizationLang: 'en',
 	modalObject: {content: '', type: 0, target: {}, collectionsEdit: false},
@@ -134,6 +136,16 @@ ManageWikiaHome.prototype = {
 							this.modalObject.type = this.MODAL_TYPE_PROMOTED;
 						}
 					}
+					else if (targetObject.hasClass('status-official')) {
+						if (targetObject.data('flags') == '1') {
+							$('.question-container').text($.msg('manage-wikia-home-modal-content-add-official'));
+							this.modalObject.type = this.MODAL_TYPE_REMOVE_OFFICIAL;
+						}
+						else {
+							$('.question-container').text($.msg('manage-wikia-home-modal-content-remove-official'));
+							this.modalObject.type = this.MODAL_TYPE_ADD_OFFCIAL;
+						}
+					}
 					
 					this.modalObject.target = targetObject;
 				}, this)
@@ -196,6 +208,15 @@ ManageWikiaHome.prototype = {
 			case this.MODAL_TYPE_DEMOTED:
 				method = 'removeWikiFromPromoted';
 				message = $.msg('manage-wikia-home-wiki-list-blocked-no');
+				break;
+			case this.MODAL_TYPE_ADD_OFFCIAL:
+				method = 'setWikiAsOfficial';
+				message = $.msg('manage-wikia-home-wiki-list-official-yes');
+				flag = 1;
+				break;
+			case this.MODAL_TYPE_REMOVE_OFFICIAL:
+				method = 'removeWikiFromOfficial';
+				message = $.msg('manage-wikia-home-wiki-list-official-no');
 				break;
 			default:
 		}
