@@ -111,7 +111,8 @@ class ScavengerHuntTest extends WikiaBaseTest {
 
 		// This is necessary because Game->setLandingTitle is called during construction
 		// and it resets the landingArticleWikiId and landingArticleName to bogus values otherwise
-		F::setInstance('GlobalTitle', array('wikiId' => self::LANDING_WIKI_ID, 'articleName' => self::MOCK_TEXT ));
+		$this->mockClassStaticMethod('GlobalTitle','explodeURL',
+			array('wikiId' => self::LANDING_WIKI_ID, 'articleName' => self::MOCK_TEXT ));
 
 		return $games;
 	}
