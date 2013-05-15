@@ -2081,10 +2081,9 @@ function lw_getSearchResults($searchString, $maxResults=25){
 		$wikiaSearchConfig = new Wikia\Search\Config();
 		$wikiaSearchConfig->setNamespaces( array( NS_MAIN ) )
 			->setQuery( $searchString )
-			->setLength( $maxResults );
+			->setLimit( $maxResults );
 
-		$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
-		$wikiaSearch = (new Wikia\Search\QueryService\Factory)->get( $container );
+		$wikiaSearch = (new Wikia\Search\QueryService\Factory)->getForConfig( $wikiaSearchConfig );
 		$resultSet = $wikiaSearch->search();
 		$found = $resultSet->getResultsFound();
 
