@@ -320,7 +320,27 @@ class Config
 			? $this->limit - 1 
 			: $this->limit;
 	}
-	
+
+	/** @DEPRECATED */
+	public function setLength( $limit ) {
+		return $this->setLimit( $limit );
+	}
+	/** @DEPRECATED */
+	public function setDebug( $param ) {
+		return $this;
+	}
+	/** @DEPRECATED */
+	public function setSkipCache( $param ) {
+		return $this;
+	}
+	/** @DEPRECATED */
+	public function setRedirs( $param ) {
+		return $this;
+	}
+	/** @DEPRECATED */
+	public function setGroupResults( $param ) {
+		return $this;
+	}
 
 	/**
 	 * Allows us to set the number of documents returned.
