@@ -52,17 +52,11 @@ class SearchApiController extends WikiaApiController {
 		$next = 0;
 
 		$searchConfig->setQuery( $query )
-			->setCityId( $this->wg->CityId )
-			->setLimit( $limit )
-			->setPage( $batch )
-			->setRank( $rank )
-			->setDebug( false )
-			->setSkipCache( false )
-			->setAdvanced( false )
-			->setHub( false )
-			->setRedirs( false )
-			->setVideoSearch( $type == 'videos' )
-			->setGroupResults( false );
+		             ->setLimit( $limit )
+		             ->setPage( $batch )
+		             ->setRank( $rank )
+		             ->setVideoSearch( $type == 'videos' )
+		;
 
 		if ( !empty( $namespaces ) ) {
 			foreach ( $namespaces as &$n ) {
@@ -77,21 +71,14 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		if ( $searchConfig->getQuery()->hasTerms() ) {
-			$container = new DependencyContainer( array( 'config' => $searchConfig ) );
-			$wikiaSearch = (new Factory)->get( $container );
+			$wikiaSearch = (new Factory)->getFromConfig( $searchConfig );
 
 			$resultSet = $wikiaSearch->search( $searchConfig );
 			$total = $searchConfig->getResultsFound();
 
 			if ( $total ) {
-				foreach ( $resultSet as $result ) {
-					$results[] = [
-						'id' => $result['pageid'],
-						'title' => $result->getTitle(),
-						'url' => $result->getUrl(),
-						'ns' => $result['ns']
-					];
-				}
+				$results = $resultSet->toArray( ['pageid' => 'id', 'title', 'url', 'ns' ] );
+				unset( $results['pageid'] );
 
 				$batches = $searchConfig->getNumPages();
 				$currentBatch = $searchConfig->getPage();
