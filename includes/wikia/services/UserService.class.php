@@ -51,7 +51,7 @@ class UserService extends Service {
 	 * @return array with User objects
 	 */
 	private function getUsersObjects( $ids ) {
-		wfProfileIn( __METHOD__ . ':BuildFromUser' );
+		wfProfileIn( __METHOD__ );
 		$result = array();
 
 		if( isset( $ids[ 'user_id' ] ) ) {
@@ -68,7 +68,7 @@ class UserService extends Service {
 				$this->cacheUser( $user );
 			}
 		}
-		wfProfileOut( __METHOD__. ':BuildFromUser' );
+		wfProfileOut( __METHOD__ );
 		return array_unique( $result );
 	}
 
