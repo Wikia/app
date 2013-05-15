@@ -3,6 +3,8 @@
 class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	const VIDEO_DOES_NOT_EXIST = 1;
+	const VIDEO_IS_NOT_PROVIDED_BY_OOYALA = 2;
 
 	public function __construct() {
 		parent::__construct( 'GameGuidesSponsored', '', false );
@@ -82,7 +84,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 
 				foreach( $entries as $entry ) {
 					$list .= $this->sendSelfRequest( 'video', [
-						'video_name' => $entry['video']['name'],
+						//'video_name' => $entry['video']['name'],
 						'video_title' => $entry['video']['title'],
 						'wiki' => $entry['wiki']['domain']
 					] );
@@ -107,12 +109,12 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
 		$this->response->setVal( 'video_title', $this->request->getVal( 'video_title', '' ) );
-		$this->response->setVal( 'video_name', $this->request->getVal( 'video_name'), '' );
-		$this->response->setVal( 'wiki', $this->request->getVal( 'wiki'), '' );
+		$this->response->setVal( 'video_name', $this->request->getVal( 'video_name', '' ) );
+		$this->response->setVal( 'wiki', $this->request->getVal( 'wiki', '') );
 
 		$this->response->setVal( 'wiki_url_placeholder', wfMessage( 'wikiagameguides-sponsored-wiki-url' )->text() );
 		$this->response->setVal( 'video_title_placeholder', wfMessage( 'wikiagameguides-sponsored-video-title' )->text() );
-		$this->response->setVal( 'video_url_placeholder', wfMessage( 'wikiagameguides-sponsored-video-url' )->text() );
+		$this->response->setVal( 'video_name_placeholder', wfMessage( 'wikiagameguides-sponsored-video-name' )->text() );
 	}
 
 	public function save(){
@@ -147,8 +149,14 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 							if ( $handler instanceof OoyalaVideoHandler ) {
 								$video['id'] = $handler->getVideoId();
 								$video['duration'] = $handler->getFormattedDuration();
+							} else{
+								$err[$video['name']] = self::VIDEO_IS_NOT_PROVIDED_BY_OOYALA;
 							}
+						} else {
+							$err[$video['name']] = self::VIDEO_DOES_NOT_EXIST;
 						}
+					} else {
+						$err[$video['name']] = self::VIDEO_DOES_NOT_EXIST;
 					}
 
 					$entries[$key]['video'] = $video;
@@ -159,11 +167,15 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 			}
 		}
 
-		$status = WikiFactory::setVarByName( 'wgWikiaGameGuidesSponsoredVideos', $this->wg->CityId, $languages );
-		$this->response->setVal( 'status', $status );
+		if ( !empty( $err ) ) {
+			$this->response->setVal( 'error', $err );
+		} else {
+			$status = WikiFactory::setVarByName( 'wgWikiaGameGuidesSponsoredVideos', $this->wg->CityId, $languages );
+			$this->response->setVal( 'status', $status );
 
-		if ( $status ) {
-			$this->wf->RunHooks( 'GameGuidesSponsoredVideosSave' );
+			if ( $status ) {
+				$this->wf->RunHooks( 'GameGuidesSponsoredVideosSave' );
+			}
 		}
 
 		return true;

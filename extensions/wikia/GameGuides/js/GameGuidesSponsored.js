@@ -11,6 +11,8 @@ $(function(){
 			emptyTagError = msg('wikiagameguides-sponsored-empty-tag'),
 			orphanedVideo = msg('wikiagameguides-sponsored-orphaned-video'),
 			sure = msg('wikiagameguides-sponsored-are-you-sure'),
+			videoDoesNotExist = msg('wikiagameguides-sponsored-video-does-not-exist'),
+			videoIsNotOoyala = msg('wikiagameguides-sponsored-video-is-not-ooyala'),
 			addCategory = d.getElementById('addCategory'),
 			addTag = d.getElementById('addTag'),
 			$save = $(d.getElementById('save')),
@@ -19,7 +21,7 @@ $(function(){
 			ul = form.getElementsByTagName('ul')[0],
 			$ul = $(ul),
 			setup = function(elem){
-				(elem || $ul.find('.video-url')).autocomplete({
+				(elem || $ul.find('.video-name')).autocomplete({
 					serviceUrl: window.wgServer + window.wgScript,
 					params: {
 						action: 'ajax',
@@ -38,7 +40,7 @@ $(function(){
 			},
 			addNew = function(row, elem){
 				$ul.append(row);
-				setup($ul.find('.video-url:last'));
+				setup($ul.find('.video-name:last'));
 				$ul.find('.wiki-input:last').focus();
 
 				$ul.sortable('refresh');
@@ -128,7 +130,7 @@ $(function(){
 		}
 
 		$form
-			.on('keypress', '.video-url', function(ev){
+			.on('keypress', '.video-name', function(ev){
 				if(ev.keyCode === 13) addNew(category, $(this).parent());
 			})
 			.on('keypress', '.wiki-input, .video-title', function(ev){
@@ -162,7 +164,7 @@ $(function(){
 				},
 				video: {
 					title: li.find('.video-title').val(),
-					name: li.find('.video-url').val()
+					name: li.find('.video-name').val()
 				}
 			}
 		}
@@ -200,18 +202,17 @@ $(function(){
 					function(data){
 						if(data.error) {
 							var err = data.error,
-								i = err.length,
-								videos = $form.find('.video-url');
+								videos = $form.find('.video-name');
 
-							while(i--){
+							for(var file in err) {
 								//I cannot use value CSS selector as I want to use current value
 								videos.each(function(){
-									if(this.value === err[i]){
+									if(this.value === file){
 										$(this)
 											.addClass('error')
 											.popover('destroy')
 											.popover({
-												content: 'This video does not exist'
+												content: err[file] == 1 ? videoDoesNotExist : videoIsNotOoyala
 											});
 
 										return false;

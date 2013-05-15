@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'wikiagameguides-sponsored-add-video' => 'Add video',
 	'wikiagameguides-sponsored-add-language' => 'Add Language',
 
-	'wikiagameguides-sponsored-video-url' => 'Video Url',
+	'wikiagameguides-sponsored-video-name' => 'Video Url',
 	'wikiagameguides-sponsored-wiki-url' => 'Wiki Url',
 	'wikiagameguides-sponsored-language' => 'Language',
 	'wikiagameguides-sponsored-video-title' => 'Video Title',
@@ -44,7 +44,9 @@ $messages['en'] = array(
 	'wikiagameguides-sponsored-required-entry' => 'This field is required',
 	'wikiagameguides-sponsored-empty-language' => 'Language can not be empty',
 	'wikiagameguides-sponsored-orphaned-video' => 'Video has to have a language',
-	'wikiagameguides-sponsored-are-you-sure' => 'Are you sure you want to erase everything ?'
+	'wikiagameguides-sponsored-are-you-sure' => 'Are you sure you want to erase everything ?',
+	'wikiagameguides-sponsored-video-does-not-exist' => 'This video does not exist',
+	'wikiagameguides-sponsored-video-is-not-ooyala' => 'This video is not provided by Ooyala'
 );
 
 /** Message documentation (Message documentation)
