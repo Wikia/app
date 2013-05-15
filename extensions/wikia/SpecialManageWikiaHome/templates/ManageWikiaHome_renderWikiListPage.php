@@ -6,6 +6,7 @@
 			<th><?= wfMessage('manage-wikia-home-wiki-list-headline')->text() ?></th>
 			<th><?= wfMessage('manage-wikia-home-wiki-list-blocked')->text() ?></th>
 			<th><?= wfMessage('manage-wikia-home-wiki-list-promoted')->text() ?></th>
+			<th><?= wfMessage('manage-wikia-home-wiki-list-official')->text() ?></th>
 			<th><?= wfMessage('manage-wikia-home-wiki-list-collection')->text() ?></th>
 		</tr>
 	</thead>
@@ -29,6 +30,11 @@
 			<td>
 				<a href="#" class="status-promoted" data-id="<?= $wiki->city_id; ?>" data-vertical="<?= $wiki->city_vertical ?>" data-flags="<?= CityVisualization::isPromotedWiki($wiki->city_flags) ?>">
 					<?= (CityVisualization::isPromotedWiki($wiki->city_flags)) ? wfMessage('manage-wikia-home-wiki-list-blocked-yes')->text() : wfMessage('manage-wikia-home-wiki-list-blocked-no')->text() ?>
+				</a>
+			</td>
+			<td>
+				<a href="#" class="status-official" data-id="<?= $wiki->city_id; ?>" data-vertical="<?= $wiki->city_vertical ?>" data-flags="<?= CityVisualization::isOfficialWiki($wiki->city_flags) ?>">
+					<?= (CityVisualization::isOfficialWiki($wiki->city_flags)) ? wfMessage('manage-wikia-home-wiki-list-official-yes')->text() : wfMessage('manage-wikia-home-wiki-list-official-no')->text() ?>
 				</a>
 			</td>
 			<td>
