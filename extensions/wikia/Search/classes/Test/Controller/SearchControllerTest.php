@@ -10,14 +10,14 @@ use Wikia, WikiaSearchController, ReflectionMethod, ReflectionProperty, SearchEn
 class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 	public function setUp() {
+		parent::setUp();
 		$this->searchController = $this->getMockBuilder( 'WikiaSearchController' )
 										->disableOriginalConstructor();
 		$this->mockFactory = $this->getMockBuilder( 'Wikia\Search\QueryService\Factory' )
 		                          ->setMethods( array( 'get', 'getFromConfig' ) )
 		                          ->getMock();
 		
-		$this->proxyClass( 'Wikia\Search\QueryService\Factory', $this->mockFactory ); 
-		parent::setUp();
+		$this->mockClass( 'Wikia\Search\QueryService\Factory', $this->mockFactory );
 	}
 
 	/**
@@ -134,10 +134,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                    ->setMethods( array( 'getTitle' ) )
 		                    ->getMock();
 		$mockTrack = $this->getMock( 'Track', array( 'event' ) );
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'RunHooks' ) )
-		                    ->getMock();
+		$mockRunHooks = $this->getGlobalFunctionMock( 'wfRunHooks' );
 
 		$originalQuery = 'foo';
 		$redirectUrl = 'http://foo.wikia.com/Wiki/foo';
@@ -183,9 +180,9 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->with		( 'fulltext', '0' )
 			->will		( $this->returnValue( '0' ) )
 		;
-		$mockWrapper
+		$mockRunHooks
 		    ->expects( $this->once() )
-		    ->method ( 'RunHooks' )
+		    ->method ( 'wfRunHooks' )
 		    ->with   ( 'SpecialSearchIsgomatch', array( $mockTitle, $originalQuery ) )
 		;
 		$mockTrack
@@ -209,14 +206,10 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$responserefl->setAccessible( true );
 		$responserefl->setValue( $mockController, $mockResponse );
 
-		$wfrefl = new ReflectionProperty( 'WikiaSearchController', 'wf' );
-		$wfrefl->setAccessible( true );
-		$wfrefl->setValue( $mockController, $mockWrapper );
-
 		$this->mockClass( 'Article', $mockArticle );
-		$this->proxyClass( 'Article', $mockArticle, 'newFromID' );
+		$this->mockClass( 'Article', $mockArticle, 'newFromID' );
 		$this->mockClass( 'Track', $mockTrack );
-		$this->proxyClass( 'Track', $mockTrack );
+		$this->mockClass( 'Track', $mockTrack );
 		$this->mockApp();
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
@@ -241,10 +234,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                  ->setMethods( array( 'getFullUrl' ) )
 		                  ->getMock();
 		$mockResponse = $this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'RunHooks' ) )
-		                    ->getMock();
+		$mockRunHooks = $this->getGlobalFunctionMock( 'wfRunHooks' );
 
 		$originalQuery = 'foo';
 		$redirectUrl = 'http://foo.wikia.com/Wiki/foo';
@@ -269,9 +259,9 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->method	( 'hasArticleMatch' )
 			->will		( $this->returnValue( false ) )
 		;
-		$mockWrapper
+		$mockRunHooks
 		    ->expects( $this->once() )
-		    ->method ( 'RunHooks' )
+		    ->method ( 'wfRunHooks' )
 		    ->with   ( 'SpecialSearchNogomatch', array( $mockTitle ) )
 		;
 
@@ -280,12 +270,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$responserefl->setAccessible( true );
 		$responserefl->setValue( $mockController, $mockResponse );
 
-		$wfrefl = new ReflectionProperty( 'WikiaSearchController', 'wf' );
-		$wfrefl->setAccessible( true );
-		$wfrefl->setValue( $mockController, $mockWrapper );
-
 		$this->mockClass( 'Title', $mockTitle );
-		$this->proxyClass( 'Title', $mockTitle, 'newFromText' );
+		$this->mockClass( 'Title', $mockTitle, 'newFromText' );
 		$this->mockApp();
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
@@ -381,9 +367,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$wfrefl->setAccessible( true );
 		$wfrefl->setValue( $mockController, $mockWrapper );
 
-		$this->proxyClass( 'Article', $mockArticle, 'newFromID' );
+		$this->mockClass( 'Article', $mockArticle, 'newFromID' );
 		$this->mockClass( 'Track', $mockTrack );
-		$this->proxyClass( 'Track', $mockTrack );
 		$this->mockApp();
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
@@ -1598,7 +1583,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$searchRefl->setAccessible( true );
 		$searchRefl->setValue( $mockController, $mockFactory );
 
-		$this->proxyClass( 'Wikia\Search\Config', $mockConfig );
+		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
 		$this->mockApp();
 
 		$mockController->videoSearch();
@@ -1704,7 +1689,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$searchRefl->setAccessible( true );
 		$searchRefl->setValue( $mockController, $mockFactory );
 
-		$this->proxyClass( 'Wikia\Search\Config', $mockConfig );
+		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
 		$this->mockApp();
 
 		$mockController->searchVideosByTitle();
@@ -1758,7 +1743,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockWgRefl->setAccessible( true );
 		$mockWgRefl->setValue( $mockController, (object) array( 'AllowMemcacheWrites' => true ) );
 
-		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$this->mockApp();
 		$mockController->getPages();
 
@@ -1783,7 +1768,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$href = 'foo.com';
 
 		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
-		$mockSpecialPage	=	$this->getMockBuilder( 'SpecialPage' )
+		$mockSpecialPageTitle	=	$this->getMockBuilder( 'SpecialPage' )
 									->disableOriginalConstructor()
 									->setMethods( array( 'getLocalURL' ) )
 									->getMock();
@@ -1833,7 +1818,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->with		( 'redirs' )
 			->will		( $this->returnValue( $redirs ) )
 		;
-		$mockSpecialPage
+		$mockSpecialPageTitle
 			->expects	( $this->once() )
 			->method	( 'getLocalURL' )
 			->with		( $stParams )
@@ -1864,7 +1849,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->method	( 'setVal' )
 			->with		( 'tooltip', $tooltip )
 		;
-		$this->mockClass( 'SpecialPage', $mockSpecialPage );
+		$this->mockClass( 'SpecialPage', $mockSpecialPageTitle, 'getTitleFor' );
 		$this->mockApp();
 
 		$mockController->advancedTabLink();
@@ -2074,7 +2059,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$reflGet = new ReflectionMethod( 'WikiaSearchController', 'getSearchConfigFromRequest' );
 		$reflGet->setAccessible( true );
 		
-		$this->proxyClass( 'Wikia\Search\Config', $mockConfig );
+		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
 		$this->mockApp();
 		
 		$reflGet->invoke( $mockController );
@@ -2301,7 +2286,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$reflGet = new ReflectionMethod( 'WikiaSearchController', 'getSearchConfigFromRequest' );
 		$reflGet->setAccessible( true );
 		
-		$this->proxyClass( 'Wikia\Search\Config', $mockConfig );
+		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
 		$this->mockApp();
 		
 		$reflGet->invoke( $mockController );
@@ -2317,11 +2302,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( array() )
 		                       ->getMock();
-		
-		$mockWf = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-		               ->disableOriginalConstructor()
-		               ->setMethods( array( 'msg' ) )
-		               ->getMock();
+
+		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
 		
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'hasTerms', 'getSanitizedQuery' ), array( 'foo' ) );
 		
@@ -2339,14 +2321,13 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$query = "Foo";
 		$message = "The contents of this message does not matter here";
 		$mockWg = (object) array( 'Out' => $mockOut, 'Sitename' => $sitename );
-		
+
 		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
 		$reflWg->setAccessible( true );
 		$reflWg->setValue( $mockController, $mockWg );
-		
-		$reflWf = new ReflectionProperty( 'WikiaSearchController', 'wf' );
-		$reflWf->setAccessible( true );
-		$reflWf->setValue( $mockController, $mockWf );
+
+		$this->mockGlobalVariable( 'wgOut', $mockOut );
+		$this->mockGlobalVariable( 'wgSitename', $sitename );
 		
 		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setPageTitle' );
 		$reflSet->setAccessible( true );
@@ -2371,9 +2352,9 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getSanitizedQuery' )
 		    ->will   ( $this->returnValue( $query ) )
 		;
-		$mockWf
+		$mockMsg
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'msg' )
+		    ->method ( 'wfMsg' )
 		    ->with   ( 'wikiasearch2-page-title-with-query', array( $query, $sitename ) )
 		    ->will   ( $this->returnValue( $message ) )
 		;
@@ -2400,9 +2381,9 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getIsInterWiki' )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$mockWf
+		$mockMsg
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'msg' )
+		    ->method ( 'wfMsg' )
 		    ->with   ( 'wikiasearch2-page-title-no-query-interwiki' )
 		    ->will   ( $this->returnValue( $message ) )
 		;
@@ -2429,9 +2410,9 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getIsInterWiki' )
 		    ->will   ( $this->returnValue( false ) )
 		;
-		$mockWf
+		$mockMsg
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'msg' )
+		    ->method ( 'wfMsg' )
 		    ->with   ( 'wikiasearch2-page-title-no-query-intrawiki', array( $sitename ) )
 		    ->will   ( $this->returnValue( $message ) )
 		;

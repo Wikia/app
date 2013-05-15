@@ -901,7 +901,7 @@ class ConfigTest extends BaseTest {
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getNamespaceId' ], [ 'foo' ] );
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getNamespaces' ] );
 		
-		$this->proxyClass( 'Wikia\Search\Query\Select', $mockQuery );
+		$this->mockClass( 'Wikia\Search\Query\Select', $mockQuery );
 		$this->mockApp();
 		
 		$this->assertFalse(
@@ -916,8 +916,8 @@ class ConfigTest extends BaseTest {
 				$mockConfig,
 				$mockConfig->setQuery( 'foo' )
 		);
-		$this->assertInstanceOf(
-				$mockConfig->getQuery()->_mockClassName, // mockproxy hack
+		$this->assertEquals(
+				$mockConfig->getQuery(),
 				$mockQuery
 		);
 		$mockQuery

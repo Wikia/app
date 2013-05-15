@@ -45,9 +45,9 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 			$setMocks[$name] = $this->getMockBuilder( $fullName )
 			                        ->disableOriginalConstructor()
 			                        ->getMock();
-			$this->proxyClass( $fullName, $setMocks[$name] );
+			$this->mockClass( $fullName, $setMocks[$name] );
 		}
-		$this->proxyClass( 'Wikia\Search\ProfiledClassFactory', $pcf );
+		$this->mockClass( 'Wikia\Search\ProfiledClassFactory', $pcf );
 		$this->mockApp();
 		
 		$mockDc

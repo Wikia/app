@@ -17,8 +17,8 @@ abstract class BaseTest extends WikiaBaseTest {
 	    
 	    // hack to overwrite irritating static logging functions
 	    $wikia = $this->getMock( 'Wikia', array( 'log', 'logBacktrace' ) );
-	    $this->proxyClass( 'Wikia', $wikia, 'logBacktrace' );
-	    $this->proxyClass( 'Wikia', $wikia, 'log' );
+	    $this->mockClass( 'Wikia', $wikia, 'logBacktrace' );
+	    $this->mockClass( 'Wikia', $wikia, 'log' );
 	    
 	    parent::setUp();
 	}

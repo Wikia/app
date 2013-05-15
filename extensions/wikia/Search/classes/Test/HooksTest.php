@@ -82,7 +82,7 @@ class HooksTest extends BaseTest {
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$this->mockApp();
 		$this->assertTrue(
 				$mockHooks->onArticleDeleteComplete( $mockArticle, $mockUser, 'why not', 123 )
@@ -124,7 +124,7 @@ class HooksTest extends BaseTest {
 		    ->with   ( array( 123 ) )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$this->mockApp();
 		$whatevs = array();
 		$whatevs2 = 0;
@@ -154,7 +154,7 @@ class HooksTest extends BaseTest {
 		    ->with   ( array( 123 ) )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$this->mockApp();
 		$whatevs = array();
 		$whatevs2 = 0;
@@ -176,7 +176,7 @@ class HooksTest extends BaseTest {
 		;
 		$status = 0;
 		$wid = 123;
-		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$this->mockApp();
 		$this->assertTrue(
 				$hooks->onWikiFactoryPublicStatusChange( $status, $wid, 'why not' )
@@ -187,7 +187,7 @@ class HooksTest extends BaseTest {
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$status = 1;
-		$this->proxyClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$this->mockApp();
 		$this->assertTrue(
 				$hooks->onWikiFactoryPublicStatusChange( $status, $wid, 'why not' )
@@ -253,7 +253,7 @@ class HooksTest extends BaseTest {
 		$attribs = [];
 		$ret = false;
 		$expected = '123_456 | foo';
-		$this->proxyClass( 'Wikia\Search\MediaWikiService', $mockService );
+		$this->mockClass( 'Wikia\Search\MediaWikiService', $mockService );
 		$this->mockApp();
 		$this->assertTrue(
 				\Wikia\Search\Hooks::onLinkEnd( $mockSkin, $mockTitle, $options, $text, $attribs, $ret )

@@ -17,8 +17,8 @@ class DefaultContentTest extends BaseTest
 		$dynamicField = \Wikia\Search\Utilities::field( 'html' );
 		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getGlobal' ) );
 		$utils = $this->getMock( 'Wikia\Search\Utilities', array( 'field' ) );
-		$this->proxyClass( 'Wikia\Search\MediaWikiService', $mockService );
-		$this->proxyClass( 'Wikia\Search\Utilities', $utils );
+		$this->mockClass( 'Wikia\Search\MediaWikiService', $mockService );
+		$this->mockClass( 'Wikia\Search\Utilities', $utils );
 		$this->mockApp();
 		$dc = new DefaultContent();
 		$field = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'field' );
@@ -265,7 +265,7 @@ class DefaultContentTest extends BaseTest
 	 */
 	public function testGetOutboundLinks() {
 		$mockMwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
-		$mockHooks = $this->getMock( 'Wikia\Search\Hooks', [ 'popLinks' ] );
+		$mockHooks = $this->getStaticMethodMock( 'Wikia\Search\Hooks', [ 'popLinks' ] );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
 		                    ->setMethods( [ 'getService', 'getCurrentDocumentId' ] )
 		                    ->disableOriginalConstructor()
@@ -295,8 +295,6 @@ class DefaultContentTest extends BaseTest
 		    ->method ( 'popLinks' )
 		    ->will   ( $this->returnValue( $backlinks ) )
 		;
-		$this->proxyClass( 'Wikia\Search\Hooks', $mockHooks );
-		$this->mockApp();
 		$get = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'getOutboundLinks' );
 		$get->setAccessible( true );
 		$this->assertEquals(
