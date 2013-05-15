@@ -38,12 +38,14 @@
 				<?=$form->renderField('exploreLinkText'.$i.'b')?>
 				<?=$form->renderField('exploreLinkText'.$i.'c')?>
 				<?=$form->renderField('exploreLinkText'.$i.'d')?>
+				<?=$form->renderField('exploreLinkText'.$i.'e')?>
 			</div>
 			<div class="grid-2 alpha url-group">
 				<?=$form->renderField('exploreLinkUrl'.$i.'a')?>
 				<?=$form->renderField('exploreLinkUrl'.$i.'b')?>
 				<?=$form->renderField('exploreLinkUrl'.$i.'c')?>
 				<?=$form->renderField('exploreLinkUrl'.$i.'d')?>
+				<?=$form->renderField('exploreLinkUrl'.$i.'e')?>
 			</div>
 			<input class="secondary clear" type="button" value="Clear" />
 		</div>
