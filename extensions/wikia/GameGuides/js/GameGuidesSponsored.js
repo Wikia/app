@@ -73,7 +73,8 @@ $(function(){
 				var lis = $ul.children(),
 					first = lis.first();
 
-				lis.removeClass('error');
+				lis.removeClass('error')
+					.popover('destroy');
 
 				if(!first.hasClass('language')){
 
@@ -88,6 +89,7 @@ $(function(){
 								content: orphanedVideo
 							});
 					}
+
 				}
 
 				$ul.find('.language').each(function(){
