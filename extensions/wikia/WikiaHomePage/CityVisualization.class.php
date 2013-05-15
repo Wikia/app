@@ -852,16 +852,12 @@ class CityVisualization extends WikiaModel {
 	public function getWikisCountForStaffTool($opt) {
 	//todo: reuse getWikisForStaffTool
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$table = array(self::CITY_VISUALIZATION_TABLE_NAME,'city_list');
+		$table = $this->getTablesForStaffTool($opt);
 		$fields = array('count( ' . self::CITY_VISUALIZATION_TABLE_NAME . '.city_id ) as count');
 		$conds = $this->getConditionsForStaffTool($opt);
 		$options = $this->getOptionsForStaffTool($opt);
-		$joinConds = array(
-			'city_list' => array(
-				'join',
-				'city_list.city_id = city_visualization.city_id'
-			)
-		);
+		$joinConds = $this->getJoinsForStaffTool($opt);
+
 		$results = $db->select($table, $fields, $conds, __METHOD__, $options, $joinConds);
 		$row = $results->fetchRow();
 
@@ -872,7 +868,7 @@ class CityVisualization extends WikiaModel {
 	//todo: implement memc and purge it once admin changes data or main image is approved
 	//todo: add sql join and instead of headline provide wiki name
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$table = array(self::CITY_VISUALIZATION_TABLE_NAME,'city_list', WikiaCollectionsModel::COLLECTIONS_CV_TABLE);
+		$table = $this->getTablesForStaffTool($opt);
 		$fields = array(
 			self::CITY_VISUALIZATION_TABLE_NAME . '.city_id',
 			self::CITY_VISUALIZATION_TABLE_NAME . '.city_vertical',
@@ -958,6 +954,14 @@ class CityVisualization extends WikiaModel {
 		}
 
 		return $sqlOptions;
+	}
+
+	protected function getTablesForStaffTool($options) {
+		$tables = array(self::CITY_VISUALIZATION_TABLE_NAME,'city_list');
+		if ( !empty($options->collectionId) ) {
+			$tables[] = WikiaCollectionsModel::COLLECTIONS_CV_TABLE;
+		}
+		return $tables;
 	}
 
 	/**

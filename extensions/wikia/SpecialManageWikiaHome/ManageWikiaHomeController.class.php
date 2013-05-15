@@ -176,7 +176,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$options = new stdClass();
 		$options->lang = $visualizationLang;
 		$options->wikiHeadline = $this->request->getVal('wikiHeadline', '');
-		$count = $this->helper->getWikisCountForStaffTool($options);
 		$options->limit = self::WHST_WIKIS_PER_PAGE;
 		$options->offset = (($this->currentPage - 1) * self::WHST_WIKIS_PER_PAGE);
 		// TODO
@@ -185,6 +184,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$options->officialFlag = false;
 		$options->promotedFlag = false;
 		$options->collectionId = 44;
+		$count = $this->helper->getWikisCountForStaffTool($options);
 
 		$specialPage = F::build('Title', array('ManageWikiaHome', NS_SPECIAL), 'newFromText');
 		//todo: getLocalUrl(array('vl' => $visualizationLang, 'page' => '%s')) doesn't work here because % sign is being escaped
