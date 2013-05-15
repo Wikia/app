@@ -27,49 +27,49 @@ class UserService extends Service {
 	 * array( 'user_id' => array(ids)|id [, 'user_name' => array(names)|name ]) or array( ids and names )
 	 * @return mixed array list of User class objects
 	 */
-	public static function getUsers( $ids ) {
+	public function getUsers( $ids ) {
 		wfProfileIn( __METHOD__ );
 
-		$where = static::parseIds( $ids );
+		$where = $this->parseIds( $ids );
 		//check for cached data
 		//by id first
-		$result = static::getUsersFromCacheById( $where[ 'user_id' ] );
+		$result = $this->getUsersFromCacheById( $where[ 'user_id' ] );
 		//then check for names
-		$result = array_merge( $result, static::getUsersFromCacheByName( $where[ 'user_name' ] ) );
-		//unset empty statements
-		if ( empty( $where[ 'user_id' ] ) ) { unset( $where[ 'user_id' ] );	}
-		if ( empty( $where[ 'user_name' ] ) ) { unset( $where[ 'user_name' ] );	}
-
-		if ( !empty( $where ) ) {
-			//init db connection
-			$result = array_merge( $result, static::queryDbForUsers( $where ) );
-		}
+		$result = array_merge( $result, $this->getUsersFromCacheByName( $where[ 'user_name' ] ) );
+		//get user by id
+		$result = array_merge( $result, $this->getUsersObjects( $where ) );
 
 		wfProfileOut( __METHOD__ );
-		return $result;
+		return array_unique( $result );
 	}
 
 	/** Helper methods for getUsers */
 
 	/**
-	 * Gets the users fro given where conditions
-	 * @param $where array filled with where condition for quering db
-	 * @return array
+	 * Methods builds User object depending on Ids and Names in ids array
+	 * @param $ids array list of user ids and names to look for
+	 * @return array with User objects
 	 */
-	private static function queryDbForUsers( $where ) {
-		global $wgExternalSharedDB;
+	private function getUsersObjects( $ids ) {
+		wfProfileIn( __METHOD__ . ':BuildFromUser' );
 		$result = array();
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$conds = $dbr->makeList( $where, LIST_OR );
-		$s = $dbr->selectSQLText( 'user', '*', $conds, __METHOD__ );
-		$s = $dbr->query( $s, __METHOD__ );
 
-		while ( ( $row = $s->fetchObject() ) !== false ) {
-			$user = User::newFromRow( $row );
-			$result[ $row->user_id ] = $user;
-			static::cacheUser( $user );
+		if( isset( $ids[ 'user_id' ] ) ) {
+			foreach( $ids[ 'user_id' ] as $id ) {
+				$user = User::newFromId( $id );
+				$result[] = $user;
+				$this->cacheUser( $user );
+			}
 		}
-		return $result;
+		if( isset( $ids[ 'user_name' ] ) ) {
+			foreach( $ids[ 'user_name' ] as $name ) {
+				$user = User::newFromName( $name );
+				$result[] = $user;
+				$this->cacheUser( $user );
+			}
+		}
+		wfProfileOut( __METHOD__. ':BuildFromUser' );
+		return array_unique( $result );
 	}
 
 
@@ -78,7 +78,7 @@ class UserService extends Service {
 	 * @param $ids array|string ids and names to parse
 	 * @return array
 	 */
-	private static function parseIds( $ids ) {
+	private function parseIds( $ids ) {
 
 		if ( !isset( $ids[ 'user_id' ] ) && !isset( $ids[ 'user_name' ] ) ) {
 			$conds = array();
@@ -110,14 +110,14 @@ class UserService extends Service {
 	 * @param $ids array list of user ids to check in cache
 	 * @return array User objects list
 	 */
-	private static function getUsersFromCacheById( &$ids ) {
+	private function getUsersFromCacheById( &$ids ) {
 		//extract getting from mem cache
 		$result = array();
 		if ( is_array( $ids ) ) {
 			foreach ( $ids as $id ) {
-				if ( ( $value = static::getUserFromLocalCacheById( $id ) ) !== false ) {
+				if ( ( $value = $this->getUserFromLocalCacheById( $id ) ) !== false ) {
 					$result[ $value->getId() ] = $value;
-				} elseif ( ( $value = static::getUserFromMemCacheById( $id ) ) !== false ) {
+				} elseif ( ( $value = $this->getUserFromMemCacheById( $id ) ) !== false ) {
 					$result[ $value->getId() ] = $value;
 				} else {
 					$idsToQuery[] = $id;
@@ -141,14 +141,14 @@ class UserService extends Service {
 	 * @param $names array list of user names to check in cache
 	 * @return array list of founded User objects
 	 */
-	private static function getUsersFromCacheByName( &$names ) {
+	private function getUsersFromCacheByName( &$names ) {
 		//extract getting from mem cache
 		$result = array();
 		if ( is_array( $names ) ) {
 			foreach ( $names as $name ) {
-				if ( ( $value = static::getUserFromLocalCacheByName( $name ) ) !== false ) {
+				if ( ( $value = $this->getUserFromLocalCacheByName( $name ) ) !== false ) {
 					$result[ $value->getId() ] = $value;
-				} elseif ( ( $value = static::getUserFromMemCacheByName( $name ) ) !== false ) {
+				} elseif ( ( $value = $this->getUserFromMemCacheByName( $name ) ) !== false ) {
 					$result[ $value->getId() ] = $value;
 				} else {
 					$namesToQuery[] = $name;
@@ -167,36 +167,36 @@ class UserService extends Service {
 	}
 
 
-	private static function getUserFromMemCacheById( $id ) {
+	private function getUserFromMemCacheById( $id ) {
 		$cacheIdKey = F::app()->wf->sharedMemcKey( "UserCache:".$id );
 		if ( ( $value = F::app()->wg->memc->get( $cacheIdKey ) ) !== false ) {
 			//cache locally
-			static::cacheLocalUser( $value );
+			$this->cacheLocalUser( $value );
 			return $value;
 		}
 		return false;
 	}
 
-	private static function getUserFromMemCacheByName( $name ) {
+	private function getUserFromMemCacheByName( $name ) {
 		$cacheNameKey = F::app()->wf->sharedMemcKey( "UserCache:".$name );
 		if ( ( $value = F::app()->wg->memc->get( $cacheNameKey ) ) !== false ) {
-			if ( ( $value = static::getUserFromMemCacheById( $value ) ) !== false ) {
+			if ( ( $value = $this->getUserFromMemCacheById( $value ) ) !== false ) {
 				return $value;
 			}
 		}
 		return false;
 	}
 
-	private static function getUserFromLocalCacheById( $id ) {
+	private function getUserFromLocalCacheById( $id ) {
 		if ( isset( static::$userCache[ $id ] ) ) {
 			return static::$userCache[ $id ];
 		}
 		return false;
 	}
 
-	private static function getUserFromLocalCacheByName( $name ) {
+	private function getUserFromLocalCacheByName( $name ) {
 		if ( isset( static::$userCacheMapping[ $name ] ) ) {
-			return static::getUserFromLocalCacheById( static::$userCacheMapping[ $name ] );
+			return $this->getUserFromLocalCacheById( static::$userCacheMapping[ $name ] );
 		}
 		return false;
 	}
@@ -204,19 +204,19 @@ class UserService extends Service {
 	/**
 	 * @param $user User
 	 */
-	private static function cacheUser( $user ) {
+	private function cacheUser( $user ) {
 		$cacheIdKey = F::app()->wf->sharedMemcKey( "UserCache:".$user->getId() );
 		$cacheNameKey = F::app()->wf->sharedMemcKey( "UserCache:".$user->getName() );
 		F::app()->wg->memc->set( $cacheIdKey, $user, static::CACHE_EXPIRATION );
 		F::app()->wg->memc->set( $cacheNameKey, $user->getId(), static::CACHE_EXPIRATION );
 
-		static::cacheLocalUser( $user );
+		$this->cacheLocalUser( $user );
 	}
 
 	/**
 	 * @param $user User
 	 */
-	private static function cacheLocalUser( $user ) {
+	private function cacheLocalUser( $user ) {
 		static::$userCacheMapping[ $user->getName() ] = $user->getId();
 		static::$userCache[ $user->getId() ] = $user;
 	}
