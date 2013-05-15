@@ -3,6 +3,7 @@ var WikiaHomePageRemix = function (params) {
 	this.PRELOADTIMEOUT = 200;
 	this.WIKISETSTACKOFFSET = 3;
 	this.NUMBEROFBATCHESTODOWNLOAD = 5;
+	this.SPONSOR_HERO_IMG_FADE_OUT_TIME = 800;
 
 	this.wikiSetStack = [];
 	this.wikiSetStackIndex = 0;
@@ -575,6 +576,6 @@ $(function () {
 
 $(window).load(function() {
 	setTimeout(function() {
-		$('#' + WikiaRemixInstance.SPONSOR_HERO_IMG_CONTAINER_ID).fadeOut();
+		$('#' + WikiaRemixInstance.SPONSOR_HERO_IMG_CONTAINER_ID).fadeOut(WikiaRemixInstance.SPONSOR_HERO_IMG_FADE_OUT_TIME);
 	}, WikiaRemixInstance.SPONSOR_HERO_IMG_TIMEOUT);
 });
