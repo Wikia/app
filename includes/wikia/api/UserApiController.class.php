@@ -32,7 +32,7 @@ class UserApiController extends WikiaApiController {
 		//limit number of users to 100
 		$ids = array_slice( $ids, 0, 100 );
 		//users are cached inside the service
-		$users = UserService::getUsers( $ids );
+		$users = (new UserService())->getUsers( $ids );
 		$items = array();
 		foreach ( $users as $user ) {
 
