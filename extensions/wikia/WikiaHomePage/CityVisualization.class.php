@@ -869,7 +869,7 @@ class CityVisualization extends WikiaModel {
 	//todo: implement memc and purge it once admin changes data or main image is approved
 	//todo: add sql join and instead of headline provide wiki name
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$table = array('city_visualization','city_list');
+		$table = array('city_visualization','city_list', WikiaCollectionsModel::COLLECTIONS_CV_TABLE);
 		$fields = array(
 			'city_visualization.city_id',
 			'city_visualization.city_vertical',
@@ -878,12 +878,7 @@ class CityVisualization extends WikiaModel {
 		);
 		$conds = $this->getConditionsForStaffTool($opt);
 		$options = $this->getOptionsForStaffTool($opt);
-		$joinConds = array(
-			'city_list' => array(
-				'join',
-				'city_list.city_id = city_visualization.city_id'
-			)
-		);
+		$joinConds = $this->getJoinsForStaffTool($opt);
 
 		$results = $db->select($table, $fields, $conds, __METHOD__, $options, $joinConds);
 		$wikis = array();
@@ -896,6 +891,24 @@ class CityVisualization extends WikiaModel {
 		return $wikis;
 	}
 
+	protected function getJoinsForStaffTool($options) {
+		$joinConds = array(
+			'city_list' => array(
+				'join',
+				'city_list.city_id = city_visualization.city_id'
+			)
+		);
+
+		if ( !empty($options->collectionId) ) {
+			$joinConds[WikiaCollectionsModel::COLLECTIONS_CV_TABLE] = [
+				'join',
+				WikiaCollectionsModel::COLLECTIONS_CV_TABLE . '.city_id = city_visualization.city_id'
+			];
+		}
+
+		return $joinConds;
+	}
+
 	protected function getConditionsForStaffTool($options) {
 		$sqlOptions = array();
 
@@ -905,6 +918,26 @@ class CityVisualization extends WikiaModel {
 
 		if( !empty($options->wikiHeadline) ) {
 			$sqlOptions[] = 'city_list.city_title like "%' . mysql_real_escape_string($options->wikiHeadline) . '%"';
+		}
+
+		if ( !empty($options->verticalId) ) {
+			$sqlOptions['city_visualization.city_vertical'] = $options->verticalId;
+		}
+
+		if ( !empty($options->collectionId) ) {
+			$sqlOptions[WikiaCollectionsModel::COLLECTIONS_CV_TABLE . '.collection_id'] = $options->collectionId;
+		}
+
+		if ( !empty($options->blockedFlag) ) {
+			$sqlOptions[] = 'city_visualization.city_flags & ' .WikisModel::FLAG_BLOCKED . ' > 0';
+		}
+
+		if ( !empty($options->officialFlag) ) {
+			$sqlOptions[] = 'city_visualization.city_flags & ' .WikisModel::FLAG_OFFICIAL . ' > 0';
+		}
+
+		if ( !empty($options->promotedFlag) ) {
+			$sqlOptions[] = 'city_visualization.city_flags & ' .WikisModel::FLAG_PROMOTED . ' > 0';
 		}
 
 		return $sqlOptions;
