@@ -572,9 +572,20 @@ class GameGuidesController extends WikiaController {
 	 * @return bool
 	 */
 	static function onGameGuidesSponsoredSave(){
-		self::purgeMethod( 'getVidoes' );
+		$languages = array_keys( F::app()->wg->WikiaGameGuidesSponsoredVideos );
+		//Empty array is there to purge call to getVideos without any language
+		$variants = [[]];
 
-		//TODO: Grab all saved languges and purge them as well
+		foreach ( $languages as $lang ) {
+			$variants[] = [
+				'lang' => $lang
+			];
+		}
+
+		self::purgeMethodVariants(
+			'getVideos',
+			$variants
+		);
 
 		return true;
 	}
