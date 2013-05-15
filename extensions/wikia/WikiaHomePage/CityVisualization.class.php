@@ -9,6 +9,9 @@ class CityVisualization extends WikiaModel {
 	const CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION = 'v1.08';
 	const WIKI_STANDARD_BATCH_SIZE_MULTIPLIER = 100;
 
+	const CITY_VISUALIZATION_TABLE_NAME = 'city_visualization';
+	const CITY_VISUALIZATION_IMAGES_TABLE_NAME = 'city_visualization_images';
+
 	const PROMOTED_SLOTS = 3;
 	const PROMOTED_ARRAY_KEY = 'promoted';
 	const DEMOTED_ARRAY_KEY = 'demoted';
@@ -126,7 +129,7 @@ class CityVisualization extends WikiaModel {
 
 		$category = HubService::getComscoreCategory($cityId);
 
-		$table = 'city_visualization';
+		$table = self::CITY_VISUALIZATION_TABLE_NAME;
 		$data = array(
 			'city_vertical' => $category->cat_id
 		);
@@ -223,21 +226,21 @@ class CityVisualization extends WikiaModel {
 		);
 
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$tables = ['city_visualization', 'city_list'];
+		$tables = [self::CITY_VISUALIZATION_TABLE_NAME, 'city_list'];
 		$fields = [
-			'city_visualization.city_id',
-			'city_visualization.city_vertical',
-			'city_visualization.city_main_image',
-			'city_visualization.city_description',
-			'city_visualization.city_headline',
+			self::CITY_VISUALIZATION_TABLE_NAME . '.city_id',
+			self::CITY_VISUALIZATION_TABLE_NAME . '.city_vertical',
+			self::CITY_VISUALIZATION_TABLE_NAME . '.city_main_image',
+			self::CITY_VISUALIZATION_TABLE_NAME . '.city_description',
+			self::CITY_VISUALIZATION_TABLE_NAME . '.city_headline',
 			'city_list.city_title',
 			'city_list.city_url',
-			'city_visualization.city_flags',
+			self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags',
 		];
 		$joinConds = [
 			'city_list' => [
 				'join',
-				'city_visualization.city_id = city_list.city_id'
+				self::CITY_VISUALIZATION_TABLE_NAME . '.city_id = city_list.city_id'
 			],
 		];
 		$conds = $conditioner->getCondition();
@@ -280,10 +283,10 @@ class CityVisualization extends WikiaModel {
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
-		$table = 'city_visualization';
-		$fields = array('city_visualization.city_id', 'city_flags');
+		$table = self::CITY_VISUALIZATION_TABLE_NAME;
+		$fields = array(self::CITY_VISUALIZATION_TABLE_NAME . '.city_id', 'city_flags');
 		$conds = array(
-			'city_visualization.city_id' => $wikiId,
+			self::CITY_VISUALIZATION_TABLE_NAME . '.city_id' => $wikiId,
 			'city_lang_code' => $langCode
 		);
 		$results = $sdb->select(array($table), $fields, $conds, __METHOD__);
@@ -313,7 +316,7 @@ class CityVisualization extends WikiaModel {
 		wfProfileIn(__METHOD__);
 		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
-		$sql = 'update city_visualization set city_flags = (city_flags | ' . $flag . ') where city_id = ' . $wikiId . ' and city_lang_code = "' . $langCode . '"';
+		$sql = 'update ' . self::CITY_VISUALIZATION_TABLE_NAME . ' set city_flags = (city_flags | ' . $flag . ') where city_id = ' . $wikiId . ' and city_lang_code = "' . $langCode . '"';
 
 		$result = $mdb->query($sql);
 		$mdb->commit(__METHOD__);
@@ -326,7 +329,7 @@ class CityVisualization extends WikiaModel {
 		wfProfileIn(__METHOD__);
 		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
-		$sql = 'update city_visualization set city_flags = (city_flags & ~' . $flag . ') where city_id = ' . $wikiId. ' and city_lang_code = "' . $langCode . '"';;
+		$sql = 'update ' . self::CITY_VISUALIZATION_TABLE_NAME . ' set city_flags = (city_flags & ~' . $flag . ') where city_id = ' . $wikiId. ' and city_lang_code = "' . $langCode . '"';;
 
 		$result = $mdb->query($sql);
 		$mdb->commit(__METHOD__);
@@ -458,25 +461,25 @@ class CityVisualization extends WikiaModel {
 			$wikiData = array();
 			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 			$row = $db->selectRow(
-				array('city_visualization','city_list'),
+				array(self::CITY_VISUALIZATION_TABLE_NAME,'city_list'),
 				array(
 					'city_title',
-					'city_visualization.city_headline',
-					'city_visualization.city_description',
-					'city_visualization.city_main_image',
-					'city_visualization.city_flags',
-					'city_visualization.city_images',
+					self::CITY_VISUALIZATION_TABLE_NAME . '.city_headline',
+					self::CITY_VISUALIZATION_TABLE_NAME . '.city_description',
+					self::CITY_VISUALIZATION_TABLE_NAME . '.city_main_image',
+					self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags',
+					self::CITY_VISUALIZATION_TABLE_NAME . '.city_images',
 				),
 				array(
-					'city_visualization.city_id' => $wikiId,
-					'city_visualization.city_lang_code' => $langCode
+					self::CITY_VISUALIZATION_TABLE_NAME . '.city_id' => $wikiId,
+					self::CITY_VISUALIZATION_TABLE_NAME . '.city_lang_code' => $langCode
 				),
 				__METHOD__,
 				array(),
 				array(
 					'city_list' => array(
 						'join',
-						'city_visualization.city_id = city_list.city_id'
+						self::CITY_VISUALIZATION_TABLE_NAME . '.city_id = city_list.city_id'
 					)
 				)
 			);
@@ -558,7 +561,7 @@ class CityVisualization extends WikiaModel {
 		$conditions = $this->getWikiImagesConditions($wikiId, $langCode, $filter);
 
 		$result = $db->select(
-			array('city_visualization_images'),
+			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
 			array(
 				'image_name',
 				'image_index',
@@ -631,7 +634,7 @@ class CityVisualization extends WikiaModel {
 				}
 
 				$dbm->insert(
-					'city_visualization_images',
+					self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
 					$insertArray
 				);
 			}
@@ -655,7 +658,7 @@ class CityVisualization extends WikiaModel {
 				}
 
 				$dbm->update(
-					'city_visualization_images',
+					self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
 					$updateArray,
 					array(
 						'city_id' => $image->city_id,
@@ -697,7 +700,7 @@ class CityVisualization extends WikiaModel {
 				}
 
 				$dbm->delete(
-					'city_visualization_images',
+					self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
 					$removeConds
 				);
 			}
@@ -709,7 +712,7 @@ class CityVisualization extends WikiaModel {
 	public function removeImageFromReview($cityId, $pageId, $langCode) {
 		$dbm = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 		$dbm->delete(
-			'city_visualization_images',
+			self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
 			array(
 				'city_id' => $cityId,
 				'page_id' => $pageId,
@@ -725,7 +728,7 @@ class CityVisualization extends WikiaModel {
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$result = $db->select(
-			array('city_visualization_images'),
+			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
 			array('*'),
 			array(
 				'city_id' => $cityId,
@@ -752,7 +755,7 @@ class CityVisualization extends WikiaModel {
 		$conditions['page_id'] = $pageId;
 
 		$result = $db->select(
-			array('city_visualization_images'),
+			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
 			array(
 				'image_review_status',
 			),
@@ -849,8 +852,8 @@ class CityVisualization extends WikiaModel {
 	public function getWikisCountForStaffTool($opt) {
 	//todo: reuse getWikisForStaffTool
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$table = array('city_visualization','city_list');
-		$fields = array('count( city_visualization.city_id ) as count');
+		$table = array(self::CITY_VISUALIZATION_TABLE_NAME,'city_list');
+		$fields = array('count( ' . self::CITY_VISUALIZATION_TABLE_NAME . '.city_id ) as count');
 		$conds = $this->getConditionsForStaffTool($opt);
 		$options = $this->getOptionsForStaffTool($opt);
 		$joinConds = array(
@@ -869,12 +872,12 @@ class CityVisualization extends WikiaModel {
 	//todo: implement memc and purge it once admin changes data or main image is approved
 	//todo: add sql join and instead of headline provide wiki name
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$table = array('city_visualization','city_list', WikiaCollectionsModel::COLLECTIONS_CV_TABLE);
+		$table = array(self::CITY_VISUALIZATION_TABLE_NAME,'city_list', WikiaCollectionsModel::COLLECTIONS_CV_TABLE);
 		$fields = array(
-			'city_visualization.city_id',
-			'city_visualization.city_vertical',
+			self::CITY_VISUALIZATION_TABLE_NAME . '.city_id',
+			self::CITY_VISUALIZATION_TABLE_NAME . '.city_vertical',
 			'city_list.city_title',
-			'city_visualization.city_flags',
+			self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags',
 		);
 		$conds = $this->getConditionsForStaffTool($opt);
 		$options = $this->getOptionsForStaffTool($opt);
@@ -895,14 +898,14 @@ class CityVisualization extends WikiaModel {
 		$joinConds = array(
 			'city_list' => array(
 				'join',
-				'city_list.city_id = city_visualization.city_id'
+				'city_list.city_id = ' . self::CITY_VISUALIZATION_TABLE_NAME . '.city_id'
 			)
 		);
 
 		if ( !empty($options->collectionId) ) {
 			$joinConds[WikiaCollectionsModel::COLLECTIONS_CV_TABLE] = [
 				'join',
-				WikiaCollectionsModel::COLLECTIONS_CV_TABLE . '.city_id = city_visualization.city_id'
+				WikiaCollectionsModel::COLLECTIONS_CV_TABLE . '.city_id = ' . self::CITY_VISUALIZATION_TABLE_NAME . '.city_id'
 			];
 		}
 
@@ -913,7 +916,7 @@ class CityVisualization extends WikiaModel {
 		$sqlOptions = array();
 
 		if( isset($options->lang) ) {
-			$sqlOptions['city_visualization.city_lang_code'] = $options->lang;
+			$sqlOptions[self::CITY_VISUALIZATION_TABLE_NAME . '.city_lang_code'] = $options->lang;
 		}
 
 		if( !empty($options->wikiHeadline) ) {
@@ -921,7 +924,7 @@ class CityVisualization extends WikiaModel {
 		}
 
 		if ( !empty($options->verticalId) ) {
-			$sqlOptions['city_visualization.city_vertical'] = $options->verticalId;
+			$sqlOptions[self::CITY_VISUALIZATION_TABLE_NAME . '.city_vertical'] = $options->verticalId;
 		}
 
 		if ( !empty($options->collectionId) ) {
@@ -929,15 +932,15 @@ class CityVisualization extends WikiaModel {
 		}
 
 		if ( !empty($options->blockedFlag) ) {
-			$sqlOptions[] = 'city_visualization.city_flags & ' .WikisModel::FLAG_BLOCKED . ' > 0';
+			$sqlOptions[] = self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags & ' .WikisModel::FLAG_BLOCKED . ' > 0';
 		}
 
 		if ( !empty($options->officialFlag) ) {
-			$sqlOptions[] = 'city_visualization.city_flags & ' .WikisModel::FLAG_OFFICIAL . ' > 0';
+			$sqlOptions[] = self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags & ' .WikisModel::FLAG_OFFICIAL . ' > 0';
 		}
 
 		if ( !empty($options->promotedFlag) ) {
-			$sqlOptions[] = 'city_visualization.city_flags & ' .WikisModel::FLAG_PROMOTED . ' > 0';
+			$sqlOptions[] = self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags & ' .WikisModel::FLAG_PROMOTED . ' > 0';
 		}
 
 		return $sqlOptions;
