@@ -301,7 +301,7 @@ class WikisModel extends WikiaModel {
 					'headline' => $row->city_headline,
 					'desc' => $row->city_description,
 					//this is stored in a pretty peculiar format,
-					//see /includes/wikia/models/CityVisualization.class.php
+					//see extensions/wikia/WikiaHomePage/CityVisualization.class.php
 					'image' => $row->city_main_image,
 					'flags' => array(
 						'new' => ( ( $row->city_flags & self::FLAG_NEW ) == self::FLAG_NEW ),

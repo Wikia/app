@@ -20,8 +20,27 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // helper hierarchy
+// row assigners
+$app->registerClass('WikiImageRowAssigner',$dir.'classes/WikiImageRowAssigner.class.php');
+$app->registerClass('WikiImageRowHelper',$dir.'classes/WikiImageRowHelper.class.php');
+$app->registerClass('WikiImageNameRowHelper',$dir.'classes/WikiImageNameRowHelper.class.php');
+$app->registerClass('WikiImageReviewStatusRowHelper',$dir.'classes/WikiImageReviewStatusRowHelper.class.php');
+
+// getdata helpers
+$app->registerClass('WikiGetDataHelper',$dir.'classes/WikiGetDataHelper.class.php');
+$app->registerClass('WikiGetDataForVisualizationHelper',$dir.'classes/WikiGetDataForVisualizationHelper.class.php');
+$app->registerClass('WikiGetDataForPromoteHelper',$dir.'classes/WikiGetDataForPromoteHelper.class.php');
+$app->registerClass('WikiDataGetter',$dir.'classes/WikiDataGetter.class.php');
+$app->registerClass('WikiDataGetterForSpecialPromote',$dir.'classes/WikiDataGetterForSpecialPromote.class.php');
+$app->registerClass('WikiDataGetterForVisualization',$dir.'classes/WikiDataGetterForVisualization.class.php');
+$app->registerClass('WikiListConditioner', $dir.'classes/WikiListConditioner.class.php');
+$app->registerClass('WikiListConditionerForVertical',$dir.'classes/WikiListConditionerForVertical.class.php');
+$app->registerClass('WikiListConditionerForCollection',$dir.'classes/WikiListConditionerForCollection.class.php');
+
 //classes
 $app->registerClass('WikiaHomePageController', $dir.'WikiaHomePageController.class.php');
+$app->registerClass('WikiaHomePageHelper', $dir.'WikiaHomePageHelper.class.php');
+$app->registerClass('CityVisualization', $dir.'CityVisualization.class.php');
 
 //i18n mapping
 $app->registerExtensionMessageFile('WikiaHomePage', $dir.'WikiaHomePage.i18n.php');
