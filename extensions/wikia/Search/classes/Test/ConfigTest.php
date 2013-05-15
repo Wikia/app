@@ -896,4 +896,40 @@ class ConfigTest extends BaseTest {
 				$config->getWikiId()
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setLimit
+	 * @covers Wikia\Search\Config::getLimit
+	 */
+	public function testSetGetLimit() {
+		$config = new Config;
+		$this->assertAttributeEquals(
+				\Wikia\Search\Config::RESULTS_PER_PAGE,
+				'limit',
+				$config
+		);
+		$this->assertEquals(
+				$config,
+				$config->setLimit( 123 )
+		);
+		$this->assertAttributeEquals(
+				123,
+				'limit',
+				$config
+		);
+		$this->assertEquals(
+				$config,
+				$config->setLimit( 500 )
+		);
+		$this->assertAttributeEquals(
+				200,
+				'limit',
+				$config,
+				'We restrict the number of results in a search to 200'
+		);
+		$this->assertEquals(
+				200,
+				$config->getLimit()
+		);
+	}
 }
