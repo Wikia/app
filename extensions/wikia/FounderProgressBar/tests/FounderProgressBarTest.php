@@ -57,8 +57,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 					->method('getMCache')
 					->will($this->returnValue($cache));
 
-			$this->proxyClass("FounderProgressBarController", $mock);
-			$this->enableMockProxy();
+			$this->mockClass("FounderProgressBarController", $mock);
 
 			$this->task_id = 0;
         }
