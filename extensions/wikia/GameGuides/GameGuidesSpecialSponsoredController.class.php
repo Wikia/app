@@ -75,16 +75,16 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 		if ( !empty( $languages ) ) {
 			$list = '';
 
-			foreach( $languages as $language => $videos ) {
+			foreach( $languages as $lang => $entries ) {
 				$list .= $this->sendSelfRequest( 'language', [
-					'value' => $language
+					'value' => $lang
 				] );
 
-				foreach( $videos as $video ) {
+				foreach( $entries as $entry ) {
 					$list .= $this->sendSelfRequest( 'video', [
-						'video_name' => $video['video_name'],
-						'video_title' => $video['video_title'],
-						'wiki' => $video['wiki']
+						'video_name' => $entry['video']['name'],
+						'video_title' => $entry['video']['title'],
+						'wiki' => $entry['wiki']['domain']
 					] );
 				}
 			}
@@ -127,12 +127,15 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 		$err = [];
 
 		if( !empty( $languages ) ) {
-			foreach ( $languages as $language => &$videos ) {
-				foreach ( $videos as &$video ) {
+			foreach ( $languages as $lang => $entries ) {
+				foreach ( $entries as $key => $entry) {
 
-					$title = Title::newFromText( $video['video_name'], NS_VIDEO );
+					$video = $entry['video'];
+					$wiki = $entry['wiki'];
 
-					$video['wiki_id'] = (int) WikiFactory::DomainToID( $video['wiki'] );
+					$wiki['id'] = (int) WikiFactory::DomainToID( $wiki['domain'] );
+
+					$title = Title::newFromText( $video['name'], NS_VIDEO );
 
 					if ( !empty( $title ) && $title->exists() ) {
 						$vid = wfFindFile( $title );
@@ -148,8 +151,11 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 						}
 					}
 
-
+					$entries[$key]['video'] = $video;
+					$entries[$key]['wiki'] = $wiki;
 				}
+
+				$languages[$lang] = $entries;
 			}
 		}
 
