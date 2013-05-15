@@ -8,6 +8,7 @@ ManageWikiaHome.prototype = {
 	MODAL_TYPE_PROMOTED: 3,
 	MODAL_TYPE_DEMOTED: 4,
 	isListChangingDelayed: false,
+	visualizationLang: 'en',
 	modalObject: {content: '', type: 0, target: {}, collectionsEdit: false},
 	wikisPerCollection: [],
 	SLOTS_IN_TOTAL: 0,
@@ -21,6 +22,11 @@ ManageWikiaHome.prototype = {
 		$('#wiki-name-filer-input').on(
 			'keyup',
 			$.proxy(this.renderWikiListPage, this)
+		);
+
+		$('#wiki-filter-reset').on(
+			'click',
+			this.renderAllWikiListPage
 		);
 
 		$.when(
@@ -47,6 +53,7 @@ ManageWikiaHome.prototype = {
 		
 		this.SLOTS_IN_TOTAL = window.wgSlotsInTotal || 0;
 		this.wikisPerCollection = window.wgWikisPerCollection || [];
+		this.visualizationLang = $('#visualizationLang').val();
 		
 		$().log('ManageWikiaHome.init');
 	},
@@ -56,7 +63,6 @@ ManageWikiaHome.prototype = {
 	renderWikiListPage: function(e) {
 		e.preventDefault();
 		var input = e.target.value;
-		var vl = $('#visualizationLang').val();
 
 		//todo: set only data in "if" statements and leave only one $.nirvana.sendRequest() not to duplicate code
 		if( input.length >= this.MIN_CHARS_TO_START_FILTERING && this.isListChangingDelayed === false ) {
@@ -69,7 +75,7 @@ ManageWikiaHome.prototype = {
 				format: 'html',
 				type: 'get',
 				data: {
-					visualizationLang: vl,
+					visualizationLang: this.visualizationLang,
 					wikiHeadline: input
 				},
 				callback: $.proxy( function(response) {
@@ -80,20 +86,23 @@ ManageWikiaHome.prototype = {
 		}
 
 		if( input.length === 0 ) {
-			$.nirvana.sendRequest({
-				controller: 'ManageWikiaHome',
-				method: 'renderWikiListPage',
-				format: 'html',
-				type: 'get',
-				data: {
-					visualizationLang: vl
-				},
-				callback: $.proxy( function(response) {
-					$("#wikisWithVisualizationList").html(response);
-					this.isListChangingDelayed = false;
-				}, this)
-			});
+			this.renderAllWikiListPage();
 		}
+	},
+	renderAllWikiListPage: function() {
+		$.nirvana.sendRequest({
+			controller: 'ManageWikiaHome',
+			method: 'renderWikiListPage',
+			format: 'html',
+			type: 'get',
+			data: {
+				visualizationLang: this.visualizationLang
+			},
+			callback: $.proxy( function(response) {
+				$("#wikisWithVisualizationList").html(response);
+				this.isListChangingDelayed = false;
+			}, this)
+		});
 	},
 	showEditModal: function(e) {
 		e.preventDefault();
@@ -206,7 +215,7 @@ ManageWikiaHome.prototype = {
 			method: method,
 			type: 'post',
 			data: {
-				lang: $('#visualizationLang').val(),
+				lang: this.visualizationLang,
 				corpWikiId: $('#visualizationWikiId').val(),
 				wikiId: this.modalObject.target.data('id')
 			},

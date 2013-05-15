@@ -109,7 +109,28 @@
 
 		<form id="wiki-name-filter" class="wiki-name-filter" name="wiki-name-filter" method="get">
 			<p><?= wfMessage('manage-wikia-home-wiki-name-filter')->text(); ?></p>
-			<p><input type="text" id="wiki-name-filer-input" name="wiki-name-filer-input" value="" /></p>
+			<p class="wiki-filter-group">
+				<label for="collections-filter"><?= wfMessage('manage-wikia-home-wiki-list-collection')->text() ?></label>
+				<select id="collections-filter" name="collections-filter">
+					<option value="collections-all">All Collections</option>
+					<option value="collection1-id">Collection 1</option>
+					<option value="collection2-id">Collection 2</option>
+					<option value="collection3-id">Collection 3</option>
+				</select>
+				<label for="vertical-filter"><?= wfMessage('manage-wikia-home-wiki-list-vertical')->text() ?></label>
+				<select id="vertical-filter" name="vertical-filter">
+					<option value="vertical-all">All verticals</option>
+					<option value="vertical-gaming-id">Gaming</option>
+					<option value="vertical-entertainment-id">Entertainment</option>
+					<option value="vertical-lifestyle-id">Lifestyle</option>
+				</select>
+				<label for="wiki-blocked-filter"><input id="wiki-blocked-filter" type="checkbox" name="wiki-blocked-filter"/> <?= wfMessage('manage-wikia-home-wiki-list-blocked')->text() ?></label>
+				<label for="wiki-promoted-filter"><input id="wiki-promoted-filter" type="checkbox" name="wiki-promoted-filter"/>  <?= wfMessage('manage-wikia-home-wiki-list-promoted')->text() ?></label>
+				<label for="wiki-official-filter"><input id="wiki-official-filter" type="checkbox" name="wiki-official-filter"/> <?= wfMessage('manage-wikia-home-wiki-list-official')->text() ?></label>
+				<input id="wiki-filter-reset" type="reset" value="<?= wfMessage('manage-wikia-home-wiki-filter-reset')->text() ?>"/>
+				<input type="submit" value="<?= wfMessage('manage-wikia-home-wiki-filter')->text() ?>" />
+			</p>
+			<p class="wiki-name-filter-field"><input type="text" id="wiki-name-filer-input" name="wiki-name-filer-input" value="" /></p>
 		</form>
 
 		<div id="wikisWithVisualizationList">

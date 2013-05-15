@@ -29,12 +29,15 @@ $messages['en'] = array(
 
 	'manage-wikia-home-wikis-in-visualization-heading' => 'List of wikis in visualization',
 	'manage-wikia-home-wiki-name-filter' => 'Start typing wiki name and the list will get shorter:',
+	'manage-wikia-home-wiki-filter' => 'Filter',
+	'manage-wikia-home-wiki-filter-reset' => 'Clear',
 
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
 	'manage-wikia-home-wiki-list-headline' => 'Headline',
 	'manage-wikia-home-wiki-list-blocked' => 'Blocked',
 	'manage-wikia-home-wiki-list-promoted' => 'Promoted',
+	'manage-wikia-home-wiki-list-official' => 'Official',
 	'manage-wikia-home-wiki-list-collection' => 'Collections',
 	'manage-wikia-home-wiki-list-blocked-no' => 'No',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Yes',
@@ -98,6 +101,7 @@ $messages['qqq'] = array(
 	'manage-wikia-home-wiki-list-headline' => 'WikiList table header Headline column name',
 	'manage-wikia-home-wiki-list-blocked' => 'WikiList table header Blocked column name',
 	'manage-wikia-home-wiki-list-promoted' => 'WikiList table header Promoted column name',
+	'manage-wikia-home-wiki-list-official' => 'WikiList table header Official column name',
 	'manage-wikia-home-wiki-list-collection' => 'WikiList table header Collections column name',
 	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'Error telling about too many wikis selected for a collection',
 	'manage-wikia-home-wiki-list-disabled-collection' => 'If collection is disabled, checkbox for selecting wiki in collection is not active',

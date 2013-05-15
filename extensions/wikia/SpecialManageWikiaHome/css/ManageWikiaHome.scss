@@ -85,6 +85,30 @@
 
 .wikis-setup {
 	clear: left;
+
+	.wiki-filter-group {
+		float: right;
+
+		input[type=submit] {
+			float: none;
+		}
+
+		label {
+			margin-left: 10px;
+		}
+
+		input[type=reset] {
+			margin-left: 40px;
+		}
+	}
+
+	.wiki-name-filter-field {
+		float: left;
+	}
+}
+
+#wikisWithVisualizationList {
+	clear: both;
 }
 
 input[type=submit] {
