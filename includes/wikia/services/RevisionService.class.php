@@ -5,83 +5,120 @@
  */
 
 class RevisionService {
+	/**
+	 * @var DatabaseBase
+	 */
 	private $databaseConnection;
+	/**
+	 * @var int
+	 */
 	private $cacheTime;
-	private $cacheKeyPrefix;
 
+	/**
+	 * @param DatabaseBase $databaseConnection
+	 * @param int $cacheTime
+	 */
 	function __construct( $databaseConnection = null, $cacheTime = 3600 ) {
 		if( $databaseConnection == null ) {
 			$databaseConnection = wfGetDB( DB_SLAVE );
 		}
-		$this->cacheKeyPrefix = "RevisionServiceCacheWrapper_" . F::app()->wg->DBname;
 		$this->cacheTime = $cacheTime;
 		$this->databaseConnection = $databaseConnection;
 	}
 
-	public function getLatestRevisions( $limit, $namespace, $category, $allowDuplicates ) {
-		$key = $this->createCacheKey( $limit, $namespace, $category, $allowDuplicates );
-		return WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $limit, $namespace, $category, $allowDuplicates ) {
-			return $this->getLatestRevisionsNoCache( $limit, $namespace, $category, $allowDuplicates );
+	/**
+	 * @param $limit int limit number of results.
+	 * @param $namespaces array list of namespaces to filter by. No filter applied if null
+	 * @param $allowDuplicates bool if false there will be at most one result per page
+	 * @return array
+	 */
+	public function getLatestRevisions( $limit, $namespaces, $allowDuplicates ) {
+		$key = $this->createCacheKey( $limit, $namespaces, $allowDuplicates );
+		return WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $limit, $namespaces, $allowDuplicates ) {
+			return $this->getLatestRevisionsNoCache( $limit, $namespaces, $allowDuplicates );
 		});
 	}
 
-	public function getLatestRevisionsNoCache( $limit, $namespaces, $categories, $allowDuplicates ) {
+	/**
+	 * @param $limit int limit number of results.
+	 * @param $namespaces array list of namespaces to filter by. No filter applied if null
+	 * @param $allowDuplicates bool if false there will be at most one result per page
+	 * @return array
+	 */
+	public function getLatestRevisionsNoCache( $limit, $namespaces, $allowDuplicates ) {
 		$limit = intval($limit);
-		$namespaces = $this->sqlSanitizeArray($namespaces);
-		$categories = $this->sqlSanitizeArray($categories);
 
-		$result = $this->getLatestRevisionsQuery( $limit, $namespaces, $categories, $allowDuplicates );
+		$result = $this->getLatestRevisionsQuery( $limit, $namespaces, $allowDuplicates );
 
 		$items = array();
 		while( ( $row = $result->fetchObject() ) !== false ) {
 			$dateTime = date_create_from_format( 'YmdHis', $row->timestamp );
 			$items[  ] = array(
-				'article' => $row->pageId,
-				'user' => $row->userId,
-				'timestamp' => $dateTime->getTimestamp()
+				'article'    => intval($row->pageId),
+				'user'       => intval($row->userId),
+				'revisionId' => intval($row->id),
+				'timestamp'  => $dateTime->getTimestamp()
 			);
 		}
 		return $items;
 	}
 
-	public function getLatestRevisionsQuery( $limit, $namespaces, $categories, $allowDuplicates ) {
-		$tables = array('revision', 'user_groups');
+	/**
+	 * @param $limit int limit number of results.
+	 * @param $namespaces array list of namespaces to filter by. No filter applied if null
+	 * @param $allowDuplicates bool if false there will be at most one result per page
+	 * @return ResultWrapper
+	 */
+	public function getLatestRevisionsQuery( $limit, $namespaces, $allowDuplicates ) {
+		$namespaces = $this->sqlSanitizeArray($namespaces);
+
+		$tables = array('revision');
 		$joinConditions = array();
 		$conditions = array();
 
-		$joinConditions['user_groups'] = array('LEFT JOIN', 'rev_user=ug_user');
-		$conditions[] = "ug_group not in('bot')";
+		//// clear out the bots
+		//$joinConditions['user_groups'] = array('JOIN', 'rev_user=ug_user');
+		//$conditions[] = "ug_group != 'bot'";
 
+		// filter by namespaces if provided
 		if ( $namespaces != null ) {
 			$conditions[] = "page_namespace in (" . implode(",",$namespaces) . ")";
 			$tables[] = 'page';
-			$joinConditions['page'] = array( "LEFT JOIN", "rev_page=page_id" );
+			if( $allowDuplicates ) {
+				$joinConditions['page'] = array( "JOIN", "rev_page=page_id" );
+			} else {
+				$joinConditions['page'] = array( "JOIN", "rev_id=page_latest" );
+			}
 		}
-		if ( $categories != null ) {
-			$conditions[] = 'cl_to in (' . implode(",",$categories) . ')';
-			$tables[] = 'categorylinks';
-			$joinConditions['categorylinks'] = array( "LEFT JOIN", "rev_page=cl_from" );
-		}
+
 		if( $allowDuplicates ) {
-			$result = $this->databaseConnection->select(
+			$query = $this->databaseConnection->selectSQLText(
 				$tables
-				, 'rev_id as id, rev_page as pageId, rev_timestamp as timestamp, rev_user as userId'
+				, 'rev_id as id, page_id as pageId, rev_timestamp as timestamp, rev_user as userId'
 				, $conditions
 				, __METHOD__
-				, array( 'LIMIT' => $limit, 'ORDER BY' => 'rev_timestamp DESC' )
+				, array( 'LIMIT' => $limit, 'ORDER BY' => 'rev_id DESC' )
 				, $joinConditions );
 		} else {
-			$result = $this->databaseConnection->select(
+			// use group by to filter out bad results
+			$query = $this->databaseConnection->selectSQLText(
 				$tables
-				, 'max(rev_id) as id, rev_page as pageId, max(rev_timestamp) as timestamp, (SELECT rev_user FROM revision r where r.rev_id = max(revision.rev_id)) as userId'
+				, 'page_latest as id, page_id as pageId, rev_timestamp as timestamp, rev_user as userId'
 				, $conditions
 				, __METHOD__
-				, array( 'LIMIT' => $limit, 'ORDER BY' => 'rev_timestamp DESC', "GROUP BY" => 'rev_page' )
+				, array( 'LIMIT' => $limit, 'ORDER BY' => 'rev_id DESC' )
 				, $joinConditions );
+
 		}
+		// die($query);
+		$result = $this->databaseConnection->query($query);
 		return $result;
 	}
 
+	/**
+	 * @param $array
+	 * @return array
+	 */
 	protected function sqlSanitizeArray( $array ) {
 		if( $array == null ) {
 			return null;
@@ -93,13 +130,24 @@ class RevisionService {
 		return $resultArray;
 	}
 
-	protected function createCacheKey( $limit, $namespace, $category, $allowDuplicates ) {
-		$key = implode("|", array(
-			$this->cacheKeyPrefix,
+	/**
+	 * @param $limit int limit number of results.
+	 * @param $namespaces array list of namespaces to filter by. No filter applied if null
+	 * @param $allowDuplicates bool if false there will be at most one result per page
+	 * @return string
+	 */
+	protected static function createCacheKey( $limit, $namespaces, $allowDuplicates, $dbName = null ) {
+		if( $dbName == null ) {
+			$dbName = F::app()->wg->DBname;
+		}
+		$key = implode("_", array(
+			"RevisionService",
+			$dbName,
 			strval($limit),
-			implode(",",$namespace),
-			implode(",",$category),
+			implode(",",$namespaces),
 			strval($allowDuplicates)));
 		return $key;
 	}
+
+	public static function on
 }
