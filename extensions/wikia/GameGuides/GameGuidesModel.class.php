@@ -208,7 +208,7 @@ class GameGuidesModel{
 
 			if ( empty( $ret ) ) {
 				
-				$resultSet = $this->getResultSetFromTermAndLimit( $term, $totalLimit );
+				$resultSet = $this->getResultSet( $term, $totalLimit );
 
 				$ret['textResults'] = array();
 				$count = 0;
@@ -243,7 +243,7 @@ class GameGuidesModel{
 	 * @param string $term
 	 * @param int $limit
 	 */
-	protected function getResultSetFromTermAndLimit( $term, $totalLimit ) {
+	public function getResultSet( $term, $totalLimit ) {
 		$wikiaSearchConfig = new Wikia\Search\Config();
 		$wikiaSearchConfig	->setNamespaces	( array( NS_MAIN ) )
 							->setQuery		( $term )
