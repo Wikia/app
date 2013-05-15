@@ -2083,7 +2083,7 @@ function lw_getSearchResults($searchString, $maxResults=25){
 			->setQuery( $searchString )
 			->setLimit( $maxResults );
 
-		$wikiaSearch = (new Wikia\Search\QueryService\Factory)->getForConfig( $wikiaSearchConfig );
+		$wikiaSearch = (new Wikia\Search\QueryService\Factory)->getFromConfig( $wikiaSearchConfig );
 		$resultSet = $wikiaSearch->search();
 		$found = $resultSet->getResultsFound();
 
