@@ -27,27 +27,40 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 			->with($this->equalTo($memkey),$this->equalTo($thumbUrl));
 
 		$fileMock = $this->getMock('File', array(), array(), '', FALSE);
-		$mockedFileTitle = $this->getMock('Title' );
+		$mockedFileTitle = $this->getMock( 'Title' );
 
 		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
-		$this->mockGlobalFunction('findFile', $fileMock, 1, array($mockedFileTitle));
+
+		$mockFindFile = $this->getGlobalFunctionMock( 'wfFindFile' );
+
+		$mockFindFile
+			->expects( $this->once() )
+			->method( 'wfFindFile' )
+			->with( $this->equalTo( $mockedFileTitle ) )
+			->will( $this->returnValue( $fileMock ) );
 
 		$this->mockApp();
 
 		$mockedTitle = $this->getMock('Title');
 
-		$mocked = $this->getMock('SEOTweaksGlobalHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeKey') );
-		$mocked->expects($this->once())
+		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'getFirstArticleImage' )
+			->expects($this->once())
 			->method('getFirstArticleImage')
 			->with($this->equalTo( $mockedTitle ) )
 			->will( $this->returnValue( $mockedFileTitle ) );
-		$mocked->expects($this->once())
+
+		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'getThumbFromFile' )
+			->expects($this->once())
 			->method('getThumbFromFile')
 			->with($this->equalTo( $fileMock ) )
 			->will( $this->returnValue( $thumbUrl ) );
-		$mocked->expects( $this->any() )
+
+		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'makeKey' )
+			->expects( $this->any() )
 			->method('makeKey')
 			->will( $this->returnValue($memkey) );
+
+		$mocked = $this->getMock('SEOTweaksGlobalHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeKey') );
 
 		$meta = array('foo'=>'bar');
 		$mocked->onOpenGraphMetaHeaders($meta, $mockedTitle);
@@ -81,16 +94,20 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 
 		$this->mockApp();
 
-		$mocked = $this->getMock('SEOTweaksGlobalHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeKey') );
-		$mocked->expects($this->never())
+		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'getFirstArticleImage' )
+			->expects($this->never())
 			->method('getFirstArticleImage');
-		$mocked->expects($this->once())
+		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'getThumbFromFile' )
+			->expects($this->once())
 			->method('getThumbFromFile')
 			->with($this->equalTo( $fileMock ) )
 			->will( $this->returnValue( $thumbUrl ) );
-		$mocked->expects( $this->any() )
+		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'makeKey' )
+			->expects( $this->any() )
 			->method('makeKey')
 			->will( $this->returnValue($memkey) );
+
+		$mocked = $this->getMock('SEOTweaksGlobalHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeKey') );
 
 		$meta = array('foo'=>'bar');
 		$mocked->onOpenGraphMetaHeaders($meta, $mockedTitle);
@@ -116,15 +133,19 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 			->method('getNamespace')
 			->will($this->returnValue(NS_USER));
 
-		$mocked = $this->getMock('SEOTweaksGlobalHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeKey') );
-		$mock_cache->expects($this->any())
+		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'makeKey' )
+			->expects($this->any())
 			->method('makeKey')
 			->will($this->returnValue('bar'));
-		$mocked->expects($this->never())
+		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'getFirstArticleImage' )
+			->expects($this->never())
 			->method('getFirstArticleImage');
-		$mocked->expects($this->never())
+		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'getThumbFromFile' )
+			->expects($this->never())
 			->method('getThumbFromFile');
 		$meta = array('foo'=>'bar');
+
+		$mocked = $this->getMock('SEOTweaksGlobalHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeKey') );
 
 		$mocked->onOpenGraphMetaHeaders($meta, $mockedTitle);
 		$this->assertEquals(array('foo'=>'bar'), $meta);
@@ -149,12 +170,15 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 
 		$this->mockApp();
 
-		$mocked = $this->getMock('SEOTweaksGlobalHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeKey') );
-		$mocked->expects( $this->any() )
+		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'makeKey' )
+			->expects( $this->any() )
 			->method('makeKey')
 			->will( $this->returnValue($memkey) );
-		$mocked->expects($this->never())
+		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'getThumbFromFile' )
+			->expects($this->never())
 			->method('getThumbFromFile');
+
+		$mocked = $this->getMock('SEOTweaksGlobalHooksHelper', array('getThumbFromFile', 'getFirstArticleImage', 'makeKey') );
 
 		$mockedTitle = $this->getMock('Title');
 		$mocked->onOpenGraphMetaHeaders($meta, $mockedTitle);
