@@ -38,14 +38,7 @@ class SearchApiController extends WikiaApiController {
 	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
-		$searchConfig = $this->getConfigFromRequest();
-		$this->validateNamespacesForConfig( $searchConfig );
-
-		if (! $searchConfig->getQuery()->hasTerms() ) {
-			throw new NotFoundApiException();
-		}
-		
-		$this->setResponseFromConfig( $searchConfig );
+		$this->setResponseFromConfig( $this->getConfigFromRequest() );
 	}
 	
 	/**
@@ -53,6 +46,10 @@ class SearchApiController extends WikiaApiController {
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
+		if (! $searchConfig->getQuery()->hasTerms() ) {
+			throw new NotFoundApiException();
+		}
+		
 		$total = 0;
 		$results = [];
 		$batches = 0;
@@ -67,7 +64,6 @@ class SearchApiController extends WikiaApiController {
 
 		if ( $total ) {
 			$results = $resultSet->toArray( ['pageid' => 'id', 'title', 'url', 'ns' ] );
-			unset( $results['pageid'] );
 
 			$batches = $searchConfig->getNumPages();
 			$currentBatch = $searchConfig->getPage();
@@ -79,13 +75,10 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		//Standard Wikia API response with pagination values
-		$this->response->setVal( 'items',	$results );
-		$this->response->setVal( 'next', $next );
-		$this->response->setVal( 'total', $total );
-		$this->response->setVal( 'batches', $batches );
-		$this->response->setVal( 'currentBatch', $currentBatch );
-
-		$this->response->setCacheValidity(
+		$response = $this->getResponse();
+		$responseValues = [ 'items' => $results, 'next' => $next, 'total' => $total, 'batches' => $batches, 'currentBatch' => $currentBatch ];
+		$response->setValues( $responseValues );
+		$response->setCacheValidity(
 			86400 /* 24h */,
 			86400 /* 24h */,
 			array(
@@ -99,20 +92,20 @@ class SearchApiController extends WikiaApiController {
 	 * Validates user-provided namespaces.
 	 * @param Wikia\Search\Config $searchConfig
 	 * @throws InvalidParameterApiException
+	 * @return Wikia\Search\Config
 	 */
 	protected function validateNamespacesForConfig( $searchConfig ) {
-		$namespaces = $this->getRequest()->getArray( 'namespaces', null );
+		$namespaces = $this->getRequest()->getArray( 'namespaces', [] );
 		if (! empty( $namespaces ) ) {
 			foreach ( $namespaces as &$n ) {
-				if ( is_numeric( $n ) ) {
-					$n = (int) $n;
-				} else {
+				if (! is_numeric( $n ) ) {
 					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
 				}
 			}
-
+			
 			$searchConfig->setNamespaces( $namespaces );
 		}
+		return $searchConfig;
 	}
 	
 	/**
@@ -128,6 +121,6 @@ class SearchApiController extends WikiaApiController {
 		             ->setRank( $request->getVal( 'rank', 'default' ) )
 		             ->setVideoSearch( $request->getVal( 'type', 'articles' ) == 'videos' )
 		;
-		return $searchConfig;
+		return $this->validateNamespacesForConfig( $searchConfig );
 	}
 }
