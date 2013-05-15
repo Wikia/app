@@ -15,13 +15,20 @@ class ActivityApiController extends WikiaApiController {
 	/**
 	 * Fetches latest activity information
 	 *
+	 * @requestParam int  $limit [OPTIONAL] maximal result count
+	 * @requestParam array $namespaces [OPTIONAL] [0] by default
+	 * @requestParam bool $allowDuplicates [OPTIONAL] false by default
+	 *
 	 * @responseParam array latest revision information
 	 *
 	 * @example
+	 * @example &allowDuplicates=1
+	 * @example &allowDuplicates=0
+	 * @example &namespaces=0,14&allowDuplicates=0&limit=20
 	 */
 	public function getLatestActivity() {
 		$limit = $this->getRequest()->getInt("limit", 10);
-		$namespaces = $this->getRequest()->getArray("namespaces", array("0", "14"));
+		$namespaces = $this->getRequest()->getArray("namespaces", array("0"));
 		$allowDuplicates = $this->getRequest()->getBool("allowDuplicates", false);
 
 		$items = $this->revisionService->getLatestRevisions($limit, $namespaces, $allowDuplicates);
