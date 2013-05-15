@@ -103,6 +103,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 	public function import( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
+		include_once( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
+
 		$debug = !empty($params['debug']);
 		$startDate = !empty($params['startDate']) ? $params['startDate'] : '';
 		$endDate = !empty($params['endDate']) ? $params['endDate'] : '';
@@ -167,6 +169,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$clipData['hd'] = ( $video['HdSource'] == 'true' ) ? 1 : 0;
 					$clipData['tags'] = trim( $video['EntertainmentProgram']['Tagline'] );
 					$clipData['provider'] = 'iva';
+
+					$clipData['language'] = '';
+					if ( !empty( $video['LanguageSpoken']['LanguageName'] ) && !empty( $languageNames ) ) {
+						$lang = trim( $video['LanguageSpoken']['LanguageName'] );
+						$clipData['language'] =  array_search( $lang, $languageNames );
+					}
 
 					$clipData['industryRating'] = '';
 					if ( !empty( $video['EntertainmentProgram']['MovieMpaa']['Rating'] ) ) {
@@ -294,6 +302,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 			'tags' => $data['tags'],
 			'industryRating' => $data['industryRating'],
 			'provider' => $data['provider'],
+			'language' => $data['language'],
 			'genres' => $data['genres'],
 			'actors' => $data['actors'],
 		);
