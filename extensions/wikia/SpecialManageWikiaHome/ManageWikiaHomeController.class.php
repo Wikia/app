@@ -7,6 +7,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	const FLAG_TYPE_UNBLOCK = 'unblock';
 	const FLAG_TYPE_PROMOTE = 'promote';
 	const FLAG_TYPE_DEMOTE = 'remove-promote';
+	const FLAG_TYPE_ADD_OFFICIAL = 'add-official';
+	const FLAG_TYPE_REMOVE_OFFICIAL = 'remove-official';
 
 	const SWITCH_COLLECTION_TYPE_ADD = 'add';
 	const SWITCH_COLLECTION_TYPE_REMOVE= 'remove';
@@ -298,12 +300,28 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * @desc A public alias of changeFlag() setting wiki as official
+	 */
+	public function setWikiAsOfficial() {
+		$this->status = $this->changeFlag(self::FLAG_TYPE_ADD_OFFICIAL);
+	}
+
+	/**
+	 * @desc A public alias of changeFlag() setting wiki as not official
+	 */
+	public function removeWikiFromOfficial() {
+		$this->status = $this->changeFlag(self::FLAG_TYPE_REMOVE_OFFICIAL);
+	}
+
+	/**
 	 * @desc Changes city_flags field in city_visualization table
 	 *
 	 * @param string $type one of: 'block', 'unblock', 'promote', 'remove-promote'
 	 * @requestParam integer $wikiId id of wiki that flags we want to change
 	 * @requestParam integer $corpWikiId id of wiki which "hosts" visualization
 	 * @requestParam string $lang language code of wiki which "hosts" visualization
+	 *
+	 * @return bool
 	 */
 	protected function changeFlag($type) {
 		wfProfileIn(__METHOD__);
@@ -327,6 +345,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 					break;
 				case self::FLAG_TYPE_DEMOTE:
 					$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_PROMOTED, $corpWikiId, $langCode);
+					break;
+				case self::FLAG_TYPE_ADD_OFFICIAL:
+					$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_OFFICIAL, $corpWikiId, $langCode);
+					break;
+				case self::FLAG_TYPE_REMOVE_OFFICIAL:
+					$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_OFFICIAL, $corpWikiId, $langCode);
 					break;
 				default:
 					$result = false;
