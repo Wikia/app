@@ -87,8 +87,6 @@ class RevisionService {
 
 		// clear out the bots
 		$conditions[] = "rc_bot=0";
-		//$joinConditions['user_groups'] = array('JOIN', 'rev_user=ug_user');
-		//$conditions[] = "ug_group != 'bot'";
 
 		// filter by namespaces if provided
 		if ( $namespaces != null ) {
@@ -127,7 +125,7 @@ class RevisionService {
 		foreach( $listOfRevisions as $i => $revision ) {
 			if( $prev == null
 				|| $prev['article'] != $revision['article']
-				|| $prev['user']    != $prev['user'] ) {
+				|| $prev['user']    != $revision['user'] ) {
 				$resultArray[] = $revision;
 			}
 			$prev = $revision;
@@ -168,5 +166,47 @@ class RevisionService {
 			implode(",",$namespaces),
 			strval($allowDuplicates)));
 		return $key;
+	}
+
+	/**
+	 * @param int $cacheTime
+	 */
+	public function setCacheTime($cacheTime) {
+		$this->cacheTime = $cacheTime;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getCacheTime() {
+		return $this->cacheTime;
+	}
+
+	/**
+	 * @param \DatabaseBase $databaseConnection
+	 */
+	public function setDatabaseConnection($databaseConnection) {
+		$this->databaseConnection = $databaseConnection;
+	}
+
+	/**
+	 * @return \DatabaseBase
+	 */
+	public function getDatabaseConnection() {
+		return $this->databaseConnection;
+	}
+
+	/**
+	 * @param int $queryLimit
+	 */
+	public function setQueryLimit($queryLimit) {
+		$this->queryLimit = $queryLimit;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getQueryLimit() {
+		return $this->queryLimit;
 	}
 }
