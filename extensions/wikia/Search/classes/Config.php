@@ -328,6 +328,7 @@ class Config
 	 * @return Wikia\Search\Config provides fluent interface
 	 */
 	public function setLimit( $limit ) {
+		$limit = $limit < 200 ? $limit : 200;
 		$this->limit = $limit;
 		return $this;
 	}
