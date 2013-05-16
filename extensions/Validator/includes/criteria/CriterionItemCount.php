@@ -2,8 +2,7 @@
 
 /**
  * Parameter criterion stating that the value must have a certain length.
- *
- * @deprecated since 0.5, removal in 0.7
+ * 
  * @since 0.4
  * 
  * @file CriterionHasLength.php

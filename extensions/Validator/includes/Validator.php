@@ -8,7 +8,7 @@
  * @file Validator.php
  * @ingroup Validator
  *
- * @licence GNU GPL v2+
+ * @licence GNU GPL v3 or later
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  * @author Daniel Werner
  */
@@ -27,9 +27,9 @@ class Validator {
 	 * 
 	 * @since 0.4
 	 * 
-	 * @var array of IParam
+	 * @var array of Parameter
 	 */
-	protected $params;
+	protected $parameters;
 	
 	/**
 	 * Associative array containing parameter names (keys) and their user-provided data (values).
@@ -50,15 +50,6 @@ class Validator {
 	 * @var array
 	 */
 	protected $paramsToHandle = array();
-
-	/**
-	 *
-	 *
-	 * @since 0.5
-	 *
-	 * @var array
-	 */
-	protected $paramDefinitions = array();
 	
 	/**
 	 * List of ValidationError.
@@ -70,55 +61,40 @@ class Validator {
 	protected $errors = array();
 
 	/**
-	 * Options for this validator object.
-	 *
-	 * @since 0.5
-	 *
-	 * @var ValidatorOptions
+	 * Name of the element that's being validated.
+	 * 
+	 * @since 0.4
+	 * 
+	 * @var string
 	 */
-	protected $options;
+	protected $element;
+	
+	/** 
+	 * Indicates if unknown parameters should be seen as invalid.
+	 * If this value is false, they will simply be ignored.
+	 * 
+	 * @since 0.4.3
+	 * 
+	 * @var boolean
+	 */
+	protected $unknownInvalid;
 
 	/**
-	 * Deprecated since 0.5, breaking changes in 0.7, use newFrom* instead.
+	 * @var array
+	 */
+	protected $paramsTohandle;
+	
+	/**
+	 * Constructor.
 	 * 
 	 * @param string $element
 	 * @param boolean $unknownInvalid Should unknown parameter be regarded as invalid (or, if not, just be ignored)
-	 * @param ValidatorOptions $options
 	 * 
 	 * @since 0.4
 	 */
-	public function __construct( $element = '', $unknownInvalid = true, ValidatorOptions $options = null ) {
-		if ( is_null( $options ) ) {
-			$options = new ValidatorOptions();
-			$options->setName( $element );
-			$options->setUnknownInvalid( $unknownInvalid );
-		}
-
-		$this->options = $options;
-	}
-
-	/**
-	 * Constructs and returns a Validator object based on the provided options.
-	 *
-	 * @since 0.5
-	 *
-	 * @param ValidatorOptions $options
-	 *
-	 * @return Validator
-	 */
-	public static function newFromOptions( ValidatorOptions $options ) {
-		return new Validator( '', true, $options );
-	}
-
-	/**
-	 * Returns the options used by this Validator object.
-	 *
-	 * @since 0.5
-	 *
-	 * @return ValidatorOptions
-	 */
-	public function getOptions() {
-		return clone $this->options;
+	public function __construct( $element = '', $unknownInvalid = true ) {
+		$this->element = $element;
+		$this->unknownInvalid = $unknownInvalid;
 	}
 	
 	/**
@@ -132,7 +108,7 @@ class Validator {
 	 * @param array $defaultParams array of strings or array of arrays to define which parameters can be used unnamed.
 	 *        The second value in array-form is reserved for flags. Currently, Validator::PARAM_UNNAMED determines that
 	 *        the parameter has no name which can be used to set it. Therefore all these parameters must be set before
-	 *        any named parameter. The effect is, that '=' within the string won't confuse the parameter anymore like
+	 *        any named parameter. The effecdt is, that '=' within the string won't confuse the parameter anymore like
 	 *        it would happen with default parameters that still have a name as well.
 	 * @param boolean $toLower Indicates if the parameter values should be put to lower case. Defaults to true.
 	 * 
@@ -218,23 +194,19 @@ class Validator {
 	 * for unknown parameters and optionally for parameter overriding.
 	 * 
 	 * @param array $parameters Parameter name as key, parameter value as value
-	 * @param array $paramDefinitions List of parameter definitions. Either ParamDefinition objects or equivalent arrays.
+	 * @param array $parameterInfo List of Parameter objects
+	 * @param boolean $toLower Indicates if the parameter values should be put to lower case. Defaults to true.
+	 * 
+	 * @todo: $toLower takes no effect yet.
 	 */
-	public function setParameters( array $parameters, array $paramDefinitions ) {
-		$this->paramDefinitions = ParamDefinition::getCleanDefinitions( $paramDefinitions );
-
+	public function setParameters( array $parameters, array $parameterInfo, $toLower = true ) {
+		$this->parameters = $parameterInfo;
+		
 		// Loop through all the user provided parameters, and distinguish between those that are allowed and those that are not.
 		foreach ( $parameters as $paramName => $paramData ) {
-			if ( $this->options->lowercaseNames() ) {
-				$paramName = strtolower( $paramName );
-			}
-
-			if ( $this->options->trimNames() ) {
-				$paramName = trim( $paramName );
-			}
-
-			$paramValue = is_array( $paramData ) ? $paramData['original-value'] : $paramData;
-
+			$paramName = trim( strtolower( $paramName ) );
+			$paramValue = is_array( $paramData ) ? $paramData['original-value'] : trim( $paramData );
+			
 			$this->rawParameters[$paramName] = $paramValue;
 		}
 	}
@@ -253,7 +225,7 @@ class Validator {
 			new ValidationError(
 				$message,
 				$severity,
-				$this->options->getName(),
+				$this->element,
 				(array)$tags
 			)
 		);
@@ -267,7 +239,7 @@ class Validator {
 	 * @param ValidationError $error
 	 */
 	protected function registerError( ValidationError $error ) {
-		$error->element = $this->options->getName();
+		$error->element = $this->element;
 		$this->errors[] = $error;
 		ValidationErrorHandler::addError( $error );		
 	}
@@ -280,7 +252,7 @@ class Validator {
 	public function validateParameters() {
 		$this->doParamProcessing();
 		
-		if ( !$this->hasFatalError() && $this->options->unknownIsInvalid() ) {
+		if ( !$this->hasFatalError() && $this->unknownInvalid ) {
 			// Loop over the remaining raw parameters.
 			// These are unrecognized parameters, as they where not used by any parameter definition.
 			foreach ( $this->rawParameters as $paramName => $paramValue ) {
@@ -298,23 +270,15 @@ class Validator {
 	 * @since 0.4
 	 */
 	protected function doParamProcessing() {
-		$this->getParamsToProcess( array(), $this->paramDefinitions );
+		$this->getParamsToProcess( array(), $this->parameters );
 
-		while ( $this->paramsToHandle !== array() ) {
-			$paramName = array_shift( $this->paramsToHandle );
-			$definition = $this->paramDefinitions[$paramName];
+		while ( $paramName = array_shift( $this->paramsTohandle ) ) {
+			$parameter = $this->parameters[$paramName];
 
-			// Compat code for 0.4.x style definitions, will be removed in 0.7.
-			if ( $definition instanceof Parameter ) {
-				$definition = ParamDefinition::newFromParameter( $definition );
-			}
-
-			$param = new Param( $definition );
-
-			$setUserValue = $this->attemptToSetUserValue( $param );
+			$setUservalue = $this->attemptToSetUserValue( $parameter );
 			
 			// If the parameter is required but not provided, register a fatal error and stop processing. 
-			if ( !$setUserValue && $param->isRequired() ) {
+			if ( !$setUservalue && $parameter->isRequired() ) {
 				$this->registerNewError(
 					wfMsgExt( 'validator_error_required_missing', 'parsemag', $paramName ),
 					array( $paramName, 'missing' ),
@@ -323,24 +287,23 @@ class Validator {
 				break;
 			}
 			else {
-				$this->params[$param->getName()] = $param;
-
-				$param->validate( $this->paramDefinitions, $this->params, $this->options );
 				
-				foreach ( $param->getErrors() as $error ) {
+				$parameter->validate( $this->parameters );			
+				
+				foreach ( $parameter->getErrors() as $error ) {
 					$this->registerError( $error );
 				}
 				
-				if ( $param->hasFatalError() ) {
+				if ( $parameter->hasFatalError() ) {
 					// If there was a fatal error, and the parameter is required, stop processing. 
 					break;
 				}
 				
-				$initialSet = $this->paramDefinitions;
+				$initialSet = $this->parameters;
+				
+				$parameter->format( $this->parameters );	
 
-				$param->format( $this->paramDefinitions, $this->params, $this->options );
-
-				$this->getParamsToProcess( $initialSet, $this->paramDefinitions );
+				$this->getParamsToProcess( $initialSet, $this->parameters );
 			}
 		}
 	}
@@ -354,17 +317,17 @@ class Validator {
 	 * @param array $resultingParamSet
 	 */
 	protected function getParamsToProcess( array $initialParamSet, array $resultingParamSet ) {
-		if ( $initialParamSet === array() ) {
-			$this->paramsToHandle = array_keys( $resultingParamSet );
+		if ( count( $initialParamSet ) == 0 ) {
+			$this->paramsTohandle = array_keys( $resultingParamSet );
 		}
 		else {
-			if ( !is_array( $this->paramsToHandle ) ) {
-				$this->paramsToHandle = array();
+			if ( !is_array( $this->paramsTohandle ) ) {
+				$this->paramsTohandle = array();
 			}			
 			
 			foreach ( $resultingParamSet as $paramName => $parameter ) {
 				if ( !array_key_exists( $paramName, $initialParamSet ) ) {
-					$this->paramsToHandle[] = $paramName;
+					$this->paramsTohandle[] = $paramName;
 				}
 			}	
 		}
@@ -372,12 +335,12 @@ class Validator {
 		$dependencyList = array();
 
 		// Loop over the parameters to handle to create a dependency list.
-		foreach ( $this->paramsToHandle as $paramName ) {
+		foreach ( $this->paramsTohandle as $paramName ) {
 			$dependencies = array();
 
 			// Only include dependencies that are in the list of parameters to handle.
-			foreach ( $this->paramDefinitions[$paramName]->getDependencies() as $dependency ) {
-				if ( in_array( $dependency, $this->paramsToHandle ) ) {
+			foreach ( $this->parameters[$paramName]->getDependencies() as $dependency ) {
+				if ( in_array( $dependency, $this->paramsTohandle ) ) {
 					$dependencies[] = $dependency;
 				}
 			}
@@ -387,7 +350,7 @@ class Validator {
 
 		$sorter = new TopologicalSort( $dependencyList, true );
 
-		$this->paramsToHandle = $sorter->doSort();
+		$this->paramsTohandle = $sorter->doSort();
 	}
 	
 	/**
@@ -396,21 +359,19 @@ class Validator {
 	 * indicating if there was any user value set or not.
 	 * 
 	 * @since 0.4
-	 *
-	 * @param IParam $param
 	 * 
 	 * @return boolean
 	 */
-	protected function attemptToSetUserValue( IParam $param ) {
-		if ( array_key_exists( $param->getName(), $this->rawParameters ) ) {
-			$param->setUserValue( $param->getName(), $this->rawParameters[$param->getName()], $this->options );
-			unset( $this->rawParameters[$param->getName()] );
+	protected function attemptToSetUserValue( Parameter $parameter ) {
+		if ( array_key_exists( $parameter->getName(), $this->rawParameters ) ) {
+			$parameter->setUserValue( $parameter->getName(), $this->rawParameters[$parameter->getName()] );
+			unset( $this->rawParameters[$parameter->getName()] );
 			return true;
 		}
 		else {
-			foreach ( $param->getDefinition()->getAliases() as $alias ) {
+			foreach ( $parameter->getAliases() as $alias ) {
 				if ( array_key_exists( $alias, $this->rawParameters ) ) {
-					$param->setUserValue( $alias, $this->rawParameters[$alias], $this->options );
+					$parameter->setUserValue( $alias, $this->rawParameters[$alias] );
 					unset( $this->rawParameters[$alias] );
 					return true;
 				}
@@ -425,10 +386,10 @@ class Validator {
 	 * 
 	 * @since 0.4
 	 * 
-	 * @return array of IParam
+	 * @return array
 	 */
 	public function getParameters() {
-		return $this->params;
+		return $this->parameters;
 	}
 	
 	/**
@@ -438,10 +399,10 @@ class Validator {
 	 * 
 	 * @param string $parameterName The name of the parameter to return
 	 * 
-	 * @return IParam
+	 * @return Parameter
 	 */
 	public function getParameter( $parameterName ) {
-		return $this->params[$parameterName];
+		return $this->parameters[$parameterName];
 	}
 	
 	/**
@@ -454,11 +415,8 @@ class Validator {
 	 */
 	public function getParameterValues() {
 		$parameters = array();
-
-		foreach ( $this->params as $parameter ) {
-			/**
-			 * @var IParam $parameter
-			 */
+		
+		foreach ( $this->parameters as $parameter ) {
 			$parameters[$parameter->getName()] = $parameter->getValue(); 
 		}
 		
@@ -497,7 +455,7 @@ class Validator {
 	 * @return boolean
 	 */
 	public function hasErrors() {
-		return !empty( $this->errors );
+		return count( $this->errors ) > 0;
 	}
 	
 	/**

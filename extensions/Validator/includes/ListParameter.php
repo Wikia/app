@@ -2,14 +2,13 @@
 
 /**
  * Class for list parameters.
- * @deprecated since 0.5, removal in 0.7.
  * 
  * @since 0.4
  * 
  * @file ListParameter.php
  * @ingroup Validator
  * 
- * @licence GNU GPL v2+
+ * @licence GNU GPL v3 or later
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class ListParameter extends Parameter {

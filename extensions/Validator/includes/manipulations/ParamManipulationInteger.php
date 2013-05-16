@@ -2,8 +2,7 @@
 
 /**
  * Parameter manipulation converting the value to a integer.
- *
- * @deprecated since 0.5, removal in 0.7
+ * 
  * @since 0.4
  * 
  * @file ParamManipulationInteger.php
