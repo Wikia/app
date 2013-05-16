@@ -17,6 +17,6 @@
 	</section>
 	<script>
 		var FilePageSummary = FilePageSummary || {};
-		FilePageSummary['<?= $type ?>'] = <?= json_encode($summary) ?>;
+		FilePageSummary[<?= json_encode($type) ?>] = <?= json_encode($summary) ?>;
 	</script>
 <? endif; ?>
