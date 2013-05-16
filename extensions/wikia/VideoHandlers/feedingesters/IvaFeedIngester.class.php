@@ -165,7 +165,6 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$clipData['category'] = trim( $video['MediaType']['Media'] );
 					$clipData['keywords'] = $videoSet;
 					$clipData['description'] = trim( $video['Descriptions']['ItemDescription'] );
-					$clipData['ageGate'] = 0;
 					$clipData['hd'] = ( $video['HdSource'] == 'true' ) ? 1 : 0;
 					$clipData['tags'] = trim( $video['EntertainmentProgram']['Tagline'] );
 					$clipData['provider'] = 'iva';
@@ -184,6 +183,9 @@ class IvaFeedIngester extends VideoFeedIngester {
 					} else if ( !empty( $video['EntertainmentProgram']['GameWarning']['Warning'] ) ) {
 						$clipData['industryRating'] = trim( $video['EntertainmentProgram']['GameWarning']['Warning'] );
 					}
+
+					$ageGateList = array( 'Extreme or graphic violence', 'Mature', 'Adults Only', 'TV-MA', 'NC-17', 'R' );
+					$clipData['ageGate'] = in_array( $clipData['industryRating'], $ageGateList );
 
 					$clipData['genres'] = '';
 					if ( !empty( $video['EntertainmentProgram']['MovieCategory']['Category'] ) ) {
@@ -292,7 +294,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 			'hd' => $data['hd'],
 			'duration' => $data['duration'],
 			'published' => $data['published'],
-			'ageGate' => $data['ageGate'],
+			'ageGate' => intval( $data['ageGate'] ),
 			'thumbnail' => $data['thumbnail'],
 			'category' => $data['category'],
 			'description' => $data['description'],
