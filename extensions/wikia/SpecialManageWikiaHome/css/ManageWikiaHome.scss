@@ -86,8 +86,8 @@
 .wikis-setup {
 	clear: left;
 
-	.wiki-filter-group {
-		float: right;
+	p {
+		padding-top: 20px;
 
 		input[type=submit] {
 			float: none;
@@ -98,17 +98,9 @@
 		}
 
 		input[type=reset] {
-			margin-left: 40px;
+			margin-left: 30px;
 		}
 	}
-
-	.wiki-name-filter-field {
-		float: left;
-	}
-}
-
-#wikisWithVisualizationList {
-	clear: both;
 }
 
 input[type=submit] {

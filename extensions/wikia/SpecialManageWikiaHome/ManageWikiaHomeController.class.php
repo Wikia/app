@@ -73,6 +73,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->currentPage = $this->request->getVal('page', 1);
 		$this->corpWikiId = $this->visualizationWikisData[$this->visualizationLang]['wikiId'];
 
+		$this->filterOptions = $this->initFilterOptions();
+
 		//verticals slots' configuration
 		/* @var $this->helper WikiaHomePageHelper */
 		$videoGamesAmount = $this->request->getVal('video-games-amount', $this->helper->getNumberOfVideoGamesSlots($this->visualizationLang));
@@ -82,10 +84,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$newWikisAmount = $this->request->getVal('new-wikis-amount', $this->helper->getNumberOfNewWikiSlots($this->visualizationLang));
 
 		$this->form = new CollectionsForm();
-		$collectionsModel = new WikiaCollectionsModel();
-		$collectionsList = $collectionsModel->getList($this->visualizationLang);
-		$collectionValues = $this->prepareCollectionToShow($collectionsList);
-		$wikisPerCollection = $this->getWikisPerCollection($collectionsList);
+		$collectionsModel = $this->getWikiaCollectionsModel();
+		$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
+		$collectionValues = $this->prepareCollectionToShow($this->collectionsList);
+		$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList);
 
 		if( $this->request->wasPosted() ) {
 			if ( $this->request->getVal('wikis-in-slots',false) ) {
@@ -116,17 +118,20 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 					$collectionSavedValues = $this->prepareCollectionForSave($collectionValues);
 					$collectionsModel->saveAll($this->visualizationLang, $collectionSavedValues);
 
-					$collectionsList = $collectionsModel->getList($this->visualizationLang);
-					$wikisPerCollection = $this->getWikisPerCollection($collectionsList, true);
+					$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
+					$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList, true);
 					
 					$this->infoMsg = wfMessage('manage-wikia-home-collections-success')->text();
 				} else {
 					$this->errorMsg = wfMessage('manage-wikia-home-collections-failure')->text();
 				}
+			} elseif ($this->request->getVal('wikis-filter', false)) {
+				$this->filterOptions = array_merge($this->filterOptions, $this->request->getParams());
 			}
 		}
 
 		$this->form->setFieldsValues($collectionValues);
+		$this->verticals = $this->getWikiVerticals();
 
 		$this->setVal('videoGamesAmount', $videoGamesAmount);
 		$this->setVal('entertainmentAmount', $entertainmentAmount);
@@ -172,22 +177,14 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$visualizationLang = $this->visualizationLang;
 		}
 
+		$this->filterOptions = $this->request->getVal('filterOptions', []);
+
 		$this->currentPage = $this->request->getVal('page', 1);
 
 		//todo: new class for options
-		$options = new stdClass();
-		$options->lang = $visualizationLang;
-		$options->wikiHeadline = $this->request->getVal('wikiHeadline', '');
-		$options->limit = self::WHST_WIKIS_PER_PAGE;
-		$options->offset = (($this->currentPage - 1) * self::WHST_WIKIS_PER_PAGE);
-		// TODO
-		$options->verticalId = 0;
-		$options->blockedFlag = false;
-		$options->officialFlag = false;
-		$options->promotedFlag = false;
-		$options->collectionId = 44;
-		$count = $this->helper->getWikisCountForStaffTool($options);
+		$options = $this->prepareFilterOptions($visualizationLang, $this->filterOptions);
 
+		$count = $this->helper->getWikisCountForStaffTool($options);
 		$specialPage = F::build('Title', array('ManageWikiaHome', NS_SPECIAL), 'newFromText');
 		//todo: getLocalUrl(array('vl' => $visualizationLang, 'page' => '%s')) doesn't work here because % sign is being escaped
 		$url = $specialPage->getLocalUrl() . '?vl=' . $visualizationLang . '&page=%s';
@@ -200,7 +197,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		}
 
 		$this->list = $this->helper->getWikisForStaffTool($options);
-		$this->collections = $this->helper->getCollectionsList($visualizationLang);
+		$this->collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -370,7 +367,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$collectionId = $this->request->getVal('collectionId', 0);
 			$type = $this->request->getVal('switchType', self::SWITCH_COLLECTION_TYPE_ADD);
 
-			$collectionsModel = new WikiaCollectionsModel();
+			$collectionsModel = $this->getWikiaCollectionsModel();
 			switch($type) {
 				case self::SWITCH_COLLECTION_TYPE_ADD:
 					$collectionsModel->addWikiToCollection($collectionId, $wikiId);
@@ -469,4 +466,37 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return $this->wikiaCollectionsModel;
 	}
 
+	private function getWikiVerticals() {
+		return array(
+			WikiFactoryHub::CATEGORY_ID_GAMING => 'Gaming',
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'Lifestyle'
+		);
+	}
+
+	private function prepareFilterOptions($visualizationLang, $filterOptions) {
+		$options = new stdClass();
+		$options->lang = $visualizationLang;
+		$options->wikiHeadline = !empty($filterOptions['wiki-name-filer-input']) ? $filterOptions['wiki-name-filer-input'] : $this->request->getVal('wikiHeadline', '');
+		$options->limit = self::WHST_WIKIS_PER_PAGE;
+		$options->offset = (($this->currentPage - 1) * self::WHST_WIKIS_PER_PAGE);
+		$options->verticalId = !empty($filterOptions['vertical-filter']) ? $filterOptions['vertical-filter'] : 0;
+		$options->blockedFlag = isset($filterOptions['wiki-blocked-filter']) ? $filterOptions['wiki-blocked-filter'] : false;
+		$options->promotedFlag = isset($filterOptions['wiki-promoted-filter']) ? $filterOptions['wiki-promoted-filter'] : false;
+		$options->officialFlag = isset($filterOptions['wiki-official-filter']) ? $filterOptions['wiki-official-filter'] : false;
+		$options->collectionId = !empty($filterOptions['collections-filter']) ? $filterOptions['collections-filter'] : 0;
+
+		return $options;
+	}
+
+	private function initFilterOptions() {
+		return [
+			'vertical-filter' => 0,
+			'wiki-blocked-filter' => 0,
+			'wiki-promoted-filter' => 0,
+			'wiki-official-filter' => 0,
+			'collections-filter' => 0,
+			'wiki-name-filer-input' => ''
+		];
+	}
 }

@@ -26,8 +26,7 @@ ManageWikiaHome.prototype = {
 			$.proxy(this.renderWikiListPage, this)
 		);
 
-		$('#wiki-filter-reset').on(
-			'click',
+		$('#wiki-filter-reset').click(
 			this.renderAllWikiListPage
 		);
 
@@ -105,6 +104,14 @@ ManageWikiaHome.prototype = {
 				this.isListChangingDelayed = false;
 			}, this)
 		});
+	},
+	resetFormFields: function(e) {
+		e.preventDefault();
+		var form = $('#wiki-name-filter');
+
+		form.find('select option:selected').removeAttr('selected');
+		form.find('input[type=text]').val('');
+		form.find('input:checked').removeAttr('checked');
 	},
 	showEditModal: function(e) {
 		e.preventDefault();

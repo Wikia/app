@@ -937,17 +937,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $wikiList;
 	}
 
-	public function getCollectionsList($langCode) {
-		$out = [];
-		$collections = $this->getCollectionsModel()->getList($langCode);
-
-		foreach ($collections as $collection) {
-			$out[$collection['id']] = $collection;
-		}
-
-		return $out;
-	}
-
 	public function getWamScore($wikiId) {
 		$wamScore = null;
 
