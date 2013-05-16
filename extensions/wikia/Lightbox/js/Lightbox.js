@@ -92,7 +92,6 @@ var Lightbox = {
 		Lightbox.openModal.moreInfoTemplate = $('#LightboxMoreInfoTemplate');
 		Lightbox.openModal.shareTemplate = $('#LightboxShareTemplate');
 		Lightbox.openModal.progressTemplate = $('#LightboxCarouselProgressTemplate');
-		Lightbox.openModal.videoTemplate = $("#LightboxVideoTemplate");
 		Lightbox.openModal.headerTemplate = $("#LightboxHeaderTemplate");
 		Lightbox.openModal.headerAdTemplate = $("#LightboxHeaderAdTemplate");
 
@@ -398,9 +397,6 @@ var Lightbox = {
 	video: {
 		trackingTimeout: false,
 		renderVideo: function(data) {
-			// render mustache template
-			var renderedResult = Lightbox.openModal.videoTemplate.mustache(data);
-
 			Lightbox.openModal.media
 				.addClass('video-media')
 				.css('line-height','normal');
