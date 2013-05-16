@@ -7,7 +7,7 @@
  *
  */
 
-
+global $IP;  // This is weird but necessary for unit tests
 require_once( $IP . '/lib/vendor/simplehtmldom/simple_html_dom.php' );
 
 class WikiaApiQueryEventsData extends ApiQueryBase {
