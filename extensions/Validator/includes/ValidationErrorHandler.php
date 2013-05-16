@@ -8,7 +8,7 @@
  * @file Validator_ErrorHandler.php
  * @ingroup Validator
  * 
- * @licence GNU GPL v3 or later
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 final class ValidationErrorHandler {
