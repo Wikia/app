@@ -4,6 +4,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'IvaApiWrapper';
 	protected static $PROVIDER = 'iva';
 	protected static $FEED_URL = 'http://api.internetvideoarchive.com/1.0/DataService/VideoAssets?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
+	protected static $ASSET_URL = 'http://www.videodetective.net/video.mp4?cmd=6&fmt=4&customerid=$1&videokbrate=750&publishedid=$2&e=$3';
 	private static $VIDEO_SETS = array(
 		'Wiggles',
 		'Futurama',
@@ -109,14 +110,13 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$startDate = !empty($params['startDate']) ? $params['startDate'] : '';
 		$endDate = !empty($params['endDate']) ? $params['endDate'] : '';
 		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
+		$remoteAsset = !empty( $params['remoteAsset'] );
 
 		$articlesCreated = 0;
 
 		foreach( self::$VIDEO_SETS as $videoSet ) {
 			$page = 0;
 			do {
-				$numVideos = 0;
-
 				// connect to provider API
 				$url = $this->initFeedUrl( $videoSet, $startDate, $endDate, $page++ );
 				print( "Connecting to $url...\n" );
@@ -145,12 +145,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$clipData['videoId'] = $video['Publishedid'];
 
 					if ( !empty($video['ExpirationDate']) ) {
-						print "Skipping {$clipData['titleName']} (Id:{$clipData['videoId']}) has expiration date.\n";
+						print "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has expiration date.\n";
 						continue;
 					}
 
 					if ( !empty($video['TargetCountryId']) && $video['TargetCountryId'] != -1 ) {
-						print "Skipping {$clipData['titleName']} (Id:{$clipData['videoId']}) has regional restrictions.\n";
+						print "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has regional restrictions.\n";
 						continue;
 					}
 
@@ -203,7 +203,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$clipData['actors'] = implode( ', ', $actors );
 
 					$msg = '';
-					$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug );
+					$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'remoteAsset' => $remoteAsset );
 					$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
 					if ( $msg ) {
 						print "ERROR: $msg\n";
@@ -218,8 +218,6 @@ class IvaFeedIngester extends VideoFeedIngester {
 	}
 
 	private function initFeedUrl( $videoSet, $startDate, $endDate, $page ) {
-		global $wgIvaApiConfig;
-
 		$url = str_replace( '$1', self::API_PAGE_SIZE, static::$FEED_URL );
 		$url = str_replace( '$2', self::API_PAGE_SIZE * $page, $url );
 
@@ -242,7 +240,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		);
 		$url = str_replace( '$4', implode( ',', $expand ), $url );
 
-		$url = str_replace( '$5', $wgIvaApiConfig['DeveloperId'], $url );
+		$url = str_replace( '$5', F::app()->wg->IvaApiConfig['DeveloperId'], $url );
 
 		return $url;
 	}
@@ -310,4 +308,41 @@ class IvaFeedIngester extends VideoFeedIngester {
 		return $metadata;
 	}
 
+	/**
+	 * generate remote asset data
+	 * @param string $name
+	 * @param array $data
+	 * @return array $data
+	 */
+	protected function generateRemoteAssetData( $name, $data ) {
+		$data['name'] = $name;
+		$data['duration'] = $data['duration'] * 1000;
+
+		$url = str_replace( '$1', F::app()->wg->IvaApiConfig['AppId'], static::$ASSET_URL );
+		$url = str_replace( '$2', $data['videoId'], $url );
+
+		$expired = 1609372800; // 2020-12-31
+		$url = str_replace( '$3', $expired, $url );
+
+		$hash = $this->generateHash( $url );
+		$url .= '&h='.$hash;
+
+		$data['url'] = array(
+			'flash' => $url,
+			'iphone' => $url,
+		);
+
+		return $data;
+	}
+
+	/**
+	 * generate hash
+	 * @param string $url
+	 * @return string $hash
+	 */
+	protected function generateHash( $url ) {
+		$hash = md5( strtolower( F::app()->wg->IvaApiConfig['AppKey'].$url ) );
+
+		return $hash;
+	}
 }
