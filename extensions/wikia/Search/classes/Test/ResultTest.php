@@ -297,8 +297,10 @@ class ResultTest extends BaseTest {
 	 * @covers Wikia\Search\Result::toArray
 	 */
 	public function testToArray() {
-		$result = new Result( $this->defaultFields );
-		$array  = $result->toArray( array( 'wid' ) );
+		$fields = $this->defaultFields;
+		$fields['foo'] = 'bar';
+		$result = new Result( $fields );
+		$array  = $result->toArray( array( 'wid', 'foo' => 'roseanne' ) );
 		$this->assertArrayHasKey(
 				'wid',
 				$array
@@ -306,6 +308,10 @@ class ResultTest extends BaseTest {
 		$this->assertEquals(
 				123,
 				$array['wid']
+		);
+		$this->assertEquals(
+				'bar',
+				$array['roseanne']
 		);
 	}
 

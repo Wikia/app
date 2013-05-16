@@ -114,10 +114,11 @@ abstract class AbstractSelect
 	
 	/**
 	 * Allows us to get an array from search results rather than search result objects.
+	 * @param array $fields allows us to apply a mapping
 	 * @return array
 	 */
-	public function searchAsApi() {
-		return $this->search()->toArray();
+	public function searchAsApi( $fields = [] ) {
+		return $this->search()->toArray( $fields );
 	}
 	
 	/**
