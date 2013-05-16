@@ -40,7 +40,6 @@ class FilePageTabbed extends WikiaFilePage {
 		wfProfileIn( __METHOD__ );
 
 		$out = $this->getContext()->getOutput();
-		$app = F::App();
 
 		$sectionClass = '';
 		if (! $this->isDiffPage() ) {
