@@ -8,6 +8,7 @@
  */
 class UserSignupSpecialController extends WikiaSpecialPageController {
 
+	/** @var UserLoginHelper */
 	private $userLoginHelper = null;
 
 	public function __construct() {
