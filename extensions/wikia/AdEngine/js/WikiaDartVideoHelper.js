@@ -8,11 +8,6 @@ define('ext.wikia.adengine.dartvideohelper', ['wikia.log', 'wikia.location', 'wi
 
 	pageParams.src = 'ooyala';
 
-	/**
-	 * Get URL for Google IMAv3 call
-	 *
-	 * @return {String} URL of DART script
-	 */
 	function getCustParams() {
 		var key,  vals, params = [], urlEncodedVals, valIndex;
 
@@ -36,6 +31,11 @@ define('ext.wikia.adengine.dartvideohelper', ['wikia.log', 'wikia.location', 'wi
 		return params.join('&');
 	}
 
+	/**
+	 * Get URL for Google IMAv3 call
+	 *
+	 * @return {String} URL of DART script
+	 */
 	function getUrl() {
 		log('getUrl', 5, logGroup);
 		var out = 'http://pubads.g.doubleclick.net/gampad/ads?' +
