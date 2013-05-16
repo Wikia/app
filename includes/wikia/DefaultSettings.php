@@ -1131,6 +1131,12 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdVideoTargeting
+ * Enables ad engine
+ */
+$wgAdVideoTargeting = false;
+
+/**
  * trusted proxy service registry
  */
 $app->registerClass( 'TrustedProxyService', "$IP/includes/wikia/services/TrustedProxyService.class.php" );

@@ -6,7 +6,7 @@
  *
  * @example
  * //AMD
- * require(['log'], function (log) { log(123, log.levels.info, 'MyLogGroup'); });
+ * require(['wikia.log'], function (log) { log(123, log.levels.info, 'MyLogGroup'); });
  *
  * //JS Namespace
  * Wikia.log(123, Wikia.log.levels.info, 'MyLogGroup');

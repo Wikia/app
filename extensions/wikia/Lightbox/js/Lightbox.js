@@ -26,6 +26,9 @@ var Lightbox = {
 	to: 0, // timestamp for getting wiki images
 
 	makeLightbox: function(params) {
+		// Allow other extensions to react when a Lightbox is opened.  Used in FilePage.
+		$(window).trigger('lightboxOpened');
+
 		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length; // if we don't have latest photos in the DOM, request them from back end
 		Lightbox.openModal = params.modal;
 
@@ -47,6 +50,8 @@ var Lightbox = {
 
 		Lightbox.openModal.aggregateViewCount = 0;
 		Lightbox.openModal.clickSource = clickSource;
+		// This is a temporary duplication of clicksource tracking until we switch over to the video-player-stats version
+		Lightbox.openModal.vbClickSource = clickSource;
 
 		// Check screen height for future interactions
 		Lightbox.shortScreen = $(window).height() < LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset ? true : false;
@@ -67,27 +72,16 @@ var Lightbox = {
 		// Set up carousel
 		Lightbox.setUpCarousel();
 
-		// callback to finish lighbox loading
-		var updateCallback = function(json) {
-			LightboxLoader.cache.details[Lightbox.current.key] = json;
-			Lightbox.updateMedia();
-			Lightbox.showOverlay();
-			Lightbox.hideOverlay(3000);
+		LightboxLoader.cache.details[Lightbox.current.title] = Lightbox.initialFileDetail;
+		Lightbox.updateMedia();
+		Lightbox.showOverlay();
+		Lightbox.hideOverlay(3000);
 
-			LightboxLoader.lightboxLoading = false;
+		LightboxLoader.lightboxLoading = false;
 
-			/* tracking after lightbox has fully loaded */
-			var trackingTitle = Lightbox.current.key;
-			LightboxTracker.track(Wikia.Tracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
-		};
-
-		// Update modal with main image/video content
-		if(Lightbox.current.type == 'image') {
-			updateCallback(Lightbox.initialFileDetail);
-		} else {
-			// normalize for jwplayer
-			LightboxLoader.normalizeMediaDetail(Lightbox.initialFileDetail, updateCallback);
-		}
+		/* tracking after lightbox has fully loaded */
+		var trackingTitle = Lightbox.current.key;
+		LightboxTracker.track(Wikia.Tracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
 
 		// attach event handlers
 		Lightbox.bindEvents();
@@ -98,7 +92,6 @@ var Lightbox = {
 		Lightbox.openModal.moreInfoTemplate = $('#LightboxMoreInfoTemplate');
 		Lightbox.openModal.shareTemplate = $('#LightboxShareTemplate');
 		Lightbox.openModal.progressTemplate = $('#LightboxCarouselProgressTemplate');
-		Lightbox.openModal.videoTemplate = $("#LightboxVideoTemplate");
 		Lightbox.openModal.headerTemplate = $("#LightboxHeaderTemplate");
 		Lightbox.openModal.headerAdTemplate = $("#LightboxHeaderAdTemplate");
 
@@ -320,6 +313,7 @@ var Lightbox = {
 
 					// Set all future click sources to Lightbox rather than DOM element
 					Lightbox.openModal.clickSource = LightboxTracker.clickSource.LB;
+					Lightbox.openModal.vbClickSource = LightboxTracker.clickSource.LB;
 				}, 500);
 
 			});
@@ -403,24 +397,19 @@ var Lightbox = {
 	video: {
 		trackingTimeout: false,
 		renderVideo: function(data) {
-			// render mustache template
-			var renderedResult = Lightbox.openModal.videoTemplate.mustache(data);
-
 			Lightbox.openModal.media
 				.addClass('video-media')
-				.html(renderedResult)
 				.css('line-height','normal');
 
-			if(data.playerScript) {
-				$('body').append('<script>' + data.playerScript + '</script>');
-			}
-
+			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+				new VideoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode, Lightbox.openModal.vbClickSource);
+				Lightbox.openModal.vbClickSource = LightboxTracker.clickSource.LB;
+			});
 		},
 		destroyVideo: function() {
 			Lightbox.openModal.media.html('');
 		},
 		updateLightbox: function(data) {
-
 			// Set lightbox css
 			var css = {
 				height: LightboxLoader.defaults.height
@@ -1371,6 +1360,12 @@ var Lightbox = {
 
 				if(typeof clickSource != 'undefined') {
 					// Click source is already set so we don't have to look for it.
+					break;
+				}
+
+				// Hubs
+				if(window.wgWikiaHubType) {
+					clickSource = VPS.HUBS;
 					break;
 				}
 

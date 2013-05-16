@@ -1,7 +1,7 @@
 <?php
 
 class MyvideoVideoHandler extends VideoHandler {
-	
+
 	protected $apiName = 'MyvideoApiWrapper';
 	protected static $urlTemplate = 'http://www.myvideo.de/movie/$1';
 	protected static $providerDetailUrlTemplate = 'http://www.myvideo.de/watch/$1';
@@ -11,13 +11,13 @@ class MyvideoVideoHandler extends VideoHandler {
 
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );
-		
+
 		$url = $this->getEmbedUrl();
 
 		$sizeString = $this->getSizeString( '611', '383', 'inline' );
 		$sizeStringElement = $this->getSizeString( $width, $height );
-		
-		$embedCode = <<<EOT
+
+		$html = <<<EOT
 <object $sizeString $sizeStringElement>
 	<embed src='$url' $sizeStringElement type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true'></embed>
 	<param name='movie' value='$url'></param>
@@ -25,8 +25,8 @@ class MyvideoVideoHandler extends VideoHandler {
 	<param name='AllowScriptAccess' value='always'></param>
 </object>
 EOT;
-	
-		return $embedCode;
+
+		return array( 'html' => $html );
 	}
 
 }

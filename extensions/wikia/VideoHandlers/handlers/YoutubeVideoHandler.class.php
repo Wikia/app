@@ -10,22 +10,34 @@ class YoutubeVideoHandler extends VideoHandler {
 	protected static $autoplayValue = "1";
 
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
-		return $this->getEmbedNative($width, $autoplay);
-	}
-
-	private function getEmbedNative($width, $autoplay=false) {
 		// YouTube parameters: http://code.google.com/apis/youtube/player_parameters.html
 		$height =  $this->getHeight( $width );
-		$url = $this->getEmbedUrl();
-		$params = array('rel'=>0);
-		if ($autoplay) $params[self::$autoplayParam] = self::$autoplayValue;
-		$qs = http_build_query($params);
-		$sizeString = $this->getSizeString( $width, $height );
+		$playerVars = array(
+			'rel' => 0,
+			'wmode' => 'opaque',
+			'allowfullscreen' => 1,
+		);
+		if ( $autoplay ) {
+			$playerVars[self::$autoplayParam] = self::$autoplayValue;
+		}
+		$sizeString = $this->getSizeString( $width, $height, 'inline' );
 
-		$code = <<<EOT
-<iframe $sizeString src="{$url}?$qs&wmode=opaque" frameborder="0" allowfullscreen></iframe>
+		$html = <<<EOT
+<div id="youtubeVideoPlayer" $sizeString></div>
 EOT;
-		return $code;
+		return array(
+			'html' => $html,
+			'init' => 'wikia.videohandler.youtube',
+			'jsParams' => array(
+				'width' => $width,
+				'height' => $height,
+				'videoId'=> $this->videoId,
+				'playerVars' => $playerVars,
+			),
+			'scripts' => array(
+				'extensions/wikia/VideoHandlers/js/handlers/Youtube.js',
+			),
+		);
 	}
 
 	public function addExtraBorder( $width ){

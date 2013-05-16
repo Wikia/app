@@ -316,7 +316,14 @@
 
 		// wlee: responseText could include <script>. Use jQuery to parse
 		// and execute this script
-		$('#VideoEmbed' + VET_curScreen).html(responseText);
+		$('#VideoEmbedDetails').html(responseText);
+
+		var element = $('<div></div>').appendTo('#VideoEmbedThumb');
+
+		require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+			new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
+		});
+
 		VET_updateHeader();
 
 
@@ -417,11 +424,7 @@
 			params.push('caption=' + encodeURIComponent( $('#VideoEmbedCaption').val() ) );
 		}
 
-		/* Allow extensions to add extra params to ajax call
-		 * So far only used by article placeholders
-		 * Making this event driven is tricky because there can be more than 'add video' element on a page.
-		 *   ex: MiniEditor and Article Placeholder
-		 */
+		// Allow extensions to add extra params to ajax call
 		params = params.concat(VET_options.insertFinalVideoParams || []);
 
 		var callback = function(o, status) {
@@ -908,15 +911,12 @@
 		// METHOD: show preview of the selected video
 		showVideoPreview: function(data) {
 			var previewWrapper = this.cachedSelectors.previewWrapper,
-				videoWrapper = this.cachedSelectors.videoWrapper;
-			if ( data.playerAsset && data.playerAsset.length > 0 ) { // screenplay special case
-				$.getScript(data.playerAsset, function() {
-					videoWrapper.html( '<div id="'+data.videoEmbedCode.id+'" class="Wikia-video-enabledEmbedCode"></div>');
-					$('body').append('<script>' + data.videoEmbedCode.script + ' loadJWPlayer(); </script>');
-				});
-			} else {
-				videoWrapper.html('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>');
-			}
+				videoWrapper = this.cachedSelectors.videoWrapper,
+				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
+
+			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+				new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
+			});
 
 			// expand preview is hidden
 			if (!previewWrapper.is(':visible')) {

@@ -9,7 +9,7 @@ var Paginator = function(el, summary) {
 	this.type = this.$root.data('listing-type');
 	this.currentPage = 0;
 	this.totalCount = 0;
-	this.summary = window.VideoPageSummary[this.type];
+	this.summary = window.FilePageSummary[this.type];
 	this.$content = this.$root.find('.page-list-content');
 	this.init();
 };
@@ -94,21 +94,49 @@ Paginator.prototype = {
 	}
 };
 
-var VideoPage = {
+var FilePageTabbed = {
 	init: function() {
-		var self = this;
-
 		this.initTabCookies();
 
+		this.initRemoveVideo();
+
+		this.initPagination();
+
+		// Hide global usage sections in Oasis
+		$('#globalusage, #mw-imagepage-section-globalusage').hide();
+
+	},
+	/**
+	 * Set cookies for logged in users to save which tab is active when they exit the page
+	 */
+	initTabCookies: function() {
+		require(['wikia.localStorage'], function(ls) {
+			if(window.wgUserName) {
+				var selected = ls.WikiaFilePageTab || 'about';
+
+				$('[data-tab="' + selected + '"] a').click();
+
+				$(window).on('wikiaTabClicked', function(e, tab) {
+					ls.WikiaFilePageTab = tab;
+				});
+			} else {
+				$('[data-tab="about"] a').click();
+			}
+		});
+	},
+	/**
+	 * Initialize pagination for "Appears in these..." sections
+	 */
+	initPagination: function() {
 		$('.page-list-pagination').each(function() {
 			new Paginator($(this));
 		});
-
-		var moreInfoWrapper = $('.more-info-wrapper'),
-			$table = $('#mw_metadata');
-
-		// temporary hiding from UI.  remove this after the GlobalUsage hook is removed as well
-		$('#globalusage, #mw-imagepage-section-globalusage').hide();
+	},
+	/**
+	 *	Bind event when the "remove" button is clicked in the edit menu
+	 */
+	initRemoveVideo: function() {
+		var self = this;
 
 		$('.WikiaMenuElement').on('click', '.remove', function(e) {
 			e.preventDefault();
@@ -143,34 +171,18 @@ var VideoPage = {
 						id: 'cancel',
 						message: $.msg('videohandler-remove-video-modal-cancel'),
 						handler: function(){
-							self.modal.closeModal();
+							self.removeVideoModal.closeModal();
 						}
 					}
 				],
 				callback: function() {
-					self.modal = $('#remove-video-modal');
+					self.removeVideoModal = $('#remove-video-modal');
 				}
 			});
-		});
-	},
-	initTabCookies: function() {
-		// Set cookies for logged in users to save which tab is active when they exit the page
-		require(['wikia.localStorage'], function(ls) {
-			if(window.wgUserName) {
-				var selected = ls.WikiaFilePageTab || 'about';
-
-				$('[data-tab="' + selected + '"] a').click();
-
-				$(window).on('wikiaTabClicked', function(e, tab) {
-					ls.WikiaFilePageTab = tab;
-				});
-			} else {
-				$('[data-tab="about"] a').click();
-			}
 		});
 	}
 }
 
-VideoPage.init();
+FilePageTabbed.init();
 
 });
