@@ -146,19 +146,17 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Mock a static class method
+	 * Mock a static method using single return value
 	 *
 	 * Example:
 	 *
-	 * $this->mockClassStaticMethod('Http', 'post', json_encode(['foo' => 'bar']));
+	 * $this->mockStaticMethod('Http', 'post', json_encode(['foo' => 'bar']));
 	 *
 	 * @param $className string class name
 	 * @param $methodName string method name
 	 * @param $retVal mixed result to be returned by mocked method
 	 */
-	protected function mockClassStaticMethod($className, $methodName, $retVal) {
-		// runkit doesn't resolve autoloaded classes, we need to force it here...
-		is_callable(array($className,$methodName));
+	protected function mockStaticMethod($className, $methodName, $retVal) {
 		$this->getMockProxy()->getStaticMethod($className,$methodName)
 			->willReturn($retVal);
 	}
@@ -249,6 +247,10 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->getMockProxy()->getStaticMethod($className,$methodName)
 			->willCall(array($mock,$methodName));
 		return $mock;
+	}
+
+	protected function callOriginalGlobalFunction( $functionName, $args ) {
+		return $this->getMockProxy()->callOriginalGlobalFunction( $functionName, $args );
 	}
 
 	// After calling this, any reference to $this->app in a test now uses the mocked object

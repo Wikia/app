@@ -87,7 +87,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		*/
 
 		$this->mockGlobalVariable('wgRequest',$wgRequest);
-		$this->mockClassStaticMethod('AutoCreateWiki','checkWikiNameIsCorrect','');
+		$this->mockStaticMethod('AutoCreateWiki','checkWikiNameIsCorrect','');
 
 		$response = $app->sendRequest('CreateNewWiki', 'CheckWikiName');
 

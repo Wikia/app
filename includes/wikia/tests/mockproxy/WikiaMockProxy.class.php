@@ -20,6 +20,8 @@ class WikiaMockProxy {
 	const PROP_STATE = 'state';
 	const PROP_ACTION = 'action';
 
+	const SAVED_PREFIX = '_saved_';
+
 	/**
 	 * Active WikiaMockProxy instance
 	 *
@@ -110,23 +112,23 @@ class WikiaMockProxy {
 			case self::STATIC_METHOD:
 				$className = $parts[1];
 				$methodName = $parts[2];
-				$savedName = "_saved_{$methodName}";
-				if ( $state ) {
+				$savedName = self::SAVED_PREFIX . $methodName;
+				if ( $state ) { // enable
 					is_callable( "{$className}::{$methodName}" );
 					runkit_method_rename( $className, $methodName, $savedName);  // save the original method
 					runkit_method_add($className, $methodName, '', $this->getExecuteCall($type,$id), RUNKIT_ACC_PUBLIC | RUNKIT_ACC_STATIC );
-				} else {
+				} else { // diable
 					runkit_method_remove($className, $methodName);  // remove the redefined instance
 					runkit_method_rename($className, $savedName, $methodName); // restore the original
 				}
 				break;
 			case self::GLOBAL_FUNCTION:
 				$functionName = $parts[1];
-				$savedName = "_saved_{$functionName}";
-				if ( $state ) {
+				$savedName = self::SAVED_PREFIX . $functionName;
+				if ( $state ) { // enable
 					runkit_function_rename($functionName, $savedName);
 					runkit_function_add($functionName, '', $this->getExecuteCall($type,$id));
-				} else {
+				} else { // disable
 					runkit_function_remove($functionName);  // remove the redefined instance
 					runkit_function_rename($savedName, $functionName); // restore the original
 				}
@@ -150,6 +152,12 @@ class WikiaMockProxy {
 		/** @var $action WikiaMockProxyAction */
 		$action = $this->mocks[$type][$id][self::PROP_ACTION];
 		return $action->execute($args);
+	}
+
+	public function callOriginalGlobalFunction( $functionName, $args ) {
+		$savedName = self::SAVED_PREFIX . $functionName;
+		$functionToCall = is_callable( $savedName ) ? $savedName : $functionName;
+		return call_user_func_array( $functionToCall, $args );
 	}
 
 	public function enable() {
