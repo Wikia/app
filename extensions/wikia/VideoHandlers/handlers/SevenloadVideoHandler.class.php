@@ -22,11 +22,7 @@ class SevenloadVideoHandler extends VideoHandler {
 </object>
 EOT;
 
-		return array(
-			'html' => $html,
-			'title' => $this->DBKey,
-			'provider' => 'sevenload',
-		);
+		return array( 'html' => $html );
 	}
 
 }

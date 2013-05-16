@@ -39,8 +39,6 @@ EOT;
 				$jsFile,
 				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js"
 			),
-			'title' => $this->DBKey,
-			'provider' => 'ooyala',
 		);
 	}
 

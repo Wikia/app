@@ -26,11 +26,7 @@ class PrototypeVideoHandler extends VideoHandler {
 </object></div>
 EOT;
 
-		return array(
-			'html' => $html,
-			'title' => $this->DBKey,
-			'provider' => 'prototype',
-		);
+		return array( 'html' => $html );
 	}
 
 }

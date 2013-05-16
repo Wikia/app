@@ -50,7 +50,7 @@ class JWPlayer {
 	 * with the setXXX() methods
 	 * @return string
 	 */
-	public function getEmbedCode( $provider, $title ) {
+	public function getEmbedCode() {
 		$jwplayerjs = self::getJavascriptPlayerUrl();
 
 		$html = <<<EOT
@@ -78,8 +78,6 @@ EOT;
 				$jwplayerjs,
 				"extensions/wikia/JWPlayer/js/JWPlayer.js"
 			),
-			'title' => $title,
-			'provider' => $provider,
 		);
 
 		return $code;
