@@ -3,16 +3,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	const WHST_VISUALIZATION_LANG_VAR_NAME = 'vl';
 	const WHST_WIKIS_PER_PAGE = 25;
 
-	const FLAG_TYPE_BLOCK = 'block';
-	const FLAG_TYPE_UNBLOCK = 'unblock';
-	const FLAG_TYPE_PROMOTE = 'promote';
-	const FLAG_TYPE_DEMOTE = 'remove-promote';
-	const FLAG_TYPE_ADD_OFFICIAL = 'add-official';
-	const FLAG_TYPE_REMOVE_OFFICIAL = 'remove-official';
-
-	const SWITCH_COLLECTION_TYPE_ADD = 'add';
-	const SWITCH_COLLECTION_TYPE_REMOVE= 'remove';
-
+	const CHANGE_FLAG_ADD = 'add';
+	const CHANGE_FLAG_REMOVE = 'remove';
 
 	/**
 	 * @var WikiaHomePageHelper $helper
@@ -35,8 +27,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	public function init() {
 		$this->wg->Out->addJsConfigVars([
-			'SWITCH_COLLECTION_TYPE_ADD' => self::SWITCH_COLLECTION_TYPE_ADD,
-			'SWITCH_COLLECTION_TYPE_REMOVE' => self::SWITCH_COLLECTION_TYPE_REMOVE
+			'CHANGE_FLAG_ADD' => self::CHANGE_FLAG_ADD,
+			'CHANGE_FLAG_REMOVE' => self::CHANGE_FLAG_REMOVE
 		]);
 	}
 
@@ -269,94 +261,36 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc A public alias of changeFlag() setting wiki as blocked
-	 */
-	public function setWikiAsBlocked() {
-		$this->status = $this->changeFlag(self::FLAG_TYPE_BLOCK);
-	}
-
-	/**
-	 * @desc A public alias of changeFlag() setting wiki as unblocked
-	 */
-	public function removeWikiFromBlocked() {
-		$this->status = $this->changeFlag(self::FLAG_TYPE_UNBLOCK);
-	}
-
-	/**
-	 * @desc A public alias of changeFlag() setting wiki as promoted
-	 */
-	public function setWikiAsPromoted() {
-		$this->status = $this->changeFlag(self::FLAG_TYPE_PROMOTE);
-	}
-
-	/**
-	 * @desc A public alias of changeFlag() setting wiki as not promoted
-	 */
-	public function removeWikiFromPromoted() {
-		$this->status = $this->changeFlag(self::FLAG_TYPE_DEMOTE);
-	}
-
-	/**
-	 * @desc A public alias of changeFlag() setting wiki as official
-	 */
-	public function setWikiAsOfficial() {
-		$this->status = $this->changeFlag(self::FLAG_TYPE_ADD_OFFICIAL);
-	}
-
-	/**
-	 * @desc A public alias of changeFlag() setting wiki as not official
-	 */
-	public function removeWikiFromOfficial() {
-		$this->status = $this->changeFlag(self::FLAG_TYPE_REMOVE_OFFICIAL);
-	}
-
-	/**
 	 * @desc Changes city_flags field in city_visualization table
 	 *
-	 * @param string $type one of: 'block', 'unblock', 'promote', 'remove-promote'
+	 * @requestParam string $type one of: self::CHANGE_FLAG_ADD or self::CHANGE_FLAG_REMOVE
+	 * @requestParam integer $flag from WikisModel which should be changed
 	 * @requestParam integer $wikiId id of wiki that flags we want to change
 	 * @requestParam integer $corpWikiId id of wiki which "hosts" visualization
 	 * @requestParam string $lang language code of wiki which "hosts" visualization
 	 *
 	 * @return bool
 	 */
-	protected function changeFlag($type) {
+	public function changeFlag() {
 		wfProfileIn(__METHOD__);
 
 		if( !$this->checkAccess() ) {
-			$result = false;
+			$this->status = false;
 		} else {
+			$type = $this->request->getInt('type');
+			$flag = $this->request->getInt('flag');
 			$wikiId = $this->request->getInt('wikiId', 0);
 			$corpWikiId = $this->request->getInt('corpWikiId', 0);
 			$langCode = $this->request->getVal('lang', 'en');
 
-			switch($type) {
-				case self::FLAG_TYPE_BLOCK:
-					$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_BLOCKED, $corpWikiId, $langCode);
-					break;
-				case self::FLAG_TYPE_UNBLOCK:
-					$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_BLOCKED, $corpWikiId, $langCode);
-					break;
-				case self::FLAG_TYPE_PROMOTE:
-					$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_PROMOTED, $corpWikiId, $langCode);
-					break;
-				case self::FLAG_TYPE_DEMOTE:
-					$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_PROMOTED, $corpWikiId, $langCode);
-					break;
-				case self::FLAG_TYPE_ADD_OFFICIAL:
-					$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_OFFICIAL, $corpWikiId, $langCode);
-					break;
-				case self::FLAG_TYPE_REMOVE_OFFICIAL:
-					$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_OFFICIAL, $corpWikiId, $langCode);
-					break;
-				default:
-					$result = false;
-					break;
+			if ($type == self::CHANGE_FLAG_ADD) {
+				$this->status = $this->helper->setFlag($wikiId, $flag, $corpWikiId, $langCode);
+			} else {
+				$this->status = $this->helper->removeFlag($wikiId, $flag, $corpWikiId, $langCode);
 			}
 
 		}
 		wfProfileOut(__METHOD__);
-		return $result;
 	}
 
 	public function switchCollection() {
@@ -369,11 +303,11 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 			$collectionsModel = $this->getWikiaCollectionsModel();
 			switch($type) {
-				case self::SWITCH_COLLECTION_TYPE_ADD:
+				case self::CHANGE_FLAG_ADD:
 					$collectionsModel->addWikiToCollection($collectionId, $wikiId);
 					$this->status = true;
 					break;
-				case self::SWITCH_COLLECTION_TYPE_REMOVE:
+				case self::CHANGE_FLAG_REMOVE:
 					$collectionsModel->removeWikiFromCollection($collectionId, $wikiId);
 					$this->status = true;
 					break;

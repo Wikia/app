@@ -23,17 +23,17 @@
 				<?= $wiki->city_title ?>
 			</td>
 			<td>
-				<a href="#" class="status-blocked" data-id="<?= $wiki->city_id; ?>" data-vertical="<?= $wiki->city_vertical ?>" data-flags="<?= CityVisualization::isBlockedWiki($wiki->city_flags) ?>">
+				<a href="#" class="status-blocked" data-id="<?= $wiki->city_id; ?>" data-vertical="<?= $wiki->city_vertical ?>" data-flags="<?= CityVisualization::isBlockedWiki($wiki->city_flags) ?>" data-flag-type="<?= WikisModel::FLAG_BLOCKED?>">
 					<?= (CityVisualization::isBlockedWiki($wiki->city_flags)) ? wfMessage('manage-wikia-home-wiki-list-blocked-yes')->text() : wfMessage('manage-wikia-home-wiki-list-blocked-no')->text() ?>
 				</a>
 			</td>
 			<td>
-				<a href="#" class="status-promoted" data-id="<?= $wiki->city_id; ?>" data-vertical="<?= $wiki->city_vertical ?>" data-flags="<?= CityVisualization::isPromotedWiki($wiki->city_flags) ?>">
-					<?= (CityVisualization::isPromotedWiki($wiki->city_flags)) ? wfMessage('manage-wikia-home-wiki-list-blocked-yes')->text() : wfMessage('manage-wikia-home-wiki-list-blocked-no')->text() ?>
+				<a href="#" class="status-promoted" data-id="<?= $wiki->city_id; ?>" data-vertical="<?= $wiki->city_vertical ?>" data-flags="<?= CityVisualization::isPromotedWiki($wiki->city_flags) ?>" data-flag-type="<?= WikisModel::FLAG_PROMOTED?>">
+					<?= (CityVisualization::isPromotedWiki($wiki->city_flags)) ? wfMessage('manage-wikia-home-wiki-list-promoted-yes')->text() : wfMessage('manage-wikia-home-wiki-list-promoted-no')->text() ?>
 				</a>
 			</td>
 			<td>
-				<a href="#" class="status-official" data-id="<?= $wiki->city_id; ?>" data-vertical="<?= $wiki->city_vertical ?>" data-flags="<?= CityVisualization::isOfficialWiki($wiki->city_flags) ?>">
+				<a href="#" class="status-official" data-id="<?= $wiki->city_id; ?>" data-vertical="<?= $wiki->city_vertical ?>" data-flags="<?= CityVisualization::isOfficialWiki($wiki->city_flags) ?>" data-flag-type="<?= WikisModel::FLAG_OFFICIAL?>">
 					<?= (CityVisualization::isOfficialWiki($wiki->city_flags)) ? wfMessage('manage-wikia-home-wiki-list-official-yes')->text() : wfMessage('manage-wikia-home-wiki-list-official-no')->text() ?>
 				</a>
 			</td>

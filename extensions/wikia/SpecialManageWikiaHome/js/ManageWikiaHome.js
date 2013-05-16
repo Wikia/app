@@ -2,13 +2,13 @@ var ManageWikiaHome = function() {};
 
 ManageWikiaHome.prototype = {
 	MIN_CHARS_TO_START_FILTERING: 3,
-	//todo: use JsVars instead of those "consts" to keep values in PHP&JS consistent
-	MODAL_TYPE_BLOCKED: 1,
-	MODAL_TYPE_UNBLOCKED: 2,
-	MODAL_TYPE_PROMOTED: 3,
-	MODAL_TYPE_DEMOTED: 4,
-	MODAL_TYPE_ADD_OFFCIAL: 5,
-	MODAL_TYPE_REMOVE_OFFICIAL: 6,
+
+	// TODO
+	flags: {
+		4: 'promoted',
+		8: 'blocked',
+		16: 'official'
+	},
 	isListChangingDelayed: false,
 	visualizationLang: 'en',
 	modalObject: {content: '', type: 0, target: {}, collectionsEdit: false},
@@ -66,40 +66,28 @@ ManageWikiaHome.prototype = {
 		e.preventDefault();
 		var input = e.target.value;
 
-		//todo: set only data in "if" statements and leave only one $.nirvana.sendRequest() not to duplicate code
+		var renderData = {
+			visualizationLang: this.visualizationLang
+		};
+
+		// CHeck if it's still required after filtering
+
 		if( input.length >= this.MIN_CHARS_TO_START_FILTERING && this.isListChangingDelayed === false ) {
 			this.isListChangingDelayed = true;
-
-			//todo: use post instead of get to have the most valid list
-			$.nirvana.sendRequest({
-				controller: 'ManageWikiaHome',
-				method: 'renderWikiListPage',
-				format: 'html',
-				type: 'get',
-				data: {
-					visualizationLang: this.visualizationLang,
-					wikiHeadline: input
-				},
-				callback: $.proxy( function(response) {
-					$("#wikisWithVisualizationList").html(response);
-					this.isListChangingDelayed = false;
-				}, this)
-			});
+			renderData['wikiHeadline'] = input;
 		}
 
-		if( input.length === 0 ) {
-			this.renderAllWikiListPage();
+		if( input.length === 0  || typeof renderData['wikiHeadline'] !== 'undefined') {
+			this.renderAllWikiListPage(renderData);
 		}
 	},
-	renderAllWikiListPage: function() {
+	renderAllWikiListPage: function(renderData) {
 		$.nirvana.sendRequest({
 			controller: 'ManageWikiaHome',
 			method: 'renderWikiListPage',
 			format: 'html',
-			type: 'get',
-			data: {
-				visualizationLang: this.visualizationLang
-			},
+			type: 'post',
+			data: renderData,
 			callback: $.proxy( function(response) {
 				$("#wikisWithVisualizationList").html(response);
 				this.isListChangingDelayed = false;
@@ -123,39 +111,23 @@ ManageWikiaHome.prototype = {
 				callback: $.proxy(function () {
 					var targetObject = $(e.target);
 
-					//todo: remove nested "ifs" and instead use new function which checks it
-					if (targetObject.hasClass('status-blocked')) {
-						if (targetObject.data('flags') == '1') {
-							$('.question-container').text($.msg('manage-wikia-home-modal-content-blocked'));
-							this.modalObject.type = this.MODAL_TYPE_BLOCKED;
-						}
-						else {
-							$('.question-container').text($.msg('manage-wikia-home-modal-content-unblocked'));
-							this.modalObject.type = this.MODAL_TYPE_UNBLOCKED;
-						}
-					}
-					else if (targetObject.hasClass('status-promoted')) {
-						if (targetObject.data('flags') == '1') {
-							$('.question-container').text($.msg('manage-wikia-home-modal-content-demoted'));
-							this.modalObject.type = this.MODAL_TYPE_DEMOTED;
-						}
-						else {
-							$('.question-container').text($.msg('manage-wikia-home-modal-content-promoted'));
-							this.modalObject.type = this.MODAL_TYPE_PROMOTED;
-						}
-					}
-					else if (targetObject.hasClass('status-official')) {
-						if (targetObject.data('flags') == '1') {
-							$('.question-container').text($.msg('manage-wikia-home-modal-content-add-official'));
-							this.modalObject.type = this.MODAL_TYPE_REMOVE_OFFICIAL;
-						}
-						else {
-							$('.question-container').text($.msg('manage-wikia-home-modal-content-remove-official'));
-							this.modalObject.type = this.MODAL_TYPE_ADD_OFFCIAL;
-						}
-					}
-					
 					this.modalObject.target = targetObject;
+					this.modalObject.flagType = targetObject.data('flag-type');
+					this.modalObject.type = targetObject.data('flags');
+
+					if (targetObject.data('flags') == 1) {
+						this.modalObject.type = window.CHANGE_FLAG_REMOVE;
+					} else {
+						this.modalObject.type = window.CHANGE_FLAG_ADD;
+					}
+
+					$('.question-container').text(
+						$.msg(
+							'manage-wikia-home-modal-content-'
+								+ this.modalObject.type + '-'
+								+ this.flags[this.modalObject.flagType]
+						)
+					);
 				}, this)
 			}
 		);
@@ -170,10 +142,10 @@ ManageWikiaHome.prototype = {
 
 					if (targetObject.is(':checked')) {
 						$('.question-container').text($.msg('manage-wikia-home-modal-content-add-collection'));
-						this.modalObject.type = window.SWITCH_COLLECTION_TYPE_ADD;
+						this.modalObject.type = window.CHANGE_FLAG_ADD;
 					} else {
 						$('.question-container').text($.msg('manage-wikia-home-modal-content-remove-collection'));
-						this.modalObject.type = window.SWITCH_COLLECTION_TYPE_REMOVE;
+						this.modalObject.type = window.CHANGE_FLAG_REMOVE;
 					}
 
 					this.modalObject.target = targetObject;
@@ -197,77 +169,50 @@ ManageWikiaHome.prototype = {
 		this.changeCollectionCheckbox();
 	},
 	modalSubmit: function() {
-		var method, message, flag = '';
-		switch(this.modalObject.type) {
-			case this.MODAL_TYPE_BLOCKED:
-				method = 'removeWikiFromBlocked';
-				message = $.msg('manage-wikia-home-wiki-list-blocked-no');
-				break;
-			case this.MODAL_TYPE_UNBLOCKED:
-				method = 'setWikiAsBlocked';
-				message = $.msg('manage-wikia-home-wiki-list-blocked-yes');
-				flag = 1;
-				break;
-			case this.MODAL_TYPE_PROMOTED:
-				method = 'setWikiAsPromoted';
-				message = $.msg('manage-wikia-home-wiki-list-blocked-yes');
-				flag = 1;
-				break;
-			case this.MODAL_TYPE_DEMOTED:
-				method = 'removeWikiFromPromoted';
-				message = $.msg('manage-wikia-home-wiki-list-blocked-no');
-				break;
-			case this.MODAL_TYPE_ADD_OFFCIAL:
-				method = 'setWikiAsOfficial';
-				message = $.msg('manage-wikia-home-wiki-list-official-yes');
-				flag = 1;
-				break;
-			case this.MODAL_TYPE_REMOVE_OFFICIAL:
-				method = 'removeWikiFromOfficial';
-				message = $.msg('manage-wikia-home-wiki-list-official-no');
-				break;
-			default:
-		}
-
 		$('.modalWrapper').startThrobbing(); //we don't fire stopThrobbing() because closeModal() deletes container from DOM
 
 		if(this.modalObject.collectionsEdit) {
 			this.editWikiCollection();
 		} else {
-			this.editBlockedPromoted(method, message, flag);
+			this.editFlag(this.modalObject.flagType, this.modalObject.type);
 		}
 
 	},
-	editBlockedPromoted: function(method, message, flag) {
+	editFlag: function(flagType, type) {
+		var yesNoMessageKey = (type == window.CHANGE_FLAG_ADD) ? 'yes' : 'no';
+
+		var message = $.msg('manage-wikia-home-wiki-list-' + this.flags[flagType] + '-' + yesNoMessageKey);
+
 		$.nirvana.sendRequest({
 			controller: 'ManageWikiaHome',
-			method: method,
+			method: 'changeFlag',
 			type: 'post',
 			data: {
+				type: type,
+				flag: flagType,
 				lang: this.visualizationLang,
 				corpWikiId: $('#visualizationWikiId').val(),
 				wikiId: this.modalObject.target.data('id')
 			},
 			callback: $.proxy(function(response) {
 				$('.modalWrapper').closeModal();
-				this.modalObject.target.data('flags', flag).text(message);
+				this.modalObject.target.data('flags', (type == window.CHANGE_FLAG_ADD) ? 1 : 0).text(message);
 			}, this)
 		});
 	},
 	editWikiCollection: function() {
 		var collectionId = this.modalObject.target.val();
 		var action = this.modalObject.type;
-		var isValid = this.isValidWikisAmount(collectionId, action);
 
-		if( isValid && action == window.SWITCH_COLLECTION_TYPE_ADD ) {
-			this.wikisPerCollection[collectionId]++;
+		if (this.isValidWikisAmount(collectionId, action)) {
+			if (action == window.CHANGE_FLAG_ADD) {
+				this.wikisPerCollection[collectionId]++;
+			} else {
+				this.wikisPerCollection[collectionId]--;
+			}
 			this.updateCounterDisplay(collectionId);
 			this.updateCollection();
-		} else if( isValid && action == window.SWITCH_COLLECTION_TYPE_REMOVE ) {
-			this.wikisPerCollection[collectionId]--;
-			this.updateCounterDisplay(collectionId);
-			this.updateCollection();
-		} else if( !isValid ) {
+		} else {
 			$('.modalWrapper').closeModal();
 			alert( $.msg('manage-wikia-home-modal-too-many-wikis-in-collection') );
 		}
@@ -290,7 +235,7 @@ ManageWikiaHome.prototype = {
 	},
 	changeCollectionCheckbox: function() {
 		if( this.modalObject.collectionsEdit ) {
-			if( this.modalObject.type == window.SWITCH_COLLECTION_TYPE_ADD ) {
+			if( this.modalObject.type == window.CHANGE_FLAG_ADD ) {
 				this.modalObject.target.attr('checked', false);
 			} else {
 				this.modalObject.target.attr('checked', true);
@@ -301,7 +246,7 @@ ManageWikiaHome.prototype = {
 		return 
 			!this.wikisPerCollection[collectionId] //there are no wikis in the collection yet 
 			|| this.wikisPerCollection[collectionId] < this.SLOTS_IN_TOTAL //or there is still place for another wiki in the collection
-			|| (this.wikisPerCollection[collectionId] >= this.SLOTS_IN_TOTAL && action == window.SWITCH_COLLECTION_TYPE_REMOVE ) //or there are too many wikis in the collection and user is removing them
+			|| (this.wikisPerCollection[collectionId] >= this.SLOTS_IN_TOTAL && action == window.CHANGE_FLAG_REMOVE ) //or there are too many wikis in the collection and user is removing them
 	},
 	updateCounterDisplay: function(collectionId) {
 		var counterContainer = $('.collection-module[data-collection-id="' + collectionId + '"] .collection-wikis-counter p');
