@@ -161,8 +161,9 @@ class VideoEmbedToolSearchService
 	 * @return array
 	 */
 	protected function postProcessSearchResponse( array $searchResponse ) {
+		$config = $this->getConfig();
 		$data = [];
-		$start = $this->getConfig()->getStart();
+		$start = $config->getStart();
 		$pos = $start;
 		foreach ( $searchResponse['items'] as $singleVideoData ) {
 			(new WikiaFileHelper)->inflateArrayWithVideoData( 
@@ -181,7 +182,7 @@ class VideoEmbedToolSearchService
 		}
 		return [
 				'totalItemCount' => count( $data ),
-				'nextStartFrom' => $start + $this->getConfig()->getLimit(),
+				'nextStartFrom' => $start + $config->getLimit(),
 				'items' => $data
 		];
 	}
