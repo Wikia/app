@@ -159,13 +159,9 @@ $(function(){
 			li = $(li);
 
 			return {
-				wiki: {
-					domain: li.find('.wiki-input').val()
-				},
-				video: {
-					title: li.find('.video-title').val(),
-					name: li.find('.video-name').val()
-				}
+				video_title: li.find('.video-title').val(),
+				video_name: li.find('.video-name').val(),
+				wiki_domain: li.find('.wiki-input').val()
 			}
 		}
 

@@ -77,16 +77,16 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 		if ( !empty( $languages ) ) {
 			$list = '';
 
-			foreach( $languages as $lang => $entries ) {
+			foreach( $languages as $lang => $videos ) {
 				$list .= $this->sendSelfRequest( 'language', [
 					'value' => $lang
 				] );
 
-				foreach( $entries as $entry ) {
+				foreach( $videos as $video ) {
 					$list .= $this->sendSelfRequest( 'video', [
-						//'video_name' => $entry['video']['name'],
-						'video_title' => $entry['video']['title'],
-						'wiki' => $entry['wiki']['domain']
+						'video_name' => $video['video_name'],
+						'video_title' => $video['video_title'],
+						'wiki' => $video['wiki_domain']
 					] );
 				}
 			}
@@ -129,15 +129,13 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 		$err = [];
 
 		if( !empty( $languages ) ) {
-			foreach ( $languages as $lang => $entries ) {
-				foreach ( $entries as $key => $entry) {
+			foreach ( $languages as $lang => $videos ) {
+				foreach ( $videos as $key => $video) {
 
-					$video = $entry['video'];
-					$wiki = $entry['wiki'];
+					$video['wiki_id'] = (int) WikiFactory::DomainToID( $video['wiki_domain'] );
+					$video['wiki_name'] = 'asd';
 
-					$wiki['id'] = (int) WikiFactory::DomainToID( $wiki['domain'] );
-
-					$title = Title::newFromText( $video['name'], NS_VIDEO );
+					$title = Title::newFromText( $video['video_name'], NS_VIDEO );
 
 					if ( !empty( $title ) && $title->exists() ) {
 						$vid = wfFindFile( $title );
@@ -147,23 +145,22 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 							$handler = $vid->getHandler();
 
 							if ( $handler instanceof OoyalaVideoHandler ) {
-								$video['id'] = $handler->getVideoId();
+								$video['video_id'] = $handler->getVideoId();
 								$video['duration'] = $handler->getFormattedDuration();
 							} else{
-								$err[$video['name']] = self::VIDEO_IS_NOT_PROVIDED_BY_OOYALA;
+								$err[$video['video_name']] = self::VIDEO_IS_NOT_PROVIDED_BY_OOYALA;
 							}
 						} else {
-							$err[$video['name']] = self::VIDEO_DOES_NOT_EXIST;
+							$err[$video['video_name']] = self::VIDEO_DOES_NOT_EXIST;
 						}
 					} else {
-						$err[$video['name']] = self::VIDEO_DOES_NOT_EXIST;
+						$err[$video['video_name']] = self::VIDEO_DOES_NOT_EXIST;
 					}
 
-					$entries[$key]['video'] = $video;
-					$entries[$key]['wiki'] = $wiki;
+					$videos[$key] = $video;
 				}
 
-				$languages[$lang] = $entries;
+				$languages[$lang] = $videos;
 			}
 		}
 
