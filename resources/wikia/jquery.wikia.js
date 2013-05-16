@@ -581,11 +581,6 @@ $(function() {
 		$().log('DOM ready after ' + loadTime + ' ms', window.skin);
 	}
 
-	//beacon_id cookie
-	if ( window.beacon_id ) {
-		$.cookies.set( 'wikia_beacon_id', window.beacon_id, { path: wgCookiePath, domain: wgCookieDomain });
-	}
-
 	// For selenium tests
 	window.wgWikiaDOMReady = true;
 
