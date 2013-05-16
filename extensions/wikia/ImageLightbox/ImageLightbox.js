@@ -333,7 +333,7 @@ var ImageLightbox = {
 						// Handle video lightbox
 						self.showLightbox(res.title, '<div id="ImageLightboxVideoEmbed"></div>'+res.html, caption, res.width, res.titleKey, res.type, res.provider, function(){
 							require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-								new VideoBootstrap($('#ImageLightboxVideoEmbed')[0], res.embedCode, 'imageLightbox');
+								new VideoBootstrap(document.getElementById('ImageLightboxVideoEmbed'), res.embedCode, 'imageLightbox');
 							});
 						});
 
