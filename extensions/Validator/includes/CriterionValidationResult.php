@@ -2,13 +2,14 @@
 
 /**
  * Class to hold parameter validation result info.
- * 
+ *
+ * @deprecated since 0.5, removal in 0.7
  * @since 0.4
  * 
  * @file CriterionValidationResult.php
  * @ingroup Validator
  * 
- * @licence GNU GPL v3 or later
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class CriterionValidationResult {

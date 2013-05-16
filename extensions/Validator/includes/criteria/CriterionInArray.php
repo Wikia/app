@@ -2,7 +2,8 @@
 
 /**
  * Parameter criterion stating that the value must be in an array.
- * 
+ *
+ * @deprecated since 0.5, removal in 0.7
  * @since 0.4
  * 
  * @file CriterionInArray.php
