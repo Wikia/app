@@ -106,7 +106,7 @@ class VideoEmbedToolSearchService
 	public function getSuggestionsForArticleId( $articleId )
 	{
 		$this->setSuggestionQueryByArticleId( $articleId );
-		$config = $this->getConfig()->setCityId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
+		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $this->getSuggestionQuery() )
 		                            ->setVideoEmbedToolSearch( true );
 		
