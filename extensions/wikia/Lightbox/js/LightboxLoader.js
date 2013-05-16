@@ -207,7 +207,7 @@ var LightboxLoader = {
 			width: targetChildImg.width()
 		}, function(json) {
 			var	embedCode = json['videoEmbedCode'],
-				inlineDiv = $('<div></div>').insertAfter(target.hide());
+				inlineDiv = $('<div class="inline-video"></div>').insertAfter(target.hide());
 
 			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
 				new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
