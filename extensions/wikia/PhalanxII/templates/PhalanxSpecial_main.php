@@ -71,8 +71,7 @@
 							$typeName = str_replace('_', '-', $typeName);
 ?>
 							<label title="<?= wfMsg("phalanx-help-type-{$typeName}"); ?>">
-								<?= Xml::check('wpPhalanxType[]', !empty($data['type'][$typeId]), array('value' => $typeId)); ?>
-
+								<?= Xml::check('wpPhalanxType[]', ($type === $typeId), array('value' => $typeId)); ?>
 								<?= wfMsg("phalanx-type-{$typeName}"); ?>
 
 							</label>
