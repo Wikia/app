@@ -37,9 +37,6 @@ EOT;
 			'scripts' => array(
 				'extensions/wikia/VideoHandlers/js/handlers/Youtube.js',
 			),
-			// TODO: title and provider are now used by all video handlers.  Let's create a base version of this array and include those two values.
-			'title' => $this->DBKey,
-			'provider' => 'youtube',
 		);
 	}
 

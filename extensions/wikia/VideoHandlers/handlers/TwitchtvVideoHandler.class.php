@@ -23,11 +23,7 @@ class TwitchtvVideoHandler extends VideoHandler {
 </object>
 EOT;
 
-		return array(
-			'html' => $html,
-			'title' => $this->DBKey,
-			'provider' => 'twitchtv',
-		);
+		return array( 'html' => $html );
 	}
 
 }

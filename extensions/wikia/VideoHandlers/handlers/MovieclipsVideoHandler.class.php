@@ -35,11 +35,7 @@ class MovieclipsVideoHandler extends VideoHandler {
 </object>
 EOT;
 
-		return array(
-			'html' => $html,
-			'title' => $this->DBKey,
-			'provider' => 'movieclips',
-		);
+		return array( 'html' => $html );
 	}
 
 }

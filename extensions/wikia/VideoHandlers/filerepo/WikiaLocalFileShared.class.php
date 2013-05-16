@@ -57,8 +57,9 @@ class WikiaLocalFileShared  {
 			}
 			$handler->setThumbnailImage( $this->oFile->transform( array( 'width' => $width ) ) );
 			$this->trackingArticleId = false;
-			$embed = $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
-			$res = $embed;
+			$res = $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
+			$res['title'] = $this->oFile->getTitle()->getDBKey();
+			$res['provider'] = $this->getProviderName();
 		} else {
 			$this->trackingArticleId = false;
 			$res = false;
@@ -173,7 +174,6 @@ class WikiaLocalFileShared  {
 					$handler->setVideoId( $videoId );
 				}
 				$handler->setTitle($this->oFile->getTitle()->getText());
-				$handler->setDBKey($this->oFile->getTitle()->getDBKey());
 				$handler->setMetadata($this->oFile->metadata);
 			}
 		}

@@ -30,11 +30,7 @@ class VimeoVideoHandler extends VideoHandler {
 <iframe src="$url?$autoplayStrParam=$autoplayStrValue" $sizeString frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 EOT;
 
-		return array(
-			'html' => $html,
-			'title' => $this->DBKey,
-			'provider' => 'vimeo',
-		);
+		return array( 'html' => $html );
 	}
 
 	public function getEmbedSrcData() {

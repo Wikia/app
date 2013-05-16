@@ -27,11 +27,7 @@ EOT;
 EOT;
 		}
 
-		return array(
-			'html' => $html,
-			'title' => $this->DBKey,
-			'provider' => 'snappytv',
-		);
+		return array( 'html' => $html );
 	}
 
 	public function getEmbedUrl() {
