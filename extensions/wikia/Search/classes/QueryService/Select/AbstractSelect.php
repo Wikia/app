@@ -117,8 +117,18 @@ abstract class AbstractSelect
 	 * @param array $fields allows us to apply a mapping
 	 * @return array
 	 */
-	public function searchAsApi( $fields = [] ) {
-		return $this->search()->toArray( $fields );
+	public function searchAsApi( $fields = null, $metadata = false ) {
+		$resultSet = $this->search();
+		if ( $metadata ) {
+			$numPages = $this->getConfig()->getNumPages();
+			return [
+					'batches' => $numPages,
+					'currentBatch' => $this->getConfig()->getPage(),
+					'next' => min( [ $numPages, $this->getConfig()->getStart() + $this->getConfig()->getLimit() ] ),
+					'items' => $resultSet->toArray( $fields )
+			];
+		}
+		return $resultSet->toArray( $fields );
 	}
 	
 	/**
@@ -351,5 +361,12 @@ abstract class AbstractSelect
 			$namespaces[] = Utilities::valueForField( 'ns', $ns );
 		}
 		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
+	}
+	
+	/**
+	 * @return Wikia\Search\Config
+	 */
+	protected function getConfig() {
+		return $this->config;
 	}
 }
