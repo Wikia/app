@@ -153,6 +153,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 							if ( $handler instanceof OoyalaVideoHandler ) {
 								$video['video_id'] = $handler->getVideoId();
 								$video['duration'] = $handler->getFormattedDuration();
+								$video['video_thumb'] = WikiaFileHelper::getMediaDetail( $title )['imageUrl'];
 							} else{
 								$err[$video['video_name']] = self::VIDEO_IS_NOT_PROVIDED_BY_OOYALA;
 							}
