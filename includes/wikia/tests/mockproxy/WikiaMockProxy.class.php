@@ -128,7 +128,7 @@ class WikiaMockProxy {
 				$savedName = self::SAVED_PREFIX . $methodName;
 				if ( $state ) { // enable
 					is_callable( "{$className}::{$methodName}" );
-					$flags = RUNKIT_ACC_PUBLIC | ( $type == self::DYNAMIC_METHOD ? RUNKIT_ACC_STATIC : 0);
+					$flags = RUNKIT_ACC_PUBLIC | ( $type == self::STATIC_METHOD ? RUNKIT_ACC_STATIC : 0);
 					runkit_method_rename( $className, $methodName, $savedName);  // save the original method
 					runkit_method_add($className, $methodName, '', $this->getExecuteCall($type,$id), $flags );
 				} else { // diable
