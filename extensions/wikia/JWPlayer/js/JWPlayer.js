@@ -4,7 +4,7 @@
  * @see http://www.longtailvideo.com/support/jw5/31164/javascript-api-reference
  */
 
-define('wikia.jwplayer', ['wikia.window'], function jwplayer(window) {
+define('wikia.videohandler.jwplayer', ['wikia.window'], function jwplayer(window) {
 	/**
 	 * Set up JWPlayer and tracking events
 	 * @param {Object} params Player params sent from the video handler

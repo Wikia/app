@@ -34,7 +34,7 @@ EOT;
 				'autoPlay'=> $autoPlayStr,
 				'title'=> $this->title,
 			),
-			'init' => 'wikia.ooyala',
+			'init' => 'wikia.videohandler.ooyala',
 			'scripts' => array(
 				$jsFile,
 				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js"

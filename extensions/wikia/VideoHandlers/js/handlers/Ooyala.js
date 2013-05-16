@@ -6,7 +6,7 @@
  */
 
 /*global define, require*/
-define('wikia.ooyala', ['wikia.window', require.optional('ext.wikia.adengine.dartvideohelper')], function(window, dartVideoHelper) {
+define('wikia.videohandler.ooyala', ['wikia.window', require.optional('ext.wikia.adengine.dartvideohelper')], function(window, dartVideoHelper) {
 	'use strict';
 
 	/**

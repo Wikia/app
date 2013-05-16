@@ -27,7 +27,7 @@ class YoutubeVideoHandler extends VideoHandler {
 EOT;
 		return array(
 			'html' => $html,
-			'init' => 'wikia.youtube',
+			'init' => 'wikia.videohandler.youtube',
 			'jsParams' => array(
 				'width' => $width,
 				'height' => $height,

@@ -36,7 +36,7 @@ EOT;
 				'height'=> $height,
 				'autoPlay'=> $autoPlayStr,
 			),
-			'init' => 'wikia.anyclip',
+			'init' => 'wikia.videohandler.anyclip',
 			'scripts' => array(
 				$jsFile,
 				"extensions/wikia/VideoHandlers/js/handlers/Anyclip.js"

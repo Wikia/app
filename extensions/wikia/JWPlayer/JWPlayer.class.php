@@ -73,7 +73,7 @@ EOT;
 			'jsParams' => array(
 				'jwScript' => $jwScript,
 			),
-			'init' => 'wikia.jwplayer',
+			'init' => 'wikia.videohandler.jwplayer',
 			'scripts' => array(
 				$jwplayerjs,
 				"extensions/wikia/JWPlayer/js/JWPlayer.js"

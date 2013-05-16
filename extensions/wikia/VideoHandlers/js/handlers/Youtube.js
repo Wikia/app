@@ -5,7 +5,7 @@
  * @see https://developers.google.com/youtube/iframe_api_reference
  */
 
-define('wikia.youtube', ['wikia.window', 'wikia.loader'], function Youtube(window, loader) {
+define('wikia.videohandler.youtube', ['wikia.window', 'wikia.loader'], function Youtube(window, loader) {
 	'use strict';
 
 	/**

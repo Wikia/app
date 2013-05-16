@@ -1,4 +1,4 @@
-define('wikia.anyclip', ['wikia.window'], function Anyclip(window) {
+define('wikia.videohandler.anyclip', ['wikia.window'], function Anyclip(window) {
 	'use strict';
 
 	/**
