@@ -730,6 +730,14 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 
+	public static function onGetRailModuleList(&$railModuleList) {
+		$railModuleList = [
+			1500 => ['Search', 'Index', null],
+		];
+		
+		return true;
+	}
+
 	public function getWikiBatchesForVisualization() {
 		$numberOfBatches = $this->request->getVal('numberOfBatches', self::WIKI_BATCH_SIZE);
 		$wikiId = $this->wg->cityId;

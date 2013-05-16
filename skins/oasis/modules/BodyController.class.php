@@ -348,6 +348,7 @@ class BodyController extends WikiaController {
 		// show corporate header on this page?
 		} else if( !empty($wgEnableWikiaHomePageExt) ) {
 			$this->headerModuleName = 'PageHeader';
+			
 			if( self::isEditPage() ) {
 				$this->headerModuleAction = 'EditPage';
 			} else {
