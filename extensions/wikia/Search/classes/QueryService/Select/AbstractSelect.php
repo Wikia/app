@@ -117,14 +117,15 @@ abstract class AbstractSelect
 	 * @param array $fields allows us to apply a mapping
 	 * @return array
 	 */
-	public function searchAsApi( $fields = null, $metadata = false ) {
+	public function searchAsApi( $fields = [], $metadata = false ) {
 		$resultSet = $this->search();
 		if ( $metadata ) {
 			$numPages = $this->getConfig()->getNumPages();
+			$limit = $this->getConfig()->getLimit();
 			return [
 					'batches' => $numPages,
 					'currentBatch' => $this->getConfig()->getPage(),
-					'next' => min( [ $numPages, $this->getConfig()->getStart() + $this->getConfig()->getLimit() ] ),
+					'next' => min( [ $numPages * $limit, $this->getConfig()->getStart() + $limit ] ),
 					'items' => $resultSet->toArray( $fields )
 			];
 		}
