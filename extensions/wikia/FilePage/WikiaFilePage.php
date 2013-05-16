@@ -53,11 +53,17 @@ abstract class WikiaFilePage extends ImagePage {
 
 		// JS for VideoBootstrap
 		$embedCode = $file->getEmbedCode( self::VIDEO_WIDTH, $autoplay );
-		$embedCode['htmlPreloaded'] = 1; // Tell JS that HTML will already be loaded on the page.
+
+		// Tell JS that HTML will already be loaded on the page.
+		$embedCode['htmlPreloaded'] = 1;
+
+		// HTML is no longer needed in VideoBootstrap
+		$html = $embedCode['html'];
+		unset($embedCode['html']);
 
 		$videoDisplay = '<script type="text/javascript">window.playerParams = '.json_encode( $embedCode ).';</script>';
 
-		$videoDisplay .= '<div class="fullImageLink" id="file">' . $embedCode['html'] . '</div>';
+		$videoDisplay .= '<div class="fullImageLink" id="file">' . $html . '</div>';
 
 		$videoDisplay .= $this->getVideoInfoLine( $file );
 
