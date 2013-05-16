@@ -6,7 +6,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 
 	const MODULE_ID = 5;
 
-	protected $lettersMap = array('a', 'b', 'c', 'd');
+	protected $lettersMap = array('a', 'b', 'c', 'd', 'e');
 
 	/**
 	 * @var MarketingToolboxExploreModel|null
