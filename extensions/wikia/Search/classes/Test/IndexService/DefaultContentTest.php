@@ -265,7 +265,7 @@ class DefaultContentTest extends BaseTest
 	 */
 	public function testGetOutboundLinks() {
 		$mockMwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
-		$mockHooks = $this->getStaticMethodMock( 'Wikia\Search\Hooks', [ 'popLinks' ] );
+		$mockHooks = $this->getStaticMethodMock( 'Wikia\Search\Hooks', 'popLinks' );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
 		                    ->setMethods( [ 'getService', 'getCurrentDocumentId' ] )
 		                    ->disableOriginalConstructor()
