@@ -42,7 +42,7 @@ class FilePageHooks extends WikiaObject{
 
 		wfProfileIn(__METHOD__);
 		if( $app->wg->Title->getNamespace() == NS_FILE ) {
-			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+			$assetsManager = AssetsManager::getInstance();
 			$wikiaFilePageJs = 'wikia_file_page_js';
 
 			foreach ( $assetsManager->getURL( $wikiaFilePageJs ) as $url ) {
