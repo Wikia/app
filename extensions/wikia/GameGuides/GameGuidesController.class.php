@@ -554,6 +554,8 @@ class GameGuidesController extends WikiaController {
 		if( !empty( $languages ) ) {
 			if ( array_key_exists( $lang, $languages ) ) {
 				$this->response->setVal( 'items', $languages[$lang] );
+			} else if ( $lang == 'list' ) {
+				$this->response->setVal( 'items', array_keys( $languages ) );
 			} else {
 				throw new NotFoundApiException( 'No data found for \'' . $lang . '\' language' );
 			}
@@ -574,7 +576,10 @@ class GameGuidesController extends WikiaController {
 	static function onGameGuidesSponsoredSave(){
 		$languages = array_keys( F::app()->wg->WikiaGameGuidesSponsoredVideos );
 		//Empty array is there to purge call to getVideos without any language
-		$variants = [[]];
+		$variants = [
+			[],
+			['lang' => 'list']
+		];
 
 		foreach ( $languages as $lang ) {
 			$variants[] = [
