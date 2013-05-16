@@ -213,11 +213,6 @@ var LightboxLoader = {
 				new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
 			});
 
-			// if player script, run it
-			/*if(json.playerScript) {
-				$('body').append('<script>' + json.playerScript + '</script>');
-			}*/
-
 			// save references for inline video removal later
 			LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
 			LightboxTracker.inlineVideoTrackingTimeout = setTimeout(function() {
