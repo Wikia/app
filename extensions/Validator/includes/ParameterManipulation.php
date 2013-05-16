@@ -2,14 +2,15 @@
 
 /**
  * Parameter manipulation base class.
- * 
+ *
+ * @deprecated since 0.5, removal in 0.7
  * @since 0.4
  * 
  * @file ParameterManipulation.php
  * @ingroup Validator
  * @ingroup ParameterManipulations
  * 
- * @licence GNU GPL v3 or later
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 abstract class ParameterManipulation {
@@ -17,7 +18,7 @@ abstract class ParameterManipulation {
 	/**
 	 * Validate a parameter against the criterion.
 	 * 
-	 * @param Parameter $parameter
+	 * @param Param $parameter
 	 * @param array $parameters
 	 * 
 	 * @since 0.4
