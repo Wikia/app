@@ -18,9 +18,12 @@
 		<? if ( $wg->EnableBlogArticles ): ?>
 		<span><a href="<?= htmlspecialchars($userBlogPage) ?>"><?= $userBlogPageMessage ?></a></span>
 		<? endif; ?>
-		
+		<? if ( !empty( $wg->EnableGoogleAuthorInfo ) && !empty( $googleAuthorLink ) ): ?>
+		<a class="google-author-link" href="<?= htmlspecialchars( $googleAuthorLink ) ?>">Google</a>
+		<? endif; ?>
+
 	</div>
-	<? if (isset($navLinks)) : ?> 
-                <?= $navLinks ?>
-        <? endif; ?> 
+	<? if (isset($navLinks)) : ?>
+		<?= $navLinks ?>
+	<? endif; ?>
 </header>
