@@ -15,6 +15,7 @@ class WikiaMockProxy {
 
 	const CLASS_CONSTRUCTOR = 'constructor';
 	const STATIC_METHOD = 'static_method';
+	const DYNAMIC_METHOD = 'dynamic_method';
 	const GLOBAL_FUNCTION = 'global_function';
 
 	const PROP_STATE = 'state';
@@ -52,6 +53,17 @@ class WikiaMockProxy {
 	 */
 	public function getStaticMethod( $className, $methodName ) {
 		return $this->get( self::STATIC_METHOD, $className, $methodName );
+	}
+
+	/**
+	 * Get a handler for regular method
+	 *
+	 * @param $className string Class Name
+	 * @param $methodName string Method name
+	 * @return WikiaMockProxyAction
+	 */
+	public function getMethod( $className, $methodName ) {
+		return $this->get( self::DYNAMIC_METHOD, $className, $methodName );
 	}
 
 	/**
@@ -110,13 +122,15 @@ class WikiaMockProxy {
 		$parts = explode('|',$id);
 		switch ($type) {
 			case self::STATIC_METHOD:
+			case self::DYNAMIC_METHOD:
 				$className = $parts[1];
 				$methodName = $parts[2];
 				$savedName = self::SAVED_PREFIX . $methodName;
 				if ( $state ) { // enable
 					is_callable( "{$className}::{$methodName}" );
+					$flags = RUNKIT_ACC_PUBLIC | ( $type == self::DYNAMIC_METHOD ? RUNKIT_ACC_STATIC : 0);
 					runkit_method_rename( $className, $methodName, $savedName);  // save the original method
-					runkit_method_add($className, $methodName, '', $this->getExecuteCall($type,$id), RUNKIT_ACC_PUBLIC | RUNKIT_ACC_STATIC );
+					runkit_method_add($className, $methodName, '', $this->getExecuteCall($type,$id), $flags );
 				} else { // diable
 					runkit_method_remove($className, $methodName);  // remove the redefined instance
 					runkit_method_rename($className, $savedName, $methodName); // restore the original

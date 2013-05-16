@@ -249,6 +249,17 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		return $mock;
 	}
 
+	protected function getMethodMock( $className, $methodName ) {
+		is_callable( "{$className}::{$methodName}" ); // autoload
+		$mock = $this->getMockBuilder( 'stdClass' )
+			->disableOriginalConstructor()
+			->setMethods( array( $methodName ) )
+			->getMock();
+		$this->getMockProxy()->getMethod($className,$methodName)
+			->willCall(array($mock,$methodName));
+		return $mock;
+	}
+
 	protected function callOriginalGlobalFunction( $functionName, $args ) {
 		return $this->getMockProxy()->callOriginalGlobalFunction( $functionName, $args );
 	}
