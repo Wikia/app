@@ -19,11 +19,7 @@ class SouthparkstudiosVideoHandler extends VideoHandler {
 <embed src="$url" $sizeString type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" base="." flashVars="$autoplayStrParam=$autoplayStrValue"></embed>
 EOT;
 
-		return array(
-			'html' => $html,
-			'title' => $this->DBKey,
-			'provider' => 'southparkstudios',
-		);
+		return array( 'html' => $html );
 	}
 
 }

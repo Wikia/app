@@ -20,11 +20,7 @@ class GametrailersVideoHandler extends VideoHandler {
 <embed src="$url" $sizeString type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" base="." flashVars="$autoplayParam=$autoplayValue"></embed>
 EOT;
 
-		return array(
-			'html' => $html,
-			'title' => $this->DBKey,
-			'provider' => 'gametrailers',
-		);
+		return array( 'html' => $html );
 	}
 
 }

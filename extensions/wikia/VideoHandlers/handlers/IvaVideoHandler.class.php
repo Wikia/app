@@ -19,11 +19,7 @@ class IvaVideoHandler extends VideoHandler {
 <iframe $sizeString src='{$url}' frameborder='0' scrolling='no'></iframe>
 EOT;
 
-		return array(
-			'html' => $html,
-			'title' => $this->DBKey,
-			'provider' => 'iva',
-		);
+		return array( 'html' => $html );
 	}
 
 }

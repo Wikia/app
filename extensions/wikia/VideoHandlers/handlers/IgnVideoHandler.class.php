@@ -24,11 +24,7 @@ class IgnVideoHandler extends VideoHandler {
 <iframe src="{$url}" $sizeString scrolling="no" frameborder="0" allowfullscreen></iframe>
 EOT;
 
-		return array(
-			'html' => $html,
-			'title' => $this->DBKey,
-			'provider' => 'ign',
-		);
+		return array( 'html' => $html );
 	}
 
 	public function getEmbedUrl() {

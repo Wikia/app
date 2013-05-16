@@ -41,8 +41,6 @@ EOT;
 				$jsFile,
 				"extensions/wikia/VideoHandlers/js/handlers/Anyclip.js"
 			),
-			'title' => $this->DBKey,
-			'provider' => 'anyclip',
 		);
 
 		return $code;
