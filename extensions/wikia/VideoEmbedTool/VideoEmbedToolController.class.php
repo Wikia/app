@@ -63,6 +63,7 @@ class VideoEmbedToolController extends WikiaController {
 		if ( $searchType === 'premium' ) {
 			$config->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
 		}
+		$config->setFilterQueryByCode( Wikia\Search\Config::FILTER_VIDEO );
 		
 		$service = new VideoEmbedToolSearchService( [ 'trimTitle' => $this->request->getInt( 'trimTitle', 0 ), 'config' => $config ] );
 		$response = $service->videoSearch();

@@ -96,7 +96,7 @@ class VideoEmbedToolSearchService
 	 */
 	public function videoSearch() {
 		$config = $this->getConfig()->setVideoSearch( true );
-		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config ) )->searchAsApi( $this->getExpectedFields(), true );
+		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $this->getExpectedFields(), true ) );
 	}
 	
 	/**
