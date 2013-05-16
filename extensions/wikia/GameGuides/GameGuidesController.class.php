@@ -553,7 +553,7 @@ class GameGuidesController extends WikiaController {
 
 		if( !empty( $languages ) ) {
 			if ( array_key_exists( $lang, $languages ) ) {
-				$this->response->setValues( $languages[$lang] );
+				$this->response->setVal( 'items', $languages[$lang] );
 			} else {
 				throw new NotFoundApiException( 'No data found for \'' . $lang . '\' language' );
 			}
