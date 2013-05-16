@@ -345,19 +345,27 @@ class BodyController extends WikiaController {
 			else if (self::isBlogListing()) {
 				$this->headerModuleAction = 'BlogListing';
 			}
-		} else {
+		// show corporate header on this page?
+		} else if( !empty($wgEnableWikiaHomePageExt) ) {
 			$this->headerModuleName = 'PageHeader';
-			if (self::isEditPage()) {
+			if( self::isEditPage() ) {
 				$this->headerModuleAction = 'EditPage';
+			} else {
+				$this->headerModuleAction = 'Corporate';
 			}
 
 			// FIXME: move to separate module
-			if ( $wgEnableWikiaHomePageExt && WikiaPageType::isMainPage() ) {
+			if( WikiaPageType::isMainPage() ) {
 				$this->wg->SuppressFooter = true;
 				$this->wg->SuppressArticleCategories = true;
 				$this->wg->SuppressPageHeader = true;
 				$this->wg->SuppressWikiHeader = true;
 				$this->wg->SuppressSlider = true;
+			}
+		} else {
+			$this->headerModuleName = 'PageHeader';
+			if( self::isEditPage() ) {
+				$this->headerModuleAction = 'EditPage';
 			}
 		}
 
