@@ -53,6 +53,7 @@ $config['adengine2_js'] = array(
 		// high prio
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
@@ -100,6 +101,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/VideoHandlers/js/VideoHandlers.js',
 		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
+		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
@@ -441,7 +443,10 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//resources/wikia/modules/ajax.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
-		'//resources/wikia/modules/cache.js'
+		'//resources/wikia/modules/cache.js',
+
+		// video
+		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 	)
 );
 
@@ -543,6 +548,7 @@ $config['wikiamobile_js_ads'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 
 		//modules
 		'//resources/wikia/modules/geo.js',
@@ -663,6 +669,7 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.src.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
@@ -1268,16 +1275,22 @@ $config['categoryselect_edit_js'] = array(
 );
 
 /* FilePage */
-$config['file_page_js'] = array(
+$config['wikia_file_page_js'] = array(
 	'type'=> AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/FilePage/js/FilePage.js',
+		'//extensions/wikia/FilePage/js/WikiaFilePage.js',
 	)
 );
-$config['file_page_css'] = array(
+$config['file_page_tabbed_js'] = array(
+	'type'=> AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/FilePage/js/FilePageTabbed.js',
+	)
+);
+$config['file_page_tabbed_css'] = array(
 	'type' =>AssetsManager::TYPE_SCSS,
 	'assets' => array(
-		'//extensions/wikia/FilePage/css/FilePage.scss',
+		'//extensions/wikia/FilePage/css/FilePageTabbed.scss',
 	)
 );
 

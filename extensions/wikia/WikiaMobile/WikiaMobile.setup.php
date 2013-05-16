@@ -142,6 +142,8 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'cityShort',
 			'wikiaPageIsHub',
 			'wikiaPageType',
+			'wgAdVideoTargeting',
+
 
 			//server/wiki
 			'wgServer',

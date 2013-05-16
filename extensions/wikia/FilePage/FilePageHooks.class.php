@@ -41,21 +41,28 @@ class FilePageHooks extends WikiaObject{
 		$app = F::app();
 
 		wfProfileIn(__METHOD__);
-		// load assets when File Page redesign is enabled and on the File Page
-		if( $app->checkSkin( 'oasis' ) && $app->wg->Title->getNamespace() == NS_FILE &&  !empty( $wgEnableVideoPageRedesign ) ) {
-			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-			$scssPackage = 'file_page_css';
-			$jsPackage = 'file_page_js';
+		if( $app->wg->Title->getNamespace() == NS_FILE ) {
+			$assetsManager = AssetsManager::getInstance();
+			$wikiaFilePageJs = 'wikia_file_page_js';
 
-			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
-				$out->addStyle( $url );
-			}
-
-			foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
+			foreach ( $assetsManager->getURL( $wikiaFilePageJs ) as $url ) {
 				$out->addScript( "<script src=\"{$url}\"></script>" );
 			}
-		}
 
+			// load assets when File Page redesign is enabled
+			if( $app->checkSkin( 'oasis' ) &&  !empty( $wgEnableVideoPageRedesign ) ) {
+				$filePageTabbedCss = 'file_page_tabbed_css';
+				$filePageTabbedJs = 'file_page_tabbed_js';
+
+				foreach ( $assetsManager->getURL( $filePageTabbedCss ) as $url ) {
+					$out->addStyle( $url );
+				}
+
+				foreach ( $assetsManager->getURL( $filePageTabbedJs ) as $url ) {
+					$out->addScript( "<script src=\"{$url}\"></script>" );
+				}
+			}
+		}
 		wfProfileOut(__METHOD__);
 		return true;
 	}
