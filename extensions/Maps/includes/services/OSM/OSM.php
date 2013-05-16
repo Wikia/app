@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This group contains all OSM related files of the Maps extension.
+ * This groupe contains all OSM related files of the Maps extension.
  * 
  * @defgroup OSM OpenStreetMap
  * @ingroup Maps
@@ -13,8 +13,7 @@
  * @file OSM.php
  * @ingroup OSM
  *
- * @licence GNU GPL v2+
- * @author Jeroen De Dauw < jeroendedauw@gmail.com >
+ * @author Jeroen De Dauw
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -34,8 +33,8 @@ $wgHooks['MappingServiceLoad'][] = 'efMapsInitOSM';
 function efMapsInitOSM() {
 	global $wgAutoloadClasses;
 	
-	$wgAutoloadClasses['MapsOSM'] = __DIR__ . '/Maps_OSM.php';
-	$wgAutoloadClasses['MapsOSMDispMap'] = __DIR__ . '/Maps_OSMDispMap.php';
+	$wgAutoloadClasses['MapsOSM'] = dirname( __FILE__ ) . '/Maps_OSM.php';
+	$wgAutoloadClasses['MapsOSMDispMap'] = dirname( __FILE__ ) . '/Maps_OSMDispMap.php';
 	
 	MapsMappingServices::registerService( 
 		'osm',

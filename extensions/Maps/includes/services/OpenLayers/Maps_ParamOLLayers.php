@@ -9,9 +9,8 @@
  * @ingroup Maps
  * @ingroup ParameterManipulations
  * @ingroup MapsOpenLayers
- *
- * @licence GNU GPL v2+
- * @author Jeroen De Dauw < jeroendedauw@gmail.com >
+ * 
+ * @author Jeroen De Dauw
  */
 class MapsParamOLLayers extends ListParameterManipulation {
 	

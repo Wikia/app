@@ -11,8 +11,7 @@ define( 'Maps_EARTH_RADIUS', 6371000 );
  * @file Maps_GeoFunctions.php
  * @ingroup Maps
  *
- * @licence GNU GPL v2+
- * @author Jeroen De Dauw < jeroendedauw@gmail.com >
+ * @author Jeroen De Dauw
  * @author Pnelnik
  * @author Matěj Grabovský
  */
@@ -66,7 +65,7 @@ final class MapsGeoFunctions {
 	 * @param float $bearing The initial bearing in degrees.
 	 * @param float $distance The distance to travel in km.
 	 * 
-	 * @return array The destination coordinates, as non-directional floats in an array with lat and lon keys.
+	 * @return array The desitination coordinates, as non-directional floats in an array with lat and lon keys.
 	 */
 	public static function findDestination( array $startingCoordinates, $bearing, $distance ) {
 		$startingCoordinates['lat'] = deg2rad( (float)$startingCoordinates['lat'] );

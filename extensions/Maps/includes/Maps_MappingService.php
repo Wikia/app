@@ -9,8 +9,7 @@
  * @file Maps_MappingService.php
  * @ingroup Maps
  *
- * @licence GNU GPL v2+
- * @author Jeroen De Dauw < jeroendedauw@gmail.com >
+ * @author Jeroen De Dauw
  */
 abstract class MapsMappingService implements iMappingService {
 
@@ -86,7 +85,7 @@ abstract class MapsMappingService implements iMappingService {
 	 *
 	 * @since 0.7
 	 *
-	 * @param $parameterInfo array of IParam
+	 * @param array $parameterInfo
 	 */
 	public function addParameterInfo( array &$parameterInfo ) {
 	}
@@ -195,7 +194,7 @@ abstract class MapsMappingService implements iMappingService {
 		$className = $this->getFeature( $featureName );
 
 		if ( $className === false || !class_exists( $className ) ) {
-			throw new MWException( 'Could not create a mapping feature class instance' );
+			throw new Exception( 'Could not create a mapping feature class instance' );
 		}
 
 		return new $className( $this );

@@ -9,7 +9,7 @@
  * @ingroup Maps
  * @ingroup Geocoders
  *
- * @licence GNU GPL v2+
+ * @licence GNU GPL v3
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  * @author Sergey Chernyshev
  * @author Desiree Gennaro
@@ -17,7 +17,7 @@
 final class MapsGoogleGeocoder extends MapsGeocoder {
 	
 	/**
-	 * Registers the geocoder.
+	 * Registeres the geocoder.
 	 * 
 	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
@@ -72,7 +72,7 @@ final class MapsGoogleGeocoder extends MapsGeocoder {
 	 * @return array
 	 */
 	public static function getOverrides() {
-		return array( 'googlemaps3' );
+		return array( 'googlemaps2', 'googlemaps3' );
 	}
 	
 }

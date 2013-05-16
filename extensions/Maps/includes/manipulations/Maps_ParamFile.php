@@ -8,9 +8,8 @@
  * @file Maps_ParamFile.php
  * @ingroup Maps
  * @ingroup ParameterManipulations
- *
- * @licence GNU GPL v2+
- * @author Jeroen De Dauw < jeroendedauw@gmail.com >
+ * 
+ * @author Jeroen De Dauw
  */
 class MapsParamFile extends ItemParameterManipulation {
 

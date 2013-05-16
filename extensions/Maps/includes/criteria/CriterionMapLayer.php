@@ -17,10 +17,8 @@ class CriterionMapLayer extends ItemParameterCriterion {
 	
 	/**
 	 * Constructor.
-	 *
+	 * 
 	 * @since 0.7
-	 *
-	 * @param string $service
 	 */
 	public function __construct( $service ) {
 		parent::__construct();
@@ -34,7 +32,7 @@ class CriterionMapLayer extends ItemParameterCriterion {
 	protected function doValidation( $value, Parameter $parameter, array $parameters ) {
 		$title = Title::newFromText( $value, Maps_NS_LAYER );
 
-		if ( $title !== null && $title->getNamespace() == Maps_NS_LAYER && $title->exists() ) {
+		if ( $title->getNamespace() == Maps_NS_LAYER && $title->exists() ) {
 			$layerPage = new MapsLayerPage( $title );
 			return $layerPage->hasValidDefinition( $this->service );
 		}

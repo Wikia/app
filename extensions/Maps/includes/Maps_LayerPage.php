@@ -7,9 +7,8 @@
  * 
  * @file Maps_LayerPage.php
  * @ingroup Maps
- *
- * @licence GNU GPL v2+
- * @author Jeroen De Dauw < jeroendedauw@gmail.com >
+ * 
+ * @author Jeroen De Dauw
  * 
  * TODO: check for the page being not created yet (then it's not invalid if there is nothing there...)
  */
@@ -197,9 +196,7 @@ class MapsLayerPage extends Article {
 	 * Returns if the layer definition in the page is valid.
 	 * 
 	 * @since 0.7.1
-	 *
-	 * @param string|null $service
-	 *
+	 * 
 	 * @return boolean
 	 */
 	public function hasValidDefinition( $service = null ) {

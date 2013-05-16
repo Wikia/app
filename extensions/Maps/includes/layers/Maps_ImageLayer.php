@@ -7,14 +7,13 @@
  * 
  * @file Maps_ImageLayer.php
  * @ingroup Maps
- *
- * @licence GNU GPL v2+
- * @author Jeroen De Dauw < jeroendedauw@gmail.com >
+ * 
+ * @author Jeroen De Dauw
  */
 class MapsImageLayer extends MapsLayer {
 
 	/**
-	 * Registers the layer.
+	 * Registeres the layer.
 	 * 
 	 * @since 0.7.2
 	 */
