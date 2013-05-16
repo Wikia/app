@@ -132,8 +132,14 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 			foreach ( $languages as $lang => $videos ) {
 				foreach ( $videos as $key => $video) {
 
-					$video['wiki_id'] = (int) WikiFactory::DomainToID( $video['wiki_domain'] );
-					$video['wiki_name'] = 'asd';
+					$wikiId = (int) WikiFactory::DomainToID( $video['wiki_domain'] );
+
+					$video['wiki_id'] = $wikiId;
+
+					$wiki = WikiFactory::getWikiByID( $wikiId );
+
+					$video['wiki_name'] = $wiki->city_title;
+					$video['wiki_lang'] = $wiki->city_lang;
 
 					$title = Title::newFromText( $video['video_name'], NS_VIDEO );
 
