@@ -7,13 +7,14 @@
  * 
  * @file Maps_Geocoders.php
  * @ingroup Maps
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 final class MapsGeocoders {
 	
 	/**
-	 * Accociative with geoservice identifiers as keys containing instances of
+	 * Associative with geoservice identifiers as keys containing instances of
 	 * the geocoder classes. 
 	 * 
 	 * Note: This list only contains the instances, so is not to be used for
@@ -27,9 +28,9 @@ final class MapsGeocoders {
 	protected static $geocoders = array();	
 	
 	/**
-	 * Accociative with geoservice identifiers as keys containing the class
+	 * Associative with geoservice identifiers as keys containing the class
 	 * name of the geocoders. This is used for registration of a geocoder
-	 * without immedialty instantiating it.
+	 * without immediately instantiating it.
 	 * 
 	 * @since 0.7
 	 * 
@@ -105,7 +106,7 @@ final class MapsGeocoders {
 	}
 	
 	/**
-	 * This function first determines wether the provided string is a pair or coordinates 
+	 * This function first determines wether the provided string is a pair or coordinates
 	 * or an address. If it's the later, an attempt to geocode will be made. The function will
 	 * return the coordinates or false, in case a geocoding attempt was made but failed. 
 	 * 
@@ -113,10 +114,9 @@ final class MapsGeocoders {
 	 * 
 	 * @param string $coordsOrAddress
 	 * @param string $geoservice
-	 * @param string $mappingService
+	 * @param string|false $mappingService
 	 * @param boolean $checkForCoords
-	 * @param boolean $checkForCoords
-	 * 
+	 *
 	 * @return array or false
 	 */
 	public static function attemptToGeocode( $coordsOrAddress, $geoservice = '', $mappingService = false, $checkForCoords = true ) {
@@ -137,6 +137,8 @@ final class MapsGeocoders {
 	 * @since 0.7
 	 * 
 	 * @param string $coordsOrAddress
+	 * @param string $geoService
+	 * @param string|false $mappingService
 	 * 
 	 * @return boolean
 	 */
@@ -178,7 +180,7 @@ final class MapsGeocoders {
 	 */
 	public static function geocode( $address, $geoService = '', $mappingService = false ) {
 		if ( !is_string( $address ) ) {
-			throw new Exception( 'Parameter $address must be a string at ' . __METHOD__ );
+			throw new MWException( 'Parameter $address must be a string at ' . __METHOD__ );
 		}		
 		
 		if ( !self::canGeocode() ) {
@@ -274,7 +276,7 @@ final class MapsGeocoders {
 	}
 	
 	/**
-	 * Registeres a geocoder linked to an identifier. 
+	 * Registers a geocoder linked to an identifier.
 	 * 
 	 * @since 0.7
 	 * 
@@ -320,11 +322,11 @@ final class MapsGeocoders {
 					self::$geocoders[$geocoderIdentifier] = $geocoder;
 				//}
 				//else {
-				//	throw new Exception( 'The geocoder linked to identifier ' . $geocoderIdentifier . ' does not implement .' );
+				//	throw new MWException( 'The geocoder linked to identifier ' . $geocoderIdentifier . ' does not implement .' );
 				//}
 			}
 			else {
-				throw new Exception( 'There is geocoder linked to identifier ' . $geocoderIdentifier . '.' );
+				throw new MWException( 'There is geocoder linked to identifier ' . $geocoderIdentifier . '.' );
 			}
 		}
 
@@ -344,15 +346,16 @@ final class MapsGeocoders {
 	 * @return string or false
 	 */
 	protected static function getValidGeocoderIdentifier( $geocoderIdentifier ) {
-		global $egMapsDefaultGeoService, $egMapsUserGeoOverrides;
+		global $egMapsDefaultGeoService;
 		static $validatedDefault = false;
 		
 		if ( $geocoderIdentifier === '' || !array_key_exists( $geocoderIdentifier, self::$registeredGeocoders ) ) {
 			if ( !$validatedDefault ) {
 				if ( !array_key_exists( $egMapsDefaultGeoService, self::$registeredGeocoders ) ) {
-					$egMapsDefaultGeoService = array_shift( array_keys( self::$registeredGeocoders ) );
+					$services = array_keys( self::$registeredGeocoders );
+					$egMapsDefaultGeoService = array_shift( $services );
 					if ( is_null( $egMapsDefaultGeoService ) ) {
-						throw new Exception( 'Tried to geocode while there are no geocoders available at ' . __METHOD__  );
+						throw new MWException( 'Tried to geocode while there are no geocoders available at ' . __METHOD__  );
 					}
 				}
 			}
