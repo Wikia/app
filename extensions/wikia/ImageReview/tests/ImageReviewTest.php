@@ -23,10 +23,6 @@ class ImageReviewTest extends WikiaBaseTest {
 
 		$this->assertInternalType('array', $imagesList);
 		$this->assertEquals($this->fakeCorrectImages, $imagesList);
-
-		F::unsetInstance('SpecialPage');
-		F::unsetInstance('ImageReviewHelper');
-		F::unsetInstance('ImageReviewSpecialController');
 	}
 
 	public function testImageReviewSpecialControllerIndexError() {
@@ -38,17 +34,13 @@ class ImageReviewTest extends WikiaBaseTest {
 
 		$this->assertInternalType('array', $imagesList);
 		$this->assertEquals($this->fakeWrongImages, $imagesList);
-
-		F::unsetInstance('SpecialPage');
-		F::unsetInstance('ImageReviewHelper');
-		F::unsetInstance('ImageReviewSpecialController');
 	}
 
 	private function setStubsForImageReviewSpecialControllerTests($error) {
 		//our test have all needed rights ;)
 		$specialPageStub = $this->getMock('SpecialPage', array('userCanExecute'));
 		$specialPageStub->expects($this->any())->method('userCanExecute')->will($this->returnValue(true));
-		F::setInstance('SpecialPage', $specialPageStub);
+		$this->mockClass('SpecialPage', $specialPageStub);
 
 		//to prevent fatal error
 		$wgTitleStub = $this->getMock('Title', array('getFullUrl'));
@@ -78,11 +70,19 @@ class ImageReviewTest extends WikiaBaseTest {
 				->method('getImageList')
 				->will($this->returnValue($this->fakeWrongImages));
 		}
-		F::setInstance('ImageReviewHelper', $imageReviewHelperStub);
+		$this->mockClass('ImageReviewHelper', $imageReviewHelperStub);
 
 		$wgMemcStub = $this->getMock('wgMemc', array('get', 'set', 'add'));
 		$wgMemcStub->expects($this->any())->method('get')->will($this->returnValue($memcTs));
 		$this->mockGlobalVariable('wgMemc', $wgMemcStub);
+
+		// disable both methods in WikiaResponse
+		$this->getMethodMock( 'WikiaResponse', 'addAsset' )
+			->expects( $this->any() )
+			->method( 'addAsset' );
+		$this->getMethodMock( 'WikiaResponse', 'sendHeader' )
+			->expects( $this->any() )
+			->method( 'sendHeader' );
 	}
 
 	/**
