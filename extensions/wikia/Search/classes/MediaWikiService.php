@@ -417,7 +417,8 @@ class MediaWikiService
 	 * @return string
 	 */
 	public function getSnippetForPageId( $pageId, $snippetLength = 250 ) {
-		$articleService = new \ArticleService( $this->getCanonicalPageIdFromPageId( $pageId ) );
+		$canonicalPageId = $this->getCanonicalPageIdFromPageId( $pageId );
+		$articleService = new \ArticleService( $canonicalPageId );
 		return $articleService->getTextSnippet( $snippetLength );
 	}
 	
@@ -827,7 +828,8 @@ class MediaWikiService
 		}
 		if( $page->isRedirect() ) {
 			self::$redirectArticles[$pageId] = $page;
-			$page = new \Article( $page->getRedirectTarget() );
+			$redirectTarget = $page->redirectTarget();
+			$page = new \Article( $redirectTarget );
 			$newId = $page->getID();
 			self::$pageIdsToArticles[$newId] = $page;
 			self::$redirectsToCanonicalIds[$pageId] = $newId;
