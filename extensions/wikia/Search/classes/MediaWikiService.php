@@ -828,7 +828,7 @@ class MediaWikiService
 		}
 		if( $page->isRedirect() ) {
 			self::$redirectArticles[$pageId] = $page;
-			$redirectTarget = $page->redirectTarget();
+			$redirectTarget = $page->getRedirectTarget();
 			$page = new \Article( $redirectTarget );
 			$newId = $page->getID();
 			self::$pageIdsToArticles[$newId] = $page;
