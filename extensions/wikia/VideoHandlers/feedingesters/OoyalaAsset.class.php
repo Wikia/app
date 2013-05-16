@@ -17,7 +17,7 @@ class OoyalaAsset extends WikiaModel {
 		$reqBody = json_encode( $this->generateRemoteAssetParams( $data ) );
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
-		print( "Connecting to $url...\n" );
+		//print( "Connecting to $url...\n" );
 
 		$options = array(
 			'method' => $method,
@@ -29,7 +29,7 @@ class OoyalaAsset extends WikiaModel {
 			$response = $req->getContent();
 			$asset = json_decode( $response, true );
 
-			print( "Ooyala: Uploaded Remote Asset: \n" );
+			print( "Ooyala: Uploaded Remote Asset: $data[provider]: $asset[name] \n" );
 			foreach( explode("\n", var_export($asset, 1)) as $line ) {
 				print ":: $line\n";
 			}
@@ -81,7 +81,7 @@ class OoyalaAsset extends WikiaModel {
 		$reqBody = json_encode( $assetData );
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
-		print( "Connecting to $url...\n" );
+		//print( "Connecting to $url...\n" );
 
 		$options = array(
 			'method' => $method,
@@ -180,7 +180,7 @@ class OoyalaAsset extends WikiaModel {
 		$reqPath = '/v2/assets';
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
-		print( "Connecting to $url...\n" );
+		//print( "Connecting to $url...\n" );
 
 		$req = MWHttpRequest::factory( $url );
 		$status = $req->execute();

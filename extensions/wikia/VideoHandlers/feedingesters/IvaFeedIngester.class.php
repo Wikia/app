@@ -317,6 +317,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	protected function generateRemoteAssetData( $name, $data ) {
 		$data['name'] = $name;
 		$data['duration'] = $data['duration'] * 1000;
+		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
 
 		$url = str_replace( '$1', F::app()->wg->IvaApiConfig['AppId'], static::$ASSET_URL );
 		$url = str_replace( '$2', $data['videoId'], $url );
