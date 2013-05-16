@@ -31,8 +31,10 @@ class VideoEmbedToolController extends WikiaController {
 		}
 		else {
 			$request = $this->getRequest();
-			$config = new Wikia\Search\Config( [ 'start' => $request->getInt( 'svStart', 0 ), 'limit' => $request->getInt( 'svSize', 20 ), 'namespaces' => [ NS_FILE ] ] );
-			$service = new VideoEmbedToolSearchService( [ 'trimTitle' => $this->request->getInt( 'trimTitle', 0 ), 'config' => $config ] );
+			$service = new VideoEmbedToolSearchService();
+			$service->setStart( $request->getInt( 'svStart', 0 ) )
+			        ->setLimit( $request->getInt( 'svSize', 20 ) )
+			        ->setTrimTitle( $this->request->getInt( 'trimTitle', 0 ) );
 			$response = $service->getSuggestionsForArticleId( $this->request->getInt('articleId', 0 ) );
 			
 			$result = array(
@@ -52,21 +54,14 @@ class VideoEmbedToolController extends WikiaController {
 		$request = $this->getRequest();
 		$phrase = $request->getVal( 'phrase' );
 		$searchType = $request->getVal( 'type', 'local' );
-		$params = [
-				'start' => $request->getInt( 'svStart', 0 ),
-				'rank' => $request->getVal( 'order', 'default' ),
-				'limit' => max( [ 1, $request->getInt( 'svSize', 20 ) ] ),
-				'query' => $phrase,
-				'namespaces' => [ NS_FILE ]
-		];
-		$config = new Wikia\Search\Config( $params );
-		if ( $searchType === 'premium' ) {
-			$config->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
-		}
-		$config->setFilterQueryByCode( Wikia\Search\Config::FILTER_VIDEO );
 		
-		$service = new VideoEmbedToolSearchService( [ 'trimTitle' => $this->request->getInt( 'trimTitle', 0 ), 'config' => $config ] );
-		$response = $service->videoSearch();
+		$service = new VideoEmbedToolSearchService();
+		$service->setTrimTitle( $this->request->getInt( 'trimTitle', 0 ) )
+		        ->setStart( $request->getInt( 'svStart', 0 ) )
+		        ->setLimit( max( [ 1, $request->getInt( 'svSize', 20 ) ] ) )
+		        ->setRank( $request->getVal( 'order', 'default' ) )
+		        ->setSearchType( $searchType );
+		$response = $service->videoSearch( $phrase );
 
 		$result = array (
 			'searchQuery' => $phrase,

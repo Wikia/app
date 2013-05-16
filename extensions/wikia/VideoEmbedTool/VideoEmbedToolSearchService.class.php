@@ -49,6 +49,30 @@ class VideoEmbedToolSearchService
 	protected $trimTitle = 0;
 
 	/**
+	 * Start to be set in config
+	 * @var int
+	 */
+	protected $start = 0;
+	
+	/**
+	 * Limit to be set in config
+	 * @var int
+	 */
+	protected $limit = 20;
+	
+	/**
+	 * The ranking style to be set in the config
+	 * @var string
+	 */
+	protected $rank = Wikia\Search\Config::RANK_DEFAULT;
+	
+	/**
+	 * Determines what wiki ID we use.
+	 * @var string
+	 */
+	protected $searchType = 'local';
+	
+	/**
 	 * Wikia Search Config
 	 * @var Wikia\Search\Config
 	 */
@@ -94,8 +118,8 @@ class VideoEmbedToolSearchService
 	 * @param string $query
 	 * @return array
 	 */
-	public function videoSearch() {
-		$config = $this->getConfig()->setVideoSearch( true );
+	public function videoSearch( $query ) {
+		$config = $this->getConfig()->setVideoSearch( true )->setQuery( $query );
 		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $this->getExpectedFields(), true ) );
 	}
 	
@@ -174,22 +198,21 @@ class VideoEmbedToolSearchService
 	}
 	
 	/**
-	 * Sets the search config instance
-	 * @var Wikia\Search\Config $config
-	 * @return VideoEmbedToolSearchService provides fluent interface
-	 */
-	public function setConfig( Wikia\Search\Config $config ) {
-		$this->config = $config;
-		return $this;
-	}
-	
-	/**
-	 * Lazy loading DI, but generally we want config set externally.
+	 * Lazy-loads config with values set from controller. Allows us to test config API.
 	 * @return Wikia\Search\Config
 	 */
 	protected function getConfig() {
 		if ( $this->config === null ) {
 			$this->config = new Wikia\Search\Config;
+			$this->config->setLimit( $this->getLimit() )
+			             ->setStart( $this->getStart() )
+			             ->setNamespaces( [ NS_FILE ] )
+			             ->setRank( $this->getRank() );
+			$this->config->setFilterQueryByCode( Wikia\Search\Config::FILTER_VIDEO );
+			if ( $this->getSearchType() == 'premium' ) {
+				$this->config->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
+			}
+			
 		}
 		return $this->config;
 	}
@@ -250,6 +273,78 @@ class VideoEmbedToolSearchService
 	public function setTrimTitle( $trimTitle ) {
 		$this->trimTitle = $trimTitle;
 		return $this;
+	}
+	
+	/**
+	 * Allows controller to set limit on service, which injects into its config
+	 * @param int $limit
+	 * @return VideoEmbedToolSearchService provides fluent interface
+	 */
+	public function setLimit( $limit ) {
+		$this->limit = $limit;
+		return $this;
+	}
+	
+	/**
+	 * Returns limit set by controller
+	 * @return int
+	 */
+	public function getLimit() {
+		return $this->limit;
+	}
+	
+	/**
+	 * Allows controller to set start on service, which injects into its config
+	 * @param int $start
+	 * @return VideoEmbedToolSearchService provides fluent interface
+	 */
+	public function setStart( $start ) {
+		$this->start = $start;
+		return $this;
+	}
+	
+	/**
+	 * Return start set by controller
+	 * @return int $start
+	 */
+	public function getStart() {
+		return $this->start;
+	}
+	
+	/**
+	 * Allows controller to set rank on service, which injects into its config
+	 * @param string $rank
+	 * @return VideoEmbedToolSearchService provides fluent interface
+	 */
+	public function setRank( $rank ) {
+		$this->rank = $rank;
+		return $this;
+	}
+	
+	/**
+	 * Return start set by controller
+	 * @return string $rank
+	 */
+	public function getRank() {
+		return $this->rank;
+	}
+	
+	/**
+	 * Allows us to set wiki ID based on search type
+	 * @param string $searchType
+	 * @return VideoEmbedToolSearchService provides fluent interface
+	 */
+	public function setSearchType( $type ) {
+		$this->searchType = $type;
+		return $this;
+	}
+	
+	/**
+	 * Return search type set by controller
+	 * @return string $searchType
+	 */
+	public function getSearchType() {
+		return $this->searchType;
 	}
 	
 	/**
