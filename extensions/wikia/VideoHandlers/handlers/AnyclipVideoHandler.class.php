@@ -27,7 +27,7 @@ class AnyclipVideoHandler extends VideoHandler {
 <div id="{$playerId}" {$sizeString}></div>
 EOT;
 
-		$code = array(
+		return array(
 			'html' => $html,
 			'jsParams' => array(
 				'playerId'=> $playerId,
@@ -42,8 +42,6 @@ EOT;
 				"extensions/wikia/VideoHandlers/js/handlers/Anyclip.js"
 			),
 		);
-
-		return $code;
 	}
 
 }
