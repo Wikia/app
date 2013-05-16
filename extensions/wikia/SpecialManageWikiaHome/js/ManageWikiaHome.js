@@ -20,14 +20,15 @@ ManageWikiaHome.prototype = {
 			'change',
 			this.changeVisualizationLang
 		);
-
+//TODO: Does dynamic search will be still in use?
+/*
 		$('#wiki-name-filer-input').on(
 			'keyup',
 			$.proxy(this.renderWikiListPage, this)
 		);
-
+*/
 		$('#wiki-filter-reset').click(
-			this.renderAllWikiListPage
+			this.resetFormFields
 		);
 
 		$.when(
