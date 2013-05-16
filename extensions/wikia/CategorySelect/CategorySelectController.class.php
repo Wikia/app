@@ -201,10 +201,8 @@ class CategorySelectController extends WikiaController {
 			$article = new Article( $title );
 			$wikitext = $article->fetchContent();
 
-			// Pull in categories from templates inside of the article (BugId:100980)
-			$options = new ParserOptions();
-			$wikitext = ParserPool::preprocess( $wikitext, $title, $options );
-
+			// Extract categories from the article, merge them with those passed in, weed out
+			// duplicates and finally append them back to the article.
 			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
 
 			// Merge categories stored in the article with any that were passed in and remove duplicates.
