@@ -49,34 +49,10 @@ class SearchApiController extends WikiaApiController {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
 			throw new NotFoundApiException();
 		}
-		
-		$total = 0;
-		$results = [];
-		$batches = 0;
-		$currentBatch = 0;
-		$next = 0;
-		
-		$limit = $searchConfig->getLimit();
-		
-		$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
-		
-		$total = $searchConfig->getResultsFound();
-
-		if ( $total ) {
-			$results = $resultSet->toArray( ['pageid' => 'id', 'title', 'url', 'ns' ] );
-
-			$batches = $searchConfig->getNumPages();
-			$currentBatch = $searchConfig->getPage();
-			$next = max( 0, $total - ( $limit * $currentBatch ) );
-
-			if ( $next > $limit ) {
-				$next = $limit;
-			}
-		}
 
 		//Standard Wikia API response with pagination values
 		$response = $this->getResponse();
-		$responseValues = [ 'items' => $results, 'next' => $next, 'total' => $total, 'batches' => $batches, 'currentBatch' => $currentBatch ];
+		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns' ], true );
 		$response->setValues( $responseValues );
 		$response->setCacheValidity(
 			86400 /* 24h */,

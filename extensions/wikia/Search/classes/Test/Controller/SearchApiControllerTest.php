@@ -326,7 +326,7 @@ class SearchApiControllerTest extends BaseTest
 		
 		$mockService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
 		                    ->disableOriginalConstructor()
-		                    ->setMethods( [ 'search' ] )
+		                    ->setMethods( [ 'searchAsApi' ] )
 		                    ->getMock();
 		
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
@@ -351,11 +351,6 @@ class SearchApiControllerTest extends BaseTest
 		    ->method ( 'hasTerms' )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getLimit' )
-		    ->will   ( $this->returnValue( 20 ) )
-		;
 		$mockFactory
 		    ->expects( $this->once() )
 		    ->method ( 'getFromConfig' )
@@ -364,29 +359,8 @@ class SearchApiControllerTest extends BaseTest
 		;
 		$mockService
 		    ->expects( $this->once() )
-		    ->method ( 'search' )
-		    ->will   ( $this->returnValue( $mockResultSet ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getResultsFound' )
-		    ->will   ( $this->returnValue( 100 ) )
-		;
-		$mockResultSet
-		    ->expects( $this->once() )
-		    ->method ( 'toArray' )
-		    ->with   ( ['pageid' => 'id', 'title', 'url', 'ns' ] )
-		    ->will   ( $this->returnValue( $resultArray ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getNumPages' )
-		    ->will   ( $this->returnValue( 5 ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getPage' )
-		    ->will   ( $this->returnValue( 1 ) )
+		    ->method ( 'searchAsApi' )
+		    ->will   ( $this->returnValue( [ 'items' => $resultArray, 'next' => 20, 'total' => 100, 'batches' => 5, 'currentBatch' => 1 ] ) )
 		;
 		$mockController
 		    ->expects( $this->once() )

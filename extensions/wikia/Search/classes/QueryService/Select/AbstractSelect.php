@@ -120,16 +120,20 @@ abstract class AbstractSelect
 	public function searchAsApi( $fields = [], $metadata = false ) {
 		$resultSet = $this->search();
 		if ( $metadata ) {
+			$total = $this->getconfig()->getResultsFound();
 			$numPages = $this->getConfig()->getNumPages();
 			$limit = $this->getConfig()->getLimit();
-			return [
-					'batches' => $numPages,
-					'currentBatch' => $this->getConfig()->getPage(),
-					'next' => min( [ $numPages * $limit, $this->getConfig()->getStart() + $limit ] ),
+			$response = [
+					'total' => $total,
+					'batches' => $total > 0 ? $numPages : 0,
+					'currentBatch' => $total > 0 ? $this->getConfig()->getPage() : 0,
+					'next' => $total > 0 ? min( [ $numPages * $limit, $this->getConfig()->getStart() + $limit ] ) : 0,
 					'items' => $resultSet->toArray( $fields )
-			];
+					];
+		} else {
+			$response = $resultSet->toArray( $fields );
 		}
-		return $resultSet->toArray( $fields );
+		return $response;
 	}
 	
 	/**
