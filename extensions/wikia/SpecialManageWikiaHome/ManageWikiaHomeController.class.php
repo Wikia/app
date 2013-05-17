@@ -28,7 +28,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	public function init() {
 		$this->wg->Out->addJsConfigVars([
 			'CHANGE_FLAG_ADD' => self::CHANGE_FLAG_ADD,
-			'CHANGE_FLAG_REMOVE' => self::CHANGE_FLAG_REMOVE
+			'CHANGE_FLAG_REMOVE' => self::CHANGE_FLAG_REMOVE,
+			'FLAG_PROMOTED' => WikisModel::FLAG_PROMOTED,
+			'FLAG_BLOCKED' => WikisModel::FLAG_BLOCKED,
+			'FLAG_OFFICIAL' => WikisModel::FLAG_OFFICIAL,
 		]);
 	}
 
@@ -299,7 +302,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		} else {
 			$wikiId = $this->request->getInt('wikiId', 0);
 			$collectionId = $this->request->getVal('collectionId', 0);
-			$type = $this->request->getVal('switchType', self::SWITCH_COLLECTION_TYPE_ADD);
+			$type = $this->request->getVal('switchType', self::CHANGE_FLAG_ADD);
 
 			$collectionsModel = $this->getWikiaCollectionsModel();
 			switch($type) {

@@ -1,17 +1,22 @@
-var ManageWikiaHome = function() {};
+var ManageWikiaHome = function() {
+	this.flags[window.FLAG_PROMOTED] = 'promoted';
+	this.flags[window.FLAG_BLOCKED] = 'blocked';
+	this.flags[window.FLAG_OFFICIAL] = 'official';
+};
 
 ManageWikiaHome.prototype = {
 	MIN_CHARS_TO_START_FILTERING: 3,
-
-	// TODO
-	flags: {
-		4: 'promoted',
-		8: 'blocked',
-		16: 'official'
-	},
 	isListChangingDelayed: false,
 	visualizationLang: 'en',
-	modalObject: {content: '', type: 0, target: {}, collectionsEdit: false},
+	modalObject: {
+		content: '',
+		type: 0,
+		target: {},
+		collectionsEdit: false,
+		flagType: '',
+		type: ''
+	},
+	flags: {},
 	wikisPerCollection: [],
 	SLOTS_IN_TOTAL: 0,
 	wereCollectionsWikisChanged: false,
