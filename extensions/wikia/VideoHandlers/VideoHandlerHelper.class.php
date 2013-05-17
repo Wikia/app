@@ -8,9 +8,10 @@ class VideoHandlerHelper extends WikiaModel {
 
 	/**
 	 * create file page by adding video category
-	 * @param Title|string $title
-	 * @param User|integer $user
-	 * @return Status|false $status
+	 * @param Title|string $title - Title text of a video
+	 * @param User|integer $user - A user ID
+	 * @param integer $flags - Edit flags to pass to the Article::doEdit method
+	 * @return Status|false $status - The status returned by Article::doEdit
 	 */
 	public function addCategoryVideos( $title, $user, $flags = EDIT_NEW ) {
 		wfProfileIn( __METHOD__ );
@@ -56,32 +57,14 @@ class VideoHandlerHelper extends WikiaModel {
 		return $newContent;
 	}
 
+	/**
+	 * Replace the contents of the description section within the content passed in.
+	 * @param string $content - The file page content
+	 * @param string $descText - The text to use to replace any existing description section
+	 * @return String - The updated file page content
+	 */
 	public function replaceDescriptionSection( $content, $descText = '' ) {
 		$headerText = $this->wf->Message( 'videohandler-description' );
-
-		// Get any text before the first description header by deleting the first decription
-		// header and everything after it.
-		$preText = preg_replace("/^==\s*$headerText\s*==\n*(.*)/sim", '', $content);
-
-		// Grab everything after the description header
-		preg_match("/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches);
-
-		// From the above match (if it was successful) try to grab the next H2 heading and below
-		if (empty($matches[1])) {
-			$postText = $preText;
-			$preText = '';
-		} else {
-			preg_match('/^(==[^=]+==.*)/sm', $matches[1], $postMatch);
-
-			// If we got anything, save it for the final reconstruction
-			$postText = empty($postMatch[1]) ? '' : $postMatch[1];
-		}
-
-		// If there's no newline at the end of the preText, add one so our '==' wiki text
-		// header shows up properly
-		if (! preg_match("/\n$/", $preText)) {
-			$preText .= "\n";
-		}
 
 		// Don't include the description section if there's no description text
 		$descSection = '';
@@ -89,11 +72,61 @@ class VideoHandlerHelper extends WikiaModel {
 			$descSection = "== $headerText ==\n".$descText;
 		}
 
-		return $preText.$descSection.$postText;
+		// Search for the description section in the file page content
+		$section = 1;
+		$sectionFound = 0;
+		$sectionText = '';
+		while (1) {
+			// Get section $section to see if its the description
+			$sectionText = $this->wg->Parser->getSection( $content, $section );
+
+			// If we find a description header here, exit the loop.  Check for English
+			// and the wiki's language
+			if (preg_match("/^== *(Description|$headerText)/mi", $sectionText)) {
+				$sectionFound = 1;
+				break;
+			}
+
+			// If there are no more sections to check, exit the loop
+			if (trim($sectionText) == '') {
+				break;
+			}
+
+			$section++;
+		}
+
+		// If we found a description section, replace it here
+		if ($sectionFound) {
+			// If there were any categories in the original section, put them back in
+			$catText = $this->extractCategories($sectionText);
+
+			$content = $this->wg->Parser->replaceSection( $content, $section, $descSection."\n".$catText );
+		} else {
+			// If there wasn't a description section, add one
+			$content = $descSection."\n".$content;
+		}
+
+		return $content;
 	}
 
 	/**
-	 * add description header
+	 * Extract category tags from content text passed in
+	 * @param string $content - Content in which to look for category tags
+	 * @return string
+	 */
+	private function extractCategories( $content ) {
+		$catText = '(?:Category|'.$this->wf->Message( 'nstab-category' ).')';
+		preg_match_all( "/(\[\[$catText:[^\]]+\]\])/", $content, $matches );
+
+		if ( !empty($matches[1]) ) {
+			return implode('', $matches[1]);
+		} else {
+			return '';
+		}
+	}
+
+	/**
+	 * Add a description header
 	 * @param string $content
 	 * @return string $newContent
 	 */
