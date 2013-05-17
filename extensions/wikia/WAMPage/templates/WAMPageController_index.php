@@ -108,7 +108,7 @@
 			<? endforeach ?>
 		<? else: ?>
 			<tr class="no-results"><td colspan="8">
-				<p>
+				<p class="plainlinks">
 					<?= wfMessage('wam-index-no-results')->parse(); ?>
 				</p>
 			</td></tr>
