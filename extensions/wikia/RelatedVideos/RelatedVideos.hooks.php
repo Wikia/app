@@ -133,15 +133,28 @@ class RelatedVideosHookHandler {
 		$title = $app->wg->Title;
 		$namespace = $title->getNamespace();
 
-		if( $title->exists() && $app->wg->request->getVal( 'diff' ) === null
-			&& ( $namespace == NS_MAIN || $namespace == NS_FILE || $namespace == NS_CATEGORY
-				|| ( (!empty($app->wg->ContentNamespace)) && in_array($namespace, $app->wg->ContentNamespace) ) ) ) {
+		if( $this->isRailModuleWanted($title, $namespace) ) {
 			$pos = $app->wg->User->isAnon() ? 1301 : 1281;
 			$modules[$pos] = array('RelatedVideosRail', 'index', null);
 		}
 
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+	
+	private function isRailModuleWanted($title, $namespace) {
+		$app = F::App();
+		wfProfileIn(__METHOD__);
+
+		wfProfileOut(__METHOD__);
+		return !HubService::isCorporatePage()
+			&& $title->exists()
+			&& $app->wg->request->getVal( 'diff' ) === null
+			&& ( $namespace == NS_MAIN 
+				|| $namespace == NS_FILE 
+				|| $namespace == NS_CATEGORY
+				|| ( (!empty($app->wg->ContentNamespace)) && in_array($namespace, $app->wg->ContentNamespace) ) 
+			);
 	}
 
 	/**
