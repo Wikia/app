@@ -30,9 +30,9 @@ $halfMainGreen: rgba(171,197,97, .5);
 
 //light mode
 $lightBackgroundColor: white;
-$lightLinkColor: green;
 $lightTextColor: rgb(58, 58, 58);
 $lightHeaderColor: rgb(140, 160, 56);
+$lightLinkColor: $lightHeaderColor;
 $lightChevronsColor: rgb(204, 204, 204);
 $lightSectionGrey: rgb(170, 170, 170);
 
