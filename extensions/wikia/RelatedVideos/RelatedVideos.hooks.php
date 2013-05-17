@@ -144,9 +144,7 @@ class RelatedVideosHookHandler {
 	
 	private function isRailModuleWanted($title, $namespace) {
 		$app = F::App();
-		wfProfileIn(__METHOD__);
-
-		wfProfileOut(__METHOD__);
+		
 		return !HubService::isCorporatePage()
 			&& $title->exists()
 			&& $app->wg->request->getVal( 'diff' ) === null
