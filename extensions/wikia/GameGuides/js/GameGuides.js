@@ -152,7 +152,7 @@
 	//Light/Dark skin handling
 	function Skin(){
 		this.toggleMode = function(type){
-			return toggle('light', 'dark', type);
+			return toggle('dark', 'light', type);
 		};
 	}
 
@@ -222,6 +222,9 @@
 						cityId: window.wgCityId
 					},
 					toc: toc.get()
+				},
+				function(){
+					html.className += ' anim-skin';
 				}
 			);
 		});

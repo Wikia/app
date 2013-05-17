@@ -24,30 +24,28 @@
 @import "../../WikiaMobile/css/mediagallery";
 @import '../../WikiaMobile/css/throbber';
 
+//main colors
 $mainGreen: #8CA038;
-$halfMainGreen: rgba(171,197,97,.5);
-
+$halfMainGreen: rgba(171,197,97, .5);
 $sectionGrey: rgb(41, 41, 41);
-
-$linkColor: rgb(172,172,172);
-$textColor: rgb(233,233,233);
-
-$backgroundColor: rgb(20,20,20);
 
 //light mode
 $lightBackgroundColor: white;
-$lightTextColor: #3a3a3a;
-$lightHeaderColor: rgb(140,160,56);
-$lightChevronsColor: rgb(204,204,204);
+$lightLinkColor: green;
+$lightTextColor: rgb(58, 58, 58);
+$lightHeaderColor: rgb(140, 160, 56);
+$lightChevronsColor: rgb(204, 204, 204);
+
+//dark mode
+$darkBackgroundColor: rgb(20, 20, 20);
+$darkLinkColor: rgb(172, 172, 172);
+$darkTextColor: rgb(233, 233, 233);
+$darkChevronsColor: rgb(204, 204, 204);
+
+
 
 html {
-	background-color: $backgroundColor;
-	color: $textColor;
-
-	&.light {
-		background-color: $lightBackgroundColor;
-		color: $lightTextColor;
-	}
+	color: $lightTextColor;
 
 	font-size: 1em;
 
@@ -56,8 +54,14 @@ html {
 	-webkit-backface-visibility: hidden;
 	-webkit-transform: translateZ(0);
 
-	-webkit-transition: background-color .1s;
+	&.dark {
+		background-color: $darkBackgroundColor;
+		color: $darkTextColor;
+	}
 
+	&.anim-skin {
+		-webkit-transition: background-color .1s;
+	}
 
 	&.serif {
 		font-family: Palatino, "GGSerif", "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
@@ -94,10 +98,10 @@ h1, h2, h3{
 }
 
 #pageName {
-	color: $textColor;
+	color: $lightHeaderColor;
 
-	.light & {
-		color: $lightBackgroundColor;
+	.dark & {
+		color: $darkTextColor;
 	}
 
 	font-weight: 800;
@@ -105,10 +109,10 @@ h1, h2, h3{
 }
 
 h2, h3, .collSec {
-	color: $textColor;
+	color: $lightTextColor;
 
-	.light & {
-		color: $lightHeaderColor;
+	.dark & {
+		color: $darkTextColor;
 	}
 }
 
@@ -150,18 +154,28 @@ h2, h3, .collSec {
 a {
 	text-decoration: none;
 
-	color: $textColor;
+	color: $lightLinkColor;
 	pointer-events: none;
 
 	img:not(.media), span {
 		pointer-events: none;
 	}
 
+	.dark & {
+		color: $darkLinkColor;
+	}
+
 	&:not(.external):not(.extiw):not(.disabled) {
-		color: $linkColor;
+		color: $lightLinkColor;
 		pointer-events: auto;
 
-		border-bottom: 1px dotted $linkColor;
+		border-bottom: 1px dotted $lightLinkColor;
+
+		.dark & {
+			color: $darkLinkColor;
+
+			border-bottom-color: $darkLinkColor;
+		}
 
 		*:not(.media) {
 			//slow
@@ -200,11 +214,19 @@ $width: 1.5;
 	width: 0;
 	height: 0;
 	border: $size + px solid;
-	border-color: $textColor transparent transparent transparent;
+	border-color: $lightChevronsColor transparent transparent transparent;
 
 	-webkit-transition: -webkit-transform .3s;
 	-webkit-transition-delay: .1s;
 	-webkit-transform-origin: 50% 25%;
+
+	.dark & {
+		border-top-color: $darkChevronsColor;
+
+		&:after {
+			border-top-color: $darkBackgroundColor;
+		}
+	}
 
 	&:after {
 		content: '';
@@ -216,7 +238,7 @@ $width: 1.5;
 		height: 0;
 
 		border: ( $size - $width ) + px solid;
-		border-color: $backgroundColor transparent transparent transparent;
+		border-color: $lightBackgroundColor transparent transparent transparent;
 	}
 }
 
@@ -290,7 +312,7 @@ figure {
 	background-repeat: no-repeat;
 	background-position: center;
 
-	background-color: #1E1E1E;
+	//background-color: #1E1E1E;
 }
 
 .lazy {
