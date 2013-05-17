@@ -27,7 +27,6 @@
 //main colors
 $mainGreen: #8CA038;
 $halfMainGreen: rgba(171,197,97, .5);
-$sectionGrey: rgb(41, 41, 41);
 
 //light mode
 $lightBackgroundColor: white;
@@ -35,12 +34,15 @@ $lightLinkColor: green;
 $lightTextColor: rgb(58, 58, 58);
 $lightHeaderColor: rgb(140, 160, 56);
 $lightChevronsColor: rgb(204, 204, 204);
+$lightSectionGrey: rgb(170, 170, 170);
 
 //dark mode
 $darkBackgroundColor: rgb(20, 20, 20);
 $darkLinkColor: rgb(172, 172, 172);
 $darkTextColor: rgb(233, 233, 233);
-$darkChevronsColor: rgb(204, 204, 204);
+$darkHeaderColor: $lightHeaderColor;
+$darkChevronsColor: $lightChevronsColor;
+$darkSectionGrey: rgb(41, 41, 41);
 
 
 
@@ -57,10 +59,6 @@ html {
 	&.dark {
 		background-color: $darkBackgroundColor;
 		color: $darkTextColor;
-	}
-
-	&.anim-skin {
-		-webkit-transition: background-color .1s;
 	}
 
 	&.serif {
@@ -89,19 +87,11 @@ h1, h2, h3{
 	font-weight: 100;
 }
 
-#mw-content-text {
-	//background-color: $backgroundColor;
-
-	.light & {
-		//background-color: $lightBackgroundColor;
-	}
-}
-
 #pageName {
 	color: $lightHeaderColor;
 
 	.dark & {
-		color: $darkTextColor;
+		color: $darkHeaderColor;
 	}
 
 	font-weight: 800;
@@ -128,11 +118,17 @@ h2, h3, .collSec {
 	background-repeat: no-repeat;
 	background-position: 100% 100%;
 	background-size: 300% 1px;
-	background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $sectionGrey ));
-	background-image: -webkit-linear-gradient(left, $mainGreen 30%, $sectionGrey 50%);
-	background-image: linear-gradient(to right, $mainGreen 30%, $sectionGrey 50%);
+	background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $lightSectionGrey ));
+	background-image: -webkit-linear-gradient(left, $mainGreen 30%, $lightSectionGrey 50%);
+	background-image: linear-gradient(to right, $mainGreen 30%, $lightSectionGrey 50%);
 
-	-webkit-transition: background-position .3s linear, color .3s;
+	.dark & {
+		background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $darkSectionGrey ));
+		background-image: -webkit-linear-gradient(left, $mainGreen 30%, $darkSectionGrey 50%);
+		background-image: linear-gradient(to right, $mainGreen 30%, $darkSectionGrey 50%);
+	}
+
+	-webkit-transition: background-position .3s linear;
 	-webkit-transition-delay: .1s;
 
 	-webkit-transform: translateZ(0);

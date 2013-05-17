@@ -222,9 +222,6 @@
 						cityId: window.wgCityId
 					},
 					toc: toc.get()
-				},
-				function(){
-					html.className += ' anim-skin';
 				}
 			);
 		});
