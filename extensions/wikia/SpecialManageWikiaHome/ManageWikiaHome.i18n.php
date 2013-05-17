@@ -113,6 +113,10 @@ $messages['qqq'] = array(
 	'manage-wikia-home-wiki-filter' => 'A label on a submitting form button; the form is filtering list of wikis in visualization',
 	'manage-wikia-home-wiki-filter-reset' => 'A label on a reseting form button, which reset all filters',
 
+	'manage-wikia-home-wiki-vertical-gaming' => 'Name of \'gaming\' vertical',
+	'manage-wikia-home-wiki-vertical-entertainment' => 'Name of \'entertainment\' vertical',
+	'manage-wikia-home-wiki-vertical-lifestyle' => 'Name of \'lifestyle\' vertical',
+
 	'manage-wikia-home-wiki-list-id' => 'Table column header which describes column containing wiki Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Table column header which describes column containing wiki vertical name',
 	'manage-wikia-home-wiki-list-headline' => 'Table column header which describes column containing wiki name ',
@@ -128,6 +132,8 @@ $messages['qqq'] = array(
 	'manage-wikia-home-wiki-list-promoted-yes' => '\'Yes\' in column Promoted on table; tells about wiki status that it IS promoted in wikis visualization on corporate main pages',
 	'manage-wikia-home-wiki-list-official-no' => '\'No\' in column Official on table; tells about wiki status that it\'s NOT official in wikis visualization on corporate main pages',
 	'manage-wikia-home-wiki-list-official-yes' => '\'Yes\' in column Official on table; tells about wiki status that it IS official in wikis visualization on corporate main pages',
+	'manage-wikia-home-wiki-list-all-collections' => 'Label on filtering select field to show all wikis (not only belonged to collections)',
+	'manage-wikia-home-wiki-list-all-verticals' => 'Label on filtering select field to show wikis for all verticals',
 
 	'manage-wikia-home-modal-title' => 'blocking/unblocking/promoting/demoting modal title',
 	'manage-wikia-home-modal-title-collection' => 'add/remove wiki in collections modal title',
