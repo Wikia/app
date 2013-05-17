@@ -940,6 +940,126 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::searchAsApi
+	 */
+	public function testSearchAsApiWithMetadata() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'search', 'getConfig' ) )
+		                   ->getMockForAbstractClass();
+		
+		$mockResultSet = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'toArray' ) )
+		                      ->getMock();
+		
+		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ 'getNumPages', 'getPage', 'getStart', 'getLimit', 'getResultsFound' ] )
+		                   ->getMock();
+		
+		$expectedFields = [ 'id', 'title' ];
+		
+		$results = array( array( 'id' => '123_234', 'title' => 'foo' ) );
+		
+		$mockSelect
+		    ->expects( $this->any() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'search' )
+		    ->will   ( $this->returnValue( $mockResultSet ) )
+		;
+		$mockResultSet
+		    ->expects( $this->once() )
+		    ->method ( 'toArray' )
+		    ->with   ( $expectedFields )
+		    ->will   ( $this->returnValue( $results ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getResultsFound' )
+		    ->will   ( $this->returnValue( 200 ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getPage' )
+		    ->will   ( $this->returnValue( 1 ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getNumPages' )
+		    ->will   ( $this->returnValue( 10 ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getLimit' )
+		    ->will   ( $this->returnValue( 20 ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getStart' )
+		    ->will   ( $this->returnValue( 0 ) )
+		;
+		$this->assertEquals(
+				[ 'total' => 200, 'batches' => 10, 'currentBatch' => 1, 'next' => 20, 'items' => $results ],
+				$mockSelect->searchAsApi( $expectedFields, true )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::searchAsApi
+	 */
+	public function testSearchAsApiWithMetadataNoResults() {
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'search', 'getConfig' ) )
+		                   ->getMockForAbstractClass();
+		
+		$mockResultSet = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'toArray' ) )
+		                      ->getMock();
+		
+		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ 'getNumPages', 'getPage', 'getStart', 'getLimit', 'getResultsFound' ] )
+		                   ->getMock();
+		
+		$expectedFields = [ 'id', 'title' ];
+		
+		$results = array();
+		
+		$mockSelect
+		    ->expects( $this->any() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'search' )
+		    ->will   ( $this->returnValue( $mockResultSet ) )
+		;
+		$mockResultSet
+		    ->expects( $this->once() )
+		    ->method ( 'toArray' )
+		    ->with   ( $expectedFields )
+		    ->will   ( $this->returnValue( $results ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getResultsFound' )
+		    ->will   ( $this->returnValue( 0 ) )
+		;
+		$this->assertEquals(
+				[ 'total' => 0, 'batches' => 0, 'currentBatch' => 0, 'next' => 0, 'items' => $results ],
+				$mockSelect->searchAsApi( $expectedFields, true )
+		);
+	}
+	
+	/**
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery
 	 */
 	public function testGetFormulatedQuery() {
