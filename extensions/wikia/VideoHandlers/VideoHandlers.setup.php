@@ -228,6 +228,8 @@ $app->registerClass('AnyclipFeedIngester', $dir . '/feedingesters/AnyclipFeedIng
 $app->registerClass('OoyalaFeedIngester', $dir . '/feedingesters/OoyalaFeedIngester.class.php');
 $app->registerClass('IvaFeedIngester', $dir . '/feedingesters/IvaFeedIngester.class.php');
 
+$app->registerClass( 'OoyalaAsset', $dir . '/feedingesters/OoyalaAsset.class.php' );
+
 $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',
 	5 => 'Youtube',
