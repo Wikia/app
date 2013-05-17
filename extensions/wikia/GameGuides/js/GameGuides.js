@@ -152,7 +152,7 @@
 	//Light/Dark skin handling
 	function Skin(){
 		this.toggleMode = function(type){
-			return toggle('dark', 'light', type);
+			return toggle('light', 'dark', type);
 		};
 	}
 
