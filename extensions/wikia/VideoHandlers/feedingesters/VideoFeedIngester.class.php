@@ -90,6 +90,7 @@ abstract class VideoFeedIngester {
 		$this->filterKeywords( $data['tags'] );
 
 		$debug = !empty($params['debug']);
+		$remoteAsset = !empty( $params['remoteAsset'] );
 		$ignoreRecent = !empty($params['ignorerecent']) ? $params['ignorerecent'] : 0;
 		if($debug) {
 			print "data after initial processing: \n";
@@ -142,6 +143,13 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
+		// create remote asset (ooyala)
+		if ( $remoteAsset ) {
+			$result = $this->createRemoteAsset( $id, $name, $metadata, $debug );
+			wfProfileOut( __METHOD__ );
+			return $result;
+		}
+
 		// prepare wiki categories string (eg [[Category:MyCategory]] )
 		$categories = $this->generateCategories($data, $addlCategories);
 		$categories[] = wfMsgForContent( 'videohandler-category' );
@@ -182,8 +190,7 @@ abstract class VideoFeedIngester {
 
 			wfProfileOut( __METHOD__ );
 			return 1;
-		}
-		else {
+		} else {
 			if(!empty($ignoreRecent) && !is_null($previousFile) ) {
 				$revId = $previousFile->getLatestRevID();
 				$revision = Revision::newFromId( $revId );
@@ -208,6 +215,64 @@ abstract class VideoFeedIngester {
 		}
 		wfProfileOut( __METHOD__ );
 		return 0;
+	}
+
+	/**
+	 * create remote asset
+	 * @param string $id
+	 * @param string $name
+	 * @param array $metadata
+	 * @param boolean $debug
+	 * @return integer
+	 */
+	protected function createRemoteAsset( $id, $name, $metadata, $debug ) {
+		wfProfileIn( __METHOD__ );
+
+		$assetData = $this->generateRemoteAssetData( $name, $metadata );
+		if ( empty( $assetData['url']['flash'] ) ) {
+			echo "Error when generating remote asset data: empty asset url.\n";
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
+		if ( $debug ) {
+			print "Ready to create remote asset\n";
+			print "id:          $id\n";
+			print "name:        $name\n";
+			print "assetdata:\n";
+			foreach( explode("\n", var_export( $assetData, TRUE ) ) as $line ) {
+				print ":: $line\n";
+			}
+		} else {
+			$ooyalaAsset = new OoyalaAsset();
+			$isExist = $ooyalaAsset->isExist( $assetData['name'], $assetData['provider'] );
+			if ( $isExist ) {
+				print( "Skip (Uploading Asset): $name ($assetData[provider]): Video already exists.\n" );
+				wfProfileOut( __METHOD__ );
+				return 0;
+			}
+
+			$result = $ooyalaAsset->addRemoteAsset( $assetData );
+			if ( !$result ) {
+				wfProfileOut( __METHOD__ );
+				return 0;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return 1;
+	}
+
+	/**
+	 * generate remote asset data
+	 * @param string $name
+	 * @param array $data
+	 * @return array $data
+	 */
+	protected function generateRemoteAssetData( $name, $data ) {
+		$data['name'] = $name;
+
+		return $data;
 	}
 
 	protected function getUniqueName( $name ) {
@@ -432,7 +497,7 @@ abstract class VideoFeedIngester {
 				$old = explode( ',', $keywords );
 				foreach( $old as $word ) {
 					if ( preg_match($regex, str_replace('-', ' ', $word)) ) {
-						echo "Skipping blacklisted keyword $word.\n";
+						echo "Skip: blacklisted keyword $word.\n";
 						continue;
 					}
 
