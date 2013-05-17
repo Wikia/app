@@ -103,7 +103,7 @@ class WikiaApiImageServing extends ApiBase {
 	/**
 	 * Examples
 	 */
-	protected function getQueryExamples() {
+	public function getExamples() {
 		return array (
 			'api.php?action=imageserving&wisTitle=Cake',
 			'api.php?action=imageserving&wisTitle=LyricWiki:Community_Portal',
