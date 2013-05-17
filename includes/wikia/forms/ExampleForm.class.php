@@ -1,5 +1,9 @@
 <?
 class ExampleForm extends BaseForm {
+	protected $action = 'test/action.php';
+	protected $id = 'testId';
+	protected $method = 'post';
+
 	public function __construct() {
 		parent::__construct();
 

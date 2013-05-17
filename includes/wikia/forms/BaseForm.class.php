@@ -10,6 +10,21 @@ abstract class BaseForm {
 	protected $templateEngine;
 
 	/**
+	 * @var string form method
+	 */
+	protected $method = 'get';
+
+	/**
+	 * @var string form action
+	 */
+	protected $action = '';
+
+	/**
+	 * @var string form id
+	 */
+	protected $id;
+
+	/**
 	 * Add field to form
 	 *
 	 * @param string $fieldName
@@ -109,7 +124,11 @@ abstract class BaseForm {
 	 * Render opening tag for form
 	 */
 	public function renderStart() {
-		return $this->renderView('start');
+		return $this->renderView('start', [
+			'method' => $this->getMethod(),
+			'action' => $this->getAction(),
+			'id' => $this->getId()
+		]);
 	}
 
 	/**
@@ -134,10 +153,26 @@ abstract class BaseForm {
 		}
 	}
 
-	protected function renderView($name) {
+	protected function renderView($name, $data = []) {
+		$data['form'] = $this;
 		return $this->templateEngine
-			->setData(['form' => $this])
+			->setData($data)
 			->render( dirname(__FILE__) . '/templates/' . __CLASS__ . '_' . $name . '.php');
 	}
 
+	protected function getMethod() {
+		return $this->method;
+	}
+
+	protected function getAction() {
+		return $this->action;
+	}
+
+	protected function getId() {
+		if (!empty($this->id)) {
+			return $this->id;
+		} else {
+			return get_class($this);
+		}
+	}
 }

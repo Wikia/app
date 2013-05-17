@@ -1,2 +1,1 @@
-<form>
-<? // TODO add form attribs?>
+<form id="<?=$id?>" method="<?=$method?>" action="<?=$action?>">
