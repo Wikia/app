@@ -13,10 +13,12 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
+		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/ContentHeaderSort.scss' );
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/css/LicensedVideoSwap.scss' );
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/LicensedVideoSwap.js' );
 		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' );
 		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Dropdown.js' );
+
 	}
 
 	/**
@@ -46,10 +48,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->pages = 10;
 
 		// sort options
-		$this->selectedSort = $selectedSort;
 		$videoHelper = new LicensedVideoSwapHelper();
-		$this->sortOptions = $videoHelper->getSortOption();
-		$this->sortMsg = "Latest"; // TODO - get this dynamically
+		$this->contentHeaderSortOptions = array(
+			'label' =>  wfMessage('specialvideos-sort-by')->text(), // TODO: abstract this message
+			'selectedSort' => $selectedSort,
+			'sortOptions' => $videoHelper->getSortOption( $selectedSort ),
+			'sortMsg' => $this->wf->Message( 'specialvideos-sort-latest' ), // TODO - get this dynamically
+			'containerId' => 'sorting-dropdown',
+		);
 	}
 
 	/**
