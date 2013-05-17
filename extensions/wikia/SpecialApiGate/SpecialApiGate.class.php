@@ -10,7 +10,7 @@
  * provides basic charts of request rates for each key.  This special page is just meant as a
  * MediaWiki wrapper for the ApiGate functionality.
  *
- * In addition to this extension, the /lib/ApiGate/ApiGate_Config.php file is used as a bridge
+ * In addition to this extension, the /lib/vendor/ApiGate/ApiGate_Config.php file is used as a bridge
  * to let ApiGate work with our MediaWiki deployment.
  *
  * WARNING: Since it was much faster, we currently depend on the charting in SponsorshipDashboard
