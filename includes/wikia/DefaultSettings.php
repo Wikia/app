@@ -1130,7 +1130,7 @@ $wgEnableAdEngineExt = true;
 
 /**
  * @name $wgAdVideoTargeting
- * Enables ad engine
+ * Enables page-level video ad targeting
  */
 $wgAdVideoTargeting = false;
 
