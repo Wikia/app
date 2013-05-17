@@ -1,1 +1,0 @@
-<?= $app->getView('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox", 'title' => wfMsg('hub-blog-header', $title))); ?>

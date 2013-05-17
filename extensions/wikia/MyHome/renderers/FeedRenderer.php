@@ -142,28 +142,21 @@ class FeedRenderer {
 	public static function getActionLabel($row) {
 		wfProfileIn(__METHOD__);
 
-		switch($row['type']) {
+		switch( $row['type'] ) {
 			case 'new':
-				switch($row['ns']) {
-					case NS_BLOG_ARTICLE:
-						$msgType = 'posted';
-						break;
+				$ns = $row['ns'];
 
-					case NS_BLOG_ARTICLE_TALK:
-						$msgType = 'comment';
-						break;
-
-					// content NS
-					default:
-						if ( defined( 'NS_USER_WALL_MESSAGE' ) && $row['ns'] == NS_USER_WALL_MESSAGE ){
-							$msgType = 'comment';
-							break;
-						}
-						if (!empty($row['articleComment'])) {
-							$msgType = 'article-comment-created';
-						} else {
-							$msgType = 'created';
-						}
+				if (
+					( defined( 'NS_USER_WALL_MESSAGE' ) && $ns == NS_USER_WALL_MESSAGE ) ||
+					( defined( 'NS_BLOG_ARTICLE_TALK' ) && $ns == NS_BLOG_ARTICLE_TALK )
+				){
+					$msgType = 'comment';
+				} else if ( defined( 'NS_BLOG_ARTICLE' ) && $ns == NS_BLOG_ARTICLE ){
+					$msgType = 'posted';
+				} else if ( !empty( $row['articleComment'] ) ) {
+					$msgType = 'article-comment-created';
+				} else {
+					$msgType = 'created';
 				}
 				break;
 

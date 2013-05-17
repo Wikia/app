@@ -32,7 +32,7 @@ class WikiaMobileCategoryService extends WikiaService {
 	}
 
 	public function categoryExhibition() {
-		$this->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		/**
 		 * @var $categoryPage CategoryPage
@@ -46,23 +46,23 @@ class WikiaMobileCategoryService extends WikiaService {
 			$items = $this->model->getExhibitionItems( $title );
 			
 			if ( empty( $items ) ) {
-				$this->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
 			$this->response->setVal( 'items', $items );
 
 		} else {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 
 	public function alphabeticalList() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		/**
 		 * @var $categoryPage CategoryPage
@@ -81,11 +81,11 @@ class WikiaMobileCategoryService extends WikiaService {
 			$this->response->setVal( 'requestedIndex', $this->wg->Request->getText( 'index', null ) );
 			$this->response->setVal( 'requestedBatch', $this->wg->Request->getInt( 'page', 1 ) );
 		} else {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

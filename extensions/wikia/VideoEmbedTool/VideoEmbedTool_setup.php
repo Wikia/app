@@ -62,6 +62,7 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
 }
 
 $wgExtensionMessagesFiles['WikiaVideoAdd'] = dirname(__FILE__) . '/WikiaVideoAdd.i18n.php';
+$wgExtensionMessagesFiles['WikiaVideoAddAliases'] = dirname(__FILE__) . '/WikiaVideoAdd.alias.php';
 extAddSpecialPage( dirname(__FILE__) . '/WikiaVideoAdd_body.php', 'WikiaVideoAdd', 'WikiaVideoAddForm' );
 
 $wgExtensionMessagesFiles['VideoEmbedTool'] = $dir.'/VideoEmbedTool.i18n.php';

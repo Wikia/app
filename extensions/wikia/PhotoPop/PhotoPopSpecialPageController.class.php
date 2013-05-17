@@ -33,21 +33,21 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 	}
 
 	private function getData($category){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( empty( $category ) ) {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new WikiaException( 'Missing parameter: category' );
 		}
 
 		$result = $this->model->getGameContents( $category, 480, 320 );
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $result;
 	}
 
 	public function setup() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$category = trim( $this->request->getVal( 'category' ) );
 		$icon = trim( $this->request->getVal( 'icon' ) );
@@ -142,7 +142,7 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 		$this->response->setVal( 'images', $rounds);
 		$this->response->setVal( 'errors', $errors );
 		$this->response->setVal( 'message', $message );
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 }

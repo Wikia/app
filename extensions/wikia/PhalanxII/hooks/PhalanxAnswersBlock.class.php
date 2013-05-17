@@ -16,12 +16,12 @@ class PhalanxAnswersBlock extends WikiaObject {
 	}
 	
 	public function badWordsTest( $title ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = F::build('PhalanxContentModel', array( $title, $this->wg->LanguageCode ) );
 		$ret = $phalanxModel->match_question_title();
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 }

@@ -329,7 +329,7 @@ class CategoryExhibitionSection {
 		$imageUrl = $this->getImageFromPageId( $pageId );
 
 		if ( empty( $imageUrl ) ){
-			$snippetService = new ArticleService ( $pageId );
+			$snippetService = new ArticleService ( $oTitle );
 			$snippetText = $snippetService->getTextSnippet();
 		}
 

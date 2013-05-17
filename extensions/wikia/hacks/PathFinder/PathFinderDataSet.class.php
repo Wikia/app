@@ -28,14 +28,14 @@ class PathFinderDataSet extends WikiaObject{
 	
 	public function load() {
 		if ( !$this->isLoaded ) {
-			$this->app->wf->profileIn( __METHOD__ );
+			wfProfileIn( __METHOD__ );
 			
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 		}
 	}
 	
 	private function getFilePath(){
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$filePath = '';
 		$tokens = explode( '/', $this->name );
 		
@@ -43,14 +43,14 @@ class PathFinderDataSet extends WikiaObject{
 			$fileName = array_pop( $tokens );
 			
 			if ( file_exists( $fileName ) ) {
-				$this->app->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				return self::DATA_PATH . '/' . $fileName;
 			}
 		} else {
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new PathFinderDataSetInvalidName();
 		}
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 }
 

@@ -77,7 +77,7 @@ class LFEditCLI extends Maintenance {
 			$text = $page->getText();
 			$re = '/%s=([\'"])?((?(1).*?|[^\s>]+))(?(1)\1)/is';			
 		
-			$all_albums = array();
+			$old_album = "";
 			foreach ( array( 'artist', 'album', 'song', 'songwriter', 'publisher', 'lfid' ) as $tag ) {
 				$reTag = sprintf( $re, $tag  );
 				
@@ -87,8 +87,8 @@ class LFEditCLI extends Maintenance {
 				}
 				
 				if ( $tag == 'album' ) {
-					$all_albums[] = $tag_value;
-				}
+					$old_album = $tag_value;
+				} 					
 				
 				if ( $tag_value != $$tag ) {
 					$text = preg_replace( $reTag, sprintf( "%s=\"%s\"", $tag, $$tag ), $text, 1 );	
@@ -96,7 +96,7 @@ class LFEditCLI extends Maintenance {
 			}
 			
 			# check additionalAlbums
-			if ( !in_array( $album, $all_albums ) ) {
+			if ( $old_album != "" && $album != $old_album ) {
 				$albums = "";
 				$reTag = sprintf( $re, 'additionalAlbums'  );
 				if ( preg_match( $reTag, $text, $match ) ) {
@@ -106,9 +106,14 @@ class LFEditCLI extends Maintenance {
 				if ( !empty( $albums ) ) {
 					$additionalAlbums = explode(",", $albums);
 				}
-				if ( !in_array( $album, $additionalAlbums ) ) {
-					$additionalAlbums[] = $album;
-					$text = preg_replace( $re, "additionalAlbums=\"" . implode( ",", $additionalAlbums ) . "\"", $text, 1 );	
+				
+				if ( in_array( $album, $additionalAlbums ) ) {
+					 unset($additionalAlbums[array_search($album, $additionalAlbums)]);
+				}
+				
+				if ( !in_array( $old_album, $additionalAlbums ) ) {
+					$additionalAlbums[] = $old_album;
+					$text = preg_replace( $reTag, "additionalAlbums=\"" . implode( ",", $additionalAlbums ) . "\"", $text, 1 );	
 				}
 			}	
 		} else {
@@ -124,6 +129,11 @@ class LFEditCLI extends Maintenance {
 		$status = $page->doEdit( $text, '', ( $bot ? EDIT_FORCE_BOT : 0 ) | ( $noRC ? EDIT_SUPPRESS_RC : 0 ) );
 		if ( $status->isOK() ) {
 			$page_id = $page->getId();
+			if ( empty( $page_id ) ) {
+				if ( !empty( $status->value['revision'] ) ) {
+					$page_id = $status->value['revision']->getPage();
+				}
+			}			
 			if ( $page_id ) {
 				global $wgStatsDB;
 				$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );

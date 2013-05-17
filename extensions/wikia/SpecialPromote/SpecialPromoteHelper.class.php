@@ -249,7 +249,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function saveVisualizationData($data, $langCode) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$cityId = $this->wg->cityId;
 		$contentLang = $this->wg->contLang->getCode();
 		$files = array('additionalImages' => array());
@@ -324,7 +324,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		$this->wg->memc->set($helper->getMemcKey($cityId, $langCode),null);
 		$visualizationModel->regenerateBatches($visualizationModel->getTargetWikiId($langCode), $langCode);
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	protected function extractModifiedFiles($files) {

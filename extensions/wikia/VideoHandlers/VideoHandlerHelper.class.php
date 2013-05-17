@@ -13,7 +13,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return Status|false $status
 	 */
 	public function addCategoryVideos( $title, $user, $flags = EDIT_NEW ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( is_string($title) ) {
 			$title = Title::newFromText( $title, NS_FILE );
@@ -25,13 +25,13 @@ class VideoHandlerHelper extends WikiaModel {
 				$user = User::newFromId( $user );
 			}
 
-			$content = '[['.WikiaVideoPage::getVideosCategory().']]';
+			$content = '[['.WikiaFileHelper::getVideosCategory().']]';
 
 			$article = new Article( $title );
 			$status = $article->doEdit( $content, 'created video', $flags, false, $user );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $status;
 	}
@@ -59,7 +59,9 @@ class VideoHandlerHelper extends WikiaModel {
 	public function replaceDescriptionSection( $content, $descText = '' ) {
 		$headerText = $this->wf->Message( 'videohandler-description' );
 
-		$preText = preg_replace("/^==\s*$headerText\s*==\n*(.+)/sim", '', $content);
+		// Get any text before the first description header by deleting the first decription
+		// header and everything after it.
+		$preText = preg_replace("/^==\s*$headerText\s*==\n*(.*)/sim", '', $content);
 
 		// Grab everything after the description header
 		preg_match("/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches);
@@ -81,7 +83,13 @@ class VideoHandlerHelper extends WikiaModel {
 			$preText .= "\n";
 		}
 
-		return $preText."== $headerText ==\n".$descText.$postText;
+		// Don't include the description section if there's no description text
+		$descSection = '';
+		if (trim($descText) != '') {
+			$descSection = "== $headerText ==\n".$descText;
+		}
+
+		return $preText.$descSection.$postText;
 	}
 
 	/**

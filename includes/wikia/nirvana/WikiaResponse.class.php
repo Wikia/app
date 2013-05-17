@@ -473,7 +473,7 @@ class WikiaResponse {
 	 */
 	public function addAsset( $assetName, $local = false ){
 		$app = F::app();
-		$app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$type = false;
 
 		if ( $this->format == 'html' ) {
@@ -492,7 +492,7 @@ class WikiaResponse {
 			}
 		}
 
-		$app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function addModules( $modules ) {

@@ -7,7 +7,7 @@
  */
 class WikiaMobileSharingService extends WikiaService{
 	public function index(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		/**
 		 * @var $socialSharingService SocialSharingService
@@ -21,7 +21,7 @@ class WikiaMobileSharingService extends WikiaService{
 			'email'
 		) ) );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function button(){

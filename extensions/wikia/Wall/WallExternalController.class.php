@@ -39,6 +39,7 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
+		/** @var $mainWall WallMessage */
 		$mainWall = $wm->getWall();
 
 		if ( !$this->wg->User->isAllowed( 'wallmessagemove' ) ) {
@@ -49,12 +50,14 @@ class WallExternalController extends WikiaController {
 
 		$forum = new Forum();
 
-		$list = $forum->getList(DB_SLAVE, NS_WIKIA_FORUM_BOARD);
+		$list = $forum->getListTitles(DB_SLAVE, NS_WIKIA_FORUM_BOARD);
 
 		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
-		foreach ( $list as $value ) {
+		/** @var $title Title */
+		foreach ( $list as $title ) {
+			$value = $title->getArticleID();
 			if($mainWall->getId() != $value) {
-				$wall = Wall::newFromId($value);
+				$wall = Wall::newFromTitle($title);
 				$this->destinationBoards[$value] = array( 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) );
 			}
 		}
@@ -169,7 +172,7 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function postNewMessage() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$relatedTopics = $this->request->getVal('relatedTopics', array());
 
@@ -195,28 +198,29 @@ class WallExternalController extends WikiaController {
 
 		if( empty($body) ) {
 			$this->response->setVal('status', false);
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
+		$ns = $this->request->getVal( 'pagenamespace' );
 		$notifyEveryone = false;
-		if ($helper->isAllowedNotifyEveryone($this->wg->Title->getNamespace(), $this->wg->User)) {
-			$notifyEveryone = $this->request->getVal('notifyeveryone', false) == 1;
+		if ( $helper->isAllowedNotifyEveryone( $ns, $this->wg->User ) ) {
+			$notifyEveryone = $this->request->getVal( 'notifyeveryone', false ) == 1;
 		}
 
-		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace')), 'newFromText');
+		$title = F::build( 'Title', array( $this->request->getVal ('pagetitle' ), $ns ), 'newFromText' );
 		$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta, false, $relatedTopics, true, $notifyEveryone), 'buildNewMessageAndPost');
 
 		if( $wallMessage === false ) {
 			error_log('WALL_NOAC_ON_POST');
 			$this->response->setVal('status', false);
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
 		$wallMessage->load(true);
 		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'new' => true, 'comment' => $wallMessage ) ));
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	public function deleteMessage() {
@@ -507,7 +511,7 @@ class WallExternalController extends WikiaController {
 		$wallMessage->load();
 
 		$wallMessage->setMetaTitle($newtitle);
-		$text = $wallMessage->doSaveComment( $newbody, $this->wg->User );
+		$text = $wallMessage->doSaveComment( $newbody, $this->wg->User, '', false, true );
 
 		$this->response->setVal('isotime', wfTimestamp(TS_ISO_8601) );
 		$this->response->setVal('fulltime', $this->wg->Lang->timeanddate( wfTimestamp(TS_MW) ) );
@@ -549,7 +553,7 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
-		Wikia::log( 'Wall::replyToMessage for parent ' . $parentTitle->getFullUrl() . ' (parentId: ' . $parentId . ') ' . $debugParentDB );
+		Wikia::log( __METHOD__, false, 'Wall::replyToMessage for parent ' . $parentTitle->getFullUrl() . ' (parentId: ' . $parentId . ') ' . $debugParentDB, true );
 
 		/**
 		 * @var $wallMessage WallMessage

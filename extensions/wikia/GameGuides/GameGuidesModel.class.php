@@ -37,7 +37,7 @@ class GameGuidesModel{
 	 * @see wfPaginateArray
 	 */
 	public function getWikisList( $limit = null, $batch = 1 ){
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$cacheKey = $this->generateCacheKey( __METHOD__ );
 		$games = $this->loadFromCache( $cacheKey );
@@ -68,7 +68,7 @@ class GameGuidesModel{
 					);
 				}
 			} else {
-				$this->app->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				throw new WikiaException( 'WikiFactory variable \'' . self::WF_WIKI_RECOMMEND_VAR . '\' not found' );
 			}
 
@@ -77,7 +77,7 @@ class GameGuidesModel{
 
 		$ret = $this->app->wf->paginateArray( $games, $limit, $batch );
 
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
@@ -92,7 +92,7 @@ class GameGuidesModel{
 	 * ** string icon the icon ID to use for this category
 	 */
 	public function getWikiContents(){
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$cacheKey = $this->generateCacheKey( __METHOD__ );
 		$ret = $this->loadFromCache( $cacheKey );
@@ -124,7 +124,7 @@ class GameGuidesModel{
 			$this->storeInCache($cacheKey , $ret);
 		}
 
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
@@ -142,7 +142,7 @@ class GameGuidesModel{
 	 * @see wfPaginateArray
 	 */
 	public function getCategoryContents( $categoryName, $limit = null, $batch = 1, $totalLimit = self::CATEGORY_RESULTS_LIMIT ) {
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$categoryName = trim( $categoryName );
 		$category = F::build( 'Category', array( $categoryName ), 'newFromName' );
@@ -169,13 +169,13 @@ class GameGuidesModel{
 				$this->storeInCache( $cacheKey , $contents );
 			}
 		} else {
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new WikiaException( "No data for '{$categoryName}'" );
 		}
 
 		$ret = $this->app->wf->paginateArray( $contents, $limit, $batch );
 
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
@@ -190,7 +190,7 @@ class GameGuidesModel{
 	 * @see WikiaSearch
 	 */
 	public function getSearchResults( $term, $totalLimit = self::SEARCH_RESULTS_LIMIT ){
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$term = trim( $term );
 		$ret = array();
@@ -208,14 +208,7 @@ class GameGuidesModel{
 
 			if ( empty( $ret ) ) {
 				
-				$wikiaSearchConfig = new Wikia\Search\Config();
-				$wikiaSearchConfig	->setNamespaces	( array( NS_MAIN ) )
-									->setQuery		( $term )
-									->setLength		( $totalLimit );
-
-				$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
-				$wikiaSearch = (new Wikia\Search\QueryService\Factory)->get( $container );
-				$resultSet = $wikiaSearch->search( $wikiaSearchConfig );
+				$resultSet = $this->getResultSet( $term, $totalLimit );
 
 				$ret['textResults'] = array();
 				$count = 0;
@@ -243,6 +236,21 @@ class GameGuidesModel{
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+	
+	/**
+	 * Perform a search query against NS_MAIN given a term and total limit
+	 * @param string $term
+	 * @param int $limit
+	 */
+	public function getResultSet( $term, $totalLimit ) {
+		$wikiaSearchConfig = new Wikia\Search\Config();
+		$wikiaSearchConfig	->setNamespaces	( array( NS_MAIN ) )
+							->setQuery		( $term )
+							->setLimit		( $totalLimit );
+
+		$wikiaSearch = (new Wikia\Search\QueryService\Factory)->getFromConfig( $wikiaSearchConfig );
+		return $wikiaSearch->search( $wikiaSearchConfig );
 	}
 
 	private function generateCacheKey( $token ){

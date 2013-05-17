@@ -18,9 +18,9 @@ class TopListParser {
 	static public function onParserFirstCallInit( &$parser ) {
 		$app = F::app();
 
-		$app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$app->wg->Parser->setHook( TOPLIST_TAG, array( __CLASS__, "parseTag" ) );
-		$app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

@@ -469,7 +469,7 @@ function formallyAddClient(client, socket, connectedUser){
 			logger.debug(new Date().getTime());
 			broadcastToRoom(client, socket, {
 				event: 'join',
-				joinData: connectedUser.xport()
+				data: connectedUser.xport()
 			});
 			broadcastUserListToMediaWiki(client, false);
 			//Conenction complted
@@ -521,9 +521,12 @@ function broadcastDisconnectionInfo(client, socket){
 
 	broadcastUserListToMediaWiki(client, true);
 
+	var partEvent = new models.PartEvent({
+		name: client.myUser.get('name')
+	});
 	broadcastToRoom(client, socket, {
         	event: 'part',
-        	data: client.myUser.xport()
+        	data: partEvent.xport()
 	});
 } // end broadcastDisconnectionInfo()
 
@@ -578,7 +581,7 @@ function chatMessage(client, socket, msg){
 
 function logout(client, socket, msg) {
 	var logoutEvent = new models.LogoutEvent({
-		leavingUserName: client.myUser.get('name')
+		name: client.myUser.get('name')
 	});
 	monitoring.incrEventCounter('logouts');
 	tracker.trackEvent(client, 'logout');

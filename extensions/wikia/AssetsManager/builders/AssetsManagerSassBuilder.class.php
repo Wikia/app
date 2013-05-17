@@ -39,17 +39,26 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			$processingTimeStart = microtime( true );
 		}
 
-		$sassService = SassService::newFromFile("{$IP}/{$this->mOid}");
-		$sassService->setSassVariables($this->mParams);
-		$sassService->setFilters(
-			SassService::FILTER_IMPORT_CSS | SassService::FILTER_CDN_REWRITE
-			| SassService::FILTER_BASE64 | SassService::FILTER_JANUS
-		);
-
-		$cacheId = __CLASS__ . "-minified-".$sassService->getCacheKey();
-
 		$memc = F::App()->wg->Memc;
-		$cachedContent = $memc->get( $cacheId );
+
+		$cachedContent = null;
+		$this->mContent = null;
+		$sassService = null;
+
+		try {
+			$sassService = SassService::newFromFile("{$IP}/{$this->mOid}");
+			$sassService->setSassVariables($this->mParams);
+			$sassService->setFilters(
+				SassService::FILTER_IMPORT_CSS | SassService::FILTER_CDN_REWRITE
+				| SassService::FILTER_BASE64 | SassService::FILTER_JANUS
+			);
+
+			$cacheId = __CLASS__ . "-minified-".$sassService->getCacheKey();
+			$cachedContent = $memc->get( $cacheId );
+		} catch (Exception $e) {
+			$cachedContent = "/* {$e->getMessage()} */";
+		}
+
 
 		if ( $cachedContent ) {
 			$this->mContent = $cachedContent;
@@ -62,7 +71,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			parent::getContent( $processingTimeStart );
 
 			// Prevent cache poisoning if we are serving sass from preview server
-			if ( getHostPrefix() == null && !$this->mForceProfile ) {
+			if ( !empty($cacheId) && getHostPrefix() == null && !$this->mForceProfile ) {
 				$memc->set( $cacheId, $this->mContent );
 			}
 		}

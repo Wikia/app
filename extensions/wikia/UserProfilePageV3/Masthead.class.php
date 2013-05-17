@@ -536,6 +536,7 @@ class Masthead {
 			wfProfileOut( __METHOD__ );
 			return UPLOAD_ERR_CANT_WRITE;
 		}
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -685,6 +686,7 @@ class Masthead {
 
 			$errorNo = UPLOAD_ERR_OK;
 		}
+		wfProfileOut( __METHOD__ );
 
 		return $errorNo;
 	} // end postProcessImageInternal()

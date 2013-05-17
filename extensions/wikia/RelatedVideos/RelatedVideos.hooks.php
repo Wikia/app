@@ -128,7 +128,7 @@ class RelatedVideosHookHandler {
 
 	public function onGetRailModuleList(&$modules) {
 		$app = F::App();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$title = $app->wg->Title;
 		$namespace = $title->getNamespace();
@@ -140,7 +140,7 @@ class RelatedVideosHookHandler {
 			$modules[$pos] = array('RelatedVideosRail', 'index', null);
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 

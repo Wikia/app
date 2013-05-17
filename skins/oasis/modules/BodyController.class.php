@@ -44,11 +44,6 @@ class BodyController extends WikiaController {
 		return defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING;
 	}
 
-	public static function isHubPage() {
-		global $wgArticle;
-		return (get_class ($wgArticle) == "AutoHubsPagesArticle");
-	}
-
 	/**
 	 * Returns if current layout should be applying gridlayout
 	 */
@@ -120,9 +115,7 @@ class BodyController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
-			$wgEnableCorporatePageExt,
-			$wgEnableWikiAnswers,
-			$wgSalesTitles, $wgEnableHuluVideoPanel,
+			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
 			$wgEnableGamingCalendarExt, $wgEnableWallEngine, $wgRequest,
 			$wgEnableForumExt, $wgIsForum;
 
@@ -162,12 +155,6 @@ class BodyController extends WikiaController {
 							$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 						}
 					}
-				} elseif ($wgEnableCorporatePageExt) {
-					$railModuleList = array(
-						1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'))
-					);
-					wfProfileOut(__METHOD__);
-					return $railModuleList;
 				}
 			} else if ($wgTitle->isSpecial('Leaderboard')) {
 				$railModuleList = array (
@@ -256,29 +243,6 @@ class BodyController extends WikiaController {
 			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
 		}
 
-		// Special case rail modules for Corporate Skin
-		if ($wgEnableCorporatePageExt) {
-			$railModuleList = array (
-				1500 => array('Search', 'Index', null),
-			);
-			// No rail on main page or edit page for corporate skin
-			if ( BodyController::isEditPage() || WikiaPageType::isMainPage() ) {
-				$railModuleList = array();
-			}
-			else if (self::isHubPage()) {
-				$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
-				$railModuleList[1480] = array('CorporateSite', 'HotSpots', null);
-			//	$railModuleList[1470] = array('CorporateSite', 'PopularHubPosts', null);  // temp disabled - data not updating
-				$railModuleList[1460] = array('CorporateSite', 'TopHubUsers', null);
-			} else if ( is_array( $wgSalesTitles ) && in_array( $wgTitle->getText(), $wgSalesTitles ) ){
-				$railModuleList[1470] = array('CorporateSite', 'SalesSupport', null);
-			} else { // content pages
-				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
-			}
-			wfProfileOut(__METHOD__);
-			return $railModuleList;
-		}
-
 		//  No rail on main page or edit page for oasis skin
 		// except &action=history of wall
 		if( !empty($wgEnableWallEngine) ) {
@@ -332,7 +296,7 @@ class BodyController extends WikiaController {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgUser, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableTopButton, $wgTopButtonPosition, $wgEnableWikiaHomePageExt;
+		global $wgOut, $wgTitle, $wgEnableInfoBoxTest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableWikiaHomePageExt;
 
 		wfProfileIn(__METHOD__);
 
@@ -394,21 +358,6 @@ class BodyController extends WikiaController {
 				$this->wg->SuppressPageHeader = true;
 				$this->wg->SuppressWikiHeader = true;
 				$this->wg->SuppressSlider = true;
-			} else if ($wgEnableCorporatePageExt) {
-				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
-
-				$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("extensions/wikia/CorporatePage/css/CorporateSite.scss"));
-
-				global $wgExtensionsPath, $wgJsMimeType;
-				$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/CorporatePage/js/CorporateSlider.js\" type=\"{$wgJsMimeType}\"></script>");
-
-				// $this->wgSuppressFooter = true;
-				$this->wgSuppressArticleCategories = true;
-				if (WikiaPageType::isMainPage()) {
-					$this->wg->SuppressPageHeader = true;
-				} else {
-					$this->headerModuleAction = 'Corporate';
-				}
 			}
 		}
 
@@ -464,7 +413,7 @@ class BodyController extends WikiaController {
 			$this->headerModuleName = null;
 			$this->wgSuppressAds = true;
 			$this->displayAdminDashboard = true;
-			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != Title::newFromText("AdminDashboard", NS_SPECIAL)->getText());
+			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
 		} else {
 			$this->displayAdminDashboard = false;
 			$this->displayAdminDashboardChromedArticle = false;

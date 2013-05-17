@@ -1,6 +1,6 @@
 <?= $table ?>
 
-<? if ( isset( editUrl ) ): ?>
+<? if ( isset( $editUrl ) ): ?>
 <a href="<?= htmlspecialchars($editUrl) ?>" class="modify"><?= wfMsg('phalanx-link-modify') ?></a>
 <? endif ?>
 

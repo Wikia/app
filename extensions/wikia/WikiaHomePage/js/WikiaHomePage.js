@@ -4,9 +4,37 @@ var WikiaHomePageRemix = function (params) {
 	this.WIKISETSTACKOFFSET = 3;
 	this.NUMBEROFBATCHESTODOWNLOAD = 5;
 
+	this.COLLECTIONS_LS_KEY = 'WHP_collections';
+	this.SPONSOR_HERO_IMG_TIMEOUT = 3000;
+	this.SPONSOR_HERO_IMG_CONTAINER_ID = 'WikiaHomePageHeroImage';
+	this.SPONSOR_HERO_IMG_FADE_OUT_TIME = 800;
+
 	this.wikiSetStack = [];
 	this.wikiSetStackIndex = 0;
+
+	var collections = window.wgCollectionsBatches || [];
+	this.collectionsWikisStack = collections;
+	this.remixesWhenShowCollection = [0, 3, 5];
 	this.heroImageDisplayed = false;
+	this.heroImage = null;
+	
+	function retriveHeroImageSrc() {
+		var collectionsKeys = Object.keys(collections) || [];
+		var firstCollection = collections[collectionsKeys[0]] || [];
+		
+		if( typeof(firstCollection['sponsor_hero_image']) !== 'undefined' && typeof(firstCollection['sponsor_hero_image']['url']) !== 'undefined' ) {
+			return firstCollection['sponsor_hero_image']['url'];
+		}
+		
+		return null;
+	}
+	
+	this.heroImageSrc = retriveHeroImageSrc();
+	if( this.heroImageSrc !== null ) {
+		$().log('Preloading hero image...');
+		this.heroImage = new Image();
+		this.heroImage.src = this.heroImageSrc;
+	}
 };
 
 function WikiPreview(el) {
@@ -140,13 +168,8 @@ WikiPreview.prototype = {
 };
 
 WikiaHomePageRemix.prototype = {
-	remixesWhenShowCollection: [0, 3, 5],
-	COLLECTIONS_LS_KEY: 'WHP_collections',
-	SPONSOR_HERO_IMG_TIMEOUT: 2000,
-	SPONSOR_HERO_IMG_CONTAINER_ID: 'WikiaHomePageHeroImage',
 	init: function () {
 		this.wikiSetStack = window.wgInitialWikiBatchesForVisualization;
-		this.collectionsWikisStack = window.wgCollectionsBatches || [];
 
 		this.statsContainer = $('#WikiaHomePageStats');
 		this.initCollectionRemixVariables();
@@ -516,17 +539,15 @@ WikiaHomePageRemix.prototype = {
 	createHeroImageContainer: function() {
 		var imgData = this.getFirstCollection()['sponsor_hero_image'];
 		
-		var img = $('<img />')
-			.attr('alt', imgData['title'])
-			.attr('witdh', imgData['width'])
-			.attr('witdh', imgData['height'])
-			.attr('src', imgData['url']);
+		if( this.heroImage !== null ) {
+			var img = $(this.heroImage)
+				.attr('alt', imgData['title'])
+				.attr('witdh', imgData['width'])
+				.attr('witdh', imgData['height']);
 
-		var container = $('<div />').attr('id', this.SPONSOR_HERO_IMG_CONTAINER_ID);
-
-		$(img).bind('load', function() {
+			var container = $('<div />').attr('id', this.SPONSOR_HERO_IMG_CONTAINER_ID);
 			container.append(img);
-		});
+		}
 		
 		return container;
 	},
@@ -575,6 +596,6 @@ $(function () {
 
 $(window).load(function() {
 	setTimeout(function() {
-		$('#' + WikiaRemixInstance.SPONSOR_HERO_IMG_CONTAINER_ID).fadeOut();
+		$('#' + WikiaRemixInstance.SPONSOR_HERO_IMG_CONTAINER_ID).fadeOut(WikiaRemixInstance.SPONSOR_HERO_IMG_FADE_OUT_TIME);
 	}, WikiaRemixInstance.SPONSOR_HERO_IMG_TIMEOUT);
 });

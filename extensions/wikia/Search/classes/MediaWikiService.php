@@ -83,6 +83,7 @@ class MediaWikiService
 		try {
     		$this->getPageFromPageId( $pageId );
 		} catch ( \Exception $e ) {
+			wfProfileOut( __METHOD__ );
 			return $pageId;
 		}
 		
@@ -494,6 +495,15 @@ class MediaWikiService
 	}
 	
 	/**
+	 * Returns the article ID of a main page for the wiki ID passed.
+	 * @param int $wikiId
+	 * @return Ambigous <number, boolean>
+	 */
+	public function getMainPageIdForWikiId( $wikiId ) {
+		return $this->getMainPageTitleForWikiId( $wikiId )->getArticleId();
+	}
+	
+	/**
 	 * Returns text from the main page of a provided wiki.
 	 * @param int $wikiId
 	 * @return string
@@ -573,7 +583,7 @@ class MediaWikiService
 	 */
 	public function getVisualizationInfoForWikiId( $wikiId ) {
 		$visualization = (new \WikisModel )->getDetails( [ $wikiId ] );
-		if ( empty( $visualization ) ) return array();
+		$visualization = empty( $visualization ) ? [ [] ] : $visualization;
 		return array_shift( $visualization );
 	}
 
@@ -810,17 +820,18 @@ class MediaWikiService
 	 * Standard interface for this class's services to access a page
 	 * @param int $pageId
 	 * @return Article
-	 * @throws WikiaException
+	 * @throws Exception
 	 */
 	protected function getPageFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );
 		if ( isset( self::$pageIdsToArticles[$pageId] ) ) {
+			wfProfileOut( __METHOD__ );
 			return self::$pageIdsToArticles[$pageId];
 		}
-	    $page = \Article::newFromID( $pageId );
+		$page = \Article::newFromID( $pageId );
 
 		if( $page === null ) {
-			throw new \WikiaException( 'Invalid Article ID' );
+			throw new \Exception( 'Invalid Article ID' );
 		}
 		if( $page->isRedirect() ) {
 			self::$redirectArticles[$pageId] = $page;
@@ -851,11 +862,12 @@ class MediaWikiService
 				$main->load();
 				$wm = $main;
 			}
-			
+			wfProfileOut( __METHOD__ );
+
 			return (string) $wm->getMetaTitle();
 		}
 		wfProfileOut(__METHOD__);
-		return $title->getBaseText();
+		return $title->getFullText();
 	}
 	
 	/**

@@ -151,10 +151,12 @@ abstract class AbstractSelect
 	}
 	
 	/**
-	 * Introduced flexible in the actual query 
+	 * As an edismax query, gives the required query in the first clause of the conjunction, and then the parseable query stuff in the second clause.
 	 * @return string
 	 */
-	abstract protected function getFormulatedQuery();
+	protected function getFormulatedQuery() {
+		return sprintf( '+(%s) AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
+	}
 	
 	/**
 	 * Prepare boost queries based on the provided instance.
@@ -290,14 +292,12 @@ abstract class AbstractSelect
 		$this->spellcheckResult( $result );
 		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $this->config ) );
 		$results = $this->resultSetFactory->get( $container );
-		$resultCount = $results->getResultsFound();
 		
-		$this->config->setResults( $results )
-		             ->setResultsFound( $resultCount )
-		;
+		$this->config->setResults( $results );
+		
 		if( $this->config->getPage() == 1 ) {
 			\Track::event(
-					( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ),
+					( $results->getResultsFound() > 0 ? 'search_start' : 'search_start_nomatch' ),
 					array(
 							'sterm'	=> $this->config->getQuery()->getSanitizedQuery(), 
 							'stype'	=> $this->searchType 
@@ -313,17 +313,15 @@ abstract class AbstractSelect
 	abstract protected function getQueryFieldsString();
 	
 	/**
-	 * Creates a nested query using extended dismax.
-	 * @return Solarium_Query_Select
+	 * Registers our query as an extended dismax query.
+	 * @return AbstractSelect
 	 */
-	protected function getNestedQuery() {
-		$nestedQuery = $this->client->createSelect();
-		$nestedQuery->setQuery( $this->config->getQuery()->getSolrQuery() );
+	protected function registerDismax( Solarium_Query_Select $select ) {
 		
 		$queryFieldsString = $this->getQueryFieldsString();
-		$dismax = $nestedQuery->getDismax()
-		                      ->setQueryFields( $queryFieldsString )
-		                      ->setQueryParser( 'edismax' )
+		$dismax = $select->getDismax()
+		                 ->setQueryFields( $queryFieldsString )
+		                 ->setQueryParser( 'edismax' )
 		;
 		
 		if ( $this->service->isOnDbCluster() ) {
@@ -338,7 +336,7 @@ abstract class AbstractSelect
 			    $dismax->setBoostFunctions( implode(' ', $this->boostFunctions ) );
 			}
 		}
-		return $nestedQuery;
+		return $this;
 	}
 	
 	/**
@@ -347,6 +345,10 @@ abstract class AbstractSelect
 	 */
 	protected function getFilterQueryString()
 	{
-		return Utilities::valueForField( 'wid', $this->config->getCityId() );
+		$namespaces = [];
+		foreach ( $this->config->getNamespaces() as $ns ) {
+			$namespaces[] = Utilities::valueForField( 'ns', $ns );
+		}
+		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
 	}
 }

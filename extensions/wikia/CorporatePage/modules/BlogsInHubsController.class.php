@@ -2,8 +2,6 @@
 /**
  * Provides Blogs in hubs functionality
  *
- * Rendered in AutoHubsPagesArticle class
- *
  * @author macbre
  */
 

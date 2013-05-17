@@ -8,6 +8,8 @@ function efDefaultMessagesSetup() {
 	global $wgDBname, $wgHooks;
 	global $messageMemc, $wgUseDatabaseMessages, $wgMsgCacheExpiry;
 
+	wfProfileIn(__FUNCTION__);
+
 	if( empty( $wgDefaultMessagesDB ) ) {
 		$wgDefaultMessagesDB = 'messaging';
 	}
@@ -16,9 +18,12 @@ function efDefaultMessagesSetup() {
 		$wgHooks['MsgGetFromNamespaceAfter'][] = 'efGetDefaultMessage';
 		$wgDefaultMessagesCache = new DefaultMessagesCache( $messageMemc, $wgUseDatabaseMessages, $wgMsgCacheExpiry );
 	}
+
+	wfProfileOut(__FUNCTION__);
 }
 
 function efGetDefaultMessage( $lckey, $lang, &$message, $useDB ) {
+	wfProfileIn(__FUNCTION__);
 	if( $message === false ) {
 		global $wgDefaultMessagesCache, $wgContLang;
 		if( is_object( $wgDefaultMessagesCache ) ) {
@@ -32,5 +37,7 @@ function efGetDefaultMessage( $lckey, $lang, &$message, $useDB ) {
 			$message = $wgDefaultMessagesCache->get( $title, $lang, $useDB );
 		}
 	}
+	wfProfileOut(__FUNCTION__);
+
 	return true;
 }

@@ -32,7 +32,7 @@ class RelatedVideosController extends WikiaController {
 		$rvs = new RelatedVideosService();
 		$videos = $rvs->getRVforArticleId( $this->app->wg->title->getArticleId() );
 
-		$this->linkToSeeMore = !empty($this->app->wg->EnableSpecialVideosExt) ? SpecialPage::getTitleFor("Videos")->escapeLocalUrl() : Title::newFromText(WikiaVideoPage::getVideosCategory())->getFullUrl();
+		$this->linkToSeeMore = !empty($this->app->wg->EnableSpecialVideosExt) ? SpecialPage::getTitleFor("Videos")->escapeLocalUrl() : Title::newFromText(WikiaFileHelper::getVideosCategory())->getFullUrl();
 		$this->videos = $videos;
 		$this->totalVideos = $this->getTotalVideos();
 		$this->canAddVideo = $this->wg->User->isAllowed( 'relatedvideosedit' );

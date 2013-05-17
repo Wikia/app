@@ -67,7 +67,7 @@ class WikiaTask {
 		$total = $result->numRows();
 		if ( $total ) {
 			$botUser = User::newFromName( 'WikiaBot' );
-			$content = '[['.WikiaVideoPage::getVideosCategory().']]';
+			$content = '[['.WikiaFileHelper::getVideosCategory().']]';
 			while ( $result && $row = $db->fetchRow( $result ) ) {
 				echo "\tWiki $wiki_id: [$counter of $total] Title:".$row['video_title'];
 

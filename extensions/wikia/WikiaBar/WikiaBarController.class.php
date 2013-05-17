@@ -50,7 +50,7 @@ class WikiaBarController extends WikiaController {
 	 * @param Array $params request params
 	 */
 	public function anon() {
-		$this->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$params = $this->request->getParams();
 
@@ -68,7 +68,7 @@ class WikiaBarController extends WikiaController {
 		$this->barContents = $barContents['data'];
 		$this->status = $barContents['status'];
 
-		$this->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**

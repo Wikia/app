@@ -42,17 +42,18 @@ class CensusEnabledPagesUpdate {
                 wfProfileOut(__METHOD__);
         }
         
-        /**
+	/**
 	 * getUpdatedContent
-         * Retrieves new infobox code and replaces it in provided article text
-         * 
-         * @param String $currentText Current article text
-         * @param Title $oTitle Title of page being edited
-         * 
-         * @return String $newText Content with replaced infobox template
+	 * Retrieves new infobox code and replaces it in provided article text
+	 *
+	 * @param String $currentText Current article text
+	 * @param Title $oTitle Title of page being edited
+	 *
+	 * @return String $newText Content with replaced infobox template
 	 */
-        private function getUpdatedContent( $currentText, Title $oTitle ) {
-		
+	private function getUpdatedContent( $currentText, Title $oTitle ) {
+		wfProfileIn(__METHOD__);
+
 		$templateCode = null;
 		$type = null;
 		$templateParams = null;
@@ -78,7 +79,7 @@ class CensusEnabledPagesUpdate {
 		$oCensusRetrieval = new CensusDataRetrieval( $oTitle );
 		if ( !$oCensusRetrieval->fetchData() ) {
 			// no data in Census or something went wrong, quit
-                        wfProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return null;
 		}
 		
@@ -105,8 +106,8 @@ class CensusEnabledPagesUpdate {
 		}
 		
 		wfProfileOut(__METHOD__);
-                return $newText;
-        }
+		return $newText;
+	}
         
         /**
 	 * matchTemplate

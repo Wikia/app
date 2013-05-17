@@ -10,7 +10,7 @@ class ArticleComment {
 	const AVATAR_BIG_SIZE = 50;
 	const AVATAR_SMALL_SIZE = 30;
 
-	const CACHE_VERSION = 0;
+	const CACHE_VERSION = 1;
 	const AN_HOUR = 3600;
 
 	/**
@@ -236,23 +236,29 @@ class ArticleComment {
 		return $result;
 	}
 
-	public function parseText($rawtext) {
-		global $wgParser, $wgOut;
-		$this->mRawtext = self::removeMetadataTag($rawtext);
+	public function parseText( $rawtext ) {
 		global $wgEnableParserCache;
+
+		$this->mRawtext = self::removeMetadataTag( $rawtext );
+
 		$wgEnableParserCache = false;
 
-		$wgParser->ac_metadata = array();
+		$parser = ParserPool::get();
 
-		$head = $wgParser->parse( $rawtext, $this->mTitle, $wgOut->parserOptions());
+		$parser->ac_metadata = [];
+
+		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
+
 		$this->mText = $head->getText();
 		$this->mHeadItems = $head->getHeadItems();
 
-		if( isset($wgParser->ac_metadata) ) {
-			$this->mMetadata = $wgParser->ac_metadata;
+		if( isset( $parser->ac_metadata ) ) {
+			$this->mMetadata = $parser->ac_metadata;
 		} else {
-			$this->mMetadata = array();
+			$this->mMetadata = [];
 		}
+
+		ParserPool::release( $parser );
 
 		return $this->mText;
 	}
@@ -313,7 +319,7 @@ class ArticleComment {
 
 		$comment = false;
 
-		$canDelete = $wgUser->isAllowed( 'delete' );
+		$canDelete = $wgUser->isAllowed( 'commentdelete' );
 
 		if ( self::isBlog() ) {
 			$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
@@ -336,8 +342,9 @@ class ArticleComment {
 		$data = $wgMemc->get( $articleDataKey );
 
 		if ( !empty( $data ) ) {
-			wfProfileOut( __METHOD__ );
 			$data['timestamp'] = "<a href='" . $title->getFullUrl( array( 'permalink' => $data['id'] ) ) . '#comm-' . $data['id'] . "' class='permalink'>" . wfTimeFormatAgo($data['rawmwtimestamp']) . "</a>";
+
+			wfProfileOut( __METHOD__ );
 			return $data;
 		}
 
@@ -634,14 +641,16 @@ class ArticleComment {
 	 * doSaveComment -- save comment
 	 *
 	 * @access public
-	 *
+	 * @param $preserveMetadata: hack to fix bug 102384 (prevent metadata override when trying to modify one of metadata keys)
 	 * @return Array or false on error. - TODO: Document what the array contains.
 	 */
-	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '' ) {
+	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '', $preserveMetadata = false ) {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
+		$metadata = $this->mMetadata;
 
 		$this->load(true);
+
 		if ( $force || ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) ) {
 
 			if ( wfReadOnly() ) {
@@ -672,6 +681,9 @@ class ArticleComment {
 			 */
 
 			$article = new Article( $commentTitle, intval( $this->mLastRevId ) );
+			if ( $preserveMetadata ) {
+				$this->mMetadata = $metadata;
+			}
 			$retval = self::doSaveAsArticle($text, $article, $user, $this->mMetadata, $summary );
 
 			if(!empty($title)) {
@@ -810,8 +822,9 @@ class ArticleComment {
 
 
 		if( !($commentTitle instanceof Title) ) {
-			if ($parentId !== false) {
-				Wikia::log("ArticleComment::doPost (reply to " . $parentId . ") - failed to create commentTitle from " . $commentTitleText);
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId .
+					") - failed to create commentTitle from " . $commentTitleText, true );
 			}
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -826,8 +839,9 @@ class ArticleComment {
 
 		// add comment to database
 		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
-			if ($parentId !== false) {
-				Wikia::log("ArticleComment::doPost (reply to " . $parentId . ") - saved an article " . $commentTitleText);
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - saved an article " .
+					$commentTitleText . ', commentId is ' . $article->getID(), true );
 			}
 			$revId = $article->getRevIdFetched();
 			$data = array(
@@ -841,21 +855,24 @@ class ArticleComment {
 
 			$commentsIndex = new CommentsIndex( $data );
 			$commentsIndex->addToDatabase();
-			if ($parentId !== false) {
-				Wikia::log("ArticleComment::doPost (reply to " . $parentId . ") - added comments index to DB for " . $commentTitleText);
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - added comments index to DB for " .
+					$commentTitleText . ', commentId is ' . $article->getID(), true );
 			}
 
 			// set last child comment id
 			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
 
-			if ($parentId !== false) {
-				Wikia::log("ArticleComment::doPost (reply to " . $parentId . ") - updated parent for " . $commentTitleText);
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - updated parent for " .
+					$commentTitleText . ', commentId is ' . $article->getID(), true );
 			}
 
 			wfRunHooks( 'EditCommentsIndex', array($article->getTitle(), $commentsIndex) );
 		} else {
-			if ($parentId !== false) {
-				Wikia::log("ArticleComment::doPost (reply to " . $parentId . ") - failed to save reply article with title " . $commentTitleText);
+			if ( !empty($parentId) ) {
+				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId .
+					") - failed to save reply article with title " . $commentTitleText, true );
 			}
 		}
 

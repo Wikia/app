@@ -2040,14 +2040,17 @@ class WallHooksHelper {
 	static public function onHAWelcomeGetPrefixText( &$prefixedText, $title ) {
 
 		if ( $title->exists() && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
-			$threadTitle = Title::newFromText( $title->getArticleID(), NS_USER_WALL_MESSAGE );
 			$wallMessage = WallMessage::newFromId( $title->getArticleID() );
 			$wallMessageParent = $wallMessage->getTopParentObj();
-			if ( !empty( $wallMessageParent ) ) {
-				$wallMessage = $wallMessageParent;
+			if ( empty( $wallMessageParent ) ) {
+				$wallMessageParent = $wallMessage;
 			}
 			$wallMessage->load();
-			$prefixedText = $threadTitle->getPrefixedText() . '|' . $wallMessage->getMetaTitle();
+			$wallMessageParent->load();
+			$pageId = $wallMessage->getMessagePageId();
+			$postFix = $wallMessage->getPageUrlPostFix();
+			$threadTitle = Title::newFromText( $pageId, NS_USER_WALL_MESSAGE );
+			$prefixedText = $threadTitle->getPrefixedText() . ( empty( $postFix ) ? '' : "#{$postFix}" ) . '|' . $wallMessageParent->getMetaTitle();
 		}
 
 		return true;

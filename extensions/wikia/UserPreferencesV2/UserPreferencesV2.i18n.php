@@ -34,7 +34,7 @@ $messages['en'] = array(
 	'preferences-v2-redirect-wiki-activity' => 'Wiki Activity',
 	'preferences-v2-redirect-main-page' => 'Main Page',
 	'preferences-v2-redirect-recent-changes' => 'Recent Changes',
-	'preferences-v2-redirect-explanation' => 'This option allows you to go directly to Wiki Activity or Recent Changes the first time you access a wiki\'s main page.',
+	'preferences-v2-redirect-explanation' => 'The Landing page option allows you to choose where you go when you type $1 into your browser.',
 	'prefs-monobookv2' => 'Monobook',
 	'prefs-under-the-hood' => 'Under the Hood',
 	'prefs-recent-changesv2' => 'Recent changes, histories, and logs',
@@ -60,4 +60,8 @@ $messages['en'] = array(
 	'tog-editsectiononrightclick-v2' => 'Edit sections by right clicking on section titles',
 	'tog-editondblclick-v2' => 'Edit pages on double click',
 	'tog-hidefollowedpages-v2' => 'Hide my followed pages list from everybody',
+);
+
+$messages['qqq'] = array(
+	'preferences-v2-redirect-explanation' => '$1 is the URL of the site, e.g. www.wikia.com',
 );

@@ -25,7 +25,7 @@ class PathFinderService extends WikiaService {
 	 * @requestParam array $backendParams any extra configuration to pass to the backend storage
 	 */
 	public function extractOneDotData() {
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$strDate = $this->getVal( 'date' );
 		$backendParams = $this->getVal( 'backendParams', array() );
 		
@@ -33,7 +33,7 @@ class PathFinderService extends WikiaService {
 			$exception = new PathFinderTargetDateMissingException();
 			$this->logger->log( $exception->getMessage(), PathFinderLogger::LOG_TYPE_ERROR );
 			
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw $exception;
 		}
 		
@@ -78,12 +78,12 @@ class PathFinderService extends WikiaService {
 			$exception = new PathFinderNoDataException();
 			$this->logger->log( "Failure: {$exception->getMessage()}", PathFinderLogger::LOG_TYPE_ERROR );
 			
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			$this->model->cleanRawDataFolder();
 			throw $exception;
 		}
 		
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 }
 

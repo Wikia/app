@@ -305,7 +305,7 @@ class WikiaApp {
 	 * @return bool whether the skin is the one (or one of) specified
 	 */
 	public function checkSkin( $skinName, $skinObj = null ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$skinNames = null;
 		$res = null;
 
@@ -331,7 +331,7 @@ class WikiaApp {
 			$res = in_array( $skin->getSkinName(), $skinNames );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 

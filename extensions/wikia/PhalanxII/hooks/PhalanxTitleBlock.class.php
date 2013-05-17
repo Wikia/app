@@ -18,7 +18,7 @@ class PhalanxTitleBlock extends WikiaObject {
 	}
 
 	public function beforeMove( &$move ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		/* title object */
 		$title = Title::newFromURL( $move->newTitle );
@@ -26,12 +26,12 @@ class PhalanxTitleBlock extends WikiaObject {
 		/* check title */
 		$ret = $this->checkTitle( $title );
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
 	public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$title = $editPage->getTitle();
 		/* 
@@ -39,7 +39,7 @@ class PhalanxTitleBlock extends WikiaObject {
 		 * if the page is created = page does not exist (RT#61104)
 		 */
 		if ( $title->exists() ) {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 		
@@ -51,7 +51,7 @@ class PhalanxTitleBlock extends WikiaObject {
 	}
 
 	public function checkTitle( $title, $displayBlock = true ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = F::build('PhalanxContentModel', array( $title ) );
 		$ret = $phalanxModel->match_title();
@@ -60,12 +60,12 @@ class PhalanxTitleBlock extends WikiaObject {
 			$phalanxModel->displayBlock();
 		}
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 	
 	public function pageTitleFilter( $title, &$error_msg ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = F::build('PhalanxContentModel', array( $title ) );
 		$ret = $phalanxModel->match_title();
@@ -74,7 +74,7 @@ class PhalanxTitleBlock extends WikiaObject {
 			$error_msg = $phalanxModel->contentBlock();
 		}
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 }

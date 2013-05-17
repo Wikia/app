@@ -22,7 +22,7 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @return bool
 	 */
 	public function onParserBeforeStrip( &$parser, &$text, &$strip_state ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->wg->WikiaMobileDisableMediaGrouping ) && $this->app->checkSkin( 'wikiamobile' ) ) {
 			$matches = array();
@@ -33,7 +33,15 @@ class WikiaMobileHooks extends WikiaObject{
 			if (
 				!empty( $translatedNs ) &&
 				preg_match_all(
-					'/(?:\[\[\b(?:' . $translatedNs . ')\b:[^\]]+\]\](\s)*){2,}/',
+					/*
+					 * This regex is to catch situations like these
+					 * [[Image:name.jpg]]
+					 * [[Image:name.jpg]]
+					 * and also images with links in captions
+					 * [[Image:name.jpg|[[Link]] caption]]
+					 * [[Image:name.jpg|[[Link]] caption [[Link|link]]]]
+					 */
+					'/(?:\[\[\b(?:' . $translatedNs . ')\b:[^\]\[]*(?:\[\[[^\[]*\]\][^\[]*)*\]\]\s*){2,}/',
 					$text,
 					$matches,
 					PREG_OFFSET_CAPTURE
@@ -49,7 +57,7 @@ class WikiaMobileHooks extends WikiaObject{
 					$submatches = array();
 
 					$itemsCount = preg_match_all(
-						'/\[\[((?:' . $translatedNs . '):.*)\]\]/U',
+						'/(?<=\[\[)(?:' . $translatedNs . '):.*(?=\]\])/',
 						$match[0],
 						$submatches,
 						PREG_SET_ORDER
@@ -60,25 +68,29 @@ class WikiaMobileHooks extends WikiaObject{
 
 						//analyze entries
 						foreach ( $submatches as $item ) {
-							$parts = explode( '|', $item[1] );
-							$components = array();
-							$totalParts = count( $parts );
+							$parts = explode( '|', $item[0] );
+							$components = [];
 
 							foreach ( $parts as $index => $part ) {
-								if (
-									//File:name
-									$index == 0 ||
-									!empty( $part ) && (
-										//link=url
-										strpos( 'link=', $part ) === 0  ||
-										//caption
-										(
-											( $index == ( $totalParts - 1 ) )  &&
-											!preg_match( '/(?:frame|thumb|right|left|[0-9]+px)/', $part )
-										)
-									)
-								) {
+								//File name
+								if ( $index == 0 ) {
 									$components[] = $part;
+									continue;
+								}
+
+								if ( !empty( $part ) ) {
+									//Link part
+									if ( strpos( 'link=', $part ) === 0 ) {
+										$components[] = $part;
+										continue;
+									}
+
+									//All parts of caption as this might be exploded ie.:
+									//[[File:aa.jpg|thumb|300px|caption with [[Link|LINK]] right?]]
+									if ( !preg_match( '/(?:frame|thumb|right|left|[0-9]+px)/', $part ) ) {
+										$components[] = $part;
+									}
+
 								}
 							}
 
@@ -100,7 +112,7 @@ class WikiaMobileHooks extends WikiaObject{
 			}
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -110,7 +122,7 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @return bool
 	 */
 	public function onParserAfterTidy( &$parser, &$text ){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		//cleanup page output from unwanted stuff
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
@@ -122,7 +134,7 @@ class WikiaMobileHooks extends WikiaObject{
 			);
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -132,14 +144,14 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @return bool
 	 */
 	public function onParserLimitReport( $parser, &$limitReport ){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		//strip out some unneeded content to lower the size of the output
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$limitReport = null;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -155,7 +167,7 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @return bool
 	 */
 	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( $this->app->checkSkin( 'wikiamobile', $skin ) ) {
 			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
@@ -166,7 +178,7 @@ class WikiaMobileHooks extends WikiaObject{
 			$ret = "<h{$level} id=\"{$anchor}\" {$attribs}{$text}</h{$level}>";
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -181,14 +193,14 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @return bool
 	 */
 	public function onLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		if ( in_array( 'broken', $options ) && $this->app->checkSkin( 'wikiamobile', $skin ) ) {
 			$ret = $text;
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -198,7 +210,7 @@ class WikiaMobileHooks extends WikiaObject{
 	 */
 
 	public function onCategoryPageView( CategoryPage &$categoryPage ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			//lets do some local caching
@@ -226,11 +238,11 @@ class WikiaMobileHooks extends WikiaObject{
 			$out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', $params ) );
 			$out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'alphabeticalList', $params ) );
 
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -239,7 +251,7 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @return bool
 	 */
 	public function onArticlePurge( WikiPage &$page ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$title = $page->getTitle();
 
@@ -255,7 +267,7 @@ class WikiaMobileHooks extends WikiaObject{
 			$model->purgeExhibitionItemsCacheKey( $title->getText() );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -265,7 +277,7 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @return bool
 	 */
 	public function onBeforeDisplayNoArticleText( $article ){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( $this->app->checkSkin( 'wikiamobile' )  ) {
 			$title = $article->getTitle();
@@ -277,7 +289,7 @@ class WikiaMobileHooks extends WikiaObject{
 				$user = User::newFromName( $title->getBaseText() );
 
 				if ( ( $user instanceof User && $user->getId() > 0 ) && !$title->isSubpage() ) {
-					$this->wf->profileOut( __METHOD__ );
+					wfProfileOut( __METHOD__ );
 					return true;
 				}
 			} else if ( $ns == NS_CATEGORY ) {
@@ -285,7 +297,7 @@ class WikiaMobileHooks extends WikiaObject{
 				$category = Category::newFromTitle( $title );
 
 				if ( $category instanceof Category && ( $category->getPageCount() + $category->getSubcatCount() + $category->getFileCount() ) > 0 ) {
-					$this->wf->profileOut( __METHOD__ );
+					wfProfileOut( __METHOD__ );
 					return true;
 				}
 			}
@@ -293,7 +305,7 @@ class WikiaMobileHooks extends WikiaObject{
 			self::$displayErrorPage = true;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -305,18 +317,18 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @return bool
 	 */
 	public function onBeforePageDisplay( &$out, &$skin ){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if( $this->app->checkSkin( 'wikiamobile', $skin ) && self::$displayErrorPage ) {
 			$out->clearHTML();
 
 			$out->addHTML( $this->app->renderView( 'WikiaMobileErrorService', 'pageNotFound', array( 'out' => &$out) ) );
 
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -324,7 +336,7 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @return null
 	 */
 	private function getLocalizedMediaNsString() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( self::$mediaNsString === null ) {
 			$translatedNs = array();
@@ -344,7 +356,7 @@ class WikiaMobileHooks extends WikiaObject{
 			self::$mediaNsString = implode( '|', array_unique( $translatedNs ) );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return self::$mediaNsString;
 	}
 }

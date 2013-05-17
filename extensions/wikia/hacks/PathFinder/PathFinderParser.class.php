@@ -42,15 +42,15 @@ class PathFinderParser {
 	}
 	
 	public function parseLine( $line, Array $wikis = array() ) {
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		if ( empty( $wikis ) ) {
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 		
 		if ( empty( $line ) ) {
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new PathFinderNoDataToParseException( 'Line is empty' );
 		}
 		
@@ -58,7 +58,7 @@ class PathFinderParser {
 		
 		//4 is the total number of tokens we're interested in, avoid going further if there aren't enough to save time
 		if ( count( $tokens ) < 4 ) {
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new PathFinderNoDataToParseException( 'Line doesn\'t contain enough data' );
 		}
 		
@@ -75,14 +75,14 @@ class PathFinderParser {
 					//event name from tracking
 					//we take into consideration only pure pageviews, no events tracking requests
 					//this avoids duplicated data popping up and screw the stats
-					$this->app->wf->profileOut( __METHOD__ );
+					wfProfileOut( __METHOD__ );
 					throw new PathFinderNoDataToParseException( 'Line refers to an event tracking call.' );
 					break;
 				case 'n':
 					//article namespace
 					//in OneDot NS_MAIN is "n=" (empty), the int cast will fix it anyways
 					if ( in_array( (int) $value, $this->app->wg->PathFinderExcludeNamespaces ) ) {
-						$this->app->wf->profileOut( __METHOD__ );
+						wfProfileOut( __METHOD__ );
 						throw new PathFinderNoDataToParseException( 'Line refers to an article in an excluded namespace.' );
 					}
 					break;
@@ -121,7 +121,7 @@ class PathFinderParser {
 			unset( $data->referrer );
 			
 			if ( empty( $urlData['host'] ) ) {
-				$this->app->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				throw new PathFinderNoDataToParseException( 'Line contains a malformed referrer URL.' );
 			} else {
 				//TODO: check if is IP or dev/verify/preview
@@ -130,7 +130,7 @@ class PathFinderParser {
 					preg_match( '/^(verify|preview)(\..*)?\.wikia\.com/', $urlData['host'] ) ||
 					preg_match( '/\.wikia-dev\.com/', $urlData['host'] )
 				) {
-					$this->app->wf->profileOut( __METHOD__ );
+					wfProfileOut( __METHOD__ );
 					throw new PathFinderNoDataToParseException( 'Line contains an IP or a dev-server as the referrer.' );
 				}
 			}
@@ -153,7 +153,7 @@ class PathFinderParser {
 				if ( !empty( $articleName ) ) {
 					$data->internalReferrer = $articleName;
 				} else {
-					$this->app->wf->profileOut( __METHOD__ );
+					wfProfileOut( __METHOD__ );
 					throw new PathFinderNoDataToParseException( 'Missing referrer article name' );
 				}
 			} else {
@@ -163,7 +163,7 @@ class PathFinderParser {
 			return false;
 		}
 		
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $data;
 	}
 	
@@ -237,10 +237,10 @@ class PathFinderParser {
 	}
 	
 	public function analyzeData( $data, Array &$output ){
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		if ( empty( $data ) ) {
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new PathFinderNoDataToAnalyzeException();
 		}
 		
@@ -273,11 +273,11 @@ class PathFinderParser {
 				$output[$key]->counter++;
 			}
 		} else {
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new PathFinderNoDataToAnalyzeException( 'Invalid title.' );
 		}
 		
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	private function removeWikiPrefix( $str, $keepLeadingSlash = false ){

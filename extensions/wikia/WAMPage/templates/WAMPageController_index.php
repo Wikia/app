@@ -74,10 +74,10 @@
 			<th></th>
 			<th><?= wfMessage('wam-index-header-score')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-rank')->text() ?></th>
+			<th><?= wfMessage('wam-index-header-peak-rank')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-wiki-name')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-vertical')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-vertical-rank')->text() ?></th>
-			<th><?= wfMessage('wam-index-header-peak-rank')->text() ?></th>
             <th><?= wfMessage('wam-index-header-admins')->text() ?></th>
 		</tr>
 
@@ -89,10 +89,10 @@
 						<?= $wg->Lang->formatNum(number_format($wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION))?>
 					</td>
 					<td><?=$wiki['wam_rank']?></td>
+					<td><?=$wiki['peak_wam_rank']?></td>
 					<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
 					<td><?=$wiki['hub_name']?></td>
 					<td><?=$wiki['hub_wam_rank']?></td>
-					<td><?=$wiki['peak_wam_rank']?></td>
 					<td class="admins">
 						<? if(!empty($wiki['admins'])): ?>
 							<ul>

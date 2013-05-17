@@ -50,14 +50,14 @@ class Context {
 	 * @param $fileName string File path (can be relative or absolute)
 	 * @param $relativeToPath string|null Extra path to search for this file in (optional)
 	 * @return Source instance
-	 * @throws SassException
+	 * @throws \Wikia\Sass\Exception
 	 */
 	public function getFile( $fileName, $relativeToPath = null ) {
 		$requested = $fileName;
 		$fileName = $this->findFile($fileName,$relativeToPath);
 //		var_dump($requested,$fileName);
 		if ( $fileName === false ) {
-			throw new SassException( __METHOD__ . ': Requested SASS file not found: ' . $requested );
+			throw new \Wikia\Sass\Exception( __METHOD__ . ': Requested SASS file not found: ' . $requested );
 		}
 		if ( empty( $this->instances[$fileName] ) ) {
 			$this->instances[$fileName] = new FileSource($this,$fileName);

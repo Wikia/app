@@ -68,13 +68,13 @@ class ImageOperationsHelper {
 	}
 
 	public function postProcess( $oImgOrig, $aOrigSize  ) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$widthBeforeResizing = $aOrigSize['width'];
 		$heightBeforeResizing = $aOrigSize['height'];
 
 		if($widthBeforeResizing > 2000 && $heightBeforeResizing > 2000) {
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return self::UPLOAD_ERR_RESOLUTION;
 		}
 
@@ -131,7 +131,7 @@ class ImageOperationsHelper {
 			100
 		);
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $oImg;
 	}
 
@@ -145,7 +145,7 @@ class ImageOperationsHelper {
 	 * @return object resized image or false
 	 */
 	protected function resize($oImgOrig, &$width, &$height) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$iImgW = $this->defaultWidth;
 		$iImgH = $this->defaultHeight;
@@ -180,11 +180,11 @@ class ImageOperationsHelper {
 			$width = $iImgW;
 			$height = $iImgH;
 
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return $oImg;
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 
@@ -202,7 +202,7 @@ class ImageOperationsHelper {
 	 * @return object resized image or false
 	 */
 	protected function resizeByTheSmallestSide($oImgOrig, &$width, &$height) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$iImgW = $this->defaultWidth;
 		$iImgH = $this->defaultHeight;
@@ -237,11 +237,11 @@ class ImageOperationsHelper {
 			$width = $iImgW;
 			$height = $iImgH;
 
-			$this->app->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return $oImg;
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 }

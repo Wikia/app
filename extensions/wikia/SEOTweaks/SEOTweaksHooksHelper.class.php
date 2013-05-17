@@ -35,13 +35,32 @@ class SEOTweaksHooksHelper extends WikiaModel {
 	 * set appropriate status code for deleted pages
 	 *
 	 * @author ADi
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 * @param Title $title
-	 * @param Article $article
 	 * @return bool
 	 */
-	public function onArticleFromTitle( &$title, &$article ) {
+	public function onAfterInitialize( &$title, &$article, &$output, &$user, $request ) {
 		if( !$title->exists() && $title->isDeleted() ) {
-			$this->wg->Out->setStatusCode( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE );
+			$setDeletedStatusCode = true;
+			// handle special cases
+			switch( $title->getNamespace() ) {
+				case NS_CATEGORY:
+					// skip non-empty categories
+					if ( Category::newFromTitle($title)->getPageCount() > 0 ) {
+						$setDeletedStatusCode = false;
+					}
+					break;
+				case NS_FILE:
+					// skip existing file with deleted description
+					$file = wfFindFile( $title );
+					if ( $file && $file->exists() ) {
+						$setDeletedStatusCode = false;
+					}
+					break;
+			}
+			if ( $setDeletedStatusCode ) {
+				$output->setStatusCode( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE );
+			}
 		}
 		return true;
 	}

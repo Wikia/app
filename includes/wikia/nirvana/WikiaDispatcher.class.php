@@ -115,7 +115,7 @@ class WikiaDispatcher {
 				$method = $response->getMethodName();						// might have been changed
 
 				$profilename = __METHOD__ . " ({$controllerClassName}_{$method})";
-				$app->wf->profileIn($profilename);
+				wfProfileIn($profilename);
 
 				// TODO: remove F::build here after removing client calls to addClassConstructor
 				$controller = F::build( $controllerClassName ); /* @var $controller WikiaController */
@@ -194,7 +194,7 @@ class WikiaDispatcher {
 				// keep the AfterExecute hooks for now, refactor later using "after" dispatching
 				$app->runHook( ( "{$controllerName}{$hookMethod}AfterExecute" ), array( &$controller, &$params ) );
 
-				$app->wf->profileOut($profilename);
+				wfProfileOut($profilename);
 
 			} catch ( WikiaHttpException $e ) {
 				if ( $request->isInternal() ) {
@@ -202,7 +202,7 @@ class WikiaDispatcher {
 					throw $e;
 
 				} else {
-					$app->wf->profileOut($profilename);
+					wfProfileOut($profilename);
 					$response->setFormat( 'json' );
 
 					$response->setHeader(
@@ -220,7 +220,7 @@ class WikiaDispatcher {
 					}
 				}
 			} catch ( Exception $e ) {
-				$app->wf->profileOut($profilename);
+				wfProfileOut($profilename);
 
 				$response->setException($e);
 				Wikia::log(__METHOD__, $e->getMessage() );

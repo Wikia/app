@@ -12,9 +12,24 @@ $specialPageAliases['en'] = array(
 $specialPageAliases['de'] = array(
     'CreatePage' => array( 'Seite_erstellen', 'Seiteerstellen', 'Seite_Erstellen', 'SiteErstellen', 'CreatePage' ),
 );
+
+/**
+ * Italian
+ */
+$specialPageAliases['it'] = array(
+	'CreatePage' => array( 'CreaPagina', 'CreatePage' ),
+);
+
 /**
  * Polish
  */
 $specialPageAliases['pl'] = array(
 	'CreatePage' => array( 'Utwórz_stronę', 'CreatePage' ),
+);
+
+/**
+ * Spanish
+ */
+$specialPageAliases['es'] = array(
+	'CreatePage' => array( 'CrearPágina', 'CreatePage' ),
 );

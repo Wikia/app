@@ -20,7 +20,7 @@ class UserOneTagStrategy extends UserTagsStrategyBase {
 	 * @return array
 	 */
 	public function getUserTags() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if( $this->isBlocked() ) {
 			$tag = $this->app->wf->Msg('user-identity-box-group-blocked');
@@ -31,7 +31,7 @@ class UserOneTagStrategy extends UserTagsStrategyBase {
 		}
 		$tags = !empty($tag) ? array($tag) : array();
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $tags;
 	}
 
