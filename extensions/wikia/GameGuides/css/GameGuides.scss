@@ -148,7 +148,7 @@ h2, h3, .collSec {
 
 a {
 	text-decoration: none;
-	color: $darkLinkColor;
+	color: $darkTextColor;
 
 	pointer-events: none;
 
@@ -157,7 +157,7 @@ a {
 	}
 
 	.light & {
-		color: $lightLinkColor;
+		color: $lightTextColor;
 	}
 
 	&:not(.external):not(.extiw):not(.disabled) {
