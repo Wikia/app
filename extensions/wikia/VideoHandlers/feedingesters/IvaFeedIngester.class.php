@@ -170,6 +170,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$clipData['provider'] = 'iva';
 
 					$clipData['language'] = '';
+					// $languageNames comes from cldr extension
 					if ( !empty( $video['LanguageSpoken']['LanguageName'] ) && !empty( $languageNames ) ) {
 						$lang = trim( $video['LanguageSpoken']['LanguageName'] );
 						$clipData['language'] =  array_search( $lang, $languageNames );
