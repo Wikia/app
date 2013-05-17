@@ -2,24 +2,15 @@
 /**
  * Class definition for Wikia\Search\Test\QueryService\Select\OnWiki
  */
-require_once 'PHPUnit/Framework.php';
-require_once 'Wikia/Search/QueryService/Select/Category.php';
-require_once 'Wikia/Search/MediaWikiService.php';
-require_once 'Wikia/Search/Config.php';
-require_once 'Wikia/Search/QueryService/Select/AbstractSelect.php';
-require_once 'Wikia/Search/QueryService/Select/DependencyContainer.php';
-require_once 'Wikia/CategoryGalleries/services/.php';
-require_once 'Wikia/Search/QueryService/Select/CategoryService.php';
-
-// \Solarium_Query_Select, \Wikia\Search\Utilities, 
-require_once 'Wikia/Search/Result.php';
+namespace Wikia\Search\QueryService\Test\Select;
+use Wikia, ReflectionProperty, ReflectionMethod, Wikia\Search\Test\BaseTest;
 
 namespace Wikia\Search\QueryService\Select;
 use Wikia, ReflectionProperty, ReflectionMethod;
 /**
- * Tests on-wiki search functionality
+ * Tests category  search functionality
  */
-class CategoryTest extends PHPUnit_Framework_TestCase { 
+class CategoryTest extends BaseTest { 
 	
 	/**
 	 * @covers Wikia\Search\QueryService\Select\Category::extractMatch
@@ -28,7 +19,7 @@ class CategoryTest extends PHPUnit_Framework_TestCase {
 		
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'getArticleMatchForTermAndNamespaces' ) )
+		                      ->setMethods( array( 'getCategoryMatchForTermAndNamespaces' ) )
 		                      ->getMock();
 		
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )

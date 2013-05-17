@@ -4,23 +4,17 @@
  * Class definition for Wikia\Search\Test\Match\CategoryMatchTest
  */
 namespace Wikia\Search\Test\Match;
-use ReflectionProperty, ReflectionMethod,Wikia\Search\MediaWikiService, Wikia\Search\Result;
-
-require_once 'PHPUnit/Autoload.php';
-//require_once '../../MediaWikiService.php';
-//require_once '../../Result.php';
-//require_once '../../Match/AbstractMatch.php';
-//require_once '../../Match/Category.php';
+use ReflectionProperty, ReflectionMethod,Wikia\Search\MediaWikiService, Wikia\Search\Result, Wikia\Search\Test\BaseTest;
 
 
-class CategoryMatchTest extends \PHPUnit_Framework_TestCase {
+class CategoryMatchTest extends BaseTest  {
          /*
 	 * @covers Wikia\Search\Match\AbstractMatch::__construct
 	 * @covers Wikia\Search\Match\AbstractMatch::getId
 	 */
     
 	public function testAbstractConstruct() {
-                $service = new \MediaWikiService;
+                $service = new MediaWikiService;
             
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\AbstractMatch' )
 		                  ->setConstructorArgs( array( 123, $service ) )
@@ -123,7 +117,7 @@ class CategoryMatchTest extends \PHPUnit_Framework_TestCase {
 		);
 		
 		$this->assertEquals(
-				123,
+				$canonicalPageId,
 				$result['id']
 		);
 		$this->assertTrue(
