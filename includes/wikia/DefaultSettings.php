@@ -331,6 +331,19 @@ $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorControlle
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
 $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuController.class.php';
 
+//form builder
+$wgAutoloadClasses['BaseForm'] = $IP.'/includes/wikia/forms/BaseForm.class.php';
+
+$wgAutoloadClasses['BaseField'] = $IP.'/includes/wikia/forms/fields/BaseField.class.php';
+$wgAutoloadClasses['InputField'] = $IP.'/includes/wikia/forms/fields/InputField.class.php';
+$wgAutoloadClasses['TextField'] = $IP.'/includes/wikia/forms/fields/TextField.class.php';
+$wgAutoloadClasses['PasswordField'] = $IP.'/includes/wikia/forms/fields/PasswordField.class.php';
+
+$wgAutoloadClasses['Label'] = $IP.'/includes/wikia/forms/labels/Label.class.php';
+
+// TODO temporary - remove it after dev
+$wgAutoloadClasses['ExampleForm'] = $IP.'/includes/wikia/forms/ExampleForm.class.php';
+
 // Sass-related classes
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
 

@@ -2,7 +2,12 @@
 
 abstract class BaseForm {
 
+	public function __construct() {
+		$this->templateEngine = new Wikia\Template\PHPEngine;
+	}
+
 	protected $fields = [];
+	protected $templateEngine;
 
 	/**
 	 * Add field to form
@@ -45,6 +50,15 @@ abstract class BaseForm {
 	}
 
 	/**
+	 * Get all fields
+	 *
+	 * @return array
+	 */
+	public function getFields() {
+		return $this->fields;
+	}
+
+	/**
 	 * Validate if data passes all fields validation
 	 *
 	 * @param $data
@@ -70,11 +84,7 @@ abstract class BaseForm {
 	 * @return string
 	 */
 	public function render() {
-		$out = '';
-		$out .= $this->renderStart();
-		$out .= $this->renderFields();
-		$out .= $this->renderEnd();
-		return $out;
+		return $this->renderView('full');
 	}
 
 	/**
@@ -83,11 +93,7 @@ abstract class BaseForm {
 	 * @return string
 	 */
 	public function renderFields() {
-		$out = '';
-		foreach ($this->fields as $fieldName => $field) {
-			$out .= $field->render();
-		}
-		return $out;
+		return $this->renderView('fields');
 	}
 
 	/**
@@ -96,21 +102,21 @@ abstract class BaseForm {
 	 * @param string $fieldName
 	 */
 	public function renderField($fieldName) {
-		$this->getField($fieldName)->render();
+		return $this->getField($fieldName)->render();
 	}
 
 	/**
 	 * Render opening tag for form
 	 */
 	public function renderStart() {
-		// TODO
+		return $this->renderView('start');
 	}
 
 	/**
 	 * Render closing tag for form
 	 */
 	public function renderEnd() {
-		// TODO
+		return $this->renderView('end');
 	}
 
 
@@ -126,6 +132,12 @@ abstract class BaseForm {
 				$field->setValue($values[$fieldName]);
 			}
 		}
+	}
+
+	protected function renderView($name) {
+		return $this->templateEngine
+			->setData(['form' => $this])
+			->render( dirname(__FILE__) . '/templates/' . $name . '.php');
 	}
 
 }
