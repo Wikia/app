@@ -113,14 +113,14 @@
 				<input type="text" id="wiki-name-filer-input" name="wiki-name-filer-input" value="<?= $filterOptions['wiki-name-filer-input'] ?>" />
 				<label for="collections-filter"><?= wfMessage('manage-wikia-home-wiki-list-collection')->text() ?></label>
 				<select id="collections-filter" name="collections-filter">
-					<option value="0">All Collections</option>
+					<option value="0"><?= wfMessage('manage-wikia-home-wiki-list-all-collections')->text() ?></option>
 					<? foreach ($collectionsList as $collection): ?>
 						<option value="<?= $collection['id'] ?>" <? if ($filterOptions['collections-filter'] == $collection['id']): ?>selected="selected"<? endif ?>><?= $collection['name'] ?></option>
 					<? endforeach ?>
 				</select>
 				<label for="vertical-filter"><?= wfMessage('manage-wikia-home-wiki-list-vertical')->text() ?></label>
 				<select id="vertical-filter" name="vertical-filter">
-					<option value="0">All verticals</option>
+					<option value="0"><?= wfMessage('manage-wikia-home-wiki-list-all-verticals')->text() ?></option>
 					<? foreach ($verticals as $id => $vertical): ?>
 						<option value="<?= $id ?>" <? if ($filterOptions['vertical-filter'] == $id): ?>selected="selected"<? endif ?>><?= $vertical ?></option>
 					<? endforeach ?>

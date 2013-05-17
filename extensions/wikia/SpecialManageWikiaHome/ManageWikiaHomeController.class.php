@@ -434,9 +434,9 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	private function getWikiVerticals() {
 		return array(
-			WikiFactoryHub::CATEGORY_ID_GAMING => 'Gaming',
-			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
-			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'Lifestyle'
+			WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('manage-wikia-home-wiki-vertical-gaming')->text(),
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMessage('manage-wikia-home-wiki-vertical-entertainment')->text(),
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMessage('manage-wikia-home-wiki-vertical-lifestyle')->text()
 		);
 	}
 

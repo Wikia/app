@@ -97,8 +97,12 @@
 			margin-left: 10px;
 		}
 
+		label:first-child {
+			margin-left: 0px;
+		}
+
 		input[type=reset] {
-			margin-left: 30px;
+			margin-left: 20px;
 		}
 	}
 }

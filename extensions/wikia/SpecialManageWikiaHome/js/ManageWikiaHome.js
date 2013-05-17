@@ -27,13 +27,7 @@ ManageWikiaHome.prototype = {
 			'change',
 			this.changeVisualizationLang
 		);
-//TODO: Does dynamic search will be still in use?
-/*
-		$('#wiki-name-filer-input').on(
-			'keyup',
-			$.proxy(this.renderWikiListPage, this)
-		);
-*/
+
 		$('#wiki-filter-reset').click(
 			this.resetFormFields
 		);
@@ -74,45 +68,13 @@ ManageWikiaHome.prototype = {
 	changeVisualizationLang: function(e) {
 		window.Wikia.Querystring().setVal('vl', e.target.value).goTo();
 	},
-	renderWikiListPage: function(e) {
-		e.preventDefault();
-		var input = e.target.value;
-
-		var renderData = {
-			visualizationLang: this.visualizationLang
-		};
-
-		// CHeck if it's still required after filtering
-
-		if( input.length >= this.MIN_CHARS_TO_START_FILTERING && this.isListChangingDelayed === false ) {
-			this.isListChangingDelayed = true;
-			renderData['wikiHeadline'] = input;
-		}
-
-		if( input.length === 0  || typeof renderData['wikiHeadline'] !== 'undefined') {
-			this.renderAllWikiListPage(renderData);
-		}
-	},
-	renderAllWikiListPage: function(renderData) {
-		$.nirvana.sendRequest({
-			controller: 'ManageWikiaHome',
-			method: 'renderWikiListPage',
-			format: 'html',
-			type: 'post',
-			data: renderData,
-			callback: $.proxy( function(response) {
-				$("#wikisWithVisualizationList").html(response);
-				this.isListChangingDelayed = false;
-			}, this)
-		});
-	},
 	resetFormFields: function(e) {
 		e.preventDefault();
-		var form = $('#wiki-name-filter');
-
-		form.find('select option:selected').removeAttr('selected');
-		form.find('input[type=text]').val('');
-		form.find('input:checked').removeAttr('checked');
+		$(':input', '#wiki-name-filter')
+			.not(':button, :submit, :reset, :hidden')
+			.val('')
+			.removeAttr('checked')
+			.removeAttr('selected');
 	},
 	addWikiToCollection: function(e) {
 		var msg = '';

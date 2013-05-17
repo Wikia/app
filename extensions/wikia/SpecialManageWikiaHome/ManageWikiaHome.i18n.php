@@ -32,9 +32,13 @@ $messages['en'] = array(
 	'manage-wikia-home-wiki-filter' => 'Filter',
 	'manage-wikia-home-wiki-filter-reset' => 'Clear',
 
+	'manage-wikia-home-wiki-vertical-gaming' => 'Gaming',
+	'manage-wikia-home-wiki-vertical-entertainment' => 'Entertainment',
+	'manage-wikia-home-wiki-vertical-lifestyle' => 'Lifestyle',
+
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
-	'manage-wikia-home-wiki-list-headline' => 'Headline',
+	'manage-wikia-home-wiki-list-headline' => 'Wiki name',
 	'manage-wikia-home-wiki-list-blocked' => 'Blocked',
 	'manage-wikia-home-wiki-list-promoted' => 'Promoted',
 	'manage-wikia-home-wiki-list-official' => 'Official',
@@ -46,6 +50,8 @@ $messages['en'] = array(
 	'manage-wikia-home-wiki-list-official-no' => 'No',
 	'manage-wikia-home-wiki-list-official-yes' => 'Yes',
 	'manage-wikia-home-wiki-list-disabled-collection' => 'Disabled collection',
+	'manage-wikia-home-wiki-list-all-collections' => 'All collections',
+	'manage-wikia-home-wiki-list-all-verticals' => 'All verticals',
 	'manage-wikia-home-modal-title' => 'Change wiki status',
 	'manage-wikia-home-modal-title-collection' => 'Edit wiki in collection',
 
