@@ -44,10 +44,9 @@ $darkHeaderColor: $lightHeaderColor;
 $darkChevronsColor: $lightChevronsColor;
 $darkSectionGrey: rgb(41, 41, 41);
 
-
-
 html {
-	color: $lightTextColor;
+	background-color: $darkBackgroundColor;
+	color: $darkTextColor;
 
 	font-size: 1em;
 
@@ -56,9 +55,9 @@ html {
 	-webkit-backface-visibility: hidden;
 	-webkit-transform: translateZ(0);
 
-	&.dark {
-		background-color: $darkBackgroundColor;
-		color: $darkTextColor;
+	&.light {
+		background-color: $lightBackgroundColor;
+		color: $lightTextColor;
 	}
 
 	&.serif {
@@ -88,10 +87,10 @@ h1, h2, h3{
 }
 
 #pageName {
-	color: $lightHeaderColor;
+	color: $darkHeaderColor;
 
-	.dark & {
-		color: $darkHeaderColor;
+	.light & {
+		color: $lightHeaderColor;
 	}
 
 	font-weight: 800;
@@ -99,10 +98,10 @@ h1, h2, h3{
 }
 
 h2, h3, .collSec {
-	color: $lightTextColor;
+	color: $darkTextColor;
 
-	.dark & {
-		color: $darkTextColor;
+	.light & {
+		color: $lightTextColor;
 	}
 }
 
@@ -118,14 +117,14 @@ h2, h3, .collSec {
 	background-repeat: no-repeat;
 	background-position: 100% 100%;
 	background-size: 300% 1px;
-	background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $lightSectionGrey ));
-	background-image: -webkit-linear-gradient(left, $mainGreen 30%, $lightSectionGrey 50%);
-	background-image: linear-gradient(to right, $mainGreen 30%, $lightSectionGrey 50%);
+	background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $darkSectionGrey ));
+	background-image: -webkit-linear-gradient(left, $mainGreen 30%, $darkSectionGrey 50%);
+	background-image: linear-gradient(to right, $mainGreen 30%, $darkSectionGrey 50%);
 
-	.dark & {
-		background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $darkSectionGrey ));
-		background-image: -webkit-linear-gradient(left, $mainGreen 30%, $darkSectionGrey 50%);
-		background-image: linear-gradient(to right, $mainGreen 30%, $darkSectionGrey 50%);
+	.light & {
+		background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $lightSectionGrey ));
+		background-image: -webkit-linear-gradient(left, $mainGreen 30%, $lightSectionGrey 50%);
+		background-image: linear-gradient(to right, $mainGreen 30%, $lightSectionGrey 50%);
 	}
 
 	-webkit-transition: background-position .3s linear;
@@ -149,28 +148,27 @@ h2, h3, .collSec {
 
 a {
 	text-decoration: none;
+	color: $darkLinkColor;
 
-	color: $lightLinkColor;
 	pointer-events: none;
 
 	img:not(.media), span {
 		pointer-events: none;
 	}
 
-	.dark & {
-		color: $darkLinkColor;
+	.light & {
+		color: $lightLinkColor;
 	}
 
 	&:not(.external):not(.extiw):not(.disabled) {
-		color: $lightLinkColor;
+		color: $darkLinkColor;
+		border-bottom: 1px dotted $darkLinkColor;
+
 		pointer-events: auto;
 
-		border-bottom: 1px dotted $lightLinkColor;
-
-		.dark & {
-			color: $darkLinkColor;
-
-			border-bottom-color: $darkLinkColor;
+		.light & {
+			color: $lightLinkColor;
+			border-bottom-color:  $lightLinkColor;
 		}
 
 		*:not(.media) {
@@ -210,17 +208,17 @@ $width: 1.5;
 	width: 0;
 	height: 0;
 	border: $size + px solid;
-	border-color: $lightChevronsColor transparent transparent transparent;
+	border-color: $darkChevronsColor transparent transparent transparent;
 
 	-webkit-transition: -webkit-transform .3s;
 	-webkit-transition-delay: .1s;
 	-webkit-transform-origin: 50% 25%;
 
-	.dark & {
-		border-top-color: $darkChevronsColor;
+	.light & {
+		border-top-color: $lightChevronsColor;
 
 		&:after {
-			border-top-color: $darkBackgroundColor;
+			border-top-color: $lightBackgroundColor;
 		}
 	}
 
@@ -234,7 +232,7 @@ $width: 1.5;
 		height: 0;
 
 		border: ( $size - $width ) + px solid;
-		border-color: $lightBackgroundColor transparent transparent transparent;
+		border-color: $darkBackgroundColor transparent transparent transparent;
 	}
 }
 
@@ -259,8 +257,10 @@ table {
 
 	border-right: 1px solid $halfMainGreen;
 
-	.dark & {
-		background-color: #222;
+	background-color: #222;
+
+	.light & {
+		background-color: $lightBackgroundColor;
 	}
 
 	font-size: .8em;
@@ -304,12 +304,10 @@ figure {
 	}
 }
 
-.imgPlcHld, wkSlider img, .lazy {
+.imgPlcHld, .wkSlider img, .lazy {
 	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_light.png'); /* base64 */
 	background-repeat: no-repeat;
 	background-position: center;
-
-	//background-color: #1E1E1E;
 }
 
 .lazy {
@@ -321,8 +319,16 @@ figure {
 	}
 }
 
-.galPlc.img, .galPlcHld {
+//this is rather long selector but at least image is transfered once
+.galPlc.img,
+.galPlcHld,
+.light .imgPlcHld,
+.light .wkSlider img,
+.light .lazy {
 	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_dark.png'); /* base64 */
+}
+
+.galPlc.img, .galPlcHld {
 	background-repeat: no-repeat;
 	background-position: center;
 
