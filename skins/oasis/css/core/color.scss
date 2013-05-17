@@ -86,6 +86,9 @@ $color-page-border: mix($color-page, #000000, 80%);
 @if $is-dark-wiki {
 	$color-page-border: mix($color-page, #ffffff, 80%);
 }
+$color-page-border-subtle: mix($color-page-border, $color-page, 50%);
+
+
 $color-page-shadow: #333;
 @if $is-dark-wiki {
 	$color-page-shadow: #000;

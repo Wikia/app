@@ -13,7 +13,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
+		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/css/LicensedVideoSwap.scss' );
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/LicensedVideoSwap.js' );
+		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' );
+		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Dropdown.js' );
 	}
 
 	/**
@@ -46,6 +49,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->selectedSort = $selectedSort;
 		$videoHelper = new LicensedVideoSwapHelper();
 		$this->sortOptions = $videoHelper->getSortOption();
+		$this->sortMsg = "Latest"; // TODO - get this dynamically
 	}
 
 	/**
