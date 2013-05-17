@@ -16,6 +16,7 @@ define('wikia.videohandler.youtube', ['wikia.window', 'wikia.loader'], function 
 	return function(params, vb) {
 		var player,
 			started = false,
+			ended = false,
 			containerId = vb.timeStampId( 'youtubeVideoPlayer' );
 
 		// Track that the player is loaded
@@ -28,6 +29,10 @@ define('wikia.videohandler.youtube', ['wikia.window', 'wikia.loader'], function 
 			if ( !started && e.data == 1 ) {
 				vb.track('content-begin');
 				started = true;
+			}
+			if ( !ended && e.data == 0 ) {
+				vb.track('content-end');
+				ended = true;
 			}
 		}
 
