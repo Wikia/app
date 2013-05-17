@@ -107,7 +107,7 @@
 			<?= wfMessage('manage-wikia-home-wikis-in-visualization-heading')->text() ?>
 		</h2>
 
-		<form id="wiki-name-filter" class="wiki-name-filter" name="wiki-name-filter" method="post">
+		<form id="wiki-name-filter" class="wiki-name-filter" name="wiki-name-filter" method="get">
 			<p class="wiki-filter-group">
                 <label><?= wfMessage('manage-wikia-home-wiki-list-headline')->text() ?></label>
 				<input type="text" id="wiki-name-filer-input" name="wiki-name-filer-input" value="<?= $filterOptions['wiki-name-filer-input'] ?>" />

@@ -68,7 +68,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->currentPage = $this->request->getVal('page', 1);
 		$this->corpWikiId = $this->visualizationWikisData[$this->visualizationLang]['wikiId'];
 
-		$this->filterOptions = $this->initFilterOptions();
+		$this->filterOptions = array_merge($this->initFilterOptions(), $this->request->getParams());
 
 		//verticals slots' configuration
 		/* @var $this->helper WikiaHomePageHelper */
@@ -120,8 +120,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				} else {
 					$this->errorMsg = wfMessage('manage-wikia-home-collections-failure')->text();
 				}
-			} elseif ($this->request->getVal('wikis-filter', false)) {
-				$this->filterOptions = array_merge($this->filterOptions, $this->request->getParams());
 			}
 		}
 
@@ -172,27 +170,29 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$visualizationLang = $this->visualizationLang;
 		}
 
-		$this->filterOptions = $this->request->getVal('filterOptions', []);
-
-		$this->currentPage = $this->request->getVal('page', 1);
+		$filterOptions = $this->request->getVal('filterOptions', []);
 
 		//todo: new class for options
-		$options = $this->prepareFilterOptions($visualizationLang, $this->filterOptions);
+		$currentPage = $this->request->getVal('page', 1);
+		$options = $this->prepareFilterOptions($visualizationLang, $filterOptions, $currentPage);
 
 		$count = $this->helper->getWikisCountForStaffTool($options);
-		$specialPage = F::build('Title', array('ManageWikiaHome', NS_SPECIAL), 'newFromText');
-		//todo: getLocalUrl(array('vl' => $visualizationLang, 'page' => '%s')) doesn't work here because % sign is being escaped
-		$url = $specialPage->getLocalUrl() . '?vl=' . $visualizationLang . '&page=%s';
+
+		$options->limit = self::WHST_WIKIS_PER_PAGE;
+		$options->offset = (($currentPage - 1) * self::WHST_WIKIS_PER_PAGE);
+
+		$this->list = $this->helper->getWikisForStaffTool($options);
+		$this->collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
 			/** @var $paginator Paginator */
 			$paginator = F::build('Paginator', array(array_fill(0, $count, ''), self::WHST_WIKIS_PER_PAGE), 'newFromArray');
-			$paginator->setActivePage($this->currentPage - 1);
+
+			$paginator->setActivePage($currentPage - 1);
+
+			$url = $this->getUrlWithAllParams($visualizationLang, $filterOptions);
 			$this->setVal('pagination', $paginator->getBarHTML($url));
 		}
-
-		$this->list = $this->helper->getWikisForStaffTool($options);
-		$this->collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -444,8 +444,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$options = new stdClass();
 		$options->lang = $visualizationLang;
 		$options->wikiHeadline = !empty($filterOptions['wiki-name-filer-input']) ? $filterOptions['wiki-name-filer-input'] : $this->request->getVal('wikiHeadline', '');
-		$options->limit = self::WHST_WIKIS_PER_PAGE;
-		$options->offset = (($this->currentPage - 1) * self::WHST_WIKIS_PER_PAGE);
 		$options->verticalId = !empty($filterOptions['vertical-filter']) ? $filterOptions['vertical-filter'] : 0;
 		$options->blockedFlag = isset($filterOptions['wiki-blocked-filter']) ? $filterOptions['wiki-blocked-filter'] : false;
 		$options->promotedFlag = isset($filterOptions['wiki-promoted-filter']) ? $filterOptions['wiki-promoted-filter'] : false;
@@ -464,5 +462,27 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			'collections-filter' => 0,
 			'wiki-name-filer-input' => ''
 		];
+	}
+
+	private function getUrlWithAllParams($lang, $filterParams) {
+		$url = '#';
+		$specialPage = F::build('Title', array('ManageWikiaHome', NS_SPECIAL), 'newFromText');
+		if( $specialPage instanceof Title ) {
+			$params = [
+				'wiki-name-filer-input' => isset($filterParams['wiki-name-filer-input']) ? $filterParams['wiki-name-filer-input'] : '',
+				'collections-filter' => isset($filterParams['collections-filter']) ? $filterParams['collections-filter'] : 0,
+				'vertical-filter' => isset($filterParams['vertical-filter']) ? $filterParams['vertical-filter'] : 0,
+				'wiki-blocked-filter' => isset($filterParams['wiki-blocked-filter']) ? $filterParams['wiki-blocked-filter'] : 0,
+				'wiki-promoted-filter' => isset($filterParams['wiki-promoted-filter']) ? $filterParams['wiki-promoted-filter'] : 0,
+				'wiki-official-filter' => isset($filterParams['wiki-official-filter']) ? $filterParams['wiki-official-filter'] : 0,
+				'page' => '%s',
+				'vl' => $lang
+			];
+
+			$url = $specialPage->getLocalURL($params);
+			$url = urldecode($url);
+		}
+
+		return $url;
 	}
 }
