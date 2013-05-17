@@ -115,7 +115,7 @@ class HAWelcomeJob extends Job {
 		$iErrorReporting = error_reporting();
 		error_reporting( E_ALL );
 		// Abort if the feature has been disabled by the admin of the wiki.
-		if ( in_array( trim( wfMessage( 'welcome-user' )->text() ), array( '@disabled', '-' ) ) ) {
+		if ( in_array( trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() ), array( '@disabled', '-' ) ) ) {
 			if ( !empty( $wgHAWelcomeNotices ) ) {
 				trigger_error( sprintf( '%s Terminated. The feature has been disabled.', __METHOD__ ) , E_USER_NOTICE );
 			}
@@ -282,7 +282,7 @@ class HAWelcomeJob extends Job {
 		$iErrorReporting = error_reporting();
 		error_reporting( E_ALL );
 		// Complete the job if the feature has been disabled by the admin of the wiki.
-		if ( in_array( trim( wfMessage( 'welcome-user' )->text() ), array( '@disabled', '-' ) ) ) {
+		if ( in_array( trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() ), array( '@disabled', '-' ) ) ) {
 			if ( $this->bShowNotices ) {
 				trigger_error( sprintf( '%s Terminated. The feature has been disabled.', __METHOD__ ) , E_USER_NOTICE );
 			}
@@ -312,7 +312,7 @@ class HAWelcomeJob extends Job {
 		global $wgEnableWallExt;
 		$this->bMessageWallExt = ! empty( $wgEnableWallExt );
 		/** @type String The user-level configuration of the feature. */
-		$sSwitches = wfMessage( 'welcome-enabled' )->text();
+		$sSwitches = wfMessage( 'welcome-enabled' )->inContentLanguage()->text();
 		// Override the default switches with user's values.
 		foreach ( $this->aSwitches as $sSwitch => $bValue ) {
 			if ( false !== strpos( $sSwitches, $sSwitch ) ) {
@@ -322,7 +322,7 @@ class HAWelcomeJob extends Job {
 		// Refresh the sender data.
 		$this->setSender();
 		// If possible, mark edits as if they were made by a bot.
-		if ( $this->oSender->isAllowed( 'bot' ) || '@bot' == trim( wfMessage( 'welcome-bot' )->text() ) ) {
+		if ( $this->oSender->isAllowed( 'bot' ) || '@bot' == trim( wfMessage( 'welcome-bot' )->inContentLanguage()->text() ) ) {
 			if ( $this->bShowNotices ) {
 				trigger_error( sprintf( '%s All edits will be marked as if they were made by a bot.', __METHOD__ ) , E_USER_NOTICE );
 			}
@@ -508,7 +508,7 @@ class HAWelcomeJob extends Job {
 			trigger_error( sprintf( '%s Start.', __METHOD__ ) , E_USER_NOTICE );
 		}
 		/** @type String Get the user-level setting. */
-		$sSender = trim( wfMessage( 'welcome-user' )->inContentLanguage() );
+		$sSender = trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() );
 		if ( $this->bShowNotices ) {
 			trigger_error( sprintf( '%s The user level setting is: %s.', __METHOD__, $sSender ) , E_USER_NOTICE );
 		}
