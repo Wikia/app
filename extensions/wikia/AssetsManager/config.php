@@ -369,6 +369,9 @@ $config['gameguides_js'] = array(
 		'//extensions/wikia/WikiaMobile/js/layout.js',
 		'//resources/wikia/modules/thumbnailer.js',
 
+		//video
+		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
+
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
 		'//extensions/wikia/GameGuides/js/GameGuides.js',
