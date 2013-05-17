@@ -48,7 +48,7 @@
 		var callback = function(data) {
 			var presets = VET_embedPresets;
 
-			VET_displayDetails(data.responseText, data);
+			VET_displayDetails(data.responseText, presets);
 
 			$('#VideoEmbedBack').hide();
 
