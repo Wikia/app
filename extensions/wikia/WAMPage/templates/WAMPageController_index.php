@@ -109,7 +109,7 @@
 		<? else: ?>
 			<tr class="no-results"><td colspan="6">
 				<p>
-					<?= wfMessage('wam-index-no-results')->text() ?>
+					<?= wfMessage('wam-index-no-results')->parse(); ?>
 				</p>
 			</td></tr>
 		<? endif; ?>
