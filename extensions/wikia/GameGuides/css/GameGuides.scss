@@ -300,7 +300,11 @@ figure {
 		background: none;
 
 		white-space: normal;
-		color: rgb(187, 187, 187);
+		color: $darkTextColor;
+
+		.light & {
+			color: $lightTextColor;
+		}
 	}
 }
 
