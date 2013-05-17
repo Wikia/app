@@ -42,9 +42,11 @@ $lightChevronsColor: rgb(204,204,204);
 
 html {
 	background-color: $backgroundColor;
+	color: $textColor;
 
 	&.light {
 		background-color: $lightBackgroundColor;
+		color: $lightTextColor;
 	}
 
 	font-size: 1em;
@@ -53,6 +55,8 @@ html {
 
 	-webkit-backface-visibility: hidden;
 	-webkit-transform: translateZ(0);
+
+	-webkit-transition: background-color .1s;
 
 
 	&.serif {
@@ -69,16 +73,7 @@ html {
 }
 
 body {
-	background-color: $backgroundColor;
-
-	.light & {
-		background-color: $lightBackgroundColor;
-		color: $lightTextColor;
-	}
-
 	padding: 10px 20px;
-
-	color: $textColor;
 
 	line-height: 1.7em;
 
@@ -91,10 +86,10 @@ h1, h2, h3{
 }
 
 #mw-content-text {
-	background-color: $backgroundColor;
+	//background-color: $backgroundColor;
 
 	.light & {
-		background-color: $lightBackgroundColor;
+		//background-color: $lightBackgroundColor;
 	}
 }
 
@@ -111,6 +106,10 @@ h1, h2, h3{
 
 h2, h3, .collSec {
 	color: $textColor;
+
+	.light & {
+		color: $lightHeaderColor;
+	}
 }
 
 .collSec {
