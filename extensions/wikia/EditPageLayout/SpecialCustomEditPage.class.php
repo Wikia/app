@@ -51,7 +51,7 @@ class SpecialCustomEditPage extends SpecialPage {
 	 * Log utility
 	 */
 	protected function log($method, $data) {
-		$data = !is_array($data) ? print_r($data, true) : $data;
+		$data = is_array($data) ? print_r($data, true) : $data;
 
 		wfDebug("{$method}: {$data}\n");
 	}

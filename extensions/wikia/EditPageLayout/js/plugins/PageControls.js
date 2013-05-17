@@ -313,10 +313,11 @@
 						}
 					});
 				},
-				// don't show close button, user has to click "Ok" and fields have to be validated
-				showCloseButton: false,
+				//bugid: MAIN-16
+                //user should be able to close modal, thats why onClose we move hidden fields again, so the modal can be
+                //displayed again later on with those fields in
 				onClose: function() {
-					return false;
+                      self.hiddenFields.append($('#HiddenFieldsDialog').find('label'));
 				}
 			});
 		},
