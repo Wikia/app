@@ -92,7 +92,7 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 		if ( in_array( $ns, array( NS_MEDIAWIKI, NS_TEMPLATE ) ) ) {
 			$policy = array(
 				'index'  => 'noindex',
-				'follow' => 'nofollow'
+				'follow' => 'follow'
 			);
 		}
 		return true;
