@@ -45,15 +45,15 @@
 	function VET_editVideo() {
 		$('#VideoEmbedMain').hide();
 
-		var callback = function(o) {
-			var data = VET_embedPresets;
+		var callback = function(data) {
+			var presets = VET_embedPresets;
 
-			VET_displayDetails(o.responseText, data);
+			VET_displayDetails(data.responseText, data);
 
 			$('#VideoEmbedBack').hide();
 
 			setTimeout(function() {
-				if ( data.thumb || data.thumbnail ) {
+				if ( presets.thumb || presets.thumbnail ) {
 		             $("#VideoEmbedThumbOption").prop('checked', true);
 		             $('#VET_StyleThumb').addClass('selected');
 		        }  else {
@@ -65,22 +65,22 @@
 		             $('#VET_StyleNoThumb').addClass('selected');
 		        }
 
-				if(data.align && data.align == 'left') {
+				if(presets.align && presets.align == 'left') {
 					$('#VideoEmbedLayoutLeft').attr('checked', 'checked').parent().addClass('selected');
-				} else if (data.align && data.align == 'center') {
+				} else if (presets.align && presets.align == 'center') {
 					$('#VideoEmbedLayoutCenter').attr('checked', 'checked').parent().addClass('selected');
 				} else {
 					$('#VideoEmbedLayoutRight').attr('checked', 'checked').parent().addClass('selected');
 				}
 
-				if(data.width) {
-					VET_readjustSlider( data.width );
-					$('#VideoEmbedManualWidth').val( data.width );
+				if(presets.width) {
+					VET_readjustSlider( presets.width );
+					$('#VideoEmbedManualWidth').val( presets.width );
 				}
 
 			}, 200);
-			if(data.caption) {
-				$('#VideoEmbedCaption').val(data.caption);
+			if(presets.caption) {
+				$('#VideoEmbedCaption').val(presets.caption);
 			}
 
 			// show width slider
@@ -256,8 +256,8 @@
 
 	/* ajax call for first screen (aka video search) */
 	function VET_loadMain(searchOrder) {
-		var callback = function(o) {
-			$('#VideoEmbedMain').html(o.responseText);
+		var callback = function(data) {
+			$('#VideoEmbedMain').html(data.responseText);
 			$('#VideoEmbedUrl').focus();
 			VET_updateHeader();
 
@@ -427,7 +427,7 @@
 		// Allow extensions to add extra params to ajax call
 		params = params.concat(VET_options.insertFinalVideoParams || []);
 
-		var callback = function(o, status) {
+		var callback = function(data, status) {
 			if(status == 'error') {
 				GlobalNotification.show( $.msg('vet-insert-error'), 'error', null, VET_notificationTimout );
 			} else if (status == 'success') {
@@ -437,13 +437,13 @@
 				}
 				switch($.trim(screenType)) {
 					case 'error':
-						o.responseText = o.responseText.replace(/<script.*script>/, "" );
-						GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
+						data.responseText = data.responseText.replace(/<script.*script>/, "" );
+						GlobalNotification.show( data.responseText, 'error', null, VET_notificationTimout );
 						break;
 					case 'summary':
 						VET_switchScreen('Summary');
 						$('#VideoEmbedBack').css('display', 'none');
-						$('#VideoEmbed' + VET_curScreen).html(o.responseText);
+						$('#VideoEmbed' + VET_curScreen).html(data.responseText);
 						VET_updateHeader();
 
 						if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
@@ -553,18 +553,18 @@
 	function VET_sendQueryEmbed(query) {
 		// If callbackAfterSelect returns false, end here. Otherwise, move on to the next screen.
 		if(VET_callbackAfterSelect(query) !== false) {
-			var callback = function(o) {
+			var callback = function(data) {
 				var screenType = VET_jqXHR.getResponseHeader('X-screen-type');
 				if(typeof screenType == "undefined") {
 					screenType = VET_jqXHR.getResponseHeader('X-Screen-Type');
 				}
 
 				if( 'error' == $.trim(screenType) ) {
-					GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
+					GlobalNotification.show( data.responseText, 'error', null, VET_notificationTimout );
 				} else {
 					// attach handlers - close preview on VET modal close (IE bug fix)
 					VETExtended.cachedSelectors.closePreviewBtn.click();
-					VET_displayDetails(o.responseText);
+					VET_displayDetails(data.responseText);
 				}
 
 			};
