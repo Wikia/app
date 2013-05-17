@@ -235,6 +235,12 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
+		if ( empty( $assetData['duration'] ) || $assetData['duration'] < 0 ) {
+			echo "Error when generating remote asset data: invalid duration ($assetData[duration]).\n";
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
 		if ( $debug ) {
 			print "Ready to create remote asset\n";
 			print "id:          $id\n";

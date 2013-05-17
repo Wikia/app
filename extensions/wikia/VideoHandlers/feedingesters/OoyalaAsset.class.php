@@ -36,6 +36,14 @@ class OoyalaAsset extends WikiaModel {
 
 			// add metadata for the asset
 			$resp = $this->addMetadata( $asset['embed_code'], $data );
+			if ( $resp ) {
+				// set thumbnail
+				$resp = $this->setThumbnailUrl( $asset['embed_code'], $data );
+				if ( $resp ) {
+					// set primary thumbnail
+					$resp = $this->setPrimaryThumbnail( $asset['embed_code'] );
+				}
+			}
 		} else {
 			print( "ERROR: problem posting remote asset (".$status->getMessage().").\n" );
 		}
@@ -69,9 +77,11 @@ class OoyalaAsset extends WikiaModel {
 	 * add metadata
 	 * @param string $videoId
 	 * @param array $metadata
-	 * @return boolean
+	 * @return boolean $resp
 	 */
 	public function addMetadata( $videoId, $metadata ) {
+		wfProfileIn( __METHOD__ );
+
 		$method = 'PUT';
 		$reqPath = '/v2/assets/'.$videoId.'/metadata';
 
@@ -87,24 +97,25 @@ class OoyalaAsset extends WikiaModel {
 			'method' => $method,
 			'postData' => $reqBody,
 		);
+
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$meta = json_decode( $req->getContent(), true );
+			$resp = true;
 
 			print( "Ooyala: Updated Metadata for $videoId: \n" );
 			foreach( explode( "\n", var_export( $meta, TRUE ) ) as $line ) {
 				print ":: $line\n";
 			}
 		} else {
+			$resp = false;
 			print( "ERROR: problem adding metadata (".$status->getMessage().").\n" );
-			wfProfileOut( __METHOD__ );
-
-			return false;
 		}
 
 		wfProfileOut( __METHOD__ );
-		return true;
+
+		return $resp;
 	}
 
 	/**
@@ -167,7 +178,7 @@ class OoyalaAsset extends WikiaModel {
 
 		$cond = array(
 			"asset_type='$assetType'",
-			"name='$name'",
+			"name='".addslashes($name)."'",
 			"metadata.source='$source'",
 		);
 
@@ -190,6 +201,90 @@ class OoyalaAsset extends WikiaModel {
 		} else {
 			$result = false;
 			print( "Error: problem checking video (".$status->getMessage().").\n" );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $result;
+	}
+
+	/**
+	 * set thumbnail url
+	 * @param string $videoId
+	 * @param array $assetData
+	 * @return boolean $resp
+	 */
+	public function setThumbnailUrl( $videoId, $assetData ) {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'PUT';
+		$reqPath = '/v2/assets/'.$videoId.'/preview_image_urls';
+
+		$params[] = array(
+			'url' => $assetData['thumbnail'],
+			'width' => 240,
+			'height' => 320,
+		);
+
+		$resp = $this->sendRequest( $method, $reqPath, $params );
+
+		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
+	 * set primary thumbnail
+	 * @param string $videoId
+	 * @return boolean $resp
+	 */
+	public function setPrimaryThumbnail( $videoId ) {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'PUT';
+		$reqPath = '/v2/assets/'.$videoId.'/primary_preview_image';
+		$params = array( 'type' => 'remote_url' );
+
+		$resp = $this->sendRequest( $method, $reqPath, $params );
+
+		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
+	 * send request
+	 * @param string $method
+	 * @param string $reqPath
+	 * @param array $params
+	 * @return boolean $result
+	 */
+	protected function sendRequest( $method, $reqPath, $params ) {
+		wfProfileIn( __METHOD__ );
+
+		$reqBody = json_encode( $params );
+
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
+		//print( "Connecting to $url...\n" );
+
+		$options = array(
+			'method' => $method,
+			'postData' => $reqBody,
+		);
+
+		$req = MWHttpRequest::factory( $url, $options );
+		$status = $req->execute();
+		if ( $status->isGood() ) {
+			$resp = json_decode( $req->getContent(), true );
+			$result = true;
+
+			print( "Ooyala: sent $reqPath request: \n" );
+			foreach( explode( "\n", var_export( $resp, TRUE ) ) as $line ) {
+				print ":: $line\n";
+			}
+		} else {
+			$result = false;
+			print( "ERROR: problem sending $reqPath request (".$status->getMessage().").\n" );
 		}
 
 		wfProfileOut( __METHOD__ );
