@@ -135,7 +135,7 @@ class WikiaCollectionsModel extends WikiaModel {
 			$insertData = array_merge($updateData, $conds);
 			$mdb->insert(self::TABLE_NAME, $insertData, __METHOD__);
 		}
-		
+
 		$mdb->commit();
 	}
 
@@ -334,5 +334,17 @@ class WikiaCollectionsModel extends WikiaModel {
 		$results = $sdb->select(self::TABLE_NAME, $fields, $conds, __METHOD__);
 
 		return $sdb->fetchRow($results);
+	}
+
+	public function isWikiInCollection($cityId) {
+		$sdb = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$conds = [
+			'city_id' => $cityId
+		];
+
+		$result = $sdb->selectRow(self::COLLECTIONS_CV_TABLE, 'city_id', $conds);
+
+		return (bool)$result;
 	}
 }

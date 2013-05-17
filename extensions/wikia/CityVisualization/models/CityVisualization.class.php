@@ -325,6 +325,23 @@ class CityVisualization extends WikiaModel {
 		return $result;
 	}
 
+	public function getFlag($wikiId, $langCode) {
+		wfProfileIn(__METHOD__);
+		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$conds = [
+			'city_id' => $wikiId,
+			'city_lang_code' => $langCode
+		];
+
+		$result = $sdb->select(self::CITY_VISUALIZATION_TABLE_NAME, 'city_flags', $conds);
+
+		$row = $sdb->fetchRow($result);
+
+		wfProfileOut(__METHOD__);
+		return $row['city_flags'];
+	}
+
 	public function removeFlag($wikiId, $langCode, $flag) {
 		wfProfileIn(__METHOD__);
 		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);

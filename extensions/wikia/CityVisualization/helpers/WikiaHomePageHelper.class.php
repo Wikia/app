@@ -536,6 +536,12 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $wikiInfo;
 	}
 
+	public function isWikiBlocked($wikiId, $langCode) {
+		$visualization = $this->getVisualization();
+		$flags = $this->getFlag($wikiId, $langCode);
+		return $visualization->isBlockedWiki($flags);
+	}
+
 	public function getImageDataForSlider($wikiId, $imageName) {
 		$newFilesUrl = $this->getNewFilesUrl($wikiId);
 		$imageData = $this->getImageData($imageName);
@@ -879,6 +885,12 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		wfProfileOut(__METHOD__);
 		return false;
+	}
+
+	public function getFlag($wikiId, $langCode) {
+		$visualization = $this->getVisualization();
+		$flags = $visualization->getFlag($wikiId, $langCode);
+		return $flags;
 	}
 
 	public function removeFlag($wikiId, $flag, $corpWikiId, $langCode) {

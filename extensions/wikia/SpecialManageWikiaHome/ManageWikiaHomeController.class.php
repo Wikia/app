@@ -263,6 +263,35 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return $result;
 	}
 
+	public function isWikiBlocked() {
+		wfProfileIn(__METHOD__);
+
+		if( !$this->checkAccess() ) {
+			$this->status = false;
+		} else {
+			$wikiId = $this->request->getInt('wikiId', 0);
+			$langCode = $this->request->getVal('lang', 'en');
+
+			$this->status = $this->helper->isWikiBlocked($wikiId, $langCode);
+		}
+
+		wfProfileOut(__METHOD__);
+	}
+
+	public function isWikiInCollection() {
+		wfProfileIn(__METHOD__);
+
+		if( !$this->checkAccess() ) {
+			$this->status = false;
+		} else {
+			$wikiId = $this->request->getInt('wikiId', 0);
+
+			$this->status = $this->getWikiaCollectionsModel()->isWikiInCollection($wikiId);
+		}
+
+		wfProfileOut(__METHOD__);
+	}
+
 	/**
 	 * @desc Changes city_flags field in city_visualization table
 	 *
