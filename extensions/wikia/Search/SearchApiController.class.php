@@ -47,7 +47,7 @@ class SearchApiController extends WikiaApiController {
 	 */
 	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
-			throw new InvalidParameterApiException();
+			throw new InvalidParameterApiException( 'query' );
 		}
 
 		//Standard Wikia API response with pagination values
