@@ -34,8 +34,18 @@ $textColor: rgb(233,233,233);
 
 $backgroundColor: rgb(20,20,20);
 
+//light mode
+$lightBackgroundColor: white;
+$lightTextColor: #3a3a3a;
+$lightHeaderColor: rgb(140,160,56);
+$lightChevronsColor: rgb(204,204,204);
+
 html {
-	background: $backgroundColor;
+	background-color: $backgroundColor;
+
+	&.light {
+		background-color: $lightBackgroundColor;
+	}
 
 	font-size: 1em;
 
@@ -59,7 +69,12 @@ html {
 }
 
 body {
-	background: $backgroundColor;
+	background-color: $backgroundColor;
+
+	.light & {
+		background-color: $lightBackgroundColor;
+		color: $lightTextColor;
+	}
 
 	padding: 10px 20px;
 
@@ -76,11 +91,20 @@ h1, h2, h3{
 }
 
 #mw-content-text {
-	background: $backgroundColor;
+	background-color: $backgroundColor;
+
+	.light & {
+		background-color: $lightBackgroundColor;
+	}
 }
 
 #pageName {
 	color: $textColor;
+
+	.light & {
+		color: $lightBackgroundColor;
+	}
+
 	font-weight: 800;
 	font-size: 1.2em;
 }
