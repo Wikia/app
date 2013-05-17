@@ -57,15 +57,21 @@ class UserService extends Service {
 		if( isset( $ids[ 'user_id' ] ) ) {
 			foreach( $ids[ 'user_id' ] as $id ) {
 				$user = User::newFromId( $id );
-				$result[] = $user;
-				$this->cacheUser( $user );
+				//skip default user
+				if ( $user->getId() !== 0 ) {
+					$result[] = $user;
+					$this->cacheUser( $user );
+				}
 			}
 		}
 		if( isset( $ids[ 'user_name' ] ) ) {
 			foreach( $ids[ 'user_name' ] as $name ) {
 				$user = User::newFromName( $name );
-				$result[] = $user;
-				$this->cacheUser( $user );
+				//skip default user
+				if ( $user->getId() !== 0 ) {
+					$result[] = $user;
+					$this->cacheUser( $user );
+				}
 			}
 		}
 		wfProfileOut( __METHOD__ );
