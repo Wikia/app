@@ -34,7 +34,7 @@ $app->wg->append(
 /**
  * dependencies
  */
-require_once( "{$IP}/lib/predis/Predis.php" );//Redis
+require_once( "{$IP}/lib/vendor/predis/Predis.php" );//Redis
 require_once( "{$IP}/includes/wikia/S3Command.class.php" );//Amazon S3
 
 /**
@@ -101,7 +101,7 @@ function efPathFinderOnBeforePageDisplayAddButton( $article, $row ) {
 		$specialTitle = Title::newFromText( 'PathFinder', NS_SPECIAL );
 		$script = "<script>$('#WikiaPageHeader ul.commentslikes').append('<li><a href=\"{$specialTitle->getLocalURL()}/{$title->getPrefixedUrl()}\" " .
 			"class=\"wikia-button secondary\" >" . wfMsg( 'pathfinder-find-path' ) . "</a></li>');</script>";
-		
+
 		$app->wg->Out->addScript( $script );
 	}
 

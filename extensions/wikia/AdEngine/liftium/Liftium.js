@@ -323,7 +323,6 @@ Liftium._callAd = function (slotname, iframe) {
 		t = Liftium.fillerAd(slotname, "getNextTag returned false");
 		if (iframe) {
 			Liftium.clearPreviousIframes(slotname);
-			// TODO write PSA in iframe
 		} else {
 			document.write("<!-- Liftium Tag #" + t.tag_id + "-->\n");
 			document.write(t.tag);
@@ -723,31 +722,35 @@ Liftium.empty = function ( v ) {
 Liftium.e = Liftium.empty; // Shortcut to make the Javascript smaller
 
 
-/* Filler ad when we don't have anything better to display. Usually means an error, either with the code
- * or the chain
- * http://www.peacecorps.gov/index.cfm?shell=resources.media.psa.webbanners
+/**
+ * Filler ad when we don't have anything better to display. Usually means an error,
+ * either with the code or the chain
  */
-Liftium.fillerAd = function(size, message){
+Liftium.fillerAd = function(slotname, message){
 	// Pull the height/width out of size
-	size = size || "300x250"; // TODO/FIXME: figure out size by looking at containing div
+	var size, tag = '', tagId = -1;
 
-	var tag = '';
+	try {
+		size = slotname.split('_')[1];
+	} catch (e) {
+		size = '300x250';
+	}
+
 	if (!Liftium.e(message)){
 		tag += '<div class="LiftiumError" style="display:none">Liftium message: ' + message + "</div>";
 	}
 
 	if (size.match(/300x250/)){
-		tag += '<a href="http://www.peacecorps.gov/psa/webbanners/click?cid=psa15" target="_blank"><img src="http://www.peacecorps.gov/images/webbanners/full/300x250_legacy.gif" width="300" height="250" border="0" alt="Public Service Announcement"/></a>';
+		tagId = 2198;
 	} else if (size.match(/728x90/)){
-		tag += '<a href="http://www.peacecorps.gov/psa/webbanners/click?cid=psa1" target="_blank"><img src="http://www.peacecorps.gov/images/webbanners/full/728x90_thinklocal.gif" width="728" height="90" border="0" alt="Public Service Announcement"/></a>';
+		tagId = 2197;
 	} else if (size.match(/160x600/)){
-		tag += '<a href="http://www.peacecorps.gov/psa/webbanners/click?cid=psa14" target="_blank"><img src="http://www.peacecorps.gov/images/webbanners/full/160x600_legacy.gif" width="160" height="600" border="0" alt="Public Service Announcement"/></a>';
+		tagId = 2199;
 	} else {
-		// No PSA to display for this size.
 		// Note that this text is specifically referenced in unit tests
 		tag += '<span style="display: none">No available ads</span>';
 	}
-	return {tag_id: 'psa', network_name: "Internal Error PSA", tag: tag, size: size};
+	return {tag_id: tagId, network_name: "Internal Error", tag: tag, size: size};
 };
 
 
@@ -1019,10 +1022,7 @@ Liftium.getNextTag = function(slotname){
 		ga_action: slotname,
 		trackingMethod: 'ad'
 	});
-	// Return a PSA. Note: Do NOT insert the garaunteed fill here.
-	// If it happens to hop due to a misconfiguration, you'll create a
-	// never ending loop. Or so I've been told. ;)
-	// -Nick
+	// Return a default ad here (don't hop there!)
 	return Liftium.fillerAd(slotname, "No more tags left in the chain");
 };
 

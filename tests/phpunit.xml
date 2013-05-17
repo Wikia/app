@@ -29,6 +29,8 @@
 	</testsuite>
 	<testsuite name="Wikia Search Test Suite">
 		<directory>../extensions/wikia/Search/classes/Test</directory>
+		<directory>../extensions/wikia/GameGuides/tests/GameGuidesModelTest.php</directory>
+		<directory>../extensions/w3rdparty/LyricWiki/tests/ServerTest.php</directory>
 	</testsuite>
 	<testsuite name="LyricFind Test Suite">
 		<directory>../extensions/3rdparty/LyricWiki/LyricFind/tests/</directory>

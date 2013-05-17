@@ -48,10 +48,13 @@ class WikiaMobileService extends WikiaService {
 		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
 
-		//show ads only for anon users
-		if ( $this->wg->user->isAnon() ) {
+		$mobileAdService = new WikiaMobileAdService();
+		if ($mobileAdService->shouldLoadAssets()) {
 			$jsBodyPackages[] = 'wikiamobile_js_ads';
-			$advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
+			if ($mobileAdService->shouldShowAds()) {
+				$advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
+				$globalVariables['wgShowAds'] = true;
+			}
 		}
 
 		$nav = $this->app->renderView( 'WikiaMobileNavigationService', 'index' );

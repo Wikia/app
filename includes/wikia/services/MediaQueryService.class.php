@@ -169,12 +169,13 @@ class MediaQueryService extends WikiaService {
 	/**
 	 * get essential information about media
 	 * @param Title $media
+	 * @param $length - snippet length
 	 */
-	public function getMediaData( Title $media ) {
-		return $this->getMediaDataFromCache( $media );
+	public function getMediaData( Title $media, $length = 256 ) {
+		return $this->getMediaDataFromCache( $media, $length );
 	}
 
-	private function getMediaDataFromCache( Title $media ) {
+	private function getMediaDataFromCache( Title $media, $length = 256 ) {
 		wfProfileIn(__METHOD__);
 
 		if( !isset($this->mediaCache[ $media->getDBKey() ] ) ) {
@@ -193,7 +194,7 @@ class MediaQueryService extends WikiaService {
 				}
 				$this->mediaCache[ $media->getDBKey() ] = array(
 					'title' => $media->getText(),
-					'desc' => $articleService->getTextSnippet( 256 ),
+					'desc' => $articleService->getTextSnippet( $length ),
 					'type' => ( $isVideo ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE ),
 					'meta' => ( $videoHandler ? array_merge( $videoHandler->getMetadata(true), $videoHandler->getEmbedSrcData() ) : array() ),
 					'thumbUrl' => ( !empty($thumb) ? $thumb->getUrl() : false

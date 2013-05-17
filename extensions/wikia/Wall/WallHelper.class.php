@@ -609,20 +609,40 @@ class WallHelper {
 			$articleId = $wm->getId();
 		}
 
-		$title = Title::newFromText($articleId, NS_USER_WALL_MESSAGE);
+		$ci = $wm->getCommentsIndex();
+		if ( empty( $ci ) && ( $row->page_namespace == NS_USER_WALL ) ) {
+			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
+			$title = F::build( 'title', array( $row->page_title, NS_USER_WALL ), 'newFromText' );
 
-		$out = array(
-			'articleUrl' => $title->getPrefixedText(),
-			'articleFullUrl' => $wm->getMessagePageUrl(),
-			'articleTitleVal' => $articleTitleTxt,
-			'articleTitleTxt' => empty($articleTitleTxt) ? wfMsg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
-			'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
-			'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
-			'wallPageName' => $wm->getArticleTitle()->getText(),
-			'actionUser' => $userText,
-			'isThread' => $wm->isMain(),
-			'isNew' => $isNew,
-		);
+			$out = array(
+				'articleUrl' => $title->getPrefixedText(),
+				'articleFullUrl' => $title->getFullUrl(),
+				'articleTitleVal' => '',
+				'articleTitleTxt' => wfMsg( 'wall-recentchanges-wall-created-title' ),
+				'wallPageUrl' => $title->getLocalURL(),
+				'wallPageFullUrl' =>  $title->getFullUrl(),
+				'wallPageName' => $row->page_title,
+				'actionUser' => $userText,
+				'isThread' => $wm->isMain(),
+				'isNew' => $isNew
+			);
+
+		} else {
+			$title = Title::newFromText( $articleId, NS_USER_WALL_MESSAGE );
+
+			$out = array(
+				'articleUrl' => $title->getPrefixedText(),
+				'articleFullUrl' => $wm->getMessagePageUrl(),
+				'articleTitleVal' => $articleTitleTxt,
+				'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMsg( 'wall-recentchanges-deleted-reply-title' ) : $articleTitleTxt,
+				'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
+				'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
+				'wallPageName' => $wm->getArticleTitle()->getText(),
+				'actionUser' => $userText,
+				'isThread' => $wm->isMain(),
+				'isNew' => $isNew
+			);
+		}
 
 		wfProfileOut(__METHOD__);
 

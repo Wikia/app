@@ -2,7 +2,7 @@
 class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 3;
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		$fields = array(
 			'sponsoredImage' => array(
 				'type' => 'hidden',
@@ -81,13 +81,15 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEdi
 	public function renderEditor($data) {
 		$model = new MarketingToolboxModel();
 
-		if( !empty($data['values']['fileName']) ) {
-			$imageModel = new MarketingToolboxImageModel($data['values']['fileName']);
+		$fileNameField = $data['form']->getField('fileName');
+		if( !empty($fileNameField['value']) ) {
+			$imageModel = new MarketingToolboxImageModel($fileNameField['value']);
 			$data['file'] = $imageModel->getImageThumbData($model->getThumbnailSize());
 		}
 
-		if( !empty($data['values']['sponsoredImage']) ) {
-			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
+		$sponsoredImageField = $data['form']->getField('sponsoredImage');
+		if( !empty($sponsoredImageField['value']) ) {
+			$imageModel = new MarketingToolboxImageModel($sponsoredImageField['value']);
 			$data['sponsoredImage'] = $imageModel->getImageThumbData();
 		}
 		

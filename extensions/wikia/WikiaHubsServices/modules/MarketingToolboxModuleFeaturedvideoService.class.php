@@ -2,7 +2,7 @@
 class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleEditableService {
 	const MODULE_ID = 4;
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		return array(
 			'sponsoredImage' => array(
 				'type' => 'hidden',
@@ -76,12 +76,15 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 	public function renderEditor($data) {
 		$model = new MarketingToolboxModel();
 
-		if( !empty($data['values']['video']) ) {
-			$videoData = $model->getVideoData($data['values']['video'], $model->getThumbnailSize());
+		$videoField = $data['form']->getField('video');
+		if( !empty($videoField['value']) ) {
+			$videoData = $model->getVideoData($videoField['value'], $model->getThumbnailSize());
 			$data['videoThumb'] =  $videoData['videoThumb'];
 		}
-		if( !empty($data['values']['sponsoredImage']) ) {
-			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
+
+		$sponsoredImageField = $data['form']->getField('sponsoredImage');
+		if( !empty($sponsoredImageField['value']) ) {
+			$imageModel = new MarketingToolboxImageModel($sponsoredImageField['value']);
 			$data['sponsoredImage'] = $imageModel->getImageThumbData();
 		}
 		return parent::renderEditor($data);

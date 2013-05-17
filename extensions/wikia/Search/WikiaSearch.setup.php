@@ -9,8 +9,8 @@
 $app = F::app();
 $dir = dirname(__FILE__) . '/';
 
-require_once( $IP . '/lib/Solarium/Autoloader.php' );
-require_once( $IP . '/lib/simplehtmldom/simple_html_dom.php' );
+require_once( $IP . '/lib/vendor/Solarium/Autoloader.php' );
+require_once( $IP . '/lib/vendor/simplehtmldom/simple_html_dom.php' );
 Solarium_Autoloader::register();
 
 /**
@@ -32,8 +32,7 @@ spl_autoload_register( function( $class ) {
 			return true;
 		}
 		return false;
-	}
-	return true;
+	}  
 });
 
 /**

@@ -3,7 +3,8 @@
 		'MarketingToolbox',
 		'sponsoredImage',
 		array(
-			'inputData' => $fields['sponsoredImage'],
+			'form' => $form,
+			'fieldName' => 'sponsoredImage',
 			'fileUrl' => (isset($sponsoredImage->url) ? $sponsoredImage->url : ''),
 			'imageWidth' => (isset($sponsoredImage->width) ? $sponsoredImage->width : ''),
 			'imageHeight' => (isset($sponsoredImage->height) ? $sponsoredImage->height : ''),
@@ -20,30 +21,10 @@
 				<?= wfMessage('marketing-toolbox-edithub-video-name')->text() ?>
 				<?php endif ?>
 			</span>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['video'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['header'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['articleUrl'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['description'])
-				);
-			?>
+			<?=$form->renderField('video')?>
+			<?=$form->renderField('header')?>
+			<?=$form->renderField('articleUrl')?>
+			<?=$form->renderField('description')?>
 			<p class="alternative"><?= wfMessage('marketing-toolbox-hub-module-html-text-tip')->parse(); ?></p>
 		</div>
 		<div class="grid-1 alpha">

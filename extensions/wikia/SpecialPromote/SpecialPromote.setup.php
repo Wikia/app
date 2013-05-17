@@ -17,7 +17,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $dir = dirname(__FILE__) . '/';
-$wikiaHomePageExtDir = dirname(dirname(__FILE__)) . '/WikiaHomePage/';
 $promoteImageReviewExtDir = dirname(dirname(__FILE__)) . '/ImageReview/modules/PromoteImage/';
 
 // classes
@@ -26,28 +25,7 @@ $wgAutoloadClasses['SpecialPromoteHelper'] =  $dir . 'SpecialPromoteHelper.class
 $wgAutoloadClasses['UploadVisualizationImageFromFile'] =  $dir . 'UploadVisualizationImageFromFile.class.php';
 
 // needed task
-$wgAutoloadClasses['PromoteImageReviewTask'] =  $promoteImageReviewExtDir  . 'PromoteImageReviewTask.php';
-
-// Needed Wikia Home Page classes
-
-// helper hierarchy
-// row assigners
-
-$wgAutoloadClasses['WikiImageRowAssigner'] = $wikiaHomePageExtDir.'classes/WikiImageRowAssigner.class.php';
-$wgAutoloadClasses['WikiImageRowHelper'] = $wikiaHomePageExtDir.'classes/WikiImageRowHelper.class.php';
-$wgAutoloadClasses['WikiImageNameRowHelper'] = $wikiaHomePageExtDir.'classes/WikiImageNameRowHelper.class.php';
-$wgAutoloadClasses['WikiImageReviewStatusRowHelper'] = $wikiaHomePageExtDir.'classes/WikiImageReviewStatusRowHelper.class.php';
-
-// getdata helpers
-$wgAutoloadClasses['WikiGetDataHelper'] = $wikiaHomePageExtDir.'classes/WikiGetDataHelper.class.php';
-$wgAutoloadClasses['WikiGetDataForVisualizationHelper'] = $wikiaHomePageExtDir.'classes/WikiGetDataForVisualizationHelper.class.php';
-$wgAutoloadClasses['WikiGetDataForPromoteHelper'] = $wikiaHomePageExtDir.'classes/WikiGetDataForPromoteHelper.class.php';
-$wgAutoloadClasses['WikiDataGetter'] = $wikiaHomePageExtDir.'classes/WikiDataGetter.class.php';
-$wgAutoloadClasses['WikiDataGetterForSpecialPromote'] = $wikiaHomePageExtDir.'classes/WikiDataGetterForSpecialPromote.class.php';
-$wgAutoloadClasses['WikiDataGetterForVisualization'] = $wikiaHomePageExtDir.'classes/WikiDataGetterForVisualization.class.php';
-
-$wgAutoloadClasses['WikiaHomePageHelper'] =  $wikiaHomePageExtDir . 'WikiaHomePageHelper.class.php';
-$wgAutoloadClasses['CityVisualization'] =  $wikiaHomePageExtDir . 'CityVisualization.class.php';
+$wgAutoloadClasses['PromoteImageReviewTask'] = $promoteImageReviewExtDir  . 'PromoteImageReviewTask.php';
 
 // hooks
 $wgHooks['UploadVerification'][] = 'UploadVisualizationImageFromFile::UploadVerification';

@@ -77,6 +77,12 @@
 		<span class="username"><%= name %></span>
 		<span class="message"><%= text %></span>
 	</script>
+	<script type='text/template' id='me-message-template'>
+		<img width="<?= ChatAjax::CHAT_AVATAR_DIMENSION ?>" height="<?= ChatAjax::CHAT_AVATAR_DIMENSION ?>" class="avatar" src="<%= avatarSrc %>"/>
+		<span class="time"><%= timeStamp %></span>
+		<span class="username"><%= name %></span>
+		<span class="message me-message">* <%= name %> <%= text %></span>
+	</script>
 	<script type='text/template' id='inline-alert-template'>
 		<%= text %>
 	</script>

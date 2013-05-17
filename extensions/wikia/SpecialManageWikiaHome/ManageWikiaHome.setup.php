@@ -17,12 +17,20 @@ $wgExtensionCredits['specialpage'][] = array(
 		'Andrzej "nAndy" Łukaszewski',
 		'Marcin Maciejewski',
 		'Sebastian Marzjan',
+		'Damian Jóźwiak',
+		'Łukasz Konieczny'
 	),
 	'version' => 1.0
 );
 
 //classes
-$wgAutoloadClasses['ManageWikiaHomeController'] = $dir.'ManageWikiaHomeController.class.php';
+$app->registerController('ManageWikiaHomeController', $dir.'ManageWikiaHomeController.class.php');
+
+// models
+$app->registerController('SpecialManageWikiaHomeModel', $dir . '/models/SpecialManageWikiaHomeModel.class.php');
+
+// forms
+$app->registerClass('CollectionsForm', $dir.'/forms/CollectionsForm.class.php');
 
 //special page
 $wgSpecialPages['ManageWikiaHome'] = 'ManageWikiaHomeController';

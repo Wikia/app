@@ -438,9 +438,15 @@ class UserPagesHeaderController extends WikiaController {
 			// user blog page message
 			$this->userBlogPageMessage = wfMessage( 'user-blog-url-link', $this->userName )->inContentLanguage()->parse();
 		}
+		if ( !empty( $this->wg->EnableGoogleAuthorInfo )
+			&& !empty( $this->wg->GoogleAuthorLinks )
+			&& array_key_exists( $this->userName, $this->wg->GoogleAuthorLinks )
+		) {
+			$this->googleAuthorLink = $this->wg->GoogleAuthorLinks[$this->userName] . '?rel=author';
+		}
 		if ($this->app->wg->Request->getVal('action') == 'history' || $this->app->wg->Request->getCheck( 'diff' ) ) {
-                	$this->navLinks = Wikia::link($this->app->wg->title, wfMsg('oasis-page-header-back-to-article'), array(), array(), 'known');
-                }
+			$this->navLinks = Wikia::link($this->app->wg->title, wfMsg('oasis-page-header-back-to-article'), array(), array(), 'known');
+		}
 		// user stats (edit points, account creation date)
 		$this->stats = $this->getStats($this->userName);
 

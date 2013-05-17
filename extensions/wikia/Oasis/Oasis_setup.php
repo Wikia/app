@@ -79,6 +79,12 @@ function wfOasisSetup() {
 	$jsMessages->registerPackage('Oasis-mobile-switch', array(
 		'oasis-mobile-site'
 	));
+
+	// Generic messages that can be used by all extensions such as error messages
+	$jsMessages->registerPackage('Oasis-generic', array(
+		'oasis-generic-error',
+	));
+	$jsMessages->enqueuePackage('Oasis-generic', JSMessages::EXTERNAL);
 }
 
 // TODO: why do we have this code here? It should be placed in ThemeDesigner

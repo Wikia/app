@@ -10,9 +10,6 @@ try {
 	$app = F::app();
 	$db = wfgetDB( DB_MASTER, array(), $wgExternalSharedDB);
 
-	echo $wgExternalSharedDB . "\n";
-
-
 	function generateUserId( $db ) {
 		$res = $db->select("webmaster_user_accounts",
 			array('max(user_id) as maxid'),

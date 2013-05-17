@@ -246,22 +246,24 @@ class WallMessage {
 		return $out;
 	}
 
-	public function doSaveComment($body, $user, $summary = '', $force = false) {
+	public function doSaveComment($body, $user, $summary = '', $force = false, $preserveMetadata = false) {
 		wfProfileIn( __METHOD__ );
 
 		if($this->canEdit($user) || $force){
-			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true, $summary );
+			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true, $summary, $preserveMetadata );
 		}
 		if( !$this->isMain() ) {
 			// after changing reply invalidate thread cache
 			$this->getThread()->invalidateCache();
 		}
-		/*
-		* mech: EditPage calls Article with watchThis set to false
-		*       which causes this article comment to be unsubscribed.
-		*       so we re-subscribe (it's not a hack, it's a workaround)
-		*/
-		$this->addWatch($user);
+		if ( !$preserveMetadata ) { // it's only a request to modify metadata, so we probably don't need to add watch
+			/**
+			 * mech: EditPage calls Article with watchThis set to false
+			 *      in Wall we assume that save on message subscribes you to it
+			 *      so we re-scubscribe it here
+			*/
+			$this->addWatch( $user );
+		}
 		$out = $this->getArticleComment()->parseText($body);
 		wfProfileOut( __METHOD__ );
 		return $out;
@@ -269,8 +271,12 @@ class WallMessage {
 
 	public function doSaveMetadata($user, $summary = '', $force = false) {
 		wfProfileIn( __METHOD__ );
+		//@todo: as getRawText overwrites the metadata, we have to make a copy of it
+		//this is done only to quickly fix case 102384, this whole thing should be refactored
+		$metadataCopy = $this->getArticleComment()->mMetadata;
 		$body = $this->getRawText(true);
-		$out = $this->doSaveComment($body, $user, $summary, $force);
+		$this->getArticleComment()->mMetadata = $metadataCopy;
+		$out = $this->doSaveComment( $body, $user, $summary, $force, true );
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -378,7 +384,7 @@ class WallMessage {
 			$this->load(true);
 			if($notifyeveryone) {
 				$this->getArticleComment()->setMetaData('notify_everyone', time());
-				$this->doSaveMetadata($app->wg->User, wfMsgForContent('wall-message-update-highlight-summary') );
+				$this->doSaveMetadata( $app->wg->User, wfMsgForContent( 'wall-message-update-highlight-summary' ), false, true );
 				$rev = $this->getArticleComment()->mLastRevision;
 				$notif = WallNotificationEntity::createFromRev($rev, $this->cityId);
 				$wne->addNotificationToQueue($notif);
@@ -386,7 +392,7 @@ class WallMessage {
 				$this->getArticleComment()->removeMetadata('notify_everyone');
 				$pageId = $this->getId();
 				$wne->removeNotificationFromQueue($pageId);
-				$this->doSaveMetadata($app->wg->User, wfMsgForContent('wall-message-update-removed-highlight-summary') );
+				$this->doSaveMetadata( $app->wg->User, wfMsgForContent( 'wall-message-update-removed-highlight-summary' ), false, true );
 			}
 		}
 	}

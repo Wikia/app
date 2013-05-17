@@ -26,7 +26,7 @@ class ScreenplayVideoHandler extends VideoHandler {
 				$poster = ' poster="' . wfReplaceImageServer( $thumb->getUrl(), $fileObj->getTimestamp() ) . '"';
 			}
 
-			$result = '<video controls ' . $poster . '><source src="' . $url . '">' . wfMsg( 'wikiamobile-unsupported-video-download', $url ) . '</video>';
+			$result = array( 'html' => '<video controls ' . $poster . '><source src="' . $url . '">' . wfMsg( 'wikiamobile-unsupported-video-download', $url ) . '</video>' );
 		} else {
 			$metadata = $this->getMetadata( true );
 			$file = $this->getStreamUrl( $metadata );

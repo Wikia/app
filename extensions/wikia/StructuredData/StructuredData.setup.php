@@ -47,7 +47,7 @@ $wgAutoloadClasses['SDTypeWikiText'] =  $dir . 'typehandlers/SDTypeWikiText.php'
 $wgAutoloadClasses['SDTypeHandlerAnyType'] =  $dir . 'typehandlers/SDTypeHandlerAnyType.php';
 
 
-require_once( $dir . '../../../lib/HTTP/Request.php');
+require_once( $IP . '/lib/vendor/HTTP/Request.php');
 
 /**
  * hooks

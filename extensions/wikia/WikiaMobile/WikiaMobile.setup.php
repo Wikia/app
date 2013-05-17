@@ -138,6 +138,8 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'cityShort',
 			'wikiaPageIsHub',
 			'wikiaPageType',
+			'wgAdVideoTargeting',
+
 
 			//server/wiki
 			'wgServer',

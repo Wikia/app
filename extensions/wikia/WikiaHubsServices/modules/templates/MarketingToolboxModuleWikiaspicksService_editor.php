@@ -3,7 +3,8 @@
 			'MarketingToolbox',
 			'sponsoredImage',
 			array(
-				'inputData' => $fields['sponsoredImage'],
+				'form' => $form,
+				'fieldName' => 'sponsoredImage',
 				'fileUrl' => (isset($sponsoredImage->url) ? $sponsoredImage->url : ''),
 				'imageWidth' => (isset($sponsoredImage->width) ? $sponsoredImage->width : ''),
 				'imageHeight' => (isset($sponsoredImage->height) ? $sponsoredImage->height : ''),
@@ -14,36 +15,19 @@
 		<div class="grid-3 alpha">
 			<input type="button" class="wmu-show" value="<?= wfMessage('marketing-toolbox-hub-module-explore-add-photo')->text() ?>" />
 			<span class="filename-placeholder alternative">
-				<?php if( !empty($fields['fileName']['value']) ): ?>
-					<?= $fields['fileName']['value']; ?>
+				<? $fileNameField = $form->getField('fileName');?>
+				<?php if( !empty($fileNameField['value']) ): ?>
+					<?= $fileNameField['value']; ?>
 				<?php else: ?>
-					<?= wfMsg('marketing-toolbox-edithub-file-name') ?>
+					<?= wfMessage('marketing-toolbox-edithub-file-name')->text() ?>
 				<?php endif ?>
 			</span>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['fileName'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['moduleTitle'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['imageLink'])
-				);
-			?>
-			<?= $app->renderView(
-					'MarketingToolbox',
-					'FormField',
-					array('inputData' => $fields['text'])
-				);
-			?>
+
+			<?=$form->renderField('fileName'); ?>
+			<?=$form->renderField('moduleTitle'); ?>
+			<?=$form->renderField('imageLink'); ?>
+			<?=$form->renderField('text'); ?>
+
 			<p class="alternative"><?= wfMessage('marketing-toolbox-hub-module-html-text-tip')->parse(); ?></p>
 		</div>
 		<div class="grid-1 alpha">

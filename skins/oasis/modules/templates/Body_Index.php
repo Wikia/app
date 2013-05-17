@@ -99,10 +99,6 @@
 				// for InfoBox-Testing
 				if ($wg->EnableInfoBoxTest) {
 					echo $app->renderView('ArticleInfoBox', 'Index');
-				}
-
-				if ($wg->EnableCorporatePageExt && empty($wg->SuppressSlider)) {
-					echo $app->renderView('CorporateSite', 'Slider');
 				} ?>
 
 				<?= $bodytext ?>

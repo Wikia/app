@@ -7,8 +7,8 @@
  *
  */
 
-
-require_once( dirname(__FILE__). '/../../../lib/simplehtmldom/simple_html_dom.php' );
+global $IP;  // This is weird but necessary for unit tests
+require_once( $IP . '/lib/vendor/simplehtmldom/simple_html_dom.php' );
 
 class WikiaApiQueryEventsData extends ApiQueryBase {
 
@@ -778,7 +778,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			return $details;
 		}
 
-		/* use SimpleHTMLDom extensions here ( include in lib/simplehtmldom ) */
+		/* use SimpleHTMLDom extensions here ( include in lib/vendor/simplehtmldom ) */
 		$oHtmlDom = str_get_html( $this->mContent );
 
 		$metricsTypes = $this->_get_metrics_types();

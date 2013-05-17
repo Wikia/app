@@ -36,7 +36,7 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
 		
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getGroupResults' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getInterWiki' ) );
 		$pcf = $this->getMock( 'Wikia\Search\ProfiledClassFactory', [ 'get' ] );
 		$setMockStrings = array( 'Base', 'Grouping', 'GroupingSet', 'EmptySet', 'MatchGrouping' );
 		$setMocks = array();
@@ -159,7 +159,7 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockConfig
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getGroupResults' )
+		    ->method ( 'getInterWiki' )
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$pcf

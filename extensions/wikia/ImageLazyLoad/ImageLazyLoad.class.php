@@ -45,7 +45,7 @@ class ImageLazyLoad  {
 				$wgParser->lazyLoadedImagesCount += 1;
 
 				// Skip first few images in article
-				if ( $wgParser->lazyLoadedImagesCount < 2 ) {
+				if ( $wgParser->lazyLoadedImagesCount < 4 ) {
 					return true;
 				}
 			}
@@ -68,8 +68,12 @@ class ImageLazyLoad  {
 			/* are base64 encoded so they are "loaded" with the content itself */
 			$lazyImageAttribs[ 'onload' ] = 'if(typeof ImgLzy=="object"){ImgLzy.load(this)}';
 
-			$html = str_replace( $origImg, Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$origImg}</noscript>", $html );
-			$html = str_replace( $origImgAlt, Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$origImg}</noscript>", $html );
+			$count = 0;
+			$html = str_replace( $origImg, Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$origImg}</noscript>", $html, $count );
+			if($count == 0) {
+				$html = str_replace( $origImgAlt, Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$origImg}</noscript>", $html );
+			} else {
+			}
 
 		}
 

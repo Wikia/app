@@ -29,5 +29,4 @@ class MatchGrouping extends Grouping {
 		
 		$this->addHeaders( $result->getFields() );
 	}
-	
 }

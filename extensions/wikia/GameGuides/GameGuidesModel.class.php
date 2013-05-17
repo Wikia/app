@@ -208,14 +208,7 @@ class GameGuidesModel{
 
 			if ( empty( $ret ) ) {
 				
-				$wikiaSearchConfig = new Wikia\Search\Config();
-				$wikiaSearchConfig	->setNamespaces	( array( NS_MAIN ) )
-									->setQuery		( $term )
-									->setLength		( $totalLimit );
-
-				$container = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $wikiaSearchConfig ) );
-				$wikiaSearch = (new Wikia\Search\QueryService\Factory)->get( $container );
-				$resultSet = $wikiaSearch->search( $wikiaSearchConfig );
+				$resultSet = $this->getResultSet( $term, $totalLimit );
 
 				$ret['textResults'] = array();
 				$count = 0;
@@ -243,6 +236,21 @@ class GameGuidesModel{
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+	
+	/**
+	 * Perform a search query against NS_MAIN given a term and total limit
+	 * @param string $term
+	 * @param int $limit
+	 */
+	public function getResultSet( $term, $totalLimit ) {
+		$wikiaSearchConfig = new Wikia\Search\Config();
+		$wikiaSearchConfig	->setNamespaces	( array( NS_MAIN ) )
+							->setQuery		( $term )
+							->setLimit		( $totalLimit );
+
+		$wikiaSearch = (new Wikia\Search\QueryService\Factory)->getFromConfig( $wikiaSearchConfig );
+		return $wikiaSearch->search( $wikiaSearchConfig );
 	}
 
 	private function generateCacheKey( $token ){

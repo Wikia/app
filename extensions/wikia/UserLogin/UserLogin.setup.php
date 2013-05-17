@@ -35,7 +35,7 @@ $wgHooks['UserSendConfirmationMail'][] = 'UserLoginHooksHelper::onUserSendConfir
 $wgHooks['PreferencesGetEmailAuthentication'][] = 'UserLoginHooksHelper::onGetEmailAuthentication';
 $wgHooks['isValidEmailAddr'][] = 'UserLoginHooksHelper::isValidEmailAddr';
 $wgHooks['SavePreferences'][] = 'UserLoginHooksHelper::onSavePreferences';
-
+$wgHooks['AddNewAccount'][] = 'UserLoginHooksHelper::onAddNewAccount';
 // i18n mapping
 $wgExtensionMessagesFiles['UserLogin'] = $dir . 'UserLogin.i18n.php';
 $wgExtensionMessagesFiles['UserSignup'] = $dir . 'UserSignup.i18n.php';

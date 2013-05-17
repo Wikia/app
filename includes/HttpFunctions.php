@@ -729,7 +729,7 @@ class CurlHttpRequest extends MWHttpRequest {
 		} else {
 			$this->curlOptions[CURLOPT_CUSTOMREQUEST] = $this->method;
 			// Wikia change - @author: mech - begin
-			// add support for PUT requests - original implementation does not send the request body
+			// allow sending body for PUT requests
 			if ($this->method == 'PUT') {
 				$this->curlOptions[CURLOPT_POSTFIELDS] = $this->postData;
 			}
