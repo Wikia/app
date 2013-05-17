@@ -14,6 +14,23 @@ abstract class WikiaFilePage extends ImagePage {
 
 	const VIDEO_WIDTH = 670;
 
+	/**
+	 * Override the default action behavior for videos
+	 *
+	 * @return array - Associative array of action to class that should handle that action
+	 */
+	public function getActionOverrides() {
+		if ( $this->isVideo() ) {
+			return array( 'revert' => 'WikiaRevertVideoAction' );
+		} else {
+			return parent::getActionOverrides();
+		}
+	}
+
+	/**
+	 * Test for whether the current file page represents a video
+	 * @return bool - true if the file is a video, false if not
+	 */
 	protected function isVideo() {
 		$file = $this->getDisplayedFile();
 

@@ -39,11 +39,16 @@ $wgWikiaVideosFoundInTemplates = 0;
  */
 $app = F::app();
 $dir = dirname( __FILE__ );
+
+// Main classes
 $app->registerClass( 'ThumbnailVideo',		$dir . '/ThumbnailVideo.class.php' );
 $app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.class.php' );
 $app->registerClass( 'VideoHandlerHooks',	$dir . '/VideoHandlerHooks.class.php' );
 $app->registerClass( 'VideoFileUploader',	$dir . '/VideoFileUploader.class.php' );
 $app->registerClass( 'VideoHandlerHelper', $dir . '/VideoHandlerHelper.class.php' );
+
+// actions
+$app->registerClass( 'WikiaRevertVideoAction', $dir . '/actions/WikiaRevertVideoAction.php' );
 
 // api wrappers
 $app->registerClass( 'ApiWrapperFactory',		$dir . '/apiwrappers/ApiWrapperFactory.class.php' );
@@ -51,6 +56,7 @@ $app->registerClass( 'ApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' )
 $app->registerClass( 'PseudoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'IngestionApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'LegacyVideoApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
+
 // api exceptions and errors
 $app->registerClass( 'EmptyResponseException',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'VideoNotFoundException',	$dir . '/apiwrappers/ApiWrapper.class.php' );
@@ -61,8 +67,6 @@ $app->registerClass( 'VideoNotFound', $dir . '/apiwrappers/ApiWrapper.class.php'
 
 // file repo
 $app->registerClass( 'OldWikiaLocalFile',	$dir . '/filerepo/OldWikiaLocalFile.class.php' );
-//mech: missing WikiaFileRevertForm class breaks the unit tests, so I commented it out
-//$app->registerClass( 'WikiaFileRevertForm',	$dir . '/filerepo/WikiaFileRevertForm.class.php');
 $app->registerClass( 'WikiaForeignDBFile',	$dir . '/filerepo/WikiaForeignDBFile.class.php' );
 $app->registerClass( 'WikiaForeignDBViaLBRepo',	$dir . '/filerepo/WikiaForeignDBViaLBRepo.class.php' );
 $app->registerClass( 'WikiaLocalFile',		$dir . '/filerepo/WikiaLocalFile.class.php' );
@@ -223,6 +227,8 @@ $app->registerClass('IgnFeedIngester', $dir . '/feedingesters/IgnFeedIngester.cl
 $app->registerClass('AnyclipFeedIngester', $dir . '/feedingesters/AnyclipFeedIngester.class.php');
 $app->registerClass('OoyalaFeedIngester', $dir . '/feedingesters/OoyalaFeedIngester.class.php');
 $app->registerClass('IvaFeedIngester', $dir . '/feedingesters/IvaFeedIngester.class.php');
+
+$app->registerClass( 'OoyalaAsset', $dir . '/feedingesters/OoyalaAsset.class.php' );
 
 $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',
