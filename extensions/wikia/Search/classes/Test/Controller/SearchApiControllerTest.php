@@ -298,10 +298,10 @@ class SearchApiControllerTest extends BaseTest
 		$set->setAccessible( true );
 		try {
 			$set->invoke( $mockController, $mockConfig );
-		} catch ( \NotFoundApiException $e ) { }
+		} catch ( \InvalidParameterApiException $e ) { }
 		
 		$this->assertInstanceOf(
-				'NotFoundApiException',
+				'InvalidParameterApiException',
 				$e
 		);
 	}
