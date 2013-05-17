@@ -1,6 +1,28 @@
 @import "../../../../skins/oasis/css/core/color";
 
+.wikinav2 .WikiaPageHeader {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
 // For now, this callout style will be specific to lvs, but we may want to make it global in the future
 .lvs-callout {
-
+	background: $color-buttons;
+	color: $color-button-text;
+	display: none;
+	margin: 10px 0;
+	padding: 15px;
+	h1 {
+		font-size: 26px;
+		line-height: 33px;
+		margin: 0 0 15px;
+	}
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.close {
+		float: right;
+	}
 }
