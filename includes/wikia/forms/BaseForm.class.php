@@ -137,7 +137,7 @@ abstract class BaseForm {
 	protected function renderView($name) {
 		return $this->templateEngine
 			->setData(['form' => $this])
-			->render( dirname(__FILE__) . '/templates/' . $name . '.php');
+			->render( dirname(__FILE__) . '/templates/' . __CLASS__ . '_' . $name . '.php');
 	}
 
 }

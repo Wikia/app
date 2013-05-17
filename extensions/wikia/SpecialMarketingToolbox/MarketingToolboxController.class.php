@@ -41,6 +41,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn(__METHOD__);
 
+		$form = new ExampleForm();
+		print($form->render());die;
+
 		$this->wg->Out->setPageTitle($this->wf->msg('marketing-toolbox-title'));
 
 		if ($this->checkAccess()) {
