@@ -11,7 +11,7 @@ use Wikia\Search\Test\BaseTest, ReflectionMethod, Wikia\Search\QueryService\Depe
 class VideoTitleTest extends BaseTest
 {
 	/**
-	 * @covers Wikia\Search\QueryService\VideoTitle
+	 * @covers Wikia\Search\QueryService\Select\VideoTitle::getSelectQuery
 	 */
 	public function testGetSelectQuery() {
 		$mockClient = $this->getMockBuilder( 'Solarium_Client' )

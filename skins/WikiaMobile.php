@@ -28,6 +28,9 @@ class SkinWikiaMobile extends WikiaSkin {
 		//this is run to grab all global variables
 		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
+		//send list of supported videos so we can treat not supported ones differently
+		$globalVariables['supportedVideos'] = $this->wg->WikiaMobileSupportedVideos;
+
 		//global variables
 		//from Output class
 		//and from ResourceLoaderStartUpModule
@@ -41,7 +44,7 @@ class SkinWikiaMobile extends WikiaSkin {
 	}
 }
 
-class WikiaMobileTemplate extends WikiaBaseTemplate {
+class WikiaMobileTemplate extends WikiaSkinTemplate {
 	function execute() {
 		$this->app->setSkinTemplateObj( $this );
 		$response = $this->app->sendRequest( 'WikiaMobileService', 'index' );

@@ -17,6 +17,9 @@ $messages['en'] = array(
 	'video-page-see-less-info' => 'Show less info',
 	'video-page-description-heading' => 'Description',
 	'video-page-description-zero-state' => 'There is no description yet.',
+	'video-page-add-description-link-text' => 'Add a description.',
+	'video-page-default-description-header-and-text' => '==Description==
+Enter the description here.',
 	'video-page-file-list-pagination' => '$1 of $2',
 
 	/* file page */
@@ -40,6 +43,8 @@ $messages['qqq'] = array(
 	'video-page-see-less-info' => 'Label to collapse UI that shows more info',
 	'video-page-description-heading' => 'Description heading',
 	'video-page-description-zero-state' => 'Placeholder file page content that states there is no description',
+	'video-page-add-description-link-text' => 'This is a link that takes you to the edit page where you can add a description for a video or image. The description, once added, will be a section in the file page content.',
+	'video-page-default-description-header' => 'When there\'s no description for a file, and you click the link on a file page to add a description, this is the default text that appears in the editor.',
 	'video-page-file-list-pagination' => 'Pagination for file listing.  e.g. 1 of 2.  $1 is current page, $2 is total pages',
 	'video-page-views' => 'Shows total number of views (plays) of the video. $1 is a number of views (integer)',
 

@@ -28,7 +28,7 @@ class PhotoPopModel extends WikiaModel{
 	 * @see wfPaginateArray
 	 */
 	public function getWikisList(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$cacheKey = $this->getGlobalCacheKey( self::MEMCACHE_GLOBAL_KEY_TOKEN );
 		$ret = $this->loadFromCache( $cacheKey );
@@ -55,14 +55,14 @@ class PhotoPopModel extends WikiaModel{
 					}
 				}
 			} else {
-				$this->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				throw new WikiaException( 'WikiFactory variable \'' . self::WF_SWITCH_NAME . '\' not found' );
 			}
 
 			$this->storeInCache( $cacheKey , $ret );
 		}
 
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
@@ -81,7 +81,7 @@ class PhotoPopModel extends WikiaModel{
 	 * - string image the url to the image for the article (only in the article property collection)
 	 */
 	public function getGameContents( $categoryName, $imageWidth, $imageHeight ) {
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$cacheKey = $this->wf->memcKey( __METHOD__, $categoryName );
 		$contents = $this->loadFromCache( $cacheKey );
@@ -108,7 +108,7 @@ class PhotoPopModel extends WikiaModel{
 				$val = $resp->getVal( 'result' );
 				
 				if( $resp->getVal( 'status' ) == 'error' ) {
-					$this->app->wf->profileOut( __METHOD__ );
+					wfProfileOut( __METHOD__ );
 					throw new WikiaException( 'Fetching images error: ' . $val );
 				} else {
 					$images = $val;
@@ -127,20 +127,20 @@ class PhotoPopModel extends WikiaModel{
 					$this->storeInCache( $cacheKey , $contents );
 				}
 			} else {
-				$this->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				throw new WikiaException( "No data for '{$categoryName}'" );
 			}
 		}
 
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $contents;
 	}
 
 	public function getImageUrl( $titleName ){
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( empty( $titleName ) ) {
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return null;
 		}
 
@@ -155,13 +155,13 @@ class PhotoPopModel extends WikiaModel{
 			}
 		}
 
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $contents;
 	}
 
 	public function getSettings( $wikiId ){
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		$gameSettings = WikiFactory::getVarValueByName( self::WF_SETTINGS_NAME, $wikiId );
 		$matches = array();
@@ -176,12 +176,12 @@ class PhotoPopModel extends WikiaModel{
 			}
 		}
 
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return ( !empty( $game->category ) ) ? $game : null;
 	}
 
 	public function saveSettings( $wikiId, $categoryName, $iconUrl, $watermarkUrl ){
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$values = array();
 		$ret = false;
@@ -205,7 +205,7 @@ class PhotoPopModel extends WikiaModel{
 			$this->wg->memc->delete( $this->getGlobalCacheKey( self::MEMCACHE_GLOBAL_KEY_TOKEN ) );
 		}
 
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $ret;
 	}

@@ -93,12 +93,12 @@ abstract class BagOStuff {
 
 	/**
 	 * Delete all objects expiring before a certain date.
-	 * @param $date The reference date in MW format
-	 * @param $progressCallback Optional, a function which will be called 
+	 * @param $date mixed The reference date in MW format
+	 * @param $progressCallback callback Optional, a function which will be called
 	 *     regularly during long-running operations with the percentage progress
 	 *     as the first parameter.
 	 *
-	 * @return true on success, false if unimplemented
+	 * @return bool true on success, false if unimplemented
 	 */
 	public function deleteObjectsExpiringBefore( $date, $progressCallback = false ) {
 		// stub
@@ -113,6 +113,7 @@ abstract class BagOStuff {
 
 			return true;
 		}
+		return false;
 	}
 
 	public function replace( $key, $value, $exptime = 0 ) {
@@ -165,9 +166,11 @@ abstract class BagOStuff {
 	}
 
 	/**
-	 * Gets multiple items. Non-existent items get "false" as value.
+	 * Get multiple items at once
 	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 * @param $keys array List of keys
+	 * @return array Data associated with given keys, no data is indicated by "false"
 	 */
 	public function getMulti( $keys ) {
 		$data = array();
@@ -175,6 +178,26 @@ abstract class BagOStuff {
 			$data[$key] = $this->get($key);
 		}
 		return $data;
+	}
+
+	/**
+	 * Prefetch the following keys if local cache is enabled, otherwise don't do anything
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 * @param $keys array List of keys to prefetch
+	 */
+	public function prefetch( $keys ) {
+		// noop
+	}
+
+	/**
+	 * Remove value from local cache which is associated with a given key
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 * @param $key
+	 */
+	public function clearLocalCache( $key ) {
+		// noop
 	}
 
 }

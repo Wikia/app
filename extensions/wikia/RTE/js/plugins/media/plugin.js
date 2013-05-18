@@ -427,8 +427,6 @@ RTE.mediaEditor = {
 			wikitext: wikitext
 		};
 
-		RTE.getInstanceEditor().fire('editorAddImage');
-
 		this._add(wikitext, data);
 	},
 
@@ -442,8 +440,6 @@ RTE.mediaEditor = {
 			params: params,
 			wikitext: wikitext
 		};
-
-		RTE.getInstanceEditor().fire('editorAddVideo');
 
 		this._add(wikitext, data);
 	},
@@ -471,11 +467,10 @@ RTE.mediaEditor = {
 			// insert new media (don't reinitialize all placeholders)
 			RTE.tools.insertElement(newMedia, true);
 
-			// for MiniEditor, resize the editor after adding an image.
-			RTE.getInstanceEditor().fire('editorResize');
-
 			// setup added media
 			self.plugin.setupMedia(newMedia);
+
+			RTE.getInstanceEditor().fire('editorAddMedia');
 
 			editor.focus();
 		});

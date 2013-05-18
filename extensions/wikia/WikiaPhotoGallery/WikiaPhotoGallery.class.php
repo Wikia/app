@@ -823,13 +823,13 @@ class WikiaPhotoGallery extends ImageGallery {
 					if ($imgHeightCompensation > 0) $image['widthCompensation'] = $imgWidthCompensation;*/
 
 					$image['link'] = $imageData[2];
+
 					$linkAttribs = $this->parseLink($imageTitle->getLocalUrl(), $imageTitle->getText(), $image['link']);
 
 					$image['link'] = $linkAttribs['href'];
 					$image['linkTitle'] = $linkAttribs['title'];
 					$image['classes'] = $linkAttribs['class'];
 					$image['bytes'] = $fileObject->getSize();
-
 
 					if ($this->mParser && $fileObject->getHandler()) {
 						$fileObject->getHandler()->parserTransformHook($this->mParser, $fileObject);
@@ -857,6 +857,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				$imgStyle = null;
 
+				$isVideo = WikiaFileHelper::isFileTypeVideo( $fileObject );
+
 				# Fix 59913 - thumbnail goes as <img /> not as <a> background.
 				if ( $orientation != 'none' ) {
 
@@ -876,18 +878,20 @@ class WikiaPhotoGallery extends ImageGallery {
 
 					$imgStyle = ( ( !empty( $tempTopMargin ) ) ? " margin-top:".$tempTopMargin."px;" : null ).
 						( ( !empty( $tempLeftMargin ) ) ? " margin-left:".$tempLeftMargin."px;" : null );
+
+					if($isVideo) {
+						$image['classes'] .= ' force-lightbox';
+					}
 				}
 
 				$linkAttribs = array(
-					'class' => $image['classes'],
+					'class' => empty($image['thumbnail']) ? 'image-no-lightbox' : $image['classes'],
 					'href' => $image['link'],
 					'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
-					'style' => (!empty($image['thumbnail'])? '' : "height:{$image['height']}px;")
+					'style' => "height:{$image['height']}px; width:{$image['width']}px;"
 				);
 
 				if (!empty($image['thumbnail'])) {
-					$isVideo = WikiaFileHelper::isFileTypeVideo( $fileObject );
-
 					if ( $isVideo ) {
 						$thumbHtml = WikiaFileHelper::videoPlayButtonOverlay( $image['width'], $image['height'] );
 						$videoOverlay = WikiaFileHelper::videoInfoOverlay( $image['width'], $image['linkTitle'] );
@@ -1398,9 +1402,10 @@ class WikiaPhotoGallery extends ImageGallery {
 					// Get HTML for main video image
 					$htmlParams = array(
 						'file-link' => true,
-						'linkAttribs' => array( 'class' => 'wikiaPhotoGallery-slider' ),
+						'linkAttribs' => array( 'class' => 'wikiaPhotoGallery-slider force-lightbox' ),
 						'hideOverlay' => true,
 					);
+
 					$videoHtml = $file->transform( array( 'width' => $imagesDimensions['w'] ) )->toHtml( $htmlParams );
 
 					// Get play button overlay for video thumb
@@ -1959,7 +1964,10 @@ class WikiaPhotoGallery extends ImageGallery {
 			$result = F::app()->sendRequest(
 				'WikiaMobileMediaService',
 				'renderMediaGroup',
-				array( 'items' => $media ),
+				[
+					'items' => $media,
+					'parser' => $this->mParser
+				],
 				true
 			)->toString();
 		}

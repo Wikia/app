@@ -16,40 +16,32 @@ class AnyclipVideoHandler extends VideoHandler {
 
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
-		$autoPlayStr = ( $autoplay ) ? ', autoPlay:true' : '';
+		$autoPlayStr = ( $autoplay ) ? 'true' : 'false';
 		$ajaxStr = (bool) $isAjax;
-		$jsFile = 'http://player.anyclip.com/embed/AnyClipPlayerLite.min.js'; // Note: This file depends on jQuery
+
+		$playerId = 'AnyClipPlayer-' . $this->videoId . '-' . $ajaxStr;
+		$jsFile = 'http://player.anyclip.com/embed/AnyClipPlayer.js';
 		$sizeString = $this->getSizeString( $width, $height, 'inline' );
 
 		$html = <<<EOT
-<div id="AnyClipPlayer-{$this->videoId}-{$ajaxStr}" $sizeString></div>
+<div id="{$playerId}" {$sizeString}></div>
 EOT;
 
-		/* Notes on AnyClipPlayer.load():
-		 * Each parameter passed to load() is an array that represents a new player instance
-		 * Array[0] = DOM element and player id
-		 * Array[1] = flash vars to be added
-		 * Array[2] = params for object tag
-		 */
-		$html .= <<<EOT
-<script type="text/javascript">
-
-(function(window) {
-
-	var loadAnyClips = function(){
-		$.getScript('{$jsFile}').done(function() {
-			window.AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}"{$autoPlayStr}}, {wmode: "opaque"}]);
-		});
-	};
-
-	wgAfterContentAndJS.push(loadAnyClips);
-
-})(this);
-
-</script>
-EOT;
-
-		return $html;
+		return array(
+			'html' => $html,
+			'jsParams' => array(
+				'playerId'=> $playerId,
+				'videoId'=> $this->videoId,
+				'width'=> $width,
+				'height'=> $height,
+				'autoPlay'=> $autoPlayStr,
+			),
+			'init' => 'wikia.videohandler.anyclip',
+			'scripts' => array(
+				$jsFile,
+				"extensions/wikia/VideoHandlers/js/handlers/Anyclip.js"
+			),
+		);
 	}
 
 }

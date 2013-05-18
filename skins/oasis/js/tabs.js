@@ -27,7 +27,7 @@ jQuery(function($){
 			$('[data-tab-body="'+previousTabName+'"]').removeClass('selected');
 			$('[data-tab-body="'+newTabName+'"]').addClass('selected');
 
-			// Let extensions react to tab switch event.
+			// Let extensions react to tab switch event. Used in FilePage.js and tables.js
 			$(window).trigger('wikiaTabClicked', [newTabName]);
 
 		} else {

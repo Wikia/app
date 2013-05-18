@@ -30,7 +30,7 @@ class JSMessagesHelper {
 	 * @return string - cache buster value
 	 */
 	public function getMessagesCacheBuster() {
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$parts = array(
 			$this->app->wg->StyleVersion,
@@ -40,7 +40,7 @@ class JSMessagesHelper {
 
 		$ret = implode('.', $parts);
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 

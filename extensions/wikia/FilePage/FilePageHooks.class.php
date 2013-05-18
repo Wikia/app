@@ -10,18 +10,20 @@ class FilePageHooks extends WikiaObject{
 	}
 
 	/**
-	 * @param Title $oTitle
+	 * Determine which FilePage to show based on skin and File type (image/video)
 	 *
-	 * @return WikiaVideoPage if file is video
+	 * @param Title $oTitle
+	 * @param Article $oArticle
 	 */
 	public function onArticleFromTitle( &$oTitle, &$oArticle ){
+		global $wgEnableVideoPageRedesign;
 
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
-			$oFile = wfFindFile( $oTitle );
-			if ( WikiaFileHelper::isVideoFile( $oFile ) ){
-				$oArticle = new WikiaVideoPage( $oTitle );
+
+			if ( F::app()->checkSkin( 'oasis' ) &&  !empty( $wgEnableVideoPageRedesign ) ) {
+				$oArticle = new FilePageTabbed( $oTitle );
 			} else {
-				$oArticle = new WikiaImagePage( $oTitle );
+				$oArticle = new FilePageFlat( $oTitle );
 			}
 		}
 
@@ -34,24 +36,33 @@ class FilePageHooks extends WikiaObject{
 	 * Add JS and CSS to File Page
 	 */
 	public function onBeforePageDisplay( OutputPage $out, $skin ) {
+		global $wgEnableVideoPageRedesign;
+
 		$app = F::app();
 
 		wfProfileIn(__METHOD__);
-		// load assets when File Page redesign is enabled and on the File Page
-		if( !empty($app->wg->EnableVideoPageRedesign) && $app->wg->Title->getNamespace() == NS_FILE ) {
-			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-			$scssPackage = 'file_page_css';
-			$jsPackage = 'file_page_js';
+		if( $app->wg->Title->getNamespace() == NS_FILE ) {
+			$assetsManager = AssetsManager::getInstance();
+			$wikiaFilePageJs = 'wikia_file_page_js';
 
-			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
-				$out->addStyle( $url );
-			}
-
-			foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
+			foreach ( $assetsManager->getURL( $wikiaFilePageJs ) as $url ) {
 				$out->addScript( "<script src=\"{$url}\"></script>" );
 			}
-		}
 
+			// load assets when File Page redesign is enabled
+			if( $app->checkSkin( 'oasis' ) &&  !empty( $wgEnableVideoPageRedesign ) ) {
+				$filePageTabbedCss = 'file_page_tabbed_css';
+				$filePageTabbedJs = 'file_page_tabbed_js';
+
+				foreach ( $assetsManager->getURL( $filePageTabbedCss ) as $url ) {
+					$out->addStyle( $url );
+				}
+
+				foreach ( $assetsManager->getURL( $filePageTabbedJs ) as $url ) {
+					$out->addScript( "<script src=\"{$url}\"></script>" );
+				}
+			}
+		}
 		wfProfileOut(__METHOD__);
 		return true;
 	}

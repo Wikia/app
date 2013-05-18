@@ -11,10 +11,10 @@ class VideoService extends WikiaModel {
 	 * @return string error message or array( $videoTitle, $videoPageId, $videoProvider )
 	 */
 	public function addVideo( $url ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( empty( $url ) ) {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $this->wf->Msg('videos-error-no-video-url');
 		}
 
@@ -45,11 +45,11 @@ class VideoService extends WikiaModel {
 				throw new Exception( $this->wf->Msg('videos-error-old-type-video') );
 			}
 		} catch ( Exception $e ) {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $e->getMessage();
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return array( $videoTitle, $videoPageId, $videoProvider );
 	}

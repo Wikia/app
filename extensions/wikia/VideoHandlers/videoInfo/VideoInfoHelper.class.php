@@ -13,7 +13,7 @@ class VideoInfoHelper extends WikiaModel {
 	 * @return array|null  $video
 	 */
 	public function getVideoDataFromTitle( $title, $premiumOnly = false ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( is_string($title) ) {
 			$title = Title::newFromText( $title, NS_FILE );
@@ -22,7 +22,7 @@ class VideoInfoHelper extends WikiaModel {
 		$file = $this->wf->FindFile( $title );
 		$video = $this->getVideoDataFromFile( $file, $premiumOnly );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $video;
 	}
@@ -34,12 +34,12 @@ class VideoInfoHelper extends WikiaModel {
 	 * @return array|null  $video
 	 */
 	public function getVideoDataFromFile( $file, $premiumOnly = false ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$video = null;
 
 		if ( !self::videoInfoExists() ) {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $video;
 		}
 
@@ -73,7 +73,7 @@ class VideoInfoHelper extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $video;
 	}
@@ -85,7 +85,7 @@ class VideoInfoHelper extends WikiaModel {
 	 * @return VideoInfo|null $videoInfo
 	 */
 	public function getVideoInfoFromTitle( $title, $premiumOnly = false ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$videoInfo = null;
 
@@ -94,7 +94,7 @@ class VideoInfoHelper extends WikiaModel {
 			$videoInfo = new VideoInfo( $videoData );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $videoInfo;
 	}
@@ -106,12 +106,12 @@ class VideoInfoHelper extends WikiaModel {
 	public static function getTotalViewsFromDB() {
 		$app = F::app();
 
-		$app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$videoList = array();
 
 		if ( !self::videoInfoExists() ) {
-			$app->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $videoList;
 		}
 
@@ -130,7 +130,7 @@ class VideoInfoHelper extends WikiaModel {
 			$videoList[$key][$hashTitle] = $row->views_total;
 		}
 
-		$app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $videoList;
 	}
@@ -195,7 +195,7 @@ class VideoInfoHelper extends WikiaModel {
 	 * @return boolean
 	 */
 	public function renameVideo( $oldTitle, $newTitle ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$affected = false;
 		$videoInfo = VideoInfo::newFromTitle( $oldTitle->getDBKey() );
@@ -211,7 +211,7 @@ class VideoInfoHelper extends WikiaModel {
 			$affected = $videoInfo->addVideo();
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $affected;
 	}
@@ -223,7 +223,7 @@ class VideoInfoHelper extends WikiaModel {
 	 * @return boolean $affected
 	 */
 	public function restorePremiumVideo( $title, $userId ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$affected = false;
 		if ( $title instanceof Title ) {
@@ -239,7 +239,7 @@ class VideoInfoHelper extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $affected;
 	}

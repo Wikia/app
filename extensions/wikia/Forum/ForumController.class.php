@@ -121,12 +121,12 @@ class ForumController extends WallBaseController {
 	}
 
 	public function boardThread() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->setIsForum();
 		$wallMessage = $this->getWallMessage();
 		if ( !($wallMessage instanceof WallMessage) ) {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			$this->forward( __CLASS__, 'message_error' );
 			return true;
 		}
@@ -176,7 +176,7 @@ class ForumController extends WallBaseController {
 		$this->response->setVal( 'iso_timestamp', $lastReply->getCreatTime( TS_ISO_8601 ) );
 		$this->response->setVal( 'fmt_timestamp', $this->wg->Lang->timeanddate( $lastReply->getCreatTime( TS_MW ) ) );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function breadCrumbs() {

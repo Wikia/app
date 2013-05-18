@@ -22,7 +22,7 @@ var AdLogicShortPage = function (document) {
 
 	getPageHeight = function () {
 		if (!pageHeight) {
-			pageHeight = document.documentElement.offsetHeight;
+			pageHeight = document.documentElement.scrollHeight;
 		}
 		return pageHeight;
 	};

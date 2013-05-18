@@ -77,24 +77,25 @@ var CreateWikiaPoll = {
 
 	editExisting: function(placeholder) {
 		var pollData = $(placeholder).getData(),
+			createWikiaPollContainer = $("#CreateWikiaPoll"), 
 			index,
 			li;
 
 		// add hidden form element for pollId
-		$("#CreateWikiaPoll").find("form").append('<input type="hidden" name="pollId" value="' + pollData.pollid + '">');
+		createWikiaPollContainer.find("form").append('<input type="hidden" name="pollId" value="' + pollData.pollId + '">');
 
 		// store data in main dom element for use when saving
-		$("#CreateWikiaPoll").data(pollData);
+		createWikiaPollContainer.data(pollData);
 
 		// populate question field
-		$("#CreateWikiaPoll").find("input[name='question']").val(pollData.question);
+		createWikiaPollContainer.find("input[name='question']").val(pollData.question);
 
 		// remove 3 empty answer fields from the default template
-		$("#CreateWikiaPoll li:not('.new-item')").remove();
+		createWikiaPollContainer.find("li:not('.new-item')").remove();
 
 		// generate answer list elements
 		for (index in pollData.answers) {
-			li = $("#CreateWikiaPoll .new-item").clone().removeClass("new-item").appendTo("#CreateWikiaPoll ul");
+			li = createWikiaPollContainer.find(".new-item").clone().removeClass("new-item").appendTo( createWikiaPollContainer.find("ul") );
 			li.find("input").val(pollData.answers[index]);
 		}
 
@@ -104,8 +105,8 @@ var CreateWikiaPoll = {
 
 	onSave: function(event) {
 		event.preventDefault();
-
-		if ($("#CreateWikiaPoll").data('pollid')) {
+		
+		if ($("#CreateWikiaPoll").data('pollId')) {
 			// editing existing poll
 			$.get(wgScript + '?action=ajax&rs=WikiaPollAjax&method=update', $("#CreateWikiaPoll").find("form").serialize(), function(data) {
 				if ($("#CreateWikiaPoll").closest(".modalWrapper").exists()) { // in modal

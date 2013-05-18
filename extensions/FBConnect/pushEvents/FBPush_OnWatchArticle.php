@@ -24,10 +24,12 @@ class FBPush_OnWatchArticle extends FBConnectPushEvent {
 		wfProfileIn(__METHOD__); 
 
 		if ( $wgRequest->getVal('action','') == 'submit' ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		
 		if( $article->getTitle()->getFirstRevision() == null ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		

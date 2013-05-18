@@ -16,7 +16,7 @@ class PhalanxContentBlock extends WikiaObject {
 	}
 
 	public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = F::build('PhalanxContentModel', array( $this->wg->Title ) );
 		
@@ -47,7 +47,7 @@ class PhalanxContentBlock extends WikiaObject {
 			$editPage->spamPageWithContent( $error_msg );
 		}
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
@@ -58,7 +58,7 @@ class PhalanxContentBlock extends WikiaObject {
 	 * any blacklisted phrase.
 	 */
 	public function abortMove( $oldTitle, $newTitle, $user, &$error, $reason ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = F::build('PhalanxContentModel', array( $newTitle ) );
 		$ret = $phalanxModel->match_title();
@@ -80,12 +80,12 @@ class PhalanxContentBlock extends WikiaObject {
 			$error .= $phalanxModel->reasonBlock();
 		}
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public function editContent( $textbox, &$error_msg, $phalanxModel = null ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( is_null( $phalanxModel ) ) {
 			$phalanxModel = F::build('PhalanxContentModel', array( $this->wg->Title ) );
@@ -108,12 +108,12 @@ class PhalanxContentBlock extends WikiaObject {
 			$error_msg = $phalanxModel->contentBlock();
 		}
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 	
 	public function checkContent( $textbox, &$msg ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = F::build('PhalanxContentModel', array( $this->wg->Title ) );
 		
@@ -123,7 +123,7 @@ class PhalanxContentBlock extends WikiaObject {
 			$msg = $phalanxModel->textBlock();
 		}
 		
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 }

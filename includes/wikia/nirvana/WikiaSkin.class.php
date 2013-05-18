@@ -71,12 +71,12 @@ abstract class WikiaSkin extends SkinTemplate {
 	 * @return string an html fragment containing the elements
 	 */
 	public function getHeadItems() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		//filter out elements that will be processed by getScripts or getStyles
 		$res = preg_replace( array( self::SCRIPT_REGEX, self::LINK_REGEX, self::STYLE_REGEX ), '', $this->wg->out->getHeadItems() );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
@@ -87,7 +87,7 @@ abstract class WikiaSkin extends SkinTemplate {
 	 * array( 'url' => 'asset URL, null if inlined code', 'tag' => 'the original tag found in the HTML output' );
 	 */
 	public function getScripts(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$scriptTags = $this->wg->out->getScriptsOnly() . $this->wg->out->getHeadItems();
 		$am = F::build( 'AssetsManager', array(), 'getInstance' );
@@ -117,7 +117,7 @@ abstract class WikiaSkin extends SkinTemplate {
 			}
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
@@ -128,7 +128,7 @@ abstract class WikiaSkin extends SkinTemplate {
 	 * array( 'url' => 'asset, null if inlined code', 'tag' => 'the original tag found in the HTML output' );
 	 */
 	public function getStyles(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		//there are a number of extension that use addScript to append link tags for stylesheets, need to include those too
 		$stylesTags = $this->wg->out->buildCssLinks(). $this->wg->out->getHeadItems() . $this->wg->out->getScriptsOnly();
@@ -171,7 +171,7 @@ abstract class WikiaSkin extends SkinTemplate {
 			}
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
@@ -234,7 +234,7 @@ abstract class WikiaSkin extends SkinTemplate {
 
 	static function makeInlineVariablesScript( $data ) {
 		$wf = F::app()->wf;
-		$wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if( $data ) {
 			$r = array();
@@ -244,10 +244,10 @@ abstract class WikiaSkin extends SkinTemplate {
 			}
 
 			$js = Html::inlineScript( "\nvar " . implode( ",\n", $r ) . ";\n");
-			$wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $js;
 		} else {
-			$wf->profileOut(__METHOD__ );
+			wfProfileOut(__METHOD__ );
 			return '';
 		}
 	}

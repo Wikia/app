@@ -46,7 +46,7 @@ class UploadPhotosController extends WikiaController {
 			$this->statusMessage = $this->uploadMessage( $this->status, null );
 		} else if (empty($this->wg->EnableUploads)) {
 			// BugId:6122
-			$this->statusMessage = wfMsg('uploaddisabled');
+			$this->statusMessage = wfMessage('uploaddisabled')->text();
 		} else {
 			$details = $up->verifyUpload();
 
@@ -98,7 +98,7 @@ class UploadPhotosController extends WikiaController {
 
 		$existsWarning = SpecialUpload::ajaxGetExistsWarning($wgRequest->getVal('wpDestFile'));
 		if(!empty($existsWarning) && $existsWarning != '&#160;') {
-			$existsWarning = '<h3>'.wfMsg('uploadwarning').'</h3>'.$existsWarning;
+			$existsWarning = '<h3>'.wfMessage('uploadwarning')->text().'</h3>'.$existsWarning;
 		} else {
 			$existsWarning = '';
 		}
@@ -117,16 +117,16 @@ class UploadPhotosController extends WikiaController {
 				break;
 
 			case UploadBase::EMPTY_FILE:
-				$msg = wfMsgHtml( 'emptyfile' );
+				$msg = wfMessage( 'emptyfile' )->escaped();
 				break;
 
 			case UploadBase::MIN_LENGTH_PARTNAME:
-				$msg = wfMsgHtml( 'minlength1' );
+				$msg = wfMessage( 'minlength1' )->escaped();
 				break;
 
 			case UploadBase::ILLEGAL_FILENAME:
 				$filtered = $details['filtered'];
-				$msg = wfMsgWikiHtml( 'illegalfilename', htmlspecialchars( $filtered ) );
+				$msg = wfMessage('illegalfilename', htmlspecialchars( $filtered ))->parse();
 				break;
 
 			case UploadBase::OVERWRITE_EXISTING_FILE:
@@ -134,29 +134,32 @@ class UploadPhotosController extends WikiaController {
 				break;
 
 			case UploadBase::FILETYPE_MISSING:
-				$msg = wfMsgExt( 'filetype-missing', array ( 'parseinline' ) );
+				$msg = wfMessage( 'filetype-missing' )->escaped();
 				break;
 
 			case UploadBase::FILETYPE_BADTYPE:
 				$finalExt = $details['finalExt'];
-				$msg = wfMsgExt( 'filetype-banned-type',
-						array( 'parseinline' ),
-						htmlspecialchars( $finalExt ),
-						$wgLang->commaList( $wgFileExtensions ),
-						$wgLang->formatNum( count($wgFileExtensions) )
-					);
+				$msg = wfMessage( 'filetype-banned-type',
+					htmlspecialchars( $finalExt ),
+					$wgLang->commaList( $wgFileExtensions ),
+					$wgLang->formatNum( count($wgFileExtensions) )
+				)->parse();
 				break;
 
 			case UploadBase::VERIFICATION_ERROR:
-				$msg = wfMsgHtml($details['details'][0]);
+				$msg = wfMessage($details['details'][0])->escaped();
 				break;
 
 			case UploadBase::UPLOAD_VERIFICATION_ERROR:
 				$msg = $details['error'];
 				break;
 
+			case UploadBase::FILE_TOO_LARGE:
+				$msg = wfMessage( 'largefileserver' )->escaped();
+				break;
+
 			case self::UPLOAD_PERMISSION_ERROR:
-				$msg = wfMsg( 'badaccess' );
+				$msg = wfMessage( 'badaccess' )->escaped();
 				break;
 
 			default:
@@ -167,7 +170,7 @@ class UploadPhotosController extends WikiaController {
 	}
 
 	private function uploadWarning($warnings) {
-		$msg = '<h2>'.wfMsgHtml('uploadwarning').'</h2><ul class="warning">';
+		$msg = '<h2>'.wfMessage('uploadwarning')->escaped().'</h2><ul class="warning">';
 
 		foreach($warnings as $warning => $args) {
 			if( $warning == 'exists' ) {
@@ -175,15 +178,15 @@ class UploadPhotosController extends WikiaController {
 			} elseif( $warning == 'duplicate' ) {
 				$msg .= SpecialUpload::getDupeWarning( $args );
 			} elseif( $warning == 'duplicate-archive' ) {
-				$msg .= "\t<li>" . wfMsgExt( 'file-deleted-duplicate', 'parseinline',
-						array( Title::makeTitle( NS_FILE, $args )->getPrefixedText() ) )
+				$msg .= "\t<li>" . wfMessage( 'file-deleted-duplicate',
+						array( Title::makeTitle( NS_FILE, $args )->getPrefixedText() ) )->parse()
 					. "</li>\n";
 			} else {
 				if ( $args === true )
 					$args = array();
 				elseif ( !is_array( $args ) )
 					$args = array( $args );
-				$msg .= "\t<li>" . wfMsgExt( $warning, 'parseinline', $args ) . "</li>\n";
+				$msg .= "\t<li>" . wfMessage( $warning, $args )->parse() . "</li>\n";
 			}
 		}
 

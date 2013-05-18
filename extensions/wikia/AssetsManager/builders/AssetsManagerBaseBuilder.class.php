@@ -107,11 +107,11 @@ class AssetsManagerBaseBuilder {
 
 		if($useYUI) {
 			$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');
-			shell_exec("nice -n 15 java -jar {$IP}/lib/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}");
+			shell_exec("nice -n 15 java -jar {$IP}/lib/vendor/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}");
 			$out = file_get_contents($tempOutFile);
 			unlink($tempOutFile);
 		} else {
-			$jsmin = "{$IP}/lib/jsmin";
+			$jsmin = "{$IP}/lib/vendor/jsmin";
 			$out = shell_exec("cat $tempInFile | $jsmin");
 		}
 

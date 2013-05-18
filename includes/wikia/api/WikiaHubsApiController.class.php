@@ -27,7 +27,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	 * @example &module=1&vertical=2&ts=1359504000&lang=de
 	 */
 	public function getModuleData() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		$moduleId = $this->request->getInt(self::PARAMETER_MODULE);
 		$verticalId = $this->request->getInt(self::PARAMETER_VERTICAL);
@@ -71,7 +71,7 @@ class WikiaHubsApiController extends WikiaApiController {
 			)
 		);
 		
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	protected function getModel() {

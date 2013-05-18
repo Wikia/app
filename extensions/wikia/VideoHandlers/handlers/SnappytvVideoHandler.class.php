@@ -26,7 +26,8 @@ EOT;
 </object>
 EOT;
 		}
-		return $html;
+
+		return array( 'html' => $html );
 	}
 
 	public function getEmbedUrl() {

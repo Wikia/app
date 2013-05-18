@@ -17,7 +17,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	 */
 	protected $model = null;
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		$fields = array();
 		$boxesCount = $this->getModel()->getBoxesCount();
 
@@ -176,8 +176,9 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		$model = new MarketingToolboxModel();
 		$imageSize = $model->getThumbnailSize();
 		for ($i = 1; $i <= $data['boxesCount']; $i++) {
-			if (!empty($data['values']['photo' . $i])) {
-				$imageData = $this->getImageInfo($data['values']['photo' . $i], $imageSize);
+			$photoField = $data['form']->getField('photo' . $i);
+			if (!empty($photoField['value'])) {
+				$imageData = $this->getImageInfo($photoField['value'], $imageSize);
 				$data['photos'][$i]['url'] = $imageData->url;
 				$data['photos'][$i]['imageWidth'] = $imageData->width;
 				$data['photos'][$i]['imageHeight'] = $imageData->height;

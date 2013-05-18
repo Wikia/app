@@ -280,14 +280,6 @@ class WikiStats {
 					__METHOD__,
 					array('ORDER BY' => 'ts DESC')
 				);
-
-			} else {
-				$oRow = $dbr->selectRow(
-					'events_log',
-					array( 'unix_timestamp(el_end) as lastdate' ),
-					array( 'el_type' => self::EVENT_LOG_TYPE ),
-					__METHOD__
-				);
 			}
 			if ( isset($oRow) && isset($oRow->lastdate) ) {
 				$this->mUpdateDate = $oRow->lastdate ;

@@ -34,12 +34,11 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => null,
-					'excludeBlacklist' => [],
+					'wikiLang' => null
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
-					'dw.hub_id' => array(2, 3, 9)
+					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle')
 				)
 			),
 			array(
@@ -49,12 +48,11 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => null,
-					'excludeBlacklist' => [],
+					'wikiLang' => null
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
-					'dw.hub_id' => array(2, 3, 9)
+					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle')
 				)
 			),
 			array(
@@ -64,13 +62,12 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 2233,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => null,
-					'excludeBlacklist' => [],
+					'wikiLang' => null
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					'fw1.wiki_id' => 2233,
-					'dw.hub_id' => array(2, 3, 9)
+					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle')
 				)
 			),
 			array(
@@ -80,13 +77,12 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 2233,
 					'verticalId' => 1,
 					'wikiWord' => null,
-					'wikiLang' => null,
-					'excludeBlacklist' => [],
+					'wikiLang' => null
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					'fw1.wiki_id' => 2233,
-					'dw.hub_id' => 1
+					'fw1.hub_name' => null
 				)
 			),
 			array(
@@ -96,13 +92,12 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'verticalId' => 0,
 					'wikiWord' => 'testWord',
-					'wikiLang' => null,
-					'excludeBlacklist' => [],
+					'wikiLang' => null
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					"dw.url like '%testWord%' OR dw.title like '%testWord%'",
-					'dw.hub_id' => array(2, 3, 9),
+					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle')
 				)
 			),
 			array(
@@ -112,12 +107,11 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => 'testLang',
-					'excludeBlacklist' => [],
+					'wikiLang' => 'testLang'
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
-					'dw.hub_id' => array(2, 3, 9),
+					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle'),
 					'dw.lang' => 'testLang'
 				)
 			),
@@ -128,14 +122,13 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 666,
 					'wikiWord' => 'testWord2',
 					'verticalId' => 5,
-					'wikiLang' => 'testLang',
-					'excludeBlacklist' => [],
+					'wikiLang' => 'testLang'
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
 					'fw1.wiki_id' => 666,
 					"dw.url like '%testWord2%' OR dw.title like '%testWord2%'",
-					'dw.hub_id' => 5,
+					'fw1.hub_name' => null,
 					'dw.lang' => 'testLang'
 				)
 			),

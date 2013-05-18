@@ -80,6 +80,9 @@ $app->registerHook( 'ParserFirstCallInit', 'ForumHooksHelper', 'onParserFirstCal
 // Hook for topic red links
 $app->registerHook( 'LinkBegin', 'ForumHooksHelper', 'onLinkBegin' );
 
+// Fix URLs of thread pages when purging them.
+$app->registerHook( 'TitleGetSquidURLs', 'ForumHooksHelper', 'onTitleGetSquidURLs' );
+
 include ($dir . '/Forum.namespace.setup.php');
 
 //add this namespace to list of wall namespaces

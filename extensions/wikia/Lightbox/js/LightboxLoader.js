@@ -97,7 +97,7 @@ var LightboxLoader = {
 				// TODO: refactor wikia slideshow
 				} else if($this.hasClass('wikia-slideshow-popout')) {
 					var $slideshowImg = $this.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').find('img').first();
-					fileKey = $slideshowImg.attr('data-image-name') || $slideshowImg.attr('data-vide-name');
+					fileKey = $slideshowImg.attr('data-image-name') || $slideshowImg.attr('data-video-name');
 				}
 
 				if(!fileKey) {
@@ -114,8 +114,9 @@ var LightboxLoader = {
 
 				// Display video inline, don't open lightbox
 				isVideo = $this.children('.Wikia-video-play-button').length;
-				if(isVideo && $thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('wikiaPhotoGallery-slider')) {
-					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, LightboxTracker.clickSource.EMBED);
+				if(isVideo && $thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
+					var clickSource = window.wgWikiaHubType ? LightboxTracker.clickSource.HUBS : LightboxTracker.clickSource.EMBED;
+					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, clickSource);
 					return;
 				}
 
@@ -205,14 +206,12 @@ var LightboxLoader = {
 			height: targetChildImg.height(),
 			width: targetChildImg.width()
 		}, function(json) {
-			//retrieve DOM reference
-			var	embedCode = json['videoEmbedCode'];
-			target.hide().after(embedCode);
+			var	embedCode = json['videoEmbedCode'],
+				inlineDiv = $('<div class="inline-video"></div>').insertAfter(target.hide());
 
-			// if player script, run it
-			if(json.playerScript) {
-				$('body').append('<script>' + json.playerScript + '</script>');
-			}
+			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+				new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
+			});
 
 			// save references for inline video removal later
 			LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
@@ -243,13 +242,11 @@ var LightboxLoader = {
 				format: 'json',
 				data: mediaParams,
 				callback: function(json) {
-					LightboxLoader.normalizeMediaDetail(json, function(json) {
-						// Don't cache videos played inline because width will be off for lightbox version bugid-42269
-						if(!nocache) {
-							LightboxLoader.cache.details[title] = json;
-						}
-						callback(json);
-					});
+					// Don't cache videos played inline because width will be off for lightbox version bugid-42269
+					if(!nocache) {
+						LightboxLoader.cache.details[title] = json;
+					}
+					callback(json);
 				}
 			});
 		}
@@ -263,23 +260,6 @@ var LightboxLoader = {
 		return deferred;
 	},
 
-	/* function to normalize backend deficiencies */
-	normalizeMediaDetail: function(json, callback) {
-		/* normalize JWPlayer instances */
-		var embedCode = json['videoEmbedCode'];
-
-		/* embedCode can be a json object, not a html.  It is implied that only JWPlayer (Screenplay) items do this. */
-		if(typeof embedCode === 'object') {
-			var playerJson = embedCode;	// renaming to keep my sanity
-			$.getScript(json['playerAsset'], function() {
-				json['videoEmbedCode'] = '<div id="' + playerJson['id'] + '"></div>';
-				json['playerScript'] = playerJson['script'] + ' loadJWPlayer();';
-				callback(json);
-			});
-		} else {
-			callback(json);
-		}
-	},
 	loadFromURL: function() {
 		var fileTitle = window.Wikia.Querystring().getVal('file'),
 			openModal = $('#LightboxModal');
@@ -346,6 +326,7 @@ LightboxTracker = {
 		SV: 'specialVideos',
 		LB: 'lightbox',
 		SHARE: 'share',
+		HUBS: 'hubs',
 		OTHER: 'other'
 	}
 };

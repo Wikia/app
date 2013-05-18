@@ -110,7 +110,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 	// Tabs on Special: Search in wiki
 	.WikiaSearch .search-tabs {
-		border-top: 1px solid $color-search-grid-border;
+		//border-top: 1px solid $color-search-grid-border;
 		margin-top: 35px;
 		overflow: hidden;
 		padding-right: 10px;
@@ -196,7 +196,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 	// Search results
 	.result-count {
-		border-bottom: 1px solid $color-search-grid-border;
+		//border-bottom: 1px solid $color-search-grid-border;
 		color:  $color-text;
 		line-height: 13px;
 		margin: 0;
@@ -208,7 +208,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 		text-align: left;
 
 		.inter-wiki-search & {
-			border-bottom: none;
+			//border-bottom: none;
 			padding-left: 10px;
 			padding-top: 20px;
 		}
@@ -217,6 +217,22 @@ $form-negative-side-padding: $form-side-padding*-1;
 			text-transform: capitalize;
 		}
 	}
+
+    .exact {
+        .result-count {
+            margin-bottom: 20px;
+        }
+        .articles {
+            list-style: none;
+            li {
+                width: 45%;
+                margin: 0;
+                padding: 0;
+                display: inline-block;
+            }
+        }
+    }
+
 	.Results {
 		list-style: none;
 		margin: 0;
@@ -231,9 +247,23 @@ $form-negative-side-padding: $form-side-padding*-1;
 		word-wrap: break-word;
 		padding: 0;
 
+        .wiki-thumb-tracking {
+            display: block;
+            width: 180px;
+        }
+
 		.inter-wiki-search & {
-			margin-bottom: 20px;
+            margin-bottom: 20px;
+            .result-description {
+                width: 820px;
+            }
+            .wiki-statistics {
+                li {
+                  padding-right: 40px;
+                }
+            }
 		}
+
 		.media-text {
 			float: left;
 		}
@@ -294,9 +324,9 @@ $form-negative-side-padding: $form-side-padding*-1;
 		}
 		.wiki-statistics {
 			margin-top: 0.4em;
-
 			li {
-				padding-right: 40px;
+				padding-right: 20px;
+                float: left;
 			}
 		}
 		.description {
@@ -305,13 +335,17 @@ $form-negative-side-padding: $form-side-padding*-1;
 		.result-description {
 			float: left;
 			padding-left: 30px;
-			width: 820px;
+			width: 310px;
 			@include box-sizing;
 		}
 		a.image {
 			position: relative;
 		}
 	}
+    .exact {
+        border-bottom: 1px solid $color-search-grid-border;
+        padding-bottom: 10px;
+    }
 	.searchmatch {
 		font-weight: bold;
 	}
@@ -371,7 +405,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 }
 .Search.this-wiki {
 	.SearchAdsTopWrapper {
-		border-top: 1px solid $color-search-grid-border;
+		//border-top: 1px solid $color-search-grid-border;
 		margin-top: 35px;
 		overflow: hidden;
 	}

@@ -20,6 +20,7 @@ $app = F::app();
 $dir = dirname(__FILE__).'/';
 
 $app->registerClass('VideoEmbedTool', $dir . 'VideoEmbedTool_body.php');
+$app->registerClass('VideoEmbedToolSearchService', $dir . 'VideoEmbedToolSearchService.class.php');
 $app->registerController('VideoEmbedToolController',	$dir . '/VideoEmbedToolController.class.php' );
 
 define( 'VIDEO_PREVIEW', 350 );

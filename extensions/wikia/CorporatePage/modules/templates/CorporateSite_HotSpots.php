@@ -34,13 +34,6 @@
 					<span>
 						<span class="page-activity-wiki"><?php echo wfMsg('hub-hotspot-from') ?></span>
 							<a class="wikia-wiki-link" href="<?php echo $value['wikiurl'] ?>"><?php echo $value['wikiname'] ?></a>
-							<?php if( $data['is_manager']): ?>
-								<?php if( isset($value['hide'] )): ?>
-									<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=article&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=1" ><?php echo wfMsg('hub-show-feed'); ?></a>
-								<?php else: ?>
-									<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=article&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>" ><?php echo wfMsg('hub-hide-feed'); ?></a>
-								<?php endif; ?>
-							<?php endif; ?>
 					</span>
 				</span>
 			</li>

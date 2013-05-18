@@ -11,6 +11,7 @@
 
 		var element = false;
 		if (event && event.data && event.data.element) {
+			// Video or Placeholder element was clicked in RTE
 			element = event.data.element;
 		}
 
@@ -72,10 +73,12 @@
 			callback = function (embedData) {
 				if (element != 'undefined') {
 					var wikitext = '';
+
+					// Handle video placeholders in the editor [[File:Placeholder|video]]
 					if(element.hasClass('media-placeholder')) {
 						wikitext = embedData.wikitext;
+						RTE.mediaEditor.update(element, wikitext, embedData);
 					} else {
-
 						// generate wikitext
 						wikitext = '[[' + embedData.href;
 
@@ -96,15 +99,15 @@
 						}
 
 						wikitext += ']]';
-					}
-					if (element) {
-						// update existing video
-						RTE.mediaEditor.update(element, wikitext, embedData);
-						VET_loader.modal.closeModal();
-					}
-					else {
-						// add new video
-						RTE.mediaEditor.addVideo(wikitext, embedData);
+
+						if (element) {
+							// update existing video
+							RTE.mediaEditor.update(element, wikitext, embedData);
+							VET_loader.modal.closeModal();
+						} else {
+							// add new video
+							RTE.mediaEditor.addVideo(wikitext, embedData);
+						}
 					}
 				}
 			};

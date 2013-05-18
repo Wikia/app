@@ -45,6 +45,13 @@ function getHubsV2VideosByModuleId( $moduleId ) {
 function addFeaturedVideos( $videos, $wikis ) {
 	global $failed;
 
+	// get url
+	$url = WikiFactory::getVarValueByName( 'wgServer', F::app()->wg->CityId );
+	if ( empty( $url ) ) {
+		$url = rtrim( F::app()->wg->WikiaVideoRepoPath, '/' );
+	}
+
+	// add videos
 	foreach( $videos as $video ) {
 		$featuredVideos = array();
 
@@ -55,7 +62,7 @@ function addFeaturedVideos( $videos, $wikis ) {
 
 			$featuredVideos[] = array(
 				'name' => $video['data']['video'],
-				'videoUrl' => rtrim( F::app()->wg->WikiaVideoRepoPath, '/' ).$title->getLocalURL(),
+				'videoUrl' => $url.$title->getLocalURL(),
 			);
 
 			addVideoToWikis( $featuredVideos, $wikis );
@@ -70,11 +77,12 @@ function addFeaturedVideos( $videos, $wikis ) {
 /**
  * add popular videos
  * @global int $failed
+ * @global int $popVideos
  * @param type $videos
  * @param type $wikis
  */
 function addPopularVideos( $videos, $wikis ) {
-	global $failed;
+	global $failed, $popVideos;
 
 	foreach( $videos as $video ) {
 		if ( !empty( $video['data']['videoUrl'] ) ) {
@@ -89,6 +97,8 @@ function addPopularVideos( $videos, $wikis ) {
 					'name' => $video['data']['video'][$i],
 					'videoUrl' => $video['data']['videoUrl'][$i]
 				);
+
+				$popVideos++;
 			}
 
 			addVideoToWikis( $popularVideos, $wikis );
@@ -96,6 +106,7 @@ function addPopularVideos( $videos, $wikis ) {
 			echo "\tUser: ".$video['lastEditorId']."\n";
 			echo "\t\tVideo: ".var_export( $video['data'], TRUE )." .... FAILED (EMPTY videoUrl)\n";
 			$failed++;
+			$popVideos++;
 		}
 	}
 }
@@ -112,15 +123,18 @@ function addVideoToWikis( $videos, $wikis ) {
 	global $dryRun, $totalRequests, $success, $failed;
 
 	if ( $dryRun ) {
-		echo "\t\tDRY RUN .... DONE\n";
-		return;
+		$wikiIds = array_keys( $wikis );
+		$response = array_fill_keys( $wikiIds, true );
 	}
+
+	$videoService = new VideoService();
 
 	foreach( $videos as $video ) {
 		echo "\t\tVideo: $video[name] ($video[videoUrl]):\n";
 
-		$videoService = new VideoService();
-		$response = $videoService->addVideoAcrossWikis( $video['videoUrl'], $wikis );
+		if ( !$dryRun ) {
+			$response = $videoService->addVideoAcrossWikis( $video['videoUrl'], $wikis );
+		}
 
 		foreach( $response as $id => $status ) {
 			echo "\t\t\tWiki $id";
@@ -200,6 +214,7 @@ if ( empty( $wikis ) ) {
 
 $success = 0;
 $failed = 0;
+$popVideos = 0;
 
 // add featured videos
 echo "Hub v2 module id (Featured Videos): ".MarketingToolboxModuleFeaturedvideoService::MODULE_ID."\n";
@@ -212,7 +227,7 @@ echo "\nHub v2 module id (Popular Videos): ".MarketingToolboxModulePopularvideos
 $popularVideos = getHubsV2VideosByModuleId( MarketingToolboxModulePopularvideosService::MODULE_ID );
 addPopularVideos( $popularVideos, $wikis );
 
-$totalVideos = count( $featuredVideos ) + count( $popularVideos );
+$totalVideos = count( $featuredVideos ) + $popVideos;
 echo "Total hub v2 wikis: ".count($wikis)." (".implode( ',', array_keys( $wikis ) ).")"."\n";
-echo "Total Videos: $totalVideos (Featured Videos: ".count( $featuredVideos ).", Popular Videos: ".count( $popularVideos ).")\n";
+echo "Total Videos: $totalVideos (Featured Videos: ".count( $featuredVideos ).", Popular Videos: $popVideos [".count( $popularVideos )." sets]).\n";
 echo "Total requests sent: ".( $totalVideos * count( $wikis ) )." (Success: $success, Failed: $failed).\n\n";

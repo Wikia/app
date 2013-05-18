@@ -340,6 +340,7 @@ class SpecialConnect extends SpecialPage {
 				// TODO: Provide an error message that explains that they need to pick a name or the name is taken.
 				wfDebug("FBConnect: Name not OK: '$name'\n");
 				$this->sendPage('chooseNameForm');
+				wfProfileOut(__METHOD__);
 				return;
 			}
 
@@ -351,13 +352,16 @@ class SpecialConnect extends SpecialPage {
 			$titleObj = SpecialPage::getTitleFor( 'Connect' );
 			if ( wfReadOnly() ) {
 				$wgOut->readOnlyPage();
+				wfProfileOut(__METHOD__);
 				return;
 			} elseif ( $wgUser->isBlockedFromCreateAccount() ) {
 				wfDebug("FBConnect: Blocked user was attempting to create account via Facebook Connect.\n");
 				$wgOut->showErrorPage('fbconnect-error', 'fbconnect-errortext');
+				wfProfileOut(__METHOD__);
 				return;
 			} elseif ( count( $permErrors = $titleObj->getUserPermissionsErrors( 'createaccount', $wgUser, true ) )>0 ) {
 				$wgOut->showPermissionsErrorPage( $permErrors, 'createaccount' );
+				wfProfileOut(__METHOD__);
 				return;
 			}
 
@@ -370,6 +374,7 @@ class SpecialConnect extends SpecialPage {
 			if( 'local' != $mDomain && '' != $mDomain ) {
 				if( !$wgAuth->canCreateAccounts() && ( !$wgAuth->userExists( $name ) ) ) {
 					$wgOut->showErrorPage('fbconnect-error', 'wrongpassword');
+					wfProfileOut(__METHOD__);
 					return false;
 				}
 			}
@@ -381,6 +386,7 @@ class SpecialConnect extends SpecialPage {
 			  $wgUser->inSorbsBlacklist( $ip ) )
 			{
 				$wgOut->showErrorPage('fbconnect-error', 'sorbs_create_account_reason');
+				wfProfileOut(__METHOD__);
 				return;
 			}
 
@@ -397,6 +403,7 @@ class SpecialConnect extends SpecialPage {
 			// This hook should only check preconditions and should not store values.  Values should be stored using the hook at the bottom of this function.
 			// Can use 'this' to call sendPage('chooseNameForm', 'SOME-ERROR-MSG-CODE-HERE') if some of the preconditions are invalid.
 			if(! wfRunHooks( 'SpecialConnect::createUser::validateForm', array( &$this ) )){
+				wfProfileOut(__METHOD__);
 				return;
 			}
 
@@ -404,6 +411,7 @@ class SpecialConnect extends SpecialPage {
 			if (!$user) {
 				wfDebug("FBConnect: Error adding new user.\n");
 				$wgOut->showErrorPage('fbconnect-error', 'fbconnect-error-creating-user');
+				wfProfileOut(__METHOD__);
 				return;
 			}
 			// Let extensions abort the account creation.  If you have extensions which are expecting a Real Name or Email, you may need to disable
@@ -430,6 +438,7 @@ class SpecialConnect extends SpecialPage {
 				}
 				if ( $value >= $wgAccountCreationThrottle ) {
 					$wgOut->showErrorPage(wfMsg( 'permissionserrors' ), wfMsgExt( 'acct_creation_throttle_hit', array( 'parseinline' ), $wgAccountCreationThrottle ) );
+					wfProfileOut(__METHOD__);
 					return false;
 				}
 				$wgMemc->incr( $key );
@@ -444,6 +453,7 @@ class SpecialConnect extends SpecialPage {
 			if( !$wgAuth->addUser( $user, $pass, $email, $realName ) ) {
 				wfDebug("FBConnect: Error adding new user to database.\n");
 				$wgOut->showErrorPage('fbconnect-error', 'fbconnect-errortext');
+				wfProfileOut(__METHOD__);
 				return;
 			}
 

@@ -78,7 +78,7 @@ class WikisApiController extends WikiaApiController {
 	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getByString&string=call+of+duty&hub=Gaming&lang=en
 	 */
 	public function getByString() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$keyword = trim( $this->request->getVal( self::PARAMETER_KEYWORD, null ) );
 		$hub = trim( $this->request->getVal( 'hub', null ) );
@@ -115,7 +115,7 @@ class WikisApiController extends WikiaApiController {
 			)
 		);
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -128,7 +128,7 @@ class WikisApiController extends WikiaApiController {
 	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getDetails&ids=3125,490
 	 */
 	public function getDetails() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$ids = $this->request->getVal( self::PARAMETER_WIKI_IDS, null );
 
@@ -186,6 +186,6 @@ class WikisApiController extends WikiaApiController {
 			)
 		);
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 }
