@@ -2,8 +2,8 @@
 /**
  * Class definition for Wikia\Search\Match\Category
  */
-namespace Wikia\Search\Match;
-use \Wikia\Search\Result as Result;
+namespace Wikia\Search\classes\Match;
+use \Wikia\Search\classes\Result as Result;
 /**
  * This class correlates a page ID to a MediaWiki category (via interface), and creates a result based on it.
  * @author Aniuska
