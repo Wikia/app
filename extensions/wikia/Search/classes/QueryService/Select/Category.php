@@ -100,8 +100,9 @@ class Category extends AbstractSelect
 	 */
 	protected function getQueryClausesString()
 	{
-                
-                $catService = new CategoryService($this->service->getTitleStringFromPageId($this->config->getCategoryMatch()->getResult()->getVar( 'id' )));
+                $catid = $this->config->getCategoryMatch()->getResult()->getVar( 'id' );
+                         
+                $catService = new CategoryService($this->service->getTitleStringFromPageId($catid));
                 $articleList = $catService->getTopArticles( self::GROUP_RESULTS_COUNT );
                 
                 $pidsQuery = '';
@@ -109,7 +110,7 @@ class Category extends AbstractSelect
 		    $pidsQuery .=  ( empty( $pidsQuery ) ? ' ' : ' OR ' ) . Utilities::valueForField( 'pageId',  $pageid );
 		}
                 
-		$catid = $this->config->getCategoryMatch()->getResult()->getVar( 'id' );
+		
 		$queryClauses= array(
 				$pidsQuery,
                                 Utilities::valueForField( 'categories', $this->service->getTitleFromPageId($catid) ),
@@ -124,9 +125,11 @@ class Category extends AbstractSelect
 	 * Returns a nested query, preceded by lucene queries used to filter out bad wikis, and non-content documents.
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery()
 	 */
+        /*
 	protected function getFormulatedQuery() {
 		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSanitizedQuery() );
 	}
+        */
         
 	/**
 	 * Return a string of query fields based on configuration

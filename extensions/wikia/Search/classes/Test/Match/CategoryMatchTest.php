@@ -13,29 +13,6 @@ class CategoryMatchTest extends BaseTest  {
 	 * @covers Wikia\Search\Match\AbstractMatch::getId
 	 */
     
-	public function testAbstractConstruct() {
-                $service = new MediaWikiService;
-            
-		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\AbstractMatch' )
-		                  ->setConstructorArgs( array( 123, $service ) )
-		                  ->getMockForAbstractClass();
-		
-                $this->assertAttributeEquals(
-				123, 
-				'id', 
-				$mockMatch
-		);
-		$this->assertAttributeEquals(
-				$service, 
-				'service', 
-				$mockMatch
-		);
-		$this->assertEquals(
-				123,
-				$mockMatch->getId()
-		);
-	}
-	
 	/**
 	 * @covers Wikia\Search\Match\AbstractMatch::getResult
         */
