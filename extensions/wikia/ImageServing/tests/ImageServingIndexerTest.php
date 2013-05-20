@@ -2,6 +2,7 @@
 /**
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @author macbre
+ * @group Integration
  */
 class ImageServingIndexerTest extends WikiaBaseTest {
 
@@ -70,6 +71,10 @@ class ImageServingIndexerTest extends WikiaBaseTest {
 			],
 			[
 				'wikitext' => "<gallery>\nWiki-wordmark.png\nFireflyLogo-NoBackground.png\n</gallery>",
+				'expectedImages' => ['Wiki-wordmark.png', 'FireflyLogo-NoBackground.png']
+			],
+			[
+				'wikitext' => "<gallery>\nImage:Wiki-wordmark.png\nFile:FireflyLogo-NoBackground.png\n</gallery>",
 				'expectedImages' => ['Wiki-wordmark.png', 'FireflyLogo-NoBackground.png']
 			],
 			// gallery and thumb
