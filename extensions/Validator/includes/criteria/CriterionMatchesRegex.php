@@ -2,7 +2,8 @@
 
 /**
  * Parameter criterion stating that the value must match a regex.
- * 
+ *
+ * @deprecated since 0.5, removal in 0.7
  * @since 0.4
  * 
  * @file CriterionMatchesRegex.php

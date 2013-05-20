@@ -10,7 +10,7 @@
  * @ingroup ParameterManipulations
  * @ingroup MapsGoogleMaps
  * 
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsParamGMap3Types extends ListParameterManipulation {
