@@ -462,6 +462,25 @@ class MediaWikiService
 		}
 		return $articleMatch;
 	}
+        
+        /**
+	 * Provided a string, uses MediaWiki's ability to find category matches to instantiate a Wikia Search Category Match.
+	 * @param string $term
+	 * @param array $namespaces
+	 * @return \Wikia\Search\Match\Category|NULL
+         * @author Aniuska
+	 */
+	public function getCategoryMatchForTermAndNamespaces( $term, array $namespaces ) {
+		$categoryMatch = null;
+		$searchEngine = new \SearchEngine();
+		$title = $searchEngine->getNearMatch( $term );
+		$catId = ( $title !== null ) ? $title->getArticleId() : 0;
+		if( ( $catId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
+			$this->getPageFromPageId( $catId );
+			$categoryMatch = new \Wikia\Search\Match\Category( $title->getArticleId(), $this );
+		}
+		return $categoryMatch;
+	}
 	
 	/**
 	 * Provided a prepped domain string, (e.g. 'runescape'), return a wiki match.

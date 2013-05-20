@@ -5,7 +5,9 @@
 namespace Wikia\Search;
 use Wikia\Search\MediaWikiService, Wikia\Search\Match;
 use Wikia\Search\Query\Select as Query;
+
 use Solarium_Query_Select, Wikia\Search\Traits\ArrayConfigurableTrait;
+
 /**
  * A config class intended to handle variable flags for search
  * Intended to be a dependency-injected receptacle for different search requirements
@@ -448,6 +450,16 @@ class Config
 	public function hasWikiMatch() {
 		return $this->wikiMatch !== null;
 	}
+
+        
+        /**
+	 * Determines whether a category match has been set
+	 * @return boolean
+         * New - Aniuska 22/04/2013
+	 */
+	public function hasCategoryMatch() {
+		return isset( $this->params['categoryMatch'] ) && !empty( $this->params['categoryMatch'] );
+	}
 	
 	/**
 	 * Overloading __set to type hint
@@ -456,6 +468,17 @@ class Config
 	 */
 	public function setArticleMatch( Match\Article $articleMatch ) {
 		$this->articleMatch = $articleMatch;
+		return $this;
+	}
+        
+        /**
+	 * Overloading __set to type hint
+	 * @param  \Wikia\Search\Match\Category $articleMatch
+	 * @return \Wikia\Search\Config provides fluent interface
+         * New Aniuska 22/04/2013
+	 */
+	public function setCategoryMatch( Match\Category $categoryMatch ) {
+		$this->params['categoryMatch'] = $categoryMatch;
 		return $this;
 	}
 	
@@ -477,6 +500,15 @@ class Config
 		return $this->articleMatch;
 	}
 	
+        /**
+	 * For IDE type-hinting
+	 * @return Wikia\Search\Match\Category
+         * New Aniuska 22/04/2013
+	 */
+	public function getCategoryMatch() {
+		return isset( $this['categoryMatch'] ) ? $this['categoryMatch'] : null;
+	}
+        
 	/**
 	 * Returns the wiki match, if registered.
 	 * @return Wikia\Search\Match\Wiki
@@ -489,17 +521,26 @@ class Config
 	/**
 	 * Agnostic match verifier
 	 * @return boolean
+         * Modifiy: Aniuska - 22/04/2013
 	 */
 	public function hasMatch() {
-		return $this->hasArticleMatch() || $this->hasWikiMatch();
+		return $this->hasArticleMatch() || $this->hasWikiMatch() || $this->hasCategoryMatch();
 	}
 	
 	/**
 	 * Agnostic match accessor
-	 * @return Wikia\Search\Match\Article|Wikia\Search\Match\Wiki|false
+	 * @return Wikia\Search\Match\Article|Wikia\Search\Match\Wiki|Wikia\Search\Match\Category|false
+         * * Modifiy: Aniuska - 22/04/2013
 	 */
 	public function getMatch() {
-		return $this->getArticleMatch() ?: $this->getWikiMatch();
+	
+            if ( $this->hasArticleMatch() ) {
+                return $this->getArticleMatch();
+            } elseif ( $this->hasWikiMatch() ) {
+                return $this->getWikiMatch();
+            } else {
+                return $this->getCategoryMatch();
+            }
 	}
 	
 	/**
