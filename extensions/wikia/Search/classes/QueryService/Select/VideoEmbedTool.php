@@ -14,8 +14,7 @@ class VideoEmbedTool extends Video
 	 * @see \Wikia\Search\QueryService\Select\Video::getBoostQueryString()
 	 * @return string
 	 */
-	public function getBoostQueryString() {
-		return '';
+  public function getBoostQueryString() {return '';
 		return sprintf( '%s^150 AND (%s)^250 AND (html_media_extras_txt:%s)^300',
 				Utilities::valueForField( 'categories', $this->service->getHubForWikiId( $this->service->getWikiId() ) ),
 				$this->getConfig()->getQuery()->getSolrQuery(),
@@ -28,7 +27,9 @@ class VideoEmbedTool extends Video
 	 * @return string
 	 */
 	protected function getFormulatedQuery() {
-		return sprintf( '+(%s) AND ( (%s)^200 OR (%s)^1000 )', $this->getQueryClausesString(), $this->getTopicsAsQuery(), $this->getTransformedQuery() );
+	  $topics = $this->getTopicsAsQuery();
+	  $query = $this->getTransformedQuery();
+	  return sprintf( '+(%s) AND ( (%s)^200 OR (%s)^1000 or (%s %s)^1500 )', $this->getQueryClausesString(), $topics, $query, $topics, $query );
 	}
 	
 	/**
