@@ -13,3 +13,4 @@ $app->registerClass('SEOTweaksGlobalHooksHelper', $dir . 'SEOTweaksGlobalHooksHe
 
 //hooks
 $app->registerHook( 'OpenGraphMetaHeaders', 'SEOTweaksGlobalHooksHelper', 'onOpenGraphMetaHeaders' );
+$app->registerHook( 'ArticleRobotPolicy', 'SEOTweaksGlobalHooksHelper', 'onArticleRobotPolicy' );

@@ -369,7 +369,6 @@ include_once("$IP/extensions/wikia/JSMessages/JSMessages_setup.php");
  */
 
 $wgAutoloadClasses[ "WikiaApiQuery"                 ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQuery.php";
-$wgAutoloadClasses[ "WikiaApiQueryConfGroups"       ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryConfGroups.php";
 $wgAutoloadClasses[ "WikiaApiQueryDomains"          ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryDomains.php";
 $wgAutoloadClasses[ "WikiaApiQueryPopularPages"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPopularPages.php";
 $wgAutoloadClasses[ "WikiaApiQueryVoteArticle"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryVoteArticle.php";
@@ -419,7 +418,6 @@ include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
  * registered API methods
  */
 global $wgAPIListModules;
-$wgAPIListModules[ "wkconfgroups" ] = "WikiaApiQueryConfGroups";
 $wgAPIListModules[ "wkdomains"    ] = "WikiaApiQueryDomains";
 $wgAPIListModules[ "wkpoppages"   ] = "WikiaApiQueryPopularPages";
 $wgAPIListModules[ "wkvoteart"    ] = "WikiaApiQueryVoteArticle";
@@ -1132,7 +1130,7 @@ $wgEnableAdEngineExt = true;
 
 /**
  * @name $wgAdVideoTargeting
- * Enables ad engine
+ * Enables page-level video ad targeting
  */
 $wgAdVideoTargeting = false;
 

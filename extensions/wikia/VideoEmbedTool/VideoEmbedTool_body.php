@@ -67,7 +67,7 @@ class VideoEmbedTool {
 
 		$props['id'] = $file->getVideoId();
 		$props['vname'] = $file->getTitle()->getText();
-		$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
+		$props['code'] = json_encode($embedCode);
 		$props['metadata'] = '';
 		$props['description'] = $this->getVideoDescription($file, false);
 		$props['href'] = $title->getPrefixedText();
@@ -116,7 +116,8 @@ class VideoEmbedTool {
 			$props['description'] = $this->getVideoDescription($file);
 			$props['provider'] = $provider;
 
-			$props['code'] = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
+			$embed_code = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
+			$props['code'] = json_encode($embed_code);
 		} else { // if not a partner video try to parse link for File:
 			$file = null;
 			// get the video name
@@ -163,7 +164,7 @@ class VideoEmbedTool {
 			$props['provider'] = 'FILE';
 			$props['id'] = $file->getHandler()->getVideoId();
 			$props['vname'] = $file->getTitle()->getText();
-			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
+			$props['code'] = json_encode($embedCode);
 			$props['metadata'] = '';
 
 			$props['description'] = $this->getVideoDescription($file);

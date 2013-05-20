@@ -32,3 +32,4 @@ $app->registerHook('OutputPageBeforeHTML', 'WikiaHomePageController', 'onOutputP
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaHomePageController', 'onWikiaMobileAssetsPackages');
 $app->registerHook('ArticleCommentCheck', 'WikiaHomePageController', 'onArticleCommentCheck');
 $app->registerHook('AfterGlobalHeader', 'WikiaHomePageController', 'onAfterGlobalHeader');
+$app->registerHook('GetRailModuleList', 'WikiaHomePageController', 'onGetRailModuleList');
