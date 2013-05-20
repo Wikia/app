@@ -15,7 +15,7 @@
 
 
 	<!-- JS -->
-	<script type="text/javascript" src="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.css%7CUser%3A<?php echo $wgUserName; ?>%2Fchat.css&only=styles"></script>
+	<script type="text/javascript" src="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.js%7CUser%3A<?php echo $wgUserName; ?>%2Fchat.js&only=styles"></script>
 	<?php
 		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('oasis_blocking', array());
 	?>
