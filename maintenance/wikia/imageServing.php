@@ -1,9 +1,7 @@
 <?php
 
 /**
- * Script that allows easy testing of ImageServing indexing feature
- *
- * Use --dry-run option to avoid storing results in database
+ * Script that allows easy debugging of ImageServing indexing feature
  *
  * @author macbre
  * @file
@@ -19,14 +17,13 @@ class ImageServingScript extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->addOption( "dry-run", "Do not mark any wikis, just list them" );
-		$this->addOption( "title", "Title of the page to parse", true );
-		$this->mDescription = 'Test ImageServing indexing';
+		$this->addOption( "title", 'Title of the page to parse', true );
+		$this->mDescription = 'Debugging script for ImageServing indexing. No results will be stored in database.';
 	}
 
 	public function execute() {
 		$title = $this->getOption('title');
-		$dryRun = $this->hasOption('dry-run');
+		$dryRun = true; # don't store results in database
 
 		$this->output("Parsing '" . $title ."'...");
 		$time = microtime(true);
