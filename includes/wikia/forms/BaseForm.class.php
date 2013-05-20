@@ -31,7 +31,7 @@ abstract class BaseForm extends FormElement {
 	 */
 	protected function addField($fieldName, BaseField $field) {
 		$field->setName($fieldName);
-		$field->setId($fieldName); // TODO maybe this id should be changed
+		$field->setId($fieldName);
 		$this->fields[$fieldName] = $field;
 	}
 

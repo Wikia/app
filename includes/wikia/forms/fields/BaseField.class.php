@@ -9,7 +9,6 @@ abstract class BaseField extends FormElement {
 	protected $validator;
 	protected $properties = [];
 
-	// TODO decide what params are required here
 	// TODO think about div
 	public function __construct($options = []) {
 		if (isset($options['label'])) {
