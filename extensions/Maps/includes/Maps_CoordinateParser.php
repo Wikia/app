@@ -14,11 +14,13 @@
  * usecases. The different seperator support could also be made nice.
  * 
  * @since 0.6
+ * @deprecated
  * 
  * @file Maps_CoordinateParser.php
  * @ingroup Maps
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsCoordinateParser {
 	
@@ -294,7 +296,7 @@ class MapsCoordinateParser {
 					( $coordinate - $degrees ) * 60, self::SYMBOL_MIN
 				);
 			default:
-				throw new Exception( __METHOD__ . " does not support formatting of coordinates to the $targetFormat notation." );
+				throw new MWException( __METHOD__ . " does not support formatting of coordinates to the $targetFormat notation." );
 		}
 	}
 	
@@ -319,7 +321,7 @@ class MapsCoordinateParser {
 			case Maps_COORDS_DMS:
 				return self::parseDMSCoordinate( $coordinate );
 			default:
-				throw new Exception( __METHOD__ . " does not support parsing of the $coordType coordinate type." );
+				throw new MWException( __METHOD__ . " does not support parsing of the $coordType coordinate type." );
 		}
 	}
 	
@@ -529,7 +531,7 @@ class MapsCoordinateParser {
 	 */
 	protected static function parseDMSCoordinate( $coordinate ) {
 		if ( !is_string( $coordinate ) ) {
-			throw new Exception( 'Parameter $coordinate must be a string at ' . __METHOD__ );
+			throw new MWException( 'Parameter $coordinate must be a string at ' . __METHOD__ );
 		}
 		
 		$isNegative = $coordinate{0} == '-';
