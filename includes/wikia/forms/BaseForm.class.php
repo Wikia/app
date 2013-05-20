@@ -1,13 +1,8 @@
 <?
 
-abstract class BaseForm {
-
-	public function __construct() {
-		$this->templateEngine = new Wikia\Template\PHPEngine;
-	}
+abstract class BaseForm extends FormElement {
 
 	protected $fields = [];
-	protected $templateEngine;
 
 	/**
 	 * @var string form method
@@ -23,6 +18,10 @@ abstract class BaseForm {
 	 * @var string form id
 	 */
 	protected $id;
+
+	protected function getDirectory() {
+		return dirname(__FILE__);
+	}
 
 	/**
 	 * Add field to form
@@ -100,7 +99,7 @@ abstract class BaseForm {
 	 * @return string
 	 */
 	public function render() {
-		return $this->renderView('full');
+		return $this->renderView(__CLASS__, 'full');
 	}
 
 	/**
@@ -109,7 +108,7 @@ abstract class BaseForm {
 	 * @return string
 	 */
 	public function renderFields() {
-		return $this->renderView('fields');
+		return $this->renderView(__CLASS__, 'fields');
 	}
 
 	/**
@@ -125,7 +124,8 @@ abstract class BaseForm {
 	 * Render opening tag for form
 	 */
 	public function renderStart() {
-		return $this->renderView('start', [
+		// TODO add attribs here
+		return $this->renderView(__CLASS__, 'start', [
 			'method' => $this->getMethod(),
 			'action' => $this->getAction(),
 			'id' => $this->getId()
@@ -136,7 +136,7 @@ abstract class BaseForm {
 	 * Render closing tag for form
 	 */
 	public function renderEnd() {
-		return $this->renderView('end');
+		return $this->renderView(__CLASS__, 'end');
 	}
 
 
@@ -152,13 +152,6 @@ abstract class BaseForm {
 				$field->setValue($values[$fieldName]);
 			}
 		}
-	}
-
-	protected function renderView($name, $data = []) {
-		$data['form'] = $this;
-		return $this->templateEngine
-			->setData($data)
-			->render( dirname(__FILE__) . '/templates/' . __CLASS__ . '_' . $name . '.php');
 	}
 
 	protected function getMethod() {

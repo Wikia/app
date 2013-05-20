@@ -333,6 +333,7 @@ $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuCon
 
 //form builder
 $wgAutoloadClasses['BaseForm'] = $IP.'/includes/wikia/forms/BaseForm.class.php';
+$wgAutoloadClasses['FormElement'] = $IP.'/includes/wikia/forms/FormElement.class.php';
 
 $wgAutoloadClasses['BaseField'] = $IP.'/includes/wikia/forms/fields/BaseField.class.php';
 $wgAutoloadClasses['InputField'] = $IP.'/includes/wikia/forms/fields/InputField.class.php';

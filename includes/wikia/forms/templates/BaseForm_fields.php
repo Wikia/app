@@ -1,3 +1,3 @@
-<? foreach ($form->getFields() as $fieldName => $field): ?>
-	<?=$form->renderField($fieldName) ?>
+<? foreach ($element->getFields() as $fieldName => $field): ?>
+	<?=$element->renderField($fieldName) ?>
 <? endforeach ?>

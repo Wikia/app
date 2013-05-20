@@ -1,5 +1,5 @@
 <?
-abstract class BaseField {
+abstract class BaseField extends FormElement {
 	const PROPERTY_VALUE = 'value';
 	const PROPERTY_ERROR_MESSAGE = 'errorMessage';
 	const PROPERTY_LABEL = 'label';
@@ -8,7 +8,6 @@ abstract class BaseField {
 
 	protected $validator;
 	protected $properties = [];
-	protected $templateEngine;
 
 	// TODO decide what params are required here
 	// TODO maybe array fields should be decorated
@@ -21,7 +20,11 @@ abstract class BaseField {
 			$this->setValidator($options['validator']);
 		}
 
-		$this->templateEngine = new Wikia\Template\PHPEngine;
+		parent::__construct();
+	}
+
+	protected function getDirectory() {
+		return dirname(__FILE__);
 	}
 
 	/**
@@ -39,7 +42,6 @@ abstract class BaseField {
 		$out = '';
 
 		$data['name'] = $this->getName();
-		$data['label'] = $this->getProperty(self::PROPERTY_LABEL); // TODO add label
 		$data['value'] = $this->getValue();
 		$data['id'] = $this->getId();
 		$data['attributes'] = $this->prepareHtmlAttributes($htmlAttributes);
@@ -53,14 +55,11 @@ abstract class BaseField {
 		return $out;
 	}
 
-	protected function prepareHtmlAttributes($attribs) {
-		$out = '';
-
-		foreach ($attribs as $name => $value) {
-			$out .= $name . '="' . $value . '" ';
+	public function renderLabel($attributes = []) {
+		$label = $this->getProperty(self::PROPERTY_LABEL);
+		if ($label instanceof Label) {
+			return $label->render($attributes);
 		}
-
-		return $out;
 	}
 
 	/**
@@ -195,12 +194,5 @@ abstract class BaseField {
 	 */
 	protected function setProperty($propertyName, $propertyValue) {
 		$this->properties[$propertyName] = $propertyValue;
-	}
-
-	protected function renderView($className, $name, $data = []) {
-		$data['field'] = $this;
-		return $this->templateEngine
-			->setData($data)
-			->render( dirname(__FILE__) . '/templates/' . $className . '_' . $name . '.php');
 	}
 }
