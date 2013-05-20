@@ -22,7 +22,7 @@ This will not accomplish anything.
 The rest of the page will be allowed to run just so that you can easily see if any of the usernames could not be loaded.",
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
@@ -36,6 +36,24 @@ $messages['af'] = array(
 	'batchuserrights-userload-error' => "Die gebruiker \"'''\$1'''\" kon nie gelaai word nie.",
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'batchuserrights' => 'معالجة حقوق المستخدمين بالدفع',
+	'batchuserrights-desc' => 'تسمح بإضافة مستخدم واحد أو أكثر لمجموعة ضمن عملية واحدة',
+	'batchuserrights-names' => 'أسماء المستخدمين التي ستضاف لهذه المجموعة (واحدة لكل سطر):',
+	'batchuserrights-intro' => 'هذه الصفحة سوف تمكنك من إضافة مجموعة من المستخدمين إلى العديد من المستخدمين في وقت واحد.
+لأسباب تتعلق بالأمان، يتم تعيين المجموعة المضافة في تفضيلات الملحق ولا يمكن تغييرها من داخل الويكي.
+الرجاء مطالبة مسؤول نظام (إداري) إذا كنت بحاجة للسماح بإضافة دفعة من المجموعات الأخرى.',
+	'batchuserrights-single-progress-update' => 'تمت إضافة {{PLURAL:$1|مجموعة|مجموعات}} إلى <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'يتم إضافة  {{PLURAL:$1|مستخدم واحد|$1 مستخدمين}} إلى {{PLURAL:$2|المجموعة التالية|المجموعات التالية}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "تعذر تحميل المستخدم \"'''\$1'''\".",
+	'batchuserrights-no-groups' => 'لم تختر أي من المجموعات.
+وهذا لن يحقق أي شيء.
+سوف يتم السماح بتشغيل بقية الصفحة فقط حيث أنه يمكنك رؤية بسهولة إذا كان أي من أسماء المستخدمين لا يمكن تحميله.',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -45,15 +63,18 @@ $messages['bg'] = array(
 
 /** Breton (brezhoneg)
  * @author Fohanno
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
 	'batchuserrights' => 'Gwirioù oberour dre strolladoù',
 	'batchuserrights-desc' => "Aotren a ra ouzhpennañ unan pe meur a implijer d'ur strollad en un taol hepken",
 	'batchuserrights-names' => "Anvioù implijer da ouzhpennañ d'ar strollad-mañ (unan dre linenn) :",
+	'batchuserrights-intro' => "Gant ar bajenn-mañ e c'haller ouzhpennañ ur strollad da veur a implijer en un taol. Evit abegoù surentez e vez termenet listenn ar strolladoù a c'haller implijout e kefluniadur an astenn. Ne c'haller ket cheñch anezhañ adalek etrefas ar wiki. M'ho peus c'hoant da aotren an ouzhpennadenn dre lodoù evit strolladoù all, goulennit digant ur merour reizhiad ouzhpennañ anezho.",
 	'batchuserrights-single-progress-update' => '{{PLURAL:$1|Strollad|Strolladoù}} ouzhpennet da <strong>$2</strong>.',
 	'batchuserrights-add-groups' => "Ouzhpennañ {{PLURAL:$1|un implijer|$1 implijer}} d'ar {{PLURAL:$2|strollad|strolladoù}}-mañ : <strong>$3</strong>.",
 	'batchuserrights-userload-error' => "Dibosupl eo kargañ an implijer \"'''\$1'''\".",
+	'batchuserrights-no-groups' => "N'ho peus dibabet strollad ebet. Ne vo graet netra. Karget e vo ar peurrest eus ar bajenn ent reizh. Evel-se e c'hallot gwelet ha ne challfer ket cheñch anvioù implijerien zo.",
 );
 
 /** Bosnian (bosanski)

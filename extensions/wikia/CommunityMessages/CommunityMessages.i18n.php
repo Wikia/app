@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Community Messages has been updated]].'
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'communitymessages-desc' => 'A description of this extension',
@@ -36,6 +36,14 @@ $messages['qqq'] = array(
 $messages['aeb'] = array(
 	'communitymessages-desc' => 'extension mte3 el mosa3ed lil messages mte3 el communauté',
 	'communitymessages-notice-msg' => "[[Special:WikiActivity|el Messages mte3 el communauté ss'artelhom mise-à-jour]].",
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'communitymessages-desc' => 'ملحق مساعد لرسائل المجتمع',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|تم تحديث رسائل المجتمع]].',
 );
 
 /** Asturian (asturianu)
@@ -149,10 +157,11 @@ $messages['gl'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Inkbug
  */
 $messages['he'] = array(
 	'communitymessages-desc' => 'הרחבת סיוע ל־Community Messages (הודעות קהילה)',
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Community Messages עודכנה]].', # Fuzzy
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|הודעות הקהילה עודכנו]].',
 );
 
 /** Upper Sorbian (hornjoserbsce)

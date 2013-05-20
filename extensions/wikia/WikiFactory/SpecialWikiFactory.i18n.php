@@ -194,6 +194,7 @@ The fact that these are maximum values is explained by [[Wikia:Awc-metrics-fewer
 	'closed-hide-dumps' => 'The exact meaning is: "Hide database dump and hide image dump", i.e. both are dumps.',
 	'closed-reason' => '{{Identical|Reason}}',
 	'newwikisgraph' => 'Title of a special page',
+	'newwikisgraph-param-all' => '{{Identical|All}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -340,6 +341,7 @@ $messages['ar'] = array(
 	'wf_cc_name' => 'التصنيف',
 	'wikifactory_removevariable' => 'إزالة بيانات الويكي من الكاش',
 	'wikifactory_removeconfirm' => '!تم إزالة بيانات الويكي من الكاش',
+	'wikifactory-label-info' => 'المعلومات',
 	'wikifactory-label-variables' => 'المتغيرات',
 	'wikifactory-label-variables2' => 'عام',
 	'wikifactory-label-hubs' => 'المحاور',
@@ -347,10 +349,19 @@ $messages['ar'] = array(
 	'wikifactory-label-return' => 'العودة إلى القائمة',
 	'wikifactory-label-clog' => 'سجل التغيير',
 	'wikifactory-label-actions' => 'الإجرائات',
+	'wikifactory-label-google' => 'أدوات جوجل',
 	'wikifactory-label-close' => 'أغلق',
 	'wikifactory-label-tags' => 'الوسوم',
+	'wikifactory-label-tags2' => 'العلامات',
+	'wikifactory-label-masstags' => 'علامات كثيفة',
+	'wikifactory-label-findtags' => 'البحث عن العلامات',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'المقارنة',
 	'right-wikifactory' => 'تغيير الإعدادات الداخلية للويكي',
+	'action-wikifactory' => 'تغيير الإعدادات الداخلية للويكي',
+	'wikifactory-domain-edit' => 'تحرير عنوان URL هذا',
+	'wikifactory-domain-remove' => 'إزالة عنوان URL هذا من الويكي',
+	'wikifactory-domain-setmain' => 'وضع عنوان URL هذا في wgServer',
 	'closewiki-check-and-confirm' => 'فحص الويكيات و تأكيد العملية',
 	'closewiki-redirect-to' => 'إعادة التوجيه',
 	'closewiki-message' => 'اسم النطاق $1',
@@ -363,6 +374,9 @@ $messages['ar'] = array(
 	'closewiki-images-url' => 'أرشيف الصور: $1',
 	'closewiki-unknown' => 'غير معروف',
 	'closewiki-return' => 'العودة إلأى $1',
+	'wikifactory-button-saveparse' => 'تحليل وحفظ التغييرات',
+	'wikifactory-button-save' => 'حفظ التغييرات',
+	'wikifactory-public-status-change-default-reason' => 'تغيرت الحالة من من نافذة "الميادين"',
 	'awc-metrics-wikis' => 'عرض الويكي',
 	'awc-metrics-select' => 'عرض الويكي:',
 	'awc-metrics-by-language' => 'حسب اللغة:',
@@ -415,6 +429,7 @@ $messages['ar'] = array(
 	'awc-metrics-close-listed' => 'إغلاق كافة القائمة',
 	'awc-metrics-close-checked' => 'إغلاق الممضى عليهم',
 	'awc-metrics-exact-match' => 'مطابقة تامة',
+	'awc-metrics-recordspager' => "عرض من '''$1''' إلى '''$2''' من مجموع '''$3''' سجلا.",
 	'closed-wiki' => 'ويكي مغلقة',
 	'closed-wiki-info' => 'تم إغلاق هذه الويكي',
 	'disabled-wiki-info' => 'هذه الويكي تم غلقها',
@@ -432,6 +447,11 @@ $messages['ar'] = array(
 	'closed-confirm-btn' => 'تأكيد الإغلاق',
 	'closed-redirect-alert' => 'يرجى وضع عنوان إلكتروني جديد للتوجيه',
 	'closed-reason' => 'السبب:',
+	'newwikisgraph' => 'رسم بياني للويكيات الجديدة',
+	'newwikisgraph-report-title' => 'الويكيات المنشئة يوميا',
+	'newwikisgraph-wikis-created' => 'الويكيات المنشئة',
+	'newwikisgraph-param-all' => 'الكل',
+	'newwikisgraph-param-other' => 'أخرى',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -978,6 +998,7 @@ $messages['ca'] = array(
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Comparar',
 	'right-wikifactory' => 'Canvia la configuració interna de wikis',
+	'action-wikifactory' => 'canviar la configuració interna dels wikis',
 	'wikifactory-domain-edit' => 'editar aquesta URL',
 	'wikifactory-domain-remove' => 'Suprimeix aquesta URL de la wiki',
 	'wikifactory-domain-setmain' => 'posar aquesta URL en wgServer',
@@ -995,6 +1016,7 @@ $messages['ca'] = array(
 	'closewiki-return' => 'Torna a$1',
 	'wikifactory-button-saveparse' => 'Analitzar i desar els canvis',
 	'wikifactory-button-save' => 'Desar els canvis',
+	'wikifactory-public-status-change-default-reason' => 'Estat canviat des de la pestanya Dominis.',
 	'awc-metrics-wikis' => 'Exhibició Wikis',
 	'awc-metrics-select' => 'Mostra Wikis:',
 	'awc-metrics-by-language' => 'per llengua:',
@@ -1017,17 +1039,17 @@ $messages['ca'] = array(
 	'awc-metrics-not-found' => "No s'ha trobat cap Wiki",
 	'awc-metrics-nbr-result' => 'Resultats:',
 	'awc-metrics-created-between' => 'creada entre  $1  (DD/MM/AAAA) i  $2  (DD/MM/AAAA)',
-	'awc-metrics-wikians' => 'Wikians<br>(> 10 edicions)', # Fuzzy
+	'awc-metrics-wikians' => 'Wikians<br />(>10 edicions)',
 	'awc-metrics-articles' => 'Articles',
-	'awc-metrics-articles-per-day' => 'Articles<br>(mitjana per dia)', # Fuzzy
-	'awc-metrics-revisions-per-page' => 'Revisions<br>(AVG. per pàgina)', # Fuzzy
-	'awc-metrics-article-avg-size' => 'Art AVG..<br>mida', # Fuzzy
+	'awc-metrics-articles-per-day' => 'Articles<br />(mitjana al dia)',
+	'awc-metrics-revisions-per-page' => 'Revisions<br />(mitjana per pàgina)',
+	'awc-metrics-article-avg-size' => "Mida mitjana<br /> d'art.",
 	'awc-metrics-edits' => 'Edicions',
 	'awc-metrics-db-size' => 'Mida de DB',
 	'awc-metrics-images' => 'Imatges',
-	'awc-metrics-all-users' => 'Reg.<br>usuaris', # Fuzzy
-	'awc-metrics-all-users-edit-main-ns' => 'Usuaris de reg.<br>(Contingut NS)', # Fuzzy
-	'awc-metrics-pageviews' => 'Pàgina<br>vistes', # Fuzzy
+	'awc-metrics-all-users' => "Reg. d'<br />usuaris",
+	'awc-metrics-all-users-edit-main-ns' => "Reg. d'usuaris<br /> (Espai de contingut)",
+	'awc-metrics-pageviews' => 'Vistes de<br />pàgina',
 	'awc-metrics-statistics' => 'Estadístiques (mitjana per a tots els mesos)',
 	'awc-metrics-close' => 'Tancar',
 	'awc-metrics-close-action' => 'Tancar',
@@ -1051,7 +1073,7 @@ $messages['ca'] = array(
 	'closed-wiki' => 'Wiki tancat',
 	'closed-wiki-info' => "S'ha tancat aquest wiki",
 	'disabled-wiki-info' => 'Aquest wiki ha estat inhabilitat',
-	'closed-wiki-dump-exists' => "Si us plau, fes clic a [$1  aquí] si vols recuperar el seu contingut.<br/> (Si el teu wiki s'ha tancat fa poc, pot trigar un període curt de temps a generar fitxers)", # Fuzzy
+	'closed-wiki-dump-exists' => 'Pots [$1 recuperar el teu contingut] si ho vols.<br />(Si el teu wiki va tancar fa poc, pot trigar una mica la generació dels arxius)',
 	'closed-wiki-dump-noexists' => "S'ha tancat aquest wiki. La descàrrega de contingut estarà disponible d'aquí 24 hores. Si us plau, comprova-ho una altra vegada més tard.",
 	'closed-wiki-create-wiki' => 'Crear un nou wiki',
 	'closed-wiki-policy' => 'Veure Política de Tancament de Wikia',
@@ -3593,7 +3615,7 @@ paginagrootte',
 	'awc-metrics-last-month' => 'de afgelopen {{PLURAL:$1|maand|$1 maanden}}',
 	'awc-metrics-pageviews-label' => "en $1 bekeken {{PLURAL:$1|pagina|pagina's}} in de afgelopen {{PLURAL:$2|dag|$2 dagen}}",
 	'awc-metrics-close-listed' => "Alle weergegeven wiki's sluiten",
-	'awc-metrics-close-checked' => "Alle aangegeven wiki's sluiten",
+	'awc-metrics-close-checked' => "Alle opgegeven wiki's sluiten",
 	'awc-metrics-exact-match' => 'precies resultaat',
 	'awc-metrics-recordspager' => "Records '''$1''' tot en met '''$2''' van '''$3''' worden weergegeven",
 	'closed-wiki' => 'Gesloten wiki',
@@ -3602,7 +3624,7 @@ paginagrootte',
 	'closed-wiki-dump-exists' => 'U kunt [$1 uw inhoud ophalen] als u wilt.<br />Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.',
 	'closed-wiki-dump-noexists' => 'Deze wiki is gesloten.
 Een dump van de inhoud wordt binnen 24 uur beschikbaar gemaakt.
-Kom hier alstublieft terug.',
+Kom hier dan terug.',
 	'closed-wiki-create-wiki' => 'Nieuwe wiki aanmaken',
 	'closed-wiki-policy' => "Wikia's sluitbeleid bekijken",
 	'closed-create-dump' => 'Databasedump aanmaken',
@@ -4033,6 +4055,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Masked Rogue
  * @author Rhaijin
  * @author SandroHc
@@ -4060,7 +4083,7 @@ $messages['pt'] = array(
 	'wikifactory-label-domains' => 'Domínios',
 	'wikifactory-label-return' => 'Voltar à lista',
 	'wikifactory-label-clog' => 'Registo de mudanças',
-	'wikifactory-label-actions' => 'Acções',
+	'wikifactory-label-actions' => 'Ações',
 	'wikifactory-label-google' => 'Ferramentas do Google',
 	'wikifactory-label-close' => 'Fechar',
 	'wikifactory-label-tags' => 'Etiquetas',
@@ -4373,10 +4396,29 @@ $messages['roa-tara'] = array(
 	'wf_city_id' => 'id',
 	'wf_city_title' => 'Titole',
 	'wf_city_created' => 'Ccrejate',
+	'wf_city_founding_user' => 'Fondatore',
+	'wf_city_founding_email' => "Email d'u fondatore",
+	'wf_city_public' => 'State',
 	'wf_city_lang' => 'Lènghe',
 	'wf_cc_name' => 'Categorije',
+	'wikifactory-label-info' => "'Mbormazione",
+	'wikifactory-label-variables' => 'Variabbile',
 	'wikifactory-label-variables2' => 'Generale',
+	'wikifactory-label-domains' => 'Dominie',
+	'wikifactory-label-actions' => 'Aziune',
+	'wikifactory-label-google' => 'Struminde de Google',
 	'wikifactory-label-close' => 'Achiude',
+	'wikifactory-label-tags' => 'Tag',
+	'wikifactory-label-tags2' => 'Tag',
+	'wikifactory-label-masstags' => 'MassTag',
+	'wikifactory-label-findtags' => 'FindTag',
+	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Combronde',
+	'closewiki-nbr-wiki' => '$1 Uicchi',
+	'closed-reason' => 'Mutive:',
+	'newwikisgraph-wikis-created' => 'uicchi ccrejate',
+	'newwikisgraph-param-all' => 'Tutte',
+	'newwikisgraph-param-other' => 'Otre',
 );
 
 /** Russian (русский)

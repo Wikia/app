@@ -81,7 +81,7 @@ $messages['en'] = array(
 	'cnw-error-bot-header' => 'You have been detected as a bot',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Shirayuki
  * @author Siebrand
@@ -116,7 +116,8 @@ $messages['qqq'] = array(
 	'cnw-userauth-headline' => 'Heading for user login/signup box at the top',
 	'cnw-userauth-creative' => 'Sublabel that says "log in".
 {{Identical|Log in}}',
-	'cnw-userauth-marketing-heading' => 'Heading to create an account in form of a question on the right side of the box',
+	'cnw-userauth-marketing-heading' => 'Heading to create an account in form of a question on the right side of the box.
+{{Identical|Do not have an account}}',
 	'cnw-userauth-marketing-body' => 'Marketing blurb with link to user signup on the right side.  Please append uselang=es(or other lang) on the link.',
 	'cnw-userauth-signup-button' => 'Label for sign up button on the right side.',
 	'cnw-desc-headline' => 'H1 for this step',
@@ -189,7 +190,7 @@ $messages['af'] = array(
  * @author زكريا
  */
 $messages['ar'] = array(
-	'createnewwiki-desc' => '[[خاص:CreateNewWiki|صانع الويكيات]]', # Fuzzy
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|صانع الويكيات]]',
 	'cnw-next' => 'التالي',
 	'cnw-back' => 'رجوع',
 	'cnw-or' => 'أو',
@@ -209,7 +210,7 @@ $messages['ar'] = array(
 	'cnw-auth-headline' => 'تسجيل الدخول',
 	'cnw-auth-headline2' => 'أنشئ حسابًا',
 	'cnw-auth-creative' => 'سجل الدخول إلى الحساب الخاص بك لمواصلة بناء الويكي.',
-	'cnw-auth-signup-creative' => 'تحتاج إلى حساب لمواصلة بناء الويكي.<br/>التسجيل لن يستغرق سوى دقيقة واحدة!', # Fuzzy
+	'cnw-auth-signup-creative' => 'تحتاج إلى حساب لمواصلة بناء الويكي.<br />التسجيل لن يستغرق سوى دقيقة واحدة!',
 	'cnw-auth-facebook-signup' => 'قم بالإشتراك عن طريق الفايسبوك',
 	'cnw-auth-facebook-login' => 'زر "تسجيل الدخول عبر فيس بوك"',
 	'cnw-userauth-headline' => 'لديك حساب؟',
@@ -618,6 +619,7 @@ $messages['diq'] = array(
 	'cnw-auth-facebook-login' => "Facebook'a cıkewtış",
 	'cnw-userauth-headline' => 'Yew hesabê şıma esto?',
 	'cnw-userauth-creative' => 'Cı kewe',
+	'cnw-userauth-marketing-heading' => 'Hesabê şıma çıniyo?',
 	'cnw-userauth-signup-button' => 'Hesabo Newe Ake',
 	'cnw-desc-tip2' => 'Psst',
 	'cnw-desc-select-one' => 'Yewi weçine',
@@ -1127,6 +1129,7 @@ $messages['inh'] = array(
 );
 
 /** Italian (italiano)
+ * @author Beta16
  * @author Lexaeus 94
  * @author Minerva Titani
  */
@@ -1171,7 +1174,7 @@ $messages['it'] = array(
 	'cnw-desc-choose' => 'Scegli una categoria',
 	'cnw-desc-select-one' => 'Seleziona',
 	'cnw-desc-default-lang' => 'La tua wiki sarà in $1',
-	'cnw-desc-change-lang' => 'Cambia',
+	'cnw-desc-change-lang' => 'cambia',
 	'cnw-desc-lang' => 'Lingua',
 	'cnw-desc-wiki-submit-error' => 'Per favore scegli una categoria',
 	'cnw-theme-headline' => 'Scegli un tema',
@@ -1708,7 +1711,7 @@ $messages['nl'] = array(
 	'cnw-error-blocked-header' => 'Gebruiker geblokkeerd',
 	'cnw-error-blocked' => 'U bent geblokkeerd door $1. De reden die gegeven is: $2. (Blokkadenummer voor referentie: $3)',
 	'cnw-error-torblock' => "Wiki's aanmaken via het Tor Network is niet toegestaan.",
-	'cnw-error-bot' => 'We denken dat u wellicht een geautomatiseerd programma bent. Als deze aanname onjuist is, neem dan alstublieft [http://www.wikia.com/Special:Contact/general contact met ons op], en geef aan waarop u denk dat u onterecht bent aangemerkt als een robot. Dit stelt ons in staat u verder te helpen met het aanmaken van uw wiki.',
+	'cnw-error-bot' => 'We denken dat u wellicht een geautomatiseerd programma bent. Als deze aanname onjuist is, neem dan [http://www.wikia.com/Special:Contact/general contact met ons op], en geef aan waarop u denk dat u onterecht bent aangemerkt als een robot. Dit stelt ons in staat u verder te helpen met het aanmaken van uw wiki.',
 	'cnw-error-bot-header' => 'U bent geïdentificeerd als een geautomatiseerd proces',
 );
 
@@ -1816,6 +1819,7 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
@@ -1823,61 +1827,61 @@ $messages['pms'] = array(
 	'cnw-next' => 'Apress',
 	'cnw-back' => 'André',
 	'cnw-or' => 'o',
-	'cnw-title' => 'Crea Neuva Wiki',
-	'cnw-name-wiki-headline' => 'Ancamin-a na Wiki',
-	'cnw-name-wiki-creative' => "Wikia a l'é ël mej pòst për fé un sit dla Ragnà e chërse na comunità d'antorn a lòn ch'at pias.",
+	'cnw-title' => 'Creé na Neuva Wiki',
+	'cnw-name-wiki-headline' => 'Anandié na Wiki',
+	'cnw-name-wiki-creative' => "Wikia a l'é ël mej pòst për fé un sit dla Ragnà e fé chërse na comunità dantorn a lòn ch'a-j pias.",
 	'cnw-name-wiki-label' => 'Daje un nòm a toa wiki',
 	'cnw-name-wiki-wiki' => 'Wiki',
 	'cnw-name-wiki-domain-label' => "Daje n'adrëssa a toa wiki",
-	'cnw-name-wiki-submit-error' => 'Contacc! It deuve vempì tute doe le casele dzora për andé anans.',
-	'cnw-login' => 'Intra',
+	'cnw-name-wiki-submit-error' => 'Atension! A dev compilé tute doe le casele sì-dzora për andé anans.',
+	'cnw-login' => 'Intré ant ël sistema',
 	'cnw-signup' => 'Creé un Cont',
 	'cnw-signup-prompt' => "Dabzògn d'un cont?",
-	'cnw-call-to-signup' => 'Registr-te belessì',
+	'cnw-call-to-signup' => "Ch'as anscriva ambelessì",
 	'cnw-login-prompt' => 'Ha-lo già un cont?',
-	'cnw-call-to-login' => 'Intra belessì',
-	'cnw-auth-headline' => 'Intra',
+	'cnw-call-to-login' => "Ch'a intra ant ël sistema belessì",
+	'cnw-auth-headline' => 'Intré ant ël sistema',
 	'cnw-auth-headline2' => "Ch'as Anscriva",
-	'cnw-auth-creative' => 'Intra con tò cont për continué a fé toa wiki.',
-	'cnw-auth-signup-creative' => "It l'has dabzògn d'un cont për continué a fé toa wiki.<br />A-i và mach na minuta për iscrivte!",
+	'cnw-auth-creative' => "Ch'as colega a sò cont për continué a batì soa wiki.",
+	'cnw-auth-signup-creative' => "A l'avrà dabzògn d'un cont për continué a batì soa wiki.<br />A-i và mach na minuta për anscriv-se!",
 	'cnw-auth-facebook-signup' => 'Anscriv-se con Facebook',
-	'cnw-auth-facebook-login' => "Ch'a intra con Facebook",
-	'cnw-userauth-headline' => "A l'ha-lo un cont?",
-	'cnw-userauth-creative' => 'Intra',
+	'cnw-auth-facebook-login' => 'Intré ant ël sistema con Facebook',
+	'cnw-userauth-headline' => 'Ha-lo un cont?',
+	'cnw-userauth-creative' => 'Conession',
 	'cnw-userauth-marketing-heading' => 'Ha-lo nen un cont?',
 	'cnw-userauth-marketing-body' => "It l'has dabzògn d'un cont për creé na wiki dzor Wikia. A-i và mach na minuta për registrete!", # Fuzzy
 	'cnw-userauth-signup-button' => "Ch'as anscriva",
-	'cnw-desc-headline' => "A propòsit ëd còs a l'é-lo toa wiki?",
-	'cnw-desc-creative' => 'Descriv tò argoment',
-	'cnw-desc-placeholder' => 'Sòn a aparirà dzor la pagina prinsipal ëd toa wiki.',
+	'cnw-desc-headline' => "Ëd lòn ch'a parla soa wiki?",
+	'cnw-desc-creative' => "Ch'a descriva l'argoment",
+	'cnw-desc-placeholder' => "Sòn a comparirà an sla pàgina d'intrada ëd soa wiki.",
 	'cnw-desc-tip1' => 'Sugeriment',
-	'cnw-desc-tip1-creative' => 'Dòvra sto spassi për parlé a la gent a propòsit ëd toa wiki ant na fras o doe',
-	'cnw-desc-tip2' => 'Psst',
-	'cnw-desc-tip2-creative' => 'Daje ai tò visitador quaich detaj specìfich a propòsit ëd tò soget',
-	'cnw-desc-tip3' => 'Për sugeriment',
-	'cnw-desc-tip3-creative' => "Faje savèj a la gent ch'a peulo giuté toa wiki a chërse modificand e giontand pagine",
+	'cnw-desc-tip1-creative' => "Ch'a deuvra së spassi për dije a la gent ëd lòn ch'a trata soa wiki ant na fras o doe",
+	'cnw-desc-tip2' => "Ch'a scota",
+	'cnw-desc-tip2-creative' => "Ch'a-j daga ai sò visitador chèich detaj specìfich a propòsit dël soget",
+	'cnw-desc-tip3' => "Consèj d'espert",
+	'cnw-desc-tip3-creative' => "Ch'a fasa savèj a la gent ch'a peul giuté soa wiki a chërse an modificand e an giontand dle pàgine",
 	'cnw-desc-choose' => 'Sern na categorìa',
 	'cnw-desc-select-one' => 'Sern-ne un-a',
 	'cnw-desc-default-lang' => 'Toa wiki a sarà an $1',
 	'cnw-desc-change-lang' => 'cambia',
 	'cnw-desc-lang' => 'Lenga',
-	'cnw-desc-wiki-submit-error' => 'Për piasì sërn na categorìa',
+	'cnw-desc-wiki-submit-error' => "Për piasì, ch'a serna na categorìa",
 	'cnw-theme-headline' => 'Sern un tema',
-	'cnw-theme-creative' => 'Sern un tema sota, it podras vëdde na peuva ëd minca tema an selessionandlo.',
-	'cnw-theme-instruction' => 'It peule ëdcò disegné tò tema pi tard andand su "Ij mè utiss".',
+	'cnw-theme-creative' => "Ch'a serna un tema sì-sota, a podrà vëdde na preuva ëd minca tema an selessionandlo.",
+	'cnw-theme-instruction' => 'A peul ëdcò progeté sò tema përsonal pi tard andasend su «Ij mè utiss».',
 	'cnw-welcome-headline' => "Congratulassion! $1 a l'é stàita creà",
-	'cnw-welcome-instruction1' => 'Sgnaca ël boton sota për ancaminé a gionté pagine a toa wiki.',
-	'cnw-welcome-instruction2' => 'It vëddras sto boton travers toa wiki, dòvrlo minca vira it veule gionté na neuva pagina.',
-	'cnw-welcome-help' => 'treuva arspòste, avis, e pi dzor <a href="http://community.wikia.com">Comunità Central</a>.',
-	'cnw-error-general' => 'Contacc, quaicòs a l\'é andàit da toa banda! mal an creand toa wiki. Për piasì preuva torna pi tard, o <a href="/Special:Contact">contatne</a> për agiut.',
+	'cnw-welcome-instruction1' => "Ch'a sgnaca an sël boton sì-sota për ancaminé a gionté dle pàgine a soa wiki.",
+	'cnw-welcome-instruction2' => "A vëddrà sto boton daspërtut an soa wiki, ch'a lo deuvra minca vira ch'a veul gionté na neuva pàgina.",
+	'cnw-welcome-help' => 'Ch\'a treuva dle rispòste, dij consej, e ancor ëd pi dzora la <a href="http://community.wikia.com">Sentral dla comunità</a>.',
+	'cnw-error-general' => "Contacc, quaicòs a l'é andàit mal da nòstra part. Për piasì, ch'a preuva torna pi tard, o <a href=\"/Special:Contact\">ch'a contata</a> për dl'agiut.",
 	'cnw-error-general-heading' => 'Scus-ne',
-	'cnw-badword-header' => 'Hey là',
-	'cnw-badword-msg' => 'Cerea, për piasì astente da dovré ste brute paròle o paròle vietà ant toa Descrission ëd Wiki: $1',
+	'cnw-badword-header' => "Ch'a scota",
+	'cnw-badword-msg' => "Cerea, për piasì ch'a deuvra nen ste parolasse o paròle vietà ant ls Descrission ëd soa Wiki: $1",
 	'cnw-error-wiki-limit-header' => 'Rivà al lìmit ëd Wiki',
 	'cnw-error-wiki-limit' => "Cerea, it ses limità a {{PLURAL:$1|$1 creassion ëd wiki}} për di. Speta 24 ore prima ëd creé n'àutra wiki.",
 	'cnw-error-blocked-header' => 'Cont blocà',
-	'cnw-error-blocked' => "It ses stàit blocà da $1. La rason dàita a l'era: $2. (ID blòch për arferiment: $3)",
-	'cnw-error-torblock' => "Creé Wiki via la Rej Tor a l'é pa përmëttù.",
+	'cnw-error-blocked' => "A l'é stàit blocà da $1. La rason dàita a l'era: $2. (ID ëd blocagi për arferiment: $3)",
+	'cnw-error-torblock' => "Creé dle Wiki via la Rej Tor a l'é pa përmëttù.",
 	'cnw-error-bot' => "I l'oma trovà che it peule esse un trigomiro. S'i l'oma fàit n'eror, për piasì contatne dëscrivend ch'it ses stàit falsament andividuà com un trigomiro, e it giuteroma a creé toa wiki: [http://www.wikia.com/Special:Contact/general ContatNe]",
 	'cnw-error-bot-header' => 'It ses stàit andividuà com un trigomiro',
 );
@@ -1925,6 +1929,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Geitost
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Malafaya
  * @author SandroHc
  */
@@ -1980,7 +1985,7 @@ $messages['pt'] = array(
 	'cnw-welcome-instruction2' => 'Verá este botão em todas as páginas da wiki; use-o em qualquer altura para criar uma página nova.',
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
 	'cnw-error-general' => 'Ocorreu um erro não identificado ao criar a sua wiki. Tente novamente mais tarde, por favor.', # Fuzzy
-	'cnw-error-general-heading' => 'Erro ao Criar Wiki Nova', # Fuzzy
+	'cnw-error-general-heading' => 'Nossas desculpas',
 	'cnw-badword-header' => 'Atenção',
 	'cnw-badword-msg' => 'Não use estas palavras impróprias ou proibidas na Descrição da Wiki, por favor: $1',
 	'cnw-error-wiki-limit-header' => 'O limite de wikis foi atingido',
@@ -1993,6 +1998,7 @@ $messages['pt'] = array(
  * @author Aristóbulo
  * @author Caio1478
  * @author JM Pessanha
+ * @author Luckas
  * @author Luckas Blade
  * @author TheGabrielZaum
  */

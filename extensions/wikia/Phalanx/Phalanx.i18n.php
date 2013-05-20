@@ -131,7 +131,7 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'right-phalanxemailblock' => 'Can file, view and manage e-mail based blocks',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author McDutchie
  * @author PtM
  * @author Shirayuki
@@ -141,6 +141,7 @@ $messages['qqq'] = array(
 	'phalanx-add-block' => 'This message is used as a button label (like "Save", "Show preview" and "Show changes" in <code>action=edit</code>). Clicking on the button adds a new block to the Phalanx database. ([[Thread:Support/About_Wikia:Phalanx-add-block/fi/reply|documentation]] by [[User:Jack Phoenix|Jack Phoenix]])',
 	'phalanx-label-filter' => '{{Identical|Filter}}',
 	'phalanx-label-type' => '{{Identical|Type}}',
+	'phalanx-label-lang' => '{{Identical|Language}}',
 	'phalanx-test-submit' => '{{Identical|Test}}',
 	'phalanx-link-unblock' => '{{Identical|Unblock}}',
 	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
@@ -156,10 +157,88 @@ $messages['qqq'] = array(
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'phalanx-desc' => 'فالانكس هو نظام دفاع مضاد للرسائل المزعجة',
+	'phalanx' => 'فالانكس',
+	'phalanx-title' => 'فالانكس - نظام دفاع مضاد للرسائل المزعجة',
+	'phalanx-type-content' => 'محتوى الصفحة',
+	'phalanx-type-summary' => 'ملخص الصفحة',
+	'phalanx-type-title' => 'عنوان الصفحة',
+	'phalanx-type-user' => 'مستخدم',
+	'phalanx-type-user-email' => 'بريد إلكتروني',
+	'phalanx-type-answers-question-title' => 'عنوان السؤال',
+	'phalanx-type-answers-recent-questions' => 'الأسئلة الحديثة',
+	'phalanx-type-wiki-creation' => 'إنشاء ويكي',
+	'phalanx-add-block' => 'تطبيق المنع',
+	'phalanx-edit-block' => 'حفظ المنع',
+	'phalanx-label-filter' => 'مرشح:',
 	'phalanx-label-reason' => 'السبب:',
+	'phalanx-label-expiry' => 'انتهاء الصلاحية:',
+	'phalanx-label-type' => 'النوع:',
 	'phalanx-label-lang' => 'اللغة:',
+	'phalanx-view-type' => 'نوع المنع...',
+	'phalanx-view-blocker' => 'البحث بواسطة مرشح النصوص:',
+	'phalanx-view-blocks' => 'مرشح البحث',
+	'phalanx-view-id' => 'الترشيح حسب الرقم:',
+	'phalanx-view-id-submit' => 'الترشيح',
+	'phalanx-format-text' => 'نص عادي',
+	'phalanx-format-regex' => 'رجاكس',
+	'phalanx-format-case' => 'يتحسس حالة الأحرف',
+	'phalanx-format-exact' => 'بالضبط',
+	'phalanx-tab-main' => 'إدارة المرشحات',
+	'phalanx-tab-secondary' => 'اختبار المرشحات',
+	'phalanx-block-success' => 'تم إضافة المنع بنجاح',
+	'phalanx-block-failure' => 'حدث خطأ أثناء إضافة المنع',
+	'phalanx-modify-success' => 'تم تعديل المنع بنجاح',
+	'phalanx-modify-failure' => 'حدث خطأ أثناء تعديل المنع',
+	'phalanx-modify-warning' => 'أنت تقوم بتعديل المنع رقم #$1.
+النقر فوق  "{{int:phalanx-edit-block}}" سوف يحفظ تغييراتك!',
+	'phalanx-test-description' => 'النص الذي تم توفيره من قبل اختبار عمليات المنع الحالية',
+	'phalanx-test-submit' => 'اختبار',
+	'phalanx-test-results-legend' => 'نتائج الاختبار',
+	'phalanx-display-row-blocks' => 'عمليات المنع: $1',
+	'phalanx-display-row-created' => "تم إنشاؤها بواسطة ''''$1''' على $2",
+	'phalanx-link-unblock' => 'الغاء المنع',
+	'phalanx-link-modify' => 'تعديل',
+	'phalanx-link-stats' => 'الحالة',
+	'phalanx-reset-form' => 'إعادة تعيين النموذج',
+	'phalanx-legend-input' => 'إنشاء أو تعديل مرشح',
+	'phalanx-legend-listing' => 'المرشحات المطبقة حاليا',
+	'phalanx-unblock-message' => 'تمت إزالة عملية المنع رقم #$1 بنجاح',
+	'phalanx-help-type-content' => 'هذا المرشح يمنع عملية تحرير من أن يتم حفظها، إذا كان محتواها يتطابق مع أي من العبارات المدرجة في القائمة السوداء.',
+	'phalanx-title-move-summary' => 'سبب المنع الذي أدخلته يحتوي على عبارة محظورة.',
+	'phalanx-content-spam-summary' => 'تم العثور على النص في موجز للصفحة.',
+	'phalanx-stats-title' => 'إحصائيات الفالانكس',
+	'phalanx-stats-block-notfound' => 'لا يمكن العثور على رقم عملية المنع',
+	'phalanx-stats-table-id' => 'رقم عملية المنع',
+	'phalanx-stats-table-user' => 'أضيفت من قبل',
+	'phalanx-stats-table-type' => 'النوع',
+	'phalanx-stats-table-create' => 'تم إنشاؤه',
+	'phalanx-stats-table-expire' => 'ينتهي في',
+	'phalanx-stats-table-exact' => 'بالضبط',
+	'phalanx-stats-table-regex' => 'رجاكس',
+	'phalanx-stats-table-case' => 'الحالة',
+	'phalanx-stats-table-language' => 'اللغة',
+	'phalanx-stats-table-text' => 'النص',
 	'phalanx-stats-table-reason' => 'السبب',
+	'phalanx-stats-row' => "قام مرشح '''$1''' بمنع '''$2''' في $3 في $4",
+	'phalanx-stats-row-per-wiki' => "تم منع المستخدم '''$2''' في '''$4''' من قبل المرشح رقم  '''$3''' ($5) (نوع: '''$1''')",
+	'phalanx-rule-log-name' => 'سجل قواعد الفالانكس',
+	'phalanx-rule-log-header' => 'هذا سجل بالتغييرات في قواعد الفالانكس.',
+	'phalanx-email-rule-log-name' => 'سجل قواعد الفالانكس للبريد الإلكتروني.',
+	'phalanx-email-rule-log-header' => 'هذا سجل للتغييرات الحاصلة على قواعد الفالانكس لنوع البريد الإلكتروني.',
+	'phalanx-rule-log-add' => 'تمت إضافة قاعدة فالانكس: $1',
+	'phalanx-rule-log-edit' => 'تم تعديل قاعدة فالانكس: $1',
+	'phalanx-rule-log-delete' => 'تم حذف قاعدة فالانكس: $1',
+	'phalanx-rule-log-details' => 'مرشح: "$1", نوع: "$2", سبب: "$3"',
+	'phalanx-stats-table-wiki-id' => 'رقم الويكي',
+	'phalanx-stats-table-wiki-name' => 'اسم الويكي',
+	'phalanx-stats-table-wiki-url' => 'عنوان الويكي الإلكتروني (URL)',
 	'phalanx-stats-table-wiki-last-edited' => 'آخر تعديل',
+	'phalanx-email-filter-hidden' => 'مرشح البريد الإلكتروني مخفي. ليس لديك إذن لعرض النص.',
+	'action-phalanx' => 'استخدام نظام الدفاع المضاد للرسائل المزعجة',
+	'right-phalanx' => 'يمكن أن يدير عمليات منع عامة وترشيح الرسائل المزعجة',
+	'right-phalanxexempt' => 'مستثناة من قواعد الفالانكس',
+	'right-phalanxemailblock' => 'يمكنك ترتيب و عرض و إدارة عمليات منع البريد الإلكتروني',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -1848,118 +1927,119 @@ Prosimy [[Special:Contact|skontaktuj się z nami]] w sprawie problemu.<br />Blok
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'phalanx-desc' => "Phalanx a l'é un Mecanism Antegrà ëd Difèisa da lë Spam",
+	'phalanx-desc' => "Phalanx a l'é un Mecanism Antegrà ëd Difèisa da la rumenta",
 	'phalanx' => 'Phalanx',
-	'phalanx-title' => 'Phalanx - Mecanism Antegrà ëd Difèisa da lë Spam',
-	'phalanx-type-content' => 'contnù ëd pagina',
-	'phalanx-type-summary' => 'resumé ëd pagina',
-	'phalanx-type-title' => 'tìtol ëd pàgina',
+	'phalanx-title' => 'Phalanx - Mecanism Antegrà ëd Difèisa da la rumenta',
+	'phalanx-type-content' => 'contnù ëd la pàgina',
+	'phalanx-type-summary' => 'resumé ëd la pàgina',
+	'phalanx-type-title' => 'tìtol ëd la pàgina',
 	'phalanx-type-user' => 'utent',
-	'phalanx-type-user-email' => 'corel',
-	'phalanx-type-answers-question-title' => 'tìtol dla custion',
-	'phalanx-type-answers-recent-questions' => 'custion recente',
+	'phalanx-type-user-email' => 'pòsta eletrònica',
+	'phalanx-type-answers-question-title' => 'tìtol dla chestion',
+	'phalanx-type-answers-recent-questions' => 'chestion recente',
 	'phalanx-type-wiki-creation' => 'creassion ëd wiki',
-	'phalanx-add-block' => 'Aplica blòch',
-	'phalanx-edit-block' => 'Salva blòch',
+	'phalanx-add-block' => 'Apliché ël blocagi',
+	'phalanx-edit-block' => 'Argistré ël blocagi',
 	'phalanx-label-filter' => 'Filtr:',
 	'phalanx-label-reason' => 'Rason:',
 	'phalanx-label-expiry' => 'Fin:',
 	'phalanx-label-type' => 'Sòrt:',
 	'phalanx-label-lang' => 'Lenga:',
-	'phalanx-view-type' => 'Sòrt ëd blòch...',
-	'phalanx-view-blocker' => 'Serca con test ëd filtr:',
+	'phalanx-view-type' => 'Sòrt ëd blocagi...',
+	'phalanx-view-blocker' => 'Sërché an filtrand ël test:',
 	'phalanx-view-blocks' => "Filtr d'arserca",
-	'phalanx-view-id' => 'Pija filtr për ID:',
-	'phalanx-view-id-submit' => 'Pijé filtr',
+	'phalanx-view-id' => 'Filtré për ID:',
+	'phalanx-view-id-submit' => 'Filtré',
 	'phalanx-format-text' => 'mach test',
-	'phalanx-format-regex' => 'regex',
-	'phalanx-format-case' => 'sensìbil a minùscol/maiùscol',
+	'phalanx-format-regex' => 'espression rassional',
+	'phalanx-format-case' => 'sensìbil a minùscol e majùscol',
 	'phalanx-format-exact' => 'precis',
-	'phalanx-tab-main' => 'Gestiss Filtr',
+	'phalanx-tab-main' => 'Gestì ij Filtr',
 	'phalanx-tab-secondary' => 'Filtr ëd Preuva',
-	'phalanx-block-success' => "Ël blòch a l'é stàit giontà da bin",
-	'phalanx-block-failure' => "A l'é stàit-ie n'eron an giontand ël blòch",
-	'phalanx-modify-success' => "Ël blòch a l'é stàit modificà da bin",
-	'phalanx-modify-failure' => "A l'é stàit-ie n'eron an modificand ël blòch",
-	'phalanx-modify-warning' => 'It të stas modificand l\'ID blòch #$1. 
-Sgnacand "{{int:phalanx-edit-block}}" it salveras ij tò cambi!',
-	'phalanx-test-description' => 'Preuva ël test dàit con ij blòch corent.',
+	'phalanx-block-success' => "Ël blocagi a l'é stàit giontà për da bin",
+	'phalanx-block-failure' => "A-i é staje n'eror an giontand ël blocagi",
+	'phalanx-modify-success' => "Ël blocagi a l'é stàit modificà për da bin",
+	'phalanx-modify-failure' => "A-i é staje n'eror durant la modìfica dël blocagi",
+	'phalanx-modify-warning' => "A l'é an camin ch'a modìfica ël blocagi d'identificativ #$1. 
+Sgnacand ancima a «{{int:phalanx-edit-block}}» soe modìfiche a saran argistrà!",
+	'phalanx-test-description' => 'Test fornì për la preuva contra ij blocagi corent.',
 	'phalanx-test-submit' => 'Preuva',
 	'phalanx-test-results-legend' => 'Arzultà dla preuva',
-	'phalanx-display-row-blocks' => 'blòch: $1',
+	'phalanx-display-row-blocks' => 'blocagi: $1',
 	'phalanx-display-row-created' => "creà da '''$1''' ai $2",
 	'phalanx-link-unblock' => 'dësbloché',
 	'phalanx-link-modify' => 'modìfica',
 	'phalanx-link-stats' => 'statìstiche',
 	'phalanx-reset-form' => "Formolari d'anulament",
-	'phalanx-legend-input' => 'Crea o modìfica filtr',
+	'phalanx-legend-input' => 'Creé o modifiché ël filtr',
 	'phalanx-legend-listing' => 'Filtr aplicà al moment',
-	'phalanx-unblock-message' => "L'ID blòch #$1 a l'é stàit gavà da bin",
-	'phalanx-help-type-content' => 'Sto filtr a vieta che na modìfica a sia salvà, se sò contnù a corispond a quaich fras dla lista nèira.',
-	'phalanx-help-type-summary' => 'Sto filtr a vieta che na modìfica a sia salvà, se ël resumé dàit a corispond a quaich fras dla lista nèira.',
-	'phalanx-help-type-title' => 'Sto filtr a vieta che na pagina a sia creà, se sò tìtol a corispond a quaich fras dla lista nèira.
+	'phalanx-unblock-message' => "ël blocagi d'identificativ #$1 a l'é stàit gavà për da bin",
+	'phalanx-help-type-content' => 'Ës filtr a ampediss che na modìfica a sia salvà, se sò contnù a corispond a chèich fras dla lista nèira.',
+	'phalanx-help-type-summary' => 'Ës filtr a ampediss che na modìfica a sia salvà, se ël resumé dàit a corispond a chèich fras dla lista nèira.',
+	'phalanx-help-type-title' => 'Ës filtr a ampediss che na pàgina a sia creà, se sò tìtol a corispond a chèich fras dla lista nèira.
 
-A vieta pa che na pagina pre-esistenta a sia modificà.',
-	'phalanx-help-type-user' => "Sto filtr a bloca n'utent (propi l'istess com un blòch local MediaWiki), se ël nòm o l'adrëssa IP a corispond a un dij nòm o adrëssa IP dla lista nèira.",
-	'phalanx-help-type-wiki-creation' => 'Ël filtr a vieta che na wiki a sia creà, se sò nòm o anliura a corispond a quaich fras dla lista nèira.',
-	'phalanx-help-type-answers-question-title' => 'Sto filtr a blòca la creassion ëd na custion (pagina), se sò tìtol a corispond a quaich fras dla lista nèira.
+A ampediss pa che na pàgina esistenta a sia modificà.',
+	'phalanx-help-type-user' => "Ës filtr a blòca n'utent (pròpi l'istess com un blocagi local MediaWiki), se ël nòm o l'adrëssa IP a corispond a un dij nòm o dj'adrësse IP dla lista nèira.",
+	'phalanx-help-type-wiki-creation' => 'Ës filtr a ampediss che na wiki a sia creà, se sò nòm o adrëssa a corispond a chèich fras dla lista nèira.',
+	'phalanx-help-type-answers-question-title' => 'Sto filtr a blòca la creassion ëd na chestion (pàgina), se sò tìtol a corispond a chèich fras dla lista nèira.
 
-Nòta: a travaja mach dzor wiki ëd sòrt-Arspòste.',
-	'phalanx-help-type-answers-recent-questions' => 'Sto filtr a vieta ëd visualisé na custion (pagina) ant un nùmer ëd surtìe (widget, liste, liste generà da tichëtte). 
-A vieta pa che coste pagine a sio creà.
+Nòta: a marcia mach dzora le wiki ëd sòrt Rispòste.',
+	'phalanx-help-type-answers-recent-questions' => 'Sto filtr a ampediss ëd visualisé dle chestion (pàgine) ant vàire surtìe (widget, liste, liste generà da tichëtte). 
+A ampediss pa che coste pàgine a sio creà.
 
-Nòta: a travaja mach dzor le wiki ëd sòrt Arspòste',
-	'phalanx-help-type-user-email' => "Sto filtr a vieta la creassion ëd cont dovrand n'adrëssa ëd corel blocà.",
-	'phalanx-user-block-reason-ip' => "St'adrëssa IP-sì a peul pa modifiché travers l'antera rèh Wikia për vandalism o àutr dann fàit da ti o da cheicun che a condivid  toa adrëssa IP.
-S'it chërde che son a sia n'eror, për piasì [[Special:Contact|contata Wikia]]",
-	'phalanx-user-block-reason-exact' => "Sto nòm utent o adrëssa IP a peul pa modifiché travers l'antera rèj Wikia për vandalism o àutr dann.
-S'it chërde che a sia n'eror, për piasì [[Special:Contact|contata Wikia]]",
-	'phalanx-user-block-reason-similar' => "Sto nòm utent a peul pa modifiché travers l'antera rèj Wikia për vandalismo o àutr dann fàit da n'utent con un nòm ch'a smija.
-Për piasì [[Special:Contact|contata Wikia]] a propòsit dël problem.",
-	'phalanx-user-block-new-account' => "Ël nòm utent a l'é pa disponìbil për la registrassion. Për piasì sern-ne n'àutr.",
-	'phalanx-user-block-withreason-ip' => "St'adrëssa IP-sì a peul pa modifiché travers l'antera rèj Wikia për vandalism o àutr dann fàit da ti o da cheicun che a condivid  toa adrëssa IP.
-S'it chërde che son a sia n'eror, për piasì [[Special:Contact|contata Wikia]].<br />Ël blocador a l'ha ëdcò butà sta rason adissional: $1.",
-	'phalanx-user-block-withreason-exact' => "Sto nòm utent o adrëssa IP a peul pa modifiché travers l'antera rèj Wikia për vandalism o àutr dann.
-S'it chërde che sòn a sia n'eror, për piasì [[Special:Contact|contata Wikia]].<br />Ël blocador a l'ha ëdcò butà sta rason adissional: $1.",
-	'phalanx-user-block-withreason-similar' => "Sto nòm utent-sì a peul pa modifichè travers l'antera rèj Wikia për vandalism o àutr dann fàit na n'utent con nòm ësmijant.
-Për piasì [[Special:Contact|contata Wikia]] për parlé dël problema.<br />Ël blocador a l'ha ëdcò butà sta rason adissional: $1.",
-	'phalanx-title-move-summary' => "La rason ch'it l'has anserì a contnìa na fras blocà.",
+Nòta: a marcia mach dzora le wiki ëd sòrt Rispòste.',
+	'phalanx-help-type-user-email' => "Sto filtr a ampediss la creassion ëd cont dovrand n'adrëssa ëd pòsta eletrònica blocà.",
+	'phalanx-user-block-reason-ip' => "St'adrëssa IP-sì a peul pa modifiché an tuta la rej Wikia për ëd vandalism o d'àutri dann fàit da chiel o da cheidun che a condivid soa adrëssa IP.
+S'a chërde che sòn a sia n'eror, për piasì [[Special:Contact|ch'a contata Wikia]].",
+	'phalanx-user-block-reason-exact' => "Së stranòm costa adrëssa IP a peul pa modifiché an tuta la rej Wikia për ëd vandalism o d'àutri dann.
+S'a chërd che a sia n'eror, për piasì [[Special:Contact|ch'a contata Wikia]].",
+	'phalanx-user-block-reason-similar' => "Së stranòm a peul pa modifiché an tuta la rèj Wikia për ëd vandalism o d'àutri dann fàit da n'utent con në stranòm ch'a jë smija.
+Për piasì [[Special:Contact|ch'a contata Wikia]] a propòsit d'ës problema.",
+	'phalanx-user-block-new-account' => "Lë stranòm utent a l'é nne disponìbil për la registrassion. Për piasì, ch'a na serna n'àutr.",
+	'phalanx-user-block-withreason-ip' => "St'adrëssa IP-sì a peul pa modifiché an tuta la rèj Wikia për ëd vandalism o d'àutri dann fàit da chiel o da cheidun che a condivid soa adrëssa IP.
+S'a chërd che sòn a sia n'eror, për piasì [[Special:Contact|ch'a contata Wikia]].<br />Chi ch'a l'ha blocalo a l'ha ëdcò butà costa rason adissional: $1.",
+	'phalanx-user-block-withreason-exact' => "Së stranòm o costa adrëssa IP a peul pa modifiché an tuta la rèj Wikia për ëd vandalism o d'àutri dann.
+S'a chërd che sòn a sia n'eror, për piasì [[Special:Contact|ch'a contata Wikia]].<br />Chi a l'ha butà ël blocagi a l'ha ëdcò butà costa rason adissional: $1.",
+	'phalanx-user-block-withreason-similar' => "Së stranòm-sì a peul pa modifichè an tuta la rèj Wikia për ëd vandalism o d'àutri dann fàit da n'utent con në stranòm ch'a jë smija.
+Për piasì [[Special:Contact|ch'a contata Wikia]] për parlé dël problema.<br />Chi a l'ha blocalo a l'ha ëdcò butà sta rason adissional: $1.",
+	'phalanx-title-move-summary' => "La rason ch'a l'ha anserì a contnisìa na fras blocà.",
 	'phalanx-content-spam-summary' => "Ël test a l'é stàit trovà ant ël somari dla pàgina.",
-	'phalanx-stats-title' => 'Statistiche ëd Phalanx',
-	'phalanx-stats-block-notfound' => 'ID blòch pa trovà',
-	'phalanx-stats-table-id' => 'ID blòch',
+	'phalanx-stats-title' => 'Statìstiche ëd Phalanx',
+	'phalanx-stats-block-notfound' => 'Identificativ ëd blocagi nen trovà',
+	'phalanx-stats-table-id' => 'Identificativ ëd blocagi',
 	'phalanx-stats-table-user' => 'Giontà da',
 	'phalanx-stats-table-type' => 'Sòrt',
 	'phalanx-stats-table-create' => 'Creà',
 	'phalanx-stats-table-expire' => 'Scadensa',
 	'phalanx-stats-table-exact' => 'Precis',
-	'phalanx-stats-table-regex' => 'Regex',
+	'phalanx-stats-table-regex' => 'Espression regolar',
 	'phalanx-stats-table-case' => 'Cas',
 	'phalanx-stats-table-language' => 'Lenga',
 	'phalanx-stats-table-text' => 'Test',
 	'phalanx-stats-table-reason' => 'Rason',
-	'phalanx-stats-row' => "a $4, filtr sòrt '''$1''' blocà '''$2''' ai $3",
-	'phalanx-stats-row-per-wiki' => "l'utent '''$2''' a l'é stàit blocà dzor '''$4''' da l'ID filtr '''$3''' ($5) (sòrt: '''$1''')",
-	'phalanx-rule-log-name' => 'Registr ëd ròj Phalanx',
-	'phalanx-rule-log-header' => "Cost a l'é un registr dij cambi ai ròj phalanx.",
-	'phalanx-email-rule-log-name' => 'Registr dij ròj dij corej ëd Phalanx',
-	'phalanx-email-rule-log-header' => "Cost a l'é un registr dij cambi ai ròj ëd Phalanx për sòrt e-mail.",
-	'phalanx-rule-log-add' => 'Giontà ròl Phalanx: $1',
-	'phalanx-rule-log-edit' => 'Modificà ròl Phalanx: $1',
-	'phalanx-rule-log-delete' => 'Scanselà ròl Phalanx: $1',
+	'phalanx-stats-row' => "a $4, la sòrt ëd filtr '''$1''' a l'ha blocà '''$2''' su $3",
+	'phalanx-stats-row-per-wiki' => "l'utent '''$2''' a l'é stàit blocà dzor '''$4''' dal filtr d'identificativ '''$3''' ($5) (sòrt: '''$1''')",
+	'phalanx-rule-log-name' => 'Registr ëd le régole Phalanx',
+	'phalanx-rule-log-header' => "Cost-sì a l'é un registr dle modìfiche a le régole ëd phalanx.",
+	'phalanx-email-rule-log-name' => 'Registr ëd le régole ëd pòsta eletrònica ëd Phalanx',
+	'phalanx-email-rule-log-header' => "Cost-sì a l'é un registr dle modìfiche a le régole ëd Phalanx për la sòrt ëd pòsta eletrònica.",
+	'phalanx-rule-log-add' => 'Régola Phalanx giontà: $1',
+	'phalanx-rule-log-edit' => 'Régola Phalanx modificà: $1',
+	'phalanx-rule-log-delete' => 'Régola Phalanx sganfà: $1',
 	'phalanx-rule-log-details' => 'Filtr: "$1", sòrt: "$2", rason: "$3"',
-	'phalanx-stats-table-wiki-id' => 'ID wiki',
-	'phalanx-stats-table-wiki-name' => 'Nòm Wiki',
-	'phalanx-stats-table-wiki-url' => 'Anliura wiki',
+	'phalanx-stats-table-wiki-id' => 'ID ëd la wiki',
+	'phalanx-stats-table-wiki-name' => 'Nòm ëd la Wiki',
+	'phalanx-stats-table-wiki-url' => 'Anliura dla wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Ùltima modìfica',
-	'phalanx-email-filter-hidden' => "Filtr ëd corel stërmà. It l'has pa ij përmess ëd vëdde ël test.",
-	'action-phalanx' => 'dòvra ël Mecanism Antegrà ëd Difèisa da lë Spam',
-	'right-phalanx' => 'A peul gestì blòch globaj e filtr dë spam',
-	'right-phalanxexempt' => 'Esempi da le régole Phalanx',
-	'right-phalanxemailblock' => 'As peul archiviesse, vëdde e gestì blòch basà su e-mail',
+	'phalanx-email-filter-hidden' => "Filtr ëd pòsta eletrònica stërmà. A l'ha nen ël përmess ëd vëdde ël test.",
+	'action-phalanx' => 'dovré ël Mecanism Antegrà ëd Difèisa da la rumenta',
+	'right-phalanx' => 'A peul gestì ij blocagi globaj e filtr ëd rumenta',
+	'right-phalanxexempt' => 'Esentà da le régole Phalanx',
+	'right-phalanxemailblock' => 'Chiel a peul archivié, vëdde e gestì ij blocagi basà an sij mëssagi ëd pòsta eletrònica',
 );
 
 /** Pashto (پښتو)
@@ -2097,6 +2177,7 @@ Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wik
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -2148,9 +2229,17 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'phalanx' => 'Falange',
+	'phalanx-title' => "Falange - Meccanisme de Difese Indegrate condre a 'u Spam",
 	'phalanx-type-title' => "Titole d'a pàgene",
 	'phalanx-type-user' => 'utende',
 	'phalanx-type-user-email' => 'e-mail',
+	'phalanx-label-filter' => 'Filtre:',
+	'phalanx-label-reason' => 'Mutive:',
+	'phalanx-label-expiry' => 'Scadenze:',
+	'phalanx-label-type' => 'Tipe:',
+	'phalanx-label-lang' => 'Lènghe:',
+	'phalanx-view-type' => 'Tipe de blocche...',
 	'phalanx-test-submit' => 'Test',
 );
 

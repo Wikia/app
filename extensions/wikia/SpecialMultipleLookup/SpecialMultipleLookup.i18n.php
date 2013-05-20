@@ -74,12 +74,28 @@ Kontroleer die gegewe IP-adres; u met moontlik \'n invoerfout gemaak.</p>',
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author OsamaK
  */
 $messages['ar'] = array(
 	'multilookupgo' => 'اذهب',
+	'multilookupnext' => 'التالي',
+	'multilookupprevious' => 'السابق',
+	'multilookupnbrresult' => 'عدد النتائج:',
+	'multilookupinvalidresults' => 'نتائج غير صحيحة!',
+	'multilookupnoresultfound' => 'لم يتم العثور على نتائج',
+	'multilookupwiki' => 'الويكي',
+	'multilookuplink' => 'رابط المساهمات',
+	'multilookupdetails' => 'شاهد  التفاصيل',
+	'multilookuplastedit' => 'آخر تحرير من عنوان IP هذا:',
+	'multilookupwikidbname' => 'اسم قاعدة البيانات',
 	'multilookupwikiurl' => 'المسار',
 	'multilookupwikititle' => 'العنوان',
+	'multilookupwikioptions' => 'الخيارات',
+	'multilookuplastedithdr' => 'آخر تعديل',
+	'multilookuprecordspager' => "عرض من '''$1''' إلى '''$2''' من مجموع '''$3''' سجلا.",
+	'right-multilookup' => 'البحث عن معلومات حول المستخدمين في عدة ويكيات',
+	'action-multilookup' => 'البحث عن معلومات حول المستخدمين في عدة ويكيات',
 );
 
 /** Azerbaijani (azərbaycanca)

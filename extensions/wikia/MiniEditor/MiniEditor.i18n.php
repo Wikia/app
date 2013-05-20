@@ -11,7 +11,7 @@ $messages['en'] = array(
 	'minieditor-placeholder-reply' => 'Reply to the message here',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'minieditor-specialpage-title' => 'Browser title for the page',
@@ -272,6 +272,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author JM Pessanha
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -281,6 +282,18 @@ $messages['pt-br'] = array(
 	'minieditor-message-edit' => 'Esta é uma mensagem existente',
 	'minieditor-reply' => 'Responder',
 	'minieditor-placeholder-reply' => 'Responder a mensagem aqui',
+);
+
+/** Romanian (română)
+ * @author Minisarm
+ */
+$messages['ro'] = array(
+	'minieditor-specialpage-title' => 'Pagină demonstrativă a MiniEditorului',
+	'minieditor-new-heading' => 'Creare mesaj nou',
+	'minieditor-placeholder-new' => 'Introduceți mesajul dumneavoastră aici',
+	'minieditor-message-edit' => 'Acesta este un mesaj existent',
+	'minieditor-reply' => 'Răspuns',
+	'minieditor-placeholder-reply' => 'Răspundeți mesajului aici',
 );
 
 /** tarandíne (tarandíne)
@@ -337,11 +350,15 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author Ua2004
  */
 $messages['uk'] = array(
+	'minieditor-specialpage-title' => 'Демо-сторінка MiniEditor',
 	'minieditor-new-heading' => 'Створити нове повідомлення',
 	'minieditor-placeholder-new' => 'Введіть ваше повідомлення тут',
+	'minieditor-message-edit' => 'Це існуюче повідомлення',
 	'minieditor-reply' => 'Відповісти',
+	'minieditor-placeholder-reply' => 'Відповідь на повідомлення тут',
 );
 
 /** Simplified Chinese (中文（简体）‎)

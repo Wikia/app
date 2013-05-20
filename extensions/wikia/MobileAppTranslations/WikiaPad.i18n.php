@@ -31,11 +31,20 @@ $messages['en'] = array(
 	'browser-loading-message' => 'Loading...'
 );
 
+/** Message documentation (Message documentation)
+ * @author Shirayuki
+ */
+$messages['qqq'] = array(
+	'main-tab-offline' => '{{Identical|Offline}}',
+);
+
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Mutarjem horr
  */
 $messages['ar'] = array(
 	'main-tab-discover' => 'إكتشف',
+	'main-tab-personal' => 'ويكياتي',
 	'main-tab-search' => 'إبحث',
 	'main-tab-offline' => 'غير متصل',
 	'tab-discover-loading-message' => 'جاري التحميل...',
@@ -82,6 +91,22 @@ $messages['br'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'Mat eo',
 	'tab-search-loading-message' => 'O klask...',
 	'browser-loading-message' => 'O kargañ...',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'main-tab-discover' => 'Descobrir',
+	'main-tab-personal' => 'La meva Wikia',
+	'main-tab-search' => 'Cercar',
+	'main-tab-offline' => 'Desconnectat',
+	'tab-discover-loading-message' => 'Carregant...',
+	'tab-discover-no-network-dialog-title' => 'Xarxa no disponible',
+	'tab-discover-no-network-dialog-message' => 'No hi ha connexió de xarxa detectada',
+	'tab-discover-no-network-dialog-close-button' => 'Acceptar',
+	'tab-search-loading-message' => 'Cercant...',
+	'browser-loading-message' => 'Carregant...',
 );
 
 /** Czech (česky)
@@ -408,6 +433,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -535,12 +561,16 @@ $messages['ug-arab'] = array(
 /** Ukrainian (українська)
  * @author Base
  * @author Steve.rusyn
+ * @author Ua2004
  */
 $messages['uk'] = array(
+	'main-tab-discover' => 'Відкрити',
+	'main-tab-personal' => 'Моя Wikia',
 	'main-tab-search' => 'Пошук',
 	'main-tab-offline' => 'Офлайн',
 	'tab-discover-loading-message' => 'Завантаження…',
 	'tab-discover-no-network-dialog-title' => 'Мережа недоступна',
+	'tab-discover-no-network-dialog-message' => 'Підключення до мережі не виявлено',
 	'tab-discover-no-network-dialog-close-button' => 'Гаразд',
 	'tab-search-loading-message' => 'Пошук...',
 	'browser-loading-message' => 'Завантаження…',

@@ -32,7 +32,7 @@ $1
 	'lightbox-visit-the-wiki' => 'Visit the wiki:'
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Shirayuki
  * @author Siebrand
  */
@@ -57,11 +57,34 @@ $messages['qqq'] = array(
  * @author Achraf94
  */
 $messages['ar'] = array(
+	'lightbox_details_tooltip' => 'عرض تفاصيل الصورة',
 	'lightbox-forum' => 'منتدى',
+	'lightbox-standard-link' => 'وصلة قياسية',
+	'lightbox-blog-link' => 'وصلة المدونة',
+	'lightbox-send' => 'إرسال',
+	'lightbox-share-description' => 'صور $1 في $2',
+	'lightbox-share-email-subject' => 'أرسل $1 لك صورة في ويكيا',
+	'lightbox-share-email-body' => 'مرحبا،
+
+أراد شخص إظهار صورة لك في ويكيا. شاهد الصورة:
+
+$1
+
+- فريق ويكيا',
 	'lightbox-share-button-email' => 'البريد الإلكتروني',
 	'lightbox-share-button-www' => 'انشرها',
 	'lightbox-share-button-embed' => 'تضمين',
+	'lightbox-share-email-label' => 'أرسل هذه الصورة لصديق',
+	'lightbox-share-email-page-label' => 'أرسل هذه الصفحة إلى صديق',
+	'lightbox-share-email-page-label-address' => 'عنوان البريد الإلكتروني',
+	'lightbox-share-email-ok-caption' => 'تأكيد',
+	'lightbox-share-email-ok-content' => 'تم إرسال {{PLURAL:$1|البريد الإلتروني|رسائل البريد الإلكتروني}}',
 	'lightbox-share-email-error-caption' => 'خطأ',
+	'lightbox-share-email-error-content' => 'خطأ في إرسال  {{PLURAL:$1|الرسالة الإلكترونية|الرسائل الإلكترونية}}.
+التفاصيل: $2',
+	'lightbox-share-email-error-login' => 'تحتاج لتسجيل الدخول لكي ترسل بريد إلكتروني',
+	'lightbox-share-email-error-noaddress' => 'لم يتم تحديد لا عناوين.',
+	'lightbox-visit-the-wiki' => 'زيارة الويكي:',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -734,6 +757,7 @@ Detaj: $2',
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'lightbox_details_tooltip' => 'د انځور تفصيل کتل',
 	'lightbox-forum' => 'فورم',
 	'lightbox-send' => 'لېږل',
 	'lightbox-share-button-email' => 'برېښليک',
@@ -743,9 +767,13 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Luckas
  * @author SandroHc
  */
 $messages['pt'] = array(
+	'lightbox-forum' => 'Fórum',
+	'lightbox-standard-link' => 'Link padrão',
+	'lightbox-send' => 'Enviar',
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Partilhar',
 	'lightbox-share-button-embed' => 'Incorporar',
@@ -755,12 +783,15 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'lightbox_details_tooltip' => 'Ver detalhes da foto',
 	'lightbox-forum' => 'Fórum',
 	'lightbox-send' => 'Enviar',
+	'lightbox-share-button-www' => 'Compartilhar',
+	'lightbox-share-button-embed' => 'Incorporar',
 	'lightbox-share-email-ok-caption' => 'Confirmação',
 	'lightbox-share-email-error-caption' => 'Erro',
 );
