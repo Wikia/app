@@ -15,10 +15,10 @@ abstract class CollectionField extends InputField
 		return isset($values[$index]) ? $values[$index] : $values;
 	}
 
-	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index) {
+	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index = null) {
 		$out = '';
 		if (isset($index)) {
-			$out .= parent::renderInternal($className, $htmlAttributes, $data);
+			$out .= parent::renderInternal($className, $htmlAttributes, $data, $index);
 		} else {
 			$values = $this->getValue();
 			foreach ($values as $index => $value) {
