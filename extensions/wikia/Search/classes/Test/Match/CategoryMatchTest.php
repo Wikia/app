@@ -3,8 +3,8 @@
 /**
  * Class definition for Wikia\Search\classes\Test\Match\CategoryMatchTest
  */
-namespace Wikia\Search\classes\Test\Match;
-use ReflectionProperty, ReflectionMethod,Wikia\Search\classes\MediaWikiService, Wikia\Search\classes\Result, Wikia\Search\classes\Test\BaseTest;
+namespace Wikia\Search\Test\Match;
+use ReflectionProperty, ReflectionMethod,Wikia\Search\MediaWikiService, Wikia\Search\Result, Wikia\Search\Test\BaseTest;
 
 
 class CategoryMatchTest extends BaseTest  {
