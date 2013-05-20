@@ -18,20 +18,11 @@ class Label extends FormElement {
 		return $this->message;
 	}
 
-	// TODO
-	public function setFieldId($fieldId) {
-		$this->fieldId = $fieldId;
-	}
-
-	public function getFieldId() {
-		return $this->fieldId;
-	}
-
-	public function render($attributes = []) {
+	public function render($attributes = [], $fieldId) {
 		// TODO icon - maybe we can extract it to separate class
 		$data = [
 			'icon' => 1,
-			'fieldId' => $this->getFieldId(),
+			'fieldId' => $fieldId,
 			'message' => $this->getMessage(),
 			'attributes' => $this->prepareHtmlAttributes($attributes)
 		];

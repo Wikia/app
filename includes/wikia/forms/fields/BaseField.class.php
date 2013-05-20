@@ -41,24 +41,24 @@ abstract class BaseField extends FormElement {
 	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index = null) {
 		$out = '';
 
-		$out.= $this->renderLabel();
+		$out.= $this->renderLabel([], $index);
 
 		$data['name'] = $this->getName($index);
 		$data['value'] = $this->getValue($index);
 		$data['id'] = $this->getId($index);
 		$data['attributes'] = $this->prepareHtmlAttributes($htmlAttributes);
 
-		$out .= $this->renderErrorMessage();
+		$out .= $this->renderErrorMessage($index);
 
 		$out .= $this->renderView($className, 'render', $data);
 
 		return $out;
 	}
 
-	public function renderLabel($attributes = []) {
+	public function renderLabel($attributes = [], $index = null) {
 		$label = $this->getProperty(self::PROPERTY_LABEL);
 		if ($label instanceof Label) {
-			return $label->render($attributes);
+			return $label->render($attributes, $this->getId($index));
 		}
 	}
 
