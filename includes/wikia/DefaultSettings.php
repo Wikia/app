@@ -342,6 +342,8 @@ $wgAutoloadClasses['PasswordField'] = $IP.'/includes/wikia/forms/fields/Password
 $wgAutoloadClasses['CheckboxField'] = $IP.'/includes/wikia/forms/fields/CheckboxField.class.php';
 $wgAutoloadClasses['HiddenField'] = $IP.'/includes/wikia/forms/fields/HiddenField.class.php';
 $wgAutoloadClasses['TextareaField'] = $IP.'/includes/wikia/forms/fields/TextareaField.class.php';
+$wgAutoloadClasses['CollectionTextField'] = $IP.'/includes/wikia/forms/fields/CollectionTextField.class.php';
+$wgAutoloadClasses['CollectionField'] = $IP.'/includes/wikia/forms/fields/CollectionField.class.php';
 
 $wgAutoloadClasses['Label'] = $IP.'/includes/wikia/forms/labels/Label.class.php';
 

@@ -23,5 +23,6 @@ class ExampleForm extends BaseForm {
 		$this->addField('fieldName4', new CheckboxField());
 		$this->addField('fieldName5', new HiddenField());
 		$this->addField('fieldName6', new TextareaField());
+		$this->addField('collectionField', new CollectionTextField(['label' => new Label(wfMessage('aaa'))]));
 	}
 }

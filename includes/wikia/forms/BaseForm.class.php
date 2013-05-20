@@ -28,7 +28,6 @@ abstract class BaseForm extends FormElement {
 	 *
 	 * @param string $fieldName
 	 * @param BaseField $field
-	 * @param WikiaValidator $validator
 	 */
 	protected function addField($fieldName, BaseField $field) {
 		$field->setName($fieldName);
@@ -116,8 +115,8 @@ abstract class BaseForm extends FormElement {
 	 *
 	 * @param string $fieldName
 	 */
-	public function renderField($fieldName, $attributes = []) {
-		return $this->getField($fieldName)->render($attributes);
+	public function renderField($fieldName, $attributes = [], $index = null) {
+		return $this->getField($fieldName)->render($attributes, $index);
 	}
 
 	/**

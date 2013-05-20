@@ -34,18 +34,18 @@ abstract class BaseField extends FormElement {
 	 *
 	 * @return string
 	 */
-	public function render($htmlAttributes = []) {
-		return $this->renderInternal(get_class($this), $htmlAttributes = []);
+	public function render($htmlAttributes = [], $index = null) {
+		return $this->renderInternal(get_class($this), $htmlAttributes = [], $index);
 	}
 
-	protected function renderInternal($className, $htmlAttributes = [], $data = []) {
+	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index = null) {
 		$out = '';
 
 		$out.= $this->renderLabel();
 
-		$data['name'] = $this->getName();
-		$data['value'] = $this->getValue();
-		$data['id'] = $this->getId();
+		$data['name'] = $this->getName($index);
+		$data['value'] = $this->getValue($index);
+		$data['id'] = $this->getId($index);
 		$data['attributes'] = $this->prepareHtmlAttributes($htmlAttributes);
 
 		$out .= $this->renderErrorMessage();
