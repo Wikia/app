@@ -1,0 +1,28 @@
+These is the install file for the Validator extension.
+	
+Extension page on mediawiki.org: https://www.mediawiki.org/wiki/Extension:Validator
+Latest version of the install file: https://gerrit.wikimedia.org/r/gitweb?p=mediawiki/extensions/Validator.git;a=blob;f=INSTALL
+
+
+== Requirements ==
+
+Validator requires:
+
+* MediaWiki 1.16 or above ( MediaWiki 1.19 or above recommended)
+* PHP 5.2 or above (PHP 5.3 or above recommended)
+
+== Download ==
+
+Release packages: https://code.google.com/p/mwvalidator/downloads/list
+
+git clone https://gerrit.wikimedia.org/r/p/mediawiki/extensions/Validator.git
+
+== Installation ==
+
+Once you have downloaded the code, place the ''Validator'' directory within your MediaWiki
+'extensions' directory. Then add the following code to your [[Manual:LocalSettings.php|LocalSettings.php]] file:
+
+# Validator
+require_once( "$IP/extensions/Validator/Validator.php" );
+
+This should be done before any extension using Validator.
