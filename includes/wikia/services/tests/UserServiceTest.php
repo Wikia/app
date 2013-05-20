@@ -4,7 +4,7 @@
  * Date: 09.05.13
  */
 
-class ArticleServiceTest extends WikiaBaseTest {
+class UserServiceTest extends WikiaBaseTest {
 
 	/** Test methods */
 
