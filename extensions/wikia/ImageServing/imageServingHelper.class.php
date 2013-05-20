@@ -109,14 +109,14 @@ class ImageServingHelper {
 	 * @param int $articleId article ID
 	 * @param array|string $images
 	 * @param $ignoreEmpty boolean
-	 * @param bool $dryRun don't store results in DB
+	 * @param bool $dryRun don't store results in DB (think twice before passing true, used by imageServing.php maintenance script)
 	 * @return mixed|bool set of images extracted from given article
 	 */
 	public static function buildIndex( $articleId, $images, $ignoreEmpty = false, $dryRun = false ) {
 		wfProfileIn(__METHOD__);
 
 		// BugId:95164: limit the number of images to be stored serialized in DB
-		// PHP has an internal limit of 65535 bytes than can be unserialized
+		// keep it under 65535 bytes
 		if (count($images) > self::IMAGES_PER_ARTICLE) {
 			$images = array_slice($images, 0, self::IMAGES_PER_ARTICLE);
 		}
@@ -164,7 +164,7 @@ class ImageServingHelper {
 	/**
 	 * @param Article $article
 	 * @param bool $ignoreEmpty
-	 * @param bool $dryRun don't store results in DB
+	 * @param bool $dryRun don't store results in DB (think twice before passing true, used by imageServing.php maintenance script)
 	 * @return mixed|bool set of images extracted from given article
 	 */
 	public static function buildAndGetIndex($article, $ignoreEmpty = false, $dryRun = false ) {
