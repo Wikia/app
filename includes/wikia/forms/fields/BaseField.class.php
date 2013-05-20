@@ -41,6 +41,8 @@ abstract class BaseField extends FormElement {
 	protected function renderInternal($className, $htmlAttributes = [], $data = []) {
 		$out = '';
 
+		$out.= $this->renderLabel();
+
 		$data['name'] = $this->getName();
 		$data['value'] = $this->getValue();
 		$data['id'] = $this->getId();
