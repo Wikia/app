@@ -15,12 +15,32 @@ class VideoEmbedTool extends Video
 	 * @return string
 	 */
 	public function getBoostQueryString() {
-		return sprintf( '%s (%s)',
+		return sprintf( '%s^50 (%s)^150',
 				Utilities::valueForField( 'categories', $this->service->getHubForWikiId( $this->service->getWikiId() ) ),
-				preg_replace( '/\bwiki\b/i', '', $this->service->getGlobal( 'Sitename' ) )
+				$this->getConfig()->getQuery()->getSolrQuery()
 				);
 	}
 	
+	/**
+	 * Here, we overwrite the normal behavior of getFormulatedQuery to search for wiki TOPIC instead of the query
+	 * @return string
+	 */
+	protected function getFormulatedQuery() {
+		return sprintf( '+(%s) AND ( (%s)^100 OR (%s)^1000 )', $this->getQueryClausesString(), $this->getTopicsAsQuery(), $this->getConfig()->getQuery()->getSolrQuery() );
+	}
+	
+	/**
+	 * Takes whatever global topics are set and returns them disjunctively
+	 * The backoff of this is to just return the query, since asking for the same query twice isn't really a big deal.
+	 * @return string
+	 */
+	protected function getTopicsAsQuery() {
+		$topics = [];
+		foreach ( $this->getService()->getGlobalWithDefault( 'WikiVideoSearchTopics', [] ) as $topic ) {
+			$topics[] = sprintf( '(%s)', $topic );
+		}
+		return empty( $topics ) ? $this->getConfig()->getQuery()->getSolrQuery() : implode( ' OR ', $topics );
+	}
 	
 	/**
 	 * Require the wiki ID we're on (or video wiki), and that everything is a video
