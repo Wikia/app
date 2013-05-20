@@ -3,7 +3,6 @@
 class RadioField extends BaseField
 {
 	const TYPE = 'radio';
-	const PROPERTY_CHOICES = 'choices';
 
 	protected function getType() {
 		return self::TYPE;
@@ -53,9 +52,5 @@ class RadioField extends BaseField
 		}
 		
 		return $out;
-	}
-	
-	protected function getChoices() {
-		return $this->getProperty(self::PROPERTY_CHOICES);
 	}
 }

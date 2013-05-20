@@ -5,6 +5,7 @@ abstract class BaseField extends FormElement {
 	const PROPERTY_LABEL = 'label';
 	const PROPERTY_NAME = 'name';
 	const PROPERTY_ID = 'id';
+	const PROPERTY_CHOICES = 'choices';
 
 	protected $validator;
 	protected $properties = [];
@@ -121,6 +122,10 @@ abstract class BaseField extends FormElement {
 
 	public function getId() {
 		return $this->getProperty(self::PROPERTY_ID);
+	}
+
+	protected function getChoices() {
+		return $this->getProperty(self::PROPERTY_CHOICES);
 	}
 
 	/**

@@ -48,5 +48,12 @@ class ExampleForm extends BaseForm {
 				['value' => 'Option 3'],
 			],
 		]));
+		$this->addField('fieldName10', new SelectField([
+			'label' => new Label(wfMessage('select-field')),
+			'choices' => [
+				['value' => '1', 'option' => 'value 1'],
+				['value' => '2', 'option' => 'value 2', 'selected' => true]
+			]
+		]));
 	}
 }

@@ -345,6 +345,7 @@ $wgAutoloadClasses['TextareaField'] = $IP.'/includes/wikia/forms/fields/Textarea
 $wgAutoloadClasses['CollectionTextField'] = $IP.'/includes/wikia/forms/fields/CollectionTextField.class.php';
 $wgAutoloadClasses['CollectionField'] = $IP.'/includes/wikia/forms/fields/CollectionField.class.php';
 $wgAutoloadClasses['RadioField'] = $IP.'/includes/wikia/forms/fields/RadioField.class.php';
+$wgAutoloadClasses['SelectField'] = $IP.'/includes/wikia/forms/fields/SelectField.class.php';
 
 $wgAutoloadClasses['Label'] = $IP.'/includes/wikia/forms/labels/Label.class.php';
 
