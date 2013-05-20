@@ -89,10 +89,6 @@
 	p {
 		padding-top: 20px;
 
-		input[type=submit] {
-			float: none;
-		}
-
 		label {
 			margin-left: 10px;
 		}
@@ -101,8 +97,16 @@
 			margin-left: 0px;
 		}
 
+		input[type=submit] {
+			float: none;
+		}
+
 		input[type=reset] {
 			margin-left: 20px;
+		}
+
+		#collections-filter {
+			width: 150px;
 		}
 	}
 }
