@@ -10,7 +10,6 @@ abstract class BaseField extends FormElement {
 	protected $properties = [];
 
 	// TODO decide what params are required here
-	// TODO maybe array fields should be decorated
 	// TODO think about div
 	public function __construct($options = []) {
 		if (isset($options['label'])) {
@@ -154,7 +153,7 @@ abstract class BaseField extends FormElement {
 		return $value;
 	}
 
-	// TODO rethink formValues
+	// TODO rethink formValues - dependent fields
 	/**
 	 * Validate form value
 	 *

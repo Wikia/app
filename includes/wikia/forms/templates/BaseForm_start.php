@@ -1,1 +1,1 @@
-<form id="<?=$id?>" method="<?=$method?>" action="<?=$action?>">
+<form id="<?=$id?>" method="<?=$method?>" action="<?=$action?>" <?=$attributes?>>

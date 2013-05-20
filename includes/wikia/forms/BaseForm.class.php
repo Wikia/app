@@ -83,7 +83,6 @@ abstract class BaseForm extends FormElement {
 		$fields = $this->getFields();
 
 		foreach ($fields as $fieldName => $field) {
-			// TODO rethink validating dependent fields
 			if (!$field->validate(isset($data[$fieldName]) ? $data[$fieldName] : null, $data)) {
 				$isValid = false;
 			}
@@ -122,12 +121,12 @@ abstract class BaseForm extends FormElement {
 	/**
 	 * Render opening tag for form
 	 */
-	public function renderStart() {
-		// TODO add attribs here
+	public function renderStart($htmlAttributes = []) {
 		return $this->renderView(__CLASS__, 'start', [
 			'method' => $this->getMethod(),
 			'action' => $this->getAction(),
-			'id' => $this->getId()
+			'id' => $this->getId(),
+			'attributes' => $this->prepareHtmlAttributes($htmlAttributes)
 		]);
 	}
 
