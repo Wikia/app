@@ -38,5 +38,15 @@ class ExampleForm extends BaseForm {
 				)
 			]
 		));
+		$this->addField('fieldName7', new RadioField());
+		$this->addField('fieldName8', new RadioField(['label' => wfMessage('radio-button')]));
+		$this->addField('fieldName9', new RadioField([
+			'label' => new Label( wfMessage('radio-buttons') ),
+			'choices' => [
+				['label' => wfMessage('A'), 'value' => 'Option 1'],
+				['label' => wfMessage('B'), 'value' => 'Option 2'],
+				['value' => 'Option 3'],
+			],
+		]));
 	}
 }
