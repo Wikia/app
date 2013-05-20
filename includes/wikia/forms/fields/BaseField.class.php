@@ -41,7 +41,10 @@ abstract class BaseField extends FormElement {
 	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index = null) {
 		$out = '';
 
-		$out.= $this->renderLabel([], $index);
+		$out.= $this->renderLabel(
+			isset($htmlAttributes['label']) ? $htmlAttributes['label']: [],
+			$index
+		);
 
 		$data['name'] = $this->getName($index);
 		$data['value'] = $this->getValue($index);
@@ -58,7 +61,7 @@ abstract class BaseField extends FormElement {
 	public function renderLabel($attributes = [], $index = null) {
 		$label = $this->getProperty(self::PROPERTY_LABEL);
 		if ($label instanceof Label) {
-			return $label->render($attributes, $this->getId($index));
+			return $label->render( $this->getId($index), $attributes);
 		}
 	}
 

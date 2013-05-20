@@ -1,3 +1,3 @@
 <label for="<?=$fieldId?>" <?=$attributes?>>
-	<?=$message->text()?>
+	<?=$message?>
 </label>
