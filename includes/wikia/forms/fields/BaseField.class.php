@@ -48,10 +48,8 @@ abstract class BaseField extends FormElement {
 		$data['id'] = $this->getId();
 		$data['attributes'] = $this->prepareHtmlAttributes($htmlAttributes);
 
-		$data['errorMessage'] = $this->getProperty(self::PROPERTY_ERROR_MESSAGE);
-		if(!empty($data['errorMessage'])) {
-			$out .= $this->renderView(__CLASS__, 'errorMessage', $data);
-		}
+		$out .= $this->renderErrorMessage();
+
 		$out .= $this->renderView($className, 'render', $data);
 
 		return $out;
@@ -61,6 +59,13 @@ abstract class BaseField extends FormElement {
 		$label = $this->getProperty(self::PROPERTY_LABEL);
 		if ($label instanceof Label) {
 			return $label->render($attributes);
+		}
+	}
+
+	public function renderErrorMessage() {
+		$errorMessage = $this->getProperty(self::PROPERTY_ERROR_MESSAGE);
+		if (!empty($errorMessage)) {
+			return $this->renderView(__CLASS__, 'errorMessage', ['errorMessage' => $errorMessage]);
 		}
 	}
 
