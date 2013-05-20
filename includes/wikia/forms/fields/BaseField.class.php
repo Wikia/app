@@ -39,8 +39,8 @@ abstract class BaseField extends FormElement {
 	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index = null) {
 		$out = '';
 
-		$out.= $this->renderLabel(
-			isset($htmlAttributes['label']) ? $htmlAttributes['label']: [],
+		$out .= $this->renderLabel(
+			isset($htmlAttributes['label']) ? $htmlAttributes['label'] : [],
 			$index
 		);
 
