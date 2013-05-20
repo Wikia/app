@@ -23,6 +23,20 @@ class ExampleForm extends BaseForm {
 		$this->addField('fieldName4', new CheckboxField());
 		$this->addField('fieldName5', new HiddenField());
 		$this->addField('fieldName6', new TextareaField());
-		$this->addField('collectionField', new CollectionTextField(['label' => new Label(wfMessage('aaa'))]));
+		$this->addField('collectionField', new CollectionTextField(
+			[
+				'label' => new Label(wfMessage('aaa')),
+				'validator' => new WikiaValidatorListValue(
+					array(
+						'validator' => new WikiaValidatorFileTitle(
+							array(
+								'required' => true
+							),
+							array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+						)
+					)
+				)
+			]
+		));
 	}
 }

@@ -84,7 +84,7 @@ abstract class BaseForm extends FormElement {
 
 		foreach ($fields as $fieldName => $field) {
 			// TODO rethink validating dependent fields
-			if (!$field->validate($data[$fieldName], $data)) {
+			if (!$field->validate(isset($data[$fieldName]) ? $data[$fieldName] : null, $data)) {
 				$isValid = false;
 			}
 		}

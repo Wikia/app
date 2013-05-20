@@ -35,7 +35,7 @@ abstract class BaseField extends FormElement {
 	 * @return string
 	 */
 	public function render($htmlAttributes = [], $index = null) {
-		return $this->renderInternal(get_class($this), $htmlAttributes = [], $index);
+		return $this->renderInternal(get_class($this), $htmlAttributes, $index);
 	}
 
 	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index = null) {
@@ -172,24 +172,9 @@ abstract class BaseField extends FormElement {
 
 			if (!$this->validator->isValid($value)) {
 				$validationError = $this->validator->getError();
-				if ( !empty($field['isArray']) ) {
-					foreach ($validationError as $key => $error) {
-						if (is_array($error)) {
-							// maybe in future we should handle many errors from one validator,
-							// but actually we don't need  this feature
-						$error = array_shift(array_values($error));
-						}
-						if (!empty($error)) {
-							$validationError[$key] = $error->getMsg();
-							$isValid = false;
-						}
-					}
-				$this->setProperty(self::PROPERTY_ERROR_MESSAGE, $validationError);
-				} else {
-					if (!empty($validationError)) {
-						$this->setProperty(self::PROPERTY_ERROR_MESSAGE,  $validationError->getMsg());
-						$isValid = false;
-					}
+				if (!empty($validationError)) {
+					$this->setProperty(self::PROPERTY_ERROR_MESSAGE,  $validationError->getMsg());
+					$isValid = false;
 				}
 			}
 		}
