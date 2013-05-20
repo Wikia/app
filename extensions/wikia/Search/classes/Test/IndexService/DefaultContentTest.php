@@ -367,7 +367,7 @@ class DefaultContentTest extends BaseTest
 	 * @covers Wikia\Search\IndexService\DefaultContent::prepValuesFromHtml
 	 */
 	public function testPrepValuesFromHtml() {
-		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'field' ) );
+		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'field', 'pushNolangTxt' ) );
 		$prep = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'prepValuesFromHtml' );
 		$prep->setAccessible( true );
 		$service
@@ -375,6 +375,11 @@ class DefaultContentTest extends BaseTest
 		    ->method ( 'field' )
 		    ->with   ( 'html' )
 		    ->will   ( $this->returnValue( 'html_en' ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'pushNoLangTxt' )
+		    ->withAnyParameters()
 		;
 		$html = <<<ENDIT
 This is a very long example so we can do some counts and stuff.
@@ -627,6 +632,39 @@ ENDIT;
 		$this->assertEquals(
 				[ 'infoboxes_txt' => [ 'here is my key | value' ] ],
 				$extract->invoke( $service, $dom, $result )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::pushNolangTxt
+	 * @covers Wikia\Search\IndexService\DefaultContent::getNolangTxt
+	 */
+	public function testPushAndGetNolangTxt() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( null )
+		                ->getMock();
+		$push = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'pushNolangTxt' );
+		$push->setAccessible( true );
+		$get = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'getNolangTxt' );
+		$get->setAccessible( true );
+		$this->assertAttributeEquals(
+				[],
+				'nolang_txt',
+				$service
+		);
+		$this->assertEquals(
+				$service,
+				$push->invoke( $service, 'foo' )
+		);
+		$this->assertAttributeEquals(
+				['foo'],
+				'nolang_txt',
+				$service
+		);
+		$this->assertEquals(
+				[ 'nolang_txt' => [ 'foo' ] ],
+				$get->invoke( $service )
 		);
 	}
 }
