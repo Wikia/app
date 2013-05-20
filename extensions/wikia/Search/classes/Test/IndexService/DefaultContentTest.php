@@ -55,7 +55,7 @@ class DefaultContentTest extends BaseTest
 	 * @covers Wikia\Search\IndexService\DefaultContent::execute
 	 */
 	public function testExecute() {
-		$methods = [ 'getService', 'field', 'getPageContentFromParseResponse', 'getCategoriesFromParseResponse', 'getHeadingsFromParseResponse', 'getOutboundLinks' ];
+		$methods = [ 'getService', 'field', 'getPageContentFromParseResponse', 'getCategoriesFromParseResponse', 'getHeadingsFromParseResponse', 'getOutboundLinks', 'pushNolangTxt', 'getNolangTxt' ];
 		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', $methods, array() );
 		$mwMethods = [
 				'getParseResponseFrompageId', 'getTitleStringFromPageId', 'getUrlFromPageId',
@@ -151,12 +151,24 @@ class DefaultContentTest extends BaseTest
 		;
 		$service
 		    ->expects( $this->at( 1 ) )
+		    ->method ( 'pushNoLangTxt' )
+		    ->with   ( "my title" )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'pushNoLangTxt' )
+		    ->with   ( "my title" )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->at( 3 ) )
 		    ->method ( 'field' )
 		    ->with   ( 'title' )
 		    ->will   ( $this->returnValue( 'title_en' ) )
 		;
 		$service
-		    ->expects( $this->at( 2 ) )
+		    ->expects( $this->at( 4 ) )
 		    ->method ( 'field' )
 		    ->with   ( 'wikititle' )
 		    ->will   ( $this->returnValue( 'wikititle_en' ) )
@@ -184,6 +196,11 @@ class DefaultContentTest extends BaseTest
 		    ->method ( 'getOutboundLinks' )
 		    ->will   ( $this->returnValue( [ 'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ] ] ) )
 		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getNolangTxt' )
+		    ->will   ( $this->returnValue( [ 'nolang_txt' => [ 'foo' ] ] ) )
+		;
 		$cpid = new \ReflectionProperty( 'Wikia\Search\IndexService\AbstractService', 'currentPageId' );
 		$cpid->setAccessible( true );
 		$cpid->setValue( $service, 123 );
@@ -204,7 +221,8 @@ class DefaultContentTest extends BaseTest
 				'page_images' => 2,
 				'iscontent' => 'true',
 				'is_main_page' => 'false',
-				'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ]
+				'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ],
+				'nolang_txt' => [ 'foo' ]
 				];
 		$this->assertEquals(
 				$expectedResult,
