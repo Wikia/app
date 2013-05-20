@@ -309,7 +309,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		if( !$this->checkAccess() ) {
 			$this->status = false;
 		} else {
-			$type = $this->request->getVal('type');
+			$type = $this->request->getInt('type');
 			$flag = $this->request->getInt('flag');
 			$wikiId = $this->request->getInt('wikiId', 0);
 			$corpWikiId = $this->request->getInt('corpWikiId', 0);
