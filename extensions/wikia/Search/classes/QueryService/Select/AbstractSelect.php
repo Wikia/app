@@ -305,7 +305,6 @@ abstract class AbstractSelect
 	 * @param Solarium_Result_Select $result
 	 */
 	protected function prepareResponse( Solarium_Result_Select $result ) {
-		#echo $result->getResponse()->getBody(); die;
 		$this->spellcheckResult( $result );
 		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $this->config ) );
 		$results = $this->resultSetFactory->get( $container );

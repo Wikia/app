@@ -15,9 +15,11 @@ class VideoEmbedTool extends Video
 	 * @return string
 	 */
 	public function getBoostQueryString() {
-		return sprintf( '%s^50 (%s)^150',
+		return '';
+		return sprintf( '%s^150 AND (%s)^250 AND (html_media_extras_txt:%s)^300',
 				Utilities::valueForField( 'categories', $this->service->getHubForWikiId( $this->service->getWikiId() ) ),
-				$this->getConfig()->getQuery()->getSolrQuery()
+				$this->getConfig()->getQuery()->getSolrQuery(),
+				$this->getTopicsAsQuery()
 				);
 	}
 	
@@ -26,7 +28,22 @@ class VideoEmbedTool extends Video
 	 * @return string
 	 */
 	protected function getFormulatedQuery() {
-		return sprintf( '+(%s) AND ( (%s)^100 OR (%s)^1000 )', $this->getQueryClausesString(), $this->getTopicsAsQuery(), $this->getConfig()->getQuery()->getSolrQuery() );
+		return sprintf( '+(%s) AND ( (%s)^200 OR (%s)^1000 )', $this->getQueryClausesString(), $this->getTopicsAsQuery(), $this->getTransformedQuery() );
+	}
+	
+	/**
+	 * I've noticed that first names or characters are more common in videos, and last names much less common
+	 * This boosts the first token in a query, which often corresponds to a first name. We will probably want to tweak this.
+	 */
+	protected function getTransformedQuery() {
+		$query = $this->getConfig()->getQuery()->getSolrQuery();
+		$ploded = explode( " ", $query );
+		$first = array_shift( $ploded );
+		if (! empty( $ploded ) ) {
+			return "{$first}^5 " . implode( " ", $ploded );
+		} else {
+			return $first; // that's all we got. why boost it?
+		}
 	}
 	
 	/**
