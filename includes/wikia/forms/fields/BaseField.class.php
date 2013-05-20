@@ -36,15 +36,21 @@ abstract class BaseField {
 	}
 
 	protected function renderInternal($className, $htmlAttributes = [], $data = []) {
+		$out = '';
+
 		$data['name'] = $this->getName();
 		$data['label'] = $this->getProperty(self::PROPERTY_LABEL); // TODO add label
 		$data['value'] = $this->getValue();
 		$data['id'] = $this->getId();
 		$data['attributes'] = $this->prepareHtmlAttributes($htmlAttributes);
 
-		return $this->renderView($className, 'render', $data);
+		$data['errorMessage'] = $this->getProperty(self::PROPERTY_ERROR_MESSAGE);
+		if(!empty($data['errorMessage'])) {
+			$out .= $this->renderView(__CLASS__, 'errorMessage', $data);
+		}
+		$out .= $this->renderView($className, 'render', $data);
 
-		// TODO add render errorMessage
+		return $out;
 	}
 
 	protected function prepareHtmlAttributes($attribs) {
