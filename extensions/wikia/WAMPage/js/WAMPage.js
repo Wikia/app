@@ -2,24 +2,30 @@ var WAMPage = function() {};
 
 WAMPage.prototype = {
 	init: function() {
-		document.getElementById('wam-index').addEventListener(
-			'click',
-			WAMPage.clickTrackingHandler,
-			true
-		);
+		var wamIndex = document.getElementById('wam-index');
+		if( wamIndex ) {
+			wamIndex.addEventListener(
+				'click',
+				WAMPage.clickTrackingHandler,
+				true
+			);
+		}
 
-		document.getElementById('wam-index-search').addEventListener(
-			'change',
-			$.proxy(function(event) {
-				WAMPage.clickTrackingHandler(event);
-				WAMPage.filterWamIndex($(event.target));
-			}, this),
-			true
-		);
+		var wamIndexSearch = document.getElementById('wam-index-search');
+		if( wamIndexSearch ) {
+			wamIndexSearch.addEventListener(
+				'change',
+				$.proxy(function(event) {
+					WAMPage.clickTrackingHandler(event);
+					WAMPage.filterWamIndex($(event.target));
+				}, this),
+				true
+			);
+		}
 
 		var track = Wikia.Tracker.buildTrackingFunction({
-			category: 'WAMPage',
-			trackingMethod: 'internal',
+			category: 'wam-page',
+			trackingMethod: 'both',
 			action: Wikia.Tracker.ACTIONS.IMPRESSION
 		});
 		
@@ -67,7 +73,7 @@ WAMPage.prototype = {
 			browserEvent: event,
 			category: category,
 			label: label,
-			trackingMethod: 'internal',
+			trackingMethod: 'both',
 			value: value
 		}, params);
 	},
@@ -82,11 +88,11 @@ WAMPage.prototype = {
 				.parents('form')
 				.find('input[name="searchPhrase"]')
 				.val();
-			WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.SUBMIT, 'wam-search', null, {lang: lang, phrase: searchPhrase}, e);
+			WAMPage.trackClick('wam-page', Wikia.Tracker.ACTIONS.SUBMIT, 'wam-search', null, {lang: lang, phrase: searchPhrase}, e);
 		} else if ( e.type === 'change' && node.closest('.wam-index-search select[name=langCode]').length > 0 ) {
-			WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: lang, filter: 'langCode'}, e);
+			WAMPage.trackClick('wam-page', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: lang, filter: 'langCode'}, e);
 		} else if ( e.type === 'change' && node.closest('.wam-index-search select[name=verticalId]').length > 0 ) {
-			WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: lang, filter: 'verticalId'}, e);
+			WAMPage.trackClick('wam-page', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: lang, filter: 'verticalId'}, e);
 		}
 	},
 

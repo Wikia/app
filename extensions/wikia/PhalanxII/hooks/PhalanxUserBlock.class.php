@@ -47,7 +47,8 @@ class PhalanxUserBlock extends WikiaObject {
 		$ret = $this->blockCheck( $user );
 
 		if ( $ret === false ) {
-			$abortError = $this->wf->Msg( ( $this->typeBlock == 'email' ) ? 'phalanx-email-block-new-account' : 'phalanx-user-block-new-account' );
+			$abortError = $this->wf->Msg( ( $this->typeBlock == 'email' ) ? 'phalanx-email-block-new-account' :
+																	 'phalanx-user-block-new-account' );
 		}
 
 		wfProfileOut( __METHOD__ );

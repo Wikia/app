@@ -3,6 +3,7 @@
 class EditPageLayoutTest extends WikiaBaseTest {
 
 	public function setUp() {
+		require_once( dirname(__FILE__) . '/../../CityVisualization/CityVisualization.setup.php' );
 		$this->setupFile = dirname(__FILE__) . '/../EditPageLayout_setup.php';
 		parent::setUp();
 	}
@@ -110,6 +111,7 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		global $wgTitle;
 		$tempTitle = $wgTitle;
 		$wgTitle = $title;
+		// TODO mock something in this test because it's running hooks
 
 		$preload = 'Preload - testing, testing...';
 		$editPage->setPreloadedText($preload);

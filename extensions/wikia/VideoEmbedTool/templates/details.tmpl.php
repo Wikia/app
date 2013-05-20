@@ -5,7 +5,9 @@
 global $wgExtensionsPath;
 ?>
 	<div id="VideoEmbedThumb">
-		<?= $props['code'] ?>
+		<script type="text/javascript">
+			window.VETPlayerParams = <?= $props['code'] ?>;
+		</script>
 		<p><?= wfMessage( 'vet-preview' ) ?></p>
 	</div>
 	<div class="preview-options">

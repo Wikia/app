@@ -18,6 +18,9 @@ class Video extends OnWiki
 	 */
 	const VIDEO_WIKI_ID = 298117;
 	
+	// skipping boost functions
+	protected $boostFunctions = array();
+	
 	/**
 	 * Video wiki requires english field search
 	 * @see \Wikia\Search\QueryService\Select\OnWiki::configureQueryFields()
@@ -30,19 +33,13 @@ class Video extends OnWiki
 					Utilities::field( 'redirect_titles', 'en' ) => 4
 					));
 		}
+		$this->config->addQueryFields( 
+				[ 'video_actors_txt' => 100, 'video_genres_txt' => 50, 'html_media_extras_txt' => 80 ]
+		);
 		return $this;
 	}
 	
-	/**
-	 * Require the wiki ID we're on (or video wiki), and that everything is a video
-	 * @return string
-	 */
-	protected function getQueryClausesString() {
-		$queryClauses = array(
-				Utilities::valueForField( 'wid', $this->config->getCityId() ),
-				Utilities::valueForField( 'is_video', 'true' ),
-				Utilities::valueForField( 'ns', \NS_FILE )
-				);
-		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
+	protected function getBoostQueryString() {
+		return '';
 	}
 }

@@ -135,9 +135,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->response->addAsset('/resources/jquery/jquery.validate.js');
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/jquery.MetaData.js');
 
-		$selectedModuleData = array(
-			'values' => $modulesData['moduleList'][$this->selectedModuleId]['data']
-		);
+		$selectedModuleValues = $modulesData['moduleList'][$this->selectedModuleId]['data'];
 
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$this->toolboxModel->getNotTranslatedModuleName($this->selectedModuleId),
@@ -146,21 +144,22 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->verticalId
 		);
 
-		$selectedModuleData['validationErrors'] = array();
+		$form = new FormBuilderService(MarketingToolboxModel::FORM_FIELD_PREFIX);
+		$form->setFields($module->getFormFields());
 
 		if ($this->request->wasPosted()) {
-			$selectedModuleData['values'] = $this->request->getParams();
+			$selectedModuleValues = $this->request->getParams();
+			$selectedModuleValues = $module->filterData($selectedModuleValues);
 
-			$selectedModuleData['values'] = $module->filterData($selectedModuleData['values']);
-			$selectedModuleData['validationErrors'] = $module->validate($selectedModuleData['values']);
-			if (empty($selectedModuleData['validationErrors'])) {
+			$isValid = $form->validate($selectedModuleValues);
+			if ($isValid) {
 				$this->toolboxModel->saveModule(
 					$this->langCode,
 					$this->sectionId,
 					$this->verticalId,
 					$this->date,
 					$this->selectedModuleId,
-					$selectedModuleData['values'],
+					$selectedModuleValues,
 					$this->wg->user->getId()
 				);
 
@@ -170,7 +169,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 				// send request to add popular/featured videos
 				if ( $module->isVideoModule() ) {
-					$response = WikiaHubsServicesHelper::addVideoToHubsV2Wikis( $module, $selectedModuleData['values'] );
+					$response = WikiaHubsServicesHelper::addVideoToHubsV2Wikis( $module, $selectedModuleValues  );
 				}
 
 				$nextUrl = $this->getNextModuleUrl();
@@ -179,9 +178,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				$this->errorMessage = $this->wf->msg('marketing-toolbox-module-save-error');
 			}
 		}
-
+		$form->setFieldsValues($selectedModuleValues);
 		$this->moduleName = $modulesData['activeModuleName'];
-		$this->moduleContent = $module->renderEditor($selectedModuleData);
+		$this->moduleContent = $module->renderEditor(['form' => $form]);
 
 		$this->overrideTemplate('editHub');
 	}
@@ -412,24 +411,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->request->setSessionData(self::FLASH_MESSAGE_SESSION_KEY, $message);
 	}
 
-	public function executeFormField() {
-		$inputData = $this->getVal('inputData');
-
-		if ($inputData['isArray']) {
-			$index = $inputData['index'];
-
-			$inputData['name'] .= '[]';
-			$inputData['id'] .= $index;
-
-			$inputData['value'] = isset($inputData['value'][$index]) ? $inputData['value'][$index] : '';
-			$inputData['errorMessage'] = isset($inputData['errorMessage'][$index]) ? $inputData['errorMessage'][$index] : '';
-		}
-
-		$this->inputData = $inputData;
-	}
-
 	public function sponsoredImage() {
-		$this->inputData = $this->request->getVal('inputData');
+		$this->form = $this->request->getVal('form');
+		$this->fieldName = $this->request->getVal('fieldName');
 		$this->fileUrl = $this->request->getVal('fileUrl', '');
 		$this->imageWidth = $this->request->getVal('imageWidth', '');
 		$this->imageHeight = $this->request->getVal('imageHeight', '');

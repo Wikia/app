@@ -28,14 +28,14 @@ class CategorySelect {
 	 * Change format of categories metadata. Supports:
 	 * array -> json, array -> wikitext, json -> wikitext, json -> array
 	 */
-	public static function changeFormat( $categories, $from, $to ) {
+	public static function changeFormat( $categories, $fromFormat, $toFormat ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( $from == 'json' ) {
+		if ( $fromFormat == 'json' ) {
 			$categories = $categories == '' ? array() : json_decode( $categories, true );
 		}
 
-		if ( $to == 'wikitext' ) {
+		if ( $toFormat == 'wikitext' ) {
 			$changed = '';
 			if ( !empty( $categories ) && is_array( $categories ) ) {
 				foreach( $categories as $category ) {
@@ -58,10 +58,10 @@ class CategorySelect {
 					$changed .= $str;
 				}
 			}
-		} else if ( $to == 'array' ) {
+		} else if ( $toFormat == 'array' ) {
 			$changed = $categories;
 
-		} else if ( $to == 'json' ) {
+		} else if ( $toFormat == 'json' ) {
 			$changed = json_encode( $categories );
 		}
 
@@ -234,37 +234,32 @@ class CategorySelect {
 	}
 
 	/**
-	 * Removes duplicate categories, optionally converting to/from different formats.
+	 * Gets the unique categories (keyed by name) from an array of categories.
+	 * If multiple arrays are provided, they will be merged left.
+	 * @return Array
 	 */
-	public static function getUniqueCategories( $categories, $format = 'array', $toFormat = 'array' ) {
+	public static function getUniqueCategories( /* Array ... */ ) {
 		wfProfileIn( __METHOD__ );
+
+		$args = func_get_args();
+		$categories = call_user_func_array( 'array_merge', $args );
 
 		$categoryNames = array();
 		$uniqueCategories = array();
 
-		if ( $format != 'array' ) {
-			$categories = self::changeFormat( $categories, $format, 'array' );
-		}
+		foreach( $categories as $category ) {
+			if ( !empty( $category ) && !empty( $category[ 'name' ] ) ) {
+				$title = Title::makeTitleSafe( NS_CATEGORY, $category[ 'name' ] );
 
-		if ( !empty( $categories ) ) {
-			foreach( $categories as $category ) {
-				if ( !empty( $category ) ) {
-					$title = Title::makeTitleSafe( NS_CATEGORY, $category[ 'name' ] );
+				if ( !empty( $title ) ) {
+					$text = $title->getText();
 
-					if ( !empty( $title ) ) {
-						$text = $title->getText();
-
-						if ( !in_array( $text, $categoryNames ) ) {
-							$categoryNames[] = $text;
-							$uniqueCategories[] = $category;
-						}
+					if ( !in_array( $text, $categoryNames ) ) {
+						$categoryNames[] = $text;
+						$uniqueCategories[] = $category;
 					}
 				}
 			}
-		}
-
-		if ( $toFormat != 'array' ) {
-			$uniqueCategories = self::changeFormat( $uniqueCategories, 'array', $toFormat );
 		}
 
 		wfProfileOut( __METHOD__ );

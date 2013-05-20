@@ -29,14 +29,20 @@ try {
 		}
 		GWTLogHelper::notice( "Synchronizing: " . $wiki->getWikiId() . " " . $users[$userI]->getEmail() );
 		try {
+			GWTLogHelper::notice( "upload" );
 			$service->uploadWikiAsUser( $wiki, $users[$userI] );
+			sleep(1);
+			GWTLogHelper::notice( "verify" );
 			$service->verifyWiki( $wiki, $users[$userI] );
+			GWTLogHelper::notice( "sendsitemap" );
 			$service->sendSitemap( $wiki, $users[$userI] );
+			if( $i % 10 == 0 ) sleep(1);
 		} catch ( Exception $e ) {
 			GWTLogHelper::error( "Error while synchronizing " . $wiki->getWikiId() . " " . $users[$userI]->getEmail() );
 			GWTLogHelper::error( "" . $e->getMessage() );
 		}
 	}
+	GWTLogHelper::notice( __FILE__ . " script ends.");
 
 } catch ( Exception $ex ) {
 	GWTLogHelper::error( __FILE__ . " script failed.", $ex);

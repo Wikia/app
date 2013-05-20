@@ -53,11 +53,16 @@ class WikiaMobileMediaService extends WikiaService {
 	public function renderMediaGroup() {
 		wfProfileIn( __METHOD__ );
 
-		$items = $this->request->getVal( 'items', array() );
+		$items = $this->request->getVal( 'items', [] );
+		/**
+		 * This is a parser from ImageGallery
+		 * @var $parser Parser
+		*/
+		$parser = $this->request->getVal( 'parser', $this->wg->Parser );
 		$first = null;
 		$wikiText = '';
 		$result = '';
-		$params = array();
+		$params = [];
 
 		//separate linked items from normal ones and select the first one
 		//which will be rendered in the page
@@ -94,7 +99,10 @@ class WikiaMobileMediaService extends WikiaService {
 					}
 
 					if ( !empty( $item['caption'] ) ) {
-						$info['capt'] = ParserPool::parse( $item['caption'], $this->wg->Title, new ParserOptions )->getText();
+						$capt = $parser->internalParse( $item['caption'] );
+						$parser->replaceLinkHolders( $capt );
+
+						$info['capt'] = $capt;
 					}
 
 					$params[] = $info;
@@ -153,7 +161,10 @@ class WikiaMobileMediaService extends WikiaService {
 			//avoid wikitext recursion
 			$this->wg->WikiaMobileDisableMediaGrouping = true;
 
-			$result .= $this->wg->Parser->recursiveTagParse( $wikiText );
+			$ret = $parser->recursiveTagParse( $wikiText );
+			$parser->replaceLinkHolders( $ret );
+
+			$result .= $ret;
 
 			//restoring to previous value
 			$this->wg->WikiaMobileDisableMediaGrouping = $origVal;

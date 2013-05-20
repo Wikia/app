@@ -2,6 +2,14 @@
 
 class UserLoginHooksHelper {
 
+	// set default user options and perform other actions after account creation
+	public static function onAddNewAccount( User $user, $byEmail ) {
+		$user->setOption( 'marketingallowed', 1 );
+		$user->saveSettings();
+
+		return true;
+	}
+
 	// send reconfirmation mail
 	public static function onUserSendReConfirmationMail( &$user, &$result ) {
 		$userLoginHelper = F::build( 'UserLoginHelper' );
@@ -25,6 +33,8 @@ class UserLoginHooksHelper {
 			$errParam = 'wpCaptchaWord';
 		} else if ( $abortError == $app->wf->Msg('phalanx-help-type-user-email') ) {
 			$errParam = 'email';
+		} else if ( $abortError == $app->wf->Msg('phalanx-email-block-new-account')) {
+			$errParam = 'email';	 
 		}
 
 		return true;

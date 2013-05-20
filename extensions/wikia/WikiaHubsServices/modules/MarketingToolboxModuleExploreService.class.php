@@ -6,7 +6,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 
 	const MODULE_ID = 5;
 
-	protected $lettersMap = array('a', 'b', 'c', 'd');
+	protected $lettersMap = array('a', 'b', 'c', 'd', 'e');
 
 	/**
 	 * @var MarketingToolboxExploreModel|null
@@ -23,7 +23,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 		$this->linksLimit = $this->model->getLinksLimit();
 	}
 
-	protected function getFormFields() {
+	public function getFormFields() {
 		$formFields = array(
 			'exploreTitle' => array(
 				'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-title'),
@@ -208,10 +208,11 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 
 	public function renderEditor($data) {
 		$data['sectionLimit'] = $this->sectionsLimit;
-		
-		if( !empty($data['values']['fileName']) ) {
+
+		$fileNameField = $data['form']->getField('fileName');
+		if( !empty($fileNameField['value']) ) {
 			$model = new MarketingToolboxModel();
-			$imageData = $this->getImageInfo($data['values']['fileName'], $model->getThumbnailSize());
+			$imageData = $this->getImageInfo($fileNameField['value'], $model->getThumbnailSize());
 			$data['fileUrl'] = $imageData->url;
 			$data['imageWidth'] = $imageData->width;
 			$data['imageHeight'] = $imageData->height;

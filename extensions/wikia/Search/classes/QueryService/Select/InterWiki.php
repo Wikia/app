@@ -49,11 +49,7 @@ class InterWiki extends AbstractSelect
 	 * @var array
 	 */
 	protected $boostFunctions = array(
-		'log(wikipages)^4',
-		'log(activeusers)^4',
-		'log(revcount)^1',
-		'log(views)^8',
-		'log(words)^0.5',
+		'log(wam)^10',
 	);
 	
 	/**
@@ -140,7 +136,8 @@ class InterWiki extends AbstractSelect
 	 * @return \Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function configureQueryFields() {
-		$this->config->setQueryField( 'wikititle', 7 );
+		$this->config->setQueryField( 'wikititle', 200 )
+		             ->setQueryField( 'wiki_description_txt', 150 );
 		return $this;
 	}
 	
@@ -149,7 +146,7 @@ class InterWiki extends AbstractSelect
 	 * @return string
 	 */
 	protected function getFilterQueryString() {
-		$filterQueries = array( Utilities::valueForField( 'iscontent', 'true') );
+		$filterQueries = [ Utilities::valueForField( 'iscontent', 'true'), '-wikiarticles:[0 TO 50]' ];
 		$hub = $this->config->getHub();
 		if (! empty( $hub ) ) {
 			$filterQueries[] = Utilities::valueForField( 'hub', $hub );
@@ -180,32 +177,7 @@ class InterWiki extends AbstractSelect
 		}
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
 	}
-	
-	/**
-	 * Returns a nested query, preceded by lucene queries used to filter out bad wikis, and non-content documents.
-	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery()
-	 */
-	protected function getFormulatedQuery() {
-		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
-	}
-	
-	/**
-	 * Returns the string used to build out a boost query with Solarium
-	 * @return string
-	 */
-	protected function getBoostQueryString()
-	{
-		$queryNoQuotes = preg_replace( '/ wiki\b/i', '', $this->config->getQueryNoQuotes( true ) );
-		$boostQueries = array(
-				Utilities::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'valueQuote'=>'\"' ) ),
-				Utilities::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'valueQuote'=>'\"' ) ),
-				Utilities::valueForField( 'wikititle', $queryNoQuotes, array( 'boost' => 15, 'valueQuote' => '\"' ) ),
-				Utilities::valueForField( 'host', 'answers', array( 'boost' => 10, 'negate' => true ) ),
-				Utilities::valueForField( 'host', 'respuestas', array( 'boost' => 10, 'negate' => true ) )
-		);
-		return implode( ' ', $boostQueries );
-	}
-	
+
 	/**
 	 * Return a string of query fields based on configuration
 	 * @todo since this gets repeated across OnWiki as well, this is an another indicator that we need additional class layers
