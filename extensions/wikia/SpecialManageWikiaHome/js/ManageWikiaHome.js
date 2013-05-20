@@ -138,8 +138,8 @@ ManageWikiaHome.prototype = {
 		$.when(
 			this.isWikiInCollection()
 		).done($.proxy(function(isInCollection){
-			if (isInCollection.status) {
-				var msg = $.msg('manage-wikia-home-modal-content-removed-blocked-in-collection')
+			if (isInCollection.status && this.modalObject.target.data('flag-type') == window.FLAG_BLOCKED) {
+				var msg = $.msg('manage-wikia-home-modal-content-removed-blocked-in-collection');
 				this.showInformationModal(msg);
 			} else {
 				$.showModal(
