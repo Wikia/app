@@ -34,12 +34,22 @@ class RadioField extends BaseField
 		$this->setProperty(self::PROPERTY_LABEL, null);
 		foreach($choices as $choice) {
 			if( !empty($choice['label']) ) {
-				$out .= $choice['label']->render($this->getId() . '_' . $i);
+				$out .= $choice['label']->render($this->getId($i));
 			}
 			
 			$data['value'] = $choice['value'];
-			$out .= $this->renderInternal(__CLASS__, $attributes, $data);
+			$out .= $this->renderInternal(__CLASS__, $attributes, $data, $i);
 			$i++;
+		}
+		
+		return $out;
+	}
+
+	public function getId($index = null) {
+		$out = parent::getId();
+		
+		if( !is_null($index) ) {
+			$out .= '_' . $index;
 		}
 		
 		return $out;
