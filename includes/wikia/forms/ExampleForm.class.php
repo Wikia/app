@@ -20,5 +20,8 @@ class ExampleForm extends BaseForm {
 			]
 		));
 		$this->addField('fieldName3', new PasswordField());
+		$this->addField('fieldName4', new CheckboxField());
+		$this->addField('fieldName5', new HiddenField());
+		$this->addField('fieldName6', new TextareaField());
 	}
 }

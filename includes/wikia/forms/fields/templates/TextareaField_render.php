@@ -1,1 +1,1 @@
-<textarea name="<?= $name ?>" id="<?= $id ?>" <?= $attributes ?> ><?= htmlspecialchars($value)?></textarea>
+<textarea name="<?= $name ?>" <? if (isset($id)): ?>id="<?= $id ?>" <? endif ?><?= $attributes ?> ><?= htmlspecialchars($value)?></textarea>

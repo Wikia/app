@@ -4,9 +4,11 @@ abstract class BaseField {
 	const PROPERTY_ERROR_MESSAGE = 'errorMessage';
 	const PROPERTY_LABEL = 'label';
 	const PROPERTY_NAME = 'name';
+	const PROPERTY_ID = 'id';
 
 	protected $validator;
 	protected $properties = [];
+	protected $templateEngine;
 
 	// TODO decide what params are required here
 	// TODO maybe array fields should be decorated
@@ -18,22 +20,40 @@ abstract class BaseField {
 		if (isset($options['validator'])) {
 			$this->setValidator($options['validator']);
 		}
+
+		$this->templateEngine = new Wikia\Template\PHPEngine;
 	}
 
 	/**
 	 * Render field
 	 *
+	 * @param array $htmlAttributes html field attributes
+	 *
 	 * @return string
 	 */
-	public function render() {
+	public function render($htmlAttributes = []) {
+		return $this->renderInternal(get_class($this), $htmlAttributes = []);
+	}
+
+	protected function renderInternal($className, $htmlAttributes = [], $data = []) {
+		$data['name'] = $this->getName();
+		$data['label'] = $this->getProperty(self::PROPERTY_LABEL); // TODO add label
+		$data['value'] = $this->getValue();
+		$data['id'] = $this->getId();
+		$data['attributes'] = $this->prepareHtmlAttributes($htmlAttributes);
+
+		return $this->renderView($className, 'render', $data);
+
+		// TODO add render errorMessage
+	}
+
+	protected function prepareHtmlAttributes($attribs) {
 		$out = '';
-		$label = $this->getProperty(self::PROPERTY_LABEL);
-		if (isset($label)) {
-			$out .= $label->render($this->getName());
+
+		foreach ($attribs as $name => $value) {
+			$out .= $name . '="' . $value . '" ';
 		}
 
-		// TODO render view
-		// TODO render errorMessage
 		return $out;
 	}
 
@@ -80,6 +100,14 @@ abstract class BaseField {
 	 */
 	public function getValue() {
 		return $this->getProperty(self::PROPERTY_VALUE);
+	}
+
+	public function setId($id) {
+		return $this->setProperty(self::PROPERTY_ID, $id);
+	}
+
+	public function getId() {
+		return $this->getProperty(self::PROPERTY_ID);
 	}
 
 	/**
@@ -161,5 +189,12 @@ abstract class BaseField {
 	 */
 	protected function setProperty($propertyName, $propertyValue) {
 		$this->properties[$propertyName] = $propertyValue;
+	}
+
+	protected function renderView($className, $name, $data = []) {
+		$data['field'] = $this;
+		return $this->templateEngine
+			->setData($data)
+			->render( dirname(__FILE__) . '/templates/' . $className . '_' . $name . '.php');
 	}
 }

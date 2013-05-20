@@ -33,6 +33,7 @@ abstract class BaseForm {
 	 */
 	protected function addField($fieldName, BaseField $field) {
 		$field->setName($fieldName);
+		$field->setId($fieldName); // TODO maybe this id should be changed
 		$this->fields[$fieldName] = $field;
 	}
 
@@ -116,8 +117,8 @@ abstract class BaseForm {
 	 *
 	 * @param string $fieldName
 	 */
-	public function renderField($fieldName) {
-		return $this->getField($fieldName)->render();
+	public function renderField($fieldName, $attributes = []) {
+		return $this->getField($fieldName)->render($attributes);
 	}
 
 	/**
