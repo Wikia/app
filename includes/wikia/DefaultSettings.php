@@ -347,6 +347,8 @@ $wgAutoloadClasses['CollectionField'] = $IP.'/includes/wikia/forms/fields/Collec
 $wgAutoloadClasses['RadioField'] = $IP.'/includes/wikia/forms/fields/RadioField.class.php';
 $wgAutoloadClasses['SelectField'] = $IP.'/includes/wikia/forms/fields/SelectField.class.php';
 
+$wgAutoloadClasses['SubmitButton'] = $IP.'/includes/wikia/forms/fields/SubmitButton.class.php';
+
 $wgAutoloadClasses['Label'] = $IP.'/includes/wikia/forms/labels/Label.class.php';
 
 // TODO temporary - remove it after dev

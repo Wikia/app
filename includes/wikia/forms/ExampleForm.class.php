@@ -58,5 +58,8 @@ class ExampleForm extends BaseForm {
 			]
 		]));
 		$this->getField('fieldName10')->setValue('2');
+		$this->addField('submitButton', new SubmitButton([
+			'value' => 'Try to send'
+		]));
 	}
 }
