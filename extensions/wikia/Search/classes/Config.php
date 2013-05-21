@@ -697,7 +697,7 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setDirectLuceneQuery( $value ) {
-		$this->setQueryService( 'Select\\Lucene', $value );
+		return $this->setQueryService( 'Select\\Lucene', $value );
 	}
 	
 	/**
@@ -706,7 +706,7 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setVideoTitleSearch( $value ) {
-		$this->setQueryService( 'Select\\VideoTitle', $value );
+		return $this->setQueryService( 'Select\\VideoTitle', $value );
 	}
 	
 	/**
