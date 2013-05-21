@@ -54,8 +54,9 @@ class ExampleForm extends BaseForm {
 			'label' => new Label(wfMessage('select-field')),
 			'choices' => [
 				['value' => '1', 'option' => 'value 1'],
-				['value' => '2', 'option' => 'value 2', 'selected' => true]
+				['value' => '2', 'option' => 'value 2']
 			]
 		]));
+		$this->getField('fieldName10')->setValue('2');
 	}
 }
