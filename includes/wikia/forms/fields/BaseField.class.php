@@ -1,5 +1,9 @@
 <?
 abstract class BaseField extends FormElement {
+
+	/**
+	 * properties constants
+	 */
 	const PROPERTY_VALUE = 'value';
 	const PROPERTY_ERROR_MESSAGE = 'errorMessage';
 	const PROPERTY_LABEL = 'label';
@@ -7,9 +11,23 @@ abstract class BaseField extends FormElement {
 	const PROPERTY_ID = 'id';
 	const PROPERTY_CHOICES = 'choices';
 
+	/**
+	 * field validator
+	 * @var WikiaValidator
+	 */
 	protected $validator;
+	/**
+	 * array of field properties
+	 * @var array
+	 */
 	protected $properties = [];
 
+	/**
+	 * constructor
+	 * @param array $options
+	 * 		'label' - label for field, instance of Label
+	 * 		'validator' - validator for field, instance of WikiaValidator
+	 */
 	public function __construct($options = []) {
 		if (isset($options['label'])) {
 			$this->setProperty(self::PROPERTY_LABEL, $options['label']);
@@ -21,10 +39,14 @@ abstract class BaseField extends FormElement {
 		parent::__construct();
 	}
 
-	protected function getDirectory() {
-		return dirname(__FILE__);
-	}
-
+	/**
+	 * Render div with label and field
+	 *
+	 * @param array $htmlAttributes html attributes for field tag
+	 * 		'label' - html attributes for label tag
+	 * @param int $index index of a field (only for CollectionField)
+	 * @return string
+	 */
 	public function renderRow($htmlAttributes = [], $index = null) {
 		$labelAttributes = isset($htmlAttributes['label']) ? $htmlAttributes['label'] : [];
 		unset($htmlAttributes['label']);
@@ -39,7 +61,8 @@ abstract class BaseField extends FormElement {
 	/**
 	 * Render field
 	 *
-	 * @param array $htmlAttributes html field attributes
+	 * @param array $htmlAttributes html attributes for field tag
+	 * @param int $index index of a field (only for CollectionField)
 	 *
 	 * @return string
 	 */
@@ -47,21 +70,12 @@ abstract class BaseField extends FormElement {
 		return $this->renderInternal(get_class($this), $htmlAttributes, $index);
 	}
 
-	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index = null) {
-		$out = '';
-
-		$data['name'] = $this->getName($index);
-		$data['value'] = $this->getValue($index);
-		$data['id'] = $this->getId($index);
-		$data['attributes'] = $this->prepareHtmlAttributes($htmlAttributes);
-
-		$out .= $this->renderView($className, 'render', $data);
-
-		$out .= $this->renderErrorMessage($index);
-
-		return $out;
-	}
-
+	/**
+	 * Render label for field
+	 * @param array $attributes html attributes for label tag
+	 * @param int $index index of a field (only for CollectionField)
+	 * @return string
+	 */
 	public function renderLabel($attributes = [], $index = null) {
 		$label = $this->getProperty(self::PROPERTY_LABEL);
 		if ($label instanceof Label) {
@@ -69,11 +83,42 @@ abstract class BaseField extends FormElement {
 		}
 	}
 
-	public function renderErrorMessage() {
-		$errorMessage = $this->getProperty(self::PROPERTY_ERROR_MESSAGE);
-		if (!empty($errorMessage)) {
-			return $this->renderView(__CLASS__, 'errorMessage', ['errorMessage' => $errorMessage]);
+	// TODO rethink formValues - dependent fields
+	/**
+	 * Validate form value
+	 *
+	 * @param mixed $value
+	 * @param array $formValues
+	 * @return bool
+	 */
+	public function validate($value, $formValues) {
+		$isValid = true;
+
+		if (isset($this->validator)){
+			if( $this->validator instanceof WikiaValidatorDependent ) {
+				$this->validator->setFormData($formValues);
+			}
+
+			if (!$this->validator->isValid($value)) {
+				$validationError = $this->validator->getError();
+				if (!empty($validationError)) {
+					$this->setProperty(self::PROPERTY_ERROR_MESSAGE,  $validationError->getMsg());
+					$isValid = false;
+				}
+			}
 		}
+		return $isValid;
+	}
+
+	/**
+	 * Before validation data processing
+	 * Filter value
+	 *
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	public function filterValue($value) {
+		return $value;
 	}
 
 	/**
@@ -121,15 +166,30 @@ abstract class BaseField extends FormElement {
 		return $this->getProperty(self::PROPERTY_VALUE);
 	}
 
+	/**
+	 * Set field Id
+	 *
+	 * @param string $id
+	 */
 	public function setId($id) {
 		return $this->setProperty(self::PROPERTY_ID, $id);
 	}
 
+	/**
+	 * get field Id
+	 *
+	 * @return string
+	 */
 	public function getId() {
 		return $this->getProperty(self::PROPERTY_ID);
 	}
 
-	protected function getChoices() {
+	/**
+	 * Get field choices
+	 *
+	 * @return mixed
+	 */
+	public function getChoices() {
 		return $this->getProperty(self::PROPERTY_CHOICES);
 	}
 
@@ -138,7 +198,7 @@ abstract class BaseField extends FormElement {
 	 *
 	 * @param WikiaValidator $validator
 	 */
-	public function setValidator(WikiaValidator $validator) {
+	protected function setValidator(WikiaValidator $validator) {
 		$this->validator = $validator;
 	}
 
@@ -147,46 +207,8 @@ abstract class BaseField extends FormElement {
 	 *
 	 * @return mixed
 	 */
-	public function getValidator() {
+	protected function getValidator() {
 		return $this->validator;
-	}
-
-	/**
-	 * Before validation data processing
-	 * Filter value
-	 *
-	 * @param mixed $value
-	 * @return mixed
-	 */
-	public function filterValue($value) {
-		return $value;
-	}
-
-	// TODO rethink formValues - dependent fields
-	/**
-	 * Validate form value
-	 *
-	 * @param mixed $value
-	 * @param array $formValues
-	 * @return bool
-	 */
-	public function validate($value, $formValues) {
-		$isValid = true;
-
-		if (isset($this->validator)){
-			if( $this->validator instanceof WikiaValidatorDependent ) {
-				$this->validator->setFormData($formValues);
-			}
-
-			if (!$this->validator->isValid($value)) {
-				$validationError = $this->validator->getError();
-				if (!empty($validationError)) {
-					$this->setProperty(self::PROPERTY_ERROR_MESSAGE,  $validationError->getMsg());
-					$isValid = false;
-				}
-			}
-		}
-		return $isValid;
 	}
 
 	/**
@@ -197,5 +219,48 @@ abstract class BaseField extends FormElement {
 	 */
 	protected function setProperty($propertyName, $propertyValue) {
 		$this->properties[$propertyName] = $propertyValue;
+	}
+
+	/**
+	 * @see FormElement
+	 */
+	protected function getDirectory() {
+		return dirname(__FILE__);
+	}
+
+	/**
+	 * Prepare field properties and render field with error message
+	 *
+	 * @param string $className template class name
+	 * @param array $htmlAttributes html attributes for field tag
+	 * @param array $data array of variables that should be passed into view
+	 * @param int $index index of a field (only for CollectionField)
+	 * @return string
+	 */
+	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index = null) {
+		$out = '';
+
+		$data['name'] = $this->getName($index);
+		$data['value'] = $this->getValue($index);
+		$data['id'] = $this->getId($index);
+		$data['attributes'] = $this->prepareHtmlAttributes($htmlAttributes);
+
+		$out .= $this->renderView($className, 'render', $data);
+
+		$out .= $this->renderErrorMessage($index);
+
+		return $out;
+	}
+
+	/**
+	 * Render error message for field
+	 *
+	 * @return string
+	 */
+	protected function renderErrorMessage() {
+		$errorMessage = $this->getProperty(self::PROPERTY_ERROR_MESSAGE);
+		if (!empty($errorMessage)) {
+			return $this->renderView(__CLASS__, 'errorMessage', ['errorMessage' => $errorMessage]);
+		}
 	}
 }

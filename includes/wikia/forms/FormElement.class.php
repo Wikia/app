@@ -1,15 +1,28 @@
 <?
 abstract class FormElement {
+	/**
+	 * @return string relative path from /icludes/wikia/forms/ to class template files directory
+	 */
+	abstract protected function getDirectory();
 
+	/**
+	 * @var Wikia\Template\PHPEngine template engine
+	 */
 	protected $templateEngine;
 
+	/**
+	 * constructor
+	 */
 	public function __construct() {
 		$this->templateEngine = new Wikia\Template\PHPEngine;
 	}
 
-	abstract protected function getDirectory();
-
-
+	/**
+	 * Convert array of html attributes into string
+	 *
+	 * @param array $attribs - array of HTML attributes
+	 * @return string
+	 */
 	protected function prepareHtmlAttributes($attribs) {
 		$out = '';
 
@@ -20,6 +33,14 @@ abstract class FormElement {
 		return $out;
 	}
 
+	/**
+	 * Render template
+	 *
+	 * @param string $className template class name
+	 * @param string $name render name
+	 * @param array $data array of variables that should be passed into view
+	 * @return string
+	 */
 	protected function renderView($className, $name, $data = []) {
 		$data['element'] = $this;
 		return $this->templateEngine

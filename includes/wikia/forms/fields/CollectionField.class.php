@@ -58,7 +58,7 @@ abstract class CollectionField extends InputField
 		return $isValid;
 	}
 
-	public function renderErrorMessage($index) {
+	protected function renderErrorMessage($index) {
 		$errorMessage = $this->getProperty(self::PROPERTY_ERROR_MESSAGE);
 
 		if (!empty($errorMessage[$index])) {
