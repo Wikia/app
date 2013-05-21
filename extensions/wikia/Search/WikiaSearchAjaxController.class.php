@@ -33,12 +33,13 @@ class WikiaSearchAjaxController extends WikiaController {
         $cityId = $isInterWiki ? 0 : $this->wg->CityId;
 
         $resultsPerPage = $isInterWiki ? WikiaSearchController::INTERWIKI_RESULTS_PER_PAGE : WikiaSearchController::RESULTS_PER_PAGE;
+        $resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? $resultsPerPage : $this->wg->SearchResultsPerPage;
         $params = array(
-			'page'			=>	$page,
-			'length'		=>	$resultsPerPage,
-			'cityId'		=>	$cityId,
-			'rank'			=>	$rank,
-			'hub'			=>	$hub,
+			'page'   => $page,
+			'limit'  => $resultsPerPage,
+			'cityId' => $cityId,
+			'rank'   => $rank,
+			'hub'    => $hub,
 		);
         $config = new Wikia\Search\Config( $params );
         $config->setInterWiki( $isInterWiki )
