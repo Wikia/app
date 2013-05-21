@@ -118,7 +118,7 @@ abstract class BaseForm extends FormElement {
 	 * @param string $fieldName
 	 */
 	public function renderField($fieldName, $attributes = [], $index = null) {
-		return $this->getField($fieldName)->render($attributes, $index);
+		return $this->getField($fieldName)->renderRow($attributes, $index);
 	}
 
 	/**

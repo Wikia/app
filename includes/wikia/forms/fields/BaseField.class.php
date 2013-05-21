@@ -10,7 +10,6 @@ abstract class BaseField extends FormElement {
 	protected $validator;
 	protected $properties = [];
 
-	// TODO think about div
 	public function __construct($options = []) {
 		if (isset($options['label'])) {
 			$this->setProperty(self::PROPERTY_LABEL, $options['label']);
@@ -24,6 +23,17 @@ abstract class BaseField extends FormElement {
 
 	protected function getDirectory() {
 		return dirname(__FILE__);
+	}
+
+	public function renderRow($htmlAttributes = [], $index = null) {
+		$labelAttributes = isset($htmlAttributes['label']) ? $htmlAttributes['label'] : [];
+		unset($htmlAttributes['label']);
+		$data = [
+			'attributes' => $htmlAttributes,
+			'labelAttributes' => $labelAttributes,
+			'index' => $index
+		];
+		return $this->renderView(__CLASS__, 'renderRow', $data);
 	}
 
 	/**
@@ -40,19 +50,14 @@ abstract class BaseField extends FormElement {
 	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index = null) {
 		$out = '';
 
-		$out .= $this->renderLabel(
-			isset($htmlAttributes['label']) ? $htmlAttributes['label'] : [],
-			$index
-		);
-
 		$data['name'] = $this->getName($index);
 		$data['value'] = $this->getValue($index);
 		$data['id'] = $this->getId($index);
 		$data['attributes'] = $this->prepareHtmlAttributes($htmlAttributes);
 
-		$out .= $this->renderErrorMessage($index);
-
 		$out .= $this->renderView($className, 'render', $data);
+
+		$out .= $this->renderErrorMessage($index);
 
 		return $out;
 	}

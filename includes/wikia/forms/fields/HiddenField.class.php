@@ -7,4 +7,8 @@ class HiddenField extends InputField
 	protected function getType() {
 		return self::TYPE;
 	}
+
+	public function renderRow($htmlAttributes = [], $index = null) {
+		return $this->render($htmlAttributes, $index);
+	}
 }
