@@ -31,10 +31,9 @@ class ImageServingIndexerTest extends WikiaBaseTest {
 		$article->mContentLoaded = true;
 
 		// disable access to the database
-		$this->mockGlobalFunction('GetDB', $this->mockClassWithMethods('Database', [
-			'replace' => null,
-			'delete' => null
-		]));
+		$this->getMethodMock('DatabaseMysql','replace');
+		$this->getMethodMock('Database','delete');
+
 		$this->mockApp();
 
 		$images = ImageServingHelper::buildAndGetIndex($article);
