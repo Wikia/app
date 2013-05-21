@@ -24,10 +24,6 @@ class RadioField extends BaseField
 
 		$out = '';
 		$i = 0;
-		$out .= $this->renderLabel(
-			isset($attributes['label']) ? $attributes['label'] : [],
-			$i
-		);
 		
 		//FIXME: this is hack; we need to think about how to remove it: overwrite renderLabel or other method?
 		$this->setProperty(self::PROPERTY_LABEL, null);
