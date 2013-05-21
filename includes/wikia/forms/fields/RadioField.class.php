@@ -2,6 +2,9 @@
 
 class RadioField extends BaseField
 {
+	/**
+	 * @see BaseField::_construct()
+	 */
 	public function __construct($options = []) {
 		parent::__construct($options);
 		
@@ -9,7 +12,10 @@ class RadioField extends BaseField
 			$this->setProperty(self::PROPERTY_CHOICES, $options['choices']);
 		}
 	}
-	
+
+	/**
+	 * @see BaseField::render()
+	 */
 	public function render($attributes = []) {
 		$choices = $this->getChoices();
 		$choices = ( empty($choices) ) ? [$this->getValue()] : $this->getChoices();
@@ -29,6 +35,9 @@ class RadioField extends BaseField
 		return $out;
 	}
 
+	/**
+	 * @see BaseField::getId
+	 */
 	public function getId($index = null) {
 		$out = parent::getId();
 		

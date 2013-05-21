@@ -2,6 +2,9 @@
 
 class SelectField extends BaseField
 {
+	/**
+	 * @see BaseField::_construct()
+	 */
 	public function __construct($options) {
 		parent::__construct($options);
 
@@ -10,6 +13,9 @@ class SelectField extends BaseField
 		}
 	}
 
+	/**
+	 * @see BaseField::render()
+	 */
 	public function render($htmlAttributes = [], $index = null) {
 		$data = [];
 

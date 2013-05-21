@@ -131,6 +131,15 @@ abstract class BaseField extends FormElement {
 	}
 
 	/**
+	 * Get value
+	 *
+	 * @return mixed
+	 */
+	public function getValue() {
+		return $this->getProperty(self::PROPERTY_VALUE);
+	}
+
+	/**
 	 * Set field name
 	 *
 	 * @param $name
@@ -141,6 +150,7 @@ abstract class BaseField extends FormElement {
 
 	/**
 	 * Get field name
+	 *
 	 * @return mixed
 	 */
 	public function getName() {
@@ -148,22 +158,24 @@ abstract class BaseField extends FormElement {
 	}
 
 	/**
+	 * Set field property
+	 *
+	 * @param string $propertyName
+	 * @param mixed $propertyValue
+	 */
+	protected function setProperty($propertyName, $propertyValue) {
+		$this->properties[$propertyName] = $propertyValue;
+	}
+
+	/**
 	 * Get field property
 	 *
 	 * @param string $propertyName
+	 *
 	 * @return mixed
 	 */
 	public function getProperty($propertyName) {
 		return isset($this->properties[$propertyName]) ? $this->properties[$propertyName] : null;
-	}
-
-	/**
-	 * Get value
-	 *
-	 * @return mixed
-	 */
-	public function getValue() {
-		return $this->getProperty(self::PROPERTY_VALUE);
 	}
 
 	/**
@@ -212,16 +224,6 @@ abstract class BaseField extends FormElement {
 	}
 
 	/**
-	 * Set field property
-	 *
-	 * @param string $propertyName
-	 * @param mixed $propertyValue
-	 */
-	protected function setProperty($propertyName, $propertyValue) {
-		$this->properties[$propertyName] = $propertyValue;
-	}
-
-	/**
 	 * @see FormElement
 	 */
 	protected function getDirectory() {
@@ -235,6 +237,7 @@ abstract class BaseField extends FormElement {
 	 * @param array $htmlAttributes html attributes for field tag
 	 * @param array $data array of variables that should be passed into view
 	 * @param int $index index of a field (only for CollectionField)
+	 *
 	 * @return string
 	 */
 	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index = null) {

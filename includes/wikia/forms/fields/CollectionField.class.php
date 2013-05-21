@@ -2,14 +2,33 @@
 
 abstract class CollectionField extends InputField
 {
+	/**
+	 * Get field array name (for multiple fields with the same name)
+	 *
+	 * @return mixed
+	 */
 	public function getName() {
 		return parent::getName() . '[]';
 	}
 
+	/**
+	 * Get field Id for given index
+	 *
+	 * $param int $index index of a field
+	 *
+	 * @return string
+	 */
 	public function getId($index = null) {
 		return parent::getId() . $index;
 	}
 
+	/**
+	 * Get value for given index
+	 *
+	 * @param int $index index of a field
+	 *
+	 * @return array|mixed
+	 */
 	public function getValue($index = null) {
 		$values = parent::getValue();
 		if (!is_array($values)) {
@@ -18,6 +37,9 @@ abstract class CollectionField extends InputField
 		return isset($values[$index]) ? $values[$index] : $values;
 	}
 
+	/**
+	 * @see BaseField::renderInternal()
+	 */
 	protected function renderInternal($className, $htmlAttributes = [], $data = [], $index = null) {
 		$out = '';
 		if (isset($index)) {
@@ -31,6 +53,9 @@ abstract class CollectionField extends InputField
 		return $out;
 	}
 
+	/**
+	 * @see BaseField::validate()
+	 */
 	public function validate($value, $formValues) {
 		$isValid = true;
 
@@ -58,6 +83,9 @@ abstract class CollectionField extends InputField
 		return $isValid;
 	}
 
+	/**
+	 * @see BaseField::renderErrorMessage()
+	 */
 	protected function renderErrorMessage($index) {
 		$errorMessage = $this->getProperty(self::PROPERTY_ERROR_MESSAGE);
 

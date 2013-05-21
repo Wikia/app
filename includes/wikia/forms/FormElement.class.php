@@ -1,7 +1,7 @@
 <?
 abstract class FormElement {
 	/**
-	 * @return string relative path from /icludes/wikia/forms/ to class template files directory
+	 * @return string relative path from /includes/wikia/forms/ to class template files directory
 	 */
 	abstract protected function getDirectory();
 
