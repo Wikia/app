@@ -7,6 +7,8 @@ class ExampleForm extends BaseForm {
 	public function __construct() {
 		parent::__construct();
 
+		$this->addField('defaultField');
+
 		$this->addField('fieldName', new TextField(
 			[
 				'label' => new Label(wfMessage('aaa')),

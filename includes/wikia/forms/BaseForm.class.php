@@ -29,7 +29,10 @@ abstract class BaseForm extends FormElement {
 	 * @param string $fieldName
 	 * @param BaseField $field
 	 */
-	protected function addField($fieldName, BaseField $field) {
+	protected function addField($fieldName, BaseField $field = null) {
+		if (is_null($field)) {
+			$field = new TextField();
+		}
 		$field->setName($fieldName);
 		$field->setId($fieldName);
 		$this->fields[$fieldName] = $field;
