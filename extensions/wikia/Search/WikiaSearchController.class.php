@@ -137,6 +137,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $this->queryServiceFactory->getFromConfig( $searchConfig )->searchAsApi() );
 	}
+	
+	/**
+	 * Delivers a JSON response for infoboxes for a given page ID
+	 * @todo find a better place for this
+	 */
+	public function getInfoboxes() {
+		$expectedIds = explode( '|', $this->getRequest()->getVal( 'ids', '' ) );
+		if ( empty( $expectedIds ) ) {
+			throw new InvalidParameterApiException( 'ids' );
+		}
+		$response = $this->getResponse();
+		$response->setFormat( 'json' );
+		$response->setData( (new InfoboxesService())->getForPageIds( $expectedIds ) );
+		
+	}
 
 	/**
 	 * Controller Helper Methods
