@@ -67,7 +67,7 @@ abstract class BaseField extends FormElement {
 	 * @return string
 	 */
 	public function render($htmlAttributes = [], $index = null) {
-		return $this->renderInternal(get_class($this), $htmlAttributes, $index);
+		return $this->renderInternal(get_class($this), $htmlAttributes, [], $index);
 	}
 
 	/**
