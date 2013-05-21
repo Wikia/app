@@ -2,12 +2,6 @@
 
 class RadioField extends BaseField
 {
-	const TYPE = 'radio';
-
-	protected function getType() {
-		return self::TYPE;
-	}
-	
 	public function __construct($options = []) {
 		parent::__construct($options);
 		
@@ -17,8 +11,6 @@ class RadioField extends BaseField
 	}
 	
 	public function render($attributes = []) {
-		$data = [];
-		$data['type'] = $this->getType();
 		$choices = $this->getChoices();
 		$choices = ( empty($choices) ) ? [$this->getValue()] : $this->getChoices();
 
