@@ -20,6 +20,13 @@
  */
 class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
+	protected static $alternativeConstructors = [
+		'Article' => [ 'newFromID', 'newFromTitle', 'newFromWikiPage' ],
+		'Title' => [ 'newFromDBkey', 'newFromText', 'newFromURL', 'newFromID', 'newFromRow' ],
+		'User' => [ 'newFromName', 'newFromId', 'newFromSession', 'newFromRow' ],
+	];
+
+
 	protected $setupFile = null;
 	/* @var WikiaApp */
 	protected $app = null;
@@ -107,15 +114,25 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @return void
 	 */
 	protected function mockClass($className, $mock, $functionName = null) {
-		if ( empty( $mock ) && empty($functionName) ) { // constructor cannot return null
-			return;
+		$functionNames = is_array( $functionName ) ? $functionName : array( $functionName );
+		foreach ($functionNames as $functionName) {
+			if ( empty( $mock ) && empty($functionName) ) { // constructor cannot return null
+				return;
+			}
+			if ( empty($functionName) ) {
+				$action = $this->getMockProxy()->getClassConstructor($className);
+			} else {
+				$action = $this->getMockProxy()->getStaticMethod($className,$functionName);
+			}
+			$action->willReturn($mock);
 		}
-		if ( empty($functionName) ) {
-			$action = $this->getMockProxy()->getClassConstructor($className);
-		} else {
-			$action = $this->getMockProxy()->getStaticMethod($className,$functionName);
-		}
-		$action->willReturn($mock);
+	}
+
+	protected function mockClassEx( $className, $mock ) {
+		$alternativeConstructors = isset( self::$alternativeConstructors[$className] )
+			? self::$alternativeConstructors[$className] : array();
+		$alternativeConstructors[] = null;
+		$this->mockClass($className,$mock,$alternativeConstructors);
 	}
 
 	/**
@@ -205,16 +222,21 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param int $callsNum
 	 * @param array $inputParams
 	 */
-	protected function mockGlobalFunction( $functionName, $returnValue, $callsNum = 1, $inputParams = array() ) {
-		if($this->appMock == null) {
-			$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
-		}
-		$this->appMock->mockGlobalFunction( $functionName, $returnValue, $callsNum, $inputParams );
+	protected function mockGlobalFunction( $functionName, $returnValue, $callsNum = null, $inputParams = null ) {
 		if ( function_exists( 'wf'.ucfirst($functionName) ) ) {
 			$functionName = 'wf' . ucfirst($functionName);
 		}
+
+		$mock = $this->getGlobalFunctionMock( $functionName );
+		$expect = $mock->expects( $callsNum !== null ? $this->exactly( $callsNum ) : $this->any() )
+			->method( $functionName );
+		if ( $inputParams !== null ) {
+			$expect = call_user_func_array( array( $expect, 'with' ), $inputParams );
+		}
+		$expect->will( $this->returnValue( $returnValue ) );
+
 		$this->getMockProxy()->getGlobalFunction($functionName)
-			->willReturn($returnValue);
+			->willCall(array($mock,$functionName));
 	}
 
 	/**

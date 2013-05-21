@@ -55,22 +55,6 @@ class WikiaAppMock {
 		$this->mockedGlobals[$globalName] = array( 'value' => $returnValue );
 	}
 
-	/**
-	 * @brief mock global function
-	 * @param string $functionName
-	 * @param mixed $returnValue
-	 * @param int $callsNum
-	 * @param array $inputParams array of PHPUnit_Framework_Constraints
-	 */
-	public function mockGlobalFunction($functionName, $returnValue, $callsNum = 1, $inputParams = array() ) {
-		if(!startsWith($functionName, 'wf')) {
-			$functionName = 'wf'.ucfirst($functionName);
-		}
-		// TODO: do not ignore CallsNum and InputParams verification
-		$this->testCase->getMockProxy()->getGlobalFunction($functionName)
-			->willReturn($returnValue);
-	}
-
 	// If the global variable is not being overridden, return the actual global variable
 	public function getGlobalCallback( $globalName ) {
 		return ( isset($this->mockedGlobals[$globalName]['value']) ? $this->mockedGlobals[$globalName]['value'] : $GLOBALS[$globalName] );
