@@ -109,6 +109,7 @@
 
 		<form id="wiki-name-filter" class="wiki-name-filter" name="wiki-name-filter" method="get">
 			<p class="wiki-filter-group">
+				<input type="hidden" name="vl" value="<?= $visualizationLang ?>" />
                 <label><?= wfMessage('manage-wikia-home-wiki-list-headline')->text() ?></label>
 				<input type="text" id="wiki-name-filer-input" name="wiki-name-filer-input" value="<?= $filterOptions['wiki-name-filer-input'] ?>" />
 				<label for="collections-filter"><?= wfMessage('manage-wikia-home-wiki-list-collection')->text() ?></label>
