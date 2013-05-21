@@ -1,5 +1,7 @@
 <?php
 
+	require_once __DIR__ . '/UserLoginBaseTest.php';
+
 	class UserSignupTest extends UserLoginBaseTest {
 
 		const TEST_USERNAME = 'WikiaUser';
@@ -456,7 +458,7 @@
 			}
 
 			if ( isset($mockUserParams['sendConfirmationMail']['mockExpTimes']) ) {
-				$mockMsgExtCount += 4;
+				$mockMsgExtCount += 7;
 			}
 
 			$this->mockGlobalVariable( 'wgEmailAuthentication', $mockEmailAuth );

@@ -1,5 +1,7 @@
 <?php
 
+	require_once __DIR__ . '/UserLoginBaseTest.php';
+
 	class UserLoginTest extends UserLoginBaseTest {
 		const TEST_CITY_ID = 79860;
 		const TEST_USERNAME = 'WikiaUser';

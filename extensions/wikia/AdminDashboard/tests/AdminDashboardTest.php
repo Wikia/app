@@ -28,12 +28,12 @@
 					->method('getDailyLikes')
 					->will($this->returnValue(false));
 
-			F::setInstance('QuickStatsController', $mock);
+			$this->mockClass('QuickStatsController', $mock);
 
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
 			$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
 
-			$this->mockGlobalFunction('wfMemcKey', null, 0);
+			$this->mockGlobalFunction('wfMemcKey', null);
 
 			$this->mockApp();
 		}
@@ -55,7 +55,7 @@
 		}
 
 		protected function tearDownGetStatsMock() {
-			F::unsetInstance('QuickStatsController');
+			// todo: remove it?
 		}
 
 		/**
