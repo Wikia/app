@@ -351,9 +351,6 @@ $wgAutoloadClasses['SubmitButton'] = $IP.'/includes/wikia/forms/fields/SubmitBut
 
 $wgAutoloadClasses['Label'] = $IP.'/includes/wikia/forms/labels/Label.class.php';
 
-// TODO temporary - remove it after dev
-$wgAutoloadClasses['ExampleForm'] = $IP.'/includes/wikia/forms/ExampleForm.class.php';
-
 // Sass-related classes
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
 
