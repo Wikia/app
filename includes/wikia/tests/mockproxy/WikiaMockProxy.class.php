@@ -174,6 +174,12 @@ class WikiaMockProxy {
 		return call_user_func_array( $functionToCall, $args );
 	}
 
+	public function callOriginalMethod( $object, $functionName, $args ) {
+		$savedName = array( $object, self::SAVED_PREFIX . $functionName );
+		$functionToCall = is_callable( $savedName ) ? $savedName : array( $object, $functionName );
+		return call_user_func_array( $functionToCall, $args );
+	}
+
 	public function enable() {
 		if ( !empty( self::$instance ) ) {
 			if ( self::$instance == $this ) {

@@ -34,8 +34,10 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	/* @var WikiaAppMock */
 	private $appMock = null;
 	private $mockedGlobals = array();
+	private $mockedMessages = array();
 	/** @var WikiaMockProxy */
 	private $mockProxy = null;
+	private $mockMessages = null;
 
 	private static $testRunTime = 0;
 
@@ -80,6 +82,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected function tearDown() {
 		$this->unsetGlobals();
+		$this->unsetMessages();
 		if (is_object($this->appOrig)) {
 			F::setInstance('App', $this->appOrig);
 		}
@@ -94,7 +97,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @return WikiaMockProxy
 	 */
-	public function getMockProxy() {
+	private function getMockProxy() {
 		if ( empty( $this->mockProxy ) ) {
 			throw new Exception("WikiaMockProxy is not initialized yet. Are you trying to mock anything in data provider?");
 		}
@@ -246,9 +249,14 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $messageContent string
 	 */
 	protected function mockMessage($messageName, $messageContent) {
-		$this->mockGlobalFunction('msg',  $messageContent, 1, array(
-			$this->equalTo($messageName)
-		));
+		if ( empty( $this->mockMessages ) ) {
+			$mock = $this->mockMessages = $this->getMethodMock( 'MessageCache', 'get' );
+
+			$mock->expects( $this->any() )
+				->method( 'get' )
+				->will( $this->returnCallback( array( $this, 'getMessageMock' ) ) );
+		}
+		$this->mockedMessages[$messageName] = $messageContent;
 	}
 
 	protected function getGlobalFunctionMock( $functionName ) {
@@ -287,6 +295,10 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		return $this->getMockProxy()->callOriginalGlobalFunction( $functionName, $args );
 	}
 
+	protected function callOriginalMethod( $object, $functionName, $args ) {
+		return $this->getMockProxy()->callOriginalMethod( $object, $functionName, $args );
+	}
+
 	// After calling this, any reference to $this->app in a test now uses the mocked object
 	protected function mockApp() {
 		$this->appMock->init();
@@ -302,6 +314,18 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			}
 		}
 		$this->mockedGlobals = array();
+	}
+
+	private function unsetMessages() {
+		$this->mockedMessages = array();
+	}
+
+	public function getMessageMock( $key ) {
+		if ( array_key_exists( $key, $this->mockedMessages ) ) {
+			return $this->mockedMessages[$key];
+		}
+
+		return $this->callOriginalMethod( MessageCache::singleton(), 'get', func_get_args() );
 	}
 
 	public static function markTestSkipped($message = '') {
