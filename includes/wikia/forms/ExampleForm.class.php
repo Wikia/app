@@ -1,5 +1,6 @@
 <?
 class ExampleForm extends BaseForm {
+	// define form attributes
 	protected $action = 'test/action.php';
 	protected $id = 'testId';
 	protected $method = 'post';
@@ -7,39 +8,29 @@ class ExampleForm extends BaseForm {
 	public function __construct() {
 		parent::__construct();
 
+		// Add default field - it's TextField
 		$this->addField('defaultField');
 
+		// add field with validation and label
 		$this->addField('fieldName', new TextField(
 			[
 				'label' => new Label(wfMessage('aaa')),
 				'validator' => new WikiaValidatorString()
 			]
 		));
+		// add another field
 		$this->addField('fieldName2', new TextField(
 			[
 				'label' => new Label(wfMessage('bbb')),
 				'validator' => new WikiaValidatorInteger()
 			]
 		));
+		// other type of fields
 		$this->addField('fieldName3', new PasswordField());
 		$this->addField('fieldName4', new CheckboxField());
 		$this->addField('fieldName5', new HiddenField());
 		$this->addField('fieldName6', new TextareaField());
-		$this->addField('collectionField', new CollectionTextField(
-			[
-				'label' => new Label(wfMessage('aaa')),
-				'validator' => new WikiaValidatorListValue(
-					array(
-						'validator' => new WikiaValidatorFileTitle(
-							array(
-								'required' => true
-							),
-							array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
-						)
-					)
-				)
-			]
-		));
+
 		$this->addField('fieldName7', new RadioField());
 		$this->addField('fieldName8', new RadioField(['label' => new Label(wfMessage('radio-button'))]));
 		$this->addField('fieldName9', new RadioField([
@@ -50,6 +41,7 @@ class ExampleForm extends BaseForm {
 				['value' => 'Option 3'],
 			],
 		]));
+
 		$this->addField('fieldName10', new SelectField([
 			'label' => new Label(wfMessage('select-field')),
 			'choices' => [
@@ -57,7 +49,27 @@ class ExampleForm extends BaseForm {
 				['value' => '2', 'option' => 'value 2']
 			]
 		]));
-		$this->getField('fieldName10')->setValue('2');
-		$this->addField('submitButton', new SubmitButton());
+
+		// add collection type field with validators
+		$this->addField('collectionField', new CollectionTextField(
+			[
+				'label' => new Label(wfMessage('aaa')),
+				'validator' => new WikiaValidatorListValue(
+					array(
+						'validator' => new WikiaValidatorInteger(
+							array(
+								'required' => true
+							),
+							array('not_int' => 'message key here')
+						)
+					)
+				)
+			]
+		));
+
+		// add submit
+		$this->addField('submitButton', new SubmitButton([
+			'value' => wfMessage('some-key-here')->text()
+		]));
 	}
 }

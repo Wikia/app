@@ -34,7 +34,16 @@ abstract class CollectionField extends InputField
 		if (!is_array($values)) {
 			$values = [];
 		}
-		return isset($values[$index]) ? $values[$index] : $values;
+
+		if (isset($index)) {
+			if (isset($values[$index])) {
+				$values = $values[$index];
+			} else {
+				$values = null;
+			}
+		}
+
+		return  $values;
 	}
 
 	/**

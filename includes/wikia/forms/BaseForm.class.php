@@ -105,6 +105,18 @@ abstract class BaseForm extends FormElement {
 	}
 
 	/**
+	 * render Label for field
+	 *
+	 * @param string $fieldName
+	 * @param array $attributes html attributes for label tag,
+	 * @param null $index index of field (only for CollectionField)
+	 * @return string
+	 */
+	public function renderFieldLabel($fieldName, $attributes = [], $index = null) {
+		return $this->getField($fieldName)->renderLabel($attributes, $index);
+	}
+
+	/**
 	 * Render opening tag for form
 	 */
 	public function renderStart($htmlAttributes = []) {
