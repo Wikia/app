@@ -1,8 +1,14 @@
 <?php
-require_once( "{$IP}/extensions/wikia/GameGuides/GameGuides_setup.php" );
 
 class GameGuidesModelTest extends WikiaBaseTest
 {
+
+	public function setUp() {
+		global $IP;
+		$this->setupFile = "{$IP}/extensions/wikia/GameGuides/GameGuides_setup.php";
+		parent::setUp();
+	}
+
 	/**
 	 * @covers GameGuidesModel::getResultSet
 	 */
@@ -61,8 +67,8 @@ class GameGuidesModelTest extends WikiaBaseTest
 		    ->will   ( $this->returnValue( $mockResultSet ) )
 		;
 		
-		$this->proxyClass( 'Wikia\Search\Config', $mockConfig );
-		$this->proxyClass( 'Wikia\Search\QueryService\Factory', $mockFactory );
+		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
+		$this->mockClass( 'Wikia\Search\QueryService\Factory', $mockFactory );
 		$this->mockApp();
 		
 		$this->assertInstanceOf(
