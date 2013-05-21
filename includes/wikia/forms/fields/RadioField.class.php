@@ -17,14 +17,11 @@ class RadioField extends BaseField
 		$out = '';
 		$i = 0;
 		
-		//FIXME: this is hack; we need to think about how to remove it: overwrite renderLabel or other method?
-		$this->setProperty(self::PROPERTY_LABEL, null);
 		foreach($choices as $choice) {
 			if( !empty($choice['label']) ) {
 				$out .= $choice['label']->render($this->getId($i));
 			}
-			
-			$data['value'] = $choice['value'];
+			$data['choiceValue'] = $choice['value'];
 			$out .= $this->renderInternal(__CLASS__, $attributes, $data, $i);
 			$i++;
 		}
