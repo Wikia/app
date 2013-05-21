@@ -12,8 +12,8 @@ class LandingPagesParser {
 
 	static public function onLanguageGetMagicHook( &$magicWords, $langCode ){
 		global $wgLandingPagesAsContentMagicWords;
-		$magicWords = array_keys( $wgLandingPagesAsContentMagicWords );
-		foreach ( $magicWords as $wordID ) {
+		$landingMagicWords = array_keys( $wgLandingPagesAsContentMagicWords );
+		foreach ( $landingMagicWords as $wordID ) {
 			$magicWords[$wordID] = array( 0, $wordID );
 		}
 
