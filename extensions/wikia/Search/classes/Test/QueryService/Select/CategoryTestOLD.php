@@ -51,7 +51,7 @@ class CategoryTest extends BaseTest {
 		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getCategoryMatchForTermAndNamespaces' )
-		    ->with   ( 'term', array( NS_CATEGORY ) )
+		    ->with   ( 'term', array( 16 ) )
 		    ->will   ( $this->returnValue( $mockMatch ) )
 		;
 		$mockConfig
@@ -181,55 +181,12 @@ class CategoryTest extends BaseTest {
 				$get->invoke( $mockSelect )
 		);
 	}
-        
-        public function testgetFilterQueryString() {
-               $mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCategoryMatch' ) );
-		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Category' )
-		                  ->disableOriginalConstructor()
-		                  ->setMethods( array( 'getResult' ) )
-		                  ->getMock();
-		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
-		                   ->setMethods( array( 'getVar' ) )
-		                   ->getMock();
-                
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Category' )
-		                   ->disableOriginalConstructor()
-		                   ->setMethods( array() )
-		                   ->getMock();
-            
-                
-                $mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getCategoryMatch' )
-		    ->will   ( $this->returnValue( $mockMatch ) )
-		;
-		$mockMatch
-		    ->expects( $this->once() )
-		    ->method ( 'getResult' )
-		    ->will   ( $this->returnValue( $mockResult ) )
-		;
-		$mockResult
-		    ->expects( $this->once() )
-		    ->method ( 'getVar' )
-		    ->with   ( 'id' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
-            
-                $get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Category', 'getFilterQueryString' );
-		$get->setAccessible( true );
-		$this->assertEquals(
-                                array(Wikia\Search\Utilities::valueForField( 'pageid', $mockResult )),
-				$get->invoke( $mockSelect )
-		);
-                	
-	
-	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Category::getQueryFieldsString 
+	 * @covers Wikia\Search\QueryService\Select\OnWiki::getQueryFieldsString 
 	 */
 	public function testGetQueryFieldsString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryFieldsToBoosts' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCategoryMatch' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Category' )
 		                   ->setConstructorArgs( array( $dc ) )
@@ -238,15 +195,111 @@ class CategoryTest extends BaseTest {
 		
 		$mockConfig
 		    ->expects( $this->once() )
-		    ->method ( 'getQueryFieldsToBoosts' )
-		    ->will   ( $this->returnValue( array( 'categories' => 25 ) ) )
+		    ->method ( 'getCategoryMatch' )
+		    ->will   ( $this->returnValue( array( 'id' => 123 ) ) )
 		;
 		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Category', 'getQueryFieldsString' );
 		$get->setAccessible( true );
 		$this->assertEquals(
-				'categories^125',
+				array('pageid' => 123),
 				$get->invoke( $mockSelect )
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\Category::getFormulatedQuery
+	 */
+        /*
+	public function testGetFormulatedQuery() {
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQuery' ] );
+		
+		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
+		
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Category' )
+		                   ->setConstructorArgs( [ $dc ] )
+		                   ->setMethods( array( 'getQueryClausesString' ) )
+		                   ->getMock();
+		
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSolrQuery' ], [ 'foo' ] );
+		
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getQueryClausesString' )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSolrQuery' )
+		    ->will   ( $this->returnValue( 'bar' ) )
+		;
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\OnWiki', 'getFormulatedQuery' );
+		$method->setAccessible( true );
+		$this->assertEquals(
+				'foo AND (bar)',
+				$method->invoke( $mockSelect )
+		);
+	}
+	*/
+        
+	/**
+	 * @covers Wikia\Search\QueryService\Select\Category::getQueryClausesString
+	 */
+	public function testGetQueryClausesString() {
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCategoryMatch' ) );
+                $mockService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getTitleStringFromPageId','getTitleFromPageId','getLanguageCode' ) );
+                
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService) );
+                
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Category' )
+		                   ->setConstructorArgs( array( $dc ) )
+		                   ->setMethods( null )
+                                   ->setMethods('getTopArticles')
+		                   ->getMock();
+		
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getCategoryMatch' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+                
+                $mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getTitleStringFromPageId' )
+                    ->with (123)
+		    ->will ( $this->returnValue( 'myCategory' ) )
+		;
+                
+                $mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getTitleFromPageId' )
+                    ->with (123)    
+		    ->will ( $this->returnValue( 'myCategory' ) )
+		;
+                
+                $mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getLanguageCode' )
+                    ->with (123)    
+		    ->will   ( $this->returnValue( 'en' ) )
+		;
+                
+                $mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getTopArticles' )
+                    ->with (999)    
+		    ->will ( $this->returnValue( array( 235 => 'mytitle1', 286 => 'mytitle2') ) )
+		;
+                		
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Category', 'getQueryClausesString' );
+		$method->setAccessible( true );
+		$this->assertEquals(
+				'( ( (pageId:235) OR (pageId:286) ) AND (categories:myCategory) AND (lang:en) )',
+				$method->invoke( $mockSelect )
+		);
+	}
 }

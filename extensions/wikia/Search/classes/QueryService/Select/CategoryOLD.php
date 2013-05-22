@@ -10,7 +10,7 @@ use \Solarium_Query_Select, \Wikia\Search\Utilities, \Wikia\CategoryGalleries\se
  * @package Search
  * @subpackage QueryService
  */
-class Category extends OnWiki
+class Category extends AbstractSelect
 {
 		
         
@@ -25,11 +25,17 @@ class Category extends OnWiki
 	 * @var string
 	 */
 	protected $searchType = 'cat';
-		
+	
+	/**
+	 * Default time allowed for a query.
+	 * @var int
+	 */
+	protected $timeAllowed = 7500;
+	
 	/**
 	 * Identifies a match by domain via mw service. Registers with config and returns if found.
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::extractMatch()
-	 * @return Wikia\Search\Match\Category|null
+	 * @return Wikia\Search\Match\Wiki
 	 */
 	public function extractMatch() {
 		
@@ -55,7 +61,7 @@ class Category extends OnWiki
 	}
 	
 	/**
-	 * Registers a filter query for documents matching the category ID of a match, if available.
+	 * Registers a filter query for documents matching the wiki ID of a match, if available.
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerFilterQueryForMatch()
 	 * @return Wikia\Search\QueryService\Select\Category
 	 */
@@ -88,18 +94,52 @@ class Category extends OnWiki
 		return $filterQueries;
 	}
 	
-		        
+	/**
+	 * Builds the necessary query clauses based on values set in the searchconfig object
+	 * @return string
+	 */
+	protected function getQueryClausesString()
+	{
+                $catid = $this->config->getCategoryMatch()->getResult()->getVar( 'id' );
+                         
+                $catService = new CategoryService($this->service->getTitleStringFromPageId($catid));
+                $articleList = $catService->getTopArticles( self::GROUP_RESULTS_COUNT );
+                
+                $pidsQuery = '';
+                foreach ( $articleList as $pageid => $title ) {
+		    $pidsQuery .=  ( empty( $pidsQuery ) ? ' ' : ' OR ' ) . Utilities::valueForField( 'pageId',  $pageid );
+		}
+                
+		
+		$queryClauses= array(
+				$pidsQuery,
+                                Utilities::valueForField( 'categories', $this->service->getTitleFromPageId($catid) ),
+				Utilities::valueForField( 'lang', $this->service->getLanguageCode() )
+		);
+				
+		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
+                
+	}
+	
+	/**
+	 * Returns a nested query, preceded by lucene queries used to filter out bad wikis, and non-content documents.
+	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery()
+	 */
+        /*
+	protected function getFormulatedQuery() {
+		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSanitizedQuery() );
+	}
+        */
+        
 	/**
 	 * Return a string of query fields based on configuration
 	 * @return string
 	 */
 	protected function getQueryFieldsString() {
 		$queryFieldsString = '';
-                
-                $queryFieldsToBoosts = $this->config->getQueryFieldsToBoosts();
-                $queryFieldsString .= sprintf( '%s^%s ', Utilities::field( 'categories' ), $queryFieldsToBoosts['categories'] );
-                
-                
+		foreach ( $this->config->getQueryFieldsToBoosts()  as $field => $boost ) {
+			$queryFieldsString .= sprintf( '%s^%s ', Utilities::field( $field ), $boost );
+		}
 		return trim( $queryFieldsString );
 	}
 	
