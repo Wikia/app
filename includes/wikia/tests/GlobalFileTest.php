@@ -21,7 +21,7 @@ class GlobalFileTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider newFromTextProvider
 	 */
-	public function testNewFromText($row, $cityId, $path, $exists, $width, $height, $mime) {
+	public function testNewFromText($row, $cityId, $path, $exists, $width, $height, $crop, $mime) {
 		$this->mockGlobalFunction('GetDB', $this->mockClassWithMethods('Database', [
 			'selectRow' => $row
 		]));
@@ -35,7 +35,10 @@ class GlobalFileTest extends WikiaBaseTest {
 
 		// original image / crop
 		$this->assertEquals("http://images.wikia.com/{$path}/images/0/06/Gzik.jpg", $file->getUrl());
-		$this->assertContains("/{$path}/images/thumb/0/06/Gzik.jpg/200px-0%2C201%2C0%2C200-Gzik.jpg", $file->getCrop(200, 200));
+
+		if ($file->exists()) {
+			$this->assertContains("/{$path}/images/thumb/0/06/Gzik.jpg/{$crop}", $file->getCrop(200, 200));
+		}
 
 		// metadata
 		$this->assertEquals($width, $file->getWidth());
@@ -59,6 +62,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'exists' => true,
 				'width' => 600,
 				'height' => 450,
+				'crop' => '200px-76%2C527%2C0%2C450-Gzik.jpg',
 				'mime' => 'image/jpeg',
 			],
 			// existing image from Muppet wiki
@@ -75,6 +79,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'exists' => true,
 				'width' => 300,
 				'height' => 300,
+				'crop' => '200px-0%2C301%2C0%2C300-Gzik.jpg',
 				'mime' => 'image/png',
 			],
 			// not existing image from Poznań wiki
@@ -85,6 +90,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'exists' => false,
 				'width' => null,
 				'height' => null,
+				'crop' => null,
 				'mime' => null,
 			]
 		];

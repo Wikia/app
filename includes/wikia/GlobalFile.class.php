@@ -174,7 +174,7 @@ class GlobalFile extends WikiaObject {
 	 * @return string URL
 	 */
 	public function getCrop( $width, $height ) {
-		$imageServing = new ImageServing( null, $width);
-		return $imageServing->getUrl($this, $width, $height);
+		$imageServing = new ImageServing(null, $width, $height);
+		return $imageServing->getUrl($this, $this->getWidth(), $this->getHeight());
 	}
 }
