@@ -1,6 +1,7 @@
 <?php
 $messages['en'] = [
 	'css' => 'Cascading Style Sheets',
+	'action-specialcss' => 'edit CSS',
 	
 	'special-css-title' => 'CSS Editor',
 
@@ -11,6 +12,7 @@ $messages['en'] = [
 
 $messages['qqq'] = [
 	'css' => 'Name of the link to Special:CSS page on Special:SpacialPages list; more about CSS: https://en.wikipedia.org/wiki/Cascading_Style_Sheets',
+	'action-specialcss' => 'Action name displayed in MW permission error message',
 	
 	'special-css-title' => 'Page title visible in the title bar of a browser or on the browser tab',
 
