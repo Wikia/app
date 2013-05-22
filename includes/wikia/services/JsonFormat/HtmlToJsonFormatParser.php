@@ -6,7 +6,6 @@
  */
 
 class HtmlToJsonFormatParser {
-
 	/**
 	 * @param string $html
 	 * @return JsonFormatNode
@@ -14,7 +13,7 @@ class HtmlToJsonFormatParser {
 	public function parse( $html ) {
 		$doc = new DOMDocument();
 		$doc->loadHTML($html);
-		$visitor = new HtmlToJsonFormatParserVisitor( $doc->getElementsByTagName('body')->item(0) );
+		$visitor = new HtmlToJsonFormatParserVisitorStateful( $doc->getElementsByTagName('body')->item(0) );
 		return $visitor->run();
 	}
 }

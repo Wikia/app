@@ -280,6 +280,7 @@ $wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/Revision
 
 $wgAutoloadClasses['HtmlToJsonFormatParser'] = $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParser.php";
 $wgAutoloadClasses['HtmlToJsonFormatParserVisitor'] = $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParserVisitor.php";
+$wgAutoloadClasses['HtmlToJsonFormatParserVisitorStateful'] = $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParserVisitorStateful.php";
 $wgAutoloadClasses['JsonFormatNode'] = $IP . "/includes/wikia/services/JsonFormat/JsonFormatNode.php";
 $wgAutoloadClasses['WikitextToHtmlParser'] = $IP . "/includes/wikia/services/JsonFormat/WikitextToHtmlParser.php";
 $wgAutoloadClasses['WikitextToJsonFormatParserFactory'] = $IP . "/includes/wikia/services/JsonFormat/WikitextToJsonFormatParserFactory.php";
