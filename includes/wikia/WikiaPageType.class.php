@@ -12,6 +12,8 @@ class WikiaPageType {
 	public static function getPageType() {
 		if (self::isMainPage()) {
 			$type = 'home';
+		} elseif (self::isFilePage()) {
+			$type = 'file';
 		} elseif (self::isSearch()) {
 			$type = 'search';
 		} elseif (self::isForum()) {
@@ -55,7 +57,18 @@ class WikiaPageType {
 		$pageNames = SpecialPageFactory::resolveAlias($title->getDBkey());
 
 		return !empty($title) && -1 == $title->getNamespace()
-			&& in_array(array_shift($pageNames), $searchPageNames);
+		&& in_array(array_shift($pageNames), $searchPageNames);
+	}
+
+	/**
+	 * Check if current page is file page
+	 *
+	 * @return bool
+	 */
+	public static function isFilePage() {
+		global $wgTitle;
+
+		return !empty($wgTitle) && NS_FILE == $wgTitle->getNamespace();
 	}
 
 	/**
