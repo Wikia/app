@@ -67,7 +67,7 @@ ManageWikiaHome.prototype = {
 		$().log('ManageWikiaHome.init');
 	},
 	changeVisualizationLang: function(e) {
-		document.location = window.Wikia.Querystring().toString().split("?")[0] + "?vl="+ e.target.value;
+		window.Wikia.Querystring().removeVals().setVal('vl', e.target.value).goTo();
 	},
 	resetFormFields: function(e) {
 		e.preventDefault();
