@@ -80,7 +80,7 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesSponsoredMsg', [
 
 //hooks
 $app->registerHook( 'GameGuidesContentSave', 'GameGuidesController', 'onGameGuidesContentSave' );
-$app->registerHook( 'GameGuidesSponsoredSave', 'GameGuidesController', 'onGameGuidesSponsoredSave' );
+$app->registerHook( 'GameGuidesSponsoredVideosSave', 'GameGuidesController', 'onGameGuidesSponsoredSave' );
 $app->registerHook( 'TitleGetSquidURLs', 'GameGuidesController', 'onTitleGetSquidURLs' );
 //add Game Guides Content to WikiFeatures
 $app->registerHook( 'WikiFeatures::onGetFeatureNormal', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
