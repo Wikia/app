@@ -6,7 +6,7 @@
  */
 
 /*global define, require*/
-define('wikia.videohandler.ooyala', ['wikia.window', require.optional('ext.wikia.adengine.dartvideohelper')], function(window, dartVideoHelper) {
+define('wikia.videohandler.ooyala', ['wikia.window', 'wikia.loader', require.optional('ext.wikia.adengine.dartvideohelper')], function(window, loader, dartVideoHelper) {
 	'use strict';
 
 	/**
@@ -62,6 +62,21 @@ define('wikia.videohandler.ooyala', ['wikia.window', require.optional('ext.wikia
 			};
 		}
 
-		window.OO.Player.create(containerId, params.videoId, createParams);
+		/* Ooyala doesn't support more than one player type (i.e. age-gate and non-age-gate)
+		 * per page load unless we delete window.OO before we reload the player script.
+		 *
+		 * If they ever fix this we can remove this hack and load params.jsFile with
+		 * video bootstrap
+		 */
+		delete window.OO;
+
+		loader({
+			type: loader.JS,
+			resources: params.jsFile
+		}).done(function() {
+			window.OO.Player.create(containerId, params.videoId, createParams);
+		});
+
+
 	};
 });
