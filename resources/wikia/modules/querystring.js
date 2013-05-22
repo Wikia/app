@@ -169,6 +169,17 @@
 		};
 
 		/**
+		 * Remove all parameters
+		 *
+		 * @public
+		 * @return {Querystring}
+		 */
+		p.removeVals = function() {
+			this.cache = {};
+			return this;
+		}
+
+		/**
 		 * @return {String} a hash from URL
 		 */
 		p.getHash = function () {
