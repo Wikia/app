@@ -99,8 +99,9 @@ HoverMenu.prototype.handleShowNav = function(event) {
 	if ($(event.relatedTarget).closest(this.selector).length == 0) {
 
 		//Delay before showing subnav.
+		var currentTarget = event.currentTarget;
 		this.mouseoverTimer = setTimeout($.proxy(function() {
-			this.showNav(event.currentTarget);
+			this.showNav(currentTarget);
 		}, this), this.settings.mouseoverDelay);
 
 		this.mouseoverTimerRunning = true;

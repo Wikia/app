@@ -39,6 +39,21 @@ Artikel '''$1''' kon nie gevind word nie.
 * Om na die tuisblad van hierdie webwerf te gaan: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'our404handler' => 'خطأ 404: الصفحة غير موجودة!',
+	'our404handler-oops' => 'هذه ليست الصفحات التي كنت تبحث عنها. الرجاء المواصلة.',
+	'message404' => "'' 'نحن آسفون حقاً، لكن لسبب ما الصفحة التي طلبتها غير موجودة. '''
+
+المقالة '''$1''' لم يتم العثور عليها.
+
+* يمكنك أن تجرب المقالة [[$2]]
+* يمكنك استخدام مربع البحث على الجانب الأيسر من الصفحة
+* للانتقال إلى الصفحة الرئيسية لهذا الموقع، انقر على الرابط: [{{SERVER}} {{SITENAME}}]",
+);
+
 /** Asturian (asturianu)
  * @author Xuacu
  */

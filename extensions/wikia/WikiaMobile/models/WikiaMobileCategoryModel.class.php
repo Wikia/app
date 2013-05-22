@@ -96,11 +96,12 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 	private $items;
 	private $count;
 
+	const LIMIT = 5000;
+
 	function __construct( Category $category ){
 		parent::__construct( $category->getTitle(), RequestContext::getMain() );
 
-		//get all the members in the category
-		$this->limit = null;
+		$this->limit = self::LIMIT; # BAC-265
 
 		$this->items = [];
 		$this->count = 0;

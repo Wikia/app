@@ -18,7 +18,8 @@ $wgExtensionCredits['other'][] = array(
 );
 $dir = dirname(__FILE__).'/';
 
-$wgAutoloadClasses['VideoEmbedTool'] =  $dir . 'VideoEmbedTool_body.php';
+$wgAutoloadClasses['VideoEmbedTool'] = $dir . 'VideoEmbedTool_body.php';
+$wgAutoloadClasses['VideoEmbedToolSearchService'] = $dir . 'VideoEmbedToolSearchService.class.php';
 $wgAutoloadClasses['VideoEmbedToolController'] = $dir . '/VideoEmbedToolController.class.php';
 
 define( 'VIDEO_PREVIEW', 350 );

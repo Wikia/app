@@ -35,18 +35,24 @@ $wgWikiaVETLoaded = false;
 $wgWikiaVideosFoundInTemplates = 0;
 
 $dir = dirname( __FILE__ );
-$wgAutoloadClasses[ 'ThumbnailVideo'] = 		$dir . '/ThumbnailVideo.class.php' ;
-$wgAutoloadClasses[ 'VideoHandlerController'] = 	$dir . '/VideoHandlerController.class.php' ;
-$wgAutoloadClasses[ 'VideoHandlerHooks'] = 	$dir . '/VideoHandlerHooks.class.php' ;
-$wgAutoloadClasses[ 'VideoFileUploader'] = 	$dir . '/VideoFileUploader.class.php' ;
-$wgAutoloadClasses[ 'VideoHandlerHelper'] =  $dir . '/VideoHandlerHelper.class.php' ;
+
+// Main classes
+$wgAutoloadClasses[ 'ThumbnailVideo' ] = $dir . '/ThumbnailVideo.class.php';
+$wgAutoloadClasses[ 'VideoHandlerController' ] = $dir . '/VideoHandlerController.class.php';
+$wgAutoloadClasses[ 'VideoHandlerHooks' ] = $dir . '/VideoHandlerHooks.class.php';
+$wgAutoloadClasses[ 'VideoFileUploader' ] = $dir . '/VideoFileUploader.class.php';
+$wgAutoloadClasses[ 'VideoHandlerHelper' ] = $dir . '/VideoHandlerHelper.class.php';
+
+// actions
+$wgAutoloadClasses[ 'WikiaRevertVideoAction'] = $dir . '/actions/WikiaRevertVideoAction.php';
 
 // api wrappers
-$wgAutoloadClasses[ 'ApiWrapperFactory'] = 		$dir . '/apiwrappers/ApiWrapperFactory.class.php' ;
-$wgAutoloadClasses[ 'ApiWrapper'] = 		$dir . '/apiwrappers/ApiWrapper.class.php' ;
-$wgAutoloadClasses[ 'PseudoApiWrapper'] = 	$dir . '/apiwrappers/ApiWrapper.class.php' ;
-$wgAutoloadClasses[ 'IngestionApiWrapper'] = 	$dir . '/apiwrappers/ApiWrapper.class.php' ;
-$wgAutoloadClasses[ 'LegacyVideoApiWrapper'] = 		$dir . '/apiwrappers/ApiWrapper.class.php' ;
+$wgAutoloadClasses[ 'ApiWrapperFactory' ] = $dir . '/apiwrappers/ApiWrapperFactory.class.php';
+$wgAutoloadClasses[ 'ApiWrapper' ] = $dir . '/apiwrappers/ApiWrapper.class.php';
+$wgAutoloadClasses[ 'PseudoApiWrapper' ] = $dir . '/apiwrappers/ApiWrapper.class.php';
+$wgAutoloadClasses[ 'IngestionApiWrapper' ] = $dir . '/apiwrappers/ApiWrapper.class.php';
+$wgAutoloadClasses[ 'LegacyVideoApiWrapper'] = $dir . '/apiwrappers/ApiWrapper.class.php';
+
 // api exceptions and errors
 $wgAutoloadClasses[ 'EmptyResponseException'] = 	$dir . '/apiwrappers/ApiWrapper.class.php' ;
 $wgAutoloadClasses[ 'VideoNotFoundException'] = 	$dir . '/apiwrappers/ApiWrapper.class.php' ;
@@ -56,15 +62,13 @@ $wgAutoloadClasses[ 'UnsuportedTypeSpecifiedException'] =  $dir . '/apiwrappers/
 $wgAutoloadClasses[ 'VideoNotFound'] =  $dir . '/apiwrappers/ApiWrapper.class.php' ;
 
 // file repo
-$wgAutoloadClasses[ 'OldWikiaLocalFile'] = 	$dir . '/filerepo/OldWikiaLocalFile.class.php' ;
-//mech: missing WikiaFileRevertForm class breaks the unit tests, so I commented it out
-//$wgAutoloadClasses[ 'WikiaFileRevertForm'] = 	$dir . '/filerepo/WikiaFileRevertForm.class.php';
-$wgAutoloadClasses[ 'WikiaForeignDBFile'] = 	$dir . '/filerepo/WikiaForeignDBFile.class.php' ;
-$wgAutoloadClasses[ 'WikiaForeignDBViaLBRepo'] = 	$dir . '/filerepo/WikiaForeignDBViaLBRepo.class.php' ;
-$wgAutoloadClasses[ 'WikiaLocalFile'] = 		$dir . '/filerepo/WikiaLocalFile.class.php' ;
-$wgAutoloadClasses[ 'WikiaLocalFileShared'] = 	$dir . '/filerepo/WikiaLocalFileShared.class.php' ;
-$wgAutoloadClasses[ 'WikiaLocalRepo'] = 		$dir . '/filerepo/WikiaLocalRepo.class.php' ;
-$wgAutoloadClasses[ 'WikiaNoArticleLocalFile'] = 	$dir . '/filerepo/WikiaNoArticleLocalFile.class.php' ;
+$wgAutoloadClasses[ 'OldWikiaLocalFile' ] = $dir . '/filerepo/OldWikiaLocalFile.class.php';
+$wgAutoloadClasses[ 'WikiaForeignDBFile' ] = $dir . '/filerepo/WikiaForeignDBFile.class.php';
+$wgAutoloadClasses[ 'WikiaForeignDBViaLBRepo' ] = $dir . '/filerepo/WikiaForeignDBViaLBRepo.class.php';
+$wgAutoloadClasses[ 'WikiaLocalFile' ] = $dir . '/filerepo/WikiaLocalFile.class.php';
+$wgAutoloadClasses[ 'WikiaLocalFileShared'] = $dir . '/filerepo/WikiaLocalFileShared.class.php';
+$wgAutoloadClasses[ 'WikiaLocalRepo' ] = $dir . '/filerepo/WikiaLocalRepo.class.php';
+$wgAutoloadClasses[ 'WikiaNoArticleLocalFile' ] = $dir . '/filerepo/WikiaNoArticleLocalFile.class.php';
 
 // handler
 $wgAutoloadClasses[ 'VideoHandler'] = 		$dir . '/handlers/VideoHandler.class.php' ;
@@ -212,13 +216,15 @@ $wgMediaHandlers['video/snappytv'] = 'SnappytvVideoHandler';
 /**
  * Feed ingesters
  */
-$wgAutoloadClasses['VideoFeedIngester'] =  $dir . '/feedingesters/VideoFeedIngester.class.php';
-$wgAutoloadClasses['RealgravityFeedIngester'] =  $dir . '/feedingesters/RealgravityFeedIngester.class.php';
-$wgAutoloadClasses['ScreenplayFeedIngester'] =  $dir . '/feedingesters/ScreenplayFeedIngester.class.php';
-$wgAutoloadClasses['IgnFeedIngester'] =  $dir . '/feedingesters/IgnFeedIngester.class.php';
-$wgAutoloadClasses['AnyclipFeedIngester'] =  $dir . '/feedingesters/AnyclipFeedIngester.class.php';
-$wgAutoloadClasses['OoyalaFeedIngester'] =  $dir . '/feedingesters/OoyalaFeedIngester.class.php';
-$wgAutoloadClasses['IvaFeedIngester'] =  $dir . '/feedingesters/IvaFeedIngester.class.php';
+$wgAutoloadClasses[ 'VideoFeedIngester' ] = $dir . '/feedingesters/VideoFeedIngester.class.php');
+$wgAutoloadClasses[ 'RealgravityFeedIngester' ] = $dir . '/feedingesters/RealgravityFeedIngester.class.php');
+$wgAutoloadClasses[ 'ScreenplayFeedIngester' ] = $dir . '/feedingesters/ScreenplayFeedIngester.class.php');
+$wgAutoloadClasses[ 'IgnFeedIngester' ] = $dir . '/feedingesters/IgnFeedIngester.class.php');
+$wgAutoloadClasses[ 'AnyclipFeedIngester' ] = $dir . '/feedingesters/AnyclipFeedIngester.class.php');
+$wgAutoloadClasses[ 'OoyalaFeedIngester' ] = $dir . '/feedingesters/OoyalaFeedIngester.class.php');
+$wgAutoloadClasses[ 'IvaFeedIngester' ] = $dir . '/feedingesters/IvaFeedIngester.class.php');
+
+$wgAutoloadClasses[ 'OoyalaAsset' ] = $dir . '/feedingesters/OoyalaAsset.class.php' );
 
 $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',

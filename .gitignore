@@ -16,3 +16,4 @@ sftp-config.json
 *.iml
 /build
 /LocalSettings.php
+/atlassian-ide-plugin.xml

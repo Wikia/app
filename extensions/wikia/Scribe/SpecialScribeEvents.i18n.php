@@ -14,11 +14,20 @@ $messages['en'] = array(
 	'scribeeventsrecords' => 'Records',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Purodha
  */
 $messages['qqq'] = array(
 	'scribe-desc' => '{{desc}}',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|أداة]] للبحث عن عنوان صفحة محددة عبر الويكيات',
+	'scribeevents' => 'الأحداث الأخيرة',
+	'scribeeventsrecords' => 'سجلات',
 );
 
 /** Breton (brezhoneg)
@@ -270,8 +279,10 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author Ua2004
  */
 $messages['uk'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Інструмент]] для пошуку конкретної назви сторінки у вікі',
 	'scribeevents' => 'Останні події',
 	'scribeeventsrecords' => 'Записи',
 );

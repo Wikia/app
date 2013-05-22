@@ -470,6 +470,7 @@ class ArticlesApiController extends WikiaApiController {
 						'revision' => [
 							'id' => $revId,
 							'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
+							'user_id' => $rev->getUser( Revision::FOR_PUBLIC ),
 							'timestamp' => wfTimestamp( TS_UNIX, $rev->getTimestamp() )
 						]
 					];

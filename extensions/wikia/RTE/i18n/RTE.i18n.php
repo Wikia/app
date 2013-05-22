@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'prefs-rte' => 'Rich Text Editor',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Shirayuki
  */
@@ -45,7 +45,7 @@ $messages['af'] = array(
  */
 $messages['ar'] = array(
 	'rte-desc' => 'محرر متطور مدمج في ميدياويكي',
-	'rte-no-js-fallback' => 'محرر النص المتطور لا يعمل عندما يكون جافاسكريبت مغلقا. الرجاء إما تشغيله من خلال خيارات المتصفح الخاص بك، أو زيارة [[خاص:تفضيلات|صفحة تفضيلاتك]] للتبديل نحو محرر ميدياويكي القديم.', # Fuzzy
+	'rte-no-js-fallback' => 'محرر النص المتطور لا يعمل عندما يكون جافاسكريبت مغلقا. الرجاء إما تشغيله من خلال خيارات المتصفح الخاص بك، أو زيارة [[Special:Preferences|صفحة تفضيلاتك]] للتبديل نحو محرر ميدياويكي القديم.',
 	'rte-edgecase-info-title' => 'يجب أن يكون المحرر معدلا في وضع محرر المصدر',
 	'rte-edgecase-info' => 'تم تعطيل محرر النص المتطور لأن الصفحة تحتوي على تعليمات برمجية معقدة.',
 	'rte-edgecase-comment' => 'تعليقات HTML',
@@ -170,13 +170,14 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Geitost
  * @author Inkowik
  * @author LWChris
  * @author The Evil IP address
  */
 $messages['de'] = array(
 	'rte-desc' => 'Integration des CKeditors in MediaWiki',
-	'rte-no-js-fallback' => 'Der Rich-Text-Editor funktioniert nicht mit ausgeschaltetem JavaScript. Bitte aktiviere es entweder in den Browser-Optionen, oder besuche deine [[Special:Preferences|Einstellungen]]  um zum alten MediaWiki-Editor zu wechseln',
+	'rte-no-js-fallback' => 'Der Rich-Text-Editor funktioniert nicht mit ausgeschaltetem JavaScript. Bitte aktiviere es entweder in den Browser-Optionen oder besuche deine [[Special:Preferences|Einstellungen]], um zum alten MediaWiki-Editor zu wechseln.',
 	'rte-edgecase-info-title' => 'Quelltext-Modus erforderlich',
 	'rte-edgecase-info' => 'Die Rich-Text-Bearbeitung wurde deaktiviert, weil die Seite komplexen Code enthält.',
 	'rte-edgecase-comment' => 'HTML-Kommentare',
@@ -196,6 +197,13 @@ $messages['de'] = array(
 * Falls du zurück zum alten Editor wechseln möchtest, kannst du das im ''Bearbeiten''-Reiter in deinen [[Special:Preferences#prefsection-4|Einstellungen]] tun.",
 	'rte-first-run-notice' => 'Wir haben einige Verbesserungen am Editor vorgenommen. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lies die Mitteilung] um mehr zu erfahren.',
 	'prefs-rte' => 'Rich Text Editor',
+);
+
+/** German (formal address) (Deutsch (Sie-Form)‎)
+ * @author Geitost
+ */
+$messages['de-formal'] = array(
+	'rte-no-js-fallback' => 'Der Rich-Text-Editor funktioniert nicht mit ausgeschaltetem JavaScript. Bitte aktivieren Sie es entweder in den Browser-Optionen oder besuchen Ihre [[Special:Preferences|Einstellungen]], um zum alten MediaWiki-Editor zu wechseln.',
 );
 
 /** Zazaki (Zazaki)

@@ -112,13 +112,14 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author BroOk
  * @author Marcmpujol
  */
 $messages['ca'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp; de tots els vots',
 	'ajaxpoll-thankyou' => 'Gràcies pel teu vot!',
 	'ajaxpoll-error' => 'Hi ha hagut un problema en processar el teu vot, si us plau, intenta-ho de nou.',
-	'ajaxpoll-summary' => "L'enquesta va ser creat el $1 $2, i per ara $3 persones han votat.",
+	'ajaxpoll-summary' => "L'enquesta va ser creada el $1 $2, i fins ara $3 persones han votat.",
 	'ajaxpoll-submit' => 'Vota!',
 	'ajaxpoll-closed' => "L'enquesta es tancarà ara. Gaudeix dels resultats.",
 	'ajaxpoll-submitting' => "Espera si us plau, s'està processant el teu vot.",
@@ -210,9 +211,11 @@ $messages['el'] = array(
 
 /** Esperanto (Esperanto)
  * @author Objectivesea
+ * @author Tradukisto
  */
 $messages['eo'] = array(
 	'ajaxpoll-thankyou' => 'Dankon pro via voĉdono!',
+	'ajaxpoll-submit' => 'Voĉdoni!',
 );
 
 /** Spanish (español)
@@ -324,6 +327,15 @@ $messages['gsw'] = array(
 	'ajaxpoll-submit' => 'Abstimme!',
 	'ajaxpoll-closed' => 'D Umfrog isch rum. Vil Spaß mit dr Ergebnis.',
 	'ajaxpoll-submitting' => 'Bitte warte e Wyyli. Am Ibermittle vu Dyyre Stimm ...',
+);
+
+/** Hakka (Hak-kâ-fa)
+ * @author Anson2812
+ */
+$messages['hak'] = array(
+	'ajaxpoll-thankyou' => '承蒙汝嘅投票！',
+	'ajaxpoll-submit' => '投票！',
+	'ajaxpoll-submitting' => '請等一下，提交緊汝嘅投票……',
 );
 
 /** Hebrew (עברית)
@@ -528,7 +540,7 @@ Probeer het nog een keer.',
 	'ajaxpoll-submit' => 'Stemmen!',
 	'ajaxpoll-closed' => 'Deze peiling is gesloten.
 Geniet van de resultaten.',
-	'ajaxpoll-submitting' => 'Even geduld alstublieft.
+	'ajaxpoll-submitting' => 'Een ogenblik geduld.
 Bezig met het opslaan van uw stem...',
 );
 
@@ -539,8 +551,7 @@ $messages['nl-informal'] = array(
 	'ajaxpoll-thankyou' => 'Dank je wel voor je stem!',
 	'ajaxpoll-error' => 'Er is een fount opgetreden bij het verwerken van je stem.
 Probeer het nog een keer.',
-	'ajaxpoll-submitting' => 'Even geduld alsjeblieft.
-Bezig met het opslaan van je stem...',
+	'ajaxpoll-submitting' => 'Een ogenblik geduld. Bezig met het opslaan van je stem...',
 );
 
 /** Norwegian Nynorsk (norsk nynorsk)
@@ -616,6 +627,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;د ټولو رايو څخه',
 	'ajaxpoll-thankyou' => 'ستاسې د رايې نه مننه!',
 	'ajaxpoll-submit' => 'رايه ورکول!',
 );

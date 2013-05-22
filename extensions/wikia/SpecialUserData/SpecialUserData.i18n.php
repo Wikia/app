@@ -23,10 +23,13 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author OsamaK
  */
 $messages['ar'] = array(
 	'userdata' => 'احصل على بيانات المستخدم',
+	'userdata-userid-label' => 'توفير معرف المستخدم:',
+	'userdata-submit' => 'الحصول على البيانات',
 );
 
 /** Breton (brezhoneg)

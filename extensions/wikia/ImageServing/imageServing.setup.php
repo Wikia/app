@@ -44,9 +44,9 @@ if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
 $wgExtensionMessagesFiles['ImageServing'] = $dir . 'ImageServing.i18n.php';
 
 /* Adds imageCrop api to lists */
-$wgAutoloadClasses[ "WikiaApiCroppedImage"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiCroppedImage.php";
+$wgAutoloadClasses[ "WikiaApiCroppedImage"         ] = "{$dir}/api/WikiaApiCroppedImage.php";
 $wgAPIModules[ "imagecrop" ] = "WikiaApiCroppedImage";
 
 // Load the MediaWiki API endpoint for ImageServing
-$wgAutoloadClasses[ "WikiaApiImageServing"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiImageServing.php";
+$wgAutoloadClasses[ "WikiaApiImageServing"         ] = "{$dir}/api//WikiaApiImageServing.php";
 $wgAPIModules['imageserving'] = 'WikiaApiImageServing';

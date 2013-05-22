@@ -202,13 +202,14 @@ class Result extends ReadWrite {
 
 	/**
 	 * Helper method for turning results into nested arrays for JSON encoding
-	 * @param array $keys list of fields you want in your json output
+	 * @param array $keys list of fields you want in your json output. You can use associative arrays to map from key to mapped value.
 	 * @return array
 	 */
 	public function toArray( $keys ) {
 		$array = array();
-		foreach ( $keys as $key ) {
-			$array[$key] = $this[$key];
+		foreach ( $keys as $key => $mapped  ) {
+			$key = is_int( $key ) ? $mapped : $key;
+			$array[$mapped] = $this[$key];
 		}
 		return $array;
 	}

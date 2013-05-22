@@ -124,7 +124,7 @@ $messages['en'] = array(
 	'rte-ck-format-tag_h5' => 'Heading 5',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author NavaRose
  * @author Nemo bis
@@ -670,9 +670,10 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
-	'rte-ck-templateDropDown-label' => 'Куцкеп',
+	'rte-ck-templateDropDown-label' => 'Кеп',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -727,7 +728,7 @@ $messages['cs'] = array(
 	'rte-ck-link-label-target' => 'Cílová stránka nebo URL adresa',
 	'rte-ck-link-label-display' => 'Text odkazu',
 	'rte-ck-link-label-internal' => 'Na wiki stránku',
-	'rte-ck-link-label-external' => 'N externí odkaz',
+	'rte-ck-link-label-external' => 'Na externí odkaz',
 	'rte-ck-link-status-checking' => 'Kontrola stavu',
 	'rte-ck-link-status-exists' => 'Stránka existuje',
 	'rte-ck-link-status-notexists' => 'Stránka neexistuje',
@@ -1867,6 +1868,23 @@ $messages['kn'] = array(
 	'rte-ck-templateDropDown-label' => 'ಟೆಂಪ್ಲೇಟು',
 );
 
+/** Korean (한국어)
+ * @author Infinity
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'rte-ck-link-external-tab' => '바깥 링크',
+	'rte-ck-link-title' => '링크 만들거나 편집하기',
+	'rte-ck-link-label-target' => '대상 문서 또는 URL',
+	'rte-ck-link-label-display' => '문서에 보여지는 글',
+	'rte-ck-link-label-internal' => '위키 문서로 링크',
+	'rte-ck-link-label-external' => '바깥 링크',
+	'rte-ck-link-status-checking' => '상태 확인 중',
+	'rte-ck-link-status-exists' => '존재하는 문서',
+	'rte-ck-link-status-notexists' => '존재하지 않는 문서',
+	'rte-ck-link-status-external' => '바깥 링크',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -1874,6 +1892,7 @@ $messages['ksh'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'Aanmärkong',
 	'rte-ck-link-external-tab' => 'Ene Lengk noh ußerhallef vum Wiki',
 	'rte-ck-link-status-external' => 'Ene Lengk noh ußerhallef vum Wiki',
+	'rte-ck-video-video' => 'Viddejo',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -1991,15 +2010,15 @@ $messages['mk'] = array(
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Префрли на визуелен режим',
 	'rte-ck-modeSwitch-error' => 'Се појави грешка при префрлувањето на режимот. Обидете се повторно.',
 	'rte-ck-photoGallery-gallery' => 'Галерија',
-	'rte-ck-photoGallery-slideshow' => 'Подвижна галерија',
+	'rte-ck-photoGallery-slideshow' => 'Сликоред',
 	'rte-ck-photoGallery-slider' => 'Лизгач',
 	'rte-ck-photoGallery-addGallery' => 'Додај галерија на слики',
-	'rte-ck-photoGallery-addSlideshow' => 'Додај подвижна галерија',
+	'rte-ck-photoGallery-addSlideshow' => 'Додај сликоред',
 	'rte-ck-photoGallery-addSlider' => 'Додај лизгач',
 	'rte-ck-photoGallery-confirmDelete' => 'Дали сте сигурни дека сакате да ја отстраните галеријата од страницава?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Да ја отстранам галеријава?',
 	'rte-ck-photoGallery-tooltip' => 'Ова е галерија.',
-	'rte-ck-photoGallery-tooltipSlideshow' => 'Ова е подвижна галерија.',
+	'rte-ck-photoGallery-tooltipSlideshow' => 'Ова е сликоред.',
 	'rte-ck-photoGallery-tooltipSlider' => 'Ова е лизгач.',
 	'rte-ck-poll-add' => 'Додај анекета',
 	'rte-ck-poll-poll' => 'Анкета',
@@ -2692,7 +2711,7 @@ $messages['pms'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Gavé sta galarìa?',
 	'rte-ck-photoGallery-tooltip' => "Costa a l'é na galarìa.",
 	'rte-ck-photoGallery-tooltipSlideshow' => "Costa a l'é na sequensa ëd diapositive.",
-	'rte-ck-photoGallery-tooltipSlider' => "Cost a l'é un visualisator ëd diapo.",
+	'rte-ck-photoGallery-tooltipSlider' => "Cost a l'é un visualisator ëd diapositive.",
 	'rte-ck-poll-add' => 'Gionté un chestionari',
 	'rte-ck-poll-poll' => 'Sondagi',
 	'rte-ck-signature-add' => 'Gionta toa firma',
@@ -2765,6 +2784,7 @@ $messages['ps'] = array(
 	'rte-ck-media-edit' => 'بدلول',
 	'rte-ck-modeSwitch-toSource' => 'سرچينه',
 	'rte-ck-photoGallery-gallery' => 'انځورتون',
+	'rte-ck-photoGallery-addGallery' => 'يو انځورتون ورګډول',
 	'rte-ck-photoGallery-tooltip' => 'دا يو انځورتون دی.',
 	'rte-ck-signature-add' => 'خپل لاسليک ورګډول',
 	'rte-ck-signature-label' => 'لاسليک',
@@ -2788,6 +2808,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Malafaya
  * @author SandroHc
  * @author Waldir
@@ -2810,6 +2831,7 @@ $messages['pt'] = array(
 	'rte-ck-hoverPreview-template-notExisting' => 'Esta predefinição não existe!',
 	'rte-ck-hoverPreview-video-notExisting' => 'Este vídeo não existe!',
 	'rte-ck-image-add' => 'Adicionar uma imagem',
+	'rte-ck-image-photo' => 'Foto',
 	'rte-ck-image-confirmDelete' => 'Tem a certeza que deseja remover a imagem desta página?',
 	'rte-ck-image-confirmDeleteTitle' => 'Remover esta imagem?',
 	'rte-ck-imagePlaceholder-confirmDelete' => 'Tem a certeza que deseja remover o espaço reservado para a imagem, desta página?',
@@ -2877,21 +2899,27 @@ $messages['pt'] = array(
 	'rte-ck-templateEditor-title' => 'Editor de predefinições',
 	'rte-ck-unlink' => 'Remover link',
 	'rte-ck-video-add' => 'Adicionar um vídeo',
+	'rte-ck-video-video' => 'Vídeo',
 	'rte-ck-video-confirmDelete' => 'Tem a certeza que deseja remover o vídeo desta página?',
 	'rte-ck-video-confirmDeleteTitle' => 'Remover este vídeo?',
 	'rte-ck-videoPlaceholder-confirmDelete' => 'Tem a certeza que deseja remover o espaço reservado para o vídeo, desta página?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Remover este espaço reservado para um vídeo?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Este é um espaço reservado para um vídeo.',
+	'rte-ck-mut-add' => 'Adicionar um vídeo (beta)',
+	'rte-ck-mut-mut' => 'Vídeo (beta)',
 	'rte-ck-widescreen-toggle' => 'Activar ou desactivar o modo panorâmico',
 	'rte-ck-poll-confirmDelete' => 'Tem a certeza de que pretende remover a votação desta página?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Remover esta votação?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
+	'rte-ck-pasteText-title' => 'Cole seu texto',
+	'rte-ck-format-tag_p' => 'Texto normal',
 );
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
  * @author Giro720
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -2989,6 +3017,13 @@ $messages['pt-br'] = array(
 	'rte-ck-poll-confirmDeleteTitle' => 'Remover esta enquete?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
 	'rte-ck-format-tag_p' => 'Texto normal',
+);
+
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'rte-ck-link-add' => "T'inkita yapay",
 );
 
 /** Romanian (română)
