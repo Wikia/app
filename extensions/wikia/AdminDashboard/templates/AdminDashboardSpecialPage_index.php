@@ -51,14 +51,24 @@
 						</li>
 					<? } ?>
 					<? if ($displaySpecialPromote) { ?>
-					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-admin-upload-tool-tooltip") ?>">
-						<a href="<?= $urlGetPromoted ?>" class="set" data-tracking="general/promoteimagetool">
-						      <span class="representation">
-	                          	<span class="icon promoteimagetool"></span>
-	                          </span>
-							<?= wfMsg("admindashboard-control-admin-upload-tool-label") ?>
-						</a>
-					</li>
+						<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-admin-upload-tool-tooltip") ?>">
+							<a href="<?= $urlGetPromoted ?>" class="set" data-tracking="general/promoteimagetool">
+								<span class="representation">
+									<span class="icon promoteimagetool"></span>
+								</span>
+								<?= wfMsg("admindashboard-control-admin-upload-tool-label") ?>
+							</a>
+						</li>
+					<? } ?>
+					<? if ($displaySpecialCss) { ?>
+						<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-special-css-tooltip") ?>">
+							<a href="<?= $urlSpecialCss ?>" class="set" data-tracking="general/specialcss">
+								<span class="representation">
+									<span class="icon specialcsstool"></span>
+								</span>
+								<?= wfMsg("admindashboard-control-special-css-label") ?>
+							</a>
+						</li>
 					<? } ?>
 				</ul>
 			</section>
