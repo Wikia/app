@@ -1,0 +1,24 @@
+@import "../../../../skins/oasis/css/core/color.scss";
+
+.css-editor {
+	float: left;
+	width: 700px;
+	.css-editor-textarea {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.css-side-bar {
+	float: right;
+	width: 300px;
+	.version-box {
+		background-color: $color-buttons;
+		color: $color-button-text;
+		padding: 10px;
+	}
+}
+
+.css-footer {
+	clear: both;
+}
