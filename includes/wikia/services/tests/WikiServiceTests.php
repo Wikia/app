@@ -12,7 +12,7 @@ class WikiServiceTests extends WikiaBaseTest {
 		$image42Url = 'http://img42';
 		$imgSize = 123;
 
-		$this->mockGlobalFunction( "Message", null, 0 );
+		$this->mockGlobalFunction( "message", null, 0 );
 		$this->mockApp();
 
 		$wikiService = $this->getMock('WikiService', array( 'getWikiDetails', 'getImageSrcByTitle' ));
@@ -41,26 +41,32 @@ class WikiServiceTests extends WikiaBaseTest {
 		$wikiService->expects($this->exactly(2))
 			->method('getImageSrcByTitle')
 			->will($this->returnValueMap([
-				[ [13, $image13, $imgSize], $image13Url ],
-				[ [42, $image42, $imgSize], $image42Url ]]));
+				[ 69, $image13, $imgSize, $image13Url ],
+				[ 69, $image42, $imgSize, $image42Url ]]));
+		$wikiService->setCityVisualizationObject($this->mockCityVisualisationObject( 69, 2 ));
 
-		$result = $wikiService->getWikiDescription( $ids );
+		$result = $wikiService->getWikiDescription( $ids, $imgSize );
 
 		$this->assertEquals( $description13, $result[13]['desc'] );
 		$this->assertEquals( $description42, $result[42]['desc'] );
+		$this->assertEquals( $image13Url, $result[13]['image_url'] );
+		$this->assertEquals( $image42Url, $result[42]['image_url'] );
 	}
 
 	public function testGetWikiDescription2 () {
 		$ids = array( 13, 42 );
 		$description13 = 'wiki13 Description';
 		$description42 = 'wiki42 Description';
-		$image13 = 'image13';
+		$image13 = '';
 		$image42 = 'image42';
+		$image13Url = '';
+		$image42Url = 'http://img42';
+		$imgSize = 123;
 
 		$this->mockGlobalFunction( "message", $this->mockMessage($description42), 1, ['wikiasearch2-crosswiki-description', 'wiki42'] );
 		$this->mockApp();
 
-		$wikiService = $this->getMock('WikiService', array( 'getWikiDetails' ));
+		$wikiService = $this->getMock('WikiService', array( 'getWikiDetails','getImageSrcByTitle' ));
 		$wikiService->expects($this->exactly(1))
 			->method('getWikiDetails')
 			->with($ids)
@@ -76,24 +82,41 @@ class WikiServiceTests extends WikiaBaseTest {
 				42 => [
 					'name' => 'wiki42',
 					'url' => 'dummyurl',
-					'lang' => 'dummyLang',
+					'lang' => 'dummyLang2',
 					'hubId' => 1,
 					'headline' => 'dummy headline',
 					'desc' => null,
 					'image' => $image42]
 			] ));
 
-		$result = $wikiService->getWikiDescription( $ids );
+		$wikiService->expects($this->exactly(1))
+			->method('getImageSrcByTitle')
+			->will($this->returnValueMap([
+				[ 69, $image13, $imgSize, $image13Url ],
+				[ 69, $image42, $imgSize, $image42Url ]]));
+		$wikiService->setCityVisualizationObject($this->mockCityVisualisationObject( 69, 1 ));
+
+		$result = $wikiService->getWikiDescription( $ids, $imgSize );
 
 		$this->assertEquals( $description13, $result[13]['desc'] );
 		$this->assertEquals( $description42, $result[42]['desc'] );
+		$this->assertEquals( $image13Url, $result[13]['image_url'] );
+		$this->assertEquals( $image42Url, $result[42]['image_url'] );
 	}
 
 	protected function mockMessage( $text, $callCount = 1 ) {
-		$message = $this->getMock('Message', array('text'));
+		$message = $this->getMock('Message', array('text'), array(), '', false);
 		$message->expects($this->exactly($callCount))
 			->method('text')
 			->will($this->returnValue($text));
 		return $message;
+	}
+
+	protected function mockCityVisualisationObject( $returnedWikiId, $times ) {
+		$cityVisualisationObject = $this->getMock('CityVisualisationObject', array('__construct', 'getTargetWikiId'));
+		$cityVisualisationObject->expects($this->exactly($times))
+			->method('getTargetWikiId')
+			->will( $this->returnValue($returnedWikiId) );
+		return $cityVisualisationObject;
 	}
 }

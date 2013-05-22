@@ -377,7 +377,7 @@ class WikiService extends WikiaModel {
 			}
 			$wikiDetails[ $wikiId ]['image_wiki_id'] = null;
 			if ( !empty( $wikiData['image'] ) ) {
-				$wikiDetails[ $wikiId ]['image_wiki_id'] = $this->CityVisualizationObject()->getTargetWikiId( $wikiData['lang'] );
+				$wikiDetails[ $wikiId ]['image_wiki_id'] = $this->getCityVisualizationObject()->getTargetWikiId( $wikiData['lang'] );
 
 				$imageUrl = $this->getImageSrcByTitle( $wikiDetails[ $wikiId ]['image_wiki_id'], $wikiData['image'], $imgSize );
 				$wikiDetails[ $wikiId ]['image_url'] = $imageUrl;
@@ -389,11 +389,11 @@ class WikiService extends WikiaModel {
 		return $wikiDetails;
 	}
 
-	public function setCityVisualizationObject( CityVisualization $cityVisualizationObject ) {
+	public function setCityVisualizationObject( $cityVisualizationObject ) {
 		$this->cityVisualizationObject = $cityVisualizationObject;
 	}
 
-	protected function CityVisualizationObject() {
+	public function getCityVisualizationObject() {
 		if ( empty( $this->cityVisualizationObject ) ) {
 			$this->cityVisualizationObject = new CityVisualization();
 		}
