@@ -29,7 +29,7 @@ class VideoEmbedTool extends Video
 	protected function getFormulatedQuery() {
 	  $topics = $this->getTopicsAsQuery();
 	  $query = $this->getTransformedQuery();
-	  return sprintf( '+(%s) AND ( (%s)^200 OR (%s)^1000 or (%s %s)^1500 )', $this->getQueryClausesString(), $topics, $query, $topics, $query );
+	  return sprintf( '+(%s) AND ( (%s)^2000 AND (%s)^1000 )', $this->getQueryClausesString(), $topics, $query, $topics, $query );
 	}
 	
 	/**
