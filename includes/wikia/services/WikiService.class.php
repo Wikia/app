@@ -381,6 +381,8 @@ class WikiService extends WikiaModel {
 
 				$imageUrl = $this->getImageSrcByTitle( $wikiDetails[ $wikiId ]['image_wiki_id'], $wikiData['image'], $imgSize );
 				$wikiDetails[ $wikiId ]['image_url'] = $imageUrl;
+			} else {
+				$wikiDetails[ $wikiId ]['image_url'] = '';
 			}
 		}
 

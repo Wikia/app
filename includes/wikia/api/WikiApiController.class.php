@@ -27,6 +27,7 @@ class WikiApiController extends WikiaApiController {
 	 */
 	public function getWikiData() {
 		$ids = $this->request->getArray( 'ids' );
+		$imageWidth = $this->request->getInt( 'width', 250 );
 
 		$items = array();
 		foreach ( $ids as $wikiId ) {
@@ -35,13 +36,12 @@ class WikiApiController extends WikiaApiController {
 //				F::app()->wg->memc->delete( $this->getMemCacheKey( $wikiId ));
 				$items[] = $cached;
 			} else {
-				//get data
-				//description
-				//thumbnail
 				//get data providers
 				$wikiObj = WikiFactory::getWikiByID( $wikiId );
 				$service = new WikiService();
 				$wikiStats = $service->getSiteStats( $wikiId );
+				$wikiDesc = $service->getWikiDescription( [ $wikiId ], $imageWidth );
+
 				//missing table on dev-box, its available on production
 //				$topUsers = $service->getTopEditors( $wikiId, 10, true );
 
@@ -52,7 +52,9 @@ class WikiApiController extends WikiaApiController {
 					'videos' => (int) $service->getTotalVideos( $wikiId ),
 //					'topUsers' => get from $topUsers,
 					'title' => $wikiObj->city_title,
-					'url' => $wikiObj->city_url
+					'url' => $wikiObj->city_url,
+					'thumbnail' => isset( $wikiDesc[ $wikiId ] ) ? $wikiDesc[ $wikiId ]['image_url'] : '',
+					'description' => isset( $wikiDesc[ $wikiId ] ) ? $wikiDesc[ $wikiId ]['desc'] : '',
 				);
 				//cache data
 //				$this->cacheWikiData( $wikiInfo );
