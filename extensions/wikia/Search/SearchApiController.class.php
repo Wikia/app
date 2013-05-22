@@ -38,21 +38,30 @@ class SearchApiController extends WikiaApiController {
 	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
-		$this->setResponseFromConfig( $this->getConfigFromRequest() );
+		$this->setResponseFromConfig( $this->getConfigFromRequest(), ['pageid' => 'id', 'title', 'url', 'ns' ] );
+	}
+
+	public function getCrossWiki() {
+		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
+		foreach( $resultSet->getResults() as $result ){
+			$items[] = array( 'id' => (int) $result->getHeader( 'wid' ) );
+		}
+
+		$this->response->setVal( 'items', $items );
 	}
 	
 	/**
 	 * Sets the response based on values set in config
 	 * @param Wikia\Search\Config $searchConfig
 	 */
-	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
+	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig, array $fields, $metadata = true ) {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
 			throw new InvalidParameterApiException( 'query' );
 		}
 
 		//Standard Wikia API response with pagination values
 		$response = $this->getResponse();
-		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns' ], true );
+		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( $fields, $metadata );
 		$response->setValues( $responseValues );
 		$response->setCacheValidity(
 			86400 /* 24h */,
@@ -98,5 +107,19 @@ class SearchApiController extends WikiaApiController {
 		             ->setVideoSearch( $request->getVal( 'type', 'articles' ) == 'videos' )
 		;
 		return $this->validateNamespacesForConfig( $searchConfig );
+	}
+
+	protected function getConfigCrossWiki() {
+		$request = $this->getRequest();
+		$searchConfig = new Wikia\Search\Config;
+//		$searchConfig->setWikiId( 80433 );
+		$searchConfig->setQuery( $request->getVal( 'query', null ) )
+			->setLimit( $request->getInt( 'limit', self::ITEMS_PER_BATCH ) )
+			->setPage( $request->getVal( 'batch', 1 ) )
+			->setRank( $request->getVal( 'rank', 'default' ) )
+			->setInterWiki( true )
+			->setNamespaces( [ 1 ] )
+		;
+		return $searchConfig;
 	}
 }
