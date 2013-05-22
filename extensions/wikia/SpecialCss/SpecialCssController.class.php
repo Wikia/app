@@ -9,6 +9,11 @@ class SpecialCssController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn(__METHOD__);
 
+		if( $this->checkPermissions() ) {
+			$this->displayRestrictionError();
+			return false; // skip rendering
+		}
+
 		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
 		
