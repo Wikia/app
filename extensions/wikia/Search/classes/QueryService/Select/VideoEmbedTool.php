@@ -55,7 +55,7 @@ class VideoEmbedTool extends Video
 	protected function getTopicsAsQuery() {
 		$topics = [];
 		foreach ( $this->getService()->getGlobalWithDefault( 'WikiVideoSearchTopics', [] ) as $topic ) {
-			$topics[] = sprintf( '(%s)', $topic );
+			$topics[] = sprintf( '"%s"', $topic );
 		}
 		return empty( $topics ) ? $this->getConfig()->getQuery()->getSolrQuery() : implode( ' OR ', $topics );
 	}
