@@ -44,7 +44,7 @@ describe("Querystring", function () {
 		expect(typeof qs.getVal).toBe('function', 'getVal');
 		expect(typeof qs.setVal).toBe('function', 'setVal');
 		expect(typeof qs.removeVal).toBe('function', 'removeVal');
-		expect(typeof qs.removeVals).toBe('function', 'removeVals');
+		expect(typeof qs.clearVals).toBe('function', 'clearVals');
 		expect(typeof qs.getHash).toBe('function', 'getHash');
 		expect(typeof qs.setHash).toBe('function', 'setHash');
 		expect(typeof qs.removeHash).toBe('function', 'removeHash');
@@ -180,7 +180,7 @@ describe("Querystring", function () {
 		expect(qs.toString()).toContain('0=val1&1=val2');
 		expect(qs.toString()).toContain('prefix0=val1&prefix1=val2');
 
-		qs.removeVals();
+		qs.clearVals();
 
 		expect(qs.getVal('prefixA')).not.toBeDefined();
 		expect(qs.getVal('test')).not.toBeDefined();

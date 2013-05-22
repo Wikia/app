@@ -174,7 +174,7 @@
 		 * @public
 		 * @return {Querystring}
 		 */
-		p.removeVals = function() {
+		p.clearVals = function() {
 			this.cache = {};
 			return this;
 		}
