@@ -95,7 +95,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 					if (pageLevelParams.hasOwnProperty(name)) {
 						value = pageLevelParams[name];
 						if (value) {
-							log(['pubads.setTargetingload', name, value], 9, logGroup);
+							log(['pubads.setTargeting', name, value], 9, logGroup);
 							pubads.setTargeting(name, value);
 						}
 					}
