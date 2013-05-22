@@ -80,7 +80,7 @@ class GlobalFile extends WikiaObject {
 	 */
 	public function exists() {
 		$this->loadData();
-		return isset($this->mData);
+		return !empty($this->mData);
 	}
 
 	private function getUploadDir() {
@@ -137,7 +137,7 @@ class GlobalFile extends WikiaObject {
 	 */
 	public function getWidth() {
 		$this->loadData();
-		return isset($this->mData) ? intval($this->mData->img_width) : null;
+		return !empty($this->mData) ? intval($this->mData->img_width) : null;
 	}
 
 	/**
@@ -145,7 +145,7 @@ class GlobalFile extends WikiaObject {
 	 */
 	public function getHeight() {
 		$this->loadData();
-		return isset($this->mData) ? intval($this->mData->img_height) : null;
+		return !empty($this->mData) ? intval($this->mData->img_height) : null;
 	}
 
 	/**
@@ -153,7 +153,7 @@ class GlobalFile extends WikiaObject {
 	 */
 	public function getTimestamp() {
 		$this->loadData();
-		return isset($this->mData) ? $this->mData->img_timestamp : null;
+		return !empty($this->mData) ? $this->mData->img_timestamp : null;
 	}
 
 	/**
@@ -161,7 +161,7 @@ class GlobalFile extends WikiaObject {
 	 */
 	public function getMimeType() {
 		$this->loadData();
-		return isset($this->mData) ? "{$this->mData->img_major_mime}/{$this->mData->img_minor_mime}" : null;
+		return !empty($this->mData) ? "{$this->mData->img_major_mime}/{$this->mData->img_minor_mime}" : null;
 	}
 
 	/**
