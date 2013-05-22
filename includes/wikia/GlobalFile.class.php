@@ -27,14 +27,16 @@ class GlobalFile extends WikiaObject {
 	private function loadData() {
 		if (!isset($this->mData)) {
 			$dbname = WikiFactory::IDtoDB($this->mTitle->mCityId);
-			$dbr = wfGetDB( DB_SLAVE, array(), $dbname );
+			$dbr = $this->wf->GetDB( DB_SLAVE, array(), $dbname );
 
 			$this->mData = $dbr->selectRow(
 				'image',
 				[
 					'img_width',
 					'img_height',
-					'img_timestamp'
+					'img_timestamp',
+					'img_major_mime',
+					'img_minor_mime'
 				],
 				['img_name' => $this->getName()],
 				__METHOD__
@@ -81,6 +83,14 @@ class GlobalFile extends WikiaObject {
 		return isset($this->mData);
 	}
 
+	private function getUploadDir() {
+		if (!isset($this->uploadDir)) {
+			$this->uploadDir = WikiFactory::getVarValueByName('wgUploadPath', $this->mTitle->mCityId);
+		}
+
+		return $this->uploadDir;
+	}
+
 	/**
 	 * Gets path to original file
 	 *
@@ -88,17 +98,23 @@ class GlobalFile extends WikiaObject {
 	 */
 	public function getUrl() {
 		if ( !isset( $this->url ) ) {
-			if (!isset($this->uploadDir)) {
-				$this->uploadDir = WikiFactory::getVarValueByName('wgUploadPath', $this->mTitle->mCityId);
-			}
-
-			$this->url = $this->uploadDir . '/' . $this->getUrlRel();
+			$this->url = $this->getUploadDir() . '/' . $this->getUrlRel();
 
 			if (!empty($this->app->wg->DevelEnvironment)) {
 				$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() );
 			}
 		}
 		return $this->url;
+	}
+
+	public function getThumbUrl($suffix = false) {
+		$path = $this->getUploadDir() . '/thumb/' . $this->getUrlRel();
+
+		if ( $suffix !== false ) {
+			$path .= '/' . rawurlencode( $suffix );
+		}
+
+		return $path;
 	}
 
 	/**
@@ -125,6 +141,14 @@ class GlobalFile extends WikiaObject {
 	}
 
 	/**
+	 * @return int|null image height
+	 */
+	public function getHeight() {
+		$this->loadData();
+		return isset($this->mData) ? intval($this->mData->img_height) : null;
+	}
+
+	/**
 	 * @return string|null image timestamp
 	 */
 	public function getTimestamp() {
@@ -133,14 +157,24 @@ class GlobalFile extends WikiaObject {
 	}
 
 	/**
-	 * @return int|null image height
+	 * @return null|string file MIME type
 	 */
-	public function getHeight() {
+	public function getMimeType() {
 		$this->loadData();
-		return isset($this->mData) ? intval($this->mData->img_height) : null;
+		return isset($this->mData) ? "{$this->mData->img_major_mime}/{$this->mData->img_minor_mime}" : null;
 	}
 
-	public function createThumb( $width, $height = -1 ) {
-
+	/**
+	 * Returns URL to cropped image
+	 *
+	 * Uses ImageServing cropping functionality
+	 *
+	 * @param int $width requsted width
+	 * @param int $height requsted height
+	 * @return string URL
+	 */
+	public function getCrop( $width, $height ) {
+		$imageServing = new ImageServing( null, $width);
+		return $imageServing->getUrl($this, $width, $height);
 	}
 }
