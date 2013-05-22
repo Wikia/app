@@ -5,6 +5,7 @@ class WikiService extends WikiaModel {
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 
 	static $botGroups = array('bot', 'bot-global');
+	protected $cityVisualizationObject = null;
 
 	/**
 	 * get list of wiki founder/admin/bureaucrat id
@@ -364,6 +365,45 @@ class WikiService extends WikiaModel {
 				return $admins;
 			}
 		);
+	}
+
+	public function getWikiDescription( Array $wikiIds, $imgSize = 250 ) {
+
+		$wikiDetails = $this->getWikiDetails( $wikiIds );
+
+		foreach ( $wikiDetails as $wikiId => $wikiData ) {
+			if ( empty( $wikiData['desc']) ) {
+				$wikiDetails[ $wikiId ]['desc'] = $this->app->wf->Message( 'wikiasearch2-crosswiki-description', $wikiData['name'] )->text();
+			}
+			$wikiDetails[ $wikiId ]['image_wiki_id'] = null;
+			if ( !empty( $wikiData['image'] ) ) {
+				$wikiDetails[ $wikiId ]['image_wiki_id'] = $this->CityVisualizationObject()->getTargetWikiId( $wikiData['lang'] );
+
+				$imageUrl = $this->getImageSrcByTitle( $wikiDetails[ $wikiId ]['image_wiki_id'], $wikiData['image'], $imgSize );
+				$wikiDetails[ $wikiId ]['image_url'] = $imageUrl;
+			}
+		}
+
+		return $wikiDetails;
+	}
+
+	public function setCityVisualizationObject( CityVisualization $cityVisualizationObject ) {
+		$this->cityVisualizationObject = $cityVisualizationObject;
+	}
+
+	protected function CityVisualizationObject() {
+		if ( empty( $this->cityVisualizationObject ) ) {
+			$this->cityVisualizationObject = new CityVisualization();
+		}
+		return $this->cityVisualizationObject;
+	}
+
+	protected function getWikiDetails( $wikiIds ) {
+		return ( new WikisModel )->getDetails( $wikiIds );
+	}
+
+	protected function getImageSrcByTitle( $wikiId, $imageTitle, $imgSize ) {
+		return ImagesService::getImageSrcByTitle( $wikiId, $imageTitle, $imgSize );
 	}
 
 	protected function getMemcKeyTotalImages( $wikiId ) {
