@@ -536,6 +536,64 @@ class GameGuidesController extends WikiaController {
 
 		return true;
 	}
+
+	/**
+	 *
+	 */
+	function getVideos() {
+		wfProfileIn( __METHOD__ );
+
+		$this->response->setFormat( 'json' );
+		//We have full control on when this data change so lets cache it for a longer period of time
+		$this->cacheMeFor( 120 );
+
+		$lang = $this->request->getVal( 'lang' , 'en' );
+
+		$languages = $this->wg->WikiaGameGuidesSponsoredVideos;
+
+		if( !empty( $languages ) ) {
+			if ( array_key_exists( $lang, $languages ) ) {
+				$this->response->setVal( 'items', $languages[$lang] );
+			} else if ( $lang == 'list' ) {
+				$this->response->setVal( 'items', array_keys( $languages ) );
+			} else {
+				throw new NotFoundApiException( 'No data found for \'' . $lang . '\' language' );
+			}
+
+		} else {
+			throw new NotFoundApiException( 'No data is available now' );
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @brief Whenever data is saved in GG Sponsored Videos Tool
+	 * purge Varnish cache for it
+	 *
+	 * @return bool
+	 */
+	static function onGameGuidesSponsoredSave(){
+		$languages = array_keys( F::app()->wg->WikiaGameGuidesSponsoredVideos );
+		//Empty array is there to purge call to getVideos without any language
+		$variants = [
+			[],
+			['lang' => 'list']
+		];
+
+		foreach ( $languages as $lang ) {
+			$variants[] = [
+				'lang' => $lang
+			];
+		}
+
+		self::purgeMethodVariants(
+			'getVideos',
+			$variants
+		);
+
+		return true;
+	}
 }
 
 class GameGuidesWrongAPIVersionException extends WikiaException {

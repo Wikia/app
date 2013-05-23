@@ -54,7 +54,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		inited,
 		supportedVideos = window.supportedVideos || [],
 		// Video view click source tracking. Possible values are "embed" and "lightbox" for consistancy with Oasis
-		clickSource;
+		clickSource,
+		videoInstance;
 
 	//Media object that holds all data needed to display it in modal/gallery
 	function Media(elem, data, length, i){
@@ -158,7 +159,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	}
 
 	function embedVideo(image, data) {
-		new VideoBootstrap(image, data, clickSource);
+		videoInstance = new VideoBootstrap(image, data, clickSource);
 		// Future video/image views will come from modal
 		clickSource = 'lightbox';
 	}
@@ -166,6 +167,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	function setupImage(){
 		var image = images[current],
 			video;
+
+		// If a video uses a timeout for tracking, clear it
+		if ( videoInstance ) {
+			videoInstance.clearTimeoutTrack();
+		}
 
 		throbber.remove(currentImage);
 
