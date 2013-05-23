@@ -107,9 +107,11 @@ class VideoEmbedToolSearchService
 	{
 		$this->setSuggestionQueryByArticleId( $articleId );
 		$query = $this->getSuggestionQuery();
+		$service = $this->getMwService();
 		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $query )
 		                            ->setFilterQuery( "+(title_en:({$query}) OR video_actors_txt:({$query}) OR nolang_txt:({$query}) OR html_media_extras_txt:({$query}))" )
+		                            ->setFilterQuery( \Wikia\Search\Utilities::valueForField( 'categories_mv_en', $service->getHubForWikiId( $service->getWikiId() ) ) )
 		                            ->setVideoEmbedToolSearch( true )
 		  
 		  ;
