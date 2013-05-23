@@ -8,7 +8,8 @@
 /*
  * Variables
  */
-(function($, window) {
+require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBootstrap, $, window) {
+
 	var VET_panel = null;
 	var VET_curSourceId = 0;
 	var VET_lastQuery = new Array();
@@ -319,9 +320,7 @@
 
 		var element = $('#VideoEmbedThumb .video-embed');
 
-		require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-			VET_videoInstance = new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
-		});
+		VET_videoInstance = new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
 
 		VET_updateHeader();
 
@@ -916,9 +915,7 @@
 				videoWrapper = this.cachedSelectors.videoWrapper,
 				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
 
-			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-				VET_videoInstance = new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
-			});
+			VET_videoInstance = new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
 
 			// expand preview is hidden
 			if (!previewWrapper.is(':visible')) {
@@ -1140,4 +1137,4 @@
 	window.VET_show = VET_show;
 	window.VET_close = VET_close;
 	window.VETExtended = VETExtended;
-})(jQuery, window);
+});
