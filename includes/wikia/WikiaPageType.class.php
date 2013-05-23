@@ -57,7 +57,7 @@ class WikiaPageType {
 		$pageNames = SpecialPageFactory::resolveAlias($title->getDBkey());
 
 		return !empty($title) && -1 == $title->getNamespace()
-		&& in_array(array_shift($pageNames), $searchPageNames);
+			&& in_array(array_shift($pageNames), $searchPageNames);
 	}
 
 	/**
