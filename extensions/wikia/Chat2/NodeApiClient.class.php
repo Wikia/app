@@ -28,6 +28,7 @@ class NodeApiClient {
 			$cityId = $cityData->{'cityId'};
 		} else {
 			// FIXME: How should we handle it if there is no cityId?
+			Wikia::log( __METHOD__, false, "CHAT getUserInfo - getCityIdForRoom call did not return cityId", true );
 		}
 
 		wfProfileOut( __METHOD__ );
