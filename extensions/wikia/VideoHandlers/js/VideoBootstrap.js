@@ -3,7 +3,7 @@
  * Important: If an init function is specified, it must handle it's own tracking
  */
 
-define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function videoBootstrap(loader, nirvana) {
+define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana', 'wikia.log'], function videoBootstrap(loader, nirvana, log) {
 	var trackingTimeout = 0;
 
 	// vb stands for video bootstrap
@@ -69,6 +69,9 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 		 */
 		reload: function(title, width, autoplay, clickSource) {
 			var element = this.element;
+
+			this.clearTimeoutTrack();
+
 			nirvana.getJson(
 				'VideoHandler',
 				'getEmbedCode',
@@ -82,6 +85,7 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 			});
 		},
 		track: function(action) {
+			log('tracking ' + action, 3, 'VideoBootstrap');
 			Wikia.Tracker.track({
 				action: action,
 				category: 'video-player-stats',
@@ -98,10 +102,14 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana'], function video
 		 */
 		timeoutTrack: function() {
 			var self = this;
-			clearTimeout(trackingTimeout);
+			this.clearTimeoutTrack();
 			trackingTimeout = setTimeout(function() {
 				self.track('content-begin');
 			}, 3000);
+		},
+		clearTimeoutTrack: function() {
+			log('clearing tracking timeout', 3, 'VideoBootstrap');
+			clearTimeout(trackingTimeout);
 		},
 		/**
 		 * Some video providers require unique DOM id's in order to initialize

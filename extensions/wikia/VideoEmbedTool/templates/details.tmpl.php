@@ -9,6 +9,7 @@ global $wgExtensionsPath;
 			window.VETPlayerParams = <?= $props['code'] ?>;
 		</script>
 		<p><?= wfMessage( 'vet-preview' ) ?></p>
+		<div class="video-embed"></div>
 	</div>
 	<div class="preview-options">
 		<div class="input-group" id="VideoEmbedNameRow">

@@ -34,6 +34,7 @@
 	var VET_MIN_WIDTH = 100;
 	var VET_DEFAULT_WIDTH = 335;
 	var VET_thumbSize = VET_DEFAULT_WIDTH;	// variable that can change later, defaulted to DEFAULT
+	var VET_videoInstance = null;
 
 	var VET_tracking = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
 		action: Wikia.Tracker.ACTIONS.CLICK,
@@ -314,14 +315,12 @@
 		VET_switchScreen('Details');
 		$('#VideoEmbedBack').css('display', 'inline');
 
-		// wlee: responseText could include <script>. Use jQuery to parse
-		// and execute this script
 		$('#VideoEmbedDetails').html(responseText);
 
-		var element = $('<div></div>').appendTo('#VideoEmbedThumb');
+		var element = $('#VideoEmbedThumb .video-embed');
 
 		require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-			new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
+			VET_videoInstance = new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
 		});
 
 		VET_updateHeader();
@@ -494,6 +493,9 @@
 	}
 
 	function VET_switchScreen(to) {
+		if ( VET_videoInstance ) {
+			VET_videoInstance.clearTimeoutTrack();
+		}
 		VET_prevScreen = VET_curScreen;
 		VET_curScreen = to;
 		$('#VideoEmbedBody').find('.VET_screen').hide();
@@ -915,7 +917,7 @@
 				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
 
 			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-				new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
+				VET_videoInstance = new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
 			});
 
 			// expand preview is hidden
