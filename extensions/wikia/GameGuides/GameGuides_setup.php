@@ -52,8 +52,8 @@ JSMessages::registerPackage( 'GameGuidesContentMsg', [
 ] );
 
 //Special Page for Sponsored Videos Managment Tool
-$app->registerClass( 'GameGuidesSpecialSponsoredController', "{$dir}/GameGuidesSpecialSponsoredController.class.php" );
-$app->registerSpecialPage( 'GameGuidesSponsored', 'GameGuidesSpecialSponsoredController' );
+$wgAutoloadClasses['GameGuidesSpecialSponsoredController'] = "{$dir}/GameGuidesSpecialSponsoredController.class.php";
+$wgSpecialPages['GameGuidesSponsored'] ='GameGuidesSpecialSponsoredController';
 
 $wgGroupPermissions['*']['gameguidessponsored'] = false;
 $wgGroupPermissions['staff']['gameguidessponsored'] = true;
@@ -72,9 +72,9 @@ JSMessages::registerPackage( 'GameGuidesSponsoredMsg', [
 ] );
 
 //hooks
-$app->registerHook( 'GameGuidesContentSave', 'GameGuidesController', 'onGameGuidesContentSave' );
-$app->registerHook( 'GameGuidesSponsoredVideosSave', 'GameGuidesController', 'onGameGuidesSponsoredSave' );
-$app->registerHook( 'TitleGetSquidURLs', 'GameGuidesController', 'onTitleGetSquidURLs' );
+$wgHooks['GameGuidesContentSave'] = 'GameGuidesController::onGameGuidesContentSave';
+$wgHooks['GameGuidesSponsoredVideosSave'] = 'GameGuidesController::onGameGuidesSponsoredSave';
+$wgHooks['TitleGetSquidURLs'] = 'GameGuidesController::onTitleGetSquidURLs';
 //add Game Guides Content to WikiFeatures
 $wgHooks['WikiFeatures::onGetFeatureNormal'][] = 'GameGuidesSpecialContentController::onWikiFeatures';
 $wgHooks['WikiFeatures::onToggleFeature'][] = 'GameGuidesSpecialContentController::onWikiFeatures';
