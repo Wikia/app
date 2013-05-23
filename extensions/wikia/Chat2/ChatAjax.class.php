@@ -27,12 +27,15 @@ class ChatAjax {
 
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
 		if( empty($data) ) {
+			Wikia::log( __METHOD__, false, "CHAT getUserInfo - no memcache value for key " . $wgRequest->getVal('key'), true );
+
 			wfProfileOut( __METHOD__ );
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
 
 		$user = User::newFromId( $data['user_id'] );
 		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
+			Wikia::log( __METHOD__, false, "CHAT getUserInfo - cannot create user from " . $data['user_id'] . ", key: " . $wgRequest->getVal('key'), true );
 			wfProfileOut( __METHOD__ );
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
@@ -75,6 +78,8 @@ class ChatAjax {
 			$roomId = $wgRequest->getVal('roomId');
 			$cityIdOfRoom = NodeApiClient::getCityIdForRoom($roomId);
 			if($wgCityId !== $cityIdOfRoom){
+				Wikia::log( __METHOD__, false, "CHAT getUserInfo - user cannot chat, roomId mismatch. wgCityId: " . $wgCityId . ", cityIdOfRoom: " . $cityIdOfRoom, true );
+
 				$retVal['canChat'] = false; // don't let the user chat in the room they requested.
 				$retVal['errorMsg'] = wfMsg('chat-room-is-not-on-this-wiki');
 			}
