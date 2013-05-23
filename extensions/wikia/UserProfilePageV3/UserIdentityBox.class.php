@@ -556,7 +556,7 @@ class UserIdentityBox {
 				$wikiId = $row->wiki_id;
 				$editCount = $row->edits;
 				$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
-				$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText');
+				$wikiTitle = GlobalTitle::newFromText($this->user->getName(), NS_USER_TALK, $wikiId);
 
 				if ($wikiTitle) {
 					$wikiUrl = $wikiTitle->getFullUrl();
@@ -733,7 +733,7 @@ class UserIdentityBox {
 		foreach ($wikis as $wikiId => $editCount) {
 			if (!$this->isTopWikiHidden($wikiId) && ($wikiId != $this->app->wg->CityId)) {
 				$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
-				$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText');
+				$wikiTitle = GlobalTitle::newFromText($this->user->getName(), NS_USER_TALK, $wikiId);
 
 				if ($wikiTitle) {
 					$wikiUrl = $wikiTitle->getFullUrl();

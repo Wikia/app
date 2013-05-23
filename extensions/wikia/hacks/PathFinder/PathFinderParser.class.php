@@ -244,12 +244,8 @@ class PathFinderParser {
 			throw new PathFinderNoDataToAnalyzeException();
 		}
 		
-		$title = F::Build(
-			'BetterGlobalTitle',
-			array( $data['r'], $data['c'], $data['x'] ),
-			'newFromText'
-		);
-		
+		$title = BetterGlobalTitle::newFromText( $data['r'], $data['c'], $data['x'] ) );
+
 		if (
 			$title instanceof Title &&
 			$title->exists() &&

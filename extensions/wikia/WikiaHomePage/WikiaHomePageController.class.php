@@ -83,7 +83,7 @@ class WikiaHomePageController extends WikiaController {
 		$this->hubImages = $response->getVal('hubImages', '');
 
 		$this->lang = $this->wg->contLang->getCode();
-		F::build('JSMessages')->enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
 
 		$batches = $this->getList();
 		$this->wg->Out->addJsConfigVars([

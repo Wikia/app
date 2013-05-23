@@ -190,7 +190,7 @@ class AssetsManagerController extends WikiaController {
 			$request = new WebRequest();
 			$request->setVal('oid', $oid);
 
-			$builder = F::build($className, array($request));
+			$builder = new $className($request);
 			return $builder;
 		}
 		else {

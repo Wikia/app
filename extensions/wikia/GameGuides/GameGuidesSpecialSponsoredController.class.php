@@ -45,7 +45,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 			$this->wg->Out->addScriptFile( $s );
 		}
 
-		F::build( 'JSMessages' )->enqueuePackage( 'GameGuidesSponsoredMsg', JSMessages::INLINE );
+		JSMessages::enqueuePackage( 'GameGuidesSponsoredMsg', JSMessages::INLINE );
 
 		$this->response->setVal( 'descriptions', [
 			wfMessage( 'wikiagameguides-sponsored-description-language' )->text(),

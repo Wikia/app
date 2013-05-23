@@ -612,7 +612,7 @@ class WallHelper {
 		$ci = $wm->getCommentsIndex();
 		if ( empty( $ci ) && ( $row->page_namespace == NS_USER_WALL ) ) {
 			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
-			$title = F::build( 'title', array( $row->page_title, NS_USER_WALL ), 'newFromText' );
+			$title = Title::newFromText( $row->page_title, NS_USER_WALL );
 
 			$out = array(
 				'articleUrl' => $title->getPrefixedText(),

@@ -398,13 +398,9 @@ class HAWelcomeJob extends Job {
 			}
 			// See: extensions/wikia/Wall/WallMessage.class.php
 			/** @type Mixed|Boolean The WallMessage object or logical false. */
-			$mWallMessage = F::build(
-				'WallMessage',
-				array(
+			$mWallMessage = WallMessage::buildNewMessageAndPost(
 					$this->sMessage, $this->sRecipientName, $this->oSender,
 					wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
-				),
-				'buildNewMessageAndPost'
 			);
 			// Moved from the previous implementation. The relevant code
 			// of the Wall extension has - as expected - no documentation
