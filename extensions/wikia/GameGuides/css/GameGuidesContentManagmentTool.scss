@@ -29,6 +29,10 @@
 				width: 30px;
 				display: inline-block;
 			}
+
+			&.language {
+				padding: 0;
+			}
 		}
 
 		.tag ~ .category {
@@ -121,7 +125,7 @@
 	box-shadow: 0 0 10px -4px;
 }
 
-.tag{
+.tag, .language{
 	background-color: $color-body;
 }
 
