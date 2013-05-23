@@ -12,6 +12,8 @@ class WikiaPageType {
 	public static function getPageType() {
 		if (self::isMainPage()) {
 			$type = 'home';
+		} elseif (self::isFilePage()) {
+			$type = 'file';
 		} elseif (self::isSearch()) {
 			$type = 'search';
 		} elseif (self::isForum()) {
@@ -35,7 +37,7 @@ class WikiaPageType {
 
 		$isMainPage = (
 			is_object($title)
-			&& $title->getArticleId() == Title::newMainPage()->getArticleId()
+			&& $title->getArticleId() === Title::newMainPage()->getArticleId()
 			&& $title->getArticleId() != 0 # caused problems on central due to NS_SPECIAL main page
 			&& !self::isActionPage()
 		);
@@ -54,8 +56,19 @@ class WikiaPageType {
 		$searchPageNames = array('Search', 'WikiaSearch');
 		$pageNames = SpecialPageFactory::resolveAlias($title->getDBkey());
 
-		return !empty($title) && -1 == $title->getNamespace()
+		return !empty($title) && -1 === $title->getNamespace()
 			&& in_array(array_shift($pageNames), $searchPageNames);
+	}
+
+	/**
+	 * Check if current page is file page
+	 *
+	 * @return bool
+	 */
+	public static function isFilePage() {
+		global $wgTitle;
+
+		return !empty($wgTitle) && NS_FILE === $wgTitle->getNamespace();
 	}
 
 	/**
