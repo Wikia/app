@@ -834,7 +834,7 @@ var Lightbox = {
 				var key = mediaArr[idx].key;
 				if(!key) {
 					key = mediaArr[idx].title.replace(/ /g, '_');
-					LightboxLoader.handleOldDom();
+					LightboxLoader.handleOldDom(1);
 				}
 				Lightbox.current.key = key.toString(); // Added toString() for edge cases where titles are numbers
 				Lightbox.current.type = mediaArr[idx].type;
@@ -1046,7 +1046,7 @@ var Lightbox = {
 
 				if(!thumbs.length) {
 					thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));
-					LightboxLoader.handleOldDom();
+					LightboxLoader.handleOldDom(2);
 				}
 
 				thumbs.each(function() {
@@ -1077,7 +1077,7 @@ var Lightbox = {
 
 					if(!key) {
 						key = title && title.replace(/ /g, '_');
-						LightboxLoader.handleOldDom();
+						LightboxLoader.handleOldDom(2);
 					}
 
 					if(key) {
@@ -1137,7 +1137,7 @@ var Lightbox = {
 
 					if(!key) {
 						key = title.replace(/ /g, '_');
-						LightboxLoader.handleOldDom();
+						LightboxLoader.handleOldDom(3);
 					}
 
 					thumbArr.push({
@@ -1171,7 +1171,6 @@ var Lightbox = {
 			if(cached.length) {
 				thumbArr = cached;
 			} else {
-
 				var thumbs = $("#LatestPhotosModule .thumbimage"),
 					keys = []; // array to check for title dupes
 
@@ -1183,7 +1182,7 @@ var Lightbox = {
 
 					if(!key) {
 						key = title && title.replace(/ /g, '_');
-						LightboxLoader.handleOldDom();
+						LightboxLoader.handleOldDom(4);
 					}
 
 					if(key) {
@@ -1241,13 +1240,6 @@ var Lightbox = {
 					}
 
 					var thumbArr = json.thumbs;
-
-					for(thumb in thumbArr) {
-						if(!thumb.key) {
-							thumb.key = thumb.title && thumb.title.replace(/ /g, '_');
-							LightboxLoader.handleOldDom();
-						}
-					}
 
 					// Add thumbs to wikiPhotos cache
 					LightboxLoader.cache.wikiPhotos = LightboxLoader.cache.wikiPhotos.concat(thumbArr);
