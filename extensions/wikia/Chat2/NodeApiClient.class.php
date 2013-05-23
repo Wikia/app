@@ -15,7 +15,7 @@ class NodeApiClient {
 	 * that the connection is attempting to be made from (prevents
 	 * circumventing bans by connecting to Wiki A's chat via Wiki B).
 	 */
-	static public function getCityIdForRoom($roomId){
+	static public function getCityIdForRoom($roomId, $debugKey){
 		wfProfileIn(__METHOD__);
 
 		$cityId = "";
@@ -28,7 +28,7 @@ class NodeApiClient {
 			$cityId = $cityData->{'cityId'};
 		} else {
 			// FIXME: How should we handle it if there is no cityId?
-			Wikia::log( __METHOD__, false, "CHAT getUserInfo - getCityIdForRoom call did not return cityId", true );
+			Wikia::log( __METHOD__, false, "CHAT getUserInfo for key " . $debugKey . "- getCityIdForRoom call did not return cityId, response: " . $cityJson, true );
 		}
 
 		wfProfileOut( __METHOD__ );
