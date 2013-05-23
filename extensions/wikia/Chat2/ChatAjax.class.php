@@ -26,6 +26,8 @@ class ChatAjax {
 		wfProfileIn( __METHOD__ );
 
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
+		Wikia::log( __METHOD__, false, "CHAT getUserInfo for " . $wgRequest->getVal('key'), true );
+
 		if( empty($data) ) {
 			Wikia::log( __METHOD__, false, "CHAT getUserInfo - no memcache value for key " . $wgRequest->getVal('key'), true );
 
@@ -76,9 +78,9 @@ class ChatAjax {
 		// Users may be banned on the wiki of the room, but not on this wiki for example, so this prevents cross-wiki chat hacks.
 		if($retVal['canChat']){
 			$roomId = $wgRequest->getVal('roomId');
-			$cityIdOfRoom = NodeApiClient::getCityIdForRoom($roomId);
+			$cityIdOfRoom = NodeApiClient::getCityIdForRoom($roomId, $wgRequest->getVal('key'));
 			if($wgCityId !== $cityIdOfRoom){
-				Wikia::log( __METHOD__, false, "CHAT getUserInfo - user cannot chat, roomId mismatch. wgCityId: " . $wgCityId . ", cityIdOfRoom: " . $cityIdOfRoom, true );
+				Wikia::log( __METHOD__, false, "CHAT getUserInfo - user cannot chat, roomId mismatch. wgCityId: " . $wgCityId . ", cityIdOfRoom: " . $cityIdOfRoom .", key: " . $wgRequest->getVal('key'), true );
 
 				$retVal['canChat'] = false; // don't let the user chat in the room they requested.
 				$retVal['errorMsg'] = wfMsg('chat-room-is-not-on-this-wiki');
@@ -104,6 +106,7 @@ class ChatAjax {
 
 			$retVal['editCount'] = $stats['edits'];
 		}
+		Wikia::log( __METHOD__, false, "CHAT getUserInfo for " . $wgRequest->getVal('key') . " completed", true );
 
 		wfProfileOut( __METHOD__ );
 		return $retVal;
