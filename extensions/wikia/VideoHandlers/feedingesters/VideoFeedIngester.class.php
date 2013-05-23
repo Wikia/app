@@ -7,6 +7,7 @@ abstract class VideoFeedIngester {
 	const PROVIDER_ANYCLIP = 'anyclip';
 	const PROVIDER_OOYALA = 'ooyala';
 	const PROVIDER_IVA = 'iva';
+	const PROVIDER_TWITCHTV = 'twitchtv';
 	public static $PROVIDERS = array(
 		self::PROVIDER_SCREENPLAY,
 		self::PROVIDER_IGN,
@@ -14,6 +15,7 @@ abstract class VideoFeedIngester {
 		self::PROVIDER_REALGRAVITY,
 		self::PROVIDER_OOYALA,
 		self::PROVIDER_IVA,
+		self::PROVIDER_TWITCHTV,
 	);
 	public static $PROVIDERS_DEFAULT = array(
 		self::PROVIDER_SCREENPLAY,

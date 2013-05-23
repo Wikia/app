@@ -227,6 +227,7 @@ $app->registerClass('IgnFeedIngester', $dir . '/feedingesters/IgnFeedIngester.cl
 $app->registerClass('AnyclipFeedIngester', $dir . '/feedingesters/AnyclipFeedIngester.class.php');
 $app->registerClass('OoyalaFeedIngester', $dir . '/feedingesters/OoyalaFeedIngester.class.php');
 $app->registerClass('IvaFeedIngester', $dir . '/feedingesters/IvaFeedIngester.class.php');
+$app->registerClass('TwitchtvFeedIngester', $dir . '/feedingesters/TwitchtvFeedIngester.class.php');
 
 $app->registerClass( 'OoyalaAsset', $dir . '/feedingesters/OoyalaAsset.class.php' );
 
