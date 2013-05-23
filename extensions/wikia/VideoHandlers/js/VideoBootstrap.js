@@ -46,6 +46,7 @@ define('wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana', 'wikia.log'], f
 				// execute the init function
 				if(init) {
 					require([init], function(init) {
+						self.clearTimeoutTrack();
 						init(jsParams, self);
 					});
 				}
