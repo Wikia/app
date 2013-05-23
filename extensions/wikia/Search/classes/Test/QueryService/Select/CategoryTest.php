@@ -170,10 +170,19 @@ class CategoryTest extends BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\Category::configureQueryFields 
 	 */
 	public function testConfigureQueryFields() {
-		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\Category' )
-		                   ->disableOriginalConstructor()
-		                   ->setMethods( array() )
-		                   ->getMockForAbstractClass();
+                $mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'setQueryField' ) );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Category' )
+		                   ->setConstructorArgs( array( $dc ) )
+		                   ->setMethods( null )
+		                   ->getMock();
+                
+                $mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setQueryField' )
+                    ->with ('categories',7)
+		;
+                
 		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Category', 'configureQueryFields' );
 		$get->setAccessible( true );
 		$this->assertEquals(
