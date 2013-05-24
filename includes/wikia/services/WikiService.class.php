@@ -367,7 +367,7 @@ class WikiService extends WikiaModel {
 		);
 	}
 
-	public function getWikiDescription( Array $wikiIds, $imgSize = 250 ) {
+	public function getWikiDescription( Array $wikiIds, $imgWidth = 250, $imgHeight = null ) {
 
 		$wikiDetails = $this->getWikiDetails( $wikiIds );
 
@@ -379,7 +379,7 @@ class WikiService extends WikiaModel {
 			if ( !empty( $wikiData['image'] ) ) {
 				$wikiDetails[ $wikiId ]['image_wiki_id'] = $this->CityVisualizationObject()->getTargetWikiId( $wikiData['lang'] );
 
-				$imageUrl = $this->getImageSrcByTitle( $wikiDetails[ $wikiId ]['image_wiki_id'], $wikiData['image'], $imgSize );
+				$imageUrl = $this->getImageSrcByTitle( $wikiDetails[ $wikiId ]['image_wiki_id'], $wikiData['image'], $imgWidth, $imgHeight);
 				$wikiDetails[ $wikiId ]['image_url'] = $imageUrl;
 			} else {
 				$wikiDetails[ $wikiId ]['image_url'] = '';
@@ -404,8 +404,8 @@ class WikiService extends WikiaModel {
 		return ( new WikisModel )->getDetails( $wikiIds );
 	}
 
-	protected function getImageSrcByTitle( $wikiId, $imageTitle, $imgSize ) {
-		return ImagesService::getImageSrcByTitle( $wikiId, $imageTitle, $imgSize );
+	protected function getImageSrcByTitle( $wikiId, $imageTitle, $imgWidth, $imgHeight ) {
+		return ImagesService::getImageSrcByTitle( $wikiId, $imageTitle, $imgWidth, $imgHeight );
 	}
 
 	protected function getMemcKeyTotalImages( $wikiId ) {
