@@ -11,6 +11,7 @@ use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QuerySe
  */
 class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
+	const CROSS_WIKI_LIMIT = 100;
 
 	const PARAMETER_NAMESPACES = 'namespaces';
 
@@ -41,10 +42,32 @@ class SearchApiController extends WikiaApiController {
 		$this->setResponseFromConfig( $this->getConfigFromRequest(), ['pageid' => 'id', 'title', 'url', 'ns' ] );
 	}
 
+	/**
+	 * Fetches results for cross-wiki search for submitted query
+	 *
+	 * @requestParam string $query The query to use for the search
+	 * @requestParam string $rank [OPTIONAL] The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest
+	 * @requestParam integer $limit [OPTIONAL] The number of wiki items per batch
+	 *
+	 * @responseParam array $items The list of results
+	 *
+	 * @example &query=kermit
+	 */
 	public function getCrossWiki() {
+		if ( !$this->request->getVal( 'query' ) ) {
+			throw new InvalidParameterApiException( 'query' );
+		}
 		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
+		$items = array();
 		foreach( $resultSet->getResults() as $result ){
-			$items[] = array( 'id' => (int) $result->getHeader( 'wid' ) );
+			$items[] = array(
+				'id' => (int) $result->getHeader( 'wid' ),
+				'language' => $result->getHeader( 'lang' ),
+			);
+		}
+
+		if ( ( $limit = $this->request->getInt( 'limit', 0 ) ) !== 0 ) {
+			$items = array_slice( $items, 0, $limit );
 		}
 
 		$this->response->setVal( 'items', $items );
@@ -112,13 +135,11 @@ class SearchApiController extends WikiaApiController {
 	protected function getConfigCrossWiki() {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
-//		$searchConfig->setWikiId( 80433 );
 		$searchConfig->setQuery( $request->getVal( 'query', null ) )
-			->setLimit( $request->getInt( 'limit', self::ITEMS_PER_BATCH ) )
-			->setPage( $request->getVal( 'batch', 1 ) )
+			->setLimit( self::CROSS_WIKI_LIMIT )
+//			->setPage( $request->getVal( 'batch', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setInterWiki( true )
-			->setNamespaces( [ 1 ] )
 		;
 		return $searchConfig;
 	}
