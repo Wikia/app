@@ -33,20 +33,16 @@ class ImagesService extends Service {
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
 
-	public static function getImageSrcByTitle( $cityId, $articleTitle, $width ) {
+	public static function getImageSrcByTitle( $cityId, $articleTitle, $width=null, $height=null ) {
 
 		wfProfileIn(__METHOD__);
-		$imageKey = F::app()->wf->SharedMemcKey( 'image_url_from_wiki', $cityId.$articleTitle.$width );
+		$imageKey = F::app()->wf->SharedMemcKey( 'image_url_from_wiki', $cityId.$articleTitle.$width.$height );
 		$imageSrc = F::app()->wg->Memc->get( $imageKey );
 
 		if ( $imageSrc === false ) {
-			$articleId = self::getArticleIdFromTitle( $cityId, $articleTitle );
-			if ( $articleId !== false ) {
-				$url = ImagesService::getImageSrc( $cityId, $articleId, $width );
-
-				if ( !empty( $url['src'] ) ) {
-					$imageSrc = $url['src'];
-				}
+			$globalFile = GlobalFile::newFromText( $articleTitle, $cityId );
+			if ( $globalFile->exists() ) {
+				$imageSrc = $globalFile->getCrop( $width, $height );
 			} else {
 				$imageSrc = null;
 			}
