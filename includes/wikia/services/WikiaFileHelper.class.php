@@ -383,7 +383,7 @@ class WikiaFileHelper extends Service {
 				$user = F::build('User', array( $file->getUser('id') ), 'newFromId' );
 
 				// get article list
-				$mediaQuery =  F::build( 'ArticlesUsingMediaQuery' , array( $fileTitle ) );
+				$mediaQuery =  new ArticlesUsingMediaQuery($fileTitle);
 				$articleList = $mediaQuery->getArticleList();
 
 				$data['imageUrl'] = $thumb->getUrl();

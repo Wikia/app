@@ -83,13 +83,13 @@ img {
 
 	&.load {
 		opacity: 0;
-	}
 
-	&.loaded {
-		background-image: none;
-		background-color: transparent;
-		opacity: 1;
-		width: auto;
-		height: auto;
+		&.loaded {
+			background-image: none;
+			background-color: transparent;
+			opacity: 1;
+			width: auto;
+			height: auto;
+		}
 	}
 }
