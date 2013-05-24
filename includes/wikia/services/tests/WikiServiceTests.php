@@ -41,8 +41,8 @@ class WikiServiceTests extends WikiaBaseTest {
 		$wikiService->expects($this->exactly(2))
 			->method('getImageSrcByTitle')
 			->will($this->returnValueMap([
-				[ 69, $image13, $imgSize, $image13Url ],
-				[ 69, $image42, $imgSize, $image42Url ]]));
+				[ 69, $image13, $imgSize, null, $image13Url ],
+				[ 69, $image42, $imgSize. null, $image42Url ]]));
 		$wikiService->setCityVisualizationObject($this->mockCityVisualisationObject( 69, 2 ));
 
 		$result = $wikiService->getWikiDescription( $ids, $imgSize );
@@ -92,8 +92,7 @@ class WikiServiceTests extends WikiaBaseTest {
 		$wikiService->expects($this->exactly(1))
 			->method('getImageSrcByTitle')
 			->will($this->returnValueMap([
-				[ 69, $image13, $imgSize, $image13Url ],
-				[ 69, $image42, $imgSize, $image42Url ]]));
+				[ 69, $image42, $imgSize, null, $image42Url ]]));
 		$wikiService->setCityVisualizationObject($this->mockCityVisualisationObject( 69, 1 ));
 
 		$result = $wikiService->getWikiDescription( $ids, $imgSize );
