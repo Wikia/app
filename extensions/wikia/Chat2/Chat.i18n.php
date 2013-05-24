@@ -5,8 +5,8 @@ $messages = array();
 $messages['en'] = array(
     'chat' => 'Chat',
     'chat-desc' => '[[Special:Chat|Live chat]]',
-    'chat-no-login' => 'You must be logged in to chat.',
-    'chat-no-login-text' => 'Please login to chat.',
+    'chat-no-login' => 'You must be <a href="/wiki/Special:Userlogin">logged in</a> to chat.',
+    'chat-no-login-text' => 'Please <a href="/wiki/Special:Userlogin">log in</a> to chat.',
     'chat-default-topic' => 'Welcome to the $1 chat',
     'chat-welcome-message' => 'Welcome to the $1 chat',
     'chat-user-joined' => '$1 has joined the chat.',

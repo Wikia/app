@@ -21,9 +21,7 @@ class SpecialChat extends UnlistedSpecialPage {
 				$output->showErrorPage( 'chat-you-are-banned', 'chat-you-are-banned-text' );
 			}
 		} else {
-			// TODO: FIXME: Make a link on this page which lets the user login.
-			// TODO: FIXME: Make a link on this page which lets the user login.
-			
+
 			// $wgOut->permissionRequired( 'chat' ); // this is a really useless message, don't use it.
 			$output->showErrorPage( 'chat-no-login', 'chat-no-login-text' );
 
