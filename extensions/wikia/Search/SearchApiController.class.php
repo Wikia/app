@@ -11,7 +11,7 @@ use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QuerySe
  */
 class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
-	const CROSS_WIKI_LIMIT = 100;
+	const CROSS_WIKI_LIMIT = 25;
 
 	const PARAMETER_NAMESPACES = 'namespaces';
 
@@ -47,6 +47,7 @@ class SearchApiController extends WikiaApiController {
 	 *
 	 * @requestParam string $query The query to use for the search
 	 * @requestParam string $rank [OPTIONAL] The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest
+	 * @requestParam integer $batch [OPTIONAL] The batch/page of results to fetch
 	 * @requestParam integer $limit [OPTIONAL] The number of wiki items per batch
 	 *
 	 * @responseParam array $items The list of results
@@ -64,10 +65,6 @@ class SearchApiController extends WikiaApiController {
 				'id' => (int) $result->getHeader( 'wid' ),
 				'language' => $result->getHeader( 'lang' ),
 			);
-		}
-
-		if ( ( $limit = $this->request->getInt( 'limit', 0 ) ) !== 0 ) {
-			$items = array_slice( $items, 0, $limit );
 		}
 
 		$this->response->setVal( 'items', $items );
@@ -136,8 +133,8 @@ class SearchApiController extends WikiaApiController {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig->setQuery( $request->getVal( 'query', null ) )
-			->setLimit( self::CROSS_WIKI_LIMIT )
-//			->setPage( $request->getVal( 'batch', 1 ) )
+			->setLimit( $request->getInt( 'limit', static::CROSS_WIKI_LIMIT ) )
+			->setPage( $request->getVal( 'batch', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setInterWiki( true )
 		;
