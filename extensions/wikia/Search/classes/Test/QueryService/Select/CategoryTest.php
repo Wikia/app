@@ -181,9 +181,10 @@ class CategoryTest extends BaseTest {
 		    ->expects( $this->once() )
 		    ->method ( 'setQueryField' )
                     ->with ('categories',7)
+                    ->will ( $this->returnValue( $mockConfig ) )
 		;
                 
-		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Category', 'configureQueryFields' );
+		$get = new ReflectionProperty( 'Wikia\Search\QueryService\Select\Category', 'configureQueryFields' );
 		$get->setAccessible( true );
 		$this->assertEquals(
 				$mockSelect,
