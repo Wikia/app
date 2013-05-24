@@ -32,10 +32,6 @@ $messages['en'] = array(
 	'manage-wikia-home-wiki-filter' => 'Filter',
 	'manage-wikia-home-wiki-filter-reset' => 'Clear',
 
-	'manage-wikia-home-wiki-vertical-gaming' => 'Gaming',
-	'manage-wikia-home-wiki-vertical-entertainment' => 'Entertainment',
-	'manage-wikia-home-wiki-vertical-lifestyle' => 'Lifestyle',
-
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
 	'manage-wikia-home-wiki-list-headline' => 'Wiki name',
@@ -112,10 +108,6 @@ $messages['qqq'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Text above filtering input text describing what the input text is for',
 	'manage-wikia-home-wiki-filter' => 'A label on a submitting form button; the form is filtering list of wikis in visualization',
 	'manage-wikia-home-wiki-filter-reset' => 'A label on a reseting form button, which reset all filters',
-
-	'manage-wikia-home-wiki-vertical-gaming' => 'Name of \'gaming\' vertical',
-	'manage-wikia-home-wiki-vertical-entertainment' => 'Name of \'entertainment\' vertical',
-	'manage-wikia-home-wiki-vertical-lifestyle' => 'Name of \'lifestyle\' vertical',
 
 	'manage-wikia-home-wiki-list-id' => 'Table column header which describes column containing wiki Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Table column header which describes column containing wiki vertical name',
