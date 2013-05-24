@@ -53,6 +53,8 @@ class SearchApiController extends WikiaApiController {
 	 * @responseParam array $items The list of results
 	 *
 	 * @example &query=kermit
+	 * @example &query=kermit&limit=10
+	 * @example &query=kermit&limit=2&batch=2
 	 */
 	public function getCrossWiki() {
 		if ( !$this->request->getVal( 'query' ) ) {
@@ -69,10 +71,13 @@ class SearchApiController extends WikiaApiController {
 
 		$this->response->setVal( 'items', $items );
 	}
-	
+
 	/**
 	 * Sets the response based on values set in config
 	 * @param Wikia\Search\Config $searchConfig
+	 * @param array $fields that will be returned in items array
+	 * @param bool $metadata if true, will return also query statistics
+	 * @throws InvalidParameterApiException if query field in request is missing
 	 */
 	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig, array $fields, $metadata = true ) {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
@@ -129,6 +134,10 @@ class SearchApiController extends WikiaApiController {
 		return $this->validateNamespacesForConfig( $searchConfig );
 	}
 
+	/**
+	 * Returns wikia Config for cross wiki search build on request data
+	 * @return Wikia\Search\Config
+	 */
 	protected function getConfigCrossWiki() {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
