@@ -510,7 +510,6 @@ class Chat {
 		global $wgCityId;
 
 		if($userObject->isBlocked()) {
-			Wikia::log( __METHOD__, false, "CHAT getUserInfo - cannot create user from " . $data['user_id'] . ", key: " . $wgRequest->getVal('key'), true );
 			return false;
 		}
 
