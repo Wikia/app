@@ -143,6 +143,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 
 		$categories = !empty($addlCategories) ? $addlCategories : array();
 
+		$categories[] = 'Ooyala';
+
 		if ( !empty($data['keywords']) ) {
 			$keywords = explode( ',', $data['keywords'] );
 
@@ -153,10 +155,6 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 
 		if ( !empty($data['categoryName']) ) {
 			$categories[] = $data['categoryName'];
-		}
-
-		if ( !in_array( 'Ooyala', $categories) ) {
-			$categories[] = 'Ooyala';
 		}
 
 		wfProfileOut( __METHOD__ );
