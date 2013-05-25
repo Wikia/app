@@ -13,7 +13,7 @@ class TwitchtvVideoHandler extends VideoHandler {
 		$sizeString = $this->getSizeString( $width, $height );
 		$category = $this->getVideoCategory();
 
-		if ( $category == 'live gaming') {
+		if ( empty( $category ) || $category == 'live gaming' ) {
 			$url = $this->getEmbedUrl();
 			$movieParam = 'http://www.twitch.tv/widgets/live_embed_player.swf';
 			$flashvars = "hostname=www.twitch.tv&channel={$this->videoId}&auto_play={$autoplayStr}&start_volume=25";
@@ -39,7 +39,20 @@ EOT;
 	}
 
 	protected function getVideoChannel() {
-		return $this->getMetadataValue( 'channel', '' );
+		return $this->getMetadataValue( 'channel' );
+	}
+
+	protected function getVideoUrl() {
+		return $this->getMetadataValue( 'videoUrl' );
+	}
+
+	public function getProviderDetailUrl() {
+		$url = $this->getVideoUrl();
+		if ( !empty( $url ) ) {
+			return $url;
+		}
+
+		return parent::getProviderDetailUrl();
 	}
 
 }

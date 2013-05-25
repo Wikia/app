@@ -82,8 +82,12 @@ class TwitchtvApiWrapper extends ApiWrapper {
 		$url = str_replace( '$1', $this->videoId, $url );
 		$content = Http::get( $url );
 		$result = json_decode( $content, true );
-		if ( isset($result['stream']['preview']) ) {
-			$thumb = $result['stream']['preview'];
+		if ( !empty( $result['stream']['preview'] ) ) {
+			if ( is_array( $result['stream']['preview'] ) ) {
+				$thumb = $result['stream']['preview']['large'];
+			} else {
+				$thumb = $result['stream']['preview'];
+			}
 		} else if ( isset($this->interfaceObj['video_banner']) ) {
 			$thumb = $this->interfaceObj['video_banner'];
 		} else {
