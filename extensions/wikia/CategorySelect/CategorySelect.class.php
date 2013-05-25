@@ -234,6 +234,42 @@ class CategorySelect {
 	}
 
 	/**
+	 * Gets the category names from an array of category arrays.
+	 * @return Array
+	 */
+	public static function getCategoryNames( $categories ) {
+		$names = array();
+
+		foreach( $categories as $category ) {
+			$name = CategorySelect::getNormalizedCategoryName( $category );
+
+			if ( !empty( $name ) ) {
+				$names[] = $name;
+			}
+		}
+
+		return $names;
+	}
+
+	/**
+	 * Gets the normalized category name from a category array.
+	 * @return String
+	 */
+	public static function getNormalizedCategoryName( $category ) {
+		$text = '';
+
+		if ( !empty( $category ) && !empty( $category[ 'name' ] ) ) {
+			$title = Title::makeTitleSafe( NS_CATEGORY, $category[ 'name' ] );
+
+			if ( !empty( $title ) ) {
+				$text = $title->getText();
+			}
+		}
+
+		return $text;
+	}
+
+	/**
 	 * Gets the unique categories (keyed by name) from an array of categories.
 	 * If multiple arrays are provided, they will be merged left.
 	 * @return Array
@@ -248,23 +284,46 @@ class CategorySelect {
 		$uniqueCategories = array();
 
 		foreach( $categories as $category ) {
-			if ( !empty( $category ) && !empty( $category[ 'name' ] ) ) {
-				$title = Title::makeTitleSafe( NS_CATEGORY, $category[ 'name' ] );
+			$name = CategorySelect::getNormalizedCategoryName( $category );
 
-				if ( !empty( $title ) ) {
-					$text = $title->getText();
-
-					if ( !in_array( $text, $categoryNames ) ) {
-						$categoryNames[] = $text;
-						$uniqueCategories[] = $category;
-					}
-				}
+			if ( !empty( $name ) && !in_array( $name, $categoryNames ) ) {
+				$categoryNames[] = $name;
+				$uniqueCategories[] = $category;
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		return $uniqueCategories;
+	}
+
+	/**
+	 * Gets the difference between arrays of categories, returning an array
+	 * of categories that aren't present in the first array of categories.
+	 * @return Array
+	 */
+	public static function getDiffCategories( /* Array ... */ ) {
+		wfProfileIn( __METHOD__ );
+
+		$args = func_get_args();
+		$base = array_shift( $args );
+		$categories = call_user_func_array( 'array_merge', $args );
+
+		$diff = array();
+
+		$names = CategorySelect::getCategoryNames( $base );
+
+		foreach( $categories as $category ) {
+			$name = CategorySelect::getNormalizedCategoryName( $category );
+
+			if ( !empty( $name ) && !in_array( $name, $names ) ) {
+				$diff[] = $category;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $diff;
 	}
 
 	/**

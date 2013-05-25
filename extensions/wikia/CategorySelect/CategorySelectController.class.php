@@ -201,19 +201,19 @@ class CategorySelectController extends WikiaController {
 			$article = new Article( $title );
 			$wikitext = $article->fetchContent();
 
-			$articleData = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
-
 			// Pull in categories from templates inside of the article (BugId:100980)
 			$options = new ParserOptions();
-			$preprocessedWikitext = ParserPool::preprocess( $articleData[ 'wikitext' ], $title, $options );
+			$preprocessedWikitext = ParserPool::preprocess( $wikitext, $title, $options );
 			$preprocessedData = CategorySelect::extractCategoriesFromWikitext( $preprocessedWikitext, true );
 
-			// Merge together the categories extracted from the article, templates and the category module
-			$categories = CategorySelect::getUniqueCategories(
-					$articleData[ 'categories' ], $preprocessedData[ 'categories' ], $categories );
+			// Compare the new categories with those already in the article to weed out duplicates
+			$newCategories = CategorySelect::getDiffCategories( $preprocessedData[ 'categories' ], $categories );
 
-			// Append the categories to the end of the article
-			$wikitext = $articleData[ 'wikitext' ] . CategorySelect::changeFormat( $categories, 'array', 'wikitext' );
+			// Append the new categories to the end of the article wikitext
+			$wikitext .= CategorySelect::changeFormat( $newCategories, 'array', 'wikitext' );
+
+			// Update the array of categories for the front-end
+			$categories = array_merge( $preprocessedData[ 'categories' ], $newCategories );
 
 			$dbw = $this->wf->GetDB( DB_MASTER );
 			$dbw->begin();
