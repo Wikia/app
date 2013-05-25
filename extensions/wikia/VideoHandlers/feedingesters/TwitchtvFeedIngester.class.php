@@ -85,7 +85,7 @@ class TwitchtvFeedIngester extends VideoFeedIngester {
 	}
 
 	private function initFeedUrl( $videoSet, $page, $period ) {
-		$url = str_replace( '$1', $videoSet, static::$FEED_URL );
+		$url = str_replace( '$1', urlencode( $videoSet ), static::$FEED_URL );
 		$url = str_replace( '$2', self::API_PAGE_SIZE, $url );
 		$url = str_replace( '$3', ( $page * self::API_PAGE_SIZE ), $url );
 		$url = str_replace( '$4', $period, $url );
