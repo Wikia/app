@@ -170,8 +170,17 @@ class CategoryTest extends BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\Category::configureQueryFields 
 	 */
 	public function testConfigureQueryFields() {
-                $mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'setQueryField' ) );
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
+            
+                $mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( null )
+		                      ->getMock();
+                
+                $mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
+		                   ->setMethods( array( 'setQueryField' ) )
+		                   ->getMock();
+                
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Category' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
@@ -183,12 +192,14 @@ class CategoryTest extends BaseTest {
                     ->with ('categories',7)
                     ->will ( $this->returnValue( $mockConfig ) )
 		;
-                
+                $config = new \Wikia\Search\Config();
+                //$get = new ReflectionProperty( 'Wikia\Search\Config', 'queryFieldsToBoosts' );
 		$get = new ReflectionProperty( 'Wikia\Search\QueryService\Select\Category', 'config' );
 		$get->setAccessible( true );
+                //$get->setValue( $config->queryFieldsToBoosts['categories'],7 );
 		$this->assertEquals(
-				$mockSelect,
-				$get->getValue( $mockSelect )
+				$config->queryFieldsToBoosts['categories'],
+				$get->getValue( $mockConfig )
 		);
 	}
         
