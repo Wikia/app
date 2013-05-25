@@ -23,7 +23,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 	}
 
 	function getDescription() {
-		return wfMessage( 'unsubscribe' )->text();
+		return $this->msg( 'unsubscribe' )->text();
 	}
 
 	/**
