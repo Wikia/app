@@ -70,9 +70,10 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
-	'mostpopularcategories' => 'Массарел гlарайаьлла кадегарш',
+	'mostpopularcategories' => 'Массарел гӀарайаьлла категореш',
 );
 
 /** Czech (česky)

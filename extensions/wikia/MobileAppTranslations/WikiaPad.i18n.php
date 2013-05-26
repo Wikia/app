@@ -460,6 +460,22 @@ $messages['ro'] = array(
 	'browser-loading-message' => 'Se încarcă...',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'main-tab-discover' => 'Scuèpre',
+	'main-tab-personal' => 'Uicchia meje',
+	'main-tab-search' => 'Cirche',
+	'main-tab-offline' => 'Fore linèe',
+	'tab-discover-loading-message' => 'Stoche a careche…',
+	'tab-discover-no-network-dialog-title' => 'Rete indisponibbile',
+	'tab-discover-no-network-dialog-message' => 'Nisciuna connessione de rete ha state acchiate',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Stoche a cerche...',
+	'browser-loading-message' => 'Stoche a careche…',
+);
+
 /** Russian (русский)
  * @author Kuzura
  */

@@ -2946,6 +2946,8 @@ Se você é o fundador ou um administrador desta wiki, pode mudar esta mensagem 
  */
 $messages['roa-tara'] = array(
 	'myhome' => 'Pàgena meje',
+	'wikiactivity' => "Attivita d'a Uicchi",
+	'myhome-activity-more' => "'ndruche cchiù attività recende",
 	'prefs-myhome' => 'Pàgena meje',
 	'myhome-feed-newpage' => 'pàgena nova',
 	'myhome-feed-edit' => 'cange',
@@ -2970,6 +2972,7 @@ $messages['roa-tara'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Fote aggiunge|Fote aggiunge}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Video aggiunge|Video aggiunge}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categorije aggiunde|Categorije aggiunde}}',
+	'myhome-hot-spots-number-of-editors' => 'editure',
 	'myhome-namespace-blog' => 'Blog',
 	'oasis-myhome-community-corner-edit' => "cange 'u messagge &gt;",
 	'myhome-community-corner-edit' => "cange 'u messagge",

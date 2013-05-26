@@ -904,6 +904,10 @@ $messages['ps'] = array(
 	'categoryselect-category-remove' => 'وېشنيزه غورځول',
 	'categoryselect-edit-summary' => 'وېشنيزې ورګډول',
 	'categoryselect-error-article-doesnt-exist' => 'د [id=$1] ليکنه نشته.',
+	'categoryselect-error-db-locked' => 'توکبنسټ تړل شوی.',
+	'categoryselect-error-duplicate-category-name' => 'د "$1" وېشنيزه له پخوا څخه شته.',
+	'categoryselect-error-empty-category-name' => 'لطفاً د يوې وېشنيزې نوم ورکړۍ.',
+	'categoryselect-modal-category-name' => 'لطفاً د وېشنيزې نوم ورکړۍ.',
 );
 
 /** Portuguese (português)
@@ -981,6 +985,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'categoryselect-desc' => "Dèje 'n'inderfacce pa gestione de le categorije jndr'à 'na pàgene senze ca cange 'a pàgena stesse",
 	'categoryselect-button-add' => "Aggiunge 'na categorije",
 	'categoryselect-button-cancel' => 'Annulle',
 	'categoryselect-button-save' => 'Reggìstre',
@@ -992,7 +997,14 @@ $messages['roa-tara'] = array(
 	'categoryselect-error-category-name-length' => "'A lunghezza massime pe 'na categorije ha state raggiunde.",
 	'categoryselect-error-db-locked' => 'Archivije bloccate.',
 	'categoryselect-error-duplicate-category-name' => 'Categorije "$1" già esiste.',
+	'categoryselect-error-edit-abort' => "Le cangiaminde ca tu è pruvate a fà avènene annullate da 'u gance de estenzione.",
 	'categoryselect-error-empty-category-name' => "Pe piacere dèje 'nu nome 'a categorije.",
+	'categoryselect-error-user-rights' => "L'utende non ge tène 'u permesse pe fà st'azione.",
+	'categoryselect-modal-category-name' => "Dèje 'nu nome d'a categorije:",
+	'categoryselect-modal-category-sortkey' => 'Opzionalmende, tu puè alfabbetizzà sta pàgene sus \'a pàgene d\'a categorije "$1" sotte a \'u nome:',
+	'categoryselect-tooltip-add' => "Cazze 'u taste Invie quanne è spicciate.",
+	'tog-disablecategoryselect' => "Module pe disabbilità 'a categorije (appliche sulamend ce le cangiaminde jndr'à 'u mode visuale onne state disabbilitate)",
+	'tog-disablecategoryselect-v2' => "Module pe disabbilità 'a categorije (appliche sulamend ce le cangiaminde jndr'à 'u mode visuale jè disabbilitate)",
 );
 
 /** Russian (русский)

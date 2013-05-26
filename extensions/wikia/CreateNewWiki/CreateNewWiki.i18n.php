@@ -2109,10 +2109,13 @@ $messages['roa-tara'] = array(
 	'cnw-back' => 'Rrete',
 	'cnw-or' => 'o',
 	'cnw-title' => "Ccreje 'na uicchi nove",
+	'cnw-name-wiki-headline' => "Fà partè 'na Uicchi",
 	'cnw-name-wiki-label' => "Nome d'a uicchi tune",
 	'cnw-name-wiki-wiki' => 'Uicchi',
 	'cnw-login' => 'Tràse',
 	'cnw-signup' => "Ccreje 'nu cunde",
+	'cnw-call-to-signup' => 'Reggistrate aqquà',
+	'cnw-login-prompt' => "Tìne ggià 'nu cunde?",
 	'cnw-call-to-login' => 'Tràse aqquà',
 	'cnw-auth-headline' => 'Tràse',
 	'cnw-auth-headline2' => 'Reggistrate',
@@ -2127,6 +2130,7 @@ $messages['roa-tara'] = array(
 	'cnw-desc-lang' => 'Lènghe',
 	'cnw-desc-wiki-submit-error' => "Pe piacere scacchie 'na categorije",
 	'cnw-theme-headline' => "Scacchie 'nu teme",
+	'cnw-error-blocked-header' => 'Cunde bloccate',
 );
 
 /** Russian (русский)
@@ -2524,6 +2528,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Ua2004
  */
 $messages['uk'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Майстер створення вікі]]',
@@ -2549,6 +2554,7 @@ $messages['uk'] = array(
 	'cnw-auth-signup-creative' => 'Вам потрібен обліковий запис, щоб продовжити створення вікі. <br /> Реєстрація не відніме багато часу!',
 	'cnw-auth-facebook-signup' => 'Зареєструватися через Facebook',
 	'cnw-auth-facebook-login' => 'Увійти з Facebook',
+	'cnw-userauth-headline' => 'Уже зареєстровані?',
 	'cnw-userauth-creative' => 'Увійти',
 	'cnw-userauth-marketing-heading' => 'Немає облікового запису?',
 	'cnw-userauth-marketing-body' => 'Вам потрібний обліковий запис для створення вікі Wikia. Створити!', # Fuzzy
@@ -2576,7 +2582,7 @@ $messages['uk'] = array(
 	'cnw-welcome-instruction2' => 'Ви будете бачити цю кнопку завжди і можете використовувати її в будь-який час, коли захочете додати нову сторінку.',
 	'cnw-welcome-help' => 'Знайті відповіді, поради та багато іншого на <a href="http://community.wikia.com">Центральній вікі</a>.',
 	'cnw-error-general' => 'Сталась якась лажа. Спробуйте пізніше.', # Fuzzy
-	'cnw-error-general-heading' => 'Система облажалася', # Fuzzy
+	'cnw-error-general-heading' => 'Просимо вибачення',
 	'cnw-badword-header' => 'Шо за фігня?',
 	'cnw-badword-msg' => 'Будь ласка, не вживайте русизмів на $1 !',
 	'cnw-error-wiki-limit-header' => 'Ліміт створення вікі',

@@ -487,6 +487,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'timeagomessaging-desc' => 'Dèje i18n pu plugin jquery.timeago.js',
 	'timeago-year' => "{{PLURAL:$1|'n'anne|$1 anne}} fà",
 	'timeago-month' => "{{PLURAL:$1|'nu mese|$1 mise}} fà",
 	'timeago-day' => "{{PLURAL:$1|'nu sciurne|$1 sciurne}} fà",
@@ -494,6 +495,10 @@ $messages['roa-tara'] = array(
 	'timeago-minute' => "{{PLURAL:$1|'nu minute|$1 minute}} fà",
 	'timeago-second' => "'nu minute fà",
 	'timeago-day-from-now' => "{{PLURAL:$1|'nu sciurne|$1 sciurne}} da mò",
+	'timeago-hour-from-now' => "{{PLURAL:$1|'n'ore|$1 ore}} da mò",
+	'timeago-minute-from-now' => "{{PLURAL:$1|'nu minute|$1 minute}} da mò",
+	'timeago-month-from-now' => "{{PLURAL:$1|'nu mese|$1 mise}} da mò",
+	'timeago-second-from-now' => "'nu minute da mò",
 );
 
 /** Russian (русский)
