@@ -8,15 +8,16 @@ const CSV_FILE = 'cssEdits.csv';
 
 global $wgCityId, $wgSitename, $wgDBname;
 
+echo "Wiki Id: " . $wgCityId . "\n";
+echo "Wiki name: " . $wgSitename . "\n";
+
 $ts = time() - (180 * 24 * 60 * 60);
 
 $db = wfGetDb(DB_SLAVE, array(), $wgDBname);
 
-$pageId = getCssPageId($db);
+// Getting data about Wikia.css
+$pageId = getCssPageId($db, WIKIA_CSS);
 $cssEditData = array();
-
-echo "Wiki Id: " . $wgCityId . "\n";
-echo "Wiki name: " . $wgSitename . "\n";
 
 if (!empty($pageId)) {
 	echo "checking number of contributors...\n";
@@ -27,19 +28,40 @@ if (!empty($pageId)) {
 	$numEdits = countCssEdits($pageId, $ts, $db);
 	echo "There is " . $numEdits . " edits\n";
 
-	$cssEditData = array( $wgCityId, $numContributors, $numEdits );
+	$cssEditData = array( $wgCityId, $numContributors, $numEdits, WIKIA_CSS );
 } else {
-	$cssEditData = array( $wgCityId, 0, 0 );
+	$cssEditData = array( $wgCityId, 0, 0, WIKIA_CSS);
 	echo "ZERO\n";
 }
 
-$db->close();
+saveData($cssEditData);
+
+// Getting data about Common.css
+$pageId = getCssPageId($db, COMMON_CSS);
+$cssEditData = array();
+
+if (!empty($pageId)) {
+	echo "checking number of contributors...\n";
+
+	$numContributors = countContributors($pageId, $ts, $db);
+	echo "There is " . $numContributors . " contributors\n";
+
+	$numEdits = countCssEdits($pageId, $ts, $db);
+	echo "There is " . $numEdits . " edits\n";
+
+	$cssEditData = array( $wgCityId, $numContributors, $numEdits, COMMON_CSS );
+} else {
+	$cssEditData = array( $wgCityId, 0, 0, COMMON_CSS );
+	echo "ZERO\n";
+}
 
 saveData($cssEditData);
 
-function getCssPageId($db) {
+$db->close();
+
+function getCssPageId($db, $cssFile) {
 	$cond = [
-		'page_title' => WIKIA_CSS,
+		'page_title' => $cssFile,
 		'page_namespace' => NS_MEDIAWIKI
 	];
 
