@@ -5,6 +5,7 @@
 class SpecialProtectSiteController extends WikiaSpecialPageController {
 
 	var $action, $persist_data, $isMagicUser;
+	protected static $dbKey = wfMemcKey( 'protectsite2' );
 
 	public function __construct() {
 		parent::__construct( "Protectsite", "protectsite", true );
@@ -14,8 +15,9 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 		wfProfileIn( __METHOD__ );
 
 		$out = $this->getContext()->getOutput();
-		$user = $this->getContext()->getOutput();
+		$user = $this->getContext()->getUser();
 		$request = $this->getContext()->getRequest();
+
 		# Show a message if the database is in read-only mode
 		if ( wfReadOnly() ) {
 			$out->readOnlyPage();
@@ -31,6 +33,7 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 
 		# If user is blocked, s/he doesn't need to access this page
 		if ( $user->isBlocked() ) {
+			wfProfileOut( __METHOD__ );
 			throw new UserBlockedError( $user->mBlock );
 		}
 
@@ -42,7 +45,7 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 		$this->persist_data = new MediaWikiBagOStuff(array());
 
 		/* Get data into the value variable/array */
-		$prot = $this->wg->memc->get( self::key() );
+		$prot = $this->wg->memc->get( $this->dbKey );
 		if( !$prot ) {
 			# ?
 		}
@@ -56,7 +59,7 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 		}
 
 		/* If this was a GET request */
-		if ( !$this->getContext()->getRequest()->wasPosted() )
+		if ( !$request->wasPosted() )
 		{
 			/* If $value is an array, protection is set, allow unsetting */
 			if ( is_array( $prot ) ) {
@@ -67,7 +70,7 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 			}
 		} else {
 			// If this was a POST request, process the data sent.
-			if ($this->getContext()->getRequest()->getVal('protect')) {
+			if ( $request->getVal( 'protect' ) ) {
 				$this->setProtectsite();
 			} else {
 				$this->unProtectsite();
@@ -75,10 +78,6 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 		}
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	static public function key() {
-		return wfMemcKey( 'protectsite2' );
 	}
 
 	private function setProtectsite() {
@@ -95,7 +94,7 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 		if ( ( ( $until = strtotime( '+' . $request['timeout'], $curr_time ) ) === false ) ||
 			 ( $until < $curr_time ) ) {
 			$out->addWikiMsg( 'protectsite-timeout-error' );
-			$this->setProtectsiteForm();
+			$this->forward( 'SpecialProtectSite', 'setProtectsiteForm' );
 		} else {
 			/* Set the array values */
 			$prot['createaccount'] = $request['createaccount'];
@@ -116,7 +115,7 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 			$prot['timeout'] = $request['timeout'];
 
 			/* Write the setting out to the "database" */
-			$this->wg->memc->set( self::key(), $prot, $prot['until']);
+			$this->wg->memc->set( $this->dbKey, $prot, $prot['until'] );
 
 			$doLog = true;
 			if ( !empty($request['nolog']) && $this->isMagicUser ) {
@@ -126,12 +125,13 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 			/* Create a log entry
 			As of March 2013, always show log
 			Suppress option now only suppresses time value */
-				$log = new LogPage('protect');
+				$log = new LogPage( 'protect' );
 				$log->addEntry( 'protect', Title::makeTitle(NS_SPECIAL, 'Allpages'),
 					$doLog ? $prot['timeout'] : wfMessage( 'protectsite-log-suppressed' )->text() .
-					(strlen($prot['comment']) > 0 ? '; ' . $prot['comment'] : '' ) );
+					( strlen($prot['comment']) > 0 ? '; ' . $prot['comment'] : '' ) );
 
-			/* Call the Unprotect Form function to display the current state. */
+				/* Call the Unprotect Form function to display the current state. */
+			$this->overrideTemplate( 'unProtectsiteForm' );
 			$this->unProtectsiteForm( $prot );
 		}
 		wfProfileOut( __METHOD__ );
@@ -144,7 +144,7 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 		$request = $this->getContext()->getRequest()->getValues();
 
 		/* Remove the data from the database to disable extension. */
-		$this->wg->memc->delete( self::key() );
+		$this->wg->memc->delete( $this->dbKey );
 
 		$doLog = true;
 		if ( $this->isMagicUser && !empty($request['nolog']) ) {
@@ -157,7 +157,7 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 				$request['ucomment'] );
 
 		/* Call the Protect Form function to display the current state. */
-		$this->setProtectsiteForm();
+		$this->forward( 'SpecialProtectSite', 'setProtectsiteForm' );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -184,7 +184,7 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 	private function setProtectsiteForm() {
 		wfProfileIn( __METHOD__ );
 
-		$request = $this->mRequest->getValues();
+		$request = $this->getContext()->getRequest()->getValues();
 		$createaccount = array(0 => false, 1 => false, 2 => false);
 		$createaccount[(isset($request['createaccount']) ? $request['createaccount'] : 0)] = true;
 		$createpage = array(0 => false, 1 => false, 2 => false);
@@ -195,7 +195,14 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 		$move[(isset($request['move']) ? $request['move'] : 0)] = true;
 		$upload = array(0 => false, 1 => false);
 		$upload[(isset($request['upload']) ? $request['upload'] : 0)] = true;
-		$radios = array_merge( $createaccount, $createpage, $edit, $move, $upload );
+
+		$radios = array(
+			'createaccount' => $createaccount,
+			'createpage' => $createpage,
+			'edit' => $edit,
+			'move' => $move,
+			'upload' => $upload
+		);
 
 		$timelimitText = '';
 		if( isset( $this->wg->ProtectsiteLimit ) ) {
@@ -206,12 +213,6 @@ class SpecialProtectSiteController extends WikiaSpecialPageController {
 		}
 
 		$noLogCheck = $this->isMagicUser ? true : false;
-		if( $this->isMagicUser ) {
-			$noLogCheck = "<div><label>" . wfMsg('protectsite-hide-time-length') .
-						 "<input type='checkbox' name=\"nolog\" />" .
-						 "</label></div>\n";
-		}
-
 		$this->setVal( 'noLogCheck', $noLogCheck );
 		$this->setVal( 'radios', $radios );
 		$this->setVal( 'action', $this->action ); 
