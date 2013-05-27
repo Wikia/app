@@ -5,35 +5,36 @@ const COMMON_CSS = 'Common.css';
 
 const CSV_FILE = 'cssEdits.csv';
 
-global $wgCityId, $wgSitename;
+global $wgCityId, $wgSitename, $wgDBname;
 
-$pageId = getCssPageId();
+$db = wfGetDb(DB_SLAVE, array(), $wgDBname);
+
+$pageId = getCssPageId($db);
 $cssEditData = array();
 
+echo "Wiki Id: " . $wgCityId . "\n";
+echo "Wiki name: " . $wgSitename . "\n";
+
 if (!empty($pageId)) {
-	echo 'Wiki name: '. $wgSitename;
 	echo "checking number of contributors...\n";
 
-	$cssEditData[] = $wgCityId;
-	$cssEditData[] = $wgSitename;
-
-	$numContributors = countContributors($pageId);
+	$numContributors = countContributors($pageId, $db);
 	echo 'There is ' . $numContributors . ' contributors';
 
-	$cssEditData[] = $numContributors;
-
-	$numEdits = countCssEdits($pageId);
+	$numEdits = countCssEdits($pageId, $db);
 	echo 'There is ' . $numEdits . ' edits';
 
-	$cssEditData[] = $numEdits;
-
-	saveData($cssEditData);
+	$cssEditData = array( $wgCityId, $numContributors, $numEdits );
+} else {
+	$cssEditData = array( $wgCityId, 0, 0 );
+	echo "ZERO\n";
 }
 
-function getCssPageId() {
-	global $wgExternalSharedDB;
-	$db = wfGetDb(DB_SLAVE, array(), $wgExternalSharedDB);
+$db->close();
 
+saveData($cssEditData);
+
+function getCssPageId($db) {
 	$cond = [
 		'page_title' => WIKIA_CSS,
 		'page_namespace' => NS_MEDIAWIKI
@@ -46,10 +47,7 @@ function getCssPageId() {
 	return $row['page_id'];
 }
 
-function countContributors($pageId) {
-	global $wgExternalSharedDB;
-	$db = wfGetDb(DB_SLAVE, array(), $wgExternalSharedDB);
-
+function countContributors($pageId, $db) {
 	$cond = ['rev_page' => $pageId];
 
 	$result = $db->select('revision', 'COUNT(DISTINCT(rev_user)) AS contributors', $cond);
@@ -59,10 +57,7 @@ function countContributors($pageId) {
 	return $row['contributors'];
 }
 
-function countCssEdits($pageId) {
-	global $wgExternalSharedDB;
-	$db = wfGetDb(DB_SLAVE, array(), $wgExternalSharedDB);
-
+function countCssEdits($pageId, $db) {
 	$cond = ['rev_page' => $pageId];
 
 	$result = $db->select('revision', 'COUNT(1) AS edits', $cond);
@@ -74,8 +69,9 @@ function countCssEdits($pageId) {
 
 function saveData($cssEditData) {
 	$file = fopen(CSV_FILE, 'a');
-	if ($file) {
+	if ($file && flock($file, LOCK_EX)) {
 		fputcsv($file, $cssEditData);
+		flock($file, LOCK_UN);
 		fclose($file);
 	}
 }
