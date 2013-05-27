@@ -196,11 +196,17 @@ class CategoryTest extends BaseTest {
                 //$get = new ReflectionProperty( 'Wikia\Search\Config', 'queryFieldsToBoosts' );
 		$get = new ReflectionProperty( 'Wikia\Search\QueryService\Select\Category', 'config' );
 		$get->setAccessible( true );
-                //$get->setValue( $config->queryFieldsToBoosts['categories'],7 );
+                
+                $property = new ReflectionProperty( 'config' , 'queryFieldsToBoosts');
+                $property->setAccessible( true );
+                $get->setValue( $config,  array('categories',7) );
+                
 		$this->assertEquals(
 				$config->queryFieldsToBoosts['categories'],
 				$get->getValue( $mockConfig )
 		);
+                
+
 	}
         
         public function testgetFilterQueryString() {
@@ -265,7 +271,7 @@ class CategoryTest extends BaseTest {
 		$get = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Category', 'getQueryFieldsString' );
 		$get->setAccessible( true );
 		$this->assertEquals(
-				'categories^125',
+				'categories^25',
 				$get->invoke( $mockSelect )
 		);
 	}
