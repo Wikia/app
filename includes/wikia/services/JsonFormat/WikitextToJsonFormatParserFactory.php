@@ -11,7 +11,7 @@ class WikitextToJsonFormatParserFactory {
 	 */
 	public function  create() {
 		return new WikitextToJsonFormatParser(
-			new WikitextToHtmlParser( new MessageCache() ),
+			new WikitextToHtmlParser( MessageCache::singleton() ),
 			new HtmlToJsonFormatParser()
 		);
 	}

@@ -12,7 +12,9 @@ class HtmlToJsonFormatParser {
 	 */
 	public function parse( $html ) {
 		$doc = new DOMDocument();
-		$doc->loadHTML($html);
+		libxml_use_internal_errors(true);
+		$doc->loadHTML("<?xml encoding=\"UTF-8\">\n<html><body>" . $html . "</body></html>");
+		libxml_clear_errors();
 		$visitor = new HtmlToJsonFormatParserVisitorStateful( $doc->getElementsByTagName('body')->item(0) );
 		return $visitor->run();
 	}

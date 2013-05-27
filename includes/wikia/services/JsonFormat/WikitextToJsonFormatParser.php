@@ -26,6 +26,6 @@ class WikitextToJsonFormatParser {
 	 */
 	public function parse( $wikitext ) {
 		$html =  $this->wikitextToHtmlParser->parse( $wikitext );
-		return $this->htmlToJsonFormatParser($html);
+		return $this->htmlToJsonFormatParser->parse($html);
 	}
 }

@@ -278,13 +278,14 @@ $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.
 $wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/MustacheService.class.php';
 $wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/RevisionService.class.php';
 
-$wgAutoloadClasses['HtmlToJsonFormatParser'] = $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParser.php";
-$wgAutoloadClasses['HtmlToJsonFormatParserVisitor'] = $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParserVisitor.php";
+$wgAutoloadClasses['HtmlToJsonFormatParser'] =                $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParser.php";
+$wgAutoloadClasses['HtmlToJsonFormatParserVisitor'] =         $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParserVisitor.php";
 $wgAutoloadClasses['HtmlToJsonFormatParserVisitorStateful'] = $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParserVisitorStateful.php";
-$wgAutoloadClasses['JsonFormatNode'] = $IP . "/includes/wikia/services/JsonFormat/JsonFormatNode.php";
-$wgAutoloadClasses['WikitextToHtmlParser'] = $IP . "/includes/wikia/services/JsonFormat/WikitextToHtmlParser.php";
-$wgAutoloadClasses['WikitextToJsonFormatParserFactory'] = $IP . "/includes/wikia/services/JsonFormat/WikitextToJsonFormatParserFactory.php";
-$wgAutoloadClasses['WikitextToJsonFormatParser'] = $IP . "/includes/wikia/services/JsonFormat/WikitextToJsonFormatParser.php";
+$wgAutoloadClasses['JsonFormatNode'] =                        $IP . "/includes/wikia/services/JsonFormat/JsonFormatNode.php";
+$wgAutoloadClasses['WikitextToHtmlParser'] =                  $IP . "/includes/wikia/services/JsonFormat/WikitextToHtmlParser.php";
+$wgAutoloadClasses['WikitextToJsonFormatParserFactory'] =     $IP . "/includes/wikia/services/JsonFormat/WikitextToJsonFormatParserFactory.php";
+$wgAutoloadClasses['WikitextToJsonFormatParser'] =            $IP . "/includes/wikia/services/JsonFormat/WikitextToJsonFormatParser.php";
+$wgAutoloadClasses['JsonFormatService'] =                     $IP . "/includes/wikia/services/JsonFormatService.php";
 
 
 

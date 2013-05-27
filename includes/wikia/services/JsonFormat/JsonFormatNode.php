@@ -97,4 +97,18 @@ class JsonFormatNode {
 	public function getLevel() {
 		return $this->level;
 	}
+
+	public function toArray() {
+		$resultArray = [
+			'text' => $this->getText(),
+			'type' => $this->getType(),
+			'level' => $this->getLevel(),
+		];
+		if( isset( $this->children ) ) {
+			foreach( $this->getChildren() as $child ) {
+				$resultArray['children'][] = $child->toArray();
+			}
+		}
+		return $resultArray;
+	}
 }

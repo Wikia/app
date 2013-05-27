@@ -26,6 +26,49 @@ class ArticlesApiController extends WikiaApiController {
 	const DETAILS_CACHE_ID = 'details';
 	const PAGE_CACHE_ID = 'page';
 
+	public function getJsonFormat() {
+		$articleId = $this->getRequest()->getInt("article", NULL);
+		if( empty($articleId) ) {
+			throw new InvalidParameterApiException( self::ARTICLE_CACHE_ID );
+		}
+		$jsonFormatService = new JsonFormatService();
+		$json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
+		//var_dump( $json );
+		$this->getResponse()->setVal( "jsonFormat" , $json->toArray() );
+	}
+
+	private function toHtml( JsonFormatNode $node ) {
+		if( $node->getType() == 'root' ) {
+			return $this->iterate( $node );
+		} else if ( $node->getType() == 'section' ) {
+			return "<h{$node->getLevel()}>{$node->getText()}</h{$node->getLevel()}>{$this->iterate($node)}";
+		} else if ( $node->getType() == 'link' ) {
+			return "<a href=\"#\">{$node->getText()}</a>";
+		} else if ( $node->getType() == 'text' ) {
+			return $node->getText();
+		}
+	}
+
+	private function iterate($node) {
+		$result = '';
+		foreach ( $node->getChildren() as $childNode ) {
+			$result .= $this->toHtml($childNode);
+		}
+		return $result;
+	}
+
+	public function getJsonFormatAsText() {
+		$articleId = $this->getRequest()->getInt("article", NULL);
+		if( empty($articleId) ) {
+			throw new InvalidParameterApiException( self::ARTICLE_CACHE_ID );
+		}
+		$jsonFormatService = new JsonFormatService();
+		$json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
+
+		$text = $this->toHtml($json);
+		die($text);
+	}
+
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
 	 *

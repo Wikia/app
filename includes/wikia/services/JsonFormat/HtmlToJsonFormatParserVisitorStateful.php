@@ -50,11 +50,15 @@ class HtmlToJsonFormatParserVisitorStateful {
 	 */
 	public function visitElement( DOMElement $node ) {
 		$headerTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7'];
-		$paragraphTags = ['div', 'p'];
+		$paragraphTags = ['p'];
 		if( in_array( $node->tagName, $headerTags ) ) {
 			$this->visitHTag( $node );
 		} else if( $node->tagName == 'a' ) {
 			$this->visitA( $node );
+		}else if( $node->tagName == 'b' ) {
+			$this->visitB( $node );
+		}else if( $node->tagName == 'figure' ) {
+			$this->visitFigure( $node );
 		} else if ( in_array($node->tagName, $paragraphTags) ) {
 			$this->visitP( $node );
 		}
@@ -94,8 +98,27 @@ class HtmlToJsonFormatParserVisitorStateful {
 	 * @param DOMElement $node
 	 */
 	public function visitA( DOMElement $node ) {
-		$text = $node->textContent;
-		$node = new JsonFormatNode( "text", $text );
+		$text = trim($this->innerText($node));
+		if( !empty($text) ) {
+			$node = new JsonFormatNode( "link", $text );
+			$this->currentContainer->addChild($node);
+		}
+	}
+
+	/**
+	 * @param DOMElement $node
+	 */
+	public function visitB( DOMElement $node ) {
+		$text = $this->innerText($node);
+		$this->appendText( $text );
+	}
+
+	/**
+	 * @param DOMElement $node
+	 */
+	public function visitFigure( DOMElement $node ) {
+		$text = $this->innerText($node);
+		$node = new JsonFormatNode("figure");
 		$this->currentContainer->addChild($node);
 	}
 
@@ -116,8 +139,7 @@ class HtmlToJsonFormatParserVisitorStateful {
 	 */
 	public function visitText( DOMText $node ) {
 		$text = $node->textContent;
-		$node = new JsonFormatNode( "text", $text );
-		$this->currentContainer->addChild($node);
+		$this->appendText( $text );
 	}
 
 	/**
@@ -140,5 +162,35 @@ class HtmlToJsonFormatParserVisitorStateful {
 			}
 		}
 		return false;
+	}
+
+	private function innerText($node) {
+		return $node->textContent;
+		//echo "visit: {$node->textContent} \n";
+		if( $node instanceof DOMText ) {
+			return $node->textContent;
+		} else if( $node instanceof DOMElement ) {
+			//echo "  {$node->tagName}\n";
+			$resultText = '';
+			$nodes = $node->childNodes;
+			for( $i = 0; $i < $nodes->length; $i++ ) {
+				$innerNode = $nodes->item($i);
+				$resultText .= $this->innerText( $innerNode );
+			}
+			return $resultText;
+		}
+	}
+
+	private function appendText( $text ) {
+		$children = $this->currentContainer->getChildren();
+		if( sizeof($children) > 0  ) {
+			$last = array_pop($children);
+			if( $last->getType() == 'text' ) {
+				$last->setText( $last->getText() . $text );
+				return;
+			}
+		}
+		$node = new JsonFormatNode( "text", $text );
+		$this->currentContainer->addChild($node);
 	}
 }
