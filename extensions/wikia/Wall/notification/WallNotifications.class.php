@@ -106,6 +106,15 @@ class WallNotifications {
 	public function getCounts($userId) {
 		$wikiList = $this->getWikiList($userId);
 
+		// prefetch data
+		$keys = array();
+		$wno = new WallNotificationsOwner;
+		foreach ($wikiList as $wiki) {
+			$keys[] = $this->getKey($userId,$wiki['id']);
+			$keys[] = $wno->getKey($wiki['id'],$userId);
+		}
+		$this->app->wg->Memc->prefetch($keys);
+
 		$output = array();
 		$total = 0;
 		foreach($wikiList as $wiki) {
