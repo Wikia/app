@@ -84,5 +84,7 @@ function saveData($cssEditData) {
 		fputcsv($file, $cssEditData);
 		flock($file, LOCK_UN);
 		fclose($file);
+	} else {
+		echo "Cannot write data to file\n";
 	}
 }
