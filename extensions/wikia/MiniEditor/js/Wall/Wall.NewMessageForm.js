@@ -18,6 +18,8 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 			limit: 256,
 			extraSpace: 15
 		});
+
+		this.messageTitle.blur(this.proxy(this.postNewMessage_blur));
 	},
 
 	initEditor: function(event) {
@@ -59,7 +61,7 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 	},
 
 	getMessageBody: function() {
-		return this.messageBody.data('wikiaEditor').getContent();
+		return this.messageBody.data('wikiaEditor').getContent().trim();
 	},
 
 	// Return an empty string if we don't need to convert,
@@ -90,6 +92,15 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 
 	postNewMessage_ChangeText_handleContent: function() {
 		// empty override
+	},
+
+	// deal with empty titles containing only white space
+	postNewMessage_blur: function() {
+		var title = this.messageTitle.val();
+
+		if (title.length > 0) {
+			this.messageTitle.val(title.trim());
+		}
 	}
 });
 
