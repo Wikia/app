@@ -50,17 +50,26 @@ class HtmlToJsonFormatParserVisitorStateful {
 	 */
 	public function visitElement( DOMElement $node ) {
 		$headerTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7'];
-		$paragraphTags = ['p'];
 		if( in_array( $node->tagName, $headerTags ) ) {
 			$this->visitHTag( $node );
 		} else if( $node->tagName == 'a' ) {
 			$this->visitA( $node );
-		}else if( $node->tagName == 'b' ) {
+		} else if( $node->tagName == 'span' ) {
+			$this->visitSpan( $node );
+		} else if( $node->tagName == 'b' ) {
 			$this->visitB( $node );
-		}else if( $node->tagName == 'figure' ) {
+		} else if( $node->tagName == 'i' ) {
+			$this->visitI( $node );
+		} else if( $node->tagName == 'figure' ) {
 			$this->visitFigure( $node );
-		} else if ( in_array($node->tagName, $paragraphTags) ) {
+		} else if ( $node->tagName == 'p' ) {
 			$this->visitP( $node );
+		} else if ( $node->tagName == 'div' ) {
+			$this->visitDiv( $node );
+		} else if ( $node->tagName == 'ul' ) {
+			$this->visitList( $node, 'ul' );
+		} else if ( $node->tagName == 'ol' ) {
+			$this->visitList( $node, 'ol' );
 		}
 	}
 
@@ -109,15 +118,28 @@ class HtmlToJsonFormatParserVisitorStateful {
 	 * @param DOMElement $node
 	 */
 	public function visitB( DOMElement $node ) {
-		$text = $this->innerText($node);
-		$this->appendText( $text );
+		$this->iterate( $node->childNodes );
+	}
+
+	/**
+	 * @param DOMElement $node
+	 */
+	public function visitI( DOMElement $node ) {
+		$this->iterate( $node->childNodes );
+	}
+
+	/**
+	 * @param DOMElement $node
+	 */
+	public function visitSpan( DOMElement $node ) {
+		$this->iterate( $node->childNodes );
 	}
 
 	/**
 	 * @param DOMElement $node
 	 */
 	public function visitFigure( DOMElement $node ) {
-		$text = $this->innerText($node);
+		//$text = $this->innerText($node);
 		$node = new JsonFormatNode("figure");
 		$this->currentContainer->addChild($node);
 	}
@@ -126,12 +148,46 @@ class HtmlToJsonFormatParserVisitorStateful {
 	 * @param DOMElement $node
 	 */
 	public function visitP( DOMElement $node ) {
-		/*
-		$text = $node->textContent;
-		$node = new JsonFormatNode( "text", $text );
-		$this->currentContainer->addChild($node);
-		*/
 		$this->iterate( $node->childNodes );
+	}
+
+	/**
+	 * @param DOMElement $node
+	 */
+	public function visitDiv( DOMElement $node ) {
+		//$this->iterate( $node->childNodes );
+	}
+
+	/**
+	 * @param DOMElement $node
+	 */
+	public function visitList( DOMElement $node, $listType = 'ul' ) {
+		$list = new JsonFormatNode($listType);
+		$this->pushNode( $list );
+		$nodes = $node->childNodes;
+		for( $i = 0; $i < $nodes->length; $i++ ) {
+			$childNode = $nodes->item($i);
+			if( $childNode instanceof DOMElement && $childNode->tagName == 'li' ) {
+				$li = new JsonFormatNode("li");
+				$this->pushNode( $li );
+				$this->iterate( $childNode->childNodes );
+				$this->popNode( $li );
+			}
+		}
+		$this->popNode( $list );
+	}
+
+	private function pushNode( $node ) {
+		$this->currentContainer = $node;
+		$this->jsonStack[sizeof($this->jsonStack)-1]->addChild( $node );
+		$this->jsonStack[] = $node;
+	}
+
+	private function popNode( $node ) {
+		if ( $this->jsonStack[sizeof($this->jsonStack)-1] === $node ) {
+			array_pop($this->jsonStack);
+			$this->currentContainer = $this->jsonStack[sizeof($this->jsonStack)-1];
+		}
 	}
 
 	/**

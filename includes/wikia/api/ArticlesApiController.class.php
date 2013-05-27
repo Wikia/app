@@ -46,6 +46,12 @@ class ArticlesApiController extends WikiaApiController {
 			return "<a href=\"#\">{$node->getText()}</a>";
 		} else if ( $node->getType() == 'text' ) {
 			return $node->getText();
+		} else if ( $node->getType() == 'ul' ) {
+			return "<ul>{$this->iterate( $node )}</ul>";
+		} else if ( $node->getType() == 'ol' ) {
+			return "<ol>{$this->iterate( $node )}</ol>";
+		} else if ( $node->getType() == 'li' ) {
+			return "<li>{$this->iterate( $node )}</li>";
 		}
 	}
 
@@ -66,6 +72,7 @@ class ArticlesApiController extends WikiaApiController {
 		$json = $jsonFormatService->getJsonFormatForArticleId( $articleId );
 
 		$text = $this->toHtml($json);
+		header('Content-Type: text/html; charset=utf-8');
 		die($text);
 	}
 
