@@ -163,6 +163,7 @@ class WallNotifications {
 		} else {
 			$output = array();
 		}
+		WikiFactory::prefetchWikisById(array_keys($val),WikiFactory::PREFETCH_VARIABLES);
 		foreach($val as $wikiId => $wikiSitename) {
 			$output[] = array(
 				'id' => $wikiId,
@@ -240,9 +241,14 @@ class WallNotifications {
 			),
 			__METHOD__
 		);
+		$ids = array();
+		foreach ($res as $row) {
+			$ids[] = $row->wiki_id;
+		}
+		WikiFactory::prefetchWikisById($ids,WikiFactory::PREFETCH_WIKI_METADATA);
 		$output = array();
-		while($row = $db->fetchRow($res)) {
-			$output[ $row['wiki_id'] ] = $sitename = WikiFactory::getWikiByID( $row['wiki_id'] )->city_title;
+		foreach ($ids as $id) {
+			$output[ $id ] = WikiFactory::getWikiByID( $id )->city_title;
 		}
 		return $output;
 	}
