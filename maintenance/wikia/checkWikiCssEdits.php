@@ -1,4 +1,5 @@
 <?php
+require_once( dirname( __FILE__ ) . '/../commandLine.inc' );
 
 const WIKIA_CSS = 'Wikia.css';
 const COMMON_CSS = 'Common.css';
@@ -21,10 +22,10 @@ if (!empty($pageId)) {
 	echo "checking number of contributors...\n";
 
 	$numContributors = countContributors($pageId, $ts, $db);
-	echo 'There is ' . $numContributors . ' contributors';
+	echo "There is " . $numContributors . " contributors\n";
 
 	$numEdits = countCssEdits($pageId, $ts, $db);
-	echo 'There is ' . $numEdits . ' edits';
+	echo "There is " . $numEdits . " edits\n";
 
 	$cssEditData = array( $wgCityId, $numContributors, $numEdits );
 } else {
