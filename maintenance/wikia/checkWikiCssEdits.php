@@ -22,38 +22,33 @@ $cssEditData = array();
 if (!empty($pageId)) {
 	echo "checking number of contributors...\n";
 
-	$numContributors = countContributors($pageId, $ts, $db);
-	echo "There is " . $numContributors . " contributors\n";
+	$numContributorsWikia = countContributors($pageId, $ts, $db);
+	echo "There is " . $numContributorsWikia . " contributors\n";
 
-	$numEdits = countCssEdits($pageId, $ts, $db);
-	echo "There is " . $numEdits . " edits\n";
-
-	$cssEditData = array( $wgCityId, $numContributors, $numEdits, WIKIA_CSS );
+	$numEditsWikia = countCssEdits($pageId, $ts, $db);
+	echo "There is " . $numEditsWikia . " edits\n";
 } else {
-	$cssEditData = array( $wgCityId, 0, 0, WIKIA_CSS);
+	$numContributorsWikia = $numEditsWikia = 0;
 	echo "ZERO\n";
 }
 
-saveData($cssEditData);
-
 // Getting data about Common.css
 $pageId = getCssPageId($db, COMMON_CSS);
-$cssEditData = array();
 
 if (!empty($pageId)) {
 	echo "checking number of contributors...\n";
 
-	$numContributors = countContributors($pageId, $ts, $db);
-	echo "There is " . $numContributors . " contributors\n";
+	$numContributorsCommon = countContributors($pageId, $ts, $db);
+	echo "There is " . $numContributorsCommon . " contributors\n";
 
-	$numEdits = countCssEdits($pageId, $ts, $db);
-	echo "There is " . $numEdits . " edits\n";
-
-	$cssEditData = array( $wgCityId, $numContributors, $numEdits, COMMON_CSS );
+	$numEditsCommon = countCssEdits($pageId, $ts, $db);
+	echo "There is " . $numEditsCommon . " edits\n";
 } else {
-	$cssEditData = array( $wgCityId, 0, 0, COMMON_CSS );
+	$numContributorsCommon = $numEditsCommon = 0;
 	echo "ZERO\n";
 }
+
+$cssEditData = array( $wgCityId, $numContributorsWikia, $numEditsWikia, $numContributorsCommon, $numEditsCommon);
 
 saveData($cssEditData);
 
