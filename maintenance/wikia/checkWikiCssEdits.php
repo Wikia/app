@@ -3,31 +3,44 @@
 const WIKIA_CSS = 'Wikia.css';
 const COMMON_CSS = 'Common.css';
 
+const CSV_FILE = 'cssEdits.csv';
+
 global $wgCityId, $wgSitename;
 
 $pageId = getCssPageId();
+$cssEditData = array();
 
 if (!empty($pageId)) {
 	echo 'Wiki name: '. $wgSitename;
 	echo "checking number of contributors...\n";
 
+	$cssEditData[] = $wgCityId;
+	$cssEditData[] = $wgSitename;
+
 	$numContributors = countContributors($pageId);
 	echo 'There is ' . $numContributors . ' contributors';
 
+	$cssEditData[] = $numContributors;
+
 	$numEdits = countCssEdits($pageId);
 	echo 'There is ' . $numEdits . ' edits';
+
+	$cssEditData[] = $numEdits;
+
+	saveData($cssEditData);
 }
 
 function getCssPageId() {
 	global $wgExternalSharedDB;
 	$db = wfGetDb(DB_SLAVE, array(), $wgExternalSharedDB);
 
-	$cond = ['page_title' => 'Wikia.css'];
+	$cond = [
+		'page_title' => WIKIA_CSS,
+		'page_namespace' => NS_MEDIAWIKI
+	];
 
 	$result = $db->select('page', 'page_id', $cond);
 
-	//FIXME: There is more than one page with page_title == Wikia.css on my slave-dev but each has different page_namespace
-	//FIXME: I'm think it is NS=8 but not sure
 	$row = $db->fetchRow($result);
 
 	return $row['page_id'];
@@ -57,4 +70,12 @@ function countCssEdits($pageId) {
 	$row = $db->fetchRow($result);
 
 	return $row['edits'];
+}
+
+function saveData($cssEditData) {
+	$file = fopen(CSV_FILE, 'a');
+	if ($file) {
+		fputcsv($file, $cssEditData);
+		fclose($file);
+	}
 }
