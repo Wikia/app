@@ -381,6 +381,23 @@ class ArticlesApiController extends WikiaApiController {
 
 		wfProfileOut( __METHOD__ );
 	}
+	
+	/**
+	 * Delivers a JSON response for infoboxes for a given page ID
+	 * 
+	 * @requestParam string $ids A string with a comma-separated list of article IDs
+	 * 
+	 * @responseParam array $items A list of results with the article ID as the index. Each result is an array keying article infobox field to value.
+	 * 
+	 */
+	public function getInfoboxes() {
+		$expectedIds = explode( ',', $this->getRequest()->getVal( 'ids', '' ) );
+		if ( empty( $expectedIds ) ) {
+			throw new InvalidParameterApiException( 'ids' );
+		}
+		$response = $this->getResponse();
+		$response->setData( [ 'items' => (new InfoboxesService())->getForPageIds( $expectedIds ) ] );
+	}
 
 	/**
 	 * Get details about one or more articles, , those in the Special namespace (NS_SPECIAL) won't produce any result
