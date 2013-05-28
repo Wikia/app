@@ -28,7 +28,7 @@ class WAMPageController extends WikiaController
 		$title = $this->wg->Title;
 		if( $title instanceof Title ) {
 			$this->redirectIfMisspelledWamMainPage($title);
-			
+
 			$this->subpageText = $title->getSubpageText();
 			$currentTabIndex = $this->model->getTabIndexBySubpageText($this->subpageText);
 
@@ -63,7 +63,7 @@ class WAMPageController extends WikiaController
 		$this->selectedVerticalId = ($this->selectedVerticalId !== '') ? $this->selectedVerticalId : null;
 		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
 		$this->selectedDate = ($this->selectedDate !== '') ? $this->selectedDate : null;
-		
+
 		$this->page = $this->getVal('page', $this->model->getFirstPage());
 
 		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
@@ -114,7 +114,7 @@ class WAMPageController extends WikiaController
 			$date = isset($this->selectedDate) ? strtotime($this->selectedDate) : null;
 			$page = $this->page;
 		}
-		
+
 		$indexParams = [
 			'searchPhrase' => $this->searchPhrase,
 			'verticalId' => $this->selectedVerticalId,
@@ -122,8 +122,8 @@ class WAMPageController extends WikiaController
 			'date' => $date,
 			'page' => $page,
 		];
-		
-		return array_merge($indexParams, $this->request->getParams());
+
+		return $indexParams;
 	}
 
 	/**
@@ -170,7 +170,7 @@ class WAMPageController extends WikiaController
 
 		return $timestamp;
 	}
-	
+
 	protected function getUrlWithAllParams() {
 		$url = '#';
 		$title = $this->wg->Title;
@@ -178,26 +178,26 @@ class WAMPageController extends WikiaController
 			$url = $title->getLocalURL($this->getIndexParams(true));
 			$url = urldecode($url);
 		}
-		
+
 		return $url;
 	}
 
 	private function redirectIfUnknownTab($currentTabIndex, $title) {
 		// we don't check here if $title is instance of Title
 		// because this method is called after this check and isWAMPage() check
-		
+
 		if( $title->isSubpage() && !$currentTabIndex ) {
 			$this->wg->Out->redirect($this->model->getWAMSubpageUrl($title), HTTP_REDIRECT_PERM);
 		}
 	}
-	
+
 	private function redirectIfFirstTab($tabIndex, $subpageText) {
 		// we don't check here if $title is instance of Title
 		// because this method is called after this check and isWAMPage() check
-		
+
 		$isFirstTab = ($tabIndex === WAMPageModel::TAB_INDEX_TOP_WIKIS && !empty($subpageText));
 		$mainWAMPageUrl = $this->model->getWAMMainPageUrl();
-		
+
 		if( $isFirstTab && !empty($mainWAMPageUrl) ) {
 			$this->wg->Out->redirect($mainWAMPageUrl, HTTP_REDIRECT_PERM);
 		}
@@ -206,7 +206,7 @@ class WAMPageController extends WikiaController
 	private function redirectIfMisspelledWamMainPage($title) {
 		// we don't check here if $title is instance of Title
 		// because this method is called after this check and isWAMPage() check
-		
+
 		$dbkey = $title->getDbKey();
 		$mainPage = $this->model->getWAMMainPageName();
 		$isMainPage = (mb_strtolower($dbkey) === mb_strtolower($mainPage));
@@ -216,7 +216,7 @@ class WAMPageController extends WikiaController
 			$this->wg->Out->redirect($this->model->getWAMMainPageUrl(), HTTP_REDIRECT_PERM);
 		}
 	}
-	
+
 	public function faq() {
 		$this->wamPageUrl = $this->model->getWAMMainPageUrl();
 	}

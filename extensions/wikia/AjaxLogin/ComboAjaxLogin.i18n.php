@@ -1277,6 +1277,7 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
@@ -1285,6 +1286,7 @@ $messages['uk'] = array(
 	'comboajaxlogin-actionmsg' => 'Для виконання цієї дії вам необхідно спочатку увійти в систему або створити обліковий запис',
 	'comboajaxlogin-actionmsg-protected' => 'Для виконання цієї дії вам необхідно спочатку увійти в систему або створити обліковий запис',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Назад',
+	'comboajaxlogin-connectmarketing-forward' => 'Початок роботи »',
 );
 
 /** Vietnamese (Tiếng Việt)

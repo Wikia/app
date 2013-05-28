@@ -647,7 +647,8 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return String
 	 */
 	public function getHubUrl($langCode, $verticalId) {
-		$wikiId = WikiaHubsServicesHelper::getCorporateWikiIdByLang($langCode);
+		$corporateModel = new WikiaCorporateModel();
+		$wikiId = $corporateModel->getCorporateWikiIdByLang($langCode);
 		$hubName = WikiaHubsServicesHelper::getHubName($wikiId, $verticalId);
 
 		$title = GlobalTitle::newFromText($hubName, NS_MAIN, $wikiId);

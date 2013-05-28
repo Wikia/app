@@ -1165,7 +1165,7 @@ $messages['ms'] = array(
 	'userlogin-forgot-password' => 'Lupa kata laluan anda?',
 	'userlogin-forgot-password-button' => 'Sambung',
 	'userlogin-forgot-password-go-to-login' => 'Sudah dapat kata laluan? [[Special:UserLogin|Log masuk]]',
-	'userlogin-remembermypassword' => 'Kekal log masuk', # Fuzzy
+	'userlogin-remembermypassword' => 'Kekal log masuk',
 	'userlogin-error-noname' => 'Maaf, sila isi ruangan nama pengguna.',
 	'userlogin-error-sessionfailure' => 'Sesi log masuk anda sudah habis. Sila log masuk semula.',
 	'userlogin-error-nosuchuser' => 'Kami tidak mengenali nama ini. Jangan lupa, nama pengguna adalah peka kecil besar huruf.',
@@ -2350,13 +2350,17 @@ _______________________________________
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Simon Shek
  */
 $messages['zh-hant'] = array(
 	'userlogin-login-heading' => '登入',
 	'userlogin-forgot-password' => '忘記密碼',
-	'userlogin-remembermypassword' => '保持登錄狀態', # Fuzzy
+	'userlogin-forgot-password-button' => '繼續',
+	'userlogin-forgot-password-go-to-login' => '已經有密碼嗎？[[Special:UserLogin|登入]]',
+	'userlogin-remembermypassword' => '保持登入狀態',
 	'userlogin-error-noname' => '請填寫使用者名欄位。',
 	'userlogin-error-sessionfailure' => '您的登錄已超時。請重新登錄。',
+	'userlogin-error-nosuchuser' => '嗯，我們找不到這個用戶名。別忘記用戶名是區分大小寫。',
 	'userlogin-error-wrongpassword' => '密碼錯誤。請確認 caps lock 已關閉，然後再試。',
 	'userlogin-error-wrongpasswordempty' => '請輸入密碼。',
 	'userlogin-error-resetpass_announce' => '看起來您使用的是臨時密碼。選擇新的密碼繼續登錄。',
@@ -2366,12 +2370,22 @@ $messages['zh-hant'] = array(
 	'userlogin-error-cantcreateaccount-text' => '您的 IP 位址不被允許創建新的帳戶。',
 	'userlogin-error-userexists' => '此用戶名已有人使用，請嘗試其他名稱。',
 	'userlogin-error-invalidemailaddress' => '請輸入有效的電子郵件地址',
+	'userlogin-get-account' => '沒有帳號？<a href="$1" tabindex="$2">創建新帳號</a>',
 	'userlogin-error-invalid-username' => '無效的使用者名稱',
+	'userlogin-error-userlogin-unable-info' => '抱歉，我們現時不能建立你的帳號。',
 	'userlogin-error-user-not-allowed' => '此使用者名禁止使用。',
+	'userlogin-error-captcha-createaccount-fail' => '輸入的字符不匹配，請重新輸入！',
+	'userlogin-error-userlogin-bad-birthday' => '哎呀，請填寫年、月、和日。',
+	'userlogin-error-externaldberror' => '抱歉！目前系統出錯，請稍後再試。',
+	'userlogin-error-noemailtitle' => '請輸入有效的電子郵件地址。',
+	'userlogin-error-acct_creation_throttle_hit' => '抱歉，此 IP 地址今天已創建了太多帳戶。請稍後再試。',
+	'userlogin-error-resetpass_forbidden' => '無法更改密碼',
 	'userlogin-password-page-title' => '更改您的密碼',
 	'userlogin-oldpassword' => '舊密碼',
 	'userlogin-newpassword' => '新密碼',
 	'userlogin-retypenew' => '重新輸入新密碼',
+	'userlogin-password-email-greeting' => '$USERNAME：',
+	'userlogin-provider-or' => '或',
 	'userlogin-facebook-show-preferences' => '顯示 Facebook 選項',
 	'userlogin-facebook-hide-preferences' => '隱藏 Facebook 選項',
 	'userlogin-loginreqlink' => '登入',

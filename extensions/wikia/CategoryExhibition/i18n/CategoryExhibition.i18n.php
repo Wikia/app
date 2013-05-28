@@ -615,9 +615,14 @@ $messages['tr'] = array(
 $messages['uk'] = array(
 	'category-exhibition-sorttype' => 'Тип сортування:',
 	'category-exhibition-alphabetical' => 'Алфавітний',
+	'category-exhibition-mostvisited' => 'Популярні',
+	'category-exhibition-recentedits' => 'Нещодавно відредаговані',
 	'category-exhibition-page-header' => 'Сторінки в категорії "$1"',
 	'category-exhibition-subcategories-header' => 'Підкатегорії',
 	'category-exhibition-media-header' => 'Файли в категорії "$1"',
+	'category-exhibition-blogs-header' => 'Записи у блозі',
+	'category-exhibition-display-old' => 'Подання категорії списком',
+	'category-exhibition-display-new' => 'Подання категорії піктограмами',
 );
 
 /** Simplified Chinese (中文（简体）‎)

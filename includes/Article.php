@@ -320,6 +320,7 @@ class Article extends Page {
 				$this->mRevision = Revision::newFromId( $oldid );
 				if ( !$this->mRevision ) {
 					wfDebug( __METHOD__ . " failed to retrieve specified revision, id $oldid\n" );
+					Wikia::log(__METHOD__, 1, "failed to retrieve specified revision, id $oldid", true); # Wikia change - @author macbre
 					wfProfileOut( __METHOD__ );
 					return false;
 				}
@@ -327,6 +328,7 @@ class Article extends Page {
 		} else {
 			if ( !$this->mPage->getLatest() ) {
 				wfDebug( __METHOD__ . " failed to find page data for title " . $this->getTitle()->getPrefixedText() . "\n" );
+				Wikia::log(__METHOD__, 2, "failed to find page data for title " . $this->getTitle()->getPrefixedText() , true); # Wikia change - @author macbre
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
@@ -334,6 +336,7 @@ class Article extends Page {
 			$this->mRevision = $this->mPage->getRevision();
 			if ( !$this->mRevision ) {
 				wfDebug( __METHOD__ . " failed to retrieve current page, rev_id " . $this->mPage->getLatest() . "\n" );
+				Wikia::log(__METHOD__, 3, "failed to retrieve current page, rev_id " . $this->mPage->getLatest(), true); # Wikia change - @author macbre
 				wfProfileOut( __METHOD__ );
 				return false;
 			}

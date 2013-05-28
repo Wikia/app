@@ -46,6 +46,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.7';
 
 	protected $visualizationModel = null;
+	protected $collectionsModel;
 
 	protected $excludeUsersFromInterstitial = array(
 		22439, //Wikia
@@ -114,6 +115,17 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 		return $this->visualizationModel;
 	}
+
+	/**
+	 * @return WikiaCollectionsModel
+	 */
+	protected function getCollectionsModel() {
+		if (empty($this->collectionsModel)) {
+			$this->collectionsModel = new WikiaCollectionsModel();
+		}
+		return $this->collectionsModel;
+	}
+
 
 	/**
 	 * @desc Returns WikiFactory variable's value if not found returns 0 and adds information to logs
@@ -524,6 +536,12 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $wikiInfo;
 	}
 
+	public function isWikiBlocked($wikiId, $langCode) {
+		$visualization = $this->getVisualization();
+		$flags = $this->getFlag($wikiId, $langCode);
+		return $visualization->isBlockedWiki($flags);
+	}
+
 	public function getImageDataForSlider($wikiId, $imageName) {
 		$newFilesUrl = $this->getNewFilesUrl($wikiId);
 		$imageData = $this->getImageData($imageName);
@@ -869,6 +887,12 @@ class WikiaHomePageHelper extends WikiaModel {
 		return false;
 	}
 
+	public function getFlag($wikiId, $langCode) {
+		$visualization = $this->getVisualization();
+		$flags = $visualization->getFlag($wikiId, $langCode);
+		return $flags;
+	}
+
 	public function removeFlag($wikiId, $flag, $corpWikiId, $langCode) {
 		wfProfileIn(__METHOD__);
 
@@ -917,7 +941,12 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function getWikisForStaffTool($options) {
-		return $this->getVisualization()->getWikisForStaffTool($options);
+		$wikiList = $this->getVisualization()->getWikisForStaffTool($options);
+
+		foreach ($wikiList as &$wiki) {
+			$wiki->collections = $this->getCollectionsModel()->getCollectionsByCityId($wiki->city_id);
+		}
+		return $wikiList;
 	}
 
 	public function getWamScore($wikiId) {
