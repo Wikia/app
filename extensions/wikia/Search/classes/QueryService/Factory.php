@@ -20,22 +20,9 @@ class Factory
 	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	public function get( DependencyContainer $container ) {
-		$config = $container->getConfig();
 		$this->validateClient( $container );
-		
-		if ( $config->isInterWiki() ) {
-			return new Select\InterWiki( $container );
-		}
-		if ( $config->getVideoSearch() ) {
-			return new Select\Video( $container );
-		}
-		if ( $config->getDirectLuceneQuery() ) {
-			return new Select\Lucene( $container );
-		}
-		if ( $config->getVideoTitleSearch() ) {
-			return new Select\VideoTitle( $container );
-		}
-		return new Select\OnWiki( $container );
+		$class = $container->getConfig()->getQueryService();
+		return new $class( $container );
 	}
 	
 	/**

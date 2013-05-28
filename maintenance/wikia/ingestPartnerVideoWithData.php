@@ -27,10 +27,11 @@ Options:
   -r				Reingest videos (overwrite existing)
   -i <time>			Do not reingest videos if they were uploaded in the last <time> seconds
   -a				get all videos
-  
+  --ra				use ooyala remote asset to ingest video
+
 Args:
   provider          Partner to import video from. Int defined in VideoPage.php.
-                    If none is specified, script will ingest content from all 
+                    If none is specified, script will ingest content from all
 		    supported premium providers.
 
 
@@ -51,6 +52,7 @@ $debug = isset($options['d']);
 $reupload = isset($options['r']);
 $ignoreRecent = isset($options['i']) ? $options['i'] : 0;
 $getAllVideos = isset($options['a']);
+$remoteAsset = isset( $options['ra'] );
 
 // INPUT VALIDATION
 
@@ -123,7 +125,14 @@ foreach ($providersVideoFeed as $provider) {
 		default:
 	}
 
-	$params = array('debug'=>$debug, 'startDate'=>$startDate, 'endDate'=>$endDate, 'ignorerecent'=>$ignoreRecent);
+	$params = array(
+		'debug' => $debug,
+		'startDate' => $startDate,
+		'endDate' => $endDate,
+		'ignorerecent' => $ignoreRecent,
+		'remoteAsset' => $remoteAsset,
+	);
+
 	if (!empty($ingestionData['keyphrases'])) {
 		$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
 	}

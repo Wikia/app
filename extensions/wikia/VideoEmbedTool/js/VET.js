@@ -45,15 +45,15 @@
 	function VET_editVideo() {
 		$('#VideoEmbedMain').hide();
 
-		var callback = function(o) {
-			var data = VET_embedPresets;
+		var callback = function(data) {
+			var presets = VET_embedPresets;
 
-			VET_displayDetails(o.responseText, data);
+			VET_displayDetails(data.responseText, presets);
 
 			$('#VideoEmbedBack').hide();
 
 			setTimeout(function() {
-				if ( data.thumb || data.thumbnail ) {
+				if ( presets.thumb || presets.thumbnail ) {
 		             $("#VideoEmbedThumbOption").prop('checked', true);
 		             $('#VET_StyleThumb').addClass('selected');
 		        }  else {
@@ -65,22 +65,22 @@
 		             $('#VET_StyleNoThumb').addClass('selected');
 		        }
 
-				if(data.align && data.align == 'left') {
+				if(presets.align && presets.align == 'left') {
 					$('#VideoEmbedLayoutLeft').attr('checked', 'checked').parent().addClass('selected');
-				} else if (data.align && data.align == 'center') {
+				} else if (presets.align && presets.align == 'center') {
 					$('#VideoEmbedLayoutCenter').attr('checked', 'checked').parent().addClass('selected');
 				} else {
 					$('#VideoEmbedLayoutRight').attr('checked', 'checked').parent().addClass('selected');
 				}
 
-				if(data.width) {
-					VET_readjustSlider( data.width );
-					$('#VideoEmbedManualWidth').val( data.width );
+				if(presets.width) {
+					VET_readjustSlider( presets.width );
+					$('#VideoEmbedManualWidth').val( presets.width );
 				}
 
 			}, 200);
-			if(data.caption) {
-				$('#VideoEmbedCaption').val(data.caption);
+			if(presets.caption) {
+				$('#VideoEmbedCaption').val(presets.caption);
 			}
 
 			// show width slider
@@ -256,8 +256,8 @@
 
 	/* ajax call for first screen (aka video search) */
 	function VET_loadMain(searchOrder) {
-		var callback = function(o) {
-			$('#VideoEmbedMain').html(o.responseText);
+		var callback = function(data) {
+			$('#VideoEmbedMain').html(data.responseText);
 			$('#VideoEmbedUrl').focus();
 			VET_updateHeader();
 
@@ -316,7 +316,14 @@
 
 		// wlee: responseText could include <script>. Use jQuery to parse
 		// and execute this script
-		$('#VideoEmbed' + VET_curScreen).html(responseText);
+		$('#VideoEmbedDetails').html(responseText);
+
+		var element = $('<div></div>').appendTo('#VideoEmbedThumb');
+
+		require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+			new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
+		});
+
 		VET_updateHeader();
 
 
@@ -417,14 +424,10 @@
 			params.push('caption=' + encodeURIComponent( $('#VideoEmbedCaption').val() ) );
 		}
 
-		/* Allow extensions to add extra params to ajax call
-		 * So far only used by article placeholders
-		 * Making this event driven is tricky because there can be more than 'add video' element on a page.
-		 *   ex: MiniEditor and Article Placeholder
-		 */
+		// Allow extensions to add extra params to ajax call
 		params = params.concat(VET_options.insertFinalVideoParams || []);
 
-		var callback = function(o, status) {
+		var callback = function(data, status) {
 			if(status == 'error') {
 				GlobalNotification.show( $.msg('vet-insert-error'), 'error', null, VET_notificationTimout );
 			} else if (status == 'success') {
@@ -434,13 +437,13 @@
 				}
 				switch($.trim(screenType)) {
 					case 'error':
-						o.responseText = o.responseText.replace(/<script.*script>/, "" );
-						GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
+						data.responseText = data.responseText.replace(/<script.*script>/, "" );
+						GlobalNotification.show( data.responseText, 'error', null, VET_notificationTimout );
 						break;
 					case 'summary':
 						VET_switchScreen('Summary');
 						$('#VideoEmbedBack').css('display', 'none');
-						$('#VideoEmbed' + VET_curScreen).html(o.responseText);
+						$('#VideoEmbed' + VET_curScreen).html(data.responseText);
 						VET_updateHeader();
 
 						if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
@@ -550,18 +553,18 @@
 	function VET_sendQueryEmbed(query) {
 		// If callbackAfterSelect returns false, end here. Otherwise, move on to the next screen.
 		if(VET_callbackAfterSelect(query) !== false) {
-			var callback = function(o) {
+			var callback = function(data) {
 				var screenType = VET_jqXHR.getResponseHeader('X-screen-type');
 				if(typeof screenType == "undefined") {
 					screenType = VET_jqXHR.getResponseHeader('X-Screen-Type');
 				}
 
 				if( 'error' == $.trim(screenType) ) {
-					GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
+					GlobalNotification.show( data.responseText, 'error', null, VET_notificationTimout );
 				} else {
 					// attach handlers - close preview on VET modal close (IE bug fix)
 					VETExtended.cachedSelectors.closePreviewBtn.click();
-					VET_displayDetails(o.responseText);
+					VET_displayDetails(data.responseText);
 				}
 
 			};
@@ -656,8 +659,10 @@
 			this.cachedSelectors.carousel.on('click', 'li > a', function(event) {
 				event.preventDefault();
 				VET_sendQueryEmbed($(this).attr('href'));
+                var node = $(event.currentTarget).data();
+                var trackData = node.phrase + '[' + node.pos + ']';
 				VET_tracking({
-					label: that.carouselMode === 'search' ? 'add-video' : 'add-video-suggested'
+					label: that.carouselMode === 'search' ? 'add-video-' + trackData  : 'add-video-suggested-' + trackData
 				});
 			});
 
@@ -707,7 +712,8 @@
 	            that.updateResultCaption();
 				that.cachedSelectors.closePreviewBtn.click();
 	            that.cachedSelectors.carousel.find('li').remove();
-	            that.addSuggestions({items: that.suggestionsCachedStuff.cashedSuggestions});
+	            that.addSuggestions({ searchQuery: that.suggestionsCachedStuff.suggestionQuery, items: that.suggestionsCachedStuff.cashedSuggestions });
+                that.carouselMode = 'suggestion';
 	            if (that.cachedSelectors.carousel.resetPosition) that.cachedSelectors.carousel.resetPosition();
 
 	            that.isCarouselCheck();
@@ -742,7 +748,7 @@
 					that.fetchSearch();
 
 					VET_tracking({
-						label: that.searchCachedStuff.searchType === 'local' ? 'find-local' : 'find-wikia-library'
+						label: that.searchCachedStuff.searchType === 'local' ? 'find-local-' + keywords : 'find-wikia-library-' + keywords
 					});
 				}
 			});
@@ -836,7 +842,7 @@
 		addSuggestions: function(data) {
 
 			var html,
-				template = '{{#items}}<li><figure>{{{thumbnail}}}<figcaption><strong>{{trimTitle}}</strong></figcaption></figure><a href="{{url}}" title="{{title}}">Add video</a></li>{{/items}}';
+				template = '{{#items}}<li><figure>{{{thumbnail}}}<figcaption><strong>{{trimTitle}}</strong></figcaption></figure><a href="{{url}}" title="{{title}}" data-phrase="' + data.searchQuery + '" data-pos="{{pos}}">Add video</a></li>{{/items}}';
 
 			html = $.mustache(template, data);
 			this.cachedSelectors.carousel.find('ul').append(html);
@@ -905,15 +911,12 @@
 		// METHOD: show preview of the selected video
 		showVideoPreview: function(data) {
 			var previewWrapper = this.cachedSelectors.previewWrapper,
-				videoWrapper = this.cachedSelectors.videoWrapper;
-			if ( data.playerAsset && data.playerAsset.length > 0 ) { // screenplay special case
-				$.getScript(data.playerAsset, function() {
-					videoWrapper.html( '<div id="'+data.videoEmbedCode.id+'" class="Wikia-video-enabledEmbedCode"></div>');
-					$('body').append('<script>' + data.videoEmbedCode.script + ' loadJWPlayer(); </script>');
-				});
-			} else {
-				videoWrapper.html('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>');
-			}
+				videoWrapper = this.cachedSelectors.videoWrapper,
+				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
+
+			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
+				new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
+			});
 
 			// expand preview is hidden
 			if (!previewWrapper.is(':visible')) {
@@ -986,12 +989,16 @@
 							length = items.length;
 
 						if (length > 0) {
+                            VET_tracking({
+                                label: 'suggestions-loaded-' + data.searchQuery
+                            });
 
 							that.trimTitles(data);
 							that.addSuggestions(data);
 
 							// update results counter
 							that.suggestionsCachedStuff.fetchedResoultsCount = data.nextStartFrom;
+							that.suggestionsCachedStuff.suggestionQuery = data.searchQuery;
 
 							// cache fetched items
 							for (i = 0; i < length; i += 1) {

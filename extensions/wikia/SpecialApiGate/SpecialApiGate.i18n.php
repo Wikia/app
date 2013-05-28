@@ -7,7 +7,7 @@
 
 // Include the messages from the ApiGate library (they're compatible with MediaWiki).
 global $IP;
-include "$IP/lib/ApiGate/i18n/ApiGate_i18n.strings.php";
+include "$IP/lib/vendor/ApiGate/i18n/ApiGate_i18n.strings.php";
 $apiGateMessages = $messages; // cache to merge together later (SpecialApiGate messages will take preference over ApiGate library messages).
 
 $messages = array();
@@ -19,9 +19,9 @@ $messages['en'] = array(
 	'apigate-nologin' => 'Please Log in',
 	'apigate-nologintext' => 'In order to get an API key, you must log in to a Wikia account.  After login, you will be able to track the API keys for all of your applications in one place - the API Control Panel.',
 	'apigate-login-button' => 'Log in',
-	
+
 	'apigate-backtomain' => '&lt; Back to API Control Panel',
-	
+
 	'apigate-error-admins-only' => 'Sorry, only API administrators are authorized to view this data.',
 
 	'apigate-register-success-heading' => 'Registration successful!',

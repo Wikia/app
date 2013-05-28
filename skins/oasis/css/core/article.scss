@@ -403,7 +403,13 @@
 	.fullMedia {
 		word-wrap: break-word;
 	}
+	// Used in Lightbox - style videos that play on the page
+	// instead of in the lightbox
+	.inline-video {
+		display: inline-block;
+	}
 }
+
 
 /**
  * FB#24380 - Make wikia-infobox styling work in RTE popup previews (out of .WikiaArticle)

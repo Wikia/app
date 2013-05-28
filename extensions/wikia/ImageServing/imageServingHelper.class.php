@@ -4,64 +4,54 @@
  * Class to serving list of top 5 images for article use for indexing and keep index up to date
  */
 
-class ImageServingHelper{
-	static $hookOnOff = false; // parser hook are off
+class ImageServingHelper {
+	const IMAGES_PER_ARTICLE = 230;
 
-	public static function buildIndexOnPageEdit( $self ) {
+	private static $hookOnOff = false; // parser hooks are off
+
+	/**
+	 * @param LinksUpdate $linksUpdate
+	 * @return bool return true to continue hooks flow
+	 */
+	public static function onLinksUpdateComplete( $linksUpdate ) {
 		wfProfileIn(__METHOD__);
+		$images = $linksUpdate->getImages();
+		$articleId = $linksUpdate->getTitle()->getArticleID();
 
-		if(count($self->mImages) == 1) {
-			$images = array_keys($self->mImages);
-			self::bulidIndex( $self->mId, $images);
+		if(count($images) === 1) {
+			$images = array_keys($images);
+			self::buildIndex( $articleId, $images);
 			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		$article = Article::newFromID( $self->mId );
+		$article = new Article($linksUpdate->getTitle());
 		self::buildAndGetIndex( $article );
 		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	/**
-	 * @static
-	 * @param $article
-	 * @param bool $ignoreEmpty
-	 * @return mixed
-	 */
-	public static function buildAndGetIndex($article, $ignoreEmpty = false ) {
-		if(!($article instanceof Article)) {
-			return;
-		}
-		wfProfileIn(__METHOD__);
-
-		$articleText = $article->getRawText();
-		$title = $article->getTitle();
-		$content = $article->getContent();
-		self::hookSwitch();
-		$editInfo = $article->prepareTextForEdit( $content, $title->getLatestRevID() );
-		self::hookSwitch(false);
-		$out = array();
-		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
-
-		self::bulidIndex($article->getID(), $out[0], $ignoreEmpty);
-		wfProfileOut(__METHOD__);
-	}
-
-	/**
-	 *  replaceGallery - hook replace images with some easy to parse tag
+	 * Replace images with some easy to parse tag
 	 *
-	 *  return boolean
+	 * @param $skin
+	 * @param $title
+	 * @param File|LocalFile $file
+	 * @param $frameParams
+	 * @param $handlerParams
+	 * @param $time
+	 * @param $res
+	 * @return bool return false to break hooks flow
 	 */
-
-	public static function replaceImages( $skin, $title, $file, $frameParams, $handlerParams, $time, &$res ) {
+	public static function onImageBeforeProduceHTML( $skin, $title, $file, $frameParams, $handlerParams, $time, &$res ) {
 		if (!self::$hookOnOff) {
 			return true;
 		}
 		wfProfileIn(__METHOD__);
 
-		if( $file instanceof File ||  $file instanceof LocalFile ) {
-			$res = " <image mw='".$file->getTitle()->getPartialURL()."' /> ";
+		$placeholder = self::getPlaceholder($file);
+		if($placeholder !== false) {
+			$res = $placeholder;
 		}
 
 		wfProfileOut(__METHOD__);
@@ -69,12 +59,13 @@ class ImageServingHelper{
 	}
 
 	/**
-	 *  replaceGallery - hook replace images from image gallery with some easy to parse tag :
+	 * Replace images from image gallery with some easy to parse tag
 	 *
-	 *  return boolean
+	 * @param Parser $parser
+	 * @param WikiaPhotoGallery $ig
+	 * @return bool return true to continue hooks flow
 	 */
-
-	public static function replaceGallery( $parser, &$ig) {
+	public static function onBeforeParserrenderImageGallery( $parser, &$ig) {
 		global $wgEnableWikiaPhotoGalleryExt;
 
 		if ((!self::$hookOnOff) || empty($wgEnableWikiaPhotoGalleryExt)) {
@@ -86,7 +77,7 @@ class ImageServingHelper{
 		$ig->parse();
 		$data = $ig->getData();
 
-		$ig = new fakeIGimageServing( $data['images'] );
+		$ig = new FakeImageGalleryImageServing( $data['images'] );
 		wfProfileOut(__METHOD__);
 		return false;
 	}
@@ -95,119 +86,107 @@ class ImageServingHelper{
 		self::$hookOnOff = $onOff;
 	}
 
-	public static function isParsing() {
-		return self::$hookOnOff;
-	}
-
 	/**
-	 * buildImages - helper function to help build list on images in parserHook
+	 * Return placeholder than will later be parsed by ImageServing
 	 *
-	 *
-	 * @param $files \type{\arrayof{\file}}
-	 *
-	 * @return string
-	 **/
+	 * @param File $file
+	 * @return string|bool placeholder's HTML or false when image doesn't exist
+	 */
+	public static function getPlaceholder($file) {
+		$res = false;
 
-	public static function buildImages($files) {
-		$res = '';
-		foreach($files as $file) {
-			if( $file instanceof File ||  $file instanceof LocalFile ) {
-				$res .= " <image mw='".$file->getTitle()->getPartialURL()."' /> ";
-			}
+		if( $file instanceof File ||  $file instanceof LocalFile ) {
+			/* @var File $file */
+			$res = " <image mw='".$file->getTitle()->getPartialURL()."' /> ";
 		}
+
 		return $res;
 	}
 
 	/**
-	 * bulidIndex - save image index in db
+	 * buildIndex - save image index in db
 	 *
-	 * @param $width \int
-	 * @param $images \type{\arrayof{\string}}
+	 * @param int $articleId article ID
+	 * @param array|string $images
 	 * @param $ignoreEmpty boolean
-	 *
-	 * @return boolean
+	 * @param bool $dryRun don't store results in DB (think twice before passing true, used by imageServing.php maintenance script)
+	 * @return mixed|bool set of images extracted from given article
 	 */
-
-	public static function bulidIndex($articleId, $images, $ignoreEmpty = false) {
-		/* 0 and 1 image don't need to be indexed */
+	public static function buildIndex( $articleId, $images, $ignoreEmpty = false, $dryRun = false ) {
 		wfProfileIn(__METHOD__);
-		$db = wfGetDB(DB_MASTER, array());
 
 		// BugId:95164: limit the number of images to be stored serialized in DB
-		// PHP has an internal limit of 65535 bytes than can be unserialized
-		$limit = 230;
-		if (count($images) > $limit) {
-			$images = array_slice($images, 0, $limit);
+		// keep it under 65535 bytes
+		if (count($images) > self::IMAGES_PER_ARTICLE) {
+			$images = array_slice($images, 0, self::IMAGES_PER_ARTICLE);
 		}
 
 		array_walk( $images, create_function( '&$n', '$n = urldecode( $n );' ) );
 
-		if( (count($images) < 1) ) {
-			if ($ignoreEmpty) {
+		if ($dryRun) {
+			wfProfileOut(__METHOD__);
+			return $images;
+		}
+
+		$app = F::app();
+		$dbw = $app->wf->GetDB(DB_MASTER, array());
+
+		if( count($images) < 1 ) {
+			if( $ignoreEmpty) {
 				wfProfileOut(__METHOD__);
-				return true;
+				return false;
 			}
-			$db->delete( 'page_wikia_props',
+			$dbw->delete( 'page_wikia_props',
 				array(
 					'page_id' =>  $articleId,
-					'propname' => "0"),
+					'propname' => WPP_IMAGE_SERVING
+				),
 				__METHOD__
 			);
 			wfProfileOut(__METHOD__);
-			return true;
+			return array();
 		}
-		$db->delete( 'page_wikia_props',
-			array(
-				'page_id' =>  $articleId,
-				'propname' => "imageOrder"),
-			__METHOD__
-		);
 
-		$db->replace('page_wikia_props','',
+		$dbw->replace('page_wikia_props','',
 			array(
 				'page_id' =>  $articleId,
-				'propname' => "0",
+				'propname' => WPP_IMAGE_SERVING,
 				'props' => serialize($images)
 			),
 			__METHOD__
 		);
 
-		$db->commit();
+		$dbw->commit();
 		wfProfileOut(__METHOD__);
-		return true;
-	}
-}
-
-/* fake class for replace image gallery in hook*/
-class fakeIGimageServing extends ImageGallery {
-	private $in;
-
-	function __construct($in) {
-		$this->in = $in;
+		return $images;
 	}
 
-	function toHTML() {
-		$res = "";
-		foreach ( $this->in as $key => $imageData ) {
-			$file =  $this->getImage($imageData['name']);
-
-			if($file) {
-				$res .= " <image mw='".$file->getTitle()->getDBkey()."' /> ";
-			}
+	/**
+	 * @param Article $article
+	 * @param bool $ignoreEmpty
+	 * @param bool $dryRun don't store results in DB (think twice before passing true, used by imageServing.php maintenance script)
+	 * @return mixed|bool set of images extracted from given article
+	 */
+	public static function buildAndGetIndex($article, $ignoreEmpty = false, $dryRun = false ) {
+		if(!($article instanceof Article)) {
+			return false;
 		}
-		return $res;
-	}
-
-	private function getImage($nt) {
 		wfProfileIn(__METHOD__);
 
-		# Give extensions a chance to select the file revision for us
-		$time = $descQuery = false;
-		wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+		$article->getRawText(); // TODO: not sure whether it's actually needed
+		$title = $article->getTitle();
+		$content = $article->getContent();
 
-		# Render image thumbnail
-		$img = wfFindFile( $nt, $time );
+		self::hookSwitch();
+		$editInfo = $article->prepareTextForEdit( $content, $title->getLatestRevID() );
+		self::hookSwitch(false);
+
+		$out = array();
+		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
+
+		$images = self::buildIndex($article->getID(), $out[0], $ignoreEmpty, $dryRun);
+
 		wfProfileOut(__METHOD__);
-		return $img;
+		return $images;
 	}
 }

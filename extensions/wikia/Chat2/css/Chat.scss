@@ -246,6 +246,9 @@ a {
 	.message {
 		white-space: pre-line;
 	}
+	.me-message {
+		color: $color-chat-gray;
+	}
 	.inline-alert {
 		color: $color-chat-gray;
 		font-weight: bold;

@@ -14,6 +14,23 @@ abstract class WikiaFilePage extends ImagePage {
 
 	const VIDEO_WIDTH = 670;
 
+	/**
+	 * Override the default action behavior for videos
+	 *
+	 * @return array - Associative array of action to class that should handle that action
+	 */
+	public function getActionOverrides() {
+		if ( $this->isVideo() ) {
+			return array( 'revert' => 'WikiaRevertVideoAction' );
+		} else {
+			return parent::getActionOverrides();
+		}
+	}
+
+	/**
+	 * Test for whether the current file page represents a video
+	 * @return bool - true if the file is a video, false if not
+	 */
 	protected function isVideo() {
 		$file = $this->getDisplayedFile();
 
@@ -51,7 +68,19 @@ abstract class WikiaFilePage extends ImagePage {
 
 		$autoplay = $app->wg->VideoPageAutoPlay;
 
-		$videoDisplay = '<div class="fullImageLink" id="file">' . $file->getEmbedCode( self::VIDEO_WIDTH, $autoplay ) . '</div>';
+		// JS for VideoBootstrap
+		$embedCode = $file->getEmbedCode( self::VIDEO_WIDTH, $autoplay );
+
+		// Tell JS that HTML will already be loaded on the page.
+		$embedCode['htmlPreloaded'] = 1;
+
+		// HTML is no longer needed in VideoBootstrap
+		$html = $embedCode['html'];
+		unset($embedCode['html']);
+
+		$videoDisplay = '<script type="text/javascript">window.playerParams = '.json_encode( $embedCode ).';</script>';
+
+		$videoDisplay .= '<div class="fullImageLink" id="file">' . $html . '</div>';
 
 		$videoDisplay .= $this->getVideoInfoLine( $file );
 

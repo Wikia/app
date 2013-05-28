@@ -123,7 +123,7 @@ class WAMPageController extends WikiaController
 			'page' => $page,
 		];
 		
-		return $indexParams;
+		return array_merge($indexParams, $this->request->getParams());
 	}
 
 	/**

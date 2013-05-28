@@ -89,4 +89,20 @@ class ParserPool {
 		return $result;
 	}
 
+	/**
+	 * Expand templates and variables in the text, producing valid, static wikitext.
+	 * Also removes comments.
+	 *
+	 * @return string
+	 */
+	public static function preprocess( $text, Title $title, ParserOptions $options, $revid = null ) {
+		$args = func_get_args();
+
+		$parser = self::get();
+		$result = call_user_func_array( array( $parser, 'preprocess' ), $args );
+		self::release($parser);
+
+		return $result;
+	}
+
 }

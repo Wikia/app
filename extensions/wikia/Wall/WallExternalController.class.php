@@ -202,12 +202,13 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
+		$ns = $this->request->getVal( 'pagenamespace' );
 		$notifyEveryone = false;
-		if ($helper->isAllowedNotifyEveryone($this->wg->Title->getNamespace(), $this->wg->User)) {
-			$notifyEveryone = $this->request->getVal('notifyeveryone', false) == 1;
+		if ( $helper->isAllowedNotifyEveryone( $ns, $this->wg->User ) ) {
+			$notifyEveryone = $this->request->getVal( 'notifyeveryone', false ) == 1;
 		}
 
-		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace')), 'newFromText');
+		$title = F::build( 'Title', array( $this->request->getVal ('pagetitle' ), $ns ), 'newFromText' );
 		$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta, false, $relatedTopics, true, $notifyEveryone), 'buildNewMessageAndPost');
 
 		if( $wallMessage === false ) {
@@ -510,7 +511,7 @@ class WallExternalController extends WikiaController {
 		$wallMessage->load();
 
 		$wallMessage->setMetaTitle($newtitle);
-		$text = $wallMessage->doSaveComment( $newbody, $this->wg->User );
+		$text = $wallMessage->doSaveComment( $newbody, $this->wg->User, '', false, true );
 
 		$this->response->setVal('isotime', wfTimestamp(TS_ISO_8601) );
 		$this->response->setVal('fulltime', $this->wg->Lang->timeanddate( wfTimestamp(TS_MW) ) );
