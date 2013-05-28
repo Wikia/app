@@ -63,7 +63,7 @@ class SEOTweaksGlobalHooksHelper {
 					$title = self::getFirstArticleImage( $title );
 				}
 				if ( !empty( $title ) ) {
-					$file = F::app()->wf->findFile( $title );
+					$file = wfFindFile( $title );
 					if ( !empty( $file ) ) {
 						$thumb = self::getThumbFromFile( $file );
 						if ( !empty( $thumb ) ) $meta["og:image"] = $thumb;

@@ -466,7 +466,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	private function getUrlWithAllParams($lang, $filterParams) {
 		$url = '#';
-		$specialPage = F::build('Title', array('ManageWikiaHome', NS_SPECIAL), 'newFromText');
+		$specialPage = Title::newFromText('ManageWikiaHome', NS_SPECIAL);
 		if( $specialPage instanceof Title ) {
 			$params = [
 				'wiki-name-filer-input' => isset($filterParams['wiki-name-filer-input']) ? $filterParams['wiki-name-filer-input'] : '',

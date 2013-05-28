@@ -204,7 +204,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getTotalCommunities() {
 		return WikiaDataAccess::cache(
-			F::app()->wf->MemcKey('total_communities_count', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
+			wfMemcKey('total_communities_count', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
 			24 * 60 * 60,
 			array($this, 'getTotalCommunitiesFromDB')
 		);
@@ -231,7 +231,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getLastDaysNewCommunities() {
 		return WikiaDataAccess::cache(
-			F::app()->wf->MemcKey('communities_created_in_range', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
+			wfMemcKey('communities_created_in_range', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
 			24 * 60 * 60,
 			array($this, 'getLastDaysNewCommunitiesFromDB')
 		);

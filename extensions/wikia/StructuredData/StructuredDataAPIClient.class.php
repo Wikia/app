@@ -28,7 +28,7 @@ class StructuredDataAPIClient extends WikiaObject {
 	private function initLog() {
 		if ( $this->wg->StructuredDataConfig['debug'] ) {
 			if ( !$this->logfile ) {
-				$tempDir = F::app()->wf->tempDir();
+				$tempDir = wfTempDir();
 				$this->logfile = fopen( $tempDir.'/structured_data.log', 'a+' );
 			}
 			return true;

@@ -327,7 +327,7 @@ class CityVisualization extends WikiaModel {
 
 	public function getFlag($wikiId, $langCode) {
 		wfProfileIn(__METHOD__);
-		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$conds = [
 			'city_id' => $wikiId,
@@ -439,7 +439,7 @@ class CityVisualization extends WikiaModel {
 	}
 
 	public function getCollectionCacheKey($collectionId) {
-		return $this->wf->SharedMemcKey('single_collection_wikis_data', self::CITY_VISUALIZATION_MEMC_VERSION, $collectionId, __METHOD__);
+		return wfSharedMemcKey('single_collection_wikis_data', self::CITY_VISUALIZATION_MEMC_VERSION, $collectionId, __METHOD__);
 	}
 
 	/**
@@ -991,7 +991,7 @@ class CityVisualization extends WikiaModel {
 
 		if( is_int(self::$wikiFactoryVarId) ) {
 			$wikiFactoryList = WikiaDataAccess::cache(
-				F::app()->wf->MemcKey('corporate_pages_list', self::CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION, __METHOD__),
+				wfMemcKey('corporate_pages_list', self::CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION, __METHOD__),
 				24 * 60 * 60,
 				array($this, 'loadCorporateSitesList')
 			);

@@ -148,8 +148,8 @@ class CreateNewWikiController extends WikiaController {
 			$stored_answer = $this->getStoredAnswer();
 			if(empty($stored_answer) || $params['wAnswer'].'' !== $stored_answer.'') {
 				$this->status = 'error';
-				$this->statusMsg = $this->app->runFunction('wfMsgExt', 'cnw-error-bot', array('parseinline'));
-				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-bot-header');
+				$this->statusMsg = wfMsgExt( 'cnw-error-bot', array('parseinline') );
+				$this->statusHeader = wfMsg( 'cnw-error-bot-header');
 				return;
 			}
 			*/

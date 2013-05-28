@@ -404,7 +404,7 @@ SQL;
 	 * @return string
 	 */
 	protected static function getMemcKey( $videoTitle ) {
-		return F::app()->wf->MemcKey( 'video_info', 'v1', md5($videoTitle) );
+		return wfMemcKey( 'video_info', 'v1', md5($videoTitle) );
 	}
 
 	/**

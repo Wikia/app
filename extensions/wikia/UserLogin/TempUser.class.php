@@ -133,7 +133,7 @@ class TempUser extends WikiaModel {
 	 * @return string key
 	 */
 	protected static function getMemKeyTempUser( $username ) {
-		return F::app()->wf->SharedMemcKey( 'userlogin', 'temp_user', md5($username) );
+		return wfSharedMemcKey( 'userlogin', 'temp_user', md5($username) );
 	}
 
 	/**

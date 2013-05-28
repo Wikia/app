@@ -201,7 +201,7 @@ class ArticleService extends WikiaObject {
 	 * @return string The cache key associated to the article
 	 */
 	static public function getCacheKey( $articleId ) {
-		return F::app()->wf->MemcKey(
+		return wfMemcKey(
 			__CLASS__,
 			self::CACHE_VERSION,
 			$articleId

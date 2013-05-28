@@ -302,7 +302,7 @@ class WAMService extends Service {
 
 		if( $blacklistExt->cv_id ) {
 			$blacklistIds = WikiaDataAccess::cache(
-				F::app()->wf->SharedMemcKey(
+				wfSharedMemcKey(
 					'wam_blacklist',
 					$blacklistExt->cv_id
 				),

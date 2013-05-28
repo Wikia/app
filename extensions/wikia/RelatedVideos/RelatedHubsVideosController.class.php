@@ -83,7 +83,7 @@ class RelatedHubsVideosController extends RelatedVideosController {
 	protected function getMemcHubsVideoKey($videoTitleTxt, $videoUsername) {
 		$videoTitleTxt = urlencode($videoTitleTxt);
 		$videoUsername = urlencode($videoUsername);
-		return F::app()->wf->memcKey($videoTitleTxt, $videoUsername, self::MEMC_KEY_VER);
+		return wfMemcKey($videoTitleTxt, $videoUsername, self::MEMC_KEY_VER);
 	}
 	
 	protected function getMemcHubsVideoData($memcKey) {

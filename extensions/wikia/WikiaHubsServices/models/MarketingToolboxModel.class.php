@@ -703,7 +703,7 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	protected function getMKeyForLastPublishedTimestamp($langCode, $sectionId, $verticalId) {
-		return F::app()->wf->SharedMemcKey(
+		return wfSharedMemcKey(
 			self::CACHE_KEY,
 			$langCode,
 			$sectionId,

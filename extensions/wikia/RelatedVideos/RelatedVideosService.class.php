@@ -133,7 +133,7 @@ class RelatedVideosService {
 		$isStagingServer = Wikia::isStagingServer();
 		$StagingServerSuffix = empty($isStagingServer)?'PRODUCTION':'STAGING';
 
-		return F::app()->wf->memcKey( md5( $title ), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, self::memcKeyPrefix, self::memcVersion, self::$width, $StagingServerSuffix );
+		return wfMemcKey( md5( $title ), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, self::memcKeyPrefix, self::memcVersion, self::$width, $StagingServerSuffix );
 	}
 
 	public function saveToCache( $title, $source, $videoWidth, $cityShort, $data ) {

@@ -115,7 +115,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return string
 	 */
 	private function extractCategories( $content ) {
-		$catText = '(?:Category|'.$this->wf->Message( 'nstab-category' ).')';
+		$catText = '(?:Category|'.wfMessage( 'nstab-category' ).')';
 		preg_match_all( "/(\[\[$catText:[^\]]+\]\])/", $content, $matches );
 
 		if ( !empty($matches[1]) ) {

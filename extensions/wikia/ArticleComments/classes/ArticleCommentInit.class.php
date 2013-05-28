@@ -430,7 +430,7 @@ class ArticleCommentInit {
 	
 	public static function getCommentByAnonMsg() {
 		if( is_null(self::$commentByAnonMsg) ) {
-			self::$commentByAnonMsg = F::app()->wf->Message( 'article-comments-anonymous' )->text();
+			self::$commentByAnonMsg = wfMessage( 'article-comments-anonymous' )->text();
 		}
 		
 		return self::$commentByAnonMsg;

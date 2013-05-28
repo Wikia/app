@@ -127,7 +127,7 @@ class WAMApiController extends WikiaApiController {
 
 	private function getMinMaxWamIndexDateInternal() {
 		$wamDates = WikiaDataAccess::cache(
-			F::app()->wf->SharedMemcKey(
+			wfSharedMemcKey(
 				'wam_minmax_date',
 				self::MEMCACHE_VER
 			),

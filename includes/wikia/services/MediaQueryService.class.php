@@ -501,7 +501,7 @@ SQL;
 	 * @return string
 	 */
 	public static function getMemKeyTotalVideoViews() {
-		return F::app()->wf->MemcKey( 'videos', 'total_video_views', 'v4' );
+		return wfMemcKey( 'videos', 'total_video_views', 'v4' );
 	}
 
 	/**

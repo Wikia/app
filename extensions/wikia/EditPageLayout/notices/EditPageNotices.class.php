@@ -94,6 +94,6 @@ class EditPageNotices implements IteratorAggregate {
 	}
 
 	private function log($method, $msg) {
-		F::app()->wf->debug("{$method}: {$msg}\n");
+		wfDebug("{$method}: {$msg}\n");
 	}
 }

@@ -32,7 +32,7 @@ class UserLoginHooksHelper {
 			$errParam = 'wpCaptchaWord';
 		} else if ( $abortError == wfMsg('phalanx-help-type-user-email') ) {
 			$errParam = 'email';
-		} else if ( $abortError == $app->wf->Msg('phalanx-email-block-new-account')) {
+		} else if ( $abortError == wfMsg('phalanx-email-block-new-account')) {
 			$errParam = 'email';	 
 		}
 
