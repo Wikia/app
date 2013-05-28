@@ -7,6 +7,7 @@ abstract class VideoFeedIngester {
 	const PROVIDER_ANYCLIP = 'anyclip';
 	const PROVIDER_OOYALA = 'ooyala';
 	const PROVIDER_IVA = 'iva';
+	const PROVIDER_TWITCHTV = 'twitchtv';
 	public static $PROVIDERS = array(
 		self::PROVIDER_SCREENPLAY,
 		self::PROVIDER_IGN,
@@ -14,6 +15,7 @@ abstract class VideoFeedIngester {
 		self::PROVIDER_REALGRAVITY,
 		self::PROVIDER_OOYALA,
 		self::PROVIDER_IVA,
+		self::PROVIDER_TWITCHTV,
 	);
 	public static $PROVIDERS_DEFAULT = array(
 		self::PROVIDER_SCREENPLAY,
@@ -153,6 +155,7 @@ abstract class VideoFeedIngester {
 		// prepare wiki categories string (eg [[Category:MyCategory]] )
 		$categories = $this->generateCategories($data, $addlCategories);
 		$categories[] = wfMsgForContent( 'videohandler-category' );
+		// remove duplicate category
 		$categories = array_unique( $categories );
 		$categoryStr = '';
 		foreach ($categories as $categoryName) {

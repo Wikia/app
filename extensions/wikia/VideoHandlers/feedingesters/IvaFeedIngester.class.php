@@ -253,20 +253,14 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		$categories = !empty($addlCategories) ? $addlCategories : array();
 
+		$categories[] = 'IVA';
+
 		if ( !empty($data['keywords']) ) {
 			$keywords = explode( ',', $data['keywords'] );
 
 			foreach( $keywords as $keyword ) {
 				$categories[] = trim( $keyword );
 			}
-		}
-
-		if ( !empty($data['categoryName']) ) {
-			$categories[] = $data['categoryName'];
-		}
-
-		if ( !in_array( 'IVA', $categories) ) {
-			$categories[] = 'IVA';
 		}
 
 		wfProfileOut( __METHOD__ );

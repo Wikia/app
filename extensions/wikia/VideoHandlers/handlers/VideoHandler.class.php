@@ -250,43 +250,53 @@ abstract class VideoHandler extends BitmapHandler {
 	}
 
 	/**
+	 * get metadata value by name
+	 * @param string $name
+	 * @param type $default
+	 * @return type $value
+	 */
+	protected function getMetadataValue( $name, $default = '' ) {
+		$metadata = $this->getMetadata( true );
+		$value = !empty( $metadata[$name] ) ? $metadata[$name] : $default;
+
+		return $value;
+	}
+
+	/**
 	 * get expiration date
 	 * @return integer|null
 	 */
 	public function getExpirationDate() {
-		$metadata = $this->getMetadata(true);
-		return (!empty($metadata['expirationDate']) ? $metadata['expirationDate'] : null);
+		return $this->getMetadataValue( 'expirationDate', null );
 	}
 
 	/**
-	 *
-	 * @return int duration in seconds, or null
+	 * get video category
+	 * @return string
 	 */
-	protected function getDuration() {
-		$metadata = $this->getMetadata(true);
-		return (!empty($metadata['duration']) ? $metadata['duration'] : null);
+	protected function getVideoCategory() {
+		return $this->getMetadataValue( 'category' );
 	}
 
+	/**
+	 * get duration
+	 * @return integer|null duration in seconds
+	 */
+	protected function getDuration() {
+		return $this->getMetadataValue( 'duration', null );
+	}
+
+	/**
+	 * get formatted duration
+	 * @return string $duration
+	 */
 	public function getFormattedDuration() {
-
-		$metadata = $this->getMetadata(true);
-		if (!empty($metadata['duration'])) {
-
-			$sec = $metadata['duration'];
-
-			if ( (int)$sec == $sec ) {
-
-				$hms = F::build( 'WikiaFileHelper', array($sec), 'formatDuration' );
-
-				return $hms;
-
-			} else {
-
-				return $metadata['duration'];
-			}
+		$duration = $this->getDuration();
+		if ( !empty( $duration ) && $duration == floatval( $duration ) ) {
+			$duration = WikiaFileHelper::formatDuration( $duration );
 		}
 
-		return '';
+		return $duration;
 	}
 
 	/**
@@ -294,11 +304,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return string
 	 */
 	protected function getEmbedVideoId() {
-		$metadata = $this->getMetadata(true);
-		if (!empty($metadata['altVideoId'])) {
-			return $metadata['altVideoId'];
-		}
-		return $this->videoId;
+		return $this->getMetadataValue( 'altVideoId', $this->videoId );
 	}
 
 	/**

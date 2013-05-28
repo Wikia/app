@@ -122,6 +122,9 @@ foreach ($providersVideoFeed as $provider) {
 			$startDate = date('Y-m-d', $startDateTS);
 			$endDate = date('Y-m-d', $endDateTS);
 			break;
+		case VideoFeedIngester::PROVIDER_TWITCHTV:
+			$startDate = $getAllVideos;
+			break;
 		default:
 	}
 
