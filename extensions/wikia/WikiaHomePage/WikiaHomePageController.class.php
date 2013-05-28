@@ -61,6 +61,8 @@ class WikiaHomePageController extends WikiaController {
 	protected $verticalsSlots = array();
 	protected $verticalsWikis = array();
 
+	protected static $collectionsList;
+
 	/**
 	 * @var CityVisualization
 	 */
@@ -215,36 +217,38 @@ class WikiaHomePageController extends WikiaController {
 	 * $val = visualization wiki batches
 	 */
 	protected function getCollectionsWikiList() {
-		$collectionsBatches = [];
-		if( $this->areCollectionsAvailable() ) {
-			$visualization = $this->getVisualization();
+		if (!isset(self::$collectionsList)) {
+			$collectionsBatches = [];
+			if( $this->wg->EnableWikiaHomePageCollections ) {
+				$visualization = $this->getVisualization();
 
-			$tmpCollectionsBatches = $visualization->getCollectionsWikisData($this->wg->WikiaHomePageCollectionsWikis);
+				$collections = new WikiaCollectionsModel();
+				$collectionsList = $collections->getListForVisualization($this->wg->ContLang->getCode());
 
-			$collections = new WikiaCollectionsModel();
-			$collectionsList = $collections->getListForVisualization($this->wg->ContLang->getCode());
+				foreach ($collectionsList as $collection) {
+					if (count($collection['wikis']) == WikiaHomePageHelper::SLOTS_IN_TOTAL) {
+						$processedCollection = $visualization->getCollectionsWikisData([$collection['id'] => $collection['wikis']])[0];
+						$processedCollection['name'] = $collection['name'];
 
-			for ($i = 0; $i < count($collectionsList); $i++) {
-				$coll = $collectionsList[$i];
-				if (isset($coll['id']) && isset($tmpCollectionsBatches[$i])) {
-					$collectionsBatches[$collectionsList[$i]['id']] = $tmpCollectionsBatches[$i];
+						if (!empty($collection['sponsor_hero_image'])) {
+							$processedCollection['sponsor_hero_image'] = $collection['sponsor_hero_image'];
+						}
 
-					if (!empty($coll['sponsor_hero_image'])) {
-						$collectionsBatches[$coll['id']]['sponsor_hero_image'] = $coll['sponsor_hero_image'];
-					}
+						if (!empty($collection['sponsor_image'])) {
+							$processedCollection['sponsor_image'] = $collection['sponsor_image'];
+						}
 
-					if (!empty($coll['sponsor_image'])) {
-						$collectionsBatches[$coll['id']]['sponsor_image'] = $coll['sponsor_image'];
-					}
-
-					if (!empty($coll['sponsor_url'])) {
-						$collectionsBatches[$coll['id']]['sponsor_url'] = $coll['sponsor_url'];
+						if (!empty($collection['sponsor_url'])) {
+							$processedCollection['sponsor_url'] = $collection['sponsor_url'];
+						}
+						$collectionsBatches[$collection['id']] = $processedCollection;
 					}
 				}
 			}
+			self::$collectionsList = $collectionsBatches;
 		}
 
-		return $collectionsBatches;
+		return self::$collectionsList;
 	}
 
 	public function getMediaWikiMessage() {
@@ -589,10 +593,7 @@ class WikiaHomePageController extends WikiaController {
 	 * draw visualization
 	 */
 	public function visualization() {
-		$collections = new WikiaCollectionsModel();
-		$collectionsList = $collections->getList($this->wg->ContLang->getCode());
-		$this->response->setVal( 'collectionsList', $collectionsList );
-		$this->response->setVal( 'areCollectionsAvailable', $this->areCollectionsAvailable() );
+		$this->response->setVal( 'collectionsList', $this->getCollectionsWikiList() );
 
 		$this->response->setVal(
 			'seoSample',
@@ -769,9 +770,5 @@ class WikiaHomePageController extends WikiaController {
 		}
 		
 		return $this->visualization;
-	}
-	
-	private function areCollectionsAvailable() {
-		return $this->wg->EnableWikiaHomePageCollections && !empty($this->wg->WikiaHomePageCollectionsWikis);
 	}
 }
