@@ -37,6 +37,13 @@ class CategorySelectTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $actual );
 	}
 
+	public function testGetCategoryTitle() {
+		$this->assertInstanceOf( 'Title', CategorySelect::getCategoryTitle( self::$data[ 0 ] ) );
+		$this->assertInstanceOf( 'Title', CategorySelect::getCategoryTitle( 'test' ) );
+		$this->assertNull( CategorySelect::getCategoryTitle( [ 'namespace' => 'Category' ] ) );
+		$this->assertNull( CategorySelect::getCategoryTitle( '' ) );
+	}
+
 	public function testGetUniqueCategories() {
 		$categories = [];
 		$categories[] = [
