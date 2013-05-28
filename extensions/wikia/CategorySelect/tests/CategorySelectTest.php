@@ -45,17 +45,22 @@ class CategorySelectTest extends WikiaBaseTest {
 	}
 
 	public function testGetUniqueCategories() {
-		$categories = [];
-		$categories[] = [
-			'namespace' => 'Category',
-			'name' => 'this is a duplicate'
-		];
-
-		$categories[] = $categories[ 0 ];
-
+		$categories = [ self::$data[ 0 ], self::$data[ 0 ] ];
 		$expected = [ $categories[ 0 ] ];
 
 		$actual = CategorySelect::getUniqueCategories( $categories );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	public function testGetDiffCategories() {
+		$categories = self::$data;
+		$newCategories = self::$data;
+		$newCategories[ 0 ][ 'name' ] = '3rd test category';
+
+		$expected = [ $newCategories[ 0 ] ];
+
+		$actual = CategorySelect::getDiffCategories( $categories, $newCategories );
 
 		$this->assertEquals( $expected, $actual );
 	}
