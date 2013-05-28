@@ -40,7 +40,7 @@ class RethinkDBTest extends Maintenance {
 		$insert = $this->hasOption( 'insert' );
 		$delete = $this->hasOption( 'delete' );
 		$update = $this->getOption( 'update', '' );
-		$search = $this->hasOption( 'search', '' );
+		$search = $this->getOption( 'search', '' );
 		$drop = $this->hasOption( 'drop' );
 		$create = $this->hasOption( 'create' );
 		$count = $this->hasOption( 'count' );
@@ -78,11 +78,10 @@ class RethinkDBTest extends Maintenance {
 			}
 			$dbr->freeResult($res);
 			$delta = microtime( true ) - $start;
-			$this->output( sprintf( "Loaded %d records in %0.2f secs\n", count( $data ), $delta ) );
-			
-			$this->db_insert( $data );
+			$this->output( sprintf( "Loaded %d records in %0.2f secs\r\n", count( $data ), $delta ) );
 			
 			$this->output( "Put data to RethinkDB database\r\n" ); 
+			$this->db_insert( $data );
 		} elseif ( !empty( $delete ) ) {
 			$this->output( "Delete data from RethinkDB\r\n" );
 			$this->db_delete( );
@@ -103,7 +102,7 @@ class RethinkDBTest extends Maintenance {
 			$this->output( "Info about table {$this->table} \r\n" );
 			$this->db_info();
 		} elseif ( !empty( $search ) ) {
-			$this->output( "Search data in RethinkDB table\r\n" );
+			$this->output( "Search {$search} data in RethinkDB table\r\n" );
 			
 			$operator = '=';
 			if ( preg_match( '/\>/', $search ) ) {
@@ -111,8 +110,9 @@ class RethinkDBTest extends Maintenance {
 			} elseif( preg_match( '/\</', $search ) ) {
 				$operator = '<';
 			}
-			
+
 			list( $key, $value ) = explode( $operator, $search ); 
+			$this->output( "Found key: {$key}, operator: {$operator}, value: {$value}\r\n" );
 			$this->db_filter( $key, $value, $operator );
 		} else {
 			$this->output( "Invalid option\r\n" );
@@ -157,6 +157,26 @@ class RethinkDBTest extends Maintenance {
 		$this->output( sprintf( "\tData inserted in %0.2f secs: %s\r\n", $delta, $result ) );
 		
 		$this->db_close();
+		
+		$start = microtime( true );
+		$dbw = wfGetDB( DB_MASTER );
+		$this->output( "Put data to MySQL database\r\n" ); 
+		foreach ( $data as $row ) {
+			$dbw->insert( 'categorylinks_test',
+				array(
+					'page_id'  => $row['pid'],
+					'page_title' => $row['title'],
+					'page_namespace' => $row['ns'],
+					'cl_to' => $row['to'],
+					'cl_type' => $row['cl_type'],
+					'cl_timestamp' => $row['cl_ts'],
+					'cl_sortkey' => $row['sort']
+				),
+				__METHOD__ 
+			);
+		}
+		$delta = microtime( true ) - $start;
+		$this->output( sprintf( "MySQL updated in %0.2f secs\r\n", $delta ) ); 
 	}
 	
 	private function db_delete() {
@@ -169,6 +189,13 @@ class RethinkDBTest extends Maintenance {
 		$this->output( sprintf( "\tData removed in %0.2f secs: %s\r\n", $delta, $result ) );
 		
 		$this->db_close();
+		
+		$start = microtime( true );
+		$dbw = wfGetDB( DB_MASTER );
+		$this->output( "Remove data from MySQL database\r\n" ); 
+		$dbw->delete( 'categorylinks_test', '*', __METHOD__ );
+		$delta = microtime( true ) - $start;
+		$this->output( sprintf( "MySQL updated in %0.2f secs\r\n", $delta ) ); 
 	}
 	
 	private function db_update( $key, $value ) {
@@ -234,22 +261,22 @@ class RethinkDBTest extends Maintenance {
 		$this->db_connect();
 		
 		$start = microtime( true );
-		$result = r\db( $this->db )->table( $this->table )->filter( 
-			function( $table ) {
-				$data = array();
-				if ( $operator == '=' ) {
-					$data = $table( $key )->eq( $value );
-				} elseif( $operator == '<' ) {
-					$data = $table( $key )->lt( $value );
-				} elseif( $operator == '>' ) {
-					$data = $table( $key )->gt( $value );
-				}
-				
-				return $data;
-			}
-		)->run( $this->conn );
+		if ( $operator == '=' ) {
+			$result = r\db( $this->db )->table( $this->table )->filter( 
+				r\row( $key )->eq($value)
+			)->run( $this->conn );
+		} elseif ( $operator == '<' ) {
+			$result = r\db( $this->db )->table( $this->table )->filter( 
+				r\row( $key )->lt($value)
+			)->run( $this->conn );	
+		} elseif ( $operator == '>' ) {
+			$result = r\db( $this->db )->table( $this->table )->filter( 
+				r\row( $key )->gt($value)
+			)->run( $this->conn );
+		}
 		$delta = microtime( true ) - $start;
-		$this->output( sprintf( "\Filter ($key $operator $value) finished after %0.2f secs: %s\r\n", $delta, $result ) );
+		$this->output( sprintf( "\Filter ($key $operator $value) finished after %0.2f secs:\r\n", $delta ) );
+		print_r($result,true);
 		
 		$this->db_close();
 	}

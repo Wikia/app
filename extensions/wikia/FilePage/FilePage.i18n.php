@@ -244,9 +244,11 @@ Insira aquí a descrición.',
 
 /** Hebrew (עברית)
  * @author Amire80
+ * @author ExampleTomer
  */
 $messages['he'] = array(
 	'video-page-description-heading' => 'תיאור',
+	'video-page-add-description-link-text' => 'הוספת תיאור.',
 	'file-page-tab-about' => 'אודות',
 	'file-page-more-links' => 'רשימה מלאה',
 );
@@ -288,6 +290,31 @@ $messages['mk'] = array(
 	'video-page-description-heading' => 'Опис',
 	'file-page-replace-button' => 'Замени',
 	'file-page-tab-about' => 'За програмот',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'filepage-desc' => 'Pengubahsuaian halaman fail MediaWiki yang piawai untuk menyokong video',
+	'video-page-file-list-header' => 'Muncul di halaman-halaman ini',
+	'video-page-global-file-list-header' => 'Muncul di wiki-wiki ini',
+	'video-page-from-provider' => 'Daripada $1',
+	'video-page-expires' => 'Kandungan luput pada $1',
+	'video-page-views' => '$1 Tontonan',
+	'video-page-see-more-info' => 'Tunjukkan maklumat lanjut',
+	'video-page-see-less-info' => 'Tutup maklumat lanjut',
+	'video-page-description-heading' => 'Keterangan',
+	'video-page-description-zero-state' => 'Belum ada keterangan.',
+	'video-page-add-description-link-text' => 'Berikan keterangan.',
+	'video-page-default-description-header-and-text' => '==Keterangan==
+Berikan keterangan di sini.',
+	'video-page-file-list-pagination' => '$1/$2',
+	'file-page-replace-button' => 'Ganti',
+	'file-page-tab-about' => 'Perihal',
+	'file-page-tab-history' => 'Sejarah Fail',
+	'file-page-tab-metadata' => 'Metadata',
+	'file-page-more-links' => 'Lihat senarai penuh',
 );
 
 /** Dutch (Nederlands)
@@ -396,6 +423,13 @@ $messages['roa-tara'] = array(
 	'video-page-views' => '$1 {{PLURAL:$1|Viste}}',
 	'video-page-file-list-pagination' => '$1 de $2',
 	'file-page-replace-button' => 'Sostituisce',
+);
+
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Milicevic01
+ */
+$messages['sr-ec'] = array(
+	'video-page-add-description-link-text' => 'Додајте опис',
 );
 
 /** Swedish (svenska)

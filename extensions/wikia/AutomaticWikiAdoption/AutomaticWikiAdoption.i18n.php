@@ -1942,6 +1942,7 @@ $messages['roa-tara'] = array(
 	'wikiadoption' => "Adozione automateche d'a uicchi",
 	'wikiadoption-header' => 'Adotte sta uicchi',
 	'wikiadoption-button-adopt' => 'Sìne, vogghie cu adotte {{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Iacchie de cchiù!',
 	'wikiadoption-log-reason' => "Adozione automateche d'a uicchi",
 	'wikiadoption-welcome-header' => 'Comblimende! Tu è adottate {{SITENAME}}!',
 );
@@ -2278,14 +2279,19 @@ Mga Kasangkapang Nakakatulong:
 /** Ukrainian (українська)
  * @author A1
  * @author Steve.rusyn
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
+	'wikiadoption' => 'Автоматичне всиновлення вікі',
+	'wikiadoption-desc' => 'Розширення AutomaticWikiAdoption для MediaWiki',
 	'wikiadoption-header' => 'Прийняти цю wiki',
 	'wikiadoption-button-adopt' => 'Так, я хочу прийняти {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Дізнайтеся більше!',
 	'wikiadoption-know-more-header' => 'Хочете знати більше?',
 	'wikiadoption-adoption-successed' => 'Вітаємо! Тепер Ви адміністратор цієї вікі!',
+	'wikiadoption-log-reason' => 'Автоматичне всиновлення вікі',
+	'wikiadoption-mail-first-subject' => 'Ми не бачили вас давненько',
 );
 
 /** Simplified Chinese (中文（简体）‎)

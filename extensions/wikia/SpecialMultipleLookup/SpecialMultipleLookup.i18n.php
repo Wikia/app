@@ -840,6 +840,17 @@ $messages['ro'] = array(
 	'multilookuplastedithdr' => 'Ultima modificare',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'multilookupgo' => 'Véje',
+	'multilookupwiki' => 'Uicchi',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Titole',
+	'multilookupwikioptions' => 'Opziune',
+);
+
 /** Russian (русский)
  * @author Eleferen
  * @author Kuzura

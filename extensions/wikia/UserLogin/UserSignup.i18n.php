@@ -3473,14 +3473,22 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'usersignup-page-title' => 'Join Uicchia',
+	'usersignup-page-captcha-label' => 'Parole Sfocate',
+	'usersignup-error-username-length' => "Pizze, 'u nome utende tune non ge pò essere cchiù de {{PLURAL:$1|'nu carattere|$1 carattere}}.",
+	'usersignup-error-invalid-user' => 'Utende invalide. Pe piacere tràse apprime.',
 	'usersignup-confirm-email-new-email-label' => 'Mail nove',
 	'usersignup-confirm-email-update' => 'Aggiorne',
 	'usersignup-confirm-page-heading-confirmed-user' => 'Comblimende!',
 	'usersignup-confirmation-heading-email-resent' => 'Email nove mannate',
 	'usersignup-confirmation-subheading' => "Condrolle l'email toje",
 	'usersignup-confirmation-email-greeting' => 'Cià $USERNAME,',
+	'usersignup-reconfirmation-email-greeting' => 'Cià $USERNAME',
+	'usersignup-welcome-email-greeting' => 'Cià $USERNAME',
 	'usersignup-marketing-community-heading' => 'Collabbore',
 	'usersignup-marketing-global-heading' => 'Ccreje',
+	'usersignup-account-creation-email-greeting' => 'Cià,',
+	'usersignup-confirmation-reminder-email-greeting' => 'Cià $USERNAME',
+	'usersignup-confirmation-reminder-email-signature' => "'A Squadre Uicchia",
 );
 
 /** Russian (русский)

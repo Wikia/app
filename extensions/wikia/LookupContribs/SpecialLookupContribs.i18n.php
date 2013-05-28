@@ -1444,6 +1444,8 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'lookupcontribsselectuser' => "Scacchie l'utende:",
+	'lookupcontribsselectfor' => 'Scacchie pe:',
 	'lookupcontribsgo' => 'Veje',
 	'lookupcontribspageremoved' => 'Luate:',
 );

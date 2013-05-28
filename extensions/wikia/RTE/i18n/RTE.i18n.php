@@ -625,6 +625,13 @@ $messages['pt-br'] = array(
 	'prefs-rte' => 'Editor de Texto Enriquecido',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'rte-edgecase-comment' => 'Commende HTML',
+);
+
 /** Russian (русский)
  * @author Eleferen
  * @author Kuzura
