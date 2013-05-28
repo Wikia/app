@@ -12,8 +12,8 @@
 	<?php endif ?>	
 	</div>
 	<textarea accesskey="," name="wpCategoryTextarea<?=$cloudNo;?>" id="wpCategoryTextarea<?=$cloudNo;?>" class="wpCategoryTextarea" rows='3' cols='<?=$cols?>'><?=$textCategories?></textarea>
-	<?=wfMsg('create-blog-categories-textinput')?>&nbsp;<input type="text" name="wpCategoryInput<?=$cloudNo;?>" class="wpCategoryInput" id="wpCategoryInput<?=$cloudNo;?>" value="" />
-	<input type="button" name="wpCategoryButton" id="wpCategoryButton" class="button color1" value="<?=wfMsg('create-blog-categories-submit')?>" onclick="cloudInputAdd(<?=$cloudNo;?>, '#wpCategoryTextarea<?=$cloudNo;?>', '#categoryCloudSection<?=$cloudNo;?>', '#wpCategoryInput<?=$cloudNo;?>'); return false ;" />
+	<?= wfMessage( 'create-blog-categories-textinput')->text() ?>&nbsp;<input type="text" name="wpCategoryInput<?=$cloudNo;?>" class="wpCategoryInput" id="wpCategoryInput<?=$cloudNo;?>" value="" />
+	<input type="button" name="wpCategoryButton" id="wpCategoryButton" class="button color1" value="<?= wfMessage( 'create-blog-categories-submit' )->text() ?>" onclick="cloudInputAdd(<?=$cloudNo;?>, '#wpCategoryTextarea<?=$cloudNo;?>', '#categoryCloudSection<?=$cloudNo;?>', '#wpCategoryInput<?=$cloudNo;?>'); return false ;" />
 </div>
 
 <script type="text/javascript">
