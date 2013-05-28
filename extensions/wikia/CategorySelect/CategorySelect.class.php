@@ -27,6 +27,7 @@ class CategorySelect {
 	/**
 	 * Change format of categories metadata. Supports:
 	 * array -> json, array -> wikitext, json -> wikitext, json -> array
+	 * @return Array | String
 	 */
 	public static function changeFormat( $categories, $fromFormat, $toFormat ) {
 		wfProfileIn( __METHOD__ );
@@ -73,6 +74,7 @@ class CategorySelect {
 	 * Extracts category tags from wikitext and returns a hash with an array
 	 * of categories data and a modified version of the wikitext with the category
 	 * tags removed.
+	 * @return Array
 	 */
 	public static function extractCategoriesFromWikitext( $wikitext, $force = false ) {
 		wfProfileIn( __METHOD__ );
@@ -138,6 +140,7 @@ class CategorySelect {
 
 	/**
 	 * Gets an array of links for the given categories.
+	 * @return Array
 	 */
 	public static function getCategoryLinks( $categories ) {
 		wfProfileIn( __METHOD__ );
@@ -147,16 +150,11 @@ class CategorySelect {
 
 		if ( !empty( $categories ) ) {
 			foreach( $categories as $category ) {
-				// Support array of category names or array of category data objects
-				$name = is_array( $category ) ? $category[ 'name' ] : $category;
+				$title = self::getCategoryTitle( $category );
 
-				if ( !empty( $name ) ) {
-					$title = Title::makeTitleSafe( NS_CATEGORY, $name );
-
-					if ( !empty( $title ) ) {
-						$text = $app->wg->ContLang->convertHtml( $title->getText() );
-						$categoryLinks[] = Linker::link( $title, $text );
-					}
+				if ( !empty( $title ) ) {
+					$text = $app->wg->ContLang->convertHtml( $title->getText() );
+					$categoryLinks[] = Linker::link( $title, $text );
 				}
 			}
 		}
@@ -168,17 +166,15 @@ class CategorySelect {
 
 	/**
 	 * Gets the type of a category (either "hidden" or "normal").
+	 * @return String
 	 */
 	public static function getCategoryType( $category ) {
 		if ( !isset( self::$categoriesService ) ) {
 			self::$categoriesService = new CategoriesService();
 		}
 
-		// Support category name or category data object
-		$name = is_array( $category ) ? $category[ 'name' ] : $category;
+		$title = self::getCategoryTitle( $category );
 		$type = 'normal';
-
-		$title = Title::makeTitleSafe( NS_CATEGORY, $name );
 
 		if ( !empty( $title ) ) {
 			$text = $title->getDBKey();
@@ -193,6 +189,7 @@ class CategorySelect {
 
 	/**
 	 * Gets the default namespaces for a wiki and content language.
+	 * @return String
 	 */
 	public static function getDefaultNamespaces() {
 		if ( !isset( self::$namespaces ) ) {
@@ -212,6 +209,7 @@ class CategorySelect {
 	 * Extracts category tags from wikitext and returns a hash of the categories
 	 * and the wikitext with categories removed. If wikitext is not provided, it will
 	 * attempt to pull it from the current article.
+	 * @return Array
 	 */
 	public static function getExtractedCategoryData( $wikitext = '', $force = false ) {
 		if ( !isset( self::$data ) ) {
@@ -241,10 +239,10 @@ class CategorySelect {
 		$names = array();
 
 		foreach( $categories as $category ) {
-			$name = CategorySelect::getNormalizedCategoryName( $category );
+			$title = self::getCategoryTitle( $category );
 
-			if ( !empty( $name ) ) {
-				$names[] = $name;
+			if ( !empty( $title ) ) {
+				$names[] = $title->getText();
 			}
 		}
 
@@ -253,20 +251,21 @@ class CategorySelect {
 
 	/**
 	 * Gets the normalized category name from a category array.
-	 * @return String
+	 * @return Title | Null
 	 */
-	public static function getNormalizedCategoryName( $category ) {
-		$text = '';
+	public static function getCategoryTitle( $category ) {
+		$title = null;
 
-		if ( !empty( $category ) && !empty( $category[ 'name' ] ) ) {
-			$title = Title::makeTitleSafe( NS_CATEGORY, $category[ 'name' ] );
-
-			if ( !empty( $title ) ) {
-				$text = $title->getText();
-			}
+		// Support name from category array
+		if ( is_array( $category ) && array_key_exists( 'name', $category ) ) {
+			$category = $category[ 'name' ];
 		}
 
-		return $text;
+		if ( is_string( $category ) ) {
+			$title = Title::makeTitleSafe( NS_CATEGORY, $category );
+		}
+
+		return $title;
 	}
 
 	/**
@@ -284,11 +283,15 @@ class CategorySelect {
 		$uniqueCategories = array();
 
 		foreach( $categories as $category ) {
-			$name = CategorySelect::getNormalizedCategoryName( $category );
+			$title = self::getCategoryTitle( $category );
 
-			if ( !empty( $name ) && !in_array( $name, $categoryNames ) ) {
-				$categoryNames[] = $name;
-				$uniqueCategories[] = $category;
+			if ( !empty( $title ) ) {
+				$name = $title->getText();
+
+				if ( !in_array( $name, $categoryNames ) ) {
+					$categoryNames[] = $name;
+					$uniqueCategories[] = $category;
+				}
 			}
 		}
 
@@ -311,13 +314,17 @@ class CategorySelect {
 
 		$diff = array();
 
-		$names = CategorySelect::getCategoryNames( $base );
+		$names = self::getCategoryNames( $base );
 
 		foreach( $categories as $category ) {
-			$name = CategorySelect::getNormalizedCategoryName( $category );
+			$title = self::getCategoryTitle( $category );
 
-			if ( !empty( $name ) && !in_array( $name, $names ) ) {
-				$diff[] = $category;
+			if ( !empty( $title ) ) {
+				$name = $title->getText();
+
+				if ( !in_array( $name, $names ) ) {
+					$diff[] = $category;
+				}
 			}
 		}
 
@@ -328,6 +335,7 @@ class CategorySelect {
 
 	/**
 	 * Whether the current user can edit categories for the current request.
+	 * @return Boolean
 	 */
 	public static function isEditable() {
 		wfProfileIn( __METHOD__ );
@@ -364,6 +372,7 @@ class CategorySelect {
 
 	/**
 	 * Whether CategorySelect should be used for the current request.
+	 * @return Boolean
 	 */
 	public static function isEnabled() {
 		wfProfileIn( __METHOD__ );
