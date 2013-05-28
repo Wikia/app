@@ -3,7 +3,7 @@
 class TwitchtvVideoHandler extends VideoHandler {
 
 	protected $apiName = 'TwitchtvApiWrapper';
-	protected static $urlTemplate = 'http://www.twitch.tv/widgets/live_embed_player.swf?channel=$1';
+	protected static $urlTemplate = 'http://www.twitch.tv/widgets/$1';
 	protected static $providerDetailUrlTemplate = 'http://www.twitch.tv/$1';
 	protected static $providerHomeUrl = 'http://www.twitch.tv';
 
@@ -11,15 +11,11 @@ class TwitchtvVideoHandler extends VideoHandler {
 		$height = $this->getHeight( $width );
 		$autoplayStr = $autoplay ? 'true' : 'false';
 		$sizeString = $this->getSizeString( $width, $height );
-		$category = $this->getVideoCategory();
+		$url = $this->getEmbedUrl();
 
-		if ( empty( $category ) || $category == 'live gaming' ) {
-			$url = $this->getEmbedUrl();
-			$movieParam = 'http://www.twitch.tv/widgets/live_embed_player.swf';
+		if ( $this->isLiveVideo() ) {
 			$flashvars = "hostname=www.twitch.tv&channel={$this->videoId}&auto_play={$autoplayStr}&start_volume=25";
 		} else {
-			$url = 'http://www.twitch.tv/widgets/archive_embed_player.swf';
-			$movieParam = $url;
 			$channel = $this->getVideoChannel();
 			$chapter_id = filter_var( $this->videoId, FILTER_SANITIZE_NUMBER_INT );
 			$flashvars = "channel={$channel}&start_volume=25&auto_play={$autoplayStr}&chapter_id={$chapter_id}";
@@ -30,7 +26,7 @@ class TwitchtvVideoHandler extends VideoHandler {
 	<param name="allowFullScreen" value="true" />
 	<param name="allowScriptAccess" value="always" />
 	<param name="allowNetworking" value="all" />
-	<param name="movie" value="$movieParam" />
+	<param name="movie" value="$url" />
 	<param name="flashvars" value="$flashvars" />
 </object>
 EOT;
@@ -53,6 +49,25 @@ EOT;
 		}
 
 		return parent::getProviderDetailUrl();
+	}
+
+	public function getEmbedUrl() {
+		if ( $this->isLiveVideo() ) {
+			$param = 'live_embed_player.swf?channel='.$this->getEmbedVideoId();
+		} else {
+			$param = 'archive_embed_player.swf';
+		}
+
+		return str_replace( '$1', $param, static::$urlTemplate );
+	}
+
+	protected function isLiveVideo() {
+		$category = $this->getVideoCategory();
+		if ( empty( $category ) || $category == 'live gaming' ) {
+			return true;
+		}
+
+		return false;
 	}
 
 }
