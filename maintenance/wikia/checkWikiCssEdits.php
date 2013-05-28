@@ -16,39 +16,12 @@ $ts = time() - (180 * 24 * 60 * 60);
 $db = wfGetDb(DB_SLAVE, array(), $wgDBname);
 
 // Getting data about Wikia.css
-$pageId = getCssPageId($db, WIKIA_CSS);
-$cssEditData = array();
+$cssEditData = array( $wgCityId );
 
-if (!empty($pageId)) {
-	echo "checking number of contributors...\n";
-
-	$numContributorsWikia = countContributors($pageId, $ts, $db);
-	echo "There is " . $numContributorsWikia . " contributors\n";
-
-	$numEditsWikia = countCssEdits($pageId, $ts, $db);
-	echo "There is " . $numEditsWikia . " edits\n";
-} else {
-	$numContributorsWikia = $numEditsWikia = 0;
-	echo "ZERO\n";
-}
+$cssEditData = array_merge($cssEditData, makeCssEditData($db, $ts, WIKIA_CSS));
 
 // Getting data about Common.css
-$pageId = getCssPageId($db, COMMON_CSS);
-
-if (!empty($pageId)) {
-	echo "checking number of contributors...\n";
-
-	$numContributorsCommon = countContributors($pageId, $ts, $db);
-	echo "There is " . $numContributorsCommon . " contributors\n";
-
-	$numEditsCommon = countCssEdits($pageId, $ts, $db);
-	echo "There is " . $numEditsCommon . " edits\n";
-} else {
-	$numContributorsCommon = $numEditsCommon = 0;
-	echo "ZERO\n";
-}
-
-$cssEditData = array( $wgCityId, $numContributorsWikia, $numEditsWikia, $numContributorsCommon, $numEditsCommon);
+$cssEditData = array_merge($cssEditData, makeCssEditData($db, $ts, COMMON_CSS));
 
 saveData($cssEditData);
 
@@ -93,6 +66,25 @@ function countCssEdits($pageId, $ts, $db) {
 	$row = $db->fetchRow($result);
 
 	return $row['edits'];
+}
+
+function makeCssEditData($db, $ts, $cssFile) {
+	$pageId = getCssPageId($db, $cssFile);
+
+	if (!empty($pageId)) {
+		echo "checking number of contributors...\n";
+
+		$numContributors = countContributors($pageId, $ts, $db);
+		echo "There is " . $numContributors . " contributors\n";
+
+		$numEdits = countCssEdits($pageId, $ts, $db);
+		echo "There is " . $numEdits . " edits\n";
+	} else {
+		$numContributors = $numEdits = 0;
+		echo "ZERO\n";
+	}
+
+	return array( $numContributors, $numEdits );
 }
 
 function saveData($cssEditData) {
