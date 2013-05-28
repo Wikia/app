@@ -39,7 +39,7 @@ class SearchApiController extends WikiaApiController {
 	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
-		$this->setResponseFromConfig( $this->getConfigFromRequest(), ['pageid' => 'id', 'title', 'url', 'ns' ] );
+		$this->setResponseFromConfig( $this->getConfigFromRequest() );
 	}
 
 	/**
@@ -79,14 +79,14 @@ class SearchApiController extends WikiaApiController {
 	 * @param bool $metadata if true, will return also query statistics
 	 * @throws InvalidParameterApiException if query field in request is missing
 	 */
-	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig, array $fields, $metadata = true ) {
+	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
 			throw new InvalidParameterApiException( 'query' );
 		}
 
 		//Standard Wikia API response with pagination values
 		$response = $this->getResponse();
-		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( $fields, $metadata );
+		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns' ], true );
 		$response->setValues( $responseValues );
 		$response->setCacheValidity(
 			86400 /* 24h */,
