@@ -391,7 +391,11 @@ class ArticlesApiController extends WikiaApiController {
 	 * 
 	 */
 	public function getInfoboxes() {
-		$expectedIds = explode( ',', $this->getRequest()->getVal( 'ids', '' ) );
+		$idString = $this->getRequest()->getVal( 'ids', null );
+		if ( empty( $idString ) ) {
+			throw new InvalidParameterApiException( 'ids' );
+		}
+		$expectedIds = explode( ',', $idString );
 		if ( empty( $expectedIds ) ) {
 			throw new InvalidParameterApiException( 'ids' );
 		}

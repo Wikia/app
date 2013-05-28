@@ -96,7 +96,7 @@ class InfoboxesService
 			}
 		}
 		// integrity check
-		foreach ( $this->getMappedIds() as $canonicalId => $nonCanonicalIds ) {
+		foreach ( $mappedIds as $canonicalId => $nonCanonicalIds ) {
 			foreach ( $nonCanonicalIds as $expectedId ) {
 				if (! isset( $items[$expectedId] ) ) {
 					$items[$expectedId] = [];
@@ -120,6 +120,7 @@ class InfoboxesService
 	
 	/**
 	 * Lazy-loading DI
+	 * @todo replace this with some kind of trait
 	 * @return Wikkia\Search\MediaWikiService
 	 */
 	protected function getMwService() {
