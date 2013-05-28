@@ -198,6 +198,9 @@ class DefaultContent extends AbstractService
 		$infoboxes = $dom->find( 'table.infobox' );
 		if ( count( $infoboxes ) > 0 ) {
 			$infobox = $infoboxes[0];
+			$infobox = new simple_html_dom( $infobox->outertext() );
+			$this->removeGarbageFromDom( $infobox );
+			$infobox->load( $infobox->save() );
 			$infoboxRows = $infobox->find( 'tr' );
 			
 			if ( $infoboxRows ) {
@@ -216,9 +219,10 @@ class DefaultContent extends AbstractService
 	
 	/**
 	 * Iterates through UI remnants and removes them from the dom.
+	 * Removed type hinting due to testing requirements and WikiaMockProxy
 	 * @param simple_html_dom $dom
 	 */
-	protected function removeGarbageFromDom( simple_html_dom $dom ) {
+	protected function removeGarbageFromDom( $dom ) {
 		foreach ( $this->garbageSelectors as $selector ) {
 			foreach ( $dom->find( $selector ) as $node ) {
 				$node->outertext = ' ';
