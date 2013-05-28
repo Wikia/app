@@ -116,7 +116,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$db = $this->wf->GetDB( DB_SLAVE );
 
 		// We want to make sure the video hasn't been removed, is not premium and does not exist
-		// in the youtube_swap table
+		// in the video_swap table
 		$sqlWhere = array( 'removed' => 0,
 						   'premium' => 0,
 						   'orig_title IS NULL');
@@ -132,12 +132,12 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			default:        $sqlOptions['ORDER BY'] = 'added_at DESC';
 		}
 
-		// Do the outer join on the youtube_swap table
-		$joinCond = array( 'youtube_swap' => array( 'LEFT JOIN', 'video_title = orig_title' ) );
+		// Do the outer join on the video_swap table
+		$joinCond = array( 'video_swap' => array( 'LEFT JOIN', 'video_title = orig_title' ) );
 
-		// Select video info making sure to skip videos that have entries in the youtube_swap table
+		// Select video info making sure to skip videos that have entries in the video_swap table
 		$result = $db->select(
-			array( 'video_info', 'youtube_swap' ),
+			array( 'video_info', 'video_swap' ),
 			array( 'video_title, added_at, added_by' ),
 			$sqlWhere,
 			__METHOD__,
