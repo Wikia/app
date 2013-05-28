@@ -1021,7 +1021,7 @@ Sila tinggalkan pesanan sekiranya anda memerlukan bantuan saya!",
 Selamat datang ke {{SITENAME}} dan terima kasih kerana menyunting halaman [[:$1]]. Kami menggalakkan semua penyumbang untuk [[Special:UserLogin|membuat nama pengguna]] supaya anda dapat mengikuti sumbangan anda, mengakses lebih banyak ciri Wikia serta berkenalan dengan ahli-ahli komuniti {{SITENAME}} yang lain.
 
 Jika anda memerlukan bantuan, sila baca [[Help:Contents|halaman bantuan]] kami terlebih dahulu, kemudian kunjungi [[w:c:community|Community Central]] untuk keterangan lanjut. Selamat menyunting!',
-	'welcome-description' => 'Menghantar pesanan alu-aluan kepada pengguna selepas suntingan sulungnya.', # Fuzzy
+	'welcome-description' => 'Menghantar pesanan alu-aluan kepada pengguna selepas suntingan sulungnya',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -1475,6 +1475,14 @@ Por favor, deixe-me uma mensagem se eu puder te ajudar com qualquer coisa!",
 '''[[Special:Userlogin|Por favor, crie uma conta e identifique-se]]'''. É uma maneira fácil para acompanhar suas contribuições e ajuda você a se comunicar com o resto da Comunidade.
 
 Por favor, deixe-me uma mensagem se eu puder te ajudar com qualquer coisa!", # Fuzzy
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'welcome-message-log' => 'Bovègne a le condrebbutore nuève',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Russian (русский)

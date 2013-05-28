@@ -697,10 +697,17 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'wva-success' => "'A pàgene d'u video [[:$1]] ha state aggiunde.",
+	'wva-success-replaced' => "'A pàgene d'u video [[:$1]] ha state sostituite.",
+	'wva-failure' => 'Pe piacere dè le parametre valide.',
 	'wva-name' => "Nome d'u video:",
 	'wva-url' => "URL d'u video:",
 	'wva-add' => 'Aggiunge',
+	'wva-title' => "Veloce veloce aggiunge 'nu video da 'na URL",
+	'wva-notlogged' => 'Tu è abbesògne de trasè o reggistrarte pe sckaffà video.',
+	'wva-notallowed' => "Non ge puè 'nzerì video sus a sta uicchi.",
 	'wva-protected' => 'Stu video jè prutette.',
+	'wva-thumbnail-upload-failed' => "'Ngapsulamende d'u video fallite, non ge se riesce a pigghià 'na miniature corrette",
 );
 
 /** Russian (русский)

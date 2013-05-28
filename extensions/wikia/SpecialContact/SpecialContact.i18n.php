@@ -875,6 +875,15 @@ $messages['ro'] = array(
 	'specialcontact-nomessage' => 'Vă rugăm completaţi mesajul',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'contact' => 'Condatte Uicchia',
+	'specialcontact-wikia' => 'Condatte Uicchia',
+	'specialcontact-pagetitle' => 'Condatte Uicchia',
+);
+
 /** Russian (русский)
  * @author Kuzura
  */
