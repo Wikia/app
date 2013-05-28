@@ -487,6 +487,7 @@ include_once( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 include_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnusedVideos/SpecialUnusedVideos.setup.php" );
 include_once( "$IP/extensions/wikia/ArticleSummary/ArticleSummary.setup.php" );
+include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
 
 /**
  * @name $wgSkipSkins
