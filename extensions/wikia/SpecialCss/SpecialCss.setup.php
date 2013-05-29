@@ -20,12 +20,13 @@ $wgExtensionCredits['specialpage'][] = array(
 
 // models
 $app->registerClass('SpecialCssModel', $dir . 'SpecialCssModel.class.php');
+$app->registerClass('SpecialCssHooks', $dir . 'SpecialCssHooks.class.php');
 
 // classes
 $app->registerController('SpecialCssController', $dir . 'SpecialCssController.class.php');
 
 // hooks
-// ...
+$app->registerHook('AlternateEdit', 'SpecialCssHooks', 'onAlternateEdit');
 
 // special page
 $app->registerSpecialPage('CSS', 'SpecialCssController', 'wikia');
