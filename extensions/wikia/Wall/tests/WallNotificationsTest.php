@@ -129,8 +129,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$dataS = $dataF;
 
-		$entityKey = '404_102';
-
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
@@ -146,13 +144,15 @@ class WallNotificationsTest extends WikiaBaseTest {
 				),
 				$uniqueId => array(
 					'read' => $read,
-					'list' => array( 1 => array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply' => $isReply ) ),
+					'list' => array( 0 => array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply' => $isReply ) ),
 					'last' => 2,
 					'count' => 1,
 					'notifyeveryone' => $notifyeveryone
 				)
 			)
 		);
+
+		$entityKey = '404_102';
 
 		$tests[] = array( null, null, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF );
 
@@ -258,8 +258,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$dataS = $dataF;
 
-		$entityKey5 = '404_106';
-
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
@@ -278,7 +276,7 @@ class WallNotificationsTest extends WikiaBaseTest {
 					'list' => array(
 						0 => array('entityKey' => $entityKey2, 'authorId' => $authorId2, 'isReply' => $isReply ),
 						1 => array('entityKey' => $entityKey3, 'authorId' => $authorId3, 'isReply' => $isReply ),
-						3 => array('entityKey' => $entityKey5, 'authorId' => $authorId4, 'isReply' => $isReply )
+						2 => array('entityKey' => $entityKey4, 'authorId' => $authorId4, 'isReply' => $isReply )
 					),
 					'last' => 5,
 					'count' => 4,
@@ -286,6 +284,8 @@ class WallNotificationsTest extends WikiaBaseTest {
 				)
 			)
 		);
+
+		$entityKey5 = '404_106';
 
 		$tests[] = array( null, null, $uniqueId, $entityKey5, $authorId4, $isReply, $read, $dataS, $dataF );
 
