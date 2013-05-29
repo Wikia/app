@@ -17,12 +17,16 @@ $wgAutoloadClasses['JsonFormatSectionNode'] =                 $dir . "/nodes/Jso
 $wgAutoloadClasses['JsonFormatTextNode'] =                    $dir . "/nodes/JsonFormatTextNode.php";
 $wgAutoloadClasses['JsonFormatListNode'] =                    $dir . "/nodes/JsonFormatListNode.php";
 $wgAutoloadClasses['JsonFormatListItemNode'] =                $dir . "/nodes/JsonFormatListItemNode.php";
+$wgAutoloadClasses['JsonFormatTableNode'] =                   $dir . "/nodes/JsonFormatTableNode.php";
+$wgAutoloadClasses['JsonFormatTableCellNode'] =               $dir . "/nodes/JsonFormatTableCellNode.php";
+$wgAutoloadClasses['JsonFormatTableRowNode'] =                $dir . "/nodes/JsonFormatTableRowNode.php";
 
 $wgAutoloadClasses['AVisitor'] =                              $dir . "/visitors/AVisitor.php";
+$wgAutoloadClasses['TableVisitor'] =                          $dir . "/visitors/TableVisitor.php";
 $wgAutoloadClasses['PVisitor'] =                              $dir . "/visitors/PVisitor.php";
 $wgAutoloadClasses['BVisitor'] =                              $dir . "/visitors/BVisitor.php";
 $wgAutoloadClasses['IVisitor'] =                              $dir . "/visitors/IVisitor.php";
-$wgAutoloadClasses['SpanVisitor'] =                           $dir . "/visitors/SpanVisitor.php";
+$wgAutoloadClasses['InlineVisitor'] =                         $dir . "/visitors/InlineVisitor.php";
 $wgAutoloadClasses['ListVisitor'] =                           $dir . "/visitors/ListVisitor.php";
 $wgAutoloadClasses['BodyVisitor'] =                           $dir . "/visitors/BodyVisitor.php";
 $wgAutoloadClasses['CompositeVisitor'] =                      $dir . "/visitors/CompositeVisitor.php";

@@ -43,7 +43,7 @@ class ArticlesApiController extends WikiaApiController {
 		} else if ( $node->getType() == 'section' ) {
 			return "<h{$node->getLevel()}>{$node->getTitle()}</h{$node->getLevel()}>{$this->iterate($node)}";
 		} else if ( $node->getType() == 'link' ) {
-			return "<a href=\"#\">{$node->getText()}</a>";
+			return "<a href=\"{$node->getUrl()}\">{$node->getText()}</a>";
 		} else if ( $node->getType() == 'text' ) {
 			return $node->getText();
 		} else if ( $node->getType() == 'list' ) {
@@ -51,6 +51,12 @@ class ArticlesApiController extends WikiaApiController {
 			return "<$tag>{$this->iterate( $node )}</$tag>";
 		} else if ( $node->getType() == 'listItem' ) {
 			return "<li>{$this->iterate( $node )}</li>";
+		} else if ( $node->getType() == 'table' ) {
+			return "<table>{$this->iterate( $node )}</table>";
+		} else if ( $node->getType() == 'tableRow' ) {
+			return "<tr>{$this->iterate( $node )}</tr>";
+		} else if ( $node->getType() == 'tableCell' ) {
+			return "<td>{$this->iterate( $node )}</td>";
 		}
 	}
 
