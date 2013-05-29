@@ -1,0 +1,25 @@
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+
+.ContentHeader {
+	> label {
+		display: block;
+		float: left;
+		font-weight: bold;
+		line-height: 21px;
+		margin-right: 8px;
+	}
+
+	.WikiaDropdown {
+		float:left;
+		.dropdown {
+			@include box-shadow(0, 0, 0, transparent, 0, 0);
+			width: 215px;
+			.selected {
+				display: none;
+			}
+		}
+		strong {
+			font-weight: normal;
+		}
+	}
+}
