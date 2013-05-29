@@ -109,9 +109,8 @@ class UserBlock {
 	protected static function blockCheckIP( User $user, $text, $writeStats = true ) {
 		global $wgMemc, $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
-
-		PhalanxShadowing::setType(Phalanx::TYPE_USER);
-		PhalanxShadowing::check($user->getName());
+		
+		PhalanxShadowing::setType(Phalanx::TYPE_USER);	
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$moduleId = Phalanx::TYPE_USER;
@@ -156,10 +155,13 @@ class UserBlock {
 			);
 			$wgMemc->set( self::getCacheKey( $user ), $cachedState );
 
+			PhalanxShadowing::check($user->getName(), $blockData['id']);		
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
+		PhalanxShadowing::check($user->getName(), 0);		
+		
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -171,9 +173,6 @@ class UserBlock {
 	protected static function getBlockFromCache( User $user, $isCurrentUser ) {
 		global $wgMemc;
 		wfProfilein( __METHOD__ );
-
-		PhalanxShadowing::setType(Phalanx::TYPE_USER);
-		PhalanxShadowing::check($user->getName());
 
 		$cacheKey = self::getCacheKey( $user );
 		$cachedState = $wgMemc->get( $cacheKey );
