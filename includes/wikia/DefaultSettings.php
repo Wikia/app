@@ -281,12 +281,34 @@ $wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/Revision
 $wgAutoloadClasses['HtmlToJsonFormatParser'] =                $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParser.php";
 $wgAutoloadClasses['HtmlToJsonFormatParserVisitor'] =         $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParserVisitor.php";
 $wgAutoloadClasses['HtmlToJsonFormatParserVisitorStateful'] = $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParserVisitorStateful.php";
-$wgAutoloadClasses['JsonFormatNode'] =                        $IP . "/includes/wikia/services/JsonFormat/JsonFormatNode.php";
 $wgAutoloadClasses['WikitextToHtmlParser'] =                  $IP . "/includes/wikia/services/JsonFormat/WikitextToHtmlParser.php";
 $wgAutoloadClasses['WikitextToJsonFormatParserFactory'] =     $IP . "/includes/wikia/services/JsonFormat/WikitextToJsonFormatParserFactory.php";
 $wgAutoloadClasses['WikitextToJsonFormatParser'] =            $IP . "/includes/wikia/services/JsonFormat/WikitextToJsonFormatParser.php";
 $wgAutoloadClasses['JsonFormatService'] =                     $IP . "/includes/wikia/services/JsonFormatService.php";
 
+$wgAutoloadClasses['HtmlToJsonFormatParser'] =                $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParser.php";
+$wgAutoloadClasses['HtmlToJsonFormatParserVisitorStateful'] = $IP . "/includes/wikia/services/JsonFormat/HtmlToJsonFormatParserVisitorStateful.php";
+$wgAutoloadClasses['JsonFormatContainerNode'] =               $IP . "/includes/wikia/services/JsonFormat/JsonFormatContainerNode.php";
+$wgAutoloadClasses['JsonFormatLinkNode'] =                    $IP . "/includes/wikia/services/JsonFormat/JsonFormatLinkNode.php";
+$wgAutoloadClasses['JsonFormatNode'] =                        $IP . "/includes/wikia/services/JsonFormat/JsonFormatNode.php";
+$wgAutoloadClasses['JsonFormatRootNode'] =                    $IP . "/includes/wikia/services/JsonFormat/JsonFormatRootNode.php";
+$wgAutoloadClasses['JsonFormatSectionNode'] =                 $IP . "/includes/wikia/services/JsonFormat/JsonFormatSectionNode.php";
+$wgAutoloadClasses['JsonFormatTextNode'] =                    $IP . "/includes/wikia/services/JsonFormat/JsonFormatTextNode.php";
+$wgAutoloadClasses['JsonFormatListNode'] =                    $IP . "/includes/wikia/services/JsonFormat/JsonFormatListNode.php";
+$wgAutoloadClasses['JsonFormatListItemNode'] =                $IP . "/includes/wikia/services/JsonFormat/JsonFormatListItemNode.php";
+$wgAutoloadClasses['AVisitor'] =                              $IP . "/includes/wikia/services/JsonFormat/visitors/AVisitor.php";
+$wgAutoloadClasses['PVisitor'] =                              $IP . "/includes/wikia/services/JsonFormat/visitors/PVisitor.php";
+$wgAutoloadClasses['BVisitor'] =                              $IP . "/includes/wikia/services/JsonFormat/visitors/BVisitor.php";
+$wgAutoloadClasses['IVisitor'] =                              $IP . "/includes/wikia/services/JsonFormat/visitors/IVisitor.php";
+$wgAutoloadClasses['SpanVisitor'] =                           $IP . "/includes/wikia/services/JsonFormat/visitors/SpanVisitor.php";
+$wgAutoloadClasses['ListVisitor'] =                           $IP . "/includes/wikia/services/JsonFormat/visitors/ListVisitor.php";
+$wgAutoloadClasses['BodyVisitor'] =                           $IP . "/includes/wikia/services/JsonFormat/visitors/BodyVisitor.php";
+$wgAutoloadClasses['CompositeVisitor'] =                      $IP . "/includes/wikia/services/JsonFormat/visitors/CompositeVisitor.php";
+$wgAutoloadClasses['DOMNodeVisitorBase'] =                    $IP . "/includes/wikia/services/JsonFormat/visitors/DOMNodeVisitorBase.php";
+$wgAutoloadClasses['HeaderVisitor'] =                         $IP . "/includes/wikia/services/JsonFormat/visitors/HeaderVisitor.php";
+$wgAutoloadClasses['IDOMNodeVisitor'] =                       $IP . "/includes/wikia/services/JsonFormat/visitors/IDOMNodeVisitor.php";
+$wgAutoloadClasses['JsonFormatTraversingState'] =             $IP . "/includes/wikia/services/JsonFormat/visitors/JsonFormatTraversingState.php";
+$wgAutoloadClasses['TextNodeVisitor'] =                       $IP . "/includes/wikia/services/JsonFormat/visitors/TextNodeVisitor.php";
 
 
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';

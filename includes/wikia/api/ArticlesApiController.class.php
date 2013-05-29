@@ -41,16 +41,15 @@ class ArticlesApiController extends WikiaApiController {
 		if( $node->getType() == 'root' ) {
 			return $this->iterate( $node );
 		} else if ( $node->getType() == 'section' ) {
-			return "<h{$node->getLevel()}>{$node->getText()}</h{$node->getLevel()}>{$this->iterate($node)}";
+			return "<h{$node->getLevel()}>{$node->getTitle()}</h{$node->getLevel()}>{$this->iterate($node)}";
 		} else if ( $node->getType() == 'link' ) {
 			return "<a href=\"#\">{$node->getText()}</a>";
 		} else if ( $node->getType() == 'text' ) {
 			return $node->getText();
-		} else if ( $node->getType() == 'ul' ) {
-			return "<ul>{$this->iterate( $node )}</ul>";
-		} else if ( $node->getType() == 'ol' ) {
-			return "<ol>{$this->iterate( $node )}</ol>";
-		} else if ( $node->getType() == 'li' ) {
+		} else if ( $node->getType() == 'list' ) {
+			$tag = $node->getOrdered() ? 'ol' : 'ul';
+			return "<$tag>{$this->iterate( $node )}</$tag>";
+		} else if ( $node->getType() == 'listItem' ) {
 			return "<li>{$this->iterate( $node )}</li>";
 		}
 	}
