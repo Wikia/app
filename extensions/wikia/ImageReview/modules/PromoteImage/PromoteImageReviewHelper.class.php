@@ -33,7 +33,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 				$sqlWhere[ImageReviewStatuses::STATE_APPROVED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$approvalList [] = $image;
 
-				$visualization = F::build('CityVisualization');
+				$visualization = F::build('CityVisualization'); /* @var $visualization CityVisualization */
 				$targetWikiId = $visualization->getTargetWikiId($image['lang']);
 
 				if( empty($taskAdditionList[$targetWikiId]) ) {

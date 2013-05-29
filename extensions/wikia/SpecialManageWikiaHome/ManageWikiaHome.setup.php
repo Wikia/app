@@ -33,10 +33,10 @@ $app->registerController('SpecialManageWikiaHomeModel', $dir . '/models/SpecialM
 // forms
 $app->registerClass('CollectionsForm', $dir.'/forms/CollectionsForm.class.php');
 
-//special page
+// special page
 $app->registerSpecialPage('ManageWikiaHome', 'ManageWikiaHomeController', 'wikia');
 
-//message files
+// message files
 $app->registerExtensionMessageFile('ManageWikiaHome', $dir.'ManageWikiaHome.i18n.php');
 F::build('JSMessages')->registerPackage('ManageWikiaHome', array('manage-wikia-home-*'));
 

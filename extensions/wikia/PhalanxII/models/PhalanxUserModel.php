@@ -8,7 +8,7 @@ class PhalanxUserModel extends PhalanxModel {
 	}
 	
 	public function getText() {
-		return ( !empty( $this->text ) ) ? $this->text : array( $this->user->getName(), $this->ip );
+		return ( !empty( $this->text ) ) ? $this->text : array( ( $this->user instanceof User ) ? $this->user->getName() : "", $this->ip );
 	}
 	
 	public function userBlock( $type = 'exact' ) {

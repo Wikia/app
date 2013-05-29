@@ -50,6 +50,27 @@ $messages['qqq'] = array(
 	'stafflog-filter-user' => '',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'stafflog-desc' => 'تسجيل مركزي للموظفين',
+	'stafflog' => 'سجل فريق العمل',
+	'stafflog-blockmsg' => 'حاول $1 $2 منع المستخدم الموظف $3 في ويكي $4. السبب: $5',
+	'stafflog-piggybackloginmsg' => 'استعارة حساب $1 - دخول المستخدم $2 باسم المستخدم $3',
+	'stafflog-piggybacklogoutmsg' => 'استعارة حساب $1 - انتهاء المستخدم $2 من استعمال حساب $3',
+	'right-stafflog' => 'يمكن له عرض سجلات فريق العمل (الموظفين)',
+	'stafflog-wiki-status-change' => 'قام $1 بتغيير حالة $2 ل$3. السبب: $4',
+	'stafflog-filter-label' => 'مرشح',
+	'stafflog-filter-user' => 'المستخدم:',
+	'stafflog-filter-type' => 'النوع:',
+	'stafflog-filter-apply' => 'تطبيق المرشح',
+	'stafflog-filter-type-block' => 'عمليات المنع',
+	'stafflog-filter-type-piggyback' => 'استعارة حساب',
+	'stafflog-filter-type-renameuser' => 'إعادة تسمية المستخدم',
+	'stafflog-filter-type-wikifactory' => 'حالة الويكي',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */
@@ -411,6 +432,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Malafaya
  */
 $messages['pt'] = array(
@@ -420,11 +442,16 @@ $messages['pt'] = array(
 	'stafflog-piggybackloginmsg' => 'Personificação $1 - utilizador $2 autenticou-se como $3',
 	'stafflog-piggybacklogoutmsg' => 'Personificação $1 - utilizador $2 saiu da conta $3',
 	'right-stafflog' => 'Pode ver o Registo da Equipa',
+	'stafflog-filter-label' => 'Filtro',
 	'stafflog-filter-user' => 'Utilizador:',
+	'stafflog-filter-type' => 'Tipo:',
+	'stafflog-filter-apply' => 'Aplicar filtro',
+	'stafflog-filter-type-block' => 'Bloqueios',
 );
 
 /** Brazilian Portuguese (português do Brasil)
  * @author JM Pessanha
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -440,6 +467,18 @@ $messages['pt-br'] = array(
 	'stafflog-filter-type' => 'Tipo:',
 	'stafflog-filter-apply' => 'Aplicar filtro',
 	'stafflog-filter-type-block' => 'Bloqueios',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'stafflog' => 'StaffLog',
+	'stafflog-filter-label' => 'Filtre',
+	'stafflog-filter-user' => 'Utende:',
+	'stafflog-filter-type' => 'Tipe:',
+	'stafflog-filter-apply' => "Appleche 'u filtre",
+	'stafflog-filter-type-block' => 'Blocche',
 );
 
 /** Russian (русский)

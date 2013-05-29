@@ -41,9 +41,11 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 		$memc = F::App()->wg->Memc;
 
-		$cachedContent = null;
 		$this->mContent = null;
+
+		$content = null;
 		$sassService = null;
+		$hasErrors = false;
 
 		try {
 			$sassService = SassService::newFromFile("{$IP}/{$this->mOid}");
@@ -54,25 +56,35 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			);
 
 			$cacheId = __CLASS__ . "-minified-".$sassService->getCacheKey();
-			$cachedContent = $memc->get( $cacheId );
+			$content = $memc->get( $cacheId );
 		} catch (Exception $e) {
-			$cachedContent = "/* {$e->getMessage()} */";
+			$content = "/* {$e->getMessage()} */";
+			$hasErrors = true;
 		}
 
 
-		if ( $cachedContent ) {
-			$this->mContent = $cachedContent;
+		if ( $content ) {
+			$this->mContent = $content;
 
 		} else {
 			// todo: add extra logging of AM request in case of any error
-			$this->mContent = $sassService->getCss( /* useCache */ false);
+			try {
+				$this->mContent = $sassService->getCss( /* useCache */ false);
+			} catch (Exception $e) {
+				$this->mContent = $this->makeComment($e->getMessage());
+				$hasErrors = true;
+			}
 
 			// This is the final pass on contents which, among other things, performs minification
 			parent::getContent( $processingTimeStart );
 
 			// Prevent cache poisoning if we are serving sass from preview server
 			if ( !empty($cacheId) && getHostPrefix() == null && !$this->mForceProfile ) {
-				$memc->set( $cacheId, $this->mContent );
+				$expTime = 0;
+				if ( $hasErrors ) {
+					$expTime = 10; // prevent flooding servers with sass processes
+				}
+				$memc->set( $cacheId, $this->mContent, $expTime );
 			}
 		}
 
@@ -266,4 +278,16 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 		wfProfileOut(__METHOD__);
 	}
+
+	/**
+	 * Get a JS/CSS comment with the given text
+	 *
+	 * @param $text string Text to be put in the comment
+	 * @return string Input text wrapped in the comment
+	 */
+	protected function makeComment( $text ) {
+		$encText = str_replace( '*/', '* /', $text );
+		return "/*\n$encText\n*/\n";
+	}
+
 }

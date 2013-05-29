@@ -9,13 +9,23 @@ $messages['en'] = array(
 	'performancestat-cpu' => 'CPU: $1s'
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'showperformancestats-desc' => '{{desc}}',
 	'performancestat-total' => 'Total time (in seconds) calculated from Varnish End time minus Varnish Start time.',
 	'performancestat-apache' => 'Apache time (in seconds).',
 	'performancestat-cpu' => 'CPU time (in seconds).',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'showperformancestats-desc' => 'تقوم بإرجاع إحصائيات أداء يمكن للأشخاص قرائتها',
+	'performancestat-total' => 'المجموع: $1 ثانية',
+	'performancestat-apache' => 'أباتشي: $1 ثانية',
+	'performancestat-cpu' => 'وحدة المعالجة المركزية (CPU): $1 ثانية',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -234,6 +244,16 @@ $messages['pt-br'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'showperformancestats-desc' => "Tuèrne a le statisteche de performance jndr'à 'nu formate leggibbile",
+	'performancestat-total' => 'Totale: $1 s',
+	'performancestat-apache' => 'Apache: $1 s',
+	'performancestat-cpu' => 'CPU: $1 s',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
@@ -284,8 +304,10 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author Ua2004
  */
 $messages['uk'] = array(
+	'showperformancestats-desc' => 'Повертає читабельну статистику продуктивності',
 	'performancestat-total' => 'Всього: $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'ЦП: $1s',

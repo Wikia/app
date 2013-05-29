@@ -56,6 +56,11 @@ class SassService extends WikiaObject {
 		// set up default cache variant
 		if (!empty($this->wg->DevelEnvironment)) {
 			$this->setCacheVariant("dev-{$this->wg->DevelEnvironmentName}");
+		} else {
+			$hostPrefix = getHostPrefix();
+			if ( $hostPrefix != null ) {
+				$this->setCacheVariant("staging-{$hostPrefix}");
+			}
 		}
 	}
 
@@ -218,11 +223,10 @@ class SassService extends WikiaObject {
 
 			$errorId = $this->getUniqueId();
 			Wikia::log(__METHOD__, false, "SASS error [{$errorId}]: ". $e->getMessage(), true /* $always */);
-			$styles = $this->makeComment(
-				$this->getDebug()
-					? $e->getMessage()
-					: self::DEFAULT_ERROR_MESSAGE . $errorId
-			);
+			$errorMessage = $this->getDebug()
+				? ("SASS error [{$errorId}]: " . $e->getMessage())
+				: (self::DEFAULT_ERROR_MESSAGE . $errorId);
+			throw new \Wikia\Sass\Exception( $errorMessage, 0, $e );
 		}
 
 		$styles .= "\n\n";

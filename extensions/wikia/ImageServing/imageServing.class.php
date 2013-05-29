@@ -215,17 +215,16 @@ class ImageServing {
 	 *
 	 * @access public
 	 *
-	 * @param $name \string dbkey of image or File object
-	 * @param $width \int
-	 * @param $height \int
+	 * @param string|File|GlobalFile $name dbkey of image or File object
+	 * @param $width int
+	 * @param $height int
 	 *
-	 * @return  \string url for image
+	 * @return  string url for image
 	 */
-
 	public function getUrl( $name, $width = 1, $height = 1 ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( $name instanceof File ) {
+		if ( $name instanceof File || $name instanceof GlobalFile ) {
 			$img = $name;
 		} else {
 			//TODO: Create files local cache of IS

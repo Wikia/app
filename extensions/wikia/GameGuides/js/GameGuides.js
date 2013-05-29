@@ -149,6 +149,21 @@
 
 	window.Font = Font;
 
+	//Light/Dark skin handling
+	function Skin(){
+		this.toggleMode = function(type){
+			return toggle('light', 'dark', type);
+		};
+	}
+
+	Ponto.PontoBaseHandler.derive(Skin);
+
+	Skin.getInstance = function(){
+		return new Skin();
+	};
+
+	window.Skin = Skin;
+
 	require(['modal', 'sections'], function(modal, sections){
 		function Modal(){
 			this.close = function(){
