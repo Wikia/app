@@ -486,7 +486,7 @@ class Phalanx {
 			}
 		}
 
-		PhalanxShadowing::check($text);
+		PhalanxShadowing::check($text, $matchingBlockData);
 
 		wfProfileOut( __METHOD__ );
 		return $result;
