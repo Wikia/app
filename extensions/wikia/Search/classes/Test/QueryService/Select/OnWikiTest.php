@@ -28,7 +28,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( null )
+		                   ->setMethods(  [ 'matchPassesFilters' ] )
 		                   ->getMock();
 		
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
