@@ -7,6 +7,10 @@ class CollectionsForm extends FormBuilderService {
 
 		if (empty($fields)) {
 			$fields = [
+				'id' => [
+					'type' => 'hidden',
+					'isArray' => true
+				],
 				'name' => [
 					'label' => $this->wf->msg('manage-wikia-home-collections-name-field-label'),
 					'validator' => new WikiaValidatorListValue([

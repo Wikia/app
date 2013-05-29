@@ -6,7 +6,7 @@ $messages['en'] = array(
 	'healthcheck-desc' => 'A [[Special:HealthCheck|special page]] for server state checking',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author The Evil IP address
  */
 $messages['qqq'] = array(

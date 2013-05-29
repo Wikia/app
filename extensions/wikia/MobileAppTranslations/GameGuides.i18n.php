@@ -397,7 +397,7 @@ $messages['ko'] = array(
 	'searchview-button-back-list' => '목록으로 돌아가기',
 	'searchview-button-back-article' => '문서로 돌아가기',
 	'searchbar-hint' => '%s 찾기...',
-	'alert-download-updated-wikis-message' => '이용 가능한 도움말 리스트는 업데이트 될것입니다.',
+	'alert-download-updated-wikis-message' => '사용 가능한 가이드 목록는 업데이트될 것입니다.',
 	'alert-download-updated-wikis-button-ok' => '확인',
 	'error-update-required' => '이 앱에 필요한 업데이트가 있습니다.',
 	'error-no-connection' => '사용 가능한 인터넷 연결이 없습니다.\\n다시 시도하세요.',
@@ -633,6 +633,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -643,6 +644,31 @@ $messages['pt-br'] = array(
 	'window-article-menu-search-label' => 'Pesquisar',
 	'window-article-menu-cancel-label' => 'Cancelar',
 	'alert-download-updated-wikis-button-ok' => 'Ok',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'activityindicator-message' => 'Stoche a scareche…',
+	'window-wikis-title' => 'Guide le le Sciueche de Uicchia',
+	'window-wikis-wikilist-search-hint' => 'Cirche le Sciuche Megghie megghie...',
+	'window-category-load-batch' => 'De cchiù',
+	'window-article-button-close' => 'Achiude',
+	'window-article-button-back' => 'Rrete',
+	'window-article-menu-search-label' => 'Cirche',
+	'window-article-menu-dashboard-label' => "Condenute d'a guide",
+	'window-article-menu-cancel-label' => 'Annulle',
+	'searchview-no-results' => 'Nisciune resultate pe "%s"',
+	'searchview-button-back-list' => "Tuèrne a l'elenghe",
+	'searchview-button-back-article' => "Tuèrne a 'a vôsce",
+	'searchbar-hint' => 'Cirche %s...',
+	'alert-download-updated-wikis-message' => "L'elenghe de le guide disponibbile adda essere aggiornate.",
+	'alert-download-updated-wikis-button-ok' => 'Ok',
+	'error-update-required' => "'N'aggiornamende pe sta applicazione jè disponibbile e richieste.",
+	'error-no-connection' => 'Nisciuna connessione a indernette disponibbile.\\nPe piacere pruève arrete.',
+	'error-server' => "Le nostre server stonne a respondene cu 'n'errore.\\nPe piacere pruève arrete.",
+	'error-json-parse' => "Stè 'nu probbleme cu 'u date ca ha turnate da le server nuèstre.\\nPe piacere pruève arrete.",
 );
 
 /** Russian (русский)

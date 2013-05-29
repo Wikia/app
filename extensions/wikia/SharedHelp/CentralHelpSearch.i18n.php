@@ -246,6 +246,14 @@ $messages['tt-cyrl'] = array(
 	'centralhelpsearch-placeholder' => 'Белешмәлек буенча эзләү ...',
 );
 
+/** Ukrainian (українська)
+ * @author Ua2004
+ */
+$messages['uk'] = array(
+	'centralhelpsearch-desc' => 'Дозволити включення форми для пошуку довідки',
+	'centralhelpsearch-placeholder' => 'Пошук довідки...',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra

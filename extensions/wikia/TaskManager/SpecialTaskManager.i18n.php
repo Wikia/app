@@ -18,7 +18,7 @@ $messages['en'] = array(
 	'action-taskmanager' => 'display and manage background tasks',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -32,6 +32,19 @@ $messages['af'] = array(
 	'taskmanager' => 'Wys en bestuur agtergrondtake',
 	'taskmanager_title' => 'Wys en bestuur agtergrondtake',
 	'taskmanager_tasklist' => 'Keer terug na taaklys',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'taskmanager' => 'عرض وإدارة مهام في الخلفية',
+	'taskmanager_title' => 'عرض وإدارة مهام في الخلفية',
+	'taskmanager_tasklist' => 'العودة إلى قائمة المهام',
+	'right-taskmanager' => 'يمكنه عرض المهام في الخلفية',
+	'right-taskmanager-action' => 'يمكن إدارة المهام في الخلفية',
+	'taskmanager-invert' => 'اعكس الاختيار',
+	'action-taskmanager' => 'عرض وإدارة المهام في الخلفية',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
@@ -352,6 +365,7 @@ $messages['pt'] = array(
  * @author Aristóbulo
  * @author Giro720
  * @author JM Pessanha
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -362,6 +376,19 @@ $messages['pt-br'] = array(
 	'right-taskmanager-action' => 'Pode administrar tarefas de segundo plano',
 	'taskmanager-invert' => 'Inverter seleção',
 	'action-taskmanager' => 'exibir e gerenciar tarefas em segundo plano',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'taskmanager' => "Fà vedè e gestisce le combite sus a 'u sfonde",
+	'taskmanager_title' => "Fà vedè e gestisce le combite sus a 'u sfonde",
+	'taskmanager_tasklist' => "Tuèrne a l'elenghe de le combite",
+	'right-taskmanager' => 'Puà fà vedè le combite de sfonde',
+	'right-taskmanager-action' => 'Puè gestì le combite de sfonde',
+	'taskmanager-invert' => 'Selezione a smerse',
+	'action-taskmanager' => "fà vedè e gestisce le combite sus a 'u sfonde",
 );
 
 /** Russian (русский)

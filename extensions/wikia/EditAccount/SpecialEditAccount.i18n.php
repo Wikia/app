@@ -80,7 +80,7 @@ $messages['en'] = array(
 	'action-editaccount' => "edit other users' information",
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Lloffiwr
  * @author Michał Roszka (Mix) <michal@wikia-inc.com>
  * @author Shirayuki
@@ -96,7 +96,8 @@ $messages['qqq'] = array(
 	'editaccount-label-toggleadopt-prevent' => 'Label for option to prevent user from automatically adopting a wiki.',
 	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
 	'editaccount-label-reason' => 'Label for reason field.',
-	'editaccount-submit-button' => 'Text of the submission button.',
+	'editaccount-submit-button' => 'Text of the submission button.
+{{Identical|Save}}',
 	'editaccount-success-disable' => 'Parameters:
 * $1 is a username.',
 	'editaccount-success-toggleadopt' => 'Indicates that a user has been successfully verified as an adopter of a wiki. Parameters:
@@ -138,14 +139,66 @@ $messages['af'] = array(
  */
 $messages['ar'] = array(
 	'editaccount' => 'عدّل الحساب',
+	'editaccount-desc' => 'يتيح للموظفين إدارة معلومات حساب مستخدم',
 	'editaccount-title' => 'خاص:EditAccount',
+	'editaccount-frame-manage' => 'تعديل حساب',
+	'editaccount-frame-usage' => 'ملاحظة',
+	'editaccount-usage' => 'بيانات المستخدم تخزن بشكل منفصل لكل ويكي. عندما تقوم بإعادة تعيين كلمة مرور أو بريد إلكرتوني، سيتم ظبط الكاش لهذه الويكي فقط. يرجى إخبار المستخدم بأن يتوجه لهذه الويكي و يسجل الدخول فيها بكلمة سره الجديدة لتجنب حدوث مشاكل مع الكاش.',
 	'editaccount-label-select' => 'حدّد حساب مستخدم',
+	'editaccount-submit-account' => 'إدارة حساب',
 	'editaccount-frame-account' => 'تعديل حساب المستخدم: $1',
+	'editaccount-frame-close' => 'تعطيل حساب المستخدم: $1',
+	'editaccount-label-email' => 'تعيين عنوان البريد الإلكتروني الجديد',
+	'editaccount-label-pass' => 'تعيين كلمة مرور جديدة',
+	'editaccount-label-realname' => 'تعيين الاسم الحقيقي الجديد',
+	'editaccount-label-clearunsub' => 'ألغيت الاشتراك',
+	'editaccount-label-toggleadopt' => 'تعديل حالة المتبني (خاصة بتبني الويكي الأوتوماتيكي):',
+	'editaccount-label-toggleadopt-prevent' => 'منع التبني الأوتوماتيكي',
+	'editaccount-label-toggleadopt-allow' => 'السماح بالتبني الأوتوماتيكي',
+	'editaccount-label-reason' => 'السبب:',
+	'editaccount-submit-email' => 'حفظ وتأكيد عنوان البريد الإلكتروني',
+	'editaccount-submit-pass' => 'حفظ كلمة المرور',
+	'editaccount-submit-realname' => 'حفظ الاسم الحقيقي',
+	'editaccount-submit-clearunsub' => 'فسخ إلغاء الاشتراك',
+	'editaccount-submit-cleardisable' => 'سحب علم التعطيل',
+	'editaccount-submit-close' => 'إغلاق الحساب',
 	'editaccount-submit-button' => 'حفظ',
+	'editaccount-usage-close' => 'يمكنك أيضا تعطيل حساب مستخدم عبر تشفير كلمة مروره و إزالة عنوان بريده الإلكتروني. علما بأن هذه البيانات يتم فقدانها نهائيا ولن تكون قابلة للإسترداد.',
+	'editaccount-warning-close' => '<b>تنبيه!</b> أنت على وشك تعطيل حساب المستخدم <b>$1 </b> بشكل دائم. لا يمكن عكس هذا الإجراء. هل أنت متأكد من أن هذا هو ما تريد القيام به؟',
+	'editaccount-status' => 'رسالة الحالة',
+	'editaccount-success-email' => 'تم تغيير البريد الإلكتروني للحساب $1 ل $2 بنجاح.',
+	'editaccount-success-email-blank' => 'تمت إزالة البريد الإلكتروني للحساب $1 بنجاح.',
+	'editaccount-success-pass' => 'تم تغيير كلمة مرور الحساب $1 بنجاح.',
+	'editaccount-success-realname' => 'تم تغيير الإسم  الحقيقي الخاص بالحساب $1 بنجاح.',
+	'editaccount-success-close' => 'تم تعطيل الحساب $1 بنجاح.',
+	'editaccount-error-email' => 'لم يتم تغيير البريد الإلكتروني. حاول مرة أخرى أو اتصل "بالفريق التقني".',
+	'editaccount-error-pass' => 'لم يتم تغيير كلمة المرور. حاول مرة أخرى أو اتصل "بالفريق التقني".',
+	'editaccount-error-realname' => 'لم يتم تغيير الاسم الحقيقي. حاول مرة أخرى أو اتصل "بالفريق التقني".',
+	'editaccount-error-close' => 'حدثت مشكلة عند إغلاق الحساب. حاول مرة أخرى أو اتصل "بالفريق التقني".',
+	'editaccount-invalid-email' => '" $1 " ليس عنوان بريد إلكتروني صالح!',
+	'editaccount-nouser' => 'لا وجود للحساب "$1"!',
+	'editaccount-not-loaded' => 'خطأ: فشل بيانات المستخدم للتحميل بشكل صحيح، الرجاء محاولة إعادة تحميل الصفحة.',
+	'editaccount-remove-avatar-fail' => 'مشكلة في حاذف الأفاتار الآلي.',
+	'editaccount-requested' => 'ملاحظة: لقد طلب المستخدم إغلاق الحساب',
+	'editaccount-not-requested' => 'تنبيه: لم يطلب المستخدم  إغلاق الحساب',
+	'editaccount-labal-account-status' => 'حالة الحساب',
+	'editaccount-labal-email-status' => 'حالة البريد الإلكتروني',
+	'editaccount-status-confirmed' => 'تم التأكيد',
+	'editaccount-status-unconfirmed' => 'لم يتم التأكيد',
+	'editaccount-status-realuser' => 'المستخدم الحقيقي',
+	'editaccount-status-tempuser' => 'المستخدم المؤقت',
+	'editaccount-log' => 'سجل حسابات المستخدم',
+	'editaccount-log-header' => 'هذه الصفحة تسرد التغييرات التي تم إجراؤها على معلومات المستخدم من قبل موظفي ويكيا.',
+	'editaccount-log-entry-email' => 'قام بتغيير  بريد المستخدم $2 الإلكتروني',
+	'editaccount-log-entry-pass' => 'قام بتغيير كلمة مرور المستخدم $2',
+	'editaccount-log-entry-realname' => 'تغيير الاسم الحقيقي للمستخدم $2',
 	'editaccount-log-entry-close' => 'الحساب معطّل $2',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">تم تعطيل هذا الحساب نهائيا من قبل ويكيا.</div>',
+	'right-editaccount' => 'تعديل معلومات المستخدمين الآخرين',
+	'action-editaccount' => 'تحرير معلومات المستخدمين الآخرين',
 );
 
-/** Assamese (অসমীয়া)
+/** Assamese (অসমীয়া)
  * @author Bishnu Saikia
  */
 $messages['as'] = array(
@@ -239,6 +292,7 @@ $messages['br'] = array(
 	'editaccount-submit-pass' => 'Enrollañ ar ger-tremen',
 	'editaccount-submit-realname' => 'Enrollañ an anv klok',
 	'editaccount-submit-clearunsub' => 'Diverkañ an digoumanantiñ',
+	'editaccount-submit-cleardisable' => 'Tennañ ar "banniel" diweredekaet',
 	'editaccount-submit-close' => 'Serriñ ar gont',
 	'editaccount-submit-button' => 'Enrollañ',
 	'editaccount-usage-close' => "Gallout a rit ivez diweredekaat ur gont implijer en ur rinegiñ he ger-tremen hag en ur implijout he chomlec'h postel. Diwallit ! Kollet e vo ar roadennoù ha ne c'hallor ket adtapout anezho.",
@@ -273,6 +327,7 @@ $messages['br'] = array(
 	'editaccount-log-entry-close' => 'en deus diweredekaet ar gont $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Diweredekaet eo bet ar gont-mañ en un doare hollek gant Wikia.</div>',
 	'right-editaccount' => 'Kemmañ penndibaboù implijerien all',
+	'action-editaccount' => 'Kemmañ titouroù implijerien all',
 );
 
 /** Catalan (català)
@@ -306,11 +361,44 @@ $messages['ca'] = array(
 	'editaccount-submit-cleardisable' => 'Retirar la marca de desactivat',
 	'editaccount-submit-close' => 'Tancar compte',
 	'editaccount-submit-button' => 'Guardar',
+	'editaccount-usage-close' => "També pots desactivar un compte d'usuari desordenant la seva contrasenya i eliminant l'adreça electrònica. Tingues en compte que aquestes dades es perdran i no es podran recuperar.",
+	'editaccount-warning-close' => "<b>Atenció:</b> Estàs a punto de desactivar permanentment el compte de l'usuari <b>$1</b>. Aquesta acció és irreversible. Segur que això és el que vols?",
+	'editaccount-status' => "Missatge d'estat",
+	'editaccount-success-email' => "S'ha canviat correctament l'adreça electrònica del compte de $1 a $2.",
+	'editaccount-success-email-blank' => "S'ha eliminat correctament l'adreça electrònica del compte $1.",
+	'editaccount-success-pass' => "S'ha canviat correctament la contrasenya del compte $1.",
+	'editaccount-success-realname' => "S'ha canviat correctament el nom real del compte $1.",
+	'editaccount-success-unsub' => 'Eliminada correctament la subscripció del compte $1.',
+	'editaccount-success-disable' => 'S\'ha retirat l\'etiqueta "desactivada" pel compte $1 correctament.',
+	'editaccount-success-toggleadopt' => "Alternar correctament la condició d'elegibilitat d'aprovació del compte $1.",
+	'editaccount-success-close' => "S'ha inhabilitat correctament el compte $1.",
+	'editaccount-error-email' => "L'adreça electrònica s'ha canviat. Intenta-ho de nou o contacta amb l'Equip Tècnic.",
+	'editaccount-error-pass' => "La contrasenya no ha estat canviada. Intenta-ho de nou o contacta amb l'Equip Tècnic.",
+	'editaccount-error-realname' => "El nom real no s'ha modificat. Intenta-ho de nou o contacta amb l'Equip Tècnic.",
+	'editaccount-error-close' => "Ha passat un problema mentre tancaves el compte. Intenta-ho de nou o contacta amb l'Equip Tàcnic.",
+	'editaccount-invalid-email' => '"$1" no és una adreça electrònica vàlida!',
+	'editaccount-nouser' => 'El compte "$1" no existeix!',
+	'editaccount-not-loaded' => "Error: No s'han pogut carregar les dades d'usuari, si us plau, intenta recarregar la pàgina.",
+	'editaccount-remove-avatar-fail' => "Problema durant l'eliminació automàtica de l'avatar.",
+	'editaccount-requested' => "Nota: L'usuari ha sol·licitat el tancament d'un compte",
+	'editaccount-not-requested' => "ATENCIÓ: L'usuari no ha sol·licitat el tancament d'un compte",
+	'editaccount-labal-account-status' => 'Estat del compte',
+	'editaccount-labal-email-status' => "Estat de l'adreça electrònica",
+	'editaccount-status-confirmed' => 'Confirmat',
+	'editaccount-status-unconfirmed' => 'Sense confirmar',
+	'editaccount-status-realuser' => 'Usuari real',
+	'editaccount-status-tempuser' => 'Usuari temporal',
+	'editaccount-error-tempuser-email' => "Els usuaris temporals no poden tenir el camp d'adreça electrònica en blanc, escriu una adreça electrònica.",
+	'editaccount-email-change-requested' => "Un usuari ha demanat canviar l'adreça electrònica a través de les seves Preferències en \$1. Per confirmar el canvi d'adreça electrònica sol·licitada per l'usuari, escriu l'adreça electrònica sol·licitada en el camp de més avall i fes clic en \"Guardar i confirmar\".",
+	'editaccount-log' => "Registre de comptes de l'usuari",
+	'editaccount-log-header' => "Aquesta pàgina s'enumera els canvis que el personal de Wikia ha realitzat en les preferències d'usuari.",
+	'editaccount-log-entry-email' => "S'ha canviat l'adreça electrònica de l'usuari $2",
 	'editaccount-log-entry-pass' => "contrasenya canviada de l'usuari $2",
 	'editaccount-log-entry-realname' => "canviat el nom real de l'usuari $2",
 	'editaccount-log-entry-close' => 'compte desactivat $2',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Aquest compte ha estat desactivat globalment en Wikia.</div>',
 	'right-editaccount' => 'Edita les preferències dels altres usuaris',
+	'action-editaccount' => "editar la informació d'altes usuaris",
 );
 
 /** Czech (česky)
@@ -333,6 +421,8 @@ $messages['cs'] = array(
 	'editaccount-label-pass' => 'Nastavit nové heslo',
 	'editaccount-label-realname' => 'Nastavit novoé skutečné jméno',
 	'editaccount-label-clearunsub' => 'Odhlášeno',
+	'editaccount-label-toggleadopt-prevent' => 'Zabránit automatickému převzetí',
+	'editaccount-label-toggleadopt-allow' => 'Povolit automatické převzetí',
 	'editaccount-label-reason' => 'Důvod:',
 	'editaccount-submit-email' => 'Uložit e-mailovou adresu',
 	'editaccount-submit-pass' => 'Uložit heslo',
@@ -350,6 +440,7 @@ $messages['cs'] = array(
 	'editaccount-success-realname' => 'Úspěšně změnil skutečné jméno pro účet $1.',
 	'editaccount-success-unsub' => 'Odhlašený bit pro účet $1 úspěšně odebrán.',
 	'editaccount-success-disable' => 'Zakázaný bit pro účet $1 úspěšně odebrán.',
+	'editaccount-success-toggleadopt' => 'Způsobilost k převzetí úspěšně přepnuta pro účet $1.',
 	'editaccount-success-close' => 'Úspěšně zakázan účet $1.',
 	'editaccount-error-email' => 'E-mail nebyl změněn. Zkuste to znovu nebo kontaktujte technický tým.',
 	'editaccount-error-pass' => 'Heslo nebylo změněno. Zkuste to znovu nebo kontaktujte technický tým.',
@@ -357,6 +448,7 @@ $messages['cs'] = array(
 	'editaccount-error-close' => 'Došlo k potížím při zavírání účtu. Zopakujte akci nebo se obraťte na technický tým.',
 	'editaccount-invalid-email' => '"$1" není platná e-mailová adresa!',
 	'editaccount-nouser' => 'Účet "$1" neexistuje!',
+	'editaccount-not-loaded' => 'Chyba: Uživatelská data se nepodařilo správně načíst, zkuste prosím stránku načíst znovu.',
 	'editaccount-remove-avatar-fail' => 'Problém při auto-odstraňování avataru.',
 	'editaccount-requested' => 'Poznámka: Uživatel požadoval uzavření účtu.',
 	'editaccount-not-requested' => 'Upozornění: Uživatel nepožadoval uzavření účtu.',
@@ -376,6 +468,7 @@ $messages['cs'] = array(
 	'editaccount-log-entry-close' => 'zakázán účet $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Tento účet byl Wikií globálně deaktivován.</div>',
 	'right-editaccount' => 'Upravit předvolby ostatních uživatelů',
+	'action-editaccount' => 'upravit informace ostatních uživatelů',
 );
 
 /** German (Deutsch)
@@ -1599,17 +1692,21 @@ $messages['ps'] = array(
 	'editaccount-frame-manage' => 'يو ګڼون سمول',
 	'editaccount-frame-usage' => 'يادښت',
 	'editaccount-label-select' => 'يو کارن ګڼون وټاکۍ',
+	'editaccount-submit-account' => 'ګڼون مهارول',
 	'editaccount-label-email' => 'نوې برېښليک پته ټاکل',
 	'editaccount-label-pass' => 'نوی پټنوم ټاکل',
 	'editaccount-label-realname' => 'نوی اصلي نوم ټاکل',
 	'editaccount-label-reason' => 'سبب:',
 	'editaccount-submit-email' => 'برېښليک خوندي کول',
 	'editaccount-submit-pass' => 'پټنوم خوندي کول',
+	'editaccount-submit-realname' => 'اصلي نوم خوندي کول',
 	'editaccount-submit-close' => 'کارن حساب تړل',
 	'editaccount-submit-button' => 'خوندي کول',
 	'editaccount-status' => 'د پيغام دريځ',
+	'editaccount-nouser' => 'د "$1" ګڼون نشته!',
 	'editaccount-labal-account-status' => 'د ګڼون دريځ',
 	'editaccount-labal-email-status' => 'د برېښليک دريځ',
+	'editaccount-status-tempuser' => 'لنډمهاله کارن',
 );
 
 /** Portuguese (português)
@@ -1677,6 +1774,7 @@ $messages['pt'] = array(
  * @author Giro720
  * @author JM Pessanha
  * @author Jesielt
+ * @author Luckas
  * @author Luckas Blade
  * @author TheGabrielZaum
  */

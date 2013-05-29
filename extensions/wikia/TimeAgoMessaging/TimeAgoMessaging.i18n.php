@@ -58,6 +58,10 @@ $messages['ar'] = array(
 	'timeago-hour' => 'منذ {{PLURAL:$1|صفر ساعات|ساعة واحدة|ساعتان|$1 ساعات|$1 ساعة}}',
 	'timeago-minute' => 'منذ {{PLURAL:$1|صفر دقائق|دقيقة واحدة|دقيقتان|$1 دقائق|$1 دقيقة}}',
 	'timeago-second' => 'قبل دقيقة',
+	'timeago-day-from-now' => 'منذ {{PLURAL:$1|يوم واحد|$1 أيام}}',
+	'timeago-hour-from-now' => 'منذ {{PLURAL:$1|ساعة واحدة|$1 ساعات}}',
+	'timeago-minute-from-now' => 'منذ {{PLURAL:$1|دقيقة واحدة|$1 دقيقة}}',
+	'timeago-month-from-now' => 'منذ {{PLURAL:$1|شهر واحد|$1 أشهر}}',
 	'timeago-second-from-now' => 'دقيقة من الآن',
 );
 
@@ -477,6 +481,24 @@ $messages['pt-br'] = array(
  */
 $messages['ro'] = array(
 	'timeago-second' => 'un minut în urmă',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'timeagomessaging-desc' => 'Dèje i18n pu plugin jquery.timeago.js',
+	'timeago-year' => "{{PLURAL:$1|'n'anne|$1 anne}} fà",
+	'timeago-month' => "{{PLURAL:$1|'nu mese|$1 mise}} fà",
+	'timeago-day' => "{{PLURAL:$1|'nu sciurne|$1 sciurne}} fà",
+	'timeago-hour' => "{{PLURAL:$1|'n'ore|$1 ore}} fà",
+	'timeago-minute' => "{{PLURAL:$1|'nu minute|$1 minute}} fà",
+	'timeago-second' => "'nu minute fà",
+	'timeago-day-from-now' => "{{PLURAL:$1|'nu sciurne|$1 sciurne}} da mò",
+	'timeago-hour-from-now' => "{{PLURAL:$1|'n'ore|$1 ore}} da mò",
+	'timeago-minute-from-now' => "{{PLURAL:$1|'nu minute|$1 minute}} da mò",
+	'timeago-month-from-now' => "{{PLURAL:$1|'nu mese|$1 mise}} da mò",
+	'timeago-second-from-now' => "'nu minute da mò",
 );
 
 /** Russian (русский)

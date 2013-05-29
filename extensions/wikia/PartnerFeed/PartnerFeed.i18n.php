@@ -34,7 +34,7 @@ $messages['en'] = array(
 	'feed-title-recentchanges'		=> 'Recent changes'
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Purodha
  */
 $messages['qqq'] = array(
@@ -45,6 +45,26 @@ $messages['qqq'] = array(
 * $1 is a hub title.',
 	'feed-title-blogcomments' => 'Parameters:
 * $1 is a blog post title.',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'partner-feed-achievements-leaderboard' => 'قائمة متصدري الإنجازات الخاصة بالويكيات',
+	'partner-feed-earned-badges' => 'الإنجازات المتحصل عليها حديثا في ويكي محددة',
+	'partner-feed-recent-changes' => 'أحدث التغييرات',
+	'partnerfeed' => 'قائمة الشركاء',
+	'feed-title-blogposts' => 'أحدث معلقات المدونة',
+	'feed-title-recent-badges' => 'أحدث الشارات',
+	'feed-title-recent-images' => 'أحدث الصور',
+	'feed-title-leaderboard' => 'قائمة متصدري الإنجازات',
+	'feed-main-title' => 'قائمة شركاء ويكيا',
+	'all-blog-posts' => 'جميع التصنيفات',
+	'blog-posts-from-listing' => 'من قائمة: $1',
+	'feed-title-hot-content' => 'محتوى المحور - $1',
+	'feed-title-blogcomments' => 'التعليقات على $1',
+	'feed-title-recentchanges' => 'أحدث التغييرات',
 );
 
 /** Bulgarian (български)
@@ -514,6 +534,18 @@ $messages['pt-br'] = array(
 	'feed-title-recentchanges' => 'Mudanças recentes',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'partner-feed-recent-changes' => 'Cangiaminde recende',
+	'all-blog-posts' => 'tutte le categorije',
+	'blog-posts-from-listing' => 'da elengà: $1',
+	'feed-title-hot-content' => 'Condenute cavede - $1',
+	'feed-title-blogcomments' => 'Commende a $1',
+	'feed-title-recentchanges' => 'Cangiaminde recende',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Eleferen
@@ -622,6 +654,7 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
@@ -629,13 +662,16 @@ $messages['uk'] = array(
 	'partner-feed-earned-badges' => 'Нещодавні відзнаки на конкретній Вікі',
 	'partner-feed-recent-blog-posts' => "Останні записи в блозі пов'язані з рекламою",
 	'partner-feed-latest-images' => 'Останні зображень, що були завантажені на вікі',
+	'partner-feed-hotcontent' => 'Портал / по вертикалі "Hot Content" відсортовано за кількістю редакторів',
 	'partner-feed-recent-blog-comments' => "Останні коментарі, пов'язані із зазначеним блогом.",
 	'partner-feed-recent-changes' => 'Нові редагування',
+	'partnerfeed' => 'Партнерська розсилка',
 	'error-no-article' => 'Помилка: ні "статті" з такими параметрами',
 	'feed-title-blogposts' => 'Останні записи в блозі',
 	'feed-title-recent-badges' => 'Останні відзнаки',
 	'feed-title-recent-images' => 'Останні зображення',
 	'feed-title-leaderboard' => 'Список нагороджених на вікі',
+	'feed-main-title' => 'Партнерська розсилка Wikia',
 	'all-blog-posts' => 'усі категорії',
 	'blog-posts-from-listing' => 'зі списку: $1',
 	'feed-title-hot-content' => 'Топ контент - $1',
