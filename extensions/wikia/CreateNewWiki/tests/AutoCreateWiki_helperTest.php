@@ -24,7 +24,6 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 			$this->mockGlobalFunction('msg', 'mocked-string', 1, array(
 				$this->equalTo($expectedErrorKey)
 			));
-			$this->mockApp();
 		}
 
 		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'checkDomainExists', 'getLanguageNames'));
@@ -80,7 +79,6 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 		$this->mockGlobalFunction('msg', 'mocked-string', 1, array(
 			$this->equalTo('autocreatewiki-violate-policy')
 		));
-		$this->mockApp();
 
 		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'getLanguageNames'));
 		$autoCreateWikiMock->staticExpects($this->any())
@@ -104,7 +102,6 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 		$this->mockGlobalFunction('msg', 'mocked-string', 1, array(
 			$this->equalTo('autocreatewiki-name-taken')
 		));
-		$this->mockApp();
 
 		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'getLanguageNames', 'checkDomainExists'));
 		$autoCreateWikiMock->staticExpects($this->any())

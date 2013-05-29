@@ -25,7 +25,6 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 		$respMock = is_array($apiResponse) ? json_encode($apiResponse) : $apiResponse;
 
 		$this->mockStaticMethod('Http', 'post', $respMock);
-		$this->mockApp();
 
 		$service = new LyricFindTrackingService();
 		$this->assertEquals($res, $service->track($amgId), 'API response code should match expected value');

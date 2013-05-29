@@ -36,8 +36,6 @@ class WikiaHomePageTest extends WikiaBaseTest {
 			2 => array('Video_Games'),
 			3 => array('Entertainment')
 		));
-
-		$this->mockApp();
 	}
 
 	protected function setUpMockObject($objectName, $objectParams = null, $needSetInstance = false, $globalVarName = null, $callOriginalConstructor = true, $globalFunc = array()) {

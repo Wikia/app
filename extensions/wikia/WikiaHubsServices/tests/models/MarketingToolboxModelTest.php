@@ -544,7 +544,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->will($this->returnValue(array()));
 
 		$this->mockGlobalFunction('GetDB', $dbMock);
-		$this->mockApp();
 
 		// create object second time to use mocked F:app()
 		$model = new MarketingToolboxModel();
@@ -586,7 +585,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->will($this->returnValue(array()));
 
 		$this->mockGlobalFunction('GetDB', $dbMock);
-		$this->mockApp();
 
 		// create object second time to use mocked F:app()
 		$model = new MarketingToolboxModel();
@@ -615,7 +613,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->will($this->returnValue(array()));
 
 		$this->mockGlobalFunction('GetDB', $dbMock);
-		$this->mockApp();
 
 		$model = new MarketingToolboxModel();
 
@@ -670,7 +667,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->will($this->returnValue(array()));
 
 		$this->mockGlobalFunction('GetDB', $dbMock);
-		$this->mockApp();
 
 		// create object second time to use mocked F:app()
 		$model = new MarketingToolboxModel();
@@ -701,7 +697,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->will($this->returnValue(array()));
 
 		$this->mockGlobalFunction('GetDB', $dbMock);
-		$this->mockApp();
 
 		$model = new MarketingToolboxModel();
 		$returnedVal = $model->checkModulesSaved('en', '2','1360454400');

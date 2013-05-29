@@ -59,7 +59,6 @@ class PhalanxModelTest extends WikiaBaseTest {
 	private function setUpTest( $block ) {
 		// PhalanxService
 		$this->mockClassWithMethods( 'PhalanxService', array( 'match' => $block, 'setUser' => null, 'setLimit' => null ) );
-		$this->mockApp();
 	}
 
 	/* PhalanxUserModel class */

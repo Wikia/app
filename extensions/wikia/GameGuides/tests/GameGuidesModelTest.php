@@ -69,8 +69,7 @@ class GameGuidesModelTest extends WikiaBaseTest
 		
 		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
 		$this->mockClass( 'Wikia\Search\QueryService\Factory', $mockFactory );
-		$this->mockApp();
-		
+
 		$this->assertInstanceOf(
 				'Wikia\Search\ResultSet\Base',
 				$mockGGModel->getResultSet( $query, $limit )

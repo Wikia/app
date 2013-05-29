@@ -24,7 +24,6 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 			->method('set')
 			->will($this->returnValue(true));
 		$this->mockGlobalVariable('wgMemc', $mock_memc);
-		$this->mockApp();
 
 		$request = new WebRequest();
 		$request->setVal('oid', self::SASS_FILE);

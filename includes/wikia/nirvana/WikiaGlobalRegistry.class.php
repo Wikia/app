@@ -128,8 +128,4 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 		return null;
 	}
 
-	public static function isInContext( $propertyName ) {
-		return array_key_exists( $propertyName, self::$requestContextMap );
-	}
-
 }

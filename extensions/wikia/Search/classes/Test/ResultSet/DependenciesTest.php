@@ -48,8 +48,7 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 			$this->mockClass( $fullName, $setMocks[$name] );
 		}
 		$this->mockClass( 'Wikia\Search\ProfiledClassFactory', $pcf );
-		$this->mockApp();
-		
+
 		$mockDc
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getConfig' )

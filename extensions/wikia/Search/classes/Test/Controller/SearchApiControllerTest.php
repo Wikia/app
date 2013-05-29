@@ -56,8 +56,7 @@ class SearchApiControllerTest extends BaseTest
 		                       ->getMock();
 		
 		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
-		$this->mockApp();
-		
+
 		$requestIncr = 0;
 		$configIncr = 0;
 		
@@ -379,8 +378,7 @@ class SearchApiControllerTest extends BaseTest
 		;
 		
 		$this->mockClass( 'Wikia\Search\QueryService\Factory', $mockFactory );
-		$this->mockApp();
-		
+
 		$set = new \ReflectionMethod( 'SearchApiController', 'setResponseFromConfig' );
 		$set->setAccessible( true );
 		$set->invoke( $mockController, $mockConfig );

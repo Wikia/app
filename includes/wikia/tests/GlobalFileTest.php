@@ -15,7 +15,6 @@ class GlobalFileTest extends WikiaBaseTest {
 
 		// assume we're in production environment
 		$this->mockGlobalVariable('wgDevelEnvironment', false);
-		$this->mockApp();
 	}
 
 	/**
@@ -25,7 +24,6 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->mockGlobalFunction('GetDB', $this->mockClassWithMethods('Database', [
 			'selectRow' => $row
 		]));
-		$this->mockApp();
 
 		$file = GlobalFile::newFromText('Gzik.jpg', $cityId);
 		$title = $file->getTitle();

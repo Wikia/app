@@ -34,8 +34,6 @@
 			$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
 
 			$this->mockGlobalFunction('wfMemcKey', null);
-
-			$this->mockApp();
 		}
 
 		protected function setMockDb($fetch_obj) {

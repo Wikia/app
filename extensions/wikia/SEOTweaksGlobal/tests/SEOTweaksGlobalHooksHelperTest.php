@@ -39,8 +39,6 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 			->with( $this->equalTo( $mockedFileTitle ) )
 			->will( $this->returnValue( $fileMock ) );
 
-		$this->mockApp();
-
 		$mockedTitle = $this->getMock('Title');
 
 		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'getFirstArticleImage' )
@@ -92,8 +90,6 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
 		$this->mockGlobalFunction('findFile', $fileMock, 1, array($mockedTitle));
 
-		$this->mockApp();
-
 		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'getFirstArticleImage' )
 			->expects($this->never())
 			->method('getFirstArticleImage');
@@ -125,8 +121,6 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 			->method('set');
 
 		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
-
-		$this->mockApp();
 
 		$mockedTitle = $this->getMock('Title', array('getNamespace') );
 		$mockedTitle->expects($this->any())
@@ -167,8 +161,6 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 			->method('set');
 
 		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
-
-		$this->mockApp();
 
 		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'makeKey' )
 			->expects( $this->any() )

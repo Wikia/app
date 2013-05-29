@@ -25,8 +25,6 @@
 
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
 
-			$this->mockApp();
-
 			// "mock" IP
 			$this->originalServer = $_SERVER;
 			$_SERVER['REMOTE_ADDR'] = '127.0.0.1';

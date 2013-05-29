@@ -266,7 +266,6 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		    ->will   ( $this->returnValue( 5 ) )
 		;
 		$this->mockClass( 'DataMartService', $mockDmService );
-		$this->mockApp();
 		$this->assertEquals(
 				$topPages,
 				$this->resultSet->getTopPages()

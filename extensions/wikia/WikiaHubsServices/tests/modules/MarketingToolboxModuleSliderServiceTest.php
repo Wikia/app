@@ -21,9 +21,6 @@ class MarketingToolboxModuleSliderServiceTest extends WikiaBaseTest
 			->will($this->returnValue('File'));
 
 		$this->mockGlobalVariable('wgContLang', $contLangMock);
-		$this->mockApp();
-
-
 
 		$sliderModule = new MarketingToolboxModuleSliderService('en',1,1);
 		$renderedText = $sliderModule->getWikitext($structuredData);

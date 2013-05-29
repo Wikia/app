@@ -54,8 +54,6 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$this->mockClass('CreateWiki', $createWiki);
 		$this->mockClass('GlobalTitle', $mainPageTitle);
 
-		$this->mockApp();
-
 		$response = $app->sendRequest('CreateNewWiki', 'CreateWiki');
 
 		$this->assertEquals("ok", $response->getVal('status'));

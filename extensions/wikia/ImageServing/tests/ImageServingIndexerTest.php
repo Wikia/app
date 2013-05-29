@@ -35,8 +35,6 @@ class ImageServingIndexerTest extends WikiaBaseTest {
 		$this->getMethodMock('DatabaseMysql','replace');
 		$this->getMethodMock('Database','delete');
 
-		$this->mockApp();
-
 		$images = ImageServingHelper::buildAndGetIndex($article);
 		$this->assertEquals($expectedImages, $images, 'List of images matches expected ones');
 	}

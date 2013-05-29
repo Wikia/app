@@ -16,7 +16,6 @@ class ImageReviewTest extends WikiaBaseTest {
 
 	public function testImageReviewSpecialControllerIndexCorrect() {
 		$this->setStubsForImageReviewSpecialControllerTests(false);
-		$this->mockApp();
 
 		$response = $this->app->sendRequest('ImageReviewSpecialController', 'index', array());
 		$imagesList = $response->getVal('imageList');
@@ -27,7 +26,6 @@ class ImageReviewTest extends WikiaBaseTest {
 
 	public function testImageReviewSpecialControllerIndexError() {
 		$this->setStubsForImageReviewSpecialControllerTests(true);
-		$this->mockApp();
 
 		$response = $this->app->sendRequest('ImageReviewSpecialController', 'index', array());
 		$imagesList = $response->getVal('imageList');

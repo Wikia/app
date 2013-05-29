@@ -447,8 +447,7 @@ class MediaWikiServiceTest extends BaseTest
 		
 		// hack to make this work in our framework
 		$this->mockClass( '\ApiService', $mockResultArray, 'call' );
-		$this->mockApp();
-		
+
 		$this->assertEquals(
 				$mockResultArray,
 				(new MediaWikiService)->getParseResponseFromPageId( $this->pageId )
@@ -610,8 +609,7 @@ class MediaWikiServiceTest extends BaseTest
 		
 		$this->mockClass( '\ApiService', $mockApiService );
 		$this->mockClass( '\ApiService', $mockApiService );
-		$this->mockApp();
-		
+
 		$this->assertEquals(
 				0,
 				$service->getBacklinksCountFromPageId( $this->pageId )
@@ -960,7 +958,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( $detailArray ) )
 		;
 		$this->mockClass( '\WikiaFileHelper', $fileHelper );
-		$this->mockApp();
 		$this->assertTrue(
 				is_array( $service->getMediaDetailFromPageId( $this->pageId ) ),
 				'\Wikia\Search\MediaWikiService::getMediaDetailFromPageId should return the array result of \WikiaFileHelper::getMediaDetail'
@@ -1167,7 +1164,6 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$this->mockClass( 'Article', $mockArticle, 'newFromID' );
 		$this->mockClass( 'Article', $mockArticle );
-		$this->mockApp();
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getPageFromPageId' );
 		$get->setAccessible( true );
 		$this->assertSame(
@@ -1283,7 +1279,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( $title ) )
 		;
 		$this->mockClass( '\WallMessage', $wm, 'newFromId' );
-		$this->mockApp();
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -1338,7 +1333,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( $title ) )
 		;
 		$this->mockClass( '\WallMessage', $wm, 'newFromId' );
-		$this->mockApp();
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -1376,7 +1370,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( (object) [ 'cv_value' => serialize( [ 'bar' ] ) ] ) )
 		;
 		$this->mockClass( 'WikiFactory', $wf );
-		$this->mockApp();
 		$this->assertEquals(
 				[ 'bar' ],
 				(new MediaWikiService)->getGlobalForWiki( 'foo', 123 )
@@ -1525,7 +1518,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( 'snippet' ) )
 		;
 		$this->mockClass( 'ArticleService', $mockservice );
-		$this->mockApp();
 		$this->assertEquals(
 				'snippet',
 				$service->getSnippetForPageId( $this->pageId )
@@ -1650,7 +1642,6 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$this->mockClass( 'SearchEngine', $mockEngine );
 		$this->mockClass( 'Wikia\Search\Match\Article', $mockMatch );
-		$this->mockApp();
 		$this->assertNull(
 				$service->getArticleMatchForTermAndNamespaces( $term, $namespaces )
 		);
@@ -1677,7 +1668,6 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$this->mockClass( 'SearchEngine', $mockEngine );
 		$this->mockClass( 'Wikia\Search\Match\Article', $mockMatch );
-		$this->mockApp();
 		$this->assertEquals(
 				$service->getArticleMatchForTermAndNamespaces( $term, $namespaces ),
 				$mockMatch
@@ -1701,7 +1691,6 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		
 		$this->mockClass( 'Wikia\Search\Match\Wiki', $mockMatch );
-		$this->mockApp();
 		$this->assertEquals(
 				$service->getWikiMatchByHost( 'foo' ),
 				$mockMatch
@@ -1801,7 +1790,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( '11/11/11' ) )
 		;
 		$this->mockClass( 'Revision', $mockRev, 'newFromId' );
-		$this->mockApp();
 		$this->assertEquals(
 				'11/11/11',
 				$service->getLastRevisionTimestampForPageId( $this->pageId )
@@ -1946,7 +1934,6 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$this->mockClass( 'WikiaFileHelper', $wfh );
 		$this->mockClass( 'MediaQueryService', $mqs );
-		$this->mockApp();
 		$this->assertEquals(
 				1234,
 				$service->getVideoViewsForPageId( $this->pageId )
@@ -1979,7 +1966,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->with   ( 'videohandler-video-views', array( 'parsemag' ), '1,234' )
 		    ->will   ( $this->returnValue( '1,234 views' ) )
 		;
-		$this->mockApp();
 		$this->assertEquals(
 				'1,234 views',
 				$service->getFormattedVideoViewsForPageId( $this->pageId )
@@ -2028,7 +2014,6 @@ class MediaWikiServiceTest extends BaseTest
 				[ [ 321 ], [] ] ] ) )
 		;
 		$this->mockClass( 'WikisModel', $model );
-		$this->mockApp();
 		$this->assertEquals(
 				$details,
 				$service->getVisualizationInfoForWikiId( 123 )
@@ -2060,7 +2045,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( 4321 ) )
 		;
 		$this->mockClass( 'WikiService', $wikisvc );
-		$this->mockApp();
 		$method = new ReflectionMethod( 'Wikia\Search\MediaWikiService', 'getStatsInfoForWikiId' );
 		$method->setAccessible( true );
 		$this->assertEquals(
@@ -2101,7 +2085,6 @@ class MediaWikiServiceTest extends BaseTest
 		           ->getMock();
 		
 		$this->mockClass( 'WikiDataSource', $ds );
-		$this->mockApp();
 		$meth = $app = new ReflectionMethod( '\Wikia\Search\MediaWikiService' , 'getDataSourceForWikiId' );
 		$meth->setAccessible( true );
 		$result = $meth->invoke( $service, 123 );
@@ -2159,7 +2142,6 @@ class MediaWikiServiceTest extends BaseTest
 		;
 		$this->mockClass( 'ApiService', $apiservice );
 		$this->mockClass( 'GlobalTitle', $title, 'newFromText' );
-		$this->mockApp();
 		$reflGet = new ReflectionMethod( 'Wikia\Search\MediaWikiService', 'getMainPageTitleForWikiId' );
 		$reflGet->setAccessible( true );
 		$result = $reflGet->invoke( $service, 123 );
@@ -2204,7 +2186,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( $responseArray ) )
 		;
 		$this->mockClass( 'ApiService', $apiservice );
-		$this->mockApp();
 		$this->assertEquals(
 				'foo wiki is a wiki',
 				$service->getDescriptionTextForWikiId( 123 )
@@ -2224,7 +2205,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will         ( $this->returnValue( (object) [ 'cat_name' => 'Entertainment' ] ) )
 		;
 		$this->mockClass( 'HubService', $hs );
-		$this->mockApp();
 		$this->assertEquals(
 				'Entertainment',
 				$service->getHubForWikiId( 123 )
@@ -2245,7 +2225,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will         ( $this->returnValue( (object) [ 'cat_name' => 'Entertainment' ] ) )
 		;
 		$this->mockClass( 'WikiFactory', $wf );
-		$this->mockApp();
 		$this->assertEquals(
 				'Entertainment',
 				$service->getSubHubForWikiId( 123 )
@@ -2289,7 +2268,6 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( $responseArray ) )
 		;
 		$this->mockClass( 'ApiService', $apiservice );
-		$this->mockApp();
 		$this->assertEquals(
 				'and if you dont know now you know',
 				$service->getMainPageTextForWikiId( 123 )
@@ -2368,7 +2346,6 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testShortNumForMsg($number, $baseMessageId, $usedNumber, $usedMessageId) {
 		$this->mockGlobalFunction('message', 'mocked message', 1, array( $usedMessageId, $usedNumber, $number ) );
-		$this->mockApp();
 		$service = (new MediaWikiService);
 		$this->assertEquals('mocked message', $service->shortNumForMsg($number, $baseMessageId));
 

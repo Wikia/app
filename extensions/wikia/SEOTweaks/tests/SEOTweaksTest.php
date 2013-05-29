@@ -321,8 +321,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		$this->mockGlobalFunction('wfMsg','A',1);
 		$this->mockGlobalVariable('wgOut',$mockOut);
 		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
-		$this->mockApp();
-		
+
 		$this->assertTrue(
 				$mockHelper->onImagePageAfterImageLinks( $mockImagePage, '' ),
 				'SEOTweaksHooksHelper::onImagePageAfterImageLinks should always return true'
@@ -395,8 +394,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		$this->mockGlobalFunction('wfMsg','A',1);
 		$this->mockGlobalVariable('wgOut',$mockOut);
 		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
-		$this->mockApp();
-		
+
 		$this->assertTrue(
 				$mockHelper->onImagePageAfterImageLinks( $mockImagePage, '' ),
 				'SEOTweaksHooksHelper::onImagePageAfterImageLinks should always return true'

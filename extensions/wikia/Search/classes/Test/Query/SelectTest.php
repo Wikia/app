@@ -27,7 +27,6 @@ class SelectTest extends BaseTest
 	{
 		$sanitizer = $this->getMock( 'Sanitizer', array( 'StripAllTags' ) );
 		$this->mockClass( 'Sanitizer', $sanitizer );
-		$this->mockApp();
 		$rawQuery = "crime &amp; <b>punishment</b>";
 		$expected = "crime & punishment";
 		$query = new Query( $rawQuery );

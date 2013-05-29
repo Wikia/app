@@ -27,13 +27,14 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	];
 
 
+	/** @var string */
 	protected $setupFile = null;
-	/* @var WikiaApp */
+	/** @var WikiaApp */
 	protected $app = null;
-	protected $appOrig = null;
-	/* @var WikiaAppMock */
-	private $appMock = null;
-	private $mockedGlobals = array();
+
+	/** @var array */
+	private $mockedGlobalVariables = array();
+	/** @var array */
 	private $mockedMessages = array();
 	/** @var WikiaMockProxy */
 	private $mockProxy = null;
@@ -62,8 +63,6 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->app = F::app();
-		$this->appOrig = F::app();
-		$this->appMock = new WikiaAppMock( $this );
 
 		if ($this->setupFile != null) {
 			global $IP; 					// used by setup file
@@ -83,10 +82,6 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected function tearDown() {
 		$this->unsetGlobals();
 		$this->unsetMessages();
-		if (is_object($this->appOrig)) {
-			F::setInstance('App', $this->appOrig);
-		}
-//		debug_print_backtrace();
 		if ( $this->mockProxy === null ) {
 			throw new Exception("Current test did not execute setUp()");
 		}
@@ -191,28 +186,14 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $returnValue mixed value variable should be set to
 	 */
 	protected function mockGlobalVariable( $globalName, $returnValue ) {
-		if ( WikiaGlobalRegistry::isInContext($globalName) ) {
-			if($this->appMock == null) {
-				$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
-			}
-			$this->appMock->mockGlobalVariable( $globalName, $returnValue );
+		if ( !empty($this->mockedGlobalVariables[$globalName] ) ) {
+			$this->mockedGlobalVariables[$globalName]->disable();
 		}
 
-		if ( !array_key_exists( $globalName, $this->mockedGlobals ) ) {
-			$exists = array_key_exists( $globalName, $GLOBALS );
-			$this->mockedGlobals[$globalName] = array(
-				'exists' => $exists,
-				'value' => $exists ? $GLOBALS[$globalName] : null,
-			);
-		}
-		$GLOBALS[$globalName] = $returnValue;
+		$mock = new WikiaGlobalVariableMock($globalName,$returnValue);
+		$mock->enable();
 
-		/*
-		if($this->appMock == null) {
-			$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
-		}
-		$this->appMock->mockGlobalVariable( $globalName, $returnValue );
-		*/
+		$this->mockedGlobalVariables[$globalName] = $mock;
 	}
 
 	/**
@@ -300,18 +281,16 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	// After calling this, any reference to $this->app in a test now uses the mocked object
+	/**
+	 * @deprecated
+	 */
 	protected function mockApp() {
-		$this->appMock->init();
-		$this->app = F::app();
+		// noop
 	}
 
 	private function unsetGlobals() {
-		foreach( $this->mockedGlobals as $globalName => $globalDef ) {
-			if ( $globalDef['exists'] ) {
-				$GLOBALS[$globalName] = $globalDef['value'];
-			} else {
-				unset($GLOBALS[$globalName]);
-			}
+		foreach ($this->mockedGlobalVariables as $globalName => $mock) {
+			$mock->disable();
 		}
 		$this->mockedGlobals = array();
 	}

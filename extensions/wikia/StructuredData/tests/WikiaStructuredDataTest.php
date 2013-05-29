@@ -120,7 +120,6 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 			->method('set');
 		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
 		$this->mockGlobalVariable('wgStructuredDataConfig', $this->mockedConfig);
-		$this->mockApp();
 
 		$apiClient = (new StructuredDataAPIClient(
 			$wgStructuredDataConfig['baseUrl'],
@@ -174,7 +173,6 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 			->method('set');
 		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
 		$this->mockGlobalVariable('wgStructuredDataConfig', $this->mockedConfig);
-		$this->mockApp();
 
 		$apiClient = (new StructuredDataAPIClient(
 			$wgStructuredDataConfig['baseUrl'],

@@ -34,7 +34,6 @@ class WikiaPollTest extends WikiaBaseTest {
 
 		// message needs to be mocked before mockApp() is called
 		$this->mockMessage('wikiapoll-error-invalid-title', 'Question text is invalid');
-		$this->mockApp();
 
 		$result = $poll->create();
 
@@ -75,8 +74,6 @@ class WikiaPollTest extends WikiaBaseTest {
 				->will($this->returnValue($mockTitle));
 
 		$this->mockClass('Article', $mockArticle, 'newFromID');
-
-		$this->mockApp();
 
 		$result = $poll->get();
 
@@ -119,7 +116,6 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->mockClass('Article', $mockArticle, 'newFromID');
 
 
-		$this->mockApp();
 		$poll = new WikiaPollAjax;
 		$result = $poll->update();
 
@@ -163,7 +159,6 @@ class WikiaPollTest extends WikiaBaseTest {
 		$mockArticle = $this->getMock('Article', array(), array($mockTitle));
 		$this->mockClass('Article', $mockArticle, 'newFromID');
 
-		$this->mockApp();
 		$poll = new WikiaPollAjax;
 
 		$result = $poll->vote();
@@ -185,8 +180,6 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->mockClassWithMethods('Title', array(
 			'exists' => true
 		), 'newFromText');
-
-		$this->mockApp();
 
 		// If the poll exists, it's a dupe
 		$result = $poll->create();

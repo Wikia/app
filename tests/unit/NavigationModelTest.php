@@ -122,7 +122,6 @@ class NavigationModelTest extends WikiaBaseTest {
 		$messageName = 'test'.rand();
 
 		$this->mockGlobalFunction('msg', '*whatever', 2);
-		$this->mockApp();
 
 		$model = new NavigationModel();
 
@@ -255,7 +254,6 @@ class NavigationModelTest extends WikiaBaseTest {
 
 	function testParseOneLineWithoutTranslation() {
 		$this->mockGlobalFunction('msg', 'mocked text', 0);
-		$this->mockApp();
 
 		$method = new ReflectionMethod(
 			'NavigationModel', 'setShouldTranslateContent'

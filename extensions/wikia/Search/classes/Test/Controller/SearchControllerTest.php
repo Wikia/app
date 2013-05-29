@@ -210,7 +210,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$this->mockClass( 'Article', $mockArticle, 'newFromID' );
 		$this->mockClass( 'Track', $mockTrack );
 		$this->mockClass( 'Track', $mockTrack );
-		$this->mockApp();
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
 		$method->setAccessible( true );
@@ -272,7 +271,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$this->mockClass( 'Title', $mockTitle );
 		$this->mockClass( 'Title', $mockTitle, 'newFromText' );
-		$this->mockApp();
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
 		$method->setAccessible( true );
@@ -369,7 +367,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$this->mockClass( 'Article', $mockArticle, 'newFromID' );
 		$this->mockClass( 'Track', $mockTrack );
-		$this->mockApp();
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
 		$method->setAccessible( true );
@@ -711,7 +708,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->will		( $this->returnValue( false ) )
 		;
 		$e = null;
-		$this->mockApp();
 		try {
 		    $mockController->tabs();
 		    $this->assertFalse(
@@ -738,7 +734,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->will		( $this->returnValue( 'foo' ) )
 		;
 		$e = null;
-		$this->mockApp();
 		try {
 		    $mockController->tabs();
 		    $this->assertFalse(
@@ -887,8 +882,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->with		( 'is_video_wiki', false )
 		;
 
-		$this->mockApp();
-
 		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
 		$reflWg->setAccessible( true );
 		$reflWg->setValue( $mockController, $wg );
@@ -1034,8 +1027,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->with		( 'is_video_wiki', true )
 		;
 
-		$this->mockApp();
-
 		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
 		$reflWg->setAccessible( true );
 		$reflWg->setValue( $mockController, $wg );
@@ -1149,8 +1140,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$this->mockClass( 'SearchEngine', $mockSearchEngine );
 
-		$this->mockApp();
-
 		F::setInstance( 'SearchEngine', $mockSearchEngine );
 
 		$mockController->advancedBox();
@@ -1166,7 +1155,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$method->setAccessible( true );
 
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
-		$this->mockApp();
 
 		$this->assertFalse(
 				$method->invoke( $this->searchController->getMock() ),
@@ -1174,7 +1162,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		);
 
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', null );
-		$this->mockApp();
 
 		$this->assertFalse(
 		        $method->invoke( $this->searchController->getMock() ),
@@ -1182,7 +1169,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		);
 
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', true );
-		$this->mockApp();
 
 		$this->searchController->getMock()->setApp( F::app() );
 
@@ -1320,7 +1306,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 
 		$this->mockClass( 'SearchEngine', $mockSearchEngine );
-		$this->mockApp();
 
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'setNamespacesFromRequest' );
@@ -1367,7 +1352,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 
 		$this->mockClass( 'SearchEngine', $mockSearchEngine );
-		$this->mockApp();
 
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'setNamespacesFromRequest' );
@@ -1419,7 +1403,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 
 		$this->mockClass( 'SearchEngine', $mockSearchEngine );
-		$this->mockApp();
 
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'setNamespacesFromRequest' );
@@ -1530,7 +1513,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$searchRefl->setValue( $mockController, $mockFactory );
 
 		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
-		$this->mockApp();
 
 		$mockController->videoSearch();
 	}
@@ -1624,7 +1606,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$searchRefl->setValue( $mockController, $mockFactory );
 
 		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
-		$this->mockApp();
 
 		$mockController->searchVideosByTitle();
 	}
@@ -1678,7 +1659,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockWgRefl->setValue( $mockController, (object) array( 'AllowMemcacheWrites' => true ) );
 
 		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
-		$this->mockApp();
 		$mockController->getPages();
 
 		$this->assertFalse(
@@ -1776,7 +1756,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->with		( 'tooltip', $tooltip )
 		;
 		$this->mockClass( 'SpecialPage', $mockSpecialPageTitle, 'getTitleFor' );
-		$this->mockApp();
 
 		$mockController->advancedTabLink();
 	}
@@ -1987,8 +1966,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$reflGet->setAccessible( true );
 		
 		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
-		$this->mockApp();
-		
+
 		$reflGet->invoke( $mockController );
 	}
 	
@@ -2215,8 +2193,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$reflGet->setAccessible( true );
 		
 		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
-		$this->mockApp();
-		
+
 		$reflGet->invoke( $mockController );
 	}
 	

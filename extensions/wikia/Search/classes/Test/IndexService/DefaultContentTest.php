@@ -19,7 +19,6 @@ class DefaultContentTest extends BaseTest
 		$utils = $this->getMock( 'Wikia\Search\Utilities', array( 'field' ) );
 		$this->mockClass( 'Wikia\Search\MediaWikiService', $mockService );
 		$this->mockClass( 'Wikia\Search\Utilities', $utils );
-		$this->mockApp();
 		$dc = new DefaultContent();
 		$field = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'field' );
 		$field->setAccessible( true );

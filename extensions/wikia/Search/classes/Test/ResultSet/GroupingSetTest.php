@@ -122,7 +122,6 @@ class GroupingSetTest extends Wikia\Search\Test\BaseTest {
 		    ->will   ( $this->returnValue( 'foo.wikia.com' ) )
 		;
 		$this->mockClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockDc );
-		$this->mockApp();
 		$fac = new ReflectionProperty( 'Wikia\Search\ResultSet\GroupingSet', 'factory' );
 		$fac->setAccessible( true );
 		$fac->setValue( $mockGroupingSet, $mockFactory );
@@ -202,7 +201,6 @@ class GroupingSetTest extends Wikia\Search\Test\BaseTest {
 		$fac->setAccessible( true );
 		$fac->setValue( $mockGroupingSet, $mockFactory );
 		$this->mockClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockDc );
-		$this->mockApp();
 		$set = new ReflectionMethod( 'Wikia\Search\ResultSet\GroupingSet', 'prependWikiMatchIfExists' );;
 		$set->setAccessible( true );
 		$this->assertEquals(

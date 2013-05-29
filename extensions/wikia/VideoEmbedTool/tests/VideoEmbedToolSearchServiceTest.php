@@ -360,7 +360,6 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		    ->will   ( $this->returnValue( $config ) )
 		;
 		$this->mockClass( 'Wikia\Search\Config', $config );
-		$this->mockApp();
 		$get = new ReflectionMethod( 'VideoEmbedToolSearchService', 'getConfig' );
 		$get->setAccessible( true );
 		$get->invoke( $service );

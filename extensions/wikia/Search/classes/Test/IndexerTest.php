@@ -292,7 +292,6 @@ class IndexerTest extends BaseTest
 		;
 		$this->mockClass( 'ScribeProducer', $sp );
 		$this->mockClass( 'WikiDataSource', $dataSource );
-		$this->mockApp();
 		$indexer->reindexWiki( 123 );
 		$dataSource
 		    ->expects( $this->at( 0 ) )
