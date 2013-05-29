@@ -300,6 +300,10 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'minieditor-specialpage-title' => 'Pàgene de demo de MiniEditor',
+	'minieditor-new-heading' => "Ccreje 'nu messàgge nuève",
+	'minieditor-placeholder-new' => "Mitte 'u messàgge tune aqquà",
+	'minieditor-message-edit' => "Quiste jè 'nu messàgge esistende",
 	'minieditor-reply' => 'Respunne',
 	'minieditor-placeholder-reply' => "Respunne a 'u messàgge aqquà",
 );

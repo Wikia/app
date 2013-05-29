@@ -26,6 +26,7 @@ function nativeToDatum($v) {
                 $datumArray[] = $subDatum;
             }
         }
+    
         // TODO: In the case of $fullyAssociative === true, we cannot
         //   know if we should convert to an array or an object. We
         //   currently assume object, but this is not overly clean.

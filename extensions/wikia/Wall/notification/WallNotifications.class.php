@@ -12,6 +12,8 @@
  */
 
 class WallNotifications {
+	private $cachedUsers = array();
+
 	private $removedEntities;
 	private $notUniqueUsers = array(); //used for sicen read email.
 	public function __construct() {
@@ -79,7 +81,7 @@ class WallNotifications {
 			$this->remWikiFromList( $userId, $wikiId );
 		}
 
-		$user = User::newFromId( $userId );
+		$user = $this->getUser( $userId );
 		if( in_array( 'sysop', $user->getEffectiveGroups() ) ) { //TODO: ???
 			$wna = new WallNotificationsAdmin;
 			$unread = array_merge( $wna->getAdminNotifications( $wikiId, $userId ), $unread );
@@ -103,6 +105,15 @@ class WallNotifications {
 
 	public function getCounts($userId) {
 		$wikiList = $this->getWikiList($userId);
+
+		// prefetch data
+		$keys = array();
+		$wno = new WallNotificationsOwner;
+		foreach ($wikiList as $wiki) {
+			$keys[] = $this->getKey($userId,$wiki['id']);
+			$keys[] = $wno->getKey($wiki['id'],$userId);
+		}
+		$this->app->wg->Memc->prefetch($keys);
 
 		$output = array();
 		$total = 0;
@@ -163,6 +174,7 @@ class WallNotifications {
 		} else {
 			$output = array();
 		}
+		WikiFactory::prefetchWikisById(array_keys($val),WikiFactory::PREFETCH_VARIABLES);
 		foreach($val as $wikiId => $wikiSitename) {
 			$output[] = array(
 				'id' => $wikiId,
@@ -240,9 +252,14 @@ class WallNotifications {
 			),
 			__METHOD__
 		);
+		$ids = array();
+		foreach ($res as $row) {
+			$ids[] = $row->wiki_id;
+		}
+		WikiFactory::prefetchWikisById($ids,WikiFactory::PREFETCH_WIKI_METADATA);
 		$output = array();
-		while($row = $db->fetchRow($res)) {
-			$output[ $row['wiki_id'] ] = $sitename = WikiFactory::getWikiByID( $row['wiki_id'] )->city_title;
+		foreach ($ids as $id) {
+			$output[ $id ] = WikiFactory::getWikiByID( $id )->city_title;
 		}
 		return $output;
 	}
@@ -335,7 +352,7 @@ class WallNotifications {
 		}
 
 		foreach($watchers as $val){
-			$watcher = User::newFromId($val);
+			$watcher = $this->getUser($val);
 			$mode = $watcher->getOption('enotifwallthread');
 
 			if(!empty($mode) && $watcher->getId() != 0 && (
@@ -515,7 +532,7 @@ class WallNotifications {
 		}
 
 		if( $id === 0 ) {
-			$user = User::newFromId( $userId );
+			$user = $this->getUser( $userId );
 			if( $user instanceof User &&
 			    ( in_array( 'sysop', $user->getEffectiveGroups() ) ||
 			      in_array( 'staff', $user->getEffectiveGroups() )	 ) ) {
@@ -943,5 +960,22 @@ class WallNotifications {
 
 	public function getKey( $userId, $wikiId ){
 		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. 'v30' );
+	}
+
+	/**
+	 * Get a user object with a given ID (cached results).
+	 *
+	 * Lots of methods used to construct the objects by themselves even a couple times for the same user.
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 *
+	 * @param $userId int User Id
+	 * @return User User object
+	 */
+	protected function getUser( $userId ) {
+		if ( !array_key_exists($userId,$this->cachedUsers ) ) {
+			$this->cachedUsers[$userId] = User::newFromId($userId);
+		}
+		return $this->cachedUsers[$userId];
 	}
 }
