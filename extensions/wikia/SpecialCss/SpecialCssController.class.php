@@ -20,4 +20,8 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 		wfProfileOut(__METHOD__);
 	}
+	
+	public function notOasis() {
+		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
+	}
 }

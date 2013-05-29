@@ -23,7 +23,11 @@ $app->registerClass('SpecialCssModel', $dir . 'SpecialCssModel.class.php');
 $app->registerClass('SpecialCssHooks', $dir . 'SpecialCssHooks.class.php');
 
 // classes
-$app->registerController('SpecialCssController', $dir . 'SpecialCssController.class.php');
+$app->registerController(
+	'SpecialCssController', 
+	$dir . 'SpecialCssController.class.php',
+	['index' => ["skin" => ["monobook", "wikiamobile"], "method" => "notOasis"]]
+);
 
 // hooks
 $app->registerHook('AlternateEdit', 'SpecialCssHooks', 'onAlternateEdit');
