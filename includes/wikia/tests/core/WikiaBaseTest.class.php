@@ -103,8 +103,8 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * This helper function will let you override new ClassName or ClassName::newFromID
 	 * See the description in WikiaMockProxy.class.php for more details
 	 * Example call:
-	 * 	$this->proxyClass('Article', $mockArticle);
-	 *  $this->proxyClass('Title', $mockTitle, 'newFromText');
+	 * 	$this->mockClass('Article', $mockArticle);
+	 *  $this->mockClass('Title', $mockTitle, 'newFromText');
 	 * TODO: make param for functionName an array so you can override both newFromText and newFromID (for example)
 	 * @param $className String
 	 * @param $mock Object instance of Mock
