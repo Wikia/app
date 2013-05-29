@@ -7,6 +7,8 @@ class SpecialCssModel extends WikiaModel {
 	}
 
 	public function getCssFileContent() {
+		wfProfileIn(__METHOD__);
+		
 		$out = '';
 		$cssTitle = $this->getCssFileTitle();
 
@@ -15,6 +17,7 @@ class SpecialCssModel extends WikiaModel {
 			$out = $cssArticle->getContent();
 		}
 
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 	
