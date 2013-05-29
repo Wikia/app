@@ -19,7 +19,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // models
-// ...
+$app->registerClass('SpecialCssModel', $dir . 'SpecialCssModel.class.php');
 
 // classes
 $app->registerController('SpecialCssController', $dir . 'SpecialCssController.class.php');
