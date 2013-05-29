@@ -86,7 +86,7 @@ img {
 	}
 
 	&.loaded {
-		background-image: none;
+		background-image: none !important;
 		background-color: transparent;
 		opacity: 1;
 		width: auto;
