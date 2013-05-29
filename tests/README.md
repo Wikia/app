@@ -16,7 +16,7 @@ ant -f build-wikia.xml -Dunittest=../extensions/wikia/AssetsManager/tests/Assets
 New way:
 ```
 cd /usr/wikia/source/wiki/tests
-ant ./php-all
+./php-all
 ```
 
 Old way:
