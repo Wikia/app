@@ -108,3 +108,4 @@ class SpecialCssModel extends WikiaModel {
 		return SpecialPage::getTitleFor('CSS');
 	}
 }
+
