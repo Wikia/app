@@ -27,7 +27,7 @@ class PhalanxUserBlock extends WikiaObject {
 			if ( $ret === false ) {
 				$this->typeBlock = 'email';
 			}
-		} 
+		}
 		
 		if ( $ret === false ) {
 			$user = $phalanxModel->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
