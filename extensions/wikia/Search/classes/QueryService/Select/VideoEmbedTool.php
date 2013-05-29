@@ -10,26 +10,11 @@ use Wikia\Search\Utilities;
 class VideoEmbedTool extends Video
 {
 	/**
-	 * Boosts results that match the the current hub category and wiki title 
-	 * @see \Wikia\Search\QueryService\Select\Video::getBoostQueryString()
-	 * @return string
-	 */
-  public function getBoostQueryString() {return '';
-		return sprintf( '%s^150 AND (%s)^250 AND (html_media_extras_txt:%s)^300',
-				Utilities::valueForField( 'categories', $this->service->getHubForWikiId( $this->service->getWikiId() ) ),
-				$this->getConfig()->getQuery()->getSolrQuery(),
-				$this->getTopicsAsQuery()
-				);
-	}
-	
-	/**
 	 * Here, we overwrite the normal behavior of getFormulatedQuery to search for wiki TOPIC instead of the query
 	 * @return string
 	 */
 	protected function getFormulatedQuery() {
-	  $topics = $this->getTopicsAsQuery();
-	  $query = $this->getTransformedQuery();
-	  return sprintf( '+(%s) AND ( +(%s)^1000 AND +(%s)^2000 )', $this->getQueryClausesString(), $topics, $query );
+	  return sprintf( '+(%s) AND ( +(%s)^1000 AND +(%s)^2000 )', $this->getQueryClausesString(), $this->getTopicsAsQuery(), $this->getTransformedQuery() );
 	}
 	
 	/**
@@ -49,7 +34,7 @@ class VideoEmbedTool extends Video
 	
 	/**
 	 * Takes whatever global topics are set and returns them disjunctively
-	 * The backoff of this is to just return the query, since asking for the same query twice isn't really a big deal.
+	 * The backoff for this is to return the wiki name with "wiki" stripped off
 	 * @return string
 	 */
 	protected function getTopicsAsQuery() {
@@ -57,7 +42,7 @@ class VideoEmbedTool extends Video
 		foreach ( $this->getService()->getGlobalWithDefault( 'WikiVideoSearchTopics', [] ) as $topic ) {
 			$topics[] = sprintf( '"%s"', $topic );
 		}
-		return empty( $topics ) ? $this->getConfig()->getQuery()->getSolrQuery() : implode( ' OR ', $topics );
+		return empty( $topics ) ? preg_replace( '/\bwiki\b/', $this->getService()->getGlobal( 'Sitename' ) ) : implode( ' OR ', $topics );
 	}
 	
 	/**
@@ -66,10 +51,23 @@ class VideoEmbedTool extends Video
 	 */
 	protected function getQueryClausesString() {
 		$queryClauses = array(
-				Utilities::valueForField( 'wid', $this->config->getCityId() ),
+				Utilities::valueForField( 'wid', $this->getConfig()->getCityId() ),
 				Utilities::valueForField( 'is_video', 'true' ),
 				Utilities::valueForField( 'ns', \NS_FILE )
 				);
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
+	}
+	
+	/**
+	 * Boosts results that match the the current hub category and wiki title 
+	 * @see \Wikia\Search\QueryService\Select\Video::getBoostQueryString()
+	 * @return string
+	 */
+	public function getBoostQueryString() {
+		return sprintf( '%s^150 AND (%s)^250 AND (html_media_extras_txt:%s)^300',
+				Utilities::valueForField( 'categories', $this->service->getHubForWikiId( $this->service->getWikiId() ) ),
+				$this->getConfig()->getQuery()->getSolrQuery(),
+				$this->getTopicsAsQuery()
+				);
 	}
 }
