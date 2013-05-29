@@ -8,9 +8,9 @@
 class BodyVisitor extends DOMNodeVisitorBase {
 	/**
 	 * @param IDOMNodeVisitor $childrenVisitor
-	 * @param JsonFormatTraversingState $jsonFormatTraversingState
+	 * @param JsonFormatBuilder $jsonFormatTraversingState
 	 */
-	function __construct( IDOMNodeVisitor $childrenVisitor, JsonFormatTraversingState $jsonFormatTraversingState ) {
+	function __construct( IDOMNodeVisitor $childrenVisitor, JsonFormatBuilder $jsonFormatTraversingState ) {
 		parent::__construct( $childrenVisitor, $jsonFormatTraversingState );
 	}
 

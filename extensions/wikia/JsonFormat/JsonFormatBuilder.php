@@ -5,7 +5,7 @@
  * Time: 17:38
  */
 
-class JsonFormatTraversingState {
+class JsonFormatBuilder {
 	private $jsonRoot;
 	private $jsonStack = array();
 	private $currentContainer;

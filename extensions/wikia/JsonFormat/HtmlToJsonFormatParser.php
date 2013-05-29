@@ -21,7 +21,7 @@ class HtmlToJsonFormatParser {
 		//$this->visit( $body, 0 );
 		//die();
 
-		$jsonFormatTraversingState = new JsonFormatTraversingState();
+		$jsonFormatTraversingState = new JsonFormatBuilder();
 		$visitor = $this->createVisitor( $jsonFormatTraversingState );
 		$visitor->visit( $body );
 		return $jsonFormatTraversingState->getJsonRoot();

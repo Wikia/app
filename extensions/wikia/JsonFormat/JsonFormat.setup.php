@@ -7,6 +7,7 @@ $wgAutoloadClasses['WikitextToHtmlParser'] =                  $dir . "/WikitextT
 $wgAutoloadClasses['WikitextToJsonFormatParserFactory'] =     $dir . "/WikitextToJsonFormatParserFactory.php";
 $wgAutoloadClasses['WikitextToJsonFormatParser'] =            $dir . "/WikitextToJsonFormatParser.php";
 $wgAutoloadClasses['JsonFormatService'] =                     $dir . "/JsonFormatService.php";
+$wgAutoloadClasses['JsonFormatBuilder'] =                     $dir . "/JsonFormatBuilder.php";
 
 $wgAutoloadClasses['JsonFormatContainerNode'] =               $dir . "/nodes/JsonFormatContainerNode.php";
 $wgAutoloadClasses['JsonFormatLinkNode'] =                    $dir . "/nodes/JsonFormatLinkNode.php";
@@ -28,5 +29,4 @@ $wgAutoloadClasses['CompositeVisitor'] =                      $dir . "/visitors/
 $wgAutoloadClasses['DOMNodeVisitorBase'] =                    $dir . "/visitors/DOMNodeVisitorBase.php";
 $wgAutoloadClasses['HeaderVisitor'] =                         $dir . "/visitors/HeaderVisitor.php";
 $wgAutoloadClasses['IDOMNodeVisitor'] =                       $dir . "/visitors/IDOMNodeVisitor.php";
-$wgAutoloadClasses['JsonFormatTraversingState'] =             $dir . "/visitors/JsonFormatTraversingState.php";
 $wgAutoloadClasses['TextNodeVisitor'] =                       $dir . "/visitors/TextNodeVisitor.php";

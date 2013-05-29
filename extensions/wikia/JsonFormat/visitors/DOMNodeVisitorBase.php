@@ -7,7 +7,7 @@
 
 abstract class DOMNodeVisitorBase implements IDOMNodeVisitor {
 	/**
-	 * @var JsonFormatTraversingState
+	 * @var JsonFormatBuilder
 	 */
 	private $jsonFormatTraversingState;
 
@@ -16,7 +16,7 @@ abstract class DOMNodeVisitorBase implements IDOMNodeVisitor {
 	 */
 	private $childrenVisitor;
 
-	function __construct( IDOMNodeVisitor $childrenVisitor, JsonFormatTraversingState $jsonFormatTraversingState) {
+	function __construct( IDOMNodeVisitor $childrenVisitor, JsonFormatBuilder $jsonFormatTraversingState) {
 		$this->childrenVisitor = $childrenVisitor;
 		$this->jsonFormatTraversingState = $jsonFormatTraversingState;
 	}
@@ -29,7 +29,7 @@ abstract class DOMNodeVisitorBase implements IDOMNodeVisitor {
 	}
 
 	/**
-	 * @return JsonFormatTraversingState
+	 * @return JsonFormatBuilder
 	 */
 	public function getJsonFormatTraversingState() {
 		return $this->jsonFormatTraversingState;
