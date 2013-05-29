@@ -119,7 +119,7 @@ var LightboxLoader = {
 
 				// Display video inline, don't open lightbox
 				isVideo = $this.children('.Wikia-video-play-button').length;
-				if(isVideo && $thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
+				if(isVideo && $thumb.width() >= that.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
 					var clickSource = window.wgWikiaHubType ? LightboxTracker.clickSource.HUBS : LightboxTracker.clickSource.EMBED;
 					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, clickSource);
 					return;
