@@ -15,11 +15,20 @@ class PhalanxContentBlock extends WikiaObject {
 		F::setInstance( __CLASS__, $this );
 	}
 
+	/**
+	 * @param EditPage $editPage
+	 * @param $text
+	 * @param $section
+	 * @param $hookError
+	 * @param $summary
+	 * @return bool
+	 */
 	public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
 		wfProfileIn( __METHOD__ );
 
+		/* @var PhalanxContentModel $phalanxModel */
 		$phalanxModel = F::build('PhalanxContentModel', array( $this->wg->Title ) );
-		
+
 		$summary = $editPage->summary;
 		$textbox = $editPage->textbox1;
 		
@@ -41,7 +50,7 @@ class PhalanxContentBlock extends WikiaObject {
 		} else {
 			$error_msg = $phalanxModel->contentBlock();
 		}
-		
+
 		if ( $ret === false ) {
 			// we found block
 			$editPage->spamPageWithContent( $error_msg );
