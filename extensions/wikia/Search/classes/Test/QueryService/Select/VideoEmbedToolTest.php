@@ -147,7 +147,7 @@ class VideoEmbedToolTest extends BaseTest
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'Sitename' )
-		    ->will   ( $this->returnValue( 'diamond lane wiki' ) )
+		    ->will   ( $this->returnValue( 'Diamond Lane Wiki' ) )
 		;
 		$get = new ReflectionMethod( self::CLASSNAME, 'getTopicsAsQuery' );
 		$get->setAccessible( true );

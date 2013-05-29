@@ -43,7 +43,7 @@ class VideoEmbedTool extends Video
 		foreach ( $service->getGlobalWithDefault( 'WikiVideoSearchTopics', [] ) as $topic ) {
 			$topics[] = sprintf( '"%s"', $topic );
 		}
-		return empty( $topics ) ? sprintf( '"%s"', trim( preg_replace( '/\bwiki\b/', '', $service->getGlobal( 'Sitename' ) ) ) ) : implode( ' OR ', $topics );
+		return empty( $topics ) ? sprintf( '"%s"', trim( preg_replace( '/\bwiki\b/', '', strtolower( $service->getGlobal( 'Sitename' ) ) ) ) ) : implode( ' OR ', $topics );
 	}
 	
 	/**
