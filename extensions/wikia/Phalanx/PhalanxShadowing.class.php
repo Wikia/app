@@ -47,7 +47,7 @@ class PhalanxShadowing {
 	 *
 	 * @param $content string text to check
 	 */
-	public static function check($content, &$matchingBlockData) {
+	public static function check($content, $expected_id) {
 		global $wgPhalanxShadowingPercentage;
 		if (empty($wgPhalanxShadowingPercentage) || !is_numeric($wgPhalanxShadowingPercentage)) {
 			return;
@@ -58,8 +58,6 @@ class PhalanxShadowing {
 			if (self::$typeName !== null) {
 				wfDebug(__METHOD__ . '::' . self::$typeName ."\n");
 				
-				$expected_id = (isset($matchingBlockData) && $matchingBlockData['id']) ? $matchingBlockData['id'] : 0;
-
 				$service = new PhalanxService();
 				$service->matchShadow(self::$typeName, $content, $expected_id);
 			}
