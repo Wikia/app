@@ -17,18 +17,8 @@ class SpecialCssModel extends WikiaModel {
 	 * @return Return|string
 	 */
 	public function getCssFileContent() {
-		wfProfileIn(__METHOD__);
-		
-		$out = '';
-		$cssTitle = $this->getCssFileTitle();
-
-		if( $cssTitle instanceof Title) {
-			$cssArticle = $this->getCssFileArticle( $cssTitle->getArticleId() );
-			$out = $cssArticle->getContent();
-		}
-
-		wfProfileOut(__METHOD__);
-		return $out;
+		$cssArticle = $this->getCssFileArticle( $this->getCssFileArticleId() );
+		return $cssArticle->getContent();
 	}
 
 	/**
@@ -108,4 +98,3 @@ class SpecialCssModel extends WikiaModel {
 		return SpecialPage::getTitleFor('CSS');
 	}
 }
-
