@@ -31,7 +31,7 @@ class BlogArticle extends Article {
 	public static function createCategory() {
 		// make sure page "Category:BlogListingTag" exists
 		$title = Title::newFromText( 'Category:BlogListingPage' );
-		if ( !$title->exists() && $this->getContext()->getUser->isAllowed( 'edit' ) ) {
+		if ( !$title->exists() && $this->getContext()->getUser()->isAllowed( 'edit' ) ) {
 			$article = new Article( $title );
 			$article->doEdit(
 				"__HIDDENCAT__", $title, EDIT_NEW | EDIT_FORCE_BOT | EDIT_SUPPRESS_RC
@@ -43,7 +43,7 @@ class BlogArticle extends Article {
 	 * overwritten Article::view function
 	 */
 	public function view() {
-		global $wgOut, $wgRequest, $wgTitle;
+		wfProfileIn( __METHOD__ );
 
 		$feed = $this->getContext()->getRequest->getText( "feed", false );
 		if( $feed && in_array( $feed, array( "rss", "atom" ) ) ) {
@@ -61,14 +61,14 @@ class BlogArticle extends Article {
 			$this->mTitle->mPrefixedText = $oldPrefixedText;
 			$this->mProps = self::getProps( $this->mTitle->getArticleID() );
 			Article::view();
-		}
-		else {
+		} else {
 			/**
 			 * blog listing
 			 */
 			$this->getContext()->getOutput()->setHTMLTitle( $this->getContext()->getOutput()->getWikiaPageTitle( $this->mTitle->getPrefixedText() ) );
 			$this->showBlogListing();
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -78,6 +78,7 @@ class BlogArticle extends Article {
 	 */
 	private function showBlogListing() {
 		global $wgMemc;
+		wfProfileIn( __METHOD__ );
 		$request = $this->getContext()->getRequest();
 		$output = $this->getContext()->getOutput();
 
@@ -108,13 +109,12 @@ class BlogArticle extends Article {
 					offset=$offset>
 					<author>$user</author>
 					</bloglist>";
-			$parser = new Parser;
-			$parserOutput = $parser->parse($text, $this->mTitle,  new ParserOptions());
-			$listing = $parserOutput->getText();
+			$listing = ParserPool::parse( $text, $this->mTitle,  new ParserOptions() )->getText();
 			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $page ), $listing, 3600 );
 		}
 
 		$output->addHTML( $listing );
+		wfProfileOut( __METHOD__ );
 	}
 
 
@@ -125,6 +125,7 @@ class BlogArticle extends Article {
 	 */
 	public function clearBlogListing() {
 		global $wgMemc;
+		wfProfileIn( __METHOD__ );
 
 		// Clear Oasis rail module
 		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $this->getContext()->getLanguage()->getCode() );
@@ -139,13 +140,14 @@ class BlogArticle extends Article {
 		$title = Title::newFromText( 'Category:BlogListingPage' );
 		$title->touchLinks();
 
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * generate xml feed from returned data
 	 */
 	private function showFeed( $format ) {
-		global $wgMemc, $wgFeedClasses, $wgSitename;
+		global $wgMemc, $wgFeedClasses, $wgSitename, $wgParser;
 
 		$user    = $this->mTitle->getBaseText();
 		$userMemc = $this->mTitle->getPrefixedDBkey();
@@ -169,7 +171,7 @@ class BlogArticle extends Article {
 				"offset" => $offset
 			);
 
-			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, new Parser );
+			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
 			$wgMemc->set( wfMemcKey( "blog", "feed", $userMemc, $offset ), $listing, 3600 );
 		}
 
