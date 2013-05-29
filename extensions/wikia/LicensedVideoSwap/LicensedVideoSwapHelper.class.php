@@ -14,7 +14,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 */
 	public function getSortOption($selected) {
 		// Set it up this way for now so mustache can consume it
-		// TODO: make this dynamic and more dry - hopefully we can extend mustache to support key/value pairs
+		// TODO: we will use a helper function in the future. Saipetch will set this up.
 		$options = array(
 			array(
 				'sortBy' => 'recent',
