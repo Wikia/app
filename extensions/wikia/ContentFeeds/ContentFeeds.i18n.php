@@ -13,7 +13,7 @@ $messages['en'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Page body is required'
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'contentfeeds-desc' => "Description of extension as listed on [[Special:Version]].
@@ -38,9 +38,14 @@ $messages['af'] = array(
  * @author Achraf94
  */
 $messages['ar'] = array(
+	'contentfeeds-desc' => 'يقدم معلومات غنية ومحدثة من خلال العلامات المتنوعة أو مايعرف ب"التغذية"',
+	'contentfeeds-newimages-rss-title' => 'تغذية آر إس إس الخاصة ب{{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'تغذية من $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'قم بإنشاء أول صفحاتك!',
 	'contentfeeds-firstfewarticles-tag-title' => 'الإسم',
 	'contentfeeds-firstfewarticles-tag-next' => 'التالي',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'خطأ: عنوان الصفحة مطلوب',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'خطأ: محتوى الصفحة مطلوب',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -69,6 +74,20 @@ $messages['br'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => "War-lerc'h",
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Fazi : rekis eo titl ar bajenn',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fazi : rekis eo korf ar bajenn',
+);
+
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'contentfeeds-desc' => 'Proporciona informació enriquida i actualitzada a través de varies etiquetes o "feeds"',
+	'contentfeeds-newimages-rss-title' => 'Font RSS per {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Font de $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Crea les teves primeres pàgines!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Títol',
+	'contentfeeds-firstfewarticles-tag-next' => 'Següent',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Error: El títol de la pàgina és necessari',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: El cos de la pàgina és necessari',
 );
 
 /** Czech (česky)

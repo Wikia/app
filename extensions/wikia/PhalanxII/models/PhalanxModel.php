@@ -66,8 +66,8 @@ abstract class PhalanxModel extends WikiaObject {
 
 	public function isOk() {
 		return (
-			$this->wg->User->isAllowed( 'phalanxexempt' ) ||
-			( ( $this->user instanceof User) && $this->user->isAllowed( 'phalanxexempt' ) )
+			( ( $this->user instanceof User ) && ( $this->user->getName() == $this->wg->User->getName() && $this->wg->User->isAllowed( 'phalanxexempt' ) ) ) ||
+			( ( $this->user instanceof User ) && $this->user->isAllowed( 'phalanxexempt' ) )
 		);
 	}
 

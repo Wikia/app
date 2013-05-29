@@ -11,6 +11,14 @@ class WikisApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const PARAMETER_KEYWORD = 'string';
 	const PARAMETER_WIKI_IDS = 'ids';
+	const CACHE_VALIDITY = 86400;//1 day
+	const MEMC_NAME = 'SharedWikiApiData:';
+	const DEFAULT_TOP_EDITORS_NUMBER = 10;
+	const DEFAULT_WIDTH = 250;
+	const DEFAULT_HEIGHT = null;
+	const DEFAULT_SNIPPET_LENGTH = null;
+
+	private $keys;
 
 	private static $model = null;
 
@@ -187,5 +195,87 @@ class WikisApiController extends WikiaApiController {
 		);
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Gets the information about wikis
+	 *
+	 * @requestParam array $ids The list of wiki ids that will be fetched
+	 * @requestParam int $height [OPTIONAL] Thumbnail height in pixels
+	 * @requestParam int $width [OPTIONAL] Thumbnail width in pixels
+	 * @requestParam int $snippet [OPTIONAL] Maximum number of words returned in description
+	 *
+	 * @responseParam array $items The list of wikis, each containing: title, url, description, thumbnail, no. of articles, no. of photos, list of top contributors, no. of videos
+	 *
+	 * @example &ids=159,831,3125
+	 * @example &ids=159,831,3125&width=100
+	 * @example &ids=159,831,3125&height=100&width=100&snippet=25
+	 */
+	public function getWikiData() {
+		wfProfileIn( __METHOD__ );
+		$ids = $this->request->getArray( 'ids' );
+		$imageWidth = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
+		$imageHeight = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
+		$length = $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH );
+
+		$items = array();
+		$service = new WikiService();
+		foreach ( $ids as $wikiId ) {
+			if ( ( $cached = $this->getFromCacheWiki( $wikiId ) ) !== false ) {
+				//get from cache
+				$wikiInfo = $cached;
+			} else {
+				//get data providers
+				$wikiObj = WikiFactory::getWikiByID( $wikiId );
+				$wikiStats = $service->getSiteStats( $wikiId );
+				$topUsers = $service->getTopEditors( $wikiId, static::DEFAULT_TOP_EDITORS_NUMBER, true );
+
+				$wikiInfo = array(
+					'wikiId' => (int) $wikiId,
+					'articles' => (int) $wikiStats[ 'articles' ],
+					'images' => (int) $wikiStats[ 'images' ],
+					'videos' => (int) $service->getTotalVideos( $wikiId ),
+					'topUsers' => array_keys( $topUsers ),
+					'title' => $wikiObj->city_title,
+					'url' => $wikiObj->city_url
+				);
+				//cache data
+				$this->cacheWikiData( $wikiInfo );
+			}
+			$wikiDesc = $service->getWikiDescription( [ $wikiId ], $imageWidth, $imageHeight );
+			//set snippet
+			$wikiInfo[ 'description' ] = $this->getSnippet( isset( $wikiDesc[ $wikiId ] ) ? $wikiDesc[ $wikiId ]['desc'] : '', $length );
+			//add image, its cached on different level
+			$wikiInfo[ 'thumbnail' ] = isset( $wikiDesc[ $wikiId ] ) ? $wikiDesc[ $wikiId ]['image_url'] : '';
+			//add to result
+			$items[] = $wikiInfo;
+		}
+
+		$this->response->setVal( 'items', $items );
+		wfProfileOut( __METHOD__ );
+	}
+
+	protected function getSnippet( $text, $length = null ) {
+		if ( $length !== null ) {
+			return implode( ' ', array_slice( explode( ' ', $text ), 0, $length ) );
+		}
+		return $text;
+	}
+
+	protected function getMemCacheKey( $wikiId ) {
+		if ( !isset( $this->keys[ $wikiId ] ) ) {
+			$this->keys[ $wikiId ] =  F::app()->wf->sharedMemcKey( static::MEMC_NAME.$wikiId );
+		}
+		return $this->keys[ $wikiId ];
+	}
+
+	protected function cacheWikiData( $wikiInfo ) {
+		$key = $this->getMemCacheKey( $wikiInfo[ 'wikiId' ] );
+		F::app()->wg->memc->set( $key, $wikiInfo, static::CACHE_VALIDITY );
+	}
+
+	protected function getFromCacheWiki( $wikiId ) {
+		$key = $this->getMemCacheKey( $wikiId );
+		return F::app()->wg->memc->get( $key );
 	}
 }

@@ -402,7 +402,7 @@ var Lightbox = {
 				.css('line-height','normal');
 
 			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-				new VideoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode, Lightbox.openModal.vbClickSource);
+				LightboxLoader.videoInstance = new VideoBootstrap(Lightbox.openModal.media[0], data.videoEmbedCode, Lightbox.openModal.vbClickSource);
 				Lightbox.openModal.vbClickSource = LightboxTracker.clickSource.LB;
 			});
 		},
@@ -670,6 +670,11 @@ var Lightbox = {
 	},
 	updateMedia: function() {
 		Lightbox.openModal.media.html("").startThrobbing();
+
+		// If a video uses a timeout for tracking, clear it
+		if ( LightboxLoader.videoInstance ) {
+			LightboxLoader.videoInstance.clearTimeoutTrack();
+		}
 
 		var key = Lightbox.current.key;
 		var type = Lightbox.current.type;

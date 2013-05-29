@@ -72,6 +72,14 @@ class PhalanxService extends Service {
 		wfProfileOut( __METHOD__  );
 		return $result;
 	}
+	
+	public function matchShadow($type, $content, $expected_id, $lang = "" ) {
+		wfProfileIn( __METHOD__  );
+		$result =  $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content,
+				"expected" => $expected_id, "lang" => $lang ) );
+		wfProfileOut( __METHOD__  );
+		return $result;
+	}
 
 	/**
 	 * service for reload function
@@ -127,6 +135,7 @@ class PhalanxService extends Service {
 	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
+		
 		$baseurl = F::app()->wg->PhalanxServiceUrl;
 		$options = F::app()->wg->PhalanxServiceOptions;
 

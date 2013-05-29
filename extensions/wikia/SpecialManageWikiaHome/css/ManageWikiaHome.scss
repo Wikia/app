@@ -85,6 +85,30 @@
 
 .wikis-setup {
 	clear: left;
+
+	p {
+		padding-top: 20px;
+
+		label {
+			margin-left: 10px;
+		}
+
+		label:first-child {
+			margin-left: 0px;
+		}
+
+		input[type=submit] {
+			float: none;
+		}
+
+		input[type=reset] {
+			margin-left: 10px;
+		}
+
+		#collections-filter {
+			width: 150px;
+		}
+	}
 }
 
 input[type=submit] {

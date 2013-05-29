@@ -30,7 +30,7 @@ Wikia
 	"globalwatchlist-no-blog-page-found" => "No blog page found.",
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
@@ -45,6 +45,36 @@ $messages['af'] = array(
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|opmerking|opmerkings}})',
 	'globalwatchlist-no-page-found' => 'Geen bladsy gevind nie.',
 	'globalwatchlist-no-blog-page-found' => 'Geen blog-bladsy gevind nie.',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'globalwatchlist-desc' => 'يرسل رسائل الموجز الأسبوعي عبر البريد الإلكتروني مرفقة بالصفحات المراقبة في كل الويكيات',
+	'tog-watchlistdigest' => 'أرسل لي الموجز الأسبوعي للصفحاتي المراقبة',
+	'tog-watchlistdigestclear' => 'وضع علامة زيارة على كافة الصفحات من الموجز الأسبوعي',
+	'globalwatchlist-see-more' => 'الرجاء التحقق من قوائم المراقبة المحلية للمزيد من التغييرات',
+	'globalwatchlist-digest-email-subject' => 'الموجز الأسبوعي',
+	'globalwatchlist-digest-email-body' => 'عزيزي $1،
+
+هذه قائمة بالصفحات التابعة لقائمة مراقبتك في ويكيا والتي تم تعديلها منذ زيارتك الأخيرة لها.
+
+$2
+
+هذه قائمة بصفحات المدونة التابعة لقائمة مراقبتك في ويكيا والتي تم تعديلها أو التعليق عليها منذ زيارتك الأخيرة لها.
+
+$3
+
+يرجى زيارتها والمساهمة...
+
+ويكيا
+
+* لتغيير تفضيلاتك المتعلقة بإشعارات الموجز الأسبوعي قم بزيارة http://www.wikia.com/wiki/Special:Preferences
+* لوضع علامة زيارة على كافة الصفحات من الموجز الأسبوعي، راجع الخيار في علامة التبويب "قائمة المراقبة" في صفحة تفضيلاتك.',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|تعليق|تعليقات}})',
+	'globalwatchlist-no-page-found' => 'لم يتم العثور على الصفحة.',
+	'globalwatchlist-no-blog-page-found' => 'لم يتم العثور على صفحة المدونة.',
 );
 
 /** Bulgarian (български)
@@ -553,7 +583,7 @@ $messages['nl'] = array(
 	'globalwatchlist-desc' => "Stuurt wekelijks e-mails met pagina's op volglijsten van alle wiki's",
 	'tog-watchlistdigest' => 'Mij wekelijks een samenvatting van mijn volglijst e-mailen',
 	'tog-watchlistdigestclear' => "Alle pagina's op mijn wekelijkse samenvatting als bezocht markeren",
-	'globalwatchlist-see-more' => 'Controleer alstublieft uw lokale volglijst op meer wijzigingen',
+	'globalwatchlist-see-more' => 'Controleer uw lokale volglijst op meer wijzigingen',
 	'globalwatchlist-digest-email-subject' => 'Wekelijkse samenvatting',
 	'globalwatchlist-digest-email-body' => 'Hallo $1.
 
@@ -565,7 +595,7 @@ Dit is een lijst met blogpagina\'s op uw volglijst bij Wikia die zijn bewerkt of
 
 $3
 
-Bezoek ze alstublieft en bewerk ze als nodig.
+Bezoek ze en bewerk ze als nodig.
 
 Groet, Wikia
 
@@ -580,7 +610,7 @@ Groet, Wikia
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
-	'globalwatchlist-see-more' => 'Controleer alsjeblieft je lokale volglijst op meer wijzigingen',
+	'globalwatchlist-see-more' => 'Controleer je lokale volglijst op meer wijzigingen',
 	'globalwatchlist-digest-email-body' => 'Hoi $1.
 
 Dit is een lijst met pagina\'s op je volglijst bij Wikia die zijn bewerkt sinds je ze hebt bezocht.
@@ -591,7 +621,7 @@ Dit is een lijst met blogpagina\'s op je volglijst bij Wikia die zijn bewerkt of
 
 $3
 
-Bezoek ze alsjeblieft en bewerk ze als nodig.
+Bezoek ze en bewerk ze als nodig.
 
 Groet, Wikia
 
@@ -885,6 +915,7 @@ Wikia
 );
 
 /** Ukrainian (українська)
+ * @author Ua2004
  * @author Ата
  */
 $messages['uk'] = array(
@@ -893,6 +924,23 @@ $messages['uk'] = array(
 	'tog-watchlistdigestclear' => 'Позначити усі сторінки з тижневого дайджесту списку спостереження як відвідані',
 	'globalwatchlist-see-more' => 'Для додаткових змін перевірте, будь ласка, Ваші місцеві списки спостереження',
 	'globalwatchlist-digest-email-subject' => 'Щотижневий дайджест',
+	'globalwatchlist-digest-email-body' => 'Шановний(-а) $1!
+
+Ось список сторінок з вашого списку спостереження Wikia, які було змінено з моменту Вашого останнього візиту.
+
+$2
+
+
+Ось список сторінок блоґу з вашого списку спостереження Wikia, які було змінено чи прокоментовано з моменту Вашого останнього візиту.
+
+$3
+
+Відвідайте ці сторінки, якщо бажаєте...
+
+Wikia
+
+* Щоб вимкнути сповіщення про сторінки зі списку спостереження, перейдіть сюди: http://www.wikia.com/wiki/Special:Preferences
+* Щоб позначити усі сторінки з цього листа прочитаними, зайдіть на вкладку "Список спостереження" на сторінці ваших налаштувань',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментарі|коментарів}})',
 	'globalwatchlist-no-page-found' => 'Сторінки не знайдено.',
 	'globalwatchlist-no-blog-page-found' => 'Сторінки блогу не знайдено.',

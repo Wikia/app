@@ -1,0 +1,13 @@
+<div id=contentManagmentForm>
+	<ol class=header>
+		{{#descriptions}}
+		<li>{{.}}</li>
+		{{/descriptions}}
+	</ol>
+	<ul>
+		{{{list}}}
+	</ul>
+    <button class=secondary id=addTag>{{addTag}}</button>
+    <button class=secondary id=addCategory>{{addCategory}}</button>
+	<button id=save>{{save}}</button>
+</div>

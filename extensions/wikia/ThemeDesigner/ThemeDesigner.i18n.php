@@ -59,7 +59,7 @@ $messages['en'] = array(
 	'themedesigner-wodmark-preview' => 'Preview',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Sam Wang
  * @author Shirayuki
@@ -80,12 +80,14 @@ $messages['qqq'] = array(
 	'themedesigner-medium' => '{{Identical|Medium}}',
 	'themedesigner-large' => '{{Identical|Large}}',
 	'themedesigner-tile-background' => 'Used in Theme Designer, and can be triggered to allow the current background graphic to tile, repeating itself around the page.',
+	'themedesigner-fix-background' => '{{Identical|Fix}}',
 	'themedesigner-tab-theme' => '{{Identical|Theme}}',
 	'themedesigner-tab-customize' => '{{Identical|Customize}}',
 	'themedesigner-button-upload' => '{{Identical|Upload}}',
 	'themedesigner-button-upload-wordmark' => '{{Identical|Upload}}',
 	'themedesigner-default' => '{{Identical|Default}}',
-	'themedesigner-rules-favicon-learn-more-link' => 'Learn more about favicons (link)',
+	'themedesigner-rules-favicon-learn-more-link' => 'Learn more about favicons (link).
+{{Identical|Learn more}}',
 	'themedesigner-history-item' => 'Parameters:
 * $1 is "how long ago"
 * $2 is the author name',
@@ -142,14 +144,65 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'themedesigner-or' => 'أو',
+	'themedesigner-desc' => 'يسمح للإداريين بالقيام بتصميم مظهر للويكي',
+	'themedesigner-title' => 'مصمم مظاهر ويكيا',
+	'themedesigner-background' => 'الخلفية',
+	'themedesigner-page' => 'الصفحة',
+	'themedesigner-color' => 'لون',
+	'themedesigner-graphic' => 'رسم',
+	'themedesigner-buttons' => 'أزرار',
+	'themedesigner-links' => 'وصلات',
+	'themedesigner-header' => 'عنوان',
+	'themedesigner-text-wordmark' => 'شعار نصي',
+	'themedesigner-graphic-wordmark' => 'شعار صورة',
+	'themedesigner-small' => 'صغير',
+	'themedesigner-medium' => 'متوسط',
+	'themedesigner-large' => 'كبير',
+	'themedesigner-tile-background' => 'فسيفساء',
+	'themedesigner-fix-background' => 'ثابتة',
+	'themedesigner-transparency' => 'الشفافية',
+	'themedesigner-tab-theme' => 'المظهر',
+	'themedesigner-tab-customize' => 'تخصيص المظهر',
+	'themedesigner-tab-wordmark' => 'الشعار',
+	'themedesigner-preview-mode' => 'وضع المعاينة...',
+	'themedesigner-previous-versions' => 'النسخ السابقة',
+	'themedesigner-button-save-im-done' => 'إحفظ، لقد إنتهيت',
 	'themedesigner-button-cancel' => 'إلغاء',
+	'themedesigner-pick-a-color' => 'اختيار لون',
+	'themedesigner-enter-your-own' => 'أدخل الخاصة بك',
+	'themedesigner-color-name-or-hex-code' => 'اسم اللون أو الرمز السداسي',
 	'themedesigner-button-ok' => 'موافق',
+	'themedesigner-pick-an-image' => 'اختيار صورة',
+	'themedesigner-dont-use-a-background' => 'لا تستخدم خلفية',
+	'themedesigner-upload-your-own' => 'تحميل بنفسك',
 	'themedesigner-button-upload' => 'رفع',
+	'themedesigner-button-upload-wordmark' => 'تحميل',
+	'themedesigner-rules-background' => 'jpg أو gif أو png. الحد: {{PLURAL:$1|كيلوبايت واحد|$1 كيلوبايت}}',
+	'themedesigner-default' => 'الافتراضي',
+	'themedesigner-font' => 'خط',
+	'themedesigner-size' => 'حجم',
 	'themedesigner-button-save' => 'احفظ',
+	'themedesigner-upload-a-graphic' => 'تحميل رسم',
+	'themedesigner-rules-wordmark' => 'تحميل ملف png ذو 250 × 65 بكسل أو أقل.',
+	'themedesigner-rules-favicon' => 'تحميل ملف ico 16 × 16 بكسل. الأيقونة هي رمز صغير يظهر كعلامة للويكي في نافذة المتصفح.',
+	'themedesigner-rules-favicon-learn-more-link' => 'معرفة المزيد.',
+	'themedesigner-dont-use-a-graphic' => 'إزالة',
+	'themedesigner-history-item' => '$1 بواسطة $2',
+	'themedesigner-button-change-text' => 'تغيير النص',
+	'themedesigner-reason' => 'مصمم المظهر - قام $1 بالحفظ',
+	'themedesigner-size-error' => 'حجم الملف غير صالح',
+	'themedesigner-dimensions-error' => 'الصورة تتجاوز حدود الأبعاد',
+	'themedesigner-type-error' => 'نوع الملف غير صالح',
+	'themedesigner-unknown-error' => 'لقد حدث خطأ، للأسف لم نكن قادرين على التعرف عليه، الرجاء المحاولة مرة أخرى',
+	'themedesigner-manual-upload-error' => 'استخدم "مصمم المظهر" لتحميل شعار للويكي أو خلفية',
+	'themedesigner-favicon-heading' => 'أيقونة',
+	'themedesigner-wodmark-preview' => 'عرض مسبق',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -1336,7 +1389,7 @@ $messages['nl'] = array(
 	'themedesigner-button-save-im-done' => 'Opslaan, ik ben klaar',
 	'themedesigner-button-cancel' => 'Annuleren',
 	'themedesigner-pick-a-color' => 'Kies een kleur',
-	'themedesigner-enter-your-own' => 'Eigen ingeven',
+	'themedesigner-enter-your-own' => 'Eigen opgeven',
 	'themedesigner-color-name-or-hex-code' => 'Kleurnaam of hexadecimale code',
 	'themedesigner-button-ok' => 'OK',
 	'themedesigner-pick-an-image' => 'Kies een afbeelding',
@@ -1590,6 +1643,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -1636,9 +1690,9 @@ $messages['pt-br'] = array(
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Alterar texto',
 	'themedesigner-reason' => 'Compositor de Temas Visuais - gravado por $1',
-	'themedesigner-size-error' => 'Tamanho de ficheiro incorrecto',
+	'themedesigner-size-error' => 'Tamanho de arquivo incorreto',
 	'themedesigner-dimensions-error' => 'A imagem excede os limites de tamanho',
-	'themedesigner-type-error' => 'Tipo de ficheiro incorrecto',
+	'themedesigner-type-error' => 'Tipo de arquivo incorreto',
 	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
 );
 
@@ -2036,6 +2090,7 @@ $messages['zh-hans'] = array(
 	'themedesigner-medium' => '中',
 	'themedesigner-large' => '大',
 	'themedesigner-tile-background' => '瓦片',
+	'themedesigner-fix-background' => '修复',
 	'themedesigner-transparency' => '透明度',
 	'themedesigner-tab-theme' => '主题',
 	'themedesigner-tab-customize' => '自定义',
@@ -2063,6 +2118,7 @@ $messages['zh-hans'] = array(
 	'themedesigner-rules-favicon' => '上传一个16x16像素的.ico文件。Favicon就是出现在浏览器窗口/标签页左上角的小图标。',
 	'themedesigner-rules-favicon-learn-more-link' => '了解更多。',
 	'themedesigner-dont-use-a-graphic' => '移除',
+	'themedesigner-history-item' => '$1 由 $2',
 	'themedesigner-button-change-text' => '更改文本',
 	'themedesigner-reason' => '主题设计器 - 保存完成由 $1',
 	'themedesigner-size-error' => '不正确的文件尺寸',
