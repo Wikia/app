@@ -31,6 +31,5 @@ $wgExtensionCredits['parserhook'][] = array(
 $wgAutoloadClasses['ExtImageSizeInfoFunctionsHooks'] = dirname( __FILE__ ) . '/ImageSizeInfoFunctions.hooks.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'ExtImageSizeInfoFunctionsHooks::parserFirstCallInit';
-$wgHooks['ParserClearState'][] = 'ExtImageSizeInfoFunctionsHooks::clearState';
 
 $wgExtensionMessagesFiles['ImageSizeInfoFunctions'] =  dirname( __FILE__ ) . '/ImageSizeInfoFunctions.i18n.php';

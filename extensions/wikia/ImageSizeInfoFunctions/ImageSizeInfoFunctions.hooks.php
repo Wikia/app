@@ -12,10 +12,6 @@ class ExtImageSizeInfoFunctionsHooks {
 		return true;
 	}
 
-	static public function clearState() {
-		return true;
-	}
-
 	static public function imageWidth( $parser, $image = '' ) {
 		try {
 			$title = Title::newFromText($image,NS_IMAGE);
