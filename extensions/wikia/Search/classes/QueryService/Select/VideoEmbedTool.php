@@ -39,10 +39,11 @@ class VideoEmbedTool extends Video
 	 */
 	protected function getTopicsAsQuery() {
 		$topics = [];
-		foreach ( $this->getService()->getGlobalWithDefault( 'WikiVideoSearchTopics', [] ) as $topic ) {
+		$service = $this->getService();
+		foreach ( $service->getGlobalWithDefault( 'WikiVideoSearchTopics', [] ) as $topic ) {
 			$topics[] = sprintf( '"%s"', $topic );
 		}
-		return empty( $topics ) ? preg_replace( '/\bwiki\b/', $this->getService()->getGlobal( 'Sitename' ) ) : implode( ' OR ', $topics );
+		return empty( $topics ) ? sprintf( '"%s"', trim( preg_replace( '/\bwiki\b/', '', $service->getGlobal( 'Sitename' ) ) ) ) : implode( ' OR ', $topics );
 	}
 	
 	/**
@@ -51,7 +52,7 @@ class VideoEmbedTool extends Video
 	 */
 	protected function getQueryClausesString() {
 		$queryClauses = array(
-				Utilities::valueForField( 'wid', $this->getConfig()->getCityId() ),
+				Utilities::valueForField( 'wid', $this->getConfig()->getWikiId() ),
 				Utilities::valueForField( 'is_video', 'true' ),
 				Utilities::valueForField( 'ns', \NS_FILE )
 				);
@@ -64,8 +65,9 @@ class VideoEmbedTool extends Video
 	 * @return string
 	 */
 	public function getBoostQueryString() {
-		return sprintf( '%s^150 AND (%s)^250 AND (html_media_extras_txt:%s)^300',
-				Utilities::valueForField( 'categories', $this->service->getHubForWikiId( $this->service->getWikiId() ) ),
+		$service = $this->getService();
+		return sprintf( '%s^150 AND (%s)^250 AND (html_media_extras_txt:(%s))^300',
+				Utilities::valueForField( 'categories', $service->getHubForWikiId( $service->getWikiId() ) ),
 				$this->getConfig()->getQuery()->getSolrQuery(),
 				$this->getTopicsAsQuery()
 				);
