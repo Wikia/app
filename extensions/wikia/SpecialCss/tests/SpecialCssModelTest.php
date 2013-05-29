@@ -8,7 +8,7 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testUrlsDataProvider
+	 * @dataProvider testGetSpecialCssDataProvider
 	 */
 	public function testGetSpecialCssUrl($fullUrl, $expected) {
 		$titleMock = $this->getMock('Title', array('getLocalURL', 'getFullUrl'));
@@ -28,7 +28,7 @@ class SpecialCssModelTest extends WikiaBaseTest {
 		$this->assertEquals($expected, $result);
 	}
 
-	public function testUrlsDataProvider () {
+	public function testGetSpecialCssDataProvider() {
 		return [
 			[true, self::FULL_URL_EXAMPLE],
 			[false, self::LOCAL_URL_EXAMPLE]
