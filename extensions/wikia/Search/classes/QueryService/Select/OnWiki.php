@@ -35,7 +35,9 @@ class OnWiki extends AbstractSelect
 		$query = $this->config->getQuery()->getSanitizedQuery();
 		$match = $this->service->getArticleMatchForTermAndNamespaces( $query, $this->config->getNamespaces() );
 		if (! empty( $match ) ) {
-			$this->config->setArticleMatch( $match );
+			if ( $this->matchPassesFilters( $match ) ) {
+				$this->config->setArticleMatch( $match );
+			}
 		}
 		if ( $this->service->getGlobal( 'OnWikiSearchIncludesWikiMatch' ) ) {
 			$domain = preg_replace(
@@ -49,6 +51,33 @@ class OnWiki extends AbstractSelect
 			}
 		}
 		return $this->config->getMatch();
+	}
+	
+	/**
+	 * Here, we're checking for conditions that should preclude a match, given our current environment settings.
+	 * We're using DeMorgan's theorem here. So write FOR the condition you're trying to filter out.
+	 * @param \Wikia\Search\Match\Article $match
+	 * @return boolean
+	 */
+	protected function matchPassesFilters( \Wikia\Search\Match\Article $match ) {
+		$result = $match->getResult();
+		return ! (
+				( // We have a file that is video, but we only want images.
+						$result['ns'] == NS_FILE
+						&& 
+						in_array( \Wikia\Search\Config::FILTER_IMAGE, $this->getConfig()->getPublicFilterKeys() )
+						&&
+						$this->getService()->pageIdIsVideoFile( $result['pageid'] )
+				) 
+				||
+				( // We have a file that is not a video, but we only want videos.
+						$result['ns'] == NS_FILE
+						&& 
+						in_array( \Wikia\Search\Config::FILTER_VIDEO, $this->getConfig()->getPublicFilterKeys() )
+						&&
+						!$this->getService()->pageIdIsVideoFile( $result['pageid'] )
+				)
+		);
 	}
 	
 	/**
