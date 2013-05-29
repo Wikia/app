@@ -29,7 +29,7 @@ class PhalanxUserBlock extends WikiaObject {
 			}
 		} 
 		
-		if ( $ret === false ) {
+		if ( $ret === true ) {
 			$user = $phalanxModel->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
 			$this->typeBlock = (empty( $this->typeBlock ) ) ? 'user' : $this->typeBlock;
 		}
