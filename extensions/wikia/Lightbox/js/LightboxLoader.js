@@ -73,7 +73,7 @@ var LightboxLoader = {
 					parent,
 					isVideo;
 
-				if($this.hasClass('link-internal') || $this.hasClass('link-external')) {
+				if( $this.hasClass('link-internal') || $this.hasClass('link-external') || $thumb.attr('data-shared-help') ) {
 					return;
 				}
 
