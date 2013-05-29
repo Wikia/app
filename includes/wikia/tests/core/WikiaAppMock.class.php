@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * WikiaAppMock
+ *
+ * @deprecated
+ */
 class WikiaAppMock {
 
 	/**

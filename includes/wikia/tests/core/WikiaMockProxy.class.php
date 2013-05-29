@@ -9,8 +9,9 @@
  * $instances is an array of class name -> mock instance mappings
  *   Title => Mock_Title (String=>object)
  *   Mock_Title_2e631b09 => Mock_Title (String=>object)
+ *
+ * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
-
 class WikiaMockProxy {
 
 	const CLASS_CONSTRUCTOR = 'constructor';
@@ -158,6 +159,16 @@ class WikiaMockProxy {
 		return "return WikiaMockProxy::\$instance->execute('{$type}','{$id}',func_get_args());";
 	}
 
+	/**
+	 * (internal use only)
+	 * Execute the specified action
+	 *
+	 * @param $type string Event type
+	 * @param $id string Event ID
+	 * @param $args array Arguments
+	 * @return mixed Return value
+	 * @throws Exception
+	 */
 	public function execute( $type, $id, $args ) {
 		if ( !isset($this->mocks[$type][$id]) ) {
 			throw new Exception("WikiaMockProxy did not find action definition for: \"{$type}/{$id}\"");

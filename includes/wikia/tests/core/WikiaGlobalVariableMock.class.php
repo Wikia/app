@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * WikiaGlobalVariableMock encapsulates all the necessary steps required
+ * to mock a global variable in Mediawiki world.
+ *
+ * Supports setting both a real global variable and the value in main
+ * RequestContext instance.
+ *
+ * @author Władysław Bodzek <wladek@wikia-inc.com>
+ */
 class WikiaGlobalVariableMock {
 
 	protected static $contextVariablesMap = array(
@@ -19,6 +28,10 @@ class WikiaGlobalVariableMock {
 	protected $oldValue;
 	protected $oldContextValue;
 
+	/**
+	 * @param $variable string Global variable name
+	 * @param $value mixed Mocked value
+	 */
 	public function __construct( $variable, $value ) {
 		$this->variable = $variable;
 		$this->value = $value;
@@ -30,6 +43,9 @@ class WikiaGlobalVariableMock {
 			? self::$contextVariablesMap[$this->variable] : null;
 	}
 
+	/**
+	 * Mock the variable
+	 */
 	public function enable() {
 		if ( $this->enabled ) {
 			return;
@@ -56,6 +72,9 @@ class WikiaGlobalVariableMock {
 		$this->enabled = true;
 	}
 
+	/**
+	 * Revert any changes done to the variable
+	 */
 	public function disable() {
 		if ( !$this->enabled ) {
 			return;
