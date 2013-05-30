@@ -18,7 +18,9 @@
 <?= empty($wg->WikiaSeasonsPencilUnit) ? '' : $app->renderView('WikiaSeasons', 'pencilUnit', array()); ?>
 
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty($isGridLayoutEnabled) ? ' WikiaGrid' : '' ?>">
-	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
+	<? if ( empty( $wg->EnableResponsiveLayout ) ): ?>
+		<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
+	<? endif ?>
 	<div class="WikiaPageContentWrapper">
 		<?= empty($wg->GlobalHeaderFullWidth) ? $app->renderView('Notifications', 'Confirmation') : '' ?>
 

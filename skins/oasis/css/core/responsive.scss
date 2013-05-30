@@ -1,3 +1,4 @@
+@import "color";
 @import "layout";
 
 .WikiaMainContent {
@@ -6,7 +7,13 @@
 }
 
 .WikiaMainContentContainer {
+	background-color: $color-page;
 	margin-right: $width-rail + $width-gutter;
+}
+
+.WikiaPage,
+.oasis-split-skin .WikiaPage {
+	border: 0;
 }
 
 .WikiaRail {
