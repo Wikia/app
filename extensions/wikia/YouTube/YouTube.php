@@ -72,7 +72,7 @@ function upgradeYouTubeTag( $editpage, $request ) {
 			$ytid   = $matches[2];
 
 			// Parse out the width and height parameters
-			$params = $this->parseSizeParams($paramText);
+			$params = parseSizeParams($paramText);
 
 			$url = 'http://www.youtube.com/watch?v='.$ytid;
 
@@ -93,7 +93,7 @@ function upgradeYouTubeTag( $editpage, $request ) {
 	return true;
 }
 
-public function parseSizeParams ( $paramText ) {
+function parseSizeParams ( $paramText ) {
 	// Some limits and defaults
 	$width_max  = 640;
 	$height_max = 385;
