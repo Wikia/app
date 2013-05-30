@@ -1,3 +1,8 @@
+/*
+ * Styles for VET
+ * @author Rafal Leszczynski
+ * @author Liz Lee
+ */
 @import "skins/oasis/css/core/WikiaSlider";
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/gradient";
@@ -19,15 +24,7 @@ $color-related-videos-background: darken($color-page, 20%);
 	$color-inactive-button: lighten($color-page, 20%);
 }
 
-.VideoEmbedSuccess {
-	line-height: 2em;
-	margin-bottom: 10px;
-}
-
-.v-float-right {
-	float: right;
-}
-
+// Back button
 .VideoEmbedBack {
 	display: none;
 	left: 10px;
@@ -45,23 +42,7 @@ $color-related-videos-background: darken($color-page, 20%);
 	}
 }
 
-/***INSERT OPTIONS***/
-.VET_error_box {
-	display: none;
-}
-
-.VideoReplaceLink {
-	float:left;
-	padding-top: 20px;
-}
-
-//*************************************
-//
-// NEW VET STUFF - SUGGESTIONS + SEARCH
-//
-// author: Rafal Leszczynski
-//
-//*************************************
+// All screens of VET
 .VideoEmbedBody {
 	background: $color-page;
 	color: $color-text !important;
@@ -120,7 +101,23 @@ $color-related-videos-background: darken($color-page, 20%);
 			cursor: pointer;
 		}
 	}
+	a.bottom-close-button {
+		float: right;
+		margin: 20px 0 0 0;
+	}
+	.VET_error_box {
+		display: none;
+	}
+	.VideoEmbedSummary,
+	.VideoEmbedDetails {
+		padding: 0;
+		h1 {
+			margin-left: 0;
+		}
+	}
 }
+
+// First screen - video selection
 .VideoEmbedMain {
 	strong {
 		font-size: 12px;
@@ -179,6 +176,9 @@ $color-related-videos-background: darken($color-page, 20%);
 		.VET-video-wrapper {
 			display: inline-block;
 		}
+	}
+	.VET-preview {
+		clear: both;
 	}
 }
 .VET-suggestions-wrapper {
@@ -302,21 +302,25 @@ $color-related-videos-background: darken($color-page, 20%);
 		}
 	}
 }
-.VET-preview {
-	clear: both;
-}
-.modalWrapper a.bottom-close-button {
-	float: right;
-	margin: 20px 0 0 0;
+.VET-search-filter {
+	padding-top: 4px;
+	width:320px;
+	float:right;
+	.VET-search-dropdown {
+	    margin-right:39px;
+	    float:right;
+	    width:180px;
+	    .dropdown {
+    		width: 215px;
+    	}
+    }
+    label.dropdown-label {
+    	float:right;
+    	margin-right:10px;
+    	font-weight: bold;
+    }
 }
 
-.VideoEmbedSummary,
-.VideoEmbedDetails {
-	padding: 0;
-	h1 {
-		margin-left: 0;
-	}
-}
 
 // Second screen - embed details
 .VideoEmbedDetails {
@@ -457,40 +461,35 @@ $color-related-videos-background: darken($color-page, 20%);
 			}
 		}
 	}
-}
-.VideoEmbedThumb {
-	float: right;
-	p {
-		padding-top: 5px;
-		text-align: center;
+	.VideoEmbedThumb {
+		float: right;
+		p {
+			padding-top: 5px;
+			text-align: center;
+		}
 	}
-}
-.VideoEmbedSizeRow p {
-	clear: left;
-	display: none;
-	float: left;
-	padding: 7px 0;
-	margin-top: 8px;
-	&.show {
-		display: block;
+	.VideoEmbedSizeRow p {
+		clear: left;
+		display: none;
+		float: left;
+		padding: 7px 0;
+		margin-top: 8px;
+		&.show {
+			display: block;
+		}
+	}
+	.VideoReplaceLink {
+		float:left;
+		padding-top: 20px;
+	}
+	.v-float-right {
+		float: right;
 	}
 }
 
-.VET-search-filter {
-	padding-top: 4px;
-	width:320px;
-	float:right;
-	.VET-search-dropdown {
-	    margin-right:39px;
-	    float:right;
-	    width:180px;
-	    .dropdown {
-    		width: 215px;
-    	}
-    }
-    label.dropdown-label {
-    	float:right;
-    	margin-right:10px;
-    	font-weight: bold;
-    }
+// Third screen - success message
+.VideoEmbedSuccess {
+	line-height: 2em;
+	margin-bottom: 10px;
 }
+
