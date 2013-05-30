@@ -1,13 +1,7 @@
-/*global UserLogin, WikiaEditor*/
-
 /*
  * Author: Inez Korczynski, Bartek Lapinski, Hyun Lim, Liz Lee
  */
 
-
-/*
- * Variables
- */
 require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBootstrap, $, window) {
 
 	var VET_panel = null;
@@ -544,7 +538,7 @@ require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBoots
 			VET_options.onClose();
 		}
 
-		UserLogin.refreshIfAfterForceLogin();
+		window.UserLogin.refreshIfAfterForceLogin();
 	}
 
 	/*
