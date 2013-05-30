@@ -65,20 +65,6 @@ $color-related-videos-background: darken($color-page, 20%);
 	}
 }
 
-.VideoEmbedNoBorder td, .VideoEmbedNoBorder th {
-	border: 0 !important;
-}
-
-.VideoEmbedThin td, .VideoEmbedThin th {
-	padding: 10px 5px 2px 2px !important;
-}
-
-.VideoEmbedSourceNote {
-	color: #666;
-	font-size: 11pt;
-	margin-top: 10px !important;
-}
-
 .VET_error_box {
 	display: none;
 }
