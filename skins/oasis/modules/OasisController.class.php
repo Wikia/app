@@ -127,6 +127,10 @@ class OasisController extends WikiaController {
 			$wgOut->addScript( '<script src="' . $this->wg->ExtensionsPath . '/wikia/CreateNewWiki/js/WikiWelcome.js"></script>' );
 		}
 
+		if ( !empty( $this->wg->EnableResponsiveLayout ) ) {
+			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'skins/oasis/css/core/responsive.scss' ) );
+		}
+
 		$renderContentOnly = false;
 		if (!empty($this->wg->EnableRenderContentOnlyExt)) {
 			if(renderContentOnly::isRenderContentOnlyEnabled()) {
