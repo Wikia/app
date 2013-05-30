@@ -387,6 +387,7 @@ class HAWelcomeJob extends Job {
 	 * @internal
 	 */
 	public function sendMessage() {
+		global $wgUser;
 		wfProfileIn( __METHOD__ );
 		if ( $this->bShowNotices ) {
 			trigger_error( sprintf( '%s Start.', __METHOD__ ) , E_USER_NOTICE );
@@ -401,7 +402,7 @@ class HAWelcomeJob extends Job {
 			$mWallMessage = F::build(
 				'WallMessage',
 				array(
-					$this->sMessage, $this->sRecipientName, $this->oSender,
+					$this->sMessage, $this->sRecipientName, $wgUser,
 					wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
 				),
 				'buildNewMessageAndPost'
