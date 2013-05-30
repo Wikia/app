@@ -29,7 +29,17 @@ class DefaultContent extends AbstractService
 				'style',
 				];
 	
+	/**
+	 * We remove these selectors since they are unreliable indicators of textual content
+	 * @var
+	 */
 	protected $asideSelectors = [ 'table', 'figure', 'div.noprint', 'div.quote', '.dablink' ];
+	
+	/**
+	 * Stores multivalued nolang_txt field as we add stuff to it.
+	 * @var array
+	 */
+	protected $nolang_txt = [];
 	
 	/**
 	 * Returns the fields required to make the document searchable (specifically, wid and title and body content)
@@ -52,6 +62,9 @@ class DefaultContent extends AbstractService
 		$response   = $response == false ? array() : $response;
 		$titleStr   = $service->getTitleStringFromPageId( $pageId );
 		
+		$this->pushNolangTxt( $titleStr )
+		     ->pushNolangTxt( preg_replace( '/([[:punct:]])/', ' $1 ', $titleStr ) );
+		
 		$pageFields = [
 				'wid'                        => $service->getWikiId(),
 				'pageid'                     => $pageId,
@@ -71,7 +84,8 @@ class DefaultContent extends AbstractService
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$this->getOutboundLinks(),
-				$pageFields 
+				$pageFields,
+				$this->getNolangTxt()
 				);
 	}
 	
@@ -153,6 +167,24 @@ class DefaultContent extends AbstractService
 	}
 	
 	/**
+	 * Add a language-agnostic field value
+	 * @param string $txt
+	 * @return DefaultContent 
+	 */
+	protected function pushNolangTxt( $txt ) {
+		$this->nolang_txt[] = $txt;
+		return $this;
+	}
+	
+	/**
+	 * Returns language-agnostic multi-valued text
+	 * @return array
+	 */
+	protected function getNolangTxt() {
+		return [ 'nolang_txt' => $this->nolang_txt ];
+	}
+	
+	/**
 	 * Allows us to strip and parse HTML
 	 * By the way, if every document on the site was as big as the Jim Henson page,
 	 * then it would take under two minutes to parse them all using this function. 
@@ -179,6 +211,7 @@ class DefaultContent extends AbstractService
 		$words = str_word_count( $paragraphString?:$plaintext, 1 );
 		$wordCount = count( $words );
 		$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
+		$this->pushNolangTxt( $upTo100Words );
 		
 		return  array_merge( $result,
 				[

@@ -192,9 +192,9 @@ class Connection
     private function receiveProtobuf() {
         $responseSize = stream_get_contents($this->socket, 4);
         if ($responseSize === false) throw new RqlDriverError("Unable to read from socket.");
-        $responseSize = @unpack("V", $responseSize);
+        $responseSize = unpack("V", $responseSize);
         $responseSize = $responseSize[1];
-        $responseBuf = @stream_get_contents($this->socket, $responseSize);
+        $responseBuf = stream_get_contents($this->socket, $responseSize);
         if ($responseBuf === false) throw new RqlDriverError("Unable to read from socket.");
         return $responseBuf;
     }

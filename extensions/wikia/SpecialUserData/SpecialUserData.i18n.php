@@ -291,6 +291,16 @@ $messages['pt-br'] = array(
 	'userdata-no-wf' => 'WikiFactory não é permitido nesta wiki. Não é possível alterar wgUserData.',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'userdata' => 'Pigghie le date utende',
+	'userdata-submit' => 'Pigghie le date',
+	'specialuserdata-desc' => "Dèje 'n'inderfacce pe cangià wgUserData pe uicchi.",
+	'userdata-header' => "'Ngremende wgUserData",
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura

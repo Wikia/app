@@ -2024,6 +2024,7 @@ ___________________________________________<br />
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -2039,8 +2040,8 @@ $messages['diq'] = array(
 	'wall-message-mywall' => 'Dêsê me',
 	'wall-toolbar-history' => 'Ravêrden',
 	'wall-message-remove' => 'Hewad',
-	'wall-message-rev-delete' => 'Rewisyoni esterıte',
-	'wall-message-fast-admin-delete-message' => 'VSTF esterıte',
+	'wall-message-rev-delete' => 'Rewizyona besternayışi',
+	'wall-message-fast-admin-delete-message' => 'VSTF besterne',
 	'wall-message-quote-button' => 'Groteko',
 	'wall-message-elseswall' => "Dêsê $1'i",
 	'wall-thread-removed' => 'Hewadeya',
@@ -4672,6 +4673,7 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-recentchanges-closed-thread' => 'menutup tred "[[$1|$2]]" pada [[$3|papan $4]]',
 	'wall-recentchanges-reopened-thread' => 'membuka semula tred "[[$1|$2]]" pada [[$3|papan $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Satu balasan di papan pesanan',
+	'wall-recentchanges-wall-created-title' => 'Mewujudkan papan pesanan',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Papan Pesanan',
 	'wall-recentchanges-thread-group' => '$1 di <a href="$2">papan $3</a>',
 	'wall-recentchanges-history-link' => 'sejarah papan',
@@ -4791,7 +4793,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-notifications-notifyeveryone' => 'Disorotkan oleh $1',
 	'wall-message-notifyeveryone' => 'Sorotkan tred ini',
 	'wall-message-unnotifyeveryone' => 'Padamkan sorotan tred ini',
-	'wall-message-notifyeveryone-tooltip' => 'Setiap orang yang log masuk ke dalam wiki ini akan diberitahu tentang tred ini', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Setiap orang yang log masuk ke dalam wiki ini akan diberitahu tentang tred ini pada kunjungan yang akan datang',
 	'wall-votes-modal-showmore' => 'Lihat orang lain yang memberikan Pujian',
 	'wall-votes-modal-title' => 'Pujian',
 	'wall-votes-modal-title-desc' => 'Pesanan ini dipuji oleh {{PLURAL:$1|seorang|$1 orang}} ahli',
@@ -5276,6 +5278,7 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-recentchanges-closed-thread' => 'heeft de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] gesloten',
 	'wall-recentchanges-reopened-thread' => 'heeft de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] heropend',
 	'wall-recentchanges-deleted-reply-title' => 'Een antwoord op het prikbord',
+	'wall-recentchanges-wall-created-title' => 'Berichtenmuur aangemaakt',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Prikbord',
 	'wall-recentchanges-thread-group' => '$1 op het <a href="$2">prikbord van $3</a>',
 	'wall-recentchanges-history-link' => 'prikbordgeschiedenis',
@@ -5376,7 +5379,7 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'wall-notifications-notifyeveryone' => 'Uitgelicht door $1',
 	'wall-message-notifyeveryone' => 'Deze draad uitlichten',
 	'wall-message-unnotifyeveryone' => 'Uitlichten voor deze draad verwijderen',
-	'wall-message-notifyeveryone-tooltip' => 'Alle aangemelde gebruikers van de wiki worden ingelicht over deze draad', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Alle aangemelde gebruikers van de wiki worden ingelicht over deze draad de volgende keer dat ze de wiki bezoeken',
 	'wall-votes-modal-showmore' => 'Andere gebruikers die Kudos hebben gegeven bekijken',
 	'wall-votes-modal-title' => 'Kudos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Eén gebruiker|$1 gebruikers}} hebben dit bericht Kudos gegeven',

@@ -21,8 +21,13 @@ class FBPush_OnArticleComment extends FBConnectPushEvent {
 	}
 	
 	public static function articleEdit(&$article, &$user, $text, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
-		global $wgContentNamespaces, $wgServer, $wgEnableArticleCommentsExt, $wgSitename;
+		global $wgEnableArticleCommentsExt, $wgSitename;
 		wfProfileIn(__METHOD__);
+
+		if ( !self::checkUserOptions(__CLASS__) ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
 
 		if (empty( $wgEnableArticleCommentsExt) ) {
 			wfProfileOut(__METHOD__);
