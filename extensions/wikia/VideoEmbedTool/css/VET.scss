@@ -46,22 +46,6 @@ $color-related-videos-background: darken($color-page, 20%);
 }
 
 /***INSERT OPTIONS***/
-.VideoEmbedOptions {
-	img {
-		vertical-align: middle;
-	}
-	label {
-		margin-right: 10px;
-	}
-	h2 {
-		clear: left;
-		padding-top: 20px;
-	}
-	.video-description {
-		resize: vertical;
-	}
-}
-
 .VET_error_box {
 	display: none;
 }
@@ -446,14 +430,26 @@ $color-related-videos-background: darken($color-page, 20%);
 	h1 {
 		margin-left: 0;
 	}
+}
+.VideoEmbedDetails {
 	.WikiaForm {
 		margin: 0;
 		border: none;
 		padding: 10px 0 0;
-		.VideoEmbedNoBorder {
+		.button-group {
 			clear: both;
 			float: right;
 			padding-top: 20px;
+		}
+		img {
+			vertical-align: middle;
+		}
+		h2 {
+			clear: left;
+			padding-top: 20px;
+		}
+		.video-description {
+			resize: vertical;
 		}
 	}
 }

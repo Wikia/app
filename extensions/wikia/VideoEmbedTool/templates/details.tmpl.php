@@ -1,5 +1,5 @@
 <h1><?=wfMessage('vet-details-about-video') ?></h1>
-<form class="VideoEmbedOptions WikiaForm" id="VET-display-options<? if( $screenType == 'edit' ){ ?>-update<? } ?>">
+<form class="WikiaForm" id="VET-display-options<? if( $screenType == 'edit' ){ ?>-update<? } ?>">
 
 <?php
 global $wgExtensionsPath;
@@ -80,14 +80,14 @@ global $wgExtensionsPath;
 		</div>
 	</div>
 	<? if( $screenType == 'details' ): ?>
-		<div class="input-group VideoEmbedNoBorder addVideoDetailsFormControls">
+		<div class="input-group button-group addVideoDetailsFormControls">
 			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-insert2') ?>" />
 		</div>
 		<input id="VideoEmbedId" type="hidden" value="<?= isset($props['id']) ? urlencode($props['id']) : '' ?>" />
 		<input id="VideoEmbedProvider" type="hidden" value="<?= urlencode($props['provider']) ?>" />
 		<input id="VideoEmbedMetadata" type="hidden" value="<?= isset($props['metadata']) ? urlencode($props['metadata']) : '' ?>" />
 	<? else: // $screenType == 'edit' ?>
-		<div class="input-group VideoEmbedNoBorder">
+		<div class="input-group button-group">
 			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-update') ?>"/>
 		</div>
 		<div id="VideoReplaceLink" class="VideoReplaceLink"><?= wfMessage('vet-video-replace-link', $props['href'])->parse(); ?></div>

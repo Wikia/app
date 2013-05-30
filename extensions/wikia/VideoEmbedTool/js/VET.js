@@ -511,7 +511,7 @@ require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBoots
 		// macbre: move back button on Oasis
 		if( to == "Details" ) {
 			setTimeout(function() {
-				VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
+				VET_moveBackButton($('.addVideoDetailsFormControls').find('input'));
 			}, 50);
 		}
 	}
