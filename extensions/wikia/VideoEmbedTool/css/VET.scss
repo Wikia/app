@@ -610,5 +610,9 @@ $color-related-videos-background: darken($color-page, 20%);
     		width: 215px;
     	}
     }
-    label.dropdown-label { float:right; margin-right:10px; font-weight: bold;  }
+    label.dropdown-label {
+    	float:right;
+    	margin-right:10px;
+    	font-weight: bold;
+    }
 }
