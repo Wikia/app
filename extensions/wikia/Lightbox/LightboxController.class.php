@@ -262,7 +262,7 @@ class LightboxController extends WikiaController {
 
 			$linkDescription = wfMsg( 'lightbox-share-description'.$msgSuffix, empty($articleUrl) ? $fileTitle : $articleTitleText, $this->wg->Sitename );
 
-			$shareNetworks = (new SocialSharingService)->getNetworks( array(
+			$shareNetworks = SocialSharingService::getInstance()->getNetworks( array(
 				'facebook',
 				'twitter',
 				'stumbleupon',

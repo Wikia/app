@@ -78,7 +78,7 @@ class ImageLightbox {
 		$linkStdEncoded = rawurlencode($linkStd);
 		$linkDescription = wfMsg('lightbox-share-description', $currentTitle->getText(), $wgSitename);
 		$shareButtons = array();
-		$shareNetworks = (new SocialSharingService)->getNetworks( array(
+		$shareNetworks = SocialSharingService::getInstance()->getNetworks( array(
 			'facebook',
 			'twitter',
 			'stumbleupon',

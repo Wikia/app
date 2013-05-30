@@ -9,10 +9,7 @@ class WikiaMobileSharingService extends WikiaService{
 	public function index(){
 		wfProfileIn( __METHOD__ );
 
-		/**
-		 * @var $socialSharingService SocialSharingService
-		 */
-		$socialSharingService = (new SocialSharingService);
+		$socialSharingService = SocialSharingService::getInstance();
 
 		$this->setVal( 'networks', $socialSharingService->getNetworks( array(
 			'facebook',
