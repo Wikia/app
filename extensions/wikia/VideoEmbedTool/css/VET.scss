@@ -110,6 +110,7 @@ $color-related-videos-background: darken($color-page, 20%);
 	}
 	.VideoEmbedSummary,
 	.VideoEmbedDetails {
+		display: none;
 		padding: 0;
 		h1 {
 			margin-left: 0;
