@@ -1,5 +1,5 @@
 <h1><?=wfMessage('vet-details-about-video') ?></h1>
-<form class="VideoEmbedOptionsTable WikiaForm" id="VET-display-options<? if( $screenType == 'edit' ){ ?>-update<? } ?>">
+<form class="VideoEmbedOptions WikiaForm" id="VET-display-options<? if( $screenType == 'edit' ){ ?>-update<? } ?>">
 
 <?php
 global $wgExtensionsPath;
