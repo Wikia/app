@@ -9,8 +9,9 @@
 class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 	const VIDEOS_PER_PAGE = 10;
-	const THUMBNAIL_WIDTH = 330;
-	const THUMBNAIL_HEIGHT = 211;
+	const THUMBNAIL_WIDTH = 500;
+	const THUMBNAIL_HEIGHT = 309;
+	const POSTED_IN_ARTICLES = 100;
 
 	public function __construct() {
 		parent::__construct( 'LicensedVideoSwap', '', false );
@@ -82,22 +83,18 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$videoHelper = new LicensedVideoSwapHelper();
 		$videoList = $videoHelper->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page );
 
-		// Reuse code from SpecialVideosHelper
-		$helper = new SpecialVideosHelper();
+		// Reuse code from VideoHandlerHelper
+		$helper = new VideoHandlerHelper();
 
 		// Go through each video and add additional detail needed to display the video
 		$videos = array();
 		foreach ( $videoList as $videoInfo ) {
-			$videoDetail = $helper->getVideoDetail( $videoInfo );
+			$videoDetail = $helper->getVideoDetail( $videoInfo, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT, self::POSTED_IN_ARTICLES );
 			if ( !empty($videoDetail) ) {
 				$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
-				$byUserMsg = $helper->getByUserMsg( $videoDetail['userName'], $videoDetail['userUrl'] );
-				$postedInMsg = $helper->getPostedInMsg( $videoDetail['truncatedList'], $videoDetail['isTruncated'] );
 
 				$videoDetail['videoPlayButton'] = $playButton;
 				$videoDetail['videoOverlay'] = $videoOverlay;
-				$videoDetail['byUserMsg'] = $byUserMsg;
-				$videoDetail['postedInMsg'] = $postedInMsg;
 
 				$videos[] = $videoDetail;
 			}

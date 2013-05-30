@@ -136,4 +136,55 @@ class VideoHandlerHelper extends WikiaModel {
 		return $newContent;
 	}
 
+	/**
+	 * get video detail
+	 * @param array $videoInfo [ array( 'title' => title, 'addedAt' => addedAt , 'addedBy' => addedBy ) ]
+	 * @param integer $thumbWidth
+	 * @param integer $thumbHeight
+	 * @param integer $postedInArticles
+	 * @return array $videoDetail
+	 */
+	public function getVideoDetail( $videoInfo, $thumbWidth, $thumbHeight, $postedInArticles ) {
+		wfProfileIn( __METHOD__ );
+
+		$videoDetail = array();
+		$title = Title::newFromText( $videoInfo['title'], NS_FILE );
+		if ( $title instanceof Title ) {
+			$file = $this->wf->FindFile( $title );
+			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
+				// get thumbnail
+				$thumb = $file->transform( array( 'width' => $thumbWidth, 'height' => $thumbHeight ) );
+				$thumbUrl = $thumb->getUrl();
+
+				// get user
+				$user = User::newFromId( $videoInfo['addedBy'] );
+				$userName = ( User::isIP($user->getName()) ) ? $this->wf->Msg( 'oasis-anon-user' ) : $user->getName();
+				$userUrl = $user->getUserPage()->getFullURL();
+
+				// get article list
+				$mediaQuery = new ArticlesUsingMediaQuery( $title );
+				$articleList = $mediaQuery->getArticleList();
+				list( $truncatedList, $isTruncated ) = WikiaFileHelper::truncateArticleList( $articleList, $postedInArticles );
+
+				// video details
+				$videoDetail = array(
+					'title' => $title->getDBKey(),
+					'fileTitle' => $title->getText(),
+					'fileUrl' => $title->getLocalUrl(),
+					'thumbUrl' => $thumbUrl,
+					'userName' => $userName,
+					'userUrl' => $userUrl,
+					'truncatedList' => $truncatedList,
+					'isTruncated' => $isTruncated,
+					'timestamp' => $videoInfo['addedAt'],
+					'embedUrl' => $file->getHandler()->getEmbedUrl(),
+				);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $videoDetail;
+	}
+
 }
