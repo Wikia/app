@@ -687,6 +687,12 @@ require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBoots
 			// attach handlers - close preview
 			this.cachedSelectors.previewWrapper.on('click', '#VET-preview-close', function(event) {
 				event.preventDefault();
+
+				// Closing a video instance, clear the tracking timeout
+				if ( VET_videoInstance ) {
+					VET_videoInstance.clearTimeoutTrack();
+				}
+
 				that.cachedSelectors.previewWrapper.stop().slideUp('slow', function() {
 					that.cachedSelectors.videoWrapper.children().remove();
 					that.removeInPreview();
