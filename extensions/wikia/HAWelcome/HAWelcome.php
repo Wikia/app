@@ -407,9 +407,8 @@ class HAWelcomeJob extends Job {
 				),
 				'buildNewMessageAndPost'
 			);
-			// Moved from the previous implementation. The relevant code
-			// of the Wall extension has - as expected - no documentation
-			// whatsoever.
+			// Sets the sender of the message when the actual message
+			// was posted by the welcome bot
 			if ( $mWallMessage ) {
 				$mWallMessage->setPostedAsBot( $this->oSender );
 				$mWallMessage->sendNotificationAboutLastRev();
