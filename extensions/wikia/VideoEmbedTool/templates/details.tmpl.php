@@ -53,7 +53,7 @@ global $wgExtensionsPath;
 			<div>
 				<div id="VideoEmbedSlider" class="WikiaSlider"></div>
 				<span id="VideoEmbedInputWidth" class="VideoEmbedInputWidth">
-					<input type="text" id="VideoEmbedManualWidth" class="VideoEmbedManualWidth" name="VideoEmbedManualWidth" value="" /> px
+					<input type="text" id="VideoEmbedManualWidth" name="VideoEmbedManualWidth" value="" /> px
 				</span>
 			</div>
 		</div>

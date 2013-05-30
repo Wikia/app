@@ -29,19 +29,19 @@ $color-related-videos-background: darken($color-page, 20%);
 }
 
 .VideoEmbedBack {
+	display: none;
 	left: 10px;
 	padding-left: 18px;
 	position: absolute;
 	top: 5px;
-	display: none;
 	a {
 		color: #FFF;
 	}
 	img  {
-		position: absolute;
 		cursor: pointer;
-		top: -1px;
 		left: -2px;
+		position: absolute;
+		top: -1px;
 	}
 }
 
@@ -153,11 +153,6 @@ $color-related-videos-background: darken($color-page, 20%);
 			cursor: pointer;
 		}
 	}
-	.VideoEmbedManualWidth {
-		padding: 6px;
-		width: 28px;
-		height: 16px;
-	}
 	.preview-options {
 		float: left;
 		width: 540px;
@@ -165,16 +160,19 @@ $color-related-videos-background: darken($color-page, 20%);
 			border: none;
 			margin: 0;
 
-			input {
+			input[type="text"] {
 				display: inline-block;
+				height: 16px;
+				padding: 6px;
+				width: 28px;
 			}
 		}
 		.VideoEmbedName, .VideoEmbedCaption {
 			width: 394px;
 		}
-		.VideoEmbedCaption {
-			display: none;
+		input.VideoEmbedCaption {
 			clear: left;
+			display: none;
 			float: left;
 			margin-top: 20px;
 			&.show {
@@ -183,7 +181,7 @@ $color-related-videos-background: darken($color-page, 20%);
 		}
 		.input-group {
 			clear: both;
-			padding: 10px 0;
+			padding: 20px 0;
 			border-bottom: 1px solid $color-page-border;
 			width: 540px;
 
@@ -474,11 +472,6 @@ $color-related-videos-background: darken($color-page, 20%);
 			float: right;
 			padding-top: 20px;
 		}
-	}
-}
-.VideoEmbedDetails {
-	.WikiaForm {
-		padding-top: 0;
 	}
 }
 .VideoEmbedThumb {
