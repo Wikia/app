@@ -49,12 +49,16 @@ class BodyController extends WikiaController {
 	 */
 	public static function isGridLayoutEnabled() {
 		$app = F::app();
+		$ns = $app->wg->Title->getNamespace();
+
+		// Don't enable for article pages when responsive layout is enabled
+		if ( !empty( $app->wg->EnableResponsiveLayout ) && $ns == NS_MAIN ) {
+			return false;
+		}
 
 		if( !empty($app->wg->OasisGrid) ) {
 			return true;
 		}
-
-		$ns = $app->wg->Title->getNamespace();
 
 		if( in_array( MWNamespace::getSubject($ns), $app->wg->WallNS) ) {
 			return true;
@@ -348,7 +352,7 @@ class BodyController extends WikiaController {
 		// show corporate header on this page?
 		} else if( HubService::isCorporatePage() ) {
 			$this->headerModuleName = 'PageHeader';
-			
+
 			if( self::isEditPage() ) {
 				$this->headerModuleAction = 'EditPage';
 			} else {
