@@ -90,6 +90,13 @@ global $wgExtensionsPath;
 		<div class="input-group button-group">
 			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-update') ?>"/>
 		</div>
+		<?
+			/*
+			 * TODO: don't show the replace link if it's a premium video
+			 * $props['premiumVideo'] isn't always true if it's a premium video - that logic needs to be fixed.
+			 * Also, we may want to send users to WikiaVideoAdd instead of the file page
+			*/
+		?>
 		<div id="VideoReplaceLink" class="VideoReplaceLink"><?= wfMessage('vet-video-replace-link', $props['href'])->parse(); ?></div>
 		<input id="VideoEmbedHref" type="hidden" value="<?= htmlspecialchars($props['href']) ?>" />
 	<? endif; ?>

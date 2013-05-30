@@ -1139,8 +1139,8 @@ require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBoots
 
 
 	// globally available functions
-	// TODO: Create VET namespace for these
-	window.VET_show = VET_show;
-	window.VET_close = VET_close;
-	window.VETExtended = VETExtended;
+	window.VET = {
+		show: VET_show,
+		close: VET_close
+	}
 });
