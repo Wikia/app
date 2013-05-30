@@ -17,8 +17,8 @@ class WallNotificationsController extends WikiaController {
 
 		if($this->wg->User->isLoggedIn()) {
 
-			$this->response->addAsset('extensions/wikia/Wall/js/WallNotifications.js');
-			$this->response->addAsset('extensions/wikia/Wall/css/WallNotifications.scss');
+			$this->response->addAsset('extensions/wikia/WallNotifications/js/WallNotifications.js');
+			$this->response->addAsset('extensions/wikia/WallNotifications/css/WallNotifications.scss');
 			$this->response->setVal('prehide', (empty($this->wg->EnableWallExt) && empty($this->wg->EnableForumExt)));
 
 			$this->response->setVal('user', $this->wg->User);

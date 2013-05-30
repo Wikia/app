@@ -49,9 +49,6 @@ if (function_exists( "extAddBatchTask" ) ) {
 }
 
 
-include($dir . '/notification/WallNotifications.setup.php');
-
-
 $app->registerExtensionMessageFile('Wall', $dir . '/Wall.i18n.php');
 
 $app->registerHook('AccountNavigationModuleAfterDropdownItems', 'WallHooksHelper', 'onAccountNavigationModuleAfterDropdownItems');

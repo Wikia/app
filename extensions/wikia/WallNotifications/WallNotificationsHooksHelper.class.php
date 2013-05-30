@@ -14,7 +14,7 @@ class WallNotificationsHooksHelper {
 
 		if( $user instanceof User && $user->isLoggedIn() && $skin->getSkinName() == 'monobook') {
 			$text .= "<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ResourceBasePath}/resources/wikia/libraries/jquery/timeago/jquery.timeago.js\"></script>\n" .
-				"<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallNotifications.js\"></script>\n";
+				"<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/WallNotifications/js/WallNotifications.js\"></script>\n";
 		}
 
 		return true;
@@ -33,8 +33,8 @@ class WallNotificationsHooksHelper {
 		}
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * @brief Add notification dropdown to right corner for monobook
 	 *
@@ -55,22 +55,22 @@ class WallNotificationsHooksHelper {
 						'class'=>'wall-notifications-monobook ',
 						'active'=>false
 				);
-				
-				/** 
-				 * none of the Wall "base" extension is enable so we are pre hide the notification drop down 
-				 * and we show it in java script when there are new notification 
+
+				/**
+				 * none of the Wall "base" extension is enable so we are pre hide the notification drop down
+				 * and we show it in java script when there are new notification
 				 */
-				 
+
 				if(empty($app->wg->EnableWallExt) && empty($app->wg->EnableForumExt)) {
 					$personalUrls['wall-notifications']['class'] .= 'prehide';
 				}
-				
-				$app->wg->Out->addStyle("{$app->wg->ExtensionsPath}/wikia/Wall/css/WallNotificationsMonobook.css");
+
+				$app->wg->Out->addStyle("{$app->wg->ExtensionsPath}/wikia/WallNotifications/css/WallNotificationsMonobook.css");
 			}
 		}
 
 		return true;
 	}
-	
+
 
 }
