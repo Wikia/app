@@ -58,6 +58,8 @@ define("WPP_CONTENT_WARNING", 15);
 //More wall flags
 define("WPP_WALL_QUOTE_OF", 16);
 
-//Forum Order 
+//Forum Order
 define("WPP_WALL_ORDER_INDEX", 17);
 
+// License video swap status
+define( "WPP_LVS_STATUS", 18 );

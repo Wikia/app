@@ -8,6 +8,10 @@
  */
 class LicensedVideoSwapHelper extends WikiaModel {
 
+	const STATUS_SKIP = 0;
+	const STATUS_EXACT_MATCH = 1;
+	const STATUS_NON_EXACT_MATCH = 2;
+
 	/**
 	 * Gets a list of videos that have not yet been swapped (e.g., no decision to keep or not keep the
 	 * original video has been made)
