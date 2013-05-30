@@ -360,7 +360,8 @@ $color-related-videos-background: darken($color-page, 20%);
 				width: 28px;
 			}
 		}
-		.VideoEmbedName, .VideoEmbedCaption {
+		.VideoEmbedName,
+		.VideoEmbedCaption {
 			width: 394px;
 		}
 		input.VideoEmbedCaption {
@@ -378,10 +379,12 @@ $color-related-videos-background: darken($color-page, 20%);
 			border-bottom: 1px solid $color-page-border;
 			width: 540px;
 
-			.option-label, > div {
+			.option-label,
+			> div {
 				float: left;
 			}
-			> div, > textarea {
+			> div,
+			> textarea {
 				width: 412px;
 				@include box-sizing-border-box;
 			}
