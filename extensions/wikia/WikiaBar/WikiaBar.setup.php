@@ -7,7 +7,6 @@
  * @author Sebastian Marzjan
  */
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
@@ -29,9 +28,9 @@ WikiaUserPropertiesController::registerHandler('WikiaBarUserPropertiesHandler');
 /**
  * hooks
  */
-$app->registerHook('MakeGlobalVariablesScript', 'WikiaBarHooks', 'onMakeGlobalVariablesScript');
-$app->registerHook('WikiFactoryChanged', 'WikiaBarHooks', 'onWikiFactoryVarChanged');
-$app->registerHook('WikiFactoryVarSave::AfterErrorDetection', 'WikiaBarHooks', 'onWFAfterErrorDetection');
+$wgHooks['MakeGlobalVariablesScript'][] = 'WikiaBarHooks::onMakeGlobalVariablesScript';
+$wgHooks['WikiFactoryChanged'][] = 'WikiaBarHooks::onWikiFactoryVarChanged';
+$wgHooks['WikiFactoryVarSave::AfterErrorDetection'][] = 'WikiaBarHooks::onWFAfterErrorDetection';
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiaBar'] = $dir . 'WikiaBar.i18n.php';

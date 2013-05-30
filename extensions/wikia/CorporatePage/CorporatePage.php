@@ -30,4 +30,4 @@ $wgAjaxExportList[] = 'CorporatePageHelper::blockArticle';
 
 $app = F::app();
 $app->registerHook('MessageCacheReplace', 'BlogsInHubsService', 'onMessageCacheReplace');
-$app->registerHook('ArticleCommentCheck', 'CorporatePageHelper', 'onArticleCommentCheck');
+$wgHooks['ArticleCommentCheck'][] = 'CorporatePageHelper::onArticleCommentCheck';

@@ -16,7 +16,7 @@ $wgAutoloadClasses['HelloWorld'] =  $dir . 'HelloWorld.class.php';
 /**
  * hooks
  */
-//$app->registerHook('OutputPageBeforeHTML', 'HelloWorld', 'onOutputPageBeforeHTML');
+//$wgHooks['OutputPageBeforeHTML'][] = 'HelloWorld::onOutputPageBeforeHTML';
 
 /**
  * controllers

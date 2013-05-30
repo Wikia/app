@@ -98,7 +98,7 @@ class WikiaPhotoGalleryHelper {
 			$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js\"></script>\n");
 
 			// load message for MW toolbar button tooltip
-			$app->registerHook('MakeGlobalVariablesScript', 'WikiaPhotoGalleryHelper', 'makeGlobalVariablesScript');
+			$wgHooks['MakeGlobalVariablesScript'][] = 'WikiaPhotoGalleryHelper::makeGlobalVariablesScript';
 		}
 
 		wfProfileOut( __METHOD__ );

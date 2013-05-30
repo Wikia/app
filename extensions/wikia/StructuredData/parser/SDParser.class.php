@@ -3,6 +3,9 @@
  * @author ADi
  */
 class SDParser {
+
+	protected static $instance = null;
+
 	/**
 	 * @var StructuredData
 	 */
@@ -15,14 +18,23 @@ class SDParser {
 		$this->structuredData = $structuredData;
 	}
 
-	public function onParserFirstCallInit( Parser &$parser ) {
-		$parser->setHook( 'datalist', array( $this, 'datalistParserHook' ) );
-		$parser->setHook( 'data', array( $this, 'dataParserHook' ) );
+	static public function getInstance() {
+		if( is_null(self::$instance) ) {
+			self::$instance = new SDParser();
+		}
+		return self::$instance;
+	}
+
+	static public function onParserFirstCallInit( Parser &$parser ) {
+		$instance = self::getInstance();
+		$parser->setHook( 'datalist', array( $instance, 'datalistParserHook' ) );
+		$parser->setHook( 'data', array( $instance, 'dataParserHook' ) );
 		return true;
 	}
 
-	public function onParserFirstCallInitParserFunctionHook( Parser &$parser ) {
-		$parser->setFunctionHook('data', array( $this, 'dataParserFunction') );
+	static public function onParserFirstCallInitParserFunctionHook( Parser &$parser ) {
+		$instance = self::getInstance();
+		$parser->setFunctionHook('data', array( $instance, 'dataParserFunction') );
 		return true;
 	}
 

@@ -13,7 +13,6 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $dir = dirname( __FILE__ ) . '/';
-$app = F::app( );
 
 // classes
 $wgAutoloadClasses[ 'ForumSpecialController'] =  $dir . 'ForumSpecialController.class.php' ;
@@ -81,7 +80,7 @@ $wgHooks['ParserFirstCallInit'][] = 'ForumHooksHelper::onParserFirstCallInit';
 $wgHooks['LinkBegin'][] = 'ForumHooksHelper::onLinkBegin';
 
 // Fix URLs of thread pages when purging them.
-$app->registerHook( 'TitleGetSquidURLs', 'ForumHooksHelper', 'onTitleGetSquidURLs' );
+$wgHooks['TitleGetSquidURLs'][] = 'ForumHooksHelper::onTitleGetSquidURLs';
 
 include ($dir . '/Forum.namespace.setup.php');
 

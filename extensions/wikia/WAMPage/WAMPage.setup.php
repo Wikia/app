@@ -11,7 +11,6 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WAM Page',
@@ -28,10 +27,10 @@ $wgAutoloadClasses[ 'WAMPageHooks'] =  $dir . 'WAMPageHooks.class.php' ;
 $wgAutoloadClasses[ 'WAMPageModel'] =  $dir . 'models/WAMPageModel.class.php' ;
 
 // hooks
-$app->registerHook('ArticleFromTitle', 'WAMPageHooks', 'onArticleFromTitle');
-$app->registerHook('MakeGlobalVariablesScript', 'WAMPageHooks', 'onMakeGlobalVariablesScript');
-$app->registerHook('LinkBegin', 'WAMPageHooks', 'onLinkBegin');
-$app->registerHook('WikiaCanonicalHref', 'WAMPageHooks', 'onWikiaCanonicalHref');
+$wgHooks['ArticleFromTitle'][] = 'WAMPageHooks::onArticleFromTitle';
+$wgHooks['MakeGlobalVariablesScript'][] = 'WAMPageHooks::onMakeGlobalVariablesScript';
+$wgHooks['LinkBegin'][] = 'WAMPageHooks::onLinkBegin';
+$wgHooks['WikiaCanonicalHref'][] = 'WAMPageHooks::onWikiaCanonicalHref';
 
 
 // i18n

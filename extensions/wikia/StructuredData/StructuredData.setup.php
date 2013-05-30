@@ -52,9 +52,9 @@ require_once( $IP . '/lib/vendor/HTTP/Request.php');
 /**
  * hooks
  */
-//$app->registerHook('ParserBeforeInternalParse', 'SDParser', 'onBeforeInternalParse');
-$app->registerHook('ParserFirstCallInit', 'SDParser', 'onParserFirstCallInit');
-$app->registerHook('ParserFirstCallInit', 'SDParser', 'onParserFirstCallInitParserFunctionHook');
+//$wgHooks['ParserBeforeInternalParse'][] = 'SDParser::onBeforeInternalParse';
+$wgHooks['ParserFirstCallInit'][] = 'SDParser::onParserFirstCallInit';
+$wgHooks['ParserFirstCallInit'][] = 'SDParser::onParserFirstCallInitParserFunctionHook';
 
 /**
  * controllers

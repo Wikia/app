@@ -11,7 +11,6 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 $wgExtensionCredits['other'][] = array(
 	'name'			=> 'WikiaHomePage',
@@ -27,9 +26,9 @@ $wgExtensionMessagesFiles['WikiaHomePage'] = $dir.'WikiaHomePage.i18n.php';
 JSMessages::registerPackage('WikiaHomePage', array('wikia-home-page-*'));
 
 // hooks
-$app->registerHook('GetHTMLAfterBody', 'WikiaHomePageController', 'onGetHTMLAfterBody');
-$app->registerHook('OutputPageBeforeHTML', 'WikiaHomePageController', 'onOutputPageBeforeHTML');
-$app->registerHook('WikiaMobileAssetsPackages', 'WikiaHomePageController', 'onWikiaMobileAssetsPackages');
-$app->registerHook('ArticleCommentCheck', 'WikiaHomePageController', 'onArticleCommentCheck');
-$app->registerHook('AfterGlobalHeader', 'WikiaHomePageController', 'onAfterGlobalHeader');
-$app->registerHook('GetRailModuleList', 'WikiaHomePageController', 'onGetRailModuleList');
+$wgHooks['GetHTMLAfterBody'][] = 'WikiaHomePageController::onGetHTMLAfterBody';
+$wgHooks['OutputPageBeforeHTML'][] = 'WikiaHomePageController::onOutputPageBeforeHTML';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaHomePageController::onWikiaMobileAssetsPackages';
+$wgHooks['ArticleCommentCheck'][] = 'WikiaHomePageController::onArticleCommentCheck';
+$wgHooks['AfterGlobalHeader'][] = 'WikiaHomePageController::onAfterGlobalHeader';
+$wgHooks['GetRailModuleList'][] = 'WikiaHomePageController::onGetRailModuleList';
