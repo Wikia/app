@@ -789,16 +789,16 @@ class WallNotifications {
 		}
 
 		// scan relation list, remove element that has the same author
+		// keep the old one, and remove the new one so that the notification link points to the oldest unread message
 		$found = false;
 
 		foreach( $data['relation'][ $uniqueId ]['list'] as $key=>$rel ) {
 			if( $rel['authorId'] == $authorId ) {
-				unset($data['relation'][ $uniqueId ]['list'][$key]);
 				$found = true;
 
 				// keep track of removed elements - we will remove them from db
 				// table after we are done updating in-memory structures
-				$this->removedEntities[] = array( 'user_id' => $userId, 'wiki_id' => $wikiId, 'unique_id'=>$uniqueId, 'entity_key' => $rel['entityKey'] );
+				$this->removedEntities[] = array( 'user_id' => $userId, 'wiki_id' => $wikiId, 'unique_id'=>$uniqueId, 'entity_key' => $entityKey );
 			}
 		}
 
@@ -812,11 +812,10 @@ class WallNotifications {
 			}
 		}
 
-		// add new element
-		$data['relation'][ $uniqueId ]['list'][] = array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply'=>$isReply);
-
 		// if this was new author increase author count
 		if($found == false){
+			// add new element
+			$data['relation'][ $uniqueId ]['list'][] = array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply'=>$isReply);
 			$data['relation'][ $uniqueId ]['count'] += 1;
 			$data['relation'][ $uniqueId ]['notifyeveryone'] = $notifyeveryone;
 		}

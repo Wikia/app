@@ -87,7 +87,13 @@ class ConfigTest extends BaseTest {
 		$mockArticleMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
 		                         ->disableOriginalConstructor()
 		                         ->getMock();
-		$config = new \Wikia\Search\Config();
+		$config = $this->getMock( 'Wikia\Search\Config', [ 'articleMatchPassesFilters' ] );
+		$config
+		    ->expects( $this->any() )
+		    ->method ( 'articleMatchPassesFilters' )
+		    ->with   ( $mockArticleMatch )
+		    ->will   ( $this->returnValue( true ) )
+		;
 
 		$this->assertFalse(
 				$config->hasArticleMatch(),
@@ -114,6 +120,91 @@ class ConfigTest extends BaseTest {
 				$mockArticleMatch,
 				$config->getMatch(),
 				'\Wikia\Search\Config::getMatch should return either article or wiki match.'
+		);
+	}
+	
+	/**
+	 * @covers \Wikia\Search\Config::hasArticleMatch
+	 * @covers \Wikia\Search\Config::setArticleMatch
+	 * @covers \Wikia\Search\Config::getArticleMatch
+	 * @covers \Wikia\Search\Config::hasMatch
+	 * @covers \Wikia\Search\Config::getMatch
+	 */
+	public function testArticleMatchingFailingFilters() {
+		$mockArticleMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
+		                         ->disableOriginalConstructor()
+		                         ->getMock();
+		$config = $this->getMock( 'Wikia\Search\Config', [ 'articleMatchPassesFilters' ] );
+		$config
+		    ->expects( $this->any() )
+		    ->method ( 'articleMatchPassesFilters' )
+		    ->with   ( $mockArticleMatch )
+		    ->will   ( $this->returnValue( false ) )
+		;
+
+		$this->assertFalse(
+				$config->hasArticleMatch(),
+				'\Wikia\Search\Config should not have an article match by default.'
+		);
+		$this->assertNull(
+				$config->getArticleMatch(),
+				'\Wikia\Search\Config should return null when getting an uninitialized article match'
+		);
+		$this->assertEquals(
+				$config,
+				$config->setArticleMatch( $mockArticleMatch ),
+				'\Wikia\Search\Config::setArticleMatch should provide a fluent interface.'
+		);
+		$this->assertNull(
+				$config->getArticleMatch(),
+				'\Wikia\Search\Config::getArticleMatch should not be set if it does not pass filters'
+		);
+		$this->assertFalse(
+				$config->hasMatch()
+		);
+		$this->assertNull(
+				$config->getMatch()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::articleMatchPassesFilters
+	 */
+	public function testArticleMatchPassesFiltersImageInVideoFilter() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'getPublicFilterKeys', 'getService' ] )
+		               ->getMock();
+		$match = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
+		              ->disableOriginalConstructor()
+		              ->setMethods( [ 'getResult' ] )
+		              ->getMock();
+		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'pageIdIsVideoFile' ] );
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getPublicFilterKeys' )
+		    ->will   ( $this->returnValue( [ \Wikia\Search\Config::FILTER_IMAGE ] ) )
+		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'pageIdIsVideoFile' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$match
+		    ->expects( $this->once() )
+		    ->method ( 'getResult' )
+		    ->will   ( $this->returnValue( [ 'pageid' => 123, 'ns' => NS_FILE ] ) )
+		;
+		$method = new \ReflectionMethod( 'Wikia\Search\Config', 'articleMatchPassesFilters' );
+		$method->setAccessible( true );
+		$this->assertFalse(
+				$method->invoke( $config, $match )
 		);
 	}
 	
