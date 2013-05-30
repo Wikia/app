@@ -1,0 +1,14 @@
+@import "layout";
+
+.WikiaMainContent {
+	margin-right: -#{ $width-rail + $width-gutter };
+	width: 100%;
+}
+
+.WikiaMainContentContainer {
+	margin-right: $width-rail + $width-gutter;
+}
+
+.WikiaRail {
+	padding: 0;
+}
