@@ -65,11 +65,14 @@ class VideoEmbedTool {
 
 		$embedCode = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
 
+		// Loading this to deal with video descriptions
+		$vHelper = new VideoHandlerHelper();
+
 		$props['id'] = $file->getVideoId();
 		$props['vname'] = $file->getTitle()->getText();
 		$props['code'] = json_encode($embedCode);
 		$props['metadata'] = '';
-		$props['description'] = $this->getVideoDescription($file, false);
+		$props['description'] = $vHelper->getVideoDescription($file, false);
 		$props['href'] = $title->getPrefixedText();
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -110,10 +113,13 @@ class VideoEmbedTool {
 			$file->setVideoId( $apiwrapper->getVideoId() );
 			$file->setProps(array('mime'=>$provider ));
 
+			// Loading this to deal with video descriptions
+			$vHelper = new VideoHandlerHelper();
+
 			$props['id'] = $apiwrapper->getVideoId();
 			$props['vname'] = $apiwrapper->getTitle();
 			$props['metadata'] = '';
-			$props['description'] = $this->getVideoDescription($file);
+			$props['description'] = $vHelper->getVideoDescription($file);
 			$props['provider'] = $provider;
 
 			$embed_code = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
@@ -160,14 +166,17 @@ class VideoEmbedTool {
 				return wfMsg( 'vet-non-existing' );
 			}
 
+			// Loading this to deal with video descriptions
+			$vHelper = new VideoHandlerHelper();
+
 			$embedCode = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
+
 			$props['provider'] = 'FILE';
 			$props['id'] = $file->getHandler()->getVideoId();
 			$props['vname'] = $file->getTitle()->getText();
 			$props['code'] = json_encode($embedCode);
 			$props['metadata'] = '';
-
-			$props['description'] = $this->getVideoDescription($file);
+			$props['description'] = $vHelper->getVideoDescription( $file );
 			$props['premiumVideo'] = ($wgRequest->getVal( 'searchType' ) == 'premium');
 		}
 
@@ -242,7 +251,10 @@ class VideoEmbedTool {
 		}
 
 		$description = urldecode( $wgRequest->getVal('description') );
-		$this->setVideoDescription($oTitle, $description);
+
+		// Set the video descriptions
+		$vHelper = new VideoHandlerHelper();
+		$vHelper->setVideoDescription($oTitle, $description);
 
 		$message = wfMsg( 'vet-single-success' );
 		$ns_file = $wgContLang->getFormattedNsText( $title->getNamespace() );
@@ -333,9 +345,9 @@ class VideoEmbedTool {
 	 * @param mixed $provider string or int from $wgVideoMigrationProviderMap
 	 * @param string $videoId
 	 * @param string $videoName
+	 * @param $oTitle
 	 * @return mixed FileRepoStatus or FALSE on error
 	 */
-
 	private function uploadVideoAsFile( $provider, $videoId, $videoName, &$oTitle ) {
 		$oUploader = new VideoFileUploader();
 		$oUploader->setProvider( $provider );
@@ -343,52 +355,5 @@ class VideoEmbedTool {
 		$oUploader->setTargetTitle( $videoName );
 		return $oUploader->upload( $oTitle );
 
-	}
-
-	/**
-	 * Get video description, which is the content of the file page minus the category wiki tags
-	 * @param File $file - The file object for this video
-	 * @param bool $fillFromMeta - Whether or not to use the video meta description if the current
-	 *                             description is blank
-	 * @return string $text
-	 */
-	private function getVideoDescription( $file, $fillFromMeta = true ) {
-		// Get the file page for this file
-		$page = WikiPage::factory( $file->getTitle() );
-
-		// remove description header
-		$videoHandlerHelper = new VideoHandlerHelper();
-		$text = $videoHandlerHelper->removeDescriptionHeader( $page->getText() );
-
-		// Strip out the category tags so they aren't shown to the user
-		$text = FilePageHelper::stripCategoriesFromDescription( $text );
-
-		// If we have an empty string or a bunch of whitespace, and we're asked to do so,
-		// use the default description from the file metadata
-		if ( $fillFromMeta && preg_match('/^\s*$/ms', $text) ) {
-			$text = $file->getMetaDescription();
-		}
-
-		return $text;
-	}
-
-	public function setVideoDescription( $title, $description ) {
-		// Get the file page for this file
-		$page = WikiPage::factory( $title );
-
-		$text = $page->getText();
-
-		// Insert description header
-		$videoHandlerHelper = new VideoHandlerHelper();
-		$text = $videoHandlerHelper->replaceDescriptionSection( $text, $description );
-
-		$summary = 'Adding video description';
-		$status = $page->doEdit( $text, $summary );
-
-		if ( $status->isOK() ) {
-			return 1;
-		} else {
-			return 0;
-		}
 	}
 }
