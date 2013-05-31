@@ -208,12 +208,6 @@ $messages['qqq'] = array(
 	'forum-specialpage-policies-edit' => 'Edit button on modal with forum Policies',
 	'forum-specialpage-policies' => 'Button label for forum policies',
 	'forum-policies-and-faq' => 'Default policies and faq',
-	'forum-notification-user1-reply-to-your' => 'Notification when someone replies on your thread. Parameters:
-* $1 is a username (GENDER is supported in this message).',
-	'forum-notification-user2-reply-to-your' => "Notification when 2 users reply on the logged in user's thread. Parameters:
-* $1 and $2 are names of users that replied (GENDER is supported in this message).",
-	'forum-notification-user3-reply-to-your' => "Notification when 3 or more users reply on the logged in user's thread. Parameters:
-* $1 is the first user who replied (GENDER is supported in this message).",
 	'forum-activity-module-heading' => 'Forum Activity right rail module heading',
 	'forum-activity-module-posted' => '$1 is username, $2 is url to user page, $3 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 	'forum-activity-module-edited' => '$1 is username, $2 is url to user page, $3 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
@@ -301,19 +295,6 @@ $messages['qqq'] = array(
 	'forum-discussion-placeholder-title' => 'Placeholder text shown in an input box when creating a thread.',
 	'forum-discussion-placeholder-message' => 'Placeholder text shown in an input box when creating a thread. Paramaters:
 * $1 is the title of the board the thread will be posted to',
-	'forum-notification-user1-reply-to-someone' => 'Notification message displayed when a user replies to a thread. Parameters:
-* $1 is the name of the user replying
-* $3 is the title of the board that the reply was posted to',
-	'forum-notification-user2-reply-to-someone' => 'Notification message displayed when two users reply to a thread. Parameters:
-* $1 is the name of the user replying
-* $2 is the name of the other user replying
-* $3 is the title of the board that the reply was posted to',
-	'forum-notification-user3-reply-to-someone' => 'Notification message displayed when three or more users reply to a thread. Parameters:
-* $1 is the name of the user replying
-* $3 is the title of the board that the reply was posted to',
-	'forum-notification-newmsg-on-followed-wall' => 'Notification message displayed when a user posts a new message to two a board the logged-in user is following. Parameters:
-* $1 is the name of the user posting the message
-* $2 is the title of the board that the message was posted to',
 	'forum-recentchanges-new-message' => 'The text added after the article link on recent changes entries. Parameters:
 * $2 is the board title',
 	'forum-recentchanges-edit' => 'Default edit summary text on recent changes',
@@ -349,34 +330,6 @@ $messages['qqq'] = array(
 * $3 is title of the board on which the thread is posted',
 	'forum-recentchanges-history-link' => 'Link to board history for items about removed and deleted threads on recent changes.',
 	'forum-recentchanges-thread-history-link' => 'Link to thread history for items about removed replies on recent changes.',
-	'forum-mail-notification-new-someone' => 'E-mail notification. Parameters:
-* $AUTHOR_NAME is user
-* $WIKI is wiki name
-* $BOARDNAME is the title of the board',
-	'forum-mail-notification-new-your' => 'E-mail notification. Parameters:
-* $AUTHOR_NAME is user
-* $WIKI is wiki name
-* $BOARDNAME is the title of the board',
-	'forum-mail-notification-reply-your' => 'E-mail notification. Parameters:
-* $AUTHOR_NAME is user
-* $WIKI is wiki name
-* $BOARDNAME is the title of the board',
-	'forum-mail-notification-reply-his' => 'E-mail notification. Parameters:
-* $AUTHOR_NAME is user
-* $WIKI is wiki name
-* $BOARDNAME is the title of the board',
-	'forum-mail-notification-reply-someone' => 'E-mail notification. Parameters:
-* $AUTHOR_NAME is user
-* $WIKI is wiki name
-* $BOARDNAME is the title of the board',
-	'forum-mail-notification-html-greeting' => 'E-mail notification greeting. Parameters:
-* $1 is the username',
-	'forum-mail-notification-html-button' => 'Email notification, text of the button the user can click to visit the thread.',
-	'forum-mail-notification-subject' => 'Email notification subject. Parameters:
-* $1 is the thread title
-* $2 is the wiki name',
-	'forum-mail-notification-body' => 'E-mail notification body text.',
-	'forum-mail-notification-body-HTML' => 'E-mail notification body text with HTML.',
 	'forum-wiki-activity-msg' => 'Link to the board a thread is posted to, used for entries on the WikiActivity special page. Parameters:
 * $1 is a link to the board',
 	'forum-wiki-activity-msg-name' => 'Text of the link to the board a thread is posted to used for entries on the WikiActivity special page. Parameters:
