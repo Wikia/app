@@ -26,6 +26,7 @@ $app->registerClass( 'JsonFormatImageFigureNode',             $dir . "/nodes/Jso
 $app->registerClass( 'JsonFormatQuoteNode',                   $dir . "/nodes/JsonFormatQuoteNode.php");
 
 $app->registerClass( 'AVisitor',                              $dir . "/visitors/AVisitor.php");
+$app->registerClass( 'BrVisitor',                             $dir . "/visitors/BrVisitor.php");
 $app->registerClass( 'TableVisitor',                          $dir . "/visitors/TableVisitor.php");
 $app->registerClass( 'TableOfContentsVisitor',                $dir . "/visitors/TableOfContentsVisitor.php");
 $app->registerClass( 'PVisitor',                              $dir . "/visitors/PVisitor.php");
