@@ -57,6 +57,8 @@ class ArticlesApiController extends WikiaApiController {
 			return "<tr>{$this->iterate( $node )}</tr>";
 		} else if ( $node->getType() == 'tableCell' ) {
 			return "<td>{$this->iterate( $node )}</td>";
+		} else if ( $node->getType() == 'paragraph' ) {
+			return "<p>{$this->iterate( $node )}</p>";
 		}
 	}
 

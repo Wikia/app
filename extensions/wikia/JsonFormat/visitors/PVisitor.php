@@ -18,6 +18,9 @@ class PVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
+		$paragraphNode = new JsonFormatParagraphNode();
+		$this->getJsonFormatTraversingState()->pushNode( $paragraphNode );
 		$this->iterate( $currentNode->childNodes );
+		$this->getJsonFormatTraversingState()->popNode( $paragraphNode );
 	}
 }

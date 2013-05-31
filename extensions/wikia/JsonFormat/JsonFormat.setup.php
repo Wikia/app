@@ -10,6 +10,7 @@ $wgAutoloadClasses['JsonFormatService'] =                     $dir . "/JsonForma
 $wgAutoloadClasses['JsonFormatBuilder'] =                     $dir . "/JsonFormatBuilder.php";
 
 $wgAutoloadClasses['JsonFormatContainerNode'] =               $dir . "/nodes/JsonFormatContainerNode.php";
+$wgAutoloadClasses['JsonFormatParagraphNode'] =               $dir . "/nodes/JsonFormatParagraphNode.php";
 $wgAutoloadClasses['JsonFormatLinkNode'] =                    $dir . "/nodes/JsonFormatLinkNode.php";
 $wgAutoloadClasses['JsonFormatNode'] =                        $dir . "/nodes/JsonFormatNode.php";
 $wgAutoloadClasses['JsonFormatRootNode'] =                    $dir . "/nodes/JsonFormatRootNode.php";
