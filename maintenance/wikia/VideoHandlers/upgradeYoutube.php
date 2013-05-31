@@ -39,10 +39,10 @@ class UpgradeYoutube extends Maintenance {
 	 * @return array
 	 */
 	public function getPages ( ) {
-		global $wgCityId;
+		global $wgCityId, $wgStatsDB;
 
 		// Find all pages in this wiki that have YouTube tags
-		$dbr = wfGetDB( DB_SLAVE, array(), 'stats' );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 		$sql = "SELECT ct_page_id FROM city_used_tags WHERE ct_wikia_id = $wgCityId and ct_kind = 'youtube'";
 		$result = $dbr->query($sql);
 
