@@ -279,7 +279,6 @@ $wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/Mustache
 $wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/RevisionService.class.php';
 
 
-
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 
 // data models

@@ -26,7 +26,6 @@ class ArticlesApiController extends WikiaApiController {
 	const DETAILS_CACHE_ID = 'details';
 	const PAGE_CACHE_ID = 'page';
 
-
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
 	 *
