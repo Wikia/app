@@ -1,3 +1,8 @@
+These is the readme file for the Maps extension.
+
+Extension page on mediawiki.org: https://www.mediawiki.org/wiki/Extension:Maps
+Latest version of the readme file: https://gerrit.wikimedia.org/r/gitweb?p=mediawiki/extensions/Maps.git;a=blob;f=README
+
 == About ==
 
 Maps is the MediaWiki extension that provides the ability to visualize geographic data
@@ -24,9 +29,34 @@ gmail.com.
 
 For more info, see http://mapping.referata.com/wiki/Mapping_on_MediaWiki
 
-
 == Credits to other projects ==
 
-* OpenLayers
-This extension includes code from the OpenLayers application. OpenLayers is an open-source
-product released under a BSD-style license (http://svn.openlayers.org/trunk/openlayers/license.txt)
+=== jQuery ===
+
+This extension uses code from the jQuery library.
+jQuery is dual licensed under the MIT [0] and GPL [1] licenses.
+
+=== OpenLayers ===
+
+This extension includes code from the OpenLayers application.
+OpenLayers is an open-source product released under a BSD-style license [2].
+
+=== geoxml3 ===
+
+This extension includes a copy of the geoxml3 KML processor.
+geoxml3 is released under the Apache License 2.0 license [3].
+
+=== google-maps-utility-library-v3 ===
+
+This extension icnludes code from the google-maps-utility-library-v3 (googleearth.js).
+It is released under the Apache License 2.0 license [3].
+
+=== OpenStreetMap.js ===
+
+This extension includes the OpenStreetMap.js file which can be found here:
+http://www.openstreetmap.org/openlayers/OpenStreetMap.js
+
+[0] http://www.opensource.org/licenses/mit-license.php
+[1] http://www.opensource.org/licenses/gpl-license.php
+[2] http://svn.openlayers.org/trunk/openlayers/license.txt
+[3] http://www.apache.org/licenses/LICENSE-2.0

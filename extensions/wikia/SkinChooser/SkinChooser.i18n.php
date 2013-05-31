@@ -208,6 +208,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -259,6 +260,15 @@ $messages['tl'] = array(
 	'skinchooser-desc' => 'Nagpapahintulot sa mga tagagamit na pumili ng mga pabalat sa loob ng kanilang mga nais',
 	'new-look' => 'Wikia',
 	'site-layout' => 'Mga Latag ng Pook',
+);
+
+/** Ukrainian (українська)
+ * @author Ua2004
+ */
+$messages['uk'] = array(
+	'skinchooser-desc' => 'Дозволяє користувачам вибирати скіни в налаштуваннях',
+	'new-look' => 'Wikia',
+	'site-layout' => 'Оформлення сайту',
 );
 
 /** Uzbek (oʻzbekcha)

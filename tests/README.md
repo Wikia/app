@@ -13,12 +13,19 @@ ant -f build-wikia.xml -Dunittest=../extensions/wikia/AssetsManager/tests/Assets
 
 ### Running all tests
 
+New way:
+```
+cd /usr/wikia/source/wiki/tests
+./php-all
+```
+
+Old way:
 ```
 cd /usr/wikia/source/wiki/tests
 ant -f build-wikia.xml php
 ```
 
-This command will run all tests from ``tests`` subdirectories of:
+These commands will run all tests from ``tests`` subdirectories of:
 
 * /includes/wikia
 * /extensions/FBConnect
@@ -26,7 +33,7 @@ This command will run all tests from ``tests`` subdirectories of:
 
 excluding the following groups: Infrastructure, Integration, Broken, Stub, Monitoring, Hack.
 
-Test file needs to match ``*Test.php``.
+Test file needs to match ``*Test.php`` and the class in the file should extend ``WikiaBaseTest``
 
 ## Running JS unit tests
 

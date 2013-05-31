@@ -114,10 +114,26 @@ abstract class AbstractSelect
 	
 	/**
 	 * Allows us to get an array from search results rather than search result objects.
+	 * @param array $fields allows us to apply a mapping
 	 * @return array
 	 */
-	public function searchAsApi() {
-		return $this->search()->toArray();
+	public function searchAsApi( $fields = [], $metadata = false ) {
+		$resultSet = $this->search();
+		if ( $metadata ) {
+			$total = $this->getconfig()->getResultsFound();
+			$numPages = $this->getConfig()->getNumPages();
+			$limit = $this->getConfig()->getLimit();
+			$response = [
+					'total' => $total,
+					'batches' => $total > 0 ? $numPages : 0,
+					'currentBatch' => $total > 0 ? $this->getConfig()->getPage() : 0,
+					'next' => $total > 0 ? min( [ $numPages * $limit, $this->getConfig()->getStart() + $limit ] ) : 0,
+					'items' => $resultSet->toArray( $fields )
+					];
+		} else {
+			$response = $resultSet->toArray( $fields );
+		}
+		return $response;
 	}
 	
 	/**
@@ -350,5 +366,19 @@ abstract class AbstractSelect
 			$namespaces[] = Utilities::valueForField( 'ns', $ns );
 		}
 		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
+	}
+	
+	/**
+	 * @return Wikia\Search\Config
+	 */
+	protected function getConfig() {
+		return $this->config;
+	}
+	
+	/**
+	 * @return Wikia\Search\MediaWikiService
+	 */
+	protected function getService() {
+		return $this->service;
 	}
 }

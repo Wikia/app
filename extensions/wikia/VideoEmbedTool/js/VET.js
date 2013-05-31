@@ -1,14 +1,9 @@
-/*global UserLogin, WikiaEditor*/
-
 /*
  * Author: Inez Korczynski, Bartek Lapinski, Hyun Lim, Liz Lee
  */
 
+require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBootstrap, $, window) {
 
-/*
- * Variables
- */
-(function($, window) {
 	var VET_panel = null;
 	var VET_curSourceId = 0;
 	var VET_lastQuery = new Array();
@@ -34,6 +29,7 @@
 	var VET_MIN_WIDTH = 100;
 	var VET_DEFAULT_WIDTH = 335;
 	var VET_thumbSize = VET_DEFAULT_WIDTH;	// variable that can change later, defaulted to DEFAULT
+	var VET_videoInstance = null;
 
 	var VET_tracking = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
 		action: Wikia.Tracker.ACTIONS.CLICK,
@@ -45,15 +41,15 @@
 	function VET_editVideo() {
 		$('#VideoEmbedMain').hide();
 
-		var callback = function(o) {
-			var data = VET_embedPresets;
+		var callback = function(data) {
+			var presets = VET_embedPresets;
 
-			VET_displayDetails(o.responseText, data);
+			VET_displayDetails(data.responseText, presets);
 
 			$('#VideoEmbedBack').hide();
 
 			setTimeout(function() {
-				if ( data.thumb || data.thumbnail ) {
+				if ( presets.thumb || presets.thumbnail ) {
 		             $("#VideoEmbedThumbOption").prop('checked', true);
 		             $('#VET_StyleThumb').addClass('selected');
 		        }  else {
@@ -65,22 +61,22 @@
 		             $('#VET_StyleNoThumb').addClass('selected');
 		        }
 
-				if(data.align && data.align == 'left') {
+				if(presets.align && presets.align == 'left') {
 					$('#VideoEmbedLayoutLeft').attr('checked', 'checked').parent().addClass('selected');
-				} else if (data.align && data.align == 'center') {
+				} else if (presets.align && presets.align == 'center') {
 					$('#VideoEmbedLayoutCenter').attr('checked', 'checked').parent().addClass('selected');
 				} else {
 					$('#VideoEmbedLayoutRight').attr('checked', 'checked').parent().addClass('selected');
 				}
 
-				if(data.width) {
-					VET_readjustSlider( data.width );
-					$('#VideoEmbedManualWidth').val( data.width );
+				if(presets.width) {
+					VET_readjustSlider( presets.width );
+					$('#VideoEmbedManualWidth').val( presets.width );
 				}
 
 			}, 200);
-			if(data.caption) {
-				$('#VideoEmbedCaption').val(data.caption);
+			if(presets.caption) {
+				$('#VideoEmbedCaption').val(presets.caption);
 			}
 
 			// show width slider
@@ -256,8 +252,8 @@
 
 	/* ajax call for first screen (aka video search) */
 	function VET_loadMain(searchOrder) {
-		var callback = function(o) {
-			$('#VideoEmbedMain').html(o.responseText);
+		var callback = function(data) {
+			$('#VideoEmbedMain').html(data.responseText);
 			$('#VideoEmbedUrl').focus();
 			VET_updateHeader();
 
@@ -314,15 +310,11 @@
 		VET_switchScreen('Details');
 		$('#VideoEmbedBack').css('display', 'inline');
 
-		// wlee: responseText could include <script>. Use jQuery to parse
-		// and execute this script
 		$('#VideoEmbedDetails').html(responseText);
 
-		var element = $('<div></div>').appendTo('#VideoEmbedThumb');
+		var element = $('#VideoEmbedThumb .video-embed');
 
-		require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-			new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
-		});
+		VET_videoInstance = new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
 
 		VET_updateHeader();
 
@@ -427,7 +419,7 @@
 		// Allow extensions to add extra params to ajax call
 		params = params.concat(VET_options.insertFinalVideoParams || []);
 
-		var callback = function(o, status) {
+		var callback = function(data, status) {
 			if(status == 'error') {
 				GlobalNotification.show( $.msg('vet-insert-error'), 'error', null, VET_notificationTimout );
 			} else if (status == 'success') {
@@ -437,13 +429,13 @@
 				}
 				switch($.trim(screenType)) {
 					case 'error':
-						o.responseText = o.responseText.replace(/<script.*script>/, "" );
-						GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
+						data.responseText = data.responseText.replace(/<script.*script>/, "" );
+						GlobalNotification.show( data.responseText, 'error', null, VET_notificationTimout );
 						break;
 					case 'summary':
 						VET_switchScreen('Summary');
 						$('#VideoEmbedBack').css('display', 'none');
-						$('#VideoEmbed' + VET_curScreen).html(o.responseText);
+						$('#VideoEmbed' + VET_curScreen).html(data.responseText);
 						VET_updateHeader();
 
 						if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
@@ -494,6 +486,9 @@
 	}
 
 	function VET_switchScreen(to) {
+		if ( VET_videoInstance ) {
+			VET_videoInstance.clearTimeoutTrack();
+		}
 		VET_prevScreen = VET_curScreen;
 		VET_curScreen = to;
 		$('#VideoEmbedBody').find('.VET_screen').hide();
@@ -510,7 +505,7 @@
 		// macbre: move back button on Oasis
 		if( to == "Details" ) {
 			setTimeout(function() {
-				VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
+				VET_moveBackButton($('.addVideoDetailsFormControls').find('input'));
 			}, 50);
 		}
 	}
@@ -543,7 +538,7 @@
 			VET_options.onClose();
 		}
 
-		UserLogin.refreshIfAfterForceLogin();
+		window.UserLogin.refreshIfAfterForceLogin();
 	}
 
 	/*
@@ -553,18 +548,18 @@
 	function VET_sendQueryEmbed(query) {
 		// If callbackAfterSelect returns false, end here. Otherwise, move on to the next screen.
 		if(VET_callbackAfterSelect(query) !== false) {
-			var callback = function(o) {
+			var callback = function(data) {
 				var screenType = VET_jqXHR.getResponseHeader('X-screen-type');
 				if(typeof screenType == "undefined") {
 					screenType = VET_jqXHR.getResponseHeader('X-Screen-Type');
 				}
 
 				if( 'error' == $.trim(screenType) ) {
-					GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
+					GlobalNotification.show( data.responseText, 'error', null, VET_notificationTimout );
 				} else {
 					// attach handlers - close preview on VET modal close (IE bug fix)
 					VETExtended.cachedSelectors.closePreviewBtn.click();
-					VET_displayDetails(o.responseText);
+					VET_displayDetails(data.responseText);
 				}
 
 			};
@@ -686,6 +681,12 @@
 			// attach handlers - close preview
 			this.cachedSelectors.previewWrapper.on('click', '#VET-preview-close', function(event) {
 				event.preventDefault();
+
+				// Closing a video instance, clear the tracking timeout
+				if ( VET_videoInstance ) {
+					VET_videoInstance.clearTimeoutTrack();
+				}
+
 				that.cachedSelectors.previewWrapper.stop().slideUp('slow', function() {
 					that.cachedSelectors.videoWrapper.children().remove();
 					that.removeInPreview();
@@ -914,9 +915,7 @@
 				videoWrapper = this.cachedSelectors.videoWrapper,
 				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
 
-			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-				new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
-			});
+			VET_videoInstance = new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
 
 			// expand preview is hidden
 			if (!previewWrapper.is(':visible')) {
@@ -1134,8 +1133,8 @@
 
 
 	// globally available functions
-	// TODO: Create VET namespace for these
-	window.VET_show = VET_show;
-	window.VET_close = VET_close;
-	window.VETExtended = VETExtended;
-})(jQuery, window);
+	window.VET = {
+		show: VET_show,
+		close: VET_close
+	}
+});

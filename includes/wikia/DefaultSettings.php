@@ -160,6 +160,7 @@ $app->registerApiController( 'StatsApiController', "{$IP}/includes/wikia/api/Sta
 $app->registerApiController( 'WikiaHubsApiController', "{$IP}/includes/wikia/api/WikiaHubsApiController.class.php" );
 $app->registerApiController( 'RelatedPagesApiController', "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php" );
 $app->registerApiController( 'ActivityApiController', "{$IP}/includes/wikia/api/ActivityApiController.class.php" );
+$app->registerApiController( 'UserApiController', "{$IP}/includes/wikia/api/UserApiController.class.php" );
 
 //Wikia Api exceptions classes
 $app->registerClass( 'BadRequestApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
@@ -199,6 +200,7 @@ $wgAutoloadClasses[ 'EasyTemplate' ] = "{$IP}/includes/wikia/EasyTemplate.php";
  * Custom wikia classes
  */
 $wgAutoloadClasses[ "GlobalTitle"                     ] = "$IP/includes/wikia/GlobalTitle.php";
+$wgAutoloadClasses[ "GlobalFile"                      ] = "$IP/includes/wikia/GlobalFile.class.php";
 $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/WikiFactory/WikiFactory.php";
 $wgAutoloadClasses[ "WikiMover"                       ] = "$IP/extensions/wikia/WikiFactory/Mover/WikiMover.php";
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
@@ -277,7 +279,7 @@ $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoServic
 $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
 $wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/MustacheService.class.php';
 $wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/RevisionService.class.php';
-
+$wgAutoloadClasses['InfoboxesService'] = $IP . '/includes/wikia/services/InfoboxesService.class.php';
 
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 
@@ -285,6 +287,7 @@ $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormB
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
 $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
+$wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -369,7 +372,6 @@ include_once("$IP/extensions/wikia/JSMessages/JSMessages_setup.php");
  */
 
 $wgAutoloadClasses[ "WikiaApiQuery"                 ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQuery.php";
-$wgAutoloadClasses[ "WikiaApiQueryConfGroups"       ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryConfGroups.php";
 $wgAutoloadClasses[ "WikiaApiQueryDomains"          ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryDomains.php";
 $wgAutoloadClasses[ "WikiaApiQueryPopularPages"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPopularPages.php";
 $wgAutoloadClasses[ "WikiaApiQueryVoteArticle"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryVoteArticle.php";
@@ -419,7 +421,6 @@ include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
  * registered API methods
  */
 global $wgAPIListModules;
-$wgAPIListModules[ "wkconfgroups" ] = "WikiaApiQueryConfGroups";
 $wgAPIListModules[ "wkdomains"    ] = "WikiaApiQueryDomains";
 $wgAPIListModules[ "wkpoppages"   ] = "WikiaApiQueryPopularPages";
 $wgAPIListModules[ "wkvoteart"    ] = "WikiaApiQueryVoteArticle";
@@ -488,6 +489,8 @@ include_once( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 include_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnusedVideos/SpecialUnusedVideos.setup.php" );
 include_once( "$IP/extensions/wikia/ArticleSummary/ArticleSummary.setup.php" );
+include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
+include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1132,7 +1135,7 @@ $wgEnableAdEngineExt = true;
 
 /**
  * @name $wgAdVideoTargeting
- * Enables ad engine
+ * Enables page-level video ad targeting
  */
 $wgAdVideoTargeting = false;
 

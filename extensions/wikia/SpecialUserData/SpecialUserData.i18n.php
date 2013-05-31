@@ -23,10 +23,13 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author OsamaK
  */
 $messages['ar'] = array(
 	'userdata' => 'احصل على بيانات المستخدم',
+	'userdata-userid-label' => 'توفير معرف المستخدم:',
+	'userdata-submit' => 'الحصول على البيانات',
 );
 
 /** Breton (brezhoneg)
@@ -286,6 +289,16 @@ $messages['pt-br'] = array(
 	'userdata-not-updated' => 'Falha ao atualizar wgUserData.',
 	'userdata-wf-reason' => 'Valor atualizado via [[Special:UserData|UserData]]',
 	'userdata-no-wf' => 'WikiFactory não é permitido nesta wiki. Não é possível alterar wgUserData.',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'userdata' => 'Pigghie le date utende',
+	'userdata-submit' => 'Pigghie le date',
+	'specialuserdata-desc' => "Dèje 'n'inderfacce pe cangià wgUserData pe uicchi.",
+	'userdata-header' => "'Ngremende wgUserData",
 );
 
 /** Russian (русский)

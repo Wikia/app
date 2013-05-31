@@ -32,7 +32,9 @@ if( !function_exists("wfProfileIn") ) {
  */
 function wfUnserializeHandler( $errno, $errstr ) {
 	global $_variable_key, $_variable_value;
-	error_log( $_SERVER['SERVER_NAME'] . " ($_variable_key=$_variable_value): $errno, $errstr" );
+
+	$serverMame = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
+	error_log("$serverMame ($_variable_key=$_variable_value): $errno, $errstr");
 }
 
 class WikiFactoryLoader {
@@ -599,6 +601,8 @@ class WikiFactoryLoader {
 			);
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
 				#--- some magic, rewritting path, etc legacy data
+				global $_variable_key, $_variable_value;
+
 				set_error_handler( "wfUnserializeHandler" );
 				$_variable_key = $oRow->cv_name;
 				$_variable_value = $oRow->cv_value;

@@ -144,33 +144,36 @@ $messages['qqq'] = array(
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'toplists-desc' => 'أكبر 10 قوائم',
+	'toplists-desc' => 'قائمة أفضل 10',
 	'right-toplists-create-edit-list' => 'إنشاء وتحرير صفحات قائمة أفضل 10',
 	'right-toplists-create-item' => 'إنشاء وإضافة عناصر إلى صفحة قائمة أفضل 10',
 	'right-toplists-edit-item' => 'تحرير العناصر الموجودة في صفحة قائمة أفضل 10',
 	'right-toplists-delete-item' => 'حذف العناصر من صفحة قائمة أفضل 10',
 	'createtoplist' => 'إنشاء قائمة جديدة  بأفضل 10',
 	'edittoplist' => 'تحرير قائمة أفضل 10',
-	'toplists-category' => 'أكبر 10 قوائم',
+	'toplists-category' => 'قوائم أفضل 10',
 	'toplists-error-invalid-title' => 'النص المعطى غير صحيح.',
 	'toplists-error-invalid-picture' => 'الصورة المحددة غير صالحة.',
 	'toplists-error-title-exists' => 'هذه الصفحة موجودة بالفعل. يمكنك الذهاب إلى <a href="<span class=" notranslate"="">$2 "الهدف =" _blank ">$1</a> أو قم بتوفير اسم مختلف.',
 	'toplists-error-title-spam' => 'النص يحتوي على بعض الكلمات المعرفة كدعاية.',
 	'toplists-error-article-blocked' => 'عذراً غير مسموح لك إنشاء صفحة بهذا الاسم.',
-	'toplists-error-article-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟', # Fuzzy
-	'toplists-error-picture-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟', # Fuzzy
+	'toplists-error-article-not-exists' => '"$1" غير موجودة. هل تريد a href="$2" target="_blank">إنشائها</a>؟',
+	'toplists-error-picture-not-exists' => '"$1" غير موجودة. هل تريد <a href="$2" target="_blank">تحميلها</a>؟',
 	'toplists-error-duplicated-entry' => 'لا يمكنك استخدام نفس الاسم أكثر من مرة.',
 	'toplists-error-empty-item-name' => 'لا يمكن أن يكون اسم عنصر القائمة فارغة.',
 	'toplists-item-cannot-delete' => 'فشل في حذف هذا البند.',
 	'toplists-error-image-already-exists' => 'صورة مع نفس الاسم موجود مسبقا.',
-	'toplists-error-add-item-anon' => 'لا يسمح للمستخدمين المجهولين إضافة قوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 ">تسجيل الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .', # Fuzzy
+	'toplists-error-add-item-anon' => 'لا يسمح للمستخدمين المجهولين إضافة عناصر  للقوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$1 ">تسجيل الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$2 "> تسجيل حساب جديد</a> .',
 	'toplists-error-add-item-permission' => 'خطأ في إذن الوصول: الحساب الخاص بك لم يتم منح الحق في إنشاء عناصر جديدة.',
-	'toplists-error-add-item-list-not-exists' => '"$1" لا توجد في قائمة أعلى 10',
+	'toplists-error-add-item-list-not-exists' => '"$1" لا توجد في قائمة أفضل 10',
 	'toplists-upload-error-unknown' => 'حدث خطأ أثناء معالجة طلب التحميل. يرجى المحاولة مرة أخرى.',
+	'action-toplists-create-edit-list' => 'أنشئ و عدل صفحات قوائم أفضل 10',
 	'toplists-editor-title-label' => 'اسم القائمة',
 	'toplists-editor-title-placeholder' => 'أدخل اسما للقائمة',
 	'toplists-editor-related-article-label' => 'الصفحة ذات الصلة <small>(اختياري، لكن حدد صورة)</small>',
 	'toplists-editor-related-article-placeholder' => 'أدخل اسم الصفحة الحالية',
+	'toplists-editor-description-label' => 'وصف قصير لقائمة أفضل 10',
+	'toplists-editor-description-placeholder' => 'أدخل وصفاً',
 	'toplists-editor-image-browser-tooltip' => 'أضف صورة',
 	'toplists-editor-remove-item-tooltip' => 'أزل العنصر',
 	'toplists-editor-drag-item-tooltip' => 'اسحب لتغيير الطلب',
@@ -179,6 +182,7 @@ $messages['ar'] = array(
 	'toplists-create-button' => 'أنشئ قائمة',
 	'toplists-update-button' => 'احفظ القائمة',
 	'toplists-cancel-button' => 'إلغاء',
+	'toplists-items-removed' => 'تمت إزالة {{PLURAL:$1|عنصر واحد|$1 عناصر}}',
 	'toplists-items-nochange' => 'لا يوجد تغيير في العناصر',
 	'toplits-image-browser-no-picture-selected' => 'ليست هناك صورة مختارة',
 	'toplits-image-browser-clear-picture' => 'صورة واضحة',
@@ -192,15 +196,30 @@ $messages['ar'] = array(
 	'toplists-item-remove-summary' => 'تمت إزالة البند من القائمة',
 	'toplists-item-restored' => 'تم استعادة عنصر',
 	'toplists-list-related-to' => 'المتعلقة بما يلي :',
-	'toplists-list-created-by' => 'بواسطة [[مستخدم:$1|$1]]', # Fuzzy
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />تصويت|$1<br />تصويتا}}',
+	'toplists-list-created-by' => 'بواسطة [[User:$1|$1]]',
 	'toplists-list-vote-up' => 'التصويت حتى',
+	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|تصويت}} في $2',
 	'toplists-list-add-item-label' => 'أضف عنصرًا',
 	'toplists-list-add-item-name-label' => 'الحفاظ على القائمة مستمرة...',
 	'toplists-list-item-voted' => 'صوت',
-	'toplists-createpage-dialog-label' => 'قائمة أكبر 10',
-	'toplists-email-subject' => 'لقد تم تغيير قائمة أعلى 10',
-	'toplists-create-heading' => '<em>جديدة!</em> إنشاء أفضل عشرة خاصة بك',
+	'toplists-createpage-dialog-label' => 'قائمة أفضل 10',
+	'toplists-email-subject' => 'لقد تم تغيير قائمة أفضل 10',
+	'toplists-email-body' => 'مرحبا من ويكيا!
+
+لقد تم تغيير قائمة <a href="$1>$2</a> في ويكيا.
+
+$3
+
+التوجه إلى ويكيا للتحقق من التغييرات! $1
+
+-ويكيا
+
+يمكنك  <a href="$4">إلغاء الإشتراك</a> من خلال التغييرات  للقائمة.',
+	'toplists-msg-fb-OnRateArticle-short' => 'صوت على قائمة أفضل 10 في $WIKINAME!',
+	'toplists-create-heading' => '<em>خاصية جديدة!</em> إنشاء قائمة أفضل عشرة خاصة بك',
 	'toplists-create-button-msg' => 'إنشاء قائمة',
+	'toplists-oasis-only' => 'إنشاء وتحرير قوائم أفضل 10 ليس متوفرا في مونوبوك. إذا كنت ترغب في استخدام هذه الميزة، يرجى تبديل تفضيلاتك لمظهر ويكيا.',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -1877,6 +1896,7 @@ Pode <a href="$4">cancelar a subscrição</a> de alterações à lista.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(

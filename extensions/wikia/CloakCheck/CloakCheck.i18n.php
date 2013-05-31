@@ -30,7 +30,7 @@ $messages['en'] = array(
 	'cloakcheck-process-edits-no' => 'User does not have enough edits.',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -40,13 +40,18 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Meno25
  * @author Mutarjem horr
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'cloakcheck' => 'التثبت من جدارة حجاب الأي إر سي (IRC)',
+	'cloakcheck-desc' => 'يوفر واجهة للتحقق من المتطلبات المتعلقة بحجاب الأي إر سي (IRC)',
+	'right-cloakcheck' => 'يمكن له التحقق من المعلومات المتعلقة بحجاب الأي إر سي (IRC) على المستخدمين الآخرين',
 	'cloakcheck-form-username' => 'اسم المستخدم:',
 	'cloakcheck-form-check' => 'تحقق من اسم المستخدم',
+	'cloakcheck-form-check-self' => 'تثبت من جدارة حجاب الأي إر سي (IRC)',
 	'cloakcheck-process-empty' => 'يجب أن لا يكون إاسم المستخدم فارغًا.',
 	'cloakcheck-process-notexist' => 'اسم المستخدم غير موجود.',
 	'cloakcheck-process-username' => 'اسم المستخدم: $1',
@@ -598,6 +603,10 @@ $messages['roa-tara'] = array(
 	'cloakcheck-form-username' => 'Nome utende:',
 	'cloakcheck-form-check' => "Verifiche 'u nome utende",
 	'cloakcheck-process-username' => 'Nome utende: $1',
+	'cloakcheck-process-accountage-yes' => "'U cunde jè vecchie abbastanze.",
+	'cloakcheck-process-accountage-no' => "'U cunde jè troppe nuève.",
+	'cloakcheck-process-emailconf-yes' => 'Indirizze email confermate.',
+	'cloakcheck-process-emailconf-no' => 'Indirizze email non confermate.',
 );
 
 /** Russian (русский)
@@ -755,6 +764,7 @@ $messages['uk'] = array(
 $messages['zh-hans'] = array(
 	'cloakcheck' => 'IRC斗篷资格检查',
 	'cloakcheck-desc' => '提供一个全功能于一身的接口用以验证IRC斗篷的资格',
+	'right-cloakcheck' => '能为其他用户查阅IRC斗篷相关信息',
 	'cloakcheck-form-username' => '用户名：',
 	'cloakcheck-form-check' => '检查用户名',
 	'cloakcheck-form-check-self' => '检查 IRC 斗篷资格',

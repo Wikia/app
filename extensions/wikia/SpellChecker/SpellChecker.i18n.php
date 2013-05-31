@@ -18,9 +18,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'spellchecker-info' => 'Special page description',
+	'spellchecker-info-spellcheck-languages' => '{{Identical|Language}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -38,6 +40,23 @@ $messages['af'] = array(
 	'spellchecker-info-spellcheck-submit' => 'Toets spelling',
 	'spellchecker-info-spellcheck-is-correct' => 'Die woord "$1" is korrek gespel',
 	'spellchecker-info-spellcheck-suggestions' => 'Spelvoorstelle vir "$1": $2',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'spellchecker-desc' => 'يوفر واجهة للتحقق الإملائي لوحدة PHP',
+	'enablespellchecker' => 'تشغيل المدقق الإملائي في الوضع المرئي',
+	'spellchecker-info' => 'معلومات المدقق الإملائي',
+	'spellchecker-info-languages' => 'اللغات المتوفرة ($1)',
+	'spellchecker-info-provider' => 'الموفر',
+	'spellchecker-info-dictionaries' => 'القواميس المتوفرة',
+	'spellchecker-info-spellcheck-text' => 'النص الذي سيدقق',
+	'spellchecker-info-spellcheck-languages' => 'اللغة',
+	'spellchecker-info-spellcheck-submit' => 'تدقيق إملائي',
+	'spellchecker-info-spellcheck-is-correct' => 'الكلمة "$1" مكتوبة بشكل صحيح',
+	'spellchecker-info-spellcheck-suggestions' => 'اقترحات لغوية من أجل "$1": $2',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -412,6 +431,13 @@ $messages['pt-br'] = array(
 	'spellchecker-info-spellcheck-submit' => 'Verificar ortografia',
 	'spellchecker-info-spellcheck-is-correct' => 'A palavra "$1" está escrita corretamente',
 	'spellchecker-info-spellcheck-suggestions' => 'Sugestões de ortografia para "$1": $2',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'spellchecker-info-spellcheck-languages' => 'Lènghe',
 );
 
 /** Russian (русский)

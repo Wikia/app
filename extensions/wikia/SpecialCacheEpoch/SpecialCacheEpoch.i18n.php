@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory is not enabled on this wiki. Unable to alter wgCacheEpoch.',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'cacheepoch-desc' => '{{desc}}',
@@ -251,6 +251,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Luckas
  */
 $messages['pt-br'] = array(
 	'cacheepoch-desc' => 'Fornece uma interface para alterar a wgCacheEpoch por wiki',
@@ -259,9 +260,17 @@ $messages['pt-br'] = array(
 	'cacheepoch-value' => 'O valor atual da wgCacheEpoch é "$1". Pressione o botão para configurá-lo para a timestamp atual.',
 	'cacheepoch-submit' => 'Atualizar o valor',
 	'cacheepoch-updated' => 'wgCacheEpoch atualizada para "$1".',
-	'cacheepoch-not-updated' => 'Erro ao actualizar a wgCacheEpoch.',
+	'cacheepoch-not-updated' => 'Erro ao atualizar wgCacheEpoch.',
 	'cacheepoch-wf-reason' => 'Valor atualizado via Especial:CacheEpoch',
 	'cacheepoch-no-wf' => 'O WikiFactory não está ativado nesta wiki. Não é possível alterar a wgCacheEpoch.',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'cacheepoch' => 'Inderfacce Cache Epoch',
+	'cacheepoch-header' => "'Ngremende wgCacheEpoch",
 );
 
 /** Russian (русский)

@@ -41,10 +41,10 @@
 				}
 			}
 			.movedown:after {
-				@include arrow(4px, black, 'down');
+				@include arrow(4px, $color-text, 'down');
 			}
 			.moveup:after {
-				@include arrow(4px, black, 'up');
+				@include arrow(4px, $color-text, 'up');
 			}
 			.sprite {
 				cursor: pointer;

@@ -121,6 +121,13 @@ $messages['gl'] = array(
 	'categorygalleries-desc' => 'Mostrar unha galería de páxinas nas páxinas das categorías',
 );
 
+/** Hebrew (עברית)
+ * @author Inkbug
+ */
+$messages['he'] = array(
+	'categorygalleries-desc' => 'מציג גלריית דפים בדפי קטגוריה',
+);
+
 /** Hungarian (magyar)
  * @author Dj
  */

@@ -20,8 +20,8 @@
  * @property WebRequest $request
  * @property WebResponse $Response
  * @property WebResponse $response
- * @property MWMemcached Memc
- * @property MWMemcached memc
+ * @property MemcachedPhpBagOStuff Memc
+ * @property MemcachedPhpBagOStuff memc
  * @property Language Lang
  * @property Language ContLang
  * @property String ArticlePath

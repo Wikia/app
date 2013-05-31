@@ -14,6 +14,7 @@
  * //To allow the messages to be printed to the console add log_level=X to the
  * //URL querystring, where X is one of the values in the levels hash (either the hash key or it's value)
  * //e.g. http://glee.wikia.com/wiki/Rachel_Berry?log_level=info
+ * //e.g. http://glee.wikia.com/wiki/Rachel_Berry?log_level=info&log_group=MyLogGroup
  *
  * @see  printMessage for a list of parameters and their description
  */
