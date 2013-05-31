@@ -55,9 +55,6 @@ class UpgradeYoutube extends Maintenance {
 			}
 		}
 
-		//$page = Article::newFromID(2169);
-		//$pages[] = $page;
-
 		return $pages;
 	}
 
