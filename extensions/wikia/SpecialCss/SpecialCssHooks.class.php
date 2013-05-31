@@ -20,9 +20,9 @@ class SpecialCssHooks {
 	}
 	
 	private function shouldRedirect($app, $model, $articleId) {
-		return !empty($app->wg->EnableSpecialCssExt)
+		return $app->wg->EnableSpecialCssExt
 			&& $model->isWikiaCssArticle( $articleId )
-			&& $app->checkSkin('oasis')
-			&& $app->wg->User->isAllowed('specialcss');
+			&& $app->checkSkin( 'oasis' )
+			&& $app->wg->User->isAllowed( 'specialcss' );
 	}
 }
