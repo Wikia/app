@@ -586,15 +586,19 @@ ENDIT;
 	public function testExtractInfoBoxes() {
 		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
 		                ->disableOriginalConstructor()
-		                ->setMethods( null )
+		                ->setMethods( [ 'removeGarbageFromDom' ] )
 		                ->getMock();
 		$dom = $this->getMockBuilder( 'simple_html_dom' )
 		            ->disableOriginalConstructor()
 		            ->setMethods( [ 'find'  ] )
 		            ->getMock();
+		$dom2 = $this->getMockBuilder( 'simple_html_dom' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( [ 'find', 'save', 'load'  ] )
+		            ->getMock();
 		$node = $this->getMockBuilder( 'simple_html_dom_node' )
 		             ->disableOriginalConstructor()
-		             ->setMethods( [ '__get', 'find' ] )
+		             ->setMethods( [ '__get', 'find', 'outertext' ] )
 		             ->getMock();
 		$result = array();
 		$extract = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'extractInfoboxes' );
@@ -606,7 +610,27 @@ ENDIT;
 		    ->will   ( $this->returnValue( array( $node ) ) )
 		;
 		$node
+		    ->expects( $this->at( 0 ) ) 
+		    ->method ( 'outertext' )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'removeGarbageFromDom' )
+		    #->with   ( $dom2 ) // commented out due to wikia mock proxy
+		;
+		$dom2
 		    ->expects( $this->at( 0 ) )
+		    ->method ( 'save' )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$dom2
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'load' )
+		    ->with   ( 'foo' )
+		;
+		$dom2
+		    ->expects( $this->at( 2 ) )
 		    ->method ( 'find' )
 		    ->with   ( 'tr' )
 		    ->will   ( $this->returnValue( array( $node ) ) )
@@ -629,6 +653,8 @@ ENDIT;
 		    ->with   ( 'plaintext' )
 		    ->will   ( $this->returnValue( 'value' ) )
 		;
+		$this->proxyClass( 'simple_html_dom', $dom2 );
+		$this->mockApp();
 		$this->assertEquals(
 				[ 'infoboxes_txt' => [ 'here is my key | value' ] ],
 				$extract->invoke( $service, $dom, $result )
