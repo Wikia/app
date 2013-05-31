@@ -63,10 +63,26 @@ class VideoFileUploader {
 		return $upload;
 	}
 
+	/**
+	 * @param $oTitle
+	 * @return FileRepoStatus|Status
+	 */
 	public function upload( &$oTitle){
 
 		wfProfileIn(__METHOD__);
-		if( !$this->getApiWrapper() ) {
+
+		// The getApiWrapper method makes an HTTP request which can result
+		// in some thrown exceptions
+		$wrapper = null;
+		try {
+			$wrapper = $this->getApiWrapper();
+		} catch ( Exception $e ) {
+			// If we get an error here, just print it and let the following
+			// code return a Status::newFatal
+			Wikia::Log(__METHOD__, false, $e->getMessage());
+		}
+
+		if( !$wrapper ) {
 			/* can't upload without proper ApiWrapper */
 			wfProfileOut(__METHOD__);
 			return Status::newFatal("Can't get ApiWrapper");
@@ -364,7 +380,9 @@ class VideoFileUploader {
 			}
 			$oUploader->setDescription( $sDescription );
 		}
-		if ( $oUploader->upload( $oTitle ) ) {
+
+		$status = $oUploader->upload( $oTitle );
+		if ( $status->isOK() ) {
 			wfProfileOut( __METHOD__ );
 			return $oTitle;
 		}
