@@ -34,6 +34,8 @@ class PhalanxService extends Service {
 				$this->$key = $args[0];
 				$result = $this;
 				break;
+			default:
+				throw new WikiaException('PhalanxService::_call supports getters and setters only');
 		}
 		return $result;
 	}
