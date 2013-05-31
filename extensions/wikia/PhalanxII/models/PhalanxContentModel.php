@@ -17,10 +17,6 @@ class PhalanxContentModel extends PhalanxModel {
 		);
 	}
 
-	public function getText() {
-		return preg_replace( '/\s+/', ' ', preg_replace( '/[^\PP]+/', '', ( !is_null( $this->text ) ) ? $this->text : $this->title->getFullText() ) );
-	}
-
 	public function buildWhiteList() {
 		wfProfileIn( __METHOD__ );
 

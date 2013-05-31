@@ -166,6 +166,7 @@ class PhalanxService extends Service {
 
 			$options["postData"] = implode( "&", $postData );
 			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
+			wfDebug( __METHOD__ . ": " . json_encode($parameters) ."\n" );
 			$response = Http::post( $url, $options);
 		}
 
