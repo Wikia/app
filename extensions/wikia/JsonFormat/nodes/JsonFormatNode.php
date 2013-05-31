@@ -22,6 +22,8 @@ abstract class JsonFormatNode {
 		return get_class( $this );
 	}
 
-
+	/**
+	 * @return array Returns json serializable "arrays of arrays" representation
+	 */
 	public abstract function toArray();
 }

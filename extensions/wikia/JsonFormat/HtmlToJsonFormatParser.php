@@ -50,6 +50,7 @@ class HtmlToJsonFormatParser {
 		$compositeVisitor->addVisitor( new BodyVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new HeaderVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
+		$compositeVisitor->addVisitor( new QuoteVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new PVisitor($compositeVisitor, $jsonFormatTraversingState) );
 		$compositeVisitor->addVisitor( new ListVisitor($compositeVisitor, $jsonFormatTraversingState) );
 
