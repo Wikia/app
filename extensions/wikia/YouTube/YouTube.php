@@ -80,7 +80,7 @@ function upgradeYouTubeTag( $editpage, $request ) {
 			$retval = $videoService->addVideo( $url );
 			if ( is_array($retval) ) {
 				list( $title, $videoPageId, $videoProvider ) = $retval;
-				return "[[$title|".$params['width']."]]";
+				return "[[$title|".$params['width']." px]]";
 			} else {
 				return $matches[0];
 			}
