@@ -90,14 +90,14 @@
 			VET_loader.modal = $(templateHtml).makeModal({
 				width: 939,
 				onClose: function() {
-					VET_close();
+					window.VET.close();
 				},
 				onAfterClose: function() {
 					modalOnScreen = false;	// release modal lock
 				}
 			});
 
-			VET_show(options);
+			window.VET.show(options);
 			resourcesLoaded = true;
 
 		});
