@@ -1,6 +1,7 @@
 <?php
 
 $dir = dirname(__FILE__);
+$app = F::app();
 
 $wgAutoloadClasses['HtmlToJsonFormatParser'] =                $dir . "/HtmlToJsonFormatParser.php";
 $wgAutoloadClasses['WikitextToHtmlParser'] =                  $dir . "/WikitextToHtmlParser.php";
@@ -38,3 +39,5 @@ $wgAutoloadClasses['IDOMNodeVisitor'] =                       $dir . "/visitors/
 $wgAutoloadClasses['TextNodeVisitor'] =                       $dir . "/visitors/TextNodeVisitor.php";
 
 $wgAutoloadClasses['DomHelper'] =                             $dir . "/util/DomHelper.php";
+
+$app->registerApiController( 'JsonFormatApiController', "{$dir}/JsonFormatApiController.php" );
