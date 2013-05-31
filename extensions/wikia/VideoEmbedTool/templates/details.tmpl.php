@@ -1,10 +1,10 @@
 <h1><?=wfMessage('vet-details-about-video') ?></h1>
-<form class="VideoEmbedOptionsTable WikiaForm" id="VET-display-options<? if( $screenType == 'edit' ){ ?>-update<? } ?>">
+<form class="WikiaForm" id="VET-display-options<? if( $screenType == 'edit' ){ ?>-update<? } ?>">
 
 <?php
 global $wgExtensionsPath;
 ?>
-	<div id="VideoEmbedThumb">
+	<div id="VideoEmbedThumb" class="VideoEmbedThumb">
 		<script type="text/javascript">
 			window.VETPlayerParams = <?= $props['code'] ?>;
 		</script>
@@ -12,14 +12,14 @@ global $wgExtensionsPath;
 		<div class="video-embed"></div>
 	</div>
 	<div class="preview-options">
-		<div class="input-group" id="VideoEmbedNameRow">
+		<div class="input-group VideoEmbedNameRow" id="VideoEmbedNameRow">
 			<label class="option-label" for="wpVideoEmbedName"><?= wfMessage( 'vet-name' ) ?></label>
 			<div>
 				<? if( $screenType == 'details' && empty($props['premiumVideo']) ): ?>
-					<input type="text" id="VideoEmbedName" name="wpVideoEmbedName" value="<?= htmlspecialchars($props['vname']) ?>" />
+					<input type="text" id="VideoEmbedName" class="VideoEmbedName" name="wpVideoEmbedName" value="<?= htmlspecialchars($props['vname']) ?>" />
 				<? else: ?>
 					<p><?= htmlspecialchars($props['vname']) ?></p>
-					<input type="hidden" id="VideoEmbedName" name="wpVideoEmbedName" value="<?= htmlspecialchars($props['vname']) ?>" />
+					<input type="hidden" id="VideoEmbedName" class="VideoEmbedName" name="wpVideoEmbedName" value="<?= htmlspecialchars($props['vname']) ?>" />
 				<? endif; ?>
 			</div>
 		</div>
@@ -33,7 +33,7 @@ global $wgExtensionsPath;
 	<h2 class="main-header"><?=wfMessage('vet-details-inf2') ?></h2>
 
 	<div class="preview-options">
-		<div class="input-group" id="VideoEmbedSizeRow">
+		<div class="input-group VideoEmbedSizeRow" id="VideoEmbedSizeRow">
 			<label class="option-label"><?= wfMessage('vet-style') ?></label>
 			<div>
 				<span id="VET_StyleThumb" class="selected">
@@ -44,7 +44,7 @@ global $wgExtensionsPath;
 					<input type="radio" id="VideoEmbedNoThumbOption" class="hidden" name="style" />
 					<label for="VideoEmbedNoThumbOption" class="vet-style-label VideoEmbedNoThumbOption" title="<?= wfMessage( 'vet-no-thumbnail' ) ?>"><?= wfMessage( 'vet-no-thumbnail' ) ?></label>
 				</span>
-				<input id="VideoEmbedCaption" type="text" placeholder="<?= wfMessage( 'vet-caption' ) ?>" class="show" />
+				<input id="VideoEmbedCaption" type="text" placeholder="<?= wfMessage( 'vet-caption' ) ?>" class="show VideoEmbedCaption" />
 				<p><?= wfMessage( 'vet-no-caption' ) ?></p>
 			</div>
 		</div>
@@ -52,7 +52,7 @@ global $wgExtensionsPath;
 			<label class="option-label" for="VideoEmbedManualWidth"><?= wfMessage('vet-width') ?></label>
 			<div>
 				<div id="VideoEmbedSlider" class="WikiaSlider"></div>
-				<span id="VideoEmbedInputWidth">
+				<span id="VideoEmbedInputWidth" class="VideoEmbedInputWidth">
 					<input type="text" id="VideoEmbedManualWidth" name="VideoEmbedManualWidth" value="" /> px
 				</span>
 			</div>
@@ -80,17 +80,17 @@ global $wgExtensionsPath;
 		</div>
 	</div>
 	<? if( $screenType == 'details' ): ?>
-		<div class="input-group VideoEmbedNoBorder addVideoDetailsFormControls">
+		<div class="input-group button-group addVideoDetailsFormControls">
 			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-insert2') ?>" />
 		</div>
 		<input id="VideoEmbedId" type="hidden" value="<?= isset($props['id']) ? urlencode($props['id']) : '' ?>" />
 		<input id="VideoEmbedProvider" type="hidden" value="<?= urlencode($props['provider']) ?>" />
 		<input id="VideoEmbedMetadata" type="hidden" value="<?= isset($props['metadata']) ? urlencode($props['metadata']) : '' ?>" />
 	<? else: // $screenType == 'edit' ?>
-		<div class="input-group VideoEmbedNoBorder">
+		<div class="input-group button-group">
 			<input class="wikia-button v-float-right" type="submit" value="<?= wfMessage('vet-update') ?>"/>
 		</div>
-		<div id="VideoReplaceLink"><?= wfMessage('vet-video-replace-link', $props['href'])->parse(); ?></div>
+		<div id="VideoReplaceLink" class="VideoReplaceLink"><?= wfMessage('vet-video-replace-link', $props['href'])->parse(); ?></div>
 		<input id="VideoEmbedHref" type="hidden" value="<?= htmlspecialchars($props['href']) ?>" />
 	<? endif; ?>
 </form>
