@@ -64,10 +64,15 @@ class VideoFileUploader {
 	}
 
 	/**
-	 * @param $oTitle
-	 * @return FileRepoStatus|Status
+	 * Start the upload.  Note that this method always returns an object, even when it fails.
+	 * Make sure to check that the return value with:
+	 *
+	 *   $statis->isOK()
+	 *
+	 * @param $oTitle - A title object that will be set if this call is successful
+	 * @return FileRepoStatus|Status - A status object representing the result of this call
 	 */
-	public function upload( &$oTitle){
+	public function upload( &$oTitle ) {
 
 		wfProfileIn(__METHOD__);
 
