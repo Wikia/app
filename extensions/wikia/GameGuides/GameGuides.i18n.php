@@ -28,23 +28,23 @@ $messages['en'] = array(
 
 	//Sponsored Videos Managment Tools
 	'wikiagameguides-sponsored-description-language' => 'Highlighted row is a language',
-	'wikiagameguides-sponsored-description-wiki' => 'First input is for Wiki Url',
+	'wikiagameguides-sponsored-description-wiki' => 'First input is for Wiki URL',
 	'wikiagameguides-sponsored-description-title' => 'Second input is for Video Title',
-	'wikiagameguides-sponsored-description-url' => 'Third input is for Video Url',
+	'wikiagameguides-sponsored-description-url' => 'Third input is for Video URL',
 
 	'wikiagameguides-sponsored-title' => 'Wikia Game Guides Sponsored Videos Tool',
 	'wikiagameguides-sponsored-add-video' => 'Add video',
 	'wikiagameguides-sponsored-add-language' => 'Add Language',
 
-	'wikiagameguides-sponsored-video-name' => 'Video Url',
-	'wikiagameguides-sponsored-wiki-url' => 'Wiki Url',
+	'wikiagameguides-sponsored-video-name' => 'Video URL',
+	'wikiagameguides-sponsored-wiki-url' => 'Wiki URL',
 	'wikiagameguides-sponsored-language' => 'Language',
 	'wikiagameguides-sponsored-video-title' => 'Video Title',
 	'wikiagameguides-sponsored-duplicate-entry' => 'This filed is duplicated',
 	'wikiagameguides-sponsored-required-entry' => 'This field is required',
 	'wikiagameguides-sponsored-empty-language' => 'Language can not be empty',
 	'wikiagameguides-sponsored-orphaned-video' => 'Video has to have a language',
-	'wikiagameguides-sponsored-are-you-sure' => 'Are you sure you want to erase everything ?',
+	'wikiagameguides-sponsored-delete-videos-are-you-sure' => 'Are you sure you want to erase everything?',
 	'wikiagameguides-sponsored-video-does-not-exist' => 'This video does not exist',
 	'wikiagameguides-sponsored-video-is-not-ooyala' => 'This video is not provided by Ooyala'
 );
