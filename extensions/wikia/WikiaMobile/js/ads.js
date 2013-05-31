@@ -23,8 +23,10 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 			 * Allowed types of Ad,
 			 * DART can invoke them but they need to be defined here first
 			 */
-			'footer': 'footer',
-			'interstitial': 'interstitial'
+			footer: 'footer',
+			interstitial: 'interstitial',
+			top_leaderboard: 'top_leaderboard',
+			in_content: 'in_content'
 		},
 		STOP_COOKIE_NAME = 'wkStopAd',
 		adSlot,
@@ -98,13 +100,12 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 	 *
 	 * @param {String} name The slot name
 	 * @param {String} size The size of the slot (e.g. 5x5)
-	 * @param {String} provider The provider name (e.g. DARTMobile)
 	 */
-	function setupSlot(name, size, provider) {
+	function setupSlot(name, size) {
 		if (shouldRequestAd()) {
 			var url = dartHelper.getMobileUrl({
 					slotname: name,
-					size: '5x5',
+					size: size,
 					uniqueId: getUniqueId()
 				}),
 				s = d.createElement('script');
@@ -134,9 +135,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 			//if the slot was already initialized once
 			//then do some cleanup
 			if (inited) {
-				var t;
-
-				for (t in AD_TYPES) {
+				for (var t in AD_TYPES) {
 					if (AD_TYPES.hasOwnProperty(t)) {
 						removeClass(adSlot, [AD_TYPES[t]]);
 					}
