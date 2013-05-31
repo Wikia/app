@@ -19,7 +19,6 @@ $app = F::app( );
 $app->registerClass( 'ForumSpecialController', $dir . 'ForumSpecialController.class.php' );
 $app->registerClass( 'ForumHooksHelper', $dir . 'ForumHooksHelper.class.php' );
 $app->registerClass( 'ForumController', $dir . 'ForumController.class.php' );
-$app->registerClass( 'ForumNotificationPlugin', $dir . 'ForumNotificationPlugin.class.php' );
 $app->registerClass( 'Forum', $dir . 'Forum.class.php' );
 $app->registerClass( 'ForumBoard', $dir . 'ForumBoard.class.php' );
 $app->registerClass( 'ForumHelper', $dir . 'ForumHelper.class.php' );
@@ -54,10 +53,6 @@ $app->registerHook( 'WallMessageDeleted', 'ForumHooksHelper', 'onWallMessageDele
 $app->registerHook( 'ContributionsLineEnding', 'ForumHooksHelper', 'onContributionsLineEnding' );
 $app->registerHook( 'OasisAddPageDeletedConfirmationMessage', 'ForumHooksHelper', 'onOasisAddPageDeletedConfirmationMessage' );
 $app->registerHook( 'FilePageImageUsageSingleLink', 'ForumHooksHelper', 'onFilePageImageUsageSingleLink' );
-
-//notification hooks
-$app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationPlugin', 'onGetNotificationMessage' );
-$app->registerHook( 'NotificationGetMailNotificationMessage', 'ForumNotificationPlugin', 'onGetMailNotificationMessage' );
 
 //old forum archive
 $app->registerHook( 'getUserPermissionsErrors', 'ForumHooksHelper', 'onGetUserPermissionsErrors' );
