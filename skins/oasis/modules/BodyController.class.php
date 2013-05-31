@@ -52,7 +52,7 @@ class BodyController extends WikiaController {
 		$ns = $app->wg->Title->getNamespace();
 
 		// Don't enable for article pages when responsive layout is enabled
-		if ( !empty( $app->wg->EnableResponsiveLayout ) && $ns == NS_MAIN ) {
+		if ( !empty( $app->wg->OasisResponsive ) && $ns == NS_MAIN ) {
 			return false;
 		}
 

@@ -4,7 +4,7 @@
  */
 
 class SassUtil {
-	
+
 	const DEFAULT_OASIS_THEME = 'oasis';
 
 	/**
@@ -20,7 +20,7 @@ class SassUtil {
 
 		return $params;
 	}
-	
+
 	/**
 	 * Returns a set of sass parameters set by the webapp that should not be saved to wiki themesettings
 	 * For example, skin width is an webapp, application, setting.  It is not user controllable.
@@ -29,22 +29,22 @@ class SassUtil {
 	 *            Non-settable settings should be driven programmatically.
 	 */
 	public static function getApplicationThemeSettings() {
-		global $wgOasisHD, $wgOasisFluid, $wgOasisGrid;
-		
+		global $wgOasisGrid, $wgOasisHD, $wgOasisResponsive;
+
 		$params = array();
 
 		if ( $wgOasisHD ) {
 			$params['widthType'] = 1;
 		}
 
-		if ( $wgOasisFluid ) {
+		if ( $wgOasisResponsive ) {
 			$params['widthType'] = 2;
 		}
-		
+
 		if ( $wgOasisGrid ) {
 			$params['widthType'] = 3;
 		}
-		
+
 		return $params;
 	}
 
@@ -59,11 +59,11 @@ class SassUtil {
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
 		static $oasisSettings = array();
-		
+
 		if (empty($oasisSettings)) {
 			$themeSettings = new ThemeSettings();
 			$settings = $themeSettings->getSettings();
-	
+
 			$oasisSettings["color-body"] = self::sanitizeColor($settings["color-body"]);
 			$oasisSettings["color-page"] = self::sanitizeColor($settings["color-page"]);
 			$oasisSettings["color-buttons"] = self::sanitizeColor($settings["color-buttons"]);
@@ -77,7 +77,7 @@ class SassUtil {
 			if (isset($settings["wordmark-font"]) && $settings["wordmark-font"] != "default") {
 				$oasisSettings["wordmark-font"] = $settings["wordmark-font"];
 			}
-	
+
 			// RTL
 			if($wgContLang && $wgContLang->isRTL()){
 				$oasisSettings['rtl'] = 'true';
@@ -94,7 +94,7 @@ class SassUtil {
 		wfDebug(__METHOD__ . ': ' . json_encode($oasisSettings) . "\n");
 
 		wfProfileOut(__METHOD__);
-		
+
 		return $oasisSettings;
 	}
 
@@ -161,7 +161,7 @@ class SassUtil {
 				$oasisSettings = self::getDefaultOasisSettings();
 			}
 		}
-		
+
 		$backgroundColor = $oasisSettings['color-page'];
 
 		// convert RGB to HSL
@@ -174,7 +174,7 @@ class SassUtil {
 		wfProfileOut(__METHOD__);
 		return $isDark;
 	}
-	
+
 	/**
 	 * Convert RGB colors array into HSL array
 	 *
