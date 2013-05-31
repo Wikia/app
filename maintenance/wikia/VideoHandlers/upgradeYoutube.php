@@ -196,6 +196,13 @@ class UpgradeYoutube extends Maintenance {
 
 		// Load the user who embedded this video
 		$wgUser = User::newFromName( $userText );
+
+		// Fall back to user WikiaBot if we can't find this user
+		if ( !$wgUser ) {
+			$wgUser = User::newFromName( 'WikiaBot' );
+		}
+
+		// If we still can't load the user, bail here
 		if ( !$wgUser ) {
 			echo "WARN: Could not load user $userText\n";
 			return false;
