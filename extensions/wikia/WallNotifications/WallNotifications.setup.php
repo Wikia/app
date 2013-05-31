@@ -2,30 +2,33 @@
 
 $app = F::app();
 
-$dir = dirname(__FILE__);
+$dirExt = __DIR__;
 
-$app->registerClass('WallNotifications', $dir . '/WallNotifications.class.php');
+$app->registerClass('WallNotifications', $dirExt . '/WallNotifications.class.php');
 
-$app->registerClass('WallNotificationsAdmin', $dir . '/WallNotificationsAdmin.class.php');
-$app->registerClass('WallNotificationAdminEntity', $dir . '/WallNotificationAdminEntity.class.php');
+$app->registerClass('WallNotificationsAdmin', $dirExt . '/WallNotificationsAdmin.class.php');
+$app->registerClass('WallNotificationAdminEntity', $dirExt . '/WallNotificationAdminEntity.class.php');
 
-$app->registerClass('WallNotificationsOwner', $dir . '/WallNotificationsOwner.class.php');
-$app->registerClass('WallNotificationOwnerEntity', $dir . '/WallNotificationOwnerEntity.class.php');
+$app->registerClass('WallNotificationsOwner', $dirExt . '/WallNotificationsOwner.class.php');
+$app->registerClass('WallNotificationOwnerEntity', $dirExt . '/WallNotificationOwnerEntity.class.php');
 
-$app->registerClass('WallNotificationEntity', $dir . '/WallNotificationEntity.class.php');
-$app->registerClass('WallNotificationsController', $dir . '/WallNotificationsController.class.php');
-$app->registerClass('WallNotificationsExternalController', $dir . '/WallNotificationsExternalController.class.php');
+$app->registerClass('WallNotificationEntity', $dirExt . '/WallNotificationEntity.class.php');
+$app->registerClass('WallNotificationsController', $dirExt . '/WallNotificationsController.class.php');
+$app->registerClass('WallNotificationsExternalController', $dirExt . '/WallNotificationsExternalController.class.php');
 
-$app->registerClass('WallNotificationsEveryone', $dir . '/WallNotificationsEveryone.class.php');
-$app->registerClass('WallNotificationsHooksHelper', $dir . '/WallNotificationsHooksHelper.class.php');
+$app->registerClass('WallNotificationsEveryone', $dirExt . '/WallNotificationsEveryone.class.php');
+$app->registerClass('WallNotificationsHooksHelper', $dirExt . '/WallNotificationsHooksHelper.class.php');
 
 // Notifications are required on NonWall Wikis in order to show proper
 // lower-left corner notification bubbles from Wall Wikis
-$app->registerClass('WallHelper', $dir . '/../Wall/WallHelper.class.php');
-$app->registerClass('WallMessage', $dir . '/../Wall/WallMessage.class.php');
+$app->registerClass('WallHelper', $dirExt . '/../Wall/WallHelper.class.php');
+$app->registerClass('WallMessage', $dirExt . '/../Wall/WallMessage.class.php');
 
 //add script in monobook
 $app->registerHook('SkinAfterBottomScripts', 'WallNotificationsHooksHelper', 'onSkinAfterBottomScripts');
 $app->registerHook('MakeGlobalVariablesScript', 'WallNotificationsHooksHelper', 'onMakeGlobalVariablesScript');
 
 $app->registerHook('PersonalUrls', 'WallNotificationsHooksHelper', 'onPersonalUrls');
+
+// Notifications plugins
+include( $dirExt . '/plugins/Forum/ForumNotificationsPlugin.setup.php' );
