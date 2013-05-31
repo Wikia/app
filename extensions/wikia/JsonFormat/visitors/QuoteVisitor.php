@@ -28,6 +28,6 @@ class QuoteVisitor extends DOMNodeVisitorBase {
 		$author = $currentNode->childNodes->item(1)->textContent;
 		$text = $currentNode->childNodes->item(0)->childNodes->item(0)->childNodes->item(1)->textContent;
 		$quoteNode = new JsonFormatQuoteNode( $author, $text );
-		$this->getJsonFormatTraversingState()->addChildToCurrentContainer($quoteNode);
+		$this->getJsonFormatBuilder()->add($quoteNode);
 	}
 }

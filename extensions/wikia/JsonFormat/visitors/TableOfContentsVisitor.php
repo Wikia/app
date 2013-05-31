@@ -14,7 +14,7 @@ class TableOfContentsVisitor extends DOMNodeVisitorBase {
 	public function canVisit(DOMNode $currentNode) {
 		// @var DomElement $currentNode
 		return
-			$this->isElement( $currentNode, 'table' )
+			DomHelper::isElement( $currentNode, 'table' )
 			&& DomHelper::hasClass( $currentNode, 'toc' );
 	}
 

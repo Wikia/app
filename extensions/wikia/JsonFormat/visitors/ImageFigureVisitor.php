@@ -31,6 +31,6 @@ class ImageFigureVisitor extends DOMNodeVisitorBase {
 		$caption = $currentNode->childNodes->item(2)->childNodes->item(0);
 		$imageFigure = new JsonFormatImageFigureNode( $src, $caption );
 
-		$this->getJsonFormatTraversingState()->addChildToCurrentContainer( $imageFigure );
+		$this->getJsonFormatBuilder()->add( $imageFigure );
 	}
 }

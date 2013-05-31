@@ -12,7 +12,7 @@ class IVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit(DOMNode $currentNode) {
-		return $this->isElement( $currentNode, 'i' );
+		return DomHelper::isElement( $currentNode, 'i' );
 	}
 
 	/**

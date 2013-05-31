@@ -61,7 +61,7 @@ class JsonFormatBuilder {
 		return $this->currentContainer;
 	}
 
-	public function addChildToCurrentContainer( $node ) {
+	public function add( $node ) {
 		$this->currentContainer->addChild($node);
 	}
 

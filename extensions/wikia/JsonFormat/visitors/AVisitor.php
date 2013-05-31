@@ -11,7 +11,7 @@ class AVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit( DOMNode $currentNode ) {
-		return $this->isElement( $currentNode, 'a' );
+		return DomHelper::isElement( $currentNode, 'a' );
 	}
 
 	/**
@@ -19,7 +19,7 @@ class AVisitor extends DOMNodeVisitorBase {
 	 */
 	public function visit( DOMNode $currentNode ) {
 		$href = $currentNode->attributes->getNamedItem('href')->textContent;
-		$this->getJsonFormatTraversingState()->addChildToCurrentContainer(
+		$this->getJsonFormatBuilder()->add(
 			new JsonFormatLinkNode( $currentNode->textContent, $href ) );
 	}
 }

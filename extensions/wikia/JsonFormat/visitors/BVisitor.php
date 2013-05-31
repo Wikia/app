@@ -12,7 +12,7 @@ class BVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit(DOMNode $currentNode) {
-		return $this->isElement( $currentNode, 'b' );
+		return DomHelper::isElement( $currentNode, 'b' );
 	}
 
 	/**

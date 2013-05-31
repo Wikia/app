@@ -12,28 +12,28 @@ class ListVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit(DOMNode $currentNode) {
-		return $this->isElement( $currentNode, 'ul' ) || $this->isElement( $currentNode, 'ol' );
+		return DomHelper::isElement( $currentNode, 'ul' ) || DomHelper::isElement( $currentNode, 'ol' );
 	}
 
 	/**
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
-		$list = new JsonFormatListNode( $this->isElement( $currentNode, 'ol' ) );
-		$this->getJsonFormatTraversingState()->pushNode( $list );
+		$list = new JsonFormatListNode( DomHelper::isElement( $currentNode, 'ol' ) );
+		$this->getJsonFormatBuilder()->pushNode( $list );
 		for( $i = 0; $i < $currentNode->childNodes->length; $i++ ) {
 			$childNode = $currentNode->childNodes->item($i);
-			if ( $this->isElement( $childNode, 'li' ) ) {
+			if ( DomHelper::isElement( $childNode, 'li' ) ) {
 				$this->visitListItem( $childNode );
 			}
 		}
-		$this->getJsonFormatTraversingState()->popNode( $list );
+		$this->getJsonFormatBuilder()->popNode( $list );
 	}
 
 	public function visitListItem( DOMNode $li ) {
 		$item = new JsonFormatListItemNode( );
-		$this->getJsonFormatTraversingState()->pushNode( $item );
+		$this->getJsonFormatBuilder()->pushNode( $item );
 		$this->iterate( $li->childNodes );
-		$this->getJsonFormatTraversingState()->popNode( $item );
+		$this->getJsonFormatBuilder()->popNode( $item );
 	}
 }

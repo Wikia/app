@@ -9,7 +9,7 @@ abstract class DOMNodeVisitorBase implements IDOMNodeVisitor {
 	/**
 	 * @var JsonFormatBuilder
 	 */
-	private $jsonFormatTraversingState;
+	private $jsonFormatBuilder;
 
 	/**
 	 * @var IDOMNodeVisitor
@@ -18,40 +18,21 @@ abstract class DOMNodeVisitorBase implements IDOMNodeVisitor {
 
 	function __construct( IDOMNodeVisitor $childrenVisitor, JsonFormatBuilder $jsonFormatTraversingState) {
 		$this->childrenVisitor = $childrenVisitor;
-		$this->jsonFormatTraversingState = $jsonFormatTraversingState;
+		$this->jsonFormatBuilder = $jsonFormatTraversingState;
 	}
 
 	/**
 	 * @param $jsonFormatTraversingState
 	 */
-	public function setJsonFormatTraversingState($jsonFormatTraversingState) {
-		$this->jsonFormatTraversingState = $jsonFormatTraversingState;
+	public function setJsonFormatBuilder($jsonFormatTraversingState) {
+		$this->jsonFormatBuilder = $jsonFormatTraversingState;
 	}
 
 	/**
 	 * @return JsonFormatBuilder
 	 */
-	public function getJsonFormatTraversingState() {
-		return $this->jsonFormatTraversingState;
-	}
-
-	/**
-	 * returns true if DOMNode is DOMElement with $tagName
-	 * if $tagName is null (default) we don't check tagName.
-	 * @param DOMNode $domNode
-	 * @param string|null $tagName
-	 * @return bool
-	 */
-	public function isElement( DOMNode $domNode, $tagName = null ) {
-		if( $domNode instanceof DOMElement ) {
-			if ( $tagName != null ) {
-				return $domNode->tagName == $tagName;
-			} else {
-				return true;
-			}
-		} else {
-			return false;
-		}
+	public function getJsonFormatBuilder() {
+		return $this->jsonFormatBuilder;
 	}
 
 	/**

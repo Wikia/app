@@ -16,6 +16,8 @@ class DomHelper {
 	}
 
 	/**
+	 * returns true if DOMNode is DOMElement with $tagName
+	 * if $tagName is null (default) we don't check tagName.
 	 * @param DOMElement|null $domNode
 	 * @param string|null $tagName
 	 * @return bool

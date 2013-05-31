@@ -22,7 +22,7 @@ class InlineVisitor extends DOMNodeVisitorBase {
 	 */
 	public function canVisit( DOMNode $currentNode ) {
 		foreach ( $this->tags as $tagName ) {
-			if ( $this->isElement( $currentNode, $tagName ) ) {
+			if ( DomHelper::isElement( $currentNode, $tagName ) ) {
 				return true;
 			}
 		}

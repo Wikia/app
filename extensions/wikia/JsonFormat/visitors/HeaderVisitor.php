@@ -19,7 +19,7 @@ class HeaderVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit( DOMNode $currentNode ) {
-		return $this->isElement( $currentNode )
+		return DomHelper::isElement( $currentNode )
 			&& in_array( $currentNode->tagName, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7'] );
 	}
 
@@ -30,7 +30,7 @@ class HeaderVisitor extends DOMNodeVisitorBase {
 		if( $this->verifyFirstChildHasClass( $currentNode, "mw-headline" ) ) {
 			$text = $currentNode->childNodes->item(0)->textContent;
 			$section = new JsonFormatSectionNode( intval($currentNode->tagName[1]), $text );
-			$this->getJsonFormatTraversingState()->pushSection($section);
+			$this->getJsonFormatBuilder()->pushSection($section);
 		} else {
 			$text = $currentNode->textContent;
 			$this->appendText($text);

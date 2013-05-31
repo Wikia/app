@@ -11,7 +11,7 @@ class PVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit(DOMNode $currentNode) {
-		return $this->isElement( $currentNode, 'p' );
+		return DomHelper::isElement( $currentNode, 'p' );
 	}
 
 	/**
@@ -19,8 +19,8 @@ class PVisitor extends DOMNodeVisitorBase {
 	 */
 	public function visit(DOMNode $currentNode) {
 		$paragraphNode = new JsonFormatParagraphNode();
-		$this->getJsonFormatTraversingState()->pushNode( $paragraphNode );
+		$this->getJsonFormatBuilder()->pushNode( $paragraphNode );
 		$this->iterate( $currentNode->childNodes );
-		$this->getJsonFormatTraversingState()->popNode( $paragraphNode );
+		$this->getJsonFormatBuilder()->popNode( $paragraphNode );
 	}
 }

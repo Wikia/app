@@ -19,6 +19,6 @@ class BrVisitor extends DOMNodeVisitorBase {
 	 * @param DOMNode $currentNode
 	 */
 	public function visit(DOMNode $currentNode) {
-		$this->getJsonFormatTraversingState()->appendText("\n");
+		$this->getJsonFormatBuilder()->appendText("\n");
 	}
 }

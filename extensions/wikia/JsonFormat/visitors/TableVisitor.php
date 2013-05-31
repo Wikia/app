@@ -12,7 +12,7 @@ class TableVisitor extends DOMNodeVisitorBase {
 	 * @return bool
 	 */
 	public function canVisit(DOMNode $currentNode) {
-		return $this->isElement($currentNode, 'table');
+		return DomHelper::isElement($currentNode, 'table');
 	}
 
 	/**
@@ -20,17 +20,17 @@ class TableVisitor extends DOMNodeVisitorBase {
 	 */
 	public function visit(DOMNode $currentNode) {
 		$table = new JsonFormatTableNode( );
-		$this->getJsonFormatTraversingState()->pushNode( $table );
+		$this->getJsonFormatBuilder()->pushNode( $table );
 		for( $i = 0; $i < $currentNode->childNodes->length; $i++ ) {
 			$childNode = $currentNode->childNodes->item($i);
 			$this->tryVisitTBody( $childNode );
 			$this->tryVisitRow( $childNode );
 		}
-		$this->getJsonFormatTraversingState()->popNode( $table );
+		$this->getJsonFormatBuilder()->popNode( $table );
 	}
 
 	protected function tryVisitTBody( $currentNode ) {
-		if ( $this->isElement( $currentNode, 'tbody' ) ) {
+		if ( DomHelper::isElement( $currentNode, 'tbody' ) ) {
 			for( $i = 0; $i < $currentNode->childNodes->length; $i++ ) {
 				$childNode = $currentNode->childNodes->item($i);
 				$this->tryVisitRow( $childNode );
@@ -39,24 +39,24 @@ class TableVisitor extends DOMNodeVisitorBase {
 	}
 
 	protected function tryVisitRow( $currentNode ) {
-		if ( $this->isElement( $currentNode, 'tr' ) ) {
+		if ( DomHelper::isElement( $currentNode, 'tr' ) ) {
 			$row = new JsonFormatTableRowNode( );
-			$this->getJsonFormatTraversingState()->pushNode( $row );
+			$this->getJsonFormatBuilder()->pushNode( $row );
 
 			for( $i = 0; $i < $currentNode->childNodes->length; $i++ ) {
 				$childNode = $currentNode->childNodes->item($i);
 				$this->tryVisitCell( $childNode );
 			}
 
-			$this->getJsonFormatTraversingState()->popNode( $row );
+			$this->getJsonFormatBuilder()->popNode( $row );
 		}
 	}
 
 	protected function tryVisitCell( DOMNode $currentNode ) {
-		if ( $this->isElement( $currentNode, 'td' )
-			|| $this->isElement( $currentNode, 'th' )) {
+		if ( DomHelper::isElement( $currentNode, 'td' )
+			|| DomHelper::isElement( $currentNode, 'th' )) {
 			$cell = new JsonFormatTableCellNode( );
-			$this->getJsonFormatTraversingState()->pushNode( $cell );
+			$this->getJsonFormatBuilder()->pushNode( $cell );
 
 			if ( $this->hasSingleDiv( $currentNode ) ) {
 				// special case: if single div, ignore it but get all the contents.
@@ -66,7 +66,7 @@ class TableVisitor extends DOMNodeVisitorBase {
 				$this->iterate( $currentNode->childNodes );
 			}
 
-			$this->getJsonFormatTraversingState()->popNode( $cell );
+			$this->getJsonFormatBuilder()->popNode( $cell );
 		}
 	}
 
