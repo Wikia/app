@@ -6,6 +6,32 @@
  */
 
 class DomHelper {
+
+	/**
+	 * @param DOMNode $node
+	 * @return bool
+	 */
+	public static function isTextNode( DOMNode $node ) {
+		return $node instanceof DOMText;
+	}
+
+	/**
+	 * @param DOMElement|null $domNode
+	 * @param string|null $tagName
+	 * @return bool
+	 */
+	public static function isElement( $domNode, $tagName = null ) {
+		if( $domNode instanceof DOMElement ) {
+			if ( $tagName != null ) {
+				return $domNode->tagName == $tagName;
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
+
 	/**
 	 * @param DomElement $domElement
 	 */
