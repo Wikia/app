@@ -5,7 +5,15 @@
  * Time: 12:58
  */
 
+/**
+ * Class JsonFormatApiController
+ * !! Beta !!
+ * simplified representation of wiki article
+ */
 class JsonFormatApiController extends WikiaApiController {
+	/**
+	 * @throws InvalidParameterApiException
+	 */
 	public function getJsonFormat() {
 		$articleId = $this->getRequest()->getInt("article", NULL);
 		if( empty($articleId) ) {
@@ -56,6 +64,9 @@ class JsonFormatApiController extends WikiaApiController {
 		return $result;
 	}
 
+	/**
+	 * @throws InvalidParameterApiException
+	 */
 	public function getJsonFormatAsText() {
 		$articleId = $this->getRequest()->getInt("article", NULL);
 		if( empty($articleId) ) {
