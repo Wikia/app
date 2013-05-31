@@ -23,6 +23,7 @@ $wgAutoloadClasses['JsonFormatTableRowNode'] =                $dir . "/nodes/Jso
 
 $wgAutoloadClasses['AVisitor'] =                              $dir . "/visitors/AVisitor.php";
 $wgAutoloadClasses['TableVisitor'] =                          $dir . "/visitors/TableVisitor.php";
+$wgAutoloadClasses['TableOfContentsVisitor'] =                $dir . "/visitors/TableOfContentsVisitor.php";
 $wgAutoloadClasses['PVisitor'] =                              $dir . "/visitors/PVisitor.php";
 $wgAutoloadClasses['BVisitor'] =                              $dir . "/visitors/BVisitor.php";
 $wgAutoloadClasses['IVisitor'] =                              $dir . "/visitors/IVisitor.php";
@@ -34,3 +35,5 @@ $wgAutoloadClasses['DOMNodeVisitorBase'] =                    $dir . "/visitors/
 $wgAutoloadClasses['HeaderVisitor'] =                         $dir . "/visitors/HeaderVisitor.php";
 $wgAutoloadClasses['IDOMNodeVisitor'] =                       $dir . "/visitors/IDOMNodeVisitor.php";
 $wgAutoloadClasses['TextNodeVisitor'] =                       $dir . "/visitors/TextNodeVisitor.php";
+
+$wgAutoloadClasses['DomHelper'] =                             $dir . "/util/DomHelper.php";
