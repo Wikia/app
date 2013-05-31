@@ -38,7 +38,7 @@
 			}
 
 			$mockMsgExtCount = ( $expResult == 'unconfirm' ) ? 1 : 0 ;
-			$this->mockGlobalFunction( 'MsgExt', $expMsg, $mockMsgExtCount );
+			$this->mockGlobalFunction( 'wfMsgExt', $expMsg, $mockMsgExtCount );
 
 			$this->setUpMock();
 

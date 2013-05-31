@@ -543,7 +543,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->method('select')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockGlobalFunction('wfGetDB', $dbMock);
 
 		// create object second time to use mocked F:app()
 		$model = new MarketingToolboxModel();
@@ -584,7 +584,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->method('select')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockGlobalFunction('wfGetDB', $dbMock);
 
 		// create object second time to use mocked F:app()
 		$model = new MarketingToolboxModel();
@@ -612,7 +612,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->method('select')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockGlobalFunction('wfGetDB', $dbMock);
 
 		$model = new MarketingToolboxModel();
 
@@ -666,7 +666,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->method('select')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockGlobalFunction('wfGetDB', $dbMock);
 
 		// create object second time to use mocked F:app()
 		$model = new MarketingToolboxModel();
@@ -696,7 +696,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->method('select')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockGlobalFunction('wfGetDB', $dbMock);
 
 		$model = new MarketingToolboxModel();
 		$returnedVal = $model->checkModulesSaved('en', '2','1360454400');

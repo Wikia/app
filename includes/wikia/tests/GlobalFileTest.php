@@ -21,7 +21,7 @@ class GlobalFileTest extends WikiaBaseTest {
 	 * @dataProvider newFromTextProvider
 	 */
 	public function testNewFromText($row, $cityId, $path, $exists, $width, $height, $crop, $mime) {
-		$this->mockGlobalFunction('GetDB', $this->mockClassWithMethods('Database', [
+		$this->mockGlobalFunction('wfGetDB', $this->mockClassWithMethods('Database', [
 			'selectRow' => $row
 		]));
 

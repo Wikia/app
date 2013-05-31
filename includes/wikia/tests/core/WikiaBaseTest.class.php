@@ -211,14 +211,15 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * Should be followed by the call to $this->mockApp()
 	 *
-	 * @param $functionName string name of global function (e.g. findFile - WITHOUT wf prefix)
-	 * @param $returnValue
-	 * @param int $callsNum
-	 * @param array $inputParams
+	 * @param $functionName string Global function name (including "wf" prefix)
+	 * @param $returnValue mixed
+	 * @param $callsNum int
+	 * @param $inputParams array
 	 */
 	protected function mockGlobalFunction( $functionName, $returnValue, $callsNum = null, $inputParams = null ) {
-		if ( function_exists( 'wf'.ucfirst($functionName) ) ) {
-			$functionName = 'wf' . ucfirst($functionName);
+		// sanity check to prevent deprecated way of using this function
+		if ( !function_exists($functionName) && function_exists('wf'.ucfirst($functionName)) ) {
+			throw new Exception("You have to specify full global function name including 'wf' prefix");
 		}
 
 		$mock = $this->getGlobalFunctionMock( $functionName );
