@@ -556,6 +556,9 @@ class Config
 		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {
 			$fieldsPrepped[] = 'id';
 		} 
+		if ( $this->getQueryService() == '\\Wikia\Search\\QueryService\\Select\\Video' ) {
+			$fieldsPrepped[] = 'title_en'; 
+		}
 		
 		return $fieldsPrepped;
 	}
