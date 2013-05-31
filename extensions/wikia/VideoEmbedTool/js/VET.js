@@ -226,8 +226,7 @@ require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBoots
 	}
 
 	function VET_show( options ) {
-
-		/* set options */
+		/* set vars for this instance of VET */
 		VET_options = options;
 		VET_embedPresets = options.embedPresets;
 		VET_wysiwygStart = options.startPoint || 1;
@@ -525,18 +524,19 @@ require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBoots
 	}
 
 	function VET_close() {
-		VET_switchScreen('Main');
 		window.VETbackButton = false;
+
+		VET_loader.modal.closeModal();
 
 		VET_tracking({
 			action: Wikia.Tracker.ACTIONS.CLOSE
 		});
 
-		VET_loader.modal.closeModal();
-
 		if ($.isFunction(VET_options.onClose)) {
 			VET_options.onClose();
 		}
+
+		VET_switchScreen('Main');
 
 		window.UserLogin.refreshIfAfterForceLogin();
 	}

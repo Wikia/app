@@ -103,7 +103,7 @@
 						if (element) {
 							// update existing video
 							RTE.mediaEditor.update(element, wikitext, embedData);
-							VET_loader.modal.closeModal();
+							window.VET.close();
 						} else {
 							// add new video
 							RTE.mediaEditor.addVideo(wikitext, embedData);
