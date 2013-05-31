@@ -41,6 +41,8 @@ class JsonFormatApiController extends WikiaApiController {
 			return "<p>{$this->iterate( $node )}</p>";
 		} else if ( $node->getType() == 'imageFigure' ) {
 			return "<div style=\"\"><img src=\"{$node->getSrc()}\"/></div>";
+		} else if ( $node->getType() == 'image' ) {
+			return "<img src=\"{$node->getSrc()}\"/>";
 		} else if ( $node->getType() == 'quote' ) {
 			return "<div><i>{$node->getText()}</i></div><div><i>{$node->getAuthor()}</i></div>";
 		}

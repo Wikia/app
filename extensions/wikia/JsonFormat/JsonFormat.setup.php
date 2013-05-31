@@ -24,6 +24,7 @@ $app->registerClass( 'JsonFormatTableCellNode',               $dir . "/nodes/Jso
 $app->registerClass( 'JsonFormatTableRowNode',                $dir . "/nodes/JsonFormatTableRowNode.php");
 $app->registerClass( 'JsonFormatImageFigureNode',             $dir . "/nodes/JsonFormatImageFigureNode.php");
 $app->registerClass( 'JsonFormatQuoteNode',                   $dir . "/nodes/JsonFormatQuoteNode.php");
+$app->registerClass( 'JsonFormatImageNode',                   $dir . "/nodes/JsonFormatImageNode.php");
 
 $app->registerClass( 'AVisitor',                              $dir . "/visitors/AVisitor.php");
 $app->registerClass( 'BrVisitor',                             $dir . "/visitors/BrVisitor.php");
@@ -42,6 +43,7 @@ $app->registerClass( 'IDOMNodeVisitor',                       $dir . "/visitors/
 $app->registerClass( 'TextNodeVisitor',                       $dir . "/visitors/TextNodeVisitor.php");
 $app->registerClass( 'ImageFigureVisitor',                    $dir . "/visitors/ImageFigureVisitor.php");
 $app->registerClass( 'QuoteVisitor',                          $dir . "/visitors/QuoteVisitor.php");
+$app->registerClass( 'ImageVisitor',                          $dir . "/visitors/ImageVisitor.php");
 
 $app->registerClass( 'DomHelper',                             $dir . "/util/DomHelper.php");
 
