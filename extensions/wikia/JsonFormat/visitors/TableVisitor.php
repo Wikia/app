@@ -58,9 +58,21 @@ class TableVisitor extends DOMNodeVisitorBase {
 			$cell = new JsonFormatTableCellNode( );
 			$this->getJsonFormatTraversingState()->pushNode( $cell );
 
-			$this->iterate( $currentNode->childNodes );
+			if ( $this->hasSingleDiv( $currentNode ) ) {
+				// special case: if single div, ignore it but get all the contents.
+				// tables cells often contain div wrapper
+				$this->iterate( $currentNode->childNodes->item(0)->childNodes );
+			} else {
+				$this->iterate( $currentNode->childNodes );
+			}
 
 			$this->getJsonFormatTraversingState()->popNode( $cell );
 		}
+	}
+
+	protected function hasSingleDiv( DOMNode $currentNode ) {
+		return DomHelper::isElement( $currentNode, 'td' )
+			&& $currentNode->childNodes->length == 1
+			&& DomHelper::isElement( $currentNode->childNodes->item(0), 'div' );
 	}
 }
