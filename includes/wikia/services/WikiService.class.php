@@ -373,7 +373,7 @@ class WikiService extends WikiaModel {
 
 		foreach ( $wikiDetails as $wikiId => $wikiData ) {
 			if ( empty( $wikiData['desc']) ) {
-				$wikiDetails[ $wikiId ]['desc'] = $this->app->wf->Message( 'wikiasearch2-crosswiki-description', $wikiData['name'] )->text();
+				$wikiDetails[ $wikiId ]['desc'] = wfMessage( 'wikiasearch2-crosswiki-description', $wikiData['name'] )->text();
 			}
 			$wikiDetails[ $wikiId ]['image_wiki_id'] = null;
 			if ( !empty( $wikiData['image'] ) ) {

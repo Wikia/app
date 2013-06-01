@@ -84,7 +84,7 @@ class GamingMapsHooks extends WikiaObject{
             }
         }*/
 
-        /*$imgFile = F::app()->wf->findFile( $attributes['img']);
+        /*$imgFile = wfFindFile( $attributes['img']);
         if($imgFile->exists()){
             $app->sendRequest("GamingMaps", "createMap", array( 'oImage' => $imgFile )); //send values to controller
         }*/

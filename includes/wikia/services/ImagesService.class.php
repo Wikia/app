@@ -34,10 +34,10 @@ class ImagesService extends Service {
 	}
 
 	public static function getImageSrcByTitle( $cityId, $articleTitle, $width=null, $height=null ) {
-
+		global $wgMemc;
 		wfProfileIn(__METHOD__);
-		$imageKey = F::app()->wf->SharedMemcKey( 'image_url_from_wiki', $cityId.$articleTitle.$width.$height );
-		$imageSrc = F::app()->wg->Memc->get( $imageKey );
+		$imageKey = wfSharedMemcKey( 'image_url_from_wiki', $cityId.$articleTitle.$width.$height );
+		$imageSrc = $wgMemc->get( $imageKey );
 
 		if ( $imageSrc === false ) {
 			$globalFile = GlobalFile::newFromText( $articleTitle, $cityId );
@@ -46,7 +46,7 @@ class ImagesService extends Service {
 			} else {
 				$imageSrc = null;
 			}
-			F::app()->wg->Memc->set( $imageKey, $imageSrc, 60*60*24*3 );
+			$wgMemc->set( $imageKey, $imageSrc, 60*60*24*3 );
 		}
 		wfProfileOut(__METHOD__);
 		return $imageSrc;
@@ -61,7 +61,6 @@ class ImagesService extends Service {
 	}
 
 	public static function getImageOriginalUrl($wikiId, $pageId) {
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);

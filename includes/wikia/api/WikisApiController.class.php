@@ -264,18 +264,20 @@ class WikisApiController extends WikiaApiController {
 
 	protected function getMemCacheKey( $wikiId ) {
 		if ( !isset( $this->keys[ $wikiId ] ) ) {
-			$this->keys[ $wikiId ] =  F::app()->wf->sharedMemcKey( static::MEMC_NAME.$wikiId );
+			$this->keys[ $wikiId ] =  wfsharedMemcKey( static::MEMC_NAME.$wikiId );
 		}
 		return $this->keys[ $wikiId ];
 	}
 
 	protected function cacheWikiData( $wikiInfo ) {
+		global $wgMemc;
 		$key = $this->getMemCacheKey( $wikiInfo[ 'wikiId' ] );
-		F::app()->wg->memc->set( $key, $wikiInfo, static::CACHE_VALIDITY );
+		$wgMemc->set( $key, $wikiInfo, static::CACHE_VALIDITY );
 	}
 
 	protected function getFromCacheWiki( $wikiId ) {
+		global $wgMemc;
 		$key = $this->getMemCacheKey( $wikiId );
-		return F::app()->wg->memc->get( $key );
+		return $wgMemc->get( $key );
 	}
 }
