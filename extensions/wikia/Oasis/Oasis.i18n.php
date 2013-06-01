@@ -163,6 +163,7 @@ $messages['en'] = array(
 	'oasis-upload-photos-fewer-options' => 'Fewer Options',
 	'oasis-upload-photos-force' => 'Upload anyway',
 	'oasis-upload-photos-caption' => 'Caption',
+	'oasis-upload-photos-overwrite-file' => 'Overwrite File',
 	
 	'oasis-corporatefooter-navigation-header' => 'Wikia Inc Navigation',
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
