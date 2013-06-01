@@ -12,6 +12,9 @@
 ini_set( "include_path", "{$IP}:{$IP}/includes:{$IP}/languages:{$IP}/lib/vendor:.:" );
 ini_set( "cgi.fix_pathinfo", 1);
 
+if ( is_file( "$IP/logLevel.php" ) ) {
+	require_once( "$IP/logLevel.php" );
+}
 require_once( "$IP/includes/Defines.php" );
 require_once( "$IP/includes/DefaultSettings.php" );
 require_once( "$IP/includes/Hooks.php" );
@@ -210,7 +213,7 @@ class WikiFactoryLoader {
 		 * do not forget about destroying the loadbalancer instance
 		 */
 		$this->mDBhandler = wfGetDB( $type, array(), $this->mDBname );
-		$this->debug( "connecting to {$this->mDBname} via LoadBalancer" );
+		Wikia::logLevel( "connecting to {$this->mDBname} via LoadBalancer", Wikia::LVL_INFO );
 
 		/**
 		 * if something goes wrong just fallback to $wgDBserver
@@ -218,7 +221,7 @@ class WikiFactoryLoader {
 		if( !$this->mDBhandler || !$this->mDBhandler->isOpen() ) {
 			error_log( "WikiFactoryLoader[{$this->mCityID}]: fallback to {$wgDBserver}" );
 			$this->mDBhandler = new DatabaseMysql( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
-			$this->debug( "fallback to wgDBserver {$wgDBserver}" );
+			Wikia::logLevel( "fallback to wgDBserver {$wgDBserver}" );
 		}
 
 		return $this->mDBhandler;
@@ -273,7 +276,7 @@ class WikiFactoryLoader {
 			$key = WikiFactory::getDomainKey( $this->mServerName );
 			$this->mDomain = $oMemc->get( $key );
 			$this->mDomain = isset( $this->mDomain["id"] ) ? $this->mDomain : array ();
-			$this->debug( "reading from cache, key {$key}" );
+			Wikia::logLevel( "reading from cache, key {$key}", Wikia::LVL_DEBUG );
 			wfProfileOut( __METHOD__."-domaincache" );
 		}
 
@@ -383,7 +386,7 @@ class WikiFactoryLoader {
 					$this->mExpireDomainCacheTimeout
 				);
 			}
-			$this->debug( "city_id={$this->mWikiID}, reading from database key {$this->mServerName}" );
+			Wikia::logLevel( "city_id={$this->mWikiID}, reading from database key {$this->mServerName}", Wikia::LVL_INFO );
 			wfProfileOut( __METHOD__."-domaindb" );
 		}
 		else {
@@ -418,7 +421,7 @@ class WikiFactoryLoader {
 		 * redirection to another url
 		 */
 		if( $this->mIsWikiaActive == 2 ) {
-			$this->debug( "city_id={$this->mWikiID};city_public={$this->mIsWikiaActive}), redirected to {$this->mCityHost}" );
+			Wikia::logLevel( "city_id={$this->mWikiID};city_public={$this->mIsWikiaActive}), redirected to {$this->mCityHost}" );
 			header( "X-Redirected-By-WF: 2" );
 			header( "Location: http://{$this->mCityHost}/", true, 301 );
 			wfProfileOut( __METHOD__ );
@@ -456,7 +459,7 @@ class WikiFactoryLoader {
 			$target = $url[ "scheme" ] . "://" . $host . $url[ "path" ];
 			$target = isset( $url[ "query" ] ) ? $target . "?" . $url[ "query" ] : $target;
 
-			$this->debug( "redirected from {$url[ "url" ]} to {$target}" );
+			Wikia::logLevel( "redirected from {$url[ "url" ]} to {$target}" );
 
 			header( "X-Redirected-By-WF: NotPrimary" );
 			header( "Location: {$target}", true, 301 );
@@ -472,7 +475,7 @@ class WikiFactoryLoader {
 		if( empty( $this->mWikiID ) || $this->mIsWikiaActive == -1 ) {
 			if( ! $this->mCommandLine ) {
 				global $wgNotAValidWikia;
-				$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				Wikia::logLevel( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				if( $this->mIsWikiaActive < 0 ) {
 					header( "X-Redirected-By-WF: MarkedForClosing" );
 				}
@@ -503,7 +506,7 @@ class WikiFactoryLoader {
 				else {
 					$redirect = $wgNotAValidWikia;
 				}
-				$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				Wikia::logLevel( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				header( "X-Redirected-By-WF: Dump" );
 				header( "Location: $redirect" );
 				wfProfileOut( __METHOD__ );
@@ -570,10 +573,10 @@ class WikiFactoryLoader {
 				$this->mVariables = isset( $data["data"] ) && is_array( $data["data"] )
 					? $data["data"]
 					: array ();
-				$this->debug( "wikifactory: reading from cache, key {$key}, count ".count( $this->mVariables ) );
+				Wikia::logLevel( "wikifactory: reading from cache, key {$key}, count ".count( $this->mVariables ), Wikia::LVL_DEBUG );
 			}
 			else {
-				$this->debug( "wikifactory: timestamp doesn't match. Cache expired" );
+				Wikia::logLevel( "wikifactory: timestamp doesn't match. Cache expired" );
 			}
 			wfProfileOut( __METHOD__."-varscache" );
 		}
@@ -620,7 +623,7 @@ class WikiFactoryLoader {
 								$url[ "host" ] = "beta." . $url[ "host" ];
 								$tUnserVal = http_build_url( $tUnserVal, $url );
 								$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
-								$this->debug( "Set value of wgServer to {$tUnserVal} for beta wikis" );
+								Wikia::logLevel( "Set value of wgServer to {$tUnserVal} for beta wikis" );
 							}
 						}
 					}
@@ -628,7 +631,7 @@ class WikiFactoryLoader {
 						/**
 						 * skip this variable
 						 */
-						$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
+						Wikia::logLevel( "{$oRow->cv_name} with value {$tUnserVal} skipped", Wikia::LVL_INFO );
 					}
 				}
 				else {
@@ -663,7 +666,7 @@ class WikiFactoryLoader {
 				$this->mVariables[ "wgWikiFactoryTags" ][ $row->id ] = $row->name;
 			}
 			$dbr->freeResult( $sth );
-			$this->debug( "reading tags from database, id {$this->mWikiID}, count ".count( $this->mVariables[ "wgWikiFactoryTags" ] ) );
+			Wikia::logLevel( "reading tags from database, id {$this->mWikiID}, count ".count( $this->mVariables[ "wgWikiFactoryTags" ] ), Wikia::LVL_DEBUG );
 			wfProfileOut( __METHOD__."-tagsdb" );
 
 			if( empty($this->mAlwaysFromDB) ) {
@@ -690,7 +693,7 @@ class WikiFactoryLoader {
 					$this->mExpireValuesCacheTimeout
 				);
 			}
-			$this->debug( "reading from database, id {$this->mWikiID}, count ".count( $this->mVariables ) );
+			Wikia::logLevel( "reading from database, id {$this->mWikiID}, count ".count( $this->mVariables ), Wikia::LVL_DEBUG );
 			wfProfileOut( __METHOD__."-varsdb" );
 
 			/**
@@ -816,7 +819,7 @@ class WikiFactoryLoader {
 				$db = array_shift( $keys );
 				if( isset( $wgLBFactoryConf[ "hostsByName" ][ $db ] ) ) {
 					$wgDBserver = $wgLBFactoryConf[ "hostsByName" ][ $db ];
-					$this->debug( "wgDBserver for cluster {$cluster} set to {$wgDBserver}" );
+					Wikia::logLevel( "wgDBserver for cluster {$cluster} set to {$wgDBserver}", Wikia::LVL_DEBUG );
 				}
 			}
 		}
@@ -975,7 +978,7 @@ class WikiFactoryLoader {
 				$up = DatabaseUpdater::newForDB( $this->db );
 				$up->doUpdates();
 			} catch ( MWException $e ) {
-				$this->debug( "An error occured: " . $e->getText() );
+				Wikia::logLevel( "An error occured: " . $e->getText(), Wikia::LVL_ERR );
 				$ret = false;
 			}
 			ob_end_flush();

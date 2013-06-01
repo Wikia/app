@@ -50,6 +50,12 @@ $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 
 class Wikia {
 
+	const LVL_ERR   = 0;
+	const LVL_WARN  = 1;
+	const LVL_NOTE  = 2;
+	const LVL_INFO  = 3;
+	const LVL_DEBUG = 4;
+
 	private static $vars = array();
 	private static $cachedLinker;
 
@@ -100,8 +106,6 @@ class Wikia {
 
 		return $themes;
 	}
-
-
 
     /**
      * successbox
@@ -199,23 +203,23 @@ class Wikia {
         return Xml::element("span", array( "style"=> "color: darkgreen; font-weight: bold;"), $what);
     }
 
-    /**
-     * fixDomainName
-     *
-     * It takes domain name as param, then checks if it contains more than one
-     * dot, then depending on that information adds .wikia.com domain or not.
-     * Additionally it lowercase name
-     *
-     * @access public
-     * @static
-     * @author eloy@wikia-inc.com
-     *
-     * @param string $name Domain Name
-     * @param string $language default false - choosen language
-     * @param mixed  $type type of domain, default false = wikia.com
-     *
-     * @return string fixed domain name
-     */
+	/**
+	 * fixDomainName
+	 *
+	 * It takes domain name as param, then checks if it contains more than one
+	 * dot, then depending on that information adds .wikia.com domain or not.
+	 * Additionally it lowercase name
+	 *
+	 * @access public
+	 * @static
+	 * @author eloy@wikia-inc.com
+	 *
+	 * @param string $name Domain Name
+	 * @param bool|string $language default false - choosen language
+	 * @param mixed $type type of domain, default false = wikia.com
+	 *
+	 * @return string fixed domain name
+	 */
 	static public function fixDomainName( $name, $language = false, $type = false ) {
 		if (empty( $name )) {
 			return $name;
@@ -353,6 +357,31 @@ class Wikia {
 		return $path;
 	}
 
+	static public function logLevel( $message, $level = self::LVL_INFO ) {
+		global $wgLogLevel;
+
+		// No logging above the current level of detail
+		if ($wgLogLevel < $level) {
+			return false;
+		}
+
+		// Set a default method name in case we can't figure it out
+		$method = 'unknown-method';
+
+		// Get a minimal backtrace for one level back
+		$trace = debug_backtrace(false, 2);
+		if ($trace && count($trace) > 1) {
+			$frame = $trace[1];
+			if ( !empty($frame['function']) ) {
+				$method = $frame['function'];
+			}
+		}
+
+		Wikia::log($method, false, $message);
+
+		return true;
+	}
+
 	/**
 	 * simple logger which log message to STDERR if devel environment is set
 	 *
@@ -360,11 +389,10 @@ class Wikia {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 * @param String $method     -- use __METHOD__
-	 * @param String $sub        -- sub-section name (if more than one in same method); default false
+	 * @param bool|String $sub -- sub-section name (if more than one in same method); default false
 	 * @param String $message    -- additional message; default false
 	 * @param Boolean $always    -- skip checking of $wgErrorLog and write log (or not); default false
 	 * @param Boolean $timestamp -- write timestamp before line; default false
-	 *
 	 */
 	static public function log( $method, $sub = false, $message = '', $always = false, $timestamp = false ) {
 	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode, $wgCommandLineSilentMode;
