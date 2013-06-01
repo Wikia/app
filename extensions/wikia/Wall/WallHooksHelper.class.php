@@ -3,7 +3,7 @@
 class WallHooksHelper {
 	const RC_WALL_COMMENTS_MAX_LEN = 50;
 	const RC_WALL_SECURENAME_PREFIX = 'WallMessage_';
-	private $rcWallActionTypes = array('wall_remove', 'wall_restore', 'wall_admindelete', 'wall_archive', 'wall_reopen');
+	static private $rcWallActionTypes = array('wall_remove', 'wall_restore', 'wall_admindelete', 'wall_archive', 'wall_reopen');
 
 	static public function onBlockIpCompleteWatch($name, $title ) {
 		$app = F::App();
@@ -818,7 +818,7 @@ class WallHooksHelper {
 		$app = F::app();
 		if( in_array($rcType, array(RC_NEW, RC_EDIT, RC_LOG)) && in_array(MWNamespace::getSubject($rc->getAttribute('rc_namespace')), $app->wg->WallNS) ) {
 
-			if( in_array($rc->getAttribute('rc_log_action'), static::rcWallActionTypes) ) {
+			if( in_array($rc->getAttribute('rc_log_action'), static::$rcWallActionTypes) ) {
 				$articleLink = '';
 
 				return true;
@@ -901,7 +901,7 @@ class WallHooksHelper {
 				return true;
 			}
 
-			if( in_array($rc->getAttribute('rc_log_action'), static::rcWallActionTypes) ) {
+			if( in_array($rc->getAttribute('rc_log_action'), static::$rcWallActionTypes) ) {
 				//delete, remove, restore
 				$parts = explode('/@', $rcTitle->getText());
 				$isThread = ( count($parts) === 2 ) ? true : false;
@@ -1006,7 +1006,7 @@ class WallHooksHelper {
 				}
 
 				$comment .= Xml::element( 'span', array('class' => 'comment'), $msg );
-			} else if( $rcType == RC_LOG && in_array($rc->getAttribute('rc_log_action'), static::rcWallActionTypes) ) {
+			} else if( $rcType == RC_LOG && in_array($rc->getAttribute('rc_log_action'), static::$rcWallActionTypes) ) {
 				//this will be deletion/removal/restore summary
 				$text = $rc->getAttribute('rc_comment');
 
@@ -1039,7 +1039,7 @@ class WallHooksHelper {
 		$app = F::app();
 		if( $rc->getAttribute('rc_type') == RC_LOG
 				&& in_array(MWNamespace::getSubject($rc->getAttribute('rc_namespace')), $app->wg->WallNS)
-				&& in_array($rc->getAttribute('rc_log_action'), static::rcWallActionTypes) ) {
+				&& in_array($rc->getAttribute('rc_log_action'), static::$rcWallActionTypes) ) {
 
 			$actionText = '';
 			$wfMsgOptsBase = static::getMessageOptions($rc);
