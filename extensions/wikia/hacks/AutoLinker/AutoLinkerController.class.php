@@ -25,7 +25,6 @@ class AutoLinkerController extends WikiaController {
 	}
 
 	private function getPagesFrom($source) {
-		$app = F::app();
 		$dbr = wfGetDb(DB_SLAVE);
 
 		$className = "{$source}Page";
@@ -37,7 +36,6 @@ class AutoLinkerController extends WikiaController {
 
 		$sql = $dbr->limitResult($queryPage->getSQL(), self::LIMIT, 0);
 		$res = $dbr->query($sql, __METHOD__ . "::{$source}");
-		$num = $dbr->numRows($res);
 
 		$pages = array();
 

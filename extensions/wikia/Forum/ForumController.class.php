@@ -1,7 +1,6 @@
 <?php
 
 class ForumController extends WallBaseController {
-	private $isThreadLevel = false;
 	protected $sortingType = 'index';
 	const BOARD_PER_PAGE = 25;
 

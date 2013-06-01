@@ -20,8 +20,6 @@ class WikiaPhotoGalleryRSS {
 	 * @author Marooned
 	 */
 	static function parseFeed($url, $omitDB = false) {
-		global $wgOut;
-
 		//reset array
 		self::$data = array('feedTitle' => '', 'images' => array());
 

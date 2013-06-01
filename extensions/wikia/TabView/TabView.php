@@ -31,11 +31,7 @@ function wfSetupTabView( $parser ) {
 }
 
 function tabviewRender($input, $params, $parser ) {
-	global $tabsCount, $wgStylePath, $wgJsMimeType;
-
-	if(isset($params['title']) && $params['title'] != '' && strpos($params['title'], '<') === false && strpos($params['title'], '>') === false) {
-		$title = $params['title'];
-	}
+	global $tabsCount;
 
 	if(isset($params['id']) && $params['id'] != '' && strpos($params['id'], '<') === false && strpos($params['id'], '>') === false) {
 		$id = $params['id'];
