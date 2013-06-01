@@ -114,15 +114,14 @@ class GamingMapsHooks extends WikiaObject{
 
     public static function getUrlIMG($imgName) // serach image Icon file by name and get its url
     {
-        $app = F::app();
-        $imgFile = wffindFile($imgName); //find file
+        $imgFile = wfFindFile($imgName); //find file
         if($imgFile) // check if exists
         {
             $urlIMG = wfReplaceImageServer(
                 $imgFile->getUrl()
             );
         }else{ // if not set default img
-            $imgFile = wffindFile('iOtherIcon.png');
+            $imgFile = wfFindFile('iOtherIcon.png');
             $urlIMG = wfReplaceImageServer(
                 $imgFile->getUrl()
             );

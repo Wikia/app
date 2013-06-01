@@ -18,7 +18,7 @@ class WikiaPollArticle extends Article {
 	 * Render Poll namespace page
 	 */
 	public function view() {
-		global $wgOut, $wgTitle, $wgJsMimeType, $wgExtensionsPath;
+		global $wgOut, $wgTitle;
 		wfProfileIn(__METHOD__);
 
 		// let MW handle basic stuff

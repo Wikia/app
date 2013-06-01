@@ -11,8 +11,6 @@ class ImagesService extends Service {
 	 * @return string imageUrl
 	 */
 	public static function getImageSrc($wikiId, $pageId, $imgSize = 250) {
-		$app = F::app();
-
 		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
