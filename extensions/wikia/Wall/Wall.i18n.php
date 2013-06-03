@@ -13,16 +13,16 @@ $messages['en'] = array(
 	'wall-message-undoremove' => 'Undo',
 	'wall-message-edited' => '<a href="$3" >Edited by</a> <a class="username" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 by </a><a class="username" href="$2">$3</a>',
-								
+
 	'wall-message-update-topics-summary' => 'Topic changed',
 	'wall-message-update-highlight-summary' => 'Highlighted',
 	'wall-message-update-removed-highlight-summary'  => 'Highlight removed',
-	
+
 	'wall-message-mywall' => 'My wall',
 	'wall-toolbar-history' => 'History',
 
 	'wall-message-notify' => 'Notify admin',
-	
+
 	'wall-message-remove' => 'Remove',
 	'wall-message-rev-delete' => 'Revision delete',
 	'wall-message-fast-admin-delete-message' => 'VSTF delete',
@@ -114,22 +114,12 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-action-rev-reply-confirm' => 'Are you sure you want to delete this message?',
 	'wall-action-rev-thread-confirm' => 'Are you sure you want to revision delete this thread and all of its history from the wiki? This cannot be undone.',
 	'wall-action-rev-confirm-ok' => 'Yes, delete',
-	
+
 	'wall-action-move-thread-heading' => 'Move this thread',
 	'wall-action-move-validation-select-wall' => 'Please select a board',
 	'wall-action-move-topics-summary' => 'Thread moved', // from $1
 	'wall-action-move-thread-ok' => 'Move thread',
 	'wall-action-move-board-label' => 'Select a board to move to',
-
-	'wall-notifications' => 'Notifications',
-	'wall-notifications-all' => 'All Notifications',
-	'wall-notifications-markasread' => 'Mark all as read',
-	'wall-notifications-markasread-all-wikis' => 'All wikis',
-	'wall-notifications-markasread-this-wiki' => 'This wiki',
-	'wall-notifications-empty' => 'There are no notifications',
-	'wall-notifications-loading' => 'Loading notifications',
-	'wall-notifications-reminder' => 'You have <span>$1</span> unread {{PLURAL:$1|notification|notifications}}',
-	'wall-notifications-wall-disabled' => 'Message Wall has been disabled on this wiki. Unable to load notifications.',
 
 	'wn-user1-reply-you-your-wall' => '$1 replied to your message on your wall',
 	'wn-user2-reply-you-your-wall' => '$1 and $2 replied to your message on your wall',
@@ -266,7 +256,7 @@ The original post and your summary will still appear in the wiki's history.",
 
 	'wall-thread-history-thread-edited' => "$1 $2 edited $3's message $5",
 	'wall-thread-history-reply-edited' => "$1 $2 edited $3's message $5",
-	
+
 	'wall-thread-history-thread-closed' => "$2 closed this thread",
 	'wall-thread-history-thread-reopened' => "$2 reopened this thread",
 
@@ -371,7 +361,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-preview-modal-title' => 'Preview',
 	'wall-preview-modal-button-back' => 'Back',
 	'wall-preview-modal-button-publish' => 'Publish',
-	
+
 	'wall-topic-input-heading' => 'Topic',
 	'wall-topic-input-placeholder' => 'Add a Topic (optional)',
 	'wall-topic-input-error' => 'There is no article named "$1". Please use an existing article name as a Topic.',
@@ -513,18 +503,6 @@ See also:
 	'wall-action-move-topics-summary' => 'Summery for change in user contribution',
 	'wall-action-move-thread-ok' => 'Confirmation button for moving thread',
 	'wall-action-move-board-label' => 'Label for list of board dropdown',
-	'wall-notifications' => 'Title of notification dropdown.
-{{Identical|Notification}}',
-	'wall-notifications-all' => 'Text in notification dropdown menu.
-{{Identical|All notifications}}',
-	'wall-notifications-markasread' => 'Option in notification dropdown menu to mark all threads as read.
-{{Identical|Mark all as read}}',
-	'wall-notifications-markasread-all-wikis' => 'Option to mark all cross-wiki notifications as read',
-	'wall-notifications-markasread-this-wiki' => "Option to mark only this wiki's notifications as read",
-	'wall-notifications-empty' => 'Message for empty notification dropdown',
-	'wall-notifications-loading' => 'Message in the notification dropdown while notifications are loading',
-	'wall-notifications-reminder' => 'Notification reminder that appears at the top right if user scrolls down without looking at notification dropdown, uses pluralization',
-	'wall-notifications-wall-disabled' => 'It shows when the wall is turned off during loading of notification',
 	'wn-user1-reply-you-your-wall' => 'Notification when someone replies on your wall. Parameters:
 * $1 is a username (GENDER is supported in this message).',
 	'wn-user2-reply-you-your-wall' => "Notification when 2 users reply on the logged in user's wall. Parameters:
@@ -920,15 +898,6 @@ $messages['ar'] = array(
 	'wall-action-move-topics-summary' => 'تم نقل الموضوع',
 	'wall-action-move-thread-ok' => 'نقل النقاش',
 	'wall-action-move-board-label' => 'قم باختيار قسم من المنتدى لكي يتم النقل له',
-	'wall-notifications' => 'الإشعارات',
-	'wall-notifications-all' => 'كل الإشعارات',
-	'wall-notifications-markasread' => 'وضع علامة مقروءة للجميع',
-	'wall-notifications-markasread-all-wikis' => 'كل الويكيات',
-	'wall-notifications-markasread-this-wiki' => 'هذا الويكي',
-	'wall-notifications-empty' => 'لا توجد أية إشعارات',
-	'wall-notifications-loading' => 'تحميل الإشعارات',
-	'wall-notifications-reminder' => 'لديك <span> $1 </span> {{PLURAL:$1| إشعار غير مقروء|إشعارات غير مقروء}}',
-	'wall-notifications-wall-disabled' => 'تم تعطيل رسائل الجدار في هذه الويكي. لا يمكن تحميل الإشعارات.',
 	'wn-user1-reply-you-your-wall' => 'قام $1 بالرد على رسالتك على جدارك',
 	'wn-user2-reply-you-your-wall' => 'قام كلا من $1 و $2 بالرد على رسالتك في جدارك',
 	'wn-user3-reply-you-your-wall' => 'قام  $1 و آخرون بالرد على رسالتك على جدارك',
@@ -1141,8 +1110,6 @@ $messages['bg'] = array(
 	'wall-action-remove-confirm-ok' => 'Премахване',
 	'wall-action-admin-confirm-ok' => 'Изтриване',
 	'wall-action-restore-confirm-ok' => 'Възстановяване',
-	'wall-notifications-markasread-all-wikis' => 'Всички уикита',
-	'wall-notifications-markasread-this-wiki' => 'Това уики',
 	'wall-history' => 'История',
 	'wall-history-summary-label' => 'Резюме',
 );
@@ -1212,14 +1179,6 @@ $messages['br'] = array(
 	'wall-action-move-thread-heading' => "Dilec'hiañ an neudennad-mañ",
 	'wall-action-move-topics-summary' => "Neudennad dilec'hiet",
 	'wall-action-move-thread-ok' => "Dilec'hiañ an neudennad",
-	'wall-notifications' => 'Kemennoù',
-	'wall-notifications-all' => 'An holl gemennoù',
-	'wall-notifications-markasread' => 'Merkañ an holl evel lennet',
-	'wall-notifications-markasread-all-wikis' => 'An holl wikioù',
-	'wall-notifications-markasread-this-wiki' => 'Ar wiki-mañ',
-	'wall-notifications-empty' => "N'eus kemenn ebet",
-	'wall-notifications-loading' => "O kargañ ar c'hemennoù",
-	'wall-notifications-reminder' => '<span>$1</span> kemenn nann-lennet ho peus', # Fuzzy
 	'wn-user1-reply-you-a-wall' => "$1 en deus respontet d'ho kemennadenn",
 	'wn-user2-reply-you-a-wall' => "$1 ha $2 o deus respontet d'ho kemennadenn",
 	'wn-user3-reply-you-a-wall' => "$1 ha re all o deus respontet d'ho kemennadenn",
@@ -1411,15 +1370,6 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-action-move-topics-summary' => 'Tema reanomenat',
 	'wall-action-move-thread-ok' => 'Reanomenar tema',
 	'wall-action-move-board-label' => 'Selecciona un subfòrum per moure',
-	'wall-notifications' => 'Notificacions',
-	'wall-notifications-all' => 'Totes les notificacions',
-	'wall-notifications-markasread' => "Marca'ls tots com a llegits",
-	'wall-notifications-markasread-all-wikis' => 'Tots els wikis',
-	'wall-notifications-markasread-this-wiki' => 'Aquest wiki',
-	'wall-notifications-empty' => 'No hi ha notificacions',
-	'wall-notifications-loading' => 'Carregant notificacions',
-	'wall-notifications-reminder' => 'Tens <span>$1</span> {{PLURAL:$1|notificació|notificacions}} sense llegir',
-	'wall-notifications-wall-disabled' => 'El Mur de Missatges ha estat desactivat en aquest wiki. No es poden carregar les notificacions.',
 	'wn-user1-reply-you-your-wall' => '$1 ha respost el teu missatge al teu Mur',
 	'wn-user2-reply-you-your-wall' => '$1 i $2 han respost al teu missatge al teu Mur',
 	'wn-user3-reply-you-your-wall' => '$1 i altres han respost el teu missatge al teu Mur',
@@ -1539,27 +1489,27 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'mail-notification-html-footer-line1' => 'Per a comprovar les últimes novetats de Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://ca.wikia.com">ca.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Vols controlar els emails que reps? Vés a les teves <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferències</a>',
 	'mail-notification-body' => 'Hola $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Veure la conversació($MESSAGE_LINK)
- 
+
 L\'equip de Wikia
 
 ___________________________________________
 * Troba l\'ajuda i els consells que necessites a la Central de Wikia en català: http://ca.wikia.com
 * Vols rebre menys missatges de nosaltres? Pots canviar les teves preferències respecte als emails aquí: http://ca.wikia.com/wiki/Especial:Preferències',
 	'mail-notification-body-HTML' => 'Hola $WATCHER,
-<p>$SUBJECT.</p> 
+<p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p> 			
+<p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veure la conversació</a></p>
 <p>L\'equip de Wikia</p>
 ___________________________________________<br />
@@ -1651,12 +1601,6 @@ $messages['cs'] = array(
 	'wall-action-restore-confirm' => 'Uveďte důvod obnovení:',
 	'wall-action-restore-confirm-ok' => 'Obnovit',
 	'wall-action-rev-confirm-ok' => 'Ano, smazat',
-	'wall-notifications' => 'Upozornění',
-	'wall-notifications-all' => 'Všechna upozornění',
-	'wall-notifications-markasread' => 'Označit vše jako přečtené',
-	'wall-notifications-markasread-all-wikis' => 'Všechny wiki',
-	'wall-notifications-markasread-this-wiki' => 'Tato wiki',
-	'wall-notifications-empty' => 'Nemáte žádná upozornění',
 	'wall-sorting-newest-threads' => 'Nejnovější vlákna',
 	'wall-sorting-oldest-threads' => 'Nejstarší vlákna',
 	'wall-sorting-newest-replies' => 'Nejnovější odpovědi',
@@ -1828,15 +1772,6 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-action-move-topics-summary' => 'Thread verschoben',
 	'wall-action-move-thread-ok' => 'Thread verschieben',
 	'wall-action-move-board-label' => 'Wähle ein Brett aus, um es zu verschieben',
-	'wall-notifications' => 'Benachrichtigungen',
-	'wall-notifications-all' => 'Alle Benachrichtigungen',
-	'wall-notifications-markasread' => 'Alle als gelesen markieren',
-	'wall-notifications-markasread-all-wikis' => 'Alle Wikis',
-	'wall-notifications-markasread-this-wiki' => 'Dieses Wiki',
-	'wall-notifications-empty' => 'Es gibt keine Benachrichtigungen.',
-	'wall-notifications-loading' => 'Lade Benachrichtigungen',
-	'wall-notifications-reminder' => 'Du hast <span>$1</span> ungelesene {{PLURAL:$1|Benachrichtigung|Benachrichtigungen}}',
-	'wall-notifications-wall-disabled' => 'Nachrichtenseiten wurden in diesem Wiki deaktiviert. Benachrichtigung kann nicht geladen werden.',
 	'wn-user1-reply-you-your-wall' => '$1 hat dir auf deiner Nachrichtenseite geantwortet',
 	'wn-user2-reply-you-your-wall' => '$1 und $2 haben dir auf deiner Nachrichtenseite geantwortet',
 	'wn-user3-reply-you-your-wall' => '$1 und weitere haben dir auf deiner Nachrichtenseite geantwortet',
@@ -2065,10 +2000,6 @@ $messages['diq'] = array(
 	'wall-action-admin-confirm-ok' => 'Besterne',
 	'wall-action-restore-confirm-ok' => 'Timar bike',
 	'wall-action-rev-confirm-ok' => 'E, besternê',
-	'wall-notifications' => 'Tebliği',
-	'wall-notifications-all' => 'Tebliği pêro',
-	'wall-notifications-markasread-all-wikis' => 'Wikiy pêro',
-	'wall-notifications-markasread-this-wiki' => 'E na wiki',
 	'wall-sorting-archived' => 'Arşivya',
 	'wall-recentchanges-new-message' => '<a href="$1">dêsê $2\'i deyo</a>',
 	'wall-recentchanges-summary' => '($1)',
@@ -2152,15 +2083,6 @@ $messages['el'] = array(
 	'wall-action-restore-reply-title' => 'Επαναφορά αυτής της απάντησης',
 	'wall-action-restore-confirm' => 'Παρακαλούμε πείτε μας γιατί θα θέλατε να επαναφέρετε αυτό:',
 	'wall-action-restore-confirm-ok' => 'Επαναφορά',
-	'wall-notifications' => 'Ειδοποιήσεις',
-	'wall-notifications-all' => 'Όλες οι ειδοποιήσεις',
-	'wall-notifications-markasread' => 'Σήμανση όλων ως διαβασμένα',
-	'wall-notifications-markasread-all-wikis' => 'Όλα τα wikis',
-	'wall-notifications-markasread-this-wiki' => 'Αυτό το wiki',
-	'wall-notifications-empty' => 'Δεν υπάρχουν ειδοποιήσεις',
-	'wall-notifications-loading' => 'Φόρτωση ειδοποιήσεων',
-	'wall-notifications-reminder' => 'Έχετε <span> $1 </span> μη αναγνωσμένη  {{PLURAL:$1|ειδοποίηση|ειδοποιήσεις}}',
-	'wall-notifications-wall-disabled' => 'Ο τοίχος μηνυμάτων έχει απενεργοποιηθεί σε αυτό το wiki.',
 	'wall-thread-history-thread-closed' => 'Ο $2 έκλεισε αυτό το νήμα',
 	'wall-thread-history-thread-reopened' => 'Ο $2 ξανάνοιξε αυτό το νήμα',
 	'wall-history-action-restore-reply' => 'επαναφορά απάντησης',
@@ -2278,15 +2200,6 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-action-move-topics-summary' => 'Tema renombrado',
 	'wall-action-move-thread-ok' => 'Renombrar tema',
 	'wall-action-move-board-label' => 'Selecciona un subforo a mover',
-	'wall-notifications' => 'Notificaciones',
-	'wall-notifications-all' => 'Todas las notificaciones',
-	'wall-notifications-markasread' => 'Marcar como leído',
-	'wall-notifications-markasread-all-wikis' => 'Todos los wikis',
-	'wall-notifications-markasread-this-wiki' => 'Este wiki',
-	'wall-notifications-empty' => 'No hay notificaciones',
-	'wall-notifications-loading' => 'Cargando notificaciones',
-	'wall-notifications-reminder' => 'Tienes <span>$1</span> {{PLURAL:$1|notificación|notificaciones}} sin leer',
-	'wall-notifications-wall-disabled' => 'El Muro de Mensajes ha sido desactivado en este wiki. No se pueden cargar las notificaciones.',
 	'wn-user1-reply-you-your-wall' => '$1 respondió a tu mensaje en tu Muro',
 	'wn-user2-reply-you-your-wall' => '$1 y $2 respondieron a tu mensaje en tu Muro',
 	'wn-user3-reply-you-your-wall' => '$1 y otros respondieron a tu mensaje en tu Muro',
@@ -2425,27 +2338,27 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'mail-notification-html-footer-line1' => 'Para comprobar las últimas novedades en Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://es.wikia.com">es.wikia.com</a>',
 	'mail-notification-html-footer-line2' => '¿Quieres controlar los correos electrónicos que recibes? Ve a tus <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferencias</a>',
 	'mail-notification-body' => 'Hola $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Ver la conversación($MESSAGE_LINK)
- 
+
 El equipo de Wikia
 
 ___________________________________________
 * Encuentra la ayuda y los consejos que necesitas en la Central de Wikia en español: http://es.wikia.com
 * ¿Quieres recibir menos mensajes de nosotros? Puedes cambiar tus preferencias con respecto a los emails aquí: http://es.wikia.com/wiki/Especial:Preferencias',
 	'mail-notification-body-HTML' => 'Hola $WATCHER,
-			<p>$SUBJECT.</p> 
+			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p> 			
+			<p>-- $AUTHOR_SIGNATURE<p>
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Ver la conversación</a></p>
 			<p>El equipo de Wikia</p>
 ___________________________________________<br />
@@ -2580,15 +2493,6 @@ Alkuperäinen viesti ja yhteenvetosi ilmestyy wikin historiaan.',
 	'wall-action-rev-thread-confirm' => 'Haluatko varmasti tarkistus poistaa tämän keskustelun ja kaikki sen historian wikistä?
 Tätä ei voi peruuttaa.',
 	'wall-action-rev-confirm-ok' => 'Kyllä, poista',
-	'wall-notifications' => 'Ilmoitukset',
-	'wall-notifications-all' => 'Kaikki ilmoitukset',
-	'wall-notifications-markasread' => 'Merkitse kaikki luetuiksi',
-	'wall-notifications-markasread-all-wikis' => 'Kaikki wikit',
-	'wall-notifications-markasread-this-wiki' => 'Tämä wiki',
-	'wall-notifications-empty' => 'Ei näytettäviä ilmoituksia',
-	'wall-notifications-loading' => 'Ladataan ilmoituksia',
-	'wall-notifications-reminder' => 'Sinulla on <span>$1</span> lukematonta {{PLURAL:$1|ilmoitusta|ilmoitusta}}',
-	'wall-notifications-wall-disabled' => 'Viesti Seinä on poistettu käytöstä tässä wikissä. Ilmoituksia ei pystytty lataamaan.',
 	'wn-user1-reply-you-your-wall' => '$1 vastasi viestiisi seinälläsi',
 	'wn-user2-reply-you-your-wall' => '$1 ja $2 vastasivat viestiisi seinälläsi',
 	'wn-user3-reply-you-your-wall' => '$1 ja muut vastasivat viestiisi seinälläsi',
@@ -2753,15 +2657,6 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-action-move-topics-summary' => 'Fil déplacé',
 	'wall-action-move-thread-ok' => 'Déplacer fil',
 	'wall-action-move-board-label' => 'Sélectionnez un sous-forum vers lequel le déplacer',
-	'wall-notifications' => 'Notifications',
-	'wall-notifications-all' => 'Notifications',
-	'wall-notifications-markasread' => 'Marquer toutes lues',
-	'wall-notifications-markasread-all-wikis' => 'Tous les wikis',
-	'wall-notifications-markasread-this-wiki' => 'Ce wiki',
-	'wall-notifications-empty' => 'Il n’y a pas de notifications',
-	'wall-notifications-loading' => 'Chargement des notifications',
-	'wall-notifications-reminder' => 'Vous avez <span>$1</span> {{PLURAL:$1|notification non lue|notifications non lues}}',
-	'wall-notifications-wall-disabled' => 'Le Mur de discussion a été désactivé sur ce wiki. Impossible de charger les notifications.',
 	'wn-user1-reply-you-your-wall' => '$1 a répondu à votre message sur votre mur',
 	'wn-user2-reply-you-your-wall' => '$1 et $2 ont répondu à votre message sur votre mur',
 	'wn-user3-reply-you-your-wall' => '$1, entre autres, a répondu à votre message sur votre mur',
@@ -2897,17 +2792,17 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'mail-notification-html-footer-line1' => 'Pour connaître les derniers évènements sur Wikia, visitez <a style="color:#2a87d5;text-decoration:none;" href="http://communaute.wikia.com">communaute.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Vous souhaitez contrôler les courriels que vous recevez ? Allez à vos <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Préférences</a>',
 	'mail-notification-body' => 'Bonjour $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 — $AUTHOR
 
 voir la conversation($MESSAGE_LINK)
- 
+
 L’équipe Wikia
 
 ___________________________________________
@@ -2915,10 +2810,10 @@ ___________________________________________
 * Vous souhaitez recevoir moins de messages de notre part ? Vous pouvez vous désinscrire ou modifier
 vos préférence de courriel ici : http://communaute.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Bonjour $WATCHER,
-<p>$SUBJECT.</p> 
+<p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>— $AUTHOR_SIGNATURE<p> 			
+<p>— $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Voir la conversation</a></p>
 <p>L’équipe Wikia</p>
 ___________________________________________<br />
@@ -3060,15 +2955,6 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-action-move-topics-summary' => 'Fío trasladado',
 	'wall-action-move-thread-ok' => 'Mover o fío',
 	'wall-action-move-board-label' => 'Seleccione a táboa á que mover',
-	'wall-notifications' => 'Notificacións',
-	'wall-notifications-all' => 'Todas as notificacións',
-	'wall-notifications-markasread' => 'Marcar todo como lido',
-	'wall-notifications-markasread-all-wikis' => 'Todos os wikis',
-	'wall-notifications-markasread-this-wiki' => 'Este wiki',
-	'wall-notifications-empty' => 'Non hai notificación ningunha',
-	'wall-notifications-loading' => 'Cargando as notificacións',
-	'wall-notifications-reminder' => 'Ten <span>$1</span> {{PLURAL:$1|notificación|notificacións}} sen ler',
-	'wall-notifications-wall-disabled' => 'O muro de mensaxes está desactivado neste wiki. Non se poden cargar as notificacións.',
 	'wn-user1-reply-you-your-wall' => '$1 respondeu á súa mensaxe no seu muro',
 	'wn-user2-reply-you-your-wall' => '$1 e $2 responderon á súa mensaxe no seu muro',
 	'wn-user3-reply-you-your-wall' => '$1 e outros responderon á súa mensaxe no seu muro',
@@ -3353,15 +3239,6 @@ Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
 	'wall-action-rev-reply-title' => 'Törlöd ennek a válasznak ezt a változatát?',
 	'wall-action-rev-reply-confirm' => 'Biztosan törölni szeretnéd ezt az üzenetet?',
 	'wall-action-rev-confirm-ok' => 'Igen, törölje',
-	'wall-notifications' => 'Értesítések',
-	'wall-notifications-all' => 'Összes értesítés',
-	'wall-notifications-markasread' => 'Az összes megjelölése olvasottként',
-	'wall-notifications-markasread-all-wikis' => 'Mindegyik wikin',
-	'wall-notifications-markasread-this-wiki' => 'Ezen a wikin',
-	'wall-notifications-empty' => 'Nincsenek értesítések',
-	'wall-notifications-loading' => 'Értesítések betöltése',
-	'wall-notifications-reminder' => '<span>$1</span> olvasatlan értesítésed van',
-	'wall-notifications-wall-disabled' => 'Az üzenőfal le van tiltva ezen a wikin. Az értesítések nem tölthetők be.',
 	'wn-user1-reply-you-your-wall' => '$1 válaszolt az üzenetedre az üzenőfaladon',
 	'wn-user2-reply-you-your-wall' => '$1 és $2 válaszolt az üzenetedre az üzenőfaladon',
 	'wn-user3-reply-you-your-wall' => '$1 és mások válaszoltak az üzenetedre az üzenőfaladon',
@@ -3603,15 +3480,6 @@ Le message original e tu summario apparera totevia in le historia del wiki.',
 	'wall-action-rev-reply-confirm' => 'Es tu secur de voler deler iste message?',
 	'wall-action-rev-thread-confirm' => 'Es tu secur de voler deler tote le versiones de iste discussion del historia del wiki? Isto non pote esser disfacite.',
 	'wall-action-rev-confirm-ok' => 'Si, deler',
-	'wall-notifications' => 'Notificationes',
-	'wall-notifications-all' => 'Tote le notificationes',
-	'wall-notifications-markasread' => 'Marcar toto como legite',
-	'wall-notifications-markasread-all-wikis' => 'Tote le wikis',
-	'wall-notifications-markasread-this-wiki' => 'Iste wiki',
-	'wall-notifications-empty' => 'Il non ha notificationes',
-	'wall-notifications-loading' => 'Carga notificationes...',
-	'wall-notifications-reminder' => 'Tu ha <span>$1</span> {{PLURAL:$1|notification|notificationes}} non legite',
-	'wall-notifications-wall-disabled' => 'Le muro de messages ha essite disactivate in iste wiki. Impossibile cargar notificationes.',
 	'wn-user1-reply-you-your-wall' => '$1 respondeva a tu message sur tu muro',
 	'wn-user2-reply-you-your-wall' => '$1 e $2 respondeva a tu message sur tu muro',
 	'wn-user3-reply-you-your-wall' => '$1 e alteres respondeva a tu message sur tu muro',
@@ -3726,17 +3594,17 @@ Le message original e tu summario apparera totevia in le historia del wiki.',
 	'mail-notification-html-footer-line1' => 'Pro cognoscer le ultime evenimentos in Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Vole seliger le e-mails que tu recipe? Face lo in tu <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferentias</a>',
 	'mail-notification-body' => 'Salute $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Vide le conversation($MESSAGE_LINK)
- 
+
 Le equipa de Wikia
 
 ___________________________________________
@@ -3744,10 +3612,10 @@ ___________________________________________
 * Vole reciper minus messages de nos? Tu pote disabonar te o cambiar le
 tue preferentias de e-mail: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Salute $WATCHER,
-			<p>$SUBJECT.</p> 
+			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p> 			
+			<p>-- $AUTHOR_SIGNATURE<p>
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Vide le conversation</a></p>
 			<p>Le equipa de Wikia</p>
 ___________________________________________<br />
@@ -3896,15 +3764,6 @@ $messages['ja'] = array(
 	'wall-action-rev-reply-confirm' => 'このメッセージを本当に削除しますか？',
 	'wall-action-rev-thread-confirm' => '本当にこのスレッドおよびその履歴を版指定削除しますか？この操作は取り消せません。',
 	'wall-action-rev-confirm-ok' => 'はい、削除します',
-	'wall-notifications' => '通知',
-	'wall-notifications-all' => 'すべての通知',
-	'wall-notifications-markasread' => 'すべての通知を確認済みにする',
-	'wall-notifications-markasread-all-wikis' => 'すべてのウィキ',
-	'wall-notifications-markasread-this-wiki' => 'このウィキ',
-	'wall-notifications-empty' => '通知はありません',
-	'wall-notifications-loading' => '通知を読み込んでいます',
-	'wall-notifications-reminder' => '未確認の通知が $1 件あります',
-	'wall-notifications-wall-disabled' => 'このウィキではメッセージウォールは無効になっています。通知を読み込めません。',
 	'wn-user1-reply-you-your-wall' => '$1 があなたのウォールのあなたのメッセージに返信しました',
 	'wn-user2-reply-you-your-wall' => '$1 と $2 があなたのウォールのあなたのメッセージに返信しました',
 	'wn-user3-reply-you-your-wall' => '$1 とその他複数があなたのウォールのあなたのメッセージに返信しました',
@@ -4039,7 +3898,7 @@ ___________________________________________
 <p>$SUBJECT</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p> 
+<p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">スレッドを見るにはこちら</a></p>
 <p>ウィキアチーム</p>
 ___________________________________________<br />
@@ -4137,11 +3996,6 @@ $messages['ksh'] = array(
 	'wall-action-restore-confirm-ok' => 'Zeröckholle',
 	'wall-action-rev-reply-confirm' => 'Wells De heh di Nohreesch verhaftesh fottschmieße?',
 	'wall-action-rev-confirm-ok' => 'Joh, schmieß fott',
-	'wall-notifications' => 'Meddeilonge',
-	'wall-notifications-all' => 'Alle Medeilonge',
-	'wall-notifications-markasread' => 'Alles als jelesse makeere',
-	'wall-notifications-markasread-all-wikis' => 'All Wikis',
-	'wall-notifications-markasread-this-wiki' => 'Bloß heh dat Wiki',
 	'wall-sorting-most-active' => 'Aam aktiivste',
 	'wall-sorting-archived' => 'uss_em Aschiif',
 	'wall-recentchanges-thread-history-link' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione',
@@ -4188,8 +4042,6 @@ $messages['lb'] = array(
 	'wall-action-restore-confirm-ok' => 'Restauréieren',
 	'wall-action-rev-reply-confirm' => 'Sidd Dir sécher datt Dir dëse Message läsche wëllt?',
 	'wall-action-rev-confirm-ok' => 'Jo, läschen',
-	'wall-notifications-markasread-all-wikis' => 'All Wikiën',
-	'wall-notifications-markasread-this-wiki' => 'Dës Wiki',
 	'wall-history-summary-label' => 'Resumé',
 	'wall-preview-modal-button-back' => 'Zréck',
 	'wall-preview-modal-button-publish' => 'Verëffentlechen',
@@ -4264,10 +4116,10 @@ $messages['mk'] = array(
 	'wall-action-all-confirm-notify' => 'Извести администратор',
 	'wall-action-remove-reply-title' => 'Отстрани го одговоров',
 	'wall-action-remove-thread-title' => 'Отстрани ја нишкава',
-	'wall-confirm-monobook-remove' => 'Кажете ни зошто сакате да го избришете ова. 
+	'wall-confirm-monobook-remove' => 'Кажете ни зошто сакате да го избришете ова.
 
 Изворната објава и вашиот опис сепак ќе фигурираат во историјата на викито.',
-	'wall-confirm-monobook-admin' => 'Кажете ни зошто сакате да го избришете ова. 
+	'wall-confirm-monobook-admin' => 'Кажете ни зошто сакате да го избришете ова.
 
 Изворната објава и вашиот опис сепак ќе фигурираат во историјата на викито.',
 	'wall-confirm-monobook-restore' => 'Кажете ни зошто сакате да го вратите ова',
@@ -4298,15 +4150,6 @@ $messages['mk'] = array(
 	'wall-action-move-topics-summary' => 'Нишката е преместена',
 	'wall-action-move-thread-ok' => 'Премести нишка',
 	'wall-action-move-board-label' => 'Одберете на која табла ќе преместите',
-	'wall-notifications' => 'Известувања',
-	'wall-notifications-all' => 'Сите известувања',
-	'wall-notifications-markasread' => 'Означи ги сите како прочитани',
-	'wall-notifications-markasread-all-wikis' => 'Сите викија',
-	'wall-notifications-markasread-this-wiki' => 'Ова вики',
-	'wall-notifications-empty' => 'Нема известувања',
-	'wall-notifications-loading' => 'Вчитувам известувања',
-	'wall-notifications-reminder' => 'Имате <span>$1</span> {{PLURAL:$1|непрочитано известување|непрочитани известувања}}',
-	'wall-notifications-wall-disabled' => 'Ѕидот за пораки е оневозможен на ова Вики. Не можам да ги вчитам известувањата.',
 	'wn-user1-reply-you-your-wall' => '$1 ви одговори на пораката на вашиот ѕид',
 	'wn-user2-reply-you-your-wall' => '$1 и $2 ви одговорија на пораката на вашиот ѕид',
 	'wn-user3-reply-you-your-wall' => '$1 и други ви одговорија на пораката на вашиот ѕид',
@@ -4444,17 +4287,17 @@ $messages['mk'] = array(
 	'mail-notification-html-footer-line1' => 'За да ги проследите најновите случувања на Викија, посетете ја страницата <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Сакате да одберете кои пораки да ги добивате? Појдете на вашите <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Нагодувања</a>',
 	'mail-notification-body' => 'Hi $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Погледајте го разговорот($MESSAGE_LINK)
- 
+
 Екипата на Викија
 
 ___________________________________________
@@ -4462,10 +4305,10 @@ ___________________________________________
 * Сакате да добивате помалку пораки од нас? Можете да се отпишете или да ги смените
 нагодувањата за е-пошта на: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Здраво $WATCHER,
-			<p>$SUBJECT.</p> 
+			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p> 			
+			<p>-- $AUTHOR_SIGNATURE<p>
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Погледајте го разговорот</a></p>
 			<p>Екипата на Викија</p>
 ___________________________________________<br />
@@ -4572,10 +4415,10 @@ $messages['ms'] = array(
 	'wall-action-all-confirm-notify' => 'Beritahu pentadbir',
 	'wall-action-remove-reply-title' => 'Buang balasan ini',
 	'wall-action-remove-thread-title' => 'Buang tred ini',
-	'wall-confirm-monobook-remove' => 'Sila terangkan sebab anda ingin membuangnya. 
+	'wall-confirm-monobook-remove' => 'Sila terangkan sebab anda ingin membuangnya.
 
 Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
-	'wall-confirm-monobook-admin' => 'Sila terangkan sebab anda ingin menghapuskannya. 
+	'wall-confirm-monobook-admin' => 'Sila terangkan sebab anda ingin menghapuskannya.
 
 Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-confirm-monobook-restore' => 'Sila terangkan sebab anda ingin memulihkannya',
@@ -4606,15 +4449,6 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-action-move-topics-summary' => 'Tred dipindahkan',
 	'wall-action-move-thread-ok' => 'Pindahkan tred',
 	'wall-action-move-board-label' => 'Pilih papan yang mana untuk memindahkan tred',
-	'wall-notifications' => 'Pemberitahuan',
-	'wall-notifications-all' => 'Semua Pemberitahuan',
-	'wall-notifications-markasread' => 'Tanda semua sebagai sudah dibaca',
-	'wall-notifications-markasread-all-wikis' => 'Semua wiki',
-	'wall-notifications-markasread-this-wiki' => 'Wiki ini',
-	'wall-notifications-empty' => 'Tiada pemberitahuan',
-	'wall-notifications-loading' => 'Pemberitahuan sedang dimuatkan',
-	'wall-notifications-reminder' => 'Anda mempunyai <span>$1</span> pemberitahuan yang belum dibaca',
-	'wall-notifications-wall-disabled' => 'Papan Pesanan telah dimatikan di Wiki ini. Pemberitahuan tidak dapat dimuatkan.',
 	'wn-user1-reply-you-your-wall' => '$1 membalas pesanan anda di papan anda',
 	'wn-user2-reply-you-your-wall' => '$1 dan $2 membalas pesanan anda di papan anda',
 	'wn-user3-reply-you-your-wall' => '$1 dan lain-lain membalas pesanan anda di papan anda',
@@ -4753,33 +4587,33 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'mail-notification-html-footer-line1' => 'Untuk meninjau perkembangan terkini di Wikia, lawati <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Ingin mengawal e-mel yang anda terima? Pergi ke <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Keutamaan</a> anda',
 	'mail-notification-body' => 'Apa khabar $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Lihat perbualan($MESSAGE_LINK)
- 
+
 Pasukan Wikia
 
 ___________________________________________
 * Dapatkan bantuan dan nasihat di Community Central: http://community.wikia.com
-* Tak nak terima banyak pesanan daripada kami? Anda boleh berhenti melanggan atau 
+* Tak nak terima banyak pesanan daripada kami? Anda boleh berhenti melanggan atau
 ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Hi $WATCHER,
-<p>$SUBJECT.</p> 
+<p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p> 			
+<p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Lihat perbualan</a></p>
 <p>Pasukan Wikia</p>
 ___________________________________________<br />
 * Dapatkan bantuan dan nasihat di Community Central: http://community.wikia.com
-* Tak nak terima banyak pesanan daripada kami? Anda boleh berhenti melanggan atau 
+* Tak nak terima banyak pesanan daripada kami? Anda boleh berhenti melanggan atau
 ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => 'Papan Pesanan dan Forum',
 	'tog-enotifwallthread-v2' => 'E-mel saya…',
@@ -4917,15 +4751,6 @@ Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
 	'wall-action-move-topics-summary' => 'Tråden er flyttet',
 	'wall-action-move-thread-ok' => 'Flytt tråden',
 	'wall-action-move-board-label' => 'Velg en tavle å flytte til',
-	'wall-notifications' => 'Varslinger',
-	'wall-notifications-all' => 'Alle varslinger',
-	'wall-notifications-markasread' => 'Merk alle som lest',
-	'wall-notifications-markasread-all-wikis' => 'Alle wikier',
-	'wall-notifications-markasread-this-wiki' => 'Denne wikien',
-	'wall-notifications-empty' => 'Det er ingen varslinger',
-	'wall-notifications-loading' => 'Laster inn varslinger',
-	'wall-notifications-reminder' => 'Du har <span>$1</span> {{PLURAL:$1|ulest varsling|uleste varslinger}}',
-	'wall-notifications-wall-disabled' => 'Beskjedtavla er blitt deaktivert på denne wikien. Kunne ikke laste inn varslinger.',
 	'wn-user1-reply-you-your-wall' => '$1 svarte på beskjeden din på beskjedtavlen din',
 	'wn-user2-reply-you-your-wall' => '$1 og $2 svarte på beskjeden din på beskjedtavlen din',
 	'wn-user3-reply-you-your-wall' => '$1 og andre svarte på beskjeden din på beskjedtavlen din',
@@ -5053,7 +4878,7 @@ $MESSAGE_NO_HTML
 -- $AUTHOR
 
 Se samtalen($MESSAGE_LINK)
- 
+
 Wikia-teamet
 
 ___________________________________________
@@ -5061,10 +4886,10 @@ ___________________________________________
 * Vil du motta færre meldinger fra oss? Du kan avslutte abonnementet eller
 endre e-post-innstillingene dine her: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Hei $WATCHER,
- <p>$SUBJECT.</p> 
+ <p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p> 
+<p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Se samtalen</a></p>
 <p>Wikia-teamet</p>
 ___________________________________________<br />
@@ -5211,15 +5036,6 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-action-move-topics-summary' => 'Draad hernoemd',
 	'wall-action-move-thread-ok' => 'Draad hernoemen',
 	'wall-action-move-board-label' => 'Selecteer een board voor de draad',
-	'wall-notifications' => 'Meldingen',
-	'wall-notifications-all' => 'Alle meldingen',
-	'wall-notifications-markasread' => 'Alles als gelezen markeren',
-	'wall-notifications-markasread-all-wikis' => "Alle wiki's",
-	'wall-notifications-markasread-this-wiki' => 'Deze wiki',
-	'wall-notifications-empty' => 'Er zijn geen meldingen',
-	'wall-notifications-loading' => 'Bezig met het laden van meldingen',
-	'wall-notifications-reminder' => 'U hebt <span>$1</span> ongelezen {{PLURAL:$1|melding|meldingen}}',
-	'wall-notifications-wall-disabled' => 'Het prikbord is uitgeschakeld op deze wiki. Meldingen laden is niet mogelijk.',
 	'wn-user1-reply-you-your-wall' => '$1 heeft geantwoord op uw bericht op uw prikbord',
 	'wn-user2-reply-you-your-wall' => '$1 en $2 hebben geantwoord op uw bericht op uw prikbord',
 	'wn-user3-reply-you-your-wall' => '$1 en anderen hebben geantwoord op uw bericht op uw prikbord',
@@ -5429,8 +5245,6 @@ $messages['pfl'] = array(
 	'wall-action-admin-confirm-ok' => 'Lesche',
 	'wall-action-restore-confirm-ok' => 'Widdaheaschdelle',
 	'wall-action-rev-confirm-ok' => 'Ja, lesche',
-	'wall-notifications-markasread-all-wikis' => 'Alli Wikis',
-	'wall-notifications-markasread-this-wiki' => 'Des Wiki',
 );
 
 /** Polish (polski)
@@ -5501,10 +5315,10 @@ $messages['pl'] = array(
 	'wall-action-all-confirm-notify' => 'Powiadom administratora',
 	'wall-action-remove-reply-title' => 'Usuń tę odpowiedź',
 	'wall-action-remove-thread-title' => 'Usuń ten wątek',
-	'wall-confirm-monobook-remove' => 'Podaj powód usunięcia. 
+	'wall-confirm-monobook-remove' => 'Podaj powód usunięcia.
 
 Ten wątek i jego historia nadal będą dostępne w historii wiki.',
-	'wall-confirm-monobook-admin' => 'Podaj powód skasowania. 
+	'wall-confirm-monobook-admin' => 'Podaj powód skasowania.
 
 Ten wątek i jego historia nadal będą dostępne w historii wiki.',
 	'wall-confirm-monobook-restore' => 'Podaj powód przywrócenia',
@@ -5535,15 +5349,6 @@ Ten wątek i jego historia nadal będą dostępne w historii wiki.',
 	'wall-action-move-topics-summary' => 'Wątek przeniesiono',
 	'wall-action-move-thread-ok' => 'Przenieś wątek',
 	'wall-action-move-board-label' => 'Wybierz subforum, do którego przenieść wątek',
-	'wall-notifications' => 'Powiadomienia',
-	'wall-notifications-all' => 'Wszystkie powiadomienia',
-	'wall-notifications-markasread' => 'Oznacz wszystkie jako przeczytane',
-	'wall-notifications-markasread-all-wikis' => 'Wszystkie wiki',
-	'wall-notifications-markasread-this-wiki' => 'Ta wiki',
-	'wall-notifications-empty' => 'Brak powiadomień',
-	'wall-notifications-loading' => 'Trwa ładowanie powiadomień',
-	'wall-notifications-reminder' => 'Masz <span>$1</span> {{PLURAL:$1|nieprzeczytane powiadomienie|nieprzeczytane powiadomienia|nieprzeczytanych powiadomień}}',
-	'wall-notifications-wall-disabled' => 'Tablica wiadomości została wyłączona na tej wiki. Nie załadowano powiadomień.',
 	'wn-user1-reply-you-your-wall' => '$1 odpowiedział na Twoją wiadomość na Twojej tablicy',
 	'wn-user2-reply-you-your-wall' => '$1 i $2 odpowiedzieli na Twoją wiadomość na Twojej tablicy',
 	'wn-user3-reply-you-your-wall' => '$1 i inni odpowiedzieli na Twoją wiadomość na Twojej tablicy',
@@ -5667,42 +5472,42 @@ Ten wątek i jego historia nadal będą dostępne w historii wiki.',
 	'mail-notification-html-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
 </a>
- 
+
 <a href="http://www.facebook.com/wikia" style="text-decoration:none">
 <img alt="facebook" src="http://images2.wikia.nocookie.net/wikianewsletter/images/5/55/Facebook.png" style="border:none">
 </a>
- 
+
 <a href="http://www.youtube.com/wikia" style="text-decoration:none">
 <img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
 </a>
- 
+
 <a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
 	'mail-notification-html-footer-line1' => 'Aby dowiedzieć się co nowego na Wikii, odwiedź <a style="color:#2a87d5;text-decoration:none;" href="http://spolecznosc.wikia.com">spolecznosc.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Chcesz zmienić ustawienia przysyłanych wiadomości? Idź do swoich <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferencji</a>',
 	'mail-notification-body' => 'Witaj $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Przejdź do wiadomości($MESSAGE_LINK)
- 
+
 Zespół Wikii
 
 ___________________________________________
 * Znajdź pomoc w Centrum Społeczności: http://spolecznosc.wikia.com
 * Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Witaj $WATCHER,
-<p>$SUBJECT.</p> 
+<p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p> 			
+<p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Przejdź do wiadomości</a></p>
 <p>Zespół Wikii</p>
 ___________________________________________<br />
@@ -5777,11 +5582,6 @@ $messages['ps'] = array(
 	'wall-action-admin-confirm-ok' => 'ړنګول',
 	'wall-action-restore-confirm-ok' => 'بيازېرمل',
 	'wall-action-rev-confirm-ok' => 'هو، ړنګ دې شي',
-	'wall-notifications' => 'يادګيرنې',
-	'wall-notifications-all' => 'ټولې يادګيرنې',
-	'wall-notifications-markasread' => 'ټول لوستی په نخښه کول',
-	'wall-notifications-markasread-all-wikis' => 'ټولې ويکي ګانې',
-	'wall-notifications-markasread-this-wiki' => 'همدا ويکي',
 	'wall-sorting-newest-replies' => 'نوي ځوابونه',
 	'wall-sorting-most-active' => 'تر ټولو ډېر فعال',
 	'wall-sorting-archived' => 'خونديځ شوي',
@@ -5877,14 +5677,6 @@ $messages['pt'] = array(
 	'wall-action-restore-reply-title' => 'Restaurar esta resposta',
 	'wall-action-restore-confirm-ok' => 'Restaurar',
 	'wall-action-rev-confirm-ok' => 'Sim, eliminar',
-	'wall-notifications' => 'Notificações',
-	'wall-notifications-all' => 'Todas as Notificações',
-	'wall-notifications-markasread' => 'Marcar todas como lidas',
-	'wall-notifications-markasread-all-wikis' => 'Todas as wikis',
-	'wall-notifications-markasread-this-wiki' => 'Esta wiki',
-	'wall-notifications-empty' => 'Não existem notificações',
-	'wall-notifications-loading' => 'A carregar notificações',
-	'wall-notifications-reminder' => 'Você tem <span>$1</span> {{PLURAL:$1|notificação|notificações}} por ler',
 	'wn-user1-reply-self-a-wall' => '$1 respondeu á mensagem',
 	'wn-newmsg' => 'Você deixou uma nova mensagem no mural de $1',
 	'wn-admin-thread-deleted' => 'Tópico removido do mural de $1',
@@ -6066,7 +5858,7 @@ $messages['pt-br'] = array(
 	'wall-action-all-confirm-notify' => 'Notificar um administrador',
 	'wall-action-remove-reply-title' => 'Remover esta resposta',
 	'wall-action-remove-thread-title' => 'Remover este tópico',
-	'wall-confirm-monobook-remove' => 'Informe-nos por que você gostaria de remover isto. 
+	'wall-confirm-monobook-remove' => 'Informe-nos por que você gostaria de remover isto.
 
 O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-confirm-monobook-admin' => 'Informe-nos por que você gostaria de excluir isto.
@@ -6094,10 +5886,6 @@ O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-action-rev-reply-title' => 'Revisão excluir esta resposta?',
 	'wall-action-rev-reply-confirm' => 'Tem certeza que você quer excluir esta mensagem?',
 	'wall-action-rev-confirm-ok' => 'Sim, excluir',
-	'wall-notifications' => 'Notificações',
-	'wall-notifications-all' => 'Todas as Notificações',
-	'wall-notifications-reminder' => 'Você tem <span>$1</span> {{PLURAL:$1|notificação|notificações}} {{PLURAL:$1|não lida|não lidas}}',
-	'wall-notifications-wall-disabled' => 'O Mural de mensagens foi desativado nesta wiki. Impossível carregar notificações.',
 	'wall-sorting-archived' => 'Arquivado',
 	'wall-deleted-msg-view' => '(Ver/Restaurar)',
 	'wall-recentchanges-edit' => '(mensagem editada)',
@@ -6140,7 +5928,7 @@ $MESSAGE_NO_HTML
 -- $AUTHOR
 
 Veja a conversa($MESSAGE_LINK)
- 
+
 A Equipe Wikia
 
 ___________________________________________
@@ -6148,10 +5936,10 @@ ___________________________________________
 * Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
 suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferências',
 	'mail-notification-body-HTML' => 'Olá $WATCHER,
-<p>$SUBJECT.</p> 
+<p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p> 
+<p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veja a conversa</a></p>
 <p>A Equipe Wikia</p>
 ___________________________________________<br>
@@ -6169,13 +5957,6 @@ suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferên
 	'wall-topic-edit' => 'Editar tópicos',
 	'wall-topic-edit-save' => 'Salvar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-);
-
-/** Quechua (Runa Simi)
- * @author AlimanRuna
- */
-$messages['qu'] = array(
-	'wall-notifications-markasread' => 'Tukuykunata ñawirisqa nispa unanchay',
 );
 
 /** tarandíne (tarandíne)
@@ -6308,15 +6089,6 @@ $messages['ru'] = array(
 	'wall-action-move-topics-summary' => 'Тема перемещена',
 	'wall-action-move-thread-ok' => 'Переместить тему',
 	'wall-action-move-board-label' => 'Выберите форум для перемещения',
-	'wall-notifications' => 'Уведомления',
-	'wall-notifications-all' => 'Все уведомления',
-	'wall-notifications-markasread' => 'Отметить всё, как прочитанное',
-	'wall-notifications-markasread-all-wikis' => 'Все викии',
-	'wall-notifications-markasread-this-wiki' => 'Эта вики',
-	'wall-notifications-empty' => 'Нет уведомлений',
-	'wall-notifications-loading' => 'Загрузка уведомлений',
-	'wall-notifications-reminder' => 'У вас <span>$1</span> {{PLURAL:$1|непрочитанное уведомление|непрочитанных уведомлений}}',
-	'wall-notifications-wall-disabled' => 'Стена обсуждения была отключена на этой вики. Уведомления загрузить невозможно.',
 	'wn-user1-reply-you-your-wall' => '$1ответил на ваше сообщение на вашей стене',
 	'wn-user2-reply-you-your-wall' => '$1 и $2 ответили на ваше сообщение на вашей стене',
 	'wn-user3-reply-you-your-wall' => '$1 и другие ответили на ваше сообщение на вашей стене',
@@ -6454,27 +6226,27 @@ $messages['ru'] = array(
 	'mail-notification-html-footer-line1' => 'Чтобы узнать о последних событиях на Викия, посетите <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Чтобы настроить уведомления по email, перейдите на страницу <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">личных настроек</a>',
 	'mail-notification-body' => 'Hi $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Смотрите обсуждение ($MESSAGE_LINK)
- 
+
 Команда Викия
 
 ___________________________________________
 * Найти помощь и совет можно на Community Central (http://community.wikia.com) и Вики Сообщества (http://ru.community.wikia.com)
 * Хотите уменьшить количество данных писем? Вы можете отписаться от рассылки или внести в неё коррективы на странице личных настроек: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Уважаемый $WATCHER,
-<p>$SUBJECT.</p> 
+<p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p> 			
+<p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Смотрите обсуждение</a></p>
 <p>Команда Викия</p>
 ___________________________________________<br />
@@ -6615,15 +6387,6 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'wall-action-move-topics-summary' => 'Tråd har flyttats',
 	'wall-action-move-thread-ok' => 'Flytta tråden',
 	'wall-action-move-board-label' => 'Välj en tavla att flytta till',
-	'wall-notifications' => 'Meddelanden',
-	'wall-notifications-all' => 'Alla meddelanden',
-	'wall-notifications-markasread' => 'Markera alla som lästa',
-	'wall-notifications-markasread-all-wikis' => 'Alla wikis',
-	'wall-notifications-markasread-this-wiki' => 'Denna wiki',
-	'wall-notifications-empty' => 'Det finns inga meddelanden',
-	'wall-notifications-loading' => 'Läser in meddelanden',
-	'wall-notifications-reminder' => 'Du har <span>$1</span> {{PLURAL:$1|oläst meddelande|olästa meddelanden}}',
-	'wall-notifications-wall-disabled' => 'Meddelandevägg har inaktiverats på denna wiki. Det gick inte att läsa in meddelanden.',
 	'wn-user1-reply-you-your-wall' => '$1 svarade på ditt meddelande på din vägg',
 	'wn-user2-reply-you-your-wall' => '$1 och $2 svarade på ditt meddelande på din vägg',
 	'wn-user3-reply-you-your-wall' => '$1 och andra svarade på ditt meddelande på din vägg',
@@ -6762,17 +6525,17 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'mail-notification-html-footer-line1' => 'För att kolla in de senaste händelserna på Wikia, besök <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Vill du kontrollera vilka e-postmeddelanden du får? Gå till dina <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Inställningar</a>',
 	'mail-notification-body' => 'Hej $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Se konversationen ($MESSAGE_LINK)
- 
+
 Wikia-teamet
 
 ___________________________________________
@@ -6780,10 +6543,10 @@ ___________________________________________
 * Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra
 dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Hej $WATCHER,
-			<p>$SUBJECT.</p> 
+			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p> 			
+			<p>-- $AUTHOR_SIGNATURE<p>
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Se konversationen</a></p>
 			<p>Wikia-teamet</p>
 ___________________________________________<br />
@@ -6937,15 +6700,6 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wall-action-rev-reply-confirm' => 'Nakatitiyak ka bang nais mong burahin ang mensaheng ito?',
 	'wall-action-rev-thread-confirm' => 'Nakatitiyak ka bang nais mong burahin na pangrebisyon ang sinulid na ito at ang lahat ng kasaysayan nito magmula sa wiki? Hindi na ito mababawi pa.',
 	'wall-action-rev-confirm-ok' => 'Oo, burahin',
-	'wall-notifications' => 'Mga pagpapabatid',
-	'wall-notifications-all' => 'Lahat ng mga Pagpapabatid',
-	'wall-notifications-markasread' => 'Tatakan ang lahat bilang nabasa na',
-	'wall-notifications-markasread-all-wikis' => 'Lahat ng mga wiki',
-	'wall-notifications-markasread-this-wiki' => 'Ang wiking ito',
-	'wall-notifications-empty' => 'Walang mga pagpapabatid',
-	'wall-notifications-loading' => 'Ikinakarga ang mga pagpapabatid',
-	'wall-notifications-reminder' => 'Mayroon kang <span>$1</span> hindi pa nababasang {{PLURAL:$1|pagpapabatid|mga pagpapabatid}}',
-	'wall-notifications-wall-disabled' => 'Hindi pinagagana ang Dingding ng Mensahe sa wiking ito. Hindi nagawang ikarga ang mga pagpapabatid.',
 	'wn-user1-reply-you-your-wall' => 'Tumugon si $1 sa mensahe mo na nasa ibabaw ng iyong dingding',
 	'wn-user2-reply-you-your-wall' => 'Tumugon sina $1 at $2 sa mensahe mo na nasa ibabaw ng iyong dingding',
 	'wn-user3-reply-you-your-wall' => 'Tumugon si $1 at iba pa sa iyong mensahe na nasa ibabaw ng dingding mo',
@@ -7093,7 +6847,7 @@ Ang Pangkat ng Wikia
 
 ___________________________________________
 * Maghanap ng tulong at payo sa Lunduyan ng Pamayanan: http://community.wikia.com
-* Nais tumanggap ng mas kakaunting mga mensahe mula sa amin? Maaari kang huwag nang magpasipi o baguhin 
+* Nais tumanggap ng mas kakaunting mga mensahe mula sa amin? Maaari kang huwag nang magpasipi o baguhin
 ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Kumusta $WATCHER,
 <p>$SUBJECT.</p>
@@ -7104,7 +6858,7 @@ ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/S
 <p>Ang Pangkat ng Wikia</p>
 ___________________________________________<br />
 * Maghanap ng tulong at payo sa Lunduyan ng Pamayanan: http://community.wikia.com
-* Nais tumanggap ng mas kakaunting mga mensahe mula sa amin? Maaari kang huwag nang magpasipi o baguhin 
+* Nais tumanggap ng mas kakaunting mga mensahe mula sa amin? Maaari kang huwag nang magpasipi o baguhin
 ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => 'Dingding ng Mensahe', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Padalhan ako ng e-liham...',
@@ -7181,7 +6935,6 @@ $messages['tt-cyrl'] = array(
 	'wall-action-remove-confirm-ok' => 'Бетерү',
 	'wall-action-admin-confirm-ok' => 'Бетерү',
 	'wall-action-restore-confirm-ok' => 'Торгызу',
-	'wall-notifications-markasread-all-wikis' => 'Барлык викиләр',
 	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
 	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'mail-notification-subject' => '$1 -- $2',
@@ -7297,15 +7050,6 @@ $messages['uk'] = array(
 	'wall-action-rev-reply-confirm' => 'Ви дійсно бажаєте видалити це повідомлення?',
 	'wall-action-rev-thread-confirm' => 'Ви справді бажаєте повністю видалити це обговорення зі всіею його історією? Це не можна буде скасувати',
 	'wall-action-rev-confirm-ok' => 'Так, видалити',
-	'wall-notifications' => 'Сповіщення',
-	'wall-notifications-all' => 'Усі сповіщення',
-	'wall-notifications-markasread' => 'Позначити всі, як прочитані',
-	'wall-notifications-markasread-all-wikis' => 'Усі вікі',
-	'wall-notifications-markasread-this-wiki' => 'Ця вікі',
-	'wall-notifications-empty' => 'Немає повідомлень',
-	'wall-notifications-loading' => 'Завантаження повідомлень',
-	'wall-notifications-reminder' => 'У вас є <span>$1</span> {{PLURAL:$1|непрочитане сповіщення|непрочитані сповіщення|непрочитаних сповіщень}}',
-	'wall-notifications-wall-disabled' => 'Стіна обговорення була вимкнута на цій вікі. Не вдалося завантажити повідомлення.',
 	'wn-user1-reply-you-your-wall' => '$1 відповів(ла) на ваше повідомлення на стіні',
 	'wn-user2-reply-you-your-wall' => '$1 та $2 відповіли на повідомлення на вашій стіні',
 	'wn-user3-reply-you-your-wall' => '$1 та інші відповіли на повідомлення на вашій стіні',
@@ -7524,10 +7268,10 @@ $messages['vi'] = array(
 	'wall-action-all-confirm-notify' => 'Thông báo cho một bảo quản viên',
 	'wall-action-remove-reply-title' => 'Dời bỏ hồi âm này',
 	'wall-action-remove-thread-title' => 'Dời bỏ luồng này',
-	'wall-confirm-monobook-remove' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn dời bỏ điều này. 
+	'wall-confirm-monobook-remove' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn dời bỏ điều này.
 
 Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịch sử của wiki.',
-	'wall-confirm-monobook-admin' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn xóa bỏ điều này. 
+	'wall-confirm-monobook-admin' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn xóa bỏ điều này.
 
 Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịch sử của wiki.',
 	'wall-confirm-monobook-restore' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn khôi phục lại tin nhắn này',
@@ -7553,15 +7297,6 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 	'wall-action-rev-reply-confirm' => 'Bạn có chắc bạn muốn xóa tin nhắn này không?',
 	'wall-action-rev-thread-confirm' => 'Bạn có chắc bạn muốn xóa luồng này và tất cả lịch sử của nó từ wiki? Điều này không thể hoàn tác được.',
 	'wall-action-rev-confirm-ok' => 'Vâng, xóa',
-	'wall-notifications' => 'Tin nhắn',
-	'wall-notifications-all' => 'Mọi tin nhắn',
-	'wall-notifications-markasread' => 'Đánh dấu đã đọc tất cả',
-	'wall-notifications-markasread-all-wikis' => 'Tất cả wiki',
-	'wall-notifications-markasread-this-wiki' => 'Wiki này',
-	'wall-notifications-empty' => 'Không có tin nhắn nào',
-	'wall-notifications-loading' => 'Tải tin nhắn',
-	'wall-notifications-reminder' => 'Bạn có <span>$1</span> {{PLURAL:$1|tin nhắn|tin nhắn}} chưa đọc',
-	'wall-notifications-wall-disabled' => 'Tường tin nhắn đã bị vô hiệu hóa trên wiki này. Không thể tải được tin nhắn.',
 	'wn-user1-reply-you-your-wall' => '$1 trả lời tin nhắn của bạn trên tường của bạn',
 	'wn-user2-reply-you-your-wall' => '$1 và $2 trả lời tin nhắn của bạn trên tường của bạn',
 	'wn-user3-reply-you-your-wall' => '$1 và những người khác trả lời tin nhắn của bạn trên tường của bạn',
@@ -7678,17 +7413,17 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://vi.wikia.com">vi.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Muốn kiểm soát những email mà bạn nhận được? <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Tùy chọn</a>',
 	'mail-notification-body' => 'Xin chào $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Xem cuộc hội thoại($MESSAGE_LINK)
- 
+
 Wikia Team
 
 ___________________________________________
@@ -7697,10 +7432,10 @@ ___________________________________________
 * Muốn nhận ít thư thông báo hơn từ chúng tôi? Bạn có thể bỏ chọn hoặc thay đổi
  tuỳ chọn thư điện tử của bạn ở đây: http://vi.wikia.com/wiki/Đặc_biệt:Tùy_chọn',
 	'mail-notification-body-HTML' => 'Chào $WATCHER,
-			<p>$SUBJECT.</p> 
+			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p> 			
+			<p>-- $AUTHOR_SIGNATURE<p>
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Xem cuộc hội thoại</a></p>
 			<p>Wikia Team</p>
 ___________________________________________<br />
@@ -7787,10 +7522,6 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 	'wall-action-restore-reply-title' => "Rapexhî l' response",
 	'wall-action-restore-confirm' => "Dijhoz s' i vs plait pocwè vos l' vôrîz rapexhî:",
 	'wall-action-restore-confirm-ok' => 'Rapexhî',
-	'wall-notifications-markasread' => 'Tot marker come léjhou',
-	'wall-notifications-markasread-all-wikis' => 'Tos les wikis',
-	'wall-notifications-markasread-this-wiki' => 'Ci wiki chal',
-	'wall-notifications-reminder' => 'Vos avoz <span$1</span> {{PLURAL:$1|notifiaedje nén léjhou|notifiaedjes nén léjhous}}',
 	'wall-deleted-msg-return-to' => 'Rivni å meur da $1.',
 	'wall-deleted-msg-view' => '(Vey/Rapexhî)',
 	'wall-recentchanges-new-message' => '«$1» sol <a href="$1">meur da $2</a>',
@@ -7853,13 +7584,6 @@ $messages['zh-hans'] = array(
 	'wall-action-remove-confirm-ok' => '删除',
 	'wall-action-admin-reply-title' => '删除本条回复',
 	'wall-action-admin-confirm-ok' => '删除',
-	'wall-notifications' => '通知',
-	'wall-notifications-markasread' => '标记全部为已读',
-	'wall-notifications-markasread-all-wikis' => '全部维基',
-	'wall-notifications-markasread-this-wiki' => '本维基',
-	'wall-notifications-empty' => '暂无通知',
-	'wall-notifications-loading' => '加载通知',
-	'wall-notifications-reminder' => '您有<span>$1</span>条未读消息 {{PLURAL:$1|消息|消息}}',
 	'wn-user1-reply-you-your-wall' => '$1在您的信息墙上回复了您',
 	'wn-user2-reply-you-your-wall' => '$1和$2在您的信息墙上回复了您',
 	'wn-user3-reply-you-your-wall' => '$1等人在您的信息墙上回复了您',

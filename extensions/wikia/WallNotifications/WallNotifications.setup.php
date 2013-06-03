@@ -30,5 +30,7 @@ $app->registerHook('MakeGlobalVariablesScript', 'WallNotificationsHooksHelper', 
 
 $app->registerHook('PersonalUrls', 'WallNotificationsHooksHelper', 'onPersonalUrls');
 
+$app->registerExtensionMessageFile( 'WallNotifications', $dirExt . '/WallNotifications.i18n.php' );
+
 // Notifications plugins
 include( $dirExt . '/plugins/Forum/ForumNotificationsPlugin.setup.php' );
