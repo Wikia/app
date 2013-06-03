@@ -24,6 +24,10 @@ $width-padding: $width-gutter / 2;
 	border: 0;
 }
 
+.WikiaPageBackground {
+	display: none;
+}
+
 .WikiaPageHeader,
 .wikinav2 .WikiaPageHeader {
 	margin: 0 0 $width-padding 0;

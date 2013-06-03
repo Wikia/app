@@ -37,7 +37,7 @@ class SassUtil {
 			$params['widthType'] = 1;
 		}
 
-		if ( $wgOasisResponsive ) {
+		if ( class_exists( 'OasisController' ) && OasisController::isResponsiveLayoutEnabled() ) {
 			$params['widthType'] = 2;
 		}
 
