@@ -7,7 +7,7 @@
 			<input type="file" name="wpUploadFile">
 			<input type="submit" value="<?= wfMsg('Upload') ?>">
 			<img class="ajaxwait" src="<?= $wg->StylePath ?>/common/images/ajax.gif"><br>
-			<label class="override"><input type="checkbox" name="wpDestFileWarningAck">Overwrite File</label>
+			<label class="override"><input type="checkbox" name="wpDestFileWarningAck"><?= wfMessage( 'oasis-upload-photos-overwrite-file' )->escaped() ?></label>
 			<div class="status"></div>
 
 			<div class="options">
