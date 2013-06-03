@@ -609,6 +609,18 @@ class MWExceptionHandler {
 	 * @param $message String Failure text
 	 */
 	private static function escapeEchoAndDie( $message ) {
+		# Wikia change - begin
+		# @author macbre
+		# don't emit anything to the client in production mode
+		header('HTTP/1.0 500 Internal Error');
+
+		global $wgDevelEnvironment;
+		if (empty($wgDevelEnvironment)) {
+			Wikia::log(__METHOD__, false, $message);
+			die(1);
+		}
+		# Wikia change - end
+
 		echo nl2br( htmlspecialchars( $message ) ) . "\n";
 		die(1);
 	}
