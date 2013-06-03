@@ -223,6 +223,10 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			throw new Exception("You have to specify full global function name including 'wf' prefix");
 		}
 
+		if ( func_num_args() > 2 ) {
+			throw new Exception("You are using deprecated version of mockGlobalFunction");
+		}
+
 		list( $namespace, $baseName ) = $this->parseGlobalFunctionName( $functionName );
 
 		$mock = $this->getGlobalFunctionMock( $functionName );

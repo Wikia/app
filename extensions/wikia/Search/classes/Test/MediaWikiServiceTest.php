@@ -2345,7 +2345,12 @@ class MediaWikiServiceTest extends BaseTest
 	 * @dataProvider dataShortNumForMsg
 	 */
 	public function testShortNumForMsg($number, $baseMessageId, $usedNumber, $usedMessageId) {
-		$this->mockGlobalFunction('wfMessage', 'mocked message', 1, array( $usedMessageId, $usedNumber, $number ) );
+		$this->getGlobalFunctionMock( 'wfMessage' )
+			->expects( $this->exactly( 1 ) )
+			->method( 'wfMessage' )
+			->with( $usedMessageId, $usedNumber, $number )
+			->will( $this->returnValue( 'mocked message' ) );
+
 		$service = (new MediaWikiService);
 		$this->assertEquals('mocked message', $service->shortNumForMsg($number, $baseMessageId));
 

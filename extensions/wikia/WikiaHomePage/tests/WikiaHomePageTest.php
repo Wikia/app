@@ -91,7 +91,10 @@ class WikiaHomePageTest extends WikiaBaseTest {
 
 		// mock global function
 		if (!empty($globalFunc)) {
-			$this->mockGlobalFunction($globalFunc['name'], $mockObject, $globalFunc['time']);
+			$this->getGlobalFunctionMock( $globalFunc['name'] )
+				->expects( $this->exactly( $globalFunc['time'] ) )
+				->method( $globalFunc['name'] )
+				->will( $this->returnValue( $mockObject ) );
 		}
 
 		// set instance

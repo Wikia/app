@@ -21,9 +21,11 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 	public function testCheckDomainIsCorrect($domainName, $lang, $isCorrect, $expectedErrorKey) {
 
 		if (!$isCorrect) {
-			$this->mockGlobalFunction('wfMsg', 'mocked-string', 1, array(
-				$this->equalTo($expectedErrorKey)
-			));
+			$this->getGlobalFunctionMock( 'wfMsg' )
+				->expects( $this->exactly( 1 ) )
+				->method( 'wfMsg' )
+				->with( $this->equalTo( $expectedErrorKey ) )
+				->will( $this->returnValue( 'mocked-string' ) );
 		}
 
 		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'checkDomainExists', 'getLanguageNames'));
@@ -76,9 +78,11 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 	}
 
 	function testCheckDomainIsCorrectBadWords() {
-		$this->mockGlobalFunction('wfMsg', 'mocked-string', 1, array(
-			$this->equalTo('autocreatewiki-violate-policy')
-		));
+		$this->getGlobalFunctionMock( 'wfMsg' )
+			->expects( $this->exactly( 1 ) )
+			->method( 'wfMsg' )
+			->with( $this->equalTo( 'autocreatewiki-violate-policy' ) )
+			->will( $this->returnValue( 'mocked-string' ) );
 
 		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'getLanguageNames'));
 		$autoCreateWikiMock->staticExpects($this->any())
@@ -99,9 +103,11 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 	}
 
 	function testCheckDomainIsCorrectDomainExists() {
-		$this->mockGlobalFunction('wfMsg', 'mocked-string', 1, array(
-			$this->equalTo('autocreatewiki-name-taken')
-		));
+		$this->getGlobalFunctionMock( 'wfMsg' )
+			->expects( $this->exactly( 1 ) )
+			->method( 'wfMsg' )
+			->with( $this->equalTo( 'autocreatewiki-name-taken' ) )
+			->will( $this->returnValue( 'mocked-string' ) );
 
 		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'getLanguageNames', 'checkDomainExists'));
 		$autoCreateWikiMock->staticExpects($this->any())

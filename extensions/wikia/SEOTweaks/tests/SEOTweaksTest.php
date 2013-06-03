@@ -318,7 +318,11 @@ class SEOTweaksTest extends WikiaBaseTest
 			->with   ( 'A - B' )
 		;
 
-		$this->mockGlobalFunction('wfMsg','A',1);
+		$this->getGlobalFunctionMock( 'wfMsg' )
+			->expects( $this->exactly( 1 ) )
+			->method( 'wfMsg' )
+			->will( $this->returnValue( 'A' ) );
+
 		$this->mockGlobalVariable('wgOut',$mockOut);
 		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
 
@@ -391,7 +395,11 @@ class SEOTweaksTest extends WikiaBaseTest
 			->with   ( 'A - B' )
 		;
 
-		$this->mockGlobalFunction('wfMsg','A',1);
+		$this->getGlobalFunctionMock( 'wfMsg' )
+			->expects( $this->exactly( 1 ) )
+			->method( 'wfMsg' )
+			->will( $this->returnValue( 'A' ) );
+
 		$this->mockGlobalVariable('wgOut',$mockOut);
 		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
 

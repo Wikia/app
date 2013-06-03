@@ -88,7 +88,11 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 			->will($this->returnValue(NS_FILE));
 
 		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
-		$this->mockGlobalFunction('wfFindFile', $fileMock, 1, array($mockedTitle));
+		$this->getGlobalFunctionMock( 'wfFindFile' )
+			->expects( $this->exactly( 1 ) )
+			->method( 'wfFindFile' )
+			->with( $mockedTitle )
+			->will( $this->returnValue( $fileMock ) );
 
 		$this->getStaticMethodMock( 'SEOTweaksGlobalHooksHelper', 'getFirstArticleImage' )
 			->expects($this->never())

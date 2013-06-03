@@ -460,7 +460,10 @@
 			}
 
 			$this->mockGlobalVariable( 'wgEmailAuthentication', $mockEmailAuth );
-			$this->mockGlobalFunction( 'wfMsgExt', $mockMsgExt, $mockMsgExtCount );
+			$this->getGlobalFunctionMock( 'wfMsgExt' )
+				->expects( $this->exactly( $mockMsgExtCount ) )
+				->method( 'wfMsgExt' )
+				->will( $this->returnValue( $mockMsgExt ) );
 
 			if ( is_int($mockCacheParams) ) {
 				$mockCacheParams = array(
