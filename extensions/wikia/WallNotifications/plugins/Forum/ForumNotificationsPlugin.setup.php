@@ -11,4 +11,4 @@ $app->registerClass( 'ForumNotificationsPlugin', $dirPlugin . '/ForumNotificatio
 $app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationsPlugin', 'onGetNotificationMessage' );
 $app->registerHook( 'NotificationGetMailNotificationMessage', 'ForumNotificationsPlugin', 'onGetMailNotificationMessage' );
 
-$app->registerExtensionMessageFile( 'Forum', $dirPlugin . '/ForumNotificationsPlugin.i18n.php' );
+$app->registerExtensionMessageFile( 'ForumNotificationsPlugin', $dirPlugin . '/ForumNotificationsPlugin.i18n.php' );
