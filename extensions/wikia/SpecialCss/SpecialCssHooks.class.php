@@ -10,7 +10,7 @@ class SpecialCssHooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 		$model = new SpecialCssModel();
-		
+
 		if( $this->shouldRedirect($app, $model, $editPage->getArticle()->getTitle()->getArticleId()) ) {
 			$app->wg->Out->redirect( $model->getSpecialCssUrl() );
 		}
@@ -18,11 +18,14 @@ class SpecialCssHooks {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-	
+
+	/**
+	 * @param $model SpecialCssModel
+	 */
 	private function shouldRedirect($app, $model, $articleId) {
 		return $app->wg->EnableSpecialCssExt
 			&& $model->isWikiaCssArticle( $articleId )
-			&& $app->checkSkin( 'oasis' )
+			&& $app->checkSkin( $model::$supportedSkins )
 			&& $app->wg->User->isAllowed( 'specialcss' );
 	}
 }

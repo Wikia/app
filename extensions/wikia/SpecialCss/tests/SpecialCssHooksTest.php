@@ -3,6 +3,7 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 
 	protected function setUp () {
 		require_once( dirname(__FILE__) . '/../SpecialCssHooks.class.php');
+		require_once( dirname(__FILE__) . '/../SpecialCssModel.class.php');
 		parent::setUp();
 	}
 
@@ -10,8 +11,7 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 	 * @dataProvider testShouldRedirectDataProvider
 	 */
 	public function testShouldRedirect( $isExtensionEnabled, $isCssWikiaArticle, $isSkinRight, $isUserAllowed, $isRedirectExpected ) {
-		//$this->markTestSkipped('work in progress...');
-		
+
 		$specialCssModelMock = $this->getMock( 'SpecialCssModel', array( 'isWikiaCssArticle' ) );
 		$specialCssModelMock->expects( $this->any() )
 			->method( 'isWikiaCssArticle' )

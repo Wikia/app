@@ -3,6 +3,11 @@ class SpecialCssModel extends WikiaModel {
 	const CSS_FILE_NAME = 'Wikia.css';
 
 	/**
+	 * @var array List of skins for which we would like to use SpecialCss for editing css file
+	 */
+	public static $supportedSkins = array( 'oasis' );
+
+	/**
 	 * @desc Retruns css file name
 	 * 
 	 * @return string

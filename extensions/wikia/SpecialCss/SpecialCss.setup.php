@@ -26,7 +26,7 @@ $app->registerClass('SpecialCssHooks', $dir . 'SpecialCssHooks.class.php');
 $app->registerController(
 	'SpecialCssController', 
 	$dir . 'SpecialCssController.class.php',
-	['index' => ["skin" => ["monobook", "wikiamobile"], "method" => "notOasis"]]
+	['index' => ["notSkin" => SpecialCssModel::$supportedSkins, "method" => "notOasis"]]
 );
 
 // hooks
