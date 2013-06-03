@@ -1,0 +1,39 @@
+@import "color";
+@import "layout";
+
+$width-padding: $width-gutter / 2;
+
+.WikiaArticle,
+.WikiaArticleFooter {
+	padding: 0;
+}
+
+.WikiaMainContent {
+	margin-right: -#{ $width-rail + $width-gutter };
+	width: 100%;
+}
+
+.WikiaMainContentContainer {
+	background-color: $color-page;
+	margin-right: $width-rail + $width-gutter;
+	padding: $width-padding;
+}
+
+.WikiaPage,
+.oasis-split-skin .WikiaPage {
+	border: 0;
+}
+
+.WikiaPageBackground {
+	display: none;
+}
+
+.WikiaPageHeader,
+.wikinav2 .WikiaPageHeader {
+	margin: 0 0 $width-padding 0;
+	padding-bottom: $width-padding / 2;
+}
+
+.WikiaRail {
+	padding: 0;
+}
