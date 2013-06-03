@@ -34,3 +34,4 @@ $app->registerExtensionMessageFile( 'WallNotifications', $dirExt . '/WallNotific
 
 // Notifications plugins
 include( $dirExt . '/plugins/Forum/ForumNotificationsPlugin.setup.php' );
+include( $dirExt . '/plugins/Wall/WallNotificationsPlugin.setup.php' );
