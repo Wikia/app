@@ -15,7 +15,6 @@
 	WikiaEditor.plugins.tracker = $.createClass( WikiaEditor.plugin, {
 		config: {
 			action: Wikia.Tracker.ACTIONS.CLICK,
-			category: 'editor',
 			trackingMethod: 'both'
 		},
 
@@ -25,7 +24,7 @@
 					( ( window.RTE !== undefined && !window.RTEEdgeCase ) ? 'ck' : 'mw' );
 
 			// Add editor type to category
-			this.config.category += editorType;
+			this.config.category = 'editor' + editorType;
 
 			// Track edit page views and page type
 			if ( !isMiniEditor ) {
