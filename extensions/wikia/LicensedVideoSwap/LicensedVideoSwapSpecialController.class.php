@@ -165,6 +165,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array|null video
 	 */
 	public function keepVideo() {
-	}
 
+	}
 }

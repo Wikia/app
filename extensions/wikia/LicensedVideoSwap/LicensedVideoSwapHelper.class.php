@@ -9,9 +9,8 @@
 class LicensedVideoSwapHelper extends WikiaModel {
 
 	const STATUS_SKIP = 0;
-	const STATUS_EXACT_MATCH = 1;
-	const STATUS_NON_EXACT_MATCH = 2;
-
+	const STATUS_SWAP_NORM = 1;
+	const STATUS_SWAP_EXACT = 2;
 	/**
 	 * Gets a list of videos that have not yet been swapped (e.g., no decision to keep or not keep the
 	 * original video has been made)
@@ -31,7 +30,8 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		$sqlWhere = array(
 			'removed' => 0,
 			'premium' => 0,
-			'orig_title IS NULL'
+			'video_title = page_title',
+			'page_wikia_props.page_id IS NULL'
 		);
 
 		// Paging options
@@ -50,11 +50,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		}
 
 		// Do the outer join on the video_swap table
-		$joinCond = array( 'video_swap' => array( 'LEFT JOIN', 'video_title = orig_title' ) );
+		$joinCond = array( 'page_wikia_props' => array( 'LEFT JOIN', 'page.page_id = page_wikia_props.page_id' ) );
 
 		// Select video info making sure to skip videos that have entries in the video_swap table
 		$result = $db->select(
-			array( 'video_info', 'video_swap' ),
+			array( 'video_info', 'page', 'page_wikia_props' ),
 			array( 'video_title, added_at, added_by' ),
 			$sqlWhere,
 			__METHOD__,
@@ -79,9 +79,10 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 	/**
 	 * get sort options
+	 * @param String|$selected - Text of the currently selected sort option
 	 * @return array $options
 	 */
-	public function getSortOption($selected) {
+	public function getSortOption( $selected ) {
 		// Set it up this way for now so mustache can consume it
 		// TODO: we will use a helper function in the future. Saipetch will set this up.
 		$options = array(
@@ -105,4 +106,45 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		return $options;
 	}
 
+	/**
+	 * Set the status of this file page to skipped
+	 * @param int|$articleId - The ID of a video's file page
+	 */
+	public function setSkipStatus( $articleId ) {
+		$this->updateStatus( $articleId, self::STATUS_SKIP );
+	}
+
+	/**
+	 * Set the status of this file page to swapped
+	 * @param int|$articleId - The ID of a video's file page
+	 */
+	public function setSwapStatus( $articleId ) {
+		$this->updateStatus( $articleId, self::STATUS_SWAP_NORM );
+	}
+
+	/**
+	 * Set the status of this file page to swapped with an exact match
+	 * @param int|$articleId - The ID of a video's file page
+	 */
+	public function setSwapExactStatus( $articleId ) {
+		$this->updateStatus( $articleId, self::STATUS_SWAP_EXACT );
+	}
+
+	/**
+	 * Update the status of a file page
+	 * @param int|$articleId - The ID of a video's file page
+	 * @param int|$status - A status constant, see STATUS_* above
+	 */
+	private function updateStatus( $articleId, $status ) {
+		$app = F::app();
+		$dbw = $app->wf->GetDB(DB_MASTER, array());
+		$dbw->replace('page_wikia_props','',
+			array(
+				'page_id'  =>  $articleId,
+				'propname' => WPP_IMAGE_SERVING,
+				'props'    => serialize($status)
+			),
+			__METHOD__
+		);
+	}
 }
