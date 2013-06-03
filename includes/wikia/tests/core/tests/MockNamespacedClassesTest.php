@@ -14,7 +14,7 @@ namespace {
 
 			$this->getConstructorMock('WikiaConstructorClassTest\WikiaMockTest')
 				->expects($this->any())
-				->method('construct')
+				->method('__construct')
 				->will($this->returnValue($fakeObject));
 
 			$this->assertSame($fakeObject,new WikiaMockTest(),'class from main namespace');
