@@ -70,7 +70,7 @@ class InterWiki extends AbstractSelect
 				strtolower( $this->config->getQuery()->getSanitizedQuery() ) 
 				);
 		$match =  $this->service->getWikiMatchByHost( $domain );
-		if (! empty( $match ) ) {
+		if (! empty( $match ) && ( $match->getId() !== $this->getService()->getWikiId() ) ) {
 			$this->config->setWikiMatch( $match );
 		}
 		return $match;
