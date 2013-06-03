@@ -49,7 +49,6 @@ class BodyController extends WikiaController {
 	 */
 	public static function isGridLayoutEnabled() {
 		$app = F::app();
-		$ns = $app->wg->Title->getNamespace();
 
 		// Don't enable when responsive layout is enabled
 		if ( OasisController::isResponsiveLayoutEnabled() ) {
@@ -59,6 +58,8 @@ class BodyController extends WikiaController {
 		if( !empty($app->wg->OasisGrid) ) {
 			return true;
 		}
+
+		$ns = $app->wg->Title->getNamespace();
 
 		if( in_array( MWNamespace::getSubject($ns), $app->wg->WallNS) ) {
 			return true;
