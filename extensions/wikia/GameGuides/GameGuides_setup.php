@@ -66,7 +66,7 @@ JSMessages::registerPackage( 'GameGuidesSponsoredMsg', [
 	'wikiagameguides-sponsored-required-entry',
 	'wikiagameguides-sponsored-empty-language',
 	'wikiagameguides-sponsored-orphaned-video',
-	'wikiagameguides-sponsored-are-you-sure',
+	'wikiagameguides-sponsored-delete-videos-are-you-sure',
 	'wikiagameguides-sponsored-video-does-not-exist',
 	'wikiagameguides-sponsored-video-is-not-ooyala'
 ] );

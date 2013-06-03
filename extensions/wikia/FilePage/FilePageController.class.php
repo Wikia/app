@@ -359,6 +359,11 @@ class FilePageController extends WikiaController {
 	 * Figure out what articles include this file from any wiki
 	 */
 	public function getGlobalUsage () {
+		if ( empty( $wgEnableGlobalUsageExt ) ) {
+			$this->summary = array();
+			return;
+		}
+
 		$fileTitle = $this->getVal('fileTitle', '');
 		$titleObj = empty($fileTitle) ? $this->wg->Title : Title::newFromText($fileTitle);
 

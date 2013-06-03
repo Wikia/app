@@ -221,7 +221,6 @@ class RelatedVideosService {
 
 		$videos = array();
 
-		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( $title );
 		$oEmbededVideosLists = RelatedVideosEmbededData::newFromTitle( $title );
 		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();
 
@@ -230,7 +229,7 @@ class RelatedVideosService {
 		global $wgEnableMemcachedBulkMode;
 		if ( !empty( $wgEnableMemcachedBulkMode ) ) {
 			$pages = array();
-			foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
+			foreach( array( $oGlobalLists, $oEmbededVideosLists ) as $oLists ) {
 				if ( !empty( $oLists ) && $oLists->exists() ){
 					$data = $oLists->getData();
 					if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
@@ -248,7 +247,7 @@ class RelatedVideosService {
 		// experimental - end
 
 		$blacklist = array();
-		foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
+		foreach( array( $oGlobalLists, $oEmbededVideosLists ) as $oLists ) {
 			if ( !empty( $oLists ) && $oLists->exists() ){
 				$data = $oLists->getData();
 				if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {

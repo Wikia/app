@@ -102,7 +102,7 @@ class WikiaVideoAddForm extends SpecialPage {
 			$this->showForm($errors);
 			return;
 		} else if ( $this->mName == '' ) {
-			$videoService = (new VideoService);
+			$videoService = new VideoService();
 			$retval = $videoService->addVideo( $this->mUrl );
 			if ( is_array($retval) ) {
 				list( $title, $videoPageId, $videoProvider ) = $retval;

@@ -107,7 +107,7 @@ var RelatedVideos = {
 							if ( formRes.error ) {
 								RelatedVideos.showError( formRes.error );
 							} else {
-								VET_loader.modal.closeModal();
+								window.VET.close();
 								RelatedVideos.injectCarouselElement( formRes.html );
 							}
 						},

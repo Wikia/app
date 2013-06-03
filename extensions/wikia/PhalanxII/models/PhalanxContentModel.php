@@ -1,6 +1,8 @@
 <?php
 
 class PhalanxContentModel extends PhalanxModel {
+
+	/* @var Title $title */
 	protected $title = null;
 	const SPAM_WHITELIST_TITLE = 'Spam-whitelist';
 	const SPAM_WHITELIST_NS_TITLE = 'Mediawiki:Spam-whitelist';
@@ -18,7 +20,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 
 	public function getText() {
-		return preg_replace( '/\s+/', ' ', preg_replace( '/[^\PP]+/', '', ( !is_null( $this->text ) ) ? $this->text : $this->title->getFullText() ) );
+		return !is_null( $this->text ) ? $this->text : $this->title->getFullText();
 	}
 
 	public function buildWhiteList() {
@@ -66,7 +68,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function contentBlock() {
-		$msg = wfmsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$this->block->text} (Block #{$this->block->id})</nowiki>" );
+		$msg = wfMessage('spamprotectionmatch', "{$this->block->text} (Block #{$this->block->id})")->text();
 		$this->logBlock();
 		return $msg;
 	}

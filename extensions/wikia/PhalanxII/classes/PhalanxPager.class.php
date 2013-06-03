@@ -103,7 +103,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 		$statsUrl = sprintf( "%s/%s", $this->phalanxStatsPage->getLocalUrl(), $row->p_id );
 
 		$html  = Html::openElement( 'li', array( 'id' => 'phalanx-block-' . $row->p_id ) );
-		$html .= Html::element( 'b', array('class' => 'blockContent'), htmlspecialchars( $row->p_text ) );
+		$html .= Html::element( 'b', array('class' => 'blockContent'), $row->p_text );
 		$html .= sprintf( " (%s%s%s) ",
 			( !empty($row->p_regex) ? 'regex' : 'plain' ),
 			( !empty($row->p_case)  ? ',case' : '' ),

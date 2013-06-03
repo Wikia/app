@@ -7,7 +7,8 @@
 class VideoHandlerHelper extends WikiaModel {
 
 	/**
-	 * create file page by adding video category
+	 * Create file page by adding video category
+	 *
 	 * @param Title|string $title - Title text of a video
 	 * @param User|integer $user - A user ID
 	 * @param integer $flags - Edit flags to pass to the Article::doEdit method
@@ -38,11 +39,93 @@ class VideoHandlerHelper extends WikiaModel {
 	}
 
 	/**
-	 * remove description header
+	 * Get video description, which is the content of the file page minus the category wiki tags
+	 *
+	 * @param File $file - The file object for this video
+	 * @param bool $fillFromMeta - Whether or not to use the video meta description if the current
+	 *                             description is blank
+	 * @return string $text
+	 */
+	public function getVideoDescription( $file, $fillFromMeta = true ) {
+		// Get the file page for this file
+		$page = WikiPage::factory( $file->getTitle() );
+
+		// Strip the description header
+		$text = $this->stripDescriptionHeader( $page->getText() );
+
+		// Strip out the category tags so they aren't shown to the user
+		$text = FilePageHelper::stripCategoriesFromDescription( $text );
+
+		// If we have an empty string or a bunch of whitespace, and we're asked to do so,
+		// use the default description from the file metadata
+		if ( $fillFromMeta && (trim($text) == '') ) {
+			$text = $file->getMetaDescription();
+		}
+
+		return $text;
+	}
+
+	/**
+	 * Add a default video description if one doesn't already exist
+	 *
+	 * @param $file - The file object for the video
+	 * @return bool - Returns true if successful, false otherwise
+	 */
+	public function addDefaultVideoDescription( $file ) {
+		$title = $file->getTitle();
+
+		// Get the file page for this file
+		$page = WikiPage::factory( $title );
+
+		// Get the description and strip the H2 header
+		$text = $this->stripDescriptionHeader( $page->getText() );
+
+		// Strip out the category tags that might be part of the content
+		$text = FilePageHelper::stripCategoriesFromDescription( $text );
+
+		// If there is no description, pull the description from metadata,
+		// otherwise do nothing
+		if ( trim($text) == '' ) {
+			$text = $file->getMetaDescription();
+			return $this->setVideoDescription( $title, $text );
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * Replace the description section from $title with the content given by $description.
+	 *
+	 * @param $title - The DBkey version of a title.
+	 * @param $description - The text to use to replace the existing description
+	 * @return bool Returns true if successful, false otherwise
+	 */
+	public function setVideoDescription( $title, $description ) {
+		// Get the file page for this file
+		$page = WikiPage::factory( $title );
+
+		$text = $page->getText();
+
+		// Insert description header
+		$text = $this->replaceDescriptionSection( $text, $description );
+
+		$summary = 'Adding video description';
+		$status = $page->doEdit( $text, $summary );
+
+		if ( $status->isOK() ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Remove description header
+	 *
 	 * @param string $content
 	 * @return string $newContent
 	 */
-	public function removeDescriptionHeader( $content ) {
+	public function stripDescriptionHeader( $content ) {
 		$headerText = wfMessage( 'videohandler-description' );
 
 		// Grab everything after the description header
@@ -59,6 +142,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 	/**
 	 * Replace the contents of the description section within the content passed in.
+	 *
 	 * @param string $content - The file page content
 	 * @param string $descText - The text to use to replace any existing description section
 	 * @return String - The updated file page content
@@ -111,6 +195,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 	/**
 	 * Extract category tags from content text passed in
+	 *
 	 * @param string $content - Content in which to look for category tags
 	 * @return string
 	 */
@@ -127,6 +212,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 	/**
 	 * Add a description header
+	 *
 	 * @param string $content
 	 * @return string $newContent
 	 */
@@ -135,5 +221,4 @@ class VideoHandlerHelper extends WikiaModel {
 
 		return $newContent;
 	}
-
 }

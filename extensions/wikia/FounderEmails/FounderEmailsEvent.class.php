@@ -125,6 +125,7 @@ abstract class FounderEmailsEvent {
 				__METHOD__
 			);
 			$this->id = $dbw->insertId();
+			wfDebug(__METHOD__ . ": id# {$this->id}\n");
 		} else {
 			$this->id = 0;
 		}

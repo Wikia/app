@@ -643,6 +643,29 @@ class ConfigTest extends BaseTest {
 				'\Wikia\Search\Config::getRequestedFields() should always include an id'
 		);
 	}
+	
+	/**
+	 * @covers \Wikia\Search\Config::getRequestedFields
+	 */
+	public function testGetRequestedFieldsWithVideo() {
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQueryService' ] );
+		$mockConfig->setRequestedFields( [ 'id' ] );
+		$this->assertAttributeEquals(
+				[ 'id' ],
+				'requestedFields',
+				$mockConfig
+		);
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getQueryService' )
+		    ->will   ( $this->returnValue( '\\Wikia\Search\\QueryService\\Select\\Video' ) )
+		;
+		$this->assertContains(
+				'title_en',
+				$mockConfig->getRequestedFields(),
+				'A video search should always include title_en as a requested field'
+		);
+	}
 
 	/**
 	 * @covers \Wikia\Search\Config::getPublicFilterKeys

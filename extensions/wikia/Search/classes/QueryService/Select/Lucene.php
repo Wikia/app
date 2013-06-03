@@ -20,6 +20,10 @@ class Lucene extends AbstractSelect
 		return $this->config->getQuery()->getSanitizedQuery();
 	}
 	
+	protected function registerComponents( \Solarium_Query_Select $select ) {
+		return $this->registerQueryParams( $select );
+	}
+	
 	/**
 	 * This obviously violates the LSP -- @todo create a parent to abstractselect
 	 * @return string

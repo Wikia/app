@@ -25,7 +25,7 @@ class VideosController extends WikiaController {
 			return;
 		}
 
-		$videoService = (new VideoService);
+		$videoService = new VideoService();
 		$retval = $videoService->addVideo( $url );
 
 		if ( !is_array($retval) ) {
