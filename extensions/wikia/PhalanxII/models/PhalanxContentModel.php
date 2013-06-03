@@ -1,6 +1,8 @@
 <?php
 
 class PhalanxContentModel extends PhalanxModel {
+
+	/* @var Title $title */
 	protected $title = null;
 	const SPAM_WHITELIST_TITLE = 'Spam-whitelist';
 	const SPAM_WHITELIST_NS_TITLE = 'Mediawiki:Spam-whitelist';
@@ -15,6 +17,10 @@ class PhalanxContentModel extends PhalanxModel {
 			!( $this->title instanceof Title ) || 
 			( $this->title->getPrefixedText() == self::SPAM_WHITELIST_NS_TITLE )  
 		);
+	}
+
+	public function getText() {
+		return !is_null( $this->text ) ? $this->text : $this->title->getFullText();
 	}
 
 	public function buildWhiteList() {
