@@ -34,6 +34,8 @@ class PhalanxService extends Service {
 				$this->$key = $args[0];
 				$result = $this;
 				break;
+			default:
+				throw new WikiaException('PhalanxService::_call supports getters and setters only');
 		}
 		return $result;
 	}
@@ -69,6 +71,14 @@ class PhalanxService extends Service {
 	public function match( $type, $content, $lang = "" ) {
 		wfProfileIn( __METHOD__  );
 		$result =  $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
+		wfProfileOut( __METHOD__  );
+		return $result;
+	}
+	
+	public function matchShadow($type, $content, $expected_id, $lang = "" ) {
+		wfProfileIn( __METHOD__  );
+		$result =  $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content,
+				"expected" => $expected_id, "lang" => $lang ) );
 		wfProfileOut( __METHOD__  );
 		return $result;
 	}
