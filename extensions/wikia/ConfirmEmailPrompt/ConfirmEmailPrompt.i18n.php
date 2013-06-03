@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'confirmemailprompt-error' => 'Is this your e-mail address: <strong>$1</strong>? [[$2|Confirm it]] or [[$3|change it]].',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -16,6 +16,21 @@ $messages['qqq'] = array(
 * $1 is an e-mail address
 * $2 is a link to the e-mail address confirmation
 * $3 is a link to the e-mail address change form',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'confirmemailprompt-desc' => 'يعرض رسالة تحذير إذا كان مستخدم لديه عنوان بريد إلكتروني غير مؤكد',
+	'confirmemailprompt-error' => 'هل هذا هو عنوان البريد الإلكتروني الخاص بك: <strong>$1</strong>؟ قم [[$2|بتأكيده]] أو [[$3|تغييره]].',
+);
+
+/** Breton (brezhoneg)
+ * @author Gwenn-Ael
+ */
+$messages['br'] = array(
+	'confirmemailprompt-error' => "Ho chomlec'h postel eo : <strong>$1</strong>? [[$2|Kadarnit anezhañ]] pe [[$3|kemmit anezhañ]].",
 );
 
 /** Catalan (català)
@@ -208,6 +223,14 @@ $messages['tl'] = array(
  */
 $messages['tt-cyrl'] = array(
 	'confirmemailprompt-desc' => 'Әгәр катнашучының электрон почта адресы күрсәтелмәгән икән, кисәтүче хәбәр чыгара.',
+);
+
+/** Ukrainian (українська)
+ * @author Ua2004
+ */
+$messages['uk'] = array(
+	'confirmemailprompt-desc' => 'Відображає попередження, якщо користувач має непідтверджену електронну пошту',
+	'confirmemailprompt-error' => 'Це ваша адреса електронної пошти: <strong>$1</strong>? [[$2|Підтвердіть її]] або [[$3|змініть її]].',
 );
 
 /** Vietnamese (Tiếng Việt)

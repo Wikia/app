@@ -21,9 +21,15 @@ class FBPush_OnRateArticle extends FBConnectPushEvent {
 	
 	public function onArticleAfterVote($user_id, &$page, $vote) {
 		global $wgSitename;
-		$article = Article::newFromID( $page );
 		wfProfileIn(__METHOD__);
-		
+
+		if ( !self::checkUserOptions(__CLASS__) ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
+		$article = Article::newFromID( $page );
+
 		$params = array(
 			'$ARTICLENAME' => $article->getTitle()->getText(),
 			'$WIKINAME' => $wgSitename,

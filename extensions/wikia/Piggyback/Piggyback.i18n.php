@@ -19,7 +19,7 @@ Check your spelling.',
 	'log-description-piggyback' => 'This log is a record of account piggybacks.',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'log-name-piggyback' => '{{doc-logpage}}',
@@ -34,6 +34,26 @@ $messages['af'] = array(
 	'piggyback-wronguser' => '$1 is nie u gebruikersnaam nie',
 	'piggyback-loginprompt' => 'Verskaf weer u gebruikersnaam en wagwoord.',
 	'piggyback-itisyou' => 'U kan nie piggyback op uself gebruik nie.',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'piggybac-desc' => 'تسمح بتسجيل الدخول كمستخدم آخر',
+	'piggyback' => 'استعارة حساب',
+	'piggyback-otherusername' => 'اسم المستخدم الآخر:',
+	'piggyback-nosuchuser' => 'لا يوجد أي مستخدم بالاسم "$1".
+أسماء المستخدمين حساسة لحالة الأحرف.
+تثبت من صحة الإسم المعطى.',
+	'piggyback-wronguser' => '$1 هو ليس اسم المستخدم الخاص بك',
+	'piggyback-loginprompt' => 'الرجاء إعادة إدخال اسم المستخدم وكلمة المرور الخاصة بك.',
+	'piggyback-firstlogout' => 'يرجى تسجيل الخروج أولا إلى الحساب الخاص بك.',
+	'piggyback-itisyou' => 'لا يمكنك استعارة حسابك الشخصي.',
+	'piggyback-issysopto' => 'لا يمكنك استعارة حساب مستخدم لديه حق الاستعارة أيضا.',
+	'action-piggyback' => 'قم بتسجيل الدخول كمستخدم آخر',
+	'log-name-piggyback' => 'سجل استعارة الحساب',
+	'log-description-piggyback' => 'هذا السجل يبين الحسابات المستعارة',
 );
 
 /** Breton (brezhoneg)

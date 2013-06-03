@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'tog-watchlistsubpages' => 'Follow subpages'
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
@@ -20,6 +20,14 @@ $messages['qqq'] = array(
 $messages['af'] = array(
 	'wikia-watchsubpages-desc' => 'Outomatiese volg van subbladsye',
 	'tog-watchlistsubpages' => 'Volg subbladsye',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'wikia-watchsubpages-desc' => 'تتبع آلي للصفحات الفرعية',
+	'tog-watchlistsubpages' => 'متابعة الصفحات الفرعية',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)

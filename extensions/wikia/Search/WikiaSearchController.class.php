@@ -137,7 +137,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $this->queryServiceFactory->getFromConfig( $searchConfig )->searchAsApi() );
 	}
-
+	
 	/**
 	 * Controller Helper Methods
 	 *----------------------------------------------------------------------------------*/

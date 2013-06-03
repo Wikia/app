@@ -24,11 +24,12 @@ $messages['en'] = array(
 			* http://poptarts.wikia.com|Pop Tarts Wikii|landingpage-wikis-en.png",
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'landingpage-language-links' => '{{Optional}}',
+	'landingpage-buttons-learn-more' => '{{Identical|Learn more}}',
 );
 
 /** Arabic (العربية)
@@ -403,6 +404,18 @@ $messages['pt-br'] = array(
 	'landingpage-buttons-learn-more' => 'Saiba mais &gt;',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'landingpage' => "Bovègne jndr'à Uicchia",
+	'landingpage-start-exploring' => 'Pronde pe accumenzà a esplorà?',
+	'landingpage-start-exploring-text' => "Cirche l'argomende ca te piace o sfogghie le comunitate ca te piaccione aqquà sotte.",
+	'landingpage-readfaq' => 'Domande? Ligge le nostre FAQ &gt;',
+	'landingpage-text' => "Sus a Uicchia tu puè <strong>collegarte cu le crestiane</strong> ca condividone le <strong>passiune e le inderesse tune</strong>. Cirche 'u gruppe tune, fa commende e cangiaminde, eppure <strong>accuminze 'u site web tune</strong> e comunitate.",
+	'landingpage-buttons-learn-more' => "'Mbare de cchiù &gt;",
+);
+
 /** Russian (русский)
  * @author Eleferen
  * @author Kuzura
@@ -476,9 +489,11 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Ua2004
  */
 $messages['uk'] = array(
 	'landingpage' => 'Ласкаво просимо у Wikia',
+	'landingpage-start-exploring' => 'Готові почати вивчення?',
 	'landingpage-readfaq' => 'Є запитання? Читайте наші FAQ &gt;',
 	'landingpage-buttons-learn-more' => 'Дізнатись більше &gt;',
 );

@@ -1,5 +1,7 @@
 <?php
 
+$fallback = 'zh-hans';
+
 if( !is_array( $messages ) ) 
      $messages = array();
 

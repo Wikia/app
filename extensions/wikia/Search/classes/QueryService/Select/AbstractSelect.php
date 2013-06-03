@@ -374,4 +374,11 @@ abstract class AbstractSelect
 	protected function getConfig() {
 		return $this->config;
 	}
+	
+	/**
+	 * @return Wikia\Search\MediaWikiService
+	 */
+	protected function getService() {
+		return $this->service;
+	}
 }

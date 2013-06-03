@@ -1,14 +1,9 @@
-/*global UserLogin, WikiaEditor*/
-
 /*
  * Author: Inez Korczynski, Bartek Lapinski, Hyun Lim, Liz Lee
  */
 
+require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBootstrap, $, window) {
 
-/*
- * Variables
- */
-(function($, window) {
 	var VET_panel = null;
 	var VET_curSourceId = 0;
 	var VET_lastQuery = new Array();
@@ -34,6 +29,7 @@
 	var VET_MIN_WIDTH = 100;
 	var VET_DEFAULT_WIDTH = 335;
 	var VET_thumbSize = VET_DEFAULT_WIDTH;	// variable that can change later, defaulted to DEFAULT
+	var VET_videoInstance = null;
 
 	var VET_tracking = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
 		action: Wikia.Tracker.ACTIONS.CLICK,
@@ -230,8 +226,7 @@
 	}
 
 	function VET_show( options ) {
-
-		/* set options */
+		/* set vars for this instance of VET */
 		VET_options = options;
 		VET_embedPresets = options.embedPresets;
 		VET_wysiwygStart = options.startPoint || 1;
@@ -314,15 +309,11 @@
 		VET_switchScreen('Details');
 		$('#VideoEmbedBack').css('display', 'inline');
 
-		// wlee: responseText could include <script>. Use jQuery to parse
-		// and execute this script
 		$('#VideoEmbedDetails').html(responseText);
 
-		var element = $('<div></div>').appendTo('#VideoEmbedThumb');
+		var element = $('#VideoEmbedThumb .video-embed');
 
-		require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-			new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
-		});
+		VET_videoInstance = new VideoBootstrap(element[0], window.VETPlayerParams, 'vetDetails');
 
 		VET_updateHeader();
 
@@ -494,6 +485,9 @@
 	}
 
 	function VET_switchScreen(to) {
+		if ( VET_videoInstance ) {
+			VET_videoInstance.clearTimeoutTrack();
+		}
 		VET_prevScreen = VET_curScreen;
 		VET_curScreen = to;
 		$('#VideoEmbedBody').find('.VET_screen').hide();
@@ -510,7 +504,7 @@
 		// macbre: move back button on Oasis
 		if( to == "Details" ) {
 			setTimeout(function() {
-				VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
+				VET_moveBackButton($('.addVideoDetailsFormControls').find('input'));
 			}, 50);
 		}
 	}
@@ -530,20 +524,21 @@
 	}
 
 	function VET_close() {
-		VET_switchScreen('Main');
 		window.VETbackButton = false;
+
+		VET_loader.modal.closeModal();
 
 		VET_tracking({
 			action: Wikia.Tracker.ACTIONS.CLOSE
 		});
 
-		VET_loader.modal.closeModal();
-
 		if ($.isFunction(VET_options.onClose)) {
 			VET_options.onClose();
 		}
 
-		UserLogin.refreshIfAfterForceLogin();
+		VET_switchScreen('Main');
+
+		window.UserLogin.refreshIfAfterForceLogin();
 	}
 
 	/*
@@ -686,6 +681,12 @@
 			// attach handlers - close preview
 			this.cachedSelectors.previewWrapper.on('click', '#VET-preview-close', function(event) {
 				event.preventDefault();
+
+				// Closing a video instance, clear the tracking timeout
+				if ( VET_videoInstance ) {
+					VET_videoInstance.clearTimeoutTrack();
+				}
+
 				that.cachedSelectors.previewWrapper.stop().slideUp('slow', function() {
 					that.cachedSelectors.videoWrapper.children().remove();
 					that.removeInPreview();
@@ -914,9 +915,7 @@
 				videoWrapper = this.cachedSelectors.videoWrapper,
 				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>').appendTo(videoWrapper.html(""));
 
-			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-				new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
-			});
+			VET_videoInstance = new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
 
 			// expand preview is hidden
 			if (!previewWrapper.is(':visible')) {
@@ -1134,8 +1133,8 @@
 
 
 	// globally available functions
-	// TODO: Create VET namespace for these
-	window.VET_show = VET_show;
-	window.VET_close = VET_close;
-	window.VETExtended = VETExtended;
-})(jQuery, window);
+	window.VET = {
+		show: VET_show,
+		close: VET_close
+	}
+});

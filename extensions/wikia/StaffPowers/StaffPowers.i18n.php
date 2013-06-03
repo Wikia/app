@@ -26,7 +26,7 @@ $messages['qqq'] = array(
  * @author Achraf94
  */
 $messages['ar'] = array(
-	'staffpowers-ipblock-abort' => 'لا يمكن منع أو حظر فريق عمل ويكيا، أو مساعدي ويكيا أو أعضاء فريق مكافحة الرسائل المزعجة (سبام). الرجاء استخدام [[خاص:Contact|نموذج الاتصال]] للإبلاغ عن أي مسائل أو مشاكل مع موظفينا.', # Fuzzy
+	'staffpowers-ipblock-abort' => 'لا يمكن منع أو حظر فريق عمل ويكيا، أو مساعدي ويكيا أو أعضاء فريق مكافحة الرسائل المزعجة (سبام). الرجاء استخدام [[Special:Contact|نموذج الاتصال]] للإبلاغ عن أي مسائل أو مشاكل مع موظفينا.',
 );
 
 /** Catalan (català)
@@ -72,6 +72,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'staffpowers-ipblock-abort' => 'Non é posible bloquear o persoal de Wikia, os axudantes de Wikia ou os nosos voluntarios da forza de loita contra o spam. Utilice o [[Special:Contact|formulario de contacto]] para informar de calquera problema co noso persoal.',
+);
+
+/** Hebrew (עברית)
+ * @author Inkbug
+ */
+$messages['he'] = array(
+	'staffpowers-ipblock-abort' => 'חסימת צוות Wikia, עוזרי Wikia, או חברים של ה־Volunteer Spam Task Force user team (VSTF) אינה אפשרית. בבקשה השתמשו [[Special:Contact|בטופס יצירת הקשר]] כדי לדווח על בעיות עם הצוות שלנו.',
 );
 
 /** Hungarian (magyar)

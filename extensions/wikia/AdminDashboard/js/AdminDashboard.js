@@ -27,7 +27,7 @@ var AdminDashboard = {
 		}, function() {
 			AdminDashboard.tooltip.text('');
 		}).click(AdminDashboard.handleControlClick);
-		
+
 		// init addVideo jQuery plugin
 		var addVideoButton = AdminDashboard.cc.find('.addVideoButton'),
 			addVideoButtonReturnUrl = addVideoButton.data('return-url');
@@ -48,7 +48,7 @@ var AdminDashboard = {
 							if ( formRes.error ) {
 								GlobalNotification.show( formRes.error, 'error' );
 							} else {
-								VET_loader.modal.closeModal();
+								window.VET.close();
 								window.location = addVideoButtonReturnUrl;
 							}
 						},

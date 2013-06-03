@@ -58,7 +58,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\VideoEmbedTool::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getWikiId', 'getNamespaces' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\VideoEmbedTool' )
 		                   ->setConstructorArgs( array( $dc ) )
@@ -67,7 +67,7 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockConfig
 		    ->expects( $this->once() )
-		    ->method ( 'getCityId' )
+		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( 123 ) )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\VideoEmbedTool', 'getQueryClausesString' );

@@ -34,6 +34,13 @@ $messages['arn'] = array(
 	'wikiawidget' => 'Wikia ñi widgets',
 );
 
+/** Asturian (asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'wikiawidget' => 'Widgets de Wikia',
+);
+
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */

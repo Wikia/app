@@ -43,6 +43,8 @@ $wgHooks['ParserFirstCallInit'][] = 'wfYouTube';
 // Initialize magic word for the parserfunction(s).
 $wgHooks['LanguageGetMagic'][] = 'wfParserFunction_magic';
 
+$wgHooks['EditPage::importFormData'][] = 'upgradeYouTubeTag';
+
 $wgExtensionCredits['parserhook'][] = array
 (
 	'name'        => 'YouTube',
@@ -56,6 +58,76 @@ $wgExtensionCredits['parserhook'][] = array
 function wfParserFunction_magic(&$magicWords, $langCode){
 	$magicWords['youtube'] = array(0, 'youtube');
 	return true;
+}
+
+function upgradeYouTubeTag( $editpage, $request ) {
+	$text = $request->getText( 'wpTextbox1' );
+	$text = $request->getBool( 'safemode' ) ? $editpage->unmakesafe( $text ) : $text;
+
+	$text = preg_replace_callback(
+		'/<youtube([^>]*)>([^<]+)<\/youtube>/i',
+		function ($matches) {
+			// Separate the Youtube ID and parameters
+			$paramText = trim($matches[1]);
+			$ytid   = $matches[2];
+
+			// Parse out the width and height parameters
+			$params = parseSizeParams($paramText);
+
+			$url = 'http://www.youtube.com/watch?v='.$ytid;
+
+			$videoService = new VideoService();
+			$retval = $videoService->addVideo( $url );
+			if ( is_array($retval) ) {
+				list( $title, $videoPageId, $videoProvider ) = $retval;
+				return "[[$title|".$params['width']." px]]";
+			} else {
+				return $matches[0];
+			}
+		},
+		$text
+	);
+
+	$editpage->textbox1 = $text;
+
+	return true;
+}
+
+function parseSizeParams ( $paramText ) {
+	// Some limits and defaults
+	$width_max  = 640;
+	$height_max = 385;
+	$width_def  = 425;
+	$height_def = 355;
+
+	// Parse out the width and height parameters
+	$params = array();
+	if ( preg_match_all('/(width|height)\s*=\s*["\']?([0-9]+)["\']?/', $paramText, $paramMatches) ) {
+		$paramKeys = $paramMatches[1];
+		$paramVals = $paramMatches[2];
+
+		foreach ($paramKeys as $key) {
+			$params[$key] = array_shift($paramVals);
+		}
+	}
+
+	// Fill in a default value if none was given
+	if ( empty( $params['height'] ) ) {
+		$params['height'] = $height_def;
+	}
+	if ( empty ($params['width'] ) ) {
+		$params['width']  = $width_def;
+	}
+
+	// Constrain the max height and width
+	if ( $params['height'] > $height_max ) {
+		$params['height'] = $height_max;
+	}
+	if ( $params['width'] > $width_max ) {
+		$params['width'] = $widtrh_max;
+	}
+
+	return $params;
 }
 
 /**
