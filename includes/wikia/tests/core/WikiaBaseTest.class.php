@@ -36,7 +36,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	private $mockedMessages = array();
 	/** @var WikiaMockProxy */
 	private $mockProxy = null;
-	private $mockMessages = null;
+	private $mockMessageCacheGet = null;
 
 	private static $testRunTime = 0;
 
@@ -247,15 +247,12 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $messageName string
 	 * @param $messageContent string
 	 */
-	protected function mockMessage($messageName, $messageContent) {
-		if ( empty( $this->mockMessages ) ) {
-			$mock = $this->mockMessages = $this->getMethodMock( 'MessageCache', 'get' );
-
-			$mock->expects( $this->any() )
-				->method( 'get' )
-				->will( $this->returnCallback( array( $this, '__retrieveMessageMock' ) ) );
-		}
-		$this->mockedMessages[$messageName] = $messageContent;
+	protected function mockMessage($messageKey, $messageContent) {
+		$mock = $this->getMessageMock( $messageKey );
+		$mock->expects( $this->any() )
+			->method( 'get' )
+			->will( $this->returnValue( $messageContent ) );
+		return $mock;
 	}
 
 	/**
@@ -316,6 +313,20 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$mock = $this->getMock( 'stdClass', array( $methodName ) );
 		$this->getMockProxy()->getMethod($className,$methodName)
 			->willCall(array($mock,$methodName));
+		return $mock;
+	}
+
+	protected function getMessageMock( $messageKey ) {
+		if ( empty( $this->mockMessageCacheGet ) ) {
+			$mockMessageCache = $this->mockMessageCacheGet = $this->getMethodMock( 'MessageCache', 'get' );
+
+			$mockMessageCache->expects( $this->any() )
+				->method( 'get' )
+				->will( $this->returnCallback( array( $this, '__retrieveMessageMock' ) ) );
+		}
+
+		$mock = $this->getMock( 'stdClass', array( 'get' ) );
+		$this->mockedMessages[$messageKey] = $mock;
 		return $mock;
 	}
 
@@ -382,7 +393,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function __retrieveMessageMock( $key ) {
 		if ( array_key_exists( $key, $this->mockedMessages ) ) {
-			return $this->mockedMessages[$key];
+			/** @var $mock PHPUnit_Framework_MockObject_MockObject Mock */
+			$mock = $this->mockedMessages[$key];
+			return $mock->get();
 		}
 
 		return $this->callOriginalMethod( MessageCache::singleton(), 'get', func_get_args() );
