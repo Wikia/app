@@ -3,6 +3,10 @@
 
 $width-padding: $width-gutter / 2;
 
+.WikiaActivityModule li em {
+	width: auto;
+}
+
 .WikiaArticle,
 .WikiaArticleFooter {
 	padding: 0;
