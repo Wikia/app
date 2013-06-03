@@ -161,7 +161,9 @@ class InterWiki extends AbstractSelect
 	protected function getQueryClausesString()
 	{
 		$widQueries = array();
-		foreach ( $this->service->getGlobal( 'CrossWikiaSearchExcludedWikis' ) as $excludedWikiId ) {
+		$excludedWikiIds = $this->service->getGlobalWithDefault( 'CrossWikiaSearchExcludedWikis', [] );
+		$excludedWikiIds[] = $this->service->getWikiId();
+		foreach ( $excludedWikiIds as $excludedWikiId ) {
 			$widQueries[] = Utilities::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 		}
 		
