@@ -380,7 +380,7 @@ class ArticlesApiController extends WikiaApiController {
 		);
 
 		wfProfileOut( __METHOD__ );
-	}
+	}	
 
 	/**
 	 * Get details about one or more articles, , those in the Special namespace (NS_SPECIAL) won't produce any result
