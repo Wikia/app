@@ -51,7 +51,7 @@ class BodyController extends WikiaController {
 		$app = F::app();
 
 		// Don't enable when responsive layout is enabled
-		if ( OasisController::isResponsiveLayoutEnabled() ) {
+		if ( self::isResponsiveLayoutEnabled() ) {
 			return false;
 		}
 
@@ -70,6 +70,17 @@ class BodyController extends WikiaController {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Pretty self explanitory.
+	 * @return Boolean
+	 */
+	public static function isResponsiveLayoutEnabled() {
+		return !empty( F::app()->wg->OasisResponsive ) &&
+				WikiaPageType::isContentPage() &&
+				!WikiaPageType::isMainPage() &&
+				!WikiaPageType::isWikiaHub();
 	}
 
 	/**

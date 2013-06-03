@@ -47,13 +47,6 @@ class OasisController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	public static function isResponsiveLayoutEnabled() {
-		return !empty( F::app()->wg->OasisResponsive ) &&
-				WikiaPageType::isContentPage() &&
-				!WikiaPageType::isMainPage() &&
-				!WikiaPageType::isWikiaHub();
-	}
-
 	/**
 	 * Add global JS variables with wgJsAtBottom
 	 *
@@ -134,7 +127,7 @@ class OasisController extends WikiaController {
 			$wgOut->addScript( '<script src="' . $this->wg->ExtensionsPath . '/wikia/CreateNewWiki/js/WikiWelcome.js"></script>' );
 		}
 
-		if ( self::isResponsiveLayoutEnabled() ) {
+		if ( BodyController::isResponsiveLayoutEnabled() ) {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'skins/oasis/css/core/responsive.scss' ) );
 		}
 

@@ -37,7 +37,7 @@ class SassUtil {
 			$params['widthType'] = 1;
 		}
 
-		if ( class_exists( 'OasisController' ) && OasisController::isResponsiveLayoutEnabled() ) {
+		if ( class_exists( 'BodyController' ) && BodyController::isResponsiveLayoutEnabled() ) {
 			$params['widthType'] = 2;
 		}
 
