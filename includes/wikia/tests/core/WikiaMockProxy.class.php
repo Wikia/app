@@ -89,6 +89,8 @@ class WikiaMockProxy {
 
 		if ( empty( $this->mocks[$type][$id] ) ) {
 			$action = new WikiaMockProxyAction($type,$id,$this);
+			// no need to update state of this action here because all actions start as inactive
+			// action send notification when it's being configured
 			$this->mocks[$type][$id] = array(
 				self::PROP_STATE => false,
 				self::PROP_ACTION => $action,
@@ -107,6 +109,11 @@ class WikiaMockProxy {
 		return $this->mocks[$type][$id][self::PROP_ACTION];
 	}
 
+	/**
+	 * (internal use only)
+	 *
+	 * @param WikiaMockProxyAction $action
+	 */
 	public function notify( WikiaMockProxyAction $action ) {
 		$type = $action->getEventType();
 		$id = $action->getEventId();
@@ -131,7 +138,7 @@ class WikiaMockProxy {
 					is_callable( "{$className}::{$methodName}" );
 					$flags = RUNKIT_ACC_PUBLIC | ( $type == self::STATIC_METHOD ? RUNKIT_ACC_STATIC : 0);
 					runkit_method_rename( $className, $methodName, $savedName);  // save the original method
-					runkit_method_add($className, $methodName, '', $this->getExecuteCall($type,$id), $flags );
+					runkit_method_add($className, $methodName, '', $this->getExecuteCallCode($type,$id), $flags );
 				} else { // diable
 					runkit_method_remove($className, $methodName);  // remove the redefined instance
 					runkit_method_rename($className, $savedName, $methodName); // restore the original
@@ -139,10 +146,14 @@ class WikiaMockProxy {
 				break;
 			case self::GLOBAL_FUNCTION:
 				$functionName = $parts[1];
-				$savedName = self::SAVED_PREFIX . $functionName;
+				list($namespace,$baseName) = $this->parseGlobalFunctionName($functionName);
+				$functionName = $namespace . $baseName;
+				$savedName = $namespace . self::SAVED_PREFIX . $baseName;
 				if ( $state ) { // enable
+					$tempName = "WikiaMockProxyTempFuncName"; // workaround for namespaces functions
 					runkit_function_rename($functionName, $savedName);
-					runkit_function_add($functionName, '', $this->getExecuteCall($type,$id));
+					runkit_function_add($tempName, '', $this->getExecuteCallCode($type,$id));
+					runkit_function_rename($tempName,$functionName);
 				} else { // disable
 					runkit_function_remove($functionName);  // remove the redefined instance
 					runkit_function_rename($savedName, $functionName); // restore the original
@@ -151,12 +162,21 @@ class WikiaMockProxy {
 		}
 	}
 
-	protected function getExecuteCall( $type, $id ) {
+	protected function getExecuteCallCode( $type, $id ) {
 		$replace = array( '\'' => '\\\'', '\\' => '\\\\' );
 		$type = strtr($type,$replace);
 		$id = strtr($id,$replace);
 
 		return "return WikiaMockProxy::\$instance->execute('{$type}','{$id}',func_get_args());";
+	}
+
+	private function parseGlobalFunctionName( $functionName ) {
+		$last = strrpos($functionName,'\\');
+		if ( $last === false ) {
+			return [ '', $functionName ];
+		} else {
+			return [ ltrim( substr( $functionName, 0, $last + 1 ), '\\' ), substr( $functionName, $last + 1 ) ];
+		}
 	}
 
 	/**
@@ -180,14 +200,21 @@ class WikiaMockProxy {
 	}
 
 	public function callOriginalGlobalFunction( $functionName, $args ) {
-		$savedName = self::SAVED_PREFIX . $functionName;
-		$functionToCall = is_callable( $savedName ) ? $savedName : $functionName;
+		list($namespace,$baseName) = $this->parseGlobalFunctionName($functionName);
+		$savedName = $namespace . self::SAVED_PREFIX . $baseName;
+		$functionToCall = function_exists( $savedName ) ? $savedName : $functionName;
 		return call_user_func_array( $functionToCall, $args );
 	}
 
 	public function callOriginalMethod( $object, $functionName, $args ) {
-		$savedName = array( $object, self::SAVED_PREFIX . $functionName );
-		$functionToCall = is_callable( $savedName ) ? $savedName : array( $object, $functionName );
+		$savedName = self::SAVED_PREFIX . $functionName;
+		$functionToCall = array( $object, method_exists( $object, $savedName ) ? $savedName : $functionName );
+		return call_user_func_array( $functionToCall, $args );
+	}
+
+	public function callOriginalStaticMethod( $className, $functionName, $args ) {
+		$savedName = self::SAVED_PREFIX . $functionName;
+		$functionToCall = array( $className, method_exists( $className, $savedName ) ? $savedName : $functionName );
 		return call_user_func_array( $functionToCall, $args );
 	}
 

@@ -16,7 +16,7 @@
  *    parent::setUp();
  * }
  */
-class WikiaBaseTest extends PHPUnit_Framework_TestCase {
+abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected static $alternativeConstructors = [
 		'Article' => [ 'newFromID', 'newFromTitle', 'newFromWikiPage' ],
@@ -197,6 +197,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function mockGlobalVariable( $globalName, $returnValue ) {
 		if ( !empty($this->mockedGlobalVariables[$globalName] ) ) {
+			// revert changes done by previous variable mock
 			$this->mockedGlobalVariables[$globalName]->disable();
 		}
 
@@ -222,9 +223,11 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			throw new Exception("You have to specify full global function name including 'wf' prefix");
 		}
 
+		list( $namespace, $baseName ) = $this->parseGlobalFunctionName( $functionName );
+
 		$mock = $this->getGlobalFunctionMock( $functionName );
 		$expect = $mock->expects( $callsNum !== null ? $this->exactly( $callsNum ) : $this->any() )
-			->method( $functionName );
+			->method( $baseName );
 		if ( $inputParams !== null ) {
 			$expect = call_user_func_array( array( $expect, 'with' ), $inputParams );
 		}
@@ -246,9 +249,26 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 			$mock->expects( $this->any() )
 				->method( 'get' )
-				->will( $this->returnCallback( array( $this, 'getMessageMock' ) ) );
+				->will( $this->returnCallback( array( $this, '__retrieveMessageMock' ) ) );
 		}
 		$this->mockedMessages[$messageName] = $messageContent;
+	}
+
+	/**
+	 * Get a PHPUnit mock associated with class constructor
+	 *
+	 * Note: Use method name "__construct" when setting up expect rules.
+	 * Note: You cannot write assert rules on constructor parameters
+	 * due to technical limitations.
+	 *
+	 * @param $className string Class name
+	 * @return PHPUnit_Framework_MockObject_MockObject Mock
+	 */
+	protected function getConstructorMock( $className ) {
+		$mock = $this->getMock( 'stdClass', array( '__construct' ) );
+		$this->getMockProxy()->getClassConstructor($className)
+			->willCall(array($mock,'__construct'));
+		return $mock;
 	}
 
 	/**
@@ -258,12 +278,10 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @return PHPUnit_Framework_MockObject_MockObject Mock
 	 */
 	protected function getGlobalFunctionMock( $functionName ) {
-		$mock = $this->getMockBuilder( 'stdClass' )
-			->disableOriginalConstructor()
-			->setMethods( array( $functionName ) )
-			->getMock();
+		list($namespace,$baseName) = $this->parseGlobalFunctionName( $functionName );
+		$mock = $this->getMock( 'stdClass', array( $baseName ) );
 		$this->getMockProxy()->getGlobalFunction($functionName)
-			->willCall(array($mock,$functionName));
+			->willCall(array($mock,$baseName));
 		return $mock;
 	}
 
@@ -276,10 +294,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function getStaticMethodMock( $className, $methodName ) {
 		is_callable( "{$className}::{$methodName}" ); // autoload
-		$mock = $this->getMockBuilder( 'stdClass' )
-			->disableOriginalConstructor()
-			->setMethods( array( $methodName ) )
-			->getMock();
+		$mock = $this->getMock( 'stdClass', array( $methodName ) );
 		$this->getMockProxy()->getStaticMethod($className,$methodName)
 			->willCall(array($mock,$methodName));
 		return $mock;
@@ -294,10 +309,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function getMethodMock( $className, $methodName ) {
 		is_callable( "{$className}::{$methodName}" ); // autoload
-		$mock = $this->getMockBuilder( 'stdClass' )
-			->disableOriginalConstructor()
-			->setMethods( array( $methodName ) )
-			->getMock();
+		$mock = $this->getMock( 'stdClass', array( $methodName ) );
 		$this->getMockProxy()->getMethod($className,$methodName)
 			->willCall(array($mock,$methodName));
 		return $mock;
@@ -327,6 +339,18 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Call an original static class method
+	 *
+	 * @param $className string Class name
+	 * @param $functionName string Method name
+	 * @param $args array Arguments
+	 * @return mixed Value returned by method
+	 */
+	protected function callOriginalStaticMethod( $className, $functionName, $args ) {
+		return $this->getMockProxy()->callOriginalStaticMethod( $className, $functionName, $args );
+	}
+
+	/**
 	 * @deprecated
 	 */
 	protected function mockApp() {
@@ -334,6 +358,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	private function unsetGlobals() {
+		/** @var $mock WikiaGlobalVariableMock */
 		foreach ($this->mockedGlobalVariables as $globalName => $mock) {
 			$mock->disable();
 		}
@@ -351,7 +376,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $key string Message key
 	 * @return string Message contents
 	 */
-	public function getMessageMock( $key ) {
+	public function __retrieveMessageMock( $key ) {
 		if ( array_key_exists( $key, $this->mockedMessages ) ) {
 			return $this->mockedMessages[$key];
 		}
@@ -380,5 +405,14 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	public static function markTestIncomplete($message = '') {
 		Wikia::log(__METHOD__, '', $message);
 		parent::markTestIncomplete($message);
+	}
+
+	private function parseGlobalFunctionName( $functionName ) {
+		$last = strrpos($functionName,'\\');
+		if ( $last === false ) {
+			return [ '', $functionName ];
+		} else {
+			return [ ltrim( substr( $functionName, 0, $last + 1 ), '\\' ), substr( $functionName, $last + 1 ) ];
+		}
 	}
 }
