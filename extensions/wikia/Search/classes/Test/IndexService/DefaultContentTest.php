@@ -650,8 +650,7 @@ ENDIT;
 		    ->with   ( 'plaintext' )
 		    ->will   ( $this->returnValue( 'value' ) )
 		;
-		$this->proxyClass( 'simple_html_dom', $dom2 );
-		$this->mockApp();
+		$this->mockClass( 'simple_html_dom', $dom2 );
 		$this->assertEquals(
 				[ 'infoboxes_txt' => [ 'here is my key | value' ] ],
 				$extract->invoke( $service, $dom, $result )

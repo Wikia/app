@@ -32,7 +32,6 @@ class WikiaPollTest extends WikiaBaseTest {
 				->will($this->returnValue(array("One", "Two", "Three")));
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
-		// message needs to be mocked before mockApp() is called
 		$this->mockMessage('wikiapoll-error-invalid-title', 'Question text is invalid');
 
 		$result = $poll->create();

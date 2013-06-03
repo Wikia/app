@@ -69,7 +69,6 @@ class WikiServiceTests extends WikiaBaseTest {
 			->method( 'wfMessage' )
 			->with( 'wikiasearch2-crosswiki-description', 'wiki42' )
 			->will( $this->returnValue( $description42 ) );
-		$this->mockApp();
 
 		$wikiService = $this->getMock('WikiService', array( 'getWikiDetails','getImageSrcByTitle' ));
 		$wikiService->expects($this->exactly(1))
