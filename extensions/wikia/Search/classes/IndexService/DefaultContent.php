@@ -231,7 +231,8 @@ class DefaultContent extends AbstractService
 		$infoboxes = $dom->find( 'table.infobox' );
 		if ( count( $infoboxes ) > 0 ) {
 			$infobox = $infoboxes[0];
-			$infobox = new simple_html_dom( $infobox->outertext() );
+			$outertext = $infobox->outertext();
+			$infobox = new simple_html_dom( $outertext );
 			$this->removeGarbageFromDom( $infobox );
 			$infobox->load( $infobox->save() );
 			$infoboxRows = $infobox->find( 'tr' );

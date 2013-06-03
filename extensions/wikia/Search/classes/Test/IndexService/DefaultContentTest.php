@@ -614,7 +614,7 @@ ENDIT;
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'removeGarbageFromDom' )
-		    #->with   ( $dom2 ) // commented out due to wikia mock proxy
+		    ->with   ( $dom2 ) // commented out due to wikia mock proxy
 		;
 		$dom2
 		    ->expects( $this->at( 0 ) )
