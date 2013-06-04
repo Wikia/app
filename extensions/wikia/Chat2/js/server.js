@@ -678,7 +678,7 @@ function giveChatMod(client, socket, msg){
 
 	var userNameToPromote = giveChatModCommand.get('userToPromote');
 		
-	mwBridge.giveChatMod(client.roomId, userNameToPromote, client.userKey, function(data){
+	mwBridge.giveChatMod(client.roomId, userNameToPromote, client.handshake.address, client.userKey, function(data){
 		// Build a user that looks like the one that got banned... then kick them!
 			
 		storage.getRoomState(client.roomId, function(nodeChatModel) {	
