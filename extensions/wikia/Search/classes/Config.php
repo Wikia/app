@@ -107,6 +107,12 @@ class Config
 	 * @var Wikia\Search\Query\Select
 	 */
 	protected $query;
+
+	/**
+	 * Two letter wiki language code
+	 * @var string
+	 */
+	protected $languageCode;
 	
 	/**
 	 * The usual requested fields
@@ -748,7 +754,7 @@ class Config
 	 * @param boolean $formatted whether we should also format the number
 	 * @return integer
 	 */
-	public function getTruncatedResultsNum( $formatted = false ) 
+	public function getTruncatedResultsNum( $formatted = false )
 	{
 		$resultsNum = $this->getResultsFound();
 		
@@ -1075,6 +1081,28 @@ class Config
 	 */
 	public function getQueryFields() {
 		return array_keys( $this->queryFieldsToBoosts );
+	}
+
+	/**
+	 * Setter for language code
+	 * @param $code string language code to set
+	 * @return $this
+	 */
+	public function setLanguageCode( $code ) {
+		$this->languageCode = $code;
+		return $this;
+	}
+
+	/**
+	 * Getter for language code, if not set will load content language
+	 * @return string
+	 */
+	public function getLanguageCode() {
+		//if language not set, load content language
+		if ( !isset( $this->languageCode ) ) {
+			$this->languageCode = $this->service->getLanguageCode();
+		}
+		return $this->languageCode;
 	}
 	
 	/**
