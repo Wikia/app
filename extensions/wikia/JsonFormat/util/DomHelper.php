@@ -40,8 +40,8 @@ class DomHelper {
 	public static function hasClass( DomElement $domElement, $className ) {
 		$classString = $domElement->getAttribute( 'class' );
 		if ( empty( $classString ) ) {
-			return NULL;
+			return false;
 		}
-		return in_array( $className, explode( '/\s/', $classString) );
+		return in_array( $className, preg_split( '/[\s]+/', $classString) );
 	}
 }

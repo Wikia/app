@@ -20,6 +20,28 @@ class JsonFormatBuilder {
 		$this->jsonStack[] = $node;
 	}
 
+	public function pushInfoboxKeyValue( JsonFormatInfoboxKeyValueNode $keyValueNode ) {
+		$valueNode = $keyValueNode->getValue();
+		$this->currentContainer = $valueNode;
+		if ( sizeof($this->jsonStack) ) {
+			$this->jsonStack[sizeof($this->jsonStack)-1]->addChild( $keyValueNode );
+		} else {
+			throw new JsonFormatException('JsonFormatInfoboxKeyValueNode cannot be root');
+		}
+		$this->jsonStack[] = $valueNode;
+	}
+
+	public function popInfoboxKeyValue( JsonFormatInfoboxKeyValueNode $keyValueNode ) {
+		if ( $this->jsonStack[sizeof($this->jsonStack)-1] === $keyValueNode->getValue() ) {
+			array_pop($this->jsonStack);
+			$this->currentContainer = $this->jsonStack[sizeof($this->jsonStack)-1];
+		} else {
+			var_dump($keyValueNode);
+			var_dump($this->jsonStack);
+			die();
+		}
+	}
+
 	public function pushSection( JsonFormatSectionNode $section ) {
 		$stackPos = 1;
 		for( ; $stackPos < sizeof($this->jsonStack); $stackPos++ ) {
@@ -34,7 +56,7 @@ class JsonFormatBuilder {
 	}
 
 	public function popNode( $node ) {
-		if ( $this->jsonStack[sizeof($this->jsonStack)-1] === $node ) {
+		if ( $this->jsonStack[sizeof($this->jsonStack)-1] == $node ) {
 			array_pop($this->jsonStack);
 			$this->currentContainer = $this->jsonStack[sizeof($this->jsonStack)-1];
 		}

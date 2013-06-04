@@ -9,6 +9,7 @@ $app->registerClass( 'WikitextToJsonFormatParserFactory',     $dir . "/WikitextT
 $app->registerClass( 'WikitextToJsonFormatParser',            $dir . "/WikitextToJsonFormatParser.php");
 $app->registerClass( 'JsonFormatService',                     $dir . "/JsonFormatService.php");
 $app->registerClass( 'JsonFormatBuilder',                     $dir . "/JsonFormatBuilder.php");
+$app->registerClass( 'JsonFormatException',                   $dir . "/JsonFormatException.php");
 
 $app->registerClass( 'JsonFormatContainerNode',               $dir . "/nodes/JsonFormatContainerNode.php");
 $app->registerClass( 'JsonFormatParagraphNode',               $dir . "/nodes/JsonFormatParagraphNode.php");
@@ -25,6 +26,9 @@ $app->registerClass( 'JsonFormatTableRowNode',                $dir . "/nodes/Jso
 $app->registerClass( 'JsonFormatImageFigureNode',             $dir . "/nodes/JsonFormatImageFigureNode.php");
 $app->registerClass( 'JsonFormatQuoteNode',                   $dir . "/nodes/JsonFormatQuoteNode.php");
 $app->registerClass( 'JsonFormatImageNode',                   $dir . "/nodes/JsonFormatImageNode.php");
+$app->registerClass( 'JsonFormatInfoboxNode',                 $dir . "/nodes/JsonFormatInfoboxNode.php");
+$app->registerClass( 'JsonFormatInfoboxKeyValueNode',         $dir . "/nodes/JsonFormatInfoboxKeyValueNode.php");
+$app->registerClass( 'JsonFormatInfoboxValueNode',            $dir . "/nodes/JsonFormatInfoboxValueNode.php");
 
 $app->registerClass( 'AVisitor',                              $dir . "/visitors/AVisitor.php");
 $app->registerClass( 'BrVisitor',                             $dir . "/visitors/BrVisitor.php");
@@ -44,6 +48,7 @@ $app->registerClass( 'TextNodeVisitor',                       $dir . "/visitors/
 $app->registerClass( 'ImageFigureVisitor',                    $dir . "/visitors/ImageFigureVisitor.php");
 $app->registerClass( 'QuoteVisitor',                          $dir . "/visitors/QuoteVisitor.php");
 $app->registerClass( 'ImageVisitor',                          $dir . "/visitors/ImageVisitor.php");
+$app->registerClass( 'InfoboxTableVisitor',                   $dir . "/visitors/InfoboxTableVisitor.php");
 
 $app->registerClass( 'DomHelper',                             $dir . "/util/DomHelper.php");
 

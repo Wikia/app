@@ -26,9 +26,13 @@ class JsonFormatApiController extends WikiaApiController {
 	}
 
 	private function toHtml( JsonFormatNode $node ) {
-		if( $node->getType() == 'root' ) {
+		if( $node->getType() == 'root' )  {
 			return $this->iterate( $node );
-		} else if ( $node->getType() == 'section' ) {
+		} else if ( $node->getType() == 'infobox' ) {
+			return "<table style='width: 600px; float: right;'>{$this->iterate( $node )}</table>";
+		} else if ( $node->getType() == 'infoboxKeyValue' ) {
+			return "<tr><td style='font-weight: bold;'>{$node->getKey()}</td><td>{$this->iterate( $node->getValue() )}</td></tr>";
+		}  else if ( $node->getType() == 'section' ) {
 			return "<h{$node->getLevel()}>{$node->getTitle()}</h{$node->getLevel()}>{$this->iterate($node)}";
 		} else if ( $node->getType() == 'link' ) {
 			return "<a href=\"{$node->getUrl()}\">{$node->getText()}</a>";
