@@ -133,7 +133,7 @@ class RelatedVideosHookHandler {
 		$title = $app->wg->Title;
 		$namespace = $title->getNamespace();
 
-		if( $this->isRailModuleWanted($title, $namespace) ) {
+		if( self::isRailModuleWanted($title, $namespace) ) {
 			$pos = $app->wg->User->isAnon() ? 1301 : 1281;
 			$modules[$pos] = array('RelatedVideosRail', 'index', null);
 		}
@@ -142,7 +142,7 @@ class RelatedVideosHookHandler {
 		return true;
 	}
 	
-	private function isRailModuleWanted($title, $namespace) {
+	static private function isRailModuleWanted($title, $namespace) {
 		$app = F::App();
 		
 		return !HubService::isCorporatePage()
