@@ -17,29 +17,43 @@
 
 <?= $app->renderView('WikiaStyleGuideElementsController', 'contentHeaderSort', $contentHeaderSortOptions ) ?>
 
-<div>
-	<ul>
-	<?php $counter = 0 ?>
+<div class="WikiaGrid LVSGrid">
+
 	<? foreach ($videoList as $video) : ?>
-		<?php $alpha = $counter % 3 == 0 ? ' alpha' : ''; ?>
-
-		<div itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-			<a href="<?= $video['fileUrl'] ?>" class="image video">
-				<?= $video['videoPlayButton'] ?>
-				<img itemprop="thumbnail" alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>" data-video-key="<?= htmlspecialchars(urlencode($video['title'])) ?>" class="Wikia-video-thumb thumbimage">
-				<?= $video['videoOverlay'] ?>
-			</a>
+		<div class="grid-3 alpha non-premium">
 			<p>
-				<ul>
 				<?php foreach( $video['truncatedList'] as $article ) { ?>
-					<li><?= $article['titleText'] ?></li>
+					<?= $article['titleText'] ?>
 				<?php } ?>
-				</ul>
+				&nbsp; <!-- TODO: hack, replace this with message -->
 			</p>
-			<meta itemprop="embedUrl" content="<?= $video['embedUrl'] ?>" />
+			<div class="video-container" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+				<a href="<?= $video['fileUrl'] ?>" class="image video">
+					<?= $video['videoPlayButton'] ?>
+					<img itemprop="thumbnail" alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>" data-video-key="<?= htmlspecialchars(urlencode($video['title'])) ?>" class="Wikia-video-thumb thumbimage">
+					<?= $video['videoOverlay'] ?>
+				</a>
+				<meta itemprop="embedUrl" content="<?= $video['embedUrl'] ?>" />
+			</div>
+			<button class="secondary"><?= wfMessage('lvs-button-keep') ?></button>
 		</div>
-		<?php $counter++; ?>
-	<? endforeach; ?>
-	</ul>
-</div>
+		<div class="grid-3 premium">
+			<p><?= wfMessage('lvs-best-match-label')->text() ?></p>
+			<div class="video-container" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+				<a href="<?= $video['fileUrl'] ?>" class="image video">
+					<?= $video['videoPlayButton'] ?>
+					<img itemprop="thumbnail" alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>" data-video-key="<?= htmlspecialchars(urlencode($video['title'])) ?>" class="Wikia-video-thumb thumbimage">
+					<?= $video['videoOverlay'] ?>
+				</a>
+				<meta itemprop="embedUrl" content="<?= $video['embedUrl'] ?>" />
+			</div>
+			<a class="more" href="#"><?= wfMessage('lvs-more-suggestions')->numParams(5)->text() ?></a>
+			<!-- TODO: add arrow asset -->
+			<button>(&lt;) <?= wfMessage('lvs-button-swap') ?></button>
+		</div>
+		<div class="more-videos">
 
+		</div>
+	<? endforeach; ?>
+
+</div>
