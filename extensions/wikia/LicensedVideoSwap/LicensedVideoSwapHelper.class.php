@@ -31,6 +31,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			'removed' => 0,
 			'premium' => 0,
 			'video_title = page_title',
+			'page_namespace' => NS_FILE,
 			'page_wikia_props.page_id IS NULL'
 		);
 
@@ -111,7 +112,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @param int|$articleId - The ID of a video's file page
 	 */
 	public function setSkipStatus( $articleId ) {
-		$this->updateStatus( $articleId, self::STATUS_SKIP );
+		wfSetWikiaPageProp( WPP_IMAGE_SERVING, $articleId, self::STATUS_SKIP );
 	}
 
 	/**
@@ -119,7 +120,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @param int|$articleId - The ID of a video's file page
 	 */
 	public function setSwapStatus( $articleId ) {
-		$this->updateStatus( $articleId, self::STATUS_SWAP_NORM );
+		wfSetWikiaPageProp( WPP_IMAGE_SERVING, $articleId, self::STATUS_SWAP_NORM );
 	}
 
 	/**
@@ -127,24 +128,6 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @param int|$articleId - The ID of a video's file page
 	 */
 	public function setSwapExactStatus( $articleId ) {
-		$this->updateStatus( $articleId, self::STATUS_SWAP_EXACT );
-	}
-
-	/**
-	 * Update the status of a file page
-	 * @param int|$articleId - The ID of a video's file page
-	 * @param int|$status - A status constant, see STATUS_* above
-	 */
-	private function updateStatus( $articleId, $status ) {
-		$app = F::app();
-		$dbw = $app->wf->GetDB(DB_MASTER, array());
-		$dbw->replace('page_wikia_props','',
-			array(
-				'page_id'  =>  $articleId,
-				'propname' => WPP_IMAGE_SERVING,
-				'props'    => serialize($status)
-			),
-			__METHOD__
-		);
+		wfSetWikiaPageProp( WPP_IMAGE_SERVING, $articleId, self::STATUS_SWAP_EXACT );
 	}
 }
