@@ -1046,7 +1046,7 @@ $wgWikiaIsCentralWiki = false;
  * (eg. get_multi())
  * @var boolean
  */
-$wgEnableMemcachedBulkMode = false;
+$wgEnableMemcachedBulkMode = true;
 
 /**
  * WikiaSeasons flags
