@@ -227,24 +227,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 				slotsize: slotsize,
 				dcopt: dcopt,
 				loc: loc
-			}, function () {
-				var slot = document.getElementById(slotname),
-					iframes = slot.getElementsByTagName('iframe'),
-					isSuccess = false;
-
-				try {
-					if (iframes[0].offsetHeight > 1) {
-						isSuccess = true;
-					}
-				} catch (e) {
-				}
-
-				if (isSuccess) {
-					success();
-				} else {
-					error();
-				}
-			});
+			}, success, error);
 
 			if (gptConfig[slotname] === 'flush') {
 				flushGpt();
