@@ -65,6 +65,15 @@ class MediaData extends AbstractService
 				if ( isset( $metadata['actors'] ) ) {
 					$results['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
 				}
+				if ( isset( $metadata['keywords'] ) ) {
+					$results['video_keywords_txt'] = explode( ', ', $metadata['keywords'] );
+				}
+				if ( isset( $metadata['tags'] ) ) {
+					$results['video_tags_txt'] = explode( ', ', str_replace( '-', ' ', $metadata['tags'] ) );
+				}
+				if ( isset( $metadata['description'] ) ) {
+					$results['video_description_txt'] = $metadata['description'];
+				}
 			}
 			
 			$results['html_media_extras_txt'] = array();
