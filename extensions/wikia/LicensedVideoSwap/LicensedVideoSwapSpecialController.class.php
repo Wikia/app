@@ -89,6 +89,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// Go through each video and add additional detail needed to display the video
 		$videos = array();
 		foreach ( $videoList as $videoInfo ) {
+//			$readableTitle = preg_replace('/_/', ' ', $videoInfo['title']);
+//			$this->getVideoSuggestions($readableTitle);
+
 			$videoDetail = $helper->getVideoDetail( $videoInfo, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT, self::POSTED_IN_ARTICLES );
 			if ( !empty($videoDetail) ) {
 				$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
@@ -110,11 +113,16 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @requestParam string videoTitle
 	 * @responseParam array videos
 	 */
-	public function getVideoSuggestions() {
-		$videoTitle = $this->getVal( 'videoTitle', '' );
+	public function getVideoSuggestions( $title = '' ) {
+		$videoTitle = $this->getVal( 'videoTitle', $title );
 
-		// the first video in the array will be the top choice one.
-		$videos = array();
+		$app = F::App();
+		$videos = $app->sendRequest('WikiaSearchController',
+									'searchVideosByTitle',
+									array('title' => $videoTitle))
+					  ->getData();
+
+		// The first video in the array is the top choice.
 		$this->videos = $videos;
 	}
 
