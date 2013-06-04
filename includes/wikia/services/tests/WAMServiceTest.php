@@ -12,16 +12,21 @@ class WAMServiceTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getWamIndexConditionsDataProvider
 	 */
-	public function testGetWamIndexConditions ($options, $expConds) {
-		$dbMock = $this->getMock('stdClass', array('strencode'));
+	public function testGetWamIndexConditions ($options, $expConds, $blackList = '') {
+		$dbMock = $this->getMock('stdClass', array('strencode', 'makeList'));
 
 		$dbMock->expects($this->any())
 			->method('strencode')
 			->will($this->returnArgument(0));
 
+		$dbMock->expects($this->any())
+			->method('makeList')
+			->will($this->returnValue($blackList));
+
 		$getWamIndexConditions = $this->getReflectionMethod('getWamIndexConditions');
 		$dataMartService = new WAMService();
 		$actConds = $getWamIndexConditions->invoke($dataMartService, $options, $dbMock);
+
 		$this->assertEquals($expConds, $actConds);
 	}
 
@@ -34,12 +39,15 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => null
+					'wikiLang' => null,
+					'excludeBlacklist' => true
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
-					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle')
-				)
+					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle'),
+					'fw1.wiki_id NOT IN (100, 200, 300)'
+				),
+				'100, 200, 300'
 			),
 			array(
 				array(
@@ -77,13 +85,16 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 2233,
 					'verticalId' => 1,
 					'wikiWord' => null,
-					'wikiLang' => null
+					'wikiLang' => null,
+					'excludeBlacklist' => true
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					'fw1.wiki_id' => 2233,
-					'fw1.hub_name' => null
-				)
+					'fw1.hub_name' => null,
+					'fw1.wiki_id NOT IN (1, 999, 3745, 8811)'
+				),
+				'1, 999, 3745, 8811'
 			),
 			array(
 				array(
