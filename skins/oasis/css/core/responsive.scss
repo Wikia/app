@@ -20,17 +20,8 @@ $width-padding: $width-gutter / 2;
 
 .WikiaMainContentContainer {
 	background-color: $color-page;
-	margin-right: $width-rail + $width-gutter;
-	padding: $width-padding;
-}
-
-.WikiaPage,
-.oasis-split-skin .WikiaPage {
-	border: 0;
-}
-
-.WikiaPageBackground {
-	display: none;
+	margin-right: $width-rail + $width-padding;
+	padding: 0 $width-padding;
 }
 
 .WikiaPageHeader,
@@ -40,5 +31,5 @@ $width-padding: $width-gutter / 2;
 }
 
 .WikiaRail {
-	padding: 0;
+	padding: 0 10px 0 0;
 }
