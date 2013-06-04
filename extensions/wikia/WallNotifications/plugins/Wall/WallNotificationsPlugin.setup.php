@@ -9,7 +9,6 @@ if ( !$wgEnableWallExt ) {
 $app->registerClass( 'WallNotificationsPlugin', $dirPlugin . '/WallNotificationsPlugin.class.php' );
 
 $app->registerHook( 'NotificationGetNotificationMessage', 'WallNotificationsPlugin', 'onGetNotificationMessage' );
-// TODO: ↓ this ↓
-//$app->registerHook( 'NotificationGetMailNotificationMessage', 'WallNotificationsPlugin', 'onGetMailNotificationMessage' );
+$app->registerHook( 'NotificationGetMailNotificationMessage', 'WallNotificationsPlugin', 'onGetMailNotificationMessage' );
 
 $app->registerExtensionMessageFile( 'WallNotificationsPlugin', $dirPlugin . '/WallNotificationsPlugin.i18n.php' );

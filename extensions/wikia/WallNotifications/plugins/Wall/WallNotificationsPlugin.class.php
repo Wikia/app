@@ -55,6 +55,26 @@ class WallNotificationsPlugin {
 	}
 
 	public function onGetMailNotificationMessage($notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text) {
+		$data = array(
+			'$WATCHER' => $watcherName,
+			'$WIKI' => $notification->data->wikiname,
+			'$PARENT_AUTHOR_NAME' => (empty($notification->data->parent_displayname) ? '':$notification->data->parent_displayname),
+			'$AUTHOR_NAME' => $notification->data->msg_author_displayname,
+			'$AUTHOR' => $notification->data->msg_author_username,
+			'$AUTHOR_SIGNATURE' => $author_signature,
+			'$MAIL_SUBJECT' => wfMsg('mail-notification-subject', array(
+				'$1' => $notification->data->thread_title,
+				'$2' => $notification->data->wikiname
+			)),
+			'$METATITLE' => $notification->data->thread_title,
+			'$MESSAGE_LINK' =>  $notification->data->url,
+			'$MESSAGE_NO_HTML' =>  $textNoHtml,
+			'$MESSAGE_HTML' =>  $text,
+			'$MSG_KEY_SUBJECT' => $key,
+			'$MSG_KEY_BODY' => 'mail-notification-body',
+			'$MSG_KEY_GREETING' => 'mail-notification-html-greeting',
+		);
+
 		return true;
 	}
 

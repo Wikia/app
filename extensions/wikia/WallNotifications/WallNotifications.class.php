@@ -371,27 +371,6 @@ class WallNotifications {
 
 				$data = array();
 				wfRunHooks('NotificationGetMailNotificationMessage', array(&$notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text) );
-				if ( empty($data) ) {
-					$data = array(
-						'$WATCHER' => $watcherName,
-						'$WIKI' => $notification->data->wikiname,
-						'$PARENT_AUTHOR_NAME' => (empty($notification->data->parent_displayname) ? '':$notification->data->parent_displayname),
-						'$AUTHOR_NAME' => $notification->data->msg_author_displayname,
-						'$AUTHOR' => $notification->data->msg_author_username,
-						'$AUTHOR_SIGNATURE' => $author_signature,
-						'$MAIL_SUBJECT' => wfMsg('mail-notification-subject', array(
-							'$1' => $notification->data->thread_title,
-							'$2' => $notification->data->wikiname
-						)),
-						'$METATITLE' => $notification->data->thread_title,
-						'$MESSAGE_LINK' =>  $notification->data->url,
-						'$MESSAGE_NO_HTML' =>  $textNoHtml,
-						'$MESSAGE_HTML' =>  $text,
-						'$MSG_KEY_SUBJECT' => $key,
-						'$MSG_KEY_BODY' => 'mail-notification-body',
-						'$MSG_KEY_GREETING' => 'mail-notification-html-greeting',
-					);
-				}
 
 				if(!($watcher->getBoolOption('unsubscribed') === true)) {
 					$this->sendEmail($watcher, $data);
@@ -419,7 +398,7 @@ class WallNotifications {
 		$values[] = $subject;
 
 		$data['$SUBJECT'] = $subject;
-		$html = $this->app->getView('WallExternal', 'mail', array('data' => $data))->render();
+		$html = $this->app->getView('WallNotifications', 'Mail', array('data' => $data))->render();
 		$text = str_replace($keys, $values, $text);
 
 		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
