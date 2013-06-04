@@ -37,12 +37,13 @@ class SassUtil {
 			$params['widthType'] = 1;
 		}
 
-		if ( class_exists( 'BodyController' ) && BodyController::isResponsiveLayoutEnabled() ) {
-			$params['widthType'] = 2;
-		}
-
 		if ( $wgOasisGrid ) {
 			$params['widthType'] = 3;
+		}
+
+		// Should be last so it can override wgOasisGrid
+		if ( class_exists( 'BodyController' ) && BodyController::isResponsiveLayoutEnabled() ) {
+			$params['widthType'] = 2;
 		}
 
 		return $params;
