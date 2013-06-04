@@ -154,9 +154,6 @@ $app->registerHook( 'HAWelcomeGetPrefixText', 'WallHooksHelper', 'onHAWelcomeGet
 $app->registerHook( 'SkinTemplateToolboxEnd', 'WallHooksHelper', 'onBuildMonobookToolbox');
 
 F::build('JSMessages')->registerPackage('Wall', array(
-	'wall-notifications',
-	'wall-notifications-reminder',
-	'wall-notifications-wall-disabled',
 	'oasis-follow',
 	'wall-message-edited',
 	'wikiafollowedpages-following',

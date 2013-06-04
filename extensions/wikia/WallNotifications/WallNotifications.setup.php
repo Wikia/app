@@ -32,6 +32,12 @@ $app->registerHook('PersonalUrls', 'WallNotificationsHooksHelper', 'onPersonalUr
 
 $app->registerExtensionMessageFile( 'WallNotifications', $dirExt . '/WallNotifications.i18n.php' );
 
+F::build('JSMessages')->registerPackage('WallNotifications', array(
+	'wall-notifications',
+	'wall-notifications-reminder',
+	'wall-notifications-wall-disabled',
+));
+
 // Notifications plugins
 include( $dirExt . '/plugins/Forum/ForumNotificationsPlugin.setup.php' );
 include( $dirExt . '/plugins/Wall/WallNotificationsPlugin.setup.php' );
