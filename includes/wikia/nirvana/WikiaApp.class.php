@@ -454,16 +454,21 @@ class WikiaApp {
 	 * $routing contains an array of methods => conditions
 	 * This is used to invoke a different controller method depending on skin or global variable true/false
 	 * The dispatcher can also invoke a before/after method passing the same request/response object
+	 * You can also use a condition 'notSkin' - in this case the call will be redirected if the current skin is not listed
 	 *
 	 * F::app()->registerController("FooController", "/path", array(
 	 * "performActionA" => array(
 	 *		"global" => "wgEnableNewFoo",
-	 *		"skin"=>"mobile"
+	 *		"skin" => array( "mobile" )
 	 *	),
 	 *	"performActionB" => array(
-	 *		"skin" => "oasis",
+	 *		"skin" => array( "oasis" ),
 	 *		"before" => "calledBeforeActionB",
 	 *		"after" => "calledAfterActionB"
+	 *	),
+	 *	"performActionC" => array(
+	 *		"notSkin" => array( "oasis" ),
+	 *		"method" => "notOasis"
 	 *	),
 	 *	// default is "any skin"
 	 *

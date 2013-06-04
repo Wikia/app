@@ -186,8 +186,11 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	// After calling this, any reference to $this->app in a test now uses the mocked object
-	protected function mockApp() {
-		$this->appMock->init();
+	/**
+	 * @param array $mockedMethods - list of methods names that should be mocked in WikiaApp object
+	 */
+	protected function mockApp($mockedMethods = array()) {
+		$this->appMock->init($mockedMethods);
 		$this->app = F::app();
 
 		// php-test-helpers provides this function
