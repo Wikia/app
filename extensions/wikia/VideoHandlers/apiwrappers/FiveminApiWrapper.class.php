@@ -98,7 +98,7 @@ class FiveminApiWrapper extends ApiWrapper {
 	 */
 	protected function getOriginalDescription() {
 		if ( !empty( $this->interfaceObj['description'] ) ) {
-			if ( preg_match( '/\&lt\;p\&gt\;(.*)\&lt\;\/p\&gt\;/', $this->interfaceObj['description'], $matches ) ) {
+			if ( preg_match( '/&lt;p&gt;(.*)&lt;\/p&gt;/', $this->interfaceObj['description'], $matches ) ) {
 				return ( !empty( $matches[1] ) ) ? $matches[1] : '' ;
 			}
 		}
