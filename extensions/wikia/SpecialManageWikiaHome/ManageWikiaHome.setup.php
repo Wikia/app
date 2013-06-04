@@ -24,13 +24,13 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 //classes
-$app->registerController('ManageWikiaHomeController', $dir.'ManageWikiaHomeController.class.php');
+$wgAutoloadClasses['ManageWikiaHomeController'] = $dir.'ManageWikiaHomeController.class.php';
 
 // models
-$app->registerController('SpecialManageWikiaHomeModel', $dir . '/models/SpecialManageWikiaHomeModel.class.php');
+$wgAutoloadClasses['SpecialManageWikiaHomeModel'] = $dir . '/models/SpecialManageWikiaHomeModel.class.php';
 
 // forms
-$app->registerClass('CollectionsForm', $dir.'/forms/CollectionsForm.class.php');
+$wgAutoloadClasses['CollectionsForm'] = $dir.'/forms/CollectionsForm.class.php';
 
 //special page
 $wgSpecialPages['ManageWikiaHome'] = 'ManageWikiaHomeController';

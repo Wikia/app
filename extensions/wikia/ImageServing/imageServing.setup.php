@@ -28,7 +28,7 @@ $wgImageServingDrivers = array(
 	 NS_CATEGORY => 'ImageServingDriverCategoryNS'
 );
 
-$app->registerClass('FakeImageGalleryImageServing', $dir . 'FakeImageGalleryImageServing.class.php');
+$wgAutoloadClasses['FakeImageGalleryImageServing'] = $dir . 'FakeImageGalleryImageServing.class.php';
 
 // hooks
 $wgHooks['LinksUpdateComplete'][] = 'ImageServingHelper::onLinksUpdateComplete';
