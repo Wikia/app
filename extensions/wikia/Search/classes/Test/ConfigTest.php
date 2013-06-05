@@ -1091,4 +1091,89 @@ class ConfigTest extends BaseTest {
 				$config->getLimit()
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\Config
+	 */
+	public function testSetGetABTestGroup() {
+		$config = new Config;
+		$this->assertAttributeEmpty(
+				'ABTestGroup',
+				$config
+		);
+		$this->assertEquals(
+				$config,
+				$config->setABTestGroup( 'A' )
+		);
+		$this->assertAttributeEquals(
+				'A',
+				'ABTestGroup',
+				$config
+		);
+		$this->assertEquals(
+				'A',
+				$config->getABTestGroup()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getTestProfile
+	 * @covers Wikia\Search\Config::initiateTestProfile
+	 */
+	public function testGetTestProfileNotSet() {
+		$config = new Config;
+		$this->assertAttributeEmpty(
+				'ABTestGroup',
+				$config
+		);
+		$this->assertInstanceOf(
+				'Wikia\Search\TestProfile\Base',
+				$config->getTestProfile(),
+				'The default test group should be Base'
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getTestProfile
+	 * @covers Wikia\Search\Config::initiateTestProfile
+	 */
+	public function testGetTestProfileExplicitBase() {
+		$config = new Config;
+		$config->setABTestGroup( 'Base' );
+		$this->assertInstanceOf(
+				'Wikia\Search\TestProfile\Base',
+				$config->getTestProfile(),
+				'We should support explicitly setting "Base" as the test group.'
+		);
+		// note that this is really just a logic hack -- we're using the backoff tested below for now
+	}
+
+	/**
+	 * @covers Wikia\Search\Config::getTestProfile
+	 * @covers Wikia\Search\Config::initiateTestProfile
+	 */
+	public function testGetTestProfileWithTestGroup() {
+		$config = new Config;
+		$config->setABTestGroup( 'A' );
+		$this->assertInstanceOf(
+				'Wikia\Search\TestProfile\GroupA',
+				$config->getTestProfile(),
+				'We should be able to access the correct test profile when given a letter value'
+		);
+	}
+
+	/**
+	 * @covers Wikia\Search\Config::getTestProfile
+	 * @covers Wikia\Search\Config::initiateTestProfile
+	 */
+	public function testGetTestProfileNonexistentTestGroup() {
+		$config = new Config;
+		$config->setABTestGroup( 'THIS_AINT_NO_TEST_GROUP' );
+		$this->assertInstanceOf(
+				'Wikia\Search\TestProfile\Base',
+				$config->getTestProfile(),
+				'A non-existent test group should back off to base'
+		);
+	}
+	
 }

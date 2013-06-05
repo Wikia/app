@@ -1054,21 +1054,11 @@ class Config
 	protected function initiateTestProfile() {
 		$nsPrefix = '\\Wikia\\Search\\TestProfile\\';
 		$class = "{$nsPrefix}Base";
-		$abTestGroup = $this->getAbTestGroup();
+		$abTestGroup = $this->getABTestGroup();
 		if ( $abTestGroup !== null && class_exists( "{$nsPrefix}Group{$abTestGroup}" ) ) {
 			$class = "{$nsPrefix}Group{$abTestGroup}";
 		}
 		$this->testProfile = new $class();
-		return $this;
-	}
-	
-	/**
-	 * Allows us to set a search profile.
-	 * @param Wikia\Search\TestProfile\Base $profile
-	 * @return Wikia\Search\Config 
-	 */
-	protected function setTestProfile( BaseProfile $testProfile ) {
-		$this->testProfile = $testProfile;
 		return $this;
 	}
 	
