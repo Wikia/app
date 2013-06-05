@@ -313,10 +313,10 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\InterWiki::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getHub' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getHub', 'getLanguageCode' ) );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'getGlobal', 'getLanguageCode' ) )
+		                      ->setMethods( array( 'getGlobal' ) )
 		                      ->getMock();
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
@@ -329,7 +329,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getHub' )
 		    ->will   ( $this->returnValue( 'Entertainment' ) )
 		;
-		$mockService
+		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getLanguageCode' )
 		    ->will   ( $this->returnValue( 'en' ) )

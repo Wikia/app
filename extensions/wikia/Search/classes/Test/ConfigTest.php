@@ -1010,6 +1010,36 @@ class ConfigTest extends BaseTest {
 				$config->getWikiId()
 		);
 	}
+
+	public function testSetAndGetLanguageCode() {
+		$config = new Config;
+
+		$this->assertAttributeEmpty(
+			'languageCode',
+			$config,
+			'At create languageCode field should be empty'
+		);
+
+		$this->assertEquals(
+			'en',
+			$config->getLanguageCode(),
+			'Default value should equals en.'
+		);
+
+		$config->setLanguageCode( 'pl' );
+
+		$this->assertAttributeEquals(
+			'pl',
+			'languageCode',
+			$config
+		);
+
+		$this->assertEquals(
+			'pl',
+			$config->getLanguageCode()
+		);
+
+	}
 	
 	/**
 	 * @covers Wikia\Search\Config::setLimit

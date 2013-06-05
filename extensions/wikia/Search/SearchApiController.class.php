@@ -46,6 +46,7 @@ class SearchApiController extends WikiaApiController {
 	 * Fetches results for cross-wiki search for submitted query
 	 *
 	 * @requestParam string $query The query to use for the search
+	 * @requestParam string $lang [OPTIONAL] The two chars wiki language code
 	 * @requestParam string $rank [OPTIONAL] The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest
 	 * @requestParam integer $batch [OPTIONAL] The batch/page of results to fetch
 	 * @requestParam integer $limit [OPTIONAL] The number of wiki items per batch
@@ -53,6 +54,7 @@ class SearchApiController extends WikiaApiController {
 	 * @responseParam array $items The list of results
 	 *
 	 * @example &query=kermit
+	 * @example &query=kermit&lang=pl
 	 * @example &query=kermit&limit=10
 	 * @example &query=kermit&limit=2&batch=2
 	 */
@@ -65,7 +67,7 @@ class SearchApiController extends WikiaApiController {
 		$lang = $this->request->getVal( 'lang', null );
 		foreach( $resultSet->getResults() as $result ){
 			$resultLang = $result->getHeader( 'lang' );
-			//check language, if is set check if correct, if not set just add
+			//check language, if is set check if correct, if not set just add to result
 			if ( ( $lang !== null && $lang == $resultLang ) || $lang === null || $resultLang == null ) {
 				$items[] = array(
 					'id' => (int) $result->getHeader( 'wid' ),
