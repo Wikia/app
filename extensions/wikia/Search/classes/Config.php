@@ -485,7 +485,7 @@ class Config
 						&& 
 						in_array( \Wikia\Search\Config::FILTER_VIDEO, $filterKeys )
 						&&
-						!isVideoFile
+						!$isVideoFile
 				)
 		);
 	}
