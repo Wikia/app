@@ -17,7 +17,7 @@
 
 <?= $app->renderView('WikiaStyleGuideElementsController', 'contentHeaderSort', $contentHeaderSortOptions ) ?>
 
-<div class="WikiaGrid LVSGrid">
+<div class="WikiaGrid LVSGrid" id="LVSGrid">
 
 	<? foreach ($videoList as $video) : ?>
 		<div class="row">
