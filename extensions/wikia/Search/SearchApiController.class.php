@@ -73,7 +73,6 @@ class SearchApiController extends WikiaApiController {
 				);
 			}
 		}
-		die;
 
 		$this->response->setVal( 'items', $items );
 	}
