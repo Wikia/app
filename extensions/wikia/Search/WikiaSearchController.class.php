@@ -139,6 +139,23 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 	
 	/**
+	 * Given a "title" parameter, tests if there's a near match, and then returns the canonical title
+	 */
+	public function resolveEntities() {
+		$request = $this->getRequest();
+		$entities = explode( '|', $request->getVal( 'entities' ) );
+		$entityResponse = [];
+		$service = new Wikia\Search\MediaWikiService();
+		foreach ( $entities as $entity ) {
+			$match = $service->getArticleMatchForTermAndNamespaces( $entity, $this->wg->ContentNamespaces );
+			$entityResponse[$entity] = ( $match === null ) ? '' : $match->getResult()->getTitle();
+		}
+		$response = $this->getResponse();
+		$response->setFormat( 'json' );
+		$response->setData( $entityResponse );
+	}
+
+	/**
 	 * Controller Helper Methods
 	 *----------------------------------------------------------------------------------*/
 
