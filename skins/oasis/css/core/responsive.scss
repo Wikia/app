@@ -3,6 +3,16 @@
 
 $width-padding: $width-gutter / 2;
 
+.AccountNavigation {
+	overflow: hidden;
+}
+
+.oasis-split-skin {
+	.WikiaHeader {
+		min-width: auto;
+	}
+}
+
 .WikiaActivityModule li em {
 	width: auto;
 }
