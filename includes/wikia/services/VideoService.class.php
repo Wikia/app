@@ -21,16 +21,19 @@ class VideoService extends WikiaModel {
 		try {
 			if ( WikiaFileHelper::isVideoStoredAsFile() ) {
 				// is it a WikiLink?
-				$title = Title::newFromText($url);
+				$title = Title::newFromText($url, NS_FILE);
 				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
-					$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url) );
+					$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url), NS_FILE );
 				}
 				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
-					if ( ($pos = strpos($url,'Video:')) !== false ) {
-						$title = Title::newFromText( substr($url,$pos) );
-					}
-					elseif ( ($pos = strpos($url,'File:')) !== false ) {
-						$title = Title::newFromText( substr($url,$pos) );
+					$transFileNS = wfMessage('nstab-image')->inContentLanguage()->text();
+
+					if ( ($pos = strpos($url, 'Video:')) !== false ) {
+						$title = Title::newFromText( substr($url,$pos), NS_FILE );
+					} elseif ( ($pos = strpos($url, 'File:')) !== false ) {
+						$title = Title::newFromText( substr($url,$pos), NS_FILE );
+					} elseif ( ($pos = strpos($url, $transFileNS.':')) !== false ) {
+						$title = Title::newFromText( substr($url,$pos), NS_FILE );
 					}
 				}
 				if ( $title && WikiaFileHelper::isTitleVideo($title) ) {
@@ -65,7 +68,7 @@ class VideoService extends WikiaModel {
 	 * @throws Exception
 	 */
 	protected function addVideoVideoHandlers( $url ) {
-		$title = F::build( 'VideoFileUploader', array($url), 'URLtoTitle' );
+		$title = VideoFileUploader::URLtoTitle( $url );
 		if ( !$title ) {
 			throw new Exception( $this->wf->Msg('videos-error-invalid-video-url') );
 		}
