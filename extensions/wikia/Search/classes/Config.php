@@ -4,6 +4,7 @@
  */
 namespace Wikia\Search;
 use Wikia\Search\MediaWikiService, Wikia\Search\Match;
+use Wikia\Search\TestProfile\Base as BaseProfile;
 use Wikia\Search\Query\Select as Query;
 use Solarium_Query_Select, Wikia\Search\Traits\ArrayConfigurableTrait;
 /**
@@ -109,6 +110,19 @@ class Config
 	protected $query;
 	
 	/**
+	 * The search profile for A/B testing
+	 * @var Wikia\Search\TestProfile\Base
+	 */
+	protected $testProfile;
+	
+	/**
+	 * The letter value of the test group.
+	 * Null means we aren't participating in a test.
+	 * @var string
+	 */
+	protected $ABTestGroup;
+	
+	/**
 	 * The usual requested fields
 	 * @var array
 	 */
@@ -137,14 +151,13 @@ class Config
 	 * Use the non-translated version.
 	 * @var array
 	 */
-	protected $queryFieldsToBoosts = [
-			'title'             => 100,
-			'html'              => 5,
-			'redirect_titles'   => 50,
-			'categories'        => 25,
-			'nolang_txt'        => 10,
-			'backlinks_txt'     => 25,
-			];
+	protected $queryFieldsToBoosts = [];
+	
+	/**
+	 * Tells us whether or not we have imported query fields from the test profile yet.
+	 * @var bool
+	 */
+	protected $queryFieldsWereImported = false;
 
 	/**
 	 * Stores field and direction as a two-value array
@@ -268,7 +281,6 @@ class Config
 				];
 		
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
-		$this->importQueryFieldBoosts();
 		
 		$this->configureByArray( $params );
 	}
@@ -1016,12 +1028,69 @@ class Config
 	}
 	
 	/**
+	 * Allows you to specify group by letter (e.g. A, B, C)
+	 * @param string $group
+	 * @return Wikia\Search\Config
+	 */
+	public function setABTestGroup( $group ) {
+		$this->ABTestGroup = $group;
+		return $this;
+	}
+	
+	/**
+	 * Tells you which test group is currently registred.
+	 * Null means that we aren't performing an A/B test right now.
+	 * @return string
+	 */
+	public function getABTestGroup() {
+		return $this->ABTestGroup;
+	}
+	
+	/**
+	 * Loads the appropriate test profile. 
+	 * Always at least returns the base profile, in case the group passed doesn't exist.
+	 * @return Wikia\Search\Config
+	 */
+	protected function initiateTestProfile() {
+		$nsPrefix = '\\Wikia\\Search\\TestProfile\\';
+		$class = "{$nsPrefix}Base";
+		$abTestGroup = $this->getAbTestGroup();
+		if ( $abTestGroup !== null && class_exists( "{$nsPrefix}Group{$abTestGroup}" ) ) {
+			$class = "{$nsPrefix}Group{$abTestGroup}";
+		}
+		$this->testProfile = new $class();
+		return $this;
+	}
+	
+	/**
+	 * Allows us to set a search profile.
+	 * @param Wikia\Search\TestProfile\Base $profile
+	 * @return Wikia\Search\Config 
+	 */
+	protected function setTestProfile( BaseProfile $testProfile ) {
+		$this->testProfile = $testProfile;
+		return $this;
+	}
+	
+	/**
+	 * Lazy-loads the default test profile.
+	 * @return Wikia\Search\TestProfile\Base
+	 */
+	public function getTestProfile() {
+		if ( $this->testProfile == null ) {
+			$this->initiateTestProfile();
+		}
+		return $this->testProfile;
+	}
+	
+	/**
 	 * Allows us to add additional query fields, with a given boost.
 	 * @param string $field
 	 * @param int $boost
 	 * @return Wikia\Search\Config
 	 */
 	public function setQueryField( $field, $boost = 1 ) {
+		$this->importQueryFieldBoosts();
 		$this->queryFieldsToBoosts[$field] = $boost;
 		return $this;
 	}
@@ -1049,6 +1118,7 @@ class Config
 	 * @return array
 	 */
 	public function getQueryFieldsToBoosts() {
+		$this->importQueryFieldBoosts();
 		return $this->queryFieldsToBoosts;
 	}
 	
@@ -1058,13 +1128,16 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setQueryFields( array $fields ) {
+		$this->importQueryFieldBoosts();
 		if ( array_values( $fields ) === $fields ) {
 			$this->queryFieldsToBoosts = array();
 			foreach ( $fields as $field ) {
 				$this->setQueryField( $field );
 			}
 		} else {
-			$this->queryFieldsToBoosts = $fields;
+			foreach ( $fields as $field => $boost ) {
+				$this->setQueryField( $field, $boost ); 
+			}
 		}
 		return $this;
 	}
@@ -1074,17 +1147,19 @@ class Config
 	 * @return array
 	 */
 	public function getQueryFields() {
+		$this->importQueryFieldBoosts();
 		return array_keys( $this->queryFieldsToBoosts );
 	}
 	
 	/**
-	 * Allows global variables like $wgSearchBoostFor_title to overwrite default boost values defined in this class.
-	 * Run during __construct().
+	 * Imports defaults for query fields to boosts from search profile.
+	 * Lazily run on first mutate or access of query fields.
 	 * @return Wikia\Search\Config
 	 */
 	protected function importQueryFieldBoosts() {
-		foreach ( $this->queryFieldsToBoosts as $field => $boost ) {
-			$this->setQueryField( $field, $this->getService()->getGlobalWithDefault( "SearchBoostFor_{$field}", $boost ) );
+		if (! $this->queryFieldsWereImported ) {
+			$this->queryFieldsToBoosts = $this->getTestProfile()->getQueryFieldsToBoosts();
+			$this->queryFieldsWereImported = true;
 		}
 		return $this;
 	}
