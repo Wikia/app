@@ -50,7 +50,7 @@ class ListusersData {
 			'loggedin' 	=> '',
 			'dtedit' 	=> 'wiki_editdate_user_edits'
 		);
-
+	
 		if ( $load == 1 ) {
 			$this->load();
 		}
@@ -137,10 +137,12 @@ class ListusersData {
 				$whereGroup = array();
 				foreach ( $this->mFilterGroup as $group ) {
 					if ( !empty($group) ) {
-						$whereGroup[] =
-							( $group == Listusers::DEF_GROUP_NAME )
-							? " all_groups = '' "
-							: " all_groups " . $dbs->buildLike( $dbs->anyString(), $group, $dbs->anyString() );
+						if ( $group == Listusers::DEF_GROUP_NAME ) {
+							$whereGroup[] = " all_groups = '' ";
+						} else {
+							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
+							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $group), $dbs->anyString() );
+						}
 					}
 				}
 
