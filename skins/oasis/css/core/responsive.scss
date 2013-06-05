@@ -3,6 +3,11 @@
 
 $width-padding: $width-gutter / 2;
 
+.WikiaPage,
+.oasis-split-skin .WikiaPage {
+	margin: 0 auto;
+}
+
 .AccountNavigation {
 	overflow: hidden;
 }
@@ -44,6 +49,38 @@ $width-padding: $width-gutter / 2;
 	padding: 0 10px 0 0;
 }
 
+.WikiHeader .navbackground {
+	width: 100%;
+}
+
+.WikiHeader > nav {
+	right: -4px;
+	width: auto;
+}
+
+@media screen and (min-width: 1281px) {
+	.WikiaPage,
+	.oasis-split-skin .WikiaPage {
+		margin: 0 130px;
+		width: auto;
+	}
+}
+
+@media screen and (min-width: 1441px) {
+	.WikiaPage,
+	.oasis-split-skin .WikiaPage {
+		margin: 0 170px;
+	}
+}
+
+@media screen and (min-width: 1941px) {
+	.WikiaPage,
+	.oasis-split-skin .WikiaPage {
+		margin: 0 auto;
+		max-width: 1600px;
+	}
+}
+
 @media screen and (max-width: 1024px) {
 	body {
 		background: $color-page;
@@ -52,6 +89,7 @@ $width-padding: $width-gutter / 2;
 	.oasis-split-skin .WikiaPage,
 	.WikiaPage {
 		border: 0;
+		width: auto;
 	}
 
 	.WikiaPageBackground {
