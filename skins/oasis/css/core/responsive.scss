@@ -3,6 +3,16 @@
 
 $width-padding: $width-gutter / 2;
 
+.AccountNavigation {
+	overflow: hidden;
+}
+
+.oasis-split-skin {
+	.WikiaHeader {
+		min-width: auto;
+	}
+}
+
 .WikiaActivityModule li em {
 	width: auto;
 }
@@ -32,4 +42,40 @@ $width-padding: $width-gutter / 2;
 
 .WikiaRail {
 	padding: 0 10px 0 0;
+}
+
+@media screen and (max-width: 1024px) {
+	body {
+		background: $color-page;
+	}
+
+	.oasis-split-skin .WikiaPage,
+	.WikiaPage {
+		border: 0;
+	}
+
+	.WikiaPageBackground {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 1023px) {
+	.WikiaArticle {
+		min-height: auto;
+	}
+
+	.WikiaMainContent {
+		float: none;
+		margin-right: 0;
+	}
+
+	.WikiaMainContentContainer {
+		margin-right: 0;
+	}
+
+	.WikiaRail {
+		float: none;
+		padding: 0 10px;
+		width: auto;
+	}
 }
