@@ -475,9 +475,16 @@ class PhalanxHelper {
 	 * @return bool true if the request was successful
 	 */
 	static private function reload($id = null) {
+		wfProfileIn(__METHOD__);
+
 		$service = new PhalanxService();
 		$res = $service->reload(!is_null($id) ? [$id] : []) === 1;
 
+		if ($res === false) {
+			Wikia::log(__METHOD__, false, 'reload failed', true);
+		}
+
+		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
