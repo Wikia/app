@@ -10,6 +10,7 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		wfProfileIn(__METHOD__);
 		RenderContentOnlyHelper::setRenderContentVar(true);
 		$this->wg->Out->clearHTML();
+		$this->wg->Out->setPageTitle( wfMessage( 'styleguide-pagetitle' )->text() );
 
 		// skip rendering
 		return false;

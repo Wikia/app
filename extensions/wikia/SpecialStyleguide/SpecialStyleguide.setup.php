@@ -28,4 +28,4 @@ $app->registerController('SpecialStyleguideController', $dir . 'SpecialStyleguid
 $app->registerSpecialPage('Styleguide', 'SpecialStyleguideController', 'wikia');
 
 // message files
-$app->registerExtensionMessageFile('Styleguide', $dir . 'SpecialStyleguide.i18n.php');
+$app->registerExtensionMessageFile('SpecialStyleguide', $dir . 'SpecialStyleguide.i18n.php');
