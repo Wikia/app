@@ -29,7 +29,6 @@ class EmailTemplatesHooksHelper {
 				);
 
 				$bodyHTML = $app->renderView( "EmailTemplates", "NewBlogPostMail", $params );
-				$bodyHTML .= 'FRAnk test';
 
 			}
 		}
