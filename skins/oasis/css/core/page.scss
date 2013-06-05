@@ -453,10 +453,3 @@
 		display: none;
 	}
 }
-
-.ContentHeader {
-	@include clearfix;
-	border-bottom: 1px solid $color-page-border-subtle;
-	border-top: 1px solid $color-page-border-subtle;
-	padding: 10px 0;
-}

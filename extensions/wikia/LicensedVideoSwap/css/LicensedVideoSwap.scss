@@ -3,6 +3,9 @@
 @import "../../../../skins/oasis/css/core/color";
 
 $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
+$thumb-img-width: 184px;
+$thumb-img-height: 103px;
+
 
 .wikinav2 .WikiaPageHeader {
 	border-bottom: none;
@@ -31,6 +34,14 @@ $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
 	}
 }
 
+.ContentHeader {
+	@include clearfix;
+	border-bottom: 1px solid $color-page-border-subtle;
+	border-top: 1px solid $color-page-border-subtle;
+	margin-bottom: 18px;
+	padding: 18px 0;
+}
+
 .LVSGrid {
 	.row {
 		@include clearfix;
@@ -42,10 +53,12 @@ $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
 	.grid-3 {
 		height: 400px;
 	}
-	.video-container {
+	.video-wrapper {
 		padding-bottom: 10px;
+		height: 320px;
 	}
 	.more-videos {
+		@include clearfix;
 		background-color: $alt-bg-color;
 		clear:both;
 		padding: 15px;
@@ -56,6 +69,31 @@ $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
 			content: "";
 			display: inline-block;
 			float: right;
+		}
+		ul, li {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			float: left;
+			margin-right: 15px;
+			width:$thumb-img-width;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+		.Wikia-video-play-button {
+			line-height:$thumb-img-height;
+			width:$thumb-img-width;
+		}
+		.video {
+			display: block;
+			position: relative;
+			> img {
+				height:$thumb-img-height;
+				width:$thumb-img-width;
+			}
 		}
 	}
 }
