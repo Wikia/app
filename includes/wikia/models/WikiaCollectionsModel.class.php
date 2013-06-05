@@ -8,8 +8,13 @@ class WikiaCollectionsModel extends WikiaModel {
 	private function getCollectionsListCacheKey($langCode) {
 		return $this->wf->SharedMemcKey('collections_list', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
 	}
+	
 	private function getCollectionsListVisualizationCacheKey($langCode) {
 		return $this->wf->SharedMemcKey('collections_list_visualization', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
+	}
+	
+	private function getWikiInCollectionCacheKey($cityId) {
+		return $this->wf->SharedMemcKey('wiki_in_collection', self::COLLECTIONS_MEMC_VERSION, $cityId, __METHOD__);
 	}
 
 	private function clearCache($langCode) {
@@ -25,6 +30,10 @@ class WikiaCollectionsModel extends WikiaModel {
 			$title->purgeSquid();
 			Wikia::log(__METHOD__, '', 'Purged memcached for collection #' . $collection['id']);
 		}
+	}
+	
+	private function clearWikiCache($cityId) {
+		$this->wg->Memc->delete( $this->getWikiInCollectionCacheKey($cityId) );
 	}
 	
 	private function getListFromDb($langCode, $useMaster = false) {
@@ -186,6 +195,7 @@ class WikiaCollectionsModel extends WikiaModel {
 
 			$collection = $this->getById($collectionId);
 			$this->clearCache($collection['lang_code']);
+			$this->clearWikiCache($cityId);
 		}
 	}
 
@@ -209,6 +219,7 @@ class WikiaCollectionsModel extends WikiaModel {
 
 		$collection = $this->getById($collectionId);
 		$this->clearCache($collection['lang_code']);
+		$this->clearWikiCache($cityId);
 	}
 
 	/**
@@ -337,6 +348,16 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 
 	public function isWikiInCollection($cityId) {
+		return WikiaDataAccess::cache(
+			$this->getWikiInCollectionCacheKey($cityId),
+			6 * 60 * 60,
+			function() use ($cityId) {
+				return $this->getWikiInCollectionFromDb($cityId);
+			}
+		);
+	}
+	
+	private function getWikiInCollectionFromDb($cityId) {
 		$sdb = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$conds = [
