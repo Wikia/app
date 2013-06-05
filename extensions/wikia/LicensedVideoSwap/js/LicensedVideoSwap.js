@@ -7,6 +7,7 @@ var LVS = {
 		this.initDropDown();
 		this.initCallout();
 		this.initMoreSuggestions();
+		this.initSwapArrow();
 	},
 	initDropDown: function() {
 		$('.WikiaDropdown').wikiaDropdown({
@@ -41,6 +42,17 @@ var LVS = {
 				toggleDiv.slideDown();
 			}
 
+		});
+	},
+	initSwapArrow: function() {
+		this.container.on('mouseover mouseout', '.swap-button', function(e) {
+			var arrow = $(this).parent().siblings('.swap-arrow');
+
+			if ( e.type == 'mouseover' ) {
+				arrow.fadeIn(100);
+			} else {
+				arrow.fadeOut(100);
+			}
 		});
 	}
 };

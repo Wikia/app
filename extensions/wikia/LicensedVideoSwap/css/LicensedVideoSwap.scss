@@ -1,11 +1,17 @@
 @import "../../../../skins/oasis/css/mixins/arrow";
+@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
+@import "mixins/_sprite-LicensedVideoSwap";
 
 $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
 $thumb-img-width: 184px;
 $thumb-img-height: 103px;
 
+$arrow-color: 'black';
+@if $is-dark-wiki {
+	$arrow-color: 'white';
+}
 
 .wikinav2 .WikiaPageHeader {
 	border-bottom: none;
@@ -43,9 +49,31 @@ $thumb-img-height: 103px;
 }
 
 .LVSGrid {
+	.lvs-sprite:before {
+		@include sprite-LicensedVideoSwap-base;
+	}
 	.row {
 		@include clearfix;
 		margin-bottom: 30px;
+		position: relative;
+		.swap-arrow {
+			@include border-radius(5px);
+			background-color: $color-page;
+			display: none;
+			left: 50%;
+			margin-left: -40px;
+			padding: 15px;
+			position: absolute;
+			top: 157px;
+			&:before {
+				@include sprite-LicensedVideoSwap('big_' + $arrow-color + '_arrow');
+				content: "";
+				display: block;
+				margin: auto;
+				height: 31px;
+				width: 49px;
+			}
+		}
 	}
 	.more-link {
 		color: $color-text;
@@ -117,5 +145,14 @@ $thumb-img-height: 103px;
 				width:$thumb-img-width;
 			}
 		}
+	}
+	.swap-button:before {
+		@include sprite-LicensedVideoSwap($arrow-color + '_small_arrow');
+		content: "";
+		display: inline-block;
+		height: 9px;
+		margin-left: -2px;
+		padding-right: 2px;
+		width: 13px;
 	}
 }

@@ -21,6 +21,7 @@
 
 	<? foreach ($videoList as $video) : ?>
 		<div class="row">
+			<span class="swap-arrow lvs-sprite"></span>
 			<div class="grid-3 alpha non-premium">
 				<p>
 					<?php foreach( $video['truncatedList'] as $article ) { ?>
@@ -48,7 +49,7 @@
 				</div>
 				<a class="more-link" href="#"><?= wfMessage('lvs-more-suggestions')->numParams(5)->text() ?></a>
 				<!-- TODO: add arrow asset -->
-				<button>(&lt;) <?= wfMessage('lvs-button-swap') ?></button>
+				<button class="swap-button lvs-sprite"> <?= wfMessage('lvs-button-swap') ?></button>
 			</div>
 			<div class="more-videos">
 				<ul>
