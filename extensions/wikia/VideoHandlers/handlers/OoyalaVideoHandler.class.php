@@ -33,10 +33,10 @@ EOT;
 				'height'=> $height,
 				'autoPlay'=> $autoPlayStr,
 				'title'=> $this->title,
+				'jsFile' => $jsFile,
 			),
 			'init' => 'wikia.videohandler.ooyala',
 			'scripts' => array(
-				$jsFile,
 				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js"
 			),
 		);

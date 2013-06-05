@@ -538,7 +538,12 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'partner-feed-recent-changes' => 'Cangiaminde recende',
 	'all-blog-posts' => 'tutte le categorije',
+	'blog-posts-from-listing' => 'da elengà: $1',
+	'feed-title-hot-content' => 'Condenute cavede - $1',
+	'feed-title-blogcomments' => 'Commende a $1',
+	'feed-title-recentchanges' => 'Cangiaminde recende',
 );
 
 /** Russian (русский)

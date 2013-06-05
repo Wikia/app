@@ -43,7 +43,7 @@ function getRebuildInterwikiSQL() {
 	}
 
 	# Extract the intermap from Central Wikia
-	$intermap = wfGetHTTP( 'http://community.wikia.com/index.php?title=MediaWiki:Interwiki_map&action=raw', 30 );
+	$intermap = Http::get( 'http://community.wikia.com/index.php?title=MediaWiki:Interwiki_map&action=raw', 30 );
 	$lines = array_map( 'trim', explode( "\n", trim( $intermap ) ) );
 
 	if ( !$lines || count( $lines ) < 2 ) {
