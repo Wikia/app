@@ -130,6 +130,7 @@ class Config
 			'views',
 			'categories',
 			'hub',
+			'lang',
 	];
 	
 	/**
