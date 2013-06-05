@@ -6,6 +6,7 @@
  */
 
 class EmailTemplatesController extends WikiaController {
+
 	public function executeNewBlogPostMail( $params ) {
 		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
 
@@ -15,4 +16,12 @@ class EmailTemplatesController extends WikiaController {
 		$this->link123 = $params['link'];
 		$this->linkTxt123 = $params['link_txt'];
 	}
+
+	public function executeBasicMail( $params ) {
+		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
+
+		$this->language = $params['language'];
+		$this->content = $params['content'];
+	}
+
 }

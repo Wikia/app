@@ -31,6 +31,14 @@ class EmailTemplatesHooksHelper {
 				$bodyHTML = $app->renderView( "EmailTemplates", "NewBlogPostMail", $params );
 
 			}
+		} else {
+			/* use basic template */
+			$params = array(
+				'language' => $wgLanguageCode,
+				'content' => $bodyHTML,
+			);
+
+			$bodyHTML = $app->renderView( "EmailTemplates", "BasicMail", $params );
 		}
 		return true;
 	}
