@@ -1,4 +1,8 @@
+@import "../../../../skins/oasis/css/mixins/arrow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
+
+$alt-bg-color: mix($color-page-opposite, $color-page, 10%);
 
 .wikinav2 .WikiaPageHeader {
 	border-bottom: none;
@@ -28,13 +32,30 @@
 }
 
 .LVSGrid {
-	.more {
+	.row {
+		@include clearfix;
+		margin-bottom: 30px;
+	}
+	.more-link {
 		float: right;
 	}
 	.grid-3 {
-		height: 430px;
+		height: 400px;
 	}
 	.video-container {
 		padding-bottom: 10px;
+	}
+	.more-videos {
+		background-color: $alt-bg-color;
+		clear:both;
+		padding: 15px;
+
+		&:before {
+			@include arrow(20px, $alt-bg-color, 'up');
+			margin-top: -25px;
+			content: "";
+			display: inline-block;
+			float: right;
+		}
 	}
 }
