@@ -49,7 +49,8 @@ class WikiaMobileService extends WikiaService {
 		$styles = null;
 		$scripts = null;
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-		$advert = '';
+		$floatingTopLeaderBoard = '';
+		$topLeaderBoard = '';
 		$globalVariables = [];
 
 		F::build( 'JSMessages' )->enqueuePackage( 'WkMbl', JSMessages::INLINE );
@@ -63,7 +64,8 @@ class WikiaMobileService extends WikiaService {
 		if ($mobileAdService->shouldLoadAssets()) {
 			$jsBodyPackages[] = 'wikiamobile_js_ads';
 			if ($mobileAdService->shouldShowAds()) {
-				$advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
+				$floatingTopLeaderBoard = $this->app->renderView( 'WikiaMobileAdService', 'floatingTopLeaderBoard' );
+				$topLeaderBoard = '';//$this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 				$globalVariables['wgShowAds'] = true;
 			}
 		}
@@ -155,7 +157,8 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'pageTitle', $this->wg->Out->getHTMLTitle() );
 		$this->response->setVal( 'bodyClasses', array( 'wkMobile', $this->templateObject->get( 'pageclass' ) ) );
 		$this->response->setVal( 'jsBodyFiles', $jsBodyFiles );
-		$this->response->setVal( 'advertisement', $advert );
+		$this->response->setVal( 'floatingTopLeaderBoard', $floatingTopLeaderBoard );
+		$this->response->setVal( 'topLeaderBoard', $topLeaderBoard );
 		$this->response->setVal( 'wikiaNavigation', $nav );
 		$this->response->setVal( 'pageContent', $pageContent );
 		$this->response->setVal( 'wikiaFooter', $footer );

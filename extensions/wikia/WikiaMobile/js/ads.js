@@ -23,46 +23,16 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 			 * Allowed types of Ad,
 			 * DART can invoke them but they need to be defined here first
 			 */
-			footer: 'footer',
-			interstitial: 'interstitial',
-			top_leaderboard: 'top_leaderboard',
-			in_content: 'in_content'
+			footer: 1,
+			interstitial: 1,
+			top_leaderboard: 1,
+			in_content: 1
 		},
 		STOP_COOKIE_NAME = 'wkStopAd',
-		adSlot,
-		adSlotStyle,
-		contentWrapper,
+		adSlots,
 		d = window.document,
 		found = false,
-		fixed = false,
-		positionfixed = window.Features.positionfixed,
-		ftr,
-		inited,
-		type;
-
-	/**
-	 * @private
-	 *
-	 * @param {HTMLElement} el
-	 * @param {Array} cls
-	 */
-	function addClass(el, cls) {
-		el.className += ((el.className !== '') ? ' ' : '') + cls.join(' ');
-	}
-
-	/**
-	 * @private
-	 *
-	 * @param {HTMLElement} el
-	 * @param {Array} cls
-	 */
-	function removeClass(el, cls) {
-		el.className = el.className
-			.replace(new RegExp('\\b(?:' + cls.join('|') + ')\\b', 'g'), '')
-			//trim is supported starting from IE9
-			//and that's the least version on WP7
-			.trim();
-	}
+		fixed = false;
 
 	/**
 	 * Stops ads requests from being made for a specific amount of time
@@ -101,21 +71,24 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 	 * @param {String} name The slot name
 	 * @param {String} size The size of the slot (e.g. 5x5)
 	 */
-	function setupSlot(name, size) {
+	function setupSlot(options) {
+
 		if (shouldRequestAd()) {
 			var url = dartHelper.getMobileUrl({
-					slotname: name,
-					size: size,
+					slotname: options.name,
+					size: options.size,
 					uniqueId: getUniqueId()
 				}),
 				s = d.createElement('script');
 
-			if (contentWrapper) {
-				//bind DOMwriter to the wrapper
-				dw.target(contentWrapper);
-				s.src = url;
-				contentWrapper.appendChild(s);
-			}
+			adSlots[options.name] = options.wrapper;
+
+			//bind DOMwriter to the wrapper
+			dw.target(options.wrapper);
+			s.src = url;
+			options.wrapper.appendChild(s);
+
+			dw.addEventListener('idle', findAd);
 		}
 	}
 
@@ -137,7 +110,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 			if (inited) {
 				for (var t in AD_TYPES) {
 					if (AD_TYPES.hasOwnProperty(t)) {
-						removeClass(adSlot, [AD_TYPES[t]]);
+						$.removeClass(adSlot, [AD_TYPES[t]]);
 					}
 				}
 			}
@@ -145,7 +118,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 			//used in other parts to check what kind of Ad we've been served
 			type = adType;
 			inited = true;
-			addClass(adSlot, [adType]);
+			$.addClass(adSlot, [adType]);
 
 			//process any option passed in
 			if (options) {
@@ -178,61 +151,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 		}
 	}
 
-	/**
-	 * Handles the positioning of the Ad either via CSS or JS
-	 * to make it "float" on the viewport, the position and
-	 * behaviour depends on the type of Ad
-	 *
-	 * @public
-	 */
-	function fix() {
-		fixed = true;
 
-		if (found) {
-			addClass(adSlot, ['over']);
-
-			if (type === AD_TYPES.footer) {
-				//give the footer space to host the
-				//"floating" footer Ad
-				addClass(ftr, ['ads']);
-				addClass(adSlot, ['fixed']);
-
-				if (!positionfixed) {
-					addClass(adSlot, ['jsfix']);
-					moveSlot();
-				}
-			}
-		}
-	}
-
-	/**
-	 * Handles the positioning of the Ad either via CSS or JS
-	 * to anchor it back in the original position before
-	 * fix was called, the position and
-	 * behaviour depends on the type of Ad
-	 *
-	 * @public
-	 */
-	function unfix() {
-		if (found) {
-			removeClass(adSlot, ['over']);
-
-			if (type === AD_TYPES.footer) {
-				//remove the extra space from the footer used
-				//to host the "floating" footer Ad
-				removeClass(ftr, ['ads']);
-				removeClass(adSlot, ['fixed']);
-
-				if (!positionfixed) {
-					removeClass(adSlot, ['jsfix']);
-					moveSlot(ftr.offsetTop);
-				}
-			}
-		}
-
-		//reset fixed after moveSlot has been called
-		fixed = false;
-	}
 
 	/**
 	 * Tries to identify the Ad content and triggers the
@@ -240,8 +159,8 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 	 *
 	 * @private
 	 */
-	function findAd() {
-		if (contentWrapper) {
+	function findAd(wrapper) {
+		if (wrapper) {
 			var i,
 				imgs,
 				width,
@@ -252,16 +171,14 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 			//search for any real ad content
 			//unfortunately some iframes can be empty
 			//but we have no access to them
-			if (contentWrapper.getElementsByTagName('iframe').length > 0 ||
-					contentWrapper.getElementsByTagName('video').length > 0 ||
-					contentWrapper.getElementsByTagName('object').length > 0 ||
-					contentWrapper.getElementsByTagName('embed').length > 0) {
-				found = true;
-			}
+			found = (wrapper.getElementsByTagName('iframe').length > 0 ||
+				wrapper.getElementsByTagName('video').length > 0 ||
+				wrapper.getElementsByTagName('object').length > 0 ||
+				wrapper.getElementsByTagName('embed').length > 0);
 
 			//despite the above check's result, run this anyways
 			//as it also takes care of hiding tracking pixels
-			if ((imgs = contentWrapper.getElementsByTagName('img')).length > 0) {
+			if ((imgs = wrapper.getElementsByTagName('img')).length > 0) {
 				for (x = 0, y = imgs.length; x < y; x += 1) {
 					i = imgs[x];
 					width = i.getAttribute('width');
@@ -304,50 +221,32 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 				}
 
 				dw.removeEventListener('idle', findAd);
-				addClass(adSlot, ['show']);
+				$.addClass(adSlot, ['show']);
 				fix();
 			}
 		}
 	}
 
 	/**
-	 * Returns the type of the current Ad
-	 *
-	 * @public
-	 *
-	 * @return {String} The type of Ad, see the AD_TYPES variable;
-	 * undefined if no Ad is being served
-	 */
-	function getAdType() {
-		return type;
-	}
-
-	/**
 	 * Module initialization
 	 */
 	$(function () {
-		adSlot = d.getElementById('wkAdPlc');
-		contentWrapper = d.getElementById('wkAdWrp');
-
-		if (adSlot) {
-			//bind findAd to when DOMwriter goes idle
-			//DOMwriter is initialized in AdProviderDARTMobile.php
-			//@see init
-			dw.addEventListener('idle', findAd);
-
-			adSlotStyle = adSlot.style;
-			ftr = d.getElementById('wkFtr');
-		}
+//		adSlot = d.getElementsByClassName('wkAdPlc');
+//
+//		if (adSlot) {
+//			//bind findAd to when DOMwriter goes idle
+//			//DOMwriter is initialized in AdProviderDARTMobile.php
+//			//@see init
+//			dw.addEventListener('idle', findAd);
+//		}
 	});
 
 	//global shortcut to be used directly
 	//inside DART creatives
 	window.MobileAd = {
 		setupSlot: setupSlot,
-		init: init,
 		fix: fix,
 		unfix: unfix,
-		getAdType: getAdType,
 		shouldRequestAd: shouldRequestAd
 	};
 
