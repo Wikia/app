@@ -127,12 +127,7 @@ class OasisController extends WikiaController {
 			$wgOut->addScript( '<script src="' . $this->wg->ExtensionsPath . '/wikia/CreateNewWiki/js/WikiWelcome.js"></script>' );
 		}
 
-		$renderContentOnly = false;
-		if (!empty($this->wg->EnableRenderContentOnlyExt)) {
-			if(renderContentOnly::isRenderContentOnlyEnabled()) {
-				$renderContentOnly = true;
-			}
-		}
+		$renderContentOnly = RenderContentOnlyHelper::isRenderContentOnlyEnabled();
 
 		if($renderContentOnly) {
 			$this->body = F::app()->renderView('BodyContentOnly', 'Index');
