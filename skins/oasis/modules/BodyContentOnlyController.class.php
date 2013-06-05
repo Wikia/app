@@ -1,9 +1,10 @@
 <?php
+
 class BodyContentOnlyController extends WikiaController {
 
-	public function executeIndex () {
+	public function executeIndex() {
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
-		switch (RenderContentOnlyHelper::getRenderContentOnlyLevel()) {
+		switch ( RenderContentOnlyHelper::getRenderContentOnlyLevel() ) {
 			case RenderContentOnlyHelper::LEAVE_NO_SKIN_ELEMENTS:
 				$this->overrideTemplate( 'NoArticleContainer' );
 				break;

@@ -130,7 +130,7 @@ class OasisController extends WikiaController {
 		$renderContentOnly = RenderContentOnlyHelper::isRenderContentOnlyEnabled();
 
 		if($renderContentOnly) {
-			$this->body = F::app()->sendRequest('BodyContentOnly', 'Index', $this->wg->request->getValues())->render();
+			$this->body = F::app()->sendRequest( 'BodyContentOnly', 'Index', $this->wg->request->getValues() )->render();
 		} else {
 			// macbre: let extensions modify content of the page (e.g. EditPageLayout)
 			wfProfileIn(__METHOD__ . ' - renderBody');

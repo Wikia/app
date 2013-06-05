@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class RenderContentOnlyHelper
+ *
+ * Provides a way to store information that is then used by the skin
+ * to determine which skin elements should be rendered apart from
+ * content
+ */
 class RenderContentOnlyHelper {
 	const LEAVE_ALL_SKIN_ELEMENTS = 0;
 	const LEAVE_ARTICLE_PLACEHOLDER_ONLY = 1;
@@ -11,8 +18,8 @@ class RenderContentOnlyHelper {
 	/**
 	 * Method accessed by hook to set correct behaviour
 	 */
-	public static function onUnknownAction ($action, $article) {
-		if ($action == 'rendercontentonly') {
+	public static function onUnknownAction( $action, $article ) {
+		if ( $action == 'rendercontentonly' ) {
 			self::$renderContentOnly = true;
 			self::$renderContentOnlyLevel = self::LEAVE_ARTICLE_PLACEHOLDER_ONLY;
 			global $wgArticle;
@@ -25,7 +32,7 @@ class RenderContentOnlyHelper {
 	/**
 	 * @return bool
 	 */
-	public static function isRenderContentOnlyEnabled () {
+	public static function isRenderContentOnlyEnabled() {
 		return self::$renderContentOnly;
 	}
 
@@ -33,7 +40,7 @@ class RenderContentOnlyHelper {
 	 * Set boolean value for $renderContentOnly
 	 * @param $value bool
 	 */
-	public static function setRenderContentVar ($value) {
+	public static function setRenderContentVar( $value ) {
 		self::$renderContentOnly = (bool)$value;
 	}
 
@@ -41,10 +48,9 @@ class RenderContentOnlyHelper {
 	 * Set interge value for $renderContentOnlyLevel
 	 * @param $value bool
 	 */
-	public static function setRenderContentLevel($value) {
+	public static function setRenderContentLevel( $value ) {
 		self::$renderContentOnlyLevel = (int)$value;
 	}
-
 
 
 	/**
