@@ -18,6 +18,6 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		wfProfileOut( __METHOD__ );
 
 		// skip rendering
-		return false;
+		$this->skipRendering();
 	}
 }
