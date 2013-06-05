@@ -44,7 +44,6 @@ $width-padding: $width-gutter / 2;
 	padding: 0 10px 0 0;
 }
 
-// These styles apply to 1024px and smaller screens
 @media screen and (max-width: 1024px) {
 	body {
 		background: $color-page;
@@ -57,5 +56,26 @@ $width-padding: $width-gutter / 2;
 
 	.WikiaPageBackground {
 		display: none;
+	}
+}
+
+@media screen and (max-width: 1023px) {
+	.WikiaArticle {
+		min-height: auto;
+	}
+
+	.WikiaMainContent {
+		float: none;
+		margin-right: 0;
+	}
+
+	.WikiaMainContentContainer {
+		margin-right: 0;
+	}
+
+	.WikiaRail {
+		float: none;
+		padding: 0 10px;
+		width: auto;
 	}
 }
