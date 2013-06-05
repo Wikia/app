@@ -252,9 +252,9 @@ class ListusersData {
 						$msg = 'talkpagelinktext';
 					}
 
-                               		if ( $oUTitle instanceof Title ) {
-                                        	$links[0] = $sk->makeLinkObj( $oUTitle, $wgLang->ucfirst(wfMsg($msg) ) );
-                                        }
+					if ( $oUTitle instanceof Title ) {
+						$links[0] = $sk->makeLinkObj( $oUTitle, $wgLang->ucfirst(wfMsg($msg) ) );
+					}
 
 					if ( $wgUser->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
 						$links[] = $sk->makeLinkObj(
@@ -390,7 +390,8 @@ class ListusersData {
 						'user_is_closed' => 0
 					);
 					if ( $key != Listusers::DEF_GROUP_NAME ) {
-						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key, $dbs->anyString() );
+						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
+						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $group), $dbs->anyString() );					
 					} else {
 						$where['cnt_groups'] = 0;
 					}
