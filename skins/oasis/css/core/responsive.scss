@@ -33,3 +33,19 @@ $width-padding: $width-gutter / 2;
 .WikiaRail {
 	padding: 0 10px 0 0;
 }
+
+// These styles apply to 1024px and smaller screens
+@media screen and (max-width: 1024px) {
+	body {
+		background: $color-page;
+	}
+
+	.oasis-split-skin .WikiaPage,
+	.WikiaPage {
+		border: 0;
+	}
+
+	.WikiaPageBackground {
+		display: none;
+	}
+}
