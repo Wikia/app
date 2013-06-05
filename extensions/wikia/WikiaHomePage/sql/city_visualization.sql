@@ -8,5 +8,6 @@ CREATE TABLE `city_visualization` (
   `city_flags` smallint(8) DEFAULT '0', /*new, hot, promoted, excluded, new&hot, new&promoted, hot&promoted, new&excluded, hot&excluded, new&hot&excluded, new&hot&promoted, new&hot&excluded&promoted*/
   `city_images` text,
   KEY `cv_cid_cf_ce` (`city_id`,`city_flags`),
+  PRIMARY KEY(`city_id`, `city_lang_code`),
   CONSTRAINT `city_visualization_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
