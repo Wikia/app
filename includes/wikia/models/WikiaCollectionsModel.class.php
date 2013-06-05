@@ -261,46 +261,6 @@ class WikiaCollectionsModel extends WikiaModel {
 		return $db->selectField(self::COLLECTIONS_CV_TABLE, 'count(city_id)', ['collection_id' => $collectionId]);
 	}
 
-	/**
-	 * Get all wikis from all collections in selected language
-	 *
-	 * @param $langCode
-	 */
-	public function getCollectionWikisByLang($langCode) {
-		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-
-		$tables = [
-			'whc'	=> self::TABLE_NAME,
-			'whccv' => self::COLLECTIONS_CV_TABLE
-		];
-
-		$fields = [
-			'whccv.city_id',
-			'whccv.collection_id'
-		];
-
-		$conds = [
-			'whc.lang_code' => $langCode
-		];
-
-		$joinConds = array(
-			'whc' => array(
-				'left join',
-				'whc.id = whccv.collection_id'
-			)
-		);
-
-		$results = $db->select($tables, $fields, $conds, __METHOD__, [], $joinConds);
-
-		$out = [];
-
-		while( $row = $db->fetchRow($results) ) {
-			$out[] = $row;
-		}
-
-		return $out;
-	}
-
 	public function getCollectionsByCityId($cityId) {
 		$db = $this->wf->getDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
