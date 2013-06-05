@@ -1,14 +1,20 @@
 <?php
 
 class RenderContentOnlyHelper {
-	private static $renderContentOnly;
+	const LEAVE_ALL_SKIN_ELEMENTS = 0;
+	const LEAVE_ARTICLE_PLACEHOLDER_ONLY = 1;
+	const LEAVE_NO_SKIN_ELEMENTS = 2;
+
+	private static $renderContentOnly = false;
+	private static $renderContentOnlyLevel = self::LEAVE_ALL_SKIN_ELEMENTS;
 
 	/**
-	 * This method is called when unknown action is called
+	 * Method accessed by hook to set correct behaviour
 	 */
 	public static function onUnknownAction ($action, $article) {
 		if ($action == 'rendercontentonly') {
 			self::$renderContentOnly = true;
+			self::$renderContentOnlyLevel = self::LEAVE_ARTICLE_PLACEHOLDER_ONLY;
 			global $wgArticle;
 			$wgArticle->view();
 			return false;
@@ -16,6 +22,9 @@ class RenderContentOnlyHelper {
 		return true;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public static function isRenderContentOnlyEnabled () {
 		return self::$renderContentOnly;
 	}
@@ -26,5 +35,23 @@ class RenderContentOnlyHelper {
 	 */
 	public static function setRenderContentVar ($value) {
 		self::$renderContentOnly = (bool)$value;
+	}
+
+	/**
+	 * Set interge value for $renderContentOnlyLevel
+	 * @param $value bool
+	 */
+	public static function setRenderContentLevel($value) {
+		self::$renderContentOnlyLevel = (int)$value;
+	}
+
+
+
+	/**
+	 * Returns level of stripping base skin elements
+	 * @return integer
+	 */
+	public static function getRenderContentOnlyLevel() {
+		return self::$renderContentOnlyLevel;
 	}
 }
