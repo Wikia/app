@@ -777,10 +777,21 @@ class ConfigTest extends BaseTest {
 	 * @covers \Wikia\Search\Config::getQueryFieldsToBoosts
 	 */
 	public function testGetQueryFieldsToBoosts() {
-		$config = new \Wikia\Search\Config();
-		$queryFieldsToBoostsRefl = new ReflectionProperty( '\Wikia\Search\Config', 'queryFieldsToBoosts' );
-		$queryFieldsToBoostsRefl->setAccessible( true );
-		$fields = $queryFieldsToBoostsRefl->getValue( $config );
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'importQueryFieldBoosts' ] )
+		               ->getMock();
+		
+		$fields = [ 'html' => 100 ];
+		
+		$reflAttr = new \ReflectionProperty( 'Wikia\Search\Config', 'queryFieldsToBoosts' );
+		$reflAttr->setAccessible( true );
+		$reflAttr->setValue( $config, $fields ); 
+		
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'importQueryFieldBoosts' )
+		;
 		$this->assertEquals(
 				$fields,
 				$config->getQueryFieldsToBoosts(),
@@ -805,36 +816,70 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @covers \Wikia\Search\Config::importQueryFieldBoosts
 	 */
-	public function testImportQueryFieldBoosts() {
+	public function testImportQueryFieldBoostsFirstTime() {
 		$config = $this->getMockBuilder( '\Wikia\Search\Config' )
 		               ->disableOriginalConstructor()
-		               ->setMethods( array( 'setQueryField' ) )
+		               ->setMethods( array( 'getTestProfile' ) )
 		               ->getMock();
 		
-		$service = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
-		                  ->disableOriginalConstructor()
-		                  ->setMethods( array( 'getGlobalWithDefault' ) )
-		                  ->getMock();
-		
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getGlobalWithDefault' )
-		    ->with   ( 'SearchBoostFor_title', 5 )
-		    ->will   ( $this->returnValue( 5 ) ) // value doesn't matter -- that's why we test this method separately 
-		;
+		$testProfile = $this->getMockbuilder( 'Wikia\Search\TestProfile\Base' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ 'getQueryFieldsToBoosts' ] )
+		                    ->getMock();
+		$fields = [ 'html' => 100 ];
 		$config
 		    ->expects( $this->once() )
-		    ->method ( 'setQueryField' )
-		    ->with   ( 'title', 5 )
+		    ->method ( 'getTestProfile' )
+		    ->will   ( $this->returnValue( $testProfile ) )
+		;
+		$testProfile
+		    ->expects( $this->once() )
+		    ->method ( "getQueryFieldsToBoosts" )
+		    ->will   ( $this->returnValue( $fields ) )
 		;
 		
-		$fieldsrefl = new ReflectionProperty( '\Wikia\Search\Config', 'queryFieldsToBoosts' );
-		$fieldsrefl->setAccessible( true );
-		$fieldsrefl->setValue( $config, array( 'title' => 5 ) );
+		$methodrefl = new ReflectionMethod( '\Wikia\Search\Config', 'importQueryFieldBoosts' );
+		$methodrefl->setAccessible( true );
+		$this->assertEquals(
+				$config,
+				$methodrefl->invoke( $config )
+		);
+		$this->assertAttributeEquals(
+				$fields,
+				'queryFieldsToBoosts',
+				$config
+		);
+		$this->assertAttributeEquals(
+				true,
+				'queryFieldsWereImported',
+				$config
+		);
+	}
+	
+	/**
+	 * @covers \Wikia\Search\Config::importQueryFieldBoosts
+	 */
+	public function testImportQueryFieldBoostsConsecutiveTimes() {
+		$config = $this->getMockBuilder( '\Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( array( 'getTestProfile' ) )
+		               ->getMock();
 		
-		$servicerefl = new ReflectionProperty( '\Wikia\Search\Config', 'service' );
-		$servicerefl->setAccessible(true );
-		$servicerefl->setValue( $config, $service );
+		$testProfile = $this->getMockbuilder( 'Wikia\Search\TestProfile\Base' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ 'getQueryFieldsToBoosts' ] )
+		                    ->getMock();
+		$prop = new ReflectionProperty( 'Wikia\Search\Config', 'queryFieldsWereImported' );
+		$prop->setAccessible( true );
+		$prop->setValue( $config, true );
+		$config
+		    ->expects( $this->never() )
+		    ->method ( 'getTestProfile' )
+		;
+		$testProfile
+		    ->expects( $this->never() )
+		    ->method ( "getQueryFieldsToBoosts" )
+		;
 		
 		$methodrefl = new ReflectionMethod( '\Wikia\Search\Config', 'importQueryFieldBoosts' );
 		$methodrefl->setAccessible( true );
