@@ -129,6 +129,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	/**
 	 * swap video
 	 * @requestParam string videoTitle
+	 * @requestParam string newTitle
+	 * @requestParam integer skip [0/1]
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam array|null video
