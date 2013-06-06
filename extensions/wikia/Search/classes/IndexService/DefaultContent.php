@@ -230,21 +230,22 @@ class DefaultContent extends AbstractService
 		$result = array();
 		$infoboxes = $dom->find( 'table.infobox' );
 		if ( count( $infoboxes ) > 0 ) {
-			$infobox = $infoboxes[0];
-			$infobox = new simple_html_dom( $infobox->outertext() );
-			$this->removeGarbageFromDom( $infobox );
-			$infobox->load( $infobox->save() );
-			$infoboxRows = $infobox->find( 'tr' );
-			
-			if ( $infoboxRows ) {
-				$result['infoboxes_txt'] = [];
-				foreach ( $infoboxRows as $row ) {
-					$infoboxCells = $row->find( 'td' );
-					// we only care about key-value pairs in infoboxes
-					if ( count( $infoboxCells ) == 2 ) {
-						$result['infoboxes_txt'][] = preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
+			$result['infoboxes_txt'] = [];
+			$counter = 1;
+			foreach ( $infoboxes as $infobox ) {
+				$infobox = new simple_html_dom( $infobox->outertext() );
+				$this->removeGarbageFromDom( $infobox );
+				$infobox->load( $infobox->save() );
+				$infoboxRows = $infobox->find( 'tr' );
+				if ( $infoboxRows ) {
+					foreach ( $infoboxRows as $row ) {
+						$infoboxCells = $row->find( 'td' );
+						if ( count( $infoboxCells ) == 2 ) {
+							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
+						}
 					}
 				}
+				$counter++;
 			}
 		}
 		return $result;
