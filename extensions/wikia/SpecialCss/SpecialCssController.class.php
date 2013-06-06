@@ -13,6 +13,9 @@ class SpecialCssController extends WikiaSpecialPageController {
 		}
 
 		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
+
+		$this->response->addAsset('specialcss_linting_js');
+
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
 		
 		$model = new SpecialCssModel();

@@ -10,4 +10,5 @@
 </aside>
 <footer class="css-footer">
 	<input class="big" type="submit" value="<?= wfMessage('special-css-publish-button')->escaped(); ?>" />
+	<input type="button" class="big" value="<?= wfMessage('special-css-lint-button')->escaped(); ?>" id="lintButton" />
 </footer>
