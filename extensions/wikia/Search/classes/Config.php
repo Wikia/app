@@ -707,6 +707,9 @@ class Config
 	 * @return bool
 	 */
 	public function getInterWiki() {
+		if ( $this->queryService === null ) {
+			$this->queryService = $this->bootstrapQueryService();
+		}
 		return $this->queryService == 'Select\\InterWiki';
 	}
 	
