@@ -71,6 +71,9 @@ function upgradeYouTubeTag( $editpage, $request ) {
 			$paramText = trim($matches[1]);
 			$ytid   = $matches[2];
 
+			// Check to see if the whole URL is used
+			$ytid = preg_replace('/^.*youtube.com\/watch?.*v=([^&]+).*$/', '$1', $ytid);
+
 			// Parse out the width and height parameters
 			$params = parseSizeParams($paramText);
 
