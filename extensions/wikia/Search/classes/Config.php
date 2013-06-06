@@ -502,7 +502,9 @@ class Config
 	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setWikiMatch( Match\Wiki $wikiMatch ) {
-		$this->wikiMatch = $wikiMatch;
+		if ( $this->getLanguageCode() === $this->service->getGlobalForWiki( 'wgLanguageCode', $wikiMatch->getId() ) ) {
+			$this->wikiMatch = $wikiMatch;
+		}
 		return $this;
 	}
 	

@@ -64,16 +64,11 @@ class SearchApiController extends WikiaApiController {
 		}
 		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
 		$items = array();
-		$lang = $this->request->getVal( 'lang', null );
-		foreach( $resultSet->getResults() as $result ){
-			$resultLang = $result->getHeader( 'lang' );
-			//check language, if is set check if correct, if not set just add to result
-			if ( ( $lang !== null && $lang == $resultLang ) || $lang === null || $resultLang == null ) {
-				$items[] = array(
-					'id' => (int) $result->getHeader( 'wid' ),
-					'language' => $resultLang,
-				);
-			}
+		foreach( $resultSet->getResults() as $result ) {
+			$items[] = array(
+				'id' => (int) $result->getHeader( 'wid' ),
+				'language' => $result->getHeader( 'lang' ),
+			);
 		}
 
 		$this->response->setVal( 'items', $items );
