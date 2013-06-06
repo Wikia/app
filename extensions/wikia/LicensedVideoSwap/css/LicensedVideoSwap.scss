@@ -171,6 +171,12 @@ $arrow-button-color: white;
 			list-style: none;
 			display: inline;
 		}
+		li:after {
+			content: ", ";
+		}
+		li:last-child:after {
+			content: "";
+		}
 		a.ellipses {
 			float: right;
 			display: none;
