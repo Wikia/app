@@ -1315,3 +1315,12 @@ $config['manage_wikia_home_js'] = array(
 		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsNavigation.js',
 	)
 );
+
+/* SpecialCSS linting */
+$config['specialcss_linting_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/CodeLint/js/csslint.js',
+		'//extensions/wikia/SpecialCss/js/linting.js',
+	)
+);

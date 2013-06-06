@@ -27,8 +27,7 @@ class CodeLintCss extends CodeLint {
 		$runScript = dirname(__FILE__) . '/../js/run-csslint.js';
 
 		// generate path to csslint.js
-		$libDirectory = F::app()->getGlobal('IP') . '/lib';
-		$params['csslint'] = "{$libDirectory}/csslint/csslint-node.js";
+		$params['csslint'] = dirname(__FILE__) . '/../js/csslint-node.js';
 
 		// file to perform lint on
 		$params['file'] = $fileName;

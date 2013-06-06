@@ -6,6 +6,10 @@ $(function () {
 		var result = CSSLint.verify($(".css-editor-textarea").val());
 		var out = '';
 
+		var end = new Date().getTime();
+		var time = end - start;
+		$().log('Execution time: ' + time, 'CSS Linting');
+
 		messages = result.messages;
 		for (i=0, len=messages.length; i < len; i++) {
 			out += messages[i].message + " (line " + messages[i].line + ", col " + messages[i].col + ")" + messages[i].type + "\n";
@@ -13,9 +17,6 @@ $(function () {
 
 
 
-		var end = new Date().getTime();
-		var time = end - start;
-		console.log('Execution time: ' + time);
 		alert(out);
 	});
 });
