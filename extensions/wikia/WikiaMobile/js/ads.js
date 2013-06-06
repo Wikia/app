@@ -32,7 +32,8 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 		adSlots,
 		d = window.document,
 		found = false,
-		fixed = false;
+		fixed = false,
+		uniqueId;
 
 	/**
 	 * Stops ads requests from being made for a specific amount of time
@@ -50,16 +51,21 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log', 'wikia.window
 	}
 
 	function getUniqueId() {
-		var wikia_mobile_id = ck.get('wikia_mobile_id');
-		if (!wikia_mobile_id) {
-			wikia_mobile_id = Math.round(Math.random() * 23456787654);
-			ck.set('wikia_mobile_id', wikia_mobile_id, {
-				expires: 1000*60*60*24*180, // 3 months
-				path: window.wgCookiePath,
-				domain: window.wgCookieDomain
-			});
+		if(!uniqueId) {
+			var uniqueId = ck.get('wikia_mobile_id');
+
+			if (!uniqueId) {
+				uniqueId = Math.round(Math.random() * 23456787654);
+
+				ck.set('wikia_mobile_id', uniqueId, {
+					expires: 1000*60*60*24*180, // 3 months
+					path: window.wgCookiePath,
+					domain: window.wgCookieDomain
+				});
+			}
 		}
-		return wikia_mobile_id;
+
+		return uniqueId;
 	}
 
 	/**
