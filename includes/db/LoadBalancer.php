@@ -702,8 +702,19 @@ class LoadBalancer {
 
 		if ( $db->isOpen() ) {
 			wfDebug( "Connected to $host $dbname.\n" );
+
+			# Wikia change - begin
+			# @author macbre
+			Wikia::log(__METHOD__, 'connected', "$host [$dbname]", true);
+			Wikia::logBacktrace(__METHOD__);
+			# Wikia change - end
 		} else {
 			wfDebug( "Connection failed to $host $dbname.\n" );
+
+			# Wikia change - begin
+			# @author macbre
+			Wikia::log(__METHOD__, 'failed', "$host [$dbname]", true);
+			# Wikia change - end
 		}
 		$db->setLBInfo( $server );
 		if ( isset( $server['fakeSlaveLag'] ) ) {
