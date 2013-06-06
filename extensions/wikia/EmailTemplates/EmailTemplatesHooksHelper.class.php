@@ -7,7 +7,6 @@
 class EmailTemplatesHooksHelper {
 
 	public function onComposeCommonBodyMail($title, &$keys, &$body, $editor, &$bodyHTML, &$postTransformKeys ) {
-		global $wgLanguageCode;
 		$app = F::app();
 		if ( array_key_exists( '$ACTION', $keys) ) {
 			$action = $keys['$ACTION'];
@@ -18,28 +17,34 @@ class EmailTemplatesHooksHelper {
 				$msgContentHTML = wfMsgHTMLwithLanguageAndAlternative(
 					'enotif_body' . ( $action == '' ? '' : ( '_' . $action ) ),
 					'enotif_body',
-					$wgLanguageCode
+					$app->wg->LanguageCode
 				);
+
+				$msgSubject = wfMsgForContent(
+					'enotif_subject_blogpost'
+				);
+
 				$params = array(
-					'language' => $wgLanguageCode,
+					'language' => $app->wg->LanguageCode,
 					'greeting' => 'Hi, $WATCHINGUSERNAME',
 					'content' => $msgContentHTML[1],
 					'link' => $title->getFullURL(),
 					'link_txt' => 'Read the new post'//create new message for that
 				);
-
 				$bodyHTML = $app->renderView( "EmailTemplates", "NewBlogPostMail", $params );
+				return true;
 
 			}
-		} else {
-			/* use basic template */
-			$params = array(
-				'language' => $wgLanguageCode,
-				'content' => $bodyHTML,
-			);
 
-			$bodyHTML = $app->renderView( "EmailTemplates", "BasicMail", $params );
 		}
+
+		/* Default: use basic template */
+		$params = array(
+			'language' => $app->wg->LanguageCode,
+			'content' => $bodyHTML,
+		);
+		$bodyHTML = $app->renderView( "EmailTemplates", "BasicMail", $params );
+
 		return true;
 	}
 
