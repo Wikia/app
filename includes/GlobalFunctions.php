@@ -961,6 +961,14 @@ function wfDebugLog( $logGroup, $text, $public = true ) {
 	} elseif ( $public === true ) {
 		wfDebug( $text, true );
 	}
+
+	# Wikia change - begin
+	# @author macbre
+	global $wgWikiaLogGroups;
+	if( isset( $wgWikiaLogGroups[$logGroup] ) ) {
+		Wikia::log(__METHOD__, $logGroup, $text, true);
+	}
+	# Wikia change - end
 }
 
 /**
@@ -976,6 +984,11 @@ function wfLogDBError( $text ) {
 		$text = date( 'D M j G:i:s T Y' ) . "\t$host\t$wiki\t$text";
 		wfErrorLog( $text, $wgDBerrorLog );
 	}
+
+	# Wikia change - begin
+	# @author macbre
+	Wikia::log(__METHOD__, false, $text, true);
+	# Wikia change - end
 }
 
 /**
