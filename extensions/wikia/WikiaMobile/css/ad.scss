@@ -5,10 +5,10 @@
 $slotFooterWidth: 300px;//some networks use this instead of 320
 $slotFooterWidthMax: 320px;
 $slotFooterHeight: 50px;
-$slotFooterMargin: 2px;
+$slotFooterMargin: 0;
 $slotFooterColor: #666;
 
-.wkAdPlc {
+#wkAdFloatingTopLeader {
 	position: relative;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
@@ -29,10 +29,8 @@ $slotFooterColor: #666;
 	&.jsfix {
 		position: absolute;
 	}
-}
 
-#wkAdWrp {
-	.footer & {
+	&.footer > * {
 		//Footer Ad
 		//force Ad content to stick in place
 		//and don't exceed allowed dimensions
@@ -40,9 +38,4 @@ $slotFooterColor: #666;
 		max-width: $slotFooterWidthMax;
 		max-height: $slotFooterHeight;
 	}
-
-	//.interstitial & {
-		//interstitial ad
-		//uncomment and complete when/if needed
-	//}
 }
