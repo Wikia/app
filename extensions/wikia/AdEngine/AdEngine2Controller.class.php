@@ -100,7 +100,7 @@ class AdEngine2Controller extends WikiaController {
 	}
 
 	public static function getAdLevelForSlot($slotname) {
-		if ($slotname === 'INVISIBLE_1') {
+		if ($slotname === 'INVISIBLE_1' || $slotname === 'INVISIBLE_SKIN') {
 			return self::AD_LEVEL_CORPORATE;
 		}
 

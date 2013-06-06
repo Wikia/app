@@ -249,7 +249,7 @@ class WAMService extends Service {
 			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
 		}
 
-		if ($options['excludeBlacklist']) {
+		if (!empty($options['excludeBlacklist'])) {
 			$blacklistIds = $this->getIdsBlacklistedWikis();
 			if (!empty($blacklistIds)) {
 				$conds[] = 'fw1.wiki_id NOT IN (' . $db->makeList( $blacklistIds ) . ')';

@@ -208,7 +208,7 @@ class DefaultContent extends AbstractService
 			$paragraphs = $this->getParagraphsFromDom( $dom );
 		}
 		$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) ); // can be empty
-		$words = str_word_count( $paragraphString?:$plaintext, 1 );
+		$words = preg_split( '/[[:space:]]+/', $paragraphString?: $plaintext);
 		$wordCount = count( $words );
 		$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
 		$this->pushNolangTxt( $upTo100Words );

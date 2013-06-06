@@ -34,14 +34,14 @@ class WikiaMobileHooks {
 			if (
 				!empty( $translatedNs ) &&
 				preg_match_all(
-					/*
-					 * This regex is to catch situations like these
-					 * [[Image:name.jpg]]
-					 * [[Image:name.jpg]]
-					 * and also images with links in captions
-					 * [[Image:name.jpg|[[Link]] caption]]
-					 * [[Image:name.jpg|[[Link]] caption [[Link|link]]]]
-					 */
+				/*
+				 * This regex is to catch situations like these
+				 * [[Image:name.jpg]]
+				 * [[Image:name.jpg]]
+				 * and also images with links in captions
+				 * [[Image:name.jpg|[[Link]] caption]]
+				 * [[Image:name.jpg|[[Link]] caption [[Link|link]]]]
+				 */
 					'/(?:\[\[\b(?:' . $translatedNs . ')\b:[^\]\[]*(?:\[\[[^\[]*\]\][^\[]*)*\]\]\s*){2,}/',
 					$text,
 					$matches,
@@ -58,7 +58,7 @@ class WikiaMobileHooks {
 					$submatches = array();
 
 					$itemsCount = preg_match_all(
-						'/(?<=\[\[)(?:' . $translatedNs . '):.*(?=\]\])/',
+						'/(?<=\[\[' . $translatedNs . '):([^\]\[]*(?:\[\[[^\[]*\]\][^\[]*)*(?=\]\])\s*?)/',
 						$match[0],
 						$submatches,
 						PREG_SET_ORDER
@@ -69,7 +69,7 @@ class WikiaMobileHooks {
 
 						//analyze entries
 						foreach ( $submatches as $item ) {
-							$parts = explode( '|', $item[0] );
+							$parts = explode( '|', $item[1] );
 							$components = [];
 
 							foreach ( $parts as $index => $part ) {
@@ -88,7 +88,7 @@ class WikiaMobileHooks {
 
 									//All parts of caption as this might be exploded ie.:
 									//[[File:aa.jpg|thumb|300px|caption with [[Link|LINK]] right?]]
-									if ( !preg_match( '/(?:frame|thumb|right|left|[0-9]+px)/', $part ) ) {
+									if ( !preg_match( '/(?:frame|thumb|right|left|\d+\s?px)/', $part ) ) {
 										$components[] = $part;
 									}
 
