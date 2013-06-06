@@ -164,17 +164,43 @@ $arrow-button-color: white;
 	.posted-in {
 		overflow: hidden;
 		white-space: nowrap;
+		margin: 0.4em 0 0.5em; // mimic a <p> tag
+		ul, li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			display: inline;
+		}
 		a.ellipses {
 			float: right;
 			display: none;
 		}
-		span {
+		> div {
 			display: inline-block;
 			&.processed {
 				float: left; // ie10 layout
 				overflow: hidden;
 				text-overflow: ellipsis;
 			}
+		}
+	}
+}
+
+.popover .details {
+	background-color: $color-page;
+	font-size: 12px;
+	padding: 2px;
+	width: 180px;
+	ul {
+		a {
+			display: block;
+			padding: 6px 5px;
+		}
+		li {
+			border-top: 1px solid $color-page-border-subtle;
+		}
+		li:first-child {
+			border-top: none;
 		}
 	}
 }

@@ -23,19 +23,21 @@
 		<div class="row">
 			<span class="swap-arrow lvs-sprite"></span>
 			<div class="grid-3 alpha non-premium">
-				<p class="posted-in">
+				<div class="posted-in">
 					<a class="ellipses" href="#"><?= wfMessage('lvs-posted-in-more')->plain() ?></a>
-					<span>
+					<div>
 						<? if ( count($video['truncatedList']) ): ?>
 							<?= wfMessage('lvs-posted-in-label')->plain() ?>
-							<?php foreach( $video['truncatedList'] as $article ) { ?>
-								<a href=""><?= $article['titleText'] ?></a>,
-							<?php } ?>
+							<ul>
+								<?php foreach( $video['truncatedList'] as $article ) { ?>
+									<li><a href=""><?= $article['titleText'] ?></a></li>
+								<?php } ?>
+							</ul>
 						<? else: ?>
 							<?= wfMessage('lvs-posted-in-label-none')->plain() ?>
 						<? endif; ?>
-					</span>
-				</p>
+					</div>
+				</div>
 				<div class="video-wrapper">
 					<a href="<?= $video['fileUrl'] ?>" class="image video">
 						<?= $video['videoPlayButton'] ?>

@@ -16,14 +16,15 @@ var LVS = {
 	 * and show a "more" link based on the width of that line.
 	 */
 	initEllipses: function() {
-		var wrapperWidth,
+		var that = this,
+			wrapperWidth,
 			ellipsesWidth,
 			truncatedWidth,
 			undef;
 
 		this.$container.find('.posted-in').each(function() {
 			var $this = $( this ),
-				$msg = $this.children( 'span' ),
+				$msg = $this.children( 'div' ),
 				msgWidth = $msg.width(),
 				$ellipses = $this.find( '.ellipses' );
 
@@ -39,6 +40,7 @@ var LVS = {
 			if ( msgWidth > wrapperWidth ) {
 				$msg.addClass( 'processed' ).width( truncatedWidth );
 				$ellipses.show();
+				that.initPopover.call( that, $ellipses );
 			}
 		});
 	},
@@ -103,6 +105,39 @@ var LVS = {
 				that.handleSwap.call( that, $this, $arrow, $wrapper );
 			}
 		});
+	},
+	initPopover: function( elem ) {
+		var popoverTimeout = 0;
+
+		function setPopoverTimeout() {
+			popoverTimeout = setTimeout( function() {
+				elem.popover( 'hide' );
+			}, 300 );
+		}
+
+		elem.popover({
+			trigger: 'manual',
+			placement: 'top',
+			content: function() {
+				var list = elem.next().find('ul').clone(),
+					details = list.wrap( '<div class="details"></div>' );
+
+				return details.parent();
+			}
+		}).on( 'mouseenter', function() {
+			clearTimeout( popoverTimeout );
+			$( '.popover' ).remove();
+			elem.popover( 'show' );
+
+		}).on('mouseleave', function() {
+			setPopoverTimeout();
+			$( '.popover' ).mouseenter( function() {
+				clearTimeout( popoverTimeout );
+			}).mouseleave( function() {
+				setPopoverTimeout();
+			});
+		});
+
 	},
 	handleSwap: function( button, $arrow, $wrapper ) {
 		// TODO: ajax call and funky transition
