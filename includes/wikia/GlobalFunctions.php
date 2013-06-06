@@ -1226,21 +1226,25 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
 /**
  * Set value of wikia article prop list of type is define in
  */
-function wfSetWikiaPageProp($type, $pageID, $value, $dbname = '') {
-	if(empty($dbname)) {
-		$db = wfGetDB(DB_MASTER, array());
+function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
+	if ( empty( $dbname ) ) {
+		$db = wfGetDB( DB_MASTER );
 	} else {
-		$db = wfGetDB(DB_MASTER, array(), $dbname);
+		$db = wfGetDB( DB_MASTER, array(), $dbname );
 	}
 
-	$db->replace('page_wikia_props','',
+	$db->replace(
+		'page_wikia_props',
+		'',
 		array(
-			'page_id' =>  $pageID,
+			'page_id' => $pageID,
 			'propname' => $type,
-			'props' => serialize($value)
+			'props' => serialize( $value )
 		),
 		__METHOD__
 	);
+
+	$db->commit( __METHOD__ );
 }
 
 
