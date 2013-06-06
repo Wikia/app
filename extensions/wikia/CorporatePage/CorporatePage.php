@@ -17,17 +17,4 @@ if ( !isset( $wgCorporatePageRedirectWiki ) ) {
 }
 
 $wgAutoloadClasses['CorporatePageHelper']  = $dir . 'CorporatePageHelper.class.php';
-$wgAutoloadClasses['CorporateSiteController'] = $dir . 'modules/CorporateSiteController.class.php';
-$wgAutoloadClasses['BlogsInHubsController'] = $dir . 'modules/BlogsInHubsController.class.php';
-$wgAutoloadClasses['BlogsInHubsService'] = $dir . 'services/BlogsInHubsService.class.php';
-
-$wgExtensionMessagesFiles['CorporatePage'] = $dir . 'CorporatePage.i18n.php';
-$wgHooks['MakeGlobalVariablesScript'][] = 'CorporatePageHelper::jsVars';
 $wgHooks['ArticleFromTitle'][] = 'CorporatePageHelper::ArticleFromTitle';
-$wgHooks['ArticleSaveComplete'][] = 'CorporatePageHelper::clearMessageCache';
-$wgHooks['OutputPageCheckLastModified'][] = 'CorporatePageHelper::forcePageReload';
-$wgAjaxExportList[] = 'CorporatePageHelper::blockArticle';
-
-$app = F::app();
-$app->registerHook('MessageCacheReplace', 'BlogsInHubsService', 'onMessageCacheReplace');
-$app->registerHook('ArticleCommentCheck', 'CorporatePageHelper', 'onArticleCommentCheck');
