@@ -140,7 +140,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$newTitle = $this->request->getVal( 'newTitle', '' );
 		$skip = $this->request->getBool( 'skip', false );
 
-		// default value
 		$this->video = null;
 		$this->result = 'error';
 
@@ -178,19 +177,32 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		if ( $skip ) {
 			$status = $helper->skipVideo( $file );
 		} else {
+			// check if the file exists
 			if ( empty( $file ) ) {
 				$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->plain();
 				return;
 			}
 
+			// check if the file is premium
 			if ( !$file->isLocal() ) {
 				$this->msg = $this->wf->Message( 'lvs-error-permission' )->plain();
 				return;
 			}
 
-			if ( $videoTitle == $newTitle ) {
-				$articleId = $file->getTitle()->getArticleID();
+			// check if the premium file exists
+			$params = array(
+				'controller' => 'VideoHandlerController',
+				'method' => 'fileExists',
+				'fileTitle' => $newTitle,
+			);
 
+			$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
+			if ( empty( $response['fileExists'] ) ) {
+				$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->plain();
+				return;
+			}
+
+			if ( $videoTitle == $newTitle ) {
 				// remove local video
 				$response = $this->sendRequest( 'VideoHandlerController', 'removeVideo', array( 'title' => $file->getName() ) );
 				$result = $response->getVal( 'result', '' );
@@ -200,7 +212,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 				}
 
 				// set swap status
-				$helper->setSwapExactStatus( $articleId );
+				$helper->setSwapExactStatus( $file->getTitle()->getArticleID() );
 
 				// force to get new file
 				$newFile = $helper->getVideoFile( $newTitle, true );
