@@ -20,6 +20,9 @@ $messages['en'] = array(
 	'lvs-button-swap' => 'Swap',
 	'lvs-more-suggestions' => '$1 more {{PLURAL:$1|suggestion|suggestions}}',
 	'lvs-best-match-label' => 'Best Match from Wikia Video Library',
+	'lvs-posted-in-label' => 'Current video posted in ',
+	'lvs-posted-in-label-none' => 'Current video is not posted in any articles',
+	'lvs-posted-in-more' => 'more',
 );
 
 $messages['qqq'] = array(
@@ -34,4 +37,7 @@ $messages['qqq'] = array(
 	'lvs-button-swap' => 'This is the text that appears on a button that, when clicked, will swap out a non-licensed video for a licensed video suggested from the wikia video library.',
 	'lvs-more-suggestions' => 'This text will appear below a video that is a suggestion for a licensed version of a video that already exists on the wiki.  When clicked, this link will reveal more licensed possible replacements for the non-licensed video.',
 	'lvs-best-match-label' => 'This text appears above the licensed video that is considered the best match for replacing a non-licensed video.',
+	'lvs-posted-in-label' => 'This is the label text that appears before a list of titles in which the video is posted.  Due to design constraints, it comes before the list, so if, when translated, it would otherwise come after the list, please do your best to adjust accordingly.  ex: "Current video posted in: title1, title2, title3."  It is up to you if you want to include a colon at the end.',
+	'lvs-posted-in-more' => 'This is the text for a link that appears at the end of a truncated list of articles in which a video is posted. it is preceded by an ellipses (...)',
+	'lvs-posted-in-more' => 'this is the text that is shown after a truncated list of titles in which a video is posted.  When hovered, a full list appears.  When clicked, the user is taken to a page where the full list is displayed.',
 );

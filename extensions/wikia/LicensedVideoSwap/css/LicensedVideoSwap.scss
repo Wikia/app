@@ -13,6 +13,11 @@ $arrow-color: 'black';
 	$arrow-color: 'white';
 }
 
+$arrow-button-color: white;
+@if lightness($color-buttons) > 55 {
+	$arrow-button-color: black;
+}
+
 .wikinav2 .WikiaPageHeader {
 	border-bottom: none;
 	padding-bottom: 0;
@@ -148,12 +153,27 @@ $arrow-color: 'black';
 		}
 	}
 	.swap-button:before {
-		@include sprite-LicensedVideoSwap($arrow-color + '_small_arrow');
+		@include sprite-LicensedVideoSwap($arrow-button-color + '_small_arrow');
 		content: "";
 		display: inline-block;
 		height: 9px;
 		margin-left: -2px;
 		padding-right: 2px;
 		width: 13px;
+	}
+	.posted-in {
+		overflow: hidden;
+		white-space: nowrap;
+		a.ellipses {
+			float: right;
+			display: none;
+		}
+		span {
+			display: inline-block;
+			&.processed {
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
 	}
 }
