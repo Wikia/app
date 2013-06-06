@@ -3,7 +3,11 @@
 <head>
 
 <meta http-equiv="Content-Type" content="<?= $mimeType ?>; charset=<?= $charset ?>">
-<meta name="viewport" content="width=1200">
+<?php if ( BodyController::isResponsiveLayoutEnabled() ) : ?>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<?php else : ?>
+	<meta name="viewport" content="width=1200">
+<?php endif ?>
 <?= $headLinks ?>
 
 <title><?= $pageTitle ?></title>
