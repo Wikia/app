@@ -40,6 +40,7 @@ class AdminDashboardLogic {
 			$bits = explode( '/', $title->getDBkey(), 2 );
 			$alias = array_shift(SpecialPageFactory::resolveAlias($bits[0]));
 
+
 			// NOTE: keep this list in alphabetical order
 			static $exclusionList = array(
 				"AbTesting",
@@ -95,7 +96,7 @@ class AdminDashboardLogic {
 				"ThemeDesigner",
 				"ThemeDesignerPreview",
 				"UnusedVideos",
-				"UserLogin",
+				"Userlogin",
 				"UserManagement",
 				"UserPathPrediction",
 				"UserSignup",
