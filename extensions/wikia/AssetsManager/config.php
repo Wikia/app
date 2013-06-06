@@ -1320,7 +1320,7 @@ $config['manage_wikia_home_js'] = array(
 $config['specialcss_linting_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/CodeLint/js/csslint.js',
+		'//lib/vendor/csslint/csslint.js',
 		'//extensions/wikia/SpecialCss/js/linting.js',
 	)
 );
