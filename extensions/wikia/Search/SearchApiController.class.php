@@ -46,7 +46,7 @@ class SearchApiController extends WikiaApiController {
 	 * Fetches results for cross-wiki search for submitted query
 	 *
 	 * @requestParam string $query The query to use for the search
-	 * @requestParam string $lang [OPTIONAL] The two chars wiki language code
+	 * @requestParam string $lang The two chars wiki language code
 	 * @requestParam string $rank [OPTIONAL] The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest
 	 * @requestParam integer $batch [OPTIONAL] The batch/page of results to fetch
 	 * @requestParam integer $limit [OPTIONAL] The number of wiki items per batch
@@ -62,6 +62,10 @@ class SearchApiController extends WikiaApiController {
 		if ( !$this->request->getVal( 'query' ) ) {
 			throw new InvalidParameterApiException( 'query' );
 		}
+		if ( !$this->request->getVal( 'lang' ) ) {
+			throw new InvalidParameterApiException( 'lang' );
+		}
+
 		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
 		$items = array();
 		foreach( $resultSet->getResults() as $result ) {
