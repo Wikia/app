@@ -14,7 +14,7 @@ $width-padding: $width-gutter / 2;
 
 .oasis-split-skin {
 	.WikiaHeader {
-		min-width: auto;
+		min-width: 0;
 	}
 }
 
@@ -104,6 +104,7 @@ $width-padding: $width-gutter / 2;
 
 	.WikiaHeader .page-width-container,
 	.oasis-split-skin .WikiaHeader .page-width-container {
+		min-width: 0;
 		width: auto;
 	}
 
