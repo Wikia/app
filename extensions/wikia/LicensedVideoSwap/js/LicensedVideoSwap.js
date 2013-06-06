@@ -49,16 +49,26 @@ var LVS = {
 			}
 		});
 	},
+	/*
+	 * This function controlls the callout box at the top of the page.
+	 * When the "x" is clicked, a local storage entry is set so the
+	 * callout won't show again.
+	 */
 	initCallout: function() {
-		var $callout = $( '#WikiaArticle' ).find( '.lvs-callout' ),
-			$closeBtn = $callout.find( '.close' );
+		require( ['wikia.localStorage'], function( ls ) {
 
-		$callout.show();
+			var $callout = $( '#WikiaArticle' ).find( '.lvs-callout' ),
+				$closeBtn = $callout.find( '.close' );
 
-		$closeBtn.on( 'click', function( e ) {
-			e.preventDefault();
-			$callout.slideUp();
-			// TODO: implement cookie to not open again.
+			if ( !ls.lvsCalloutClosed ) {
+				$callout.show();
+
+				$closeBtn.on( 'click', function( e ) {
+					e.preventDefault();
+					$callout.slideUp();
+					ls.lvsCalloutClosed = true;
+				});
+			}
 		});
 	},
 	initMoreSuggestions: function() {

@@ -171,6 +171,7 @@ $arrow-button-color: white;
 		span {
 			display: inline-block;
 			&.processed {
+				float: left; // ie10 layout
 				overflow: hidden;
 				text-overflow: ellipsis;
 			}
