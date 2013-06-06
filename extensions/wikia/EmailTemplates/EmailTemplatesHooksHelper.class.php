@@ -38,12 +38,8 @@ class EmailTemplatesHooksHelper {
 
 		}
 
-		/* Default: use basic template */
-		$params = array(
-			'language' => $app->wg->LanguageCode,
-			'content' => $bodyHTML,
-		);
-		$bodyHTML = $app->renderView( "EmailTemplates", "BasicMail", $params );
+		/* Default template may be put here */
+
 
 		return true;
 	}
