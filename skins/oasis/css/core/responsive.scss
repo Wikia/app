@@ -2,6 +2,8 @@
 @import "layout";
 
 $width-padding: $width-gutter / 2;
+$width-adskin: 170px;
+$width-outside-max: 1500px;
 
 .WikiaPage,
 .oasis-split-skin .WikiaPage {
@@ -54,26 +56,19 @@ $width-padding: $width-gutter / 2;
 	width: auto;
 }
 
-@media screen and (min-width: 1281px) {
+@media screen and (min-width: $width-outside + ($width-adskin * 2) + 2) {
 	.WikiaPage,
 	.oasis-split-skin .WikiaPage {
-		margin: 0 130px;
+		margin: 0 $width-adskin;
 		width: auto;
 	}
 }
 
-@media screen and (min-width: 1441px) {
-	.WikiaPage,
-	.oasis-split-skin .WikiaPage {
-		margin: 0 170px;
-	}
-}
-
-@media screen and (min-width: 1941px) {
+@media screen and (min-width: $width-outside-max + ($width-adskin * 2) + 2) {
 	.WikiaPage,
 	.oasis-split-skin .WikiaPage {
 		margin: 0 auto;
-		max-width: 1600px;
+		max-width: $width-outside-max;
 	}
 }
 
