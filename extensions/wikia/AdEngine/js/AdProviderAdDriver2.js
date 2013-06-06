@@ -43,9 +43,12 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	};
 	// TODO: integrate this array to slotMap if it makes sense
 	gptConfig = { // slots to use SRA with
+		CORP_TOP_LEADERBOARD: 'wait',
+		HUB_TOP_LEADERBOARD: 'wait',
 		TOP_LEADERBOARD: 'wait',
 		HOME_TOP_LEADERBOARD: 'wait',
 		INVISIBLE_SKIN: 'wait',
+		CORP_TOP_RIGHT_BOXAD: 'flush',
 		TOP_RIGHT_BOXAD: 'flush',
 		HOME_TOP_RIGHT_BOXAD: 'flush',
 		GPT_FLUSH: 'flushonly'
@@ -102,6 +105,8 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	 * All other ads will go through the legacy DART API.
 	 */
 	function flushGpt() {
+		log('flushGpt', 5, logGroup);
+
 		if (!gptFlushed) {
 			gptFlushed = true;
 			wikiaGpt.flushAds();
@@ -221,6 +226,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		 */
 		if (window.wgAdDriverUseGpt && gptConfig[slotname] && !gptFlushed) {
 			// Use the new GPT library:
+			log('Use the new GPT library for ' + slotname, 5, logGroup);
 
 			wikiaGpt.pushAd({
 				slotname: slotname,
@@ -234,6 +240,7 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 			}
 		} else {
 			// Legacy DART call:
+			log('Legacy DART call for ' + slotname, 5, logGroup);
 
 			// Random ord for MODAL_INTERSTITIAL
 			// This disables synchronisation of Lightbox ads, but allows ads to repeat
