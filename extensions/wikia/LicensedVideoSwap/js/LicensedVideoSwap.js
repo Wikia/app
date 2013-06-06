@@ -45,15 +45,28 @@ var LVS = {
 		});
 	},
 	initSwapArrow: function() {
-		this.container.on('mouseover mouseout', '.swap-button', function(e) {
-			var arrow = $(this).parent().siblings('.swap-arrow');
+		var that = this;
+
+		this.container.on('mouseover mouseout click', '.swap-button', function(e) {
+			var parent = $(this).parent()
+				arrow = parent.siblings('.swap-arrow'),
+				container = parent.parent();
 
 			if ( e.type == 'mouseover' ) {
 				arrow.fadeIn(100);
-			} else {
+			} else if ( e.type == 'mouseout' ) {
 				arrow.fadeOut(100);
+			} else if ( e.type == 'click' ) {
+				that.handleSwap.call(that, $this, arrow, container);
 			}
 		});
+	},
+	handleSwap: function(button, arrow, container) {
+		// TODO: ajax call and funky transition
+
+		/*button.hide();
+		arrow.show();
+		container.find('.non-premium').fadeOut();*/
 	}
 };
 
