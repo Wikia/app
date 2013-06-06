@@ -5,6 +5,10 @@ $width-padding: $width-gutter / 2;
 $width-adskin: 170px;
 $width-outside-max: 1500px;
 
+body {
+	overflow-x: hidden;
+}
+
 .WikiaPage,
 .oasis-split-skin .WikiaPage {
 	margin: 0 auto;
@@ -47,67 +51,20 @@ $width-outside-max: 1500px;
 	padding: 0 10px 0 0;
 }
 
-.WikiHeader .navbackground {
-	width: 100%;
-}
-
-.WikiHeader > nav {
-	right: -4px;
-	width: auto;
-}
-
-@media screen and (min-width: $width-outside + ($width-adskin * 2) + 2) {
-	.WikiaPage,
-	.oasis-split-skin .WikiaPage {
-		margin: 0 $width-adskin;
-		width: auto;
-	}
-}
-
-@media screen and (min-width: $width-outside-max + ($width-adskin * 2) + 2) {
-	.WikiaPage,
-	.oasis-split-skin .WikiaPage {
-		margin: 0 auto;
-		max-width: $width-outside-max;
-	}
-}
-
-@media screen and (max-width: 1050px) {
-	body {
-		overflow-x: hidden;
-	}
-}
-
-@media screen and (max-width: 1030px) {
-	body {
-		background: $color-page;
-	}
-
-	.oasis-split-skin .WikiaPage,
-	.WikiaPage {
-		border: 0;
-		width: auto;
-	}
-
-	.WikiaPageBackground {
-		display: none;
-	}
-
-	.WikiaHeader .page-width-container,
-	.oasis-split-skin .WikiaHeader .page-width-container {
-		min-width: 0;
-		width: auto;
-	}
-
-	.WikiHeader,
-	.oasis-split-skin .WikiHeader {
-		overflow: hidden;
-	}
-
-	.WikiaTopAds,
-	.oasis-split-skin .WikiaTopAds {
+.WikiHeader {
+	.navbackground {
 		width: 100%;
 	}
+
+	.WikiNav {
+		right: -4px;
+		width: auto;
+	}
+}
+
+.WikiaHeader .page-width-container,
+.oasis-split-skin .WikiaHeader .page-width-container {
+	width: auto;
 }
 
 @media screen and (max-width: 1023px) {
@@ -128,5 +85,42 @@ $width-outside-max: 1500px;
 		float: none;
 		padding: 0 10px;
 		width: auto;
+	}
+}
+
+@media screen and (max-width: 1030px) {
+	body {
+		background: $color-page;
+	}
+
+	.oasis-split-skin .WikiaPage,
+	.WikiaPage {
+		border: 0;
+		width: auto;
+	}
+
+	.WikiaPageBackground {
+		display: none;
+	}
+
+	.WikiaTopAds,
+	.oasis-split-skin .WikiaTopAds {
+		width: 100%;
+	}
+}
+
+@media screen and (min-width: $width-outside + ($width-adskin * 2) + 2) {
+	.WikiaPage,
+	.oasis-split-skin .WikiaPage {
+		margin: 0 $width-adskin;
+		width: auto;
+	}
+}
+
+@media screen and (min-width: $width-outside-max + ($width-adskin * 2) + 2) {
+	.WikiaPage,
+	.oasis-split-skin .WikiaPage {
+		margin: 0 auto;
+		max-width: $width-outside-max;
 	}
 }
