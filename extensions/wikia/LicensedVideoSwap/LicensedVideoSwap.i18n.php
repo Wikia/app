@@ -20,6 +20,8 @@ $messages['en'] = array(
 	'lvs-button-swap' => 'Swap',
 	'lvs-more-suggestions' => '$1 more {{PLURAL:$1|suggestion|suggestions}}',
 	'lvs-best-match-label' => 'Best Match from Wikia Video Library',
+	'lvs-swap-success' => 'Successfully swapped video.',
+	'lvs-error-permission' => 'you cannot swap this video.',
 );
 
 $messages['qqq'] = array(
@@ -34,4 +36,6 @@ $messages['qqq'] = array(
 	'lvs-button-swap' => 'This is the text that appears on a button that, when clicked, will swap out a non-licensed video for a licensed video suggested from the wikia video library.',
 	'lvs-more-suggestions' => 'This text will appear below a video that is a suggestion for a licensed version of a video that already exists on the wiki.  When clicked, this link will reveal more licensed possible replacements for the non-licensed video.',
 	'lvs-best-match-label' => 'This text appears above the licensed video that is considered the best match for replacing a non-licensed video.',
+	'lvs-swap-success' => 'This text appears after the video is successfully swapped.',
+	'lvs-error-permission' => 'This text appears if user does not have permission to swap the video.',
 );

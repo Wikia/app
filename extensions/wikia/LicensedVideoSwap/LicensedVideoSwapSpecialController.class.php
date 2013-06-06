@@ -127,52 +127,101 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * swap video
+	 * swap/skip video
 	 * @requestParam string videoTitle
+	 * @requestParam string newTitle
+	 * @requestParam integer skip [0/1]
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam array|null video
 	 */
 	public function swapVideo() {
-		$videoTitle = $this->getVal( 'videoTitle', '' );
+		$videoTitle = $this->request->getVal( 'videoTitle', '' );
+		$newTitle = $this->request->getVal( 'newTitle', '' );
+		$skip = $this->request->getBool( 'skip', false );
 
+		// default value
+		$this->video = null;
+		$this->result = 'error';
+
+		// check for logged in user
 		if ( !$this->wg->User->isLoggedIn() ) {
-			$this->result = 'error';
-			$this->msg = $this->wf->Msg( 'videos-error-not-logged-in' );
+			$this->msg = $this->wf->Message( 'videos-error-not-logged-in' )->plain();
 			return;
 		}
 
+		// check for blocked user
 		if ( $this->wg->User->isBlocked() ) {
-			$this->result = 'error';
-			$this->msg = $this->wf->Msg( 'videos-error-blocked-user' );
+			$this->msg = $this->wf->Message( 'videos-error-blocked-user' )->plain();
 			return;
 		}
 
-		$video = null;
-		$result = 'error';
-		$msg = $this->wf->Message( 'videohandler-error-video-no-exist' );
+		// check for empty title
+		if ( empty( $videoTitle ) || ( !$skip && empty( $newTitle ) ) ) {
+			$this->msg = $this->wf->Message( 'videos-error-empty-title' )->plain();
+			return;
+		}
 
-		$title = Title::newFromText( $videoTitle,  NS_FILE );
-		if ( $title instanceof Title ) {
-			$file = $this->wf->FindFile( $title );
-			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
-				$video = array();
+		// check for read only mode
+		if ( $this->wf->ReadOnly() ) {
+			$this->msg = $this->wf->Message( 'videos-error-readonly' )->plain();
+			return;
+		}
+
+		$helper = new LicensedVideoSwapHelper();
+		$file = $helper->getVideoFile( $videoTitle );
+		if ( empty( $file ) ) {
+			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->plain();
+			return;
+		}
+
+		if ( $skip ) {
+			$status = $helper->skipVideo( $file );
+		} else {
+			if ( empty( $file ) ) {
+				$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->plain();
+				return;
+			}
+
+			if ( !$file->isLocal() ) {
+				$this->msg = $this->wf->Message( 'lvs-error-permission' )->plain();
+				return;
+			}
+
+			if ( $videoTitle == $newTitle ) {
+				$articleId = $file->getTitle()->getArticleID();
+
+				// remove local video
+				$response = $this->sendRequest( 'VideoHandlerController', 'removeVideo', array( 'title' => $file->getName() ) );
+				$result = $response->getVal( 'result', '' );
+				if ( $result != 'ok' ) {
+					$this->msg = $response->getVal( 'msg', '' );
+					return;
+				}
+
+				// set swap status
+				$helper->setSwapExactStatus( $articleId );
+
+				// force to get new file
+				$newFile = $helper->getVideoFile( $newTitle, true );
+
+				// add premium video
+				wfRunHooks( 'AddPremiumVideo', array( $newFile->getTitle() ) );
+
+				$status = Status::newGood();
+			} else {
+
 			}
 		}
 
-		$this->video = $video;
-		$this->result = $result;
-		$this->msg = $msg;
+		if ( $status->isGood() ) {
+			$video = array();
+			$this->video = $video;
+			$this->result = 'ok';
+			$this->msg = $this->wf->Message( 'lvs-swap-success' )->plain();
+		} else {
+			$this->msg = $status->getMessage();
+		}
 	}
 
-	/**
-	 * keep video
-	 * @requestParam string videoTitle
-	 * @responseParam string result [ok/error]
-	 * @responseParam string msg - result message
-	 * @responseParam array|null video
-	 */
-	public function keepVideo() {
-
-	}
 }
