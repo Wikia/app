@@ -81,7 +81,13 @@ $width-padding: $width-gutter / 2;
 	}
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1050px) {
+	body {
+		overflow-x: hidden;
+	}
+}
+
+@media screen and (max-width: 1030px) {
 	body {
 		background: $color-page;
 	}
@@ -94,6 +100,21 @@ $width-padding: $width-gutter / 2;
 
 	.WikiaPageBackground {
 		display: none;
+	}
+
+	.WikiaHeader .page-width-container,
+	.oasis-split-skin .WikiaHeader .page-width-container {
+		width: auto;
+	}
+
+	.WikiHeader,
+	.oasis-split-skin .WikiHeader {
+		overflow: hidden;
+	}
+
+	.WikiaTopAds,
+	.oasis-split-skin .WikiaTopAds {
+		width: 100%;
 	}
 }
 
