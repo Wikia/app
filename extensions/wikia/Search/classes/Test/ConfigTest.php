@@ -1011,6 +1011,10 @@ class ConfigTest extends BaseTest {
 		);
 	}
 
+	/**
+	 * @covers Wikia\Search\Config::getLanguageCode
+	 * @covers Wikia\Search\Config::setLanguageCode
+	 */
 	public function testSetAndGetLanguageCode() {
 		$config = new Config;
 
