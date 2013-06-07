@@ -437,7 +437,18 @@ class WallMessage {
 
 	public function getWallOwner( $master = false ) {
 		$parts = explode( '/', $this->getWallTitle( $master )->getText() );
-		$wall_owner = User::newFromName(  $parts[0], false);
+		$userName = $parts[0];
+		// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
+		// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
+		// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
+		// always correct
+		$parts = explode( '/', $this->getText() );
+		if ( $parts[0] != $userName ) {
+			Wikia::log( __METHOD__, false, 'WAL_PERF article title owner does not match ci username (' . $userName .
+				' vs ' . $parts[0] . ') for ' . $this->getId(), true );
+		}
+
+		$wall_owner = User::newFromName( $userName, false );
 
 		if( empty($wall_owner) ) {
 			error_log('EMPTY_WALL_OWNER: (id)'. $this->getId());
