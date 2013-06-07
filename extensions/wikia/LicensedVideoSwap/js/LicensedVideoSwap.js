@@ -47,7 +47,7 @@ var LVS = {
 	initDropDown: function() {
 		$( '.WikiaDropdown' ).wikiaDropdown({
 			onChange: function( e, $target ) {
-				console.log( 'changed' );
+				//TODO: add change event here
 			}
 		});
 	},
@@ -93,7 +93,8 @@ var LVS = {
 		var that = this;
 
 		this.$container.on( 'mouseover mouseout click', '.swap-button', function( e ) {
-			var $parent = $( this ).parent()
+			var $this = $( this ),
+				$parent = $this.parent(),
 				$arrow = $parent.siblings( '.swap-arrow' ),
 				$wrapper = $parent.parent();
 
@@ -140,7 +141,13 @@ var LVS = {
 
 	},
 	handleSwap: function( button, $arrow, $wrapper ) {
-		// TODO: ajax call and funky transition
+        $.confirm({
+	        content: $.msg( 'lvs-confirm-swap-message' ),
+	        onOk: function(){
+		        // TODO: add ajax request here
+	        },
+	        width: 700
+        });
 
 		/*button.hide();
 		$arrow.show();

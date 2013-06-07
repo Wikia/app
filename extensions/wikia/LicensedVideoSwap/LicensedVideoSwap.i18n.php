@@ -23,6 +23,7 @@ $messages['en'] = array(
 	'lvs-posted-in-label' => 'Current video posted in ',
 	'lvs-posted-in-label-none' => 'Current video is not posted in any articles',
 	'lvs-posted-in-more' => 'more',
+	'lvs-confirm-swap-message' => 'You are about to swap out $1 with $2 on your wiki. This will replace all instances of the video, including any videos embedded in articles. Any changes can be reversed from the file page. Do you want to continue?',
 );
 
 $messages['qqq'] = array(
@@ -38,6 +39,6 @@ $messages['qqq'] = array(
 	'lvs-more-suggestions' => 'This text will appear below a video that is a suggestion for a licensed version of a video that already exists on the wiki.  When clicked, this link will reveal more licensed possible replacements for the non-licensed video.',
 	'lvs-best-match-label' => 'This text appears above the licensed video that is considered the best match for replacing a non-licensed video.',
 	'lvs-posted-in-label' => 'This is the label text that appears before a list of titles in which the video is posted.  Due to design constraints, it comes before the list, so if, when translated, it would otherwise come after the list, please do your best to adjust accordingly.  ex: "Current video posted in: title1, title2, title3."  It is up to you if you want to include a colon at the end.',
-	'lvs-posted-in-more' => 'This is the text for a link that appears at the end of a truncated list of articles in which a video is posted. it is preceded by an ellipses (...)',
-	'lvs-posted-in-more' => 'this is the text that is shown after a truncated list of titles in which a video is posted.  When hovered, a full list appears.  When clicked, the user is taken to a page where the full list is displayed.',
+	'lvs-posted-in-more' => 'This is the text that is shown after a truncated list of titles in which a video is posted.  When hovered, a full list appears.  When clicked, the user is taken to a page where the full list is displayed.',
+	'lvs-confirm-swap-message' => '',
 );

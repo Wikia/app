@@ -134,6 +134,11 @@ $.showModal = function(title, content, options) {
 };
 
 // show modal version of confirm()
+	/**
+	 *
+	 * @param options Some possible properties of options are: id, title, content, cancelMsg, okMsg,
+	 * callbackBefore, onOk, callback.  Also, anything that is used by $.fn.makeModal
+	 */
 $.confirm = function(options) {
 	// init options
 	options = (typeof options != 'object') ? {} : options;
