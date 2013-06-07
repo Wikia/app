@@ -545,7 +545,7 @@ $config['wikiamobile_js_ads'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		//libraries
-		'//resources/wikia/libraries/DOMwriter/domwriter.js',
+		'//extensions/wikia/WikiaMobile/js/postscribe.min.js',
 
 		//advertisement "core"
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',

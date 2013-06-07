@@ -55,5 +55,6 @@
 	<div id=wkCurtain>&nbsp;</div>
 	<?= $jsBodyFiles ;?>
 	<?= $floatingTopLeaderBoard ;?>
+	<?= $inContentAd ;?>
 </body>
 </html>

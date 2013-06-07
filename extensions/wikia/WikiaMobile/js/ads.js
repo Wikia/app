@@ -13,7 +13,7 @@
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
-define('ads', ['domwriter', 'wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobilehelper'], function (dw, ck, window, $, dartHelper) {
+define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobilehelper'], function ( ck, window, $, dartHelper) {
 	'use strict';
 
 	var AD_TYPES = {
@@ -27,9 +27,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'wikia.window', 'wikia.utils', 'wik
 			in_content: 1
 		},
 		STOP_COOKIE_NAME = 'wkStopAd',
-		ID_COOKIE_NAME = 'wikia_mobile_id',
-		d = window.document,
-		queue = [];
+		ID_COOKIE_NAME = 'wikia_mobile_id';
 
 	/**
 	 * Stops ads requests from being made for a specific amount of time
@@ -76,22 +74,17 @@ define('ads', ['domwriter', 'wikia.cookies', 'wikia.window', 'wikia.utils', 'wik
 	 */
 	function setupSlot(options) {
 		if (shouldRequestAd()) {
-
-			queue.push = options;
-
-			var url = dartHelper.getMobileUrl({
-					slotname: options.name,
-					size: options.size,
-					uniqueId: getUniqueId()
-				}),
-				s = d.createElement('script');
-
-			//bind DOMwriter to the wrapper
-			dw.target(options.wrapper);
-			s.src = url;
-			options.wrapper.appendChild(s);
-
-			dw.addEventListener('idle', findAd(options.wrapper, options.init));
+			postscribe(
+				options.wrapper,
+				'<script src="' +
+					dartHelper.getMobileUrl({
+						slotname: options.name,
+						size: options.size,
+						uniqueId: getUniqueId()
+					}) +
+				'"></script>',
+				findAd(options.wrapper, options.init)
+			);
 		}
 	}
 
@@ -102,9 +95,8 @@ define('ads', ['domwriter', 'wikia.cookies', 'wikia.window', 'wikia.utils', 'wik
 	 * @private
 	 */
 	function findAd(wrapper, init) {
-		//return callback for dw
+		//return callback for postscribe
 		return function(){
-			console.log(wrapper)
 			if (wrapper) {
 				var i,
 					imgs,
@@ -165,7 +157,14 @@ define('ads', ['domwriter', 'wikia.cookies', 'wikia.window', 'wikia.utils', 'wik
 	//inside DART creatives
 	window.MobileAd = {
 		setupSlot: setupSlot,
-		shouldRequestAd: shouldRequestAd
+		shouldRequestAd: shouldRequestAd,
+		fix: function(){
+
+		},
+		unfix: function(){
+
+		},
+		stop: stop
 	};
 
 	return window.MobileAd;
