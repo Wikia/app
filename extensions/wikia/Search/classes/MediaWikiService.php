@@ -13,6 +13,12 @@ namespace Wikia\Search;
  */
 class MediaWikiService
 {
+
+	/**
+	 * Wiki default lang
+	 */
+	const WIKI_DEFAULT_LANG_CODE = 'en';
+
 	/**
 	 * Application interface
 	 * @var \WikiaApp
@@ -472,7 +478,7 @@ class MediaWikiService
 		$match = null;
 		if ( $domain !== '' ) {
 		$langCode = $this->getLanguageCode();
-            if ( $langCode === WIKI_DEFAULT_LANG_CODE ) {
+            if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
                 $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
             } else {
                 $wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
@@ -640,7 +646,7 @@ class MediaWikiService
 	public function getThumbnailHtmlForPageId(
 			$pageId, 
 			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
-			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) 
+			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)
 			) {
 		$html = '';
 		$img = $this->getFileForPageId( $pageId );
@@ -863,23 +869,20 @@ class MediaWikiService
 	 */
 	protected function getTitleString( \Title $title ) {
 		wfProfileIn( __METHOD__ );
-		$titleString = $title->getFullText();
 		if ( in_array( $title->getNamespace(), array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
 			$wm = \WallMessage::newFromId( $title->getArticleID() );
-			if (! empty( $wm ) ) {
-				$wm->load();
-				if ( !$wm->isMain() ) {
-					$main = $wm->getTopParentObj();
-					if ( !empty( $main ) ) {
-						$main->load();
-						$wm = $main;
-					}
-				}
-				$titleString = $wm->getMetaTitle();
+			$wm->load();
+			
+			if ( !$wm->isMain() && ( $main = $wm->getTopParentObj() ) && !empty( $main ) ) {
+				$main->load();
+				$wm = $main;
 			}
+			wfProfileOut( __METHOD__ );
+
+			return (string) $wm->getMetaTitle();
 		}
 		wfProfileOut(__METHOD__);
-		return $titleString;
+		return $title->getFullText();
 	}
 	
 	/**

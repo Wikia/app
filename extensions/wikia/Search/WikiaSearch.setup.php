@@ -22,8 +22,6 @@ define( 'SEARCH_PROFILE_USERS',    'users' );
 define( 'SEARCH_PROFILE_ALL',      'all' );
 define( 'SEARCH_PROFILE_ADVANCED', 'advanced' );
 
-define( 'WIKI_DEFAULT_LANG_CODE', 'en' );
-
 // autoloads values in the search namespace
 spl_autoload_register( function( $class ) {
 	if ( substr_count( $class, 'Wikia\\Search\\' ) > 0 ) {
