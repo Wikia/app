@@ -9,21 +9,16 @@
 <?= $afterBodyHtml ?>
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
+
 <?= $app->renderView('GlobalHeader', 'Index') ?>
-
-<?= empty($wg->GlobalHeaderFullWidth) ? '' : $app->renderView('Notifications', 'Confirmation') ?>
-
-<?= empty($wg->GlobalHeaderFullWidth) ? '' : $app->renderView('Ad', 'Top') ?>
+<?= $app->renderView('Notifications', 'Confirmation') ?>
+<?= $app->renderView('Ad', 'Top') ?>
 
 <?= empty($wg->WikiaSeasonsPencilUnit) ? '' : $app->renderView('WikiaSeasons', 'pencilUnit', array()); ?>
 
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty($isGridLayoutEnabled) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-		<?= empty($wg->GlobalHeaderFullWidth) ? $app->renderView('Notifications', 'Confirmation') : '' ?>
-
-		<?= empty($wg->GlobalHeaderFullWidth) ? $app->renderView('Ad', 'Top') : '' ?>
-
 		<?php
 			if ( empty( $wg->SuppressWikiHeader ) ) {
 				echo $app->renderView( 'WikiHeader', 'Index' );

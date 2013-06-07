@@ -89,20 +89,13 @@ class OasisController extends WikiaController {
 
 		wfProfileIn(__METHOD__);
 
-		/* set the grid or full width if passed in, otherwise, respect the default */
+		/* set the grid if passed in, otherwise, respect the default */
 		$grid = $wgRequest->getVal('wikiagrid', '');
-		$fullhead = $wgRequest->getVal('wikiafullheader', '');
 
 		if ( '1' === $grid ) {
 			$this->wg->OasisGrid = true;
 		} else if ( '0' === $grid ) {
 			$this->wg->OasisGrid = false;
-		}
-
-		if ( '1' === $fullhead ) {
-			$this->wg->GlobalHeaderFullWidth = true;
-		} else if ( '0' === $fullhead ) {
-			$this->wg->GlobalHeaderFullWidth = false;
 		}
 		/* end grid or full width */
 
@@ -173,11 +166,6 @@ class OasisController extends WikiaController {
 		// mark dark themes
 		if (SassUtil::isThemeDark()) {
 			$bodyClasses[] = 'oasis-dark-theme';
-		}
-
-		// support for oasis split skin
-		if (!empty($this->wg->GlobalHeaderFullWidth)) {
-			$bodyClasses[] = 'oasis-split-skin';
 		}
 
 		$this->bodyClasses = $bodyClasses;

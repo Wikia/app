@@ -11,9 +11,11 @@
 
 .WikiaTopAds {
 	font-size: 0;
+	margin: 0 auto;
 	position: relative;
-	padding-top: 10px;
+	padding: 10px 0;
 	text-align: center;
+	width: $width-outside;
 	z-index: 0;
 	.WikiaTopAdsInner {
 		@include clearfix;
@@ -24,6 +26,11 @@
 	}
 	.standard-leaderboard {
 		max-width: 728px;
+	}
+	.wikia-ad {
+		>img {
+			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
+		}
 	}
 }
 
@@ -41,23 +48,6 @@
 	}
 	&.default-height {
 		height: 90px;
-	}
-}
-
-/**
- * IMPORTANT (21-Aug-2012, FB:45031): Integrate this code into base css above after transition.
- * This is currently an override depending on skin switch.
- */
-.oasis-split-skin {
-	.WikiaTopAds {
-		margin: 0 auto;
-		padding: 10px 0;
-		width: $width-outside;
-	}
-	.wikia-ad {
-		>img {
-			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
-		}
 	}
 }
 
@@ -97,7 +87,7 @@
 		margin-bottom: 0;
 		padding: 15px;
 	}
-} 
+}
 /* end transistion temp code */
 
 #TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
@@ -115,12 +105,12 @@
 #SPOTLIGHT_GLOBALNAV_1, #SPOTLIGHT_GLOBALNAV_2, #SPOTLIGHT_GLOBALNAV_3 {
 	width: 269px;
 	&.SPOTLIGHT_GLOBALNAV {
-		width: 255px;	
+		width: 255px;
 	}
 }
 // changes for $wgEnableSpotlightsV2
-.GlobalNavigation { 
-	.subnav { 
+.GlobalNavigation {
+	.subnav {
 		.SPOTLIGHT_GLOBALNAV {
 			left: 10px;
 			margin-top: 17px;
@@ -128,7 +118,7 @@
 		}
 	}
 }
-.WikiaFooter { 
+.WikiaFooter {
 	section {
 		.SPOTLIGHT_FOOTER {
 			padding: 0px 28px 33px;

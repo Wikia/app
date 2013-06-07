@@ -6,11 +6,8 @@
 @import "../mixins/opacity";
 
 .WikiaPage {
-	border-bottom: 1px solid $color-page-border;
-	border-left: 1px solid $color-page-border;
-	border-right: 1px solid $color-page-border;
-	margin: -59px auto -39px;
-	padding-top: 59px;
+	border: 1px solid $color-page-border;
+	margin: 0 auto;
 	/* temp grid transition code - integrate into main, then remove after grid is fully rolled out */
 	&.WikiaGrid {
 		.WikiaSearchHeader {
@@ -25,10 +22,6 @@
 		}
 	}
 	/* end temp grid transition code */
-	&.V2 {
-		padding-top: 0;
-		margin: 0px auto -39px;
-	}
 	position: relative;
 	width: $width-outside;
 	z-index: 1;
@@ -48,18 +41,6 @@
 	.WikiaPageContentWrapper {
 		@include clearfix;
 		position: relative;
-	}
-}
-
-/**
- * IMPORTANT (21-Aug-2012, FB:45031): Integrate this code into base css above after transition.
- * This is currently an override depending on skin switch.
- */
-.oasis-split-skin {
-	.WikiaPage {
-		border-top: 1px solid $color-page-border;
-		margin: 0 auto 0px;
-		padding-top: 0;
 	}
 }
 
@@ -185,13 +166,12 @@
 		h2 {
 			@extend h1;
 			clear: both;
+			padding-top: 15px;
 
 			margin: {
 				top: 0;
 				bottom: 10px;
 			}
-			padding-top: 15px;
-			/*border-top: 1px solid $color-page-border;*/
 		}
 
 		b {
