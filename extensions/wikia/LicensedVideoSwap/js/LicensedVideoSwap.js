@@ -103,7 +103,7 @@ var LVS = {
 			} else if ( e.type == 'mouseout' ) {
 				$arrow.fadeOut( 100 );
 			} else if ( e.type == 'click' ) {
-				that.handleSwap.call( that, $this, $arrow, $wrapper );
+				that.confirmSwap.call( that );
 			}
 		});
 	},
@@ -140,18 +140,31 @@ var LVS = {
 		});
 
 	},
-	handleSwap: function( button, $arrow, $wrapper ) {
-        $.confirm({
-	        content: $.msg( 'lvs-confirm-swap-message' ),
-	        onOk: function(){
-		        // TODO: add ajax request here
-	        },
-	        width: 700
-        });
-
-		/*button.hide();
-		$arrow.show();
-		$wrapper.find( '.non-premium' ).fadeOut();*/
+	confirmSwap: function() {
+		var that = this;
+		$.confirm({
+			content: $.msg( 'lvs-confirm-swap-message', 'title here', 'other title here' ),
+			onOk: that.handleSwap,
+			width: 700
+		});
+	},
+	handleSwap: function(){
+		$.nirvana.sendRequest({
+			controller: 'LicensedVideoSwapSpecialController',
+			method: 'swapVideo',
+			data: {
+				videoTitle: 'liz-xyz',
+				newTitle: 'liz-xyz',
+				skip: 0
+			},
+			callback: function(data) {
+				if( data.result == 'error' ) {
+					window.GlobalNotification.show('data.msg', 'error');
+				} else {
+					window.GlobalNotification.show('data.msg', 'confirm');
+				}
+			}
+		});
 	}
 };
 
