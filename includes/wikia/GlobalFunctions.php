@@ -1288,20 +1288,23 @@ function wfUnserializeProp($data) {
 /**
  * Delete value of wikia article prop
  */
-function wfDeleteWikiaPageProp($type, $pageID, $dbname = '') {
-	if(empty($dbname)) {
-		$db = wfGetDB(DB_MASTER, array());
+function wfDeleteWikiaPageProp( $type, $pageID, $dbname = '' ) {
+	if ( empty( $dbname ) ) {
+		$db = wfGetDB( DB_MASTER );
 	} else {
-		$db = wfGetDB(DB_MASTER, array(), $dbname);
+		$db = wfGetDB( DB_MASTER, array(), $dbname );
 	}
 
-	$db->delete('page_wikia_props',
+	$db->delete(
+		'page_wikia_props',
 		array(
 			'page_id' =>  $pageID,
 			'propname' => $type,
 		),
 		__METHOD__
 	);
+
+	$db->commit( __METHOD__ );
 }
 
 if (!function_exists('http_build_url')) {
