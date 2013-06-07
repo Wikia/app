@@ -1755,7 +1755,6 @@ class MediaWikiServiceTest extends BaseTest
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
 		$term = 'Foo';
 		$namespaces = array( 0, 14 );
 		
@@ -1805,18 +1804,21 @@ class MediaWikiServiceTest extends BaseTest
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
 	public function testGetWikiMatchByHost() {
-		$service = $this->service->setMethods( array( 'getWikiIdByHost' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getWikiIdByHost', 'getLanguageCode' ) )->getMock();
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+		$service
+			->expects( $this->once() )
+			->method ( 'getLanguageCode' )
+			->will   ( $this->returnValue( 'en' ) )
+		;
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiIdByHost' )
 		    ->with   ( 'foo.wikia.com' )
 		    ->will   ( $this->returnValue( 123 ) )
 		;
-		
 		$this->proxyClass( 'Wikia\Search\Match\Wiki', $mockMatch );
 		$this->mockApp();
 		$this->assertInstanceOf(
