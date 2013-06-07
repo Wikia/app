@@ -38,6 +38,10 @@ body {
 	}
 }
 
+.WikiHeaderSearch {
+	display: none;
+}
+
 .WikiaHeader {
 	min-width: 0;
 
@@ -87,6 +91,56 @@ body {
 		float: none;
 		padding: 0 10px;
 		width: auto;
+	}
+
+	.WikiaHeader li.start-a-wiki {
+		display: none;
+	}
+
+	.WikiHeader {
+		min-height: 154px;
+		padding-top: 0;
+
+		> nav {
+			left: 0;
+			top: 85px;
+		}
+
+		.buttons {
+			top: 87px;
+		}
+	}
+
+	.WikiNav li.nav-item:first-child {
+		margin-left: 10px;
+	}
+
+	.WikiHeaderSearch {
+		display: block;
+		left: 280px;
+		position: absolute;
+		right: 10px;
+		top: 12px;
+		width: auto;
+
+		input[type="text"] {
+			font-size: 15pt;
+			height: 30px !important;
+			left: 0;
+			position: absolute;
+			right: 45px;
+			width: auto;
+		}
+
+		.wikia-button {
+			height: 40px !important;
+			position: absolute;
+			right: 0;
+		}
+	}
+
+	.WikiaRail .WikiaSearch {
+		display: none;
 	}
 }
 
