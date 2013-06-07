@@ -133,31 +133,6 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	}
 
 	/**
-	 * skip video
-	 * @param File $file
-	 * @return Status
-	 */
-	public function skipVideo( $file ) {
-		try {
-			// Set the status of this file page to skipped
-			$articleId = $file->getTitle()->getArticleID();
-			$this->wf->SetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SKIP );
-		} catch ( Exception $e ) {
-			return Status::newFatal( $e->getMessage() );
-		}
-
-		return Status::newGood();
-	}
-
-	/**
-	 * Set the status of this file page to skipped
-	 * @param int|$articleId - The ID of a video's file page
-	 */
-	public function setSkipStatus( $articleId ) {
-		$this->wf->SetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SKIP );
-	}
-
-	/**
 	 * Set the status of this file page to swapped
 	 * @param int|$articleId - The ID of a video's file page
 	 */
