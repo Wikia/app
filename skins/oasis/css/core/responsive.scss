@@ -1,5 +1,6 @@
 @import "color";
 @import "layout";
+@import "../mixins/box-sizing";
 
 $width-padding: $width-gutter / 2;
 $width-adskin: 170px;
@@ -9,9 +10,16 @@ body {
 	overflow-x: hidden;
 }
 
+body > .global-notification,
+.WikiaHeader .page-width-container,
 .WikiaPage {
 	margin: 0 auto;
 	max-width: $width-outside-max;
+}
+
+.global-notification {
+	@include box-sizing( border-box );
+	width: $width-outside;
 }
 
 .WikiaActivityModule li em {
@@ -44,10 +52,6 @@ body {
 
 .WikiaHeader {
 	min-width: 0;
-
-	.page-width-container {
-		width: auto;
-	}
 }
 
 .WikiaMainContent {
@@ -124,8 +128,7 @@ body {
 		width: auto;
 
 		input[type="text"] {
-			-moz-box-sizing: border-box;
-			box-sizing: border-box;
+			@include box-sizing( border-box );
 			font-size: 15pt;
 			height: 40px !important;
 			left: 0;
@@ -161,6 +164,11 @@ body {
 		}
 	}
 
+	.global-notification,
+	.WikiaHeader .page-width-container {
+		width: auto;
+	}
+
 	.WikiaPage {
 		border: 0;
 		width: auto;
@@ -176,6 +184,8 @@ body {
 }
 
 @media screen and (min-width: $width-outside + ($width-adskin * 2) + 2) {
+	body > .global-notification,
+	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 $width-adskin;
 		width: auto;
@@ -183,6 +193,8 @@ body {
 }
 
 @media screen and (min-width: $width-outside-max + ($width-adskin * 2) + 2) {
+	body > .global-notification,
+	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 auto;
 	}
