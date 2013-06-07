@@ -23,7 +23,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/LicensedVideoSwap.js' );
 		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' );
 		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Dropdown.js' );
-
 	}
 
 	/**
@@ -38,6 +37,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videoList
 	 */
 	public function index() {
+
+		// Setup messages for JS
+		// TODO: once 'back to roots' branch is merged, use JSMessages::enqueuePackage
+		F::build('JSMessages')->enqueuePackage('LVS', JSMessages::EXTERNAL);
 
 		// update h1 text
 		$this->getContext()->getOutput()->setPageTitle( $this->wf->Msg('lvs-page-title') );
@@ -130,6 +133,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * swap video
 	 * @requestParam string videoTitle
 	 * @requestParam string newTitle
+<<<<<<< HEAD
+=======
+	 * @requestParam integer skip [0/1]
+>>>>>>> LicensedVideoSwap
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam array|null video
@@ -332,6 +339,11 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->msg = null;
+	}
+
+	// TODO: probably make this use mustache
+	public function row() {
+
 	}
 
 }

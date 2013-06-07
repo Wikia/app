@@ -1,4 +1,22 @@
+@import "../../../../skins/oasis/css/mixins/arrow";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
+@import "mixins/_sprite-LicensedVideoSwap";
+
+$alt-bg-color: mix($color-page-opposite, $color-page, 10%);
+$thumb-img-width: 184px;
+$thumb-img-height: 103px;
+
+$arrow-color: 'black';
+@if $is-dark-wiki {
+	$arrow-color: 'white';
+}
+
+$arrow-button-color: white;
+@if lightness($color-buttons) > 55 {
+	$arrow-button-color: black;
+}
 
 .wikinav2 .WikiaPageHeader {
 	border-bottom: none;
@@ -27,14 +45,168 @@
 	}
 }
 
+.ContentHeader {
+	@include clearfix;
+	border-bottom: 1px solid $color-page-border-subtle;
+	border-top: 1px solid $color-page-border-subtle;
+	margin-bottom: 18px;
+	padding: 18px 0;
+}
+
 .LVSGrid {
-	.more {
+	.lvs-sprite:before {
+		@include sprite-LicensedVideoSwap-base;
+	}
+	.row {
+		@include clearfix;
+		margin-bottom: 30px;
+		position: relative;
+		overflow-x: hidden;
+		.swap-arrow {
+			@include border-radius(5px);
+			background-color: $color-page;
+			display: none;
+			left: 50%;
+			margin-left: -40px;
+			padding: 15px;
+			position: absolute;
+			top: 157px;
+			&:before {
+				@include sprite-LicensedVideoSwap('big_' + $arrow-color + '_arrow');
+				content: "";
+				display: block;
+				margin: auto;
+				height: 31px;
+				width: 49px;
+			}
+		}
+	}
+	.more-link {
+		color: $color-text;
+		font-size: 15px;
 		float: right;
+		padding-right: 10px;
+
+		&:before {
+			@include arrow(5px, $color-text, 'down');
+			content: "";
+			display: block;
+			float: right;
+			margin-top: 10px;
+			margin-left: 5px;
+		}
+		&.expanded:before {
+			@include arrow(5px, $color-text, 'up');
+		}
 	}
 	.grid-3 {
-		height: 430px;
+		height: 395px;
 	}
-	.video-container {
+	.video-wrapper {
 		padding-bottom: 10px;
+		height: 320px;
+	}
+	.more-videos {
+		@include clearfix;
+		clear:both;
+		display: none;
+		padding-top: 20px;
+		width: 100%; // needed for smooth jQuery animation
+		&:before {
+			@include arrow(15px, $alt-bg-color, 'up');
+			margin-top: -15px;
+			margin-right: 15px;
+			content: "";
+			display: inline-block;
+			float: right;
+		}
+
+		ul, li {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		ul {
+			@include clearfix;
+			background-color: $alt-bg-color;
+			padding: 15px;
+		}
+		li {
+			float: left;
+			margin-right: 15px;
+			width:$thumb-img-width;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+		.Wikia-video-play-button {
+			line-height:$thumb-img-height;
+			width:$thumb-img-width;
+		}
+		.video {
+			display: block;
+			position: relative;
+			> img {
+				height:$thumb-img-height;
+				width:$thumb-img-width;
+			}
+		}
+	}
+	.swap-button:before {
+		@include sprite-LicensedVideoSwap($arrow-button-color + '_small_arrow');
+		content: "";
+		display: inline-block;
+		height: 9px;
+		margin-left: -2px;
+		padding-right: 2px;
+		width: 13px;
+	}
+	.posted-in {
+		overflow: hidden;
+		white-space: nowrap;
+		margin: 0.4em 0 0.5em; // mimic a <p> tag
+		ul, li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			display: inline;
+		}
+		li:after {
+			content: ", ";
+		}
+		li:last-child:after {
+			content: "";
+		}
+		a.ellipses {
+			float: right;
+			display: none;
+		}
+		> div {
+			display: inline-block;
+			&.processed {
+				float: left; // ie10 layout
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+}
+
+.popover .details {
+	background-color: $color-page;
+	font-size: 12px;
+	padding: 2px;
+	width: 180px;
+	ul {
+		a {
+			display: block;
+			padding: 6px 5px;
+		}
+		li {
+			border-top: 1px solid $color-page-border-subtle;
+		}
+		li:first-child {
+			border-top: none;
+		}
 	}
 }

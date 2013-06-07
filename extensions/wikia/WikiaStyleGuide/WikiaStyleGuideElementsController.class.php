@@ -8,6 +8,7 @@ class WikiaStyleGuideElementsController extends WikiaController {
 		$this->sortMsg = $this->getVal('sortMsg');
 		$this->sortOptions = $this->getVal('sortOptions');
 		$this->containerId = $this->getVal('containerId');
+		$this->blankImgUrl = $this->wg->BlankImgUrl;
 	}
 
 }
