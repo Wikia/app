@@ -442,9 +442,9 @@ class WallMessage {
 		// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
 		// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
 		// always correct
-		$parts = explode( '/', $this->getText() );
+		$parts = explode( '/', $this->title->getText() );
 		if ( $parts[0] != $userName ) {
-			Wikia::log( __METHOD__, false, 'WAL_PERF article title owner does not match ci username (' . $userName .
+			Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
 				' vs ' . $parts[0] . ') for ' . $this->getId(), true );
 		}
 
