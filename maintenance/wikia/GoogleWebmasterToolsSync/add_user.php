@@ -9,7 +9,7 @@ GWTLogHelper::notice( __FILE__ . " script starts.");
 try {
 	if( !isset($options['u']) || !isset($options['p']) ) {
 		GWTLogHelper::warning( "Specify user (-u) and password (-p)" );
-		die(1);
+		die();
 	}
 
 	$userRepository = new GWTUserRepository();
@@ -17,7 +17,7 @@ try {
 	$r = $userRepository->create( $options['u'], $options['p'] );
 	if ( $r == null ) {
 		GWTLogHelper::warning( "error while inserting user." );
-		die( 1 );
+		die();
 	}
 	GWTLogHelper::notice( $r->getId() . " " . $r->getEmail() . "\n" );
 

@@ -26,12 +26,12 @@ class GWTWikiRepository {
 		}
 		return $list;
 	}
-
+	/*
 	public function all() {
 		$result = $this->databaseConnection->select("webmaster_sitemaps", array("user_id", "wiki_id", "upload_date"));
 		return $this->materializeList($result);
 	}
-
+	*/
 	/*
 	 * @return array
 	 */
