@@ -175,7 +175,7 @@ class FounderProgressBarHooks {
 	 *
 	 * @return bool true because it's a hook
 	 */
-	public function onFacebookConnect() {
+	public static function onFacebookConnect() {
 		// Quick exit if tasks are all completed
 		if( self::allTasksComplete() ) {
 			return true;
@@ -190,7 +190,7 @@ class FounderProgressBarHooks {
 	 *
 	 * @return bool true because it's a hook
 	 */
-	public function onAfterVideoFileUploaderUpload(File $file, FileRepoStatus $result) {
+	public static function onAfterVideoFileUploaderUpload(File $file, FileRepoStatus $result) {
 		// Quick exit if tasks are all completed
 		if( self::allTasksComplete() ) {
 			return true;

@@ -113,8 +113,6 @@ $wgHooks[ 'LinkEnd' ][] = 'ChatHelper::onLinkEnd';
 $wgHooks[ 'BeforePageDisplay' ][] = 'ChatHelper::onBeforePageDisplay';
 $wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
 
-$wgHooks[ 'LogLineExt' ][] = 'ChatHelper::onLogLineExt';
-
 $wgLogTypes[] = 'chatban';
 $wgLogHeaders['chatban'] = 'chat-chatban-log';
 $wgLogNames['chatban'] = 'chat-chatban-log';

@@ -244,7 +244,7 @@ class PathFinderParser {
 			throw new PathFinderNoDataToAnalyzeException();
 		}
 		
-		$title = BetterGlobalTitle::newFromText( $data['r'], $data['c'], $data['x'] ) );
+		$title = BetterGlobalTitle::newFromText( $data['r'], $data['c'], $data['x'] );
 
 		if (
 			$title instanceof Title &&

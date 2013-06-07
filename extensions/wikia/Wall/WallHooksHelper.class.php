@@ -321,7 +321,7 @@ class WallHooksHelper {
 	/**
 	 * @brief add history to wall toolbar
 	 **/
-	function onBeforeToolbarMenu(&$items) {
+	static public function onBeforeToolbarMenu(&$items) {
 		$app = F::app();
 		if( empty( $app->wg->EnableWallExt ) ){
 			return true;
@@ -734,6 +734,7 @@ class WallHooksHelper {
 	static public function onSkinTemplateContentActions(&$contentActions) {
 		$app = F::app();
 
+		$title = null;
 		if( !empty($app->wg->EnableWallExt) && $app->wg->Title instanceof Title ) {
 			$title = $app->wg->Title;
 			$parts = explode( '/', $title->getText() );
@@ -748,12 +749,10 @@ class WallHooksHelper {
 			//remove "History" and "View source" tabs in Monobook & don't show history in "My Tools" in Oasis
 			//because it leads to Message Wall (redirected) and a user could get confused
 			if( isset($contentActions['history']['href']) ) {
-				//$contentActions['history']['href'] = $this->getWallTitle()->getLocalUrl('action=history');
 				unset($contentActions['history']);
 			}
 
 			if( isset($contentActions['view-source']['href']) ) {
-				//$contentActions['view-source']['href'] = $this->getWallTitle()->getLocalUrl('action=edit');
 				unset($contentActions['view-source']);
 			}
 		}

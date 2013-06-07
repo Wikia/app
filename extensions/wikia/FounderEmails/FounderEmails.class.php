@@ -213,7 +213,7 @@ class FounderEmails {
 	 * @param array $removegroup
 	 * @return true
 	 */
-	public function onUserRightsChange($user, $addgroup, $removegroup) {
+	public static function onUserRightsChange($user, $addgroup, $removegroup) {
 		global $wgCityId, $wgMemc;
 		wfProfileIn( __METHOD__ );
 

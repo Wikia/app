@@ -72,9 +72,9 @@ JSMessages::registerPackage( 'GameGuidesSponsoredMsg', [
 ] );
 
 //hooks
-$wgHooks['GameGuidesContentSave'] = 'GameGuidesController::onGameGuidesContentSave';
-$wgHooks['GameGuidesSponsoredVideosSave'] = 'GameGuidesController::onGameGuidesSponsoredSave';
-$wgHooks['TitleGetSquidURLs'] = 'GameGuidesController::onTitleGetSquidURLs';
+$wgHooks['GameGuidesContentSave'][] = 'GameGuidesController::onGameGuidesContentSave';
+$wgHooks['GameGuidesSponsoredVideosSave'][] = 'GameGuidesController::onGameGuidesSponsoredSave';
+$wgHooks['TitleGetSquidURLs'][] = 'GameGuidesController::onTitleGetSquidURLs';
 //add Game Guides Content to WikiFeatures
 $wgHooks['WikiFeatures::onGetFeatureNormal'][] = 'GameGuidesSpecialContentController::onWikiFeatures';
 $wgHooks['WikiFeatures::onToggleFeature'][] = 'GameGuidesSpecialContentController::onWikiFeatures';

@@ -2,7 +2,7 @@
 
 class ImageDrop {
 
-	public function onBeforePageDisplay( $out, $skin ) {
+	public static function onBeforePageDisplay( $out, $skin ) {
 		wfProfileIn(__METHOD__);
 
 		$assetsManager = AssetsManager::getInstance();

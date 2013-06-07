@@ -5,8 +5,8 @@ class SpellChecker {
 	/**
 	 * Add JavaScript variable with path to be used by AJAX requests sent by RTE plugin
 	 */
-	public function onRTEAddGlobalVariablesScript(Array &$vars) {
-		global $wgUser, $wgContLang;
+	public static function onRTEAddGlobalVariablesScript(Array &$vars) {
+		global $wgUser, $wgContLang, $wgScript;
 		wfProfileIn(__METHOD__);
 
 		// check user preferences (enabled by default)
@@ -21,7 +21,7 @@ class SpellChecker {
 
 		if ( $dict->isLanguageSupported( $wgContLang->getCode() ) ) {
 			$vars['wgSpellCheckerLangIsSupported'] = true;
-			$vars['wgSpellCheckerUrl'] = "{$this->script}?action=ajax&rs=SpellCheckerAjax";
+			$vars['wgSpellCheckerUrl'] = "{$wgScript}?action=ajax&rs=SpellCheckerAjax";
 		}
 
 		wfProfileOut(__METHOD__);
@@ -31,7 +31,7 @@ class SpellChecker {
 	/**
 	 * Add user preferences switch to enable spell checker
 	 */
-	public function onGetPreferences($user, &$preferences) {
+	public static function onGetPreferences($user, &$preferences) {
 		$preferences['disablespellchecker'] = array(
 			'type' => 'toggle',
 			'section' => 'editing/rte',
