@@ -17,9 +17,9 @@ class WallNotificationEntity {
 	 *	Public Interface
 	 */
 
-	public static function createFromRev(Revision $rev, $wiki) {
+	public static function createFromRev( Revision $rev, $wiki, $master = false ) {
 		$wn = F::build('WallNotificationEntity', array() ); /* @var $wn WallNotificationEntity */
-		if($wn->loadDataFromRev($rev, $wiki)) {
+		if( $wn->loadDataFromRev( $rev, $wiki, $master ) ) {
 			$wn->save();
 			return $wn;
 		}
@@ -61,7 +61,7 @@ class WallNotificationEntity {
 		return $this->id;
 	}
 
-	public function loadDataFromRev(Revision $rev, $wiki) {
+	public function loadDataFromRev( Revision $rev, $wiki, $master = false ) {
 		$this->id = $rev->getId(). '_' .  $wiki;
 
 		$ac = F::build('WallMessage', array($rev->getTitle()), 'newFromTitle' ); /* @var $ac WallMessage */
@@ -72,7 +72,7 @@ class WallNotificationEntity {
 		$this->data = new stdClass;
 		$this->data_noncached = new stdClass;
 
-		$walluser = $ac->getWallOwner();
+		$walluser = $ac->getWallOwner( $master );
 		$authoruser = User::newFromId($rev->getUser());
 
 		if(empty($walluser)) {
