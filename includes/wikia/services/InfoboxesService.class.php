@@ -92,7 +92,7 @@ class InfoboxesService
 					if (! isset( $infoboxes[$table] ) ) {
 						$infoboxes[$table] = [];
 					}
-					$infoboxes[$table][] = implode( ' | ', $cells );
+					$infoboxes[$table][$key] = implode( ' | ', $cells );
 				}
 			}
 			foreach ( $mappedIds[$item['pageid']] as $expectedId ) {
