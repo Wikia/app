@@ -61,9 +61,7 @@ function wfParserFunction_magic(&$magicWords, $langCode){
 }
 
 function upgradeYouTubeTag( $editpage, $request ) {
-	$text = $request->getText( 'wpTextbox1' );
-	$text = $request->getBool( 'safemode' ) ? $editpage->unmakesafe( $text ) : $text;
-
+	$text = $editpage->textbox1;
 	$text = preg_replace_callback(
 		'/<youtube([^>]*)>([^<]+)<\/youtube>/i',
 		function ($matches) {
@@ -93,9 +91,7 @@ function upgradeYouTubeTag( $editpage, $request ) {
 		},
 		$text
 	);
-
 	$editpage->textbox1 = $text;
-
 	return true;
 }
 
