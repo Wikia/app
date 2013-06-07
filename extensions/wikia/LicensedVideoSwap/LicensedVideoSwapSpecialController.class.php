@@ -180,4 +180,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	public function keepVideo() {
 
 	}
+
+	// TODO: probably make this use mustache
+	public function row() {
+
+	}
 }
