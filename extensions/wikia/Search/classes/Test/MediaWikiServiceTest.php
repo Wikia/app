@@ -1804,26 +1804,82 @@ class MediaWikiServiceTest extends BaseTest
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
 	public function testGetWikiMatchByHost() {
-		$service = $this->service->setMethods( array( 'getWikiIdByHost', 'getLanguageCode' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getWikiIdByHost', 'getLanguageCode', 'getGlobalForWiki' ) )->getMock();
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
 		$service
-			->expects( $this->once() )
+			->expects( $this->at( 0 ) )
 			->method ( 'getLanguageCode' )
 			->will   ( $this->returnValue( 'en' ) )
 		;
 		$service
-		    ->expects( $this->once() )
+		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getWikiIdByHost' )
 		    ->with   ( 'foo.wikia.com' )
 		    ->will   ( $this->returnValue( 123 ) )
 		;
+		$service
+			->expects( $this->at( 2 ) )
+			->method( 'getGlobalForWiki' )
+			->with( 'wgLanguageCode', 123 )
+			->will ( $this->returnValue( 'en' ) )
+		;
+
 		$this->proxyClass( 'Wikia\Search\Match\Wiki', $mockMatch );
 		$this->mockApp();
 		$this->assertInstanceOf(
 				$service->getWikiMatchByHost( 'foo' )->_mockClassName,
 				$mockMatch
+		);
+
+		$service
+			->expects( $this->at( 0 ) )
+			->method ( 'getLanguageCode' )
+			->will   ( $this->returnValue( 'pl' ) )
+		;
+
+		$service
+			->expects( $this->at( 1 ) )
+			->method ( 'getWikiIdByHost' )
+			->with   ( 'pl.foo.wikia.com' )
+			->will   ( $this->returnValue( 123 ) )
+		;
+		$this->assertEmpty(
+			$service->getWikiMatchByHost( 'foo' )
+		);
+
+		$service
+			->expects( $this->at( 0 ) )
+			->method ( 'getLanguageCode' )
+			->will   ( $this->returnValue( 'pl' ) )
+		;
+
+		$service
+			->expects( $this->at( 1 ) )
+			->method ( 'getWikiIdByHost' )
+			->with   ( 'pl.foo.wikia.com' )
+			->will   ( $this->returnValue( null ) )
+		;
+
+		$service
+			->expects( $this->at( 2 ) )
+			->method ( 'getWikiIdByHost' )
+			->with   ( 'foo.pl' )
+			->will   ( $this->returnValue( 123 ) )
+		;
+
+		$service
+			->expects( $this->at( 3 ) )
+			->method( 'getGlobalForWiki' )
+			->will ( $this->returnValue( 'pl' ) )
+		;
+
+		$this->proxyClass( 'Wikia\Search\Match\Wiki', $mockMatch );
+		$this->mockApp();
+		$this->assertInstanceOf(
+			$service->getWikiMatchByHost( 'foo' )->_mockClassName,
+			$mockMatch
 		);
 	}
 	
