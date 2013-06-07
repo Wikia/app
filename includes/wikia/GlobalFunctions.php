@@ -1226,21 +1226,25 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
 /**
  * Set value of wikia article prop list of type is define in
  */
-function wfSetWikiaPageProp($type, $pageID, $value, $dbname = '') {
-	if(empty($dbname)) {
-		$db = wfGetDB(DB_MASTER, array());
+function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
+	if ( empty( $dbname ) ) {
+		$db = wfGetDB( DB_MASTER );
 	} else {
-		$db = wfGetDB(DB_MASTER, array(), $dbname);
+		$db = wfGetDB( DB_MASTER, array(), $dbname );
 	}
 
-	$db->replace('page_wikia_props','',
+	$db->replace(
+		'page_wikia_props',
+		'',
 		array(
-			'page_id' =>  $pageID,
+			'page_id' => $pageID,
 			'propname' => $type,
-			'props' => serialize($value)
+			'props' => serialize( $value )
 		),
 		__METHOD__
 	);
+
+	$db->commit( __METHOD__ );
 }
 
 
@@ -1284,20 +1288,23 @@ function wfUnserializeProp($data) {
 /**
  * Delete value of wikia article prop
  */
-function wfDeleteWikiaPageProp($type, $pageID, $dbname = '') {
-	if(empty($dbname)) {
-		$db = wfGetDB(DB_MASTER, array());
+function wfDeleteWikiaPageProp( $type, $pageID, $dbname = '' ) {
+	if ( empty( $dbname ) ) {
+		$db = wfGetDB( DB_MASTER );
 	} else {
-		$db = wfGetDB(DB_MASTER, array(), $dbname);
+		$db = wfGetDB( DB_MASTER, array(), $dbname );
 	}
 
-	$db->delete('page_wikia_props',
+	$db->delete(
+		'page_wikia_props',
 		array(
 			'page_id' =>  $pageID,
 			'propname' => $type,
 		),
 		__METHOD__
 	);
+
+	$db->commit( __METHOD__ );
 }
 
 if (!function_exists('http_build_url')) {
