@@ -108,11 +108,28 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	}
 
 	/**
-	 * Set the status of this file page to skipped
-	 * @param int|$articleId - The ID of a video's file page
+	 * get file object (video only)
+	 * @param string $videoTitle
+	 * @param boolean $force
+	 * @return File|null $result
 	 */
-	public function setSkipStatus( $articleId ) {
-		wfSetWikiaPageProp( WPP_IMAGE_SERVING, $articleId, self::STATUS_SKIP );
+	public function getVideoFile( $videoTitle, $force = false ) {
+		$result = null;
+
+		$title = Title::newFromText( $videoTitle,  NS_FILE );
+		if ( $title instanceof Title ) {
+			// clear cache for file object
+			if ( $force ) {
+				RepoGroup::singleton()->clearCache( $title );
+			}
+
+			$file = $this->wf->FindFile( $title );
+			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
+				$result = $file;
+			}
+		}
+
+		return $result;
 	}
 
 	/**
@@ -120,7 +137,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @param int|$articleId - The ID of a video's file page
 	 */
 	public function setSwapStatus( $articleId ) {
-		wfSetWikiaPageProp( WPP_IMAGE_SERVING, $articleId, self::STATUS_SWAP_NORM );
+		$this->wf->SetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SWAP_NORM );
 	}
 
 	/**
@@ -128,6 +145,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @param int|$articleId - The ID of a video's file page
 	 */
 	public function setSwapExactStatus( $articleId ) {
-		wfSetWikiaPageProp( WPP_IMAGE_SERVING, $articleId, self::STATUS_SWAP_EXACT );
+		$this->wf->SetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SWAP_EXACT );
 	}
+
 }
