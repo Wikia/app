@@ -68,7 +68,11 @@ $app->registerHook('SkinSubPageSubtitleAfterTitle', 'WallHooksHelper', 'onSkinSu
 $app->registerHook('SkinTemplateContentActions', 'WallHooksHelper', 'onSkinTemplateContentActions');
 $app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared');
 $app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpCompleteWatch');
-$app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
+/*
+ * Nirvana's registerHook was here, but it failed to work for some reason:
+ * $app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
+ */
+$wgHooks['UserIsBlockedFrom'] = array( array( 'WallHooksHelper::onUserIsBlockedFrom' ) );
 
 $app->registerHook( 'ArticleRobotPolicy', 'WallHooksHelper', 'onArticleRobotPolicy' );
 

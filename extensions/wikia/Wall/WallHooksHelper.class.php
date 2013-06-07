@@ -14,9 +14,9 @@ class WallHooksHelper {
 
 	public function onUserIsBlockedFrom($user, $title, &$blocked, &$allowUsertalk) {
 
-		if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wm =  F::build('WallMessage', array($title), 'newFromTitle');
-			if($wm->getWallOwner()->getName() === $user->getName()){
+        if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
+			// wall owner is in it's name
+			if($title->getBaseText() === $user->getName()){
 				$blocked = false;
 				wfDebug( __METHOD__ . ": self-user wall page, ignoring any blocks\n" );
 			}
