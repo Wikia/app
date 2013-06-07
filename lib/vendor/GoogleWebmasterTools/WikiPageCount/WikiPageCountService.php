@@ -55,7 +55,7 @@ class PageCountsIterator implements  Iterator {
 	private $position = 0;
 	private $chunk = null;
 	private $chunkStart = null;
-	private $chunkSize = 10;
+	private $chunkSize = 1000;
 
 	function __construct( WikiPageCountService $wikiPageCountService ) {
 		$this->wikiPageCountService = $wikiPageCountService;

@@ -55,6 +55,7 @@ class GroupingIterator implements Iterator {
 	 * @return void Any returned value is ignored.
 	 */
 	public function next() {
+		$this->current();
 		$this->currentGroup = null;
 		$this->index++;
 	}

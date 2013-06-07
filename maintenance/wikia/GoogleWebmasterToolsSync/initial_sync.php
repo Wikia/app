@@ -9,63 +9,25 @@ $minCountOfPagesToSync = 100;
 
 try {
 	global $wgExternalSharedDB, $wgDatamartDB;
-	$app = F::app();
-	$db = $app->wf->getDB( DB_MASTER, array(), $wgExternalSharedDB);
 
 	$wikiPageCountService = (new WikiPageCountServiceFactory())->get();
+	$wikiRepository = new GWTWikiRepository();
 
+	foreach ( Iterators::group( $wikiPageCountService->listPageCountsIterator(), 50 ) as $pageCountGroup ) {
 
-	function fetchGroup ( $result, $count ) {
-		$i = 0;
-		$resultGroup = array();
-		while( ( $row = $result->fetchObject() ) && ( $i < $count ) ) {
-			$resultGroup[] = array(
-				"wiki_id" => $row->wiki_id,
-				"user_id" => 0,
-				"upload_date" => null,
-			);
-			$i ++;
-		}
-		return $resultGroup;
-	}
-
-	function filterGroup( $db, $group ) {
-		$arr = array();
-		foreach( $group as $i => $wiki ) {
-			$arr[] = $wiki['wiki_id'];
-		}
-		$query = "
-			SELECT wiki_id
-			FROM webmaster_sitemaps
-			WHERE wiki_id IN (". implode(",",$arr) .")
-
-		";
-		$exists = array();
-		$result = $db->query($query);
-		while ( $obj = $result->fetchObject() ) {
-			$exists[$obj->wiki_id] = true;
-		}
-		$resultGroup = array();
-		foreach( $group as $i => $wiki ) {
-			if( !isset($exists[$wiki['wiki_id']]) ) {
-				$resultGroup[] = $wiki;
+		GWTLogHelper::debug( "Group size: " . count( $pageCountGroup ) );
+		foreach ( $pageCountGroup as $pageCountModel ) {
+			/** @var WikiPageCountModel $pageCountModel */
+			$page = $wikiRepository->oneByWikiId( $pageCountModel->getWikiId() );
+			if( $page == null ) {
+				$wikiRepository->insert( $pageCountModel->getWikiId(), null, null, $pageCountModel->getPageCount() );
+			} else {
+				if ( $page->getPageCount() != $pageCountModel->getPageCount() ) {
+					$page->setPageCount( $pageCountModel->getPageCount() );
+					$wikiRepository->updateWiki( $page );
+				}
 			}
 		}
-		return $resultGroup;
-	}
-
-	while( true ) {
-		$group = fetchGroup( $result, 50 );
-		$groupSize = count( $group );
-		GWTLogHelper::debug( "Group size: " . $groupSize );
-		if( count($group) == 0 ) break;
-		$group = filterGroup( $db, $group );
-		$filteredGroupSize = count( $group );
-		GWTLogHelper::debug( "Filtered group size: " . $filteredGroupSize );
-		if( count($group) == 0 ) continue;
-		//var_dump($group);
-		GWTLogHelper::notice( "Fetching " . count($group) . " wikis from mart." );
-		$db->insert("webmaster_sitemaps", $group);
 		sleep(1);
 	}
 	GWTLogHelper::notice( __FILE__ . " script ends.");

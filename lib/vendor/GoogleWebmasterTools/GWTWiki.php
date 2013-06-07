@@ -1,18 +1,31 @@
 <?php
 
 class GWTWiki {
+	/**
+	 * @var integer
+	 */
 	private $wikiId;
+	/**
+	 * @var null|integer
+	 */
 	private $userId;
+	/**
+	 * @var string
+	 */
 	private $uploadDate;
+	/**
+	 * @var null|integer
+	 */
+	private $pageCount;
 
-	function __construct( $wikiId, $userId, $uploadDate ) {
+	function __construct( $wikiId, $userId, $uploadDate, $pageCount = null ) {
 		$this->setUserId( $userId );
 		$this->setWikiId( $wikiId );
 		$this->setUploadDate( $uploadDate );
 	}
 
 	public function setUserId($userId) {
-		$this->userId = intval( $userId );
+		$this->userId = $userId === null ? null : intval( $userId );
 	}
 
 	public function getUserId() {
@@ -49,5 +62,13 @@ class GWTWiki {
 		if (!preg_match('!/$!', $site))       $site = $site.'/';
 
 		return $site;
+	}
+
+	public function getPageCount() {
+		return $this->pageCount;
+	}
+
+	public function setPageCount($pageCount) {
+		$this->pageCount = $pageCount;
 	}
 }

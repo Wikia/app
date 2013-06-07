@@ -9,7 +9,7 @@ GWTLogHelper::notice( __FILE__ . " script starts.");
 try {
 	if( !isset($options['i']) ) {
 		GWTLogHelper::error( "Specify wiki id (-i)" );
-		die(1);
+		die();
 	}
 
 	$service = new GWTService();
