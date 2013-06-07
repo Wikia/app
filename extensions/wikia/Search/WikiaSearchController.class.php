@@ -281,7 +281,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
 
 		$image = $resultSet->getHeader( 'image' );
-		$imageUrl = empty( $image ) ? $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png' : (new \WikiaHomePageHelper)->getImageUrl( $image, 180, 120 );
+		$lang = $resultSet->getHeader( 'lang' );
+		$globalWikiId = (new CityVisualization())->getTargetWikiId( $lang );
+
+		if ( !empty( $image) && $globalWikiId !== false ) {
+			$imageUrl = ImagesService::getImageSrcByTitle( $globalWikiId, $image, 180, 120 );
+		}
+		//default image if not set or missing
+		if ( empty( $imageUrl ) ) {
+			$imageUrl = $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
+		}
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="-1" data-event="search_click_wiki-';
 		$thumbTracking .= empty( $image ) ? 'no-thumb"' : 'thumb"';
 
