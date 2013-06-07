@@ -24,7 +24,7 @@ class GWTWikiRepository {
 	}
 
 	/**
-	 * @param $queryResult
+	 * @param ResultWrapper $queryResult
 	 * @return array
 	 */
 	private function materializeList( $queryResult ) {
@@ -46,7 +46,9 @@ class GWTWikiRepository {
 	public function allUnassigned() {
 		$result = $this->databaseConnection->select("webmaster_sitemaps"
 			, array("user_id", "wiki_id", "upload_date", "page_count")
-			, array("upload_date" => null ) );
+			, array("upload_date" => null )
+			, __METHOD__
+			, "ORDER BY page_count DESC");
 		return $this->materializeList($result);
 	}
 
@@ -66,10 +68,11 @@ class GWTWikiRepository {
 	 * @throws GWTException
 	 * @return GWTWiki
 	 */
-	public function oneByWikiId( $wikiId ) {
+	public function getById( $wikiId ) {
 		$wikis = $this->allByWikiId( $wikiId );
-		if( count( $wikis ) == 1 ) return $wikis[0];
-		throw new GWTException("Fetched wrong number of wikis (id=".$wikiId."). Expected 1, was " . count($wikis));
+		if( count( $wikis ) == 0 ) { return null; }
+		if( count( $wikis ) == 1 ) { return $wikis[0]; }
+		throw new GWTException("Fetched wrong number of wikis (id=".$wikiId."). Expected 0 or 1, was " . count($wikis));
 	}
 
 	/**
@@ -83,11 +86,10 @@ class GWTWikiRepository {
 	}
 
 	/**
-	 * @param $wikiId
+	 * @param int $wikiId
 	 * @return bool
 	 */
 	public function exists( $wikiId ) {
-		$wikiId = $this->wikiToId( $wikiId );
 		$res = $this->databaseConnection->select("webmaster_sitemaps",
 			array('wiki_id'),
 			array(
@@ -113,10 +115,10 @@ class GWTWikiRepository {
 	/**
 	 * @param $wikiId
 	 * @param int $userId
-	 * @param null $uploadDate
-	 * @param null $pageCount
+	 * @param null|string $uploadDate
+	 * @param null|int $pageCount
 	 * @return GWTWiki
-	 * @throws Exception
+	 * @throws GWTException
 	 */
 	public function insert( $wikiId, $userId = 0, $uploadDate = null, $pageCount = null ) {
 		if ( ! $this->databaseConnection->insert("webmaster_sitemaps", array(
@@ -125,9 +127,9 @@ class GWTWikiRepository {
 			"upload_date" => $uploadDate,
 			"page_count"  => $pageCount,
 		))) {
-			throw new Exception("can't insert wiki id = " . $wikiId);
+			throw new GWTException("can't insert wiki id = " . $wikiId);
 		}
-		return new GWTWiki( $wikiId, $userId, $uploadDate);
+		return new GWTWiki( $wikiId, $userId, $uploadDate, $pageCount);
 	}
 
 	/**
@@ -146,18 +148,5 @@ class GWTWikiRepository {
 				"wiki_id" => $gwtWikiObject->getWikiId(),
 			));
 		if( !$res ) throw new GWTException("Failed to update " . $gwtWikiObject->getUserId() . " " . $gwtWikiObject->getWikiId());
-	}
-
-	/**
-	 * @param $wikiId
-	 * @return int
-	 * @throws Exception
-	 */
-	private function wikiToId( $wikiId ) {
-		if( is_string( $wikiId ) ) {
-			$wikiId = WikiFactory::UrlToID( $wikiId );
-			if( $wikiId == null ) throw new Exception("Can't resolve " . $wikiId);
-		}
-		return $wikiId;
 	}
 }

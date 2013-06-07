@@ -14,20 +14,25 @@ try {
 	$wikiRepository = new GWTWikiRepository();
 
 	foreach ( Iterators::group( $wikiPageCountService->listPageCountsIterator(), 50 ) as $pageCountGroup ) {
-
+		$updated = 0; $created = 0; $same = 0;
 		GWTLogHelper::debug( "Group size: " . count( $pageCountGroup ) );
 		foreach ( $pageCountGroup as $pageCountModel ) {
 			/** @var WikiPageCountModel $pageCountModel */
-			$page = $wikiRepository->oneByWikiId( $pageCountModel->getWikiId() );
+			$page = $wikiRepository->getById( $pageCountModel->getWikiId() );
 			if( $page == null ) {
 				$wikiRepository->insert( $pageCountModel->getWikiId(), null, null, $pageCountModel->getPageCount() );
+				$created++;
 			} else {
 				if ( $page->getPageCount() != $pageCountModel->getPageCount() ) {
 					$page->setPageCount( $pageCountModel->getPageCount() );
 					$wikiRepository->updateWiki( $page );
+					$updated++;
+				} else {
+					$same ++;
 				}
 			}
 		}
+		GWTLogHelper::debug("Created: $created, Updated $updated, Same: $same");
 		sleep(1);
 	}
 	GWTLogHelper::notice( __FILE__ . " script ends.");

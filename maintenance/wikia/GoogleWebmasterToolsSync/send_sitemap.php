@@ -14,7 +14,7 @@ try {
 
 	$service = new GWTService();
 	GWTLogHelper::notice("wiki_id: " . $options["i"] );
-	$wiki = $service->getWikiRepository()->oneByWikiId( $options['i'] );
+	$wiki = $service->getWikiRepository()->getById( $options['i'] );
 	if( !$wiki ) {
 		GWTLogHelper::error( "No wiki for " . $options['i'] . "\n" );
 		die(1);

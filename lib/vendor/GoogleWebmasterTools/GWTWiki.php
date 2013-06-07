@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class GWTWiki
+ */
 class GWTWiki {
 	/**
 	 * @var integer
@@ -18,45 +21,80 @@ class GWTWiki {
 	 */
 	private $pageCount;
 
+	/**
+	 * @param $wikiId
+	 * @param $userId
+	 * @param $uploadDate
+	 * @param null $pageCount
+	 */
 	function __construct( $wikiId, $userId, $uploadDate, $pageCount = null ) {
 		$this->setUserId( $userId );
 		$this->setWikiId( $wikiId );
 		$this->setUploadDate( $uploadDate );
+		$this->setPageCount( $pageCount );
 	}
 
-	public function setUserId($userId) {
+	/**
+	 * @param null|integer $userId
+	 */
+	public function setUserId( $userId ) {
 		$this->userId = $userId === null ? null : intval( $userId );
 	}
 
+	/**
+	 * @return int|null
+	 */
 	public function getUserId() {
 		return $this->userId;
 	}
 
-	public function setWikiId($wikiId) {
+	/**
+	 * @param integer $wikiId
+	 */
+	public function setWikiId( $wikiId ) {
 		$this->wikiId = intval( $wikiId );
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getWikiId() {
 		return $this->wikiId;
 	}
 
-	public function setUploadDate($uploadDate) {
+	/**
+	 * @param string $uploadDate
+	 */
+	public function setUploadDate( $uploadDate ) {
 		$this->uploadDate = $uploadDate;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getUploadDate() {
 		return $this->uploadDate;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getDb() {
 		return WikiFactory::IDtoDB( $this->wikiId );
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getUrl() {
 		$wiki = WikiFactory::getWikiByID( $this->wikiId );
 		return $this->normalize_site( $wiki );
 	}
 
+	/**
+	 * @param $site
+	 * @return string
+	 */
 	private function normalize_site ( $site ) {
 		if (!preg_match('!^http://!', $site)) $site = 'http://'.$site;
 		if (!preg_match('!/$!', $site))       $site = $site.'/';
@@ -64,11 +102,17 @@ class GWTWiki {
 		return $site;
 	}
 
+	/**
+	 * @return int|null
+	 */
 	public function getPageCount() {
 		return $this->pageCount;
 	}
 
+	/**
+	 * @param int $pageCount
+	 */
 	public function setPageCount($pageCount) {
-		$this->pageCount = $pageCount;
+		$this->pageCount = $pageCount === null ? null : (int) $pageCount;
 	}
 }
