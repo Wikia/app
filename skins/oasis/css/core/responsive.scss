@@ -31,6 +31,10 @@ body {
 	.WikiNav {
 		right: -4px;
 		width: auto;
+
+		.subnav-2 {
+			width: auto;
+		}
 	}
 }
 
@@ -88,6 +92,14 @@ body {
 @media screen and (max-width: 1030px) {
 	body {
 		background: $color-page;
+	}
+
+	.WikiHeader .WikiNav {
+		right: 0;
+
+		.navbackground img {
+			display: none;
+		}
 	}
 
 	.WikiaPage {

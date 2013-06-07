@@ -57,9 +57,9 @@ $WikiNavWidth: $width-outside - 271px;
 		}
 
 		>ul {
+			@include clearfix;
 			position: relative;
 			z-index: 1;
-
 		}
 
 		// BugId: 44309
@@ -287,8 +287,8 @@ $WikiNavWidth: $width-outside - 271px;
 		img {
 			border-color: darken( $color-buttons, 10% ) transparent transparent darken( $color-buttons, 10% );
 			border-width: 2px;
-			float:right;
-			margin-top:30px;
+			float: right;
+			margin-top: 30px;
 		}
 	}
 
