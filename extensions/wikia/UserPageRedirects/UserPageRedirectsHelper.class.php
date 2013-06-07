@@ -2,10 +2,11 @@
 
 /*
  * Author: Tomek Odrobny
+ * Author: Damian Jóźwiak
  * Helper function for extension
  */
 
-class CorporatePageHelper {
+class UserPageRedirectsHelper {
 
 	/**
 	 * ArticleFromTitle
@@ -67,7 +68,7 @@ class CorporatePageHelper {
 				break;
 		}
 
-		if( !wfRunHooks( 'CorporateBeforeRedirect', array( &$title ) ) ) {
+		if( !wfRunHooks( 'UserPageRedirectsBeforeRedirect', array( &$title ) ) ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
