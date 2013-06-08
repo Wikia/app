@@ -8,7 +8,7 @@
  */
 class LicensedVideoSwapHelper extends WikiaModel {
 
-	const STATUS_SKIP = 0;
+	const STATUS_KEEP = 0;
 	const STATUS_SWAP_NORM = 1;
 	const STATUS_SWAP_EXACT = 2;
 	/**

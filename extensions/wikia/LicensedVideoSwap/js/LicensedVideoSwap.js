@@ -193,7 +193,7 @@ var LVS = {
 		function doRequest( currTitle, $wrapper ) {
 			$.nirvana.sendRequest({
 				controller: 'LicensedVideoSwapSpecialController',
-				method: 'skipVideo',
+				method: 'keepVideo',
 				data: {
 					videoTitle: currTitle,
 				},

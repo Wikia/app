@@ -20,9 +20,9 @@ $messages['en'] = array(
 	'lvs-button-swap' => 'Swap',
 	'lvs-more-suggestions' => '$1 more {{PLURAL:$1|suggestion|suggestions}}',
 	'lvs-best-match-label' => 'Best Match from Wikia Video Library',
-	'lvs-swap-video-success' => 'Congratulation! You have successfully swapped the existing video with the wikia video. You can check it via [[$1| Link]] [[$2|Undo]]',
-	'lvs-skip-video-success' => 'You have chosen to keep your current video. The video will be removed from this list. [[$1|Undo]]',
-	'lvs-restore-skipped-video-success' => 'You have restored the skipped video to this list.',
+	'lvs-swap-video-success' => 'Congratulation! You have successfully swapped the existing video with the wikia video. You can check it via [[$1|Link]] [[$2|Undo]]',
+	'lvs-keep-video-success' => 'You have successfully kept existing $1. The video was removed from this list on this page. [[$2|Undo]]',
+	'lvs-restore-video-success' => 'You have restored the video to this list.',
 	'lvs-error-permission' => 'you cannot swap this video.',
 	'lvs-posted-in-label' => 'Current video posted in ',
 	'lvs-posted-in-label-none' => 'Current video is not posted in any articles',
@@ -43,9 +43,13 @@ $messages['qqq'] = array(
 	'lvs-button-swap' => 'This is the text that appears on a button that, when clicked, will swap out a non-licensed video for a licensed video suggested from the wikia video library.',
 	'lvs-more-suggestions' => 'This text will appear below a video that is a suggestion for a licensed version of a video that already exists on the wiki.  When clicked, this link will reveal more licensed possible replacements for the non-licensed video.',
 	'lvs-best-match-label' => 'This text appears above the licensed video that is considered the best match for replacing a non-licensed video.',
-	'lvs-swap-video-success' => 'This text appears after the video is successfully swapped.',
-	'lvs-skip-video-success' => 'This text appears after the video is successfully skipped.',
-	'lvs-restore-skipped-video-success' => 'This text appears after the skipped video is successfully restored to the list.',
+	'lvs-swap-video-success' => 'This text appears after swapping out the video.
+* $1 is a link to the file page
+* $2 is a link to reverse the replacement',
+	'lvs-keep-video-success' => 'This text appears after keeping the video.
+* $1 is the title of the video
+* $2 is a link to restore the video to the Special page again',
+	'lvs-restore-video-success' => 'This text appears after restoring the video to the list.',
 	'lvs-error-permission' => 'This text appears if user does not have permission to swap the video.',
 	'lvs-posted-in-label' => 'This is the label text that appears before a list of titles in which the video is posted.  Due to design constraints, it comes before the list, so if, when translated, it would otherwise come after the list, please do your best to adjust accordingly.  ex: "Current video posted in: title1, title2, title3."  It is up to you if you want to include a colon at the end.',
 	'lvs-posted-in-more' => 'This is the text that is shown after a truncated list of titles in which a video is posted.  When hovered, a full list appears.  When clicked, the user is taken to a page where the full list is displayed.',

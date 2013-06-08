@@ -215,6 +215,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
+		// TODO: add log
 		// TODO: send request for tracking
 		$video = array();
 		$this->video = $video;
@@ -223,13 +224,13 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * skip video
+	 * keep video
 	 * @requestParam string videoTitle
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam array|null video
 	 */
-	public function skipVideo() {
+	public function keepVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
 
 		// validate action
@@ -252,24 +253,24 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		// set the status of this file page to skipped
+		// set the status of this file page
 		$articleId = $file->getTitle()->getArticleID();
-		$this->wf->SetWikiaPageProp( WPP_LVS_STATUS, $articleId, LicensedVideoSwapHelper::STATUS_SKIP );
+		$this->wf->SetWikiaPageProp( WPP_LVS_STATUS, $articleId, LicensedVideoSwapHelper::STATUS_KEEP );
 
 		$video = array();
 		$this->video = $video;
 		$this->result = 'ok';
-		$this->msg = $this->wf->Message( 'lvs-skip-video-success' )->text();
+		$this->msg = $this->wf->Message( 'lvs-keep-video-success' )->text();
 	}
 
 	/**
-	 * restore skipped video
+	 * restore video
 	 * @requestParam string videoTitle
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam array|null video
 	 */
-	public function restoreSkippedVideo() {
+	public function restoreVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
 
 		// validate action
@@ -299,7 +300,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$video = array();
 		$this->video = $video;
 		$this->result = 'ok';
-		$this->msg = $this->wf->Message( 'lvs-restore-skipped-video-success' )->text();
+		$this->msg = $this->wf->Message( 'lvs-restore-video-success' )->text();
 	}
 
 	/**
