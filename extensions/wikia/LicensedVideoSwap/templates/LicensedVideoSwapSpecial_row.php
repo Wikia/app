@@ -25,7 +25,7 @@
 				<?= $video['videoOverlay'] ?>
 			</a>
 		</div>
-		<button class="secondary"><?= wfMessage('lvs-button-keep') ?></button>
+		<button class="keep-button secondary" data-video-keep="<?= htmlspecialchars($video['title']) ?>"><?= wfMessage('lvs-button-keep') ?></button>
 	</div>
 	<div class="grid-3 premium">
 		<p><?= wfMessage('lvs-best-match-label')->text() ?></p>
@@ -37,7 +37,7 @@
 			</a>
 		</div>
 		<a class="more-link" href="#"><?= wfMessage('lvs-more-suggestions')->numParams(5)->text() ?></a>
-		<button class="swap-button lvs-sprite"> <?= wfMessage('lvs-button-swap') ?></button>
+		<button class="swap-button lvs-sprite" data-video-swap="<?= htmlspecialchars($video['title']) ?>"> <?= wfMessage('lvs-button-swap') ?></button>
 	</div>
 	<div class="more-videos">
 		<ul>

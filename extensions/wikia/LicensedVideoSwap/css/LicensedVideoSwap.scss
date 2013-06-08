@@ -134,14 +134,14 @@ $arrow-button-color: white;
 		li {
 			float: left;
 			margin-right: 15px;
-			width:$thumb-img-width;
+			width: $thumb-img-width;
 			&:last-child {
 				margin-right: 0;
 			}
 		}
 		.Wikia-video-play-button {
-			line-height:$thumb-img-height;
-			width:$thumb-img-width;
+			line-height: $thumb-img-height;
+			width: $thumb-img-width;
 		}
 		.video {
 			display: block;
@@ -165,6 +165,7 @@ $arrow-button-color: white;
 		overflow: hidden;
 		white-space: nowrap;
 		margin: 0.4em 0 0.5em; // mimic a <p> tag
+		width: 480px;
 		ul, li {
 			margin: 0;
 			padding: 0;

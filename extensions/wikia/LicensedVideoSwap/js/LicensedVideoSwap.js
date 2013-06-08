@@ -8,7 +8,8 @@ var LVS = {
 		this.initDropDown();
 		this.initCallout();
 		this.initMoreSuggestions();
-		this.initSwapArrow();
+		this.initSwap();
+		this.initKeep();
 	},
 	/*
 	 * The design calls for all of the "posted in" titles to be on one line.
@@ -16,11 +17,43 @@ var LVS = {
 	 * and show a "more" link based on the width of that line.
 	 */
 	initEllipses: function() {
-		var that = this,
-			wrapperWidth,
+		var wrapperWidth,
 			ellipsesWidth,
 			truncatedWidth,
 			undef;
+
+		function initPopover( elem ) {
+			var popoverTimeout = 0;
+
+			function setPopoverTimeout() {
+				popoverTimeout = setTimeout( function() {
+					elem.popover( 'hide' );
+				}, 300 );
+			}
+
+			elem.popover({
+				trigger: 'manual',
+				placement: 'top',
+				content: function() {
+					var list = elem.next().find('ul').clone(),
+						details = list.wrap( '<div class="details"></div>' );
+
+					return details.parent();
+				}
+			}).on( 'mouseenter', function() {
+				clearTimeout( popoverTimeout );
+				$( '.popover' ).remove();
+				elem.popover( 'show' );
+
+			}).on('mouseleave', function() {
+				setPopoverTimeout();
+				$( '.popover' ).mouseenter( function() {
+					clearTimeout( popoverTimeout );
+				}).mouseleave( function() {
+					setPopoverTimeout();
+				});
+			});
+		}
 
 		this.$container.find('.posted-in').each(function() {
 			var $this = $( this ),
@@ -40,10 +73,13 @@ var LVS = {
 			if ( msgWidth > wrapperWidth ) {
 				$msg.addClass( 'processed' ).width( truncatedWidth );
 				$ellipses.show();
-				that.initPopover.call( that, $ellipses );
+				initPopover( $ellipses );
 			}
 		});
 	},
+	/**
+	 * Set up the style guide dropdown to toggle sorting of videos
+	 */
 	initDropDown: function() {
 		$( '.WikiaDropdown' ).wikiaDropdown({
 			onChange: function( e, $target ) {
@@ -73,6 +109,11 @@ var LVS = {
 			}
 		});
 	},
+	/**
+	 * Clicking on the more suggestions link will slide down a row of
+	 * thumbnails that are additional possible matches for the non-premium
+	 * video
+	 */
 	initMoreSuggestions: function() {
 		this.$container.on( 'click', '.more-link', function( e ) {
 			e.preventDefault();
@@ -89,81 +130,105 @@ var LVS = {
 
 		});
 	},
-	initSwapArrow: function() {
+	initSwap: function() {
 		var that = this;
+
+		function doRequest( newTitle, currTitle ){
+			$.nirvana.sendRequest({
+				controller: 'LicensedVideoSwapSpecialController',
+				method: 'swapVideo',
+				data: {
+					videoTitle: currTitle,
+					newTitle: newTitle
+				},
+				callback: function(data) {
+					if( data.result == 'error' ) {
+						window.GlobalNotification.show(data.msg, 'error');
+					} else {
+						window.GlobalNotification.show(data.msg, 'confirm');
+					}
+				}
+			});
+		}
+
+		function confirmSwap( isSwap, currTitle, newTitle ) {
+			var msg;
+
+			currTitleText =  currTitle.replace(/_/g, ' ');
+
+			newTitleText = newTitle.replace(/_/g, ' ');
+			msg = $.msg( 'lvs-confirm-swap-message', currTitleText, newTitleText )
+
+			$.confirm({
+				content: msg,
+				onOk: function() {
+					doRequest( isSwap, newTitle, currTitle );
+				},
+				width: 700
+			});
+		}
 
 		this.$container.on( 'mouseover mouseout click', '.swap-button', function( e ) {
 			var $this = $( this ),
 				$parent = $this.parent(),
 				$arrow = $parent.siblings( '.swap-arrow' ),
-				$wrapper = $parent.parent();
+				newTitle,
+				currTitle;
 
+			// swap button hovered
 			if ( e.type == 'mouseover' ) {
 				$arrow.fadeIn( 100 );
 			} else if ( e.type == 'mouseout' ) {
 				$arrow.fadeOut( 100 );
+			// swap button clicked
 			} else if ( e.type == 'click' ) {
-				that.confirmSwap.call( that );
+				// Get both titles - current/non-premium video and video to swap it out with
+				newTitle = $this.attr( 'data-video-swap' );
+				currTitle = that.$container.find( '.keep-button' ).attr( 'data-video-keep' );
+				confirmSwap( true, decodeURIComponent( currTitle ), decodeURIComponent( newTitle ) );
 			}
 		});
 	},
-	initPopover: function( elem ) {
-		var popoverTimeout = 0;
+	initKeep: function() {
+		function doRequest( currTitle, $wrapper ) {
+			$.nirvana.sendRequest({
+				controller: 'LicensedVideoSwapSpecialController',
+				method: 'skipVideo',
+				data: {
+					videoTitle: currTitle,
+				},
+				callback: function(data) {
+					if( data.result == 'error' ) {
+						window.GlobalNotification.show(data.msg, 'error');
+					} else {
+						window.GlobalNotification.show(data.msg, 'confirm');
 
-		function setPopoverTimeout() {
-			popoverTimeout = setTimeout( function() {
-				elem.popover( 'hide' );
-			}, 300 );
+						$wrapper.slideUp( function() {
+							$wrapper.remove();
+						})
+					}
+				}
+			});
 		}
 
-		elem.popover({
-			trigger: 'manual',
-			placement: 'top',
-			content: function() {
-				var list = elem.next().find('ul').clone(),
-					details = list.wrap( '<div class="details"></div>' );
+		function confirmKeep( currTitle, $wrapper ) {
+			var currTitleText =  currTitle.replace(/_/g, ' ');
 
-				return details.parent();
-			}
-		}).on( 'mouseenter', function() {
-			clearTimeout( popoverTimeout );
-			$( '.popover' ).remove();
-			elem.popover( 'show' );
-
-		}).on('mouseleave', function() {
-			setPopoverTimeout();
-			$( '.popover' ).mouseenter( function() {
-				clearTimeout( popoverTimeout );
-			}).mouseleave( function() {
-				setPopoverTimeout();
+			$.confirm({
+				content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
+				onOk: function() {
+					doRequest( currTitle, $wrapper );
+				},
+				width: 700
 			});
-		});
+		}
 
-	},
-	confirmSwap: function() {
-		var that = this;
-		$.confirm({
-			content: $.msg( 'lvs-confirm-swap-message', 'title here', 'other title here' ),
-			onOk: that.handleSwap,
-			width: 700
-		});
-	},
-	handleSwap: function(){
-		$.nirvana.sendRequest({
-			controller: 'LicensedVideoSwapSpecialController',
-			method: 'swapVideo',
-			data: {
-				videoTitle: 'liz-xyz',
-				newTitle: 'liz-xyz',
-				skip: 0
-			},
-			callback: function(data) {
-				if( data.result == 'error' ) {
-					window.GlobalNotification.show('data.msg', 'error');
-				} else {
-					window.GlobalNotification.show('data.msg', 'confirm');
-				}
-			}
+		this.$container.on( 'click', '.keep-button', function() {
+			var $this = $( this ),
+				$wrapper = $this.closest( '.row' );
+				currTitle = $this.attr( 'data-video-keep' );
+
+			confirmKeep( decodeURIComponent( currTitle ), $wrapper );
 		});
 	}
 };

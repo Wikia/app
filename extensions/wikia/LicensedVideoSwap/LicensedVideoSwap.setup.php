@@ -34,4 +34,5 @@ $wgGroupPermissions['vstf']['licensedvideoswap'] = true;
 // TODO: once 'back to roots' branch is merged, use JSMessages::registerPackage
 F::build('JSMessages')->registerPackage('LVS', array(
 	'lvs-confirm-swap-message',
+	'lvs-confirm-keep-message',
 ));

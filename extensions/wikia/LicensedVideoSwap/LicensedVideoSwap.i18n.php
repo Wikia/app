@@ -28,6 +28,7 @@ $messages['en'] = array(
 	'lvs-posted-in-label-none' => 'Current video is not posted in any articles',
 	'lvs-posted-in-more' => 'more',
 	'lvs-confirm-swap-message' => 'You are about to swap out $1 with $2 on your wiki. This will replace all instances of the video, including any videos embedded in articles. Any changes can be reversed from the file page. Do you want to continue?',
+	'lvs-confirm-keep-message' => 'You have chosen not to replace your current video with a licensed Wikia Video Libary video. Do you want to continue?',
 );
 
 $messages['qqq'] = array(
@@ -48,5 +49,6 @@ $messages['qqq'] = array(
 	'lvs-error-permission' => 'This text appears if user does not have permission to swap the video.',
 	'lvs-posted-in-label' => 'This is the label text that appears before a list of titles in which the video is posted.  Due to design constraints, it comes before the list, so if, when translated, it would otherwise come after the list, please do your best to adjust accordingly.  ex: "Current video posted in: title1, title2, title3."  It is up to you if you want to include a colon at the end.',
 	'lvs-posted-in-more' => 'This is the text that is shown after a truncated list of titles in which a video is posted.  When hovered, a full list appears.  When clicked, the user is taken to a page where the full list is displayed.',
-	'lvs-confirm-swap-message' => '',
+	'lvs-confirm-swap-message' => 'This message is show in a modal when a user clicks a button to swap out an un-licensed video for a licensed video. It is a coonfirmation message.',
+	'lvs-confirm-keep-message' => 'This message is show in a modal when a user clicks a button to keep an un-licensed video as opposed to swapping it out for a licensed video. It is a coonfirmation message.',
 );
