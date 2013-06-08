@@ -4,14 +4,16 @@
 	<span class="swap-arrow lvs-sprite"></span>
 	<div class="grid-3 alpha non-premium">
 		<div class="posted-in">
-			<a class="ellipses" href="#"><?= wfMessage('lvs-posted-in-more')->plain() ?></a>
+			<? // TODO: add URL for Special:WhatLinksHere ?>
+			<a class="ellipses" href=" "><?= wfMessage('lvs-posted-in-more')->plain() ?></a>
 			<div>
 				<? if ( count($video['truncatedList']) ): ?>
 					<?= wfMessage('lvs-posted-in-label')->plain() ?>
 					<ul>
-						<?php foreach( $video['truncatedList'] as $article ) { ?>
-							<li><a href=""><?= $article['titleText'] ?></a></li>
-						<?php } ?>
+						<? foreach( $video['truncatedList'] as $article ) { ?>
+							<? // TODO: add URL for the article here ?>
+							<li><a href="<?= $article['url'] ?>"><?= $article['titleText'] ?></a></li>
+						<? } ?>
 					</ul>
 				<? else: ?>
 					<?= wfMessage('lvs-posted-in-label-none')->plain() ?>
@@ -25,11 +27,12 @@
 				<?= $video['videoOverlay'] ?>
 			</a>
 		</div>
-		<button class="keep-button secondary" data-video-keep="<?= htmlspecialchars($video['title']) ?>"><?= wfMessage('lvs-button-keep') ?></button>
+		<button class="keep-button secondary" data-video-keep="<?= htmlspecialchars($video['title']) ?>"><?= wfMessage('lvs-button-keep')->plain() ?></button>
 	</div>
 	<div class="grid-3 premium">
-		<p><?= wfMessage('lvs-best-match-label')->text() ?></p>
+		<p><?= wfMessage('lvs-best-match-label')->plain() ?></p>
 		<div class="video-wrapper">
+			<? // TODO: This data is mocked for now ?>
 			<a href="<?= $video['fileUrl'] ?>" class="image video">
 				<?= $video['videoPlayButton'] ?>
 				<img alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>" data-video-key="<?= htmlspecialchars(urlencode($video['title'])) ?>" class="Wikia-video-thumb thumbimage">
@@ -37,10 +40,11 @@
 			</a>
 		</div>
 		<a class="more-link" href="#"><?= wfMessage('lvs-more-suggestions')->numParams(5)->text() ?></a>
-		<button class="swap-button lvs-sprite" data-video-swap="<?= htmlspecialchars($video['title']) ?>"> <?= wfMessage('lvs-button-swap') ?></button>
+		<button class="swap-button lvs-sprite" data-video-swap="<?= htmlspecialchars($video['title']) ?>"> <?= wfMessage('lvs-button-swap')->plain() ?></button>
 	</div>
 	<div class="more-videos">
 		<ul>
+			<? // TODO: This data is mocked for now ?>
 			<? for ($i = 0; $i < 5; $i++): ?>
 				<li>
 					<a href="<?= $video['fileUrl'] ?>" class="video">
