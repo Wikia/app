@@ -146,14 +146,18 @@ var LVS = {
 						window.GlobalNotification.show(data.msg, 'error');
 					} else {
 						window.GlobalNotification.show(data.msg, 'confirm');
+
+						$wrapper.slideUp( function() {
+							$wrapper.remove();
+						});
 					}
 				}
 			});
 		}
 
-		function confirmSwap( isSwap, currTitle, newTitle ) {
+		function confirmSwap( isSwap, currTitle, newTitle, $wrapper ) {
 			var msg;
-
+ 
 			currTitleText =  currTitle.replace(/_/g, ' ');
 
 			newTitleText = newTitle.replace(/_/g, ' ');
@@ -162,7 +166,7 @@ var LVS = {
 			$.confirm({
 				content: msg,
 				onOk: function() {
-					doRequest( isSwap, newTitle, currTitle );
+					doRequest( isSwap, newTitle, currTitle, $wrapper );
 				},
 				width: 700
 			});
@@ -172,6 +176,7 @@ var LVS = {
 			var $this = $( this ),
 				$parent = $this.parent(),
 				$arrow = $parent.siblings( '.swap-arrow' ),
+				$wrapper = $this.closest( '.row'),
 				newTitle,
 				currTitle;
 
@@ -185,7 +190,7 @@ var LVS = {
 				// Get both titles - current/non-premium video and video to swap it out with
 				newTitle = $this.attr( 'data-video-swap' );
 				currTitle = that.$container.find( '.keep-button' ).attr( 'data-video-keep' );
-				confirmSwap( true, decodeURIComponent( currTitle ), decodeURIComponent( newTitle ) );
+				confirmSwap( true, decodeURIComponent( currTitle ), decodeURIComponent( newTitle ), $wrapper );
 			}
 		});
 	},
@@ -205,7 +210,7 @@ var LVS = {
 
 						$wrapper.slideUp( function() {
 							$wrapper.remove();
-						})
+						});
 					}
 				}
 			});
