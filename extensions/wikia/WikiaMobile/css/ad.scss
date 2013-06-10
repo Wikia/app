@@ -7,6 +7,9 @@ $slotFooterWidthMax: 320px;
 $slotFooterHeight: 50px;
 $slotFooterMargin: 2px;
 $slotFooterColor: #666;
+//z-index has to be high enough to be above page content
+//and low enough so expandables can be above it
+$slotZIndex: 4000;
 
 #wkAdPlc {
 	position: relative;
@@ -14,7 +17,7 @@ $slotFooterColor: #666;
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
 
 	&.over {
-		z-index: $top-layer-z-index;
+		z-index: $slotZIndex;
 	}
 
 	&.fixed {
