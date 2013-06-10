@@ -9,8 +9,8 @@ $dir = dirname( __FILE__ );
 /**
  * classes
  */
-$wgAutoloadClassesp['GameGuidesController'] = "{$dir}/GameGuidesController.class.php";
-$wgAutoloadClassesp['GameGuidesWrongAPIVersionException'] = "{$dir}/GameGuidesController.class.php";
+$wgAutoloadClasses['GameGuidesController'] = "{$dir}/GameGuidesController.class.php";
+$wgAutoloadClasses['GameGuidesWrongAPIVersionException'] = "{$dir}/GameGuidesController.class.php";
 $wgAutoloadClasses[ 'GameGuidesModel'] =  "{$dir}/GameGuidesModel.class.php" ;
 
 /**
