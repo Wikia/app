@@ -14,7 +14,7 @@ $dir = dirname( __FILE__ );
 /**
  * info
  */
-$wgExtensionCredits[] =
+$wgExtensionCredits['other'][] =
 	array(
 		"name" => "WikiaMobile",
 		"description" => "Mobile Skin for Wikia",
