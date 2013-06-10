@@ -138,6 +138,10 @@ $arrow-button-color: white;
 			&:last-child {
 				margin-right: 0;
 			}
+
+			> a.selected {
+			      outline: 4px solid $color-buttons;
+			}
 		}
 		.Wikia-video-play-button {
 			line-height: $thumb-img-height;

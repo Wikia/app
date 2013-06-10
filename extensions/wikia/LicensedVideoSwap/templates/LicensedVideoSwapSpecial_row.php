@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<div class="video-wrapper">
-			<a href="<?= $video['fileUrl'] ?>" class="image video">
+			<a href="<?= $video['fileUrl'] ?>" class="image video no-lightbox">
 				<?= $video['videoPlayButton'] ?>
 				<img alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>" data-video-key="<?= htmlspecialchars(urlencode($video['title'])) ?>" class="Wikia-video-thumb thumbimage">
 				<?= $video['videoOverlay'] ?>
@@ -33,7 +33,7 @@
 		<p><?= wfMessage('lvs-best-match-label')->plain() ?></p>
 		<div class="video-wrapper">
 			<? // TODO: This data is mocked for now ?>
-			<a href="<?= $video['fileUrl'] ?>" class="image video">
+			<a href="<?= $video['fileUrl'] ?>" class="image video no-lightbox">
 				<?= $video['videoPlayButton'] ?>
 				<img alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>" data-video-key="<?= htmlspecialchars(urlencode($video['title'])) ?>" class="Wikia-video-thumb thumbimage">
 				<?= $video['videoOverlay'] ?>
@@ -47,7 +47,7 @@
 			<? // TODO: This data is mocked for now ?>
 			<? for ($i = 0; $i < 5; $i++): ?>
 				<li>
-					<a href="<?= $video['fileUrl'] ?>" class="video">
+					<a href="<?= $video['fileUrl'] ?>" class="video thumb<? if ( $i == 0 ): ?> selected<? endif; ?>">
 						<span class="timer">1:30</span>
 						<div class="Wikia-video-play-button"><img class="sprite play small" src=" <?= $wg->BlankImgUrl ?>"></div>
 						<img alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>" data-video-key="<?= htmlspecialchars(urlencode($video['title'])) ?>" class="Wikia-video-thumb thumbimage">

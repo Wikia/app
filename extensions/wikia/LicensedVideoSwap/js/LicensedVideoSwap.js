@@ -3,6 +3,7 @@ $(function() {
 var LVS = {
 	init: function() {
 		this.$container = $( '#LVSGrid' );
+		this.videoWidth = this.$container.find( '.grid-3' ).first().width();
 
 		this.initEllipses();
 		this.initDropDown();
@@ -10,6 +11,7 @@ var LVS = {
 		this.initMoreSuggestions();
 		this.initSwap();
 		this.initKeep();
+		this.initPlay();
 	},
 	/*
 	 * The design calls for all of the "posted in" titles to be on one line.
@@ -157,7 +159,7 @@ var LVS = {
 
 		function confirmSwap( isSwap, currTitle, newTitle, $wrapper ) {
 			var msg;
- 
+
 			currTitleText =  currTitle.replace(/_/g, ' ');
 
 			newTitleText = newTitle.replace(/_/g, ' ');
@@ -235,6 +237,46 @@ var LVS = {
 
 			confirmKeep( decodeURIComponent( currTitle ), $wrapper );
 		});
+	},
+	initPlay: function() {
+		var that = this;
+
+		this.$container.on('click', '.video', function(e) {
+			e.preventDefault();
+
+			var $this = $( this ),
+				fileTitle = decodeURIComponent( $this.children( 'img' ).attr( 'data-video-key' )),
+				videoInstance;
+
+			if ( $this.hasClass( 'thumb' ) ) {
+				// one of the thumbnails was clicked
+				$element = $this.closest( '.row' ).find( '.premium .video-wrapper' );
+				$thumbList = $this.closest( 'ul' ),
+
+				// put outline around the thumbnail that was clicked
+				$thumbList.find( '.selected' ).removeClass( 'selected' );
+				$this.addClass( 'selected' );
+			} else {
+				// Large image was clicked
+				$element = $this.parent();
+			}
+
+			$.nirvana.sendRequest({
+				controller: 'VideoHandler',
+				method: 'getEmbedCode',
+				data: {
+					fileTitle: fileTitle,
+					width: that.videoWidth,
+					autoplay: 1
+				},
+				callback: function( data ) {
+					require( ['wikia.videoBootstrap'], function( VideoBootstrap ) {
+						videoInstance = new VideoBootstrap( $element[0], data.embedCode, 'licensedVideoSwap' );
+					});
+				}
+			})
+
+		})
 	}
 };
 
