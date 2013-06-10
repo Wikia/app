@@ -32,13 +32,13 @@
 						</div>
 						<div class="clearfix">
 							<div class="left-spacer">&nbsp;</div>
-							<?= Xml::check( 'wpPhalanxFormatRegex', !empty( $data['regex'] ), array( 'id' => 'wpPhalanxFormatRegex' ) ) ?>
+							<?= Xml::check( 'wpPhalanxFormatRegex', !empty( $data['regex'] ), array( 'id' => 'wpPhalanxFormatRegex', 'data-excludes' => 'wpPhalanxFormatExact' ) ) ?>
 							<label for="wpPhalanxFormatRegex"><?php echo wfMsg( 'phalanx-format-regex' ) ?></label>
 
 							<?= Xml::check( 'wpPhalanxFormatCase', !empty( $data['case'] ), array( 'id' => 'wpPhalanxFormatCase' ) ) ?>
 							<label for="wpPhalanxFormatCase"><?php echo wfMsg( 'phalanx-format-case' ) ?></label>
 
-							<?= Xml::check( 'wpPhalanxFormatExact', !empty( $data['exact'] ), array( 'id' => 'wpPhalanxFormatExact' ) ) ?>
+							<?= Xml::check( 'wpPhalanxFormatExact', !empty( $data['exact'] ), array( 'id' => 'wpPhalanxFormatExact', 'data-excludes' => 'wpPhalanxFormatRegex' ) ) ?>
 							<label for="wpPhalanxFormatExact"><?php echo wfMsg( 'phalanx-format-exact' ) ?></label>
 						</div>
 						<div class="clearfix">
