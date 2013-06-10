@@ -109,7 +109,7 @@ class FilePageController extends WikiaController {
 		$summary = $this->getVal('summary', '');
 		$type = $this->getVal('type', '');
 		$result = array();
-		if(empty($summary) || empty($type)) {
+		if ( empty($summary) || empty($type) ) {
 			$this->result = $result;
 			return;
 		}
@@ -436,10 +436,29 @@ class FilePageController extends WikiaController {
 				// Eliminate the superfluous 'summary' key
 				$extraData = $extraData['summary'];
 
+				$whHelper = new WallHooksHelper;
+
 				// Loop with indexes so we can change $data in place
 				for ($i = 0; $i < count($articles); $i++) {
 					$info = $articles[$i];
 					$extraInfo = $extraData[$info['id']];
+
+					$ns = $info['namespace_id'];
+
+					if ( isset($ns) && in_array($ns, array(NS_USER_WALL_MESSAGE, NS_WIKIA_FORUM_BOARD_THREAD)) ) {
+						$row['page_namespace'] = $info['namespace_id'];
+						$row['page_title'] = $info['title'];
+						$opts = $whHelper->getMessageOptions( null, (object)$row );
+
+						// Beautify the title
+						$extraInfo['titleText'] = $opts['articleTitleTxt'];
+						$extraInfo['url'] = $opts['articleFullUrl'];
+					} else {
+						$cleanedText = preg_replace('/\/@comment-.+-[0-9]+$/', '', $extraInfo['titleText']);
+						if ( !empty($cleanedText) ) {
+							$extraInfo['titleText'] = $cleanedText;
+						}
+					}
 
 					$articles[$i] = array_merge($info, $extraInfo);
 				}
