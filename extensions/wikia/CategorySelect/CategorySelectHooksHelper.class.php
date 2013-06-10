@@ -146,6 +146,8 @@ class CategorySelectHooksHelper {
 	 * Add hooks for view and edit pages
 	 */
 	public static function onMediaWikiPerformAction( $output, $article, $title, $user, $request, $mediawiki, $force = false ) {
+		global $wgHooks;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( $force || CategorySelect::isEnabled() ) {
