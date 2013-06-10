@@ -59,21 +59,12 @@ class InterWiki extends AbstractSelect
 	protected $timeAllowed = 7500;
 	
 	/**
-	 * Identifies a match by domain via mw service. Registers with config and returns if found.
+	 * Reuses AbstractSelect's extractWikiMatch as the primary match method
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::extractMatch()
 	 * @return Wikia\Search\Match\Wiki
 	 */
 	public function extractMatch() {
-		$domain = preg_replace(
-				'/[^a-zA-Z]/',
-				'',
-				strtolower( $this->config->getQuery()->getSanitizedQuery() ) 
-				);
-		$match =  $this->service->getWikiMatchByHost( $domain );
-		if (! empty( $match ) ) {
-			$this->config->setWikiMatch( $match );
-		}
-		return $match;
+		return $this->extractWikiMatch();
 	}
 	
 	/**

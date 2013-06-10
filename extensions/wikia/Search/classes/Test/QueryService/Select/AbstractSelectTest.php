@@ -1097,5 +1097,70 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::extractWikiMatch
+	 */
+	public function testExtractWikiMatchWithMatch() {
+		$mockService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ 'getService', 'getConfig' ] )
+		                    ->getMockForAbstractClass();
+		
+		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( [ 'getQuery', 'setWikiMatch', 'getWikiMatch' ] )
+		                   ->getMock();
+		
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$mockMwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiMatchByHost' ] );
+		
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSanitizedQuery' ], [ 'foo' ] );
+		
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $mockMwService ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
+		    ->will   ( $this->returnValue( 'foo bar 123' ) )
+		;
+		$mockMwService
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiMatchByHost' )
+		    ->with   ( 'foobar123' )
+		    ->will   ( $this->returnValue( $mockMatch ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setWikiMatch' )
+		    ->with   ( $mockMatch )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiMatch' )
+		    ->will   ( $this->returnValue( $mockMatch ) )
+		;
+		$extract = new ReflectionMethod( $mockService, 'extractWikiMatch' );
+		$extract->setAccessible( true );
+		$this->assertEquals(
+				$mockMatch,
+				$extract->invoke( $mockService )
+		);
+	}
 	
 }
