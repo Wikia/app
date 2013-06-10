@@ -516,3 +516,11 @@ $messages['zh-hant'] = array(
 	'file-page-tab-about' => '關於',
 	'file-page-more-links' => '查看完整清單',
 );
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'video-page-file-list-header' => '在以下頁面中出現',
+	'file-page-tab-history' => '檔案歷史',
+);

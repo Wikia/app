@@ -65,7 +65,7 @@ class VideoService extends WikiaModel {
 	 * @throws Exception
 	 */
 	protected function addVideoVideoHandlers( $url ) {
-		$title = VideoFileUploader::URLtoTitle($url);
+		$title = VideoFileUploader::URLtoTitle( $url );
 		if ( !$title ) {
 			throw new Exception( wfMsg('videos-error-invalid-video-url') );
 		}

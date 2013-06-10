@@ -841,3 +841,15 @@ $messages['zh-hant'] = array(
 	'ajaxpoll-closed' => '投票現已封閉。享受結果。',
 	'ajaxpoll-submitting' => '請稍候，正提交您的投票...',
 );
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'ajaxpoll-thankyou' => '感謝您的投票！',
+	'ajaxpoll-error' => '處理您的投票發生問題，請再試一次。',
+	'ajaxpoll-summary' => '這項投票由 $1 在 $2上發起 ，目前為止有 $3 人投票。',
+	'ajaxpoll-submit' => '投票！',
+	'ajaxpoll-closed' => '投票現已封閉。享受結果。',
+	'ajaxpoll-submitting' => '請稍候，正提交您的投票...',
+);

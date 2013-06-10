@@ -390,8 +390,7 @@ class ListusersData {
 						'user_is_closed' => 0
 					);
 					if ( $key != Listusers::DEF_GROUP_NAME ) {
-						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
-						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $group), $dbs->anyString() );					
+						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key ) . " OR all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $key), $dbs->anyString() );						
 					} else {
 						$where['cnt_groups'] = 0;
 					}

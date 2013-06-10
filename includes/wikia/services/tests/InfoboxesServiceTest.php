@@ -159,8 +159,9 @@ class InfoboxesServiceTest extends WikiaBaseTest
 		
 		$service = $this->getMock( 'InfoboxesService', [ 'getMappedIds' ] );
 		$mapped = [ 123 => [ 123 ], 234 => [ 456, 789 ], 987 => [ 889 ] ];
-		$boxes = [ 'foo | bar' ];
-		$result = [ 123 => [ 'foo' => 'bar' ], 456 => [ 'foo' => 'bar' ], 789 => [ 'foo' => 'bar' ], 889 => [] ];
+		$boxes = [ 'infobox_1 | foo | bar', 'infobox_2 | baz | qux' ];
+		$ib = [ [ 'foo' => 'bar' ], [ 'baz' => 'qux' ] ];
+		$result = [ 123 => $ib, 456 => $ib, 789 => $ib, 889 => [] ];
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getMappedIds' )

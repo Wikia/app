@@ -14,6 +14,13 @@ class WAMServiceTest extends WikiaBaseTest {
 	 */
 	public function testGetWamIndexConditions ($options, $expConds, $blackList = '') {
 		$dbMock = $this->getMock('stdClass', array('strencode', 'makeList'));
+		$wamMock = $this->getMock('WAMService', array('getIdsBlacklistedWikis'));
+
+		$blackListArray = explode(',', $blackList);
+
+		$wamMock->expects($this->any())
+			->method('getIdsBlacklistedWikis')
+			->will($this->returnValue($blackListArray));
 
 		$dbMock->expects($this->any())
 			->method('strencode')
@@ -24,8 +31,8 @@ class WAMServiceTest extends WikiaBaseTest {
 			->will($this->returnValue($blackList));
 
 		$getWamIndexConditions = $this->getReflectionMethod('getWamIndexConditions');
-		$dataMartService = new WAMService();
-		$actConds = $getWamIndexConditions->invoke($dataMartService, $options, $dbMock);
+
+		$actConds = $getWamIndexConditions->invoke($wamMock, $options, $dbMock);
 
 		$this->assertEquals($expConds, $actConds);
 	}

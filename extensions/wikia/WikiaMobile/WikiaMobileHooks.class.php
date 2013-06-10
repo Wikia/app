@@ -89,7 +89,7 @@ class WikiaMobileHooks {
 									//All parts of caption as this might be exploded ie.:
 									//[[File:aa.jpg|thumb|300px|caption with [[Link|LINK]] right?]]
 									if ( !preg_match( '/(?:frame|thumb|right|left|\d+\s?px)/', $part ) ) {
-										$components[] = $part;
+										$components[] = htmlspecialchars( $part );
 									}
 
 								}

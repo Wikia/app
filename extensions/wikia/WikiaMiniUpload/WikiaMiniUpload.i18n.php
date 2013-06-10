@@ -3059,3 +3059,19 @@ $messages['zh-hant'] = array(
 	'wmu-title' => '上傳圖片',
 	'wmu-upload' => '上傳',
 );
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'wmu-notlogged' => '請登入或註冊，以便你從電腦上傳圖像',
+	'wmu-rename' => '把圖像重命名',
+	'wmu-overwrite' => '取代現有圖像',
+	'wmu-flickr2' => 'Flickr圖像 ($1 個結果)',
+	'wmu-insert3' => '插入此圖像',
+	'wmu-recent-inf' => '最近上傳的圖像',
+	'wmu-success' => '<h1>成功了！</h1>你已成功插入圖像。',
+	'wmu-imagelink' => '<b>最新！</b> 加入圖像',
+	'wmu-notallowed' => '你不能在此wiki上傳圖像',
+	'wmu-file-protected' => '此圖像已被保護',
+);

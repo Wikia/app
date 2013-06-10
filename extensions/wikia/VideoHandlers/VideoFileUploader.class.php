@@ -63,10 +63,31 @@ class VideoFileUploader {
 		return $upload;
 	}
 
-	public function upload( &$oTitle){
+	/**
+	 * Start the upload.  Note that this method always returns an object, even when it fails.
+	 * Make sure to check that the return value with:
+	 *
+	 *   $statis->isOK()
+	 *
+	 * @param $oTitle - A title object that will be set if this call is successful
+	 * @return FileRepoStatus|Status - A status object representing the result of this call
+	 */
+	public function upload( &$oTitle ) {
 
 		wfProfileIn(__METHOD__);
-		if( !$this->getApiWrapper() ) {
+
+		// The getApiWrapper method makes an HTTP request which can result
+		// in some thrown exceptions
+		$wrapper = null;
+		try {
+			$wrapper = $this->getApiWrapper();
+		} catch ( Exception $e ) {
+			// If we get an error here, just print it and let the following
+			// code return a Status::newFatal
+			Wikia::Log(__METHOD__, false, $e->getMessage());
+		}
+
+		if( !$wrapper ) {
 			/* can't upload without proper ApiWrapper */
 			wfProfileOut(__METHOD__);
 			return Status::newFatal("Can't get ApiWrapper");
@@ -360,7 +381,9 @@ class VideoFileUploader {
 			}
 			$oUploader->setDescription( $sDescription );
 		}
-		if ( $oUploader->upload( $oTitle ) ) {
+
+		$status = $oUploader->upload( $oTitle );
+		if ( $status->isOK() ) {
 			wfProfileOut( __METHOD__ );
 			return $oTitle;
 		}

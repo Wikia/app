@@ -652,7 +652,7 @@ ENDIT;
 		;
 		$this->mockClass( 'simple_html_dom', $dom2 );
 		$this->assertEquals(
-				[ 'infoboxes_txt' => [ 'here is my key | value' ] ],
+				[ 'infoboxes_txt' => [ 'infobox_1 | here is my key | value' ] ],
 				$extract->invoke( $service, $dom, $result )
 		);
 	}
