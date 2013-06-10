@@ -445,6 +445,7 @@ class FilePageController extends WikiaController {
 
 					$ns = $info['namespace_id'];
 
+					// Handle message wall and forum board links
 					if ( isset($ns) && in_array($ns, array(NS_USER_WALL_MESSAGE, NS_WIKIA_FORUM_BOARD_THREAD)) ) {
 						$row['page_namespace'] = $info['namespace_id'];
 						$row['page_title'] = $info['title'];
@@ -453,7 +454,9 @@ class FilePageController extends WikiaController {
 						// Beautify the title
 						$extraInfo['titleText'] = $opts['articleTitleTxt'];
 						$extraInfo['url'] = $opts['articleFullUrl'];
-					} else {
+					}
+					// Clean up any type of comment on any article page
+					else {
 						$cleanedText = preg_replace('/\/@comment-.+-[0-9]+$/', '', $extraInfo['titleText']);
 						if ( !empty($cleanedText) ) {
 							$extraInfo['titleText'] = $cleanedText;
