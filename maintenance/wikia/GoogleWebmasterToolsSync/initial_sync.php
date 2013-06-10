@@ -3,7 +3,7 @@
 // example: SERVER_ID=5915 php maintenance/wikia/GoogleWebmasterToolsSync/initial_sync.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
 
 global $IP;
-require_once( __DIR__."/configure_log_file.php" );
+require_once( __DIR__."/common.php" );
 GWTLogHelper::notice( __FILE__ . " script starts.");
 $minCountOfPagesToSync = 100;
 
@@ -15,7 +15,7 @@ try {
 
 	foreach ( Iterators::group( $wikiPageCountService->listPageCountsIterator(), 50 ) as $pageCountGroup ) {
 		$updated = 0; $created = 0; $same = 0;
-		GWTLogHelper::debug( "Group size: " . count( $pageCountGroup ) );
+		GWTLogHelper::debug( "Group size: " . (int) count( $pageCountGroup ) );
 		foreach ( $pageCountGroup as $pageCountModel ) {
 			/** @var WikiPageCountModel $pageCountModel */
 			$page = $wikiRepository->getById( $pageCountModel->getWikiId() );

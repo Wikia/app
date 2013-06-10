@@ -37,7 +37,7 @@ class GWTService {
 
 	/**
 	 * Get all users that don't have to much sites added.
-	 * @return array
+	 * @return GWTUser[]
 	 */
 	function getAvailableUsers() {
 		$users = $this->userRepository->allCountLt( $this->getMaxSitesPerAccount() );
@@ -57,7 +57,7 @@ class GWTService {
 
 	/**
 	 * Get all wikis not marked as uploaded to google webmaster toolkit
-	 * @return array
+	 * @return GWTWiki[]
 	 */
 	function getWikisToUpload() {
 		$wikis = $this->wikiRepository->allUnassigned();
@@ -81,7 +81,7 @@ class GWTService {
 	/**
 	 * Get wiki info.
 	 * @param $wikiId - city_id
-	 * @return null
+	 * @return null|GWTSiteSyncStatus
 	 */
 	function getWikiInfo( $wikiId ) {
 		$wikiId = strval($wikiId);

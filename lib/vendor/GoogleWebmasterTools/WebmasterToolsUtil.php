@@ -11,7 +11,7 @@ class WebmasterToolsUtil {
 	 * @param $credentials IUserCredentials
 	 * @return - GWTSiteSyncStatus.
 	 */
-	public function add( $wiki, $credentials ) {
+	public function add( $wiki, IGoogleCredentials $credentials ) {
 		$client = new GWTClient($credentials->getEmail(), $credentials->getPassword(), $wiki);
 		$client->add_site();
 		return $client->site_info();
@@ -61,10 +61,10 @@ class WebmasterToolsUtil {
 		$client->add_site();
 	}
 
-	/*
+	/**
 	 * Fetch all sites added to google webmaster toolkit account.
 	 * @param $credentials - ICredentials implementation. Google account credentials.
-	 * @return array of GWTSiteSyncStatus
+	 * @return GWTSiteSyncStatus[]
 	 */
 	public function getSites( IGoogleCredentials $credentials ) {
 		$client = new GWTClient($credentials->getEmail(), $credentials->getPassword());
@@ -72,11 +72,12 @@ class WebmasterToolsUtil {
 		return $client->get_sites();
 	}
 
-	/*
+	/**
 	 * Gets wiki sync status
 	 * @param $wikiId - city_id
-	 * @param $credentials - google webmaster tools credentials.
-	 * @return GWTSiteSyncStatus
+	 * @param \IGoogleCredentials $credentials - google webmaster tools credentials.
+	 * @throws InvalidArgumentException
+	 * @return GWTSiteSyncStatus|null
 	 */
 	public function getInfo( $wikiId, IGoogleCredentials $credentials = null ) {
 		//if ( is_array($credentials) ) $credentials = $this->findAccount( $wikiId, $credentials );
@@ -88,8 +89,9 @@ class WebmasterToolsUtil {
 
 	public function findAccount( $wikiId, $accounts ) {
 		foreach ( $accounts as $i => $u ) {
+			/** @var IGoogleCredentials $u  */
 			$client = new GWTClient($u->getEmail(), $u->getPassword(), $wikiId);
-			if ( $client->site_info() ) return $u;
+			if ( $client->site_info() ) { return $u; }
 			//else {
 			//	echo $u->getEmail() . " " . $u->getPassword() . " " . $wikiId . "\n";
 			//}

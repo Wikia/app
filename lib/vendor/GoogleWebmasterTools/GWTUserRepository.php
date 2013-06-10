@@ -32,7 +32,7 @@ class GWTUserRepository {
 
 	/**
 	 * @param ResultWrapper $queryResult
-	 * @return array
+	 * @return GWTUser[]
 	 */
 	private function materializeList( $queryResult ) {
 		$list = array();
@@ -43,7 +43,7 @@ class GWTUserRepository {
 	}
 
 	/**
-	 * @return array
+	 * @return GWTUser[]
 	 */
 	public function all() {
 		$result = $this->databaseConnection->select("webmaster_user_accounts", array("user_id", "user_name", "user_password", "wikis_number"));
@@ -52,7 +52,7 @@ class GWTUserRepository {
 
 	/**
 	 * @param $count
-	 * @return array
+	 * @return GWTUser[]
 	 */
 	public function allCountLt( $count ) {
 		$result = $this->databaseConnection->select("webmaster_user_accounts"
@@ -63,7 +63,7 @@ class GWTUserRepository {
 
 	/**
 	 * @param $email
-	 * @return null
+	 * @return null|GWTUser
 	 */
 	public function getByEmail( $email ) {
 		$result = $this->databaseConnection->select("webmaster_user_accounts"
