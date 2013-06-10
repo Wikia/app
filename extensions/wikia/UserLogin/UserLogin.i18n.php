@@ -1764,12 +1764,13 @@ ___________________________________________
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Bebauautu
+ * @author Milicevic01
  * @author Rancher
  */
 $messages['sr-ec'] = array(
 	'userlogin-login-heading' => 'Пријава',
 	'userlogin-forgot-password' => 'Заборавили сте лозинку?',
-	'userlogin-remembermypassword' => 'Запамти ме', # Fuzzy
+	'userlogin-remembermypassword' => 'Остави ме пријављеног/у',
 	'userlogin-error-noname' => 'Попуните поље за корисничко име.',
 	'userlogin-error-sessionfailure' => 'Ваша сесија је истекла. Пријавите се поново.',
 	'userlogin-error-nosuchuser' => 'Корисничко име не постоји. Не заборавите да систем разликује мала и велика слова.',

@@ -901,7 +901,10 @@ Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maa
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'comboajaxlogin-desc' => "Bóstia de dinamica que permeton als utilizaires de se connectar, se rapelar de lor senhal e d'enregistrar d'utilizaires",
+	'comboajaxlogin-createlog' => 'Se connectar o crear un compte',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retorn',
+	'comboajaxlogin-connectmarketing-forward' => 'Abans de començar &raquo;',
 );
 
 /** Polish (polski)
@@ -1362,4 +1365,40 @@ $messages['zh-hans'] = array(
 <br />
 （如果您已拥有一个账户，则可以正常<a href="#">登陆</a>，但不能做出任何编辑。）</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia没有响应。请检查您的网络连接。',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'comboajaxlogin-createlog' => '登入／創建帳戶',
+	'comboajaxlogin-actionmsg' => '如要執行此動作，你需要先登入或建立帳戶',
+	'comboajaxlogin-actionmsg-protected' => '如要執行此動作，你需要先登入或創建帳戶。',
+	'comboajaxlogin-connectmarketing' => '<h1>連結你的帳戶</h1>
+<ul>
+<li>登入之後保留你現有的用戶名稱、編輯歷史，一切都不會改變。</li>
+<li>在facebook和朋友分享你在Wikia的編輯記錄。</li>
+<li>完全控制你想發佈的內容。</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>以facebook帳戶登入</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>連結你的facebook帳戶</h1>
+<ul>
+<li>登入之後保留你現有的用戶名稱、編輯歷史，一切都不會改變。</li>
+<li>在facebook和朋友分享你在Wikia的編輯記錄。</li>
+<li>完全控制你想發佈的內容。</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '« 返回',
+	'comboajaxlogin-connectmarketing-forward' => '開始使用 »',
+	'comboajaxlogin-connectdirections' => '請在此輸入你的Wikia用戶名稱及密碼──我們會在背後奇蹟般地把你的Wikia帳戶和你的facebook帳戶連結。
+
+在完成之後，你便能輕易使用你的facebook帳戶登入Wikia。',
+	'comboajaxlogin-post-not-understood' => '建立表單的方式導致錯誤發生。
+
+請重試或[[Special:Contact|向我們匯報]]。',
+	'comboajaxlogin-readonlytext' => '<h2>抱歉！</h2>
+<p>閣下目前不能建立帳戶──我們將會在短期內回復正常。請參考以下連結，看看發生了甚麼事：<br /><em>$1</em></p>
+<p>請查看Wikia的<a href="http://twitter.com/wikia">Twitter</a>或<a href="http://facebook.com/wikia">facebook</a>以獲取更多有關事件的詳情。
+<br />
+（如果你已經擁有帳戶，你可以如常<a href="#">登入</a>，但你將不能進行任何編輯動作。）</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia沒有回應，請檢查你的網路連線。',
 );

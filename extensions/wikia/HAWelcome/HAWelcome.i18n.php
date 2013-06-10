@@ -380,6 +380,7 @@ Persiyayışa pêron rê ez şımarê peşti dana!",
  * @author Bola
  * @author Crazymadlover
  * @author Pertile
+ * @author Pintor Smeargle
  * @author VegaDark
  * @author Vivaelcelta
  */
@@ -408,16 +409,22 @@ Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en [[$2|mi di
 	'welcome-message-log' => 'Bienvenida',
 	'welcome-message-user-staff' => '==Bienvenido==
 
-Hola, ¡bienvenido a {{SITENAME}}! Gracias por editar la página [[:$1]].
+Hola, ¡bienvenido a {{SITENAME}}! Te agradecemos por tu edición en [[:$1]].
 
-Si necesitas ayuda y no hay administradores locales aquí, quizás quieras visitar las [[w:c:ayuda|páginas de ayuda]]. Visita la [[w:c:comunidad|Comunidad Central]] para mantenerte informado con nuestro [[w:c:comunidad:Blog:Actualizaciones técnicas|blog del personal]], haz preguntas en nuestro [[w:c:comunidad:Special:Forum|foro]], participa en nuestras [[w:c:community:Help:Webinars|series web]], o conversa en directo con tus amigos de Wikia. ¡Que te diviertas! $3', # Fuzzy
+Si requieres ayuda y no encuentras administradores activos aquí, te inviramos a visitar la [[w:c:ayuda|Central de Ayuda]]. Visita la [[w:c:comunidad|Comunidad Central Hispana]] para estar informado con nuestros [[w:c:comunidad:Blog:Actualizaciones técnicas|blogs]].
+
+Si tienes dudas, siempre puedes preguntar en nuestro [[w:c:comunidad:Special:Forum|foro de ayuda]], ¡te invitamos a participar en nuestras [[w:c:community:Help:Webinars|series web]] o conversar en directo con tus amigos de Wikia!
+
+¡Esperamos que te diviertas! $3', # Fuzzy
 	'welcome-message-anon-staff' => '==Bienvenido==
 
-Hola,
+Hola.
 
 Bienvenido a {{SITENAME}}. Gracias por editar la página [[:$1]]. Animamos a todos los colaboradores a [[Special:UserLogin|crear una cuenta de usuario]], una forma sencilla de mantener un registro de tus contribuciones, acceder a más características de Wikia y ayudar a darse a conocer en el resto de la comunidad de {{SITENAME}}.
 
-Si necesitas ayuda visita primero las [[w:c:ayuda|páginas de ayuda]] y luego visita la [[w:c:comunidad|Comunidad central]] para aprender más. ¡Que te diviertas! $3', # Fuzzy
+Si necesitas ayuda, siempre puedes visitar la [[w:c:ayuda|Central de Ayuda]] y si gustas, te invitamos a revisar la [[w:c:comunidad|Comunidad central]] para aprender más. 
+
+¡Que te diviertas! $3', # Fuzzy
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|foro de ayuda]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HaWelcomeEdit',
 	'welcome-message-wall-user' => '¡Hola, bienvenido a {{SITENAME}}! Gracias por tu edición en [[:$1]].
@@ -431,14 +438,14 @@ Bienvenido a {{SITENAME}} y gracias por tu edición en la página [[:$1]]. Si ne
 ¿Por qué no '''[[Special:Userlogin|te creas una cuenta y te identificas?]]'''. De esta forma será mucho más fácil saber qué páginas has editado y se te atribuirá tu trabajo en el wiki, además te será de ayuda a la hora de comunicarte con el resto de la comunidad.
 
 Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro para ver si puedo ayudarte con cualquier cosa.",
-	'welcome-message-wall-anon-staff' => "¡Hola,
+	'welcome-message-wall-anon-staff' => "Hola.
 
-Bienvenido a {{SITENAME}}! Gracias por tu edición en [[:$1]]. 
+¡Bienvenido a {{SITENAME}}! Gracias por tu edición en [[:$1]]. 
 
 ¿Por qué no '''[[Special:Userlogin|te creas una cuenta y te identificas?]]'''. De esta forma será mucho más fácil saber qué páginas has editado y se te atribuirá tu trabajo en el wiki, acceder a más funcionalidades de Wikia y darte a conocer al resto de la comunidad.
 
 Si necesitas ayuda, visita primero las [[w:c:ayuda|páginas de ayuda]] y luego visita la [[w:c:comunidad|Comunidad Central]] para aprender más. ¡Que te diviertas!", # Fuzzy
-	'welcome-description' => 'Envía un mensaje de bienvenida a los usuarios después de la primera edición.', # Fuzzy
+	'welcome-description' => 'Envía un mensaje a todos los usuarios después de realizar su primera edición.',
 );
 
 /** Estonian (eesti)

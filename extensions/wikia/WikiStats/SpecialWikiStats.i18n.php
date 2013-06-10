@@ -7062,7 +7062,7 @@ $messages['pt'] = array(
 	'wikistats_comparision' => 'Comparações',
 	'wikistats_showstats_btn' => 'Mostrar estatísticas',
 	'wikistats_wikia_information' => 'Informações da Wikia',
-	'wikiastast_refresh_data' => 'Actualizar dados',
+	'wikiastast_refresh_data' => 'Atualizar dados',
 	'wikistats_showcharts' => 'Mostrar gráficos',
 	'wikistats_export_xls' => 'Exportar para XLS',
 	'wikistats_panel_close_btn' => 'Fechar',
@@ -9189,6 +9189,17 @@ $messages['zh-hant'] = array(
 	'wikistats_current_month' => '本月',
 	'wikistats_language_top' => '首 $1 種語言',
 	'wikistats_language_all' => '所有語言',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'wikistats_images' => '圖像',
+	'wikistats_media' => '圖片及影片',
+	'wikistats_image' => '圖片',
+	'wikistats_image_namespace' => '圖片',
+	'wikistats_image_uploads' => '已上傳的圖像',
 );
 
 /** Chinese (Taiwan) (中文（台灣）‎)
