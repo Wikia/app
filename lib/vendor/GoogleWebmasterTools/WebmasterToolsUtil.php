@@ -1,15 +1,21 @@
 <?php
 
 
+/**
+ * Class WebmasterToolsUtil
+ */
 class WebmasterToolsUtil {
 
+	/**
+	 *
+	 */
 	public function __construct( ) {
 	}
 
-	/*
+	/**
 	 * @param $wiki GWTWiki
-	 * @param $credentials IUserCredentials
-	 * @return - GWTSiteSyncStatus.
+	 * @param \IGoogleCredentials $credentials IUserCredentials
+	 * @return \GWTSiteSyncStatus|null - GWTSiteSyncStatus.
 	 */
 	public function add( $wiki, IGoogleCredentials $credentials ) {
 		$client = new GWTClient($credentials->getEmail(), $credentials->getPassword(), $wiki);
@@ -17,12 +23,14 @@ class WebmasterToolsUtil {
 		return $client->site_info();
 	}
 
-	/*
+	/**
 	 * Sends verify request to google webmaster tools ( uses wgGoogleSiteVerification variable )
-	 * @param $wikiId - id of wiki to verify (city_id)
-	 * @param $credentials - ICredentials implementation. Google account credentials.
-	 * @param $force - send verify request even if already verified.
-	 * @return google verify response
+	 * @param int $wikiId - id of wiki to verify (city_id)
+	 * @param \IGoogleCredentials $credentials - ICredentials implementation. Google account credentials.
+	 * @param bool $force - send verify request even if already verified.
+	 * @return bool|\GWTSiteSyncStatus
+	 * @throws GWTException
+	 * @throws InvalidArgumentException
 	 */
 	public function verify( $wikiId, IGoogleCredentials $credentials = null , $force = false ) {
 		//if ( is_array($credentials) ) $credentials = $this->findAccount( $wikiId, $credentials );
@@ -37,11 +45,12 @@ class WebmasterToolsUtil {
 		return $client->verify_site();
 	}
 
-	/*
+	/**
 	 * Sends sitemap to google webmaster tools
 	 * @param $wikiId - id of wiki to verify (city_id)
-	 * @param $credentials - ICredentials implementation. Google account credentials.
-	*/
+	 * @param \IGoogleCredentials $credentials - ICredentials implementation. Google account credentials.
+	 * @throws InvalidArgumentException
+	 */
 	public function sendSitemap( $wikiId, IGoogleCredentials $credentials ) {
 		//if ( is_array($credentials) ) $credentials = $this->findAccount( $wikiId, $credentials );
 		if ( !$credentials ) throw new InvalidArgumentException("credentials = null");
@@ -51,10 +60,10 @@ class WebmasterToolsUtil {
 		$client->send_sitemap();
 	}
 
-	/*
+	/**
 	 * Sends information to given google account. Do this before verify
-	 * @param $wikiId - id of wiki to verify (city_id)
-	 * @param $credentials - ICredentials implementation. Google account credentials.
+	 * @param int $wikiId - id of wiki to verify (city_id)
+	 * @param IGoogleCredentials $credentials - ICredentials implementation. Google account credentials.
 	 */
 	public function upload( $wikiId, IGoogleCredentials $credentials ) {
 		$client = new GWTClient($credentials->getEmail(), $credentials->getPassword(), $wikiId);
@@ -63,7 +72,7 @@ class WebmasterToolsUtil {
 
 	/**
 	 * Fetch all sites added to google webmaster toolkit account.
-	 * @param $credentials - ICredentials implementation. Google account credentials.
+	 * @param IGoogleCredentials $credentials - ICredentials implementation. Google account credentials.
 	 * @return GWTSiteSyncStatus[]
 	 */
 	public function getSites( IGoogleCredentials $credentials ) {
@@ -87,14 +96,16 @@ class WebmasterToolsUtil {
 		return $client->site_info();
 	}
 
+	/**
+	 * @param $wikiId
+	 * @param $accounts
+	 * @return IGoogleCredentials|null
+	 */
 	public function findAccount( $wikiId, $accounts ) {
 		foreach ( $accounts as $i => $u ) {
 			/** @var IGoogleCredentials $u  */
 			$client = new GWTClient($u->getEmail(), $u->getPassword(), $wikiId);
 			if ( $client->site_info() ) { return $u; }
-			//else {
-			//	echo $u->getEmail() . " " . $u->getPassword() . " " . $wikiId . "\n";
-			//}
 		}
 		return null;
 	}
