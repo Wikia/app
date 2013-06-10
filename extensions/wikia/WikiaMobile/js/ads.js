@@ -27,7 +27,9 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 			in_content: 1
 		},
 		STOP_COOKIE_NAME = 'wkStopAd',
-		ID_COOKIE_NAME = 'wikia_mobile_id';
+		ID_COOKIE_NAME = 'wikia_mobile_id',
+		fix,
+		unfix;
 
 	/**
 	 * Stops ads requests from being made for a specific amount of time
@@ -85,6 +87,12 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 				'"></script>',
 				findAd(options.wrapper, options.init)
 			);
+
+			if(options.functions){
+				fix = options.functions.fix;
+				unfix = options.functions.unfix;
+			}
+
 		}
 	}
 
@@ -161,10 +169,10 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 		setupSlot: setupSlot,
 		shouldRequestAd: shouldRequestAd,
 		fix: function(){
-
+			fix && fix()
 		},
 		unfix: function(){
-
+			unfix && unfix();
 		},
 		stop: stop
 	};
