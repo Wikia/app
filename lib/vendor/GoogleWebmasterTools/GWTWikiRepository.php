@@ -41,20 +41,20 @@ class GWTWikiRepository {
 	}
 	*/
 	/**
-	 * @return array
+	 * @return GWTWiki[]
 	 */
 	public function allUnassigned() {
 		$result = $this->databaseConnection->select("webmaster_sitemaps"
 			, array("user_id", "wiki_id", "upload_date", "page_count")
 			, array("upload_date" => null )
 			, __METHOD__
-			, "ORDER BY page_count DESC");
+			, [ "ORDER BY" => "page_count DESC" ]);
 		return $this->materializeList($result);
 	}
 
 	/**
 	 * @param integer $wikiId
-	 * @return array
+	 * @return GWTWiki[]
 	 */
 	public function allByWikiId( $wikiId ) {
 		$result = $this->databaseConnection->select("webmaster_sitemaps"
@@ -72,7 +72,7 @@ class GWTWikiRepository {
 		$wikis = $this->allByWikiId( $wikiId );
 		if( count( $wikis ) == 0 ) { return null; }
 		if( count( $wikis ) == 1 ) { return $wikis[0]; }
-		throw new GWTException("Fetched wrong number of wikis (id=".$wikiId."). Expected 0 or 1, was " . count($wikis));
+		throw new GWTException("Fetched wrong number of wikis (id=".$wikiId."). Expected 0 or 1, was " . (int) count($wikis));
 	}
 
 	/**

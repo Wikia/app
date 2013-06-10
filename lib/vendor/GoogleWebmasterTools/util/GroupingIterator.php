@@ -5,6 +5,12 @@
  * Time: 16:01
  */
 
+/**
+ * Class GroupingIterator
+ * Wraps inner iterator and returns arrays of size $groupSize.
+ * @example $groupsSize = 2 and original iterator returns 1,2,3,4,5.
+ * @example new iterator would return [1,2], [3,4], [5]
+ */
 class GroupingIterator implements Iterator {
 	/**
 	 * @var Iterator

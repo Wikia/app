@@ -42,6 +42,8 @@ class GroupingIteratorTest extends WikiaBaseTest {
 
 	public function testSecondGroup2() {
 		$groupingIterator = new GroupingIterator( new ArrayIterator( [1,2,3] ), 2);
+		$this->assertTrue( $groupingIterator->valid() );
+		$this->assertEquals( [1,2], $groupingIterator->current() );
 		$groupingIterator->next();
 		$this->assertTrue( $groupingIterator->valid() );
 		$this->assertEquals( [3], $groupingIterator->current() );

@@ -9,7 +9,7 @@ try {
 	$wikis = $wikiRepository->allUnassigned();
 
 	foreach ( $wikis as $i => $w ) {
-		echo $w->getWikiId() . " " . $w->getDb() . "\n";
+		echo $w->getWikiId() . " " . $w->getDb() . " page count = " . $w->getPageCount() . "\n";
 	}
 
 } catch ( Exception $ex ) {

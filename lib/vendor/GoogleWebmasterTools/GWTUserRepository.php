@@ -92,6 +92,7 @@ class GWTUserRepository {
 	}
 
 	/**
+	 * Insert user. Throws if user (email) exists.
 	 * @param $email
 	 * @param $password
 	 * @return GWTUser
@@ -105,6 +106,7 @@ class GWTUserRepository {
 	}
 
 	/**
+	 * Returns false if user exists
 	 * @param $email
 	 * @param $password
 	 * @return bool|GWTUser
@@ -190,7 +192,7 @@ class GWTUserRepository {
 	}
 
 	/**
-	 * @return mixed
+	 * @return int
 	 */
 	private function generateUserId(  ) {
 		$res = $this->databaseConnection->select("webmaster_user_accounts",
@@ -198,6 +200,6 @@ class GWTUserRepository {
 			array(),
 			__METHOD__
 		);
-		return $res->fetchObject()->maxid + 1;
+		return (int) $res->fetchObject()->maxid + 1;
 	}
 }
