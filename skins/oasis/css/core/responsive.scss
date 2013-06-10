@@ -6,10 +6,6 @@ $width-padding: $width-gutter / 2;
 $width-adskin: 170px;
 $width-outside-max: 1600px;
 
-body {
-	overflow-x: hidden;
-}
-
 body > .global-notification,
 .WikiaHeader .page-width-container,
 .WikiaPage {
