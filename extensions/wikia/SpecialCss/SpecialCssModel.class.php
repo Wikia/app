@@ -1,6 +1,8 @@
 <?php
 class SpecialCssModel extends WikiaModel {
 	const CSS_FILE_NAME = 'Wikia.css';
+	const CC_SERVER_NAME = 'http://community.lukaszk.wikia-dev.com/';
+	const CC_CITY_ID = 117;
 
 	/**
 	 * @var array List of skins for which we would like to use SpecialCss for editing css file
@@ -101,5 +103,55 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	public function getSpecialCssTitle() {
 		return SpecialPage::getTitleFor('CSS');
+	}
+
+	public function getCssBlogData($params = []) {
+		$cssBlogs = [];
+
+		$cssBlogsJson = $this->getCssBlogJsonData($params);
+
+		if ( $cssBlogsJson ) {
+			foreach ( $cssBlogsJson as $blog ) {
+				$blogTitle = GlobalTitle::newFromText($blog->title, $blog->ns, self::CC_CITY_ID);
+				$cssBlogs[] = [
+					'title' => $blogTitle->getText(),
+					'blogUrl' => $blogTitle->getFullURL()
+				];
+			}
+		}
+
+		return $cssBlogs;
+	}
+
+	private function getCssBlogJsonData($params) {
+		$blogs = json_decode( Http::get($this->createApiUrl($params)) );
+		return $blogs->query->categorymembers;
+	}
+
+	private function createApiUrl($params) {
+		$url = self::CC_SERVER_NAME . 'api.php?' . http_build_query( $this->prepareParameters($params));
+		return $url;
+	}
+
+	private function prepareParameters($params) {
+		$apiParams = $this->getDefaultParams();
+
+		if ( !empty($params) ) {
+			$apiParams = array_merge($apiParams, $params);
+		}
+
+		return $apiParams;
+	}
+
+	private function getDefaultParams() {
+		return [
+			'format' => 'json',
+			'action' => 'query',
+			'list' => 'categorymembers',
+			'cmtitle' => 'Category:Staff_blogs',
+			'cmlimit' => '20',
+			'cmsort' => 'timestamp',
+			'cmdir' => 'desc'
+		];
 	}
 }

@@ -18,6 +18,8 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$model = new SpecialCssModel();
 		$this->cssContent = $model->getCssFileContent();
 
+		$this->cssBlogs = $model->getCssBlogData();
+
 		wfProfileOut(__METHOD__);
 	}
 	
