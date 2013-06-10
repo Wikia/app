@@ -13,7 +13,7 @@
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
-define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobilehelper'], function ( ck, window, $, dartHelper) {
+define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobilehelper'], function (ck, window, $, dartHelper) {
 	'use strict';
 
 	var AD_TYPES = {
@@ -93,9 +93,10 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 	 * expected position/behaviour accordingly
 	 *
 	 * @private
+	 *
+	 * @return function - callback for postscribe
 	 */
 	function findAd(wrapper, init) {
-		//return callback for postscribe
 		return function(){
 			if (wrapper) {
 				var i,
@@ -155,7 +156,8 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 
 	//global shortcut to be used directly
 	//inside DART creatives
-	window.MobileAd = {
+	//it also return it for AMD modules
+	return window.MobileAd = {
 		setupSlot: setupSlot,
 		shouldRequestAd: shouldRequestAd,
 		fix: function(){
@@ -166,6 +168,4 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 		},
 		stop: stop
 	};
-
-	return window.MobileAd;
 });
