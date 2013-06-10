@@ -51,6 +51,8 @@ class EditPageLayoutHelper {
 	 * @author macbre
 	 */
 	function setupEditPage(Article $editedArticle, $fullScreen = true, $class = false) {
+		global $wgHooks;
+
 		wfProfileIn(__METHOD__);
 
 		$user = $this->app->wg->User;
