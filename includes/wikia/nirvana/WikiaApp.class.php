@@ -526,7 +526,6 @@ class WikiaApp {
 	/**
 	 * get global variable (alias: WikiaGlobalRegistry::get(var,'mediawiki'))
 	 * @param string $globalVarName
-	 * @deprecated
 	 */
 	public function getGlobal( $globalVarName ) {
 		return $this->wg->get( $globalVarName );
