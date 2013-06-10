@@ -49,7 +49,7 @@ var SpecialVideos = {
 							if ( formRes.error ) {
 								GlobalNotification.show( formRes.error, 'error' );
 							} else {
-								window.VET_loader.modal.closeModal();
+								window.VET.close();
 								(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
 							}
 						},

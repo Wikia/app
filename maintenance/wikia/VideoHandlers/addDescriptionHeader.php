@@ -11,7 +11,7 @@ ini_set('error_reporting', E_NOTICE);
 
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
-class EditCLI extends Maintenance {
+class AddDescHeader extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Add the description header";
@@ -22,7 +22,7 @@ class EditCLI extends Maintenance {
 	public function execute() {
 		global $wgUser;
 
-		$userName = $this->getOption( 'user', 'Maintenance script' );
+		$userName = $this->getOption( 'user', 'WikiaBot' );
 		$test = $this->hasOption('test') ? true : false;
 
 		if (!$test) {
@@ -113,6 +113,6 @@ class EditCLI extends Maintenance {
 	}
 }
 
-$maintClass = "EditCLI";
+$maintClass = "AddDescHeader";
 require_once( RUN_MAINTENANCE_IF_MAIN );
 

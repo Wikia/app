@@ -137,6 +137,15 @@ class TempUser extends WikiaModel {
 	}
 
 	/**
+	 * invalidate memcache for temp user
+	 * @param string $sUserName
+	 * @return void
+	 */
+	public static function invalidateTempUserCache( $sUserName ) {
+		F::app()->wg->Memc->delete( self::getMemKeyTempUser( $sUserName ) );
+	}
+
+	/**
 	 * get temp user from name
 	 * @param string $username
 	 * @return tempUser object or false $tempUser

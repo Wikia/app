@@ -30,7 +30,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-	'videos' => 'This is the feature name',
+	'videos' => 'This is the feature name that shows up in the Wiki Nav menu bar when the Extension is enabled',
 	'specialvideos-html-title' => 'This is the page title for the Special:Videos page',
 	'specialvideos-page-title' => 'This is the h1 (header) text for the Special:Videos page',
 	'specialvideos-wiki-videos-tally' => 'This text displays the number of videos on a wiki',

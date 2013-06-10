@@ -839,6 +839,14 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 		$commentedSql = preg_replace( '/\s/', " /* $fname $userName */ ", $sql, 1 );
 
+		# Wikia change - begin
+		# @author macbre
+		# Add profiling data to queries like BEGIN or COMMIT (preg_replace above will not handle them)
+		if (strpos($sql, ' ') === false) {
+			$commentedSql = "{$sql} /* {$fname} {$userName} */";
+		}
+		# Wikia change - end
+
 		# If DBO_TRX is set, start a transaction
 		if ( ( $this->mFlags & DBO_TRX ) && !$this->trxLevel() &&
 			$sql != 'BEGIN' && $sql != 'COMMIT' && $sql != 'ROLLBACK' ) {

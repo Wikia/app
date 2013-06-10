@@ -83,11 +83,12 @@ class Base extends EmptySet
 	 * @return Base provides fluent interface
 	 */
 	protected function prependArticleMatchIfExists() {
-		if (! ( $this->searchConfig->hasArticleMatch() && $this->getResultsStart() == 0 ) ) {
-			return $this;
+		if ( $this->searchConfig->hasArticleMatch() ) {
+			if ( $this->getResultsStart() == 0 ) {
+				$this->addResult( $this->searchConfig->getArticleMatch()->getResult() );
+			}
+			$this->resultsFound++;
 		}
-		$this->addResult( $this->searchConfig->getArticleMatch()->getResult() );
-		$this->resultsFound++;
 		return $this;
 	}
 

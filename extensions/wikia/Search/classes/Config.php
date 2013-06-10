@@ -485,7 +485,7 @@ class Config
 						&& 
 						in_array( \Wikia\Search\Config::FILTER_VIDEO, $filterKeys )
 						&&
-						!isVideoFile
+						!$isVideoFile
 				)
 		);
 	}
@@ -556,6 +556,9 @@ class Config
 		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {
 			$fieldsPrepped[] = 'id';
 		} 
+		if ( $this->getQueryService() == '\\Wikia\Search\\QueryService\\Select\\Video' ) {
+			$fieldsPrepped[] = 'title_en'; 
+		}
 		
 		return $fieldsPrepped;
 	}
@@ -728,7 +731,7 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setDirectLuceneQuery( $value ) {
-		$this->setQueryService( 'Select\\Lucene', $value );
+		return $this->setQueryService( 'Select\\Lucene', $value );
 	}
 	
 	/**
@@ -737,7 +740,7 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setVideoTitleSearch( $value ) {
-		$this->setQueryService( 'Select\\VideoTitle', $value );
+		return $this->setQueryService( 'Select\\VideoTitle', $value );
 	}
 	
 	/**

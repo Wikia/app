@@ -3044,6 +3044,7 @@ $messages['vep'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Timothy Quievryn
+ * @author Tuankiet65
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
@@ -3129,9 +3130,10 @@ $messages['vi'] = array(
 	'chat-chatbanadd-log-entry' => 'cấm $1 khỏi tán gẫu với thời hạn $2, kết thúc $3',
 	'chat-chatbanremove-log-entry' => 'bỏ cấm $1 khỏi tán gẫu',
 	'chat-chatbanchange-log-entry' => 'thay đổi thiết lập cấm cho $1 với thời hạn $2, kết thúc $3',
-	'chat-contributions-ban-notice' => 'Thành viên này hiện nay bị cấm tán gẫu. Nhật trình cấm tán gẫu mới nhất được cung cấp dưới đây để tham khảo:', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Thành viên này}} bị cấm không được tham gia chat. Nhật kí cấm được cung cấp dưới đây để tham khảo:',
 	'chat-browser-is-notsupported' => 'Trình duyệt của bạn không được hỗ trợ. Để trải nghiệm tốt nhất, sử dụng một <a href="http://community.wikia.com/wiki/Help:Supported_browsers">trình duyệt mới hơn</a>.',
 	'chat-checkuser-join-action' => 'Tham gia Tán gẫu',
+	'chat-status-away' => 'Vắng',
 );
 
 /** Simplified Chinese (中文（简体）‎)

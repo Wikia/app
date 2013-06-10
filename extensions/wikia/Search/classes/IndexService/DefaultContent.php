@@ -208,7 +208,7 @@ class DefaultContent extends AbstractService
 			$paragraphs = $this->getParagraphsFromDom( $dom );
 		}
 		$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) ); // can be empty
-		$words = str_word_count( $paragraphString?:$plaintext, 1 );
+		$words = preg_split( '/[[:space:]]+/', $paragraphString?: $plaintext);
 		$wordCount = count( $words );
 		$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
 		$this->pushNolangTxt( $upTo100Words );
@@ -230,18 +230,22 @@ class DefaultContent extends AbstractService
 		$result = array();
 		$infoboxes = $dom->find( 'table.infobox' );
 		if ( count( $infoboxes ) > 0 ) {
-			$infobox = $infoboxes[0];
-			$infoboxRows = $infobox->find( 'tr' );
-			
-			if ( $infoboxRows ) {
-				$result['infoboxes_txt'] = [];
-				foreach ( $infoboxRows as $row ) {
-					$infoboxCells = $row->find( 'td' );
-					// we only care about key-value pairs in infoboxes
-					if ( count( $infoboxCells ) == 2 ) {
-						$result['infoboxes_txt'][] = preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
+			$result['infoboxes_txt'] = [];
+			$counter = 1;
+			foreach ( $infoboxes as $infobox ) {
+				$infobox = new simple_html_dom( $infobox->outertext() );
+				$this->removeGarbageFromDom( $infobox );
+				$infobox->load( $infobox->save() );
+				$infoboxRows = $infobox->find( 'tr' );
+				if ( $infoboxRows ) {
+					foreach ( $infoboxRows as $row ) {
+						$infoboxCells = $row->find( 'td' );
+						if ( count( $infoboxCells ) == 2 ) {
+							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
+						}
 					}
 				}
+				$counter++;
 			}
 		}
 		return $result;
@@ -249,9 +253,10 @@ class DefaultContent extends AbstractService
 	
 	/**
 	 * Iterates through UI remnants and removes them from the dom.
+	 * Removed type hinting due to testing requirements and WikiaMockProxy
 	 * @param simple_html_dom $dom
 	 */
-	protected function removeGarbageFromDom( simple_html_dom $dom ) {
+	protected function removeGarbageFromDom( $dom ) {
 		foreach ( $this->garbageSelectors as $selector ) {
 			foreach ( $dom->find( $selector ) as $node ) {
 				$node->outertext = ' ';
