@@ -30,7 +30,7 @@ class UserProfilePageHooks {
 			$wikiId = intval($wgCityId);
 
 			if ($user instanceof User && $wikiId > 0) {
-				$userIdentityBox = new UserIdentityBox(F::app(), $user, self::MAX_TOP_WIKIS);
+				$userIdentityBox = new UserIdentityBox(F::app(), $user, UserProfilePageController::MAX_TOP_WIKIS);
 				$userIdentityBox->addTopWiki($wikiId);
 			}
 		}
