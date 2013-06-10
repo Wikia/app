@@ -1046,7 +1046,7 @@ $config['wikiahubs_scss_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//extensions/wikia/WikiaHubs/css/WikiaHubs.wikiamobile.scss'
+		'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV1/WikiaHubs.wikiamobile.scss'
 	)
 );
 
