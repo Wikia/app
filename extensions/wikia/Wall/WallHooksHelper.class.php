@@ -1536,7 +1536,7 @@ class WallHooksHelper {
 		$page->resetArticleId($row->rev_page);
 		$skin = $app->wg->User->getSkin();
 
-		$wfMsgOptsBase = $this->getMessageOptions(null, $row, true);
+		$wfMsgOptsBase = $this->getMessageOptions(null, $row);
 
 
 		$isThread = $wfMsgOptsBase['isThread'];
@@ -1627,12 +1627,13 @@ class WallHooksHelper {
 	 *
 	 * @param RecentChanges $rc
 	 * @param Object $row
-	 * @param Title $objTitle
+	 * @param bool $fullUrls
+	 * @internal param \Title $objTitle
 	 *
 	 * @return Array
 	 */
-	public  function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
-		return WallHelper::getWallTitleData( $rc, $row, $fullUrls);
+	public  function getMessageOptions($rc = null, $row = null) {
+		return WallHelper::getWallTitleData( $rc, $row );
 	}
 
 
@@ -1640,7 +1641,7 @@ class WallHooksHelper {
 
 		if ( $element->page_namespace == NS_USER_WALL_MESSAGE ) {
 
-			$titleData = WallHelper::getWallTitleData(null, $element, true);
+			$titleData = WallHelper::getWallTitleData(null, $element );
 			$a = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ';
 			$link = wfMsg( 'wall-recentchanges-thread-group', array( $a, $titleData['wallPageFullUrl'], $titleData['wallPageName'] ) );
 		}
@@ -1661,11 +1662,10 @@ class WallHooksHelper {
 
 		if( isset($row->page_namespace) && in_array( intval($row->page_namespace), array( NS_USER_WALL_MESSAGE, NS_WIKIA_FORUM_BOARD_THREAD )) ) {
 			$defaultRendering = false;
-			$title = F::build('Title', array($row->page_title, $row->page_namespace), 'newFromText');
 
 			$app = F::app();
 			$wlhTitle = SpecialPage::getTitleFor( 'Whatlinkshere' );
-			$wfMsgOptsBase = $this->getMessageOptions(null, $row, true);
+			$wfMsgOptsBase = $this->getMessageOptions(null, $row);
 
 			$wfMsgOpts = array(
 				$wfMsgOptsBase['articleFullUrl'],

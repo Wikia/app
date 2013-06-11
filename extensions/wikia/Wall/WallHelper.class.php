@@ -560,10 +560,9 @@ class WallHelper {
 	/**
 	 * @param null $rc
 	 * @param array $row [ page_title, page_namespace, rev_user_text?, page_is_new?, rev_parent_id? ]
-	 * @param bool $fullUrls
 	 * @return array|bool
 	 */
-	public static function getWallTitleData( $rc = null, $row = null, $fullUrls = false ) {
+	public static function getWallTitleData( $rc = null, $row = null ) {
 
 		wfProfileIn(__METHOD__);
 
@@ -608,9 +607,6 @@ class WallHelper {
 			}
 			$wmw->load();
 		}
-
-		$articleId = $wm->getId();
-		$wallOwnerName = $wm->getArticleTitle()->getText();
 
 		if(!empty($wmw)) {
 			$articleTitleTxt =  $wmw->getMetaTitle();
@@ -659,5 +655,4 @@ class WallHelper {
 
 		return $out;
 	}
-	
 }
