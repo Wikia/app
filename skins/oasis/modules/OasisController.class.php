@@ -127,15 +127,8 @@ class OasisController extends WikiaController {
 			$wgOut->addScript( '<script src="' . $this->wg->ExtensionsPath . '/wikia/CreateNewWiki/js/WikiWelcome.js"></script>' );
 		}
 
-		$renderContentOnly = false;
-		if (!empty($this->wg->EnableRenderContentOnlyExt)) {
-			if(renderContentOnly::isRenderContentOnlyEnabled()) {
-				$renderContentOnly = true;
-			}
-		}
-
-		if($renderContentOnly) {
-			$this->body = F::app()->renderView('BodyContentOnly', 'Index');
+		if(RenderContentOnlyHelper::isRenderContentOnlyEnabled()) {
+			$this->body = F::app()->renderView( 'BodyContentOnly', 'Index' );
 		} else {
 			// macbre: let extensions modify content of the page (e.g. EditPageLayout)
 			wfProfileIn(__METHOD__ . ' - renderBody');
