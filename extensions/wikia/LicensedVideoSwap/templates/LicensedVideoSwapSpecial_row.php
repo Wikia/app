@@ -5,15 +5,14 @@
 	<div class="grid-3 alpha non-premium">
 		<div class="posted-in">
 			<? // TODO: add URL for Special:WhatLinksHere ?>
-			<a class="ellipses" href=" "><?= wfMessage('lvs-posted-in-more')->plain() ?></a>
+			<a class="ellipses" href="<?= $video['seeMoreLink'] ?>"><?= wfMessage('lvs-posted-in-more')->plain() ?></a>
 			<div>
 				<? if ( count($video['truncatedList']) ): ?>
 					<?= wfMessage('lvs-posted-in-label')->plain() ?>
 					<ul>
-						<? foreach( $video['truncatedList'] as $article ) { ?>
-							<? // TODO: add URL for the article here ?>
+						<? foreach( $video['truncatedList'] as $article ): ?>
 							<li><a href="<?= $article['url'] ?>"><?= $article['titleText'] ?></a></li>
-						<? } ?>
+						<? endforeach; ?>
 					</ul>
 				<? else: ?>
 					<?= wfMessage('lvs-posted-in-label-none')->plain() ?>

@@ -102,6 +102,12 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 				$videoDetail['videoPlayButton'] = $playButton;
 				$videoDetail['videoOverlay'] = $videoOverlay;
 
+				$seeMoreLink = SpecialPage::getTitleFor("WhatLinksHere")->escapeLocalUrl();
+				$seeMoreLink .= '/' . $this->app->wg->ContLang->getNsText( NS_FILE ). ':' . $videoDetail['title'];
+
+				$videoDetail['seeMoreLink'] = $seeMoreLink;
+
+
 				$videos[] = $videoDetail;
 			}
 		}

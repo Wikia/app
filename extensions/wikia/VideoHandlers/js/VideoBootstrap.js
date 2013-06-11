@@ -23,6 +23,7 @@ define( 'wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana', 'wikia.log'], 
 		this.clickSource = clickSource;
 		this.title = json.title;
 		this.provider = json.provider;
+		this.width = json.width; // TODO: json.width doesn't exist yet.  It needs to be added to all video handlers.
 
 		// Insert html if it hasn't been inserted already
 		function instertHtml() {
@@ -77,8 +78,8 @@ define( 'wikia.videoBootstrap', ['wikia.loader', 'wikia.nirvana', 'wikia.log'], 
 			var undef,
 				element = this.element,
 				fileTitle = title || this.title,
-				fileWidth = width || this.width, // TODO: implement this.width
-				fileAutoPlay = ( autoplay === undef || autoplay === null ) ? this.autoplay : autoplay, // TODO: implement this.autoplay
+				fileWidth = width || this.width,// TODO: implement this.width; For now, width will be a required param for reload()
+				fileAutoPlay = ( autoplay === undef || autoplay === null ) ? this.autoplay : autoplay,// TODO: implement this.autoplay; For now, autoplay will be a required param for reload()
 				fileClickSource = clickSource || this.clickSource;
 
 			this.clearTimeoutTrack();
