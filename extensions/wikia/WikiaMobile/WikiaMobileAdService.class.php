@@ -19,8 +19,12 @@ class WikiaMobileAdService extends WikiaService {
 		return $this->shouldLoadAssets() && !$this->wg->Title->isSpecialPage();
 	}
 
-	public function floatingTopLeaderBoard() {
-		return $this->shouldShowAds();
+	public function floating() {
+		if ( $this->shouldShowAds() ) {
+			$this->response->setVal('js', AssetsManager::getInstance()->getOneCommonURL('/extensions/wikia/WikiaMobile/js/floatingAd.js'));
+		} else {
+			return false;
+		}
 	}
 
 	public function topLeaderBoard() {

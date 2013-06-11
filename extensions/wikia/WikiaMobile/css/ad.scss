@@ -8,7 +8,7 @@ $slotFooterHeight: 50px;
 $slotFooterMargin: 0;
 $slotFooterColor: #666;
 
-#wkAdFloatingTopLeader {
+#wkFloatingAd {
 	position: relative;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
@@ -40,19 +40,19 @@ $slotFooterColor: #666;
 	}
 }
 
-#wkAdTopLeader {
-	text-align: center;
-	background: rgb(255, 255, 255);
-	padding: 5px 0 0 0;
-}
-
-#wkAdInContent {
-	padding: 3px;
-	margin: 0 auto;
-
-	border-top: 1px solid grey;
-	border-bottom: 1px solid grey;
-
-	height: 250px;
-	width: 300px;
-}
+//#wkAdTopLeader {
+//	text-align: center;
+//	background: rgb(255, 255, 255);
+//	padding: 5px 0 0 0;
+//}
+//
+//#wkAdInContent {
+//	padding: 3px;
+//	margin: 0 auto;
+//
+//	border-top: 1px solid grey;
+//	border-bottom: 1px solid grey;
+//
+//	height: 250px;
+//	width: 300px;
+//}

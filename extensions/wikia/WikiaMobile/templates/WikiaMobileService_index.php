@@ -49,12 +49,12 @@
 <body class="<?= implode(' ', $bodyClasses) ?>">
 	<?= $trackingCode ;?>
 	<?= $wikiaNavigation ;?>
-	<?= $topLeaderBoard ;?>
+	<? //$topLeaderBoard ;?>
 	<?= $pageContent ;?>
 	<?= $wikiaFooter ;?>
 	<div id=wkCurtain>&nbsp;</div>
 	<?= $jsBodyFiles ;?>
-	<?= $floatingTopLeaderBoard ;?>
-	<?= $inContentAd ;?>
+	<?= $floatingAd ;?>
+	<? //$inContentAd ;?>
 </body>
 </html>
