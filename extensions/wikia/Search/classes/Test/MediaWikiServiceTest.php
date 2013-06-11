@@ -1729,6 +1729,24 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
+	 */
+	public function testGetWikiMatchByHostWithNoDomain() {
+		$service = $this->service->setMethods( array( 'getWikiIdByHost' ) )->getMock();
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$service
+		    ->expects( $this->never() )
+		    ->method ( 'getWikiIdByHost' )
+		;
+		$this->assertNull(
+				$service->getWikiMatchByHost( '' )
+		);
+	}
+	
+	/**
 	 * @covers Wikia\Search\MediaWikiService::getMainPageUrlForWikiId
 	 */
 	public function testGetMainPageUrlForWikiId() {

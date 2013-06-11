@@ -470,7 +470,7 @@ class MediaWikiService
 	 */
 	public function getWikiMatchByHost( $domain ) {
 		$match = null;
-		if ( $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' ) ) {
+		if ( ( $domain !== '' ) && ( $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' ) ) ) {
 			$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
 		}
 		return $match;
