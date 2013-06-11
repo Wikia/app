@@ -54,8 +54,8 @@ class SearchApiController extends WikiaApiController {
 	 * @responseParam array $items The list of results
 	 *
 	 * @example &query=kermit&lang=en
-	 * @example &query=kermit&limit=10
-	 * @example &query=kermit&limit=2&batch=2
+	 * @example &query=kermit&lang=en&limit=10
+	 * @example &query=kermit&lang=en&limit=2&batch=2
 	 */
 	public function getCrossWiki() {
 		if ( !$this->request->getVal( 'query' ) ) {
