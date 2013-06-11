@@ -558,6 +558,7 @@ $config['wikiamobile_js_ads'] = array(
 		//modules
 		'//resources/wikia/modules/geo.js',
 		'//extensions/wikia/WikiaMobile/js/ads.js',
+		'//extensions/wikia/WikiaMobile/js/floatingAd.js'
 	)
 );
 

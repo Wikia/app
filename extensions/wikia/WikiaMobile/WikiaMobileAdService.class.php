@@ -20,11 +20,7 @@ class WikiaMobileAdService extends WikiaService {
 	}
 
 	public function floating() {
-		if ( $this->shouldShowAds() ) {
-			$this->response->setVal('js', AssetsManager::getInstance()->getOneCommonURL('/extensions/wikia/WikiaMobile/js/floatingAd.js'));
-		} else {
-			return false;
-		}
+		return $this->shouldShowAds();
 	}
 
 	public function topLeaderBoard() {
