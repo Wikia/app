@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @property mixed title
+ */
 class WallHelper {
 	//WA = wiki activity
 	const WA_WALL_COMMENTS_MAX_LEN = 150;
@@ -60,6 +63,7 @@ class WallHelper {
 	 * It sends request to UserProfilePage controller which should return user object generated
 	 * from passed title.
 	 *
+	 * @param bool $title
 	 * @return User
 	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
@@ -115,7 +119,6 @@ class WallHelper {
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function wikiActivityFilterMessageWall($title, &$res) {
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$item = array();
@@ -286,6 +289,7 @@ class WallHelper {
 	 *
 	 * @param array $comments an array with WallMessage instances
 	 *
+	 * @return array
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	private function getCommentsData($comments) {
@@ -388,7 +392,6 @@ class WallHelper {
 	public function getParsedText($rawtext, $title) {
 		global $wgParser, $wgOut;
 		global $wgEnableParserCache;
-		global $wgUser;
 		$wgEnableParserCache = false;
 
 		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions())->getText();
@@ -436,6 +439,7 @@ class WallHelper {
 	 *
 	 * @param integer $textId article's text id in text table
 	 *
+	 * @return string
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getDeletedArticleTitleTxt($textId) {
@@ -467,6 +471,7 @@ class WallHelper {
 	 *
 	 * TODO: remove it we don't need to operate on delete wall messages anymore
 	 *
+	 * @return string
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getTitleTxtFromMetadata($text) {
