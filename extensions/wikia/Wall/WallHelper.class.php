@@ -221,7 +221,6 @@ class WallHelper {
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
 	public function getWallComments($parentId = null) {
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$comments = array();
@@ -293,7 +292,6 @@ class WallHelper {
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	private function getCommentsData($comments) {
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$timeNow = time();
