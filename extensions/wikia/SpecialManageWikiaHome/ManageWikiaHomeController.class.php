@@ -285,7 +285,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$this->status = false;
 		} else {
 			$wikiId = $this->request->getInt('wikiId', 0);
-
+			
 			$this->status = $this->getWikiaCollectionsModel()->isWikiInCollection($wikiId);
 		}
 
