@@ -88,6 +88,7 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 				findAd(options.wrapper, options.init)
 			);
 
+			//this is temporary for testing ads
 			if(options.functions){
 				fix = options.functions.fix;
 				unfix = options.functions.unfix;
