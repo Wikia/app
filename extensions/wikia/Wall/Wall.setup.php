@@ -72,7 +72,7 @@ $app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpComplete
  * Nirvana's registerHook was here, but it failed to work for some reason:
  * $app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
  */
-$wgHooks['UserIsBlockedFrom'] = array( array( 'WallHooksHelper::onUserIsBlockedFrom' ) );
+$wgHooks['UserIsBlockedFrom'][] = array( 'WallHooksHelper::onUserIsBlockedFrom' );
 
 $app->registerHook( 'ArticleRobotPolicy', 'WallHooksHelper', 'onArticleRobotPolicy' );
 
