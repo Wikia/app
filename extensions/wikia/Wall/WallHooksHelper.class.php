@@ -12,7 +12,7 @@ class WallHooksHelper {
 		return true;
 	}
 
-	public function onUserIsBlockedFrom($user, $title, &$blocked, &$allowUsertalk) {
+	public static function onUserIsBlockedFrom($user, $title, &$blocked, &$allowUsertalk) {
 
         if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
 			// wall owner is in it's name
