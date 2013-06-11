@@ -143,7 +143,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
-	 * @responseParam array|null videoList
+	 * @responseParam string html
 	 */
 	public function swapVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
@@ -153,7 +153,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$validAction = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
 		$msg = $validAction->getVal( 'msg', '' );
 		if ( !empty( $msg ) ) {
-			$this->videoList = null;
+			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $msg;
 		}
@@ -163,7 +163,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// check if file exists
 		if ( empty( $file ) ) {
-			$this->videoList = null;
+			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
 			return;
@@ -171,7 +171,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// check if the file is premium
 		if ( !$file->isLocal() ) {
-			$this->videoList = null;
+			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'lvs-error-permission' )->text();
 			return;
@@ -186,7 +186,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
 		if ( empty( $response['fileExists'] ) ) {
-			$this->videoList = null;
+			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
 			return;
@@ -197,7 +197,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$response = $this->sendRequest( 'VideoHandlerController', 'removeVideo', array( 'title' => $file->getName() ) );
 			$result = $response->getVal( 'result', '' );
 			if ( $result != 'ok' ) {
-				$this->videoList = null;
+				$this->html = '';
 				$this->result = 'error';
 				$this->msg = $response->getVal( 'msg', '' );
 				return;
@@ -218,7 +218,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 			// check if new file exists
 			if ( empty( $newFile ) ) {
-				$this->videoList = null;
+				$this->html = '';
 				$this->result = 'error';
 				$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
 				return;
@@ -233,7 +233,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$selectedSort = $this->getVal( 'selectedSort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
-		$this->videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
+		// get video list
+		$videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
+
+		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		$this->result = 'ok';
 
 		$fileUrl = $newFile->getTitle()->getLocalURL();
@@ -247,7 +250,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
-	 * @responseParam array|null videoList
+	 * @responseParam string html
 	 */
 	public function keepVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
@@ -256,7 +259,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
 		$msg = $response->getVal( 'msg', '' );
 		if ( !empty( $msg ) ) {
-			$this->videoList = null;
+			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $msg;
 		}
@@ -266,7 +269,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// check if file exists
 		if ( empty( $file ) ) {
-			$this->videoList = null;
+			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
 			return;
@@ -279,7 +282,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$selectedSort = $this->getVal( 'selectedSort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
-		$this->videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
+		// get video list
+		$videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
+
+		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		$this->result = 'ok';
 		$this->msg = $this->wf->Message( 'lvs-keep-video-success' )->text();
 	}
@@ -291,7 +297,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
-	 * @responseParam array|null videoList
+	 * @responseParam string html
 	 */
 	public function restoreVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
@@ -300,7 +306,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
 		$msg = $response->getVal( 'msg', '' );
 		if ( !empty( $msg ) ) {
-			$this->videoList = '';
+			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $msg;
 		}
@@ -310,7 +316,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// check if file exists
 		if ( empty( $file ) ) {
-			$this->videoList = '';
+			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
 			return;
@@ -323,7 +329,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$selectedSort = $this->getVal( 'selectedSort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
-		$this->videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
+		// get video list
+		$videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
+
+		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		$this->result = 'ok';
 		$this->msg = $this->wf->Message( 'lvs-restore-video-success' )->text();
 	}
@@ -365,7 +374,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 	// TODO: probably make this use mustache
 	public function row() {
-
+		$this->videoList = $this->getVal( 'videoList', array() );
+		$this->thumbWidth = self::THUMBNAIL_WIDTH;
+		$this->thumbHeight = self::THUMBNAIL_HEIGHT;
 	}
 
 }
