@@ -70,8 +70,10 @@ class InterWiki extends AbstractSelect
 				strtolower( $this->config->getQuery()->getSanitizedQuery() ) 
 				);
 		$match =  $this->service->getWikiMatchByHost( $domain );
-		if (! empty( $match ) ) {
+		if ( (! empty( $match ) ) && ( $match->getId() !== $this->getService()->getWikiId() ) ) {
 			$this->config->setWikiMatch( $match );
+		} else {
+			$match = null; // idempotent if nothing, has us return null if match was identical to current wiki
 		}
 		return $match;
 	}
@@ -161,7 +163,9 @@ class InterWiki extends AbstractSelect
 	protected function getQueryClausesString()
 	{
 		$widQueries = array();
-		foreach ( $this->service->getGlobal( 'CrossWikiaSearchExcludedWikis' ) as $excludedWikiId ) {
+		$excludedWikiIds = $this->service->getGlobalWithDefault( 'CrossWikiaSearchExcludedWikis', [] );
+		$excludedWikiIds[] = $this->service->getWikiId();
+		foreach ( $excludedWikiIds as $excludedWikiId ) {
 			$widQueries[] = Utilities::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 		}
 		
