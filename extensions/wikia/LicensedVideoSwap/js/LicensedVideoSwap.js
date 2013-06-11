@@ -1,4 +1,4 @@
-$(function() {
+require( ['wikia.querystring', 'wikia.localStorage', 'wikia.videoBootstrap'], function( QueryString, LocalStorage, VideoBootstrap) {
 
 var LVS = {
 	init: function() {
@@ -85,7 +85,9 @@ var LVS = {
 	initDropDown: function() {
 		$( '.WikiaDropdown' ).wikiaDropdown({
 			onChange: function( e, $target ) {
-				//TODO: add change event here
+				var sort = $target.data( 'sort' ),
+					qs = new QueryString;
+				qs.setVal( 'sort', sort ).goTo();
 			}
 		});
 	},
@@ -95,21 +97,19 @@ var LVS = {
 	 * callout won't show again.
 	 */
 	initCallout: function() {
-		require( ['wikia.localStorage'], function( ls ) {
 
-			var $callout = $( '#WikiaArticle' ).find( '.lvs-callout' ),
-				$closeBtn = $callout.find( '.close' );
+		var $callout = $( '#WikiaArticle' ).find( '.lvs-callout' ),
+			$closeBtn = $callout.find( '.close' );
 
-			if ( !ls.lvsCalloutClosed ) {
-				$callout.show();
+		if ( !LocalStorage.lvsCalloutClosed ) {
+			$callout.show();
 
-				$closeBtn.on( 'click', function( e ) {
-					e.preventDefault();
-					$callout.slideUp();
-					ls.lvsCalloutClosed = true;
-				});
-			}
-		});
+			$closeBtn.on( 'click', function( e ) {
+				e.preventDefault();
+				$callout.slideUp();
+				LocalStorage.lvsCalloutClosed = true;
+			});
+		}
 	},
 	/**
 	 * Clicking on the more suggestions link will slide down a row of
@@ -270,9 +270,7 @@ var LVS = {
 					autoplay: 1
 				},
 				callback: function( data ) {
-					require( ['wikia.videoBootstrap'], function( VideoBootstrap ) {
-						videoInstance = new VideoBootstrap( $element[0], data.embedCode, 'licensedVideoSwap' );
-					});
+					videoInstance = new VideoBootstrap( $element[0], data.embedCode, 'licensedVideoSwap' );
 				}
 			})
 
@@ -280,6 +278,8 @@ var LVS = {
 	}
 };
 
-LVS.init();
+$(function() {
+	LVS.init.call( LVS );
+});
 
 });
