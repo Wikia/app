@@ -396,12 +396,11 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setRank( $rank ) {
-		if (! isset( $this->rankOptions[$rank] ) ) {
-			throw new \Exception( "Attempting to set search sorting by a nonexistent rank key" );
+		if ( isset( $this->rankOptions[$rank] ) ) {
+			$this->rank = $rank;
+			$sort = $this->rankOptions[$rank];
+			$this->setSort( $sort[0], $sort[1] );
 		}
-		$this->rank = $rank;
-		$sort = $this->rankOptions[$rank];
-		$this->setSort( $sort[0], $sort[1] );
 		return $this;
 	}
 	

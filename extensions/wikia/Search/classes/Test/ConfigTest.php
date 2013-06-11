@@ -1046,4 +1046,51 @@ class ConfigTest extends BaseTest {
 				$config->getLimit()
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getRank
+	 * @covers Wikia\Search\Config::setRank
+	 */
+	public function testGetSetRank() {
+		$config = new Config;
+		$this->assertAttributeEquals(
+				$config::RANK_DEFAULT,
+				'rank',
+				$config,
+				'Default rank should be default on instantiation'
+		);
+		$this->assertEquals(
+				$config::RANK_DEFAULT,
+				$config->getRank(),
+				'getRank should return value of rank property'
+		);
+		$this->assertEquals(
+				$config,
+				$config->setRank( $config::RANK_NEWEST ),
+				'setrank should provide a fluent interface'
+		);
+		$this->assertAttributeEquals(
+				$config::RANK_NEWEST,
+				'rank',
+				$config,
+				'setrank should mutate the rank attribute'
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setRank
+	 */
+	public function testSetRankBadRankName() {
+		$config = new Config;
+		$this->assertEquals(
+				$config,
+				$config->setRank( 'this is a totally fake rank' ),
+				'Setting an incorrect rank on config should fail gracefully'
+		);
+		$this->assertEquals(
+				$config::RANK_DEFAULT,
+				$config->getRank(),
+				'An incorrect rank value should not mutate the config rank propery'
+		);
+	}
 }
