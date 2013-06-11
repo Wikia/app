@@ -86,7 +86,7 @@ var LVS = {
 		$( '.WikiaDropdown' ).wikiaDropdown({
 			onChange: function( e, $target ) {
 				var sort = $target.data( 'sort' ),
-					qs = new QueryString;
+					qs = new QueryString();
 				qs.setVal( 'sort', sort ).goTo();
 			}
 		});
@@ -135,7 +135,7 @@ var LVS = {
 	initSwap: function() {
 		var that = this;
 
-		function doRequest( newTitle, currTitle ){
+		function doRequest( newTitle, currTitle, $wrapper ){
 			$.nirvana.sendRequest({
 				controller: 'LicensedVideoSwapSpecialController',
 				method: 'swapVideo',
@@ -157,18 +157,14 @@ var LVS = {
 			});
 		}
 
-		function confirmSwap( isSwap, currTitle, newTitle, $wrapper ) {
-			var msg;
-
-			currTitleText =  currTitle.replace(/_/g, ' ');
-
-			newTitleText = newTitle.replace(/_/g, ' ');
-			msg = $.msg( 'lvs-confirm-swap-message', currTitleText, newTitleText )
+		function confirmSwap( currTitle, newTitle, $wrapper ) {
+			var currTitleText =  currTitle.replace(/_/g, ' ' ),
+				newTitleText = newTitle.replace(/_/g, ' ' );
 
 			$.confirm({
-				content: msg,
+				content: $.msg( 'lvs-confirm-swap-message', currTitleText, newTitleText ),
 				onOk: function() {
-					doRequest( isSwap, newTitle, currTitle, $wrapper );
+					doRequest( newTitle, currTitle, $wrapper );
 				},
 				width: 700
 			});
@@ -202,7 +198,7 @@ var LVS = {
 				controller: 'LicensedVideoSwapSpecialController',
 				method: 'keepVideo',
 				data: {
-					videoTitle: currTitle,
+					videoTitle: currTitle
 				},
 				callback: function(data) {
 					if( data.result == 'error' ) {
@@ -232,7 +228,7 @@ var LVS = {
 
 		this.$container.on( 'click', '.keep-button', function() {
 			var $this = $( this ),
-				$wrapper = $this.closest( '.row' );
+				$wrapper = $this.closest( '.row' ),
 				currTitle = $this.attr( 'data-video-keep' );
 
 			confirmKeep( decodeURIComponent( currTitle ), $wrapper );
@@ -246,12 +242,14 @@ var LVS = {
 
 			var $this = $( this ),
 				fileTitle = decodeURIComponent( $this.children( 'img' ).attr( 'data-video-key' )),
-				videoInstance;
+				videoInstance,
+				$element,
+				$thumbList;
 
 			if ( $this.hasClass( 'thumb' ) ) {
 				// one of the thumbnails was clicked
 				$element = $this.closest( '.row' ).find( '.premium .video-wrapper' );
-				$thumbList = $this.closest( 'ul' ),
+				$thumbList = $this.closest( 'ul' );
 
 				// put outline around the thumbnail that was clicked
 				$thumbList.find( '.selected' ).removeClass( 'selected' );
@@ -272,9 +270,8 @@ var LVS = {
 				callback: function( data ) {
 					videoInstance = new VideoBootstrap( $element[0], data.embedCode, 'licensedVideoSwap' );
 				}
-			})
-
-		})
+			});
+		});
 	}
 };
 
