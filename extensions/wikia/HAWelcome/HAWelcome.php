@@ -147,7 +147,7 @@ class HAWelcomeJob extends Job {
 			 */
 			global $wgMemc;
 			// Abort if the contributor has been welcomed recently.
-/*			if ( $wgMemc->get( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ) ) ) {
+			if ( $wgMemc->get( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ) ) ) {
 				if ( !empty( $wgHAWelcomeNotices ) ) {
 					trigger_error( sprintf( '%s Done. The contributor has been welcomed recently.', __METHOD__ ) , E_USER_NOTICE );
 				}
@@ -155,7 +155,7 @@ class HAWelcomeJob extends Job {
 				error_reporting( $iErrorReporting );
 				wfProfileOut( __METHOD__ );
 				return true;
-			}*/
+			}
 			// Handle an edit made by an anonymous contributor.
 			if ( ! $oRevision->getRawUser() ) {
 				if ( !empty( $wgHAWelcomeNotices ) ) {
