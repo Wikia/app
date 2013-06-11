@@ -27,7 +27,7 @@ $app->registerExtensionMessageFile('WikiaSpecialVersion', $dir . 'WikiaSpecialVe
 
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'Wikia Special:Version',
-	'version'			=> '1.0',
+	'version'			=> '1.1',
 	'author'			=> '[http://wikia.com/wiki/User:Relwell Robert Elwell]',
 	'descriptionmsg'	=> 'wikia-version-desc',
 );

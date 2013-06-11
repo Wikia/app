@@ -121,6 +121,13 @@ $messages['br'] = array(
 	'iwedit-success' => '<p>Liamm krouet gant berzh.</p>',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'iwedit-update' => 'Карлаяккха',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  * @author Utar

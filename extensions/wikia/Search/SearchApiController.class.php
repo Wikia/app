@@ -90,9 +90,15 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		//Standard Wikia API response with pagination values
-		$response = $this->getResponse();
 		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns' ], true );
+
+		if ( empty( $responseValues['items'] ) ) {
+			throw new NotFoundApiException();
+		}
+
+		$response = $this->getResponse();
 		$response->setValues( $responseValues );
+
 		$response->setCacheValidity(
 			86400 /* 24h */,
 			86400 /* 24h */,
@@ -151,6 +157,7 @@ class SearchApiController extends WikiaApiController {
 			->setPage( $request->getVal( 'batch', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setInterWiki( true )
+			->setRequestedFields( array_merge( $searchConfig->getRequestedFields(), [ 'lang' ] ) ) 
 			->setLanguageCode( $request->getVal( 'lang' ) )
 		;
 		return $searchConfig;

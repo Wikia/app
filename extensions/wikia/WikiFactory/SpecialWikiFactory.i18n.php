@@ -4097,7 +4097,7 @@ $messages['pt'] = array(
 	'wikifactory-domain-remove' => 'remover esta URL da wiki',
 	'wikifactory-domain-setmain' => 'colocar esta URL em wgServer',
 	'closewiki-check-and-confirm' => 'Verificar as wikis e confirmar a operação',
-	'closewiki-redirect-to' => 'Redireccionar para',
+	'closewiki-redirect-to' => 'Redirecionar para',
 	'closewiki-message' => 'nome do domínio $1',
 	'closewiki-confirm-button' => "Confirmar '$1' de $2",
 	'closewiki-nbr-wiki' => '$1 Wikis',
@@ -4177,9 +4177,9 @@ regist.',
 	'closed-delete-images' => 'Eliminar os ficheiros',
 	'closed-free-url' => 'Libertar a URL para um fundador novo',
 	'closed-hide-dumps' => 'Esconder Cópias da BD e Arquivos',
-	'closed-redirect-url' => 'Redireccionar a URL',
+	'closed-redirect-url' => 'Redirecionar a URL',
 	'closed-confirm-btn' => 'Confirmar o fecho',
-	'closed-redirect-alert' => 'Introduza a URL nova do redireccionamento!',
+	'closed-redirect-alert' => 'Introduza a URL nova do redirecionamento!',
 	'closed-reason' => 'Motivo:',
 	'newwikisgraph-report-title' => 'criações de wiki por dia',
 	'newwikisgraph-wikis-created' => 'wikis criadas',
@@ -5347,6 +5347,14 @@ $messages['zh-hant'] = array(
 	'newwikisgraph-wikis-created' => '已創建的wiki',
 	'newwikisgraph-param-all' => '全部',
 	'newwikisgraph-param-other' => '其他',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'awc-metrics-images' => '圖像',
+	'closed-delete-database-images' => '刪除資料庫和圖像',
 );
 
 /** Chinese (Taiwan) (中文（台灣）‎)

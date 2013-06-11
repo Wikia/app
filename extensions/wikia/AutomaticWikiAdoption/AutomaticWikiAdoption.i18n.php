@@ -1503,6 +1503,15 @@ Handige hulpmiddelen:<br /><br />
 [[Special:UserRights|Rechten beheren]]',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiadoption-header' => 'Adoptar aqueste wiki',
+	'wikiadoption-button-adopt' => 'Òc, vòli adoptar {{SITENAME}} !',
+	'wikiadoption-adopt-inquiry' => 'Per ne saber mai !',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq

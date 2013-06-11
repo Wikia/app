@@ -753,9 +753,11 @@ Seràs notificat per correu electrònic quan s'hagi completat.",
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'renameuser' => 'Декъашхочуьна цlе хийца',
+	'userrenametool-page-exists' => 'Агӏо $1 йолуш ю цундела и ша юху дӏаязъян йиш яц.',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -931,6 +933,7 @@ $messages['da'] = array(
  * @author Kghbln
  * @author LWChris
  * @author Lyzzy
+ * @author PtM
  * @author Raimond Spekking
  * @author Spacebirdy
  * @author The Evil IP address
@@ -985,7 +988,7 @@ Grund: "$5".',
 	'userrenametool-info-in-progress' => 'Der Umbenennungsprozess läuft.
 Der Rest erfolgt im Hintergrund.
 Du wirst per E-Mail benachrichtigt, wenn alles abgeschlossen ist.',
-	'userrenametool-success' => 'Der Benutzer „<nowiki>$1</nowiki>“ wurde erfolgreich in „<nowiki>$2</nowiki>“ umbenannt.',
+	'userrenametool-success' => 'Der Benutzer „$1“ wurde erfolgreich in „$2“ umbenannt.',
 	'userrenametool-confirm-intro' => 'Wollen Sie wirklich dies tun?',
 	'userrenametool-confirm-yes' => 'Ja',
 	'userrenametool-confirm-no' => 'Nein',
