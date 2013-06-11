@@ -486,13 +486,12 @@ class WallHelper {
 		return $comments->getCountAll() > 0;
 	}
 
-	public function sendNotification($revOldId, $rcType = RC_NEW) {
+	public function sendNotification( $revOldId, $rcType = RC_NEW, $master = false ) {
 		$app = F::App();
 		$rev = Revision::newFromId($revOldId);
-		$notif = F::build('WallNotificationEntity', array($rev, $app->wg->CityId), 'createFromRev');
+		$notif = WallNotificationEntity::createFromRev( $rev, $app->wg->CityId, $master );
+		$wh = new WallHistory( $app->wg->CityId );
 
-		$wh = F::build('WallHistory', array($app->wg->CityId));
-		
 		$wh->add($rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User);
 
 		if( $rcType == RC_NEW ) {
