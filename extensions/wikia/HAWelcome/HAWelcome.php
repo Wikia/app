@@ -48,9 +48,9 @@ $wgExtensionMessagesFiles[ 'HAWelcome' ] = __DIR__ . '/HAWelcome.i18n.php';
 /**
  * @global Array The list of hooks.
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
- * @see http://www.mediawiki.org/wiki/Manual:Hooks/RevisionInsertComplete
+ * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
  */
-$wgHooks['RevisionInsertComplete'][] = 'HAWelcomeJob::onRevisionInsertComplete';
+$wgHooks['ArticleSaveComplete'][] = 'HAWelcomeJob::onArticleSaveComplete';
 /**
  * @type String Command name for the job aka type of the job.
  * @see http://www.mediawiki.org/wiki/Manual:RunJobs.php
@@ -96,18 +96,26 @@ class HAWelcomeJob extends Job {
 	/**
 	 * Enqueues a job based on a few simple preliminary checks.
 	 *
-	 * Called after a revision is inserted into the database.
+	 * Called once an article has been saved.
 	 *
+	 * @param $oArticle Object The WikiPage object for the contribution.
+	 * @param $oUser Object The User object for the contribution.
+	 * @param $sText String The contributed text.
+	 * @param $sSummary String The summary for the contribution.
+	 * @param $iMinorEdit Integer Indicates whether a contribution has been marked as a minor one.
+	 * @param $nWatchThis Null Not used as of MW 1.8
+	 * @param $nSectionAnchor Null Not used as of MW 1.8
+	 * @param $iFlags Integer Bitmask flags for the edit.
 	 * @param $oRevision Object The Revision object.
-	 * @param $sData String URL to external object.
-	 * @param $sFlags String Flags for this revision.
+	 * @param $oStatus Object The Status object returned by Article::doEdit().
+	 * @param $iBaseRevId Integer The ID of the revision, the current edit is based on (or Boolean False).
 	 * @return Boolean True so the calling method would continue.
 	 * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
-	 * @see http://www.mediawiki.org/wiki/Manual:Hooks/RevisionInsertComplete
+	 * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
 	 * @since MediaWiki 1.19.4
 	 * @internal
 	 */
-	public static function onRevisionInsertComplete( &$oRevision, $sData, $sFlags ) {
+	public static function onArticleSaveComplete( &$oArticle, &$oUser, $sText, $sSummary, $iMinorEdit, $nWatchThis, $nSectionAnchor, &$iFlags, $oRevision, $oStatus, $iBaseRevId ) {
 		wfProfileIn( __METHOD__ );
 		/** @global Boolean Show PHP Notices. Set via WikiFactory. */
 		global $wgHAWelcomeNotices;
@@ -139,7 +147,7 @@ class HAWelcomeJob extends Job {
 			 */
 			global $wgMemc;
 			// Abort if the contributor has been welcomed recently.
-			if ( $wgMemc->get( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ) ) ) {
+/*			if ( $wgMemc->get( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ) ) ) {
 				if ( !empty( $wgHAWelcomeNotices ) ) {
 					trigger_error( sprintf( '%s Done. The contributor has been welcomed recently.', __METHOD__ ) , E_USER_NOTICE );
 				}
@@ -147,7 +155,7 @@ class HAWelcomeJob extends Job {
 				error_reporting( $iErrorReporting );
 				wfProfileOut( __METHOD__ );
 				return true;
-			}
+			}*/
 			// Handle an edit made by an anonymous contributor.
 			if ( ! $oRevision->getRawUser() ) {
 				if ( !empty( $wgHAWelcomeNotices ) ) {
