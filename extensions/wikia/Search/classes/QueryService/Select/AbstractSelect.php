@@ -117,7 +117,7 @@ abstract class AbstractSelect
 	 * @param array $fields allows us to apply a mapping
 	 * @return array
 	 */
-	public function searchAsApi( $fields = [], $metadata = false ) {
+	public function searchAsApi( $fields = null, $metadata = false ) {
 		$resultSet = $this->search();
 		if ( $metadata ) {
 			$total = $this->getconfig()->getResultsFound();
@@ -130,8 +130,10 @@ abstract class AbstractSelect
 					'next' => $total > 0 ? min( [ $numPages * $limit, $this->getConfig()->getStart() + $limit ] ) : 0,
 					'items' => $resultSet->toArray( $fields )
 					];
-		} else {
+		} else if ( $fields ) {
 			$response = $resultSet->toArray( $fields );
+		} else {
+			$response = $resultSet->toArray();
 		}
 		return $response;
 	}
@@ -380,5 +382,25 @@ abstract class AbstractSelect
 	 */
 	protected function getService() {
 		return $this->service;
+	}
+	
+	/**
+	 * Reusable logic for storing matches on a wiki basis. Used in InterWiki and OnWiki Query Services.
+	 * @return Wikia\Search\Match\Wiki|null
+	 */
+	protected function extractWikiMatch() {
+		$config = $this->getConfig();
+		$query = $config->getQuery()->getSanitizedQuery();
+		$domain = preg_replace(
+			'/[^a-zA-Z0-9]/',
+			'',
+			strtolower( $query ) 
+		);
+		$service = $this->getService();
+		$wikiMatch = $service->getWikiMatchByHost( $domain );
+		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) ) {
+			$config->setWikiMatch( $wikiMatch );
+		}
+		return $config->getWikiMatch();
 	}
 }

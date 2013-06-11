@@ -54,7 +54,7 @@ abstract class VideoHandler extends BitmapHandler {
 	}
 
 	function normaliseParams( $image, &$params ) {
-		global $wgMaxImageArea, $wgMaxThumbnailArea;
+		global $wgMaxThumbnailArea;
 		wfProfileIn( __METHOD__ );
 		if ( !ImageHandler::normaliseParams( $image, $params ) ) {
 			wfProfileOut( __METHOD__ );

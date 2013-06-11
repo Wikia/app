@@ -470,7 +470,7 @@ class MediaWikiService
 	 */
 	public function getWikiMatchByHost( $domain ) {
 		$match = null;
-		if ( $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' ) ) {
+		if ( ( $domain !== '' ) && ( $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' ) ) ) {
 			$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
 		}
 		return $match;
@@ -854,20 +854,23 @@ class MediaWikiService
 	 */
 	protected function getTitleString( \Title $title ) {
 		wfProfileIn( __METHOD__ );
+		$titleString = $title->getFullText();
 		if ( in_array( $title->getNamespace(), array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
 			$wm = \WallMessage::newFromId( $title->getArticleID() );
-			$wm->load();
-			
-			if ( !$wm->isMain() && ( $main = $wm->getTopParentObj() ) && !empty( $main ) ) {
-				$main->load();
-				$wm = $main;
+			if (! empty( $wm ) ) {
+				$wm->load();
+				if ( !$wm->isMain() ) {
+					$main = $wm->getTopParentObj();
+					if ( !empty( $main ) ) {
+						$main->load();
+						$wm = $main;
+					}
+				}
+				$titleString = $wm->getMetaTitle();
 			}
-			wfProfileOut( __METHOD__ );
-
-			return (string) $wm->getMetaTitle();
 		}
 		wfProfileOut(__METHOD__);
-		return $title->getFullText();
+		return $titleString;
 	}
 	
 	/**

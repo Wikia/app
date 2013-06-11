@@ -1,4 +1,5 @@
 CREATE TABLE `city_visualization` (
+  PRIMARY KEY(`city_id`, `city_lang_code`),
   `city_id` int(11) DEFAULT NULL,
   `city_lang_code` char(8) NOT NULL DEFAULT 'en',
   `city_vertical` int(11) DEFAULT NULL,

@@ -152,6 +152,7 @@ class SearchApiController extends WikiaApiController {
 			->setPage( $request->getVal( 'batch', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setInterWiki( true )
+			->setRequestedFields( array_merge( $searchConfig->getRequestedFields(), [ 'lang' ] ) ) 
 		;
 		return $searchConfig;
 	}
