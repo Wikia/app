@@ -36,6 +36,10 @@ class FilePageTabbed extends WikiaFilePage {
 		return $isDiff;
 	}
 
+	/**
+	 * imageContent override
+	 * Content here will appear on the "About" tab
+	 */
 	protected function imageContent() {
 		wfProfileIn( __METHOD__ );
 
@@ -57,6 +61,8 @@ class FilePageTabbed extends WikiaFilePage {
 
 	/**
 	 * imageDetails override
+	 * Content here will appear on the "File History" tab
+	 *
 	 * Image page doesn't need the wrapper, but WikiaFilePage does
 	 * This is called after the wikitext is printed out
 	 */
@@ -86,6 +92,8 @@ class FilePageTabbed extends WikiaFilePage {
 
 	/**
 	 * imageMetadata override
+	 * Content here will appear on the "Metadata" tab
+	 *
 	 * Image page doesn't need the wrapper, but WikiaFilePage does
 	 */
 	protected function imageMetadata($formattedMetadata) {
@@ -106,7 +114,7 @@ class FilePageTabbed extends WikiaFilePage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/*
+	/**
 	 * Render related pages section at the bottom of a file page
 	 */
 	protected function imageFooter() {
@@ -182,5 +190,4 @@ class FilePageTabbed extends WikiaFilePage {
 
 		return $caption;
 	}
-
 }
