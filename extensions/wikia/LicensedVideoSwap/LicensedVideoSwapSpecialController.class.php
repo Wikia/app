@@ -139,19 +139,21 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * swap video
 	 * @requestParam string videoTitle
 	 * @requestParam string newTitle
+	 * @requestParam string selectedSort [recent/popular/trend]
+	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
-	 * @responseParam array|null video
+	 * @responseParam array|null videoList
 	 */
 	public function swapVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
 		$newTitle = $this->request->getVal( 'newTitle', '' );
 
 		// validate action
-		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
-		$msg = $response->getVal( 'msg', '' );
+		$validAction = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
+		$msg = $validAction->getVal( 'msg', '' );
 		if ( !empty( $msg ) ) {
-			$this->video = null;
+			$this->videoList = null;
 			$this->result = 'error';
 			$this->msg = $msg;
 		}
@@ -161,7 +163,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// check if file exists
 		if ( empty( $file ) ) {
-			$this->video = null;
+			$this->videoList = null;
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
 			return;
@@ -169,7 +171,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// check if the file is premium
 		if ( !$file->isLocal() ) {
-			$this->video = null;
+			$this->videoList = null;
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'lvs-error-permission' )->text();
 			return;
@@ -184,7 +186,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
 		if ( empty( $response['fileExists'] ) ) {
-			$this->video = null;
+			$this->videoList = null;
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
 			return;
@@ -195,7 +197,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$response = $this->sendRequest( 'VideoHandlerController', 'removeVideo', array( 'title' => $file->getName() ) );
 			$result = $response->getVal( 'result', '' );
 			if ( $result != 'ok' ) {
-				$this->video = null;
+				$this->videoList = null;
 				$this->result = 'error';
 				$this->msg = $response->getVal( 'msg', '' );
 				return;
@@ -209,32 +211,43 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 			// add premium video
 			wfRunHooks( 'AddPremiumVideo', array( $newFile->getTitle() ) );
+
+			$undoUrl = SpecialPage::getTitleFor( 'Undelete', $newFile->getTitle()->getPrefixedDBkey() )->escapeLocalUrl();
 		} else {
 			$newFile = $helper->getVideoFile( $newTitle );
 
 			// check if new file exists
 			if ( empty( $newFile ) ) {
-				$this->video = null;
+				$this->videoList = null;
 				$this->result = 'error';
 				$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
 				return;
 			}
+
+			$undoUrl = '';
 		}
 
 		// TODO: add log
 		// TODO: send request for tracking
-		$video = array();
-		$this->video = $video;
+
+		$selectedSort = $this->getVal( 'selectedSort', 'recent' );
+		$currentPage = $this->getVal( 'currentPage', 1 );
+
+		$this->videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
 		$this->result = 'ok';
-		$this->msg = $this->wf->Message( 'lvs-swap-video-success' )->text();
+
+		$fileUrl = $newFile->getTitle()->getLocalURL();
+		$this->msg = $this->wf->Message( 'lvs-swap-video-success', array( $fileUrl, $undoUrl ) )->text();
 	}
 
 	/**
 	 * keep video
 	 * @requestParam string videoTitle
+	 * @requestParam string selectedSort [recent/popular/trend]
+	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
-	 * @responseParam array|null video
+	 * @responseParam array|null videoList
 	 */
 	public function keepVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
@@ -243,7 +256,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
 		$msg = $response->getVal( 'msg', '' );
 		if ( !empty( $msg ) ) {
-			$this->video = null;
+			$this->videoList = null;
 			$this->result = 'error';
 			$this->msg = $msg;
 		}
@@ -253,7 +266,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// check if file exists
 		if ( empty( $file ) ) {
-			$this->video = null;
+			$this->videoList = null;
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
 			return;
@@ -263,8 +276,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$articleId = $file->getTitle()->getArticleID();
 		$this->wf->SetWikiaPageProp( WPP_LVS_STATUS, $articleId, LicensedVideoSwapHelper::STATUS_KEEP );
 
-		$video = array();
-		$this->video = $video;
+		$selectedSort = $this->getVal( 'selectedSort', 'recent' );
+		$currentPage = $this->getVal( 'currentPage', 1 );
+
+		$this->videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
 		$this->result = 'ok';
 		$this->msg = $this->wf->Message( 'lvs-keep-video-success' )->text();
 	}
@@ -272,9 +287,11 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	/**
 	 * restore video
 	 * @requestParam string videoTitle
+	 * @requestParam string selectedSort [recent/popular/trend]
+	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
-	 * @responseParam array|null video
+	 * @responseParam array|null videoList
 	 */
 	public function restoreVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
@@ -283,7 +300,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
 		$msg = $response->getVal( 'msg', '' );
 		if ( !empty( $msg ) ) {
-			$this->video = null;
+			$this->videoList = '';
 			$this->result = 'error';
 			$this->msg = $msg;
 		}
@@ -293,7 +310,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// check if file exists
 		if ( empty( $file ) ) {
-			$this->video = null;
+			$this->videoList = '';
 			$this->result = 'error';
 			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
 			return;
@@ -303,8 +320,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$articleId = $file->getTitle()->getArticleID();
 		$this->wf->DeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
 
-		$video = array();
-		$this->video = $video;
+		$selectedSort = $this->getVal( 'selectedSort', 'recent' );
+		$currentPage = $this->getVal( 'currentPage', 1 );
+
+		$this->videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
 		$this->result = 'ok';
 		$this->msg = $this->wf->Message( 'lvs-restore-video-success' )->text();
 	}
