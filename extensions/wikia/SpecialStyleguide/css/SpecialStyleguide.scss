@@ -1,3 +1,5 @@
+@import "../../../../skins/oasis/css/core/color";
+
 .WikiaHeader {
   top: 0;
   li {
@@ -27,7 +29,7 @@
   }
   a:hover {
     background-image: none;
-    background-color: #0A5FA3;
+    background-color: mix($color-buttons, #fff, 65%);
   }
 }
 
@@ -36,7 +38,7 @@
 }
 
 .pagetitle {
-  color: #004C7F;
+  color: $color-header;
   float: right;
   font-weight: 900;
   line-height: 32px;
