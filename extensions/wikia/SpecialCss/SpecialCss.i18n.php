@@ -9,6 +9,10 @@ $messages['en'] = [
 
 	'special-css-publish-button' => 'Publish',
 
+	'community-update-headline' => 'Wikia CSS Updates',
+	'special-css-community-update-by' => '$1 by $2',
+	'special-css-community-read-more' => '[$1 Read more &gt;]',
+
 	'special-css-oasis-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
 ];
 
@@ -22,5 +26,8 @@ $messages['qqq'] = [
 	
 	'special-css-publish-button' => 'Text on the publish button; pressing the button saves new content of CSS file',
 
+	'special-css-community-update-by' => '',
+	'special-css-community-read-more' => '',
+	
 	'special-css-oasis-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
 ];
