@@ -277,4 +277,37 @@ class VideoHandlerHelper extends WikiaModel {
 		return $videoDetail;
 	}
 
+	/**
+	 * get sort options
+	 * @return array $options
+	 */
+	public function getSortOptions() {
+		$options = array(
+			'recent' => $this->wf->Message( 'specialvideos-sort-latest' )->text(),
+			'popular' => $this->wf->Message( 'specialvideos-sort-most-popular' )->text(),
+			'trend' => $this->wf->Message( 'specialvideos-sort-trending' )->text(),
+		);
+
+		return $options;
+	}
+
+	/**
+	 * get select options for template
+	 * @param array $options
+	 * @param string $selected
+	 * @return array $opts
+	 */
+	public function getTemplateSelectOptions( $options, $selected ) {
+		$opts = array();
+		foreach( $options as $key => $value ) {
+			$opts[] = array(
+				'label' => $value,
+				'value' => $key,
+				'selected' => ( $key == $selected ),
+			);
+		}
+
+		return $opts;
+	}
+
 }

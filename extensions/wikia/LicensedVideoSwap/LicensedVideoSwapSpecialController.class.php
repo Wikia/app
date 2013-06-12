@@ -29,7 +29,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	/**
 	 * LicensedVideoSwap page
 	 *
-	 * @requestParam string selectedSort [recent/popular/trend]
+	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer currentPage
 	 * @responseParam string selectedSort
 	 * @responseParam array sortOptions
@@ -46,7 +46,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// update h1 text
 		$this->getContext()->getOutput()->setPageTitle( $this->wf->Msg('lvs-page-title') );
 
-		$selectedSort = $this->getVal( 'selectedSort', 'recent' );
+		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// list of videos
@@ -60,12 +60,13 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->pages = 10;
 
 		// sort options
-		$videoHelper = new LicensedVideoSwapHelper();
+		$videoHelper = new VideoHandlerHelper();
+		$options = $videoHelper->getSortOptions();
 		$this->contentHeaderSortOptions = array(
 			'label' =>  wfMessage('specialvideos-sort-by')->text(), // TODO: abstract this message
 			'selectedSort' => $selectedSort,
-			'sortOptions' => $videoHelper->getSortOption( $selectedSort ),
-			'sortMsg' => $this->wf->Message( 'specialvideos-sort-latest' ), // TODO - get this dynamically
+			'sortOptions' => $videoHelper->getTemplateSelectOptions( $options, $selectedSort ),
+			'sortMsg' => $options[$selectedSort],
 			'containerId' => 'sorting-dropdown',
 		);
 	}
