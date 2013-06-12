@@ -53,11 +53,6 @@ class EmailTemplatesHooksHelper {
 				);
 				$content = $msgContentHTML[1];
 
-				/* Are we able to modify subject here? */
-				$msgSubject = wfMsgForContent(
-					'enotif_subject_blogpost'
-				);
-
 				$username = $editor->getName();
 				/*
 				 * $title variable has wrong value. Use $keys['$PAGETITLE'] to get title of the post ($oPostTitle).

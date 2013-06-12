@@ -7,6 +7,11 @@
 
 class EmailTemplatesController extends WikiaController {
 
+	/**
+	 * Execute function for generating view of NewBlogPostMail template
+	 * Sets params' values of template
+	 * @param $params
+	 */
 	public function executeNewBlogPostMail( $params ) {
 		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
 
@@ -14,6 +19,11 @@ class EmailTemplatesController extends WikiaController {
 		$this->content = $params['content'];
 	}
 
+	/**
+	 * Execute function for generating view of PostInfo template
+	 * Sets params' values of template
+	 * @param $params
+	 */
 	public function executePostInfo( $params ) {
 		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
 
@@ -26,6 +36,11 @@ class EmailTemplatesController extends WikiaController {
 		$this->short_text = $params['short_text'];
 	}
 
+	/**
+	 * Execute function for generating view of Button template
+	 * Sets params' values of template
+	 * @param $params
+	 */
 	public function executeButton( $params ) {
 		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
 
