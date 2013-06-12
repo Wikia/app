@@ -34,12 +34,11 @@ class RenameUserHelper {
 
 		wfDebugLog(__CLASS__.'::'.__METHOD__, "Looking up registered user activity for user with ID {$userID}");
 
-		$result = array();
+		$result = [];
 		if ( empty($wgDevelEnvironment) ) { // on production
 			if ( !empty( $wgStatsDBEnabled ) ) {
 				$dbr = wfGetDB(DB_SLAVE, array(), $wgDatamartDB);
-				$res = $dbr->select('rollup_edit_events', 'wiki_id', array('user_id' => $userID), __METHOD__, array('DISTINCT'));
-				$result = array();
+				$res = $dbr->select('rollup_edit_events', 'wiki_id', ['user_id' => $userID], __METHOD__, ['GROUP BY' => 'wiki_id']);
 
 				while($row = $dbr->fetchObject($res)) {
 					if ( !in_array( $row->wiki_id, self::$excludedWikis ) ) {
