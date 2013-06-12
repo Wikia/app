@@ -25,7 +25,6 @@ $app->registerClass('WikiaHubsV2Controller', $dir . 'WikiaHubsV2Controller.class
 $app->registerClass('WikiaHubsV2SuggestController', $dir . 'WikiaHubsV2SuggestController.class.php');
 
 // hook classes
-$app->registerClass('WikiaHubsV2Mobile', $dir . 'hooks/WikiaHubsV2MobileHooks.php');
 $app->registerClass('WikiaHubsV2Hooks', $dir . 'hooks/WikiaHubsV2Hooks.php');
 
 // model classes
