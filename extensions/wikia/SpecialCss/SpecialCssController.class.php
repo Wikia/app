@@ -31,7 +31,8 @@ class SpecialCssController extends WikiaSpecialPageController {
 		return [
 			[
 				'userName' => 'DaNASCAT',
-				'userAvatar' => AvatarService::renderAvatar('DaNASCAT', 26), //todo: talk about that -- it's not a default avatar size
+				'userUrl' => 'http://community.wikia.com/wiki/User:DaNASCAT',
+				'userAvatar' => AvatarService::renderAvatar('DaNASCAT', 25),
 				'title' => 'Technical Update: June 11, 2013',
 				'timestamp' => 'June 11, 2013',
 				'text' => 'Shortly after the release, a script will run to convert existing YouTube tags to File pages. This conversion is already happening (as of last week) for newly added YouTube tags.',
@@ -39,7 +40,8 @@ class SpecialCssController extends WikiaSpecialPageController {
 			],
 			[
 				'userName' => 'Kirkburn',
-				'userAvatar' => AvatarService::renderAvatar('Kirkburn'),
+				'userUrl' => 'http://community.wikia.com/wiki/User:Kirkburn',
+				'userAvatar' => AvatarService::renderAvatar('Kirkburn', 25),
 				'title' => 'Technical Update: June 4, 2013',
 				'timestamp' => 'June 4, 2013',
 				'text' => 'It is no longer possible to create Message Wall and Forum posts with titles that consist of only spaces (which made them difficult to access).',
@@ -47,7 +49,8 @@ class SpecialCssController extends WikiaSpecialPageController {
 			],
 			[
 				'userName' => 'Rappy 4187',
-				'userAvatar' => AvatarService::renderAvatar('Rappy 4187'),
+				'userUrl' => 'http://community.wikia.com/wiki/User:Rappy_4187',
+				'userAvatar' => AvatarService::renderAvatar('Rappy 4187', 25),
 				'title' => 'Technical Update: May 28, 2013',
 				'timestamp' => 'May 28, 2013',
 				'text' => 'Due to observations of the American holiday Memorial Day on May 27 and the Polish holiday Corpus Christi on May 30, there will be no release this week. The regular release schedule will resume next week.',

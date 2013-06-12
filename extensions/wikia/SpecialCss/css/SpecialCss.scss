@@ -1,4 +1,5 @@
 @import "../../../../skins/oasis/css/core/color.scss";
+@import "../../../../skins/oasis/css/mixins/clearfix.scss";
 
 .css-editor {
 	float: left;
@@ -36,17 +37,28 @@
 			li {
 				border-bottom: 1px solid $color-page-border;
 				margin: 15px;
+				h4 {
+					font-size: 13px;
+					font-weight: bold;
+					line-height: 13px;
+					margin: 0;
+				}
+				span {
+					@include clearfix;
+					color: $color-alternate-text;
+					font-size: 11px;
+				}
 			}
 			li:last-child {
 				border: none;
 			}
 		}
 		blockquote {
-			margin: 12px 0 0 0;
+			margin: 0;
 		}
 		.avatar {
 			float: left;
-			margin: 10px;
+			margin: 0 10px 10px 0;
 		}
 		.read-more {
 			font-size: 11px;

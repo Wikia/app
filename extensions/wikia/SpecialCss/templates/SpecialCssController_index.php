@@ -11,12 +11,12 @@
 		<h3><?= wfMessage('community-update-headline'); ?></h3>
 		<ul>
 			<?php foreach( $cssBlogs as $cssUpdatePost ): ?>
-			<li class="community-update-item">
+			<li class="community-update-item plainlinks">
 				<?= $cssUpdatePost['userAvatar']; ?>
-				<h4><?= $cssUpdatePost['title']; ?></h4>
-				<span><?= wfMessage('special-css-community-update-by')->params([$cssUpdatePost['timestamp'], $cssUpdatePost['userName']])->text(); ?></span>
+				<h4><?= wfMessage('special-css-community-post-title')->params([$cssUpdatePost['url'], $cssUpdatePost['title']])->parse(); ?></h4>
+				<span><?= wfMessage('special-css-community-update-by')->params([$cssUpdatePost['timestamp'], $cssUpdatePost['userUrl'], $cssUpdatePost['userName']])->parse(); ?></span>
 				<blockquote><?= $cssUpdatePost['text']; ?></blockquote>
-				<p class="plainlinks read-more"><?= wfMessage('special-css-community-read-more')->params([$cssUpdatePost['url']])->parse(); ?></p>
+				<p class="read-more"><?= wfMessage('special-css-community-read-more')->params([$cssUpdatePost['url']])->parse(); ?></p>
 			</li>
 			<?php endforeach; ?>
 		</ul>
