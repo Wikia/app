@@ -1,5 +1,17 @@
 @import "../../../../skins/oasis/css/core/color";
-
+@import "../../../../skins/oasis/css/mixins/box-sizing";
+body {
+	background-image: none;
+	font-size: 14px;
+	line-height: 22px;
+}
+h1 {
+	font-size: 2.75rem;
+	line-height: 60px;
+}
+.light-font {
+	font-weight: 100;
+}
 .WikiaHeader {
   top: 0;
   li {
@@ -44,4 +56,19 @@
   line-height: 32px;
   margin-right: 40px;
   text-transform: uppercase;
+}
+.styleguide-home-page-body {
+	margin: 0 auto;
+	width: 1024px;
+	section {
+		@include box-sizing();
+		float: left;
+		padding: 0 65px 65px;
+		text-align: center;
+		width: 50%;
+	}
+	section:first-child {
+		float: none;
+		margin: 0 auto;
+	}
 }
