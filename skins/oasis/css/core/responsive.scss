@@ -23,13 +23,43 @@ body > .global-notification,
 	width: $width-outside;
 }
 
-.WikiaActivityModule li em {
-	width: auto;
+.WikiaActivityModule {
+	li em {
+		font-size: 15px;
+		line-height: 18px;
+		width: auto;
+	}
+
+	.edited-by {
+		font-size: 12px;
+	}
+}
+
+.WikiaArticle {
+	font-size: 14px;
+	line-height: 22px;
+
+	li {
+		line-height: 21px;
+	}
+
+	.editsection {
+		font-size: 14px;
+	}
 }
 
 .WikiaArticle,
 .WikiaArticleFooter {
 	padding: 0;
+}
+
+.WikiaArticle #toctitle {
+	h2 {
+		font-size: 16px;
+	}
+	.toctoggle {
+		font-size: 13px;
+	}
 }
 
 .WikiHeader {
@@ -76,6 +106,10 @@ body > .global-notification,
 .WikiaRail {
 	overflow: hidden;
 	padding: 0 10px 0 0;
+
+	.module .more {
+		font-size: 11px;
+	}
 }
 
 @media screen and (max-width: 1023px) {
