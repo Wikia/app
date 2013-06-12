@@ -31,7 +31,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		return [
 			[
 				'userName' => 'DaNASCAT',
-				'userAvatar' => AvatarService::renderAvatar('DaNASCAT'),
+				'userAvatar' => AvatarService::renderAvatar('DaNASCAT', 26), //todo: talk about that -- it's not a default avatar size
 				'title' => 'Technical Update: June 11, 2013',
 				'timestamp' => 'June 11, 2013',
 				'text' => 'Shortly after the release, a script will run to convert existing YouTube tags to File pages. This conversion is already happening (as of last week) for newly added YouTube tags.',
