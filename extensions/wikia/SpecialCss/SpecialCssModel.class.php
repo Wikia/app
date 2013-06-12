@@ -108,11 +108,15 @@ class SpecialCssModel extends WikiaModel {
 	public function getCssBlogData($params = []) {
 		$cssBlogs = [];
 
+		if ( empty($params) ) {
+			$params = $this->getDefaultParams();
+		}
+
 		$cssBlogsJson = $this->getCssBlogJsonData($params);
 
 		if ( $cssBlogsJson ) {
 			foreach ( $cssBlogsJson as $blog ) {
-				$blogTitle = GlobalTitle::newFromText($blog->title, $blog->ns, self::CC_CITY_ID);
+				$blogTitle = GlobalTitle::newFromText($blog['title'], $blog['ns'], self::CC_CITY_ID);
 				$cssBlogs[] = [
 					'title' => $blogTitle->getText(),
 					'blogUrl' => $blogTitle->getFullURL()
@@ -124,8 +128,16 @@ class SpecialCssModel extends WikiaModel {
 	}
 
 	private function getCssBlogJsonData($params) {
-		$blogs = json_decode( Http::get($this->createApiUrl($params)) );
-		return $blogs->query->categorymembers;
+		global $wgDevelEnvironment;
+		$dbName = 'wikia';
+
+		if ( $wgDevelEnvironment ) {
+			$dbName = 'community';
+		}
+
+		$blogs = ApiService::foreignCall($dbName, $params);
+
+		return isset( $blogs['query']['categorymembers'] ) ? $blogs['query']['categorymembers'] : [];
 	}
 
 	private function createApiUrl($params) {
