@@ -9,8 +9,7 @@ var LVS = {
 		this.initDropDown();
 		this.initCallout();
 		this.initMoreSuggestions();
-		this.initSwap();
-		this.initKeep();
+		this.initSwapOrKeep();
 		this.initPlay();
 	},
 	/*
@@ -132,106 +131,85 @@ var LVS = {
 
 		});
 	},
-	initSwap: function() {
-		var that = this;
+	initSwapOrKeep: function() {
+		function doRequest( isSwap, currTitle,  newTitle, $row ){
+			var data = {
+				videoTitle: currTitle,
+				selectedSort: 'latest', // TODO: make this dynamic
+				currentPage: 1 // TODO: make this dynamic
+			};
 
-		function doRequest( newTitle, currTitle, $wrapper ){
+			if ( isSwap ) {
+				data.newTitle = newTitle;
+			}
+
 			$.nirvana.sendRequest({
 				controller: 'LicensedVideoSwapSpecialController',
-				method: 'swapVideo',
-				data: {
-					videoTitle: currTitle,
-					newTitle: newTitle
-				},
-				callback: function(data) {
+				method: isSwap ? 'swapVideo' : 'keepVideo',
+				data: data,
+				callback: function( data ) {
 					if( data.result == 'error' ) {
-						window.GlobalNotification.show(data.msg, 'error');
+						window.GlobalNotification.show( data.msg, 'error' );
 					} else {
-						window.GlobalNotification.show(data.msg, 'confirm');
+						window.GlobalNotification.show( data.msg, 'confirm' );
 
-						$wrapper.slideUp( function() {
-							$wrapper.remove();
+						$row.slideUp( function() {
+							$row.remove();
 						});
 					}
 				}
 			});
 		}
 
-		function confirmSwap( currTitle, newTitle, $wrapper ) {
+		function confirmModal( isSwap, currTitle, newTitle, $row ) {
 			var currTitleText =  currTitle.replace(/_/g, ' ' ),
+				newTitleText,
+				msg;
+
+			if ( isSwap ) {
 				newTitleText = newTitle.replace(/_/g, ' ' );
+				msg = $.msg( 'lvs-confirm-swap-message', currTitleText, newTitleText );
+			} else {
+				msg = $.msg( 'lvs-confirm-keep-message', currTitleText );
+			}
 
 			$.confirm({
-				content: $.msg( 'lvs-confirm-swap-message', currTitleText, newTitleText ),
+				content: msg,
 				onOk: function() {
-					doRequest( newTitle, currTitle, $wrapper );
+					doRequest( isSwap, newTitle, currTitle, $row );
 				},
 				width: 700
 			});
 		}
 
-		this.$container.on( 'mouseover mouseout click', '.swap-button', function( e ) {
+		// Event listener for interacting with buttons
+		this.$container.on( 'mouseover mouseout click', '.swap-button, .keep-button', function( e ) {
 			var $this = $( this ),
 				$parent = $this.parent(),
 				$arrow = $parent.siblings( '.swap-arrow' ),
-				$wrapper = $this.closest( '.row'),
+				$row = $this.closest( '.row' ),
+				isSwap = $this.is( '.swap-button' ),
 				newTitle,
 				currTitle;
 
-			// swap button hovered
-			if ( e.type == 'mouseover' ) {
-				$arrow.fadeIn( 100 );
-			} else if ( e.type == 'mouseout' ) {
-				$arrow.fadeOut( 100 );
-			// swap button clicked
-			} else if ( e.type == 'click' ) {
-				// Get both titles - current/non-premium video and video to swap it out with
-				newTitle = $this.attr( 'data-video-swap' );
-				currTitle = that.$container.find( '.keep-button' ).attr( 'data-video-keep' );
-				confirmSwap( true, decodeURIComponent( currTitle ), decodeURIComponent( newTitle ), $wrapper );
-			}
-		});
-	},
-	initKeep: function() {
-		function doRequest( currTitle, $wrapper ) {
-			$.nirvana.sendRequest({
-				controller: 'LicensedVideoSwapSpecialController',
-				method: 'keepVideo',
-				data: {
-					videoTitle: currTitle
-				},
-				callback: function(data) {
-					if( data.result == 'error' ) {
-						window.GlobalNotification.show(data.msg, 'error');
-					} else {
-						window.GlobalNotification.show(data.msg, 'confirm');
-
-						$wrapper.slideUp( function() {
-							$wrapper.remove();
-						});
-					}
+			if ( isSwap ) {
+				// swap button hovered
+				if ( e.type == 'mouseover' ) {
+					$arrow.fadeIn( 100 );
+				} else if ( e.type == 'mouseout' ) {
+					$arrow.fadeOut( 100 );
+				// swap button clicked
+				} else if ( e.type == 'click' ) {
+					// Get both titles - current/non-premium video and video to swap it out with
+					newTitle = $this.attr( 'data-video-swap' );
+					currTitle = $row.find( '.keep-button' ).attr( 'data-video-keep' );
+					confirmModal( true, decodeURIComponent( currTitle ), decodeURIComponent( newTitle ), $row );
 				}
-			});
-		}
-
-		function confirmKeep( currTitle, $wrapper ) {
-			var currTitleText =  currTitle.replace(/_/g, ' ');
-
-			$.confirm({
-				content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
-				onOk: function() {
-					doRequest( currTitle, $wrapper );
-				},
-				width: 700
-			});
-		}
-
-		this.$container.on( 'click', '.keep-button', function() {
-			var $this = $( this ),
-				$wrapper = $this.closest( '.row' ),
-				currTitle = $this.attr( 'data-video-keep' );
-
-			confirmKeep( decodeURIComponent( currTitle ), $wrapper );
+			// Keep button clicked
+			} else if ( e.type == 'click' ) {
+				currTitle = $row.find( '.keep-button' ).attr( 'data-video-keep' );
+				confirmModal( false, decodeURIComponent( currTitle ), null, $row );
+			}
 		});
 	},
 	initPlay: function() {
@@ -244,7 +222,10 @@ var LVS = {
 				fileTitle = decodeURIComponent( $this.children( 'img' ).attr( 'data-video-key' )),
 				videoInstance,
 				$element,
-				$thumbList;
+				$thumbList,
+				$row = $this.closest( '.row' );
+
+			$row.find( '.swap-button' ).attr( 'data-video-swap', fileTitle );
 
 			if ( $this.hasClass( 'thumb' ) ) {
 				// one of the thumbnails was clicked
@@ -269,6 +250,9 @@ var LVS = {
 				},
 				callback: function( data ) {
 					videoInstance = new VideoBootstrap( $element[0], data.embedCode, 'licensedVideoSwap' );
+
+					// Update swap button so it contains the dbkey of the video to swap
+					$row.find( '.swap-button' ).attr( 'data-video-swap', fileTitle );
 				}
 			});
 		});

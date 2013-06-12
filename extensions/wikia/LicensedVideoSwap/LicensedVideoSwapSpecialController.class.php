@@ -12,7 +12,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	const THUMBNAIL_WIDTH = 500;
 	const THUMBNAIL_HEIGHT = 309;
 	const POSTED_IN_ARTICLES = 100;
-	const NUM_SUGGESTIONS = 6;
+	const NUM_SUGGESTIONS = 5;
 
 	public function __construct() {
 		parent::__construct( 'LicensedVideoSwap', '', false );
