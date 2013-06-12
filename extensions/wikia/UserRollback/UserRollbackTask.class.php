@@ -1,7 +1,7 @@
 <?php
 
 class UserRollbackTask extends BatchTask {
-
+	
 	protected $mParams = array();
 
 	public function __construct() {
@@ -9,27 +9,27 @@ class UserRollbackTask extends BatchTask {
 		$this->mVisible = true;
 		parent::__construct();
 	}
-
+	
 	public function execute( $params = null ) {
 		global $IP, $wgWikiaLocalSettingsPath;
-
+		
 		$this->mParams = unserialize($params->task_arguments);
 		$this->users = $this->mParams['users'];
 		$this->time = $this->mParams['time'];
-
+		
 		$userNames = array();
 		foreach ($this->users as $u)
 			$userNames[] = $u['canonical'];
-
+		
 		// Save initial log line
 		$processSummary = "Processing UserRollback request:\n";
 		$processSummary .= "  - users: " . implode(', ',$userNames) . "\n";
 		$processSummary .= "  - from: " . $this->time;
 		$this->log($processSummary);
-
+		
 		// ...
 		$wikiIds = $this->findWikis( $this->users );
-
+		
 		$noErrors = true;
 		$allUsers = implode('|',$userNames);
 		foreach ($wikiIds as $wikiId) {
@@ -46,13 +46,13 @@ class UserRollbackTask extends BatchTask {
 			$this->log("Finished processing wiki with ID {$wikiId}.");
 		}
 		$this->log("Finished processing work.");
-
+		
 		return $noErrors;
 	}
-
+	
 	protected function findWikis( $users ) {
-		global $wgDatamartDB, $wgStatsDBEnabled, $wgDevelEnvironment;
-
+		global $wgStatsDB, $wgStatsDBEnabled, $wgDevelEnvironment;
+		
 		if (!$wgStatsDBEnabled) {
 			return false;
 		}
@@ -64,8 +64,8 @@ class UserRollbackTask extends BatchTask {
 				165, // firefly
 			);
 		}
-
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgDatamartDB);
+		
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 		$wikiIds = array();
 		foreach ($users as $user) {
 			if ( $user['id'] != 0 ) { // regular user
@@ -75,10 +75,10 @@ class UserRollbackTask extends BatchTask {
 			} else { // ip - anons
 				$where = array(
 					'user_id' => 0,
-					'ip' => IP::toUnsigned($user['ip']), // FIXME: no IP entry in dataware
+					'ip' => IP::toUnsigned($user['ip']),
 				);
 			}
-			$res = $dbr->select('rollup_edit_events', 'wiki_id', $where, __METHOD__, array('DISTINCT'));
+			$res = $dbr->select('events', 'wiki_id', $where, __METHOD__, array('DISTINCT'));
 			$userWikiIds = array();
 			while($row = $dbr->fetchObject($res)) {
 				$wikiIds[$row->wiki_id] = true;
@@ -90,10 +90,10 @@ class UserRollbackTask extends BatchTask {
 		sort($wikiIds);
 		return $wikiIds;
 	}
-
+	
 	public function getForm( $title, $errors = false ) {
 	}
-
+	
 	public function submitForm() {
 		return array(
 			array(
@@ -101,5 +101,5 @@ class UserRollbackTask extends BatchTask {
 			),
 		);
 	}
-
+	
 }
