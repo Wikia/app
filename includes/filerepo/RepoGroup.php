@@ -163,7 +163,21 @@ class RepoGroup {
 				}
 				return $image;
 			}
+
+			/* Wikia changes begin */
+			// check if the foreign repo allows file redirecting
+			if ( $title->isRedirect() && $repo->allowRedirect  ) {
+				wfRunHooks( 'FindRedirectedFile', array( $title, $options, &$image ) );
+				if ( $image ) {
+					if ( $useCache ) {
+						$cacheEntry = $image;
+					}
+					return $image;
+				}
+			}
+			/* Wikia changes end */
 		}
+
 		# Not found, do not override negative cache
 		return false;
 	}
