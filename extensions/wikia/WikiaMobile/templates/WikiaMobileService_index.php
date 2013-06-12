@@ -47,14 +47,14 @@
 	<?= $headItems ;?>
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>">
-	<?= $trackingCode ;?>
 	<?= $wikiaNavigation ;?>
-	<? //$topLeaderBoard ;?>
+	<?= $topLeaderBoardAd ;?>
 	<?= $pageContent ;?>
 	<?= $wikiaFooter ;?>
 	<div id=wkCurtain>&nbsp;</div>
 	<?= $jsBodyFiles ;?>
-	<?= $floatingAd ;?>
+	<? //$floatingAd ;?>
 	<? //$inContentAd ;?>
+	<?= $trackingCode ;?>
 </body>
 </html>

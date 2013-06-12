@@ -49,9 +49,10 @@ class WikiaMobileService extends WikiaService {
 		$styles = null;
 		$scripts = null;
 		$assetsManager = F::build( 'AssetsManager', [], 'getInstance' );
-		$floatingAd = '';
-		//$topLeaderBoardAd = '';
+		//$floatingAd = '';
+		$topLeaderBoardAd = '';
 		//$inContentAd = '';
+		//$modalInterstitial = '';
 		$globalVariables = [];
 
 		F::build( 'JSMessages' )->enqueuePackage( 'WkMbl', JSMessages::INLINE );
@@ -66,8 +67,8 @@ class WikiaMobileService extends WikiaService {
 			$jsBodyPackages[] = 'wikiamobile_js_ads';
 
 			if ($mobileAdService->shouldShowAds()) {
-				$floatingAd = $this->app->renderView( 'WikiaMobileAdService', 'floating' );
-				//$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
+				//$floatingAd = $this->app->renderView( 'WikiaMobileAdService', 'floating' );
+				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 				//$inContentAd = $this->app->renderView( 'WikiaMobileAdService', 'inContent' );
 				$globalVariables['wgShowAds'] = true;
 			}
@@ -160,15 +161,15 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'pageTitle', $this->wg->Out->getHTMLTitle() );
 		$this->response->setVal( 'bodyClasses', array( 'wkMobile', $this->templateObject->get( 'pageclass' ) ) );
 		$this->response->setVal( 'jsBodyFiles', $jsBodyFiles );
-
-		$this->response->setVal( 'floatingAd', $floatingAd );
-		//$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
-		//$this->response->setVal( 'inContentAd', $inContentAd );
-
 		$this->response->setVal( 'wikiaNavigation', $nav );
 		$this->response->setVal( 'pageContent', $pageContent );
 		$this->response->setVal( 'wikiaFooter', $footer );
 		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $globalVariables ) );
+		//Ad units
+		//$this->response->setVal( 'floatingAd', $floatingAd );
+		$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
+		//$this->response->setVal( 'inContentAd', $inContentAd );
+		//$this->response->setVal( 'modalInterstitial', $modalInterstitial );
 
 		//tracking
 		$trackingCode = '';

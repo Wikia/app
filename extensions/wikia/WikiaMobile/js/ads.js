@@ -144,10 +144,8 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 					}
 				}
 
-				if (found && typeof init == 'function') {
-					//if the slot was not initialized and Ads where found
-					//then force the default, i.e. a footer Ad
-					init();
+				if(typeof init == 'function') {
+					init(found)
 				}
 			}
 		}
