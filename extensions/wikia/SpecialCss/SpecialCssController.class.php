@@ -19,9 +19,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 		$aceUrl = AssetsManager::getInstance()->getOneCommonURL('/resources/Ace');
 		$aceUrlParts = parse_url($aceUrl);
-		$this->wg->Out->addJsConfigVars([
-			'aceScriptsPath' => $aceUrlParts['path']
-		]);
+		$this->response->setJsVar('aceScriptsPath', $aceUrlParts['path']);
 
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
 		
