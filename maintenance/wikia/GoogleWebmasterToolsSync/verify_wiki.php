@@ -8,21 +8,22 @@ GWTLogHelper::notice( __FILE__ . " script starts.");
 try {
 	if( !isset($options['i']) ) {
 		GWTLogHelper::error( "Specify wiki id ( city_id ) (-i)" );
+		die(1);
 	}
 
 	$service = new GWTService();
 	$wiki = $service->getWikiRepository()->oneByWikiId( $options['i'] );
 	if( !$wiki ) {
 		GWTLogHelper::error( "No wiki for " . $options['i'] . "\n" );
-		die();
+		die(1);
 	}
 	if( !$wiki->getUserId() ) {
 		GWTLogHelper::error( "User id empty for " . $wiki->getWikiId() . "\n" );
-		die();
+		die(1);
 	}
 	$user = $service->getUserRepository()->getById( $wiki->getUserId() );
 	$info = $service->verifyWiki( $wiki, $user );
-	var_dump($info);
+	GWTLogHelper::notice( __FILE__ . " script ends.");
 
 } catch ( Exception $ex ) {
 	GWTLogHelper::error( __FILE__ . " script failed.", $ex);

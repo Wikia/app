@@ -100,11 +100,11 @@ class AdEngine2Controller extends WikiaController {
 	}
 
 	public static function getAdLevelForSlot($slotname) {
-		if ($slotname === 'INVISIBLE_1') {
+		if ($slotname === 'INVISIBLE_1' || $slotname === 'INVISIBLE_SKIN') {
 			return self::AD_LEVEL_CORPORATE;
 		}
 
-		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD/', $slotname)) {
+		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD|GPT_FLUSH/', $slotname)) {
 			return self::AD_LEVEL_LIMITED;
 		}
 		return self::AD_LEVEL_ALL;
@@ -411,6 +411,7 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wgShowAds'] = self::areAdsShowableOnPage();
 
 		$vars['wgAdDriverUseGpt'] = $req->getBool('usegpt', (bool) $this->wg->AdDriverUseGpt);
+		$vars['wgAdVideoTargeting'] = $req->getBool('videotargeting', (bool) $this->wg->AdVideoTargeting);
 		$vars['wgAdDriverStartLiftiumOnLoad'] = $req->getBool('liftiumonload', (bool) $this->wg->LiftiumOnLoad);
 
 		// Used to hop by DART ads

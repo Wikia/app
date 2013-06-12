@@ -113,7 +113,7 @@ class ForumHooksHelper {
 
 		if ( $element->page_namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
 
-			$titleData = WallHelper::getWallTitleData(null, $element, true);
+			$titleData = WallHelper::getWallTitleData(null, $element );
 
 			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'forum-wiki-activity-msg-name', $titleData['wallPageName'] ) . '</a>' );
 			$link = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ' . $boardText;
@@ -377,11 +377,36 @@ class ForumHooksHelper {
 
 			$board->clearCacheBoardInfo();
 
-			$thread = WallThread::newFromId($threadId);
+			$thread = WallThread::newFromId( $threadId );
 			if(!empty($thread)) {
 				$thread->purgeLastMessage();
+				$threadTitle = Title::newFromId( $threadId );
+				// the title can be empty if this is a create action
+				if ( !empty( $threadTitle ) ) {
+					$threadTitle->purgeSquid();
+					$threadTitle->invalidateCache();
+				}
 			}
 		}
+		return true;
+	}
+
+	/**
+	 * Makes sure the correct URLs for thread pages get purged.
+	 *
+	 * @param $title Title
+	 * @param $urls String[]
+	 * @return bool
+	 */
+	public static function onTitleGetSquidURLs( $title, &$urls ) {
+		if ( $title->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+			$wallMessage = WallMessage::newFromTitle( $title );
+			$urls = array(
+				$wallMessage->getMessagePageUrl(),
+				$wallMessage->getMessagePageUrl() . '?action=history',
+			);
+		}
+
 		return true;
 	}
 

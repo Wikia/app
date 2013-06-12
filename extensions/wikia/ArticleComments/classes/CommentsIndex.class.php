@@ -168,7 +168,7 @@ class CommentsIndex extends WikiaModel {
 	 * [ field = archived, deleted, removed, locked, protected, sticky, last_rev_id, last_child_comment_id ]
 	 */
 	protected function updateDatabase( $updateValue ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wf->ReadOnly() && !empty($this->commentId) ) {
 			$this->createTableCommentsIndex();
@@ -185,19 +185,19 @@ class CommentsIndex extends WikiaModel {
 			$db->commit();
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * add comment to database
 	 */
 	public function addToDatabase() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		//Just for transition time
 		if(empty($this->wg->EnableWallEngine) || !WallHelper::isWallNamespace($this->namespace) ) {
 			Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR no wall?", true);
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -241,14 +241,14 @@ class CommentsIndex extends WikiaModel {
 			Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR Failed to create comments_index entry, db is readonly", true);
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * create comments_index table if not exists
 	 */
 	public function createTableCommentsIndex() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wf->ReadOnly() ) {
 			$db = $this->wf->GetDB( DB_MASTER );
@@ -259,7 +259,7 @@ class CommentsIndex extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -271,7 +271,7 @@ class CommentsIndex extends WikiaModel {
 	public static function newFromId( $commentId, $parentPageId = 0 ) {
 		$app = F::App();
 
-		$app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$sqlWhere = array( 'comment_id' => $commentId );
 		if ( !empty($parentPageId) ) {
@@ -297,7 +297,7 @@ class CommentsIndex extends WikiaModel {
 			$comment = null;
 		}
 
-		$app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $comment;
 	}
@@ -359,7 +359,7 @@ class CommentsIndex extends WikiaModel {
 	 * @param integer $lastChildCommentId
 	 */
 	public function updateParentLastCommentId( $lastChildCommentId ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !empty($this->parentCommentId) ) {
 			$data = array( 'commentId' => $this->parentCommentId );
@@ -367,7 +367,7 @@ class CommentsIndex extends WikiaModel {
 			$parent->updateLastChildCommentId( $lastChildCommentId );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -376,7 +376,7 @@ class CommentsIndex extends WikiaModel {
 	 * @return integer $lastCommentId
 	 */
 	public function getParentLastCommentId( $useMaster = false ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$dbname = ( $useMaster ) ? DB_MASTER : DB_SLAVE ;
 		$db = $this->wf->GetDB( $dbname );
@@ -398,7 +398,7 @@ class CommentsIndex extends WikiaModel {
 			$lastCommentId = $row->last_comment_id;
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $lastCommentId;
 	}

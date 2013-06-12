@@ -87,7 +87,7 @@ class PathFinderDataSource extends WikiaObject{
 	}
 
 	public function getDataSet( $indexOrName = 0 ){
-		$this->app->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->load();
 		$item = null;
@@ -103,7 +103,7 @@ class PathFinderDataSource extends WikiaObject{
 			$item = $this->items[$indexOrName];
 		}
 
-		$this->app->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		if ( !empty( $item ) ) {
 			return F::build( 'PathFinderDataSet', array( $item ) );
@@ -114,7 +114,7 @@ class PathFinderDataSource extends WikiaObject{
 
 	public function load(){
 		if ( !$this->isLoaded ) {
-			$this->app->wf->profileIn( __METHOD__ );
+			wfProfileIn( __METHOD__ );
 
 			$params = array();
 
@@ -136,11 +136,11 @@ class PathFinderDataSource extends WikiaObject{
 				$this->items = $matches[1];
 				$this->isLoaded = true;
 			} else {
-				$this->app->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				throw new PathFinderDataSourceNoDataException();
 			}
 
-			$this->app->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 		}
 	}
 

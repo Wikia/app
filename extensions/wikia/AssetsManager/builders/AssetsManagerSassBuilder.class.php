@@ -39,31 +39,52 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			$processingTimeStart = microtime( true );
 		}
 
-		$sassService = SassService::newFromFile("{$IP}/{$this->mOid}");
-		$sassService->setSassVariables($this->mParams);
-		$sassService->setFilters(
-			SassService::FILTER_IMPORT_CSS | SassService::FILTER_CDN_REWRITE
-			| SassService::FILTER_BASE64 | SassService::FILTER_JANUS
-		);
-
-		$cacheId = __CLASS__ . "-minified-".$sassService->getCacheKey();
-
 		$memc = F::App()->wg->Memc;
-		$cachedContent = $memc->get( $cacheId );
 
-		if ( $cachedContent ) {
-			$this->mContent = $cachedContent;
+		$this->mContent = null;
+
+		$content = null;
+		$sassService = null;
+		$hasErrors = false;
+
+		try {
+			$sassService = SassService::newFromFile("{$IP}/{$this->mOid}");
+			$sassService->setSassVariables($this->mParams);
+			$sassService->setFilters(
+				SassService::FILTER_IMPORT_CSS | SassService::FILTER_CDN_REWRITE
+				| SassService::FILTER_BASE64 | SassService::FILTER_JANUS
+			);
+
+			$cacheId = __CLASS__ . "-minified-".$sassService->getCacheKey();
+			$content = $memc->get( $cacheId );
+		} catch (Exception $e) {
+			$content = "/* {$e->getMessage()} */";
+			$hasErrors = true;
+		}
+
+
+		if ( $content ) {
+			$this->mContent = $content;
 
 		} else {
 			// todo: add extra logging of AM request in case of any error
-			$this->mContent = $sassService->getCss( /* useCache */ false);
+			try {
+				$this->mContent = $sassService->getCss( /* useCache */ false);
+			} catch (Exception $e) {
+				$this->mContent = $this->makeComment($e->getMessage());
+				$hasErrors = true;
+			}
 
 			// This is the final pass on contents which, among other things, performs minification
 			parent::getContent( $processingTimeStart );
 
 			// Prevent cache poisoning if we are serving sass from preview server
-			if ( getHostPrefix() == null && !$this->mForceProfile ) {
-				$memc->set( $cacheId, $this->mContent );
+			if ( !empty($cacheId) && getHostPrefix() == null && !$this->mForceProfile ) {
+				$expTime = 0;
+				if ( $hasErrors ) {
+					$expTime = 10; // prevent flooding servers with sass processes
+				}
+				$memc->set( $cacheId, $this->mContent, $expTime );
 			}
 		}
 
@@ -257,4 +278,16 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 		wfProfileOut(__METHOD__);
 	}
+
+	/**
+	 * Get a JS/CSS comment with the given text
+	 *
+	 * @param $text string Text to be put in the comment
+	 * @return string Input text wrapped in the comment
+	 */
+	protected function makeComment( $text ) {
+		$encText = str_replace( '*/', '* /', $text );
+		return "/*\n$encText\n*/\n";
+	}
+
 }

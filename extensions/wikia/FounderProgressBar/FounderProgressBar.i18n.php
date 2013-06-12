@@ -92,7 +92,7 @@ $messages['en'] = array(
 	'founderprogressbar-browse-page-name' => 'Browse',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Shirayuki
  * @author Siebrand
  */
@@ -107,6 +107,48 @@ $messages['qqq'] = array(
  * @author Achraf94
  */
 $messages['ar'] = array(
+	'founderprogressbar-credits' => 'محور مهام و دليل لمؤسسي الويكي الجدد',
+	'founderprogressbar-widget-label' => 'مرحلة تطور {{SITENAME}}',
+	'founderprogressbar-progress-label' => 'المهام المنجزة',
+	'founderprogressbar-progress-see-full-list' => 'انظر قائمة مهام كاملة',
+	'founderprogressbar-progress-hide-full-list' => 'إخفاء قائمة المهام الكاملة',
+	'founderprogressbar-skip-for-now' => 'تخطى هذا الآن',
+	'founderprogressbar-task-completed' => 'اكتملت',
+	'founderprogressbar-list-label' => 'مهام {{SITENAME}}',
+	'founderprogressbar-list-description1' => 'هل أنت مستعد لدفع هذه الويكي نحو طريق النجاح؟ أكمل كافة المهام المذكورة أدناه لرفع شريط التقدم إلى 100%! يمكن لأي شخص في الويكي مساعدتك عبر المساهمة في المهام وسوف يتم حسابها ضمن المهام في القائمة.',
+	'founderprogressbar-list-description2' => 'تظهر منطقة المهام قائمة بكل المهام التي تحتاج إلى إكمالها. إذا قمت بتخطي مهمة فسوف تنتقل المهمة إلى قسم المهام التي تم تخطيها و تبقى متاحة لك لإكمالها في أي وقت. هل هناك مهمة في القائمة لا تعتقد بأنها جيدة للويكي الخاص بك؟ لا تقلق -- عندما تبقى فقط قائمة المهام التي تم تخطيها سوف نفتح لك المهام الإضافية (مكافأة). أكمل المهام الإضافية لتعوض نقاط النسبة المئوية للمهام التي ستتخطاها للأبد للوصول إلى 100% مهام مكتملة.',
+	'founderprogressbar-list-task-label' => 'المهام',
+	'founderprogressbar-list-skipped-task-label' => 'المهام التي تم تخطيها',
+	'founderprogressbar-list-skipped-task-desc' => 'يمكنك إكمال هذه في أي وقت.',
+	'founderprogressbar-list-bonus-task-label' => 'مهام إضافية',
+	'founderprogressbar-list-bonus-task-desc' => 'أكمل قائمة المهام لفتح المهام الإضافية',
+	'founderprogressbar-task-call-to-action' => 'الانتقال إلى المهمة',
+	'founderprogressbar-completion-message' => 'تهانينا! لقد قمت بعمل مدهش وأكملت كافة المهام إلى 100%. الويكي الخاصة بك في طريقها إلى النجاح، هذا إذا لم تصله بعد. استمر في العمل رائع!',
+	'founderprogressbar-bonus-task-notice' => 'ملاحظة: كل مهمة إضافية يمكن إكمالها أكثر من مرة. أكمل كل ما تحتاجه للوصول إلى 100%.',
+	'founderprogressbar-page-add10-label' => 'الوصول إلى $1 {{PLURAL:$1|صفحة|صفحات}}',
+	'founderprogressbar-themedesigner-visit-label' => 'تخصيص مظهرك',
+	'founderprogressbar-mainpage-edit-label' => 'ملء الصفحة الرئيسية الخاصة بك',
+	'founderprogressbar-commcentral-visit-label' => 'زيارة مركز المؤسسين والإداريين',
+	'founderprogressbar-wikiactivity-visit-label' => 'زيارة نشاط الويكي',
+	'founderprogressbar-profile-edit-label' => 'ملء صفحتك الشخصية',
+	'founderprogressbar-total-edit75-label' => 'الوصول إلى 75 تعديلا',
+	'founderprogressbar-category-edit-label' => 'تعديل صفحة تصنيف',
+	'founderprogressbar-wikialabs-visit-label' => 'زيارة مختبرات ويكيا',
+	'founderprogressbar-fb-connect-label' => 'اتصال عبر الفيسبوك',
+	'founderprogressbar-gallery-add-label' => 'إضافة معرض للصور',
+	'founderprogressbar-topnav-edit-label' => 'قم بتخصيص الإبحار',
+	'founderprogressbar-mainpage-addslider-label' => 'إضافة شريط تمرير صور للصفحة الرئيسية',
+	'founderprogressbar-commcorner-edit-label' => 'تعديل زاوية المجتمع',
+	'founderprogressbar-video-add-label' => 'إضافة ملف فيديو',
+	'founderprogressbar-user-add5-label' => 'الوصول إلى 5 صفحات مستخدمين',
+	'founderprogressbar-recentchanges-visit-label' => 'زيارة أحدث التغييرات',
+	'founderprogressbar-wordmark-edit-label' => 'تحميل شعار',
+	'founderprogressbar-mostvisited-visit-label' => 'رؤية الصفحات الأكثر مشاهدة',
+	'founderprogressbar-toptenlist-add-label' => 'إضافة قائمة أفضل 10',
+	'founderprogressbar-blogpost-add-label' => 'إضافة مشاركة في المدونة',
+	'founderprogressbar-fb-likes3-label' => 'الوصول إلى $1 إعجاب في الفيسبوك',
+	'founderprogressbar-uncategorized-visit-label' => 'انظر الصفحات الغير مصنفة',
+	'founderprogressbar-bonus-photo-add10-label' => 'أضف $1 من الصور',
 	'founderprogressbar-browse-page-name' => 'تصفّح',
 );
 
@@ -125,6 +167,9 @@ $messages['br'] = array(
 	'founderprogressbar-task-completed' => 'Graet',
 	'founderprogressbar-list-label' => 'Trevelloù {{SITENAME}}',
 	'founderprogressbar-list-task-label' => 'Trevelloù',
+	'founderprogressbar-list-bonus-task-label' => 'Trevelloù ouzhpenn',
+	'founderprogressbar-list-bonus-task-desc' => 'Echuit roll an trevelloù evit diskolhañ trevelloù ouzhpenn',
+	'founderprogressbar-task-call-to-action' => "Mont d'an trevell",
 	'founderprogressbar-page-add10-label' => 'Tizhout $1 {{PLURAL:$1|pajenn}}',
 	'founderprogressbar-themedesigner-visit-label' => 'Personelaat ho tem.',
 	'founderprogressbar-photo-add10-label' => 'Tizhout $1 {{PLURAL:$1|skeudenn}}',
@@ -1284,10 +1329,11 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'founderprogressbar-credits' => "Un perno d'atività e guida për fondator ëd neuve wiki",
+	'founderprogressbar-credits' => "N'argropament d'atività e guida për ij fondator ëd neuve wiki",
 	'founderprogressbar-widget-label' => 'Progress ëd {{SITENAME}}',
 	'founderprogressbar-progress-label' => 'Atività fàite',
 	'founderprogressbar-progress-see-full-list' => 'Varda la lista completa',
@@ -1295,17 +1341,17 @@ $messages['pms'] = array(
 	'founderprogressbar-skip-for-now' => 'Sàuta për adess',
 	'founderprogressbar-task-completed' => 'Completà',
 	'founderprogressbar-list-label' => 'Atività ëd {{SITENAME}}',
-	'founderprogressbar-list-description1' => "Pront a possé toa wiki an sla strà dël sucess? Completa tute toe atività listà sota për porté la bara dij tò progress al 100%! Mincadun dzor toa wiki a peul giuté e mincadun-a ëd soe contribussion a sarà contà ansema a j'atività dë sta lista.",
-	'founderprogressbar-list-description2' => "L'area dj'atività a lista tute j'atività ch'it deuve completé. S'it sàute n'atività, a sarà tramudà ant la session Atività Sautà e a resterà disponibla përchè ch'it la complete an qualsëssìa moment. A-i é-lo n'atività ant la lista ch'it pense a sarà mai giusta për toa wiki? Sagrinte pa -- quand che mach j'Atività Sautà a resto da completé i dësblocheroma toe Atività Bonus. Completa j'atività bonus për aussé ij pont ëd persentual për j'atività ch'it sauteras për sempe e riva a coaté ël 100%.",
+	'founderprogressbar-list-description1' => "Pront a possé soa wiki an sla strà dël sucess? Ch'a livra tute j'atività listà sì-sota për porté la bara dij sò progress al 100%! Tuti ansima a soa wiki a peulo giuté e mincadun-a ëd soe contribussion a sarà contà ansema a j'atività dë sta lista.",
+	'founderprogressbar-list-description2' => "La zòna dj'atività a lista tute j'atività ch'a dev livré. S'a sàuta n'atività, a sarà tramudà ant la session Atività Sautà e a resterà disponìbil për ch'a la completa an qualsëssìa moment. I-é-lo n'atività ant la lista ch'a pensa a sarà mai giusta për soa wiki? Ch'as sagrin-a pa -- quand che mach j'Atività Sautà a resto da completé i dësblocheroma soe Atività suplementar. Ch'a completa se atività suplementar për aussé ij pont ëd persentual për j'atività ch'a sautrà për sempe e rivé al 100% sustà.",
 	'founderprogressbar-list-task-label' => 'Atività',
 	'founderprogressbar-list-skipped-task-label' => 'Atività Sautà',
 	'founderprogressbar-list-skipped-task-desc' => 'It peule completeje an qualsëssìa moment.',
-	'founderprogressbar-list-bonus-task-label' => 'Atività Bonus',
-	'founderprogressbar-list-bonus-task-desc' => "Completa la lista dj'atività për dësbloché j'atività bonus",
+	'founderprogressbar-list-bonus-task-label' => 'Atività adissionaj',
+	'founderprogressbar-list-bonus-task-desc' => "Ch'a livra la lista dj'atività për dësbloché j'atività adissionaj",
 	'founderprogressbar-task-call-to-action' => "Và a l'atività",
 	'founderprogressbar-completion-message' => "Congratulassion! It l'has fàit un travaj anciarmant e completà tute j'atività al 100%. Toa wiki a l'é bin an sla stra dël sucess, o a-i é già. Continua l'incredìbil travaj!",
-	'founderprogressbar-bonus-task-notice' => "Nòta: Minca atività bonus a peul esse continuà pi che na vòta. Completa pi ch'it peule për rivé al 100%",
-	'founderprogressbar-page-add10-label' => 'Rivà a $1 {{PLURAL:$1|pagina|pagine}}',
+	'founderprogressbar-bonus-task-notice' => "Nòta: Minca atività suplementar a peul esse livrà pi che na vòta. Ch'a na completa fin ch'a n'ha damanca për rivé al 100%",
+	'founderprogressbar-page-add10-label' => 'Rivé a $1 {{PLURAL:$1|pàgina|pàgine}}',
 );
 
 /** Pashto (پښتو)
@@ -1315,13 +1361,18 @@ $messages['ps'] = array(
 	'founderprogressbar-progress-see-full-list' => 'بشپړ لړليک کتل',
 	'founderprogressbar-progress-hide-full-list' => 'بشپړ لړليک پټول',
 	'founderprogressbar-task-completed' => 'بشپړ شو',
+	'founderprogressbar-list-task-label' => 'دندې',
+	'founderprogressbar-photo-add10-label' => '$1 {{PLURAL:$1|انځور|انځورونو}} ته يې ورسوۍ',
+	'founderprogressbar-photo-add20-label' => '$1 {{PLURAL:$1|انځور|انځورونو}} ته يې ورسوۍ',
 	'founderprogressbar-fb-connect-label' => 'فېسبوک سره يوځای کول',
 	'founderprogressbar-gallery-add-label' => 'يو انځورتون ورګډول',
 	'founderprogressbar-video-add-label' => 'يوه ويډيو ورګډول',
+	'founderprogressbar-bonus-photo-add10-label' => '$1 نور انځورونه ورګډول',
 	'founderprogressbar-browse-page-name' => 'سپړل',
 );
 
 /** Portuguese (português)
+ * @author Luckas
  * @author Malafaya
  * @author Rhaijin
  * @author SandroHc
@@ -1340,6 +1391,7 @@ $messages['pt'] = array(
 	'founderprogressbar-list-bonus-task-label' => 'Tarefas Bónus',
 	'founderprogressbar-task-call-to-action' => 'Ir para tarefa',
 	'founderprogressbar-page-add10-label' => 'Atingir $1 {{PLURAL:$1|página|páginas}}',
+	'founderprogressbar-themedesigner-visit-label' => 'Personalizar seu tema',
 	'founderprogressbar-photo-add10-label' => 'Atingir $1 {{PLURAL:$1|Imagem|Imagens}}',
 	'founderprogressbar-category-add3-label' => 'Atingir $1 {{PLURAL:$1|Categoria|Categorias}}',
 	'founderprogressbar-wikiactivity-visit-label' => 'Visitar a Atividade da Wiki',
@@ -1359,6 +1411,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Luckas
  * @author Luckas Blade
  * @author TheGabrielZaum
  */
@@ -1369,6 +1422,23 @@ $messages['pt-br'] = array(
 	'founderprogressbar-wikialabs-visit-label' => 'Visitar Wikia Labs',
 	'founderprogressbar-topnav-edit-label' => 'Personalizar sua navegação',
 	'founderprogressbar-video-add-label' => 'Adicionar um vídeo',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'founderprogressbar-widget-label' => 'Progresse de {{SITENAME}}',
+	'founderprogressbar-progress-label' => 'Combite spicciate',
+	'founderprogressbar-progress-see-full-list' => "'Ndruche l'elenghe comblete",
+	'founderprogressbar-progress-hide-full-list' => "Scunne l'elenghe comblete",
+	'founderprogressbar-skip-for-now' => 'Zumbe pe mò',
+	'founderprogressbar-task-completed' => 'Combletate',
+	'founderprogressbar-list-label' => 'Combite de {{SITENAME}}',
+	'founderprogressbar-list-task-label' => 'Combite',
+	'founderprogressbar-list-skipped-task-label' => 'Combite Zumbate',
+	'founderprogressbar-list-skipped-task-desc' => 'Tu puè combletà chiste ogne vote.',
+	'founderprogressbar-browse-page-name' => 'Sfoglie',
 );
 
 /** Russian (русский)
@@ -1672,15 +1742,18 @@ $messages['tt-cyrl'] = array(
 /** Ukrainian (українська)
  * @author A1
  * @author Steve.rusyn
+ * @author Ua2004
  */
 $messages['uk'] = array(
 	'founderprogressbar-list-task-label' => 'Завдання',
 	'founderprogressbar-list-skipped-task-label' => 'Пропущені завдання',
+	'founderprogressbar-list-skipped-task-desc' => 'Ви можете виконати їх пізніше.',
 	'founderprogressbar-list-bonus-task-label' => 'Бонусні завдання',
 	'founderprogressbar-task-call-to-action' => 'Перейти до завдання',
+	'founderprogressbar-page-add10-label' => 'Досягти $1 {{PLURAL:$1|сторінки|сторінок}}',
 	'founderprogressbar-total-edit75-label' => 'Досягти 75 редагувань',
 	'founderprogressbar-total-edit75-description' => '75 правок - це віха на шляху до величі wiki!',
-	'founderprogressbar-page-add20-label' => 'Досягти  $1   {{PLURAL:$1| сторінки | сторінки}}',
+	'founderprogressbar-page-add20-label' => 'Досягти $1 {{PLURAL:$1|сторінки|сторінок}}',
 	'founderprogressbar-gallery-add-label' => 'Додати фотогалерею',
 	'founderprogressbar-video-add-label' => 'Додати відео',
 	'founderprogressbar-video-add-description' => 'Відео це інший тип популярних засобів масової інформації, які допоможуть залучити людей на ваш wiki. Ви можете позичити відео на YouTube, Hulu та інших сайтах. Додати, використовуючи кнопку "Можливості і Медіа" в редакторі',

@@ -41,7 +41,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example &category=Characters&namespaces=14
 	 */
 	public function getTop() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
@@ -127,7 +127,7 @@ class ArticlesApiController extends WikiaApiController {
 				$titles = null;
 			}
 		} else {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException();
 		}
 
@@ -149,7 +149,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->response->setVal( 'basepath', $this->wg->Server );
 
 		$batches = null;
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -167,7 +167,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example http://www.wikia.com/wikia.php?controller=ArticlesApi&method=getTopByHub&hub=Gaming&lang=de
 	 */
 	public function getTopByHub() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( $this->wg->DBname == 'wikiaglobal' ) {
 			$hub = trim( $this->request->getVal( self::PARAMETER_HUB, null ) );
@@ -175,7 +175,7 @@ class ArticlesApiController extends WikiaApiController {
 			$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
 
 			if ( empty( $hub ) ) {
-				$this->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				throw new MissingParameterApiException( self::PARAMETER_HUB );
 			}
 
@@ -233,7 +233,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			$wikis = null;
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 
 			if ( $found == 0 ) {
 				throw new NotFoundApiException();
@@ -241,7 +241,7 @@ class ArticlesApiController extends WikiaApiController {
 
 			$this->response->setVal( 'items', $res );
 		} else {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new BadRequestApiException();
 		}
 	}
@@ -266,7 +266,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example &category=Weapons&limit=5
 	 */
 	public function getList(){
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
 
@@ -292,7 +292,7 @@ class ArticlesApiController extends WikiaApiController {
 
 				$articles = self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
 			} else {
-				$this->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
 			}
 		} else {
@@ -366,7 +366,7 @@ class ArticlesApiController extends WikiaApiController {
 
 			$this->response->setVal( 'basepath', $this->wg->Server );
 		} else {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException( 'No members' );
 		}
 
@@ -379,8 +379,8 @@ class ArticlesApiController extends WikiaApiController {
 			]
 		);
 
-		$this->wf->ProfileOut( __METHOD__ );
-	}
+		wfProfileOut( __METHOD__ );
+	}	
 
 	/**
 	 * Get details about one or more articles, , those in the Special namespace (NS_SPECIAL) won't produce any result
@@ -397,7 +397,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example &ids=2187,23478&abstract=200&width=300&height=150
 	 */
 	public function getDetails() {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$abstractLen = $this->request->getInt( self::PARAMETER_ABSTRACT, 100 );
 
@@ -470,6 +470,7 @@ class ArticlesApiController extends WikiaApiController {
 						'revision' => [
 							'id' => $revId,
 							'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
+							'user_id' => $rev->getUser( Revision::FOR_PUBLIC ),
 							'timestamp' => $this->wf->Timestamp( TS_UNIX, $rev->getTimestamp() )
 						]
 					];
@@ -526,7 +527,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->response->setVal( 'basepath', $this->wg->Server );
 
 		$collection = null;
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**

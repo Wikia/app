@@ -56,6 +56,7 @@ class ApiService extends Service {
 		$url = "{$hostName}/{$endpoint}?" . implode('&', $parts);
 		wfDebug(__METHOD__ . ": {$url}\n");
 
+		$options = [];
 		if ( !empty($userName) ) {
 			$options = self::loginAsUser( $userName );
 		}

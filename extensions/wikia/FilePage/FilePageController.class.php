@@ -180,7 +180,7 @@ class FilePageController extends WikiaController {
 		$relatedPages->setCategories($titleCats);
 
 		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
-		$this->text = F::app()->renderView( 'RelatedPages', 'Index', array( "altTitle" => $title ) );
+		$this->text = F::app()->renderView( 'RelatedPages', 'Index', array( "altTitle" => $title, "anyNS" => true ) );
 	}
 
 	/**
@@ -359,6 +359,11 @@ class FilePageController extends WikiaController {
 	 * Figure out what articles include this file from any wiki
 	 */
 	public function getGlobalUsage () {
+		if ( empty( $wgEnableGlobalUsageExt ) ) {
+			$this->summary = array();
+			return;
+		}
+
 		$fileTitle = $this->getVal('fileTitle', '');
 		$titleObj = empty($fileTitle) ? $this->wg->Title : Title::newFromText($fileTitle);
 

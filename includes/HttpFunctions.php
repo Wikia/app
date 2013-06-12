@@ -728,6 +728,12 @@ class CurlHttpRequest extends MWHttpRequest {
 			$this->reqHeaders['Expect'] = '';
 		} else {
 			$this->curlOptions[CURLOPT_CUSTOMREQUEST] = $this->method;
+			// Wikia change - @author: mech - begin
+			// allow sending body for PUT requests
+			if ($this->method == 'PUT') {
+				$this->curlOptions[CURLOPT_POSTFIELDS] = $this->postData;
+			}
+			// Wikia change - end
 		}
 
 		$this->curlOptions[CURLOPT_HTTPHEADER] = $this->getHeaderList();

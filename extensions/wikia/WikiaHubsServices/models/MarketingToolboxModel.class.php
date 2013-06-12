@@ -403,7 +403,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return stdClass (properties: boolean $success, string $errorMsg)
 	 */
 	public function publish($langCode, $sectionId, $verticalId, $timestamp) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		
 		$results = new stdClass();
 		$results->success = null;
@@ -413,7 +413,7 @@ class MarketingToolboxModel extends WikiaModel {
 			$results->success = false;
 			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-read-only');
 
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return $results;
 		}
 		
@@ -423,7 +423,7 @@ class MarketingToolboxModel extends WikiaModel {
 				break;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
@@ -436,11 +436,12 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return stdClass (properties: boolean $success, string $errorMsg)
 	 */
 	protected function publishHub($langCode, $verticalId, $timestamp, &$results) {
+		wfProfileIn(__METHOD__);
 		if( !$this->checkModulesSaved($langCode, $verticalId, $timestamp) ) {
 			$results->success = false;
 			$results->errorMsg = $this->wf->Msg('marketing-toolbox-module-publish-error-modules-not-saved');
 
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -472,7 +473,7 @@ class MarketingToolboxModel extends WikiaModel {
 			$this->purgeLastPublishedTimestampCache($langCode, self::SECTION_HUBS, $verticalId);
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -646,7 +647,8 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return String
 	 */
 	public function getHubUrl($langCode, $verticalId) {
-		$wikiId = WikiaHubsServicesHelper::getCorporateWikiIdByLang($langCode);
+		$corporateModel = new WikiaCorporateModel();
+		$wikiId = $corporateModel->getCorporateWikiIdByLang($langCode);
 		$hubName = WikiaHubsServicesHelper::getHubName($wikiId, $verticalId);
 
 		$title = GlobalTitle::newFromText($hubName, NS_MAIN, $wikiId);
@@ -664,7 +666,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return string|false $fileName
 	 */
 	public function extractTitleFromVETWikitext($wikiText) {
-		$this->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$fileName = false;
 
@@ -678,7 +680,7 @@ class MarketingToolboxModel extends WikiaModel {
 			}
 		}
 
-		$this->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
 		return $fileName;
 	}

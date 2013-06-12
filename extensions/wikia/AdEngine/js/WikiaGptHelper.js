@@ -95,7 +95,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 					if (pageLevelParams.hasOwnProperty(name)) {
 						value = pageLevelParams[name];
 						if (value) {
-							log(['pubads.setTargetingload', name, value], 9, logGroup);
+							log(['pubads.setTargeting', name, value], 9, logGroup);
 							pubads.setTargeting(name, value);
 						}
 					}
@@ -119,7 +119,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		return sizes;
 	}
 
-	function pushAd(slotParams, done) {
+	function pushAd(slotParams, success, error) {
 		var slotname = slotParams.slotname,
 			slotnameGpt = slotname + '_gpt',
 			slotDiv = document.createElement('div'),
@@ -160,9 +160,21 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 			}
 
 			slotsToDisplay.push(slotnameGpt);
-			if (typeof done === 'function') {
-				doneCallbacks[slotnameGpt] = done;
-			}
+			doneCallbacks[slotnameGpt] = function () {
+				var height = slotDiv.offsetHeight;
+				log(['doneCallback', slotname, 'height', height], 4, logGroup);
+				if (height <= 1) {
+					log(['doneCallback', slotname, 'running error callback (hop)'], 4, logGroup);
+					if (typeof error === 'function') {
+						error();
+					}
+				} else {
+					log(['doneCallback', slotname, 'running success callback'], 4, logGroup);
+					if (typeof success === 'function') {
+						success();
+					}
+				}
+			};
 		});
 	}
 

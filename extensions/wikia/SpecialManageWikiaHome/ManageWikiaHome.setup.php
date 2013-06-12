@@ -18,17 +18,25 @@ $wgExtensionCredits['specialpage'][] = array(
 		'Andrzej "nAndy" Łukaszewski',
 		'Marcin Maciejewski',
 		'Sebastian Marzjan',
+		'Damian Jóźwiak',
+		'Łukasz Konieczny'
 	),
 	'version' => 1.0
 );
 
-//classes
-$app->registerController('ManageWikiaHomeController', $dir.'ManageWikiaHomeController.class.php');
+// classes
+$app->registerController('ManageWikiaHomeController', $dir . 'ManageWikiaHomeController.class.php');
 
-//special page
+// models
+$app->registerController('SpecialManageWikiaHomeModel', $dir . '/models/SpecialManageWikiaHomeModel.class.php');
+
+// forms
+$app->registerClass('CollectionsForm', $dir.'/forms/CollectionsForm.class.php');
+
+// special page
 $app->registerSpecialPage('ManageWikiaHome', 'ManageWikiaHomeController', 'wikia');
 
-//message files
+// message files
 $app->registerExtensionMessageFile('ManageWikiaHome', $dir.'ManageWikiaHome.i18n.php');
 F::build('JSMessages')->registerPackage('ManageWikiaHome', array('manage-wikia-home-*'));
 

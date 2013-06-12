@@ -340,7 +340,7 @@ var NodeRoomController = $.createClass(Observable,{
 
 	onJoin: function(message) {
 		var joinedUser = new models.User();
-		joinedUser.mport(message.joinData);
+		joinedUser.mport(message.data);
 
 		if(joinedUser.get('name') == wgUserName) {
 			this.userMain = joinedUser;
@@ -376,13 +376,13 @@ var NodeRoomController = $.createClass(Observable,{
 	},
 
 	onPart: function(message) {
-		var partedUser = new models.User();
-		partedUser.mport(message.data);
-		if(this.partTimeOuts[partedUser.get('name')]) {
+		var partEvent = new models.PartEvent();
+		partEvent.mport(message.data);
+		if(this.partTimeOuts[partEvent.get('name')]) {
 			return true;
 		}
-		this.partTimeOuts[partedUser.get('name')] = setTimeout(this.proxy(function(){
-			this.onPartBase(partedUser);
+		this.partTimeOuts[partEvent.get('name')] = setTimeout(this.proxy(function(){
+			this.onPartBase(partEvent);
 		}), 45000);
 	},
 
@@ -392,11 +392,11 @@ var NodeRoomController = $.createClass(Observable,{
 		 */
 		var logoutEvent = new models.LogoutEvent();
 		logoutEvent.mport(message.data);
-		if(this.partTimeOuts[logoutEvent.get('leavingUserName')]) {
+		if(this.partTimeOuts[logoutEvent.get('name')]) {
 			return true;
 		}
-		this.partTimeOuts[logoutEvent.get('leavingUserName')] = setTimeout(this.proxy(function(){
-			this.onPartBase(logoutEvent.get('leavingUserName'), false);
+		this.partTimeOuts[logoutEvent.get('name')] = setTimeout(this.proxy(function(){
+			this.onPartBase(logoutEvent.get('name'), false);
 		}), 10000);
 	},
 

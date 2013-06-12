@@ -6,7 +6,7 @@ class GlobalHeaderController extends WikiaController {
 	public function init() {
 		global $wgCityId;
 
-		$this->app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$category = WikiFactory::getCategory($wgCityId);
 
@@ -30,7 +30,7 @@ class GlobalHeaderController extends WikiaController {
 
 		$this->menuNodes = $menuNodes;
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	public function index() {

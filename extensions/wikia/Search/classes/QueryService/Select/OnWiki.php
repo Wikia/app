@@ -32,9 +32,13 @@ class OnWiki extends AbstractSelect
 	 * @return Wikia\Search\Match\Article|null
 	 */
 	public function extractMatch() {
-		$match = $this->service->getArticleMatchForTermAndNamespaces( $this->config->getQuery()->getSanitizedQuery(), $this->config->getNamespaces() );
+		$query = $this->config->getQuery()->getSanitizedQuery();
+		$match = $this->service->getArticleMatchForTermAndNamespaces( $query, $this->config->getNamespaces() );
 		if (! empty( $match ) ) {
 			$this->config->setArticleMatch( $match );
+		}
+		if ( $this->service->getGlobal( 'OnWikiSearchIncludesWikiMatch' ) ) {
+			$this->extractWikiMatch();
 		}
 		return $this->config->getMatch();
 	}
@@ -107,15 +111,6 @@ class OnWiki extends AbstractSelect
 			$queryFieldsString .= sprintf( '%s^%s ', Utilities::field( $field ), $boost );
 		}
 		return trim( $queryFieldsString );
-	}
-	
-	/**
-	 * Returns a nested query, with query clauses used to pre-filter things like namespace and wiki ID.
-	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::getFormulatedQuery()
-	 * @return string
-	 */
-	protected function getFormulatedQuery() {
-		return sprintf( '%s AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
 	}
 	
 	/**

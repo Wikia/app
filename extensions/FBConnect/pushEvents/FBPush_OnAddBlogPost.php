@@ -19,16 +19,22 @@ class FBPush_OnAddBlogPost extends FBConnectPushEvent {
 	}
 		
 	public static function articleEdit(&$article, &$user, $text, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
-		global $wgContentNamespaces, $wgSitename;
-
+		global $wgSitename;
 		wfProfileIn(__METHOD__);
-		
+
+		if ( !self::checkUserOptions(__CLASS__) ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
 		if( strlen($article->getId()) == 0 ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		
 		// only push if it's a newly created article
 		if ( !( $flags & EDIT_NEW ) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		

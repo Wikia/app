@@ -25,7 +25,7 @@ use Wikia\Sass\Compiler\ExternalRubyCompiler;
  */
 class SassService extends WikiaObject {
 
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 1; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
 
 	const FILTER_IMPORT_CSS = 1;
 	const FILTER_CDN_REWRITE = 2;
@@ -56,6 +56,11 @@ class SassService extends WikiaObject {
 		// set up default cache variant
 		if (!empty($this->wg->DevelEnvironment)) {
 			$this->setCacheVariant("dev-{$this->wg->DevelEnvironmentName}");
+		} else {
+			$hostPrefix = getHostPrefix();
+			if ( $hostPrefix != null ) {
+				$this->setCacheVariant("staging-{$hostPrefix}");
+			}
 		}
 	}
 
@@ -218,11 +223,10 @@ class SassService extends WikiaObject {
 
 			$errorId = $this->getUniqueId();
 			Wikia::log(__METHOD__, false, "SASS error [{$errorId}]: ". $e->getMessage(), true /* $always */);
-			$styles = $this->makeComment(
-				$this->getDebug()
-					? $e->getMessage()
-					: self::DEFAULT_ERROR_MESSAGE . $errorId
-			);
+			$errorMessage = $this->getDebug()
+				? ("SASS error [{$errorId}]: " . $e->getMessage())
+				: (self::DEFAULT_ERROR_MESSAGE . $errorId);
+			throw new \Wikia\Sass\Exception( $errorMessage, 0, $e );
 		}
 
 		$styles .= "\n\n";
@@ -242,11 +246,12 @@ class SassService extends WikiaObject {
 	public function getCacheKey() {
 		return sprintf("%s%s",
 			$this->getCacheVariant() ? $this->getCacheVariant() . '-' : '',
-			md5(serialize(array(
+			md5(serialize([
 				$this->getHash(),
 				$this->getSassVariables(),
 				$this->getFilters(),
-			)))
+				self::CACHE_VERSION
+			]))
 		);
 	}
 

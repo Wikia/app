@@ -6,7 +6,7 @@ var Wall = $.createClass(Object, {
 			return;
 		}
 		var self = this;
-		
+
 		Wall.initialized = true;
 		this.wall = $(element);
 		this.settings = $.extend(true, {}, Wall.settings, settings);
@@ -63,7 +63,7 @@ var Wall = $.createClass(Object, {
 
 		// Enable tooltips
 		this.setUpVoteTooltips();
-		
+
 		$('#ForumNewMessage .highlight').popover({
 			content: function() {
 				return self.WallTooltipMeta.find('.tooltip-highlight-thread').clone();
@@ -77,17 +77,17 @@ var Wall = $.createClass(Object, {
 		$(document).ready(this.initTextareas);
 		$(window).bind('hashchange', this.proxy(this.onHashChange)).trigger('hashchange');
 	},
-	
+
 	setUpVoteTooltips: function() {
 		// tooltips for votes
 		var self = this,
 			votingControls = $('.voting-controls');
-		
+
 		votingControls.find('.vote').popover({
 			content: function() {
 				var popoverText,
 					$this = $(this);
-					
+
 				if($this.hasClass('voted') || $this.hasClass('inprogress')) {
 					return self.WallTooltipMeta.find('.tooltip-votes-voted').clone();
 				}
@@ -97,12 +97,12 @@ var Wall = $.createClass(Object, {
 		});
 
 		var votesLink = votingControls.find('.votes');
-		
+
 		if(!votesLink.hasClass('notlink')) {
 			this.enableVotesLink(votesLink);
 		}
 	},
-	
+
 	enableVotesLink: function(votesLink) {
 		var self = this;
 
@@ -113,7 +113,7 @@ var Wall = $.createClass(Object, {
 			placement: 'top'
 		});
 	},
-	
+
 	disableVotesLink: function(votesLink) {
 		votesLink.popover('destroy');
 	},
@@ -188,18 +188,18 @@ var Wall = $.createClass(Object, {
 	},
 
 	scrollToQuoted: function(e) {
-		//check if we are on thread page 
+		//check if we are on thread page
 		//then we are just going to use link
 		if($('.Wall.Thread').length != 0) {
 			return true;
 		}
-		
+
 		e.preventDefault();
 		var postfix =  $(e.target).data('postfix');
 		var main = $(e.target).closest('.message-main');
-		
+
 		if(postfix > 1) {
-			var el = $('.message-' + postfix, main);	
+			var el = $('.message-' + postfix, main);
 		} else {
 			el = main;
 		}
@@ -212,7 +212,7 @@ var Wall = $.createClass(Object, {
 		var p = el.offset();
 		window.scrollTo(0, p.top);
 	},
-	
+
 	// TODO: this should be refactored so it can be used elsewhere
 	switchWatch: function(e) {
 		var element = $(e.target);
@@ -507,7 +507,7 @@ var Wall = $.createClass(Object, {
 			})
 		});
 	},
-	
+
 	doThreadChange: function(e) {
 		e.preventDefault();
 		var target = $(e.target);
@@ -530,7 +530,7 @@ var Wall = $.createClass(Object, {
 				callback: this.proxy(function(json) {
 					if(json.status) {
 						if(UserLoginAjaxForm) {
-							UserLoginAjaxForm.prototype.reloadPage();	
+							UserLoginAjaxForm.prototype.reloadPage();
 						} else {
 							window.location.reload();
 						}
@@ -562,25 +562,25 @@ var Wall = $.createClass(Object, {
 			window.location.reload();
 		});
 	},
-	
+
 	quote: function (e) {
 		e.preventDefault();
-		
+
 		var replyForm = this.replyMessageForm,
 			message = $(e.target).closest('.message'),
 			reply = message.find(replyForm.replyWrapper),
 			editorPromise = '',
 			quotedFrom = message.data('id');
-			
+
 		if(reply.length == 0) {
 			reply = message.parent().find(replyForm.replyWrapper);
 		}
-		
+
 		var formTarget = reply.find(replyForm.replyBody);
-		
+
 		//scroll
 		$('body').scrollTo(reply, {duration: 600});
-		
+
 		// start loading editor and get promise, or mock dummy promise
 		if(typeof replyForm.initEditor === 'function') {
 			editorPromise = replyForm.initEditor({target: formTarget});
@@ -590,7 +590,7 @@ var Wall = $.createClass(Object, {
 			editorPromise = editorDeferred.promise();
 			editorDeferred.resolve('');
 		}
-		
+
 		// get formatted quote
 		var deferredQuote = $.Deferred(),
 			quotePromise = deferredQuote.promise();
@@ -598,7 +598,7 @@ var Wall = $.createClass(Object, {
 			controller: 'WallExternalController',
 			method: 'getFormattedQuoteText',
 			format: 'json',
-			data: { 
+			data: {
 				messageId: message.data('id'),
 				convertToFormat: replyForm.editor && replyForm.editor.data('wikiaEditor') ? WikiaEditor.modeToFormat(replyForm.editor.data('wikiaEditor').mode) : 'wikitext'
 			},
@@ -606,7 +606,7 @@ var Wall = $.createClass(Object, {
 				deferredQuote.resolve(data);
 			}
 		});
-		
+
 		// merge two async operations here
 		$.when(editorPromise, quotePromise).done(function() {
 			var data = arguments[1];
@@ -614,10 +614,10 @@ var Wall = $.createClass(Object, {
 				replyForm.setContent(reply, data.markup);
 			}
 		});
-		
+
 		reply.data('quotedFrom', quotedFrom);
 	},
-	
+
 	handleEditTopics: function(e) {
 		e.preventDefault();
 		var rootMessageId = $(e.target).closest('.message').data('id');
@@ -631,23 +631,23 @@ var Wall = $.createClass(Object, {
 			this.editTopics(rootMessageId);
 		}
 	},
-	
+
 	editTopics: function(rootMessageId) {
 		var relatedTopics = $('.related-topics'),
 			messageTopicEditSection = $('.message-topic-edit'),
 			messageTopicSection = messageTopicEditSection.find('.message-topic'),
-			topics = [], 
+			topics = [],
 			model = this.model;
 
 		relatedTopics.hide();
 		messageTopicEditSection.show();
-		
+
 		relatedTopics.find('.related-topic').each(function() {
 			topics.push($(this).data('topic'));
 		});
-		
+
 		var messageTopic = messageTopicSection.data('messageTopic');
-		
+
 		if(messageTopic) {
 			messageTopic.resetSelections(topics);
 		} else {
@@ -670,11 +670,11 @@ var Wall = $.createClass(Object, {
 					messageTopicEditSection.hide();
 				});
 		}
-		
+
 		messageTopic.input.focus();
-		
+
 	},
-	
+
 	moveThread: function(e) {
 		var id = $(e.target).closest('.message').data('id');
 		$.nirvana.sendRequest({

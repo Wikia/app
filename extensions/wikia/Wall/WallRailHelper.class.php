@@ -9,7 +9,7 @@ class WallRailHelper {
 	 */
 	public function onGetRailModuleList(&$modules) {
 		$app = F::App();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		
 		$namespace = $app->wg->Title->getNamespace();
 		$action = $app->wg->Request->getVal('action', null);
@@ -33,7 +33,7 @@ class WallRailHelper {
 			$modules[1440] = array('WallRail', 'index', null);
 		}
 		
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 	

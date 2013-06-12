@@ -9,6 +9,7 @@
  */
 
 class MemcacheSync{
+	/** @var MemcachedPhpBagOStuff */
 	var $memc = null;
 	var $key;
 	var $lockKey;
@@ -45,10 +46,7 @@ class MemcacheSync{
 	}
 
 	function getLockStatus() {
-		/* Hack clear local cache to force request to memc*/
-		if(!empty($this->memc->_dupe_cache[$this->lockKey])){
-			unset($this->memc->_dupe_cache[$this->lockKey]);
-		}
+		$this->memc->clearLocalCache($this->lockKey);
 		return $this->memc->get($this->lockKey, false);
 	}
 

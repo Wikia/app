@@ -103,7 +103,7 @@ class VideoInfo extends WikiaModel {
 	 * @return boolean $affected
 	 */
 	protected function updateDatabase() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$affected = false;
 		if ( !$this->wf->ReadOnly() && !empty($this->videoTitle) ) {
@@ -133,7 +133,7 @@ class VideoInfo extends WikiaModel {
 			$this->saveToCache();
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $affected;
 	}
@@ -143,7 +143,7 @@ class VideoInfo extends WikiaModel {
 	 * @return boolean $affected
 	 */
 	protected function addToDatabase() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$affected = false;
 		if ( !$this->wf->ReadOnly() ) {
@@ -178,7 +178,7 @@ class VideoInfo extends WikiaModel {
 			$this->saveToCache();
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $affected;
 	}
@@ -187,7 +187,7 @@ class VideoInfo extends WikiaModel {
 	 * remove video from database
 	 */
 	protected function removeFromDatabase() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wf->ReadOnly() ) {
 			$db = $this->wf->GetDB( DB_MASTER );
@@ -203,14 +203,14 @@ class VideoInfo extends WikiaModel {
 			$this->invalidateCache();
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * create video_info table if not exists
 	 */
 	public function createTableVideoInfo() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wf->ReadOnly() ) {
 			$db = $this->wf->GetDB( DB_MASTER );
@@ -239,14 +239,14 @@ SQL;
 			$db->commit( __METHOD__ );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * update schema for video_info table (v1): add featured field
 	 */
 	public function alterTableVideoInfoV1() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wf->ReadOnly() ) {
 			$db = $this->wf->GetDB( DB_MASTER );
@@ -265,7 +265,7 @@ SQL;
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -276,7 +276,7 @@ SQL;
 	public static function newFromTitle( $videoTitle ) {
 		$app = F::App();
 
-		$app->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$memKey = self::getMemcKey( $videoTitle );
 		$videoData = $app->wg->Memc->get( $memKey );
@@ -299,7 +299,7 @@ SQL;
 			}
 		}
 
-		$app->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $video;
 	}
@@ -341,7 +341,7 @@ SQL;
 	 * @return boolean
 	 */
 	public function addPremiumVideo( $userId ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->addedAt = $this->wf->Timestamp( TS_MW );
 		if ( !empty($userId) ) {
@@ -354,7 +354,7 @@ SQL;
 		$videoHandlerHelper = new VideoHandlerHelper();
 		$status = $videoHandlerHelper->addCategoryVideos( $this->videoTitle, $this->addedBy );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $affected;
 	}

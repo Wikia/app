@@ -25,11 +25,11 @@ class PhotoPopController extends WikiaController {
 	 * @see PhotoPop_jsonp.php
 	 */
 	public function jsonp(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setContentType( 'text/javascript' );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function index() {
@@ -54,13 +54,13 @@ class PhotoPopController extends WikiaController {
 	}
 
 	public function listGames(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$callbackName = $this->request->getVal( 'callback' );
 
 
 		if ( empty( $callbackName ) && !$this->isJSON ) {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new WikiaException( 'Missing parameter: callback' );
 		}
 
@@ -76,24 +76,24 @@ class PhotoPopController extends WikiaController {
 		} else {
 			$this->response->setVal( 'data', $result );
 		}
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function getData(){
 		$this->checkGameAllowed();
 
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$category = trim( $this->request->getVal( 'category' ) );
 		$callbackName = $this->request->getVal( 'callback' );
 
 		if ( empty( $category ) ) {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new WikiaException( 'Missing parameter: category' );
 		}
 
 		if ( empty( $callbackName ) && !$this->isJSON ) {
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			throw new WikiaException( 'Missing parameter: callback' );
 		}
 
@@ -109,7 +109,7 @@ class PhotoPopController extends WikiaController {
 		} else {
 			$this->response->setVal( 'data', $result );
 		}
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function checkGameAllowed(){

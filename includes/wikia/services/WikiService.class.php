@@ -5,6 +5,7 @@ class WikiService extends WikiaModel {
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 
 	static $botGroups = array('bot', 'bot-global');
+	protected $cityVisualizationObject = null;
 
 	/**
 	 * get list of wiki founder/admin/bureaucrat id
@@ -17,7 +18,7 @@ class WikiService extends WikiaModel {
 	 * @return array of $userIds
 	 */
 	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$userIds = array();
 		if ( empty($this->wg->FounderEmailsDebugUserId) ) {
@@ -71,7 +72,7 @@ class WikiService extends WikiaModel {
 			$userIds[] = $this->wg->FounderEmailsDebugUserId;
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $userIds;
 	}
 
@@ -84,7 +85,7 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return string memcache key
 	 */
-	public function getMemKeyAdminIds( $wikiId, $excludeBots, $limit ) {
+	public function getMemKeyAdminIds( $wikiId, $excludeBots = false, $limit = null ) {
 		return $this->wf->SharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots, $limit );
 	}
 
@@ -93,7 +94,7 @@ class WikiService extends WikiaModel {
 	 * @return integer totalVideos
 	 */
 	public function getTotalVideos( $wikiId = 0 ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$memKey = $this->wf->SharedMemcKey( 'wiki_total_videos', $wikiId );
@@ -119,7 +120,7 @@ class WikiService extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $totalVideos;
 	}
@@ -129,7 +130,7 @@ class WikiService extends WikiaModel {
 	 * @return array $sitestats
 	 */
 	public function getSiteStats( $wikiId = 0 ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$memKey = $this->wf->SharedMemcKey( 'wiki_sitestats', $wikiId );
@@ -172,7 +173,7 @@ class WikiService extends WikiaModel {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $sitestats;
 	}
@@ -187,7 +188,7 @@ class WikiService extends WikiaModel {
 	 * @return array topEditors [ array( user_id => edits ) ]
 	 */
 	public function getTopEditors( $wikiId = 0, $limit = 30, $excludeBots = false ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
@@ -217,7 +218,7 @@ class WikiService extends WikiaModel {
 			}
 		);
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $topEditors;
 	}
@@ -239,7 +240,7 @@ class WikiService extends WikiaModel {
 	 * @return integer totalImages
 	 */
 	public function getTotalImages( $wikiId = 0 ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$memKey = $this->getMemcKeyTotalImages( $wikiId );
@@ -267,7 +268,7 @@ class WikiService extends WikiaModel {
 			$this->wg->Memc->set( $memKey, $totalImages, 60*60*3 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $totalImages;
 	}
@@ -364,6 +365,47 @@ class WikiService extends WikiaModel {
 				return $admins;
 			}
 		);
+	}
+
+	public function getWikiDescription( Array $wikiIds, $imgWidth = 250, $imgHeight = null ) {
+
+		$wikiDetails = $this->getWikiDetails( $wikiIds );
+
+		foreach ( $wikiDetails as $wikiId => $wikiData ) {
+			if ( empty( $wikiData['desc']) ) {
+				$wikiDetails[ $wikiId ]['desc'] = $this->app->wf->Message( 'wikiasearch2-crosswiki-description', $wikiData['name'] )->text();
+			}
+			$wikiDetails[ $wikiId ]['image_wiki_id'] = null;
+			if ( !empty( $wikiData['image'] ) ) {
+				$wikiDetails[ $wikiId ]['image_wiki_id'] = $this->getCityVisualizationObject()->getTargetWikiId( $wikiData['lang'] );
+
+				$imageUrl = $this->getImageSrcByTitle( $wikiDetails[ $wikiId ]['image_wiki_id'], $wikiData['image'], $imgWidth, $imgHeight);
+				$wikiDetails[ $wikiId ]['image_url'] = $imageUrl;
+			} else {
+				$wikiDetails[ $wikiId ]['image_url'] = '';
+			}
+		}
+
+		return $wikiDetails;
+	}
+
+	public function setCityVisualizationObject( $cityVisualizationObject ) {
+		$this->cityVisualizationObject = $cityVisualizationObject;
+	}
+
+	public function getCityVisualizationObject() {
+		if ( empty( $this->cityVisualizationObject ) ) {
+			$this->cityVisualizationObject = new CityVisualization();
+		}
+		return $this->cityVisualizationObject;
+	}
+
+	protected function getWikiDetails( $wikiIds ) {
+		return ( new WikisModel )->getDetails( $wikiIds );
+	}
+
+	protected function getImageSrcByTitle( $wikiId, $imageTitle, $imgWidth, $imgHeight ) {
+		return ImagesService::getImageSrcByTitle( $wikiId, $imageTitle, $imgWidth, $imgHeight );
 	}
 
 	protected function getMemcKeyTotalImages( $wikiId ) {

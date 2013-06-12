@@ -8,11 +8,11 @@ class PhalanxUserModel extends PhalanxModel {
 	}
 	
 	public function getText() {
-		return ( !empty( $this->text ) ) ? $this->text : array( $this->user->getName(), $this->ip );
+		return ( !empty( $this->text ) ) ? $this->text : array( ( $this->user instanceof User ) ? $this->user->getName() : "", $this->ip );
 	}
 	
 	public function userBlock( $type = 'exact' ) {
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 	
 		$this->user->mBlockedby = $this->block->authorId;
 		$this->user->mBlockedGlobally = true;
@@ -40,7 +40,7 @@ class PhalanxUserModel extends PhalanxModel {
 			$this->user->mBlock->setCreateAccount( 1 );
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $this;
 	}
 	

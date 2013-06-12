@@ -3,15 +3,18 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	const WHST_VISUALIZATION_LANG_VAR_NAME = 'vl';
 	const WHST_WIKIS_PER_PAGE = 25;
 
-	const FLAG_TYPE_BLOCK = 'block';
-	const FLAG_TYPE_UNBLOCK = 'unblock';
-	const FLAG_TYPE_PROMOTE = 'promote';
-	const FLAG_TYPE_DEMOTE = 'remove-promote';
+	const CHANGE_FLAG_ADD = 'add';
+	const CHANGE_FLAG_REMOVE = 'remove';
 
 	/**
 	 * @var WikiaHomePageHelper $helper
 	 */
 	protected $helper;
+
+	/**
+	 * @var WikiaCollectionsModel
+	 */
+	private $wikiaCollectionsModel;
 
 	public function __construct() {
 		parent::__construct('ManageWikiaHome', 'managewikiahome', true);
@@ -23,26 +26,33 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
+		$this->wg->Out->addJsConfigVars([
+			'CHANGE_FLAG_ADD' => self::CHANGE_FLAG_ADD,
+			'CHANGE_FLAG_REMOVE' => self::CHANGE_FLAG_REMOVE,
+			'FLAG_PROMOTED' => WikisModel::FLAG_PROMOTED,
+			'FLAG_BLOCKED' => WikisModel::FLAG_BLOCKED,
+			'FLAG_OFFICIAL' => WikisModel::FLAG_OFFICIAL,
+		]);
 	}
 
 	protected function checkAccess() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('managewikiahome') ) {
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	public function index() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$this->wg->Out->setPageTitle(wfMsg('managewikiahome'));
 
 		if( !$this->checkAccess() ) {
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			$this->forward('ManageWikiaHome', 'onWrongRights');
 			return false;
 		}
@@ -58,6 +68,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->currentPage = $this->request->getVal('page', 1);
 		$this->corpWikiId = $this->visualizationWikisData[$this->visualizationLang]['wikiId'];
 
+		$this->filterOptions = array_merge($this->initFilterOptions(), $this->request->getParams());
+
 		//verticals slots' configuration
 		/* @var $this->helper WikiaHomePageHelper */
 		$videoGamesAmount = $this->request->getVal('video-games-amount', $this->helper->getNumberOfVideoGamesSlots($this->visualizationLang));
@@ -66,39 +78,72 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$hotWikisAmount = $this->request->getVal('hot-wikis-amount', $this->helper->getNumberOfHotWikiSlots($this->visualizationLang));
 		$newWikisAmount = $this->request->getVal('new-wikis-amount', $this->helper->getNumberOfNewWikiSlots($this->visualizationLang));
 
-		if( $this->request->wasPosted() ) {
-		//todo: separate post request handling
-		//todo: move validation from saveSlotsConfigInWikiFactory() to helper
-			$total = intval($videoGamesAmount) + intval($entertainmentAmount) + intval($lifestyleAmount);
+		$this->form = new CollectionsForm();
+		$collectionsModel = $this->getWikiaCollectionsModel();
+		$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
+		$collectionValues = $this->prepareCollectionToShow($this->collectionsList);
+		$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList);
 
-			if ($total !== WikiaHomePageHelper::SLOTS_IN_TOTAL) {
-				$this->setVal('errorMsg', wfMsg('manage-wikia-home-error-invalid-total-no-of-slots', array($total, WikiaHomePageHelper::SLOTS_IN_TOTAL)));
-			} elseif ( $this->isAnySlotNumberNegative($videoGamesAmount, $entertainmentAmount, $lifestyleAmount) ) {
-				$this->setVal('errorMsg', wfMsg('manage-wikia-home-error-negative-slots-number-not-allowed'));
-			} else {
-				$this->saveSlotsConfigInWikiFactory($this->corpWikiId,
-					$visualizationLang,
-					array(
-						WikiaHomePageHelper::VIDEO_GAMES_SLOTS_VAR_NAME => $videoGamesAmount,
-						WikiaHomePageHelper::ENTERTAINMENT_SLOTS_VAR_NAME => $entertainmentAmount,
-						WikiaHomePageHelper::LIFESTYLE_SLOTS_VAR_NAME => $lifestyleAmount,
-					)
-				);
+		if( $this->request->wasPosted() ) {
+			if ( $this->request->getVal('wikis-in-slots',false) ) {
+				//todo: separate post request handling
+				//todo: move validation from saveSlotsConfigInWikiFactory() to helper
+				$total = intval($videoGamesAmount) + intval($entertainmentAmount) + intval($lifestyleAmount);
+
+				if ($total !== WikiaHomePageHelper::SLOTS_IN_TOTAL) {
+					$this->errorMsg = wfMessage('manage-wikia-home-error-invalid-total-no-of-slots')->params(array($total, WikiaHomePageHelper::SLOTS_IN_TOTAL))->text();
+				} elseif ( $this->isAnySlotNumberNegative($videoGamesAmount, $entertainmentAmount, $lifestyleAmount) ) {
+					$this->errorMsg = wfMessage('manage-wikia-home-error-negative-slots-number-not-allowed')->text();
+				} else {
+					$this->saveSlotsConfigInWikiFactory($this->corpWikiId,
+						$visualizationLang,
+						array(
+							WikiaHomePageHelper::VIDEO_GAMES_SLOTS_VAR_NAME => $videoGamesAmount,
+							WikiaHomePageHelper::ENTERTAINMENT_SLOTS_VAR_NAME => $entertainmentAmount,
+							WikiaHomePageHelper::LIFESTYLE_SLOTS_VAR_NAME => $lifestyleAmount,
+						)
+					);
+				}
+			} elseif ( $this->request->getVal('collections',false) ) {
+				$collectionValues = $this->request->getParams();
+				$collectionValues = $this->form->filterData($collectionValues);
+				$isValid = $this->form->validate($collectionValues);
+
+				if ($isValid) {
+					$collectionSavedValues = $this->prepareCollectionForSave($collectionValues);
+					$collectionsModel->saveAll($this->visualizationLang, $collectionSavedValues);
+
+					$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
+					$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList, true);
+					
+					$this->infoMsg = wfMessage('manage-wikia-home-collections-success')->text();
+				} else {
+					$this->errorMsg = wfMessage('manage-wikia-home-collections-failure')->text();
+				}
 			}
 		}
+
+		$this->form->setFieldsValues($collectionValues);
+		$this->verticals = $this->getWikiVerticals();
 
 		$this->setVal('videoGamesAmount', $videoGamesAmount);
 		$this->setVal('entertainmentAmount', $entertainmentAmount);
 		$this->setVal('lifestyleAmount', $lifestyleAmount);
 		$this->setVal('hotWikisAmount', $hotWikisAmount);
 		$this->setVal('newWikisAmount', $newWikisAmount);
+		$this->setVal('wikisPerCollection', $wikisPerCollection);
 
 		$this->response->addAsset('/extensions/wikia/SpecialManageWikiaHome/css/ManageWikiaHome.scss');
-		$this->response->addAsset('/extensions/wikia/SpecialManageWikiaHome/js/ManageWikiaHome.js');
+		$this->response->addAsset('manage_wikia_home_js');
 
 		F::build('JSMessages')->enqueuePackage('ManageWikiaHome', JSMessages::EXTERNAL);
 
-		$this->wf->ProfileOut(__METHOD__);
+		$this->wg->Out->addJsConfigVars([
+			'wgWikisPerCollection' => $wikisPerCollection,
+			'wgSlotsInTotal' => WikiaHomePageHelper::SLOTS_IN_TOTAL,
+		]);
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -111,10 +156,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 * @return false if user does not have permissions
 	 */
 	public function renderWikiListPage() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if( !$this->checkAccess() ) {
-			$this->wf->ProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -125,30 +170,31 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$visualizationLang = $this->visualizationLang;
 		}
 
-		$this->currentPage = $this->request->getVal('page', 1);
+		$filterOptions = $this->request->getVal('filterOptions', []);
 
 		//todo: new class for options
-		$options = new stdClass();
-		$options->lang = $visualizationLang;
-		$options->wikiHeadline = $this->request->getVal('wikiHeadline', '');
-		$count = $this->helper->getWikisCountForStaffTool($options);
-		$options->limit = self::WHST_WIKIS_PER_PAGE;
-		$options->offset = (($this->currentPage - 1) * self::WHST_WIKIS_PER_PAGE);
+		$currentPage = $this->request->getVal('page', 1);
+		$options = $this->prepareFilterOptions($visualizationLang, $filterOptions, $currentPage);
 
-		$specialPage = F::build('Title', array('ManageWikiaHome', NS_SPECIAL), 'newFromText');
-		//todo: getLocalUrl(array('vl' => $visualizationLang, 'page' => '%s')) doesn't work here because % sign is being escaped
-		$url = $specialPage->getLocalUrl() . '?vl=' . $visualizationLang . '&page=%s';
+		$count = $this->helper->getWikisCountForStaffTool($options);
+
+		$options->limit = self::WHST_WIKIS_PER_PAGE;
+		$options->offset = (($currentPage - 1) * self::WHST_WIKIS_PER_PAGE);
+
+		$this->list = $this->helper->getWikisForStaffTool($options);
+		$this->collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
 			/** @var $paginator Paginator */
 			$paginator = F::build('Paginator', array(array_fill(0, $count, ''), self::WHST_WIKIS_PER_PAGE), 'newFromArray');
-			$paginator->setActivePage($this->currentPage - 1);
+
+			$paginator->setActivePage($currentPage - 1);
+
+			$url = $this->getUrlWithAllParams($visualizationLang, $filterOptions);
 			$this->setVal('pagination', $paginator->getBarHTML($url));
 		}
 
-		$this->list = $this->helper->getWikisForStaffTool($options);
-
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	//todo: make from isAnySlotNumberNegative() and isHotOrNewSlotNumberNegative() one method
@@ -181,7 +227,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function saveSlotsConfigInWikiFactory($corpWikiId, $corpWikiLang, $slotsCfgArr) {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$statusArr = array();
 		$result = false;
@@ -195,7 +241,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		if( in_array(false, $statusArr) ) {
 			Wikia::log(__METHOD__, false, "A problem with saving WikiFactory variable(s) occured. Status array: " . print_r($statusArr, true));
-			$this->setVal('errorMsg', wfMsg('manage-wikia-home-error-wikifactory-failure'));
+			$this->errorMsg = wfMessage('manage-wikia-home-error-wikifactory-failure')->text();
 		} else {
 			$visualization = F::build('CityVisualization'); /** @var $visualization CityVisualization */
 			//todo: put purging those caches to CityVisualization class and fire here only one its method here
@@ -208,94 +254,235 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			//purge visualization list cache
 			$visualization->purgeVisualizationWikisListCache($corpWikiId, $corpWikiLang);
 
-			$this->setVal('infoMsg', wfMsg('manage-wikia-home-wikis-in-slots-success'));
+			$this->infoMsg = wfMessage('manage-wikia-home-wikis-in-slots-success')->text();
 
 			$result = true;
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
-	/**
-	 * @desc A public alias of changeFlag() setting wiki as blocked
-	 */
-	public function setWikiAsBlocked() {
+	public function isWikiBlocked() {
+		wfProfileIn(__METHOD__);
+
 		if( !$this->checkAccess() ) {
 			$this->status = false;
+		} else {
+			$wikiId = $this->request->getInt('wikiId', 0);
+			$langCode = $this->request->getVal('lang', 'en');
+
+			$this->status = $this->helper->isWikiBlocked($wikiId, $langCode);
 		}
 
-		$this->status = $this->changeFlag('block');
+		wfProfileOut(__METHOD__);
 	}
 
-	/**
-	 * @desc A public alias of changeFlag() setting wiki as unblocked
-	 */
-	public function removeWikiFromBlocked() {
+	public function isWikiInCollection() {
+		wfProfileIn(__METHOD__);
+
 		if( !$this->checkAccess() ) {
 			$this->status = false;
+		} else {
+			$wikiId = $this->request->getInt('wikiId', 0);
+			
+			$this->status = $this->getWikiaCollectionsModel()->isWikiInCollection($wikiId);
 		}
 
-		$this->status = $this->changeFlag('unblock');
-	}
-
-	/**
-	 * @desc A public alias of changeFlag() setting wiki as promoted
-	 */
-	public function setWikiAsPromoted() {
-		if( !$this->checkAccess() ) {
-			$this->status = false;
-		}
-
-		$this->status = $this->changeFlag('promote');
-	}
-
-	/**
-	 * @desc A public alias of changeFlag() setting wiki as not promoted
-	 */
-	public function removeWikiFromPromoted() {
-		if( !$this->checkAccess() ) {
-			$this->status = false;
-		}
-
-		$this->status = $this->changeFlag('remove-promote');
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
 	 * @desc Changes city_flags field in city_visualization table
 	 *
-	 * @param string $type one of: 'block', 'unblock', 'promote', 'remove-promote'
+	 * @requestParam string $type one of: self::CHANGE_FLAG_ADD or self::CHANGE_FLAG_REMOVE
+	 * @requestParam integer $flag from WikisModel which should be changed
 	 * @requestParam integer $wikiId id of wiki that flags we want to change
 	 * @requestParam integer $corpWikiId id of wiki which "hosts" visualization
 	 * @requestParam string $lang language code of wiki which "hosts" visualization
+	 *
+	 * @return bool
 	 */
-	protected function changeFlag($type) {
-		$this->wf->ProfileIn(__METHOD__);
+	public function changeFlag() {
+		wfProfileIn(__METHOD__);
 
-		$wikiId = $this->request->getInt('wikiId', 0);
-		$corpWikiId = $this->request->getInt('corpWikiId', 0);
-		$langCode = $this->request->getVal('lang', 'en');
+		if( !$this->checkAccess() ) {
+			$this->status = false;
+		} else {
+			$type = $this->request->getVal('type');
+			$flag = $this->request->getInt('flag');
+			$wikiId = $this->request->getInt('wikiId', 0);
+			$corpWikiId = $this->request->getInt('corpWikiId', 0);
+			$langCode = $this->request->getVal('lang', 'en');
 
-		switch($type) {
-			case self::FLAG_TYPE_BLOCK:
-				$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_BLOCKED, $corpWikiId, $langCode);
-				break;
-			case self::FLAG_TYPE_UNBLOCK:
-				$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_BLOCKED, $corpWikiId, $langCode);
-				break;
-			case self::FLAG_TYPE_PROMOTE:
-				$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_PROMOTED, $corpWikiId, $langCode);
-				break;
-			case self::FLAG_TYPE_DEMOTE:
-				$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_PROMOTED, $corpWikiId, $langCode);
-				break;
-			default:
-				$result = false;
-				break;
+			if ($type == self::CHANGE_FLAG_ADD) {
+				$this->status = $this->helper->setFlag($wikiId, $flag, $corpWikiId, $langCode);
+			} else {
+				$this->status = $this->helper->removeFlag($wikiId, $flag, $corpWikiId, $langCode);
+			}
+
 		}
-
-		$this->wf->ProfileOut(__METHOD__);
-		return $result;
+		wfProfileOut(__METHOD__);
 	}
 
+	public function switchCollection() {
+		if( !$this->checkAccess() ) {
+			$this->status = false;
+		} else {
+			$wikiId = $this->request->getInt('wikiId', 0);
+			$collectionId = $this->request->getVal('collectionId', 0);
+			$type = $this->request->getVal('switchType', self::CHANGE_FLAG_ADD);
+
+			$collectionsModel = $this->getWikiaCollectionsModel();
+			switch($type) {
+				case self::CHANGE_FLAG_ADD:
+					$collectionsModel->addWikiToCollection($collectionId, $wikiId);
+					$this->status = true;
+					break;
+				case self::CHANGE_FLAG_REMOVE:
+					$collectionsModel->removeWikiFromCollection($collectionId, $wikiId);
+					$this->status = true;
+					break;
+				default:
+					$this->status = false;
+					break;
+			}
+		}
+	}
+
+	/**
+	 * Preparing data received from collection's form to array, which could be easily use to insert data
+	 * to database or update already existing data.
+	 *
+	 * Example:
+	 *
+	 * We get array(
+	 * 			'fieldName1' => array(value1, value2, ... ),
+	 * 			'fieldName2' => array(value1, value2, ... )
+	 * 		  )
+	 *
+	 * We want array(
+	 * 			array('fieldName1' => value1, 'fieldName2' => value1),
+	 * 			array('fieldName1' => value2, 'fieldName2' => value2)
+	 * 		  )
+	 *
+	 * @param array $collectionValues data from form collection's form
+	 * @return array $collections data to save
+	 */
+	private function prepareCollectionForSave($collectionValues) {
+		$collections = [];
+
+		foreach($collectionValues as $name => $collection) {
+			foreach($collection as $key => $field) {
+				$collections[$key][$name] = $field;
+			}
+		}
+
+		return $collections;
+	}
+
+	/**
+	 * Preparing data received from database to array, which could be easily use to display
+	 * values in form
+	 *
+	 * Example
+	 *
+	 * We get array(
+	 * 			array('fieldName1' => value1, 'fieldName2' => value1),
+	 * 			array('fieldName1' => value2, 'fieldName2' => value2)
+	 * 		  )
+	 *
+	 * We want array(
+	 * 			'fieldName1' => array(value1, value2, ... ),
+	 * 			'fieldName2' => array(value1, value2, ... )
+	 * 		  )
+	 *
+	 * @param array $collections data from database
+	 * @return array $collectionValues data to display
+	 */
+	private function prepareCollectionToShow($collections) {
+		$collectionValues = [];
+
+		foreach($collections as $key => $collection) {
+			foreach($collection as $name => $value) {
+				$collectionValues[$name][$key] = $value;
+			}
+		}
+		
+		return $collectionValues;
+	}
+	
+	private function getWikisPerCollection($collections, $useMaster = false) {
+		$wikisPerCollections = [];
+		
+		foreach($collections as $key => $collection) {
+			$collectionId = $collection['id'];
+			$wikis = $this->getWikiaCollectionsModel()->getCountWikisFromCollection($collectionId, $useMaster);
+			$wikisPerCollections[$collectionId] = $wikis;
+		}
+		
+		return $wikisPerCollections;
+	}
+	
+	private function getWikiaCollectionsModel() {
+		if( !isset($this->wikiaCollectionsModel) ) {
+			$this->wikiaCollectionsModel = new WikiaCollectionsModel();
+		}
+		
+		return $this->wikiaCollectionsModel;
+	}
+
+	private function getWikiVerticals() {
+		return array(
+			WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('hub-Gaming')->text(),
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMessage('hub-Entertainment')->text(),
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMessage('hub-Lifestyle')->text()
+		);
+	}
+
+	private function prepareFilterOptions($visualizationLang, $filterOptions) {
+		$options = new stdClass();
+		$options->lang = $visualizationLang;
+		$options->wikiHeadline = !empty($filterOptions['wiki-name-filer-input']) ? $filterOptions['wiki-name-filer-input'] : $this->request->getVal('wikiHeadline', '');
+		$options->verticalId = !empty($filterOptions['vertical-filter']) ? $filterOptions['vertical-filter'] : 0;
+		$options->blockedFlag = isset($filterOptions['wiki-blocked-filter']) ? $filterOptions['wiki-blocked-filter'] : false;
+		$options->promotedFlag = isset($filterOptions['wiki-promoted-filter']) ? $filterOptions['wiki-promoted-filter'] : false;
+		$options->officialFlag = isset($filterOptions['wiki-official-filter']) ? $filterOptions['wiki-official-filter'] : false;
+		$options->collectionId = !empty($filterOptions['collections-filter']) ? $filterOptions['collections-filter'] : 0;
+
+		return $options;
+	}
+
+	private function initFilterOptions() {
+		return [
+			'vertical-filter' => 0,
+			'wiki-blocked-filter' => 0,
+			'wiki-promoted-filter' => 0,
+			'wiki-official-filter' => 0,
+			'collections-filter' => 0,
+			'wiki-name-filer-input' => ''
+		];
+	}
+
+	private function getUrlWithAllParams($lang, $filterParams) {
+		$url = '#';
+		$specialPage = F::build('Title', array('ManageWikiaHome', NS_SPECIAL), 'newFromText');
+		if( $specialPage instanceof Title ) {
+			$params = [
+				'wiki-name-filer-input' => isset($filterParams['wiki-name-filer-input']) ? $filterParams['wiki-name-filer-input'] : '',
+				'collections-filter' => isset($filterParams['collections-filter']) ? $filterParams['collections-filter'] : 0,
+				'vertical-filter' => isset($filterParams['vertical-filter']) ? $filterParams['vertical-filter'] : 0,
+				'wiki-blocked-filter' => isset($filterParams['wiki-blocked-filter']) ? $filterParams['wiki-blocked-filter'] : 0,
+				'wiki-promoted-filter' => isset($filterParams['wiki-promoted-filter']) ? $filterParams['wiki-promoted-filter'] : 0,
+				'wiki-official-filter' => isset($filterParams['wiki-official-filter']) ? $filterParams['wiki-official-filter'] : 0,
+				'page' => '%s',
+				'vl' => $lang
+			];
+
+			$url = $specialPage->getLocalURL($params);
+			$url = urldecode($url);
+		}
+
+		return $url;
+	}
 }

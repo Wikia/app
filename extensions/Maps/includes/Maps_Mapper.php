@@ -7,8 +7,9 @@
  * 
  * @file Maps_Mapper.php
  * @ingroup Maps
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 final class MapsMapper {
 	
@@ -25,6 +26,8 @@ final class MapsMapper {
 	 * @since 0.7.1
 	 * 
 	 * @param mixed $value
+	 *
+	 * @return tring
 	 */
 	public static function encodeJsVar( $value ) {
 		if ( is_bool( $value ) ) {
@@ -68,52 +71,55 @@ final class MapsMapper {
 	 * @return array
 	 */
 	public static function getCommonParameters() {
-		global $egMapsAvailableServices, $egMapsAvailableGeoServices, $egMapsDefaultGeoService, $egMapsMapWidth, $egMapsMapHeight, $egMapsDefaultService;
+		global $egMapsAvailableGeoServices, $egMapsDefaultGeoService, $egMapsMapWidth, $egMapsMapHeight, $egMapsDefaultService;
 
 		$params = array();
-		
-		$params['mappingservice'] = new Parameter( 'mappingservice' );
-		$params['mappingservice']->addAliases( 'service' );
-		$params['mappingservice']->setDefault( $egMapsDefaultService );
-		$params['mappingservice']->addCriteria( new CriterionInArray( MapsMappingServices::getAllServiceValues() ) );		
-		
-		$params['geoservice'] = new Parameter( 'geoservice' );
-		$params['geoservice']->setDefault( $egMapsDefaultGeoService );
-		$params['geoservice']->addCriteria( new CriterionInArray( $egMapsAvailableGeoServices ) );
-		$params['geoservice']->addDependencies( 'mappingservice' );
-		$params['geoservice']->addManipulations( new MapsParamGeoService( 'mappingservice' ) );
-		$params['geoservice']->setDescription( wfMsg( 'maps-par-geoservice' ) );
-		
-		$params['zoom'] = new Parameter(
-			'zoom', 
-			Parameter::TYPE_INTEGER
-		);
-		$params['zoom']->setDescription( wfMsg( 'maps-par-zoom' ) );
-		
-		$params['width'] = new Parameter(
-			'width', 
-			Parameter::TYPE_STRING,
-			$egMapsMapWidth,
-			array(),
-			array(
-				new CriterionMapDimension( 'width' ),
-			)
-		);
-		$params['width']->addManipulations( new MapsParamDimension( 'width' ) );
-		$params['width']->setDescription( wfMsg( 'maps-par-width' ) );
 
-		$params['height'] = new Parameter(
-			'height', 
-			Parameter::TYPE_STRING,
-			$egMapsMapHeight,
-			array(),
-			array(
-				new CriterionMapDimension( 'height' ),
-			)
+		$params['mappingservice'] = array(
+			'type' => 'mappingservice',
+			'aliases' => 'service',
+			'default' => $egMapsDefaultService,
 		);
-		$params['height']->addManipulations( new MapsParamDimension( 'height' ) );
-		$params['height']->setDescription( wfMsg( 'maps-par-height' ) );
-		
+
+		$params['geoservice'] = array(
+			'default' => $egMapsDefaultGeoService,
+			'values' => $egMapsAvailableGeoServices,
+			'dependencies' => 'mappingservice',
+			'manipulations' => new MapsParamGeoService( 'mappingservice' ),
+		);
+
+		$params['zoom'] = array(
+			'type' => 'integer',
+		);
+
+		$params['width'] = array(
+			'default' => $egMapsMapWidth,
+			'criteria' => new CriterionMapDimension( 'width' ),
+			'manipulations' => new MapsParamDimension( 'width' ),
+		);
+
+		$params['height'] = array(
+			'default' => $egMapsMapHeight,
+			'criteria' => new CriterionMapDimension( 'height' ),
+			'manipulations' => new MapsParamDimension( 'height' ),
+		);
+
+		$manipulation = new MapsParamLocation();
+		$manipulation->toJSONObj = true;
+
+		$params['centre'] = array(
+			'aliases' => array( 'center' ),
+			'criteria' => new CriterionIsLocation(),
+			'manipulations' => $manipulation,
+			'default' => false,
+			'manipulatedefault' => false,
+		);
+
+		foreach ( $params as $name => &$data ) {
+			$data['name'] = $name;
+			$data['message'] = 'maps-par-' . $name;
+		}
+
 		return $params;
 	}
 	
@@ -143,6 +149,8 @@ final class MapsMapper {
 	 * @since 1.0
 	 * 
 	 * @param string $serviceName
+	 *
+	 * @return string
 	 */
 	public static function getBaseMapJSON( $serviceName ) {
 		static $baseInit = false;

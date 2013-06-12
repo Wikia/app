@@ -44,13 +44,20 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'interwikiedit' => 'محرر الإنترويكي',
+	'iwedit-title' => 'محرر الإنترويكي',
+	'iwedit-language-interwikis' => 'روابط إنترويكي للغات فقط',
+	'iwedit-all-interwikis' => 'كل روابط الإنترويكي',
 	'iwedit-update' => 'حدّث',
+	'iwedit-error' => '<p>حدث خطأ.</p>',
+	'iwedit-success' => '<p>تم إنشاء رابط بنجاح.</p>',
 );
 
-/** Assamese (অসমীয়া)
+/** Assamese (অসমীয়া)
  * @author Bishnu Saikia
  */
 $messages['as'] = array(
@@ -112,6 +119,13 @@ $messages['br'] = array(
 	'iwedit-update' => 'Hizivaat',
 	'iwedit-error' => "<p>ur fazi zo c'hoarvezet</p>",
 	'iwedit-success' => '<p>Liamm krouet gant berzh.</p>',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'iwedit-update' => 'Карлаяккха',
 );
 
 /** Czech (česky)
@@ -418,13 +432,14 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'interwikiedit' => 'Editor de Links Interwikis',
 	'iwedit-title' => 'Editor de Links Interwikis',
 	'iwedit-language-interwikis' => 'só links interlínguas',
 	'iwedit-all-interwikis' => 'todos os links interwikis',
-	'iwedit-update' => 'Actualizar',
+	'iwedit-update' => 'Atualizar',
 	'iwedit-error' => '<p>Ocorreu um erro.</p>',
 	'iwedit-success' => '<p>Os links foram criados correctamente.</p>',
 );
@@ -449,6 +464,19 @@ $messages['pt-br'] = array(
  */
 $messages['qu'] = array(
 	'iwedit-update' => 'Musuqchay',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'interwikiedit' => 'Cangiatore InderUicchi',
+	'iwedit-title' => 'Cangiatore InderUicchi',
+	'iwedit-language-interwikis' => 'sulamende lènghe de inderuicchi',
+	'iwedit-all-interwikis' => 'tutte le inderuicchi',
+	'iwedit-update' => 'Aggiorne',
+	'iwedit-error' => "<p>S'ha verificate 'n'errore.</p>",
+	'iwedit-success' => '<p>Collegamende ccrejate cu successe.</p>',
 );
 
 /** Russian (русский)

@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Class holding information and functionallity specific to Google Maps v3.
- * This infomation and features can be used by any mapping feature. 
+ * Class holding information and functionality specific to Google Maps v3.
+ * This information and features can be used by any mapping feature.
  * 
  * @since 0.7
  * 
  * @file Maps_GoogleMaps3.php
  * @ingroup MapsGoogleMaps3
  * 
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsGoogleMaps3 extends MapsMappingService {
@@ -43,7 +43,7 @@ class MapsGoogleMaps3 extends MapsMappingService {
 		'bicycling'
 	);	
 	
-	public static $tyepControlStyles = array(
+	public static $typeControlStyles = array(
 		'default' => 'DEFAULT',
 		'horizontal' => 'HORIZONTAL_BAR',
 		'dropdown' => 'DROPDOWN_MENU'
@@ -85,9 +85,9 @@ class MapsGoogleMaps3 extends MapsMappingService {
 		global $egMapsGMaps3Type, $egMapsGMaps3Types, $egMapsGMaps3Controls, $egMapsGMaps3Layers;
 		global $egMapsGMaps3DefTypeStyle, $egMapsGMaps3DefZoomStyle, $egMapsGMaps3AutoInfoWindows;
 		global $egMapsResizableByDefault, $egMapsGMaps3DefaultTilt;
-		
-		$params['zoom']->addCriteria( new CriterionInRange( 0, 20 ) );
-		$params['zoom']->setDefault( self::getDefaultZoom() );		
+
+		$params['zoom']->setRange( 0, 20 );
+		$params['zoom']->setDefault( self::getDefaultZoom() );
 		
 		$params['type'] = new Parameter( 'type' );
 		$params['type']->setDefault( $egMapsGMaps3Type );
@@ -121,7 +121,7 @@ class MapsGoogleMaps3 extends MapsMappingService {
 		
 		$params['typestyle'] = new Parameter( 'typestyle' );
 		$params['typestyle']->setDefault( $egMapsGMaps3DefTypeStyle );
-		$params['typestyle']->addCriteria( new CriterionInArray( array_keys( self::$tyepControlStyles ) ) );
+		$params['typestyle']->addCriteria( new CriterionInArray( array_keys( self::$typeControlStyles ) ) );
 		$params['typestyle']->addManipulations( new MapsParamGMap3Typestyle() );
 		$params['typestyle']->setMessage( 'maps-googlemaps3-par-typestyle' );
 
@@ -132,6 +132,7 @@ class MapsGoogleMaps3 extends MapsMappingService {
 		$params['kml'] = new ListParameter( 'kml' );
 		$params['kml']->setDefault( array() );
 		$params['kml']->setMessage( 'maps-googlemaps3-par-kml' );
+		$params['kml']->addManipulations(new MapsParamFile());
 		
 		$params['gkml'] = new ListParameter( 'gkml' );
 		$params['gkml']->setDefault( array() );
@@ -152,6 +153,30 @@ class MapsGoogleMaps3 extends MapsMappingService {
 		$params['kmlrezoom'] = new Parameter( 'kmlrezoom', Parameter::TYPE_BOOLEAN );
 		$params['kmlrezoom']->setDefault( $GLOBALS['egMapsRezoomForKML'], false );
 		$params['kmlrezoom']->setMessage( 'maps-googlemaps3-par-kmlrezoom' );
+
+		$params['poi'] = new Parameter( 'poi', Parameter::TYPE_BOOLEAN );
+		$params['poi']->setDefault( $GLOBALS['egMapsShowPOI'], false );
+		$params['poi']->setMessage( 'maps-googlemaps3-par-poi' );
+
+		$params['imageoverlays'] = new ListParameter( 'imageoverlays' , ';' );
+		$params['imageoverlays']->setDefault( array() );
+		$params['imageoverlays']->addManipulations( new MapsParamImageOverlay('~'));
+
+		$params['markercluster'] = new Parameter(
+			'markercluster' ,
+			Parameter::TYPE_BOOLEAN
+		);
+		$params['markercluster']->setDefault( false );
+		$params['markercluster']->setDoManipulationOfDefault( false );
+
+		$params['searchmarkers'] = new Parameter(
+			'searchmarkers' ,
+			Parameter::TYPE_STRING
+		);
+		$params['searchmarkers']->setDefault( '' );
+		$params['searchmarkers']->addCriteria( new CriterionSearchMarkers() );
+		$params['searchmarkers']->setDoManipulationOfDefault( false );
+
 	}
 	
 	/**
@@ -205,14 +230,27 @@ class MapsGoogleMaps3 extends MapsMappingService {
 	 * @return array
 	 */
 	protected function getDependencies() {
-		global $wgLang;
-		global $egMapsStyleVersion, $egMapsScriptPath;
-
-		$languageCode = self::getMappedLanguageCode( $wgLang->getCode() );
-		
 		return array(
-			Html::linkedScript( "http://maps.google.com/maps/api/js?sensor=false&language=$languageCode" )
-		);			
+			self::getApiScript( $GLOBALS['wgLang']->getCode() ),
+		);
+	}
+
+	public static function getApiScript( $langCode, array $urlArgs = array() ) {
+		global $egGoogleJsApiKey;
+
+		$urlArgs = array_merge(
+			array(
+				'language' => self::getMappedLanguageCode( $langCode ),
+				'sensor' => 'false'
+			),
+			$urlArgs
+		);
+
+		if ( $egGoogleJsApiKey !== '' ) {
+			$urlArgs['key'] = $egGoogleJsApiKey;
+		}
+
+		return Html::linkedScript( 'http://maps.googleapis.com/maps/api/js?' . wfArrayToCgi( $urlArgs ) );
 	}
 	
 	/**

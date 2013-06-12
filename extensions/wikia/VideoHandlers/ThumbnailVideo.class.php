@@ -120,7 +120,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		 * wikia change, Inez
 		 */
 		$title = !isset( $options['title'] ) ? $alt : $options['title'];
-		
+
 		$videoTitle = $this->file->getTitle();
 
 		$linkAttribs = array(
@@ -137,12 +137,15 @@ class ThumbnailVideo extends ThumbnailImage {
 			$linkAttribs['itemtype'] = 'http://schema.org/VideoObject';
 		}
 
-		// let extension override any link attributes 
+		// let extension override any link attributes
 		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
 			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
 		}
 
-		$extraClasses = 'image video lightbox';
+		$extraClasses = 'video';
+		if( empty($options['noLightbox']) ) {
+			$extraClasses .= ' image lightbox';
+		}
 		$linkAttribs['class'] = empty($linkAttribs['class']) ? $extraClasses : $linkAttribs['class'] . ' ' . $extraClasses;
 
 		$attribs = array(
@@ -212,12 +215,12 @@ class ThumbnailVideo extends ThumbnailImage {
 		if ( !empty( $extraBorder ) ) $playButtonHeight += ( $extraBorder*2 );
 		$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $playButtonHeight );
 		$html .= Xml::element( 'img', $attribs, '', true );
-		
-		
+
+
 		if( empty( $options['hideOverlay'] ) ) {
 			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $videoTitle );
 		}
-		
+
 		$html .= ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::closeElement( 'a' ) : '';
 
 		//give extensions a chance to modify the markup

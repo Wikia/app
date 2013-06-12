@@ -12,7 +12,7 @@ $messages['en'] = array(
 	'globalnotification-general-ajax-failure' => 'The browser could not connect to the Wikia.  Try again later.',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'globalnotification-desc' => 'Description of this extension',
@@ -23,6 +23,7 @@ $messages['qqq'] = array(
  * @author Achraf94
  */
 $messages['ar'] = array(
+	'globalnotification-desc' => 'تعرض إعلامات النظام لأحداث مثل فشل الأجاكس',
 	'globalnotification-general-ajax-failure' => 'تعذر على المتصفح الدخول إلى ويكيا.  حاول مرة أخرى لاحقاً.',
 );
 
@@ -212,6 +213,14 @@ $messages['tl'] = array(
 $messages['tt-cyrl'] = array(
 	'globalnotification-desc' => 'AJAX хаталары кебек вакыйгалар өчен система хәбәрләрен күрсәтә',
 	'globalnotification-general-ajax-failure' => 'Браузер Викия белән тоташа алмады. Соңрак кереп карагыз.',
+);
+
+/** Ukrainian (українська)
+ * @author Ua2004
+ */
+$messages['uk'] = array(
+	'globalnotification-desc' => 'Відображає системні повідомлення про такі події, як помилки AJAX',
+	'globalnotification-general-ajax-failure' => 'Браузер не зміг підключитися до Wikia. Спробуйте ще раз пізніше.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

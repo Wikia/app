@@ -86,6 +86,16 @@
 						'post': tagClose
 					}
 				);
+
+				// Wikia change - begin
+				// @author kflorence
+				var wikiaEditor = currentFocused.data( 'wikiaEditor' );
+
+				// Let WikiaEditor know when things are inserted
+				if ( wikiaEditor ) {
+					wikiaEditor.fire( 'editorInsertTags' );
+				}
+				// Wikia change - end
 			}
 		},
 

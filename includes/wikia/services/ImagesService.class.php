@@ -13,7 +13,7 @@ class ImagesService extends Service {
 	public static function getImageSrc($wikiId, $pageId, $imgSize = 250) {
 		$app = F::app();
 
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
 
@@ -29,13 +29,40 @@ class ImagesService extends Service {
 		$imageSrc = (empty($response['image']['imagecrop'])) ? '' : $response['image']['imagecrop'];
 		$imagePage = (empty($response['imagepage']['imagecrop'])) ? '' : $response['imagepage']['imagecrop'];
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return array('src' => $imageSrc, 'page' => $imagePage);
+	}
+
+	public static function getImageSrcByTitle( $cityId, $articleTitle, $width=null, $height=null ) {
+
+		wfProfileIn(__METHOD__);
+		$imageKey = F::app()->wf->SharedMemcKey( 'image_url_from_wiki', $cityId.$articleTitle.$width.$height );
+		$imageSrc = F::app()->wg->Memc->get( $imageKey );
+
+		if ( $imageSrc === false ) {
+			$globalFile = GlobalFile::newFromText( $articleTitle, $cityId );
+			if ( $globalFile->exists() ) {
+				$imageSrc = $globalFile->getCrop( $width, $height );
+			} else {
+				$imageSrc = null;
+			}
+			F::app()->wg->Memc->set( $imageKey, $imageSrc, 60*60*24*3 );
+		}
+		wfProfileOut(__METHOD__);
+		return $imageSrc;
+	}
+
+	protected static function getArticleIdFromTitle( $cityId, $title ) {
+		$title = GlobalTitle::newFromText($title, NS_FILE, $cityId);
+		if ( $title->exists() ) {
+			return $title->getArticleID();
+		}
+		return false;
 	}
 
 	public static function getImageOriginalUrl($wikiId, $pageId) {
 		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
 		$title = GlobalTitle::newFromId($pageId, $wikiId);
@@ -58,7 +85,7 @@ class ImagesService extends Service {
 			$imageSrc = '';
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
 
@@ -147,12 +174,12 @@ class ImagesService extends Service {
 	 */
 	public static function getImagePage($wikiId, $pageId) {
 		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$title = GlobalTitle::newFromId($pageId, $wikiId);
 		$imagePage = ($title instanceof Title) ? $title->getFullURL() : '';
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $imagePage;
 	}
 

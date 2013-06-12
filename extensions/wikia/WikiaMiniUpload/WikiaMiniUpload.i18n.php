@@ -77,7 +77,7 @@ $messages['en'] = array(
 	'wmu-file-error' => 'There was an error with the upload process, sorry. Please try again.'
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Lloffiwr
  * @author Shirayuki
@@ -116,7 +116,7 @@ $messages['af'] = array(
 	'wmu-upload-image' => 'Laai foto op',
 	'wmu-title' => 'Laai foto',
 	'wmu-upload' => 'Oplaai',
-	'wmu-notlogged' => 'Teken aan of registreer om beelde te kan oplaai',
+	'wmu-notlogged' => 'Meld aan of registreer om beelde te kan oplaai',
 	'wmu-find' => 'Vind',
 	'wmu-thiswiki' => 'Hierdie Wiki',
 	'wmu-flickr' => 'Flickr',
@@ -257,18 +257,77 @@ $messages['ang'] = array(
  */
 $messages['ar'] = array(
 	'wmu-upload-image' => 'تحميل صورة',
+	'wmu-title' => 'تحميل صورة',
+	'wmu-upload' => 'تحميل',
+	'wmu-notlogged' => 'قم بتسجيل الدخول أو التسجيل لتحميل الصور من جهاز الكمبيوتر الخاص بك',
+	'wmu-find' => 'إبحث',
+	'wmu-thiswiki' => 'هذا الويكي',
 	'wmu-flickr' => 'فلكر',
 	'wmu-upload-btn' => 'رفع',
+	'wmu-find-btn' => 'إبحث',
+	'wmu-flickr-inf' => 'البحث عن الصور الحرة المرخصة بشكل صحيح من فليكر واستيرادها في الويكي.',
+	'wmu-conflict-inf' => '<h1>عفوا، ملف بهذا الاسم موجود مسبقاً.</h1>ماذا تريد القيام به حيال <b> $1 </b>؟',
+	'wmu-rename' => 'إعادة تسمية صورتك',
+	'wmu-existing' => 'استخدام صورة موجودة',
+	'wmu-overwrite' => 'إستبدل الصورة الحالية بصورتك',
 	'wmu-insert' => 'أدرج',
+	'wmu-details-inf' => '<h1>تفاصيل الملف</h1>حدد اسماً لهذا الملف. اجعله شيئا وصفيا.',
 	'wmu-name' => 'الاسم',
 	'wmu-license' => 'الرخصة',
+	'wmu-licensing' => 'الترخيص',
+	'wmu-details-inf2' => '<h1>خيارات المقالة</h1>اختر كيف تريد لهذا الملف أن يظهر في صفحتك.',
+	'wmu-size' => 'الحجم',
+	'wmu-thumbnail' => 'صورة مصغرة',
+	'wmu-fullsize' => 'الحجم الكامل ($1 في $2بك)',
 	'wmu-width' => 'العرض',
 	'wmu-layout' => 'التخطيط',
 	'wmu-caption' => 'التعليق',
 	'wmu-link' => 'الوصلة',
 	'wmu-optional' => '(اختياري)',
 	'wmu-insert2' => 'أدرج الملف',
+	'wmu-prev' => 'الـ8 السابقة',
+	'wmu-next' => 'الـ8 التالية',
+	'wmu-flickr2' => 'صور فليكر  ($1 {{PLURAL:$1|نتيجة|نتائج}})',
+	'wmu-insert3' => 'إدراج هذه الصورة',
+	'wmu-recent-inf' => 'ملفّات مرفوعة حديثاً',
+	'wmu-thiswiki2' => 'صور هذه الويكي ($1 {{PLURAL:$1|نتيجة|نتائج}})',
+	'wmu-success' => '<h1>نجاح</h1>تم إدراج الصورة الخاصة بك.',
+	'wmu-success-placeholder' => '<h1>تمت العملية بنجاح</h1>',
+	'wmu-return' => 'العودة إلى وضع التحرير',
+	'wmu-back' => 'حدد صورة أخرى',
+	'wmu-warn1' => 'أنت بحاجة لتحديد الاستعلام أولاً!',
+	'wmu-warn2' => 'أنت بحاجة لتحديد الملف أولاً!',
+	'wmu-warn3' => 'أنت بحاجة إلى تحديد اسم الملف أولاً!',
+	'wmu-imagelink' => '<b>جديد!</b> إضافة صور',
+	'wmu-imagebutton' => 'أضف الصور',
+	'wmu-license-cc' => 'يرخص تحت Creative Commons Attribution-Share Alike 3.0',
+	'wmu-bad-extension' => 'لقد حاولت تحميل نوع ملف غير قانوني. الرجاء المحاولة مرة أخرى.',
+	'wmu-filetype-missing' => 'يفتقد هذا الملف ملحق نوعيته',
+	'wmu-filetype-incorrect' => 'يحتوي هذا التحميل على ملحق ملف غير صحيح',
+	'wmu-hide-license-msg' => 'إخفاء نص الترخيص',
+	'wmu-show-license-msg' => 'إظهار نص الترخيص',
+	'wmu-max-thumb' => 'تم تجاوز أقصى حجم مصغر، العودة إلى الحجم الأصلي',
+	'wmu-notallowed' => 'لا يمكنك تحميل الصور على هذه الويكي',
+	'wmu-readonly' => 'لا يمكنك تحميل الصور حالياً لأنّ الويكي في حالة إقرأ-فقط.',
+	'wmu-placeholder' => 'حامل صور',
+	'wmu-gallery' => 'معرض الصور',
+	'wmu-columns' => '$1 {{PLURAL:$1|عمود|أعمدة}}',
+	'wmu-column' => 'الأعمدة',
+	'wmu-added-from-plc' => 'الملفات المضافة عن طريق حامل الصور',
+	'wmu-uploaddisabled' => 'تم تعطيل تحميل الملفات في هذه الويكي',
+	'wmu-gallery-success' => 'قمت بإضافة صورة إلى معرض جديد. انقر أدناه لإضافة المزيد من الصور أو لإدراج معرض',
 	'wmu-gallery-btn1' => 'أضف صورة أخرى',
+	'wmu-gallery-btn2' => 'إدراج معرض الصور في الصفحة',
+	'wmu-no-preview' => 'لا يمكنك إضافة صورة من صفحة في وضع المعاينة',
+	'wmu-no-protect' => 'هذه الصفحة محمية، لا يمكنك إضافة الصور لها',
+	'wmu-no-rights' => 'لا يسمح لك لإضافة الصور إلى هذه الصفحة',
+	'wmu-more-options' => 'المزيد من الخيارات',
+	'wmu-fewer-options' => 'خيارات أقل',
+	'wmu-replace-default-caption' => 'استبدال التسمية التوضيحية الافتراضية',
+	'wmu-appearance-in-article' => 'المظهر على الصفحة',
+	'wmu-alignment' => 'المحاذاة',
+	'wmu-file-protected' => 'هذه الصورة محمية',
+	'wmu-file-error' => 'كان هناك خطأ في عملية التحميل، عذراً. الرجاء المحاولة مرة أخرى.',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -2392,6 +2451,7 @@ $messages['pt'] = array(
  * @author Caio1478
  * @author Giro720
  * @author JM Pessanha
+ * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -2405,7 +2465,7 @@ $messages['pt-br'] = array(
 	'wmu-upload-btn' => 'Carregar',
 	'wmu-find-btn' => 'Procurar',
 	'wmu-flickr-inf' => 'Pesquise imagens grátis devidamente licenciadas no Flickr e importe-as para a sua wiki.',
-	'wmu-conflict-inf' => '<h1>Já existe um ficheiro com esse nome.</h1>O que é que quer fazer com o <b>$1</b>?',
+	'wmu-conflict-inf' => '<h1>Já existe um arquivo com esse nome.</h1>O que quer fazer com o <b>$1</b>?',
 	'wmu-rename' => 'Alterar nome da imagem',
 	'wmu-existing' => 'Usar imagem existente',
 	'wmu-overwrite' => 'Substituir a imagem existente pela sua',
@@ -2414,7 +2474,7 @@ $messages['pt-br'] = array(
 	'wmu-name' => 'Nome',
 	'wmu-license' => 'Licença',
 	'wmu-licensing' => 'Licenciamento',
-	'wmu-details-inf2' => '<h1>Opções do artigo</h1>Escolha o aspecto deste ficheiro na página.',
+	'wmu-details-inf2' => '<h1>Opções do artigo</h1>Escolha o aspecto deste arquivo na página.',
 	'wmu-size' => 'Tamanho',
 	'wmu-thumbnail' => 'Miniatura',
 	'wmu-fullsize' => 'Tamanho original ($1x$2px)',
@@ -2435,12 +2495,12 @@ $messages['pt-br'] = array(
 	'wmu-return' => 'Voltar à edição',
 	'wmu-back' => 'Selecionar outra imagem',
 	'wmu-warn1' => 'Antes tem de especificar a consulta!',
-	'wmu-warn2' => 'Antes tem de selecionar o ficheiro!',
+	'wmu-warn2' => 'Antes tem que selecionar o arquivo!',
 	'wmu-warn3' => 'Você precisa especificar o nome do arquivo antes!',
 	'wmu-imagelink' => '<b>Novo!</b> Adicionar imagens',
 	'wmu-imagebutton' => 'Adicionar imagens',
 	'wmu-license-cc' => 'Protegida pela licença Atribuição e Partilha nos Mesmos Termos 3.0, da Creative Commons',
-	'wmu-bad-extension' => 'Tentou importar um tipo de ficheiro não permitido. Tente novamente, por favor.',
+	'wmu-bad-extension' => 'Tentou importar um tipo de arquivo não permitido. Tente novamente, por favor.',
 	'wmu-filetype-missing' => 'Este carregamento está sem uma extensão de arquivo',
 	'wmu-filetype-incorrect' => 'Este carregamento tem uma extensão de arquivo incorreta',
 	'wmu-hide-license-msg' => 'esconder texto da licença',
@@ -2452,7 +2512,7 @@ $messages['pt-br'] = array(
 	'wmu-gallery' => 'Galeria',
 	'wmu-columns' => '$1 {{PLURAL:$1|coluna|colunas}}',
 	'wmu-column' => 'Colunas',
-	'wmu-added-from-plc' => 'Ficheiro adicionado via uma reserva de espaço para imagem',
+	'wmu-added-from-plc' => 'Arquivo adicionado via uma reserva de espaço para imagem',
 	'wmu-uploaddisabled' => 'A importação de ficheiros foi impossibilitada nesta wiki',
 	'wmu-gallery-success' => 'Adicionou uma imagem a uma galeria nova. Clique abaixo para adicionar mais imagens ou inserir a galeria',
 	'wmu-gallery-btn1' => 'Adicionar outra imagem',
@@ -2998,4 +3058,20 @@ $messages['zh-hant'] = array(
 	'wmu-upload-image' => '上傳圖片',
 	'wmu-title' => '上傳圖片',
 	'wmu-upload' => '上傳',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'wmu-notlogged' => '請登入或註冊，以便你從電腦上傳圖像',
+	'wmu-rename' => '把圖像重命名',
+	'wmu-overwrite' => '取代現有圖像',
+	'wmu-flickr2' => 'Flickr圖像 ($1 個結果)',
+	'wmu-insert3' => '插入此圖像',
+	'wmu-recent-inf' => '最近上傳的圖像',
+	'wmu-success' => '<h1>成功了！</h1>你已成功插入圖像。',
+	'wmu-imagelink' => '<b>最新！</b> 加入圖像',
+	'wmu-notallowed' => '你不能在此wiki上傳圖像',
+	'wmu-file-protected' => '此圖像已被保護',
 );

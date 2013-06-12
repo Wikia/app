@@ -85,4 +85,17 @@ class SEOTweaksGlobalHooksHelper extends WikiaModel {
 		return true;
 	}
 
+	static public function onArticleRobotPolicy( &$policy, Title $title ) {
+
+		$ns = MWNamespace::getSubject( $title->getNamespace() );
+
+		if ( in_array( $ns, array( NS_MEDIAWIKI, NS_TEMPLATE ) ) ) {
+			$policy = array(
+				'index'  => 'noindex',
+				'follow' => 'follow'
+			);
+		}
+		return true;
+	}
+
 }

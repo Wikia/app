@@ -115,7 +115,7 @@ Helpful Tools:
 [[Special:UserRights|Manage Rights]]",
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Siebrand
  * @author TK-999
  */
@@ -142,10 +142,29 @@ $messages['ar'] = array(
 	'wikiadoption-header' => 'تبنى هذه الويكي',
 	'wikiadoption-button-adopt' => 'نعم أريد أن أتبنى {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'اكتشف المزيد!',
+	'wikiadoption-description' => '$1، مستعد لتبني {{SITENAME}}؟
+<br /><br />
+لم يكن هناك إداري نشيط في  {{SITENAME}} لفترة من الوقت، ونحن نبحث عن قائد جديد للمساعدة في محتوى هذه الويكي و تنمية المجتمع! باعتبارك ساهمت في {{SITENAME}} نحن نتسائل إذا كنت ترغب في الحصول على هذا المنصب.
+<br /><br />
+بتبني هذه الويكي، سوف يتم إعطائك رتب إداري و بيروقراطي لتحصل على الأدوات اللازمة لإدارة مجتمع الويكي و محتواها. سوف تتمكن أيضا من إضافة إداريين آخرين معك ليساعدوا و يحذفوا و يستعيدوا و ينقلوا و يحموا الصفحات.
+<br /><br />
+هل أنت مستعد لاتخاذ الخطوات التالية لمساعدة  {{SITENAME}}؟',
 	'wikiadoption-know-more-header' => 'هل تريد معرفة المزيد؟',
+	'wikiadoption-know-more-description' => 'قم بزيارة هذه الوصلات للحصول على مزيد من المعلومات. ولا تتردد بالطبع في الاتصال بنا إذا كان لديك أي أسئلة!',
 	'wikiadoption-adoption-successed' => 'تهانينا! أنت الآن إداري مسؤول عن هذه الويكي!',
+	'wikiadoption-adoption-failed' => 'نحن نأسف. حاولنا أن نجعلك إداريا، ولكن لم نتمكن. الرجاء [http://community.wikia.com/Special:Contact الاتصال بنا]، وسوف نحاول أن نساعدك.',
 	'wikiadoption-not-allowed' => 'نحن نأسف. لا يمكن لك تبني هذه الويكي حاليا',
 	'wikiadoption-not-enough-edits' => 'عفوا! تحتاج إلى أكثر من 10 تعديلات لكي تتمكن من تبني هذه الويكي',
+	'wikiadoption-adopted-recently' => 'عفوا! لقد قمت بتبني ويكي آخرى مؤخرا. سوف تحتاج إلى الانتظار لبعض الوقت قبل أن يمكنك أن تتبنى ويكي جديدة.',
+	'wikiadoption-log-reason' => 'تبني ويكي أوتوماتيكي',
+	'wikiadoption-notification' => '{{SITENAME}} معروضة للتبني. هل ترغب في أن تصبح قائدا هنا؟ قم بتبني هذه الويكي للبدء! $2',
+	'wikiadoption-mail-first-subject' => 'لم نرك في الويكي لمدة طويلة',
+	'wikiadoption-mail-second-subject' => 'سيتم طرح #WIKINAME للتبني في أقرب وقت',
+	'wikiadoption-mail-adoption-subject' => 'تم تبني #WIKINAME',
+	'tog-adoptionmails' => 'راسلني عبر البريد الإلكتروني إذا كانت $1 سوف تصبح متوفرة للتبني من قبل المستخدمين الآخرين',
+	'tog-adoptionmails-v2' => '...إذا كانت الويكي سوف تصبح متوفرة للتبني من قبل المستخدمين الآخرين',
+	'wikiadoption-pref-label' => 'سيؤثر تغيير هذه التفضيلات على رسائل البريد الإلكتروني من $1 فقط.',
+	'wikiadoption-welcome-header' => 'تهانينا! لقد تبنيت {{SITENAME}}!',
 );
 
 /** Bulgarian (български)
@@ -156,13 +175,17 @@ $messages['bg'] = array(
 
 /** Breton (brezhoneg)
  * @author Fohanno
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
 	'wikiadoption' => 'Degemer ur wiki ez-emgefre',
+	'wikiadoption-desc' => 'Un astenn AutomaticWikiAdoption extension evit MediaWiki',
 	'wikiadoption-header' => 'Degemer ar wiki-mañ',
 	'wikiadoption-button-adopt' => "Ya, c'hoant 'm eus degemer {{SITENAME}} !",
 	'wikiadoption-adopt-inquiry' => "Gouzout hiroc'h !",
+	'wikiadoption-description' => "$1, prest da zegemer {{SITENAME}}?
+<br /><br /> N'eus bet merour oberiat ebet e {{SITENAME}}abaoe ur mare hag emaomp o klask ur atebeg nevez evit sikour da ziorren endalc'had ar wiki-mañ ha brasaat ar gumuniezh anezhañ ! Dre m'ho peus graet traoù e {{SITENAME}} e c'houlennomp diganeoc'h hag-eñ e plijfe deoc'h  al labour-se <br /><br /> Dre zegemer  ar wiki-mañ e vioc'h lakaet da verour ha da vurevour evit reiñ deoc'h ar binvioù ho peus ezhomm da verañ ar gumuniezh hag endalc'had ar wiki-mañ. Gallout a reot krouiñ merourien ha burevourien all a c'hallo sikour, lemel, adsevel, dilec'hiañ ha gwereziñ ar pajennoù. <br /><br /> Ha prest oc'h da dremen d'ar pazennoù all evit sikour {{SITENAME}} ?",
 	'wikiadoption-know-more-header' => "C'hoant gouzout hiroc'h ?",
 	'wikiadoption-know-more-description' => "Sellit ouzh al liammoù-se evit gouzout hiroc'h. Ha deuit hardizh e darempred ganimp m'ho peus goulenn pe c'houlenn !",
 	'wikiadoption-adoption-successed' => "Gourc'hemennoù ! Merour oc'h bremañ war ar wiki-mañ !",
@@ -207,6 +230,7 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Avatar
  * @author Claudia Hattitten
  * @author Geitost
  * @author LWChris
@@ -220,7 +244,7 @@ $messages['de'] = array(
 	'wikiadoption-desc' => 'Ermöglicht die automatische Adoption eines Wikis',
 	'wikiadoption-header' => 'Dieses Wiki adoptieren',
 	'wikiadoption-button-adopt' => 'Ja, ich möchte {{SITENAME}} adoptieren!',
-	'wikiadoption-adopt-inquiry' => 'Mehr erfahren',
+	'wikiadoption-adopt-inquiry' => 'Mehr erfahren!',
 	'wikiadoption-description' => '$1, willst du {{SITENAME}} adoptieren?
 <br /><br />
 Auf {{SITENAME}} ist seit einiger Zeit kein aktiver Admin mehr unterwegs, und wir suchen einen neuen Leiter, der dem Wiki beim Wachsen helfen soll. Du hast dich in diesem Wiki eingebracht, möchtest du diesen Job übernehmen?
@@ -228,11 +252,11 @@ Auf {{SITENAME}} ist seit einiger Zeit kein aktiver Admin mehr unterwegs, und wi
 Durch die Adoption wirst du zum Administrator und Bürokraten befördert, sodass du die Werkzeuge erhältst, um den Inhalt und die Community des Wikis zu verwalten. Du wirst auch die Möglichkeit haben, andere Benutzer zu Administratoren zu ernennen, die beim Löschen, Zurücksetzen und Seitenschützen helfen können.
 <br /><br />
 Bist du bereit, einen weiteren Schritt zu tun, um {{SITENAME}} zu helfen?',
-	'wikiadoption-know-more-header' => 'Möchtest du mehr wissen?',
+	'wikiadoption-know-more-header' => 'Möchtest du mehr erfahren?',
 	'wikiadoption-know-more-description' => 'Sieh dir diese Links für weitere Informationen an. Und natürlich, zögere nicht uns zu kontaktieren, wenn du Fragen hast!',
 	'wikiadoption-adoption-successed' => 'Herzlichen Glückwunsch! Du bist jetzt ein Administrator in diesem Wiki!',
-	'wikiadoption-adoption-failed' => 'Tut uns leid. Wir haben versucht, dich zu einem Administrator zu machen, aber es hat nicht funktioniert. Bitte [http://community.wikia.com/Special:Contact kontaktiere uns], und wir werden versuchen, dir weiterzuhelfen.',
-	'wikiadoption-not-allowed' => 'Tut uns leid. Du kannst dieses Wiki gerade nicht übernehmen.',
+	'wikiadoption-adoption-failed' => 'Tut uns leid. Wir haben versucht, dich zu einem Administrator zu machen, aber es hat nicht funktioniert. Bitte [http://de.community.wikia.com/wiki/Spezial:Kontakt kontaktiere uns], und wir werden versuchen, dir weiterzuhelfen.',
+	'wikiadoption-not-allowed' => 'Tut uns leid. Du kannst dieses Wiki im Moment nicht übernehmen.',
 	'wikiadoption-not-enough-edits' => 'Auweia! Du musst mehr als 10 Bearbeitungen getätigt haben, um dieses Wiki adoptieren zu können.',
 	'wikiadoption-adopted-recently' => 'Auweia! Du hast in letzter Zeit bereits ein anderes Wiki adoptiert. Du musst eine Weile warten, bevor du ein weiteres Wiki adoptieren kannst.',
 	'wikiadoption-log-reason' => 'Automatische Wiki-Adoption',
@@ -288,7 +312,7 @@ Klicke auf den folgenden Link, um Änderungen an dieser Liste abzubestellen: $3.
 Der #WIKINAME adoptierende Benutzer hat nun Bürokraten- und Administratorstatus. Mach dir keine Sorgen - du bist immer noch ein Administrator, und du kannst jederzeit wieder dazustoßen und mitmachen.<br /><br />
 Das Wikia-Team<br /><br />
 <small>Du kannst Änderungen an dieser Liste <a href="$3">abbestellen</a>.</small>',
-	'tog-adoptionmails' => 'Mich per E-Mail benachrichtigen, wenn $1 zur Adoption durch andere Benutzer freigegeben wird',
+	'tog-adoptionmails' => 'Benachrichtige mich per E-Mail, wenn $1 zur Adoption durch andere Benutzer freigegeben wird',
 	'tog-adoptionmails-v2' => '… wenn das Wiki für andere Benutzer zur Adoption freigegeben wird.',
 	'wikiadoption-pref-label' => 'Eine Änderung dieser Einstellungen wirkt sich nur auf E-Mails von $1 aus.',
 	'wikiadoption-welcome-header' => 'Gratulation! Du hast {{SITENAME}} adoptiert!',
@@ -1479,6 +1503,15 @@ Handige hulpmiddelen:<br /><br />
 [[Special:UserRights|Rechten beheren]]',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiadoption-header' => 'Adoptar aqueste wiki',
+	'wikiadoption-button-adopt' => 'Òc, vòli adoptar {{SITENAME}} !',
+	'wikiadoption-adopt-inquiry' => 'Per ne saber mai !',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -1685,6 +1718,14 @@ Utiss ch'a ven-o motobin a taj:
 [[Special:ListUsers|List dj'Utent]]
 <br />
 [[Special:UserRights|Gestì ij Drit]]",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiadoption-adopt-inquiry' => 'ډېر نور څه موندل!',
+	'wikiadoption-know-more-header' => 'غواړې نور هم پوه شې؟',
 );
 
 /** Portuguese (português)
@@ -1910,6 +1951,7 @@ $messages['roa-tara'] = array(
 	'wikiadoption' => "Adozione automateche d'a uicchi",
 	'wikiadoption-header' => 'Adotte sta uicchi',
 	'wikiadoption-button-adopt' => 'Sìne, vogghie cu adotte {{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Iacchie de cchiù!',
 	'wikiadoption-log-reason' => "Adozione automateche d'a uicchi",
 	'wikiadoption-welcome-header' => 'Comblimende! Tu è adottate {{SITENAME}}!',
 );
@@ -2246,14 +2288,19 @@ Mga Kasangkapang Nakakatulong:
 /** Ukrainian (українська)
  * @author A1
  * @author Steve.rusyn
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
+	'wikiadoption' => 'Автоматичне всиновлення вікі',
+	'wikiadoption-desc' => 'Розширення AutomaticWikiAdoption для MediaWiki',
 	'wikiadoption-header' => 'Прийняти цю wiki',
 	'wikiadoption-button-adopt' => 'Так, я хочу прийняти {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Дізнайтеся більше!',
 	'wikiadoption-know-more-header' => 'Хочете знати більше?',
 	'wikiadoption-adoption-successed' => 'Вітаємо! Тепер Ви адміністратор цієї вікі!',
+	'wikiadoption-log-reason' => 'Автоматичне всиновлення вікі',
+	'wikiadoption-mail-first-subject' => 'Ми не бачили вас давненько',
 );
 
 /** Simplified Chinese (中文（简体）‎)

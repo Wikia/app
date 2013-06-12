@@ -15,6 +15,15 @@ $messages['af'] = array(
 	'tog-disablelinksuggest' => 'Moenie skakel-voorstelle in bron-modus wys nie',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'linksuggest-desc' => 'يقوم باقتراح وصلات للمحررين أثناء التحرير',
+	'tog-disablelinksuggest' => 'عدم إظهار إقتراح الوصلات في وضع المصدر',
+	'tog-redirected-from' => '&ndash; إعادة توجيه من $1',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author PPerviz
  * @author Wertuose
@@ -385,9 +394,12 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Ua2004
  */
 $messages['uk'] = array(
-	'tog-disablelinksuggest' => 'Не показувати пропозиції посилань', # Fuzzy
+	'linksuggest-desc' => 'Пропонує редакторам посилання в режимі редагування',
+	'tog-disablelinksuggest' => 'Не показувати пропозицій посилань у режимі Вихідного коду',
+	'tog-redirected-from' => '&ndash; перенаправлено з $1',
 );
 
 /** Simplified Chinese (中文（简体）‎)

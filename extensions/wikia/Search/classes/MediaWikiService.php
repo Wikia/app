@@ -83,6 +83,7 @@ class MediaWikiService
 		try {
     		$this->getPageFromPageId( $pageId );
 		} catch ( \Exception $e ) {
+			wfProfileOut( __METHOD__ );
 			return $pageId;
 		}
 		
@@ -469,7 +470,7 @@ class MediaWikiService
 	 */
 	public function getWikiMatchByHost( $domain ) {
 		$match = null;
-		if ( $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' ) ) {
+		if ( ( $domain !== '' ) && ( $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' ) ) ) {
 			$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
 		}
 		return $match;
@@ -491,6 +492,15 @@ class MediaWikiService
 	 */
 	public function getMainPageUrlForWikiId( $wikiId ) {
 		return $this->getMainPageTitleForWikiId( $wikiId )->getFullUrl();
+	}
+	
+	/**
+	 * Returns the article ID of a main page for the wiki ID passed.
+	 * @param int $wikiId
+	 * @return Ambigous <number, boolean>
+	 */
+	public function getMainPageIdForWikiId( $wikiId ) {
+		return $this->getMainPageTitleForWikiId( $wikiId )->getArticleId();
 	}
 	
 	/**
@@ -573,7 +583,7 @@ class MediaWikiService
 	 */
 	public function getVisualizationInfoForWikiId( $wikiId ) {
 		$visualization = (new \WikisModel )->getDetails( [ $wikiId ] );
-		if ( empty( $visualization ) ) return array();
+		$visualization = empty( $visualization ) ? [ [] ] : $visualization;
 		return array_shift( $visualization );
 	}
 
@@ -810,17 +820,18 @@ class MediaWikiService
 	 * Standard interface for this class's services to access a page
 	 * @param int $pageId
 	 * @return Article
-	 * @throws WikiaException
+	 * @throws Exception
 	 */
 	protected function getPageFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );
 		if ( isset( self::$pageIdsToArticles[$pageId] ) ) {
+			wfProfileOut( __METHOD__ );
 			return self::$pageIdsToArticles[$pageId];
 		}
-	    $page = \Article::newFromID( $pageId );
+		$page = \Article::newFromID( $pageId );
 
 		if( $page === null ) {
-			throw new \WikiaException( 'Invalid Article ID' );
+			throw new \Exception( 'Invalid Article ID' );
 		}
 		if( $page->isRedirect() ) {
 			self::$redirectArticles[$pageId] = $page;
@@ -843,19 +854,23 @@ class MediaWikiService
 	 */
 	protected function getTitleString( \Title $title ) {
 		wfProfileIn( __METHOD__ );
+		$titleString = $title->getFullText();
 		if ( in_array( $title->getNamespace(), array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
 			$wm = \WallMessage::newFromId( $title->getArticleID() );
-			$wm->load();
-			
-			if ( !$wm->isMain() && ( $main = $wm->getTopParentObj() ) && !empty( $main ) ) {
-				$main->load();
-				$wm = $main;
+			if (! empty( $wm ) ) {
+				$wm->load();
+				if ( !$wm->isMain() ) {
+					$main = $wm->getTopParentObj();
+					if ( !empty( $main ) ) {
+						$main->load();
+						$wm = $main;
+					}
+				}
+				$titleString = $wm->getMetaTitle();
 			}
-			
-			return (string) $wm->getMetaTitle();
 		}
 		wfProfileOut(__METHOD__);
-		return $title->getFullText();
+		return $titleString;
 	}
 	
 	/**

@@ -5,13 +5,13 @@ class RelatedVideosRailController extends WikiaController {
 	
 	public function executeIndex() {
 		$app = F::App();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		
 		#var_dump($rvc->videos);
 		
 		#$this->realResponse->addAsset('extensions/wikia/Wall/css/WallHistoryRail.scss');
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 	
 }

@@ -45,8 +45,11 @@ class SpecialCreateRedirect extends SpecialPage {
 	public function execute( $par ) {
 		global $wgRequest, $wgOut, $wgUser;
 
+		wfProfileIn( __METHOD__ );
+
 		if( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -138,19 +141,23 @@ class SpecialCreateRedirect extends SpecialPage {
 			switch ( $value ) {
 				case EditPage::AS_SPAM_ERROR:
 					$crEdit->spamPageWithContent( $resultDetails['spam'] );
+					wfProfileOut( __METHOD__ );
 					return;
 
 				case EditPage::AS_BLOCKED_PAGE_FOR_USER:
 					$crEdit->blockedPage();
+					wfProfileOut( __METHOD__ );
 					return;
 
 				case EditPage::AS_READ_ONLY_PAGE_ANON:
 					$crEdit->userNotLoggedInPage();
+					wfProfileOut( __METHOD__ );
 					return;
 
 			 	case EditPage::AS_READ_ONLY_PAGE_LOGGED:
 			 	case EditPage::AS_READ_ONLY_PAGE:
 			 		$wgOut->readOnlyPage();
+					wfProfileOut( __METHOD__ );
 					return;
 
 			 	case EditPage::AS_RATE_LIMITED:
@@ -159,6 +166,7 @@ class SpecialCreateRedirect extends SpecialPage {
 
 			 	case EditPage::AS_NO_CREATE_PERMISSION:
 			 		$crEdit->noCreatePermission();
+					wfProfileOut( __METHOD__ );
 					return;
 			}
 
@@ -201,6 +209,7 @@ class SpecialCreateRedirect extends SpecialPage {
 </form>
 END
 		);
+		wfProfileOut( __METHOD__ );
 	}
 
 }

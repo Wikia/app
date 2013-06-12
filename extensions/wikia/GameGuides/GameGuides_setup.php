@@ -58,33 +58,38 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', [
 	'wikiagameguides-content-empty-tag'
 ] );
 
+//Special Page for Sponsored Videos Managment Tool
+$app->registerClass( 'GameGuidesSpecialSponsoredController', "{$dir}/GameGuidesSpecialSponsoredController.class.php" );
+$app->registerSpecialPage( 'GameGuidesSponsored', 'GameGuidesSpecialSponsoredController' );
+
+$wgGroupPermissions['*']['gameguidessponsored'] = false;
+$wgGroupPermissions['staff']['gameguidessponsored'] = true;
+
+F::build( 'JSMessages' )->registerPackage( 'GameGuidesSponsoredMsg', [
+	'wikiagameguides-sponsored-video',
+	'wikiagameguides-sponsored-language',
+	'wikiagameguides-sponsored-video-title',
+	'wikiagameguides-sponsored-duplicate-entry',
+	'wikiagameguides-sponsored-required-entry',
+	'wikiagameguides-sponsored-empty-language',
+	'wikiagameguides-sponsored-orphaned-video',
+	'wikiagameguides-sponsored-delete-videos-are-you-sure',
+	'wikiagameguides-sponsored-video-does-not-exist',
+	'wikiagameguides-sponsored-video-is-not-ooyala'
+] );
+
 //hooks
 $app->registerHook( 'GameGuidesContentSave', 'GameGuidesController', 'onGameGuidesContentSave' );
+$app->registerHook( 'GameGuidesSponsoredVideosSave', 'GameGuidesController', 'onGameGuidesSponsoredSave' );
 $app->registerHook( 'TitleGetSquidURLs', 'GameGuidesController', 'onTitleGetSquidURLs' );
 //add Game Guides Content to WikiFeatures
 $app->registerHook( 'WikiFeatures::onGetFeatureNormal', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
 $app->registerHook( 'WikiFeatures::onToggleFeature', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
 
-//the only globals needed in Game Guides
-if ( empty( $app->wg->GameGuidesGlobalsWhiteList ) ) {
-$app->wg->set( 'wgGameGuidesGlobalsWhiteList',
-	[
-		'wgNamespaceNumber',
-		'wgCityId',
-		'wgPageName',
-		'wgArticleId',
-		'wgArticlePath',
-		'wgTitle',
-		'wgServer',
-		'wgScriptPath',
-		'wgAssetsManagerQuery',
-		'wgStyleVersion',
-		'wgRevisionId'
-	] );
-}
-
 //minimal package of messages in Game Gudes
 F::build( 'JSMessages' )->registerPackage( 'GameGuides', array(
 	'wikiamobile-hide-section',
-	'wikiamobile-image-not-loaded'
+	'wikiamobile-image-not-loaded',
+	'wikiamobile-video-not-friendly',
+	'wikiamobile-video-not-friendly-header'
 ) );

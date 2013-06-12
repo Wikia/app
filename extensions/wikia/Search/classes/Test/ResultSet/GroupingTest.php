@@ -240,6 +240,44 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		$configure->invoke( $mockGrouping, $dc );
 	}
 	
+	/**
+	 * @covers Wikia\Search\ResultSet\Grouping::getTopPages
+	 */
+	public function testGetTopPages() {
+		
+		$this->prepareMocks( [ 'getHeader' ], [], [], [ 'getMainPageIdForWikiId' ] );
+		$mockDmService = $this->getMock( 'DataMartService', [ 'getTopArticlesByPageview' ] );
+		
+		$topPages = [ 1, 2, 3, 4 ];
+		$this->resultSet
+		    ->expects( $this->once() )
+		    ->method ( 'getHeader' )
+		    ->with   ( 'wid' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mockDmService
+		    ->staticExpects( $this->once() )
+		    ->method ( 'getTopArticlesByPageView' )
+		    ->will   ( $this->returnValue( [ 1 => [], 2 => [], 5 => [], 3 => [], 4 => [] ] ) )
+		;
+		$this->service
+		    ->expects( $this->once() )
+		    ->method ( 'getMainPageIdForWikiId' )
+		    ->will   ( $this->returnValue( 5 ) )
+		;
+		$this->proxyClass( 'DataMartService', $mockDmService );
+		$this->mockApp();
+		$this->assertEquals(
+				$topPages,
+				$this->resultSet->getTopPages()
+		);
+		$this->assertAttributeEquals(
+				$topPages,
+				'topPages',
+				$this->resultSet
+		);
+	}
+	
 	
 	/**
 	 * @covers Wikia\Search\ResultSet\Grouping::setResultsFromHostGrouping
@@ -323,7 +361,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		$results = new \ArrayIterator( array( $mockResult ) );
 		$this->prepareMocks( array( 'addHeaders', 'setHeader', 'getHeader', 'getDescription' ), array(), array(), array( 'getSimpleMessage', 'getWikiIdByHost', 'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getGlobalForWiki', 'getHubForWikiId' ) );
 		$fields = array( 'id' => 123 );
-		$vizInfo = array( 'description' => 'yup' );
+		$vizInfo = array( 'description' => 'yup', 'lang' => 'get rid of me' );
 		$mockResult
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'offsetGet' )
@@ -364,7 +402,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		$this->resultSet
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'addHeaders' )
-		    ->with   ( $vizInfo )
+		    ->with   ( [ 'description' => 'yup' ] ) // note we dropped the lang
 		    ->will   ( $this->returnValue( $this->resultSet ) )
 		;
 		$this->resultSet

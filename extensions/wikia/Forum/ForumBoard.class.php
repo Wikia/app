@@ -17,7 +17,7 @@ class ForumBoard extends Wall {
 	 * @return array $info
 	 */
 	public function getBoardInfo($db = DB_SLAVE) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$memKey = $this->wf->MemcKey( 'forum_board_info', $this->getId() );
 
@@ -65,7 +65,7 @@ class ForumBoard extends Wall {
 			$this->wg->Memc->set( $memKey, $info, 60 * 60 * 12 );
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $info;
 	}
@@ -75,7 +75,7 @@ class ForumBoard extends Wall {
 	 * @return integer activeThreads
 	 */
 	public function getTotalActiveThreads($relatedPageId = 0, $db = DB_SLAVE) {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if(empty($relatedPageId)) {
 			$memKey = $this->wf->MemcKey( 'forum_board_active_threads', $this->getId() );
@@ -112,7 +112,7 @@ class ForumBoard extends Wall {
 			}
 		}
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $activeThreads;
 	}

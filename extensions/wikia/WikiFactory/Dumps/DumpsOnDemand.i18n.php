@@ -626,13 +626,14 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Crazymadlover
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'dump-database' => 'Cópias da base de dados em ficheiro',
 	'dump-database-info' => 'Cópias da base de dados em ficheiro podem ser usadas como cópia de segurança pessoal (a Wikia produz automaticamente cópias de segurança separadas, de todas as wikis) ou por robôs de manutenção',
 	'dump-database-curr-pages' => 'páginas actuais',
 	'dump-database-curr-pages-info' => '(Normalmente, esta versão é melhor para uso por robôs)',
-	'dump-database-full-pages' => 'Versão actual e histórico das páginas',
+	'dump-database-full-pages' => 'Páginas atuais e histórico',
 	'dump-database-full-pages-info' => '(Aviso: este ficheiro pode ser muito grande)',
 	'dump-database-request' => 'Pedir uma actualização',
 	'dump-database-request-info' => '(Normalmente as cópias em ficheiro são geradas semanalmente)',
@@ -783,6 +784,7 @@ $messages['tl'] = array(
 /** Ukrainian (українська)
  * @author Alex Khimich
  * @author Prima klasy4na
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
@@ -796,7 +798,7 @@ $messages['uk'] = array(
 	'dump-database-request-info' => '(Дампи зазвичай створюються щотижня)',
 	'dump-database-request-submit' => 'Надіслати запит',
 	'dump-database-request-already-submitted' => 'Запит на створення дампа було надіслано недавно (менше 7 днів тому)',
-	'dump-database-request-requested' => 'Запит на створення дампа бази данних надіслано.',
+	'dump-database-request-requested' => 'Запит на створення дампу бази даних надіслано.',
 	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
 );
 

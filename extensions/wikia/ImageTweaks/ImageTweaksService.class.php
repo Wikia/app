@@ -7,7 +7,7 @@
 class ImageTweaksService extends WikiaService {
 
 	public function getTag(){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$imageHTML = $this->request->getVal('imageHTML');
 		$align = $this->request->getVal('align');
@@ -28,7 +28,7 @@ class ImageTweaksService extends WikiaService {
 
 		//picture attribution
 		if ( !empty( $showPictureAttribution ) && !empty( $attributeTo ) ) {
-			$this->wf->profileIn( __METHOD__ . '::PictureAttribution' );
+			wfProfileIn( __METHOD__ . '::PictureAttribution' );
 
 			// render avatar and link to user page
 			$avatar = AvatarService::renderAvatar( $attributeTo, 16 );
@@ -39,7 +39,7 @@ class ImageTweaksService extends WikiaService {
 				$this->wf->MsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $attributeTo ) .
 				Xml::closeElement( 'div' );
 
-			$this->wf->profileOut( __METHOD__ . '::PictureAttribution' );
+			wfProfileOut( __METHOD__ . '::PictureAttribution' );
 		}
 
 		if ( !empty( $showCaption ) ) {
@@ -50,7 +50,7 @@ class ImageTweaksService extends WikiaService {
 
 		$this->setVal( 'tag', $html );
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 }

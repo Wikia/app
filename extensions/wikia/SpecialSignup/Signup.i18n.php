@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'signup' => 'Signup',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -17,13 +17,15 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Malhargan
  */
 $messages['ar'] = array(
+	'signup-desc' => 'يضيف اسم مستعار [[{{#Special:Signup}}]] ل[[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'إنشاء حساب',
 );
 
-/** Assamese (অসমীয়া)
+/** Assamese (অসমীয়া)
  * @author Bishnu Saikia
  */
 $messages['as'] = array(
@@ -188,7 +190,7 @@ $messages['nl'] = array(
 	'signup' => 'Registreren',
 );
 
-/** Oriya (ଓଡ଼ିଆ)
+/** Oriya (ଓଡ଼ିଆ)
  * @author Odisha1
  * @author Psubhashish
  */
@@ -332,7 +334,9 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Simon Shek
  */
 $messages['zh-hant'] = array(
+	'signup-desc' => '添加[[{{#Special:Signup}}]]為[[{{#Special:UserLogin}}/signup]]別名',
 	'signup' => '註冊',
 );

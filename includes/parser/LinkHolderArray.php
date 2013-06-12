@@ -288,7 +288,7 @@ class LinkHolderArray {
 					}
 				}
 			}
-			$wgMemc->getMulti($memcKeys);
+			$wgMemc->prefetch($memcKeys);
 		}
 		// experimental - end
 

@@ -17,11 +17,11 @@ class CategorySelectController extends WikiaController {
 	 * The template used for article pages and edit previews.
 	 */
 	public function articlePage() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		// Template rendering cancelled by hook
 		if ( !$this->wf->RunHooks( 'CategorySelectArticlePage' ) ) {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -31,7 +31,7 @@ class CategorySelectController extends WikiaController {
 
 		// There are no categories present and user can't edit, skip rendering
 		if ( !$userCanEdit && !count( $categories ) ) {
-			$this->wf->ProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -51,14 +51,14 @@ class CategorySelectController extends WikiaController {
 		$this->response->setVal( 'showHidden', $showHidden );
 		$this->response->setVal( 'userCanEdit', $userCanEdit );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * The category list template. Used by article pages on view and edit save.
 	 */
 	public function categories() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$categories = $this->request->getVal( 'categories', array() );
 		$data = array();
@@ -85,7 +85,7 @@ class CategorySelectController extends WikiaController {
 
 		$this->response->setVal( 'categories', $data );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -141,7 +141,7 @@ class CategorySelectController extends WikiaController {
 	 * Returns all of the categories on the current wiki.
 	 */
 	public function getWikiCategories() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$key = $this->wf->MemcKey( 'CategorySelectGetWikiCategories', self::VERSION );
 		$data = $this->wg->Memc->get( $key );
@@ -171,14 +171,14 @@ class CategorySelectController extends WikiaController {
 		$this->response->setData( $data );
 		$this->response->setFormat( 'json' );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * Save categories sent via AJAX into article
 	 */
 	public function save() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$articleId = $this->request->getVal( 'articleId', 0 );
 		$categories = $this->request->getVal( 'categories', array() );
@@ -201,14 +201,19 @@ class CategorySelectController extends WikiaController {
 			$article = new Article( $title );
 			$wikitext = $article->fetchContent();
 
-			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
+			// Pull in categories from templates inside of the article (BugId:100980)
+			$options = new ParserOptions();
+			$preprocessedWikitext = ParserPool::preprocess( $wikitext, $title, $options );
+			$preprocessedData = CategorySelect::extractCategoriesFromWikitext( $preprocessedWikitext, true );
 
-			// Merge categories stored in the article with any that were passed in and remove duplicates.
-			$categories = array_merge( $data[ 'categories' ], $categories );
-			$categories = CategorySelect::getUniqueCategories( $categories );
+			// Compare the new categories with those already in the article to weed out duplicates
+			$newCategories = CategorySelect::getDiffCategories( $preprocessedData[ 'categories' ], $categories );
 
-			// Convert categories to wikitext and append them to the article's wikitext
-			$wikitext = $data[ 'wikitext' ] . CategorySelect::changeFormat( $categories, 'array', 'wikitext' );
+			// Append the new categories to the end of the article wikitext
+			$wikitext .= CategorySelect::changeFormat( $newCategories, 'array', 'wikitext' );
+
+			// Update the array of categories for the front-end
+			$categories = array_merge( $preprocessedData[ 'categories' ], $newCategories );
 
 			$dbw = $this->wf->GetDB( DB_MASTER );
 			$dbw->begin();
@@ -249,6 +254,6 @@ class CategorySelectController extends WikiaController {
 
 		$this->response->setData( $response );
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 }

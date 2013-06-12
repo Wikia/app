@@ -1,6 +1,7 @@
 <?php
-require_once __DIR__.'/../WikiaHomePage.setup.php';
-require_once __DIR__.'/../../WikiaHubsServices/WikiaHubsServicesHelper.class.php';
+require_once __DIR__ . '/../WikiaHomePage.setup.php';
+require_once __DIR__ . '/../../WikiaHubsServices/WikiaHubsServicesHelper.class.php';
+require_once __DIR__ . '/../../CityVisualization/CityVisualization.setup.php' ;
 
 class WikiaHomePageTest extends WikiaBaseTest {
 	const TEST_CITY_ID = 80433;

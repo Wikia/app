@@ -38,15 +38,20 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
 		'TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
-		'WIKIA_BAR_BOXAD_1': {'size': '320x50', 'tile': 4, 'loc': 'bottom'}
+		'WIKIA_BAR_BOXAD_1': {'size': '320x50', 'tile': 4, 'loc': 'bottom'},
+		'GPT_FLUSH': 'flushonly'
 	};
 	// TODO: integrate this array to slotMap if it makes sense
 	gptConfig = { // slots to use SRA with
+		CORP_TOP_LEADERBOARD: 'wait',
+		HUB_TOP_LEADERBOARD: 'wait',
 		TOP_LEADERBOARD: 'wait',
 		HOME_TOP_LEADERBOARD: 'wait',
 		INVISIBLE_SKIN: 'wait',
+		CORP_TOP_RIGHT_BOXAD: 'flush',
 		TOP_RIGHT_BOXAD: 'flush',
-		HOME_TOP_RIGHT_BOXAD: 'flush'
+		HOME_TOP_RIGHT_BOXAD: 'flush',
+		GPT_FLUSH: 'flushonly'
 	};
 
 	// Private methods
@@ -100,6 +105,8 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	 * All other ads will go through the legacy DART API.
 	 */
 	function flushGpt() {
+		log('flushGpt', 5, logGroup);
+
 		if (!gptFlushed) {
 			gptFlushed = true;
 			wikiaGpt.flushAds();
@@ -108,6 +115,13 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 
 	function fillInSlot(slot) {
 		log(['fillInSlot', slot], 5, logGroup);
+
+		if (gptConfig[slot[0]] === 'flushonly') {
+			if (window.wgAdDriverUseGpt) {
+				flushGpt();
+			}
+			return;
+		}
 
 		var slotname = slot[0],
 			slotsize = slotMap[slotname].size,
@@ -212,36 +226,21 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 		 */
 		if (window.wgAdDriverUseGpt && gptConfig[slotname] && !gptFlushed) {
 			// Use the new GPT library:
+			log('Use the new GPT library for ' + slotname, 5, logGroup);
 
 			wikiaGpt.pushAd({
 				slotname: slotname,
 				slotsize: slotsize,
 				dcopt: dcopt,
 				loc: loc
-			}, function () {
-				var slot = document.getElementById(slotname),
-					iframes = slot.getElementsByTagName('iframe'),
-					isSuccess = false;
-
-				try {
-					if (iframes[0].offsetHeight > 1) {
-						isSuccess = true;
-					}
-				} catch (e) {
-				}
-
-				if (isSuccess) {
-					success();
-				} else {
-					error();
-				}
-			});
+			}, success, error);
 
 			if (gptConfig[slotname] === 'flush') {
 				flushGpt();
 			}
 		} else {
 			// Legacy DART call:
+			log('Legacy DART call for ' + slotname, 5, logGroup);
 
 			// Random ord for MODAL_INTERSTITIAL
 			// This disables synchronisation of Lightbox ads, but allows ads to repeat
@@ -290,7 +289,6 @@ var AdProviderAdDriver2 = function (wikiaDart, scriptWriter, tracker, log, windo
 	return {
 		name: 'AdDriver2',
 		fillInSlot: fillInSlot,
-		canHandleSlot: canHandleSlot,
-		flushGpt: flushGpt
+		canHandleSlot: canHandleSlot
 	};
 };

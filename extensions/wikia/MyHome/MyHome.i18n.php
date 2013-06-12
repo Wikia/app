@@ -101,7 +101,7 @@ For example, you could:
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|one message|$1 messages}}',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author McDutchie
  * @author Shirayuki
@@ -172,8 +172,8 @@ $messages['af'] = array(
 	'myhome-feed-inserted-video-details' => "{{PLURAL:$1|Video bygevoeg|Video's bygevoeg}}",
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategorie bygevoeg|Kategorieë bygevoeg}}',
 	'myhome-hot-spots-number-of-editors' => 'outeurs',
-	'myhome-log-in' => "<center>Die My Tuisblad-funksie is slegs beskikbaar as u aangeteken is.<br /><br />
-<big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Teken asseblief aan om hierdie bladsy te wys!]</span>'''</big></center>",
+	'myhome-log-in' => "<center>Die ''My Tuisblad''-funksie is slegs beskikbaar as u aangemeld is.<br /><br />
+<big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Meld asseblief aan om hierdie bladsy te wys!]</span>'''</big></center>",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Geselshoekie', # Fuzzy
 	'myhome-community-corner-edit' => 'wysig boodskap',
@@ -188,7 +188,9 @@ $messages['af'] = array(
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'myhome-desc' => 'صفحة رئيسية خاصة بالمستخدمين الذين قاموا بالتسجيل',
 	'myhome' => 'صفحتي الرئيسية',
+	'wikiactivity' => 'نشاط الويكي',
 	'myhome-activity-more' => 'أنظر النشاطات الأكثر حداثة',
 	'myhome-activity-feed' => 'دليل النشاطات',
 	'myhome-activity-feed-empty' => "هذه الويكي في انتظار مشاركتك.
@@ -201,19 +203,21 @@ $messages['ar'] = array(
 	'myhome-hot-spots-feed-empty' => "هذه الويكي تنتظر مشاركتك.
 أنقر على '''[[خاص:CreatePage|صفحة جديدة]]''' لبداية التعديل!",
 	'myhome-hot-spots-newest' => 'الصفحات الجديدة في الويكي',
+	'tog-userlandingpage' => 'صفحة الوصول',
+	'prefs-myhome' => 'صفحتي الرئيسية',
 	'myhome-feed-newpage' => 'صفحة جديدة',
 	'myhome-feed-edit' => 'تعديل',
 	'myhome-feed-move' => 'نقلت الصفحة',
 	'myhome-feed-talkpage' => 'صفحة نقاش',
 	'myhome-feed-blogcomment' => 'تعليق على مدونة',
 	'myhome-feed-delete' => 'حذفت',
-	'myhome-feed-image' => 'الصور المضافة',
-	'myhome-feed-video' => 'الفيديو المضاف',
+	'myhome-feed-image' => 'تمت إضافة صورة',
+	'myhome-feed-video' => 'تمت إضافة فيديو',
 	'myhome-feed-categorization' => 'تصنيف',
 	'myhome-feed-created-by' => 'أنشأت من قبل $1',
 	'myhome-feed-added-by' => 'أضيفت من قبل $1',
 	'myhome-feed-edited-by' => 'عدلت من قبل $1',
-	'myhome-feed-posted-by' => 'علقت من قبل $1',
+	'myhome-feed-posted-by' => 'نشرت من قبل $1',
 	'myhome-feed-comment-by' => 'تعليق من قبل $1',
 	'myhome-feed-deleted-by' => 'حذفت من قبل $1',
 	'myhome-feed-moved-by' => 'نقلت من قبل $1',
@@ -227,7 +231,7 @@ $messages['ar'] = array(
 	'myhome-feed-new-blog-post-details' => 'مدونة جديدة',
 	'myhome-feed-new-blog-comment-details' => 'تعليق',
 	'myhome-feed-new-article-comment-details' => 'تعليق',
-	'myhome-feed-move-details' => 'أعاد التسمية',
+	'myhome-feed-move-details' => 'إعادة تسمية',
 	'myhome-feed-redirect-details' => 'تحويلة',
 	'myhome-feed-inserted-image-details' => ' {{PLURAL:$1|أضاف صورة|أضاف صور}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|أضاف مقطع فيديو|أضاف مقاطع فيديو}}',
@@ -236,16 +240,19 @@ $messages['ar'] = array(
 يمكن لأي شخص القيام بتعديلات و تغييرات، و إضافة معلومات أو تصحيح أخطاء.
 الويكي مبنية من قبل المجتمع، و بمجرد النقر على زر "عدل"، تصبح جزءا منه.
 جربه!',
-	'myhome-hot-spots-number-of-editors' => 'محرر',
+	'myhome-hot-spots-number-of-editors' => 'محررون',
 	'myhome-log-in' => "<center>خاصية \"صفحتي الرئيسية\" غير متوفرة إلا إذا سجلت الدخول. <br /><br /><big>'''[{{fullurl:خاص:Signup|\$1}} الرجاء التسجيل لرؤية هذه الصفحة.]''' </big></center>",
+	'myhome-switch-to-monaco' => 'خاصية نشاط الويكي متوفرة فقط لمستخدمي مظهر ويكيا.
+إذا كنت ترغب في رؤية "صفحتي الرئيسية"، يرجى زيارة [[Special:Preferences|تفضيلاتك]] لتغيير المظهر.',
+	'myhome-namespace-blog' => 'مدونة',
 	'myhome-community-corner-header' => 'رسائل المجتمع',
+	'oasis-myhome-community-corner-edit' => 'تعديل الرسالة &gt;',
 	'myhome-community-corner-edit' => 'عدل الرسالة',
 	'community-corner' => "'''مرحبا بك في صفحتي الرئيسية'''
 
-هذه الصفحة تساعدك على معرفة ما يحدث على الويكي.
+هذه الصفحة تساعدك على معرفة ما يحدث داخل الويكي.
 
-إذا كنت مؤسس أو مشرفا على هذا الويكي ، بإمكانك تغيير هذه الرسالة لاجراء محادثات مع المجتمع حول أشياء هامة تحدث على هذا
-الموقع. على سبيل المثال ، يمكن أن
+إذا كنت مؤسس أو مشرفا على هذا الويكي ، بإمكانك تغيير هذه الرسالة لاجراء محادثات مع المجتمع حول أشياء هامة تحدث على هذا الموقع. على سبيل المثال ، يمكن أن:
 
 * تنظم مشروعا لبناء منطقة من الويكي
 
@@ -256,11 +263,15 @@ $messages['ar'] = array(
 *عرف بأحد المساهمين الذي أضاف شيئا خاصا للويكي
 
 *أو اكتفي بوضع بعض كلمات التشجيع!",
+	'myhome-hot-spots-definition' => 'صفحات ذات أكبر عدد من المحررين في {{PLURAL:$1|اليوم الأخير|$1 أيام الأخيرة}}.',
+	'myhome-default-view-checkbox' => 'جعل $1 طريقة العرض الافتراضية',
+	'myhome-default-view-success' => 'حسنا، هذه هي طريقة العرض الافتراضية الخاص بك الآن',
 	'tooltip-pt-myhome' => 'اذهب الى صفحتي الرئيسية',
 	'activityfeed' => 'دليل النشاطات',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|رسالة جديدة|$1 رسائل جديدة}}',
 );
 
-/** Assamese (অসমীয়া)
+/** Assamese (অসমীয়া)
  * @author Bellayet
  * @author Chaipau
  * @author Jaminianurag
@@ -681,6 +692,7 @@ $messages['cy'] = array(
 /** German (Deutsch)
  * @author Dennis07
  * @author F.trott
+ * @author Geitost
  * @author Kghbln
  * @author Kjell
  * @author LWChris
@@ -743,8 +755,8 @@ Das Wiki wird durch die Gemeinschaft der Nutzer erstellt, und durch den Klick au
 Probier es einfach aus!',
 	'myhome-hot-spots-number-of-editors' => 'Bearbeiter',
 	'myhome-log-in' => "<center>Die Startseiten-Funktion ist nur verfügbar wenn du eingeloggt bist.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Bitte melde dich an um diese Seite zu sehen!]'''</big></center>",
-	'myhome-switch-to-monaco' => "Die Startseiten-Funktion ist nur für das Wikia Design verfügbar.
-Wenn du die Startseite sehen möchtest, gehe bitte zu '''[[Special:Preferences|deinen Einstellungen]]''' um dein Design zu wechseln.",
+	'myhome-switch-to-monaco' => "Die Wikiaktivitäten-Funktion ist nur für die Wikia-Benutzeroberfläche verfügbar.
+Wenn du deine Startseite sehen möchtest, gehe bitte zu '''[[Special:Preferences|deinen Einstellungen]],''' um deine Benutzeroberfläche zu wechseln.",
 	'myhome-namespace-blog' => 'Benutzer-Blog',
 	'myhome-community-corner-header' => 'Gemeinschafts-Nachrichten',
 	'oasis-myhome-community-corner-edit' => 'Bearbeiten &gt;',
@@ -774,6 +786,7 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Claudia Hattitten
+ * @author Geitost
  * @author LWChris
  * @author The Evil IP address
  */
@@ -789,8 +802,8 @@ Jeder kann Seiten ändern, Informationen hinzufügen oder Fehler berichtigen.
 Das Wiki wird durch die Gemeinschaft der Nutzer erstellt, und durch den Klick auf den Bearbeiten-Link werden Sie selbst zum Teil dieser Gemeinschaft.
 Probieren Sie es einfach aus!',
 	'myhome-log-in' => "<center>Die Startseiten-Funktion ist nur verfügbar wenn Sie eingeloggt sind.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Bitte melden Sie sich an um diese Seite zu sehen!]'''</big></center>",
-	'myhome-switch-to-monaco' => "Die Wiki-Aktivitäten sind nur für den Wikia-Skin verfügbar.
-Wenn Sie die Letzten Aktivitäten sehen möchten, gehen Sie bitte zu '''[[Special:Preferences|Ihren Einstellungen]]''' um das Aussehen zu wechseln.",
+	'myhome-switch-to-monaco' => "Die Wikiaktivitäten-Funktion ist nur für die Wikia-Benutzeroberfläche verfügbar.
+Wenn Sie Ihre Startseite sehen möchten, gehen Sie bitte zu '''[[Special:Preferences|Ihren Einstellungen]],''' um Ihre Benutzeroberfläche zu wechseln.",
 	'community-corner' => "'''Willkommen auf Ihrer Startseite!'''
 
 Diese Seite hilft Ihnen, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
@@ -2752,6 +2765,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  * @author Malafaya
  * @author SandroHc
  */
@@ -2794,12 +2808,12 @@ Clique '''[[Special:CreatePage|Página nova]]''' para começar a escrever!",
 	'myhome-feed-diff-alt' => 'mostrar a alteração nesta página',
 	'myhome-feed-new-page-details' => 'Página nova',
 	'myhome-feed-summary-details' => 'Resumo',
-	'myhome-feed-section-edit-details' => 'Editou a secção',
+	'myhome-feed-section-edit-details' => 'Editou a seção',
 	'myhome-feed-new-blog-post-details' => 'Blogue novo',
 	'myhome-feed-new-blog-comment-details' => 'Comentário',
 	'myhome-feed-new-article-comment-details' => 'Comentário',
 	'myhome-feed-move-details' => 'Nome alterado',
-	'myhome-feed-redirect-details' => 'Redireccionamento',
+	'myhome-feed-redirect-details' => 'Redirecionamento',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Adicionou fotografia|Adicionou fotografias}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Adicionou vídeo|Adicionou vídeos}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Adicionou categoria|Adicionou categorias}}',
@@ -2932,6 +2946,8 @@ Se você é o fundador ou um administrador desta wiki, pode mudar esta mensagem 
  */
 $messages['roa-tara'] = array(
 	'myhome' => 'Pàgena meje',
+	'wikiactivity' => "Attivita d'a Uicchi",
+	'myhome-activity-more' => "'ndruche cchiù attività recende",
 	'prefs-myhome' => 'Pàgena meje',
 	'myhome-feed-newpage' => 'pàgena nova',
 	'myhome-feed-edit' => 'cange',
@@ -2956,6 +2972,7 @@ $messages['roa-tara'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Fote aggiunge|Fote aggiunge}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Video aggiunge|Video aggiunge}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categorije aggiunde|Categorije aggiunde}}',
+	'myhome-hot-spots-number-of-editors' => 'editure',
 	'myhome-namespace-blog' => 'Blog',
 	'oasis-myhome-community-corner-edit' => "cange 'u messagge &gt;",
 	'myhome-community-corner-edit' => "cange 'u messagge",

@@ -6,7 +6,7 @@ class WallRailController extends WikiaController {
 	
 	public function executeIndex() {
 		$app = F::App();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		
 		$this->response->addAsset('extensions/wikia/Wall/css/WallHistoryRail.scss');
 		$this->usersInvolved = array_merge($this->getUsersData(self::$usersData), $this->getUsersData(self::$anonsData));
@@ -17,7 +17,7 @@ class WallRailController extends WikiaController {
 			$this->showTalkPage = true;
 		}
 		
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	

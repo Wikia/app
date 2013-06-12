@@ -39,11 +39,32 @@ $messages['en'] = array(
 	'unsubscribe-preferences-notice' => 'Emails have been disabled for your account. Visit the User Profile tab to re-enable them.',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author HvW
  */
 $messages['qqq'] = array(
 	'unsubscribe-preferences-toggle' => 'zugehörige Adresse: http://de.wikia.com/Spezial:Einstellungen',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'unsubscribe' => 'ألغِ الاشتراك',
+	'unsubscribe-badaccess' => 'عذراً، لا يمكن استخدام هذه الصفحة مباشرة. الرجاء اتباع الرابط من البريد الإلكتروني الخاص بك.',
+	'unsubscribe-badtoken' => 'آسف، كانت هناك مشكلة مع رمز الأمان.',
+	'unsubscribe-bademail' => 'آسف، كانت هناك مشكلة مع البريد الإلكتروني.',
+	'unsubscribe-badtime' => 'عذراً، انتهت مدة صلاحية الرابط. يرجى استخدام رابط أقل من 7 أيام.',
+	'unsubscribe-nousers' => 'لا يوجد مستخدمون بعنوان البريد الإلكتروني هذا.',
+	'unsubscribe-noconfusers' => 'لا يوجد مستخدمون بعنوان البريد الإلكتروني هذا.',
+	'unsubscribe-confirm-legend' => 'تأكيد',
+	'unsubscribe-confirm-text' => 'إلغاء الاشتراك في جميع الحسابات مع <code>$1</code> ؟',
+	'unsubscribe-confirm-button' => 'نعم، أنا متأكد',
+	'unsubscribe-working' => 'إلغاء اشتراك  $1   {{PLURAL:$1|حساب|حسابات}} ل $2',
+	'unsubscribe-working-problem' => 'مشكلة أثناء تحميل معلومات المستخدم ل: $1',
+	'unsubscribe-working-done' => 'انتهيت.',
+	'unsubscribe-preferences-toggle' => 'إلغاء الاشتراك من جميع رسائل البريد الإلكتروني من ويكيا (إلغاء تحديد لهذا الوصول في الخيارات أدناه)',
+	'unsubscribe-preferences-notice' => 'لقد تم تعطيل رسائل البريد الإلكتروني للحساب الخاص بك. قم بزيارة قسم تفضيلات الصفحة الشخصية للمستخدم لإعادة تمكينها.',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -301,6 +322,18 @@ $messages['lb'] = array(
 	'unsubscribe-working-done' => 'Fäerdeg.',
 );
 
+/** Latvian (latviešu)
+ * @author Admresdeserv.
+ */
+$messages['lv'] = array(
+	'unsubscribe' => 'Atcelt abonēšanu',
+	'unsubscribe-bademail' => 'Atvainojiet, radās problēma ar e-pastu.',
+	'unsubscribe-confirm-legend' => 'Apstiprināt',
+	'unsubscribe-confirm-text' => 'Atrakstīt visus kontus ar <code>$1</code> ?',
+	'unsubscribe-confirm-button' => 'Jā, es esmu pārliecināts.',
+	'unsubscribe-working-done' => 'Pabeigts!',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -376,7 +409,7 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'unsubscribe' => 'Uitschrijven',
-	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg alstublieft de koppeling in uw e-mail.',
+	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg de koppeling in uw e-mail.',
 	'unsubscribe-badtoken' => 'Er is een probleem met het beveiligingstoken.',
 	'unsubscribe-bademail' => 'Er is een probleem met het e-mailbericht.',
 	'unsubscribe-badtime' => 'De koppeling is verlopen. Gebruik een koppeling die maximaal zeven dagen oud is.',
@@ -396,7 +429,7 @@ $messages['nl'] = array(
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
-	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg alsjeblieft de koppeling in je e-mail.',
+	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg de koppeling in je e-mail.',
 );
 
 /** Polish (polski)
@@ -497,7 +530,9 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'unsubscribe' => 'Scangillate',
 	'unsubscribe-confirm-legend' => 'Conferme',
+	'unsubscribe-confirm-button' => 'Sìne, so secure',
 	'unsubscribe-working-done' => 'Comblete.',
 );
 

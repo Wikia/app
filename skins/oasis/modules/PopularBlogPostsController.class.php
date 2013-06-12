@@ -2,7 +2,7 @@
 class PopularBlogPostsController extends WikiaController {
 
 	public function executeIndex() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 		
 		$mcKey = $this->wf->MemcKey( "OasisPopularBlogPosts", $this->wg->Lang->getCode() );
 		$this->body = $this->wg->Memc->get($mcKey);
@@ -33,7 +33,7 @@ class PopularBlogPostsController extends WikiaController {
 			$this->wg->Memc->set ($mcKey, $this->body, 60*60);  // cache for 1 hour
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 }

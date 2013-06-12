@@ -61,6 +61,13 @@ class WikiaHomePageController extends WikiaController {
 	protected $verticalsSlots = array();
 	protected $verticalsWikis = array();
 
+	protected static $collectionsList;
+
+	/**
+	 * @var CityVisualization
+	 */
+	protected $visualization;
+
 	public function __construct() {
 		parent::__construct();
 		$this->helper = F::build('WikiaHomePageHelper');
@@ -79,6 +86,13 @@ class WikiaHomePageController extends WikiaController {
 
 		$this->lang = $this->wg->contLang->getCode();
 		F::build('JSMessages')->enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
+
+		$batches = $this->getList();
+		$this->wg->Out->addJsConfigVars([
+			'wgCollectionsBatches' => $this->getCollectionsWikiList(),
+			'wgWikiaBatchesStatus' => $batches['status'],
+			'wgInitialWikiBatchesForVisualization' => $batches['batches']
+		]);
 	}
 
 	public function wikiaMobileIndex() {
@@ -127,7 +141,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @responseParam integer totalPages
 	 */
 	public function getStats() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'stats', $this->wg->contLang->getCode());
 		$stats = $this->wg->Memc->get($memKey);
@@ -159,18 +173,17 @@ class WikiaHomePageController extends WikiaController {
 			$this->edits = $this->editsDefault . '+';
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
 	 * get list of wikis
 	 */
-	public function getList() {
+	protected function getList() {
 		$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 		if (!empty($wikiBatches)) {
 			Wikia::log(__METHOD__, false, ' pulling visualization data from db');
 			$status = 'true';
-			$this->response->setVal('initialWikiBatchesForVisualization', json_encode($wikiBatches));
 		} else {
 			try {
 				Wikia::log(__METHOD__, false, ' pulling failover visualization data from message');
@@ -179,27 +192,63 @@ class WikiaHomePageController extends WikiaController {
 				$this->source = $this->getMediaWikiMessage();
 
 				$failoverData = $this->parseSourceMessage();
-				$visualization = F::build('CityVisualization');
-				/** @var $visualization CityVisualization */
+				$visualization = $this->getVisualization();
 				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
-				$failoverBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
-
-				$this->response->setVal('initialWikiBatchesForVisualization', json_encode($failoverBatches));
+				$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 			} catch (Exception $e) {
 				Wikia::log(__METHOD__, false, ' pulling failover visualization data from file');
 
 				$status = 'false';
 
 				$failoverData = $this->getFailoverWikiList();
-				$visualization = F::build('CityVisualization');
+				$visualization = $this->getVisualization();
 				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
-				$failoverBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
-
-				$this->response->setVal('initialWikiBatchesForVisualization', json_encode($failoverBatches));
-				$this->response->setVal('exception', $e->getMessage());
+				$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 			}
 		}
-		$this->response->setVal('wgWikiaBatchesStatus', $status);
+		return ['status' => $status, 'batches' => $wikiBatches];
+	}
+
+	/**
+	 * Get collections batches
+	 *
+	 * @return array
+	 * $key = collection id
+	 * $val = visualization wiki batches
+	 */
+	protected function getCollectionsWikiList() {
+		if (!isset(self::$collectionsList)) {
+			$collectionsBatches = [];
+			if( $this->wg->EnableWikiaHomePageCollections ) {
+				$visualization = $this->getVisualization();
+
+				$collections = new WikiaCollectionsModel();
+				$collectionsList = $collections->getListForVisualization($this->wg->ContLang->getCode());
+
+				foreach ($collectionsList as $collection) {
+					if (count($collection['wikis']) == WikiaHomePageHelper::SLOTS_IN_TOTAL) {
+						$processedCollection = $visualization->getCollectionsWikisData([$collection['id'] => $collection['wikis']])[0];
+						$processedCollection['name'] = $collection['name'];
+
+						if (!empty($collection['sponsor_hero_image'])) {
+							$processedCollection['sponsor_hero_image'] = $collection['sponsor_hero_image'];
+						}
+
+						if (!empty($collection['sponsor_image'])) {
+							$processedCollection['sponsor_image'] = $collection['sponsor_image'];
+						}
+
+						if (!empty($collection['sponsor_url'])) {
+							$processedCollection['sponsor_url'] = $collection['sponsor_url'];
+						}
+						$collectionsBatches[$collection['id']] = $processedCollection;
+					}
+				}
+			}
+			self::$collectionsList = $collectionsBatches;
+		}
+
+		return self::$collectionsList;
 	}
 
 	public function getMediaWikiMessage() {
@@ -217,7 +266,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @return array
 	 */
 	public function getSeoList() {
-		$this->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$list = $this->wg->Memc->get('wikia-home-page-seo-samples' . self::$seoMemcKeyVer);
 
@@ -267,7 +316,7 @@ class WikiaHomePageController extends WikiaController {
 			}
 		}
 
-		$this->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $list;
 	}
 
@@ -544,6 +593,8 @@ class WikiaHomePageController extends WikiaController {
 	 * draw visualization
 	 */
 	public function visualization() {
+		$this->response->setVal( 'collectionsList', $this->getCollectionsWikiList() );
+
 		$this->response->setVal(
 			'seoSample',
 			$this->getSeoList()
@@ -680,6 +731,14 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 
+	public static function onGetRailModuleList(&$railModuleList) {
+		$railModuleList = [
+			1500 => ['Search', 'Index', null],
+		];
+		
+		return true;
+	}
+
 	public function getWikiBatchesForVisualization() {
 		$numberOfBatches = $this->request->getVal('numberOfBatches', self::WIKI_BATCH_SIZE);
 		$wikiId = $this->wg->cityId;
@@ -703,5 +762,13 @@ class WikiaHomePageController extends WikiaController {
 			return self::hubsImgHeight;
 		}
 
+	}
+	
+	private function getVisualization() {
+		if( is_null($this->visualization) ) {
+			$this->visualization = new CityVisualization();
+		}
+		
+		return $this->visualization;
 	}
 }

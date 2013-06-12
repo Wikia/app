@@ -22,7 +22,7 @@ $messages['en'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -45,7 +45,7 @@ $messages['ar'] = array(
 	'quickstats-header-photos' => 'الصور',
 	'quickstats-header-likes' => 'الإعجابات',
 	'quickstats-totals-label' => 'المجموع',
-	'quickstats-see-more-stats-link' => '[[خاص:WikiStats|مشاهدة المزيد من الإحصائيات]]', # Fuzzy
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|مشاهدة المزيد من الإحصائيات]]',
 	'quickstats-number-shortening' => '$1 ألف',
 	'quickstats-number-shortening-millions' => '$1 مليون',
 	'quickstats-number-shortening-billions' => '$1 بليون',
@@ -58,7 +58,7 @@ $messages['arc'] = array(
 	'quickstats-header-date' => 'ܣܝܩܘܡܐ',
 );
 
-/** Assamese (অসমীয়া)
+/** Assamese (অসমীয়া)
  * @author Bishnu Saikia
  */
 $messages['as'] = array(
@@ -419,6 +419,23 @@ $messages['gl'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
+/** Hakka (Hak-kâ-fa)
+ * @author Anson2812
+ */
+$messages['hak'] = array(
+	'quickstats-header-label' => '快速計數',
+	'quickstats-header-date' => '日期',
+	'quickstats-header-views' => '查看嘅數目',
+	'quickstats-header-edits' => '編寫',
+	'quickstats-header-photos' => '相片',
+	'quickstats-header-likes' => '撳贊嘅數目',
+	'quickstats-totals-label' => '共計',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看還加多統計]]',
+	'quickstats-number-shortening' => '$1千',
+	'quickstats-number-shortening-millions' => '$1百萬',
+	'quickstats-number-shortening-billions' => '$10億',
+);
+
 /** Hebrew (עברית)
  * @author Deror avi
  * @author Yova
@@ -560,10 +577,12 @@ $messages['ksh'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
  * @author Gomada
  */
 $messages['ku-latn'] = array(
 	'quickstats-header-date' => 'Dîrok',
+	'quickstats-header-edits' => 'Guherandin',
 	'quickstats-header-photos' => 'Wêne',
 	'quickstats-totals-label' => 'Hemû',
 );
@@ -590,6 +609,9 @@ $messages['lb'] = array(
 	'quickstats-header-likes' => 'Hunn ech gär',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Méi Statistiken]]',
+	'quickstats-number-shortening' => '$1k',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1 Mrd',
 );
 
 /** Lithuanian (lietuvių)
@@ -778,6 +800,9 @@ $messages['ps'] = array(
 	'quickstats-header-likes' => 'خوښې',
 	'quickstats-totals-label' => 'ټولټال',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|نورې شمارنې کتل]]',
+	'quickstats-number-shortening' => '$1زر',
+	'quickstats-number-shortening-millions' => '$1ميليون',
+	'quickstats-number-shortening-billions' => '$1بيليون',
 );
 
 /** Portuguese (português)
@@ -800,6 +825,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author Luckas
  * @author Luckas Blade
  * @author Pedroca cerebral
  * @author TheGabrielZaum
@@ -1025,6 +1051,7 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Ua2004
  * @author Vox
  */
 $messages['uk'] = array(
@@ -1035,8 +1062,10 @@ $messages['uk'] = array(
 	'quickstats-header-photos' => 'Фото',
 	'quickstats-header-likes' => 'Подобається',
 	'quickstats-totals-label' => 'Загалом',
-	'quickstats-see-more-stats-link' => '[[Спеціальна:WikiStats|Див. більше статистики]]', # Fuzzy
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Більше статистики]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1 млн',
+	'quickstats-number-shortening-billions' => '$1 млрд',
 );
 
 /** Veps (vepsän kel’)
@@ -1096,4 +1125,21 @@ $messages['zh-hant'] = array(
 	'quickstats-totals-label' => '總計',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多統計]]',
 	'quickstats-number-shortening' => '$1K',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'quickstats-header-label' => '快速統計資訊',
+	'quickstats-header-date' => '日期',
+	'quickstats-header-views' => '瀏覽次數',
+	'quickstats-header-edits' => '編輯次數',
+	'quickstats-header-photos' => '圖片數',
+	'quickstats-header-likes' => '讚好的數目',
+	'quickstats-totals-label' => '總計',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多統計]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );

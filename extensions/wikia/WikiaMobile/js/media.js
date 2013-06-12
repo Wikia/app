@@ -4,8 +4,8 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana'],
-	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana){
+define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana', 'wikia.videoBootstrap'],
+	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana, VideoBootstrap){
 	'use strict';
 	/** @private **/
 
@@ -52,7 +52,10 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		startD,
 		galleryInited = false,
 		inited,
-		supportedVideos = window.supportedVideos || [];
+		supportedVideos = window.supportedVideos || [],
+		// Video view click source tracking. Possible values are "embed" and "lightbox" for consistancy with Oasis
+		clickSource,
+		videoInstance;
 
 	//Media object that holds all data needed to display it in modal/gallery
 	function Media(elem, data, length, i){
@@ -65,7 +68,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		if(data.capt) {this.caption = data.capt;}
 		if(data.type === 'video') {
 			this.isVideo = true;
-			this.supported = ~supportedVideos.indexOf(data.provider);
+			//some providers come with a 'subname' like ooyala/wikiawebinar
+			this.supported = ~supportedVideos.indexOf((data.provider || '').split('/')[0]);
 		}
 
 		if(length > 1){
@@ -154,14 +158,20 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		currentImage.className += ' imgPlcHld';
 	}
 
-	function setVideo(title, html) {
-		videoCache[title] = html;
-		currentImage.innerHTML = html;
+	function embedVideo(image, data) {
+		videoInstance = new VideoBootstrap(image, data, clickSource);
+		// Future video/image views will come from modal
+		clickSource = 'lightbox';
 	}
 
 	function setupImage(){
 		var image = images[current],
 			video;
+
+		// If a video uses a timeout for tracking, clear it
+		if ( videoInstance ) {
+			videoInstance.clearTimeoutTrack();
+		}
 
 		throbber.remove(currentImage);
 
@@ -173,7 +183,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			zoomable = false;
 
 			if(videoCache[imgTitle]){
-				currentImage.innerHTML = videoCache[imgTitle];
+				embedVideo(currentImage, videoCache[imgTitle]);
 			}else{
 				if(image.supported) {
 					currentImage.innerHTML = '';
@@ -186,9 +196,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 						'VideoHandler',
 						'getEmbedCode',
 						{
-							articleId: wgArticleId,
 							fileTitle: imgTitle,
-							width: document.width - 100
+							width: window.innerWidth - 100,
+							autoplay: 1
 						}
 					).done(
 						function(data) {
@@ -197,16 +207,30 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 							if(data.error){
 								handleError(data.error);
 							}else{
-								setVideo(imgTitle, "<div class=player>" + data.embedCode + "</div>");
+								var videoData = data.embedCode;
+
+								if(videoData.html) {
+									videoData.html = "<div class=player>" + videoData.html + "</div>";
+								}
+
+								videoCache[imgTitle] = videoData;
+
+								embedVideo(currentImage, videoData);
 							}
 						}
 					);
 				} else {
-					setVideo(imgTitle, "<div class=not-supported><span>" +
-						msg('wikiamobile-video-not-friendly-header') + "</span>" +
-						currentImage.innerHTML + "<span>" +
-						msg('wikiamobile-video-not-friendly') +
-						'</span></div>');
+					var html = "<div class=not-supported><span>" +
+							msg('wikiamobile-video-not-friendly-header') + "</span>" +
+							currentImage.innerHTML + "<span>" +
+							msg('wikiamobile-video-not-friendly') +
+							'</span></div>';
+
+					videoCache[imgTitle] = {
+						html: html
+					};
+
+					currentImage.innerHTML = html;
 				}
 			}
 		}else{
@@ -244,6 +268,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				origW = img.width;
 				origH = img.height;
 			}
+
+			// Future video/image views will come from modal
+			clickSource = 'lightbox';
 		}
 
 		//remove any left videos from DOM
@@ -439,6 +466,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		var cacheKey = 'mediaGalleryAssets',
 			galleryData,
 			ttl = 604800; //7days
+
+		// Video/image view was initiated from article
+		clickSource = "embed";
 
 		current = ~~num;
 

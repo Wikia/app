@@ -77,21 +77,16 @@ class RelatedVideosService {
 
 
 	/**
-	 * Preload information from memcached about given pages
+	 * Prefetch data from memcached for given pages
 	 *
 	 * @author Władysław Bodzek
 	 * @param $pages array
 	 */
-	protected function preloadDataFromMemcached( $pages, $videoWidth = RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ) {
+	protected function prefetchDataFor( $pages, $videoWidth = RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ) {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
 
 		if ( empty( $pages ) ) {
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
-		if ( !is_callable( array( $wgMemc, 'getMulti' ) ) ) {
 			wfProfileOut(__METHOD__);
 			return;
 		}
@@ -104,11 +99,9 @@ class RelatedVideosService {
 		}
 
 		$keys = array_unique($keys);
+		$wgMemc->prefetch( $keys );
 
-		$data = $wgMemc->getMulti( $keys );
 		wfProfileOut(__METHOD__);
-
-		return $data;
 	}
 
 	private function extendVideoByLocalParams( $videoData, $localParams ){
@@ -228,7 +221,6 @@ class RelatedVideosService {
 
 		$videos = array();
 
-		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( $title );
 		$oEmbededVideosLists = RelatedVideosEmbededData::newFromTitle( $title );
 		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();
 
@@ -237,7 +229,7 @@ class RelatedVideosService {
 		global $wgEnableMemcachedBulkMode;
 		if ( !empty( $wgEnableMemcachedBulkMode ) ) {
 			$pages = array();
-			foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
+			foreach( array( $oGlobalLists, $oEmbededVideosLists ) as $oLists ) {
 				if ( !empty( $oLists ) && $oLists->exists() ){
 					$data = $oLists->getData();
 					if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
@@ -250,12 +242,12 @@ class RelatedVideosService {
 					}
 				}
 			}
-			$this->preloadDataFromMemcached($pages);
+			$this->prefetchDataFor($pages);
 		}
 		// experimental - end
 
 		$blacklist = array();
-		foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
+		foreach( array( $oGlobalLists, $oEmbededVideosLists ) as $oLists ) {
 			if ( !empty( $oLists ) && $oLists->exists() ){
 				$data = $oLists->getData();
 				if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {

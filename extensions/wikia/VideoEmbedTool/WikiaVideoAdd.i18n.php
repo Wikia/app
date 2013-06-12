@@ -34,7 +34,7 @@ $messages['af'] = array(
 	'wva-url' => 'Sleutel die URL in:',
 	'wva-add' => 'Voeg by',
 	'wva-title' => "Voeg vinnig 'n video vanaf URL by",
-	'wva-notlogged' => "U moet aanteken of registreer om video's by te kan voeg.",
+	'wva-notlogged' => "U moet aanmeld of registreer om video's by te kan voeg.",
 	'wva-notallowed' => "U kan nie video's op hierdie wiki byvoeg nie.",
 );
 
@@ -43,16 +43,17 @@ $messages['af'] = array(
  * @author Aiman titi
  */
 $messages['ar'] = array(
-	'wva-success' => 'صفحة الفيديو $1 تم إضافتها بنجاح',
-	'wva-success-replaced' => 'صفحة الفيديو $1 تم تعويضها بنجاح',
+	'wva-success' => 'صفحة الفيديو [[:$1]] تم إضافتها بنجاح',
+	'wva-success-replaced' => 'صفحة الفيديو [[:$1]] تم تعويضها بنجاح',
 	'wva-failure' => 'يرجى تزويد المعلومات الصحيحة',
 	'wva-name' => 'أدخل الإسم:',
-	'wva-url' => 'أدخل العنوان الإلكتروني (URL):',
+	'wva-url' => 'أدخل العنوان الإلكتروني للفيديو (URL):',
 	'wva-add' => 'أضف',
 	'wva-title' => 'إضافة فيديو بسرعة من العنوان (URL)',
-	'wva-notlogged' => 'يجب أن تكون مسجلا إذا أرد إضافة فيديو',
+	'wva-notlogged' => 'يجب أن تكون مسجلا إذا أردت إضافة فيديو',
 	'wva-notallowed' => 'لا يمكنك إضافة فيديو في هذه الويكي',
 	'wva-protected' => 'هذا الفيديو. محمي',
+	'wva-thumbnail-upload-failed' => 'فشل في الفيديو المضمن، لا يمكن الحصول على صورة مصغرة سليمة',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -311,6 +312,7 @@ $messages['gl'] = array(
 
 /** Hebrew (עברית)
  * @author 0ftal
+ * @author Inkbug
  * @author שומבלע
  */
 $messages['he'] = array(
@@ -324,6 +326,7 @@ $messages['he'] = array(
 	'wva-notlogged' => 'התחברו או הרשמו כדי להוסיף סרטונים.',
 	'wva-notallowed' => 'לא ניתן להוסיף סרטונים לאתר.',
 	'wva-protected' => 'סרטון זה מוגן.',
+	'wva-thumbnail-upload-failed' => 'הטבעת הסרטון נכשלה, לא ניתן לקבל תמונה ממוזערת נכונה',
 );
 
 /** Hungarian (magyar)
@@ -541,7 +544,7 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'wva-success' => 'De videopagina $1 is toegevoegd.',
 	'wva-success-replaced' => 'De videopagina $1 is vervangen.',
-	'wva-failure' => 'Geef alstublieft geldige parameters op.',
+	'wva-failure' => 'Geef geldige parameters op.',
 	'wva-name' => 'Geef de naam in:',
 	'wva-url' => 'Geef de URL in:',
 	'wva-add' => 'Toevoegen',
@@ -694,10 +697,17 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'wva-success' => "'A pàgene d'u video [[:$1]] ha state aggiunde.",
+	'wva-success-replaced' => "'A pàgene d'u video [[:$1]] ha state sostituite.",
+	'wva-failure' => 'Pe piacere dè le parametre valide.',
 	'wva-name' => "Nome d'u video:",
 	'wva-url' => "URL d'u video:",
 	'wva-add' => 'Aggiunge',
+	'wva-title' => "Veloce veloce aggiunge 'nu video da 'na URL",
+	'wva-notlogged' => 'Tu è abbesògne de trasè o reggistrarte pe sckaffà video.',
+	'wva-notallowed' => "Non ge puè 'nzerì video sus a sta uicchi.",
 	'wva-protected' => 'Stu video jè prutette.',
+	'wva-thumbnail-upload-failed' => "'Ngapsulamende d'u video fallite, non ge se riesce a pigghià 'na miniature corrette",
 );
 
 /** Russian (русский)
@@ -813,6 +823,7 @@ $messages['tly'] = array(
 /** Ukrainian (українська)
  * @author Ast
  * @author Prima klasy4na
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
@@ -826,6 +837,7 @@ $messages['uk'] = array(
 	'wva-notlogged' => 'Для того, щоб вставити відео, Вам потрібно увійти до системи або зареєструватися.',
 	'wva-notallowed' => 'Ви не можете додавати відео у цю Вікі.',
 	'wva-protected' => 'Це відео захищено.',
+	'wva-thumbnail-upload-failed' => 'Вставлення відео не вдалося, неможливо отримати належну мініатюрку',
 );
 
 /** Simplified Chinese (中文（简体）‎)

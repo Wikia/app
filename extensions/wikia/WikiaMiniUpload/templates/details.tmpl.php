@@ -30,11 +30,11 @@ global $wgExtensionsPath, $wgBlankImgUrl;
 
 	<h3><?= wfMsg('wmu-layout') ?></h3>
 	<span id="WMU_LayoutThumbBox">
-		<input onclick="MWU_imageSizeChanged('thumb');" type="radio" name="fullthumb" id="ImageUploadThumbOption" checked=checked /> <label for="ImageUploadThumbOption" onclick="MWU_imageSizeChanged('thumb');"><?= wfMsg('wmu-thumbnail') ?></label>
+		<label for="ImageUploadThumbOption"><input onclick="MWU_imageSizeChanged('thumb');" type="radio" name="fullthumb" id="ImageUploadThumbOption" checked=checked /><?= wfMsg('wmu-thumbnail') ?></label>
 	&nbsp;
 	</span>
 	<span id="WMU_LayoutFullBox">
-		<input onclick="MWU_imageSizeChanged('full');" type="radio" name="fullthumb" id="ImageUploadFullOption" /> <label for="ImageUploadFullOption" onclick="MWU_imageSizeChanged('full');"><?= wfMsg('wmu-fullsize', $props['file']->width, $props['file']->height) ?></label>
+		<label for="ImageUploadFullOption"><input onclick="MWU_imageSizeChanged('full');" type="radio" name="fullthumb" id="ImageUploadFullOption" /> <?= wfMsg('wmu-fullsize', $props['file']->width, $props['file']->height) ?></label>
 	</span>
 
 

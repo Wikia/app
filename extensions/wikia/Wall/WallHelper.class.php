@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @property mixed title
+ */
 class WallHelper {
 	//WA = wiki activity
 	const WA_WALL_COMMENTS_MAX_LEN = 150;
@@ -60,6 +63,7 @@ class WallHelper {
 	 * It sends request to UserProfilePage controller which should return user object generated
 	 * from passed title.
 	 *
+	 * @param bool $title
 	 * @return User
 	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
@@ -115,8 +119,7 @@ class WallHelper {
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function wikiActivityFilterMessageWall($title, &$res) {
-		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$item = array();
 		$item['type'] = 'new';
@@ -173,7 +176,7 @@ class WallHelper {
 
 		wfRunHooks('AfterWallWikiActivityFilter', array(&$item, $wmessage));
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $item;
 	}
 
@@ -189,7 +192,7 @@ class WallHelper {
 	  
 	private function mapParentData(&$item, $parent, $title) {
 		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$metaTitle = $parent->getMetaTitle();
 
@@ -205,7 +208,7 @@ class WallHelper {
 			$item['parent-id'] = $parentTitle->getArticleID();
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -218,8 +221,7 @@ class WallHelper {
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
 	public function getWallComments($parentId = null) {
-		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$comments = array();
 		$commentsCount = 0;
@@ -231,7 +233,7 @@ class WallHelper {
 			//this should never happen
 				Wikia::log(__METHOD__, false, 'No WallMessage instance article id: '.$parentId, true);
 
-				$app->wf->ProfileOut(__METHOD__);
+				wfProfileOut(__METHOD__);
 				return array(
 					'count' => $commentsCount,
 					'comments' => $comments,
@@ -274,7 +276,7 @@ class WallHelper {
 			}
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return array(
 			'count' => $commentsCount,
 			'comments' => $comments,
@@ -286,11 +288,11 @@ class WallHelper {
 	 *
 	 * @param array $comments an array with WallMessage instances
 	 *
+	 * @return array
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	private function getCommentsData($comments) {
-		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$timeNow = time();
 		$items = array();
@@ -343,7 +345,7 @@ class WallHelper {
 		}
 		unset($data);
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $items;
 	}
 
@@ -359,7 +361,7 @@ class WallHelper {
 	 */
 	public function shortenText($text, $limit = self::WA_WALL_COMMENTS_MAX_LEN) {
 		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		if( mb_strlen($text) > $limit ) {
 			$text = $app->wg->Lang->truncate($text, $limit);
@@ -370,7 +372,7 @@ class WallHelper {
 			}
 		}
 
-		$app->wf->ProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $text;
 	}
 
@@ -388,7 +390,6 @@ class WallHelper {
 	public function getParsedText($rawtext, $title) {
 		global $wgParser, $wgOut;
 		global $wgEnableParserCache;
-		global $wgUser;
 		$wgEnableParserCache = false;
 
 		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions())->getText();
@@ -436,6 +437,7 @@ class WallHelper {
 	 *
 	 * @param integer $textId article's text id in text table
 	 *
+	 * @return string
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getDeletedArticleTitleTxt($textId) {
@@ -467,6 +469,7 @@ class WallHelper {
 	 *
 	 * TODO: remove it we don't need to operate on delete wall messages anymore
 	 *
+	 * @return string
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getTitleTxtFromMetadata($text) {
@@ -560,10 +563,9 @@ class WallHelper {
 	/**
 	 * @param null $rc
 	 * @param array $row [ page_title, page_namespace, rev_user_text?, page_is_new?, rev_parent_id? ]
-	 * @param bool $fullUrls
 	 * @return array|bool
 	 */
-	public static function getWallTitleData( $rc = null, $row = null, $fullUrls = false ) {
+	public static function getWallTitleData( $rc = null, $row = null ) {
 
 		wfProfileIn(__METHOD__);
 
@@ -603,13 +605,11 @@ class WallHelper {
 		if(!$wm->isMain()) {
 			$wmw = $wm->getTopParentObj();
 			if( empty($wmw) ) {
+				wfProfileOut(__METHOD__);
 				return true;
 			}
 			$wmw->load();
 		}
-
-		$articleId = $wm->getId();
-		$wallOwnerName = $wm->getArticleTitle()->getText();
 
 		if(!empty($wmw)) {
 			$articleTitleTxt =  $wmw->getMetaTitle();
@@ -619,24 +619,43 @@ class WallHelper {
 			$articleId = $wm->getId();
 		}
 
-		$title = Title::newFromText($articleId, NS_USER_WALL_MESSAGE);
+		$ci = $wm->getCommentsIndex();
+		if ( empty( $ci ) && ( $row->page_namespace == NS_USER_WALL ) ) {
+			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
+			$title = F::build( 'title', array( $row->page_title, NS_USER_WALL ), 'newFromText' );
 
-		$out = array(
-			'articleUrl' => $title->getPrefixedText(),
-			'articleFullUrl' => $wm->getMessagePageUrl(),
-			'articleTitleVal' => $articleTitleTxt,
-			'articleTitleTxt' => empty($articleTitleTxt) ? wfMsg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
-			'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
-			'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
-			'wallPageName' => $wm->getArticleTitle()->getText(),
-			'actionUser' => $userText,
-			'isThread' => $wm->isMain(),
-			'isNew' => $isNew,
-		);
+			$out = array(
+				'articleUrl' => $title->getPrefixedText(),
+				'articleFullUrl' => $title->getFullUrl(),
+				'articleTitleVal' => '',
+				'articleTitleTxt' => wfMsg( 'wall-recentchanges-wall-created-title' ),
+				'wallPageUrl' => $title->getLocalURL(),
+				'wallPageFullUrl' =>  $title->getFullUrl(),
+				'wallPageName' => $row->page_title,
+				'actionUser' => $userText,
+				'isThread' => $wm->isMain(),
+				'isNew' => $isNew
+			);
+
+		} else {
+			$title = Title::newFromText( $articleId, NS_USER_WALL_MESSAGE );
+
+			$out = array(
+				'articleUrl' => $title->getPrefixedText(),
+				'articleFullUrl' => $wm->getMessagePageUrl(),
+				'articleTitleVal' => $articleTitleTxt,
+				'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMsg( 'wall-recentchanges-deleted-reply-title' ) : $articleTitleTxt,
+				'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
+				'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
+				'wallPageName' => $wm->getArticleTitle()->getText(),
+				'actionUser' => $userText,
+				'isThread' => $wm->isMain(),
+				'isNew' => $isNew
+			);
+		}
 
 		wfProfileOut(__METHOD__);
 
 		return $out;
 	}
-	
 }

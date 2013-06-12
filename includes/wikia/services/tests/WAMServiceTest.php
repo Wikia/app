@@ -12,16 +12,28 @@ class WAMServiceTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getWamIndexConditionsDataProvider
 	 */
-	public function testGetWamIndexConditions ($options, $expConds) {
-		$dbMock = $this->getMock('stdClass', array('strencode'));
+	public function testGetWamIndexConditions ($options, $expConds, $blackList = '') {
+		$dbMock = $this->getMock('stdClass', array('strencode', 'makeList'));
+		$wamMock = $this->getMock('WAMService', array('getIdsBlacklistedWikis'));
+
+		$blackListArray = explode(',', $blackList);
+
+		$wamMock->expects($this->any())
+			->method('getIdsBlacklistedWikis')
+			->will($this->returnValue($blackListArray));
 
 		$dbMock->expects($this->any())
 			->method('strencode')
 			->will($this->returnArgument(0));
 
+		$dbMock->expects($this->any())
+			->method('makeList')
+			->will($this->returnValue($blackList));
+
 		$getWamIndexConditions = $this->getReflectionMethod('getWamIndexConditions');
-		$dataMartService = new WAMService();
-		$actConds = $getWamIndexConditions->invoke($dataMartService, $options, $dbMock);
+
+		$actConds = $getWamIndexConditions->invoke($wamMock, $options, $dbMock);
+
 		$this->assertEquals($expConds, $actConds);
 	}
 
@@ -35,12 +47,14 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiWord' => null,
 					'verticalId' => 0,
 					'wikiLang' => null,
-					'excludeBlacklist' => [],
+					'excludeBlacklist' => true
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
-					'dw.hub_id' => array(2, 3, 9)
-				)
+					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle'),
+					'fw1.wiki_id NOT IN (100, 200, 300)'
+				),
+				'100, 200, 300'
 			),
 			array(
 				array(
@@ -49,12 +63,11 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => null,
-					'excludeBlacklist' => [],
+					'wikiLang' => null
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
-					'dw.hub_id' => array(2, 3, 9)
+					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle')
 				)
 			),
 			array(
@@ -64,13 +77,12 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 2233,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => null,
-					'excludeBlacklist' => [],
+					'wikiLang' => null
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					'fw1.wiki_id' => 2233,
-					'dw.hub_id' => array(2, 3, 9)
+					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle')
 				)
 			),
 			array(
@@ -81,13 +93,15 @@ class WAMServiceTest extends WikiaBaseTest {
 					'verticalId' => 1,
 					'wikiWord' => null,
 					'wikiLang' => null,
-					'excludeBlacklist' => [],
+					'excludeBlacklist' => true
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					'fw1.wiki_id' => 2233,
-					'dw.hub_id' => 1
-				)
+					'fw1.hub_name' => null,
+					'fw1.wiki_id NOT IN (1, 999, 3745, 8811)'
+				),
+				'1, 999, 3745, 8811'
 			),
 			array(
 				array(
@@ -96,13 +110,12 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'verticalId' => 0,
 					'wikiWord' => 'testWord',
-					'wikiLang' => null,
-					'excludeBlacklist' => [],
+					'wikiLang' => null
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					"dw.url like '%testWord%' OR dw.title like '%testWord%'",
-					'dw.hub_id' => array(2, 3, 9),
+					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle')
 				)
 			),
 			array(
@@ -112,12 +125,11 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 0,
 					'wikiWord' => null,
 					'verticalId' => 0,
-					'wikiLang' => 'testLang',
-					'excludeBlacklist' => [],
+					'wikiLang' => 'testLang'
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
-					'dw.hub_id' => array(2, 3, 9),
+					'fw1.hub_name' => array('Gaming', 'Entertainment', 'Lifestyle'),
 					'dw.lang' => 'testLang'
 				)
 			),
@@ -128,14 +140,13 @@ class WAMServiceTest extends WikiaBaseTest {
 					'wikiId' => 666,
 					'wikiWord' => 'testWord2',
 					'verticalId' => 5,
-					'wikiLang' => 'testLang',
-					'excludeBlacklist' => [],
+					'wikiLang' => 'testLang'
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
 					'fw1.wiki_id' => 666,
 					"dw.url like '%testWord2%' OR dw.title like '%testWord2%'",
-					'dw.hub_id' => 5,
+					'fw1.hub_name' => null,
 					'dw.lang' => 'testLang'
 				)
 			),

@@ -33,9 +33,13 @@ class RelatedPages {
 		$this->categories = $categories;
 	}
 
-	public function getCategories( $articleId ) {
+	/**
+	 * @param $titleOrId Title|int Title object or article ID
+	 * @return array|null
+	 */
+	public function getCategories( $titleOrId ) {
 		if ( is_null( $this->categories ) ) {
-			$title = Title::newFromID( $articleId );
+			$title = $titleOrId instanceof Title ? $titleOrId : Title::newFromID( $titleOrId );
 
 			if( !empty( $title ) ) {
 				$categories = [];

@@ -389,6 +389,33 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @covers Wikia\Search\MediaWikiService::getMainPageIdForWikiId
+	 */
+	public function testGetMainPageIdForWikiId() {
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( [ 'getArticleId' ] )
+		                  ->getMock();
+		
+		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getMainPageTitleForWikiId' ] );
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getMainPageTitleForWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->once() )
+		    ->method ( 'getArticleId' )
+		    ->will   ( $this->returnValue( 321 ) )
+		;
+		$this->assertEquals(
+				321,
+				$mockService->getMainPageIdForWikiId( 123 )
+		);
+	}
+	
+	/**
 	 * @covers \Wikia\Search\MediaWikiService::getSimpleLanguageCode
 	 */
 	public function testGetsimpleLanguageCode() {
@@ -1205,13 +1232,13 @@ class MediaWikiServiceTest extends BaseTest
 		
 		$title
 		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getNamespace' )
-		    ->will   ( $this->returnValue( NS_MAIN ) )
+		    ->method ( 'getFullText' )
+		    ->will   ( $this->returnValue( 'title' ) )
 		;
 		$title
 		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getFullText' )
-		    ->will   ( $this->returnValue( 'title' ) )
+		    ->method ( 'getNamespace' )
+		    ->will   ( $this->returnValue( NS_MAIN ) )
 		;
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );
 		$get->setAccessible( true );
@@ -1221,7 +1248,7 @@ class MediaWikiServiceTest extends BaseTest
 		);
 	}
 	
-    /**
+	/**
 	 * @covers \Wikia\Search\MediaWikiService::getTitleString
 	 */
 	public function testGetTitleStringChildWallMessage() {
@@ -1229,7 +1256,7 @@ class MediaWikiServiceTest extends BaseTest
 		
 		$title = $this->getMockBuilder( '\Title' )
 		              ->disableOriginalConstructor()
-		              ->setMethods( array( 'getArticleID', 'getNamespace', '__toString' ) )
+		              ->setMethods( array( 'getArticleID', 'getNamespace', 'getFullText' ) )
 		              ->getMock();
 		
 		$wm = $this->getMockBuilder( '\WallMessage' )
@@ -1239,18 +1266,18 @@ class MediaWikiServiceTest extends BaseTest
 		
 		$title
 		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getFullText' )
+		    ->will   ( $this->returnValue( 'not the wall message title' ) )
+		;
+		$title
+		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getNamespace' )
 		    ->will   ( $this->returnValue( NS_WIKIA_FORUM_BOARD_THREAD ) )
 		;
 		$title
-		    ->expects( $this->at( 1 ) )
+		    ->expects( $this->at( 2 ) )
 		    ->method ( 'getArticleID' )
 		    ->will    ( $this->returnValue( $this->pageId ) )
-		;
-		$title
-		    ->expects( $this->at( 2 ) )
-		    ->method ( '__toString' )
-		    ->will   ( $this->returnValue( 'wall message title' ) )
 		;
 		$wm
 		    ->expects( $this->at( 0 ) )
@@ -1273,7 +1300,7 @@ class MediaWikiServiceTest extends BaseTest
 		$wm
 		    ->expects( $this->at( 4 ) )
 		    ->method ( 'getMetaTitle' )
-		    ->will   ( $this->returnValue( $title ) )
+		    ->will   ( $this->returnValue( 'wall message title' ) )
 		;
 		$this->proxyClass( '\WallMessage', $wm, 'newFromId' );
 		$this->mockApp();
@@ -1285,15 +1312,15 @@ class MediaWikiServiceTest extends BaseTest
 		);
 	}
 	
-    /**
+	/**
 	 * @covers \Wikia\Search\MediaWikiService::getTitleString
-	 **/
-	public function testGetTitleStringMainWallMessage() {
+	 */
+	public function testGetTitleStringEmptyChildWallMessage() {
 		$service = $this->service->getMock();
 		
 		$title = $this->getMockBuilder( '\Title' )
 		              ->disableOriginalConstructor()
-		              ->setMethods( array( 'getArticleID', 'getNamespace', '__toString' ) )
+		              ->setMethods( array( 'getArticleID', 'getNamespace', 'getFullText' ) )
 		              ->getMock();
 		
 		$wm = $this->getMockBuilder( '\WallMessage' )
@@ -1303,18 +1330,115 @@ class MediaWikiServiceTest extends BaseTest
 		
 		$title
 		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getFullText' )
+		    ->will   ( $this->returnValue( 'not the wall message title' ) )
+		;
+		$title
+		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getNamespace' )
 		    ->will   ( $this->returnValue( NS_WIKIA_FORUM_BOARD_THREAD ) )
 		;
 		$title
-		    ->expects( $this->at( 1 ) )
+		    ->expects( $this->at( 2 ) )
 		    ->method ( 'getArticleID' )
 		    ->will    ( $this->returnValue( $this->pageId ) )
 		;
+		$wm
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'load' )
+		;
+		$wm
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'isMain' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$wm
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getTopParentObj' )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		$wm
+		    ->expects( $this->at( 3 ) )
+		    ->method ( 'getMetaTitle' )
+		    ->will   ( $this->returnValue( 'wall message title' ) )
+		;
+		$this->proxyClass( '\WallMessage', $wm, 'newFromId' );
+		$this->mockApp();
+		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );
+		$get->setAccessible( true );
+		$this->assertEquals(
+				'wall message title',
+				$get->invoke( $service, $title )
+		);
+	}
+	
+	/**
+	 * @covers \Wikia\Search\MediaWikiService::getTitleString
+	 */
+	public function testGetTitleStringEmptyWallMessage() {
+		$service = $this->service->getMock();
+		
+		$title = $this->getMockBuilder( '\Title' )
+		              ->disableOriginalConstructor()
+		              ->setMethods( array( 'getFullText', 'getNamespace' ) )
+		              ->getMock();
+		
+		$title
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getFullText' )
+		    ->will   ( $this->returnValue( 'title' ) )
+		;
+		$title
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getNamespace' )
+		    ->will   ( $this->returnValue( NS_WIKIA_FORUM_BOARD_THREAD ) )
+		;
 		$title
 		    ->expects( $this->at( 2 ) )
-		    ->method ( '__toString' )
-		    ->will   ( $this->returnValue( 'wall message title' ) )
+		    ->method ( 'getArticleID' )
+		    ->will    ( $this->returnValue( $this->pageId ) )
+		;
+		$this->proxyClass( '\WallMessage', null, 'newFromId' );
+		$this->mockApp();
+		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );
+		$get->setAccessible( true );
+		$this->assertEquals(
+				'title',
+				$get->invoke( $service, $title )
+		);
+	}
+	
+	
+	/**
+	 * @covers \Wikia\Search\MediaWikiService::getTitleString
+	 **/
+	public function testGetTitleStringMainWallMessage() {
+		$service = $this->service->getMock();
+		
+		$title = $this->getMockBuilder( '\Title' )
+		              ->disableOriginalConstructor()
+		              ->setMethods( array( 'getArticleID', 'getNamespace', 'getFullText' ) )
+		              ->getMock();
+		
+		$wm = $this->getMockBuilder( '\WallMessage' )
+		           ->disableOriginalConstructor()
+		           ->setMethods( array( 'load', 'isMain', 'getTopParentObj', 'getMetaTitle' ) )
+		           ->getMock();
+		
+		$title
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getFullText' )
+		    ->will   ( $this->returnValue( 'not the wall message title' ) )
+		;
+		$title
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getNamespace' )
+		    ->will   ( $this->returnValue( NS_WIKIA_FORUM_BOARD_THREAD ) )
+		;
+		$title
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getArticleID' )
+		    ->will    ( $this->returnValue( $this->pageId ) )
 		;
 		$wm
 		    ->expects( $this->at( 0 ) )
@@ -1328,7 +1452,7 @@ class MediaWikiServiceTest extends BaseTest
 		$wm
 		    ->expects( $this->at( 2 ) )
 		    ->method ( 'getMetaTitle' )
-		    ->will   ( $this->returnValue( $title ) )
+		    ->will   ( $this->returnValue( 'wall message title' ) )
 		;
 		$this->proxyClass( '\WallMessage', $wm, 'newFromId' );
 		$this->mockApp();
@@ -1698,6 +1822,24 @@ class MediaWikiServiceTest extends BaseTest
 		$this->assertInstanceOf(
 				$service->getWikiMatchByHost( 'foo' )->_mockClassName,
 				$mockMatch
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
+	 */
+	public function testGetWikiMatchByHostWithNoDomain() {
+		$service = $this->service->setMethods( array( 'getWikiIdByHost' ) )->getMock();
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$service
+		    ->expects( $this->never() )
+		    ->method ( 'getWikiIdByHost' )
+		;
+		$this->assertNull(
+				$service->getWikiMatchByHost( '' )
 		);
 	}
 	

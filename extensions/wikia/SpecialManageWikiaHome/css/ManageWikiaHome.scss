@@ -1,12 +1,22 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/curation-elements";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.slots-setup {
+	width: 250px;
+	float: left;
+}
 .slot-forms {
 	overflow: hidden;
 	.wikis-in-slots {
 		float:left;
-		width: 450px;
 		label {
 			width: 140px;
 			float: left;
 			clear: left;
+		}
+		input:not([type=submit]) {
+			width: 50px;
 		}
 	}
 }
@@ -15,4 +25,96 @@
 }
 .submit-buttons {
 	margin-top: 20px;
+}
+
+.collections-setup {
+	width: 735px;
+	float: left;
+	padding-left: 10px;
+	margin: 0 0 20px 10px;
+	border-left: 1px solid $color-page-border;
+
+	.collection-module {
+		@include module-box;
+
+		position: relative;
+
+		.input-group {
+			@include clearfix;
+			float: none;
+			label {
+				clear: both;
+				float: left;
+				margin-top: 10px;
+				width: 145px;
+			}
+			input:not([type=checkbox]) {
+				width: 400px;
+
+				&:disabled {
+					background-color: mix($color-page-opposite, $color-page, 15%);
+				}
+			}
+			input[type=checkbox] {
+				margin-top: 10px;
+			}
+		}
+
+		.image-input-container {
+			float: left;
+			width: 100%;
+
+			.input-group {
+				width: 563px;
+				float: left;
+			}
+			.wmu-show {
+				margin-top: 11px;
+			}
+		}
+
+		p.alternative {
+			margin: 0 7px 10px 152px;
+		}
+
+		.navigation {
+			@include navigation;
+		}
+	}
+}
+
+.wikis-setup {
+	clear: left;
+
+	p {
+		padding-top: 20px;
+
+		label {
+			margin-left: 10px;
+		}
+
+		label:first-child {
+			margin-left: 0px;
+		}
+
+		input[type=submit] {
+			float: none;
+		}
+
+		input[type=reset] {
+			margin-left: 10px;
+		}
+
+		#collections-filter {
+			width: 150px;
+		}
+	}
+}
+
+input[type=submit] {
+	float: right;
+}
+
+.alternative {
+	color: $color-alternate-text;
 }

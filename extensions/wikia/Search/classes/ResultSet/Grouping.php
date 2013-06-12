@@ -3,7 +3,7 @@
  * Class definition for Wikia\Search\ResultSet\Grouping
  */
 namespace Wikia\Search\ResultSet;
-use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config, Wikia\Search\Utilities;
+use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wikia\Search\Config, Wikia\Search\Utilities, DataMartService;
 /**
  * This class handles sub-groupings of results for inter-wiki search.
  * @author relwell
@@ -12,6 +12,12 @@ use \Wikia\Search\MediaWikiService, \ArrayIterator, \Solarium_Result_Select, \Wi
  */
 class Grouping extends Base
 {
+	
+	/**
+	 * Stores top pages' IDs
+	 * @var array
+	 */
+	protected $topPages = [];
 
 	/**
 	 * The wrapper handling this particular grouping instance
@@ -35,6 +41,47 @@ class Grouping extends Base
 		$count = str_word_count( $desc );
 		$ellipses = $count > $wordCount ? '&hellip;' : '';
 		return empty( $desc ) ? '' : implode( ' ', array_slice( explode( ' ', $desc ), 0, $wordCount ) ) . $ellipses;
+	}
+
+	public function getDescriptionByLength( $chars = 100 ) {
+		$desc = $this->getHeader( 'desc' );
+		$count = strlen( $desc );
+		$ellipses = $count > $chars ? '&hellip;' : '';
+
+		$words = explode( ' ', $desc );
+		if ( !empty( $words ) ) {
+			$result = 0;
+			foreach( $words as $key => $word ) {
+				if ( $result + strlen( $word ) + strlen( $ellipses ) + 1 > $chars ) {
+					return implode( ' ', array_slice( $words, 0, $key ) ) . $ellipses;
+				}
+				$result += strlen( $word ) + 1;
+			}
+			return $desc;
+		}
+		return '';
+	}
+
+	/**
+	 * Returns the top four articles for this wiki
+	 * @return array of Articles
+	 */
+	public function getTopPages() {
+		if ( empty( $this->topPages ) ) {
+			$wikiId = $this->getHeader( 'wid' );
+			$articles = (new DataMartService)->getTopArticlesByPageview(
+					$wikiId,
+					null,
+					null,
+					false,
+					5 //compensation for Main Page
+					);
+			$mainId = $this->service->getMainPageIdForWikiId( $wikiId );
+			$counter = 0;
+			unset( $articles[$mainId] );
+			$this->topPages = array_slice( array_keys( $articles ), 0, 4 );
+		}
+		return $this->topPages;
 	}
 	
 	/**
@@ -75,11 +122,13 @@ class Grouping extends Base
 		$wikiId = $doc['wid'];
 		$wikiId = $wikiId ?: $this->service->getWikiIdByHost( $this->host );
 		$title = $this->service->getGlobalForWiki( 'wgSitename', $wikiId );
+		$visualizationInfo = $this->service->getVisualizationInfoForWikiId( $wikiId );
+		unset( $visualizationInfo['lang'] ); // untrustworthy
 		if (! empty( $doc ) ) {
 			$this->addHeaders( $doc->getFields() );
 			$title = $title ?: $doc[Utilities::field( 'wikititle' )]; // apparently wgSitename can be false for some wiki IDs
 		}
-		$this->addHeaders( $this->service->getVisualizationInfoForWikiId( $wikiId ) )
+		$this->addHeaders( $visualizationInfo )
 			 ->addHeaders( $this->service->getStatsInfoForWikiId( $wikiId ) )
 			 ->setHeader ( 'wikititle', $title )
 			 ->setHeader ( 'title', $title )

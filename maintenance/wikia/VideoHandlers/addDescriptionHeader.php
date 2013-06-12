@@ -11,7 +11,7 @@ ini_set('error_reporting', E_NOTICE);
 
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
-class EditCLI extends Maintenance {
+class AddDescHeader extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Add the description header";
@@ -22,7 +22,7 @@ class EditCLI extends Maintenance {
 	public function execute() {
 		global $wgUser;
 
-		$userName = $this->getOption( 'user', 'Maintenance script' );
+		$userName = $this->getOption( 'user', 'WikiaBot' );
 		$test = $this->hasOption('test') ? true : false;
 
 		if (!$test) {
@@ -58,7 +58,7 @@ class EditCLI extends Maintenance {
 	 * @return boolean Whether the action succeeded
 	 */
 	public function addDescriptionHeader ( $pageId, $test = false ) {
-		global $wgTitle;
+		global $wgTitle, $wgServer;
 
 		$wgTitle = Title::newFromID( $pageId );
 		if ( !$wgTitle ) {
@@ -70,14 +70,26 @@ class EditCLI extends Maintenance {
 		// Read the text
 		$text = $page->getText();
 
-		// Return early if there's already a description header here
-		if (preg_match('/^==\s*description\s*==/mi', $text)) {
+		$catText = '('.wfMessage( 'nstab-category' ).'|Category)';
+
+		// Get the visible content by removing category tags
+		$content = preg_replace("/\[\[$catText:[^\]]+\]\]/", '', $text);
+
+		// Return early if there's no text at all (don't need a description header when there's nothing there)
+		if ( trim($content) == '' ) {
 			return true;
 		}
 
-		$newText = "== Description ==\n".$text;
+		$headerText = wfMessage( 'videohandler-description' );
 
-		$this->output( "Adding the description back to '".$wgTitle->getText()."' ... " );
+		// Return early if there's already a description header here
+		if (preg_match("/^==\s*$headerText\s*==/mi", $text)) {
+			return true;
+		}
+
+		$newText = "== $headerText ==\n".$text;
+
+		$this->output( "Adding the description back: '".$wgServer.'/wiki/File:'.$wgTitle->getText()."' ... " );
 
 		// Do the edit
 		if ($test) {
@@ -101,6 +113,6 @@ class EditCLI extends Maintenance {
 	}
 }
 
-$maintClass = "EditCLI";
+$maintClass = "AddDescHeader";
 require_once( RUN_MAINTENANCE_IF_MAIN );
 

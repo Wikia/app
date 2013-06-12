@@ -101,7 +101,7 @@ class WAMPageModel extends WikiaModel {
 	 */
 	public function getIndexWikis($params) {
 		$params = $this->getIndexParams($params);
-
+		
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$WAMData = $this->getMockedDataForDev();
 		} else {
@@ -370,7 +370,7 @@ class WAMPageModel extends WikiaModel {
 	/**
 	 * MOCKED data for devboxes for testing
 	 * because we don't have wam data on devboxes
-	 *
+	 * 
 	 * @return array
 	 */
 	protected function getMockedDataForDev() {

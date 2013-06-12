@@ -36,6 +36,7 @@ $app->registerHook('UserSendConfirmationMail', 'UserLoginHooksHelper', 'onUserSe
 $app->registerHook('PreferencesGetEmailAuthentication', 'UserLoginHooksHelper', 'onGetEmailAuthentication' );
 $app->registerHook('isValidEmailAddr', 'UserLoginHooksHelper', 'isValidEmailAddr');
 $app->registerHook('SavePreferences', 'UserLoginHooksHelper', 'onSavePreferences');
+$app->registerHook('AddNewAccount', 'UserLoginHooksHelper', 'onAddNewAccount');
 
 // i18n mapping
 $wgExtensionMessagesFiles['UserLogin'] = $dir . 'UserLogin.i18n.php';

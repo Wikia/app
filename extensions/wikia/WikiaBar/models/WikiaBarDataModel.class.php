@@ -9,7 +9,7 @@
 
 class WikiaBarDataModel extends WikiaBarModelBase {
 	public function getData() {
-		$this->wf->profileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
 		$wikiaBarConfigMessage = WikiFactory::getVarValueByName('wgWikiaBarConfig', self::WIKIA_BAR_CONFIG_WIKI_ID, true);
 
@@ -23,7 +23,7 @@ class WikiaBarDataModel extends WikiaBarModelBase {
 			$data = false;
 		}
 
-		$this->wf->profileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $data;
 	}
 }

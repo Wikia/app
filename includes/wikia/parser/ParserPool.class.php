@@ -24,8 +24,8 @@ class ParserPool {
 	 */
 	public static function create() {
 		global $wgParserConf;
+		# Create base instance for cloning
 		if ( self::$origin === null ) {
-			# Clone it and store it
 			$class = $wgParserConf['class'];
 			if ( $class == 'Parser_DiffTest' ) {
 				self::$origin = false;
@@ -33,6 +33,7 @@ class ParserPool {
 				self::$origin = new Parser( $wgParserConf );
 			}
 		}
+		# Clone it (or create a new one if not possible)
 		if ( self::$origin !== false ) {
 			$parser = clone self::$origin;
 		} else {
@@ -83,6 +84,22 @@ class ParserPool {
 
 		$parser = self::get();
 		$result = call_user_func_array( array( $parser, 'parse' ), $args );
+		self::release($parser);
+
+		return $result;
+	}
+
+	/**
+	 * Expand templates and variables in the text, producing valid, static wikitext.
+	 * Also removes comments.
+	 *
+	 * @return string
+	 */
+	public static function preprocess( $text, Title $title, ParserOptions $options, $revid = null ) {
+		$args = func_get_args();
+
+		$parser = self::get();
+		$result = call_user_func_array( array( $parser, 'preprocess' ), $args );
 		self::release($parser);
 
 		return $result;

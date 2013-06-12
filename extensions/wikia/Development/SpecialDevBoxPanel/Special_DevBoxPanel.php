@@ -41,6 +41,7 @@ $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
 $wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
 $wgHooks['WikiFactory::executeBeforeTransferToGlobals'][] = "wfDevBoxDisableWikiFactory";
 $wgHooks['PageRenderingHash'][] = 'wfDevBoxSeparateParserCache';
+$wgHooks['ResourceLoaderGetConfigVars'][] = 'wfDevBoxResourceLoaderGetConfigVars';
 $wgExceptionHooks['MWExceptionRaw'][] = "wfDevBoxLogExceptions";
 
 $wgExtensionCredits['specialpage'][] = array(
@@ -211,6 +212,14 @@ function wfDevBoxDisableWikiFactory(WikiFactoryLoader $wikiFactoryLoader) {
 			}
 		}
 	}
+
+	return true;
+}
+
+function wfDevBoxResourceLoaderGetConfigVars( &$vars ) {
+	global $wgDevelEnvironment;
+
+	$vars['wgDevelEnvironment'] = $wgDevelEnvironment;
 
 	return true;
 }

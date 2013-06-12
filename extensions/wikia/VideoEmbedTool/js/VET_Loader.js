@@ -2,7 +2,7 @@
  *
  * @author Hyun Lim, Liz Lee
  *
- * Final callback should include VET_loader.modal.closeModal() in success case.
+ * Final callback should include window.VET.close() in success case.
  * Sample input json for options:
  *	{
  *		callbackAfterSelect: function() {}, // callback after video is selected (first screen).  If it returns false, second screen will not show.
@@ -13,7 +13,7 @@
  *			thumb: true
  *			width: 335
  *		},
- *		insertFinalVideoParams: [], // tell the back end anything extra when inserting the video at the end 
+ *		insertFinalVideoParams: [], // tell the back end anything extra when inserting the video at the end
  *		startPoint: 1 | 2, // display first or second screen when VET opens
  *		searchOrder: "newest" // Used in MarketingToolbox
  *	}
@@ -47,21 +47,21 @@
 			// handle login on article page
 			return;
 		}
-		
+
 		// if modal is already on screen or is about to be, don't do anything
 		if(modalOnScreen) {
 			$.stopThrobbing();
 			return;
 		}
-		
+
 		modalOnScreen = true;	// modal is now loading
 
 		var deferredList = [];
-		
+
 		if(!resourcesLoaded) {
 			var templateDeferred = $.Deferred(),
 				deferredMessages = $.Deferred();
-				
+
 			// Get modal template HTML
 			$.nirvana.sendRequest({
 				controller: 'VideoEmbedToolController',
@@ -90,46 +90,50 @@
 			VET_loader.modal = $(templateHtml).makeModal({
 				width: 939,
 				onClose: function() {
-					VET_close();
+					window.VET.close();
 				},
 				onAfterClose: function() {
 					modalOnScreen = false;	// release modal lock
 				}
 			});
-			
-			VET_show(options);
+
+			// Give the VET JS a chance to execute before calling VET.show()
+			setTimeout(function() {
+				window.VET.show(options);
+			}, 0);
 			resourcesLoaded = true;
-		});			
+
+		});
 	};
 
 	/* Extends jQuery to make any element an add video button
 	 *
 	 * @param object options - options to be passed to VET_loader.load(). See above for example.
-	 */ 
+	 */
 	$.fn.addVideoButton = function(options) {
 		$.preloadThrobber();
 
 		return this.each(function() {
 			var $this = $(this);
-			
+
 			$this.on('click.VETLoader', function(e) {
 				e.preventDefault();
-				
+
 				// Provide immediate feedback once button is clicked
 				$this.startThrobbing();
 
 				VET_loader.load(options);
 			});
 		});
-	
+
 	};
-	
+
 	$.fn.removeAddVideoButton = function() {
 		return this.each(function() {
 			$(this).off('click.VETLoader');
 		});
 	}
-	
+
 	window.VET_loader = VET_loader;
-	
+
 })(window, jQuery);

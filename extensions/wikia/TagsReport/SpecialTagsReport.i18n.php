@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'tagsreportgenerated' => 'Generated on $1 at $2',
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)
+/** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author LWChris
  * @author Siebrand
@@ -38,6 +38,22 @@ $messages['af'] = array(
 	'tagsreportmainnspace' => 'Hoofnaamruimte',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|bladsy|bladsye}})',
 	'tagsreportgenerated' => 'Gegenereer op $1 om $2',
+);
+
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'tagsreport' => 'تقرير العلامات',
+	'tagsreporttitle' => 'تقرير العلامات',
+	'tagsreportselecttag' => 'حدد العلامة:',
+	'tagsreportgo' => 'عرض',
+	'tagsreportnotspecify' => 'أنت لم تقم بتحديد أي علامة خاصة بعد',
+	'tagsreportnoresults' => 'لم يتم العثور على نتائج',
+	'tagsreportmainnspace' => 'رئيسي',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|صفحة|صفحات}})',
+	'tagsreportpagesfound' => 'تم العثور على (<strong>$1</strong> {{PLURAL:$1|صفحة|صفحات}}) تحتوي على العلامة الخاصة (دي بي إل، يوتيوب، إلخ.)',
+	'tagsreportgenerated' => 'تم توليدها في  $1 على الساعة  $2',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -513,6 +529,22 @@ $messages['pt-br'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Foi encontrada <strong>$1</strong> página que contém|Foram encontradas <strong>$1</strong> páginas que contêm}} um elemento especial (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Gerado a $1 às $2',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'tagsreport' => 'Riepiloghe de le tag',
+	'tagsreporttitle' => 'Riepiloghe de le tag',
+	'tagsreportselecttag' => "Scacchie 'u tag:",
+	'tagsreportgo' => 'Fà vedè',
+	'tagsreportnotspecify' => "Non g'è angore scacchiate nisciune tag speciale",
+	'tagsreportnoresults' => 'Nisciune resultate acchiate',
+	'tagsreportmainnspace' => 'Prengepàle',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pàgene|pàggene}})',
+	'tagsreportpagesfound' => 'Acchiate <strong>$1</strong> {{PLURAL:$1|pàgene|pàggene}}, ca tènene tag speciale (DPL, YouTube, etc.)',
+	'tagsreportgenerated' => "Generate 'u $1 a le $2",
 );
 
 /** Russian (русский)

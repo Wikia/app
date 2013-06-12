@@ -16,19 +16,19 @@ class WikiaMobileCategoryModel extends WikiaModel{
 			$this->getItemsCollectionCacheKey( $category->getID() ),
 			self::CACHE_TTL_ITEMSCOLLECTION,
 			function() use( $category ) {
-				$this->wf->profileIn( __METHOD__ );
+				wfProfileIn( __METHOD__ );
 
 				$viewer = new WikiaMobileCategoryViewer( $category );
 				$viewer->doCategoryQuery();
 
-				$this->wf->profileOut( __METHOD__ );
+				wfProfileOut( __METHOD__ );
 				return $viewer->getData();
 			}
 		);
 	}
 
 	public function getExhibitionItems( Title $title ){
-		$this->wf->profileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		if ( class_exists( 'CategoryDataService' ) ) {
 			$cacheKey = $this->getExhibitionItemsCacheKey( $title->getText() );
@@ -63,11 +63,11 @@ class WikiaMobileCategoryModel extends WikiaModel{
 				$this->wg->memc->set( $cacheKey, $items, self::CACHE_TTL_EXHIBITION );
 			}
 
-			$this->wf->profileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return $items;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
@@ -96,11 +96,12 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 	private $items;
 	private $count;
 
+	const LIMIT = 5000;
+
 	function __construct( Category $category ){
 		parent::__construct( $category->getTitle(), RequestContext::getMain() );
 
-		//get all the members in the category
-		$this->limit = null;
+		$this->limit = self::LIMIT; # BAC-265
 
 		$this->items = [];
 		$this->count = 0;
