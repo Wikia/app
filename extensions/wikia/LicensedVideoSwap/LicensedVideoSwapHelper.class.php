@@ -79,6 +79,55 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	}
 
 	/**
+	 * Get the total number of unswapped videos
+	 * @return int - The number of unswapped videos
+	 */
+	public function getUnswappedVideoTotal ( ) {
+		wfProfileIn( __METHOD__ );
+
+		$db = $this->wf->GetDB( DB_SLAVE );
+
+		// We want to make sure the video hasn't been removed, is not premium and does not exist
+		// in the video_swap table
+		$sqlWhere = array(
+			'removed' => 0,
+			'premium' => 0,
+			'video_title = page_title',
+			'page_namespace' => NS_FILE,
+			'page_wikia_props.page_id IS NULL'
+		);
+
+		// Give a name for clarity, but no options for this statement
+		$sqlOptions = array( );
+
+		// Do the outer join on the video_swap table
+		$joinCond = array( 'page_wikia_props' => array( 'LEFT JOIN', 'page.page_id = page_wikia_props.page_id' ) );
+
+		// Select video info making sure to skip videos that have entries in the video_swap table
+		$result = $db->select(
+			array( 'video_info', 'page', 'page_wikia_props' ),
+			array( 'count(*) as total' ),
+			$sqlWhere,
+			__METHOD__,
+			$sqlOptions,
+			$joinCond
+		);
+
+		// Get the result
+		$total = 0;
+		while( $row = $db->fetchObject($result) ) {
+			$total = $row->total;
+
+			// Should only be one result
+			break;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $total;
+	}
+
+	/**
 	 * get file object (video only)
 	 * @param string $videoTitle
 	 * @param boolean $force

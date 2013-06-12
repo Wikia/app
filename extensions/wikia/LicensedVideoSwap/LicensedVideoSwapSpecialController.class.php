@@ -55,9 +55,22 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->thumbWidth = self::THUMBNAIL_WIDTH;
 		$this->thumbHeight = self::THUMBNAIL_HEIGHT;
 
-		// pagination
+
+		// Set up pagination
 		$this->currentPage = $currentPage;
-		$this->pages = 10;
+		$videoHelper = new LicensedVideoSwapHelper();
+		$this->totalVideos = $videoHelper->getUnswappedVideoTotal();
+
+		$pagination = '';
+		$linkToSpecialPage = SpecialPage::getTitleFor("LicensedVideoSwap")->escapeLocalUrl();
+
+		if ( $this->totalVideos > self::VIDEOS_PER_PAGE ) {
+			$pages = Paginator::newFromArray( array_fill( 0, $this->totalVideos, '' ), self::VIDEOS_PER_PAGE );
+			$pages->setActivePage( $this->currentPage - 1 );
+
+			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?currentPage=%s&sort='.$selectedSort );
+		}
+		$this->pagination = $pagination;
 
 		// sort options
 		$videoHelper = new VideoHandlerHelper();
