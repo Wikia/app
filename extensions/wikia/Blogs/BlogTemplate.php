@@ -1368,11 +1368,11 @@ class BlogTemplateClass {
 	 * @author Kamil Koterba
 	 * @since June 2013
 	 *
-	 * @param int $iPage Page id
+	 * @param integer $iPage Page id
 	 * @param Revision $oRev Revision of article to get text from
 	 * @return mixed|string
 	 */
-	public static function getShortText(int $iPage, Revision $oRev) {
+	public static function getShortText($iPage, Revision $oRev) {
 		wfProfileIn( __METHOD__ );
 		//backup current value
 		$aOptions_bck = self::$aOptions;
