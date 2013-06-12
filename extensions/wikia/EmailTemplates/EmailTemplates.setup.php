@@ -6,8 +6,8 @@ $app = F::app();
 
 $wgExtensionMessagesFiles['EmailTemplates'] = $dir . '/EmailTemplates.i18n.php';
 
-$app->registerClass('EmailTemplatesController', $dir.'/EmailTemplatesController.class.php');
-$app->registerClass('EmailTemplatesHooksHelper', $dir . '/EmailTemplatesHooksHelper.class.php');
+$wgAutoloadClasses['EmailTemplatesController'] = $dir . '/EmailTemplatesController.class.php';
+$wgAutoloadClasses['EmailTemplatesHooksHelper'] = $dir . '/EmailTemplatesHooksHelper.class.php';
 
-$app->registerHook('ComposeCommonBodyMail', 'EmailTemplatesHooksHelper', 'onComposeCommonBodyMail' );
-$app->registerHook('ComposeCommonSubjectMail', 'EmailTemplatesHooksHelper', 'onComposeCommonSubjectMail' );
+$wgHooks['ComposeCommonBodyMail'][] = 'EmailTemplatesHooksHelper::onComposeCommonBodyMail';
+$wgHooks['ComposeCommonSubjectMail'][] = 'EmailTemplatesHooksHelper::onComposeCommonSubjectMail';
