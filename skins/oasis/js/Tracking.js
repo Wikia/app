@@ -334,6 +334,11 @@ jQuery(function($){
 			}
 		});
 
+        $wikiaSearch.one('suggestShow', {
+            category: category,
+            label: 'search-suggest-show'
+        }, trackWithEventData);
+
 		if ($body.hasClass('page-Special_Search')) {
 			category = 'special-' + category;
 			$wikiaSearch.on('mousedown', '.search-tabs a', function(e) {
