@@ -16,7 +16,7 @@
 				<h4><?= $cssUpdatePost['title']; ?></h4>
 				<span><?= wfMessage('special-css-community-update-by')->params([$cssUpdatePost['timestamp'], $cssUpdatePost['userName']])->text(); ?></span>
 				<blockquote><?= $cssUpdatePost['text']; ?></blockquote>
-				<p class="plainlinks"><?= wfMessage('special-css-community-read-more')->params([$cssUpdatePost['url']])->parse(); ?></p>
+				<p class="plainlinks read-more"><?= wfMessage('special-css-community-read-more')->params([$cssUpdatePost['url']])->parse(); ?></p>
 			</li>
 			<?php endforeach; ?>
 		</ul>
