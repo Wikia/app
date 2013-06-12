@@ -13,20 +13,6 @@ class SpecialVideosHelper extends WikiaModel {
 	const POSTED_IN_ARTICLES = 5;
 
 	/**
-	 * get list of sorting options
-	 * @return array $options
-	 */
-	public function getSortingOptions() {
-		$options = array(
-			'recent' => $this->wf->Msg( 'specialvideos-sort-latest' ),
-			'popular' => $this->wf->Msg( 'specialvideos-sort-most-popular' ),
-			'trend' => $this->wf->Msg( 'specialvideos-sort-trending' ),
-		);
-
-		return $options;
-	}
-
-	/**
 	 * get list of filter options
 	 * @return array $options
 	 */
@@ -35,7 +21,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 		$premiumVideos = $this->premiumVideosExist();
 		if ( !empty($premiumVideos) ) {
-			$options['premium'] = $this->wf->Msg( 'specialvideos-sort-featured' );
+			$options['premium'] = $this->wf->Message( 'specialvideos-sort-featured' )->text();
 		}
 
 		return $options;

@@ -278,7 +278,7 @@ class VideoHandlerHelper extends WikiaModel {
 	}
 
 	/**
-	 * get sort options
+	 * get list of sorting options
 	 * @return array $options
 	 */
 	public function getSortOptions() {
