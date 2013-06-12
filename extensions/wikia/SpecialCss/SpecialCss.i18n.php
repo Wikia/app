@@ -9,8 +9,7 @@ $messages['en'] = [
 
 	'special-css-publish-button' => 'Publish',
 
-	'community-update-headline' => 'Wikia CSS Updates',
-	'special-css-community-post-title' => '[$1 $2]',
+	'special-css-community-update-headline' => 'Wikia CSS Updates',
 	'special-css-community-update-by' => '$1 by [$2 $3]',
 	'special-css-community-read-more' => '[$1 Read more &gt;]',
 
@@ -27,8 +26,9 @@ $messages['qqq'] = [
 	
 	'special-css-publish-button' => 'Text on the publish button; pressing the button saves new content of CSS file',
 
-	'special-css-community-update-by' => '',
-	'special-css-community-read-more' => '',
+	'special-css-community-update-headline' => 'Headline above container with blog posts feed',
+	'special-css-community-update-by' => "Post detailed informations text: $1 = post's creation time, $2 = link to post's author profile page on community.wikia.com, $3 = post's author username",
+	'special-css-community-read-more' => "Link below post snippet leading to the full post page; $1 = link to the post's page on community.wikia.com",
 	
 	'special-css-oasis-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
 ];

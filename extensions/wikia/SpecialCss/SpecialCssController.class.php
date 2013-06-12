@@ -26,7 +26,12 @@ class SpecialCssController extends WikiaSpecialPageController {
 	public function notOasis() {
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
 	}
-	
+
+	/**
+	 * @desc Temporary method which will be removed after work on pulling data from community wiki blog's post is done
+	 * 
+	 * @return array
+	 */
 	private function getCssBlogMockedData() {
 		return [
 			[

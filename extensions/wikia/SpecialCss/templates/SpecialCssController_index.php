@@ -8,12 +8,12 @@
 		<?= wfMessage('special-css-current-version')->rawParams(['1.0.17'])->text(); ?>
 	</div>
 	<div class="community-updates">
-		<h3><?= wfMessage('community-update-headline'); ?></h3>
+		<h3><?= wfMessage('special-css-community-update-headline')->text(); ?></h3>
 		<ul>
 			<?php foreach( $cssBlogs as $cssUpdatePost ): ?>
 			<li class="community-update-item plainlinks">
 				<?= $cssUpdatePost['userAvatar']; ?>
-				<h4><?= wfMessage('special-css-community-post-title')->params([$cssUpdatePost['url'], $cssUpdatePost['title']])->parse(); ?></h4>
+				<h4><a href="<?= $cssUpdatePost['url']; ?>"><?= $cssUpdatePost['title']; ?></a></h4>
 				<span><?= wfMessage('special-css-community-update-by')->params([$cssUpdatePost['timestamp'], $cssUpdatePost['userUrl'], $cssUpdatePost['userName']])->parse(); ?></span>
 				<blockquote><?= $cssUpdatePost['text']; ?></blockquote>
 				<p class="read-more"><?= wfMessage('special-css-community-read-more')->params([$cssUpdatePost['url']])->parse(); ?></p>
