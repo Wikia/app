@@ -7,11 +7,14 @@ $width-adskin: 170px;
 $width-outside-min: 768px;
 $width-outside-max: 1600px;
 
+body {
+	min-width: $width-outside-min;
+}
+
 body > .global-notification,
 .WikiaHeader .page-width-container,
 .WikiaPage {
 	margin: 0 auto;
-	min-width: $width-outside-min;
 	max-width: $width-outside-max;
 }
 
@@ -49,7 +52,7 @@ body > .global-notification,
 }
 
 .WikiaHeader {
-	min-width: $width-outside-min;
+	min-width: 0;
 }
 
 .WikiaMainContent {
