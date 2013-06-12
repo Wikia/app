@@ -1,8 +1,8 @@
 <?
 foreach ($videoList as $video):
 	$suggestions = $video['videoSuggestions'];
-	$numSuggestions = count($suggestions);
 	$best = count($suggestions) > 0 ? array_shift($suggestions) : null;
+	$numSuggestions = count($suggestions);
 ?>
 <div class="row">
 	<span class="swap-arrow lvs-sprite"></span>
