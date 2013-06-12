@@ -13,9 +13,15 @@ class SpecialCssController extends WikiaSpecialPageController {
 		}
 
 		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
-		// TODO move to AM
-		$this->response->addAsset('/extensions/wikia/SpecialCss/js/chrome.js');
+		$this->response->addAsset('/extensions/wikia/SpecialCss/js/SpecialCss.js');
+		// This shouldn't be moved to asset manager package because of Ace internal autoloader
 		$this->response->addAsset('/resources/Ace/ace.js');
+
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL('/resources/Ace');
+		$aceUrlParts = parse_url($aceUrl);
+		$this->wg->Out->addJsConfigVars([
+			'aceScriptsPath' => $aceUrlParts['path']
+		]);
 
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
 		
