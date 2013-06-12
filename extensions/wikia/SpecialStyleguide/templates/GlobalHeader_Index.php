@@ -1,3 +1,6 @@
+<?php
+// TODO: remove this and aggregate into modularized GlobalHeader
+?>
 <header id="WikiaHeader" class="WikiaHeader">
 	<div class="wikia-header-mask">
 		<div class="pagetitle">
