@@ -132,6 +132,8 @@ var LVS = {
 		});
 	},
 	initSwapOrKeep: function() {
+		var that = this;
+
 		function doRequest( isSwap, currTitle,  newTitle, $row ){
 			var data = {
 				videoTitle: currTitle,
@@ -152,16 +154,13 @@ var LVS = {
 						window.GlobalNotification.show( data.msg, 'error' );
 					} else {
 						window.GlobalNotification.show( data.msg, 'confirm' );
-
-						$row.slideUp( function() {
-							$row.remove();
-						});
+						that.$container.html( data.html );
 					}
 				}
 			});
 		}
 
-		function confirmModal( isSwap, currTitle, newTitle, $row ) {
+		function confirmModal( isSwap, currTitle, newTitle ) {
 			var currTitleText =  currTitle.replace(/_/g, ' ' ),
 				newTitleText,
 				msg;
@@ -176,7 +175,7 @@ var LVS = {
 			$.confirm({
 				content: msg,
 				onOk: function() {
-					doRequest( isSwap, newTitle, currTitle, $row );
+					doRequest( isSwap, currTitle, newTitle );
 				},
 				width: 700
 			});
@@ -203,12 +202,12 @@ var LVS = {
 					// Get both titles - current/non-premium video and video to swap it out with
 					newTitle = $this.attr( 'data-video-swap' );
 					currTitle = $row.find( '.keep-button' ).attr( 'data-video-keep' );
-					confirmModal( true, decodeURIComponent( currTitle ), decodeURIComponent( newTitle ), $row );
+					confirmModal( true, decodeURIComponent( currTitle ), decodeURIComponent( newTitle ) );
 				}
 			// Keep button clicked
 			} else if ( e.type == 'click' ) {
 				currTitle = $row.find( '.keep-button' ).attr( 'data-video-keep' );
-				confirmModal( false, decodeURIComponent( currTitle ), null, $row );
+				confirmModal( false, decodeURIComponent( currTitle ) );
 			}
 		});
 	},
