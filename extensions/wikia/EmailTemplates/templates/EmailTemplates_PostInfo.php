@@ -1,0 +1,22 @@
+<table width="100%" cellspacing="0" cellpadding="13" border="0">
+	<tbody>
+	<tr>
+		<td width="50px" valign="top">
+			<?= $avatar_url ?>
+		</td>
+		<td valign="top">
+			<h2 style="margin:0"><a style="color:#2c85d5; font-size:20px; line-height:20px; text-decoration:none" href="<?= $post_url ?>"><?= $post_title ?></a></h2>
+			<span style="font-size:12px">
+				<?= wfMsgForContent('blog-by', $date, Xml::element('a', array('href' => htmlspecialchars($user_page_url), 'style' => 'text-decoration:none'), $username, false)) ?>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+
+			<?= $short_text ?>
+
+		</td>
+	</tr>
+	</tbody>
+</table>
