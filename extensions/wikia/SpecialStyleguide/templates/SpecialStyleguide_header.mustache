@@ -1,0 +1,22 @@
+<div class="styleguide-header">
+	<div>
+		<hgroup>
+			{{#home}}
+				<h1>{{mainHeader}}</h1>
+			{{/home}}
+			{{^home}}
+				<h2>{{sectionHeader}}</h2>
+			{{/home}}
+			<h3>{{tagLine}}</h3>
+		</hgroup>
+		{{#home}}
+			<a href="{{getStartedBtnLink}}" title="{{getStartedBtnTitle}}" class="button">{{getStartedBtnLabel}}</a>
+			<small>{{version}}</small>
+		{{/home}}
+	<div>
+</div>
+{{#home}}
+	<div class="styleguide-link-box alter-background">
+        {{! TODO: this will be implemented in future}}
+	</div>
+{{/home}}
