@@ -1,4 +1,45 @@
-.printfooter {
-	display: none;
+.WikiaHeader {
+  top: 0;
+  li {
+    height: 32px;
+    margin-top: 0;
+  }
+  .WikiaLogo {
+    a {
+      padding-right: 25px;
+      top: 2px;
+    }
+  }
 }
 
+.GlobalNavigation {
+  >li {
+    padding: 0;
+    >a {
+      font-size: 14px;
+      font-weight: 900;
+    }
+  }
+  a {
+    border: none;
+    height: 32px;
+    line-height: 32px;
+  }
+  a:hover {
+    background-image: none;
+    background-color: #0A5FA3;
+  }
+}
+
+.printfooter {
+  display: none;
+}
+
+.pagetitle {
+  color: #004C7F;
+  float: right;
+  font-weight: 900;
+  line-height: 32px;
+  margin-right: 40px;
+  text-transform: uppercase;
+}

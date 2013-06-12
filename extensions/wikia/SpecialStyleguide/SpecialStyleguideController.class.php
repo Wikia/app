@@ -10,10 +10,13 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		wfProfileIn( __METHOD__ );
 
 		RenderContentOnlyHelper::setRenderContentVar( true );
-		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_NO_SKIN_ELEMENTS );
+		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_NAV_ONLY );
 		$this->response->addAsset( 'extensions/wikia/SpecialStyleguide/css/SpecialStyleguide.scss' );
+		$this->wg->Out->setPageTitle( wfMessage( 'styleguide-pagetitle' )->plain() );
+
+		$this->app->setGlobal( 'wgAutoloadClasses', dirname( __FILE__ ) . '/SpecialStyleguideGlobalHeaderControllerOverride.php', 'GlobalHeaderController' );
+
 		$this->wg->Out->clearHTML();
-		$this->wg->Out->setPageTitle( wfMessage( 'styleguide-pagetitle' )->text() );
 
 		wfProfileOut( __METHOD__ );
 
