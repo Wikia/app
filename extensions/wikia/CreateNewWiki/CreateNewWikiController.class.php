@@ -33,14 +33,34 @@ class CreateNewWikiController extends WikiaController {
 
 		// form field values
 		$hubs = WikiFactoryHub::getInstance();
-        $this->aCategories = $hubs->getCategories();
+		$this->aCategories = $hubs->getCategories();
 
-        $this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-        $languages = wfGetFixedLanguageNames();
+		$this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
+		$languages = wfGetFixedLanguageNames();
 		asort( $languages );
 		$this->aLanguages = $languages;
 
 		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
+
+		// MAIN-139: Wikis in Chinese language variants should lead to 'zh' createwiki language
+		// quick bandaid based on code from CreateWiki.php
+		switch ( $useLang ) {
+			case 'zh-tw':
+			case 'zh-hk':
+			case 'zh-clas':
+			case 'zh-class':
+			case 'zh-classical':
+			case 'zh-cn':
+			case 'zh-hans':
+			case 'zh-hant':
+			case 'zh-min-':
+			case 'zh-min-n':
+			case 'zh-mo':
+			case 'zh-sg':
+			case 'zh-yue':
+				$useLang = 'zh';
+				break;
+		}
 
 		// falling back to english (BugId:3538)
 		if ( !array_key_exists($useLang, $this->aLanguages) ) {
