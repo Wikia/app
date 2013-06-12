@@ -82,7 +82,7 @@
 		<img width="<?= ChatAjax::CHAT_AVATAR_DIMENSION ?>" height="<?= ChatAjax::CHAT_AVATAR_DIMENSION ?>" class="avatar" src="<%= avatarSrc %>"/>
 		<span class="time"><%= timeStamp %></span>
 		<span class="username"><%= name %></span>
-		<span class="message me-message">* <%= name %> <%= text %></span>
+		<span class="message me-message"><span class="me-username">* <span><%= name %></span></span> <%= text %></span>
 	</script>
 	<script type='text/template' id='inline-alert-template'>
 		<%= text %>
