@@ -24,11 +24,14 @@
 			border-bottom: 1px solid #CCCACA;
 			font-size: 18px;
 			font-weight: bold;
+			margin: 0;
 			padding: 15px;
 		}
 		ul {
+			height: 440px;
 			list-style: none;
 			margin: 0;
+			overflow-y: scroll;
 			padding: 0;
 			li {
 				border-bottom: 1px solid $color-page-border;
@@ -39,14 +42,14 @@
 			}
 		}
 		blockquote {
-			margin: 12px 0;
+			margin: 12px 0 0 0;
 		}
 		.avatar {
 			float: left;
 			margin: 10px;
 		}
 		.read-more {
-			font-size: 12px;
+			font-size: 11px;
 			margin-bottom: 20px;
 		}
 	}
