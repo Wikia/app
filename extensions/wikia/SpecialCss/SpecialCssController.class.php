@@ -13,6 +13,10 @@ class SpecialCssController extends WikiaSpecialPageController {
 		}
 
 		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
+		// TODO move to AM
+		$this->response->addAsset('/extensions/wikia/SpecialCss/js/chrome.js');
+		$this->response->addAsset('/resources/Ace/ace.js');
+
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
 		
 		$model = new SpecialCssModel();

@@ -1,6 +1,6 @@
 <div class="css-editor">
 	<form>
-		<textarea class="css-editor-textarea"><?= $cssContent; ?></textarea>
+		<pre class="css-editor-textarea" id="cssEditorTextarea"><?= $cssContent; ?></pre>
 	</form>
 </div>
 <aside class="css-side-bar">
