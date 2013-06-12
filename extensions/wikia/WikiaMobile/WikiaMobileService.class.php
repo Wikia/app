@@ -49,10 +49,10 @@ class WikiaMobileService extends WikiaService {
 		$styles = null;
 		$scripts = null;
 		$assetsManager = F::build( 'AssetsManager', [], 'getInstance' );
-		//$floatingAd = '';
+		$floatingAd = '';
 		$topLeaderBoardAd = '';
-		//$inContentAd = '';
-		//$modalInterstitial = '';
+		$inContentAd = '';
+		$modalInterstitial = '';
 		$globalVariables = [];
 
 		F::build( 'JSMessages' )->enqueuePackage( 'WkMbl', JSMessages::INLINE );
@@ -68,8 +68,9 @@ class WikiaMobileService extends WikiaService {
 
 			if ($mobileAdService->shouldShowAds()) {
 				//$floatingAd = $this->app->renderView( 'WikiaMobileAdService', 'floating' );
-				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
-				//$inContentAd = $this->app->renderView( 'WikiaMobileAdService', 'inContent' );
+				//$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
+				$inContentAd = $this->app->renderView( 'WikiaMobileAdService', 'inContent' );
+				//$modalInterstitial = $this->app->renderView( 'WikiaMobileAdService', 'modalInterstitial' );
 				$globalVariables['wgShowAds'] = true;
 			}
 		}
@@ -166,10 +167,10 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'wikiaFooter', $footer );
 		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $globalVariables ) );
 		//Ad units
-		//$this->response->setVal( 'floatingAd', $floatingAd );
+		$this->response->setVal( 'floatingAd', $floatingAd );
 		$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
-		//$this->response->setVal( 'inContentAd', $inContentAd );
-		//$this->response->setVal( 'modalInterstitial', $modalInterstitial );
+		$this->response->setVal( 'inContentAd', $inContentAd );
+		$this->response->setVal( 'modalInterstitial', $modalInterstitial );
 
 		//tracking
 		$trackingCode = '';

@@ -473,6 +473,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
 		//modules
+		'//resources/wikia/libraries/sloth/sloth.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
@@ -527,8 +528,7 @@ $config['wikiamobile_relatedpages_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//resources/wikia/libraries/sloth/sloth.js',
-		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js',
+		'//extensions/wikia/RelatedPages/js/RelatedPages.wikiamobile.js'
 	)
 );
 
@@ -558,7 +558,7 @@ $config['wikiamobile_js_ads'] = array(
 		//modules
 		'//resources/wikia/modules/geo.js',
 		'//extensions/wikia/WikiaMobile/js/ads.js',
-		'//extensions/wikia/WikiaMobile/js/floatingAd.js'
+		//'//extensions/wikia/WikiaMobile/js/floatingAd.js'
 	)
 );
 

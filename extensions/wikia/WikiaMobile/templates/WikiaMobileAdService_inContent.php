@@ -1,18 +1,38 @@
 <script>window.addEventListener('load', function () {
-	require(['ads'], function (ads) {
+	require(['ads', 'sloth'], function (ads, sloth) {
 
-		var firstSection = document.getElementsByClassName('collSec')[0];
+		function findPos(obj) {
+			var curtop = 0;
 
-		if(firstSection){
+			if (obj.offsetParent) {
+				do {
+					curtop += obj.offsetTop;
+				} while (obj = obj.offsetParent)
+				return curtop;
+			}
+		}
+
+		var MIN_ZEROTH_SECTION_LENGTH = 1000,
+			firstSection = document.getElementsByClassName('collSec')[0];
+
+		if(firstSection && findPos(firstSection) > MIN_ZEROTH_SECTION_LENGTH){
+
 			firstSection.insertAdjacentHTML('beforebegin', '<div id=wkAdInContent></div>');
 
-			ads.setupSlot({
-				name: 'MOBILE_TOP_LEADERBOARD',
-				size: '300x250',
-				wrapper: document.getElementById('wkAdInContent'),
-				init: function(){
+			sloth({
+				on: document.getElementById('wkAdInContent'),
+				threshold: 200,
+				callback: function(adWrapper){
+					ads.setupSlot({
+						name: 'MOBILE_TOP_LEADERBOARD',
+						size: '300x250',
+						wrapper: adWrapper,
+						init: function(){
+							console.log('loaded')
+						}
+					});
 				}
-			});
+			})
 		}
 	});
 });</script>

@@ -53,8 +53,9 @@
 	<?= $wikiaFooter ;?>
 	<div id=wkCurtain>&nbsp;</div>
 	<?= $jsBodyFiles ;?>
-	<? //$floatingAd ;?>
-	<? //$inContentAd ;?>
+	<?= $inContentAd ;?>
+	<?= $modalInterstitial ;?>
+	<?= $floatingAd ;?>
 	<?= $trackingCode ;?>
 </body>
 </html>
