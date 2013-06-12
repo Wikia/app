@@ -424,6 +424,8 @@ class AdEngine2Controller extends WikiaController {
 		$cat = self::getCachedCategory();
 		$vars['cityShort'] = $cat['short'];
 
+		$vars['wgDisableKruxKV'] = (bool) $this->wg->DisableKruxKV;
+
 		wfProfileOut(__METHOD__);
 
 		return true;
