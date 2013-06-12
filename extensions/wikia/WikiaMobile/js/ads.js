@@ -16,17 +16,7 @@
 define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobilehelper'], function (ck, window, $, dartHelper) {
 	'use strict';
 
-	var AD_TYPES = {
-			/**
-			 * Allowed types of Ad,
-			 * DART can invoke them but they need to be defined here first
-			 */
-			footer: 1,
-			interstitial: 1,
-			top_leaderboard: 1,
-			in_content: 1
-		},
-		STOP_COOKIE_NAME = 'wkStopAd',
+	var STOP_COOKIE_NAME = 'wkStopAd',
 		ID_COOKIE_NAME = 'wikia_mobile_id',
 		fix,
 		unfix;
@@ -174,6 +164,11 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 		},
 		unfix: function(){
 			unfix && unfix();
+		},
+		init: function(name, options){
+			if(options && options.hasOwnProperty('stop')){
+				stop(options.stop);
+			}
 		},
 		stop: stop
 	};
