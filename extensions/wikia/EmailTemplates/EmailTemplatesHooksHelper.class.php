@@ -40,7 +40,6 @@ class EmailTemplatesHooksHelper {
 		/* @var $wgContLang Language */
 		global $wgContLang;
 		wfProfileIn( __METHOD__ );
-
 		$app = F::app();
 		if ( array_key_exists( '$ACTION', $keys) ) {
 			$action = $keys['$ACTION'];
@@ -89,6 +88,8 @@ class EmailTemplatesHooksHelper {
 				);
 				$buttonHTML= $app->renderView( "EmailTemplates", "Button", $button_params );
 				$keys['$BUTTON'] = $buttonHTML;
+
+				$keys['$TITLE_STYLE'] = ' style="color:#2c85d5;font-size:17px;font-weight:bold;"';
 
 				/* render body of mail */
 				$body_params = array(
