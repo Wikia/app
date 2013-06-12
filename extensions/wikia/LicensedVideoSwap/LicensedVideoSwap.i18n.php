@@ -29,6 +29,7 @@ $messages['en'] = array(
 	'lvs-posted-in-more' => 'more',
 	'lvs-confirm-swap-message' => 'You are about to swap out $1 with $2 on your wiki. This will replace all instances of the video, including any videos embedded in articles. Any changes can be reversed from the file page. Do you want to continue?',
 	'lvs-confirm-keep-message' => 'You have chosen not to replace your current video with a licensed Wikia Video Libary video. Do you want to continue?',
+	'lvs-no-matching-videos' => 'There are currently no premium videos related to this video',
 );
 
 $messages['qqq'] = array(
@@ -55,4 +56,5 @@ $messages['qqq'] = array(
 	'lvs-posted-in-more' => 'This is the text that is shown after a truncated list of titles in which a video is posted.  When hovered, a full list appears.  When clicked, the user is taken to a page where the full list is displayed.',
 	'lvs-confirm-swap-message' => 'This message is show in a modal when a user clicks a button to swap out an un-licensed video for a licensed video. It is a coonfirmation message.',
 	'lvs-confirm-keep-message' => 'This message is show in a modal when a user clicks a button to keep an un-licensed video as opposed to swapping it out for a licensed video. It is a coonfirmation message.',
+	'lvs-no-matching-videos' => 'Message shown when no video can be found that matches the title of the youtube video we intend to swap',
 );

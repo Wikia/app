@@ -12,6 +12,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	const THUMBNAIL_WIDTH = 500;
 	const THUMBNAIL_HEIGHT = 309;
 	const POSTED_IN_ARTICLES = 100;
+	const NUM_SUGGESTIONS = 6;
 
 	public function __construct() {
 		parent::__construct( 'LicensedVideoSwap', '', false );
@@ -92,8 +93,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// Go through each video and add additional detail needed to display the video
 		$videos = array();
 		foreach ( $videoList as $videoInfo ) {
-//			$readableTitle = preg_replace('/_/', ' ', $videoInfo['title']);
-//			$this->getVideoSuggestions($readableTitle);
+			$readableTitle = preg_replace('/_/', ' ', $videoInfo['title']);
+			$suggestions = $this->getVideoSuggestions($readableTitle);
 
 			$videoDetail = $helper->getVideoDetail( $videoInfo, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT, self::POSTED_IN_ARTICLES );
 			if ( !empty($videoDetail) ) {
@@ -101,6 +102,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 				$videoDetail['videoPlayButton'] = $playButton;
 				$videoDetail['videoOverlay'] = $videoOverlay;
+				$videoDetail['videoSuggestions'] = $suggestions;
 
 				$seeMoreLink = SpecialPage::getTitleFor("WhatLinksHere")->escapeLocalUrl();
 				$seeMoreLink .= '/' . $this->app->wg->ContLang->getNsText( NS_FILE ). ':' . $videoDetail['title'];
@@ -126,13 +128,43 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$videoTitle = $this->getVal( 'videoTitle', $title );
 
 		$app = F::App();
-		$videos = $app->sendRequest('WikiaSearchController',
+		$videoRows = $app->sendRequest('WikiaSearchController',
 									'searchVideosByTitle',
 									array('title' => $videoTitle))
-					  ->getData();
+						 ->getData();
+
+		// Reuse code from VideoHandlerHelper
+		$helper = new VideoHandlerHelper();
+
+		// Get the play button image to overlay on the video
+		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
+
+		$videos = array();
+		$count = 0;
+		foreach ($videoRows as $videoInfo) {
+			$videoDetail = $helper->getVideoDetail( $videoInfo,
+													self::THUMBNAIL_WIDTH,
+													self::THUMBNAIL_HEIGHT,
+													self::POSTED_IN_ARTICLES );
+			if ( empty($videoDetail) ) {
+				break;
+			}
+
+			$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
+			$videoDetail['videoPlayButton'] = $playButton;
+			$videoDetail['videoOverlay'] = $videoOverlay;
+
+			$videos[] = $videoDetail;
+
+			$count++;
+			if ( $count >= self::NUM_SUGGESTIONS ) {
+				break;
+			}
+		}
 
 		// The first video in the array is the top choice.
 		$this->videos = $videos;
+		return $videos;
 	}
 
 	/**

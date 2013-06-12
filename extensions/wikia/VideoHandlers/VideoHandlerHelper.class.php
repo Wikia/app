@@ -241,11 +241,15 @@ class VideoHandlerHelper extends WikiaModel {
 				// get thumbnail
 				$thumb = $file->transform( array( 'width' => $thumbWidth, 'height' => $thumbHeight ) );
 				$thumbUrl = $thumb->getUrl();
-
 				// get user
-				$user = User::newFromId( $videoInfo['addedBy'] );
-				$userName = ( User::isIP($user->getName()) ) ? $this->wf->Msg( 'oasis-anon-user' ) : $user->getName();
-				$userUrl = $user->getUserPage()->getFullURL();
+				if ( !empty($videoInfo['addedBy']) ) {
+					$user = User::newFromId( $videoInfo['addedBy'] );
+					$userName = ( User::isIP($user->getName()) ) ? $this->wf->Msg( 'oasis-anon-user' ) : $user->getName();
+					$userUrl = $user->getUserPage()->getFullURL();
+				} else {
+					$userName = '';
+					$userUrl = '';
+				}
 
 				// get article list
 				$mediaQuery = new ArticlesUsingMediaQuery( $title );
@@ -262,7 +266,7 @@ class VideoHandlerHelper extends WikiaModel {
 					'userUrl' => $userUrl,
 					'truncatedList' => $truncatedList,
 					'isTruncated' => $isTruncated,
-					'timestamp' => $videoInfo['addedAt'],
+					'timestamp' => empty($videoInfo['addedAt']) ? '' : $videoInfo['addedAt'],
 					'embedUrl' => $file->getHandler()->getEmbedUrl(),
 				);
 			}
