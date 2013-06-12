@@ -16,6 +16,7 @@ class EmailTemplatesHooksHelper {
 	 * @return bool
 	 */
 	public function onComposeCommonSubjectMail( Title $title, &$keys, &$subject, $editor ) {
+		wfProfileIn( __METHOD__ );
 
 		if ( array_key_exists( '$ACTION', $keys) ) {
 			$action = $keys['$ACTION'];
@@ -30,7 +31,7 @@ class EmailTemplatesHooksHelper {
 
 		/* Default subject may be put here */
 
-
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -38,6 +39,7 @@ class EmailTemplatesHooksHelper {
 	public function onComposeCommonBodyMail(Title $title, &$keys, &$body, User $editor, &$bodyHTML, &$postTransformKeys ) {
 		/* @var $wgContLang Language */
 		global $wgContLang;
+		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
 		if ( array_key_exists( '$ACTION', $keys) ) {
@@ -94,6 +96,7 @@ class EmailTemplatesHooksHelper {
 					'content' => $content,
 				);
 				$bodyHTML = $app->renderView( "EmailTemplates", "NewBlogPostMail", $body_params );
+				wfProfileOut( __METHOD__ );
 				return true;
 
 			}
@@ -101,7 +104,7 @@ class EmailTemplatesHooksHelper {
 
 		/* Default template may be put here */
 
-
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

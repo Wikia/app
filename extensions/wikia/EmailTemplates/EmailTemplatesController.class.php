@@ -25,6 +25,8 @@ class EmailTemplatesController extends WikiaController {
 	 * @param $params
 	 */
 	public function executePostInfo( $params ) {
+		wfProfileIn( __METHOD__ );
+
 		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
 
 		$this->post_url = $params['post_url'];
@@ -34,6 +36,7 @@ class EmailTemplatesController extends WikiaController {
 		$this->user_page_url = $params['user_page_url'];
 		$this->date = $params['date'];
 		$this->short_text = $params['short_text'];
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -42,10 +45,13 @@ class EmailTemplatesController extends WikiaController {
 	 * @param $params
 	 */
 	public function executeButton( $params ) {
+		wfProfileIn( __METHOD__ );
+
 		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
 
 		$this->link_url = $params['link_url'];
 		$this->link_text = $params['link_text'];
+		wfProfileOut( __METHOD__ );
 	}
 
 }
