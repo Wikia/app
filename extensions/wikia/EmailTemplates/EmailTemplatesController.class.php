@@ -11,17 +11,26 @@ class EmailTemplatesController extends WikiaController {
 		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
 
 		$this->language = $params['language'];
-		$this->greeting = $params['greeting'];
 		$this->content = $params['content'];
-		$this->link123 = $params['link'];
-		$this->linkTxt123 = $params['link_txt'];
 	}
 
-	public function executeBasicMail( $params ) {
+	public function executePostInfo( $params ) {
 		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
 
-		$this->language = $params['language'];
-		$this->content = $params['content'];
+		$this->post_url = $params['post_url'];
+		$this->post_title = $params['post_title'];
+		$this->avatar_url = $params['avatar_url'];
+		$this->username = $params['username'];
+		$this->user_page_url = $params['user_page_url'];
+		$this->date = $params['date'];
+		$this->short_text = $params['short_text'];
+	}
+
+	public function executeButton( $params ) {
+		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
+
+		$this->link_url = $params['link_url'];
+		$this->link_text = $params['link_text'];
 	}
 
 }
