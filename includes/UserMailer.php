@@ -554,6 +554,17 @@ class EmailNotification {
 			return;
 		}
 		if ( $wgEnotifUseJobQ ) {
+			/*
+ 			 * @TODO if $watchers array is too big it won't fit in job_params (blob) field in job table,
+			 * probably a good idea will be to slice it and add couple of jobs
+			 */
+			#<Wikia>
+			/* extract only plain data instead of whole objects to add as parameters to job queue */
+			$otherParamForJob = array(
+				'childTitle' => $otherParam['childTitle']->getText(),
+				'childTitleId' => $otherParam['childTitle']->getArticleId()
+			);
+			#<Wikia>
 			$params = array(
 				'editor' => $editor->getName(),
 				'editorID' => $editor->getID(),
@@ -564,7 +575,7 @@ class EmailNotification {
 				'watchers' => $watchers,
 				#<Wikia>
 				'action' => $action,
-				'otherParam' => $othersParam
+				'otherParam' => $otherParamForJob
 				#</Wikia>
 			);
 			$job = new EnotifNotifyJob( $title, $params );
@@ -764,9 +775,10 @@ class EmailNotification {
 		$keys['$PAGETITLE_URL'] = $this->title->getCanonicalUrl('s=wl');
 		$keys['$PAGEMINOREDIT'] = $this->minorEdit ? wfMsgForContent( 'minoredit' ) : '';
 		$keys['$UNWATCHURL'] = $this->title->getCanonicalUrl( 'action=unwatch' );
-		
+
 		# <Wikia>
 		$keys['$ACTION'] = $this->action;
+
 		wfRunHooks('MailNotifyBuildKeys', array( &$keys, $this->action, $this->other_param ));
 		# </Wikia>
 
@@ -904,7 +916,6 @@ class EmailNotification {
 			$body = array( 'text' => $body, 'html' => $bodyHTML );
 		}
 		# </Wikia>
-
 		return UserMailer::send( $to, $this->from, $this->subject, $body, $this->replyto );
 	}
 
