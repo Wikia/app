@@ -1,7 +1,6 @@
 <?php
 class SpecialCssModel extends WikiaModel {
 	const CSS_FILE_NAME = 'Wikia.css';
-	const CC_SERVER_NAME = 'http://community.lukaszk.wikia-dev.com/';
 	const CC_CITY_ID = 177;
 
 	/**
@@ -118,9 +117,12 @@ class SpecialCssModel extends WikiaModel {
 				$blogTitle = GlobalTitle::newFromId($blog['pageid'], self::CC_CITY_ID, 'wikia');
 				$cssBlogs[] = [
 					'title' => $blogTitle->getText(),
-					'blogUrl' => $blogTitle->getFullURL(),
-					'avatar' => AvatarService::renderAvatar($blogUser, 48),
-					'userpage' => AvatarService::getUrl($blogUser)
+					'url' => $blogTitle->getFullURL(),
+					'userAvatar' => AvatarService::renderAvatar($blogUser, 48),
+					'userUrl' => AvatarService::getUrl($blogUser),
+					'userName' => $blogUser,
+					'timestamp' => $cssUserJson[$blog['pageid']]['revisions'][0]['timestamp'],
+					'text' => $cssUserJson[$blog['pageid']]['revisions'][0]['*']
 				];
 			}
 		}
