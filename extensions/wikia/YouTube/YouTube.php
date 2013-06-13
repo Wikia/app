@@ -62,12 +62,20 @@ function wfParserFunction_magic(&$magicWords, $langCode){
 
 function upgradeYouTubeTag( $editpage, $request ) {
 	$text = $editpage->textbox1;
+
+	// Note that we match <nowiki> here to consume that text and any possible
+	// <youtube> tags within it.  We don't want to convert anything within <nowiki>
 	$text = preg_replace_callback(
-		'/<youtube([^>]*)>([^<]+)<\/youtube>/i',
+		'/(<nowiki>.*?<\/nowiki>)|(<youtube([^>]*)>([^<]+)<\/youtube>)/i',
 		function ($matches) {
+			// If we don't have a youtube match (its a nowiki tag) return as is
+			if ( empty($matches[2]) ) {
+				return $matches[0];
+			}
+
 			// Separate the Youtube ID and parameters
-			$paramText = trim($matches[1]);
-			$ytid   = $matches[2];
+			$paramText = trim($matches[3]);
+			$ytid   = $matches[4];
 
 			// Parse out the width and height parameters
 			$params = parseSizeParams($paramText);
