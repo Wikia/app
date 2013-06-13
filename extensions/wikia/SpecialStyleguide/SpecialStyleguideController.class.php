@@ -1,9 +1,18 @@
 <?php
 
+/**
+ * Class SpecialStyleguideController
+ * Controller that handles Special:Styleguide page
+ */
 class SpecialStyleguideController extends WikiaSpecialPageController {
+	/**
+	 * @var $model SpecialStyleguideDataModel
+	 */
+	private $model;
 
 	public function __construct() {
 		parent::__construct( 'Styleguide' );
+		$this->model = new SpecialStyleguideDataModel();
 	}
 
 	public function index() {
@@ -34,87 +43,15 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		$this->skipRendering();
 	}
 
+	/**
+	 * Returns rendered content of section given as param
+	 * @param $sectionName string
+	 * @return string
+	 */
 	public function getSectionContent($sectionName) {
 		return (new Wikia\Template\MustacheEngine)
 			->setPrefix( dirname(__FILE__) . '/templates' )
-			->setData($this->getSectionData($sectionName))
+			->setData($this->model->getSectionData($sectionName))
 			->render('SpecialStyleguide_' . $sectionName . '.mustache');
-	}
-
-	private function getSectionData($sectionName) {
-		$homePageData = [
-			'sections' => [
-				[
-					'header' => 'Lorem ipsum',
-					'paragraph' => 'Maecenas sed diam eget risus varius blandit.'
-				],
-				[
-					'header' => 'Lorem ipsum',
-					'paragraph' => 'Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit
-					sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas sed diam eget risus varius blandit sit amet non magna. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.',
-				],
-				[
-					'header' => 'Lorem ipsum',
-					'paragraph' => 'Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit
-					sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
-					'list' => [
-						[
-							'link' => '',
-							'linkTitle' => 'Lorem Ipsum',
-							'linkName' => 'Lorem Ipsum',
-							'linkTagline' => 'Lorem ipsum dolor'
-						],
-						[
-							'link' => '',
-							'linkTitle' => 'Lorem Ipsum',
-							'linkName' => 'Lorem Ipsum',
-							'linkTagline' => 'Lorem ipsum dolor'
-						],
-						[
-							'link' => '',
-							'linkTitle' => 'Lorem Ipsum',
-							'linkName' => 'Lorem Ipsum',
-							'linkTagline' => 'Lorem ipsum dolor'
-						]
-					]
-				]
-			]
-		];
-		$headerData = [
-			'home' => [
-				'mainHeader' => 'Lorem Ipsum Dolor',
-				'getStartedBtnLink' => '',
-				'getStartedBtnTitle' => 'Lorem Ipsum',
-				'getStartedBtnLabel' => 'Get started',
-				'version' => 'Version 1.0.0'
-			],
-			'tagLine' => 'Maecenas faucibus mollis interdum',
-		];
-		$footerData = [
-			'list' => [
-				[
-					'link' => '#',
-					'linkTitle' => 'Blog',
-					'linkLabel' => 'Blog'
-				],
-				[
-					'link' => '#',
-					'linkTitle' => 'Changelog',
-					'linkLabel' => 'Changelog'
-				]
-			]
-		];
-
-		switch ($sectionName) {
-			case 'home':
-				return $homePageData;
-				break;
-			case 'header':
-				return $headerData;
-				break;
-			case 'footer':
-				return $footerData;
-				break;
-		}
 	}
 }

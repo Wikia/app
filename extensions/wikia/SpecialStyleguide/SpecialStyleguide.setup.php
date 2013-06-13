@@ -24,10 +24,12 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // classes
-$app->registerController( 'SpecialStyleguideController', $dir . 'SpecialStyleguideController.class.php' );
+$wgAutoloadClasses['SpecialStyleguideController'] = $dir . 'SpecialStyleguideController.class.php';
+$wgAutoloadClasses['SpecialStyleguideDataModel'] = $dir . 'models/SpecialStyleguideDataModel.class.php';
 
 // special page
-$app->registerSpecialPage( 'Styleguide', 'SpecialStyleguideController', 'wikia' );
+$wgSpecialPages['Styleguide'] = 'SpecialStyleguideController';
+$wgSpecialPageGroups['Styleguide'] = 'wikia';
 
 // message files
-$app->registerExtensionMessageFile( 'SpecialStyleguide', $dir . 'SpecialStyleguide.i18n.php' );
+$wgExtensionMessagesFiles['SpecialStyleguide'] = $dir . 'SpecialStyleguide.i18n.php';
