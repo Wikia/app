@@ -53,6 +53,7 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/AbTesting.i18n.php", 'AbTesti
 
 // Embed the experiment/treatment config in the head scripts.
 $app->registerHook( 'WikiaSkinTopScripts', 'AbTesting', 'onWikiaSkinTopScripts' );
+$app->registerHook( 'WikiaMobileAssetsPackages', 'AbTesting', 'onWikiaMobileAssetsPackages' );
 // Add js code in Oasis
 $app->registerHook( 'OasisSkinAssetGroupsBlocking', 'AbTesting', 'onOasisSkinAssetGroupsBlocking' );
 

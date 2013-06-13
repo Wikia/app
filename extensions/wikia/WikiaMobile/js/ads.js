@@ -19,7 +19,38 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 	var STOP_COOKIE_NAME = 'wkStopAd',
 		ID_COOKIE_NAME = 'wikia_mobile_id',
 		fix,
-		unfix;
+		unfix,
+		inContent = 'MOBILE_IN_CONTENT',
+		top = 'MOBILE_TOP_LEADERBOARD',
+		floating = 'MOBILE_FLOATING_FOOTER',
+		modal = 'MOBILE_MODAL_INTERSTITAL',
+		TESTS = {
+			A: [
+				top,
+				inContent
+			],
+			B: [
+				top,
+				modal
+			],
+			C: [
+				inContent,
+				modal
+			],
+			D: [
+				top,
+				inContent,
+				modal
+			],
+			E: [
+				floating
+			]
+		},
+		ABTestGroup;
+
+	function getABTestGroup(){
+		return ABTestGroup = Wikia.AbTest.getGroup( "WIKIAMOBILEADSLOTS" ) || 'E';
+	}
 
 	/**
 	 * Stops ads requests from being made for a specific amount of time
@@ -66,17 +97,26 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 	 */
 	function setupSlot(options) {
 		if (shouldRequestAd()) {
-			postscribe(
-				options.wrapper,
-				'<script src="' +
-					dartHelper.getMobileUrl({
-						slotname: options.name,
-						size: options.size,
-						uniqueId: getUniqueId()
-					}) +
-				'"></script>',
-				findAd(options.wrapper, options.init)
-			);
+			var slotName = options.name;
+			console.log(slotName)
+			console.log(getABTestGroup())
+			console.log(TESTS[getABTestGroup()])
+			console.log(TESTS[getABTestGroup()].indexOf(slotName))
+			console.log(~TESTS[getABTestGroup()].indexOf(slotName))
+
+			if(~TESTS[getABTestGroup()].indexOf(slotName)) {
+				postscribe(
+					options.wrapper,
+					'<script src="' +
+						dartHelper.getMobileUrl({
+							slotname: slotName,
+							size: options.size,
+							uniqueId: getUniqueId()
+						}) +
+						'"></script>',
+					findAd(options.wrapper, options.init)
+				);
+			}
 
 			//this is temporary for testing ads
 			if(options.functions){

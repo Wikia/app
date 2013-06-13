@@ -21,14 +21,16 @@
 
 			sloth({
 				on: document.getElementById('wkAdInContent'),
-				threshold: 200,
+				threshold: 500,
 				callback: function(adWrapper){
 					ads.setupSlot({
-						name: 'MOBILE_IN_CONTENT',
+						name: 'MOBILE_TOP_LEADERBOARD',
 						size: '300x250',
 						wrapper: adWrapper,
-						init: function(){
-							console.log('loaded')
+						init: function(found){
+							if(found){
+								adWrapper.className = 'show';
+							}
 						}
 					});
 				}

@@ -144,7 +144,6 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'wikiaPageType',
 			'wgAdVideoTargeting',
 
-
 			//server/wiki
 			'wgServer',
 			'wgDBname',

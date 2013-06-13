@@ -53,12 +53,18 @@ $slotZIndex: 4000;
 }
 
 #wkAdInContent {
-	padding: 3px;
-	margin: 0 auto;
+	visibility: hidden;
 
-	border-top: 1px solid grey;
-	border-bottom: 1px solid grey;
+	&.show {
+		padding: 10px 0;
+		margin: 0 auto;
 
-	height: 250px;
-	width: 300px;
+		border-top: 1px solid $border-color;
+		border-bottom: 1px solid $border-color;
+
+		height: 250px;
+		width: 300px;
+
+		visibility: visible;
+	}
 }

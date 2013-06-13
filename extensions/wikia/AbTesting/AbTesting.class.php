@@ -39,7 +39,7 @@ class AbTesting extends WikiaObject {
 
 	// Keeping the response size (assets minification) and the number of external requests low (aggregation)
 	public function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ) {
-		array_unshift( $jsHeadPackages, 'abtesting' );
+		array_push( $jsBodyPackages, 'abtesting' );
 		return true;
 	}
 
@@ -51,6 +51,9 @@ class AbTesting extends WikiaObject {
 	public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
 		if ( $this->app->checkSkin( 'oasis', $skin ) ) {
 			$scripts .= ResourceLoader::makeCustomLink($this->wg->out, array( 'wikia.ext.abtesting' ), 'scripts') . "\n";
+		}
+		if ( $this->app->checkSkin( 'wikiamobile', $skin ) ) {
+			$scripts .= '<script>' . $this->getConfigScript() . '</script>';
 		}
 		return true;
 	}
