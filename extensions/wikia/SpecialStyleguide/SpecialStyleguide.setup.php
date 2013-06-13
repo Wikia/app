@@ -26,7 +26,7 @@ $wgExtensionCredits['specialpage'][] = array(
 // classes
 $wgAutoloadClasses['SpecialStyleguideController'] = $dir . 'SpecialStyleguideController.class.php';
 $wgAutoloadClasses['SpecialStyleguideDataModel'] = $dir . 'models/SpecialStyleguideDataModel.class.php';
-$wgAutoloadClasses['iStyleguideSectionDataProvider'] = $dir . 'models/sectiondataproviders/iStyleguideSectionDataProvider.class.php';
+$wgAutoloadClasses['iStyleguideSectionDataProvider'] = $dir . 'models/sectiondataproviders/iStyleguideSectionDataProvider.php';
 $wgAutoloadClasses['StyleguideFooterSectionDataProvider'] = $dir . 'models/sectiondataproviders/StyleguideFooterSectionDataProvider.class.php';
 $wgAutoloadClasses['StyleguideHeaderSectionDataProvider'] = $dir . 'models/sectiondataproviders/StyleguideHeaderSectionDataProvider.class.php';
 $wgAutoloadClasses['StyleguideHomePageSectionDataProvider'] = $dir . 'models/sectiondataproviders/StyleguideHomePageSectionDataProvider.class.php';
