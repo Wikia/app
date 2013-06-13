@@ -27,7 +27,7 @@ class GlobalHeaderController extends WikiaController {
 			0 => [ 'children' => [ 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5 ] ],
 			1 => [ 'original' => '#', 'text' => wfMessage( 'styleguide-home' )->plain(), 'href' => '#', 'specialAttr' => 'active', 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
 			2 => [ 'original' => '#', 'text' => wfMessage( 'styleguide-get-started' )->plain(), 'href' => '#', 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
-			3 => [ 'original' => '#', 'text' => wfMessage( 'styleguide-base-styles' )->plain(), 'href' => '#', 'specialAttr' => 'active', 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
+			3 => [ 'original' => '#', 'text' => wfMessage( 'styleguide-base-styles' )->plain(), 'href' => '#', 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
 			4 => [ 'original' => '#', 'text' => wfMessage( 'styleguide-components' )->plain(), 'href' => '#', 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ],
 			5 => [ 'original' => '#', 'text' => wfMessage( 'styleguide-design' )->plain(), 'href' => '#', 'specialAttr' => null, 'parentIndex' => 0, 'depth' => 0, 'children' => [ ] ] ];
 

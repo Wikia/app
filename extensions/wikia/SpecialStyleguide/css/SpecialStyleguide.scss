@@ -42,6 +42,9 @@ h1 {
 .GlobalNavigation {
 	>li {
 		padding: 0;
+		&.active {
+			background-color: $color-buttons;
+		}
 		>a {
 			height: 36px;
 			font-size: 14px;
