@@ -1,5 +1,8 @@
-<aside class=wkAdPlace>
-<div id=wkAdInterstitial><script>window.addEventListener('load', function () {
-	require(['ads'], function (ads) { ads.setupSlot('MOBILE_MODAL_INTERSTITIAL', '300x250'); });
-});</script></div>
-</aside>
+<script>window.addEventListener('load', function () {
+	require(['ads'], function (ads) {
+		ads.setupSlot({
+			name: 'MOBILE_MODAL_INTERSTITIAL',
+			size: '300x250'
+		});
+	});
+});</script>

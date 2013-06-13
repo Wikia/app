@@ -49,7 +49,7 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 		ABTestGroup;
 
 	function getABTestGroup(){
-		return ABTestGroup = Wikia.AbTest.getGroup( "WIKIAMOBILEADSLOTS" ) || 'E';
+		return ABTestGroup = Wikia.AbTest.getGroup( 'WIKIAMOBILEADSLOTS' ) || 'E';
 	}
 
 	/**
@@ -96,13 +96,11 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 	 * 		init - function to be called
 	 */
 	function setupSlot(options) {
+		console.log(getABTestGroup());
 		if (shouldRequestAd()) {
 			var slotName = options.name;
 			console.log(slotName)
-			console.log(getABTestGroup())
-			console.log(TESTS[getABTestGroup()])
-			console.log(TESTS[getABTestGroup()].indexOf(slotName))
-			console.log(~TESTS[getABTestGroup()].indexOf(slotName))
+			console.log(!!~TESTS[getABTestGroup()].indexOf(slotName))
 
 			if(~TESTS[getABTestGroup()].indexOf(slotName)) {
 				postscribe(
