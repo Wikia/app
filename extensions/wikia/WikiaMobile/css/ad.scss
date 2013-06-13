@@ -44,12 +44,16 @@ $slotZIndex: 4000;
 }
 
 #wkAdTopLeader {
-	background: rgb(255, 255, 255);
+	visibility: hidden;
 
-	width: 320px;
-	height: 50px;
+	&.show {
+		visibility: visible;
 
-	margin: 0 auto;
+		width: 320px;
+		height: 50px;
+
+		margin: 0 auto;
+	}
 }
 
 #wkAdInContent {

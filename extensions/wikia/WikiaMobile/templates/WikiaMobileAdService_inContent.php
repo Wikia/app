@@ -1,4 +1,5 @@
 <script>window.addEventListener('load', function () {
+if(~['A', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
 	require(['ads', 'sloth', 'wikia.utils'], function (ads, sloth, $) {
 		var MIN_ZEROTH_SECTION_LENGTH = 1000,
 			firstSection = document.getElementsByClassName('collSec')[0];
@@ -16,8 +17,10 @@
 						size: '300x250',
 						wrapper: adWrapper,
 						init: function(found){
-							if(found){
+							if(found) {
 								adWrapper.className = 'show';
+							}else{
+								adWrapper.parentElement.removeChild(adWrapper);
 							}
 						}
 					});
@@ -25,4 +28,5 @@
 			})
 		}
 	});
+}
 });</script>
