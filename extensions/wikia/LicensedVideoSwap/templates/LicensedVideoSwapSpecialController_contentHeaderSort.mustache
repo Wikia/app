@@ -1,4 +1,4 @@
-<div class="ContentHeader sort-form" {{#containerId}} id="{{containerId}}"{{/containerId}} >
+<div class="ContentHeader sort-form" {{#containerId}} id="{{containerId}}" {{/containerId}} >
 	<label>{{label}}</label>
 
 	<div class="WikiaDropdown">
@@ -9,9 +9,9 @@
 		<div class="dropdown">
 			<ul class="dropdown-list">
 				{{#sortOptions}}
-					<li class="dropdown-item{{#selected}} selected{{/selected}}">
-						<label data-sort="{{value}}">{{label}}</label>
-					</li>
+				<li class="dropdown-item{{#selected}} selected{{/selected}}">
+					<label data-sort="{{value}}">{{label}}</label>
+				</li>
 				{{/sortOptions}}
 			</ul>
 		</div>

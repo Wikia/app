@@ -273,7 +273,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->result = 'ok';
 
 		$fileUrl = $newFile->getTitle()->getLocalURL();
-		$this->msg = $this->wf->Message( 'lvs-swap-video-success', array( $fileUrl, $undoUrl ) )->text();
+		$this->msg = $this->wf->Message( 'lvs-swap-video-success', array( $fileUrl, $undoUrl ) )->parse();
 	}
 
 	/**
@@ -412,6 +412,16 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->videoList = $this->getVal( 'videoList', array() );
 		$this->thumbWidth = self::THUMBNAIL_WIDTH;
 		$this->thumbHeight = self::THUMBNAIL_HEIGHT;
+	}
+
+	public function contentHeaderSort() {
+		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
+
+		$this->label = $this->getVal('label');
+		$this->sortMsg = $this->getVal('sortMsg');
+		$this->sortOptions = $this->getVal('sortOptions');
+		$this->containerId = $this->getVal('containerId');
+		$this->blankImgUrl = $this->wg->BlankImgUrl;
 	}
 
 }

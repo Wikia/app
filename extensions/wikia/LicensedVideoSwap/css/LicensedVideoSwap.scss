@@ -1,5 +1,6 @@
 @import "../../../../skins/oasis/css/mixins/arrow";
 @import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
 @import "mixins/_sprite-LicensedVideoSwap";
@@ -46,12 +47,34 @@ $arrow-button-color: white;
 }
 
 .ContentHeader {
-	@include clearfix;
-	border-bottom: 1px solid $color-page-border-subtle;
-	border-top: 1px solid $color-page-border-subtle;
-	margin-bottom: 18px;
-	padding: 18px 0;
+  @include clearfix;
+  border-bottom: 1px solid $color-page-border-subtle;
+  border-top: 1px solid $color-page-border-subtle;
+  margin-bottom: 18px;
+  padding: 18px 0;
+  > label {
+    display: block;
+    float: left;
+    font-weight: bold;
+    line-height: 21px;
+    margin-right: 8px;
+  }
+
+  .WikiaDropdown {
+    float:left;
+    .dropdown {
+      @include box-shadow(0, 0, 0, transparent, 0, 0);
+      width: 215px;
+      .selected {
+        display: none;
+      }
+    }
+    strong {
+      font-weight: normal;
+    }
+  }
 }
+
 
 .LVSGrid {
 	.lvs-sprite:before {
