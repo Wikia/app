@@ -3,6 +3,8 @@
 $alter-background-color: mix($color-page, #000, 90%);
 body {
 	background-image: none;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-rendering: optimizeLegibility;
 	font-size: 14px;
 	line-height: 22px;
 	padding-bottom: 0;
@@ -12,7 +14,7 @@ h1 {
 	line-height: 60px;
 }
 .light-font {
-	font-weight: 100;
+	font-weight: 200;
 }
 .WikiaHeader {
 	border: none;
@@ -54,7 +56,7 @@ h1 {
 	}
 	a:hover {
 		background-image: none;
-		background-color: mix($color-buttons, #fff, 65%);
+		background-color: $color-buttons;
 	}
 }
 
