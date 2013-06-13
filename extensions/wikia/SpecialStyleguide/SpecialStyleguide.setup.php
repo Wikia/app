@@ -12,16 +12,16 @@
 $dir = dirname( __FILE__ ) . '/';
 $app = F::app();
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'Special:Styleguide',
 	'description' => 'Extension to present a library of reusable components with usage examples',
 	'descriptionmsg' => 'styleguide-descriptionmsg',
-	'authors' => array(
+	'authors' => [
 		'Rafał Leszczyński',
 		'Sebastian Marzjan',
-	),
+	],
 	'version' => 1.0
-);
+];
 
 // classes
 $wgAutoloadClasses['SpecialStyleguideController'] = $dir . 'SpecialStyleguideController.class.php';
