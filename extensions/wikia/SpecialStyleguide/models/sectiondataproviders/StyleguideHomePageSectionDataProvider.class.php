@@ -12,7 +12,7 @@ class StyleguideHomePageSectionDataProvider implements iStyleguideSectionDataPro
 			'sections' => [
 				[
 					'header' => wfMessage( 'styleguide-home-welcome-message' )->plain(),
-					'paragraph' => wfMessage( 'styleguide-home-welcome-message' )->plain(),
+					'paragraph' => wfMessage( 'styleguide-home-welcome-tagline' )->plain(),
 				],
 				[
 					'header' => wfMessage( 'styleguide-home-stakeholders-header' )->plain(),

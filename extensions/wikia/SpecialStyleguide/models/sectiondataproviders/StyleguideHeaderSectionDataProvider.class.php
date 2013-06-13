@@ -12,8 +12,8 @@ class StyleguideHeaderSectionDataProvider implements iStyleguideSectionDataProvi
 			'home' => [
 				'mainHeader' => wfMessage( 'styleguide-home-header' )->plain(),
 				'getStartedBtnLink' => '',
-				'getStartedBtnTitle' => wfMessage( 'styleguide-getting-started' )->plain(),
-				'getStartedBtnLabel' => wfMessage( 'styleguide-getting-started' )->plain(),
+				'getStartedBtnTitle' => wfMessage( 'styleguide-get-started' )->plain(),
+				'getStartedBtnLabel' => wfMessage( 'styleguide-get-started' )->plain(),
 				'version' => 'Version 1.0.0'
 			],
 			'tagLine' => wfMessage( 'styleguide-home-header-tagline' )->plain(),
