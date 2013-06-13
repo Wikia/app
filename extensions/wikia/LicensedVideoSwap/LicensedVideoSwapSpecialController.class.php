@@ -259,7 +259,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$undoUrl = '';
 		}
 
-		// TODO: add log
+		// add to log
+		$reason = wfMessage( 'lvs-log-swap' )->text();
+		$helper->addLog( $file->getTitle(), 'licensedvideoswap_swap', $reason );
+
 		// TODO: send request for tracking
 
 		$selectedSort = $this->getVal( 'sort', 'recent' );
@@ -356,9 +359,24 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		// delete the status of this file page
+		// get the status of this file page
 		$articleId = $file->getTitle()->getArticleID();
-		$this->wf->DeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
+		$status = wfGetWikiaPageProp( WPP_LVS_STATUS, $articleId );
+		if ( empty( $status ) ) {
+			$this->html = '';
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videohandler-error-video-no-exist' )->text();
+			return;
+		}
+
+		// delete the status of this file page
+		wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
+
+		// add log for undo swapping video only
+		if ( $status != LicensedVideoSwapHelper::STATUS_KEEP ) {
+			$reason = wfMessage( 'lvs-log-restore' )->text();
+			$helper->addLog( $file->getTitle(), 'licensedvideoswap_restore', $reason );
+		}
 
 		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );

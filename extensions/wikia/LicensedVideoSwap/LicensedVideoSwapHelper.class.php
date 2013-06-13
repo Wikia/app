@@ -8,9 +8,10 @@
  */
 class LicensedVideoSwapHelper extends WikiaModel {
 
-	const STATUS_KEEP = 0;
-	const STATUS_SWAP_NORM = 1;
-	const STATUS_SWAP_EXACT = 2;
+	const STATUS_KEEP = 1;
+	const STATUS_SWAP_NORM = 2;
+	const STATUS_SWAP_EXACT = 3;
+
 	/**
 	 * Gets a list of videos that have not yet been swapped (e.g., no decision to keep or not keep the
 	 * original video has been made)
@@ -117,6 +118,17 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 */
 	public function setSwapExactStatus( $articleId ) {
 		$this->wf->SetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SWAP_EXACT );
+	}
+
+	/**
+	 * add log to RecentChange
+	 * @param Title $title
+	 * @param string $action
+	 * @param string $reason
+	 */
+	public function addLog( $title, $action, $reason = '' ) {
+		$user = $this->wg->User;
+		RecentChange::notifyLog( wfTimestampNow(), $title, $user, '', '', RC_EDIT, $action, $title, $reason, '' );
 	}
 
 }
