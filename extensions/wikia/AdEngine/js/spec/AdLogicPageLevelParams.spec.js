@@ -399,10 +399,8 @@ describe('AdLogicPageLevelParams', function(){
 		expect(params.hasp).toBe('yes');
 	});
 
-	// not tested, js test runner is dead )))-: OPS-3744
 	it('getPageLevelParams Krux segments on regular and on COPPA wiki', function() {
 		var logMock = function() {},
-			kruxMockNone = {segments: []},
 			kruxMockFew = {segments: ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD']},
 			windowMockRegular = {
 				location: {hostname: 'an.example.org'}
@@ -412,7 +410,6 @@ describe('AdLogicPageLevelParams', function(){
 				wgDisableKruxKV: true
 			},
 			adLogicShortPageMock,
-			kruxMock = {},
 			abTestMock,
 			adLogicPageLevelParams,
 			params;
@@ -423,7 +420,6 @@ describe('AdLogicPageLevelParams', function(){
 
 		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMockCOPPA, kruxMockFew, adLogicShortPageMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
-		expect(params.ksgmnt).toEqual(kruxMockNone.segments, 'No Krux on COPPA wiki');
+		expect(params.ksgmnt).toBeUndefined('No Krux on COPPA wiki');
 	});
-
 });
