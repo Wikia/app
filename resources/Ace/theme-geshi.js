@@ -32,11 +32,12 @@ define('ace/theme/geshi', ['require', 'exports', 'module' , 'ace/lib/dom'], func
 
 	exports.isDark = false;
 	exports.cssClass = "ace-geshi";
-	exports.cssText = "\.\
+	exports.cssText = "\
 .ace-geshi .ace_gutter {\
-background: #ebebeb;\
-color: #333;\
 overflow : hidden;\
+}\
+.ace_editor {\
+color:inherit;\
 }\
 .ace-geshi .ace_print-margin {\
 width: 1px;\
@@ -63,14 +64,10 @@ color: rgb(191, 191, 191);\
 .ace-geshi .ace_variable {\
 color: #6666FF;\
 }\
-.ace-geshi .ace_line {\
-color: #3A3A3A;\
-}\
 .ace-geshi .ace_paren {\
 color: #00AA00;\
 }\
 \.ace-geshi .ace_type {\
-color: #000000;\
 font-weight: bold;\
 }\
 \.ace-geshi .ace_keyword {\
@@ -105,11 +102,8 @@ border: 1px solid rgb(192, 192, 192);\
 .ace-geshi .ace_marker-layer .ace_active-line {\
 background: rgba(0, 0, 0, 0.07);\
 }\
-.ace-geshi .ace_marker-layer .ace_active-line {\
-background: rgba(0, 0, 0, 0.07);\
-}\
 .ace-geshi .ace_gutter-active-line {\
-background-color : #dcdcdc;\
+background-color : #aaa;\
 }\
 .ace-geshi .ace_marker-layer .ace_selection {\
 background: rgb(181, 213, 255);\

@@ -3,11 +3,15 @@
 .css-editor {
 	float: left;
 	width: 700px;
-	.css-editor-textarea {
+	.css-editor-container {
 		width: 100%;
 		min-height: 400px;
 		font-size: 13px;
 		padding: 0;
+
+		.ace_scrollbar {
+			display: none;
+		}
 	}
 }
 
@@ -24,4 +28,5 @@
 .css-footer {
 	clear: both;
 	margin: 0 0 20px 0;
+	padding-top: 20px;
 }
