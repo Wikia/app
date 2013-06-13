@@ -66,9 +66,31 @@ h1 {
 		padding: 0 65px 65px;
 		text-align: center;
 		width: 50%;
+		&:first-child {
+			float: none;
+			margin: 0 auto;
+			width: 100%;
+			p {
+				font-size: 1.5rem;
+				font-weight: 100;
+				line-height: 34px;
+			}
+		}
+		&:last-child {
+			border-left: 1px solid $color-page-border;
+		}
+		h1 {
+			padding-top: 65px;
+		}
 	}
-	section:first-child {
-		float: none;
-		margin: 0 auto;
+	li {
+		padding-top: 15px;
+		&:first-child {
+			padding-top: 25px;
+		}
+		small {
+			display: block;
+			line-height: 16px;
+		}
 	}
 }

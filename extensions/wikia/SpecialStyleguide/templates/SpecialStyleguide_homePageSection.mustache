@@ -1,12 +1,12 @@
 <section>
 	<h1 class="light-font">{{header}}</h1>
 	<p>{{paragraph}}</p>
-	{{#list}}
-		<ul>
-			<li>
-				<a href="{{link}}" title="{{linkTitle}}">{{linkName}}</a>
-				<small>{{linkTagline}}<small>
-			</li>
-		</ul>
-	{{/list}}
+	<ul>
+		{{#list}}
+				<li>
+					<a href="{{link}}" title="{{linkTitle}}">{{linkName}}</a>
+					<small>{{linkTagline}}</small>
+				</li>
+		{{/list}}
+	</ul>
 </section>
