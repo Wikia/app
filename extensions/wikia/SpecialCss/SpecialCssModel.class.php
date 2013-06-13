@@ -114,15 +114,18 @@ class SpecialCssModel extends WikiaModel {
 		if ( $cssBlogsJson ) {
 			foreach ( $cssBlogsJson as $blog ) {
 				$blogUser = $cssUserJson[$blog['pageid']]['revisions'][0]['user'];
-				$blogTitle = GlobalTitle::newFromId($blog['pageid'], self::CC_CITY_ID, 'wikia');
-				$userPage = GlobalTitle::newFromText($blogUser, NS_USER, self::CC_CITY_ID);
+				$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, self::CC_CITY_ID );
+				$timestamp = $cssUserJson[$blog['pageid']]['revisions'][0]['timestamp'];
+				
+				$blogTitle = GlobalTitle::newFromId( $blog['pageid'], self::CC_CITY_ID, 'wikia' );
+				
 				$cssBlogs[] = [
-					'title' => $this->getCleanTitle($blogTitle->getText()),
+					'title' => $this->getCleanTitle( $blogTitle->getText() ),
 					'url' => $blogTitle->getFullURL(),
-					'userAvatar' => AvatarService::renderAvatar($blogUser, 25),
+					'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
 					'userUrl' => $userPage->getFullUrl(),
 					'userName' => $blogUser,
-					'timestamp' => $this->getFormattedTimestamp($cssUserJson[$blog['pageid']]['revisions'][0]['timestamp']),
+					'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
 					'text' => $cssUserJson[$blog['pageid']]['revisions'][0]['*']
 				];
 			}
@@ -137,14 +140,10 @@ class SpecialCssModel extends WikiaModel {
 		
 		if( $slashPosition !== false ) {
 			$slashPosition++;
-			$result = mb_strcut($titleText, $slashPosition);
+			$result = mb_strcut( $titleText, $slashPosition );
 		}
 		
 		return $result;
-	}
-	
-	private function getFormattedTimestamp($timestamp) {
-		return wfTimestamp(TS_ISO_8601, $timestamp);
 	}
 
 	private function getCssBlogJsonData($params) {
