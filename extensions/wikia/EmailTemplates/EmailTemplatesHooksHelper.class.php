@@ -37,8 +37,8 @@ class EmailTemplatesHooksHelper {
 
 
 	public function onComposeCommonBodyMail(Title $title, &$keys, &$body, User $editor, &$bodyHTML, &$postTransformKeys ) {
-		/* @var $wgContLang Language */
-		global $wgContLang, $wgEnableWikiaFollowedPages, $wgEnableWikiaFollowedPagesOnlyPrefs;
+		/* @var $wgLang Language */
+		global $wgLang, $wgEnableWikiaFollowedPages, $wgEnableWikiaFollowedPagesOnlyPrefs;
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 		if ( array_key_exists( '$ACTION', $keys) ) {
@@ -70,7 +70,7 @@ class EmailTemplatesHooksHelper {
 				if ( $oRevision instanceof Revision ) {
 					$timestamp = $oRevision->getTimestamp();
 				}
-				$date = $wgContLang->date(wfTimestamp(TS_MW, $timestamp));
+				$date = $wgLang->date(wfTimestamp(TS_MW, $timestamp));
 				/* render blog post info (avatar, author, date, title and short text) */
 				$post_info_params = array(
 					'language' => $app->wg->LanguageCode,
@@ -89,7 +89,7 @@ class EmailTemplatesHooksHelper {
 				$button_params = array(
 					'language' => $app->wg->LanguageCode,
 					'link_url' => $oPostTitle->getFullURL(),
-					'link_text' => wfMsgForContent( 'read-the-whole-post' )
+					'link_text' => wfMessage( 'read-the-whole-post' )->plain()
 				);
 				$buttonHTML= $app->renderView( "EmailTemplates", "Button", $button_params );
 				$keys['$BUTTON'] = $buttonHTML;
