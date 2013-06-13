@@ -2,6 +2,7 @@ require( ['wikia.querystring', 'wikia.localStorage', 'wikia.videoBootstrap'], fu
 
 var LVS = {
 	init: function() {
+console.log('init')
 		this.$container = $( '#LVSGrid' );
 		this.videoWidth = this.$container.find( '.grid-3' ).first().width();
 
@@ -133,11 +134,10 @@ var LVS = {
 	},
 	initSwapOrKeep: function() {
 		var that = this;
-
 		function doRequest( isSwap, currTitle,  newTitle, $row ){
 			var data = {
 				videoTitle: currTitle,
-				selectedSort: 'latest', // TODO: make this dynamic
+				sort: 'recent', // TODO: make this dynamic
 				currentPage: 1 // TODO: make this dynamic
 			};
 
@@ -190,7 +190,7 @@ var LVS = {
 				isSwap = $this.is( '.swap-button' ),
 				newTitle,
 				currTitle;
-
+console.log( e.type );
 			if ( isSwap ) {
 				// swap button hovered
 				if ( e.type == 'mouseover' ) {
