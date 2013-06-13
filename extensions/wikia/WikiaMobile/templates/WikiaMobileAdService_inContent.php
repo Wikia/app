@@ -24,7 +24,7 @@
 				threshold: 200,
 				callback: function(adWrapper){
 					ads.setupSlot({
-						name: 'MOBILE_TOP_LEADERBOARD',
+						name: 'MOBILE_IN_CONTENT',
 						size: '300x250',
 						wrapper: adWrapper,
 						init: function(){
