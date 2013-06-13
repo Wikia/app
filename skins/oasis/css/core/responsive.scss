@@ -6,6 +6,14 @@ $width-padding: $width-gutter / 2;
 $width-adskin: 170px;
 $width-outside-min: 768px;
 $width-outside-max: 1600px;
+$bg-gradient-width: 40px;
+$responsive-breakpoint: $width-outside + ($width-adskin * 2) + 2;
+$bg-margin: $responsive-breakpoint / 2;
+
+body.mediawiki {
+	/*background: $color-body url($background-image) top $background-align repeat;/* /* $wgCdnStylePath */
+	background: $color-body;
+}
 
 body {
 	min-width: $width-outside-min;
@@ -244,9 +252,37 @@ body > .global-notification,
 	}
 }
 
+.wikia-background-image-left {
+	background: url('http://mech.linuxpl.eu/Wiki-background-left.jpeg') no-repeat right;
+	height: 1000px;
+	left:0;
+	max-width: $bg-margin;
+	position: absolute;
+	width: 50%;
+}
+
+.wikia-background-image-right {
+	background: url('http://mech.linuxpl.eu/Wiki-background-right.jpeg') no-repeat left;
+	height: 1000px;
+	max-width: $bg-margin;
+	position: absolute;
+	right: 0;
+	width: 50%;
+}
+
+.wikia-background-gradient-wrapper {
+	height: 1000px;
+	position: absolute;
+	width: 100%;
+}
+
 @media screen and (max-width: 1030px) {
 	body {
 		background: $color-page;
+	}
+
+	.wikia-background-image-left, .wikia-background-image-right, .wikia-background-gradient-wrapper {
+		display: none
 	}
 
 	.WikiHeader .WikiNav {
@@ -276,11 +312,21 @@ body > .global-notification,
 	}
 }
 
-@media screen and (min-width: $width-outside + ($width-adskin * 2) + 2) {
+@media screen and (min-width: $responsive-breakpoint) {
 	body > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		margin: 0 $width-adskin;
+		width: auto;
+	}
+
+	.wikia-background-gradient {
+		background: linear-gradient(to right, rgba($color-body, 0), $color-body $bg-gradient-width, $color-body 50%, rgba($color-body, 0) 51%) no-repeat border-box,
+		linear-gradient(to left , rgba($color-body, 0), $color-body $bg-gradient-width, $color-body 50%, rgba($color-body, 0) 51%) no-repeat border-box;
+		height: 100%;
+		margin-left: $bg-margin - $bg-gradient-width;
+		margin-right: $bg-margin - $bg-gradient-width;
+		position: relative;
 		width: auto;
 	}
 }
