@@ -55,7 +55,7 @@ class GWTWikiRepository {
 	public function allUnassignedGt( $minPageCount ) {
 		$result = $this->databaseConnection->select("webmaster_sitemaps"
 			, ["user_id", "wiki_id", "upload_date", "page_count"]
-			, ["upload_date" => null, "page_count" => "> " . intval($minPageCount) ]
+			, ["upload_date" => null, "page_count > " . intval($minPageCount) ]
 			, __METHOD__
 			, [ "ORDER BY" => "page_count DESC" ]);
 		return $this->materializeList($result);
