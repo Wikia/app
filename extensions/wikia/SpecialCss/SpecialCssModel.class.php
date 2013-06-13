@@ -4,11 +4,12 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc The article page name of CSS file of which content we display in the editor
 	 */
 	const CSS_FILE_NAME = 'Wikia.css';
-
 	/**
 	 * @desc The city_id of community wiki from which we pull blog posts data
 	 */
-	const CC_CITY_ID = 177;
+	const COMMUNITY_CENTRAL_CITY_ID = 177;
+
+	const USER_AVATAR_SIZE = 25;
 
 	/**
 	 * @desc The category of blogposts we pull data from
@@ -131,35 +132,46 @@ class SpecialCssModel extends WikiaModel {
 		return SpecialPage::getTitleFor('CSS');
 	}
 
-	public function getCssBlogData($params = []) {
-		$cssBlogs = [];
+	/**
+	 * @desc Returns an array of 20 last CSS updates
+	 *
+	 * @param array $blogParams parameters for api to fetch blog data
+	 * @param array $revisionsParams parameters for api to fetch revisions data including user info
+	 * @return array
+	 */
+	public function getCssBlogData($blogParams = [], $revisionsParams = []) {
+		$cssBlogs = WikiaDataAccess::cache(
+			wfSharedMemcKey('css-chrome-updates'),
+			60 * 60 * 24,
+			function () use ($blogParams, $revisionsParams) {
+				$cssBlogs = [];
+				$cssBlogsData = $this->getCssBlogApiData($blogParams);
+				$ids = $this->getBlogsIds($cssBlogsData);
+				$cssRevisionsData = $this->getCssRevisionsApiData($ids, $revisionsParams);
 
-		$cssBlogsJson = $this->getCssBlogJsonData($params);
-		$ids = $this->getBlogsIds($cssBlogsJson);
-		$cssUserJson = $this->getCssRevisionsJsonData($ids, $params);
+				if ( $cssBlogsData ) {
+					foreach ( $cssBlogsData as $blog ) {
+						$pageId = $blog['pageid'];
+						$blogUser = $cssRevisionsData[$blog['pageid']]['revisions'][0]['user'];
+						$blogTitle = GlobalTitle::newFromId($blog['pageid'], self::COMMUNITY_CENTRAL_CITY_ID, 'wikia');
+						$userPage = GlobalTitle::newFromText($blogUser, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID);
+						$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
+						$sectionText = $cssRevisionsData[$pageId]['revisions'][0]['*'];
 
-		if ( $cssBlogsJson ) {
-			foreach ( $cssBlogsJson as $blog ) {
-				$pageId = $blog['pageid'];
-				$blogUser = $cssUserJson[$pageId]['revisions'][0]['user'];
-				$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, self::CC_CITY_ID );
-				$timestamp = $cssUserJson[$pageId]['revisions'][0]['timestamp'];
-				
-				$blogTitle = GlobalTitle::newFromId( $pageId, self::CC_CITY_ID, 'wikia' );
-
-				$sectionText = $cssUserJson[$pageId]['revisions'][0]['*'];
-				
-				$cssBlogs[] = [
-					'title' => $this->getCleanTitle( $blogTitle->getText() ),
-					'url' => trim( $blogTitle->getFullURL() . $this->addAnchorToPostUrl( $sectionText ) ),
-					'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
-					'userUrl' => $userPage->getFullUrl(),
-					'userName' => $blogUser,
-					'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
-					'text' => $this->getPostSnippet($blogTitle, $sectionText),
-				];
+						$cssBlogs[] = [
+							'title' => $this->getCleanTitle( $blogTitle->getText() ),
+							'url' => trim( $blogTitle->getFullURL() . $this->addAnchorToPostUrl( $sectionText ) ),
+							'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
+							'userUrl' => $userPage->getFullUrl(),
+							'userName' => $blogUser,
+							'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
+							'text' => $this->getPostSnippet($blogTitle, $sectionText),
+						];
+					}
+				}
+				return $cssBlogs;
 			}
-		}
+		);
 
 		return $cssBlogs;
 	}
@@ -226,7 +238,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc Removes from given string first slash and the string before it
 	 * 
 	 * @param String $titleText
-	 * 
+	 *
 	 * @return string
 	 */
 	private function getCleanTitle($titleText) {
@@ -241,7 +253,23 @@ class SpecialCssModel extends WikiaModel {
 		return $result;
 	}
 
-	private function getCssBlogJsonData($params) {
+	/**
+	 * @desc Returns formatted timestamp
+	 *
+	 * @param $timestamp
+	 * @return Mixed|string
+	 */
+	private function getFormattedTimestamp($timestamp) {
+		return wfTimestamp(TS_ISO_8601, $timestamp);
+	}
+
+	/**
+	 * @desc Returns information about 20 last CSS updates (page id, namespace and post title)
+	 *
+	 * @param $params
+	 * @return array
+	 */
+	private function getCssBlogApiData($params) {
 		$defaultParams = $this->getDefaultBlogParams();
 		$params = array_merge($defaultParams, $params);
 		$blogs = $this->getApiData($params);
@@ -249,7 +277,14 @@ class SpecialCssModel extends WikiaModel {
 		return isset( $blogs['query']['categorymembers'] ) ? $blogs['query']['categorymembers'] : [];
 	}
 
-	private function getCssRevisionsJsonData($ids, $params) {
+	/**
+	 * @desc Returns information about 20 last revisions of CSS updates (user name, timestamp, post content)
+	 *
+	 * @param $ids page ids
+	 * @param $params
+	 * @return array
+	 */
+	private function getCssRevisionsApiData($ids, $params) {
 		$defaultParams = $this->getDefaultRevisionParams($ids);
 		$params = array_merge($defaultParams, $params);
 		$revisions = $this->getApiData($params);
@@ -257,6 +292,12 @@ class SpecialCssModel extends WikiaModel {
 		return isset( $revisions['query']['pages'] ) ? $revisions['query']['pages'] : [];
 	}
 
+	/**
+	 * @desc Returns data from API based on parameters
+	 *
+	 * @param $params
+	 * @return mixed
+	 */
 	private function getApiData($params) {
 		global $wgDevelEnvironment;
 		$dbName = 'wikia';
@@ -270,6 +311,12 @@ class SpecialCssModel extends WikiaModel {
 		return $data;
 	}
 
+	/**
+	 * @desc Returns array with page ids based on blog data from api
+	 *
+	 * @param $cssBlogsJson
+	 * @return string
+	 */
 	private function getBlogsIds($cssBlogsJson) {
 		$pageIds = [];
 
@@ -282,6 +329,11 @@ class SpecialCssModel extends WikiaModel {
 		return $ids;
 	}
 
+	/**
+	 * @desc Returns default parameters for fetching blog data
+	 *
+	 * @return array
+	 */
 	private function getDefaultBlogParams() {
 		return [
 			'format' => 'json',
@@ -294,7 +346,13 @@ class SpecialCssModel extends WikiaModel {
 		];
 	}
 
-	private function getDefaultRevisionParams($ids) {
+	/**
+	 * @desc Returns default parameters for fetching revision data
+	 *
+	 * @param string $ids page ids separated by '|'
+	 * @return array
+	 */
+	private function getDefaultRevisionParams($ids = '') {
 		return [
 			'format' => 'json',
 			'action' => 'query',
