@@ -2,7 +2,7 @@
 class SpecialCssModel extends WikiaModel {
 	const CSS_FILE_NAME = 'Wikia.css';
 	const CC_SERVER_NAME = 'http://community.lukaszk.wikia-dev.com/';
-	const CC_CITY_ID = 117;
+	const CC_CITY_ID = 177;
 
 	/**
 	 * @var array List of skins for which we would like to use SpecialCss for editing css file
@@ -108,18 +108,19 @@ class SpecialCssModel extends WikiaModel {
 	public function getCssBlogData($params = []) {
 		$cssBlogs = [];
 
-		if ( empty($params) ) {
-			$params = $this->getDefaultParams();
-		}
-
 		$cssBlogsJson = $this->getCssBlogJsonData($params);
+		$ids = $this->getBlogsIds($cssBlogsJson);
+		$cssUserJson = $this->getCssRevisionsJsonData($ids, $params);
 
 		if ( $cssBlogsJson ) {
 			foreach ( $cssBlogsJson as $blog ) {
-				$blogTitle = GlobalTitle::newFromText($blog['title'], $blog['ns'], self::CC_CITY_ID);
+				$blogUser = $cssUserJson[$blog['pageid']]['revisions'][0]['user'];
+				$blogTitle = GlobalTitle::newFromId($blog['pageid'], self::CC_CITY_ID, 'wikia');
 				$cssBlogs[] = [
 					'title' => $blogTitle->getText(),
-					'blogUrl' => $blogTitle->getFullURL()
+					'blogUrl' => $blogTitle->getFullURL(),
+					'avatar' => AvatarService::renderAvatar($blogUser, 48),
+					'userpage' => AvatarService::getUrl($blogUser)
 				];
 			}
 		}
@@ -128,6 +129,22 @@ class SpecialCssModel extends WikiaModel {
 	}
 
 	private function getCssBlogJsonData($params) {
+		$defaultParams = $this->getDefaultBlogParams();
+		$params = array_merge($defaultParams, $params);
+		$blogs = $this->getApiData($params);
+
+		return isset( $blogs['query']['categorymembers'] ) ? $blogs['query']['categorymembers'] : [];
+	}
+
+	private function getCssRevisionsJsonData($ids, $params) {
+		$defaultParams = $this->getDefaultRevisionParams($ids);
+		$params = array_merge($defaultParams, $params);
+		$revisions = $this->getApiData($params);
+
+		return isset( $revisions['query']['pages'] ) ? $revisions['query']['pages'] : [];
+	}
+
+	private function getApiData($params) {
 		global $wgDevelEnvironment;
 		$dbName = 'wikia';
 
@@ -135,35 +152,42 @@ class SpecialCssModel extends WikiaModel {
 			$dbName = 'community';
 		}
 
-		$blogs = ApiService::foreignCall($dbName, $params);
+		$data = ApiService::foreignCall($dbName, $params);
 
-		return isset( $blogs['query']['categorymembers'] ) ? $blogs['query']['categorymembers'] : [];
+		return $data;
 	}
 
-	private function createApiUrl($params) {
-		$url = self::CC_SERVER_NAME . 'api.php?' . http_build_query( $this->prepareParameters($params));
-		return $url;
-	}
+	private function getBlogsIds($cssBlogsJson) {
+		$pageIds = [];
 
-	private function prepareParameters($params) {
-		$apiParams = $this->getDefaultParams();
-
-		if ( !empty($params) ) {
-			$apiParams = array_merge($apiParams, $params);
+		foreach ( $cssBlogsJson as $blog ) {
+			$pageIds[] = $blog['pageid'];
 		}
 
-		return $apiParams;
+		$ids = implode('|', $pageIds);
+
+		return $ids;
 	}
 
-	private function getDefaultParams() {
+	private function getDefaultBlogParams() {
 		return [
 			'format' => 'json',
 			'action' => 'query',
 			'list' => 'categorymembers',
-			'cmtitle' => 'Category:Staff_blogs',
+			'cmtitle' => 'Category:Technical_Updates',
 			'cmlimit' => '20',
 			'cmsort' => 'timestamp',
 			'cmdir' => 'desc'
+		];
+	}
+
+	private function getDefaultRevisionParams($ids) {
+		return [
+			'format' => 'json',
+			'action' => 'query',
+			'prop' => 'revisions',
+			'rvprop' => 'content|user|timestamp',
+			'pageids' => $ids
 		];
 	}
 }
