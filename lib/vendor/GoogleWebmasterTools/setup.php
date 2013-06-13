@@ -9,7 +9,6 @@ $dir = __DIR__ . "/";
 $app->registerClass( 'GWTException',                $dir . 'GWTException.php' );
 $app->registerClass( 'GWTAuthenticationException',  $dir . 'GWTAuthenticationException.php' );
 $app->registerClass( 'GWTClient',                   $dir . 'GWTClient.php' );
-$app->registerClass( 'GWTLocalCache',               $dir . 'GWTLocalCache.php' );
 $app->registerClass( 'GWTUser',                     $dir . 'GWTUser.php' );
 $app->registerClass( 'GWTUserRepository',           $dir . 'GWTUserRepository.php' );
 $app->registerClass( 'GWTWiki',                     $dir . 'GWTWiki.php' );

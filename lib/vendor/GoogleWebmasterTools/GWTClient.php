@@ -38,10 +38,6 @@ class GWTClient {
 	 * @var int|mixed|object|string
 	 */
 	private $mAuth, $mEmail, $mPass, $mType, $mSource, $mService, $mWiki, $mSiteURI;
-	/**
-	 * @var GWTLocalCache
-	 */
-	private static $cache; /* var $cache GWTLocalCache */
 
 	/**
 	 * constructor
@@ -50,8 +46,6 @@ class GWTClient {
 	 * @access public
 	 */
 	public function __construct( $email, $pass, $wiki = null) {
-		if ( GWTClient::$cache == null )
-			GWTClient::$cache = new GWTLocalCache();
 
 		global $wgGoogleWebToolsAccts;
 
@@ -99,32 +93,30 @@ class GWTClient {
 	}
 
 	/**
-	 * @return mixed
+	 * @return string
 	 * @throws GWTAuthenticationException
 	 */
 	private function getAuthToken () {
 		$cacheKey = $this->mEmail;
-		$cached = self::$cache->get( $cacheKey );
-		if( $cached ) return $cached;
+		return WikiaDataAccess::cache($cacheKey, 60 * 60, function() {
+			$content = Http::post('https://www.google.com/accounts/ClientLogin',
+				//null,
+				array('postData' => array(
+					"Email"       => $this->mEmail,
+					"Passwd"      => $this->mPass,
+					"accountType" => $this->mType,
+					"source"      => $this->mSource,
+					"service"     => $this->mService,
+				)
+				)
+			);
 
-		$content = Http::post('https://www.google.com/accounts/ClientLogin',
-			//null,
-			array('postData' => array(
-				"Email"       => $this->mEmail,
-				"Passwd"      => $this->mPass,
-				"accountType" => $this->mType,
-				"source"      => $this->mSource,
-				"service"     => $this->mService,
-			)
-			)
-		);
-
-		if (preg_match('/Auth=(\S+)/', $content, $matches)) {
-			self::$cache->set( $cacheKey, $matches[1] );
-			return $matches[1];
-		} else {
-			throw new GWTAuthenticationException();
-		}
+			if (preg_match('/Auth=(\S+)/', $content, $matches)) {
+				return $matches[1];
+			} else {
+				throw new GWTAuthenticationException();
+			}
+		});
 	}
 
 	/**
