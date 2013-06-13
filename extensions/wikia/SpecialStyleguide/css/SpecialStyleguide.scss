@@ -5,6 +5,7 @@ body {
 	background-image: none;
 	font-size: 14px;
 	line-height: 22px;
+	padding-bottom: 0;
 }
 h1 {
 	font-size: 2.75rem;
@@ -71,6 +72,7 @@ h1 {
 	text-transform: uppercase;
 }
 .styleguide-header {
+	// TODO: create a mixin for diagonal gradients
 	background: $color-header; /* Old browsers */
 	background: -moz-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%, $color-header 46%); /* FF3.6+ */
 	background: -webkit-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* Chrome10+,Safari5.1+ */
@@ -110,6 +112,7 @@ h1 {
 }
 .styleguide-home-page-body {
 	margin: 0 auto;
+	overflow: hidden;
 	width: 1024px;
 	section {
 		@include box-sizing();
@@ -145,4 +148,25 @@ h1 {
 			line-height: 16px;
 		}
 	}
+}
+.styleguide-footer {
+	clear: both;
+	margin-top: 100px;
+	text-align: center;
+	li {
+		display: inline-block;
+		padding: 20px 15px;
+		position: relative;
+		&:before {
+			color: $color-links;
+			content: '•';
+			position: absolute;
+			left: -4px;
+			top: 34%;
+		}
+		&:first-child:before {
+			content: '';
+		}
+	}
+
 }
