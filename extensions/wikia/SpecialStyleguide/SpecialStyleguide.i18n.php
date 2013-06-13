@@ -6,7 +6,19 @@ $messages['en'] = array(
 	'styleguide-pagetitle' => 'Wikia Styleguide',
 	'styleguide-page-navigation-title' > 'Wikia Styleguide',
 	'styleguide-descriptionmsg' => 'Special:Styleguide is a Special page containing library of Wikia reusable components',
+
+	// Main navigation
 	'styleguide-home' => 'Home',
+	'styleguide-get-started' => 'Get started',
+	'styleguide-base-styles' => 'Base styles',
+	'styleguide-components' => 'Components',
+	'styleguide-design' => 'Design',
+
+	// Footer navigation
+	'styleguide-blog' => 'Blog',
+	'styleguide-changelog' => 'Changelog',
+
+	// Home page
 	'styleguide-home-header' => 'Wikia Styleguide',
 	'styleguide-home-header-tagline' => 'Wikia’s front-end framework made easy.',
 	'styleguide-home-welcome-message' => 'Meet Wikia Styleguide.',
@@ -24,13 +36,6 @@ $messages['en'] = array(
 	'styleguide-home-team-pm' => 'Product manager',
 	'styleguide-home-team-engineer' => 'Engineer',
 	'styleguide-home-team-designer' => 'Product designer',
-	'styleguide-get-started' => 'Get started',
-	'styleguide-base-styles' => 'Base styles',
-	'styleguide-design' => 'Design',
-	'styleguide-components' => 'Components',
-	'styleguide-base-design' => 'Design',
-	'styleguide-blog' => 'Blog',
-	'styleguide-changelog' => 'Changelog',
 );
 
 /** Message documentation (Message documentation)
@@ -39,12 +44,23 @@ $messages['qqq'] = array(
 	'styleguide-pagetitle' => 'Page Title of Styleguide page containing library of Wikia reusable components',
 	'styleguide-page-navigation-title' => 'Short version of Page Title of Styleguide page containing library of Wikia reusable components that will appear on the right of global nav',
 	'styleguide-descriptionmsg' => 'Explanatory text for the extension, explaining that Special:Styleguide is a Special page containing library of Wikia reusable components',
+
+	// Main navigation
 	'styleguide-home' => 'Anchor text for link to Home section in Styleguide',
+	'styleguide-get-started' => 'Anchor text for link to Get started section in Styleguide',
+	'styleguide-base-styles' => 'Anchor text for link to Base styles section in Styleguide',
+	'styleguide-components' => 'Anchor text for link to Components list in Styleguide',
+	'styleguide-design' => 'Anchor text for link to Design section in Styleguide',
+
+	// Footer navigation
+	'styleguide-blog' => 'Anchor text for link to Styleguide Blog',
+	'styleguide-changelog' => 'Anchor text for link to Styleguide Changelog',
+
+	// Home page
 	'styleguide-home-header' => 'Header for Styleguide home page',
 	'styleguide-home-header-tagline' => 'Tagline for Styleguide home page header',
 	'styleguide-home-welcome-message' => 'Header for entering paragraph - welcome message',
 	'styleguide-home-welcome-tagline' => 'Short image-text about what Styleguide is',
-	'styleguide-get-started' => 'Anchor text for link to Get started section in Styleguide',
 	'styleguide-home-stakeholders-header' => 'Question who is Styleguide stakeholders',
 	'styleguide-home-stakeholders-paragraph' => 'Explanation who are Styleguide stakeholders',
 	'styleguide-home-team-header' => 'Header for Styleguide team description paragraph',
@@ -52,9 +68,5 @@ $messages['qqq'] = array(
 	'styleguide-home-team-pm' => 'Job Title - Product manager',
 	'styleguide-home-team-engineer' => 'Job Title - Product manager',
 	'styleguide-home-team-designer' => 'Job Title - Product manager',
-	'styleguide-components' => 'Anchor text for link to Components list in Styleguide',
-	'styleguide-base-styles' => 'Anchor text for link to Base styles section in Styleguide',
-	'styleguide-design' => 'Anchor text for link to Design section in Styleguide',
-	'styleguide-blog' => 'Link for Styleguide Blog',
-	'styleguide-changelog' => 'Link for Styleguide Changelog',
+
 );
