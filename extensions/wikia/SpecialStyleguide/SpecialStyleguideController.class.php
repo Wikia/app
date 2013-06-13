@@ -21,7 +21,9 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 			(new Wikia\Template\MustacheEngine)
 				->setPrefix( dirname(__FILE__) . '/templates' )
 				->setData( [
-					'body' => $this->getPageContent('home'),
+					'header' =>  $this->getSectionContent('header'),
+					'body' => $this->getSectionContent('home'),
+					//'footer' => $this->getSectionContent('footer'),
 				])
 				->render('SpecialStyleguide_index.mustache')
 		);
@@ -32,14 +34,14 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		$this->skipRendering();
 	}
 
-	public function getPageContent($pagename) {
+	public function getSectionContent($sectionName) {
 		return (new Wikia\Template\MustacheEngine)
 			->setPrefix( dirname(__FILE__) . '/templates' )
-			->setData($this->getPageData($pagename))
-			->render('SpecialStyleguide_' . $pagename . '.mustache');
+			->setData($this->getSectionData($sectionName))
+			->render('SpecialStyleguide_' . $sectionName . '.mustache');
 	}
 
-	private function getPageData($pagename) {
+	private function getSectionData($sectionName) {
 		$homePageData = [
 			'sections' => [
 				[
@@ -78,9 +80,24 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 				]
 			]
 		];
+		$headerData = [
+			'home' => [
+				'mainHeader' => 'Lorem Ipsum Dolor',
+				'getStartedBtnLink' => '',
+				'getStartedBtnTitle' => 'Lorem Ipsum',
+				'getStartedBtnLabel' => 'Get started',
+				'version' => 'Version 1.0.0'
+			],
+			'tagLine' => 'Maecenas faucibus mollis interdum',
+		];
 
-		if ($pagename == 'home') {
-			return $homePageData;
+		switch ($sectionName) {
+			case 'home':
+				return $homePageData;
+				break;
+			case 'header':
+				return $headerData;
+				break;
 		}
 	}
 }

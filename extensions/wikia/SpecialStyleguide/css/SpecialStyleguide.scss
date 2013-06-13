@@ -1,5 +1,6 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/box-sizing";
+$alter-background-color: mix($color-page, #000, 90%);
 body {
 	background-image: none;
 	font-size: 14px;
@@ -13,49 +14,95 @@ h1 {
 	font-weight: 100;
 }
 .WikiaHeader {
-  top: 0;
-  li {
-    height: 32px;
-    margin-top: 0;
-  }
-  .WikiaLogo {
-    a {
-      padding-right: 25px;
-      top: 2px;
-    }
-  }
+	border: none;
+	padding: 1px 0;
+	top: 0;
+	.wikia-header-mask {
+		background: none;
+	}
+	nav {
+		height: 38px;
+	}
+	li {
+		height: 38px;
+		margin-top: 0;
+	}
+	.WikiaLogo {
+		padding-right: 25px;
+		a {
+			padding-right: 0;
+			top: 3px;
+		}
+	}
 }
 
 .GlobalNavigation {
-  >li {
-    padding: 0;
-    >a {
-      font-size: 14px;
-      font-weight: 900;
-    }
-  }
-  a {
-    border: none;
-    height: 32px;
-    line-height: 32px;
-  }
-  a:hover {
-    background-image: none;
-    background-color: mix($color-buttons, #fff, 65%);
-  }
+	>li {
+		padding: 0;
+		>a {
+			height: 36px;
+			font-size: 14px;
+			font-weight: bolder;
+			padding-top: 2px;
+		}
+	}
+	a {
+		border: none;
+		height: 32px;
+		line-height: 32px;
+	}
+	a:hover {
+		background-image: none;
+		background-color: mix($color-buttons, #fff, 65%);
+	}
 }
 
 .printfooter {
-  display: none;
+	display: none;
 }
 
 .pagetitle {
-  color: $color-header;
-  float: right;
-  font-weight: 900;
-  line-height: 32px;
-  margin-right: 40px;
-  text-transform: uppercase;
+	color: $color-header;
+	float: right;
+	font-weight: 900;
+	line-height: 32px;
+	margin-right: 40px;
+	padding-top: 4px;
+	text-transform: uppercase;
+}
+.styleguide-header {
+	background: $color-header; /* Old browsers */
+	background: -moz-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%, $color-header 46%); /* FF3.6+ */
+	background: -webkit-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* IE10+ */
+	background: linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* W3C */
+	color: $color-page;
+	text-align: center;
+	h1 {
+		font-size: 100px;
+		font-weight: bold;
+		line-height: 110px;
+		padding:80px 0 40px;
+	}
+	h3 {
+		font-size: 2.75rem;
+		font-weight: 100;
+		padding-bottom: 40px;
+	}
+	.button {
+		font-size: 16px;
+	}
+	small {
+		color: $color-alternate-text;
+		display: block;
+	}
+}
+.styleguide-link-box {
+	height: 55px;
+}
+.alter-background {
+	background-color: $alter-background-color;
 }
 .styleguide-home-page-body {
 	margin: 0 auto;
@@ -89,6 +136,7 @@ h1 {
 			padding-top: 25px;
 		}
 		small {
+			color: $color-alternate-text;
 			display: block;
 			line-height: 16px;
 		}
