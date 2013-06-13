@@ -335,6 +335,7 @@ jQuery(function($){
 		});
 
         $wikiaSearch.one('suggestShow', {
+            action: Wikia.Tracker.ACTIONS.VIEW,
             category: category,
             label: 'search-suggest-show'
         }, trackWithEventData);
