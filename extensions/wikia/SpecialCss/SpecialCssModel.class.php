@@ -115,19 +115,36 @@ class SpecialCssModel extends WikiaModel {
 			foreach ( $cssBlogsJson as $blog ) {
 				$blogUser = $cssUserJson[$blog['pageid']]['revisions'][0]['user'];
 				$blogTitle = GlobalTitle::newFromId($blog['pageid'], self::CC_CITY_ID, 'wikia');
+				$userPage = GlobalTitle::newFromText($blogUser, NS_USER, self::CC_CITY_ID);
 				$cssBlogs[] = [
-					'title' => $blogTitle->getText(),
+					'title' => $this->getCleanTitle($blogTitle->getText()),
 					'url' => $blogTitle->getFullURL(),
-					'userAvatar' => AvatarService::renderAvatar($blogUser, 48),
-					'userUrl' => AvatarService::getUrl($blogUser),
+					'userAvatar' => AvatarService::renderAvatar($blogUser, 25),
+					'userUrl' => $userPage->getFullUrl(),
 					'userName' => $blogUser,
-					'timestamp' => $cssUserJson[$blog['pageid']]['revisions'][0]['timestamp'],
+					'timestamp' => $this->getFormattedTimestamp($cssUserJson[$blog['pageid']]['revisions'][0]['timestamp']),
 					'text' => $cssUserJson[$blog['pageid']]['revisions'][0]['*']
 				];
 			}
 		}
 
 		return $cssBlogs;
+	}
+	
+	private function getCleanTitle($titleText) {
+		$result = $titleText;
+		$slashPosition = mb_strpos($titleText, '/');
+		
+		if( $slashPosition !== false ) {
+			$slashPosition++;
+			$result = mb_strcut($titleText, $slashPosition);
+		}
+		
+		return $result;
+	}
+	
+	private function getFormattedTimestamp($timestamp) {
+		return wfTimestamp(TS_ISO_8601, $timestamp);
 	}
 
 	private function getCssBlogJsonData($params) {
