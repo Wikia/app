@@ -5,6 +5,7 @@
  * Controller that handles Special:Styleguide page
  */
 class SpecialStyleguideController extends WikiaSpecialPageController {
+
 	/**
 	 * @var $model SpecialStyleguideDataModel
 	 */
@@ -26,15 +27,13 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		$this->app->setGlobal( 'wgAutoloadClasses', dirname( __FILE__ ) . '/SpecialStyleguideGlobalHeaderControllerOverride.php', 'GlobalHeaderController' );
 
 		$this->wg->Out->clearHTML();
-		$this->wg->Out->addHtml(
-			(new Wikia\Template\MustacheEngine)
-				->setPrefix( dirname(__FILE__) . '/templates' )
-				->setData( [
-					'header' =>  $this->getSectionContent('header'),
-					'body' => $this->getSectionContent('home'),
-					'footer' => $this->getSectionContent('footer'),
-				])
-				->render('SpecialStyleguide_index.mustache')
+		$this->wg->Out->addHtml( ( new Wikia\Template\MustacheEngine )
+			->setPrefix( dirname( __FILE__ ) . '/templates' )
+			->setData( [
+				'header' => $this->getSectionContent( 'header' ),
+				'body' => $this->getSectionContent( 'home' ),
+				'footer' => $this->getSectionContent( 'footer' ), ] )
+			->render( 'SpecialStyleguide_index.mustache' )
 		);
 
 		wfProfileOut( __METHOD__ );
@@ -45,13 +44,14 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 
 	/**
 	 * Returns rendered content of section given as param
+	 *
 	 * @param $sectionName string
 	 * @return string
 	 */
-	public function getSectionContent($sectionName) {
-		return (new Wikia\Template\MustacheEngine)
-			->setPrefix( dirname(__FILE__) . '/templates' )
-			->setData($this->model->getSectionData($sectionName))
-			->render('SpecialStyleguide_' . $sectionName . '.mustache');
+	public function getSectionContent( $sectionName ) {
+		return ( new Wikia\Template\MustacheEngine )
+			->setPrefix( dirname( __FILE__ ) . '/templates' )
+			->setData( $this->model->getSectionData( $sectionName ) )
+			->render( 'SpecialStyleguide_' . $sectionName . '.mustache' );
 	}
 }
