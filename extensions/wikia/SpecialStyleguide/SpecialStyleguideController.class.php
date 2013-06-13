@@ -23,7 +23,7 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 				->setData( [
 					'header' =>  $this->getSectionContent('header'),
 					'body' => $this->getSectionContent('home'),
-					//'footer' => $this->getSectionContent('footer'),
+					'footer' => $this->getSectionContent('footer'),
 				])
 				->render('SpecialStyleguide_index.mustache')
 		);
@@ -90,6 +90,20 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 			],
 			'tagLine' => 'Maecenas faucibus mollis interdum',
 		];
+		$footerData = [
+			'list' => [
+				[
+					'link' => '#',
+					'linkTitle' => 'Blog',
+					'linkLabel' => 'Blog'
+				],
+				[
+					'link' => '#',
+					'linkTitle' => 'Changelog',
+					'linkLabel' => 'Changelog'
+				]
+			]
+		];
 
 		switch ($sectionName) {
 			case 'home':
@@ -97,6 +111,9 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 				break;
 			case 'header':
 				return $headerData;
+				break;
+			case 'footer':
+				return $footerData;
 				break;
 		}
 	}
