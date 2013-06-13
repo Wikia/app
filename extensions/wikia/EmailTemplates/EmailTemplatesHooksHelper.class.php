@@ -38,14 +38,19 @@ class EmailTemplatesHooksHelper {
 
 	public function onComposeCommonBodyMail(Title $title, &$keys, &$body, User $editor, &$bodyHTML, &$postTransformKeys ) {
 		/* @var $wgContLang Language */
-		global $wgContLang;
+		global $wgContLang, $wgEnableWikiaFollowedPages, $wgEnableWikiaFollowedPagesOnlyPrefs;
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 		if ( array_key_exists( '$ACTION', $keys) ) {
 			$action = $keys['$ACTION'];
 
-			/* modify bodyHTML for blogpost action */
-			if ( $action == 'blogpost' ) {
+			/*
+			 * modify bodyHTML for blogpost action
+			 * check if Follow Ext is enabled, otherwise parameter $keys['$PAGETITLE'] that we need hasn't been initialized on MailNotifyBuildKeys hook
+			*/
+			if ( $action == 'blogpost'
+				&& ( !empty( $wgEnableWikiaFollowedPages ) || !empty( $wgEnableWikiaFollowedPagesOnlyPrefs ) )
+			) {
 
 				$msgContentHTML = wfMsgHTMLwithLanguageAndAlternative(
 					'enotif_body' . ( $action == '' ? '' : ( '_' . $action ) ),
