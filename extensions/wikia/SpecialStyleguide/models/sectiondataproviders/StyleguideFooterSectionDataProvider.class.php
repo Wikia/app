@@ -12,13 +12,13 @@ class StyleguideFooterSectionDataProvider implements iStyleguideSectionDataProvi
 			'list' => [
 				[
 					'link' => '#',
-					'linkTitle' => 'Blog',
-					'linkLabel' => 'Blog'
+					'linkTitle' => wfMessage( 'styleguide-blog' )->plain(),
+					'linkLabel' => wfMessage( 'styleguide-blog' )->plain(),
 				],
 				[
 					'link' => '#',
-					'linkTitle' => 'Changelog',
-					'linkLabel' => 'Changelog'
+					'linkTitle' => wfMessage( 'styleguide-changelog' )->plain(),
+					'linkLabel' => wfMessage( 'styleguide-changelog' )->plain(),
 				]
 			]
 		];

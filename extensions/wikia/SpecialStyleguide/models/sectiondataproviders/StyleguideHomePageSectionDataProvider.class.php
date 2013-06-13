@@ -11,36 +11,40 @@ class StyleguideHomePageSectionDataProvider implements iStyleguideSectionDataPro
 		return [
 			'sections' => [
 				[
-					'header' => 'Lorem ipsum',
-					'paragraph' => 'Maecenas sed diam eget risus varius blandit.'
+					'header' => wfMessage( 'styleguide-home-welcome-message' )->plain(),
+					'paragraph' => wfMessage( 'styleguide-home-welcome-message' )->plain(),
 				],
 				[
-					'header' => 'Lorem ipsum',
-					'paragraph' => 'Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit
-					sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas sed diam eget risus varius blandit sit amet non magna. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.',
+					'header' => wfMessage( 'styleguide-home-stakeholders-header' )->plain(),
+					'paragraph' => wfMessage( 'styleguide-home-stakeholders-paragraph' )->plain(),
 				],
 				[
-					'header' => 'Lorem ipsum',
-					'paragraph' => 'Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit
-					sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
+					'header' => wfMessage( 'styleguide-home-team-header' )->plain(),
+					'paragraph' => wfMessage( 'styleguide-home-team-paragraph' )->plain(),
 					'list' => [
 						[
 							'link' => '',
-							'linkTitle' => 'Lorem Ipsum',
-							'linkName' => 'Lorem Ipsum',
-							'linkTagline' => 'Lorem ipsum dolor'
+							'linkTitle' => 'Elizabeth Worthy',
+							'linkName' => 'Elizabeth Worthy',
+							'linkTagline' => wfMessage( 'styleguide-home-team-pm' )->plain(),
 						],
 						[
 							'link' => '',
-							'linkTitle' => 'Lorem Ipsum',
-							'linkName' => 'Lorem Ipsum',
-							'linkTagline' => 'Lorem ipsum dolor'
+							'linkTitle' => 'Rafał Leszczyński',
+							'linkName' => 'Rafał Leszczyński',
+							'linkTagline' => wfMessage( 'styleguide-home-team-engineer' )->plain(),
 						],
 						[
 							'link' => '',
-							'linkTitle' => 'Lorem Ipsum',
-							'linkName' => 'Lorem Ipsum',
-							'linkTagline' => 'Lorem ipsum dolor'
+							'linkTitle' => 'Mika Kozma',
+							'linkName' => 'Mika Kozma',
+							'linkTagline' => wfMessage( 'styleguide-home-team-designer' )->plain(),
+						],
+						[
+							'link' => '',
+							'linkTitle' => 'Earl Carlson',
+							'linkName' => 'Earl Carlson',
+							'linkTagline' => 'Product designer'
 						]
 					]
 				]

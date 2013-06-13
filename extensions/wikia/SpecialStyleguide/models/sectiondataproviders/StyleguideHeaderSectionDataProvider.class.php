@@ -10,13 +10,13 @@ class StyleguideHeaderSectionDataProvider implements iStyleguideSectionDataProvi
 	public function getData() {
 		return [
 			'home' => [
-				'mainHeader' => 'Lorem Ipsum Dolor',
+				'mainHeader' => wfMessage( 'styleguide-home-header' )->plain(),
 				'getStartedBtnLink' => '',
-				'getStartedBtnTitle' => 'Lorem Ipsum',
-				'getStartedBtnLabel' => 'Get started',
+				'getStartedBtnTitle' => wfMessage( 'styleguide-getting-started' )->plain(),
+				'getStartedBtnLabel' => wfMessage( 'styleguide-getting-started' )->plain(),
 				'version' => 'Version 1.0.0'
 			],
-			'tagLine' => 'Maecenas faucibus mollis interdum',
+			'tagLine' => wfMessage( 'styleguide-home-header-tagline' )->plain(),
 		];
 	}
 }
