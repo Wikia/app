@@ -48,7 +48,7 @@ class GWTWikiRepository {
 	}
 
 	/**
-	 * Get all unassigned pages larger than $minPageCount
+	 * Get all unassigned wikis with page_count larger than $minPageCount
 	 * @param $minPageCount
 	 * @return GWTWiki[]
 	 */

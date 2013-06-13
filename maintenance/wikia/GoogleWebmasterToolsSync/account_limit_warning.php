@@ -9,6 +9,7 @@ GWTLogHelper::notice( __FILE__ . " script starts.");
 try {
 	$gwt = new GWTService(null, null, null);
 	$users = $gwt->getAvailableUsers();
+	$unsyncWikisCount = sizeof( $gwt->getWikisToUpload() );
 
 	$limitPerAccout = $gwt->getMaxSitesPerAccount();
 
@@ -27,7 +28,8 @@ try {
 				new MailAddress( $warningEmail ),
 				new MailAddress( 'GoogleWebmasterToolsService@wikia-inc.com', 'GoogleWebmasterToolsService' ),
 				'GA Webmaster Tools Accounts - '.$freeSlots.' slots left',
-				'There is only '.$freeSlots.' slots left. Please add new accounts to our database.',
+				'There is only '.$freeSlots.' slots left. Please add new accounts to our database.\n'.
+				'There is ' . $unsyncWikisCount . ' unsync wikis.',
 				null,
 				'text/html; charset=ISO-8859-1'
 			);
