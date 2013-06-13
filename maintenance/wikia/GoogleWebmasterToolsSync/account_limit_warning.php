@@ -2,7 +2,7 @@
 // example: SERVER_ID=5915 php maintenance/wikia/GoogleWebmasterToolsSync/list_users.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
 
 $freeSlotsWarning = 100;
-$warningEmails = array("jacek@wikia-inc.com");
+$warningEmails = ["seo-sitemaps@wikia-inc.com"];
 
 require_once( __DIR__."/common.php" );
 GWTLogHelper::notice( __FILE__ . " script starts.");
