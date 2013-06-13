@@ -326,11 +326,18 @@ jQuery(function($){
 				});
 			}
 		}).on('keypress', function(e) {
-			if (e.which === 13) {
-				track({
-					category: category,
-					label: 'search-enter'
-				});
+			if ( e.which === 13 ) {
+                if ( $('#WikiaSearch [name=search]').is(':focus') ) {
+                    track({
+                        category: category,
+                        label: 'search-enter'
+                    });
+                } else {
+                    track({
+                        category: category,
+                        label: 'search-suggest-enter'
+                    });
+                }
 			}
 		});
 
