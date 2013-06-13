@@ -22,3 +22,5 @@
 	<?= $app->renderPartial('LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList, 'thumbWidth' => $thumbWidth, 'thumbHeight' => $thumbHeight ) ) ?>
 
 </div>
+
+<?= $pagination ?>
