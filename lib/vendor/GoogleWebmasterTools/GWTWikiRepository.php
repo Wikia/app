@@ -34,12 +34,7 @@ class GWTWikiRepository {
 		}
 		return $list;
 	}
-	/*
-	public function all() {
-		$result = $this->databaseConnection->select("webmaster_sitemaps", array("user_id", "wiki_id", "upload_date"));
-		return $this->materializeList($result);
-	}
-	*/
+
 	/**
 	 * @return GWTWiki[]
 	 */
@@ -47,6 +42,20 @@ class GWTWikiRepository {
 		$result = $this->databaseConnection->select("webmaster_sitemaps"
 			, array("user_id", "wiki_id", "upload_date", "page_count")
 			, array("upload_date" => null )
+			, __METHOD__
+			, [ "ORDER BY" => "page_count DESC" ]);
+		return $this->materializeList($result);
+	}
+
+	/**
+	 * Get all unassigned pages larger than $minPageCount
+	 * @param $minPageCount
+	 * @return GWTWiki[]
+	 */
+	public function allUnassignedGt( $minPageCount ) {
+		$result = $this->databaseConnection->select("webmaster_sitemaps"
+			, ["user_id", "wiki_id", "upload_date", "page_count"]
+			, ["upload_date" => null, "page_count" => "> " . intval($minPageCount) ]
 			, __METHOD__
 			, [ "ORDER BY" => "page_count DESC" ]);
 		return $this->materializeList($result);

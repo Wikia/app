@@ -60,7 +60,7 @@ class GWTService {
 	 * @return GWTWiki[]
 	 */
 	function getWikisToUpload() {
-		$wikis = $this->wikiRepository->allUnassigned();
+		$wikis = $this->wikiRepository->allUnassignedGt( 50 );
 		return $wikis;
 	}
 
