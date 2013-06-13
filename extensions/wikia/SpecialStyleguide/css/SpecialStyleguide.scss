@@ -88,14 +88,18 @@ h1 {
 	h3 {
 		font-size: 2.75rem;
 		font-weight: 100;
-		padding-bottom: 40px;
+		padding-bottom: 50px;
 	}
 	.button {
-		font-size: 16px;
+		font-size: 18px;
+		font-weight: 100px;
+		margin-bottom: 40px;
+		padding: 5px 15px;
 	}
 	small {
 		color: $color-alternate-text;
 		display: block;
+		padding-bottom: 30px;
 	}
 }
 .styleguide-link-box {
