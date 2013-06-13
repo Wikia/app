@@ -15,7 +15,7 @@
 
 <p><?= wfMessage('lvs-instructions')->plain() ?></p>
 
-<?= $app->renderView('WikiaStyleGuideElementsController', 'contentHeaderSort', $contentHeaderSortOptions ) ?>
+<?= $app->renderView('LicensedVideoSwapSpecialController', 'contentHeaderSort', $contentHeaderSortOptions ) ?>
 
 <div class="WikiaGrid LVSGrid" id="LVSGrid">
 
