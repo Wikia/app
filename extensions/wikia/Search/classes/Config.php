@@ -1170,7 +1170,7 @@ class Config
 	public function getLanguageCode() {
 		//if language not set, load content language
 		if ( !isset( $this->languageCode ) ) {
-			$this->languageCode = $this->service->getLanguageCode();
+			$this->languageCode = $this->getService()->getLanguageCode();
 		}
 		return $this->languageCode;
 	}

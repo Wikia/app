@@ -1106,7 +1106,25 @@ class ConfigTest extends BaseTest {
 	 * @covers Wikia\Search\Config::setLanguageCode
 	 */
 	public function testSetAndGetLanguageCode() {
-		$config = new Config;
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+			->setMethods( [ 'getLanguageCode' ] )
+			->getMock();
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getService' ] )
+			->getMock();
+
+		$mockService
+			->expects( $this->once() )
+			->method( 'getLanguageCode' )
+			->will( $this->returnValue( 'en' ) )
+		;
+
+		$config
+			->expects( $this->once() )
+			->method( 'getService' )
+			->will( $this->returnValue( $mockService ) )
+		;
 
 		$this->assertAttributeEmpty(
 			'languageCode',
