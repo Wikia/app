@@ -26,6 +26,15 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 
 		$this->app->setGlobal( 'wgAutoloadClasses', dirname( __FILE__ ) . '/SpecialStyleguideGlobalHeaderControllerOverride.php', 'GlobalHeaderController' );
 
+		$this->response->setCacheValidity(
+			86400,
+			86400,
+			[
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			]
+		);
+
 		$this->wg->Out->clearHTML();
 		$this->wg->Out->addHtml( ( new Wikia\Template\MustacheEngine )
 			->setPrefix( dirname( __FILE__ ) . '/templates' )
