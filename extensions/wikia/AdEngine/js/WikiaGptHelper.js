@@ -161,6 +161,15 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 
 			slotsToDisplay.push(slotnameGpt);
 			doneCallbacks[slotnameGpt] = function () {
+				// TODO: unify forced status and height based status?
+				if (window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname]) {
+					var status = window.adDriver2ForcedStatus[slotname];
+					log(['doneCallback', slotname, 'forced status', status], 4, logGroup);
+					if (status === 'success' && typeof success === 'function') {
+						success();
+					}
+				} else {
+
 				var height = slotDiv.offsetHeight;
 				log(['doneCallback', slotname, 'height', height], 4, logGroup);
 				if (height <= 1) {
@@ -173,6 +182,8 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 					if (typeof success === 'function') {
 						success();
 					}
+				}
+
 				}
 			};
 		});
