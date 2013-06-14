@@ -134,7 +134,7 @@ function parseSizeParams ( $paramText ) {
 		$params['height'] = $height_max;
 	}
 	if ( $params['width'] > $width_max ) {
-		$params['width'] = $widtrh_max;
+		$params['width'] = $width_max;
 	}
 
 	return $params;
