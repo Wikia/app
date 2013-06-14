@@ -1,5 +1,7 @@
 $(function() {
 	require(['ace/ace'], function(ace) {
+		var EDITOR_BOTTOM_MARGIN = 10;
+
 		ace.config.set("workerPath", aceScriptsPath);
 
 		var editor = ace.edit("cssEditorContainer");
@@ -7,13 +9,13 @@ $(function() {
 		editor.getSession().setMode("ace/mode/css");
 
 		var heightUpdateFunction = function() {
+			var editorContainer = $('#cssEditorContainer');
+			var newHeight = $(window).height()
+				- editorContainer.offset().top
+				- $('#WikiaBarWrapper:not(.hidden)').height()
+				- EDITOR_BOTTOM_MARGIN;
 
-			var newHeight =
-				editor.getSession().getScreenLength()
-					* editor.renderer.lineHeight
-					+ editor.renderer.scrollBar.getWidth();
-
-			$('#cssEditorContainer').height(newHeight.toString() + "px");
+			editorContainer.height(newHeight);
 
 			// This call is required for the editor to fix all of
 			// its inner structure for adapting to a change in size
@@ -21,6 +23,5 @@ $(function() {
 		};
 
 		heightUpdateFunction();
-		editor.getSession().on('change', heightUpdateFunction);
 	});
 });
