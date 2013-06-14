@@ -1310,6 +1310,8 @@ function wfMessageFallback( /*...*/ ) {
 }
 
 /**
+ * Deprecated since 1.18
+ *
  * Get a message from anywhere, for the current user language.
  *
  * Use wfMsgForContent() instead if the message should NOT
@@ -1333,6 +1335,8 @@ function wfMsg( $key ) {
 }
 
 /**
+ * Deprecated since 1.18
+ *
  * Same as above except doesn't transform the message
  *
  * @param $key String
@@ -1345,6 +1349,8 @@ function wfMsgNoTrans( $key ) {
 }
 
 /**
+ * Deprecated since 1.18
+ *
  * Get a message from anywhere, for the current global language
  * set with $wgLanguageCode.
  *
@@ -1381,6 +1387,8 @@ function wfMsgForContent( $key ) {
 }
 
 /**
+ * Deprecated since 1.18
+ *
  * Same as above except doesn't transform the message
  *
  * @param $key String
@@ -1400,6 +1408,8 @@ function wfMsgForContentNoTrans( $key ) {
 }
 
 /**
+ * Deprecated since 1.18
+ *
  * Really get a message
  *
  * @param $key String: key to get.
@@ -1418,6 +1428,8 @@ function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform 
 }
 
 /**
+ * Deprecated since 1.18
+ *
  * Fetch a message string value, but don't replace any keys yet.
  *
  * @param $key String
@@ -1469,6 +1481,8 @@ function wfMsgReplaceArgs( $message, $args ) {
 }
 
 /**
+ * Deprecated since 1.18
+ *
  * Return an HTML-escaped version of a message.
  * Parameter replacements, if any, are done *after* the HTML-escaping,
  * so parameters may contain HTML (eg links or form controls). Be sure
@@ -1486,6 +1500,8 @@ function wfMsgHtml( $key ) {
 }
 
 /**
+ * Deprecated since 1.18
+ *
  * Return an HTML version of message
  * Parameter replacements, if any, are done *after* parsing the wiki-text message,
  * so parameters may contain HTML (eg links or form controls). Be sure
@@ -1506,6 +1522,8 @@ function wfMsgWikiHtml( $key ) {
 }
 
 /**
+ * Deprecated since 1.18
+ *
  * Returns message in the requested format
  * @param $key String: key of the message
  * @param $options Array: processing rules. Can take the following options:
