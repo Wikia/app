@@ -66,9 +66,39 @@ $slotZIndex: 4000;
 		border-top: 1px solid $border-color;
 		border-bottom: 1px solid $border-color;
 
-		height: 250px;
+		height: 270px;
 		width: 300px;
 
 		visibility: visible;
+	}
+}
+
+.swiperPage > img {
+	-webkit-transition: -webkit-transform .3s;
+}
+
+.swiperPage.wkAdPlace > img {
+	-webkit-transform: translate(20%, 90%) scale(.3);
+}
+
+.wkAdWrapper {
+	display: inline-block;
+
+	position: absolute;
+	height: 0;
+	opacity: 0;
+	top: 40%;
+	left: 50%;
+	margin-left: -150px;
+	margin-top: -125px;
+	-webkit-transform: translateZ(0);
+	-webkit-transition: opacity .2s, top .2s;
+	width: 300px;
+
+
+	&.show {
+		opacity: 1;
+		top: 50%;
+		height: 250px;
 	}
 }

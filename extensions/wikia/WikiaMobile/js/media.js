@@ -55,7 +55,20 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		supportedVideos = window.supportedVideos || [],
 		// Video view click source tracking. Possible values are "embed" and "lightbox" for consistancy with Oasis
 		clickSource,
-		videoInstance;
+		videoInstance,
+		events = {
+			open: [],
+			close: [],
+			change: []
+		},
+		VIDEO_TYPE = 'video',
+		IMAGE_TYPE = 'image';
+
+	function trigger(event, data){
+		events[event].forEach(function(func) {
+			func.call(func, data);
+		});
+	}
 
 	//Media object that holds all data needed to display it in modal/gallery
 	function Media(elem, data, length, i){
@@ -66,10 +79,12 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		if(data.thumb) {this.thumb = data.thumb;}
 		if(data.med) {this.med = data.med;}
 		if(data.capt) {this.caption = data.capt;}
-		if(data.type === 'video') {
-			this.isVideo = true;
+		if(data.type === VIDEO_TYPE) {
+			this.type = VIDEO_TYPE;
 			//some providers come with a 'subname' like ooyala/wikiawebinar
 			this.supported = ~supportedVideos.indexOf((data.provider || '').split('/')[0]);
+		}else{
+			this.type = IMAGE_TYPE;
 		}
 
 		if(length > 1){
@@ -121,9 +136,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		elements = null;
 	}
 
-	function init(images){
+	function init(elementList){
 
-		elements = images;
+		elements = elementList;
 
 		//if url contains image=imageName - setup and find the image
 		if(shrImg) {
@@ -166,18 +181,47 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 	function setupImage(){
 		var image = images[current],
-			video;
+			video,
+			data = {
+				image: image,
+				images: images,
+				current: current,
+				wrapper: currentImage,
+				zoomable: zoomable
+			};
+
+		throbber.remove(currentImage);
+
+		modal.setCaption(getCaption(current));
+
+		trigger('change', data);
+
+		//If anything was changed in event listeners
+		//change it in media module as well
+		if(data.image != image){
+			image = data.image
+		}
+
+		if(data.images != images){
+			images = data.images
+		}
+
+		if(data.current != current){
+			current = data.current
+		}
+
+		if(data.zoomable != zoomable){
+			zoomable = data.zoomable
+		}
 
 		// If a video uses a timeout for tracking, clear it
 		if ( videoInstance ) {
 			videoInstance.clearTimeoutTrack();
 		}
 
-		throbber.remove(currentImage);
+		var type = image.type;
 
-		modal.setCaption(getCaption(current));
-
-		if(image.isVideo) {// video
+		if(type == VIDEO_TYPE) {// video
 			var imgTitle = image.name;
 
 			zoomable = false;
@@ -233,7 +277,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 					currentImage.innerHTML = html;
 				}
 			}
-		}else{
+		}else if(type == IMAGE_TYPE){
 			var img = new Image();
 			img.src = image.url;
 
@@ -459,6 +503,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		currentImage = wkMdlImages.getElementsByClassName('current')[0];
 		currentImageStyle = currentImage.style;
 
+		shareBtn.style.display = 'block';
+
 		setupImage();
 	}
 
@@ -621,6 +667,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				});
 			}
 		});
+
+		trigger('open', imagesLength);
 	}
 
 	/** @public **/
@@ -638,6 +686,17 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			if(shareBtn) {shareBtn.style.display = 'none';}
 		},
 		init: init,
-		cleanup: removeZoom
+		cleanup: removeZoom,
+		on: function(event, func){
+			if(events.hasOwnProperty(event)){
+				events[event].push(func)
+			}
+			//return events[event].length - 1;
+		},
+		remove: function(event, func){
+			events[event] = events[event].filter(function(callback){
+				return callback != func;
+			})
+		}
 	};
 });
