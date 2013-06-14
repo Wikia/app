@@ -34,4 +34,42 @@ class SpecialCssModelTest extends WikiaBaseTest {
 			[false, self::LOCAL_URL_EXAMPLE]
 		];
 	}
+
+	/**
+	 * @param String $title
+	 * @param String $expected
+	 * 
+	 * @dataProvider testGetCleanTitleDataProvider
+	 */
+	public function testGetCleanTitle($title, $expected) {
+		$getCleanTitleMethod = new ReflectionMethod('SpecialCssModel', 'getCleanTitle');
+		$getCleanTitleMethod->setAccessible(true);
+		
+		$this->assertEquals( $expected, $getCleanTitleMethod->invoke( new SpecialCssModel(), $title ) );
+	}
+	
+	public function testGetCleanTitleDataProvider() {
+		return [
+			[
+				'title' => 'DaNASCAT/Technical_Update:_November_20,_2012',
+				'expected' => 'Technical_Update:_November_20,_2012',
+			],
+			[
+				'title' => 'DaNASCAT/Technical_Update:_November_20,_2012#Major_Bugs_Fixed',
+				'expected' => 'Technical_Update:_November_20,_2012#Major_Bugs_Fixed',
+			],
+			[
+				'title' => 'User_blog:DaNASCAT/Technical_Update:_November_21,_2012',
+				'expected' => 'Technical_Update:_November_21,_2012',
+			],
+			[
+				'title' => 'Rappy 4187/Technical_Update:_November_22,_2012',
+				'expected' => 'Technical_Update:_November_22,_2012',
+			],
+			[
+				'title' => 'Test page/Rappy 4187/Technical_Update:_November_22,_2012',
+				'expected' => 'Technical_Update:_November_22,_2012',
+			],
+		];
+	}
 }
