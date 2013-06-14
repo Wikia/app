@@ -231,7 +231,7 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function getCleanTitle($titleText) {
 		$result = $titleText;
-		$slashPosition = mb_strpos($titleText, '/');
+		$slashPosition = mb_strrpos($titleText, '/');
 		
 		if( $slashPosition !== false ) {
 			$slashPosition++;
