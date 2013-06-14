@@ -21,6 +21,16 @@ class SpecialCssModel extends WikiaModel {
 	const UPDATE_SECTION_IN_BLOGPOST = 2;
 
 	/**
+	 * @desc Regex pattern used to extract h3 tags; see: SpecialCssModel::removeHeadline() and SpecialCssModel::addAnchorToPostUrl()
+	 */
+	const MEDIAWIKI_H3_PATTERN = '/===[^=]+===[^=]\s*/';
+
+	/**
+	 * @desc Limit of characters per one post snippet
+	 */
+	const SNIPPET_CHAR_LIMIT = 150;
+	
+	/**
 	 * @var array List of skins for which we would like to use SpecialCss for editing css file
 	 */
 	public static $supportedSkins = array( 'oasis' );
@@ -136,20 +146,56 @@ class SpecialCssModel extends WikiaModel {
 				$timestamp = $cssUserJson[$pageId]['revisions'][0]['timestamp'];
 				
 				$blogTitle = GlobalTitle::newFromId( $pageId, self::CC_CITY_ID, 'wikia' );
+
+				$sectionText = $cssUserJson[$pageId]['revisions'][0]['*'];
 				
 				$cssBlogs[] = [
 					'title' => $this->getCleanTitle( $blogTitle->getText() ),
-					'url' => $blogTitle->getFullURL(),
+					'url' => trim( $blogTitle->getFullURL() . $this->addAnchorToPostUrl( $sectionText ) ),
 					'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
 					'userUrl' => $userPage->getFullUrl(),
 					'userName' => $blogUser,
 					'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
-					'text' => $this->getParsedText( $this->removeHeadline( $cssUserJson[$pageId]['revisions'][0]['*'] ), $blogTitle ),
+					'text' => $this->getPostSnippet($blogTitle, $sectionText),
 				];
 			}
 		}
 
 		return $cssBlogs;
+	}
+
+	/**
+	 * @desc Removes wikitext H3, truncates $sectionText and parse wikitext
+	 * 
+	 * @param Title $blogTitle
+	 * @param String $sectionText
+	 * 
+	 * @return String
+	 */
+	private function getPostSnippet($blogTitle, $sectionText) {
+		$output = $this->removeHeadline( $sectionText );
+		$output = $this->wg->Lang->truncate( $output, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
+		$output = $this->getParsedText($output, $blogTitle);
+		
+		return $output;
+	}
+
+	/**
+	 * @desc Gets first H3 tag content and makes an anchor of it if found
+	 * 
+	 * @param String $sectionText
+	 * 
+	 * @return string
+	 */
+	private function addAnchorToPostUrl($sectionText) {
+		$anchor = '';
+		$headlines = [];
+		
+		if( preg_match( self::MEDIAWIKI_H3_PATTERN, $sectionText, $headlines ) ) {
+			$anchor = '#' . str_replace( ' ', '_', str_replace('=', '', $headlines[0]) );
+		}
+		
+		return $anchor;
 	}
 
 	/**
@@ -159,8 +205,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @return mixed
 	 */
 	private function removeHeadline($text) {
-		$pattern = '/===[^=]+===[^=]\s*/';
-		return preg_replace($pattern, '', $text);
+		return preg_replace(self::MEDIAWIKI_H3_PATTERN, '', $text);
 	}
 
 	/**
@@ -172,6 +217,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @return mixed
 	 */
 	private function getParsedText( $text, $title ) {
+		// should we use here $wgParser or ParserPool?
 		$output = $this->wg->Parser->parse( $text, $title, new ParserOptions() ); /** @var ParserOutput $output */
 		return $output->getText();
 	}
