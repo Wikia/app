@@ -7,9 +7,10 @@
 	<div class="version-box">
 		<?= wfMessage('special-css-current-version')->rawParams(['1.0.17'])->text(); ?>
 	</div>
+	<?php if( !empty($cssBlogs) ): ?>
 	<div class="community-updates">
 		<h3><?= wfMessage('special-css-community-update-headline')->text(); ?></h3>
-		<ul>
+		<ul class="community-updates-list">
 			<?php foreach( $cssBlogs as $cssUpdatePost ): ?>
 			<li class="community-update-item plainlinks">
 				<?= $cssUpdatePost['userAvatar']; ?>
@@ -21,6 +22,7 @@
 			<?php endforeach; ?>
 		</ul>
 	</div>
+	<?php endif; ?>
 </aside>
 <footer class="css-footer">
 	<input class="big" type="submit" value="<?= wfMessage('special-css-publish-button')->escaped(); ?>" />

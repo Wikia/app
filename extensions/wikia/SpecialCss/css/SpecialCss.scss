@@ -28,13 +28,13 @@
 			margin: 0;
 			padding: 15px;
 		}
-		ul {
+		.community-updates-list {
 			height: 440px;
 			list-style: none;
 			margin: 0;
 			overflow-y: scroll;
 			padding: 0;
-			li {
+			.community-update-item {
 				border-bottom: 1px solid $color-page-border;
 				margin: 15px;
 				h4 {
@@ -49,7 +49,7 @@
 					font-size: 11px;
 				}
 			}
-			li:last-child {
+			.community-update-item:last-child {
 				border: none;
 			}
 		}

@@ -1,7 +1,24 @@
 <?php
 class SpecialCssModel extends WikiaModel {
+	/**
+	 * @desc The article page name of CSS file of which content we display in the editor
+	 */
 	const CSS_FILE_NAME = 'Wikia.css';
+
+	/**
+	 * @desc The city_id of community wiki from which we pull blog posts data
+	 */
 	const CC_CITY_ID = 177;
+
+	/**
+	 * @desc The category of blogposts we pull data from
+	 */
+	const UPDATES_CATEGORY = 'CSS_Updates';
+
+	/**
+	 * @desc The section number we pull content from
+	 */
+	const UPDATE_SECTION_IN_BLOGPOST = 3;
 
 	/**
 	 * @var array List of skins for which we would like to use SpecialCss for editing css file
@@ -126,14 +143,45 @@ class SpecialCssModel extends WikiaModel {
 					'userUrl' => $userPage->getFullUrl(),
 					'userName' => $blogUser,
 					'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
-					'text' => $cssUserJson[$blog['pageid']]['revisions'][0]['*']
+					'text' => $this->getParsedText( $this->removeHeadline( $cssUserJson[$blog['pageid']]['revisions'][0]['*'] ), $blogTitle ),
 				];
 			}
 		}
 
 		return $cssBlogs;
 	}
-	
+
+	/**
+	 * @desc Removes wikitext's H3 tags from given text
+	 * 
+	 * @param $text
+	 * @return mixed
+	 */
+	private function removeHeadline($text) {
+		$pattern = '/===[^=]+===[^=]\s*/';
+		return preg_replace($pattern, '', $text);
+	}
+
+	/**
+	 * @desc Parse given wiki text and returns the HTML output
+	 * 
+	 * @param String $text
+	 * @param Title $title
+	 * 
+	 * @return mixed
+	 */
+	private function getParsedText( $text, $title ) {
+		$output = $this->wg->Parser->parse( $text, $title, new ParserOptions() ); /** @var ParserOutput $output */
+		return $output->getText();
+	}
+
+	/**
+	 * @desc Removes from given string first slash and the string before it
+	 * 
+	 * @param String $titleText
+	 * 
+	 * @return string
+	 */
 	private function getCleanTitle($titleText) {
 		$result = $titleText;
 		$slashPosition = mb_strpos($titleText, '/');
@@ -192,7 +240,7 @@ class SpecialCssModel extends WikiaModel {
 			'format' => 'json',
 			'action' => 'query',
 			'list' => 'categorymembers',
-			'cmtitle' => 'Category:Technical_Updates',
+			'cmtitle' => 'Category:' . self::UPDATES_CATEGORY,
 			'cmlimit' => '20',
 			'cmsort' => 'timestamp',
 			'cmdir' => 'desc'
@@ -205,6 +253,7 @@ class SpecialCssModel extends WikiaModel {
 			'action' => 'query',
 			'prop' => 'revisions',
 			'rvprop' => 'content|user|timestamp',
+			'rvsection' => self::UPDATE_SECTION_IN_BLOGPOST,
 			'pageids' => $ids
 		];
 	}
