@@ -1310,7 +1310,7 @@ function wfMessageFallback( /*...*/ ) {
 }
 
 /**
- * Deprecated since 1.18
+ * @deprecated since 1.18
  *
  * Get a message from anywhere, for the current user language.
  *
@@ -1329,13 +1329,14 @@ function wfMessageFallback( /*...*/ ) {
  * @return String
  */
 function wfMsg( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReal( $key, $args );
 }
 
 /**
- * Deprecated since 1.18
+ * @deprecated since 1.18
  *
  * Same as above except doesn't transform the message
  *
@@ -1343,13 +1344,14 @@ function wfMsg( $key ) {
  * @return String
  */
 function wfMsgNoTrans( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReal( $key, $args, true, false, false );
 }
 
 /**
- * Deprecated since 1.18
+ * @deprecated since 1.18
  *
  * Get a message from anywhere, for the current global language
  * set with $wgLanguageCode.
@@ -1374,6 +1376,8 @@ function wfMsgNoTrans( $key ) {
  * @return String
  */
 function wfMsgForContent( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
+
 	global $wgForceUIMsgAsContentMsg;
 	$args = func_get_args();
 	array_shift( $args );
@@ -1387,7 +1391,7 @@ function wfMsgForContent( $key ) {
 }
 
 /**
- * Deprecated since 1.18
+ * @deprecated since 1.18
  *
  * Same as above except doesn't transform the message
  *
@@ -1395,6 +1399,8 @@ function wfMsgForContent( $key ) {
  * @return String
  */
 function wfMsgForContentNoTrans( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
+
 	global $wgForceUIMsgAsContentMsg;
 	$args = func_get_args();
 	array_shift( $args );
@@ -1408,7 +1414,7 @@ function wfMsgForContentNoTrans( $key ) {
 }
 
 /**
- * Deprecated since 1.18
+ * @deprecated since 1.18
  *
  * Really get a message
  *
@@ -1421,6 +1427,7 @@ function wfMsgForContentNoTrans( $key ) {
  */
 function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform = true ) {
 	wfProfileIn( __METHOD__ );
+	wfDeprecated( __METHOD__, '1.18' );
 	$message = wfMsgGetKey( $key, $useDB, $forContent, $transform );
 	$message = wfMsgReplaceArgs( $message, $args );
 	wfProfileOut( __METHOD__ );
@@ -1428,7 +1435,7 @@ function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform 
 }
 
 /**
- * Deprecated since 1.18
+ * @deprecated since 1.18
  *
  * Fetch a message string value, but don't replace any keys yet.
  *
@@ -1440,6 +1447,8 @@ function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform 
  * @return string
  */
 function wfMsgGetKey( $key, $useDB = true, $langCode = false, $transform = true ) {
+	wfDeprecated( __METHOD__, '1.18' );
+
 	wfRunHooks( 'NormalizeMessageKey', array( &$key, &$useDB, &$langCode, &$transform ) );
 
 	$cache = MessageCache::singleton();
@@ -1481,7 +1490,7 @@ function wfMsgReplaceArgs( $message, $args ) {
 }
 
 /**
- * Deprecated since 1.18
+ * @deprecated since 1.18
  *
  * Return an HTML-escaped version of a message.
  * Parameter replacements, if any, are done *after* the HTML-escaping,
@@ -1494,13 +1503,14 @@ function wfMsgReplaceArgs( $message, $args ) {
  * @return string
  */
 function wfMsgHtml( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReplaceArgs( htmlspecialchars( wfMsgGetKey( $key ) ), $args );
 }
 
 /**
- * Deprecated since 1.18
+ * @deprecated since 1.18
  *
  * Return an HTML version of message
  * Parameter replacements, if any, are done *after* parsing the wiki-text message,
@@ -1513,6 +1523,7 @@ function wfMsgHtml( $key ) {
  * @return string
  */
 function wfMsgWikiHtml( $key ) {
+	wfDeprecated( __METHOD__, '1.18' );
 	$args = func_get_args();
 	array_shift( $args );
 	return wfMsgReplaceArgs(
@@ -1522,7 +1533,7 @@ function wfMsgWikiHtml( $key ) {
 }
 
 /**
- * Deprecated since 1.18
+ * @deprecated since 1.18
  *
  * Returns message in the requested format
  * @param $key String: key of the message
@@ -1544,6 +1555,7 @@ function wfMsgWikiHtml( $key ) {
  */
 function wfMsgExt( $key, $options ) {
 	wfProfileIn(__METHOD__);
+	wfDeprecated( __METHOD__, '1.18' );
 	$args = func_get_args();
 	array_shift( $args );
 	array_shift( $args );
