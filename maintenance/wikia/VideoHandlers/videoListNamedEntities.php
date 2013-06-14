@@ -1,4 +1,5 @@
 <?php
+/** @usage: SERVER_ID=298117 php ./videoListNamedEntities.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php */
 
 ini_set( 'display_errors', 'stdout' );
 $options = array('help');
