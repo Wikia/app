@@ -130,11 +130,12 @@ class SpecialCssModel extends WikiaModel {
 
 		if ( $cssBlogsJson ) {
 			foreach ( $cssBlogsJson as $blog ) {
-				$blogUser = $cssUserJson[$blog['pageid']]['revisions'][0]['user'];
+				$pageId = $blog['pageid'];
+				$blogUser = $cssUserJson[$pageId]['revisions'][0]['user'];
 				$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, self::CC_CITY_ID );
-				$timestamp = $cssUserJson[$blog['pageid']]['revisions'][0]['timestamp'];
+				$timestamp = $cssUserJson[$pageId]['revisions'][0]['timestamp'];
 				
-				$blogTitle = GlobalTitle::newFromId( $blog['pageid'], self::CC_CITY_ID, 'wikia' );
+				$blogTitle = GlobalTitle::newFromId( $pageId, self::CC_CITY_ID, 'wikia' );
 				
 				$cssBlogs[] = [
 					'title' => $this->getCleanTitle( $blogTitle->getText() ),
@@ -143,7 +144,7 @@ class SpecialCssModel extends WikiaModel {
 					'userUrl' => $userPage->getFullUrl(),
 					'userName' => $blogUser,
 					'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
-					'text' => $this->getParsedText( $this->removeHeadline( $cssUserJson[$blog['pageid']]['revisions'][0]['*'] ), $blogTitle ),
+					'text' => $this->getParsedText( $this->removeHeadline( $cssUserJson[$pageId]['revisions'][0]['*'] ), $blogTitle ),
 				];
 			}
 		}
