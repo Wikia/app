@@ -43,7 +43,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		F::build('JSMessages')->enqueuePackage('LVS', JSMessages::EXTERNAL);
 
 		// update h1 text
-		$this->getContext()->getOutput()->setPageTitle( $this->wf->Msg('lvs-page-title') );
+		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-page-title')->text() );
 
 		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
@@ -203,6 +203,13 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$this->msg = $msg;
 		}
 
+		// check user permission
+		if ( !$this->wg->User->isAllowed( 'deletedtext' ) ) {
+			$this->html = '';
+			$this->result = 'error';
+			$this->msg = wfMessage( 'lvs-error-permission' )->text();
+		}
+
 		$helper = new LicensedVideoSwapHelper();
 		$file = $helper->getVideoFile( $videoTitle );
 
@@ -210,7 +217,16 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		if ( empty( $file ) ) {
 			$this->html = '';
 			$this->result = 'error';
-			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
+			$this->msg = wfMessage( 'videohandler-error-video-no-exist' )->text();
+			return;
+		}
+
+		// check if the file is swapped
+		$articleId = $file->getTitle()->getArticleID();
+		if ( $helper->isSwapped( $articleId ) ) {
+			$this->html = '';
+			$this->result = 'error';
+			$this->msg = wfMessage( 'lvs-error-already-swapped' )->text();
 			return;
 		}
 
@@ -218,9 +234,12 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		if ( !$file->isLocal() ) {
 			$this->html = '';
 			$this->result = 'error';
-			$this->msg = $this->wf->Message( 'lvs-error-permission' )->text();
+			$this->msg = wfMessage( 'lvs-error-permission' )->text();
 			return;
 		}
+
+		// set swap status
+		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, LicensedVideoSwapHelper::STATUS_SWAP_EXACT );
 
 		// check if the new file exists
 		$params = array(
@@ -231,45 +250,55 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
 		if ( empty( $response['fileExists'] ) ) {
+			wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
 			$this->html = '';
 			$this->result = 'error';
-			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
+			$this->msg = wfMessage( 'videohandler-error-video-no-exist' )->text();
 			return;
 		}
 
-		if ( $videoTitle == $newTitle ) {
-			// remove local video
-			$response = $this->sendRequest( 'VideoHandlerController', 'removeVideo', array( 'title' => $file->getName() ) );
-			$result = $response->getVal( 'result', '' );
-			if ( $result != 'ok' ) {
+		// remove local video
+		$removeVideo = $this->sendRequest( 'VideoHandlerController', 'removeVideo', array( 'title' => $file->getName() ) );
+		$result = $removeVideo->getVal( 'result', '' );
+		if ( $result != 'ok' ) {
+			wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
+			$this->html = '';
+			$this->result = 'error';
+			$this->msg = $removeVideo->getVal( 'msg', '' );
+			return;
+		}
+
+		$sameTitle = ( $videoTitle == $newTitle );
+
+		// force to get new file for same title
+		$newFile = $helper->getVideoFile( $newTitle, $sameTitle );
+
+		// check if new file exists
+		if ( empty( $newFile ) ) {
+			wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
+			$this->html = '';
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videohandler-error-video-no-exist' )->text();
+			return;
+		}
+
+		// add premium video
+		wfRunHooks( 'AddPremiumVideo', array( $newFile->getTitle() ) );
+
+		if ( !$sameTitle ) {
+			// add redirect url
+			$title = Title::newFromText( $videoTitle, NS_FILE );
+			$status = $helper->addRedirectLink( $title, $newFile->getTitle() );
+			if ( !$status->isGood() ) {
+				wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
 				$this->html = '';
 				$this->result = 'error';
-				$this->msg = $response->getVal( 'msg', '' );
+				$this->msg = $status->getMessage();
 				return;
 			}
 
 			// set swap status
-			$helper->setSwapExactStatus( $file->getTitle()->getArticleID() );
-
-			// force to get new file
-			$newFile = $helper->getVideoFile( $newTitle, true );
-
-			// add premium video
-			wfRunHooks( 'AddPremiumVideo', array( $newFile->getTitle() ) );
-
-			$undoUrl = SpecialPage::getTitleFor( 'Undelete', $newFile->getTitle()->getPrefixedDBkey() )->escapeLocalUrl();
-		} else {
-			$newFile = $helper->getVideoFile( $newTitle );
-
-			// check if new file exists
-			if ( empty( $newFile ) ) {
-				$this->html = '';
-				$this->result = 'error';
-				$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
-				return;
-			}
-
-			$undoUrl = '';
+			wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, LicensedVideoSwapHelper::STATUS_SWAP_NORM );
 		}
 
 		// add to log
@@ -288,7 +317,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->result = 'ok';
 
 		$fileUrl = $newFile->getTitle()->getLocalURL();
-		$this->msg = $this->wf->Message( 'lvs-swap-video-success', array( $fileUrl, $undoUrl ) )->parse();
+		$this->msg = wfMessage( 'lvs-swap-video-success', $fileUrl )->text();
 	}
 
 	/**
@@ -312,6 +341,13 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$this->msg = $msg;
 		}
 
+		// check user permission
+		if ( !$this->wg->User->isAllowed( 'undelete' ) || !$this->wg->User->isAllowed( 'deletedtext' ) ) {
+			$this->html = '';
+			$this->result = 'error';
+			$this->msg = wfMessage( 'lvs-error-permission' )->text();
+		}
+
 		$helper = new LicensedVideoSwapHelper();
 		$file = $helper->getVideoFile( $videoTitle );
 
@@ -319,13 +355,13 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		if ( empty( $file ) ) {
 			$this->html = '';
 			$this->result = 'error';
-			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
+			$this->msg = wfMessage( 'videohandler-error-video-no-exist' )->text();
 			return;
 		}
 
 		// set the status of this file page
 		$articleId = $file->getTitle()->getArticleID();
-		$this->wf->SetWikiaPageProp( WPP_LVS_STATUS, $articleId, LicensedVideoSwapHelper::STATUS_KEEP );
+		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, LicensedVideoSwapHelper::STATUS_KEEP );
 
 		$selectedSort = $this->getVal( 'sort', 'recent' );
 		$currentPage = $this->getVal( 'currentPage', 1 );
@@ -337,7 +373,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->result = 'ok';
 
 		// TODO: add url to undo as a parameter for 'lvs-keep-video-success'
-		$this->msg = $this->wf->Message( 'lvs-keep-video-success' )->parse();
+		$this->msg = wfMessage( 'lvs-keep-video-success' )->parse();
 	}
 
 	/**
@@ -368,18 +404,51 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		if ( empty( $file ) ) {
 			$this->html = '';
 			$this->result = 'error';
-			$this->msg = $this->wf->Message( 'videohandler-error-video-no-exist' )->text();
+			$this->msg = wfMessage( 'videohandler-error-video-no-exist' )->text();
 			return;
 		}
 
-		// get the status of this file page
-		$articleId = $file->getTitle()->getArticleID();
-		$status = wfGetWikiaPageProp( WPP_LVS_STATUS, $articleId );
-		if ( empty( $status ) ) {
+		$title = Title::newFromText( $videoTitle, NS_FILE );
+		if ( !$title instanceof Title ) {
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = wfMessage( 'videohandler-error-video-no-exist' )->text();
 			return;
+		}
+
+		// get the status of this file page
+		$articleId = $title->getArticleID();
+		$pageStatus = wfGetWikiaPageProp( WPP_LVS_STATUS, $articleId );
+		if ( empty( $pageStatus ) ) {
+			$this->html = '';
+			$this->result = 'error';
+			$this->msg = wfMessage( 'videohandler-error-invalid-file' )->text();
+			return;
+		}
+
+		if ( $pageStatus == LicensedVideoSwapHelper::STATUS_SWAP_EXACT ) {
+			$status = $helper->undeletePage( $title );
+		} else if ( $pageStatus == LicensedVideoSwapHelper::STATUS_SWAP_NORM ) {
+			$newTitle = $this->request->getVal( 'newTitle', '' );
+			$article = Article::newFromID( $title->getArticleID() );
+			$redirect = $article->getRedirectTarget();
+			if ( $article->isRedirect() && !empty( $redirect ) && $redirect->getDBKey() == $newTitle ) {
+				$status = $helper->undeletePage( $title );
+				if ( !$status->isOK() ) {
+					$this->html = '';
+					$this->result = 'error';
+					$this->msg = $status->getMessage();
+					return;
+				}
+
+				$result = $helper->removeRedirectLink( $article );
+				if ( !$result->isOK() ) {
+					$this->html = '';
+					$this->result = 'error';
+					$this->msg = $status->getMessage();
+					return;
+				}
+			}
 		}
 
 		// delete the status of this file page
@@ -399,7 +468,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		$this->result = 'ok';
-		$this->msg = $this->wf->Message( 'lvs-restore-video-success' )->text();
+		$this->msg = wfMessage( 'lvs-restore-video-success' )->text();
 	}
 
 	/**
@@ -412,25 +481,25 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// check for logged in user
 		if ( !$this->wg->User->isLoggedIn() ) {
-			$this->msg = $this->wf->Message( 'videos-error-not-logged-in' )->text();
+			$this->msg = wfMessage( 'videos-error-not-logged-in' )->text();
 			return;
 		}
 
 		// check for blocked user
 		if ( $this->wg->User->isBlocked() ) {
-			$this->msg = $this->wf->Message( 'videos-error-blocked-user' )->text();
+			$this->msg = wfMessage( 'videos-error-blocked-user' )->text();
 			return;
 		}
 
 		// check for empty title
 		if ( empty( $videoTitle ) ) {
-			$this->msg = $this->wf->Message( 'videos-error-empty-title' )->text();
+			$this->msg = wfMessage( 'videos-error-empty-title' )->text();
 			return;
 		}
 
 		// check for read only mode
-		if ( $this->wf->ReadOnly() ) {
-			$this->msg = $this->wf->Message( 'videos-error-readonly' )->text();
+		if ( wfReadOnly() ) {
+			$this->msg = wfMessage( 'videos-error-readonly' )->text();
 			return;
 		}
 

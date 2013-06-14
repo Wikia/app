@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'lvs-no-matching-videos' => 'There are currently no premium videos related to this video',
 	'lvs-log-swap' => 'Swapped video',
 	'lvs-log-restore' => 'Restored swapped video',
+	'lvs-log-removed-redirected-link' => 'Removed redirected link',
 );
 
 $messages['qqq'] = array(

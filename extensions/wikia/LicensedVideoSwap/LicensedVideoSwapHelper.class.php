@@ -24,7 +24,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	public function getUnswappedVideoList ( $sort = 'popular', $limit = 10, $page = 1 ) {
 		wfProfileIn( __METHOD__ );
 
-		$db = $this->wf->GetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE );
 
 		// We want to make sure the video hasn't been removed, is not premium and does not exist
 		// in the video_swap table
@@ -86,7 +86,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	public function getUnswappedVideoTotal ( ) {
 		wfProfileIn( __METHOD__ );
 
-		$db = $this->wf->GetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE );
 
 		// We want to make sure the video hasn't been removed, is not premium and does not exist
 		// in the video_swap table
@@ -144,7 +144,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 				RepoGroup::singleton()->clearCache( $title );
 			}
 
-			$file = $this->wf->FindFile( $title );
+			$file = wfFindFile( $title );
 			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
 				$result = $file;
 			}
@@ -158,7 +158,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @param int|$articleId - The ID of a video's file page
 	 */
 	public function setSwapStatus( $articleId ) {
-		$this->wf->SetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SWAP_NORM );
+		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SWAP_NORM );
 	}
 
 	/**
@@ -166,7 +166,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @param int|$articleId - The ID of a video's file page
 	 */
 	public function setSwapExactStatus( $articleId ) {
-		$this->wf->SetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SWAP_EXACT );
+		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SWAP_EXACT );
 	}
 
 	/**
@@ -178,6 +178,72 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	public function addLog( $title, $action, $reason = '' ) {
 		$user = $this->wg->User;
 		RecentChange::notifyLog( wfTimestampNow(), $title, $user, '', '', RC_EDIT, $action, $title, $reason, '' );
+	}
+
+	public function isSwapped( $articleId ) {
+		$status = wfGetWikiaPageProp( WPP_LVS_STATUS, $articleId );
+		return ( $status == self::STATUS_SWAP_EXACT || $status == self::STATUS_SWAP_NORM );
+	}
+
+	/**
+	 * add redirect link to the article
+	 * @param Title $title
+	 * @param Title $newTitle
+	 * @return Status $status
+	 */
+	public function addRedirectLink( $title, $newTitle ) {
+		$article = new Article( $title );
+		$content = "#REDIRECT [[{$newTitle->getPrefixedText()}]]";
+		$summary = wfMessage( 'autoredircomment', $title->getFullText() )->inContentLanguage()->text();
+		$status = $article->doEdit( $content, $summary );
+
+		return $status;
+	}
+
+	/**
+	 * remove redirect link (last revision)
+	 * @param Article $article
+	 * @return Status $status
+	 */
+	public function removeRedirectLink( $article ) {
+		$lastRevision = $article->getRevision();
+		$previousRevision = $lastRevision->getPrevious();
+		$previousText = empty( $previousRevision ) ? '' : $previousRevision->getText();
+		$summary = wfMessage( 'lvs-log-removed-redirected-link' )->inContentLanguage()->text();
+		$status = $article->doEdit( $previousText, $summary, EDIT_UPDATE, $previousRevision->getId() );
+
+		return $status;
+	}
+
+	/**
+	 * undelete page
+	 * @param Title $title
+	 * @return Status $status
+	 */
+	public function undeletePage( $title ) {
+		// use Phalanx to check recovered page title
+		if ( !wfRunHooks( 'CreatePageTitleCheck', array( $title, false ) ) ) {
+			return Status::newFatal( wfMessage( 'spamprotectiontext' )->text() );
+		}
+
+		$archive = new PageArchive( $title );
+		wfRunHooks( 'UndeleteForm::undelete', array( &$archive, $title ) );
+
+		$time = '';
+		$comment = '';
+		$fileVersions = array();
+		$unsuppress = false;
+
+		$status = $archive->undelete( $time, $comment, $fileVersions, $unsuppress );
+		if ( is_array( $status ) ) {
+			// Undeleted file count
+			if ( $status[1] ) {
+				wfRunHooks( 'FileUndeleteComplete', array( $title, $fileVersions, $this->wg->User, $comment ) );
+			}
+			return Status::newGood();
+		} else {
+			return Status::newFatal( wfMessage( 'cannotundelete' )->text() );
+		}
 	}
 
 }
