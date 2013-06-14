@@ -67,13 +67,25 @@ class ChatHelper {
 		return $server[self::getServerBasket()];
 	}
 
+	static function getEnvironmentName() {
+		global $wgDevelEnvironment;
+		if (!empty($wgDevelEnvironment)) return 'dev';
+
+		$name = Wikia::getStagingServerName();
+		if ( ( $name === "preview" ) || ( $name === "verify" ) ) {
+			return $name;
+		}
+
+		return 'prod';
+	}
+
 	/**
 	 *
 	 * laod Config of chat from json file (we need to use jsone file becasue w)
 	 * @param string $name
 	 */
 	static function getChatConfig($name) {
-		global $wgWikiaLocalSettingsPath, $wgDevelEnvironment, $wgWikiaConfigDirectory;
+		global $wgWikiaConfigDirectory;
 		wfProfileIn(__METHOD__);
 
 		if(empty(self::$configFile)) {
@@ -82,9 +94,10 @@ class ChatHelper {
 			self::$configFile = json_decode($string, true);
 		}
 
-		if(isset(self::$configFile[empty($wgDevelEnvironment) ? 'prod':'dev'][$name])) {
+		$env = self::getEnvironmentName();
+		if(isset(self::$configFile[$env][$name])) {
 			wfProfileOut(__METHOD__);
-			return self::$configFile[empty($wgDevelEnvironment) ? 'prod':'dev'][$name];
+			return self::$configFile[$env][$name];
 		}
 
 		if(isset(self::$configFile[$name])) {
