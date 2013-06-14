@@ -8,7 +8,7 @@ class ConfigTest extends BaseTest {
 
 	public function setUp() {
 		$this->service = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
-		                        ->disableOriginalConstructor();
+		                       ->disableOriginalConstructor();
 		
 		$this->config = $this->getMockBuilder( '\\Wikia\Search\Config' )
 		                     ->disableOriginalConstructor();
@@ -219,7 +219,31 @@ class ConfigTest extends BaseTest {
 		$mockWikiMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
-		$config = new \Wikia\Search\Config();
+
+		$mockWikiMatch
+			->expects( $this->exactly( 2 ) )
+			->method( 'getId' )
+			->will( $this->returnValue( 0 ) )
+		;
+		$wikiService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobalForWiki' ] );
+
+		$wikiService
+			->expects( $this->exactly( 2 ) )
+			->method( 'getGlobalForWiki' )
+			->with( 'wgLanguageCode', 0 )
+			->will( $this->returnValue( 'en' ) )
+		;
+
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getService' ] )
+			->getMock()
+		;
+		$config
+			->expects( $this->exactly( 2 ) )
+			->method( 'getService' )
+			->will( $this->returnValue( $wikiService ) )
+		;
 
 		$this->assertFalse(
 				$config->hasWikiMatch(),
@@ -229,6 +253,16 @@ class ConfigTest extends BaseTest {
 				$config->getWikiMatch(),
 				'\Wikia\Search\Config should return null when getting an uninitialized wiki match'
 		);
+
+		$config->setLanguageCode( 'pl' );
+		$config->setWikiMatch( $mockWikiMatch );
+		$this->assertNull(
+				$config->getWikiMatch(),
+				'\Wikia\Search\Config::setWikiMatch should not set match if lang is not correct'
+		);
+
+		$config->setLanguageCode( 'en' );
+
 		$this->assertEquals(
 				$config,
 				$config->setWikiMatch( $mockWikiMatch ),
@@ -254,21 +288,32 @@ class ConfigTest extends BaseTest {
 	 * @covers \Wikia\Search\Config::setInterWiki
 	 */
 	public function testInterWiki() {
-		$config	= new \Wikia\Search\Config;
-
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'bootstrapQueryService' ] )
+		               ->getMock();
+		
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'bootstrapQueryService' )
+		    ->will   ( $this->returnValue( 'Select\\OnWiki' ) )
+		;
 		$this->assertFalse(
-				$config->getInterWiki(),
-				'Interwiki accessor method should be false by default.'
+				$config->getInterWiki()
 		);
 		$this->assertEquals(
 				$config,
-				$config->setInterWiki( true ),
-				'WikiaSearch::setInterWiki should provide fluent interface.'
+				$config->setInterWiki( true )
 		);
 		$this->assertTrue(
-				$config->getInterWiki(),
-				'Interwiki accessor method should always have the same value, regardless of previous mutated state.'
+				$config->getInterWiki()
 		);
+		$this->assertAttributeEquals(
+				'Select\\InterWiki',
+				'queryService',
+				$config
+		);
+
 	}
 
 	/**
@@ -777,10 +822,21 @@ class ConfigTest extends BaseTest {
 	 * @covers \Wikia\Search\Config::getQueryFieldsToBoosts
 	 */
 	public function testGetQueryFieldsToBoosts() {
-		$config = new \Wikia\Search\Config();
-		$queryFieldsToBoostsRefl = new ReflectionProperty( '\Wikia\Search\Config', 'queryFieldsToBoosts' );
-		$queryFieldsToBoostsRefl->setAccessible( true );
-		$fields = $queryFieldsToBoostsRefl->getValue( $config );
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'importQueryFieldBoosts' ] )
+		               ->getMock();
+		
+		$fields = [ 'html' => 100 ];
+		
+		$reflAttr = new \ReflectionProperty( 'Wikia\Search\Config', 'queryFieldsToBoosts' );
+		$reflAttr->setAccessible( true );
+		$reflAttr->setValue( $config, $fields ); 
+		
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'importQueryFieldBoosts' )
+		;
 		$this->assertEquals(
 				$fields,
 				$config->getQueryFieldsToBoosts(),
@@ -805,36 +861,70 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @covers \Wikia\Search\Config::importQueryFieldBoosts
 	 */
-	public function testImportQueryFieldBoosts() {
+	public function testImportQueryFieldBoostsFirstTime() {
 		$config = $this->getMockBuilder( '\Wikia\Search\Config' )
 		               ->disableOriginalConstructor()
-		               ->setMethods( array( 'setQueryField' ) )
+		               ->setMethods( array( 'getTestProfile' ) )
 		               ->getMock();
 		
-		$service = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
-		                  ->disableOriginalConstructor()
-		                  ->setMethods( array( 'getGlobalWithDefault' ) )
-		                  ->getMock();
-		
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getGlobalWithDefault' )
-		    ->with   ( 'SearchBoostFor_title', 5 )
-		    ->will   ( $this->returnValue( 5 ) ) // value doesn't matter -- that's why we test this method separately 
-		;
+		$testProfile = $this->getMockbuilder( 'Wikia\Search\TestProfile\Base' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ 'getQueryFieldsToBoosts' ] )
+		                    ->getMock();
+		$fields = [ 'html' => 100 ];
 		$config
 		    ->expects( $this->once() )
-		    ->method ( 'setQueryField' )
-		    ->with   ( 'title', 5 )
+		    ->method ( 'getTestProfile' )
+		    ->will   ( $this->returnValue( $testProfile ) )
+		;
+		$testProfile
+		    ->expects( $this->once() )
+		    ->method ( "getQueryFieldsToBoosts" )
+		    ->will   ( $this->returnValue( $fields ) )
 		;
 		
-		$fieldsrefl = new ReflectionProperty( '\Wikia\Search\Config', 'queryFieldsToBoosts' );
-		$fieldsrefl->setAccessible( true );
-		$fieldsrefl->setValue( $config, array( 'title' => 5 ) );
+		$methodrefl = new ReflectionMethod( '\Wikia\Search\Config', 'importQueryFieldBoosts' );
+		$methodrefl->setAccessible( true );
+		$this->assertEquals(
+				$config,
+				$methodrefl->invoke( $config )
+		);
+		$this->assertAttributeEquals(
+				$fields,
+				'queryFieldsToBoosts',
+				$config
+		);
+		$this->assertAttributeEquals(
+				true,
+				'queryFieldsWereImported',
+				$config
+		);
+	}
+	
+	/**
+	 * @covers \Wikia\Search\Config::importQueryFieldBoosts
+	 */
+	public function testImportQueryFieldBoostsConsecutiveTimes() {
+		$config = $this->getMockBuilder( '\Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( array( 'getTestProfile' ) )
+		               ->getMock();
 		
-		$servicerefl = new ReflectionProperty( '\Wikia\Search\Config', 'service' );
-		$servicerefl->setAccessible(true );
-		$servicerefl->setValue( $config, $service );
+		$testProfile = $this->getMockbuilder( 'Wikia\Search\TestProfile\Base' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( [ 'getQueryFieldsToBoosts' ] )
+		                    ->getMock();
+		$prop = new ReflectionProperty( 'Wikia\Search\Config', 'queryFieldsWereImported' );
+		$prop->setAccessible( true );
+		$prop->setValue( $config, true );
+		$config
+		    ->expects( $this->never() )
+		    ->method ( 'getTestProfile' )
+		;
+		$testProfile
+		    ->expects( $this->never() )
+		    ->method ( "getQueryFieldsToBoosts" )
+		;
 		
 		$methodrefl = new ReflectionMethod( '\Wikia\Search\Config', 'importQueryFieldBoosts' );
 		$methodrefl->setAccessible( true );
@@ -1010,6 +1100,58 @@ class ConfigTest extends BaseTest {
 				$config->getWikiId()
 		);
 	}
+
+	/**
+	 * @covers Wikia\Search\Config::getLanguageCode
+	 * @covers Wikia\Search\Config::setLanguageCode
+	 */
+	public function testSetAndGetLanguageCode() {
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+			->setMethods( [ 'getLanguageCode' ] )
+			->getMock();
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getService' ] )
+			->getMock();
+
+		$mockService
+			->expects( $this->once() )
+			->method( 'getLanguageCode' )
+			->will( $this->returnValue( 'en' ) )
+		;
+
+		$config
+			->expects( $this->once() )
+			->method( 'getService' )
+			->will( $this->returnValue( $mockService ) )
+		;
+
+		$this->assertAttributeEmpty(
+			'languageCode',
+			$config,
+			'At create languageCode field should be empty'
+		);
+
+		$this->assertEquals(
+			'en',
+			$config->getLanguageCode(),
+			'Default value should equals en.'
+		);
+
+		$config->setLanguageCode( 'pl' );
+
+		$this->assertAttributeEquals(
+			'pl',
+			'languageCode',
+			$config
+		);
+
+		$this->assertEquals(
+			'pl',
+			$config->getLanguageCode()
+		);
+
+	}
 	
 	/**
 	 * @covers Wikia\Search\Config::setLimit
@@ -1076,6 +1218,304 @@ class ConfigTest extends BaseTest {
 				'setrank should mutate the rank attribute'
 		);
 	}
+
+	/**
+	 * @covers Wikia\Search\Config
+	 */
+	public function testSetGetABTestGroup() {
+		$config = new Config;
+		$this->assertAttributeEmpty(
+				'ABTestGroup',
+				$config
+		);
+		$this->assertEquals(
+				$config,
+				$config->setABTestGroup( 'A' )
+		);
+		$this->assertAttributeEquals(
+				'A',
+				'ABTestGroup',
+				$config
+		);
+		$this->assertEquals(
+				'A',
+				$config->getABTestGroup()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getTestProfile
+	 * @covers Wikia\Search\Config::initiateTestProfile
+	 */
+	public function testGetTestProfileNotSet() {
+		$config = new Config;
+		$this->assertAttributeEmpty(
+				'ABTestGroup',
+				$config
+		);
+		$this->assertInstanceOf(
+				'Wikia\Search\TestProfile\Base',
+				$config->getTestProfile(),
+				'The default test group should be Base'
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getTestProfile
+	 * @covers Wikia\Search\Config::initiateTestProfile
+	 */
+	public function testGetTestProfileExplicitBase() {
+		$config = new Config;
+		$config->setABTestGroup( 'Base' );
+		$this->assertInstanceOf(
+				'Wikia\Search\TestProfile\Base',
+				$config->getTestProfile(),
+				'We should support explicitly setting "Base" as the test group.'
+		);
+		// note that this is really just a logic hack -- we're using the backoff tested below for now
+	}
+
+	/**
+	 * @covers Wikia\Search\Config::getTestProfile
+	 * @covers Wikia\Search\Config::initiateTestProfile
+	 */
+	public function testGetTestProfileWithTestGroup() {
+		$config = new Config;
+		$config->setABTestGroup( 'A' );
+		$this->assertInstanceOf(
+				'Wikia\Search\TestProfile\GroupA',
+				$config->getTestProfile(),
+				'We should be able to access the correct test profile when given a letter value'
+		);
+	}
+
+	/**
+	 * @covers Wikia\Search\Config::getTestProfile
+	 * @covers Wikia\Search\Config::initiateTestProfile
+	 */
+	public function testGetTestProfileNonexistentTestGroup() {
+		$config = new Config;
+		$config->setABTestGroup( 'THIS_AINT_NO_TEST_GROUP' );
+		$this->assertInstanceOf(
+				'Wikia\Search\TestProfile\Base',
+				$config->getTestProfile(),
+				'A non-existent test group should back off to base'
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setStart
+	 * @covers Wikia\Search\Config::getStart
+	 */
+	public function testSetGetStart() {
+		$start = 12345; // could never be our default start
+		$config = new Config;
+		$this->assertEquals(
+				$config,
+				$config->setStart( $start )
+		);
+		$this->assertAttributeEquals(
+				$start,
+				'start',
+				$config
+		);
+		$this->assertEquals(
+				$start,
+				$config->getStart()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setMinimumMatch
+	 * @covers Wikia\Search\Config::getMinimumMatch
+	 */
+	public function testSetGetMm() {
+		$mm = '200%';
+		$config = new Config;
+		$this->assertEquals(
+				$config,
+				$config->setMinimumMatch( $mm )
+		);
+		$this->assertAttributeEquals(
+				$mm,
+				'minimumMatch',
+				$config
+		);
+		$this->assertEquals(
+				$mm,
+				$config->getMinimumMatch()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getLength
+	 */
+	public function testGetLengthWithMatch() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'hasMatch', 'getStart' ] )
+		               ->getMock();
+		
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'hasMatch' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( "getStart" )
+		    ->will   ( $this->returnValue( 0 ) )
+		;
+		$this->assertAttributeEquals(
+				$config->getLength() + 1,
+				'limit',
+				$config,
+				'Wikia\Search\Config::getLength should be limit -1 if we have a match'
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setNamespaces
+	 */
+	public function testSetNamespaces() {
+		$config = new Config;
+		$ns = [ 1, 2, 3, 4 ,5, 6, 7, 8, 9 ];
+		$this->assertEquals(
+				$config,
+				$config->setNamespaces( $ns )
+		);
+		$this->assertAttributeEquals(
+				$ns,
+				'namespaces',
+				$config
+		);
+		
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getNamespaces
+	 */
+	public function testGetNamespacesLazyLoad() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'getService' ] )
+		               ->getMock();
+		
+		$service = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( [ 'getDefaultNamespacesFromSearchEngine' ] )
+		                ->getMock();
+		
+		$ns = [ 1, 2, 3, 4, 5 ];
+		$this->assertAttributeEmpty(
+				'namespaces',
+				$config
+		);
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( "getDefaultNamespacesFromSearchEngine" )
+		    ->will   ( $this->returnValue( $ns ) )
+		;
+		$this->assertEquals(
+				$ns,
+				$config->getNamespaces()
+		);
+		$this->assertAttributeEquals(
+				$ns,
+				'namespaces',
+				$config
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getNamespaces
+	 */
+	public function testGetNamespacesWithQueryNamespace() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'getService' ] )
+		               ->getMock();
+		
+		$ns = [ 1, 2, 3, 4, 5 ];
+		$newNs = array_merge( $ns, [ 6 ] );
+		$config->setNamespaces( $ns );
+		
+		$qn = new ReflectionProperty( 'Wikia\Search\Config', 'queryNamespace' );
+		$qn->setAccessible( true );
+		$qn->setValue( $config, 6 );
+		
+		$config
+		    ->expects( $this->never() )
+		    ->method ( 'getService' )
+		;
+		$this->assertEquals(
+				$newNs,
+				$config->getNamespaces()
+		);
+		$this->assertAttributeEquals(
+				$newNs,
+				'namespaces',
+				$config
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setRank
+	 * @covers Wikia\Search\Config::getRank
+	 * @covers Wikia\Search\Config::getSort
+	 */
+	public function testSetGetRankGetSort() {
+		$config = new Config;
+		$this->assertAttributeEquals(
+				[ 'score', 'desc' ],
+				'sort',
+				$config
+		);
+		$this->assertAttributeEquals(
+				'default',
+				'rank',
+				$config
+		);
+		$this->assertEquals(
+				$config,
+				$config->setRank( $config::RANK_MOST_VIEWED )
+		);
+		$this->assertEquals(
+				$config::RANK_MOST_VIEWED,
+				$config->getRank()
+		);
+		$this->assertEquals(
+				[ 'views', 'desc' ],
+				$config->getSort()
+		);
+		$this->assertAttributeEquals(
+				$config::RANK_MOST_VIEWED,
+				'rank',
+				$config
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setRequestedFields
+	 */
+	public function testSetRequestedFields() {
+		$config = new Config;
+		$fields = [ 'fake', 'fake2', 'fake3' ];
+		$this->assertEquals(
+				$config,
+				$config->setRequestedFields( $fields )
+		);
+		$this->assertAttributeEquals(
+				$fields,
+				'requestedFields',
+				$config
+		);
+	}
 	
 	/**
 	 * @covers Wikia\Search\Config::setRank
@@ -1091,6 +1531,288 @@ class ConfigTest extends BaseTest {
 				$config::RANK_DEFAULT,
 				$config->getRank(),
 				'An incorrect rank value should not mutate the config rank propery'
+		);
+	}
+
+	/**
+	 * @covers Wikia\Search\Config::setHub
+	 * @covers Wikia\Search\Config::getHub
+	 */
+	public function testSetGetHub() {
+		$hub = 'Entertainment';
+		$config = new Config;
+		$this->assertEquals(
+				$config,
+				$config->setHub( $hub )
+		);
+		$this->assertAttributeEquals(
+				$hub,
+				'hub',
+				$config
+		);
+		$this->assertEquals(
+				$hub,
+				$config->getHub()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setAdvanced
+	 * @covers Wikia\Search\Config::getAdvanced
+	 */
+	public function testSetGetAdvanced() {
+		$config = new Config;
+		$this->assertEquals(
+				$config,
+				$config->setAdvanced( true )
+		);
+		$this->assertAttributeEquals(
+				true,
+				'advanced',
+				$config
+		);
+		$this->assertEquals(
+				true,
+				$config->getAdvanced()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setError
+	 * @covers Wikia\Search\Config::getError
+	 */
+	public function testSetGetError() {
+		$error = $this->getMockBuilder( 'Exception' )
+		              ->disableOriginalConstructor()
+		              ->getMock();
+		$config = new Config;
+		$this->assertEquals(
+				$config,
+				$config->setError( $error )
+		);
+		$this->assertAttributeEquals(
+				$error,
+				'error',
+				$config
+		);
+		$this->assertEquals(
+				$error,
+				$config->getError()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setSkipBoostFunctions
+	 * @covers Wikia\Search\Config::getSkipBoostFunctions
+	 */
+	public function testSetGetSkipboostFunctions() {
+		$config = new Config;
+		$this->assertEquals(
+				$config,
+				$config->setSkipBoostFunctions( true )
+		);
+		$this->assertAttributeEquals(
+				true,
+				'skipBoostFunctions',
+				$config
+		);
+		$this->assertEquals(
+				true,
+				$config->getSkipBoostFunctions()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setQueryService
+	 */
+	public function testSetQueryServiceNonExistentClass() {
+		$config = new Config;
+		$meth = new ReflectionMethod( $config, 'setQueryService' );
+		$meth->setAccessible( true );
+		try {
+			$meth->invoke( $config, 'this will never be a class', true );
+		} catch ( \Exception $e ) { }
+		$this->assertInstanceOf(
+				'Exception',
+				$e
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::setQueryService
+	 */
+	public function testSetQueryService() {
+		$config = new Config;
+		$meth = new ReflectionMethod( $config, 'setQueryService' );
+		$meth->setAccessible( true );
+		$this->assertEquals(
+				$config,
+				$meth->invoke( $config, 'Select\\OnWiki', true )
+		);
+		$this->assertAttributeEquals(
+				'Select\\OnWiki',
+				'queryService',
+				$config
+		);
+		$meth->invoke( $config, 'Select\\Video', false );
+		$this->assertAttributeEquals(
+				'Select\\OnWiki',
+				'queryService',
+				$config,
+				'We should be able to vacuously "unapply" unregistered query services'
+		);
+		$meth->invoke( $config, 'Select\\OnWiki', false );
+		$this->assertAttributeEquals(
+				null,
+				'queryService',
+				$config,
+				'Apply as false means we now have no query service registered'
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::bootstrapQueryService
+	 */
+	public function testBootstrapQueryServiceDefault() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'getWikiId', 'getService' ] )
+		               ->getMock();
+		
+		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
+		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
+		$bs->setAccessible( true );
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'EnableWikiaHomePageExt' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$this->assertEquals(
+				'Select\\OnWiki',
+				$bs->invoke( $config )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::bootstrapQueryService
+	 */
+	public function testBootstrapQueryServiceVideo() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'getWikiId', 'getService' ] )
+		               ->getMock();
+		
+		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
+		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
+		$bs->setAccessible( true );
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiId' )
+		    ->will   ( $this->returnValue( \Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID ) )
+		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'EnableWikiaHomePageExt' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$this->assertEquals(
+				'Select\\Video',
+				$bs->invoke( $config )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::bootstrapQueryService
+	 */
+	public function testBootstrapQueryServiceInterWiki() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'getWikiId', 'getService' ] )
+		               ->getMock();
+		
+		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
+		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
+		$bs->setAccessible( true );
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'EnableWikiaHomePageExt' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->assertEquals(
+				'Select\\InterWiki',
+				$bs->invoke( $config )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\Config::getQueryService
+	 */
+	public function testGetQueryService() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'bootstrapQueryService' ] )
+		               ->getMock();
+		
+		$config
+		    ->expects( $this->once() )
+		    ->method ( "bootstrapQueryService" )
+		    ->will   ( $this->returnValue( 'Select\\OnWiki' ) )
+		;
+		$this->assertEquals(
+				'\\Wikia\\Search\\QueryService\\Select\\OnWiki',
+				$config->getQueryService()
+		);
+		$this->assertEquals(
+				'\\Wikia\\Search\\QueryService\\Select\\OnWiki',
+				$config->getQueryService(),
+				"Run a second time to ensure we only call bootstrapQueryService once"
+		);
+	}
+	
+	public function testGetService() {
+		$config = new Config;
+		$meth = new ReflectionMethod( $config, 'getService' );
+		$meth->setAccessible( true );
+		$this->assertAttributeEmpty(
+				'service',
+				$config
+		);
+		$this->assertInstanceOf(
+				'Wikia\Search\MediaWikiService',
+				$meth->invoke( $config )
+		);
+		$this->assertAttributeInstanceOf(
+				'Wikia\Search\MediaWikiService',
+				'service',
+				$config
 		);
 	}
 }

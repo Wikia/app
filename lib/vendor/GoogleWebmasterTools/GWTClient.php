@@ -4,11 +4,40 @@
  * Internal implementation of Google WebmasterTools client.
  * Consider using GWTService or WebmasterToolsUtil as public interface.
  */
+/**
+ * Class GWTClient
+ */
 class GWTClient {
+	/**
+	 *
+	 */
 	const FEED_URI = 'https://www.google.com/webmasters/tools/feeds';
 
+	/**
+	 * @var
+	 */
+	/**
+	 * @var int|string
+	 */
+	/**
+	 * @var int|string
+	 */
+	/**
+	 * @var int|string
+	 */
+	/**
+	 * @var int|string
+	 */
+	/**
+	 * @var int|string
+	 */
+	/**
+	 * @var int|mixed|object|string
+	 */
+	/**
+	 * @var int|mixed|object|string
+	 */
 	private $mAuth, $mEmail, $mPass, $mType, $mSource, $mService, $mWiki, $mSiteURI;
-	private static $cache; /* var $cache GWTLocalCache */
 
 	/**
 	 * constructor
@@ -17,8 +46,6 @@ class GWTClient {
 	 * @access public
 	 */
 	public function __construct( $email, $pass, $wiki = null) {
-		if ( GWTClient::$cache == null )
-			GWTClient::$cache = new GWTLocalCache();
 
 		global $wgGoogleWebToolsAccts;
 
@@ -65,31 +92,37 @@ class GWTClient {
 		$this->mAuth    = $this->getAuthToken();
 	}
 
+	/**
+	 * @return string
+	 * @throws GWTAuthenticationException
+	 */
 	private function getAuthToken () {
 		$cacheKey = $this->mEmail;
-		$cached = self::$cache->get( $cacheKey );
-		if( $cached ) return $cached;
+		return WikiaDataAccess::cache($cacheKey, 60 * 60, function() {
+			$content = Http::post('https://www.google.com/accounts/ClientLogin',
+				//null,
+				array('postData' => array(
+					"Email"       => $this->mEmail,
+					"Passwd"      => $this->mPass,
+					"accountType" => $this->mType,
+					"source"      => $this->mSource,
+					"service"     => $this->mService,
+				)
+				)
+			);
 
-		$content = Http::post('https://www.google.com/accounts/ClientLogin',
-			//null,
-			array('postData' => array(
-				"Email"       => $this->mEmail,
-				"Passwd"      => $this->mPass,
-				"accountType" => $this->mType,
-				"source"      => $this->mSource,
-				"service"     => $this->mService,
-			)
-			)
-		);
-
-		if (preg_match('/Auth=(\S+)/', $content, $matches)) {
-			self::$cache->set( $cacheKey, $matches[1] );
-			return $matches[1];
-		} else {
-			throw new GWTAuthenticationException();
-		}
+			if (preg_match('/Auth=(\S+)/', $content, $matches)) {
+				return $matches[1];
+			} else {
+				throw new GWTAuthenticationException();
+			}
+		});
 	}
 
+	/**
+	 * @param $site
+	 * @return string
+	 */
 	private function normalize_site ($site) {
 		if (!preg_match('!^http://!', $site)) $site = 'http://'.$site;
 		if (!preg_match('!/$!', $site))       $site = $site.'/';
@@ -97,24 +130,36 @@ class GWTClient {
 		return $site;
 	}
 
+	/**
+	 * @return string
+	 */
 	private function make_site_uri () {
 		$site = $this->normalize_site($this->mWiki->city_url);
 		$uri = self::FEED_URI . '/sites/' . urlencode($site);
 		return $uri;
 	}
 
+	/**
+	 * @return string
+	 */
 	private function make_sitemaps_uri () {
 		$site = $this->normalize_site($this->mWiki->city_url);
 		$uri = self::FEED_URI . '/' . urlencode($site) . "/sitemaps/";
 		return $uri;
 	}
 
+	/**
+	 * @return string
+	 */
 	private function make_site_id () {
 		return $this->normalize_site($this->mWiki->city_url).'sitemap-index.xml';
 	}
 	/*
 	* @return - GWTSiteSyncStatus.
 	*/
+	/**
+	 * @return GWTSiteSyncStatus|null
+	 */
 	public function site_info () {
 		$request = MWHttpRequest::factory( $this->mSiteURI );
 		$request->setHeader('Authorization', 'GoogleLogin auth='. $this->mAuth);
@@ -131,6 +176,9 @@ class GWTClient {
 		return GWTSiteSyncStatus::fromDomElement( $e );
 	}
 
+	/**
+	 * @return array|null
+	 */
 	public function get_sites() {
 		$uri = self::FEED_URI . '/sites/';
 		$request = MWHttpRequest::factory( $uri );
@@ -151,6 +199,10 @@ class GWTClient {
 		return GWTSiteSyncStatus::arrayFromDomDocument( $doc );
 	}
 
+	/**
+	 * @return GWTSiteSyncStatus
+	 * @throws GWTException
+	 */
 	public function add_site () {
 		$uri = self::FEED_URI . '/sites/';
 		// create request template
@@ -179,6 +231,10 @@ class GWTClient {
 		}
 	}
 
+	/**
+	 * @param null $code
+	 * @return GWTSiteSyncStatus
+	 */
 	public function verify_site ($code = null) {
 
 		if (!$code) {
@@ -197,6 +253,11 @@ class GWTClient {
 		return $this->put_verify( $xml );
 	}
 
+	/**
+	 * @param $xml
+	 * @return GWTSiteSyncStatus
+	 * @throws GWTException
+	 */
 	private function put_verify ( $xml ) {
 		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
 		$request = MWHttpRequest::factory( $this->mSiteURI , array( 'postData' => $xml, 'method' => 'PUT') );
@@ -217,6 +278,9 @@ class GWTClient {
 		return GWTSiteSyncStatus::fromDomElement( $e );
 	}
 
+	/**
+	 *
+	 */
 	public function send_sitemap () {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array( "site_id" => $this->make_site_id()) );
@@ -224,6 +288,10 @@ class GWTClient {
 		$this->put_sitemap( $xml );
 	}
 
+	/**
+	 * @param $xml
+	 * @throws GWTException
+	 */
 	private function put_sitemap ( $xml ) {
 		$request = MWHttpRequest::factory( $this->make_sitemaps_uri(), array( 'postData' => $xml, 'method' => 'POST') );
 		$request->setHeader('Content-type', 'application/atom+xml');

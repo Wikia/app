@@ -46,23 +46,28 @@ class SearchApiController extends WikiaApiController {
 	 * Fetches results for cross-wiki search for submitted query
 	 *
 	 * @requestParam string $query The query to use for the search
+	 * @requestParam string $lang The two chars wiki language code
 	 * @requestParam string $rank [OPTIONAL] The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest
 	 * @requestParam integer $batch [OPTIONAL] The batch/page of results to fetch
 	 * @requestParam integer $limit [OPTIONAL] The number of wiki items per batch
 	 *
 	 * @responseParam array $items The list of results
 	 *
-	 * @example &query=kermit
-	 * @example &query=kermit&limit=10
-	 * @example &query=kermit&limit=2&batch=2
+	 * @example &query=kermit&lang=en
+	 * @example &query=kermit&lang=en&limit=10
+	 * @example &query=kermit&lang=en&limit=2&batch=2
 	 */
 	public function getCrossWiki() {
 		if ( !$this->request->getVal( 'query' ) ) {
 			throw new InvalidParameterApiException( 'query' );
 		}
+		if ( !$this->request->getVal( 'lang' ) ) {
+			throw new InvalidParameterApiException( 'lang' );
+		}
+
 		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
 		$items = array();
-		foreach( $resultSet->getResults() as $result ){
+		foreach( $resultSet->getResults() as $result ) {
 			$items[] = array(
 				'id' => (int) $result->getHeader( 'wid' ),
 				'language' => $result->getHeader( 'lang' ),
@@ -153,6 +158,7 @@ class SearchApiController extends WikiaApiController {
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setInterWiki( true )
 			->setRequestedFields( array_merge( $searchConfig->getRequestedFields(), [ 'lang' ] ) ) 
+			->setLanguageCode( $request->getVal( 'lang' ) )
 		;
 		return $searchConfig;
 	}
