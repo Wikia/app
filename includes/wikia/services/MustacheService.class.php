@@ -10,7 +10,6 @@
  */
 class MustacheService {
 
-
 	const REGEX_PARTIALS = '/{{>([^{}]*?)}}/';
 
 	const INFO_TEMPLATE = 'template';
