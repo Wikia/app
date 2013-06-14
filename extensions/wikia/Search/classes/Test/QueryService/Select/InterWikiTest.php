@@ -17,7 +17,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'getWikiMatchByHost' ) )
+		                      ->setMethods( array( 'getWikiMatchByHost', 'getWikiId' ) )
 		                      ->getMock();
 
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
@@ -27,8 +27,14 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->getMock();
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                  ->disableOriginalConstructor()
+						  ->setMethods( array( 'getId' ) )
 		                  ->getMock();
-		
+
+		$mockMatch
+			->expects( $this->once() )
+			->method ( 'getId' )
+			->will   ( $this->returnValue( 123 ) )
+		;
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getQuery' )
@@ -45,10 +51,21 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( 'starwars' )
 		    ->will   ( $this->returnValue( $mockMatch ) )
 		;
+		$mockService
+			->expects( $this->once() )
+			->method ( 'getWikiId' )
+			->will   ( $this->returnValue( 456 ) )
+		;
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'setWikiMatch' )
 		    ->with   ( $mockMatch )
+		;
+
+		$mockConfig
+			->expects( $this->once() )
+			->method( 'getWikiMatch' )
+			->will( $this->returnValue( $mockMatch ) )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'extractMatch' );
 		$method->setAccessible( true );
@@ -316,7 +333,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getHub', 'getLanguageCode' ) );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'getGlobal' ) )
+		                      ->setMethods( array( 'getGlobal', 'getWikiId' ) )
 		                      ->getMock();
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
@@ -340,10 +357,15 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( 'CrossWikiaSearchExcludedWikis' )
 		    ->will   ( $this->returnValue( array( 123, 321 ) ) )
 		;
+		$mockService
+			->expects( $this->once() )
+			->method ( 'getWikiId' )
+			->will   ( $this->returnValue( 456 ) )
+		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'getQueryClausesString' );
 		$method->setAccessible( true );
 		$this->assertEquals(
-				'(-(wid:123) AND -(wid:321) AND (lang:en) AND (iscontent:true) AND (hub:Entertainment))',
+				'(-(wid:123) AND -(wid:321) AND -(wid:456) AND (lang:en) AND (iscontent:true) AND (hub:Entertainment))',
 				$method->invoke( $mockSelect )
 		);
 	}
