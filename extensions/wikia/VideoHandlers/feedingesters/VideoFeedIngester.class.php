@@ -516,4 +516,8 @@ abstract class VideoFeedIngester {
 		}
 	}
 
+	protected function extractNamedEntities( $metadata ) {
+		return array();
+	}
+
 }

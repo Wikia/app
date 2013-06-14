@@ -82,6 +82,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			foreach( $video['objectRelations'] as $obj ) {
 				$keywords[$obj['objectName']] = true;
 			}
+
 			$keywords = array_keys( $keywords );
 			$addlCategories = array_merge( $addlCategories, $keywords );
 			$clipData['keywords'] = implode(", ", $keywords );
@@ -95,16 +96,23 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$tags = array_keys( $tags );
 			//$addlCategories = array_merge( $addlCategories, $tags );
 			$clipData['tags'] = implode(", ", $tags );
+			$clipData['named_entities'] = $this->extractNamedEntities( $video );
 
 			$createParams = array('addlCategories'=>$addlCategories, 'debug'=>$debug, 'ignorerecent'=>$ignoreRecent);
 			$articlesCreated += $this->createVideo($clipData, $msg, $createParams);
-
-
 		}
 		echo "Feed size: $i\n";
 
 		wfProfileOut( __METHOD__ );
 		return $articlesCreated;
+	}
+
+	protected function extractNamedEntities( $metadata ) {
+		$namedEntities = array();
+		foreach( $metadata['objectRelations'] as $obj ) {
+			$namedEntities[] = array( "type"=>$obj['objectType'], "value"=> $obj['objectName'] );
+		}
+		return $namedEntities;
 	}
 
 	public function generateCategories(array $data, $addlCategories) {
