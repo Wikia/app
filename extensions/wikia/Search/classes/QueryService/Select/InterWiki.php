@@ -157,13 +157,12 @@ class InterWiki extends AbstractSelect
 		foreach ( $excludedWikiIds as $excludedWikiId ) {
 			$widQueries[] = Utilities::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 		}
-		
 		$queryClauses= array(
 				implode( ' AND ', $widQueries ),
-				Utilities::valueForField( 'lang', $this->service->getLanguageCode() ),
+				Utilities::valueForField( 'lang', $this->config->getLanguageCode() ),
 				Utilities::valueForField( 'iscontent', 'true' )
 		);
-		
+
 		$hub = $this->config->getHub();
 		if (! empty( $hub ) ) {
 		    $queryClauses[] = Utilities::valueForField( 'hub', $hub );
