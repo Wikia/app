@@ -38,6 +38,45 @@ $messages['en'] = array(
 	'styleguide-home-team-designer' => 'Product designer',
 );
 
+$messages['pl'] = array(
+	'styleguide-pagetitle' => 'Wikia Styleguide',
+	'styleguide-page-navigation-title' > 'Wikia Styleguide',
+	'styleguide-descriptionmsg' => 'Special:Styleguide to strona specjalna zawierająca informacje na temat biblioteki reużywalnych komponentów interfejsu Wikii',
+
+	// Main navigation
+	'styleguide-home' => 'Strona główna',
+	'styleguide-get-started' => 'Szybki start',
+	'styleguide-base-styles' => 'Style bazowe',
+	'styleguide-components' => 'Komponenty',
+	'styleguide-design' => 'Design',
+
+	// Footer navigation
+	'styleguide-blog' => 'Blog',
+	'styleguide-changelog' => 'Lista zmian',
+
+	// Home page
+	'styleguide-home-header' => 'Wikia Styleguide',
+	'styleguide-home-header-tagline' => 'Interfejs użytkownika w Wikii. Po prostu.',
+	'styleguide-home-welcome-message' => 'Poznaj Wikia Styleguide.',
+	'styleguide-home-welcome-tagline' => 'Proste i użyteczne narzędzie wspomagające szybki development w Wikii.',
+	'styleguide-home-stakeholders-header' => 'Dla kogo jest ta strona?',
+	'styleguide-home-stakeholders-paragraph' => 'Wikia Styleguide stworzono z myślą o inżynierach
+	i designerach. To miejsce, gdzie ewidencjonujemy komponenty używane przez nas
+	w obrębie platformy Wikii.
+	Możesz łatwo znaleźć aktualne elementy interfejsu użytkownika i kawałki kodu,
+	które przydadzą się w projektach przy których pracujesz.
+	To także świetna lektura dla nowych pracowników w Wikii.
+	Miłej lektury',
+	'styleguide-home-team-header' => 'Zespół Styleguide',
+	'styleguide-home-team-paragraph' => 'Zespół Wikia Styleguide został utworzony by pomóc w budowie
+	 narzędzia ułatwiającego nam wszystkim życie i zwiększającego wydajność.
+	 Odezwij się do nas jeżeli masz jakieś pytani dotyczące Styleguide
+	 lub sugestie, jak możemy uczynić go lepszym.',
+	'styleguide-home-team-pm' => 'Product manager',
+	'styleguide-home-team-engineer' => 'Inżynier',
+	'styleguide-home-team-designer' => 'Designer',
+);
+
 /** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
@@ -66,7 +105,7 @@ $messages['qqq'] = array(
 	'styleguide-home-team-header' => 'Header for Styleguide team description paragraph',
 	'styleguide-home-team-paragraph' => 'Style guide team description',
 	'styleguide-home-team-pm' => 'Job Title - Product manager',
-	'styleguide-home-team-engineer' => 'Job Title - Product manager',
-	'styleguide-home-team-designer' => 'Job Title - Product manager',
+	'styleguide-home-team-engineer' => 'Job Title - Engineer',
+	'styleguide-home-team-designer' => 'Job Title - Designer',
 
 );
