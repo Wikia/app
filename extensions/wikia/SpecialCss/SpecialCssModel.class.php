@@ -18,7 +18,7 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc The section number we pull content from
 	 */
-	const UPDATE_SECTION_IN_BLOGPOST = 3;
+	const UPDATE_SECTION_IN_BLOGPOST = 2;
 
 	/**
 	 * @var array List of skins for which we would like to use SpecialCss for editing css file
