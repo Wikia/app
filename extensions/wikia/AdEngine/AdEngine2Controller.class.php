@@ -426,6 +426,9 @@ class AdEngine2Controller extends WikiaController {
 
 		$vars['wgDisableKruxKV'] = (bool) $this->wg->DisableKruxKV;
 
+		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
+		$vars['adDriver2ForcedStatus'] = array();
+
 		wfProfileOut(__METHOD__);
 
 		return true;
