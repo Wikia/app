@@ -15,8 +15,7 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc The category of blogposts we pull data from
 	 */
-	//const UPDATES_CATEGORY = 'CSS_Updates';
-	const UPDATES_CATEGORY = 'Technical_Updates';
+	const UPDATES_CATEGORY = 'CSS_Updates';
 	/**
 	 * @desc The section number we pull content from
 	 */
@@ -29,6 +28,9 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc Limit of characters per one post snippet
 	 */
 	const SNIPPET_CHAR_LIMIT = 150;
+	/**
+	 * @desc Memcache key for CSS Updates
+	 */
 	const MEMC_KEY = 'css-chrome-updates';
 	
 	/**

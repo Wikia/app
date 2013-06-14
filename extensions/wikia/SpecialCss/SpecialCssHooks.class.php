@@ -35,7 +35,7 @@ class SpecialCssHooks {
 	public function onArticleSaveComplete($article) {
 		$categories = $article->getTitle()->getParentCategories();
 		if ( array_key_exists( "Category:" . SpecialCssModel::UPDATES_CATEGORY, $categories ) ) {
-			WikiaDataAccess::cachePurge( SpecialCssModel::MEMC_KEY );
+			WikiaDataAccess::cachePurge( wfSharedMemcKey(SpecialCssModel::MEMC_KEY) );
 		}
 		return true;
 	}
