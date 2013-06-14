@@ -28,4 +28,15 @@ class SpecialCssHooks {
 			&& $app->checkSkin( $model::$supportedSkins )
 			&& $app->wg->User->isAllowed( 'specialcss' );
 	}
+
+	/**
+	 * $desc Checks if CSS Update post was added, and purging cache with CSS Updates list
+	 */
+	public function onArticleSaveComplete($article) {
+		$categories = $article->getTitle()->getParentCategories();
+		if ( array_key_exists( "Category:" . SpecialCssModel::UPDATES_CATEGORY, $categories ) ) {
+			WikiaDataAccess::cachePurge( SpecialCssModel::MEMC_KEY );
+		}
+		return true;
+	}
 }

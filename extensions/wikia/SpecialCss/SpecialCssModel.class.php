@@ -8,28 +8,28 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc The city_id of community wiki from which we pull blog posts data
 	 */
 	const COMMUNITY_CENTRAL_CITY_ID = 177;
-
+	/**
+	 * @desc User avatar size
+	 */
 	const USER_AVATAR_SIZE = 25;
-
 	/**
 	 * @desc The category of blogposts we pull data from
 	 */
-	const UPDATES_CATEGORY = 'CSS_Updates';
-
+	//const UPDATES_CATEGORY = 'CSS_Updates';
+	const UPDATES_CATEGORY = 'Technical_Updates';
 	/**
 	 * @desc The section number we pull content from
 	 */
 	const UPDATE_SECTION_IN_BLOGPOST = 2;
-
 	/**
 	 * @desc Regex pattern used to extract h3 tags; see: SpecialCssModel::removeHeadline() and SpecialCssModel::addAnchorToPostUrl()
 	 */
 	const MEDIAWIKI_H3_PATTERN = '/===[^=]+===[^=]\s*/';
-
 	/**
 	 * @desc Limit of characters per one post snippet
 	 */
 	const SNIPPET_CHAR_LIMIT = 150;
+	const MEMC_KEY = 'css-chrome-updates';
 	
 	/**
 	 * @var array List of skins for which we would like to use SpecialCss for editing css file
@@ -141,7 +141,7 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	public function getCssBlogData($blogParams = [], $revisionsParams = []) {
 		$cssBlogs = WikiaDataAccess::cache(
-			wfSharedMemcKey('css-chrome-updates'),
+			wfSharedMemcKey(self::MEMC_KEY),
 			60 * 60 * 24,
 			function () use ($blogParams, $revisionsParams) {
 				$cssBlogs = [];
@@ -152,8 +152,8 @@ class SpecialCssModel extends WikiaModel {
 				if ( $cssBlogsData ) {
 					foreach ( $cssBlogsData as $blog ) {
 						$pageId = $blog['pageid'];
-						$blogUser = $cssRevisionsData[$blog['pageid']]['revisions'][0]['user'];
-						$blogTitle = GlobalTitle::newFromId($blog['pageid'], self::COMMUNITY_CENTRAL_CITY_ID, 'wikia');
+						$blogUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
+						$blogTitle = GlobalTitle::newFromId($pageId, self::COMMUNITY_CENTRAL_CITY_ID, 'wikia');
 						$userPage = GlobalTitle::newFromText($blogUser, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID);
 						$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
 						$sectionText = $cssRevisionsData[$pageId]['revisions'][0]['*'];
