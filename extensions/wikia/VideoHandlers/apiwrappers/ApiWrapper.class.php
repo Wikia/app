@@ -314,10 +314,17 @@ abstract class ApiWrapper {
 		if ( !isset($metadata['provider']) ) {
 			$metadata['provider'] = $this->getProvider();
 		}
+		if ( !isset($metadata['named_entities']) ) {
+			$metadata['named_entities'] = $this->getNamedEntities();
+		}
 
 		$this->metadata = $metadata;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	protected function getNamedEntities() {
+		return array();
 	}
 
 	protected function getVideoPublished(){
