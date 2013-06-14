@@ -11,8 +11,7 @@ $responsive-breakpoint: $width-outside + ($width-adskin * 2) + 2;
 $bg-margin: $responsive-breakpoint / 2;
 
 body.mediawiki {
-	/*background: $color-body url($background-image) top $background-align repeat;/* /* $wgCdnStylePath */
-	background: $color-body;
+	background-image: none;
 }
 
 body {
@@ -270,18 +269,12 @@ body > .global-notification,
 	width: 50%;
 }
 
-.wikia-background-gradient-wrapper {
-	height: 1000px;
-	position: absolute;
-	width: 100%;
-}
-
 @media screen and (max-width: 1030px) {
 	body {
 		background: $color-page;
 	}
 
-	.wikia-background-image-left, .wikia-background-image-right, .wikia-background-gradient-wrapper {
+	.wikia-background-image-left, .wikia-background-image-right {
 		display: none
 	}
 
@@ -322,12 +315,11 @@ body > .global-notification,
 
 	.wikia-background-gradient {
 		background: linear-gradient(to right, rgba($color-body, 0), $color-body $bg-gradient-width, $color-body 50%, rgba($color-body, 0) 51%) no-repeat border-box,
-		linear-gradient(to left , rgba($color-body, 0), $color-body $bg-gradient-width, $color-body 50%, rgba($color-body, 0) 51%) no-repeat border-box;
 		height: 100%;
-		margin-left: $bg-margin - $bg-gradient-width;
-		margin-right: $bg-margin - $bg-gradient-width;
-		position: relative;
-		width: auto;
+		left: $bg-margin - $bg-gradient-width;
+		linear-gradient(to left , rgba($color-body, 0), $color-body $bg-gradient-width, $color-body 50%, rgba($color-body, 0) 51%) no-repeat border-box;
+		position: absolute;
+		right: $bg-margin - $bg-gradient-width;
 	}
 }
 
