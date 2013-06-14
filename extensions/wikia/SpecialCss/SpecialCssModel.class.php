@@ -23,7 +23,7 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Regex pattern used to extract h3 tags; see: SpecialCssModel::removeHeadline() and SpecialCssModel::addAnchorToPostUrl()
 	 */
-	const MEDIAWIKI_H3_PATTERN = '/===[^=]+===[^=]\s*/';
+	const MEDIAWIKI_H3_PATTERN = '/===[^=]+===\s*/';
 
 	/**
 	 * @desc Limit of characters per one post snippet

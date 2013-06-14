@@ -51,6 +51,14 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	public function testGetCleanTitleDataProvider() {
 		return [
 			[
+				'title' => '',
+				'expected' => '',
+			],
+			[
+				'title' => 'Technical_Update:_November_20,_2012',
+				'expected' => 'Technical_Update:_November_20,_2012',
+			],
+			[
 				'title' => 'DaNASCAT/Technical_Update:_November_20,_2012',
 				'expected' => 'Technical_Update:_November_20,_2012',
 			],
@@ -71,5 +79,33 @@ class SpecialCssModelTest extends WikiaBaseTest {
 				'expected' => 'Technical_Update:_November_22,_2012',
 			],
 		];
+	}
+
+	public function testRemoveHeadline() {
+		$getRemoveHeadlineMethod = new ReflectionMethod('SpecialCssModel', 'removeHeadline');
+		$getRemoveHeadlineMethod->setAccessible(true);
+
+		$text = '===Headline===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
+				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
+				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.';
+		
+		$expected = '\nLorem ipsum dolor sit amet, consectetur adipiscing elit. , nisi eu 
+				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
+				nibh at justo . ==vulputate nulla at orci rhoncus, non eleifend ante porttitor.';
+		
+		$this->assertEquals( $expected, $getRemoveHeadlineMethod->invoke( new SpecialCssModel(), $text ) );
+	}
+	
+	public function testAddAnchorToPostUrl() {
+		$addAnchorToPostUrlMethod = new ReflectionMethod('SpecialCssModel', 'addAnchorToPostUrl');
+		$addAnchorToPostUrlMethod->setAccessible(true);
+
+		$text = '===Headline with more text===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
+				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
+				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.';
+
+		$expected = '#Headline_with_more_text';
+		
+		$this->assertEquals( $expected, $addAnchorToPostUrlMethod->invoke( new SpecialCssModel(), $text ) );
 	}
 }
