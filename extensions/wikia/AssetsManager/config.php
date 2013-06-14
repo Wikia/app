@@ -548,7 +548,9 @@ $config['wikiamobile_js_ads'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		//libraries
-		'//resources/wikia/libraries/DOMwriter/domwriter.js',
+		//I wan't to minimize how much data we have to transfer
+		//We currently don't have JS minimizer so I used minified version of it
+		'//resources/wikia/libraries/postscribe/postscribe.min.js',
 
 		//advertisement "core"
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
@@ -559,6 +561,7 @@ $config['wikiamobile_js_ads'] = array(
 		//modules
 		'//resources/wikia/modules/geo.js',
 		'//extensions/wikia/WikiaMobile/js/ads.js',
+		'//extensions/wikia/WikiaMobile/js/floatingAd.js'
 	)
 );
 
