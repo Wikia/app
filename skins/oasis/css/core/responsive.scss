@@ -23,13 +23,87 @@ body > .global-notification,
 	width: $width-outside;
 }
 
-.WikiaActivityModule li em {
-	width: auto;
+.WikiaActivityModule {
+	li em {
+		font-size: 15px;
+		line-height: 18px;
+		width: auto;
+	}
+
+	.edited-by {
+		font-size: 12px;
+	}
+}
+
+.WikiaArticle {
+	font-size: 14px;
+	line-height: 22px;
+
+	h2 {
+		font-size: 20px;
+	}
+
+	h3 {
+		font-size: 17px;
+	}
+
+	h4 {
+		font-size: 15px;
+	}
+
+	li {
+		line-height: 22px;
+	}
+
+	.editsection {
+		font-size: 14px;
+
+		img {
+			margin-right: 1px;
+		}
+	}
+
+	.thumbcaption {
+		line-height: 20px;
+	}
+}
+
+.WikiaPageHeader {
+	h1 {
+		font-size: 28px;
+		line-height: 28px;
+	}
 }
 
 .WikiaArticle,
 .WikiaArticleFooter {
 	padding: 0;
+}
+
+.WikiaArticle .toc {
+	#toctitle {
+		h2 {
+			font-size: 16px;
+		}
+
+		.toctoggle {
+			font-size: 13px;
+		}
+	}
+
+	ul li {
+		line-height: 20px;
+	}
+}
+
+.tally {
+	font-size: 9px;
+	line-height: 1.5em;
+
+	em {
+		font-size: 28px;
+		margin-right: 3px;
+	}
 }
 
 .WikiHeader {
@@ -71,11 +145,29 @@ body > .global-notification,
 .wikinav2 .WikiaPageHeader {
 	margin: 0 0 $width-padding 0;
 	padding-bottom: $width-padding / 2;
+
+	.wikia-menu-button,
+	> .comments {
+		margin-top: 3px;
+	}
 }
 
 .WikiaRail {
 	overflow: hidden;
 	padding: 0 10px 0 0;
+
+	.module h1,
+	#RIGHT_SKYSCRAPER h1,
+	.module h2,
+	#RIGHT_SKYSCRAPER h2 {
+		font-size: 20px;
+		font-weight: normal;
+		padding-left: 0;
+	}
+
+	.module .more {
+		font-size: 11px;
+	}
 }
 
 @media screen and (max-width: 1023px) {
