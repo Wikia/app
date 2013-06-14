@@ -520,4 +520,31 @@ abstract class VideoFeedIngester {
 		return array();
 	}
 
+	protected function normalizeNamedEntitiesType( $type ) {
+		switch ( $type ) {
+			case 'games':
+			case 'game':
+				return 'game';
+			break;
+
+			case 'movie':
+			case 'movies':
+				return 'movie';
+			break;
+
+			case 'shows':
+			case 'tv-series':
+			case 'tv-shows':
+			case 'tv-show':
+			case 'tv-serie':
+				return 'tv-show';
+			break;
+
+			case 'people':
+				return 'people';
+			break;
+		}
+		return $type;
+	}
+
 }

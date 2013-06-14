@@ -110,7 +110,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 	protected function extractNamedEntities( $metadata ) {
 		$namedEntities = array();
 		foreach( $metadata['objectRelations'] as $obj ) {
-			$namedEntities[] = array( "type"=>$obj['objectType'], "value"=> $obj['objectName'] );
+			$namedEntities[] = array( "type"=> $this->normalizeNamedEntitiesType( $obj['objectType'] ), "value"=> $obj['objectName'] );
 		}
 		return $namedEntities;
 	}
