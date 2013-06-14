@@ -315,9 +315,9 @@ body > .global-notification,
 
 	.wikia-background-gradient {
 		background: linear-gradient(to right, rgba($color-body, 0), $color-body $bg-gradient-width, $color-body 50%, rgba($color-body, 0) 51%) no-repeat border-box,
+				    linear-gradient(to left , rgba($color-body, 0), $color-body $bg-gradient-width, $color-body 50%, rgba($color-body, 0) 51%) no-repeat border-box;
 		height: 100%;
 		left: $bg-margin - $bg-gradient-width;
-		linear-gradient(to left , rgba($color-body, 0), $color-body $bg-gradient-width, $color-body 50%, rgba($color-body, 0) 51%) no-repeat border-box;
 		position: absolute;
 		right: $bg-margin - $bg-gradient-width;
 	}
