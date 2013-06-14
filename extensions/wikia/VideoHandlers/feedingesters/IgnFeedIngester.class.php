@@ -169,6 +169,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 				'description'	=> $data['description'],
 				'keywords'		=> $data['keywords'],
 				'tags'			=> $data['tags'],
+				'named_entities'=> $data['named_entities']
 			);
 		return $metadata;
 	}
