@@ -58,8 +58,8 @@ $messages['pl'] = array(
 	'styleguide-home-header' => 'Wikia Styleguide',
 	'styleguide-home-header-tagline' => 'Interfejs użytkownika w Wikii. Po prostu.',
 	'styleguide-home-welcome-message' => 'Poznaj Wikia Styleguide.',
-	'styleguide-home-welcome-tagline' => 'Proste i użyteczne narzędzie wspomagające szybki development w Wikii.',
-	'styleguide-home-stakeholders-header' => 'Dla kogo jest ta strona?',
+	'styleguide-home-welcome-tagline' => 'Proste, efektywne narzędzie wspomagające szybki development w Wikii.',
+	'styleguide-home-stakeholders-header' => 'Użytkownicy Styleguide',
 	'styleguide-home-stakeholders-paragraph' => 'Wikia Styleguide stworzono z myślą o inżynierach
 	i designerach. To miejsce, gdzie ewidencjonujemy komponenty używane przez nas
 	w obrębie platformy Wikii.
@@ -69,8 +69,8 @@ $messages['pl'] = array(
 	Miłej lektury',
 	'styleguide-home-team-header' => 'Zespół Styleguide',
 	'styleguide-home-team-paragraph' => 'Zespół Wikia Styleguide został utworzony by pomóc w budowie
-	 narzędzia ułatwiającego nam wszystkim życie i zwiększającego wydajność.
-	 Odezwij się do nas jeżeli masz jakieś pytani dotyczące Styleguide
+	 narzędzia ułatwiającego nam wszystkim życie i zwiększającego naszą wydajność.
+	 Odezwij się do nas jeżeli masz jakieś pytania dotyczące Styleguide
 	 lub sugestie, jak możemy uczynić go lepszym.',
 	'styleguide-home-team-pm' => 'Product manager',
 	'styleguide-home-team-engineer' => 'Inżynier',
