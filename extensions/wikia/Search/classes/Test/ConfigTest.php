@@ -8,7 +8,7 @@ class ConfigTest extends BaseTest {
 
 	public function setUp() {
 		$this->service = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
-		                        ->disableOriginalConstructor();
+		                       ->disableOriginalConstructor();
 		
 		$this->config = $this->getMockBuilder( '\\Wikia\Search\Config' )
 		                     ->disableOriginalConstructor();
@@ -1190,6 +1190,36 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @covers Wikia\Search\Config::getRank
+	 * @covers Wikia\Search\Config::setRank
+	 */
+	public function testGetSetRank() {
+		$config = new Config;
+		$this->assertAttributeEquals(
+				$config::RANK_DEFAULT,
+				'rank',
+				$config,
+				'Default rank should be default on instantiation'
+		);
+		$this->assertEquals(
+				$config::RANK_DEFAULT,
+				$config->getRank(),
+				'getRank should return value of rank property'
+		);
+		$this->assertEquals(
+				$config,
+				$config->setRank( $config::RANK_NEWEST ),
+				'setrank should provide a fluent interface'
+		);
+		$this->assertAttributeEquals(
+				$config::RANK_NEWEST,
+				'rank',
+				$config,
+				'setrank should mutate the rank attribute'
+		);
+	}
+
+	/**
 	 * @covers Wikia\Search\Config
 	 */
 	public function testSetGetABTestGroup() {
@@ -1436,20 +1466,6 @@ class ConfigTest extends BaseTest {
 	
 	/**
 	 * @covers Wikia\Search\Config::setRank
-	 */
-	public function testSetRankWithBadKey() {
-		$config = new Config;
-		try {
-		    $config->setRank( 'this will never be a rank' );
-		} catch ( \Exception $e ) {}
-		$this->assertInstanceOf(
-				'Exception',
-				$e
-		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\Config::setRank
 	 * @covers Wikia\Search\Config::getRank
 	 * @covers Wikia\Search\Config::getSort
 	 */
@@ -1501,6 +1517,23 @@ class ConfigTest extends BaseTest {
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\Config::setRank
+	 */
+	public function testSetRankBadRankName() {
+		$config = new Config;
+		$this->assertEquals(
+				$config,
+				$config->setRank( 'this is a totally fake rank' ),
+				'Setting an incorrect rank on config should fail gracefully'
+		);
+		$this->assertEquals(
+				$config::RANK_DEFAULT,
+				$config->getRank(),
+				'An incorrect rank value should not mutate the config rank propery'
+		);
+	}
+
 	/**
 	 * @covers Wikia\Search\Config::setHub
 	 * @covers Wikia\Search\Config::getHub
@@ -1597,7 +1630,7 @@ class ConfigTest extends BaseTest {
 		$meth = new ReflectionMethod( $config, 'setQueryService' );
 		$meth->setAccessible( true );
 		try {
-			$meth->invoke( $config, 'this will never be a class' );
+			$meth->invoke( $config, 'this will never be a class', true );
 		} catch ( \Exception $e ) { }
 		$this->assertInstanceOf(
 				'Exception',
@@ -1782,5 +1815,4 @@ class ConfigTest extends BaseTest {
 				$config
 		);
 	}
-	
 }
