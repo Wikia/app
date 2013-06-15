@@ -1,12 +1,11 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
 describe("Ads module", function () {
-	//'use strict';
-	// this has to be global?
-	postscribe = function() {};
+	'use strict';
 
-	var ckMock = {
-			get: function() {},
-			set: function() {}
+	var cookies = {
+			val: 0,
+			get: function(){return cookies.val++},
+			set: function(){cookies.val = 1}
 		},
 		parentNode = {
 			removeChild: function(){}
@@ -17,7 +16,7 @@ describe("Ads module", function () {
 			this.className = '';
 		},
 		dartHelper = {
-			getMobileUrl: function() {}
+			getMobileUrl: function(){return ''}
 		},
 		window = {
 			document: {
@@ -25,15 +24,20 @@ describe("Ads module", function () {
 					return elements[name] || (elements[name] = new Element());
 				}
 			},
-			Features: {}
+			Features: {},
+			postscribe: function(){}
 		},
 		utils = function(func){
 			func();
 		},
-		ads = modules.ads(ckMock, window, utils, dartHelper);
+		ads = modules.ads(cookies, window, utils, dartHelper);
 
 	it("is defined as a module", function () {
 		expect(ads).toBeDefined();
+	});
+
+	it("is defined as a global", function () {
+		expect(window.MobileAd).toBeDefined();
 	});
 
 	it("has a public API", function () {
@@ -41,13 +45,25 @@ describe("Ads module", function () {
 		expect(typeof ads.init).toEqual('function');
 		expect(typeof ads.fix).toEqual('function');
 		expect(typeof ads.unfix).toEqual('function');
-		expect(typeof ads.shouldRequestAd).toEqual('function');
+		expect(typeof ads.stop).toEqual('function');
 	});
 
-	it("can initialize a top right box Ad", function () {
-		ads.setupSlot({name: 'TOP_RIGHT_BOXAD', size: '300x250', wrapper: {}});
-		//expect(elements['wkAdPlc'].className).toEqual('footer');
-		//expect(ads.getAdType()).toEqual('footer');
+	it("can setup an ad slot", function () {
+		ads.setupSlot({
+			name: 'AD_SLOT',
+			size: '100x100',
+			wrapper: window.document
+		});
 	});
+
+	it('can tell if ad should be requested', function(){
+		expect(ads.shouldRequestAd()).toBeTruthy();
+	});
+
+	it('can stop ads from showing', function(){
+		ads.stop();
+		expect(ads.shouldRequestAd()).toBeFalsy();
+	});
+
 
 });
