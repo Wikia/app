@@ -1,14 +1,13 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
 describe("Ads module", function () {
-	'use strict';
+	//'use strict';
+	// this has to be global?
+	postscribe = function() {};
 
-	var domwriter = {
-			addEventListener: function(){},
-			removeEventListener: function(){}
+	var ckMock = {
+			get: function() {},
+			set: function() {}
 		},
-		cookies = {},
-		track = {},
-		log = {},
 		parentNode = {
 			removeChild: function(){}
 		},
@@ -17,7 +16,9 @@ describe("Ads module", function () {
 			this.parentNode = parentNode;
 			this.className = '';
 		},
-		dartHelper = function(){},
+		dartHelper = {
+			getMobileUrl: function() {}
+		},
 		window = {
 			document: {
 				getElementById: function(name){
@@ -29,7 +30,7 @@ describe("Ads module", function () {
 		utils = function(func){
 			func();
 		},
-		ads = modules.ads(domwriter, cookies, track, log, window, utils, dartHelper);
+		ads = modules.ads(ckMock, window, utils, dartHelper);
 
 	it("is defined as a module", function () {
 		expect(ads).toBeDefined();
@@ -40,27 +41,13 @@ describe("Ads module", function () {
 		expect(typeof ads.init).toEqual('function');
 		expect(typeof ads.fix).toEqual('function');
 		expect(typeof ads.unfix).toEqual('function');
-		expect(typeof ads.getAdType).toEqual('function');
+		expect(typeof ads.shouldRequestAd).toEqual('function');
 	});
 
-	it("can initialize a footer Ad", function () {
-		ads.init('footer');
-
-		expect(elements['wkAdPlc'].className).toEqual('footer');
-		expect(ads.getAdType()).toEqual('footer');
+	it("can initialize a top right box Ad", function () {
+		ads.setupSlot({name: 'TOP_RIGHT_BOXAD', size: '300x250', wrapper: {}});
+		//expect(elements['wkAdPlc'].className).toEqual('footer');
+		//expect(ads.getAdType()).toEqual('footer');
 	});
 
-	it("can initialize a interstital Ad", function(){
-		ads.init('interstitial');
-
-		expect(elements['wkAdPlc'].className).toEqual('interstitial');
-		expect(ads.getAdType()).toEqual('interstitial');
-	});
-
-	it("will not do anything with wrong Ad type passed", function(){
-		ads.init('TEST');
-
-		expect(elements['wkAdPlc'].className).not.toEqual('TEST');
-		expect(ads.getAdType()).not.toEqual('TEST');
-	});
 });
