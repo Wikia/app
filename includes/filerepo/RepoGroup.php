@@ -163,15 +163,15 @@ class RepoGroup {
 				}
 				return $image;
 			}
-
-			/* Wikia changes begin */
-			// get redirected file if the foreign repo allows file redirecting
-			wfRunHooks( 'FindRedirectedFile', array( $repo, $title, $options, $useCache, &$image, &$cacheEntry ) );
-			if ( $image ) {
-				return $image;
-			}
-			/* Wikia changes end */
 		}
+
+		/* Wikia changes begin */
+		// get redirected file if the foreign repo allows file redirecting
+		wfRunHooks( 'FindRedirectedFile', array( $this->foreignRepos, $title, $options, $useCache, &$image, &$cacheEntry ) );
+		if ( $image ) {
+			return $image;
+		}
+		/* Wikia changes end */
 
 		# Not found, do not override negative cache
 		return false;
