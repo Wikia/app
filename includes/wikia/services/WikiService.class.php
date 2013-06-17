@@ -43,15 +43,15 @@ class WikiService extends WikiaModel {
 							$conditions = array("ug_group in ('sysop','bureaucrat')");
 
 							if ($excludeBots) {
-								$conditions[] = "ug_group not in (" .
+								$conditions[] = "ug_user not in (select distinct ug_user from user_groups where ug_group in (" .
 									$db->makeList(self::$botGroups) .
-									")";
+									"))";
 							}
 
 							$result = $db->select(
 								'user_groups',
 								'distinct ug_user',
-								array ("ug_group in ('sysop','bureaucrat')"),
+								$conditions,
 								__METHOD__,
 								(!empty($limit))?(array('LIMIT' => $limit)):array()
 							);
