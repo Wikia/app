@@ -39,16 +39,16 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	 * @param String $title
 	 * @param String $expected
 	 * 
-	 * @dataProvider testGetCleanTitleDataProvider
+	 * @dataProvider testGetAfterLastSlashTextDataProvider
 	 */
-	public function testGetCleanTitle($title, $expected) {
-		$getCleanTitleMethod = new ReflectionMethod('SpecialCssModel', 'getCleanTitle');
-		$getCleanTitleMethod->setAccessible(true);
+	public function testGetAfterLastSlashText($title, $expected) {
+		$getAfterLastSlashTextMethod = new ReflectionMethod('SpecialCssModel', 'getAfterLastSlashText');
+		$getAfterLastSlashTextMethod->setAccessible(true);
 		
-		$this->assertEquals( $expected, $getCleanTitleMethod->invoke( new SpecialCssModel(), $title ) );
+		$this->assertEquals( $expected, $getAfterLastSlashTextMethod->invoke( new SpecialCssModel(), $title ) );
 	}
 	
-	public function testGetCleanTitleDataProvider() {
+	public function testGetAfterLastSlashTextDataProvider() {
 		return [
 			[
 				'title' => '',
@@ -107,5 +107,59 @@ class SpecialCssModelTest extends WikiaBaseTest {
 		$expected = '#Headline_with_more_text';
 		
 		$this->assertEquals( $expected, $addAnchorToPostUrlMethod->invoke( new SpecialCssModel(), $text ) );
+	}
+
+	/**
+	 * @param String $titleText
+	 * @param String $fallbackUser
+	 * @param String $expected
+	 *
+	 * @dataProvider testGetUserFromTitleTextDataProvider
+	 */
+	public function testGetUserFromTitleText($titleText, $fallbackUser, $expected) {
+		$getUserFromTitleTextMethod = new ReflectionMethod('SpecialCssModel', 'getUserFromTitleText');
+		$getUserFromTitleTextMethod->setAccessible(true);
+
+		$this->assertEquals( $expected, $getUserFromTitleTextMethod->invoke( new SpecialCssModel(), $titleText, $fallbackUser ) );
+	}
+	
+	public function testGetUserFromTitleTextDataProvider() {
+		return [
+			[
+				'titleText' => '',
+				'fallbackUser' => 'User',
+				'expected' => 'User',
+			],
+			[
+				'titleText' => 'Technical_Update:_November_20,_2012',
+				'fallbackUser' => 'User',
+				'expected' => 'User',
+			],
+			[
+				'titleText' => 'DaNASCAT/Technical_Update:_November_20,_2012',
+				'fallbackUser' => 'User',
+				'expected' => 'DaNASCAT',
+			],
+			[
+				'titleText' => 'DaNASCAT/Technical_Update:_November_20,_2012#Major_Bugs_Fixed',
+				'fallbackUser' => 'User',
+				'expected' => 'DaNASCAT',
+			],
+			[
+				'titleText' => 'User_blog:DaNASCAT/Technical_Update:_November_21,_2012',
+				'fallbackUser' => 'User',
+				'expected' => 'DaNASCAT',
+			],
+			[
+				'titleText' => 'Rappy 4187/Technical_Update:_November_22,_2012',
+				'fallbackUser' => 'User',
+				'expected' => 'Rappy 4187',
+			],
+			[
+				'titleText' => 'Test page/Rappy 4187/Technical_Update:_November_22,_2012',
+				'fallbackUser' => 'User',
+				'expected' => 'Rappy 4187',
+			],
+		];
 	}
 }

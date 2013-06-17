@@ -173,7 +173,7 @@ class SpecialCssModel extends WikiaModel {
 						$sectionText = $cssRevisionsData[$pageId]['revisions'][0]['*'];
 
 						$cssBlogs[] = [
-							'title' => $this->getTextWithNoSlashes( $blogTitle->getText() ),
+							'title' => $this->getAfterLastSlashText( $blogTitle->getText() ),
 							'url' => trim( $blogTitle->getFullURL() . $this->addAnchorToPostUrl( $sectionText ) ),
 							'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
 							'userUrl' => $userPage->getFullUrl(),
@@ -255,7 +255,7 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @return string
 	 */
-	private function getTextWithNoSlashes($titleText) {
+	private function getAfterLastSlashText($titleText) {
 		$result = $titleText;
 		$slashPosition = mb_strrpos($titleText, '/');
 		
@@ -276,9 +276,9 @@ class SpecialCssModel extends WikiaModel {
 	 * @return string
 	 */
 	private function getUserFromTitleText($titleText, $fallbackUser) {
-		$userName = str_replace( $this->getTextWithNoSlashes($titleText), '', $titleText );
+		$userName = str_replace( $this->getAfterLastSlashText($titleText), '', $titleText );
 		$userName = trim( $userName, '/' );
-		$userName = $this->getTextWithNoSlashes($userName);
+		$userName = $this->getAfterLastSlashText($userName);
 		
 		if( empty($userName) ) {
 			$userName = $fallbackUser;
