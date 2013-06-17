@@ -149,32 +149,39 @@ class SpecialCssModel extends WikiaModel {
 			function () use ($blogParams, $revisionsParams) {
 				$cssBlogs = [];
 				$cssBlogsData = $this->getCssBlogApiData($blogParams);
-				$ids = $this->getBlogsIds($cssBlogsData);
-				$cssRevisionsData = $this->getCssRevisionsApiData($ids, $revisionsParams);
 
 				if ( $cssBlogsData ) {
+					$ids = $this->getBlogsIds($cssBlogsData);
+					$cssRevisionsData = $this->getCssRevisionsApiData($ids, $revisionsParams);
+
 					foreach ( $cssBlogsData as $blog ) {
 						$pageId = $blog['pageid'];
 						$blogUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
-						$blogTitle = GlobalTitle::newFromId($pageId, self::COMMUNITY_CENTRAL_CITY_ID, 'wikia');
+						$blogTitle = GlobalTitle::newFromText($blog['title'], NS_MAIN, self::COMMUNITY_CENTRAL_CITY_ID );
 						$userPage = GlobalTitle::newFromText($blogUser, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID);
-						$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
-						$sectionText = $cssRevisionsData[$pageId]['revisions'][0]['*'];
 
-						$cssBlogs[] = [
-							'title' => $this->getCleanTitle( $blogTitle->getText() ),
-							'url' => trim( $blogTitle->getFullURL() . $this->addAnchorToPostUrl( $sectionText ) ),
-							'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
-							'userUrl' => $userPage->getFullUrl(),
-							'userName' => $blogUser,
-							'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
-							'text' => $this->getPostSnippet($blogTitle, $sectionText),
-						];
+						if (( $blogTitle && $blogTitle instanceof GlobalTitle)
+								&& ($userPage && $userPage instanceof GlobalTitle)) {
+
+							$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
+							$sectionText = $cssRevisionsData[$pageId]['revisions'][0]['*'];
+
+							$cssBlogs[] = [
+								'title' => $this->getCleanTitle( $blogTitle->getText() ),
+								'url' => trim( $this->getFormattedUrl($blogTitle->getFullURL()) . $this->addAnchorToPostUrl( $sectionText ) ),
+								'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
+								'userUrl' => $userPage->getFullUrl(),
+								'userName' => $blogUser,
+								'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
+								'text' => $this->getPostSnippet($blogTitle, $sectionText),
+							];
+						}
 					}
 				}
 				return $cssBlogs;
 			}
 		);
+
 
 		return $cssBlogs;
 	}
@@ -264,6 +271,17 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function getFormattedTimestamp($timestamp) {
 		return wfTimestamp(TS_ISO_8601, $timestamp);
+	}
+
+	/**
+	 * @desc Only for devboxes - change url to community central
+	 */
+	private function getFormattedUrl($url) {
+		global $wgDevelEnvironment;
+		if ( $wgDevelEnvironment ) {
+			$url = str_replace('http://wikia.', 'http://community.', $url);
+		}
+		return $url;
 	}
 
 	/**
