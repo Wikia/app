@@ -1,5 +1,5 @@
-@import "../../../../skins/oasis/css/core/color.scss";
-@import "../../../../skins/oasis/css/mixins/clearfix.scss";
+@import "skins/oasis/css/core/color.scss";
+@import "skins/oasis/css/mixins/clearfix.scss";
 
 .css-editor {
 	float: left;
@@ -13,58 +13,65 @@
 .css-side-bar {
 	float: right;
 	width: 300px;
-	.version-box {
-		background-color: $color-buttons;
-		color: $color-button-text;
-		padding: 10px;
+}
+
+.community-updates {
+	border: 1px solid $color-page-border;
+	margin: 10px 0;
+	h3 {
+		border-bottom: 1px solid #CCCACA;
+		font-size: 18px;
+		font-weight: bold;
+		margin: 0;
+		padding: 15px;
 	}
-	.community-updates {
-		border: 1px solid $color-page-border;
-		margin: 10px 0;
-		h3 {
-			border-bottom: 1px solid #CCCACA;
-			font-size: 18px;
-			font-weight: bold;
-			margin: 0;
-			padding: 15px;
-		}
-		.community-updates-list {
-			height: 440px;
-			list-style: none;
-			margin: 0;
-			overflow-y: scroll;
-			padding: 0;
-			.community-update-item {
-				border-bottom: 1px solid $color-page-border;
-				margin: 15px;
-				h4 {
-					font-size: 13px;
-					font-weight: bold;
-					line-height: 13px;
-					margin: 0;
-				}
-				span {
-					@include clearfix;
-					color: $color-alternate-text;
-					font-size: 11px;
-				}
-			}
-			.community-update-item:last-child {
-				border: none;
-			}
-		}
-		blockquote {
-			margin: 0;
-		}
-		.avatar {
-			float: left;
-			margin: 0 10px 10px 0;
-		}
-		.read-more {
-			font-size: 11px;
-			margin-bottom: 20px;
-		}
+	blockquote {
+		margin: 0;
 	}
+	.avatar {
+		float: left;
+		margin: 0 10px 10px 0;
+	}
+	.read-more {
+		font-size: 11px;
+		margin-bottom: 20px;
+	}
+}
+
+.community-updates-list {
+	height: 440px;
+	list-style: none;
+	margin: 0;
+	overflow-y: scroll;
+	padding: 0;
+}
+
+.community-update-item {
+	border-bottom: 1px solid $color-page-border;
+	margin: 15px;
+	h4 {
+		font-size: 13px;
+		font-weight: bold;
+		line-height: 13px;
+		margin: 0;
+	}
+	span {
+		@include clearfix;
+		color: $color-alternate-text;
+		font-size: 11px;
+	}
+	.read-more:after {
+		color: $color-links;
+		content: '>';
+		left: 3px;
+		position: relative;
+		right: 3px;
+		top: -1px;
+	}
+}
+
+.community-update-item:last-child {
+	border: none;
 }
 
 .css-footer {

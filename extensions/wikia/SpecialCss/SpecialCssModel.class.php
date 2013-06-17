@@ -6,11 +6,6 @@ class SpecialCssModel extends WikiaModel {
 	const CSS_FILE_NAME = 'Wikia.css';
 	
 	/**
-	 * @desc The city_id of community wiki from which we pull blog posts data
-	 */
-	const COMMUNITY_CENTRAL_CITY_ID = 177;
-	
-	/**
 	 * @desc User avatar size
 	 */
 	const USER_AVATAR_SIZE = 25;
@@ -26,7 +21,10 @@ class SpecialCssModel extends WikiaModel {
 	const UPDATE_SECTION_IN_BLOGPOST = 2;
 	
 	/**
-	 * @desc Regex pattern used to extract h3 tags; see: SpecialCssModel::removeHeadline() and SpecialCssModel::addAnchorToPostUrl()
+	 * @desc Regex pattern used to extract h3 tags
+	 * 
+	 * @see SpecialCssModel::removeHeadline() 
+	 * @see SpecialCssModel::addAnchorToPostUrl()
 	 */
 	const MEDIAWIKI_H3_PATTERN = '/===[^=]+===\s*/';
 	
@@ -144,54 +142,77 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns an array of 20 last CSS updates
 	 *
-	 * @param array $blogParams parameters for api to fetch blog data
+	 * @param array $postsParams parameters for api to fetch blog data
 	 * @param array $revisionsParams parameters for api to fetch revisions data including user info
 	 * @return array
 	 */
-	public function getCssBlogData($blogParams = [], $revisionsParams = []) {
-		$cssBlogs = WikiaDataAccess::cache(
+	public function getCssUpdatesData($postsParams = [], $revisionsParams = []) {
+		$cssUpdatesPosts = WikiaDataAccess::cache(
 			wfSharedMemcKey(self::MEMC_KEY),
 			60 * 60 * 24,
-			function () use ($blogParams, $revisionsParams) {
-				$cssBlogs = [];
-				$cssBlogsData = $this->getCssBlogApiData($blogParams);
+			function () use ($postsParams, $revisionsParams) {
+				$cssUpdatesPosts = [];
+				$cssUpdatesPostsData = $this->getCssPostsApiData($postsParams);
 
-				if ( $cssBlogsData ) {
-					$ids = $this->getBlogsIds($cssBlogsData);
-					$cssRevisionsData = $this->getCssRevisionsApiData($ids, $revisionsParams);
+				if ( !empty( $cssUpdatesPostsData ) ) {
+					$ids = $this->getBlogsIds( $cssUpdatesPostsData );
+					$cssRevisionsData = $this->getCssRevisionsApiData( $ids, $revisionsParams );
 
-					foreach ( $cssBlogsData as $blog ) {
-						$pageId = $blog['pageid'];
-						$blogTitle = GlobalTitle::newFromText($blog['title'], NS_MAIN, self::COMMUNITY_CENTRAL_CITY_ID );
-						$blogTitleText = $blogTitle->getText();
-
-						$lastRevisionUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
-						$blogUser = $this->getUserFromTitleText($blogTitleText, $lastRevisionUser);
-						$userPage = GlobalTitle::newFromText($blogUser, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID);
-
-						if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
-
-							$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
-							$sectionText = $cssRevisionsData[$pageId]['revisions'][0]['*'];
-
-							$cssBlogs[] = [
-								'title' => $this->getAfterLastSlashText( $blogTitleText ),
-								'url' => trim( $this->getFormattedUrl($blogTitle->getFullURL()) . $this->addAnchorToPostUrl( $sectionText ) ),
-								'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
-								'userUrl' => $userPage->getFullUrl(),
-								'userName' => $blogUser,
-								'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
-								'text' => $this->getPostSnippet($blogTitle, $sectionText),
-							];
-						}
+					foreach ( $cssUpdatesPostsData as $postData ) {
+						$cssUpdatesPosts[] = $this->prepareCssUpdateData($cssRevisionsData, $postData);
 					}
 				}
-				return $cssBlogs;
+				
+				return $cssUpdatesPosts;
 			}
 		);
 
+		return $cssUpdatesPosts;
+	}
 
-		return $cssBlogs;
+	/**
+	 * @desc Returns an array with correct elements from given api results
+	 * 
+	 * @param array $cssRevisionsData results from API call with request of revision's info
+	 * @param array $postData results from API call with request of posts (articles) list in a category
+	 * 
+	 * @return array
+	 */
+	private function prepareCssUpdateData($cssRevisionsData, $postData) {
+		$cssUpdatePost = [
+			'title' => '',
+			'url' => '',
+			'userAvatar' => '',
+			'userUrl' => '',
+			'userName' => '',
+			'timestamp' => '',
+			'text' => '',
+		];
+		
+		$pageId = $postData['pageid'];
+		$blogTitle = GlobalTitle::newFromText( $postData['title'], NS_MAIN, WikiFactory::COMMUNITY_CENTRAL );
+		$blogTitleText = $blogTitle->getText();
+
+		$lastRevisionUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
+		$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser);
+		$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, WikiFactory::COMMUNITY_CENTRAL );
+
+		if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
+			$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
+			$sectionText = $cssRevisionsData[$pageId]['revisions'][0]['*'];
+
+			$cssUpdatePost = [
+				'title' => $this->getAfterLastSlashText( $blogTitleText ),
+				'url' => trim( $this->getFormattedUrl($blogTitle->getFullURL()) . $this->addAnchorToPostUrl( $sectionText ) ),
+				'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
+				'userUrl' => $userPage->getFullUrl(),
+				'userName' => $blogUser,
+				'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
+				'text' => $this->getPostSnippet($blogTitle, $sectionText),
+			];
+		}
+		
+		return $cssUpdatePost;
 	}
 
 	/**
@@ -231,7 +252,7 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Removes wikitext's H3 tags from given text
 	 * 
-	 * @param $text
+	 * @param String $text
 	 * @return mixed
 	 */
 	private function removeHeadline($text) {
@@ -247,7 +268,6 @@ class SpecialCssModel extends WikiaModel {
 	 * @return mixed
 	 */
 	private function getParsedText( $text, $title ) {
-		// should we use here $wgParser or ParserPool?
 		$output = $this->wg->Parser->parse( $text, $title, new ParserOptions() ); /** @var ParserOutput $output */
 		return $output->getText();
 	}
@@ -310,10 +330,10 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns information about 20 last CSS updates (page id, namespace and post title)
 	 *
-	 * @param $params
+	 * @param array $params: action, list, cmtitle, cmlimit, cmsort, cmdir which are send to MW API: http://en.wikipedia.org/w/api.php
 	 * @return array
 	 */
-	private function getCssBlogApiData($params) {
+	private function getCssPostsApiData($params) {
 		$defaultParams = $this->getDefaultBlogParams();
 		$params = array_merge($defaultParams, $params);
 		$blogs = $this->getApiData($params);
@@ -324,8 +344,9 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns information about 20 last revisions of CSS updates (user name, timestamp, post content)
 	 *
-	 * @param $ids page ids
-	 * @param $params
+	 * @param array $ids array of integers which are page ids
+	 * @param array $params: action, prop, rvprop, rvsection, pageids which are send to MW API: http://en.wikipedia.org/w/api.php 
+	 * 
 	 * @return array
 	 */
 	private function getCssRevisionsApiData($ids, $params) {
@@ -339,7 +360,8 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns data from API based on parameters
 	 *
-	 * @param $params
+	 * @param array $params more documentation: http://en.wikipedia.org/w/api.php
+	 * 
 	 * @return mixed
 	 */
 	private function getApiData($params) {
@@ -380,7 +402,6 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function getDefaultBlogParams() {
 		return [
-			'format' => 'json',
 			'action' => 'query',
 			'list' => 'categorymembers',
 			'cmtitle' => 'Category:' . self::UPDATES_CATEGORY,
@@ -398,7 +419,6 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function getDefaultRevisionParams($ids = '') {
 		return [
-			'format' => 'json',
 			'action' => 'query',
 			'prop' => 'revisions',
 			'rvprop' => 'content|user|timestamp',
