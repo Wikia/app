@@ -436,8 +436,6 @@ class FilePageController extends WikiaController {
 				// Eliminate the superfluous 'summary' key
 				$extraData = $extraData['summary'];
 
-				$whHelper = new WallHooksHelper;
-
 				// Loop with indexes so we can change $data in place
 				for ($i = 0; $i < count($articles); $i++) {
 					$info = $articles[$i];
