@@ -562,15 +562,6 @@ class WikiaHomePageController extends WikiaController {
 		return $lines;
 	}
 
-	public static function onGetHTMLAfterBody($skin, &$html) {
-		$app = F::app();
-
-		if ($app->checkSkin('wikiamobile') && $app->wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
-			$html .= $app->sendRequest('WikiaHomePage', 'wikiaMobileIndex')->toString();
-		}
-		return true;
-	}
-
 	public static function onOutputPageBeforeHTML(OutputPage &$out, &$text) {
 		if (WikiaPageType::isMainPage() && !(F::app()->checkSkin('wikiamobile'))) {
 			$text = '';
@@ -584,15 +575,6 @@ class WikiaHomePageController extends WikiaController {
 		if (WikiaPageType::isMainPage()) {
 			return false;
 		}
-		return true;
-	}
-
-	public static function onWikiaMobileAssetsPackages(Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages) {
-		//this hook is fired only by the WikiaMobile skin, no need to check for what skin is being used
-		if (F::app()->wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
-			$scssPackages[] = 'wikiahomepage_scss_wikiamobile';
-		}
-
 		return true;
 	}
 
