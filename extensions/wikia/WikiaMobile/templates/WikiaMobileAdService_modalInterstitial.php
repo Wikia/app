@@ -21,8 +21,7 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 				});
 
 				media.on('change', function(data){
-					//remove any left videos from DOM
-					//videos tend to be heavy on resources we shouldn't have more than one at a time
+					//remove any left ads from DOM
 					if(adWrapper = document.querySelector('.swiperPage:not(.current) .wkAdWrapper')) {
 						adWrapper.parentElement.removeChild(adWrapper);
 					}
@@ -66,7 +65,6 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 					}
 				})
 			}
-
 
 			media.remove('open', onOpen);
 		})
