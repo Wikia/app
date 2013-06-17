@@ -134,7 +134,7 @@ console.log('init')
 	},
 	initSwapOrKeep: function() {
 		var that = this;
-		function doRequest( isSwap, currTitle,  newTitle, $row ){
+		function doRequest( isSwap, currTitle,  newTitle ){
 			var data = {
 				videoTitle: currTitle,
 				sort: 'recent', // TODO: make this dynamic
