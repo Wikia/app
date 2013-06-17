@@ -8,12 +8,6 @@
  */
 class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
-	const VIDEOS_PER_PAGE = 10;
-	const THUMBNAIL_WIDTH = 500;
-	const THUMBNAIL_HEIGHT = 309;
-	const POSTED_IN_ARTICLES = 100;
-	const NUM_SUGGESTIONS = 5;
-
 	public function __construct() {
 		parent::__construct( 'LicensedVideoSwap', '', false );
 	}
@@ -49,22 +43,22 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// list of videos
-		$videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
+		$helper = new LicensedVideoSwapHelper();
+		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
 		$this->videoList = $videoList;
-		$this->thumbWidth = self::THUMBNAIL_WIDTH;
-		$this->thumbHeight = self::THUMBNAIL_HEIGHT;
+		$this->thumbWidth = LicensedVideoSwapHelper::THUMBNAIL_WIDTH;
+		$this->thumbHeight = LicensedVideoSwapHelper::THUMBNAIL_HEIGHT;
 
 
 		// Set up pagination
 		$this->currentPage = $currentPage;
-		$videoHelper = new LicensedVideoSwapHelper();
-		$this->totalVideos = $videoHelper->getUnswappedVideoTotal();
+		$this->totalVideos = $helper->getUnswappedVideoTotal();
 
 		$pagination = '';
 		$linkToSpecialPage = SpecialPage::getTitleFor("LicensedVideoSwap")->escapeLocalUrl();
 
-		if ( $this->totalVideos > self::VIDEOS_PER_PAGE ) {
-			$pages = Paginator::newFromArray( array_fill( 0, $this->totalVideos, '' ), self::VIDEOS_PER_PAGE );
+		if ( $this->totalVideos > LicensedVideoSwapHelper::VIDEOS_PER_PAGE ) {
+			$pages = Paginator::newFromArray( array_fill( 0, $this->totalVideos, '' ), LicensedVideoSwapHelper::VIDEOS_PER_PAGE );
 			$pages->setActivePage( $this->currentPage - 1 );
 
 			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?currentPage=%s&sort='.$selectedSort );
@@ -81,103 +75,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			'sortMsg' => $options[$selectedSort],
 			'containerId' => 'sorting-dropdown',
 		);
-	}
-
-	/**
-	 * Get a list of non-premium video that is available to swap
-	 *
-	 * @param string $sort - The sort order for the video list (options: recent, popular, trend)
-	 * @param int $page - Which page to display. Each page contains self::VIDEOS_PER_PAGE videos
-	 * @return array - Returns a list of video metadata
-	 */
-	private function getRegularVideoList ( $sort, $page ) {
-		wfProfileIn( __METHOD__ );
-
-		// Get the play button image to overlay on the video
-		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
-
-		// Get the list of videos that haven't been swapped yet
-		$videoHelper = new LicensedVideoSwapHelper();
-		$videoList = $videoHelper->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page );
-
-		// Reuse code from VideoHandlerHelper
-		$helper = new VideoHandlerHelper();
-
-		// Go through each video and add additional detail needed to display the video
-		$videos = array();
-		foreach ( $videoList as $videoInfo ) {
-			$readableTitle = preg_replace('/_/', ' ', $videoInfo['title']);
-			$suggestions = $this->getVideoSuggestions($readableTitle);
-
-			$videoDetail = $helper->getVideoDetail( $videoInfo, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT, self::POSTED_IN_ARTICLES );
-			if ( !empty($videoDetail) ) {
-				$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
-
-				$videoDetail['videoPlayButton'] = $playButton;
-				$videoDetail['videoOverlay'] = $videoOverlay;
-				$videoDetail['videoSuggestions'] = $suggestions;
-
-				$seeMoreLink = SpecialPage::getTitleFor("WhatLinksHere")->escapeLocalUrl();
-				$seeMoreLink .= '/' . $this->app->wg->ContLang->getNsText( NS_FILE ). ':' . $videoDetail['title'];
-
-				$videoDetail['seeMoreLink'] = $seeMoreLink;
-
-
-				$videos[] = $videoDetail;
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $videos;
-	}
-
-	/**
-	 * get video suggestions
-	 * @requestParam string videoTitle
-	 * @responseParam array videos
-	 */
-	public function getVideoSuggestions( $title = '' ) {
-		$videoTitle = $this->getVal( 'videoTitle', $title );
-
-		$app = F::App();
-		$videoRows = $app->sendRequest('WikiaSearchController',
-									'searchVideosByTitle',
-									array('title' => $videoTitle))
-						 ->getData();
-
-		// Reuse code from VideoHandlerHelper
-		$helper = new VideoHandlerHelper();
-
-		// Get the play button image to overlay on the video
-		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
-
-		$videos = array();
-		$count = 0;
-		foreach ($videoRows as $videoInfo) {
-			$videoDetail = $helper->getVideoDetail( $videoInfo,
-													self::THUMBNAIL_WIDTH,
-													self::THUMBNAIL_HEIGHT,
-													self::POSTED_IN_ARTICLES );
-			if ( empty($videoDetail) ) {
-				break;
-			}
-
-			$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
-			$videoDetail['videoPlayButton'] = $playButton;
-			$videoDetail['videoOverlay'] = $videoOverlay;
-
-			$videos[] = $videoDetail;
-
-			$count++;
-			if ( $count >= self::NUM_SUGGESTIONS ) {
-				break;
-			}
-		}
-
-		// The first video in the array is the top choice.
-		$this->videos = $videos;
-		return $videos;
 	}
 
 	/**
@@ -311,7 +208,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// get video list
-		$videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
+		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		$this->result = 'ok';
@@ -368,7 +265,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// get video list
-		$videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
+		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		$this->result = 'ok';
@@ -466,7 +363,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// get video list
-		$videoList = $this->getRegularVideoList( $selectedSort, $currentPage );
+		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		$this->result = 'ok';
@@ -511,8 +408,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	// TODO: probably make this use mustache
 	public function row() {
 		$this->videoList = $this->getVal( 'videoList', array() );
-		$this->thumbWidth = self::THUMBNAIL_WIDTH;
-		$this->thumbHeight = self::THUMBNAIL_HEIGHT;
+		$this->thumbWidth = LicensedVideoSwapHelper::THUMBNAIL_WIDTH;
+		$this->thumbHeight = LicensedVideoSwapHelper::THUMBNAIL_HEIGHT;
 	}
 
 	public function contentHeaderSort() {

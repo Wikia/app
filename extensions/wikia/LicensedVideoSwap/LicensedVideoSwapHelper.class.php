@@ -12,6 +12,12 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	const STATUS_SWAP_NORM = 2;
 	const STATUS_SWAP_EXACT = 3;
 
+	const VIDEOS_PER_PAGE = 10;
+	const THUMBNAIL_WIDTH = 500;
+	const THUMBNAIL_HEIGHT = 309;
+	const POSTED_IN_ARTICLES = 100;
+	const NUM_SUGGESTIONS = 5;
+
 	/**
 	 * Gets a list of videos that have not yet been swapped (e.g., no decision to keep or not keep the
 	 * original video has been made)
@@ -127,6 +133,101 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 		return $total;
 	}
+
+	/**
+	 * Get a list of non-premium video that is available to swap
+	 *
+	 * @param string $sort - The sort order for the video list (options: recent, popular, trend)
+	 * @param int $page - Which page to display. Each page contains self::VIDEOS_PER_PAGE videos
+	 * @return array - Returns a list of video metadata
+	 */
+	public function getRegularVideoList ( $sort, $page ) {
+		wfProfileIn( __METHOD__ );
+
+		// Get the play button image to overlay on the video
+		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
+
+		// Get the list of videos that haven't been swapped yet
+		$videoList = $this->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page );
+
+		// Reuse code from VideoHandlerHelper
+		$helper = new VideoHandlerHelper();
+
+		// Go through each video and add additional detail needed to display the video
+		$videos = array();
+		foreach ( $videoList as $videoInfo ) {
+			$readableTitle = preg_replace( '/_/', ' ', $videoInfo['title'] );
+			$suggestions = $this->getVideoSuggestions( $readableTitle );
+
+			$videoDetail = $helper->getVideoDetail( $videoInfo, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT, self::POSTED_IN_ARTICLES );
+			if ( !empty($videoDetail) ) {
+				$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
+
+				$videoDetail['videoPlayButton'] = $playButton;
+				$videoDetail['videoOverlay'] = $videoOverlay;
+				$videoDetail['videoSuggestions'] = $suggestions;
+
+				$seeMoreLink = SpecialPage::getTitleFor( "WhatLinksHere" )->escapeLocalUrl();
+				$seeMoreLink .= '/' . $this->app->wg->ContLang->getNsText( NS_FILE ). ':' . $videoDetail['title'];
+
+				$videoDetail['seeMoreLink'] = $seeMoreLink;
+
+				$videos[] = $videoDetail;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $videos;
+	}
+
+	/**
+	 * get video suggestions
+	 * @param string videoTitle
+	 * @return array videos
+	 */
+	public function getVideoSuggestions( $videoTitle = '' ) {
+		wfProfileIn( __METHOD__ );
+
+		$app = F::App();
+		$videoRows = $app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', array( 'title' => $videoTitle ) )
+						 ->getData();
+
+		// Reuse code from VideoHandlerHelper
+		$helper = new VideoHandlerHelper();
+
+		// Get the play button image to overlay on the video
+		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
+
+		$videos = array();
+		$count = 0;
+		foreach ($videoRows as $videoInfo) {
+			$videoDetail = $helper->getVideoDetail( $videoInfo,
+													self::THUMBNAIL_WIDTH,
+													self::THUMBNAIL_HEIGHT,
+													self::POSTED_IN_ARTICLES );
+			if ( empty($videoDetail) ) {
+				break;
+			}
+
+			$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
+			$videoDetail['videoPlayButton'] = $playButton;
+			$videoDetail['videoOverlay'] = $videoOverlay;
+
+			$videos[] = $videoDetail;
+
+			$count++;
+			if ( $count >= self::NUM_SUGGESTIONS ) {
+				break;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		// The first video in the array is the top choice.
+		return $videos;
+	}
+
 
 	/**
 	 * get file object (video only)
