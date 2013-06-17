@@ -1,7 +1,7 @@
 window.addEventListener('load', function(){
 	'use strict';
 
-	if(~['E', undefined].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
+	if(!Wikia.AbTest || ~['E', undefined].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
 		require(['ads', 'wikia.window'], function (ads, window) {
 			var wrapper = document.getElementById('wkFloatingAd'),
 				wrapperStyle = wrapper.style,

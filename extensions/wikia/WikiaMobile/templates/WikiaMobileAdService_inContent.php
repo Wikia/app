@@ -1,5 +1,5 @@
 <script>window.addEventListener('load', function () {
-if(~['A', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
+if(Wikia.AbTest && ~['A', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
 	require(['ads', 'sloth', 'wikia.utils'], function (ads, sloth, $) {
 		var MIN_ZEROTH_SECTION_LENGTH = 1000,
 			firstSection = document.getElementsByClassName('collSec')[0];

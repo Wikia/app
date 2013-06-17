@@ -1,5 +1,5 @@
 <script>window.addEventListener('load', function () {
-if(~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
+if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
 	require(['ads', 'media', 'modal'], function (ads, media, modal) {
 		var changes = 0,
 			adTimer;
@@ -42,10 +42,8 @@ if(~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
 						adTimer = setTimeout(function(){
 							console.log('SHOW')
 							var wrapper = data.wrapper;
-							console.log(wrapper)
-							wrapper.className += ' wkAdPlace';
 							data.zoomable = false;
-
+							wrapper.className += ' wkAdPlace';
 							media.hideShare();
 							modal.setCaption();
 
@@ -53,12 +51,13 @@ if(~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
 							var ad = wrapper.getElementsByClassName('wkAdWrapper')[0];
 
 							ads.setupSlot({
-								name: 'MOBILE_IN_CONTENT',
+								name: 'MOBILE_MODAL_INTERSTITIAL',
 								size: '300x250',
 								wrapper: ad,
 								init: function(found){
 									if(found) {
 										setTimeout(function(){
+
 											ad.className += ' show';
 										},300)
 
@@ -69,7 +68,7 @@ if(~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
 							});
 
 							changes = 0;
-						},200);
+						},1000);
 					}
 				})
 			}
