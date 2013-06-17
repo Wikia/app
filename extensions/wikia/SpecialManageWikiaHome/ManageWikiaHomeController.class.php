@@ -183,6 +183,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->list = $this->helper->getWikisForStaffTool($options);
 		$this->collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
+		$this->verticals = $this->getWikiVerticals();
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
 			/** @var $paginator Paginator */
