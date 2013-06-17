@@ -26,7 +26,10 @@ class SpecialCssModel extends WikiaModel {
 	const UPDATE_SECTION_IN_BLOGPOST = 2;
 	
 	/**
-	 * @desc Regex pattern used to extract h3 tags; see: SpecialCssModel::removeHeadline() and SpecialCssModel::addAnchorToPostUrl()
+	 * @desc Regex pattern used to extract h3 tags
+	 * 
+	 * @see SpecialCssModel::removeHeadline() 
+	 * @see SpecialCssModel::addAnchorToPostUrl()
 	 */
 	const MEDIAWIKI_H3_PATTERN = '/===[^=]+===\s*/';
 	
