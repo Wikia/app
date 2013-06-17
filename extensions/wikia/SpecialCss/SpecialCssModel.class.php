@@ -147,49 +147,72 @@ class SpecialCssModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getCssBlogData($blogParams = [], $revisionsParams = []) {
-		$cssBlogs = WikiaDataAccess::cache(
+		$cssUpdatesPosts = WikiaDataAccess::cache(
 			wfSharedMemcKey(self::MEMC_KEY),
 			60 * 60 * 24,
 			function () use ($blogParams, $revisionsParams) {
-				$cssBlogs = [];
-				$cssBlogsData = $this->getCssBlogApiData($blogParams);
+				$cssUpdatesPosts = [];
+				$cssUpdatesPostsData = $this->getCssBlogApiData($blogParams);
 
-				if ( empty( $cssBlogsData ) ) {
-					$ids = $this->getBlogsIds($cssBlogsData);
-					$cssRevisionsData = $this->getCssRevisionsApiData($ids, $revisionsParams);
+				if ( !empty( $cssUpdatesPostsData ) ) {
+					$ids = $this->getBlogsIds( $cssUpdatesPostsData );
+					$cssRevisionsData = $this->getCssRevisionsApiData( $ids, $revisionsParams );
 
-					foreach ( $cssBlogsData as $blog ) {
-						$pageId = $blog['pageid'];
-						$blogTitle = GlobalTitle::newFromText( $blog['title'], NS_MAIN, WikiFactory::COMMUNITY_CENTRAL );
-						$blogTitleText = $blogTitle->getText();
-
-						$lastRevisionUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
-						$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser);
-						$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, WikiFactory::COMMUNITY_CENTRAL );
-
-						if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
-
-							$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
-							$sectionText = $cssRevisionsData[$pageId]['revisions'][0]['*'];
-
-							$cssBlogs[] = [
-								'title' => $this->getAfterLastSlashText( $blogTitleText ),
-								'url' => trim( $this->getFormattedUrl($blogTitle->getFullURL()) . $this->addAnchorToPostUrl( $sectionText ) ),
-								'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
-								'userUrl' => $userPage->getFullUrl(),
-								'userName' => $blogUser,
-								'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
-								'text' => $this->getPostSnippet($blogTitle, $sectionText),
-							];
-						}
+					foreach ( $cssUpdatesPostsData as $postData ) {
+						$cssUpdatesPosts[] = $this->prepareCssUpdateData($cssRevisionsData, $postData);
 					}
 				}
-				return $cssBlogs;
+				
+				return $cssUpdatesPosts;
 			}
 		);
 
+		return $cssUpdatesPosts;
+	}
 
-		return $cssBlogs;
+	/**
+	 * @desc Returns an array with correct elements from given api results
+	 * 
+	 * @param array $cssRevisionsData results from API call with request of revision's info
+	 * @param array $postData results from API call with request of posts (articles) list in a category
+	 * 
+	 * @return array
+	 */
+	private function prepareCssUpdateData($cssRevisionsData, $postData) {
+		$cssUpdatePost = [
+			'title' => '',
+			'url' => '',
+			'userAvatar' => '',
+			'userUrl' => '',
+			'userName' => '',
+			'timestamp' => '',
+			'text' => '',
+		];
+		
+		$pageId = $postData['pageid'];
+		$blogTitle = GlobalTitle::newFromText( $postData['title'], NS_MAIN, WikiFactory::COMMUNITY_CENTRAL );
+		$blogTitleText = $blogTitle->getText();
+
+		$lastRevisionUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
+		$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser);
+		$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, WikiFactory::COMMUNITY_CENTRAL );
+
+		if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
+			$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
+			$sectionText = $cssRevisionsData[$pageId]['revisions'][0]['*'];
+
+			$cssUpdatePost = [
+				'title' => $this->getAfterLastSlashText( $blogTitleText ),
+				'url' => trim( $this->getFormattedUrl($blogTitle->getFullURL()) . $this->addAnchorToPostUrl( $sectionText ) ),
+				'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
+				'userUrl' => $userPage->getFullUrl(),
+				'userName' => $blogUser,
+				'timestamp' => $this->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ),
+				'text' => $this->getPostSnippet($blogTitle, $sectionText),
+			];
+		}
+		
+		return $cssUpdatePost;
 	}
 
 	/**
