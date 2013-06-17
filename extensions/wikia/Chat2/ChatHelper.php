@@ -5,6 +5,13 @@ class ChatHelper {
 	private static $operationMode = "wgChatOperationMode";
 	private static $CentralCityId = 177;
 	private static $configFile = array();
+
+	// constants with config file sections
+	const CHAT_DEVBOX_ENV = 'dev';
+	const CHAT_PREVIEW_ENV = 'preview';
+	const CHAT_VERIFY_ENV = 'verify';
+	const CHAT_PRODUCTION_ENV = 'prod';
+
 	/**
 	 * Hooks into GetRailModuleList and adds the chat module to the side-bar when appropriate.
 	 */
@@ -74,14 +81,14 @@ class ChatHelper {
 	 */
 	static function getEnvironmentName() {
 		global $wgDevelEnvironment;
-		if (!empty($wgDevelEnvironment)) return 'dev';
+		if (!empty($wgDevelEnvironment)) return self::CHAT_DEVBOX_ENV;
 
 		$name = Wikia::getStagingServerName();
-		if ( ( $name === "preview" ) || ( $name === "verify" ) ) {
+		if ( ( $name === self::CHAT_PREVIEW_ENV ) || ( $name === self::CHAT_VERIFY_ENV ) ) {
 			return $name;
 		}
 
-		return 'prod';
+		return self::CHAT_PRODUCTION_ENV;
 	}
 
 	/**
@@ -99,6 +106,10 @@ class ChatHelper {
 			self::$configFile = json_decode($string, true);
 		}
 
+		if ( empty( self::$configFile ) ) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
 		$env = self::getEnvironmentName();
 		if(isset(self::$configFile[$env][$name])) {
 			wfProfileOut(__METHOD__);
