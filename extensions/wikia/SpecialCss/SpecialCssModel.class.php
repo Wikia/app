@@ -307,7 +307,7 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns information about 20 last CSS updates (page id, namespace and post title)
 	 *
-	 * @param $params
+	 * @param array $params: action, list, cmtitle, cmlimit, cmsort, cmdir which are send to MW API: http://en.wikipedia.org/w/api.php
 	 * @return array
 	 */
 	private function getCssBlogApiData($params) {
@@ -321,8 +321,9 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns information about 20 last revisions of CSS updates (user name, timestamp, post content)
 	 *
-	 * @param $ids page ids
-	 * @param $params
+	 * @param array $ids array of integers which are page ids
+	 * @param array $params: action, prop, rvprop, rvsection, pageids which are send to MW API: http://en.wikipedia.org/w/api.php 
+	 * 
 	 * @return array
 	 */
 	private function getCssRevisionsApiData($ids, $params) {
@@ -336,7 +337,8 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns data from API based on parameters
 	 *
-	 * @param $params
+	 * @param array $params more documentation: http://en.wikipedia.org/w/api.php
+	 * 
 	 * @return mixed
 	 */
 	private function getApiData($params) {
@@ -377,7 +379,6 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function getDefaultBlogParams() {
 		return [
-			'format' => 'json',
 			'action' => 'query',
 			'list' => 'categorymembers',
 			'cmtitle' => 'Category:' . self::UPDATES_CATEGORY,
@@ -395,7 +396,6 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	private function getDefaultRevisionParams($ids = '') {
 		return [
-			'format' => 'json',
 			'action' => 'query',
 			'prop' => 'revisions',
 			'rvprop' => 'content|user|timestamp',
