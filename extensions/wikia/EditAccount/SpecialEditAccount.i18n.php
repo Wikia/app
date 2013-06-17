@@ -1862,8 +1862,13 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'editaccount' => "Cange 'u cunde",
+	'editaccount-frame-manage' => "Cange 'nu cunde",
 	'editaccount-frame-usage' => 'Note',
+	'editaccount-label-select' => "scacchie 'nu cunde utende",
 	'editaccount-submit-account' => "Gestisce 'u cunde",
+	'editaccount-frame-account' => "Stoche a cange 'u cunde utende: $1",
+	'editaccount-frame-close' => "Disabbilite 'u cunde utende: $1",
 	'editaccount-label-reason' => 'Mutive:',
 	'editaccount-submit-button' => 'Reggìstre',
 );
@@ -2419,9 +2424,30 @@ $messages['zh-hans'] = array(
 /** Traditional Chinese (中文（繁體）‎)
  * @author Dream
  * @author Horacewai2
+ * @author Radish10cm
  * @author Waihorace
  */
 $messages['zh-hant'] = array(
 	'editaccount' => '編輯帳戶',
+	'editaccount-frame-manage' => '編輯帳戶',
+	'editaccount-usage' => '使用者資料是每個 wiki分開緩存。當您重設密碼或電子郵件時，只有這個wiki的緩存會被銷毀。請直接使用新的密碼登入本微基，以避免緩存問題。',
+	'editaccount-label-select' => '選擇使用者帳戶',
 	'editaccount-submit-account' => '管理帳戶',
+	'editaccount-frame-account' => '編輯使用者帳戶：$1',
+	'editaccount-frame-close' => '禁用使用者帳戶：$1',
+	'editaccount-label-email' => '設置新的電子郵件地址',
+	'editaccount-label-pass' => '設定新密碼',
+	'editaccount-label-realname' => '設置新的真實姓名',
+	'editaccount-label-clearunsub' => '取消訂閱',
+	'editaccount-label-reason' => '原因：',
+	'editaccount-submit-email' => '保存並確認電子郵件地址',
+	'editaccount-submit-pass' => '保存密碼',
+	'editaccount-submit-realname' => '保存真實姓名',
+	'editaccount-submit-clearunsub' => '取消退訂',
+	'editaccount-submit-close' => '關閉帳戶',
+	'editaccount-usage-close' => '您也可以通過置亂其密碼及刪除電子郵件地址來禁用一個使用者帳戶。注意這會使資料丟失，無法恢復。',
+	'editaccount-warning-close' => '<b>小心!</b>您將要永久禁用此使用者的帳戶<b> $1 </b>。這不能還原。你確定這是你想要做的嗎？',
+	'editaccount-success-email' => '已成功更改帳戶的電子郵件地址由 $1 到 $2 。',
+	'editaccount-success-email-blank' => '成功刪除帳戶的電子郵件地址 $1 。',
+	'editaccount-success-pass' => '已成功更改了的帳戶 $1 的密碼。',
 );
