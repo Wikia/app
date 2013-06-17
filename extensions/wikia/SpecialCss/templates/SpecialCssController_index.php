@@ -4,20 +4,17 @@
 	</form>
 </div>
 <aside class="css-side-bar">
-	<div class="version-box">
-		<?= wfMessage('special-css-current-version')->rawParams(['1.0.17'])->text(); ?>
-	</div>
-	<?php if( !empty($cssBlogs) ): ?>
+	<?php if( !empty($cssUpdates) ): ?>
 	<div class="community-updates">
 		<h3><?= wfMessage('special-css-community-update-headline')->text(); ?></h3>
 		<ul class="community-updates-list">
-			<?php foreach( $cssBlogs as $cssUpdatePost ): ?>
+			<?php foreach( $cssUpdates as $cssUpdate ): ?>
 			<li class="community-update-item plainlinks">
-				<?= $cssUpdatePost['userAvatar']; ?>
-				<h4><a href="<?= $cssUpdatePost['url']; ?>"><?= $cssUpdatePost['title']; ?></a></h4>
-				<span><?= wfMessage('special-css-community-update-by')->params([$cssUpdatePost['timestamp'], $cssUpdatePost['userUrl'], $cssUpdatePost['userName']])->parse(); ?></span>
-				<blockquote><?= $cssUpdatePost['text']; ?></blockquote>
-				<p class="read-more"><?= wfMessage('special-css-community-read-more')->params([$cssUpdatePost['url']])->parse(); ?></p>
+				<?= $cssUpdate['userAvatar']; ?>
+				<h4><a href="<?= $cssUpdate['url']; ?>"><?= $cssUpdate['title']; ?></a></h4>
+				<span><?= wfMessage('special-css-community-update-by')->params([$cssUpdate['timestamp'], $cssUpdate['userUrl'], $cssUpdate['userName']])->parse(); ?></span>
+				<blockquote><?= $cssUpdate['text']; ?></blockquote>
+				<p class="read-more"><?= wfMessage('special-css-community-read-more')->params([$cssUpdate['url']])->parse(); ?></p>
 			</li>
 			<?php endforeach; ?>
 		</ul>

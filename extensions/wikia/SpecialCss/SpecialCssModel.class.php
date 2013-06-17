@@ -142,17 +142,17 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Returns an array of 20 last CSS updates
 	 *
-	 * @param array $blogParams parameters for api to fetch blog data
+	 * @param array $postsParams parameters for api to fetch blog data
 	 * @param array $revisionsParams parameters for api to fetch revisions data including user info
 	 * @return array
 	 */
-	public function getCssBlogData($blogParams = [], $revisionsParams = []) {
+	public function getCssUpdatesData($postsParams = [], $revisionsParams = []) {
 		$cssUpdatesPosts = WikiaDataAccess::cache(
 			wfSharedMemcKey(self::MEMC_KEY),
 			60 * 60 * 24,
-			function () use ($blogParams, $revisionsParams) {
+			function () use ($postsParams, $revisionsParams) {
 				$cssUpdatesPosts = [];
-				$cssUpdatesPostsData = $this->getCssBlogApiData($blogParams);
+				$cssUpdatesPostsData = $this->getCssPostsApiData($postsParams);
 
 				if ( !empty( $cssUpdatesPostsData ) ) {
 					$ids = $this->getBlogsIds( $cssUpdatesPostsData );
@@ -333,7 +333,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @param array $params: action, list, cmtitle, cmlimit, cmsort, cmdir which are send to MW API: http://en.wikipedia.org/w/api.php
 	 * @return array
 	 */
-	private function getCssBlogApiData($params) {
+	private function getCssPostsApiData($params) {
 		$defaultParams = $this->getDefaultBlogParams();
 		$params = array_merge($defaultParams, $params);
 		$blogs = $this->getApiData($params);
