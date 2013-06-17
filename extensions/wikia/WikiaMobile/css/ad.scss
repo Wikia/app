@@ -25,12 +25,15 @@ $slotZIndex: 4000;
 	}
 
 	&.fixed {
-		background-color: $slotFooterColor;
+		position: fixed;
 		bottom: 0;
+
 		margin: 0;
 		padding: 0;
-		position: fixed;
+
 		width: 100%;
+
+		background-color: $slotFooterColor;
 	}
 
 	&.jsfix {
@@ -64,16 +67,15 @@ $slotZIndex: 4000;
 	visibility: hidden;
 
 	&.show {
+		visibility: visible;
+
 		padding: 10px 0;
 		margin: 0 auto;
-
-		border-top: 1px solid $border-color;
-		border-bottom: 1px solid $border-color;
-
 		height: 270px;
 		width: 300px;
 
-		visibility: visible;
+		border-top: 1px solid $border-color;
+		border-bottom: 1px solid $border-color;
 	}
 }
 
@@ -85,7 +87,6 @@ $slotZIndex: 4000;
 	width: 100px;
 
 	opacity: 0;
-
 	z-index: 21;
 
 	-webkit-transition: all .3s;
@@ -95,20 +96,24 @@ $slotZIndex: 4000;
 	display: inline-block;
 
 	position: absolute;
-	height: 0;
-	opacity: 0;
 	top: 40%;
 	left: 50%;
-	margin-left: -150px;
-	margin-top: -125px;
-	-webkit-transition: opacity .3s, top .3s;
+
+	height: 0;
 	width: 300px;
 
+	opacity: 0;
+	margin-left: -150px;
+	margin-top: -125px;
+
+	-webkit-transition: opacity .3s, top .3s;
 
 	&.show {
-		opacity: 1;
 		top: 50%;
+
 		height: 250px;
+
+		opacity: 1;
 
 		& ~ img {
 			bottom: 30px;
