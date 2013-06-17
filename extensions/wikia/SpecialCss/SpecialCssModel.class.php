@@ -4,31 +4,37 @@ class SpecialCssModel extends WikiaModel {
 	 * @desc The article page name of CSS file of which content we display in the editor
 	 */
 	const CSS_FILE_NAME = 'Wikia.css';
+	
 	/**
 	 * @desc The city_id of community wiki from which we pull blog posts data
 	 */
 	const COMMUNITY_CENTRAL_CITY_ID = 177;
+	
 	/**
 	 * @desc User avatar size
 	 */
 	const USER_AVATAR_SIZE = 25;
+	
 	/**
 	 * @desc The category of blogposts we pull data from
 	 */
 	const UPDATES_CATEGORY = 'CSS_Updates';
+	
 	/**
 	 * @desc The section number we pull content from
 	 */
 	const UPDATE_SECTION_IN_BLOGPOST = 2;
+	
 	/**
 	 * @desc Regex pattern used to extract h3 tags; see: SpecialCssModel::removeHeadline() and SpecialCssModel::addAnchorToPostUrl()
 	 */
 	const MEDIAWIKI_H3_PATTERN = '/===[^=]+===\s*/';
-
+	
 	/**
 	 * @desc Limit of characters per one post snippet
 	 */
 	const SNIPPET_CHAR_LIMIT = 150;
+	
 	/**
 	 * @desc Memcache key for CSS Updates
 	 */
@@ -156,18 +162,20 @@ class SpecialCssModel extends WikiaModel {
 
 					foreach ( $cssBlogsData as $blog ) {
 						$pageId = $blog['pageid'];
-						$blogUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
 						$blogTitle = GlobalTitle::newFromText($blog['title'], NS_MAIN, self::COMMUNITY_CENTRAL_CITY_ID );
-						$userPage = GlobalTitle::newFromText($blogUser, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID);
+                                                $blogTitleText = $blogTitle->getText();
 
-						if (( $blogTitle && $blogTitle instanceof GlobalTitle)
-								&& ($userPage && $userPage instanceof GlobalTitle)) {
+                                                $lastRevisionUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
+                                                $blogUser = $this->getUserFromTitleText($blogTitleText, $lastRevisionUser);
+                                                $userPage = GlobalTitle::newFromText($blogUser, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID);
+
+						if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
 
 							$timestamp = $cssRevisionsData[$pageId]['revisions'][0]['timestamp'];
 							$sectionText = $cssRevisionsData[$pageId]['revisions'][0]['*'];
 
 							$cssBlogs[] = [
-								'title' => $this->getCleanTitle( $blogTitle->getText() ),
+								'title' => $this->getAfterLastSlashText( $blogTitleText ),
 								'url' => trim( $this->getFormattedUrl($blogTitle->getFullURL()) . $this->addAnchorToPostUrl( $sectionText ) ),
 								'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
 								'userUrl' => $userPage->getFullUrl(),
@@ -251,7 +259,7 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @return string
 	 */
-	private function getCleanTitle($titleText) {
+	private function getAfterLastSlashText($titleText) {
 		$result = $titleText;
 		$slashPosition = mb_strrpos($titleText, '/');
 		
@@ -260,17 +268,32 @@ class SpecialCssModel extends WikiaModel {
 			$result = mb_strcut( $titleText, $slashPosition );
 		}
 		
-		return $result;
+		return trim( $result, '/' );
 	}
 
 	/**
-	 * @desc Returns formatted timestamp
-	 *
-	 * @param $timestamp
-	 * @return Mixed|string
+	 * @desc Gets username from title's text
+	 * 
+	 * @param String $titleText Title::getText() result moslty
+	 * @param String $fallbackUser 
+	 * 
+	 * @return string
 	 */
-	private function getFormattedTimestamp($timestamp) {
-		return wfTimestamp(TS_ISO_8601, $timestamp);
+	private function getUserFromTitleText($titleText, $fallbackUser) {
+		$userName = str_replace( $this->getAfterLastSlashText($titleText), '', $titleText );
+		$userName = trim( $userName, '/' );
+		$userName = $this->getAfterLastSlashText($userName);
+		$userArray = explode(':', $userName);
+		
+		if( count($userArray) > 1 ) {
+			$userName = $userArray[1];
+		} 
+		
+		if( empty($userName) ) {
+			$userName = $fallbackUser;
+		}
+		
+		return $userName;
 	}
 
 	/**
