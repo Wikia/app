@@ -154,7 +154,7 @@ class SpecialCssModel extends WikiaModel {
 				$cssBlogs = [];
 				$cssBlogsData = $this->getCssBlogApiData($blogParams);
 
-				if ( $cssBlogsData ) {
+				if ( empty( $cssBlogsData ) ) {
 					$ids = $this->getBlogsIds($cssBlogsData);
 					$cssRevisionsData = $this->getCssRevisionsApiData($ids, $revisionsParams);
 
