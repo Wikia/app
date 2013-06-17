@@ -40,7 +40,6 @@ $app->registerClass('WikiaHubsParserHelper', $dir . 'WikiaHubsParserHelper.class
 $app->registerExtensionMessageFile('WikiaHubsV2', $dir.'WikiaHubsV2.i18n.php');
 
 // hooks
-$app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsV2Mobile', 'onWikiaMobileAssetsPackages');
 $app->registerHook('ArticleFromTitle', 'WikiaHubsV2Hooks', 'onArticleFromTitle');
 $app->registerHook('WikiaCanonicalHref', 'WikiaHubsV2Hooks', 'onWikiaCanonicalHref');
 $app->registerHook('ParserFirstCallInit', 'WikiaHubsV2Hooks', 'onParserFirstCallInit');
