@@ -6,11 +6,6 @@ class SpecialCssModel extends WikiaModel {
 	const CSS_FILE_NAME = 'Wikia.css';
 	
 	/**
-	 * @desc The city_id of community wiki from which we pull blog posts data
-	 */
-	const COMMUNITY_CENTRAL_CITY_ID = 177;
-	
-	/**
 	 * @desc User avatar size
 	 */
 	const USER_AVATAR_SIZE = 25;
@@ -165,12 +160,12 @@ class SpecialCssModel extends WikiaModel {
 
 					foreach ( $cssBlogsData as $blog ) {
 						$pageId = $blog['pageid'];
-						$blogTitle = GlobalTitle::newFromText($blog['title'], NS_MAIN, self::COMMUNITY_CENTRAL_CITY_ID );
+						$blogTitle = GlobalTitle::newFromText( $blog['title'], NS_MAIN, WikiFactory::COMMUNITY_CENTRAL );
 						$blogTitleText = $blogTitle->getText();
 
 						$lastRevisionUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
-						$blogUser = $this->getUserFromTitleText($blogTitleText, $lastRevisionUser);
-						$userPage = GlobalTitle::newFromText($blogUser, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID);
+						$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser);
+						$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, WikiFactory::COMMUNITY_CENTRAL );
 
 						if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
 
