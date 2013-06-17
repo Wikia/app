@@ -691,12 +691,12 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			if(events.hasOwnProperty(event)){
 				events[event].push(func)
 			}
-			//return events[event].length - 1;
 		},
 		remove: function(event, func){
 			events[event] = events[event].filter(function(callback){
 				return callback != func;
 			})
-		}
+		},
+		resetZoom: resetZoom
 	};
 });
