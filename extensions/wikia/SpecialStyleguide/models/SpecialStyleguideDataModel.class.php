@@ -70,7 +70,7 @@ class SpecialStyleguideDataModel {
 								'link' => '',
 								'linkTitle' => 'Earl Carlson',
 								'linkName' => 'Earl Carlson',
-								'linkTagline' => 'Product designer'
+								'linkTagline' => wfMessage( 'styleguide-home-team-designer' )->plain()
 							]
 						]
 					]
