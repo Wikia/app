@@ -163,11 +163,11 @@ class SpecialCssModel extends WikiaModel {
 					foreach ( $cssBlogsData as $blog ) {
 						$pageId = $blog['pageid'];
 						$blogTitle = GlobalTitle::newFromText($blog['title'], NS_MAIN, self::COMMUNITY_CENTRAL_CITY_ID );
-                                                $blogTitleText = $blogTitle->getText();
+						$blogTitleText = $blogTitle->getText();
 
-                                                $lastRevisionUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
-                                                $blogUser = $this->getUserFromTitleText($blogTitleText, $lastRevisionUser);
-                                                $userPage = GlobalTitle::newFromText($blogUser, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID);
+						$lastRevisionUser = $cssRevisionsData[$pageId]['revisions'][0]['user'];
+						$blogUser = $this->getUserFromTitleText($blogTitleText, $lastRevisionUser);
+						$userPage = GlobalTitle::newFromText($blogUser, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID);
 
 						if( $blogTitle instanceof GlobalTitle && $userPage instanceof GlobalTitle ) {
 
