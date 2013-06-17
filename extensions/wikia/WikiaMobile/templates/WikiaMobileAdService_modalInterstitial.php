@@ -5,7 +5,8 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 			adTimer;
 
 		media.on('open', function onOpen(length){
-			var adWrapper;
+			var adWrapper,
+				current;
 
 			if(length > 5){
 
@@ -15,13 +16,7 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 					if(t.tagName == 'IMG' && ~t.parentElement.className.indexOf('wkAdPlace')){
 						ev.stopPropagation();
 
-						//remove any left videos from DOM
-						//videos tend to be heavy on resources we shouldn't have more than one at a time
-						if(adWrapper = document.querySelector('.swiperPage .wkAdWrapper')) {
-							adWrapper.parentElement.removeChild(adWrapper);
-						}
-
-						t.parentElement.className = t.parentElement.className.replace('wkAdPlace', '');
+						media.openModal(current);
 					}
 				});
 
@@ -43,15 +38,17 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 							var ad = wrapper.getElementsByClassName('wkAdWrapper')[0];
 
 							ads.setupSlot({
-								name: 'MOBILE_MODAL_INTERSTITIAL',
+								name: 'MOBILE_IN_CONTENT',
 								size: '300x250',
 								wrapper: ad,
 								init: function(found){
 									if(found) {
 										data.zoomable = false;
 										media.hideShare();
+										media.resetZoom();
 										modal.setCaption();
 
+										current = data.current;
 										wrapper.className += ' wkAdPlace';
 
 										setTimeout(function(){
