@@ -229,7 +229,7 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Removes wikitext's H3 tags from given text
 	 * 
-	 * @param $text
+	 * @param String $text
 	 * @return mixed
 	 */
 	private function removeHeadline($text) {
