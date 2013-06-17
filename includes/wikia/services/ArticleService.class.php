@@ -193,6 +193,46 @@ class ArticleService extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return $snippet;
 	}
+	
+	/**
+	 * Gets a plain text snippet from an article using Solr
+	 * 
+	 * @TODO implement WikiaDataAccess::cache
+	 *
+	 * @param integer $length [OPTIONAL] The maximum snippet length, defaults to 100
+	 *
+	 * @return string The plain text snippet, it includes SUFFIX at the end of the string
+	 * if the length of the article's content is longer than $length, the text will be cut
+	 * respecting the integrity of the words
+	 *
+	 * @throws WikiaException If $length is bigger than MAX_LENGTH
+	 *
+	 * @example
+	 * $service = new ArticleService( $article );
+	 * $snippet = $service->getTextSnippet( 250 );
+	 *
+	 * $service->setArticleById( $title->getArticleID() );
+	 * $snippet = $service->getTextSnippet( 50 );
+	 *
+	 * $service->setArticle( $anotherArticle );
+	 * $snippet = $service->getTextSnippet();
+	 */
+	public function getTextSnippetFromSolr( $length = 100 ) {
+		$service = new SolrDocumentService();
+		// note that this will use wgArticleId without an article
+		if ( $this->article ) {
+			$service->setArticleId( $this->article->getId() );
+		}
+		$htmlField = Wikia\Search\Utilities::field( 'html' );
+		
+		$document = $service->setRequestedFields( [ $htmlField ] )
+		                    ->getDocument();
+		$text = '';
+		if (! empty( $document ) ) {
+			$text = $document[$htmlField];
+		}
+		return $this->wf->ShortenText( $text, $length, true );
+	}
 
 	/**
 	 * Gets the cache key associated to an article
