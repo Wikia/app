@@ -30,7 +30,7 @@ class SpecialCssHooks {
 	}
 
 	/**
-	 * $desc Checks if CSS Update post was added, and purging cache with CSS Updates list
+	 * @desc Checks if CSS Update post was added, and purges cache with CSS Updates list
 	 */
 	public function onArticleSaveComplete($article) {
 		$categories = $article->getTitle()->getParentCategories();
