@@ -86,6 +86,8 @@ $slotZIndex: 4000;
 
 	opacity: 0;
 
+	z-index: 21;
+
 	-webkit-transition: all .3s;
 }
 
@@ -116,5 +118,11 @@ $slotZIndex: 4000;
 
 			opacity: 1;
 		}
+	}
+}
+
+@media screen and (min-width:320px) and (orientation:landscape) {
+	.wkAdWrapper.show {
+		left: 40%;
 	}
 }
