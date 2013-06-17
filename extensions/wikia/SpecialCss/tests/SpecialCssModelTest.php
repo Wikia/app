@@ -34,4 +34,32 @@ class SpecialCssModelTest extends WikiaBaseTest {
 			[false, self::LOCAL_URL_EXAMPLE]
 		];
 	}
+
+	/**
+	 * @dataProvider testGetCssFileContentDataProvider
+	 */
+	public function testGetCssFileContent($expected, $articleContent) {
+		if (isset($articleContent)) {
+			$fileArticle = $this->getMock('Article', array('getContent'), [new Title()]);
+			$fileArticle->expects($this->any())
+				->method('getContent')
+				->will($this->returnValue($articleContent));
+		} else {
+			$fileArticle = null;
+		}
+
+		$specialCssModelMock = $this->getMock('SpecialCssModel', array('getCssFileArticle'));
+		$specialCssModelMock->expects($this->any())
+			->method('getCssFileArticle')
+			->will($this->returnValue($fileArticle));
+
+		$this->assertEquals($expected, $specialCssModelMock->getCssFileContent());
+	}
+
+	public function testGetCssFileContentDataProvider() {
+		return [
+			['', null],
+			['test content', 'test content']
+		];
+	}
 }

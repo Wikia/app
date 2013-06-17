@@ -23,7 +23,7 @@ class SpecialCssModel extends WikiaModel {
 	 */
 	public function getCssFileContent() {
 		$cssArticle = $this->getCssFileArticle( $this->getCssFileArticleId() );
-		return $cssArticle->getContent();
+		return ($cssArticle instanceof Article) ? $cssArticle->getContent() : '';
 	}
 
 	/**
