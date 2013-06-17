@@ -6,7 +6,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 	
 	public function index() {
 		wfProfileIn(__METHOD__);
-
+		
 		if( $this->checkPermissions() ) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
@@ -17,6 +17,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		
 		$model = new SpecialCssModel();
 		$this->cssContent = $model->getCssFileContent();
+		$this->cssUpdates = $model->getCssUpdatesData();
 
 		wfProfileOut(__METHOD__);
 	}
