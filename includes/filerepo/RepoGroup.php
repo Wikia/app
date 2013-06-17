@@ -166,10 +166,12 @@ class RepoGroup {
 		}
 
 		/* Wikia changes begin */
-		// get redirected file if the foreign repo allows file redirecting
-		wfRunHooks( 'FindRedirectedFile', array( $this->foreignRepos, $title, $options, $useCache, &$image, &$cacheEntry ) );
-		if ( $image ) {
-			return $image;
+		if ( $title->isRedirect() ) {
+			// get redirected file if the foreign repo allows file redirecting
+			wfRunHooks( 'FindRedirectedFile', array( $this->foreignRepos, $title, $options, $useCache, &$image, &$cacheEntry ) );
+			if ( $image ) {
+				return $image;
+			}
 		}
 		/* Wikia changes end */
 

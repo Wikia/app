@@ -223,15 +223,13 @@ class VideoHandlerHooks extends WikiaObject{
 	 * @return true
 	 */
 	public function onFindRedirectedFile( $repos, $title, $options, $useCache, &$file, &$cacheEntry ) {
-		if ( $title->isRedirect() ) {
-			$redirect = RepoGroup::singleton()->getLocalRepo()->checkRedirect( $title );
-			if ( $redirect instanceof Title && $redirect->getNamespace() == NS_FILE && $title->getDBKey() != $redirect->getDBKey() ) {
-				foreach ( $repos as $repo ) {
-					if ( $repo->allowRedirect) {
-						$file = $repo->findfile( $redirect, $options );
-						if ( $file && $useCache ) {
-							$cacheEntry = $file;
-						}
+		$redirect = RepoGroup::singleton()->getLocalRepo()->checkRedirect( $title );
+		if ( $redirect instanceof Title && $redirect->getNamespace() == NS_FILE && $title->getDBKey() != $redirect->getDBKey() ) {
+			foreach ( $repos as $repo ) {
+				if ( $repo->allowRedirect) {
+					$file = $repo->findfile( $redirect, $options );
+					if ( $file && $useCache ) {
+						$cacheEntry = $file;
 					}
 				}
 			}
