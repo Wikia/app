@@ -67,6 +67,11 @@ class ChatHelper {
 		return $server[self::getServerBasket()];
 	}
 
+	/**
+	 * Return the name of the current configuration. This should return a config name
+	 * that exists in ChatConfig.json file.
+	 * @return string
+	 */
 	static function getEnvironmentName() {
 		global $wgDevelEnvironment;
 		if (!empty($wgDevelEnvironment)) return 'dev';
