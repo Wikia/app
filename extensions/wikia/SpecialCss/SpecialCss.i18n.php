@@ -11,7 +11,7 @@ $messages['en'] = [
 
 	'special-css-community-update-headline' => 'Wikia CSS Updates',
 	'special-css-community-update-by' => '$1 by [$2 $3]',
-	'special-css-community-read-more' => '[$1 Read more &gt;]',
+	'special-css-community-read-more' => '[$1 Read more]',
 
 	'special-css-oasis-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
 ];
