@@ -81,11 +81,15 @@ class ChatHelper {
 	 */
 	static function getEnvironmentName() {
 		global $wgDevelEnvironment;
-		if (!empty($wgDevelEnvironment)) return self::CHAT_DEVBOX_ENV;
+		if ( !empty( $wgDevelEnvironment ) ) {
+			return self::CHAT_DEVBOX_ENV;
+		}
 
-		$name = Wikia::getStagingServerName();
-		if ( ( $name === self::CHAT_PREVIEW_ENV ) || ( $name === self::CHAT_VERIFY_ENV ) ) {
-			return $name;
+		if ( Wikia::isPreviewServer() ) {
+			return self::CHAT_PREVIEW_ENV;
+		}
+		if ( Wikia::isVerifyServer() ) {
+			return self::CHAT_VERIFY_ENV;
 		}
 
 		return self::CHAT_PRODUCTION_ENV;

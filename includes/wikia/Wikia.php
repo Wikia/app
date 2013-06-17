@@ -50,22 +50,43 @@ $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 
 class Wikia {
 
+	const VARNISH_STAGING_HEADER = 'X-Staging';
+	const VARNISH_STAGING_PREVIEW = 'preview';
+	const VARNISH_STAGING_VERIFY = 'verify';
+
 	private static $vars = array();
 	private static $cachedLinker;
 
 	private static $apacheHeaders = null;
+
 	/**
 	 * Return the name of staging server (or empty string for production/dev envs)
 	 * @return string
 	 */
-	public function getStagingServerName() {
+	public static function getStagingServerName() {
 		if ( is_null( self::$apacheHeaders ) ) {
 			self::$apacheHeaders = function_exists('apache_request_headers') ? apache_request_headers() : array();
 		}
-		if ( isset( self::$apacheHeaders[ "X-Staging" ] ) ) {
-			return self::$apacheHeaders[ "X-Staging" ];
+		if ( isset( self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ] ) ) {
+			return self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ];
 		}
 		return '';
+	}
+
+	/**
+	 * Check if we're running on preview server
+	 * @return bool
+	 */
+	public static function isPreviewServer() {
+		return self::getStagingServerName() === self::VARNISH_STAGING_PREVIEW;
+	}
+
+	/**
+	 * Check if we're running on verify server
+	 * @return bool
+	 */
+	public static function isVerifyServer() {
+		return self::getStagingServerName() === self::VARNISH_STAGING_VERIFY;
 	}
 
 	/**
@@ -73,8 +94,7 @@ class Wikia {
 	 * @return bool
 	 */
 	public static function isStagingServer() {
-		$name = self::getStagingServerName();
-		return ($name === "preview") || ($name === "verify");
+		return self::isPreviewServer() || self::isVerifyServer();
 	}
 
 	public static function setVar($key, $value) {
