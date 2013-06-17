@@ -148,33 +148,87 @@ class WallHistory extends WikiaModel {
 		);
 	}
 
+	/**
+	 * Gets data for Forum Activity Module.
+	 *
+	 * @param int $ns    The namespace (this should theoretically work for Forum and Wall)
+	 * @param int $count The number of activities to get
+	 *
+	 * @return array Formatted data that gets passed to the view
+	 */
 	public function  getLastPosts($ns, $count = 5) {
-		$where = array(
-			'action' => WH_NEW,
-			'post_ns' => MWNamespace::getSubject( $ns ),
-			'deleted_or_removed' => 0
+		$ns    = (int)MWNamespace::getSubject( $ns );
+		$count = (int)$count;
+		$db    = $this->getDB( DB_SLAVE );
+		$out   = array();
+
+		$result = $db->query(
+			'SELECT
+				`parent_page_id`,
+				`post_user_id`,
+				`post_user_ip`,
+				`is_reply`,
+				`parent_comment_id`,
+				`comment_id`,
+				`action`,
+				`event_date`,
+				`last_title`.`metatitle`,
+				`reason`,
+				`revision_id`
+			FROM `wall_history`
+			RIGHT JOIN
+				(
+					SELECT
+						`parent_comment_id`,
+						MAX(`event_date`) AS `event_date`
+					FROM `wall_history`
+					RIGHT JOIN
+						(
+							SELECT `parent_comment_id`
+							FROM `wall_history`
+							WHERE
+								`action` = ' . WH_NEW . '
+								AND `is_reply` = 0
+								AND `deleted_or_removed` = 0
+						) AS `not_removed_parents`
+						USING (`parent_comment_id`)
+					WHERE
+						`action` = ' . WH_NEW . '
+						AND `deleted_or_removed` = 0
+					GROUP BY `parent_comment_id`
+				) AS `last_new_post_date`
+				USING (`parent_comment_id`, `event_date`)
+			RIGHT JOIN
+				(
+					SELECT
+						`parent_comment_id`,
+						`metatitle`
+					FROM `wall_history`
+					RIGHT JOIN
+						(
+							SELECT
+								`parent_comment_id`,
+								MAX(`event_date`) AS `event_date`
+							FROM `wall_history`
+							WHERE `action` IN (' . WH_EDIT . ', ' . WH_NEW . ')
+							GROUP BY `parent_comment_id`
+						) AS `last_edit_date`
+						USING (`parent_comment_id`, `event_date`)
+				) AS `last_title`
+				USING (`parent_comment_id`)
+			WHERE
+				`action` = ' . WH_NEW . '
+				AND `post_ns` = ' . $ns . '
+			ORDER BY `event_date` DESC
+			LIMIT ' . $count,
+			__METHOD__
 		);
 
-		$out = array();
-		$group = array();
-
-		$db =  $this->getDB(DB_SLAVE);
-
-		for($try = 0; ($try < 5 && count($out) < $count ); $try++  ) {
-			$res = $this->baseLoadFromDB($where, 100, $try*100, 'desc');
-			while($row = $db->fetchRow($res)) {
-				$key = $row['parent_comment_id'];
-				if(empty($group[$key])) {
-					$data = $this->formatData($row);
-					if(!empty($data)){
-						$out[] = $data;
-						$group[$key] = true;
-					}
-				}
-
-				if($count == count($out)) {
-					break;
-				}
+		while ( $row = $db->fetchRow( $result ) ) {
+			$data = $this->formatData( $row );
+			// This empty check shouldn't be necessary, but I'll leave it here just in case.
+			if ( !empty( $data ) ) {
+				$out[] = $data;
 			}
 		}
 
