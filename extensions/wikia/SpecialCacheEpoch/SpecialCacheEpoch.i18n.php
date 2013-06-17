@@ -269,8 +269,15 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'cacheepoch-desc' => "Dèje 'n'inderfacce pe cangià wgCacheEpoch pe uicchi",
 	'cacheepoch' => 'Inderfacce Cache Epoch',
 	'cacheepoch-header' => "'Ngremende wgCacheEpoch",
+	'cacheepoch-value' => "'U valore de mò de wgCacheEpoch jè \"\$1\". Cazze 'u buttone pe 'mbostarle a l'orarie de mò.",
+	'cacheepoch-submit' => "Aggiorne 'u valore",
+	'cacheepoch-updated' => 'wgCacheEpoch aggiornate a "$1".',
+	'cacheepoch-not-updated' => "Fallite l'aggiornamende de wgCacheEpoch.",
+	'cacheepoch-wf-reason' => 'Valore aggiornate cu Special:CacheEpoch',
+	'cacheepoch-no-wf' => "UicchiFactory non g'è abbilitate sus a sta uicchi. Non g'è possibbile cangià wgCacheEpoch.",
 );
 
 /** Russian (русский)
