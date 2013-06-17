@@ -279,6 +279,11 @@ class SpecialCssModel extends WikiaModel {
 		$userName = str_replace( $this->getAfterLastSlashText($titleText), '', $titleText );
 		$userName = trim( $userName, '/' );
 		$userName = $this->getAfterLastSlashText($userName);
+		$userArray = explode(':', $userName);
+		
+		if( count($userArray) > 1 ) {
+			$userName = $userArray[1];
+		} 
 		
 		if( empty($userName) ) {
 			$userName = $fallbackUser;
