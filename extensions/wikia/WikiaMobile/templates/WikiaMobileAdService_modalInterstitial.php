@@ -5,6 +5,8 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 			adTimer;
 
 		media.on('open', function onOpen(length){
+			var adWrapper;
+
 			if(length > 5){
 
 				modal.getWrapper().addEventListener('touchend', function(ev){
@@ -12,8 +14,6 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 
 					if(t.tagName == 'IMG' && ~t.parentElement.className.indexOf('wkAdPlace')){
 						ev.stopPropagation();
-
-						var adWrapper;
 
 						//remove any left videos from DOM
 						//videos tend to be heavy on resources we shouldn't have more than one at a time
@@ -26,26 +26,18 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 				});
 
 				media.on('change', function(data){
-					var adWrapper;
-
 					//remove any left videos from DOM
 					//videos tend to be heavy on resources we shouldn't have more than one at a time
 					if(adWrapper = document.querySelector('.swiperPage:not(.current) .wkAdWrapper')) {
 						adWrapper.parentElement.removeChild(adWrapper);
 					}
+
 					clearTimeout(adTimer);
 
-
-					//increase changes by 1 if it is equal to five reset it to zero and let logic run
 					if((++changes >= 5)) {
 
 						adTimer = setTimeout(function(){
-							console.log('SHOW')
 							var wrapper = data.wrapper;
-							data.zoomable = false;
-							wrapper.className += ' wkAdPlace';
-							media.hideShare();
-							modal.setCaption();
 
 							wrapper.insertAdjacentHTML('afterbegin', '<div class=wkAdWrapper></div>');
 							var ad = wrapper.getElementsByClassName('wkAdWrapper')[0];
@@ -56,10 +48,15 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 								wrapper: ad,
 								init: function(found){
 									if(found) {
-										setTimeout(function(){
+										data.zoomable = false;
+										media.hideShare();
+										modal.setCaption();
 
+										wrapper.className += ' wkAdPlace';
+
+										setTimeout(function(){
 											ad.className += ' show';
-										},300)
+										},20)
 
 									}else{
 										ad.parentElement.removeChild(ad);
@@ -68,7 +65,7 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 							});
 
 							changes = 0;
-						},1000);
+						},900);
 					}
 				})
 			}

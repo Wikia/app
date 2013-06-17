@@ -73,12 +73,16 @@ $slotZIndex: 4000;
 	}
 }
 
-.swiperPage > img {
-	-webkit-transition: -webkit-transform .3s;
-}
-
 .swiperPage.wkAdPlace > img {
-	-webkit-transform: translate(20%, 90%) scale(.3);
+	position: absolute;
+	bottom: 80px;
+	right: 80px;
+
+	width: 100px;
+
+	opacity: 0;
+
+	-webkit-transition: all .3s;
 }
 
 .wkAdWrapper {
@@ -91,8 +95,7 @@ $slotZIndex: 4000;
 	left: 50%;
 	margin-left: -150px;
 	margin-top: -125px;
-	-webkit-transform: translateZ(0);
-	-webkit-transition: opacity .2s, top .2s;
+	-webkit-transition: opacity .3s, top .3s;
 	width: 300px;
 
 
@@ -100,5 +103,14 @@ $slotZIndex: 4000;
 		opacity: 1;
 		top: 50%;
 		height: 250px;
+
+		& ~ img {
+			bottom: 30px;
+			right: 30px;
+
+			width: 80px;
+
+			opacity: 1;
+		}
 	}
 }
