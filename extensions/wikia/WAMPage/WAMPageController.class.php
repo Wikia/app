@@ -39,6 +39,7 @@ class WAMPageController extends WikiaController
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
 		$this->tabs = $this->model->getTabs($currentTabIndex);
 		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
+		$this->filterParams = $this->getFilterParamsAsQueryString();
 
 		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
 
@@ -199,7 +200,8 @@ class WAMPageController extends WikiaController
 		$mainWAMPageUrl = $this->model->getWAMMainPageUrl();
 
 		if( $isFirstTab && !empty($mainWAMPageUrl) ) {
-			$this->wg->Out->redirect($mainWAMPageUrl, HTTP_REDIRECT_PERM);
+			$mainWAMPageUrlWithFilterParams = $mainWAMPageUrl.$this->getFilterParamAsQueryString();
+			$this->wg->Out->redirect($mainWAMPageUrlWithFilterParams, HTTP_REDIRECT_PERM);
 		}
 	}
 
@@ -219,5 +221,26 @@ class WAMPageController extends WikiaController
 
 	public function faq() {
 		$this->wamPageUrl = $this->model->getWAMMainPageUrl();
+	}
+	
+	/**
+	 * Return all currently available filter parameters as query string ready for concatenation.
+	 *
+	 * @return string
+	 */
+	private function getFilterParamsAsQueryString() {
+		// here is list of all params added by filter
+		$possibleParams = array( 'verticalId', 'date', 'langCode', 'searchPhrase' );
+		$filterParams = array();
+	
+		foreach ( $possibleParams as $key ) {
+			$value = $this->getVal($key, '');
+			
+			if ( mb_strlen($value) ) {
+				$filterParams[$key] = $value;
+			}
+		}
+	
+		return count($filterParams) ? '?'.http_build_query($filterParams) : '';
 	}
 }
