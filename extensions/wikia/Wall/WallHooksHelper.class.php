@@ -2147,4 +2147,21 @@ class WallHooksHelper {
 		echo '<li id="t-log">' . Linker::link(SpecialPage::getTitleFor('Log'), wfMsgHtml('log'), array(), array('user' => $user->getName())) . '</li>';
 		return true;
 	}
+
+	public static function onFormatForumLinks( &$info, $title, $ns ) {
+
+		// Handle message wall and forum board links
+		if ( isset($ns) && in_array($ns, array(NS_USER_WALL_MESSAGE, NS_WIKIA_FORUM_BOARD_THREAD)) ) {
+			// The method expects a DB result row. Set the data and then pass it as an object
+			$row['page_namespace'] = $ns;
+			$row['page_title'] = $title;
+			$opts = WallHelper::getWallTitleData( null, (object)$row );
+
+			// Set the human readable title and a link
+			$info['titleText'] = $opts['articleTitleTxt'];
+			$info['url'] = $opts['articleFullUrl'];
+		}
+
+		return true;
+	}
 }
