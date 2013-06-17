@@ -574,6 +574,10 @@ function chatMessage(client, socket, msg){
 		logger.critical(logMsg);
 		return;
 	}
+	if (!chatEntry.get('text')) {
+		// skip empty messages
+		return;
+	}
 	//chatEntry.set({ isInlineAlert: false}); // not needed, as we ingore those messages
     monitoring.incrEventCounter('chat_messages');
 	storeAndBroadcastChatEntry(client, socket, chatEntry);
