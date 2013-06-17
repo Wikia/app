@@ -8,7 +8,10 @@ window.addEventListener('load', function(){
 				positionfixed = window.Features.positionfixed,
 				fixed,
 				found,
-				ftr = window.document.getElementById('wkFtr');
+				ftr = window.document.getElementById('wkFtr'),
+				classes = ['over', 'fixed'];
+
+			!positionfixed && classes.push('jsfix');
 
 			/**
 			 * Moves the slot at the bottom of the viewport
@@ -37,13 +40,11 @@ window.addEventListener('load', function(){
 			function fix() {
 				if (found) {
 					fixed = true;
-					var classes = ['footer', 'over', 'fixed'];
 
 					//give the footer space to host the
 					//"floating" footer Ad
 					if (!positionfixed) {
 						window.addEventListener('scroll', moveSlot);
-						classes.push('jsfix');
 						moveSlot();
 					}
 
@@ -64,11 +65,9 @@ window.addEventListener('load', function(){
 				if (found) {
 					//reset fixed after moveSlot has been called
 					fixed = false;
-					var classes = ['over', 'fixed'];
 
 					if (!positionfixed) {
 						window.removeEventListener('scroll', moveSlot);
-						classes.push('jsfix');
 						moveSlot(ftr.offsetTop);
 					}
 
