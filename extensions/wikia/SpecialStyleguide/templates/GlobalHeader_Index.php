@@ -14,16 +14,17 @@
 					</li>
 					<li>
 						<ul id="GlobalNavigation" class="GlobalNavigation<?= $wg->GlobalHeaderVerticalColors ? ' vertical-colors' : '' ?>" data-hash="<?= $menuNodesHash ?>">
-							<? if(is_array($topNavMenuItems)): ?>
-								<? foreach($topNavMenuItems as $topNavIndex): ?>
+							<? if ( is_array($topNavMenuItems) ) : ?>
+								<? foreach ( $topNavMenuItems as $topNavIndex ) : ?>
 									<? $topNavItem = $menuNodes[$topNavIndex] ?>
-									<li class="topNav <?= str_replace(' ', '_', $topNavItem['text']) ?> <?php if( isset($topNavItem['specialAttr']) ) { echo str_replace(' ', '_', $topNavItem['specialAttr']); } ?>" data-index="<?= $topNavIndex?>">
+									<li class="topNav <?= str_replace(' ', '_', $topNavItem['text']) ?> <?php if (
+									isset($topNavItem['specialAttr']) ) { echo str_replace(' ', '_', $topNavItem['specialAttr']); } ?>" data-index="<?= $topNavIndex?>">
 										<a href="<?= $topNavItem['href'] ?>"><?= $topNavItem['text'] ?>
-											<? if(!empty($topNavItem['children'])): ?>
+											<? if ( !empty($topNavItem['children']) ) : ?>
 												<img src="<?= $wg->BlankImgUrl; ?>" class="chevron" height="0" width="0">
 											<? endif; ?>
 										</a>
-										<? if(!empty($topNavItem['children'])): ?>
+										<? if ( !empty($topNavItem['children']) ) : ?>
 											<ul class="subnav"></ul>
 										<? endif; ?>
 									</li>
