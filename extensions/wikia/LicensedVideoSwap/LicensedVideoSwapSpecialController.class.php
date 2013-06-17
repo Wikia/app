@@ -302,7 +302,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		}
 
 		// add to log
-		$reason = wfMessage( 'lvs-log-swap' )->text();
+		$reason = wfMessage( 'lvs-log-swap', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
 		$helper->addLog( $file->getTitle(), 'licensedvideoswap_swap', $reason );
 
 		// TODO: send request for tracking
@@ -317,7 +317,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->result = 'ok';
 
 		$fileUrl = $newFile->getTitle()->getLocalURL();
-		$this->msg = wfMessage( 'lvs-swap-video-success', $fileUrl )->text();
+		$undo = Xml::element( 'a', array( 'class' => 'undo-swap', 'href' => '' ), wfMessage( 'lvs-undo-swap' )->text() );
+		$this->msg = wfMessage( 'lvs-swap-video-success', $fileUrl, $undo )->text();
 	}
 
 	/**
@@ -372,13 +373,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		$this->result = 'ok';
 
-		// TODO: add url to undo as a parameter for 'lvs-keep-video-success'
-		$this->msg = wfMessage( 'lvs-keep-video-success' )->parse();
+		$undo = Xml::element( 'a', array( 'class' => 'undo-keep', 'href' => '' ), wfMessage( 'lvs-undo-keep' )->text() );
+		$this->msg = wfMessage( 'lvs-keep-video-success', $undo )->parse();
 	}
 
 	/**
 	 * restore video
 	 * @requestParam string videoTitle
+	 * @requestParam string newTitle
 	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer currentPage
 	 * @responseParam string result [ok/error]
@@ -422,7 +424,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		if ( empty( $pageStatus ) ) {
 			$this->html = '';
 			$this->result = 'error';
-			$this->msg = wfMessage( 'videohandler-error-invalid-file' )->text();
+			$this->msg = wfMessage( 'lvs-error-invalid-page-status' )->text();
 			return;
 		}
 
@@ -455,8 +457,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
 
 		// add log for undo swapping video only
-		if ( $status != LicensedVideoSwapHelper::STATUS_KEEP ) {
-			$reason = wfMessage( 'lvs-log-restore' )->text();
+		if ( $pageStatus != LicensedVideoSwapHelper::STATUS_KEEP ) {
+			$reason = wfMessage( 'lvs-log-restore', $file->getTitle()->getText() )->text();
 			$helper->addLog( $file->getTitle(), 'licensedvideoswap_restore', $reason );
 		}
 
