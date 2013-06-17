@@ -77,7 +77,7 @@ h1 {
 	text-transform: uppercase;
 }
 .styleguide-header {
-	// TODO: create a mixin for diagonal gradients
+	// TODO: create a mixin for diagonal gradients when it's gone be used in at least one additional place in the code.
 	background: $color-header; /* Old browsers */
 	background: -moz-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%, $color-header 46%); /* FF3.6+ */
 	background: -webkit-linear-gradient(30deg,  mix($color-header, #000, 30%) 0%,$color-header 46%); /* Chrome10+,Safari5.1+ */
