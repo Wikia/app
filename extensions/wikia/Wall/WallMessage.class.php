@@ -91,9 +91,12 @@ class WallMessage {
 			$userPageTitle = Title::newFromText($page, NS_USER_WALL);
 		}
 
+		// if message wall was just created, we should later use MASTER db when creating title object
+		$newMessageWall = false;
 		// create wall page by bot if not exist
 		if ( $userPageTitle instanceof Title && !$userPageTitle->exists() ) {
 			$userPageTitle = self::addMessageWall( $userPageTitle );
+			$newMessageWall = true;
 		}
 
 		if( empty($userPageTitle) ) {
@@ -159,7 +162,7 @@ class WallMessage {
 		//Build data for sweet url ? id#number_of_comment
 		//notify
 		if($notify) {
-			$class->sendNotificationAboutLastRev();
+			$class->sendNotificationAboutLastRev( $newMessageWall );
 		}
 
 		if($parent === false && $notifyEveryone) {
@@ -432,9 +435,20 @@ class WallMessage {
 		return $wallOwnerName;
 	}
 
-	public function getWallOwner() {
-		$parts = explode( '/', $this->getWallTitle()->getText() );
-		$wall_owner = User::newFromName(  $parts[0], false);
+	public function getWallOwner( $master = false ) {
+		$parts = explode( '/', $this->getWallTitle( $master )->getText() );
+		$userName = $parts[0];
+		// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
+		// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
+		// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
+		// always correct
+		$parts = explode( '/', $this->title->getText() );
+		if ( $parts[0] != $userName ) {
+			Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
+				' vs ' . $parts[0] . ') for ' . $this->getId(), true );
+		}
+
+		$wall_owner = User::newFromName( $userName, false );
 
 		if( empty($wall_owner) ) {
 			error_log('EMPTY_WALL_OWNER: (id)'. $this->getId());
@@ -448,11 +462,11 @@ class WallMessage {
 
 
 	//TODO: remove get wall title
-	public function getWallTitle(){
-		return $this->getArticleTitle();
+	public function getWallTitle( $master = false ){
+		return $this->getArticleTitle( $master );
 	}
 
-	public function getArticleTitle(){
+	public function getArticleTitle( $master = false ){
 		$commentsIndex = $this->getCommentsIndex();
 
 		if(empty($commentsIndex)) {
@@ -463,7 +477,20 @@ class WallMessage {
 
 		static $cache = array();
 		if(empty($cache[$pageId])) {
-			$cache[$pageId] = Title::newFromId($pageId);
+			if ( !$master ) {
+				$cache[$pageId] = Title::newFromId( $pageId );
+				// make sure this did not happen due to master-slave delay
+				// if so, this is a bug in the code, as $master flag should be set to true
+				// we want to log this and fix it
+				if( empty($cache[$pageId]) ) {
+					$cache[$pageId] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
+					if ( !empty( $cache[$pageId] ) ) {
+						Wikia::log( __METHOD__, false, "WALL_BUG - title does not exist in slave db yet - fix it!", true );
+					}
+				}
+			} else {
+				$cache[$pageId] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
+			}
 		}
 
 		if( empty($cache[$pageId]) ){
@@ -1375,11 +1402,11 @@ class WallMessage {
 		return $this->getArticleComment()->getData($master, $title);
 	}
 
-	public function sendNotificationAboutLastRev() {
+	public function sendNotificationAboutLastRev( $master = false ) {
 		$this->load();
 		$lastRevId = $this->getArticleComment()->mLastRevId;
 		if(!empty($lastRevId)){
-			$this->helper->sendNotification($lastRevId);
+			$this->helper->sendNotification( $lastRevId, RC_NEW, $master );
 		}
 	}
 

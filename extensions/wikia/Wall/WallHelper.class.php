@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @property mixed title
+ */
 class WallHelper {
 	//WA = wiki activity
 	const WA_WALL_COMMENTS_MAX_LEN = 150;
@@ -60,6 +63,7 @@ class WallHelper {
 	 * It sends request to UserProfilePage controller which should return user object generated
 	 * from passed title.
 	 *
+	 * @param bool $title
 	 * @return User
 	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
@@ -104,7 +108,6 @@ class WallHelper {
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function wikiActivityFilterMessageWall($title, &$res) {
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$item = array();
@@ -207,7 +210,6 @@ class WallHelper {
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
 	public function getWallComments($parentId = null) {
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$comments = array();
@@ -275,10 +277,10 @@ class WallHelper {
 	 *
 	 * @param array $comments an array with WallMessage instances
 	 *
+	 * @return array
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	private function getCommentsData($comments) {
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$timeNow = time();
@@ -377,7 +379,6 @@ class WallHelper {
 	public function getParsedText($rawtext, $title) {
 		global $wgParser, $wgOut;
 		global $wgEnableParserCache;
-		global $wgUser;
 		$wgEnableParserCache = false;
 
 		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions())->getText();
@@ -425,6 +426,7 @@ class WallHelper {
 	 *
 	 * @param integer $textId article's text id in text table
 	 *
+	 * @return string
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getDeletedArticleTitleTxt($textId) {
@@ -456,6 +458,7 @@ class WallHelper {
 	 *
 	 * TODO: remove it we don't need to operate on delete wall messages anymore
 	 *
+	 * @return string
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getTitleTxtFromMetadata($text) {
@@ -475,13 +478,12 @@ class WallHelper {
 		return $comments->getCountAll() > 0;
 	}
 
-	public function sendNotification($revOldId, $rcType = RC_NEW) {
+	public function sendNotification( $revOldId, $rcType = RC_NEW, $master = false ) {
 		$app = F::App();
 		$rev = Revision::newFromId($revOldId);
-		$notif = WallNotificationEntity::createFromRev($rev, $app->wg->CityId);
+		$notif = WallNotificationEntity::createFromRev( $rev, $app->wg->CityId, $master );
+		$wh = new WallHistory( $app->wg->CityId );
 
-		$wh = new WallHistory($app->wg->CityId);
-		
 		$wh->add($rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User);
 
 		if( $rcType == RC_NEW ) {
@@ -549,10 +551,9 @@ class WallHelper {
 	/**
 	 * @param null $rc
 	 * @param array $row [ page_title, page_namespace, rev_user_text?, page_is_new?, rev_parent_id? ]
-	 * @param bool $fullUrls
 	 * @return array|bool
 	 */
-	public static function getWallTitleData( $rc = null, $row = null, $fullUrls = false ) {
+	public static function getWallTitleData( $rc = null, $row = null ) {
 
 		wfProfileIn(__METHOD__);
 
@@ -597,9 +598,6 @@ class WallHelper {
 			}
 			$wmw->load();
 		}
-
-		$articleId = $wm->getId();
-		$wallOwnerName = $wm->getArticleTitle()->getText();
 
 		if(!empty($wmw)) {
 			$articleTitleTxt =  $wmw->getMetaTitle();
@@ -648,5 +646,4 @@ class WallHelper {
 
 		return $out;
 	}
-	
 }

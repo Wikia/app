@@ -185,12 +185,13 @@ WMBridge.prototype.ban = function(roomId, name, userAddress ,time, reason, key, 
 }
 
 
-WMBridge.prototype.giveChatMod = function(roomId, name, key, success, error) {
+WMBridge.prototype.giveChatMod = function(roomId, name, userAddress, key, success, error) {
 	clearAuthenticateCache(roomId, name);
 	var requestUrl = getUrl('giveChatMod', {
 		roomId: roomId,
 		userToPromote: urlencode(name),
-		key: key
+		key: key,
+		userIP: (userAddress && userAddress.address) || ''
 	});
 
 	requestMW('GET', roomId, {}, requestUrl, function(data){

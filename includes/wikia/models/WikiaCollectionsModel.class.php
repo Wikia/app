@@ -8,8 +8,13 @@ class WikiaCollectionsModel extends WikiaModel {
 	private function getCollectionsListCacheKey($langCode) {
 		return wfSharedMemcKey('collections_list', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
 	}
+	
 	private function getCollectionsListVisualizationCacheKey($langCode) {
 		return wfSharedMemcKey('collections_list_visualization', self::COLLECTIONS_MEMC_VERSION, $langCode, __METHOD__);
+	}
+	
+	private function getWikiInCollectionCacheKey($cityId) {
+		return $this->wf->SharedMemcKey('wiki_in_collection', self::COLLECTIONS_MEMC_VERSION, $cityId, __METHOD__);
 	}
 
 	private function clearCache($langCode) {
@@ -25,6 +30,10 @@ class WikiaCollectionsModel extends WikiaModel {
 			$title->purgeSquid();
 			Wikia::log(__METHOD__, '', 'Purged memcached for collection #' . $collection['id']);
 		}
+	}
+	
+	private function clearWikiCache($cityId) {
+		$this->wg->Memc->delete( $this->getWikiInCollectionCacheKey($cityId) );
 	}
 	
 	private function getListFromDb($langCode, $useMaster = false) {
@@ -186,6 +195,7 @@ class WikiaCollectionsModel extends WikiaModel {
 
 			$collection = $this->getById($collectionId);
 			$this->clearCache($collection['lang_code']);
+			$this->clearWikiCache($cityId);
 		}
 	}
 
@@ -209,6 +219,7 @@ class WikiaCollectionsModel extends WikiaModel {
 
 		$collection = $this->getById($collectionId);
 		$this->clearCache($collection['lang_code']);
+		$this->clearWikiCache($cityId);
 	}
 
 	/**
@@ -248,46 +259,6 @@ class WikiaCollectionsModel extends WikiaModel {
 		$dbType = (!$useMaster) ? DB_SLAVE : DB_MASTER;
 		$db = wfGetDB($dbType, array(), $this->wg->ExternalSharedDB);
 		return $db->selectField(self::COLLECTIONS_CV_TABLE, 'count(city_id)', ['collection_id' => $collectionId]);
-	}
-
-	/**
-	 * Get all wikis from all collections in selected language
-	 *
-	 * @param $langCode
-	 */
-	public function getCollectionWikisByLang($langCode) {
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-
-		$tables = [
-			'whc'	=> self::TABLE_NAME,
-			'whccv' => self::COLLECTIONS_CV_TABLE
-		];
-
-		$fields = [
-			'whccv.city_id',
-			'whccv.collection_id'
-		];
-
-		$conds = [
-			'whc.lang_code' => $langCode
-		];
-
-		$joinConds = array(
-			'whc' => array(
-				'left join',
-				'whc.id = whccv.collection_id'
-			)
-		);
-
-		$results = $db->select($tables, $fields, $conds, __METHOD__, [], $joinConds);
-
-		$out = [];
-
-		while( $row = $db->fetchRow($results) ) {
-			$out[] = $row;
-		}
-
-		return $out;
 	}
 
 	public function getCollectionsByCityId($cityId) {
@@ -337,6 +308,16 @@ class WikiaCollectionsModel extends WikiaModel {
 	}
 
 	public function isWikiInCollection($cityId) {
+		return WikiaDataAccess::cache(
+			$this->getWikiInCollectionCacheKey($cityId),
+			6 * 60 * 60,
+			function() use ($cityId) {
+				return $this->getWikiInCollectionFromDb($cityId);
+			}
+		);
+	}
+	
+	private function getWikiInCollectionFromDb($cityId) {
 		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$conds = [

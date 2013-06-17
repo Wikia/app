@@ -199,13 +199,17 @@ class MultiwikifinderPage {
 						}
 
 						if ( empty($page_url) || empty($page_server) ) {
-							$skip++; continue;
+							$skip++;
+							continue;
 						}
 					}
 					# check Wiki
 					if ( !empty($city_id) ) {
 						$oWikia = WikiFactory::getWikiByID($city_id) ;
-						if ( empty($oWikia) || empty($oWikia->city_public) ) continue;
+						if ( empty($oWikia) || empty($oWikia->city_public) ) {
+							$skip++;
+							continue;
+						}
 					}
 
 					if (empty($this->mShow)) {

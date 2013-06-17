@@ -162,6 +162,10 @@ class WallHooksHelper {
 	/**
 	 * @brief Hook to change tabs on user wall page
 	 *
+	 * @param $template
+	 * @param $contentActions
+	 * @return bool
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	static public function onSkinTemplateTabs($template, &$contentActions) {
@@ -259,6 +263,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Redirects any attempts of editing anything in NS_USER_WALL namespace
 	 *
+	 * @param $editPage
 	 * @return true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -272,6 +277,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Redirects any attempts of viewing history of any page in NS_USER_WALL namespace
 	 *
+	 * @param $article
 	 * @return true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -303,6 +309,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Overrides descrpiton of history page
 	 *
+	 * @param $description
 	 * @return true
 	 *
 	 * @author Jakub Olek
@@ -320,8 +327,12 @@ class WallHooksHelper {
 
 	/**
 	 * @brief add history to wall toolbar
-	 **/
-	static public function onBeforeToolbarMenu(&$items) {
+	 *
+	 * @param $items
+	 *
+	 * @return bool
+	 */
+	static public function onBeforeToolbarMenu( &$items ) {
 		$app = F::app();
 		if( empty( $app->wg->EnableWallExt ) ){
 			return true;
@@ -374,11 +385,10 @@ class WallHooksHelper {
 		return true;
 	}
 
-
-
 	/**
 	 * @brief Redirects any attempts of protecting any page in NS_USER_WALL namespace
 	 *
+	 * @param $article
 	 * @return true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -392,6 +402,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Redirects any attempts of unprotecting any page in NS_USER_WALL namespace
 	 *
+	 * @param $article
 	 * @return true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -405,6 +416,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Redirects any attempts of deleting any page in NS_USER_WALL namespace
 	 *
+	 * @param $article
 	 * @return true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -418,6 +430,8 @@ class WallHooksHelper {
 	/**
 	 * @brief Changes "My talk" to "Message wall" in the user links.
 	 *
+	 * @param $personalUrls
+	 * @param $title
 	 * @return true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -451,6 +465,9 @@ class WallHooksHelper {
 	/**
 	 * @brief Changes "My talk" to "Message wall" in Oasis (in the tabs on the User page).
 	 *
+	 * @param $tabs
+	 * @param $namespace
+	 * @param $userName
 	 * @return true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -482,6 +499,11 @@ class WallHooksHelper {
 	/**
 	 * @brief Remove Message Wall:: from back link
 	 *
+	 * @param $title
+	 * @param $ptext
+	 * @param $cssClass
+	 * @return bool
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	static public function onSkinSubPageSubtitleAfterTitle($title, &$ptext, &$cssClass) {
@@ -495,6 +517,11 @@ class WallHooksHelper {
 
 	/**
 	 * @brief Adds an action button on user talk archive page
+	 *
+	 * @param $response
+	 * @param $ns
+	 * @param $skin
+	 * @return bool
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
@@ -610,6 +637,8 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 *
+	 * @param null $subpage
+	 * @param null $user
 	 * @return Title | null
 	 */
 	static protected function getWallTitle($subpage = null, $user = null) {
@@ -619,10 +648,13 @@ class WallHooksHelper {
 	}
 
 	/**
-	 *  clean history after delete
-	 *
-	 **/
-
+	 * clean history after delete
+	 * @param $self
+	 * @param $user
+	 * @param $reason
+	 * @param $id
+	 * @return bool
+	 */
 	static public function onArticleDeleteComplete( &$self, &$user, $reason, $id) {
 		$title = $self->getTitle();
 		$app = F::app();
@@ -704,6 +736,9 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 *
+	 * @param $permErrors
+	 * @param $title
+	 * @param $removeArray
 	 * @return boolean true -- because it's a hook
 	 */
 	static public function onAfterEditPermissionErrors(&$permErrors, $title, $removeArray) {
@@ -877,11 +912,13 @@ class WallHooksHelper {
 	 * @desc This method doesn't let display diff history links
 	 *
 	 * @param ChangesList $list
-	 * @param string $articleLink
+	 * @param $diffLink
+	 * @param $historyLink
 	 * @param string $s
 	 * @param RecentChange $rc
 	 * @param boolean $unpatrolled
 	 *
+	 * @internal param string $articleLink
 	 * @return true because this is a hook
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
@@ -980,10 +1017,9 @@ class WallHooksHelper {
 	 * @desc This method creates comment to a recent change line
 	 *
 	 * @param ChangesList $list
-	 * @param string $comment
-	 * @param string $s
 	 * @param RecentChange $rc
-	 *
+	 * @param string $comment
+	 * @internal param string $s
 	 * @return true because this is a hook
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
@@ -1090,10 +1126,11 @@ class WallHooksHelper {
 	 *
 	 * @desc This method clears or leaves as it was the text which is being send as a content of <li /> elements in RC page
 	 *
-	 * @param ChangesList $list
+	 * @param $changelist
 	 * @param string $s
 	 * @param RecentChange $rc
 	 *
+	 * @internal param \ChangesList $list
 	 * @return true because this is a hook
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
@@ -1237,8 +1274,10 @@ class WallHooksHelper {
 	 * @param string $r
 	 * @param array $oRCCacheEntryArray an array of RCCacheEntry instances
 	 * @param boolean $changeRecentChangesHeader a flag saying Wikia's hook if we want to change header or not
+	 * @param $oTitle
 	 * @param string $headerTitle string which will be put as a header for RecentChanges block
 	 *
+	 * @return bool
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	static public function onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup($oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle) {
@@ -1273,10 +1312,9 @@ class WallHooksHelper {
 	/**
 	 * @brief get prefixed message name for recent changes, helpful for using wall on others namesapces
 	 *
-	 *
 	 * @param int $namespace
-	 * @param string $message
-	 *
+	 * @return string
+	 * @internal param string $message
 	 */
 
 	static protected function getMessagePrefix($namespace) {
@@ -1299,6 +1337,7 @@ class WallHooksHelper {
 	 * @param string $secureName
 	 * @param RecentChange $rc
 	 *
+	 * @return bool
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	static public function onChangesListMakeSecureName($changesList, &$secureName, $rc) {
@@ -1325,8 +1364,15 @@ class WallHooksHelper {
 	/**
 	 * @brief Changing all links to Message Wall to blue links
 	 *
-	 * @param Title $title
-	 * @param boolean $result
+	 * @param $skin
+	 * @param $target
+	 * @param $text
+	 * @param $customAttribs
+	 * @param $query
+	 * @param $options
+	 * @param $ret
+	 * @internal param \Title $title
+	 * @internal param bool $result
 	 *
 	 * @return true -- because it's a hook
 	 *
@@ -1357,6 +1403,12 @@ class WallHooksHelper {
 	/**
 	 * getUserPermissionsErrors -  control access to articles in the namespace NS_USER_WALL_MESSAGE_GREETING
 	 *
+	 * @param $title
+	 * @param $user
+	 * @param $action
+	 * @param $result
+	 * @return bool
+	 *
 	 * @author Tomek Odrobny
 	 *
 	 * @access public
@@ -1380,7 +1432,6 @@ class WallHooksHelper {
 		$result = null;
 		return true;
 	}
-
 
 	static public function onComposeCommonBodyMail($title, &$keys, &$body, $editor) {
 		return true;
@@ -1498,7 +1549,6 @@ class WallHooksHelper {
 		return true;
 	}
 
-
 	/**
 	 * @brief Adjusting Special:Contributions
 	 *
@@ -1527,8 +1577,7 @@ class WallHooksHelper {
 		$page->resetArticleId($row->rev_page);
 		$skin = $app->wg->User->getSkin();
 
-		$wfMsgOptsBase = static::getMessageOptions(null, $row, true);
-
+		$wfMsgOptsBase = self::getMessageOptions(null, $row);
 
 		$isThread = $wfMsgOptsBase['isThread'];
 		$isNew = $wfMsgOptsBase['isNew'];
@@ -1604,8 +1653,6 @@ class WallHooksHelper {
 			$ret .= ' ' . Xml::openElement('span', array('class' => 'comment')) . $msg . Xml::closeElement('span');
 		}
 
-
-
 		wfProfileOut(__METHOD__);
 
 		return true;
@@ -1618,12 +1665,11 @@ class WallHooksHelper {
 	 *
 	 * @param RecentChanges $rc
 	 * @param Object $row
-	 * @param Title $objTitle
 	 *
 	 * @return Array
 	 */
-	static public  function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
-		return WallHelper::getWallTitleData( $rc, $row, $fullUrls);
+	static public function getMessageOptions($rc = null, $row = null) {
+		return WallHelper::getWallTitleData( $rc, $row );
 	}
 
 
@@ -1631,7 +1677,7 @@ class WallHooksHelper {
 
 		if ( $element->page_namespace == NS_USER_WALL_MESSAGE ) {
 
-			$titleData = WallHelper::getWallTitleData(null, $element, true);
+			$titleData = WallHelper::getWallTitleData( null, $element );
 			$a = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ';
 			$link = wfMsg( 'wall-recentchanges-thread-group', array( $a, $titleData['wallPageFullUrl'], $titleData['wallPageName'] ) );
 		}
@@ -1652,11 +1698,10 @@ class WallHooksHelper {
 
 		if( isset($row->page_namespace) && in_array( intval($row->page_namespace), array( NS_USER_WALL_MESSAGE, NS_WIKIA_FORUM_BOARD_THREAD )) ) {
 			$defaultRendering = false;
-			$title = Title::newFromText($row->page_title, $row->page_namespace);
 
 			$app = F::app();
 			$wlhTitle = SpecialPage::getTitleFor( 'Whatlinkshere' );
-			$wfMsgOptsBase = static::getMessageOptions(null, $row, true);
+			$wfMsgOptsBase = self::getMessageOptions(null, $row);
 
 			$wfMsgOpts = array(
 				$wfMsgOptsBase['articleFullUrl'],
@@ -1965,8 +2010,7 @@ class WallHooksHelper {
 	/**
 	 * create needed tables
 	 */
-
-	static public function onAfterToggleFeature($name, $val) {
+	public static function onAfterToggleFeature($name, $val) {
 		global $IP;
 		if($name == 'wgEnableWallExt' || $name == 'wgEnableForumExt') {
 			$db = wfGetDB(DB_MASTER);
@@ -2018,9 +2062,10 @@ class WallHooksHelper {
 	/**
 	 * HAWelcome
 	 *
-	 * @param String $$prefixedText
+	 * @param $prefixedText
 	 * @param Title $title
 	 *
+	 * @internal param $String $$prefixedText
 	 * @access public
 	 * @author Tomek
 	 *

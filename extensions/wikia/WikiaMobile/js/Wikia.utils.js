@@ -131,6 +131,26 @@
 		return target;
 	};
 
+	/**
+	 * @param {HTMLElement} el
+	 * @param {Array} cls
+	 */
+	Wikia.addClass = function(el, cls) {
+		el.className += ((el.className !== '') ? ' ' : '') + cls.join(' ');
+	};
+
+	/**
+	 * @param {HTMLElement} el
+	 * @param {Array} cls
+	 */
+	Wikia.removeClass = function(el, cls) {
+		el.className = el.className
+			.replace(new RegExp('\\b(?:' + cls.join('|') + ')\\b', 'g'), '')
+			//trim is supported starting from IE9
+			//and that's the least version on WP7
+			.trim();
+	};
+
 	//expose it to the world
 	//$ is forbackward compatability
 	w.Wikia = Wikia;
