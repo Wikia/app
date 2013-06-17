@@ -48,11 +48,11 @@ font-family: monospace;\
 background-color: #f2f2f2;\
 }\
 .ace-geshi .ace_cursor {\
-border-left: 2px solid black;\
+border-left: 2px solid;\
 }\
 .ace-geshi .ace_overwrite-cursors .ace_cursor {\
 border-left: 0px;\
-border-bottom: 1px solid black;\
+border-bottom: 1px solid;\
 }\
 .ace-geshi .ace_invalid {\
 background-color: rgb(153, 0, 0);\
