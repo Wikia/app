@@ -186,10 +186,13 @@ class UpgradeYoutube extends Maintenance {
 	 * @param $editors - An associative array of editor to youtube tag
 	 */
 	public function convertTags ( Article $page, $editors ) {
+		global $wgCityId;
 
 		foreach ( $editors as $ytTag => $userText ) {
 			echo "\tAttributing YT tag ".trim($ytTag)." to '$userText'\n";
-			$this->upgradeTag( $page, $ytTag, $userText );
+			if ( ! $this->upgradeTag( $page, $ytTag, $userText ) ) {
+				echo "NoConvert: $wgCityId,".$page->getID()."\n";
+			}
 		}
 	}
 
