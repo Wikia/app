@@ -407,7 +407,7 @@ describe('AdLogicPageLevelParams', function(){
 			},
 			windowMockCOPPA = {
 				location: {hostname: 'an.example.org'},
-				wgDisableKruxKV: true
+				wgWikiDirectedAtChildren: true
 			},
 			adLogicShortPageMock,
 			abTestMock,
