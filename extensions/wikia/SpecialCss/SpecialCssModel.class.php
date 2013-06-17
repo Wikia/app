@@ -245,7 +245,6 @@ class SpecialCssModel extends WikiaModel {
 	 * @return mixed
 	 */
 	private function getParsedText( $text, $title ) {
-		// should we use here $wgParser or ParserPool?
 		$output = $this->wg->Parser->parse( $text, $title, new ParserOptions() ); /** @var ParserOutput $output */
 		return $output->getText();
 	}
