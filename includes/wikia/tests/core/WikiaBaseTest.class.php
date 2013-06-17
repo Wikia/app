@@ -227,7 +227,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			throw new Exception("You are using deprecated version of mockGlobalFunction");
 		}
 
-		list( $namespace, $baseName ) = $this->parseGlobalFunctionName( $functionName );
+		list( $namespace, $baseName ) = WikiaMockProxy::parseGlobalFunctionName( $functionName );
 
 		$mock = $this->getGlobalFunctionMock( $functionName );
 		$expect = $mock->expects( $callsNum !== null ? $this->exactly( $callsNum ) : $this->any() )
@@ -279,7 +279,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @return PHPUnit_Framework_MockObject_MockObject Mock
 	 */
 	protected function getGlobalFunctionMock( $functionName ) {
-		list($namespace,$baseName) = $this->parseGlobalFunctionName( $functionName );
+		list($namespace,$baseName) = WikiaMockProxy::parseGlobalFunctionName( $functionName );
 		$mock = $this->getMock( 'stdClass', array( $baseName ) );
 		$this->getMockProxy()->getGlobalFunction($functionName)
 			->willCall(array($mock,$baseName));
@@ -363,6 +363,13 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function callOriginalStaticMethod( $className, $functionName, $args ) {
 		return $this->getMockProxy()->callOriginalStaticMethod( $className, $functionName, $args );
+	}
+
+	/**
+	 * @return WikiaMockProxyInvocation
+	 */
+	protected function getCurrentInvocation() {
+		return WikiaMockProxyAction::currentInvocation();
 	}
 
 	/**

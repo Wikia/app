@@ -21,9 +21,17 @@ class GlobalFileTest extends WikiaBaseTest {
 	 * @dataProvider newFromTextProvider
 	 */
 	public function testNewFromText($row, $cityId, $path, $exists, $width, $height, $crop, $mime) {
-		$this->mockGlobalFunction('wfGetDB', $this->mockClassWithMethods('Database', [
-			'selectRow' => $row
-		]));
+		$mockSelectRow = $this->getMethodMock( 'DatabaseMysql', 'selectRow' );
+		$mockSelectRow
+			->expects( $this->any() )
+			->method( 'selectRow' )
+			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ($row) {
+				if ( $fname == 'GlobalFile::loadData' ) {
+					return $row;
+				} else { // don't mess with WikiFactory accessing database
+					return $this->getCurrentInvocation()->callOriginal();
+				}
+			}));
 
 		$file = GlobalFile::newFromText('Gzik.jpg', $cityId);
 		$title = $file->getTitle();

@@ -42,7 +42,12 @@ class WikiaMockProxy {
 	 * @return WikiaMockProxyAction
 	 */
 	public function getClassConstructor( $className ) {
-		return $this->get( self::CLASS_CONSTRUCTOR, $className );
+		return $this->get( array(
+			'type' => self::CLASS_CONSTRUCTOR,
+			'className' => $className,
+		), array(
+			'functionName' => '__construct',
+		) );
 	}
 
 	/**
@@ -53,7 +58,11 @@ class WikiaMockProxy {
 	 * @return WikiaMockProxyAction
 	 */
 	public function getStaticMethod( $className, $methodName ) {
-		return $this->get( self::STATIC_METHOD, $className, $methodName );
+		return $this->get( array(
+			'type' => self::STATIC_METHOD,
+			'className' => $className,
+			'methodName' => $methodName
+		) );
 	}
 
 	/**
@@ -64,7 +73,11 @@ class WikiaMockProxy {
 	 * @return WikiaMockProxyAction
 	 */
 	public function getMethod( $className, $methodName ) {
-		return $this->get( self::DYNAMIC_METHOD, $className, $methodName );
+		return $this->get( array(
+			'type' => self::DYNAMIC_METHOD,
+			'className' => $className,
+			'functionName' => $methodName
+		) );
 	}
 
 	/**
@@ -74,7 +87,10 @@ class WikiaMockProxy {
 	 * @return WikiaMockProxyAction
 	 */
 	public function getGlobalFunction( $functionName ) {
-		return $this->get( self::GLOBAL_FUNCTION, $functionName );
+		return $this->get( array(
+			'type' => self::GLOBAL_FUNCTION,
+			'functionName' => $functionName
+		) );
 	}
 
 	/**
@@ -84,13 +100,15 @@ class WikiaMockProxy {
 	 * @param $params mixed Event params
 	 * @return WikiaMockProxyAction
 	 */
-	protected function get( $type, $params = null ) {
-		$id = implode('|',func_get_args());
+	protected function get( $baseData, $extraData = array() ) {
+		$type = $baseData['type'];
+		$id = implode('|',$baseData);
 
 		if ( empty( $this->mocks[$type][$id] ) ) {
-			$action = new WikiaMockProxyAction($type,$id,$this);
+			$action = new WikiaMockProxyAction($type,$id,$this,
+				array_merge( $baseData, $extraData ));
 			// no need to update state of this action here because all actions start as inactive
-			// action send notification when it's being configured
+			// action sends notification when it's being configured
 			$this->mocks[$type][$id] = array(
 				self::PROP_STATE => false,
 				self::PROP_ACTION => $action,
@@ -138,7 +156,7 @@ class WikiaMockProxy {
 					is_callable( "{$className}::{$methodName}" );
 					$flags = RUNKIT_ACC_PUBLIC | ( $type == self::STATIC_METHOD ? RUNKIT_ACC_STATIC : 0);
 					runkit_method_rename( $className, $methodName, $savedName);  // save the original method
-					runkit_method_add($className, $methodName, '', $this->getExecuteCallCode($type,$id), $flags );
+					runkit_method_add($className, $methodName, '', $this->getExecuteCallCode($type,$id, $type === self::DYNAMIC_METHOD), $flags );
 				} else { // diable
 					runkit_method_remove($className, $methodName);  // remove the redefined instance
 					runkit_method_rename($className, $savedName, $methodName); // restore the original
@@ -146,7 +164,7 @@ class WikiaMockProxy {
 				break;
 			case self::GLOBAL_FUNCTION:
 				$functionName = $parts[1];
-				list($namespace,$baseName) = $this->parseGlobalFunctionName($functionName);
+				list($namespace,$baseName) = self::parseGlobalFunctionName($functionName);
 				$functionName = $namespace . $baseName;
 				$savedName = $namespace . self::SAVED_PREFIX . $baseName;
 				if ( $state ) { // enable
@@ -162,15 +180,16 @@ class WikiaMockProxy {
 		}
 	}
 
-	protected function getExecuteCallCode( $type, $id ) {
+	protected function getExecuteCallCode( $type, $id, $passThis = false ) {
 		$replace = array( '\'' => '\\\'', '\\' => '\\\\' );
 		$type = strtr($type,$replace);
 		$id = strtr($id,$replace);
 
-		return "return WikiaMockProxy::\$instance->execute('{$type}','{$id}',func_get_args());";
+		$passThisCode = $passThis ? ',$this' : '';
+		return "return WikiaMockProxy::\$instance->execute('{$type}','{$id}',func_get_args(){$passThisCode});";
 	}
 
-	private function parseGlobalFunctionName( $functionName ) {
+	public static function parseGlobalFunctionName( $functionName ) {
 		$last = strrpos($functionName,'\\');
 		if ( $last === false ) {
 			return [ '', $functionName ];
@@ -189,33 +208,40 @@ class WikiaMockProxy {
 	 * @return mixed Return value
 	 * @throws Exception
 	 */
-	public function execute( $type, $id, $args ) {
+	public function execute( $type, $id, $args, $context = null ) {
 		if ( !isset($this->mocks[$type][$id]) ) {
 			throw new Exception("WikiaMockProxy did not find action definition for: \"{$type}/{$id}\"");
 		}
 
 		/** @var $action WikiaMockProxyAction */
 		$action = $this->mocks[$type][$id][self::PROP_ACTION];
-		return $action->execute($args);
+		return $action->execute($args,$context);
 	}
 
 	public function callOriginalGlobalFunction( $functionName, $args ) {
-		list($namespace,$baseName) = $this->parseGlobalFunctionName($functionName);
-		$savedName = $namespace . self::SAVED_PREFIX . $baseName;
-		$functionToCall = function_exists( $savedName ) ? $savedName : $functionName;
-		return call_user_func_array( $functionToCall, $args );
+		$invocationOptions = array(
+			'functionName' => $functionName,
+			'arguments' => $args,
+		);
+		return (new WikiaMockProxyInvocation($invocationOptions))->callOriginal();
 	}
 
 	public function callOriginalMethod( $object, $functionName, $args ) {
-		$savedName = self::SAVED_PREFIX . $functionName;
-		$functionToCall = array( $object, method_exists( $object, $savedName ) ? $savedName : $functionName );
-		return call_user_func_array( $functionToCall, $args );
+		$invocationOptions = array(
+			'object' => $object,
+			'functionName' => $functionName,
+			'arguments' => $args,
+		);
+		return (new WikiaMockProxyInvocation($invocationOptions))->callOriginal();
 	}
 
 	public function callOriginalStaticMethod( $className, $functionName, $args ) {
-		$savedName = self::SAVED_PREFIX . $functionName;
-		$functionToCall = array( $className, method_exists( $className, $savedName ) ? $savedName : $functionName );
-		return call_user_func_array( $functionToCall, $args );
+		$invocationOptions = array(
+			'className' => $className,
+			'functionName' => $functionName,
+			'arguments' => $args,
+		);
+		return (new WikiaMockProxyInvocation($invocationOptions))->callOriginal();
 	}
 
 	public function enable() {

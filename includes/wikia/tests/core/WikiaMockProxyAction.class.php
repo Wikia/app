@@ -20,6 +20,8 @@ class WikiaMockProxyAction {
 	protected $action = self::ACTION_DISABLED;
 	protected $data;
 
+	protected $invocationOptions = array();
+
 	/**
 	 * Create a new Action object
 	 *
@@ -27,10 +29,11 @@ class WikiaMockProxyAction {
 	 * @param $eventId string Event ID
 	 * @param $parent object Parent object that receives notifications when the action is enabled/disabled
 	 */
-	public function __construct( $eventType, $eventId, $parent ) {
+	public function __construct( $eventType, $eventId, $parent, $invocationOptions = array() ) {
 		$this->eventType = $eventType;
 		$this->eventId = $eventId;
 		$this->parent = $parent;
+		$this->invocationOptions = $invocationOptions;
 	}
 
 	/**
@@ -88,17 +91,74 @@ class WikiaMockProxyAction {
 	 * @return mixed Return value
 	 * @throws Exception
 	 */
-	public function execute( $args ) {
+	public function execute( $args, $context = null ) {
 		switch ($this->action) {
 			case self::ACTION_RETURN:
 				return $this->data;
 				break;
 			case self::ACTION_CALL:
-				return call_user_func_array($this->data,$args);
+				$invocationOptions = $this->invocationOptions;
+				$invocationOptions['arguments'] = $args;
+				if ( $context !== null ) {
+					$invocationOptions['object'] = $context;
+				}
+				$invocation = new WikiaMockProxyInvocation($invocationOptions);
+				self::pushInvocation($invocation);
+				$result = call_user_func_array($this->data,$args);
+				self::popInvocation($invocation);
+				return $result;
 				break;
 			default:
 				throw new Exception("WikiaMockProxyAction::execute: called under invalid circumstances");
 		}
+	}
+
+	private static $invocationStack = array();
+
+	private static function getRandomString( $length ) {
+		$str = '';
+		for( $i = 0; $i < $length; $i++ ) {
+			$char = rand( 32, 127 );
+			$str .= chr( $char );
+		}
+		return $str;
+	}
+
+	private static function pushInvocation( WikiaMockProxyInvocation $invocation ) {
+		// sanity check
+		if ( !empty( $invocation->uuid ) ) {
+			Wikia::log(__METHOD__, false, "could not push invocation: " . (string)$invocation );
+			throw new Exception("Could not push invocation which is already in the stack");
+		}
+		$invocation->uuid = array(
+			'index' => count(self::$invocationStack),
+			'uuid' => self::getRandomString(16),
+		);
+		array_push(self::$invocationStack,$invocation);
+	}
+
+	private static function popInvocation( WikiaMockProxyInvocation $invocation ) {
+		if ( empty( $invocation->uuid) ) {
+			return;
+		}
+		$stackInfo = $invocation->uuid;
+		$index = $stackInfo['index'];
+		// no match, something stupid happened
+		if ( count(self::$invocationStack) <= $index || $stackInfo !== $invocation->uuid ) {
+			// todo: log it
+			Wikia::log(__METHOD__, false, "could not pop invocation: " . (string)$invocation );
+			return;
+		}
+		self::$invocationStack = array_slice(self::$invocationStack,0,$index);
+	}
+
+	/**
+	 * Return a currently executed mock invocation that's handled by WikiaMockProxy
+	 *
+	 * @return WikiaMockProxyInvocation
+	 */
+	public static function currentInvocation() {
+		return end(self::$invocationStack);
 	}
 
 }

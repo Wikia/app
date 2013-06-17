@@ -1831,10 +1831,9 @@ class MediaWikiServiceTest extends BaseTest
 			->will ( $this->returnValue( 'pl' ) )
 		;
 
-		$this->proxyClass( 'Wikia\Search\Match\Wiki', $mockMatch );
-		$this->mockApp();
-		$this->assertInstanceOf(
-			$service->getWikiMatchByHost( 'foo' )->_mockClassName,
+		$this->mockClass( 'Wikia\Search\Match\Wiki', $mockMatch );
+		$this->assertEquals(
+			$service->getWikiMatchByHost( 'foo' ),
 			$mockMatch
 		);
 	}
