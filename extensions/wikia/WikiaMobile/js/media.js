@@ -356,14 +356,16 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		touched = false;
 		ev.preventDefault();
 
-		if(zoomed){
-			resetZoom();
-		}else{
-			currentZoom = 2;
-			currentImageStyle[transform] = 'scale(2)';
-		}
+		if(!~ev.target.className.indexOf('chnImg')) {
+			if(zoomed){
+				resetZoom();
+			}else{
+				currentZoom = 2;
+				currentImageStyle[transform] = 'scale(2)';
+			}
 
-		onZoom();
+			onZoom();
+		}
 	}
 
 	function onZoom(state){
