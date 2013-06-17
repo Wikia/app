@@ -114,7 +114,7 @@ var ChatView = Backbone.View.extend({
 		if(this.model.get('text') == ''){
 			var params = this.model.get('msgParams'),
 				msgId = this.model.get('wfMsg');
-			if ((!params) || (!msgId)) {
+			if (!params || !msgId) {
 				return this;
 			}
 			$().log("Found an i18n message with msg name " + msgId + " and params: " + params);

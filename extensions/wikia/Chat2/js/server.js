@@ -574,7 +574,7 @@ function chatMessage(client, socket, msg){
 		logger.critical(logMsg);
 		return;
 	}
-	if (!chatEntry.get('text')) {
+	if (typeof(text) !== "string" || text.length === 0) {
 		// skip empty messages
 		return;
 	}
