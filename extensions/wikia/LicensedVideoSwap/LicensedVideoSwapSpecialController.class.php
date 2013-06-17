@@ -18,13 +18,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		parent::__construct( 'LicensedVideoSwap', '', false );
 	}
 
-	public function init() {
-		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/css/LicensedVideoSwap.scss' );
-		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/LicensedVideoSwap.js' );
-		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' );
-		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Dropdown.js' );
-	}
-
 	/**
 	 * LicensedVideoSwap page
 	 *
@@ -37,6 +30,13 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videoList
 	 */
 	public function index() {
+
+		// Add assets
+		// TODO: move this to Assets Manager once we release this
+		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/css/LicensedVideoSwap.scss' );
+		$this->response->addAsset( 'extensions/wikia/LicensedVideoSwap/js/LicensedVideoSwap.js' );
+		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' );
+		$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Dropdown.js' );
 
 		// Setup messages for JS
 		// TODO: once 'back to roots' branch is merged, use JSMessages::enqueuePackage
