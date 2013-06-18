@@ -39,12 +39,12 @@ class WikiaTask {
 
 		echo "Wiki $wiki_id\n";
 
-		if ( $app->wf->ReadOnly() ) {
+		if ( wfReadOnly() ) {
 			die( "Error: In read only mode.\n" );
 		}
 
 		try {
-			$db = $app->wf->GetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE );
 		} catch ( Exception $e ) {
 			die( "Error: Could not connect to database: ".$e->getMessage()."\n" );
 		}

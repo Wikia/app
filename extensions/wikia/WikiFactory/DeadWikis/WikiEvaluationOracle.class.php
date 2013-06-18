@@ -32,7 +32,7 @@ class WikiEvaluationOracle {
 
 			$condsCount++;
 			$refValue = $condition[$cond];
-			$rawRefValue = $refValue;
+			//$rawRefValue = $refValue;
 			if ($type == 'datetime' && is_string($refValue)) {
 				$refValue = strtotime($refValue);
 			}

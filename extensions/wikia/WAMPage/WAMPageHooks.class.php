@@ -1,31 +1,26 @@
 <?php
 class WAMPageHooks {
-	protected $WAMPageConfig = null;
-	protected $EnableWAMPageExt = null;
-	protected $app = null;
+	static protected $WAMPageConfig = null;
+	static protected $EnableWAMPageExt = null;
+	static protected $app = null;
 
 	/**
 	 * @var WAMPageModel $model
 	 */
-	protected $model = null;
+	static protected $model = null;
 
-	protected function init() {
+	static protected $initialized = false;
+
+	static protected function init() {
 		wfProfileIn(__METHOD__);
-		
-		if( is_null($this->app) ) {
-			$this->app = F::app();
-		}
-		
-		if( is_null($this->EnableWAMPageExt) ) {
-			$this->EnableWAMPageExt = $this->app->wg->EnableWAMPageExt;
-		}
-		
-		if( is_null($this->model) ) {
-			$this->model = new WAMPageModel();
-		}
 
-		if( is_null($this->WAMPageConfig) ) {
-			$this->WAMPageConfig = $this->model->getConfig();
+		if( self::$initialized == false ) {
+			self::$app = F::app();
+			self::$EnableWAMPageExt = self::$app->wg->EnableWAMPageExt;
+			self::$model = new WAMPageModel();
+			self::$WAMPageConfig = self::$model->getConfig();
+
+			self::$initialized = true;
 		}
 		
 		wfProfileOut(__METHOD__);
@@ -37,15 +32,15 @@ class WAMPageHooks {
 	 *
 	 * @return true because it's a hook
 	 */
-	public function onArticleFromTitle(&$title, &$article) {
+	static public function onArticleFromTitle(&$title, &$article) {
 		wfProfileIn(__METHOD__);
-		$this->init();
+		self::init();
 
-		if( $this->model->isWAMPage($title) ) {
-			$this->app->wg->SuppressPageHeader = true;
-			$this->app->wg->SuppressWikiHeader = true;
-			$this->app->wg->SuppressRail = true;
-			$this->app->wg->SuppressFooter = true;
+		if( self::$model->isWAMPage($title) ) {
+			self::$app->wg->SuppressPageHeader = true;
+			self::$app->wg->SuppressWikiHeader = true;
+			self::$app->wg->SuppressRail = true;
+			self::$app->wg->SuppressFooter = true;
 			$article = new WAMPageArticle($title);
 		}
 
@@ -53,14 +48,14 @@ class WAMPageHooks {
 		return true;
 	}
 
-	public function onMakeGlobalVariablesScript(&$vars) {
+	static public function onMakeGlobalVariablesScript(&$vars) {
 		wfProfileIn(__METHOD__);
 		
-		$this->init();
+		self::init();
 		
-		if( !empty($this->EnableWAMPageExt) ) {
-			$vars['wgWAMPageName'] = $this->WAMPageConfig['pageName'];
-			$vars['wgWAMFAQPageName'] = $this->WAMPageConfig['faqPageName'];
+		if( !empty(self::$EnableWAMPageExt) ) {
+			$vars['wgWAMPageName'] = self::$WAMPageConfig['pageName'];
+			$vars['wgWAMFAQPageName'] = self::$WAMPageConfig['faqPageName'];
 		}
 
 		wfProfileOut(__METHOD__);
@@ -80,11 +75,11 @@ class WAMPageHooks {
 	 * 
 	 * @return bool
 	 */
-	public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
+	static public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
 		wfProfileIn(__METHOD__);
-		$this->init();
+		self::init();
 		
-		if( $this->model->isWAMPage($target) ) {
+		if( self::$model->isWAMPage($target) ) {
 			$index = array_search('broken', $options);
 			unset($options[$index]);
 			$options[] = 'known';
@@ -101,13 +96,13 @@ class WAMPageHooks {
 	 *
 	 * @return bool
 	 */
-	public function onWikiaCanonicalHref(&$url) {
+	static public function onWikiaCanonicalHref(&$url) {
 		wfProfileIn(__METHOD__);
-		$this->init();
+		self::init();
 		
-		$title = $this->app->wg->Title;
-		if( $title instanceof Title && $this->model->isWAMPage($title) && !$this->model->isWAMFAQPage($title) ) {
-			$url = $this->model->getWAMMainPageUrl();
+		$title = self::$app->wg->Title;
+		if( $title instanceof Title && self::$model->isWAMPage($title) && !self::$model->isWAMFAQPage($title) ) {
+			$url = self::$model->getWAMMainPageUrl();
 		}
 
 		wfProfileOut(__METHOD__);

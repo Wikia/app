@@ -65,7 +65,7 @@ class Wall extends WikiaModel {
 	public function getDescription ( $bParse = true ) {
 		/** @var $title Title */
 		$title = $this->getTitle();
-		$memcKey = $this->wf->memcKey(__METHOD__,$title->getArticleID(),$title->getTouchedCached());
+		$memcKey = wfmemcKey(__METHOD__,$title->getArticleID(),$title->getTouchedCached());
 		$res = $this->wg->memc->get($memcKey);
 		if ( !is_string($res) ) {
 			$oArticle = new Article( $this->getTitle() );
@@ -104,7 +104,7 @@ class Wall extends WikiaModel {
 
 	public function getUrl() {
 		wfProfileIn(__METHOD__);
-		$title = F::build( 'title', array( $this->getUser()->getName(), NS_USER_WALL ), 'newFromText' );
+		$title = Title::newFromText( $this->getUser()->getName(), NS_USER_WALL );
 		wfProfileOut(__METHOD__);
 		return $title->getFullUrl();
 	}

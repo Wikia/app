@@ -39,6 +39,6 @@
 <input type="hidden" name="confirm" value="1" />
 
 <input type="submit" value="<?= wfMsg( 'userrollback-form-confirm' ) ?>" />
-<input type="submit" class="secondary" name="back" value="<?= wfmsg( 'userrollback-form-back' ) ?>" />
+<input type="submit" class="secondary" name="back" value="<?= wfMsg( 'userrollback-form-back' ) ?>" />
 <?php } ?>
 </form>

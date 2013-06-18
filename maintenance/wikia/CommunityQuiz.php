@@ -81,7 +81,7 @@ class CommunityQuiz {
             }
 
             // Connect to the wiki's DB
-            $tmpDbObj = F::app()->wf->getDb( DB_SLAVE, array(), $oRow->city_dbname );
+            $tmpDbObj = wfGetDB( DB_SLAVE, array(), $oRow->city_dbname );
             // Revisions made by the founder.
             $revisions = $tmpDbObj->selectRow(
                     'revision',
@@ -189,6 +189,6 @@ if ( !isset( $options['date'] ) ) {
     $date = $options['date'];
 }
 
-$d = new CommunityQuiz( F::app()->wf->getDb( DB_SLAVE, array(), 'wikicities' ), $date );
+$d = new CommunityQuiz( wfGetDB( DB_SLAVE, array(), 'wikicities' ), $date );
 $d->execute();
 exit( 0 );

@@ -10,7 +10,6 @@ class WikiaMobileService extends WikiaService {
 	//const CACHE_MANIFEST_PATH = 'wikia.php?controller=WikiaMobileAppCache&method=serveManifest&format=html';
 	const LYRICSWIKI_ID = 43339;
 
-	static protected $initialized = false;
 	/**
 	* @var $skin WikiaSkin
 	*/
@@ -21,18 +20,8 @@ class WikiaMobileService extends WikiaService {
 	 */
 	private $templateObject;
 
-	function __construct(){
-		parent::__construct();
-
-		if ( !self::$initialized ) {
-			//singleton
-			F::setInstance( __CLASS__, $this );
-			self::$initialized = true;
-		}
-	}
-
 	function init(){
-		$this->wf->LoadExtensionMessages( 'WikiaMobile' );
+		wfLoadExtensionMessages( 'WikiaMobile' );
 		$this->skin = RequestContext::getMain()->getSkin();
 		$this->templateObject = $this->app->getSkinTemplateObj();
 	}
@@ -48,13 +37,13 @@ class WikiaMobileService extends WikiaService {
 		$jsHeadFiles = '';
 		$styles = null;
 		$scripts = null;
-		$assetsManager = F::build( 'AssetsManager', [], 'getInstance' );
+		$assetsManager = AssetsManager::getInstance();
 		$floatingAd = '';
 		//$topLeaderBoardAd = '';
 		//$inContentAd = '';
 		$globalVariables = [];
 
-		F::build( 'JSMessages' )->enqueuePackage( 'WkMbl', JSMessages::INLINE );
+		JSMessages::enqueuePackage( 'WkMbl', JSMessages::INLINE );
 
 		$jsBodyPackages[] = 'wikiamobile_js_body_full';
 		$scssPackages[] = 'wikiamobile_scss';

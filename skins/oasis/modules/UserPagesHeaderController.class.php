@@ -125,7 +125,7 @@ class UserPagesHeaderController extends WikiaController {
 					);
 		}
 
-		$this->wf->RunHooks( 'UserPagesHeaderModuleAfterGetTabs', array(&$tabs, $namespace, $userName) );
+		wfRunHooks( 'UserPagesHeaderModuleAfterGetTabs', array(&$tabs, $namespace, $userName) );
 
 		wfProfileOut(__METHOD__);
 		return $tabs;
@@ -436,7 +436,7 @@ class UserPagesHeaderController extends WikiaController {
 			$this->userBlogPage = AvatarService::getUrl( $this->userName, NS_BLOG_ARTICLE );
 
 			// user blog page message
-			$this->userBlogPageMessage = $this->wf->Message( 'user-blog-url-link', $this->userName )->inContentLanguage()->parse();
+			$this->userBlogPageMessage = wfMessage( 'user-blog-url-link', $this->userName )->inContentLanguage()->parse();
 		}
 		if ( !empty( $this->wg->EnableGoogleAuthorInfo )
 			&& !empty( $this->wg->GoogleAuthorLinks )

@@ -103,7 +103,7 @@ class UserIdentityBox {
 
 			if (empty($this->userStats)) {
 				/** @var $userStatsService UserStatsService */
-				$userStatsService = F::build('UserStatsService', array($userId));
+				$userStatsService = new UserStatsService($userId);
 				$this->userStats = $userStatsService->getStats();
 			}
 
@@ -182,7 +182,7 @@ class UserIdentityBox {
 		$data = array();
 		$data['id'] = $userId;
 		$data['name'] = $userName;
-		$data['avatar'] = F::build('AvatarService', array($userName, 150), 'getAvatarUrl');
+		$data['avatar'] = AvatarService::getAvatarUrl($userName, 150);
 		wfProfileOut(__METHOD__);
 		return $data;
 	}
@@ -194,7 +194,7 @@ class UserIdentityBox {
 		$data['edits'] = -1;
 		$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
 		$data['name'] = $userName;
-		$data['realName'] = $this->app->wf->Msg('user-identity-box-wikia-contributor');
+		$data['realName'] = wfMsg('user-identity-box-wikia-contributor');
 		wfProfileOut(__METHOD__);
 		return $data;
 	}
@@ -457,7 +457,7 @@ class UserIdentityBox {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function getDb($type = DB_SLAVE) {
-		return $this->app->wf->GetDB($type, array(), $this->app->wg->SharedDB);
+		return wfGetDB($type, array(), $this->app->wg->SharedDB);
 	}
 
 	/**
@@ -473,10 +473,10 @@ class UserIdentityBox {
 
 		if( !empty($this->app->wg->EnableTwoTagsInMasthead) ) {
 			/** @var $strategy UserTwoTagsStrategy */
-			$strategy = F::build('UserTwoTagsStrategy', array($this->user));
+			$strategy = new UserTwoTagsStrategy($this->user);
 		} else {
 			/** @var $strategy UserOneTagStrategy */
-			$strategy = F::build('UserOneTagStrategy', array($this->user));
+			$strategy = new UserOneTagStrategy($this->user);
 		}
 		$tags = $strategy->getUserTags();
 
@@ -539,7 +539,7 @@ class UserIdentityBox {
 				$where[] = 'wiki_id NOT IN (' . join(',', $hiddenTopWikis) . ')';
 			}
 
-			$dbs = $this->app->wf->GetDB(DB_SLAVE, array(), $this->app->wg->StatsDB);
+			$dbs = wfGetDB(DB_SLAVE, array(), $this->app->wg->StatsDB);
 			$res = $dbs->select(
 				array('specials.events_local_users'),
 				array('wiki_id', 'edits'),
@@ -555,9 +555,8 @@ class UserIdentityBox {
 			while ($row = $dbs->fetchObject($res)) {
 				$wikiId = $row->wiki_id;
 				$editCount = $row->edits;
-				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-				/** @var $wikiTitle GlobalTitle */
-				$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText');
+				$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
+				$wikiTitle = GlobalTitle::newFromText($this->user->getName(), NS_USER_TALK, $wikiId);
 
 				if ($wikiTitle) {
 					$wikiUrl = $wikiTitle->getFullUrl();
@@ -640,15 +639,14 @@ class UserIdentityBox {
 	public function addTopWiki($wikiId) {
 		wfProfileIn(__METHOD__);
 
-		$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-		/** @var $wikiTitle GlobalTitle */
-		$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText');
+		$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
+		$wikiTitle = GlobalTitle::newFromText($this->user->getName(), NS_USER_TALK, $wikiId);
 
 		if ($wikiTitle instanceof Title) {
 			$wikiUrl = $wikiTitle->getFullUrl();
 
 			/** @var $userStatsService UserStatsService */
-			$userStatsService = F::build('UserStatsService', array($this->app->wg->User->getId()));
+			$userStatsService = new UserStatsService($this->app->wg->User->getId());
 			$userStats = $userStatsService->getStats();
 
 			//adding new wiki to topWikis in cache
@@ -699,7 +697,7 @@ class UserIdentityBox {
 	 * @return array
 	 */
 	private function getMemcHiddenWikisId() {
-		return $this->app->wf->SharedMemcKey( 'user-identity-box-data-top-hidden-wikis', $this->user->getId(), self::CACHE_VERSION );
+		return wfSharedMemcKey( 'user-identity-box-data-top-hidden-wikis', $this->user->getId(), self::CACHE_VERSION );
 	}
 
 	/**
@@ -709,7 +707,7 @@ class UserIdentityBox {
 		wfProfileIn(__METHOD__);
 
 		$hiddenWikis = array();
-		$this->updateHiddenInDb($this->app->wf->GetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $hiddenWikis);
+		$this->updateHiddenInDb(wfGetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $hiddenWikis);
 		$this->app->wg->Memc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
 
 		wfProfileOut(__METHOD__);
@@ -734,9 +732,8 @@ class UserIdentityBox {
 
 		foreach ($wikis as $wikiId => $editCount) {
 			if (!$this->isTopWikiHidden($wikiId) && ($wikiId != $this->app->wg->CityId)) {
-				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-				/** @var $wikiTitle GlobalTitle */
-				$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText');
+				$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
+				$wikiTitle = GlobalTitle::newFromText($this->user->getName(), NS_USER_TALK, $wikiId);
 
 				if ($wikiTitle) {
 					$wikiUrl = $wikiTitle->getFullUrl();
@@ -766,7 +763,7 @@ class UserIdentityBox {
 		$hiddenWikis = $this->app->wg->Memc->get($this->getMemcHiddenWikisId());
 
 		if (empty($hiddenWikis) && !is_array($hiddenWikis)) {
-			$dbs = $this->app->wf->GetDB(DB_SLAVE, array(), $this->app->wg->ExternalSharedDB);
+			$dbs = wfGetDB(DB_SLAVE, array(), $this->app->wg->ExternalSharedDB);
 			$hiddenWikis = $this->getHiddenFromDb($dbs);
 			$this->app->wg->Memc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
 		}
@@ -788,7 +785,7 @@ class UserIdentityBox {
 		if (!$this->isTopWikiHidden($wikiId)) {
 			$hiddenWikis = $this->getHiddenTopWikis();
 			$hiddenWikis[] = $wikiId;
-			$this->updateHiddenInDb($this->app->wf->GetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $hiddenWikis);
+			$this->updateHiddenInDb(wfGetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $hiddenWikis);
 			$this->app->wg->Memc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
 
 			$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
@@ -871,7 +868,7 @@ class UserIdentityBox {
 		$userId = $this->user->getId();
 		if (empty($this->userStats)) {
 			/** @var $userStatsService UserStatsService */
-			$userStatsService = F::build('UserStatsService', array($userId));
+			$userStatsService = new UserStatsService($userId);
 			$this->userStats = $userStatsService->getStats();
 		}
 

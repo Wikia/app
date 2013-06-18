@@ -12,6 +12,7 @@ use Wikia\Search\IndexService\AbstractService, Wikia\Search\MediaWikiService, \R
 class AbstractServiceTest extends BaseTest
 {
 	public function setUp() {
+		parent::setUp();
 		$this->service = $this->getMockBuilder( '\Wikia\Search\IndexService\AbstractService' );
 	}
 	

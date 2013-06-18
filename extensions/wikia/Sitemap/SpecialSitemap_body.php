@@ -59,7 +59,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		$this->mLinkLimit = 5000;
 		$this->mPage = 0;
 		$this->mCacheTime = 86400*14; // cron is run every week but we want to keep them longer
-		$this->mMediaService = F::build('MediaQueryService');
+		$this->mMediaService = new MediaQueryService();
 	}
 
 
@@ -478,7 +478,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$this->initDb();
 
-		$this->mTitle = F::build( 'Title', array( 'Sitemap', NS_SPECIAL ), 'newFromText' );
+		$this->mTitle = Title::newFromText( 'Sitemap', NS_SPECIAL );
 		foreach( $sitemapIndex[$namespace] as $pageNo => $data ) {
 			$this->mNamespace = $namespace;
 			$this->mPage = $pageNo;

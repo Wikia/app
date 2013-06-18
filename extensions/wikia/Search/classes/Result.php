@@ -221,7 +221,8 @@ class Result extends ReadWrite {
 	 */
 	public function offsetGet( $key ) {
 		$value = null;
-		$nolangKey = array_shift( explode( '_', $key ) );
+		$keyParts = explode( '_', $key );
+		$nolangKey = reset( $keyParts );
 		switch ( $nolangKey ) {
 		    case 'title':
 		    	$value = $this->getTitle(); break;

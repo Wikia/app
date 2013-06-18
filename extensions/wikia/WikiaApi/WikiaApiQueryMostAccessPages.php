@@ -22,8 +22,6 @@ class WikiaApiQueryMostAccessPages extends WikiaApiQuery {
      * main function
      */
 	public function execute() {
-		global $wgUser;
-
 		switch ($this->getActionName()) {
 			case parent::INSERT :
 								{

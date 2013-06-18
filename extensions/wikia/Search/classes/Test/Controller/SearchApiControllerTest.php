@@ -55,9 +55,8 @@ class SearchApiControllerTest extends BaseTest
 		                       ->setMethods( [ 'getRequest', 'validateNamespacesForConfig' ] )
 		                       ->getMock();
 		
-		$this->proxyClass( 'Wikia\Search\Config', $mockConfig );
-		$this->mockApp();
-		
+		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
+
 		$requestIncr = 0;
 		$configIncr = 0;
 		
@@ -378,9 +377,8 @@ class SearchApiControllerTest extends BaseTest
 		    ->with   ( 86400, 86400, [ \WikiaResponse::CACHE_TARGET_BROWSER, \WikiaResponse::CACHE_TARGET_VARNISH ] )
 		;
 		
-		$this->proxyClass( 'Wikia\Search\QueryService\Factory', $mockFactory );
-		$this->mockApp();
-		
+		$this->mockClass( 'Wikia\Search\QueryService\Factory', $mockFactory );
+
 		$set = new \ReflectionMethod( 'SearchApiController', 'setResponseFromConfig' );
 		$set->setAccessible( true );
 		$set->invoke( $mockController, $mockConfig );

@@ -407,13 +407,9 @@ class HAWelcomeJob extends Job {
 			}
 			// See: extensions/wikia/Wall/WallMessage.class.php
 			/** @type Mixed|Boolean The WallMessage object or logical false. */
-			$mWallMessage = F::build(
-				'WallMessage',
-				array(
-					$this->sMessage, $this->sRecipientName, $wgUser,
-					wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
-				),
-				'buildNewMessageAndPost'
+			$mWallMessage = WallMessage::buildNewMessageAndPost(
+                $this->sMessage, $this->sRecipientName, $wgUser,
+                wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
 			);
 			// Sets the sender of the message when the actual message
 			// was posted by the welcome bot

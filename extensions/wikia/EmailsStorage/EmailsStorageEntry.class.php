@@ -42,7 +42,7 @@ class EmailsStorageEntry {
 		// set default values
 		$this->setCityId($this->app->wg->CityId);
 		$this->setUserId($this->app->wg->User->getId());
-		$this->setBeaconId($this->app->wf->GetBeaconId());
+		$this->setBeaconId(wfGetBeaconId());
 	}
 
 	/**

@@ -9,14 +9,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-$app = F::app();
 $dir = dirname( __FILE__ );
 
 /**
  * info
  */
-$app->wg->append(
-	'wgExtensionCredits',
+$wgExtensionCredits['other'][] =
 	array(
 		"name" => "PhotoPop",
 		"description" => "Photo guessing game",
@@ -36,14 +34,12 @@ $app->wg->append(
 				'api.php?action=wikia&controller=PhotoPop&format=json'
 			)
 		)
-	),
-	'other'
-);
+	);
 
 /**
  * rights
  */
-$app->wg->append( 'AvailableRights', 'photopop_setup' );
+$AvailableRights[] = 'photopop_setup';
 //Nirvana doesn't give access to multi-dimensional global arrays :(
 $wgGroupPermissions['*']['photopop_setup'] = false;
 $wgGroupPermissions['staff']['photopop_setup'] = true;
@@ -55,7 +51,7 @@ $wgGroupPermissions['staff']['photopop_setup'] = true;
 /**
  * models
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopModel.class.php", 'PhotoPopModel' );
+$wgAutoloadClasses['PhotoPopModel'] = "{$dir}/PhotoPopModel.class.php";
 
 /**
  * services
@@ -64,21 +60,21 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopModel.class.php", 'PhotoPopM
 /**
  * controllers
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopController.class.php", 'PhotoPopController' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopSpecialPageController.class.php", 'PhotoPopSpecialPageController' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopAppCacheController.class.php", 'PhotoPopAppCacheController' );
+$wgAutoloadClasses['PhotoPopController'] = "{$dir}/PhotoPopController.class.php";
+$wgAutoloadClasses['PhotoPopSpecialPageController'] = "{$dir}/PhotoPopSpecialPageController.class.php";
+$wgAutoloadClasses['PhotoPopAppCacheController'] = "{$dir}/PhotoPopAppCacheController.class.php";
 
 /**
  * special pages
  */
-if ( !empty ( $app->wg->AllowPhotoPopGame ) ){
-	$app->registerSpecialPage('PhotoPopSetup', 'PhotoPopSpecialPageController');
+if ( !empty ( $wgAllowPhotoPopGame ) ){
+	$wgSpecialPages['PhotoPopSetup'] = 'PhotoPopSpecialPageController';
 }
 
 /**
  * message files
  */
-$app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/PhotoPop.i18n.php", 'PhotoPop' );
+$wgExtensionMessagesFiles['PhotoPop'] = "{$dir}/PhotoPop.i18n.php";
 
 /**
  * hooks
@@ -88,7 +84,7 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/PhotoPop.i18n.php", 'PhotoPop
  * settings
  */
 
-F::build( 'JSMessages' )->registerPackage( 'PhotoPop', array(
+JSMessages::registerPackage( 'PhotoPop', array(
 	"photopop-game-round",
 	"photopop-game-correct",
 	"photopop-game-points",
