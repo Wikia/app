@@ -1,9 +1,7 @@
 <li class="result">
 	<article>
 	<?php 
-	if ( $result['ns'] == NS_FILE ) {
-		$thumbnailHtml = $result->getThumbnailHtml();
-	}
+	$thumbnailHtml = $result->getThumbnailHtml();
 	?>
 	<?php if(! empty( $thumbnailHtml ) ): ?>
 		<div class="grid-1 alpha"><?= $thumbnailHtml ?></div>
