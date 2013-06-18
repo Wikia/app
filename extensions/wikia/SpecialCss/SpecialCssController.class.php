@@ -40,6 +40,14 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 		wfProfileOut(__METHOD__);
 	}
+
+	public function getDiff($wikitext) {
+		$editPageService = new EditPageService(
+			Title::newFromText(SpecialCssModel::CSS_FILE_NAME, NS_MEDIAWIKI)
+		);
+		$diff = $editPageService->getDiff($wikitext);
+		return $diff;
+	}
 	
 	public function notOasis() {
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
