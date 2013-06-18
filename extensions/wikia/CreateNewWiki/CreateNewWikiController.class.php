@@ -33,14 +33,17 @@ class CreateNewWikiController extends WikiaController {
 
 		// form field values
 		$hubs = WikiFactoryHub::getInstance();
-        $this->aCategories = $hubs->getCategories();
+		$this->aCategories = $hubs->getCategories();
 
-        $this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-        $languages = wfGetFixedLanguageNames();
+		$this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
+		$languages = wfGetFixedLanguageNames();
 		asort( $languages );
 		$this->aLanguages = $languages;
 
 		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
+
+		// squash language dialects (same wiki language for different dialects)
+		$useLang = $this->squashLanguageDialects($useLang);
 
 		// falling back to english (BugId:3538)
 		if ( !array_key_exists($useLang, $this->aLanguages) ) {
@@ -269,4 +272,26 @@ class CreateNewWikiController extends WikiaController {
 		return intval($oRow->count);
 	}
 
+	/**
+	 * Return proper wiki language for for languages that have different dialects.
+	 */
+	private function squashLanguageDialects($useLang) {
+		$squashLanguageData = array(
+			'zh-tw' => 'zh',
+			'zh-hk' => 'zh',
+			'zh-clas' => 'zh',
+			'zh-class' => 'zh',
+			'zh-classical' => 'zh',
+			'zh-cn' => 'zh',
+			'zh-hans' => 'zh',
+			'zh-hant' => 'zh',
+			'zh-min-' => 'zh',
+			'zh-min-n' => 'zh',
+			'zh-mo' => 'zh',
+			'zh-sg' => 'zh',
+			'zh-yue' => 'zh',
+		);
+
+		return array_key_exists($useLang, $squashLanguageData) ? $squashLanguageData[$useLang] : $useLang;
+	}
 }
