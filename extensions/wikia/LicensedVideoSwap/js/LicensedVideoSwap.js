@@ -2,7 +2,6 @@ require( ['wikia.querystring', 'wikia.localStorage', 'wikia.videoBootstrap'], fu
 
 var LVS = {
 	init: function() {
-console.log('init')
 		this.$container = $( '#LVSGrid' );
 		this.videoWidth = this.$container.find( '.grid-3' ).first().width();
 
@@ -12,6 +11,7 @@ console.log('init')
 		this.initMoreSuggestions();
 		this.initSwapOrKeep();
 		this.initPlay();
+		this.initUndo();
 	},
 	/*
 	 * The design calls for all of the "posted in" titles to be on one line.
@@ -190,7 +190,7 @@ console.log('init')
 				isSwap = $this.is( '.swap-button' ),
 				newTitle,
 				currTitle;
-console.log( e.type );
+
 			if ( isSwap ) {
 				// swap button hovered
 				if ( e.type == 'mouseover' ) {
@@ -254,6 +254,39 @@ console.log( e.type );
 					$row.find( '.swap-button' ).attr( 'data-video-swap', fileTitle );
 				}
 			});
+		});
+	},
+	initUndo: function() {
+		var that = this;
+
+		$( 'body' ).on( 'click', '.global-notification .undo', function( e ) {
+			e.preventDefault();
+
+			var $this = $( this ),
+				videoTitle = $this.attr( 'data-video-title' ),
+				newTitle = $this.attr( 'data-new-title' ) || '',
+				qs = new QueryString(),
+				sort = qs.getVal ( 'sort', 'recent' );
+
+			$.nirvana.sendRequest({
+				controller: 'LicensedVideoSwapSpecialController',
+				method: 'restoreVideo',
+				data: {
+					videoTitle: videoTitle,
+					newTitle: newTitle,
+					sort: sort
+				},
+				callback: function( data ) {
+					if( data.result == 'error' ) {
+						window.GlobalNotification.show( data.msg, 'error' );
+					} else {
+						window.GlobalNotification.show( data.msg, 'confirm' );
+						that.$container.html( data.html );
+					}
+				}
+			});
+
+
 		});
 	}
 };

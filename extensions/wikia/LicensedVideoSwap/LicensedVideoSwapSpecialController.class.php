@@ -214,8 +214,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->result = 'ok';
 
 		$fileUrl = $newFile->getTitle()->getLocalURL();
-		$undo = Xml::element( 'a', array( 'class' => 'undo-swap', 'href' => '' ), wfMessage( 'lvs-undo-swap' )->text() );
-		$this->msg = wfMessage( 'lvs-swap-video-success', $fileUrl, $undo )->text();
+		$undoOptions = array(
+			'class' => 'undo',
+			'href' => '#',
+			'data-video-title' => $videoTitle,
+			'data-new-title' => $newTitle,
+		);
+		$undo = Xml::element( 'a', $undoOptions, wfMessage( 'lvs-undo-swap' )->text() );
+		$this->msg = wfMessage( 'lvs-swap-video-success' )->rawParams( $fileUrl, $undo )->parse();
 	}
 
 	/**
@@ -270,12 +276,17 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		$this->result = 'ok';
 
-		$undo = Xml::element( 'a', array( 'class' => 'undo-keep', 'href' => '' ), wfMessage( 'lvs-undo-keep' )->text() );
-		$this->msg = wfMessage( 'lvs-keep-video-success', $undo )->parse();
+		$undoOptions = array(
+			'class' => 'undo',
+			'href' => '#',
+			'data-video-title' => $videoTitle,
+		);
+		$undo = Xml::element( 'a', $undoOptions, wfMessage( 'lvs-undo-keep' )->text() );
+		$this->msg = wfMessage( 'lvs-keep-video-success' )->rawParams( $undo )->parse();
 	}
 
 	/**
-	 * restore video
+	 * restore video after swapping or keeping it
 	 * @requestParam string videoTitle
 	 * @requestParam string newTitle
 	 * @requestParam string sort [recent/popular/trend]
@@ -286,7 +297,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 */
 	public function restoreVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
-
 		// validate action
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
 		$msg = $response->getVal( 'msg', '' );
