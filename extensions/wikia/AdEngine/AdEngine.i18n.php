@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'adengine-exitstitial-title-template' => 'You\'re leaving $1...',
+	'adengine-exitstitial-title-template' => 'You\'re leaving $1…',
 	'adengine-exitstitial-redirecting' => 'Your browser will redirect you to the page you requested in a few seconds.',
 	'adengine-exitstitial-go-back' => 'Want to go back?',
 	'adengine-exitstitial-button' => 'Skip this Ad',

@@ -1177,6 +1177,13 @@ $messages['ur'] = array(
 	'categoryselect-button-cancel' => 'منسوخ',
 );
 
+/** Uzbek (oʻzbekcha)
+ * @author Sociologist
+ */
+$messages['uz'] = array(
+	'categoryselect-category-remove' => 'Turkumni oʻchirish',
+);
+
 /** Veps (vepsän kel’)
  * @author Игорь Бродский
  */

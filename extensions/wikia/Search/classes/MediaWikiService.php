@@ -850,7 +850,13 @@ class MediaWikiService
 		if( $page === null ) {
 			throw new \Exception( 'Invalid Article ID' );
 		}
-		if( $page->isRedirect() ) {
+
+		$redirectTarget = null;
+		if ( $page->isRedirect() ) {
+			$redirectTarget = $page->getRedirectTarget();
+		}
+
+		if( $redirectTarget ) {
 			self::$redirectArticles[$pageId] = $page;
 			$redirectTarget = $page->getRedirectTarget();
 			$page = new \Article( $redirectTarget );
