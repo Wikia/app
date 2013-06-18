@@ -156,6 +156,9 @@ $app->registerHook( 'HAWelcomeGetPrefixText', 'WallHooksHelper', 'onHAWelcomeGet
 // Monobook toolbar links
 $app->registerHook( 'SkinTemplateToolboxEnd', 'WallHooksHelper', 'onBuildMonobookToolbox');
 
+// Hook for code that wants a beautified title and URL given the not very readable Wall/Forum title
+$wgHooks['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks';
+
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
 	'wall-notifications-reminder',
