@@ -201,7 +201,14 @@ class WAMPageModel extends WikiaModel {
 	public function getSubpageTextByIndex($tabIndex, $defaultTitle) {
 		$tabs = $this->getTabs();
 		$tabIndex = (int)$tabIndex; // first tab has 'false' as tabIndex
-		return (array_key_exists($tabIndex, $tabs) && array_key_exists('name', $tabs[$tabIndex])) ? $tabs[$tabIndex]['name'] : $defaultTitle;
+		
+		// we don't have that index - return default title
+		if ( !array_key_exists($tabIndex, $tabs) ) {
+		    return $defaultTitle;
+		}
+		
+		// we have that index - return tab's name
+		return array_key_exists('name', $tabs[$tabIndex]) ? $tabs[$tabIndex]['name'] : $defaultTitle;
 	}
 
 	/**
