@@ -548,20 +548,6 @@ class WikiaHomePageController extends WikiaController {
 		$this->imagesSlider = $this->sendRequest('WikiaMediaCarouselController', 'renderSlider', array('data' => $images));
 	}
 
-	/**
-	 * Returns lines of text contained inside mosaic slider gallery tag
-	 * @param $articleText
-	 * @return array
-	 */
-	protected function extractMosaicGalleryImages($articleText) {
-		$lines = array();
-
-		if (preg_match('/\<gallery.+mosaic.+\>([\s\S]+)\<\/gallery\>/', $articleText, $matches)) {
-			$lines = StringUtils::explode("\n", $matches[1]);
-		}
-		return $lines;
-	}
-
 	public static function onGetHTMLAfterBody($skin, &$html) {
 		$app = F::app();
 
