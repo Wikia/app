@@ -102,4 +102,30 @@ class SpecialCssModel extends WikiaModel {
 	public function getSpecialCssTitle() {
 		return SpecialPage::getTitleFor('CSS');
 	}
+
+	/**
+	 * @desc Saving CSS content
+	 *
+	 * @param string $content
+	 * @param string $summary
+	 * @param bool $isMinor
+	 * @param User $user
+	 * @return bool if saving was successful
+	 */
+	public function saveCssContent($content, $summary = '', $isMinor, $user) {
+		$cssTitle = $this->getCssFileTitle();
+		$flags = 0;
+		if ( $cssTitle instanceof Title) {
+			$aid = $cssTitle->getArticleID( Title::GAID_FOR_UPDATE );
+			//TODO: do we need EDIT_AUTOSUMMARY flag?
+			$flags |= ( $aid == 0 ) ? EDIT_NEW : EDIT_UPDATE;
+			if ( $isMinor ) {
+				$flags |= EDIT_MINOR;
+			}
+			$article = new Article($cssTitle);
+			$status = $article->doEdit($content, $summary, $flags, false, $user);
+			return $status->ok;
+		}
+		return false;
+	}
 }
