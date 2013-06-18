@@ -23,5 +23,13 @@ $(function() {
 		};
 
 		heightUpdateFunction();
+
+		$('#cssEditorForm').submit(function() {
+			var hiddenInput = $('<input/>')
+				.attr('type', 'hidden')
+				.attr('name', 'cssContent')
+				.val(editor.getSession().getValue());
+			$(this).append(hiddenInput);
+		});
 	});
 });

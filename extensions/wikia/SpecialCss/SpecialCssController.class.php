@@ -24,6 +24,14 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
 		
 		$model = new SpecialCssModel();
+
+		if ($this->request->wasPosted()) {
+			// TODO uncoment here when model is ready
+			$status = $model->saveCssFileContent($this->request->getVal('cssContent'));
+			// TODO handle statuses
+			$this->response->redirect($this->specialPage->getLocalURL());
+		}
+
 		$this->cssContent = $model->getCssFileContent();
 
 		wfProfileOut(__METHOD__);
