@@ -325,23 +325,17 @@ jQuery(function($){
 					label: 'search-button'
 				});
 			}
-		}).on('keypress', function(e) {
-			if ( e.which === 13 ) {
-                if ( $('#WikiaSearch [name=search]').is(':focus') ) {
-                    track({
-                        category: category,
-                        label: 'search-enter'
-                    });
-                } else {
-                    track({
-                        category: category,
-                        label: 'search-suggest-enter'
-                    });
-                }
+		}).on('keydown', function(e) {
+			if ( e.which === 13 && $('#WikiaSearch [name=search]').is(':focus') ) {
+                track({
+                    category: category,
+                    label: 'search-enter'
+                });
 			}
-		});
-
-        $wikiaSearch.one('suggestShow', {
+		}).on('suggestEnter', {
+            category: category,
+            label: 'search-suggest-enter'
+        }, trackWithEventData).one('suggestShow', {
             action: Wikia.Tracker.ACTIONS.VIEW,
             category: category,
             label: 'search-suggest-show'
