@@ -10,11 +10,11 @@ class SpecialMyblog extends RedirectSpecialPage {
 	}
 
 	function getRedirect( $subpage ) {
-		$username = $this->getUser()->getName();
+			global $wgUser;
 			if ( strval( $subpage ) !== '' ) {
-					return Title::makeTitle( NS_BLOG_ARTICLE, $username . '/' . $subpage );
+					return Title::makeTitle( NS_BLOG_ARTICLE, $wgUser->getName() . '/' . $subpage );
 			} else {
-					return Title::makeTitle( NS_BLOG_ARTICLE, $username );
+					return Title::makeTitle( NS_BLOG_ARTICLE, $wgUser->getName() );
 			}
 	}
 }
