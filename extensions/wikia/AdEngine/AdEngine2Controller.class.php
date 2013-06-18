@@ -427,6 +427,8 @@ class AdEngine2Controller extends WikiaController {
 		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
 		$vars['adDriver2ForcedStatus'] = array();
 
+		$vars['wgWikiDirectedAtChildren'] = (bool) $this->wg->WikiDirectedAtChildrenByStaff;
+
 		wfProfileOut(__METHOD__);
 
 		return true;
