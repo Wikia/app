@@ -126,7 +126,7 @@ $slotZIndex: 4000;
 	}
 }
 
-@media screen and (min-width:320px) and (orientation:landscape) {
+@media (min-width:320px) and (orientation:landscape) {
 	.wkAdWrapper.show {
 		left: 40%;
 	}
