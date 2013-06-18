@@ -19,21 +19,6 @@ class VideoHandlerHooks extends WikiaObject{
 		return true;
 	}
 
-	public function WikiaVideoFetchTemplateAndTitle( &$text, $finalTitle ) {
-
-		global $wgContLang, $wgWikiaVideosFoundInTemplates;
-
-		$vid_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":Placeholder";
-
-		// replace text and give Video:Template_Placeholder: text everywhere
-		if ($text !== false) {
-			$count = 0;
-			$text = str_replace( $vid_tag, 'Video:Template_Placeholder', $text, $count );
-			$wgWikiaVideosFoundInTemplates += $count;
-		}
-		return true;
-	}
-
 	public function WikiaVideoParserBeforeStrip($parser, &$text, $strip_state) {
 
 		global $wgWikiaVideoGalleryId, $wgRTEParserEnabled;

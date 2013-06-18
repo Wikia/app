@@ -97,7 +97,6 @@ $wgExtensionMessagesFiles['VideoHandlers'] = "$dir/VideoHandlers.i18n.php";
 
 $app->registerHook( 'MWNamespace:isMovable', 'VideoHandlerHooks', 'WikiaVideo_isMovable');
 $app->registerHook( 'SpecialNewImages::beforeQuery', 'VideoHandlerHooks', 'WikiaVideoNewImagesBeforeQuery');
-$app->registerHook( 'Parser::FetchTemplateAndTitle', 'VideoHandlerHooks', 'WikiaVideoFetchTemplateAndTitle');
 $app->registerHook( 'ParserBeforeStrip', 'VideoHandlerHooks', 'WikiaVideoParserBeforeStrip'); // <videogallery>
 
 $app->registerHook( 'FileRevertFormBeforeUpload', 'VideoHandlerHooks', 'onFileRevertFormBeforeUpload' );
