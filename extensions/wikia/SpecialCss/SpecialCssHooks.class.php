@@ -42,10 +42,7 @@ class SpecialCssHooks {
 	 * @return true because it's a hook
 	 */
 	public function onArticleSaveComplete( $article, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
-		$title = $article->getTitle();
-		$categories = ( $title instanceof Title ) ? $this->removeNamespace( array_keys( $title->getParentCategories() ) ) : [];
-		
-		if( in_array( SpecialCssModel::UPDATES_CATEGORY, $categories ) ) {
+		if( $this->titleHasCssUpdatesCat( $article->getTitle() ) ) {
 			// purging "Wikia CSS Updates" cache because a new post was added to the category
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
 		} else if( $this->prevRevisionHasCssUpdatesCat($revision) ) {
@@ -54,6 +51,19 @@ class SpecialCssHooks {
 		}
 		
 		return true;
+	}
+
+	/**
+	 * @desc Returns true if given title has "CSS Updates" category
+	 * 
+	 * @param $title
+	 * 
+	 * @return boolean
+	 */
+	private function titleHasCssUpdatesCat($title) {
+		$categories = ( $title instanceof Title ) ? $this->removeNamespace( array_keys( $title->getParentCategories() ) ) : [];
+
+		return in_array( SpecialCssModel::UPDATES_CATEGORY, $categories );
 	}
 
 	/**
@@ -110,5 +120,41 @@ class SpecialCssHooks {
 		}
 		
 		return $categories;
+	}
+
+	/**
+	 * @desc Purges cache once a post within category is requested for deletion
+	 * 
+	 * @param Article $article
+	 * @param User $user
+	 * @param String $reason
+	 * @param $error
+	 * 
+	 * @return true because it's a hook
+	 */
+	public function onArticleDelete( &$article, &$user, &$reason, &$error ) {
+		if( $this->titleHasCssUpdatesCat( $article->getTitle() ) ) {
+			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+		}
+		
+		return true;
+	}
+
+	/**
+	 * @desc Purges cache once a post within category is restored
+	 * 
+	 * @param Title $title
+	 * @param $created
+	 * @param String $comment
+	 * 
+	 * @return bool
+	 */
+	public function onArticleUndelete( $title, $created, $comment ) {
+		if( $this->titleHasCssUpdatesCat($title) ) {
+			// purging "Wikia CSS Updates" cache because a post from its category was removed
+			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
+		}
+		
+		return true;
 	}
 }
