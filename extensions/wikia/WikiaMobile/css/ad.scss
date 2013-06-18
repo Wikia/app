@@ -102,7 +102,7 @@ $slotZIndex: 4000;
 
 	opacity: 0;
 
-	-webkit-transition: all .3s;
+	-webkit-transition: opacity .3s, bottom .3s, height .3s;
 }
 
 .wkAdWrapper {
@@ -141,7 +141,27 @@ $slotZIndex: 4000;
 }
 
 @media (min-width:320px) and (orientation:landscape) {
+	.swiperPage.wkAdPlace > img {
+		bottom: 30%;
+		right: 30%;
+
+		width: 200px;
+
+		-webkit-transition: opacity .3s, right .3s, width .3s;
+	}
+
 	.wkAdWrapper.show {
 		left: 40%;
+
+		& ~ img {
+			left: auto;
+			right: 2%;
+			bottom: 15%;
+
+			height: auto;
+			width: 120px;
+
+			z-index: 21;
+		}
 	}
 }
