@@ -43,9 +43,8 @@ class SolrDocumentService
 		$config = $this->getConfig();
 		$config->setQuery( Wikia\Search\Utilities::valueForField( 'id', $this->getDocumentId() ) );
 		$queryService = $this->getFactory()->getFromConfig( $config );
-		$resultSet = $queryService->search();
-		$document = array_shift( $resultSet );
-		return $document ? $document->toArray( $this->requestedFields ) : [];
+		$resultSet = $queryService->search()->toArray( $this->requestedFields );
+		return array_shift( $resultSet );
 	}
 	
 	/**

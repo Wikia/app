@@ -53,7 +53,7 @@ function wfArticleMetaDescription(&$out, &$text) {
 		$DESC_LENGTH = 100;
 		$article = new Article($wgTitle);
 		$articleService = new ArticleService( $article );
-		$description = $articleService->getTextSnippet( $DESC_LENGTH );
+		$description = $articleService->getTextSnippetFromSolr( $DESC_LENGTH );
 	} else {
 		// MediaWiki:Description message found, use it
 		$description = $sMessage;
