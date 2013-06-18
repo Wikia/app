@@ -1,6 +1,12 @@
 <?php
 
 class WallHistory extends WikiaModel {
+
+	/**
+	 * Number of activity items for getLastPosts() method.
+	 */
+	const DEFAULT_LAST_POSTS_COUNT = 5;
+
 	var $wikiId;
 	var $page = 1;
 	var $perPage = 100;
@@ -156,7 +162,7 @@ class WallHistory extends WikiaModel {
 	 *
 	 * @return array Formatted data that gets passed to the view
 	 */
-	public function  getLastPosts($ns, $count = 5) {
+	public function  getLastPosts( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
 		$ns    = (int)MWNamespace::getSubject( $ns );
 		$count = (int)$count;
 		$db    = $this->getDB( DB_SLAVE );
