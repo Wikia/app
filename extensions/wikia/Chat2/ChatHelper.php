@@ -157,12 +157,12 @@ class ChatHelper {
 		foreach($sp as $value) {
 			if($wgTitle->isSpecial($value)) {
 				// For Chat2 (doesn't exist in Chat(1))
-				$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_ban_js', array());
+				$srcs = AssetsManager::getInstance()->getGroupCommonURL('chat_ban_js', array());
 
 				foreach($srcs as $val) {
 					$out->addScript('<script src="' .$val. '"></script>');
 				}
-				F::build('JSMessages')->enqueuePackage('ChatBanModal', JSMessages::EXTERNAL);
+				JSMessages::enqueuePackage('ChatBanModal', JSMessages::EXTERNAL);
 				$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat2/css/ChatModal.scss'));
 				break;
 			}

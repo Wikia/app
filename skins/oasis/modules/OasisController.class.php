@@ -25,7 +25,7 @@ class OasisController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		$skinVars = $this->app->getSkinTemplateObj()->data;
 
-		$this->assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+		$this->assetsManager = AssetsManager::getInstance();
 		$this->pageTitle = $skinVars['pagetitle'];
 		$this->displayTitle = $skinVars['displaytitle'];
 		$this->mimeType = $skinVars['mimetype'];

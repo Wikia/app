@@ -33,6 +33,6 @@ class WikiaValidatorFileTitle extends WikiaValidator {
 		$titleClass = $this->getTitleClass();
 		$title = $titleClass::newFromText($name, NS_FILE);
 		
-		return $this->getApp()->wf->findFile( $title );
+		return wfFindFile( $title );
 	}
 }

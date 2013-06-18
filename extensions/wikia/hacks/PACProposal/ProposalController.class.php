@@ -48,7 +48,7 @@ class ProposalController extends WikiaSpecialPageController {
 		$this->response->setBody( $usersView->render() );
 	}
 
-	public function onSpecialPage_initList( &$list ) {
+	static public function onSpecialPage_initList( &$list ) {
 		var_dump( $list );
 	}
 

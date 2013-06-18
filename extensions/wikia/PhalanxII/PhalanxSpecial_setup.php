@@ -30,11 +30,13 @@ $classes = array(
 );
 
 foreach ( $classes as $class_name => $class_path ) {
-	$app->registerClass( $class_name, $class_path );
+	$wgAutoloadClasses[ $class_name] =  $class_path ;
 }
 
-$app->registerSpecialPage( 'Phalanx', 'PhalanxSpecialController', 'wikia' );
-$app->registerSpecialPage( 'PhalanxStats', 'PhalanxStatsSpecialController', 'wikia' );
+$wgSpecialPages[ 'Phalanx' ] =  'PhalanxSpecialController';
+$wgSpecialPageGroups['Phalanx'] = 'wikia';
+$wgSpecialPages[ 'PhalanxStats' ] =  'PhalanxStatsSpecialController';
+$wgSpecialPageGroups['PhalanxStats'] = 'wikia';
 
 /*
  * rights, globals, etc.

@@ -121,8 +121,10 @@ class NavigationModelTest extends WikiaBaseTest {
 	function testParseMessage() {
 		$messageName = 'test'.rand();
 
-		$this->mockGlobalFunction('msg', '*whatever', 2);
-		$this->mockApp();
+		$this->getGlobalFunctionMock( 'wfMsg' )
+			->expects( $this->exactly( 2 ) )
+			->method( 'wfMsg' )
+			->will( $this->returnValue( '*whatever' ) );
 
 		$model = new NavigationModel();
 
@@ -254,8 +256,10 @@ class NavigationModelTest extends WikiaBaseTest {
 	}
 
 	function testParseOneLineWithoutTranslation() {
-		$this->mockGlobalFunction('msg', 'mocked text', 0);
-		$this->mockApp();
+		$this->getGlobalFunctionMock( 'wfMsg' )
+			->expects( $this->never() )
+			->method( 'wfMsg' )
+			->will( $this->returnValue( 'mocked text' ) );
 
 		$method = new ReflectionMethod(
 			'NavigationModel', 'setShouldTranslateContent'

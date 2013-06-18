@@ -51,8 +51,6 @@ class ArticleServiceTest extends WikiaBaseTest {
 			->method( 'getID' )
 			->will( $this->returnValue( $randId ) );
 
-		$this->mockApp();
-
 		$service = new ArticleService( $mockArticle );
 		$snippet = $service->getTextSnippet( $snippetLength );
 		$this->assertEquals( $expSnippetText, $snippet );

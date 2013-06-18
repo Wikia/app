@@ -9,8 +9,8 @@ class WallRelatedPages extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 		$dir = dirname(__FILE__);
 		
-		if ( !$this->wf->ReadOnly() ) {
-			$db = $this->wf->GetDB( DB_MASTER );
+		if ( !wfReadOnly() ) {
+			$db = wfGetDB( DB_MASTER );
 			if ( !$db->tableExists('wall_related_pages') ) {
 				$db->sourceFile( $dir . '/sql/wall_related_pages.sql' );
 				wfProfileOut( __METHOD__ );
@@ -29,7 +29,7 @@ class WallRelatedPages extends WikiaModel {
 	
 	function setLastUpdate($messageId) {	 
 	 	wfProfileIn( __METHOD__ );
-		$db = $this->wf->GetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER );
 		$db->begin();
 		$db->query( "update `wall_related_pages` set last_update = NOW() where comment_id = $messageId ", __METHOD__ );
 		$db->commit();
@@ -45,7 +45,7 @@ class WallRelatedPages extends WikiaModel {
 	
 	function set($messageId, $pages = array() ) {
 		wfProfileIn( __METHOD__ );
-		$db = $this->wf->GetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER );
 		
 		$this->createTable();
 		
@@ -120,15 +120,14 @@ class WallRelatedPages extends WikiaModel {
 		$pageIds = array();
 		
 		//Loading from cache 
-		$db = $this->wf->GetDB( $db );
+		$db = wfGetDB( $db );
 		
-		if ( ! $db->tableExists('wall_related_pages') && $this->wf->ReadOnly() ) {
-			wfProfileOut( __METHOD__ );
+		if ( ! $db->tableExists('wall_related_pages') && wfReadOnly() ) {
 			return array();
 		}
 		
 		if($this->createTable()) {
-			$db = $this->wf->GetDB( $db );	
+			$db = wfGetDB( $db );
 		}
 		
 		$result = $db->select(
@@ -260,15 +259,15 @@ class WallRelatedPages extends WikiaModel {
 		$messgesIds = array();
 		
 		//Loading from cache 
-		$db = $this->wf->GetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE );
 		
-	    if ( ! $db->tableExists('wall_related_pages') && $this->wf->ReadOnly() ) {
+	    if ( ! $db->tableExists('wall_related_pages') && wfReadOnly() ) {
 			wfProfileOut( __METHOD__ );
 			return array();
 		}
 		
 		if($this->createTable()) {
-			$db = $this->wf->GetDB( DB_MASTER );	
+			$db = wfGetDB( DB_MASTER );
 		}
 		
 		//Loading from cache 

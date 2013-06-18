@@ -19,7 +19,7 @@ class UserPreferencesV2 {
 	 *
 	 * @return Bool
 	 */
-	public function onGetPreferences($user, &$defaultPreferences) {
+	static public function onGetPreferences($user, &$defaultPreferences) {
 		global $wgEnableWallExt, $wgOut, $wgScriptPath, $wgServer, $wgUser, $wgAuth;
 
 		//add javascript
@@ -62,25 +62,25 @@ class UserPreferencesV2 {
 		}
 		if (isset($defaultPreferences['language'])) {
 			$defaultPreferences['language']['section'] = 'personal/appearance';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'language');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'language');
 		}
 		if (isset($defaultPreferences['date'])) {
 			$defaultPreferences['date']['section'] = 'personal/appearance';
 			$defaultPreferences['date']['type'] = 'select';
 			$defaultPreferences['date']['label-message'] = 'preferences-v2-date';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'date');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'date');
 		}
 		if (isset($defaultPreferences['timecorrection'])) {
 			$defaultPreferences['timecorrection']['section'] = 'personal/appearance';
 			$defaultPreferences['timecorrection']['label-message'] = 'preferences-v2-time';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'timecorrection');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'timecorrection');
 		}
 
 		if (isset($defaultPreferences['skin'])) {
 			$defaultPreferences['skin']['section'] = 'personal/appearance';
 			$defaultPreferences['skin']['type'] = 'select';
 			$defaultPreferences['skin']['label-message'] = 'preferences-v2-skin';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'skin');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'skin');
 		}
 		if (isset($defaultPreferences[self::LANDING_PAGE_PROP_NAME])) {
 			$redirectOptions[wfMsg('preferences-v2-redirect-main-page')] = self::LANDING_PAGE_MAIN_PAGE;
@@ -91,7 +91,7 @@ class UserPreferencesV2 {
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['label-message'] = 'preferences-v2-user-landing-page';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['section'] = 'personal/appearance';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['help'] = wfMsg('preferences-v2-redirect-explanation', parse_url( $wgServer, PHP_URL_HOST ) );
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, self::LANDING_PAGE_PROP_NAME);
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, self::LANDING_PAGE_PROP_NAME);
 		}
 		if (isset($defaultPreferences['showAds'])) {
 			$defaultPreferences['showAds']['section'] = 'personal/appearance';
@@ -100,7 +100,7 @@ class UserPreferencesV2 {
 			$adOptions[wfMsg('preferences-v2-showads-disable')] = 0;
 			$adOptions[wfMsg('preferences-v2-showads-enable')] = 1;
 			$defaultPreferences['showAds']['options'] = $adOptions;
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showAds');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'showAds');
 		}
 
 		//Tab 2: Email
@@ -140,63 +140,63 @@ class UserPreferencesV2 {
 		if (isset($defaultPreferences['enotifwatchlistpages'])) {
 			$defaultPreferences['enotifwatchlistpages']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences['enotifwatchlistpages']['label-message'] = 'tog-enotifwatchlistpages-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifwatchlistpages');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'enotifwatchlistpages');
 		}
 		if (isset($defaultPreferences['enotifminoredits'])) {
 			$defaultPreferences['enotifminoredits']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences['enotifminoredits']['label-message'] = 'tog-enotifminoredits-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifminoredits');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'enotifminoredits');
 		}
 		if (isset($defaultPreferences['enotifusertalkpages'])) {
 			$defaultPreferences['enotifusertalkpages']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences['enotifusertalkpages']['label-message'] = 'tog-enotifusertalkpages-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifusertalkpages');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'enotifusertalkpages');
 		}
 		if (isset($defaultPreferences['marketingallowed'])) {
 			$defaultPreferences['marketingallowed']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences['marketingallowed']['label-message'] = 'tog-marketingallowed-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'marketingallowed');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'marketingallowed');
 		}
 		if (isset($defaultPreferences['watchlistdigest'])) {
 			$defaultPreferences['watchlistdigest']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences['watchlistdigest']['label-message'] = 'tog-watchlistdigest-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'watchlistdigest');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'watchlistdigest');
 		}
 		if (isset($defaultPreferences['marketingallowed'])) {
 			$defaultPreferences['marketingallowed']['section'] = 'emailv2/email-me-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'marketingallowed');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'marketingallowed');
 		}
 		if ($wgEnableWallExt) {
 			if (isset($defaultPreferences['enotifwallthread'])) {
-				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifwallthread');
+				$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'enotifwallthread');
 			}
 			if (isset($defaultPreferences['enotifmywall'])) {
-				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifmywall');
+				$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'enotifmywall');
 			}
 		}
 
 		if (isset($defaultPreferences['htmlemails'])) {
 			$defaultPreferences['htmlemails']['section'] = 'emailv2/email-advanced-v2';
 			$defaultPreferences['htmlemails']['label-message'] = 'tog-htmlemails-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'htmlemails');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'htmlemails');
 		}
 		if (isset($defaultPreferences['disablemail'])) {
 			$defaultPreferences['disablemail']['section'] = 'emailv2/email-advanced-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'disablemail');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'disablemail');
 		}
 		if (isset($defaultPreferences['enotifrevealaddr'])) {
 			$defaultPreferences['enotifrevealaddr']['section'] = 'emailv2/email-advanced-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifrevealaddr');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'enotifrevealaddr');
 		}
 		if (array_key_exists('watchlistdigestclear', $defaultPreferences)) {
 			$defaultPreferences['watchlistdigestclear']['section'] = 'emailv2/email-advanced-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'watchlistdigestclear');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'watchlistdigestclear');
 		}
 
 		if (isset($defaultPreferences['unsubscribed'])) {
 			$defaultPreferences['unsubscribed']['section'] = 'emailv2/email-unsubscribe';
 			$defaultPreferences['unsubscribed']['label-message'] = 'unsubscribe-preferences-toggle-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'unsubscribed');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'unsubscribed');
 		}
 
 		//Tab 3: Editing
@@ -221,28 +221,28 @@ class UserPreferencesV2 {
 		}
 		if (isset($defaultPreferences['disablelinksuggest'])) {
 			$defaultPreferences['disablelinksuggest']['section'] = 'editing/editing-experience';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'disablelinksuggest');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'disablelinksuggest');
 		}
 		if ($user->mOptions['skin'] == 'monobook') {
 			if (isset($defaultPreferences['showtoolbar'])) {
 				$defaultPreferences['showtoolbar']['section'] = 'editing/monobookv2';
-				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showtoolbar');
+				$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'showtoolbar');
 			}
 			if (isset($defaultPreferences['previewontop'])) {
 				$defaultPreferences['previewontop']['section'] = 'editing/monobookv2';
-				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'previewontop');
+				$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'previewontop');
 			}
 			if (isset($defaultPreferences['previewonfirst'])) {
 				$defaultPreferences['previewonfirst']['section'] = 'editing/monobookv2';
-				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'previewonfirst');
+				$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'previewonfirst');
 			}
 			if (isset($defaultPreferences['cols'])) {
 				$defaultPreferences['cols']['section'] = 'editing/monobookv2';
-				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'cols');
+				$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'cols');
 			}
 			if (isset($defaultPreferences['rows'])) {
 				$defaultPreferences['rows']['section'] = 'editing/monobookv2';
-				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'rows');
+				$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'rows');
 			}
 		}
 		if (isset($defaultPreferences['editsectiononrightclick'])) {
@@ -253,7 +253,7 @@ class UserPreferencesV2 {
 		}
 		if (isset($defaultPreferences['disablecategoryselect'])) {
 			$defaultPreferences['disablecategoryselect']['section'] = 'editing/starting-an-edit';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'disablecategoryselect');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'disablecategoryselect');
 		}
 
 		//Tab 4: Under the Hood
@@ -321,7 +321,7 @@ class UserPreferencesV2 {
 			$defaultPreferences['showhiddencats']['section'] = 'under-the-hood/advanced-displayv2';
 			$defaultPreferences['showhiddencats']['type'] = 'toggle';
 			$defaultPreferences['showhiddencats']['label-message'] = 'tog-showhiddencats';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showhiddencats');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'showhiddencats');
 		}
 		if (isset($defaultPreferences['showjumplinks'])) {
 			$defaultPreferences['showjumplinks']['section'] = 'under-the-hood/advanced-displayv2';
@@ -347,20 +347,20 @@ class UserPreferencesV2 {
 		if (isset($defaultPreferences['hidefollowedpages'])) {
 			$defaultPreferences['hidefollowedpages']['section'] = 'under-the-hood/advanced-displayv2';
 			$defaultPreferences['hidefollowedpages']['label-message'] = 'tog-hidefollowedpages-v2';
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'hidefollowedpages');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'hidefollowedpages');
 		}
 		if (isset($defaultPreferences['justify'])) {
 			if ($user->mOptions['skin'] == 'monobook') {
 				$defaultPreferences['justify']['section'] = 'under-the-hood/advanced-displayv2';
 				$defaultPreferences['justify']['label-message'] = 'tog-justify-v2';
-				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'justify');
+				$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'justify');
 			}
 			else {
 				unset($defaultPreferences['justify']);
 			}
 		}
 		if (($wgEnableWallExt) && (isset($defaultPreferences['wallshowsource']))) {
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'wallshowsource');
+			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'wallshowsource');
 		}
 		if (isset($defaultPreferences['hidepatrolled'])) {
 			$defaultPreferences['hidepatrolled']['section'] = 'under-the-hood/patrolled-editsv2';
@@ -387,7 +387,7 @@ class UserPreferencesV2 {
 	 *
 	 * @return bool true
 	 */
-	public function onUserGetDefaultOptions(&$defOpt) {
+	static public function onUserGetDefaultOptions(&$defOpt) {
 		$defOpt[self::LANDING_PAGE_PROP_NAME] = self::LANDING_PAGE_MAIN_PAGE;
 
 		return true;
@@ -399,11 +399,11 @@ class UserPreferencesV2 {
 	 * @param $storage - storage in which we can save some options, it will be passed in onSpecialPreferencesAfterResetUserOptions hook call
 	 * @param User $user
 	 */
-	public function onSpecialPreferencesBeforeResetUserOptions($preferences, &$user, &$storage) {
+	static public function onSpecialPreferencesBeforeResetUserOptions($preferences, &$user, &$storage) {
 		//user identity box/masthead
 		$userIdentityObject = new UserIdentityBox(F::app(), $user, 0);
 		$mastheadOptions = $userIdentityObject->getFullData();
-		$masthead = F::build('Masthead', array($user));
+		$masthead = new Masthead($user);
 		if(!empty($masthead->mUser->mOptionOverrides['avatar'])) {
 			$mastheadOptions['avatar'] = $masthead->mUser->mOptionOverrides['avatar'];
 		}
@@ -426,27 +426,27 @@ class UserPreferencesV2 {
 	 *
 	 * @param $storage - storage with info from SpecialPreferencesBeforeResetUserOptions hook call
 	 */
-	public function onSpecialPreferencesAfterResetUserOptions($preferences, &$user, &$storage) {
+	static public function onSpecialPreferencesAfterResetUserOptions($preferences, &$user, &$storage) {
 		//user identity box/masthead
-		$this->setUserOptionByNameAndValue($user, $storage[self::MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME]);
+		self::setUserOptionByNameAndValue($user, $storage[self::MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME]);
 
 		//customize toolbar
-		$this->setUserOptionByNameAndValue($user, $storage[self::MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME]);
+		self::setUserOptionByNameAndValue($user, $storage[self::MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME]);
 
 		return true;
 	}
 
 	// check if email is valid
-	public static function onSavePreferences( &$formData, &$error ) {
+	static public function onSavePreferences( &$formData, &$error ) {
 		if ( array_key_exists('emailaddress', $formData) && !Sanitizer::validateEmail($formData['emailaddress']) ) {
-			$error = F::app()->wf->Msg( 'invalidemailaddress' );
+			$error = wfMsg( 'invalidemailaddress' );
 			return false;
 		}
 
 		return true;
 	}
 
-	public function onPreferencesTrySetUserEmail( $user, $newEmail, &$result ) {
+	static public function onPreferencesTrySetUserEmail( $user, $newEmail, &$result ) {
 		list( $status, $info ) = Preferences::trySetUserEmail( $user, $newEmail );
 
 		/* @var $status Status */
@@ -458,7 +458,7 @@ class UserPreferencesV2 {
 		return true;
 	}
 
-	public function moveToEndOfArray($array, $key) {
+	static public function moveToEndOfArray($array, $key) {
 		$temp[$key] = $array[$key];
 		unset($array[$key]);
 		return array_merge($array, $temp);
@@ -468,7 +468,7 @@ class UserPreferencesV2 {
 	 * @param User $user
 	 * @param $options
 	 */
-	protected function setUserOptionByNameAndValue($user, $options) {
+	static protected function setUserOptionByNameAndValue($user, $options) {
 		foreach($options as $optionName => $optionValue) {
 			if(!is_array($optionValue)) {
 				$user->setOption($optionName, $optionValue);

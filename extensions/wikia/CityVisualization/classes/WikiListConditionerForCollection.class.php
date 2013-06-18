@@ -8,7 +8,7 @@ class WikiListConditionerForCollection implements WikiListConditioner {
 	
 	public function getCondition() {
 		$app = F::app();
-		$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->ExternalSharedDB);
+		$db = wfGetDB(DB_SLAVE, array(), $app->wg->ExternalSharedDB);
 		
 		return [
 			'city_list.city_public' => 1,

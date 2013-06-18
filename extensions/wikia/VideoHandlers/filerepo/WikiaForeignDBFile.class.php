@@ -60,7 +60,7 @@ class WikiaForeignDBFile extends ForeignDBFile {
 
 	protected function getLocalFileLogic() {
 		if ( empty( $this->oLocalFileLogic ) ){
-			$this->oLocalFileLogic = F::build( 'WikiaLocalFileShared', array( $this ) );
+			$this->oLocalFileLogic = new WikiaLocalFileShared( $this );
 		}
 		return $this->oLocalFileLogic;
 	}

@@ -17,7 +17,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'chat-desc',
 );
 
-$app = F::app();
 $dir = dirname(__FILE__);
 
 // rights
@@ -94,7 +93,7 @@ $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['NodeApiClient'] = "$dir/NodeApiClient.class.php";
 $wgAutoloadClasses['ChatfailoverSpecialController'] = "$dir/ChatfailoverSpecialController.class.php";
 
-$app->registerSpecialPage('Chatfailover', 'ChatfailoverSpecialController');
+$wgSpecialPages[ 'Chatfailover'] = 'ChatfailoverSpecialController';
 
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
@@ -112,8 +111,6 @@ $wgHooks[ 'ParserFirstCallInit' ][] = 'ChatEntryPoint::onParserFirstCallInit';
 $wgHooks[ 'LinkEnd' ][] = 'ChatHelper::onLinkEnd';
 $wgHooks[ 'BeforePageDisplay' ][] = 'ChatHelper::onBeforePageDisplay';
 $wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
-
-$wgHooks[ 'LogLineExt' ][] = 'ChatHelper::onLogLineExt';
 
 $wgLogTypes[] = 'chatban';
 $wgLogHeaders['chatban'] = 'chat-chatban-log';
@@ -133,11 +130,11 @@ $wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHelper::formatLogEntry";
 
 
 // register messages package for JS
-F::build('JSMessages')->registerPackage('Chat', array(
+JSMessages::registerPackage('Chat', array(
 	'chat-*',
 ));
 
-F::build('JSMessages')->registerPackage('ChatBanModal', array(
+JSMessages::registerPackage('ChatBanModal', array(
 	'chat-log-reason-banadd',
 	'chat-ban-modal-change-ban-heading',
 	'chat-ban-modal-button-cancel',

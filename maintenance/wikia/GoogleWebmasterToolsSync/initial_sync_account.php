@@ -8,7 +8,7 @@ GWTLogHelper::notice( __FILE__ . " script starts.");
 try {
 	global $wgExternalSharedDB;
 	$app = F::app();
-	$db = $app->wf->getDB( DB_MASTER, array(), $wgExternalSharedDB);
+	$db = wfgetDB( DB_MASTER, array(), $wgExternalSharedDB);
 
 	function generateUserId( DatabaseBase $db ) {
 		$res = $db->select("webmaster_user_accounts",

@@ -170,7 +170,7 @@ class AssetsManagerController extends WikiaController {
 	 * @param array $options @see getMultiTypePackage
 	 */
 	public function purgeMultiTypePackageCache( Array $options ) {
-		SquidUpdate::purge( array ( F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( $options ) ) );
+		SquidUpdate::purge( array ( AssetsManager::getInstance()->getMultiTypePackageURL( $options ) ) );
 	}
 
 	/**
@@ -190,7 +190,7 @@ class AssetsManagerController extends WikiaController {
 			$request = new WebRequest();
 			$request->setVal('oid', $oid);
 
-			$builder = F::build($className, array($request));
+			$builder = new $className($request);
 			return $builder;
 		}
 		else {

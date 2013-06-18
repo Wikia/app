@@ -10,7 +10,7 @@ class GWTWikiRepository {
 		if ( $databaseConnection == null ) {
 			global $wgExternalSharedDB;
 			$app = F::app();
-			$databaseConnection = $app->wf->getDB( DB_MASTER, array(), $wgExternalSharedDB);
+			$databaseConnection = wfgetDB( DB_MASTER, array(), $wgExternalSharedDB);
 		}
 		$this->databaseConnection = $databaseConnection;
 	}

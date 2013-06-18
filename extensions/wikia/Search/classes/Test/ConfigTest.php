@@ -464,7 +464,6 @@ class ConfigTest extends BaseTest {
 		;
 
 		$this->mockClass( 'SearchEngine', $searchEngineMock );
-		$this->mockApp();
 
 		$profiles = $config->getSearchProfiles();
 		$profileConstants = array( SEARCH_PROFILE_DEFAULT, SEARCH_PROFILE_IMAGES, SEARCH_PROFILE_USERS, SEARCH_PROFILE_ALL );
@@ -648,7 +647,6 @@ class ConfigTest extends BaseTest {
 			->method		( 'log' )
 		;
 		$this->mockClass( 'Wikia', $mockWikia );
-		$this->mockApp();
 		// this satisfies the above expectation
 		$config->setFilterQueryByCode( 'notacode' );
 
@@ -954,9 +952,8 @@ class ConfigTest extends BaseTest {
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getNamespaceId' ], [ 'foo' ] );
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getNamespaces' ] );
 		
-		$this->proxyClass( 'Wikia\Search\Query\Select', $mockQuery );
-		$this->mockApp();
-		
+		$this->mockClass( 'Wikia\Search\Query\Select', $mockQuery );
+
 		$this->assertNull(
 				$mockConfig->getQuery()
 		);
@@ -969,8 +966,8 @@ class ConfigTest extends BaseTest {
 				$mockConfig,
 				$mockConfig->setQuery( 'foo' )
 		);
-		$this->assertInstanceOf(
-				$mockConfig->getQuery()->_mockClassName, // mockproxy hack
+		$this->assertEquals(
+				$mockConfig->getQuery(),
 				$mockQuery
 		);
 		$mockQuery

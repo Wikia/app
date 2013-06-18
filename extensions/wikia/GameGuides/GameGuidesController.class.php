@@ -31,7 +31,7 @@ class GameGuidesController extends WikiaController {
 			throw new  GameGuidesWrongAPIVersionException();
 		}
 		
-		$this->mModel = F::build( 'GameGuidesModel' );
+		$this->mModel = (new GameGuidesModel);
 		$this->mPlatform = $this->request->getVal( 'os' );
 	}
 	
@@ -250,7 +250,7 @@ class GameGuidesController extends WikiaController {
 		);
 
 		$this->response->setVal( 'globals', Skin::newFromKey( 'wikiamobile' )->getTopScripts() );
-		$this->response->setVal( 'messages', F::build( 'JSMessages' )->getPackages( array( 'GameGuides' ) ) );
+		$this->response->setVal( 'messages', JSMessages::getPackages( array( 'GameGuides' ) ) );
 		$this->response->setVal( 'title', Title::newFromText( $titleName )->getText() );
 		$this->response->setVal( 'html', $html['parse']['text']['*'] );
 
@@ -364,7 +364,7 @@ class GameGuidesController extends WikiaController {
 		$offset = $this->request->getVal( 'offset', '' );
 
 		$categories = WikiaDataAccess::cache(
-			$this->wf->memcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
+			wfMemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
 			self::SIX_HOURS,
 			function() use ( $limit, $offset ) {
 				return ApiService::call(

@@ -36,7 +36,7 @@ class ImageTweaksService extends WikiaService {
 
 			$html .= Xml::openElement( 'div', array( 'class' => 'picture-attribution' ) ) .
 				$avatar .
-				$this->wf->MsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $attributeTo ) .
+				wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $attributeTo ) .
 				Xml::closeElement( 'div' );
 
 			wfProfileOut( __METHOD__ . '::PictureAttribution' );

@@ -7,12 +7,12 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 
 		parent::setUp();
 
-		$userMock = $this->getMock('stcClass', array('getGroups'));
+		$userMock = $this->getMock('stdClass', array('getGroups'));
 		$userMock->expects($this->any())
 			->method('getGroups')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalVariable('user', $userMock);
+		$this->mockGlobalVariable('wgUser', $userMock);
 	}
 
 	/**
@@ -21,10 +21,11 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 	public function testCheckDomainIsCorrect($domainName, $lang, $isCorrect, $expectedErrorKey) {
 
 		if (!$isCorrect) {
-			$this->mockGlobalFunction('msg', 'mocked-string', 1, array(
-				$this->equalTo($expectedErrorKey)
-			));
-			$this->mockApp();
+			$this->getGlobalFunctionMock( 'wfMsg' )
+				->expects( $this->exactly( 1 ) )
+				->method( 'wfMsg' )
+				->with( $this->equalTo( $expectedErrorKey ) )
+				->will( $this->returnValue( 'mocked-string' ) );
 		}
 
 		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'checkDomainExists', 'getLanguageNames'));
@@ -77,10 +78,11 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 	}
 
 	function testCheckDomainIsCorrectBadWords() {
-		$this->mockGlobalFunction('msg', 'mocked-string', 1, array(
-			$this->equalTo('autocreatewiki-violate-policy')
-		));
-		$this->mockApp();
+		$this->getGlobalFunctionMock( 'wfMsg' )
+			->expects( $this->exactly( 1 ) )
+			->method( 'wfMsg' )
+			->with( $this->equalTo( 'autocreatewiki-violate-policy' ) )
+			->will( $this->returnValue( 'mocked-string' ) );
 
 		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'getLanguageNames'));
 		$autoCreateWikiMock->staticExpects($this->any())
@@ -101,10 +103,11 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 	}
 
 	function testCheckDomainIsCorrectDomainExists() {
-		$this->mockGlobalFunction('msg', 'mocked-string', 1, array(
-			$this->equalTo('autocreatewiki-name-taken')
-		));
-		$this->mockApp();
+		$this->getGlobalFunctionMock( 'wfMsg' )
+			->expects( $this->exactly( 1 ) )
+			->method( 'wfMsg' )
+			->with( $this->equalTo( 'autocreatewiki-name-taken' ) )
+			->will( $this->returnValue( 'mocked-string' ) );
 
 		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'getLanguageNames', 'checkDomainExists'));
 		$autoCreateWikiMock->staticExpects($this->any())

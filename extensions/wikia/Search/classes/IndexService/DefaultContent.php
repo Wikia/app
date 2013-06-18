@@ -241,7 +241,8 @@ class DefaultContent extends AbstractService
 			$result['infoboxes_txt'] = [];
 			$counter = 1;
 			foreach ( $infoboxes as $infobox ) {
-				$infobox = new simple_html_dom( $infobox->outertext() );
+				$outerText = $infobox->outertext();
+				$infobox = new simple_html_dom( $outerText );
 				$this->removeGarbageFromDom( $infobox );
 				$infobox->load( $infobox->save() );
 				$infoboxRows = $infobox->find( 'tr' );

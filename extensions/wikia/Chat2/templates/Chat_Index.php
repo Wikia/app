@@ -14,7 +14,7 @@
 
 	<!-- JS -->
 	<?php
-		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('oasis_blocking', array());
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL('oasis_blocking', array());
 	?>
 	<?php foreach($srcs as $src): ?>
 		<script src="<?php echo $src ?>"></script>
@@ -125,7 +125,7 @@
 	</script>
 	<!-- Load these after the DOM is built -->
 	<?php
-		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_js2', array());
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL('chat_js2', array());
 	?>
 	<?php foreach($srcs as $src): ?>
 		<script src="<?php echo $src ?>"></script>

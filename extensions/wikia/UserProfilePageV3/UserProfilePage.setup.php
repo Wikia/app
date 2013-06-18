@@ -2,7 +2,6 @@
 /**
  * @var WikiaApp
  */
-$app = F::app();
 $dir = dirname( __FILE__ );
 
 define ('AVATAR_DEFAULT_WIDTH', 200);
@@ -15,23 +14,25 @@ define ('AVATAR_UPLOAD_FIELD', 'wkUserAvatar');
 /**
  * model
  */
-$app->registerClass('UserProfilePage', $dir . '/UserProfilePage.class.php');
-$app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
-$app->registerClass('UserProfilePageRailHelper', $dir . '/UserProfilePageRailHelper.class.php');
-$app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
+$wgAutoloadClasses['UserProfilePage'] =  $dir . '/UserProfilePage.class.php';
+$wgAutoloadClasses['UserIdentityBox'] =  $dir . '/UserIdentityBox.class.php';
+$wgAutoloadClasses['UserProfilePageRailHelper'] =  $dir . '/UserProfilePageRailHelper.class.php';
+$wgAutoloadClasses['ImageOperationsHelper'] =  $dir . '/ImageOperationsHelper.class.php';
+
+$wgAutoloadClasses['UserProfilePageHelper'] =  $dir . '/UserProfilePageHelper.class.php';
 
 /**
  * controllers
  */
-$app->registerClass('UserProfilePageController', $dir . '/UserProfilePageController.class.php');
-$app->registerClass('Masthead', $dir . '/Masthead.class.php');
+$wgAutoloadClasses['UserProfilePageController'] =  $dir . '/UserProfilePageController.class.php';
+$wgAutoloadClasses['Masthead'] =  $dir . '/Masthead.class.php';
 
 /**
  * helper classes (strategies)
  */
-$app->registerClass('UserTagsStrategyBase', $dir . '/strategies/UserTagsStrategyBase.class.php');
-$app->registerClass('UserOneTagStrategy', $dir . '/strategies/UserOneTagStrategy.class.php');
-$app->registerClass('UserTwoTagsStrategy', $dir . '/strategies/UserTwoTagsStrategy.class.php');
+$wgAutoloadClasses['UserTagsStrategyBase'] =  $dir . '/strategies/UserTagsStrategyBase.class.php';
+$wgAutoloadClasses['UserOneTagStrategy'] =  $dir . '/strategies/UserOneTagStrategy.class.php';
+$wgAutoloadClasses['UserTwoTagsStrategy'] =  $dir . '/strategies/UserTwoTagsStrategy.class.php';
 
 /**
  * special pages
@@ -40,27 +41,24 @@ $app->registerClass('UserTwoTagsStrategy', $dir . '/strategies/UserTwoTagsStrate
 /**
  * hooks
  */
-$app->registerHook('SkinTemplateOutputPageBeforeExec', 'UserProfilePageController', 'onSkinTemplateOutputPageBeforeExec');
-$app->registerHook('SkinSubPageSubtitleAfterTitle', 'UserProfilePageController', 'onSkinSubPageSubtitleAfterTitle');
-$app->registerHook('ArticleSaveComplete', 'UserProfilePageController', 'onArticleSaveComplete');
-$app->registerHook('GetRailModuleList', 'UserProfilePageRailHelper', 'onGetRailModuleList');
-$app->registerHook('WikiaMobileAssetsPackages', 'UserProfilePageController', 'onWikiaMobileAssetsPackages');
-$app->registerHook('BeforeDisplayNoArticleText', 'UserProfilePageController', 'onBeforeDisplayNoArticleText');
+$wgAutoloadClasses['UserProfilePageHooks'] =  $dir . '/UserProfilePageHooks.class.php';
 
-$app->registerHook('ArticleSaveComplete', 'Masthead', 'userMastheadInvalidateCache');
+$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfilePageHooks::onSkinTemplateOutputPageBeforeExec';
+$wgHooks['BeforeDisplayNoArticleText'][] = 'UserProfilePageHooks::onBeforeDisplayNoArticleText';
+$wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'UserProfilePageHooks::onSkinSubPageSubtitleAfterTitle';
+$wgHooks['ArticleSaveComplete'][] = 'UserProfilePageHooks::onArticleSaveComplete';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'UserProfilePageHooks::onWikiaMobileAssetsPackages';
+
+$wgHooks['GetRailModuleList'][] = 'UserProfilePageRailHelper::onGetRailModuleList';
+
+$wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
 
 /**
  * messages
  */
-$app->registerExtensionMessageFile('UserProfilePageV3', $dir . '/UserProfilePage.i18n.php');
+$wgExtensionMessagesFiles['UserProfilePageV3'] = $dir . '/UserProfilePage.i18n.php';
 //register messages package for JS
 //$app->registerExtensionJSMessagePackage('UPP3_modals', array('user-identity-box-about-date-*'));
-
-/**
- * DI setup
- */
-F::addClassConstructor( 'UserProfilePage', array( 'app' => $app ) );
-F::addClassConstructor( 'UserProfilePageController', array( 'app' => $app ) );
 
 /**
  * extension related configuration
@@ -76,8 +74,6 @@ if( defined('NS_USER_WALL') ) {
 if( defined('NS_BLOG_ARTICLE') ) {
 	$UPPNamespaces[] = NS_BLOG_ARTICLE;
 }
-
-$app->getLocalRegistry()->set( 'UserProfilePageNamespaces', $UPPNamespaces );
 
 $wgLogTypes[] = AVATAR_LOG_NAME;
 $wgLogHeaders[AVATAR_LOG_NAME] = 'blog-avatar-alt';
