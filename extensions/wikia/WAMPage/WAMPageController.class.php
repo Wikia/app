@@ -200,7 +200,7 @@ class WAMPageController extends WikiaController
 		$mainWAMPageUrl = $this->model->getWAMMainPageUrl();
 
 		if( $isFirstTab && !empty($mainWAMPageUrl) ) {
-			$mainWAMPageUrlWithFilterParams = $mainWAMPageUrl.$this->getFilterParamAsQueryString();
+			$mainWAMPageUrlWithFilterParams = $mainWAMPageUrl.$this->getFilterParamsAsQueryString();
 			$this->wg->Out->redirect($mainWAMPageUrlWithFilterParams, HTTP_REDIRECT_PERM);
 		}
 	}
