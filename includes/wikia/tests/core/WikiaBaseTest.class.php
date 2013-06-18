@@ -190,8 +190,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Mock global ($wg...) variable.
 	 *
-	 * Should be followed by the call to $this->mockApp()
-	 *
 	 * @param $globalName string name of global variable (e.g. wgCity - WITH wg prefix)
 	 * @param $returnValue mixed value variable should be set to
 	 */
@@ -209,8 +207,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Mock global (wf...) function.
-	 *
-	 * Should be followed by the call to $this->mockApp()
 	 *
 	 * @param $functionName string Global function name (including "wf" prefix)
 	 * @param $returnValue mixed

@@ -10,7 +10,6 @@ class ImageLazyLoad  {
 	const LAZY_IMAGE_CLASSES = 'lzy lzyPlcHld';
 
 	static public function isEnabled() {
-		global $wgRTEParserEnabled;
 		if ( is_null( self::$enabled ) ) {
 			$app = F::app();
 			self::$enabled = false;
@@ -19,7 +18,7 @@ class ImageLazyLoad  {
 				self::$isWikiaMobile = $app->checkSkin( 'wikiamobile' );
 			}
 
-			if ( !self::$isWikiaMobile && empty( $wgRTEParserEnabled ) ) {
+			if ( !self::$isWikiaMobile && empty( $app->wg->RTEParserEnabled ) ) {
 				self::$enabled = true;
 			}
 		}

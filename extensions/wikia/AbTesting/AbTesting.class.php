@@ -54,7 +54,7 @@ class AbTesting extends WikiaObject {
 	}
 
 	protected function getMemcKey() {
-		return wfsharedMemcKey('abtesting','config',self::VERSION);
+		return wfSharedMemcKey('abtesting','config',self::VERSION);
 	}
 
 	protected function getFlagsInObject( $flags ) {

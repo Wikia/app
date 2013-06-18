@@ -28,8 +28,8 @@ class JSMessagesHelper {
 
 		$parts = array(
 			$wgStyleVersion,
-			STATIC::getWikiRevisionId(),
-			STATIC::getWikiRevisionId(self::MESSAGING),
+			static::getWikiRevisionId(),
+			static::getWikiRevisionId(self::MESSAGING),
 		);
 
 		$ret = implode('.', $parts);
@@ -45,7 +45,7 @@ class JSMessagesHelper {
 	 */
 	static private function getWikiRevisionId($dbName = null) {
 		global $wgMemc;
-		return intval($wgMemc->get(STATIC::getMemcacheKey($dbName)));
+		return intval($wgMemc->get(static::getMemcacheKey($dbName)));
 	}
 
 	/**
@@ -55,7 +55,7 @@ class JSMessagesHelper {
 	 */
 	static private function setWikiRevisionId($revId) {
 		global $wgMemc;
-		$wgMemc->set(STATIC::getMemcacheKey(), $revId, self::TTL);
+		$wgMemc->set(static::getMemcacheKey(), $revId, self::TTL);
 	}
 
 	/**
@@ -85,7 +85,7 @@ class JSMessagesHelper {
 		global $wgArticle;
 
 		if (!empty($wgArticle)) {
-			STATIC::setWikiRevisionId(intval($wgArticle->getLatest()));
+			static::setWikiRevisionId(intval($wgArticle->getLatest()));
 		}
 
 		return true;

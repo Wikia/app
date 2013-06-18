@@ -17,7 +17,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'chat-desc',
 );
 
-$app = F::app();
 $dir = dirname(__FILE__);
 
 // rights

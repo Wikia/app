@@ -126,7 +126,7 @@ class EditPageLayoutHelper {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageLayoutHooks::onMakeGlobalVariablesScript';
 		$wgHooks['SkinGetPageClasses'][] = 'EditPageLayoutHooks::onSkinGetPageClasses';
 
-		$this->helper = EditPageLayoutHelper::getInstance();
+		$this->helper = self::getInstance();
 
 		wfProfileOut(__METHOD__);
 		return $this->editPage;

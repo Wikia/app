@@ -15,22 +15,22 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname( __FILE__ ) . '/';
 
 // classes
-$wgAutoloadClasses[ 'ForumSpecialController'] =  $dir . 'ForumSpecialController.class.php' ;
-$wgAutoloadClasses[ 'ForumHooksHelper'] =  $dir . 'ForumHooksHelper.class.php' ;
-$wgAutoloadClasses[ 'ForumController'] =  $dir . 'ForumController.class.php' ;
-$wgAutoloadClasses[ 'ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
-$wgAutoloadClasses[ 'Forum'] =  $dir . 'Forum.class.php' ;
-$wgAutoloadClasses[ 'ForumBoard'] =  $dir . 'ForumBoard.class.php' ;
-$wgAutoloadClasses[ 'ForumHelper'] =  $dir . 'ForumHelper.class.php' ;
-$wgAutoloadClasses[ 'ForumExternalController'] =  $dir . 'ForumExternalController.class.php' ;
-$wgAutoloadClasses[ 'RelatedForumDiscussionController'] =  $dir . 'RelatedForumDiscussionController.class.php' ;
+$wgAutoloadClasses['ForumSpecialController'] =  $dir . 'ForumSpecialController.class.php' ;
+$wgAutoloadClasses['ForumHooksHelper'] =  $dir . 'ForumHooksHelper.class.php' ;
+$wgAutoloadClasses['ForumController'] =  $dir . 'ForumController.class.php' ;
+$wgAutoloadClasses['ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
+$wgAutoloadClasses['Forum'] =  $dir . 'Forum.class.php' ;
+$wgAutoloadClasses['ForumBoard'] =  $dir . 'ForumBoard.class.php' ;
+$wgAutoloadClasses['ForumHelper'] =  $dir . 'ForumHelper.class.php' ;
+$wgAutoloadClasses['ForumExternalController'] =  $dir . 'ForumExternalController.class.php' ;
+$wgAutoloadClasses['RelatedForumDiscussionController'] =  $dir . 'RelatedForumDiscussionController.class.php' ;
 
 // i18n mapping
 $wgExtensionMessagesFiles['Forum'] = $dir . 'Forum.i18n.php' ;
 $wgExtensionMessagesFiles['ForumAliases'] = $dir . 'Forum.alias.php';
 
 // special pages
-$wgSpecialPages[ 'Forum' ] =  'ForumSpecialController';
+$wgSpecialPages['Forum'] =  'ForumSpecialController';
 
 // hooks
 $wgHooks['AfterWallWikiActivityFilter'][] = 'ForumHooksHelper::onAfterWallWikiActivityFilter';

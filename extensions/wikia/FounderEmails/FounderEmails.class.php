@@ -149,7 +149,7 @@ class FounderEmails {
 		global $wgUser, $wgCityId, $wgSitename, $wgEnableUserPreferencesV2Ext;
 		wfProfileIn( __METHOD__ );
 
-		$wikiService = (new WikiService); /* @var $wikiService WikiService */
+		$wikiService = (new WikiService);
 		if ( !FounderEmailsEvent::isAnswersWiki() && in_array($wgUser->getId(), $wikiService->getWikiAdminIds()) ) {
 
 			if ( empty($wgEnableUserPreferencesV2Ext) ) {

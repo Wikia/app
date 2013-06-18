@@ -98,7 +98,7 @@ class CreateNewWikiController extends WikiaController {
 	public function CheckWikiName() {
 		wfProfileIn(__METHOD__);
 
-		$wgRequest = $this->wg->Request; /* @var $wgRequest WebRequest */
+		$wgRequest = $this->wg->Request;
 
 		$name = $wgRequest->getVal('name');
 		$lang = $wgRequest->getVal('lang');

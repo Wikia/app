@@ -27,7 +27,7 @@ class PhalanxContentModel extends PhalanxModel {
 		wfProfileIn( __METHOD__ );
 
 		$whitelist = array();
-		$content = wfmsgForContent( self::SPAM_WHITELIST_TITLE );
+		$content = wfMsgForContent( self::SPAM_WHITELIST_TITLE );
 		
 		if ( wfemptyMsg( self::SPAM_WHITELIST_TITLE, $content ) ) {
 			wfProfileOut( __METHOD__ );
@@ -74,9 +74,9 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function reasonBlock() {
-		$msg = wfmsgExt( 'phalanx-title-move-summary', 'parseinline' );
+		$msg = wfMsgExt( 'phalanx-title-move-summary', 'parseinline' );
 		$msg .= Html::element( 'p', array(), wfMsg( 'phalanx-stats-table-id' ) . " #{$this->block->id}" );
-		$msg .= wfmsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$this->block->text}</nowiki>" );
+		$msg .= wfMsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$this->block->text}</nowiki>" );
 		$this->logBlock();
 		
 		return $msg;

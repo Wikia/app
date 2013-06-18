@@ -16,6 +16,7 @@ abstract class WikiaSuperFactory {
 	 * @param string $className class name
 	 * @param array $params optional params to be set as defaults
 	 * @param string $methodName factory method to call, leave default for "new" operator to be called
+	 * @deprecated
 	 */
 	public static function addClassConstructor($className, Array $params = array(), $methodName = '__construct') {
 		if(!isset(self::$constructors[$className])) {

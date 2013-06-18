@@ -55,10 +55,6 @@
 			$this->mockGlobalVariable('wgStatsDB', '', 2);
 		}
 
-		protected function tearDownGetStatsMock() {
-			// todo: remove it?
-		}
-
 		/**
 		 * @dataProvider getStatsDataProvider
 		 */
@@ -72,8 +68,6 @@
 
 			$response_data = $response->getVal('totals');
 			$this->assertEquals($expected_total, $response_data);
-
-			$this->tearDownGetStatsMock();
 		}
 
 		public function getStatsDataProvider() {

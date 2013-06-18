@@ -17,7 +17,7 @@ class AchNotificationService {
 	}
 
 	protected function getMemcKey() {
-		return wfmemcKey('AchNotificationService','user',intval($this->userId));
+		return wfMemcKey('AchNotificationService','user',intval($this->userId));
 	}
 
 	protected function getLastBadge() {

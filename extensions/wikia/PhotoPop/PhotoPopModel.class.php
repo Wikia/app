@@ -83,7 +83,7 @@ class PhotoPopModel extends WikiaModel{
 	public function getGameContents( $categoryName, $imageWidth, $imageHeight ) {
 		wfProfileIn( __METHOD__ );
 
-		$cacheKey = wfmemcKey( __METHOD__, $categoryName );
+		$cacheKey = wfMemcKey( __METHOD__, $categoryName );
 		$contents = $this->loadFromCache( $cacheKey );
 
 		if ( empty( $contents ) ) {

@@ -289,7 +289,7 @@ class ScavengerHunt {
 	static public function onMakeGlobalVariablesScript( Array &$vars ) {
 		wfProfileIn(__METHOD__);
 
-		$games = (new ScavengerHuntGames); /** @var $games ScavengerHuntGames  */
+		$games = new ScavengerHuntGames();
 
 		$params = $games->getJSParamsForCurrent();
 		if( !empty( $params ) ){

@@ -224,10 +224,10 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$articleId = $this->getVal( 'articleId', '' );
-		$rvd = (new RelatedVideosData); /** @var $rvd RelatedVideosData */
+		$rvd = new RelatedVideosData();
 		$retval = $rvd->addVideo( $articleId, $url );
 		if ( is_array( $retval ) ) {
-			$rvs = (new RelatedVideosService); /** @var $rvs RelatedVideosService */
+			$rvs = new RelatedVideosService();
 			$data = $rvs->getRelatedVideoDataFromMaster( $retval );
 			if ( empty($wgRelatedVideosOnRail) ) {
 				$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCarouselElement', array( 'video' => $data, 'preloaded' => 1 ) ));

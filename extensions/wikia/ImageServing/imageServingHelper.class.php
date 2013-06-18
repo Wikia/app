@@ -128,7 +128,6 @@ class ImageServingHelper {
 			return $images;
 		}
 
-		$app = F::app();
 		$dbw = wfGetDB(DB_MASTER, array());
 
 		if( count($images) < 1 ) {

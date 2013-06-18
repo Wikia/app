@@ -41,8 +41,8 @@ class JSMessages {
 	 * @param array $messages - list of messages in the package
 	 */
 	static public function registerPackage($packageName, $messages) {
-		static::log(__METHOD__, $packageName);
-		static::$packages[$packageName] = $messages;
+		self::log(__METHOD__, $packageName);
+		self::$packages[$packageName] = $messages;
 	}
 
 	/**
@@ -56,9 +56,9 @@ class JSMessages {
 
 		// add to proper queue
 		$queueName = ($mode == self::INLINE) ? 'inline' : 'external';
-		static::$queue[$queueName][] = $package;
+		self::$queue[$queueName][] = $package;
 
-		static::log(__METHOD__ , "{$package} (added to '{$queueName}' queue)");
+		self::log(__METHOD__ , "{$package} (added to '{$queueName}' queue)");
 		wfProfileOut(__METHOD__);
 	}
 
@@ -92,7 +92,7 @@ class JSMessages {
 		$fname = __METHOD__ . "::$pattern";
 		wfProfileIn($fname);
 
-		static::log(__METHOD__, $pattern);
+		self::log(__METHOD__, $pattern);
 
 		$pattern = substr($pattern, 0, -1);
 		$patternLen = strlen($pattern);
@@ -104,7 +104,7 @@ class JSMessages {
 		if($lang instanceof StubUserLang) {
 			$lang = $lang->_newObject();
 		}
-		$messageKeys = static::getAllMessageKeys($lang);
+		$messageKeys = self::getAllMessageKeys($lang);
 
 		$ret = array();
 		foreach($messageKeys as $msg) {
@@ -130,18 +130,18 @@ class JSMessages {
 	static private function getAllMessageKeys(Language $lang) {
 		wfProfileIn(__METHOD__);
 
-		if (is_null(static::$allMessageKeys)) {
+		if (is_null(self::$allMessageKeys)) {
 			wfProfileIn(__METHOD__ . '::miss');
 			$messageKeys = $lang->getAllMessageKeys();
-			static::$allMessageKeys = $messageKeys['messages'];
+			self::$allMessageKeys = $messageKeys['messages'];
 
 			$langCode = $lang->getCode();
 
 			// append legacy data
 			if (isset(Language::$dataCache->legacyData[$langCode]['messages'])) {
-				static::$allMessageKeys = array_unique(
+				self::$allMessageKeys = array_unique(
 					array_keys( Language::$dataCache->legacyData[$langCode]['messages']),
-					static::$allMessageKeys
+					self::$allMessageKeys
 				);
 			}
 
@@ -149,7 +149,7 @@ class JSMessages {
 		}
 
 		wfProfileOut(__METHOD__);
-		return static::$allMessageKeys;
+		return self::$allMessageKeys;
 	}
 
 	/**
@@ -165,11 +165,11 @@ class JSMessages {
 		wfProfileIn(__METHOD__);
 		$ret = null;
 
-		if (isset(static::$packages[$name])) {
-			static::log(__METHOD__, $name);
+		if (isset(self::$packages[$name])) {
+			self::log(__METHOD__, $name);
 
 			// get messages
-			$messages = static::$packages[$name];
+			$messages = self::$packages[$name];
 			$ret = array();
 
 			foreach($messages as $message) {
@@ -177,7 +177,7 @@ class JSMessages {
 				if (substr($message, -1) == '*') {
 					// BugId:18482
 					if ($allowWildcards) {
-						$msgs = static::resolveMessagesPattern($message);
+						$msgs = self::resolveMessagesPattern($message);
 
 						if (!empty($msgs)) {
 							$ret = array_merge($ret, $msgs);
@@ -222,7 +222,7 @@ class JSMessages {
 		$messages = array();
 
 		foreach($packages as $packageName) {
-			$packageMessages = static::getPackage($packageName, $allowWildcards);
+			$packageMessages = self::getPackage($packageName, $allowWildcards);
 
 			if (is_array($packageMessages)) {
 				$messages = array_merge($messages, $packageMessages);
@@ -239,21 +239,21 @@ class JSMessages {
 	 */
 	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin) {
 		wfProfileIn(__METHOD__);
-		static::log(__METHOD__, 'preparing list of inline messages...');
+		self::log(__METHOD__, 'preparing list of inline messages...');
 
 		// get items to be rendered as a variable in <head> section
-		$packages = static::$queue['inline'];
+		$packages = self::$queue['inline'];
 
 		if (!empty($packages)) {
-			$vars['wgMessages'] = static::getPackages($packages, false /* don't allow wildcards in INLINE mode (BugId:18482) */);
+			$vars['wgMessages'] = self::getPackages($packages, false /* don't allow wildcards in INLINE mode (BugId:18482) */);
 		}
 
 		// messages cache buster used by JSMessages (BugId:6324)
 		$vars['wgJSMessagesCB'] = JSMessagesHelper::getMessagesCacheBuster();
 
-		static::log(__METHOD__, 'preparing list of external packages...');
+		self::log(__METHOD__, 'preparing list of external packages...');
 
-		$url = static::getExternalPackagesUrl();
+		$url = self::getExternalPackagesUrl();
 
 		if ($url != "") {
 			// request a script
@@ -277,7 +277,7 @@ class JSMessages {
 		$wg = F::app()->wg;
 
 		// get items to be loaded via JS file
-		$packages = static::$queue['external'];
+		$packages = self::$queue['external'];
 		$url = '';
 
 		if (!empty($packages)) {

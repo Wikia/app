@@ -75,7 +75,7 @@ class GameGuidesModel{
 			$this->storeInCache( $cacheKey , $games );
 		}
 
-		$ret = wfpaginateArray( $games, $limit, $batch );
+		$ret = wfPaginateArray( $games, $limit, $batch );
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
@@ -99,14 +99,13 @@ class GameGuidesModel{
 
 		if ( empty( $ret ) ) {
 			$ret = Array();
-			wfloadExtensionMessages( 'GameGuides' );
 
 			$searchTitle = Title::newFromText( 'Search', NS_SPECIAL );
 			$ret[ 'searchURL' ] = $searchTitle->getLocalUrl( array( 'useskin' => GameGuidesController::SKIN_NAME ) );
 			$ret[ 'entries' ] = Array();
 
 			$entries = array_filter(
-				explode( "\n", strip_tags( str_replace( array( '<br>', '<br/>', '<br />' ), "\n" , wfmsgForContent( 'wikiagameguides-contents' ) ) ) ),
+				explode( "\n", strip_tags( str_replace( array( '<br>', '<br/>', '<br />' ), "\n" , wfMsgForContent( 'wikiagameguides-contents' ) ) ) ),
 				array( __CLASS__, 'verifyElement')
 			);
 
@@ -254,7 +253,7 @@ class GameGuidesModel{
 	}
 
 	private function generateCacheKey( $token ){
-		return wfmemcKey( $token, GameGuidesController::API_VERSION . '.' . GameGuidesController::API_REVISION . '.' . GameGuidesController::API_MINOR_REVISION );
+		return wfMemcKey( $token, GameGuidesController::API_VERSION . '.' . GameGuidesController::API_REVISION . '.' . GameGuidesController::API_MINOR_REVISION );
 	}
 
 	private function loadFromCache( $key ){

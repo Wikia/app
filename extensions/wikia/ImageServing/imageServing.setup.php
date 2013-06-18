@@ -9,7 +9,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '1.0.1',
 );
 
-$app = F::app();
 $dir = __DIR__ . '/';
 
 /*Auto loader setup */

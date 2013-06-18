@@ -364,7 +364,7 @@ class GameGuidesController extends WikiaController {
 		$offset = $this->request->getVal( 'offset', '' );
 
 		$categories = WikiaDataAccess::cache(
-			wfmemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
+			wfMemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
 			self::SIX_HOURS,
 			function() use ( $limit, $offset ) {
 				return ApiService::call(

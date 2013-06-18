@@ -17,4 +17,4 @@ $wgAutoloadClasses['AuthImageSpecialPageController'] =  $dir . 'AuthImageSpecial
 /**
  * special pages
  */
-$wgSpecialPages[ 'AuthImage'] = 'AuthImageSpecialPageController';
+$wgSpecialPages['AuthImage'] = 'AuthImageSpecialPageController';

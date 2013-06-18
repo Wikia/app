@@ -33,7 +33,7 @@ class ImageLightbox {
 			return array();
 		}
 
-		if ( (new WikiaFileHelper)->isFileTypeVideo( $image ) ) {
+		if ( WikiaFileHelper::isFileTypeVideo( $image ) ) {
 			if ( !empty($wgTitle) ) {
 				wfProfileOut(__METHOD__);
 				return self::videoLightbox($image);

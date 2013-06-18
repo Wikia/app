@@ -43,7 +43,7 @@ class ForumController extends WallBaseController {
 		$this->description = '';
 
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$board = ForumBoard::getEmpty( );
+			$board = ForumBoard::getEmpty();
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
@@ -199,7 +199,7 @@ class ForumController extends WallBaseController {
 	}
 
 	public function header() {
-		$forum = (new Forum);
+		$forum = new Forum();
 		$this->response->setVal( 'threads', $forum->getTotalThreads() );
 		$this->response->setVal( 'activeThreads', $forum->getTotalActiveThreads() );
 

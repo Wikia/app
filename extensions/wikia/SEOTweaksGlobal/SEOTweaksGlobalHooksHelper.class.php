@@ -23,7 +23,7 @@ class SEOTweaksGlobalHooksHelper {
 	}
 
 	static protected function makeKey( $title ) {
-		return wfmemcKey( 'OpenGraphTitleImage', md5( $title->getDBKey() ) );
+		return wfMemcKey( 'OpenGraphTitleImage', md5( $title->getDBKey() ) );
 	}
 
 	/**

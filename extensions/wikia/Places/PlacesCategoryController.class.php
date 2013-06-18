@@ -12,7 +12,7 @@ class PlacesCategoryController extends WikiaController {
 	}
 	public function enableGeoTagging(){
 
-		if ( !wfreadOnly() && $this->app->wg->user->isAllowed('places-enable-category-geolocation') ){
+		if ( !wfReadOnly() && $this->app->wg->user->isAllowed('places-enable-category-geolocation') ){
 			$sTitle = $this->getVal( 'pageName', null );
 			if ( !empty( $sTitle ) ){
 				$oPlacesCategory = PlaceCategory::newFromTitle( $sTitle );
@@ -27,7 +27,7 @@ class PlacesCategoryController extends WikiaController {
 	}
 	public function disableGeoTagging(){
 
-		if ( !wfreadOnly() && $this->app->wg->user->isAllowed('places-enable-category-geolocation') ){
+		if ( !wfReadOnly() && $this->app->wg->user->isAllowed('places-enable-category-geolocation') ){
 			$sTitle = $this->getVal( 'pageName', null );
 			if ( !empty( $sTitle ) ){
 				$oPlacesCategory = PlaceCategory::newFromTitle( $sTitle );
