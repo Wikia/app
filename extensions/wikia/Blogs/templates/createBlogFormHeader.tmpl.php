@@ -1,7 +1,7 @@
 <!-- s:<?php echo __FILE__ ?> -->
 <?php if(empty($preview)): ?>
 	<div id="blogInfo">
-	<label><?php echo wfMessage( "create-blog-form-info" )->parse() ?></label><br />
+	<label><?php echo wfMsgExt( "create-blog-form-info", array ( 'parseinline' ) ) ?></label><br />
 	</div>
 	<br />
 <?php endif; ?>
@@ -15,7 +15,7 @@
 		</div>
 	<?php endif; ?>
 	<div class="formBlock">
-		<span id="blogPostTitleHeader"><?php echo wfMessage( "create-blog-form-post-title" )->text() ?></span>
+		<span id="blogPostTitleHeader"><?php echo wfMsg( "create-blog-form-post-title" ) ?></span>
 		<?php if(isset($formData['isExistingArticleEditAllowed']) && $formData['isExistingArticleEditAllowed']): ?>
 			<input type="hidden" name="blogPostTitle" value="<?=isset($formData['postTitle']) ? $formData['postTitle'] : 0; ?>" />
 			<input type="hidden" name="blogPostId" value="<?=isset($formData['postId']) ? $formData['postId'] : 0; ?>" />
@@ -26,7 +26,7 @@
 			<input type="text" id="blogPostTitle" name="blogPostTitle" value="<?php echo (isset($formData['postTitle']) ? htmlspecialchars($formData['postTitle']) : ""); ?>" size="60" maxlength="255" />
 		<?php endif; ?>
 		<div id="blogPostCheckboxes">
-			<label><input type="checkbox" name="blogPostIsCommentingEnabled" value="1" <?php echo (!empty($formData['isCommentingEnabled']) || !isset($formData['isCommentingEnabled'])) ? "checked" : ""; ?> /><?php echo wfMessage( "blog-comments-label" )->text() ?></label>
+			<label><input type="checkbox" name="blogPostIsCommentingEnabled" value="1" <?php echo (!empty($formData['isCommentingEnabled']) || !isset($formData['isCommentingEnabled'])) ? "checked" : ""; ?> /><?php echo wfMsg("blog-comments-label") ?></label>
 		</div>
 	</div>
 </div>

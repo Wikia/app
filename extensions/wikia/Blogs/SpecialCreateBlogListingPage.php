@@ -23,49 +23,43 @@ class CreateBlogListingPage extends SpecialPage {
 	}
 
 	public function execute() {
-		wfProfileIn( __METHOD__ );
-		$user = $this->getUser();
-		$request = $this->getRequest();
-		$output = $this->getOutput();
+		global $wgOut, $wgUser, $wgRequest, $wgTitle;
 
-		wfRunHooks( 'beforeBlogListingForm', array( &$this, $request->getVal('article') ) );
+		wfRunHooks( 'beforeBlogListingForm', array( &$this, $wgRequest->getVal('article') ) );
 
-		if( !$user->isLoggedIn() ) {
-			$output->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array(wfGetReturntoParam()));
-			wfProfileOut( __METHOD__ );
+		if( !$wgUser->isLoggedIn() ) {
+			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array(wfGetReturntoParam()));
 			return;
 		}
 
-		if( $user->isBlocked() ) {
-			wfProfileOut( __METHOD__ );
-			throw new UserBlockedError( $user->mBlock );
+		if( $wgUser->isBlocked() ) {
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if( wfReadOnly() ) {
-			$output->readOnlyPage();
-			wfProfileOut( __METHOD__ );
+			$wgOut->readOnlyPage();
 			return;
 		}
 
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogListingPage' );
 
-		$output->setPageTitle( wfMessage( 'create-blog-listing-title' )->text() );
+		$wgOut->setPageTitle( wfMsg('create-blog-listing-title') );
 
-		if( $request->wasPosted() ) {
+		if($wgRequest->wasPosted()) {
 			$this->parseFormData();
-			if (count($this->mFormErrors) > 0 || !empty($this->mRenderedPreview)) {
+			if(count($this->mFormErrors) > 0 || !empty($this->mRenderedPreview)) {
 				$this->renderForm();
-			} else {
+			}
+			else {
 				$this->save();
 			}
 		}
 		else {
-			if( $request->getVal('article') != null ) {
-				$this->parseTag(urldecode( $request->getVal('article') ));
+			if($wgRequest->getVal('article') != null) {
+				$this->parseTag(urldecode($wgRequest->getVal('article')));
 			}
 			$this->renderForm();
 		}
-		wfProfileOut( __METHOD__ );
 
 	}
 
@@ -90,37 +84,36 @@ class CreateBlogListingPage extends SpecialPage {
 	}
 
 	protected function parseFormData() {
-		wfProfileIn( __METHOD__ );
-		$request = $this->getRequest();
+		global $wgUser, $wgRequest, $wgOut, $wgParser;
 
-		$this->mFormData['listingTitle'] = $request->getVal('blogListingTitle');
-		$this->mFormData['listingCategories'] = $request->getVal('wpCategoryTextarea1');
-		$this->mFormData['listingAuthors'] = $request->getVal('blogListingAuthors');
-		$this->mFormData['listingSortBy'] = $request->getVal('blogListingSortBy');
-		$this->mFormData['listingPageCategories'] = $request->getVal('wpCategoryTextarea2');
-		$this->mFormData['listingType'] = $request->getVal('listingType');
-		$this->mFormData['isExistingArticleEditAllowed'] = $request->getVal('articleEditAllowed');
+		$this->mFormData['listingTitle'] = $wgRequest->getVal('blogListingTitle');
+		$this->mFormData['listingCategories'] = $wgRequest->getVal('wpCategoryTextarea1');
+		$this->mFormData['listingAuthors'] = $wgRequest->getVal('blogListingAuthors');
+		$this->mFormData['listingSortBy'] = $wgRequest->getVal('blogListingSortBy');
+		$this->mFormData['listingPageCategories'] = $wgRequest->getVal('wpCategoryTextarea2');
+		$this->mFormData['listingType'] = $wgRequest->getVal('listingType');
+		$this->mFormData['isExistingArticleEditAllowed'] = $wgRequest->getVal('articleEditAllowed');
 
 		if(empty($this->mFormData['listingTitle'])) {
-			$this->mFormErrors[] = wfMessage( 'create-blog-empty-title-error' )->text();
+			$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
 		}
 		else {
 			$oPostTitle = Title::newFromText( $this->mFormData['listingTitle'], NS_BLOG_LISTING );
 
 			if(!($oPostTitle instanceof Title)) {
-				$this->mFormErrors[] = wfMessage( 'create-blog-invalid-title-error' )->text();
+				$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
 			}
 			elseif ( $oPostTitle->isProtected( 'edit' ) && !$oPostTitle->userCan( 'edit' ) ) {
 				if ( $oPostTitle->isSemiProtected() ) {
-					$this->mFormErrors[] = wfMessage( 'semiprotectedpagewarning' )->parse();
+					$this->mFormErrors[] = wfMsgExt('semiprotectedpagewarning', array('parse'));
 				} else {
-					$this->mFormErrors[] = wfMessage( 'protectedpagewarning' )->parse();
+					$this->mFormErrors[] = wfMsgExt('protectedpagewarning', array('parse'));
 				}
 			}
 			else {
 				$this->mPostArticle = new Article($oPostTitle, 0);
 				if($this->mPostArticle->exists() && ($this->mFormData['listingType'] == 'plain') && !$this->mFormData['isExistingArticleEditAllowed']) {
-					$this->mFormErrors[] = wfMessage( 'create-blog-article-already-exists' )->text();
+					$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
 				}
 			}
 		}
@@ -129,23 +122,21 @@ class CreateBlogListingPage extends SpecialPage {
 			$this->buildTag();
 		}
 
-		if(!count($this->mFormErrors) && $request->getVal('wpPreview')) {
+		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
 			if($this->mFormData['listingType'] == 'plain') {
-				$this->mRenderedPreview = BlogTemplateClass::parseTag($this->mTagBody, array(), new Parser);
+				$this->mRenderedPreview = BlogTemplateClass::parseTag($this->mTagBody, array(), $wgParser);
 			}
 			else {
 				$this->mRenderedPreview = '<pre>' . htmlspecialchars($this->mTagBody) . '</pre>';
 			}
 		}
-		wfProfileOut( __METHOD__ );
+
 	}
 
 	protected function renderForm() {
-		wfProfileIn( __METHOD__ );
-		global $wgExtensionsPath;
-		$output = $this->getOutput();
+		global $wgOut, $wgExtensionsPath;
 
-		$output->addScript( '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/Blogs/js/categoryCloud.js"><!-- categoryCloud js --></script>');
+		$wgOut->addScript( '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/Blogs/js/categoryCloud.js"><!-- categoryCloud js --></script>');
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
@@ -158,7 +149,7 @@ class CreateBlogListingPage extends SpecialPage {
  LIMIT 0,10";
 
 		$oTmpl->set_vars( array(
-			'categoryCloudTitle' => wfMessage( 'create-blog-listing-blog-post-categories-title' )->text(),
+			'categoryCloudTitle' => wfMsg('create-blog-listing-blog-post-categories-title'),
 			'cloud' => new TagCloud(10, $sQuery),
 			'cols' => 10,
 			'cloudNo' => 1,
@@ -168,7 +159,7 @@ class CreateBlogListingPage extends SpecialPage {
 		$sBlogCategoryCloud = $oTmpl->render("createPostCategoryCloud");
 
 		$oTmpl->set_vars( array(
-			'categoryCloudTitle' => wfMessage( 'create-blog-listing-page-categories-title' )->text(),
+			'categoryCloudTitle' => wfMsg('create-blog-listing-page-categories-title'),
 			'cloud' => new TagCloud(),
 			'cols' => 10,
 			'cloudNo' => 2,
@@ -187,22 +178,20 @@ class CreateBlogListingPage extends SpecialPage {
 			"pageCategoryCloud" => $sPageCategoryCloud )
 		);
 
-		$output->addHTML( $oTmpl->render("createBlogListingForm") );
+		$wgOut->addHTML( $oTmpl->render("createBlogListingForm") );
 
-		wfProfileOut( __METHOD__ );
+		return;
 	}
 
 	protected function save() {
-		wfProfileIn( __METHOD__ );
-		$output = $this->getOutput();
-
+		global $wgOut;
 		if($this->mFormData['listingType'] == 'box') {
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars( array(
 				"tagBody" => $this->mTagBody)
 			);
 
-			$output->addHTML( $oTmpl->render("createListingConfirm") );
+			$wgOut->addHTML( $oTmpl->render("createListingConfirm") );
 		}
 		else {
 			$sPageBody = $this->mTagBody;
@@ -213,16 +202,15 @@ class CreateBlogListingPage extends SpecialPage {
 				$sPageBody .= $this->getCategoriesAsText($aCategories);
 			}
 
-			$this->mPostArticle->doEdit($sPageBody, wfMessage( 'blog-listing-created' )->inContentLanguage()->text() );
+			$this->mPostArticle->doEdit($sPageBody, wfMsgForContent( 'blog-listing-created' ) );
 
 			$aListingCategories = explode('|', $this->mFormData['listingCategories']);
 			$aListingAuthors = explode(',', $this->mFormData['listingAuthors']);
 
 			wfRunHooks( 'BlogListingSave', array( $this->mFormData['listingTitle'], $aListingCategories, $aListingAuthors ) );
 
-			$output->redirect($this->mPostArticle->getTitle()->getFullUrl());
+			$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());
 		}
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -230,17 +218,14 @@ class CreateBlogListingPage extends SpecialPage {
 	 */
 
 	private function buildTag() {
-		wfProfileIn( __METHOD__ );
 		$this->mTagBody = "<bloglist summary=\"true\" timestamp=\"true\" count=" . self::defaultListingCount . ">\n";
 		$this->buildTagContent();
 		$this->mTagBody.= "</bloglist>\n";
 		$this->mTagBody.= "[[Category:BlogListingPage]]";
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function parseTag($sTitle) {
 		global $wgParser;
-		wfProfileIn( __METHOD__ );
 		$oTitle = Title::newFromText($sTitle, NS_BLOG_LISTING);
 		$oArticle = new Article($oTitle, 0);
 		$sArticleBody = $oArticle->getContent();
@@ -275,7 +260,7 @@ class CreateBlogListingPage extends SpecialPage {
 			$this->mFormData['isExistingArticleEditAllowed'] = 1;
 		}
 		else {
-			$this->mFormErrors[] = wfMessage( 'create-blog-listing-tag-format-not-recognized-on-page')->text() . ": <a href=\"" . $oTitle->getFullUrl() . "\">" . $oTitle->getFullText() . "</a>";
+			$this->mFormErrors[] = wfMsg('create-blog-listing-tag-format-not-recognized-on-page') . ": <a href=\"" . $oTitle->getFullUrl() . "\">" . $oTitle->getFullText() . "</a>";
 		}
 	}
 
@@ -312,16 +297,15 @@ class CreateBlogListingPage extends SpecialPage {
 	}
 
 	public static function axBlogListingCheckMatches() {
-		global $wgParser;
-		$request = $this->getRequest();
+		global $wgRequest, $wgParser;
 
 		$oSpecialPage = new CreateBlogListingPage;
 
-		$oSpecialPage->setFormData('listingCategories', $request->getVal('categories'));
-		$oSpecialPage->setFormData('listingAuthors', $request->getVal('authors'));
+		$oSpecialPage->setFormData('listingCategories', $wgRequest->getVal('categories'));
+		$oSpecialPage->setFormData('listingAuthors', $wgRequest->getVal('authors'));
 		$oSpecialPage->setFormData('listingType', 'count');
 
-		return (string) BlogTemplateClass::parseTag($oSpecialPage->buildTagContent(), array(), $wgParser );
+		return (string) BlogTemplateClass::parseTag($oSpecialPage->buildTagContent(), array(), $wgParser);
 	}
 
 }
