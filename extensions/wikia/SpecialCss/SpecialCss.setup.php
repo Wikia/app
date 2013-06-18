@@ -32,6 +32,8 @@ $app->registerController(
 // hooks
 $app->registerHook('AlternateEdit', 'SpecialCssHooks', 'onAlternateEdit');
 $app->registerHook('ArticleSaveComplete', 'SpecialCssHooks', 'onArticleSaveComplete');
+$app->registerHook('ArticleDelete', 'SpecialCssHooks', 'onArticleDelete');
+$app->registerHook('ArticleUndelete', 'SpecialCssHooks', 'onArticleUndelete');
 
 // special page
 $app->registerSpecialPage('CSS', 'SpecialCssController', 'wikia');
