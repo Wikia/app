@@ -2148,6 +2148,15 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * Fills the $info parameter with a human readable article title and a URL that links directly to
+	 * a wall or forum post
+	 *
+	 * @param $info - Associative array to hold the result
+	 * @param $title - The article title of the wall/forum post
+	 * @param $ns - The namespace of the wall/forum post
+	 * @return bool - The status of the hook
+	 */
 	public static function onFormatForumLinks( &$info, $title, $ns ) {
 
 		// Handle message wall and forum board links
