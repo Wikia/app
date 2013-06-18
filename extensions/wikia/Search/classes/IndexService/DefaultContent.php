@@ -90,6 +90,14 @@ class DefaultContent extends AbstractService
 	}
 	
 	/**
+	 * @return Wikia\Search\IndexService\DefaultContent
+	 */
+	protected function reinitialize() {
+		$this->nolang_txt = [];
+		return $this;
+	}
+	
+	/**
 	 * Provides an array of outbound links from the current document to other doc IDs.
 	 * Filters out self-links (e.g. Edit and the like)
 	 * @param int $wid
