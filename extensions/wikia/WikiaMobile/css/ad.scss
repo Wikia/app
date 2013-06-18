@@ -92,13 +92,15 @@ $slotZIndex: 4000;
 
 .swiperPage.wkAdPlace > img {
 	position: absolute;
-	bottom: 80px;
-	right: 80px;
+	bottom: 120px;
+	left: 0;
+	right: 0;
 
-	width: 100px;
+	margin: 0 auto;
+
+	height: 150px;
 
 	opacity: 0;
-	z-index: 21;
 
 	-webkit-transition: all .3s;
 }
@@ -117,6 +119,8 @@ $slotZIndex: 4000;
 	margin-left: -150px;
 	margin-top: -125px;
 
+	z-index: 15;
+
 	-webkit-transition: opacity .3s, top .3s;
 
 	&.show {
@@ -127,10 +131,9 @@ $slotZIndex: 4000;
 		opacity: 1;
 
 		& ~ img {
-			bottom: 30px;
-			right: 30px;
+			bottom: 4%;
 
-			width: 80px;
+			height: 80px;
 
 			opacity: 1;
 		}
