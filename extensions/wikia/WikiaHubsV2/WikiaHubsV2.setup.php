@@ -25,7 +25,6 @@ $app->registerClass('WikiaHubsV2Controller', $dir . 'WikiaHubsV2Controller.class
 $app->registerClass('WikiaHubsV2SuggestController', $dir . 'WikiaHubsV2SuggestController.class.php');
 
 // hook classes
-$app->registerClass('WikiaHubsV2Mobile', $dir . 'hooks/WikiaHubsV2MobileHooks.php');
 $app->registerClass('WikiaHubsV2Hooks', $dir . 'hooks/WikiaHubsV2Hooks.php');
 
 // model classes
@@ -41,7 +40,6 @@ $app->registerClass('WikiaHubsParserHelper', $dir . 'WikiaHubsParserHelper.class
 $app->registerExtensionMessageFile('WikiaHubsV2', $dir.'WikiaHubsV2.i18n.php');
 
 // hooks
-$app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsV2Mobile', 'onWikiaMobileAssetsPackages');
 $app->registerHook('ArticleFromTitle', 'WikiaHubsV2Hooks', 'onArticleFromTitle');
 $app->registerHook('WikiaCanonicalHref', 'WikiaHubsV2Hooks', 'onWikiaCanonicalHref');
 $app->registerHook('ParserFirstCallInit', 'WikiaHubsV2Hooks', 'onParserFirstCallInit');
