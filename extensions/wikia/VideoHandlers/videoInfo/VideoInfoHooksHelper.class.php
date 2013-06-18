@@ -206,6 +206,8 @@ class VideoInfoHooksHelper {
 		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
 			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
 			if ( empty($videoInfo) ) {
+				$affected = false;
+
 				// add removed video
 				$videoInfoHelper = new VideoInfoHelper();
 				$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $title, true );

@@ -293,10 +293,14 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @return Status $status
 	 */
 	public function addRedirectLink( $title, $newTitle ) {
+		wfProfileIn( __METHOD__ );
+
 		$article = new Article( $title );
 		$content = "#REDIRECT [[{$newTitle->getPrefixedText()}]]";
 		$summary = wfMessage( 'autoredircomment', $title->getFullText() )->inContentLanguage()->text();
 		$status = $article->doEdit( $content, $summary );
+
+		wfProfileOut( __METHOD__ );
 
 		return $status;
 	}
@@ -307,11 +311,15 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @return Status $status
 	 */
 	public function removeRedirectLink( $article ) {
+		wfProfileIn( __METHOD__ );
+
 		$lastRevision = $article->getRevision();
 		$previousRevision = $lastRevision->getPrevious();
 		$previousText = empty( $previousRevision ) ? '' : $previousRevision->getText();
 		$summary = wfMessage( 'lvs-log-removed-redirected-link' )->inContentLanguage()->text();
 		$status = $article->doEdit( $previousText, $summary, EDIT_UPDATE, $previousRevision->getId() );
+
+		wfProfileOut( __METHOD__ );
 
 		return $status;
 	}
@@ -322,8 +330,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @return Status $status
 	 */
 	public function undeletePage( $title ) {
+		wfProfileIn( __METHOD__ );
+
 		// use Phalanx to check recovered page title
 		if ( !wfRunHooks( 'CreatePageTitleCheck', array( $title, false ) ) ) {
+			wfProfileOut( __METHOD__ );
 			return Status::newFatal( wfMessage( 'spamprotectiontext' )->text() );
 		}
 
@@ -341,10 +352,14 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			if ( $status[1] ) {
 				wfRunHooks( 'FileUndeleteComplete', array( $title, $fileVersions, $this->wg->User, $comment ) );
 			}
-			return Status::newGood();
+			$status = Status::newGood();
 		} else {
-			return Status::newFatal( wfMessage( 'cannotundelete' )->text() );
+			$status = Status::newFatal( wfMessage( 'cannotundelete' )->text() );
 		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $status;
 	}
 
 }

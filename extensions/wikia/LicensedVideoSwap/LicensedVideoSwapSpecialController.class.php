@@ -165,7 +165,13 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$sameTitle = ( $videoTitle == $newTitle );
+		if ( $videoTitle == $newTitle ) {
+			$sameTitle = true;
+			$swapStatus = LicensedVideoSwapHelper::STATUS_SWAP_EXACT;
+		} else {
+			$sameTitle = false;
+			$swapStatus = LicensedVideoSwapHelper::STATUS_SWAP_NORM;
+		}
 
 		// force to get new file for same title
 		$newFile = $helper->getVideoFile( $newTitle, $sameTitle );
@@ -182,9 +188,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// add premium video
 		wfRunHooks( 'AddPremiumVideo', array( $newFile->getTitle() ) );
 
+		$title = Title::newFromText( $videoTitle, NS_FILE );
 		if ( !$sameTitle ) {
 			// add redirect url
-			$title = Title::newFromText( $videoTitle, NS_FILE );
 			$status = $helper->addRedirectLink( $title, $newFile->getTitle() );
 			if ( !$status->isGood() ) {
 				wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
@@ -193,10 +199,13 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 				$this->msg = $status->getMessage();
 				return;
 			}
-
-			// set swap status
-			wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, LicensedVideoSwapHelper::STATUS_SWAP_NORM );
 		}
+
+		// set swap status
+		wfSetWikiaPageProp( WPP_LVS_STATUS, $title->getArticleID(), $swapStatus );
+
+		// remove old page status
+		wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
 
 		// add to log
 		$reason = wfMessage( 'lvs-log-swap', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
