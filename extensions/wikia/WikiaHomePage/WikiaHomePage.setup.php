@@ -27,9 +27,9 @@ $app->registerExtensionMessageFile('WikiaHomePage', $dir.'WikiaHomePage.i18n.php
 F::build('JSMessages')->registerPackage('WikiaHomePage', array('wikia-home-page-*'));
 
 // hooks
+$app->registerHook('GetHTMLAfterBody', 'WikiaHomePageController', 'onGetHTMLAfterBody');
 $app->registerHook('OutputPageBeforeHTML', 'WikiaHomePageController', 'onOutputPageBeforeHTML');
+$app->registerHook('WikiaMobileAssetsPackages', 'WikiaHomePageController', 'onWikiaMobileAssetsPackages');
 $app->registerHook('ArticleCommentCheck', 'WikiaHomePageController', 'onArticleCommentCheck');
 $app->registerHook('AfterGlobalHeader', 'WikiaHomePageController', 'onAfterGlobalHeader');
 $app->registerHook('GetRailModuleList', 'WikiaHomePageController', 'onGetRailModuleList');
-
-
