@@ -61,13 +61,14 @@ function wfParserFunction_magic(&$magicWords, $langCode){
 }
 
 function upgradeYouTubeTag( $editpage, $request ) {
+	$app = F::app();
 
 	// Don't convert <youtube> tags if the user is not logged in or is blocked.
 	// It provides a loophole for those users to upload video.
-	if ( !$this->wg->User->isLoggedIn() ) {
+	if ( !$app->wg->User->isLoggedIn() ) {
 		return true;
 	}
-	if ( $this->wg->User->isBlocked() ) {
+	if ( $app->wg->User->isBlocked() ) {
 		return true;
 	}
 
