@@ -26,7 +26,11 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$model = new SpecialCssModel();
 
 		if ($this->request->wasPosted()) {
-			// TODO uncoment here when model is ready
+			// TODO pass those params into save method when it'll be ready
+			var_dump($this->request->getVal('minorEdit'));
+			var_dump($this->request->getVal('editSummary'));
+			var_dump($this->request->getVal('cssContent'));
+			die;
 			$status = $model->saveCssFileContent($this->request->getVal('cssContent'));
 			// TODO handle statuses
 			$this->response->redirect($this->specialPage->getLocalURL());

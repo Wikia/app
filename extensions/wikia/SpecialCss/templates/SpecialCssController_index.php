@@ -8,6 +8,8 @@
 		</div>
 	</aside>
 	<footer class="css-footer">
+		<label><input type="checkbox" name="minorEdit"/><?= wfMessage('special-css-minor-edit-label')->plain(); ?></label>
+		<textarea name="editSummary" placeholder="<?= wfMessage('special-css-summary-placeholder')->plain(); ?>"></textarea>
 		<input class="big" type="submit" value="<?= wfMessage('special-css-publish-button')->escaped(); ?>" />
 	</footer>
 </form>
