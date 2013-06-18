@@ -22,10 +22,9 @@ class EditPageLayoutHelper {
 	static private $instance;
 
 	private function __construct() {
-		global $wgOut, $wgRequest;
 		$this->app = F::app();
-		$this->out = $wgOut;
-		$this->request = $wgRequest;
+		$this->out = $this->app->wg->Out;
+		$this->request = $this->app->wg->Request;
 	}
 
 	static function getInstance() {

@@ -74,8 +74,6 @@ class SEOTweaksHooksHelper {
 	 * @return bool
 	 */
 	static function onImagePageAfterImageLinks( $imgPage, $html ) {
-		global $wgOut;
-
 		$file = $imgPage->getDisplayedFile(); /* @var $file LocalRepo */
 		$title = $imgPage->getTitle();  /* @var $title Title */
 		$newTitle = '';
@@ -95,7 +93,7 @@ class SEOTweaksHooksHelper {
 			}
 
 			if ( !empty( $newTitle ) ) {
-				$wgOut->setPageTitle( $newTitle );
+				F::app()->wg->Out->setPageTitle( $newTitle );
 			}
 		}
 		return true;
@@ -128,7 +126,6 @@ class SEOTweaksHooksHelper {
 	 * @param bool $pcache
 	 */
 	static public function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
-		global $wgOut;
 		$title = $article->getTitle();
 		if ( ( ! $title->exists() ) 
 			&& ( isset( $_SERVER['HTTP_REFERER'] ) ) 
@@ -138,7 +135,7 @@ class SEOTweaksHooksHelper {
 			$result = $dbr->query( sprintf( 'SELECT page_title FROM page WHERE page_title %s LIMIT 1', $dbr->buildLike( $title->getDBKey(), $dbr->anyString() ) ), __METHOD__ );
 			if ( $row = $dbr->fetchObject( $result ) ) {
 				$title = Title::newFromText( $row->page_title );
-				$wgOut->redirect( $title->getFullUrl() );
+				F::app()->wg->Out->redirect( $title->getFullUrl() );
 			    $outputDone = true;
 			}
 		}

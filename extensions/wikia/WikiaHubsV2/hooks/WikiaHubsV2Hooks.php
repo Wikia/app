@@ -8,7 +8,6 @@ class WikiaHubsV2Hooks {
 	 * @return true because it's a hook
 	 */
 	static public function onArticleFromTitle(&$title, &$article) {
-		global $wgOut;
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
@@ -35,8 +34,8 @@ class WikiaHubsV2Hooks {
 			OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $canonicalHubName));
 
 			$am = AssetsManager::getInstance();
-			$wgOut->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV1/WikiaHubs.scss'));
-			$wgOut->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'));
+			$app->wg->Out->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV1/WikiaHubs.scss'));
+			$app->wg->Out->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'));
 		}
 
 		wfProfileOut(__METHOD__);

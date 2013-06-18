@@ -120,10 +120,10 @@ class PlacesHooks {
 	 * @return bool true it's a hook
 	 */
 	static public function onShowEditForm( EditPage $editpage ){
-		global $wgOut, $wgJsMimeType;
+		global $wgJsMimeType;
 		// add edit toolbar button for adding places
 		$src = AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/Places/js/PlacesEditPage.js' );
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>" );
+		F::app()->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>" );
 
 		// load JS messages
 		JSMessages::enqueuePackage('Places', JSMessages::EXTERNAL);

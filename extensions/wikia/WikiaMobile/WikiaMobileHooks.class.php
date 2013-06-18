@@ -211,14 +211,13 @@ class WikiaMobileHooks {
 	 */
 
 	static public function onCategoryPageView( CategoryPage &$categoryPage ) {
-		global $wgOut;
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
 
 		if ( $app->checkSkin( 'wikiamobile' ) ) {
 			//lets do some local caching
-			$out = $wgOut;
+			$out = $app->wg->Out;
 			$title = $categoryPage->getTitle();
 			$text = $title->getText();
 

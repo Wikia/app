@@ -13,10 +13,12 @@ class UserProfilePageHelper {
 	 * @author nAndy
 	 */
 	static public function getUserFromTitle($title = null) {
-		global $wgTitle, $UPPNamespaces, $wgRequest, $wgUser;
+		global $UPPNamespaces;
+
 		wfProfileIn(__METHOD__);
+		$wg = F::app()->wg;
 		if( is_null($title) ) {
-			$title = $wgTitle;
+			$title = $wg->Title;
 		}
 
 		$user = null;
@@ -25,14 +27,14 @@ class UserProfilePageHelper {
 			$parts = explode('/', $title->getText());
 		} else {
 			if ($title instanceof Title && $title->getNamespace() == NS_SPECIAL && ($title->isSpecial('Following') || $title->isSpecial('Contributions'))) {
-				$target = $wgRequest->getVal('target');
+				$target = $wg->Request->getVal('target');
 
 				if (!empty($target)) {
 					// Special:Contributions?target=FooBar (RT #68323)
 					$parts = array($target);
 				} else {
 					// get user this special page referrs to
-					$titleVal = $wgRequest->getVal('title', false);
+					$titleVal = $wg->Request->getVal('title', false);
 					$parts = explode('/', $titleVal);
 
 					// remove special page name
@@ -41,7 +43,7 @@ class UserProfilePageHelper {
 
 				if ($title->isSpecial('Following') && !isset($parts[0])) {
 					//following pages are rendered only for profile owners
-					$user = $wgUser;
+					$user = $wg->User;
 					wfProfileOut(__METHOD__);
 					return $user;
 				}
@@ -66,7 +68,7 @@ class UserProfilePageHelper {
 		if (!($user instanceof User) && empty($userName)) {
 			//this is in case Blog:Recent_posts or Special:Contribution will be called
 			//then in title there is no username and "default" user instance is $wgUser
-			$user = $wgUser;
+			$user = $wg->User;
 		}
 
 		wfProfileOut(__METHOD__);

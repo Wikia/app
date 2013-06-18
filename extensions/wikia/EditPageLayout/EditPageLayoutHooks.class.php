@@ -163,9 +163,9 @@ class EditPageLayoutHooks {
 	 * @return boolean return true
 	 */
 	static function onBeforeDisplayingTextbox(EditPage $editPage, &$hidden) {
-		global $wgOut;
-		if ( F::app()->checkSkin( 'oasis' ) ) {
-			$wgOut->addHtml('<div class="editpage-editarea" data-space-type="editarea">');
+		$app = F::app();
+		if ( $app->checkSkin( 'oasis' ) ) {
+			$app->wg->Out->addHtml('<div class="editpage-editarea" data-space-type="editarea">');
 		}
 
 		return true;
@@ -179,7 +179,6 @@ class EditPageLayoutHooks {
 	 * @return boolean return true
 	 */
 	static function onAfterDisplayingTextbox(EditPage $editPage, &$hidden) {
-		global $wgOut;
 		$app = F::app();
 		if ( $app->checkSkin( 'oasis') ) {
 			$params = array(
@@ -187,7 +186,7 @@ class EditPageLayoutHooks {
 			);
 			$html = $app->getView( 'EditPageLayout', 'Loader', $params )->render();
 			$html .= '</div>';
-			$wgOut->addHtml($html);
+			$app->wg->Out->addHtml($html);
 		}
 
 		return true;

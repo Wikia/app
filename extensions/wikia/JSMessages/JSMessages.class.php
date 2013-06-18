@@ -238,8 +238,6 @@ class JSMessages {
 	 *   - JS requested via <script> tag at the bottom of the page (EXTERNAL mode)
 	 */
 	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin) {
-		global $wgOut;
-
 		wfProfileIn(__METHOD__);
 		static::log(__METHOD__, 'preparing list of inline messages...');
 
@@ -259,7 +257,7 @@ class JSMessages {
 
 		if ($url != "") {
 			// request a script
-			$wgOut->addScript(Html::linkedScript($url));
+			F::app()->wg->Out->addScript(Html::linkedScript($url));
 		}
 
 		wfProfileOut(__METHOD__);
@@ -274,8 +272,9 @@ class JSMessages {
 	 * @return string - URL to "dynamic" JS file with messages
 	 */
 	static public function getExternalPackagesUrl() {
-		global $wgLang, $wgScriptPath;
 		wfProfileIn( __METHOD__ );
+
+		$wg = F::app()->wg;
 
 		// get items to be loaded via JS file
 		$packages = static::$queue['external'];
@@ -286,7 +285,7 @@ class JSMessages {
 			sort($packages);
 
 			// /wikia.php?controller=HelloWorld&method=index&format=html
-			$url = wfAppendQuery($wgScriptPath . '/wikia.php', array(
+			$url = wfAppendQuery($wg->ScriptPath . '/wikia.php', array(
 				'controller' => 'JSMessages',
 				'method' => 'getMessages',
 				'format' => 'html',
@@ -295,7 +294,7 @@ class JSMessages {
 				'packages' => implode(',', $packages),
 
 				// cache separately for different languages
-				'uselang' => $wgLang->getCode(),
+				'uselang' => $wg->Lang->getCode(),
 
 				// cache buster
 				'cb' => JSMessagesHelper::getMessagesCacheBuster(),

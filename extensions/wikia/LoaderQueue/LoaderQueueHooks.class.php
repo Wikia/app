@@ -7,9 +7,8 @@ class LoaderQueueHooks  {
 	 * @return bool return true - it's a hook
 	 */
 	static public function onWikiaSkinTopScripts(Array &$vars) {
-		global $wgOut;
 		$vars['wgLoaderQueue'] = array();
-		$wgOut->addModules('ext.wikia.loaderQueue');
+		F::app()->wg->Out->addModules('ext.wikia.loaderQueue');
 		return true;
 	}
 }

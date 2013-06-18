@@ -8,8 +8,8 @@ class UnsubscribePreferences {
 	 * @return bool
 	 */
 	public static function onGetPreferences( $user, &$defaultPreferences ) {
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgCityId;
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/SpecialUnsubscribe/UnsubscribePreferences.js\"></script>" );
+		global $wgJsMimeType, $wgExtensionsPath, $wgCityId;
+		F::app()->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/SpecialUnsubscribe/UnsubscribePreferences.js\"></script>" );
 
 		$unsubscribe = array( 'unsubscribed' => array(
 			'type' => 'toggle',

@@ -44,8 +44,8 @@ class LyricFindHooks {
 	 * @return bool true
 	 */
 	static public function onOasisSkinAssetGroups(Array &$jsAssetGroups) {
-		global $wgTitle;
-		if (self::pageIsTrackable($wgTitle)) {
+		$wg = F::app()->wg;
+		if (self::pageIsTrackable($wg->Title)) {
 			$jsAssetGroups[] = 'LyricsFindTracking';
 		}
 
@@ -59,14 +59,14 @@ class LyricFindHooks {
 	 * @return bool show edit page form?
 	 */
 	static public function onAlternateEdit(EditPage $editPage) {
-		global $wgUser;
+		$wg = F::app()->wg;
 		$title = $editPage->getTitle();
 		$isLyricFind = $title->getNamespace() === NS_LYRICFIND;
-		$isNotAllowedToEdit = $title->isNamespaceProtected($wgUser);
+		$isNotAllowedToEdit = $title->isNamespaceProtected($wg->User);
 
 		$blockEdit = ($isLyricFind && $isNotAllowedToEdit);
 		if ($blockEdit) {
-			F::app()->wg->Out->addHTML(Wikia::errorbox(wfMessage('lyricfind-edit-blocked')));
+			$wg->Out->addHTML(Wikia::errorbox(wfMessage('lyricfind-edit-blocked')));
 		}
 
 		return !$blockEdit;

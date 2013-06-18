@@ -39,8 +39,8 @@ class UserProfilePageHooks {
 
 	//WikiaMobile hook to add assets so they are minified and concatenated
 	static public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
-		global $wgTitle;
-		if ( $wgTitle->getNamespace() === NS_USER ) {
+		$wg = F::app()->wg;
+		if ( $wg->Title->getNamespace() === NS_USER ) {
 			$scssPackages[] = 'userprofilepage_scss_wikiamobile';
 		}
 		return true;
@@ -61,7 +61,7 @@ class UserProfilePageHooks {
 	static function addToUserProfile(&$skin, &$tpl) {
 		wfProfileIn(__METHOD__);
 
-		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath;
+		$wg = F::app()->wg;
 
 		// don't output on Oasis
 		if (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis') {
@@ -69,14 +69,14 @@ class UserProfilePageHooks {
 			return true;
 		}
 
-		$action = $wgRequest->getVal('action', 'view');
-		if ($wgTitle->getNamespace() != NS_USER || ($action != 'view' && $action != 'purge')) {
+		$action = $wg->Request->getVal('action', 'view');
+		if ($wg->Title->getNamespace() != NS_USER || ($action != 'view' && $action != 'purge')) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
 
 		// construct object for the user whose page were' on
-		$user = User::newFromName($wgTitle->getDBKey());
+		$user = User::newFromName($wg->Title->getDBKey());
 
 		// sanity check
 		if (!is_object($user)) {
@@ -104,7 +104,7 @@ class UserProfilePageHooks {
 		wfRunHooks('AddToUserProfile', array(&$out, $user));
 
 		if (count($out) > 0) {
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/UserProfilePageV3/css/UserprofileMonobook.css");
+			$wg->Out->addExtensionStyle("{$wg->ExtensionsPath}/wikia/UserProfilePageV3/css/UserprofileMonobook.css");
 
 			$html .= "<div id='profile-content'>";
 			$html .= "<div id='profile-content-inner'>";
@@ -112,7 +112,7 @@ class UserProfilePageHooks {
 			$html .= "</div>";
 			$html .= "</div>";
 
-			$wgOut->addStyle("common/article_sidebar.css");
+			$wg->Out->addStyle("common/article_sidebar.css");
 
 			$html .= '<div class="article-sidebar">';
 			if (isset($out['UserProfile1'])) {
@@ -137,7 +137,8 @@ class UserProfilePageHooks {
 	 * @brief hook handler
 	 */
 	static public function onBeforeDisplayNoArticleText($article) {
-		global $wgOut, $UPPNamespaces;
+		global $UPPNamespaces;
+		$wg = F::app()->wg;
 		$title = $article->getTitle();
 		if ($title instanceof Title && in_array($title->getNamespace(), $UPPNamespaces)) {
 			$user = UserProfilePageHelper::getUserFromTitle($title);
@@ -146,7 +147,7 @@ class UserProfilePageHooks {
 				$userData = $userIdentityBox->getFullData();
 				if ( is_array( $userData ) && array_key_exists( 'showZeroStates', $userData ) ) {
 					if ( !$userData['showZeroStates'] ) {
-						$wgOut->setStatusCode ( 200 );
+						$wg->Out->setStatusCode ( 200 );
 					}
 				}
 			}

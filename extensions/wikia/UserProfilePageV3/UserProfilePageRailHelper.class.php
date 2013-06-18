@@ -8,14 +8,16 @@ class UserProfilePageRailHelper {
 	 * @return boolean true
 	 */
 	static public function onGetRailModuleList(&$modules) {
-		global $wgTitle, $UPPNamespaces;
-		if ( !in_array( $wgTitle->getNamespace(), $UPPNamespaces ) ) {
+		global $UPPNamespaces;
+
+		$wg = F::app()->wg;
+		if ( !in_array( $wg->Title->getNamespace(), $UPPNamespaces ) ) {
 			return true;
 		}
 		wfProfileIn(__METHOD__);
 
 		$pageOwner = UserProfilePageHelper::getUserFromTitle();
-		if( !$pageOwner->getOption('hidefollowedpages') && !$wgTitle->isSpecial('Following') && !$wgTitle->isSpecial('Contributions') ) {
+		if( !$pageOwner->getOption('hidefollowedpages') && !$wg->Title->isSpecial('Following') && !$wg->Title->isSpecial('Contributions') ) {
 			$modules[1101] = array('FollowedPages', 'Index', array('showDeletedPages' => false));
 		}
 

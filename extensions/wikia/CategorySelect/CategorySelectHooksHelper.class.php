@@ -130,13 +130,13 @@ class CategorySelectHooksHelper {
 	 * Set global variables for javascript
 	 */
 	public static function onMakeGlobalVariablesScript( Array &$vars ) {
-		global $wgContLang, $wgParser, $wgTitle;
+		$wg = F::app()->wg;
 
 		$vars[ 'wgCategorySelect' ] = array(
-			'defaultNamespace' => $wgContLang->getNsText( NS_CATEGORY ),
+			'defaultNamespace' => $wg->ContLang->getNsText( NS_CATEGORY ),
 			'defaultNamespaces' => CategorySelect::getDefaultNamespaces(),
 			'defaultSeparator' => trim( wfMessage( 'colon-separator' )->escaped() ),
-			'defaultSortKey' => $wgParser->getDefaultSort() ?: $wgTitle->getText()
+			'defaultSortKey' => $wg->Parser->getDefaultSort() ?: $wg->Title->getText()
 		);
 
 		return true;

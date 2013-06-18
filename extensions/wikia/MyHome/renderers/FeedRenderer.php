@@ -637,7 +637,7 @@ class FeedRenderer {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function getAddedMediaRow($row, $type) {
-		global $wgLang;
+		$wg = F::app()->wg;
 
 		$key = "new_{$type}";
 
@@ -659,7 +659,7 @@ class FeedRenderer {
 			$thumb .= $item['html'];
 
 			// localised title for popup
-			$popupTitle = $wgLang->getNsText($namespace) . ':' . $item['name'];
+			$popupTitle = $wg->Lang->getNsText($namespace) . ':' . $item['name'];
 
 			$titleObj = Title::newFromText($item['name'], NS_FILE);
 			$fileName = $titleObj->getText(); // Pass display version of title to Lightbox

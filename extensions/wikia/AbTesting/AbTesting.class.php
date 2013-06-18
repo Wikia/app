@@ -46,9 +46,8 @@ class AbTesting extends WikiaObject {
 	}
 
 	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		global $wgOut;
 		if ( F::app()->checkSkin( 'oasis', $skin ) ) {
-			$scripts .= ResourceLoader::makeCustomLink($wgOut, array( 'wikia.ext.abtesting' ), 'scripts') . "\n";
+			$scripts .= ResourceLoader::makeCustomLink($this->wg->Out, array( 'wikia.ext.abtesting' ), 'scripts') . "\n";
 		}
 		return true;
 	}
