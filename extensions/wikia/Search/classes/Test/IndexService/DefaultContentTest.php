@@ -693,4 +693,27 @@ ENDIT;
 				$get->invoke( $service )
 		);
 	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::reinitialize
+	 */
+	public function testReinitialize() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( null )
+		                ->getMock();
+		$nolang = new ReflectionProperty( $service, 'nolang_txt' );
+		$nolang->setAccessible( true );
+		$nolang->setValue( $service, [ 1, 2, 3, 4, 5 ] );
+		$reinitialize = new ReflectionMethod( $service, 'reinitialize' );
+		$reinitialize->setAccessible( true );
+		$this->assertEquals(
+				$service,
+				$reinitialize->invoke( $service )
+		);
+		$this->assertAttributeEmpty(
+				'nolang_txt',
+				$service
+		);
+	}
 }
