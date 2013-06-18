@@ -67,7 +67,6 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/models/WikiaMobileStatsModel.class.p
 /**
  * controllers
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAppCacheController.class.php", 'WikiaMobileAppCacheController' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileController.class.php", 'WikiaMobileController' );
 
 /**
@@ -87,7 +86,8 @@ F::build( 'JSMessages' )->registerPackage( 'WkMbl', array(
 	'wikiamobile-sharing-email-text',
 	'wikiamobile-image-not-loaded',
 	'wikiamobile-video-not-friendly',
-	'wikiamobile-video-not-friendly-header'
+	'wikiamobile-video-not-friendly-header',
+	'wikiamobile-ad-sign'
 ) );
 
 F::build( 'JSMessages' )->registerPackage( 'SmartBanner', [

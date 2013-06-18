@@ -69,14 +69,25 @@ $slotZIndex: 4000;
 	&.show {
 		visibility: visible;
 
-		padding: 10px 0;
+		position: relative;
 		margin: 0 auto;
+
+		padding: 15px 0;
 		height: 270px;
 		width: 300px;
 
 		border-top: 1px solid $border-color;
-		border-bottom: 1px solid $border-color;
 	}
+}
+
+.wkAdLabel {
+	position: absolute;
+	top: -5px;
+	left: 10px;
+
+	font-size: 9px;
+	color: $ad-label-color;
+	text-transform: uppercase;
 }
 
 .swiperPage.wkAdPlace > img {
