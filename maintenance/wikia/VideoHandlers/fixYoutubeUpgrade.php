@@ -38,11 +38,21 @@ class FixYoutubeUpgrade extends Maintenance {
 	 * @return array
 	 */
 	public function getPages ( ) {
-		$line = trim(fgets(STDIN));
-		$pageKeys = explode("\t", $line);
+		// Find all pages in this wiki that have YouTube tags
+		$dbr = wfGetDB( DB_SLAVE );
+		$sql = "select il_from
+				from image, imagelinks
+				where il_to = img_name
+				  and img_major_mime = 'video'
+				  and img_minor_mime = 'youtube'
+				  and img_timestamp > '20130617000000'";
 
-		foreach ( $pageKeys as $dbKey ) {
-			$page = Article::newFromTitle( $dbKey, RequestContext::getMain() );
+		$result = $dbr->query($sql);
+
+		// Get an array of pages that have YT tags on them
+		$pages = array();
+		foreach ($result as $row) {
+			$page = Article::newFromID($row->il_from);
 			if ( !empty($page) ) {
 				$pages[] = $page;
 			}
