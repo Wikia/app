@@ -153,4 +153,17 @@ class SelectTest extends BaseTest
 				$query->getSolrQuery()
 		);
 	}
+	
+	public function testGetSolrQueryWithWordLimit() {
+		$query = <<<YEEZY
+Uh:my mind move like a Tron bike
+Uh, pop a wheelie on the Zeitgeist
+Uh, I'm finna start a new movement
+YEEZY;
+		$q = new Query( $query );
+		$this->assertEquals(
+				'Uh\:my mind move like a Tron bike Uh, pop a',
+				$q->getSolrQuery( 10 )
+		);
+	}
 }
