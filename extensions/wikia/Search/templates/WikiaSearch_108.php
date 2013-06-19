@@ -2,12 +2,17 @@
 	<article>
 		<?php
 		$thumbnailHtml = $result->getThumbnailHtml();
+		$thumbTracking = 'data-pos="' . $pos . '" ' . ( $result->getVar('isArticleMatch') ?  'data-event="search_click_match"' : '' );
 		?>
 			<?php if(! empty( $thumbnailHtml ) ): ?>
-			<div class="grid-1 alpha"><?= $thumbnailHtml ?></div>
-			<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
-			<?php endif; ?>
 
+				<a class="grid-1 alpha thumb-tracking" href="<?= $result->getUrl(); ?>" title="<?= $result->getTitle(); ?>" <?=
+					$thumbTracking ?>>
+						<?= $thumbnailHtml ?>
+				</a>
+				<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
+
+			<?php endif; ?>
 			<h1>
 				<?php $title = $result->getTitle(); ?>
 
