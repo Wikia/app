@@ -37,6 +37,7 @@ $app->registerSpecialPage('CSS', 'SpecialCssController', 'wikia');
 
 // message files
 $app->registerExtensionMessageFile('SpecialCss', $dir . 'SpecialCss.i18n.php');
+F::build('JSMessages')->registerPackage('SpecialCss', array('special-css-*'));
 
 //user rights
 $wgGroupPermissions['*']['specialcss'] = false;

@@ -37,18 +37,19 @@ class SpecialCssController extends WikiaSpecialPageController {
 		}
 
 		$this->cssContent = $model->getCssFileContent();
+		F::build('JSMessages')->enqueuePackage('SpecialCss', JSMessages::EXTERNAL);
 
 		wfProfileOut(__METHOD__);
 	}
 
-	public function getDiff($wikitext) {
+	public function getDiff() {
+		$wikitext = $this->request->getVal('wikitext', '');
 		$model = new SpecialCssModel();
 
 		$editPageService = new EditPageService(
 			$model->getCssFileTitle()
 		);
-		$diff = $editPageService->getDiff($wikitext);
-		return $diff;
+		$this->diff = $editPageService->getDiff($wikitext);
 	}
 	
 	public function notOasis() {

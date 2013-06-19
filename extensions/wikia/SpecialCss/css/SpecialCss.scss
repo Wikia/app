@@ -26,3 +26,14 @@
 	margin: 0 0 20px 0;
 	padding-top: 20px;
 }
+
+.diffContent {
+	position: relative;
+	min-height: 120px;
+
+	.loading {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+	}
+}

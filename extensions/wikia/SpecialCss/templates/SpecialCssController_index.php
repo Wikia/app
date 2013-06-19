@@ -6,6 +6,7 @@
 		<div class="version-box">
 			<?= wfMessage('special-css-current-version')->rawParams(['1.0.17'])->text(); ?>
 		</div>
+		<a href="#" id="showChanges">show changes</a>
 	</aside>
 	<footer class="css-footer">
 		<label><input type="checkbox" name="minorEdit"/><?= wfMessage('special-css-minor-edit-label')->plain(); ?></label>
