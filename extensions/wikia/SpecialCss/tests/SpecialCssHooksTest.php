@@ -85,4 +85,63 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 		];
 	}
 	
+	public function testRemoveNamespace() {
+		$removeNamespaceMethod = new ReflectionMethod('SpecialCssHooks', 'removeNamespace');
+		$removeNamespaceMethod->setAccessible(true);
+
+		$langMock = $this->getMock( 'Language', array( 'getNsText' ) );
+		$langMock->expects( $this->once() )
+			->method( 'getNsText' )
+			->will( $this->returnValue( 'Category' ) );
+
+		$this->mockGlobalVariable( 'wgContLang', $langMock );
+		$this->mockApp();
+
+		$categories = ['Category:Abc', 'Category:Def', 'Category:123', 'Category:1 a 2 b 3 c', 'Kategoria:Raz', 'Something'];
+		$expected = ['Abc', 'Def', '123', '1 a 2 b 3 c', 'Kategoria:Raz', 'Something'];
+
+		$this->assertEquals( $expected, $removeNamespaceMethod->invoke( new SpecialCssHooks(), $categories ) );
+	}
+
+	/**
+	 * @dataProvider testGetCategoriesFromWikitextDataProvider
+	 */
+	public function testGetCategoriesFromWikitext($mockedResultsFromCategorySelect, $categorySelectEnabled, $expected) {
+		$getCategoriesFromWikitextMethod = new ReflectionMethod( 'SpecialCssHooks', 'getCategoriesFromWikitext' );
+		$getCategoriesFromWikitextMethod->setAccessible( true );
+
+		$specialCssHooksMock = $this->getMock( 'SpecialCssHooks', [ 'getCategoriesFromCategorySelect' ] );
+		$specialCssHooksMock->expects( $this->any() )
+			->method( 'getCategoriesFromCategorySelect' )
+			->will( $this->returnValue( $mockedResultsFromCategorySelect ) );
+		
+		$this->mockGlobalVariable( 'wgEnableCategorySelectExt', $categorySelectEnabled );
+		$this->mockApp();
+
+		$this->assertEquals( $expected, $getCategoriesFromWikitextMethod->invoke( $specialCssHooksMock, 'wikitext' ) );
+	}
+	
+	public function testGetCategoriesFromWikitextDataProvider() {
+		return [
+			// all fine
+			[
+				'mockedResultsFromCategorySelect' => [ 'categories' => [ ['name' => 'CSS Updates' ], [ 'name' => 'Test' ] ] ], 
+				'categorySelectEnabled' => true, 
+				'expected' => ['CSS_Updates', 'Test']
+			],
+			// CategorySelect disabled
+			[
+				'mockedResultsFromCategorySelect' => [ 'categories' => [ ['name' => 'CSS Updates' ], [ 'name' => 'Test' ] ] ],
+				'categorySelectEnabled' => false,
+				'expected' => []
+			],
+			// invalid CategorySelect results
+			[
+				'mockedResultsFromCategorySelect' => [ 'cats' => [ ['name' => 'CSS Updates' ], [ 'name' => 'Test' ] ] ],
+				'categorySelectEnabled' => true,
+				'expected' => []
+			]
+		];
+	}
+	
 }

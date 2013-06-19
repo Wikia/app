@@ -111,7 +111,7 @@ class SpecialCssHooks {
 		$categories = [];
 		
 		if( !empty( $app->wg->EnableCategorySelectExt ) && 
-			( $results = CategorySelect::extractCategoriesFromWikitext( $wikitext, true ) ) && 
+			( $results = $this->getCategoriesFromCategorySelect( $wikitext ) ) && 
 			!empty( $results['categories'] ) 
 		) {
 			foreach( $results['categories'] as $category ) {
@@ -120,6 +120,16 @@ class SpecialCssHooks {
 		}
 		
 		return $categories;
+	}
+
+	/**
+	 * @desc Alias to CategorySelect::extractCategoriesFromWikitext helpful for unit tests
+	 * 
+	 * @param $wikitext
+	 * @return Array
+	 */
+	public function getCategoriesFromCategorySelect( $wikitext ) {
+		return CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
 	}
 
 	/**
