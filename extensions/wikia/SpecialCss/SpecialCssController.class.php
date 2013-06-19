@@ -10,6 +10,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	public function index() {
+		global $wgUser;
 		wfProfileIn(__METHOD__);
 
 		if( $this->checkPermissions() ) {
@@ -43,17 +44,24 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 		$this->deletedArticle = '';
 		$title = $model->getCssFileTitle();
-		$this->dropdown = array();
 		if ( !empty( $title ) ) {
 			if ( !$title->isDeleted() ) {
+				$this->historyUrl = $title->getLocalURL( 'action=history' );
+				if ( $title->quickUserCan( 'delete', $wgUser ) ) {
+					$this->deleteUrl = $title->getLocalURL( 'action=delete' );
+				}
 			} else
 			{
 				LogEventsList::showLogExtract( $this->deletedArticle, array( 'delete', 'move' ), $title,
 					'', array( 'lim' => 10,
 						'conds' => array( "log_action != 'revision'" ),
 						'showIfEmpty' => false,
-						'msgKey' => array( 'recreate-moveddeleted-warn') )
+						'msgKey' => array( 'recreate-moveddeleted-warn' ) )
 				);
+				if ( $wgUser->isAllowed( 'deletedhistory' ) ) {
+					$undelTitle = SpecialPage::getTitleFor( 'Undelete' );
+					$this->undeleteUrl = $undelTitle->getLocalURL( array( 'target' => $title->getPrefixedDBkey() ) );
+				}
 			}
 		}
 		$this->cssContent = $model->getCssFileContent();

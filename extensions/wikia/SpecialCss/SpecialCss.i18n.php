@@ -21,6 +21,8 @@ $messages['en'] = [
 
 	'special-css-delete-button' => 'Delete',
 
+	'special-css-delete-button' => 'Undelete',
+
 	'special-css-oasis-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
 
 	'special-css-diff-modal-title' => 'Changes',
@@ -49,6 +51,8 @@ $messages['qqq'] = [
 	'special-css-compare-button' => 'Text on the compare changes button from dropdown; pressing the button shows differences of CSS file',
 
 	'special-css-delete-button' => 'Text on the delete button from dropdown; pressing the button deletes CSS file',
+
+	'special-css-delete-button' => 'Text on the undelete button from dropdown; pressing the button undeletes CSS file',
 
 	'special-css-oasis-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
 

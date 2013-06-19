@@ -14,15 +14,24 @@
 					<img src="<?= $wg->BlankImgUrl ?>" class="chevron">
 					</span>
 					<ul class="WikiaMenuElement">
-						<li>
-							<a href="#"><?= wfMessage('special-css-history-button')->plain() ?></a>
-						</li>
+						<?php if ( isset( $historyUrl ) ): ?>
+							<li>
+								<a href="<?= $historyUrl ?>"><?= wfMessage('special-css-history-button')->plain() ?></a>
+							</li>
+						<?php endif ?>
 						<li>
                             <a href="#" id="showChanges"><?= wfMessage('special-css-compare-button')->plain() ?></a>
 						</li>
-						<li>
-                            <a href="#"><?= wfMessage('special-css-delete-button')->plain() ?></a>
-						</li>
+						<?php if ( isset( $deleteUrl ) ): ?>
+							<li>
+								<a href="<?= $deleteUrl ?>"><?= wfMessage('special-css-delete-button')->plain() ?></a>
+							</li>
+						<?php endif ?>
+						<?php if ( isset( $undeleteUrl ) ): ?>
+							<li>
+								<a href="<?= $undeleteUrl ?>"><?= wfMessage('special-css-undelete-button')->plain() ?></a>
+							</li>
+						<?php endif ?>
 					</ul>
             </nav>
 		</div>
