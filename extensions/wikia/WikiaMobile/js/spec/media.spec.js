@@ -30,7 +30,7 @@ describe("Media module", function () {
 		expect(media).toBeDefined();
 
 		expect(typeof media.openModal).toBe('function');
-		expect(typeof media.getImages).toBe('function');
+		expect(typeof media.getMedia).toBe('function');
 		expect(typeof media.getCurrent).toBe('function');
 		expect(typeof media.hideShare).toBe('function');
 		expect(typeof media.init).toBe('function');
@@ -54,7 +54,7 @@ describe("Media module", function () {
 			new Elem('[{"name":"video","full":"link_to_vid.mp4","capt":"5","type":"video"}]')
 		]);
 
-		var imgs = media.getImages();
+		var imgs = media.getMedia();
 
 		expect(imgs[0].element).toBeDefined();
 		expect(imgs[0].url).toBe('http://images.jolek.wikia-dev.com/__cb20120915045654/callofduty/images/5/50/Bo_2_wii.jpg');

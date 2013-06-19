@@ -19,12 +19,13 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 		i,
 		dotsPerWidth,
 		modalWrapper = mod.getWrapper(),
-		images = med.getImages(),
+		images = med.getMedia(),
 		pagination,
 		paginationStyle,
 		paginationWidth,
 		current,
-		imgsPerPage = 9;
+		imgsPerPage = 9,
+		types = ['image', 'video'];
 
 	function init(){
 		modalWrapper.addEventListener('click', function (ev) {
@@ -40,7 +41,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 				updateDots();
 
 				//open specific image chosen from gallery
-			} else if (target.className.indexOf('galPlc img') > -1) {
+			} else if (target.className.indexOf('galPlc image') > -1) {
 				goBackToImgModal(~~target.id.slice(3));
 				if(target.className.indexOf('video')) {track.event('video', track.CLICK, {label: 'gallery'});}
 				//open/close gallery
@@ -58,15 +59,15 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 	function loadImages(){
 		//this gives me a chance to first load current page then next and at the end prev
 
-		lazyload(modalWrapper.querySelectorAll('.current .img'), true);
+		lazyload(modalWrapper.querySelectorAll('.current .image'), true);
 
 		setTimeout(function(){
-			lazyload(modalWrapper.querySelectorAll('.next .img'), true);
+			lazyload(modalWrapper.querySelectorAll('.next .image'), true);
 
 			setTimeout(function(){
-				lazyload(modalWrapper.querySelectorAll('.prev .img'), true);
+				lazyload(modalWrapper.querySelectorAll('.prev .image'), true);
 			}, 200);
-		}, 200);
+		}, 400);
 	}
 
 	function goBackToImgModal(img){
@@ -93,7 +94,8 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 			x = (Math.ceil(imgL / cols) * cols) - imgL,
 			img,
 			thumb,
-			isVideo;
+			type,
+			l = 0;
 
 		current *= imgsPerPage;
 		imgsPerPage = cols * ~~((gal.offsetHeight - 50) / imagesize);
@@ -104,26 +106,30 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 		pages.length = 0;
 		pages[pagesNum] = '<div class=gallery>';
 
-		for (i = 0;i < imgL; i++) {
-			if(i > 0 && (i%imgsPerPage) === 0){
+		for (i = 0; i < imgL; i++) {
+			if(l > 0 && l % imgsPerPage === 0){
 				pages[pagesNum++] += '</div>';
 				pages[pagesNum] = '<div class=gallery>';
 				dots += '<div class="dot'+ ((current === pagesNum) ? ' curr':'') + '" id=dot' + pagesNum + '><div></div></div>';
 			}
 
 			img = images[i];
+			type = img.type;
 
-			isVideo = img.isVideo;
-			thumb = img.thumb;
+			if(~types.indexOf(type)){
+				thumb = img.thumb;
 
-			//no thumb available, generate one
-			if (!thumb) {
-				thumb = thumbnailer.getThumbURL(img.url, (isVideo ? 'video' : 'image'), MAX_THUMB_SIZE, MAX_THUMB_SIZE);
+				//no thumb available, generate one
+				if (!thumb) {
+					thumb = thumbnailer.getThumbURL(img.url, type, MAX_THUMB_SIZE, MAX_THUMB_SIZE);
+				}
+
+				pages[pagesNum] += '<div class="galPlc ' +
+					type +
+					((goToImg === i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
+
+				l += 1;
 			}
-
-			pages[pagesNum] += '<div class="galPlc img' +
-				(isVideo ? ' video' : '') +
-				((goToImg === i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
 		}
 
 		//add placeholders
@@ -156,7 +162,6 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 			curr.className += ' curr';
 			paginationStyle.webkitTransform = 'translate3d(' + Math.min(Math.max((~~(dotsPerWidth/2) - current) * 18, (-paginationWidth+width)), 0) + 'px,0,0)';
 		}
-
 	}
 
 	function open(){

@@ -49,7 +49,8 @@ $wgAutoloadClasses['AbTestingController'] = "{$dir}/AbTestingController.class.ph
 $wgExtensionMessagesFiles['AbTesting'] = "{$dir}/AbTesting.i18n.php";
 
 // Embed the experiment/treatment config in the head scripts.
-$wgHooks['WikiaSkinTopScripts'][] = 'AbTesting::onWikiaSkinTopScripts';
+$wgHooks['WikiaSkinTopScripts'][] =  'AbTesting::onWikiaSkinTopScripts';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
 // Add js code in Oasis
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AbTesting::onOasisSkinAssetGroupsBlocking';
 
