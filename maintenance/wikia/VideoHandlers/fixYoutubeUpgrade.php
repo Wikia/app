@@ -42,7 +42,7 @@ class FixYoutubeUpgrade extends Maintenance {
 		$pageKeys = explode("\t", $line);
 
 		foreach ( $pageKeys as $dbKey ) {
-			$page = Article::newFromTitle( $dbKey );
+			$page = Article::newFromTitle( $dbKey, RequestContext::getMain() );
 			if ( !empty($page) ) {
 				$pages[] = $page;
 			}
