@@ -17,9 +17,9 @@
 
 .community-updates {
 	border: 1px solid $color-page-border;
-	margin: 10px 0 20px;
+	margin: 10px 0;
 	h3 {
-		border-bottom: 1px solid #CCCACA;
+		border-bottom: 1px solid $color-page-border;;
 		font-size: 18px;
 		font-weight: bold;
 		margin: 0;
