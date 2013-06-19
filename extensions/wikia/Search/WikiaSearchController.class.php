@@ -28,6 +28,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var int
 	 */
 	const PAGES_PER_WINDOW = 5;
+
+	/**
+	 * Default sufix for result template
+	 */
+	const WIKIA_DEFAULT_RESULT = 'result';
 	
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -396,16 +401,26 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action to handle overriding template for different abTests
 	 */
 	protected function handleLayoutAbTest( $abGroup ) {
-		//build path to templates dir
-		$path = __DIR__ . '/templates';
 		//check if template for ab test exists
-		if( $abGroup !== null && file_exists( "{$path}/WikiaSearch_{$abGroup}.php" ) ) {
+		if( $abGroup !== null && $this->templateExists( $abGroup ) ) {
 			//set name depending on abGroup
 			$this->setVal( 'resultView', $abGroup );
 		} else {
 			//defaults to result
-			$this->setVal( 'resultView', 'result' );
+			$this->setVal( 'resultView', static::WIKIA_DEFAULT_RESULT );
 		}
+		return true;
+	}
+
+	/**
+	 * Checks if template with given sufix exists
+	 * @param $name string Template sufix
+	 * @return bool
+	 */
+	protected function templateExists( $name ) {
+		//build path to templates dir
+		$path = __DIR__ . '/templates';
+		return file_exists( "{$path}/WikiaSearch_{$name}.php" );
 	}
 
 	/**
