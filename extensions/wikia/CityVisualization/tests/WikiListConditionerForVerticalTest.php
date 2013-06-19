@@ -9,7 +9,7 @@ class WikiListConditionerForVerticalTest extends WikiaBaseTest {
 		$this->assertEquals(
 			false,
 			$conditioner->getPromotionCondition( $isPromoted ),
-			'WikiListConditionerForCollection::getPromotionCondition returns false for promoted Wiki'
+			'WikiListConditionerForCollection::getPromotionCondition returns false for non-promoted Wiki'
 		);
 
 		$isPromoted = true;
