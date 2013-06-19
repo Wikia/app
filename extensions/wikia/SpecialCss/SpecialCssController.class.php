@@ -42,8 +42,10 @@ class SpecialCssController extends WikiaSpecialPageController {
 	}
 
 	public function getDiff($wikitext) {
+		$model = new SpecialCssModel();
+
 		$editPageService = new EditPageService(
-			Title::newFromText(SpecialCssModel::CSS_FILE_NAME, NS_MEDIAWIKI)
+			$model->getCssFileTitle()
 		);
 		$diff = $editPageService->getDiff($wikitext);
 		return $diff;
