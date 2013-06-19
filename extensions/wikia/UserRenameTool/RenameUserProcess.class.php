@@ -203,7 +203,7 @@ class RenameUserProcess {
 		$dbw = wfGetDb( DB_MASTER, array(), $wgExternalSharedDB );
 
 		$table = '`user`';
-		$this->addLog("Changing user {$this->mOldUsername} to {$this->mNewUsername} in {$dbName}");
+		$this->addLog("Changing user {$this->mOldUsername} to {$this->mNewUsername} in {$wgExternalSharedDB}");
 
 		if($dbw->tableExists($table)){
 			$dbw->update($table,
@@ -221,10 +221,10 @@ class RenameUserProcess {
 				wfProfileOut(__METHOD__);
 				return true;
 			} else {
-				$this->addLog("No changes in {$dbName} for user {$this->mOldUsername}");
+				$this->addLog("No changes in {$wgExternalSharedDB} for user {$this->mOldUsername}");
 			}
 		} else {
-			$this->addLog("Table \"{$table}\" not found in {$dbName}");
+			$this->addLog("Table \"{$table}\" not found in {$wgExternalSharedDB}");
 		}
 
 		wfProfileOut(__METHOD__);
