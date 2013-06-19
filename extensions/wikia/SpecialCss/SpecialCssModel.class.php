@@ -23,10 +23,10 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Regex pattern used to extract h3 tags
 	 * 
-	 * @see SpecialCssModel::removeHeadline() 
-	 * @see SpecialCssModel::addAnchorToPostUrl()
+	 * @see SpecialCssModel::removeHeadline(removeFirstH3 
+	 * @see SpecialCssModel::addAnchorToPostUrl(getAnchorFromWikitext
 	 */
-	const MEDIAWIKI_H3_PATTERN = '/===[^=]+===\s*/';
+	const WIKITEXT_H3_PATTERN = '/([^=]|^)={3}([^=]+)={3}[^=]/';
 	
 	/**
 	 * @desc Limit of characters per one post snippet
@@ -203,7 +203,7 @@ class SpecialCssModel extends WikiaModel {
 
 			$cssUpdatePost = [
 				'title' => $this->getAfterLastSlashText( $blogTitleText ),
-				'url' => trim( $this->getFormattedUrl($blogTitle->getFullURL()) . $this->addAnchorToPostUrl( $sectionText ) ),
+				'url' => trim( $this->getFormattedUrl($blogTitle->getFullURL()) . $this->getAnchorFromWikitext( $sectionText ) ),
 				'userAvatar' => AvatarService::renderAvatar( $blogUser, 25 ),
 				'userUrl' => $userPage->getFullUrl(),
 				'userName' => $blogUser,
@@ -224,7 +224,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @return String
 	 */
 	private function getPostSnippet($blogTitle, $sectionText) {
-		$output = $this->removeHeadline( $sectionText );
+		$output = $this->removeFirstH3( $sectionText );
 		$output = $this->wg->Lang->truncate( $output, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
 		$output = $this->getParsedText($output, $blogTitle);
 		
@@ -238,12 +238,12 @@ class SpecialCssModel extends WikiaModel {
 	 * 
 	 * @return string
 	 */
-	private function addAnchorToPostUrl($sectionText) {
+	private function getAnchorFromWikitext( $sectionText ) {
 		$anchor = '';
-		$headlines = [];
+		$firstH3Tag = $this->getFirstH3Tag( $sectionText );
 		
-		if( preg_match( self::MEDIAWIKI_H3_PATTERN, $sectionText, $headlines ) ) {
-			$anchor = '#' . str_replace( ' ', '_', str_replace('=', '', $headlines[0]) );
+		if( !empty( $firstH3Tag ) ) {
+			$anchor .= '#' . str_replace(' ', '_', $firstH3Tag);
 		}
 		
 		return $anchor;
@@ -255,8 +255,33 @@ class SpecialCssModel extends WikiaModel {
 	 * @param String $text
 	 * @return mixed
 	 */
-	private function removeHeadline($text) {
-		return preg_replace(self::MEDIAWIKI_H3_PATTERN, '', $text);
+	private function removeFirstH3($text) {
+		$firstH3Tag = $this->getFirstH3Tag( $text );
+		
+		if( !empty( $firstH3Tag ) ) {
+			$wikitextFirstH3Tag = '===' . $firstH3Tag . '===';
+			$text = str_replace( $wikitextFirstH3Tag, '', $text );
+		}
+		
+		return $text;
+	}
+
+	/**
+	 * @desc Uses regural expression to find first wikitext h3 tag (i.e. "=== this is a wikitext h3 tag ===") and returns it if found
+	 * 
+	 * @param String $wikitext
+	 * 
+	 * @return string
+	 */
+	private function getFirstH3Tag($wikitext) {
+		$firstH3Tag = '';
+		$wikitextH3Tags = [];
+
+		if( preg_match( self::WIKITEXT_H3_PATTERN, $wikitext, $wikitextH3Tags ) && !empty( $wikitextH3Tags[2] ) ) {
+			$firstH3Tag = $wikitextH3Tags[2];
+		}
+
+		return $firstH3Tag;
 	}
 
 	/**
