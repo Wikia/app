@@ -23,6 +23,32 @@ $messages['en'] = [
 	'special-css-education-item-com-center-header' => 'Community Center',
 	'special-css-education-item-com-center-link-title' => 'Got questions?',
 	'special-css-education-item-com-center-paragraph' => 'Get CSS help from other Wikia users.'
+];
+
+$messages['pl'] = [
+	'css' => 'Kaskadowe arkusze stylów',
+	'action-specialcss' => 'edycja CSS',
+
+	'special-css-title' => 'CSS Edytor',
+
+	'special-css-current-version' => 'Wersja $1',
+
+	'special-css-publish-button' => 'Publikuj',
+
+	'special-css-community-update-headline' => 'Aktualizacje na temat CSS od Wikii ',
+	'special-css-community-update-by' => '$1 przez [$2 $3]',
+	'special-css-community-read-more' => '[$1 Czytaj więcej]',
+	'special-css-community-update-see-all' => 'Zobacz wszystko',
+	'special-css-oasis-only' => 'Special:CSS jest stroną dostępną tylko w skórce Wikia. Jeśli chcesz używać tej strony zmień ustawienia skórki w swoich preferencjach na Wikia.',
+	'special-css-education-item-webinars-header' => 'CSS_ Wikia Webinars',
+	'special-css-education-item-webinars-link-title' => 'Wikia CSS Webinar',
+	'special-css-education-item-webinars-paragraph' => 'Istrukcje dotyczące używania własnych reguł CSS w Wikii.',
+	'special-css-education-item-help-header' => 'Pomoc / FAQ',
+	'special-css-education-item-help-link-title' => 'Pomoc i najczęściej zadawane pytania',
+	'special-css-education-item-help-paragraph' => 'Przewodniki i najlepsze praktyki dotyczące używania własnych styli CSS.',
+	'special-css-education-item-com-center-header' => 'Społeczność',
+	'special-css-education-item-com-center-link-title' => 'Masz pytania?',
+	'special-css-education-item-com-center-paragraph' => 'Uzyskaj pomocy dotyczącej CSS od innych użytkowników Wikii.'
 
 ];
 
