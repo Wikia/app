@@ -489,7 +489,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		// Video/image view was initiated from article
 		clickSource = "embed";
 
-		currentNum = num;
+		currentNum = ~~num;
 		currentMedia = images[currentNum];
 
 		modal.open({
