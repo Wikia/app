@@ -396,9 +396,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action to handle overriding template for different abTests
 	 */
 	protected function handleLayoutAbTest( $abGroup ) {
-		global $IP;
+		//build path to templates dir
+		$path = __DIR__ . '/templates';
 		//check if template for ab test exists
-		if( $abGroup !== null && file_exists( "{$IP}/Search/templates/WikiaSearch_{$abGroup}.php" ) ) {
+		if( $abGroup !== null && file_exists( "{$path}/WikiaSearch_{$abGroup}.php" ) ) {
 			//set name depending on abGroup
 			$this->setVal( 'resultView', $abGroup );
 		} else {
