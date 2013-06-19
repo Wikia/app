@@ -15,7 +15,7 @@ class WallHelper {
 	}
 
 	public function createPostContent($title, $body) {
-		return XML::element("title", array(), $title )."\n".XML::element("body", array(), $body );
+		return Xml::element("title", array(), $title )."\n".Xml::element("body", array(), $body );
 	}
 
 	public function getArchiveSubPageText() {
@@ -85,7 +85,7 @@ class WallHelper {
 			/**
 			 * @var $wm WallMessage
 			 */
-			 
+
 			$wm = WallMessage::newFromTitle( $title );
             $user = $wm->getWallOwner();
 		}
@@ -178,7 +178,7 @@ class WallHelper {
 	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
-	  
+
 	private function mapParentData(&$item, $parent, $title) {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
@@ -501,7 +501,7 @@ class WallHelper {
 		}
 		return false;
 	}
-	
+
 	public static function getTopicPageURL($topic) {
 		if(empty($topic)) {
 			return "#";
@@ -510,7 +510,7 @@ class WallHelper {
 		$topicTitle = Title::newFromText($topic->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD);
 		return $topicTitle->getFullURL();
 	}
-	
+
 	public static function isWallNamespace($ns) {
 		$app = F::App();
 		return in_array( MWNamespace::getSubject( $ns ), $app->wg->WallNS );
