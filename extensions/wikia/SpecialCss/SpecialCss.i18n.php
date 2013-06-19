@@ -14,6 +14,16 @@ $messages['en'] = [
 	'special-css-community-read-more' => '[$1 Read more]',
 
 	'special-css-oasis-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
+	'special-css-education-item-webinars-header' => 'CSS_ Wikia Webinars',
+	'special-css-education-item-webinars-paragraph' => 'Sed posuere consectetur est at lobortis. Curabitur blandit
+	tempus porttitor.',
+	'special-css-education-item-help-header' => 'Help / FAQ',
+	'special-css-education-item-help-paragraph' => 'Sed posuere consectetur est at lobortis. Curabitur blandit
+	tempus porttitor.',
+	'special-css-education-item-com-center-header' => 'Community Center',
+	'special-css-education-item-com-center-paragraph' => 'Sed posuere consectetur est at lobortis. Curabitur blandit
+	tempus porttitor.'
+
 ];
 
 $messages['qqq'] = [
@@ -31,4 +41,11 @@ $messages['qqq'] = [
 	'special-css-community-read-more' => "Link below post snippet leading to the full post page; The post page includes information regarding markup and CSS changes; $1 = link to the post's page on community.wikia.com",
 	
 	'special-css-oasis-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
+	'special-css-education-item-webinars-header' => 'Header text for Wikia Webinars',
+	'special-css-education-item-webinars-paragraph' => 'Paragraph text for Wikia Webinars',
+	'special-css-education-item-help-header' => 'Header text for Help / FAQ',
+	'special-css-education-item-help-paragraph' => 'Paragraph text for Help / FAQ',
+	'special-css-education-item-com-center-header' => 'Header text for Community Center',
+	'special-css-education-item-com-center-paragraph' => 'Paragraph text for Community Center',
+
 ];

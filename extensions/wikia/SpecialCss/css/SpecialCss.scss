@@ -3,7 +3,7 @@
 
 .css-editor {
 	float: left;
-	width: 700px;
+	width: 670px;
 	.css-editor-textarea {
 		width: 100%;
 		min-height: 400px;
@@ -12,12 +12,12 @@
 
 .css-side-bar {
 	float: right;
-	width: 300px;
+	width: 330px;
 }
 
 .community-updates {
 	border: 1px solid $color-page-border;
-	margin: 10px 0;
+	margin: 10px 0 20px;
 	h3 {
 		border-bottom: 1px solid #CCCACA;
 		font-size: 18px;
@@ -76,5 +76,23 @@
 
 .css-footer {
 	clear: both;
-	margin: 0 0 20px 0;
+	margin: 0 0 10px 0;
+}
+
+ul.education-links {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	li {
+		border: 1px solid $color-page-border;
+		margin-bottom: 10px;
+		padding: 15px;
+	}
+	h2 {
+		border: none;
+		margin-top: 0;
+	}
+	strong {
+		display: block;
+	}
 }

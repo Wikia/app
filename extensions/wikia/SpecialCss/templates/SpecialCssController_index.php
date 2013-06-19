@@ -19,6 +19,32 @@
 			<?php endforeach; ?>
 		</ul>
 	</div>
+	<ul class="education-links">
+		<li>
+			<h2>
+				<a href="" title="<?= wfMessage('special-css-education-item-webinars-header')->text(); ?>">
+					<?= wfMessage('special-css-education-item-webinars-header')->text(); ?>
+				</a>
+			</h2>
+			<p><?= wfMessage('special-css-education-item-webinars-paragraph')->text(); ?></p>
+		</li>
+		<li>
+			<h2>
+				<a href="" title="<?= wfMessage('special-css-education-item-help-header')->text(); ?>">
+					<?= wfMessage('special-css-education-item-help-header')->text(); ?>
+				</a>
+			</h2>
+			<p><?= wfMessage('special-css-education-item-help-paragraph')->text(); ?></p>
+		</li>
+		<li>
+			<h2>
+				<a href="" title="<?= wfMessage('special-css-education-item-com-center-header')->text(); ?>">
+					<?= wfMessage('special-css-education-item-com-center-header')->text(); ?>
+				</a>
+			</h2>
+			<p><?= wfMessage('special-css-education-item-com-center-paragraph')->text(); ?></p>
+		</li>
+	</ul>
 	<?php endif; ?>
 </aside>
 <footer class="css-footer">
