@@ -86,6 +86,7 @@ files = [
 
 	//Search
 	'extensions/wikia/Search/js/SearchAbTest.js',
+	'extensions/wikia/Search/js/SearchAbTest.*.js',
 	'extensions/wikia/Search/js/spec/*.spec.js'
 ];
 

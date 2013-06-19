@@ -195,6 +195,10 @@ $config['oasis_jquery'] = array(
 		'//skins/oasis/js/tables.js',
 
 		// Search A/B testing
+		'//extensions/wikia/Search/js/SearchAbTest.LinkUpdater.js',
+		'//extensions/wikia/Search/js/SearchAbTest.FormUpdater.js',
+		'//extensions/wikia/Search/js/SearchAbTest.WindowUtil.js',
+		'//extensions/wikia/Search/js/SearchAbTest.GroupProvider.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
 	)
 );
