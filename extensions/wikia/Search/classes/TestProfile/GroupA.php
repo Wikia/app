@@ -19,7 +19,6 @@ class GroupA extends Base
 			'title'             => 100,
 			'html'              => 80,
 			'redirect_titles'   => 50,
-			'nolang_txt'        => 10,
 			'backlinks_txt'     => 120,
 			];
 }
