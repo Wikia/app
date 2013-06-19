@@ -23,7 +23,7 @@
 	<ul class="education-links">
 		<li class="widget-box">
 			<h2>
-				<a href="" title="<?= wfMessage('special-css-education-item-webinars-header')->text(); ?>">
+				<a href="http://community.wikia.com/wiki/File:Intro_to_CSS_%26_Your_Wiki_Webinar" title="<?= wfMessage('special-css-education-item-webinars-header')->text(); ?>">
 					<?= wfMessage('special-css-education-item-webinars-header')->text(); ?>
 				</a>
 			</h2>
@@ -31,7 +31,7 @@
 		</li>
 		<li class="widget-box">
 			<h2>
-				<a href="" title="<?= wfMessage('special-css-education-item-help-header')->text(); ?>">
+				<a href="http://community.wikia.com/wiki/Help:CSS" title="<?= wfMessage('special-css-education-item-help-header')->text(); ?>">
 					<?= wfMessage('special-css-education-item-help-header')->text(); ?>
 				</a>
 			</h2>
@@ -39,7 +39,7 @@
 		</li>
 		<li class="widget-box">
 			<h2>
-				<a href="" title="<?= wfMessage('special-css-education-item-com-center-header')->text(); ?>">
+				<a href="http://community.wikia.com/wiki/Board:Support_Requests_-_Designing_Your_Wiki" title="<?= wfMessage('special-css-education-item-com-center-header')->text(); ?>">
 					<?= wfMessage('special-css-education-item-com-center-header')->text(); ?>
 				</a>
 			</h2>
