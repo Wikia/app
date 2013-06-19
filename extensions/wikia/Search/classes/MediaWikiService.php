@@ -647,7 +647,7 @@ class MediaWikiService
 	 */
 	public function getThumbnailHtmlForPageId(
 			$pageId, 
-			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
+			$transformParams = array( 'width' => 160, 'height' => 100 ), // WikiaGrid 1 column width
 			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)
 			) {
 		$html = $this->getThumbnailHtmlFromFilePageId( $pageId, $transformParams, $htmlParams );
@@ -960,7 +960,7 @@ class MediaWikiService
 	 */
 	protected function getThumbnailHtmlFromFilePageId( 
 			$pageId, 
-			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
+			$transformParams = array( 'width' => 160, 'height' => 100 ), // WikiaGrid 1 column width
 			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) 
 			) {
 		$html = '';
@@ -982,11 +982,11 @@ class MediaWikiService
 	 */
 	protected function getThumbnailHtmlFromArticlePageId( 
 			$pageId,
-			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
+			$transformParams = array( 'width' => 160, 'height' => 100 ), // WikiaGrid 1 column width
 			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) 
 			) {
 		$html = '';
-		$imagesServing = new \ImageServing( [ $pageId ], $transformParams['width'] );
+		$imagesServing = new \ImageServing( [ $pageId ], $transformParams['width'], $transformParams['height'] );
 		$images = $imagesServing->getImages( 1 );
 		if ( isset( $images[$pageId] ) && !empty( $images[$pageId] ) ) {
 			$image = array_shift( $images[$pageId] );

@@ -2034,7 +2034,7 @@ class MediaWikiServiceTest extends BaseTest
 		$mockFile
 		    ->expects( $this->once() )
 		    ->method ( 'transform' )
-		    ->with   ( array( 'width' => 160 ) )
+		    ->with   ( array( 'width' => 160, 'height' => 100 ) )
 		    ->will   ( $this->returnValue( $mockTransform ) )
 		;
 		$mockTransform
