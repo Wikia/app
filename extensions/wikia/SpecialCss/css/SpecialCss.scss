@@ -18,6 +18,8 @@
 	}
 	.community-updates {
 		margin: 10px 0;
+		overflow: hidden;
+		padding-bottom: 15px;
 		h2 {
 			border-bottom: 1px solid $color-page-border;
 			color: $color-links;
@@ -33,9 +35,11 @@
 		}
 	}
 	.community-updates-list {
+		border-bottom: 1px solid $color-page-border;
 		height: 440px;
 		list-style: none;
 		margin: 0;
+		margin-bottom: 15px;
 		overflow-y: scroll;
 		padding: 0;
 	}
@@ -69,6 +73,20 @@
 		}
 		&:last-child {
 			border: none;
+		}
+	}
+	.see-all-link {
+		display: inline-block;
+		float: right;
+		padding-right: 20px;
+		text-align: right;
+		&:after {
+			color: $color-links;
+			content: '>';
+			display: inline;
+			position: relative;
+			right: -3px;
+			top: -1px;
 		}
 	}
 	.education-links {
