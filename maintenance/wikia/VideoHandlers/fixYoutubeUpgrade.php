@@ -74,9 +74,8 @@ class FixYoutubeUpgrade extends Maintenance {
 		$matchFile = 'File|'.wfMessage('nstab-image')->text();
 
 		$text = preg_replace_callback(
-			"/\[\[((?:$matchFile):[\|]+)\|([0-9]+)([^\|\]]*)\]\]/i",
+			"/\[\[((?:$matchFile):[^\|]+)\|([0-9]+)([^\|\]]*)\]\]/i",
 			function ($matches) {
-
 				// Name the bits we're matching, for sanity
 				$original = $matches[0];
 				$file = $matches[1];
@@ -89,11 +88,11 @@ class FixYoutubeUpgrade extends Maintenance {
 				// See if our width is suffixed by 'px' or not.  If so
 				// leave it as is, unchanged.
 				if ( preg_match('/^ *px/', $suffix) ) {
-					echo "\t- Leaving unchanged";
+					echo "\t- Leaving unchanged\n";
 					return $original;
 				} else {
 					$rewrite = "[[$file|${width}px]]";
-					echo "\t- FIXING as '$rewrite\n";
+					echo "\t- FIX AS '$rewrite\n";
 					return $rewrite;
 				}
 			},
