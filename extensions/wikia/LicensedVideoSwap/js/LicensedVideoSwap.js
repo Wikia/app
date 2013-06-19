@@ -181,12 +181,15 @@ var LVS = {
 
 			if ( isSwap ) {
 				newTitleText = newTitle.replace(/_/g, ' ' );
+				title = $.msg( 'lvs-confirm-swap-title' );
 				msg = $.msg( 'lvs-confirm-swap-message', currTitleText, newTitleText );
 			} else {
+				title = $.msg( 'lvs-confirm-keep-title' );
 				msg = $.msg( 'lvs-confirm-keep-message', currTitleText );
 			}
 
 			$.confirm({
+				title: title,
 				content: msg,
 				onOk: function() {
 					doRequest();
@@ -272,17 +275,14 @@ var LVS = {
 		});
 	},
 	initUndo: function() {
-		var that = this;
+		var that = this,
+			videoTitle,
+			newTitle,
+			qs,
+			sort,
+			wasSwap;
 
-		$( 'body' ).on( 'click', '.global-notification .undo', function( e ) {
-			e.preventDefault();
-
-			var $this = $( this ),
-				videoTitle = $this.attr( 'data-video-title' ),
-				newTitle = $this.attr( 'data-new-title' ) || '',
-				qs = new QueryString(),
-				sort = qs.getVal ( 'sort', 'recent' );
-
+		function doRequest() {
 			$.nirvana.sendRequest({
 				controller: 'LicensedVideoSwapSpecialController',
 				method: 'restoreVideo',
@@ -300,7 +300,31 @@ var LVS = {
 					}
 				}
 			});
+		}
 
+		$( 'body' ).on( 'click', '.global-notification .undo', function( e ) {
+			e.preventDefault();
+
+			var $this = $( this );
+
+			videoTitle = $this.attr( 'data-video-title' );
+			newTitle = $this.attr( 'data-new-title' ) || '';
+			qs = new QueryString();
+			sort = qs.getVal ( 'sort', 'recent' );
+			wasSwap = !!newTitle;
+
+			if ( wasSwap ) {
+				$.confirm({
+					title: $.msg( 'lvs-confirm-undow-swap-title' ),
+					content: $.msg( 'lvs-confirm-undo-swap-message' ),
+					onOk: function() {
+						doRequest();
+					},
+					width: 700
+				});
+			} else {
+				doRequest();
+			}
 
 		});
 	}
