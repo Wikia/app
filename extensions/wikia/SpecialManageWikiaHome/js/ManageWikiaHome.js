@@ -289,8 +289,11 @@ ManageWikiaHome.prototype = {
 				wikiId: this.modalObject.target.attr('data-id')
 			},
 			callback: $.proxy(function(response) {
-				this.wereCollectionsWikisChanged = true;
+				this.wereCollectionsWikisChanged = response.status;
 				$('.modalWrapper').closeModal();
+                if(!response.status) {
+                    alert(response.message);
+                }
 			}, this)
 		});
 	},
