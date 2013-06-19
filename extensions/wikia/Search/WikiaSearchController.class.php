@@ -55,6 +55,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		$this->handleSkinSettings();
+		//will change template depending on passed ab group
+		$this->handleLayoutAbTest( $this->getVal( 'ab', null ) );
 		$searchConfig = $this->getSearchConfigFromRequest();
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig);
@@ -388,6 +390,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Called in index action to handle overriding template for different abTests
+	 */
+	protected function handleLayoutAbTest( $abGroup ) {
+		global $IP;
+		//check if template for ab test exists
+		if( $abGroup !== null && file_exists( "{$IP}/Search/templates/WikiaSearch_{$abGroup}.php" ) ) {
+			//set name depending on abGroup
+			$this->setVal( 'resultView', $abGroup );
+		} else {
+			//defaults to result
+			$this->setVal( 'resultView', 'result' );
+		}
 	}
 
 	/**
