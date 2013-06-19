@@ -41,6 +41,21 @@ class SpecialCssController extends WikiaSpecialPageController {
 			$this->response->redirect($this->specialPage->getTitle()->getLocalURL());
 		}
 
+		$this->deletedArticle = '';
+		$title = $model->getCssFileTitle();
+		$this->dropdown = array();
+		if ( !empty( $title ) ) {
+			if ( !$title->isDeleted() ) {
+			} else
+			{
+				LogEventsList::showLogExtract( $this->deletedArticle, array( 'delete', 'move' ), $title,
+					'', array( 'lim' => 10,
+						'conds' => array( "log_action != 'revision'" ),
+						'showIfEmpty' => false,
+						'msgKey' => array( 'recreate-moveddeleted-warn') )
+				);
+			}
+		}
 		$this->cssContent = $model->getCssFileContent();
 		F::build('JSMessages')->enqueuePackage('SpecialCss', JSMessages::EXTERNAL);
 

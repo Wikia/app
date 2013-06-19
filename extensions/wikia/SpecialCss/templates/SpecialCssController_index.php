@@ -1,5 +1,6 @@
 <form method="post" id="cssEditorForm">
 	<div class="css-editor">
+		<?= $deletedArticle ?>
 		<pre class="css-editor-container" id="cssEditorContainer"><?= htmlspecialchars($cssContent); ?></pre>
 	</div>
 	<aside class="css-side-bar">
