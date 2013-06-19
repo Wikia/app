@@ -143,7 +143,8 @@ var LVS = {
 			$button,
 			isSwap,
 			currTitle,
-			newTitle;
+			newTitle,
+			title;
 
 		function doRequest(){
 			// Add loading graphic
