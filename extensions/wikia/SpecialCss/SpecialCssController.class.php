@@ -3,7 +3,12 @@ class SpecialCssController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct('CSS', 'specialcss', true);
 	}
-	
+
+	/**
+	 * Main page for Special:Css page
+	 *
+	 * @return bool
+	 */
 	public function index() {
 		wfProfileIn(__METHOD__);
 
@@ -42,6 +47,11 @@ class SpecialCssController extends WikiaSpecialPageController {
 		wfProfileOut(__METHOD__);
 	}
 
+	/**
+	 * Method for getting diff between actual Wikia.css file and text given in request parameter
+	 * @param string wikitext - request param in which you can provide text to create a diff
+	 *
+	 */
 	public function getDiff() {
 		$wikitext = $this->request->getVal('wikitext', '');
 		$model = new SpecialCssModel();
