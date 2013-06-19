@@ -28,6 +28,7 @@ $messages['en'] = [
 	'special-css-diff-modal-title' => 'Changes',
 
 	'special-css-saving-internal-error' => 'Error while saving article',
+	'special-css-save-message' => 'Saved'
 ];
 
 $messages['qqq'] = [
@@ -59,4 +60,5 @@ $messages['qqq'] = [
 	'special-css-diff-modal-title' => 'Title for modal witch actual changes in css file',
 
 	'special-css-saving-internal-error' => 'Error message after publish button informing user that there were some problems while saving css file content',
+	'special-css-save-message' => 'Notification message at the top of page that says that Css content was saved'
 ];
