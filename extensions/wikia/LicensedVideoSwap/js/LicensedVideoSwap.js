@@ -133,8 +133,21 @@ var LVS = {
 		});
 	},
 	initSwapOrKeep: function() {
-		var that = this;
-		function doRequest( isSwap, currTitle,  newTitle ){
+		var that = this,
+			$loading = $('<div class="loading-bg"></div>' ),
+			$parent,
+			$overlay,
+			$row,
+			$button,
+			isSwap,
+			currTitle,
+			newTitle;
+
+		function doRequest(){
+			// Add loading graphic
+			$loading.appendTo( that.$container );
+			$overlay.addClass( 'loading' ).show();
+
 			var data = {
 				videoTitle: currTitle,
 				sort: 'recent', // TODO: make this dynamic
@@ -154,13 +167,14 @@ var LVS = {
 						window.GlobalNotification.show( data.msg, 'error' );
 					} else {
 						window.GlobalNotification.show( data.msg, 'confirm' );
+						// update page html (this also gets rid of loading overlay)
 						that.$container.html( data.html );
 					}
 				}
 			});
 		}
 
-		function confirmModal( isSwap, currTitle, newTitle ) {
+		function confirmModal() {
 			var currTitleText =  currTitle.replace(/_/g, ' ' ),
 				newTitleText,
 				msg;
@@ -175,7 +189,7 @@ var LVS = {
 			$.confirm({
 				content: msg,
 				onOk: function() {
-					doRequest( isSwap, currTitle, newTitle );
+					doRequest();
 				},
 				width: 700
 			});
@@ -183,31 +197,32 @@ var LVS = {
 
 		// Event listener for interacting with buttons
 		this.$container.on( 'mouseover mouseout click', '.swap-button, .keep-button', function( e ) {
-			var $this = $( this ),
-				$parent = $this.parent(),
-				$arrow = $parent.siblings( '.swap-arrow' ),
-				$row = $this.closest( '.row' ),
-				isSwap = $this.is( '.swap-button' ),
-				newTitle,
-				currTitle;
+			$button = $( this );
+
+			$parent = $button.parent();
+			$overlay = $parent.siblings( '.swap-arrow' );
+			$row = $button.closest( '.row' );
+			isSwap = $button.is( '.swap-button' );
 
 			if ( isSwap ) {
 				// swap button hovered
 				if ( e.type == 'mouseover' ) {
-					$arrow.fadeIn( 100 );
+					$overlay.fadeIn( 100 );
 				} else if ( e.type == 'mouseout' ) {
-					$arrow.fadeOut( 100 );
+					$overlay.fadeOut( 100 );
 				// swap button clicked
 				} else if ( e.type == 'click' ) {
 					// Get both titles - current/non-premium video and video to swap it out with
-					newTitle = $this.attr( 'data-video-swap' );
-					currTitle = $row.find( '.keep-button' ).attr( 'data-video-keep' );
-					confirmModal( true, decodeURIComponent( currTitle ), decodeURIComponent( newTitle ) );
+					newTitle = decodeURIComponent( $button.attr( 'data-video-swap' ) );
+					currTitle = decodeURIComponent( $row.find( '.keep-button' ).attr( 'data-video-keep' ) );
+					confirmModal();
 				}
 			// Keep button clicked
 			} else if ( e.type == 'click' ) {
-				currTitle = $row.find( '.keep-button' ).attr( 'data-video-keep' );
-				confirmModal( false, decodeURIComponent( currTitle ) );
+				currTitle = decodeURIComponent( $row.find( '.keep-button' ).attr( 'data-video-keep' ) );
+				// no new title b/c we're keeping the current video
+				newTitle = '';
+				confirmModal();
 			}
 		});
 	},

@@ -3,6 +3,7 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/opacity";
 @import "mixins/_sprite-LicensedVideoSwap";
 
 $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
@@ -77,6 +78,7 @@ $arrow-button-color: white;
 
 
 .LVSGrid {
+	position: relative;
 	.lvs-sprite:before {
 		@include sprite-LicensedVideoSwap-base;
 	}
@@ -89,11 +91,14 @@ $arrow-button-color: white;
 			@include border-radius(5px);
 			background-color: $color-page;
 			display: none;
+			height: 31px;
 			left: 50%;
 			margin-left: -40px;
 			padding: 15px;
 			position: absolute;
 			top: 157px;
+			width: 49px;
+			z-index: 102; // above loading bg
 			&:before {
 				@include sprite-LicensedVideoSwap('big_' + $arrow-color + '_arrow');
 				content: "";
@@ -101,6 +106,14 @@ $arrow-button-color: white;
 				margin: auto;
 				height: 31px;
 				width: 49px;
+			}
+			&.loading:before {
+				content: "";
+				background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
+				display: block;
+				height: 16px;
+				margin: 7px auto 0;
+				width: 16px;
 			}
 		}
 	}
@@ -217,6 +230,16 @@ $arrow-button-color: white;
 				text-overflow: ellipsis;
 			}
 		}
+	}
+	.loading-bg {
+		@include opacity(75);
+		background-color: $color-page;
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 101; // play buttons are 100
 	}
 }
 
