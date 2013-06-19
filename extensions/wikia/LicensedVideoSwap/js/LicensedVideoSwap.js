@@ -143,8 +143,7 @@ var LVS = {
 			$button,
 			isSwap,
 			currTitle,
-			newTitle,
-			title;
+			newTitle;
 
 		function doRequest(){
 			// Add loading graphic
@@ -180,6 +179,7 @@ var LVS = {
 		function confirmModal() {
 			var currTitleText =  currTitle.replace(/_/g, ' ' ),
 				newTitleText,
+				title,
 				msg;
 
 			if ( isSwap ) {
