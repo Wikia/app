@@ -17,13 +17,20 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 				caption: caption
 			};
 
+		function Ad(num){
+			this.caption = caption;
+			this.type = type;
+			this.toString = toString;
+			this.imgNum = num;
+		}
+
 		media.on('setup', function (data){
 			var l = data.length;
 
 			if(l > 5){
 				data.images.forEach(function(val,key){
 					if(key > 0 && key % 5 == 0){
-						data.images.splice(key, 0, ad);
+						data.images.splice(key, 0, new Ad(key));
 					}
 				});
 

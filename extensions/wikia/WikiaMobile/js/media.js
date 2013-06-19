@@ -489,7 +489,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		// Video/image view was initiated from article
 		clickSource = "embed";
 
-		currentNum = num + ~~(num / 5);
+		currentNum = num;
 		currentMedia = images[currentNum];
 
 		modal.open({
@@ -653,7 +653,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 	return {
 		openModal: openModal,
-		getImages: function(){
+		getMedia: function(){
 			!inited && setup();
 			return images;
 		},
