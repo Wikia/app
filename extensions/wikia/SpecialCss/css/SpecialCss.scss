@@ -61,15 +61,15 @@
 		}
 		& > a {
 			font-size: 11px;
-		}
-		& > a:after {
-			background-image: none;
-			color: $color-links;
-			content: '>';
-			display: inline;
-			position: relative;
-			right: -3px;
-			top: -3px;
+			&:after {
+				background-image: none;
+				color: $color-links;
+				content: '>';
+				display: inline;
+				position: relative;
+				right: -3px;
+				top: -3px;
+			}
 		}
 		&:last-child {
 			border: none;
