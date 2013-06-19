@@ -1,4 +1,3 @@
-<div id=wkAdInContent><span=wkAdSpoiler><?= wfMessage('wikiamobile-ad-sign')->text(); ?></div></div>
 <script>window.addEventListener('load', function () {
 if(Wikia.AbTest && ~['A', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
 	require(['ads', 'sloth', 'wikia.utils', 'JSMessages'], function (ads, sloth, $, msg) {
@@ -7,7 +6,7 @@ if(Wikia.AbTest && ~['A', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 
 		if(firstSection && $.findPos(firstSection) > MIN_ZEROTH_SECTION_LENGTH){
 
-			firstSection.insertAdjacentHTML('beforebegin', '<div id=wkAdInContent><label class=wkAdLabel>' + msg('wikiamobile-ad-sign') + '<label></div>');
+			firstSection.insertAdjacentHTML('beforebegin', '<div id=wkAdInContent><label class="wkAdLabel inContent">' + msg('wikiamobile-ad-label') + '<label></div>');
 
 			sloth({
 				on: document.getElementById('wkAdInContent'),

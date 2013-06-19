@@ -56,7 +56,7 @@ you should definitely check this out:
 	'wikiamobile-video-not-friendly' => 'Sorry, this video isn\'t available on mobile.',
 
 	//ad
-	'wikiamobile-ad-sign' => 'advertisement',
+	'wikiamobile-ad-label' => 'advertisement',
 
 	//modal
 	'wikiamobile-image-not-loaded' => 'Image is not available',
@@ -89,7 +89,7 @@ $messages['qqq'] = array(
 	'wikiamobile-media-group-footer' => 'the caption under a media-group/gallery, $1 contains the total amount of images/videos in the group',
 	'wikiamobile-unsupported-video-download' => 'feedback message for browsers not supporting html5 videos with link to play the video in a native app (the video URL is in $1)',
 	'wikiamobile-video-views-counter' => 'counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
-	'wikiamobile-ad-sign' => 'Message shown to a user on page next to advertisement - to distinguish that below is an ad',
+	'wikiamobile-ad-label' => 'Message shown to a user on page next to advertisement - to distinguish that below is an ad',
 
 	'wikiasmartbanner-appstore' => 'Message displayed in smart banner promoting an app on app store',
 	'wikiasmartbanner-googleplay' => 'Message displayed in smart banner promoting an app on google play store',

@@ -60,6 +60,7 @@ $slotZIndex: 4000;
 		height: 50px;
 
 		margin: 0 auto;
+		text-align: center;
 	}
 }
 
@@ -80,88 +81,30 @@ $slotZIndex: 4000;
 	}
 }
 
-.wkAdLabel {
-	position: absolute;
-	top: -5px;
-	left: 10px;
-
-	font-size: 9px;
-	color: $ad-label-color;
-	text-transform: uppercase;
-}
-
-.swiperPage.wkAdPlace > img {
-	position: absolute;
-	bottom: 120px;
-	left: 0;
-	right: 0;
-
-	margin: 0 auto;
-
-	height: 150px;
-
-	opacity: 0;
-
-	-webkit-transition: opacity .3s, bottom .3s, height .3s;
-}
-
 .wkAdWrapper {
 	display: inline-block;
 
-	position: absolute;
-	top: 40%;
-	left: 50%;
+	opacity: 0;
 
-	height: 0;
+	height: 250px;
 	width: 300px;
 
-	opacity: 0;
-	margin-left: -150px;
-	margin-top: -125px;
-
-	z-index: 15;
-
-	-webkit-transition: opacity .3s, top .3s;
+	-webkit-transition: opacity .2s;
 
 	&.show {
-		top: 50%;
-
-		height: 250px;
-
 		opacity: 1;
-
-		& ~ img {
-			bottom: 4%;
-
-			height: 80px;
-
-			opacity: 1;
-		}
 	}
 }
 
-@media (min-width:320px) and (orientation:landscape) {
-	.swiperPage.wkAdPlace > img {
-		bottom: 30%;
-		right: 30%;
+.wkAdLabel {
+	text-transform: uppercase;
 
-		width: 200px;
+	&.inContent {
+		position: absolute;
+		top: -5px;
+		left: 10px;
 
-		-webkit-transition: opacity .3s, right .3s, width .3s;
-	}
-
-	.wkAdWrapper.show {
-		left: 40%;
-
-		& ~ img {
-			left: auto;
-			right: 2%;
-			bottom: 15%;
-
-			height: auto;
-			width: 120px;
-
-			z-index: 21;
-		}
+		font-size: 9px;
+		color: $ad-label-color;
 	}
 }

@@ -87,7 +87,7 @@ F::build( 'JSMessages' )->registerPackage( 'WkMbl', array(
 	'wikiamobile-image-not-loaded',
 	'wikiamobile-video-not-friendly',
 	'wikiamobile-video-not-friendly-header',
-	'wikiamobile-ad-sign'
+	'wikiamobile-ad-label'
 ) );
 
 F::build( 'JSMessages' )->registerPackage( 'SmartBanner', [
