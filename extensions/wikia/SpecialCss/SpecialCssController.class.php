@@ -19,7 +19,6 @@ class SpecialCssController extends WikiaSpecialPageController {
 		}
 
 		$model = new SpecialCssModel();
-		$this->cssContent = $model->getCssFileContent();
 
 		if ($this->request->wasPosted()) {
 			$content = $this->request->getVal('cssContent', '');
@@ -29,11 +28,9 @@ class SpecialCssController extends WikiaSpecialPageController {
 				$this->request->getVal('minorEdit', '') != '',
 				$this->wg->user
 			);
-
+			
 			if ($status->isOk()) {
-				// TODO check whats wrong with this message
-				NotificationsController::addConfirmation(wfMessage('special-css-save-message'));
-				$this->response->redirect($this->specialPage->getTitle()->getLocalURL());
+				NotificationsController::addConfirmation( wfMessage('special-css-save-message')->text() );
 			} else {
 				NotificationsController::addConfirmation(
 					$status->getMessage(),
@@ -65,7 +62,9 @@ class SpecialCssController extends WikiaSpecialPageController {
 				}
 			}
 		}
-
+		
+		$this->cssContent = $model->getCssFileContent();
+		
 		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
 		$this->response->addAsset('/extensions/wikia/SpecialCss/js/SpecialCss.js');
 		// This shouldn't be moved to asset manager package because of Ace internal autoloader
