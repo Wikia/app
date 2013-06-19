@@ -5,8 +5,8 @@
 </div>
 <aside class="css-side-bar">
 	<?php if( !empty($cssUpdates) ): ?>
-	<div class="community-updates">
-		<h3><?= wfMessage('special-css-community-update-headline')->text(); ?></h3>
+	<div class="community-updates widget-box">
+		<h2><?= wfMessage('special-css-community-update-headline')->text(); ?></h2>
 		<ul class="community-updates-list">
 			<?php foreach( $cssUpdates as $cssUpdate ): ?>
 			<li class="community-update-item plainlinks">
@@ -14,13 +14,13 @@
 				<h4><a href="<?= $cssUpdate['url']; ?>"><?= $cssUpdate['title']; ?></a></h4>
 				<span><?= wfMessage('special-css-community-update-by')->params([$cssUpdate['timestamp'], $cssUpdate['userUrl'], $cssUpdate['userName']])->parse(); ?></span>
 				<blockquote><?= $cssUpdate['text']; ?></blockquote>
-				<p class="read-more"><?= wfMessage('special-css-community-read-more')->params([$cssUpdate['url']])->parse(); ?></p>
+				<?= wfMessage('special-css-community-read-more')->params([$cssUpdate['url']])->parse(); ?>
 			</li>
 			<?php endforeach; ?>
 		</ul>
 	</div>
 	<ul class="education-links">
-		<li>
+		<li class="widget-box">
 			<h2>
 				<a href="" title="<?= wfMessage('special-css-education-item-webinars-header')->text(); ?>">
 					<?= wfMessage('special-css-education-item-webinars-header')->text(); ?>
@@ -28,7 +28,7 @@
 			</h2>
 			<p><?= wfMessage('special-css-education-item-webinars-paragraph')->text(); ?></p>
 		</li>
-		<li>
+		<li class="widget-box">
 			<h2>
 				<a href="" title="<?= wfMessage('special-css-education-item-help-header')->text(); ?>">
 					<?= wfMessage('special-css-education-item-help-header')->text(); ?>
@@ -36,7 +36,7 @@
 			</h2>
 			<p><?= wfMessage('special-css-education-item-help-paragraph')->text(); ?></p>
 		</li>
-		<li>
+		<li class="widget-box">
 			<h2>
 				<a href="" title="<?= wfMessage('special-css-education-item-com-center-header')->text(); ?>">
 					<?= wfMessage('special-css-education-item-com-center-header')->text(); ?>

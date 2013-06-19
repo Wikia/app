@@ -9,90 +9,87 @@
 		min-height: 400px;
 	}
 }
-
 .css-side-bar {
 	float: right;
 	width: 330px;
-}
+	.widget-box {
+		border: 1px solid $color-page-border;
+		margin-bottom: 10px;
+	}
+	.community-updates {
+		margin: 10px 0;
+		h2 {
+			border-bottom: 1px solid $color-page-border;
+			color: $color-links;
+			margin: 0;
+			padding: 15px;
+		}
+		blockquote {
+			margin: 0;
+		}
+		.avatar {
+			float: left;
+			margin: 0 15px 15px 0;
+		}
+	}
+	.community-updates-list {
+		height: 440px;
+		list-style: none;
+		margin: 0;
+		overflow-y: scroll;
+		padding: 0;
+	}
 
-.community-updates {
-	border: 1px solid $color-page-border;
-	margin: 10px 0;
-	h3 {
-		border-bottom: 1px solid $color-page-border;;
-		font-size: 18px;
-		font-weight: bold;
+	.community-update-item {
+		border-bottom: 1px solid $color-page-border;
 		margin: 0;
 		padding: 15px;
+		h4 {
+			font-size: 13px;
+			font-weight: bold;
+			line-height: 13px;
+			margin: 0;
+		}
+		span {
+			@include clearfix;
+			color: $color-alternate-text;
+			font-size: 11px;
+		}
+		& > a {
+			font-size: 11px;
+		}
+		& > a:after {
+			background-image: none;
+			color: $color-links;
+			content: '>';
+			display: inline;
+			position: relative;
+			right: -3px;
+			top: -3px;
+		}
+		&:last-child {
+			border: none;
+		}
 	}
-	blockquote {
+	.education-links {
 		margin: 0;
-	}
-	.avatar {
-		float: left;
-		margin: 0 10px 10px 0;
-	}
-	.read-more {
-		font-size: 11px;
-		margin-bottom: 20px;
-	}
-}
-
-.community-updates-list {
-	height: 440px;
-	list-style: none;
-	margin: 0;
-	overflow-y: scroll;
-	padding: 0;
-}
-
-.community-update-item {
-	border-bottom: 1px solid $color-page-border;
-	margin: 15px;
-	h4 {
-		font-size: 13px;
-		font-weight: bold;
-		line-height: 13px;
-		margin: 0;
-	}
-	span {
-		@include clearfix;
-		color: $color-alternate-text;
-		font-size: 11px;
-	}
-	.read-more:after {
-		color: $color-links;
-		content: '>';
-		left: 3px;
-		position: relative;
-		right: 3px;
-		top: -1px;
+		padding: 0;
+		list-style: none;
+		li {
+			padding: 15px;
+		}
+		h2 {
+			border: none;
+			margin-top: 0;
+		}
+		strong {
+			display: block;
+		}
 	}
 }
-
-.community-update-item:last-child {
-	border: none;
-}
-
 .css-footer {
 	clear: both;
 	margin: 0 0 10px 0;
 }
 
-ul.education-links {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	li {
-		border: 1px solid $color-page-border;
-		margin-bottom: 10px;
-		padding: 15px;
-	}
-	h2 {
-		border: none;
-		margin-top: 0;
-	}
-	strong {
-		display: block;
-	}
-}
+
