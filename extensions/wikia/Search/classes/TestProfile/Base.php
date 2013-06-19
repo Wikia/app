@@ -26,7 +26,6 @@ class Base
 			'html'              => 5,
 			'redirect_titles'   => 50,
 			'categories'        => 25,
-			'nolang_txt'        => 10,
 			'backlinks_txt'     => 25,
 			];
 	
