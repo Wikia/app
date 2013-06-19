@@ -28,9 +28,9 @@ class Video extends OnWiki
 	protected function configureQueryFields() {
 		if ( $this->service->getLanguageCode() !== 'en' ) {
 			$this->config->addQueryFields( array(
-					Utilities::field( 'title', 'en' )           => 5, 
-					Utilities::field( 'html', 'en' )            => 1.5, 
-					Utilities::field( 'redirect_titles', 'en' ) => 4
+					Utilities::field( 'title', 'en' )           => 100, 
+					Utilities::field( 'html', 'en' )            => 5, 
+					Utilities::field( 'redirect_titles', 'en' ) => 50
 					));
 		}
 		$this->config->addQueryFields( 

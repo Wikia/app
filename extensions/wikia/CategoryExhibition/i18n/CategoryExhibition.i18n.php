@@ -426,6 +426,15 @@ $messages['nl'] = array(
 	'category-exhibition-display-new' => 'Categoriepresentatieweergave',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'category-exhibition-sorttype' => 'Tipe de triada :',
+	'category-exhibition-mostvisited' => 'Los mai visitats',
+	'category-exhibition-recentedits' => 'Modificats recentament',
+);
+
 /** Polish (polski)
  * @author Sovq
  */

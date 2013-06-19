@@ -6,14 +6,14 @@
  */
 require_once( $IP . '/extensions/wikia/CityVisualization/models/CityVisualization.class.php' );
 
-F::app()->registerHook('WikiFactoryChanged', 'WikiaHomePageCollectionsHooks', 'onWikiFactoryVarChanged');
+$wgHooks['WikiFactoryChanged'][] = 'WikiaHomePageCollectionsHooks::onWikiFactoryVarChanged';
 
 class WikiaHomePageCollectionsHooks {
 	const COLLECTIONS_LIST_WF_VAR_NAME = 'wgWikiaHomePageCollectionsWikis';
 	
-	public function onWikiFactoryVarChanged($cv_name, $city_id, $value) {
+	static public function onWikiFactoryVarChanged($cv_name, $city_id, $value) {
 		$app = F::app();
-		if( $this->isCollectionList($city_id, $cv_name) ) {
+		if( self::isCollectionList($city_id, $cv_name) ) {
 			Wikia::log(__METHOD__, '', 'Updating collection list cache after change');
 			
 			$visualization = new CityVisualization();
@@ -28,7 +28,7 @@ class WikiaHomePageCollectionsHooks {
 		return true;
 	}
 
-	private function isCollectionList($city_id, $cv_name) {
+	static private function isCollectionList($city_id, $cv_name) {
 		return $cv_name === self::COLLECTIONS_LIST_WF_VAR_NAME;
 	}
 }

@@ -40,6 +40,7 @@ class AdminDashboardLogic {
 			$bits = explode( '/', $title->getDBkey(), 2 );
 			$alias = array_shift(SpecialPageFactory::resolveAlias($bits[0]));
 
+
 			// NOTE: keep this list in alphabetical order
 			static $exclusionList = array(
 				"AbTesting",
@@ -96,7 +97,7 @@ class AdminDashboardLogic {
 				"ThemeDesigner",
 				"ThemeDesignerPreview",
 				"UnusedVideos",
-				"UserLogin",
+				"Userlogin",
 				"UserManagement",
 				"UserPathPrediction",
 				"UserSignup",
@@ -119,8 +120,9 @@ class AdminDashboardLogic {
 	/**
 	 *  @brief hook to add toolbar item for admin dashboard
 	 */
-	function onBeforeToolbarMenu(&$items) {
-		if( F::app()->wg->User->isAllowed('admindashboard') ) {
+	static function onBeforeToolbarMenu(&$items) {
+		$wg = F::app()->wg;
+		if( $wg->User->isAllowed('admindashboard') ) {
 			$item = array(
 				'type' => 'html',
 				'html' => Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link', array('data-tracking' => 'admindashboard/toolbar/admin') )

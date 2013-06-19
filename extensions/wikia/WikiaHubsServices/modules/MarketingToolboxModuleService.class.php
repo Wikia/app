@@ -122,7 +122,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	protected function getMemcacheKey( $timestamp, $skin ) {
-		return  $this->wf->SharedMemcKey(
+		return  wfSharedMemcKey(
 			MarketingToolboxModel::CACHE_KEY,
 			$timestamp,
 			$this->verticalId,

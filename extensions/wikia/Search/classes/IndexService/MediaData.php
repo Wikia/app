@@ -25,7 +25,6 @@ class MediaData extends AbstractService
 			return $results;
 		}
 	
-		$fileHelper = new \WikiaFileHelper();
 		$detail     = $service->getMediaDetailFromPageId( $this->currentPageId );
 		$metadata   = $service->getMediaDataFromPageId( $this->currentPageId );
 
@@ -65,6 +64,15 @@ class MediaData extends AbstractService
 				}
 				if ( isset( $metadata['actors'] ) ) {
 					$results['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
+				}
+				if ( isset( $metadata['keywords'] ) ) {
+					$results['video_keywords_txt'] = explode( ', ', $metadata['keywords'] );
+				}
+				if ( isset( $metadata['tags'] ) ) {
+					$results['video_tags_txt'] = explode( ', ', str_replace( '-', ' ', $metadata['tags'] ) );
+				}
+				if ( isset( $metadata['description'] ) ) {
+					$results['video_description_txt'] = $metadata['description'];
 				}
 			}
 			

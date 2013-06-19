@@ -71,7 +71,7 @@ function wfOasisSetup() {
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
 	//Oasis-navigation-v2 messages
-	$jsMessages = F::build('JSMessages');
+	$jsMessages = new JSMessages();
 	$jsMessages->registerPackage('Oasis-navigation-v2', array(
 		'oasis-navigation-v2-*'
 	));

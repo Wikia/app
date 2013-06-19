@@ -14,11 +14,11 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 // autoloaded classes
-$app->registerClass('ShareButton', "$dir/ShareButton.class.php");
+$wgAutoloadClasses['ShareButton'] =  "$dir/ShareButton.class.php";
 
 // providers
-$app->registerClass('ShareButtonFacebook', "$dir/providers/ShareButtonFacebook.class.php");
-$app->registerClass('ShareButtonGooglePlus', "$dir/providers/ShareButtonGooglePlus.class.php");
-$app->registerClass('ShareButtonTwitter', "$dir/providers/ShareButtonTwitter.class.php");
-$app->registerClass('ShareButtonMailController', "$dir/modules/ShareButtonMailController.class.php");
-$app->registerClass('ShareButtonMail', "$dir/providers/ShareButtonMail.class.php");
+$wgAutoloadClasses['ShareButtonFacebook'] =  "$dir/providers/ShareButtonFacebook.class.php";
+$wgAutoloadClasses['ShareButtonGooglePlus'] =  "$dir/providers/ShareButtonGooglePlus.class.php";
+$wgAutoloadClasses['ShareButtonTwitter'] =  "$dir/providers/ShareButtonTwitter.class.php";
+$wgAutoloadClasses['ShareButtonMailController'] =  "$dir/modules/ShareButtonMailController.class.php";
+$wgAutoloadClasses['ShareButtonMail'] =  "$dir/providers/ShareButtonMail.class.php";

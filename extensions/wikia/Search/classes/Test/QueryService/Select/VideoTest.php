@@ -27,9 +27,9 @@ class VideoTest extends Wikia\Search\Test\BaseTest {
 		                   ->getMock();
 		
 		$videoQueryFields = array(
-				Wikia\Search\Utilities::field( 'title', 'en' )           => 5, 
-				Wikia\Search\Utilities::field( 'html', 'en' )            => 1.5, 
-				Wikia\Search\Utilities::field( 'redirect_titles', 'en' ) => 4
+				Wikia\Search\Utilities::field( 'title', 'en' )           => 100, 
+				Wikia\Search\Utilities::field( 'html', 'en' )            => 5, 
+				Wikia\Search\Utilities::field( 'redirect_titles', 'en' ) => 50
 		);
 		$mockService
 		    ->expects( $this->once() )

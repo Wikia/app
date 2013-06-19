@@ -12,11 +12,11 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes (controllers)
  */
-$app->registerClass('BatchVarnishPurgeToolController', $dir . 'BatchVarnishPurgeToolController.class.php');
+$wgAutoloadClasses['BatchVarnishPurgeToolController'] =  $dir . 'BatchVarnishPurgeToolController.class.php';
 
-$app->registerExtensionMessageFile('BatchVarnishPurgeTool', $dir . '/BatchVarnishPurgeTool.i18n.php');
+	$wgExtensionMessagesFiles['BatchVarnishPurgeTool'] = $dir . '/BatchVarnishPurgeTool.i18n.php';
 
-$app->registerSpecialPage('BatchVarnishPurgeTool', 'BatchVarnishPurgeToolController');
+$wgSpecialPages['BatchVarnishPurgeTool'] = 'BatchVarnishPurgeToolController';
 
 $wgGroupPermissions['*']['batchvarnishpurgetool'] = false;
 $wgGroupPermissions['staff']['batchvarnishpurgetool'] = true;

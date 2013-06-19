@@ -6,7 +6,6 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 $wgExtensionCredits['other'][] = array(
 	'name'			=> 'WikiaRecentChangesBlockHandler',
@@ -16,7 +15,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //classes
-$app->registerClass('WikiaRecentChangesBlockHandler', $dir.'WikiaRecentChangesBlockHandler.php');
+$wgAutoloadClasses['WikiaRecentChangesBlockHandler'] =  $dir.'WikiaRecentChangesBlockHandler.php';
 
 //hooks
-$app->registerHook('ChangesListHeaderBlockGroup', 'WikiaRecentChangesBlockHandler', 'onChangesListHeaderBlockGroup');
+$wgHooks['ChangesListHeaderBlockGroup'][] = 'WikiaRecentChangesBlockHandler::onChangesListHeaderBlockGroup';

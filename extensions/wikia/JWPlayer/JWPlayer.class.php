@@ -121,7 +121,7 @@ EOT;
 				break;
 			case 'ad':
 				$googimaDataVariable = self::GOOGIMA_DATA_VARIABLE;
-				$jwplayerAdMessage = F::app()->wf->Msg('jwplayer-ad-message');
+				$jwplayerAdMessage = wfMsg('jwplayer-ad-message');
 				$script = <<<EOT
 if (window.wikiaDartHelper && (!window.wgUserName || window.wgUserShowAds)) {
 	var jwplayer_ad_tag = wikiaDartHelper.getUrl({
@@ -273,9 +273,9 @@ EOT;
 		// NOTE: this code must be before the thumb section
 		if ($this->ageGate && $canDisplayAgegate) {
 			$agegateOptions = array(
-			    'cookielife'=>60*24*365,	// cookielife in minutes
-			    'message'=>F::app()->wf->Msg('jwplayer-agegate-message'),
-			    'minage'=>17
+			    'cookielife' => 60*24*365,	// cookielife in minutes
+			    'message' => wfMsg('jwplayer-agegate-message'),
+			    'minage' => 17
 			    );
 			$plugins['agegate-3'] = $agegateOptions;
 		}

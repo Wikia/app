@@ -11,17 +11,16 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 //classes
-$app->registerClass( 'LicensedVideoSwapSpecialController', $dir.'LicensedVideoSwapSpecialController.class.php' );
-$app->registerClass( 'LicensedVideoSwapHelper', $dir.'LicensedVideoSwapHelper.class.php' );
+$wgAutoloadClasses['LicensedVideoSwapSpecialController'] = $dir.'LicensedVideoSwapSpecialController.class.php';
+$wgAutoloadClasses['LicensedVideoSwapHelper'] = $dir.'LicensedVideoSwapHelper.class.php';
 
 // i18n mapping
-$app->registerExtensionMessageFile( 'LicensedVideoSwap', $dir.'LicensedVideoSwap.i18n.php' );
+$wgExtensionMessagesFiles['LicensedVideoSwap'] = $dir.'LicensedVideoSwap.i18n.php';
 
 // special pages
-$app->registerSpecialPage( 'LicensedVideoSwap', 'LicensedVideoSwapSpecialController' );
+$wgSpecialPages['LicensedVideoSwap'] = 'LicensedVideoSwapSpecialController';
 
 // permissions
 $wgGroupPermissions['*']['licensedvideoswap'] = false;

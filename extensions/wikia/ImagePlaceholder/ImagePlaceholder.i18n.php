@@ -558,3 +558,11 @@ $messages['zh-hans'] = array(
 	'imgplc-notinhistory' => '您不能在历史模式中添加图片。',
 	'imgplc-notinhistory-video' => '您不能在历史模式中添加视频。',
 );
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'imgplc-add-image' => '加入圖像',
+	'imgplc-image' => '圖像',
+);

@@ -5022,6 +5022,47 @@ $messages['li'] = array(
 	'wikistats_new_per_day' => 'nuuj<br />edaag',
 );
 
+/** Lithuanian (lietuvių)
+ * @author Mantak111
+ */
+$messages['lt'] = array(
+	'wikistats' => 'Wikia statistikos',
+	'wikistats_wikia' => 'Wikia',
+	'wikistats_pagetitle' => 'Wikia statistikos',
+	'wikistats_comparision' => 'Palyginimai',
+	'wikistats_showstats_btn' => 'Rodyti statistikas',
+	'wikistats_wikia_information' => 'Wikia informacija',
+	'wikiastast_refresh_data' => 'Atnaujinti duomenis',
+	'wikistats_export_xls' => 'Eksportuoti į XLS',
+	'wikistats_panel_close_btn' => 'Uždaryti',
+	'wikistats_daterange_from' => 'Nuo:',
+	'wikistats_daterange_to' => 'Kam:',
+	'wikistats_active_useredits' => 'Kalbos aktyvumas',
+	'wikistats_active_day' => 'diena',
+	'wikistats_active_month' => 'mėnuo',
+	'wikistats_active_year' => 'metai',
+	'wikistats_active_months' => 'mėnesiai',
+	'wikistats_number_editors' => 'redaktorių skaičius',
+	'wikistats_wikians' => 'Registruoti redaktoriai',
+	'wikistats_articles' => 'Straipsniai (išskyrus nukreipimus)',
+	'wikistats_articles_text' => 'Straipsniai',
+	'wikistats_archived' => 'Suarchyvuota',
+	'wikistats_other' => 'Kita',
+	'wikistats_database' => 'Duomenų bazė',
+	'wikistats_links' => 'Nuorodos',
+	'wikistats_reg_users' => 'Unikalūs registruoti redaktoriai',
+	'wikistats_images' => 'Paveikslėliai',
+	'wikistats_video' => 'Vaizdo įrašai',
+	'wikistats_media' => 'Vaizdai & Vaizdo įrašai',
+	'wikistats_uploaded_images' => 'įkelta',
+	'wikistats_date' => 'Dat',
+	'wikistats_hide' => 'Slėpti',
+	'wikistats_total' => 'iš viso',
+	'wikistats_new' => 'naujas',
+	'wikistats_month_ago' => 'prieš $1 $2',
+	'wikistats_wikilang' => 'Kalba:',
+);
+
 /** Latgalian (latgaļu)
  * @author Dark Eagle
  */
@@ -7062,7 +7103,7 @@ $messages['pt'] = array(
 	'wikistats_comparision' => 'Comparações',
 	'wikistats_showstats_btn' => 'Mostrar estatísticas',
 	'wikistats_wikia_information' => 'Informações da Wikia',
-	'wikiastast_refresh_data' => 'Actualizar dados',
+	'wikiastast_refresh_data' => 'Atualizar dados',
 	'wikistats_showcharts' => 'Mostrar gráficos',
 	'wikistats_export_xls' => 'Exportar para XLS',
 	'wikistats_panel_close_btn' => 'Fechar',
@@ -7525,6 +7566,7 @@ $messages['roa-tara'] = array(
 	'wikistats_nostats_found' => 'Nisciuna statisteche ha state acchiate pa Uicchia scacchiate',
 	'wikistats_pviews_notfound' => 'Nisciuna pàgene acchiate',
 	'wikistats_invalid_date' => 'Indervalle invalide de date',
+	'wikistats_distrib_article' => 'Distribuzione de le attività de cangiamende',
 	'wikistats_breakdown_editors' => "Attività d'u cangiatore",
 	'wikistats_breakdown_anons' => 'Attività anonime',
 	'wikistats_latest_pageviews' => 'Le urteme pàggene visitate',
@@ -7552,6 +7594,7 @@ $messages['roa-tara'] = array(
 	'wikistats_with_links' => 'cu le collegaminde',
 	'wikistats_connection_error' => 'Errore de connessione',
 	'wikistats_distrib_edits' => 'Cangiaminde >=',
+	'wikistats_date' => 'Date',
 	'wikistats_namespace' => 'Namespace',
 	'wikistats_show' => 'Fà vedè',
 	'wikistats_hide' => 'Scunne',
@@ -7573,6 +7616,12 @@ $messages['roa-tara'] = array(
 	'wikistats_external' => 'de fore',
 	'wikistats_main_namespace' => 'prengepàle',
 	'wikistats_image_namespace' => 'immaggine',
+	'wikistats_official' => 'ufficiale',
+	'wikistats_more_200_ch' => '&gt;200 ch',
+	'wikistats_count' => 'condegge',
+	'wikistats_unique_users' => 'Utinde unece',
+	'wikistats_first_edit' => 'Prime cangiamende',
+	'wikistats_last_edit' => 'Urteme cangiamende',
 	'wikistats_rank' => 'posizione',
 	'wikistats_previous_month' => 'mese<br />apprime',
 	'wikistats_total' => 'totale',
@@ -7587,12 +7636,21 @@ $messages['roa-tara'] = array(
 	'wikistats_wikicreated' => 'Ccrejate:',
 	'wikistats_wikilang' => 'Lènghe:',
 	'wikistats_history_mainstats_value1' => 'x &lt; 0%',
+	'wikistats_history_mainstats_value2' => '0% &lt; x &lt; 25%',
+	'wikistats_history_mainstats_value3' => '25% &lt; x &lt; 75%',
 	'wikistats_history_mainstats_value4' => '&gt; 75%',
+	'wikistats_trend_where_text' => 'addò:',
+	'wikistats_trend_all_wikia_text' => 'Tutte le uicchi',
+	'wikistats_always_selected' => '(sembre scacchiate)',
 	'wikistats_xls_files_stats' => 'XLS',
 	'wikistats_full_dump_stats' => 'Chine',
 	'wikistats_current_dump_stats' => 'De mò',
 	'wikistats_database_name_stats' => "Nome d'u database",
 	'wikistats_dbdumps_stats' => "Fote d'u database",
+	'wikistats_xls_generate' => 'Genere',
+	'wikistats_xls_cancel' => 'Annulle',
+	'wikistats_select_text' => "Scacchie 'a Uicchia:",
+	'wikistats_select_btn' => 'Scacchie',
 );
 
 /** Russian (русский)
@@ -9189,6 +9247,17 @@ $messages['zh-hant'] = array(
 	'wikistats_current_month' => '本月',
 	'wikistats_language_top' => '首 $1 種語言',
 	'wikistats_language_all' => '所有語言',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'wikistats_images' => '圖像',
+	'wikistats_media' => '圖片及影片',
+	'wikistats_image' => '圖片',
+	'wikistats_image_namespace' => '圖片',
+	'wikistats_image_uploads' => '已上傳的圖像',
 );
 
 /** Chinese (Taiwan) (中文（台灣）‎)

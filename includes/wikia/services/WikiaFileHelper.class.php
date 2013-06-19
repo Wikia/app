@@ -156,7 +156,7 @@ class WikiaFileHelper extends Service {
 		$html = '';
 		if ( $width > 230 && !empty($title) ) {
 			if ( is_string($title) ) {
-				$media = F::build('Title', array($title, NS_FILE), 'newFromText');
+				$media = Title::newFromText($title, NS_FILE);
 			} else {
 				$media = $title;
 			}
@@ -248,7 +248,7 @@ class WikiaFileHelper extends Service {
 		$attribs = array(
 			'class' => 'info-overlay-views',
 		);
-		$views = $app->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), $app->wg->Lang->formatNum($views) );
+		$views = wfMsgExt( 'videohandler-video-views', array( 'parsemag' ), $app->wg->Lang->formatNum($views) );
 
 		return Xml::element( 'span', $attribs, $views, false );
 	}
@@ -363,7 +363,7 @@ class WikiaFileHelper extends Service {
 
 		if ( !empty($fileTitle) ) {
 			if ( $fileTitle->getNamespace() != NS_FILE ) {
-				$fileTitle = F::build('Title', array($fileTitle->getDBKey(), NS_FILE), 'newFromText');
+				$fileTitle = Title::newFromText($fileTitle->getDBKey(), NS_FILE);
 			}
 
 			$file = wfFindFile( $fileTitle );
@@ -394,11 +394,11 @@ class WikiaFileHelper extends Service {
 					}
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
-					$mediaPage = F::build( 'ImagePage', array($fileTitle) );
+					$mediaPage = new ImagePage($fileTitle);
 				}
 
 				$thumb = $file->transform( array('width'=>$width, 'height'=>$height), 0 );
-				$user = F::build('User', array( $file->getUser('id') ), 'newFromId' );
+				$user = User::newFromId( $file->getUser('id') );
 
 				// get article list
 				$mediaQuery =  new ArticlesUsingMediaQuery($fileTitle);
@@ -409,7 +409,7 @@ class WikiaFileHelper extends Service {
 				$data['rawImageUrl'] = $file->getUrl();
 				$data['userId'] = $user->getId();
 				$data['userName'] = $user->getName();
-				$data['userThumbUrl'] = F::build( 'AvatarService', array($user, $config['userAvatarWidth'] ), 'getAvatarUrl' );
+				$data['userThumbUrl'] = AvatarService::getAvatarUrl($user, $config['userAvatarWidth'] );
 				$data['userPageUrl'] = $user->getUserPage()->getFullURL();
 				$data['description']  = $mediaPage->getContent();
 				$data['articles'] = $articleList;

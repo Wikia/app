@@ -23,7 +23,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 		$this->privateData[] = 'bar';
 		$this->privateData[] = 'baz';
 
-		$this->helper = F::build( 'HelloWorld', array( 'currentTitle' => $this->app->wg->Title ) );
+		$this->helper = new HelloWorld( $this->app->wg->Title );
 	}
 
 	/**
@@ -39,7 +39,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 		wfProfileIn( __METHOD__ );
 		// Global variable access
 		$this->wg->Out->setPageTitle( "Page Title" );
-		$this->wg->Out->setPageTitle( $this->wf->msg( 'helloworld-specialpage-title' ) );
+		$this->wg->Out->setPageTitle( wfMsg( 'helloworld-specialpage-title' ) );
 		// adding custom css and js for this extension
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->addAsset( 'extensions/wikia/templates/HelloWorld/css/HelloWorld_Oasis.scss' );
@@ -52,7 +52,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 		// setting response data
 		// Note: special page controllers cannot use the shorthand syntax of $this->var to set response variables
 		// This is because the
-		$this->setVal( 'header', $this->wf->msg('helloworld-hello-msg') );
+		$this->setVal( 'header', wfMsg('helloworld-hello-msg') );
 		$this->setVal( 'helperData', $this->helper->getWikiData( $wikiId ) );
 		$this->setVal( 'controllerData', $this->privateData );
 

@@ -15,22 +15,25 @@ class VideoService extends WikiaModel {
 
 		if ( empty( $url ) ) {
 			wfProfileOut( __METHOD__ );
-			return $this->wf->Msg('videos-error-no-video-url');
+			return wfMsg('videos-error-no-video-url');
 		}
 
 		try {
 			if ( WikiaFileHelper::isVideoStoredAsFile() ) {
 				// is it a WikiLink?
-				$title = Title::newFromText($url);
+				$title = Title::newFromText($url, NS_FILE);
 				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
-					$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url) );
+					$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url), NS_FILE );
 				}
 				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
-					if ( ($pos = strpos($url,'Video:')) !== false ) {
-						$title = Title::newFromText( substr($url,$pos) );
-					}
-					elseif ( ($pos = strpos($url,'File:')) !== false ) {
-						$title = Title::newFromText( substr($url,$pos) );
+					$transFileNS = wfMessage('nstab-image')->inContentLanguage()->text();
+
+					if ( ($pos = strpos($url, 'Video:')) !== false ) {
+						$title = Title::newFromText( substr($url,$pos), NS_FILE );
+					} elseif ( ($pos = strpos($url, 'File:')) !== false ) {
+						$title = Title::newFromText( substr($url,$pos), NS_FILE );
+					} elseif ( ($pos = strpos($url, $transFileNS.':')) !== false ) {
+						$title = Title::newFromText( substr($url,$pos), NS_FILE );
 					}
 				}
 				if ( $title && WikiaFileHelper::isTitleVideo($title) ) {
@@ -47,7 +50,7 @@ class VideoService extends WikiaModel {
 				$vHelper = new VideoHandlerHelper();
 				$vHelper->addDefaultVideoDescription( $file );
 			} else {
-				throw new Exception( $this->wf->Msg('videos-error-old-type-video') );
+				throw new Exception( wfMsg('videos-error-old-type-video') );
 			}
 		} catch ( Exception $e ) {
 			wfProfileOut( __METHOD__ );
@@ -65,9 +68,9 @@ class VideoService extends WikiaModel {
 	 * @throws Exception
 	 */
 	protected function addVideoVideoHandlers( $url ) {
-		$title = F::build( 'VideoFileUploader', array($url), 'URLtoTitle' );
+		$title = VideoFileUploader::URLtoTitle( $url );
 		if ( !$title ) {
-			throw new Exception( $this->wf->Msg('videos-error-invalid-video-url') );
+			throw new Exception( wfMsg('videos-error-invalid-video-url') );
 		}
 
 		return array( $title, $title->getArticleID(), null );

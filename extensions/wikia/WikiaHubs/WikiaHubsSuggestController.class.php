@@ -39,12 +39,12 @@ class WikiaHubsSuggestController extends WikiaController {
 			} else if ( strlen($videoUrl) < 10) {
 				$this->result = 'error';
 				$this->errParam = 'videourl';
-				$this->msg = $this->wf->msg( 'wikiahubs-error-invalid-video-url-length' );
+				$this->msg = wfMsg( 'wikiahubs-error-invalid-video-url-length' );
 				return;
 			} else if ( empty($wikiname) ) {
 				$this->result = 'error';
 				$this->errParam = 'wikiname';
-				$this->msg = $this->wf->msg( 'wikiahubs-error-invalid-wikiname-length' );
+				$this->msg = wfMsg( 'wikiahubs-error-invalid-wikiname-length' );
 				return;
 			}
 
@@ -56,7 +56,7 @@ class WikiaHubsSuggestController extends WikiaController {
 			$status = $article->doEdit( $content, $summary );
 			
 			$this->result = 'ok';
-			$this->msg = $this->wf->msg( 'wikiahubs-suggest-video-success' );
+			$this->msg = wfMsg( 'wikiahubs-suggest-video-success' );
 		}
 	}
 
@@ -81,12 +81,12 @@ class WikiaHubsSuggestController extends WikiaController {
 			} else if ( strlen($articleUrl) < 10 ) {
 				$this->result = 'error';
 				$this->errParam = 'articleurl';
-				$this->msg = $this->wf->msg( 'wikiahubs-error-invalid-article-url-length' );
+				$this->msg = wfMsg( 'wikiahubs-error-invalid-article-url-length' );
 				return;
 			} else if ( empty($reason) || strlen($reason) > 140 ) {
 				$this->result = 'error';
 				$this->errParam = 'reason';
-				$this->msg = $this->wf->msg( 'wikiahubs-error-invalid-reason-length' );
+				$this->msg = wfMsg( 'wikiahubs-error-invalid-reason-length' );
 				return;
 			}
 
@@ -98,7 +98,7 @@ class WikiaHubsSuggestController extends WikiaController {
 			$status = $article->doEdit( $content, $summary );
 
 			$this->result = 'ok';
-			$this->msg = $this->wf->msg( 'wikiahubs-suggest-article-success' );
+			$this->msg = wfMsg( 'wikiahubs-suggest-article-success' );
 		}
 	}
 

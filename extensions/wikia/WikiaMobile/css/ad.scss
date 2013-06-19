@@ -5,16 +5,19 @@
 $slotFooterWidth: 300px;//some networks use this instead of 320
 $slotFooterWidthMax: 320px;
 $slotFooterHeight: 50px;
-$slotFooterMargin: 2px;
+$slotFooterMargin: 0;
 $slotFooterColor: #666;
+//z-index has to be high enough to be above page content
+//and low enough so expandables can be above it
+$slotZIndex: 4000;
 
-#wkAdPlc {
+#wkFloatingAd {
 	position: relative;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
 
 	&.over {
-		z-index: $top-layer-z-index;
+		z-index: $slotZIndex;
 	}
 
 	&.fixed {
@@ -29,10 +32,8 @@ $slotFooterColor: #666;
 	&.jsfix {
 		position: absolute;
 	}
-}
 
-#wkAdWrp {
-	.footer & {
+	&.footer > * {
 		//Footer Ad
 		//force Ad content to stick in place
 		//and don't exceed allowed dimensions
@@ -40,9 +41,21 @@ $slotFooterColor: #666;
 		max-width: $slotFooterWidthMax;
 		max-height: $slotFooterHeight;
 	}
-
-	//.interstitial & {
-		//interstitial ad
-		//uncomment and complete when/if needed
-	//}
 }
+
+//#wkAdTopLeader {
+//	text-align: center;
+//	background: rgb(255, 255, 255);
+//	padding: 5px 0 0 0;
+//}
+//
+//#wkAdInContent {
+//	padding: 3px;
+//	margin: 0 auto;
+//
+//	border-top: 1px solid grey;
+//	border-bottom: 1px solid grey;
+//
+//	height: 250px;
+//	width: 300px;
+//}

@@ -24,7 +24,7 @@ class LatestPhotosController extends WikiaController {
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// get the count of images on this wiki
-		$wikiService = F::build( 'WikiService' );
+		$wikiService = (new WikiService);
 		$this->total = $wikiService->getTotalImages();
 
 		// Pull the list of images from memcache first
@@ -299,7 +299,7 @@ class LatestPhotosController extends WikiaController {
 	protected static function invalidateCacheWikiTotalImages( $file, $reupload ) {
 		$title = $file->getTitle();
 		if ( $title instanceof Title && !WikiaFileHelper::isVideoFile($file) && !$reupload ) {
-			$wikiService = F::build( 'WikiService' );
+			$wikiService = (new WikiService);
 			$wikiService->invalidateCacheTotalImages();
 		}
 	}

@@ -17,9 +17,8 @@ class DefaultContentTest extends BaseTest
 		$dynamicField = \Wikia\Search\Utilities::field( 'html' );
 		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getGlobal' ) );
 		$utils = $this->getMock( 'Wikia\Search\Utilities', array( 'field' ) );
-		$this->proxyClass( 'Wikia\Search\MediaWikiService', $mockService );
-		$this->proxyClass( 'Wikia\Search\Utilities', $utils );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\MediaWikiService', $mockService );
+		$this->mockClass( 'Wikia\Search\Utilities', $utils );
 		$dc = new DefaultContent();
 		$field = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'field' );
 		$field->setAccessible( true );
@@ -283,7 +282,7 @@ class DefaultContentTest extends BaseTest
 	 */
 	public function testGetOutboundLinks() {
 		$mockMwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
-		$mockHooks = $this->getMock( 'Wikia\Search\Hooks', [ 'popLinks' ] );
+		$mockHooks = $this->getStaticMethodMock( 'Wikia\Search\Hooks', 'popLinks' );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
 		                    ->setMethods( [ 'getService', 'getCurrentDocumentId' ] )
 		                    ->disableOriginalConstructor()
@@ -313,8 +312,6 @@ class DefaultContentTest extends BaseTest
 		    ->method ( 'popLinks' )
 		    ->will   ( $this->returnValue( $backlinks ) )
 		;
-		$this->proxyClass( 'Wikia\Search\Hooks', $mockHooks );
-		$this->mockApp();
 		$get = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'getOutboundLinks' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -617,7 +614,7 @@ ENDIT;
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'removeGarbageFromDom' )
-		    #->with   ( $dom2 ) // commented out due to wikia mock proxy
+		    ->with   ( $dom2 ) // commented out due to wikia mock proxy
 		;
 		$dom2
 		    ->expects( $this->at( 0 ) )
@@ -653,10 +650,9 @@ ENDIT;
 		    ->with   ( 'plaintext' )
 		    ->will   ( $this->returnValue( 'value' ) )
 		;
-		$this->proxyClass( 'simple_html_dom', $dom2 );
-		$this->mockApp();
+		$this->mockClass( 'simple_html_dom', $dom2 );
 		$this->assertEquals(
-				[ 'infoboxes_txt' => [ 'here is my key | value' ] ],
+				[ 'infoboxes_txt' => [ 'infobox_1 | here is my key | value' ] ],
 				$extract->invoke( $service, $dom, $result )
 		);
 	}
@@ -691,6 +687,29 @@ ENDIT;
 		$this->assertEquals(
 				[ 'nolang_txt' => [ 'foo' ] ],
 				$get->invoke( $service )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\IndexService\DefaultContent::reinitialize
+	 */
+	public function testReinitialize() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( null )
+		                ->getMock();
+		$nolang = new ReflectionProperty( $service, 'nolang_txt' );
+		$nolang->setAccessible( true );
+		$nolang->setValue( $service, [ 1, 2, 3, 4, 5 ] );
+		$reinitialize = new ReflectionMethod( $service, 'reinitialize' );
+		$reinitialize->setAccessible( true );
+		$this->assertEquals(
+				$service,
+				$reinitialize->invoke( $service )
+		);
+		$this->assertAttributeEmpty(
+				'nolang_txt',
+				$service
 		);
 	}
 }

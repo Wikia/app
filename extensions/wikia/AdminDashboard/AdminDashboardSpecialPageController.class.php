@@ -58,7 +58,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->displaySpecialPromote = !empty($this->wg->EnableSpecialPromoteExt);
 
 		// add messages package
-		F::build('JSMessages')->enqueuePackage('AdminDashboard', JSMessages::INLINE);
+		JSMessages::enqueuePackage('AdminDashboard', JSMessages::INLINE);
 	}
 
 	/**

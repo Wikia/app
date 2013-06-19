@@ -18,7 +18,7 @@ class PhalanxAnswersBlock extends WikiaObject {
 	public function badWordsTest( $title ) {
 		wfProfileIn( __METHOD__ );
 
-		$phalanxModel = F::build('PhalanxContentModel', array( $title, $this->wg->LanguageCode ) );
+		$phalanxModel = new PhalanxContentModel( $title, $this->wg->LanguageCode );
 		$ret = $phalanxModel->match_question_title();
 		
 		wfProfileOut( __METHOD__ );

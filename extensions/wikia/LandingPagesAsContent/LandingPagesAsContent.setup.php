@@ -53,11 +53,11 @@ define('__INTERLANGTOP__', '__INTERLANGTOP__');
 /**
  * hooks
  */
-$app->registerHook( 'LanguageGetMagic', 'LandingPagesParser', 'onLanguageGetMagicHook' );
-$app->registerHook( 'InternalParseBeforeLinks', 'LandingPagesParser', 'onInternalParseBeforeLinksHook' );
-$app->registerHook( 'ArticleFromTitle', 'LandingPagesParser', 'onArticleFromTitle' );
-$app->registerHook( 'ArticlePurge', 'LandingPagesParser', 'onArticlePurge' );
-$app->registerHook( 'ArticleSaveComplete', 'LandingPagesParser', 'onArticleSaveComplete' );
+$wgHooks['LanguageGetMagic'][] = 'LandingPagesParser::onLanguageGetMagicHook';
+$wgHooks['InternalParseBeforeLinks'][] = 'LandingPagesParser::onInternalParseBeforeLinksHook';
+$wgHooks['ArticleFromTitle'][] = 'LandingPagesParser::onArticleFromTitle';
+$wgHooks['ArticlePurge'][] = 'LandingPagesParser::onArticlePurge';
+$wgHooks['ArticleSaveComplete'][] = 'LandingPagesParser::onArticleSaveComplete';
 
 /**
  * settings

@@ -121,8 +121,7 @@ class GroupingSetTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( 'url' )
 		    ->will   ( $this->returnValue( 'foo.wikia.com' ) )
 		;
-		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockDc );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockDc );
 		$fac = new ReflectionProperty( 'Wikia\Search\ResultSet\GroupingSet', 'factory' );
 		$fac->setAccessible( true );
 		$fac->setValue( $mockGroupingSet, $mockFactory );
@@ -172,6 +171,10 @@ class GroupingSetTest extends Wikia\Search\Test\BaseTest {
 		               ->disableOriginalConstructor()
 		               ->getMock();
 		
+		$rfRefl = new ReflectionProperty( $mockGroupingSet, 'resultsFound' );
+		$rfRefl->setAccessible( true );
+		$prevResultsFound = $rfRefl->getValue( $mockGroupingSet ); 
+		
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'hasWikiMatch' )
@@ -201,8 +204,7 @@ class GroupingSetTest extends Wikia\Search\Test\BaseTest {
 		$fac = new ReflectionProperty( 'Wikia\Search\ResultSet\GroupingSet', 'factory' );
 		$fac->setAccessible( true );
 		$fac->setValue( $mockGroupingSet, $mockFactory );
-		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockDc );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockDc );
 		$set = new ReflectionMethod( 'Wikia\Search\ResultSet\GroupingSet', 'prependWikiMatchIfExists' );;
 		$set->setAccessible( true );
 		$this->assertEquals(
@@ -213,6 +215,88 @@ class GroupingSetTest extends Wikia\Search\Test\BaseTest {
 				$mockMatchGrouping,
 				'results',
 				$mockGroupingSet
+		);
+		$this->assertAttributeEquals(
+				$prevResultsFound + 1,
+				'resultsFound',
+				$mockGroupingSet,
+				"We should increment the number of results found by one if we have a match."
+		);
+	}
+	
+	/**
+	 * @covers  Wikia\Search\ResultSet\GroupingSet::prependWikiMatchIfExists
+	 */
+	public function testPrependWikiMatchIfExistsWithoutStartAt0() {
+		$mockGroupingSet = $this->getMockBuilder( 'Wikia\Search\ResultSet\GroupingSet' )
+		                        ->disableOriginalConstructor()
+		                        ->setMethods( null )
+		                        ->getMock();
+		
+		$mockMatchGrouping = $this->getMockBuilder( 'Wikia\Search\ResultSet\MatchGrouping' )
+		                          ->disableOriginalConstructor()
+		                          ->setMethods( array( 'getHeader' ) )
+		                          ->getMock();
+		
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'hasWikiMatch', 'getStart', 'getWikiMatch' ) );
+		
+		$confRefl = new ReflectionProperty( 'Wikia\Search\ResultSet\GroupingSet', 'searchConfig' );
+		$confRefl->setAccessible( true );
+		$confRefl->setValue( $mockGroupingSet, $mockConfig );
+		
+		$mockFactory = $this->getMockBuilder( 'Wikia\Search\ResultSet\Factory' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'get' ) )
+		                    ->getMock();
+		
+		$mockDc = $this->getMockBuilder( 'Wikia\Search\ResultSet\DependencyContainer' )
+		               ->disableOriginalConstructor()
+		               ->getMock();
+		
+		$rfRefl = new ReflectionProperty( $mockGroupingSet, 'resultsFound' );
+		$rfRefl->setAccessible( true );
+		$prevResultsFound = $rfRefl->getValue( $mockGroupingSet ); 
+		
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'hasWikiMatch' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getStart' )
+		    ->will   ( $this->returnValue( 1 ) )
+		;
+		$mockConfig
+		    ->expects( $this->never() )
+		    ->method ( 'getWikiMatch' )
+		    ->will   ( $this->returnValue( $mockMatch ) )
+		;
+		$fac = new ReflectionProperty( 'Wikia\Search\ResultSet\GroupingSet', 'factory' );
+		$fac->setAccessible( true );
+		$fac->setValue( $mockGroupingSet, $mockFactory );
+		$this->proxyClass( 'Wikia\Search\ResultSet\DependencyContainer', $mockDc );
+		$this->mockApp();
+		$set = new ReflectionMethod( 'Wikia\Search\ResultSet\GroupingSet', 'prependWikiMatchIfExists' );;
+		$set->setAccessible( true );
+		$this->assertEquals(
+				$mockGroupingSet,
+				$set->invoke( $mockGroupingSet )
+		);
+		$this->assertAttributeNotContains(
+				$mockMatchGrouping,
+				'results',
+				$mockGroupingSet
+		);
+		$this->assertAttributeEquals(
+				$prevResultsFound + 1,
+				'resultsFound',
+				$mockGroupingSet,
+				"We should increment the number of results found by one if we have a match."
 		);
 	}
 	

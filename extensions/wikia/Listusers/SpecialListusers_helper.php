@@ -50,7 +50,7 @@ class ListusersData {
 			'loggedin' 	=> '',
 			'dtedit' 	=> 'wiki_editdate_user_edits'
 		);
-
+	
 		if ( $load == 1 ) {
 			$this->load();
 		}
@@ -137,10 +137,12 @@ class ListusersData {
 				$whereGroup = array();
 				foreach ( $this->mFilterGroup as $group ) {
 					if ( !empty($group) ) {
-						$whereGroup[] =
-							( $group == Listusers::DEF_GROUP_NAME )
-							? " all_groups = '' "
-							: " all_groups " . $dbs->buildLike( $dbs->anyString(), $group, $dbs->anyString() );
+						if ( $group == Listusers::DEF_GROUP_NAME ) {
+							$whereGroup[] = " all_groups = '' ";
+						} else {
+							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
+							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $group), $dbs->anyString() );
+						}
 					}
 				}
 
@@ -250,9 +252,9 @@ class ListusersData {
 						$msg = 'talkpagelinktext';
 					}
 
-                               		if ( $oUTitle instanceof Title ) {
-                                        	$links[0] = $sk->makeLinkObj( $oUTitle, $wgLang->ucfirst(wfMsg($msg) ) );
-                                        }
+					if ( $oUTitle instanceof Title ) {
+						$links[0] = $sk->makeLinkObj( $oUTitle, $wgLang->ucfirst(wfMsg($msg) ) );
+					}
 
 					if ( $wgUser->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
 						$links[] = $sk->makeLinkObj(
@@ -388,7 +390,7 @@ class ListusersData {
 						'user_is_closed' => 0
 					);
 					if ( $key != Listusers::DEF_GROUP_NAME ) {
-						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key, $dbs->anyString() );
+						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key ) . " OR all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $key), $dbs->anyString() );						
 					} else {
 						$where['cnt_groups'] = 0;
 					}

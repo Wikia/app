@@ -1126,3 +1126,20 @@ $messages['zh-hant'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多統計]]',
 	'quickstats-number-shortening' => '$1K',
 );
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'quickstats-header-label' => '快速統計資訊',
+	'quickstats-header-date' => '日期',
+	'quickstats-header-views' => '瀏覽次數',
+	'quickstats-header-edits' => '編輯次數',
+	'quickstats-header-photos' => '圖片數',
+	'quickstats-header-likes' => '讚好的數目',
+	'quickstats-totals-label' => '總計',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多統計]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);

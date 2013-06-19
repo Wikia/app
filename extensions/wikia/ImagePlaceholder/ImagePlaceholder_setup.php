@@ -34,8 +34,8 @@ $wgExtensionFunctions[] = 'ImagePlaceholder_init';
  */
 $wgExtensionMessagesFiles['ImagePlaceholder'] = $dir.'/ImagePlaceholder.i18n.php';
 
-F::build('JSMessages')->registerPackage('ImagePlaceholder', array('imgplc-*'));
-F::build('JSMessages')->enqueuePackage('ImagePlaceholder', JSMessages::EXTERNAL);
+JSMessages::registerPackage('ImagePlaceholder', array('imgplc-*'));
+JSMessages::enqueuePackage('ImagePlaceholder', JSMessages::EXTERNAL);
 
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'ImagePlaceholderFetchTemplateAndTitle';
 $wgHooks['ImageBeforeProduceHTML'][] = 'ImagePlaceholderImageBeforeProduceHTML';
@@ -327,7 +327,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 			)
 		));
 	} else {
-		$out .= F::build('JSSnippets')->addToStack(
+		$out .= JSSnippets::addToStack(
 			array( '/extensions/wikia/ImagePlaceholder/js/MediaPlaceholder.js' ),
 			array(),
 			'MediaPlaceholder.init'

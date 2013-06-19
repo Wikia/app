@@ -126,7 +126,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return string $newContent
 	 */
 	public function stripDescriptionHeader( $content ) {
-		$headerText = $this->wf->Message( 'videohandler-description' );
+		$headerText = wfMessage( 'videohandler-description' );
 
 		// Grab everything after the description header
 		preg_match("/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches);
@@ -148,7 +148,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return String - The updated file page content
 	 */
 	public function replaceDescriptionSection( $content, $descText = '' ) {
-		$headerText = $this->wf->Message( 'videohandler-description' );
+		$headerText = wfMessage( 'videohandler-description' );
 
 		// Don't include the description section if there's no description text
 		$descSection = '';
@@ -200,7 +200,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return string
 	 */
 	private function extractCategories( $content ) {
-		$catText = '(?:Category|'.$this->wf->Message( 'nstab-category' ).')';
+		$catText = '(?:Category|'.wfMessage( 'nstab-category' ).')';
 		preg_match_all( "/(\[\[$catText:[^\]]+\]\])/", $content, $matches );
 
 		if ( !empty($matches[1]) ) {
@@ -217,7 +217,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return string $newContent
 	 */
 	public function addDescriptionHeader( $content ) {
-		$newContent = '=='.$this->wf->Message( 'videohandler-description' ).'=='."\n".$content;
+		$newContent = '=='.wfMessage( 'videohandler-description' ).'=='."\n".$content;
 
 		return $newContent;
 	}

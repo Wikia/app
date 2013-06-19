@@ -10,8 +10,8 @@ class UAD {
 	 */
 	protected $app = null;
 
-	public function __construct(WikiaApp $app) {
-		$this->app = $app;
+	public function __construct() {
+		$this->app = F::app();
 	}
 
 	/**
@@ -19,7 +19,8 @@ class UAD {
 	 * @return DatabaseBase
 	 */
 	protected function getDb( $type = DB_MASTER ) {
-		return $this->app->runFunction( 'wfGetDB', $type, array(), $this->app->getGlobal( 'wgExternalDatawareDB' ) );
+		global $wgExternalDatawareDB;
+		return wfGetDB( $type, array(), $wgExternalDatawareDB );
 	}
 
 	/**

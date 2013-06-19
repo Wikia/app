@@ -99,14 +99,14 @@ class WikiaPollHooks {
 						}
 					}
 
-					$js .= F::build( 'JSMessages' )->printPackages( array( 'WikiaMobilePolls' ) );
+					$js .= JSMessages::printPackages( array( 'WikiaMobilePolls' ) );
 
 					$ret = str_replace("\n", ' ', "{$css}{$ret}{$js}");
 				} else {
 					$sassUrl = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/WikiaPoll/css/WikiaPoll.scss');
 					$css = '<link rel="stylesheet" type="text/css" href="' . htmlspecialchars($sassUrl) . ' " />';
 
-					$jsFile = F::build('JSSnippets')->addToStack(
+					$jsFile = JSSnippets::addToStack(
 						array( '/extensions/wikia/WikiaPoll/js/WikiaPoll.js' ),
 						array(),
 						'WikiaPoll.init'
