@@ -117,7 +117,6 @@ class SpecialCssModel extends WikiaModel {
 		$flags = 0;
 		if ( $cssTitle instanceof Title) {
 			$aid = $cssTitle->getArticleID( Title::GAID_FOR_UPDATE );
-			//TODO: do we need EDIT_AUTOSUMMARY flag?
 			$flags |= ( $aid == 0 ) ? EDIT_NEW : EDIT_UPDATE;
 			if ( $isMinor ) {
 				$flags |= EDIT_MINOR;
