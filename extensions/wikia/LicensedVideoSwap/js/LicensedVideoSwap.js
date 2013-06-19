@@ -1,5 +1,7 @@
 require( ['wikia.querystring', 'wikia.localStorage', 'wikia.videoBootstrap'], function( QueryString, LocalStorage, VideoBootstrap) {
 
+"use strict";
+
 var LVS = {
 	init: function() {
 		this.$container = $( '#LVSGrid' );
