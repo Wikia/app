@@ -1,13 +1,5 @@
 <li class="result">
 	<article>
-	<?php 
-	$thumbnailHtml = $result->getThumbnailHtml();
-	?>
-	<?php if(! empty( $thumbnailHtml ) ): ?>
-		<div class="grid-1 alpha"><?= $thumbnailHtml ?></div>
-		<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
-	<?php endif; ?>
-	
 	<h1>
 		<?php $title = $result->getTitle(); ?>
 
