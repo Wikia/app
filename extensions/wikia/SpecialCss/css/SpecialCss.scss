@@ -1,4 +1,8 @@
 @import "../../../../skins/oasis/css/core/color.scss";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
 
 .css-editor {
 	float: left;
@@ -31,18 +35,21 @@
 			padding: 0 20px;
 		}
 		.css-publish-button:hover {
-			background-color: #005F9C;
-			background-image: -moz-linear-gradient(center top , #007FCF 35%, #005F9C 65%);
+			@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
 		}
 		.drop {
-			border-left: 1px solid #79bfe3;
+			border-left: 1px solid $color-buttons;
 		}
 		#editSummary {
 			border: 1px solid #dadbdb;
 			border-radius: 4px;
 			clear: both;
 			margin: 5px 0;
-			width: 100%;
+			padding: 5px;
+			width: 260px;
+		}
+		#minorEdit {
+			float: left;
 		}
 	}
 	.version-box {
