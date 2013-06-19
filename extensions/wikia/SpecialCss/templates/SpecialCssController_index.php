@@ -6,7 +6,7 @@
 		<div class="css-edit-box">
             <label for="minorEdit"><input id="minorEdit" type="checkbox" name="minorEdit"/><?= wfMessage('special-css-minor-edit-label')->plain(); ?></label>
             <label for="editSummary"><?= wfMessage('special-css-edit-summary')->plain() ?></label>
-			<textarea id="editSummary" name="editSummary"></textarea>
+			<textarea id="editSummary" name="editSummary" placeholder="<?= wfMessage('special-css-summary-placeholder')->plain(); ?>"></textarea>
             <nav class="wikia-menu-button primary">
 				<input class="css-publish-button" type="submit" value="<?= wfMessage('special-css-publish-button') ?>"/>
                 <span class="drop">
@@ -14,13 +14,13 @@
 					</span>
 					<ul class="WikiaMenuElement">
 						<li>
-							<a href="#" data-id=""><?= wfMessage('special-css-history-button')->plain() ?></a>
+							<a href="#"><?= wfMessage('special-css-history-button')->plain() ?></a>
 						</li>
 						<li>
-                            <a href="#" data-id=""><?= wfMessage('special-css-compare-button')->plain() ?></a>
+                            <a href="#" id="showChanges"><?= wfMessage('special-css-compare-button')->plain() ?></a>
 						</li>
 						<li>
-                            <a href="#" data-id=""><?= wfMessage('special-css-delete-button')->plain() ?></a>
+                            <a href="#"><?= wfMessage('special-css-delete-button')->plain() ?></a>
 						</li>
 					</ul>
             </nav>
@@ -28,7 +28,6 @@
 		<div class="version-box">
 			<?= wfMessage('special-css-current-version')->rawParams(['1.0.17'])->text(); ?>
 		</div>
-		<a href="#" id="showChanges">show changes</a>
 	</aside>
 	<footer class="css-footer">
 	</footer>
