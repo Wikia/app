@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * WikiaAppMock
+ *
+ * @deprecated
+ */
 class WikiaAppMock {
 
 	/**
@@ -53,25 +58,6 @@ class WikiaAppMock {
 			$this->methods[] = 'getGlobal';
 		}
 		$this->mockedGlobals[$globalName] = array( 'value' => $returnValue );
-	}
-
-	/**
-	 * @brief mock global function
-	 * @param string $functionName
-	 * @param mixed $returnValue
-	 * @param int $callsNum
-	 * @param array $inputParams array of PHPUnit_Framework_Constraints
-	 */
-	public function mockGlobalFunction($functionName, $returnValue, $callsNum = 1, $inputParams = array() ) {
-		if(!in_array( 'runFunction', $this->methods )) {
-			$this->methods[] = 'runFunction';
-		}
-		if(!array_key_exists($functionName, $this->mockedFunctions)) {
-			$this->mockedFunctions[$functionName] = array( 'value' => $returnValue, 'calls' => $callsNum, 'params' => $inputParams );
-		}
-		else {
-			$this->markTestSkipped( "Function $functionName already mocked, multiple mocks of the same function not supported." );
-		}
 	}
 
 	// If the global variable is not being overridden, return the actual global variable

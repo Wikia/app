@@ -13,13 +13,13 @@
 	?>
 	<div class="module-box grid-4 alpha">
 		<div class="grid-3 alpha">
-			<input type="button" class="wmu-show" value="<?= $wf->Message('marketing-toolbox-hub-module-explore-add-photo')->text() ?>" />
+			<input type="button" class="wmu-show" value="<?= wfMessage('marketing-toolbox-hub-module-explore-add-photo')->text() ?>" />
 			<span class="filename-placeholder alternative">
 				<? $fileNameField = $form->getField('fileName');?>
 				<?php if( !empty($fileNameField['value']) ): ?>
 					<?= $fileNameField['value']; ?>
 				<?php else: ?>
-					<?= $wf->Message('marketing-toolbox-edithub-file-name')->text() ?>
+					<?= wfMessage('marketing-toolbox-edithub-file-name')->text() ?>
 				<?php endif ?>
 			</span>
 
@@ -28,7 +28,7 @@
 			<?=$form->renderField('imageLink'); ?>
 			<?=$form->renderField('text'); ?>
 
-			<p class="alternative"><?= $wf->Message('marketing-toolbox-hub-module-html-text-tip')->parse(); ?></p>
+			<p class="alternative"><?= wfMessage('marketing-toolbox-hub-module-html-text-tip')->parse(); ?></p>
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder">

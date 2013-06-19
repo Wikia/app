@@ -18,14 +18,14 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 	 * Constructor method. Overrides the original Special:Version page.
 	 */
 	public function __construct() {
-		$this->version = F::build( 'WikiaSpecialVersion' );
+		$this->version = (new WikiaSpecialVersion);
 		
 		parent::__construct( 'Version' );
 	}
 	
 	public function index() {
-		$title = F::build( 'Title', array( 'Version', NS_SPECIAL ), 'newFromText' );
-		$popts = F::build('ParserOptions', array( RequestContext::getMain() ), 'newFromContext' );
+		$title = Title::newFromText( 'Version', NS_SPECIAL );
+		$popts = ParserOptions::newFromContext( RequestContext::getMain() );
 
 		$this->wg->Title = $title;
 		$this->app->wg->Out->setPageTitle( $title );

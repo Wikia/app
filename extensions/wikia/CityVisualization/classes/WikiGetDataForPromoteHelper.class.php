@@ -8,7 +8,7 @@ class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
 	 */
 	protected function getVisualization() {
 		if(empty($this->visualization)) {
-			$this->visualization = F::build('CityVisualization');
+			$this->visualization = new CityVisualization();
 		}
 		return $this->visualization;
 	}

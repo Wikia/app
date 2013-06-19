@@ -20,7 +20,7 @@ class PhalanxUserBlock extends WikiaObject {
 	public function blockCheck( User $user ) {
 		wfProfileIn( __METHOD__ );
 
-		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
+		$phalanxModel = new PhalanxUserModel( $user );
 		$ret = $phalanxModel->match_user();
 		if ( $ret !== false ){
 			$ret = $phalanxModel->match_email();
@@ -47,7 +47,7 @@ class PhalanxUserBlock extends WikiaObject {
 		$ret = $this->blockCheck( $user );
 
 		if ( $ret === false ) {
-			$abortError = $this->wf->Msg( ( $this->typeBlock == 'email' ) ? 'phalanx-email-block-new-account' :
+			$abortError = wfMsg( ( $this->typeBlock == 'email' ) ? 'phalanx-email-block-new-account' :
 																	 'phalanx-user-block-new-account' );
 		}
 

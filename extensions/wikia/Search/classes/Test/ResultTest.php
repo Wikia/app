@@ -126,7 +126,6 @@ class ResultTest extends BaseTest {
 		$oldCode = $wgLanguageCode;
 		$wgLanguageCode = 'fr';
 		$result = new Result( array( 'title_en' => $languageTitle ) );
-		$this->mockApp();
 		$this->assertEquals(
 		        $languageTitle,
 		        $result->getTitle(),

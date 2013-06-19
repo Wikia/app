@@ -98,12 +98,12 @@ class CreateNewWikiController extends WikiaController {
 	public function CheckWikiName() {
 		wfProfileIn(__METHOD__);
 
-		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
+		$wgRequest = $this->wg->Request;
 
 		$name = $wgRequest->getVal('name');
 		$lang = $wgRequest->getVal('lang');
 
-		$this->res = $this->app->runFunction('AutoCreateWiki::checkWikiNameIsCorrect', $name, $lang);
+		$this->res = AutoCreateWiki::checkWikiNameIsCorrect($name, $lang);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -141,15 +141,15 @@ class CreateNewWikiController extends WikiaController {
 		{
 			// do nothing
 			$this->status = 'error';
-			$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-general');
-			$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
+			$this->statusMsg = wfMsg('cnw-error-general');
+			$this->statusHeader = wfMsg('cnw-error-general-heading');
 		} else {
 			/*
 			$stored_answer = $this->getStoredAnswer();
 			if(empty($stored_answer) || $params['wAnswer'].'' !== $stored_answer.'') {
 				$this->status = 'error';
-				$this->statusMsg = $this->app->runFunction('wfMsgExt', 'cnw-error-bot', array('parseinline'));
-				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-bot-header');
+				$this->statusMsg = wfMsgExt( 'cnw-error-bot', array('parseinline') );
+				$this->statusHeader = wfMsg( 'cnw-error-bot-header');
 				return;
 			}
 			*/
@@ -157,8 +157,8 @@ class CreateNewWikiController extends WikiaController {
 			// check if user is blocked
 			if ( $wgUser->isBlocked() ) {
 				$this->status = 'error';
-				$this->statusMsg = $this->app->wf->msg( 'cnw-error-blocked', $wgUser->blockedBy(), $wgUser->blockedFor(), $wgUser->getBlockId() );
-				$this->statusHeader = $this->app->wf->msg( 'cnw-error-blocked-header' );
+				$this->statusMsg = wfMsg( 'cnw-error-blocked', $wgUser->blockedBy(), $wgUser->blockedFor(), $wgUser->getBlockId() );
+				$this->statusHeader = wfMsg( 'cnw-error-blocked-header' );
 				wfProfileOut(__METHOD__);
 				return;
 			}
@@ -166,8 +166,8 @@ class CreateNewWikiController extends WikiaController {
 			// check if user is a tor node
 			if ( class_exists( 'TorBlock' ) && TorBlock::isExitNode() ) {
 				$this->status = 'error';
-				$this->statusMsg = $this->app->wf->msg( 'cnw-error-torblock' );
-				$this->statusHeader = $this->app->wf->msg( 'cnw-error-blocked-header' );
+				$this->statusMsg = wfMsg( 'cnw-error-torblock' );
+				$this->statusHeader = wfMsg( 'cnw-error-blocked-header' );
 				wfProfileOut(__METHOD__);
 				return;
 			}
@@ -176,25 +176,25 @@ class CreateNewWikiController extends WikiaController {
 			$numWikis = $this->countCreatedWikis($wgUser->getId());
 			if($numWikis >= self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() && !$wgUser->isAllowed( 'createwikilimitsexempt' ) ) {
 				$this->status = 'wikilimit';
-				$this->statusMsg = $this->app->runFunction('wfMsgExt', 'cnw-error-wiki-limit', array( 'parsemag' ), self::DAILY_USER_LIMIT);
-				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit-header');
+				$this->statusMsg = wfMsgExt('cnw-error-wiki-limit', array( 'parsemag' ), self::DAILY_USER_LIMIT);
+				$this->statusHeader = wfMsg('cnw-error-wiki-limit-header');
 				wfProfileOut(__METHOD__);
 				return;
 			}
 
-			$createWiki = F::build('CreateWiki', array($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory'])); /* @var $createWiki CreateWiki */
+			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory']);
 			$error_code = $createWiki->create();
 			$cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($cityId)) {
 				$this->status = 'backenderror';
-				$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-general');
-				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
+				$this->statusMsg = wfMsg('cnw-error-general');
+				$this->statusHeader = wfMsg('cnw-error-general-heading');
 				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . $wgRequest->getIP(), E_USER_WARNING);
 			} else {
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
 				$this->cityId = $cityId;
-				$finishCreateTitle = F::build('GlobalTitle', array("FinishCreate", NS_SPECIAL, $cityId), 'newFromText');
+				$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $cityId);
 				$this->finishCreateUrl = empty($wgDevelDomains) ? $finishCreateTitle->getFullURL() : str_replace('.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL());
 			}
 		}
@@ -242,7 +242,6 @@ class CreateNewWikiController extends WikiaController {
 	}
 
 	public static function setupCreateNewWiki() {
-		F::addClassConstructor('CreateNewWikiModule', array(F::app()));
 	}
 
 	/**

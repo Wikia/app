@@ -18,16 +18,12 @@ $wgExtensionMessagesFiles['WikiaMiniUpload'] = $dir.'/WikiaMiniUpload.i18n.php';
 $wgHooks['EditPage::showEditForm:initial2'][] = 'WMUSetup';
 
 function WMUSetup($editform) {
-	global $wgOut, $wgExtensionsPath, $wgHooks;
+	global $wgHooks;
 
 	if( get_class(RequestContext::getMain()->getSkin()) === 'SkinOasis' ) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'WMUSetupVars';
 		if (isset ($editform->ImageSeparator)) {
-			$sep = $editform->ImageSeparator ;
-			$marg = 'margin-left:5px;' ;
 		} else {
-			$sep = '' ;
-			$marg =  'clear: both;' ;
 			$editform->ImageSeparator = ' - ' ;
 		}
 	}

@@ -79,7 +79,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		$message = $this->getRegularMessage();
 
 		/** @var $validator WikiaBarMessageDataValidator */
-		$validator = F::build('WikiaBarMessageDataValidator');
+		$validator = new WikiaBarMessageDataValidator();
 		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
 		$status = true;
 
@@ -115,7 +115,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		Wikia::log(__METHOD__, null, 'WikiaBar configured en message ' . $dataMemcKey . ' empty, trying en failsafe');
 		$message = $this->getFailsafeMessage();
 		/** @var $validator WikiaBarFailsafeDataValidator */
-		$validator = F::build('WikiaBarFailsafeDataValidator');
+		$validator = new WikiaBarFailsafeDataValidator();
 		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
 		$this->setLang($tmpLang);
 		return $parseResult;
@@ -128,7 +128,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		Wikia::log(__METHOD__, null, 'WikiaBar failsafe message ' . $dataMemcKey . ' empty, trying configured en');
 		$message = $this->getRegularMessage();
 		/** @var $validator WikiaBarMessageDataValidator */
-		$validator = F::build('WikiaBarMessageDataValidator');
+		$validator = new WikiaBarMessageDataValidator();
 		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
 		$this->setLang($tmpLang);
 		return $parseResult;
@@ -139,7 +139,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		Wikia::log(__METHOD__, null, 'WikiaBar message ' . $dataMemcKey . ' falling back to failsafe');
 		$message = $this->getFailsafeMessage();
 		/** @var $validator WikiaBarFailsafeDataValidator */
-		$validator = F::build('WikiaBarFailsafeDataValidator');
+		$validator = new WikiaBarFailsafeDataValidator();
 		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
 		return $parseResult;
 	}
@@ -180,10 +180,10 @@ class WikiaBarModel extends WikiaBarModelBase {
 	function getModel($modelType) {
 		switch ($modelType) {
 			case self::WIKIA_BAR_TYPE_DATA_MODEL:
-				$model = F::build('WikiaBarDataModel');
+				$model = new WikiaBarDataModel();
 				break;
 			case self::WIKIA_BAR_TYPE_DATA_FAILSAFE_MODEL:
-				$model = F::build('WikiaBarDataFailsafeModel');
+				$model = new WikiaBarDataFailsafeModel();
 				break;
 			default:
 				$model = false;
@@ -350,6 +350,6 @@ class WikiaBarModel extends WikiaBarModelBase {
 
 	protected
 	function getMemcKey() {
-		return $this->wf->SharedMemcKey('WikiaBarContents', $this->getVertical(), $this->getLang(), self::WIKIA_BAR_MCACHE_VERSION);
+		return wfSharedMemcKey('WikiaBarContents', $this->getVertical(), $this->getLang(), self::WIKIA_BAR_MCACHE_VERSION);
 	}
 }

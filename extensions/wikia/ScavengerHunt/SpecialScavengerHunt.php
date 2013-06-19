@@ -43,7 +43,7 @@ class SpecialScavengerHunt extends SpecialPage {
 	public function execute( $subpage ) {
 		wfProfileIn(__METHOD__);
 
-		$this->games = F::build('ScavengerHuntGames');
+		$this->games = new ScavengerHuntGames();
 
 		$this->setHeaders();
 		$this->mTitle = SpecialPage::getTitleFor('scavengerhunt');
@@ -74,19 +74,19 @@ class SpecialScavengerHunt extends SpecialPage {
 		$this->out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/ScavengerHunt/css/scavenger-special.scss'));
 		$this->out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/ScavengerHunt/css/scavenger-game.scss'));
 		$this->out->addScriptFile($this->app->getGlobal('wgExtensionsPath') . '/wikia/ScavengerHunt/js/scavenger-special.js');
-		$template = F::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+		$template = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 
 		$errors = array();
 		switch ($action) {
 			case 'list':
 				$button = '<a class="wikia-button scavengerhunt-add-button" href="' . $this->mTitle->getFullUrl() . '/add">'.
-					XML::element('img', array( 'class' => 'sprite new', 'src' => $this->app->getGlobal('wgBlankImgUrl'))) . wfMsg('scavengerhunt-button-add') . '</a>';
+					Xml::element('img', array( 'class' => 'sprite new', 'src' => $this->app->getGlobal('wgBlankImgUrl'))) . wfMsg('scavengerhunt-button-add') . '</a>';
 
 				$this->out->mPagetitle .= $button;
 				$this->out->mPageLinkTitle = true;
 
 				// Games list
-				$pager = F::build('ScavengerHuntGamesPager', array($this->games, $this->mTitle->getFullUrl(), $template));
+				$pager = new ScavengerHuntGamesPager($this->games, $this->mTitle->getFullUrl(), $template);
 				$this->out->addHTML(
 					$pager->getBody() .
 					$pager->getNavigationBar()

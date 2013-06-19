@@ -22,7 +22,7 @@ class SDParserTag {
 
 	public function __construct( SDParser $parser, $tagRawContent, array $args = array() ) {
 		$this->parser = $parser;
-		$this->path = F::build( 'SDParserTagPropertyPath', array( 'pathString' => trim( $tagRawContent ) ) );
+		$this->path = new SDParserTagPropertyPath( trim( $tagRawContent ) );
 
 		if(isset($args['renderMode'])) {
 			$this->renderMode = $args['renderMode'];

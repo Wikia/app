@@ -178,7 +178,7 @@ class Wikia {
      */
     static public function linkTag($url, $title, $attribs = null )
     {
-        return XML::element("a", array( "href"=> $url), $title);
+        return Xml::element("a", array( "href"=> $url), $title);
     }
 
     /**

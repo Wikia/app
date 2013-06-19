@@ -2,10 +2,10 @@
 
 class ImageDrop {
 
-	public function onBeforePageDisplay( $out, $skin ) {
+	public static function onBeforePageDisplay( $out, $skin ) {
 		wfProfileIn(__METHOD__);
 
-		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+		$assetsManager = AssetsManager::getInstance();
 		$scssPackage = 'imagedrop_scss';
 		$jsPackage = 'imagedrop_js';
 

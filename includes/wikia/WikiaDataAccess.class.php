@@ -147,7 +147,7 @@ class WikiaDataAccess {
 			if( is_null( $result ) ) {
 				$result = array(
 					'data' => $getData(),
-					'time' => $app->wf->Timestamp( TS_UNIX )
+					'time' => wfTimestamp( TS_UNIX )
 				);
 				self::setCache( $key, $result, $cacheTime * 2, $command );
 			}
@@ -155,7 +155,7 @@ class WikiaDataAccess {
 			if( $gotLock ) self::unlock( $keyLock );
 
 		} else {
-			$now = $app->wf->Timestamp( TS_UNIX );
+			$now = wfTimestamp( TS_UNIX );
 			if( $result['time'] >= $now - $cacheTime ) {
 				// still fresh enough
 			} else {
@@ -168,7 +168,7 @@ class WikiaDataAccess {
 					// because we hold the lock other threads won't try to generate it in the same time
 					$result = array(
 						'data' => $getData(),
-						'time' => $app->wf->Timestamp( TS_UNIX )
+						'time' => wfTimestamp( TS_UNIX )
 					);
 					self::setCache( $key, $result, $cacheTime * 2, $command );
 					self::unlock( $keyLock );
@@ -231,7 +231,7 @@ class WikiaDataAccess {
 $getData = function () {
 	$app = F::app();
 
-	$db = $app->wf->GetDB(DB_SLAVE);
+	$db = wfGetDB(DB_SLAVE);
 
 	$result = $db->select('page', '*', array('page_id' => '(SELECT MIN(page_id) from page'));
 
@@ -255,7 +255,7 @@ $myPreciousData = WikiaDataAccess::cache($key, $cacheTime, $getData);
 
 	function getData ($id) {
 		$app = F::app();
-		$db = $app->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
 		$result = $db->select('city_list', '*', array('city_id > ' . $id));
 		$data = array();
 		while ($row = $db->fetchObject($result)) {
@@ -275,7 +275,7 @@ $myPreciousData = WikiaDataAccess::cache($key, $cacheTime, $getData);
 	class DataGetter {
 		public function getData () {
 			$app = F::app();
-			$db = $app->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+			$db = wfGetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
 			$result = $db->select('city_list', '*', array());
 			$data = array();
 			while ($row = $db->fetchObject($result)) {
@@ -295,7 +295,7 @@ $myPreciousData = WikiaDataAccess::cache($key, $cacheTime, $getData);
 	class DataGetter1 {
 		public function getData ($id) {
 			$app = F::app();
-			$db = $app->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+			$db = wfGetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
 			$result = $db->select('city_list', '*', array('city_id > ' . $id));
 			$data = array();
 			while ($row = $db->fetchObject($result)) {

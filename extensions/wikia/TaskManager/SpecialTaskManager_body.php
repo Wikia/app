@@ -73,7 +73,7 @@ class TaskManagerPage extends SpecialPage {
 						#--- get form for this class
 						$wgOut->addHTML( $oObject->getForm( $this->mTitle ));
 					}
-					$wgOut->addHTML(XML::element("a", array( "href"=>
+					$wgOut->addHTML(Xml::element("a", array( "href"=>
 						$this->mTitle->getLocalUrl(),
 						wfMsg("taskmanager_tasklist")
 					)));

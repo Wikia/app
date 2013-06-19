@@ -48,7 +48,7 @@
 			$lat = $filters['nearby']['lat'];
 			$lon = $filters['nearby']['lon'];
 
-			$this->app->wf->Debug(__METHOD__ . "::nearby - {$lat},{$lon}\n");
+			wfDebug(__METHOD__ . "::nearby - {$lat},{$lon}\n");
 		}
 
 		// apply rows limit
@@ -85,7 +85,7 @@
 		$models = array();
 
 		foreach($attrs as $attr) {
-			$models[] = F::build('PlaceModel', array($attr), 'newFromAttributes');
+			$models[] = PlaceModel::newFromAttributes($attr);
 		}
 
 		wfProfileOut(__METHOD__);
@@ -192,7 +192,7 @@
 	public function getNearbyByTitle(Title $title, $distance = 10 /* km */) {
 		wfProfileIn(__METHOD__);
 
-		$storage = F::build('PlaceStorage', array($title), 'newFromTitle');
+		$storage = PlaceStorage::newFromTitle($title);
 		$models = $this->getNearby($storage->getModel(), $distance);
 
 		wfProfileOut(__METHOD__);
@@ -200,6 +200,6 @@
 	}
 
 	private function getDB($type = DB_SLAVE) {
-		return $this->app->wf->GetDB($type, array(), $this->app->wg->DBname);
+		return wfGetDB($type, array(), $this->app->wg->DBname);
 	}
 }

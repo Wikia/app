@@ -157,7 +157,7 @@ var AdLogicPageLevelParams = function (
 			params.hasp = 'no';
 		}
 
-		if (Krux) {
+		if (Krux && !window.wgWikiDirectedAtChildren) {
 			params.u = Krux.user;
 			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
 		}

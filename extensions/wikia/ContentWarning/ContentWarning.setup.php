@@ -11,15 +11,14 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 //classes
-$app->registerClass('ContentWarningController', $dir.'ContentWarningController.class.php');
-$app->registerClass('ContentWarningHooks', $dir . 'ContentWarningHooks.class.php');
+$wgAutoloadClasses['ContentWarningController'] =  $dir.'ContentWarningController.class.php';
+$wgAutoloadClasses['ContentWarningHooks'] =  $dir . 'ContentWarningHooks.class.php';
 
 // i18n mapping
-$app->registerExtensionMessageFile('ContentWarning', $dir.'ContentWarning.i18n.php');
+$wgExtensionMessagesFiles['ContentWarning'] = $dir.'ContentWarning.i18n.php';
 
 // Hooks
-$app->registerHook('GetHTMLAfterBody', 'ContentWarningHooks', 'onGetHTMLAfterBody');
-$app->registerHook('BeforePageDisplay', 'ContentWarningHooks', 'onBeforePageDisplay');
+$wgHooks['GetHTMLAfterBody'][] = 'ContentWarningHooks::onGetHTMLAfterBody';
+$wgHooks['BeforePageDisplay'][] = 'ContentWarningHooks::onBeforePageDisplay';

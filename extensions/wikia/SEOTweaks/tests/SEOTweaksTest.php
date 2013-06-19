@@ -7,13 +7,17 @@ class SEOTweaksTest extends WikiaBaseTest
 		parent::setUp();
 		$this->helperMocker = $this->getMockBuilder( 'SEOTweaksHooksHelper' )
 									->disableOriginalConstructor();
+
 	}
 	
 	/**
 	 * @covers SEOTweaksHooksHelper::onBeforePageDisplay
 	 */
 	public function testOnBeforePageDisplayWithoutGoogleVals() {
-		
+
+		$this->mockGlobalVariable('wgSEOGoogleSiteVerification', null);
+		$this->mockGlobalVariable('wgSEOGooglePlusLink', null);
+
 		$mockOut = $this->getMockbuilder( 'OutputPage' )
 						->disableOriginalConstructor()
 						->setMethods( array( 'addMeta', 'addLink' ) )
@@ -45,7 +49,10 @@ class SEOTweaksTest extends WikiaBaseTest
 	 * @covers SEOTweaksHooksHelper::onBeforePageDisplay
 	 */
 	public function testOnBeforePageDisplayWithGoogleVals() {
-		
+
+		$this->mockGlobalVariable('wgSEOGoogleSiteVerification', 'foobar');
+		$this->mockGlobalVariable('wgSEOGooglePlusLink', 'bazqux');
+
 		$mockOut = $this->getMockbuilder( 'OutputPage' )
 						->disableOriginalConstructor()
 						->setMethods( array( 'addMeta', 'addLink' ) )
@@ -57,19 +64,15 @@ class SEOTweaksTest extends WikiaBaseTest
 		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
 		$wgRefl->setAccessible( true );
 		
-		$wg = (object) array( 'SEOGoogleSiteVerification' => 'foobar', 'SEOGooglePlusLink' => 'bazqux' );
-		
-		$wgRefl->setValue( $mockHelper, $wg ); 
-		
 		$mockOut
 			->expects( $this->at( 0 ) )
 			->method ( 'addMeta' )
-			->with   ( 'google-site-verification', $wg->SEOGoogleSiteVerification )
+			->with   ( 'google-site-verification', 'foobar' )
 		;
 		$mockOut
 			->expects( $this->at( 1 ) )
 			->method ( 'addLink' )
-			->with   ( array( 'href' => $wg->SEOGooglePlusLink, 'rel' => 'publisher' ) )
+			->with   ( array( 'href' => 'bazqux', 'rel' => 'publisher' ) )
 		;
 		$this->assertTrue(
 				$mockHelper->onBeforePageDisplay( $mockOut ),
@@ -284,10 +287,6 @@ class SEOTweaksTest extends WikiaBaseTest
 							->disableOriginalConstructor()
 							->getMock();
 		
-		$wfRefl = new ReflectionProperty( 'WikiaObject', 'wf' );
-		$wfRefl->setAccessible( true );
-		$wfRefl->setValue( $mockHelper, $mockWrapper );
-		
 		$mockImagePage
 			->expects( $this->at( 0 ) )
 			->method ( 'getDisplayedFile' )
@@ -308,12 +307,6 @@ class SEOTweaksTest extends WikiaBaseTest
 			->method ( 'getHandler' )
 			->will   ( $this->returnValue( $mockHandler ) )
 		;
-		$mockWrapper
-			->expects( $this->at( 0 ) )
-			->method ( 'Msg' )
-			->with   ( 'seotweaks-image' )
-			->will   ( $this->returnValue( 'A' ) )
-		;
 		$mockTitle
 			->expects( $this->at( 0 ) )
 			->method ( 'getBaseText' )
@@ -325,15 +318,14 @@ class SEOTweaksTest extends WikiaBaseTest
 			->with   ( 'A - B' )
 		;
 
-		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
-		$wgRefl->setAccessible( true );
-		$wg = (object) array( 'Out' => $mockOut );
-		$wgRefl->setValue( $mockHelper, $wg );
-		
-		
+		$this->getGlobalFunctionMock( 'wfMsg' )
+			->expects( $this->exactly( 1 ) )
+			->method( 'wfMsg' )
+			->will( $this->returnValue( 'A' ) );
+
+		$this->mockGlobalVariable('wgOut',$mockOut);
 		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
-		$this->mockApp();
-		
+
 		$this->assertTrue(
 				$mockHelper->onImagePageAfterImageLinks( $mockImagePage, '' ),
 				'SEOTweaksHooksHelper::onImagePageAfterImageLinks should always return true'
@@ -363,11 +355,6 @@ class SEOTweaksTest extends WikiaBaseTest
 						->setMethods( array( 'setPageTitle' ) )
 						->getMock();
 		
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-							->disableOriginalConstructor()
-							->setMethods( array( 'Msg' ) )
-							->getMock();
-		
 		$mockTitle = $this->getMockBuilder( 'Title' )
 							->disableOriginalConstructor()
 							->setMethods( array( 'getBaseText' ) )
@@ -381,10 +368,6 @@ class SEOTweaksTest extends WikiaBaseTest
 		$mockHandler = $this->getMockBuilder( 'JpegHandler' )
 							->disableOriginalConstructor()
 							->getMock();
-		
-		$wfRefl = new ReflectionProperty( 'WikiaObject', 'wf' );
-		$wfRefl->setAccessible( true );
-		$wfRefl->setValue( $mockHelper, $mockWrapper );
 		
 		$mockImagePage
 			->expects( $this->at( 0 ) )
@@ -401,12 +384,6 @@ class SEOTweaksTest extends WikiaBaseTest
 			->method       ( 'isFileTypeVideo' )
 			->will         ( $this->returnValue( true ) )
 		;
-		$mockWrapper
-			->expects( $this->at( 0 ) )
-			->method ( 'Msg' )
-			->with   ( 'seotweaks-video' )
-			->will   ( $this->returnValue( 'A' ) )
-		;
 		$mockTitle
 			->expects( $this->at( 0 ) )
 			->method ( 'getBaseText' )
@@ -418,15 +395,14 @@ class SEOTweaksTest extends WikiaBaseTest
 			->with   ( 'A - B' )
 		;
 
-		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
-		$wgRefl->setAccessible( true );
-		$wg = (object) array( 'Out' => $mockOut );
-		$wgRefl->setValue( $mockHelper, $wg );
-		
-		
+		$this->getGlobalFunctionMock( 'wfMsg' )
+			->expects( $this->exactly( 1 ) )
+			->method( 'wfMsg' )
+			->will( $this->returnValue( 'A' ) );
+
+		$this->mockGlobalVariable('wgOut',$mockOut);
 		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
-		$this->mockApp();
-		
+
 		$this->assertTrue(
 				$mockHelper->onImagePageAfterImageLinks( $mockImagePage, '' ),
 				'SEOTweaksHooksHelper::onImagePageAfterImageLinks should always return true'
@@ -651,11 +627,6 @@ class SEOTweaksTest extends WikiaBaseTest
 		                  ->setMethods( array( 'exists', 'getDBKey' ) )
 		                  ->getMock();
 		
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'GetDB' ) )
-		                    ->getMock();
-		
 		$mockDb = $this->getMockBuilder( "DatabaseMysql" )
 		               ->disableOriginalConstructor()
 		               ->setMethods( array( 'query', 'fetchObject', 'buildLike', 'anyString' ) )
@@ -681,11 +652,13 @@ class SEOTweaksTest extends WikiaBaseTest
 		    ->method ( 'exists' )
 		    ->will   ( $this->returnValue( false ) )
 		;
+		/*
 		$mockWrapper
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getDB' )
 		    ->will   ( $this->returnValue( $mockDb ) )
 		;
+		*/
 		$mockTitle
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'getDBKey' )
@@ -713,11 +686,15 @@ class SEOTweaksTest extends WikiaBaseTest
 		    ->method ( 'fetchObject' )
 		    ->will   ( $this->returnValue( null ) )
 		;
-		
+
+		$this->mockGlobalFunction('wfGetDB', $mockDb);
+
+		/*
 		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
 		$reflWf->setAccessible( true );
 		$reflWf->setValue( $mockHelper, $mockWrapper );
-		
+		*/
+
 		$this->assertTrue(
 				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
 				'SEOTweaksHooksHelper::onArticleViewHeader should always return true'
@@ -746,11 +723,6 @@ class SEOTweaksTest extends WikiaBaseTest
 		                  ->setMethods( array( 'exists', 'getDBKey', 'getFullUrl' ) )
 		                  ->getMock();
 		
-		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( array( 'GetDB' ) )
-		                    ->getMock();
-		
 		$mockDb = $this->getMockBuilder( "DatabaseMysql" )
 		               ->disableOriginalConstructor()
 		               ->setMethods( array( 'query', 'fetchObject', 'buildLike', 'anyString' ) )
@@ -764,7 +736,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		                ->disableOriginalConstructor()
 		                ->setMethods( array( 'redirect' ) )
 		                ->getMock();
-		
+
 		$outputDone = false;
 		$pcache = false;
 		
@@ -782,11 +754,6 @@ class SEOTweaksTest extends WikiaBaseTest
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'exists' )
 		    ->will   ( $this->returnValue( false ) )
-		;
-		$mockWrapper
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getDB' )
-		    ->will   ( $this->returnValue( $mockDb ) )
 		;
 		$mockTitle
 		    ->expects( $this->at( 1 ) )
@@ -826,17 +793,11 @@ class SEOTweaksTest extends WikiaBaseTest
 		    ->with   ( $fullUrl )
 		;
 		
-		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
-		$reflWf->setAccessible( true );
-		$reflWf->setValue( $mockHelper, $mockWrapper );
-		
-		$reflWg = new ReflectionProperty( 'WikiaObject', 'wg' );
-		$reflWg->setAccessible( true );
-		$reflWg->setValue( $mockHelper, (object) array( 'Out' => $mockOut ) );
-		
 		$this->mockClass( 'Title', $mockTitle );
-		$this->proxyClass( 'Title', $mockTitle, 'newFromText' );
-		
+		$this->mockClass( 'Title', $mockTitle, 'newFromText' );
+		$this->mockGlobalFunction('wfGetDB',$mockDb);
+		$this->mockGlobalVariable('wgOut',$mockOut);
+
 		$this->assertTrue(
 				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
 				'SEOTweaksHooksHelper::onArticleViewHeader should always return true'

@@ -66,7 +66,7 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.utils', 'wikia.dartmobile
 	 */
 	function setupSlot(options) {
 		if (shouldRequestAd()) {
-			postscribe(
+			window.postscribe(
 				options.wrapper,
 				'<script src="' +
 					dartHelper.getMobileUrl({

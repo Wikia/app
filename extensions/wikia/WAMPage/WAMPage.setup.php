@@ -11,7 +11,6 @@
  */
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WAM Page',
@@ -21,18 +20,18 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // classes
-$app->registerClass( 'WAMPage', $dir . 'WAMPage.class.php' );
-$app->registerClass( 'WAMPageArticle', $dir . 'WAMPageArticle.class.php' );
-$app->registerClass( 'WAMPageController', $dir . 'WAMPageController.class.php' );
-$app->registerClass( 'WAMPageHooks', $dir . 'WAMPageHooks.class.php' );
-$app->registerClass( 'WAMPageModel', $dir . 'models/WAMPageModel.class.php' );
+$wgAutoloadClasses[ 'WAMPage'] =  $dir . 'WAMPage.class.php' ;
+$wgAutoloadClasses[ 'WAMPageArticle'] =  $dir . 'WAMPageArticle.class.php' ;
+$wgAutoloadClasses[ 'WAMPageController'] =  $dir . 'WAMPageController.class.php' ;
+$wgAutoloadClasses[ 'WAMPageHooks'] =  $dir . 'WAMPageHooks.class.php' ;
+$wgAutoloadClasses[ 'WAMPageModel'] =  $dir . 'models/WAMPageModel.class.php' ;
 
 // hooks
-$app->registerHook('ArticleFromTitle', 'WAMPageHooks', 'onArticleFromTitle');
-$app->registerHook('MakeGlobalVariablesScript', 'WAMPageHooks', 'onMakeGlobalVariablesScript');
-$app->registerHook('LinkBegin', 'WAMPageHooks', 'onLinkBegin');
-$app->registerHook('WikiaCanonicalHref', 'WAMPageHooks', 'onWikiaCanonicalHref');
+$wgHooks['ArticleFromTitle'][] = 'WAMPageHooks::onArticleFromTitle';
+$wgHooks['MakeGlobalVariablesScript'][] = 'WAMPageHooks::onMakeGlobalVariablesScript';
+$wgHooks['LinkBegin'][] = 'WAMPageHooks::onLinkBegin';
+$wgHooks['WikiaCanonicalHref'][] = 'WAMPageHooks::onWikiaCanonicalHref';
 
 
 // i18n
-$app->registerExtensionMessageFile( 'WAMPage', $dir . 'WAMPage.i18n.php' );
+$wgExtensionMessagesFiles['WAMPage'] = $dir . 'WAMPage.i18n.php' ;

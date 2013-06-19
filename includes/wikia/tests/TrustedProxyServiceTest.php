@@ -13,12 +13,9 @@ class TrustedProxyServiceTest extends WikiaBaseTest {
 		$ranges = [ "199.27.72.0/21", "208.174.57.186" ];
 
 		$this->mockGlobalVariable( "wgSquidServersNoPurge", $ranges );
-		$this->mockApp();
-
-		$class = new TrustedProxyService();
 
 		$trusted = false;
-		$value = $class->onIsTrustedProxy( $ip, $trusted );
+		$value = TrustedProxyService::onIsTrustedProxy( $ip, $trusted );
 		$this->assertEquals( $trusted, $expected, $message );
 		$this->assertEquals( $value, true, "Hook should return true" );
 	}

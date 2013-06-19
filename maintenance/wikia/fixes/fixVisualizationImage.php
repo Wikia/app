@@ -5,7 +5,7 @@ class FixVisualizationImage extends Maintenance {
 	public function execute() {
 		$app = F::app();
 
-		$dbr = $app->wf->GetDB( DB_MASTER, array(), $app->wg->ExternalSharedDB );
+		$dbr = wfGetDB( DB_MASTER, array(), $app->wg->ExternalSharedDB );
 		$rows = $dbr->select(
 			array( 'city_visualization' ),
 			array( 'city_id', 'city_main_image', 'city_images' ),
@@ -21,7 +21,7 @@ class FixVisualizationImage extends Maintenance {
 		while ($row = $rows->fetchRow()) {
 			$row['city_images'] = json_decode($row['city_images'], true);
 			$title = Title::newFromText($row['city_main_image'], NS_FILE);
-			$file = $app->wf->findFile($title);
+			$file = wffindFile($title);
 
 
 			if ($file && $file->isMissing()) {
@@ -46,7 +46,7 @@ class FixVisualizationImage extends Maintenance {
 					$imageIndex = substr($imageIndex, 0, 1);
 
 					$title = Title::newFromText($imageName, NS_FILE);
-					$file = $app->wf->findFile($title);
+					$file = wffindFile($title);
 					if ($file && $file->isMissing()) {
 
 						$t = GlobalTitle::newFromText("Wikia-Visualization-Add-$imageIndex.png", NS_FILE, $row['city_id']);

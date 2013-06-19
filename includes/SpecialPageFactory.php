@@ -91,7 +91,7 @@ class SpecialPageFactory {
 		'Log'                       => 'SpecialLog',
 		'Watchlist'                 => 'SpecialWatchlist',
 		'Newpages'                  => 'SpecialNewpages',
-		'Recentchanges'             => 'SpecialRecentchanges',
+		'Recentchanges'             => 'SpecialRecentChanges',
 		'Recentchangeslinked'       => 'SpecialRecentchangeslinked',
 		'Tags'                      => 'SpecialTags',
 

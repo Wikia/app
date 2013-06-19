@@ -25,7 +25,7 @@ class WikiaMobileErrorService extends WikiaService {
 		 */
 		$out = $this->request->getVal( 'out', $this->wg->Out );
 
-		$assetManager = F::build( 'AssetsManager', array(), 'getInstance' );
+		$assetManager = AssetsManager::getInstance();
 
 		//add styles that belongs only to 404 page
 		$styles = $assetManager->getURL( array( 'wikiamobile_404_scss' ) );
@@ -49,7 +49,7 @@ class WikiaMobileErrorService extends WikiaService {
 		/**
 		 * @var $wikiaMobileStatsModel WikiaMobileStatsModel
 		 */
-		$wikiaMobileStatsModel = F::build( 'WikiaMobileStatsModel' );
+		$wikiaMobileStatsModel = (new WikiaMobileStatsModel);
 		$ret = $wikiaMobileStatsModel->getRandomPopularPage();
 
 		$this->response->setVal( 'title', $this->wg->Out->getTitle() );

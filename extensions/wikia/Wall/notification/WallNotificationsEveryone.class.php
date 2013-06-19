@@ -75,9 +75,9 @@ class WallNotificationsEveryone extends WallNotifications {
 			$rev = Revision::newFromId($entityKeyArray[0]);
 
 			if(!empty($rev)) {
-				$notif = F::build('WallNotificationEntity', array($rev, $this->app->wg->CityId), 'createFromRev');
+				$notif = WallNotificationEntity::createFromRev($rev, $this->app->wg->CityId);
 				if(!empty($notif)) {
-					$wn = F::build('WallNotifications', array());
+					$wn = new WallNotifications();
 					$wn->addNotificationLinks(array($userId), $notif);
 				}
 			}
@@ -178,15 +178,15 @@ class WallNotificationsEveryone extends WallNotifications {
 	}
 
 	public function getEntityProcessedCacheKey($userId, $entityKey) {
-		return $this->app->runFunction('wfMemcKey', __CLASS__, 'EntityProcessed', $userId, $entityKey, $this->getGlobalCacheBuster());
+		return wfMemcKey( __CLASS__, 'EntityProcessed', $userId, $entityKey, $this->getGlobalCacheBuster());
 	}
 
 	public function getQueueProcessedCacheKey($userId) {
-		return $this->app->runFunction('wfMemcKey', __CLASS__, 'QueueProcessed', $userId, $this->getGlobalCacheBuster());
+		return wfMemcKey( __CLASS__, 'QueueProcessed', $userId, $this->getGlobalCacheBuster());
 	}
 
 	public function getGlobalCacheBusterKey() {
-		return $this->app->runFunction('wfMemcKey', __CLASS__, 'GlobalCacheKey');
+		return wfMemcKey( __CLASS__, 'GlobalCacheKey');
 	}
 
 	public function clearQueue() {

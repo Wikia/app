@@ -12,18 +12,14 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	public function testGetModuleName() {
-		$functionWrapperMock = $this->getMock('WikiaFunctionWrapper', array('msg'));
-
-		$functionWrapperMock->expects($this->once())
-			->method('msg')
-			->with('marketing-toolbox-hub-module-slider')
-			->will($this->returnValue('testNameFor slider'));
-
-		$app = new WikiaApp(null, null, null, $functionWrapperMock);
+		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
 
 		$model = new MarketingToolboxModel();
 
-		$model->setApp($app);
+		$mockMsg->expects($this->once())
+			->method('wfMsg')
+			->with('marketing-toolbox-hub-module-slider')
+			->will($this->returnValue('testNameFor slider'));
 
 		$this->assertEquals(
 			'testNameFor slider',
@@ -53,16 +49,14 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	public function testGetAvailableSections() {
-		$functionWrapperMock = $this->getMock('WikiaFunctionWrapper', array('msg'));
+		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
 
-		$functionWrapperMock->expects($this->at(0))
-			->method('msg')
+		$mockMsg->expects($this->at(0))
+			->method('wfMsg')
 			->with($this->equalTo('marketing-toolbox-section-hubs-button'))
 			->will($this->returnValue('test name for hubs section'));
 
-		$app = new WikiaApp(null, null, null, $functionWrapperMock);
-
-		$model = new MarketingToolboxModel($app);
+		$model = new MarketingToolboxModel();
 
 		$sections = $model->getAvailableSections();
 		$this->assertArrayHasKey(MarketingToolboxModel::SECTION_HUBS, $sections);
@@ -70,16 +64,14 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	public function testGetSectionName() {
-		$functionWrapperMock = $this->getMock('WikiaFunctionWrapper', array('msg'));
+		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
 
-		$functionWrapperMock->expects($this->at(0))
-			->method('msg')
+		$mockMsg->expects($this->at(0))
+			->method('wfMsg')
 			->with($this->equalTo('marketing-toolbox-section-hubs-button'))
 			->will($this->returnValue('test name for hubs section'));
 
-		$app = new WikiaApp(null, null, null, $functionWrapperMock);
-
-		$model = new MarketingToolboxModel($app);
+		$model = new MarketingToolboxModel();
 
 		$this->assertEquals(
 			'test name for hubs section',
@@ -408,15 +400,13 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			)
 		);
 
-		$functionWrapperMock = $this->getMock('WikiaFunctionWrapper', array('GetDB'));
+		$mockGetDB = $this->getGlobalFunctionMock( 'wfGetDB' );
 
-		$functionWrapperMock->expects($this->any())
-			->method('GetDB')
+		$mockGetDB->expects($this->any())
+			->method('wfGetDB')
 			->will($this->returnValue($dbMock));
 
-		$app = new WikiaApp(null, null, null, $functionWrapperMock);
-
-		$model = new MarketingToolboxModel($app);
+		$model = new MarketingToolboxModel();
 
 		$model->saveModule(
 			$dataToInsert['lang'],
@@ -470,15 +460,13 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			)
 		);
 
-		$functionWrapperMock = $this->getMock('WikiaFunctionWrapper', array('GetDB'));
+		$mockGetDB = $this->getGlobalFunctionMock( 'wfGetDB' );
 
-		$functionWrapperMock->expects($this->any())
-			->method('GetDB')
+		$mockGetDB->expects($this->any())
+			->method('wfGetDB')
 			->will($this->returnValue($dbMock));
 
-		$app = new WikiaApp(null, null, null, $functionWrapperMock);
-
-		$model = new MarketingToolboxModel($app);
+		$model = new MarketingToolboxModel();
 
 		$model->saveModule(
 			$dataToInsert['lang'],
@@ -555,8 +543,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->method('select')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalFunction('GetDB', $dbMock);
-		$this->mockApp();
+		$this->mockGlobalFunction('wfGetDB', $dbMock);
 
 		// create object second time to use mocked F:app()
 		$model = new MarketingToolboxModel();
@@ -597,8 +584,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->method('select')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalFunction('GetDB', $dbMock);
-		$this->mockApp();
+		$this->mockGlobalFunction('wfGetDB', $dbMock);
 
 		// create object second time to use mocked F:app()
 		$model = new MarketingToolboxModel();
@@ -626,8 +612,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->method('select')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalFunction('GetDB', $dbMock);
-		$this->mockApp();
+		$this->mockGlobalFunction('wfGetDB', $dbMock);
 
 		$model = new MarketingToolboxModel();
 
@@ -681,8 +666,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->method('select')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalFunction('GetDB', $dbMock);
-		$this->mockApp();
+		$this->mockGlobalFunction('wfGetDB', $dbMock);
 
 		// create object second time to use mocked F:app()
 		$model = new MarketingToolboxModel();
@@ -712,8 +696,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->method('select')
 			->will($this->returnValue(array()));
 
-		$this->mockGlobalFunction('GetDB', $dbMock);
-		$this->mockApp();
+		$this->mockGlobalFunction('wfGetDB', $dbMock);
 
 		$model = new MarketingToolboxModel();
 		$returnedVal = $model->checkModulesSaved('en', '2','1360454400');

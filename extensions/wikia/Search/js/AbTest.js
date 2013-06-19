@@ -4,15 +4,17 @@ jQuery(function($)  {
 		,abGroupParameterName = 'ab';
 
 	function findSearchRelatedExperiments() {
-		var experiments = Wikia.AbTest.getExperiments();
 		var searchExperiments = [];
-		for( var i = 0; i < experiments.length; i++ ) {
-			if( experiments[i].name.toUpperCase().indexOf('SEARCH') === 0 ) {
-				// all experiments with name starting with search are considered search related
-				searchExperiments.push(experiments[i]);
+		if ( window.Wikia && window.Wikia.AbTest ) {
+			var experiments = Wikia.AbTest.getExperiments();
+			for( var i = 0; i < experiments.length; i++ ) {
+				if( experiments[i].name.toUpperCase().indexOf('SEARCH') === 0 ) {
+					// all experiments with name starting with search are considered search related
+					searchExperiments.push(experiments[i]);
+				}
 			}
 		}
-		return experiments;
+		return searchExperiments;
 	}
 
 	function getSearchRelatedGroupIds() {

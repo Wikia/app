@@ -49,7 +49,7 @@ class WikisApiController extends WikiaApiController {
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$results = self::$model->getTop( $lang, $hub );
-		$batches = $this->wf->PaginateArray( $results, $limit, $batch );
+		$batches = wfPaginateArray( $results, $limit, $batch );
 
 		foreach ( $batches as $name => $value ) {
 			$this->response->setVal( $name, $value );
@@ -102,7 +102,7 @@ class WikisApiController extends WikiaApiController {
 		$results = self::$model->getByString($keyword, $lang, $hub, $includeDomain );
 
 		if( is_array( $results ) ) {
-			$batches = $this->wf->PaginateArray( $results, $limit, $batch );
+			$batches = wfPaginateArray( $results, $limit, $batch );
 
 			foreach ( $batches as $name => $value ) {
 				$this->response->setVal( $name, $value );
@@ -151,7 +151,7 @@ class WikisApiController extends WikiaApiController {
 		foreach ( $results as &$res ) {
 			//image data transformation
 			$imageUrl = null;
-			$img = $this->wf->findFile( $res['image'] );
+			$img = wffindFile( $res['image'] );
 
 			if ( !empty( $img ) ) {
 				$imageUrl = $img->getFullUrl();
@@ -264,18 +264,20 @@ class WikisApiController extends WikiaApiController {
 
 	protected function getMemCacheKey( $wikiId ) {
 		if ( !isset( $this->keys[ $wikiId ] ) ) {
-			$this->keys[ $wikiId ] =  F::app()->wf->sharedMemcKey( static::MEMC_NAME.$wikiId );
+			$this->keys[ $wikiId ] =  wfsharedMemcKey( static::MEMC_NAME.$wikiId );
 		}
 		return $this->keys[ $wikiId ];
 	}
 
 	protected function cacheWikiData( $wikiInfo ) {
+		global $wgMemc;
 		$key = $this->getMemCacheKey( $wikiInfo[ 'wikiId' ] );
-		F::app()->wg->memc->set( $key, $wikiInfo, static::CACHE_VALIDITY );
+		$wgMemc->set( $key, $wikiInfo, static::CACHE_VALIDITY );
 	}
 
 	protected function getFromCacheWiki( $wikiId ) {
+		global $wgMemc;
 		$key = $this->getMemCacheKey( $wikiId );
-		return F::app()->wg->memc->get( $key );
+		return $wgMemc->get( $key );
 	}
 }

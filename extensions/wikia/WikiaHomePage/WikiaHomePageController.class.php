@@ -70,7 +70,7 @@ class WikiaHomePageController extends WikiaController {
 
 	public function __construct() {
 		parent::__construct();
-		$this->helper = F::build('WikiaHomePageHelper');
+		$this->helper = new WikiaHomePageHelper();
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'));
 	}
 
@@ -85,7 +85,7 @@ class WikiaHomePageController extends WikiaController {
 		$this->hubImages = $response->getVal('hubImages', '');
 
 		$this->lang = $this->wg->contLang->getCode();
-		F::build('JSMessages')->enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
 
 		$batches = $this->getList();
 		$this->wg->Out->addJsConfigVars([
@@ -143,7 +143,7 @@ class WikiaHomePageController extends WikiaController {
 	public function getStats() {
 		wfProfileIn(__METHOD__);
 
-		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'stats', $this->wg->contLang->getCode());
+		$memKey = wfSharedMemcKey('wikiahomepage', 'stats', $this->wg->contLang->getCode());
 		$stats = $this->wg->Memc->get($memKey);
 		if (empty($stats)) {
 			$stats['visitors'] = $this->helper->getStatsFromArticle('StatsVisitors');
@@ -400,7 +400,7 @@ class WikiaHomePageController extends WikiaController {
 			$wikiNew = !empty($data[5]) ? trim($data[5]) : false;
 
 			$wikiImgName = trim($data[2]);
-			$wikiImg = $this->wf->FindFile($wikiImgName);
+			$wikiImg = wfFindFile($wikiImgName);
 
 			$wikiId = WikiFactory::UrlToID(trim($wikiUrl));
 			if (!$wikiId) {
@@ -451,7 +451,7 @@ class WikiaHomePageController extends WikiaController {
 			);
 		} else {
 			// TODO remove after launch new hubs
-			$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'hubimages', $lang, self::HUBS_IMAGES_MEMC_KEY_VER);
+			$memKey = wfSharedMemcKey('wikiahomepage', 'hubimages', $lang, self::HUBS_IMAGES_MEMC_KEY_VER);
 			$hubImages = $this->wg->Memc->get($memKey);
 
 			if (empty($hubImages)) {
@@ -567,9 +567,9 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	protected function getRawArticleContent($hubname) {
-		$title = F::build('Title', array($hubname), 'newFromText');
+		$title = Title::newFromText($hubname);
 		if($title instanceof Title && $title->exists()) {
-		    $article = F::build('Article', array($title));
+		    $article = new Article($title);
 		    $content = $article->getRawText();
 		} else {
 		    $content = null;

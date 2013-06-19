@@ -2,8 +2,8 @@
 
 class PlacesCategoryController extends WikiaController {
 
-	public function __construct( WikiaApp $app ) {
-		$this->app = $app;
+	public function __construct() {
+		$this->app = F::app();
 	}
 	public function makeGeoTaggable(){
 
@@ -12,10 +12,10 @@ class PlacesCategoryController extends WikiaController {
 	}
 	public function enableGeoTagging(){
 
-		if ( !$this->app->wf->readOnly() && $this->app->wg->user->isAllowed('places-enable-category-geolocation') ){
+		if ( !wfReadOnly() && $this->app->wg->user->isAllowed('places-enable-category-geolocation') ){
 			$sTitle = $this->getVal( 'pageName', null );
 			if ( !empty( $sTitle ) ){
-				$oPlacesCategory = F::build( 'PlaceCategory', array( $sTitle ), 'newFromTitle' );
+				$oPlacesCategory = PlaceCategory::newFromTitle( $sTitle );
 				$oPlacesCategory->enableGeoTagging();
 				$this->setVal( 'error', 0 );
 			} else {
@@ -27,10 +27,10 @@ class PlacesCategoryController extends WikiaController {
 	}
 	public function disableGeoTagging(){
 
-		if ( !$this->app->wf->readOnly() && $this->app->wg->user->isAllowed('places-enable-category-geolocation') ){
+		if ( !wfReadOnly() && $this->app->wg->user->isAllowed('places-enable-category-geolocation') ){
 			$sTitle = $this->getVal( 'pageName', null );
 			if ( !empty( $sTitle ) ){
-				$oPlacesCategory = F::build( 'PlaceCategory', array( $sTitle ), 'newFromTitle' );
+				$oPlacesCategory = PlaceCategory::newFromTitle( $sTitle );
 				$oPlacesCategory->disableGeoTagging();
 				$this->setVal( 'error', 0 );
 			} else {

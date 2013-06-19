@@ -20,7 +20,7 @@ class FogBugzReport {
 		$this->app = F::app();
 		$this->since = new DateTime( date_start );
 		$this->until = new DateTime();
-		$this->db = $this->app->wf->GetDB( DB_SLAVE );
+		$this->db = wfGetDB( DB_SLAVE );
 	}
 
 	/**
