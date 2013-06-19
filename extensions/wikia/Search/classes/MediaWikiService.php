@@ -638,7 +638,8 @@ class MediaWikiService
 	}
 	
 	/**
-	 * Returns the HTML needed to get a thumbnail provided a page ID
+	 * Returns the HTML needed to get a thumbnail provided a page ID.
+	 * First attempts to use file-specific logic, then backs off to imageserving
 	 * @param int $pageId
 	 * @param array $transformParams
 	 * @param array $htmlParams
@@ -649,11 +650,9 @@ class MediaWikiService
 			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
 			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)
 			) {
-		$html = '';
-		$img = $this->getFileForPageId( $pageId );
-		if (! empty( $img ) ) {
-			$thumb = $img->transform( $transformParams );
-			$html = $thumb->toHtml( $htmlParams );
+		$html = $this->getThumbnailHtmlFromFilePageId( $pageId, $transformParams, $htmlParams );
+		if ( $html == '' ) {
+			$html = $this->getThumbnailHtmlFromArticlePageId( $pageId, $transformParams, $htmlParams );
 		}
 		return $html;
 	}
@@ -951,4 +950,51 @@ class MediaWikiService
 		wfProfileOut( __METHOD__ );
 		return static::$pageIdsToTitles[$pageId];
 	}
+	
+	/**
+	 * Returns the HTML needed to get a thumbnail provided a page ID that corresponds to a File
+	 * @param int $pageId
+	 * @param array $transformParams
+	 * @param array $htmlParams
+	 * @return string
+	 */
+	protected function getThumbnailHtmlFromFilePageId( 
+			$pageId, 
+			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
+			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) 
+			) {
+		$html = '';
+		$img = $this->getFileForPageId( $pageId );
+		if (! empty( $img ) ) {
+			
+			$thumb = $img->transform( $transformParams );
+			$html = $thumb->toHtml( $htmlParams );
+		}
+		return $html;
+	}
+	
+	/**
+	 * Uses the ImageServing API to access a thumbnail for a non-file page.
+	 * @param int $pageId
+	 * @param array $transformParams
+	 * @param array $htmlParams
+	 * @return string
+	 */
+	protected function getThumbnailHtmlFromArticlePageId( 
+			$pageId,
+			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
+			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) 
+			) {
+		$html = '';
+		$imagesServing = new \ImageServing( [ $pageId ], $transformParams['width'] );
+		$images = $imagesServing->getImages( 1 );
+		if ( isset( $images[$pageId] ) && !empty( $images[$pageId] ) ) {
+			$image = array_shift( $images[$pageId] );
+			$url = $image['url'];
+			$name = isset( $image['name'] ) ? $image['name'] : '';
+			$html = sprintf( '<img src="%s", alt="%s">', $url, $name );
+		}
+		return $html;
+	}
+	
 }
