@@ -15,11 +15,14 @@ $messages['en'] = [
 	'special-css-community-update-see-all' => 'See all',
 	'special-css-oasis-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
 	'special-css-education-item-webinars-header' => 'CSS_ Wikia Webinars',
+	'special-css-education-item-webinars-link-title' => 'Wikia CSS Webinar',
 	'special-css-education-item-webinars-paragraph' => 'An introduction to using custom CSS on Wikia.',
 	'special-css-education-item-help-header' => 'Help / FAQ',
+	'special-css-education-item-help-link-title' => 'Help and FAQs',
 	'special-css-education-item-help-paragraph' => 'Guides and best practices for using custom CSS.',
 	'special-css-education-item-com-center-header' => 'Community Center',
-	'special-css-education-item-com-center-paragraph' => 'Get CSS help from other Wikia users.s'
+	'special-css-education-item-com-center-link-title' => 'Got questions?',
+	'special-css-education-item-com-center-paragraph' => 'Get CSS help from other Wikia users.'
 
 ];
 
@@ -40,10 +43,13 @@ $messages['qqq'] = [
 
 	'special-css-oasis-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
 	'special-css-education-item-webinars-header' => 'Header - link to Wikia Webinars',
+	'special-css-education-item-webinars-link-title' => 'Short message apearing next to the mouse cursor after hovering header which is a link to Wikia Webinars',
 	'special-css-education-item-webinars-paragraph' => 'Short paragraph describing what is the link to Wikia Webinars about',
 	'special-css-education-item-help-header' => 'Header - link to Help / FAQ',
+	'special-css-education-item-help-link-title' => 'Short message apearing next to the mouse cursor after hovering header which is a link to Help/FAQ page',
 	'special-css-education-item-help-paragraph' => 'Short paragraph describing what is the link to Help / FAQ about',
-	'special-css-education-item-com-center-header' => 'Header -  link to Community Center',
+	'special-css-education-item-com-center-header' => 'Header - link to Community Center',
+	'special-css-education-item-com-center-link-title' => 'Short message apearing next to the mouse cursor after hovering header which is a link to Community Center',
 	'special-css-education-item-com-center-paragraph' => 'Short paragraph describing what is the link to Community
 	Center about',
 
