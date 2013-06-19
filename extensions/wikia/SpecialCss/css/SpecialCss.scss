@@ -14,6 +14,37 @@
 .css-side-bar {
 	float: right;
 	width: 300px;
+	.css-edit-box {
+		background-color: #f1f2f2;
+		font-size: 13px;
+		margin-bottom: 10px;
+		padding: 15px;
+		width: 270px;
+		label[for=minorEdit] {
+			float: right;
+			font-size: 10px;
+		}
+		.css-publish-button {
+			background: none;
+			border: none;
+			height: 20px;
+			padding: 0 20px;
+		}
+		.css-publish-button:hover {
+			background-color: #005F9C;
+			background-image: -moz-linear-gradient(center top , #007FCF 35%, #005F9C 65%);
+		}
+		.drop {
+			border-left: 1px solid #79bfe3;
+		}
+		#editSummary {
+			border: 1px solid #dadbdb;
+			border-radius: 4px;
+			clear: both;
+			margin: 5px 0;
+			width: 100%;
+		}
+	}
 	.version-box {
 		background-color: $color-buttons;
 		color: $color-button-text;
