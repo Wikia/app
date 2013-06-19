@@ -42,11 +42,12 @@ $messages['qqq'] = [
 	'special-css-community-update-see-all' => 'Link to blog listing with contains all CSS updates',
 
 	'special-css-oasis-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
-	'special-css-education-item-webinars-header' => 'Header text for Wikia Webinars',
-	'special-css-education-item-webinars-paragraph' => 'Paragraph text for Wikia Webinars',
-	'special-css-education-item-help-header' => 'Header text for Help / FAQ',
-	'special-css-education-item-help-paragraph' => 'Paragraph text for Help / FAQ',
-	'special-css-education-item-com-center-header' => 'Header text for Community Center',
-	'special-css-education-item-com-center-paragraph' => 'Paragraph text for Community Center',
+	'special-css-education-item-webinars-header' => 'Header - link to Wikia Webinars',
+	'special-css-education-item-webinars-paragraph' => 'Short paragraph describing what is the link to Wikia Webinars about',
+	'special-css-education-item-help-header' => 'Header - link to Help / FAQ',
+	'special-css-education-item-help-paragraph' => 'Short paragraph describing what is the link to Help / FAQ about',
+	'special-css-education-item-com-center-header' => 'Header -  link to Community Center',
+	'special-css-education-item-com-center-paragraph' => 'Short paragraph describing what is the link to Community
+	Center about',
 
 ];
