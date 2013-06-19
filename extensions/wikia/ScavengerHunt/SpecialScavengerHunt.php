@@ -80,7 +80,7 @@ class SpecialScavengerHunt extends SpecialPage {
 		switch ($action) {
 			case 'list':
 				$button = '<a class="wikia-button scavengerhunt-add-button" href="' . $this->mTitle->getFullUrl() . '/add">'.
-					XML::element('img', array( 'class' => 'sprite new', 'src' => $this->app->getGlobal('wgBlankImgUrl'))) . wfMsg('scavengerhunt-button-add') . '</a>';
+					Xml::element('img', array( 'class' => 'sprite new', 'src' => $this->app->getGlobal('wgBlankImgUrl'))) . wfMsg('scavengerhunt-button-add') . '</a>';
 
 				$this->out->mPagetitle .= $button;
 				$this->out->mPageLinkTitle = true;

@@ -356,7 +356,7 @@ class WallHooksHelper {
 		if( $title instanceof Title &&  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isSubpage() && empty($action) ) {
 			$item = array(
 					'type' => 'html',
-					'html' => XML::element('a', array('href' => $title->getFullUrl('action=history')), wfMsg('wall-toolbar-history') )
+					'html' => Xml::element('a', array('href' => $title->getFullUrl('action=history')), wfMsg('wall-toolbar-history') )
 			);
 
 			if( is_array($items) ) {

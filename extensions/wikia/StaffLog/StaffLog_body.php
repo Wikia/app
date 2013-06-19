@@ -29,35 +29,35 @@ class StaffLog extends SpecialPage
 
 		$pager = new StaffLoggerPager( "" );
 
-		$sTypesDropDown = XML::openElement( 'select', array( 'name' => 'type', 'id' => 'StaffLogFilterType' ) );
+		$sTypesDropDown = Xml::openElement( 'select', array( 'name' => 'type', 'id' => 'StaffLogFilterType' ) );
 
 		foreach ( $this->aTypes as $k => $v) {
-			$sTypesDropDown .= XML::option( $v, $k, ( $k == $this->request->getText( 'type', '' ) ) );
+			$sTypesDropDown .= Xml::option( $v, $k, ( $k == $this->request->getText( 'type', '' ) ) );
 		}
 
-		$sTypesDropDown .= XML::closeElement( 'select' );
+		$sTypesDropDown .= Xml::closeElement( 'select' );
 
 		$wgOut->addHTML(
-			XML::openElement( 'form', array( 'method' => 'get', 'action' => $this->getTitle()->getLocalURL() ) ) .
-				XML::openElement( 'fieldset' ) .
-				XML::element( 'legend', null, wfMsg( 'stafflog-filter-label' ), false ) .
-				XML::inputLabel(
+			Xml::openElement( 'form', array( 'method' => 'get', 'action' => $this->getTitle()->getLocalURL() ) ) .
+				Xml::openElement( 'fieldset' ) .
+				Xml::element( 'legend', null, wfMsg( 'stafflog-filter-label' ), false ) .
+				Xml::inputLabel(
 					wfMsg('stafflog-filter-user'),
 					'user',
 					'StaffLogFilterUser',
 					false,
 					htmlspecialchars( $this->request->getText( 'user', '' ), ENT_QUOTES, 'UTF-8' )
 				) .
-				XML::label( wfMsg( 'stafflog-filter-type' ), 'StaffLogFilterType' ) . ' ' .
+				Xml::label( wfMsg( 'stafflog-filter-type' ), 'StaffLogFilterType' ) . ' ' .
 				$sTypesDropDown . ' ' .
-				XML::submitButton( wfMsg( 'stafflog-filter-apply' ) ) .
-				XML::closeElement( 'fieldset' ) .
-				XML::closeElement( 'form' ) .
-				XML::openElement( 'div', array('class' => 'mw-spcontent') ) .
+				Xml::submitButton( wfMsg( 'stafflog-filter-apply' ) ) .
+				Xml::closeElement( 'fieldset' ) .
+				Xml::closeElement( 'form' ) .
+				Xml::openElement( 'div', array('class' => 'mw-spcontent') ) .
 				$pager->getNavigationBar() .
 				'<ul>' . $pager->getBody() . '</ul>' .
 				$pager->getNavigationBar() .
-				XML::closeElement( 'div' )
+				Xml::closeElement( 'div' )
 		);
 	}
 }
