@@ -173,7 +173,7 @@ abstract class AbstractSelect
 	 * @return string
 	 */
 	protected function getFormulatedQuery() {
-		return sprintf( '+(%s) AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery() );
+		return sprintf( '+(%s) AND (%s)', $this->getQueryClausesString(), $this->config->getQuery()->getSolrQuery( 10 ) );
 	}
 	
 	/**
