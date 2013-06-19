@@ -112,7 +112,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @param User $user
 	 * @return bool if saving was successful
 	 */
-	public function saveCssFileContent($content, $summary = '', $isMinor, $user) {
+	public function saveCssFileContent($content, $summary, $isMinor, $user) {
 		$cssTitle = $this->getCssFileTitle();
 		$flags = 0;
 		if ( $cssTitle instanceof Title) {
@@ -124,8 +124,8 @@ class SpecialCssModel extends WikiaModel {
 			}
 			$article = new Article($cssTitle);
 			$status = $article->doEdit($content, $summary, $flags, false, $user);
-			return $status->ok;
+			return $status;
 		}
-		return false;
+		return Status::newFatal('special-css-saving-internal-error');
 	}
 }

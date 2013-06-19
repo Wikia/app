@@ -14,6 +14,8 @@ $messages['en'] = [
 	'special-css-oasis-only' => 'Special:CSS is available only in Wikia skin. If you would like to use this feature please switch your preference to the Wikia skin.',
 
 	'special-css-diff-modal-title' => 'Changes',
+
+	'special-css-saving-internal-error' => 'Error while saving article',
 ];
 
 $messages['qqq'] = [
@@ -31,4 +33,6 @@ $messages['qqq'] = [
 	'special-css-oasis-only' => 'Message displayed to users who use skin different than "Wikia Skin" (i.e. Monobook). This feature is enabled only for "Wikia Skin".',
 
 	'special-css-diff-modal-title' => 'Title for modal witch actual changes in css file',
+
+	'special-css-saving-internal-error' => 'Error message after publish button informing user that there were some problems while saving css file content',
 ];
