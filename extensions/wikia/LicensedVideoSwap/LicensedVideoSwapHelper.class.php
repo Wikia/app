@@ -58,7 +58,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		}
 
 		// Do the outer join on the video_swap table
-		$joinCond = array( 'page_wikia_props' => array( 'LEFT JOIN', 'page.page_id = page_wikia_props.page_id' ) );
+		$joinCond['page_wikia_props'] = array( 'LEFT JOIN', array( 'page.page_id' => 'page_wikia_props.page_id', 'propname' => WPP_LVS_STATUS ) );
 
 		// Select video info making sure to skip videos that have entries in the video_swap table
 		$result = $db->select(
@@ -315,9 +315,15 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 		$lastRevision = $article->getRevision();
 		$previousRevision = $lastRevision->getPrevious();
-		$previousText = empty( $previousRevision ) ? '' : $previousRevision->getText();
+		if ( $previousRevision instanceof Revision ) {
+			$baseRevId = $previousRevision->getId();
+			$previousText = $previousRevision->getText();
+		} else {
+			$baseRevId = false;
+			$previousText = '';
+		}
 		$summary = wfMessage( 'lvs-log-removed-redirected-link' )->inContentLanguage()->text();
-		$status = $article->doEdit( $previousText, $summary, EDIT_UPDATE, $previousRevision->getId() );
+		$status = $article->doEdit( $previousText, $summary, EDIT_UPDATE, $baseRevId );
 
 		wfProfileOut( __METHOD__ );
 
@@ -350,6 +356,9 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		if ( is_array( $status ) ) {
 			// Undeleted file count
 			if ( $status[1] ) {
+				// clear file cache
+				RepoGroup::singleton()->clearCache( $title );
+
 				wfRunHooks( 'FileUndeleteComplete', array( $title, $fileVersions, $this->wg->User, $comment ) );
 			}
 			$status = Status::newGood();

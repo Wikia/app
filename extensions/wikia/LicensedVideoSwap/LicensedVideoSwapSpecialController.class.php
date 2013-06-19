@@ -222,7 +222,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
 		$this->result = 'ok';
 
-		$fileUrl = $newFile->getTitle()->getLocalURL();
+		$fileUrl = $newFile->getTitle()->getPrefixedDBkey();
 		$undoOptions = array(
 			'class' => 'undo',
 			'href' => '#',
@@ -363,7 +363,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 				if ( !$result->isOK() ) {
 					$this->html = '';
 					$this->result = 'error';
-					$this->msg = $status->getMessage();
+					$this->msg = $result->getMessage();
 					return;
 				}
 			}
