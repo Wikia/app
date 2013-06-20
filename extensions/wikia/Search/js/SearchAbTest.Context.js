@@ -1,12 +1,16 @@
 /**
  * Provides ids of search related A/B test groups.
  */
-define('SearchAbTest.GroupProvider' ,['wikia.window', 'wikia.log'], function( window, log ) {
+define('SearchAbTest.Context' ,['wikia.window', 'wikia.log', 'wikia.querystring'], function( window, log, querystring ) {
 	'use strict';
 	// IF AbTests are absent THEN return dummy
 	if ( !window || !window.Wikia || !window.Wikia.AbTest ) {
 		log('AbTest is not present. Fallback to dummy SearchAbTest.GroupProvider', log.levels.debug, 'search');
-		return { getGroups: function() {return []}};
+		return {
+			getAbTestGroups: function() { return []; },
+			getAbTestParameters: function() { return {}; },
+			getQueryParameters: function() { return {}; }
+		};
 	}
 	var AbTest = window.Wikia.AbTest;
 
@@ -37,7 +41,7 @@ define('SearchAbTest.GroupProvider' ,['wikia.window', 'wikia.log'], function( wi
 		 * @see findSearchRelatedExperiments
 		 * @returns {Array}
 		 */
-		getGroups: function() {
+		getAbTestGroups: function() {
 			var searchRelatedExperiments = findSearchRelatedExperiments();
 			var groupIds = [];
 			for( var i = 0; i < searchRelatedExperiments.length; i++ ) {
@@ -47,6 +51,27 @@ define('SearchAbTest.GroupProvider' ,['wikia.window', 'wikia.log'], function( wi
 			}
 			log('Found A/B groups: ' + groupIds.join(',') , log.levels.debug, 'search');
 			return groupIds;
+		},
+
+		getQueryParameters: function() {
+			var str = querystring(window.location.url);
+			return str.cache;
+		},
+
+		/**
+		 * Returns parameters related to A/B testing.
+		 * That is all parameters that starts with AbTest.* and ab parameter
+		 * @returns {{}}
+		 */
+		getAbTestParameters: function() {
+			var parameters = {};
+			var allParameters = this.getQueryParameters();
+			for( var parameterName in allParameters ) {
+				if( parameterName.indexOf('AbTest.') === 0 || parameterName == 'ab' ) {
+					parameters[parameterName] = allParameters[parameterName];
+				}
+			}
+			return parameters;
 		}
 	};
 
