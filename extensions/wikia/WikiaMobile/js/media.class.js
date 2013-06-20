@@ -11,10 +11,11 @@ define('wikia.media.class', ['wikia.window'], function(window){
 		this.url = image.full;
 		this.imgNum = data.imgNum;
 
-		if(image.name) {this.name = image.name;}
-		if(image.thumb) {this.thumb = image.thumb;}
-		if(image.med) {this.med = image.med;}
-		if(image.capt) {this.caption = image.capt;}
+		if(image.name) this.name = image.name;
+		if(image.thumb) this.thumb = image.thumb;
+		if(image.med) this.med = image.med;
+		if(image.capt) this.caption = image.capt;
+
 		if(image.type === Media.types.VIDEO) {
 			this.type = Media.types.VIDEO;
 			//some providers come with a 'subname' like ooyala/wikiawebinar

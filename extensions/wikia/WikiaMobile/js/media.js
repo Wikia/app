@@ -331,7 +331,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		touched = false;
 		ev.preventDefault();
 
-		if(!~ev.target.className.indexOf('chnImg')) {
+		if(ev.target.className.indexOf('chnImg') == -1) {
 			if(zoomed){
 				resetZoom();
 			}else{
@@ -463,7 +463,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 	function resetZoom(){
 		currentZoom = 1;
-		currentWrapperStyle && (currentWrapperStyle[transform] = '');
+		if(currentWrapperStyle) currentWrapperStyle[transform] = '';
 	}
 
 	function addZoom(){
