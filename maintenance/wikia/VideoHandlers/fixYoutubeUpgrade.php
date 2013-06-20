@@ -80,6 +80,8 @@ class FixYoutubeUpgrade extends Maintenance {
 			return false;
 		}
 
+		echo "Checking ".$page->getTitle()->getPrefixedDBkey()."\n";
+
 		$text = $page->getText();
 		$matchFile = 'File|'.wfMessage('nstab-image')->text();
 
@@ -88,7 +90,7 @@ class FixYoutubeUpgrade extends Maintenance {
 		// [[File:Filename|345|center]]
 
 		$text = preg_replace_callback(
-			"/\[\[((?:$matchFile):[^\|]+)\|([0-9]+)([^\|\]]*)\]\]/i",
+			"/\[\[((?:$matchFile):[^\|\]]+)\|([0-9]+)([^\|\]]*)\]\]/i",
 			function ($matches) {
 				// Name the bits we're matching, for sanity
 				$original = $matches[0];
@@ -101,13 +103,13 @@ class FixYoutubeUpgrade extends Maintenance {
 
 				// See if our width is suffixed by 'px' or not.  If so
 				// leave it as is, unchanged.
-				if ( preg_match('/^ *px/', $suffix) ) {
+				if ( preg_match('/^ *$/', $suffix) ) {
+                                        $rewrite = "[[$file|${width}px]]";
+                                        echo "\t- FIX AS '$rewrite\n";
+                                        return $rewrite;
+				} else {
 					echo "\t- Leaving unchanged\n";
 					return $original;
-				} else {
-					$rewrite = "[[$file|${width}px]]";
-					echo "\t- FIX AS '$rewrite\n";
-					return $rewrite;
 				}
 			},
 			$text
