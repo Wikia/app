@@ -42,7 +42,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn(__METHOD__);
 
-		$this->wg->Out->setPageTitle($this->wf->msg('marketing-toolbox-title'));
+		$this->wg->Out->setPageTitle(wfMsg('marketing-toolbox-title'));
 
 		if ($this->checkAccess()) {
 			$this->wg->SuppressSpotlights = true;
@@ -54,7 +54,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 			$action = $this->getRequestedAction();
 
-			F::build('JSMessages')->enqueuePackage('MarketingToolbox', JSMessages::EXTERNAL);
+			JSMessages::enqueuePackage('MarketingToolbox', JSMessages::EXTERNAL);
 
 			switch ($action) {
 				case 'editHub':
@@ -166,7 +166,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 				$this->purgeCache( $module );
 
-				$this->putFlashMessage($this->wf->msg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
+				$this->putFlashMessage(wfMsg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
 
 				// send request to add popular/featured videos
 				if ( $module->isVideoModule() ) {
@@ -176,7 +176,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				$nextUrl = $this->getNextModuleUrl();
 				$this->response->redirect($nextUrl);
 			} else {
-				$this->errorMessage = $this->wf->msg('marketing-toolbox-module-save-error');
+				$this->errorMessage = wfMsg('marketing-toolbox-module-save-error');
 			}
 		}
 		$form->setFieldsValues($selectedModuleValues);
@@ -203,7 +203,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
 					. '/' . $date->format('Y-m-d');
-				$this->successText = $this->wf->msg('marketing-toolbox-module-publish-success', $this->wg->lang->date($this->date));
+				$this->successText = wfMsg('marketing-toolbox-module-publish-success', $this->wg->lang->date($this->date));
 				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null, true)) {
 					$this->purgeWikiaHomepageHubs();
 				}

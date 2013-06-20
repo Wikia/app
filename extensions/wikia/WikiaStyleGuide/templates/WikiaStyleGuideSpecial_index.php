@@ -62,7 +62,7 @@ $('#LoadingWheelDiv').toggle(function() {
 <h3>Button with Chevron</h3>
 <button>
 Chevron to the right
-<img src="<?= F::app()->wf->BlankImgUrl() ?>" class="chevron">
+<img src="<?= wfBlankImgUrl() ?>" class="chevron">
 </button>
 
 <h3>Sample Codes:</h3>

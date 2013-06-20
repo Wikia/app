@@ -14,7 +14,10 @@ class UserProfilePage {
 	 */
 	private $user = null;
 
-	public function __construct( WikiaApp $app, User $user ) {
+	public function __construct( User $user, WikiaApp $app = null ) {
+		if( is_null( $app ) ) {
+			$app = F::app();
+		}
 		$this->app = $app;
 		$this->user = $user;
 	}
@@ -26,7 +29,7 @@ class UserProfilePage {
 	 * @param bool $asArray return array of arrays instead of objects
 	 */
 	public function getInterviewQuestions( $wikiId, $answeredOnly = false, $asArray = false ) {
-		$interview = F::build( 'Interview', array( 'wikiId' => $wikiId ) );
+		$interview = new Interview( $wikiId );
 
 		$questions = array();
 		$answers = $this->parseInterviewAnswers();
@@ -37,7 +40,7 @@ class UserProfilePage {
 
 		foreach( $interviewQuestions as $question ) {
 			$index++;
-			$question->setCaption( $this->app->wf->msg( 'userprofilepage-question-caption', $index, $questionsNum ) );
+			$question->setCaption( wfMsg( 'userprofilepage-question-caption', $index, $questionsNum ) );
 			if( isset( $answers[ $question->getId() ] ) ) {
 				$question->setAnswerBody( $answers[ $question->getId() ] );
 			}
@@ -97,12 +100,12 @@ class UserProfilePage {
 
 			// update counters
 			foreach($incrCounters as $questionId) {
-				$question = F::build( 'InterviewQuestion', array( 'id' => $questionId ) );
+				$question = new InterviewQuestion( $questionId );
 				$question->incrAnswersCount();
 			}
 
 			foreach($decrCounters as $questionId) {
-				$question = F::build( 'InterviewQuestion', array( 'id' => $questionId ) );
+				$question = new InterviewQuestion( $questionId );
 				$question->decrAnswersCount();
 			}
 

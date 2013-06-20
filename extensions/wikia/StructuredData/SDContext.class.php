@@ -21,7 +21,7 @@ class SDContext extends WikiaObject {
 	}
 
 	public function addResource($resourceUrl, $relative = true, $elementType = null) {
-		$resourceCacheKey = $this->wf->SharedMemcKey( 'SDContextResource', $resourceUrl );
+		$resourceCacheKey = wfSharedMemcKey( 'SDContextResource', $resourceUrl );
 		$resourceData = $this->wg->Memc->get( $resourceCacheKey );
 		if(empty($resourceData)) {
 			$resourceData = $this->APIClient->getContext( $resourceUrl, $relative );
@@ -39,7 +39,7 @@ class SDContext extends WikiaObject {
 		}
 
 		if(!empty($elementType)) {
-			$descriptionCacheKey = $this->wf->SharedMemcKey( 'SDContextDescription', $elementType );
+			$descriptionCacheKey = wfSharedMemcKey( 'SDContextDescription', $elementType );
 			$objectDescriptionData = $this->wg->Memc->get( $descriptionCacheKey );
 			if(empty($objectDescriptionData)) {
 				$objectDescriptionData = $this->APIClient->getObjectDescription( $elementType );

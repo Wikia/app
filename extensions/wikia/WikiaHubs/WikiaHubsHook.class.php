@@ -8,34 +8,34 @@
 
 class WikiaHubsPopularVideos {
 	private static $counter = 1;
-	protected $data = array();
+	static protected $data = array();
 
 	/**
 	 * @brief This function set renderTag hook
 	 * @param Parser parser
 	 * @return true
 	 */
-	public function onParserFirstCallInit( Parser $parser ) {
+	static public function onParserFirstCallInit( Parser $parser ) {
 		wfProfileIn(__METHOD__);
 
-		$parser->setHook('hubspopularvideos', array($this, 'renderTag'));
+		$parser->setHook('hubspopularvideos', 'WikiaHubsPopularVideos::renderTag');
 
 		wfProfileOut(__METHOD__);
 		return true;
 	}
 
-	public function renderTag($input, $params) {
+	static public function renderTag($input, $params) {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 		
 		//get input data
-		$this->pullData($input);
+		self::pullData($input);
 
 		$returnString = (string) $app->sendRequest(
 			'RelatedHubsVideos',
 			'getCarousel',
 			array(
-				'data' => $this->data,
+				'data' => self::$data,
 			)
 		);
 		
@@ -45,11 +45,15 @@ class WikiaHubsPopularVideos {
 			$id = 'hubspopularvideos-' . self::$counter++;
 			
 			//render node
-			$html = F::build('Xml', array('div', array(
+			$html = Xml::element(
+				'div',
+				array(
 					'id' => $id,
 					'class' => 'hubspopularvideos',
-					'data-message' => $input,
-			), trim($returnString)), 'element');
+					'data-message' => $input
+				),
+				trim($returnString)
+			);
 			
 			$res = $html;
 		} else {
@@ -65,7 +69,7 @@ class WikiaHubsPopularVideos {
 	 * 
 	 * @param String $input data within <hubspopularvideos /> tag
 	 */
-	protected function pullData($input) {
+	static protected function pullData($input) {
 		wfProfileIn(__METHOD__);
 		
 		//use images passed inside <gallery> tag
@@ -87,7 +91,7 @@ class WikiaHubsPopularVideos {
 				continue;
 			}
 			
-			$this->data[] = array(
+			self::$data[] = array(
 				'videoTitleText' => $videoTitleText,
 				'username' => $username,
 				'wikiUrl' => $wikiUrl,

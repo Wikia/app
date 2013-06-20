@@ -19,7 +19,6 @@ $wgExtensionMessagesFiles['FollowAliases'] = $dir . 'Follow.alias.php';
 
 /* Hooks setup */
 if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages ) {
-	$wgHooks['RecentChangeNotify'][] = 'FollowHelper::watchersList';
 	$wgHooks['AfterCategoriesUpdate'][] = 'FollowHelper::watchCategories';
 	$wgHooks['BlogListingSave'][] = 'FollowHelper::blogListingBuildRelation';
 	$wgHooks['ArticleSaveComplete'][] = "FollowHelper::watchBlogListing";

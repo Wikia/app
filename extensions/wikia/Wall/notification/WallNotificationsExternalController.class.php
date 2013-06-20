@@ -9,14 +9,14 @@ class WallNotificationsExternalController extends WikiaController {
 	}
 
 	public function init() {
-		$this->helper = F::build('WallHelper', array());
+		$this->helper = new WallHelper();
 	}
 
 	public function getUpdateCounts() {
-		$wne = F::build('WallNotificationsEveryone', array());
+		$wne = new WallNotificationsEveryone();
 		$wne->processQueue($this->wg->user->getId());
 
-		$wn = F::build('WallNotifications', array());
+		$wn = new WallNotifications();
 		$this->getUpdateCountsInternal($wn);
 		return true;
 	}
@@ -24,14 +24,14 @@ class WallNotificationsExternalController extends WikiaController {
 	public function getUpdateWiki() {
 		$id = $this->request->getVal('wikiId');
 		$isCrossWiki = $this->request->getVal('isCrossWiki') == 1;
-		$wn = F::build('WallNotifications', array());
+		$wn = new WallNotifications();
 		$this->getUpdateWikiInternal($wn, $id, $isCrossWiki);
 		return true;
 	}
 
 	public function markAllAsRead() {
 		$forceAll = $this->request->getVal('forceAll');
-		$wn = F::build('WallNotifications', array());
+		$wn = new WallNotifications();
 		$ret = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId );
 		if($ret === false || $forceAll == 'FORCE') {
 			$ret = $wn->markReadAllWikis( $this->wg->User->getId() );
@@ -42,7 +42,7 @@ class WallNotificationsExternalController extends WikiaController {
 
 	public function markAsRead() {
 		$id = $this->request->getVal('id');
-		$wn = F::build('WallNotifications', array());
+		$wn = new WallNotifications();
 		$ret = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $id );
 		$this->response->setVal('wasUnread', $ret);
 		$this->response->setVal('status', true);
@@ -69,12 +69,11 @@ class WallNotificationsExternalController extends WikiaController {
 		//solution for problem with cross wiki notification and no wikia domain.
 		$notificationKey = uniqid();
 
-		$this->app->runFunction( 'wfSharedMemcKey', 'notificationkey', $notificationKey);
 		$app->wg->Memc->set($notificationKey,  $this->wg->User->getId() );
 
 		$this->response->setVal('html', $this->app->renderView( 'WallNotifications', 'Update', array('notificationCounts' => $all, 'count' => $sum, 'notificationKey' => $notificationKey) ));
 		$this->response->setVal('count', $sum);
-		$this->response->setVal('reminder', $this->app->wf->MsgExt( 'wall-notifications-reminder', array('parsemag'), $sum ) );
+		$this->response->setVal('reminder', wfMsgExt( 'wall-notifications-reminder', array('parsemag'), $sum ) );
 		$this->response->setVal('status', true);
 
 		wfProfileOut(__METHOD__);

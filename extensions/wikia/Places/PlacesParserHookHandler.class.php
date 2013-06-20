@@ -29,20 +29,20 @@ class PlacesParserHookHandler {
 		wfProfileIn(__METHOD__);
 
 		// wrap data in a model object
-		$placeModel = F::build('PlaceModel', array($attributes), 'newFromAttributes');
+		$placeModel = PlaceModel::newFromAttributes($attributes);
 
 		// are we rendering for RTE?
 		$inRTE = !empty(F::app()->wg->RTEParserEnabled);
 
 		if ($inRTE) {
-			$wikitext = F::build('RTEData', array('wikitext', self::$lastWikitextId), 'get');
+			$wikitext = RTEData::get('wikitext', self::$lastWikitextId);
 
 			$data = array(
 				'wikitext' => $wikitext,
 				'placeholder' => 1,
 			);
 
-			$rteData = F::build('RTEData', array($data), 'convertDataToAttributes');
+			$rteData = RTEData::convertDataToAttributes($data);
 		}
 		else {
 			$rteData = false;
@@ -64,7 +64,7 @@ class PlacesParserHookHandler {
 		}
 
 		// add model to be stored in database
-		F::build( 'PlacesHooks' )->setModelToSave($placeModel);
+		(new PlacesHooks)->setModelToSave($placeModel);
 
 		$html = self::cleanHTML($html);
 
@@ -94,7 +94,7 @@ class PlacesParserHookHandler {
 			false;
 
 		// get all places on this wiki
-		$placesModel = F::build('PlacesModel');
+		$placesModel = new PlacesModel();
 		$markers = empty($categories) ? $placesModel->getAll() : $placesModel->getFromCategories($categories);
 
 		// render parser hook
@@ -131,9 +131,9 @@ class PlacesParserHookHandler {
 	 * Get JavaScript code snippet to be loaded
 	 */
 	static public function getJSSnippet(Array $options = array()) {
-		$am = F::build( 'AssetsManager', array(), 'getInstance' );
+		$am = AssetsManager::getInstance();
 
-		$html = F::build('JSSnippets')->addToStack(
+		$html = JSSnippets::addToStack(
 			array( 'places_css', 'places_js' ),
 			array(),
 			'Places.init',

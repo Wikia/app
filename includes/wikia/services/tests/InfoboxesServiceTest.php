@@ -187,7 +187,7 @@ class InfoboxesServiceTest extends WikiaBaseTest
 	public function testGetSearchResponse() {
 		$config = $this->getMock( 'Wikia\Search\Config', [ 'setDirectLuceneQuery', 'setRequestedFields', 'setQuery' ] );
 		$service = $this->getMock( 'InfoboxesService', [ 'getIdQueries' ] );
-		$factory = $this->getMock( 'Wikia\Search\QueryService\Factory' );
+		$factory = $this->getMock( 'Wikia\Search\QueryService\Factory', [ 'getFromConfig' ] );
 		$queryService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Lucene' )
 		                     ->disableOriginalConstructor()
 		                     ->setMethods( [ 'searchAsApi' ] )
@@ -230,9 +230,8 @@ class InfoboxesServiceTest extends WikiaBaseTest
 		    ->will   ( $this->returnValue( $expected ) )
 		;
 		
-		$this->proxyClass( 'Wikia\Search\Config', $config );
-		$this->proxyClass( 'Wikia\Search\QueryService\Factory', $factory );
-		$this->mockApp();
+		$this->mockClass( 'Wikia\Search\Config', $config );
+		$this->mockClass( 'Wikia\Search\QueryService\Factory', $factory );
 		$get = new ReflectionMethod( 'InfoboxesService', 'getSearchResponse' );
 		$get->setAccessible( true );
 		$this->assertEquals(

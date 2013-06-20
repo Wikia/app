@@ -57,8 +57,8 @@ class VideoFileUploader {
 			'wpUploadFileURL' => $urlFrom
 		);
 
-		$upload = F::build( 'UploadFromUrl' ); /* @var $upload UploadFromUrl */
-		$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
+		$upload = (new UploadFromUrl); /* @var $upload UploadFromUrl */
+		$upload->initializeFromRequest( new FauxRequest( $data, true ) );
 		wfProfileOut( __METHOD__ );
 		return $upload;
 	}
@@ -154,13 +154,11 @@ class VideoFileUploader {
 			}
 		}
 
-		$file = F::build(
-			!empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile',
-			array(
+		$class = !empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile';
+		$file = new $class(
 				$oTitle,
 				RepoGroup::singleton()->getLocalRepo()
-			)
-		); /* @var $file WikiaLocalFile */
+		);
 
 		/* override thumbnail metadata with video metadata */
 		$file->forceMime( $this->getApiWrapper()->getMimeType() );
@@ -247,12 +245,10 @@ class VideoFileUploader {
 				$apiWrapperPrefix = $this->sProvider;
 			}
 
-			$this->oApiWrapper = F::build(
-				ucfirst( $apiWrapperPrefix ) . 'ApiWrapper',
-				array(
+			$class = ucfirst( $apiWrapperPrefix ) . 'ApiWrapper';
+			$this->oApiWrapper = new $class(
 					$this->sVideoId,
 					$this->aOverrideMetadata
-				)
 			);
 		}
 		wfProfileOut( __METHOD__ );
@@ -272,7 +268,7 @@ class VideoFileUploader {
 
 		wfProfileIn( __METHOD__ );
 		if ( empty( $this->sDescription ) ) {
-			$headerText = F::App()->wf->Message( 'videohandler-description' );
+			$headerText = wfMessage( 'videohandler-description' );
 			$this->sDescription = "\n== $headerText ==\n" .
 								  $this->getApiWrapper()->getDescription() . "\n" .
 								  $this->getCategoryVideosWikitext();

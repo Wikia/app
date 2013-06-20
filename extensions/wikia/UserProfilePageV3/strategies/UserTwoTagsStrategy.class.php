@@ -27,7 +27,7 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 		$tags = array();
 		if( $this->isBlocked() ) {
 		//blocked user has only one tag displayed "Blocked"
-			$tags[] = $this->app->wf->Msg('user-identity-box-group-blocked');
+			$tags[] = wfMsg('user-identity-box-group-blocked');
 		} else {
 			$firstTag = $this->getFirstTag();
 			$secondTag = $this->getSecondTag();
@@ -56,7 +56,7 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 		}
 
 		if( !is_null($groupNameSuffix) ) {
-			$tag = $this->app->wf->Msg('user-identity-box-group-' . $groupNameSuffix);
+			$tag = wfMsg('user-identity-box-group-' . $groupNameSuffix);
 		}
 		wfProfileOut(__METHOD__);
 
@@ -70,7 +70,7 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 	 */
 	protected function getSecondTag() {
 		if( $this->isFounder() ) {
-			$tag = $this->app->wf->Msg('user-identity-box-group-founder');
+			$tag = wfMsg('user-identity-box-group-founder');
 		} else {
 			$tag = $this->getTagFromGroups();
 		}

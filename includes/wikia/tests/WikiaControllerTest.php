@@ -36,8 +36,8 @@ class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 	 * Test that the Controller response object is working properly for get/set/unset of a controller property
 	 */
 	public function testResponse() {
-		$controller = F::build('TestController');
-		$response = F::build('WikiaResponse', array('html'));
+		$controller = new TestController();
+		$response = new WikiaResponse('html');
 
 		// setResponse and getResponse
 		$controller->setResponse($response);

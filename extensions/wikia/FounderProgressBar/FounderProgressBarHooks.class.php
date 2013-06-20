@@ -175,7 +175,7 @@ class FounderProgressBarHooks {
 	 *
 	 * @return bool true because it's a hook
 	 */
-	public function onFacebookConnect() {
+	public static function onFacebookConnect() {
 		// Quick exit if tasks are all completed
 		if( self::allTasksComplete() ) {
 			return true;
@@ -190,7 +190,7 @@ class FounderProgressBarHooks {
 	 *
 	 * @return bool true because it's a hook
 	 */
-	public function onAfterVideoFileUploaderUpload(File $file, FileRepoStatus $result) {
+	public static function onAfterVideoFileUploaderUpload(File $file, FileRepoStatus $result) {
 		// Quick exit if tasks are all completed
 		if( self::allTasksComplete() ) {
 			return true;
@@ -216,7 +216,7 @@ class FounderProgressBarHooks {
 
 		// Records go into global wikicites table
 		$app = F::app();
-		$dbw = $app->wf->GetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
+		$dbw = wfGetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
 
 		foreach(FounderProgressBarController::$tasks as $task_id) {
 			if($task_id < FounderProgressBarController::REGULAR_TASK_MAX_ID) {
@@ -228,8 +228,8 @@ class FounderProgressBarHooks {
 
 		// also clear out any lingering memcache keys
 		$memc = $app->wg->Memc;
-		$memc->delete($app->wf->MemcKey('FounderLongTaskList'));
-		$memc->delete($app->wf->MemcKey('FounderTasksComplete'));
+		$memc->delete(wfMemcKey('FounderLongTaskList'));
+		$memc->delete(wfMemcKey('FounderTasksComplete'));
 
 		wfProfileOut(__METHOD__);
 	}
@@ -242,7 +242,7 @@ class FounderProgressBarHooks {
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
-		$memKey = $app->wf->MemcKey('FounderTasksCompleted');
+		$memKey = wfMemcKey('FounderTasksCompleted');
 		$task_complete = $app->wg->Memc->get($memKey);
 		if (empty($task_complete)) {
 			$response = $app->sendRequest('FounderProgressBar',"isTaskComplete", array("task_id" => FounderProgressBarController::$tasks['FT_COMPLETION']));

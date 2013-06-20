@@ -3024,14 +3024,6 @@ class User {
 			}
 		}
 
-		/**
-		 * @author Michał Roszka (Mix)
-		 * trap for BugId:17012
-		 */
-		if ( 'Lancer1289' == $this->mName ) {
-			$oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
-			UserMailer::send( $oTo, $oFrom, 'BugId:17012 Occurrence Report', serialize( wfDebugBacktrace() ) );
-		}
 		// wikia change end
 
 		$dbw = wfGetDB( DB_MASTER );

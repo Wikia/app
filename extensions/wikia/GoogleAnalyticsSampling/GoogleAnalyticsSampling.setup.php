@@ -17,5 +17,5 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 // autoloaded classes
-// $app->registerClass( 'GoogleAnalyticsSampling', "$dir/GoogleAnalyticsSampling.body.php" );
-$app->registerClass( 'GoogleAnalyticsSamplingController', "$dir/GoogleAnalyticsSamplingController.class.php" );
+// $wgAutoloadClasses[ 'GoogleAnalyticsSampling'] =  "$dir/GoogleAnalyticsSampling.body.php" ;
+$wgAutoloadClasses[ 'GoogleAnalyticsSamplingController'] =  "$dir/GoogleAnalyticsSamplingController.class.php" ;

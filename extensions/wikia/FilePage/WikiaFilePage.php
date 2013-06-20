@@ -53,7 +53,7 @@ abstract class WikiaFilePage extends ImagePage {
 
 		$app = F::app();
 
-		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('VideoPage', JSMessages::EXTERNAL);
 
 		$file = $this->getDisplayedFile();
 

@@ -26,17 +26,17 @@ $dir = dirname(__FILE__) . '/modules/PromoteImage/';
 $app = F::app();
 
 // classes
-$app->registerClass('PromoteImageReviewTask', $dir . 'PromoteImageReviewTask.php');
+$wgAutoloadClasses['PromoteImageReviewTask'] =  $dir . 'PromoteImageReviewTask.php';
 if( function_exists('extAddBatchTask') ) {
 	extAddBatchTask($dir . "PromoteImageReviewTask.php", "promoteimagereview", "PromoteImageReviewTask");
 }
 
-$app->registerClass('PromoteImageReviewSpecialController', $dir . 'PromoteImageReviewSpecialController.class.php');
-$app->registerClass('PromoteImageReviewHelper', $dir . 'PromoteImageReviewHelper.class.php');
-$app->registerSpecialPage('PromoteImageReview', 'PromoteImageReviewSpecialController');
+$wgAutoloadClasses['PromoteImageReviewSpecialController'] =  $dir . 'PromoteImageReviewSpecialController.class.php';
+$wgAutoloadClasses['PromoteImageReviewHelper'] =  $dir . 'PromoteImageReviewHelper.class.php';
+$wgSpecialPages[ 'PromoteImageReview'] = 'PromoteImageReviewSpecialController';
 
 // hooks
-$app->registerHook('WikiFactory::onPostChangesApplied', 'CityVisualization', 'onWikiDataUpdated');
+$wgHooks['WikiFactory::onPostChangesApplied'][] = 'CityVisualization::onWikiDataUpdated';
 
 // rights
 $wgAvailableRights[] = 'promoteimagereview';

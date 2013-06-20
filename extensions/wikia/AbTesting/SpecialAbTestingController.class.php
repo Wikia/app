@@ -32,7 +32,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		$actions[] = array(
 			'cmd' => 'add-experiment',
 			'class' => 'add sprite-small',
-			'text' => $this->wf->msg('abtesting-create-experiment'),
+			'text' => wfMsg('abtesting-create-experiment'),
 		);
 		$this->setVal( 'actions', $actions );
 	}
@@ -62,7 +62,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		$fields['name'] = array(
 			'type' => $hasStarted ? 'display' : 'text',
 			'name' => 'name',
-			'label' => $this->wf->msg('abtesting-heading-name'),
+			'label' => wfMsg('abtesting-heading-name'),
 			'value' => $experiment['name'],
 		);
 
@@ -70,7 +70,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'type' => 'textarea',
 			'class' => 'fullwidth',
 			'name' => 'description',
-			'label' => $this->wf->msg('abtesting-heading-description'),
+			'label' => wfMsg('abtesting-heading-description'),
 			'value' => $experiment['description'],
 		);
 
@@ -84,7 +84,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'type' => 'text',
 			'name' => 'start_time',
 			'class' => 'datepicker',
-			'label' => $this->wf->msg('abtesting-heading-start-time'),
+			'label' => wfMsg('abtesting-heading-start-time'),
 			'value' => $lastVersion ? $lastVersion['start_time'] : '',
 		);
 
@@ -92,14 +92,14 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'type' => 'text',
 			'name' => 'end_time',
 			'class' => 'datepicker',
-			'label' => $this->wf->msg('abtesting-heading-end-time'),
+			'label' => wfMsg('abtesting-heading-end-time'),
 			'value' => $lastVersion ? $lastVersion['end_time'] : '',
 		);
 
 		$fields['ga_slot'] = array(
 			'type' => 'text',
 			'name' => 'ga_slot',
-			'label' => $this->wf->msg('abtesting-heading-ga-slot'),
+			'label' => wfMsg('abtesting-heading-ga-slot'),
 			'value' => $lastVersion ? $lastVersion['ga_slot'] : '',
 		);
 
@@ -112,7 +112,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$flagFieldConf = array(
 				'type' => 'checkbox',
 				'name' => self::FLAG_FIELD_PREFIX.$name,
-				'label' => $this->wf->msg('abtesting-heading-long-flag-'.$name),
+				'label' => wfMsg('abtesting-heading-long-flag-'.$name),
 			);
 			if ( $abTesting->getFlagState($lastFlags,$flag) ) {
 				$flagFieldConf['attributes']['checked'] = 'checked';
@@ -164,7 +164,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		$groups[] = array(
 			'type' => 'button',
 			'name' => 'addTreatmentGroup',
-			'content' => $this->wf->msg('abtesting-add-treatment-group'),
+			'content' => wfMsg('abtesting-add-treatment-group'),
 		);
 
 		$fields[] = array(
@@ -175,7 +175,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'params' => array(
 				'form' => array(
 					'inputs' => $groups,
-					'legend' => $this->wf->msg('abtesting-heading-treatment-groups')
+					'legend' => wfMsg('abtesting-heading-treatment-groups')
 				)
 			),
 		);
@@ -186,7 +186,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'inputs' => $fields,
 			'submits' => array(
 				array(
-					'value' => F::app()->wf->msg('abtesting-save-button'),
+					'value' => wfMsg('abtesting-save-button'),
 				)
 			)
 		);
@@ -229,7 +229,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		$exp['actions'][] = array(
 			'cmd' => 'edit-experiment',
 			'class' => 'edit-pencil sprite',
-			'text' => $this->wf->msg('abtesting-edit-button'),
+			'text' => wfMsg('abtesting-edit-button'),
 		);
 	}
 
@@ -467,7 +467,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 	 */
 	protected function getAbTesting() {
 		if ( !$this->abTesting ) {
-			$this->abTesting = new AbTesting();
+			$this->abTesting = AbTesting::getInstance();
 		}
 		return $this->abTesting;
 	}

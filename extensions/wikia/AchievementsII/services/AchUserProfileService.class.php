@@ -18,7 +18,7 @@ class AchUserProfileService {
 	public function __construct( $ownerUser = null ) {
 		global $wgUser, $wgTitle;
 		if ( !isset( $ownerUser ) ) {
-			$ownerUser = F::build('User', array( UserPagesHeaderController::getUserName( $wgTitle, BodyController::getUserPagesNamespaces() ) ), 'newFromName');
+			$ownerUser = User::newFromName( UserPagesHeaderController::getUserName( $wgTitle, BodyController::getUserPagesNamespaces() ) );
 		}
 
 		$this->ownerUser = $ownerUser;

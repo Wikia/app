@@ -11,8 +11,6 @@ class ImagesService extends Service {
 	 * @return string imageUrl
 	 */
 	public static function getImageSrc($wikiId, $pageId, $imgSize = 250) {
-		$app = F::app();
-
 		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
@@ -34,10 +32,10 @@ class ImagesService extends Service {
 	}
 
 	public static function getImageSrcByTitle( $cityId, $articleTitle, $width=null, $height=null ) {
-
+		global $wgMemc;
 		wfProfileIn(__METHOD__);
-		$imageKey = F::app()->wf->SharedMemcKey( 'image_url_from_wiki', $cityId.$articleTitle.$width.$height );
-		$imageSrc = F::app()->wg->Memc->get( $imageKey );
+		$imageKey = wfSharedMemcKey( 'image_url_from_wiki', $cityId.$articleTitle.$width.$height );
+		$imageSrc = $wgMemc->get( $imageKey );
 
 		if ( $imageSrc === false ) {
 			$globalFile = GlobalFile::newFromText( $articleTitle, $cityId );
@@ -46,7 +44,7 @@ class ImagesService extends Service {
 			} else {
 				$imageSrc = null;
 			}
-			F::app()->wg->Memc->set( $imageKey, $imageSrc, 60*60*24*3 );
+			$wgMemc->set( $imageKey, $imageSrc, 60*60*24*3 );
 		}
 		wfProfileOut(__METHOD__);
 		return $imageSrc;
@@ -61,7 +59,6 @@ class ImagesService extends Service {
 	}
 
 	public static function getImageOriginalUrl($wikiId, $pageId) {
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
@@ -118,7 +115,7 @@ class ImagesService extends Service {
 			}
 		}
 
-		$foundFile = $app->wf->FindFile($title);
+		$foundFile = wfFindFile($title);
 
 		if ($foundFile) {
 			$imageWidth = $foundFile->getWidth();
@@ -214,9 +211,8 @@ class ImagesService extends Service {
 			}
 		}
 
-		$upload = F::build('UploadFromUrl');
-		/* @var $upload UploadFromUrl */
-		$upload->initializeFromRequest(F::build('FauxRequest', array($data, true)));
+		$upload = new UploadFromUrl();
+		$upload->initializeFromRequest(new FauxRequest($data, true));
 		$fetchStatus = $upload->fetchFile();
 
 		if ($fetchStatus->isGood()) {
@@ -249,13 +245,10 @@ class ImagesService extends Service {
 		// create destination file
 		$title = Title::newFromText($name, NS_FILE);
 		/** @var $title Title */
-		return F::build(
-			'WikiaLocalFile',
-			array(
+		return new WikiaLocalFile(
 				$title,
 				RepoGroup::singleton()->getLocalRepo()
-			)
-		);
+			);
 		/** @var $file WikiaLocalFile */
 	}
 

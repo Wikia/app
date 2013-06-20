@@ -18,6 +18,7 @@ $messages['en'] = array(
 	'stafflog-filter-type-piggyback' => 'Piggyback',
 	'stafflog-filter-type-renameuser' => 'User renames',
 	'stafflog-filter-type-wikifactory' => 'Wiki status',
+	'action-stafflog' => 'view the centralized staff log',
 );
 
 /** Message documentation (Message documentation)
@@ -48,6 +49,7 @@ $messages['qqq'] = array(
 * $3 is the new status of the wiki,
 * $4 is the reason of the change.',
 	'stafflog-filter-user' => '',
+	'action-stafflog' => '{{doc-action|stafflog}}',
 );
 
 /** Arabic (العربية)

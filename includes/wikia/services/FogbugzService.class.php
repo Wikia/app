@@ -14,7 +14,7 @@ class FogbugzService extends Service {
 	protected $HTTPProxy = null;
 
 	public function __construct( $url, $login = '', $passwd = '', $HTTPProxy = null ) {
-		$this->setCurl( F::build( 'Curl', array( 'url' => $url ) ) );
+		$this->setCurl( Curl::logon( $url ) );
 		$this->setLogin( $login );
 		$this->setPasswd( $passwd );
 		$this->setHTTPProxy( $HTTPProxy );
@@ -200,7 +200,7 @@ class FogbugzService extends Service {
 	}
 
 	/**
-	 * @author: Piotr Paw³owski (Pepe)
+	 * @author: Piotr Pawï¿½owski (Pepe)
 	 *
 	 * get info about case(cases) passed as a parameter and all children cases, which main parrent(parrents) is(are) $casesIDs
 	 * @param int/array $casesIDs
