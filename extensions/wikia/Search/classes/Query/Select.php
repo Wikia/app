@@ -104,7 +104,7 @@ class Select
 			// this is actually a micro-optimization. 
 			// i could just as easily apply no preg_split limit and impose the limit on array_slice.
 			$split = preg_split( '/\s+/', $query, $wordLimit + 1 );
-			$query = implode( ' ', array_slice( $split, 0, -1 ) );
+			$query = implode( ' ', array_slice( $split, 0, $wordLimit ) );
 		} 
 		
 		return $query;
