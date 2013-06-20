@@ -371,4 +371,24 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		return $status;
 	}
 
+	/**
+	 * get pagination
+	 * @param integer $currentPage
+	 * @param string $selectedSort
+	 * @return string $pagination
+	 */
+	public function getPagination( $currentPage, $selectedSort ) {
+		$pagination = '';
+		$totalVideos = $this->getUnswappedVideoTotal();
+		if ( $totalVideos > self::VIDEOS_PER_PAGE ) {
+			$pages = Paginator::newFromArray( array_fill( 0, $totalVideos, '' ), self::VIDEOS_PER_PAGE );
+			$pages->setActivePage( $currentPage - 1 );
+
+			$linkToSpecialPage = SpecialPage::getTitleFor( "LicensedVideoSwap" )->escapeLocalUrl();
+			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?currentPage=%s&sort='.$selectedSort );
+		}
+
+		return $pagination;
+	}
+
 }

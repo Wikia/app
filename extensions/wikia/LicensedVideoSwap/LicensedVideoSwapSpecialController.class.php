@@ -50,19 +50,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 
 		// Set up pagination
-		$this->currentPage = $currentPage;
-		$this->totalVideos = $helper->getUnswappedVideoTotal();
-
-		$pagination = '';
-		$linkToSpecialPage = SpecialPage::getTitleFor("LicensedVideoSwap")->escapeLocalUrl();
-
-		if ( $this->totalVideos > LicensedVideoSwapHelper::VIDEOS_PER_PAGE ) {
-			$pages = Paginator::newFromArray( array_fill( 0, $this->totalVideos, '' ), LicensedVideoSwapHelper::VIDEOS_PER_PAGE );
-			$pages->setActivePage( $this->currentPage - 1 );
-
-			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?currentPage=%s&sort='.$selectedSort );
-		}
-		$this->pagination = $pagination;
+		$this->pagination = $helper->getPagination( $currentPage, $selectedSort );
 
 		// sort options
 		$videoHelper = new VideoHandlerHelper();
@@ -219,6 +207,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
+		$this->html .= $helper->getPagination( $currentPage, $selectedSort );
 		$this->result = 'ok';
 
 		$fileUrl = $newFile->getTitle()->getPrefixedDBkey();
@@ -282,6 +271,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
+		$this->html .= $helper->getPagination( $currentPage, $selectedSort );
 		$this->result = 'ok';
 
 		$undoOptions = array(
@@ -384,6 +374,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$videoList = $helper->getRegularVideoList( $selectedSort, $currentPage );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
+		$this->html .= $helper->getPagination( $currentPage, $selectedSort );
 		$this->result = 'ok';
 		$this->msg = wfMessage( 'lvs-restore-video-success' )->text();
 	}
