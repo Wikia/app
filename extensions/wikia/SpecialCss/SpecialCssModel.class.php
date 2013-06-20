@@ -26,7 +26,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @see SpecialCssModel::removeHeadline(removeFirstH3 
 	 * @see SpecialCssModel::addAnchorToPostUrl(getAnchorFromWikitext
 	 */
-	const WIKITEXT_H3_PATTERN = '/([^=]|^)={3}([^=]+)={3}[^=]/';
+	const WIKITEXT_H3_PATTERN = '/([^=]|^)={3}([^=]+)={3}([^=]|$)/';
 	
 	/**
 	 * @desc Limit of characters per one post snippet

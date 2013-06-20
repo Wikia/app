@@ -11,7 +11,7 @@ class SpecialCssHooks {
 		$app = F::app();
 		$model = new SpecialCssModel();
 
-		if( self::shouldRedirect($app, $model, $editPage->getArticle()->getTitle()->getArticleId()) ) {
+		if( static::shouldRedirect($app, $model, $editPage->getArticle()->getTitle()->getArticleId()) ) {
 			$app->wg->Out->redirect( $model->getSpecialCssUrl() );
 		}
 
@@ -97,7 +97,8 @@ class SpecialCssHooks {
 	}
 
 	/**
-	 * @desc Using CategorySelect::extractCategoriesFromWikitext() retrives categories' data array which then is being flattern to categories' names with replaces spacebar to _
+	 * @desc Using CategorySelect::extractCategoriesFromWikitext() retrives categories' data array 
+	 * which then is being flattern to categories' names with replaces spacebar to _
 	 * 
 	 * @param String $wikitext
 	 * 
@@ -105,12 +106,12 @@ class SpecialCssHooks {
 	 * 
 	 * @return array
 	 */
-	static private function getCategoriesFromWikitext( $wikitext ) {
+	static public function getCategoriesFromWikitext( $wikitext ) {
 		$app = F::app();
 		$categories = [];
 		
 		if( !empty( $app->wg->EnableCategorySelectExt ) && 
-			( $results = self::getCategoriesFromCategorySelect( $wikitext ) ) && 
+			( $results = static::getCategoriesFromCategorySelect( $wikitext ) ) && 
 			!empty( $results['categories'] ) 
 		) {
 			foreach( $results['categories'] as $category ) {

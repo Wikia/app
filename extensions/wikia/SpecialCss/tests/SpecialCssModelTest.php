@@ -102,14 +102,8 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	public function testAddAnchorToPostUrl( $wikitext, $expected ) {
 		$addAnchorToPostUrlMethod = new ReflectionMethod('SpecialCssModel', 'getAnchorFromWikitext');
 		$addAnchorToPostUrlMethod->setAccessible(true);
-
-		$text = '===Headline with more text===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
-				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
-				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.';
-
-		$expected = '#Headline_with_more_text';
 		
-		$this->assertEquals( $expected, $addAnchorToPostUrlMethod->invoke( new SpecialCssModel(), $text ) );
+		$this->assertEquals( $expected, $addAnchorToPostUrlMethod->invoke( new SpecialCssModel(), $wikitext ) );
 	}
 	
 	public function testAddAnchorToPostUrlDataProvider() {
@@ -119,14 +113,28 @@ class SpecialCssModelTest extends WikiaBaseTest {
 				'wikitext' => '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n=== Headlin e   ===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
 				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
 				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.',
-				'exptected' => '#Headline'
+				'exptected' => '#_Headlin_e___'
 			],
 			// headline with spaces
 			[
-				'wikitext' => '===Headline with more text===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
+				'wikitext' => 'Consectetur adipiscing elit\n\n===Headline with more text===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
 				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
 				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.', 
 				'exptected' => '#Headline_with_more_text'
+			],
+			// headline at the begining of string
+			[
+				'wikitext' => '===Headline 1===\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n=== Headlin e   ===\nLorem ipsum dolor sit amet, consectetur adipiscing elit. === Sed sodales ===, nisi eu 
+				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
+				===Nam ullamcorper ===nibh at justo === lacinia mattis===. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.',
+				'exptected' => '#Headline_1'
+			],
+			// headline at the end of string
+			[
+				'wikitext' => '= Headline 1=\nText text text\n==Headline 2==\nText text text\n==== Headline 4 ====\nText text text\n== Headlin e   ==\nLorem ipsum dolor sit amet, consectetur adipiscing elit. = Sed sodales =, nisi eu 
+				sagittis vulputate, erat lectus adipiscing dui, a rutrum nunc nisi non lorem. 
+				==== Nam ullamcorper ====nibh at justo = lacinia mattis=. ====Nulla====vulputate nulla at orci rhoncus, non eleifend ante porttitor.===Headline at the end===',
+				'exptected' => '#Headline_at_the_end'
 			],
 			// no h3 tag
 			[
