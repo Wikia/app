@@ -328,7 +328,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				resetZoom();
 			}else{
 				currentZoom = 2;
-				currentImageStyle[transform] = 'scale(2)';
+				currentWrapperStyle[transform] = 'scale(2)';
 			}
 
 			onZoom();
@@ -405,7 +405,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				dx = (imgW <= widthFll) ? 0 : ~~(Math.max(-xMax, Math.min(xMax, (-(touch.clientX * currentZoom - startX) + sx) / currentZoom)));
 				dy = (imgH <= heightFll) ? 0 : ~~(Math.max(-yMax, Math.min(yMax, (-(touch.clientY * currentZoom - startY) + sy) / currentZoom)));
 
-				currentImageStyle[transform] = 'scale(' + currentZoom + ') translate(' + -dx / currentZoom + 'px,' + -dy / currentZoom + 'px)';
+				currentWrapperStyle[transform] = 'scale(' + currentZoom + ') translate(' + -dx / currentZoom + 'px,' + -dy / currentZoom + 'px)';
 
 				modal.hideUI();
 			}
@@ -429,7 +429,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 						if(newZoom > 1){
 							currentZoom = newZoom;
 
-							currentImageStyle[transform] = 'scale(' + newZoom + ')';
+							currentWrapperStyle[transform] = 'scale(' + newZoom + ')';
 
 							onZoom(true);
 						}else{
