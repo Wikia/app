@@ -1,6 +1,7 @@
 @import "color";
 @import "layout";
 @import "../mixins/clearfix";
+@import "../mixins/gradient";
 
 /** Hide 1x1 iframes **/
 .wikia-ad iframe[width="1"][height="1"] {
@@ -53,8 +54,10 @@
 
 /** Skyscrapers **/
 #LEFT_SKYSCRAPER_2 {
+	// FIXME: this is bad. Is it necessary?
 	@extend section;
 }
+
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
@@ -63,6 +66,7 @@
 }
 
 #RIGHT_SKYSCRAPER {
+	// FIXME: this is bad. Is it necessary?
 	@extend .module;
 	text-align: center;
 	img {
@@ -151,15 +155,25 @@
 	width: 270px;
 }
 
-.WikiaFooter {
-	section {
-		.SPOTLIGHT_FOOTER {
-			padding: 0px 28px 33px;
-			.WikiaSpotlight {
-				height: 123px;
-				width: 255px;
-			}
-		}
+#SPOTLIGHT_FOOTER {
+	@include clearfix;
+	@include linear-gradient(false, top, rgba($color-module-shadow, 0), 50%, $color-module-shadow, 100%);
+	list-style: none;
+	margin: 0;
+	padding: 0px 28px 33px;
+	text-align: center;
+
+	.item-1 {
+		float: left;
+	}
+
+	.item-2 {
+		float: right;
+	}
+
+	.WikiaSpotlight {
+		height: 123px;
+		width: 255px;
 	}
 }
 
