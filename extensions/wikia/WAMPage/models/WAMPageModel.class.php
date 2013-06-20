@@ -203,12 +203,7 @@ class WAMPageModel extends WikiaModel {
 		$tabIndex = (int)$tabIndex; // first tab has 'false' as tabIndex
 		
 		// we don't have that index - return default title
-		if ( !array_key_exists($tabIndex, $tabs) ) {
-		    return $defaultTitle;
-		}
-		
-		// we have that index - return tab's name
-		return array_key_exists('name', $tabs[$tabIndex]) ? $tabs[$tabIndex]['name'] : $defaultTitle;
+		return isset($tabs[$tabIndex]['name']) ? $tabs[$tabIndex]['name'] : $defaultTitle;
 	}
 
 	/**
