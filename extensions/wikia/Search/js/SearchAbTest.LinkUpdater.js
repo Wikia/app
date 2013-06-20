@@ -5,24 +5,44 @@ define('SearchAbTest.LinkUpdater' ,['jquery', 'wikia.log'], function( $, log ) {
 	'use strict';
 	var searchPaginationLinksSelector = '.wikia-paginator a.paginator-page, .search-tabs a';
 
-	var LinkUpdater = {};
+	return {
+		/**
+		 * Perform dom update
+		 * @param params
+		 */
+		update: function(params) {
+			if( !params ) return;
+			$(searchPaginationLinksSelector).each(function() {
+				var originalLink = $(this).attr('href');
+				var modifiedLink = this.modifyLink(originalLink);
+				log('Modifying link: ' + originalLink + " to " + modifiedLink, log.levels.debug, 'search');
+				$(this).attr('href', modifiedLink);
+			})
+		},
 
-	/**
-	 * Perform dom update
-	 * @param params
-	 */
-	LinkUpdater.update = function(params) {
-		if( !params ) return;
-		$(searchPaginationLinksSelector).each(function() {
-			var originalLink = $(this).attr('href'),
-				modifiedLink = originalLink;
-			for( var paramName in params ) {
-				modifiedLink = modifiedLink + '&' + paramName + '=' + params[paramName];
+		/**
+		 * Adds parameters to link and returns modified link.
+		 * if originalLink="http://domain/path?asd" and params={foo: 'bar'} then return http://domain/path?asd&foo=bar
+		 * @param originalLink
+		 * @param params params that we want to add to link
+		 * @returns string modified link
+		 */
+		modifyLink: function(originalLink, params) {
+			var modifiedLink = originalLink;
+			params = params || {};
+			var joinCharacter = "?";
+			if ( originalLink.indexOf('?') > -1 ) {
+				joinCharacter = "&";
 			}
-			log('Modifying link: ' + originalLink + " to " + modifiedLink, log.levels.debug, 'search');
-			$(this).attr('href', modifiedLink);
-		});
+			if ( originalLink.indexOf('?') == originalLink.length - 1 ) {
+				joinCharacter = '';
+			}
+			for( var paramName in params ) {
+				modifiedLink = modifiedLink + joinCharacter + paramName + '=' + params[paramName];
+				joinCharacter = "&";
+			}
+			return modifiedLink;
+		}
 	};
 
-	return LinkUpdater;
 });
