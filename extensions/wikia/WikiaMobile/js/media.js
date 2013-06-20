@@ -149,6 +149,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	function handleError(msg){
 		modal.setCaption(msg || '');
 		modal.showUI();
+		//for a support of not prefixed transform refer to:
+		//http://caniuse.com/#feat=transforms2d
 		currentWrapperStyle.webkitTransform = 'scale(1)';
 		currentWrapper.className += ' imgPlcHld';
 	}
