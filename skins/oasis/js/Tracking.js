@@ -325,8 +325,8 @@ jQuery(function($){
                         label: 'search-button'
                     });
                 }
-            }).on('keydown', function(e) {
-                if ( e.which === 13 && $('#WikiaSearch [name=search]').is(':focus') ) {
+            }).on('keypress', '[name=search]', function(e) {
+                if ( e.which === 13 && $(this).is(':focus') ) {
                     track({
                         category: category,
                         label: 'search-enter'
