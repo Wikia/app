@@ -450,13 +450,44 @@ class Config
 	}
 	
 	/**
-	 * Overloading __set to type hint
+	 * Stores the current article match ONLY IF IT PASSES OUR ESTABLISHED FILTERS
 	 * @param  \Wikia\Search\Match\Article $articleMatch
 	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setArticleMatch( Match\Article $articleMatch ) {
-		$this->articleMatch = $articleMatch;
+		if ( $this->articleMatchPassesFilters( $articleMatch ) ) {
+			$this->articleMatch = $articleMatch;
+		}
 		return $this;
+	}
+	
+	/**
+	 * Here, we're checking for conditions that should preclude a match, given our current environment settings.
+	 * We're using DeMorgan's theorem here. So write FOR the condition you're trying to filter out.
+	 * @param \Wikia\Search\Match\Article $match
+	 * @return boolean
+	 */
+	protected function articleMatchPassesFilters( \Wikia\Search\Match\Article $match ) {
+		$result = $match->getResult();
+		$filterKeys = $this->getPublicFilterKeys();
+		$isVideoFile = $this->getService()->pageIdIsVideoFile( $result['pageid'] );
+		return ! (
+				( // We have a file that is video, but we only want images.
+						$result['ns'] == NS_FILE
+						&& 
+						in_array( \Wikia\Search\Config::FILTER_IMAGE, $filterKeys )
+						&&
+						$isVideoFile
+				) 
+				||
+				( // We have a file that is not a video, but we only want videos.
+						$result['ns'] == NS_FILE
+						&& 
+						in_array( \Wikia\Search\Config::FILTER_VIDEO, $filterKeys )
+						&&
+						!$isVideoFile
+				)
+		);
 	}
 	
 	/**
@@ -525,6 +556,9 @@ class Config
 		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {
 			$fieldsPrepped[] = 'id';
 		} 
+		if ( $this->getQueryService() == '\\Wikia\Search\\QueryService\\Select\\Video' ) {
+			$fieldsPrepped[] = 'title_en'; 
+		}
 		
 		return $fieldsPrepped;
 	}
@@ -697,7 +731,7 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setDirectLuceneQuery( $value ) {
-		$this->setQueryService( 'Select\\Lucene', $value );
+		return $this->setQueryService( 'Select\\Lucene', $value );
 	}
 	
 	/**
@@ -706,7 +740,7 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setVideoTitleSearch( $value ) {
-		$this->setQueryService( 'Select\\VideoTitle', $value );
+		return $this->setQueryService( 'Select\\VideoTitle', $value );
 	}
 	
 	/**

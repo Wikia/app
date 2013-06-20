@@ -2104,3 +2104,10 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'wikiaquiz-title-label' => '標題',
 );
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'wikiaquiz-error-invalid-image' => '圖像無效: $1',
+);

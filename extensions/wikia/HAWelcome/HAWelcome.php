@@ -387,6 +387,7 @@ class HAWelcomeJob extends Job {
 	 * @internal
 	 */
 	public function sendMessage() {
+		global $wgUser;
 		wfProfileIn( __METHOD__ );
 		if ( $this->bShowNotices ) {
 			trigger_error( sprintf( '%s Start.', __METHOD__ ) , E_USER_NOTICE );
@@ -401,14 +402,13 @@ class HAWelcomeJob extends Job {
 			$mWallMessage = F::build(
 				'WallMessage',
 				array(
-					$this->sMessage, $this->sRecipientName, $this->oSender,
+					$this->sMessage, $this->sRecipientName, $wgUser,
 					wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
 				),
 				'buildNewMessageAndPost'
 			);
-			// Moved from the previous implementation. The relevant code
-			// of the Wall extension has - as expected - no documentation
-			// whatsoever.
+			// Sets the sender of the message when the actual message
+			// was posted by the welcome bot
 			if ( $mWallMessage ) {
 				$mWallMessage->setPostedAsBot( $this->oSender );
 				$mWallMessage->sendNotificationAboutLastRev();

@@ -85,9 +85,15 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		//Standard Wikia API response with pagination values
-		$response = $this->getResponse();
 		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns' ], true );
+
+		if ( empty( $responseValues['items'] ) ) {
+			throw new NotFoundApiException();
+		}
+
+		$response = $this->getResponse();
 		$response->setValues( $responseValues );
+
 		$response->setCacheValidity(
 			86400 /* 24h */,
 			86400 /* 24h */,

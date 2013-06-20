@@ -231,6 +231,10 @@ class Result extends ReadWrite {
 		    	$value = $this->getVideoViews(); break;
 		    default:
 		    	$value = parent::offsetGet( Utilities::field( $nolangKey ) );
+		    	// e.g. infoboxes_txt
+		    	if ( empty( $value ) ) {
+		    		$value = parent::offsetGet( $key );
+		    	}
 		}
 		return $value;
 	}

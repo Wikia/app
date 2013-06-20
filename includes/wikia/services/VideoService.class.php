@@ -41,6 +41,11 @@ class VideoService extends WikiaModel {
 				} else {
 					list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
 				}
+
+				// Add a default description if available and one doesn't already exist
+				$file = wfFindFile( $videoTitle );
+				$vHelper = new VideoHandlerHelper();
+				$vHelper->addDefaultVideoDescription( $file );
 			} else {
 				throw new Exception( $this->wf->Msg('videos-error-old-type-video') );
 			}
@@ -60,7 +65,7 @@ class VideoService extends WikiaModel {
 	 * @throws Exception
 	 */
 	protected function addVideoVideoHandlers( $url ) {
-		$title = F::build( 'VideoFileUploader', array($url), 'URLtoTitle' );
+		$title = VideoFileUploader::URLtoTitle( $url );
 		if ( !$title ) {
 			throw new Exception( $this->wf->Msg('videos-error-invalid-video-url') );
 		}

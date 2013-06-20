@@ -2,7 +2,7 @@
  *
  * @author Hyun Lim, Liz Lee
  *
- * Final callback should include VET_loader.modal.closeModal() in success case.
+ * Final callback should include window.VET.close() in success case.
  * Sample input json for options:
  *	{
  *		callbackAfterSelect: function() {}, // callback after video is selected (first screen).  If it returns false, second screen will not show.
@@ -90,14 +90,17 @@
 			VET_loader.modal = $(templateHtml).makeModal({
 				width: 939,
 				onClose: function() {
-					VET_close();
+					window.VET.close();
 				},
 				onAfterClose: function() {
 					modalOnScreen = false;	// release modal lock
 				}
 			});
 
-			VET_show(options);
+			// Give the VET JS a chance to execute before calling VET.show()
+			setTimeout(function() {
+				window.VET.show(options);
+			}, 0);
 			resourcesLoaded = true;
 
 		});
