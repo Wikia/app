@@ -640,6 +640,7 @@ $wgWikiFactoryTags = array();
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
+$wgKnowledgeDB = 'dataknowledge';
 $wgDatamartDB = 'statsdb_mart';
 $wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
