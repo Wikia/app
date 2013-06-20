@@ -93,7 +93,13 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 					if (name === shrImg) {shrImg = imagesLength;}
 
-					images[imagesLength] = new Media(element, imageData, l, j, imagesLength++);
+					images[imagesLength] = new Media({
+						element: element,
+						image: imageData,
+						length: l,
+						number: j,
+						imgNum: imagesLength++
+					});
 				}
 			}
 		}
