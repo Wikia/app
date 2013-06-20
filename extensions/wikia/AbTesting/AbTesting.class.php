@@ -49,13 +49,17 @@ class AbTesting extends WikiaObject {
 		$app = F::app();
 		$wg = $app->wg;
 
-		if ( $app->checkSkin( 'oasis', $skin ) ) {
-			$scripts .= ResourceLoader::makeCustomLink($wg->out, array( 'wikia.ext.abtesting' ), 'scripts') . "\n";
+		if ( $app->checkSkin( 'wikiamobile', $skin ) ) {
+			//Add this mock as wikia.ext.abtesting relies on it and on WikiaMobile there is no mw object
+			//This will need some treatment if we add more abtesting to WikiaMobile
+			$scripts .= '<script>var mw = {loader: {state: function(){}}}</script>';
 		}
 
-		if ( $app->checkSkin( 'wikiamobile', $skin ) ) {
-			$scripts .= '<script>' . self::getInstance()->getConfigScript() . '</script>';
+		if ( $app->checkSkin( ['oasis', 'wikiamobile'], $skin ) ) {
+			$scripts .= ResourceLoader::makeCustomLink( $wg->out, array( 'wikia.ext.abtesting' ), 'scripts' ) . "\n";
 		}
+
+
 
 		return true;
 	}
