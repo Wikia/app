@@ -433,7 +433,10 @@ Verifique a ortografia.',
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'piggybac-desc' => "Permette de trasè sus a 'n'otre utende",
+	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Otre nome utende:',
+	'log-name-piggyback' => 'Archivije de piggyback',
 );
 
 /** Russian (русский)
