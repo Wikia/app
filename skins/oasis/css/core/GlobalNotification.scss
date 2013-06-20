@@ -2,30 +2,10 @@
 @import "../mixins/border-radius";
 
 .global-notification {
-	padding: 8px 10px;
-	margin: 0 10px 10px;
-	.msg{
-		font-size: 13px;
-		line-height: 16px;
-		a {
-			text-decoration: underline;
-		}
-	}
-	.close {
-		float: right;
-		height: 14px;
-		width: 14px;
-		margin: 0;
-		img {
-			height: 11px;
-			width: 12px;
-		}
-	}
-}
-
-.global-notification {
 	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
 	width: 958px;
+	padding: 8px 10px;
+	margin: 0 auto;
 	z-index: $zTop + 1;
 	&.confirm { // Green
 		background: #92CD8E;
@@ -76,8 +56,27 @@
 		}
 	}
 	&.float {
+		left: 50%;
+		margin-left: -489px;
 		position: fixed;
 		top: 0;
+	}
+	.msg{
+		font-size: 13px;
+		line-height: 16px;
+		a {
+			text-decoration: underline;
+		}
+	}
+	.close {
+		float: right;
+		height: 14px;
+		width: 14px;
+		margin: 0;
+		img {
+			height: 11px;
+			width: 12px;
+		}
 	}
 }
 
@@ -85,25 +84,13 @@
 .wikia-grid {
 	.global-notification {
     	width: 988px;
-	}
-	&.oasis-split-skin .global-notification.float {
-		margin-left: -505px;
+
+		&.float {
+			margin-left: -505px;
+		}
 	}
 }
 /* end temp transistion code */
-
-/**
- * IMPORTANT (21-Aug-2012, FB:45031): Integrate this code into base css above after transition.
- * This is currently an override depending on skin switch.
- */
-.oasis-split-skin .global-notification {
-	@include box-shadow(0px, 2px, 5px, darken($color-body,12%));
-	margin: 0 auto;
-	&.float {
-		left: 50%;
-		margin-left: -489px;
-	}
-}
 
 .modalWrapper >.global-notification {
 	@include box-shadow(0, 0, 0, #000);
