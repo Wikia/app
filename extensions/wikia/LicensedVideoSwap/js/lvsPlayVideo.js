@@ -6,13 +6,13 @@ define( 'lvs.playvideo', ['wikia.videoBootstrap'], function( VideoBootstrap ) {
 	"use strict";
 
 	return function( $container ) {
-		var videoWidth = $container.find( '.grid-3' ).first().width();
+		var videoWidth = $container.find( '.grid-3' ).width();
 
 		$container.on( 'click', '.video', function(e) {
 			e.preventDefault();
 
 			var $this = $( this ),
-				fileTitle = decodeURIComponent( $this.children( 'img' ).attr( 'data-video-key' )),
+				fileTitle = decodeURIComponent( $this.children( 'img' ).attr( 'data-video-key' ) ),
 				videoInstance,
 				$element,
 				$thumbList,

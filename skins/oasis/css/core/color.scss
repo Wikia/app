@@ -35,9 +35,12 @@ $is-dark-wiki: false;
 }
 
 // Text color
-$color-text: #3a3a3a;
+$color-text-dark: #3a3a3a;
+$color-text-light: #D5D4D4;
+
+$color-text: $color-text-dark;
 @if $is-dark-wiki {
-	$color-text: #D5D4D4;
+	$color-text: $color-text-light;
 }
 
 // Generic Error text color

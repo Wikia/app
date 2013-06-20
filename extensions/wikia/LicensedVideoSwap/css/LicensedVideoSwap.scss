@@ -20,6 +20,19 @@ $arrow-button-color: white;
 	$arrow-button-color: black;
 }
 
+// Callout text should be calculated the same way normal text is calculated
+// except the button color is used instead of the page color.
+$buttons-are-dark: false;
+@if lightness($color-buttons) < 50 {
+	$buttons-are-dark: true;
+}
+
+$color-callout-text: $color-text-dark;
+@if $buttons-are-dark {
+	$color-callout-text: $color-text-light;
+}
+
+
 .wikinav2 .WikiaPageHeader {
 	border-bottom: none;
 	padding-bottom: 0;
@@ -31,13 +44,14 @@ $arrow-button-color: white;
 	color: $color-button-text;
 	display: none;
 	margin: 10px 0;
-	padding: 15px;
+	padding: 20px;
 	h1 {
-		font-size: 26px;
+		font-size: 22px;
 		line-height: 33px;
 		margin: 0 0 15px;
 	}
 	ul {
+		color: $color-callout-text;
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -110,8 +124,9 @@ $arrow-button-color: white;
 	}
 	.more-link {
 		color: $color-text;
-		font-size: 15px;
+		font-size: 13px;
 		float: right;
+		line-height: 15px;
 		padding-right: 10px;
 
 		&:before {
@@ -119,7 +134,7 @@ $arrow-button-color: white;
 			content: "";
 			display: block;
 			float: right;
-			margin-top: 10px;
+			margin-top: 6px;
 			margin-left: 5px;
 		}
 		&.expanded:before {
@@ -130,8 +145,8 @@ $arrow-button-color: white;
 		height: 395px;
 	}
 	.video-wrapper {
-		padding-bottom: 10px;
-		height: 320px;
+		padding-bottom: 8px;
+		height: 310px;
 	}
 	.more-videos {
 		@include clearfix;
@@ -167,7 +182,7 @@ $arrow-button-color: white;
 			}
 
 			> a.selected {
-			      outline: 4px solid $color-buttons;
+			      outline: 5px solid $color-buttons;
 			}
 		}
 		.Wikia-video-play-button {
