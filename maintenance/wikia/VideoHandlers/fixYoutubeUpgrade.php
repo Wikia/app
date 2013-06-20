@@ -17,17 +17,24 @@ class FixYoutubeUpgrade extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgTestMode;
+		global $wgTestMode, $wgUser;
 		$wgTestMode = $this->getOption('test');
 
 		if ($wgTestMode) {
 			echo "=== TEST MODE ===\n";
 		}
 
+		// Load wikia user
+		$wgUser = User::newFromName( 'WikiaBot' );
+		if ( !$wgUser ) {
+			echo "WARN: Could not load WikiaBot user\n";
+			exit(1);
+		}
+
 		$pages = $this->getPages();
 
-		foreach ( $pages as $page ) {
-			$this->fixTags($page);
+		foreach ( $pages as $pageID ) {
+			$this->fixTags($pageID);
 		}
 
 		exit( 0 );
@@ -52,10 +59,7 @@ class FixYoutubeUpgrade extends Maintenance {
 		// Get an array of pages that have YT tags on them
 		$pages = array();
 		foreach ($result as $row) {
-			$page = Article::newFromID($row->il_from);
-			if ( !empty($page) ) {
-				$pages[] = $page;
-			}
+			$pages[] = $row->il_from;
 		}
 
 		return $pages;
@@ -64,14 +68,24 @@ class FixYoutubeUpgrade extends Maintenance {
 	/**
 	 * Fix broken [[File:...]] wiki tag
 	 *
-	 * @param Article $page - The page on which the tag exists
+	 * @param $pageID
 	 * @return bool - Whether this upgrade was successful
 	 */
-	public function fixTags ( Article $page ) {
+	public function fixTags ( $pageID ) {
 		global $wgUser, $wgTestMode;
+
+		$page = Article::newFromID( $pageID );
+		if ( empty($page) ) {
+			echo "\tERROR: Couldn't load page ID $pageID\n";
+			return false;
+		}
 
 		$text = $page->getText();
 		$matchFile = 'File|'.wfMessage('nstab-image')->text();
+
+
+		// [[File:Filename|345]]
+		// [[File:Filename|345|center]]
 
 		$text = preg_replace_callback(
 			"/\[\[((?:$matchFile):[^\|]+)\|([0-9]+)([^\|\]]*)\]\]/i",
@@ -99,20 +113,13 @@ class FixYoutubeUpgrade extends Maintenance {
 			$text
 		);
 
-		// Load wikia user
-		$wgUser = User::newFromName( 'WikiaBot' );
-		if ( !$wgUser ) {
-			echo "WARN: Could not load WikiaBot user\n";
-			return false;
-		}
-
 		if ( $wgTestMode ) {
 			return true;
 		}
 
 		# Do the edit
 		$status = $page->doEdit( $text, "Adding missing 'px' suffix to video pixel width",
-								 EDIT_MINOR | EDIT_FORCE_BOT | EDIT_AUTOSUMMARY | EDIT_SUPPRESS_RC );
+								 EDIT_MINOR | EDIT_FORCE_BOT | EDIT_SUPPRESS_RC );
 
 		$retval = true;
 		if ( !$status->isGood() ) {
