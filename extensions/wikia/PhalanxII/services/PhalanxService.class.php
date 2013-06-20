@@ -34,6 +34,8 @@ class PhalanxService extends Service {
 				$this->$key = $args[0];
 				$result = $this;
 				break;
+			default:
+				throw new WikiaException('PhalanxService::_call supports getters and setters only');
 		}
 		return $result;
 	}
@@ -166,6 +168,7 @@ class PhalanxService extends Service {
 
 			$options["postData"] = implode( "&", $postData );
 			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
+			wfDebug( __METHOD__ . ": " . json_encode($parameters) ."\n" );
 			$response = Http::post( $url, $options);
 		}
 

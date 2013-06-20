@@ -1718,6 +1718,7 @@ $messages['ko'] = array(
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
+ * @author Ghybu
  */
 $messages['ku-latn'] = array(
 	'wmu-upload-image' => 'Wêneyî bar bike',
@@ -1729,6 +1730,7 @@ $messages['ku-latn'] = array(
 	'wmu-find-btn' => 'Bibîne',
 	'wmu-rename' => 'Navê wêneya xwe biguherîne',
 	'wmu-existing' => 'Wêneyên hene bi kar bînê',
+	'wmu-insert' => 'Tevlî bike',
 	'wmu-name' => 'Nav',
 	'wmu-license' => 'Lîsans',
 	'wmu-thumbnail' => 'Thumbnail',
@@ -2537,9 +2539,24 @@ $messages['roa-tara'] = array(
 	'wmu-title' => "Careche 'a fote",
 	'wmu-upload' => 'Careche',
 	'wmu-find' => 'Cirche',
+	'wmu-thiswiki' => 'Sta uicchi',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Careche',
 	'wmu-find-btn' => 'Cirche',
+	'wmu-insert' => "'Nzerisce",
+	'wmu-name' => 'Nome',
+	'wmu-license' => 'Licenze',
+	'wmu-licensing' => 'Licenziate da',
+	'wmu-size' => 'Dimenzione',
+	'wmu-thumbnail' => 'Miniature',
+	'wmu-fullsize' => 'Dimenzione complete ($1x$2px)',
+	'wmu-width' => 'Larghezze',
+	'wmu-caption' => "'Ndestazione",
+	'wmu-link' => 'Collegamende',
+	'wmu-optional' => '(opzionale)',
+	'wmu-insert2' => "'Nzerisce 'nu file",
+	'wmu-prev' => 'Le 8 precedende',
+	'wmu-next' => 'Le prossime 8',
 );
 
 /** Russian (русский)
@@ -3058,4 +3075,20 @@ $messages['zh-hant'] = array(
 	'wmu-upload-image' => '上傳圖片',
 	'wmu-title' => '上傳圖片',
 	'wmu-upload' => '上傳',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'wmu-notlogged' => '請登入或註冊，以便你從電腦上傳圖像',
+	'wmu-rename' => '把圖像重命名',
+	'wmu-overwrite' => '取代現有圖像',
+	'wmu-flickr2' => 'Flickr圖像 ($1 個結果)',
+	'wmu-insert3' => '插入此圖像',
+	'wmu-recent-inf' => '最近上傳的圖像',
+	'wmu-success' => '<h1>成功了！</h1>你已成功插入圖像。',
+	'wmu-imagelink' => '<b>最新！</b> 加入圖像',
+	'wmu-notallowed' => '你不能在此wiki上傳圖像',
+	'wmu-file-protected' => '此圖像已被保護',
 );

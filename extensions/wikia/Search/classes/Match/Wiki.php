@@ -28,6 +28,7 @@ class Wiki extends AbstractMatch
 				'isWikiMatch' => true,
 				'url' => $this->service->getMainPageUrlForWikiId( $this->id ),
 				'hub' => $this->service->getHubForWikiId( $this->id ),
+				'lang' => $this->service->getGlobalForWiki( 'wgLanguageCode', $this->id ),
 				);
 		$fields = array_merge( $fields, $this->service->getVisualizationInfoForWikiId( $this->id ), $this->service->getStatsInfoForWikiId( $this->id ) );
 		if ( empty($fields['desc']) ) {

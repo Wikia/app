@@ -18,7 +18,11 @@ function efImageReviewDisplayStatus( $imagePage, &$html ) {
 	$html .= Xml::element( 'h2', array(), wfMsg( 'imagereview-imagepage-header' ) );
 
 	$reviews = array();
-	$headers = array( 'Reviewer', 'State', 'Time' );
+	$headers = array(
+		wfMessage('imagereview-imagepage-table-header-reviewer')->text(),
+		wfMessage('imagereview-imagepage-table-header-state')->text(),
+		wfMessage('imagereview-imagepage-table-header-time')->text(),
+	);
 	$where = array(
 			'wiki_id' => $wgCityId,
 			'page_id' => $imagePage->getId(),

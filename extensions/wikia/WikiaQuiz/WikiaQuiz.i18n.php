@@ -1633,9 +1633,14 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'wikiaquiz-desc' => "Dèje 'nu mode facile de ccrejà e gestì le quiz",
 	'wikiaquiz-createquiz-headline' => "Ccreje 'nu Quiz",
 	'wikiaquiz-editquiz-headline' => "Cange 'nu Quiz",
+	'wikiaquiz-createquizarticle-headline' => "Ccreje le domande e le resposte d'u quiz",
+	'wikiaquiz-editquizarticle-headline' => "Cange le domande e le resposte d'u quiz",
 	'wikiaquiz-title-label' => 'Titole',
+	'wikiaquiz-titlescreentext-label' => "Teste d'u titole d'u quadre",
+	'wikiaquiz-fbrecommendationtext-label' => "Descrizione d'a raccomandazione de Feisbuk",
 	'wikiaquiz-moreinfoarticle-label' => 'Vôsce',
 	'wikiaquiz-question-label' => 'Domande',
 	'wikiaquiz-image-label' => 'Immaggine (opzionale)',
@@ -1644,6 +1649,7 @@ $messages['roa-tara'] = array(
 	'wikiaquiz-answers-label' => 'Resposte',
 	'wikiaquiz-answer-label' => 'Resposte',
 	'wikiaquiz-correct-label' => 'Esatte?',
+	'wikiaquiz-addnewitem-label' => "Aggiunge 'na vôscia nove",
 	'wikiaquiz-cancel-label' => 'Annulle',
 	'wikiaquiz-publish-label' => 'Pubbleche',
 	'wikiaquiz-game-cadence-3' => 'Pronde',
@@ -1652,6 +1658,8 @@ $messages['roa-tara'] = array(
 	'wikiaquiz-game-question-label' => 'DOMANDE',
 	'wikiaquiz-game-next-button' => 'Prossema domande',
 	'wikiaquiz-game-finish-button' => 'Spicce',
+	'wikiaquiz-game-congratulations' => 'A uerre sì tu, $1!',
+	'wikiaquiz-game-congratulations-anon' => 'A uerre sì tu!',
 	'wikiaquiz-game-your-score' => "'U PUNDEGGE TUNE JE'",
 	'wikiaquiz-game-continue-button' => 'Condinue',
 	'wikiaquiz-game-mute' => 'Citte',
@@ -2103,4 +2111,11 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'wikiaquiz-title-label' => '標題',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'wikiaquiz-error-invalid-image' => '圖像無效: $1',
 );
