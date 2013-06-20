@@ -56,7 +56,7 @@ you should definitely check this out:
 	'wikiamobile-video-not-friendly' => 'Sorry, this video isn\'t available on mobile.',
 
 	//ad
-	'wikiamobile-ad-close' => 'close',
+	'wikiamobile-ad-label' => 'advertisement',
 
 	//modal
 	'wikiamobile-image-not-loaded' => 'Image is not available',
@@ -78,9 +78,9 @@ $messages['qqq'] = array(
 	'wikiamobile-page-not-found' => 'Message shown to a user on 404 page; $1 is a page title that was not found. Please make sure b element wraps around $1.',
 	'wikiamobile-image-not-loaded' => 'This is a message shown to a user when an image could not be loaded in the modal',
 	'wikiamobile-footer-link-license' => 'label for the link pointing to content licensing information',
-	'wikiamobile-footer-link-lifestyle' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
-	'wikiamobile-footer-link-entertainment' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
-	'wikiamobile-footer-link-videogames' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
+	'wikiamobile-footer-link-lifestyle' => 'interwiki link, please translate only the last parameter after the last "|" if that makes sense',
+	'wikiamobile-footer-link-entertainment' => 'interwiki link, please translate only the last parameter after the last "|" if that makes sense',
+	'wikiamobile-footer-link-videogames' => 'interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-categories-tagline' => 'Tagline that appears next to the category page title, please keep it really short',
 	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category',
 	'wikiamobile-sharing-page-text' => '$1 is the title of the article, $2 is the name of the wiki',
@@ -89,14 +89,14 @@ $messages['qqq'] = array(
 	'wikiamobile-media-group-footer' => 'the caption under a media-group/gallery, $1 contains the total amount of images/videos in the group',
 	'wikiamobile-unsupported-video-download' => 'feedback message for browsers not supporting html5 videos with link to play the video in a native app (the video URL is in $1)',
 	'wikiamobile-video-views-counter' => 'counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
-	'wikiamobile-ad-close' => 'text on the close button for the ad place',
+	'wikiamobile-ad-label' => 'Message shown to a user on page next to advertisement - to distinguish that below is an ad',
 
 	'wikiasmartbanner-appstore' => 'Message displayed in smart banner promoting an app on app store',
 	'wikiasmartbanner-googleplay' => 'Message displayed in smart banner promoting an app on google play store',
 	'wikiasmartbanner-price' => 'Message displayed in smart banner indicating a price of an app',
 	'wikiasmartbanner-view' => 'Message displayed in smart banner promoting on a button that leads to a store',
 
-	'wikiamobile-video-not-friendly' => 'Message displayed in modal - to indcate that this video won\'t be loaded in mobile skin'
+	'wikiamobile-video-not-friendly' => 'Message displayed in modal - to indicate that this video won\'t be loaded in mobile skin'
 );
 
 /** Адыгэбзэ (Адыгэбзэ)
