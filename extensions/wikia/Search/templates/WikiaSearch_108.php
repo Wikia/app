@@ -1,14 +1,14 @@
 <li class="result">
 	<article>
 		<?php
-		$thumbnailHtml = $result->getThumbnailHtml();
+		$thumbnailHtml = $result->getThumbnailUrl();
 		$thumbTracking = 'data-pos="' . $pos . '" ' . ( $result->getVar('isArticleMatch') ?  'data-event="search_click_match"' : '' );
 		?>
 			<?php if(! empty( $thumbnailHtml ) ): ?>
 
 				<a class="grid-1 alpha thumb-tracking" href="<?= $result->getUrl(); ?>" title="<?= $result->getTitle(); ?>" <?=
 					$thumbTracking ?>>
-						<?= $thumbnailHtml ?>
+					<img src="<?= $thumbnailHtml ?>" class="thumbimage"/>
 				</a>
 				<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
 

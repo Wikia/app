@@ -636,27 +636,20 @@ class MediaWikiService
 	public function searchSupportsLanguageCode( $languageCode ) {
 		return in_array( $languageCode, $this->getGlobal( 'WikiaSearchSupportedLanguages' ) );
 	}
-	
-	/**
-	 * Returns the HTML needed to get a thumbnail provided a page ID.
-	 * First attempts to use file-specific logic, then backs off to imageserving
-	 * @param int $pageId
-	 * @param array $transformParams
-	 * @param array $htmlParams
-	 * @return string
-	 */
-	public function getThumbnailHtmlForPageId(
-			$pageId, 
-			$transformParams = array( 'width' => 160, 'height' => 100 ), // WikiaGrid 1 column width
-			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)
-			) {
-		$html = $this->getThumbnailHtmlFromFilePageId( $pageId, $transformParams, $htmlParams );
-		if ( $html == '' ) {
-			$html = $this->getThumbnailHtmlFromArticlePageId( $pageId, $transformParams, $htmlParams );
+
+	public function getThumbnailUrl(
+		$pageId,
+		$dimensions = array( 'width' => 160, 'height' => 100 )
+	) {
+		$imgSource = new \ImageServing( array( $pageId ), $dimensions[ 'width' ], $dimensions[ 'height' ] );
+		//get one image only
+		$img = $imgSource->getImages( 1 );
+		if ( !empty( $img ) ) {
+			return $img[ $pageId ][ 0 ][ 'url' ];
 		}
-		return $html;
+		return false;
 	}
-	
+
 	/**
 	 * Returns the number of video views for a page ID.
 	 * @param int $pageId
@@ -950,51 +943,4 @@ class MediaWikiService
 		wfProfileOut( __METHOD__ );
 		return static::$pageIdsToTitles[$pageId];
 	}
-	
-	/**
-	 * Returns the HTML needed to get a thumbnail provided a page ID that corresponds to a File
-	 * @param int $pageId
-	 * @param array $transformParams
-	 * @param array $htmlParams
-	 * @return string
-	 */
-	protected function getThumbnailHtmlFromFilePageId( 
-			$pageId, 
-			$transformParams = array( 'width' => 160, 'height' => 100 ), // WikiaGrid 1 column width
-			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) 
-			) {
-		$html = '';
-		$img = $this->getFileForPageId( $pageId );
-		if (! empty( $img ) ) {
-			
-			$thumb = $img->transform( $transformParams );
-			$html = $thumb->toHtml( $htmlParams );
-		}
-		return $html;
-	}
-	
-	/**
-	 * Uses the ImageServing API to access a thumbnail for a non-file page.
-	 * @param int $pageId
-	 * @param array $transformParams
-	 * @param array $htmlParams
-	 * @return string
-	 */
-	protected function getThumbnailHtmlFromArticlePageId( 
-			$pageId,
-			$transformParams = array( 'width' => 160, 'height' => 100 ), // WikiaGrid 1 column width
-			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) 
-			) {
-		$html = '';
-		$imagesServing = new \ImageServing( [ $pageId ], $transformParams['width'], $transformParams['height'] );
-		$images = $imagesServing->getImages( 1 );
-		if ( isset( $images[$pageId] ) && !empty( $images[$pageId] ) ) {
-			$image = array_shift( $images[$pageId] );
-			$url = $image['url'];
-			$name = isset( $image['name'] ) ? $image['name'] : '';
-			$html = sprintf( '<img src="%s", alt="%s">', $url, $name );
-		}
-		return $html;
-	}
-	
 }
