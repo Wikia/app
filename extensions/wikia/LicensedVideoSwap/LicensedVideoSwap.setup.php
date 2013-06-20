@@ -38,4 +38,6 @@ F::build('JSMessages')->registerPackage('LVS', array(
 	'lvs-confirm-swap-message',
 	'lvs-confirm-keep-message',
 	'lvs-confirm-undo-swap-message',
+	'lvs-confirm-undo-keep-title',
+	'lvs-confirm-undo-keep-message',
 ));

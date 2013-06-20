@@ -5,6 +5,8 @@
  */
 define( 'lvs.suggestions', [], function() {
 
+	"use strict";
+
 	return function( $container ) {
 		$container.on( 'click', '.more-link', function( e ) {
 			e.preventDefault();

@@ -4,6 +4,8 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.containerdom'], function( QuerySt
 	return function( $container ) {
 		var videoTitle,
 			newTitle,
+			title,
+			msg,
 			qs,
 			sort,
 			wasSwap;
@@ -35,17 +37,21 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.containerdom'], function( QuerySt
 			wasSwap = !!newTitle;
 
 			if ( wasSwap ) {
-				$.confirm({
-					title: $.msg( 'lvs-confirm-undo-swap-title' ),
-					content: $.msg( 'lvs-confirm-undo-swap-message' ),
-					onOk: function() {
-						doRequest();
-					},
-					width: 700
-				});
+				title = $.msg( 'lvs-confirm-undo-swap-title' );
+				msg = $.msg( 'lvs-confirm-undo-swap-message' );
 			} else {
-				doRequest();
+				title = $.msg( 'lvs-confirm-undo-keep-title' );
+				msg = $.msg( 'lvs-confirm-undo-keep-message' );
 			}
+
+			$.confirm({
+				title: title,
+				content: msg,
+				onOk: function() {
+					doRequest();
+				},
+				width: 700
+			});
 
 		});
 	}

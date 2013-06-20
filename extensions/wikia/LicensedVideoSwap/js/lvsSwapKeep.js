@@ -1,5 +1,7 @@
-
-define( 'lvs.swapkeep', ['lvs.containerdom'], function( containerDOM ) {
+/**
+ *
+ */
+define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.containerdom'], function( QueryString, containerDOM ) {
 	"use strict";
 
 	return function( $container ) {
@@ -10,17 +12,23 @@ define( 'lvs.swapkeep', ['lvs.containerdom'], function( containerDOM ) {
 			$button,
 			isSwap,
 			currTitle,
-			newTitle;
+			newTitle,
+			qs,
+			sort,
+			page;
 
 		function doRequest(){
 			// Add loading graphic
 			$loading.appendTo( $container );
 			$overlay.addClass( 'loading' ).show();
+			qs = new QueryString();
+			sort = qs.getVal( 'sort', 'recent' );
+			page = qs.getVal( 'currentPage', 1);
 
 			var data = {
 				videoTitle: currTitle,
-				sort: 'recent', // TODO: make this dynamic
-				currentPage: 1 // TODO: make this dynamic
+				sort: sort,
+				currentPage: page
 			};
 
 			if ( isSwap ) {

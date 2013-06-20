@@ -2,7 +2,7 @@
  * Set up the style guide dropdown to toggle sorting of videos
  */
 
-define( 'lvs.dropdown', [], function() {
+define( 'lvs.dropdown', ['wikia.querystring'], function( QueryString ) {
 	"use strict";
 
 	return function() {
