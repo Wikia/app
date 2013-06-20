@@ -720,9 +720,9 @@ class EmailNotification {
 
 		# <Wikia>
 		$action = strtolower($this->action);
-		$subject = wfMsgForContent( 'enotif_subject_' . $action );
+		$subject = wfMessage( 'enotif_subject_' . $action )->inContentLanguage()->text();
 		if ( wfEmptyMsg( 'enotif_subject_' . $action, $subject ) ) {
-			$subject = wfMsgForContent( 'enotif_subject' );
+			$subject = wfMessage( 'enotif_subject' )->inContentLanguage()->text();
 		}
 		list ( $body, $bodyHTML ) = wfMsgHTMLwithLanguageAndAlternative(
 			'enotif_body' . ( $action == '' ? '' : ( '_' . $action ) ), 
@@ -741,8 +741,8 @@ class EmailNotification {
 		if ( $this->oldid ) {
 			if ( $wgEnotifImpersonal ) {
 				// For impersonal mail, show a diff link to the last revision.
-				$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastdiff',
-					$this->title->getCanonicalUrl( 'diff=next&oldid=' . $this->oldid ) );
+				$keys['$NEWPAGE'] = wfMessage( 'enotif_lastdiff',
+					$this->title->getCanonicalUrl( 'diff=next&oldid=' . $this->oldid ) )->inContentLanguage()->plain();
 			} else {
 				/* WIKIA change, watchlist link tracking, rt#33913 */
 				list ( $keys['$NEWPAGE'], $keys['$NEWPAGEHTML'] ) = wfMsgHTMLwithLanguageAndAlternative ( 
@@ -755,12 +755,12 @@ class EmailNotification {
 				# </Wikia>
 			}
 			$keys['$OLDID']   = $this->oldid;
-			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'changed' );				
+			$keys['$CHANGEDORCREATED'] = wfMessage( 'changed' )->inContentLanguage()->plain();
 		} else {
 			# <Wikia>
 			if ( $action == '' ) {
 				//no oldid + empty action = create edit, ok to use newpagetext
-				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = wfMsgForContent( 'enotif_newpagetext' );
+				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = wfMessage( 'enotif_newpagetext' )->inContentLanguage()->plain();
 			} else {
 				//no oldid + action = event, dont show anything, confuses users
 				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = '';
@@ -768,12 +768,12 @@ class EmailNotification {
 			# </Wikia>
 			# clear $OLDID placeholder in the message template
 			$keys['$OLDID']   = '';
-			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'created' );
+			$keys['$CHANGEDORCREATED'] = wfMessage( 'created' )->inContentLanguage()->plain();
 		}
 
 		$keys['$PAGETITLE'] = $this->title->getPrefixedText();
 		$keys['$PAGETITLE_URL'] = $this->title->getCanonicalUrl('s=wl');
-		$keys['$PAGEMINOREDIT'] = $this->minorEdit ? wfMsgForContent( 'minoredit' ) : '';
+		$keys['$PAGEMINOREDIT'] = $this->minorEdit ? wfMessage( 'minoredit' )->inContentLanguage()->plain() : '';
 		$keys['$UNWATCHURL'] = $this->title->getCanonicalUrl( 'action=unwatch' );
 
 		# <Wikia>
@@ -784,8 +784,8 @@ class EmailNotification {
 
 		if ( $this->editor->isAnon() ) {
 			# real anon (user:xxx.xxx.xxx.xxx)
-			$keys['$PAGEEDITOR'] = wfMsgForContent( 'enotif_anon_editor', $this->editor->getName() );
-			$keys['$PAGEEDITOR_EMAIL'] = wfMsgForContent( 'noemailtitle' );
+			$keys['$PAGEEDITOR'] = wfMessage( 'enotif_anon_editor', $this->editor->getName() )->inContentLanguage()->plain();
+			$keys['$PAGEEDITOR_EMAIL'] = wfMessage( 'noemailtitle' )->inContentLanguage()->plain();
 		} else {
 			$keys['$PAGEEDITOR'] = $wgEnotifUseRealName ? $this->editor->getRealName() : $this->editor->getName();
 			$emailPage = SpecialPage::getSafeTitleFor( 'Emailuser', $this->editor->getName() );
@@ -796,7 +796,7 @@ class EmailNotification {
 
 		# <Wikia>
 		// RT #1294 Bartek 07.05.2009, use the language of the wiki
-		$summary = ($this->summary == '') ? wfMsgForContent( 'enotif_no_summary' ) : '"' . $this->summary . '"';
+		$summary = ($this->summary == '') ? wfMessage( 'enotif_no_summary' )->inContentLanguage()->plain() : '"' . $this->summary . '"';
 		# </Wikia>
 		
 		# Replace this after transforming the message, bug 35019
@@ -933,7 +933,7 @@ class EmailNotification {
 				array( '$WATCHINGUSERNAME',
 					'$PAGEEDITDATE',
 					'$PAGEEDITTIME' ),
-				array( wfMsgForContent( 'enotif_impersonal_salutation' ),
+				array( wfMessage( 'enotif_impersonal_salutation' )->inContentLanguage()->text(),
 					$wgContLang->date( $this->timestamp, false, false ),
 					$wgContLang->time( $this->timestamp, false, false ) ),
 				$this->body );
