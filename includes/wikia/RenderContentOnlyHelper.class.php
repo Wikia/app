@@ -9,8 +9,9 @@
  */
 class RenderContentOnlyHelper {
 	const LEAVE_ALL_SKIN_ELEMENTS = 0;
-	const LEAVE_ARTICLE_PLACEHOLDER_ONLY = 1;
-	const LEAVE_NO_SKIN_ELEMENTS = 2;
+	const LEAVE_NO_SKIN_ELEMENTS = 1;
+	const LEAVE_ARTICLE_PLACEHOLDER_ONLY = 2;
+	const LEAVE_NAV_ONLY = 4;
 
 	private static $renderContentOnly = false;
 	private static $renderContentOnlyLevel = self::LEAVE_ALL_SKIN_ELEMENTS;
