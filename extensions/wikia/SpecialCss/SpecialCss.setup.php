@@ -29,11 +29,20 @@ $app->registerController(
 	['index' => ["notSkin" => SpecialCssModel::$supportedSkins, "method" => "notOasis"]]
 );
 
-// hooks
-$app->registerHook('AlternateEdit', 'SpecialCssHooks', 'onAlternateEdit');
-$app->registerHook('ArticleSaveComplete', 'SpecialCssHooks', 'onArticleSaveComplete');
-$app->registerHook('ArticleDelete', 'SpecialCssHooks', 'onArticleDelete');
-$app->registerHook('ArticleUndelete', 'SpecialCssHooks', 'onArticleUndelete');
+/**
+ * @global Array The list of hooks.
+ * 
+ * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
+ * @see http://www.mediawiki.org/wiki/Manual:Hooks/AlternateEdit
+ * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
+ * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleDelete
+ * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleUndelete
+ */
+$wgHooks['AlternateEdit'][] = 'SpecialCssHooks::onAlternateEdit';
+$wgHooks['ArticleSaveComplete'][] = 'SpecialCssHooks::onArticleSaveComplete';
+$wgHooks['ArticleDelete'][] = 'SpecialCssHooks::onArticleDelete';
+$wgHooks['ArticleUndelete'][] = 'SpecialCssHooks::onArticleUndelete';
+
 
 // special page
 $app->registerSpecialPage('CSS', 'SpecialCssController', 'wikia');
