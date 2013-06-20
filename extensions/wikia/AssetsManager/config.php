@@ -1326,7 +1326,7 @@ $config['licensed_video_swap_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsContainerDOM.js',
+		'//extensions/wikia/LicensedVideoSwap/js/lvsCommonAjax.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsCallout.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsDropDown.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsEllipses.js',
