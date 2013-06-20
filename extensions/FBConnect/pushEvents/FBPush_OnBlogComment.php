@@ -20,14 +20,19 @@ class FBPush_OnBlogComment extends FBConnectPushEvent {
 	
 	
 	public static function articleEdit(&$article, &$user, $text, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
-		global $wgContentNamespaces, $wgSitename;
-		
-		if( !defined('NS_BLOG_ARTICLE_TALK') ) {
-			return true; 
+		global $wgSitename;
+		wfProfileIn(__METHOD__);
+
+		if ( !self::checkUserOptions(__CLASS__) ) {
+			wfProfileOut(__METHOD__);
+			return true;
 		}
 
-		wfProfileIn(__METHOD__);
-		
+		if( !defined('NS_BLOG_ARTICLE_TALK') ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
 		if( $article->getTitle()->getNamespace() == NS_BLOG_ARTICLE_TALK ) {
 			$title_explode = explode("/", $article->getTitle()->getText());
 			$title = Title::newFromText($title_explode[0]."/".$title_explode[1], NS_BLOG_ARTICLE);

@@ -608,7 +608,7 @@ class RenameUserProcess {
 				'case'        => 1,
 				'regex'       => 0,
 				'timestamp'   => wfTimestampNow(),
-				'expire'      => 'infinite',
+				'expire'      => null,
 				'author_id'   => $this->mRequestorId,
 				'reason'      => 'User rename process requested',
 				'lang'        => null,

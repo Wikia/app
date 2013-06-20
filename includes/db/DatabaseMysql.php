@@ -44,10 +44,19 @@ class DatabaseMysql extends DatabaseBase {
 			$err_num = $this->lastErrno();
 			error_log( sprintf("SQL (%s): %d: %s", $wgDBname, $err_num, $error) );
 			error_log( "SQL: invalid query: $sql" );
-			if ( $err_num == 1213 ) { /* deadlock*/ 
-				error_log( "MOLI: deadlock: $error " );
-				Wikia::debugBacktrace( "MOLI: Deadlock:" );
+			# Wikia change - begin
+			switch ( $err_num ) {
+				case 1213: /* deadlock*/
+					error_log( "MOLI: deadlock: $error " );
+					Wikia::debugBacktrace( "MOLI: Deadlock:" );
+					break;
+
+				case 2006: /* server has gone away */
+					error_log( "MOLI: gone away: $error " );
+					Wikia::debugBacktrace( "MOLI: gone away:" );
+					break;
 			}
+			# Wikia change - end
 		}
 		return $ret;
 	}

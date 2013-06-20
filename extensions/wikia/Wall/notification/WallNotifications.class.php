@@ -504,22 +504,26 @@ class WallNotifications {
 					}
 				}
 
+				$success = false;
 				// Make sure we have data
 				if (isset($data)) {
 					// See if we can set it successfully
 					if ($this->setData($memcSync, $data)) {
-						break;
+						$success = true;
 					}
 				} else {
 					// If there's no data don't bother doing anything
+					$success = true;
+				}
+				$memcSync->unlock();
+				if ( $success ) {
 					break;
 				}
+
 			} else {
 				$this->random_msleep($count);
 			}
 		}
-
-		$memcSync->unlock();
 
 		// If count is -1 it means we left the above loop failing to update
 		if ($count == -1) {
@@ -576,22 +580,25 @@ class WallNotifications {
 						$data = $this->getData($memcSync, $uId, $wikiId);
 						$this->remNotificationFromData($data, $uniqueId);
 
+						$success = false;
 						// Make sure we have data
 						if (isset($data)) {
 							// See if we can set it successfully
 							if ($this->setData($memcSync, $data)) {
-								break;
+								$success = true;
 							}
 						} else {
 							// If there's no data don't bother doing anything
+							$success = true;
+						}
+						$memcSync->unlock();
+						if ( $success ) {
 							break;
 						}
 					} else {
 						$this->random_msleep($count);
 					}
 				}
-
-				$memcSync->unlock();
 
 				// If count is -1 it means we left the above loop failing to update
 				if ($count == -1) {
@@ -690,23 +697,25 @@ class WallNotifications {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, false, $notifyeveryone );
 
+				$success = false;
 				// Make sure we have data
 				if (isset($data)) {
 					// See if we can set it successfully
 					if ($this->setData($memcSync, $data)) {
-						break;
+						$success = true;
 					}
 				} else {
 					// If there's no data don't bother doing anything
+					$success = true;
+				}
+				$memcSync->unlock();
+				if ( $success ) {
 					break;
 				}
 			} else {
 				$this->random_msleep($count);
 			}
-			$count++;
 		}
-
-		$memcSync->unlock();
 
 		// If count is -1 it means we left the above loop failing to update
 		if ($count == -1) {
@@ -789,16 +798,16 @@ class WallNotifications {
 		}
 
 		// scan relation list, remove element that has the same author
+		// keep the old one, and remove the new one so that the notification link points to the oldest unread message
 		$found = false;
 
 		foreach( $data['relation'][ $uniqueId ]['list'] as $key=>$rel ) {
 			if( $rel['authorId'] == $authorId ) {
-				unset($data['relation'][ $uniqueId ]['list'][$key]);
 				$found = true;
 
 				// keep track of removed elements - we will remove them from db
 				// table after we are done updating in-memory structures
-				$this->removedEntities[] = array( 'user_id' => $userId, 'wiki_id' => $wikiId, 'unique_id'=>$uniqueId, 'entity_key' => $rel['entityKey'] );
+				$this->removedEntities[] = array( 'user_id' => $userId, 'wiki_id' => $wikiId, 'unique_id'=>$uniqueId, 'entity_key' => $entityKey );
 			}
 		}
 
@@ -812,11 +821,10 @@ class WallNotifications {
 			}
 		}
 
-		// add new element
-		$data['relation'][ $uniqueId ]['list'][] = array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply'=>$isReply);
-
 		// if this was new author increase author count
 		if($found == false){
+			// add new element
+			$data['relation'][ $uniqueId ]['list'][] = array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply'=>$isReply);
 			$data['relation'][ $uniqueId ]['count'] += 1;
 			$data['relation'][ $uniqueId ]['notifyeveryone'] = $notifyeveryone;
 		}

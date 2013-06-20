@@ -33,6 +33,33 @@ class ImagesService extends Service {
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
 
+	public static function getImageSrcByTitle( $cityId, $articleTitle, $width=null, $height=null ) {
+
+		wfProfileIn(__METHOD__);
+		$imageKey = F::app()->wf->SharedMemcKey( 'image_url_from_wiki', $cityId.$articleTitle.$width.$height );
+		$imageSrc = F::app()->wg->Memc->get( $imageKey );
+
+		if ( $imageSrc === false ) {
+			$globalFile = GlobalFile::newFromText( $articleTitle, $cityId );
+			if ( $globalFile->exists() ) {
+				$imageSrc = $globalFile->getCrop( $width, $height );
+			} else {
+				$imageSrc = null;
+			}
+			F::app()->wg->Memc->set( $imageKey, $imageSrc, 60*60*24*3 );
+		}
+		wfProfileOut(__METHOD__);
+		return $imageSrc;
+	}
+
+	protected static function getArticleIdFromTitle( $cityId, $title ) {
+		$title = GlobalTitle::newFromText($title, NS_FILE, $cityId);
+		if ( $title->exists() ) {
+			return $title->getArticleID();
+		}
+		return false;
+	}
+
 	public static function getImageOriginalUrl($wikiId, $pageId) {
 		$app = F::app();
 		wfProfileIn(__METHOD__);

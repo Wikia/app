@@ -410,6 +410,7 @@ abstract class ApiWrapper {
 class EmptyResponseException extends Exception {
 	public function __construct( $apiUrl ) {
 		$this->apiUrl = $apiUrl;
+		$this->message = "Empty response from URL '".$apiUrl."'";
 	}
 }
 class NegativeResponseException extends Exception {
@@ -417,6 +418,19 @@ class NegativeResponseException extends Exception {
 		$this->status = $status;
 		$this->content = $content;
 		$this->apiUrl = $apiUrl;
+
+		$message = "Negative response from URL '".$apiUrl."'";
+
+		// Add the error message if there is one
+		$errors = $status->errors;
+		if (!empty($errors) && (count($errors) > 0)) {
+			$firstError = $errors[0];
+			if (!empty($firstError['message'])) {
+				$message .= ' - '.$firstError['message'];
+			}
+		}
+
+		$this->message = $message;
 	}
 }
 class VideoIsPrivateException extends NegativeResponseException {}

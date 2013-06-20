@@ -137,6 +137,23 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $this->queryServiceFactory->getFromConfig( $searchConfig )->searchAsApi() );
 	}
+	
+	/**
+	 * Given a "title" parameter, tests if there's a near match, and then returns the canonical title
+	 */
+	public function resolveEntities() {
+		$request = $this->getRequest();
+		$entities = explode( '|', $request->getVal( 'entities' ) );
+		$entityResponse = [];
+		$service = new Wikia\Search\MediaWikiService();
+		foreach ( $entities as $entity ) {
+			$match = $service->getArticleMatchForTermAndNamespaces( $entity, $this->wg->ContentNamespaces );
+			$entityResponse[$entity] = ( $match === null ) ? '' : $match->getResult()->getTitle();
+		}
+		$response = $this->getResponse();
+		$response->setFormat( 'json' );
+		$response->setData( $entityResponse );
+	}
 
 	/**
 	 * Controller Helper Methods
@@ -192,6 +209,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setInterWiki               ( $this->isCorporateWiki() )
 			->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
 			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
+			->setABTestGroup			 ( $this->getVal( 'ab' ) )
 		;
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
@@ -249,7 +267,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $wgExtensionsPath);
-		
+
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
@@ -260,15 +278,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function registerWikiMatch( Wikia\Search\Config $searchConfig ) {
-		//check if corporate wiki or community wiki
-		if ( !$this->isCorporateWiki() && $this->wg->CityId != 177 ) {
-			return;
-		}
-
 		$resultSet = new Wikia\Search\ResultSet\MatchGrouping( new Wikia\Search\ResultSet\DependencyContainer( ['config' => $searchConfig, 'wikiMatch' => $searchConfig->getWikiMatch() ] ) );
 
 		$image = $resultSet->getHeader( 'image' );
-		$imageUrl = empty( $image ) ? $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png' : (new \WikiaHomePageHelper)->getImageUrl( $image, 180, 120 );
+		$lang = $resultSet->getHeader( 'lang' );
+		$globalWikiId = (new CityVisualization())->getTargetWikiId( $lang );
+
+		if ( !empty( $image) && $globalWikiId !== false ) {
+			$imageUrl = ImagesService::getImageSrcByTitle( $globalWikiId, $image, 180, 120 );
+		}
+		//default image if not set or missing
+		if ( empty( $imageUrl ) ) {
+			$imageUrl = $this->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
+		}
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="-1" data-event="search_click_wiki-';
 		$thumbTracking .= empty( $image ) ? 'no-thumb"' : 'thumb"';
 

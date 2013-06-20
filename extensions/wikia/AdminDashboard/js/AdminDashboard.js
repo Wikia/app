@@ -27,7 +27,7 @@ var AdminDashboard = {
 		}, function() {
 			AdminDashboard.tooltip.text('');
 		}).click(AdminDashboard.handleControlClick);
-		
+
 		// init addVideo jQuery plugin
 		var addVideoButton = AdminDashboard.cc.find('.addVideoButton'),
 			addVideoButtonReturnUrl = addVideoButton.data('return-url');
@@ -35,28 +35,30 @@ var AdminDashboard = {
 		if( $.fn.addVideoButton ) { //FB#68272
 			addVideoButton.addVideoButton({
 				callbackAfterSelect: function(url) {
-					$.nirvana.postJson(
-						// controller
-						'VideosController',
-						// method
-						'addVideo',
-						// data
-						{ url: url },
-						// success callback
-						function( formRes ) {
-							GlobalNotification.hide();
-							if ( formRes.error ) {
-								GlobalNotification.show( formRes.error, 'error' );
-							} else {
-								VET_loader.modal.closeModal();
-								window.location = addVideoButtonReturnUrl;
+					require(['wikia.vet'], function(vet) {
+						$.nirvana.postJson(
+							// controller
+							'VideosController',
+							// method
+							'addVideo',
+							// data
+							{ url: url },
+							// success callback
+							function( formRes ) {
+								GlobalNotification.hide();
+								if ( formRes.error ) {
+									GlobalNotification.show( formRes.error, 'error' );
+								} else {
+									vet.close();
+									window.location = addVideoButtonReturnUrl;
+								}
+							},
+							// error callback
+							function() {
+								GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
 							}
-						},
-						// error callback
-						function() {
-							GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
-						}
-					);
+						);
+					});
 					// Don't move on to second VET screen.  We're done.
 					return false;
 				}

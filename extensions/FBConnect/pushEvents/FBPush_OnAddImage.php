@@ -14,23 +14,35 @@ class FBPush_OnAddImage extends FBConnectPushEvent {
 		wfProfileIn(__METHOD__);
 
 		$wgHooks['ArticleSaveComplete'][] = 'FBPush_OnAddImage::onArticleSaveComplete';
-		$wgHooks['UploadComplete'][] = 'FBPush_OnAddImage::onUploadComplet';
+		$wgHooks['UploadComplete'][] = 'FBPush_OnAddImage::onUploadComplete';
 		wfProfileOut(__METHOD__);
 	}
 
 	public static function onArticleSaveComplete(&$article, &$user, $text, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
+		wfProfileIn(__METHOD__);
+		if ( !self::checkUserOptions(__CLASS__) ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
 		if( $article->getTitle()->getNamespace() != NS_FILE ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		$img = wfFindFile( $article->getTitle()->getText() );
 		if (!empty($img) && ($img->media_type == 'BITMAP') ) {
 			FBPush_OnAddImage::uploadNews( $img, $img->title->getText(), $img->title->getFullUrl("?ref=fbfeed&fbtype=addimage")) ;
 		}
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
-	public static function  onUploadComplet(&$image) {
-		global $wgServer, $wgSitename;
+	public static function  onUploadComplete(&$image) {
+		wfProfileIn(__METHOD__);
+		if ( !self::checkUserOptions(__CLASS__) ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
 
 		/**
 		 * $image->mLocalFile is protected
@@ -39,6 +51,7 @@ class FBPush_OnAddImage extends FBConnectPushEvent {
 		if ($localFile->media_type == 'BITMAP' ) {
 			FBPush_OnAddImage::uploadNews( $localFile, $localFile->getTitle(), $localFile->getTitle()->getFullUrl( "?ref=fbfeed&fbtype=addimage" ) );
 		}
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 

@@ -28,6 +28,8 @@ class PhalanxService extends Service {
 				$this->$key = $args[0];
 				$result = $this;
 				break;
+			default:
+				throw new WikiaException('PhalanxService::_call supports getters and setters only');
 		}
 		return $result;
 	}
@@ -59,6 +61,17 @@ class PhalanxService extends Service {
 	 */
 	public function match( $type, $content, $lang = "" ) {
 		return $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
+	}
+
+	/**
+	 * Send expected results for comparison
+	 */
+	public function matchShadow($type, $content, $expected_id, $lang = "" ) {
+		wfProfileIn( __METHOD__  );
+		$result =  $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content,
+			"expected" => $expected_id, "lang" => $lang ) );
+		wfProfileOut( __METHOD__  );
+		return $result;
 	}
 
 	/**
@@ -145,6 +158,7 @@ class PhalanxService extends Service {
 
 			$options["postData"] = implode( "&", $postData );
 			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
+			wfDebug( __METHOD__ . ": " . json_encode($parameters) ."\n" );
 			$response = Http::post( $url, $options);
 		}
 
@@ -152,6 +166,8 @@ class PhalanxService extends Service {
 			/* service doesn't work */
 			$res = false;
 		} else {
+			wfDebug( __METHOD__ . "::response - {$response}\n" );
+
 			switch ( $action ) {
 				case "stats":
 					$res = ( is_null( $response ) ) ? false : $response;

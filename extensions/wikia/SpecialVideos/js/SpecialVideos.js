@@ -36,28 +36,30 @@ var SpecialVideos = {
 		if( $.isFunction( $.fn.addVideoButton ) ) {
 			addVideoButton.addVideoButton({
 				callbackAfterSelect: function(url) {
-					$.nirvana.postJson(
-						// controller
-						'VideosController',
-						// method
-						'addVideo',
-						// data
-						{ url: url },
-						// success callback
-						function( formRes ) {
-							GlobalNotification.hide();
-							if ( formRes.error ) {
-								GlobalNotification.show( formRes.error, 'error' );
-							} else {
-								window.VET_loader.modal.closeModal();
-								(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
+					require(['wikia.vet'], function(vet) {
+						$.nirvana.postJson(
+							// controller
+							'VideosController',
+							// method
+							'addVideo',
+							// data
+							{ url: url },
+							// success callback
+							function( formRes ) {
+								GlobalNotification.hide();
+								if ( formRes.error ) {
+									GlobalNotification.show( formRes.error, 'error' );
+								} else {
+									vet.close();
+									(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
+								}
+							},
+							// error callback
+							function() {
+								GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
 							}
-						},
-						// error callback
-						function() {
-							GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
-						}
-					);
+						);
+					});
 					// Don't move on to second VET screen.  We're done.
 					return false;
 				}

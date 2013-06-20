@@ -6115,6 +6115,7 @@ $messages['uz'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Tuankiet65
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
@@ -6289,7 +6290,7 @@ Ngoài ra, bạn có thể nhấn vào "$2" để xem trang trong hình thức c
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Liên kết đến (dán tên trang web hoặc URL)',
 	'wikiaPhotoGallery-photooptions-description' => 'Hình ảnh chi tiết.',
 	'wikiaPhotoGallery-search-tooltip' => 'Tìm kiếm hình ảnh trên wiki này',
-	'wikiaPhotoGallery-upload-image-size' => 'Hình ảnh này phải có kích thước là 670 × 360 px hoặc lớn hơn.', # Fuzzy
+	'wikiaPhotoGallery-upload-image-size' => 'Hình ảnh nên có kích cỡ 670x360px hay lớn hơn',
 	'wikiaPhotoGallery-not-displayed' => 'Không hiển thị',
 	'galery-slider-read-more' => 'Chi tiết >',
 );
@@ -6404,6 +6405,15 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-finish' => '完成',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'wikiaPhotoGallery-upload-title' => '尋找及上傳圖像',
+	'wikiaPhotoGallery-upload-info-images-label' => '此頁面中的圖像',
+	'wikiaPhotoGallery-upload-error-readonly' => '由於此wiki目前在唯讀狀態，因此你現在不能上傳圖像。',
 );
 
 /** Chinese (Taiwan) (中文（台灣）‎)

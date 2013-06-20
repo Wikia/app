@@ -70,46 +70,44 @@ class EditAccount extends SpecialPage {
 
 			// check if user name is an existing user
 			if ( User::isValidUserName( $userName ) ) {
-				$this->mUser = User::newFromName( $userName );
-				$id = $this->mUser->idFromName( $userName );
+
+				// BugId:CE-11
+				// If the user account has just been enabled with Special:EditAccount
+				// and the 'wikicities_c1' database (local for Community Central)
+				// has lagged compared to the 'wikicities' database (the shared one)
+				// the next action done with Special:EditAccount will fail and the
+				// correct user data will be replaced by the temp user cache.
+				// In other words: LOST.
+				//
+				// In order to prevent that we have to do the following two steps:
+				//
+				// 1) invalidate temp user cache
+				if ( !empty( $wgEnableUserLoginExt ) ) {
+					TempUser::invalidateTempUserCache( $userName );
+				}
+				//
+				// 2) and copy the data from the shared to the local database
+				$oUser = User::newFromName( $userName );
+				wfRunHooks( 'UserNameLoadFromId', array( $userName, &$oUser, true ) );
+
+				$this->mUser = $oUser;
+				$id = $this->mUser->getId();
 
 				if( empty($action) ) {
 					$action = 'displayuser';
 				}
 
 				if ( empty( $id ) ) {
-					// User didn't exist on first load, trying External User
-					$extUser = null;
-					if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-						$extUser = ExternalUser::newFromName( $userName );
+					if ( !empty($wgEnableUserLoginExt) ) {
+						$this->mTempUser = TempUser::getTempUserFromName( $userName );
 					}
-					if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
-						// User does exist, so try from the External User object
-						// This leads to loading the user data from master,
-						// so it should be there now...
-						$user = $extUser->getLocalUser();
-						if ( $user == null || $user->getId() == 0 ) {
-							// Still not loaded, let user know to try reloading page
-							$this->mStatus = false;
-							$this->mStatusMsg = wfMessage( 'editaccount-not-loaded' )->plain();
-							$action = '';
-						} else {
-							$id = $user->getId();
-							$this->mUser = $user;
-						}
+					if ( $this->mTempUser ) {
+						$id = $this->mTempUser->getId();
+						$this->mUser = User::newFromId( $id );
 					} else {
-						if ( !empty($wgEnableUserLoginExt) ) {
-							$this->mTempUser = TempUser::getTempUserFromName( $userName );
-						}
-
-						if ( $this->mTempUser ) {
-							$id = $this->mTempUser->getId();
-							$this->mUser = User::newFromId( $id );
-						} else {
-							$this->mStatus = false;
-							$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
-							$action = '';
-						}
+						$this->mUser = null;
+						$this->mStatus = false;
+						$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
 					}
 				}
 			}

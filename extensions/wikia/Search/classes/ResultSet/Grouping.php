@@ -122,11 +122,13 @@ class Grouping extends Base
 		$wikiId = $doc['wid'];
 		$wikiId = $wikiId ?: $this->service->getWikiIdByHost( $this->host );
 		$title = $this->service->getGlobalForWiki( 'wgSitename', $wikiId );
+		$visualizationInfo = $this->service->getVisualizationInfoForWikiId( $wikiId );
+		unset( $visualizationInfo['lang'] ); // untrustworthy
 		if (! empty( $doc ) ) {
 			$this->addHeaders( $doc->getFields() );
 			$title = $title ?: $doc[Utilities::field( 'wikititle' )]; // apparently wgSitename can be false for some wiki IDs
 		}
-		$this->addHeaders( $this->service->getVisualizationInfoForWikiId( $wikiId ) )
+		$this->addHeaders( $visualizationInfo )
 			 ->addHeaders( $this->service->getStatsInfoForWikiId( $wikiId ) )
 			 ->setHeader ( 'wikititle', $title )
 			 ->setHeader ( 'title', $title )
