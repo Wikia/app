@@ -6,12 +6,12 @@ class SpecialCssHooks {
 	 * @param EditPage $editPage
 	 * @return bool
 	 */
-	public function onAlternateEdit( EditPage $editPage ) {
+	static public function onAlternateEdit( EditPage $editPage ) {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 		$model = new SpecialCssModel();
 
-		if( $this->shouldRedirect($app, $model, $editPage->getArticle()->getTitle()->getArticleId()) ) {
+		if( static::shouldRedirect($app, $model, $editPage->getArticle()->getTitle()->getArticleId()) ) {
 			$app->wg->Out->redirect( $model->getSpecialCssUrl() );
 		}
 
@@ -26,7 +26,7 @@ class SpecialCssHooks {
 	 * 
 	 * @return boolean
 	 */
-	private function shouldRedirect( $app, $model, $articleId ) {
+	static private function shouldRedirect( $app, $model, $articleId ) {
 		return $app->wg->EnableSpecialCssExt
 			&& $model->isWikiaCssArticle( $articleId )
 			&& $app->checkSkin( $model::$supportedSkins )
@@ -41,11 +41,11 @@ class SpecialCssHooks {
 	 * 
 	 * @return true because it's a hook
 	 */
-	public function onArticleSaveComplete( $article, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
-		if( $this->titleHasCssUpdatesCat( $article->getTitle() ) ) {
+	static public function onArticleSaveComplete( $article, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId ) {
+		if( self::titleHasCssUpdatesCat( $article->getTitle() ) ) {
 			// purging "Wikia CSS Updates" cache because a new post was added to the category
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
-		} else if( $this->prevRevisionHasCssUpdatesCat($revision) ) {
+		} else if( self::prevRevisionHasCssUpdatesCat($revision) ) {
 			// purging "Wikia CSS Updates" cache because a post within the category was removed from the category
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
 		}
@@ -60,9 +60,8 @@ class SpecialCssHooks {
 	 * 
 	 * @return boolean
 	 */
-	private function titleHasCssUpdatesCat($title) {
-		$categories = ( $title instanceof Title ) ? $this->removeNamespace( array_keys( $title->getParentCategories() ) ) : [];
-
+	static private function titleHasCssUpdatesCat($title) {
+		$categories = ( $title instanceof Title ) ? self::removeNamespace( array_keys( $title->getParentCategories() ) ) : [];
 		return in_array( SpecialCssModel::UPDATES_CATEGORY, $categories );
 	}
 
@@ -73,7 +72,7 @@ class SpecialCssHooks {
 	 * 
 	 * @return array
 	 */
-	private function removeNamespace( $categories ) {
+	static private function removeNamespace( $categories ) {
 		$app = F::app();
 		$results = [];
 		$categoryNamespace = $app->wg->ContLang->getNsText(NS_CATEGORY);
@@ -92,13 +91,14 @@ class SpecialCssHooks {
 	 * 
 	 * @return bool
 	 */
-	private function prevRevisionHasCssUpdatesCat( Revision $rev ) {
+	static private function prevRevisionHasCssUpdatesCat( Revision $rev ) {
 		return ( ( $prevRev = $rev->getPrevious() ) instanceof Revision ) &&
-			in_array( SpecialCssModel::UPDATES_CATEGORY, $this->getCategoriesFromWikitext( $prevRev->getRawText() ) );
+			in_array( SpecialCssModel::UPDATES_CATEGORY, self::getCategoriesFromWikitext( $prevRev->getRawText() ) );
 	}
 
 	/**
-	 * @desc Using CategorySelect::extractCategoriesFromWikitext() retrives categories' data array which then is being flattern to categories' names with replaces spacebar to _
+	 * @desc Using CategorySelect::extractCategoriesFromWikitext() retrives categories' data array 
+	 * which then is being flattern to categories' names with replaces spacebar to _
 	 * 
 	 * @param String $wikitext
 	 * 
@@ -106,12 +106,12 @@ class SpecialCssHooks {
 	 * 
 	 * @return array
 	 */
-	private function getCategoriesFromWikitext( $wikitext ) {
+	static public function getCategoriesFromWikitext( $wikitext ) {
 		$app = F::app();
 		$categories = [];
 		
 		if( !empty( $app->wg->EnableCategorySelectExt ) && 
-			( $results = $this->getCategoriesFromCategorySelect( $wikitext ) ) && 
+			( $results = static::getCategoriesFromCategorySelect( $wikitext ) ) && 
 			!empty( $results['categories'] ) 
 		) {
 			foreach( $results['categories'] as $category ) {
@@ -128,7 +128,7 @@ class SpecialCssHooks {
 	 * @param $wikitext
 	 * @return Array
 	 */
-	public function getCategoriesFromCategorySelect( $wikitext ) {
+	static public function getCategoriesFromCategorySelect( $wikitext ) {
 		return CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
 	}
 
@@ -142,8 +142,8 @@ class SpecialCssHooks {
 	 * 
 	 * @return true because it's a hook
 	 */
-	public function onArticleDelete( &$article, &$user, &$reason, &$error ) {
-		if( $this->titleHasCssUpdatesCat( $article->getTitle() ) ) {
+	static public function onArticleDelete( &$article, &$user, &$reason, &$error ) {
+		if( self::titleHasCssUpdatesCat( $article->getTitle() ) ) {
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
 		}
 		
@@ -159,8 +159,8 @@ class SpecialCssHooks {
 	 * 
 	 * @return bool
 	 */
-	public function onArticleUndelete( $title, $created, $comment ) {
-		if( $this->titleHasCssUpdatesCat($title) ) {
+	static public function onArticleUndelete( $title, $created, $comment ) {
+		if( self::titleHasCssUpdatesCat($title) ) {
 			// purging "Wikia CSS Updates" cache because a post from its category was removed
 			WikiaDataAccess::cachePurge( wfSharedMemcKey( SpecialCssModel::MEMC_KEY ) );
 		}
