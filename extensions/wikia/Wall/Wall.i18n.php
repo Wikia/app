@@ -1757,13 +1757,33 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-recentchanges-new-message' => 'na <a href="$1">zdi {{GENDER:$2|uživatele|uživatelky|uživatele}} $2</a>',
 	'wall-recentchanges-edit' => '(upravená zpráva)',
 	'wall-recentchanges-summary' => '($1)',
-	'wall-recentchanges-removed-thread' => '{{GENDER:$5|odstranil|odstranila|odstranil}} vlákno "[[$1|$2]]" ze [[$3|zdi uživatele $4]]', # Fuzzy
-	'wall-recentchanges-removed-reply' => '{{GENDER:$5|odstranil|odstranila|odstranil}} odpověď z vlákna "[[$1|$2]]" ze [[$3|zdi uživatele $4]]', # Fuzzy
+	'wall-recentchanges-removed-thread' => 'odstranil vlákno "[[$1|$2]]" ze [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-removed-reply' => 'odstranil odpověď z vlákna "[[$1|$2]]" ze [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-restored-thread' => 'obnovil vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-restored-reply' => 'obnovil odpověď "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-deleted-thread' => 'smazal vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-deleted-reply' => 'smazal odpověď "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-closed-thread' => 'uzavřel vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-reopened-thread' => 'znovuotevřel vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
+	'wall-recentchanges-deleted-reply-title' => 'Odpověď na zdi zpráv',
+	'wall-recentchanges-wall-created-title' => 'Vytvořil zeď zpráv',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Zeď zpráv',
+	'wall-recentchanges-thread-group' => '$1 na <a href="$2">zdi uživatele $3</a>',
 	'wall-recentchanges-history-link' => 'historie stránky',
 	'wall-recentchanges-thread-history-link' => 'historie vlákna',
+	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> na <a href="$3">zdi uživatele $4</a>',
+	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> na <a href="$3">zdi uživatele $4</a>',
+	'wall-message-not-found' => 'Tato zpráva nebyla nalezena. Kontaktujte prosím Wikiu na [[Special:Contact]] a poskytněte co nejvíce detailů o tom, jak k chybě došlo. Děkujeme!',
+	'wall-message-staff-text' => 'Tento uživatel je členem týmu Wikia',
+	'wall-ipballowusertalk' => 'Povolit tomuto uživateli editovat vlastní zeď zpráv po dobu zablokování',
+	'wall-ipbwatchuser' => 'Sledovat profil a zeď zpráv tohoto uživatele',
 	'wall-wiki-activity-on' => 'na $1',
 	'wall-wiki-activity-wall-owner' => 'Zeď uživatele $1',
+	'wall-removed-thread-undo' => 'Toto vlákno bylo odstraněno. $1',
+	'wall-removed-reply-undo' => 'Tato odpověď byla odstraněna. $1',
+	'wall-removed-reply' => 'Tato odpověď byla odstraněna',
+	'wall-deleted-thread-undo' => 'Toto vlákno bylo smazáno. $1',
+	'wall-deleted-reply-undo' => 'Tato odpověď byla smazána. $1',
 	'wall-deleted-reply' => 'Tato odpověď byla odstraněna.',
 	'wall-history' => 'Historie',
 	'wall-history-title' => 'historie stránky',
@@ -1783,15 +1803,77 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-history-action-restore' => 'obnovit',
 	'wall-history-action-thread-history' => 'historie vlákna',
 	'wall-thread-history-title' => 'historie vlákna',
+	'wall-thread-history-thread-created' => '$1 $2 {{GENDER:$2|vytvořil|vytvořila}} toto vlákno',
+	'wall-thread-history-reply-created' => '$1 $2 {{GENDER:$2|zanechal|zanechala}} odpověď',
+	'wall-thread-history-thread-removed' => '$1 $2 {{GENDER:$2|odstranil|odstranila}} toto vlákno',
+	'wall-thread-history-reply-removed' => '$1 $2 {{GENDER:$2|odstranil|odstranila}} odpověď $5 uživatele $3',
+	'wall-thread-history-reply-deleted' => '$1 $2 {{GENDER:$2|smazal|smazala}} odpověď uživatele $3',
+	'wall-thread-history-thread-restored' => '$1 $2 {{GENDER:$2|obnovil|obnovila}} toto vlákno',
+	'wall-thread-history-reply-restored' => '$1 $2 {{GENDER:$2|obnovil|obnovila}} odpověď $5 uživatele $3',
+	'wall-thread-history-thread-deleted' => '$1 $2 {{GENDER:$2|smazal|smazala}} toto vlákno',
+	'wall-thread-history-thread-edited' => '$1 $2 {{GENDER:$2|upravil|upravila}} zprávu $5 uživatele $3',
+	'wall-thread-history-reply-edited' => '$1 $2 {{GENDER:$2|upravil|upravila}} zprávu $5 uživatele $3',
+	'wall-thread-history-thread-closed' => '$2 uzavřel toto téma',
+	'wall-thread-history-thread-reopened' => '$2 znovuotevřel toto téma',
 	'wall-history-action-restore-reply' => 'obnovit odpověď',
 	'wall-history-action-restore-thread' => 'obnovit vlákno',
+	'wall-message-not-found-in-db' => 'Omlouváme se, ale nemohli jsme najít tuto zprávu v naší databázi.',
 	'mail-notification-new-someone' => 'Na $WIKI $AUTHOR_NAME napsal novou zprávu.',
 	'mail-notification-new-your' => '$AUTHOR_NAME vám nechal novou zprávu na $WIKI.',
 	'mail-notification-reply-your' => '$AUTHOR_NAME odpověděl na vaši zprávu na $WIKI.',
+	'mail-notification-reply-his' => '$AUTHOR_NAME odpověděl na zprávu na $WIKI.',
+	'mail-notification-reply-someone' => '$AUTHOR_NAME odpověděl na zprávu uživatele $PARENT_AUTHOR_NAME na $WIKI.',
 	'mail-notification-html-greeting' => 'Ahoj $1,',
 	'mail-notification-html-button' => 'Zobrazit konverzaci',
+	'mail-notification-html-footer-line1' => 'Nejnovější dění na Wikii můžete sledovat na <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'mail-notification-html-footer-line2' => 'Chcete si nastavit e-mailová upozornění? Přejděte na <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Nastavení</a>',
+	'mail-notification-body' => 'Ahoj $WATCHER,
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+Zobrazit konverzaci($MESSAGE_LINK)
+
+Tým Wikia
+
+___________________________________________
+* Nápovědu a rady naleznete zde: http://community.wikia.com
+* Chcete dostávat méne zpráv? Jejich nastavení můžete změnit zde: http://community.wikia.com/Special:Preferences',
+	'mail-notification-body-HTML' => 'Ahoj $WATCHER,
+<p>$SUBJECT.</p>
+			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+			<p>$MESSAGE_HTML</p>
+			<p>-- $AUTHOR_SIGNATURE<p>
+			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Zobrazit konverzaci</a></p>
+			<p>Tým Wikia</p>
+___________________________________________<br />
+* Nápovědu a rady naleznete zde: http://community.wikia.com
+* Chcete dostávat méne zpráv? Jejich nastavení můžete změnit zde: http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => 'Zeď zpráv a fórum',
 	'tog-enotifwallthread-v2' => 'Napiš mi email...',
+	'tog-enotifmywall-every' => 'Pro každou zprávu a odpověď',
+	'tog-enotifmywall-sincevisited' => 'Jednou na každé vlákno od mé poslední návštěvy',
+	'tog-enotifmywall-reminder' => 'S denním připomenutím e-mailem',
+	'tog-enotifmywall-noemail' => 'Nikdy. Neposílejte mi žádné e-maily o zdi zpráv nebo fóru',
+	'wallshowsource-toggle-v2' => 'Povolit {{int:user-action-menu-view-source}} ve vláknech',
+	'wallshowsource-toggle' => 'Povolit {{int:user-action-menu-view-source}} v příspěvcích na zdi',
+	'walldelete-toggle' => 'Povolit mazání revizí vláken',
+	'wall-notifications-notifyeveryone' => 'Zvýrazněno {{GENDER:$1|uživatelem|uživatelkou|uživatelem}} $1',
+	'wall-message-notifyeveryone' => 'Zvýraznit toto vlákno',
+	'wall-message-unnotifyeveryone' => 'Zrušit zvýraznění tohoto vlákna',
+	'wall-message-notifyeveryone-tooltip' => 'Každý uživatel přihlášený budu upozorněn na toto téma, jakmile příště navštíví tuto wiki.',
+	'wall-votes-modal-showmore' => 'Zobrazit ostatní, kteří zvýšili Prestiž',
+	'wall-votes-modal-title' => 'Prestiž',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Jeden člověk zvýšil|$1 lidé zvýšili|$1 lidí zvýšilo}} Prestiž této zprávy.',
+	'wall-votes-number' => '$1 {{PLURAL:$1|Prestiž|Prestiže|Prestiží}}',
+	'wall-votes-number-tooltip' => 'Zobrazit, kdo zvýšil Prestiž této zprávy',
+	'wall-votes-vote-tooltip' => 'Zvýšit Prestiž této zprávy',
+	'wall-votes-voted-tooltip' => 'Zvýšil jste Prestiž této zprávy!',
 	'wall-quote-author' => '$1 napsal:',
 	'wall-quote-reply-to' => 'odpověď na #$1',
 	'wall-preview-modal-title' => 'Náhled',
@@ -1799,6 +1881,8 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-preview-modal-button-publish' => 'Publikovat',
 	'wall-topic-input-heading' => 'Téma',
 	'wall-topic-input-placeholder' => 'Přidat téma (volitelné)',
+	'wall-topic-input-error' => 'Neexistuje žádný článek s názvem "$1". Jako téma použijte název existujícího článku.',
+	'wall-topic-input-error-limit' => 'Vlákno může být maximálně $1 {{PLURAL:$1|téma|témata|témat}}.',
 	'wall-topic-heading' => 'Témata pro toto vlákno:',
 	'wall-topic-edit' => 'Upravit témata',
 	'wall-topic-edit-save' => 'Uložit',

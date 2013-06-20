@@ -13,17 +13,61 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\InterWiki::extractMatch
 	 */
 	public function testExtractMatch() {
-		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
-		                   ->disableOriginalConstructor()
-		                   ->setMethods( [ 'getService', 'extractWikiMatch' ] )
-		                   ->getMock();
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery', 'setWikiMatch', 'getWikiMatch' ) );
+		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'getWikiMatchByHost', 'getWikiId' ) )
+		                      ->getMock();
 
-		$mockSelect
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
+		                   ->setConstructorArgs( array( $dc ) )
+		                   ->setMethods( null )
+		                   ->getMock();
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
+		                  ->disableOriginalConstructor()
+						  ->setMethods( array( 'getId' ) )
+		                  ->getMock();
+
+		$mockMatch
+			->expects( $this->once() )
+			->method ( 'getId' )
+			->will   ( $this->returnValue( 123 ) )
+		;
+		$mockConfig
 		    ->expects( $this->once() )
-		    ->method ( 'extractWikiMatch' )
+		    ->method ( 'getQuery' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+	    ;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getSanitizedQuery' )
+		    ->will   ( $this->returnValue( 'star wars' ) )
+		;
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiMatchByHost' )
+		    ->with   ( 'starwars' )
 		    ->will   ( $this->returnValue( $mockMatch ) )
 		;
-		$method = new ReflectionMethod( $mockSelect, 'extractMatch' );
+		$mockService
+			->expects( $this->once() )
+			->method ( 'getWikiId' )
+			->will   ( $this->returnValue( 456 ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'setWikiMatch' )
+		    ->with   ( $mockMatch )
+		;
+
+		$mockConfig
+			->expects( $this->once() )
+			->method( 'getWikiMatch' )
+			->will( $this->returnValue( $mockMatch ) )
+		;
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'extractMatch' );
 		$method->setAccessible( true );
 		$this->assertEquals(
 				$mockMatch,
@@ -286,10 +330,10 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\InterWiki::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getHub' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getHub', 'getLanguageCode' ) );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'getGlobalWithDefault', 'getLanguageCode', 'getWikiId' ) )
+		                      ->setMethods( array( 'getGlobal', 'getWikiId' ) )
 		                      ->getMock();
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\InterWiki' )
@@ -302,21 +346,21 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getHub' )
 		    ->will   ( $this->returnValue( 'Entertainment' ) )
 		;
-		$mockService
+		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getLanguageCode' )
 		    ->will   ( $this->returnValue( 'en' ) )
 		;
 		$mockService
 		    ->expects( $this->once() )
-		    ->method ( 'getGlobalWithDefault' )
+		    ->method ( 'getGlobal' )
 		    ->with   ( 'CrossWikiaSearchExcludedWikis' )
 		    ->will   ( $this->returnValue( array( 123, 321 ) ) )
 		;
 		$mockService
-		    ->expects( $this->once() )
-		    ->method ( 'getWikiId' )
-		    ->will   ( $this->returnValue( 456 ) )
+			->expects( $this->once() )
+			->method ( 'getWikiId' )
+			->will   ( $this->returnValue( 456 ) )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\InterWiki', 'getQueryClausesString' );
 		$method->setAccessible( true );
