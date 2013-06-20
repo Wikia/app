@@ -1,9 +1,5 @@
 <?php
 
-$dir = dirname(__FILE__);
-
-$app = F::app();
-
 $wgExtensionMessagesFiles['EmailTemplates'] = $dir . '/EmailTemplates.i18n.php';
 
 $wgAutoloadClasses['EmailTemplatesController'] = $dir . '/EmailTemplatesController.class.php';
