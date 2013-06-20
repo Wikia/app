@@ -13,7 +13,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		wfProfileIn(__METHOD__);
-
+		
 		if( $this->checkPermissions() ) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
@@ -43,6 +43,8 @@ class SpecialCssController extends WikiaSpecialPageController {
 			}
 		}
 
+
+		$this->cssUpdates = $model->getCssUpdatesData();
 		$this->createDeleteLinks();
 		$this->handleAssets();
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
