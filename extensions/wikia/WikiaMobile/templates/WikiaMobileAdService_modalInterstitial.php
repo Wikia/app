@@ -42,7 +42,7 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 					data.zoomable = false;
 
 					ads.setupSlot({
-						name: 'MOBILE_IN_CONTENT',
+						name: 'MOBILE_MODAL_INTERSTITIAL',
 						size: '300x250',
 						wrapper: ad,
 						init: function(found){
