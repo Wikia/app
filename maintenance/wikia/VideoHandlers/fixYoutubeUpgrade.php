@@ -85,11 +85,14 @@ class FixYoutubeUpgrade extends Maintenance {
 		$text = $page->getText();
 		$matchFile = 'File|'.wfMessage('nstab-image')->text();
 
-		$fixes = 0;
+		global $wgTagFixes;
+		$wgTagFixes = 0;
 
 		$text = preg_replace_callback(
 			"/\[\[((?:$matchFile):[^\|\]]+)\|([0-9]+)([^\|\]]*)\]\]/i",
 			function ($matches) {
+				global $wgTagFixes;
+
 				// Name the bits we're matching, for sanity
 				$original = $matches[0];
 				$file = $matches[1];
@@ -104,7 +107,7 @@ class FixYoutubeUpgrade extends Maintenance {
 				if ( preg_match('/^ *$/', $suffix) ) {
 					$rewrite = "[[$file|${width}px]]";
 					echo "\t- FIX AS '$rewrite\n";
-					$fixes++;
+					$wgTagFixes++;
 					return $rewrite;
 				} else {
 					echo "\t- Leaving unchanged\n";
@@ -114,7 +117,7 @@ class FixYoutubeUpgrade extends Maintenance {
 			$text
 		);
 
-		if ( $fixes == 0 ) {
+		if ( $wgTagFixes == 0 ) {
 			echo "\tNo changes for this article\n";
 			return true;
 		}
