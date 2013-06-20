@@ -20,6 +20,12 @@ class MediaWikiService
 	const WIKI_DEFAULT_LANG_CODE = 'en';
 
 	/**
+	 * Thumbnails default size, used for getting article images
+	 */
+	const THUMB_DEFAULT_WIDTH = 160;
+	const THUMB_DEFAULT_HEIGHT = 100;
+
+	/**
 	 * Application interface
 	 * @var \WikiaApp
 	 */
@@ -639,15 +645,28 @@ class MediaWikiService
 
 	public function getThumbnailUrl(
 		$pageId,
-		$dimensions = array( 'width' => 160, 'height' => 100 )
+		$dimensions = null
 	) {
-		$imgSource = new \ImageServing( array( $pageId ), $dimensions[ 'width' ], $dimensions[ 'height' ] );
+		$width = (isset( $dimensions[ 'width' ] ) ) ? $dimensions[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
+		$height = (isset( $dimensions[ 'height' ] ) ) ? $dimensions[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
+		$imgSource = $this->getImageServing( array( $pageId ), $width, $height );
 		//get one image only
 		$img = $imgSource->getImages( 1 );
 		if ( !empty( $img ) ) {
 			return $img[ $pageId ][ 0 ][ 'url' ];
 		}
 		return false;
+	}
+
+	/**
+	 * Gets image serving for page, moved to external method for easier testing
+	 * @param $pageId
+	 * @param $width
+	 * @param $height
+	 * @return \ImageServing
+	 */
+	protected function getImageServing( $pageId, $width, $height ) {
+		return new \ImageServing( array( $pageId ), $width, $height );
 	}
 
 	/**
