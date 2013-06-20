@@ -104,9 +104,9 @@ class FixYoutubeUpgrade extends Maintenance {
 				// See if our width is suffixed by 'px' or not.  If so
 				// leave it as is, unchanged.
 				if ( preg_match('/^ *$/', $suffix) ) {
-                                        $rewrite = "[[$file|${width}px]]";
-                                        echo "\t- FIX AS '$rewrite\n";
-                                        return $rewrite;
+					$rewrite = "[[$file|${width}px]]";
+					echo "\t- FIX AS '$rewrite\n";
+					return $rewrite;
 				} else {
 					echo "\t- Leaving unchanged\n";
 					return $original;
