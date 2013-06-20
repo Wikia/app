@@ -164,5 +164,12 @@ YEEZY;
 				'Uh\:my mind move like a Tron bike Uh, pop a',
 				$q->getSolrQuery( 10 )
 		);
+
+		$sQuery = 'test';
+		$q = new Query( $sQuery );
+		$this->assertEquals(
+			$sQuery,
+			$q->getSolrQuery( 10 )
+		);
 	}
 }
