@@ -1,12 +1,11 @@
 /**
  *
  */
-define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.containerdom'], function( QueryString, containerDOM ) {
+define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.commonajax'], function( QueryString, commonAjax ) {
 	"use strict";
 
 	return function( $container ) {
-		var $loading = $('<div class="loading-bg"></div>' ),
-			$parent,
+		var $parent,
 			$overlay,
 			$row,
 			$button,
@@ -19,8 +18,8 @@ define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.containerdom'], function( Que
 
 		function doRequest(){
 			// Add loading graphic
-			$loading.appendTo( $container );
-			$overlay.addClass( 'loading' ).show();
+			commonAjax.startLoadingGraphic();
+
 			qs = new QueryString();
 			sort = qs.getVal( 'sort', 'recent' );
 			page = qs.getVal( 'currentPage', 1);
@@ -40,7 +39,10 @@ define( 'lvs.swapkeep', ['wikia.querystring', 'lvs.containerdom'], function( Que
 				method: isSwap ? 'swapVideo' : 'keepVideo',
 				data: data,
 				callback: function( data ) {
-					containerDOM( $container, data);
+					commonAjax.success( $container, data);
+				},
+				onErrorCallback: function() {
+					commonAjax.failure();
 				}
 			});
 		}

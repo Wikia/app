@@ -1,5 +1,5 @@
 
-define( 'lvs.undo', ['wikia.querystring', 'lvs.containerdom'], function( QueryString, containerDOM ) {
+define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window'], function( QueryString, commonAjax, window ) {
 
 	return function( $container ) {
 		var videoTitle,
@@ -11,6 +11,8 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.containerdom'], function( QuerySt
 			wasSwap;
 
 		function doRequest() {
+			commonAjax.startLoadingGraphic();
+
 			$.nirvana.sendRequest({
 				controller: 'LicensedVideoSwapSpecialController',
 				method: 'restoreVideo',
@@ -20,13 +22,18 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.containerdom'], function( QuerySt
 					sort: sort
 				},
 				callback: function( data ) {
-					containerDOM( $container, data);
+					commonAjax.success( $container, data);
+				},
+				onErrorCallback: function() {
+					commonAjax.failure();
 				}
 			});
 		}
 
 		$( 'body' ).on( 'click', '.global-notification .undo', function( e ) {
 			e.preventDefault();
+
+			window.GlobalNotification.hide();
 
 			var $this = $( this );
 

@@ -98,7 +98,6 @@ $arrow-button-color: white;
 			position: absolute;
 			top: 157px;
 			width: 49px;
-			z-index: 102; // above loading bg
 			&:before {
 				@include sprite-LicensedVideoSwap('big_' + $arrow-color + '_arrow');
 				content: "";
@@ -106,14 +105,6 @@ $arrow-button-color: white;
 				margin: auto;
 				height: 31px;
 				width: 49px;
-			}
-			&.loading:before {
-				content: "";
-				background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
-				display: block;
-				height: 16px;
-				margin: 7px auto 0;
-				width: 16px;
 			}
 		}
 	}
@@ -231,16 +222,6 @@ $arrow-button-color: white;
 			}
 		}
 	}
-	.loading-bg {
-		@include opacity(75);
-		background-color: $color-page;
-		bottom: 0;
-		left: 0;
-		position: absolute;
-		right: 0;
-		top: 0;
-		z-index: 101; // play buttons are 100
-	}
 }
 
 .popover .details {
@@ -260,4 +241,8 @@ $arrow-button-color: white;
 			border-top: none;
 		}
 	}
+}
+
+body.lvs-loading {
+	overflow: hidden;
 }
