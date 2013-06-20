@@ -274,8 +274,8 @@ ManageWikiaHome.prototype = {
 			this.updateCounterDisplay(collectionId);
 			this.updateCollection();
 		} else {
-            $('.modalWrapper').closeModal();
-            this.showInformationModal( $.msg('manage-wikia-home-modal-too-many-wikis-in-collection') );
+            		$('.modalWrapper').closeModal();
+            		this.showInformationModal( $.msg('manage-wikia-home-modal-too-many-wikis-in-collection') );
 		}
 	},
 	updateCollection: function() {
