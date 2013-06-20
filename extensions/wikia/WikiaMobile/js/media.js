@@ -677,7 +677,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 			if(whiteList && whiteList instanceof Array) {
 				return images.filter(function(media){
-					return ~whiteList.indexOf(media.type);
+					return whiteList.indexOf(media.type) != -1;
 				});
 			}else {
 				return images

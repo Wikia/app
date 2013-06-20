@@ -1,5 +1,5 @@
 <script>window.addEventListener('load', function () {
-if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS"))){
+if(Wikia.AbTest && ['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS")) != -1){
 	require(['ads', 'media', 'modal','JSMessages'], function (ads, media, modal, msg) {
 
 		var type = 'ad',
