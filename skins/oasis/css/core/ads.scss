@@ -172,8 +172,14 @@
 	}
 
 	.WikiaSpotlight {
-		height: 123px;
-		width: 255px;
+		max-height: 123px;
+		max-width: 255px;
+		width: 30%;
+
+		img {
+			height: auto;
+			width: 100%;
+		}
 	}
 }
 
