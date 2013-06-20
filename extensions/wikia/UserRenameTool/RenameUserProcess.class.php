@@ -493,7 +493,7 @@ class RenameUserProcess {
 			$status = $this->doRun();
 		} catch (Exception $e) {
 			$this->addLog($e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine());
-			$this->addError(wfMessage('userrenametool-error-cannot-rename-unexpected')->text());
+			$this->addError(wfMessage('userrenametool-error-cannot-rename-unexpected')->inContentLanguage()->text());
 		}
 
 		$this->mGlobalTask->closeTask($status);
