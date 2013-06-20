@@ -23,6 +23,13 @@ class IgnApiWrapper extends IngestionApiWrapper {
 		return '';
 	}
 
+	public function getNamedEntities() {
+		if (!empty($this->metadata['named_entities'])) {
+			return $this->metadata['named_entities'];
+		}
+		return array();
+	}
+
 	protected function getOriginalDescription() {
 		if (!empty($this->metadata['description'])) {
 			return $this->metadata['description'];
