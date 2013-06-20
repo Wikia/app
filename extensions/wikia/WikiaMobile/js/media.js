@@ -13,7 +13,6 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			return style.transform != undef ? 'transform' : style.webkitTransform != undef ? 'webkitTransform' : style.oTransform != undef ? 'oTransform' : style.mozTransform != undef ? 'mozTransform' : 'msTransform';
 		})(document.createElement('div').style),
 		images = [],
-		imagesLength = 0,
 		elements,
 		videoCache = {},
 		pager,
@@ -55,7 +54,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		// Video view click source tracking. Possible values are "embed" and "lightbox" for consistancy with Oasis
 		clickSource,
 		videoInstance,
-		events = {};
+		events = {},
+		skip = [];
 
 	function trigger(event, data){
 		if(events[event]){
@@ -68,6 +68,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	function setup(){
 		var	name,
 			i = 0,
+			imagesLength = 0,
 			element,
 			imageData,
 			j,
@@ -101,17 +102,12 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		data = {
 			images: images,
-			length: imagesLength
+			skip: skip
 		};
 
 		trigger('setup', data);
 
-		if(images != data.images) {
-			images = data.images;
-			imagesLength = images.length;
-		}
-
-		if(imagesLength > 1) {
+		if(images.length > 1) {
 			content = '<div class=chnImg id=prvImg></div>' + content + '<div class=chnImg id=nxtImg></div>';
 			toolbar += '<div id=wkGalTgl></div>';
 		}
@@ -481,6 +477,29 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		setupImage();
 	}
 
+	function getMediaNumber(num, reverse) {
+		var add = 0;
+		//count how many images have to be skipped
+		//to correctly get to an image
+		//also support reverse lookup
+		skip.every(function(val){
+			if(reverse) {
+				if(val < num){
+					add--;
+					return true;
+
+				}
+			}else {
+				if(val <= num){
+					num++;
+					return true;
+				}
+			}
+		});
+
+		return num + add;
+	}
+
 	function openModal(num){
 		var cacheKey = 'mediaGalleryAssets',
 			galleryData,
@@ -489,7 +508,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		// Video/image view was initiated from article
 		clickSource = "embed";
 
-		currentNum = ~~num;
+		currentNum = getMediaNumber(~~num);
 		currentMedia = images[currentNum];
 
 		modal.open({
@@ -521,7 +540,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		wrapper = modal.getWrapper();
 
-		if(imagesLength > 1 && !galleryInited) {
+		if(images.length > 1 && !galleryInited) {
 			//in GG all assets are loaded upfront
 			if(Features.gameguides) {
 				require(['mediagallery'], function(mg){
@@ -614,7 +633,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			}
 
 			//handling next/previous image
-			if(imagesLength > 1){
+			if(images.length > 1){
 				document.getElementById('nxtImg').addEventListener('click', tap);
 				document.getElementById('prvImg').addEventListener('click', tap);
 			}
@@ -667,6 +686,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		},
 		getCurrent: function(){
 			return currentNum;
+		},
+		getCurrentDisplayable: function(){
+			return getMediaNumber(currentNum, true);
 		},
 		hideShare: function(){
 			if(shareBtn) {shareBtn.style.display = 'none';}

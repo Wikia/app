@@ -15,7 +15,8 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 				toString: toString,
 				type: type,
 				caption: caption
-			};
+			},
+			FREQUENCY = 5;
 
 		function Ad(num){
 			this.caption = caption;
@@ -25,12 +26,13 @@ if(Wikia.AbTest && ~['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEAD
 		}
 
 		media.on('setup', function (data){
-			var l = data.length;
+			var l = data.images.length;
 
-			if(l > 5){
+			if(l > FREQUENCY){
 				data.images.forEach(function(val,key){
-					if(key > 0 && key % 5 == 0){
+					if(key % (FREQUENCY+1) == FREQUENCY){
 						data.images.splice(key, 0, new Ad(key));
+						data.skip.push(key);
 					}
 				});
 
