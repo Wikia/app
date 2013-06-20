@@ -274,8 +274,8 @@ ManageWikiaHome.prototype = {
 			this.updateCounterDisplay(collectionId);
 			this.updateCollection();
 		} else {
-			$('.modalWrapper').closeModal();
-			alert( $.msg('manage-wikia-home-modal-too-many-wikis-in-collection') );
+            $('.modalWrapper').closeModal();
+            this.showInformationModal( $.msg('manage-wikia-home-modal-too-many-wikis-in-collection') );
 		}
 	},
 	updateCollection: function() {
@@ -292,7 +292,7 @@ ManageWikiaHome.prototype = {
 				this.wereCollectionsWikisChanged = response.status;
 				$('.modalWrapper').closeModal();
                 if(!response.status) {
-                    alert(response.message);
+                    this.showInformationModal( response.message );
                 }
 			}, this)
 		});
