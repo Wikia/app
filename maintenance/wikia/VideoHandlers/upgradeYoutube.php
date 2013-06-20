@@ -98,6 +98,7 @@ class UpgradeYoutube extends Maintenance {
 			return null;
 		}
 
+		$ownersFound = array();
 		foreach ($tagsToFind as $tag) {
 			$ownersFound[$tag] = 'WikiaBot';
 		}
