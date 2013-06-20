@@ -36,7 +36,7 @@ class AbTesting extends WikiaObject {
 
 	// Keeping the response size (assets minification) and the number of external requests low (aggregation)
 	static public function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ) {
-		array_unshift( $jsHeadPackages, 'abtesting' );
+		array_unshift( $jsBodyPackages, 'abtesting' );
 		return true;
 	}
 

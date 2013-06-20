@@ -21,7 +21,6 @@ class WikiaMobileService extends WikiaService {
 	private $templateObject;
 
 	function init(){
-		wfLoadExtensionMessages( 'WikiaMobile' );
 		$this->skin = RequestContext::getMain()->getSkin();
 		$this->templateObject = $this->app->getSkinTemplateObj();
 	}
@@ -30,7 +29,7 @@ class WikiaMobileService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		$jsHeadPackages = [ 'wikiamobile_js_head' ];
-		$jsBodyPackages = [];
+		$jsBodyPackages = [ 'wikiamobile_js_body_full' ];
 		$scssPackages = [];
 		$cssLinks = '';
 		$jsBodyFiles = '';
@@ -46,7 +45,6 @@ class WikiaMobileService extends WikiaService {
 
 		JSMessages::enqueuePackage( 'WkMbl', JSMessages::INLINE );
 
-		$jsBodyPackages[] = 'wikiamobile_js_body_full';
 		$scssPackages[] = 'wikiamobile_scss';
 		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
