@@ -13,8 +13,6 @@ class EmailTemplatesController extends WikiaController {
 	 * @param $params
 	 */
 	public function executeNewBlogPostMail( $params ) {
-		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
-
 		$this->language = $params['language'];
 		$this->content = $params['content'];
 	}
@@ -26,8 +24,6 @@ class EmailTemplatesController extends WikiaController {
 	 */
 	public function executePostInfo( $params ) {
 		wfProfileIn( __METHOD__ );
-
-		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
 
 		$this->post_url = $params['post_url'];
 		$this->post_title = $params['post_title'];
@@ -46,8 +42,6 @@ class EmailTemplatesController extends WikiaController {
 	 */
 	public function executeButton( $params ) {
 		wfProfileIn( __METHOD__ );
-
-		$this->msgParams = array( 'parsemag', 'language' => $params['language'] );
 
 		$this->link_url = $params['link_url'];
 		$this->link_text = $params['link_text'];
