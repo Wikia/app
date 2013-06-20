@@ -28,7 +28,6 @@ define('SearchAbTest.GroupProvider' ,['wikia.window', 'wikia.log'], function( wi
 				searchExperiments.push(experiments[i]);
 			}
 		}
-		log('Search related experiment groups = ' + searchExperiments.join(','), log.levels.debug, 'search');
 		return searchExperiments;
 	}
 

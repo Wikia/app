@@ -12,12 +12,13 @@ define('SearchAbTest.LinkUpdater' ,['jquery', 'wikia.log'], function( $, log ) {
 		 */
 		update: function(params) {
 			if( !params ) return;
+			var self = this;
 			$(searchPaginationLinksSelector).each(function() {
 				var originalLink = $(this).attr('href');
-				var modifiedLink = this.modifyLink(originalLink);
-				log('Modifying link: ' + originalLink + " to " + modifiedLink, log.levels.debug, 'search');
+				var modifiedLink = self.modifyLink(originalLink, params);
+				log('Modifying link: "' + originalLink + '" to "' + modifiedLink + '"', log.levels.debug, 'search');
 				$(this).attr('href', modifiedLink);
-			})
+			});
 		},
 
 		/**
@@ -28,8 +29,8 @@ define('SearchAbTest.LinkUpdater' ,['jquery', 'wikia.log'], function( $, log ) {
 		 * @returns string modified link
 		 */
 		modifyLink: function(originalLink, params) {
-			var modifiedLink = originalLink;
 			params = params || {};
+			var modifiedLink = originalLink;
 			var joinCharacter = "?";
 			if ( originalLink.indexOf('?') > -1 ) {
 				joinCharacter = "&";
