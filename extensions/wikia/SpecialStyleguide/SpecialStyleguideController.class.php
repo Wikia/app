@@ -17,6 +17,7 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		Global $wgAutoloadClasses;
 		wfProfileIn( __METHOD__ );
 
 		RenderContentOnlyHelper::setRenderContentVar( true );
@@ -24,7 +25,8 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/SpecialStyleguide/css/SpecialStyleguide.scss' );
 		$this->wg->Out->setPageTitle( wfMessage( 'styleguide-pagetitle' )->plain() );
 
-		$this->app->setGlobal( 'wgAutoloadClasses', dirname( __FILE__ ) . '/SpecialStyleguideGlobalHeaderControllerOverride.php', 'GlobalHeaderController' );
+		$wgAutoloadClasses['GlobalHeaderController'] = dirname( __FILE__ ) . '/SpecialStyleguideGlobalHeaderControllerOverride.php';
+
 
 		$this->response->setCacheValidity(
 			86400,
