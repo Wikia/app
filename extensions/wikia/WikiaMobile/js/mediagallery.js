@@ -19,13 +19,12 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 		i,
 		dotsPerWidth,
 		modalWrapper = mod.getWrapper(),
-		images = med.getMedia(),
+		images = med.getMedia(['image', 'video']),
 		pagination,
 		paginationStyle,
 		paginationWidth,
 		current,
-		imgsPerPage = 9,
-		types = ['image', 'video'];
+		imgsPerPage = 9;
 
 	function init(){
 		modalWrapper.addEventListener('click', function (ev) {
@@ -94,8 +93,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 			x = (Math.ceil(imgL / cols) * cols) - imgL,
 			img,
 			thumb,
-			type,
-			l = 0;
+			type;
 
 		current *= imgsPerPage;
 		imgsPerPage = cols * ~~((gal.offsetHeight - 50) / imagesize);
@@ -107,7 +105,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 		pages[pagesNum] = '<div class=gallery>';
 
 		for (i = 0; i < imgL; i++) {
-			if(l > 0 && l % imgsPerPage === 0){
+			if(i > 0 && i % imgsPerPage === 0){
 				pages[pagesNum++] += '</div>';
 				pages[pagesNum] = '<div class=gallery>';
 				dots += '<div class="dot'+ ((current === pagesNum) ? ' curr':'') + '" id=dot' + pagesNum + '><div></div></div>';
@@ -115,21 +113,16 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 
 			img = images[i];
 			type = img.type;
+			thumb = img.thumb;
 
-			if(~types.indexOf(type)){
-				thumb = img.thumb;
-
-				//no thumb available, generate one
-				if (!thumb) {
-					thumb = thumbnailer.getThumbURL(img.url, type, MAX_THUMB_SIZE, MAX_THUMB_SIZE);
-				}
-
-				pages[pagesNum] += '<div class="galPlc ' +
-					type +
-					((goToImg === i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
-
-				l += 1;
+			//no thumb available, generate one
+			if (!thumb) {
+				thumb = thumbnailer.getThumbURL(img.url, type, MAX_THUMB_SIZE, MAX_THUMB_SIZE);
 			}
+
+			pages[pagesNum] += '<div class="galPlc ' +
+				type +
+				((goToImg === i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
 		}
 
 		//add placeholders

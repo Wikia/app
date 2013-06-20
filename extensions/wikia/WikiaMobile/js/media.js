@@ -653,9 +653,17 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 	return {
 		openModal: openModal,
-		getMedia: function(){
+		getMedia: function(whiteList){
 			!inited && setup();
-			return images;
+
+			if(whiteList && whiteList instanceof Array) {
+				return images.filter(function(media){
+					return ~whiteList.indexOf(media.type);
+				});
+			}else {
+				return images
+			}
+
 		},
 		getCurrent: function(){
 			return currentNum;
