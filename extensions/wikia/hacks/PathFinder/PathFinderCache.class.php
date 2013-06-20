@@ -11,7 +11,7 @@ class PathFinderCache extends WikiaObject {
 	private $predisClient;
 	
 	function __construct(){
-		$this->predisClient = F::build( 'Predis\Client' );
+		$this->predisClient = (new Predis\Client);
 	}
 	
 	public function set( $key, $value = null, $exp = 0 ) {
@@ -49,7 +49,7 @@ class PathFinderCache extends WikiaObject {
 	}
 	
 	public function makeKey( /* ... */ ){
-		$key = $this->app->wf->WikiID() . ':' . implode( ':', func_get_args() );
+		$key = wfWikiID() . ':' . implode( ':', func_get_args() );
 		return str_replace( ' ', '_', $key );
 	}
 	

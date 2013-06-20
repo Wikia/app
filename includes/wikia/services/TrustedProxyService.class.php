@@ -12,7 +12,7 @@ class TrustedProxyService extends WikiaObject {
 	 *
 	 * @return boolean true if in range, false otherwise
 	 */
-	private function inRange( $cidr, $ip  ) {
+	private static function inRange( $cidr, $ip  ) {
 		list ( $net, $mask ) = explode ( '/', $cidr );
 		return ( ip2long ($ip) & ~(( 1 << ( 32 - $mask ) ) - 1 ) ) == ip2long ( $net );
 	}
@@ -29,16 +29,17 @@ class TrustedProxyService extends WikiaObject {
 	 *
 	 * @return true always since hook
 	 */
-	public function onIsTrustedProxy( &$ip, &$trusted ) {
+	public static function onIsTrustedProxy( &$ip, &$trusted ) {
 		wfProfileIn( __METHOD__ );
-		$ranges = $this->wg->SquidServersNoPurge;
+		$wg = F::app()->wg;
+		$ranges = $wg->SquidServersNoPurge;
 		if( is_array( $ranges ) ) {
 			foreach( $ranges as $range ) {
 				if( strpos( $range, '/' ) !== false ) {
 					#
 					# stop if match is true
 					#
-					if( $this->inRange( $range, $ip ) === true ) {
+					if( self::inRange( $range, $ip ) === true ) {
 						wfDebug( __METHOD__ . ": $ip is in range $range.\n" );
 						$trusted = true;
 						wfProfileOut( __METHOD__ );

@@ -26,7 +26,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 	public function getFormFields() {
 		$formFields = array(
 			'exploreTitle' => array(
-				'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-title'),
+				'label' => wfMsg('marketing-toolbox-hub-module-explore-title'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -49,7 +49,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 				)
 			),
 			'imageLink' => array(
-				'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
+				'label' => wfMsg('marketing-toolbox-hub-module-explore-link-url'),
 				'validator' => new WikiaValidatorToolboxUrl(
 					array(),
 					array(
@@ -78,7 +78,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 		$fieldName = self::SECTION_FIELD_PREFIX . $sectionIdx;
 		return array(
 			$fieldName => array(
-				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $sectionIdx),
+				'label' => wfMsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $sectionIdx),
 				'validator' => new WikiaValidatorDependent(
 					array(
 						'required' => false,
@@ -105,7 +105,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 		$linkUrlFieldName = $this->generateUrlFieldName($sectionIdx, $linkIdx);
 
 		$linkUrlField = array(
-			'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
+			'label' => wfMsg('marketing-toolbox-hub-module-explore-link-url'),
 			'labelclass' => "wikiaUrlLabel",
 			'validator' => new WikiaValidatorToolboxUrl(
 				array(),
@@ -121,7 +121,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 
 		$linkHeaderFieldName = $this->generateHeaderFieldName($sectionIdx, $linkIdx);
 		$linkHeaderField = array(
-			'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $this->lettersMap[$linkIdx]),
+			'label' => wfMsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $this->lettersMap[$linkIdx]),
 			'validator' => new WikiaValidatorDependent(
 				array(
 					'required' => false,

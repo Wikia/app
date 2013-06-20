@@ -265,8 +265,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		    ->method ( 'getMainPageIdForWikiId' )
 		    ->will   ( $this->returnValue( 5 ) )
 		;
-		$this->proxyClass( 'DataMartService', $mockDmService );
-		$this->mockApp();
+		$this->mockClass( 'DataMartService', $mockDmService );
 		$this->assertEquals(
 				$topPages,
 				$this->resultSet->getTopPages()
@@ -361,7 +360,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		$results = new \ArrayIterator( array( $mockResult ) );
 		$this->prepareMocks( array( 'addHeaders', 'setHeader', 'getHeader', 'getDescription' ), array(), array(), array( 'getSimpleMessage', 'getWikiIdByHost', 'getStatsInfoForWikiId', 'getVisualizationInfoForWikiId', 'getGlobalForWiki', 'getHubForWikiId' ) );
 		$fields = array( 'id' => 123 );
-		$vizInfo = array( 'description' => 'yup' );
+		$vizInfo = array( 'description' => 'yup', 'lang' => 'get rid of me' );
 		$mockResult
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'offsetGet' )
@@ -402,7 +401,7 @@ class GroupingTest extends Wikia\Search\Test\BaseTest
 		$this->resultSet
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'addHeaders' )
-		    ->with   ( $vizInfo )
+		    ->with   ( [ 'description' => 'yup' ] ) // note we dropped the lang
 		    ->will   ( $this->returnValue( $this->resultSet ) )
 		;
 		$this->resultSet

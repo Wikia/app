@@ -7,7 +7,7 @@ class WallRailHelper {
 	 * 
 	 * @return boolean true
 	 */
-	public function onGetRailModuleList(&$modules) {
+	public static function onGetRailModuleList(&$modules) {
 		$app = F::App();
 		wfProfileIn(__METHOD__);
 		

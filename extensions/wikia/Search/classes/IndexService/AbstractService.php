@@ -97,7 +97,7 @@ abstract class AbstractService
 				continue;
 			}
 			try {
-				$response = $this->execute();
+				$response = $this->getResponse();
 				$this->processedDocIds[] = $this->getCurrentDocumentId();
 				if (! empty( $response ) ) {
 				    $documents[] = $this->getJsonDocumentFromResponse( $response );
@@ -144,6 +144,30 @@ abstract class AbstractService
 			$this->service = new MediaWikiService;
 		}
 		return $this->service;
+	}
+	
+
+	/**
+	 * Hook for resetting any state specific to a single page
+	 * @return \Wikia\Search\IndexService\AbstractService
+	 */
+	protected function reinitialize() {
+		return $this;
+	}
+	
+	/**
+	 * Execute with hook to reinitialize
+	 * @return \Wikia\Search\IndexService\AbstractService
+	 */
+	protected function getResponse() {
+		try {
+			$response = $this->execute();
+		} catch ( \Exception $e ) {
+			$this->reinitialize();
+			throw $e;
+		}
+		$this->reinitialize();
+		return $response;
 	}
 	
 }

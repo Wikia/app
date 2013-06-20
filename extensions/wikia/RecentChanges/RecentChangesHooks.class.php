@@ -20,7 +20,7 @@ class RecentChangesHooks {
 		return true;
 	}
 
-	public function onGetRecentChangeQuery( &$conds, &$tables, &$join_conds, $opts ) {
+	public static function onGetRecentChangeQuery( &$conds, &$tables, &$join_conds, $opts ) {
 		$app = F::app();
 
 		if ( $app->wg->User->isAnon() ) {
@@ -43,7 +43,7 @@ class RecentChangesHooks {
 			    return true;
 			}
 			
-			$db = $app->wf->GetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE );
 			$cond = 'rc_namespace IN ('.$db->makeList( $selected ).')';
 			
 			$flag = true;

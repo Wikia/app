@@ -39,7 +39,7 @@ echo wfMsgExt( 'specialcontact-intro-bug', array( 'parse' ) );
 </p>
 
 <p>
-<label for="wpDescription"><?= wfmsg( 'specialcontact-label-bug-description' ) ?></label>
+<label for="wpDescription"><?= wfMsg( 'specialcontact-label-bug-description' ) ?></label>
 <textarea name="wpDescription"></textarea>
 </p>
 

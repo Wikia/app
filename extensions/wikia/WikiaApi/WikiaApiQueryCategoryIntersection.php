@@ -29,8 +29,6 @@ class WikiaApiQueryCategoryIntersection extends ApiQueryGeneratorBase {
      * dispatcher
      */
 	public function executeGenerator( $resultPageSet ) {
-		global $wgUser;
-
 		$this->getCategoryIntersection( $resultPageSet );
 
 	} // end execute()

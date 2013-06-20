@@ -70,7 +70,7 @@ class WikiaMobileMediaService extends WikiaService {
 			/**
 			 * @var $file File
 			 */
-			$file = $this->wf->FindFile( $item['title'] );
+			$file = wfFindFile( $item['title'] );
 
 			if ( $file instanceof File ) {
 				if ( !empty( $item['link'] ) ) {
@@ -90,7 +90,7 @@ class WikiaMobileMediaService extends WikiaService {
 					//prepare data for media collection
 					$info = [
 						'name' => $item['title']->getText(),
-						'full' => $this->wf->ReplaceImageServer( $file->getFullUrl(), $file->getTimestamp() )
+						'full' => wfReplaceImageServer( $file->getFullUrl(), $file->getTimestamp() )
 					];
 
 					if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
@@ -135,7 +135,7 @@ class WikiaMobileMediaService extends WikiaService {
 				$size = self::calculateMediaSize( $origWidth, $origHeight );
 				$thumb = $file->transform( $size );
 				$attribs = array(
-					'src' => $this->wf->ReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() ),
+					'src' => wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() ),
 					'width' => $size['width'],
 					'height' => $size['height']
 				);
@@ -148,7 +148,7 @@ class WikiaMobileMediaService extends WikiaService {
 					false,
 					Xml::element( 'img', $attribs, '', true ),
 					[],
-					$this->wf->MsgForContent( 'wikiamobile-media-group-footer', count( $params ) )
+					wfMsgForContent( 'wikiamobile-media-group-footer', count( $params ) )
 				);
 			}
 		}
@@ -186,7 +186,7 @@ class WikiaMobileMediaService extends WikiaService {
 		$content = $this->request->getVal( 'content' );
 
 		$attribs['data-src'] = $attribs['src'];
-		$attribs['src'] = $this->wf->BlankImgUrl();
+		$attribs['src'] = wfBlankImgUrl();
 		$attribs['class'] = ( ( !empty( $attribs['class'] ) ) ? "{$attribs['class']} " : '' ) . self::CLASS_LAZYLOAD . ( !$linked  ? ' ' . self::CLASS_MEDIA : '' );
 
 		if ( !empty( $params ) ) {

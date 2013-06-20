@@ -1,7 +1,7 @@
 <?php
 
 class MostvisitedpagesSpecialPage extends SpecialPage {
-    private $mpa = null;
+    private $mpp = null;
     private $showList = true;
     private $page = '';
     private $page_id = '';

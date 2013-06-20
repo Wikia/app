@@ -3,9 +3,8 @@
 class RelatedVideosController extends WikiaController {
 
 	const SURVEY_URL = 'http://www.surveymonkey.com/s/RelatedVideosExperience';
-	public function __construct( WikiaApp $app ) {
+	public function __construct() {
 		global $wgRelatedVideosOnRail;
-		$this->app = $app;
 		if( !empty( $wgRelatedVideosOnRail ) ) {
 			RelatedVideosService::$width = 150;
 			RelatedVideosService::$height = 90;
@@ -56,7 +55,7 @@ class RelatedVideosController extends WikiaController {
 		$controlerName = str_replace('Controller', '', $this->getVal('controlerName', 'RelatedVideos'));
 		$wikiLink = $this->getVal('wikiLink', '');
 
-		$oRelatedVideosService = F::build('RelatedVideosService');
+		$oRelatedVideosService = new RelatedVideosService();
 		$result = $oRelatedVideosService->getRelatedVideoDataFromTitle( array( 'title' => $title, 'source' => $external ), RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort, $videoHeight );
 		if ( isset( $result['error'] ) ){
 			$this->setVal( 'error', $result['error'] );
@@ -132,7 +131,7 @@ class RelatedVideosController extends WikiaController {
 			$useMaster = ( false || !empty( $useMaster ) );
 		}
 
-		$rvd = F::build('RelatedVideosData'); /* @var $rvd RelatedVideosData */
+		$rvd = new RelatedVideosData();
 		$videoData = $rvd->getVideoData( $videoName, $width, $videoWidth, $autoplay, $useMaster, $cityShort, $videoHeight, $useJWPlayer, $inAjaxReponse );
 		$this->setVal( 'data', $videoData );
 	}
@@ -150,7 +149,7 @@ class RelatedVideosController extends WikiaController {
 
  		$preloaded = $this->getVal( 'preloaded' );
 
-		$videoTitle = F::build('Title', array($video['id'], NS_FILE), 'newFromText');
+		$videoTitle = Title::newFromText($video['id'], NS_FILE);
 		$videoFile = wfFindFile($videoTitle);
 
 		if( $videoFile ) {
@@ -182,14 +181,14 @@ class RelatedVideosController extends WikiaController {
 
 			$canDelete = $this->wg->User->isAllowed( 'relatedvideosdelete' );
 
-			$this->removeTooltip = $this->wf->Message( 'related-videos-tooltip-remove' );
+			$this->removeTooltip = wfMessage( 'related-videos-tooltip-remove' );
 			$this->videoThumb = $videoThumb;
 			$this->video = $video;
 			$this->preloaded = $preloaded;
 			$this->canDelete = $canDelete;
 			$this->totalVideos = $this->getTotalVideos();
 			$this->isNew = empty($video['isNew']) ? false : true ;
-			$this->isNewMsg = $this->wf->Message( 'related-videos-video-is-new' );
+			$this->isNewMsg = wfMessage( 'related-videos-video-is-new' );
 		} else {
 			Wikia::log(__METHOD__, false, 'A video file not found. ID: '.$video['id']);
 		}
@@ -204,31 +203,31 @@ class RelatedVideosController extends WikiaController {
 		global $wgRelatedVideosOnRail;
 
 		if ( !$this->wg->User->isLoggedIn() ) {
-			$this->error = $this->wf->Msg( 'videos-error-not-logged-in' );
+			$this->error = wfMsg( 'videos-error-not-logged-in' );
 			return;
 		}
 
 		if ( !$this->wg->User->isAllowed( 'relatedvideosedit' ) ) {
-			$this->error = $this->wf->Msg( 'related-videos-add-video-error-permission-video' );
+			$this->error = wfMsg( 'related-videos-add-video-error-permission-video' );
 			return;
 		}
 
 		$url = urldecode( $this->getVal( 'url', '' ) );
 		if ( empty( $url ) ) {
-			$this->error = $this->wf->Msg( 'videos-error-no-video-url' );
+			$this->error = wfMsg( 'videos-error-no-video-url' );
 			return;
 		}
 
 		if ( $this->wg->User->isBlocked() ) {
-			$this->error = $this->wf->Msg( 'videos-error-blocked-user' );
+			$this->error = wfMsg( 'videos-error-blocked-user' );
 			return;
 		}
 
 		$articleId = $this->getVal( 'articleId', '' );
-		$rvd = F::build( 'RelatedVideosData' ); /** @var $rvd RelatedVideosData */
+		$rvd = new RelatedVideosData();
 		$retval = $rvd->addVideo( $articleId, $url );
 		if ( is_array( $retval ) ) {
-			$rvs = F::build( 'RelatedVideosService' ); /** @var $rvs RelatedVideosService */
+			$rvs = new RelatedVideosService();
 			$data = $rvs->getRelatedVideoDataFromMaster( $retval );
 			if ( empty($wgRelatedVideosOnRail) ) {
 				$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCarouselElement', array( 'video' => $data, 'preloaded' => 1 ) ));

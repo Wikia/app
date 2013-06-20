@@ -8,11 +8,8 @@ $app = F::app();
 /**
  * classes
  */
-$app->registerClass('UAD', $dir . 'UAD.class.php');
-$app->registerClass('UADController', $dir . 'UADController.class.php');
-
-F::addClassConstructor( 'UAD', array( 'app' => $app ) );
-F::addClassConstructor( 'UADController', array( 'app' => $app, 'uad' => F::build( 'UAD' ) ) );
+$wgAutoloadClasses['UAD'] =  $dir . 'UAD.class.php';
+$wgAutoloadClasses['UADController'] =  $dir . 'UADController.class.php';
 
 
 /**

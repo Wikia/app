@@ -1350,6 +1350,16 @@ $messages['ko'] = array(
 	'cnw-error-blocked-header' => '계정이 차단됨',
 );
 
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'cnw-back' => 'Артха',
+	'cnw-or' => 'неда',
+	'cnw-title' => 'Джангы вики къура',
+	'cnw-userauth-marketing-heading' => 'Аккаунтугъуз джокъмуду?',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */

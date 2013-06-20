@@ -19,7 +19,7 @@ class PathFinderModel {
 	
 	function __construct() {
 		$this->app = F::app();
-		$this->logger = F::build( 'PathFinderLogger' );
+		$this->logger = (new PathFinderLogger);
 		
 		//singleton
 		F::setInstance( __CLASS__, $this );
@@ -119,8 +119,7 @@ class PathFinderModel {
 		
 		if ( empty( $this->wikis ) ) {
 			$this->wikis = array();
-			$data;
-			
+
 			if ( $this->app->wg->DevelEnvironment ) {
 				$data = array(
 					array( 'city_id' => '490', 'domain_name' => 'www.wowwiki.com' ),
@@ -170,7 +169,7 @@ class PathFinderModel {
 				//no memcache for the time being, it will come when this will be ready for production
 				$nextNode = $this->getEntryPoints( $cityId, $articleId, 1, $dateSpan, $minVisitsCount, array( 'target_id NOT IN (' . implode( ',', $prevTargetIds ) . ')' ) );
 				
-				if ( is_array( $res ) && !empty( $nextNode[0] ) > 0 ) {
+				if ( !empty( $nextNode[0] ) > 0 ) {
 					$node = $nextNode[0];
 					$articleId = $node->target_id;
 					$prevTargetIds[] = $node->referrer_id;
@@ -200,8 +199,6 @@ class PathFinderModel {
 		$dateString = "-" . $dateSpan . " day";
 		$date = date( "Ymd", strtotime( $dateString ) );
 		$dbr =$this->getDBConnection();
-		$prevTargetId;
-		$firstTargetId;
 		$result = array();
 		$where = array(
 			"LIMIT" => $count,
@@ -259,16 +256,12 @@ class PathFinderModel {
 			throw $exception;
 		}
 		
-		$db = F::build(
-			'Database',
-			array(
+		$db = Database::newFromParams(
 				$dbServer,
 				$dbUser,
 				$dbPassword,
 				$dbName
-			),
-			'newFromParams'
-		);
+			);
 		
 		wfProfileOut( __METHOD__ );
 		return $db;

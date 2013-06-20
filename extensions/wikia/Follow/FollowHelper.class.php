@@ -23,7 +23,6 @@ class FollowHelper {
 			return true;
 		}
 
-		$dbw = wfGetDB( DB_SLAVE );
 		$action = "categoryadd";
 		$catList = array_keys($categoryInserts);
 

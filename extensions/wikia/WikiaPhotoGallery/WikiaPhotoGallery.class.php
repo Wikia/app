@@ -593,7 +593,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				break;
 		}
 
-		$out .= F::build('JSSnippets')->addToStack(
+		$out .= JSSnippets::addToStack(
 			array( '/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', ),
 			array(),
 			'WikiaPhotoGalleryView.init'
@@ -1272,7 +1272,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$width = "{$params['width']}px";
 		$height = "{$params['height']}px";
 
-		$slideshowHtml .= F::build('JSSnippets')->addToStack(
+		$slideshowHtml .= JSSnippets::addToStack(
 			array(
 				'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
@@ -1496,7 +1496,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$javascriptInitializationFunction = 'WikiaPhotoGallerySlider.init';
 			}
 
-			$html .= F::build('JSSnippets')->addToStack(
+			$html .= JSSnippets::addToStack(
 				$sliderResources,
 				array(),
 				$javascriptInitializationFunction,
@@ -1504,7 +1504,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			);
 
 			//load WikiaMobile resources if needed using JSSnippets filtering mechanism
-			$html .= F::build('JSSnippets')->addToStack(
+			$html .= JSSnippets::addToStack(
 				array(
 					'wikiaphotogallery_slider_scss_wikiamobile',
 					'wikiaphotogallery_slider_js_wikiamobile'
@@ -1906,7 +1906,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$height = $params['height'];
 		$width = $params['width'];
 
-		$html .= F::build('JSSnippets')->addToStack(
+		$html .= JSSnippets::addToStack(
 			array(
 				'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'

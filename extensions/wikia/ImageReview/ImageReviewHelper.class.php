@@ -600,7 +600,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	}
 
 	public function getUserTsKey() {
-		return $this->wf->MemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
+		return wfMemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
 	}
 
 	private function getImageStatesForStats() {

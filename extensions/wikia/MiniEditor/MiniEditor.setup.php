@@ -16,24 +16,23 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $dir = dirname(__FILE__) . '/';
-$app = F::app();
 
 /**
  * Controllers
  */
-$app->registerClass('MiniEditorController', $dir . '/MiniEditorController.class.php');
-$app->registerClass('MiniEditorHelper', $dir . '/MiniEditorHelper.class.php');
-$app->registerClass('MiniEditorSpecialController', $dir . 'MiniEditorSpecialController.class.php');
+$wgAutoloadClasses['MiniEditorController'] =  $dir . '/MiniEditorController.class.php';
+$wgAutoloadClasses['MiniEditorHelper'] =  $dir . '/MiniEditorHelper.class.php';
+$wgAutoloadClasses['MiniEditorSpecialController'] =  $dir . 'MiniEditorSpecialController.class.php';
 
 /**
  * Special page
  */
-$app->registerSpecialPage('MiniEditorDemo', 'MiniEditorSpecialController');
+$wgSpecialPages['MiniEditorDemo'] = 'MiniEditorSpecialController';
 
 /**
  * Message files
  */
-$app->registerExtensionMessageFile('MiniEditor', $dir . 'MiniEditor.i18n.php');
+$wgExtensionMessagesFiles['MiniEditor'] = $dir . 'MiniEditor.i18n.php';
 
 /**
  * Permissions

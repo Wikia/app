@@ -425,6 +425,16 @@ $messages['roa-tara'] = array(
 	'file-page-replace-button' => 'Sostituisce',
 );
 
+/** Russian (русский)
+ * @author Lunacy1911
+ */
+$messages['ru'] = array(
+	'file-page-replace-button' => 'Заменить',
+	'file-page-tab-about' => 'О приложении',
+	'file-page-tab-history' => 'Посмотреть историю',
+	'file-page-more-links' => 'Просмотреть полный список',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Milicevic01
  */

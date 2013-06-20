@@ -22,11 +22,15 @@ class WikiaHubsParserHelper {
 			$id = 'hubspopularvideos-' . self::$counter++;
 
 			//render node
-			$html = F::build('Xml', array('div', array(
-				'id' => $id,
-				'class' => 'hubspopularvideos',
-				'data-message' => $input,
-			), trim($returnString)), 'element');
+			$html = Xml::element(
+				'div',
+				array(
+					 'id' => $id,
+					 'class' => 'hubspopularvideos',
+					 'data-message' => $input
+				),
+				trim($returnString)
+			);
 
 			$res = $html;
 		} else {

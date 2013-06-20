@@ -1,6 +1,6 @@
 <section id="EditBoardModal" class="EditBoardModal">
 	<h1>
-		<?= $wf->Msg('forum-admin-edit-board-modal-heading', $boardTitle) ?>
+		<?= wfMsg('forum-admin-edit-board-modal-heading', $boardTitle) ?>
 	</h1>
 
 <?
@@ -36,10 +36,10 @@
 	
 	<div class="neutral modalToolbar">
 		<button class="secondary cancel">
-			<?= $wf->Msg('cancel') ?>
+			<?= wfMsg('cancel') ?>
 		</button>
 		<button class="submit">
-			<?= $wf->Msg('save') ?>
+			<?= wfMsg('save') ?>
 		</button>
 	</div>
 </section>

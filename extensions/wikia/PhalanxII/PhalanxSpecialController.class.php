@@ -23,7 +23,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		$this->wg->Out->setPageTitle( $this->wf->Msg('phalanx-title') );
+		$this->wg->Out->setPageTitle( wfMsg('phalanx-title') );
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
