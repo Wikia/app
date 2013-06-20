@@ -10,9 +10,8 @@ $(function() {
 
 		var heightUpdateFunction = function() {
 			var editorContainer = $('#cssEditorContainer');
-			var newHeight = $(window).height()
-				- editorContainer.offset().top
-				- $('#WikiaBarWrapper:not(.hidden)').height()
+			var newHeight = $('.css-side-bar').height()
+				- $('.editor-changes-info-wrapper').height()
 				- EDITOR_BOTTOM_MARGIN;
 
 			editorContainer.height(newHeight);
