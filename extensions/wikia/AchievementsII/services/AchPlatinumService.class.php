@@ -29,8 +29,6 @@ class AchPlatinumService {
 	public static function getPlatinumForm($badge) {
 		wfProfileIn(__METHOD__);
 
-		global $wgScriptPath;
-
 		$template = new EasyTemplate(dirname(__FILE__).'/../templates');
 		$template->set_vars($badge);
 		$out = $template->render('PlatinumForm');

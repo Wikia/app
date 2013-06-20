@@ -29,7 +29,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$this->mContentType = AssetsManager::TYPE_CSS;
 	}
 
-	public function getContent() {
+	public function getContent( $processingTimeStart = null ) {
 		global $IP;
 		wfProfileIn(__METHOD__);
 

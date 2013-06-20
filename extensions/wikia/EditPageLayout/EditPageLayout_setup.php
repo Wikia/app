@@ -23,49 +23,47 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__);
 
-// WikiaApp
-$app = F::app();
-
 // classes
-$app->registerClass('EditPageLayout', $dir . '/EditPageLayout.class.php');
-$app->registerClass('EditPageLayoutAjax', $dir . '/EditPageLayoutAjax.class.php');
-$app->registerClass('EditPageLayoutHelper', $dir . '/EditPageLayoutHelper.class.php');
-$app->registerClass('EditPageLayoutController', $dir . '/EditPageLayoutController.class.php');
+$wgAutoloadClasses['EditPageLayout'] =  $dir . '/EditPageLayout.class.php';
+$wgAutoloadClasses['EditPageLayoutAjax'] =  $dir . '/EditPageLayoutAjax.class.php';
+$wgAutoloadClasses['EditPageLayoutHelper'] =  $dir . '/EditPageLayoutHelper.class.php';
+$wgAutoloadClasses['EditPageLayoutHooks'] =  $dir . '/EditPageLayoutHooks.class.php';
+$wgAutoloadClasses['EditPageLayoutController'] =  $dir . '/EditPageLayoutController.class.php';
 
 // mocks classes
-$app->registerClass('ObjectMocker', $dir . '/mocks/ObjectMocker.class.php');
-$app->registerClass('ObjectTracer', $dir . '/mocks/ObjectTracer.class.php');
-$app->registerClass('ObjectCallTrace', $dir . '/mocks/ObjectCallTrace.class.php');
+$wgAutoloadClasses['ObjectMocker'] =  $dir . '/mocks/ObjectMocker.class.php';
+$wgAutoloadClasses['ObjectTracer'] =  $dir . '/mocks/ObjectTracer.class.php';
+$wgAutoloadClasses['ObjectCallTrace'] =  $dir . '/mocks/ObjectCallTrace.class.php';
 
 // notices classes
-$app->registerClass('EditPageNotice', $dir . '/notices/EditPageNotice.class.php');
-$app->registerClass('EditPageNotices', $dir . '/notices/EditPageNotices.class.php');
-$app->registerClass('EditPageOutputBridge', $dir . '/notices/EditPageOutputBridge.class.php');
+$wgAutoloadClasses['EditPageNotice'] =  $dir . '/notices/EditPageNotice.class.php';
+$wgAutoloadClasses['EditPageNotices'] =  $dir . '/notices/EditPageNotices.class.php';
+$wgAutoloadClasses['EditPageOutputBridge'] =  $dir . '/notices/EditPageOutputBridge.class.php';
 
 // services
-$app->registerClass('EditPageService', $dir . '/EditPageService.class.php');
+$wgAutoloadClasses['EditPageService'] =  $dir . '/EditPageService.class.php';
 
 // abstract special page class for custom edit pages
-$app->registerClass('SpecialCustomEditPage', $dir . '/SpecialCustomEditPage.class.php');
+$wgAutoloadClasses['SpecialCustomEditPage'] =  $dir . '/SpecialCustomEditPage.class.php';
 
 // hooks
-$app->registerHook('AlternateEditPageClass', 'EditPageLayoutHelper', 'onAlternateEditPageClass');
-$app->registerHook('EditPageBeforeConflictDiff', 'EditPageLayoutHelper', 'onEditPageBeforeConflictDiff');
-$app->registerHook('EditPageGetPreviewNote', 'EditPageLayoutHelper', 'onEditPageGetPreviewNote');
-$app->registerHook('EditForm:AfterDisplayingTextbox', 'EditPageLayoutHelper', 'onAfterDisplayingTextbox');
-$app->registerHook('EditForm:BeforeDisplayingTextbox', 'EditPageLayoutHelper', 'onBeforeDisplayingTextbox');
-$app->registerHook('GetPreferences', 'EditPageLayoutHelper', 'onGetPreferences');
-$app->registerHook('LogEventsListShowLogExtract', 'EditPageLayoutHelper', 'onLogEventsListShowLogExtract');
+$wgHooks['AlternateEditPageClass'][] = 'EditPageLayoutHooks::onAlternateEditPageClass';
+$wgHooks['EditPageBeforeConflictDiff'][] = 'EditPageLayoutHooks::onEditPageBeforeConflictDiff';
+$wgHooks['EditPageGetPreviewNote'][] = 'EditPageLayoutHooks::onEditPageGetPreviewNote';
+$wgHooks['EditForm:AfterDisplayingTextbox'][] = 'EditPageLayoutHooks::onAfterDisplayingTextbox';
+$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'EditPageLayoutHooks::onBeforeDisplayingTextbox';
+$wgHooks['GetPreferences'][] = 'EditPageLayoutHooks::onGetPreferences';
+$wgHooks['LogEventsListShowLogExtract'][] = 'EditPageLayoutHooks::onLogEventsListShowLogExtract';
 
 // messages
-$app->registerExtensionMessageFile('EditPageLayout', $dir . '/EditPageLayout.i18n.php');
+$wgExtensionMessagesFiles['EditPageLayout'] = $dir . '/EditPageLayout.i18n.php';
 
 // add class to autoloader and register handler for it
 $wgAutoloadClasses['EditorUserPropertiesHandler'] = "$dir/models/EditorUserPropertiesHandler.class.php";
 WikiaUserPropertiesController::registerHandler('EditorUserPropertiesHandler');
 
 // register messages package for JS
-F::build('JSMessages')->registerPackage('EditPageLayout', array(
+JSMessages::registerPackage('EditPageLayout', array(
 	'ok',
 	'back',
 	'preview',

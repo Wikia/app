@@ -30,7 +30,7 @@ class NewWikisSpecialPage extends SpecialPage {
 
 			# getBody() first to check, if empty
 			$usersbody = $up->getBody();
-			$s = XML::openElement( 'div', array('class' => 'mw-spcontent') );
+			$s = Xml::openElement( 'div', array('class' => 'mw-spcontent') );
 			$s .= $up->getPageHeader();
 			if( $usersbody ) {
 				$s .=	$up->getNavigationBar();
@@ -39,7 +39,7 @@ class NewWikisSpecialPage extends SpecialPage {
 			} else {
 				$s .=	'<p>' . wfMsgHTML('listusers-noresult') . '</p>';
 			};
-			$s .= XML::closeElement( 'div' );
+			$s .= Xml::closeElement( 'div' );
 			$wgOut->addHTML( $s );
 		}
 	}

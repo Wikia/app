@@ -198,7 +198,7 @@ class FilePageController extends WikiaController {
 		$expireDate = $this->getVal( 'expireDate', '' );
 		if ( !empty($expireDate) ) {
 			$date = $this->wg->Lang->date( $expireDate );
-			$expireDate = $this->wf->Message( 'video-page-expires', $date )->text();
+			$expireDate = wfMessage( 'video-page-expires', $date )->text();
 		}
 
 		$this->provider = ucwords($provider);

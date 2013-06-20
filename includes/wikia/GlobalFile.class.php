@@ -27,7 +27,7 @@ class GlobalFile extends WikiaObject {
 	private function loadData() {
 		if (!isset($this->mData)) {
 			$dbname = WikiFactory::IDtoDB($this->mTitle->mCityId);
-			$dbr = $this->wf->GetDB( DB_SLAVE, array(), $dbname );
+			$dbr = wfGetDB( DB_SLAVE, array(), $dbname );
 
 			$this->mData = $dbr->selectRow(
 				'image',

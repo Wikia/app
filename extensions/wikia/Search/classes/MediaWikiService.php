@@ -327,7 +327,7 @@ class MediaWikiService
 	 * @return array
 	 */
 	public function getRedirectTitlesForPageId( $pageId ) {
-		$dbr = $this->app->wf->GetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE);
 		$result = array();
 		$query = $dbr->select(
 				array( 'redirect', 'page' ),
@@ -385,7 +385,7 @@ class MediaWikiService
 	 * @return mixed
 	 */
 	public function invokeHook( $hookName, array $args = array() ) {
-		return $this->app->wf->RunHooks( $hookName, $args );
+		return wfRunHooks( $hookName, $args );
 	}
 	
 	/**
@@ -423,7 +423,8 @@ class MediaWikiService
 	 * @return string
 	 */
 	public function getSnippetForPageId( $pageId, $snippetLength = 250 ) {
-		$articleService = new \ArticleService( $this->getCanonicalPageIdFromPageId( $pageId ) );
+		$canonicalPageId = $this->getCanonicalPageIdFromPageId( $pageId );
+		$articleService = new \ArticleService( $canonicalPageId );
 		return $articleService->getTextSnippet( $snippetLength );
 	}
 	
@@ -587,7 +588,7 @@ class MediaWikiService
 	 * @return string
 	 */
 	public function getMediaWikiFormattedTimestamp( $timestamp ) { 
-		return $this->app->wg->Lang ? $this->app->wg->Lang->date( $this->app->wf->Timestamp( TS_MW, $timestamp ) ) : '';
+		return $this->app->wg->Lang ? $this->app->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ) : '';
 	}
 	
 	/**
@@ -663,7 +664,7 @@ class MediaWikiService
 	 * @return string
 	 */
 	public function getFormattedVideoViewsForPageId( $pageId ) {
-		return $this->app->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), $this->formatNumber( $this->getVideoViewsForPageId( $pageId ) ) );
+		return wfMsgExt( 'videohandler-video-views', array( 'parsemag' ), $this->formatNumber( $this->getVideoViewsForPageId( $pageId ) ) );
 	}
 	
 	public function getVideoViewsForPageId( $pageId ) {
@@ -707,7 +708,7 @@ class MediaWikiService
 	 * @return string
 	 */
 	public function getSimpleMessage( $messageName, array $params = array() ) {
-		return $this->app->wf->Message( $messageName, $params )->text();
+		return wfMessage( $messageName, $params )->text();
 	}
 
 	/**
@@ -733,7 +734,7 @@ class MediaWikiService
 			$shortNum = $number;
 		}
 
-		return $this->app->wf->Message($msgName, $shortNum, $number);
+		return wfMessage($msgName, $shortNum, $number);
 	}
 	
 	/**
@@ -754,7 +755,7 @@ class MediaWikiService
 	 * @return string
 	 */
 	public function getCacheKey( $key ) {
-		return $this->app->wf->SharedMemcKey( $key, $this->getWikiId() );
+		return wfSharedMemcKey( $key, $this->getWikiId() );
 	}
 	
 	/**
@@ -783,6 +784,7 @@ class MediaWikiService
 	 * @param string $event
 	 * @param string $class
 	 * @param string $method
+	 * @deprecated
 	 */
 	public function registerHook( $event, $class, $method ) {
 		$this->app->registerHook( $event, $class, $method );
@@ -807,7 +809,7 @@ class MediaWikiService
 	 * @param string $timestamp
 	 */
 	protected function getFormattedTimestamp( $timestamp ) {
-		return $this->app->wf->Timestamp( TS_ISO_8601, $timestamp );
+		return wfTimestamp( TS_ISO_8601, $timestamp );
 	}
 
 	/**
@@ -826,7 +828,7 @@ class MediaWikiService
 	 */
 	protected function getFileForPageId( $pageId ) {
 		if (! isset( self::$pageIdsToFiles[$pageId] ) ) {
-			self::$pageIdsToFiles[$pageId] = $this->app->wf->FindFile( $this->getTitleFromPageId( $pageId ) );
+			self::$pageIdsToFiles[$pageId] = wfFindFile( $this->getTitleFromPageId( $pageId ) );
 		}
 		return self::$pageIdsToFiles[$pageId];
 	}
@@ -848,9 +850,15 @@ class MediaWikiService
 		if( $page === null ) {
 			throw new \Exception( 'Invalid Article ID' );
 		}
-		if( $page->isRedirect() ) {
+
+		$redirectTarget = null;
+		if ( $page->isRedirect() ) {
+			$redirectTarget = $page->getRedirectTarget();
+		}
+
+		if( $redirectTarget ) {
 			self::$redirectArticles[$pageId] = $page;
-			$page = new \Article( $page->getRedirectTarget() );
+			$page = new \Article( $redirectTarget );
 			$newId = $page->getID();
 			self::$pageIdsToArticles[$newId] = $page;
 			self::$redirectsToCanonicalIds[$pageId] = $newId;

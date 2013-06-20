@@ -59,7 +59,6 @@ class PhalanxModelTest extends WikiaBaseTest {
 	private function setUpTest( $block ) {
 		// PhalanxService
 		$this->mockClassWithMethods( 'PhalanxService', array( 'match' => $block, 'setUser' => null, 'setLimit' => null ) );
-		$this->mockApp();
 	}
 
 	/* PhalanxUserModel class */
@@ -190,7 +189,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 		return array(
 			array(
 				'type' => Phalanx:: TYPE_TITLE,
-				'content' => $this->mockClassWithMethods('Title', array('getText' => 'foo')),
+				'content' => $this->getMockWithMethods('Title', array('getText' => 'foo')),
 				'className' => 'PhalanxContentModel',
 				'methodName' => 'getTitle'
 			),
@@ -202,7 +201,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			),
 			array(
 				'type' => Phalanx::TYPE_USER,
-				'content' => $this->mockClassWithMethods('User', array('getUser' => 'foo')),
+				'content' => $this->getMockWithMethods('User', array('getUser' => 'foo')),
 				'className' => 'PhalanxUserModel',
 				'methodName' => 'getUser'
 			),

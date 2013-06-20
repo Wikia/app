@@ -19,21 +19,21 @@ $dir = dirname( __FILE__ );
 /**
  * classes
  */
-$app->registerClass( 'LiteSemanticsCollection', $dir . '/LiteSemanticsCollection.class.php' );
-$app->registerClass( 'LiteSemanticsHashCollection', $dir . '/LiteSemanticsCollection.class.php' );
-$app->registerClass( 'LiteSemanticsListCollection', $dir . '/LiteSemanticsCollection.class.php' );
+$wgAutoloadClasses[ 'LiteSemanticsCollection'] =  $dir . '/LiteSemanticsCollection.class.php' ;
+$wgAutoloadClasses[ 'LiteSemanticsHashCollection'] =  $dir . '/LiteSemanticsCollection.class.php' ;
+$wgAutoloadClasses[ 'LiteSemanticsListCollection'] =  $dir . '/LiteSemanticsCollection.class.php' ;
 
-$app->registerClass( 'LiteSemanticsEntity', $dir . '/LiteSemanticsEntity.class.php' );
-$app->registerClass( 'LiteSemanticsProperty', $dir . '/LiteSemanticsEntity.class.php' );
-$app->registerClass( 'LiteSemanticsAttribute', $dir . '/LiteSemanticsEntity.class.php' );
-$app->registerClass( 'LiteSemanticsData', $dir . '/LiteSemanticsEntity.class.php' );
-$app->registerClass( 'LiteSemanticsDocument', $dir . '/LiteSemanticsEntity.class.php' );
+$wgAutoloadClasses[ 'LiteSemanticsEntity'] =  $dir . '/LiteSemanticsEntity.class.php' ;
+$wgAutoloadClasses[ 'LiteSemanticsProperty'] =  $dir . '/LiteSemanticsEntity.class.php' ;
+$wgAutoloadClasses[ 'LiteSemanticsAttribute'] =  $dir . '/LiteSemanticsEntity.class.php' ;
+$wgAutoloadClasses[ 'LiteSemanticsData'] =  $dir . '/LiteSemanticsEntity.class.php' ;
+$wgAutoloadClasses[ 'LiteSemanticsDocument'] =  $dir . '/LiteSemanticsEntity.class.php' ;
 
-$app->registerClass( 'LiteSemanticsParser', $dir . '/LiteSemanticsParser.class.php' );
+$wgAutoloadClasses[ 'LiteSemanticsParser'] =  $dir . '/LiteSemanticsParser.class.php' ;
 
-$app->registerClass( 'LiteSemanticsModel', $dir . '/LiteSemanticsModel.class.php' );
+$wgAutoloadClasses[ 'LiteSemanticsModel'] =  $dir . '/LiteSemanticsModel.class.php' ;
 
-$app->registerClass( 'LiteSemanticsHooks', $dir . '/LiteSemanticsHooks.class.php' );
+$wgAutoloadClasses[ 'LiteSemanticsHooks'] =  $dir . '/LiteSemanticsHooks.class.php' ;
 
 /**
  * hooks

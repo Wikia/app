@@ -101,17 +101,17 @@ class BlogsHelper {
 		$ns = $element->page_namespace;
 
 		if( $ns == NS_BLOG_ARTICLE ) {
-
 			$title = Title::newFromText( $element->page_title, $ns );
 			$userBlog = Title::newFromText( $title->getBaseText(), $ns );
 
-			$link = wfMessage(
+			$link = wfMsgExt(
 				'blog-file-page',
+				array ('parsemag'),
 				$title->getLocalURL(),
 				$title->getSubpageText(),
 				$userBlog->getLocalURL(),
 				$userBlog->getText()
-			)->text();
+			);
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -145,14 +145,10 @@ class WikiaSpamRegexBatch extends SpamRegexBatch{
 		$regexes = array();
 		if(!empty($this->files)) {
 			foreach($this->files as $file) {
-				$regexes = array_merge($regexes, self::regexesFromMessage($file, F::build('SpamBlacklist')));
+				$regexes = array_merge($regexes, self::regexesFromMessage($file, (new SpamBlacklist)));
 			}
 		}
 		return $regexes;
-	}
-
-	function getWhitelists() {
-		return self::regexesFromMessage($this->whitelist, F::build('WikiaWhiteList'));
 	}
 
 	/**

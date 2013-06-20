@@ -276,7 +276,7 @@ class SpecialCustomEditPage extends SpecialPage {
 	 * initialize article edit page
 	 */
 	protected function initializeEditPage() {
-		$helper = new EditPageLayoutHelper();
+		$helper = EditPageLayoutHelper::getInstance();
 
 		$editPage = $helper->setupEditPage($this->mEditedArticle, $this->fullScreen, get_class($this) );
 

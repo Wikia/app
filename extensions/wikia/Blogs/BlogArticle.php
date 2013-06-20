@@ -31,7 +31,8 @@ class BlogArticle extends Article {
 	public static function createCategory() {
 		// make sure page "Category:BlogListingTag" exists
 		$title = Title::newFromText( 'Category:BlogListingPage' );
-		if ( !$title->exists() && $this->getContext()->getUser()->isAllowed( 'edit' ) ) {
+		global $wgUser;
+		if ( !$title->exists() && $wgUser->isAllowed( 'edit' ) ) {
 			$article = new Article( $title );
 			$article->doEdit(
 				"__HIDDENCAT__", $title, EDIT_NEW | EDIT_FORCE_BOT | EDIT_SUPPRESS_RC
@@ -43,13 +44,13 @@ class BlogArticle extends Article {
 	 * overwritten Article::view function
 	 */
 	public function view() {
-		wfProfileIn( __METHOD__ );
+		global $wgOut, $wgRequest, $wgTitle;
 
-		$feed = $this->getContext()->getRequest->getText( "feed", false );
+		$feed = $wgRequest->getText( "feed", false );
 		if( $feed && in_array( $feed, array( "rss", "atom" ) ) ) {
 			$this->showFeed( $feed );
 		}
-		elseif ( $this->getTitle()->isSubpage() ) {
+		elseif ( $wgTitle->isSubpage() ) {
 			/**
 			 * blog article, show if exists
 			 */
@@ -61,14 +62,14 @@ class BlogArticle extends Article {
 			$this->mTitle->mPrefixedText = $oldPrefixedText;
 			$this->mProps = self::getProps( $this->mTitle->getArticleID() );
 			Article::view();
-		} else {
+		}
+		else {
 			/**
 			 * blog listing
 			 */
-			$this->getContext()->getOutput()->setHTMLTitle( $this->getContext()->getOutput()->getWikiaPageTitle( $this->mTitle->getPrefixedText() ) );
+			$wgOut->setHTMLTitle( $wgOut->getWikiaPageTitle( $this->mTitle->getPrefixedText() ) );
 			$this->showBlogListing();
 		}
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -77,10 +78,7 @@ class BlogArticle extends Article {
 	 * @access private
 	 */
 	private function showBlogListing() {
-		global $wgMemc;
-		wfProfileIn( __METHOD__ );
-		$request = $this->getContext()->getRequest();
-		$output = $this->getContext()->getOutput();
+		global $wgOut, $wgRequest, $wgMemc, $wgParser;
 
 		/**
 		 * use cache or skip cache when action=purge
@@ -88,11 +86,11 @@ class BlogArticle extends Article {
 		$user    = $this->mTitle->getBaseText();
 		$userMem = $this->mTitle->getPrefixedDBkey();
 		$listing = false;
-		$purge   = $request->getVal( "action" ) == 'purge';
-		$page    = $request->getVal( "page", 0 );
+		$purge   = $wgRequest->getVal( "action" ) == 'purge';
+		$page    = $wgRequest->getVal( "page", 0 );
 		$offset  = $page * $this->mCount;
 
-		$output->setSyndicated( true );
+		$wgOut->setSyndicated( true );
 
 		if( !$purge ) {
 			$listing  = $wgMemc->get( wfMemcKey( "blog", "listing", $userMem, $page ) );
@@ -108,13 +106,13 @@ class BlogArticle extends Article {
 					title=Blogs
 					offset=$offset>
 					<author>$user</author>
-					</bloglist>";
-			$listing = ParserPool::parse( $text, $this->mTitle,  new ParserOptions() )->getText();
+				</bloglist>";
+			$parserOutput = $wgParser->parse($text, $this->mTitle,  new ParserOptions());
+			$listing = $parserOutput->getText();
 			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $page ), $listing, 3600 );
 		}
 
-		$output->addHTML( $listing );
-		wfProfileOut( __METHOD__ );
+		$wgOut->addHTML( $listing );
 	}
 
 
@@ -124,11 +122,10 @@ class BlogArticle extends Article {
 	 * @access public
 	 */
 	public function clearBlogListing() {
-		global $wgMemc;
-		wfProfileIn( __METHOD__ );
+		global $wgRequest, $wgMemc, $wgLang;
 
 		// Clear Oasis rail module
-		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $this->getContext()->getLanguage()->getCode() );
+		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $wgLang->getCode() );
 		$wgMemc->delete($mcKey);
 
 		$user = $this->mTitle->getPrefixedDBkey();
@@ -140,19 +137,19 @@ class BlogArticle extends Article {
 		$title = Title::newFromText( 'Category:BlogListingPage' );
 		$title->touchLinks();
 
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * generate xml feed from returned data
 	 */
 	private function showFeed( $format ) {
-		global $wgMemc, $wgFeedClasses, $wgSitename, $wgParser;
+		global $wgOut, $wgRequest, $wgParser, $wgMemc, $wgFeedClasses, $wgTitle;
+		global $wgSitename;
 
 		$user    = $this->mTitle->getBaseText();
 		$userMemc = $this->mTitle->getPrefixedDBkey();
 		$listing = false;
-		$purge   = $this->getContext()->getRequest()->getVal( 'action' ) == 'purge';
+		$purge   = $wgRequest->getVal( 'action' ) == 'purge';
 		$offset  = 0;
 
 		wfProfileIn( __METHOD__ );
@@ -175,7 +172,7 @@ class BlogArticle extends Article {
 			$wgMemc->set( wfMemcKey( "blog", "feed", $userMemc, $offset ), $listing, 3600 );
 		}
 
-		$feed = new $wgFeedClasses[ $format ]( wfMessage( "blog-userblog", $user )->text(), wfMessage( "blog-fromsitename", $wgSitename )->text(), $this->getTitle()->getFullUrl() );
+		$feed = new $wgFeedClasses[ $format ]( wfMsg("blog-userblog", $user), wfMsg("blog-fromsitename", $wgSitename), $wgTitle->getFullUrl() );
 
 		$feed->outHeader();
 		if( is_array( $listing ) ) {
@@ -216,6 +213,7 @@ class BlogArticle extends Article {
 	 * @access public
 	 */
 	static public function ArticleFromTitle( &$Title, &$Article ) {
+		global $wgOut;
 		// macbre: check namespace (RT #16832)
 		if ( !in_array($Title->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)) ) {
 			return true;
@@ -316,7 +314,7 @@ class BlogArticle extends Article {
 
 		if( $rescnt > 0 ) {
 			$r = "<div id=\"mw-pages\">\n";
-			$r .= '<h2>' . wfMessage( "blog-header", $ti )->text() . "</h2>\n";
+			$r .= '<h2>' . wfMsg( "blog-header", $ti ) . "</h2>\n";
 			$r .= $countmsg;
 			$r .= $catView->getSectionPagingLinksExt( 'page' );
 			$r .= $catView->formatList( array_values($catView->blogs), $catView->blogs_start_char );
@@ -392,7 +390,7 @@ class BlogArticle extends Article {
 	 * static method to get number of pages in category
 	 */
 	static public function getCountMessage( &$catView, $rescnt, $dbcnt, $type ) {
-		$lang = $this->getContext()->getLanguage();
+		global $wgLang;
 		# See CategoryPage->getCountMessage() function
 		$totalrescnt = count( $catView->blogs ) + count( $catView->children ) + ($catView->showGallery ? $catView->gallery->count() : 0);
 		if ($dbcnt == $rescnt || (($totalrescnt == $catView->limit || $catView->from || $catView->until) && $dbcnt > $rescnt)) {
@@ -403,9 +401,9 @@ class BlogArticle extends Article {
 			$totalcnt = $rescnt;
 		} else {
 			# Case 3: hopeless.  Don't give a total count at all.
-			return wfMessage( "blog-subheader", $lang->formatNum( $rescnt ) )->parse();
+			return wfMsgExt("blog-subheader", 'parse', $wgLang->formatNum( $rescnt ) );
 		}
-		return wfMessage( "blog-subheader-all", $lang->formatNum( $rescnt ), $lang->formatNum( $totalcnt ) )->parse();
+		return wfMsgExt( "blog-subheader-all", 'parse', $wgLang->formatNum( $rescnt ), $wgLang->formatNum( $totalcnt ) );
 	}
 
 	/**
@@ -455,21 +453,21 @@ class BlogArticle extends Article {
 	 * hook, add link to toolbar
 	 */
 	static public function skinTemplateTabs( $skin, &$tabs ) {
+		global $wgTitle, $wgUser;
 		global $wgEnableSemanticMediaWikiExt, $wgEnableBlogCommentEdit;
-		$title = $this->getTitle();
 
-		if ( ! in_array( $title->getNamespace(), array( NS_BLOG_ARTICLE, NS_BLOG_LISTING, NS_BLOG_ARTICLE_TALK ) ) ) {
+		if( ! in_array( $wgTitle->getNamespace(), array( NS_BLOG_ARTICLE, NS_BLOG_LISTING, NS_BLOG_ARTICLE_TALK ) ) ) {
 			return true;
 		}
 
-		if ( ( $title->getNamespace() == NS_BLOG_ARTICLE_TALK ) && ( empty($wgEnableBlogCommentEdit) ) ) {
+		if ( ( $wgTitle->getNamespace() == NS_BLOG_ARTICLE_TALK ) && ( empty($wgEnableBlogCommentEdit) ) ) {
 			return true;
 		}
 
 		$row = array();
 		switch( $wgTitle->getNamespace()  ) {
 			case NS_BLOG_ARTICLE:
-				if ( !$title->isSubpage() ) {
+				if ( !$wgTitle->isSubpage() ) {
 					$allowedTabs = array();
 					$tabs = array();
 					break;
@@ -478,9 +476,9 @@ class BlogArticle extends Article {
 				if (empty($wgEnableSemanticMediaWikiExt)) {
 					$row["listing-refresh-tab"] = array(
 						"class" => "",
-						"text" => wfMessage( "blog-refresh-label" )->text(),
+						"text" => wfMsg("blog-refresh-label"),
 						"icon" => "refresh",
-						"href" => $title->getLocalUrl( "action=purge" )
+						"href" => $wgTitle->getLocalUrl( "action=purge" )
 					);
 					$tabs += $row;
 				}
@@ -505,6 +503,8 @@ class BlogArticle extends Article {
 	 */
 	static public function editPageCheckboxes( &$EditPage, &$checkboxes ) {
 
+		global $wgOut;
+
 		if( $EditPage->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
 			return true;
 		}
@@ -515,13 +515,13 @@ class BlogArticle extends Article {
 		if( $EditPage->mTitle->mArticleID ) {
 			$props = self::getProps( $EditPage->mTitle->mArticleID );
 			$output["voting"] = Xml::checkLabel(
-				wfMessage( "blog-voting-label" )->text(),
+				wfMsg("blog-voting-label"),
 				"wpVoting",
 				"wpVoting",
 				isset( $props["voting"] ) && $props[ "voting" ] == 1
 			);
 			$output["commenting"] = Xml::checkLabel(
-				wfMessage( "blog-comments-label" )->text(),
+				wfMsg("blog-comments-label"),
 				"wpCommenting",
 				"wpCommenting",
 				isset( $props["commenting"] ) && $props[ "commenting"] == 1
@@ -543,7 +543,7 @@ class BlogArticle extends Article {
 		}
 
 		wfProfileIn( __METHOD__ );
-		$request = $this->getContext()->getRequest();
+		global $wgRequest;
 
 		/**
 		 * restore/change properties for blog article
@@ -551,9 +551,9 @@ class BlogArticle extends Article {
 		$pageId = $LinksUpdate->mTitle->getArticleId();
 		$keep   = array();
 
-		if( $request->wasPosted() ) {
-			$keep[ "voting" ]     = $request->getVal( "wpVoting", 0 );
-			$keep[ "commenting" ] = $request->getVal( "wpCommenting", 0 );
+		if( $wgRequest->wasPosted() ) {
+			$keep[ "voting" ]     = $wgRequest->getVal( "wpVoting", 0 );
+			$keep[ "commenting" ] = $wgRequest->getVal( "wpCommenting", 0 );
 		}
 		else {
 			/**
@@ -633,22 +633,24 @@ class BlogArticle extends Article {
 	 * @static
 	 */
 	static public function wfMaintenance() {
+		global $wgTitle;
 		echo "Blog Article maintenance.\n";
 		/**
 		 * create Blog:Recent posts page if not exists
 		 */
-		$recentPosts = wfMessage( "create-blog-post-recent-listing" )->text();
+		$recentPosts = wfMsg("create-blog-post-recent-listing");
 		if( $recentPosts ) {
 			echo "Creating {$recentPosts}";
 			$oTitle = Title::newFromText( $recentPosts,  NS_BLOG_LISTING );
 			if( $oTitle ) {
+				$wgTitle = $oTitle;
 				$oArticle = new Article( $oTitle, 0 );
 				if( !$oArticle->exists( ) ) {
 					$oArticle->doEdit(
 						'<bloglist summary="true" count=50><title>'
-						. wfMessage( "create-blog-post-recent-listing-title" )->text()
+						. wfMsg("create-blog-post-recent-listing-title")
 						.'</title><type>plain</type><order>date</order></bloglist>',
-						wfMessage( "create-blog-post-recent-listing-log" )->text(),
+						wfMsg("create-blog-post-recent-listing-log"),
 						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
 					);
 					echo "... done.\n";
@@ -660,8 +662,8 @@ class BlogArticle extends Article {
 				 * Edit sidebar, add link to recent blog posts
 				 */
 				echo "Updating Monaco-sidebar";
-				$sidebar = wfMessage( 'Monaco-sidebar' )->text();
-				$newline = sprintf("\n* %s|%s", $oTitle->getPrefixedText(), wfMessage( "create-blog-post-recent-listing-title ")->text() );
+				$sidebar = wfMsg('Monaco-sidebar');
+				$newline = sprintf("\n* %s|%s", $oTitle->getPrefixedText(), wfMsg("create-blog-post-recent-listing-title") );
 				if( strpos( $sidebar, $newline ) !== false ) {
 					$sidebar .= $newline;
 					$msgTitle = Title::newFromText( 'Monaco-sidebar', NS_MEDIAWIKI );
@@ -669,7 +671,7 @@ class BlogArticle extends Article {
 						$oArticle = new Article( $msgTitle, 0 );
 						$oArticle->doEdit(
 							$sidebar,
-							wfMessage( "create-blog-post-recent-listing-log" )->text(),
+							wfMsg("create-blog-post-recent-listing-log"),
 							EDIT_MINOR | EDIT_FORCE_BOT  # flags
 						);
 					}
@@ -685,7 +687,7 @@ class BlogArticle extends Article {
 		/**
 		 * create Category:Blog page if not exists
 		 */
-		$catName = wfMessage( "create-blog-post-category" )->text();
+		$catName = wfMsg("create-blog-post-category");
 		if( $catName && $catName !== "-" ) {
 			echo "Creating {$catName}";
 			$oTitle = Title::newFromText( $catName, NS_CATEGORY );
@@ -693,8 +695,8 @@ class BlogArticle extends Article {
 				$oArticle = new Article( $oTitle, 0 );
 				if( !$oArticle->exists( ) ) {
 					$oArticle->doEdit(
-						wfMessage( "create-blog-post-category-body" )->text(),
-						wfMessage( "create-blog-post-category-log" )->text(),
+						wfMsg( "create-blog-post-category-body" ),
+						wfMsg( "create-blog-post-category-log" ),
 						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
 					);
 					echo "... done.\n";
@@ -776,25 +778,24 @@ class BlogArticle extends Article {
 	/* hook used to redirect to custom edit page */
 
 	public static function alternateEditHook(EditPage $oEditPage) {
-		$output = $this->getContext()->getOutput();
-		$request = $this->getContext()->getRequest();
+		global $wgOut, $wgRequest;
 		$oTitle = $oEditPage->mTitle;
 		if($oTitle->getNamespace() == NS_BLOG_LISTING) {
 			$oSpecialPageTitle = Title::newFromText('CreateBlogListingPage', NS_SPECIAL);
-			$output->redirect($oSpecialPageTitle->getFullUrl("article=" . urlencode($oTitle->getText())));
+			$wgOut->redirect($oSpecialPageTitle->getFullUrl("article=" . urlencode($oTitle->getText())));
 		}
 		if($oTitle->getNamespace() == NS_BLOG_ARTICLE && $oTitle->isSubpage() && empty($oEditPage->isCreateBlogPage) ) {
 			$oSpecialPageTitle = Title::newFromText('CreateBlogPage', NS_SPECIAL);
-			if ($request->getVal('oldid')) {
-				$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() . "&oldid=" . $request->getVal('oldid'));
+			if ($wgRequest->getVal('oldid')) {
+				$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() . "&oldid=" . $wgRequest->getVal('oldid'));
 			}
-			elseif ($request->getVal('undoafter') && $request->getVal('undo')) {
-				$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() . "&undoafter=" . $request->getVal('undoafter') . "&undo=" . $request->getVal('undo'));
+			else if ($wgRequest->getVal('undoafter') && $wgRequest->getVal('undo')) {
+				$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() . "&undoafter=" . $wgRequest->getVal('undoafter') . "&undo=" . $wgRequest->getVal('undo'));
 			}
 			else {
 				$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() );
 			}
-			$output->redirect($url);
+			$wgOut->redirect($url);
 
 		}
 		return true;

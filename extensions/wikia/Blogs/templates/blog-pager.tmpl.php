@@ -6,7 +6,7 @@ $i = 0;
 if ($iPageCount > 1) {
 	if ( $iPage != 0 ) {
 ?>		
-<a href="<?=$wgTitle->getFullURL($pageOffsetName."=".($iPage - 1))?>">&#171; <?=wfMessage( 'blog-newerposts' )->text()?></a>
+<a href="<?=$wgTitle->getFullURL($pageOffsetName."=".($iPage - 1))?>">&#171; <?=wfMsg('blog-newerposts')?></a>
 <?
 	}
 ?>	
@@ -14,7 +14,7 @@ if ($iPageCount > 1) {
 <?
 	if ( ($iPage + 1) != $iPageCount ) {
 ?>
-<a href="<?=$wgTitle->getFullURL($pageOffsetName."=".($iPage+1))?>"><?=wfMessage( 'blog-olderposts')->text() ?> &#187;</a>
+<a href="<?=$wgTitle->getFullURL($pageOffsetName."=".($iPage+1))?>"><?=wfMsg('blog-olderposts')?> &#187;</a>
 <?
 	}
 } 

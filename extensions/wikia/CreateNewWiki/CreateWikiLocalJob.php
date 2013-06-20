@@ -269,7 +269,7 @@ class CreateWikiLocalJob extends Job {
 		}
 
 		if( !empty($wgEnableWallExt) ) {
-			$wallMessage = F::build('WallMessage', array($talkBody, $this->mFounder->getName(), $wgUser, $wallTitle, false, array(), true, false), 'buildNewMessageAndPost');
+			$wallMessage = WallMessage::buildNewMessageAndPost($talkBody, $this->mFounder->getName(), $wgUser, $wallTitle, false, array(), true, false);
 			if( $wallMessage === false ) {
 				return false;
 			}
@@ -535,7 +535,7 @@ class CreateWikiLocalJob extends Job {
                  * determine the timestamp of the latest starter revision and image
                  */
                 if ( !empty( $this->mParams->sDbStarter ) ) {
-                    $oStarterDb = F::app()->wf->getDb( DB_SLAVE, array(), $this->mParams->sDbStarter );
+                    $oStarterDb = wfGetDb( DB_SLAVE, array(), $this->mParams->sDbStarter );
 
                     if ( is_object( $oStarterDb ) ) {
                         $oLatestRevision = $oStarterDb->selectRow(
@@ -728,7 +728,7 @@ class CreateWikiLocalJob extends Job {
 			$oRevision = Revision::newFromId($oRow->rev_id);
 			if ( $wgEnableScribeNewReport ) {
 				$key = ( isset($pages[$oRow->page_id]) ) ? 'edit' : 'create';
-				$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => $key, 'archive' => 0 ) );
+				$oScribeProducer = new ScribeEventProducer( $key, 0 );
 				if ( is_object( $oScribeProducer ) ) {
 					if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision ) ) {
 						$oScribeProducer->sendLog();

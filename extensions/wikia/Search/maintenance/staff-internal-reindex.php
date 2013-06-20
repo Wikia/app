@@ -17,7 +17,7 @@ $c = RequestContext::getMain();
 $c->setUser($wgUser);
 $c->setTitle($wgTitle);
 
-$indexer = F::build( 'WikiaSearchIndexer' );
+$indexer = (new WikiaSearchIndexer);
 
 $dbr = wfGetDB( DB_MASTER );
 

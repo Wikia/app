@@ -18,9 +18,9 @@ class SpecialVideosHelper extends WikiaModel {
 	 */
 	public function getSortingOptions() {
 		$options = array(
-			'recent' => $this->wf->Msg( 'specialvideos-sort-latest' ),
-			'popular' => $this->wf->Msg( 'specialvideos-sort-most-popular' ),
-			'trend' => $this->wf->Msg( 'specialvideos-sort-trending' ),
+			'recent' => wfMsg( 'specialvideos-sort-latest' ),
+			'popular' => wfMsg( 'specialvideos-sort-most-popular' ),
+			'trend' => wfMsg( 'specialvideos-sort-trending' ),
 		);
 
 		return $options;
@@ -35,7 +35,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 		$premiumVideos = $this->premiumVideosExist();
 		if ( !empty($premiumVideos) ) {
-			$options['premium'] = $this->wf->Msg( 'specialvideos-sort-featured' );
+			$options['premium'] = wfMsg( 'specialvideos-sort-featured' );
 		}
 
 		return $options;
@@ -84,7 +84,7 @@ class SpecialVideosHelper extends WikiaModel {
 		$videoDetail = array();
 		$title = Title::newFromText( $videoInfo['title'], NS_FILE );
 		if ( $title instanceof Title ) {
-			$file = $this->wf->FindFile( $title );
+			$file = wfFindFile( $title );
 			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
 				// get thumbnail
 				$thumb = $file->transform( array('width'=>self::THUMBNAIL_WIDTH, 'height'=>self::THUMBNAIL_HEIGHT) );
@@ -92,7 +92,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 				// get user
 				$user = User::newFromId( $videoInfo['addedBy'] );
-				$userName = ( User::isIP($user->getName()) ) ? $this->wf->Msg( 'oasis-anon-user' ) : $user->getName();
+				$userName = ( User::isIP($user->getName()) ) ? wfMsg( 'oasis-anon-user' ) : $user->getName();
 				$userUrl = $user->getUserPage()->getFullURL();
 
 				// get article list
@@ -136,7 +136,7 @@ class SpecialVideosHelper extends WikiaModel {
 			);
 
 			$userLink = Xml::element( 'a', $attribs, $userName, false );
-			$byUserMsg = $this->wf->Msg( 'specialvideos-uploadby', $userLink );
+			$byUserMsg = wfMsg( 'specialvideos-uploadby', $userLink );
 		}
 
 		return $byUserMsg;
@@ -171,7 +171,7 @@ class SpecialVideosHelper extends WikiaModel {
 		}
 
 		if ( !empty($articleLinks) ) {
-			$postedInMsg = $this->wf->Msg( 'specialvideos-posted-in', implode($articleLinks, ', ') );
+			$postedInMsg = wfMsg( 'specialvideos-posted-in', implode($articleLinks, ', ') );
 		}
 
 		return $postedInMsg;

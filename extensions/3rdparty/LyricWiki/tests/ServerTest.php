@@ -60,10 +60,9 @@ class ServerTest extends WikiaBaseTest
 		
 		// @todo handle the transformation from result set to array of titles
 		
-		$this->proxyClass( 'Wikia\Search\Config', $mockConfig );
-		$this->proxyClass( 'Wikia\Search\QueryService\Factory', $mockFactory );
-		$this->mockApp();
-		
+		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
+		$this->mockClass( 'Wikia\Search\QueryService\Factory', $mockFactory );
+
 		$this->assertTrue(
 				is_array( lw_getSearchResults( $query, $limit ) )
 		);

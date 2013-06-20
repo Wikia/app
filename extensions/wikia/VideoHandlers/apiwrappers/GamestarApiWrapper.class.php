@@ -56,7 +56,7 @@ class GamestarApiWrapper extends ApiWrapper {
 			throw new EmptyResponseException($apiUrl);
 		}
 
-		$memcKey = F::app()->wf->memcKey( static::$CACHE_KEY, $apiUrl, static::$CACHE_KEY_VERSION );
+		$memcKey = wfMemcKey( static::$CACHE_KEY, $apiUrl, static::$CACHE_KEY_VERSION );
 		$processedResponse = F::app()->wg->memc->get( $memcKey );
 		if ( empty($processedResponse) ) {
 			$req = MWHttpRequest::factory( $apiUrl );

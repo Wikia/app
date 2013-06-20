@@ -15,7 +15,7 @@ class VideoService extends WikiaModel {
 
 		if ( empty( $url ) ) {
 			wfProfileOut( __METHOD__ );
-			return $this->wf->Msg('videos-error-no-video-url');
+			return wfMsg('videos-error-no-video-url');
 		}
 
 		try {
@@ -50,7 +50,7 @@ class VideoService extends WikiaModel {
 				$vHelper = new VideoHandlerHelper();
 				$vHelper->addDefaultVideoDescription( $file );
 			} else {
-				throw new Exception( $this->wf->Msg('videos-error-old-type-video') );
+				throw new Exception( wfMsg('videos-error-old-type-video') );
 			}
 		} catch ( Exception $e ) {
 			wfProfileOut( __METHOD__ );
@@ -70,7 +70,7 @@ class VideoService extends WikiaModel {
 	protected function addVideoVideoHandlers( $url ) {
 		$title = VideoFileUploader::URLtoTitle( $url );
 		if ( !$title ) {
-			throw new Exception( $this->wf->Msg('videos-error-invalid-video-url') );
+			throw new Exception( wfMsg('videos-error-invalid-video-url') );
 		}
 
 		return array( $title, $title->getArticleID(), null );

@@ -15,7 +15,7 @@ class ObjectTracer extends ObjectMocker {
 	public function __construct( $object, $methods ) {
 		parent::__construct($object);
 		$this->methods = $methods;
-		$this->tracer = F::build('ObjectCallTrace');
+		$this->tracer = new ObjectCallTrace();
 	}
 
 	/**
