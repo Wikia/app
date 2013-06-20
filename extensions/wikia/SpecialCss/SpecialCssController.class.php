@@ -43,7 +43,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->getDeleteLinks();
+		$this->createDeleteLinks();
 		$this->handleAssets();
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
 		
@@ -82,7 +82,10 @@ class SpecialCssController extends WikiaSpecialPageController {
 		F::build('JSMessages')->enqueuePackage('SpecialCss', JSMessages::EXTERNAL);
 	}
 
-	protected function getDeleteLinks() {
+	/**
+	 * Pass delete, undelete links and information about deletion into view
+	 */
+	protected function createDeleteLinks() {
 		$this->deletedArticle = '';
 		$title = $this->getModel()->getCssFileTitle();
 		if ( !empty( $title ) ) {
@@ -93,6 +96,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 				}
 			} else
 			{
+				// get message informing you that article is deleted and how you can restore it
 				LogEventsList::showLogExtract( $this->deletedArticle, array( 'delete', 'move' ), $title,
 					'', array( 'lim' => 10,
 						'conds' => array( "log_action != 'revision'" ),
@@ -107,6 +111,10 @@ class SpecialCssController extends WikiaSpecialPageController {
 		}
 	}
 
+	/**
+	 * Get model
+	 * @return SpecialCssModel
+	 */
 	protected function getModel() {
 		if (empty($this->model)) {
 			$this->model = new SpecialCssModel();
