@@ -7,6 +7,11 @@
 class EmailTemplatesHooksHelper {
 
 	/**
+	 * Default with of user avatar attached to email
+	 */
+	const EMAIL_AVATAR_DEFAULT_WIDTH = 48;
+
+	/**
 	 * on ComposeCommonSubjectMail hook
 	 * modify subject of an email
 	 * @param Title $title
@@ -135,7 +140,7 @@ class EmailTemplatesHooksHelper {
 			'post_title' => $oPostTitle->getSubpageText(),
 			'username' => $username,
 			'user_page_url' => $editor->getUserPage()->getFullURL(),
-			'avatar_url' => AvatarService::renderAvatar($username, 48),
+			'avatar_url' => AvatarService::renderAvatar($username, self::EMAIL_AVATAR_DEFAULT_WIDTH),
 			'date' => $date,
 			'short_text' => BlogTemplateClass::getShortText($oPostTitle->getArticleId(), $oRevision)
 		);

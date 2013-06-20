@@ -23,7 +23,7 @@ class EmailTemplatesController extends WikiaController {
 	 * @param $params array of params described below
 	 * @param $params['post_url'] string Full link to full article
 	 * @param $params['post_title'] string Title of post
-	 * @param $params['avatar_url'] string Full url to user avatar image ~48px width
+	 * @param $params['avatar_url'] string Full url to user avatar image
 	 * @param $params['username'] string Name of post author
 	 * @param $params['user_page_url'] string Full url to author page
 	 * @param $params['date'] string Date of post publish
@@ -34,7 +34,7 @@ class EmailTemplatesController extends WikiaController {
 
 		$this->post_url = array_key_exists( 'post_url', $params ) ? $params['post_url'] : '';
 		$this->post_title = array_key_exists( 'post_title', $params ) ? $params['post_title'] : '';
-		$this->avatar_url = array_key_exists( 'avatar_url', $params ) ? $params['avatar_url'] : AvatarService::renderAvatar('',48);
+		$this->avatar_url = array_key_exists( 'avatar_url', $params ) ? $params['avatar_url'] : AvatarService::renderAvatar('',EmailTemplatesHooksHelper::EMAIL_AVATAR_DEFAULT_WIDTH);
 		$this->username = array_key_exists( 'username', $params ) ? $params['username'] : wfMessage('oasis-anon-user')->plain();
 		$this->user_page_url = array_key_exists( 'user_page_url', $params ) ? $params['user_page_url'] : '';
 		$this->date = array_key_exists( 'date', $params ) ? $params['date'] : '';
