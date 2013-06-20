@@ -187,6 +187,13 @@ $messages['nl'] = array(
 	'campfire-licensed-under' => 'Gelicenseerd onder $1',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'campfire-page-header' => '$1 (de $2)',
+);
+
 /** Polish (polski)
  * @author Sovq
  */

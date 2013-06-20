@@ -73,7 +73,7 @@ var LightboxLoader = {
 					parent,
 					isVideo;
 
-				if($this.hasClass('link-internal') || $this.hasClass('link-external')) {
+				if( $this.hasClass('link-internal') || $this.hasClass('link-external') || $thumb.attr('data-shared-help') ) {
 					return;
 				}
 
@@ -109,17 +109,17 @@ var LightboxLoader = {
 					// might be old/cached DOM.  TODO: delete this when cache is flushed
 					fileKey = $this.attr('data-image-name') || $this.attr('data-video-name');
 					fileKey = fileKey ? fileKey.replace(/ /g, '_') : fileKey;
-					LightboxLoader.handleOldDom();
+					LightboxLoader.handleOldDom(5);
 				}
 
 				if(!fileKey) {
-					LightboxLoader.handleOldDom();
+					LightboxLoader.handleOldDom(5);
 					return;
 				}
 
 				// Display video inline, don't open lightbox
 				isVideo = $this.children('.Wikia-video-play-button').length;
-				if(isVideo && $thumb.width() > that.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
+				if(isVideo && $thumb.width() >= that.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
 					var clickSource = window.wgWikiaHubType ? LightboxTracker.clickSource.HUBS : LightboxTracker.clickSource.EMBED;
 					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, clickSource);
 					return;
@@ -300,10 +300,13 @@ var LightboxLoader = {
 		}
 	},
 	isOldDom: null,
-	handleOldDom: function() {
+	/*
+	 * @param {integer} type Value map: { itemClick:1, articleMedia:2, relatedVideos:3, latestPhotos:4, fromClick:5 }
+	 */
+	handleOldDom: function(type) {
 		if(LightboxLoader.isOldDom === null) {
 			$().log("Send old DOM tracking", "Lightbox");
-			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', null, null, 'ga');
+			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', type, null, 'ga');
 		}
 		LightboxLoader.isOldDom = true;
 	}

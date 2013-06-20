@@ -59,21 +59,12 @@ class InterWiki extends AbstractSelect
 	protected $timeAllowed = 7500;
 	
 	/**
-	 * Identifies a match by domain via mw service. Registers with config and returns if found.
+	 * Reuses AbstractSelect's extractWikiMatch as the primary match method
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::extractMatch()
 	 * @return Wikia\Search\Match\Wiki
 	 */
 	public function extractMatch() {
-		$domain = preg_replace(
-				'/[^a-zA-Z]/',
-				'',
-				strtolower( $this->config->getQuery()->getSanitizedQuery() ) 
-				);
-		$match =  $this->service->getWikiMatchByHost( $domain );
-		if (! empty( $match ) ) {
-			$this->config->setWikiMatch( $match );
-		}
-		return $match;
+		return $this->extractWikiMatch();
 	}
 	
 	/**
@@ -161,16 +152,17 @@ class InterWiki extends AbstractSelect
 	protected function getQueryClausesString()
 	{
 		$widQueries = array();
-		foreach ( $this->service->getGlobal( 'CrossWikiaSearchExcludedWikis' ) as $excludedWikiId ) {
+		$excludedWikiIds = $this->service->getGlobalWithDefault( 'CrossWikiaSearchExcludedWikis', [] );
+		$excludedWikiIds[] = $this->service->getWikiId();
+		foreach ( $excludedWikiIds as $excludedWikiId ) {
 			$widQueries[] = Utilities::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 		}
-		
 		$queryClauses= array(
 				implode( ' AND ', $widQueries ),
-				Utilities::valueForField( 'lang', $this->service->getLanguageCode() ),
+				Utilities::valueForField( 'lang', $this->config->getLanguageCode() ),
 				Utilities::valueForField( 'iscontent', 'true' )
 		);
-		
+
 		$hub = $this->config->getHub();
 		if (! empty( $hub ) ) {
 		    $queryClauses[] = Utilities::valueForField( 'hub', $hub );

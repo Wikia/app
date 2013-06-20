@@ -1691,16 +1691,23 @@ $messages['lb'] = array(
 
 /** Lithuanian (lietuvių)
  * @author Eitvys200
+ * @author Mantak111
  */
 $messages['lt'] = array(
 	'chat' => 'Pokalbiai',
+	'chat-desc' => '[[Special:Chat|Tiesioginiai pokalbiai]]',
 	'chat-no-login' => 'Jus turite būti prisijungęs, kad galėtumėte kalbėti.',
+	'chat-no-login-text' => 'Prisijunkite, norėdami kalbėtis.',
 	'chat-default-topic' => 'Sveiki atvykę į, $1 pokalbį',
+	'chat-welcome-message' => 'Sveiki atvykę į $1 pokalbį',
 	'chat-user-joined' => '$1 prisijungė prie pokalbio.',
 	'chat-read-only' => 'Pokalbiai yra laikinai neprieinami, kol wiki yra tik skaitymo režimu.',
+	'chat-private-messages' => 'Privačios žinutės',
 	'chat-user-parted' => '$1 paliko pokalbį.',
 	'chat-user-blocked' => '$1 užblokavo  $2.',
 	'chat-user-allow' => '$1 leido $2.',
+	'chat-kick-you-need-permission' => 'Jūs neturite teisės išmesti naudotoją.',
+	'chat-kick-cant-kick-moderator' => 'Jūs negalite išmesti kitą pokalbio moderatorių.',
 	'chat-user-permanently-disconnected' => 'Buvote atjungtas, patikrinkite interneto ryšį ir atnaujinimo naršyklės langą',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 padarė <strong> $2 </strong> pokalbių moderatoriumi.',
 	'chat-err-connected-from-another-browser' => 'Prisijungiate iš kitos naršyklės. Šis ryšys bus uždarytas.',
@@ -1718,10 +1725,19 @@ $messages['lt'] = array(
 	'chat-ban-you-need-permission' => 'Jūs neturite $1 teisės kuri yra reikalinga vartotojo išmetimui/užblokavimui.',
 	'chat-missing-required-parameter' => '"$1"  yra reikalingas bet nebuvo rastas prašyme.',
 	'chat-err-already-chatmod' => 'Klaida: "$1" jau yra "$2" grupėje.',
+	'chat-you-are-banned' => 'Leidimų klaida.',
+	'chat-you-are-banned-text' => 'Apgailestaujame, jūs neturite teisės kalbėtis šiame wiki. Jei manote, kad tai buvo klaida arba norite būti persvarstyti, kreipkitės į administratorių.',
+	'chat-live2' => 'Gyvai! Pokalbiai',
 	'chat-start-a-chat' => 'Pradėti Pokalbį',
 	'chat-join-the-chat' => 'Prisijungti prie Pokalbio',
+	'chat-edit-count' => '{{PLURAL:$1|$1 redagavimas|$1 redagavimai|$1 redagavimų}}',
 	'chat-member-since' => 'Narys nuo $1',
+	'chat-great-youre-logged-in' => 'Puiku! Jūs prisijungėte.',
+	'chat-user-menu-message-wall' => 'Žinutės siena',
 	'chat-user-menu-talk-page' => 'Diskusijų Puslapis',
+	'chat-user-menu-contribs' => 'Indėliai',
+	'chat-user-menu-private' => 'Privati žinutė',
+	'chat-user-menu-kick' => 'Išmesti',
 	'chat-user-menu-ban' => 'Blokuoti',
 	'chat-user-menu-private-block' => 'Blokuoti Asmenines Žinutes',
 	'chat-user-menu-private-allow' => 'Leisti Privačias Žinutes',
@@ -1729,6 +1745,7 @@ $messages['lt'] = array(
 	'chat-private-headline' => 'Privatus pokalbis su $1',
 	'group-chatmoderator' => 'Pokalbių moderatoriai',
 	'group-chatmoderator-member' => 'Pokalbių moderatorius',
+	'chat-browser-is-notsupported' => '	Jūsų naršyklė nepalaiko. Geriausiam patyrimui, naudokitės <a href="http://community.wikia.com/wiki/Help:Supported_browsers">naujesnę naršyklė</a>.',
 );
 
 /** Macedonian (македонски)
@@ -3044,6 +3061,7 @@ $messages['vep'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Timothy Quievryn
+ * @author Tuankiet65
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
@@ -3129,9 +3147,10 @@ $messages['vi'] = array(
 	'chat-chatbanadd-log-entry' => 'cấm $1 khỏi tán gẫu với thời hạn $2, kết thúc $3',
 	'chat-chatbanremove-log-entry' => 'bỏ cấm $1 khỏi tán gẫu',
 	'chat-chatbanchange-log-entry' => 'thay đổi thiết lập cấm cho $1 với thời hạn $2, kết thúc $3',
-	'chat-contributions-ban-notice' => 'Thành viên này hiện nay bị cấm tán gẫu. Nhật trình cấm tán gẫu mới nhất được cung cấp dưới đây để tham khảo:', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Thành viên này}} bị cấm không được tham gia chat. Nhật kí cấm được cung cấp dưới đây để tham khảo:',
 	'chat-browser-is-notsupported' => 'Trình duyệt của bạn không được hỗ trợ. Để trải nghiệm tốt nhất, sử dụng một <a href="http://community.wikia.com/wiki/Help:Supported_browsers">trình duyệt mới hơn</a>.',
 	'chat-checkuser-join-action' => 'Tham gia Tán gẫu',
+	'chat-status-away' => 'Vắng',
 );
 
 /** Simplified Chinese (中文（简体）‎)

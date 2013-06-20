@@ -10,7 +10,7 @@ $(function(){
 			requiredError = msg('wikiagameguides-sponsored-required-entry'),
 			emptyTagError = msg('wikiagameguides-sponsored-empty-tag'),
 			orphanedVideo = msg('wikiagameguides-sponsored-orphaned-video'),
-			sure = msg('wikiagameguides-sponsored-are-you-sure'),
+			sure = msg('wikiagameguides-sponsored-delete-videos-are-you-sure'),
 			videoDoesNotExist = msg('wikiagameguides-sponsored-video-does-not-exist'),
 			videoIsNotOoyala = msg('wikiagameguides-sponsored-video-is-not-ooyala'),
 			addCategory = d.getElementById('addCategory'),

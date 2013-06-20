@@ -51,6 +51,7 @@ class PhalanxHelper {
 				self::updateCache($oldData, $data);
 			}
 			self::logEdit($oldData,$data);
+			self::reload($data[ 'id' ]);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -87,6 +88,7 @@ class PhalanxHelper {
 				self::updateCache(null, $data);
 			}
 			self::logAdd($data);
+			self::reload($data[ 'id' ]);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -254,6 +256,7 @@ class PhalanxHelper {
 			self::updateCache($data, null);
 		}
 		self::logDelete($data);
+		self::reload($blockId);
 
 		$result = array(
 			'error' => false,
@@ -463,6 +466,26 @@ class PhalanxHelper {
 		// Workaround lack of automatic COMMIT in Ajax requests
 		$db = wfGetDB( DB_MASTER );
 		$db->commit();
+	}
+
+	/**
+	 * Reload Phalanx II service to keep service in sync with blocks added from old Phalanx
+	 *
+	 * @param int|null $id block ID to be reloaded (or null to reload all blocks)
+	 * @return bool true if the request was successful
+	 */
+	static private function reload($id = null) {
+		wfProfileIn(__METHOD__);
+
+		$service = new PhalanxService();
+		$res = $service->reload(!is_null($id) ? [$id] : []) === 1;
+
+		if ($res === false) {
+			Wikia::log(__METHOD__, false, 'reload failed', true);
+		}
+
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 }

@@ -107,8 +107,8 @@ class VideoEmbedToolController extends WikiaController {
 		$title = Title::newFromText($title, NS_FILE);
 
 		$description = urldecode( $this->request->getVal('description') );
-		$vet = new VideoEmbedTool();
-		$status = $vet->setVideoDescription($title, $description);
+		$vHelper = new VideoHandlerHelper();
+		$status = $vHelper->setVideoDescription($title, $description);
 
 		if ($status) {
 			$this->status = 'success';

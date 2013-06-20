@@ -38,6 +38,11 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		;
 		$mockService
 		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getSuggestionQuery' )
+		    ->will   ( $this->returnValue( $suggestionQuery ) )
+		;
+		$mockService
+		    ->expects( $this->at( 2 ) )
 		    ->method ( 'getConfig' )
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
@@ -46,11 +51,6 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		    ->method ( 'setWikiId' )
 		    ->with   ( Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID )
 		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockService
-		    ->expects( $this->at( 2 ) )
-		    ->method ( 'getSuggestionQuery' )
-		    ->will   ( $this->returnValue( $suggestionQuery ) )
 		;
 		$mockConfig
 		    ->expects( $this->at( 1 ) )

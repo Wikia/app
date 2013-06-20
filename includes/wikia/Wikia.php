@@ -1966,14 +1966,15 @@ class Wikia {
 	/*
 	 * @param $user_name String
 	 * @param $s ResultWrapper
+	 * @param $bUserObject boolean Return instance of User if true; StdClass (row) otherwise.
 	 */
-	public static function onUserNameLoadFromId( $user_name, &$s ) {
+	public static function onUserNameLoadFromId( $user_name, &$s, $bUserObject = false ) {
 		global $wgExternalAuthType;
 		if ( $wgExternalAuthType ) {
 			$mExtUser = ExternalUser::newFromName( $user_name );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 				$mExtUser->linkToLocal( $mExtUser->getId() );
-				$s = $mExtUser->getLocalUser( false );
+				$s = $mExtUser->getLocalUser( $bUserObject );
 			}
 		}
 

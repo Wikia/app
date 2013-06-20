@@ -18,7 +18,6 @@ abstract class VideoFeedIngester {
 	public static $PROVIDERS_DEFAULT = array(
 		self::PROVIDER_SCREENPLAY,
 		self::PROVIDER_IGN,
-		self::PROVIDER_ANYCLIP,
 		self::PROVIDER_REALGRAVITY,
 		self::PROVIDER_OOYALA,
 	);

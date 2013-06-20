@@ -181,12 +181,17 @@ class FBConnectPushEvent {
 					die($msg);
 				}
 
+				// @author: wladek
+				// options are lazy-checked inside each hook execution
+				/*
 				// The push event is valid, let it initialize itself if needed.
 				if( !$wgUser->getOption(self::$PREF_TO_DISABLE_ALL) ) {
 					if( $wgUser->getOption($prefName) ) {
 						$pushObj->init();
 					}
 				}
+				*/
+				$pushObj->init();
 			}
 		}
 
@@ -351,6 +356,17 @@ class FBConnectPushEvent {
 		$redirect = $wgStylePath.'/common/fbconnect/'.$wgRequest->getVal('img', '0');
 		header("Location: $redirect");
 		exit;
+	}
+
+	static public function checkUserOptions( $className ) {
+		global $wgUser;
+
+		$obj = new $className;
+		$prefName = $obj->getUserPreferenceName();
+
+		return
+			!$wgUser->getOption(self::$PREF_TO_DISABLE_ALL)
+			&& $wgUser->getOption($prefName);
 	}
 
 } // end FBConnectPushEvent class

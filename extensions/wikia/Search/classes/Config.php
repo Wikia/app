@@ -4,6 +4,7 @@
  */
 namespace Wikia\Search;
 use Wikia\Search\MediaWikiService, Wikia\Search\Match;
+use Wikia\Search\TestProfile\Base as BaseProfile;
 use Wikia\Search\Query\Select as Query;
 use Solarium_Query_Select, Wikia\Search\Traits\ArrayConfigurableTrait;
 /**
@@ -107,6 +108,25 @@ class Config
 	 * @var Wikia\Search\Query\Select
 	 */
 	protected $query;
+
+	/**
+	 * Two letter wiki language code
+	 * @var string
+	 */
+	protected $languageCode;
+	
+	/**
+	 * The search profile for A/B testing
+	 * @var Wikia\Search\TestProfile\Base
+	 */
+	protected $testProfile;
+	
+	/**
+	 * The letter value of the test group.
+	 * Null means we aren't participating in a test.
+	 * @var string
+	 */
+	protected $ABTestGroup;
 	
 	/**
 	 * The usual requested fields
@@ -130,6 +150,7 @@ class Config
 			'views',
 			'categories',
 			'hub',
+			'lang',
 	];
 	
 	/**
@@ -137,14 +158,13 @@ class Config
 	 * Use the non-translated version.
 	 * @var array
 	 */
-	protected $queryFieldsToBoosts = [
-			'title'             => 100,
-			'html'              => 5,
-			'redirect_titles'   => 50,
-			'categories'        => 25,
-			'nolang_txt'        => 10,
-			'backlinks_txt'     => 25,
-			];
+	protected $queryFieldsToBoosts = [];
+	
+	/**
+	 * Tells us whether or not we have imported query fields from the test profile yet.
+	 * @var bool
+	 */
+	protected $queryFieldsWereImported = false;
 
 	/**
 	 * Stores field and direction as a two-value array
@@ -268,7 +288,6 @@ class Config
 				];
 		
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
-		$this->importQueryFieldBoosts();
 		
 		$this->configureByArray( $params );
 	}
@@ -396,12 +415,11 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setRank( $rank ) {
-		if (! isset( $this->rankOptions[$rank] ) ) {
-			throw new \Exception( "Attempting to set search sorting by a nonexistent rank key" );
+		if ( isset( $this->rankOptions[$rank] ) ) {
+			$this->rank = $rank;
+			$sort = $this->rankOptions[$rank];
+			$this->setSort( $sort[0], $sort[1] );
 		}
-		$this->rank = $rank;
-		$sort = $this->rankOptions[$rank];
-		$this->setSort( $sort[0], $sort[1] );
 		return $this;
 	}
 	
@@ -450,13 +468,44 @@ class Config
 	}
 	
 	/**
-	 * Overloading __set to type hint
+	 * Stores the current article match ONLY IF IT PASSES OUR ESTABLISHED FILTERS
 	 * @param  \Wikia\Search\Match\Article $articleMatch
 	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setArticleMatch( Match\Article $articleMatch ) {
-		$this->articleMatch = $articleMatch;
+		if ( $this->articleMatchPassesFilters( $articleMatch ) ) {
+			$this->articleMatch = $articleMatch;
+		}
 		return $this;
+	}
+	
+	/**
+	 * Here, we're checking for conditions that should preclude a match, given our current environment settings.
+	 * We're using DeMorgan's theorem here. So write FOR the condition you're trying to filter out.
+	 * @param \Wikia\Search\Match\Article $match
+	 * @return boolean
+	 */
+	protected function articleMatchPassesFilters( \Wikia\Search\Match\Article $match ) {
+		$result = $match->getResult();
+		$filterKeys = $this->getPublicFilterKeys();
+		$isVideoFile = $this->getService()->pageIdIsVideoFile( $result['pageid'] );
+		return ! (
+				( // We have a file that is video, but we only want images.
+						$result['ns'] == NS_FILE
+						&& 
+						in_array( \Wikia\Search\Config::FILTER_IMAGE, $filterKeys )
+						&&
+						$isVideoFile
+				) 
+				||
+				( // We have a file that is not a video, but we only want videos.
+						$result['ns'] == NS_FILE
+						&& 
+						in_array( \Wikia\Search\Config::FILTER_VIDEO, $filterKeys )
+						&&
+						!$isVideoFile
+				)
+		);
 	}
 	
 	/**
@@ -465,7 +514,9 @@ class Config
 	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setWikiMatch( Match\Wiki $wikiMatch ) {
-		$this->wikiMatch = $wikiMatch;
+		if ( $this->getLanguageCode() === $this->getService()->getGlobalForWiki( 'wgLanguageCode', $wikiMatch->getId() ) ) {
+			$this->wikiMatch = $wikiMatch;
+		}
 		return $this;
 	}
 	
@@ -525,6 +576,9 @@ class Config
 		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {
 			$fieldsPrepped[] = 'id';
 		} 
+		if ( $this->getQueryService() == '\\Wikia\Search\\QueryService\\Select\\Video' ) {
+			$fieldsPrepped[] = 'title_en'; 
+		}
 		
 		return $fieldsPrepped;
 	}
@@ -661,6 +715,9 @@ class Config
 	 * @return bool
 	 */
 	public function getInterWiki() {
+		if ( $this->queryService === null ) {
+			$this->queryService = $this->bootstrapQueryService();
+		}
 		return $this->queryService == 'Select\\InterWiki';
 	}
 	
@@ -697,7 +754,7 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setDirectLuceneQuery( $value ) {
-		$this->setQueryService( 'Select\\Lucene', $value );
+		return $this->setQueryService( 'Select\\Lucene', $value );
 	}
 	
 	/**
@@ -706,7 +763,7 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setVideoTitleSearch( $value ) {
-		$this->setQueryService( 'Select\\VideoTitle', $value );
+		return $this->setQueryService( 'Select\\VideoTitle', $value );
 	}
 	
 	/**
@@ -714,7 +771,7 @@ class Config
 	 * @param boolean $formatted whether we should also format the number
 	 * @return integer
 	 */
-	public function getTruncatedResultsNum( $formatted = false ) 
+	public function getTruncatedResultsNum( $formatted = false )
 	{
 		$resultsNum = $this->getResultsFound();
 		
@@ -982,12 +1039,59 @@ class Config
 	}
 	
 	/**
+	 * Allows you to specify group by letter (e.g. A, B, C)
+	 * @param string $group
+	 * @return Wikia\Search\Config
+	 */
+	public function setABTestGroup( $group ) {
+		$this->ABTestGroup = $group;
+		return $this;
+	}
+	
+	/**
+	 * Tells you which test group is currently registred.
+	 * Null means that we aren't performing an A/B test right now.
+	 * @return string
+	 */
+	public function getABTestGroup() {
+		return $this->ABTestGroup;
+	}
+	
+	/**
+	 * Loads the appropriate test profile. 
+	 * Always at least returns the base profile, in case the group passed doesn't exist.
+	 * @return Wikia\Search\Config
+	 */
+	protected function initiateTestProfile() {
+		$nsPrefix = '\\Wikia\\Search\\TestProfile\\';
+		$class = "{$nsPrefix}Base";
+		$abTestGroup = $this->getABTestGroup();
+		if ( $abTestGroup !== null && class_exists( "{$nsPrefix}Group{$abTestGroup}" ) ) {
+			$class = "{$nsPrefix}Group{$abTestGroup}";
+		}
+		$this->testProfile = new $class();
+		return $this;
+	}
+	
+	/**
+	 * Lazy-loads the default test profile.
+	 * @return Wikia\Search\TestProfile\Base
+	 */
+	public function getTestProfile() {
+		if ( $this->testProfile == null ) {
+			$this->initiateTestProfile();
+		}
+		return $this->testProfile;
+	}
+	
+	/**
 	 * Allows us to add additional query fields, with a given boost.
 	 * @param string $field
 	 * @param int $boost
 	 * @return Wikia\Search\Config
 	 */
 	public function setQueryField( $field, $boost = 1 ) {
+		$this->importQueryFieldBoosts();
 		$this->queryFieldsToBoosts[$field] = $boost;
 		return $this;
 	}
@@ -1015,6 +1119,7 @@ class Config
 	 * @return array
 	 */
 	public function getQueryFieldsToBoosts() {
+		$this->importQueryFieldBoosts();
 		return $this->queryFieldsToBoosts;
 	}
 	
@@ -1024,13 +1129,16 @@ class Config
 	 * @return Wikia\Search\Config
 	 */
 	public function setQueryFields( array $fields ) {
+		$this->importQueryFieldBoosts();
 		if ( array_values( $fields ) === $fields ) {
 			$this->queryFieldsToBoosts = array();
 			foreach ( $fields as $field ) {
 				$this->setQueryField( $field );
 			}
 		} else {
-			$this->queryFieldsToBoosts = $fields;
+			foreach ( $fields as $field => $boost ) {
+				$this->setQueryField( $field, $boost ); 
+			}
 		}
 		return $this;
 	}
@@ -1040,17 +1148,41 @@ class Config
 	 * @return array
 	 */
 	public function getQueryFields() {
+		$this->importQueryFieldBoosts();
 		return array_keys( $this->queryFieldsToBoosts );
+	}
+
+	/**
+	 * Setter for language code
+	 * @param $code string language code to set
+	 * @return $this
+	 */
+	public function setLanguageCode( $code ) {
+		$this->languageCode = $code;
+		return $this;
+	}
+
+	/**
+	 * Getter for language code, if not set will load content language
+	 * @return string
+	 */
+	public function getLanguageCode() {
+		//if language not set, load content language
+		if ( !isset( $this->languageCode ) ) {
+			$this->languageCode = $this->getService()->getLanguageCode();
+		}
+		return $this->languageCode;
 	}
 	
 	/**
-	 * Allows global variables like $wgSearchBoostFor_title to overwrite default boost values defined in this class.
-	 * Run during __construct().
+	 * Imports defaults for query fields to boosts from search profile.
+	 * Lazily run on first mutate or access of query fields.
 	 * @return Wikia\Search\Config
 	 */
 	protected function importQueryFieldBoosts() {
-		foreach ( $this->queryFieldsToBoosts as $field => $boost ) {
-			$this->setQueryField( $field, $this->getService()->getGlobalWithDefault( "SearchBoostFor_{$field}", $boost ) );
+		if (! $this->queryFieldsWereImported ) {
+			$this->queryFieldsToBoosts = $this->getTestProfile()->getQueryFieldsToBoosts();
+			$this->queryFieldsWereImported = true;
 		}
 		return $this;
 	}
