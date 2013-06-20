@@ -17,11 +17,18 @@ class UpgradeYoutube extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgTestMode;
+		global $wgTestMode, $wgUser;
 		$wgTestMode = $this->getOption('test');
 
 		if ($wgTestMode) {
 			echo "=== TEST MODE ===\n";
+		}
+
+		// Load wikia user
+		$wgUser = User::newFromName( 'WikiaBot' );
+		if ( !$wgUser ) {
+			echo "WARN: Could not load WikiaBot user\n";
+			exit(1);
 		}
 
 		$pages = $this->getPages();
@@ -91,6 +98,12 @@ class UpgradeYoutube extends Maintenance {
 			return null;
 		}
 
+		foreach ($tagsToFind as $tag) {
+			$ownersFound[$tag] = 'WikiaBot';
+		}
+		return $ownersFound;
+
+/*
 		$ownersFound = array();
 		$limit = 100;
 		$offset = 0;
@@ -145,6 +158,7 @@ class UpgradeYoutube extends Maintenance {
 		}
 
 		return $ownersFound;
+*/
 	}
 
 	/**
@@ -207,6 +221,7 @@ class UpgradeYoutube extends Maintenance {
 	public function upgradeTag ( Article $page, $ytid, $userText ) {
 		global $wgUser, $wgTestMode;
 
+/*
 		// Load the user who embedded this video
 		$wgUser = User::newFromName( $userText );
 
@@ -223,6 +238,7 @@ class UpgradeYoutube extends Maintenance {
 		if ( $wgUser->isAnon() ) {
 			$wgUser->addToDatabase();
 		}
+*/
 
 		$text = $page->getText();
 
@@ -305,12 +321,14 @@ class UpgradeYoutube extends Maintenance {
 			$text
 		);
 
+/*
 		// Load wikia user
 		$wgUser = User::newFromName( 'WikiaBot' );
 		if ( !$wgUser ) {
 			echo "WARN: Could not load WikiaBot user\n";
 			return false;
 		}
+*/
 
 		if ( $wgTestMode ) {
 			return true;
