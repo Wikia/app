@@ -11,11 +11,6 @@ if(Wikia.AbTest && ['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADS
 			caption = function(){
 				return captionHTML;
 			},
-			ad = {
-				toString: toString,
-				type: type,
-				caption: caption
-			},
 			FREQUENCY = 5;
 
 		function Ad(num){
@@ -43,21 +38,24 @@ if(Wikia.AbTest && ['B', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADS
 					media.resetZoom();
 					data.zoomable = false;
 
-					ads.setupSlot({
-						name: 'MOBILE_MODAL_INTERSTITIAL',
-						size: '300x250',
-						wrapper: ad,
-						init: function(found){
-							if(found) {
-								setTimeout(function(){
-									ad.className += ' show';
-								},50)
+					//Don't load ad if something is already there
+					if(ad && ad.children.length == 0) {
+						ads.setupSlot({
+							name: 'MOBILE_IN_CONTENT',
+							size: '300x250',
+							wrapper: ad,
+							init: function(found){
+								if(found) {
+									setTimeout(function(){
+										ad.className += ' show';
+									},50)
 
-							}else{
-								ad.parentElement.removeChild(ad);
+								}else{
+									ad.innerHTML = '';
+								}
 							}
-						}
-					});
+						});
+					}
 				})
 			}
 		})
