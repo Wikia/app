@@ -1,6 +1,7 @@
 @import "color";
 @import "layout";
 @import "../mixins/clearfix";
+@import "../mixins/gradient";
 
 /** Hide 1x1 iframes **/
 .wikia-ad iframe[width="1"][height="1"] {
@@ -53,8 +54,10 @@
 
 /** Skyscrapers **/
 #LEFT_SKYSCRAPER_2 {
+	// FIXME: this is bad. Is it necessary?
 	@extend section;
 }
+
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
@@ -62,6 +65,14 @@
 	top: -640px;
 }
 
+#RIGHT_SKYSCRAPER {
+	// FIXME: this is bad. Is it necessary?
+	@extend .module;
+	text-align: center;
+	img {
+		margin: 40px auto;
+	}
+}
 
 /** Box ads **/
 .home-top-right-ads {
@@ -90,13 +101,30 @@
 }
 /* end transistion temp code */
 
+#TOP_BOXAD {
+	img {
+		display: block;
+	}
+}
+
 #TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
 }
+
 #CORP_TOP_RIGHT_BOXAD.default-height, #HOME_TOP_RIGHT_BOXAD.default-height, #TOP_RIGHT_BOXAD.default-height {
 	height: 250px;
 }
+
+#PREFOOTER_LEFT_BOXAD {
+	float: left;
+	margin: 0 15px;
+}
+
+#PREFOOTER_RIGHT_BOXAD {
+	margin: 0 15px;
+}
+
 #PREFOOTER_LEFT_BOXAD.default-height, #PREFOOTER_RIGHT_BOXAD.default-height {
 	height: 250px;
 }
@@ -108,6 +136,7 @@
 		width: 255px;
 	}
 }
+
 // changes for $wgEnableSpotlightsV2
 .GlobalNavigation {
 	.subnav {
@@ -118,14 +147,38 @@
 		}
 	}
 }
-.WikiaFooter {
-	section {
-		.SPOTLIGHT_FOOTER {
-			padding: 0px 28px 33px;
-			.WikiaSpotlight {
-				height: 123px;
-				width: 255px;
-			}
+
+.WikiaSpotlight {
+	background-color: $color-page;
+	color: $color-text;
+	display: inline-block;
+	width: 270px;
+}
+
+#SPOTLIGHT_FOOTER {
+	@include clearfix;
+	@include linear-gradient(false, top, rgba($color-module-shadow, 0), 50%, $color-module-shadow, 100%);
+	list-style: none;
+	margin: 0;
+	padding: 0px 28px 33px;
+	text-align: center;
+
+	.item-1 {
+		float: left;
+	}
+
+	.item-2 {
+		float: right;
+	}
+
+	.WikiaSpotlight {
+		max-height: 123px;
+		max-width: 255px;
+		width: 30%;
+
+		img {
+			height: auto;
+			width: 100%;
 		}
 	}
 }
