@@ -42,7 +42,7 @@ class GlobalHeaderController extends WikiaController {
 		$userLang = $this->wg->Lang->getCode();
 
 		// Link to Wikia home page
-		$centralUrl = 'http://www.wikia.com/Wikia';
+		$centralUrl = wfMessage( 'styleguide-corporate-wiki-link' )->plain();
 		if ( ! empty( $this->wg->LangToCentralMap[$userLang] ) ) {
 			$centralUrl = $this->wg->LangToCentralMap[$userLang];
 			return $centralUrl;

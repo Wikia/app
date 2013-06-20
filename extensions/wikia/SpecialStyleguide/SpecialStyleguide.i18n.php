@@ -8,6 +8,7 @@ $messages['en'] = array(
 	'styleguide-descriptionmsg' => 'Special:Styleguide is a Special page containing library of Wikia reusable components',
 
 	// Main navigation
+	'styleguide-corporate-wiki-link' => 'http://www.wikia.com/Wikia',
 	'styleguide-home' => 'Home',
 	'styleguide-get-started' => 'Get started',
 	'styleguide-base-styles' => 'Base styles',
@@ -85,6 +86,7 @@ $messages['qqq'] = array(
 	'styleguide-descriptionmsg' => 'Explanatory text for the extension, explaining that Special:Styleguide is a Special page containing library of Wikia reusable components',
 
 	// Main navigation
+	'styleguide-corporate-wiki-link' => 'link (href) to corporate wiki',
 	'styleguide-home' => 'Anchor text for link to Home section in Styleguide',
 	'styleguide-get-started' => 'Anchor text for link to Get started section in Styleguide',
 	'styleguide-base-styles' => 'Anchor text for link to Base styles section in Styleguide',
