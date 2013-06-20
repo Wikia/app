@@ -184,7 +184,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 			pages: pages,
 			pageNumber: current,
 			center: true,
-			onEnd: function(currPageNum){
+			onEnd: function(page, wrapper, currPageNum){
 				if(current !== currPageNum){
 					track.event('gallery', track.PAGINATE, {
 						label: (current < currPageNum ? 'next' : 'previous')

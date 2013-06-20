@@ -600,11 +600,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				onStart: function(){
 					zoomable = false;
 				},
-				onEnd: function(image, page){
+				onEnd: function(image, page, currentPageNum){
 					zoomable = true;
 
 					currentMedia = image;
-					currentNum = image.imgNum;
+					currentNum = currentPageNum;
 
 					//make sure user changed page
 					if(currentNum !== num) {
