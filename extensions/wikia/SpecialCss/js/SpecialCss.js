@@ -54,7 +54,6 @@ $(function() {
 						});
 				}
 			};
-			// TODO i18n
 			$.showModal($.msg('special-css-diff-modal-title'), content, options);
 			return false;
 		});
