@@ -246,10 +246,16 @@ class MatchTest extends BaseTest {
 		$stats = array( 'users_count' => 100 );
 		$hub = 'Entertainment';
 		$mockService
-		    ->expects( $this->once() )
+		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getGlobalForWiki' )
 		    ->with   ( 'wgSitename', 123 )
 		    ->will   ( $this->returnValue( $title ) ) 
+		;
+		$mockService
+			->expects( $this->at( 3 ) )
+			->method ( 'getGlobalForWiki' )
+			->with   ( 'wgLanguageCode', 123 )
+			->will   ( $this->returnValue( 'en' ) )
 		;
 		$mockService
 		   ->expects( $this->once() )

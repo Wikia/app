@@ -113,7 +113,7 @@ class ForumHooksHelper {
 
 		if ( $element->page_namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
 
-			$titleData = WallHelper::getWallTitleData(null, $element, true);
+			$titleData = WallHelper::getWallTitleData(null, $element );
 
 			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'forum-wiki-activity-msg-name', $titleData['wallPageName'] ) . '</a>' );
 			$link = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ' . $boardText;

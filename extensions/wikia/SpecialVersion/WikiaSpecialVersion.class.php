@@ -5,14 +5,21 @@ class WikiaSpecialVersion extends SpecialVersion {
 	 * Identifies tag we're on based on file
 	 * @return string
 	 */
-	public static function getWikiaVersion() {
+	public static function getWikiaCodeVersion() {
 		global $IP;
-		$filename = $IP . '/VERSION';
+		return self::getVersionFromDir($IP);
+	}
+	
+	public static function getWikiaConfigVersion() {
+		return self::getVersionFromDir("/usr/wikia/conf/current"); # no global for config path :(
+	}
+
+	public static function getVersionFromDir($dir) {
+		$filename = $dir . '/VERSION';
 		if ( file_exists( $filename ) ) {
 			return file_get_contents( $filename );
 		}
-
-		return self::getGitBranch();
+		return self::getGitBranch($dir);	
 	}
 
 	/**
@@ -20,8 +27,8 @@ class WikiaSpecialVersion extends SpecialVersion {
 	 * @return string
 	 * @todo use MW 1.20 functionality for Git-based version
 	 */
-	private function getGitBranch() {
-		return `git branch | grep '*' | perl -pe 's/^\* (\S+).*$/$1/g'`;
+	private function getGitBranch($dir) {	
+		return shell_exec("cd $dir ; git branch | grep '*' | perl -pe 's/^\* (\S+).*$/$1/g'");
 	}
 
 	/**

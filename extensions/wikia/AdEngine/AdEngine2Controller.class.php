@@ -100,7 +100,7 @@ class AdEngine2Controller extends WikiaController {
 	}
 
 	public static function getAdLevelForSlot($slotname) {
-		if ($slotname === 'INVISIBLE_1') {
+		if ($slotname === 'INVISIBLE_1' || $slotname === 'INVISIBLE_SKIN') {
 			return self::AD_LEVEL_CORPORATE;
 		}
 
@@ -423,6 +423,9 @@ class AdEngine2Controller extends WikiaController {
 		}
 		$cat = self::getCachedCategory();
 		$vars['cityShort'] = $cat['short'];
+
+		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
+		$vars['adDriver2ForcedStatus'] = array();
 
 		wfProfileOut(__METHOD__);
 

@@ -576,6 +576,7 @@ $messages['pms'] = array(
 /** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'rte-desc' => 'Integração do CKeditor no MediaWiki',
@@ -589,7 +590,7 @@ $messages['pt'] = array(
 	'rte-edgecase-template-with-link' => 'uma predefinição com um link como parâmetro',
 	'rte-edgecase-syntax' => 'sintaxe não permitida',
 	'rte-edgecase-image-with-link' => 'imagem com um link na descrição',
-	'rte-edgecase-redirect' => 'redireccionamento',
+	'rte-edgecase-redirect' => 'redirecionamento',
 	'rte-edgecase-templateintable' => 'uma tabela cuja definição chama uma predefinição',
 	'rte-edgecase-unclosed-tags' => 'elemento HTML não foi fechado',
 	'enablerichtexteditor' => 'Activar o Editor de Texto Enriquecido ("Rich Text Editor")', # Fuzzy

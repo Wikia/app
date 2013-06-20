@@ -133,7 +133,7 @@ class FounderEmails {
 					// remove processed events for this wiki
 					$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 					foreach ( $aEventsData as $event ) {
-						$dbw->delete( 'founder_emails_event', array( 'feev_id' => $event['id'] ) );
+						$dbw->delete( 'founder_emails_event', array( 'feev_id' => $event['id'] ), __METHOD__ );
 					}
 				}
 			}

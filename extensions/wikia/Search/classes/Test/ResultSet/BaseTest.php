@@ -251,7 +251,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	/**
 	 * @covers \Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
 	 */
-	public function testPrependArticleMatchIfExistsWithMatch() {
+	public function testPrependArticleMatchIfExistsWithMatchAndStartAt0() {
 		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
 		
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
@@ -287,6 +287,54 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		    ->expects( $this->at( 1 ) )
 		    ->method ( 'addResult' )
 		    ->with   ( $mockResult )
+	    ;
+		
+		$found = new ReflectionProperty( '\Wikia\Search\ResultSet\Base', 'resultsFound' );
+		$found->setAccessible( true );
+		$oldFound = $found->getValue( $this->resultSet );
+		
+		$prepend = new ReflectionMethod( '\Wikia\Search\ResultSet\Base', 'prependArticleMatchIfExists' );
+		$prepend->setAccessible( true );
+		
+		$this->assertEquals(
+				$this->resultSet,
+				$prepend->invoke( $this->resultSet ),
+				'\Wikia\Search\ResultSet\Base::prependArticleMatchIfExists should provide a fluent interface'
+		);
+		$this->assertEquals(
+				$oldFound + 1,
+				$found->getValue( $this->resultSet )
+		);
+	}
+	
+	/**
+	 * @covers \Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
+	 */
+	public function testPrependArticleMatchIfExistsWithMatchAndStartNotAt0() {
+		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
+		
+		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getResult' ) )
+		                  ->getMock();
+
+		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
+		                   ->disableOriginalConstructor()
+		                   ->getMock();
+		
+		$this->config
+			->expects( $this->at( 0 ) )
+			->method ( 'hasArticleMatch' )
+			->will   ( $this->returnValue( true ) )
+		;
+		$this->resultSet
+			->expects( $this->at( 0 ) )
+			->method ( 'getResultsStart' )
+			->will   ( $this->returnValue( 1 ) )
+		;
+		$this->resultSet
+		    ->expects( $this->never() )
+		    ->method ( 'addResult' )
 	    ;
 		
 		$found = new ReflectionProperty( '\Wikia\Search\ResultSet\Base', 'resultsFound' );
