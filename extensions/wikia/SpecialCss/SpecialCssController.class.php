@@ -1,5 +1,7 @@
 <?php
 class SpecialCssController extends WikiaSpecialPageController {
+	protected  $model;
+
 	public function __construct() {
 		parent::__construct('CSS', 'specialcss', true);
 	}
@@ -10,7 +12,6 @@ class SpecialCssController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	public function index() {
-		global $wgUser;
 		wfProfileIn(__METHOD__);
 
 		if( $this->checkPermissions() ) {
@@ -18,7 +19,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 			return false; // skip rendering
 		}
 
-		$model = new SpecialCssModel();
+		$model = $this->getModel();
 		$this->cssContent = $model->getCssFileContent();
 
 		if ($this->request->wasPosted()) {
@@ -42,42 +43,10 @@ class SpecialCssController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->deletedArticle = '';
-		$title = $model->getCssFileTitle();
-		if ( !empty( $title ) ) {
-			if ( !$title->isDeleted() ) {
-				$this->historyUrl = $title->getLocalURL( 'action=history' );
-				if ( $title->quickUserCan( 'delete', $wgUser ) ) {
-					$this->deleteUrl = $title->getLocalURL( 'action=delete' );
-				}
-			} else
-			{
-				LogEventsList::showLogExtract( $this->deletedArticle, array( 'delete', 'move' ), $title,
-					'', array( 'lim' => 10,
-						'conds' => array( "log_action != 'revision'" ),
-						'showIfEmpty' => false,
-						'msgKey' => array( 'recreate-moveddeleted-warn' ) )
-				);
-				if ( $wgUser->isAllowed( 'deletedhistory' ) ) {
-					$undelTitle = SpecialPage::getTitleFor( 'Undelete' );
-					$this->undeleteUrl = $undelTitle->getLocalURL( array( 'target' => $title->getPrefixedDBkey() ) );
-				}
-			}
-		}
-		
-		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
-		$this->response->addAsset('/extensions/wikia/SpecialCss/js/SpecialCss.js');
-		// This shouldn't be moved to asset manager package because of Ace internal autoloader
-		$this->response->addAsset('/resources/Ace/ace.js');
-
-		$aceUrl = AssetsManager::getInstance()->getOneCommonURL('/resources/Ace');
-		$aceUrlParts = parse_url($aceUrl);
-		$this->response->setJsVar('aceScriptsPath', $aceUrlParts['path']);
-
+		$this->getDeleteLinks();
+		$this->handleAssets();
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
-
-		F::build('JSMessages')->enqueuePackage('SpecialCss', JSMessages::EXTERNAL);
-
+		
 		wfProfileOut(__METHOD__);
 	}
 
@@ -98,5 +67,50 @@ class SpecialCssController extends WikiaSpecialPageController {
 	
 	public function notOasis() {
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
+	}
+
+	protected function handleAssets() {
+		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
+		$this->response->addAsset('/extensions/wikia/SpecialCss/js/SpecialCss.js');
+		// This shouldn't be moved to asset manager package because of Ace internal autoloader
+		$this->response->addAsset('/resources/Ace/ace.js');
+
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL('/resources/Ace');
+		$aceUrlParts = parse_url($aceUrl);
+		$this->response->setJsVar('aceScriptsPath', $aceUrlParts['path']);
+
+		F::build('JSMessages')->enqueuePackage('SpecialCss', JSMessages::EXTERNAL);
+	}
+
+	protected function getDeleteLinks() {
+		$this->deletedArticle = '';
+		$title = $this->getModel()->getCssFileTitle();
+		if ( !empty( $title ) ) {
+			if ( !$title->isDeleted() ) {
+				$this->historyUrl = $title->getLocalURL( 'action=history' );
+				if ( $title->quickUserCan( 'delete', $this->wg->user ) ) {
+					$this->deleteUrl = $title->getLocalURL( 'action=delete' );
+				}
+			} else
+			{
+				LogEventsList::showLogExtract( $this->deletedArticle, array( 'delete', 'move' ), $title,
+					'', array( 'lim' => 10,
+						'conds' => array( "log_action != 'revision'" ),
+						'showIfEmpty' => false,
+						'msgKey' => array( 'recreate-moveddeleted-warn' ) )
+				);
+				if ( $this->wg->user->isAllowed( 'deletedhistory' ) ) {
+					$undelTitle = SpecialPage::getTitleFor( 'Undelete' );
+					$this->undeleteUrl = $undelTitle->getLocalURL( array( 'target' => $title->getPrefixedDBkey() ) );
+				}
+			}
+		}
+	}
+
+	protected function getModel() {
+		if (empty($this->model)) {
+			$this->model = new SpecialCssModel();
+		}
+		return $this->model;
 	}
 }
