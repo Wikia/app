@@ -42,10 +42,10 @@ class WAMService extends Service {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 
-		$memKey = $app->wf->SharedMemcKey('datamart', 'wam', $wikiId);
+		$memKey = wfSharedMemcKey('datamart', 'wam', $wikiId);
 
 		$getData = function () use ($app, $wikiId) {
-			$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 			$result = $db->select(
 				array('fact_wam_scores'),
@@ -100,7 +100,7 @@ class WAMService extends Service {
 			'wam_results_total' => 0
 		);
 		if (!empty($app->wg->StatsDBEnabled)) {
-			$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 			$tables = $this->getWamIndexTables();
 			$fields = $this->getWamIndexFields();
@@ -153,7 +153,7 @@ class WAMService extends Service {
 		wfProfileIn(__METHOD__);
 
 		if (!empty($app->wg->StatsDBEnabled)) {
-			$db = $app->wf->GetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 			$fields = array(
 				'MAX(time_id) AS max_date',
@@ -249,7 +249,7 @@ class WAMService extends Service {
 			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
 		}
 
-		if ($options['excludeBlacklist']) {
+		if (!empty($options['excludeBlacklist'])) {
 			$blacklistIds = $this->getIdsBlacklistedWikis();
 			if (!empty($blacklistIds)) {
 				$conds[] = 'fw1.wiki_id NOT IN (' . $db->makeList( $blacklistIds ) . ')';
@@ -302,7 +302,7 @@ class WAMService extends Service {
 
 		if( $blacklistExt->cv_id ) {
 			$blacklistIds = WikiaDataAccess::cache(
-				F::app()->wf->SharedMemcKey(
+				wfSharedMemcKey(
 					'wam_blacklist',
 					$blacklistExt->cv_id
 				),

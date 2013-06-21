@@ -57,7 +57,7 @@ class SpecialSpamWikisSpecialPageController extends WikiaSpecialPageController {
 
             if ( !empty( $data ) ) {
                 // DB handle
-                $tmpDb = F::app()->wf->getDb( DB_MASTER, array(), 'stats' );
+                $tmpDb = wfGetDB( DB_MASTER, array(), 'stats' );
 
                 foreach ( $data as $k => $v ) {
                     // get some info about the wiki

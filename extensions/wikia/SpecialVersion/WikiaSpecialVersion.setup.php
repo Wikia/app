@@ -6,28 +6,27 @@
  */
 
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
  * classes
  */
-$app->registerClass('WikiaSpecialVersion', $dir . 'WikiaSpecialVersion.class.php');
-$app->registerClass('WikiaSpecialVersionController', $dir . 'WikiaSpecialVersionController.class.php');
+$wgAutoloadClasses['WikiaSpecialVersion'] =  $dir . 'WikiaSpecialVersion.class.php';
+$wgAutoloadClasses['WikiaSpecialVersionController'] =  $dir . 'WikiaSpecialVersionController.class.php';
 
 /**
  * special pages
  */
-$app->registerSpecialPage('Version', 'WikiaSpecialVersionController');
+$wgSpecialPages['Version'] = 'WikiaSpecialVersionController';
 
 /**
  * message files
  */
-$app->registerExtensionMessageFile('WikiaSpecialVersion', $dir . 'WikiaSpecialVersion.i18n.php' );
+$wgExtensionMessagesFiles['WikiaSpecialVersion'] = $dir . 'WikiaSpecialVersion.i18n.php' ;
 
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'Wikia Special:Version',
-	'version'			=> '1.0',
+	'version'			=> '1.1',
 	'author'			=> '[http://wikia.com/wiki/User:Relwell Robert Elwell]',
 	'descriptionmsg'	=> 'wikia-version-desc',
 );

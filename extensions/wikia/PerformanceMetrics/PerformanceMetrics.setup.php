@@ -14,12 +14,12 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 // generic classes
-$app->registerClass('PerformanceMetrics', $dir . '/PerformanceMetrics.class.php');
-$app->registerClass('PerformanceMetricsProvider', $dir . '/PerformanceMetricsProvider.class.php');
+$wgAutoloadClasses['PerformanceMetrics'] =  $dir . '/PerformanceMetrics.class.php';
+$wgAutoloadClasses['PerformanceMetricsProvider'] =  $dir . '/PerformanceMetricsProvider.class.php';
 
 // providers
-$app->registerClass('PerformanceMetricsGooglePageSpeed', $dir . '/providers/PerformanceMetricsGooglePageSpeed.class.php');
-$app->registerClass('PerformanceMetricsPhantom', $dir . '/providers/PerformanceMetricsPhantom.class.php');
+$wgAutoloadClasses['PerformanceMetricsGooglePageSpeed'] =  $dir . '/providers/PerformanceMetricsGooglePageSpeed.class.php';
+$wgAutoloadClasses['PerformanceMetricsPhantom'] =  $dir . '/providers/PerformanceMetricsPhantom.class.php';
 
 // list of all available providers
 $wgPerformanceMetricsProviders = array(

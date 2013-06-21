@@ -131,7 +131,7 @@ class AccountNavigationController extends WikiaController {
 			$dropdownItems = array();
 
 			// Allow hooks to modify the dropdown items.
-			$this->wf->RunHooks( 'AccountNavigationModuleAfterDropdownItems', array(&$possibleItems, &$this->personal_urls) );
+			wfRunHooks( 'AccountNavigationModuleAfterDropdownItems', array(&$possibleItems, &$this->personal_urls) );
 
 			foreach($possibleItems as $item) {
 				if (isset($this->personal_urls[$item])) {

@@ -37,9 +37,8 @@ $wgAutoloadClasses['SpellCheckerService'] = $dir . '/SpellCheckerService.class.p
 $wgSpecialPages['SpellCheckerInfo'] = 'SpellCheckerInfoSpecial';
 
 // hooks
-$app = F::app();
-$app->registerHook('RTEAddGlobalVariablesScript', 'SpellChecker', 'onRTEAddGlobalVariablesScript');
-$app->registerHook('GetPreferences', 'SpellChecker', 'onGetPreferences');
+$wgHooks['RTEAddGlobalVariablesScript'][] = 'SpellChecker::onRTEAddGlobalVariablesScript';
+$wgHooks['GetPreferences'][] = 'SpellChecker::onGetPreferences';
 
 $wgAjaxExportList[] = 'SpellCheckerAjax';
 

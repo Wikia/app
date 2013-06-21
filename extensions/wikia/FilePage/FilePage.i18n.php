@@ -425,6 +425,16 @@ $messages['roa-tara'] = array(
 	'file-page-replace-button' => 'Sostituisce',
 );
 
+/** Russian (русский)
+ * @author Lunacy1911
+ */
+$messages['ru'] = array(
+	'file-page-replace-button' => 'Заменить',
+	'file-page-tab-about' => 'О приложении',
+	'file-page-tab-history' => 'Посмотреть историю',
+	'file-page-more-links' => 'Просмотреть полный список',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Milicevic01
  */
@@ -515,4 +525,12 @@ $messages['zh-hant'] = array(
 	'file-page-replace-button' => '取代',
 	'file-page-tab-about' => '關於',
 	'file-page-more-links' => '查看完整清單',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Tcshek
+ */
+$messages['zh-hk'] = array(
+	'video-page-file-list-header' => '在以下頁面中出現',
+	'file-page-tab-history' => '檔案歷史',
 );

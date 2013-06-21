@@ -65,7 +65,7 @@ class WikisModel extends WikiaModel {
 	public function getTop( $lang = null, $hub = null ) {
 		wfProfileIn( __METHOD__ );
 
-		$cacheKey = $this->wf->SharedMemcKey( __METHOD__, self::CACHE_VERSION, $lang, $hub );
+		$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION, $lang, $hub );
 		$results = $this->wg->Memc->get( $cacheKey );
 
 		if ( !is_array( $results ) ) {
@@ -135,7 +135,7 @@ class WikisModel extends WikiaModel {
 			}
 
 			if ( empty( $hub ) || ( !empty( $hub ) && is_integer( $hubId ) ) ) {
-				$cacheKey = $this->wf->SharedMemcKey( __METHOD__, self::CACHE_VERSION,  md5( strtolower( $string ) ), $hubId, $lang, ( ( !empty( $includeDomain ) ? 'includeDomain' : null ) ) );
+				$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION,  md5( strtolower( $string ) ), $hubId, $lang, ( ( !empty( $includeDomain ) ? 'includeDomain' : null ) ) );
 				$wikis = $this->app->wg->Memc->get( $cacheKey );
 
 				if ( !is_array( $wikis ) ) {
@@ -244,7 +244,7 @@ class WikisModel extends WikiaModel {
 				$val = (int) $val;
 
 				if ( !empty( $val ) ) {
-					$cacheKey = $this->wf->SharedMemcKey( __METHOD__, self::CACHE_VERSION, $val );
+					$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION, $val );
 					$item = $this->wg->Memc->get( $cacheKey );
 
 					if ( is_array( $item ) ) {
@@ -311,7 +311,7 @@ class WikisModel extends WikiaModel {
 					)
 				);
 
-				$cacheKey = $this->wf->SharedMemcKey( __METHOD__, self::CACHE_VERSION, $row->city_id );
+				$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION, $row->city_id );
 				$this->wg->Memc->set( $cacheKey, $item, 43200 /* 12h */ );
 				$results[$row->city_id] = $item;
 			}

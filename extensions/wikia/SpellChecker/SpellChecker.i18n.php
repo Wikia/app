@@ -437,7 +437,12 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'spellchecker-info-dictionaries' => 'Dizionarie disponibbile',
+	'spellchecker-info-spellcheck-text' => 'Teste da verificà',
 	'spellchecker-info-spellcheck-languages' => 'Lènghe',
+	'spellchecker-info-spellcheck-submit' => "Verifiche d'a pronunge",
+	'spellchecker-info-spellcheck-is-correct' => '\'A parole "$1" jè pronugiate bbone',
+	'spellchecker-info-spellcheck-suggestions' => 'Suggereminde de pronunge pe "$1": $2',
 );
 
 /** Russian (русский)

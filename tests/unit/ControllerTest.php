@@ -8,6 +8,8 @@ class ControllerTest extends WikiaBaseTest {
 		$wgAutoloadClasses['UnitTestController'] = dirname( __FILE__ ) . '/controllers/UnitTestController.class.php';
 		$wgAutoloadClasses['UnitTestService'] = dirname( __FILE__ ) . '/controllers/UnitTestService.class.php';
 		$wgAutoloadClasses['OasisTemplate'] = $IP . '/skins/Oasis.php';
+
+		parent::setUp();
 	}
 
 	function testDispatchingToController() {

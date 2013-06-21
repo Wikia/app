@@ -390,10 +390,86 @@ ___________________________________________<br />
  * @author Vks
  */
 $messages['cs'] = array(
+	'wall-notifications' => 'Upozornění',
+	'wall-notifications-all' => 'Všechna upozornění',
+	'wall-notifications-markasread' => 'Označit vše jako přečtené',
+	'wall-notifications-markasread-all-wikis' => 'Všechny wiki',
+	'wall-notifications-markasread-this-wiki' => 'Tato wiki',
+	'wall-notifications-empty' => 'Nemáte žádná upozornění',
+	'wall-notifications-loading' => 'Načítání upozornění',
+	'wall-notifications-reminder' => 'Máte <span>$1</span> {{PLURAL:$1|nepřečtenou zprávu|nepřečtené zprávy|nepřečtených zpráv}}',
+	'wall-notifications-wall-disabled' => 'Zeď zpráv je vypnutá na této wiki. Nelze načíst oznámení.',
 	'mail-notification-new-someone' => 'Na $WIKI $AUTHOR_NAME napsal novou zprávu.',
 	'mail-notification-new-your' => '$AUTHOR_NAME vám nechal novou zprávu na $WIKI.',
 	'mail-notification-reply-your' => '$AUTHOR_NAME odpověděl na vaši zprávu na $WIKI.',
+	'mail-notification-reply-his' => '$AUTHOR_NAME odpověděl na zprávu na $WIKI.',
+	'mail-notification-reply-someone' => '$AUTHOR_NAME odpověděl na zprávu uživatele $PARENT_AUTHOR_NAME na $WIKI.',
+	'mail-notification-html-button' => 'Zobrazit konverzaci',
 	'mail-notification-html-greeting' => 'Ahoj $1,',
+	'mail-notification-html-footer-line1' => 'Nejnovější dění na Wikii můžete sledovat na <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'mail-notification-html-footer-line2' => 'Chcete si nastavit e-mailová upozornění? Přejděte na <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Nastavení</a>',
+	'mail-notification-body' => 'Ahoj $WATCHER,
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+Zobrazit konverzaci($MESSAGE_LINK)
+
+Tým Wikia
+
+___________________________________________
+* Nápovědu a rady naleznete zde: http://community.wikia.com
+* Chcete dostávat méne zpráv? Jejich nastavení můžete změnit zde: http://community.wikia.com/Special:Preferences',
+	'mail-notification-body-HTML' => 'Ahoj $WATCHER,
+<p>$SUBJECT.</p>
+			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+			<p>$MESSAGE_HTML</p>
+			<p>-- $AUTHOR_SIGNATURE<p>
+			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Zobrazit konverzaci</a></p>
+			<p>Tým Wikia</p>
+___________________________________________<br />
+* Nápovědu a rady naleznete zde: http://community.wikia.com
+* Chcete dostávat méne zpráv? Jejich nastavení můžete změnit zde: http://community.wikia.com/Special:Preferences',
+	'prefs-email-wall-v2' => 'Zeď zpráv a fórum',
+	'wn-user1-reply-you-your-wall' => '$1 {{GENDER:$1|odpověděl|odpověděla|odpověděl}} na Vaši zprávu na Vaší zdi',
+	'wn-user2-reply-you-your-wall' => '$1 a $2 odpověděli na Vaši zprávu na Vaší zdi',
+	'wn-user3-reply-you-your-wall' => '$1 a další odpověděli na Vaši zprávu na Vaší zdi',
+	'wn-user1-reply-self-your-wall' => '$1 {{GENDER:$1|odpověděl|odpověděla|odpověděl}} na zprávu na Vaší zdi',
+	'wn-user2-reply-self-your-wall' => '$1 a $2 odpověděli na zprávu na Vaší zdi',
+	'wn-user3-reply-self-your-wall' => '$1 a další odpověděli na zprávu na Vaší zdi',
+	'wn-user1-reply-other-your-wall' => '$1 {{GENDER:$1|odpověděl|odpověděla|odpověděl}} na zprávu uživatele $2 na Vaší zdi',
+	'wn-user2-reply-other-your-wall' => '$1 a $2 odpověděli na zprávu uživatele $3 na Vaší zdi',
+	'wn-user3-reply-other-your-wall' => '$1 a další odpověděli na zprávu uživatele $2 na Vaší zdi',
+	'wn-user1-reply-you-other-wall' => '$1 {{GENDER:$1|odpověděl|odpověděla|odpověděl}} na Vaši zprávu na zdi {{GENDER:$2|uživatele|uživatelky|uživatele}} $2',
+	'wn-user2-reply-you-other-wall' => '$1 a $2 odpověděli na Vaši zprávu na zdi {{GENDER:$3|uživatele|uživatelky|uživatele}} $3',
+	'wn-user3-reply-you-other-wall' => '$1 a další odpověděli na Vaši zprávu na zdi {{GENDER:$3|uživatele|uživatelky|uživatele}} $3',
+	'wn-user1-reply-self-other-wall' => '$1 {{GENDER:$1|odpověděl|odpověděla|odpověděl}} na zprávu na zdi {{GENDER:$2|uživatele|uživatelky|uživatele}} $2',
+	'wn-user2-reply-self-other-wall' => '$1 a $2 odpověděli na zprávu na zdi {{GENDER:$3|uživatele|uživatelky|uživatele}} $3',
+	'wn-user3-reply-self-other-wall' => '$1 a další odpověděli na zprávu na zdi {{GENDER:$2|uživatele|uživatelky|uživatele}} $2',
+	'wn-user1-reply-other-other-wall' => '$1 {{GENDER:$1|odpověděl|odpověděla|odpověděl}} na zprávu {{GENDER:$2|uživatele|uživatelky|uživatele}} $2 na zdi {{GENDER:$3|uživatele|uživatelky|uživatele}} $3',
+	'wn-user2-reply-other-other-wall' => '$1 a $2 odpověděli na zprávu {{GENDER:$3|uživatele|uživatelky|uživatele}} $3 na zdi {{GENDER:$4|uživatele|uživatelky|uživatele}} $4',
+	'wn-user3-reply-other-other-wall' => '$1 a další odpověděli na zprávu {{GENDER:$2|uživatele|uživatelky|uživatele}} $2 na zdi {{GENDER:$3|uživatele|uživatelky|uživatele}} $3',
+	'wn-user1-reply-you-a-wall' => '$1 {{GENDER:$1|odpověděl|odpověděla|odpověděl}} na Vaši zprávu',
+	'wn-user2-reply-you-a-wall' => '$1 a $2 odpověděli na Vaši zprávu',
+	'wn-user3-reply-you-a-wall' => '$1 a další odpověděli na Vaši zprávu',
+	'wn-user1-reply-self-a-wall' => '$1 {{GENDER:$1|odpověděl|odpověděla|odpověděl}} na zprávu',
+	'wn-user2-reply-self-a-wall' => '$1 a $2 odpověděli na zprávu',
+	'wn-user3-reply-self-a-wall' => '$1 a další odpověděli na zprávu',
+	'wn-user1-reply-other-a-wall' => '$1 {{GENDER:$1|odpověděl|odpověděla|odpověděl}} na zprávu {{GENDER:$2|uživatele|uživatelky|uživatele}} $2',
+	'wn-user2-reply-other-a-wall' => '$1 a $2 odpověděli na zprávu {{GENDER:$3|uživatele|uživatelky|uživatele}} $3',
+	'wn-user3-reply-other-a-wall' => '$1 a další odpověděli na zprávu {{GENDER:$3|uživatele|uživatelky|uživatele}} $3',
+	'wn-newmsg-onmywall' => '$1 {{GENDER:$1|zanechal|zanechala|zanechal}} novou zprávu na Vaší zdi',
+	'wn-newmsg' => 'Zanechal jste novou zprávu na zdi {{GENDER:$1|uživatele|uživatelky|uživatele}} $1',
+	'wn-newmsg-on-followed-wall' => '$1 {{GENDER:$1|zanechal|zanechala|zanechal}} novou zprávu na zdi {{GENDER:$2|uživatele|uživatelky|uživatele}} $2',
+	'wn-admin-thread-deleted' => 'Odstraněno vlákno ze zdi {{GENDER:$1|uživatele|uživatelky|uživatele}} $1',
+	'wn-admin-reply-deleted' => 'Odstraněna odpověď z vlákna na zdi {{GENDER:$1|uživatele|uživatelky|uživatele}} $1',
+	'wn-owner-thread-deleted' => 'Odstraněno vlákno z Vaší zdi',
+	'wn-owner-reply-deleted' => 'Odstraněna odpověď z vlákna na Vaší zdi',
 );
 
 /** German (Deutsch)

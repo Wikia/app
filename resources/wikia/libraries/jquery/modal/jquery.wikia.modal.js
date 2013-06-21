@@ -244,7 +244,7 @@ $.fn.extend({
 
 		blackout.fadeOut("fast", function() {
 			$(this).remove();
-			var callback = settings && settings.onAfterClose ? settings.onAfterClose : false;
+			var callback = settings && settings.onAfterClose;
 			if($.isFunction(callback)) {
 				callback();
 			}
@@ -267,7 +267,7 @@ $.fn.extend({
 			opacity: 0
 		}, "fast", function() {
 			$(this).hide();
-			var callback = settings && settings.onAfterClose ? settings.onAfterClose : false;
+			var callback = settings && settings.onAfterClose;
 			if($.isFunction(callback)) {
 				callback();
 			}

@@ -50,20 +50,51 @@ $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 
 class Wikia {
 
+	const VARNISH_STAGING_HEADER = 'X-Staging';
+	const VARNISH_STAGING_PREVIEW = 'preview';
+	const VARNISH_STAGING_VERIFY = 'verify';
+
 	private static $vars = array();
 	private static $cachedLinker;
 
-	public static function isStagingServer() {
-		$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
+	private static $apacheHeaders = null;
 
-		if(
-				isset( $headers[ "X-Staging" ] )
-				&& ( $headers[ "X-Staging" ] === "preview" || $headers[ "X-Staging" ] === "verify" )
-		) {
-			return true;
-		} else {
-			return false;
+	/**
+	 * Return the name of staging server (or empty string for production/dev envs)
+	 * @return string
+	 */
+	public static function getStagingServerName() {
+		if ( is_null( self::$apacheHeaders ) ) {
+			self::$apacheHeaders = function_exists('apache_request_headers') ? apache_request_headers() : array();
 		}
+		if ( isset( self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ] ) ) {
+			return self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ];
+		}
+		return '';
+	}
+
+	/**
+	 * Check if we're running on preview server
+	 * @return bool
+	 */
+	public static function isPreviewServer() {
+		return self::getStagingServerName() === self::VARNISH_STAGING_PREVIEW;
+	}
+
+	/**
+	 * Check if we're running on verify server
+	 * @return bool
+	 */
+	public static function isVerifyServer() {
+		return self::getStagingServerName() === self::VARNISH_STAGING_VERIFY;
+	}
+
+	/**
+	 * Check if we're running in preview or verify env
+	 * @return bool
+	 */
+	public static function isStagingServer() {
+		return self::isPreviewServer() || self::isVerifyServer();
 	}
 
 	public static function setVar($key, $value) {
@@ -178,7 +209,7 @@ class Wikia {
      */
     static public function linkTag($url, $title, $attribs = null )
     {
-        return XML::element("a", array( "href"=> $url), $title);
+        return Xml::element("a", array( "href"=> $url), $title);
     }
 
     /**
@@ -1966,14 +1997,15 @@ class Wikia {
 	/*
 	 * @param $user_name String
 	 * @param $s ResultWrapper
+	 * @param $bUserObject boolean Return instance of User if true; StdClass (row) otherwise.
 	 */
-	public static function onUserNameLoadFromId( $user_name, &$s ) {
+	public static function onUserNameLoadFromId( $user_name, &$s, $bUserObject = false ) {
 		global $wgExternalAuthType;
 		if ( $wgExternalAuthType ) {
 			$mExtUser = ExternalUser::newFromName( $user_name );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 				$mExtUser->linkToLocal( $mExtUser->getId() );
-				$s = $mExtUser->getLocalUser( false );
+				$s = $mExtUser->getLocalUser( $bUserObject );
 			}
 		}
 

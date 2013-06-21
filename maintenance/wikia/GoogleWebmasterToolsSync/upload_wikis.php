@@ -3,7 +3,7 @@ global $IP;
 
 $optionsWithArgs = array( 'm' );
 
-require_once( __DIR__."/configure_log_file.php" );
+require_once( __DIR__."/common.php" );
 GWTLogHelper::notice( __FILE__ . " script starts.");
 try {
 	$max_wikis_to_sync = 1000;

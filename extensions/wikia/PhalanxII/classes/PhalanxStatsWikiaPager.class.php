@@ -16,10 +16,10 @@ class PhalanxStatsWikiaPager extends PhalanxStatsPager {
 		# block
 		$phalanxUrl = $this->mSkin->makeLinkObj( $this->mTitle, $blockId, 'id=' . $blockId );
 		# stats
-		$statsUrl = $this->mSkin->makeLinkObj( $this->mTitleStats, $this->app->wf->Msg('phalanx-link-stats'), 'blockId=' . $blockId );
+		$statsUrl = $this->mSkin->makeLinkObj( $this->mTitleStats, wfMsg('phalanx-link-stats'), 'blockId=' . $blockId );
 
 		$html  = Html::openElement( 'li' );
-		$html .= $this->app->wf->MsgExt( 'phalanx-stats-row-per-wiki', array('parseinline', 'replaceafter'), $type, $username, $phalanxUrl, $timestamp, $statsUrl );
+		$html .= wfMsgExt( 'phalanx-stats-row-per-wiki', array('parseinline', 'replaceafter'), $type, $username, $phalanxUrl, $timestamp, $statsUrl );
 		$html .= Html::closeElement( 'li' );
 
 		return $html;

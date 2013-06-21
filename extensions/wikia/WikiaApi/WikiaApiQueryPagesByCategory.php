@@ -30,7 +30,6 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 	# if someone want to use it
 	#---
 	private function getPagesByCategoryWithOffset() {
-		global $wgDBname;
         #--- blank variables
         $category = $order = null;
         #--- initial parameters (dbname, limit, offset ...)

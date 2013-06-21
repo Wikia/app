@@ -45,9 +45,14 @@ class StructuredDataController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
+		global $wgStructuredDataConfig;
 		$this->config = $this->wg->StructuredDataConfig;
-		$this->APIClient = F::build( 'StructuredDataAPIClient' );
-		$this->structuredData = F::build( 'StructuredData', array( 'apiClient' => $this->APIClient ));
+		$this->APIClient = (new StructuredDataAPIClient(
+			$wgStructuredDataConfig['baseUrl'],
+			$wgStructuredDataConfig['apiPath'],
+			$wgStructuredDataConfig['schemaPath']
+		));
+		$this->structuredData = new StructuredData( $this->APIClient );
 	}
 
 	public function index() {
@@ -226,7 +231,6 @@ class StructuredDataController extends WikiaSpecialPageController {
 			return $params;
 		}
 
-		return $requestParams;
 	}
 
 	public function getObject() {

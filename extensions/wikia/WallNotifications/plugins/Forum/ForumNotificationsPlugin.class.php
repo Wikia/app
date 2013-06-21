@@ -6,7 +6,7 @@
 
 
 class ForumNotificationsPlugin {
-	public function onGetNotificationMessage($nc, &$msg, $isMain, $data, $authors, $userCount, $myName) {
+	static public function onGetNotificationMessage($nc, &$msg, $isMain, $data, $authors, $userCount, $myName) {
 
 		if ( empty( $data->article_title_ns ) || MWNamespace::getSubject( $data->article_title_ns ) != NS_WIKIA_FORUM_BOARD ) {
 			return true;
@@ -42,7 +42,7 @@ class ForumNotificationsPlugin {
 		return true;
 	}
 
-	public function onGetMailNotificationMessage($notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text) {
+	static public function onGetMailNotificationMessage($notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text) {
 		if ( empty( $notification->data->article_title_ns ) || MWNamespace::getSubject( $notification->data->article_title_ns ) != NS_WIKIA_FORUM_BOARD ) {
 			return true;
 		}

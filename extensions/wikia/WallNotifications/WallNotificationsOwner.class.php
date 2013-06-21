@@ -105,11 +105,12 @@ class WallNotificationsOwner {
 	 */
 	
 	protected function getCache() {
-		return $this->app->wg->Memc;
+		global $wgMemc;
+		return $wgMemc;
 	}
 	
 	public function getKey( $wikiId, $userId ){
-		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $wikiId. '_' . $userId . 'v11' );
+		return wfSharedMemcKey( __CLASS__, $wikiId. '_' . $userId . 'v11' );
 	}
 	
 	

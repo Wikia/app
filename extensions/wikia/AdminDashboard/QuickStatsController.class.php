@@ -5,7 +5,7 @@ class QuickStatsController extends WikiaController {
 	public function getStats() {
 
 		// First check memcache for our stats
-		$memKey = $this->wf->MemcKey('quick_stats');
+		$memKey = wfMemcKey('quick_stats');
 		$stats = $this->wg->Memc->get($memKey);
 		if (!is_array($stats)) {
 			$cityID = $this->wg->CityId;
@@ -60,7 +60,7 @@ class QuickStatsController extends WikiaController {
 			$today = date( 'Y-m-d', strtotime('-1 day') );
 			$week = date( 'Y-m-d', strtotime('-7 day') );
 
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
+			$db = wfGetDB(DB_SLAVE, array(), $this->wg->StatsDB);
 
 			$oRes = $db->select(
 				array( 'events' ),
@@ -85,7 +85,7 @@ class QuickStatsController extends WikiaController {
 	protected function getDailyPhotos(Array &$stats) {
 		wfProfileIn( __METHOD__ );
 
-		$db = $this->wf->GetDB(DB_SLAVE, array());
+		$db = wfGetDB(DB_SLAVE, array());
 
 		$today = date( 'Ymd', strtotime('-1 day') ) . '235959';
 		$week = date( 'Ymd', strtotime('-7 day') ) . '000000';

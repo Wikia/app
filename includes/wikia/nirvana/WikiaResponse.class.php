@@ -71,7 +71,7 @@ class WikiaResponse {
 	 */
 	public function __construct( $format, $request = null ) {
 		$this->setFormat( $format );
-		$this->setView( F::build( 'WikiaView', array( $this ) ) );
+		$this->setView( new WikiaView( $this ) );
 		$this->setRequest( $request );
 	}
 
@@ -477,7 +477,7 @@ class WikiaResponse {
 		$type = false;
 
 		if ( $this->format == 'html' ) {
-			$sources = F::build( 'AssetsManager', array(), 'getInstance' )->getURL( $assetName, $type, $local );
+			$sources = AssetsManager::getInstance()->getURL( $assetName, $type, $local );
 
 			foreach($sources as $src){
 				switch ( $type ) {

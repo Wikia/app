@@ -18,7 +18,7 @@ class LatestActivityController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		$maxElements = 4;
 
-		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgOut, $wgTitle, $wgUserProfilePagesNamespaces;
+		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc;
 		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestActivity.js"></script>');
 		$this->moduleHeader = wfMsg('oasis-activity-header');
 		

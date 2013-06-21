@@ -296,9 +296,15 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'userdata' => 'Pigghie le date utende',
+	'userdata-userid-label' => "Dèje l'ID utende:",
 	'userdata-submit' => 'Pigghie le date',
 	'specialuserdata-desc' => "Dèje 'n'inderfacce pe cangià wgUserData pe uicchi.",
 	'userdata-header' => "'Ngremende wgUserData",
+	'userdata-value' => "'U valore de mò de wgUserData jè \"\$1\". Cazze 'u buttone pe 'mbostarle l'orarie de mò.",
+	'userdata-updated' => 'wgUserData aggiornate a "$1".',
+	'userdata-not-updated' => 'Aggiornamende de wgUserData fallite.',
+	'userdata-wf-reason' => 'Valore aggiornate cu [[Special:UserData|UserData]]',
+	'userdata-no-wf' => "UicchiFactory non g'è abbilitate sus a sta uicchi. Non ge pozze cangià wgUserData.",
 );
 
 /** Russian (русский)

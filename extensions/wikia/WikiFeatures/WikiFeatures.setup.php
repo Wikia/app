@@ -8,22 +8,22 @@
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 //classes
-$app->registerController(
+$wgAutoloadClasses['WikiFeaturesSpecialController'] = $dir . 'WikiFeaturesSpecialController.class.php';
+$app->getDispatcher()->addRouting(
 	'WikiFeaturesSpecialController',
-	$dir . 'WikiFeaturesSpecialController.class.php',
 	array( 'index' => array( "skin" => array( "monobook", "wikiamobile" ), "method" => "notOasis") )
 );
 
-$app->registerClass('WikiFeaturesHelper', $dir . 'WikiFeaturesHelper.class.php');
-$app->registerClass('WikiaLabsSpecialController', $dir . 'WikiaLabsSpecialController.class.php');
+$wgAutoloadClasses['WikiFeaturesHelper'] =  $dir . 'WikiFeaturesHelper.class.php';
+$wgAutoloadClasses['WikiaLabsSpecialController'] =  $dir . 'WikiaLabsSpecialController.class.php';
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiFeatures'] = $dir . 'WikiFeatures.i18n.php';
 $wgExtensionMessagesFiles['WikiFeaturesAliases'] = $dir . 'WikiFeatures.alias.php' ;
 
 // special pages
-$app->registerSpecialPage('WikiFeatures', 'WikiFeaturesSpecialController');
-$app->registerSpecialPage('WikiaLabs', 'WikiaLabsSpecialController');
+$wgSpecialPages['WikiFeatures'] = 'WikiFeaturesSpecialController';
+$wgSpecialPages['WikiaLabs'] = 'WikiaLabsSpecialController';
 
 $wgAvailableRights[] = 'wikifeatures';
 

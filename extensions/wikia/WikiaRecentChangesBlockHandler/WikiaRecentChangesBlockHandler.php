@@ -1,5 +1,5 @@
 <?php
-class WikiaRecentChangesBlockHandler extends Service {
+class WikiaRecentChangesBlockHandler {
 
 	/**
 	 * @brief Adjusting title of a block group on RecentChanges page
@@ -10,7 +10,7 @@ class WikiaRecentChangesBlockHandler extends Service {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onChangesListHeaderBlockGroup($oChangeList, &$r, &$oRCCacheEntryArray) {
+	static public function onChangesListHeaderBlockGroup($oChangeList, &$r, &$oRCCacheEntryArray) {
 		wfProfileIn(__METHOD__);
 
 		$headerTitle = null;

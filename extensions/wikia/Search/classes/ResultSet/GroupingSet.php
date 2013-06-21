@@ -63,16 +63,18 @@ class GroupingSet extends Grouping
 	 * @return GroupingSet
 	 */
 	protected function prependWikiMatchIfExists() {
-		if ( $this->searchConfig->hasWikiMatch() && $this->searchConfig->getStart() == 0 ) {
-			$dependencies = array(
-					'result' => $this->searchResultObject, 
-					'config' => $this->searchConfig, 
-					'parent' => $this, 
-					'wikiMatch' => $this->searchConfig->getWikiMatch(),
-					);
-			;
-			$resultSet = $this->factory->get( new DependencyContainer( $dependencies ) );
-			$this->results[$resultSet->getHeader( 'url' )] = $resultSet;
+		if ( $this->searchConfig->hasWikiMatch() ) {
+			if ( $this->searchConfig->getStart() == 0 ) {
+				$dependencies = array(
+						'result' => $this->searchResultObject, 
+						'config' => $this->searchConfig, 
+						'parent' => $this, 
+						'wikiMatch' => $this->searchConfig->getWikiMatch(),
+						);
+				$resultSet = $this->factory->get( new DependencyContainer( $dependencies ) );
+				$this->results[$resultSet->getHeader( 'url' )] = $resultSet;
+			}
+			$this->resultsFound += 1;
 		}
 		return $this;
 	}

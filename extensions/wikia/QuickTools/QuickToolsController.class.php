@@ -88,7 +88,7 @@ class QuickToolsController extends WikiaController  {
 		if ( !$time ) {
 			$time = '';
 		} else {
-			$time = $this->wf->Timestamp( TS_UNIX, $time );
+			$time = wfTimestamp( TS_UNIX, $time );
 			if ( !$time ) {
 				$this->response->setVal( 'success', false );
 				$this->response->setVal( 'error', wfMessage( 'quicktools-invalidtime' )->plain() );
@@ -96,7 +96,7 @@ class QuickToolsController extends WikiaController  {
 				return true;
 			}
 
-			$time = $this->wf->Timestamp( TS_MW, $time );
+			$time = wfTimestamp( TS_MW, $time );
 		}
 
 		$titles = $this->getRollbackTitles( $target, $time );
@@ -128,7 +128,7 @@ class QuickToolsController extends WikiaController  {
 	 */
 	private function getRollbackTitles( $user, $time ) {
 		wfProfileIn( __METHOD__ );
-		$dbr = $this->wf->GetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$titles = array();
 		$where = array(
 			'page_latest = rev_id',
@@ -184,7 +184,7 @@ class QuickToolsController extends WikiaController  {
 		}
 
 		// fetch revisions from this article
-		$dbr = $this->wf->GetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
 			'revision',
 			array( 'rev_id', 'rev_user_text', 'rev_timestamp' ),

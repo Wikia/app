@@ -87,12 +87,16 @@ class InfoboxesService
 			if ( isset( $item['infoboxes_txt'] ) ) {
 				foreach ( $item['infoboxes_txt'] as $row ) {
 					$cells = explode( ' | ', $row );
+					$table = array_shift( $cells );
 					$key = array_shift( $cells );
-					$infoboxes[$key] = implode( ' | ', $cells );
+					if (! isset( $infoboxes[$table] ) ) {
+						$infoboxes[$table] = [];
+					}
+					$infoboxes[$table][$key] = implode( ' | ', $cells );
 				}
 			}
 			foreach ( $mappedIds[$item['pageid']] as $expectedId ) {
-				$items[$expectedId] = $infoboxes;
+				$items[$expectedId] = array_values( $infoboxes ); // don't want infobox_1, infobox_2, etc.
 			}
 		}
 		// integrity check

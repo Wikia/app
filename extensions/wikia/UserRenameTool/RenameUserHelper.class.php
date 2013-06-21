@@ -18,16 +18,14 @@ class RenameUserHelper {
 	 * @author Federico "Lox" Lucignano
 	 * @param $userID int the registered user ID
 	 * @return Array A list of wikis' IDs related to user activity, false if the user is not an existing one or an anon
-	 * 
+	 *
 	 * Finds on which wikis a REGISTERED user (see LookupContribs for anons) has been active using the events table stored in the stats DB
 	 * instead of the blobs table in dataware, tests showed is faster and more accurate
 	 */
-
 	static public function lookupRegisteredUserActivity($userID) {
+		global $wgDevelEnvironment, $wgDatamartDB, $wgStatsDBEnabled;
 		wfProfileIn(__METHOD__);
 
-		global $wgDevelEnvironment, $wgStatsDB, $wgStatsDBEnabled;
-		
 		//check for non admitted values
 		if(empty($userID) || !is_int($userID)){
 			wfProfileOut( __METHOD__ );
@@ -36,21 +34,20 @@ class RenameUserHelper {
 
 		wfDebugLog(__CLASS__.'::'.__METHOD__, "Looking up registered user activity for user with ID {$userID}");
 
-		$result = array();
+		$result = [];
 		if ( empty($wgDevelEnvironment) ) { // on production
 			if ( !empty( $wgStatsDBEnabled ) ) {
-				$dbr =& wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-				$res = $dbr->select('events', 'wiki_id', array('user_id' => $userID), __METHOD__, array('DISTINCT'));
-				$result = array();
+				$dbr = wfGetDB(DB_SLAVE, array(), $wgDatamartDB);
+				$res = $dbr->select('rollup_edit_events', 'wiki_id', ['user_id' => $userID], __METHOD__, ['GROUP BY' => 'wiki_id']);
 
 				while($row = $dbr->fetchObject($res)) {
 					if ( !in_array( $row->wiki_id, self::$excludedWikis ) ) {
-                                                if ( WikiFactory::isPublic( $row->wiki_id ) ) {
-                                                    $result[] = (int)$row->wiki_id;
-                                                    wfDebugLog(__CLASS__.'::'.__METHOD__, "Registered user with ID {$userID} was active on wiki with ID {$row->wiki_id}");
-                                                } else {
-                                                    wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id} (inactive wiki)");
-                                                }
+						if ( WikiFactory::isPublic( $row->wiki_id ) ) {
+							$result[] = (int)$row->wiki_id;
+							wfDebugLog(__CLASS__.'::'.__METHOD__, "Registered user with ID {$userID} was active on wiki with ID {$row->wiki_id}");
+						} else {
+							wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id} (inactive wiki)");
+						}
 					} else {
 						wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id} (excluded wiki)");
 					}
@@ -66,10 +63,10 @@ class RenameUserHelper {
 		}
 
 		wfProfileOut(__METHOD__);
-		
+
 		return $result;
 	}
-	
+
 	/**
 	 * @author Federico "Lox" Lucignano
 	 * @param $wikiCityID int the city_id for the wiki
@@ -97,7 +94,7 @@ class RenameUserHelper {
 			$res = $dbr->selectField('city_list', 'city_cluster', array('city_id' => $wikiCityID));
 			$value = $res;
 		}
-		
+
 		wfDebugLog(__CLASS__.'::'.__METHOD__, "Cluster for wiki with ID {$wikiCityID} is '{$value}'" . ((empty($value) ? ' (main shared DB)' : null)));
 
 		wfProfileOut(__METHOD__);

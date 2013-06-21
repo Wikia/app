@@ -140,6 +140,6 @@ class WikiaMobileStatsModel extends WikiaModel {
 	}
 
 	private function getPopularPagesCacheKey(){
-		return $this->wf->MemcKey( self::POPULAR_PAGES_CACHE_KEY );
+		return wfMemcKey( self::POPULAR_PAGES_CACHE_KEY );
 	}
 }
