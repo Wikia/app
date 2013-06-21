@@ -30,7 +30,8 @@ define( 'lvs.commonajax', ['wikia.window'], function( window ) {
 			stopLoadingGraphic();
 		} else {
 			window.GlobalNotification.show( data.msg, 'confirm' );
-			$container.html( data.html );
+			// update the grid and trigger the reset event for JS garbage collection
+			$container.html( data.html ).trigger( 'contentReset' );
 			stopLoadingGraphic();
 		}
 	}

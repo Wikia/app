@@ -32,7 +32,7 @@ define( 'lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs
 
 	function init( $elem ) {
 		$container = $elem;
-		
+
 		$( 'body' ).on( 'click', '.global-notification .undo', function( e ) {
 			e.preventDefault();
 

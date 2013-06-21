@@ -50,6 +50,11 @@ define( 'lvs.videocontrols', ['wikia.videoBootstrap'], function( VideoBootstrap 
 				}
 			});
 		});
+
+		$container.on( 'contentReset', function() {
+			// All video instances will have been wiped away with the html reset
+			videoInstances = [];
+		});
 	}
 
 	function reset() {
