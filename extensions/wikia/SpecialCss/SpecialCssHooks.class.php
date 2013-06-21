@@ -23,6 +23,11 @@ class SpecialCssHooks {
 	 * @param $model SpecialCssModel
 	 */
 	private function shouldRedirect($app, $model, $articleId) {
+		// currently special::css cannot handle undo mode
+		if ( $app->wg->Request->getInt( 'undo' ) > 0 && $app->wg->Request->getInt( 'undoafter' ) > 0 ) {
+			return false;
+		}
+
 		return $app->wg->EnableSpecialCssExt
 			&& $model->isWikiaCssArticle( $articleId )
 			&& $app->checkSkin( $model::$supportedSkins )
