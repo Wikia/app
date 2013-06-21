@@ -136,8 +136,8 @@ jQuery(function($){
 			category: category,
 			label: 'category-name'
 		}, trackWithEventData).on('mousedown', '.add', {
-				category: category,
-				label: 'add-category'
+			category: category,
+			label: 'add-category'
 		}, trackWithEventData);
 	})();
 
