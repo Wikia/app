@@ -28,13 +28,13 @@ $messages['en'] = [
 	'special-css-save-message' => 'Your changes to wikia.css have been saved.',
 	'special-css-oldid-message' => 'You are editing an old version of this page. If you save it, any changes made since this version will be lost.',
 
-	'special-css-education-item-webinars-header' => 'CSS_ Wikia Webinars',
+	'special-css-education-item-webinars-header' => 'Wikia CSS Webinar',
 	'special-css-education-item-webinars-link-title' => 'Wikia CSS Webinar',
 	'special-css-education-item-webinars-paragraph' => 'An introduction to using custom CSS on Wikia.',
-	'special-css-education-item-help-header' => 'Help / FAQ',
+	'special-css-education-item-help-header' => 'Help and FAQs',
 	'special-css-education-item-help-link-title' => 'Help and FAQs',
 	'special-css-education-item-help-paragraph' => 'Guides and best practices for using custom CSS.',
-	'special-css-education-item-com-center-header' => 'Community Center',
+	'special-css-education-item-com-center-header' => 'Got questions?',
 	'special-css-education-item-com-center-link-title' => 'Got questions?',
 	'special-css-education-item-com-center-paragraph' => 'Get CSS help from other Wikia users.'
 ];
