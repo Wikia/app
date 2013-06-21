@@ -18,11 +18,12 @@ class CrossWikiCore extends AbstractWikiService
 		$sitename = $service->getGlobal( 'Sitename' );
 		$response['id'] = $this->wikiId;
 		$response['sitename_txt'] = $sitename;
-		$response[ Utilities::field( 'sitename' ) ] = $sitename;
+		$sn = Utilities::field( 'sitename' );
+		$langSn = $sn == 'sitename' ? 'sitename_txt' : $sn;
 		$response['lang_s'] = $service->getLanguageCode();
 		$response['hub_s'] = $service->getHubForWikiId( $this->wikiId );
-		$response['created_dt'] = $wiki->city_created;
-		$response['touched_dt'] = $wiki->city_last_timestamp;
+		$response['created_dt'] = str_replace( ' ', 'T', $wiki->city_created ) . 'Z';
+		$response['touched_dt'] = str_replace( ' ', 'T', $wiki->city_last_timestamp ) . 'Z';
 		$response['url'] = $wiki->city_url;
 		$response['dbname_s'] = $wiki->city_dbname;
 		$response['hostname_s'] = $service->getHostName();
@@ -33,19 +34,25 @@ class CrossWikiCore extends AbstractWikiService
 				$this->getWikiViews(),
 				$this->getWam(),
 				$this->getCategories(),
-				$this->getVisualizationInfo(),
+			        $this->getVisualizationInfo(),
 				$this->getTopArticles()
 				);
 	}
 	
 	protected function getWikiViews() {
-		$wvResponse = (new WikiViews)->getStubbedWikiResponse();
-		return [ 'views_weekly_i' => $wvResponse['contents']['wikiviews_weekly'], 'views_monthly_i' => $wvResponse['contents']['wikiviews_monthly'] ];
+	  $result = [];
+	  if ( $wvResponse = (new WikiViews)->getStubbedWikiResponse() ) {
+		$result = [ 'views_weekly_i' => $wvResponse['contents']['wikiviews_weekly']['set'], 'views_monthly_i' => $wvResponse['contents']['wikiviews_monthly']['set'] ];
+	  }
+	  return $result;
 	}
 	
 	protected function getWam() {
-		$wamResp = (new Wam)->getStubbedWikiResponse();
-		return $wamResp['contents'];
+	  $response = [];
+	  if ( $wamResp = (new Wam)->getStubbedWikiResponse() ) {
+	    $response['wam_i'] = $wamResp['contents']['wam']['set'];
+	  }
+	  return $response;
 	}
 	
 	protected function getWikiStats() {
@@ -71,7 +78,9 @@ class CrossWikiCore extends AbstractWikiService
 				$description = $service->getSimpleMessage( 'wikiasearch2-crosswiki-description', array( $service->getGlobal( 'Sitename' ) ) );
 			}
 			$response['description_txt'] = $description;
-			$response[ Utilities::field( 'description' ) ] = $description;
+			$ds = Utilities::field( 'description' );
+			$ds = $ds == 'description' ? 'description_txt' : $ds;
+			$response[$ds] = $description;
 			foreach ( $vizInfo['flags'] as $flag => $bool ) {
 				$response[$flag.'_b'] = $bool ? 'true' : 'false';
 			}
@@ -88,7 +97,9 @@ class CrossWikiCore extends AbstractWikiService
 				$response['top_articles_txt'][] = $item['title'];
 			}
 		}
-		$response[Utilities::field( 'top_articles' )] = $response['top_articles_txt'];
+		$ta = Utilities::field( 'top_articles' );
+		$ta = $ta == 'top_articles' ? 'top_articles_txt' : $ta;
+		$response[$ta] = $response['top_articles_txt'];
 		return $response;
 	}
 	
@@ -107,11 +118,15 @@ class CrossWikiCore extends AbstractWikiService
 			$categories[] = str_replace( '_', ' ', $result->cat_title );
 		}
 		$topCategories = array_slice( $categories, 0, 20 );
+		$cats = Utilities::field( 'categories' );
+		$cats = $cats == 'categories' ? 'categories_txt' : $cats;
+		$topsCats = Utilities::field( 'top_categories' );
+		$topsCats = $topsCats == 'top_categories' ? 'top_categories_txt' : $topsCats;
 		return array(
-				Utilities::field( 'categories' ) => $categories,
+				 $cats => $categories,
 				'categories_txt' => $categories,
 				'top_categories_txt' => $topCategories,
-				Utilities::field( 'top_categories' ) => $topCategories 
+				 $topsCats => $topCategories 
 				);
 	}
 }
