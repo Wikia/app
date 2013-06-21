@@ -59,13 +59,13 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 	function loadImages(){
 		//this gives me a chance to first load current page then next and at the end prev
 
-		lazyload(modalWrapper.querySelectorAll('.current .image'), true);
+		lazyload(modalWrapper.querySelectorAll('.current .media'), true);
 
 		setTimeout(function(){
-			lazyload(modalWrapper.querySelectorAll('.next .image'), true);
+			lazyload(modalWrapper.querySelectorAll('.next .media'), true);
 
 			setTimeout(function(){
-				lazyload(modalWrapper.querySelectorAll('.prev .image'), true);
+				lazyload(modalWrapper.querySelectorAll('.prev .media'), true);
 			}, 200);
 		}, 400);
 	}
@@ -121,7 +121,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 				thumb = thumbnailer.getThumbURL(img.url, type, MAX_THUMB_SIZE, MAX_THUMB_SIZE);
 			}
 
-			pages[pagesNum] += '<div class="galPlc ' +
+			pages[pagesNum] += '<div class="galPlc media ' +
 				type +
 				((thisImg === i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
 		}

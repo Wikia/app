@@ -621,9 +621,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 					currentNum = currentPageNum;
 
 					//make sure user changed page
-					if(currentNum !== num) {
+					if(currentNum !== lastNum) {
 						track.event('modal', track.PAGINATE, {
-							label: currentNum > num ? 'previous' : 'next'
+							label: currentNum > lastNum ? 'next' : 'previous'
 						});
 
 						currentWrapper = page;
