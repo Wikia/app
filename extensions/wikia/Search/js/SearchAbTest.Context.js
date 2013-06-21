@@ -55,7 +55,7 @@ define('SearchAbTest.Context' ,['wikia.window', 'wikia.log', 'wikia.querystring'
 
 		getQueryParameters: function() {
 			var str = querystring(window.location.url);
-			return str.cache;
+			return str.getVals();
 		},
 
 		/**

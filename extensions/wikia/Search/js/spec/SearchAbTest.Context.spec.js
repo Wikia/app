@@ -4,7 +4,7 @@ describe('SearchAbTest.Context', function() {
 	logMock.levels = { debug: 13 };
 	function getQueryStringMock( returnedParameters ) {
 		returnedParameters = returnedParameters || {};
-		return function() { return { cache: returnedParameters }; };
+		return function() { return { getVals: function() { return returnedParameters;} }; };
 	}
 
 	it("returns a dummy if 'Wikia' is not loaded", function() {
