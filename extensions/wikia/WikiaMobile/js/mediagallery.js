@@ -48,7 +48,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 			} else if (target.id === 'wkGalTgl') {
 				if(modalWrapper.className.indexOf('wkMedGal') > -1) {
 					track.event('gallery', track.CLICK, {label: 'close'});
-					goBackToImgModal(goToImg);
+					goBackToImgModal(thisImg);
 				} else {
 					open();
 				}
