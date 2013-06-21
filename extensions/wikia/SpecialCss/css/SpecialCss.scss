@@ -34,14 +34,9 @@
 		}
 
 		.css-publish-button {
-			background: none;
 			border: none;
 			height: 20px;
 			padding: 0 20px;
-		}
-
-		.css-publish-button:hover {
-			@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
 		}
 
 		.drop {
