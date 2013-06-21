@@ -19,7 +19,7 @@ jQuery(function($){
 
 	var trackWithEventData = function(e) {
 
-        // Primary mouse button only
+		// Primary mouse button only
 		if (e.type === 'mousedown' && e.which !== 1) {
 			return;
 		}
@@ -29,7 +29,7 @@ jQuery(function($){
 		}, e.data);
 	};
 
-    // For tracking components which are used inside and outside of the editor.
+	// For tracking components which are used inside and outside of the editor.
 	var trackEditorComponent = (function() {
 		var slice = Array.prototype.slice;
 
@@ -37,10 +37,10 @@ jQuery(function($){
 			var wikiaEditor = window.WikiaEditor && WikiaEditor.getInstance(),
 				track = Wikia.Tracker.track;
 
-            // Determine whether or not to track through the editor tracking method:
-            // - If an editor is present on the page and is not a MiniEditor, then it must be the main editor.
-            // - If an editor is present on the page and is a MiniEditor, make sure it currently has focus.
-            // - Otherwise, assume that we are not tracking through the editor.
+			// Determine whether or not to track through the editor tracking method:
+			// - If an editor is present on the page and is not a MiniEditor, then it must be the main editor.
+			// - If an editor is present on the page and is a MiniEditor, make sure it currently has focus.
+			// - Otherwise, assume that we are not tracking through the editor.
 			if ( wikiaEditor && ( !wikiaEditor.config.isMiniEditor || wikiaEditor.plugins.MiniEditor.hasFocus ) ) {
 				track = WikiaEditor.track;
 			}
@@ -54,7 +54,7 @@ jQuery(function($){
 	(function() {
 		var category = 'article';
 
-        // Not special pages
+		// Not special pages
 		if ($body.hasClass('ns-special')) {
 			return;
 		}
@@ -64,7 +64,7 @@ jQuery(function($){
 				el = $(e.currentTarget),
 				id = el.data('id');
 
-            // Primary mouse button only
+			// Primary mouse button only
 			if (e.which !== 1) {
 				return;
 			}
@@ -100,7 +100,7 @@ jQuery(function($){
 			var label,
 				el = $(e.currentTarget);
 
-            // Primary mouse button only
+			// Primary mouse button only
 			if (e.which !== 1) {
 				return;
 			}
@@ -171,7 +171,7 @@ jQuery(function($){
 			el = $(e.target),
 			id = el.data('id');
 
-        // Primary mouse button only
+		// Primary mouse button only
 		if (e.which !== 1) {
 			return;
 		}
@@ -218,7 +218,7 @@ jQuery(function($){
 		var label,
 			el = $(e.target);
 
-        // Primary mouse button only
+		// Primary mouse button only
 		if (e.which !== 1) {
 			return;
 		}
@@ -248,7 +248,7 @@ jQuery(function($){
 				el = $(e.target),
 				href = el.attr('href');
 
-            // Primary mouse button only
+			// Primary mouse button only
 			if (e.which !== 1) {
 				return;
 			}
@@ -279,7 +279,7 @@ jQuery(function($){
 		var label,
 			el = $(e.target);
 
-        // Primary mouse button only
+		// Primary mouse button only
 		if (e.which !== 1) {
 			return;
 		}
@@ -318,7 +318,7 @@ jQuery(function($){
 			category: category,
 			label: 'search-suggest'
 		}, trackWithEventData).on('mousedown', '.wikia-button', function(e) {
-                // Prevent tracking 'fake' form submission clicks
+				// Prevent tracking 'fake' form submission clicks
 				if (e.which === 1 && e.clientX > 0) {
 					track({
 						category: category,
@@ -398,7 +398,7 @@ jQuery(function($){
 		var label,
 			el = $(e.target);
 
-        // Primary mouse button only
+		// Primary mouse button only
 		if (e.which !== 1) {
 			return;
 		}
@@ -427,7 +427,7 @@ jQuery(function($){
 			el = $(e.target),
 			name = el.data('name');
 
-        // Primary mouse button only
+		// Primary mouse button only
 		if (e.which !== 1) {
 			return;
 		}
@@ -465,7 +465,7 @@ jQuery(function($){
 				el = $(e.target),
 				id = el.data('id');
 
-            // Primary mouse button only
+			// Primary mouse button only
 			if (e.which !== 1) {
 				return;
 			}
@@ -523,7 +523,7 @@ jQuery(function($){
 				el = $(e.target),
 				id = el.attr('id');
 
-            // Primary mouse button only
+			// Primary mouse button only
 			if (e.which !== 1) {
 				return;
 			}
@@ -554,7 +554,7 @@ jQuery(function($){
 				el = $(e.target),
 				parent = el.parent();
 
-            // Primary mouse button only
+			// Primary mouse button only
 			if (e.which !== 1) {
 				return;
 			}
@@ -595,7 +595,7 @@ jQuery(function($){
 		var label,
 			el = $(e.target);
 
-        // Primary mouse button only
+		// Primary mouse button only
 		if (e.which !== 1) {
 			return;
 		}
@@ -643,6 +643,6 @@ jQuery(function($){
 		}
 	});
 
-// Exports
+	// Exports
 	Wikia.trackEditorComponent = trackEditorComponent;
 });
