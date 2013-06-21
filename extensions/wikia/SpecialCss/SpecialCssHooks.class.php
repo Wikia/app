@@ -12,7 +12,8 @@ class SpecialCssHooks {
 		$model = new SpecialCssModel();
 
 		if( $this->shouldRedirect($app, $model, $editPage->getArticle()->getTitle()->getArticleId()) ) {
-			$app->wg->Out->redirect( $model->getSpecialCssUrl() );
+			$oldid = $app->wg->Request->getIntOrNull( 'oldid' );
+			$app->wg->Out->redirect( $model->getSpecialCssUrl( false, ( $oldid ) ? array( 'oldid' => $oldid ) : null ) );
 		}
 
 		wfProfileOut(__METHOD__);
