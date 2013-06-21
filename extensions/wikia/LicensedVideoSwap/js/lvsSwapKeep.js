@@ -14,13 +14,13 @@ define( 'lvs.swapkeep', [
 		$overlay,
 		$row,
 		$button,
+		$container,
 		isSwap,
 		currTitle,
 		newTitle,
 		qs,
 		sort,
-		page,
-		$container;
+		page;
 
 	function doRequest(){
 		// Add loading graphic
@@ -64,7 +64,11 @@ define( 'lvs.swapkeep', [
 		if ( isSwap ) {
 			newTitleText = newTitle.replace(/_/g, ' ' );
 			title = $.msg( 'lvs-confirm-swap-title' );
-			msg = $.msg( 'lvs-confirm-swap-message', currTitleText, newTitleText );
+			if ( currTitleText == newTitleText ) {
+				msg = $.msg( 'lvs-confirm-swap-message-same-title', currTitleText );
+			} else {
+				msg = $.msg( 'lvs-confirm-swap-message-different-title', currTitleText, newTitleText );
+			}
 		} else {
 			title = $.msg( 'lvs-confirm-keep-title' );
 			msg = $.msg( 'lvs-confirm-keep-message', currTitleText );
