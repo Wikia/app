@@ -6,6 +6,11 @@
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/opacity";
 
+$edit-box-color: mix($color-page, #000,95%);
+@if $is-dark-wiki {
+	$edit-box-color: mix($color-page, #fff,95%);
+}
+
 .cssEditorForm {
 	padding-top: 5px;
 }
@@ -27,7 +32,7 @@
 	width: 330px;
 
 	.css-edit-box {
-		background-color: #f1f2f2;
+		background-color: $edit-box-color;
 		font-size: 13px;
 		margin-bottom: 10px;
 		padding: 15px;
