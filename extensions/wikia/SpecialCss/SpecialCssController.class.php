@@ -89,7 +89,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$this->deletedArticle = '';
 		$title = $this->getModel()->getCssFileTitle();
 		if ( !empty( $title ) ) {
-			if ( !$title->isDeleted() ) {
+			if ( $title->isDeleted() && $title->getArticleID( Title::GAID_FOR_UPDATE ) ) {
 				$this->historyUrl = $title->getLocalURL( 'action=history' );
 				if ( $title->quickUserCan( 'delete', $this->wg->user ) ) {
 					$this->deleteUrl = $title->getLocalURL( 'action=delete' );
