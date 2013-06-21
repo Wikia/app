@@ -46,6 +46,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 		$this->cssUpdates = $model->getCssUpdatesData();
 		$this->createDeleteLinks();
+		$this->dropdown = $this->createButtonLinks();
 		$this->handleAssets();
 		$this->wg->Out->setPageTitle( $this->wf->Message('special-css-title')->text() );
 		
@@ -122,5 +123,36 @@ class SpecialCssController extends WikiaSpecialPageController {
 			$this->model = new SpecialCssModel();
 		}
 		return $this->model;
+	}
+
+	protected function createButtonLinks() {
+		$dropdown = [];
+		if ( isset( $this->historyUrl ) ) {
+			$dropdown[] = array(
+				'text' => wfMessage('special-css-history-button')->plain(),
+				'href' => $this->historyUrl
+			);
+		}
+
+		$dropdown[] = array(
+			'id' 	=> 'showChanges',
+			'href' 	=> '#',
+			'text' 	=> wfMessage('special-css-compare-button')->plain()
+		);
+
+		if ( isset( $this->deleteUrl ) ) {
+			$dropdown[] = array(
+				'href'	=> $this->deleteUrl,
+				'text' 	=> wfMessage('special-css-delete-button')->plain()
+			);
+		}
+
+		if ( isset( $this->undeleteUrl ) ) {
+			$dropdown[] = array(
+				'href'	=> $this->undeleteUrl,
+				'text'	=> wfMessage('special-css-undelete-button')->plain()
+			);
+		}
+		return $dropdown;
 	}
 }
