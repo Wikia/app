@@ -89,8 +89,6 @@ $slotZIndex: 4000;
 
 	background: rgba(0,0,0,.3);
 
-	-webkit-transition: background .2s;
-
 	&.show {
 		background: transparent;
 	}

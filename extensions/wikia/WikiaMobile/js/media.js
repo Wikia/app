@@ -272,8 +272,6 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				origH = img.height;
 			}
 
-			// Future video/image views will come from modal
-			clickSource = 'lightbox';
 		} else if(currentMedia.type){//custom
 			var data = {
 					currentNum: currentNum,
@@ -289,6 +287,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				zoomable = data.zoomable
 			}
 		}
+
+		// Future video/image views will come from modal
+		clickSource = 'lightbox';
 
 		//remove any left videos from DOM
 		//videos tend to be heavy on resources we shouldn't have more than one at a time
