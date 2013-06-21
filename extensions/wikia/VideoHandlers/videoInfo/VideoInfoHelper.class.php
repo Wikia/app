@@ -248,15 +248,20 @@ class VideoInfoHelper extends WikiaModel {
 	 * Check if Special Videos Ext is enabled and video_info table exists
 	 */
 	public static function videoInfoExists() {
+		global $wgVideoInfoExists;
+
+		if ( $wgVideoInfoExists !== null ) {
+			return  $wgVideoInfoExists;
+		}
 		$app = F::app();
-		$exists = false;
+		$wgVideoInfoExists = false;
 		if ( !empty($app->wg->enableSpecialVideosExt) ) {
 			$db = wfGetDB( DB_SLAVE );
 			if ( $db->tableExists( 'video_info' ) ) {
-				$exists = true;
+				$wgVideoInfoExists = true;
 			}
 		}
 
-		return $exists;
+		return $wgVideoInfoExists;
 	}
 }

@@ -63,3 +63,5 @@ define("WPP_WALL_ORDER_INDEX", 17);
 
 // License video swap status
 define( "WPP_LVS_STATUS", 18 );
+define( "WPP_LVS_SUGGEST", 19 );
+define( "WPP_LVS_SUGGEST_DATE", 20 );
